@@ -32262,6 +32262,10 @@
         "CreationDateCondition":{
           "shape":"CreationDateCondition",
           "locationName":"creationDateCondition"
+        },
+        "ImageWatermarks":{
+          "shape":"ImageWatermarkFilterResponseList",
+          "locationName":"imageWatermarkSet"
         }
       }
     },
@@ -32288,7 +32292,11 @@
           "locationName":"ImageName"
         },
         "DeprecationTimeCondition":{"shape":"DeprecationTimeConditionRequest"},
-        "CreationDateCondition":{"shape":"CreationDateConditionRequest"}
+        "CreationDateCondition":{"shape":"CreationDateConditionRequest"},
+        "ImageWatermarks":{
+          "shape":"ImageWatermarkFilterRequestList",
+          "locationName":"ImageWatermark"
+        }
       }
     },
     "ImageCriterionRequestList":{
@@ -32730,6 +32738,50 @@
           "shape":"MillisecondDateTime",
           "locationName":"watermarkCreationTime"
         }
+      }
+    },
+    "ImageWatermarkFilterRequest":{
+      "type":"structure",
+      "members":{
+        "WatermarkKey":{"shape":"String"},
+        "SourceImageRegion":{"shape":"String"},
+        "MaximumDaysSinceSourceImageCreated":{"shape":"Integer"},
+        "MaximumDaysSinceWatermarkCreated":{"shape":"Integer"}
+      }
+    },
+    "ImageWatermarkFilterRequestList":{
+      "type":"list",
+      "member":{
+        "shape":"ImageWatermarkFilterRequest",
+        "locationName":"item"
+      }
+    },
+    "ImageWatermarkFilterResponse":{
+      "type":"structure",
+      "members":{
+        "WatermarkKey":{
+          "shape":"String",
+          "locationName":"watermarkKey"
+        },
+        "SourceImageRegion":{
+          "shape":"String",
+          "locationName":"sourceImageRegion"
+        },
+        "MaximumDaysSinceSourceImageCreated":{
+          "shape":"Integer",
+          "locationName":"maximumDaysSinceSourceImageCreated"
+        },
+        "MaximumDaysSinceWatermarkCreated":{
+          "shape":"Integer",
+          "locationName":"maximumDaysSinceWatermarkCreated"
+        }
+      }
+    },
+    "ImageWatermarkFilterResponseList":{
+      "type":"list",
+      "member":{
+        "shape":"ImageWatermarkFilterResponse",
+        "locationName":"item"
       }
     },
     "ImageWatermarkList":{

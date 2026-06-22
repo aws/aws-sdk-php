@@ -2,16 +2,22 @@
   "version": "2.0",
   "service": "<p>Use CloudWatch Application Signals for comprehensive observability of your cloud-based applications. It enables real-time service health dashboards and helps you track long-term performance trends against your business goals. The application-centric view provides you with unified visibility across your applications, services, and dependencies, so you can proactively monitor and efficiently triage any issues that may arise, ensuring optimal customer experience.</p> <p>Application Signals provides the following benefits:</p> <ul> <li> <p>Automatically collect metrics and traces from your applications, and display key metrics such as call volume, availability, latency, faults, and errors. </p> </li> <li> <p>Create and monitor service level objectives (SLOs). </p> </li> <li> <p>See a map of your application topology that Application Signals automatically discovers, that gives you a visual representation of your applications, dependencies, and their connectivity.</p> </li> </ul> <p>Application Signals works with CloudWatch RUM, CloudWatch Synthetics canaries, and Amazon Web Services Service Catalog AppRegistry, to display your client pages, Synthetics canaries, and application names within dashboards and maps.</p>",
   "operations": {
+    "BatchDeleteInstrumentationConfigurations": "<p>Deletes multiple instrumentation configurations in a single request. Supports two mutually exclusive selection methods:</p> <ul> <li>By scope: Delete all configurations matching a Service + Environment + InstrumentationType</li> <li>By ARN list: Delete specific configurations by providing a list of resource ARNs</li> </ul>",
     "BatchGetServiceLevelObjectiveBudgetReport": "<p>Use this operation to retrieve one or more <i>service level objective (SLO) budget reports</i>.</p> <p>An <i>error budget</i> is the amount of time or requests in an unhealthy state that your service can accumulate during an interval before your overall SLO budget health is breached and the SLO is considered to be unmet. For example, an SLO with a threshold of 99.95% and a monthly interval translates to an error budget of 21.9 minutes of downtime in a 30-day month.</p> <p>Budget reports include a health indicator, the attainment value, and remaining budget.</p> <p>For more information about SLO error budgets, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-ServiceLevelObjectives.html#CloudWatch-ServiceLevelObjectives-concepts\"> SLO concepts</a>.</p>",
     "BatchUpdateExclusionWindows": "<p>Add or remove time window exclusions for one or more Service Level Objectives (SLOs).</p>",
+    "CreateInstrumentationConfiguration": "<p>Creates a dynamic instrumentation configuration for a specific code or endpoint location within a service and environment. Configurations are immutable after creation.</p> <p>For <code>BREAKPOINT</code> type configurations, they expire after 24 hours unless a shorter expiration is provided. For <code>PROBE</code> type configurations, they persist until explicitly deleted; an expiration cannot be set for <code>PROBE</code> configurations.</p> <p>If a configuration already exists for the same service, environment, signal type, and location, this operation returns a conflict instead of overwriting it. Use attribute filters and capture settings to control where the instrumentation runs and which data is collected.</p>",
     "CreateServiceLevelObjective": "<p>Creates a service level objective (SLO), which can help you ensure that your critical business operations are meeting customer expectations. Use SLOs to set and track specific target levels for the reliability and availability of your applications and services. SLOs use service level indicators (SLIs) to calculate whether the application is performing at the level that you want.</p> <p>Create an SLO to set a target for a service or operation’s availability or latency. CloudWatch measures this target frequently you can find whether it has been breached. </p> <p>The target performance quality that is defined for an SLO is the <i>attainment goal</i>.</p> <p>You can set SLO targets for your applications that are discovered by Application Signals, using critical metrics such as latency and availability. You can also set SLOs against any CloudWatch metric or math expression that produces a time series.</p> <note> <p>You can't create an SLO for a service operation that was discovered by Application Signals until after that operation has reported standard metrics to Application Signals.</p> </note> <p>When you create an SLO, you specify whether it is a <i>period-based SLO</i> or a <i>request-based SLO</i>. Each type of SLO has a different way of evaluating your application's performance against its attainment goal.</p> <ul> <li> <p>A <i>period-based SLO</i> uses defined <i>periods</i> of time within a specified total time interval. For each period of time, Application Signals determines whether the application met its goal. The attainment rate is calculated as the <code>number of good periods/number of total periods</code>.</p> <p>For example, for a period-based SLO, meeting an attainment goal of 99.9% means that within your interval, your application must meet its performance goal during at least 99.9% of the time periods.</p> </li> <li> <p>A <i>request-based SLO</i> doesn't use pre-defined periods of time. Instead, the SLO measures <code>number of good requests/number of total requests</code> during the interval. At any time, you can find the ratio of good requests to total requests for the interval up to the time stamp that you specify, and measure that ratio against the goal set in your SLO.</p> </li> </ul> <p>After you have created an SLO, you can retrieve error budget reports for it. An <i>error budget</i> is the amount of time or amount of requests that your application can be non-compliant with the SLO's goal, and still have your application meet the goal.</p> <ul> <li> <p>For a period-based SLO, the error budget starts at a number defined by the highest number of periods that can fail to meet the threshold, while still meeting the overall goal. The <i>remaining error budget</i> decreases with every failed period that is recorded. The error budget within one interval can never increase.</p> <p>For example, an SLO with a threshold that 99.95% of requests must be completed under 2000ms every month translates to an error budget of 21.9 minutes of downtime per month.</p> </li> <li> <p>For a request-based SLO, the remaining error budget is dynamic and can increase or decrease, depending on the ratio of good requests to total requests.</p> </li> </ul> <p>For more information about SLOs, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-ServiceLevelObjectives.html\"> Service level objectives (SLOs)</a>. </p> <p>When you perform a <code>CreateServiceLevelObjective</code> operation, Application Signals creates the <i>AWSServiceRoleForCloudWatchApplicationSignals</i> service-linked role, if it doesn't already exist in your account. This service- linked role has the following permissions:</p> <ul> <li> <p> <code>xray:GetServiceGraph</code> </p> </li> <li> <p> <code>logs:StartQuery</code> </p> </li> <li> <p> <code>logs:GetQueryResults</code> </p> </li> <li> <p> <code>cloudwatch:GetMetricData</code> </p> </li> <li> <p> <code>cloudwatch:ListMetrics</code> </p> </li> <li> <p> <code>tag:GetResources</code> </p> </li> <li> <p> <code>autoscaling:DescribeAutoScalingGroups</code> </p> </li> </ul>",
     "DeleteGroupingConfiguration": "<p>Deletes the grouping configuration for this account. This removes all custom grouping attribute definitions that were previously configured.</p>",
+    "DeleteInstrumentationConfiguration": "<p>Deletes the specified instrumentation configuration. SDKs remove the instrumentation during their next sync after the configuration is deleted or expires.</p>",
     "DeleteServiceLevelObjective": "<p>Deletes the specified service level objective.</p>",
+    "GetInstrumentationConfiguration": "<p>Returns the details of a single instrumentation configuration identified by service, environment, signal type, and location. Use this to audit or display configuration details.</p>",
+    "GetInstrumentationConfigurationStatus": "<p>Retrieves the status history for a single instrumentation configuration during a specified time range. The response lists when the configuration was ACTIVE, READY, ERROR, or DISABLED.</p> <p>If no status or time window is provided, the operation defaults to ACTIVE events from the last hour.</p>",
     "GetService": "<p>Returns information about a service discovered by Application Signals.</p>",
     "GetServiceLevelObjective": "<p>Returns information about one SLO created in the account. </p>",
     "ListAuditFindings": "<p>Returns a list of audit findings that provide automated analysis of service behavior and root cause analysis. These findings help identify the most significant observations about your services, including performance issues, anomalies, and potential problems. The findings are generated using heuristic algorithms based on established troubleshooting patterns.</p>",
     "ListEntityEvents": "<p>Returns a list of change events for a specific entity, such as deployments, configuration changes, or other state-changing activities. This operation helps track the history of changes that may have affected service performance.</p>",
     "ListGroupingAttributeDefinitions": "<p>Returns the current grouping configuration for this account, including all custom grouping attribute definitions that have been configured. These definitions determine how services are logically grouped based on telemetry attributes, Amazon Web Services tags, or predefined mappings.</p>",
+    "ListInstrumentationConfigurations": "<p>Returns all active instrumentation configurations for a service and environment. SDKs use this operation to sync configurations and apply client-side filters locally.</p> <p>Include the previous <code>SyncedAt</code> value to perform incremental syncs. When no changes are detected, the response sets <code>Changed</code> to <code>false</code> and omits configuration details.</p>",
     "ListServiceDependencies": "<p>Returns a list of service dependencies of the service that you specify. A dependency is an infrastructure component that an operation of this service connects with. Dependencies can include Amazon Web Services services, Amazon Web Services resources, and third-party services. </p>",
     "ListServiceDependents": "<p>Returns the list of dependents that invoked the specified service during the provided time range. Dependents include other services, CloudWatch Synthetics canaries, and clients that are instrumented with CloudWatch RUM app monitors.</p>",
     "ListServiceLevelObjectiveExclusionWindows": "<p>Retrieves all exclusion windows configured for a specific SLO.</p>",
@@ -21,6 +27,7 @@
     "ListServices": "<p>Returns a list of services that have been discovered by Application Signals. A service represents a minimum logical and transactional unit that completes a business function. Services are discovered through Application Signals instrumentation.</p>",
     "ListTagsForResource": "<p>Displays the tags associated with a CloudWatch resource. Tags can be assigned to service level objectives.</p>",
     "PutGroupingConfiguration": "<p>Creates or updates the grouping configuration for this account. This operation allows you to define custom grouping attributes that determine how services are logically grouped based on telemetry attributes, Amazon Web Services tags, or predefined mappings. These grouping attributes can then be used to organize and filter services in the Application Signals console and APIs.</p>",
+    "ReportInstrumentationConfigurationStatus": "<p>Reports the status of one or more instrumentation configurations from SDK instances. Use this to record when configurations become ready, hit errors, become active, or are disabled by limits.</p> <p>Report <code>READY</code>, <code>ERROR</code>, and <code>DISABLED</code> when the status changes. Report <code>ACTIVE</code> periodically (for example, every minute) while instrumentation is running.</p>",
     "StartDiscovery": "<p>Enables this Amazon Web Services account to be able to use CloudWatch Application Signals by creating the <i>AWSServiceRoleForCloudWatchApplicationSignals</i> service-linked role. This service- linked role has the following permissions:</p> <ul> <li> <p> <code>xray:GetServiceGraph</code> </p> </li> <li> <p> <code>logs:StartQuery</code> </p> </li> <li> <p> <code>logs:GetQueryResults</code> </p> </li> <li> <p> <code>cloudwatch:GetMetricData</code> </p> </li> <li> <p> <code>cloudwatch:ListMetrics</code> </p> </li> <li> <p> <code>tag:GetResources</code> </p> </li> <li> <p> <code>autoscaling:DescribeAutoScalingGroups</code> </p> </li> </ul> <p>A service-linked CloudTrail event channel is created to process CloudTrail events and return change event information. This includes last deployment time, userName, eventName, and other event metadata.</p> <p>After completing this step, you still need to instrument your Java and Python applications to send data to Application Signals. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Application-Signals-Enable.html\"> Enabling Application Signals</a>.</p>",
     "TagResource": "<p>Assigns one or more tags (key-value pairs) to the specified CloudWatch resource, such as a service level objective.</p> <p>Tags can help you organize and categorize your resources. You can also use them to scope user permissions by granting a user permission to access or change only resources with certain tag values.</p> <p>Tags don't have any semantic meaning to Amazon Web Services and are interpreted strictly as strings of characters.</p> <p>You can use the <code>TagResource</code> action with an alarm that already has tags. If you specify a new tag key for the alarm, this tag is appended to the list of tags associated with the alarm. If you specify a tag key that is already associated with the alarm, the new tag value that you specify replaces the previous value for that tag.</p> <p>You can associate as many as 50 tags with a CloudWatch resource.</p>",
     "UntagResource": "<p>Removes one or more tags from the specified resource.</p>",
@@ -194,6 +201,86 @@
         "MetricReference$AccountId": "<p>Amazon Web Services account ID.</p>"
       }
     },
+    "BatchDeleteByResourceArns": {
+      "base": "<p>Parameters for targeted delete by ARN list.</p>",
+      "refs": {
+        "BatchDeleteDeletionTarget$ResourceArns": "<p>Delete specific configurations by ARN list.</p>"
+      }
+    },
+    "BatchDeleteByResourceArnsResourceArnsList": {
+      "base": "<p>List of resource ARNs for batch delete by ARN list. Maximum 50 ARNs per request.</p>",
+      "refs": {
+        "BatchDeleteByResourceArns$ResourceArns": "<p>List of resource ARNs to delete.</p>"
+      }
+    },
+    "BatchDeleteByResourceArnsResourceArnsListMemberString": {
+      "base": null,
+      "refs": {
+        "BatchDeleteByResourceArnsResourceArnsList$member": null
+      }
+    },
+    "BatchDeleteDeletionTarget": {
+      "base": "<p>Union type for batch delete target selection. Exactly one of the two modes must be specified.</p>",
+      "refs": {
+        "BatchDeleteInstrumentationConfigurationsRequest$DeletionTarget": "<p>The deletion target - either bulk by scope or targeted by ARN list.</p>"
+      }
+    },
+    "BatchDeleteError": {
+      "base": "<p>Represents an error that occurred when attempting to delete a configuration.</p>",
+      "refs": {
+        "BatchDeleteErrorList$member": null
+      }
+    },
+    "BatchDeleteErrorCode": {
+      "base": "<p>Error codes for batch delete item-level failures.</p>",
+      "refs": {
+        "BatchDeleteError$Code": "<p>Error code indicating the type of failure.</p>"
+      }
+    },
+    "BatchDeleteErrorList": {
+      "base": "<p>List of errors in batch delete response.</p>",
+      "refs": {
+        "BatchDeleteInstrumentationConfigurationsResponse$Errors": "<p>List of configurations that failed to delete.</p>"
+      }
+    },
+    "BatchDeleteInstrumentationConfigurationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchDeleteInstrumentationConfigurationsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchDeleteScope": {
+      "base": "<p>Scope parameters for bulk delete by scope.</p>",
+      "refs": {
+        "BatchDeleteDeletionTarget$Scope": "<p>Delete all configurations matching the specified scope.</p>"
+      }
+    },
+    "BatchDeleteScopeEnvironmentString": {
+      "base": null,
+      "refs": {
+        "BatchDeleteScope$Environment": "<p>Environment identifier for the instrumentation configurations.</p>"
+      }
+    },
+    "BatchDeleteScopeServiceString": {
+      "base": null,
+      "refs": {
+        "BatchDeleteScope$Service": "<p>Service name for the instrumentation configurations.</p>"
+      }
+    },
+    "BatchDeleteSuccessfulDeletion": {
+      "base": "<p>Represents a successfully deleted instrumentation configuration.</p>",
+      "refs": {
+        "BatchDeleteSuccessfulDeletionList$member": null
+      }
+    },
+    "BatchDeleteSuccessfulDeletionList": {
+      "base": "<p>List of successful deletions in batch delete response.</p>",
+      "refs": {
+        "BatchDeleteInstrumentationConfigurationsResponse$SuccessfulDeletions": "<p>List of successfully deleted configurations. Deleting by scope populates SignalType and LocationHash per item. Deleting by ARN list populates ResourceArn per item.</p>"
+      }
+    },
     "BatchGetServiceLevelObjectiveBudgetReportInput": {
       "base": null,
       "refs": {}
@@ -225,8 +312,11 @@
     "Boolean": {
       "base": null,
       "refs": {
+        "CodeCaptureConfiguration$CaptureReturn": "<p>Whether to capture the return value. Defaults to false.</p>",
+        "CodeCaptureConfiguration$CaptureStackTrace": "<p>Whether to capture a stack trace when the instrumentation point is hit. Defaults to true.</p>",
         "CreateServiceLevelObjectiveInput$CreateRecommendedSlo": "<p>Set this to <code>true</code> to create a recommended SLO out of the box. When set to <code>true</code>, you don't need to specify the <code>MetricThreshold</code> or <code>ComparisonOperator</code> in the <code>SliConfig</code> or <code>RequestBasedSliConfig</code>. The default value is <code>false</code>.</p> <p>This is supported for SLOs on a service, service operation, or a dependency.</p>",
         "CreateServiceLevelObjectiveInput$AutoInvestigationEnabled": "<p>Indicates whether DevOps Agent will automatically investigate this SLO when it is breached</p>",
+        "InstrumentationConfigurationsPage$Changed": "<p>Indicates whether there are configuration changes since the provided <code>SyncedAt</code> timestamp.</p>",
         "ListGroupingAttributeDefinitionsInput$IncludeLinkedAccounts": "<p>If you are using this operation in a monitoring account, specify <code>true</code> to include grouping attributes from source accounts in the returned data.</p>",
         "ListServiceLevelObjectivesInput$IncludeLinkedAccounts": "<p>If you are using this operation in a monitoring account, specify <code>true</code> to include SLO from source accounts in the returned data. </p> <p>When you are monitoring an account, you can use Amazon Web Services account ID in <code>KeyAttribute</code> filter for service source account and <code>SloOwnerawsaccountID</code> for SLO source account with <code>IncludeLinkedAccounts</code> to filter the returned data to only a single source account. </p>",
         "ListServiceStatesInput$IncludeLinkedAccounts": "<p>If you are using this operation in a monitoring account, specify <code>true</code> to include service states from source accounts in the returned data.</p>",
@@ -285,6 +375,69 @@
         "AuditTargetEntity$Canary": "<p>Canary entity information when the audit target is a CloudWatch Synthetics canary.</p>"
       }
     },
+    "CaptureConfiguration": {
+      "base": "<p>A union that defines what data to capture when the instrumentation point is hit. Specify <code>CodeCapture</code> for code-level capture settings.</p>",
+      "refs": {
+        "CreateInstrumentationConfigurationRequest$CaptureConfiguration": "<p>Specifies what to capture when the instrumentation point is hit. Specify <code>CodeCapture</code> for code-level capture settings.</p>",
+        "CreateInstrumentationConfigurationResponse$CaptureConfiguration": "<p>The capture settings that were stored for this instrumentation configuration.</p>",
+        "InstrumentationConfiguration$CaptureConfiguration": "<p>The capture settings for this instrumentation configuration.</p>",
+        "InstrumentationConfigurationWithoutServiceEnv$CaptureConfiguration": "<p>The capture settings for this instrumentation configuration.</p>"
+      }
+    },
+    "CaptureLimitsConfig": {
+      "base": "<p>Guardrails that prevent instrumentation from impacting application performance by limiting how much data is captured.</p>",
+      "refs": {
+        "CodeCaptureConfiguration$CaptureLimits": "<p>Safety limits that bound what is captured, including hit counts, string length, collection depth, and stack trace size.</p>"
+      }
+    },
+    "CaptureLimitsConfigMaxCollectionDepthInteger": {
+      "base": null,
+      "refs": {
+        "CaptureLimitsConfig$MaxCollectionDepth": "<p>The maximum nesting depth to traverse inside collections. Defaults to 3.</p>"
+      }
+    },
+    "CaptureLimitsConfigMaxCollectionWidthInteger": {
+      "base": null,
+      "refs": {
+        "CaptureLimitsConfig$MaxCollectionWidth": "<p>The maximum number of items to capture from any collection to prevent large payloads. Defaults to 10.</p>"
+      }
+    },
+    "CaptureLimitsConfigMaxFieldsPerObjectInteger": {
+      "base": null,
+      "refs": {
+        "CaptureLimitsConfig$MaxFieldsPerObject": "<p>The maximum number of fields to capture for any object. Defaults to 10.</p>"
+      }
+    },
+    "CaptureLimitsConfigMaxHitsInteger": {
+      "base": null,
+      "refs": {
+        "CaptureLimitsConfig$MaxHits": "<p>The maximum number of times the instrumentation point can be hit before it is automatically disabled. Defaults to 100.</p>"
+      }
+    },
+    "CaptureLimitsConfigMaxObjectDepthInteger": {
+      "base": null,
+      "refs": {
+        "CaptureLimitsConfig$MaxObjectDepth": "<p>The maximum depth for nested object traversal when capturing structured data. Defaults to 3.</p>"
+      }
+    },
+    "CaptureLimitsConfigMaxStackFramesInteger": {
+      "base": null,
+      "refs": {
+        "CaptureLimitsConfig$MaxStackFrames": "<p>The maximum number of stack frames to capture in stack traces. Defaults to 2.</p>"
+      }
+    },
+    "CaptureLimitsConfigMaxStackTraceSizeInteger": {
+      "base": null,
+      "refs": {
+        "CaptureLimitsConfig$MaxStackTraceSize": "<p>The maximum total size, in bytes, of a captured stack trace. Defaults to 1000.</p>"
+      }
+    },
+    "CaptureLimitsConfigMaxStringLengthInteger": {
+      "base": null,
+      "refs": {
+        "CaptureLimitsConfig$MaxStringLength": "<p>The maximum length of captured string values in characters. Strings longer than this are truncated. Defaults to 128.</p>"
+      }
+    },
     "ChangeEvent": {
       "base": "<p>A structure that contains information about a change event that occurred for a service, such as a deployment or configuration change.</p>",
       "refs": {
@@ -302,6 +455,73 @@
       "base": null,
       "refs": {
         "ListEntityEventsOutput$ChangeEvents": "<p>An array of structures, where each structure contains information about one change event that occurred for the specified entity during the requested time period.</p>"
+      }
+    },
+    "CodeCaptureConfiguration": {
+      "base": "<p>Defines what data to capture for code-level instrumentation, including arguments, return values, stack traces, local variables, and safety limits.</p>",
+      "refs": {
+        "CaptureConfiguration$CodeCapture": "<p>Capture settings for code-level instrumentation, including arguments, return values, stack traces, local variables, and safety limits.</p>"
+      }
+    },
+    "CodeCaptureConfigurationCaptureArgumentsList": {
+      "base": null,
+      "refs": {
+        "CodeCaptureConfiguration$CaptureArguments": "<p>The function arguments to capture. Omit to capture defaults, use an empty list to capture none, use <code>[\"*\"]</code> to capture all arguments, or specify argument names to capture selectively (up to 10 entries).</p>"
+      }
+    },
+    "CodeCaptureConfigurationCaptureArgumentsListMemberString": {
+      "base": null,
+      "refs": {
+        "CodeCaptureConfigurationCaptureArgumentsList$member": null
+      }
+    },
+    "CodeCaptureConfigurationCaptureLocalsList": {
+      "base": null,
+      "refs": {
+        "CodeCaptureConfiguration$CaptureLocals": "<p>The local variables to capture by name. Omit or pass an empty list to capture none. You can specify up to 20 names.</p>"
+      }
+    },
+    "CodeCaptureConfigurationCaptureLocalsListMemberString": {
+      "base": null,
+      "refs": {
+        "CodeCaptureConfigurationCaptureLocalsList$member": null
+      }
+    },
+    "CodeLocation": {
+      "base": "<p>Identifies a code location to instrument, including the programming language, code unit, class, method, file path, and optional line number.</p>",
+      "refs": {
+        "Location$CodeLocation": "<p>A code location for code-level instrumentation, including language, code unit, class, method, file path, and optional line number.</p>",
+        "LocationIdentifier$CodeLocation": "<p>The full code location specification (will be hashed internally)</p>"
+      }
+    },
+    "CodeLocationClassNameString": {
+      "base": null,
+      "refs": {
+        "CodeLocation$ClassName": "<p>The class or type name that contains the method. This is required for Java and optional for Python module-level functions.</p>"
+      }
+    },
+    "CodeLocationCodeUnitString": {
+      "base": null,
+      "refs": {
+        "CodeLocation$CodeUnit": "<p>The package, module, or namespace that contains the target code, for example <code>com.amazon.payment</code> or <code>payment_service</code>.</p>"
+      }
+    },
+    "CodeLocationFilePathString": {
+      "base": null,
+      "refs": {
+        "CodeLocation$FilePath": "<p>The source file path relative to the project or source root, such as <code>src/payment/PaymentProcessor.java</code> or <code>src/payment/PaymentProcessor.py</code>.</p>"
+      }
+    },
+    "CodeLocationLineNumberInteger": {
+      "base": null,
+      "refs": {
+        "CodeLocation$LineNumber": "<p>The line number to instrument. Provide this to disambiguate overloaded methods and to target a specific line when needed.</p>"
+      }
+    },
+    "CodeLocationMethodNameString": {
+      "base": null,
+      "refs": {
+        "CodeLocation$MethodName": "<p>The method or function name to instrument, such as <code>validateCreditCard</code> or <code>__init__</code>.</p>"
       }
     },
     "CompositeSliComponent": {
@@ -336,6 +556,50 @@
         "Edge$ConnectionType": "<p>The type of connection between the nodes, indicating the nature of the relationship.</p>"
       }
     },
+    "CreateInstrumentationConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateInstrumentationConfigurationRequestDescriptionString": {
+      "base": null,
+      "refs": {
+        "CreateInstrumentationConfigurationRequest$Description": "<p>An optional short description (up to 50 characters) that explains the purpose of this instrumentation.</p>"
+      }
+    },
+    "CreateInstrumentationConfigurationRequestEnvironmentString": {
+      "base": null,
+      "refs": {
+        "CreateInstrumentationConfigurationRequest$Environment": "<p>The environment that the service is running in, such as <code>eks:cluster-prod/namespace</code> or <code>ec2:production</code>.</p>"
+      }
+    },
+    "CreateInstrumentationConfigurationRequestServiceString": {
+      "base": null,
+      "refs": {
+        "CreateInstrumentationConfigurationRequest$Service": "<p>The name of the service to instrument. This should match the <code>service.name</code> resource attribute reported by the application.</p>"
+      }
+    },
+    "CreateInstrumentationConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateInstrumentationConfigurationResponseEnvironmentString": {
+      "base": null,
+      "refs": {
+        "CreateInstrumentationConfigurationResponse$Environment": "<p>The environment for the instrumentation configuration, echoed from the request.</p>"
+      }
+    },
+    "CreateInstrumentationConfigurationResponseLocationHashString": {
+      "base": null,
+      "refs": {
+        "CreateInstrumentationConfigurationResponse$LocationHash": "<p>A stable hash computed from the location that uniquely identifies this instrumentation point within the service, environment, and signal type.</p>"
+      }
+    },
+    "CreateInstrumentationConfigurationResponseServiceString": {
+      "base": null,
+      "refs": {
+        "CreateInstrumentationConfigurationResponse$Service": "<p>The service name for the instrumentation configuration, echoed from the request.</p>"
+      }
+    },
     "CreateServiceLevelObjectiveInput": {
       "base": null,
       "refs": {}
@@ -351,6 +615,26 @@
       }
     },
     "DeleteGroupingConfigurationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteInstrumentationConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteInstrumentationConfigurationRequestEnvironmentString": {
+      "base": null,
+      "refs": {
+        "DeleteInstrumentationConfigurationRequest$Environment": "<p>Environment name for the instrumentation configuration.</p>"
+      }
+    },
+    "DeleteInstrumentationConfigurationRequestServiceString": {
+      "base": null,
+      "refs": {
+        "DeleteInstrumentationConfigurationRequest$Service": "<p>Service name for the instrumentation configuration.</p>"
+      }
+    },
+    "DeleteInstrumentationConfigurationResponse": {
       "base": null,
       "refs": {}
     },
@@ -425,6 +709,54 @@
         "Window$DurationUnit": "<p>The unit of time for the exclusion window duration. Valid values: MINUTE, HOUR, DAY, MONTH.</p>"
       }
     },
+    "DynamicInstrumentationAttributeFilterGroup": {
+      "base": "<p>A string-to-string map of OpenTelemetry resource attributes and values that must all match for the instrumentation to run on an instance.</p>",
+      "refs": {
+        "DynamicInstrumentationAttributeFilters$member": null
+      }
+    },
+    "DynamicInstrumentationAttributeFilterGroupKeyString": {
+      "base": null,
+      "refs": {
+        "DynamicInstrumentationAttributeFilterGroup$key": null
+      }
+    },
+    "DynamicInstrumentationAttributeFilterGroupValueString": {
+      "base": null,
+      "refs": {
+        "DynamicInstrumentationAttributeFilterGroup$value": null
+      }
+    },
+    "DynamicInstrumentationAttributeFilters": {
+      "base": "<p>An array of attribute filter groups used to target specific instances. Each filter group must match all of its keys (AND), and multiple groups are OR-matched to decide whether an instance applies the instrumentation. Filters are evaluated client-side by the SDK.</p>",
+      "refs": {
+        "CreateInstrumentationConfigurationRequest$AttributeFilters": "<p>Client-side filters that target specific instances. Each object in the array is AND-matched on its keys, and multiple objects are OR-matched to decide where to apply the instrumentation.</p>",
+        "CreateInstrumentationConfigurationResponse$AttributeFilters": "<p>The attribute filters returned with the configuration so SDKs can perform client-side targeting.</p>",
+        "InstrumentationConfiguration$AttributeFilters": "<p>Client-side filters that determine which instances apply this instrumentation.</p>",
+        "InstrumentationConfigurationWithoutServiceEnv$AttributeFilters": "<p>Client-side filters that determine which instances apply this instrumentation.</p>"
+      }
+    },
+    "DynamicInstrumentationDeletionStatus": {
+      "base": "<p>The status of a delete request for an instrumentation configuration. The value is <code>DELETED</code> after a successful deletion.</p>",
+      "refs": {
+        "DeleteInstrumentationConfigurationResponse$DeletionStatus": "<p>The result of the delete request. The value is <code>DELETED</code> when the configuration has been removed.</p>"
+      }
+    },
+    "DynamicInstrumentationSignalType": {
+      "base": "<p>The telemetry signal type for instrumentation.</p> <ul> <li> <p> <code>SNAPSHOT</code> - Captures a snapshot of the instrumentation point.</p> </li> </ul>",
+      "refs": {
+        "CreateInstrumentationConfigurationRequest$SignalType": "<p>The telemetry signal type to emit for this instrumentation. The supported value is <code>SNAPSHOT</code>.</p>",
+        "CreateInstrumentationConfigurationResponse$SignalType": "<p>The telemetry signal type for the instrumentation configuration, echoed from the request.</p>",
+        "DeleteInstrumentationConfigurationRequest$SignalType": "<p>Signal type for the instrumentation configuration.</p>",
+        "GetInstrumentationConfigurationRequest$SignalType": "<p>Signal type for the instrumentation configuration.</p>",
+        "GetInstrumentationConfigurationStatusRequest$SignalType": "<p>Signal type for the instrumentation configuration.</p>",
+        "GetInstrumentationConfigurationStatusResponse$SignalType": "<p>The telemetry signal type echoed from the request.</p>",
+        "InstrumentationConfiguration$SignalType": "<p>The telemetry signal type for this instrumentation configuration.</p>",
+        "InstrumentationConfigurationStatusReport$SignalType": "<p>The telemetry signal type for this instrumentation configuration.</p>",
+        "InstrumentationConfigurationWithoutServiceEnv$SignalType": "<p>The telemetry signal type for this instrumentation configuration.</p>",
+        "UnprocessedStatusEvent$SignalType": "<p>The telemetry signal type for the unprocessed status event.</p>"
+      }
+    },
     "Edge": {
       "base": "<p>A structure that represents a connection between two nodes in a dependency graph, showing the relationship and characteristics of the connection.</p>",
       "refs": {
@@ -493,6 +825,64 @@
       "base": null,
       "refs": {
         "ResourceNotFoundException$Message": null
+      }
+    },
+    "GetInstrumentationConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetInstrumentationConfigurationRequestEnvironmentString": {
+      "base": null,
+      "refs": {
+        "GetInstrumentationConfigurationRequest$Environment": "<p>Environment name for the instrumentation configuration.</p>"
+      }
+    },
+    "GetInstrumentationConfigurationRequestServiceString": {
+      "base": null,
+      "refs": {
+        "GetInstrumentationConfigurationRequest$Service": "<p>Service name for the instrumentation configuration.</p>"
+      }
+    },
+    "GetInstrumentationConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetInstrumentationConfigurationStatusRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetInstrumentationConfigurationStatusRequestEnvironmentString": {
+      "base": null,
+      "refs": {
+        "GetInstrumentationConfigurationStatusRequest$Environment": "<p>Environment name for the instrumentation configuration.</p>"
+      }
+    },
+    "GetInstrumentationConfigurationStatusRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "GetInstrumentationConfigurationStatusRequest$MaxResults": "<p>The maximum number of status events to return in one call. The default is 60.</p>"
+      }
+    },
+    "GetInstrumentationConfigurationStatusRequestServiceString": {
+      "base": null,
+      "refs": {
+        "GetInstrumentationConfigurationStatusRequest$Service": "<p>Service name for the instrumentation configuration.</p>"
+      }
+    },
+    "GetInstrumentationConfigurationStatusResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetInstrumentationConfigurationStatusResponseEnvironmentString": {
+      "base": null,
+      "refs": {
+        "GetInstrumentationConfigurationStatusResponse$Environment": "<p>The environment echoed from the request.</p>"
+      }
+    },
+    "GetInstrumentationConfigurationStatusResponseServiceString": {
+      "base": null,
+      "refs": {
+        "GetInstrumentationConfigurationStatusResponse$Service": "<p>The service name echoed from the request.</p>"
       }
     },
     "GetServiceInput": {
@@ -578,6 +968,153 @@
         "GroupingSourceKeyStringList$member": null
       }
     },
+    "InstrumentationConfiguration": {
+      "base": "<p>The full instrumentation configuration, including the instrumentation type, service, environment, signal type, location details, stable location hash, capture settings, filters, expiration, creation time, and ARN.</p>",
+      "refs": {
+        "GetInstrumentationConfigurationResponse$Configuration": "<p>The complete instrumentation configuration, including its location hash, capture settings, filters, expiration, and creation time.</p>"
+      }
+    },
+    "InstrumentationConfigurationArn": {
+      "base": "<p>ARN for an instrumentation configuration Format: arn:${Partition}:application-signals:${Region}:${Account}:instrumentationConfig/${service}/${environment}/${signalType}/${locationHash} Note: service and environment can contain '/' and ':', so we use a permissive pattern that only validates the ARN prefix structure and the 16-character lowercase hex locationHash suffix.</p>",
+      "refs": {
+        "CreateInstrumentationConfigurationResponse$ARN": "<p>ARN for the created instrumentation configuration</p>",
+        "InstrumentationConfiguration$ARN": "<p>ARN for the instrumentation configuration</p>",
+        "InstrumentationConfigurationWithoutServiceEnv$ARN": "<p>ARN for the instrumentation configuration</p>"
+      }
+    },
+    "InstrumentationConfigurationDescriptionString": {
+      "base": null,
+      "refs": {
+        "InstrumentationConfiguration$Description": "<p>An optional short description of the instrumentation configuration.</p>"
+      }
+    },
+    "InstrumentationConfigurationEnvironmentString": {
+      "base": null,
+      "refs": {
+        "InstrumentationConfiguration$Environment": "<p>The environment where the service is running.</p>"
+      }
+    },
+    "InstrumentationConfigurationLocationHashString": {
+      "base": null,
+      "refs": {
+        "InstrumentationConfiguration$LocationHash": "<p>The stable hash derived from the location that uniquely identifies this instrumentation point within the service and environment.</p>"
+      }
+    },
+    "InstrumentationConfigurationServiceString": {
+      "base": null,
+      "refs": {
+        "InstrumentationConfiguration$Service": "<p>The service that this instrumentation configuration targets.</p>"
+      }
+    },
+    "InstrumentationConfigurationStatus": {
+      "base": "<p>The status of an instrumentation configuration on a host.</p> <ul> <li> <p> <code>READY</code> - The configuration has been applied but has not been hit yet.</p> </li> <li> <p> <code>ERROR</code> - Applying the configuration failed; see the error cause.</p> </li> <li> <p> <code>ACTIVE</code> - The configuration has been hit and is capturing data.</p> </li> <li> <p> <code>DISABLED</code> - The configuration was disabled, for example because a limit was reached.</p> </li> </ul>",
+      "refs": {
+        "GetInstrumentationConfigurationStatusRequest$Status": "<p>The single status to query for. If omitted, only <code>ACTIVE</code> status events are returned.</p>",
+        "GetInstrumentationConfigurationStatusResponse$Status": "<p>The status that was queried. If not specified in the request, this is <code>ACTIVE</code>.</p>",
+        "InstrumentationConfigurationStatusReport$Status": "<p>The status of the instrumentation configuration: <code>READY</code>, <code>ERROR</code>, <code>ACTIVE</code>, or <code>DISABLED</code>.</p>",
+        "UnprocessedStatusEvent$Status": "<p>The status that failed to be processed.</p>"
+      }
+    },
+    "InstrumentationConfigurationStatusReport": {
+      "base": "<p>The status of a single instrumentation configuration reported by an SDK instance.</p>",
+      "refs": {
+        "ReportInstrumentationConfigurationStatusRequestConfigurationsList$member": null
+      }
+    },
+    "InstrumentationConfigurationStatusReportLocationHashString": {
+      "base": null,
+      "refs": {
+        "InstrumentationConfigurationStatusReport$LocationHash": "<p>The stable hash of the instrumentation location that identifies the configuration being reported.</p>"
+      }
+    },
+    "InstrumentationConfigurationWithoutServiceEnv": {
+      "base": "<p>An instrumentation configuration that omits service and environment because they are provided at a higher level, such as in a list response.</p>",
+      "refs": {
+        "InstrumentationConfigurationsWithoutServiceEnv$member": null
+      }
+    },
+    "InstrumentationConfigurationWithoutServiceEnvDescriptionString": {
+      "base": null,
+      "refs": {
+        "InstrumentationConfigurationWithoutServiceEnv$Description": "<p>An optional short description of the instrumentation configuration.</p>"
+      }
+    },
+    "InstrumentationConfigurationWithoutServiceEnvLocationHashString": {
+      "base": null,
+      "refs": {
+        "InstrumentationConfigurationWithoutServiceEnv$LocationHash": "<p>The stable hash derived from the location that identifies this instrumentation point.</p>"
+      }
+    },
+    "InstrumentationConfigurationsPage": {
+      "base": null,
+      "refs": {}
+    },
+    "InstrumentationConfigurationsPageEnvironmentString": {
+      "base": null,
+      "refs": {
+        "InstrumentationConfigurationsPage$Environment": "<p>The environment associated with the returned configurations.</p>"
+      }
+    },
+    "InstrumentationConfigurationsPageServiceString": {
+      "base": null,
+      "refs": {
+        "InstrumentationConfigurationsPage$Service": "<p>The service name associated with the returned configurations.</p>"
+      }
+    },
+    "InstrumentationConfigurationsPageSyncIntervalInteger": {
+      "base": null,
+      "refs": {
+        "InstrumentationConfigurationsPage$SyncInterval": "<p>The suggested number of seconds to wait before the next sync request. This is at least 60 seconds to prevent excessive polling.</p>"
+      }
+    },
+    "InstrumentationConfigurationsWithoutServiceEnv": {
+      "base": "<p>An array of instrumentation configurations that omit service and environment, used when those values are provided elsewhere in the response.</p>",
+      "refs": {
+        "InstrumentationConfigurationsPage$LatestConfigurations": "<p>The current set of active instrumentation configurations for the service and environment. Items omit service and environment because they are provided in the request.</p>"
+      }
+    },
+    "InstrumentationErrorCause": {
+      "base": "<p>The reason why applying an instrumentation configuration failed.</p> <ul> <li> <p> <code>FILE_NOT_FOUND</code> - The specified file or file location could not be located.</p> </li> <li> <p> <code>METHOD_NOT_FOUND</code> - The specified method or function does not exist.</p> </li> <li> <p> <code>LINE_NOT_EXECUTABLE</code> - The specified line does not contain executable code.</p> </li> <li> <p> <code>OVERLOADED_METHODS</code> - Multiple overloaded methods were found; provide a line number to disambiguate.</p> </li> <li> <p> <code>LANGUAGE_MISMATCH</code> - The language specified in the configuration does not match the service.</p> </li> <li> <p> <code>RUNTIME_ERROR</code> - A runtime error occurred while applying the instrumentation.</p> </li> </ul>",
+      "refs": {
+        "InstrumentationConfigurationStatusReport$ErrorCause": "<p>The error cause when the status is <code>ERROR</code>, such as the file or method not being found.</p>",
+        "InstrumentationStatusEvent$ErrorCause": "<p>The error cause when the status is <code>ERROR</code>.</p>"
+      }
+    },
+    "InstrumentationStatusEvent": {
+      "base": "<p>A status event for an instrumentation configuration returned by <code>GetInstrumentationConfigurationStatus</code>. Events include the timestamp and, for errors, an error cause.</p>",
+      "refs": {
+        "InstrumentationStatusEventList$member": null
+      }
+    },
+    "InstrumentationStatusEventList": {
+      "base": null,
+      "refs": {
+        "GetInstrumentationConfigurationStatusResponse$Events": "<p>The list of status events within the requested time window, sorted with the most recent first. Error events include an error cause.</p>"
+      }
+    },
+    "InstrumentationType": {
+      "base": "<p>Type of instrumentation configuration</p>",
+      "refs": {
+        "BatchDeleteByResourceArns$InstrumentationType": "<p>Instrumentation type: BREAKPOINT or PROBE.</p>",
+        "BatchDeleteScope$InstrumentationType": "<p>Instrumentation type: BREAKPOINT or PROBE.</p>",
+        "CreateInstrumentationConfigurationRequest$InstrumentationType": "<p>Type of instrumentation: BREAKPOINT (temporary) or PROBE (permanent)</p>",
+        "CreateInstrumentationConfigurationResponse$InstrumentationType": "<p>The type of instrumentation that was created, echoed from the request.</p>",
+        "DeleteInstrumentationConfigurationRequest$InstrumentationType": "<p>Type of instrumentation configuration (BREAKPOINT or PROBE). Required to identify the configuration to delete.</p>",
+        "GetInstrumentationConfigurationRequest$InstrumentationType": "<p>Type of instrumentation configuration (BREAKPOINT or PROBE). Required to identify the configuration to retrieve.</p>",
+        "GetInstrumentationConfigurationStatusRequest$InstrumentationType": "<p>Type of instrumentation configuration (BREAKPOINT or PROBE). Required to identify the configuration to retrieve.</p>",
+        "InstrumentationConfiguration$InstrumentationType": "<p>The type of instrumentation for this configuration.</p>",
+        "InstrumentationConfigurationStatusReport$InstrumentationType": "<p>The type of instrumentation configuration being reported.</p>",
+        "InstrumentationConfigurationWithoutServiceEnv$InstrumentationType": "<p>The type of instrumentation for this configuration.</p>",
+        "ListInstrumentationConfigurationsRequest$InstrumentationType": "<p>Type of instrumentation configuration (BREAKPOINT or PROBE). Required to determine which backing store to query.</p>",
+        "UnprocessedStatusEvent$InstrumentationType": "<p>The type of instrumentation configuration for the unprocessed status event.</p>"
+      }
+    },
+    "Integer": {
+      "base": null,
+      "refs": {
+        "BatchDeleteInstrumentationConfigurationsResponse$DeletedCount": "<p>Number of configurations successfully deleted. When deleting by scope, this is the total count of deleted items. When deleting by ARN list, this equals the length of SuccessfulDeletions.</p>"
+      }
+    },
     "Interval": {
       "base": "<p>The time period used to evaluate the SLO. It can be either a calendar interval or rolling interval.</p>",
       "refs": {
@@ -637,6 +1174,28 @@
     "ListGroupingAttributeDefinitionsOutput": {
       "base": null,
       "refs": {}
+    },
+    "ListInstrumentationConfigurationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListInstrumentationConfigurationsRequestEnvironmentString": {
+      "base": null,
+      "refs": {
+        "ListInstrumentationConfigurationsRequest$Environment": "<p>The environment that the service is running in.</p>"
+      }
+    },
+    "ListInstrumentationConfigurationsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListInstrumentationConfigurationsRequest$MaxResults": "<p>The maximum number of configurations to return in one call. The default is 50 and the maximum is 100.</p>"
+      }
+    },
+    "ListInstrumentationConfigurationsRequestServiceString": {
+      "base": null,
+      "refs": {
+        "ListInstrumentationConfigurationsRequest$Service": "<p>The name of the service to retrieve instrumentation configurations for.</p>"
+      }
     },
     "ListServiceDependenciesInput": {
       "base": null,
@@ -743,6 +1302,30 @@
     "ListTagsForResourceResponse": {
       "base": null,
       "refs": {}
+    },
+    "Location": {
+      "base": "<p>A union that identifies the location to instrument. Specify a <code>CodeLocation</code> for code-level instrumentation.</p>",
+      "refs": {
+        "CreateInstrumentationConfigurationRequest$Location": "<p>The location where instrumentation should be applied. Specify a <code>CodeLocation</code> for code-level instrumentation.</p>",
+        "CreateInstrumentationConfigurationResponse$Location": "<p>The location where instrumentation is applied, echoed from the request.</p>",
+        "GetInstrumentationConfigurationStatusResponse$Location": "<p>The code location echoed from the request.</p>",
+        "InstrumentationConfiguration$Location": "<p>The location where this instrumentation is applied.</p>",
+        "InstrumentationConfigurationWithoutServiceEnv$Location": "<p>The location where this instrumentation is applied.</p>"
+      }
+    },
+    "LocationIdentifier": {
+      "base": "<p>Union type for identifying an instrumentation configuration by code location or locationHash. Used in Get/Delete/GetStatus operations to allow flexible identification.</p>",
+      "refs": {
+        "DeleteInstrumentationConfigurationRequest$LocationIdentifier": "<p>Location identifier - either full code location or a pre-computed hash.</p>",
+        "GetInstrumentationConfigurationRequest$LocationIdentifier": "<p>Location identifier - either full code location or a pre-computed hash.</p>",
+        "GetInstrumentationConfigurationStatusRequest$LocationIdentifier": "<p>Location identifier - either full code location or a pre-computed hash.</p>"
+      }
+    },
+    "LocationIdentifierLocationHashString": {
+      "base": null,
+      "refs": {
+        "LocationIdentifier$LocationHash": "<p>The pre-computed location hash (16-character hex string)</p>"
+      }
     },
     "LogGroupReferences": {
       "base": null,
@@ -878,12 +1461,16 @@
     "NextToken": {
       "base": null,
       "refs": {
+        "GetInstrumentationConfigurationStatusRequest$NextToken": "<p>Use the token returned by a previous call to retrieve the next page of status events.</p>",
+        "GetInstrumentationConfigurationStatusResponse$NextToken": "<p>Pagination token to continue retrieving status events.</p>",
+        "InstrumentationConfigurationsPage$NextToken": "<p>Pagination token to continue listing configurations when more results are available.</p>",
         "ListAuditFindingsInput$NextToken": "<p>Include this value, if it was returned by the previous operation, to get the next set of audit findings.</p>",
         "ListAuditFindingsOutput$NextToken": "<p>Include this value in your next use of this API to get the next set of audit findings.</p>",
         "ListEntityEventsInput$NextToken": "<p>Include this value, if it was returned by the previous operation, to get the next set of change events.</p>",
         "ListEntityEventsOutput$NextToken": "<p>Include this value in your next use of this API to get the next set of change events.</p>",
         "ListGroupingAttributeDefinitionsInput$NextToken": "<p>Include this value, if it was returned by the previous operation, to get the next set of grouping attribute definitions.</p>",
         "ListGroupingAttributeDefinitionsOutput$NextToken": "<p>Include this value in your next use of this API to get the next set of grouping attribute definitions.</p>",
+        "ListInstrumentationConfigurationsRequest$NextToken": "<p>Use the token returned by a previous call to retrieve the next page of configurations.</p>",
         "ListServiceDependenciesInput$NextToken": "<p>Include this value, if it was returned by the previous operation, to get the next set of service dependencies.</p>",
         "ListServiceDependenciesOutput$NextToken": "<p>Include this value in your next use of this API to get next set of service dependencies.</p>",
         "ListServiceDependentsInput$NextToken": "<p>Include this value, if it was returned by the previous operation, to get the next set of service dependents.</p>",
@@ -937,6 +1524,12 @@
         "MetricStat$Period": "<p>The granularity, in seconds, to be used for the metric. For metrics with regular resolution, a period can be as short as one minute (60 seconds) and must be a multiple of 60. For high-resolution metrics that are collected at intervals of less than one minute, the period can be 1, 5, 10, 30, 60, or any multiple of 60. High-resolution metrics are those metrics stored by a <code>PutMetricData</code> call that includes a <code>StorageResolution</code> of 1 second.</p>"
       }
     },
+    "ProgrammingLanguage": {
+      "base": "<p>The programming language of the instrumentation point. Java, Python, and JavaScript are currently supported.</p>",
+      "refs": {
+        "CodeLocation$Language": "<p>The programming language for this instrumentation point, such as Java, Python, or JavaScript.</p>"
+      }
+    },
     "PutGroupingConfigurationInput": {
       "base": null,
       "refs": {}
@@ -949,6 +1542,44 @@
       "base": "<p>The recurrence rule for the SLO time window exclusion .</p>",
       "refs": {
         "ExclusionWindow$RecurrenceRule": "<p>The recurrence rule for the SLO time window exclusion. Supports both cron and rate expressions.</p>"
+      }
+    },
+    "ReportInstrumentationConfigurationStatusRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ReportInstrumentationConfigurationStatusRequestConfigurationsList": {
+      "base": null,
+      "refs": {
+        "ReportInstrumentationConfigurationStatusRequest$Configurations": "<p>An array of configuration status reports (up to 100) that include the instrumentation type, signal type, location hash, status, timestamp, and optional error cause.</p>"
+      }
+    },
+    "ReportInstrumentationConfigurationStatusRequestEnvironmentString": {
+      "base": null,
+      "refs": {
+        "ReportInstrumentationConfigurationStatusRequest$Environment": "<p>The environment that the service is running in.</p>"
+      }
+    },
+    "ReportInstrumentationConfigurationStatusRequestServiceString": {
+      "base": null,
+      "refs": {
+        "ReportInstrumentationConfigurationStatusRequest$Service": "<p>The service that the reported configurations belong to.</p>"
+      }
+    },
+    "ReportInstrumentationConfigurationStatusResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ReportInstrumentationConfigurationStatusResponseEnvironmentString": {
+      "base": null,
+      "refs": {
+        "ReportInstrumentationConfigurationStatusResponse$Environment": "<p>The environment echoed from the request.</p>"
+      }
+    },
+    "ReportInstrumentationConfigurationStatusResponseServiceString": {
+      "base": null,
+      "refs": {
+        "ReportInstrumentationConfigurationStatusResponse$Service": "<p>The service name echoed from the request.</p>"
       }
     },
     "RequestBasedServiceLevelIndicator": {
@@ -1345,12 +1976,18 @@
         "AuditTarget$Type": "<p>The type of entity being audited, such as <code>service</code>, <code>SLO</code>, <code>service_operation</code>, or <code>canary</code>. </p>",
         "AuditorResult$Auditor": "<p>The name of the auditor algorithm that generated this result.</p>",
         "Auditors$member": null,
+        "BatchDeleteError$ResourceArn": "<p>ARN of the configuration that failed to delete.</p>",
+        "BatchDeleteError$Message": "<p>Descriptive error message.</p>",
+        "BatchDeleteSuccessfulDeletion$ResourceArn": "<p>ARN of the deleted configuration (populated only when deleting by ARN list).</p>",
+        "BatchDeleteSuccessfulDeletion$SignalType": "<p>Signal type of the deleted configuration (populated only when deleting by scope).</p>",
+        "BatchDeleteSuccessfulDeletion$LocationHash": "<p>Location hash of the deleted configuration (populated only when deleting by scope).</p>",
         "CanaryEntity$CanaryName": "<p>The name of the CloudWatch Synthetics canary.</p>",
         "ChangeEvent$Region": "<p>The Amazon Web Services region where this change event occurred.</p>",
         "ChangeEvent$EventId": "<p>A unique identifier for this change event. For CloudTrail-based events, this is the CloudTrail event id. For other events, this will be <code>Unknown</code>.</p>",
         "ChangeEvent$UserName": "<p>The name of the user who initiated this change event, if available.</p>",
         "ChangeEvent$EventName": "<p>The name or description of this change event.</p>",
         "ConflictException$Message": null,
+        "CreateInstrumentationConfigurationResponse$Description": "<p>The optional description that was stored with the instrumentation configuration.</p>",
         "DataMap$key": null,
         "DataMap$value": null,
         "Edge$SourceNodeId": "<p>The identifier of the source node in this edge connection.</p>",
@@ -1395,6 +2032,7 @@
     "TagList": {
       "base": null,
       "refs": {
+        "CreateInstrumentationConfigurationRequest$Tags": "<p>An optional list of key-value pairs to associate with the instrumentation configuration. Tags can help you organize and categorize your resources.</p>",
         "CreateServiceLevelObjectiveInput$Tags": "<p>A list of key-value pairs to associate with the SLO. You can associate as many as 50 tags with an SLO. To be able to associate tags with the SLO when you create the SLO, you must have the <code>cloudwatch:TagResource</code> permission.</p> <p>Tags can help you organize and categorize your resources. You can also use them to scope user permissions by granting a user permission to access or change only resources with certain tag values.</p>",
         "ListTagsForResourceResponse$Tags": "<p>The list of tag keys and values associated with the resource you specified.</p>",
         "TagResourceRequest$Tags": "<p>The list of key-value pairs to associate with the alarm.</p>"
@@ -1425,12 +2063,24 @@
         "BatchGetServiceLevelObjectiveBudgetReportOutput$Timestamp": "<p>The date and time that the report is for. It is expressed as the number of milliseconds since Jan 1, 1970 00:00:00 UTC.</p>",
         "CalendarInterval$StartTime": "<p>The date and time when you want the first interval to start. Be sure to choose a time that configures the intervals the way that you want. For example, if you want weekly intervals starting on Mondays at 6 a.m., be sure to specify a start time that is a Monday at 6 a.m.</p> <p>When used in a raw HTTP Query API, it is formatted as be epoch time in seconds. For example: <code>1698778057</code> </p> <p>As soon as one calendar interval ends, another automatically begins.</p>",
         "ChangeEvent$Timestamp": "<p>The timestamp when this change event occurred. When used in a raw HTTP Query API, it is formatted as epoch time in seconds.</p>",
+        "CreateInstrumentationConfigurationRequest$ExpiresAt": "<p>For BREAKPOINT: optional, defaults to 24 hours, must be between 5 min and 24 hours. For PROBE: not supported. PROBE configurations are permanent and persist until explicitly deleted.</p>",
+        "CreateInstrumentationConfigurationResponse$ExpiresAt": "<p>The timestamp after which this configuration is no longer served to clients. Present only for <code>BREAKPOINT</code> configurations; <code>PROBE</code> configurations do not expire.</p>",
+        "CreateInstrumentationConfigurationResponse$CreatedAt": "<p>The server-generated creation timestamp for this instrumentation configuration.</p>",
         "ExclusionWindow$StartTime": "<p>The start of the SLO time window exclusion. Defaults to current time if not specified.</p>",
+        "GetInstrumentationConfigurationStatusRequest$StartTime": "<p>The start of the time range to retrieve status events for. <code>StartTime</code> and <code>EndTime</code> must both be provided together or both be omitted. When both are omitted, the time range defaults to the last hour.</p>",
+        "GetInstrumentationConfigurationStatusRequest$EndTime": "<p>The end of the time range to retrieve status events for. <code>StartTime</code> and <code>EndTime</code> must both be provided together or both be omitted. When both are omitted, the time range defaults to the last hour.</p>",
         "GetServiceInput$StartTime": "<p>The start of the time period to retrieve information about. When used in a raw HTTP Query API, it is formatted as be epoch time in seconds. For example: <code>1698778057</code> </p> <p>Your requested start time will be rounded to the nearest hour.</p>",
         "GetServiceInput$EndTime": "<p>The end of the time period to retrieve information about. When used in a raw HTTP Query API, it is formatted as be epoch time in seconds. For example: <code>1698778057</code> </p> <p>Your requested start time will be rounded to the nearest hour.</p>",
         "GetServiceOutput$StartTime": "<p>The start time of the data included in the response. In a raw HTTP Query API, it is formatted as be epoch time in seconds. For example: <code>1698778057</code>.</p> <p>This displays the time that Application Signals used for the request. It might not match your request exactly, because it was rounded to the nearest hour.</p>",
         "GetServiceOutput$EndTime": "<p>The end time of the data included in the response. In a raw HTTP Query API, it is formatted as be epoch time in seconds. For example: <code>1698778057</code>.</p> <p>This displays the time that Application Signals used for the request. It might not match your request exactly, because it was rounded to the nearest hour.</p>",
         "GroupingConfiguration$UpdatedAt": "<p>The timestamp when this grouping configuration was last updated. When used in a raw HTTP Query API, it is formatted as epoch time in seconds.</p>",
+        "InstrumentationConfiguration$ExpiresAt": "<p>The timestamp when this configuration expires.</p>",
+        "InstrumentationConfiguration$CreatedAt": "<p>The timestamp when this instrumentation configuration was created.</p>",
+        "InstrumentationConfigurationStatusReport$Time": "<p>The timestamp when the status event occurred.</p>",
+        "InstrumentationConfigurationWithoutServiceEnv$ExpiresAt": "<p>The timestamp when this configuration expires.</p>",
+        "InstrumentationConfigurationWithoutServiceEnv$CreatedAt": "<p>The timestamp when this instrumentation configuration was created.</p>",
+        "InstrumentationConfigurationsPage$SyncedAt": "<p>The server timestamp to supply on the next sync call.</p>",
+        "InstrumentationStatusEvent$Time": "<p>The time when the status was reported, rounded to the nearest minute.</p>",
         "ListAuditFindingsInput$StartTime": "<p>The start of the time period to retrieve audit findings for. When used in a raw HTTP Query API, it is formatted as epoch time in seconds. For example, <code>1698778057</code> </p>",
         "ListAuditFindingsInput$EndTime": "<p>The end of the time period to retrieve audit findings for. When used in a raw HTTP Query API, it is formatted as epoch time in seconds. For example, <code>1698778057</code> </p>",
         "ListAuditFindingsOutput$StartTime": "<p>The start of the time period that the returned audit findings apply to. When used in a raw HTTP Query API, it is formatted as epoch time in seconds. For example, <code>1698778057</code> </p>",
@@ -1440,6 +2090,7 @@
         "ListEntityEventsOutput$StartTime": "<p>The start of the time period that the returned change events apply to. When used in a raw HTTP Query API, it is formatted as epoch time in seconds. For example: <code>1698778057</code> </p>",
         "ListEntityEventsOutput$EndTime": "<p>The end of the time period that the returned change events apply to. When used in a raw HTTP Query API, it is formatted as epoch time in seconds. For example: <code>1698778057</code> </p>",
         "ListGroupingAttributeDefinitionsOutput$UpdatedAt": "<p>The timestamp when the grouping configuration was last updated. When used in a raw HTTP Query API, it is formatted as epoch time in seconds.</p>",
+        "ListInstrumentationConfigurationsRequest$SyncedAt": "<p>The timestamp from the last successful sync. When provided, the response returns <code>Changed</code> as <code>false</code> if nothing is new since this time, or returns the latest configurations when changes exist.</p>",
         "ListServiceDependenciesInput$StartTime": "<p>The start of the time period to retrieve information about. When used in a raw HTTP Query API, it is formatted as be epoch time in seconds. For example: <code>1698778057</code> </p> <p>Your requested start time will be rounded to the nearest hour.</p>",
         "ListServiceDependenciesInput$EndTime": "<p>The end of the time period to retrieve information about. When used in a raw HTTP Query API, it is formatted as be epoch time in seconds. For example: <code>1698778057</code> </p> <p>Your requested end time will be rounded to the nearest hour.</p>",
         "ListServiceDependenciesOutput$StartTime": "<p>The start of the time period that the returned information applies to. When used in a raw HTTP Query API, it is formatted as be epoch time in seconds. For example: <code>1698778057</code> </p> <p>This displays the time that Application Signals used for the request. It might not match your request exactly, because it was rounded to the nearest hour.</p>",
@@ -1464,7 +2115,8 @@
         "MetricGraph$EndTime": "<p>The end time for the metric data included in this graph. When used in a raw HTTP Query API, it is formatted as epoch time in seconds.</p>",
         "ServiceLevelObjective$CreatedTime": "<p>The date and time that this SLO was created. When used in a raw HTTP Query API, it is formatted as <code>yyyy-MM-dd'T'HH:mm:ss</code>. For example, <code>2019-07-01T23:59:59</code>.</p>",
         "ServiceLevelObjective$LastUpdatedTime": "<p>The time that this SLO was most recently updated. When used in a raw HTTP Query API, it is formatted as <code>yyyy-MM-dd'T'HH:mm:ss</code>. For example, <code>2019-07-01T23:59:59</code>.</p>",
-        "ServiceLevelObjectiveSummary$CreatedTime": "<p>The date and time that this service level objective was created. It is expressed as the number of milliseconds since Jan 1, 1970 00:00:00 UTC.</p>"
+        "ServiceLevelObjectiveSummary$CreatedTime": "<p>The date and time that this service level objective was created. It is expressed as the number of milliseconds since Jan 1, 1970 00:00:00 UTC.</p>",
+        "UnprocessedStatusEvent$Time": "<p>The timestamp of the status event that failed to be processed.</p>"
       }
     },
     "TotalBudgetRequests": {
@@ -1477,6 +2129,30 @@
       "base": null,
       "refs": {
         "ServiceLevelObjectiveBudgetReport$TotalBudgetSeconds": "<p>The total number of seconds in the error budget for the interval. This field is included only if the SLO is a period-based SLO.</p>"
+      }
+    },
+    "UnprocessedStatusEvent": {
+      "base": "<p>A status event that could not be processed by the service.</p>",
+      "refs": {
+        "UnprocessedStatusEventList$member": null
+      }
+    },
+    "UnprocessedStatusEventFailureReason": {
+      "base": "<p>The reason an instrumentation status event could not be processed.</p> <ul> <li> <p> <code>THROTTLED</code> - The request exceeded allowed throughput.</p> </li> <li> <p> <code>INTERNAL_ERROR</code> - An internal server error occurred while processing the event.</p> </li> <li> <p> <code>VALIDATION_ERROR</code> - The event failed validation.</p> </li> </ul>",
+      "refs": {
+        "UnprocessedStatusEvent$FailedReason": "<p>The reason why this status event could not be processed, such as throttling or validation errors.</p>"
+      }
+    },
+    "UnprocessedStatusEventList": {
+      "base": null,
+      "refs": {
+        "ReportInstrumentationConfigurationStatusResponse$UnprocessedStatusEvents": "<p>Status events that failed to be processed. Each entry includes the configuration identifiers, status, timestamp, and a reason for the failure.</p>"
+      }
+    },
+    "UnprocessedStatusEventLocationHashString": {
+      "base": null,
+      "refs": {
+        "UnprocessedStatusEvent$LocationHash": "<p>The stable hash of the instrumentation location for the unprocessed event.</p>"
       }
     },
     "UntagResourceRequest": {

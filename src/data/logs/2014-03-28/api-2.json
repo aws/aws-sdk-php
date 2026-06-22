@@ -486,6 +486,23 @@
         {"shape":"ServiceUnavailableException"}
       ]
     },
+    "DeleteSyslogConfiguration":{
+      "name":"DeleteSyslogConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteSyslogConfigurationRequest"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidOperationException"},
+        {"shape":"OperationAbortedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceUnavailableException"}
+      ]
+    },
     "DeleteTransformer":{
       "name":"DeleteTransformer",
       "http":{
@@ -1194,6 +1211,23 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "ListSyslogConfigurations":{
+      "name":"ListSyslogConfigurations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListSyslogConfigurationsRequest"},
+      "output":{"shape":"ListSyslogConfigurationsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidOperationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceUnavailableException"}
+      ]
+    },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
       "http":{
@@ -1485,6 +1519,23 @@
         {"shape":"LimitExceededException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"InvalidOperationException"}
+      ]
+    },
+    "PutSyslogConfiguration":{
+      "name":"PutSyslogConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutSyslogConfigurationRequest"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidOperationException"},
+        {"shape":"OperationAbortedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceUnavailableException"}
       ]
     },
     "PutTransformer":{
@@ -2455,6 +2506,14 @@
       "members":{
         "logGroupName":{"shape":"LogGroupName"},
         "filterName":{"shape":"FilterName"}
+      }
+    },
+    "DeleteSyslogConfigurationRequest":{
+      "type":"structure",
+      "required":["logGroupIdentifier"],
+      "members":{
+        "logGroupIdentifier":{"shape":"LogGroupIdentifier"},
+        "vpcEndpointId":{"shape":"VpcEndpointId"}
       }
     },
     "DeleteTransformerRequest":{
@@ -4156,6 +4215,27 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListSyslogConfigurationsMaxResults":{
+      "type":"integer",
+      "max":50,
+      "min":0
+    },
+    "ListSyslogConfigurationsRequest":{
+      "type":"structure",
+      "members":{
+        "logGroupIdentifier":{"shape":"LogGroupIdentifier"},
+        "vpcEndpointId":{"shape":"VpcEndpointId"},
+        "nextToken":{"shape":"NextToken"},
+        "maxResults":{"shape":"ListSyslogConfigurationsMaxResults"}
+      }
+    },
+    "ListSyslogConfigurationsResponse":{
+      "type":"structure",
+      "members":{
+        "syslogConfigurations":{"shape":"SyslogConfigurations"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListTagsForResourceRequest":{
       "type":"structure",
       "required":["resourceArn"],
@@ -5241,6 +5321,14 @@
         "emitSystemFields":{"shape":"EmitSystemFields"}
       }
     },
+    "PutSyslogConfigurationRequest":{
+      "type":"structure",
+      "required":["logGroupIdentifier"],
+      "members":{
+        "logGroupIdentifier":{"shape":"LogGroupIdentifier"},
+        "vpcEndpointId":{"shape":"VpcEndpointId"}
+      }
+    },
     "PutTransformerRequest":{
       "type":"structure",
       "required":[
@@ -5975,6 +6063,23 @@
         "HOURS"
       ]
     },
+    "SyslogConfiguration":{
+      "type":"structure",
+      "members":{
+        "logGroupArn":{"shape":"LogGroupArn"},
+        "sourceType":{"shape":"SyslogSourceType"},
+        "vpcEndpointId":{"shape":"VpcEndpointId"},
+        "createdAt":{"shape":"Timestamp"}
+      }
+    },
+    "SyslogConfigurations":{
+      "type":"list",
+      "member":{"shape":"SyslogConfiguration"}
+    },
+    "SyslogSourceType":{
+      "type":"string",
+      "enum":["VPCE"]
+    },
     "SystemField":{"type":"string"},
     "TableBody":{
       "type":"string",
@@ -6405,6 +6510,10 @@
       "type":"string",
       "max":128,
       "min":1
+    },
+    "VpcEndpointId":{
+      "type":"string",
+      "pattern":"^vpce-[0-9a-f]{1,64}$"
     },
     "WithKey":{
       "type":"string",

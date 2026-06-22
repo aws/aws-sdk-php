@@ -3306,7 +3306,8 @@
         "workflowVersionName":{"shape":"WorkflowVersionName"},
         "networkingMode":{"shape":"NetworkingMode"},
         "configurationName":{"shape":"ConfigurationName"},
-        "engineSettings":{"shape":"EngineSettings"}
+        "engineSettings":{"shape":"EngineSettings"},
+        "scratchStorageMode":{"shape":"ScratchStorageMode"}
       }
     },
     "DefaultRunSettingPriorityInteger":{
@@ -4512,6 +4513,7 @@
         "workflowVersionName":{"shape":"WorkflowVersionName"},
         "workflowUuid":{"shape":"WorkflowUuid"},
         "networkingMode":{"shape":"NetworkingMode"},
+        "scratchStorageMode":{"shape":"ScratchStorageMode"},
         "configuration":{"shape":"ConfigurationDetails"},
         "vpcConfig":{"shape":"VpcConfigResponse"},
         "engineSettings":{"shape":"EngineSettings"}
@@ -7123,6 +7125,15 @@
         "BOOLEAN"
       ]
     },
+    "ScratchStorageMode":{
+      "type":"string",
+      "enum":[
+        "LOCAL",
+        "SHARED"
+      ],
+      "max":64,
+      "min":1
+    },
     "SecurityGroupId":{
       "type":"string",
       "max":128,
@@ -7614,6 +7625,7 @@
         "workflowOwnerId":{"shape":"WorkflowOwnerId"},
         "workflowVersionName":{"shape":"WorkflowVersionName"},
         "networkingMode":{"shape":"NetworkingMode"},
+        "scratchStorageMode":{"shape":"ScratchStorageMode"},
         "configurationName":{"shape":"ConfigurationName"},
         "engineSettings":{"shape":"EngineSettings"}
       }

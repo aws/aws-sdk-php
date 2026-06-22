@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DirectConnect` - Added VIF rate limiting support for AWS Direct Connect, allowing customers to set bandwidth allocations on virtual interfaces to manage traffic on dedicated connections.
+* `Aws\EC2` - This release adds support for AMI Watermark and Allowed AMIs integration
+* `Aws\QuickSight` - Updated the Amazon Quick Spaces API to remove unsupported SPACE and ARTIFACT values from the SpaceQuickSightResourceType enum.
+* `Aws\Kafka` - Amazon MSK Replicator now supports mTLS authentication when connecting to external Apache Kafka clusters, enabling customers to replicate data from clusters that require mutual TLS for client authentication. This capability is supported when replicating to Amazon MSK Express brokers.
+* `Aws\LambdaMicrovms` - Lambda MicroVMs GA launch. Lambda MicroVMs enable isolated and highly responsive execution of user-supplied or LLM-generated code.
+* `Aws\GuardDuty` - Added AI-powered investigations that automatically analyze security findings, correlate related activity, and produce structured summaries with risk assessment, confidence scoring, MITRE technique classification, and actionable next steps.
+* `Aws\Lambda` - Add support for tagging Network Connector resources in AWS Lambda.
+* `Aws\LambdaCore` - Initial release of the AWS Lambda Core SDK with APIs to create, manage, and tag network connectors that enable Lambda compute resources to access private resources in your Amazon VPC.
+* `Aws\MediaConnect` - AWS MediaConnect now supports Content Quality Analysis for Router Inputs, enabling detection of black frames, frozen frames, and silent audio with configurable thresholds.
+* `Aws\ApplicationSignals` - Application Signals now supports dynamic instrumentation and Service Events telemetry. Add instrumentation at runtime without restarts, and use fine-grained profiling data to quickly pinpoint latency and error root causes.
+* `Aws\Omics` - Adds support for scratch ephemeral storage mounted at tmp
+* `Aws\BedrockAgentCore` - Adds an optional extractionMode field to CreateEvent. SKIP retains the event in short-term memory but excludes it from long-term memory extraction.
+* `Aws\CloudWatchLogs` - CloudWatch Logs Updates - New APIs introduced to support syslog ingestion to a log group. For more information, see CloudWatch Logs API documentation.
+
 ## 3.385.3 - 2026-06-19
 
 * `Aws\Signature` - Updates signed headers to include `x-amz-user-agent` and `content-type`

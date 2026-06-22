@@ -4010,11 +4010,12 @@
         "SaslScram": {
           "shape": "KafkaClusterSaslScramAuthentication",
           "locationName": "saslScram"
+        },
+        "MTLS": {
+          "shape": "KafkaClusterMTLSAuthentication",
+          "locationName": "mTLS"
         }
-      },
-      "required": [
-        "SaslScram"
-      ]
+      }
     },
     "KafkaClusterSaslScramAuthentication": {
       "type": "structure",
@@ -4030,6 +4031,18 @@
       },
       "required": [
         "Mechanism",
+        "SecretArn"
+      ]
+    },
+    "KafkaClusterMTLSAuthentication": {
+      "type": "structure",
+      "members": {
+        "SecretArn": {
+          "shape": "__string",
+          "locationName": "secretArn"
+        }
+      },
+      "required": [
         "SecretArn"
       ]
     },

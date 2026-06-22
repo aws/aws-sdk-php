@@ -2283,7 +2283,8 @@
           "shape":"String",
           "idempotencyToken":true
         },
-        "metadata":{"shape":"MetadataMap"}
+        "metadata":{"shape":"MetadataMap"},
+        "extractionMode":{"shape":"ExtractionMode"}
       }
     },
     "CreateEventOutput":{
@@ -3089,6 +3090,10 @@
     "ExtractionJobStatus":{
       "type":"string",
       "enum":["FAILED"]
+    },
+    "ExtractionMode":{
+      "type":"string",
+      "enum":["SKIP"]
     },
     "FailureAnalysisResultContent":{
       "type":"structure",

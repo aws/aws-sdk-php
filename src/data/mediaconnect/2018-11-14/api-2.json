@@ -2294,6 +2294,23 @@
         }
       }
     },
+    "BlackFramesConfiguration":{
+      "type":"structure",
+      "required":[
+        "State",
+        "ThresholdSeconds"
+      ],
+      "members":{
+        "State":{
+          "shape":"ContentQualityAnalysisState",
+          "locationName":"state"
+        },
+        "ThresholdSeconds":{
+          "shape":"RouterCqaThresholdSeconds",
+          "locationName":"thresholdSeconds"
+        }
+      }
+    },
     "Blob":{"type":"blob"},
     "Boolean":{
       "type":"boolean",
@@ -2521,6 +2538,12 @@
         "UPDATING"
       ]
     },
+    "ClientToken":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"[!-~]+"
+    },
     "Colorimetry":{
       "type":"string",
       "enum":[
@@ -2555,6 +2578,23 @@
         "CONNECTED",
         "DISCONNECTED"
       ]
+    },
+    "ContentQualityAnalysisFeatureConfiguration":{
+      "type":"structure",
+      "members":{
+        "BlackFrames":{
+          "shape":"BlackFramesConfiguration",
+          "locationName":"blackFrames"
+        },
+        "FrozenFrames":{
+          "shape":"FrozenFramesConfiguration",
+          "locationName":"frozenFrames"
+        },
+        "SilentAudio":{
+          "shape":"SilentAudioConfiguration",
+          "locationName":"silentAudio"
+        }
+      }
     },
     "ContentQualityAnalysisState":{
       "type":"string",
@@ -2812,9 +2852,13 @@
           "locationName":"tags"
         },
         "ClientToken":{
-          "shape":"String",
+          "shape":"ClientToken",
           "idempotencyToken":true,
           "locationName":"clientToken"
+        },
+        "ContentQualityAnalysisConfiguration":{
+          "shape":"RouterContentQualityAnalysisConfiguration",
+          "locationName":"contentQualityAnalysisConfiguration"
         }
       }
     },
@@ -2857,7 +2901,7 @@
           "locationName":"tags"
         },
         "ClientToken":{
-          "shape":"String",
+          "shape":"ClientToken",
           "idempotencyToken":true,
           "locationName":"clientToken"
         }
@@ -2926,7 +2970,7 @@
           "locationName":"tags"
         },
         "ClientToken":{
-          "shape":"String",
+          "shape":"ClientToken",
           "idempotencyToken":true,
           "locationName":"clientToken"
         }
@@ -3982,6 +4026,23 @@
         },
         "ThresholdSeconds":{
           "shape":"Integer",
+          "locationName":"thresholdSeconds"
+        }
+      }
+    },
+    "FrozenFramesConfiguration":{
+      "type":"structure",
+      "required":[
+        "State",
+        "ThresholdSeconds"
+      ],
+      "members":{
+        "State":{
+          "shape":"ContentQualityAnalysisState",
+          "locationName":"state"
+        },
+        "ThresholdSeconds":{
+          "shape":"RouterCqaThresholdSeconds",
           "locationName":"thresholdSeconds"
         }
       }
@@ -6627,6 +6688,26 @@
       "type":"string",
       "pattern":"arn:(aws[a-zA-Z-]*):iam::[0-9]{12}:role/[a-zA-Z0-9_+=,.@-]+"
     },
+    "RouterContentQualityAnalysisConfiguration":{
+      "type":"structure",
+      "members":{
+        "ContentLevel":{
+          "shape":"ContentQualityAnalysisFeatureConfiguration",
+          "locationName":"contentLevel"
+        }
+      },
+      "union":true
+    },
+    "RouterContentQualityAnalysisType":{
+      "type":"string",
+      "enum":["CONTENT_LEVEL"]
+    },
+    "RouterCqaThresholdSeconds":{
+      "type":"integer",
+      "box":true,
+      "max":60,
+      "min":10
+    },
     "RouterInput":{
       "type":"structure",
       "required":[
@@ -6649,7 +6730,9 @@
         "Tags",
         "StreamDetails",
         "MaintenanceType",
-        "MaintenanceConfiguration"
+        "MaintenanceConfiguration",
+        "ContentQualityAnalysisType",
+        "ContentQualityAnalysisConfiguration"
       ],
       "members":{
         "Name":{
@@ -6747,6 +6830,14 @@
         "MaintenanceSchedule":{
           "shape":"MaintenanceSchedule",
           "locationName":"maintenanceSchedule"
+        },
+        "ContentQualityAnalysisType":{
+          "shape":"RouterContentQualityAnalysisType",
+          "locationName":"contentQualityAnalysisType"
+        },
+        "ContentQualityAnalysisConfiguration":{
+          "shape":"RouterContentQualityAnalysisConfiguration",
+          "locationName":"contentQualityAnalysisConfiguration"
         }
       }
     },
@@ -7723,6 +7814,23 @@
         },
         "ThresholdSeconds":{
           "shape":"Integer",
+          "locationName":"thresholdSeconds"
+        }
+      }
+    },
+    "SilentAudioConfiguration":{
+      "type":"structure",
+      "required":[
+        "State",
+        "ThresholdSeconds"
+      ],
+      "members":{
+        "State":{
+          "shape":"ContentQualityAnalysisState",
+          "locationName":"state"
+        },
+        "ThresholdSeconds":{
+          "shape":"RouterCqaThresholdSeconds",
           "locationName":"thresholdSeconds"
         }
       }
@@ -9455,6 +9563,10 @@
         "MaintenanceConfiguration":{
           "shape":"MaintenanceConfiguration",
           "locationName":"maintenanceConfiguration"
+        },
+        "ContentQualityAnalysisConfiguration":{
+          "shape":"RouterContentQualityAnalysisConfiguration",
+          "locationName":"contentQualityAnalysisConfiguration"
         }
       }
     },

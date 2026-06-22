@@ -100,6 +100,21 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "CreateInvestigation":{
+      "name":"CreateInvestigation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/detector/{DetectorId}/investigation",
+        "responseCode":202
+      },
+      "input":{"shape":"CreateInvestigationRequest"},
+      "output":{"shape":"CreateInvestigationResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "CreateMalwareProtectionPlan":{
       "name":"CreateMalwareProtectionPlan",
       "http":{
@@ -568,6 +583,22 @@
         {"shape":"InternalServerErrorException"}
       ]
     },
+    "GetInvestigation":{
+      "name":"GetInvestigation",
+      "http":{
+        "method":"GET",
+        "requestUri":"/detector/{DetectorId}/investigation/{InvestigationId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetInvestigationRequest"},
+      "output":{"shape":"GetInvestigationResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "GetInvitationsCount":{
       "name":"GetInvitationsCount",
       "http":{
@@ -836,6 +867,21 @@
       "errors":[
         {"shape":"BadRequestException"},
         {"shape":"InternalServerErrorException"}
+      ]
+    },
+    "ListInvestigations":{
+      "name":"ListInvestigations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/detector/{DetectorId}/investigation/list",
+        "responseCode":200
+      },
+      "input":{"shape":"ListInvestigationsRequest"},
+      "output":{"shape":"ListInvestigationsResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "ListInvitations":{
@@ -1919,6 +1965,34 @@
       "max":64,
       "min":0
     },
+    "CloudDetails":{
+      "type":"structure",
+      "required":[
+        "Provider",
+        "Region",
+        "Account"
+      ],
+      "members":{
+        "Provider":{
+          "shape":"CloudProvider",
+          "locationName":"provider"
+        },
+        "Region":{
+          "shape":"String",
+          "locationName":"region"
+        },
+        "Account":{
+          "shape":"String",
+          "locationName":"account"
+        }
+      }
+    },
+    "CloudProvider":{
+      "type":"string",
+      "enum":["AWS"],
+      "max":50,
+      "min":1
+    },
     "CloudTrailConfigurationResult":{
       "type":"structure",
       "required":["Status"],
@@ -2015,6 +2089,17 @@
           "locationName":"notMatches"
         }
       }
+    },
+    "Confidence":{
+      "type":"string",
+      "enum":[
+        "Unknown",
+        "Low",
+        "Medium",
+        "High"
+      ],
+      "max":50,
+      "min":1
     },
     "ConflictException":{
       "type":"structure",
@@ -2547,6 +2632,39 @@
         "IpSetId":{
           "shape":"String",
           "locationName":"ipSetId"
+        }
+      }
+    },
+    "CreateInvestigationRequest":{
+      "type":"structure",
+      "required":[
+        "DetectorId",
+        "TriggerPrompt"
+      ],
+      "members":{
+        "DetectorId":{
+          "shape":"DetectorId",
+          "location":"uri",
+          "locationName":"DetectorId"
+        },
+        "TriggerPrompt":{
+          "shape":"TriggerPrompt",
+          "locationName":"triggerPrompt"
+        },
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true,
+          "locationName":"clientToken"
+        }
+      }
+    },
+    "CreateInvestigationResponse":{
+      "type":"structure",
+      "required":["InvestigationId"],
+      "members":{
+        "InvestigationId":{
+          "shape":"InvestigationId",
+          "locationName":"investigationId"
         }
       }
     },
@@ -4854,6 +4972,35 @@
         }
       }
     },
+    "GetInvestigationRequest":{
+      "type":"structure",
+      "required":[
+        "DetectorId",
+        "InvestigationId"
+      ],
+      "members":{
+        "DetectorId":{
+          "shape":"DetectorId",
+          "location":"uri",
+          "locationName":"DetectorId"
+        },
+        "InvestigationId":{
+          "shape":"InvestigationId",
+          "location":"uri",
+          "locationName":"InvestigationId"
+        }
+      }
+    },
+    "GetInvestigationResponse":{
+      "type":"structure",
+      "required":["Investigation"],
+      "members":{
+        "Investigation":{
+          "shape":"Investigation",
+          "locationName":"investigation"
+        }
+      }
+    },
     "GetInvitationsCountRequest":{
       "type":"structure",
       "members":{}
@@ -5692,6 +5839,182 @@
       "exception":true,
       "fault":true
     },
+    "Investigation":{
+      "type":"structure",
+      "required":[
+        "InvestigationId",
+        "Status",
+        "TriggerPrompt",
+        "TriggeredBy"
+      ],
+      "members":{
+        "InvestigationId":{
+          "shape":"InvestigationId",
+          "locationName":"investigationId"
+        },
+        "Status":{
+          "shape":"InvestigationStatus",
+          "locationName":"status"
+        },
+        "TriggerPrompt":{
+          "shape":"TriggerPrompt",
+          "locationName":"triggerPrompt"
+        },
+        "TriggeredBy":{
+          "shape":"TriggeredBy",
+          "locationName":"triggeredBy"
+        },
+        "Metadata":{
+          "shape":"InvestigationMetadata",
+          "locationName":"metadata"
+        },
+        "Cloud":{
+          "shape":"CloudDetails",
+          "locationName":"cloud"
+        },
+        "RiskLevel":{
+          "shape":"RiskLevel",
+          "locationName":"riskLevel"
+        },
+        "Risk":{
+          "shape":"RiskDetails",
+          "locationName":"risk"
+        },
+        "Confidence":{
+          "shape":"Confidence",
+          "locationName":"confidence"
+        },
+        "Summary":{
+          "shape":"String",
+          "locationName":"summary"
+        },
+        "StartTime":{
+          "shape":"Timestamp",
+          "locationName":"startTime"
+        },
+        "EndTime":{
+          "shape":"Timestamp",
+          "locationName":"endTime"
+        },
+        "Error":{
+          "shape":"InvestigationErrorDetails",
+          "locationName":"error"
+        }
+      }
+    },
+    "InvestigationErrorDetails":{
+      "type":"string",
+      "max":2048,
+      "min":0
+    },
+    "InvestigationId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-fA-F0-9\\-]+"
+    },
+    "InvestigationMetadata":{
+      "type":"structure",
+      "required":[
+        "Version",
+        "Product"
+      ],
+      "members":{
+        "Version":{
+          "shape":"String",
+          "locationName":"version"
+        },
+        "Product":{
+          "shape":"Product",
+          "locationName":"product"
+        }
+      }
+    },
+    "InvestigationSortCriteria":{
+      "type":"structure",
+      "members":{
+        "AttributeName":{
+          "shape":"InvestigationSortField",
+          "locationName":"attributeName"
+        },
+        "OrderBy":{
+          "shape":"OrderBy",
+          "locationName":"orderBy"
+        }
+      }
+    },
+    "InvestigationSortField":{
+      "type":"string",
+      "enum":[
+        "START_TIME",
+        "END_TIME",
+        "STATUS",
+        "RISK_LEVEL",
+        "CONFIDENCE"
+      ]
+    },
+    "InvestigationStatus":{
+      "type":"string",
+      "enum":[
+        "RUNNING",
+        "COMPLETED",
+        "FAILED"
+      ],
+      "max":300,
+      "min":1
+    },
+    "InvestigationSummaries":{
+      "type":"list",
+      "member":{"shape":"InvestigationSummary"},
+      "max":50,
+      "min":0
+    },
+    "InvestigationSummary":{
+      "type":"structure",
+      "members":{
+        "InvestigationId":{
+          "shape":"InvestigationId",
+          "locationName":"investigationId"
+        },
+        "Status":{
+          "shape":"InvestigationStatus",
+          "locationName":"status"
+        },
+        "TriggerPrompt":{
+          "shape":"TriggerPrompt",
+          "locationName":"triggerPrompt"
+        },
+        "RiskLevel":{
+          "shape":"RiskLevel",
+          "locationName":"riskLevel"
+        },
+        "Confidence":{
+          "shape":"Confidence",
+          "locationName":"confidence"
+        },
+        "Title":{
+          "shape":"InvestigationTitle",
+          "locationName":"title"
+        },
+        "AccountId":{
+          "shape":"String",
+          "locationName":"accountId"
+        },
+        "StartTime":{
+          "shape":"Timestamp",
+          "locationName":"startTime"
+        },
+        "EndTime":{
+          "shape":"Timestamp",
+          "locationName":"endTime"
+        }
+      }
+    },
+    "InvestigationTitle":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
     "Invitation":{
       "type":"structure",
       "members":{
@@ -6382,6 +6705,43 @@
         },
         "NextToken":{
           "shape":"String",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListInvestigationsRequest":{
+      "type":"structure",
+      "required":["DetectorId"],
+      "members":{
+        "DetectorId":{
+          "shape":"DetectorId",
+          "location":"uri",
+          "locationName":"DetectorId"
+        },
+        "SortCriteria":{
+          "shape":"InvestigationSortCriteria",
+          "locationName":"sortCriteria"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "locationName":"maxResults"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListInvestigationsResponse":{
+      "type":"structure",
+      "required":["Investigations"],
+      "members":{
+        "Investigations":{
+          "shape":"InvestigationSummaries",
+          "locationName":"investigations"
+        },
+        "NextToken":{
+          "shape":"NextToken",
           "locationName":"nextToken"
         }
       }
@@ -7432,6 +7792,12 @@
       "type":"list",
       "member":{"shape":"NetworkInterface"}
     },
+    "NextToken":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"[a-zA-Z0-9+/=_\\-]+"
+    },
     "NonEmptyString":{
       "type":"string",
       "max":200,
@@ -7976,6 +8342,20 @@
       "type":"string",
       "max":1024,
       "min":0
+    },
+    "Product":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{
+          "shape":"String",
+          "locationName":"name"
+        },
+        "Feature":{
+          "shape":"String",
+          "locationName":"feature"
+        }
+      }
     },
     "ProductCode":{
       "type":"structure",
@@ -8524,6 +8904,23 @@
       "member":{"shape":"ResourceV2"},
       "max":400,
       "min":0
+    },
+    "RiskDetails":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "RiskLevel":{
+      "type":"string",
+      "enum":[
+        "Info",
+        "Low",
+        "Medium",
+        "High",
+        "Critical"
+      ],
+      "max":300,
+      "min":1
     },
     "RuntimeContext":{
       "type":"structure",
@@ -9924,12 +10321,22 @@
         }
       }
     },
+    "TriggerPrompt":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
     "TriggerType":{
       "type":"string",
       "enum":[
         "BACKUP",
         "GUARDDUTY"
       ]
+    },
+    "TriggeredBy":{
+      "type":"string",
+      "max":256,
+      "min":0
     },
     "TrustedEntitySetFormat":{
       "type":"string",
