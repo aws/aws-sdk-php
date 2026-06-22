@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.386.0 - 2026-06-22
 
 * `Aws\DirectConnect` - Added VIF rate limiting support for AWS Direct Connect, allowing customers to set bandwidth allocations on virtual interfaces to manage traffic on dedicated connections.
 * `Aws\EC2` - This release adds support for AMI Watermark and Allowed AMIs integration
