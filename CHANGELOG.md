@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Kafka` - Amazon MSK Replicator now supports mTLS authentication when connecting to external Apache Kafka clusters, enabling customers to replicate data from clusters that require mutual TLS for client authentication. This capability is supported when replicating to Amazon MSK Express brokers.
+
 ## 3.386.0 - 2026-06-22
 
 * `Aws\DirectConnect` - Added VIF rate limiting support for AWS Direct Connect, allowing customers to set bandwidth allocations on virtual interfaces to manage traffic on dedicated connections.
