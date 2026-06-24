@@ -43,7 +43,7 @@ trait EncryptionTraitV3
      * Builds an AesStreamInterface and populates encryption metadata into the
      * supplied envelope.
      *
-     * @param Stream $plaintext Plain-text data to be encrypted using the
+     * @param StreamInterface $plaintext Plain-text data to be encrypted using the
      *                          materials, algorithm, and data provided.
      * @param AlgorithmSuite $algorithmSuite Algorithm Suite for use in encryption
      * @param array $options    Options for use in encryption, including cipher
@@ -61,7 +61,7 @@ trait EncryptionTraitV3
      * @internal
      */
     public function encrypt(
-        Stream $plaintext,
+        StreamInterface $plaintext,
         AlgorithmSuite $algorithmSuite,
         array $options,
         MaterialsProviderV3 $provider,
@@ -143,7 +143,7 @@ trait EncryptionTraitV3
     }
 
     private function encryptNonCommitingStream(
-        Stream $plaintext,
+        StreamInterface $plaintext,
         array &$cipherOptions,
         array $keys,
         array $materialsDescription,
@@ -202,7 +202,7 @@ trait EncryptionTraitV3
     }
 
     private function encryptCommitingStream(
-        Stream $plaintext,
+        StreamInterface $plaintext,
         AlgorithmSuite $algorithmSuite,
         array &$options,
         array $keys,
@@ -276,7 +276,7 @@ trait EncryptionTraitV3
      * Generates a stream that wraps the plaintext with the proper cipher and
      * uses the content encryption key (CEK) to encrypt the data when read.
      *
-     * @param Stream $plaintext Plain-text data to be encrypted using the
+     * @param StreamInterface $plaintext Plain-text data to be encrypted using the
      *                          materials, algorithm, and data provided.
      * @param string $cek A content encryption key for use by the stream for
      *                    encrypting the plaintext data.
@@ -288,7 +288,7 @@ trait EncryptionTraitV3
      * @internal
      */
     protected function getNonCommittingEncryptingStream(
-        Stream $plaintext,
+        StreamInterface $plaintext,
         string $cek,
         array &$cipherOptions
     ): AppendStream
@@ -346,7 +346,7 @@ trait EncryptionTraitV3
      * Generates a stream that wraps the plaintext with the proper cipher and
      * uses the content encryption key (CEK) to encrypt the data when read.
      *
-     * @param Stream $plaintext Plain-text data to be encrypted using the
+     * @param StreamInterface $plaintext Plain-text data to be encrypted using the
      *                          materials, algorithm, and data provided.
      * @param string $cek A content encryption key for use by the stream for
      *                    encrypting the plaintext data.
@@ -361,7 +361,7 @@ trait EncryptionTraitV3
      * @internal
      */
     protected function getCommitingEncryptionStream(
-        Stream $plaintext,
+        StreamInterface $plaintext,
         string $dek,
         array &$cipherOptions,
         string $messageId,

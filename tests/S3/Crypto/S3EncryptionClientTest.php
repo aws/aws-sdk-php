@@ -782,4 +782,34 @@ EOXML;
             '@MaterialsProvider' => $provider
         ]);
     }
+
+    public function testPutObjectDoesNotCloseUserProvidedResourceHandle(): void
+    {
+        $s3 = $this->getS3Client();
+        $this->addMockResults($s3, [
+            new Result(['ObjectURL' => 'file_url'])
+        ]);
+
+        $kms = $this->getKmsClient();
+        $provider = new KmsMaterialsProvider($kms, 'test-key');
+        $this->addMockResults($kms, [
+            new Result(['CiphertextBlob' => 'encrypted'])
+        ]);
+
+        $fp = fopen('php://memory', 'r+');
+        fwrite($fp, 'plaintext');
+        fseek($fp, 0);
+
+        $client = @new S3EncryptionClient($s3);
+        $client->putObject([
+            'Bucket' => 'foo',
+            'Key' => 'bar',
+            'Body' => $fp,
+            '@MaterialsProvider' => $provider,
+            '@CipherOptions' => ['Cipher' => 'cbc'],
+        ]);
+
+        $this->assertTrue(is_resource($fp));
+        fclose($fp);
+    }
 }

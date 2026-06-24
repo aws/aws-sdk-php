@@ -4,7 +4,6 @@ namespace Aws\S3;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Promise\PromisorInterface;
 use GuzzleHttp\Psr7;
-use GuzzleHttp\Psr7\FnStream;
 use Psr\Http\Message\StreamInterface;
 
 /**
@@ -102,8 +101,7 @@ class ObjectUploader implements PromisorInterface
     }
 
     /**
-     * Creates a stream from the provided body, ensuring that user-provided
-     * PHP stream resources are not closed when the stream is destructed.
+     * Creates a stream from the provided body.
      *
      * @param mixed $body
      *
@@ -112,17 +110,10 @@ class ObjectUploader implements PromisorInterface
     private function createStream($body): StreamInterface
     {
         $stream = Psr7\Utils::streamFor($body);
-
-        // When the user provides a raw PHP resource, we should not take
-        // ownership of it (i.e., we should not fclose it on destruct).
-        // Decorate with a no-op close to prevent the underlying Stream
-        // from closing the user's resource handle.
+        // User-owned resource which should be detached instead of closed
+        // during garbage-collection
         if (is_resource($body)) {
-            return FnStream::decorate($stream, [
-                'close' => function () use ($stream) {
-                    $stream->detach();
-                },
-            ]);
+            return \Aws\detach_on_close_stream($stream);
         }
 
         return $stream;

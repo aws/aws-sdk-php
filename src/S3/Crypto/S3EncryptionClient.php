@@ -127,8 +127,15 @@ class S3EncryptionClient extends AbstractCryptoClient
 
         $envelope = new MetadataEnvelope();
 
+        $bodyStream = Psr7\Utils::streamFor($args['Body']);
+        // User-owned resource which should be detached instead of closed
+        // during garbage-collection
+        if (is_resource($args['Body'])) {
+            $bodyStream = \Aws\detach_on_close_stream($bodyStream);
+        }
+
         return Promise\Create::promiseFor($this->encrypt(
-            Psr7\Utils::streamFor($args['Body']),
+            $bodyStream,
             $args['@CipherOptions'] ?: [],
             $provider,
             $envelope

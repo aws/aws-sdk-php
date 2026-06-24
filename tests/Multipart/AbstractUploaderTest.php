@@ -188,6 +188,40 @@ class AbstractUploaderTest extends TestCase
         $this->assertInstanceOf('InvalidArgumentException', $exception);
     }
 
+    public function testDoesNotCloseUserProvidedResourceHandle()
+    {
+        $fp = fopen('php://memory', 'r+');
+        fwrite($fp, 'data');
+        fseek($fp, 0);
+
+        $uploader = $this->getTestUploader(
+            $fp,
+            ['bucket' => 'foo', 'key' => 'bar']
+        );
+
+        /** @var StreamInterface $source */
+        $source = $this->getPropertyValue($uploader, 'source');
+        $source->close();
+
+        $this->assertTrue(is_resource($fp));
+        fclose($fp);
+    }
+
+    public function testClosesSdkOwnedResourceForFilenameSource()
+    {
+        $uploader = $this->getTestUploader(
+            __FILE__,
+            ['bucket' => 'foo', 'key' => 'bar']
+        );
+
+        /** @var StreamInterface $source */
+        $source = $this->getPropertyValue($uploader, 'source');
+        $handle = $source->detach();
+
+        $this->assertIsResource($handle);
+        fclose($handle);
+    }
+
     #[DataProvider('getPartGeneratorTestCases')]
     public function testCommandGeneratorYieldsExpectedUploadCommands(
         $seekable,
