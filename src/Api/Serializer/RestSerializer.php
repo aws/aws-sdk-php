@@ -164,7 +164,13 @@ abstract class RestSerializer
 
             // Streaming bodies or payloads that are strings are
             // always just a stream of data.
-            $opts['body'] = Psr7\Utils::streamFor($body);
+            $stream = Psr7\Utils::streamFor($body);
+            // User-owned resource which should be detached instead of closed
+            // during garbage-collection
+            if (is_resource($body)) {
+                $stream = \Aws\detach_on_close_stream($stream);
+            }
+            $opts['body'] = $stream;
             return;
         }
 

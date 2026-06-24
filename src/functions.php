@@ -1,8 +1,10 @@
 <?php
 namespace Aws;
 
+use GuzzleHttp\Psr7\FnStream;
 use GuzzleHttp\Utils;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\StreamInterface;
 use GuzzleHttp\Promise\FulfilledPromise;
 
 //-----------------------------------------------------------------------------
@@ -565,4 +567,21 @@ function is_associative(array $array): bool
     }
 
     return !array_is_list($array);
+}
+
+/**
+ * Decorates a PSR-7 stream so close() detaches the underlying resource
+ * instead of fclose()-ing it. Use at sites where the SDK wraps a
+ * user-owned PHP resource.
+ *
+ * @param StreamInterface $stream
+ * @return StreamInterface
+ */
+function detach_on_close_stream(StreamInterface $stream): StreamInterface
+{
+    return FnStream::decorate($stream, [
+        'close' => static function () use ($stream) {
+            $stream->detach();
+        },
+    ]);
 }

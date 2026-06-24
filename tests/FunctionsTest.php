@@ -27,6 +27,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 #[CoversFunction('Aws\parse_ini_file')]
 #[CoversFunction('Aws\parse_ini_section_with_subsections')]
 #[CoversFunction('Aws\is_associative')]
+#[CoversFunction('Aws\detach_on_close_stream')]
 class FunctionsTest extends TestCase
 {
     public function testCreatesRecursiveDirIterator()
@@ -468,13 +469,53 @@ EOT
     {
         return [
            [[], false],
-           [['foo' => 'bar'], true],
-           [[1, 2, 3, 5], false],
-           [['foo', 'bar', 'baz'], false],
-           [['1' => 1, '2' => 2, '3'], true],
-           [['0' => 0, '1' => 2], false],
-           [[0 => 1, 1 => 2], false],
-           [[1 => 0, 2 => 2], true],
+            [['foo' => 'bar'], true],
+            [[1, 2, 3, 5], false],
+            [['foo', 'bar', 'baz'], false],
+            [['1' => 1, '2' => 2, '3'], true],
+            [['0' => 0, '1' => 2], false],
+            [[0 => 1, 1 => 2], false],
+            [[1 => 0, 2 => 2], true],
         ];
+    }
+
+    public function testDetachOnCloseStreamLeavesResourceOpenAfterClose()
+    {
+        $fp = fopen('php://memory', 'r+');
+        $stream = \GuzzleHttp\Psr7\Utils::streamFor($fp);
+
+        $decorated = Aws\detach_on_close_stream($stream);
+        $decorated->close();
+
+        $this->assertTrue(is_resource($fp));
+        fclose($fp);
+    }
+
+    public function testDetachOnCloseStreamLeavesResourceOpenAfterDestruct()
+    {
+        $fp = fopen('php://memory', 'r+');
+        $stream = \GuzzleHttp\Psr7\Utils::streamFor($fp);
+
+        $decorated = Aws\detach_on_close_stream($stream);
+        unset($decorated, $stream);
+        gc_collect_cycles();
+
+        $this->assertTrue(is_resource($fp));
+        fclose($fp);
+    }
+
+    public function testDetachOnCloseStreamPassesThroughReads()
+    {
+        $fp = fopen('php://memory', 'r+');
+        fwrite($fp, 'hello');
+        fseek($fp, 0);
+
+        $stream = \GuzzleHttp\Psr7\Utils::streamFor($fp);
+        $decorated = Aws\detach_on_close_stream($stream);
+
+        $this->assertSame('hello', (string) $decorated);
+
+        $decorated->close();
+        fclose($fp);
     }
 }

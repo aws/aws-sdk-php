@@ -352,6 +352,22 @@ class RestJsonSerializerTest extends TestCase
         );
     }
 
+    public function testDoesNotCloseUserProvidedResourceHandleForBlobPayload(): void
+    {
+        $fp = fopen('php://memory', 'r+');
+        fwrite($fp, 'hello');
+        fseek($fp, 0);
+
+        $request = $this->getRequest('bar', ['baz' => $fp]);
+        $this->assertSame('hello', (string) $request->getBody());
+
+        unset($request);
+        gc_collect_cycles();
+
+        $this->assertTrue(is_resource($fp));
+        fclose($fp);
+    }
+
     /**
      * @param $input
      * @param $expectedOutput

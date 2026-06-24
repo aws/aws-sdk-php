@@ -54,7 +54,7 @@ trait EncryptionTraitV2
      * @internal
      */
     public function encrypt(
-        Stream $plaintext,
+        StreamInterface $plaintext,
         array $options,
         MaterialsProviderV2 $provider,
         MetadataEnvelope $envelope
@@ -155,7 +155,7 @@ trait EncryptionTraitV2
      * @internal
      */
     protected function getEncryptingStream(
-        Stream $plaintext,
+        StreamInterface $plaintext,
         $cek,
         &$cipherOptions
     ) {
