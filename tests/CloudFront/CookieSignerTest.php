@@ -72,6 +72,23 @@ class CookieSignerTest extends TestCase
         $this->assertArrayNotHasKey('CloudFront-Policy', $cookie);
     }
 
+    public function testSha256CookieIncludesHashAlgorithmAttribute()
+    {
+        $s = new CookieSigner('a', $this->key, OPENSSL_ALGO_SHA256);
+        $cookie = $s->getSignedCookie('https://bar.com', strtotime('+10 minutes'));
+
+        $this->assertArrayHasKey('CloudFront-Hash-Algorithm', $cookie);
+        $this->assertSame('SHA256', $cookie['CloudFront-Hash-Algorithm']);
+    }
+
+    public function testSha1CookieOmitsHashAlgorithmAttribute()
+    {
+        $s = new CookieSigner('a', $this->key);
+        $cookie = $s->getSignedCookie('https://bar.com', strtotime('+10 minutes'));
+
+        $this->assertArrayNotHasKey('CloudFront-Hash-Algorithm', $cookie);
+    }
+
     public function testReturnsHashWithCookieParameterNamesForCustomPolicy()
     {
         $s = new CookieSigner('a', $this->key);

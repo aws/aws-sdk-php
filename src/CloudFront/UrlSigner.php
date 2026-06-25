@@ -13,15 +13,19 @@ class UrlSigner
     private $signer;
 
     /**
-     * @param $keyPairId  string ID of the key pair
-     * @param $privateKey string Path to the private key used for signing
+     * @param $keyPairId  string     ID of the key pair
+     * @param $privateKey string     Path to the private key used for signing
+     * @param $algorithm  int|string OpenSSL signature algorithm constant (e.g.
+     *                               OPENSSL_ALGO_SHA1, OPENSSL_ALGO_SHA256) or
+     *                               algorithm name string (e.g. "sha256").
+     *                               Defaults to OPENSSL_ALGO_SHA1.
      *
      * @throws \RuntimeException if the openssl extension is missing
      * @throws \InvalidArgumentException if the private key cannot be found.
      */
-    public function __construct($keyPairId, $privateKey)
+    public function __construct($keyPairId, $privateKey, $algorithm = OPENSSL_ALGO_SHA1)
     {
-        $this->signer = new Signer($keyPairId, $privateKey);
+        $this->signer = new Signer($keyPairId, $privateKey, '', $algorithm);
     }
 
     /**

@@ -78,6 +78,30 @@ class SignerTest extends TestCase
         $this->assertArrayHasKey('Key-Pair-Id', $signature);
     }
 
+    public function testSignsWithAlternativeAlgorithm()
+    {
+        $sha256Signer = new Signer(
+            'test',
+            $this->testKeyFile,
+            self::PASSPHRASE,
+            OPENSSL_ALGO_SHA256
+        );
+        $signature = $sha256Signer->getSignature('test.mp4', time() + 1000);
+
+        $this->assertArrayHasKey('Signature', $signature);
+        $this->assertArrayHasKey('Key-Pair-Id', $signature);
+        $this->assertArrayHasKey('Hash-Algorithm', $signature);
+        $this->assertSame('SHA256', $signature['Hash-Algorithm']);
+        $this->assertDoesNotMatchRegularExpression('/[\+\=\/]/', $signature['Signature']);
+    }
+
+    public function testSha1SignatureOmitsHashAlgorithmParam()
+    {
+        $signature = $this->instance->getSignature('test.mp4', time() + 1000);
+
+        $this->assertArrayNotHasKey('Hash-Algorithm', $signature);
+    }
+
     /**
      * @return array<array<int|string>>
      */
