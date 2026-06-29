@@ -1039,8 +1039,13 @@
               "clusterArn": "arn:aws:ecs:us-west-2:123456789012:cluster/example",
               "deploymentConfiguration": {
                 "deploymentCircuitBreaker": {
-                  "enable": false,
-                  "rollback": false
+                  "enable": true,
+                  "resetOnHealthyTask": true,
+                  "rollback": true,
+                  "thresholdConfiguration": {
+                    "type": "BOUNDED_PERCENT",
+                    "value": 50
+                  }
                 },
                 "maximumPercent": 200,
                 "minimumHealthyPercent": 100
@@ -1075,8 +1080,13 @@
               "clusterArn": "arn:aws:ecs:us-east-1:123456789012:cluster/MyCluster",
               "deploymentConfiguration": {
                 "deploymentCircuitBreaker": {
-                  "enable": false,
-                  "rollback": false
+                  "enable": true,
+                  "resetOnHealthyTask": true,
+                  "rollback": true,
+                  "thresholdConfiguration": {
+                    "type": "BOUNDED_PERCENT",
+                    "value": 50
+                  }
                 },
                 "lifecycleHooks": [
                   {

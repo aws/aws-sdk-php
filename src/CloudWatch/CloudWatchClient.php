@@ -82,6 +82,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise putDashboardAsync(array $args = [])
  * @method \Aws\Result putInsightRule(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putInsightRuleAsync(array $args = [])
+ * @method \Aws\Result putLogAlarm(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putLogAlarmAsync(array $args = [])
  * @method \Aws\Result putManagedInsightRules(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putManagedInsightRulesAsync(array $args = [])
  * @method \Aws\Result putMetricAlarm(array $args = [])

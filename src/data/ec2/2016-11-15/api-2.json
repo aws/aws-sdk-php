@@ -14847,6 +14847,7 @@
         "SpreadLevel":{"shape":"SpreadLevel"},
         "LinkedGroupId":{"shape":"PlacementGroupId"},
         "Operator":{"shape":"OperatorRequest"},
+        "ParentGroupId":{"shape":"PlacementGroupId"},
         "DryRun":{
           "shape":"Boolean",
           "locationName":"dryRun"
@@ -46318,6 +46319,10 @@
         "Operator":{
           "shape":"OperatorResponse",
           "locationName":"operator"
+        },
+        "ParentGroupId":{
+          "shape":"PlacementGroupId",
+          "locationName":"parentGroupId"
         }
       }
     },
@@ -46393,7 +46398,8 @@
       "enum":[
         "cluster",
         "spread",
-        "partition"
+        "partition",
+        "precision-time"
       ]
     },
     "PlatformValues":{

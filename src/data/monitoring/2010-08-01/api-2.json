@@ -56,7 +56,8 @@
       },
       "input":{"shape":"DeleteAlarmsInput"},
       "errors":[
-        {"shape":"ResourceNotFound"}
+        {"shape":"ResourceNotFound"},
+        {"shape":"ResourceConflict"}
       ]
     },
     "DeleteAnomalyDetector":{
@@ -601,6 +602,18 @@
         {"shape":"LimitExceededException"}
       ]
     },
+    "PutLogAlarm":{
+      "name":"PutLogAlarm",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutLogAlarmInput"},
+      "errors":[
+        {"shape":"LimitExceededFault"},
+        {"shape":"ResourceConflict"}
+      ]
+    },
     "PutManagedInsightRules":{
       "name":"PutManagedInsightRules",
       "http":{
@@ -777,6 +790,8 @@
       "max":255,
       "min":1
     },
+    "ActionLogLineCount":{"type":"integer"},
+    "ActionLogLineRoleArn":{"type":"string"},
     "ActionPrefix":{
       "type":"string",
       "max":1024,
@@ -795,6 +810,11 @@
       "type":"string",
       "max":1024,
       "min":0
+    },
+    "AggregationExpression":{
+      "type":"string",
+      "max":256,
+      "min":1
     },
     "AlarmArn":{
       "type":"string",
@@ -906,7 +926,8 @@
       "type":"string",
       "enum":[
         "CompositeAlarm",
-        "MetricAlarm"
+        "MetricAlarm",
+        "LogAlarm"
       ]
     },
     "AlarmTypes":{
@@ -1399,6 +1420,7 @@
       "members":{
         "CompositeAlarms":{"shape":"CompositeAlarms"},
         "MetricAlarms":{"shape":"MetricAlarms"},
+        "LogAlarms":{"shape":"LogAlarms"},
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -1533,6 +1555,7 @@
         "Failures":{"shape":"BatchFailures"}
       }
     },
+    "EndTimeOffset":{"type":"long"},
     "Entity":{
       "type":"structure",
       "members":{
@@ -2202,6 +2225,67 @@
         "Tags":{"shape":"TagList"}
       }
     },
+    "LogAlarm":{
+      "type":"structure",
+      "members":{
+        "AlarmName":{"shape":"AlarmName"},
+        "AlarmArn":{"shape":"AlarmArn"},
+        "AlarmDescription":{"shape":"AlarmDescription"},
+        "AlarmConfigurationUpdatedTimestamp":{"shape":"Timestamp"},
+        "ActionsEnabled":{"shape":"ActionsEnabled"},
+        "OKActions":{"shape":"ResourceList"},
+        "AlarmActions":{"shape":"ResourceList"},
+        "InsufficientDataActions":{"shape":"ResourceList"},
+        "StateValue":{"shape":"StateValue"},
+        "StateReason":{"shape":"StateReason"},
+        "StateReasonData":{"shape":"StateReasonData"},
+        "StateUpdatedTimestamp":{"shape":"Timestamp"},
+        "ScheduledQueryConfiguration":{"shape":"ScheduledQueryConfiguration"},
+        "QueryResultsToEvaluate":{"shape":"QueryResultsToEvaluate"},
+        "QueryResultsToAlarm":{"shape":"QueryResultsToAlarm"},
+        "Threshold":{"shape":"Threshold"},
+        "ComparisonOperator":{"shape":"ComparisonOperator"},
+        "TreatMissingData":{"shape":"TreatMissingData"},
+        "StateTransitionedTimestamp":{"shape":"Timestamp"},
+        "EvaluationState":{"shape":"EvaluationState"},
+        "ActionLogLineCount":{"shape":"ActionLogLineCount"},
+        "ActionLogLineRoleArn":{"shape":"ActionLogLineRoleArn"}
+      },
+      "xmlOrder":[
+        "AlarmName",
+        "AlarmArn",
+        "AlarmDescription",
+        "AlarmConfigurationUpdatedTimestamp",
+        "ActionsEnabled",
+        "OKActions",
+        "AlarmActions",
+        "InsufficientDataActions",
+        "StateValue",
+        "StateReason",
+        "StateReasonData",
+        "StateUpdatedTimestamp",
+        "StateTransitionedTimestamp",
+        "ScheduledQueryConfiguration",
+        "QueryResultsToEvaluate",
+        "QueryResultsToAlarm",
+        "Threshold",
+        "ComparisonOperator",
+        "TreatMissingData",
+        "EvaluationState",
+        "ActionLogLineCount",
+        "ActionLogLineRoleArn"
+      ]
+    },
+    "LogAlarms":{
+      "type":"list",
+      "member":{"shape":"LogAlarm"}
+    },
+    "LogGroupIdentifiers":{
+      "type":"list",
+      "member":{"shape":"AmazonResourceName"},
+      "max":50,
+      "min":1
+    },
     "ManagedRule":{
       "type":"structure",
       "required":[
@@ -2709,6 +2793,34 @@
       "type":"structure",
       "members":{}
     },
+    "PutLogAlarmInput":{
+      "type":"structure",
+      "required":[
+        "AlarmName",
+        "ScheduledQueryConfiguration",
+        "QueryResultsToEvaluate",
+        "QueryResultsToAlarm",
+        "Threshold",
+        "ComparisonOperator"
+      ],
+      "members":{
+        "AlarmName":{"shape":"AlarmName"},
+        "AlarmDescription":{"shape":"AlarmDescription"},
+        "ScheduledQueryConfiguration":{"shape":"ScheduledQueryConfiguration"},
+        "ActionLogLineCount":{"shape":"ActionLogLineCount"},
+        "ActionLogLineRoleArn":{"shape":"ActionLogLineRoleArn"},
+        "ActionsEnabled":{"shape":"ActionsEnabled"},
+        "OKActions":{"shape":"ResourceList"},
+        "AlarmActions":{"shape":"ResourceList"},
+        "InsufficientDataActions":{"shape":"ResourceList"},
+        "QueryResultsToEvaluate":{"shape":"QueryResultsToEvaluate"},
+        "QueryResultsToAlarm":{"shape":"QueryResultsToAlarm"},
+        "Threshold":{"shape":"Threshold"},
+        "ComparisonOperator":{"shape":"ComparisonOperator"},
+        "TreatMissingData":{"shape":"TreatMissingData"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
     "PutManagedInsightRulesInput":{
       "type":"structure",
       "required":["ManagedRules"],
@@ -2796,6 +2908,19 @@
       "max":10000,
       "min":1
     },
+    "QueryResultsToAlarm":{
+      "type":"integer",
+      "min":1
+    },
+    "QueryResultsToEvaluate":{
+      "type":"integer",
+      "min":1
+    },
+    "QueryString":{
+      "type":"string",
+      "max":10000,
+      "min":0
+    },
     "Range":{
       "type":"structure",
       "required":[
@@ -2819,6 +2944,18 @@
       "type":"integer",
       "max":86400,
       "min":0
+    },
+    "ResourceConflict":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ErrorMessage"}
+      },
+      "error":{
+        "code":"ResourceConflict",
+        "httpStatusCode":409,
+        "senderFault":true
+      },
+      "exception":true
     },
     "ResourceId":{"type":"string"},
     "ResourceList":{
@@ -2882,6 +3019,38 @@
         "Expression":{"shape":"Expression"},
         "Duration":{"shape":"Duration"},
         "Timezone":{"shape":"Timezone"}
+      }
+    },
+    "ScheduleConfiguration":{
+      "type":"structure",
+      "required":["ScheduleExpression"],
+      "members":{
+        "ScheduleExpression":{"shape":"ScheduleExpression"},
+        "StartTimeOffset":{"shape":"StartTimeOffset"},
+        "EndTimeOffset":{"shape":"EndTimeOffset"}
+      }
+    },
+    "ScheduleExpression":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "ScheduledQueryConfiguration":{
+      "type":"structure",
+      "required":[
+        "QueryString",
+        "ScheduledQueryRoleARN",
+        "ScheduleConfiguration",
+        "AggregationExpression"
+      ],
+      "members":{
+        "QueryString":{"shape":"QueryString"},
+        "LogGroupIdentifiers":{"shape":"LogGroupIdentifiers"},
+        "QueryARN":{"shape":"AmazonResourceName"},
+        "ScheduledQueryRoleARN":{"shape":"AmazonResourceName"},
+        "ScheduleConfiguration":{"shape":"ScheduleConfiguration"},
+        "AggregationExpression":{"shape":"AggregationExpression"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "SetAlarmStateInput":{
@@ -2960,6 +3129,7 @@
       "type":"structure",
       "members":{}
     },
+    "StartTimeOffset":{"type":"long"},
     "Stat":{"type":"string"},
     "StateReason":{
       "type":"string",

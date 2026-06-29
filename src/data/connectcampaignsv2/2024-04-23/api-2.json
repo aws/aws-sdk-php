@@ -739,6 +739,11 @@
       "type":"boolean",
       "box":true
     },
+    "BrowserId":{
+      "type":"string",
+      "max":36,
+      "min":1
+    },
     "Campaign":{
       "type":"structure",
       "required":[
@@ -833,6 +838,12 @@
       "box":true,
       "max":1,
       "min":0.01
+    },
+    "ChannelContext":{
+      "type":"structure",
+      "members":{
+        "webNotificationContext":{"shape":"WebNotificationContext"}
+      }
     },
     "ChannelSubtype":{
       "type":"string",
@@ -1289,6 +1300,13 @@
         "customerProfilesDomainArn":{"shape":"Arn"}
       }
     },
+    "EventTriggerContext":{
+      "type":"structure",
+      "members":{
+        "sourceEvent":{"shape":"SourceEvent"},
+        "channelContext":{"shape":"ChannelContext"}
+      }
+    },
     "EventType":{
       "type":"string",
       "enum":[
@@ -1296,7 +1314,8 @@
         "Campaign-SMS",
         "Campaign-Telephony",
         "Campaign-Orchestration",
-        "Campaign-WhatsApp"
+        "Campaign-WhatsApp",
+        "Campaign-WebNotification"
       ]
     },
     "ExternalCampaignType":{
@@ -1831,7 +1850,8 @@
       "members":{
         "clientToken":{"shape":"ClientToken"},
         "profileId":{"shape":"ProfileId"},
-        "expirationTime":{"shape":"TimeStamp"}
+        "expirationTime":{"shape":"TimeStamp"},
+        "eventTriggerContext":{"shape":"EventTriggerContext"}
       }
     },
     "ProfileOutboundRequestFailureCode":{
@@ -2059,6 +2079,11 @@
       },
       "exception":true
     },
+    "SessionId":{
+      "type":"string",
+      "max":36,
+      "min":1
+    },
     "SmsChannelSubtypeConfig":{
       "type":"structure",
       "required":[
@@ -2109,6 +2134,10 @@
         "eventTrigger":{"shape":"EventTrigger"}
       },
       "union":true
+    },
+    "SourceEvent":{
+      "type":"string",
+      "min":1
     },
     "SourcePhoneNumber":{
       "type":"string",
@@ -2501,6 +2530,13 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "WebNotificationContext":{
+      "type":"structure",
+      "members":{
+        "sessionId":{"shape":"SessionId"},
+        "browserId":{"shape":"BrowserId"}
+      }
     },
     "WhatsAppChannelSubtypeConfig":{
       "type":"structure",

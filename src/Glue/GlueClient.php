@@ -535,6 +535,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise testConnectionAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
+ * @method \Aws\Result updateAsset(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateAssetAsync(array $args = [])
  * @method \Aws\Result updateBlueprint(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateBlueprintAsync(array $args = [])
  * @method \Aws\Result updateCatalog(array $args = [])

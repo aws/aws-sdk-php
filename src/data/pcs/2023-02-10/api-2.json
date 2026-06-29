@@ -1465,7 +1465,8 @@
           "shape":"SBClientToken",
           "idempotencyToken":true
         },
-        "slurmConfiguration":{"shape":"UpdateClusterSlurmConfigurationRequest"}
+        "slurmConfiguration":{"shape":"UpdateClusterSlurmConfigurationRequest"},
+        "scheduler":{"shape":"UpdateSchedulerRequest"}
       }
     },
     "UpdateClusterResponse":{
@@ -1560,6 +1561,13 @@
       "type":"structure",
       "members":{
         "slurmCustomSettings":{"shape":"SlurmCustomSettings"}
+      }
+    },
+    "UpdateSchedulerRequest":{
+      "type":"structure",
+      "required":["version"],
+      "members":{
+        "version":{"shape":"String"}
       }
     },
     "UpdateSlurmRestRequest":{

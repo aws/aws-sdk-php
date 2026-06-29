@@ -2897,7 +2897,9 @@
       ],
       "members":{
         "enable":{"shape":"Boolean"},
-        "rollback":{"shape":"Boolean"}
+        "rollback":{"shape":"Boolean"},
+        "resetOnHealthyTask":{"shape":"BoxedBoolean"},
+        "thresholdConfiguration":{"shape":"ThresholdConfiguration"}
       }
     },
     "DeploymentConfiguration":{
@@ -6213,6 +6215,25 @@
     "Tasks":{
       "type":"list",
       "member":{"shape":"Task"}
+    },
+    "ThresholdConfiguration":{
+      "type":"structure",
+      "required":[
+        "type",
+        "value"
+      ],
+      "members":{
+        "type":{"shape":"ThresholdType"},
+        "value":{"shape":"Integer"}
+      }
+    },
+    "ThresholdType":{
+      "type":"string",
+      "enum":[
+        "COUNT",
+        "BOUNDED_PERCENT",
+        "UNBOUNDED_PERCENT"
+      ]
     },
     "TimeoutConfiguration":{
       "type":"structure",

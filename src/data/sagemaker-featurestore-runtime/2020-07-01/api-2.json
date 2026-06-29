@@ -29,6 +29,22 @@
         {"shape":"AccessForbidden"}
       ]
     },
+    "BatchWriteRecord":{
+      "name":"BatchWriteRecord",
+      "http":{
+        "method":"POST",
+        "requestUri":"/BatchWriteRecord"
+      },
+      "input":{"shape":"BatchWriteRecordRequest"},
+      "output":{"shape":"BatchWriteRecordResponse"},
+      "errors":[
+        {"shape":"ValidationError"},
+        {"shape":"ResourceNotFound"},
+        {"shape":"InternalFailure"},
+        {"shape":"ServiceUnavailable"},
+        {"shape":"AccessForbidden"}
+      ]
+    },
     "DeleteRecord":{
       "name":"DeleteRecord",
       "http":{
@@ -58,6 +74,23 @@
         {"shape":"ServiceUnavailable"},
         {"shape":"AccessForbidden"}
       ]
+    },
+    "ListRecords":{
+      "name":"ListRecords",
+      "http":{
+        "method":"POST",
+        "requestUri":"/FeatureGroup/{FeatureGroupName}/ListRecords"
+      },
+      "input":{"shape":"ListRecordsRequest"},
+      "output":{"shape":"ListRecordsResponse"},
+      "errors":[
+        {"shape":"ValidationError"},
+        {"shape":"ResourceNotFound"},
+        {"shape":"InternalFailure"},
+        {"shape":"ServiceUnavailable"},
+        {"shape":"AccessForbidden"}
+      ],
+      "readonly":true
     },
     "PutRecord":{
       "name":"PutRecord",
@@ -162,6 +195,63 @@
       "member":{"shape":"BatchGetRecordResultDetail"},
       "min":0
     },
+    "BatchWriteRecordEntries":{
+      "type":"list",
+      "member":{"shape":"BatchWriteRecordEntry"},
+      "max":25,
+      "min":1
+    },
+    "BatchWriteRecordEntry":{
+      "type":"structure",
+      "required":[
+        "FeatureGroupName",
+        "Record"
+      ],
+      "members":{
+        "FeatureGroupName":{"shape":"FeatureGroupNameOrArn"},
+        "Record":{"shape":"Record"},
+        "TargetStores":{"shape":"TargetStores"},
+        "TtlDuration":{"shape":"TtlDuration"}
+      }
+    },
+    "BatchWriteRecordError":{
+      "type":"structure",
+      "required":[
+        "Entry",
+        "ErrorCode",
+        "ErrorMessage"
+      ],
+      "members":{
+        "Entry":{"shape":"BatchWriteRecordEntry"},
+        "ErrorCode":{"shape":"ValueAsString"},
+        "ErrorMessage":{"shape":"Message"}
+      }
+    },
+    "BatchWriteRecordErrors":{
+      "type":"list",
+      "member":{"shape":"BatchWriteRecordError"},
+      "min":0
+    },
+    "BatchWriteRecordRequest":{
+      "type":"structure",
+      "required":["Entries"],
+      "members":{
+        "Entries":{"shape":"BatchWriteRecordEntries"},
+        "TtlDuration":{"shape":"TtlDuration"}
+      }
+    },
+    "BatchWriteRecordResponse":{
+      "type":"structure",
+      "required":[
+        "Errors",
+        "UnprocessedEntries"
+      ],
+      "members":{
+        "Errors":{"shape":"BatchWriteRecordErrors"},
+        "UnprocessedEntries":{"shape":"UnprocessedBatchWriteRecordEntries"}
+      }
+    },
+    "Boolean":{"type":"boolean"},
     "DeleteRecordRequest":{
       "type":"structure",
       "required":[
@@ -284,6 +374,38 @@
       "fault":true,
       "synthetic":true
     },
+    "ListRecordsMaxResults":{
+      "type":"integer",
+      "max":100,
+      "min":1
+    },
+    "ListRecordsNextToken":{
+      "type":"string",
+      "max":8192,
+      "min":1
+    },
+    "ListRecordsRequest":{
+      "type":"structure",
+      "required":["FeatureGroupName"],
+      "members":{
+        "FeatureGroupName":{
+          "shape":"FeatureGroupNameOrArn",
+          "location":"uri",
+          "locationName":"FeatureGroupName"
+        },
+        "MaxResults":{"shape":"ListRecordsMaxResults"},
+        "NextToken":{"shape":"ListRecordsNextToken"},
+        "IncludeSoftDeletedRecords":{"shape":"Boolean"}
+      }
+    },
+    "ListRecordsResponse":{
+      "type":"structure",
+      "required":["RecordIdentifiers"],
+      "members":{
+        "RecordIdentifiers":{"shape":"RecordIdentifierList"},
+        "NextToken":{"shape":"ListRecordsNextToken"}
+      }
+    },
     "Message":{
       "type":"string",
       "max":2048
@@ -309,6 +431,10 @@
       "type":"list",
       "member":{"shape":"FeatureValue"},
       "min":1
+    },
+    "RecordIdentifierList":{
+      "type":"list",
+      "member":{"shape":"ValueAsString"}
     },
     "RecordIdentifiers":{
       "type":"list",
@@ -371,6 +497,11 @@
     "TtlDurationValue":{
       "type":"integer",
       "min":1
+    },
+    "UnprocessedBatchWriteRecordEntries":{
+      "type":"list",
+      "member":{"shape":"BatchWriteRecordEntry"},
+      "min":0
     },
     "UnprocessedIdentifiers":{
       "type":"list",

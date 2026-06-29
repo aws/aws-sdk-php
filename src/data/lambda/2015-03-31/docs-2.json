@@ -1359,6 +1359,12 @@
         "GetFunctionResponse$Code": "<p>The deployment package of the function or version.</p>"
       }
     },
+    "FunctionCodeLocationError": {
+      "base": "<p>Details about an error related to retrieving a function's deployment package.</p>",
+      "refs": {
+        "FunctionCodeLocation$Error": "<p>An object that contains details about an error related to function deployment package retrieval.</p>"
+      }
+    },
     "FunctionConfiguration": {
       "base": "<p>Details about a function's configuration.</p>",
       "refs": {
@@ -2849,6 +2855,13 @@
         "PutFunctionConcurrencyRequest$ReservedConcurrentExecutions": "<p>The number of simultaneous executions to reserve for the function.</p>"
       }
     },
+    "ResolvedS3Object": {
+      "base": "<p>Details about the resolved Amazon S3 object that contains a function's deployment package.</p>",
+      "refs": {
+        "FunctionCodeLocation$ResolvedS3Object": "<p>The resolved Amazon S3 object that contains the deployment package.</p>",
+        "LayerVersionContentOutput$ResolvedS3Object": null
+      }
+    },
     "ResourceArn": {
       "base": null,
       "refs": {
@@ -2943,6 +2956,7 @@
       "refs": {
         "FunctionCode$S3Bucket": "<p>An Amazon S3 bucket in the same Amazon Web Services Region as your function. The bucket can be in a different Amazon Web Services account.</p>",
         "LayerVersionContentInput$S3Bucket": "<p>The Amazon S3 bucket of the layer archive.</p>",
+        "ResolvedS3Object$S3Bucket": "<p>The Amazon S3 bucket that contains the deployment package.</p>",
         "UpdateFunctionCodeRequest$S3Bucket": "<p>An Amazon S3 bucket in the same Amazon Web Services Region as your function. The bucket can be in a different Amazon Web Services account. Use only with a function defined with a .zip file archive deployment package.</p>"
       }
     },
@@ -2963,7 +2977,16 @@
       "refs": {
         "FunctionCode$S3Key": "<p>The Amazon S3 key of the deployment package.</p>",
         "LayerVersionContentInput$S3Key": "<p>The Amazon S3 key of the layer archive.</p>",
+        "ResolvedS3Object$S3Key": "<p>The Amazon S3 key of the deployment package.</p>",
         "UpdateFunctionCodeRequest$S3Key": "<p>The Amazon S3 key of the deployment package. Use only with a function defined with a .zip file archive deployment package.</p>"
+      }
+    },
+    "S3ObjectStorageMode": {
+      "base": "<p>The storage mode for a function's deployment package.</p>",
+      "refs": {
+        "FunctionCode$S3ObjectStorageMode": "<p>Specifies how the deployment package is stored. Use <code>COPY</code> (default) to upload a copy of your deployment package to Lambda. Use <code>REFERENCE</code> to have Lambda reference the deployment package from the specified Amazon S3 bucket.</p>",
+        "LayerVersionContentInput$S3ObjectStorageMode": null,
+        "UpdateFunctionCodeRequest$S3ObjectStorageMode": "<p>Specifies how the deployment package is stored. Use <code>COPY</code> (default) to upload a copy of your deployment package to Lambda. Use <code>REFERENCE</code> to have Lambda reference the deployment package from the specified Amazon S3 bucket.</p>"
       }
     },
     "S3ObjectVersion": {
@@ -2971,6 +2994,7 @@
       "refs": {
         "FunctionCode$S3ObjectVersion": "<p>For versioned objects, the version of the deployment package object to use.</p>",
         "LayerVersionContentInput$S3ObjectVersion": "<p>For versioned objects, the version of the layer archive object to use.</p>",
+        "ResolvedS3Object$S3ObjectVersion": "<p>The version of the deployment package object.</p>",
         "UpdateFunctionCodeRequest$S3ObjectVersion": "<p>For versioned objects, the version of the deployment package object to use.</p>"
       }
     },
@@ -3051,6 +3075,7 @@
       "base": null,
       "refs": {
         "EnvironmentError$Message": "<p>The error message.</p>",
+        "FunctionCodeLocationError$Message": "<p>A description of the error.</p>",
         "ImageConfigError$Message": "<p>Error message.</p>",
         "RuntimeVersionError$Message": "<p>The error message.</p>"
       }
@@ -3289,6 +3314,7 @@
         "FunctionCodeLocation$RepositoryType": "<p>The service that's hosting the file.</p>",
         "FunctionCodeLocation$ImageUri": "<p>URI of a container image in the Amazon ECR registry.</p>",
         "FunctionCodeLocation$ResolvedImageUri": "<p>The resolved URI for the image.</p>",
+        "FunctionCodeLocationError$ErrorCode": "<p>The error code for the failed retrieval.</p>",
         "FunctionConfiguration$CodeSha256": "<p>The SHA256 hash of the function's deployment package.</p>",
         "FunctionConfiguration$RevisionId": "<p>The latest updated revision of the function or alias.</p>",
         "FunctionConfiguration$ConfigSha256": "<p>The SHA256 hash of the function configuration.</p>",

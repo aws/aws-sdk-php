@@ -3281,6 +3281,7 @@
         "S3Bucket":{"shape":"S3Bucket"},
         "S3Key":{"shape":"S3Key"},
         "S3ObjectVersion":{"shape":"S3ObjectVersion"},
+        "S3ObjectStorageMode":{"shape":"S3ObjectStorageMode"},
         "ImageUri":{"shape":"String"},
         "SourceKMSKeyArn":{"shape":"KMSKeyArn"}
       }
@@ -3292,7 +3293,16 @@
         "Location":{"shape":"SensitiveStringOnServerOnly"},
         "ImageUri":{"shape":"String"},
         "ResolvedImageUri":{"shape":"String"},
-        "SourceKMSKeyArn":{"shape":"KMSKeyArn"}
+        "ResolvedS3Object":{"shape":"ResolvedS3Object"},
+        "SourceKMSKeyArn":{"shape":"KMSKeyArn"},
+        "Error":{"shape":"FunctionCodeLocationError"}
+      }
+    },
+    "FunctionCodeLocationError":{
+      "type":"structure",
+      "members":{
+        "ErrorCode":{"shape":"String"},
+        "Message":{"shape":"SensitiveString"}
       }
     },
     "FunctionConfiguration":{
@@ -4558,6 +4568,7 @@
         "S3Bucket":{"shape":"S3Bucket"},
         "S3Key":{"shape":"S3Key"},
         "S3ObjectVersion":{"shape":"S3ObjectVersion"},
+        "S3ObjectStorageMode":{"shape":"S3ObjectStorageMode"},
         "ZipFile":{"shape":"Blob"}
       }
     },
@@ -4568,7 +4579,8 @@
         "CodeSha256":{"shape":"String"},
         "CodeSize":{"shape":"Long"},
         "SigningProfileVersionArn":{"shape":"Arn"},
-        "SigningJobArn":{"shape":"Arn"}
+        "SigningJobArn":{"shape":"Arn"},
+        "ResolvedS3Object":{"shape":"ResolvedS3Object"}
       }
     },
     "LayerVersionNumber":{"type":"long"},
@@ -5919,6 +5931,14 @@
       "box":true,
       "min":0
     },
+    "ResolvedS3Object":{
+      "type":"structure",
+      "members":{
+        "S3Bucket":{"shape":"S3Bucket"},
+        "S3Key":{"shape":"S3Key"},
+        "S3ObjectVersion":{"shape":"S3ObjectVersion"}
+      }
+    },
     "ResourceArn":{
       "type":"string",
       "max":10000,
@@ -6119,6 +6139,13 @@
       "max":1024,
       "min":1,
       "pattern":".*"
+    },
+    "S3ObjectStorageMode":{
+      "type":"string",
+      "enum":[
+        "COPY",
+        "REFERENCE"
+      ]
     },
     "S3ObjectVersion":{
       "type":"string",
@@ -6894,6 +6921,7 @@
         "S3Bucket":{"shape":"S3Bucket"},
         "S3Key":{"shape":"S3Key"},
         "S3ObjectVersion":{"shape":"S3ObjectVersion"},
+        "S3ObjectStorageMode":{"shape":"S3ObjectStorageMode"},
         "ImageUri":{"shape":"String"},
         "Architectures":{"shape":"ArchitecturesList"},
         "Publish":{"shape":"Boolean"},

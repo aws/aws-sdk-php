@@ -393,6 +393,7 @@
       "type":"structure",
       "members":{
         "type":{"shape":"CheckType"},
+        "id":{"shape":"String"},
         "result":{"shape":"CheckResult"},
         "impairedSince":{"shape":"Timestamp"}
       }
@@ -414,7 +415,13 @@
         "HOST_COUNT",
         "VCENTER_REACHABILITY",
         "VCENTER_VM_SYNC",
-        "VCENTER_VM_EVENT"
+        "VCENTER_VM_EVENT",
+        "OPERATIONS_MANAGER_REACHABILITY",
+        "SDDC_MANAGER_REACHABILITY",
+        "SDDC_MANAGER_HOST_COUNT",
+        "SDDC_MANAGER_KEY_COVERAGE",
+        "SDDC_MANAGER_KEY_REUSE",
+        "CONNECTOR_HEALTH"
       ]
     },
     "ChecksList":{
@@ -485,7 +492,11 @@
     },
     "ConnectorType":{
       "type":"string",
-      "enum":["VCENTER"]
+      "enum":[
+        "OPERATIONS_MANAGER",
+        "SDDC_MANAGER",
+        "VCENTER"
+      ]
     },
     "ConnectorsChecksList":{
       "type":"list",
@@ -571,12 +582,7 @@
         "serviceAccessSubnetId",
         "vcfVersion",
         "termsAccepted",
-        "licenseInfo",
-        "initialVlans",
-        "hosts",
-        "connectivityInfo",
-        "vcfHostnames",
-        "siteId"
+        "initialVlans"
       ],
       "members":{
         "clientToken":{
@@ -591,10 +597,10 @@
         "serviceAccessSubnetId":{"shape":"SubnetId"},
         "vcfVersion":{"shape":"VcfVersion"},
         "termsAccepted":{"shape":"Boolean"},
-        "licenseInfo":{"shape":"LicenseInfoList"},
         "initialVlans":{"shape":"InitialVlans"},
-        "hosts":{"shape":"HostInfoForCreateList"},
         "connectivityInfo":{"shape":"ConnectivityInfo"},
+        "licenseInfo":{"shape":"LicenseInfoList"},
+        "hosts":{"shape":"HostInfoForCreateList"},
         "vcfHostnames":{"shape":"VcfHostnames"},
         "siteId":{"shape":"String"}
       }
@@ -1441,7 +1447,8 @@
       "type":"string",
       "enum":[
         "VCF-5.2.1",
-        "VCF-5.2.2"
+        "VCF-5.2.2",
+        "SELF_DEPLOYED"
       ]
     },
     "VcfVersionInfo":{

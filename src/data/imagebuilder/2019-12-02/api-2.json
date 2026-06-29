@@ -1495,6 +1495,18 @@
       "min":1,
       "pattern":"^[-_A-Za-z0-9{][-_A-Za-z0-9\\s:{}\\.]+[-_A-Za-z0-9}]$"
     },
+    "AmiWatermarkName":{
+      "type":"string",
+      "max":128,
+      "min":3,
+      "pattern":"^[A-Za-z0-9()\\[\\]./'@_\\-][A-Za-z0-9 ()\\[\\]./'@_\\-]{1,126}[A-Za-z0-9()\\[\\]./'@_\\-]$"
+    },
+    "AmiWatermarksList":{
+      "type":"list",
+      "member":{"shape":"AmiWatermarkName"},
+      "max":5,
+      "min":1
+    },
     "Arn":{"type":"string"},
     "AutoDisableFailureCount":{
       "type":"integer",
@@ -1995,6 +2007,7 @@
         "workingDirectory":{"shape":"NonEmptyString"},
         "additionalInstanceConfiguration":{"shape":"AdditionalInstanceConfiguration"},
         "amiTags":{"shape":"TagMap"},
+        "amiWatermarks":{"shape":"AmiWatermarksList"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -3045,7 +3058,8 @@
         "tags":{"shape":"TagMap"},
         "workingDirectory":{"shape":"NonEmptyString"},
         "additionalInstanceConfiguration":{"shape":"AdditionalInstanceConfiguration"},
-        "amiTags":{"shape":"TagMap"}
+        "amiTags":{"shape":"TagMap"},
+        "amiWatermarks":{"shape":"AmiWatermarksList"}
       }
     },
     "ImageRecipeArn":{

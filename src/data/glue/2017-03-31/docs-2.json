@@ -267,6 +267,7 @@
     "TagResource": "<p>Adds tags to a resource. A tag is a label you can assign to an Amazon Web Services resource. In Glue, you can tag only certain resources. For information about what resources you can tag, see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/monitor-tags.html\">Amazon Web Services Tags in Glue</a>.</p>",
     "TestConnection": "<p>Tests a connection to a service to validate the service credentials that you provide.</p> <p>You can either provide an existing connection name or a <code>TestConnectionInput</code> for testing a non-existing connection input. Providing both at the same time will cause an error.</p> <p>If the action is successful, the service sends back an HTTP 200 response.</p>",
     "UntagResource": "<p>Removes tags from a resource.</p>",
+    "UpdateAsset": "<p>Updates the name and description of an existing asset in Glue Data Catalog. Only the fields that you provide are updated.</p>",
     "UpdateBlueprint": "<p>Updates a registered blueprint.</p>",
     "UpdateCatalog": "<p>Updates an existing catalog's properties in the Glue Data Catalog.</p>",
     "UpdateClassifier": "<p>Modifies an existing classifier (a <code>GrokClassifier</code>, an <code>XMLClassifier</code>, a <code>JsonClassifier</code>, or a <code>CsvClassifier</code>, depending on which field is present).</p>",
@@ -531,7 +532,9 @@
         "GetAssetOutput$Description": "<p>The description of the asset.</p>",
         "PutAssetRequest$Description": "<p>The description of the asset.</p>",
         "PutAssetResponse$Description": "<p>The description of the asset.</p>",
-        "SearchResultItem$AssetDescription": "<p>The description of the matched asset.</p>"
+        "SearchResultItem$AssetDescription": "<p>The description of the matched asset.</p>",
+        "UpdateAssetRequest$Description": "<p>The new description of the asset.</p>",
+        "UpdateAssetResponse$Description": "<p>The description of the asset.</p>"
       }
     },
     "AssetFormEntry": {
@@ -575,7 +578,9 @@
         "PutAssetResponse$Id": "<p>The unique identifier of the asset.</p>",
         "PutAttachmentRequest$AssetIdentifier": "<p>The unique identifier of the asset to attach the form to.</p>",
         "PutAttachmentResponse$AssetIdentifier": "<p>The unique identifier of the asset.</p>",
-        "SearchResultItem$Id": "<p>The unique identifier of the matched asset.</p>"
+        "SearchResultItem$Id": "<p>The unique identifier of the matched asset.</p>",
+        "UpdateAssetRequest$Identifier": "<p>The unique identifier of the asset to update.</p>",
+        "UpdateAssetResponse$Id": "<p>The unique identifier of the asset.</p>"
       }
     },
     "AssetName": {
@@ -583,7 +588,9 @@
       "refs": {
         "GetAssetOutput$Name": "<p>The name of the asset.</p>",
         "PutAssetRequest$Name": "<p>The name of the asset.</p>",
-        "PutAssetResponse$Name": "<p>The name of the asset.</p>"
+        "PutAssetResponse$Name": "<p>The name of the asset.</p>",
+        "UpdateAssetRequest$Name": "<p>The new name of the asset.</p>",
+        "UpdateAssetResponse$Name": "<p>The name of the asset.</p>"
       }
     },
     "AssetTypeFormKey": {
@@ -4735,7 +4742,8 @@
     "FormContent": {
       "base": null,
       "refs": {
-        "AssetFormEntry$Content": "<p>The JSON content of the form, conforming to the schema of the specified form type.</p>"
+        "AssetFormEntry$Content": "<p>The JSON content of the form, conforming to the schema of the specified form type.</p>",
+        "PutAttachmentRequest$Content": "<p>The JSON content of the form, conforming to the schema of the specified form type.</p>"
       }
     },
     "FormTypeId": {
@@ -4748,6 +4756,8 @@
         "GetFormTypeRequest$Identifier": "<p>The identifier of the form type to retrieve.</p>",
         "GetFormTypeResponse$Id": "<p>The identifier of the form type.</p>",
         "IterableFormEntry$FormTypeId": "<p>The form type identifier of the iterable form (for example, <code>columns</code>), used to retrieve its items via <code>ListIterableForms</code> or <code>BatchGetIterableForms</code>.</p>",
+        "PutAttachmentRequest$FormTypeId": "<p>The identifier of the form type for this attachment.</p>",
+        "PutAttachmentResponse$FormTypeId": "<p>The identifier of the form type for this attachment.</p>",
         "PutFormTypeResponse$Id": "<p>The identifier of the form type.</p>"
       }
     },
@@ -6127,6 +6137,7 @@
         "TaskRun$TransformId": "<p>The unique identifier for the transform.</p>",
         "TaskRun$TaskRunId": "<p>The unique identifier for this task run.</p>",
         "TransformIdList$member": null,
+        "UpdateAssetRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
         "UpdateGlossaryRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
         "UpdateGlossaryTermRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
         "UpdateMLTransformRequest$TransformId": "<p>A unique identifier that was generated when the transform was created.</p>",
@@ -7865,19 +7876,6 @@
         "GlossaryItem$Description": "<p>The description of the glossary.</p>",
         "UpdateGlossaryRequest$Description": "<p>The updated description of the glossary.</p>",
         "UpdateGlossaryResponse$Description": "<p>The description of the glossary.</p>"
-      }
-    },
-    "MetadataFormContent": {
-      "base": null,
-      "refs": {
-        "PutAttachmentRequest$Content": "<p>The JSON content of the form, conforming to the schema of the specified form type.</p>"
-      }
-    },
-    "MetadataFormTypeIdentifier": {
-      "base": null,
-      "refs": {
-        "PutAttachmentRequest$FormTypeId": "<p>The identifier of the form type for this attachment.</p>",
-        "PutAttachmentResponse$FormTypeId": "<p>The identifier of the form type for this attachment.</p>"
       }
     },
     "MetadataInfo": {
@@ -12313,6 +12311,14 @@
       "base": null,
       "refs": {}
     },
+    "UpdateAssetRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAssetResponse": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateBehavior": {
       "base": null,
       "refs": {
@@ -12619,7 +12625,8 @@
       "base": null,
       "refs": {
         "GetAssetOutput$UpdatedAt": "<p>The timestamp at which the asset was last updated.</p>",
-        "SearchResultItem$UpdatedAt": "<p>The timestamp at which the matched asset was last updated.</p>"
+        "SearchResultItem$UpdatedAt": "<p>The timestamp at which the matched asset was last updated.</p>",
+        "UpdateAssetResponse$UpdatedAt": "<p>The timestamp at which the asset was last updated.</p>"
       }
     },
     "UpdatedTimestamp": {

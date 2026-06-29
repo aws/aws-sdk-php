@@ -77,6 +77,23 @@
         {"shape":"ServiceQuotaExceededException"}
       ]
     },
+    "CreateExperimentDefinition":{
+      "name":"CreateExperimentDefinition",
+      "http":{
+        "method":"POST",
+        "requestUri":"/applications/{ApplicationIdentifier}/experimentdefinitions",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateExperimentDefinitionRequest"},
+      "output":{"shape":"ExperimentDefinition"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "CreateExtension":{
       "name":"CreateExtension",
       "http":{
@@ -184,6 +201,22 @@
         {"shape":"InternalServerException"},
         {"shape":"BadRequestException"}
       ]
+    },
+    "DeleteExperimentDefinition":{
+      "name":"DeleteExperimentDefinition",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/applications/{ApplicationIdentifier}/experimentdefinitions/{ExperimentDefinitionIdentifier}",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteExperimentDefinitionRequest"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
     },
     "DeleteExtension":{
       "name":"DeleteExtension",
@@ -332,6 +365,38 @@
         {"shape":"BadRequestException"}
       ]
     },
+    "GetExperimentDefinition":{
+      "name":"GetExperimentDefinition",
+      "http":{
+        "method":"GET",
+        "requestUri":"/applications/{ApplicationIdentifier}/experimentdefinitions/{ExperimentDefinitionIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetExperimentDefinitionRequest"},
+      "output":{"shape":"ExperimentDefinition"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "GetExperimentRun":{
+      "name":"GetExperimentRun",
+      "http":{
+        "method":"GET",
+        "requestUri":"/applications/{ApplicationIdentifier}/experimentdefinitions/{ExperimentDefinitionIdentifier}/experimentruns/{Run}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetExperimentRunRequest"},
+      "output":{"shape":"ExperimentRun"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"BadRequestException"}
+      ],
+      "readonly":true
+    },
     "GetExtension":{
       "name":"GetExtension",
       "http":{
@@ -450,6 +515,54 @@
         {"shape":"BadRequestException"}
       ]
     },
+    "ListExperimentDefinitions":{
+      "name":"ListExperimentDefinitions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/experimentdefinitions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListExperimentDefinitionsRequest"},
+      "output":{"shape":"ExperimentDefinitions"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"BadRequestException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "ListExperimentRunEvents":{
+      "name":"ListExperimentRunEvents",
+      "http":{
+        "method":"GET",
+        "requestUri":"/applications/{ApplicationIdentifier}/experimentdefinitions/{ExperimentDefinitionIdentifier}/experimentruns/{Run}/events",
+        "responseCode":200
+      },
+      "input":{"shape":"ListExperimentRunEventsRequest"},
+      "output":{"shape":"ExperimentRunEvents"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"BadRequestException"}
+      ],
+      "readonly":true
+    },
+    "ListExperimentRuns":{
+      "name":"ListExperimentRuns",
+      "http":{
+        "method":"GET",
+        "requestUri":"/applications/{ApplicationIdentifier}/experimentdefinitions/{ExperimentDefinitionIdentifier}/experimentruns",
+        "responseCode":200
+      },
+      "input":{"shape":"ListExperimentRunsRequest"},
+      "output":{"shape":"ExperimentRuns"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"BadRequestException"}
+      ],
+      "readonly":true
+    },
     "ListExtensionAssociations":{
       "name":"ListExtensionAssociations",
       "http":{
@@ -524,6 +637,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "StartExperimentRun":{
+      "name":"StartExperimentRun",
+      "http":{
+        "method":"POST",
+        "requestUri":"/applications/{ApplicationIdentifier}/experimentdefinitions/{ExperimentDefinitionIdentifier}/experimentruns",
+        "responseCode":201
+      },
+      "input":{"shape":"StartExperimentRunRequest"},
+      "output":{"shape":"ExperimentRun"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "StopDeployment":{
       "name":"StopDeployment",
       "http":{
@@ -533,6 +662,21 @@
       },
       "input":{"shape":"StopDeploymentRequest"},
       "output":{"shape":"Deployment"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"BadRequestException"}
+      ]
+    },
+    "StopExperimentRun":{
+      "name":"StopExperimentRun",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/applications/{ApplicationIdentifier}/experimentdefinitions/{ExperimentDefinitionIdentifier}/experimentruns/{Run}/stop",
+        "responseCode":200
+      },
+      "input":{"shape":"StopExperimentRunRequest"},
+      "output":{"shape":"ExperimentRun"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
@@ -641,6 +785,38 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "UpdateExperimentDefinition":{
+      "name":"UpdateExperimentDefinition",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/applications/{ApplicationIdentifier}/experimentdefinitions/{ExperimentDefinitionIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateExperimentDefinitionRequest"},
+      "output":{"shape":"ExperimentDefinition"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "UpdateExperimentRun":{
+      "name":"UpdateExperimentRun",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/applications/{ApplicationIdentifier}/experimentdefinitions/{ExperimentDefinitionIdentifier}/experimentruns/{Run}/update",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateExperimentRunRequest"},
+      "output":{"shape":"ExperimentRun"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "UpdateExtension":{
       "name":"UpdateExtension",
       "http":{
@@ -691,7 +867,8 @@
     "AccountSettings":{
       "type":"structure",
       "members":{
-        "DeletionProtection":{"shape":"DeletionProtectionSettings"}
+        "DeletionProtection":{"shape":"DeletionProtectionSettings"},
+        "VendedMetrics":{"shape":"VendedMetricsSettings"}
       }
     },
     "Action":{
@@ -783,6 +960,39 @@
       "min":20,
       "pattern":"arn:(aws[a-zA-Z-]*)?:[a-z]+:((eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1})?:(\\d{12})?:[a-zA-Z0-9-_/:.]+"
     },
+    "AttributeKey":{
+      "type":"string",
+      "pattern":"(?!enabled$)[a-z][a-zA-Z0-9_-]{0,63}"
+    },
+    "AttributeString":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "AttributeValue":{
+      "type":"structure",
+      "members":{
+        "StringValue":{"shape":"AttributeString"},
+        "NumberValue":{
+          "shape":"Double",
+          "box":true
+        },
+        "BooleanValue":{
+          "shape":"Boolean",
+          "box":true
+        },
+        "StringArray":{"shape":"StringList"},
+        "NumberArray":{"shape":"NumberList"}
+      },
+      "union":true
+    },
+    "AttributeValueMap":{
+      "type":"map",
+      "key":{"shape":"AttributeKey"},
+      "value":{"shape":"AttributeValue"},
+      "max":25,
+      "min":0
+    },
     "BadRequestDetails":{
       "type":"structure",
       "members":{
@@ -862,7 +1072,7 @@
     },
     "ConfigurationProfileType":{
       "type":"string",
-      "pattern":"^[a-zA-Z\\.]+"
+      "pattern":"^[a-zA-Z0-9\\.\\-]+"
     },
     "ConfigurationProfiles":{
       "type":"structure",
@@ -897,7 +1107,7 @@
       ],
       "members":{
         "ApplicationId":{
-          "shape":"Id",
+          "shape":"Name",
           "location":"uri",
           "locationName":"ApplicationId"
         },
@@ -943,13 +1153,44 @@
       ],
       "members":{
         "ApplicationId":{
-          "shape":"Id",
+          "shape":"Name",
           "location":"uri",
           "locationName":"ApplicationId"
         },
         "Name":{"shape":"Name"},
         "Description":{"shape":"Description"},
         "Monitors":{"shape":"MonitorList"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateExperimentDefinitionRequest":{
+      "type":"structure",
+      "required":[
+        "ApplicationIdentifier",
+        "Name",
+        "ConfigurationProfileIdentifier",
+        "EnvironmentIdentifier",
+        "FlagKey",
+        "Treatments",
+        "Control",
+        "AudienceRule"
+      ],
+      "members":{
+        "ApplicationIdentifier":{
+          "shape":"Identifier",
+          "location":"uri",
+          "locationName":"ApplicationIdentifier"
+        },
+        "Name":{"shape":"NameWithReservedAwsPrefix"},
+        "ConfigurationProfileIdentifier":{"shape":"Identifier"},
+        "EnvironmentIdentifier":{"shape":"Identifier"},
+        "FlagKey":{"shape":"FlagKey"},
+        "Treatments":{"shape":"TreatmentInputList"},
+        "Control":{"shape":"TreatmentInput"},
+        "AudienceRule":{"shape":"Rule"},
+        "Hypothesis":{"shape":"Description"},
+        "AudienceDescription":{"shape":"Description"},
+        "LaunchCriteria":{"shape":"Description"},
         "Tags":{"shape":"TagMap"}
       }
     },
@@ -1000,12 +1241,12 @@
       ],
       "members":{
         "ApplicationId":{
-          "shape":"Id",
+          "shape":"Name",
           "location":"uri",
           "locationName":"ApplicationId"
         },
         "ConfigurationProfileId":{
-          "shape":"Id",
+          "shape":"LongName",
           "location":"uri",
           "locationName":"ConfigurationProfileId"
         },
@@ -1039,7 +1280,7 @@
       "required":["ApplicationId"],
       "members":{
         "ApplicationId":{
-          "shape":"Id",
+          "shape":"Name",
           "location":"uri",
           "locationName":"ApplicationId"
         }
@@ -1053,12 +1294,12 @@
       ],
       "members":{
         "ApplicationId":{
-          "shape":"Id",
+          "shape":"Name",
           "location":"uri",
           "locationName":"ApplicationId"
         },
         "ConfigurationProfileId":{
-          "shape":"Id",
+          "shape":"LongName",
           "location":"uri",
           "locationName":"ConfigurationProfileId"
         },
@@ -1088,12 +1329,12 @@
       ],
       "members":{
         "EnvironmentId":{
-          "shape":"Id",
+          "shape":"Name",
           "location":"uri",
           "locationName":"EnvironmentId"
         },
         "ApplicationId":{
-          "shape":"Id",
+          "shape":"Name",
           "location":"uri",
           "locationName":"ApplicationId"
         },
@@ -1101,6 +1342,30 @@
           "shape":"DeletionProtectionCheck",
           "location":"header",
           "locationName":"x-amzn-deletion-protection-check"
+        }
+      }
+    },
+    "DeleteExperimentDefinitionRequest":{
+      "type":"structure",
+      "required":[
+        "ApplicationIdentifier",
+        "ExperimentDefinitionIdentifier"
+      ],
+      "members":{
+        "ApplicationIdentifier":{
+          "shape":"Identifier",
+          "location":"uri",
+          "locationName":"ApplicationIdentifier"
+        },
+        "ExperimentDefinitionIdentifier":{
+          "shape":"Identifier",
+          "location":"uri",
+          "locationName":"ExperimentDefinitionIdentifier"
+        },
+        "DeleteType":{
+          "shape":"DeleteType",
+          "location":"querystring",
+          "locationName":"delete_type"
         }
       }
     },
@@ -1141,12 +1406,12 @@
       ],
       "members":{
         "ApplicationId":{
-          "shape":"Id",
+          "shape":"Name",
           "location":"uri",
           "locationName":"ApplicationId"
         },
         "ConfigurationProfileId":{
-          "shape":"Id",
+          "shape":"LongName",
           "location":"uri",
           "locationName":"ConfigurationProfileId"
         },
@@ -1156,6 +1421,13 @@
           "locationName":"VersionNumber"
         }
       }
+    },
+    "DeleteType":{
+      "type":"string",
+      "enum":[
+        "ARCHIVE",
+        "DESTROY"
+      ]
     },
     "DeletionProtectionCheck":{
       "type":"string",
@@ -1241,6 +1513,13 @@
       "type":"list",
       "member":{"shape":"DeploymentSummary"}
     },
+    "DeploymentParameters":{
+      "type":"structure",
+      "members":{
+        "DynamicExtensionParameters":{"shape":"DynamicParameterMap"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
     "DeploymentState":{
       "type":"string",
       "enum":[
@@ -1285,6 +1564,7 @@
       "type":"structure",
       "members":{
         "DeploymentNumber":{"shape":"Integer"},
+        "ConfigurationProfileId":{"shape":"Id"},
         "ConfigurationName":{"shape":"Name"},
         "ConfigurationVersion":{"shape":"Version"},
         "DeploymentDurationInMinutes":{"shape":"MinutesBetween0And24Hours"},
@@ -1295,8 +1575,16 @@
         "PercentageComplete":{"shape":"Percentage"},
         "StartedAt":{"shape":"Iso8601DateTime"},
         "CompletedAt":{"shape":"Iso8601DateTime"},
-        "VersionLabel":{"shape":"VersionLabel"}
+        "VersionLabel":{"shape":"VersionLabel"},
+        "Type":{"shape":"DeploymentType"}
       }
+    },
+    "DeploymentType":{
+      "type":"string",
+      "enum":[
+        "USER",
+        "MANAGED"
+      ]
     },
     "Deployments":{
       "type":"structure",
@@ -1310,6 +1598,7 @@
       "max":1024,
       "min":0
     },
+    "Double":{"type":"double"},
     "DynamicParameterKey":{
       "type":"string",
       "pattern":"^([^#\\n]{1,96})#([^\\/#\\n]{1,64})$"
@@ -1321,6 +1610,11 @@
       "max":10,
       "min":1,
       "sensitive":true
+    },
+    "EntityId":{
+      "type":"string",
+      "max":2048,
+      "min":1
     },
     "Environment":{
       "type":"structure",
@@ -1351,6 +1645,169 @@
       "type":"structure",
       "members":{
         "Items":{"shape":"EnvironmentList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ExperimentDefinition":{
+      "type":"structure",
+      "members":{
+        "ApplicationId":{"shape":"Id"},
+        "Id":{"shape":"Id"},
+        "Name":{"shape":"Name"},
+        "Hypothesis":{"shape":"Description"},
+        "Status":{"shape":"ExperimentDefinitionStatus"},
+        "ConfigurationProfileId":{"shape":"Id"},
+        "EnvironmentId":{"shape":"Id"},
+        "FlagKey":{"shape":"FlagKey"},
+        "AudienceRule":{"shape":"Rule"},
+        "AudienceDescription":{"shape":"Description"},
+        "LaunchCriteria":{"shape":"Description"},
+        "Treatments":{"shape":"TreatmentList"},
+        "Control":{"shape":"Treatment"},
+        "CreatedAt":{"shape":"Iso8601DateTime"},
+        "UpdatedAt":{"shape":"Iso8601DateTime"},
+        "KmsKeyIdentifier":{"shape":"KmsKeyIdentifier"}
+      }
+    },
+    "ExperimentDefinitionList":{
+      "type":"list",
+      "member":{"shape":"ExperimentDefinitionSummary"}
+    },
+    "ExperimentDefinitionSnapshot":{
+      "type":"structure",
+      "members":{
+        "ApplicationId":{"shape":"Id"},
+        "Id":{"shape":"Id"},
+        "Name":{"shape":"Name"},
+        "Hypothesis":{"shape":"Description"},
+        "ConfigurationProfileId":{"shape":"Id"},
+        "EnvironmentId":{"shape":"Id"},
+        "FlagKey":{"shape":"FlagKey"},
+        "AudienceRule":{"shape":"Rule"},
+        "AudienceDescription":{"shape":"Description"},
+        "LaunchCriteria":{"shape":"Description"},
+        "Treatments":{"shape":"TreatmentList"},
+        "Control":{"shape":"Treatment"}
+      }
+    },
+    "ExperimentDefinitionStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "IDLE",
+        "ARCHIVED"
+      ]
+    },
+    "ExperimentDefinitionSummary":{
+      "type":"structure",
+      "members":{
+        "ApplicationId":{"shape":"Id"},
+        "Id":{"shape":"Id"},
+        "Name":{"shape":"Name"},
+        "Hypothesis":{"shape":"Description"},
+        "Status":{"shape":"ExperimentDefinitionStatus"},
+        "ConfigurationProfileId":{"shape":"Id"},
+        "EnvironmentId":{"shape":"Id"},
+        "FlagKey":{"shape":"FlagKey"},
+        "CreatedAt":{"shape":"Iso8601DateTime"},
+        "UpdatedAt":{"shape":"Iso8601DateTime"}
+      }
+    },
+    "ExperimentDefinitions":{
+      "type":"structure",
+      "members":{
+        "Items":{"shape":"ExperimentDefinitionList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ExperimentRun":{
+      "type":"structure",
+      "members":{
+        "ApplicationId":{"shape":"Id"},
+        "ExperimentDefinitionId":{"shape":"Id"},
+        "Run":{"shape":"Integer"},
+        "Description":{"shape":"Description"},
+        "Status":{"shape":"ExperimentRunStatus"},
+        "ExposurePercentage":{"shape":"NullablePercentage"},
+        "TreatmentOverrides":{"shape":"TreatmentOverrides"},
+        "Result":{"shape":"ExperimentRunResult"},
+        "StartedAt":{"shape":"Iso8601DateTime"},
+        "UpdatedAt":{"shape":"Iso8601DateTime"},
+        "EndedAt":{"shape":"Iso8601DateTime"},
+        "ExperimentDefinitionSnapshot":{"shape":"ExperimentDefinitionSnapshot"}
+      }
+    },
+    "ExperimentRunEvent":{
+      "type":"structure",
+      "members":{
+        "Description":{"shape":"Description"},
+        "AssociatedDeployment":{"shape":"Arn"},
+        "EventType":{"shape":"ExperimentRunEventType"},
+        "OccurredAt":{"shape":"Iso8601DateTime"},
+        "TriggeredBy":{"shape":"TriggeredBy"},
+        "ExposurePercentage":{
+          "shape":"NullablePercentage",
+          "box":true
+        },
+        "TreatmentOverrides":{"shape":"TreatmentOverrides"}
+      }
+    },
+    "ExperimentRunEventList":{
+      "type":"list",
+      "member":{"shape":"ExperimentRunEvent"}
+    },
+    "ExperimentRunEventType":{
+      "type":"string",
+      "enum":[
+        "RUN_STARTED",
+        "EXPOSURE_UPDATED",
+        "OVERRIDES_UPDATED",
+        "RUN_STOPPED"
+      ]
+    },
+    "ExperimentRunEvents":{
+      "type":"structure",
+      "members":{
+        "Items":{"shape":"ExperimentRunEventList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ExperimentRunResult":{
+      "type":"structure",
+      "members":{
+        "ExecutiveSummary":{"shape":"Description"},
+        "ReasonsToLaunch":{"shape":"Description"},
+        "ReasonsNotToLaunch":{"shape":"Description"}
+      },
+      "box":true
+    },
+    "ExperimentRunStatus":{
+      "type":"string",
+      "enum":[
+        "RUNNING",
+        "DONE"
+      ]
+    },
+    "ExperimentRunSummary":{
+      "type":"structure",
+      "members":{
+        "ExperimentDefinitionId":{"shape":"Id"},
+        "Run":{"shape":"Integer"},
+        "Description":{"shape":"Description"},
+        "Status":{"shape":"ExperimentRunStatus"},
+        "StartedAt":{"shape":"Iso8601DateTime"},
+        "UpdatedAt":{"shape":"Iso8601DateTime"},
+        "EndedAt":{"shape":"Iso8601DateTime"}
+      }
+    },
+    "ExperimentRunSummaryList":{
+      "type":"list",
+      "member":{"shape":"ExperimentRunSummary"}
+    },
+    "ExperimentRuns":{
+      "type":"structure",
+      "members":{
+        "Items":{"shape":"ExperimentRunSummaryList"},
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -1421,13 +1878,25 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "FlagKey":{
+      "type":"string",
+      "pattern":"^[a-z][a-zA-Z0-9_-]{1,64}"
+    },
+    "FlagValue":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{"shape":"Boolean"},
+        "AttributeValues":{"shape":"AttributeValueMap"}
+      }
+    },
     "Float":{"type":"float"},
     "GetApplicationRequest":{
       "type":"structure",
       "required":["ApplicationId"],
       "members":{
         "ApplicationId":{
-          "shape":"Id",
+          "shape":"Name",
           "location":"uri",
           "locationName":"ApplicationId"
         }
@@ -1441,12 +1910,12 @@
       ],
       "members":{
         "ApplicationId":{
-          "shape":"Id",
+          "shape":"Name",
           "location":"uri",
           "locationName":"ApplicationId"
         },
         "ConfigurationProfileId":{
-          "shape":"Id",
+          "shape":"LongName",
           "location":"uri",
           "locationName":"ConfigurationProfileId"
         }
@@ -1497,12 +1966,12 @@
       ],
       "members":{
         "ApplicationId":{
-          "shape":"Id",
+          "shape":"Name",
           "location":"uri",
           "locationName":"ApplicationId"
         },
         "EnvironmentId":{
-          "shape":"Id",
+          "shape":"Name",
           "location":"uri",
           "locationName":"EnvironmentId"
         },
@@ -1533,14 +2002,59 @@
       ],
       "members":{
         "ApplicationId":{
-          "shape":"Id",
+          "shape":"Name",
           "location":"uri",
           "locationName":"ApplicationId"
         },
         "EnvironmentId":{
-          "shape":"Id",
+          "shape":"Name",
           "location":"uri",
           "locationName":"EnvironmentId"
+        }
+      }
+    },
+    "GetExperimentDefinitionRequest":{
+      "type":"structure",
+      "required":[
+        "ApplicationIdentifier",
+        "ExperimentDefinitionIdentifier"
+      ],
+      "members":{
+        "ApplicationIdentifier":{
+          "shape":"Identifier",
+          "location":"uri",
+          "locationName":"ApplicationIdentifier"
+        },
+        "ExperimentDefinitionIdentifier":{
+          "shape":"Identifier",
+          "location":"uri",
+          "locationName":"ExperimentDefinitionIdentifier"
+        }
+      }
+    },
+    "GetExperimentRunRequest":{
+      "type":"structure",
+      "required":[
+        "ApplicationIdentifier",
+        "ExperimentDefinitionIdentifier",
+        "Run"
+      ],
+      "members":{
+        "ApplicationIdentifier":{
+          "shape":"Identifier",
+          "location":"uri",
+          "locationName":"ApplicationIdentifier"
+        },
+        "ExperimentDefinitionIdentifier":{
+          "shape":"Identifier",
+          "location":"uri",
+          "locationName":"ExperimentDefinitionIdentifier"
+        },
+        "Run":{
+          "shape":"PositiveInteger",
+          "box":true,
+          "location":"uri",
+          "locationName":"Run"
         }
       }
     },
@@ -1581,12 +2095,12 @@
       ],
       "members":{
         "ApplicationId":{
-          "shape":"Id",
+          "shape":"Name",
           "location":"uri",
           "locationName":"ApplicationId"
         },
         "ConfigurationProfileId":{
-          "shape":"Id",
+          "shape":"LongName",
           "location":"uri",
           "locationName":"ConfigurationProfileId"
         },
@@ -1742,7 +2256,7 @@
       "required":["ApplicationId"],
       "members":{
         "ApplicationId":{
-          "shape":"Id",
+          "shape":"Name",
           "location":"uri",
           "locationName":"ApplicationId"
         },
@@ -1788,12 +2302,12 @@
       ],
       "members":{
         "ApplicationId":{
-          "shape":"Id",
+          "shape":"Name",
           "location":"uri",
           "locationName":"ApplicationId"
         },
         "EnvironmentId":{
-          "shape":"Id",
+          "shape":"Name",
           "location":"uri",
           "locationName":"EnvironmentId"
         },
@@ -1815,7 +2329,7 @@
       "required":["ApplicationId"],
       "members":{
         "ApplicationId":{
-          "shape":"Id",
+          "shape":"Name",
           "location":"uri",
           "locationName":"ApplicationId"
         },
@@ -1829,6 +2343,114 @@
           "shape":"NextToken",
           "location":"querystring",
           "locationName":"next_token"
+        }
+      }
+    },
+    "ListExperimentDefinitionsRequest":{
+      "type":"structure",
+      "members":{
+        "ApplicationIdentifier":{
+          "shape":"Identifier",
+          "location":"querystring",
+          "locationName":"application_identifier"
+        },
+        "ConfigurationProfileIdentifier":{
+          "shape":"Identifier",
+          "location":"querystring",
+          "locationName":"configuration_profile_identifier"
+        },
+        "EnvironmentIdentifier":{
+          "shape":"Identifier",
+          "location":"querystring",
+          "locationName":"environment_identifier"
+        },
+        "Status":{
+          "shape":"ExperimentDefinitionStatus",
+          "location":"querystring",
+          "locationName":"status"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "box":true,
+          "location":"querystring",
+          "locationName":"max_results"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"next_token"
+        }
+      }
+    },
+    "ListExperimentRunEventsRequest":{
+      "type":"structure",
+      "required":[
+        "ApplicationIdentifier",
+        "ExperimentDefinitionIdentifier",
+        "Run"
+      ],
+      "members":{
+        "ApplicationIdentifier":{
+          "shape":"Identifier",
+          "location":"uri",
+          "locationName":"ApplicationIdentifier"
+        },
+        "ExperimentDefinitionIdentifier":{
+          "shape":"Identifier",
+          "location":"uri",
+          "locationName":"ExperimentDefinitionIdentifier"
+        },
+        "Run":{
+          "shape":"PositiveInteger",
+          "box":true,
+          "location":"uri",
+          "locationName":"Run"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "box":true,
+          "location":"querystring",
+          "locationName":"max_results"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"next_token"
+        }
+      }
+    },
+    "ListExperimentRunsRequest":{
+      "type":"structure",
+      "required":[
+        "ApplicationIdentifier",
+        "ExperimentDefinitionIdentifier"
+      ],
+      "members":{
+        "ApplicationIdentifier":{
+          "shape":"Identifier",
+          "location":"uri",
+          "locationName":"ApplicationIdentifier"
+        },
+        "ExperimentDefinitionIdentifier":{
+          "shape":"Identifier",
+          "location":"uri",
+          "locationName":"ExperimentDefinitionIdentifier"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "box":true,
+          "location":"querystring",
+          "locationName":"max_results"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"next_token"
+        },
+        "Status":{
+          "shape":"ExperimentRunStatus",
+          "location":"querystring",
+          "locationName":"status"
         }
       }
     },
@@ -1893,12 +2515,12 @@
       ],
       "members":{
         "ApplicationId":{
-          "shape":"Id",
+          "shape":"Name",
           "location":"uri",
           "locationName":"ApplicationId"
         },
         "ConfigurationProfileId":{
-          "shape":"Id",
+          "shape":"LongName",
           "location":"uri",
           "locationName":"ConfigurationProfileId"
         },
@@ -1965,10 +2587,26 @@
       "max":64,
       "min":1
     },
+    "NameWithReservedAwsPrefix":{
+      "type":"string",
+      "pattern":"^(?!AWS\\.).{1,64}$"
+    },
     "NextToken":{
       "type":"string",
       "max":2048,
       "min":1
+    },
+    "NullablePercentage":{
+      "type":"float",
+      "box":true,
+      "max":100.0,
+      "min":0.0
+    },
+    "NumberList":{
+      "type":"list",
+      "member":{"shape":"Double"},
+      "max":25,
+      "min":0
     },
     "Parameter":{
       "type":"structure",
@@ -2008,6 +2646,11 @@
       "max":100.0,
       "min":1.0
     },
+    "PositiveInteger":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
     "QueryName":{
       "type":"string",
       "max":64,
@@ -2041,6 +2684,11 @@
       "min":20,
       "pattern":"^((arn):(aws|aws-cn|aws-iso|aws-iso-[a-z]{1}|aws-us-gov|aws-eusc):(iam)::\\d{12}:role[/].*)$"
     },
+    "Rule":{
+      "type":"string",
+      "max":16384,
+      "min":1
+    },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "members":{
@@ -2060,22 +2708,50 @@
       ],
       "members":{
         "ApplicationId":{
-          "shape":"Id",
+          "shape":"Name",
           "location":"uri",
           "locationName":"ApplicationId"
         },
         "EnvironmentId":{
-          "shape":"Id",
+          "shape":"Name",
           "location":"uri",
           "locationName":"EnvironmentId"
         },
         "DeploymentStrategyId":{"shape":"DeploymentStrategyId"},
-        "ConfigurationProfileId":{"shape":"Id"},
+        "ConfigurationProfileId":{"shape":"LongName"},
         "ConfigurationVersion":{"shape":"Version"},
         "Description":{"shape":"Description"},
         "Tags":{"shape":"TagMap"},
         "KmsKeyIdentifier":{"shape":"KmsKeyIdentifier"},
-        "DynamicExtensionParameters":{"shape":"DynamicParameterMap"}
+        "DynamicExtensionParameters":{"shape":"DynamicParameterMap"},
+        "LatestDeploymentNumber":{
+          "shape":"Integer",
+          "box":true
+        }
+      }
+    },
+    "StartExperimentRunRequest":{
+      "type":"structure",
+      "required":[
+        "ApplicationIdentifier",
+        "ExperimentDefinitionIdentifier"
+      ],
+      "members":{
+        "ApplicationIdentifier":{
+          "shape":"Identifier",
+          "location":"uri",
+          "locationName":"ApplicationIdentifier"
+        },
+        "ExperimentDefinitionIdentifier":{
+          "shape":"Identifier",
+          "location":"uri",
+          "locationName":"ExperimentDefinitionIdentifier"
+        },
+        "Description":{"shape":"Description"},
+        "ExposurePercentage":{"shape":"NullablePercentage"},
+        "TreatmentOverrides":{"shape":"TreatmentOverrides"},
+        "Tags":{"shape":"TagMap"},
+        "DeploymentParameters":{"shape":"DeploymentParameters"}
       }
     },
     "StopDeploymentRequest":{
@@ -2087,12 +2763,12 @@
       ],
       "members":{
         "ApplicationId":{
-          "shape":"Id",
+          "shape":"Name",
           "location":"uri",
           "locationName":"ApplicationId"
         },
         "EnvironmentId":{
-          "shape":"Id",
+          "shape":"Name",
           "location":"uri",
           "locationName":"EnvironmentId"
         },
@@ -2110,7 +2786,41 @@
         }
       }
     },
+    "StopExperimentRunRequest":{
+      "type":"structure",
+      "required":[
+        "ApplicationIdentifier",
+        "ExperimentDefinitionIdentifier",
+        "Run"
+      ],
+      "members":{
+        "ApplicationIdentifier":{
+          "shape":"Identifier",
+          "location":"uri",
+          "locationName":"ApplicationIdentifier"
+        },
+        "ExperimentDefinitionIdentifier":{
+          "shape":"Identifier",
+          "location":"uri",
+          "locationName":"ExperimentDefinitionIdentifier"
+        },
+        "Run":{
+          "shape":"PositiveInteger",
+          "box":true,
+          "location":"uri",
+          "locationName":"Run"
+        },
+        "Result":{"shape":"ExperimentRunResult"},
+        "DeploymentParameters":{"shape":"DeploymentParameters"}
+      }
+    },
     "String":{"type":"string"},
+    "StringList":{
+      "type":"list",
+      "member":{"shape":"AttributeString"},
+      "max":25,
+      "min":0
+    },
     "StringWithLengthBetween0And32768":{
       "type":"string",
       "max":32768,
@@ -2169,6 +2879,61 @@
       "type":"string",
       "max":256
     },
+    "Treatment":{
+      "type":"structure",
+      "required":[
+        "Weight",
+        "FlagValue"
+      ],
+      "members":{
+        "Key":{"shape":"TreatmentKey"},
+        "Weight":{"shape":"Weight"},
+        "Description":{"shape":"Description"},
+        "FlagValue":{"shape":"FlagValue"}
+      }
+    },
+    "TreatmentInput":{
+      "type":"structure",
+      "required":[
+        "Weight",
+        "FlagValue"
+      ],
+      "members":{
+        "Weight":{"shape":"Weight"},
+        "Description":{"shape":"Description"},
+        "FlagValue":{"shape":"FlagValue"}
+      }
+    },
+    "TreatmentInputList":{
+      "type":"list",
+      "member":{"shape":"TreatmentInput"},
+      "max":5,
+      "min":1
+    },
+    "TreatmentKey":{
+      "type":"string",
+      "pattern":"^[a-zA-Z0-9]{1,8}"
+    },
+    "TreatmentList":{
+      "type":"list",
+      "member":{"shape":"Treatment"},
+      "max":5,
+      "min":1
+    },
+    "TreatmentOverrideMap":{
+      "type":"map",
+      "key":{"shape":"EntityId"},
+      "value":{"shape":"TreatmentKey"},
+      "max":32,
+      "min":0
+    },
+    "TreatmentOverrides":{
+      "type":"structure",
+      "members":{
+        "Inline":{"shape":"TreatmentOverrideMap"}
+      },
+      "union":true
+    },
     "TriggeredBy":{
       "type":"string",
       "enum":[
@@ -2200,7 +2965,8 @@
     "UpdateAccountSettingsRequest":{
       "type":"structure",
       "members":{
-        "DeletionProtection":{"shape":"DeletionProtectionSettings"}
+        "DeletionProtection":{"shape":"DeletionProtectionSettings"},
+        "VendedMetrics":{"shape":"VendedMetricsSettings"}
       }
     },
     "UpdateApplicationRequest":{
@@ -2208,7 +2974,7 @@
       "required":["ApplicationId"],
       "members":{
         "ApplicationId":{
-          "shape":"Id",
+          "shape":"Name",
           "location":"uri",
           "locationName":"ApplicationId"
         },
@@ -2224,12 +2990,12 @@
       ],
       "members":{
         "ApplicationId":{
-          "shape":"Id",
+          "shape":"Name",
           "location":"uri",
           "locationName":"ApplicationId"
         },
         "ConfigurationProfileId":{
-          "shape":"Id",
+          "shape":"LongName",
           "location":"uri",
           "locationName":"ConfigurationProfileId"
         },
@@ -2273,18 +3039,76 @@
       ],
       "members":{
         "ApplicationId":{
-          "shape":"Id",
+          "shape":"Name",
           "location":"uri",
           "locationName":"ApplicationId"
         },
         "EnvironmentId":{
-          "shape":"Id",
+          "shape":"Name",
           "location":"uri",
           "locationName":"EnvironmentId"
         },
         "Name":{"shape":"Name"},
         "Description":{"shape":"Description"},
         "Monitors":{"shape":"MonitorList"}
+      }
+    },
+    "UpdateExperimentDefinitionRequest":{
+      "type":"structure",
+      "required":[
+        "ApplicationIdentifier",
+        "ExperimentDefinitionIdentifier"
+      ],
+      "members":{
+        "ApplicationIdentifier":{
+          "shape":"Identifier",
+          "location":"uri",
+          "locationName":"ApplicationIdentifier"
+        },
+        "ExperimentDefinitionIdentifier":{
+          "shape":"Identifier",
+          "location":"uri",
+          "locationName":"ExperimentDefinitionIdentifier"
+        },
+        "Treatments":{"shape":"TreatmentInputList"},
+        "Control":{"shape":"TreatmentInput"},
+        "Hypothesis":{"shape":"Description"},
+        "AudienceRule":{"shape":"Rule"},
+        "AudienceDescription":{"shape":"Description"},
+        "LaunchCriteria":{"shape":"Description"}
+      }
+    },
+    "UpdateExperimentRunRequest":{
+      "type":"structure",
+      "required":[
+        "ApplicationIdentifier",
+        "ExperimentDefinitionIdentifier",
+        "Run"
+      ],
+      "members":{
+        "ApplicationIdentifier":{
+          "shape":"Identifier",
+          "location":"uri",
+          "locationName":"ApplicationIdentifier"
+        },
+        "ExperimentDefinitionIdentifier":{
+          "shape":"Identifier",
+          "location":"uri",
+          "locationName":"ExperimentDefinitionIdentifier"
+        },
+        "Run":{
+          "shape":"PositiveInteger",
+          "box":true,
+          "location":"uri",
+          "locationName":"Run"
+        },
+        "Description":{"shape":"Description"},
+        "ExposurePercentage":{
+          "shape":"NullablePercentage",
+          "box":true
+        },
+        "TreatmentOverrides":{"shape":"TreatmentOverrides"},
+        "DeploymentParameters":{"shape":"DeploymentParameters"}
       }
     },
     "UpdateExtensionAssociationRequest":{
@@ -2331,12 +3155,12 @@
       ],
       "members":{
         "ApplicationId":{
-          "shape":"Id",
+          "shape":"Name",
           "location":"uri",
           "locationName":"ApplicationId"
         },
         "ConfigurationProfileId":{
-          "shape":"Id",
+          "shape":"LongName",
           "location":"uri",
           "locationName":"ConfigurationProfileId"
         },
@@ -2377,6 +3201,15 @@
       "max":2,
       "min":0
     },
+    "VendedMetricsSettings":{
+      "type":"structure",
+      "members":{
+        "Enabled":{
+          "shape":"Boolean",
+          "box":true
+        }
+      }
+    },
     "Version":{
       "type":"string",
       "max":1024,
@@ -2387,6 +3220,10 @@
       "max":64,
       "min":1,
       "pattern":".*[^0-9].*"
+    },
+    "Weight":{
+      "type":"float",
+      "min":0.0
     }
   }
 }

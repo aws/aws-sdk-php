@@ -1,5 +1,27 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Fixes issue where after #3290, user-provided resource handles were closed on Guzzle `StreamInterface` destruct.
+* `Aws\PinpointSMSVoiceV2` - This launch is an expansion of our Q1 RCS for business launch where we will release an API that supports rich media and interactive messaging elements.
+* `Aws\EC2` - Adds support for the precision time strategy and a parentGroupId parameter on CreatePlacementGroup and DescribePlacementGroups. Precision time placement groups and cluster placement groups with a parent precision time placement group ensure instances launch on precision time capable hardware.
+* `Aws\RDSDataService` - Updated documentation to remove Aurora Serverless V1 references.
+* `Aws\ECS` - Amazon ECS now supports customizable deployment circuit breaker configurations. Customers can now define the failure threshold or control the failure counting mechanism.
+* `Aws\WAFV2` - AWS WAF added support for associating AWS WAF web ACLs with Amazon Bedrock AgentCore Gateway resources. You can now use AssociateWebACL, DisassociateWebACL, GetWebACLForResource, and ListResourcesForWebACL to protect your AgentCore Gateways with AWS WAF.
+* `Aws\ConnectCampaignsV2` - Adding new attributes to PutProfileOutboundRequest API that will create an outbound request call for the customer's Web Notification outbound campaign.
+* `Aws\Lambda` - Lambda now supports self-managed S3 buckets for Lambda code storage giving you the option for Lambda to reference a copy of your source code from your own S3 buckets. This allows you to maintain a single copy of your source code and manage your own code storage limits.
+* `Aws\PCS` - Add support for in-place Slurm version upgrades on existing clusters by accepting scheduler.version in UpdateCluster.
+* `Aws\Evs` - Amazon EVS introduces a VMware Cloud Foundation (VCF) self-deployed mode, along with new connectors to VCF components such as the Operations and SDDC managers to monitor coverage and usage.
+* `Aws\imagebuilder` - Adds support for AMI watermarks in Image Builder.
+* `Aws\CloudWatch` - This release adds the API (PutLogAlarm) to manage a new CloudWatch resource, Log Based Alarms. Log Based Alarms allows customers to alarm directly on CloudWatch Logs query results.
+* `Aws\ConnectHealth` - Expand input validation to support Unicode characters and markdown table syntax.
+* `Aws\SageMakerFeatureStoreRuntime` - Add support for ListRecords and BatchWriteRecord APIs to Feature Store.
+* `Aws\VPCLattice` - Amazon VPC Lattice now supports mutable idle timeout configuration on VPC Lattice Services
+* `Aws\ResourceExplorer2` - Added CFN resource type fields for Search and ListSupportedResourceTypes responses. Added SLRec field for ServiceView
+* `Aws\AppConfig` - AWS AppConfig introduces Experimentation tools - enhanced capabilities within AWS AppConfig that enable you to run AB tests, multivariate tests, and gradual feature rollouts across your application stack.
+* `Aws\Glue` - Added the UpdateAsset operation to set the business name and description for an existing AWS Glue Data Catalog asset.
+* `Aws\ElastiCache` - Updated documentation for the ApplyImmediately parameter in ModifyCacheCluster and ModifyReplicationGroup to clarify modification behavior.
+
 ## 3.386.1 - 2026-06-23
 
 * `Aws\Kafka` - Amazon MSK Replicator now supports mTLS authentication when connecting to external Apache Kafka clusters, enabling customers to replicate data from clusters that require mutual TLS for client authentication. This capability is supported when replicating to Amazon MSK Express brokers.

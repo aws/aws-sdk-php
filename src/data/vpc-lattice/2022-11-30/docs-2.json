@@ -209,7 +209,7 @@
         "CreateServiceNetworkVpcAssociationResponse$privateDnsEnabled": "<p> Indicates if private DNS is enabled for the VPC association. </p>",
         "GetResourceConfigurationResponse$allowAssociationToShareableServiceNetwork": "<p>Specifies whether the resource configuration is associated with a sharable service network.</p>",
         "GetResourceConfigurationResponse$amazonManaged": "<p>Indicates whether the resource configuration was created and is managed by Amazon.</p>",
-        "GetResourceGatewayResponse$serviceManaged": "<p>Indicates whether the resource gateway is managed by an AWS service.</p>",
+        "GetResourceGatewayResponse$serviceManaged": "<p>Indicates whether the resource gateway is managed by an Amazon Web Services service.</p>",
         "GetRuleResponse$isDefault": "<p>Indicates whether this is the default rule.</p>",
         "GetServiceNetworkResourceAssociationResponse$privateDnsEnabled": "<p> Indicates if private DNS is enabled in the service network resource association. </p>",
         "GetServiceNetworkResourceAssociationResponse$isManagedAssociation": "<p>Indicates whether the association is managed by Amazon.</p>",
@@ -830,6 +830,16 @@
       "base": null,
       "refs": {
         "FixedResponseAction$statusCode": "<p>The HTTP response code. Only <code>404</code> and <code>500</code> status codes are supported.</p>"
+      }
+    },
+    "IdleTimeoutSeconds": {
+      "base": null,
+      "refs": {
+        "CreateServiceRequest$idleTimeoutSeconds": "<p>The amount of time, in seconds, that a connection can remain idle (no data sent) before VPC Lattice closes it. The valid range is 60 to 600 seconds. If you don't specify a value, the default is 60 seconds. This setting does not change the maximum connection duration of 10 minutes; connections are still closed when they reach that limit.</p>",
+        "CreateServiceResponse$idleTimeoutSeconds": "<p>The amount of time, in seconds, that a connection can remain idle before VPC Lattice closes it.</p>",
+        "GetServiceResponse$idleTimeoutSeconds": "<p>The amount of time, in seconds, that a connection can remain idle before VPC Lattice closes it.</p>",
+        "UpdateServiceRequest$idleTimeoutSeconds": "<p>The amount of time, in seconds, that a connection can remain idle (no data sent) before VPC Lattice closes it. The valid range is 60 to 600 seconds. If you don't specify a value, the default is 60 seconds. This setting does not change the maximum connection duration of 10 minutes; connections are still closed when they reach that limit.</p>",
+        "UpdateServiceResponse$idleTimeoutSeconds": "<p>The amount of time, in seconds, that a connection can remain idle before VPC Lattice closes it.</p>"
       }
     },
     "Integer": {
@@ -2060,7 +2070,7 @@
         "DnsEntry$domainName": "<p>The domain name of the service.</p>",
         "DnsEntry$hostedZoneId": "<p>The ID of the hosted zone.</p>",
         "GetResourceConfigurationResponse$failureReason": "<p>The reason the create-resource-configuration request failed.</p>",
-        "GetResourceGatewayResponse$managedBy": "<p>The AWS service that manages the resource gateway.</p>",
+        "GetResourceGatewayResponse$managedBy": "<p>The Amazon Web Services service that manages the resource gateway.</p>",
         "GetServiceNetworkResourceAssociationResponse$failureReason": "<p>The reason the association request failed.</p>",
         "GetServiceNetworkResourceAssociationResponse$failureCode": "<p>The failure code.</p>",
         "GetServiceNetworkServiceAssociationResponse$failureMessage": "<p>The failure message.</p>",

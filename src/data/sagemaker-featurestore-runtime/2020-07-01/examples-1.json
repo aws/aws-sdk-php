@@ -1,4 +1,49 @@
 {
   "version": "1.0",
-  "examples": {}
+  "examples": {
+    "BatchWriteRecord": [
+      {
+        "input": {
+          "Entries": [
+            {
+              "FeatureGroupName": "my-feature-group",
+              "Record": [
+                {
+                  "FeatureName": "customer_id",
+                  "ValueAsString": "cust-001"
+                },
+                {
+                  "FeatureName": "age",
+                  "ValueAsString": "25"
+                }
+              ]
+            }
+          ]
+        },
+        "output": {
+          "Errors": [],
+          "UnprocessedEntries": []
+        },
+        "id": "batch-write-record-example-1",
+        "title": "Write records to multiple feature groups"
+      }
+    ],
+    "ListRecords": [
+      {
+        "input": {
+          "FeatureGroupName": "my-feature-group",
+          "MaxResults": 10
+        },
+        "output": {
+          "NextToken": "eyJsYXN0RXZhbHVhdGVkS2V5IjoiYWJjMTIzIn0=",
+          "RecordIdentifiers": [
+            "record-id-1",
+            "record-id-2"
+          ]
+        },
+        "id": "list-records-example-1",
+        "title": "List record identifiers from a feature group"
+      }
+    ]
+  }
 }

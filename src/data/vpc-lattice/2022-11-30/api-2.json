@@ -1848,7 +1848,8 @@
         "tags":{"shape":"TagMap"},
         "customDomainName":{"shape":"ServiceCustomDomainName"},
         "certificateArn":{"shape":"CertificateArn"},
-        "authType":{"shape":"AuthType"}
+        "authType":{"shape":"AuthType"},
+        "idleTimeoutSeconds":{"shape":"IdleTimeoutSeconds"}
       }
     },
     "CreateServiceResponse":{
@@ -1861,6 +1862,7 @@
         "certificateArn":{"shape":"CertificateArn"},
         "status":{"shape":"ServiceStatus"},
         "authType":{"shape":"AuthType"},
+        "idleTimeoutSeconds":{"shape":"IdleTimeoutSeconds"},
         "dnsEntry":{"shape":"DnsEntry"}
       }
     },
@@ -2669,6 +2671,7 @@
         "certificateArn":{"shape":"CertificateArn"},
         "status":{"shape":"ServiceStatus"},
         "authType":{"shape":"AuthType"},
+        "idleTimeoutSeconds":{"shape":"IdleTimeoutSeconds"},
         "failureCode":{"shape":"FailureCode"},
         "failureMessage":{"shape":"FailureMessage"}
       }
@@ -2823,6 +2826,12 @@
       "box":true,
       "max":599,
       "min":100
+    },
+    "IdleTimeoutSeconds":{
+      "type":"integer",
+      "box":true,
+      "max":600,
+      "min":60
     },
     "Integer":{
       "type":"integer",
@@ -4759,7 +4768,8 @@
           "locationName":"serviceIdentifier"
         },
         "certificateArn":{"shape":"CertificateArn"},
-        "authType":{"shape":"AuthType"}
+        "authType":{"shape":"AuthType"},
+        "idleTimeoutSeconds":{"shape":"IdleTimeoutSeconds"}
       }
     },
     "UpdateServiceResponse":{
@@ -4770,7 +4780,8 @@
         "name":{"shape":"ServiceName"},
         "customDomainName":{"shape":"ServiceCustomDomainName"},
         "certificateArn":{"shape":"CertificateArn"},
-        "authType":{"shape":"AuthType"}
+        "authType":{"shape":"AuthType"},
+        "idleTimeoutSeconds":{"shape":"IdleTimeoutSeconds"}
       }
     },
     "UpdateTargetGroupRequest":{

@@ -1,3 +1,3 @@
 <?php
 // This file was auto-generated from sdk-root/src/data/sagemaker-featurestore-runtime/2020-07-01/examples-1.json
-return [ 'version' => '1.0', 'examples' => [],];
+return [ 'version' => '1.0', 'examples' => [ 'BatchWriteRecord' => [ [ 'input' => [ 'Entries' => [ [ 'FeatureGroupName' => 'my-feature-group', 'Record' => [ [ 'FeatureName' => 'customer_id', 'ValueAsString' => 'cust-001', ], [ 'FeatureName' => 'age', 'ValueAsString' => '25', ], ], ], ], ], 'output' => [ 'Errors' => [], 'UnprocessedEntries' => [], ], 'id' => 'batch-write-record-example-1', 'title' => 'Write records to multiple feature groups', ], ], 'ListRecords' => [ [ 'input' => [ 'FeatureGroupName' => 'my-feature-group', 'MaxResults' => 10, ], 'output' => [ 'NextToken' => 'eyJsYXN0RXZhbHVhdGVkS2V5IjoiYWJjMTIzIn0=', 'RecordIdentifiers' => [ 'record-id-1', 'record-id-2', ], ], 'id' => 'list-records-example-1', 'title' => 'List record identifiers from a feature group', ], ], ],];
