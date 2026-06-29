@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.386.2 - 2026-06-29
 
 * `Aws\` - Fixes issue where after #3290, user-provided resource handles were closed on Guzzle `StreamInterface` destruct.
 * `Aws\PinpointSMSVoiceV2` - This launch is an expansion of our Q1 RCS for business launch where we will release an API that supports rich media and interactive messaging elements.
