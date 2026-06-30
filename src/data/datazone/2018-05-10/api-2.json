@@ -5041,6 +5041,7 @@
         "sparkEmrProperties":{"shape":"SparkEmrPropertiesInput"},
         "sparkGlueProperties":{"shape":"SparkGluePropertiesInput"},
         "s3Properties":{"shape":"S3PropertiesInput"},
+        "snowflakeProperties":{"shape":"SnowflakePropertiesInput"},
         "amazonQProperties":{"shape":"AmazonQPropertiesInput"},
         "mlflowProperties":{"shape":"MlflowPropertiesInput"},
         "workflowsMwaaProperties":{"shape":"WorkflowsMwaaPropertiesInput"},
@@ -5061,6 +5062,7 @@
         "sparkEmrProperties":{"shape":"SparkEmrPropertiesOutput"},
         "sparkGlueProperties":{"shape":"SparkGluePropertiesOutput"},
         "s3Properties":{"shape":"S3PropertiesOutput"},
+        "snowflakeProperties":{"shape":"SnowflakePropertiesOutput"},
         "amazonQProperties":{"shape":"AmazonQPropertiesOutput"},
         "mlflowProperties":{"shape":"MlflowPropertiesOutput"},
         "workflowsMwaaProperties":{"shape":"WorkflowsMwaaPropertiesOutput"},
@@ -5079,6 +5081,7 @@
         "redshiftProperties":{"shape":"RedshiftPropertiesPatch"},
         "sparkEmrProperties":{"shape":"SparkEmrPropertiesPatch"},
         "s3Properties":{"shape":"S3PropertiesPatch"},
+        "snowflakeProperties":{"shape":"SnowflakePropertiesPatch"},
         "amazonQProperties":{"shape":"AmazonQPropertiesPatch"},
         "mlflowProperties":{"shape":"MlflowPropertiesPatch"},
         "lakehouseProperties":{"shape":"LakehousePropertiesPatch"},
@@ -5166,6 +5169,47 @@
         "MLFLOW",
         "VPC"
       ]
+    },
+    "ConnectivityProperties":{
+      "type":"structure",
+      "members":{
+        "connectionProperties":{"shape":"ConnectionProperties"},
+        "physicalConnectionRequirements":{"shape":"PhysicalConnectionRequirements"},
+        "name":{"shape":"ConnectivityPropertiesNameString"},
+        "description":{"shape":"ConnectivityPropertiesDescriptionString"},
+        "validateCredentials":{"shape":"Boolean"},
+        "validateForComputeEnvironments":{"shape":"ComputeEnvironmentsList"},
+        "sparkProperties":{"shape":"PropertyMap"},
+        "athenaProperties":{"shape":"PropertyMap"},
+        "pythonProperties":{"shape":"PropertyMap"},
+        "authenticationConfiguration":{"shape":"AuthenticationConfigurationInput"}
+      }
+    },
+    "ConnectivityPropertiesDescriptionString":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFF\\r\\n\\t]*"
+    },
+    "ConnectivityPropertiesNameString":{
+      "type":"string",
+      "max":41,
+      "min":1,
+      "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFF\\t]*"
+    },
+    "ConnectivityPropertiesPatch":{
+      "type":"structure",
+      "members":{
+        "description":{"shape":"ConnectivityPropertiesPatchDescriptionString"},
+        "connectionProperties":{"shape":"ConnectionProperties"},
+        "authenticationConfiguration":{"shape":"AuthenticationConfigurationPatch"}
+      }
+    },
+    "ConnectivityPropertiesPatchDescriptionString":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "pattern":"[\\S\\s]*"
     },
     "CreateAccountPoolInput":{
       "type":"structure",
@@ -11072,6 +11116,14 @@
         "groupProfileId":{"shape":"String"}
       }
     },
+    "IdentityMapping":{
+      "type":"structure",
+      "required":["usernameAttribute"],
+      "members":{
+        "usernameAttribute":{"shape":"String"},
+        "prefix":{"shape":"String"}
+      }
+    },
     "Import":{
       "type":"structure",
       "required":[
@@ -11447,11 +11499,35 @@
         "errorMessages":{"shape":"FailedQueryProcessingErrorMessages"}
       }
     },
+    "LineageSyncInput":{
+      "type":"structure",
+      "required":["enabled"],
+      "members":{
+        "timezone":{"shape":"Timezone"},
+        "enabled":{"shape":"Boolean"},
+        "schedule":{"shape":"LineageSyncScheduleCronString"}
+      }
+    },
+    "LineageSyncOutput":{
+      "type":"structure",
+      "members":{
+        "lineageJobId":{"shape":"String"},
+        "timezone":{"shape":"Timezone"},
+        "enabled":{"shape":"Boolean"},
+        "schedule":{"shape":"LineageSyncScheduleCronString"}
+      }
+    },
     "LineageSyncSchedule":{
       "type":"structure",
       "members":{
         "schedule":{"shape":"LineageSyncScheduleScheduleString"}
       }
+    },
+    "LineageSyncScheduleCronString":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"cron\\((\\b[0-5]?[0-9]\\b) ([*]|\\b2[0-3]\\b|\\b[0-1]?[0-9]\\b) ([-?*,/\\dLW]){1,83} ([-*,/\\d]|[a-zA-Z]{3}){1,23} ([-?#*,/\\dL]|[a-zA-Z]{3}){1,13} ([^\\)]+)\\)"
     },
     "LineageSyncScheduleScheduleString":{
       "type":"string",
@@ -15798,6 +15874,49 @@
       "type":"string",
       "max":100000,
       "min":1
+    },
+    "SnowflakePropertiesInput":{
+      "type":"structure",
+      "required":[
+        "snowflakeRole",
+        "identityMapping"
+      ],
+      "members":{
+        "connectivityProperties":{"shape":"ConnectivityProperties"},
+        "snowflakeRole":{"shape":"SnowflakeRole"},
+        "identityMapping":{"shape":"IdentityMapping"},
+        "lineageSync":{"shape":"LineageSyncInput"}
+      }
+    },
+    "SnowflakePropertiesOutput":{
+      "type":"structure",
+      "required":[
+        "snowflakeRole",
+        "identityMapping",
+        "lineageSync",
+        "status"
+      ],
+      "members":{
+        "snowflakeRole":{"shape":"SnowflakeRole"},
+        "identityMapping":{"shape":"IdentityMapping"},
+        "lineageSync":{"shape":"LineageSyncOutput"},
+        "status":{"shape":"ConnectionStatus"},
+        "errorMessage":{"shape":"String"}
+      }
+    },
+    "SnowflakePropertiesPatch":{
+      "type":"structure",
+      "members":{
+        "connectivityPropertiesPatch":{"shape":"ConnectivityPropertiesPatch"},
+        "snowflakeRole":{"shape":"SnowflakeRole"},
+        "lineageSync":{"shape":"LineageSyncInput"}
+      }
+    },
+    "SnowflakeRole":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_$]+"
     },
     "SortFieldAccountPool":{
       "type":"string",

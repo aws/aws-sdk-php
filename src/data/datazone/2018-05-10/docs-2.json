@@ -859,6 +859,7 @@
     "AuthenticationConfigurationInput": {
       "base": "<p>The authentication configuration of a connection.</p>",
       "refs": {
+        "ConnectivityProperties$authenticationConfiguration": "<p>The authentication settings for this configuration.</p>",
         "GlueConnectionInput$authenticationConfiguration": "<p>The authentication configuration of the Amazon Web Services Glue connection.</p>"
       }
     },
@@ -877,6 +878,7 @@
     "AuthenticationConfigurationPatch": {
       "base": "<p>The authentication configuration patch of a connection. </p>",
       "refs": {
+        "ConnectivityPropertiesPatch$authenticationConfiguration": "<p>The authentication settings to update.</p>",
         "GlueConnectionPatch$authenticationConfiguration": "<p>The authentication configuration of the Amazon Web Services Glue connection patch.</p>"
       }
     },
@@ -1081,6 +1083,7 @@
         "AmazonQPropertiesPatch$isEnabled": "<p>Specifies whether Amazon Q is enabled for the connection.</p>",
         "BusinessNameGenerationConfiguration$enabled": "<p>Specifies whether the business name generation is enabled.</p>",
         "CancelSubscriptionOutput$retainPermissions": "<p>Specifies whether the permissions to the asset are retained after the subscription is cancelled.</p>",
+        "ConnectivityProperties$validateCredentials": "<p>Specifies whether to validate credentials for the connectivity configuration. Defaults to true if not specified.</p>",
         "CreateAssetTypePolicyGrantDetail$includeChildDomainUnits": "<p>Specifies whether the policy grant is applied to child domain units.</p>",
         "CreateConnectionInput$enableTrustedIdentityPropagation": "<p>Specifies whether the trusted identity propagation is enabled.</p>",
         "CreateDataSourceInput$publishOnImport": "<p>Specifies whether the assets that this data source creates in the inventory are to be also automatically published to the catalog.</p>",
@@ -1122,6 +1125,8 @@
         "LakehousePropertiesInput$glueLineageSyncEnabled": "<p>Specifies whether to enable Glue lineage sync for tables managed by Glue crawlers.</p>",
         "LakehousePropertiesOutput$glueLineageSyncEnabled": "<p>Specifies whether Glue lineage sync is enabled for tables managed by Glue crawlers.</p>",
         "LakehousePropertiesPatch$glueLineageSyncEnabled": "<p>Specifies whether to enable Glue lineage sync for tables managed by Glue crawlers.</p>",
+        "LineageSyncInput$enabled": "<p>Specifies whether lineage sync is enabled.</p>",
+        "LineageSyncOutput$enabled": "<p>Specifies whether lineage sync is enabled.</p>",
         "ListEnvironmentBlueprintsInput$managed": "<p>Specifies whether the environment blueprint is managed by Amazon DataZone.</p>",
         "ListRulesInput$dataProduct": "<p>The data product of the rule.</p>",
         "ListRulesInput$includeCascaded": "<p>Specifies whether to include cascading rules in the results.</p>",
@@ -1278,6 +1283,7 @@
     "ComputeEnvironmentsList": {
       "base": null,
       "refs": {
+        "ConnectivityProperties$validateForComputeEnvironments": "<p>The compute environments to use when validating connectivity. The service validates that the connection is reachable from each specified environment.</p>",
         "GlueConnection$compatibleComputeEnvironments": "<p>The compatible compute environments of the Amazon Web Services Glue connection.</p>",
         "GlueConnectionInput$validateForComputeEnvironments": "<p>Speciefies whether to validate for compute environments of the Amazon Web Services Glue connection.</p>"
       }
@@ -1380,6 +1386,8 @@
     "ConnectionProperties": {
       "base": null,
       "refs": {
+        "ConnectivityProperties$connectionProperties": "<p>The connection properties for this configuration.</p>",
+        "ConnectivityPropertiesPatch$connectionProperties": "<p>The connection properties to update.</p>",
         "GlueConnection$connectionProperties": "<p>The properties of the Amazon Web Services Glue connection.</p>",
         "GlueConnectionInput$connectionProperties": "<p>The connection properties of the Amazon Web Services Glue connection.</p>",
         "GlueConnectionPatch$connectionProperties": "<p>The properties of the Amazon Web Services Glue connection patch.</p>"
@@ -1430,6 +1438,7 @@
         "GluePropertiesOutput$status": "<p>The status of a connection.</p>",
         "RedshiftPropertiesOutput$status": "<p>The status in the Amazon Redshift properties.</p>",
         "S3PropertiesOutput$status": "<p>The status of the Amazon S3 connection.</p>",
+        "SnowflakePropertiesOutput$status": "<p>The status of the Snowflake connection.</p>",
         "VpcPropertiesOutput$status": "<p>The status of the VPC connection.</p>"
       }
     },
@@ -1454,6 +1463,36 @@
         "GlueConnection$connectionType": "<p>The type of the Amazon Web Services Glue connection.</p>",
         "ListConnectionsInput$type": "<p>The type of connection.</p>",
         "UpdateConnectionOutput$type": "<p>The connection type.</p>"
+      }
+    },
+    "ConnectivityProperties": {
+      "base": "<p>Contains the network and authentication settings for a connection, including connection credentials, physical network requirements, and compute-environment validation options.</p>",
+      "refs": {
+        "SnowflakePropertiesInput$connectivityProperties": "<p>The connectivity properties of the Snowflake connection.</p>"
+      }
+    },
+    "ConnectivityPropertiesDescriptionString": {
+      "base": null,
+      "refs": {
+        "ConnectivityProperties$description": "<p>The description of the connectivity configuration.</p>"
+      }
+    },
+    "ConnectivityPropertiesNameString": {
+      "base": null,
+      "refs": {
+        "ConnectivityProperties$name": "<p>The name of the connectivity configuration.</p>"
+      }
+    },
+    "ConnectivityPropertiesPatch": {
+      "base": "<p>Contains the connectivity settings to update on an existing connection. Include only the fields you want to change.</p>",
+      "refs": {
+        "SnowflakePropertiesPatch$connectivityPropertiesPatch": "<p>The connectivity properties patch of the Snowflake connection.</p>"
+      }
+    },
+    "ConnectivityPropertiesPatchDescriptionString": {
+      "base": null,
+      "refs": {
+        "ConnectivityPropertiesPatch$description": "<p>A description of the connectivity properties update.</p>"
       }
     },
     "CreateAccountPoolInput": {
@@ -4952,6 +4991,13 @@
         "UserProfileDetails$iam": "<p>The IAM details of the user profile.</p>"
       }
     },
+    "IdentityMapping": {
+      "base": "<p>Contains the configuration for mapping user identities to Snowflake users, including the username attribute and optional prefix applied during the mapping.</p>",
+      "refs": {
+        "SnowflakePropertiesInput$identityMapping": "<p>The identity mapping configuration for the Snowflake connection.</p>",
+        "SnowflakePropertiesOutput$identityMapping": "<p>The identity mapping configuration for the Snowflake connection.</p>"
+      }
+    },
     "Import": {
       "base": "<p>The details of the import of the metadata form type.</p>",
       "refs": {
@@ -5282,11 +5328,31 @@
         "LineageRunDetails$sqlQueryRunDetails": "<p>The SQL query run details of a data lineage run.</p>"
       }
     },
+    "LineageSyncInput": {
+      "base": "<p>Contains the settings for configuring lineage sync on a Snowflake connection, including the schedule, timezone, and enabled state.</p>",
+      "refs": {
+        "SnowflakePropertiesInput$lineageSync": "<p>The lineage sync configuration for the Snowflake connection.</p>",
+        "SnowflakePropertiesPatch$lineageSync": "<p>The lineage sync configuration for the Snowflake connection.</p>"
+      }
+    },
+    "LineageSyncOutput": {
+      "base": "<p>Contains the current state of lineage sync for a Snowflake connection, including the schedule, timezone, enabled state, and the ID of the associated lineage job.</p>",
+      "refs": {
+        "SnowflakePropertiesOutput$lineageSync": "<p>The lineage sync configuration for the Snowflake connection.</p>"
+      }
+    },
     "LineageSyncSchedule": {
       "base": "<p>The lineage sync schedule.</p>",
       "refs": {
         "RedshiftLineageSyncConfigurationInput$schedule": "<p>The schedule of the Amaon Redshift lineage sync configuration.</p>",
         "RedshiftLineageSyncConfigurationOutput$schedule": "<p>The schedule of teh Amaon Redshift lineage sync configuration.</p>"
+      }
+    },
+    "LineageSyncScheduleCronString": {
+      "base": "<p>The cron expression for the lineage sync schedule.</p>",
+      "refs": {
+        "LineageSyncInput$schedule": "<p>The schedule of the lineage sync.</p>",
+        "LineageSyncOutput$schedule": "<p>The schedule of the lineage sync.</p>"
       }
     },
     "LineageSyncScheduleScheduleString": {
@@ -6511,6 +6577,7 @@
     "PhysicalConnectionRequirements": {
       "base": "<p>Physical connection requirements of a connection.</p>",
       "refs": {
+        "ConnectivityProperties$physicalConnectionRequirements": "<p>The physical network requirements for the connection, such as the subnet, security group, and VPC settings needed to reach the data source.</p>",
         "GlueConnection$physicalConnectionRequirements": "<p>The physical connection requirements of the Amazon Web Services Glue connection.</p>",
         "GlueConnectionInput$physicalConnectionRequirements": "<p>The physical connection requirements for the Amazon Web Services Glue connection.</p>"
       }
@@ -6867,6 +6934,9 @@
       "base": null,
       "refs": {
         "Configuration$properties": "<p>The properties of the connection configuration.</p>",
+        "ConnectivityProperties$sparkProperties": "<p>The Spark properties for this configuration.</p>",
+        "ConnectivityProperties$athenaProperties": "<p>The Athena properties for this configuration.</p>",
+        "ConnectivityProperties$pythonProperties": "<p>The Python properties for this configuration.</p>",
         "GlueConnection$sparkProperties": "<p>The Spark properties of the Amazon Web Services Glue connection.</p>",
         "GlueConnection$athenaProperties": "<p>The Amazon Athena properties of the Amazon Web Services Glue connection.</p>",
         "GlueConnection$pythonProperties": "<p>The Python properties of the Amazon Web Services Glue connection.</p>",
@@ -8032,6 +8102,32 @@
         "Model$smithy": "<p>Indicates the smithy model of the API.</p>"
       }
     },
+    "SnowflakePropertiesInput": {
+      "base": "<p>Contains the Snowflake-specific settings required when creating or updating a connection, including the Snowflake role, identity mapping, and lineage sync configuration.</p>",
+      "refs": {
+        "ConnectionPropertiesInput$snowflakeProperties": "<p>The Snowflake-specific connection properties to use when creating the connection.</p>"
+      }
+    },
+    "SnowflakePropertiesOutput": {
+      "base": "<p>Contains the Snowflake-specific settings returned for an existing connection, including the current role, identity mapping, lineage sync state, and connection status.</p>",
+      "refs": {
+        "ConnectionPropertiesOutput$snowflakeProperties": "<p>The Snowflake-specific connection properties for an existing connection.</p>"
+      }
+    },
+    "SnowflakePropertiesPatch": {
+      "base": "<p>Contains the Snowflake-specific settings to update on an existing connection. Include only the fields you want to change.</p>",
+      "refs": {
+        "ConnectionPropertiesPatch$snowflakeProperties": "<p>The Snowflake-specific connection properties to update.</p>"
+      }
+    },
+    "SnowflakeRole": {
+      "base": "<p>The name of the Snowflake role to use for the connection.</p>",
+      "refs": {
+        "SnowflakePropertiesInput$snowflakeRole": "<p>The Snowflake role used to access Snowflake resources.</p>",
+        "SnowflakePropertiesOutput$snowflakeRole": "<p>The Snowflake role used to access Snowflake resources.</p>",
+        "SnowflakePropertiesPatch$snowflakeRole": "<p>The Snowflake role used to access Snowflake resources.</p>"
+      }
+    },
     "SortFieldAccountPool": {
       "base": null,
       "refs": {
@@ -8379,7 +8475,7 @@
         "CreateEnvironmentInput$name": "<p>The name of the Amazon DataZone environment.</p>",
         "CreateEnvironmentInput$environmentAccountIdentifier": "<p>The ID of the account in which the environment is being created.</p>",
         "CreateEnvironmentInput$environmentAccountRegion": "<p>The region of the account in which the environment is being created.</p>",
-        "CreateEnvironmentInput$environmentBlueprintIdentifier": "<p>The ID of the blueprint with which the environment is being created.</p>",
+        "CreateEnvironmentInput$environmentBlueprintIdentifier": "<p>The ID of the blueprint with which the environment is being created.</p> <note> <p>This parameter is only valid for V1 domains. If provided for a V2 domain, the service returns a ValidationException.</p> </note>",
         "CreateEnvironmentInput$environmentConfigurationId": "<p>The configuration ID of the environment.</p>",
         "CreateEnvironmentOutput$createdBy": "<p>The Amazon DataZone user who created this environment.</p>",
         "CreateEnvironmentOutput$provider": "<p>The provider of this Amazon DataZone environment.</p>",
@@ -8497,6 +8593,8 @@
         "IamUserProfileDetails$principalId": "<p>The principal ID as part of the IAM user profile details.</p>",
         "IamUserProfileDetails$sessionName": "<p>The session name for IAM role sessions.</p>",
         "IamUserProfileDetails$groupProfileId": "<p>The identifier of the group profile associated with the IAM user profile. This links the user to a specific group profile within the Amazon DataZone domain.</p>",
+        "IdentityMapping$usernameAttribute": "<p>The username attribute used for the identity mapping.</p>",
+        "IdentityMapping$prefix": "<p>The prefix used for the identity mapping.</p>",
         "InExpression$columnName": "<p>The name of the column.</p>",
         "IsNotNullExpression$columnName": "<p>The name of the column.</p>",
         "IsNullExpression$columnName": "<p>The name of the column.</p>",
@@ -8521,6 +8619,7 @@
         "LineageNodeSummary$sourceIdentifier": "<p>The alternate ID of the data lineage node.</p>",
         "LineageNodeTypeItem$name": "<p>The name of the data lineage node type.</p>",
         "LineageNodeTypeItem$description": "<p>The description of the data lineage node type.</p>",
+        "LineageSyncOutput$lineageJobId": "<p>The ID of the lineage sync job.</p>",
         "ListDataSourcesInput$projectIdentifier": "<p>The identifier of the project in which to list data sources.</p>",
         "ListDataSourcesInput$environmentIdentifier": "<p>The identifier of the environment in which to list the data sources.</p>",
         "ListDataSourcesInput$connectionIdentifier": "<p>The ID of the connection.</p>",
@@ -8589,6 +8688,7 @@
         "S3PropertiesOutput$errorMessage": "<p>The error message that gets displayed.</p>",
         "SecurityGroupIds$member": null,
         "SelfGrantStatusDetail$failureCause": "<p>The reason for why the operation failed.</p>",
+        "SnowflakePropertiesOutput$errorMessage": "<p>An error message returned if the Snowflake connection failed to establish or validate.</p>",
         "SparkEmrPropertiesOutput$computeArn": "<p>The compute ARN of the Spark EMR.</p>",
         "SparkEmrPropertiesOutput$instanceProfileArn": "<p>The instance profile ARN of the Spark EMR.</p>",
         "SparkEmrPropertiesOutput$javaVirtualEnv": "<p>The Java virtual env of the Spark EMR.</p>",
@@ -9360,6 +9460,8 @@
     "Timezone": {
       "base": null,
       "refs": {
+        "LineageSyncInput$timezone": "<p>The timezone of the lineage sync schedule.</p>",
+        "LineageSyncOutput$timezone": "<p>The timezone of the lineage sync schedule.</p>",
         "ScheduleConfiguration$timezone": "<p>The timezone of the data source run. </p>"
       }
     },

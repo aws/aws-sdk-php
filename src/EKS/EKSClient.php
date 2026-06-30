@@ -11,6 +11,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise associateEncryptionConfigAsync(array $args = [])
  * @method \Aws\Result associateIdentityProviderConfig(array $args = [])
  * @method \GuzzleHttp\Promise\Promise associateIdentityProviderConfigAsync(array $args = [])
+ * @method \Aws\Result cancelUpdate(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise cancelUpdateAsync(array $args = [])
  * @method \Aws\Result createAccessEntry(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createAccessEntryAsync(array $args = [])
  * @method \Aws\Result createAddon(array $args = [])

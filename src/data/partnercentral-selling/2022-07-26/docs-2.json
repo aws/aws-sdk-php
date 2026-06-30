@@ -282,6 +282,39 @@
         "RelatedEntityIdentifiers$AwsMarketplaceOfferSets": "<p>Enables the association of AWS Marketplace offer sets with the <code>Opportunity</code>. Offer sets allow grouping multiple related marketplace offers together for comprehensive solution packaging. Each value is an Amazon Resource Name (ARN) in this format: <code>arn:aws:aws-marketplace:us-east-1:999999999999:AWSMarketplace/OfferSet/offerset-sampleOfferSet32</code>.</p>"
       }
     },
+    "AwsMarketplaceProductArn": {
+      "base": null,
+      "refs": {
+        "AwsMarketplaceProductIdentifiers$member": null
+      }
+    },
+    "AwsMarketplaceProductIdentifiers": {
+      "base": null,
+      "refs": {
+        "AwsOpportunityRelatedEntities$AwsMarketplaceProducts": "<p>The AWS Marketplace product ARNs associated with this opportunity.</p>",
+        "RelatedEntityIdentifiers$AwsMarketplaceProducts": "<p>Specifies the AWS Marketplace products to associate with the <code>Opportunity</code>. Each value is an Amazon Resource Name (ARN) that identifies a product listing in AWS Marketplace.</p>"
+      }
+    },
+    "AwsMarketplaceSolutionArn": {
+      "base": null,
+      "refs": {
+        "ListSolutionsRequestAwsMarketplaceSolutionArnList$member": null,
+        "SolutionBase$AwsMarketplaceSolutionArn": "<p>The Amazon Resource Name (ARN) of the AWS Marketplace solution associated with this partner solution.</p>"
+      }
+    },
+    "AwsMarketplaceSolutionIdentifier": {
+      "base": null,
+      "refs": {
+        "AwsMarketplaceSolutionIdentifiers$member": null
+      }
+    },
+    "AwsMarketplaceSolutionIdentifiers": {
+      "base": null,
+      "refs": {
+        "AwsOpportunityRelatedEntities$AwsMarketplaceSolutions": "<p>The AWS Marketplace solution ARNs associated with this opportunity.</p>",
+        "RelatedEntityIdentifiers$AwsMarketplaceSolutions": "<p>Specifies the AWS Marketplace solutions to associate with the <code>Opportunity</code>. Each value is an Amazon Resource Name (ARN) that identifies a solution listing in AWS Marketplace.</p>"
+      }
+    },
     "AwsMaturity": {
       "base": null,
       "refs": {
@@ -1691,6 +1724,12 @@
     "ListSolutionsRequest": {
       "base": null,
       "refs": {}
+    },
+    "ListSolutionsRequestAwsMarketplaceSolutionArnList": {
+      "base": null,
+      "refs": {
+        "ListSolutionsRequest$AwsMarketplaceSolutionArn": "<p>Filters results by AWS Marketplace solution ARN. You can provide up to 10 ARNs.</p>"
+      }
     },
     "ListSolutionsRequestCategoryList": {
       "base": null,

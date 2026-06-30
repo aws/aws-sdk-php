@@ -6092,6 +6092,15 @@
       "input":{"shape":"ModifyVpcEndpointConnectionNotificationRequest"},
       "output":{"shape":"ModifyVpcEndpointConnectionNotificationResult"}
     },
+    "ModifyVpcEndpointPayerResponsibility":{
+      "name":"ModifyVpcEndpointPayerResponsibility",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyVpcEndpointPayerResponsibilityRequest"},
+      "output":{"shape":"ModifyVpcEndpointPayerResponsibilityResult"}
+    },
     "ModifyVpcEndpointServiceConfiguration":{
       "name":"ModifyVpcEndpointServiceConfiguration",
       "http":{
@@ -43596,6 +43605,34 @@
         }
       }
     },
+    "ModifyVpcEndpointPayerResponsibilityRequest":{
+      "type":"structure",
+      "required":[
+        "VpcEndpointId",
+        "PayerResponsibility",
+        "Scope"
+      ],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "ServiceId":{"shape":"VpcEndpointServiceId"},
+        "VpcEndpointId":{"shape":"VpcEndpointId"},
+        "PayerResponsibility":{"shape":"PayerResponsibilityType"},
+        "Scope":{"shape":"PayerResponsibilityScope"}
+      }
+    },
+    "ModifyVpcEndpointPayerResponsibilityResult":{
+      "type":"structure",
+      "members":{
+        "VpcEndpointId":{
+          "shape":"String",
+          "locationName":"vpcEndpointId"
+        },
+        "PayerResponsibilities":{
+          "shape":"PayerResponsibilitySet",
+          "locationName":"payerResponsibilitySet"
+        }
+      }
+    },
     "ModifyVpcEndpointRequest":{
       "type":"structure",
       "required":["VpcEndpointId"],
@@ -45925,6 +45962,37 @@
     "PayerResponsibility":{
       "type":"string",
       "enum":["ServiceOwner"]
+    },
+    "PayerResponsibilityEntry":{
+      "type":"structure",
+      "members":{
+        "Scope":{
+          "shape":"PayerResponsibilityScope",
+          "locationName":"scope"
+        },
+        "PayerResponsibilityType":{
+          "shape":"PayerResponsibilityType",
+          "locationName":"payerResponsibilityType"
+        }
+      }
+    },
+    "PayerResponsibilityScope":{
+      "type":"string",
+      "enum":["vpc-endpoint-charges"]
+    },
+    "PayerResponsibilitySet":{
+      "type":"list",
+      "member":{
+        "shape":"PayerResponsibilityEntry",
+        "locationName":"item"
+      }
+    },
+    "PayerResponsibilityType":{
+      "type":"string",
+      "enum":[
+        "vpc-endpoint-account",
+        "vpc-endpoint-service-account"
+      ]
     },
     "PaymentOption":{
       "type":"string",
@@ -59489,6 +59557,10 @@
         "ServiceRegion":{
           "shape":"String",
           "locationName":"serviceRegion"
+        },
+        "PayerResponsibilities":{
+          "shape":"PayerResponsibilitySet",
+          "locationName":"payerResponsibilitySet"
         }
       }
     },
@@ -59602,6 +59674,10 @@
         "VpcEndpointRegion":{
           "shape":"String",
           "locationName":"vpcEndpointRegion"
+        },
+        "PayerResponsibilities":{
+          "shape":"PayerResponsibilitySet",
+          "locationName":"payerResponsibilitySet"
         }
       }
     },

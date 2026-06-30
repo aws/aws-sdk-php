@@ -851,6 +851,13 @@
         "MetricAlarm$EvaluationState": "<p>If the value of this field is <code>PARTIAL_DATA</code>, it indicates that not all the available data was able to be retrieved due to quota limitations. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Create_Metrics_Insights_Alarm.html\">Create alarms on Metrics Insights queries</a>.</p> <p>If the value of this field is <code>EVALUATION_ERROR</code>, it indicates configuration errors in alarm setup that require review and correction. Refer to StateReason field of the alarm for more details.</p> <p>If the value of this field is <code>EVALUATION_FAILURE</code>, it indicates temporary CloudWatch issues. We recommend manual monitoring until the issue is resolved </p>"
       }
     },
+    "EvaluationWindow": {
+      "base": "<p>The evaluation window that an alarm uses to select the range of metric data that it evaluates each time it runs. This is a union type. Set exactly one of its members, <code>SlidingWindow</code> or <code>WallClockWindow</code>. If you don't set <code>EvaluationWindow</code>, the alarm uses a <code>SlidingWindow</code> by default.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/alarm-evaluation-window.html\">Alarm evaluation windows</a> in the <i>CloudWatch User Guide</i>.</p>",
+      "refs": {
+        "MetricAlarm$EvaluationWindow": "<p>The evaluation window that the alarm uses to select the range of metric data that it evaluates. This is either a sliding window or a wall clock window. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/alarm-evaluation-window.html\">Alarm evaluation windows</a> in the <i>CloudWatch User Guide</i>.</p>",
+        "PutMetricAlarmInput$EvaluationWindow": "<p>The evaluation window that the alarm uses to select the range of metric data that it evaluates. Specify either a sliding window or a wall clock window. If you omit this parameter, the alarm uses a sliding window.</p> <p>A sliding window advances each time the alarm is evaluated, forming a rolling time window. A wall clock window aligns the evaluated range to fixed clock boundaries, such as the top of the hour or the start of the day.</p> <p>You can use <code>EvaluationWindow</code> with any type of metric alarm except alarms that are based on a PromQL query.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/alarm-evaluation-window.html\">Alarm evaluation windows</a> in the <i>CloudWatch User Guide</i>.</p>"
+      }
+    },
     "ExceptionType": {
       "base": null,
       "refs": {
@@ -2000,6 +2007,12 @@
         "DashboardEntry$Size": "<p>The size of the dashboard, in bytes.</p>"
       }
     },
+    "SlidingWindow": {
+      "base": "<p>An evaluation window that advances each time the alarm is evaluated, forming a rolling time window. This is the default evaluation window. A sliding window has no additional configuration options.</p> <p>Choose a sliding window when you need the fastest detection and the calendar boundaries of the data don't matter, such as for continuous performance, latency, or resource-exhaustion monitoring.</p>",
+      "refs": {
+        "EvaluationWindow$SlidingWindow": "<p>A sliding window, which advances each time the alarm is evaluated, forming a rolling time window. This is the default evaluation window.</p>"
+      }
+    },
     "StandardUnit": {
       "base": null,
       "refs": {
@@ -2257,7 +2270,8 @@
     "Timezone": {
       "base": null,
       "refs": {
-        "Schedule$Timezone": "<p>The time zone to use when evaluating the schedule expression. The time zone must be between 1 and 50 characters in length.</p> <p>Specify the time zone using standard timezone identifiers (for example, <code>America/New_York</code>, <code>Europe/London</code>, or <code>Asia/Tokyo</code>).</p> <p>If you don't specify a time zone, UTC is used by default. The time zone affects how cron and at expressions are interpreted, as well as start and expire dates you specify</p> <p>Examples:</p> <ul> <li> <p> <code>America/New_York</code> - Eastern Time (US)</p> </li> <li> <p> <code>America/Los_Angeles</code> - Pacific Time (US)</p> </li> <li> <p> <code>Europe/London</code> - British Time</p> </li> <li> <p> <code>Asia/Tokyo</code> - Japan Standard Time</p> </li> <li> <p> <code>UTC</code> - Coordinated Universal Time</p> </li> </ul>"
+        "Schedule$Timezone": "<p>The time zone to use when evaluating the schedule expression. The time zone must be between 1 and 50 characters in length.</p> <p>Specify the time zone using standard timezone identifiers (for example, <code>America/New_York</code>, <code>Europe/London</code>, or <code>Asia/Tokyo</code>).</p> <p>If you don't specify a time zone, UTC is used by default. The time zone affects how cron and at expressions are interpreted, as well as start and expire dates you specify</p> <p>Examples:</p> <ul> <li> <p> <code>America/New_York</code> - Eastern Time (US)</p> </li> <li> <p> <code>America/Los_Angeles</code> - Pacific Time (US)</p> </li> <li> <p> <code>Europe/London</code> - British Time</p> </li> <li> <p> <code>Asia/Tokyo</code> - Japan Standard Time</p> </li> <li> <p> <code>UTC</code> - Coordinated Universal Time</p> </li> </ul>",
+        "WallClockWindow$Timezone": "<p>The time zone to use when the alarm aligns the evaluation window to clock boundaries. You can specify an IANA time zone name (for example, <code>America/New_York</code>), a fixed UTC offset (for example, <code>+05:30</code>), or an offset-prefixed identifier (for example, <code>UTC+05:30</code>). The offset must be aligned to a multiple of 5 minutes. If you don't specify a time zone, CloudWatch uses <code>UTC</code>.</p> <p>The time zone affects window alignment for all periods, including periods of one hour or shorter.</p>"
       }
     },
     "TreatMissingData": {
@@ -2281,6 +2295,12 @@
       "base": null,
       "refs": {
         "MetricDatum$Values": "<p>Array of numbers representing the values for the metric during the period. Each unique value is listed just once in this array, and the corresponding number in the <code>Counts</code> array specifies the number of times that value occurred during the period. You can include up to 150 unique values in each <code>PutMetricData</code> action that specifies a <code>Values</code> array.</p> <p>Although the <code>Values</code> array accepts numbers of type <code>Double</code>, CloudWatch rejects values that are either too small or too large. Values must be in the range of -2^360 to 2^360. In addition, special values (for example, NaN, +Infinity, -Infinity) are not supported.</p>"
+      }
+    },
+    "WallClockWindow": {
+      "base": "<p>An evaluation window that aligns the evaluated range to fixed clock boundaries that match the alarm's period, such as the top of the hour, midnight, or the start of the calendar week, optionally in a specific time zone.</p> <p>When you use a wall clock window, the alarm's period must be 1 minute (60 seconds), 5 minutes (300 seconds), 1 hour (3,600 seconds), 1 day (86,400 seconds), or 1 week (604,800 seconds). Other period values aren't supported with a wall clock window.</p> <p>Choose a wall clock window when your monitoring is tied to a business or calendar period, such as daily reports, batch jobs, or backups, or when you want alarm evaluations to match the periods shown on a metric dashboard.</p>",
+      "refs": {
+        "EvaluationWindow$WallClockWindow": "<p>A wall clock window, which aligns the evaluated range to fixed clock boundaries that match the alarm's period, such as the top of the hour, midnight, or the start of the calendar week.</p>"
       }
     }
   }

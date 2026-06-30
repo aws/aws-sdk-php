@@ -35,6 +35,7 @@
     "ClaimPhoneNumber": "<p>Claims an available phone number to your Connect Customer instance or traffic distribution group. You can call this API only in the same Amazon Web Services Region where the Connect Customer instance or traffic distribution group was created.</p> <p>For more information about how to use this operation, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/claim-phone-number.html\">Claim a phone number in your country</a> and <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/claim-phone-numbers-traffic-distribution-groups.html\">Claim phone numbers to traffic distribution groups</a> in the <i>Connect Customer Administrator Guide</i>. </p> <important> <p>You can call the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_SearchAvailablePhoneNumbers.html\">SearchAvailablePhoneNumbers</a> API for available phone numbers that you can claim. Call the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_DescribePhoneNumber.html\">DescribePhoneNumber</a> API to verify the status of a previous <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_ClaimPhoneNumber.html\">ClaimPhoneNumber</a> operation.</p> </important> <p>If you plan to claim and release numbers frequently, contact us for a service quota exception. Otherwise, it is possible you will be blocked from claiming and releasing any more numbers until up to 180 days past the oldest number released has expired.</p> <p>By default you can claim and release up to 200% of your maximum number of active phone numbers. If you claim and release phone numbers using the UI or API during a rolling 180 day cycle that exceeds 200% of your phone number service level quota, you will be blocked from claiming any more numbers until 180 days past the oldest number released has expired. </p> <p>For example, if you already have 99 claimed numbers and a service level quota of 99 phone numbers, and in any 180 day period you release 99, claim 99, and then release 99, you will have exceeded the 200% limit. At that point you are blocked from claiming any more numbers until you open an Amazon Web Services support ticket.</p>",
     "CompleteAttachedFileUpload": "<p>Allows you to confirm that the attached file has been uploaded using the pre-signed URL provided in the StartAttachedFileUpload API.</p>",
     "CreateAgentStatus": "<p>Creates an agent status for the specified Connect Customer instance.</p>",
+    "CreateAttachedFile": "<p>Creates an attached file for a completed voice contact by copying a recording from a source S3 URI into Connect Customer managed storage. Use this API to attach voice recordings to contacts for downstream processing such as conversational analytics.</p> <important> <p>The <code>AssociatedResourceArn</code> must be the ARN of a completed voice contact, <code>FileUseCaseType</code> must be set to <code>VOICE_RECORDING</code>, and <code>FileSourceUri</code> must be a valid S3 URI.</p> </important> <note> <p>For example, you can call <code>CreateContact</code>, then <code>CreateAttachedFile</code>, then <code>StartContactConversationalAnalyticsJob</code> to create a contact, attach a recording, and run post-call analytics.</p> </note>",
     "CreateContact": "<important> <p>Only the VOICE, EMAIL, and TASK channels are supported. </p> <ul> <li> <p>For VOICE: The supported initiation method is <code>TRANSFER</code>. The contacts created with this initiation method have a subtype <code>connect:ExternalAudio</code>. </p> </li> <li> <p>For EMAIL: The supported initiation methods are <code>OUTBOUND</code>, <code>AGENT_REPLY</code>, and <code>FLOW</code>. </p> </li> <li> <p>For TASK: The supported initiation method is <code>API</code>. Contacts created with this API have a sub-type of <code>connect:ExternalTask</code>.</p> </li> </ul> </important> <p>Creates a new VOICE, EMAIL, or TASK contact. </p> <p>After a contact is created, you can move it to the desired state by using the <code>InitiateAs</code> parameter. While you can use API to create task contacts that are in the <code>COMPLETED</code> state, you must contact Amazon Web Services Support before using it for bulk import use cases. Bulk import causes your requests to be throttled or fail if your CreateContact limits aren't high enough. </p>",
     "CreateContactFlow": "<p>Creates a flow for the specified Connect Customer instance.</p> <p>You can also create and update flows using the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/flow-language.html\">Connect Customer Flow language</a>.</p>",
     "CreateContactFlowModule": "<p>Creates a flow module for the specified Connect Customer instance. </p>",
@@ -285,6 +286,7 @@
     "SendOutboundEmail": "<p>Send outbound email for outbound campaigns. For more information about outbound campaigns, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/enable-outbound-campaigns.html\">Set up Connect Customer outbound campaigns</a>.</p> <note> <p>Only the Connect Customer outbound campaigns service principal is allowed to assume a role in your account and call this API.</p> </note>",
     "StartAttachedFileUpload": "<p>Provides a pre-signed Amazon S3 URL in response for uploading your content.</p> <important> <p>You may only use this API to upload attachments to an <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_CreateCase.html\">Connect Customer Case</a> or <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/setup-email-channel.html\">Connect Customer Email</a>. </p> </important>",
     "StartChatContact": "<p>Initiates a flow to start a new chat for the customer. Response of this API provides a token required to obtain credentials from the <a href=\"https://docs.aws.amazon.com/connect-participant/latest/APIReference/API_CreateParticipantConnection.html\">CreateParticipantConnection</a> API in the Connect Customer Participant Service.</p> <p>When a new chat contact is successfully created, clients must subscribe to the participant’s connection for the created chat within 5 minutes. This is achieved by invoking <a href=\"https://docs.aws.amazon.com/connect-participant/latest/APIReference/API_CreateParticipantConnection.html\">CreateParticipantConnection</a> with WEBSOCKET and CONNECTION_CREDENTIALS. </p> <p>A 429 error occurs in the following situations:</p> <ul> <li> <p>API rate limit is exceeded. API TPS throttling returns a <code>TooManyRequests</code> exception.</p> </li> <li> <p>The <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html\">quota for concurrent active chats</a> is exceeded. Active chat throttling returns a <code>LimitExceededException</code>.</p> </li> </ul> <p>If you use the <code>ChatDurationInMinutes</code> parameter and receive a 400 error, your account may not support the ability to configure custom chat durations. For more information, contact Amazon Web Services Support. </p> <p>For more information about chat, see the following topics in the <i>Connect Customer Administrator Guide</i>: </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/web-and-mobile-chat.html\">Concepts: Web and mobile messaging capabilities in Connect Customer</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/security-best-practices.html#bp-security-chat\">Connect Customer Chat security best practices</a> </p> </li> </ul>",
+    "StartContactConversationalAnalyticsJob": "<p>Starts a Contact Lens post-call analytics job for the specified contact. This API runs Conversational Analytics post-contact analysis on a voice recording that is already attached to the contact, generating transcription, sentiment analysis, redaction, and summarization results based on the provided configuration.</p> <important> <p>A voice recording must already be attached to the contact before calling this API. Use <code>CreateAttachedFile</code> to attach a recording from an S3 source URI.</p> </important> <note> <p>For example, you can call <code>CreateContact</code>, then <code>CreateAttachedFile</code>, then <code>StartContactConversationalAnalyticsJob</code> to create a contact, attach a recording, and run post-call analytics.</p> </note>",
     "StartContactEvaluation": "<p>Starts an empty evaluation in the specified Connect Customer instance, using the given evaluation form for the particular contact. The evaluation form version used for the contact evaluation corresponds to the currently activated version. If no version is activated for the evaluation form, the contact evaluation cannot be started. </p> <note> <p>Evaluations created through the public API do not contain answer values suggested from automation.</p> </note>",
     "StartContactMediaProcessing": "<p> Enables in-flight message processing for an ongoing chat session. Message processing will stay active for the rest of the chat, even if an individual contact segment ends. </p>",
     "StartContactRecording": "<p>Starts recording the contact: </p> <ul> <li> <p>If the API is called <i>before</i> the agent joins the call, recording starts when the agent joins the call.</p> </li> <li> <p>If the API is called <i>after</i> the agent joins the call, recording starts at the time of the API call.</p> </li> </ul> <p>StartContactRecording is a one-time action. For example, if you use StopContactRecording to stop recording an ongoing call, you can't use StartContactRecording to restart it. For scenarios where the recording has started and you want to suspend and resume it, such as when collecting sensitive information (for example, a credit card number), use SuspendContactRecording and ResumeContactRecording.</p> <p>You can use this API to override the recording behavior configured in the <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/set-recording-behavior.html\">Set recording behavior</a> block.</p> <p>Only voice recordings are supported at this time.</p>",
@@ -412,6 +414,8 @@
         "ContactFlowVersionSummary$Arn": "<p>The Amazon Resource Name (ARN) of the view version.</p>",
         "ContactSearchSummary$Arn": "<p>The Amazon Resource Name (ARN) of the contact.</p>",
         "CreateAgentStatusResponse$AgentStatusARN": "<p>The Amazon Resource Name (ARN) of the agent status.</p>",
+        "CreateAttachedFileRequest$AssociatedResourceArn": "<p>The ARN of the completed voice contact to attach the file to. Only voice contacts with Telephony subtype are supported.</p> <note> <p>This value must be a valid ARN.</p> </note>",
+        "CreateAttachedFileResponse$FileArn": "<p>The unique identifier of the attached file resource (ARN).</p>",
         "CreateContactFlowModuleAliasResponse$ContactFlowModuleArn": "<p>The Amazon Resource Name (ARN) of the flow module.</p>",
         "CreateContactFlowModuleResponse$Arn": "<p>The Amazon Resource Name (ARN) of the flow module.</p>",
         "CreateContactFlowModuleVersionRequest$ContactFlowModuleId": "<p>The identifier of the flow module.</p>",
@@ -1082,6 +1086,12 @@
         "Preview$AllowedUserActions": "<p>The actions the agent can perform after accepting the preview outbound contact.</p>"
       }
     },
+    "AnalyticsConfiguration": {
+      "base": "<p>The configuration for conversational analytics.</p>",
+      "refs": {
+        "StartContactConversationalAnalyticsJobRequest$AnalyticsConfiguration": "<p>The configuration for the conversational analytics job.</p>"
+      }
+    },
     "AnalyticsDataAssociationResult": {
       "base": "<p>This API is in preview release for Connect Customer and is subject to change.</p> <p>Information about associations that are successfully created: <code>DataSetId</code>, <code>TargetAccountId</code>, <code>ResourceShareId</code>, <code>ResourceShareArn</code>. </p>",
       "refs": {
@@ -1105,6 +1115,18 @@
       "base": null,
       "refs": {
         "ListAnalyticsDataLakeDataSetsResponse$Results": "<p>An array of successful results: <code>DataSetId</code>, <code>DataSetName</code>. This is a paginated API, so <code>nextToken</code> is given if there are more results to be returned.</p>"
+      }
+    },
+    "AnalyticsMode": {
+      "base": null,
+      "refs": {
+        "AnalyticsModes$member": null
+      }
+    },
+    "AnalyticsModes": {
+      "base": null,
+      "refs": {
+        "StartContactConversationalAnalyticsJobRequest$AnalyticsModes": "<p>The analytics modes to run for the contact. Valid values: <code>PostContact</code>.</p>"
       }
     },
     "AnswerMachineDetectionConfig": {
@@ -1834,6 +1856,14 @@
         "BatchUpdateDataTableValueResponse$Successful": "<p>A list of successfully updated values with their new lock versions and identifiers.</p>"
       }
     },
+    "Behavior": {
+      "base": null,
+      "refs": {
+        "RedactionConfiguration$Behavior": "<p>Controls whether redaction is applied to the analytics output. Valid values: <code>Enable</code> | <code>Disable</code>.</p>",
+        "RulesConfiguration$Behavior": "<p>Controls whether Contact Lens rules are evaluated for the contact. Valid values: <code>Enable</code> | <code>Disable</code>.</p>",
+        "SentimentConfiguration$Behavior": "<p>Controls whether sentiment analysis is applied to the analytics output. Valid values: <code>Enable</code> | <code>Disable</code>.</p>"
+      }
+    },
     "BehaviorType": {
       "base": null,
       "refs": {
@@ -2106,6 +2136,7 @@
         "AssociateSecurityKeyRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "BatchPutContactRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "ClaimPhoneNumberRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p> <p>Pattern: <code>^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$</code> </p>",
+        "CreateAttachedFileRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "CreateContactFlowModuleRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "CreateContactRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "CreateEmailAddressRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
@@ -2135,6 +2166,7 @@
         "SendOutboundEmailRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "StartAttachedFileUploadRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "StartChatContactRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
+        "StartContactConversationalAnalyticsJobRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "StartContactEvaluationRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "StartContactStreamingRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "StartEmailContactRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
@@ -2762,6 +2794,8 @@
         "StartChatContactRequest$RelatedContactId": "<p>The unique identifier for an Connect Customer contact. This identifier is related to the chat starting.</p> <note> <p>You cannot provide data for both RelatedContactId and PersistentChat. </p> </note>",
         "StartChatContactResponse$ContactId": "<p>The identifier of this contact within the Connect Customer instance. </p>",
         "StartChatContactResponse$ContinuedFromContactId": "<p>The contactId from which a persistent chat session is started. This field is populated only for persistent chats.</p>",
+        "StartContactConversationalAnalyticsJobRequest$ContactId": "<p>The identifier of the contact in this instance of Connect Customer. </p>",
+        "StartContactConversationalAnalyticsJobResponse$ContactId": "<p>The identifier of the contact.</p>",
         "StartContactEvaluationRequest$ContactId": "<p>The identifier of the contact in this instance of Connect Customer. </p>",
         "StartContactMediaProcessingRequest$ContactId": "<p>The identifier of the contact.</p>",
         "StartContactRecordingRequest$ContactId": "<p>The identifier of the contact.</p>",
@@ -3050,6 +3084,14 @@
     },
     "CreateAgentStatusResponse": {
       "base": null,
+      "refs": {}
+    },
+    "CreateAttachedFileRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAttachedFileResponse": {
+      "base": "Response from CreateAttachedFile API.",
       "refs": {}
     },
     "CreateCaseActionDefinition": {
@@ -4930,6 +4972,18 @@
         "EndpointInfo$Type": "<p>Type of endpoint.</p>"
       }
     },
+    "Entities": {
+      "base": null,
+      "refs": {
+        "RedactionConfiguration$Entities": "<p>The list of PII entity types to redact from the transcript (for example, <code>NAME</code>, <code>ADDRESS</code>, <code>CREDIT_DEBIT_NUMBER</code>).</p>"
+      }
+    },
+    "Entity": {
+      "base": null,
+      "refs": {
+        "Entities$member": null
+      }
+    },
     "EntityArn": {
       "base": null,
       "refs": {
@@ -6090,6 +6144,7 @@
         "AttachedFile$FileId": "<p>The unique identifier of the attached file resource.</p>",
         "AttachedFileError$FileId": "<p>The unique identifier of the attached file resource.</p>",
         "CompleteAttachedFileUploadRequest$FileId": "<p>The unique identifier of the attached file resource.</p>",
+        "CreateAttachedFileResponse$FileId": "<p>The unique identifier of the attached file resource.</p>",
         "DeleteAttachedFileRequest$FileId": "<p>The unique identifier of the attached file resource.</p>",
         "FileIdList$member": null,
         "GetAttachedFileRequest$FileId": "<p>The unique identifier of the attached file resource.</p>",
@@ -6121,10 +6176,17 @@
         "StartAttachedFileUploadRequest$FileSizeInBytes": "<p>The size of the attached file in bytes.</p>"
       }
     },
+    "FileSourceUri": {
+      "base": null,
+      "refs": {
+        "CreateAttachedFileRequest$FileSourceUri": "<p>The S3 URI of the file to be attached. Only S3 source URIs are supported.</p>"
+      }
+    },
     "FileStatusType": {
       "base": null,
       "refs": {
         "AttachedFile$FileStatus": "<p>The current status of the attached file.</p>",
+        "CreateAttachedFileResponse$FileStatus": "<p>The current status of the attached file. Valid values: <code>PROCESSING</code> | <code>APPROVED</code> | <code>REJECTED</code> | <code>FAILED</code>.</p>",
         "GetAttachedFileResponse$FileStatus": "<p>The current status of the attached file.</p>",
         "StartAttachedFileUploadResponse$FileStatus": "<p>The current status of the attached file.</p>"
       }
@@ -6133,6 +6195,7 @@
       "base": null,
       "refs": {
         "AttachedFile$FileUseCaseType": "<p>The use case for the file.</p>",
+        "CreateAttachedFileRequest$FileUseCaseType": "<p>The use case for the file.</p> <important> <p>Only <code>VOICE_RECORDING</code> is supported.</p> </important>",
         "GetAttachedFileResponse$FileUseCaseType": "<p>The use case for the file.</p>",
         "StartAttachedFileUploadRequest$FileUseCaseType": "<p>The use case for the file.</p> <important> <p> Only <code>ATTACHMENTS</code> are supported.</p> </important>"
       }
@@ -6862,6 +6925,7 @@
       "base": null,
       "refs": {
         "AttachedFile$CreationTime": "<p>The time of Creation of the file resource as an ISO timestamp. It's specified in ISO 8601 format: <code>yyyy-MM-ddThh:mm:ss.SSSZ</code>. For example, <code>2024-05-03T02:41:28.172Z</code>.</p>",
+        "CreateAttachedFileResponse$CreationTime": "<p>The time of Creation of the file resource as an ISO timestamp. It's specified in ISO 8601 format: <code>yyyy-MM-ddThh:mm:ss.SSSZ</code>. For example, <code>2024-05-03T02:41:28.172Z</code>.</p>",
         "DescribeEmailAddressResponse$CreateTimestamp": "<p>The email address creation timestamp in ISO 8601 Datetime.</p>",
         "DescribeEmailAddressResponse$ModifiedTimestamp": "<p>The email address last modification timestamp in ISO 8601 Datetime.</p>",
         "DownloadUrlMetadata$UrlExpiry": "<p>The expiration time of the URL in ISO timestamp. It's specified in ISO 8601 format: yyyy-MM-ddThh:mm:ss.SSSZ. For example, 2019-11-08T02:41:28.172Z.</p>",
@@ -7049,6 +7113,7 @@
         "ClaimedPhoneNumberSummary$InstanceId": "<p>The identifier of the Connect Customer instance that phone numbers are claimed to. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "CompleteAttachedFileUploadRequest$InstanceId": "<p>The unique identifier of the Connect Customer instance.</p>",
         "CreateAgentStatusRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "CreateAttachedFileRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "CreateContactFlowModuleRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "CreateContactFlowModuleVersionRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "CreateContactFlowRequest$InstanceId": "<p>The identifier of the Connect Customer instance.</p>",
@@ -7279,6 +7344,8 @@
         "SendOutboundEmailRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "StartAttachedFileUploadRequest$InstanceId": "<p>The unique identifier of the Connect Customer instance.</p>",
         "StartChatContactRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "StartContactConversationalAnalyticsJobRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "StartContactConversationalAnalyticsJobResponse$InstanceId": "<p>The identifier of the Connect Customer instance.</p>",
         "StartContactEvaluationRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "StartContactMediaProcessingRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "StartContactRecordingRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -7615,6 +7682,18 @@
       "base": "<p>Configuration information of a Kinesis video stream.</p>",
       "refs": {
         "InstanceStorageConfig$KinesisVideoStreamConfig": "<p>The configuration of the Kinesis video stream.</p>"
+      }
+    },
+    "LanguageConfiguration": {
+      "base": "<p>The language configuration for conversational analytics.</p>",
+      "refs": {
+        "AnalyticsConfiguration$LanguageConfiguration": "<p>The language configuration for conversational analytics.</p>"
+      }
+    },
+    "LanguageLocale": {
+      "base": null,
+      "refs": {
+        "LanguageConfiguration$LanguageLocale": "<p>The language locale setting for conversational analytics.</p>"
       }
     },
     "LargeNextToken": {
@@ -8293,6 +8372,12 @@
         "RoutingProfile$NumberOfAssociatedQueues": "<p>The number of associated queues in routing profile.</p>",
         "RoutingProfile$NumberOfAssociatedManualAssignmentQueues": "<p>The number of associated manual assignment queues in routing profile.</p>",
         "RoutingProfile$NumberOfAssociatedUsers": "<p>The number of associated users in routing profile.</p>"
+      }
+    },
+    "MaskMode": {
+      "base": null,
+      "refs": {
+        "RedactionConfiguration$MaskMode": "<p>The masking mode that determines how redacted content is replaced in the output. Valid values: <code>PII</code> (replaces with the literal string [PII]) | <code>EntityType</code> (replaces with the entity type name, for example [NAME]).</p>"
       }
     },
     "MatchCriteria": {
@@ -9759,6 +9844,12 @@
         "QuestionPointsConfiguration$MinPointValue": "<p>The minimum point value.</p>"
       }
     },
+    "Policy": {
+      "base": null,
+      "refs": {
+        "RedactionConfiguration$Policy": "<p>The redaction output policy that determines which versions of the transcript are stored. Valid values: <code>None</code> | <code>RedactedOnly</code> | <code>RedactedAndOriginal</code>.</p>"
+      }
+    },
     "PositiveAndNegativeDouble": {
       "base": null,
       "refs": {
@@ -10820,6 +10911,12 @@
         "RecurrenceConfig$RecurrencePattern": "<p>The recurrence pattern that defines how the event repeats. Example: Frequency, Interval, ByMonth, ByMonthDay, ByWeekdayOccurrence</p>"
       }
     },
+    "RedactionConfiguration": {
+      "base": "<p>The redaction configuration for conversational analytics.</p>",
+      "refs": {
+        "AnalyticsConfiguration$RedactionConfiguration": "<p>The redaction configuration for conversational analytics.</p>"
+      }
+    },
     "Reference": {
       "base": "<p>Well-formed data on a contact, used by agents to complete a contact request. You can have up to 4,096 UTF-8 bytes across all references for a contact.</p>",
       "refs": {
@@ -11497,6 +11594,12 @@
         "Rule$TriggerEventSource": "<p>The event source to trigger the rule.</p>"
       }
     },
+    "RulesConfiguration": {
+      "base": "<p>The rules configuration for conversational analytics. Controls whether Contact Lens rules are evaluated against the analytics output.</p>",
+      "refs": {
+        "AnalyticsConfiguration$RulesConfiguration": "<p>The rules configuration for conversational analytics.</p>"
+      }
+    },
     "S3Config": {
       "base": "<p>Information about the Amazon Simple Storage Service (Amazon S3) storage type.</p>",
       "refs": {
@@ -12135,6 +12238,12 @@
         "UserPhoneConfig$DeskPhoneNumber": "<p>The phone number for the user's desk phone.</p>"
       }
     },
+    "SentimentConfiguration": {
+      "base": "<p>The sentiment configuration for conversational analytics.</p>",
+      "refs": {
+        "AnalyticsConfiguration$SentimentConfiguration": "<p>The sentiment configuration for conversational analytics.</p>"
+      }
+    },
     "ServiceQuotaExceededException": {
       "base": "<p>The service quota has been exceeded.</p>",
       "refs": {}
@@ -12284,6 +12393,14 @@
       "refs": {}
     },
     "StartChatContactResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "StartContactConversationalAnalyticsJobRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartContactConversationalAnalyticsJobResponse": {
       "base": null,
       "refs": {}
     },
@@ -12630,6 +12747,24 @@
         "BatchPutContactResponse$SuccessfulRequestList": "<p>List of requests for which contact was successfully created.</p>"
       }
     },
+    "SummaryConfiguration": {
+      "base": "<p>The summary configuration for conversational analytics.</p>",
+      "refs": {
+        "AnalyticsConfiguration$SummaryConfiguration": "<p>The summary configuration for conversational analytics.</p>"
+      }
+    },
+    "SummaryMode": {
+      "base": null,
+      "refs": {
+        "SummaryModes$member": null
+      }
+    },
+    "SummaryModes": {
+      "base": null,
+      "refs": {
+        "SummaryConfiguration$SummaryModes": "<p>The summary modes that determine what type of summarization is generated. Valid values: <code>PostContact</code> | <code>AutomatedInteraction</code> | <code>ContactChain</code>.</p>"
+      }
+    },
     "SupportedMessagingContentType": {
       "base": null,
       "refs": {
@@ -12712,6 +12847,7 @@
         "ContactFlow$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "ContactFlowModule$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "CreateAgentStatusRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
+        "CreateAttachedFileRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, <code>{ \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }</code>.</p>",
         "CreateContactFlowModuleRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "CreateContactFlowRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "CreateDataTableRequest$Tags": "<p>Key value pairs for attribute based access control (TBAC or ABAC). Optional tags to apply to the data table for organization and access control purposes.</p>",

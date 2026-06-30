@@ -1834,7 +1834,9 @@
         "IncludeNestedStacks":{"shape":"IncludeNestedStacks"},
         "OnStackFailure":{"shape":"OnStackFailure"},
         "ImportExistingResources":{"shape":"ImportExistingResources"},
-        "DeploymentMode":{"shape":"DeploymentMode"}
+        "DeploymentMode":{"shape":"DeploymentMode"},
+        "DeploymentConfig":{"shape":"DeploymentConfig"},
+        "DisableValidation":{"shape":"DisableValidation"}
       }
     },
     "CreateChangeSetOutput":{
@@ -1881,7 +1883,9 @@
         "Tags":{"shape":"Tags"},
         "ClientRequestToken":{"shape":"ClientRequestToken"},
         "EnableTerminationProtection":{"shape":"EnableTerminationProtection"},
-        "RetainExceptOnCreate":{"shape":"RetainExceptOnCreate"}
+        "RetainExceptOnCreate":{"shape":"RetainExceptOnCreate"},
+        "DeploymentConfig":{"shape":"DeploymentConfig"},
+        "DisableValidation":{"shape":"DisableValidation"}
       }
     },
     "CreateStackInstancesInput":{
@@ -2022,7 +2026,8 @@
         "RetainResources":{"shape":"RetainResources"},
         "RoleARN":{"shape":"RoleARN"},
         "ClientRequestToken":{"shape":"ClientRequestToken"},
-        "DeletionMode":{"shape":"DeletionMode"}
+        "DeletionMode":{"shape":"DeletionMode"},
+        "DeploymentConfig":{"shape":"DeploymentConfig"}
       }
     },
     "DeleteStackInstancesInput":{
@@ -2072,6 +2077,20 @@
       ]
     },
     "DeletionTime":{"type":"timestamp"},
+    "DeploymentConfig":{
+      "type":"structure",
+      "members":{
+        "Mode":{"shape":"DeploymentConfigMode"},
+        "DisableRollback":{"shape":"DisableRollback"}
+      }
+    },
+    "DeploymentConfigMode":{
+      "type":"string",
+      "enum":[
+        "STANDARD",
+        "EXPRESS"
+      ]
+    },
     "DeploymentMode":{
       "type":"string",
       "enum":["REVERT_DRIFT"]
@@ -2175,7 +2194,8 @@
         "RootChangeSetId":{"shape":"ChangeSetId"},
         "OnStackFailure":{"shape":"OnStackFailure"},
         "ImportExistingResources":{"shape":"ImportExistingResources"},
-        "DeploymentMode":{"shape":"DeploymentMode"}
+        "DeploymentMode":{"shape":"DeploymentMode"},
+        "DeploymentConfig":{"shape":"DeploymentConfig"}
       }
     },
     "DescribeEventsInput":{
@@ -2574,6 +2594,7 @@
       ]
     },
     "DisableRollback":{"type":"boolean"},
+    "DisableValidation":{"type":"boolean"},
     "DriftIgnoredReason":{
       "type":"string",
       "enum":[
@@ -4469,7 +4490,8 @@
         "StackName":{"shape":"StackNameOrId"},
         "RoleARN":{"shape":"RoleARN"},
         "ClientRequestToken":{"shape":"ClientRequestToken"},
-        "RetainExceptOnCreate":{"shape":"RetainExceptOnCreate"}
+        "RetainExceptOnCreate":{"shape":"RetainExceptOnCreate"},
+        "DeploymentConfig":{"shape":"DeploymentConfig"}
       }
     },
     "RollbackStackOutput":{
@@ -4630,6 +4652,7 @@
         "StackStatus":{"shape":"StackStatus"},
         "StackStatusReason":{"shape":"StackStatusReason"},
         "DisableRollback":{"shape":"DisableRollback"},
+        "DeploymentConfig":{"shape":"DeploymentConfig"},
         "NotificationARNs":{"shape":"NotificationARNs"},
         "TimeoutInMinutes":{"shape":"TimeoutMinutes"},
         "Capabilities":{"shape":"Capabilities"},
@@ -5851,7 +5874,9 @@
         "Tags":{"shape":"Tags"},
         "DisableRollback":{"shape":"DisableRollback"},
         "ClientRequestToken":{"shape":"ClientRequestToken"},
-        "RetainExceptOnCreate":{"shape":"RetainExceptOnCreate"}
+        "RetainExceptOnCreate":{"shape":"RetainExceptOnCreate"},
+        "DeploymentConfig":{"shape":"DeploymentConfig"},
+        "DisableValidation":{"shape":"DisableValidation"}
       }
     },
     "UpdateStackInstancesInput":{

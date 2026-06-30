@@ -99,6 +99,22 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "CreateContainerAssociation":{
+      "name":"CreateContainerAssociation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateContainerAssociationRequest"},
+      "output":{"shape":"CreateContainerAssociationResponse"},
+      "errors":[
+        {"shape":"LimitExceededException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerError"},
+        {"shape":"InsufficientCapacityException"}
+      ]
+    },
     "CreateFirewall":{
       "name":"CreateFirewall",
       "http":{
@@ -241,6 +257,22 @@
         {"shape":"InternalServerError"},
         {"shape":"InsufficientCapacityException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidOperationException"}
+      ]
+    },
+    "DeleteContainerAssociation":{
+      "name":"DeleteContainerAssociation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteContainerAssociationRequest"},
+      "output":{"shape":"DeleteContainerAssociationResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServerError"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
         {"shape":"InvalidOperationException"}
       ]
     },
@@ -417,6 +449,21 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InvalidOperationException"}
+      ]
+    },
+    "DescribeContainerAssociation":{
+      "name":"DescribeContainerAssociation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeContainerAssociationRequest"},
+      "output":{"shape":"DescribeContainerAssociationResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServerError"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "DescribeFirewall":{
@@ -723,6 +770,20 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "ListContainerAssociations":{
+      "name":"ListContainerAssociations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListContainerAssociationsRequest"},
+      "output":{"shape":"ListContainerAssociationsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServerError"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "ListFirewallPolicies":{
       "name":"ListFirewallPolicies",
       "http":{
@@ -1003,6 +1064,22 @@
         {"shape":"ThrottlingException"},
         {"shape":"InvalidTokenException"},
         {"shape":"ResourceOwnerCheckException"}
+      ]
+    },
+    "UpdateContainerAssociation":{
+      "name":"UpdateContainerAssociation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateContainerAssociationRequest"},
+      "output":{"shape":"UpdateContainerAssociationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerError"},
+        {"shape":"InvalidTokenException"}
       ]
     },
     "UpdateFirewallAnalysisSettings":{
@@ -1539,7 +1616,101 @@
         "CAPACITY_CONSTRAINED"
       ]
     },
+    "ContainerAssociationLastUpdatedTime":{"type":"timestamp"},
+    "ContainerAssociationStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "CREATING",
+        "DELETING"
+      ]
+    },
+    "ContainerAssociationSummary":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"ResourceArn"},
+        "Name":{"shape":"ResourceName"}
+      }
+    },
+    "ContainerAssociations":{
+      "type":"list",
+      "member":{"shape":"ContainerAssociationSummary"}
+    },
+    "ContainerAttribute":{
+      "type":"structure",
+      "required":[
+        "Key",
+        "Value"
+      ],
+      "members":{
+        "Key":{"shape":"ContainerAttributeKey"},
+        "Value":{"shape":"ContainerAttributeValue"}
+      }
+    },
+    "ContainerAttributeKey":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"\\S+"
+    },
+    "ContainerAttributeValue":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"\\S+"
+    },
+    "ContainerAttributes":{
+      "type":"list",
+      "member":{"shape":"ContainerAttribute"}
+    },
+    "ContainerMonitoringConfiguration":{
+      "type":"structure",
+      "required":["ClusterArn"],
+      "members":{
+        "ClusterArn":{"shape":"ResourceArn"},
+        "AttributeFilters":{"shape":"ContainerAttributes"}
+      }
+    },
+    "ContainerMonitoringConfigurations":{
+      "type":"list",
+      "member":{"shape":"ContainerMonitoringConfiguration"}
+    },
+    "ContainerMonitoringType":{
+      "type":"string",
+      "enum":[
+        "ECS",
+        "EKS"
+      ]
+    },
     "Count":{"type":"integer"},
+    "CreateContainerAssociationRequest":{
+      "type":"structure",
+      "required":[
+        "ContainerAssociationName",
+        "Type",
+        "ContainerMonitoringConfigurations"
+      ],
+      "members":{
+        "ContainerAssociationName":{"shape":"ResourceName"},
+        "Description":{"shape":"Description"},
+        "Type":{"shape":"ContainerMonitoringType"},
+        "ContainerMonitoringConfigurations":{"shape":"ContainerMonitoringConfigurations"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateContainerAssociationResponse":{
+      "type":"structure",
+      "members":{
+        "ContainerAssociationName":{"shape":"ResourceName"},
+        "ContainerAssociationArn":{"shape":"ResourceArn"},
+        "Description":{"shape":"Description"},
+        "Type":{"shape":"ContainerMonitoringType"},
+        "ContainerMonitoringConfigurations":{"shape":"ContainerMonitoringConfigurations"},
+        "Status":{"shape":"ContainerAssociationStatus"},
+        "Tags":{"shape":"TagList"},
+        "UpdateToken":{"shape":"UpdateToken"}
+      }
+    },
     "CreateFirewallPolicyRequest":{
       "type":"structure",
       "required":[
@@ -1796,6 +1967,21 @@
       "member":{"shape":"CustomAction"}
     },
     "DeepThreatInspection":{"type":"boolean"},
+    "DeleteContainerAssociationRequest":{
+      "type":"structure",
+      "members":{
+        "ContainerAssociationName":{"shape":"ResourceName"},
+        "ContainerAssociationArn":{"shape":"ResourceArn"}
+      }
+    },
+    "DeleteContainerAssociationResponse":{
+      "type":"structure",
+      "members":{
+        "ContainerAssociationName":{"shape":"ResourceName"},
+        "ContainerAssociationArn":{"shape":"ResourceArn"},
+        "Status":{"shape":"ContainerAssociationStatus"}
+      }
+    },
     "DeleteFirewallPolicyRequest":{
       "type":"structure",
       "members":{
@@ -1955,6 +2141,28 @@
       "members":{
         "VpcEndpointAssociation":{"shape":"VpcEndpointAssociation"},
         "VpcEndpointAssociationStatus":{"shape":"VpcEndpointAssociationStatus"}
+      }
+    },
+    "DescribeContainerAssociationRequest":{
+      "type":"structure",
+      "members":{
+        "ContainerAssociationName":{"shape":"ResourceName"},
+        "ContainerAssociationArn":{"shape":"ResourceArn"}
+      }
+    },
+    "DescribeContainerAssociationResponse":{
+      "type":"structure",
+      "members":{
+        "ContainerAssociationName":{"shape":"ResourceName"},
+        "ContainerAssociationArn":{"shape":"ResourceArn"},
+        "Description":{"shape":"Description"},
+        "Type":{"shape":"ContainerMonitoringType"},
+        "ContainerMonitoringConfigurations":{"shape":"ContainerMonitoringConfigurations"},
+        "Status":{"shape":"ContainerAssociationStatus"},
+        "ResolvedCidrCount":{"shape":"CIDRCount"},
+        "LastUpdatedTime":{"shape":"ContainerAssociationLastUpdatedTime"},
+        "Tags":{"shape":"TagList"},
+        "UpdateToken":{"shape":"UpdateToken"}
       }
     },
     "DescribeFirewallMetadataRequest":{
@@ -2767,6 +2975,20 @@
       "type":"structure",
       "members":{
         "AnalysisReports":{"shape":"AnalysisReports"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListContainerAssociationsRequest":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{"shape":"PaginationMaxResults"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListContainerAssociationsResponse":{
+      "type":"structure",
+      "members":{
+        "ContainerAssociations":{"shape":"ContainerAssociations"},
         "NextToken":{"shape":"PaginationToken"}
       }
     },
@@ -4249,6 +4471,36 @@
         "FirewallArn":{"shape":"ResourceArn"},
         "FirewallName":{"shape":"ResourceName"},
         "AvailabilityZoneChangeProtection":{"shape":"Boolean"}
+      }
+    },
+    "UpdateContainerAssociationRequest":{
+      "type":"structure",
+      "required":[
+        "Type",
+        "ContainerMonitoringConfigurations",
+        "UpdateToken"
+      ],
+      "members":{
+        "ContainerAssociationName":{"shape":"ResourceName"},
+        "ContainerAssociationArn":{"shape":"ResourceArn"},
+        "Description":{"shape":"Description"},
+        "Type":{"shape":"ContainerMonitoringType"},
+        "ContainerMonitoringConfigurations":{"shape":"ContainerMonitoringConfigurations"},
+        "Tags":{"shape":"TagList"},
+        "UpdateToken":{"shape":"UpdateToken"}
+      }
+    },
+    "UpdateContainerAssociationResponse":{
+      "type":"structure",
+      "members":{
+        "ContainerAssociationName":{"shape":"ResourceName"},
+        "ContainerAssociationArn":{"shape":"ResourceArn"},
+        "Description":{"shape":"Description"},
+        "Type":{"shape":"ContainerMonitoringType"},
+        "ContainerMonitoringConfigurations":{"shape":"ContainerMonitoringConfigurations"},
+        "Status":{"shape":"ContainerAssociationStatus"},
+        "Tags":{"shape":"TagList"},
+        "UpdateToken":{"shape":"UpdateToken"}
       }
     },
     "UpdateFirewallAnalysisSettingsRequest":{

@@ -1078,6 +1078,32 @@
       "type":"list",
       "member":{"shape":"AwsMarketplaceOfferSetIdentifier"}
     },
+    "AwsMarketplaceProductArn":{
+      "type":"string",
+      "max":2048,
+      "min":4,
+      "pattern":"arn:.*"
+    },
+    "AwsMarketplaceProductIdentifiers":{
+      "type":"list",
+      "member":{"shape":"AwsMarketplaceProductArn"}
+    },
+    "AwsMarketplaceSolutionArn":{
+      "type":"string",
+      "max":2048,
+      "min":4,
+      "pattern":"arn:.*"
+    },
+    "AwsMarketplaceSolutionIdentifier":{
+      "type":"string",
+      "max":2048,
+      "min":4,
+      "pattern":"arn:.*"
+    },
+    "AwsMarketplaceSolutionIdentifiers":{
+      "type":"list",
+      "member":{"shape":"AwsMarketplaceSolutionIdentifier"}
+    },
     "AwsMaturity":{
       "type":"string",
       "pattern":"(?s).{1,20}"
@@ -1141,7 +1167,9 @@
       "type":"structure",
       "members":{
         "AwsProducts":{"shape":"AwsProductIdentifiers"},
-        "Solutions":{"shape":"SolutionIdentifiers"}
+        "Solutions":{"shape":"SolutionIdentifiers"},
+        "AwsMarketplaceSolutions":{"shape":"AwsMarketplaceSolutionIdentifiers"},
+        "AwsMarketplaceProducts":{"shape":"AwsMarketplaceProductIdentifiers"}
       }
     },
     "AwsOpportunityStage":{
@@ -3393,8 +3421,15 @@
         "Sort":{"shape":"SolutionSort"},
         "Status":{"shape":"ListSolutionsRequestStatusList"},
         "Identifier":{"shape":"ListSolutionsRequestIdentifierList"},
-        "Category":{"shape":"ListSolutionsRequestCategoryList"}
+        "Category":{"shape":"ListSolutionsRequestCategoryList"},
+        "AwsMarketplaceSolutionArn":{"shape":"ListSolutionsRequestAwsMarketplaceSolutionArnList"}
       }
+    },
+    "ListSolutionsRequestAwsMarketplaceSolutionArnList":{
+      "type":"list",
+      "member":{"shape":"AwsMarketplaceSolutionArn"},
+      "max":10,
+      "min":0
     },
     "ListSolutionsRequestCategoryList":{
       "type":"list",
@@ -4033,11 +4068,15 @@
     "RecommendationAttributeMap":{
       "type":"map",
       "key":{"shape":"String"},
-      "value":{"shape":"String"}
+      "value":{"shape":"String"},
+      "max":25,
+      "min":0
     },
     "RecommendationList":{
       "type":"list",
-      "member":{"shape":"Recommendation"}
+      "member":{"shape":"Recommendation"},
+      "max":5,
+      "min":0
     },
     "RejectEngagementInvitationRequest":{
       "type":"structure",
@@ -4061,7 +4100,9 @@
         "AwsMarketplaceOffers":{"shape":"AwsMarketplaceOfferIdentifiers"},
         "AwsMarketplaceOfferSets":{"shape":"AwsMarketplaceOfferSetIdentifiers"},
         "Solutions":{"shape":"SolutionIdentifiers"},
-        "AwsProducts":{"shape":"AwsProductIdentifiers"}
+        "AwsProducts":{"shape":"AwsProductIdentifiers"},
+        "AwsMarketplaceSolutions":{"shape":"AwsMarketplaceSolutionIdentifiers"},
+        "AwsMarketplaceProducts":{"shape":"AwsMarketplaceProductIdentifiers"}
       }
     },
     "RelatedEntityType":{
@@ -4070,7 +4111,9 @@
         "Solutions",
         "AwsProducts",
         "AwsMarketplaceOffers",
-        "AwsMarketplaceOfferSets"
+        "AwsMarketplaceOfferSets",
+        "AwsMarketplaceSolutions",
+        "AwsMarketplaceProducts"
       ]
     },
     "ResourceArn":{
@@ -4266,7 +4309,8 @@
         "Name":{"shape":"String"},
         "Status":{"shape":"SolutionStatus"},
         "Category":{"shape":"String"},
-        "CreatedDate":{"shape":"DateTime"}
+        "CreatedDate":{"shape":"DateTime"},
+        "AwsMarketplaceSolutionArn":{"shape":"AwsMarketplaceSolutionArn"}
       }
     },
     "SolutionIdentifier":{

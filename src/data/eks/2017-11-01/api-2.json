@@ -66,6 +66,25 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "CancelUpdate":{
+      "name":"CancelUpdate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/clusters/{name}/updates/{updateId}/cancel-update"
+      },
+      "input":{"shape":"CancelUpdateRequest"},
+      "output":{"shape":"CancelUpdateResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ClientException"},
+        {"shape":"ServerException"},
+        {"shape":"ResourceInUseException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidStateException"}
+      ]
+    },
     "CreateAccessEntry":{
       "name":"CreateAccessEntry",
       "http":{
@@ -1461,6 +1480,50 @@
       "type":"integer",
       "box":true
     },
+    "CancelUpdateRequest":{
+      "type":"structure",
+      "required":[
+        "name",
+        "updateId"
+      ],
+      "members":{
+        "name":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"name"
+        },
+        "updateId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"updateId"
+        },
+        "clientRequestToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CancelUpdateResponse":{
+      "type":"structure",
+      "members":{
+        "update":{"shape":"Update"}
+      }
+    },
+    "Cancellation":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"CancellationStatus"},
+        "reason":{"shape":"String"}
+      }
+    },
+    "CancellationStatus":{
+      "type":"string",
+      "enum":[
+        "InProgress",
+        "Failed",
+        "Successful"
+      ]
+    },
     "Capability":{
       "type":"structure",
       "members":{
@@ -1572,7 +1635,8 @@
       "type":"string",
       "enum":[
         "UPGRADE_READINESS",
-        "MISCONFIGURATION"
+        "MISCONFIGURATION",
+        "ROLLBACK_READINESS"
       ]
     },
     "CategoryList":{
@@ -4126,6 +4190,12 @@
       "max":255,
       "min":1
     },
+    "RollbackConfig":{
+      "type":"structure",
+      "members":{
+        "timeoutMinutes":{"shape":"BoxedInteger"}
+      }
+    },
     "ServerException":{
       "type":"structure",
       "members":{
@@ -4328,7 +4398,8 @@
         "type":{"shape":"UpdateType"},
         "params":{"shape":"UpdateParams"},
         "createdAt":{"shape":"Timestamp"},
-        "errors":{"shape":"ErrorDetails"}
+        "errors":{"shape":"ErrorDetails"},
+        "cancellation":{"shape":"Cancellation"}
       }
     },
     "UpdateAccessConfigRequest":{
@@ -4496,7 +4567,8 @@
           "shape":"String",
           "idempotencyToken":true
         },
-        "force":{"shape":"Boolean"}
+        "force":{"shape":"Boolean"},
+        "rollbackConfig":{"shape":"RollbackConfig"}
       }
     },
     "UpdateClusterVersionResponse":{
@@ -4749,7 +4821,8 @@
         "CapabilityUpdate",
         "ControlPlaneScalingConfigUpdate",
         "VendedLogsUpdate",
-        "ControlPlaneEgressUpdate"
+        "ControlPlaneEgressUpdate",
+        "VersionRollback"
       ]
     },
     "UpgradePolicyRequest":{

@@ -1502,7 +1502,8 @@
         "USAGE_LOGS",
         "SECURITY_FINDING_LOGS",
         "ACCESS_LOGS",
-        "CONNECTION_LOGS"
+        "CONNECTION_LOGS",
+        "S3_SERVER_ACCESS_LOGS"
       ]
     },
     "LogTypes":{
@@ -1699,7 +1700,8 @@
         "AWS::CloudFront::Distribution",
         "AWS::SecurityHub::HubV2",
         "AWS::CloudWatch::OTelEnrichment",
-        "AWS::MSK::Cluster"
+        "AWS::MSK::Cluster",
+        "AWS::S3::Bucket"
       ]
     },
     "ResourceTypes":{
@@ -1759,6 +1761,13 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "SignalType":{
+      "type":"string",
+      "enum":[
+        "LOG",
+        "METRIC"
+      ]
     },
     "SingleHeader":{
       "type":"structure",
@@ -2073,7 +2082,8 @@
       ],
       "members":{
         "Records":{"shape":"Records"},
-        "Configuration":{"shape":"TelemetryPipelineConfiguration"}
+        "Configuration":{"shape":"TelemetryPipelineConfiguration"},
+        "SignalType":{"shape":"SignalType"}
       }
     },
     "TestTelemetryPipelineOutput":{

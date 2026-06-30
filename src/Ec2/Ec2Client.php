@@ -1434,6 +1434,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise modifyVpcEncryptionControlAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result modifyVpcEndpointConnectionNotification(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise modifyVpcEndpointConnectionNotificationAsync(array $args = []) (supported in versions 2016-11-15)
+ * @method \Aws\Result modifyVpcEndpointPayerResponsibility(array $args = []) (supported in versions 2016-11-15)
+ * @method \GuzzleHttp\Promise\Promise modifyVpcEndpointPayerResponsibilityAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result modifyVpcEndpointServiceConfiguration(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise modifyVpcEndpointServiceConfigurationAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result modifyVpcEndpointServicePayerResponsibility(array $args = []) (supported in versions 2016-11-15)

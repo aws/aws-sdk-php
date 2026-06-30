@@ -1642,6 +1642,14 @@
         "EVALUATION_ERROR"
       ]
     },
+    "EvaluationWindow":{
+      "type":"structure",
+      "members":{
+        "WallClockWindow":{"shape":"WallClockWindow"},
+        "SlidingWindow":{"shape":"SlidingWindow"}
+      },
+      "union":true
+    },
     "ExceptionType":{"type":"string"},
     "Expression":{
       "type":"string",
@@ -2389,6 +2397,7 @@
         "ThresholdMetricId":{"shape":"MetricId"},
         "EvaluationState":{"shape":"EvaluationState"},
         "StateTransitionedTimestamp":{"shape":"Timestamp"},
+        "EvaluationWindow":{"shape":"EvaluationWindow"},
         "EvaluationCriteria":{"shape":"EvaluationCriteria"},
         "EvaluationInterval":{"shape":"EvaluationInterval"}
       },
@@ -2422,6 +2431,7 @@
         "ThresholdMetricId",
         "EvaluationState",
         "StateTransitionedTimestamp",
+        "EvaluationWindow",
         "EvaluationCriteria",
         "EvaluationInterval"
       ]
@@ -2860,6 +2870,7 @@
         "Metrics":{"shape":"MetricDataQueries"},
         "Tags":{"shape":"TagList"},
         "ThresholdMetricId":{"shape":"MetricId"},
+        "EvaluationWindow":{"shape":"EvaluationWindow"},
         "EvaluationCriteria":{"shape":"EvaluationCriteria"},
         "EvaluationInterval":{"shape":"EvaluationInterval"}
       }
@@ -3078,6 +3089,10 @@
       }
     },
     "Size":{"type":"long"},
+    "SlidingWindow":{
+      "type":"structure",
+      "members":{}
+    },
     "StandardUnit":{
       "type":"string",
       "enum":[
@@ -3299,6 +3314,12 @@
     "Values":{
       "type":"list",
       "member":{"shape":"DatapointValue"}
+    },
+    "WallClockWindow":{
+      "type":"structure",
+      "members":{
+        "Timezone":{"shape":"Timezone"}
+      }
     }
   }
 }

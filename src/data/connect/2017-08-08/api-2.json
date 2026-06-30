@@ -574,6 +574,23 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "CreateAttachedFile":{
+      "name":"CreateAttachedFile",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/attached-files/{InstanceId}/files"
+      },
+      "input":{"shape":"CreateAttachedFileRequest"},
+      "output":{"shape":"CreateAttachedFileResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceConflictException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ]
+    },
     "CreateContact":{
       "name":"CreateContact",
       "http":{
@@ -4708,6 +4725,23 @@
         {"shape":"LimitExceededException"}
       ]
     },
+    "StartContactConversationalAnalyticsJob":{
+      "name":"StartContactConversationalAnalyticsJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/contact/start-conversational-analytics-job/{InstanceId}/{ContactId}"
+      },
+      "input":{"shape":"StartContactConversationalAnalyticsJobRequest"},
+      "output":{"shape":"StartContactConversationalAnalyticsJobResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"IdempotencyException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "StartContactEvaluation":{
       "name":"StartContactEvaluation",
       "http":{
@@ -6667,6 +6701,23 @@
       "type":"list",
       "member":{"shape":"AllowedUserAction"}
     },
+    "AnalyticsConfiguration":{
+      "type":"structure",
+      "required":[
+        "LanguageConfiguration",
+        "RedactionConfiguration",
+        "SentimentConfiguration",
+        "SummaryConfiguration",
+        "RulesConfiguration"
+      ],
+      "members":{
+        "LanguageConfiguration":{"shape":"LanguageConfiguration"},
+        "RedactionConfiguration":{"shape":"RedactionConfiguration"},
+        "SentimentConfiguration":{"shape":"SentimentConfiguration"},
+        "SummaryConfiguration":{"shape":"SummaryConfiguration"},
+        "RulesConfiguration":{"shape":"RulesConfiguration"}
+      }
+    },
     "AnalyticsDataAssociationResult":{
       "type":"structure",
       "members":{
@@ -6691,6 +6742,19 @@
     "AnalyticsDataSetsResults":{
       "type":"list",
       "member":{"shape":"AnalyticsDataSetsResult"}
+    },
+    "AnalyticsMode":{
+      "type":"string",
+      "enum":[
+        "PostContact",
+        "RealTime",
+        "ContactLens",
+        "AutomatedInteraction"
+      ]
+    },
+    "AnalyticsModes":{
+      "type":"list",
+      "member":{"shape":"AnalyticsMode"}
     },
     "AnswerMachineDetectionConfig":{
       "type":"structure",
@@ -7975,6 +8039,13 @@
       "type":"list",
       "member":{"shape":"BatchUpdateDataTableValueSuccessResult"}
     },
+    "Behavior":{
+      "type":"string",
+      "enum":[
+        "Enable",
+        "Disable"
+      ]
+    },
     "BehaviorType":{
       "type":"string",
       "enum":[
@@ -9045,6 +9116,43 @@
       "members":{
         "AgentStatusARN":{"shape":"ARN"},
         "AgentStatusId":{"shape":"AgentStatusId"}
+      }
+    },
+    "CreateAttachedFileRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "FileUseCaseType",
+        "FileSourceUri",
+        "AssociatedResourceArn"
+      ],
+      "members":{
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "FileUseCaseType":{"shape":"FileUseCaseType"},
+        "FileSourceUri":{"shape":"FileSourceUri"},
+        "AssociatedResourceArn":{
+          "shape":"ARN",
+          "location":"querystring",
+          "locationName":"associatedResourceArn"
+        },
+        "Tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateAttachedFileResponse":{
+      "type":"structure",
+      "members":{
+        "FileArn":{"shape":"ARN"},
+        "FileId":{"shape":"FileId"},
+        "CreationTime":{"shape":"ISO8601Datetime"},
+        "FileStatus":{"shape":"FileStatusType"}
       }
     },
     "CreateCaseActionDefinition":{
@@ -13294,6 +13402,14 @@
         "EMAIL_ADDRESS"
       ]
     },
+    "Entities":{
+      "type":"list",
+      "member":{"shape":"Entity"}
+    },
+    "Entity":{
+      "type":"string",
+      "min":1
+    },
     "EntityArn":{
       "type":"string",
       "min":1
@@ -14733,6 +14849,11 @@
       "box":true,
       "min":1
     },
+    "FileSourceUri":{
+      "type":"string",
+      "max":2000,
+      "min":1
+    },
     "FileStatusType":{
       "type":"string",
       "enum":[
@@ -14750,7 +14871,8 @@
         "EMAIL_MESSAGE_PLAIN_TEXT",
         "EMAIL_MESSAGE_REDACTED",
         "EMAIL_MESSAGE_PLAIN_TEXT_REDACTED",
-        "ATTACHMENT"
+        "ATTACHMENT",
+        "VOICE_RECORDING"
       ]
     },
     "FilterV2":{
@@ -16260,6 +16382,13 @@
         "EncryptionConfig":{"shape":"EncryptionConfig"}
       }
     },
+    "LanguageConfiguration":{
+      "type":"structure",
+      "members":{
+        "LanguageLocale":{"shape":"LanguageLocale"}
+      }
+    },
+    "LanguageLocale":{"type":"string"},
     "LargeNextToken":{
       "type":"string",
       "max":100000,
@@ -18704,6 +18833,13 @@
       "min":0
     },
     "Long":{"type":"long"},
+    "MaskMode":{
+      "type":"string",
+      "enum":[
+        "PII",
+        "EntityType"
+      ]
+    },
     "MatchCriteria":{
       "type":"structure",
       "members":{
@@ -20085,6 +20221,14 @@
       "max":100,
       "min":0
     },
+    "Policy":{
+      "type":"string",
+      "enum":[
+        "None",
+        "RedactedOnly",
+        "RedactedAndOriginal"
+      ]
+    },
     "PositiveAndNegativeDouble":{"type":"double"},
     "PositiveDouble":{
       "type":"double",
@@ -21143,6 +21287,19 @@
         }
       }
     },
+    "RedactionConfiguration":{
+      "type":"structure",
+      "required":[
+        "Behavior",
+        "Policy"
+      ],
+      "members":{
+        "Behavior":{"shape":"Behavior"},
+        "Policy":{"shape":"Policy"},
+        "Entities":{"shape":"Entities"},
+        "MaskMode":{"shape":"MaskMode"}
+      }
+    },
     "Reference":{
       "type":"structure",
       "required":["Type"],
@@ -21784,6 +21941,12 @@
       "members":{
         "EventSourceName":{"shape":"EventSourceName"},
         "IntegrationAssociationId":{"shape":"IntegrationAssociationId"}
+      }
+    },
+    "RulesConfiguration":{
+      "type":"structure",
+      "members":{
+        "Behavior":{"shape":"Behavior"}
       }
     },
     "S3Config":{
@@ -22832,6 +22995,13 @@
       "pattern":"\\+[1-9]\\d{1,14}$",
       "sensitive":true
     },
+    "SentimentConfiguration":{
+      "type":"structure",
+      "required":["Behavior"],
+      "members":{
+        "Behavior":{"shape":"Behavior"}
+      }
+    },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "members":{
@@ -23057,6 +23227,37 @@
         "ParticipantId":{"shape":"ParticipantId"},
         "ParticipantToken":{"shape":"ParticipantToken"},
         "ContinuedFromContactId":{"shape":"ContactId"}
+      }
+    },
+    "StartContactConversationalAnalyticsJobRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactId",
+        "AnalyticsModes",
+        "AnalyticsConfiguration"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "ContactId":{
+          "shape":"ContactId",
+          "location":"uri",
+          "locationName":"ContactId"
+        },
+        "AnalyticsModes":{"shape":"AnalyticsModes"},
+        "AnalyticsConfiguration":{"shape":"AnalyticsConfiguration"},
+        "ClientToken":{"shape":"ClientToken"}
+      }
+    },
+    "StartContactConversationalAnalyticsJobResponse":{
+      "type":"structure",
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "ContactId":{"shape":"ContactId"}
       }
     },
     "StartContactEvaluationRequest":{
@@ -23675,6 +23876,27 @@
     "SuccessfulRequestList":{
       "type":"list",
       "member":{"shape":"SuccessfulRequest"}
+    },
+    "SummaryConfiguration":{
+      "type":"structure",
+      "required":["SummaryModes"],
+      "members":{
+        "SummaryModes":{"shape":"SummaryModes"}
+      }
+    },
+    "SummaryMode":{
+      "type":"string",
+      "enum":[
+        "PostContact",
+        "AutomatedInteraction",
+        "ContactChain"
+      ]
+    },
+    "SummaryModes":{
+      "type":"list",
+      "member":{"shape":"SummaryMode"},
+      "max":2,
+      "min":0
     },
     "SupportedMessagingContentType":{
       "type":"string",

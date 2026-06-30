@@ -682,6 +682,7 @@
     "ModifyVpcEncryptionControl": "<p>Modifies the encryption control configuration for a VPC. You can update the encryption mode and exclusion settings for various gateway types and peering connections.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/vpc-encryption-controls.html\">Enforce VPC encryption in transit</a> in the <i>Amazon VPC User Guide</i>.</p>",
     "ModifyVpcEndpoint": "<p>Modifies attributes of a specified VPC endpoint. The attributes that you can modify depend on the type of VPC endpoint (interface, gateway, or Gateway Load Balancer). For more information, see the <a href=\"https://docs.aws.amazon.com/vpc/latest/privatelink/\">Amazon Web Services PrivateLink Guide</a>.</p>",
     "ModifyVpcEndpointConnectionNotification": "<p>Modifies a connection notification for VPC endpoint or VPC endpoint service. You can change the SNS topic for the notification, or the events for which to be notified. </p>",
+    "ModifyVpcEndpointPayerResponsibility": "<p>Modifies the billing account for VPC endpoint usage/charges.</p>",
     "ModifyVpcEndpointServiceConfiguration": "<p>Modifies the attributes of the specified VPC endpoint service configuration.</p> <p>If you set or modify the private DNS name, you must prove that you own the private DNS domain name.</p>",
     "ModifyVpcEndpointServicePayerResponsibility": "<p>Modifies the payer responsibility for your VPC endpoint service.</p>",
     "ModifyVpcEndpointServicePermissions": "<p>Modifies the permissions for your VPC endpoint service. You can add or remove permissions for service consumers (Amazon Web Services accounts, users, and IAM roles) to connect to your endpoint service. Principal ARNs with path components aren't supported.</p> <p>If you grant permissions to all principals, the service is public. Any users who know the name of a public service can send a request to attach an endpoint. If the service does not require manual approval, attachments are automatically approved.</p>",
@@ -3336,6 +3337,7 @@
         "ModifyVpcEncryptionControlRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyVpcEndpointConnectionNotificationRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyVpcEndpointConnectionNotificationResult$ReturnValue": "<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>",
+        "ModifyVpcEndpointPayerResponsibilityRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyVpcEndpointRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyVpcEndpointRequest$ResetPolicy": "<p>(Gateway endpoint) Specify <code>true</code> to reset the policy document to the default policy. The default policy allows full access to the service.</p>",
         "ModifyVpcEndpointRequest$PrivateDnsEnabled": "<p>(Interface endpoint) Indicates whether a private hosted zone is associated with the VPC.</p>",
@@ -19647,6 +19649,16 @@
       "refs": {
       }
     },
+    "ModifyVpcEndpointPayerResponsibilityRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ModifyVpcEndpointPayerResponsibilityResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ModifyVpcEndpointRequest": {
       "base": null,
       "refs": {
@@ -20880,6 +20892,34 @@
         "ModifyVpcEndpointServicePayerResponsibilityRequest$PayerResponsibility": "<p>The entity that is responsible for the endpoint costs. The default is the endpoint owner. If you set the payer responsibility to the service owner, you cannot set it back to the endpoint owner.</p>",
         "ServiceConfiguration$PayerResponsibility": "<p>The payer responsibility.</p>",
         "ServiceDetail$PayerResponsibility": "<p>The payer responsibility.</p>"
+      }
+    },
+    "PayerResponsibilityEntry": {
+      "base": "<p>Describes a payer responsibility setting for a VPC endpoint.</p>",
+      "refs": {
+        "PayerResponsibilitySet$member": null
+      }
+    },
+    "PayerResponsibilityScope": {
+      "base": null,
+      "refs": {
+        "ModifyVpcEndpointPayerResponsibilityRequest$Scope": "<p>The scope of usage/charges for which the billing account is being modified.</p>",
+        "PayerResponsibilityEntry$Scope": "<p>The scope of usage/charges.</p>"
+      }
+    },
+    "PayerResponsibilitySet": {
+      "base": null,
+      "refs": {
+        "ModifyVpcEndpointPayerResponsibilityResult$PayerResponsibilities": "<p>The payer responsibility settings for the VPC endpoint.</p>",
+        "VpcEndpoint$PayerResponsibilities": "<p>The payer responsibility settings for the endpoint.</p>",
+        "VpcEndpointConnection$PayerResponsibilities": "<p>The payer responsibility settings for the endpoint.</p>"
+      }
+    },
+    "PayerResponsibilityType": {
+      "base": null,
+      "refs": {
+        "ModifyVpcEndpointPayerResponsibilityRequest$PayerResponsibility": "<p>The Amazon Web Services account to which the usage of VPC endpoint is charged.</p>",
+        "PayerResponsibilityEntry$PayerResponsibilityType": "<p>The Amazon Web Services account to which the usage is charged.</p>"
       }
     },
     "PaymentOption": {
@@ -26501,6 +26541,7 @@
         "ModifyVerifiedAccessTrustProviderRequest$Description": "<p>A description for the Verified Access trust provider.</p>",
         "ModifyVerifiedAccessTrustProviderRequest$ClientToken": "<p>A unique, case-sensitive token that you provide to ensure idempotency of your modification request. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensuring idempotency</a>.</p>",
         "ModifyVpcEndpointConnectionNotificationRequest$ConnectionNotificationArn": "<p>The ARN for the SNS topic for the notification.</p>",
+        "ModifyVpcEndpointPayerResponsibilityResult$VpcEndpointId": "<p>The ID of the VPC endpoint.</p>",
         "ModifyVpcEndpointRequest$PolicyDocument": "<p>(Interface and gateway endpoints) A policy to attach to the endpoint that controls access to the service. The policy must be in valid JSON format.</p>",
         "ModifyVpcEndpointServiceConfigurationRequest$PrivateDnsName": "<p>(Interface endpoint configuration) The private DNS name to assign to the endpoint service.</p>",
         "ModifyVpnConnectionOptionsRequest$LocalIpv4NetworkCidr": "<p>The IPv4 CIDR on the customer gateway (on-premises) side of the VPN connection.</p> <p>Default: <code>0.0.0.0/0</code> </p>",
@@ -30736,6 +30777,7 @@
         "CreateRouteRequest$VpcEndpointId": "<p>The ID of a VPC endpoint. Supported for Gateway Load Balancer endpoints only.</p>",
         "CreateTrafficMirrorTargetRequest$GatewayLoadBalancerEndpointId": "<p>The ID of the Gateway Load Balancer endpoint.</p>",
         "CreateVpcEndpointConnectionNotificationRequest$VpcEndpointId": "<p>The ID of the endpoint.</p>",
+        "ModifyVpcEndpointPayerResponsibilityRequest$VpcEndpointId": "<p>The ID of the VPC endpoint.</p>",
         "ModifyVpcEndpointRequest$VpcEndpointId": "<p>The ID of the endpoint.</p>",
         "ReplaceRouteRequest$VpcEndpointId": "<p>The ID of a VPC endpoint. Supported for Gateway Load Balancer endpoints only.</p>",
         "VpcEndpointAssociation$VpcEndpointId": "<p>The ID of the VPC endpoint.</p>",
@@ -30774,6 +30816,7 @@
         "AcceptVpcEndpointConnectionsRequest$ServiceId": "<p>The ID of the VPC endpoint service.</p>",
         "CreateVpcEndpointConnectionNotificationRequest$ServiceId": "<p>The ID of the endpoint service.</p>",
         "DescribeVpcEndpointServicePermissionsRequest$ServiceId": "<p>The ID of the service.</p>",
+        "ModifyVpcEndpointPayerResponsibilityRequest$ServiceId": "<p>The ID of the VPC endpoint service.</p>",
         "ModifyVpcEndpointServiceConfigurationRequest$ServiceId": "<p>The ID of the service.</p>",
         "ModifyVpcEndpointServicePayerResponsibilityRequest$ServiceId": "<p>The ID of the service.</p>",
         "ModifyVpcEndpointServicePermissionsRequest$ServiceId": "<p>The ID of the service.</p>",
