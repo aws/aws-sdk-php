@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.387.0 - 2026-06-30
 
 * `Aws\` - Removes `SimSpaceWeaver`, `Panorama`, and `IotEvents` services, which have been deprecated.
 * `Aws\NetworkFirewall` - AWS Network Firewall now supports container associations for monitoring ECS and EKS workloads. You can create container associations to dynamically track the IP addresses of running containers in your Amazon ECS and Amazon EKS clusters.
