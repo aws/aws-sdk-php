@@ -4692,6 +4692,22 @@
         {"shape":"IdempotencyException"}
       ]
     },
+    "SendOutboundWebNotification":{
+      "name":"SendOutboundWebNotification",
+      "http":{
+        "method":"POST",
+        "requestUri":"/instance/{InstanceId}/outbound-web-notification"
+      },
+      "input":{"shape":"SendOutboundWebNotificationRequest"},
+      "output":{"shape":"SendOutboundWebNotificationResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "StartAttachedFileUpload":{
       "name":"StartAttachedFileUpload",
       "http":{
@@ -9057,6 +9073,12 @@
       "max":1024,
       "min":1
     },
+    "ContentAttributes":{
+      "type":"structure",
+      "members":{
+        "RecommenderConfig":{"shape":"RecommenderConfig"}
+      }
+    },
     "ContentType":{
       "type":"string",
       "max":255,
@@ -10415,6 +10437,11 @@
       "sensitive":true
     },
     "CustomerProfileAttributesSerialized":{"type":"string"},
+    "CustomerProfileId":{
+      "type":"string",
+      "max":32,
+      "min":1
+    },
     "CustomerQualityMetrics":{
       "type":"structure",
       "members":{
@@ -19337,6 +19364,13 @@
       "type":"list",
       "member":{"shape":"Notification"}
     },
+    "NotificationType":{
+      "type":"string",
+      "enum":[
+        "WIDGET_VIEW",
+        "WIDGET_ACTION"
+      ]
+    },
     "NullableBoolean":{"type":"boolean"},
     "NullableDouble":{"type":"double"},
     "NullableProficiencyLevel":{
@@ -19861,6 +19895,11 @@
     "PersistentConnectionConfigs":{
       "type":"list",
       "member":{"shape":"PersistentConnectionConfig"}
+    },
+    "PersonalizeDomainName":{
+      "type":"string",
+      "max":64,
+      "min":1
     },
     "PhoneNumber":{
       "type":"string",
@@ -21202,6 +21241,38 @@
       "type":"list",
       "member":{"shape":"ARN"},
       "max":200
+    },
+    "RecommenderConfig":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "RecommenderName"
+      ],
+      "members":{
+        "DomainName":{"shape":"PersonalizeDomainName"},
+        "RecommenderName":{"shape":"RecommenderName"},
+        "Context":{"shape":"RecommenderContext"}
+      }
+    },
+    "RecommenderContext":{
+      "type":"map",
+      "key":{"shape":"RecommenderContextKey"},
+      "value":{"shape":"RecommenderContextValue"}
+    },
+    "RecommenderContextKey":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "RecommenderContextValue":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "RecommenderName":{
+      "type":"string",
+      "max":64,
+      "min":1
     },
     "RecordIds":{
       "type":"list",
@@ -22987,6 +23058,39 @@
       }
     },
     "SendOutboundEmailResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "SendOutboundWebNotificationRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "BrowserId",
+        "SessionId",
+        "ExpiresAt",
+        "Source",
+        "Destination",
+        "Content"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "BrowserId":{"shape":"WebBrowserId"},
+        "SessionId":{"shape":"WebSessionId"},
+        "ExpiresAt":{"shape":"Timestamp"},
+        "Source":{"shape":"WebNotificationSource"},
+        "Destination":{"shape":"WidgetDestination"},
+        "Content":{"shape":"WebNotificationContent"}
+      }
+    },
+    "SendOutboundWebNotificationResponse":{
       "type":"structure",
       "members":{}
     },
@@ -26729,6 +26833,11 @@
       "type":"list",
       "member":{"shape":"ViewAction"}
     },
+    "ViewArn":{
+      "type":"string",
+      "max":500,
+      "min":1
+    },
     "ViewContent":{
       "type":"structure",
       "members":{
@@ -27032,6 +27141,32 @@
         "ALL"
       ]
     },
+    "WebBrowserId":{
+      "type":"string",
+      "max":36,
+      "min":1
+    },
+    "WebNotificationContent":{
+      "type":"structure",
+      "required":["Type"],
+      "members":{
+        "Type":{"shape":"NotificationType"},
+        "ViewArn":{"shape":"ViewArn"},
+        "Attributes":{"shape":"ContentAttributes"}
+      }
+    },
+    "WebNotificationSource":{
+      "type":"structure",
+      "required":["SourceCampaign"],
+      "members":{
+        "SourceCampaign":{"shape":"SourceCampaign"}
+      }
+    },
+    "WebSessionId":{
+      "type":"string",
+      "max":36,
+      "min":1
+    },
     "WeekdayOccurrenceInteger":{
       "type":"integer",
       "box":true,
@@ -27043,6 +27178,22 @@
       "member":{"shape":"WeekdayOccurrenceInteger"},
       "max":1,
       "min":0
+    },
+    "WidgetDestination":{
+      "type":"structure",
+      "required":[
+        "WidgetId",
+        "ProfileId"
+      ],
+      "members":{
+        "WidgetId":{"shape":"WidgetId"},
+        "ProfileId":{"shape":"CustomerProfileId"}
+      }
+    },
+    "WidgetId":{
+      "type":"string",
+      "max":36,
+      "min":1
     },
     "WisdomInfo":{
       "type":"structure",

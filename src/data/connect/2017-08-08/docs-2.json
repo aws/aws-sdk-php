@@ -284,6 +284,7 @@
     "SearchWorkspaces": "<p>Searches workspaces based on name, description, visibility, or tags.</p>",
     "SendChatIntegrationEvent": "<p>Processes chat integration events from Amazon Web Services or external integrations to Connect Customer. A chat integration event includes:</p> <ul> <li> <p>SourceId, DestinationId, and Subtype: a set of identifiers, uniquely representing a chat</p> </li> <li> <p> ChatEvent: details of the chat action to perform such as sending a message, event, or disconnecting from a chat</p> </li> </ul> <p>When a chat integration event is sent with chat identifiers that do not map to an active chat contact, a new chat contact is also created before handling chat action. </p> <p>Access to this API is currently restricted to Amazon Web Services End User Messaging for supporting SMS integration. </p>",
     "SendOutboundEmail": "<p>Send outbound email for outbound campaigns. For more information about outbound campaigns, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/enable-outbound-campaigns.html\">Set up Connect Customer outbound campaigns</a>.</p> <note> <p>Only the Connect Customer outbound campaigns service principal is allowed to assume a role in your account and call this API.</p> </note>",
+    "SendOutboundWebNotification": "<p>Sends an outbound web notification to a customer's web browser for outbound campaigns. For more information about outbound campaigns, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/enable-outbound-campaigns.html\">Set up Connect Customer outbound campaigns</a>.</p> <note> <p>Only the Connect Customer outbound campaigns service principal is allowed to assume a role in your account and call this API.</p> </note>",
     "StartAttachedFileUpload": "<p>Provides a pre-signed Amazon S3 URL in response for uploading your content.</p> <important> <p>You may only use this API to upload attachments to an <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_CreateCase.html\">Connect Customer Case</a> or <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/setup-email-channel.html\">Connect Customer Email</a>. </p> </important>",
     "StartChatContact": "<p>Initiates a flow to start a new chat for the customer. Response of this API provides a token required to obtain credentials from the <a href=\"https://docs.aws.amazon.com/connect-participant/latest/APIReference/API_CreateParticipantConnection.html\">CreateParticipantConnection</a> API in the Connect Customer Participant Service.</p> <p>When a new chat contact is successfully created, clients must subscribe to the participant’s connection for the created chat within 5 minutes. This is achieved by invoking <a href=\"https://docs.aws.amazon.com/connect-participant/latest/APIReference/API_CreateParticipantConnection.html\">CreateParticipantConnection</a> with WEBSOCKET and CONNECTION_CREDENTIALS. </p> <p>A 429 error occurs in the following situations:</p> <ul> <li> <p>API rate limit is exceeded. API TPS throttling returns a <code>TooManyRequests</code> exception.</p> </li> <li> <p>The <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html\">quota for concurrent active chats</a> is exceeded. Active chat throttling returns a <code>LimitExceededException</code>.</p> </li> </ul> <p>If you use the <code>ChatDurationInMinutes</code> parameter and receive a 400 error, your account may not support the ability to configure custom chat durations. For more information, contact Amazon Web Services Support. </p> <p>For more information about chat, see the following topics in the <i>Connect Customer Administrator Guide</i>: </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/web-and-mobile-chat.html\">Concepts: Web and mobile messaging capabilities in Connect Customer</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/security-best-practices.html#bp-security-chat\">Connect Customer Chat security best practices</a> </p> </li> </ul>",
     "StartContactConversationalAnalyticsJob": "<p>Starts a Contact Lens post-call analytics job for the specified contact. This API runs Conversational Analytics post-contact analysis on a voice recording that is already attached to the contact, generating transcription, sentiment analysis, redaction, and summarization results based on the provided configuration.</p> <important> <p>A voice recording must already be attached to the contact before calling this API. Use <code>CreateAttachedFile</code> to attach a recording from an S3 source URI.</p> </important> <note> <p>For example, you can call <code>CreateContact</code>, then <code>CreateAttachedFile</code>, then <code>StartContactConversationalAnalyticsJob</code> to create a contact, attach a recording, and run post-call analytics.</p> </note>",
@@ -2164,6 +2165,7 @@
         "ReleasePhoneNumberRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "ReplicateInstanceRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "SendOutboundEmailRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
+        "SendOutboundWebNotificationRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "StartAttachedFileUploadRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "StartChatContactRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "StartContactConversationalAnalyticsJobRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
@@ -3020,6 +3022,12 @@
         "SendNotificationActionDefinition$Content": "<p>Notification content. Supports variable injection. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/contact-lens-variable-injection.html\">JSONPath reference</a> in the <i>Connect Customer Administrators Guide</i>.</p>"
       }
     },
+    "ContentAttributes": {
+      "base": "<p>Optional attributes used to populate the content of an outbound web notification, such as recommender configuration for personalized content.</p>",
+      "refs": {
+        "WebNotificationContent$Attributes": "<p>Optional attributes used to populate the notification content, such as recommender configuration for personalized content.</p>"
+      }
+    },
     "ContentType": {
       "base": null,
       "refs": {
@@ -3495,6 +3503,12 @@
       "base": null,
       "refs": {
         "TemplateAttributes$CustomerProfileAttributes": "<p>An object that specifies the customer profile attributes values to use for variables in the message template. This object contains different categories of key-value pairs. Each key defines a variable or placeholder in the message template. </p>"
+      }
+    },
+    "CustomerProfileId": {
+      "base": null,
+      "refs": {
+        "WidgetDestination$ProfileId": "<p>The identifier of the customer profile associated with the browser session that should receive the notification.</p>"
       }
     },
     "CustomerQualityMetrics": {
@@ -7342,6 +7356,7 @@
         "SecurityProfile$OrganizationResourceId": "<p>The organization resource identifier for the security profile.</p>",
         "SecurityProfileSearchSummary$OrganizationResourceId": "<p>The organization resource identifier.</p>",
         "SendOutboundEmailRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "SendOutboundWebNotificationRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "StartAttachedFileUploadRequest$InstanceId": "<p>The unique identifier of the Connect Customer instance.</p>",
         "StartChatContactRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "StartContactConversationalAnalyticsJobRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -9174,6 +9189,12 @@
         "ListNotificationsResponse$NotificationSummaryList": "<p>A list of notification summaries.</p>"
       }
     },
+    "NotificationType": {
+      "base": null,
+      "refs": {
+        "WebNotificationContent$Type": "<p>The type of web notification to send.</p>"
+      }
+    },
     "NullableBoolean": {
       "base": null,
       "refs": {
@@ -9677,6 +9698,12 @@
         "UpdateUserConfigRequest$PersistentConnectionConfigs": "<p>The list of persistent connection configuration settings for each channel.</p>",
         "User$PersistentConnectionConfigs": "<p>The list of persistent connection configuration settings for each channel.</p>",
         "UserSearchSummary$PersistentConnectionConfigs": "<p>The list of persistent connection configuration settings for each channel.</p>"
+      }
+    },
+    "PersonalizeDomainName": {
+      "base": null,
+      "refs": {
+        "RecommenderConfig$DomainName": "<p>The name of the Amazon Personalize domain that hosts the recommender.</p>"
       }
     },
     "PhoneNumber": {
@@ -10846,6 +10873,36 @@
         "CreateNotificationRequest$Recipients": "<p>A list of Amazon Resource Names (ARNs) identifying the recipients of the notification. Can include user ARNs or instance ARNs to target all users in an instance. Maximum of 200 recipients.</p>",
         "Notification$Recipients": "<p>A list of Amazon Resource Names (ARNs) identifying the recipients of the notification. Maximum of 200 recipients.</p>",
         "NotificationSearchSummary$Recipients": "<p>A list of recipient Amazon Resource Names (ARNs).</p>"
+      }
+    },
+    "RecommenderConfig": {
+      "base": "<p>Configuration for the recommender used to generate personalized recommendations included in an outbound web notification.</p>",
+      "refs": {
+        "ContentAttributes$RecommenderConfig": "<p>Configuration for the recommender used to generate personalized recommendations for the notification content.</p>"
+      }
+    },
+    "RecommenderContext": {
+      "base": null,
+      "refs": {
+        "RecommenderConfig$Context": "<p>A map of contextual key-value pairs supplied to the recommender to influence the recommendations returned.</p>"
+      }
+    },
+    "RecommenderContextKey": {
+      "base": null,
+      "refs": {
+        "RecommenderContext$key": null
+      }
+    },
+    "RecommenderContextValue": {
+      "base": null,
+      "refs": {
+        "RecommenderContext$value": null
+      }
+    },
+    "RecommenderName": {
+      "base": null,
+      "refs": {
+        "RecommenderConfig$RecommenderName": "<p>The name of the recommender used to generate the recommendations.</p>"
       }
     },
     "RecordIds": {
@@ -12231,6 +12288,14 @@
       "base": null,
       "refs": {}
     },
+    "SendOutboundWebNotificationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SendOutboundWebNotificationResponse": {
+      "base": null,
+      "refs": {}
+    },
     "SensitivePhoneNumber": {
       "base": null,
       "refs": {
@@ -12364,7 +12429,8 @@
     "SourceCampaign": {
       "base": "<p>Information about the campaign.</p>",
       "refs": {
-        "SendOutboundEmailRequest$SourceCampaign": "<p>A Campaign object need for Campaign traffic type.</p>"
+        "SendOutboundEmailRequest$SourceCampaign": "<p>A Campaign object need for Campaign traffic type.</p>",
+        "WebNotificationSource$SourceCampaign": "<p>Information about the campaign that triggered the web notification, including the campaign identifier and outbound request identifier.</p>"
       }
     },
     "SourceId": {
@@ -13528,6 +13594,7 @@
         "SearchContactsTimeRange$EndTime": "<p>The end time of the time range.</p>",
         "SecurityProfile$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
         "SecurityProfileSummary$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
+        "SendOutboundWebNotificationRequest$ExpiresAt": "<p>The timestamp, in Unix epoch time format, at which the web notification expires. After this time, the notification is no longer delivered to the customer's browser.</p>",
         "StartTaskContactRequest$ScheduledTime": "<p>The timestamp, in Unix Epoch seconds format, at which to start running the inbound flow. The scheduled time cannot be in the past. It must be within up to 6 days in future. </p>",
         "TestCase$LastModifiedTime": "<p>The time at which the test case was last modified.</p>",
         "TestCaseExecution$StartTime": "<p>The timestamp when the test case execution started.</p>",
@@ -14529,6 +14596,12 @@
         "ViewInputContent$Actions": "<p>A list of possible actions from the view.</p>"
       }
     },
+    "ViewArn": {
+      "base": null,
+      "refs": {
+        "WebNotificationContent$ViewArn": "<p>The Amazon Resource Name (ARN) of the view to render for the notification.</p>"
+      }
+    },
     "ViewContent": {
       "base": "<p>View content containing all content necessary to render a view except for runtime input data.</p>",
       "refs": {
@@ -14848,6 +14921,30 @@
         "VoiceRecordingConfiguration$VoiceRecordingTrack": "<p>Identifies which track is being recorded.</p>"
       }
     },
+    "WebBrowserId": {
+      "base": null,
+      "refs": {
+        "SendOutboundWebNotificationRequest$BrowserId": "<p>A unique identifier for the customer's web browser instance to which the notification is being sent.</p>"
+      }
+    },
+    "WebNotificationContent": {
+      "base": "<p>The content of an outbound web notification, including the notification type, the view to render, and any optional attributes used to populate the view.</p>",
+      "refs": {
+        "SendOutboundWebNotificationRequest$Content": "<p>The content of the web notification, including the notification type, the view to render, and any optional attributes used to populate it.</p>"
+      }
+    },
+    "WebNotificationSource": {
+      "base": "<p>The source of an outbound web notification. Identifies the campaign and outbound request that triggered the notification.</p>",
+      "refs": {
+        "SendOutboundWebNotificationRequest$Source": "<p>The source of the web notification. A <code>SourceCampaign</code> object identifies the campaign and outbound request that triggered this notification.</p>"
+      }
+    },
+    "WebSessionId": {
+      "base": null,
+      "refs": {
+        "SendOutboundWebNotificationRequest$SessionId": "<p>A unique identifier for the customer's web session to which the notification is being sent.</p>"
+      }
+    },
     "WeekdayOccurrenceInteger": {
       "base": null,
       "refs": {
@@ -14858,6 +14955,18 @@
       "base": null,
       "refs": {
         "RecurrencePattern$ByWeekdayOccurrence": "<p>Specifies which occurrence of a weekday within the month the event should occur on. Must be used with MONTHLY or YEARLY frequency. </p> <p>Example: 2 corresponds to second occurrence of the weekday in the month. -1 corresponds to last occurrence of the weekday in the month </p> <p>The weekday itself is specified separately in the HoursOfOperationConfig. Example: To schedule the recurring event for the 2nd Thursday of April every year, set ByWeekdayOccurrence=[2], Day=THURSDAY, ByMonth=[4], Frequency: YEARLY and INTERVAL=1.</p>"
+      }
+    },
+    "WidgetDestination": {
+      "base": "<p>The destination for an outbound web notification, specifying the communication widget that delivers the notification and the customer profile of the recipient.</p>",
+      "refs": {
+        "SendOutboundWebNotificationRequest$Destination": "<p>The destination for the web notification, specifying the communication widget that delivers the notification and the customer profile of the recipient.</p>"
+      }
+    },
+    "WidgetId": {
+      "base": null,
+      "refs": {
+        "WidgetDestination$WidgetId": "<p>The identifier of the communication widget that delivers the notification to the customer's browser.</p>"
       }
     },
     "WisdomInfo": {

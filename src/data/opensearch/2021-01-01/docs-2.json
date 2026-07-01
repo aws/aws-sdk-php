@@ -59,6 +59,7 @@
     "GetPackageVersionHistory": "<p>Returns a list of Amazon OpenSearch Service package versions, along with their creation time, commit message, and plugin properties (if the package is a zip plugin package). For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
     "GetUpgradeHistory": "<p>Retrieves the complete history of the last 10 upgrades performed on an Amazon OpenSearch Service domain.</p>",
     "GetUpgradeStatus": "<p>Returns the most recent status of the last upgrade or upgrade eligibility check performed on an Amazon OpenSearch Service domain.</p>",
+    "InsightFeedback": "<p>Submits feedback for an existing insight in an Amazon OpenSearch Service domain. Allows users to provide a thumbs up or thumbs down rating and optional text feedback for a specific insight.</p>",
     "ListApplications": "<p>Lists all OpenSearch applications under your account.</p>",
     "ListDataSourceAttachments": "<p>Returns a paginated list of all data source attachments for an OpenSearch application, including attachments in all states (<code>PENDING</code>, <code>ATTACHED</code>, and <code>FAILED</code>).</p>",
     "ListDataSources": "<p>Lists direct-query data sources for a specific domain. For more information, see For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/direct-query-s3.html\">Working with Amazon OpenSearch Service direct queries with Amazon S3</a>.</p>",
@@ -1623,6 +1624,15 @@
         "DescribeDomainsResponse$DomainStatusList": "<p>The status of the requested domains.</p>"
       }
     },
+    "DomainUseCase": {
+      "base": "<p>The primary use case for the domain, which determines the default configuration and the engine modes that are available. Valid values are <code>SEARCH</code> (full-text search, e-commerce, content discovery, and hybrid and semantic search), <code>VECTOR</code> (k-NN and semantic search, and retrieval-augmented generation), <code>OBSERVABILITY</code> (logs, metrics, traces, and dashboards), and <code>MIXED</code> (a combination of search and analytics). If you don't specify a use case, <code>MIXED</code> is used.</p>",
+      "refs": {
+        "CreateDomainRequest$UseCase": "<p>The primary use case for the domain. For valid values, see <code>DomainUseCase</code>.</p>",
+        "DomainStatus$UseCase": "<p>The primary use case for the domain.</p>",
+        "UpdateDomainConfigRequest$UseCase": "<p>The primary use case for the domain. For valid values, see <code>DomainUseCase</code>.</p>",
+        "UseCaseStatus$Options": "<p>The use case configured for the domain.</p>"
+      }
+    },
     "Double": {
       "base": null,
       "refs": {
@@ -1717,6 +1727,21 @@
         "DomainStatus$Endpoints": "<p>The key-value pair that exists if the OpenSearch Service domain uses VPC endpoints. For example:</p> <ul> <li> <p> <b>IPv4 IP addresses</b> - <code>'vpc','vpc-endpoint-h2dsd34efgyghrtguk5gt6j2foh4.us-east-1.es.amazonaws.com'</code> </p> </li> <li> <p> <b>Dual stack IP addresses</b> - <code>'vpcv2':'vpc-endpoint-h2dsd34efgyghrtguk5gt6j2foh4.aos.us-east-1.on.aws'</code> </p> </li> </ul>"
       }
     },
+    "EngineMode": {
+      "base": "<p>The engine mode for the domain. Valid values are <code>GENERAL</code> (the standard OpenSearch engine) and <code>OPTIMIZED</code>. If you don't specify an engine mode, <code>GENERAL</code> is used. <code>OPTIMIZED</code> requires OpenSearch 3.5 or later, OpenSearch Optimized instance types (OR1, OR2, OM2, or OI2) for the data tier, and is available only for the <code>OBSERVABILITY</code> use cases. The engine mode can't be changed after the domain is created.</p>",
+      "refs": {
+        "CreateDomainRequest$EngineMode": "<p>The engine mode for the domain. For valid values and requirements, see <code>EngineMode</code>.</p>",
+        "DomainStatus$EngineMode": "<p>The engine mode for the domain.</p>",
+        "EngineModeStatus$Options": "<p>The engine mode configured for the domain.</p>",
+        "UpdateDomainConfigRequest$EngineMode": "<p>The engine mode for the domain. The engine mode can't be changed after the domain is created. For valid values, see <code>EngineMode</code>.</p>"
+      }
+    },
+    "EngineModeStatus": {
+      "base": "<p>The status of the engine mode for the domain.</p>",
+      "refs": {
+        "DomainConfig$EngineMode": "<p>The engine mode configured for the domain.</p>"
+      }
+    },
     "EngineType": {
       "base": null,
       "refs": {
@@ -1789,6 +1814,7 @@
         "DryRunProgressStatus$DryRunId": "<p>The unique identifier of the dry run.</p>",
         "GUIDList$member": null,
         "Insight$InsightId": "<p>The unique identifier of the insight.</p>",
+        "InsightFeedbackRequest$InsightId": "<p>The unique identifier of the insight for which to submit feedback.</p>",
         "PurchaseReservedInstanceOfferingRequest$ReservedInstanceOfferingId": "<p>The ID of the Reserved Instance offering to purchase.</p>",
         "PurchaseReservedInstanceOfferingResponse$ReservedInstanceId": "<p>The ID of the Reserved Instance offering that was purchased.</p>",
         "ReservedInstance$ReservedInstanceId": "<p>The unique identifier for the reservation.</p>",
@@ -2096,7 +2122,40 @@
     "InsightEntityValue": {
       "base": "<p>The value of the entity, such as a domain name or Amazon Web Services account ID.</p>",
       "refs": {
-        "InsightEntity$Value": "<p>The value of the entity. For <code>DomainName</code>, this is the domain name. For <code>Account</code>, this is the Amazon Web Services account ID.</p>"
+        "InsightEntity$Value": "<p>The value of the entity. For <code>DomainName</code>, this is the domain name. For <code>Account</code>, this is the Amazon Web Services account ID.</p>",
+        "InsightFeedbackEntity$Value": "<p>The value of the entity, such as a domain name.</p>"
+      }
+    },
+    "InsightFeedbackEntity": {
+      "base": "<p>Specifies the entity for which to submit insight feedback. An entity represents an Amazon OpenSearch Service domain.</p>",
+      "refs": {
+        "InsightFeedbackRequest$Entity": "<p>The entity for which to submit insight feedback. Specifies the type and value of the entity, such as a domain name.</p>"
+      }
+    },
+    "InsightFeedbackEntityType": {
+      "base": "<p>The type of entity for which to submit insight feedback. Possible values are <code>DomainName</code>.</p>",
+      "refs": {
+        "InsightFeedbackEntity$Type": "<p>The type of the entity. Possible values are <code>DomainName</code>.</p>"
+      }
+    },
+    "InsightFeedbackRequest": {
+      "base": "<p>Container for the parameters to the <code>InsightFeedback</code> operation.</p>",
+      "refs": {}
+    },
+    "InsightFeedbackResponse": {
+      "base": "<p>The result of an <code>InsightFeedback</code> request. Contains the status of the feedback submission.</p>",
+      "refs": {}
+    },
+    "InsightFeedbackText": {
+      "base": "<p>Optional text feedback providing additional details about an insight. Maximum length is 1000 characters.</p>",
+      "refs": {
+        "InsightFeedbackRequest$FeedbackText": "<p>Optional text feedback providing additional details about the insight. Maximum length is 1000 characters.</p>"
+      }
+    },
+    "InsightFeedbackThumbs": {
+      "base": "<p>The thumbs up or thumbs down feedback for an insight. Possible values are <code>Up</code> and <code>Down</code>.</p>",
+      "refs": {
+        "InsightFeedbackRequest$Thumbs": "<p>The thumbs up or thumbs down feedback for the insight. Possible values are <code>Up</code> and <code>Down</code>.</p>"
       }
     },
     "InsightField": {
@@ -2133,6 +2192,12 @@
       "base": "<p>The priority level of an insight. Possible values are <code>CRITICAL</code>, <code>HIGH</code>, <code>MEDIUM</code>, and <code>LOW</code>.</p>",
       "refs": {
         "Insight$Priority": "<p>The priority level of the insight. Possible values are <code>CRITICAL</code>, <code>HIGH</code>, <code>MEDIUM</code>, and <code>LOW</code>.</p>"
+      }
+    },
+    "InsightResponseStatus": {
+      "base": "<p>The status of an insight response. Possible values are <code>SUCCESS</code> and <code>ERROR</code>.</p>",
+      "refs": {
+        "InsightFeedbackResponse$Status": "<p>The status of the feedback submission. Possible values are <code>SUCCESS</code> and <code>ERROR</code>.</p>"
       }
     },
     "InsightSortOrder": {
@@ -2819,6 +2884,7 @@
         "DomainEndpointOptionsStatus$Status": "<p>The status of the endpoint options for a domain.</p>",
         "EBSOptionsStatus$Status": "<p>The status of the EBS options for the specified domain.</p>",
         "EncryptionAtRestOptionsStatus$Status": "<p>The status of the encryption at rest options for the specified domain.</p>",
+        "EngineModeStatus$Status": "<p>The current status of the engine mode for the domain.</p>",
         "IPAddressTypeStatus$Status": null,
         "IdentityCenterOptionsStatus$Status": "<p>The status of IAM Identity Center configuration settings for a domain.</p>",
         "LogPublishingOptionsStatus$Status": "<p>The status of the log publishing options for the domain.</p>",
@@ -2826,6 +2892,7 @@
         "OffPeakWindowOptionsStatus$Status": "<p>The current status of off-peak window options.</p>",
         "SnapshotOptionsStatus$Status": "<p>The status of a daily automated snapshot.</p>",
         "SoftwareUpdateOptionsStatus$Status": "<p>The status of service software update options, including creation date and last updated date.</p>",
+        "UseCaseStatus$Status": "<p>The current status of the use case for the domain.</p>",
         "VPCDerivedInfoStatus$Status": "<p>The status of the VPC options for the specified domain.</p>",
         "VersionStatus$Status": "<p>The status of the version options for the specified domain.</p>"
       }
@@ -3893,6 +3960,12 @@
       "base": null,
       "refs": {
         "UpgradeHistory$StepsList": "<p>A list of each step performed as part of a specific upgrade or upgrade eligibility check.</p>"
+      }
+    },
+    "UseCaseStatus": {
+      "base": "<p>The status of the use case for the domain.</p>",
+      "refs": {
+        "DomainConfig$UseCase": "<p>The use case configured for the domain.</p>"
       }
     },
     "UserPoolId": {

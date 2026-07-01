@@ -119,6 +119,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getUpgradeHistoryAsync(array $args = [])
  * @method \Aws\Result getUpgradeStatus(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getUpgradeStatusAsync(array $args = [])
+ * @method \Aws\Result insightFeedback(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise insightFeedbackAsync(array $args = [])
  * @method \Aws\Result listApplications(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listApplicationsAsync(array $args = [])
  * @method \Aws\Result listDataSourceAttachments(array $args = [])

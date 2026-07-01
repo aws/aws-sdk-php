@@ -935,6 +935,23 @@
         {"shape":"InternalException"}
       ]
     },
+    "InsightFeedback":{
+      "name":"InsightFeedback",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/opensearch/insight-feedback"
+      },
+      "input":{"shape":"InsightFeedbackRequest"},
+      "output":{"shape":"InsightFeedbackResponse"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"InternalException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"DisabledOperationException"},
+        {"shape":"LimitExceededException"}
+      ]
+    },
     "ListApplications":{
       "name":"ListApplications",
       "http":{
@@ -2415,7 +2432,9 @@
         "SoftwareUpdateOptions":{"shape":"SoftwareUpdateOptions"},
         "AIMLOptions":{"shape":"AIMLOptionsInput"},
         "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptions"},
-        "AutomatedSnapshotPauseOptions":{"shape":"AutomatedSnapshotPauseRequestOptions"}
+        "AutomatedSnapshotPauseOptions":{"shape":"AutomatedSnapshotPauseRequestOptions"},
+        "UseCase":{"shape":"DomainUseCase"},
+        "EngineMode":{"shape":"EngineMode"}
       }
     },
     "CreateDomainResponse":{
@@ -3376,7 +3395,9 @@
         "ModifyingProperties":{"shape":"ModifyingPropertiesList"},
         "AIMLOptions":{"shape":"AIMLOptionsStatus"},
         "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptionsStatus"},
-        "AutomatedSnapshotPauseOptions":{"shape":"AutomatedSnapshotPauseOptionsStatus"}
+        "AutomatedSnapshotPauseOptions":{"shape":"AutomatedSnapshotPauseOptionsStatus"},
+        "UseCase":{"shape":"UseCaseStatus"},
+        "EngineMode":{"shape":"EngineModeStatus"}
       }
     },
     "DomainEndpointOptions":{
@@ -3575,12 +3596,23 @@
         "ModifyingProperties":{"shape":"ModifyingPropertiesList"},
         "AIMLOptions":{"shape":"AIMLOptionsOutput"},
         "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptions"},
-        "AutomatedSnapshotPauseOptions":{"shape":"AutomatedSnapshotPauseOptions"}
+        "AutomatedSnapshotPauseOptions":{"shape":"AutomatedSnapshotPauseOptions"},
+        "UseCase":{"shape":"DomainUseCase"},
+        "EngineMode":{"shape":"EngineMode"}
       }
     },
     "DomainStatusList":{
       "type":"list",
       "member":{"shape":"DomainStatus"}
+    },
+    "DomainUseCase":{
+      "type":"string",
+      "enum":[
+        "SEARCH",
+        "VECTOR",
+        "OBSERVABILITY",
+        "MIXED"
+      ]
     },
     "Double":{"type":"double"},
     "DryRun":{"type":"boolean"},
@@ -3673,6 +3705,24 @@
       "type":"map",
       "key":{"shape":"String"},
       "value":{"shape":"ServiceUrl"}
+    },
+    "EngineMode":{
+      "type":"string",
+      "enum":[
+        "GENERAL",
+        "OPTIMIZED"
+      ]
+    },
+    "EngineModeStatus":{
+      "type":"structure",
+      "required":[
+        "Options",
+        "Status"
+      ],
+      "members":{
+        "Options":{"shape":"EngineMode"},
+        "Status":{"shape":"OptionStatus"}
+      }
     },
     "EngineType":{
       "type":"string",
@@ -4208,6 +4258,53 @@
       "min":3,
       "pattern":"([a-z][a-z0-9\\-]+|\\d{12})"
     },
+    "InsightFeedbackEntity":{
+      "type":"structure",
+      "required":[
+        "Type",
+        "Value"
+      ],
+      "members":{
+        "Type":{"shape":"InsightFeedbackEntityType"},
+        "Value":{"shape":"InsightEntityValue"}
+      }
+    },
+    "InsightFeedbackEntityType":{
+      "type":"string",
+      "enum":["DomainName"]
+    },
+    "InsightFeedbackRequest":{
+      "type":"structure",
+      "required":[
+        "Entity",
+        "InsightId",
+        "Thumbs"
+      ],
+      "members":{
+        "Entity":{"shape":"InsightFeedbackEntity"},
+        "InsightId":{"shape":"GUID"},
+        "Thumbs":{"shape":"InsightFeedbackThumbs"},
+        "FeedbackText":{"shape":"InsightFeedbackText"}
+      }
+    },
+    "InsightFeedbackResponse":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"InsightResponseStatus"}
+      }
+    },
+    "InsightFeedbackText":{
+      "type":"string",
+      "max":1000,
+      "min":0
+    },
+    "InsightFeedbackThumbs":{
+      "type":"string",
+      "enum":[
+        "Up",
+        "Down"
+      ]
+    },
     "InsightField":{
       "type":"structure",
       "required":[
@@ -4248,6 +4345,13 @@
         "HIGH",
         "MEDIUM",
         "LOW"
+      ]
+    },
+    "InsightResponseStatus":{
+      "type":"string",
+      "enum":[
+        "SUCCESS",
+        "ERROR"
       ]
     },
     "InsightSortOrder":{
@@ -6200,7 +6304,9 @@
         "SoftwareUpdateOptions":{"shape":"SoftwareUpdateOptions"},
         "AIMLOptions":{"shape":"AIMLOptionsInput"},
         "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptions"},
-        "AutomatedSnapshotPauseOptions":{"shape":"AutomatedSnapshotPauseRequestOptions"}
+        "AutomatedSnapshotPauseOptions":{"shape":"AutomatedSnapshotPauseRequestOptions"},
+        "UseCase":{"shape":"DomainUseCase"},
+        "EngineMode":{"shape":"EngineMode"}
       }
     },
     "UpdateDomainConfigResponse":{
@@ -6394,6 +6500,17 @@
     "UpgradeStepsList":{
       "type":"list",
       "member":{"shape":"UpgradeStepItem"}
+    },
+    "UseCaseStatus":{
+      "type":"structure",
+      "required":[
+        "Options",
+        "Status"
+      ],
+      "members":{
+        "Options":{"shape":"DomainUseCase"},
+        "Status":{"shape":"OptionStatus"}
+      }
     },
     "UserPoolId":{
       "type":"string",

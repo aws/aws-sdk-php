@@ -1159,6 +1159,7 @@
         "DescribeTopicRefreshScheduleResponse$TopicArn": "<p>The Amazon Resource Name (ARN) of the topic.</p>",
         "DescribeTopicRefreshScheduleResponse$DatasetArn": "<p>The Amazon Resource Name (ARN) of the dataset.</p>",
         "DescribeTopicResponse$Arn": "<p>The Amazon Resource Name (ARN) of the topic.</p>",
+        "FileSource$DataSourceArn": "<p>The Amazon Resource Name (ARN) for the data source.</p>",
         "Folder$Arn": "<p>The Amazon Resource Name (ARN) for the folder.</p>",
         "FolderArnList$member": null,
         "FolderSummary$Arn": "<p>The Amazon Resource Name (ARN) of the folder.</p>",
@@ -7541,6 +7542,12 @@
         "UploadSettings$Format": "<p>File format.</p>"
       }
     },
+    "FileSource": {
+      "base": "<p>A physical table type that contains the schema and upload settings for a file-based data source.</p>",
+      "refs": {
+        "PhysicalTable$FileSource": "<p>A physical table type for a file data source.</p>"
+      }
+    },
     "FilledMapAggregatedFieldWells": {
       "base": "<p>The aggregated field well of the filled map.</p>",
       "refs": {
@@ -9509,6 +9516,7 @@
       "base": null,
       "refs": {
         "CustomSql$Columns": "<p>The column schema from the SQL query result set.</p>",
+        "FileSource$InputColumns": "<p>The column schema of the file.</p>",
         "ParentDataSet$InputColumns": "<p>The list of input columns available from the parent dataset.</p>",
         "RelationalTable$InputColumns": "<p>The column schema of the table.</p>",
         "S3Source$InputColumns": "<p>A physical table type for an S3 data source.</p> <note> <p>For files that aren't JSON, only <code>STRING</code> data types are supported in input columns.</p> </note>",
@@ -9541,6 +9549,7 @@
         "AxisLinearScale$StepCount": "<p>The step count setup of a linear axis.</p>",
         "DisplayFormatOptions$FractionDigits": "<p>Determines the number of fraction digits.</p>",
         "ExcludePeriodConfiguration$Amount": "<p>The amount or number of the exclude period.</p>",
+        "FileSource$SheetIndex": "<p>The zero-based index of the sheet to use within the file. For files that contain multiple sheets, this identifies which sheet to read. Files that contain a single sheet, or that have no concept of sheets, use sheet 0.</p>",
         "FlowSummary$RunCount": "<p>The number of runs done for the flow.</p>",
         "FlowSummary$UserCount": "<p>The number of users who have used the flow.</p>",
         "GetFlowMetadataOutput$UserCount": "<p>The number of users who have used the flow.</p>",
@@ -13640,7 +13649,7 @@
     "S3Source": {
       "base": "<p>A physical table type for an S3 data source.</p>",
       "refs": {
-        "PhysicalTable$S3Source": "<p>A physical table type for as S3 data source.</p>"
+        "PhysicalTable$S3Source": "<p>A physical table type for an S3 data source.</p>"
       }
     },
     "S3TableBucketArn": {
@@ -18752,6 +18761,7 @@
     "UploadSettings": {
       "base": "<p>Information about the format for a source file or files.</p>",
       "refs": {
+        "FileSource$UploadSettings": "<p>Information about the format for the source file.</p>",
         "S3Source$UploadSettings": "<p>Information about the format for the S3 source file or files.</p>"
       }
     },

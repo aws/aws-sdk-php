@@ -4637,6 +4637,23 @@
         "ENABLED"
       ]
     },
+    "DurationControl": {
+      "type": "structure",
+      "members": {
+        "IntegerDurationMaximumCompressionDenominator": {
+          "shape": "__integerMin1Max2147483647",
+          "locationName": "integerDurationMaximumCompressionDenominator"
+        },
+        "IntegerDurationMaximumCompressionNumerator": {
+          "shape": "__integerMin0Max2147483647",
+          "locationName": "integerDurationMaximumCompressionNumerator"
+        },
+        "IntegerDurationTrimThresholdMilliseconds": {
+          "shape": "__integerMin0Max500",
+          "locationName": "integerDurationTrimThresholdMilliseconds"
+        }
+      }
+    },
     "DvbNitSettings": {
       "type": "structure",
       "members": {
@@ -5632,7 +5649,8 @@
         "wave",
         "avi",
         "mpegts",
-        "mpegps"
+        "mpegps",
+        "mp3"
       ]
     },
     "FrameCaptureSettings": {
@@ -5920,6 +5938,13 @@
         "CAVLC"
       ]
     },
+    "H264ExplicitWeightedPrediction": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
+      ]
+    },
     "H264FieldEncoding": {
       "type": "string",
       "enum": [
@@ -6079,6 +6104,10 @@
         "EntropyEncoding": {
           "shape": "H264EntropyEncoding",
           "locationName": "entropyEncoding"
+        },
+        "ExplicitWeightedPrediction": {
+          "shape": "H264ExplicitWeightedPrediction",
+          "locationName": "explicitWeightedPrediction"
         },
         "FieldEncoding": {
           "shape": "H264FieldEncoding",
@@ -12470,6 +12499,10 @@
         "DolbyVision": {
           "shape": "DolbyVision",
           "locationName": "dolbyVision"
+        },
+        "DurationControl": {
+          "shape": "DurationControl",
+          "locationName": "durationControl"
         },
         "Hdr10Plus": {
           "shape": "Hdr10Plus",

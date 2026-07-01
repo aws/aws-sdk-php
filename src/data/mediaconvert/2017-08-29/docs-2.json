@@ -1331,6 +1331,12 @@
         "VideoDescription$DropFrameTimecode": "Applies only to 29.97 fps outputs. When this feature is enabled, the service will use drop-frame timecode on outputs. If it is not possible to use drop-frame timecode, the system will fall back to non-drop-frame. This setting is enabled by default when Timecode insertion or Timecode track is enabled."
       }
     },
+    "DurationControl": {
+      "base": "Settings for integer-second duration normalization. When this preprocessor is present, the output duration will be adjusted to an exact integer-second boundary. If the input is within the trim threshold of an integer second, trailing frames are dropped. If within the compression threshold and less than 500ms over the previous integer second, the output is sped up slightly. Otherwise, black frames are padded to the next integer second.",
+      "refs": {
+        "VideoPreprocessor$DurationControl": "Enable integer-second duration normalization. When enabled, the output duration is adjusted to land on an exact integer-second boundary. The adjustment method (trim, compress, or pad) is chosen automatically based on how far the input duration is from the nearest integer second."
+      }
+    },
     "DvbNitSettings": {
       "base": "Use these settings to insert a DVB Network Information Table (NIT) in the transport stream of this output.",
       "refs": {
@@ -1754,7 +1760,7 @@
     "Format": {
       "base": null,
       "refs": {
-        "Container$Format": "The format of your media file. For example: MP4, QuickTime (MOV), Matroska (MKV), WebM, MXF, Wave, AVI, MPEG-TS, or MPEG-PS. Note that this will be blank if your media file has a format that the MediaConvert Probe operation does not recognize."
+        "Container$Format": "The format of your media file. For example: MP4, QuickTime (MOV), Matroska (MKV), WebM, MXF, Wave, AVI, MPEG-TS, MPEG-PS, or MP3. Note that this will be blank if your media file has a format that the MediaConvert Probe operation does not recognize."
       }
     },
     "FrameCaptureSettings": {
@@ -1883,6 +1889,12 @@
       "base": "Entropy encoding mode. Use CABAC (must be in Main or High profile) or CAVLC.",
       "refs": {
         "H264Settings$EntropyEncoding": "Entropy encoding mode. Use CABAC (must be in Main or High profile) or CAVLC."
+      }
+    },
+    "H264ExplicitWeightedPrediction": {
+      "base": "Enable or disable explicit weighted prediction for the H.264 encoder. Weighted prediction improves compression efficiency for content with fading or brightness changes between frames.",
+      "refs": {
+        "H264Settings$ExplicitWeightedPrediction": "Enable or disable explicit weighted prediction for the H.264 encoder. Weighted prediction improves compression efficiency for content with fading or brightness changes between frames."
       }
     },
     "H264FieldEncoding": {
@@ -4825,6 +4837,7 @@
         "ColorConversion3DLUTSetting$OutputMasteringLuminance": "Specify which outputs use this 3D LUT, according to their luminance. To apply this 3D LUT to HDR10 or P3D65 (HDR) outputs with a specific luminance: Enter an integer from 0 to 2147483647, corresponding to the output's luminance. To apply this 3D LUT to any output regardless of its luminance: Leave blank, or enter 0.",
         "ColorCorrector$MaxLuminance": "Specify the maximum mastering display luminance. Enter an integer from 0 to 2147483647, in units of 0.0001 nits. For example, enter 10000000 for 1000 nits.",
         "DashIsoGroupSettings$MinBufferTime": "Minimum time of initially buffered media that is needed to ensure smooth playout.",
+        "DurationControl$IntegerDurationMaximumCompressionNumerator": "Required. Numerator of the maximum allowed compression ratio, defined as overrun divided by target duration. For example, numerator 5 with denominator 100 means max 5% compression. Set to 0 to disable compression entirely (only trim or pad will be used).",
         "DvbSubDestinationSettings$DdsXCoordinate": "Use this setting, along with DDS y-coordinate, to specify the upper left corner of the display definition segment (DDS) display window. With this setting, specify the distance, in pixels, between the left side of the frame and the left side of the DDS display window. Keep the default value, 0, to have MediaConvert automatically choose this offset. Related setting: When you use this setting, you must set DDS handling to a value other than None. MediaConvert uses these values to determine whether to write page position data to the DDS or to the page composition segment. All burn-in and DVB-Sub font settings must match.",
         "DvbSubDestinationSettings$DdsYCoordinate": "Use this setting, along with DDS x-coordinate, to specify the upper left corner of the display definition segment (DDS) display window. With this setting, specify the distance, in pixels, between the top of the frame and the top of the DDS display window. Keep the default value, 0, to have MediaConvert automatically choose this offset. Related setting: When you use this setting, you must set DDS handling to a value other than None. MediaConvert uses these values to determine whether to write page position data to the DDS or to the page composition segment (PCS). All burn-in and DVB-Sub font settings must match.",
         "DvbSubDestinationSettings$XPosition": "Specify the horizontal position of the captions, relative to the left side of the output in pixels. A value of 10 would result in the captions starting 10 pixels from the left of the output. If no explicit x_position is provided, the horizontal caption position will be determined by the alignment parameter. Within your job settings, all of your DVB-Sub settings must be identical.",
@@ -4938,6 +4951,7 @@
     "__integerMin0Max500": {
       "base": null,
       "refs": {
+        "DurationControl$IntegerDurationTrimThresholdMilliseconds": "Maximum number of fractional milliseconds past an integer second that qualify for the trim path (frame dropping). Default is 0 (trimming disabled).",
         "M2tsSettings$MaxPcrInterval": "Specify the maximum time, in milliseconds, between Program Clock References (PCRs) inserted into the transport stream.",
         "M3u8Settings$MaxPcrInterval": "Specify the maximum time, in milliseconds, between Program Clock References (PCRs) inserted into the transport stream."
       }
@@ -5143,8 +5157,8 @@
     "__integerMin1Max150": {
       "base": null,
       "refs": {
-        "JobSettings$FollowSource": "Specify the input that MediaConvert references for your default output settings.  MediaConvert uses this input's Resolution, Frame rate, and Pixel aspect ratio for all  outputs that you don't manually specify different output settings for. Enabling this setting will disable \"Follow source\" for all other inputs.  If MediaConvert cannot follow your source, for example if you specify an audio-only input,  MediaConvert uses the first followable input instead. In your JSON job specification, enter an integer from 1 to 150 corresponding  to the order of your inputs.",
-        "JobTemplateSettings$FollowSource": "Specify the input that MediaConvert references for your default output settings.  MediaConvert uses this input's Resolution, Frame rate, and Pixel aspect ratio for all  outputs that you don't manually specify different output settings for. Enabling this setting will disable \"Follow source\" for all other inputs.  If MediaConvert cannot follow your source, for example if you specify an audio-only input,  MediaConvert uses the first followable input instead. In your JSON job specification, enter an integer from 1 to 150 corresponding  to the order of your inputs."
+        "JobSettings$FollowSource": "Specify the input that MediaConvert references for your default output settings. MediaConvert uses this input's Resolution, Frame rate, and Pixel aspect ratio for all outputs that you don't manually specify different output settings for. Enabling this setting will disable \"Follow source\" for all other inputs.  If MediaConvert cannot follow your source, for example if you specify an audio-only input,  MediaConvert uses the first followable input instead. In your JSON job specification, enter an integer from 1 to 150 corresponding  to the order of your inputs.",
+        "JobTemplateSettings$FollowSource": "Specify the input that MediaConvert references for your default output settings. MediaConvert uses this input's Resolution, Frame rate, and Pixel aspect ratio for all outputs that you don't manually specify different output settings for. Enabling this setting will disable \"Follow source\" for all other inputs.  If MediaConvert cannot follow your source, for example if you specify an audio-only input,  MediaConvert uses the first followable input instead. In your JSON job specification, enter an integer from 1 to 150 corresponding  to the order of your inputs."
       }
     },
     "__integerMin1Max17895697": {
@@ -5191,6 +5205,7 @@
         "CmafGroupSettings$SegmentLength": "Specify the length, in whole seconds, of each segment. When you don't specify a value, MediaConvert defaults to 10. Related settings: Use Segment length control to specify whether the encoder enforces this value strictly. Use Segment control to specify whether MediaConvert creates separate segment files or one content file that has metadata to mark the segment boundaries.",
         "DashIsoGroupSettings$FragmentLength": "Length of fragments to generate (in seconds). Fragment length must be compatible with GOP size and Framerate. Note that fragments will end on the next keyframe after this number of seconds, so actual fragment length may be longer. When Emit Single File is checked, the fragmentation is internal to a single output file and it does not cause the creation of many output files as in other output types.",
         "DashIsoGroupSettings$SegmentLength": "Specify the length, in whole seconds, of each segment. When you don't specify a value, MediaConvert defaults to 30. Related settings: Use Segment length control to specify whether the encoder enforces this value strictly. Use Segment control to specify whether MediaConvert creates separate segment files or one content file that has metadata to mark the segment boundaries.",
+        "DurationControl$IntegerDurationMaximumCompressionDenominator": "Required. Denominator of the maximum allowed compression ratio.",
         "DvbSubDestinationSettings$Height": "Specify the height, in pixels, of this set of DVB-Sub captions. The default value is 576 pixels. Related setting: When you use this setting, you must set DDS handling to a value other than None. All burn-in and DVB-Sub font settings must match.",
         "DvbSubDestinationSettings$Width": "Specify the width, in pixels, of this set of DVB-Sub captions. The default value is 720 pixels. Related setting: When you use this setting, you must set DDS handling to a value other than None. All burn-in and DVB-Sub font settings must match.",
         "DvbSubSourceSettings$Pid": "When using DVB-Sub with Burn-in, use this PID for the source content. Unused for DVB-Sub passthrough. All DVB-Sub content is passed through, regardless of selectors.",

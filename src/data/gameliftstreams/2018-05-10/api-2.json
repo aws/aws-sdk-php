@@ -88,6 +88,24 @@
       ],
       "idempotent":true
     },
+    "CreateStreamSessionAdminShell":{
+      "name":"CreateStreamSessionAdminShell",
+      "http":{
+        "method":"POST",
+        "requestUri":"/streamgroups/{Identifier}/streamsessions/{StreamSessionIdentifier}/access",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateStreamSessionAdminShellInput"},
+      "output":{"shape":"CreateStreamSessionAdminShellOutput"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"StreamSessionAccessNotReadyException"}
+      ]
+    },
     "CreateStreamSessionConnection":{
       "name":"CreateStreamSessionConnection",
       "http":{
@@ -672,6 +690,33 @@
         "CreatedAt":{"shape":"Timestamp"},
         "ExpiresAt":{"shape":"Timestamp"},
         "AssociatedApplications":{"shape":"ArnList"}
+      }
+    },
+    "CreateStreamSessionAdminShellInput":{
+      "type":"structure",
+      "required":[
+        "Identifier",
+        "StreamSessionIdentifier"
+      ],
+      "members":{
+        "Identifier":{
+          "shape":"Identifier",
+          "location":"uri",
+          "locationName":"Identifier"
+        },
+        "StreamSessionIdentifier":{
+          "shape":"Identifier",
+          "location":"uri",
+          "locationName":"StreamSessionIdentifier"
+        }
+      }
+    },
+    "CreateStreamSessionAdminShellOutput":{
+      "type":"structure",
+      "members":{
+        "SessionId":{"shape":"SessionId"},
+        "StreamUrl":{"shape":"StreamUrl"},
+        "TokenValue":{"shape":"TokenValue"}
       }
     },
     "CreateStreamSessionConnectionInput":{
@@ -1302,6 +1347,11 @@
       },
       "exception":true
     },
+    "SessionId":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
     "SessionLengthSeconds":{
       "type":"integer",
       "box":true,
@@ -1443,6 +1493,19 @@
       "type":"list",
       "member":{"shape":"StreamGroupSummary"}
     },
+    "StreamSessionAccessNotReadyException":{
+      "type":"structure",
+      "required":["Message"],
+      "members":{
+        "Message":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
+      "exception":true,
+      "retryable":{"throttling":false}
+    },
     "StreamSessionStatus":{
       "type":"string",
       "enum":[
@@ -1490,6 +1553,7 @@
       "type":"list",
       "member":{"shape":"StreamSessionSummary"}
     },
+    "StreamUrl":{"type":"string"},
     "String":{"type":"string"},
     "TagKey":{
       "type":"string",
@@ -1571,6 +1635,12 @@
       "retryable":{"throttling":true}
     },
     "Timestamp":{"type":"timestamp"},
+    "TokenValue":{
+      "type":"string",
+      "max":1024,
+      "min":0,
+      "sensitive":true
+    },
     "UntagResourceRequest":{
       "type":"structure",
       "required":[

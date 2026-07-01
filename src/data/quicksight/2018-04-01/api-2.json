@@ -15905,6 +15905,20 @@
         "JSON"
       ]
     },
+    "FileSource":{
+      "type":"structure",
+      "required":[
+        "DataSourceArn",
+        "SheetIndex",
+        "InputColumns"
+      ],
+      "members":{
+        "DataSourceArn":{"shape":"Arn"},
+        "UploadSettings":{"shape":"UploadSettings"},
+        "SheetIndex":{"shape":"Integer"},
+        "InputColumns":{"shape":"InputColumnList"}
+      }
+    },
     "FilledMapAggregatedFieldWells":{
       "type":"structure",
       "members":{
@@ -22467,7 +22481,8 @@
         "RelationalTable":{"shape":"RelationalTable"},
         "CustomSql":{"shape":"CustomSql"},
         "S3Source":{"shape":"S3Source"},
-        "SaaSTable":{"shape":"SaaSTable"}
+        "SaaSTable":{"shape":"SaaSTable"},
+        "FileSource":{"shape":"FileSource"}
       }
     },
     "PhysicalTableId":{
