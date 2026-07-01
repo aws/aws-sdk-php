@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.387.1 - 2026-07-01
 
 * `Aws\QuickSight` - Adding support for FileSource PhysicalTables. This adds support for datasets with file sources.
 * `Aws\GameLiftStreams` - Added CreateStreamSessionAdminShell API operation to enable customers to establish secure terminal connections to the live runtime environment of streaming sessions for troubleshooting purposes.
