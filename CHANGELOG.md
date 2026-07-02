@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.387.2 - 2026-07-02
 
 * `Aws\CustomerProfiles` - Amazon Connect Customer Profiles adds support for diversityConfig to recommenderConfig which can be used for diversifying the recommendations. This release also includes model versioning support which helps customer to rollback trained models.
 * `Aws\MediaTailor` - Added dual-stack (IPv4 and IPv6) endpoint fields to SSAI and Channel Assembly API responses.
