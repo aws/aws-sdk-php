@@ -702,6 +702,37 @@
         "title": "Example delete a user pool replica"
       }
     ],
+    "GetProvisionedLimit": [
+      {
+        "input": {
+          "LimitDefinition": {
+            "Attributes": {
+              "Category": "UserAuthentication"
+            },
+            "LimitClass": "API_CATEGORY"
+          }
+        },
+        "output": {
+          "Limit": {
+            "FreeLimitValue": 120,
+            "LimitDefinition": {
+              "Attributes": {
+                "Category": "UserAuthentication"
+              },
+              "LimitClass": "API_CATEGORY"
+            },
+            "ProvisionedLimitValue": 120
+          }
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example returns the provisioned limit for the UserAuthentication API category.",
+        "id": "example-get-a-provisioned-limit-1782432000000",
+        "title": "Example get a provisioned limit"
+      }
+    ],
     "InitiateAuth": [
       {
         "input": {
@@ -845,6 +876,38 @@
         "description": "This request submits a value for all possible parameters for ListUsers. By iterating the PaginationToken, you can page through and collect all users in a user pool.",
         "id": "a-listusers-request-for-the-next-3-users-whose-email-address-starts-with-testuser-1689977648246",
         "title": "A ListUsers request for the next 3 users whose email address starts with \"testuser.\""
+      }
+    ],
+    "UpdateProvisionedLimit": [
+      {
+        "input": {
+          "LimitDefinition": {
+            "Attributes": {
+              "Category": "UserAuthentication"
+            },
+            "LimitClass": "API_CATEGORY"
+          },
+          "RequestedLimitValue": 300
+        },
+        "output": {
+          "Limit": {
+            "FreeLimitValue": 120,
+            "LimitDefinition": {
+              "Attributes": {
+                "Category": "UserAuthentication"
+              },
+              "LimitClass": "API_CATEGORY"
+            },
+            "ProvisionedLimitValue": 300
+          }
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example sets the provisioned limit for the UserAuthentication API category to 300 RPS.",
+        "id": "example-update-a-provisioned-limit-1782432000000",
+        "title": "Example update a provisioned limit"
       }
     ],
     "UpdateUserPoolReplica": [

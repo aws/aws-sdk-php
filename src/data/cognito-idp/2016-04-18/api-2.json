@@ -1482,6 +1482,22 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "GetProvisionedLimit":{
+      "name":"GetProvisionedLimit",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetProvisionedLimitRequest"},
+      "output":{"shape":"GetProvisionedLimitResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"NotAuthorizedException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"InternalErrorException"}
+      ]
+    },
     "GetSigningCertificate":{
       "name":"GetSigningCertificate",
       "http":{
@@ -2354,6 +2370,23 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"NotAuthorizedException"},
         {"shape":"OperationNotEnabledException"},
+        {"shape":"InternalErrorException"}
+      ]
+    },
+    "UpdateProvisionedLimit":{
+      "name":"UpdateProvisionedLimit",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateProvisionedLimitRequest"},
+      "output":{"shape":"UpdateProvisionedLimitResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"NotAuthorizedException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"InternalErrorException"}
       ]
     },
@@ -4827,6 +4860,20 @@
         "LogDeliveryConfiguration":{"shape":"LogDeliveryConfigurationType"}
       }
     },
+    "GetProvisionedLimitRequest":{
+      "type":"structure",
+      "required":["LimitDefinition"],
+      "members":{
+        "LimitDefinition":{"shape":"LimitDefinitionType"}
+      }
+    },
+    "GetProvisionedLimitResponse":{
+      "type":"structure",
+      "required":["Limit"],
+      "members":{
+        "Limit":{"shape":"LimitType"}
+      }
+    },
     "GetSigningCertificateRequest":{
       "type":"structure",
       "required":["UserPoolId"],
@@ -5214,12 +5261,40 @@
       "type":"string",
       "pattern":"^cognito:(default|dutch|english|french|spanish|german|bahasa-indonesia|italian|japanese|korean|portuguese-brazil|chinese-(simplified|traditional))$"
     },
+    "LimitClass":{
+      "type":"string",
+      "enum":["API_CATEGORY"]
+    },
+    "LimitDefinitionType":{
+      "type":"structure",
+      "required":[
+        "LimitClass",
+        "Attributes"
+      ],
+      "members":{
+        "LimitClass":{"shape":"LimitClass"},
+        "Attributes":{"shape":"StringToStringMapType"}
+      }
+    },
     "LimitExceededException":{
       "type":"structure",
       "members":{
         "message":{"shape":"MessageType"}
       },
       "exception":true
+    },
+    "LimitType":{
+      "type":"structure",
+      "required":[
+        "LimitDefinition",
+        "ProvisionedLimitValue",
+        "FreeLimitValue"
+      ],
+      "members":{
+        "LimitDefinition":{"shape":"LimitDefinitionType"},
+        "ProvisionedLimitValue":{"shape":"IntegerType"},
+        "FreeLimitValue":{"shape":"IntegerType"}
+      }
     },
     "LinkUrlType":{
       "type":"string",
@@ -6172,6 +6247,13 @@
         "TLS_V1_3_2025"
       ]
     },
+    "ServiceQuotaExceededException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"MessageType"}
+      },
+      "exception":true
+    },
     "SessionType":{
       "type":"string",
       "max":2048,
@@ -6440,6 +6522,11 @@
         "MinLength":{"shape":"StringType"},
         "MaxLength":{"shape":"StringType"}
       }
+    },
+    "StringToStringMapType":{
+      "type":"map",
+      "key":{"shape":"StringType"},
+      "value":{"shape":"StringType"}
     },
     "StringType":{
       "type":"string",
@@ -6753,6 +6840,24 @@
       "type":"structure",
       "members":{
         "ManagedLoginBranding":{"shape":"ManagedLoginBrandingType"}
+      }
+    },
+    "UpdateProvisionedLimitRequest":{
+      "type":"structure",
+      "required":[
+        "LimitDefinition",
+        "RequestedLimitValue"
+      ],
+      "members":{
+        "LimitDefinition":{"shape":"LimitDefinitionType"},
+        "RequestedLimitValue":{"shape":"IntegerType"}
+      }
+    },
+    "UpdateProvisionedLimitResponse":{
+      "type":"structure",
+      "required":["Limit"],
+      "members":{
+        "Limit":{"shape":"LimitType"}
       }
     },
     "UpdateReplicaStatusType":{

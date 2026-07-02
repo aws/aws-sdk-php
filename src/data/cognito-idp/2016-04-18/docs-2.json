@@ -76,6 +76,7 @@
     "GetGroup": "<p>Given a user pool ID and a group name, returns information about the user group.</p> <p> For more information about user pool groups, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-user-groups.html\">Adding groups to a user pool</a>.</p> <note> <p>Amazon Cognito evaluates Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you must use IAM credentials to authorize requests, and you must grant yourself the corresponding IAM permission in a policy.</p> <p class=\"title\"> <b>Learn more</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html\">Signing Amazon Web Services API Requests</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a> </p> </li> </ul> </note>",
     "GetIdentityProviderByIdentifier": "<p>Given the identifier of an identity provider (IdP), for example <code>examplecorp</code>, returns information about the user pool configuration for that IdP. For more information about IdPs, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-identity-federation.html\">Third-party IdP sign-in</a>.</p>",
     "GetLogDeliveryConfiguration": "<p>Given a user pool ID, returns the logging configuration. User pools can export message-delivery error and threat-protection activity logs to external Amazon Web Services services. For more information, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/exporting-quotas-and-usage.html\">Exporting user pool logs</a>.</p> <note> <p>Amazon Cognito evaluates Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you must use IAM credentials to authorize requests, and you must grant yourself the corresponding IAM permission in a policy.</p> <p class=\"title\"> <b>Learn more</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html\">Signing Amazon Web Services API Requests</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a> </p> </li> </ul> </note>",
+    "GetProvisionedLimit": "<p>Returns the current provisioned limit for a specific API category.</p> <note> <p>Amazon Cognito evaluates Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you must use IAM credentials to authorize requests, and you must grant yourself the corresponding IAM permission in a policy.</p> <p class=\"title\"> <b>Learn more</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html\">Signing Amazon Web Services API Requests</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a> </p> </li> </ul> </note>",
     "GetSigningCertificate": "<p>Given a user pool ID, returns the signing certificate for SAML 2.0 federation.</p> <p>Issued certificates are valid for 10 years from the date of issue. Amazon Cognito issues and assigns a new signing certificate annually. This renewal process returns a new value in the response to <code>GetSigningCertificate</code>, but doesn't invalidate the original certificate.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-SAML-signing-encryption.html#cognito-user-pools-SAML-signing\">Signing SAML requests</a>.</p> <note> <p>Amazon Cognito evaluates Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you must use IAM credentials to authorize requests, and you must grant yourself the corresponding IAM permission in a policy.</p> <p class=\"title\"> <b>Learn more</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html\">Signing Amazon Web Services API Requests</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a> </p> </li> </ul> </note>",
     "GetTokensFromRefreshToken": "<p>Given a refresh token, issues new ID, access, and optionally refresh tokens for the user who owns the submitted token. This operation issues a new refresh token and invalidates the original refresh token after an optional grace period when refresh token rotation is enabled. If refresh token rotation is disabled, issues new ID and access tokens only.</p>",
     "GetUICustomization": "<p>Given a user pool ID or app client, returns information about classic hosted UI branding that you applied, if any. Returns user-pool level branding information if no app client branding is applied, or if you don't specify an app client ID. Returns an empty object if you haven't applied hosted UI branding to either the client or the user pool. For more information, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/hosted-ui-classic-branding.html\">Hosted UI (classic) branding</a>.</p>",
@@ -119,6 +120,7 @@
     "UpdateGroup": "<p>Given the name of a user pool group, updates any of the properties for precedence, IAM role, or description. For more information about user pool groups, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-user-groups.html\">Adding groups to a user pool</a>.</p> <note> <p>Amazon Cognito evaluates Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you must use IAM credentials to authorize requests, and you must grant yourself the corresponding IAM permission in a policy.</p> <p class=\"title\"> <b>Learn more</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html\">Signing Amazon Web Services API Requests</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a> </p> </li> </ul> </note>",
     "UpdateIdentityProvider": "<p>Modifies the configuration and trust relationship between a third-party identity provider (IdP) and a user pool. Amazon Cognito accepts sign-in with third-party identity providers through managed login and OIDC relying-party libraries. For more information, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-identity-federation.html\">Third-party IdP sign-in</a>.</p> <note> <p>Amazon Cognito evaluates Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you must use IAM credentials to authorize requests, and you must grant yourself the corresponding IAM permission in a policy.</p> <p class=\"title\"> <b>Learn more</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html\">Signing Amazon Web Services API Requests</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a> </p> </li> </ul> </note>",
     "UpdateManagedLoginBranding": "<p>Configures the branding settings for a user pool style. This operation is the programmatic option for the configuration of a style in the branding editor.</p> <p>Provides values for UI customization in a <code>Settings</code> JSON object and image files in an <code>Assets</code> array.</p> <p> This operation has a 2-megabyte request-size limit and include the CSS settings and image assets for your app client. Your branding settings might exceed 2MB in size. Amazon Cognito doesn't require that you pass all parameters in one request and preserves existing style settings that you don't specify. If your request is larger than 2MB, separate it into multiple requests, each with a size smaller than the limit.</p> <note> <p>Amazon Cognito evaluates Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you must use IAM credentials to authorize requests, and you must grant yourself the corresponding IAM permission in a policy.</p> <p class=\"title\"> <b>Learn more</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html\">Signing Amazon Web Services API Requests</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a> </p> </li> </ul> </note>",
+    "UpdateProvisionedLimit": "<p>Sets the provisioned limit for a specific API category. The value must be between the default limit and your account-level maximum limit in Service Quotas.</p> <p>Managed login user pools don't support adjustments to the <code>UserAuthentication</code> or <code>UserFederation</code> categories. To increase these limits, submit a Service Quotas increase request.</p> <note> <p>Amazon Cognito evaluates Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you must use IAM credentials to authorize requests, and you must grant yourself the corresponding IAM permission in a policy.</p> <p class=\"title\"> <b>Learn more</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html\">Signing Amazon Web Services API Requests</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a> </p> </li> </ul> </note>",
     "UpdateResourceServer": "<p>Updates the name and scopes of a resource server. All other fields are read-only. For more information about resource servers, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html\">Access control with resource servers</a>.</p> <important> <p>If you don't provide a value for an attribute, it is set to the default value.</p> </important> <note> <p>Amazon Cognito evaluates Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you must use IAM credentials to authorize requests, and you must grant yourself the corresponding IAM permission in a policy.</p> <p class=\"title\"> <b>Learn more</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html\">Signing Amazon Web Services API Requests</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a> </p> </li> </ul> </note>",
     "UpdateTerms": "<p>Modifies existing terms documents for the requested app client. When Terms and conditions and Privacy policy documents are configured, the app client displays links to them in the sign-up page of managed login for the app client.</p> <p>You can provide URLs for terms documents in the languages that are supported by <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-managed-login.html#managed-login-localization\">managed login localization</a>. Amazon Cognito directs users to the terms documents for their current language, with fallback to <code>default</code> if no document exists for the language.</p> <p>Each request accepts one type of terms document and a map of language-to-link for that document type. You must provide both types of terms documents in at least one language before Amazon Cognito displays your terms documents. Supply each type in separate requests.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-managed-login.html#managed-login-terms-documents\">Terms documents</a>.</p> <note> <p>Amazon Cognito evaluates Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you must use IAM credentials to authorize requests, and you must grant yourself the corresponding IAM permission in a policy.</p> <p class=\"title\"> <b>Learn more</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html\">Signing Amazon Web Services API Requests</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a> </p> </li> </ul> </note>",
     "UpdateUserAttributes": "<p>Updates the currently signed-in user's attributes. To delete an attribute from the user, submit the attribute in your API request with a blank value.</p> <p>For custom attributes, you must add a <code>custom:</code> prefix to the attribute name, for example <code>custom:department</code>.</p> <p>Authorize this action with a signed-in user's access token. It must include the scope <code>aws.cognito.signin.user.admin</code>.</p> <note> <p>Amazon Cognito doesn't evaluate Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you can't use IAM credentials to authorize requests, and you can't grant IAM permissions in policies. For more information about authorization models in Amazon Cognito, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a>.</p> </note> <note> <p>This action might generate an SMS text message. Starting June 1, 2021, US telecom carriers require you to register an origination phone number before you can send SMS messages to US phone numbers. If you use SMS text messages in Amazon Cognito, you must register a phone number with <a href=\"https://console.aws.amazon.com/pinpoint/home/\">Amazon Pinpoint</a>. Amazon Cognito uses the registered number automatically. Otherwise, Amazon Cognito users who must receive SMS messages might not be able to sign up, activate their accounts, or sign in.</p> <p>If you have never used SMS text messages with Amazon Cognito or any other Amazon Web Services service, Amazon Simple Notification Service might place your account in the SMS sandbox. In <i> <a href=\"https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html\">sandbox mode</a> </i>, you can send messages only to verified phone numbers. After you test your app while in the sandbox environment, you can move out of the sandbox and into production. For more information, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-sms-settings.html\"> SMS message settings for Amazon Cognito user pools</a> in the <i>Amazon Cognito Developer Guide</i>.</p> </note>",
@@ -1780,6 +1782,14 @@
       "base": null,
       "refs": {}
     },
+    "GetProvisionedLimitRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetProvisionedLimitResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetSigningCertificateRequest": {
       "base": "<p>Request to get a signing certificate from Amazon Cognito.</p>",
       "refs": {}
@@ -1977,6 +1987,9 @@
       "base": null,
       "refs": {
         "AuthenticationResultType$ExpiresIn": "<p>The expiration period of the authentication result in seconds.</p>",
+        "LimitType$ProvisionedLimitValue": "<p>The provisioned limit value, in requests per second (RPS). This is the rate that Amazon Cognito currently enforces for your account.</p>",
+        "LimitType$FreeLimitValue": "<p>The default (free) limit value, in requests per second (RPS). This is the rate included at no additional cost.</p>",
+        "UpdateProvisionedLimitRequest$RequestedLimitValue": "<p>The provisioned rate to set, in requests per second (RPS).</p>",
         "UserPoolType$EstimatedNumberOfUsers": "<p>A number estimating the size of the user pool.</p>"
       }
     },
@@ -2063,9 +2076,30 @@
         "LinksType$key": null
       }
     },
+    "LimitClass": {
+      "base": null,
+      "refs": {
+        "LimitDefinitionType$LimitClass": "<p>The class of the limit. For API rate limits, this is <code>API_CATEGORY</code>.</p>"
+      }
+    },
+    "LimitDefinitionType": {
+      "base": "<p>The class and attributes that identify a specific limit at the account level.</p>",
+      "refs": {
+        "GetProvisionedLimitRequest$LimitDefinition": "<p>The limit to retrieve. Specify the limit class and the attributes that identify the limit.</p>",
+        "LimitType$LimitDefinition": "<p>The definition that identifies this limit, including the class and attributes.</p>",
+        "UpdateProvisionedLimitRequest$LimitDefinition": "<p>The limit to update. Specify the limit class and the attributes that identify the limit.</p>"
+      }
+    },
     "LimitExceededException": {
       "base": "<p>This exception is thrown when a user exceeds the limit for a requested Amazon Web Services resource.</p>",
       "refs": {}
+    },
+    "LimitType": {
+      "base": "<p>The limit definition and current limit values for a provisioned limit.</p>",
+      "refs": {
+        "GetProvisionedLimitResponse$Limit": "<p>The provisioned and default limit values for the requested limit.</p>",
+        "UpdateProvisionedLimitResponse$Limit": "<p>The updated provisioned and default limit values.</p>"
+      }
     },
     "LinkUrlType": {
       "base": null,
@@ -2349,6 +2383,7 @@
         "RefreshTokenReuseException$message": null,
         "ResourceNotFoundException$message": "<p>The message returned when the Amazon Cognito service returns a resource not found exception.</p>",
         "ScopeDoesNotExistException$message": null,
+        "ServiceQuotaExceededException$message": null,
         "SoftwareTokenMFANotFoundException$message": null,
         "TermsExistsException$message": null,
         "TierChangeNotAllowedException$message": null,
@@ -2935,6 +2970,10 @@
         "CustomDomainConfigType$SecurityPolicy": "<p>The security policy for the custom domain. Defines the minimum TLS version and cipher suites that CloudFront uses when communicating with viewers (clients). Valid values are as follows:</p> <ul> <li> <p> <code>TLS_V1</code>: Supports TLS 1.0 and later. Provides the broadest client compatibility.</p> </li> <li> <p> <code>TLS_V1_2_2021</code>: Supports TLS 1.2 and later with 2021 cipher suites. Recommended minimum for most use cases.</p> </li> <li> <p> <code>TLS_V1_3_2025</code>: Supports TLS 1.3 and later with 2025 cipher suites. Provides the strongest security posture.</p> </li> </ul>"
       }
     },
+    "ServiceQuotaExceededException": {
+      "base": "<p>The request exceeded your account's service quota. To increase your limit, use or submit a Service Quotas increase request.</p>",
+      "refs": {}
+    },
     "SessionType": {
       "base": null,
       "refs": {
@@ -3121,6 +3160,12 @@
         "SchemaAttributeType$StringAttributeConstraints": "<p>Specifies the constraints for an attribute of the string type.</p>"
       }
     },
+    "StringToStringMapType": {
+      "base": null,
+      "refs": {
+        "LimitDefinitionType$Attributes": "<p>The attributes that identify the specific limit. For API rate limits, specify the <code>Category</code> key with a value like <code>UserAuthentication</code> or <code>UserCreation</code>.</p>"
+      }
+    },
     "StringType": {
       "base": null,
       "refs": {
@@ -3180,6 +3225,8 @@
         "SmsConfigurationType$ExternalId": "<p>The external ID provides additional security for your IAM role. You can use an <code>ExternalId</code> with the IAM role that you use with Amazon SNS to send SMS messages for your user pool. If you provide an <code>ExternalId</code>, your Amazon Cognito user pool includes it in the request to assume your IAM role. You can configure the role trust policy to require that Amazon Cognito, and any principal, provide the <code>ExternalID</code>. If you use the Amazon Cognito Management Console to create a role for SMS multi-factor authentication (MFA), Amazon Cognito creates a role with the required permissions and a trust policy that demonstrates use of the <code>ExternalId</code>.</p> <p>For more information about the <code>ExternalId</code> of a role, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-user_externalid.html\">How to use an external ID when granting access to your Amazon Web Services resources to a third party</a>.</p>",
         "StringAttributeConstraintsType$MinLength": "<p>The minimum length of a string attribute value.</p>",
         "StringAttributeConstraintsType$MaxLength": "<p>The maximum length of a string attribute value. Must be a number less than or equal to <code>2^1023</code>, represented as a string with a length of 131072 characters or fewer.</p>",
+        "StringToStringMapType$key": null,
+        "StringToStringMapType$value": null,
         "UserContextDataType$IpAddress": "<p>The source IP address of your user's device.</p>",
         "UserContextDataType$EncodedData": "<p>Encoded device-fingerprint details that your app collected with the Amazon Cognito context data collection library. For more information, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pool-settings-adaptive-authentication.html#user-pool-settings-adaptive-authentication-device-fingerprint\">Adding user device and session data to API requests</a>.</p>",
         "UserMFASettingListType$member": null,
@@ -3423,6 +3470,14 @@
       "refs": {}
     },
     "UpdateManagedLoginBrandingResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateProvisionedLimitRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateProvisionedLimitResponse": {
       "base": null,
       "refs": {}
     },

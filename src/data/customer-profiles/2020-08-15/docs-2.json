@@ -1111,6 +1111,54 @@
         "Group$Dimensions": "<p>Defines the attributes to segment on.</p>"
       }
     },
+    "DiversityCapType": {
+      "base": null,
+      "refs": {
+        "DiversityColumn$CapType": "<p>The type of diversity cap to apply. Valid values are <code>PERCENTAGE</code> (interpret <code>Target</code> as a percentage of returned items) and <code>VALUE</code> (interpret <code>Target</code> as an absolute count).</p>"
+      }
+    },
+    "DiversityCapValue": {
+      "base": null,
+      "refs": {
+        "DiversityValuesMap$value": null
+      }
+    },
+    "DiversityColumn": {
+      "base": "<p>Defines a diversity constraint for a single item column, specifying a cap type and a target value or placeholder that controls how many recommended items may share the same column value.</p>",
+      "refs": {
+        "DiversityColumnsList$member": null
+      }
+    },
+    "DiversityColumnsList": {
+      "base": null,
+      "refs": {
+        "DiversityConfig$DiversityColumns": "<p>A list of up to two diversity columns. Each column defines a cap on the number or percentage of recommended items that share the same value for that column.</p>"
+      }
+    },
+    "DiversityConfig": {
+      "base": "<p>Configuration that controls diversity of recommendation results by capping the representation of specified item columns.</p>",
+      "refs": {
+        "RecommenderConfig$DiversityConfig": "<p>Configuration for diversity-aware recommendations. When set, the recommender applies diversity constraints defined per item column to reduce over-concentration of similar items in the results.</p>"
+      }
+    },
+    "DiversityPlaceholderName": {
+      "base": null,
+      "refs": {
+        "DiversityValuesMap$key": null
+      }
+    },
+    "DiversityTargetExpression": {
+      "base": null,
+      "refs": {
+        "DiversityColumn$Target": "<p>The diversity cap target. Either an integer literal (for example, <code>\"25\"</code>) or a placeholder expression of the form <code>$name</code> whose value is supplied at inference time through <code>GetProfileRecommendations</code>.</p>"
+      }
+    },
+    "DiversityValuesMap": {
+      "base": null,
+      "refs": {
+        "RecommendationDiversityConfig$Values": "<p>An optional map of placeholder name to integer cap value used to resolve <code>$name</code> placeholders defined in the recommender's <code>DiversityConfig</code> at inference time. Up to 2 entries are supported.</p>"
+      }
+    },
     "DomainList": {
       "base": null,
       "refs": {
@@ -2678,6 +2726,12 @@
         "Recommendations$member": null
       }
     },
+    "RecommendationDiversityConfig": {
+      "base": "<p>Runtime diversity configuration for a <code>GetProfileRecommendations</code> request.</p>",
+      "refs": {
+        "GetProfileRecommendationsRequest$DiversityConfig": "<p>Runtime diversity configuration for this request. Enables diversity-aware recommendations and optionally supplies values for placeholder-based diversity caps configured on the recommender.</p>"
+      }
+    },
     "Recommendations": {
       "base": null,
       "refs": {
@@ -2873,6 +2927,15 @@
       "refs": {
         "GetRecommenderResponse$LatestRecommenderUpdate": "<p>Information about the most recent update performed on the recommender, including status and timestamp.</p>",
         "RecommenderSummary$LatestRecommenderUpdate": "<p>Information about the most recent update performed on the recommender, including its status and timing.</p>"
+      }
+    },
+    "RecommenderVersionName": {
+      "base": null,
+      "refs": {
+        "GetRecommenderResponse$ActiveRecommenderVersionName": "<p>The name of the recommender version currently serving recommendations. Omitted when no active recommender version is set.</p>",
+        "RecommenderUpdate$RecommenderVersionName": "<p>The name of the recommender version associated with this update operation.</p>",
+        "TrainingMetrics$RecommenderVersionName": "<p>The name of the recommender version that produced these training metrics.</p>",
+        "UpdateRecommenderRequest$RecommenderVersionName": "<p>The name of a specific recommender version to activate as part of this update (for example, to roll back to a previously trained version).</p>"
       }
     },
     "ResourceNotFoundException": {
@@ -3835,6 +3898,7 @@
         "MatchingRequest$Enabled": "<p>The flag that enables the matching process of duplicate profiles.</p>",
         "MatchingResponse$Enabled": "<p>The flag that enables the matching process of duplicate profiles.</p>",
         "PutIntegrationResponse$IsUnstructured": "<p>Boolean that shows if the Flow that's associated with the Integration is created in Amazon Appflow, or with ObjectTypeName equals _unstructured via API/CLI in flowDefinition.</p>",
+        "RecommendationDiversityConfig$Enabled": "<p>Whether diversity-aware recommendations are enabled for this request.</p>",
         "RuleBasedMatchingRequest$Enabled": "<p>The flag that enables the rule-based matching process of duplicate profiles.</p>",
         "RuleBasedMatchingResponse$Enabled": "<p>The flag that enables the rule-based matching process of duplicate profiles.</p>",
         "UpdateCalculatedAttributeDefinitionResponse$UseHistoricalData": "<p>Whether historical data ingested before the Calculated Attribute was created should be included in calculations.</p>"
@@ -4207,6 +4271,7 @@
         "BatchPutProfileObjectErrorItem$Message": "<p>A message describing the error.</p>",
         "ColumnNamesList$member": null,
         "CreateUploadJobRequest$UniqueKey": "<p>The unique key columns for de-duping the profiles used to map data to the profile. </p>",
+        "DiversityColumn$Name": "<p>The name of the item catalog column on which to apply the diversity cap. The column must be defined in the recommender schema.</p>",
         "DomainObjectTypeField$Source": "<p>The expression that defines how to extract the field value from the source object.&gt;</p>",
         "DomainObjectTypeField$Target": "<p>The expression that defines where the field value should be placed in the standard domain object.</p>",
         "EventTriggerSummaryItem$Description": "<p>The description of the event trigger.</p>",

@@ -3506,6 +3506,61 @@
       "type":"list",
       "member":{"shape":"Dimension"}
     },
+    "DiversityCapType":{
+      "type":"string",
+      "enum":[
+        "PERCENTAGE",
+        "VALUE"
+      ]
+    },
+    "DiversityCapValue":{
+      "type":"integer",
+      "max":200,
+      "min":1
+    },
+    "DiversityColumn":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "CapType",
+        "Target"
+      ],
+      "members":{
+        "Name":{"shape":"text"},
+        "CapType":{"shape":"DiversityCapType"},
+        "Target":{"shape":"DiversityTargetExpression"}
+      }
+    },
+    "DiversityColumnsList":{
+      "type":"list",
+      "member":{"shape":"DiversityColumn"},
+      "max":2,
+      "min":0
+    },
+    "DiversityConfig":{
+      "type":"structure",
+      "members":{
+        "DiversityColumns":{"shape":"DiversityColumnsList"}
+      }
+    },
+    "DiversityPlaceholderName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[a-zA-Z][a-zA-Z0-9_]*$"
+    },
+    "DiversityTargetExpression":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"(\\d+|\\$[a-z_]+)"
+    },
+    "DiversityValuesMap":{
+      "type":"map",
+      "key":{"shape":"DiversityPlaceholderName"},
+      "value":{"shape":"DiversityCapValue"},
+      "max":2
+    },
     "DomainList":{
       "type":"list",
       "member":{"shape":"ListDomainItem"}
@@ -4540,7 +4595,8 @@
         "RecommenderPromotionalFilters":{"shape":"RecommenderPromotionalFilters"},
         "CandidateIds":{"shape":"CandidateIdList"},
         "MaxResults":{"shape":"maxSize500"},
-        "MetadataConfig":{"shape":"MetadataConfig"}
+        "MetadataConfig":{"shape":"MetadataConfig"},
+        "DiversityConfig":{"shape":"RecommendationDiversityConfig"}
       }
     },
     "GetProfileRecommendationsResponse":{
@@ -4635,6 +4691,7 @@
         "CreatedAt":{"shape":"timestamp"},
         "FailureReason":{"shape":"String"},
         "LatestRecommenderUpdate":{"shape":"RecommenderUpdate"},
+        "ActiveRecommenderVersionName":{"shape":"RecommenderVersionName"},
         "TrainingMetrics":{"shape":"TrainingMetricsList"},
         "Tags":{"shape":"TagMap"}
       }
@@ -7005,6 +7062,14 @@
         "Score":{"shape":"Double0To1"}
       }
     },
+    "RecommendationDiversityConfig":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{"shape":"optionalBoolean"},
+        "Values":{"shape":"DiversityValuesMap"}
+      }
+    },
     "Recommendations":{
       "type":"list",
       "member":{"shape":"Recommendation"},
@@ -7017,7 +7082,8 @@
         "TrainingFrequency":{"shape":"RecommenderConfigTrainingFrequencyInteger"},
         "InferenceConfig":{"shape":"InferenceConfig"},
         "IncludedColumns":{"shape":"IncludedColumns"},
-        "ExcludedColumns":{"shape":"IncludedColumns"}
+        "ExcludedColumns":{"shape":"IncludedColumns"},
+        "DiversityConfig":{"shape":"DiversityConfig"}
       }
     },
     "RecommenderConfigTrainingFrequencyInteger":{
@@ -7223,8 +7289,15 @@
         "Status":{"shape":"RecommenderStatus"},
         "CreatedAt":{"shape":"timestamp"},
         "LastUpdatedAt":{"shape":"timestamp"},
-        "FailureReason":{"shape":"String"}
+        "FailureReason":{"shape":"String"},
+        "RecommenderVersionName":{"shape":"RecommenderVersionName"}
       }
+    },
+    "RecommenderVersionName":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_-]+/\\d{4}-\\d{2}-\\d{2}T\\d{2}-\\d{2}-\\d{2}Z"
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -7971,7 +8044,8 @@
       "type":"structure",
       "members":{
         "Time":{"shape":"timestamp"},
-        "Metrics":{"shape":"Metrics"}
+        "Metrics":{"shape":"Metrics"},
+        "RecommenderVersionName":{"shape":"RecommenderVersionName"}
       }
     },
     "TrainingMetricsList":{
@@ -8276,7 +8350,8 @@
           "locationName":"RecommenderName"
         },
         "Description":{"shape":"sensitiveText"},
-        "RecommenderConfig":{"shape":"RecommenderConfig"}
+        "RecommenderConfig":{"shape":"RecommenderConfig"},
+        "RecommenderVersionName":{"shape":"RecommenderVersionName"}
       }
     },
     "UpdateRecommenderResponse":{
