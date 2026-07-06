@@ -270,6 +270,12 @@
         "CentralizationRuleDestination$DestinationLogsConfiguration": "<p>Log specific configuration for centralization destination log groups.</p>"
       }
     },
+    "DestinationMetricsConfiguration": {
+      "base": "<p>Configuration for centralization destination metrics, including backup settings.</p>",
+      "refs": {
+        "CentralizationRuleDestination$DestinationMetricsConfiguration": "<p>Metric specific configuration for centralization destination metrics.</p>"
+      }
+    },
     "DestinationType": {
       "base": null,
       "refs": {
@@ -650,6 +656,18 @@
         "TelemetryRuleSummary$LastUpdateTimeStamp": "<p> The timestamp when the telemetry rule was last modified. </p>"
       }
     },
+    "MetricsBackupConfiguration": {
+      "base": "<p>Configuration for backing up centralized metrics data to a secondary region.</p>",
+      "refs": {
+        "DestinationMetricsConfiguration$BackupConfiguration": "<p>Configuration defining the backup region for the metrics backup destination.</p>"
+      }
+    },
+    "MetricsFilterString": {
+      "base": null,
+      "refs": {
+        "SourceMetricsConfiguration$MetricsSelectionCriteria": "<p>The filter expression that selects which source metrics to centralize. Currently, only <code>*</code> (all metrics) is supported. Other values return a validation error.</p>"
+      }
+    },
     "MskEnhancedMonitoringLevel": {
       "base": "<p> Enumeration of supported enhanced monitoring levels for Amazon MSK clusters: DEFAULT, PER_BROKER, PER_TOPIC_PER_BROKER, and PER_TOPIC_PER_PARTITION. </p>",
       "refs": {
@@ -760,6 +778,7 @@
         "GetTelemetryRuleForOrganizationOutput$HomeRegion": "<p> The Amazon Web Services Region where the organization telemetry rule was originally created. For replicated rules in spoke regions, this indicates the region that manages the rule. For rules created without multi-region scope, this field is not present. </p>",
         "GetTelemetryRuleOutput$HomeRegion": "<p> The Amazon Web Services Region where the telemetry rule was originally created. For replicated rules in spoke regions, this indicates the region that manages the rule. For rules created without multi-region scope, this field is not present. </p>",
         "LogsBackupConfiguration$Region": "<p>Logs specific backup destination region within the primary destination account to which log data should be centralized.</p>",
+        "MetricsBackupConfiguration$Region": "<p>Metrics specific backup destination region within the primary destination account to which metrics data should be centralized.</p>",
         "RegionStatus$Region": "<p> The Amazon Web Services Region code (for example, <code>eu-west-1</code> or <code>us-west-2</code>) that this status applies to. </p>",
         "Regions$member": null
       }
@@ -905,6 +924,12 @@
       "base": "<p> The requested operation would exceed the allowed quota for the specified resource type. </p>",
       "refs": {}
     },
+    "SignalType": {
+      "base": null,
+      "refs": {
+        "TestTelemetryPipelineInput$SignalType": "<p>The type of telemetry signal to test. If not specified, defaults to log processing.</p>"
+      }
+    },
     "SingleHeader": {
       "base": "<p> Structure containing a name field limited to 64 characters for header or query parameter identification. </p>",
       "refs": {
@@ -939,6 +964,12 @@
       "base": "<p>Configuration for selecting and handling source log groups for centralization.</p>",
       "refs": {
         "CentralizationRuleSource$SourceLogsConfiguration": "<p>Log specific configuration for centralization source log groups.</p>"
+      }
+    },
+    "SourceMetricsConfiguration": {
+      "base": "<p>Configuration for selecting source metrics for centralization.</p>",
+      "refs": {
+        "CentralizationRuleSource$SourceMetricsConfiguration": "<p>Metric specific configuration for centralization source metrics.</p>"
       }
     },
     "Sources": {

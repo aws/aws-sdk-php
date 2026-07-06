@@ -11,7 +11,7 @@
     "CreateFlow": "<p>Creates a prompt flow that you can use to send an input through various steps to yield an output. Configure nodes, each of which corresponds to a step of the flow, and create connections between the nodes to create paths to different outputs. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-how-it-works.html\">How it works</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-create.html\">Create a flow in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p>",
     "CreateFlowAlias": "<p>Creates an alias of a flow for deployment. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-deploy.html\">Deploy a flow in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p>",
     "CreateFlowVersion": "<p>Creates a version of the flow that you can deploy. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-deploy.html\">Deploy a flow in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p>",
-    "CreateKnowledgeBase": "<p>Creates a knowledge base. A knowledge base contains your data sources so that Large Language Models (LLMs) can use your data. To create a knowledge base, you must first set up your data sources and configure a supported vector store. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowlege-base-prereq.html\">Set up a knowledge base</a>.</p> <note> <p>If you prefer to let Amazon Bedrock create and manage a vector store for you in Amazon OpenSearch Service, use the console. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-create\">Create a knowledge base</a>.</p> </note> <ul> <li> <p>Provide the <code>name</code> and an optional <code>description</code>.</p> </li> <li> <p>Provide the Amazon Resource Name (ARN) with permissions to create a knowledge base in the <code>roleArn</code> field.</p> </li> <li> <p>Provide the embedding model to use in the <code>embeddingModelArn</code> field in the <code>knowledgeBaseConfiguration</code> object.</p> </li> <li> <p>Provide the configuration for your vector store in the <code>storageConfiguration</code> object.</p> <ul> <li> <p>For an Amazon OpenSearch Service database, use the <code>opensearchServerlessConfiguration</code> object. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-setup-oss.html\">Create a vector store in Amazon OpenSearch Service</a>.</p> </li> <li> <p>For an Amazon Aurora database, use the <code>RdsConfiguration</code> object. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-setup-rds.html\">Create a vector store in Amazon Aurora</a>.</p> </li> <li> <p>For a Pinecone database, use the <code>pineconeConfiguration</code> object. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-setup-pinecone.html\">Create a vector store in Pinecone</a>.</p> </li> <li> <p>For a Redis Enterprise Cloud database, use the <code>redisEnterpriseCloudConfiguration</code> object. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-setup-redis.html\">Create a vector store in Redis Enterprise Cloud</a>.</p> </li> </ul> </li> </ul>",
+    "CreateKnowledgeBase": "<p>Creates a knowledge base. A knowledge base contains your data sources so that Large Language Models (LLMs) can use your data. To create a knowledge base, you must first set up your data sources and configure a supported vector store. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowlege-base-prereq.html\">Set up a knowledge base</a>.</p> <note> <p>To create a managed knowledge base, provide a <code>managedKnowledgeBaseConfiguration</code> during creation. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-build-managed.html\">Build a managed knowledge base</a>.</p> </note> <ul> <li> <p>Provide the <code>name</code> and an optional <code>description</code>.</p> </li> <li> <p>Provide the Amazon Resource Name (ARN) with permissions to create a knowledge base in the <code>roleArn</code> field.</p> </li> <li> <p>For managed knowledge bases, set <code>embeddingModelType</code> to <code>MANAGED</code> to use the service-managed embedding model, or <code>CUSTOM</code> with an <code>embeddingModelArn</code> to use your own. To use your own KMS key for encryption, provide the ARN in <code>serverSideEncryptionConfiguration</code>. No vector store configuration is required for managed knowledge bases.</p> </li> <li> <p>For self-managed knowledge bases, provide the embedding model to use in the <code>embeddingModelArn</code> field in the <code>knowledgeBaseConfiguration</code> object.</p> </li> <li> <p>For self-managed knowledge bases, provide the configuration for your vector store in the <code>storageConfiguration</code> object.</p> <ul> <li> <p>For an Amazon OpenSearch Service database, use the <code>opensearchServerlessConfiguration</code> object. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-setup-oss.html\">Create a vector store in Amazon OpenSearch Service</a>.</p> </li> <li> <p>For an Amazon Aurora database, use the <code>RdsConfiguration</code> object. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-setup-rds.html\">Create a vector store in Amazon Aurora</a>.</p> </li> <li> <p>For a Pinecone database, use the <code>pineconeConfiguration</code> object. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-setup-pinecone.html\">Create a vector store in Pinecone</a>.</p> </li> <li> <p>For a Redis Enterprise Cloud database, use the <code>redisEnterpriseCloudConfiguration</code> object. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-setup-redis.html\">Create a vector store in Redis Enterprise Cloud</a>.</p> </li> </ul> </li> </ul>",
     "CreatePrompt": "<p>Creates a prompt in your prompt library that you can add to a flow. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management.html\">Prompt management in Amazon Bedrock</a>, <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-create.html\">Create a prompt using Prompt management</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows.html\">Prompt flows in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p>",
     "CreatePromptVersion": "<p>Creates a static snapshot of your prompt that can be deployed to production. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-deploy.html\">Deploy prompts using Prompt management by creating versions</a> in the Amazon Bedrock User Guide.</p>",
     "DeleteAgent": "<p>Deletes an agent.</p>",
@@ -25,6 +25,7 @@
     "DeleteKnowledgeBase": "<p>Deletes a knowledge base. Before deleting a knowledge base, you should disassociate the knowledge base from any agents that it is associated with by making a <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_DisassociateAgentKnowledgeBase.html\">DisassociateAgentKnowledgeBase</a> request.</p>",
     "DeleteKnowledgeBaseDocuments": "<p>Deletes documents from a data source and syncs the changes to the knowledge base that is connected to it. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-direct-ingestion.html\">Ingest changes directly into a knowledge base</a> in the Amazon Bedrock User Guide.</p>",
     "DeletePrompt": "<p>Deletes a prompt or a version of it, depending on whether you include the <code>promptVersion</code> field or not. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-manage.html#prompt-management-delete.html\">Delete prompts from the Prompt management tool</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-deploy.html#prompt-management-versions-delete.html\">Delete a version of a prompt from the Prompt management tool</a> in the Amazon Bedrock User Guide.</p>",
+    "DeleteResourcePolicy": "<p>Removes the resource policy associated with a knowledge base. After deletion, other AWS accounts can no longer access the knowledge base using cross-account permissions.</p>",
     "DisassociateAgentCollaborator": "<p>Disassociates an agent collaborator.</p>",
     "DisassociateAgentKnowledgeBase": "<p>Disassociates a knowledge base from an agent.</p>",
     "GetAgent": "<p>Gets information about an agent.</p>",
@@ -41,6 +42,7 @@
     "GetKnowledgeBase": "<p>Gets information about a knowledge base.</p>",
     "GetKnowledgeBaseDocuments": "<p>Retrieves specific documents from a data source that is connected to a knowledge base. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-direct-ingestion.html\">Ingest changes directly into a knowledge base</a> in the Amazon Bedrock User Guide.</p>",
     "GetPrompt": "<p>Retrieves information about the working draft (<code>DRAFT</code> version) of a prompt or a version of it, depending on whether you include the <code>promptVersion</code> field or not. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-manage.html#prompt-management-view.html\">View information about prompts using Prompt management</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-deploy.html#prompt-management-versions-view.html\">View information about a version of your prompt</a> in the Amazon Bedrock User Guide.</p>",
+    "GetResourcePolicy": "<p>Retrieves the resource policy associated with a knowledge base.</p>",
     "IngestKnowledgeBaseDocuments": "<p>Ingests documents directly into the knowledge base that is connected to the data source. The <code>dataSourceType</code> specified in the content for each document must match the type of the data source that you specify in the header. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-direct-ingestion.html\">Ingest changes directly into a knowledge base</a> in the Amazon Bedrock User Guide.</p>",
     "ListAgentActionGroups": "<p>Lists the action groups for an agent and information about each one.</p>",
     "ListAgentAliases": "<p>Lists the aliases of an agent and information about each one.</p>",
@@ -59,6 +61,7 @@
     "ListTagsForResource": "<p>List all the tags for the resource you specify.</p>",
     "PrepareAgent": "<p>Creates a <code>DRAFT</code> version of the agent that can be used for internal testing.</p>",
     "PrepareFlow": "<p>Prepares the <code>DRAFT</code> version of a flow so that it can be invoked. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-test.html\">Test a flow in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p>",
+    "PutResourcePolicy": "<p>Associates a resource policy with a knowledge base. A resource policy allows other AWS accounts to access the knowledge base. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-managed-cross-account.html\">Cross-account access for knowledge bases</a>.</p>",
     "StartIngestionJob": "<p>Begins a data ingestion job. Data sources are ingested into your knowledge base so that Large Language Models (LLMs) can use your data.</p>",
     "StopIngestionJob": "<p>Stops a currently running data ingestion job. You can send a <code>StartIngestionJob</code> request again to ingest the rest of your data when you are ready.</p>",
     "TagResource": "<p>Associate tags with a resource. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Tagging resources</a> in the Amazon Bedrock User Guide.</p>",
@@ -82,6 +85,18 @@
         "AgentActionGroup$apiSchema": "<p>Contains either details about the S3 object containing the OpenAPI schema for the action group or the JSON or YAML-formatted payload defining the schema. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-api-schema.html\">Action group OpenAPI schemas</a>.</p>",
         "CreateAgentActionGroupRequest$apiSchema": "<p>Contains either details about the S3 object containing the OpenAPI schema for the action group or the JSON or YAML-formatted payload defining the schema. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-api-schema.html\">Action group OpenAPI schemas</a>.</p>",
         "UpdateAgentActionGroupRequest$apiSchema": "<p>Contains either details about the S3 object containing the OpenAPI schema for the action group or the JSON or YAML-formatted payload defining the schema. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-api-schema.html\">Action group OpenAPI schemas</a>.</p>"
+      }
+    },
+    "AccessControlAccess": {
+      "base": "<p>The access level for an access control entry.</p>",
+      "refs": {
+        "DocumentAccessControlEntry$access": "<p>Whether to allow or deny access.</p>"
+      }
+    },
+    "AccessControlPrincipalType": {
+      "base": "<p>The type of principal in an access control entry.</p>",
+      "refs": {
+        "DocumentAccessControlEntry$type": "<p>The type of principal.</p>"
       }
     },
     "AccessDeniedException": {
@@ -419,6 +434,12 @@
         "BedrockEmbeddingModelConfiguration$audio": "<p>Configuration settings for processing audio content in multimodal knowledge bases.</p>"
       }
     },
+    "AudioExtractionConfiguration": {
+      "base": "<p>Configuration for audio extraction.</p>",
+      "refs": {
+        "MediaExtractionConfiguration$audioExtractionConfiguration": "<p>Configuration for audio extraction.</p>"
+      }
+    },
     "AudioSegmentationConfiguration": {
       "base": "<p>Configuration for segmenting audio content during multimodal knowledge base ingestion. Determines how audio files are divided into chunks for processing.</p>",
       "refs": {
@@ -464,6 +485,7 @@
     "BedrockEmbeddingModelArn": {
       "base": null,
       "refs": {
+        "ManagedKnowledgeBaseConfiguration$embeddingModelArn": "<p>The ARN for the embeddings model.</p>",
         "VectorKnowledgeBaseConfiguration$embeddingModelArn": "<p>The Amazon Resource Name (ARN) of the model used to create vector embeddings for the knowledge base.</p>"
       }
     },
@@ -646,9 +668,9 @@
       }
     },
     "ConfluenceDataSourceConfiguration": {
-      "base": "<p>The configuration information to connect to Confluence as your data source.</p>",
+      "base": "<p>The configuration information to connect to Confluence as your data source for self-managed knowledge bases.</p>",
       "refs": {
-        "DataSourceConfiguration$confluenceConfiguration": "<p>The configuration information to connect to Confluence as your data source.</p> <note> <p>Confluence data source connector is in preview release and is subject to change.</p> </note>"
+        "DataSourceConfiguration$confluenceConfiguration": "<p>The configuration information to connect to Confluence as your data source for self-managed knowledge bases.</p> <note> <p>To configure this data source for managed knowledge bases, use <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_ManagedKnowledgeBaseConnectorConfiguration.html\">managedKnowledgeBaseConnectorConfiguration</a>. Confluence data source connector for self-managed knowledge bases is in preview release and is subject to change.</p> </note>"
       }
     },
     "ConfluenceHostType": {
@@ -880,7 +902,7 @@
     "DataDeletionPolicy": {
       "base": null,
       "refs": {
-        "CreateDataSourceRequest$dataDeletionPolicy": "<p>The data deletion policy for the data source.</p> <p>You can set the data deletion policy to:</p> <ul> <li> <p>DELETE: Deletes all data from your data source that’s converted into vector embeddings upon deletion of a knowledge base or data source resource. Note that the <b>vector store itself is not deleted</b>, only the data. This flag is ignored if an Amazon Web Services account is deleted.</p> </li> <li> <p>RETAIN: Retains all data from your data source that’s converted into vector embeddings upon deletion of a knowledge base or data source resource. Note that the <b>vector store itself is not deleted</b> if you delete a knowledge base or data source resource.</p> </li> </ul>",
+        "CreateDataSourceRequest$dataDeletionPolicy": "<p>The data deletion policy for the data source.</p> <p>You can set the data deletion policy to:</p> <ul> <li> <p>DELETE: Deletes all data from your data source that’s converted into vector embeddings upon deletion of a knowledge base or data source resource. Note that the <b>vector store itself is not deleted</b>, only the data. This flag is ignored if an Amazon Web Services account is deleted.</p> </li> <li> <p>RETAIN: Retains all data from your data source that’s converted into vector embeddings upon deletion of a knowledge base or data source resource. Note that the <b>vector store itself is not deleted</b> if you delete a knowledge base or data source resource.</p> </li> </ul> <note> <p>For managed knowledge bases, the only supported option is <code>DELETE</code>, which is also the default.</p> </note>",
         "DataSource$dataDeletionPolicy": "<p>The data deletion policy for the data source.</p>",
         "UpdateDataSourceRequest$dataDeletionPolicy": "<p>The data deletion policy for the data source that you want to update.</p>"
       }
@@ -1085,6 +1107,26 @@
       "base": null,
       "refs": {}
     },
+    "DeleteResourcePolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteResourcePolicyResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeletionProtectionConfiguration": {
+      "base": "<p>Configuration for deletion protection.</p>",
+      "refs": {
+        "ManagedKnowledgeBaseConnectorConfiguration$deletionProtectionConfiguration": "<p>A safeguard against accidental bulk deletion of indexed content.</p>"
+      }
+    },
+    "DeletionProtectionConfigurationDeletionProtectionThresholdInteger": {
+      "base": null,
+      "refs": {
+        "DeletionProtectionConfiguration$deletionProtectionThreshold": "<p>The threshold is the maximum percentage of documents that a sync job can delete from your index. If a sync would delete more than this percentage, the sync skips its delete phase, leaving your indexed documents in place. Not supported for the Custom connector.</p>"
+      }
+    },
     "Description": {
       "base": null,
       "refs": {
@@ -1157,10 +1199,29 @@
     "Document": {
       "base": null,
       "refs": {
+        "ManagedKnowledgeBaseConnectorConfiguration$connectorParameters": "<p>Connector-specific parameters. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-managed-connect-ds.html\">Connect a data source</a>.</p>",
         "PromptConfiguration$additionalModelRequestFields": "<p>If the Converse or ConverseStream operations support the model, <code>additionalModelRequestFields</code> contains additional inference parameters, beyond the base set of inference parameters in the <code>inferenceConfiguration</code> field. </p> <p>For more information, see <i>Inference request parameters and response fields for foundation models</i> in the Amazon Bedrock user guide.</p>",
         "PromptFlowNodeInlineConfiguration$additionalModelRequestFields": "<p>Additional fields to be included in the model request for the Prompt node.</p>",
         "PromptVariant$additionalModelRequestFields": "<p>Contains model-specific inference configurations that aren't in the <code>inferenceConfiguration</code> field. To see model-specific inference parameters, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html\">Inference request parameters and response fields for foundation models</a>.</p>",
         "ToolInputSchema$json": "<p>A JSON object defining the input schema for the tool.</p>"
+      }
+    },
+    "DocumentAccessControlEntry": {
+      "base": "<p>An access control entry specifying a principal and their access level.</p>",
+      "refs": {
+        "DocumentAccessControlList$member": null
+      }
+    },
+    "DocumentAccessControlEntryNameString": {
+      "base": null,
+      "refs": {
+        "DocumentAccessControlEntry$name": "<p>The user identifier.</p>"
+      }
+    },
+    "DocumentAccessControlList": {
+      "base": "<p>List of access control entries for a document.</p>",
+      "refs": {
+        "DocumentMetadata$accessControlList": "<p>Access control list for the document. Used when metadata type is IN_LINE_ATTRIBUTE.</p>"
       }
     },
     "DocumentContent": {
@@ -1241,13 +1302,29 @@
     "EmbeddingModelConfiguration": {
       "base": "<p>The configuration details for the embeddings model.</p>",
       "refs": {
+        "ManagedKnowledgeBaseConfiguration$embeddingModelConfiguration": null,
         "VectorKnowledgeBaseConfiguration$embeddingModelConfiguration": "<p>The embeddings model configuration details for the vector model used in Knowledge Base.</p>"
+      }
+    },
+    "EmbeddingModelType": {
+      "base": "<p>Choose <code>CUSTOM</code> to provide your own Bedrock embedding model ARN. Choose <code>MANAGED</code> to use a service-managed embedding model. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-managed-create.html#kb-managed-embedding-models\">Embedding model options</a>.</p>",
+      "refs": {
+        "ManagedKnowledgeBaseConfiguration$embeddingModelType": null
       }
     },
     "EnabledMemoryTypes": {
       "base": null,
       "refs": {
         "MemoryConfiguration$enabledMemoryTypes": "<p>The type of memory that is stored. </p>"
+      }
+    },
+    "EnabledOrDisabledState": {
+      "base": null,
+      "refs": {
+        "AudioExtractionConfiguration$audioExtractionStatus": "<p>Whether audio extraction is enabled or disabled.</p>",
+        "DeletionProtectionConfiguration$deletionProtectionStatus": "<p>Enable or disable deletion protection for the connector.</p>",
+        "ImageExtractionConfiguration$imageExtractionStatus": "<p>Whether image extraction is enabled or disabled.</p>",
+        "VideoExtractionConfiguration$videoExtractionStatus": "<p>Whether video extraction is enabled or disabled.</p>"
       }
     },
     "EnrichmentStrategyConfiguration": {
@@ -1999,6 +2076,14 @@
       "base": null,
       "refs": {}
     },
+    "GetResourcePolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetResourcePolicyResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GraphArn": {
       "base": "<p>ARN for Neptune Analytics graph database</p>",
       "refs": {
@@ -2175,11 +2260,25 @@
         "UpdateKnowledgeBaseRequest$knowledgeBaseId": "<p>The unique identifier of the knowledge base to update.</p>"
       }
     },
+    "ImageExtractionConfiguration": {
+      "base": "<p>Configuration for image extraction.</p>",
+      "refs": {
+        "MediaExtractionConfiguration$imageExtractionConfiguration": "<p>Configuration for image extraction.</p>"
+      }
+    },
     "IncludeExclude": {
       "base": null,
       "refs": {
         "QueryGenerationColumn$inclusion": "<p>Specifies whether to include or exclude the column during query generation. If you specify <code>EXCLUDE</code>, the column will be ignored. If you specify <code>INCLUDE</code>, all other columns in the table will be ignored.</p>",
         "QueryGenerationTable$inclusion": "<p>Specifies whether to include or exclude the table during query generation. If you specify <code>EXCLUDE</code>, the table will be ignored. If you specify <code>INCLUDE</code>, all other tables will be ignored.</p>"
+      }
+    },
+    "IncludedData": {
+      "base": null,
+      "refs": {
+        "GetFlowRequest$includedData": "<p>Controls the scope of data returned. Set to <code>METADATA_ONLY</code> to return only resource metadata. Set to <code>ALL_DATA</code> or omit this field to return the full response.</p>",
+        "GetFlowVersionRequest$includedData": "<p>Controls the scope of data returned. Set to <code>METADATA_ONLY</code> to return only resource metadata. Set to <code>ALL_DATA</code> or omit this field to return the full response.</p>",
+        "GetPromptRequest$includedData": "<p>Controls the scope of data returned. Set to <code>METADATA_ONLY</code> to return only resource metadata. Set to <code>ALL_DATA</code> or omit this field to return the full response.</p>"
       }
     },
     "IncompatibleConnectionDataTypeFlowValidationDetails": {
@@ -2510,7 +2609,7 @@
       }
     },
     "KnowledgeBaseStorageType": {
-      "base": null,
+      "base": "<p>The storage type of a knowledge base.</p>",
       "refs": {
         "StorageConfiguration$type": "<p>The vector store service in which the knowledge base is stored.</p>"
       }
@@ -2534,9 +2633,9 @@
       }
     },
     "KnowledgeBaseType": {
-      "base": null,
+      "base": "<p>The type of a knowledge base.</p>",
       "refs": {
-        "KnowledgeBaseConfiguration$type": "<p>The type of data that the data source is converted into for the knowledge base.</p>"
+        "KnowledgeBaseConfiguration$type": "<p>The type of data that the data source is converted into for the knowledge base. Choose <code>MANAGED</code> to create a managed knowledge base.</p>"
       }
     },
     "LambdaArn": {
@@ -2722,6 +2821,18 @@
         "FlowValidationDetails$malformedNodeInputExpression": "<p>Details about a malformed input expression in a node.</p>"
       }
     },
+    "ManagedKnowledgeBaseConfiguration": {
+      "base": "<p>Configurations for a managed knowledge base.</p>",
+      "refs": {
+        "KnowledgeBaseConfiguration$managedKnowledgeBaseConfiguration": null
+      }
+    },
+    "ManagedKnowledgeBaseConnectorConfiguration": {
+      "base": "<p>Configuration for managed knowledge base connector data sources.</p>",
+      "refs": {
+        "DataSourceConfiguration$managedKnowledgeBaseConnectorConfiguration": "<p>Contains the configuration for a data source that connects a managed knowledge base to a supported data source connector. Specify this object when the data source type is <code>MANAGED_KNOWLEDGE_BASE_CONNECTOR</code>.</p>"
+      }
+    },
     "MaxRecentSessions": {
       "base": null,
       "refs": {
@@ -2752,6 +2863,12 @@
       "refs": {
         "InferenceConfiguration$maximumLength": "<p>The maximum number of tokens to allow in the generated response.</p>",
         "PromptModelInferenceConfiguration$maxTokens": "<p>The maximum number of tokens to return in the response.</p>"
+      }
+    },
+    "MediaExtractionConfiguration": {
+      "base": "<p>Configuration for media extraction settings.</p>",
+      "refs": {
+        "ManagedKnowledgeBaseConnectorConfiguration$mediaExtractionConfiguration": "<p>Configuration for extracting media (images, audio, video) from data source files.</p>"
       }
     },
     "MemoryConfiguration": {
@@ -3214,7 +3331,7 @@
     "ParsingStrategy": {
       "base": null,
       "refs": {
-        "ParsingConfiguration$parsingStrategy": "<p>The parsing strategy for the data source.</p>"
+        "ParsingConfiguration$parsingStrategy": "<p>The parsing strategy for the data source. Only <code>SMART_PARSING</code> can be selected for managed knowledge bases. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-managed-customize-ingestion.html\">Customize ingestion for managed knowledge bases</a>.</p>"
       }
     },
     "PatternObjectFilter": {
@@ -3302,7 +3419,8 @@
         "IngestionJobStatistics$numberOfModifiedDocumentsIndexed": "<p>The number of modified source documents in the data source that were successfully indexed.</p>",
         "IngestionJobStatistics$numberOfMetadataDocumentsModified": "<p>The number of metadata files that were updated or deleted.</p>",
         "IngestionJobStatistics$numberOfDocumentsDeleted": "<p>The number of source documents that were deleted.</p>",
-        "IngestionJobStatistics$numberOfDocumentsFailed": "<p>The number of source documents that failed to be ingested.</p>"
+        "IngestionJobStatistics$numberOfDocumentsFailed": "<p>The number of source documents that failed to be ingested.</p>",
+        "IngestionJobStatistics$numberOfDocumentsSkipped": "<p>The number of source documents that were skipped during ingestion.</p>"
       }
     },
     "PromptAgentResource": {
@@ -3555,6 +3673,14 @@
         "AgentAliasRoutingConfigurationListItem$provisionedThroughput": "<p>Information on the Provisioned Throughput assigned to an agent alias.</p>"
       }
     },
+    "PutResourcePolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "PutResourcePolicyResponse": {
+      "base": null,
+      "refs": {}
+    },
     "QueryEngineType": {
       "base": null,
       "refs": {
@@ -3805,9 +3931,27 @@
         "MetadataConfigurationForReranking$selectiveModeConfiguration": "<p>The configuration for selective metadata field inclusion or exclusion during reranking.</p>"
       }
     },
+    "ResourceArn": {
+      "base": null,
+      "refs": {
+        "DeleteResourcePolicyRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the knowledge base to remove the resource policy from.</p>",
+        "DeleteResourcePolicyResponse$resourceArn": "<p>The ARN of the knowledge base that the resource policy was removed from.</p>",
+        "GetResourcePolicyRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the knowledge base to retrieve the resource policy for.</p>",
+        "GetResourcePolicyResponse$resourceArn": "<p>The ARN of the knowledge base that the resource policy is associated with.</p>",
+        "PutResourcePolicyRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the knowledge base to attach the resource policy to.</p>",
+        "PutResourcePolicyResponse$resourceArn": "<p>The ARN of the knowledge base that the resource policy was attached to.</p>"
+      }
+    },
     "ResourceNotFoundException": {
       "base": "<p>The specified resource Amazon Resource Name (ARN) was not found. Check the Amazon Resource Name (ARN) and try your request again.</p>",
       "refs": {}
+    },
+    "ResourcePolicy": {
+      "base": null,
+      "refs": {
+        "GetResourcePolicyResponse$policy": "<p>The JSON-formatted resource policy associated with the knowledge base.</p>",
+        "PutResourcePolicyRequest$policy": "<p>The JSON-formatted resource policy to associate with the knowledge base.</p>"
+      }
     },
     "RetrievalFlowNodeConfiguration": {
       "base": "<p>Contains configurations for a Retrieval node in a flow. This node retrieves data from the Amazon S3 location that you specify and returns it as the output.</p>",
@@ -3825,6 +3969,16 @@
       "base": "<p>Contains configurations for the service to use for retrieving data to return as the output from the node.</p>",
       "refs": {
         "RetrievalFlowNodeConfiguration$serviceConfiguration": "<p>Contains configurations for the service to use for retrieving data to return as the output from the node.</p>"
+      }
+    },
+    "RevisionId": {
+      "base": null,
+      "refs": {
+        "DeleteResourcePolicyRequest$expectedRevisionId": "<p>The expected revision identifier of the resource policy. Use this to prevent conflicts when multiple users update the same policy concurrently.</p>",
+        "DeleteResourcePolicyResponse$revisionId": "<p>The revision identifier after the resource policy was deleted.</p>",
+        "GetResourcePolicyResponse$revisionId": "<p>The revision identifier of the resource policy.</p>",
+        "PutResourcePolicyRequest$expectedRevisionId": "<p>The expected revision identifier of the resource policy. Use this to prevent conflicts when multiple users update the same policy concurrently. Specify the <code>revisionId</code> from the most recent <code>GetResourcePolicy</code> or <code>PutResourcePolicy</code> response.</p>",
+        "PutResourcePolicyResponse$revisionId": "<p>The revision identifier of the resource policy. Use this value in the <code>expectedRevisionId</code> field of a subsequent <code>PutResourcePolicy</code> or <code>DeleteResourcePolicy</code> request.</p>"
       }
     },
     "S3BucketArn": {
@@ -3852,9 +4006,9 @@
       }
     },
     "S3DataSourceConfiguration": {
-      "base": "<p>The configuration information to connect to Amazon S3 as your data source.</p>",
+      "base": "<p>The configuration information to connect to Amazon S3 as your data source for self-managed knowledge bases. To configure this data source for managed knowledge bases, use <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_ManagedKnowledgeBaseConnectorConfiguration.html\">managedKnowledgeBaseConnectorConfiguration</a>.</p>",
       "refs": {
-        "DataSourceConfiguration$s3Configuration": "<p>The configuration information to connect to Amazon S3 as your data source.</p>"
+        "DataSourceConfiguration$s3Configuration": "<p>The configuration information to connect to Amazon S3 as your data source for self-managed knowledge bases. To configure this data source for managed knowledge bases, use <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_ManagedKnowledgeBaseConnectorConfiguration.html\">managedKnowledgeBaseConnectorConfiguration</a>.</p>"
       }
     },
     "S3Identifier": {
@@ -3869,7 +4023,7 @@
         "DocumentIdentifier$s3": "<p>Contains information that identifies the document in an S3 data source.</p>",
         "IntermediateStorage$s3Location": "<p>An S3 bucket path.</p>",
         "S3Content$s3Location": "<p>The S3 location of the file containing the content to ingest.</p>",
-        "SupplementalDataStorageLocation$s3Location": "<p>Contains information about the Amazon S3 location for the extracted images.</p>"
+        "SupplementalDataStorageLocation$s3Location": "<p>Contains information about the Amazon S3 location for the extracted multimedia content.</p>"
       }
     },
     "S3ObjectKey": {
@@ -3917,7 +4071,7 @@
     "SalesforceDataSourceConfiguration": {
       "base": "<p>The configuration information to connect to Salesforce as your data source.</p>",
       "refs": {
-        "DataSourceConfiguration$salesforceConfiguration": "<p>The configuration information to connect to Salesforce as your data source.</p> <note> <p>Salesforce data source connector is in preview release and is subject to change.</p> </note>"
+        "DataSourceConfiguration$salesforceConfiguration": "<p>The configuration information to connect to Salesforce as your data source.</p> <note> <p>Salesforce data source connector for self-managed knowledge bases is in preview release and is subject to change.</p> </note>"
       }
     },
     "SalesforceSourceConfiguration": {
@@ -3977,10 +4131,11 @@
       }
     },
     "ServerSideEncryptionConfiguration": {
-      "base": "<p>Contains the configuration for server-side encryption.</p>",
+      "base": "<p>Contains the configuration for server-side encryption for your managed knowledge base.</p>",
       "refs": {
         "CreateDataSourceRequest$serverSideEncryptionConfiguration": "<p>Contains details about the server-side encryption for the data source.</p>",
         "DataSource$serverSideEncryptionConfiguration": "<p>Contains details about the configuration of the server-side encryption.</p>",
+        "ManagedKnowledgeBaseConfiguration$serverSideEncryptionConfiguration": null,
         "UpdateDataSourceRequest$serverSideEncryptionConfiguration": "<p>Contains details about server-side encryption of the data source.</p>"
       }
     },
@@ -4016,9 +4171,9 @@
       }
     },
     "SharePointDataSourceConfiguration": {
-      "base": "<p>The configuration information to connect to SharePoint as your data source.</p>",
+      "base": "<p>The configuration information to connect to SharePoint as your data source for self-managed knowledge bases.</p>",
       "refs": {
-        "DataSourceConfiguration$sharePointConfiguration": "<p>The configuration information to connect to SharePoint as your data source.</p> <note> <p>SharePoint data source connector is in preview release and is subject to change.</p> </note>"
+        "DataSourceConfiguration$sharePointConfiguration": "<p>The configuration information to connect to SharePoint as your data source for self-managed knowledge bases.</p> <note> <p>To configure this data source for managed knowledge bases, use <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_ManagedKnowledgeBaseConnectorConfiguration.html\">managedKnowledgeBaseConnectorConfiguration</a>. SharePoint data source connector for self-managed knowledge bases is in preview release and is subject to change.</p> </note>"
       }
     },
     "SharePointDomain": {
@@ -4148,13 +4303,13 @@
       }
     },
     "SupplementalDataStorageConfiguration": {
-      "base": "<p>Specifies configurations for the storage location of the images extracted from multimodal documents in your data source. These images can be retrieved and returned to the end user.</p>",
+      "base": "<p>Specifies configurations for the storage location of multimedia content (images, audio, and video) extracted from multimodal documents in your data source. This content can be retrieved and returned to the end user with timestamp references for audio and video segments.</p>",
       "refs": {
         "VectorKnowledgeBaseConfiguration$supplementalDataStorageConfiguration": "<p>If you include multimodal data from your data source, use this object to specify configurations for the storage location of the images extracted from your documents. These images can be retrieved and returned to the end user. They can also be used in generation when using <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html\">RetrieveAndGenerate</a>.</p>"
       }
     },
     "SupplementalDataStorageLocation": {
-      "base": "<p>Contains information about a storage location for images extracted from multimodal documents in your data source.</p>",
+      "base": "<p>Contains information about a storage location for multimedia content (images, audio, and video) extracted from multimodal documents in your data source.</p>",
       "refs": {
         "SupplementalDataStorageLocations$member": null
       }
@@ -4168,7 +4323,7 @@
     "SupplementalDataStorageLocations": {
       "base": null,
       "refs": {
-        "SupplementalDataStorageConfiguration$storageLocations": "<p>A list of objects specifying storage locations for images extracted from multimodal documents in your data source.</p>"
+        "SupplementalDataStorageConfiguration$storageLocations": "<p>A list of objects specifying storage locations for multimedia content (images, audio, and video) extracted from multimodal documents in your data source.</p>"
       }
     },
     "SupportedLanguages": {
@@ -4643,6 +4798,12 @@
         "BedrockEmbeddingModelConfiguration$video": "<p>Configuration settings for processing video content in multimodal knowledge bases.</p>"
       }
     },
+    "VideoExtractionConfiguration": {
+      "base": "<p>Configuration for video extraction.</p>",
+      "refs": {
+        "MediaExtractionConfiguration$videoExtractionConfiguration": "<p>Configuration for video extraction.</p>"
+      }
+    },
     "VideoSegmentationConfiguration": {
       "base": "<p>Configuration for segmenting video content during multimodal knowledge base ingestion. Determines how video files are divided into chunks for processing.</p>",
       "refs": {
@@ -4682,7 +4843,7 @@
     "WebDataSourceConfiguration": {
       "base": "<p>The configuration details for the web data source.</p>",
       "refs": {
-        "DataSourceConfiguration$webConfiguration": "<p>The configuration of web URLs to crawl for your data source. You should be authorized to crawl the URLs.</p> <note> <p>Crawling web URLs as your data source is in preview release and is subject to change.</p> </note>"
+        "DataSourceConfiguration$webConfiguration": "<p>The configuration of web URLs to crawl for your data source. You should be authorized to crawl the URLs.</p> <note> <p>To configure this data source for managed knowledge bases, use <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_ManagedKnowledgeBaseConnectorConfiguration.html\">managedKnowledgeBaseConnectorConfiguration</a>. Web crawler data source connector for self-managed knowledge bases is in preview release and is subject to change.</p> </note>"
       }
     },
     "WebScopeType": {

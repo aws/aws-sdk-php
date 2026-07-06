@@ -3305,7 +3305,9 @@
         "outputBucketOwnerId":{"shape":"AwsAccountId"},
         "workflowVersionName":{"shape":"WorkflowVersionName"},
         "networkingMode":{"shape":"NetworkingMode"},
-        "configurationName":{"shape":"ConfigurationName"}
+        "configurationName":{"shape":"ConfigurationName"},
+        "engineSettings":{"shape":"EngineSettings"},
+        "scratchStorageMode":{"shape":"ScratchStorageMode"}
       }
     },
     "DefaultRunSettingPriorityInteger":{
@@ -3649,6 +3651,11 @@
     "EngineLogStream":{
       "type":"string",
       "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
+    },
+    "EngineSettings":{
+      "type":"structure",
+      "members":{},
+      "document":true
     },
     "EngineVersion":{
       "type":"string",
@@ -4506,8 +4513,10 @@
         "workflowVersionName":{"shape":"WorkflowVersionName"},
         "workflowUuid":{"shape":"WorkflowUuid"},
         "networkingMode":{"shape":"NetworkingMode"},
+        "scratchStorageMode":{"shape":"ScratchStorageMode"},
         "configuration":{"shape":"ConfigurationDetails"},
-        "vpcConfig":{"shape":"VpcConfigResponse"}
+        "vpcConfig":{"shape":"VpcConfigResponse"},
+        "engineSettings":{"shape":"EngineSettings"}
       }
     },
     "GetRunResponsePriorityInteger":{
@@ -4784,7 +4793,9 @@
         "containerRegistryMap":{"shape":"ContainerRegistryMap"},
         "readme":{"shape":"ReadmeS3PresignedUrl"},
         "definitionRepositoryDetails":{"shape":"DefinitionRepositoryDetails"},
-        "readmePath":{"shape":"ReadmePath"}
+        "readmePath":{"shape":"ReadmePath"},
+        "profiles":{"shape":"WorkflowProfileList"},
+        "profileParameterTemplates":{"shape":"WorkflowProfileParameterTemplates"}
       }
     },
     "GetWorkflowResponseStorageCapacityInteger":{
@@ -4853,7 +4864,9 @@
         "containerRegistryMap":{"shape":"ContainerRegistryMap"},
         "readme":{"shape":"ReadmeS3PresignedUrl"},
         "definitionRepositoryDetails":{"shape":"DefinitionRepositoryDetails"},
-        "readmePath":{"shape":"ReadmePath"}
+        "readmePath":{"shape":"ReadmePath"},
+        "profiles":{"shape":"WorkflowProfileList"},
+        "profileParameterTemplates":{"shape":"WorkflowProfileParameterTemplates"}
       }
     },
     "GetWorkflowVersionResponseStorageCapacityInteger":{
@@ -5003,7 +5016,8 @@
         "priority":{"shape":"InlineSettingPriorityInteger"},
         "parameters":{"shape":"RunParameters"},
         "outputBucketOwnerId":{"shape":"AwsAccountId"},
-        "runTags":{"shape":"TagMap"}
+        "runTags":{"shape":"TagMap"},
+        "engineSettings":{"shape":"EngineSettings"}
       }
     },
     "InlineSettingPriorityInteger":{
@@ -6892,7 +6906,8 @@
         "startTime":{"shape":"RunTimestamp"},
         "stopTime":{"shape":"RunTimestamp"},
         "storageType":{"shape":"StorageType"},
-        "workflowVersionName":{"shape":"WorkflowVersionName"}
+        "workflowVersionName":{"shape":"WorkflowVersionName"},
+        "workflowName":{"shape":"WorkflowName"}
       }
     },
     "RunListItemPriorityInteger":{
@@ -7109,6 +7124,15 @@
         "DOUBLE",
         "BOOLEAN"
       ]
+    },
+    "ScratchStorageMode":{
+      "type":"string",
+      "enum":[
+        "LOCAL",
+        "SHARED"
+      ],
+      "max":64,
+      "min":1
     },
     "SecurityGroupId":{
       "type":"string",
@@ -7601,7 +7625,9 @@
         "workflowOwnerId":{"shape":"WorkflowOwnerId"},
         "workflowVersionName":{"shape":"WorkflowVersionName"},
         "networkingMode":{"shape":"NetworkingMode"},
-        "configurationName":{"shape":"ConfigurationName"}
+        "scratchStorageMode":{"shape":"ScratchStorageMode"},
+        "configurationName":{"shape":"ConfigurationName"},
+        "engineSettings":{"shape":"EngineSettings"}
       }
     },
     "StartRunRequestPriorityInteger":{
@@ -8657,6 +8683,16 @@
       "value":{"shape":"WorkflowParameter"},
       "max":2000,
       "min":1
+    },
+    "WorkflowProfileList":{
+      "type":"list",
+      "member":{"shape":"WorkflowProfileName"}
+    },
+    "WorkflowProfileName":{"type":"string"},
+    "WorkflowProfileParameterTemplates":{
+      "type":"map",
+      "key":{"shape":"WorkflowProfileName"},
+      "value":{"shape":"WorkflowParameterTemplate"}
     },
     "WorkflowRequestId":{
       "type":"string",

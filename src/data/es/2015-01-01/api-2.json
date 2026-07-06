@@ -1062,6 +1062,36 @@
       "type":"string",
       "enum":["SCHEDULED_ACTION"]
     },
+    "AutomatedSnapshotPauseOptions":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{"shape":"Boolean"},
+        "StartTime":{"shape":"UpdateTimestamp"},
+        "EndTime":{"shape":"UpdateTimestamp"},
+        "State":{"shape":"PauseState"}
+      }
+    },
+    "AutomatedSnapshotPauseOptionsStatus":{
+      "type":"structure",
+      "required":[
+        "Options",
+        "Status"
+      ],
+      "members":{
+        "Options":{"shape":"AutomatedSnapshotPauseOptions"},
+        "Status":{"shape":"OptionStatus"}
+      }
+    },
+    "AutomatedSnapshotPauseRequestOptions":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{"shape":"Boolean"},
+        "StartTime":{"shape":"UpdateTimestamp"},
+        "EndTime":{"shape":"UpdateTimestamp"}
+      }
+    },
     "BackendRole":{
       "type":"string",
       "max":256,
@@ -1260,7 +1290,8 @@
         "AdvancedSecurityOptions":{"shape":"AdvancedSecurityOptionsInput"},
         "AutoTuneOptions":{"shape":"AutoTuneOptionsInput"},
         "TagList":{"shape":"TagList"},
-        "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptions"}
+        "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptions"},
+        "AutomatedSnapshotPauseOptions":{"shape":"AutomatedSnapshotPauseRequestOptions"}
       }
     },
     "CreateElasticsearchDomainResponse":{
@@ -2035,7 +2066,8 @@
         "AutoTuneOptions":{"shape":"AutoTuneOptionsStatus"},
         "ChangeProgressDetails":{"shape":"ChangeProgressDetails"},
         "ModifyingProperties":{"shape":"ModifyingPropertiesList"},
-        "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptionsStatus"}
+        "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptionsStatus"},
+        "AutomatedSnapshotPauseOptions":{"shape":"AutomatedSnapshotPauseOptionsStatus"}
       }
     },
     "ElasticsearchDomainStatus":{
@@ -2074,7 +2106,8 @@
         "ChangeProgressDetails":{"shape":"ChangeProgressDetails"},
         "DomainProcessingStatus":{"shape":"DomainProcessingStatusType"},
         "ModifyingProperties":{"shape":"ModifyingPropertiesList"},
-        "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptions"}
+        "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptions"},
+        "AutomatedSnapshotPauseOptions":{"shape":"AutomatedSnapshotPauseOptions"}
       }
     },
     "ElasticsearchDomainStatusList":{
@@ -2819,6 +2852,15 @@
       "min":8,
       "sensitive":true
     },
+    "PauseState":{
+      "type":"string",
+      "enum":[
+        "Active",
+        "Completed",
+        "Scheduled",
+        "Disabled"
+      ]
+    },
     "PolicyDocument":{"type":"string"},
     "PrincipalType":{
       "type":"string",
@@ -3205,7 +3247,8 @@
         "EncryptionAtRestOptions":{"shape":"EncryptionAtRestOptions"},
         "AutoTuneOptions":{"shape":"AutoTuneOptions"},
         "DryRun":{"shape":"DryRun"},
-        "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptions"}
+        "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptions"},
+        "AutomatedSnapshotPauseOptions":{"shape":"AutomatedSnapshotPauseRequestOptions"}
       }
     },
     "UpdateElasticsearchDomainConfigResponse":{

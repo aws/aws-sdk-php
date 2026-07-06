@@ -131,6 +131,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listMessageTemplatesAsync(array $args = [])
  * @method \Aws\Result listMessages(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listMessagesAsync(array $args = [])
+ * @method \Aws\Result listModels(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listModelsAsync(array $args = [])
  * @method \Aws\Result listQuickResponses(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listQuickResponsesAsync(array $args = [])
  * @method \Aws\Result listSpans(array $args = [])

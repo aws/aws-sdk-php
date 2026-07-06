@@ -81,6 +81,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
+ * @method \Aws\Result updateAdConfiguration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateAdConfigurationAsync(array $args = [])
  * @method \Aws\Result updateChannel(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateChannelAsync(array $args = [])
  * @method \Aws\Result updatePlaybackRestrictionPolicy(array $args = [])

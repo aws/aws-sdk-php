@@ -522,9 +522,11 @@
         "AutoEnable$lambdaCode": "<p>Represents whether Lambda code scans are automatically enabled for new members of your Amazon Inspector organization. </p>",
         "AutoEnable$codeRepository": "<p>Represents whether code repository scans are automatically enabled for new members of your Amazon Inspector organization.</p>",
         "DescribeOrganizationConfigurationResponse$maxAccountLimitReached": "<p>Represents whether your organization has reached the maximum Amazon Web Services account limit for Amazon Inspector.</p>",
+        "Ec2Configuration$activateVMScanner": "<p>Whether to activate Amazon Inspector VM scanner for Amazon EC2 scanning.</p>",
         "ListMembersRequest$onlyAssociated": "<p>Specifies whether to list only currently associated members if <code>True</code> or to list all members within the organization if <code>False</code>.</p>",
         "MemberAccountEc2DeepInspectionStatus$activateDeepInspection": "<p>Whether Amazon Inspector deep inspection is active in the account. If <code>TRUE</code> Amazon Inspector deep inspection is active, if <code>FALSE</code> it is not active.</p>",
-        "UpdateEc2DeepInspectionConfigurationRequest$activateDeepInspection": "<p>Specify <code>TRUE</code> to activate Amazon Inspector deep inspection in your account, or <code>FALSE</code> to deactivate. Member accounts in an organization cannot deactivate deep inspection, instead the delegated administrator for the organization can deactivate a member account using <a href=\"https://docs.aws.amazon.com/inspector/v2/APIReference/API_BatchUpdateMemberEc2DeepInspectionStatus.html\">BatchUpdateMemberEc2DeepInspectionStatus</a>.</p>"
+        "UpdateEc2DeepInspectionConfigurationRequest$activateDeepInspection": "<p>Specify <code>TRUE</code> to activate Amazon Inspector deep inspection in your account, or <code>FALSE</code> to deactivate. Member accounts in an organization cannot deactivate deep inspection, instead the delegated administrator for the organization can deactivate a member account using <a href=\"https://docs.aws.amazon.com/inspector/v2/APIReference/API_BatchUpdateMemberEc2DeepInspectionStatus.html\">BatchUpdateMemberEc2DeepInspectionStatus</a>.</p>",
+        "VMScannerState$activated": "<p>Whether the VM scanner is activated.</p>"
       }
     },
     "CancelFindingsReportRequest": {
@@ -1458,7 +1460,7 @@
         "CoverageFilterCriteria$ecrImageTags": "<p>The Amazon ECR image tags to filter on.</p>",
         "CoverageFilterCriteria$lambdaFunctionName": "<p>Returns coverage statistics for Amazon Web Services Lambda functions filtered by function names.</p>",
         "CoverageFilterCriteria$lambdaFunctionRuntime": "<p>Returns coverage statistics for Amazon Web Services Lambda functions filtered by runtime.</p>",
-        "CoverageFilterCriteria$scanMode": "<p>The filter to search for Amazon EC2 instance coverage by scan mode. Valid values are <code>EC2_SSM_AGENT_BASED</code> and <code>EC2_AGENTLESS</code>.</p>",
+        "CoverageFilterCriteria$scanMode": "<p>The filter to search for Amazon EC2 instance coverage by scan mode. Valid values are <code>EC2_SSM_AGENT_BASED</code>, <code>EC2_AGENTLESS</code>, and <code>EC2_INSPECTOR_AGENT_BASED</code>.</p>",
         "CoverageFilterCriteria$codeRepositoryProjectName": "<p>Filter criteria for code repositories based on project name.</p>",
         "CoverageFilterCriteria$codeRepositoryProviderType": "<p>Filter criteria for code repositories based on provider type (such as GitHub, GitLab, etc.).</p>",
         "CoverageFilterCriteria$codeRepositoryProviderTypeVisibility": "<p>Filter criteria for code repositories based on visibility setting (public or private).</p>",
@@ -1685,7 +1687,8 @@
         "LambdaFunctionAggregationResponse$lastModifiedAt": "<p>The date that the Amazon Web Services Lambda function included in the aggregation results was last changed.</p>",
         "Member$updatedAt": "<p>A timestamp showing when the status of this member was last updated.</p>",
         "PackageVulnerabilityDetails$vendorCreatedAt": "<p>The date and time that this vulnerability was first added to the vendor's database.</p>",
-        "PackageVulnerabilityDetails$vendorUpdatedAt": "<p>The date and time the vendor last updated this vulnerability in their database.</p>"
+        "PackageVulnerabilityDetails$vendorUpdatedAt": "<p>The date and time the vendor last updated this vulnerability in their database.</p>",
+        "VMScannerState$activatedAt": "<p>The date and time the VM scanner was activated.</p>"
       }
     },
     "Day": {
@@ -4654,6 +4657,18 @@
       "base": null,
       "refs": {
         "Usage$total": "<p>The total of usage.</p>"
+      }
+    },
+    "VMScannerState": {
+      "base": "<p>The state of the Amazon Inspector VM scanner.</p>",
+      "refs": {
+        "Ec2ConfigurationState$vmScannerState": "<p>An object that contains details about the state of the Amazon Inspector VM scanner.</p>"
+      }
+    },
+    "VMScannerStatus": {
+      "base": null,
+      "refs": {
+        "VMScannerState$status": "<p>The status of the VM scanner.</p>"
       }
     },
     "ValidationException": {

@@ -408,7 +408,7 @@
     "EBSMetricName": {
       "base": null,
       "refs": {
-        "EBSUtilizationMetric$name": "<p>The name of the utilization metric.</p> <p>The following utilization metrics are available:</p> <ul> <li> <p> <code>VolumeReadOpsPerSecond</code> - The completed read operations per second from the volume in a specified period of time.</p> <p>Unit: Count</p> </li> <li> <p> <code>VolumeWriteOpsPerSecond</code> - The completed write operations per second to the volume in a specified period of time.</p> <p>Unit: Count</p> </li> <li> <p> <code>VolumeReadBytesPerSecond</code> - The bytes read per second from the volume in a specified period of time.</p> <p>Unit: Bytes</p> </li> <li> <p> <code>VolumeWriteBytesPerSecond</code> - The bytes written to the volume in a specified period of time.</p> <p>Unit: Bytes</p> </li> </ul>"
+        "EBSUtilizationMetric$name": "<p>The name of the utilization metric.</p> <p>The following utilization metrics are available:</p> <ul> <li> <p> <code>VolumeReadOpsPerSecond</code> - The completed read operations per second from the volume in a specified period of time.</p> <p>Unit: Count</p> </li> <li> <p> <code>VolumeWriteOpsPerSecond</code> - The completed write operations per second to the volume in a specified period of time.</p> <p>Unit: Count</p> </li> <li> <p> <code>VolumeReadBytesPerSecond</code> - The bytes read per second from the volume in a specified period of time.</p> <p>Unit: Bytes</p> </li> <li> <p> <code>VolumeWriteBytesPerSecond</code> - The bytes written to the volume in a specified period of time.</p> <p>Unit: Bytes</p> </li> <li> <p> <code>VolumeIOPSExceeded</code> - Indicates whether the volume's provisioned IOPS performance was exceeded in a specified period of time. A value of <code>1</code> means the provisioned IOPS were exceeded; a value of <code>0</code> means they were not.</p> <p>Unit: None</p> </li> <li> <p> <code>VolumeThroughputExceeded</code> - Indicates whether the volume's provisioned throughput performance was exceeded in a specified period of time. A value of <code>1</code> means the provisioned throughput was exceeded; a value of <code>0</code> means it was not.</p> <p>Unit: None</p> </li> </ul>"
       }
     },
     "EBSSavingsEstimationMode": {
@@ -1172,6 +1172,36 @@
         "RDSDBRecommendation$idle": "<p> This indicates if the DB instance is idle or not. </p>"
       }
     },
+    "IdleDimension": {
+      "base": "<p>Describes the dimension of an idle resource utilization metric.</p>",
+      "refs": {
+        "IdleDimensions$member": null
+      }
+    },
+    "IdleDimensionKey": {
+      "base": null,
+      "refs": {
+        "IdleDimension$key": "<p>The name of the dimension key.</p>"
+      }
+    },
+    "IdleDimensionValue": {
+      "base": null,
+      "refs": {
+        "IdleDimensionValues$member": null
+      }
+    },
+    "IdleDimensionValues": {
+      "base": null,
+      "refs": {
+        "IdleDimension$values": "<p>The value of the dimension.</p>"
+      }
+    },
+    "IdleDimensions": {
+      "base": null,
+      "refs": {
+        "IdleUtilizationMetric$dimensions": "<p>The dimensions of the utilization metric.</p>"
+      }
+    },
     "IdleEstimatedMonthlySavings": {
       "base": "<p>Describes the estimated monthly savings possible for idle resources by adopting Compute Optimizer recommendations.</p>",
       "refs": {
@@ -1757,9 +1787,11 @@
     "LookBackPeriodPreference": {
       "base": null,
       "refs": {
+        "EBSEffectiveRecommendationPreferences$lookBackPeriod": "<p>The number of days for which utilization metrics were analyzed for the volume.</p>",
+        "ECSEffectiveRecommendationPreferences$lookBackPeriod": "<p> The number of days the Amazon ECS service utilization metrics were analyzed. </p>",
         "EffectiveRecommendationPreferences$lookBackPeriod": "<p> The number of days the utilization metrics of the Amazon Web Services resource are analyzed. </p>",
-        "GetEffectiveRecommendationPreferencesResponse$lookBackPeriod": "<p> The number of days the utilization metrics of the Amazon Web Services resource are analyzed. </p> <p>To validate that the preference is applied to your last generated set of recommendations, review the <code>effectiveRecommendationPreferences</code> value in the response of the GetAutoScalingGroupRecommendations or GetEC2InstanceRecommendations actions.</p>",
-        "PutRecommendationPreferencesRequest$lookBackPeriod": "<p> The preference to control the number of days the utilization metrics of the Amazon Web Services resource are analyzed. When this preference isn't specified, we use the default value <code>DAYS_14</code>. </p> <p>You can only set this preference for the Amazon EC2 instance and Auto Scaling group resource types. </p> <note> <ul> <li> <p>Amazon EC2 instance lookback preferences can be set at the organization, account, and resource levels.</p> </li> <li> <p>Auto Scaling group lookback preferences can only be set at the resource level.</p> </li> </ul> </note>",
+        "GetEffectiveRecommendationPreferencesResponse$lookBackPeriod": "<p> The number of days the utilization metrics of the Amazon Web Services resource are analyzed. </p> <p>To validate that the preference is applied to your last generated set of recommendations, review the <code>effectiveRecommendationPreferences</code> value in the response of the GetAutoScalingGroupRecommendations, GetEC2InstanceRecommendations, GetEBSVolumeRecommendations, GetECSServiceRecommendations, or GetRDSDatabaseRecommendations actions.</p>",
+        "PutRecommendationPreferencesRequest$lookBackPeriod": "<p> The preference to control the number of days the utilization metrics of the Amazon Web Services resource are analyzed. When this preference isn't specified, we use the default value <code>DAYS_14</code>. </p> <p>You can only set this preference for the Amazon EC2 instance, Auto Scaling group, Amazon EBS volume, Amazon ECS service on Fargate, Amazon RDS DB instance, and Aurora DB cluster storage resource types. </p> <note> <ul> <li> <p>Lookback period preferences for Amazon EC2 instances, Amazon EBS volumes, Amazon ECS services, Amazon RDS DB instances, and Aurora DB cluster storage resource types can be set at the organization, account, and resource levels.</p> </li> <li> <p>Auto Scaling group lookback preferences can only be set at the resource level.</p> </li> <li> <p>Amazon EBS volume lookback preferences can be set at the organization, account, and resource levels.</p> </li> <li> <p>Amazon ECS service on Fargate lookback preferences can be set at the organization, account, and resource levels.</p> </li> <li> <p>Amazon RDS DB instance lookback preferences can be set at the organization, account, and resource levels.</p> </li> <li> <p>Aurora DB cluster storage lookback preferences can be set at the organization, account, and resource levels.</p> </li> <li> <p>Changing the lookback period for Amazon EBS volumes to 14 days does not affect the 32-day lookback period used to determine whether an Amazon EBS volume is unattached.</p> </li> </ul> </note>",
         "RDSEffectiveRecommendationPreferences$lookBackPeriod": "<p> The number of days the utilization metrics of the DB instance are analyzed. </p>",
         "RecommendationPreferencesDetail$lookBackPeriod": "<p> The preference to control the number of days the utilization metrics of the Amazon Web Services resource are analyzed. If the preference isn’t set, this object is null. </p>"
       }
@@ -2115,7 +2147,7 @@
     "PreferredResources": {
       "base": null,
       "refs": {
-        "PutRecommendationPreferencesRequest$preferredResources": "<p> The preference to control which resource type values are considered when generating rightsizing recommendations. You can specify this preference as a combination of include and exclude lists. You must specify either an <code>includeList</code> or <code>excludeList</code>. If the preference is an empty set of resource type values, an error occurs. </p> <note> <p>You can only set this preference for the Amazon EC2 instance and Auto Scaling group resource types.</p> </note>"
+        "PutRecommendationPreferencesRequest$preferredResources": "<p> The preference to control which resource type values are considered when generating rightsizing recommendations. You can specify this preference as a combination of include and exclude lists. You must specify either an <code>includeList</code> or <code>excludeList</code>. If the preference is an empty set of resource type values, an error occurs. </p> <note> <p>You can only set this preference for the Amazon EC2 instance, Auto Scaling group, Amazon EBS volume, Amazon ECS service, Amazon RDS DB instance, and Aurora DB cluster storage resource types.</p> </note>"
       }
     },
     "ProjectedMetric": {

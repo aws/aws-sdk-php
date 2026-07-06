@@ -868,6 +868,23 @@
         {"shape":"ValidationException"}
       ]
     },
+    "GenerateRecommendedPolicyV2":{
+      "name":"GenerateRecommendedPolicyV2",
+      "http":{
+        "method":"POST",
+        "requestUri":"/recommendedPolicyV2/{MetadataUid}"
+      },
+      "input":{"shape":"GenerateRecommendedPolicyV2Request"},
+      "output":{"shape":"GenerateRecommendedPolicyV2Response"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"}
+      ]
+    },
     "GetAdministratorAccount":{
       "name":"GetAdministratorAccount",
       "http":{
@@ -1161,6 +1178,23 @@
         {"shape":"InvalidAccessException"},
         {"shape":"LimitExceededException"},
         {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "GetRecommendedPolicyV2":{
+      "name":"GetRecommendedPolicyV2",
+      "http":{
+        "method":"GET",
+        "requestUri":"/recommendedPolicyV2/{MetadataUid}"
+      },
+      "input":{"shape":"GetRecommendedPolicyV2Request"},
+      "output":{"shape":"GetRecommendedPolicyV2Response"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"}
       ]
     },
     "GetResourcesStatisticsV2":{
@@ -8628,8 +8662,16 @@
       "type":"structure",
       "members":{
         "Value":{"shape":"Integer"},
-        "Unit":{"shape":"DateRangeUnit"}
+        "Unit":{"shape":"DateRangeUnit"},
+        "Comparison":{"shape":"DateRangeComparison"}
       }
+    },
+    "DateRangeComparison":{
+      "type":"string",
+      "enum":[
+        "WITHIN",
+        "OLDER_THAN"
+      ]
     },
     "DateRangeUnit":{
       "type":"string",
@@ -9302,6 +9344,21 @@
       "type":"list",
       "member":{"shape":"FirewallPolicyStatelessRuleGroupReferencesDetails"}
     },
+    "GenerateRecommendedPolicyV2Request":{
+      "type":"structure",
+      "required":["MetadataUid"],
+      "members":{
+        "MetadataUid":{
+          "shape":"NonEmptyString",
+          "location":"uri",
+          "locationName":"MetadataUid"
+        }
+      }
+    },
+    "GenerateRecommendedPolicyV2Response":{
+      "type":"structure",
+      "members":{}
+    },
     "GeneratorDetails":{
       "type":"structure",
       "members":{
@@ -9643,6 +9700,38 @@
       "members":{
         "Members":{"shape":"MemberList"},
         "UnprocessedAccounts":{"shape":"ResultList"}
+      }
+    },
+    "GetRecommendedPolicyV2Request":{
+      "type":"structure",
+      "required":["MetadataUid"],
+      "members":{
+        "MetadataUid":{
+          "shape":"NonEmptyString",
+          "location":"uri",
+          "locationName":"MetadataUid"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"NextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"MaxResults"
+        }
+      }
+    },
+    "GetRecommendedPolicyV2Response":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"NextToken"},
+        "RecommendationType":{"shape":"RecommendationType"},
+        "RecommendationSteps":{"shape":"RecommendationSteps"},
+        "Error":{"shape":"RecommendationError"},
+        "Status":{"shape":"RecommendationStatus"},
+        "ResourceArn":{"shape":"NonEmptyString"}
       }
     },
     "GetResourcesStatisticsV2Request":{
@@ -11191,6 +11280,36 @@
         "Text":{"shape":"NonEmptyString"},
         "Url":{"shape":"NonEmptyString"}
       }
+    },
+    "RecommendationError":{
+      "type":"structure",
+      "members":{
+        "Code":{"shape":"NonEmptyString"},
+        "Message":{"shape":"NonEmptyString"}
+      }
+    },
+    "RecommendationStatus":{
+      "type":"string",
+      "enum":[
+        "IN_PROGRESS",
+        "SUCCEEDED",
+        "FAILED"
+      ]
+    },
+    "RecommendationStep":{
+      "type":"structure",
+      "members":{
+        "UnusedPermissions":{"shape":"UnusedPermissionsRecommendationStep"}
+      },
+      "union":true
+    },
+    "RecommendationSteps":{
+      "type":"list",
+      "member":{"shape":"RecommendationStep"}
+    },
+    "RecommendationType":{
+      "type":"string",
+      "enum":["UNUSED_PERMISSION_RECOMMENDATION"]
     },
     "Record":{
       "type":"structure",
@@ -12843,6 +12962,16 @@
     "UntagResourceResponse":{
       "type":"structure",
       "members":{}
+    },
+    "UnusedPermissionsRecommendationStep":{
+      "type":"structure",
+      "members":{
+        "RecommendedAction":{"shape":"NonEmptyString"},
+        "ExistingPolicy":{"shape":"NonEmptyString"},
+        "ExistingPolicyId":{"shape":"NonEmptyString"},
+        "PolicyUpdatedAt":{"shape":"Timestamp"},
+        "RecommendedPolicy":{"shape":"NonEmptyString"}
+      }
     },
     "UpdateActionTargetRequest":{
       "type":"structure",

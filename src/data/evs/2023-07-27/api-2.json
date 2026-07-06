@@ -161,6 +161,21 @@
       ],
       "idempotent":true
     },
+    "GetDepotUrl":{
+      "name":"GetDepotUrl",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetDepotUrlRequest"},
+      "output":{"shape":"GetDepotUrlResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
     "GetEnvironment":{
       "name":"GetEnvironment",
       "http":{
@@ -378,6 +393,7 @@
       "type":"structure",
       "members":{
         "type":{"shape":"CheckType"},
+        "id":{"shape":"String"},
         "result":{"shape":"CheckResult"},
         "impairedSince":{"shape":"Timestamp"}
       }
@@ -399,7 +415,13 @@
         "HOST_COUNT",
         "VCENTER_REACHABILITY",
         "VCENTER_VM_SYNC",
-        "VCENTER_VM_EVENT"
+        "VCENTER_VM_EVENT",
+        "OPERATIONS_MANAGER_REACHABILITY",
+        "SDDC_MANAGER_REACHABILITY",
+        "SDDC_MANAGER_HOST_COUNT",
+        "SDDC_MANAGER_KEY_COVERAGE",
+        "SDDC_MANAGER_KEY_REUSE",
+        "CONNECTOR_HEALTH"
       ]
     },
     "ChecksList":{
@@ -470,7 +492,11 @@
     },
     "ConnectorType":{
       "type":"string",
-      "enum":["VCENTER"]
+      "enum":[
+        "OPERATIONS_MANAGER",
+        "SDDC_MANAGER",
+        "VCENTER"
+      ]
     },
     "ConnectorsChecksList":{
       "type":"list",
@@ -556,12 +582,7 @@
         "serviceAccessSubnetId",
         "vcfVersion",
         "termsAccepted",
-        "licenseInfo",
-        "initialVlans",
-        "hosts",
-        "connectivityInfo",
-        "vcfHostnames",
-        "siteId"
+        "initialVlans"
       ],
       "members":{
         "clientToken":{
@@ -576,10 +597,10 @@
         "serviceAccessSubnetId":{"shape":"SubnetId"},
         "vcfVersion":{"shape":"VcfVersion"},
         "termsAccepted":{"shape":"Boolean"},
-        "licenseInfo":{"shape":"LicenseInfoList"},
         "initialVlans":{"shape":"InitialVlans"},
-        "hosts":{"shape":"HostInfoForCreateList"},
         "connectivityInfo":{"shape":"ConnectivityInfo"},
+        "licenseInfo":{"shape":"LicenseInfoList"},
+        "hosts":{"shape":"HostInfoForCreateList"},
         "vcfHostnames":{"shape":"VcfHostnames"},
         "siteId":{"shape":"String"}
       }
@@ -822,6 +843,25 @@
     "EsxVersionList":{
       "type":"list",
       "member":{"shape":"String"}
+    },
+    "GetDepotUrlRequest":{
+      "type":"structure",
+      "required":["environmentId"],
+      "members":{
+        "environmentId":{"shape":"EnvironmentId"},
+        "rotate":{"shape":"Boolean"}
+      }
+    },
+    "GetDepotUrlResponse":{
+      "type":"structure",
+      "required":[
+        "depotUrl",
+        "token"
+      ],
+      "members":{
+        "depotUrl":{"shape":"String"},
+        "token":{"shape":"String"}
+      }
     },
     "GetEnvironmentRequest":{
       "type":"structure",
@@ -1227,7 +1267,8 @@
     },
     "SolutionKey":{
       "type":"string",
-      "pattern":"[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}"
+      "pattern":"[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}",
+      "sensitive":true
     },
     "StateDetails":{"type":"string"},
     "String":{"type":"string"},
@@ -1337,7 +1378,8 @@
     },
     "VSanLicenseKey":{
       "type":"string",
-      "pattern":"[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}"
+      "pattern":"[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}",
+      "sensitive":true
     },
     "ValidationException":{
       "type":"structure",
@@ -1405,7 +1447,8 @@
       "type":"string",
       "enum":[
         "VCF-5.2.1",
-        "VCF-5.2.2"
+        "VCF-5.2.2",
+        "SELF_DEPLOYED"
       ]
     },
     "VcfVersionInfo":{

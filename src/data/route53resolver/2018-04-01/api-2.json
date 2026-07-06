@@ -89,6 +89,54 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "BatchCreateFirewallRule":{
+      "name":"BatchCreateFirewallRule",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"BatchCreateFirewallRuleRequest"},
+      "output":{"shape":"BatchCreateFirewallRuleResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceErrorException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "BatchDeleteFirewallRule":{
+      "name":"BatchDeleteFirewallRule",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"BatchDeleteFirewallRuleRequest"},
+      "output":{"shape":"BatchDeleteFirewallRuleResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceErrorException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "BatchUpdateFirewallRule":{
+      "name":"BatchUpdateFirewallRule",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"BatchUpdateFirewallRuleRequest"},
+      "output":{"shape":"BatchUpdateFirewallRuleResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceErrorException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "CreateFirewallDomainList":{
       "name":"CreateFirewallDomainList",
       "http":{
@@ -321,6 +369,7 @@
       "input":{"shape":"DeleteResolverRuleRequest"},
       "output":{"shape":"DeleteResolverRuleResponse"},
       "errors":[
+        {"shape":"InvalidRequestException"},
         {"shape":"InvalidParameterException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ResourceInUseException"},
@@ -389,6 +438,7 @@
       "output":{"shape":"DisassociateResolverRuleResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
         {"shape":"InvalidParameterException"},
         {"shape":"InternalServiceErrorException"},
         {"shape":"ThrottlingException"}
@@ -718,6 +768,21 @@
       },
       "input":{"shape":"ListFirewallRuleGroupsRequest"},
       "output":{"shape":"ListFirewallRuleGroupsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceErrorException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListFirewallRuleTypes":{
+      "name":"ListFirewallRuleTypes",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListFirewallRuleTypesRequest"},
+      "output":{"shape":"ListFirewallRuleTypesResponse"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
@@ -1270,6 +1335,84 @@
         "USE_LOCAL_RESOURCE_SETTING"
       ]
     },
+    "BatchCreateFirewallRuleError":{
+      "type":"structure",
+      "members":{
+        "FirewallRule":{"shape":"CreateFirewallRuleEntry"},
+        "Code":{"shape":"String"},
+        "Message":{"shape":"String"}
+      }
+    },
+    "BatchCreateFirewallRuleErrors":{
+      "type":"list",
+      "member":{"shape":"BatchCreateFirewallRuleError"}
+    },
+    "BatchCreateFirewallRuleRequest":{
+      "type":"structure",
+      "required":["CreateFirewallRuleEntries"],
+      "members":{
+        "CreateFirewallRuleEntries":{"shape":"CreateFirewallRuleEntries"}
+      }
+    },
+    "BatchCreateFirewallRuleResponse":{
+      "type":"structure",
+      "members":{
+        "CreatedFirewallRules":{"shape":"FirewallRules"},
+        "CreateErrors":{"shape":"BatchCreateFirewallRuleErrors"}
+      }
+    },
+    "BatchDeleteFirewallRuleError":{
+      "type":"structure",
+      "members":{
+        "FirewallRule":{"shape":"DeleteFirewallRuleEntry"},
+        "Code":{"shape":"String"},
+        "Message":{"shape":"String"}
+      }
+    },
+    "BatchDeleteFirewallRuleErrors":{
+      "type":"list",
+      "member":{"shape":"BatchDeleteFirewallRuleError"}
+    },
+    "BatchDeleteFirewallRuleRequest":{
+      "type":"structure",
+      "required":["DeleteFirewallRuleEntries"],
+      "members":{
+        "DeleteFirewallRuleEntries":{"shape":"DeleteFirewallRuleEntries"}
+      }
+    },
+    "BatchDeleteFirewallRuleResponse":{
+      "type":"structure",
+      "members":{
+        "DeletedFirewallRules":{"shape":"FirewallRules"},
+        "DeleteErrors":{"shape":"BatchDeleteFirewallRuleErrors"}
+      }
+    },
+    "BatchUpdateFirewallRuleError":{
+      "type":"structure",
+      "members":{
+        "FirewallRule":{"shape":"UpdateFirewallRuleEntry"},
+        "Code":{"shape":"String"},
+        "Message":{"shape":"String"}
+      }
+    },
+    "BatchUpdateFirewallRuleErrors":{
+      "type":"list",
+      "member":{"shape":"BatchUpdateFirewallRuleError"}
+    },
+    "BatchUpdateFirewallRuleRequest":{
+      "type":"structure",
+      "required":["UpdateFirewallRuleEntries"],
+      "members":{
+        "UpdateFirewallRuleEntries":{"shape":"UpdateFirewallRuleEntries"}
+      }
+    },
+    "BatchUpdateFirewallRuleResponse":{
+      "type":"structure",
+      "members":{
+        "UpdatedFirewallRules":{"shape":"FirewallRules"},
+        "UpdateErrors":{"shape":"BatchUpdateFirewallRuleErrors"}
+      }
+    },
     "BlockOverrideDnsType":{
       "type":"string",
       "enum":["CNAME"]
@@ -1293,6 +1436,10 @@
       ]
     },
     "Boolean":{"type":"boolean"},
+    "Category":{
+      "type":"string",
+      "max":256
+    },
     "ConfidenceThreshold":{
       "type":"string",
       "enum":[
@@ -1331,6 +1478,67 @@
       "type":"structure",
       "members":{
         "FirewallDomainList":{"shape":"FirewallDomainList"}
+      }
+    },
+    "CreateFirewallRuleEntries":{
+      "type":"list",
+      "member":{"shape":"CreateFirewallRuleEntry"}
+    },
+    "CreateFirewallRuleEntry":{
+      "type":"structure",
+      "required":[
+        "CreatorRequestId",
+        "FirewallRuleGroupId",
+        "Priority",
+        "Action",
+        "Name"
+      ],
+      "members":{
+        "CreatorRequestId":{"shape":"CreatorRequestId"},
+        "FirewallRuleGroupId":{"shape":"ResourceId"},
+        "FirewallDomainListId":{
+          "shape":"ResourceId",
+          "box":true
+        },
+        "Priority":{"shape":"Priority"},
+        "Action":{"shape":"Action"},
+        "BlockResponse":{
+          "shape":"BlockResponse",
+          "box":true
+        },
+        "BlockOverrideDomain":{
+          "shape":"BlockOverrideDomain",
+          "box":true
+        },
+        "BlockOverrideDnsType":{
+          "shape":"BlockOverrideDnsType",
+          "box":true
+        },
+        "BlockOverrideTtl":{
+          "shape":"BlockOverrideTtl",
+          "box":true
+        },
+        "Name":{"shape":"Name"},
+        "FirewallDomainRedirectionAction":{
+          "shape":"FirewallDomainRedirectionAction",
+          "box":true
+        },
+        "Qtype":{
+          "shape":"Qtype",
+          "box":true
+        },
+        "DnsThreatProtection":{
+          "shape":"DnsThreatProtection",
+          "box":true
+        },
+        "ConfidenceThreshold":{
+          "shape":"ConfidenceThreshold",
+          "box":true
+        },
+        "FirewallRuleType":{
+          "shape":"FirewallRuleType",
+          "box":true
+        }
       }
     },
     "CreateFirewallRuleGroupRequest":{
@@ -1409,6 +1617,10 @@
         },
         "ConfidenceThreshold":{
           "shape":"ConfidenceThreshold",
+          "box":true
+        },
+        "FirewallRuleType":{
+          "shape":"FirewallRuleType",
           "box":true
         }
       }
@@ -1491,6 +1703,14 @@
         },
         "TargetNameServerMetricsEnabled":{
           "shape":"TargetNameServerMetricsEnabled",
+          "box":true
+        },
+        "Dns64Enabled":{
+          "shape":"Dns64Enabled",
+          "box":true
+        },
+        "Ipv6InternetAccessEnabled":{
+          "shape":"Ipv6InternetAccessEnabled",
           "box":true
         }
       }
@@ -1586,6 +1806,26 @@
       "type":"structure",
       "members":{
         "FirewallDomainList":{"shape":"FirewallDomainList"}
+      }
+    },
+    "DeleteFirewallRuleEntries":{
+      "type":"list",
+      "member":{"shape":"DeleteFirewallRuleEntry"}
+    },
+    "DeleteFirewallRuleEntry":{
+      "type":"structure",
+      "required":["FirewallRuleGroupId"],
+      "members":{
+        "FirewallRuleGroupId":{"shape":"ResourceId"},
+        "FirewallDomainListId":{
+          "shape":"ResourceId",
+          "box":true
+        },
+        "FirewallThreatProtectionId":{
+          "shape":"ResourceId",
+          "box":true
+        },
+        "Qtype":{"shape":"Qtype"}
       }
     },
     "DeleteFirewallRuleGroupRequest":{
@@ -1744,6 +1984,11 @@
         "ResolverRuleAssociation":{"shape":"ResolverRuleAssociation"}
       }
     },
+    "DisplayName":{
+      "type":"string",
+      "max":256
+    },
+    "Dns64Enabled":{"type":"boolean"},
     "DnsThreatProtection":{
       "type":"string",
       "enum":[
@@ -1752,10 +1997,33 @@
         "DICTIONARY_DGA"
       ]
     },
+    "DnsThreatProtectionRuleTypeConfig":{
+      "type":"structure",
+      "required":[
+        "Value",
+        "ConfidenceThreshold"
+      ],
+      "members":{
+        "Value":{"shape":"DnsThreatProtectionRuleTypeValue"},
+        "ConfidenceThreshold":{"shape":"ConfidenceThreshold"}
+      }
+    },
+    "DnsThreatProtectionRuleTypeValue":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
     "DomainListFileUrl":{
       "type":"string",
       "max":1024,
       "min":1
+    },
+    "DomainListType":{
+      "type":"string",
+      "enum":[
+        "THREAT",
+        "CONTENT"
+      ]
     },
     "DomainName":{
       "type":"string",
@@ -1788,6 +2056,30 @@
       "type":"list",
       "member":{"shape":"Filter"}
     },
+    "FirewallAdvancedContentCategoryConfig":{
+      "type":"structure",
+      "required":["Category"],
+      "members":{
+        "Category":{"shape":"FirewallAdvancedContentCategoryValue"}
+      }
+    },
+    "FirewallAdvancedContentCategoryValue":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "FirewallAdvancedThreatCategoryConfig":{
+      "type":"structure",
+      "required":["Category"],
+      "members":{
+        "Category":{"shape":"FirewallAdvancedThreatCategoryValue"}
+      }
+    },
+    "FirewallAdvancedThreatCategoryValue":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
     "FirewallConfig":{
       "type":"structure",
       "members":{
@@ -1817,7 +2109,9 @@
         "ManagedOwnerName":{"shape":"ServicePrinciple"},
         "CreatorRequestId":{"shape":"CreatorRequestId"},
         "CreationTime":{"shape":"Rfc3339TimeString"},
-        "ModificationTime":{"shape":"Rfc3339TimeString"}
+        "ModificationTime":{"shape":"Rfc3339TimeString"},
+        "Category":{"shape":"Category"},
+        "ManagedListType":{"shape":"DomainListType"}
       }
     },
     "FirewallDomainListMetadata":{
@@ -1827,7 +2121,9 @@
         "Arn":{"shape":"Arn"},
         "Name":{"shape":"Name"},
         "CreatorRequestId":{"shape":"CreatorRequestId"},
-        "ManagedOwnerName":{"shape":"ServicePrinciple"}
+        "ManagedOwnerName":{"shape":"ServicePrinciple"},
+        "ManagedListType":{"shape":"DomainListType"},
+        "Category":{"shape":"Category"}
       }
     },
     "FirewallDomainListMetadataList":{
@@ -1895,7 +2191,10 @@
         "FirewallDomainRedirectionAction":{"shape":"FirewallDomainRedirectionAction"},
         "Qtype":{"shape":"Qtype"},
         "DnsThreatProtection":{"shape":"DnsThreatProtection"},
-        "ConfidenceThreshold":{"shape":"ConfidenceThreshold"}
+        "ConfidenceThreshold":{"shape":"ConfidenceThreshold"},
+        "FirewallRuleType":{"shape":"FirewallRuleType"},
+        "Status":{"shape":"FirewallRuleStatus"},
+        "StatusMessage":{"shape":"FirewallRuleStatusMessage"}
       }
     },
     "FirewallRuleGroup":{
@@ -1970,6 +2269,52 @@
         "DELETING",
         "UPDATING"
       ]
+    },
+    "FirewallRuleStatus":{
+      "type":"string",
+      "max":32
+    },
+    "FirewallRuleStatusMessage":{
+      "type":"string",
+      "max":1024
+    },
+    "FirewallRuleType":{
+      "type":"structure",
+      "members":{
+        "PartnerThreatProtection":{
+          "shape":"PartnerThreatProtectionConfig",
+          "box":true
+        },
+        "FirewallAdvancedContentCategory":{
+          "shape":"FirewallAdvancedContentCategoryConfig",
+          "box":true
+        },
+        "FirewallAdvancedThreatCategory":{
+          "shape":"FirewallAdvancedThreatCategoryConfig",
+          "box":true
+        },
+        "DnsThreatProtection":{
+          "shape":"DnsThreatProtectionRuleTypeConfig",
+          "box":true
+        }
+      }
+    },
+    "FirewallRuleTypeDefinition":{
+      "type":"structure",
+      "members":{
+        "RuleType":{"shape":"RuleTypeName"},
+        "Value":{"shape":"RuleTypeValue"},
+        "DisplayName":{"shape":"DisplayName"},
+        "Description":{"shape":"RuleTypeDescription"},
+        "SubscriptionInfo":{
+          "shape":"SubscriptionInfo",
+          "box":true
+        }
+      }
+    },
+    "FirewallRuleTypeDefinitions":{
+      "type":"list",
+      "member":{"shape":"FirewallRuleTypeDefinition"}
     },
     "FirewallRules":{
       "type":"list",
@@ -2276,6 +2621,7 @@
       "enum":[
         "CREATING",
         "FAILED_CREATION",
+        "FAILED_CREATION_INSUFFICIENT_EC2_CAPACITY_IN_OUTPOST",
         "ATTACHING",
         "ATTACHED",
         "REMAP_DETACHING",
@@ -2325,6 +2671,7 @@
       "max":39,
       "min":7
     },
+    "Ipv6InternetAccessEnabled":{"type":"boolean"},
     "LimitExceededException":{
       "type":"structure",
       "members":{
@@ -2459,6 +2806,30 @@
       "members":{
         "NextToken":{"shape":"NextToken"},
         "FirewallRuleGroups":{"shape":"FirewallRuleGroupMetadataList"}
+      }
+    },
+    "ListFirewallRuleTypesRequest":{
+      "type":"structure",
+      "members":{
+        "RuleType":{
+          "shape":"RuleTypeName",
+          "box":true
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "box":true
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "box":true
+        }
+      }
+    },
+    "ListFirewallRuleTypesResponse":{
+      "type":"structure",
+      "members":{
+        "FirewallRuleTypes":{"shape":"FirewallRuleTypeDefinitions"},
+        "NextToken":{"shape":"NextToken"}
       }
     },
     "ListFirewallRulesRequest":{
@@ -2801,12 +3172,28 @@
       "type":"string",
       "max":4096
     },
+    "PartnerThreatProtectionConfig":{
+      "type":"structure",
+      "required":["Partner"],
+      "members":{
+        "Partner":{"shape":"PartnerValue"}
+      }
+    },
+    "PartnerValue":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
     "Port":{
       "type":"integer",
       "max":65535,
       "min":0
     },
     "Priority":{"type":"integer"},
+    "ProductId":{
+      "type":"string",
+      "max":256
+    },
     "Protocol":{
       "type":"string",
       "enum":[
@@ -2945,7 +3332,9 @@
         "ResolverEndpointType":{"shape":"ResolverEndpointType"},
         "Protocols":{"shape":"ProtocolList"},
         "RniEnhancedMetricsEnabled":{"shape":"RniEnhancedMetricsEnabled"},
-        "TargetNameServerMetricsEnabled":{"shape":"TargetNameServerMetricsEnabled"}
+        "TargetNameServerMetricsEnabled":{"shape":"TargetNameServerMetricsEnabled"},
+        "Dns64Enabled":{"shape":"Dns64Enabled"},
+        "Ipv6InternetAccessEnabled":{"shape":"Ipv6InternetAccessEnabled"}
       }
     },
     "ResolverEndpointDirection":{
@@ -3166,6 +3555,14 @@
       "min":20
     },
     "RniEnhancedMetricsEnabled":{"type":"boolean"},
+    "RuleTypeDescription":{
+      "type":"string",
+      "max":1024
+    },
+    "RuleTypeName":{
+      "type":"string",
+      "max":128
+    },
     "RuleTypeOption":{
       "type":"string",
       "enum":[
@@ -3174,6 +3571,10 @@
         "RECURSIVE",
         "DELEGATE"
       ]
+    },
+    "RuleTypeValue":{
+      "type":"string",
+      "max":128
     },
     "SecurityGroupIds":{
       "type":"list",
@@ -3225,6 +3626,13 @@
       "type":"string",
       "max":32,
       "min":1
+    },
+    "SubscriptionInfo":{
+      "type":"structure",
+      "members":{
+        "VendorName":{"shape":"VendorName"},
+        "ProductId":{"shape":"ProductId"}
+      }
     },
     "Tag":{
       "type":"structure",
@@ -3372,6 +3780,70 @@
         "StatusMessage":{"shape":"StatusMessage"}
       }
     },
+    "UpdateFirewallRuleEntries":{
+      "type":"list",
+      "member":{"shape":"UpdateFirewallRuleEntry"}
+    },
+    "UpdateFirewallRuleEntry":{
+      "type":"structure",
+      "required":["FirewallRuleGroupId"],
+      "members":{
+        "FirewallRuleGroupId":{"shape":"ResourceId"},
+        "FirewallDomainListId":{
+          "shape":"ResourceId",
+          "box":true
+        },
+        "FirewallThreatProtectionId":{
+          "shape":"ResourceId",
+          "box":true
+        },
+        "Priority":{
+          "shape":"Priority",
+          "box":true
+        },
+        "Action":{
+          "shape":"Action",
+          "box":true
+        },
+        "BlockResponse":{
+          "shape":"BlockResponse",
+          "box":true
+        },
+        "BlockOverrideDomain":{
+          "shape":"BlockOverrideDomain",
+          "box":true
+        },
+        "BlockOverrideDnsType":{
+          "shape":"BlockOverrideDnsType",
+          "box":true
+        },
+        "BlockOverrideTtl":{
+          "shape":"BlockOverrideTtl",
+          "box":true
+        },
+        "Name":{
+          "shape":"Name",
+          "box":true
+        },
+        "FirewallDomainRedirectionAction":{
+          "shape":"FirewallDomainRedirectionAction",
+          "box":true
+        },
+        "Qtype":{"shape":"Qtype"},
+        "DnsThreatProtection":{
+          "shape":"DnsThreatProtection",
+          "box":true
+        },
+        "ConfidenceThreshold":{
+          "shape":"ConfidenceThreshold",
+          "box":true
+        },
+        "FirewallRuleType":{
+          "shape":"FirewallRuleType",
+          "box":true
+        }
+      }
+    },
     "UpdateFirewallRuleGroupAssociationRequest":{
       "type":"structure",
       "required":["FirewallRuleGroupAssociationId"],
@@ -3449,6 +3921,10 @@
         },
         "ConfidenceThreshold":{
           "shape":"ConfidenceThreshold",
+          "box":true
+        },
+        "FirewallRuleType":{
+          "shape":"FirewallRuleType",
           "box":true
         }
       }
@@ -3563,6 +4039,14 @@
         "TargetNameServerMetricsEnabled":{
           "shape":"TargetNameServerMetricsEnabled",
           "box":true
+        },
+        "Dns64Enabled":{
+          "shape":"Dns64Enabled",
+          "box":true
+        },
+        "Ipv6InternetAccessEnabled":{
+          "shape":"Ipv6InternetAccessEnabled",
+          "box":true
         }
       }
     },
@@ -3603,6 +4087,10 @@
         "Message":{"shape":"ExceptionMessage"}
       },
       "exception":true
+    },
+    "VendorName":{
+      "type":"string",
+      "max":256
     }
   }
 }

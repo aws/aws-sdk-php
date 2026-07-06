@@ -574,6 +574,23 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "CreateAttachedFile":{
+      "name":"CreateAttachedFile",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/attached-files/{InstanceId}/files"
+      },
+      "input":{"shape":"CreateAttachedFileRequest"},
+      "output":{"shape":"CreateAttachedFileResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceConflictException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ]
+    },
     "CreateContact":{
       "name":"CreateContact",
       "http":{
@@ -2804,6 +2821,21 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "GetEvaluationFormValidation":{
+      "name":"GetEvaluationFormValidation",
+      "http":{
+        "method":"GET",
+        "requestUri":"/evaluation-forms/{InstanceId}/{EvaluationFormId}/validation-results"
+      },
+      "input":{"shape":"GetEvaluationFormValidationRequest"},
+      "output":{"shape":"GetEvaluationFormValidationResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "GetFederationToken":{
       "name":"GetFederationToken",
       "http":{
@@ -4660,6 +4692,22 @@
         {"shape":"IdempotencyException"}
       ]
     },
+    "SendOutboundWebNotification":{
+      "name":"SendOutboundWebNotification",
+      "http":{
+        "method":"POST",
+        "requestUri":"/instance/{InstanceId}/outbound-web-notification"
+      },
+      "input":{"shape":"SendOutboundWebNotificationRequest"},
+      "output":{"shape":"SendOutboundWebNotificationResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "StartAttachedFileUpload":{
       "name":"StartAttachedFileUpload",
       "http":{
@@ -4691,6 +4739,23 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServiceException"},
         {"shape":"LimitExceededException"}
+      ]
+    },
+    "StartContactConversationalAnalyticsJob":{
+      "name":"StartContactConversationalAnalyticsJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/contact/start-conversational-analytics-job/{InstanceId}/{ContactId}"
+      },
+      "input":{"shape":"StartContactConversationalAnalyticsJobRequest"},
+      "output":{"shape":"StartContactConversationalAnalyticsJobResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"IdempotencyException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "StartContactEvaluation":{
@@ -4777,6 +4842,23 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"},
         {"shape":"IdempotencyException"}
+      ]
+    },
+    "StartEvaluationFormValidation":{
+      "name":"StartEvaluationFormValidation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/evaluation-forms/{InstanceId}/{EvaluationFormId}/validate"
+      },
+      "input":{"shape":"StartEvaluationFormValidationRequest"},
+      "output":{"shape":"StartEvaluationFormValidationResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceConflictException"}
       ]
     },
     "StartOutboundChatContact":{
@@ -6516,6 +6598,11 @@
       "max":100,
       "min":1
     },
+    "AiAgentId":{
+      "type":"string",
+      "max":128,
+      "min":0
+    },
     "AiAgentInfo":{
       "type":"structure",
       "members":{
@@ -6524,14 +6611,42 @@
         "AiAgentEscalated":{"shape":"Boolean"}
       }
     },
+    "AiAgentSearchCriteria":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"AiAgentId"},
+        "VersionNumber":{
+          "shape":"AiAgentVersionNumber",
+          "box":true
+        },
+        "AiAgentEscalated":{
+          "shape":"Boolean",
+          "box":true
+        },
+        "AiUseCase":{"shape":"AiUseCase"}
+      }
+    },
+    "AiAgentSearchCriteriaList":{
+      "type":"list",
+      "member":{"shape":"AiAgentSearchCriteria"},
+      "max":1,
+      "min":0
+    },
     "AiAgentVersionId":{
       "type":"string",
       "max":128,
       "min":0
     },
+    "AiAgentVersionNumber":{"type":"integer"},
     "AiAgents":{
       "type":"list",
       "member":{"shape":"AiAgentInfo"}
+    },
+    "AiAgentsCriteria":{
+      "type":"structure",
+      "members":{
+        "Criteria":{"shape":"AiAgentSearchCriteriaList"}
+      }
     },
     "AiUseCase":{
       "type":"string",
@@ -6602,6 +6717,23 @@
       "type":"list",
       "member":{"shape":"AllowedUserAction"}
     },
+    "AnalyticsConfiguration":{
+      "type":"structure",
+      "required":[
+        "LanguageConfiguration",
+        "RedactionConfiguration",
+        "SentimentConfiguration",
+        "SummaryConfiguration",
+        "RulesConfiguration"
+      ],
+      "members":{
+        "LanguageConfiguration":{"shape":"LanguageConfiguration"},
+        "RedactionConfiguration":{"shape":"RedactionConfiguration"},
+        "SentimentConfiguration":{"shape":"SentimentConfiguration"},
+        "SummaryConfiguration":{"shape":"SummaryConfiguration"},
+        "RulesConfiguration":{"shape":"RulesConfiguration"}
+      }
+    },
     "AnalyticsDataAssociationResult":{
       "type":"structure",
       "members":{
@@ -6626,6 +6758,19 @@
     "AnalyticsDataSetsResults":{
       "type":"list",
       "member":{"shape":"AnalyticsDataSetsResult"}
+    },
+    "AnalyticsMode":{
+      "type":"string",
+      "enum":[
+        "PostContact",
+        "RealTime",
+        "ContactLens",
+        "AutomatedInteraction"
+      ]
+    },
+    "AnalyticsModes":{
+      "type":"list",
+      "member":{"shape":"AnalyticsMode"}
     },
     "AnswerMachineDetectionConfig":{
       "type":"structure",
@@ -7910,6 +8055,13 @@
       "type":"list",
       "member":{"shape":"BatchUpdateDataTableValueSuccessResult"}
     },
+    "Behavior":{
+      "type":"string",
+      "enum":[
+        "Enable",
+        "Disable"
+      ]
+    },
     "BehaviorType":{
       "type":"string",
       "enum":[
@@ -8354,6 +8506,52 @@
         "ExportLocation":{"shape":"ExportLocation"}
       }
     },
+    "ContactEvaluationAttributeAndCondition":{
+      "type":"structure",
+      "members":{
+        "TagConditions":{"shape":"TagAndConditionList"},
+        "AttributeConditions":{"shape":"ContactEvaluationAttributeConditionList"}
+      }
+    },
+    "ContactEvaluationAttributeComparisonType":{
+      "type":"string",
+      "enum":["EXACT"]
+    },
+    "ContactEvaluationAttributeCondition":{
+      "type":"structure",
+      "members":{
+        "AttributeKey":{"shape":"ContactEvaluationAttributeKey"},
+        "AttributeValue":{"shape":"ContactEvaluationAttributeValue"},
+        "ComparisonType":{"shape":"ContactEvaluationAttributeComparisonType"}
+      }
+    },
+    "ContactEvaluationAttributeConditionList":{
+      "type":"list",
+      "member":{"shape":"ContactEvaluationAttributeCondition"}
+    },
+    "ContactEvaluationAttributeFilter":{
+      "type":"structure",
+      "members":{
+        "OrConditions":{"shape":"ContactEvaluationAttributeOrConditionList"},
+        "AndCondition":{"shape":"ContactEvaluationAttributeAndCondition"},
+        "TagCondition":{"shape":"TagCondition"},
+        "ContactEvaluationAttributeCondition":{"shape":"ContactEvaluationAttributeCondition"}
+      }
+    },
+    "ContactEvaluationAttributeKey":{
+      "type":"string",
+      "enum":["ContactAgentId"]
+    },
+    "ContactEvaluationAttributeOrConditionList":{
+      "type":"list",
+      "member":{"shape":"ContactEvaluationAttributeAndCondition"}
+    },
+    "ContactEvaluationAttributeValue":{
+      "type":"structure",
+      "members":{
+        "StringValue":{"shape":"String"}
+      }
+    },
     "ContactEvaluations":{
       "type":"map",
       "key":{"shape":"EvaluationId"},
@@ -8778,7 +8976,8 @@
         "Name":{"shape":"Name"},
         "RoutingCriteria":{"shape":"RoutingCriteria"},
         "Tags":{"shape":"ContactTagMap"},
-        "GlobalResiliencyMetadata":{"shape":"GlobalResiliencyMetadata"}
+        "GlobalResiliencyMetadata":{"shape":"GlobalResiliencyMetadata"},
+        "AiAgentInfo":{"shape":"ContactSearchSummaryAiAgentInfoList"}
       }
     },
     "ContactSearchSummaryAgentInfo":{
@@ -8787,6 +8986,21 @@
         "Id":{"shape":"AgentResourceId"},
         "ConnectedToAgentTimestamp":{"shape":"timestamp"}
       }
+    },
+    "ContactSearchSummaryAiAgentInfo":{
+      "type":"structure",
+      "members":{
+        "AiAgentVersionId":{"shape":"AiAgentVersionId"},
+        "AiAgentEscalated":{
+          "shape":"Boolean",
+          "box":true
+        },
+        "AiUseCase":{"shape":"AiUseCase"}
+      }
+    },
+    "ContactSearchSummaryAiAgentInfoList":{
+      "type":"list",
+      "member":{"shape":"ContactSearchSummaryAiAgentInfo"}
     },
     "ContactSearchSummaryQueueInfo":{
       "type":"structure",
@@ -8859,6 +9073,12 @@
       "max":1024,
       "min":1
     },
+    "ContentAttributes":{
+      "type":"structure",
+      "members":{
+        "RecommenderConfig":{"shape":"RecommenderConfig"}
+      }
+    },
     "ContentType":{
       "type":"string",
       "max":255,
@@ -8918,6 +9138,43 @@
       "members":{
         "AgentStatusARN":{"shape":"ARN"},
         "AgentStatusId":{"shape":"AgentStatusId"}
+      }
+    },
+    "CreateAttachedFileRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "FileUseCaseType",
+        "FileSourceUri",
+        "AssociatedResourceArn"
+      ],
+      "members":{
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "FileUseCaseType":{"shape":"FileUseCaseType"},
+        "FileSourceUri":{"shape":"FileSourceUri"},
+        "AssociatedResourceArn":{
+          "shape":"ARN",
+          "location":"querystring",
+          "locationName":"associatedResourceArn"
+        },
+        "Tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateAttachedFileResponse":{
+      "type":"structure",
+      "members":{
+        "FileArn":{"shape":"ARN"},
+        "FileId":{"shape":"FileId"},
+        "CreationTime":{"shape":"ISO8601Datetime"},
+        "FileStatus":{"shape":"FileStatusType"}
       }
     },
     "CreateCaseActionDefinition":{
@@ -10180,6 +10437,11 @@
       "sensitive":true
     },
     "CustomerProfileAttributesSerialized":{"type":"string"},
+    "CustomerProfileId":{
+      "type":"string",
+      "max":32,
+      "min":1
+    },
     "CustomerQualityMetrics":{
       "type":"structure",
       "members":{
@@ -13167,6 +13429,14 @@
         "EMAIL_ADDRESS"
       ]
     },
+    "Entities":{
+      "type":"list",
+      "member":{"shape":"Entity"}
+    },
+    "Entity":{
+      "type":"string",
+      "min":1
+    },
     "EntityArn":{
       "type":"string",
       "min":1
@@ -13397,7 +13667,9 @@
         "ReviewConfiguration":{"shape":"EvaluationReviewConfiguration"},
         "Tags":{"shape":"TagMap"},
         "TargetConfiguration":{"shape":"EvaluationFormTargetConfiguration"},
-        "LanguageConfiguration":{"shape":"EvaluationFormLanguageConfiguration"}
+        "LanguageConfiguration":{"shape":"EvaluationFormLanguageConfiguration"},
+        "LatestValidationStatus":{"shape":"EvaluationFormValidationStatus"},
+        "LastValidationTime":{"shape":"Timestamp"}
       }
     },
     "EvaluationFormAutoEvaluationConfiguration":{
@@ -13599,7 +13871,11 @@
       ],
       "members":{
         "RefId":{"shape":"ReferenceId"},
-        "Text":{"shape":"EvaluationFormMultiSelectQuestionOptionText"}
+        "Text":{"shape":"EvaluationFormMultiSelectQuestionOptionText"},
+        "Score":{"shape":"EvaluationFormQuestionAnswerScore"},
+        "AutomaticFail":{"shape":"Boolean"},
+        "AutomaticFailConfiguration":{"shape":"AutomaticFailConfiguration"},
+        "PointsConfiguration":{"shape":"QuestionOptionPointsConfiguration"}
       }
     },
     "EvaluationFormMultiSelectQuestionOptionList":{
@@ -13639,7 +13915,8 @@
         "MaxValue":{"shape":"Integer"},
         "Score":{"shape":"EvaluationFormQuestionAnswerScore"},
         "AutomaticFail":{"shape":"Boolean"},
-        "AutomaticFailConfiguration":{"shape":"AutomaticFailConfiguration"}
+        "AutomaticFailConfiguration":{"shape":"AutomaticFailConfiguration"},
+        "PointsConfiguration":{"shape":"QuestionOptionPointsConfiguration"}
       }
     },
     "EvaluationFormNumericQuestionOptionList":{
@@ -13674,7 +13951,8 @@
         "QuestionType":{"shape":"EvaluationFormQuestionType"},
         "QuestionTypeProperties":{"shape":"EvaluationFormQuestionTypeProperties"},
         "Enablement":{"shape":"EvaluationFormItemEnablementConfiguration"},
-        "Weight":{"shape":"EvaluationFormItemWeight"}
+        "Weight":{"shape":"EvaluationFormItemWeight"},
+        "ScoringConfiguration":{"shape":"EvaluationFormQuestionScoringConfiguration"}
       }
     },
     "EvaluationFormQuestionAnswerScore":{"type":"integer"},
@@ -13693,6 +13971,14 @@
       ]
     },
     "EvaluationFormQuestionInstructions":{"type":"string"},
+    "EvaluationFormQuestionScoringConfiguration":{
+      "type":"structure",
+      "members":{
+        "PointsConfiguration":{"shape":"QuestionPointsConfiguration"},
+        "IsExcludedFromScoring":{"shape":"Boolean"},
+        "ScoreThresholds":{"shape":"EvaluationFormScoreThresholdList"}
+      }
+    },
     "EvaluationFormQuestionTitle":{"type":"string"},
     "EvaluationFormQuestionType":{
       "type":"string",
@@ -13714,11 +14000,25 @@
       },
       "union":true
     },
+    "EvaluationFormScoreThreshold":{
+      "type":"structure",
+      "required":["PerformanceCategory"],
+      "members":{
+        "PerformanceCategory":{"shape":"PerformanceCategoryName"},
+        "MinScorePercentage":{"shape":"EvaluationScorePercentage"},
+        "MaxScorePercentage":{"shape":"EvaluationScorePercentage"}
+      }
+    },
+    "EvaluationFormScoreThresholdList":{
+      "type":"list",
+      "member":{"shape":"EvaluationFormScoreThreshold"}
+    },
     "EvaluationFormScoringMode":{
       "type":"string",
       "enum":[
         "QUESTION_ONLY",
-        "SECTION_ONLY"
+        "SECTION_ONLY",
+        "POINTS_BASED"
       ]
     },
     "EvaluationFormScoringStatus":{
@@ -13736,7 +14036,8 @@
       ],
       "members":{
         "Mode":{"shape":"EvaluationFormScoringMode"},
-        "Status":{"shape":"EvaluationFormScoringStatus"}
+        "Status":{"shape":"EvaluationFormScoringStatus"},
+        "ScoreThresholds":{"shape":"EvaluationFormScoreThresholdList"}
       }
     },
     "EvaluationFormSearchConditionList":{
@@ -13815,7 +14116,9 @@
         "RefId":{"shape":"ReferenceId"},
         "Instructions":{"shape":"EvaluationFormQuestionInstructions"},
         "Items":{"shape":"EvaluationFormItemsList"},
-        "Weight":{"shape":"EvaluationFormItemWeight"}
+        "Weight":{"shape":"EvaluationFormItemWeight"},
+        "IsExcludedFromScoring":{"shape":"Boolean"},
+        "ScoreThresholds":{"shape":"EvaluationFormScoreThresholdList"}
       }
     },
     "EvaluationFormSectionTitle":{"type":"string"},
@@ -13856,7 +14159,8 @@
         "Text":{"shape":"EvaluationFormSingleSelectQuestionOptionText"},
         "Score":{"shape":"EvaluationFormQuestionAnswerScore"},
         "AutomaticFail":{"shape":"Boolean"},
-        "AutomaticFailConfiguration":{"shape":"AutomaticFailConfiguration"}
+        "AutomaticFailConfiguration":{"shape":"AutomaticFailConfiguration"},
+        "PointsConfiguration":{"shape":"QuestionOptionPointsConfiguration"}
       }
     },
     "EvaluationFormSingleSelectQuestionOptionList":{
@@ -13926,6 +14230,56 @@
       }
     },
     "EvaluationFormTitle":{"type":"string"},
+    "EvaluationFormValidationFailureReason":{"type":"string"},
+    "EvaluationFormValidationFinding":{
+      "type":"structure",
+      "required":[
+        "IssueCode",
+        "Description",
+        "Severity"
+      ],
+      "members":{
+        "IssueCode":{"shape":"EvaluationFormValidationIssueCode"},
+        "Items":{"shape":"EvaluationFormValidationFindingItemList"},
+        "Description":{"shape":"EvaluationFormValidationFindingDescription"},
+        "Suggestion":{"shape":"EvaluationFormValidationFindingSuggestion"},
+        "Severity":{"shape":"EvaluationFormValidationFindingSeverity"}
+      }
+    },
+    "EvaluationFormValidationFindingDescription":{"type":"string"},
+    "EvaluationFormValidationFindingItem":{
+      "type":"structure",
+      "members":{
+        "RefId":{"shape":"ReferenceId"},
+        "Property":{"shape":"EvaluationFormValidationFindingItemProperty"}
+      }
+    },
+    "EvaluationFormValidationFindingItemList":{
+      "type":"list",
+      "member":{"shape":"EvaluationFormValidationFindingItem"}
+    },
+    "EvaluationFormValidationFindingItemProperty":{"type":"string"},
+    "EvaluationFormValidationFindingList":{
+      "type":"list",
+      "member":{"shape":"EvaluationFormValidationFinding"}
+    },
+    "EvaluationFormValidationFindingSeverity":{
+      "type":"string",
+      "enum":[
+        "WARNING",
+        "ERROR"
+      ]
+    },
+    "EvaluationFormValidationFindingSuggestion":{"type":"string"},
+    "EvaluationFormValidationIssueCode":{"type":"string"},
+    "EvaluationFormValidationStatus":{
+      "type":"string",
+      "enum":[
+        "IN_PROGRESS",
+        "COMPLETED",
+        "FAILED"
+      ]
+    },
     "EvaluationFormVersionIsLocked":{"type":"boolean"},
     "EvaluationFormVersionStatus":{
       "type":"string",
@@ -14107,14 +14461,13 @@
         "Percentage":{"shape":"EvaluationScorePercentage"},
         "NotApplicable":{"shape":"Boolean"},
         "AutomaticFail":{"shape":"Boolean"},
-        "AppliedWeight":{"shape":"Double"}
+        "AppliedWeight":{"shape":"Double"},
+        "EarnedPoints":{"shape":"Integer"},
+        "MaxBasePoint":{"shape":"Integer"},
+        "PerformanceCategory":{"shape":"PerformanceCategoryName"}
       }
     },
-    "EvaluationScorePercentage":{
-      "type":"double",
-      "max":100,
-      "min":0
-    },
+    "EvaluationScorePercentage":{"type":"double"},
     "EvaluationScoresMap":{
       "type":"map",
       "key":{"shape":"ResourceId"},
@@ -14140,7 +14493,8 @@
     "EvaluationSearchFilter":{
       "type":"structure",
       "members":{
-        "AttributeFilter":{"shape":"ControlPlaneAttributeFilter"}
+        "AttributeFilter":{"shape":"ControlPlaneAttributeFilter"},
+        "ContactEvaluationAttributeFilter":{"shape":"ContactEvaluationAttributeFilter"}
       }
     },
     "EvaluationSearchMetadata":{
@@ -14165,7 +14519,16 @@
         "SamplingJobId":{"shape":"ResourceId"},
         "ReviewId":{"shape":"ResourceId"},
         "ContactParticipantRole":{"shape":"ContactParticipantRole"},
-        "ContactParticipantId":{"shape":"ResourceId"}
+        "ContactParticipantId":{"shape":"ResourceId"},
+        "EarnedPoints":{
+          "shape":"Integer",
+          "box":true
+        },
+        "MaxBasePoint":{
+          "shape":"Integer",
+          "box":true
+        },
+        "PerformanceCategory":{"shape":"PerformanceCategoryName"}
       }
     },
     "EvaluationSearchSummary":{
@@ -14346,7 +14709,11 @@
         "OnMetricDataUpdate",
         "OnCaseCreate",
         "OnCaseUpdate",
-        "OnSlaBreach"
+        "OnSlaBreach",
+        "OnAlertUpdate",
+        "OnSchedulePublish",
+        "OnScheduleUpdate",
+        "OnScheduleTimeOffRequestActivity"
       ]
     },
     "ExecutionRecord":{
@@ -14509,6 +14876,11 @@
       "box":true,
       "min":1
     },
+    "FileSourceUri":{
+      "type":"string",
+      "max":2000,
+      "min":1
+    },
     "FileStatusType":{
       "type":"string",
       "enum":[
@@ -14526,7 +14898,8 @@
         "EMAIL_MESSAGE_PLAIN_TEXT",
         "EMAIL_MESSAGE_REDACTED",
         "EMAIL_MESSAGE_PLAIN_TEXT_REDACTED",
-        "ATTACHMENT"
+        "ATTACHMENT",
+        "VOICE_RECORDING"
       ]
     },
     "FilterV2":{
@@ -14844,6 +15217,48 @@
         "EffectiveHoursOfOperationList":{"shape":"EffectiveHoursOfOperationList"},
         "EffectiveOverrideHoursList":{"shape":"EffectiveOverrideHoursList"},
         "TimeZone":{"shape":"TimeZone"}
+      }
+    },
+    "GetEvaluationFormValidationRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "EvaluationFormId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "EvaluationFormId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"EvaluationFormId"
+        },
+        "EvaluationFormVersion":{
+          "shape":"VersionNumber",
+          "box":true,
+          "location":"querystring",
+          "locationName":"version"
+        }
+      }
+    },
+    "GetEvaluationFormValidationResponse":{
+      "type":"structure",
+      "required":[
+        "Status",
+        "EvaluationFormId",
+        "EvaluationFormVersion",
+        "StartedTime"
+      ],
+      "members":{
+        "Status":{"shape":"EvaluationFormValidationStatus"},
+        "FailureReason":{"shape":"EvaluationFormValidationFailureReason"},
+        "EvaluationFormId":{"shape":"ResourceId"},
+        "EvaluationFormVersion":{"shape":"VersionNumber"},
+        "StartedTime":{"shape":"Timestamp"},
+        "Findings":{"shape":"EvaluationFormValidationFindingList"}
       }
     },
     "GetFederationTokenRequest":{
@@ -15994,6 +16409,13 @@
         "EncryptionConfig":{"shape":"EncryptionConfig"}
       }
     },
+    "LanguageConfiguration":{
+      "type":"structure",
+      "members":{
+        "LanguageLocale":{"shape":"LanguageLocale"}
+      }
+    },
+    "LanguageLocale":{"type":"string"},
     "LargeNextToken":{
       "type":"string",
       "max":100000,
@@ -18438,6 +18860,13 @@
       "min":0
     },
     "Long":{"type":"long"},
+    "MaskMode":{
+      "type":"string",
+      "enum":[
+        "PII",
+        "EntityType"
+      ]
+    },
     "MatchCriteria":{
       "type":"structure",
       "members":{
@@ -18935,6 +19364,13 @@
       "type":"list",
       "member":{"shape":"Notification"}
     },
+    "NotificationType":{
+      "type":"string",
+      "enum":[
+        "WIDGET_VIEW",
+        "WIDGET_ACTION"
+      ]
+    },
     "NullableBoolean":{"type":"boolean"},
     "NullableDouble":{"type":"double"},
     "NullableProficiencyLevel":{
@@ -19417,6 +19853,13 @@
       "max":100,
       "min":0
     },
+    "PerformanceCategoryName":{
+      "type":"string",
+      "enum":[
+        "NEEDS_IMPROVEMENT",
+        "EXCEEDS_EXPECTATIONS"
+      ]
+    },
     "Permission":{
       "type":"string",
       "max":128,
@@ -19452,6 +19895,11 @@
     "PersistentConnectionConfigs":{
       "type":"list",
       "member":{"shape":"PersistentConnectionConfig"}
+    },
+    "PersonalizeDomainName":{
+      "type":"string",
+      "max":64,
+      "min":1
     },
     "PhoneNumber":{
       "type":"string",
@@ -19806,6 +20254,19 @@
       "type":"string",
       "max":128,
       "min":0
+    },
+    "PointValue":{
+      "type":"integer",
+      "max":100,
+      "min":0
+    },
+    "Policy":{
+      "type":"string",
+      "enum":[
+        "None",
+        "RedactedOnly",
+        "RedactedAndOriginal"
+      ]
     },
     "PositiveAndNegativeDouble":{"type":"double"},
     "PositiveDouble":{
@@ -20185,6 +20646,22 @@
       "members":{
         "Agent":{"shape":"AgentQualityMetrics"},
         "Customer":{"shape":"CustomerQualityMetrics"}
+      }
+    },
+    "QuestionOptionPointsConfiguration":{
+      "type":"structure",
+      "required":["PointValue"],
+      "members":{
+        "PointValue":{"shape":"PointValue"},
+        "IsBonus":{"shape":"Boolean"}
+      }
+    },
+    "QuestionPointsConfiguration":{
+      "type":"structure",
+      "members":{
+        "MaxPointValue":{"shape":"PointValue"},
+        "MinPointValue":{"shape":"PointValue"},
+        "IsBonus":{"shape":"Boolean"}
       }
     },
     "QuestionRuleCategoryAutomationCondition":{
@@ -20765,6 +21242,38 @@
       "member":{"shape":"ARN"},
       "max":200
     },
+    "RecommenderConfig":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "RecommenderName"
+      ],
+      "members":{
+        "DomainName":{"shape":"PersonalizeDomainName"},
+        "RecommenderName":{"shape":"RecommenderName"},
+        "Context":{"shape":"RecommenderContext"}
+      }
+    },
+    "RecommenderContext":{
+      "type":"map",
+      "key":{"shape":"RecommenderContextKey"},
+      "value":{"shape":"RecommenderContextValue"}
+    },
+    "RecommenderContextKey":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "RecommenderContextValue":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "RecommenderName":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
     "RecordIds":{
       "type":"list",
       "member":{"shape":"DataTableId"}
@@ -20847,6 +21356,19 @@
           "shape":"WeekdayOccurrenceList",
           "box":true
         }
+      }
+    },
+    "RedactionConfiguration":{
+      "type":"structure",
+      "required":[
+        "Behavior",
+        "Policy"
+      ],
+      "members":{
+        "Behavior":{"shape":"Behavior"},
+        "Policy":{"shape":"Policy"},
+        "Entities":{"shape":"Entities"},
+        "MaskMode":{"shape":"MaskMode"}
       }
     },
     "Reference":{
@@ -21492,6 +22014,12 @@
         "IntegrationAssociationId":{"shape":"IntegrationAssociationId"}
       }
     },
+    "RulesConfiguration":{
+      "type":"structure",
+      "members":{
+        "Behavior":{"shape":"Behavior"}
+      }
+    },
     "S3Config":{
       "type":"structure",
       "required":[
@@ -21739,7 +22267,8 @@
         "SearchableContactAttributes":{"shape":"SearchableContactAttributes"},
         "SearchableSegmentAttributes":{"shape":"SearchableSegmentAttributes"},
         "ActiveRegions":{"shape":"ActiveRegionList"},
-        "ContactTags":{"shape":"ControlPlaneTagFilter"}
+        "ContactTags":{"shape":"ControlPlaneTagFilter"},
+        "AiAgents":{"shape":"AiAgentsCriteria"}
       }
     },
     "SearchDataTablesRequest":{
@@ -22532,10 +23061,50 @@
       "type":"structure",
       "members":{}
     },
+    "SendOutboundWebNotificationRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "BrowserId",
+        "SessionId",
+        "ExpiresAt",
+        "Source",
+        "Destination",
+        "Content"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "BrowserId":{"shape":"WebBrowserId"},
+        "SessionId":{"shape":"WebSessionId"},
+        "ExpiresAt":{"shape":"Timestamp"},
+        "Source":{"shape":"WebNotificationSource"},
+        "Destination":{"shape":"WidgetDestination"},
+        "Content":{"shape":"WebNotificationContent"}
+      }
+    },
+    "SendOutboundWebNotificationResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "SensitivePhoneNumber":{
       "type":"string",
       "pattern":"\\+[1-9]\\d{1,14}$",
       "sensitive":true
+    },
+    "SentimentConfiguration":{
+      "type":"structure",
+      "required":["Behavior"],
+      "members":{
+        "Behavior":{"shape":"Behavior"}
+      }
     },
     "ServiceQuotaExceededException":{
       "type":"structure",
@@ -22764,6 +23333,37 @@
         "ContinuedFromContactId":{"shape":"ContactId"}
       }
     },
+    "StartContactConversationalAnalyticsJobRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactId",
+        "AnalyticsModes",
+        "AnalyticsConfiguration"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "ContactId":{
+          "shape":"ContactId",
+          "location":"uri",
+          "locationName":"ContactId"
+        },
+        "AnalyticsModes":{"shape":"AnalyticsModes"},
+        "AnalyticsConfiguration":{"shape":"AnalyticsConfiguration"},
+        "ClientToken":{"shape":"ClientToken"}
+      }
+    },
+    "StartContactConversationalAnalyticsJobResponse":{
+      "type":"structure",
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "ContactId":{"shape":"ContactId"}
+      }
+    },
     "StartContactEvaluationRequest":{
       "type":"structure",
       "required":[
@@ -22887,6 +23487,40 @@
       "type":"structure",
       "members":{
         "ContactId":{"shape":"ContactId"}
+      }
+    },
+    "StartEvaluationFormValidationRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "EvaluationFormId",
+        "EvaluationFormVersion"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "EvaluationFormId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"EvaluationFormId"
+        },
+        "EvaluationFormVersion":{"shape":"VersionNumber"}
+      }
+    },
+    "StartEvaluationFormValidationResponse":{
+      "type":"structure",
+      "required":[
+        "EvaluationFormId",
+        "EvaluationFormArn",
+        "EvaluationFormVersion"
+      ],
+      "members":{
+        "EvaluationFormId":{"shape":"ResourceId"},
+        "EvaluationFormArn":{"shape":"ARN"},
+        "EvaluationFormVersion":{"shape":"VersionNumber"}
       }
     },
     "StartOutboundChatContactRequest":{
@@ -23347,6 +23981,27 @@
       "type":"list",
       "member":{"shape":"SuccessfulRequest"}
     },
+    "SummaryConfiguration":{
+      "type":"structure",
+      "required":["SummaryModes"],
+      "members":{
+        "SummaryModes":{"shape":"SummaryModes"}
+      }
+    },
+    "SummaryMode":{
+      "type":"string",
+      "enum":[
+        "PostContact",
+        "AutomatedInteraction",
+        "ContactChain"
+      ]
+    },
+    "SummaryModes":{
+      "type":"list",
+      "member":{"shape":"SummaryMode"},
+      "max":2,
+      "min":0
+    },
     "SupportedMessagingContentType":{
       "type":"string",
       "max":100,
@@ -23488,7 +24143,7 @@
     },
     "TargetSlaMinutes":{
       "type":"long",
-      "max":129600,
+      "max":1051200,
       "min":1
     },
     "TaskActionDefinition":{
@@ -26178,6 +26833,11 @@
       "type":"list",
       "member":{"shape":"ViewAction"}
     },
+    "ViewArn":{
+      "type":"string",
+      "max":500,
+      "min":1
+    },
     "ViewContent":{
       "type":"structure",
       "members":{
@@ -26481,6 +27141,32 @@
         "ALL"
       ]
     },
+    "WebBrowserId":{
+      "type":"string",
+      "max":36,
+      "min":1
+    },
+    "WebNotificationContent":{
+      "type":"structure",
+      "required":["Type"],
+      "members":{
+        "Type":{"shape":"NotificationType"},
+        "ViewArn":{"shape":"ViewArn"},
+        "Attributes":{"shape":"ContentAttributes"}
+      }
+    },
+    "WebNotificationSource":{
+      "type":"structure",
+      "required":["SourceCampaign"],
+      "members":{
+        "SourceCampaign":{"shape":"SourceCampaign"}
+      }
+    },
+    "WebSessionId":{
+      "type":"string",
+      "max":36,
+      "min":1
+    },
     "WeekdayOccurrenceInteger":{
       "type":"integer",
       "box":true,
@@ -26492,6 +27178,22 @@
       "member":{"shape":"WeekdayOccurrenceInteger"},
       "max":1,
       "min":0
+    },
+    "WidgetDestination":{
+      "type":"structure",
+      "required":[
+        "WidgetId",
+        "ProfileId"
+      ],
+      "members":{
+        "WidgetId":{"shape":"WidgetId"},
+        "ProfileId":{"shape":"CustomerProfileId"}
+      }
+    },
+    "WidgetId":{
+      "type":"string",
+      "max":36,
+      "min":1
     },
     "WisdomInfo":{
       "type":"structure",

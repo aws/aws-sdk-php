@@ -103,6 +103,12 @@
         "UntagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource to remove tags from. The resource must be active (not in the <code>DELETING</code> state), and must be owned by the account ID included in the request.</p>"
       }
     },
+    "AutoscalingStatus": {
+      "base": "<p>The autoscaling status of an OpenSearch Serverless collection group: <code>ACTION_SCALING_UP</code>, <code>ACTION_SCALING_DOWN</code>, or <code>NO_ACTION</code>.</p>",
+      "refs": {
+        "CapacityDetails$autoscalingStatus": "<p>The current autoscaling status for the collection group.</p>"
+      }
+    },
     "BatchGetCollectionGroupRequest": {
       "base": null,
       "refs": {}
@@ -148,6 +154,13 @@
       "refs": {
         "EffectiveLifecyclePolicyDetail$noMinRetentionPeriod": "<p>The minimum number of index retention days set. That is an optional param that will return as <code>true</code> if the minimum number of days or hours is not set to a index resource.</p>",
         "EncryptionConfig$aWSOwnedKey": "<p>Indicates whether to use an Amazon Web Services-owned key for encryption.</p>"
+      }
+    },
+    "CapacityDetails": {
+      "base": "<p>Capacity details for an OpenSearch Serverless collection group, including the current capacity and autoscaling status.</p>",
+      "refs": {
+        "CurrentCapacity$search": "<p>The search capacity for the collection group.</p>",
+        "CurrentCapacity$indexing": "<p>The indexing capacity for the collection group.</p>"
       }
     },
     "CapacityLimits": {
@@ -267,11 +280,28 @@
         "BatchGetCollectionGroupRequest$ids": "<p>A list of collection group IDs. You can't provide names and IDs in the same request.</p>"
       }
     },
-    "CollectionGroupIndexingCapacityValue": {
+    "CollectionGroupMaxIndexingCapacityValue": {
       "base": null,
       "refs": {
-        "CollectionGroupCapacityLimits$maxIndexingCapacityInOCU": "<p>The maximum indexing capacity for collections in the group.</p>",
+        "CollectionGroupCapacityLimits$maxIndexingCapacityInOCU": "<p>The maximum indexing capacity for collections in the group.</p>"
+      }
+    },
+    "CollectionGroupMaxSearchCapacityValue": {
+      "base": null,
+      "refs": {
+        "CollectionGroupCapacityLimits$maxSearchCapacityInOCU": "<p>The maximum search capacity for collections in the group.</p>"
+      }
+    },
+    "CollectionGroupMinIndexingCapacityValue": {
+      "base": null,
+      "refs": {
         "CollectionGroupCapacityLimits$minIndexingCapacityInOCU": "<p>The minimum indexing capacity for collections in the group.</p>"
+      }
+    },
+    "CollectionGroupMinSearchCapacityValue": {
+      "base": null,
+      "refs": {
+        "CollectionGroupCapacityLimits$minSearchCapacityInOCU": "<p>The minimum search capacity for collections in the group.</p>"
       }
     },
     "CollectionGroupName": {
@@ -295,13 +325,6 @@
       "base": null,
       "refs": {
         "BatchGetCollectionGroupRequest$names": "<p>A list of collection group names. You can't provide names and IDs in the same request.</p>"
-      }
-    },
-    "CollectionGroupSearchCapacityValue": {
-      "base": null,
-      "refs": {
-        "CollectionGroupCapacityLimits$maxSearchCapacityInOCU": "<p>The maximum search capacity for collections in the group.</p>",
-        "CollectionGroupCapacityLimits$minSearchCapacityInOCU": "<p>The minimum search capacity for collections in the group.</p>"
       }
     },
     "CollectionGroupSummaries": {
@@ -511,6 +534,12 @@
       "base": null,
       "refs": {}
     },
+    "CurrentCapacity": {
+      "base": "<p>Current search and indexing capacity for an OpenSearch Serverless collection group. Measured in OpenSearch Compute Units (OCUs).</p>",
+      "refs": {
+        "CollectionGroupDetail$currentCapacity": "<p>Current search and indexing capacity for the collection group.</p>"
+      }
+    },
     "DeleteAccessPolicyRequest": {
       "base": null,
       "refs": {}
@@ -587,6 +616,17 @@
       "base": null,
       "refs": {}
     },
+    "DeletionProtection": {
+      "base": "<p>Indicates whether deletion protection is <code>ENABLED</code> or <code>DISABLED</code> for the collection. When deletion protection is <code>ENABLED</code>, the collection cannot be deleted.</p>",
+      "refs": {
+        "CollectionDetail$deletionProtection": "<p>Indicates whether deletion protection is <code>ENABLED</code> or <code>DISABLED</code> for the collection.</p>",
+        "CreateCollectionDetail$deletionProtection": "<p>Indicates whether deletion protection is <code>ENABLED</code> or <code>DISABLED</code> for the collection.</p>",
+        "CreateCollectionRequest$deletionProtection": "<p>Indicates whether to enable deletion protection for the collection. When set to <code>ENABLED</code>, the collection cannot be deleted.</p>",
+        "DeleteCollectionDetail$deletionProtection": "<p>Indicates whether deletion protection is <code>ENABLED</code> or <code>DISABLED</code> for the collection.</p>",
+        "UpdateCollectionDetail$deletionProtection": "<p>Indicates whether deletion protection is <code>ENABLED</code> or <code>DISABLED</code> for the collection.</p>",
+        "UpdateCollectionRequest$deletionProtection": "<p>Indicates whether to enable or disable deletion protection for the collection. When set to <code>ENABLED</code>, the collection cannot be deleted.</p>"
+      }
+    },
     "Document": {
       "base": null,
       "refs": {
@@ -635,6 +675,12 @@
       "base": "<p>FIPS-compliant endpoint URLs for an OpenSearch Serverless collection. These endpoints ensure all data transmission uses FIPS 140-3 validated cryptographic implementations, meeting federal security requirements for government workloads.</p>",
       "refs": {
         "CollectionDetail$fipsEndpoints": "<p>FIPS-compliant endpoints for the collection. These endpoints use FIPS 140-3 validated cryptographic modules and are required for federal government workloads that must comply with FedRAMP security standards.</p>"
+      }
+    },
+    "Float": {
+      "base": null,
+      "refs": {
+        "CapacityDetails$capacityInOcu": "<p>The current capacity in OpenSearch Compute Units (OCUs).</p>"
       }
     },
     "GetAccessPolicyRequest": {
@@ -1232,6 +1278,16 @@
         "SecurityPolicyDetail$type": "<p>The type of security policy.</p>",
         "SecurityPolicySummary$type": "<p>The type of security policy.</p>",
         "UpdateSecurityPolicyRequest$type": "<p>The type of access policy.</p>"
+      }
+    },
+    "ServerlessGeneration": {
+      "base": null,
+      "refs": {
+        "CollectionGroupDetail$generation": "<p>The generation of Amazon OpenSearch Serverless for the collection group.</p>",
+        "CollectionGroupSummary$generation": "<p>The generation of Amazon OpenSearch Serverless for the collection group.</p>",
+        "CreateCollectionGroupDetail$generation": "<p>The generation of Amazon OpenSearch Serverless for the collection group.</p>",
+        "CreateCollectionGroupRequest$generation": "<p>The generation of Amazon OpenSearch Serverless for the collection group. Valid values are <code>CLASSIC</code> and <code>NEXTGEN</code>.</p>",
+        "UpdateCollectionGroupDetail$generation": "<p>The generation of Amazon OpenSearch Serverless for the collection group.</p>"
       }
     },
     "ServerlessVectorAccelerationStatus": {

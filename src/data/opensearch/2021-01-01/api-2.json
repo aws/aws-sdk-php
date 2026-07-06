@@ -109,6 +109,24 @@
         {"shape":"DisabledOperationException"}
       ]
     },
+    "AttachDataSource":{
+      "name":"AttachDataSource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/opensearch/application/{id}/attachDataSource",
+        "responseCode":200
+      },
+      "input":{"shape":"AttachDataSourceRequest"},
+      "output":{"shape":"AttachDataSourceResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"DisabledOperationException"}
+      ]
+    },
     "AuthorizeVpcEndpointAccess":{
       "name":"AuthorizeVpcEndpointAccess",
       "http":{
@@ -422,6 +440,23 @@
         {"shape":"DisabledOperationException"}
       ]
     },
+    "DescribeDataSourceAttachment":{
+      "name":"DescribeDataSourceAttachment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/opensearch/application/{id}/describeDataSourceAttachment",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeDataSourceAttachmentRequest"},
+      "output":{"shape":"DescribeDataSourceAttachmentResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"DisabledOperationException"}
+      ]
+    },
     "DescribeDomain":{
       "name":"DescribeDomain",
       "http":{
@@ -666,6 +701,24 @@
         {"shape":"BaseException"}
       ]
     },
+    "DetachDataSource":{
+      "name":"DetachDataSource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/opensearch/application/{id}/detachDataSource",
+        "responseCode":200
+      },
+      "input":{"shape":"DetachDataSourceRequest"},
+      "output":{"shape":"DetachDataSourceResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"DisabledOperationException"}
+      ]
+    },
     "DissociatePackage":{
       "name":"DissociatePackage",
       "http":{
@@ -882,6 +935,23 @@
         {"shape":"InternalException"}
       ]
     },
+    "InsightFeedback":{
+      "name":"InsightFeedback",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/opensearch/insight-feedback"
+      },
+      "input":{"shape":"InsightFeedbackRequest"},
+      "output":{"shape":"InsightFeedbackResponse"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"InternalException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"DisabledOperationException"},
+        {"shape":"LimitExceededException"}
+      ]
+    },
     "ListApplications":{
       "name":"ListApplications",
       "http":{
@@ -897,6 +967,23 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalException"},
+        {"shape":"DisabledOperationException"}
+      ]
+    },
+    "ListDataSourceAttachments":{
+      "name":"ListDataSourceAttachments",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/opensearch/application/{id}/listDataSourceAttachments",
+        "responseCode":200
+      },
+      "input":{"shape":"ListDataSourceAttachmentsRequest"},
+      "output":{"shape":"ListDataSourceAttachmentsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"DisabledOperationException"}
       ]
     },
@@ -1773,6 +1860,34 @@
         "DomainPackageDetailsList":{"shape":"DomainPackageDetailsList"}
       }
     },
+    "AttachDataSourceRequest":{
+      "type":"structure",
+      "required":[
+        "id",
+        "dataSourceArn"
+      ],
+      "members":{
+        "id":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"id"
+        },
+        "dataSourceArn":{"shape":"ARN"},
+        "workspaceId":{"shape":"String"},
+        "workspaceConfiguration":{"shape":"WorkspaceConfigurationInput"},
+        "clientToken":{"shape":"ClientToken"}
+      }
+    },
+    "AttachDataSourceResponse":{
+      "type":"structure",
+      "members":{
+        "attachmentId":{"shape":"String"},
+        "id":{"shape":"Id"},
+        "arn":{"shape":"ARN"},
+        "dataSourceArn":{"shape":"ARN"},
+        "status":{"shape":"DataSourceAttachmentStatus"}
+      }
+    },
     "AuthorizeVpcEndpointAccessRequest":{
       "type":"structure",
       "required":["DomainName"],
@@ -1909,6 +2024,36 @@
     "AutoTuneType":{
       "type":"string",
       "enum":["SCHEDULED_ACTION"]
+    },
+    "AutomatedSnapshotPauseOptions":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{"shape":"Boolean"},
+        "StartTime":{"shape":"Timestamp"},
+        "EndTime":{"shape":"Timestamp"},
+        "State":{"shape":"PauseState"}
+      }
+    },
+    "AutomatedSnapshotPauseOptionsStatus":{
+      "type":"structure",
+      "required":[
+        "Options",
+        "Status"
+      ],
+      "members":{
+        "Options":{"shape":"AutomatedSnapshotPauseOptions"},
+        "Status":{"shape":"OptionStatus"}
+      }
+    },
+    "AutomatedSnapshotPauseRequestOptions":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{"shape":"Boolean"},
+        "StartTime":{"shape":"Timestamp"},
+        "EndTime":{"shape":"Timestamp"}
+      }
     },
     "AvailabilityZone":{
       "type":"string",
@@ -2286,7 +2431,10 @@
         "OffPeakWindowOptions":{"shape":"OffPeakWindowOptions"},
         "SoftwareUpdateOptions":{"shape":"SoftwareUpdateOptions"},
         "AIMLOptions":{"shape":"AIMLOptionsInput"},
-        "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptions"}
+        "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptions"},
+        "AutomatedSnapshotPauseOptions":{"shape":"AutomatedSnapshotPauseRequestOptions"},
+        "UseCase":{"shape":"DomainUseCase"},
+        "EngineMode":{"shape":"EngineMode"}
       }
     },
     "CreateDomainResponse":{
@@ -2403,6 +2551,26 @@
         "dataSourceDescription":{"shape":"DataSourceDescription"},
         "iamRoleForDataSourceArn":{"shape":"RoleArn"}
       }
+    },
+    "DataSourceAttachmentStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "ATTACHED",
+        "FAILED"
+      ]
+    },
+    "DataSourceAttachmentSummary":{
+      "type":"structure",
+      "members":{
+        "attachmentId":{"shape":"String"},
+        "dataSourceArn":{"shape":"ARN"},
+        "status":{"shape":"DataSourceAttachmentStatus"}
+      }
+    },
+    "DataSourceAttachmentSummaryList":{
+      "type":"list",
+      "member":{"shape":"DataSourceAttachmentSummary"}
     },
     "DataSourceDescription":{
       "type":"string",
@@ -2679,6 +2847,31 @@
       "type":"structure",
       "members":{
         "status":{"shape":"CapabilityStatus"}
+      }
+    },
+    "DescribeDataSourceAttachmentRequest":{
+      "type":"structure",
+      "required":[
+        "id",
+        "dataSourceArn"
+      ],
+      "members":{
+        "id":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"id"
+        },
+        "dataSourceArn":{"shape":"ARN"}
+      }
+    },
+    "DescribeDataSourceAttachmentResponse":{
+      "type":"structure",
+      "members":{
+        "attachmentId":{"shape":"String"},
+        "id":{"shape":"Id"},
+        "arn":{"shape":"ARN"},
+        "dataSourceArn":{"shape":"ARN"},
+        "status":{"shape":"DataSourceAttachmentStatus"}
       }
     },
     "DescribeDomainAutoTunesRequest":{
@@ -3054,6 +3247,29 @@
       }
     },
     "Description":{"type":"string"},
+    "DetachDataSourceRequest":{
+      "type":"structure",
+      "required":[
+        "id",
+        "dataSourceArn"
+      ],
+      "members":{
+        "id":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"id"
+        },
+        "dataSourceArn":{"shape":"ARN"}
+      }
+    },
+    "DetachDataSourceResponse":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"Id"},
+        "arn":{"shape":"ARN"},
+        "dataSourceArn":{"shape":"ARN"}
+      }
+    },
     "DirectQueryDataSource":{
       "type":"structure",
       "members":{
@@ -3178,7 +3394,10 @@
         "SoftwareUpdateOptions":{"shape":"SoftwareUpdateOptionsStatus"},
         "ModifyingProperties":{"shape":"ModifyingPropertiesList"},
         "AIMLOptions":{"shape":"AIMLOptionsStatus"},
-        "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptionsStatus"}
+        "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptionsStatus"},
+        "AutomatedSnapshotPauseOptions":{"shape":"AutomatedSnapshotPauseOptionsStatus"},
+        "UseCase":{"shape":"UseCaseStatus"},
+        "EngineMode":{"shape":"EngineModeStatus"}
       }
     },
     "DomainEndpointOptions":{
@@ -3376,12 +3595,24 @@
         "DomainProcessingStatus":{"shape":"DomainProcessingStatusType"},
         "ModifyingProperties":{"shape":"ModifyingPropertiesList"},
         "AIMLOptions":{"shape":"AIMLOptionsOutput"},
-        "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptions"}
+        "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptions"},
+        "AutomatedSnapshotPauseOptions":{"shape":"AutomatedSnapshotPauseOptions"},
+        "UseCase":{"shape":"DomainUseCase"},
+        "EngineMode":{"shape":"EngineMode"}
       }
     },
     "DomainStatusList":{
       "type":"list",
       "member":{"shape":"DomainStatus"}
+    },
+    "DomainUseCase":{
+      "type":"string",
+      "enum":[
+        "SEARCH",
+        "VECTOR",
+        "OBSERVABILITY",
+        "MIXED"
+      ]
     },
     "Double":{"type":"double"},
     "DryRun":{"type":"boolean"},
@@ -3474,6 +3705,24 @@
       "type":"map",
       "key":{"shape":"String"},
       "value":{"shape":"ServiceUrl"}
+    },
+    "EngineMode":{
+      "type":"string",
+      "enum":[
+        "GENERAL",
+        "OPTIMIZED"
+      ]
+    },
+    "EngineModeStatus":{
+      "type":"structure",
+      "required":[
+        "Options",
+        "Status"
+      ],
+      "members":{
+        "Options":{"shape":"EngineMode"},
+        "Status":{"shape":"OptionStatus"}
+      }
     },
     "EngineType":{
       "type":"string",
@@ -4009,6 +4258,53 @@
       "min":3,
       "pattern":"([a-z][a-z0-9\\-]+|\\d{12})"
     },
+    "InsightFeedbackEntity":{
+      "type":"structure",
+      "required":[
+        "Type",
+        "Value"
+      ],
+      "members":{
+        "Type":{"shape":"InsightFeedbackEntityType"},
+        "Value":{"shape":"InsightEntityValue"}
+      }
+    },
+    "InsightFeedbackEntityType":{
+      "type":"string",
+      "enum":["DomainName"]
+    },
+    "InsightFeedbackRequest":{
+      "type":"structure",
+      "required":[
+        "Entity",
+        "InsightId",
+        "Thumbs"
+      ],
+      "members":{
+        "Entity":{"shape":"InsightFeedbackEntity"},
+        "InsightId":{"shape":"GUID"},
+        "Thumbs":{"shape":"InsightFeedbackThumbs"},
+        "FeedbackText":{"shape":"InsightFeedbackText"}
+      }
+    },
+    "InsightFeedbackResponse":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"InsightResponseStatus"}
+      }
+    },
+    "InsightFeedbackText":{
+      "type":"string",
+      "max":1000,
+      "min":0
+    },
+    "InsightFeedbackThumbs":{
+      "type":"string",
+      "enum":[
+        "Up",
+        "Down"
+      ]
+    },
     "InsightField":{
       "type":"structure",
       "required":[
@@ -4049,6 +4345,13 @@
         "HIGH",
         "MEDIUM",
         "LOW"
+      ]
+    },
+    "InsightResponseStatus":{
+      "type":"string",
+      "enum":[
+        "SUCCESS",
+        "ERROR"
       ]
     },
     "InsightSortOrder":{
@@ -4256,6 +4559,26 @@
       "members":{
         "ApplicationSummaries":{"shape":"ApplicationSummaries"},
         "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListDataSourceAttachmentsRequest":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"id"
+        },
+        "nextToken":{"shape":"String"},
+        "maxResults":{"shape":"Integer"}
+      }
+    },
+    "ListDataSourceAttachmentsResponse":{
+      "type":"structure",
+      "members":{
+        "attachments":{"shape":"DataSourceAttachmentSummaryList"},
+        "nextToken":{"shape":"String"}
       }
     },
     "ListDataSourcesRequest":{
@@ -5185,6 +5508,15 @@
       "pattern":".*",
       "sensitive":true
     },
+    "PauseState":{
+      "type":"string",
+      "enum":[
+        "Active",
+        "Completed",
+        "Scheduled",
+        "Disabled"
+      ]
+    },
     "PluginClassName":{
       "type":"string",
       "max":1024
@@ -5872,7 +6204,8 @@
           "locationName":"id"
         },
         "dataSources":{"shape":"DataSources"},
-        "appConfigs":{"shape":"AppConfigs"}
+        "appConfigs":{"shape":"AppConfigs"},
+        "iamIdentityCenterOptions":{"shape":"IamIdentityCenterOptionsInput"}
       }
     },
     "UpdateApplicationResponse":{
@@ -5970,7 +6303,10 @@
         "OffPeakWindowOptions":{"shape":"OffPeakWindowOptions"},
         "SoftwareUpdateOptions":{"shape":"SoftwareUpdateOptions"},
         "AIMLOptions":{"shape":"AIMLOptionsInput"},
-        "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptions"}
+        "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptions"},
+        "AutomatedSnapshotPauseOptions":{"shape":"AutomatedSnapshotPauseRequestOptions"},
+        "UseCase":{"shape":"DomainUseCase"},
+        "EngineMode":{"shape":"EngineMode"}
       }
     },
     "UpdateDomainConfigResponse":{
@@ -6165,6 +6501,17 @@
       "type":"list",
       "member":{"shape":"UpgradeStepItem"}
     },
+    "UseCaseStatus":{
+      "type":"structure",
+      "required":[
+        "Options",
+        "Status"
+      ],
+      "members":{
+        "Options":{"shape":"DomainUseCase"},
+        "Status":{"shape":"OptionStatus"}
+      }
+    },
     "UserPoolId":{
       "type":"string",
       "max":55,
@@ -6184,7 +6531,8 @@
         "VPCId":{"shape":"String"},
         "SubnetIds":{"shape":"StringList"},
         "AvailabilityZones":{"shape":"StringList"},
-        "SecurityGroupIds":{"shape":"StringList"}
+        "SecurityGroupIds":{"shape":"StringList"},
+        "EgressEnabled":{"shape":"Boolean"}
       }
     },
     "VPCDerivedInfoStatus":{
@@ -6202,7 +6550,8 @@
       "type":"structure",
       "members":{
         "SubnetIds":{"shape":"StringList"},
-        "SecurityGroupIds":{"shape":"StringList"}
+        "SecurityGroupIds":{"shape":"StringList"},
+        "EgressEnabled":{"shape":"Boolean"}
       }
     },
     "ValidationException":{
@@ -6336,6 +6685,17 @@
       "members":{
         "Hours":{"shape":"StartTimeHours"},
         "Minutes":{"shape":"StartTimeMinutes"}
+      }
+    },
+    "WorkspaceConfigurationInput":{
+      "type":"structure",
+      "required":[
+        "name",
+        "workspaceType"
+      ],
+      "members":{
+        "name":{"shape":"String"},
+        "workspaceType":{"shape":"String"}
       }
     },
     "ZoneAwarenessConfig":{

@@ -487,6 +487,51 @@
         {"shape":"WAFInvalidOperationException"}
       ]
     },
+    "GetRevenueStatistics":{
+      "name":"GetRevenueStatistics",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetRevenueStatisticsRequest"},
+      "output":{"shape":"GetRevenueStatisticsResponse"},
+      "errors":[
+        {"shape":"WAFInternalErrorException"},
+        {"shape":"WAFInvalidParameterException"},
+        {"shape":"WAFNonexistentItemException"},
+        {"shape":"WAFInvalidOperationException"}
+      ]
+    },
+    "GetRevenueStatisticsSummary":{
+      "name":"GetRevenueStatisticsSummary",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetRevenueStatisticsSummaryRequest"},
+      "output":{"shape":"GetRevenueStatisticsSummaryResponse"},
+      "errors":[
+        {"shape":"WAFInternalErrorException"},
+        {"shape":"WAFInvalidParameterException"},
+        {"shape":"WAFNonexistentItemException"},
+        {"shape":"WAFInvalidOperationException"}
+      ]
+    },
+    "GetRevenueStatisticsTimeSeries":{
+      "name":"GetRevenueStatisticsTimeSeries",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetRevenueStatisticsTimeSeriesRequest"},
+      "output":{"shape":"GetRevenueStatisticsTimeSeriesResponse"},
+      "errors":[
+        {"shape":"WAFInternalErrorException"},
+        {"shape":"WAFInvalidParameterException"},
+        {"shape":"WAFNonexistentItemException"},
+        {"shape":"WAFInvalidOperationException"}
+      ]
+    },
     "GetRuleGroup":{
       "name":"GetRuleGroup",
       "http":{
@@ -703,6 +748,21 @@
       "errors":[
         {"shape":"WAFInternalErrorException"},
         {"shape":"WAFInvalidParameterException"},
+        {"shape":"WAFInvalidOperationException"}
+      ]
+    },
+    "ListSettlementRecords":{
+      "name":"ListSettlementRecords",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListSettlementRecordsRequest"},
+      "output":{"shape":"ListSettlementRecordsResponse"},
+      "errors":[
+        {"shape":"WAFInternalErrorException"},
+        {"shape":"WAFInvalidParameterException"},
+        {"shape":"WAFNonexistentItemException"},
         {"shape":"WAFInvalidOperationException"}
       ]
     },
@@ -1012,6 +1072,7 @@
         "COUNT",
         "CAPTCHA",
         "CHALLENGE",
+        "MONETIZE",
         "EXCLUDED_AS_COUNT"
       ]
     },
@@ -1102,7 +1163,8 @@
         "API_GATEWAY",
         "COGNITO_USER_POOL",
         "APP_RUNNER_SERVICE",
-        "VERIFIED_ACCESS_INSTANCE"
+        "VERIFIED_ACCESS_INSTANCE",
+        "AGENTCORE_GATEWAY"
       ]
     },
     "AssociationConfig":{
@@ -1133,6 +1195,15 @@
       "members":{
         "CustomResponse":{"shape":"CustomResponse"}
       }
+    },
+    "BlockchainChain":{
+      "type":"string",
+      "enum":[
+        "BASE",
+        "SOLANA",
+        "BASE_SEPOLIA",
+        "SOLANA_DEVNET"
+      ]
     },
     "Body":{
       "type":"structure",
@@ -1656,7 +1727,8 @@
         "Rules":{"shape":"Rules"},
         "VisibilityConfig":{"shape":"VisibilityConfig"},
         "Tags":{"shape":"TagList"},
-        "CustomResponseBodies":{"shape":"CustomResponseBodies"}
+        "CustomResponseBodies":{"shape":"CustomResponseBodies"},
+        "MonetizationConfig":{"shape":"MonetizationConfig"}
       }
     },
     "CreateRuleGroupResponse":{
@@ -1688,7 +1760,8 @@
         "TokenDomains":{"shape":"TokenDomains"},
         "AssociationConfig":{"shape":"AssociationConfig"},
         "OnSourceDDoSProtectionConfig":{"shape":"OnSourceDDoSProtectionConfig"},
-        "ApplicationConfig":{"shape":"ApplicationConfig"}
+        "ApplicationConfig":{"shape":"ApplicationConfig"},
+        "MonetizationConfig":{"shape":"MonetizationConfig"}
       }
     },
     "CreateWebACLResponse":{
@@ -1702,6 +1775,28 @@
       "max":256,
       "min":1,
       "pattern":".*\\S.*"
+    },
+    "CryptoConfig":{
+      "type":"structure",
+      "required":["PaymentNetworks"],
+      "members":{
+        "PaymentNetworks":{"shape":"PaymentNetworks"}
+      }
+    },
+    "CryptoCurrency":{
+      "type":"string",
+      "enum":["USDC"]
+    },
+    "Currency":{
+      "type":"string",
+      "enum":["USDC"]
+    },
+    "CurrencyMode":{
+      "type":"string",
+      "enum":[
+        "REAL",
+        "TEST"
+      ]
     },
     "CustomHTTPHeader":{
       "type":"structure",
@@ -1763,6 +1858,22 @@
         "ContentType":{"shape":"ResponseContentType"},
         "Content":{"shape":"ResponseContent"}
       }
+    },
+    "DataPointEntry":{
+      "type":"structure",
+      "members":{
+        "Date":{"shape":"Timestamp"},
+        "MonetizeServedCount":{"shape":"RequestCount"},
+        "SettledCount":{"shape":"RequestCount"},
+        "TotalAmount":{"shape":"MonetizationAmountValue"},
+        "Category":{"shape":"FilterString"},
+        "Intent":{"shape":"FilterString"},
+        "GroupByValue":{"shape":"FilterString"}
+      }
+    },
+    "DataPointsList":{
+      "type":"list",
+      "member":{"shape":"DataPointEntry"}
     },
     "DataProtection":{
       "type":"structure",
@@ -2413,6 +2524,83 @@
         "LockToken":{"shape":"LockToken"}
       }
     },
+    "GetRevenueStatisticsRequest":{
+      "type":"structure",
+      "required":[
+        "StatisticType",
+        "TimeWindow",
+        "Scope",
+        "Currency"
+      ],
+      "members":{
+        "StatisticType":{"shape":"RankingStatisticType"},
+        "TimeWindow":{"shape":"TimeWindow"},
+        "Scope":{"shape":"Scope"},
+        "Currency":{"shape":"Currency"},
+        "GroupBy":{"shape":"GroupByType"},
+        "Filters":{"shape":"MonetizationFilterList"},
+        "NextMarker":{"shape":"NextMarker"},
+        "Limit":{"shape":"PathStatisticsLimit"},
+        "SortBy":{"shape":"RankingSortBy"},
+        "SortOrder":{"shape":"SortOrder"}
+      }
+    },
+    "GetRevenueStatisticsResponse":{
+      "type":"structure",
+      "members":{
+        "SourceStatistics":{"shape":"SourceStatisticsList"},
+        "RevenuePathStatistics":{"shape":"RevenuePathStatisticsList"},
+        "NextMarker":{"shape":"NextMarker"}
+      }
+    },
+    "GetRevenueStatisticsSummaryRequest":{
+      "type":"structure",
+      "required":[
+        "TimeWindow",
+        "Scope",
+        "Currency"
+      ],
+      "members":{
+        "TimeWindow":{"shape":"TimeWindow"},
+        "Scope":{"shape":"Scope"},
+        "Currency":{"shape":"Currency"},
+        "Filters":{"shape":"MonetizationFilterList"}
+      }
+    },
+    "GetRevenueStatisticsSummaryResponse":{
+      "type":"structure",
+      "members":{
+        "RevenueBreakdown":{"shape":"RevenueBreakdown"}
+      }
+    },
+    "GetRevenueStatisticsTimeSeriesRequest":{
+      "type":"structure",
+      "required":[
+        "StatisticType",
+        "TimeWindow",
+        "Scope",
+        "Interval",
+        "Currency"
+      ],
+      "members":{
+        "StatisticType":{"shape":"TimeSeriesStatisticType"},
+        "TimeWindow":{"shape":"TimeWindow"},
+        "Scope":{"shape":"Scope"},
+        "Interval":{"shape":"IntervalType"},
+        "Currency":{"shape":"Currency"},
+        "GroupBy":{"shape":"GroupByType"},
+        "Filters":{"shape":"MonetizationFilterList"},
+        "Limit":{"shape":"MaxDataPoints"},
+        "NextMarker":{"shape":"NextMarker"}
+      }
+    },
+    "GetRevenueStatisticsTimeSeriesResponse":{
+      "type":"structure",
+      "members":{
+        "DataPoints":{"shape":"DataPointsList"},
+        "NextMarker":{"shape":"NextMarker"}
+      }
+    },
     "GetRuleGroupRequest":{
       "type":"structure",
       "members":{
@@ -2518,6 +2706,16 @@
         "LockToken":{"shape":"LockToken"},
         "ApplicationIntegrationURL":{"shape":"OutputUrl"}
       }
+    },
+    "GroupByType":{
+      "type":"string",
+      "enum":[
+        "NAME",
+        "CATEGORY",
+        "INTENT",
+        "ORGANIZATION",
+        "WEBACL"
+      ]
     },
     "HTTPHeader":{
       "type":"structure",
@@ -2662,6 +2860,15 @@
       "enum":[
         "COMMON",
         "TARGETED"
+      ]
+    },
+    "IntervalType":{
+      "type":"string",
+      "enum":[
+        "MINUTELY",
+        "FIVE_MINUTELY",
+        "HOURLY",
+        "DAILY"
       ]
     },
     "JA3Fingerprint":{
@@ -2953,6 +3160,31 @@
         "RuleGroups":{"shape":"RuleGroupSummaries"}
       }
     },
+    "ListSettlementRecordsRequest":{
+      "type":"structure",
+      "required":[
+        "TimeWindow",
+        "Scope",
+        "Currency"
+      ],
+      "members":{
+        "TimeWindow":{"shape":"TimeWindow"},
+        "Scope":{"shape":"Scope"},
+        "Currency":{"shape":"Currency"},
+        "Filters":{"shape":"MonetizationFilterList"},
+        "SortBy":{"shape":"SettlementSortBy"},
+        "SortOrder":{"shape":"SortOrder"},
+        "Limit":{"shape":"SettlementRecordLimit"},
+        "NextMarker":{"shape":"NextMarker"}
+      }
+    },
+    "ListSettlementRecordsResponse":{
+      "type":"structure",
+      "members":{
+        "Settlements":{"shape":"SettlementRecordList"},
+        "NextMarker":{"shape":"NextMarker"}
+      }
+    },
     "ListTagsForResourceRequest":{
       "type":"structure",
       "required":["ResourceARN"],
@@ -3195,6 +3427,11 @@
         "VALUE"
       ]
     },
+    "MaxDataPoints":{
+      "type":"integer",
+      "max":10000,
+      "min":1
+    },
     "Method":{
       "type":"structure",
       "members":{}
@@ -3212,6 +3449,53 @@
         "Timestamp":{"shape":"Timestamp"},
         "ReleaseNotes":{"shape":"ReleaseNotes"},
         "Tags":{"shape":"TagList"}
+      }
+    },
+    "MonetizationAmountValue":{"type":"string"},
+    "MonetizationConfig":{
+      "type":"structure",
+      "members":{
+        "CryptoConfig":{"shape":"CryptoConfig"},
+        "CurrencyMode":{"shape":"CurrencyMode"}
+      }
+    },
+    "MonetizationFilter":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Values"
+      ],
+      "members":{
+        "Name":{"shape":"MonetizationFilterName"},
+        "Values":{"shape":"MonetizationFilterValueList"}
+      }
+    },
+    "MonetizationFilterList":{
+      "type":"list",
+      "member":{"shape":"MonetizationFilter"},
+      "max":20,
+      "min":1
+    },
+    "MonetizationFilterName":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "MonetizationFilterValue":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "MonetizationFilterValueList":{
+      "type":"list",
+      "member":{"shape":"MonetizationFilterValue"},
+      "max":20,
+      "min":1
+    },
+    "MonetizeAction":{
+      "type":"structure",
+      "members":{
+        "PriceMultiplier":{"shape":"PriceMultiplier"}
       }
     },
     "NextMarker":{
@@ -3345,7 +3629,11 @@
         "CUSTOM_KEYS",
         "ACP_RULE_SET_RESPONSE_INSPECTION",
         "DATA_PROTECTION_CONFIG",
-        "LOW_REPUTATION_MODE"
+        "LOW_REPUTATION_MODE",
+        "MONETIZATION_CONFIG",
+        "WALLET_ADDRESS",
+        "PRICE_AMOUNT",
+        "PAYMENT_NETWORK"
       ]
     },
     "ParameterExceptionParameter":{
@@ -3395,6 +3683,25 @@
         "FORM_ENCODED"
       ]
     },
+    "PaymentNetwork":{
+      "type":"structure",
+      "required":[
+        "Chain",
+        "WalletAddress",
+        "Prices"
+      ],
+      "members":{
+        "Chain":{"shape":"BlockchainChain"},
+        "WalletAddress":{"shape":"WalletAddress"},
+        "Prices":{"shape":"Prices"}
+      }
+    },
+    "PaymentNetworks":{
+      "type":"list",
+      "member":{"shape":"PaymentNetwork"},
+      "max":2,
+      "min":1
+    },
     "PercentageValue":{
       "type":"double",
       "max":100.0,
@@ -3434,6 +3741,35 @@
         "CONTAINS",
         "CONTAINS_WORD"
       ]
+    },
+    "Price":{
+      "type":"structure",
+      "required":[
+        "Amount",
+        "Currency"
+      ],
+      "members":{
+        "Amount":{"shape":"PriceAmount"},
+        "Currency":{"shape":"CryptoCurrency"}
+      }
+    },
+    "PriceAmount":{
+      "type":"string",
+      "max":13,
+      "min":1,
+      "pattern":"^([1-9][0-9]*(\\.[0-9]{1,3})?|0\\.([1-9][0-9]{0,2}|0[1-9][0-9]?|00[1-9]))$"
+    },
+    "PriceMultiplier":{
+      "type":"string",
+      "max":3,
+      "min":1,
+      "pattern":"^([1-9][0-9]?|100)$"
+    },
+    "Prices":{
+      "type":"list",
+      "member":{"shape":"Price"},
+      "max":1,
+      "min":1
     },
     "PricingPlanFeatureName":{
       "type":"string",
@@ -3522,6 +3858,21 @@
     "QueryString":{
       "type":"structure",
       "members":{}
+    },
+    "RankingSortBy":{
+      "type":"string",
+      "enum":[
+        "REVENUE",
+        "PERCENTAGE",
+        "NAME"
+      ]
+    },
+    "RankingStatisticType":{
+      "type":"string",
+      "enum":[
+        "TOP_SOURCES_BY_REVENUE",
+        "TOP_PATHS_BY_REVENUE"
+      ]
     },
     "RateBasedStatement":{
       "type":"structure",
@@ -3820,7 +4171,8 @@
         "COGNITO_USER_POOL",
         "APP_RUNNER_SERVICE",
         "VERIFIED_ACCESS_INSTANCE",
-        "AMPLIFY"
+        "AMPLIFY",
+        "AGENTCORE_GATEWAY"
       ]
     },
     "ResponseCode":{"type":"integer"},
@@ -3954,6 +4306,36 @@
       "max":599,
       "min":200
     },
+    "RevenueBreakdown":{
+      "type":"structure",
+      "members":{
+        "TotalAmount":{"shape":"MonetizationAmountValue"},
+        "VerifiedAmount":{"shape":"MonetizationAmountValue"},
+        "UnverifiedAmount":{"shape":"MonetizationAmountValue"},
+        "Currency":{"shape":"Currency"},
+        "TotalSettled":{"shape":"RequestCount"},
+        "TotalMonetizeServed":{"shape":"RequestCount"}
+      }
+    },
+    "RevenuePathStatistics":{
+      "type":"structure",
+      "required":[
+        "Path",
+        "Percentage",
+        "Amount",
+        "RequestCount"
+      ],
+      "members":{
+        "Path":{"shape":"PathString"},
+        "Percentage":{"shape":"PercentageValue"},
+        "Amount":{"shape":"MonetizationAmountValue"},
+        "RequestCount":{"shape":"RequestCount"}
+      }
+    },
+    "RevenuePathStatisticsList":{
+      "type":"list",
+      "member":{"shape":"RevenuePathStatistics"}
+    },
     "Rule":{
       "type":"structure",
       "required":[
@@ -3981,7 +4363,8 @@
         "Allow":{"shape":"AllowAction"},
         "Count":{"shape":"CountAction"},
         "Captcha":{"shape":"CaptchaAction"},
-        "Challenge":{"shape":"ChallengeAction"}
+        "Challenge":{"shape":"ChallengeAction"},
+        "Monetize":{"shape":"MonetizeAction"}
       }
     },
     "RuleActionOverride":{
@@ -4020,7 +4403,8 @@
         "LabelNamespace":{"shape":"LabelName"},
         "CustomResponseBodies":{"shape":"CustomResponseBodies"},
         "AvailableLabels":{"shape":"LabelSummaries"},
-        "ConsumedLabels":{"shape":"LabelSummaries"}
+        "ConsumedLabels":{"shape":"LabelSummaries"},
+        "MonetizationConfig":{"shape":"MonetizationConfig"}
       }
     },
     "RuleGroupReferenceStatement":{
@@ -4116,6 +4500,73 @@
         "HIGH"
       ]
     },
+    "SettlementFilterString":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9:._\\-=+/]+$"
+    },
+    "SettlementIdString":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "SettlementRecord":{
+      "type":"structure",
+      "required":[
+        "Timestamp",
+        "Status",
+        "Amount"
+      ],
+      "members":{
+        "Timestamp":{"shape":"Timestamp"},
+        "PayerAddress":{"shape":"SettlementFilterString"},
+        "WalletAddress":{"shape":"SettlementFilterString"},
+        "Status":{"shape":"SettlementStatus"},
+        "Amount":{"shape":"MonetizationAmountValue"},
+        "Currency":{"shape":"Currency"},
+        "Network":{"shape":"SettlementFilterString"},
+        "TransactionId":{"shape":"SettlementIdString"},
+        "RequestId":{"shape":"SettlementFilterString"},
+        "SourceName":{"shape":"FilterString"},
+        "Organization":{"shape":"FilterString"},
+        "SourceCategory":{"shape":"FilterString"},
+        "Intent":{"shape":"FilterString"},
+        "Verified":{"shape":"VerifiedStatus"},
+        "ContentPath":{"shape":"FilterString"},
+        "WebAclArn":{"shape":"ResourceArn"},
+        "RequestTimestamp":{"shape":"Timestamp"}
+      }
+    },
+    "SettlementRecordLimit":{
+      "type":"integer",
+      "max":100,
+      "min":1
+    },
+    "SettlementRecordList":{
+      "type":"list",
+      "member":{"shape":"SettlementRecord"}
+    },
+    "SettlementSortBy":{
+      "type":"string",
+      "enum":[
+        "TIMESTAMP",
+        "AMOUNT",
+        "NAME",
+        "STATUS"
+      ]
+    },
+    "SettlementStatus":{
+      "type":"string",
+      "enum":[
+        "SETTLED",
+        "PENDING",
+        "FAILED",
+        "SERVICE_ERROR",
+        "SKIPPED_ORIGIN_ERROR",
+        "DUPLICATE"
+      ]
+    },
     "SingleCookieName":{
       "type":"string",
       "max":60,
@@ -4166,6 +4617,37 @@
       ]
     },
     "SolveTimestamp":{"type":"long"},
+    "SortOrder":{
+      "type":"string",
+      "enum":[
+        "ASC",
+        "DESC"
+      ]
+    },
+    "SourceStatistics":{
+      "type":"structure",
+      "required":[
+        "SourceName",
+        "Percentage",
+        "Amount",
+        "RequestCount"
+      ],
+      "members":{
+        "SourceName":{"shape":"FilterString"},
+        "Percentage":{"shape":"PercentageValue"},
+        "Amount":{"shape":"MonetizationAmountValue"},
+        "RequestCount":{"shape":"RequestCount"},
+        "SourceCategory":{"shape":"FilterString"},
+        "Intent":{"shape":"FilterString"},
+        "Organization":{"shape":"FilterString"},
+        "Verified":{"shape":"VerifiedStatus"},
+        "GroupByValue":{"shape":"FilterString"}
+      }
+    },
+    "SourceStatisticsList":{
+      "type":"list",
+      "member":{"shape":"SourceStatistics"}
+    },
     "SourceType":{"type":"string"},
     "SqliMatchStatement":{
       "type":"structure",
@@ -4317,6 +4799,13 @@
       "member":{"shape":"TextTransformation"},
       "min":1
     },
+    "TimeSeriesStatisticType":{
+      "type":"string",
+      "enum":[
+        "DATE_HISTOGRAM",
+        "PAYMENT_TRAFFIC"
+      ]
+    },
     "TimeWindow":{
       "type":"structure",
       "required":[
@@ -4456,7 +4945,8 @@
         "Rules":{"shape":"Rules"},
         "VisibilityConfig":{"shape":"VisibilityConfig"},
         "LockToken":{"shape":"LockToken"},
-        "CustomResponseBodies":{"shape":"CustomResponseBodies"}
+        "CustomResponseBodies":{"shape":"CustomResponseBodies"},
+        "MonetizationConfig":{"shape":"MonetizationConfig"}
       }
     },
     "UpdateRuleGroupResponse":{
@@ -4491,7 +4981,8 @@
         "TokenDomains":{"shape":"TokenDomains"},
         "AssociationConfig":{"shape":"AssociationConfig"},
         "OnSourceDDoSProtectionConfig":{"shape":"OnSourceDDoSProtectionConfig"},
-        "ApplicationConfig":{"shape":"ApplicationConfig"}
+        "ApplicationConfig":{"shape":"ApplicationConfig"},
+        "MonetizationConfig":{"shape":"MonetizationConfig"}
       }
     },
     "UpdateWebACLResponse":{
@@ -4536,6 +5027,7 @@
       "min":1,
       "pattern":".*\\S.*"
     },
+    "VerifiedStatus":{"type":"boolean"},
     "VersionKeyString":{
       "type":"string",
       "max":64,
@@ -4714,6 +5206,12 @@
       },
       "exception":true
     },
+    "WalletAddress":{
+      "type":"string",
+      "max":44,
+      "min":26,
+      "pattern":".*\\S.*"
+    },
     "WebACL":{
       "type":"structure",
       "required":[
@@ -4744,7 +5242,8 @@
         "AssociationConfig":{"shape":"AssociationConfig"},
         "RetrofittedByFirewallManager":{"shape":"Boolean"},
         "OnSourceDDoSProtectionConfig":{"shape":"OnSourceDDoSProtectionConfig"},
-        "ApplicationConfig":{"shape":"ApplicationConfig"}
+        "ApplicationConfig":{"shape":"ApplicationConfig"},
+        "MonetizationConfig":{"shape":"MonetizationConfig"}
       }
     },
     "WebACLSummaries":{

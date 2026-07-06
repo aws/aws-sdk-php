@@ -661,6 +661,10 @@
       "type":"boolean",
       "box":true
     },
+    "CFNResourceTypeList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
     "ConflictException":{
       "type":"structure",
       "required":["Message"],
@@ -1354,6 +1358,13 @@
       "min":0,
       "sensitive":true
     },
+    "RecorderType":{
+      "type":"string",
+      "enum":[
+        "AWS",
+        "THIRD_PARTY"
+      ]
+    },
     "RegionList":{
       "type":"list",
       "member":{"shape":"RegionListMemberString"}
@@ -1386,6 +1397,7 @@
         "Region":{"shape":"String"},
         "ResourceType":{"shape":"String"},
         "Service":{"shape":"String"},
+        "CfnResourceType":{"shape":"String"},
         "LastReportedAt":{"shape":"SyntheticTimestamp_date_time"},
         "Properties":{"shape":"ResourcePropertyList"}
       }
@@ -1486,6 +1498,14 @@
       "max":1011,
       "min":1
     },
+    "ServiceLinkedRecorderInfo":{
+      "type":"structure",
+      "members":{
+        "ServicePrincipal":{"shape":"String"},
+        "RecorderName":{"shape":"String"},
+        "RecorderType":{"shape":"RecorderType"}
+      }
+    },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "required":[
@@ -1513,7 +1533,8 @@
         "Filters":{"shape":"SearchFilter"},
         "IncludedProperties":{"shape":"IncludedPropertyList"},
         "StreamingAccessForService":{"shape":"String"},
-        "ScopeType":{"shape":"String"}
+        "ScopeType":{"shape":"String"},
+        "ServiceLinkedRecorder":{"shape":"ServiceLinkedRecorderInfo"}
       }
     },
     "ServiceViewArnList":{
@@ -1549,7 +1570,8 @@
       "type":"structure",
       "members":{
         "Service":{"shape":"String"},
-        "ResourceType":{"shape":"String"}
+        "ResourceType":{"shape":"String"},
+        "CFNResourceTypes":{"shape":"CFNResourceTypeList"}
       }
     },
     "SyntheticTimestamp_date_time":{

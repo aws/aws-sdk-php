@@ -130,6 +130,12 @@
         "RdsDbInstanceConfiguration$instance": "<p>Details about the instance configuration.</p>"
       }
     },
+    "DocumentDbCluster": {
+      "base": "<p>The Amazon DocumentDB cluster recommendation details.</p>",
+      "refs": {
+        "ResourceDetails$documentDbCluster": "<p>The Amazon DocumentDB cluster recommendation details.</p>"
+      }
+    },
     "Double": {
       "base": null,
       "refs": {
@@ -179,6 +185,12 @@
       "base": "<p>The DynamoDB reserved capacity configuration used for recommendations.</p>",
       "refs": {
         "DynamoDbReservedCapacity$configuration": "<p>The DynamoDB reserved capacity configuration used for recommendations.</p>"
+      }
+    },
+    "DynamoDbTable": {
+      "base": "<p>The DynamoDB table recommendation details.</p>",
+      "refs": {
+        "ResourceDetails$dynamoDbTable": "<p>The DynamoDB table recommendation details.</p>"
       }
     },
     "EbsVolume": {
@@ -269,6 +281,12 @@
       "base": "<p>A list of cost efficiency metrics grouped by the specified dimension.</p>",
       "refs": {
         "ListEfficiencyMetricsResponse$efficiencyMetricsByGroup": "<p>A list of cost efficiency metrics grouped by the specified dimension. Each group contains time-series data points with cost efficiency, potential savings, and optimzable spend for the specified time period.</p>"
+      }
+    },
+    "ElastiCacheCluster": {
+      "base": "<p>The ElastiCache cluster recommendation details.</p>",
+      "refs": {
+        "ResourceDetails$elastiCacheCluster": "<p>The ElastiCache cluster recommendation details.</p>"
       }
     },
     "ElastiCacheReservedInstances": {
@@ -441,6 +459,12 @@
         "GetPreferencesResponse$memberAccountDiscountVisibility": "<p>Retrieves the status of the \"member account discount visibility\" preference.</p>",
         "UpdatePreferencesRequest$memberAccountDiscountVisibility": "<p>Sets the \"member account discount visibility\" preference.</p>",
         "UpdatePreferencesResponse$memberAccountDiscountVisibility": "<p>Shows the status of the \"member account discount visibility\" preference.</p>"
+      }
+    },
+    "MemoryDbCluster": {
+      "base": "<p>The MemoryDB cluster recommendation details.</p>",
+      "refs": {
+        "ResourceDetails$memoryDbCluster": "<p>The MemoryDB cluster recommendation details.</p>"
       }
     },
     "MemoryDbReservedInstances": {
@@ -649,14 +673,20 @@
       "base": "<p>Cost impact of the resource recommendation.</p>",
       "refs": {
         "AuroraDbClusterStorage$costCalculation": null,
+        "DocumentDbCluster$costCalculation": null,
+        "DynamoDbTable$costCalculation": null,
         "EbsVolume$costCalculation": "<p>Cost impact of the recommendation.</p>",
         "Ec2AutoScalingGroup$costCalculation": "<p>Cost impact of the recommendation.</p>",
         "Ec2Instance$costCalculation": "<p>Cost impact of the recommendation.</p>",
         "EcsService$costCalculation": "<p>Cost impact of the recommendation.</p>",
+        "ElastiCacheCluster$costCalculation": null,
         "LambdaFunction$costCalculation": "<p>Cost impact of the recommendation.</p>",
+        "MemoryDbCluster$costCalculation": null,
         "NatGateway$costCalculation": null,
         "RdsDbInstance$costCalculation": null,
-        "RdsDbInstanceStorage$costCalculation": null
+        "RdsDbInstanceStorage$costCalculation": null,
+        "SageMakerEndpoint$costCalculation": null,
+        "WorkSpaces$costCalculation": null
       }
     },
     "ResourceDetails": {
@@ -694,6 +724,12 @@
       "base": null,
       "refs": {
         "Filter$resourceTypes": "<p>The resource type of the recommendation.</p>"
+      }
+    },
+    "SageMakerEndpoint": {
+      "base": "<p>The SageMaker endpoint recommendation details.</p>",
+      "refs": {
+        "ResourceDetails$sageMakerEndpoint": "<p>The SageMaker endpoint recommendation details.</p>"
       }
     },
     "SageMakerSavingsPlans": {
@@ -1019,6 +1055,12 @@
       "base": null,
       "refs": {
         "ValidationException$reason": "<p>The reason for the validation exception.</p>"
+      }
+    },
+    "WorkSpaces": {
+      "base": "<p>The WorkSpaces recommendation details.</p>",
+      "refs": {
+        "ResourceDetails$workSpaces": "<p>The WorkSpaces recommendation details.</p>"
       }
     }
   }

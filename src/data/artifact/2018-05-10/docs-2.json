@@ -2,14 +2,22 @@
   "version": "2.0",
   "service": "<p>This reference provides descriptions of the low-level AWS Artifact Service API.</p>",
   "operations": {
+    "CreateComplianceInquiry": "<p>Create a new compliance inquiry.</p>",
+    "ExportComplianceInquiry": "<p>Export a compliance inquiry report.</p>",
     "GetAccountSettings": "<p>Get the account settings for Artifact.</p>",
+    "GetComplianceInquiryMetadata": "<p>Get the metadata for a single compliance inquiry.</p>",
     "GetReport": "<p>Get the content for a single report.</p>",
     "GetReportMetadata": "<p>Get the metadata for a single report.</p>",
     "GetTermForReport": "<p>Get the Term content associated with a single report.</p>",
+    "ListComplianceInquiries": "<p>List available compliance inquiries.</p>",
+    "ListComplianceInquiryQueries": "<p>List queries within a compliance inquiry.</p>",
     "ListCustomerAgreements": "<p>List active customer-agreements applicable to calling identity.</p>",
     "ListReportVersions": "<p>List available report versions for a given report.</p>",
     "ListReports": "<p>List available reports.</p>",
-    "PutAccountSettings": "<p>Put the account settings for Artifact.</p>"
+    "ListTagsForResource": "<p>List tags for a resource.</p>",
+    "PutAccountSettings": "<p>Put the account settings for Artifact.</p>",
+    "TagResource": "<p>Add tags to a resource.</p>",
+    "UntagResource": "<p>Remove tags from a resource.</p>"
   },
   "shapes": {
     "AcceptanceType": {
@@ -43,8 +51,40 @@
         "CustomerAgreementSummary$type": "<p>Type of the customer-agreement resource.</p>"
       }
     },
+    "Blob": {
+      "base": null,
+      "refs": {
+        "InquiryFileContent$content": "<p>Binary content of the uploaded file.</p>"
+      }
+    },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "ExportComplianceInquiryRequest$includeCitations": "<p>When true, include citations in the exported document.</p>"
+      }
+    },
+    "Citation": {
+      "base": "<p>Citation information for AI-generated responses.</p>",
+      "refs": {
+        "CitationList$member": null
+      }
+    },
+    "CitationList": {
+      "base": null,
+      "refs": {
+        "QuerySummary$citations": "<p>Supporting citations for the response.</p>"
+      }
+    },
     "ConflictException": {
       "base": "<p>Request to create/modify content would result in a conflict.</p>",
+      "refs": {}
+    },
+    "CreateComplianceInquiryRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateComplianceInquiryResponse": {
+      "base": null,
       "refs": {}
     },
     "CustomerAgreementIdAttribute": {
@@ -71,11 +111,27 @@
         "CustomerAgreementList$member": null
       }
     },
+    "ExportComplianceInquiryRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ExportComplianceInquiryResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetAccountSettingsRequest": {
       "base": null,
       "refs": {}
     },
     "GetAccountSettingsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetComplianceInquiryMetadataRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetComplianceInquiryMetadataResponse": {
       "base": null,
       "refs": {}
     },
@@ -115,15 +171,114 @@
         "GetTermForReportResponse$documentPresignedUrl": "<p>Presigned S3 url to access the term content.</p>"
       }
     },
+    "IdempotentClientToken": {
+      "base": null,
+      "refs": {
+        "CreateComplianceInquiryRequest$clientToken": "<p>Idempotency token for the request.</p>"
+      }
+    },
+    "InputSource": {
+      "base": null,
+      "refs": {
+        "InquiryDetail$inputSource": "<p>Type of inquiry content (text or file).</p>",
+        "InquirySummary$inputSource": "<p>Type of inquiry content (text or file).</p>"
+      }
+    },
+    "InquiriesList": {
+      "base": null,
+      "refs": {
+        "ListComplianceInquiriesResponse$complianceInquiries": "<p>List of compliance inquiry resources.</p>"
+      }
+    },
+    "InquiryContent": {
+      "base": "<p>Content for creating a compliance inquiry - either a single query or file content.</p>",
+      "refs": {
+        "CreateComplianceInquiryRequest$inquiryContent": "<p>Content for creating a compliance inquiry - either a single query or file content.</p>"
+      }
+    },
+    "InquiryDetail": {
+      "base": "<p>Detailed information about a compliance inquiry.</p>",
+      "refs": {
+        "GetComplianceInquiryMetadataResponse$complianceInquiryDetail": "<p>Detailed information about the compliance inquiry.</p>"
+      }
+    },
+    "InquiryFileContent": {
+      "base": "<p>File content structure for compliance inquiry uploads.</p>",
+      "refs": {
+        "InquiryContent$fileContent": "<p>File content with multiple questions.</p>"
+      }
+    },
+    "InquiryFileContentFileSectionsList": {
+      "base": null,
+      "refs": {
+        "InquiryFileContent$fileSections": "<p>List of file sections/sheets to process.</p>"
+      }
+    },
+    "InquiryId": {
+      "base": null,
+      "refs": {
+        "ExportComplianceInquiryRequest$complianceInquiryId": "<p>Unique resource ID for the compliance inquiry.</p>",
+        "GetComplianceInquiryMetadataRequest$complianceInquiryId": "<p>Unique resource ID for the compliance inquiry.</p>",
+        "InquiryDetail$id": "<p>Unique resource ID for the compliance inquiry.</p>",
+        "InquirySummary$id": "<p>Unique resource ID for the compliance inquiry.</p>",
+        "ListComplianceInquiryQueriesRequest$complianceInquiryId": "<p>Unique resource ID for the compliance inquiry.</p>"
+      }
+    },
+    "InquiryStatus": {
+      "base": null,
+      "refs": {
+        "InquiryDetail$status": "<p>Current processing status of the inquiry.</p>",
+        "InquirySummary$status": "<p>Current processing status of the inquiry.</p>"
+      }
+    },
+    "InquiryStatusMessage": {
+      "base": null,
+      "refs": {
+        "InquiryDetail$statusMessage": "<p>Status message providing additional context.</p>",
+        "InquirySummary$statusMessage": "<p>Status message providing additional context.</p>"
+      }
+    },
+    "InquirySummary": {
+      "base": "<p>Summary information about a compliance inquiry.</p>",
+      "refs": {
+        "CreateComplianceInquiryResponse$complianceInquirySummary": "<p>Summary information about the created compliance inquiry.</p>",
+        "InquiriesList$member": null
+      }
+    },
+    "InquirySupportMode": {
+      "base": null,
+      "refs": {
+        "CreateComplianceInquiryRequest$supportMode": "<p>Support mode for inquiry processing. Only supported for file upload mode. Defaults to AI_ONLY if not specified.</p>",
+        "InquiryDetail$supportMode": "<p>Support mode for this inquiry. AI_ONLY provides AI-generated responses. FULL_SUPPORT includes human expert review.</p>"
+      }
+    },
     "Integer": {
       "base": null,
       "refs": {
         "InternalServerException$retryAfterSeconds": "<p>Number of seconds in which the caller can retry the request.</p>",
+        "QueryIdentifiersList$member": null,
+        "QuerySummary$queryIdentifier": "<p>Sequential identifier of the query within the inquiry.</p>",
         "ThrottlingException$retryAfterSeconds": "<p>Number of seconds in which the caller can retry the request.</p>"
       }
     },
     "InternalServerException": {
       "base": "<p>An unknown server exception has occurred.</p>",
+      "refs": {}
+    },
+    "ListComplianceInquiriesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListComplianceInquiriesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListComplianceInquiryQueriesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListComplianceInquiryQueriesResponse": {
+      "base": null,
       "refs": {}
     },
     "ListCustomerAgreementsRequest": {
@@ -150,25 +305,44 @@
       "base": null,
       "refs": {}
     },
+    "ListTagsForResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
     "LongStringAttribute": {
       "base": null,
       "refs": {
         "AgreementTerms$member": null,
+        "Citation$sourceContent": "<p>Content text from the compliance source.</p>",
+        "Citation$sourceLink": "<p>Link to the compliance source.</p>",
         "CustomerAgreementSummary$name": "<p>Name of the customer-agreement resource.</p>",
         "CustomerAgreementSummary$arn": "<p>ARN of the customer-agreement resource.</p>",
         "CustomerAgreementSummary$agreementArn": "<p>ARN of the agreement resource the customer-agreement resource represents.</p>",
         "CustomerAgreementSummary$organizationArn": "<p>ARN of the organization that owns the resource.</p>",
         "CustomerAgreementSummary$description": "<p>Description of the resource.</p>",
+        "InquiryContent$query": "<p>Single text query for AI-generated answer.</p>",
+        "ListTagsForResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
+        "QuerySummary$query": "<p>The actual query text.</p>",
+        "QuerySummary$response": "<p>Generated response to the query.</p>",
         "ReportDetail$description": "<p>Description for the report resource.</p>",
         "ReportDetail$arn": "<p>ARN for the report resource.</p>",
         "ReportDetail$termArn": "<p>Unique resource ARN for term resource.</p>",
         "ReportSummary$arn": "<p>ARN for the report resource.</p>",
-        "ReportSummary$description": "<p>Description for the report resource.</p>"
+        "ReportSummary$description": "<p>Description for the report resource.</p>",
+        "ResponseVersion$responseText": "<p>The response text for this version.</p>",
+        "TagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
+        "UntagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>"
       }
     },
     "MaxResultsAttribute": {
       "base": null,
       "refs": {
+        "ListComplianceInquiriesRequest$maxResults": "<p>Maximum number of resources to return in the paginated response.</p>",
+        "ListComplianceInquiryQueriesRequest$maxResults": "<p>Maximum number of resources to return in the paginated response.</p>",
         "ListCustomerAgreementsRequest$maxResults": "<p>Maximum number of resources to return in the paginated response.</p>",
         "ListReportVersionsRequest$maxResults": "<p>Maximum number of resources to return in the paginated response.</p>",
         "ListReportsRequest$maxResults": "<p>Maximum number of resources to return in the paginated response.</p>"
@@ -177,6 +351,10 @@
     "NextTokenAttribute": {
       "base": null,
       "refs": {
+        "ListComplianceInquiriesRequest$nextToken": "<p>Pagination token to request the next page of resources.</p>",
+        "ListComplianceInquiriesResponse$nextToken": "<p>Pagination token to request the next page of resources.</p>",
+        "ListComplianceInquiryQueriesRequest$nextToken": "<p>Pagination token to request the next page of resources.</p>",
+        "ListComplianceInquiryQueriesResponse$nextToken": "<p>Pagination token to request the next page of resources.</p>",
         "ListCustomerAgreementsRequest$nextToken": "<p>Pagination token to request the next page of resources.</p>",
         "ListCustomerAgreementsResponse$nextToken": "<p>Pagination token to request the next page of resources.</p>",
         "ListReportVersionsRequest$nextToken": "<p>Pagination token to request the next page of resources.</p>",
@@ -190,6 +368,12 @@
       "refs": {
         "AccountSettings$notificationSubscriptionStatus": "<p>Notification subscription status of the customer.</p>",
         "PutAccountSettingsRequest$notificationSubscriptionStatus": "<p>Desired notification subscription status.</p>"
+      }
+    },
+    "PresignedUrl": {
+      "base": "<p>A pre-signed URL for accessing content.</p>",
+      "refs": {
+        "ExportComplianceInquiryResponse$documentPresignedUrl": "<p>Presigned S3 URL to access the exported compliance inquiry report.</p>"
       }
     },
     "PublishedState": {
@@ -206,6 +390,36 @@
     "PutAccountSettingsResponse": {
       "base": null,
       "refs": {}
+    },
+    "QueriesList": {
+      "base": null,
+      "refs": {
+        "ListComplianceInquiryQueriesResponse$queries": "<p>List of compliance query summaries.</p>"
+      }
+    },
+    "QueryIdentifiersList": {
+      "base": null,
+      "refs": {
+        "ExportComplianceInquiryRequest$queryIdentifiers": "<p>List of query identifiers to include in the export.</p>"
+      }
+    },
+    "QueryStatus": {
+      "base": null,
+      "refs": {
+        "QuerySummary$status": "<p>Current processing status of the query.</p>"
+      }
+    },
+    "QueryStatusMessage": {
+      "base": null,
+      "refs": {
+        "QuerySummary$statusMessage": "<p>Descriptive status message.</p>"
+      }
+    },
+    "QuerySummary": {
+      "base": "<p>Summary information about a single query within a compliance inquiry.</p>",
+      "refs": {
+        "QueriesList$member": null
+      }
     },
     "ReportDetail": {
       "base": "<p>Full detail for report resource metadata.</p>",
@@ -241,6 +455,24 @@
       "base": "<p>Request references a resource which does not exist.</p>",
       "refs": {}
     },
+    "ResponseVersion": {
+      "base": "<p>A versioned snapshot of a response edit.</p>",
+      "refs": {
+        "ResponseVersionList$member": null
+      }
+    },
+    "ResponseVersionList": {
+      "base": null,
+      "refs": {
+        "QuerySummary$updatedResponseVersions": "<p>Ordered list of response version history entries, oldest first.</p>"
+      }
+    },
+    "ReviewType": {
+      "base": null,
+      "refs": {
+        "QuerySummary$reviewType": "<p>Type of review for the response.</p>"
+      }
+    },
     "SequenceNumberAttribute": {
       "base": null,
       "refs": {
@@ -254,8 +486,10 @@
     "ShortStringAttribute": {
       "base": null,
       "refs": {
+        "Citation$sourceLabel": "<p>Label identifying the compliance source.</p>",
         "CustomerAgreementSummary$awsAccountId": "<p>AWS account Id that owns the resource.</p>",
         "GetReportRequest$termToken": "<p>Unique download token provided by GetTermForReport API.</p>",
+        "InquiryFileContentFileSectionsList$member": null,
         "ReportDetail$name": "<p>Name for the report resource.</p>",
         "ReportDetail$series": "<p>Series for the report resource.</p>",
         "ReportDetail$category": "<p>Category for the report resource.</p>",
@@ -282,7 +516,12 @@
         "ConflictException$message": null,
         "ConflictException$resourceId": "<p>Identifier of the affected resource.</p>",
         "ConflictException$resourceType": "<p>Type of the affected resource.</p>",
+        "CreateComplianceInquiryRequest$name": "<p>Title of the inquiry.</p>",
         "GetTermForReportResponse$termToken": "<p>Unique token representing this request event.</p>",
+        "InquiryDetail$arn": "<p>ARN of the compliance inquiry resource.</p>",
+        "InquiryDetail$name": "<p>Title of the inquiry.</p>",
+        "InquirySummary$arn": "<p>ARN of the compliance inquiry resource.</p>",
+        "InquirySummary$name": "<p>Title of the inquiry.</p>",
         "InternalServerException$message": null,
         "ResourceNotFoundException$message": null,
         "ResourceNotFoundException$resourceId": "<p>Identifier of the affected resource.</p>",
@@ -300,6 +539,44 @@
         "ValidationExceptionField$message": "<p>Message describing why the field failed validation.</p>"
       }
     },
+    "TagKey": {
+      "base": "<p>A tag key.</p>",
+      "refs": {
+        "TagKeys$member": null,
+        "TagsMap$key": null
+      }
+    },
+    "TagKeys": {
+      "base": "<p>A list of tag keys.</p>",
+      "refs": {
+        "UntagResourceRequest$tagKeys": "<p>Tag keys to remove from the resource.</p>"
+      }
+    },
+    "TagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "TagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "TagValue": {
+      "base": "<p>A tag value.</p>",
+      "refs": {
+        "TagsMap$value": null
+      }
+    },
+    "TagsMap": {
+      "base": "<p>A map of tag keys to tag values.</p>",
+      "refs": {
+        "CreateComplianceInquiryRequest$tags": "<p>Tags to associate with the compliance inquiry resource.</p>",
+        "CreateComplianceInquiryResponse$tags": "<p>Tags associated with the compliance inquiry resource.</p>",
+        "ExportComplianceInquiryResponse$tags": "<p>Tags associated with the compliance inquiry resource.</p>",
+        "GetComplianceInquiryMetadataResponse$tags": "<p>Tags associated with the compliance inquiry resource.</p>",
+        "ListTagsForResourceResponse$tags": "<p>Tags associated with the resource.</p>",
+        "TagResourceRequest$tags": "<p>Tags to add to the resource.</p>"
+      }
+    },
     "ThrottlingException": {
       "base": "<p>Request was denied due to request throttling.</p>",
       "refs": {}
@@ -309,14 +586,27 @@
       "refs": {
         "CustomerAgreementSummary$effectiveStart": "<p>Timestamp indicating when the agreement became effective.</p>",
         "CustomerAgreementSummary$effectiveEnd": "<p>Timestamp indicating when the agreement was terminated.</p>",
+        "InquiryDetail$createdAt": "<p>Timestamp indicating when the resource was created.</p>",
+        "InquiryDetail$updatedAt": "<p>Timestamp indicating when the resource was last modified.</p>",
+        "InquirySummary$createdAt": "<p>Timestamp indicating when the resource was created.</p>",
+        "QuerySummary$createdAt": "<p>Timestamp when the query was created.</p>",
         "ReportDetail$periodStart": "<p>Timestamp indicating the report resource effective start.</p>",
         "ReportDetail$periodEnd": "<p>Timestamp indicating the report resource effective end.</p>",
         "ReportDetail$createdAt": "<p>Timestamp indicating when the report resource was created.</p>",
         "ReportDetail$lastModifiedAt": "<p>Timestamp indicating when the report resource was last modified.</p>",
         "ReportDetail$deletedAt": "<p>Timestamp indicating when the report resource was deleted.</p>",
         "ReportSummary$periodStart": "<p>Timestamp indicating the report resource effective start.</p>",
-        "ReportSummary$periodEnd": "<p>Timestamp indicating the report resource effective end.</p>"
+        "ReportSummary$periodEnd": "<p>Timestamp indicating the report resource effective end.</p>",
+        "ResponseVersion$timestamp": "<p>ISO 8601 timestamp of when this edit was made.</p>"
       }
+    },
+    "UntagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UntagResourceResponse": {
+      "base": null,
+      "refs": {}
     },
     "UploadState": {
       "base": null,

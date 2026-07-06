@@ -313,6 +313,20 @@
       "input":{"shape":"DeleteObjectRequest"},
       "output":{"shape":"DeleteObjectOutput"}
     },
+    "DeleteObjectAnnotation":{
+      "name":"DeleteObjectAnnotation",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/{Bucket}/{Key+}?annotation",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteObjectAnnotationRequest"},
+      "output":{"shape":"DeleteObjectAnnotationOutput"},
+      "errors":[
+        {"shape":"NoSuchBucket"},
+        {"shape":"NoSuchKey"}
+      ]
+    },
     "DeleteObjectTagging":{
       "name":"DeleteObjectTagging",
       "http":{
@@ -687,6 +701,35 @@
         {"shape":"NoSuchKey"}
       ]
     },
+    "GetObjectAnnotation":{
+      "name":"GetObjectAnnotation",
+      "http":{
+        "method":"GET",
+        "requestUri":"/{Bucket}/{Key+}?annotation"
+      },
+      "input":{"shape":"GetObjectAnnotationRequest"},
+      "output":{"shape":"GetObjectAnnotationOutput"},
+      "errors":[
+        {"shape":"NoSuchBucket"},
+        {"shape":"NoSuchKey"},
+        {"shape":"NoSuchAnnotation"}
+      ],
+      "httpChecksum":{
+        "requestValidationModeMember":"ChecksumMode",
+        "responseAlgorithms":[
+          "CRC64NVME",
+          "CRC32",
+          "CRC32C",
+          "SHA256",
+          "SHA1",
+          "SHA512",
+          "MD5",
+          "XXHASH64",
+          "XXHASH3",
+          "XXHASH128"
+        ]
+      }
+    },
     "GetObjectAttributes":{
       "name":"GetObjectAttributes",
       "http":{
@@ -857,6 +900,20 @@
       },
       "input":{"shape":"ListMultipartUploadsRequest"},
       "output":{"shape":"ListMultipartUploadsOutput"}
+    },
+    "ListObjectAnnotations":{
+      "name":"ListObjectAnnotations",
+      "http":{
+        "method":"GET",
+        "requestUri":"/{Bucket}/{Key+}?annotation"
+      },
+      "input":{"shape":"ListObjectAnnotationsRequest"},
+      "output":{"shape":"ListObjectAnnotationsOutput"},
+      "errors":[
+        {"shape":"NoSuchBucket"},
+        {"shape":"NoSuchKey"},
+        {"shape":"InvalidPrefix"}
+      ]
     },
     "ListObjectVersions":{
       "name":"ListObjectVersions",
@@ -1230,6 +1287,28 @@
         "requestChecksumRequired":true
       }
     },
+    "PutObjectAnnotation":{
+      "name":"PutObjectAnnotation",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/{Bucket}/{Key+}?annotation"
+      },
+      "input":{"shape":"PutObjectAnnotationRequest"},
+      "output":{"shape":"PutObjectAnnotationOutput"},
+      "errors":[
+        {"shape":"NoSuchBucket"},
+        {"shape":"NoSuchKey"},
+        {"shape":"InvalidRequest"},
+        {"shape":"AnnotationNameTooLong"},
+        {"shape":"AnnotationLimitExceeded"},
+        {"shape":"InvalidAnnotationName"},
+        {"shape":"UnsupportedMediaType"}
+      ],
+      "httpChecksum":{
+        "requestAlgorithmMember":"ChecksumAlgorithm",
+        "requestChecksumRequired":false
+      }
+    },
     "PutObjectLegalHold":{
       "name":"PutObjectLegalHold",
       "http":{
@@ -1337,6 +1416,21 @@
         "xmlNamespace":{"uri":"http://s3.amazonaws.com/doc/2006-03-01/"}
       },
       "output":{"shape":"SelectObjectContentOutput"}
+    },
+    "UpdateBucketMetadataAnnotationTableConfiguration":{
+      "name":"UpdateBucketMetadataAnnotationTableConfiguration",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/{Bucket}?metadataAnnotationTable"
+      },
+      "input":{"shape":"UpdateBucketMetadataAnnotationTableConfigurationRequest"},
+      "httpChecksum":{
+        "requestAlgorithmMember":"ChecksumAlgorithm",
+        "requestChecksumRequired":true
+      },
+      "staticContextParams":{
+        "UseS3ExpressControlEndpoint":{"value":true}
+      }
     },
     "UpdateBucketMetadataInventoryTableConfiguration":{
       "name":"UpdateBucketMetadataInventoryTableConfiguration",
@@ -1615,6 +1709,89 @@
     "AnalyticsS3ExportFileFormat":{
       "type":"string",
       "enum":["CSV"]
+    },
+    "AnnotationConfigurationState":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "AnnotationCount":{"type":"integer"},
+    "AnnotationDirective":{
+      "type":"string",
+      "enum":[
+        "COPY",
+        "EXCLUDE"
+      ]
+    },
+    "AnnotationEntry":{
+      "type":"structure",
+      "required":[
+        "AnnotationName",
+        "LastModified",
+        "Size"
+      ],
+      "members":{
+        "AnnotationName":{"shape":"AnnotationName"},
+        "LastModified":{"shape":"LastModified"},
+        "ETag":{"shape":"ETag"},
+        "ChecksumAlgorithm":{"shape":"ChecksumAlgorithmList"},
+        "Size":{"shape":"Size"},
+        "ReplicationStatus":{"shape":"ReplicationStatus"}
+      }
+    },
+    "AnnotationLimitExceeded":{
+      "type":"structure",
+      "members":{},
+      "error":{"httpStatusCode":400},
+      "exception":true
+    },
+    "AnnotationList":{
+      "type":"list",
+      "member":{
+        "shape":"AnnotationEntry",
+        "locationName":"AnnotationEntry"
+      }
+    },
+    "AnnotationName":{"type":"string"},
+    "AnnotationNameTooLong":{
+      "type":"structure",
+      "members":{},
+      "error":{"httpStatusCode":400},
+      "exception":true
+    },
+    "AnnotationPayload":{"type":"blob"},
+    "AnnotationPrefix":{"type":"string"},
+    "AnnotationTableConfiguration":{
+      "type":"structure",
+      "required":["ConfigurationState"],
+      "members":{
+        "ConfigurationState":{"shape":"AnnotationConfigurationState"},
+        "EncryptionConfiguration":{"shape":"MetadataTableEncryptionConfiguration"},
+        "Role":{"shape":"Role"}
+      }
+    },
+    "AnnotationTableConfigurationResult":{
+      "type":"structure",
+      "required":["ConfigurationState"],
+      "members":{
+        "ConfigurationState":{"shape":"AnnotationConfigurationState"},
+        "TableStatus":{"shape":"MetadataTableStatus"},
+        "Error":{"shape":"ErrorDetails"},
+        "TableName":{"shape":"S3TablesName"},
+        "TableArn":{"shape":"S3TablesArn"},
+        "Role":{"shape":"Role"}
+      }
+    },
+    "AnnotationTableConfigurationUpdates":{
+      "type":"structure",
+      "required":["ConfigurationState"],
+      "members":{
+        "ConfigurationState":{"shape":"AnnotationConfigurationState"},
+        "EncryptionConfiguration":{"shape":"MetadataTableEncryptionConfiguration"},
+        "Role":{"shape":"Role"}
+      }
     },
     "ArchiveStatus":{
       "type":"string",
@@ -2377,6 +2554,11 @@
           "shape":"TaggingDirective",
           "location":"header",
           "locationName":"x-amz-tagging-directive"
+        },
+        "AnnotationDirective":{
+          "shape":"AnnotationDirective",
+          "location":"header",
+          "locationName":"x-amz-object-annotation-directive"
         },
         "ServerSideEncryption":{
           "shape":"ServerSideEncryption",
@@ -3340,6 +3522,67 @@
       "member":{"shape":"DeleteMarkerEntry"},
       "flattened":true
     },
+    "DeleteObjectAnnotationOutput":{
+      "type":"structure",
+      "members":{
+        "ObjectVersionId":{
+          "shape":"ObjectVersionId",
+          "location":"header",
+          "locationName":"x-amz-object-version-id"
+        },
+        "RequestCharged":{
+          "shape":"RequestCharged",
+          "location":"header",
+          "locationName":"x-amz-request-charged"
+        }
+      }
+    },
+    "DeleteObjectAnnotationRequest":{
+      "type":"structure",
+      "required":[
+        "Bucket",
+        "Key",
+        "AnnotationName"
+      ],
+      "members":{
+        "Bucket":{
+          "shape":"BucketName",
+          "contextParam":{"name":"Bucket"},
+          "location":"uri",
+          "locationName":"Bucket"
+        },
+        "Key":{
+          "shape":"ObjectKey",
+          "location":"uri",
+          "locationName":"Key"
+        },
+        "AnnotationName":{
+          "shape":"AnnotationName",
+          "location":"querystring",
+          "locationName":"annotationName"
+        },
+        "VersionId":{
+          "shape":"ObjectVersionId",
+          "location":"querystring",
+          "locationName":"versionId"
+        },
+        "RequestPayer":{
+          "shape":"RequestPayer",
+          "location":"header",
+          "locationName":"x-amz-request-payer"
+        },
+        "ExpectedBucketOwner":{
+          "shape":"AccountId",
+          "location":"header",
+          "locationName":"x-amz-expected-bucket-owner"
+        },
+        "ObjectIfMatch":{
+          "shape":"ObjectIfMatch",
+          "location":"header",
+          "locationName":"x-amz-object-if-match"
+        }
+      }
+    },
     "DeleteObjectOutput":{
       "type":"structure",
       "members":{
@@ -3696,7 +3939,10 @@
         "s3:LifecycleExpiration:DeleteMarkerCreated",
         "s3:ObjectTagging:*",
         "s3:ObjectTagging:Put",
-        "s3:ObjectTagging:Delete"
+        "s3:ObjectTagging:Delete",
+        "s3:ObjectAnnotation:*",
+        "s3:ObjectAnnotation:Put",
+        "s3:ObjectAnnotation:Delete"
       ]
     },
     "EventBridgeConfiguration":{
@@ -3741,7 +3987,7 @@
       "type":"boolean",
       "box":true
     },
-    "Expires":{"type":"string"},
+    "Expires":{"type":"timestamp"},
     "ExposeHeader":{"type":"string"},
     "ExposeHeaders":{
       "type":"list",
@@ -4479,6 +4725,153 @@
           "shape":"AccountId",
           "location":"header",
           "locationName":"x-amz-expected-bucket-owner"
+        }
+      }
+    },
+    "GetObjectAnnotationOutput":{
+      "type":"structure",
+      "members":{
+        "AnnotationPayload":{
+          "shape":"AnnotationPayload",
+          "streaming":true
+        },
+        "ObjectVersionId":{
+          "shape":"ObjectVersionId",
+          "location":"header",
+          "locationName":"x-amz-object-version-id"
+        },
+        "LastModified":{
+          "shape":"LastModified",
+          "location":"header",
+          "locationName":"Last-Modified"
+        },
+        "ContentLength":{
+          "shape":"ContentLength",
+          "location":"header",
+          "locationName":"Content-Length"
+        },
+        "ETag":{
+          "shape":"ETag",
+          "location":"header",
+          "locationName":"ETag"
+        },
+        "ChecksumCRC32":{
+          "shape":"ChecksumCRC32",
+          "location":"header",
+          "locationName":"x-amz-checksum-crc32"
+        },
+        "ChecksumCRC32C":{
+          "shape":"ChecksumCRC32C",
+          "location":"header",
+          "locationName":"x-amz-checksum-crc32c"
+        },
+        "ChecksumCRC64NVME":{
+          "shape":"ChecksumCRC64NVME",
+          "location":"header",
+          "locationName":"x-amz-checksum-crc64nvme"
+        },
+        "ChecksumSHA1":{
+          "shape":"ChecksumSHA1",
+          "location":"header",
+          "locationName":"x-amz-checksum-sha1"
+        },
+        "ChecksumSHA256":{
+          "shape":"ChecksumSHA256",
+          "location":"header",
+          "locationName":"x-amz-checksum-sha256"
+        },
+        "ChecksumSHA512":{
+          "shape":"ChecksumSHA512",
+          "location":"header",
+          "locationName":"x-amz-checksum-sha512"
+        },
+        "ChecksumMD5":{
+          "shape":"ChecksumMD5",
+          "location":"header",
+          "locationName":"x-amz-checksum-md5"
+        },
+        "ChecksumXXHASH64":{
+          "shape":"ChecksumXXHASH64",
+          "location":"header",
+          "locationName":"x-amz-checksum-xxhash64"
+        },
+        "ChecksumXXHASH3":{
+          "shape":"ChecksumXXHASH3",
+          "location":"header",
+          "locationName":"x-amz-checksum-xxhash3"
+        },
+        "ChecksumXXHASH128":{
+          "shape":"ChecksumXXHASH128",
+          "location":"header",
+          "locationName":"x-amz-checksum-xxhash128"
+        },
+        "ChecksumType":{
+          "shape":"ChecksumType",
+          "location":"header",
+          "locationName":"x-amz-checksum-type"
+        },
+        "ServerSideEncryption":{
+          "shape":"ServerSideEncryption",
+          "location":"header",
+          "locationName":"x-amz-server-side-encryption"
+        },
+        "RequestCharged":{
+          "shape":"RequestCharged",
+          "location":"header",
+          "locationName":"x-amz-request-charged"
+        },
+        "ReplicationStatus":{
+          "shape":"ReplicationStatus",
+          "location":"header",
+          "locationName":"x-amz-replication-status"
+        }
+      },
+      "payload":"AnnotationPayload"
+    },
+    "GetObjectAnnotationRequest":{
+      "type":"structure",
+      "required":[
+        "Bucket",
+        "Key",
+        "AnnotationName"
+      ],
+      "members":{
+        "Bucket":{
+          "shape":"BucketName",
+          "contextParam":{"name":"Bucket"},
+          "location":"uri",
+          "locationName":"Bucket"
+        },
+        "Key":{
+          "shape":"ObjectKey",
+          "contextParam":{"name":"Key"},
+          "location":"uri",
+          "locationName":"Key"
+        },
+        "AnnotationName":{
+          "shape":"AnnotationName",
+          "location":"querystring",
+          "locationName":"annotationName"
+        },
+        "VersionId":{
+          "shape":"ObjectVersionId",
+          "location":"querystring",
+          "locationName":"versionId"
+        },
+        "RequestPayer":{
+          "shape":"RequestPayer",
+          "location":"header",
+          "locationName":"x-amz-request-payer"
+        },
+        "ExpectedBucketOwner":{
+          "shape":"AccountId",
+          "location":"header",
+          "locationName":"x-amz-expected-bucket-owner"
+        },
+        "ChecksumMode":{
+          "shape":"ChecksumMode",
+          "location":"header",
+          "locationName":"x-amz-checksum-mode"
         }
       }
     },
@@ -5703,6 +6096,12 @@
         "Disabled"
       ]
     },
+    "InvalidAnnotationName":{
+      "type":"structure",
+      "members":{},
+      "error":{"httpStatusCode":400},
+      "exception":true
+    },
     "InvalidObjectState":{
       "type":"structure",
       "members":{
@@ -5710,6 +6109,12 @@
         "AccessTier":{"shape":"IntelligentTieringAccessTier"}
       },
       "error":{"httpStatusCode":403},
+      "exception":true
+    },
+    "InvalidPrefix":{
+      "type":"structure",
+      "members":{},
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "InvalidRequest":{
@@ -6325,6 +6730,79 @@
         }
       }
     },
+    "ListObjectAnnotationsOutput":{
+      "type":"structure",
+      "members":{
+        "Annotations":{"shape":"AnnotationList"},
+        "Bucket":{"shape":"BucketName"},
+        "Key":{"shape":"ObjectKey"},
+        "ObjectVersionId":{
+          "shape":"ObjectVersionId",
+          "location":"header",
+          "locationName":"x-amz-object-version-id"
+        },
+        "AnnotationPrefix":{"shape":"AnnotationPrefix"},
+        "MaxAnnotationResults":{"shape":"MaxAnnotationResults"},
+        "AnnotationCount":{"shape":"AnnotationCount"},
+        "ContinuationToken":{"shape":"Token"},
+        "NextContinuationToken":{"shape":"NextToken"},
+        "RequestCharged":{
+          "shape":"RequestCharged",
+          "location":"header",
+          "locationName":"x-amz-request-charged"
+        }
+      }
+    },
+    "ListObjectAnnotationsRequest":{
+      "type":"structure",
+      "required":[
+        "Bucket",
+        "Key"
+      ],
+      "members":{
+        "Bucket":{
+          "shape":"BucketName",
+          "contextParam":{"name":"Bucket"},
+          "location":"uri",
+          "locationName":"Bucket"
+        },
+        "Key":{
+          "shape":"ObjectKey",
+          "location":"uri",
+          "locationName":"Key"
+        },
+        "VersionId":{
+          "shape":"ObjectVersionId",
+          "location":"querystring",
+          "locationName":"versionId"
+        },
+        "MaxAnnotationResults":{
+          "shape":"MaxAnnotationResults",
+          "location":"querystring",
+          "locationName":"max-annotation-results"
+        },
+        "AnnotationPrefix":{
+          "shape":"AnnotationPrefix",
+          "location":"querystring",
+          "locationName":"annotation-prefix"
+        },
+        "ContinuationToken":{
+          "shape":"Token",
+          "location":"querystring",
+          "locationName":"continuation-token"
+        },
+        "RequestPayer":{
+          "shape":"RequestPayer",
+          "location":"header",
+          "locationName":"x-amz-request-payer"
+        },
+        "ExpectedBucketOwner":{
+          "shape":"AccountId",
+          "location":"header",
+          "locationName":"x-amz-expected-bucket-owner"
+        }
+      }
+    },
     "ListObjectVersionsOutput":{
       "type":"structure",
       "members":{
@@ -6718,6 +7196,12 @@
       "type":"integer",
       "box":true
     },
+    "MaxAnnotationResults":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
     "MaxBuckets":{
       "type":"integer",
       "box":true,
@@ -6744,7 +7228,8 @@
       "required":["JournalTableConfiguration"],
       "members":{
         "JournalTableConfiguration":{"shape":"JournalTableConfiguration"},
-        "InventoryTableConfiguration":{"shape":"InventoryTableConfiguration"}
+        "InventoryTableConfiguration":{"shape":"InventoryTableConfiguration"},
+        "AnnotationTableConfiguration":{"shape":"AnnotationTableConfiguration"}
       }
     },
     "MetadataConfigurationResult":{
@@ -6753,7 +7238,8 @@
       "members":{
         "DestinationResult":{"shape":"DestinationResult"},
         "JournalTableConfigurationResult":{"shape":"JournalTableConfigurationResult"},
-        "InventoryTableConfigurationResult":{"shape":"InventoryTableConfigurationResult"}
+        "InventoryTableConfigurationResult":{"shape":"InventoryTableConfigurationResult"},
+        "AnnotationTableConfigurationResult":{"shape":"AnnotationTableConfigurationResult"}
       }
     },
     "MetadataDirective":{
@@ -6879,6 +7365,12 @@
     "NextToken":{"type":"string"},
     "NextUploadIdMarker":{"type":"string"},
     "NextVersionIdMarker":{"type":"string"},
+    "NoSuchAnnotation":{
+      "type":"structure",
+      "members":{},
+      "error":{"httpStatusCode":404},
+      "exception":true
+    },
     "NoSuchBucket":{
       "type":"structure",
       "members":{},
@@ -7032,6 +7524,7 @@
       "member":{"shape":"ObjectIdentifier"},
       "flattened":true
     },
+    "ObjectIfMatch":{"type":"string"},
     "ObjectKey":{
       "type":"string",
       "min":1
@@ -8236,6 +8729,201 @@
         }
       },
       "payload":"AccessControlPolicy"
+    },
+    "PutObjectAnnotationOutput":{
+      "type":"structure",
+      "members":{
+        "Key":{"shape":"ObjectKey"},
+        "AnnotationName":{"shape":"AnnotationName"},
+        "ObjectVersionId":{
+          "shape":"ObjectVersionId",
+          "location":"header",
+          "locationName":"x-amz-object-version-id"
+        },
+        "ETag":{
+          "shape":"ETag",
+          "location":"header",
+          "locationName":"ETag"
+        },
+        "ChecksumCRC32":{
+          "shape":"ChecksumCRC32",
+          "location":"header",
+          "locationName":"x-amz-checksum-crc32"
+        },
+        "ChecksumCRC32C":{
+          "shape":"ChecksumCRC32C",
+          "location":"header",
+          "locationName":"x-amz-checksum-crc32c"
+        },
+        "ChecksumCRC64NVME":{
+          "shape":"ChecksumCRC64NVME",
+          "location":"header",
+          "locationName":"x-amz-checksum-crc64nvme"
+        },
+        "ChecksumSHA1":{
+          "shape":"ChecksumSHA1",
+          "location":"header",
+          "locationName":"x-amz-checksum-sha1"
+        },
+        "ChecksumSHA256":{
+          "shape":"ChecksumSHA256",
+          "location":"header",
+          "locationName":"x-amz-checksum-sha256"
+        },
+        "ChecksumSHA512":{
+          "shape":"ChecksumSHA512",
+          "location":"header",
+          "locationName":"x-amz-checksum-sha512"
+        },
+        "ChecksumMD5":{
+          "shape":"ChecksumMD5",
+          "location":"header",
+          "locationName":"x-amz-checksum-md5"
+        },
+        "ChecksumXXHASH64":{
+          "shape":"ChecksumXXHASH64",
+          "location":"header",
+          "locationName":"x-amz-checksum-xxhash64"
+        },
+        "ChecksumXXHASH3":{
+          "shape":"ChecksumXXHASH3",
+          "location":"header",
+          "locationName":"x-amz-checksum-xxhash3"
+        },
+        "ChecksumXXHASH128":{
+          "shape":"ChecksumXXHASH128",
+          "location":"header",
+          "locationName":"x-amz-checksum-xxhash128"
+        },
+        "ChecksumType":{
+          "shape":"ChecksumType",
+          "location":"header",
+          "locationName":"x-amz-checksum-type"
+        },
+        "ServerSideEncryption":{
+          "shape":"ServerSideEncryption",
+          "location":"header",
+          "locationName":"x-amz-server-side-encryption"
+        },
+        "RequestCharged":{
+          "shape":"RequestCharged",
+          "location":"header",
+          "locationName":"x-amz-request-charged"
+        }
+      }
+    },
+    "PutObjectAnnotationRequest":{
+      "type":"structure",
+      "required":[
+        "Bucket",
+        "Key",
+        "AnnotationName",
+        "AnnotationPayload"
+      ],
+      "members":{
+        "Bucket":{
+          "shape":"BucketName",
+          "contextParam":{"name":"Bucket"},
+          "location":"uri",
+          "locationName":"Bucket"
+        },
+        "Key":{
+          "shape":"ObjectKey",
+          "contextParam":{"name":"Key"},
+          "location":"uri",
+          "locationName":"Key"
+        },
+        "VersionId":{
+          "shape":"ObjectVersionId",
+          "location":"querystring",
+          "locationName":"versionId"
+        },
+        "AnnotationName":{
+          "shape":"AnnotationName",
+          "location":"querystring",
+          "locationName":"annotationName"
+        },
+        "AnnotationPayload":{
+          "shape":"AnnotationPayload",
+          "streaming":true
+        },
+        "ObjectIfMatch":{
+          "shape":"ObjectIfMatch",
+          "location":"header",
+          "locationName":"x-amz-object-if-match"
+        },
+        "ChecksumAlgorithm":{
+          "shape":"ChecksumAlgorithm",
+          "location":"header",
+          "locationName":"x-amz-sdk-checksum-algorithm"
+        },
+        "ChecksumCRC32":{
+          "shape":"ChecksumCRC32",
+          "location":"header",
+          "locationName":"x-amz-checksum-crc32"
+        },
+        "ChecksumCRC32C":{
+          "shape":"ChecksumCRC32C",
+          "location":"header",
+          "locationName":"x-amz-checksum-crc32c"
+        },
+        "ChecksumCRC64NVME":{
+          "shape":"ChecksumCRC64NVME",
+          "location":"header",
+          "locationName":"x-amz-checksum-crc64nvme"
+        },
+        "ChecksumSHA1":{
+          "shape":"ChecksumSHA1",
+          "location":"header",
+          "locationName":"x-amz-checksum-sha1"
+        },
+        "ChecksumSHA256":{
+          "shape":"ChecksumSHA256",
+          "location":"header",
+          "locationName":"x-amz-checksum-sha256"
+        },
+        "ChecksumSHA512":{
+          "shape":"ChecksumSHA512",
+          "location":"header",
+          "locationName":"x-amz-checksum-sha512"
+        },
+        "ChecksumMD5":{
+          "shape":"ChecksumMD5",
+          "location":"header",
+          "locationName":"x-amz-checksum-md5"
+        },
+        "ChecksumXXHASH64":{
+          "shape":"ChecksumXXHASH64",
+          "location":"header",
+          "locationName":"x-amz-checksum-xxhash64"
+        },
+        "ChecksumXXHASH3":{
+          "shape":"ChecksumXXHASH3",
+          "location":"header",
+          "locationName":"x-amz-checksum-xxhash3"
+        },
+        "ChecksumXXHASH128":{
+          "shape":"ChecksumXXHASH128",
+          "location":"header",
+          "locationName":"x-amz-checksum-xxhash128"
+        },
+        "ContentMD5":{
+          "shape":"ContentMD5",
+          "location":"header",
+          "locationName":"Content-MD5"
+        },
+        "RequestPayer":{
+          "shape":"RequestPayer",
+          "location":"header",
+          "locationName":"x-amz-request-payer"
+        },
+        "ExpectedBucketOwner":{
+          "shape":"AccountId",
+          "location":"header",
+          "locationName":"x-amz-expected-bucket-owner"
+        }
+      },
+      "payload":"AnnotationPayload"
     },
     "PutObjectLegalHoldOutput":{
       "type":"structure",
@@ -9895,6 +10583,48 @@
       ]
     },
     "URI":{"type":"string"},
+    "UnsupportedMediaType":{
+      "type":"structure",
+      "members":{},
+      "error":{"httpStatusCode":415},
+      "exception":true
+    },
+    "UpdateBucketMetadataAnnotationTableConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "Bucket",
+        "AnnotationTableConfiguration"
+      ],
+      "members":{
+        "Bucket":{
+          "shape":"BucketName",
+          "contextParam":{"name":"Bucket"},
+          "location":"uri",
+          "locationName":"Bucket"
+        },
+        "ContentMD5":{
+          "shape":"ContentMD5",
+          "location":"header",
+          "locationName":"Content-MD5"
+        },
+        "ChecksumAlgorithm":{
+          "shape":"ChecksumAlgorithm",
+          "location":"header",
+          "locationName":"x-amz-sdk-checksum-algorithm"
+        },
+        "AnnotationTableConfiguration":{
+          "shape":"AnnotationTableConfigurationUpdates",
+          "locationName":"AnnotationTableConfiguration",
+          "xmlNamespace":{"uri":"http://s3.amazonaws.com/doc/2006-03-01/"}
+        },
+        "ExpectedBucketOwner":{
+          "shape":"AccountId",
+          "location":"header",
+          "locationName":"x-amz-expected-bucket-owner"
+        }
+      },
+      "payload":"AnnotationTableConfiguration"
+    },
     "UpdateBucketMetadataInventoryTableConfigurationRequest":{
       "type":"structure",
       "required":[

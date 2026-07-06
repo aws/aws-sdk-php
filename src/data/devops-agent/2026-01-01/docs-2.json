@@ -1,14 +1,20 @@
 {
   "version": "2.0",
-  "service": "<p>AWS DevOps Agent is a frontier agent that resolves and proactively prevents incidents, continuously improving reliability and performance. AWS DevOps Agent investigates incidents and identifies operational improvements as an experienced DevOps engineer.</p> <p>The agent works by:</p> <ul> <li>Learning your resources and their relationships.</li> <li>Working with your observability tools, runbooks, code repositories, and CI/CD pipelines.</li> <li>Correlating telemetry, code, and deployment data to understand relationships between your application resources.</li> <li>Supporting applications in multicloud and hybrid environments.</li> </ul>",
+  "service": "<p>AWS DevOps Agent is your always-available operations teammate. It resolves and proactively prevents incidents, optimizes application reliability and performance, and handles on-demand SRE tasks across AWS, multicloud, and on-premises environments. AWS DevOps Agent investigates incidents as an experienced DevOps engineer would. It learns your applications and their relationships. It works with your observability tools, runbooks, code repositories, and CI/CD pipelines. The agent correlates telemetry, code, and deployment data across all of them.</p>",
   "operations": {
     "AssociateService": "<p>Adds a specific service association to an AgentSpace. It overwrites the existing association of the same service. Returns 201 Created on success.</p>",
     "CreateAgentSpace": "<p>Creates a new AgentSpace with the specified name and description. Duplicate space names are allowed.</p>",
+    "CreateAsset": "<p>Creates a new asset in the specified agent space</p>",
+    "CreateAssetFile": "<p>Creates a file in an asset</p>",
     "CreateBacklogTask": "<p>Creates a new backlog task in the specified agent space</p>",
     "CreateChat": "<p>Creates a new chat execution in the specified agent space</p>",
     "CreatePrivateConnection": "<p>Creates a Private Connection to a target resource.</p>",
+    "CreateTrigger": "<p>Creates a new Trigger in the specified agent space</p>",
     "DeleteAgentSpace": "<p>Deletes an AgentSpace. This operation is idempotent and returns a 204 No Content response on success.</p>",
+    "DeleteAsset": "<p>Deletes an asset and all its files from the specified agent space</p>",
+    "DeleteAssetFile": "<p>Deletes a file from an asset</p>",
     "DeletePrivateConnection": "<p>Deletes a Private Connection. The deletion is asynchronous and returns DELETE_IN_PROGRESS status.</p>",
+    "DeleteTrigger": "<p>Deletes a Trigger from the specified agent space</p>",
     "DeregisterService": "<p>Deregister a service</p>",
     "DescribePrivateConnection": "<p>Retrieves details of an existing Private Connection.</p>",
     "DisableOperatorApp": "<p>Disable the Operator App for the specified AgentSpace</p>",
@@ -16,12 +22,20 @@
     "EnableOperatorApp": "<p>Enable the Operator App to access the given AgentSpace</p>",
     "GetAccountUsage": "<p>Retrieves monthly account usage metrics and limits for the AWS account.</p>",
     "GetAgentSpace": "<p>Retrieves detailed information about a specific AgentSpace.</p>",
+    "GetAsset": "<p>Gets an asset from the specified agent space</p>",
+    "GetAssetContent": "<p>Gets an asset's content as a zip bundle</p>",
+    "GetAssetFile": "<p>Gets a file from an asset</p>",
     "GetAssociation": "<p>Retrieves given associations configured for a specific AgentSpace.</p>",
     "GetBacklogTask": "<p>Gets a backlog task for the specified agent space and task id</p>",
     "GetOperatorApp": "<p>Get the full auth configuration of operator including any enabled auth flow</p>",
     "GetRecommendation": "<p>Retrieves a specific recommendation by its ID</p>",
     "GetService": "<p>Retrieves given service by it's unique identifier</p>",
+    "GetTrigger": "<p>Gets a Trigger from the specified agent space</p>",
     "ListAgentSpaces": "<p>Lists all AgentSpaces with optional pagination.</p>",
+    "ListAssetFiles": "<p>Lists files in an asset</p>",
+    "ListAssetTypes": "<p>Lists the supported asset types</p>",
+    "ListAssetVersions": "<p>Lists versions of an asset in the specified agent space</p>",
+    "ListAssets": "<p>Lists assets in the specified agent space</p>",
     "ListAssociations": "<p>List all associations for given AgentSpace</p>",
     "ListBacklogTasks": "<p>Lists backlog tasks in the specified agent space with optional filtering and sorting</p>",
     "ListChats": "<p>Retrieves a paginated list of the user's recent chat executions</p>",
@@ -33,18 +47,22 @@
     "ListRecommendations": "<p>Lists recommendations for the specified agent space</p>",
     "ListServices": "<p>List a list of registered service on the account level.</p>",
     "ListTagsForResource": "<p>Lists tags for the specified AWS DevOps Agent resource.</p>",
+    "ListTriggers": "<p>Lists Triggers in the specified agent space</p>",
     "ListWebhooks": "<p>List all webhooks for given Association</p>",
     "RegisterService": "<p>This operation registers the specified service</p>",
     "SendMessage": "<p>Sends a chat message and streams the response for the specified agent space execution</p>",
     "TagResource": "<p>Adds or overwrites tags for the specified AWS DevOps Agent resource.</p>",
     "UntagResource": "<p>Removes tags from the specified AWS DevOps Agent resource.</p>",
     "UpdateAgentSpace": "<p>Updates the information of an existing AgentSpace.</p>",
+    "UpdateAsset": "<p>Updates an asset in the specified agent space</p>",
+    "UpdateAssetFile": "<p>Updates a file in an asset</p>",
     "UpdateAssociation": "<p>Partially updates the configuration of an existing service association for an AgentSpace. Present fields are fully replaced; absent fields are left unchanged. Returns 200 OK on success.</p>",
     "UpdateBacklogTask": "<p>Update an existing backlog task.</p>",
     "UpdateGoal": "<p>Update an existing goal</p>",
     "UpdateOperatorAppIdpConfig": "<p>Update the external Identity Provider configuration for the Operator App</p>",
     "UpdatePrivateConnectionCertificate": "<p>Updates the certificate associated with a Private Connection.</p>",
     "UpdateRecommendation": "<p>Updates an existing recommendation with new content, status, or metadata</p>",
+    "UpdateTrigger": "<p>Updates the status of an existing Trigger</p>",
     "ValidateAwsAssociations": "<p>Validates an aws association and set status and returns a 204 No Content response on success.</p>"
   },
   "shapes": {
@@ -91,18 +109,31 @@
         "AgentSpace$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
         "AssociateServiceInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
         "Association$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
+        "CreateAssetFileRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the asset</p>",
+        "CreateAssetRequest$agentSpaceId": "<p>The unique identifier for the agent space where the asset will be created</p>",
         "CreateBacklogTaskRequest$agentSpaceId": "<p>The unique identifier for the agent space where the task will be created</p>",
         "CreateChatRequest$agentSpaceId": null,
+        "CreateTriggerRequest$agentSpaceId": "<p>The unique identifier for the agent space where the Trigger will be created</p>",
         "DeleteAgentSpaceInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
+        "DeleteAssetFileRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the asset</p>",
+        "DeleteAssetRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the asset</p>",
+        "DeleteTriggerRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the Trigger</p>",
         "DisableOperatorAppInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
         "DisassociateServiceInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
         "EnableOperatorAppInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
         "EnableOperatorAppOutput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
         "GetAgentSpaceInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
+        "GetAssetContentRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the asset</p>",
+        "GetAssetFileRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the asset</p>",
+        "GetAssetRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the asset</p>",
         "GetAssociationInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
         "GetBacklogTaskRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the task</p>",
         "GetOperatorAppInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
         "GetRecommendationRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the recommendation</p>",
+        "GetTriggerRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the Trigger</p>",
+        "ListAssetFilesRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the asset</p>",
+        "ListAssetVersionsRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the asset</p>",
+        "ListAssetsRequest$agentSpaceId": "<p>The unique identifier for the agent space to list assets from</p>",
         "ListAssociationsInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
         "ListBacklogTasksRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the tasks</p>",
         "ListChatsRequest$agentSpaceId": null,
@@ -112,15 +143,20 @@
         "ListPendingMessagesRequest$agentSpaceId": null,
         "ListPendingMessagesResponse$agentSpaceId": null,
         "ListRecommendationsRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the recommendations</p>",
+        "ListTriggersRequest$agentSpaceId": "<p>The unique identifier for the agent space whose Triggers should be listed</p>",
         "ListWebhooksInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
         "SendMessageRequest$agentSpaceId": "<p>The agent space identifier</p>",
+        "Trigger$agentSpaceId": "<p>The agent space this Trigger belongs to</p>",
         "UpdateAgentSpaceInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
+        "UpdateAssetFileRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the asset</p>",
+        "UpdateAssetRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the asset</p>",
         "UpdateAssociationInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
         "UpdateBacklogTaskRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the task</p>",
         "UpdateGoalRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the goal</p>",
         "UpdateOperatorAppIdpConfigInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
         "UpdateOperatorAppIdpConfigOutput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
         "UpdateRecommendationRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the recommendation</p>",
+        "UpdateTriggerRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the Trigger</p>",
         "ValidateAwsAssociationsInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>"
       }
     },
@@ -142,6 +178,157 @@
       "base": "<p>API Key Value for service.</p>",
       "refs": {
         "GenericWebhook$apiKey": "<p>API Key for API Key webhook authentication</p>"
+      }
+    },
+    "Asset": {
+      "base": "<p>Represents an asset in an agent space, including its identifier, type, metadata, version, and timestamps.</p>",
+      "refs": {
+        "AssetList$member": null,
+        "CreateAssetResponse$asset": "<p>The asset object</p>",
+        "GetAssetResponse$asset": "<p>The asset object</p>",
+        "UpdateAssetResponse$asset": "<p>The asset object</p>"
+      }
+    },
+    "AssetContent": {
+      "base": "<p>Content for an asset: a single file, a zip bundle, or a source URL to import from</p>",
+      "refs": {
+        "CreateAssetRequest$content": "<p>The content for the asset. Provide a single file, a zip bundle, or a sourceUrl to import from an external source.</p>",
+        "UpdateAssetRequest$content": "<p>Optional content update. A single file adds or replaces one file; a zip replaces all files; a sourceUrl re-syncs from the original source.</p>"
+      }
+    },
+    "AssetContentUrl": {
+      "base": "<p>URL to a source repository or directory containing asset content</p>",
+      "refs": {
+        "AssetSourceUrlContent$url": "<p>The source URL to import asset content from</p>"
+      }
+    },
+    "AssetFile": {
+      "base": "<p>Represents a single file within an asset, including its path, content, version, and timestamps.</p>",
+      "refs": {
+        "CreateAssetFileResponse$file": "<p>The asset file object</p>",
+        "GetAssetFileResponse$file": "<p>The asset file object</p>",
+        "UpdateAssetFileResponse$file": "<p>The asset file object</p>"
+      }
+    },
+    "AssetFileBody": {
+      "base": "<p>Content of an individual asset file</p>",
+      "refs": {
+        "AssetFile$content": "<p>The content of this file</p>",
+        "AssetFileContent$body": "<p>The file content</p>",
+        "CreateAssetFileRequest$content": "<p>The content of the file to create</p>",
+        "UpdateAssetFileRequest$content": "<p>Updated file content. If omitted, the existing content is unchanged.</p>"
+      }
+    },
+    "AssetFileBytes": {
+      "base": "<p>Binary file content</p>",
+      "refs": {
+        "AssetFileBody$bytes": null
+      }
+    },
+    "AssetFileContent": {
+      "base": "<p>A single file with path and content</p>",
+      "refs": {
+        "AssetContent$file": "<p>A single file with path and content</p>"
+      }
+    },
+    "AssetFilePath": {
+      "base": "<p>The path of a file within an asset</p>",
+      "refs": {
+        "AssetFile$path": "<p>The path of this file within the asset</p>",
+        "AssetFileContent$path": "<p>The path of the file within the asset</p>",
+        "AssetFileSummary$path": "<p>The path of this file within the asset</p>",
+        "CreateAssetFileRequest$path": "<p>The path of the file within the asset</p>",
+        "DeleteAssetFileRequest$path": "<p>The path of the file within the asset to delete</p>",
+        "GetAssetFileRequest$path": "<p>The path of the file within the asset to retrieve</p>",
+        "UpdateAssetFileRequest$path": "<p>The path of the file within the asset to update</p>"
+      }
+    },
+    "AssetFileSummary": {
+      "base": "<p>Summary of a file within an asset, including its path, version, and timestamps.</p>",
+      "refs": {
+        "AssetFileSummaryList$member": null
+      }
+    },
+    "AssetFileSummaryList": {
+      "base": null,
+      "refs": {
+        "ListAssetFilesResponse$items": "<p>The list of asset file summaries</p>"
+      }
+    },
+    "AssetFileText": {
+      "base": "<p>Text file content</p>",
+      "refs": {
+        "AssetFileBody$text": null
+      }
+    },
+    "AssetIdList": {
+      "base": "<p>List of asset identifiers to attach to a message</p>",
+      "refs": {
+        "SendMessageRequest$assetIds": "<p>Optional list of asset identifiers to attach to the message</p>"
+      }
+    },
+    "AssetList": {
+      "base": null,
+      "refs": {
+        "ListAssetsResponse$items": "<p>The list of assets for the agent space</p>"
+      }
+    },
+    "AssetSourceUrlContent": {
+      "base": "<p>Content for an asset sourced from an external URL.</p>",
+      "refs": {
+        "AssetContent$sourceUrl": "<p>A source URL to import asset content from</p>"
+      }
+    },
+    "AssetType": {
+      "base": "<p>The type of asset (e.g. skill, artifact)</p>",
+      "refs": {
+        "Asset$assetType": "<p>The type of this asset</p>",
+        "AssetTypeSummary$assetType": "<p>The asset type identifier</p>",
+        "CreateAssetRequest$assetType": "<p>The type of asset to create</p>",
+        "ListAssetsRequest$assetType": "<p>Filter results to only assets of this type</p>"
+      }
+    },
+    "AssetTypeList": {
+      "base": null,
+      "refs": {
+        "ListAssetTypesResponse$items": "<p>The list of supported asset types</p>"
+      }
+    },
+    "AssetTypeSummary": {
+      "base": "<p>Summary of an asset type, including its identifier and description.</p>",
+      "refs": {
+        "AssetTypeList$member": null
+      }
+    },
+    "AssetTypeSummaryDescriptionString": {
+      "base": null,
+      "refs": {
+        "AssetTypeSummary$description": "<p>A description of the asset type</p>"
+      }
+    },
+    "AssetVersionMetadata": {
+      "base": "<p>Metadata for a single version of an asset, including the version number and timestamps.</p>",
+      "refs": {
+        "AssetVersionMetadataList$member": null
+      }
+    },
+    "AssetVersionMetadataList": {
+      "base": null,
+      "refs": {
+        "ListAssetVersionsResponse$items": "<p>The list of version metadata for the asset</p>"
+      }
+    },
+    "AssetZipBytes": {
+      "base": "<p>Zip file content as bytes</p>",
+      "refs": {
+        "AssetZipContent$zipFile": "<p>The zip file bytes</p>"
+      }
+    },
+    "AssetZipContent": {
+      "base": "<p>A zip file containing asset files</p>",
+      "refs": {
+        "AssetContent$zip": "<p>A zip file containing multiple files</p>",
+        "GetAssetContentResponse$content": "<p>The asset content as a zip file</p>"
       }
     },
     "AssistantMessage": {
@@ -171,6 +358,14 @@
         "AssociationsList$member": null,
         "GetAssociationOutput$association": null,
         "UpdateAssociationOutput$association": null
+      }
+    },
+    "AssociationCapabilities": {
+      "base": "<p>Per-capability enablement for the AWS DevOps Agent. Absent capability = disabled.</p>",
+      "refs": {
+        "AssociateServiceInput$capabilities": "<p>Enabled capabilities for this association.</p>",
+        "Association$capabilities": "<p>Enabled capabilities for this association.</p>",
+        "UpdateAssociationInput$capabilities": "<p>Enabled capabilities for this association.</p>"
       }
     },
     "AssociationId": {
@@ -214,6 +409,7 @@
         "Goal$createdAt": "<p>Timestamp when this goal was created</p>",
         "Goal$updatedAt": "<p>Timestamp when this goal was last updated</p>",
         "Goal$lastEvaluatedAt": "<p>Timestamp when the goal was last evaluated</p>",
+        "Recommendation$rankedAt": "<p>Timestamp when the recommendation was last ranked</p>",
         "Recommendation$createdAt": "<p>Timestamp when this recommendation was created</p>",
         "Recommendation$updatedAt": "<p>Timestamp when this recommendation was last updated</p>",
         "Task$createdAt": "<p>Timestamp when this task was created</p>",
@@ -237,9 +433,22 @@
     "Boolean": {
       "base": null,
       "refs": {
+        "CapabilityConfiguration$enabled": "<p>Whether the capability is enabled.</p>",
         "MCPServerOAuth3LOConfig$supportCodeChallenge": "<p>Whether the service supports PKCE (Proof Key for Code Exchange) for enhanced security during the OAuth flow.</p>",
         "SendMessageContentBlockStopEvent$last": "<p>Whether this is the final content block in the response</p>",
         "Task$hasLinkedTasks": "<p>Indicates if this task has other tasks linked to it</p>"
+      }
+    },
+    "CapabilityConfiguration": {
+      "base": "<p>Capability configuration for the AWS DevOps Agent.</p>",
+      "refs": {
+        "AssociationCapabilities$value": null
+      }
+    },
+    "CapabilityType": {
+      "base": "<p>AWS DevOps Agent capability types representing the set of automated capabilities that can be enabled per association.</p>",
+      "refs": {
+        "AssociationCapabilities$key": null
       }
     },
     "CertificateString": {
@@ -256,6 +465,12 @@
         "ChatExecutionList$member": null
       }
     },
+    "ChatExecutionId": {
+      "base": "<p>Chat execution identifier — must be a valid UUID</p>",
+      "refs": {
+        "SendMessageRequest$executionId": "<p>The execution identifier for the chat session</p>"
+      }
+    },
     "ChatExecutionList": {
       "base": null,
       "refs": {
@@ -269,6 +484,7 @@
         "MCPServerOAuth3LOConfig$clientId": "<p>OAuth client ID for authenticating with the service.</p>",
         "MCPServerOAuthClientCredentialsConfig$clientId": "<p>OAuth client ID for authenticating with the service.</p>",
         "PagerDutyOAuthClientCredentialsConfig$clientId": "<p>OAuth client ID for authenticating with the service.</p>",
+        "RemoteAgentOAuthClientCredentialsConfig$clientId": "<p>OAuth client ID for authenticating with the service.</p>",
         "ServiceNowOAuthClientCredentialsConfig$clientId": "<p>OAuth client ID for authenticating with the service.</p>"
       }
     },
@@ -276,9 +492,9 @@
       "base": "<p>Client secret for service authentication.</p>",
       "refs": {
         "DynatraceOAuthClientCredentialsConfig$clientSecret": "<p>OAuth client secret for authenticating with the service.</p>",
-        "MCPServerOAuth3LOConfig$clientSecret": "<p>OAuth client secret for authenticating with the service. Required for confidential clients or when PKCE is not supported. Optional for public clients using PKCE.</p>",
         "MCPServerOAuthClientCredentialsConfig$clientSecret": "<p>OAuth client secret for authenticating with the service.</p>",
         "PagerDutyOAuthClientCredentialsConfig$clientSecret": "<p>OAuth client secret for authenticating with the service.</p>",
+        "RemoteAgentOAuthClientCredentialsConfig$clientSecret": "<p>OAuth client secret for authenticating with the service.</p>",
         "ServiceNowOAuthClientCredentialsConfig$clientSecret": "<p>OAuth client secret for authenticating with the service.</p>"
       }
     },
@@ -302,6 +518,34 @@
     },
     "CreateAgentSpaceOutput": {
       "base": "<p>Output containing the newly created AgentSpace.</p>",
+      "refs": {}
+    },
+    "CreateAssetFileRequest": {
+      "base": "<p>Request structure for creating an asset file</p>",
+      "refs": {}
+    },
+    "CreateAssetFileRequestClientTokenString": {
+      "base": null,
+      "refs": {
+        "CreateAssetFileRequest$clientToken": "<p>A unique, case-sensitive identifier used for idempotent asset file creation</p>"
+      }
+    },
+    "CreateAssetFileResponse": {
+      "base": "<p>Response structure for creating an asset file</p>",
+      "refs": {}
+    },
+    "CreateAssetRequest": {
+      "base": "<p>Request structure for creating a new asset</p>",
+      "refs": {}
+    },
+    "CreateAssetRequestClientTokenString": {
+      "base": null,
+      "refs": {
+        "CreateAssetRequest$clientToken": "<p>A unique, case-sensitive identifier used for idempotent asset creation</p>"
+      }
+    },
+    "CreateAssetResponse": {
+      "base": "<p>Response structure for creating a new asset</p>",
       "refs": {}
     },
     "CreateBacklogTaskRequest": {
@@ -328,6 +572,39 @@
       "base": "<p>Output containing the newly created Private Connection summary.</p>",
       "refs": {}
     },
+    "CreateTriggerRequest": {
+      "base": "<p>Request structure for creating a new Trigger</p>",
+      "refs": {}
+    },
+    "CreateTriggerRequestClientTokenString": {
+      "base": null,
+      "refs": {
+        "CreateTriggerRequest$clientToken": "<p>A unique, case-sensitive identifier used for idempotent Trigger creation</p>"
+      }
+    },
+    "CreateTriggerResponse": {
+      "base": "<p>Response structure for creating a new Trigger</p>",
+      "refs": {}
+    },
+    "CustomHeaderName": {
+      "base": "<p>HTTP header name. Allows alphanumeric characters, hyphens, and underscores.</p>",
+      "refs": {
+        "CustomHeaders$key": null
+      }
+    },
+    "CustomHeaderValue": {
+      "base": "<p>Value type for custom headers.</p>",
+      "refs": {
+        "CustomHeaders$value": null
+      }
+    },
+    "CustomHeaders": {
+      "base": "<p>Custom headers map.</p>",
+      "refs": {
+        "MCPServerSigV4AuthorizationConfig$customHeaders": "<p>Custom headers for the SigV4 MCP server.</p>",
+        "RegisteredMCPServerSigV4Details$customHeaders": "<p>Custom headers for the SigV4 MCP server.</p>"
+      }
+    },
     "DatadogAuthorizationConfig": {
       "base": "<p>Authorization configuration for Datadog MCP server (uses authorization discovery only).</p>",
       "refs": {
@@ -346,18 +623,6 @@
         "DatadogServiceDetails$description": "<p>Optional description for the MCP server.</p>"
       }
     },
-    "DatadogServiceDetailsEndpointString": {
-      "base": null,
-      "refs": {
-        "DatadogServiceDetails$endpoint": "<p>MCP server endpoint URL.</p>"
-      }
-    },
-    "DatadogServiceDetailsNameString": {
-      "base": null,
-      "refs": {
-        "DatadogServiceDetails$name": "<p>MCP server name.</p>"
-      }
-    },
     "DateTime": {
       "base": null,
       "refs": {
@@ -373,12 +638,36 @@
       "base": "<p>Empty output for successful AgentSpace deletion.</p>",
       "refs": {}
     },
+    "DeleteAssetFileRequest": {
+      "base": "<p>Request structure for deleting an asset file</p>",
+      "refs": {}
+    },
+    "DeleteAssetFileResponse": {
+      "base": "<p>Response structure for deleting an asset file</p>",
+      "refs": {}
+    },
+    "DeleteAssetRequest": {
+      "base": "<p>Request structure for deleting an asset</p>",
+      "refs": {}
+    },
+    "DeleteAssetResponse": {
+      "base": "<p>Response structure for deleting an asset</p>",
+      "refs": {}
+    },
     "DeletePrivateConnectionInput": {
       "base": "<p>Input for deleting an existing Private Connection.</p>",
       "refs": {}
     },
     "DeletePrivateConnectionOutput": {
       "base": "<p>Output containing the status of the Private Connection deletion.</p>",
+      "refs": {}
+    },
+    "DeleteTriggerRequest": {
+      "base": "<p>Request structure for deleting a Trigger</p>",
+      "refs": {}
+    },
+    "DeleteTriggerResponse": {
+      "base": "<p>Response structure for deleting a Trigger</p>",
       "refs": {}
     },
     "DeregisterServiceInput": {
@@ -422,11 +711,19 @@
     "Document": {
       "base": null,
       "refs": {
+        "Asset$metadata": "<p>The metadata for this asset</p>",
+        "AssetFile$metadata": "<p>The metadata for this file</p>",
+        "AssetFileContent$metadata": "<p>Optional metadata for this file</p>",
+        "AssetFileSummary$metadata": "<p>The metadata for this file</p>",
         "AssistantMessageBlock$toolUse": "<p>Tool use request from the assistant.</p>",
+        "CreateAssetFileRequest$metadata": "<p>Optional metadata describing this file</p>",
+        "CreateAssetRequest$metadata": "<p>The metadata describing this asset</p>",
         "DocumentList$member": null,
         "JournalRecord$content": "<p>The content of this journal record</p>",
         "Task$supportMetadata": "<p>Optional support metadata for the task</p>",
         "Task$metadata": "<p>Optional metadata for the task</p>",
+        "UpdateAssetFileRequest$metadata": "<p>Metadata fields to update. Only the fields present in this document are updated. Omitted fields retain their current values.</p>",
+        "UpdateAssetRequest$metadata": "<p>Metadata fields to update. Only the fields present in this document are updated. Omitted fields retain their current values.</p>",
         "UserMessageBlock$toolResult": "<p>Tool execution result provided by the user.</p>"
       }
     },
@@ -529,6 +826,7 @@
         "MCPServerOAuth3LOConfig$exchangeParameters": "<p>OAuth token exchange parameters for authenticating with the service.</p>",
         "MCPServerOAuthClientCredentialsConfig$exchangeParameters": "<p>OAuth token exchange parameters for authenticating with the service.</p>",
         "PagerDutyOAuthClientCredentialsConfig$exchangeParameters": "<p>OAuth token exchange parameters for authenticating with the service.</p>",
+        "RemoteAgentOAuthClientCredentialsConfig$exchangeParameters": "<p>OAuth token exchange parameters for authenticating with the service.</p>",
         "ServiceNowOAuthClientCredentialsConfig$exchangeParameters": "<p>OAuth token exchange parameters for authenticating with the service.</p>"
       }
     },
@@ -548,6 +846,15 @@
       "base": "<p>Possible states of an execution</p>",
       "refs": {
         "Execution$executionStatus": "<p>The current status of this execution</p>"
+      }
+    },
+    "FailureMessage": {
+      "base": "<p>Failure message describing why a Private Connection has a FAILED status.</p>",
+      "refs": {
+        "CreatePrivateConnectionOutput$failureMessage": "<p>Message describing the reason for a failed Private Connection creation, if applicable.</p>",
+        "DescribePrivateConnectionOutput$failureMessage": "<p>Message describing the reason for a failed Private Connection, if applicable.</p>",
+        "PrivateConnectionSummary$failureMessage": "<p>Message describing the reason for a failed Private Connection, if applicable.</p>",
+        "UpdatePrivateConnectionCertificateOutput$failureMessage": "<p>Message describing the reason for a failed Private Connection update, if applicable.</p>"
       }
     },
     "GenericWebhook": {
@@ -571,6 +878,48 @@
     },
     "GetAgentSpaceOutput": {
       "base": "<p>Output containing the requested AgentSpace details.</p>",
+      "refs": {}
+    },
+    "GetAssetContentRequest": {
+      "base": "<p>Request structure for getting an asset's content as a zip bundle</p>",
+      "refs": {}
+    },
+    "GetAssetContentRequestAssetVersionInteger": {
+      "base": null,
+      "refs": {
+        "GetAssetContentRequest$assetVersion": "<p>The specific asset version to export. If omitted, the latest version is returned.</p>"
+      }
+    },
+    "GetAssetContentResponse": {
+      "base": "<p>Response structure for getting an asset's content as a zip bundle</p>",
+      "refs": {}
+    },
+    "GetAssetFileRequest": {
+      "base": "<p>Request structure for getting an asset file</p>",
+      "refs": {}
+    },
+    "GetAssetFileRequestAssetVersionInteger": {
+      "base": null,
+      "refs": {
+        "GetAssetFileRequest$assetVersion": "<p>The specific asset version to retrieve the file from. If omitted, the latest version is returned.</p>"
+      }
+    },
+    "GetAssetFileResponse": {
+      "base": "<p>Response structure for getting an asset file</p>",
+      "refs": {}
+    },
+    "GetAssetRequest": {
+      "base": "<p>Request structure for getting an asset</p>",
+      "refs": {}
+    },
+    "GetAssetRequestAssetVersionInteger": {
+      "base": null,
+      "refs": {
+        "GetAssetRequest$assetVersion": "<p>The specific version of the asset to retrieve. If omitted, the latest version is returned.</p>"
+      }
+    },
+    "GetAssetResponse": {
+      "base": "<p>Response structure for getting an asset</p>",
       "refs": {}
     },
     "GetAssociationInput": {
@@ -611,6 +960,14 @@
     },
     "GetServiceOutput": {
       "base": "<p>Output containing the requested service details.</p>",
+      "refs": {}
+    },
+    "GetTriggerRequest": {
+      "base": "<p>Request structure for getting a Trigger</p>",
+      "refs": {}
+    },
+    "GetTriggerResponse": {
+      "base": "<p>Response structure for getting a Trigger</p>",
       "refs": {}
     },
     "GitHubConfiguration": {
@@ -714,18 +1071,6 @@
         "GrafanaServiceDetails$description": "<p>Optional description for the MCP server.</p>"
       }
     },
-    "GrafanaServiceDetailsEndpointString": {
-      "base": null,
-      "refs": {
-        "GrafanaServiceDetails$endpoint": "<p>MCP server endpoint URL.</p>"
-      }
-    },
-    "GrafanaServiceDetailsNameString": {
-      "base": null,
-      "refs": {
-        "GrafanaServiceDetails$name": "<p>MCP server name.</p>"
-      }
-    },
     "Guid": {
       "base": "<p>Globally Unique Identifier (GUID) in standard format.</p>",
       "refs": {
@@ -775,6 +1120,11 @@
     "Integer": {
       "base": null,
       "refs": {
+        "Asset$version": "<p>The version number of this asset</p>",
+        "AssetFile$version": "<p>The asset version this file belongs to</p>",
+        "AssetFileSummary$version": "<p>The asset version this file belongs to</p>",
+        "AssetVersionMetadata$version": "<p>The version number of this asset</p>",
+        "GetAssetContentResponse$version": "<p>The asset version this content belongs to</p>",
         "Goal$version": "<p>Version number for optimistic locking</p>",
         "ListExecutionsRequest$limit": "<p>Maximum number of executions to return</p>",
         "SendMessageContentBlockDeltaEvent$index": "<p>Zero-based index of the content block</p>",
@@ -792,7 +1142,7 @@
         "SendMessageUsageInfo$outputTokens": "<p>Number of output tokens</p>",
         "SendMessageUsageInfo$totalTokens": "<p>Total tokens used</p>",
         "Task$version": "<p>Version number for optimistic locking</p>",
-        "UsageMetric$limit": "<p>Configured limit for this metric.</p>"
+        "UsageMetric$limit": "<p>Configured limit for this metric. A value of -1 indicates no limit is enforced.</p>"
       }
     },
     "InternalServerException": {
@@ -861,6 +1211,68 @@
     },
     "ListAgentSpacesOutput": {
       "base": "<p>Output containing a list of AgentSpaces and pagination token.</p>",
+      "refs": {}
+    },
+    "ListAssetFilesRequest": {
+      "base": "<p>Request structure for listing asset files</p>",
+      "refs": {}
+    },
+    "ListAssetFilesRequestAssetVersionInteger": {
+      "base": null,
+      "refs": {
+        "ListAssetFilesRequest$assetVersion": "<p>The specific asset version to list files from. If omitted, files from the latest version are returned.</p>"
+      }
+    },
+    "ListAssetFilesRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListAssetFilesRequest$maxResults": "<p>The maximum number of results to return in a single response</p>"
+      }
+    },
+    "ListAssetFilesResponse": {
+      "base": "<p>Response structure for listing asset files</p>",
+      "refs": {}
+    },
+    "ListAssetTypesRequest": {
+      "base": "<p>Request structure for listing asset types</p>",
+      "refs": {}
+    },
+    "ListAssetTypesRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListAssetTypesRequest$maxResults": "<p>The maximum number of results to return in a single response</p>"
+      }
+    },
+    "ListAssetTypesResponse": {
+      "base": "<p>Response structure for listing asset types</p>",
+      "refs": {}
+    },
+    "ListAssetVersionsRequest": {
+      "base": "<p>Request structure for listing asset versions</p>",
+      "refs": {}
+    },
+    "ListAssetVersionsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListAssetVersionsRequest$maxResults": "<p>The maximum number of results to return in a single response</p>"
+      }
+    },
+    "ListAssetVersionsResponse": {
+      "base": "<p>Response structure for listing asset versions</p>",
+      "refs": {}
+    },
+    "ListAssetsRequest": {
+      "base": "<p>Request structure for listing assets</p>",
+      "refs": {}
+    },
+    "ListAssetsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListAssetsRequest$maxResults": "<p>The maximum number of results to return in a single response</p>"
+      }
+    },
+    "ListAssetsResponse": {
+      "base": "<p>Response structure for listing assets</p>",
       "refs": {}
     },
     "ListAssociationsInput": {
@@ -1017,6 +1429,20 @@
       "base": null,
       "refs": {}
     },
+    "ListTriggersRequest": {
+      "base": "<p>Request structure for listing Triggers in an agent space</p>",
+      "refs": {}
+    },
+    "ListTriggersRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListTriggersRequest$maxResults": "<p>The maximum number of results to return in a single response</p>"
+      }
+    },
+    "ListTriggersResponse": {
+      "base": "<p>Response structure for listing Triggers</p>",
+      "refs": {}
+    },
     "ListWebhooksInput": {
       "base": "<p>Input for listing service webhooks within an association.</p>",
       "refs": {}
@@ -1141,16 +1567,15 @@
         "MCPServerDetails$description": "<p>Optional description for the MCP server.</p>"
       }
     },
-    "MCPServerDetailsEndpointString": {
-      "base": null,
+    "MCPServerEndpoint": {
+      "base": "<p>HTTPS endpoint URL for an MCP server.</p>",
       "refs": {
-        "MCPServerDetails$endpoint": "<p>MCP server endpoint URL.</p>"
-      }
-    },
-    "MCPServerDetailsNameString": {
-      "base": null,
-      "refs": {
-        "MCPServerDetails$name": "<p>MCP server name.</p>"
+        "DatadogServiceDetails$endpoint": "<p>MCP server endpoint URL.</p>",
+        "GrafanaServiceDetails$endpoint": "<p>MCP server endpoint URL.</p>",
+        "MCPServerDetails$endpoint": "<p>MCP server endpoint URL.</p>",
+        "MCPServerSigV4ServiceDetails$endpoint": "<p>MCP server endpoint URL.</p>",
+        "RegisteredGrafanaServerDetails$endpoint": "<p>Grafana instance URL (e.g., https://your-instance.grafana.net)</p>",
+        "RegisteredMCPServerSigV4Details$endpoint": "<p>MCP server endpoint URL.</p>"
       }
     },
     "MCPServerGrafanaConfiguration": {
@@ -1169,6 +1594,16 @@
       "base": null,
       "refs": {
         "MCPServerGrafanaConfiguration$organizationId": "<p>The Grafana organization ID that can be used.</p>"
+      }
+    },
+    "MCPServerName": {
+      "base": "<p>Name identifier for an MCP server.</p>",
+      "refs": {
+        "DatadogServiceDetails$name": "<p>MCP server name.</p>",
+        "GrafanaServiceDetails$name": "<p>MCP server name.</p>",
+        "MCPServerDetails$name": "<p>MCP server name.</p>",
+        "MCPServerSigV4ServiceDetails$name": "<p>MCP server name.</p>",
+        "RegisteredMCPServerSigV4Details$name": "<p>MCP server name.</p>"
       }
     },
     "MCPServerNewRelicConfiguration": {
@@ -1207,6 +1642,12 @@
         "MCPServerOAuth3LOConfig$clientName": "<p>User friendly OAuth client name specified by end user.</p>"
       }
     },
+    "MCPServerOAuth3LOConfigClientSecretString": {
+      "base": "<p>Client secret for service authentication.</p>",
+      "refs": {
+        "MCPServerOAuth3LOConfig$clientSecret": "<p>OAuth client secret for authenticating with the service. Required for confidential clients or when PKCE is not supported. Optional for public clients using PKCE.</p>"
+      }
+    },
     "MCPServerOAuth3LOConfigExchangeUrlString": {
       "base": null,
       "refs": {
@@ -1237,6 +1678,42 @@
         "MCPServerOAuthClientCredentialsConfig$exchangeUrl": "<p>OAuth token exchange URL.</p>"
       }
     },
+    "MCPServerSigV4AuthorizationConfig": {
+      "base": "<p>Authorization configuration for SigV4-authenticated MCP server.</p>",
+      "refs": {
+        "MCPServerSigV4ServiceDetails$authorizationConfig": "<p>MCP Server SigV4 authorization configuration.</p>"
+      }
+    },
+    "MCPServerSigV4AuthorizationConfigRoleArnString": {
+      "base": null,
+      "refs": {
+        "MCPServerSigV4AuthorizationConfig$roleArn": "<p>Deprecated — use mcpRoleArn instead. IAM role ARN to assume for SigV4 signing.</p>"
+      }
+    },
+    "MCPServerSigV4AuthorizationConfigServiceString": {
+      "base": null,
+      "refs": {
+        "MCPServerSigV4AuthorizationConfig$service": "<p>AWS service name for SigV4 signing.</p>"
+      }
+    },
+    "MCPServerSigV4Configuration": {
+      "base": "<p>Configuration for SigV4-authenticated MCP server integration.</p>",
+      "refs": {
+        "ServiceConfiguration$mcpserversigv4": "<p>SigV4-authenticated MCP server integration configuration.</p>"
+      }
+    },
+    "MCPServerSigV4ServiceDetails": {
+      "base": "<p>Complete service details for SigV4-authenticated MCP server integration.</p>",
+      "refs": {
+        "ServiceDetails$mcpserversigv4": "<p>SigV4-authenticated MCP server-specific service details.</p>"
+      }
+    },
+    "MCPServerSigV4ServiceDetailsDescriptionString": {
+      "base": "<p>Description field</p>",
+      "refs": {
+        "MCPServerSigV4ServiceDetails$description": "<p>Optional description for the MCP server.</p>"
+      }
+    },
     "MCPServerSplunkConfiguration": {
       "base": "<p>Mixin for webhook update support.</p>",
       "refs": {
@@ -1247,7 +1724,8 @@
       "base": "<p>List of MCP tool names available for the association.</p>",
       "refs": {
         "MCPServerConfiguration$tools": "<p>List of MCP tools can be used with the association.</p>",
-        "MCPServerGrafanaConfiguration$tools": "<p>List of MCP tools that can be used.</p>"
+        "MCPServerGrafanaConfiguration$tools": "<p>List of MCP tools that can be used.</p>",
+        "MCPServerSigV4Configuration$tools": "<p>List of MCP tools available for the association.</p>"
       }
     },
     "MCPToolsListMemberString": {
@@ -1358,6 +1836,14 @@
       "refs": {
         "ListAgentSpacesInput$nextToken": "<p>Token for the next page of results.</p>",
         "ListAgentSpacesOutput$nextToken": "<p>Token to retrieve the next page of results, if there are more results.</p>",
+        "ListAssetFilesRequest$nextToken": "<p>Pagination token from a previous response to retrieve the next page of results</p>",
+        "ListAssetFilesResponse$nextToken": "<p>Pagination token to retrieve the next page of results. Absent when there are no more results.</p>",
+        "ListAssetTypesRequest$nextToken": "<p>Pagination token from a previous response to retrieve the next page of results</p>",
+        "ListAssetTypesResponse$nextToken": "<p>Pagination token to retrieve the next page of results. Absent when there are no more results.</p>",
+        "ListAssetVersionsRequest$nextToken": "<p>Pagination token from a previous response to retrieve the next page of results</p>",
+        "ListAssetVersionsResponse$nextToken": "<p>Pagination token to retrieve the next page of results. Absent when there are no more results.</p>",
+        "ListAssetsRequest$nextToken": "<p>Pagination token from a previous response to retrieve the next page of results</p>",
+        "ListAssetsResponse$nextToken": "<p>Pagination token to retrieve the next page of results. Absent when there are no more results.</p>",
         "ListAssociationsInput$nextToken": "<p>Token for the next page of results.</p>",
         "ListAssociationsOutput$nextToken": "<p>Token to retrieve the next page of results, if there are more results.</p>",
         "ListBacklogTasksRequest$nextToken": "<p>Token for retrieving the next page of results</p>",
@@ -1366,13 +1852,28 @@
         "ListJournalRecordsRequest$nextToken": "<p>Token for retrieving the next page of results</p>",
         "ListRecommendationsRequest$nextToken": "<p>Token for retrieving the next page of results</p>",
         "ListServicesInput$nextToken": "<p>Token for the next page of results.</p>",
-        "ListServicesOutput$nextToken": "<p>Token to retrieve the next page of results, if there are more results.</p>"
+        "ListServicesOutput$nextToken": "<p>Token to retrieve the next page of results, if there are more results.</p>",
+        "ListTriggersRequest$nextToken": "<p>Pagination token from a previous response to retrieve the next page of results</p>",
+        "ListTriggersResponse$nextToken": "<p>Pagination token to retrieve the next page of results</p>"
       }
     },
     "OAuthAdditionalStepDetails": {
       "base": "<p>Details for completing OAuth authorization step.</p>",
       "refs": {
         "AdditionalServiceRegistrationStep$oauth": "<p>OAuth authorization step required.</p>"
+      }
+    },
+    "OAuthScope": {
+      "base": "<p>OAuth scope parameter</p>",
+      "refs": {
+        "Scopes$member": null
+      }
+    },
+    "OperatorAppUrl": {
+      "base": "<p>The URL for operators to access the Operator App.</p>",
+      "refs": {
+        "EnableOperatorAppOutput$operatorAppUrl": "<p>The URL for operators to access the Operator App</p>",
+        "GetOperatorAppOutput$operatorAppUrl": "<p>The URL for operators to access the Operator App</p>"
       }
     },
     "OrderType": {
@@ -1484,6 +1985,8 @@
         "DescribePrivateConnectionOutput$name": "<p>The name of the Private Connection.</p>",
         "PrivateConnectionSummary$name": "<p>The name of the Private Connection.</p>",
         "RegisterServiceInput$privateConnectionName": "<p>The name of the private connection to use for VPC connectivity.</p>",
+        "RegisterServiceInput$targetUrlPrivateConnectionName": "<p>The name of the private connection to use for API calls (target URL) only. Cannot be specified when privateConnectionName is provided.</p>",
+        "RegisterServiceInput$exchangeUrlPrivateConnectionName": "<p>The name of the private connection to use for OAuth token exchange requests only. Cannot be specified when privateConnectionName is provided.</p>",
         "RegisteredService$privateConnectionName": "<p>The name of the private connection used for VPC connectivity.</p>",
         "UpdatePrivateConnectionCertificateInput$name": "<p>The name of the Private Connection.</p>",
         "UpdatePrivateConnectionCertificateOutput$name": "<p>The name of the Private Connection.</p>"
@@ -1551,6 +2054,12 @@
       "refs": {
         "ListRecommendationsRequest$priority": "<p>Optional priority to filter recommendations by priority level</p>",
         "Recommendation$priority": "<p>Priority level of the recommendation</p>"
+      }
+    },
+    "RecommendationRankPositionInteger": {
+      "base": null,
+      "refs": {
+        "Recommendation$rankPosition": "<p>Position in ranked list (1 = highest priority)</p>"
       }
     },
     "RecommendationStatus": {
@@ -1630,18 +2139,36 @@
         "AdditionalServiceDetails$mcpservergrafana": "<p>Grafana MCP server-specific service details.</p>"
       }
     },
-    "RegisteredGrafanaServerDetailsEndpointString": {
-      "base": null,
-      "refs": {
-        "RegisteredGrafanaServerDetails$endpoint": "<p>Grafana instance URL (e.g., https://your-instance.grafana.net)</p>"
-      }
-    },
     "RegisteredMCPServerDetails": {
       "base": "<p>Details specific to a registered MCP (Model Context Protocol) server.</p>",
       "refs": {
         "AdditionalServiceDetails$mcpserverdatadog": "<p>Datadog MCP server-specific service details.</p>",
         "AdditionalServiceDetails$mcpserver": "<p>MCP server-specific service details.</p>",
         "AdditionalServiceDetails$mcpserversplunk": "<p>Splunk MCP server-specific service details.</p>"
+      }
+    },
+    "RegisteredMCPServerSigV4Details": {
+      "base": "<p>Details specific to a registered SigV4-authenticated MCP server.</p>",
+      "refs": {
+        "AdditionalServiceDetails$mcpserversigv4": "<p>SigV4-authenticated MCP server-specific service details.</p>"
+      }
+    },
+    "RegisteredMCPServerSigV4DetailsDescriptionString": {
+      "base": "<p>Description field</p>",
+      "refs": {
+        "RegisteredMCPServerSigV4Details$description": "<p>Optional description for the MCP server.</p>"
+      }
+    },
+    "RegisteredMCPServerSigV4DetailsRoleArnString": {
+      "base": null,
+      "refs": {
+        "RegisteredMCPServerSigV4Details$roleArn": "<p>IAM role ARN to assume for SigV4 signing.</p>"
+      }
+    },
+    "RegisteredMCPServerSigV4DetailsServiceString": {
+      "base": null,
+      "refs": {
+        "RegisteredMCPServerSigV4Details$service": "<p>AWS service name for SigV4 signing.</p>"
       }
     },
     "RegisteredNewRelicDetails": {
@@ -1654,6 +2181,36 @@
       "base": "<p>Details specific to a registered PagerDuty service.</p>",
       "refs": {
         "AdditionalServiceDetails$pagerduty": "<p>Pagerduty service details.</p>"
+      }
+    },
+    "RegisteredRemoteAgentDetails": {
+      "base": "<p>Details specific to a registered token-based remote A2A agent.</p>",
+      "refs": {
+        "AdditionalServiceDetails$remoteagent": "<p>Remote A2A agent-specific service details (token-based auth).</p>"
+      }
+    },
+    "RegisteredRemoteAgentDetailsDescriptionString": {
+      "base": "<p>Description field</p>",
+      "refs": {
+        "RegisteredRemoteAgentDetails$description": null
+      }
+    },
+    "RegisteredRemoteAgentSigV4Details": {
+      "base": "<p>Details specific to a registered SigV4-authenticated remote A2A agent.</p>",
+      "refs": {
+        "AdditionalServiceDetails$remoteagentsigv4": "<p>Remote A2A agent-specific service details (SigV4 auth).</p>"
+      }
+    },
+    "RegisteredRemoteAgentSigV4DetailsDescriptionString": {
+      "base": "<p>Description field</p>",
+      "refs": {
+        "RegisteredRemoteAgentSigV4Details$description": null
+      }
+    },
+    "RegisteredRemoteAgentSigV4DetailsServiceString": {
+      "base": null,
+      "refs": {
+        "RegisteredRemoteAgentSigV4Details$service": "<p>The AWS service name for SigV4 signing.</p>"
       }
     },
     "RegisteredService": {
@@ -1681,6 +2238,160 @@
         "AdditionalServiceDetails$slack": "<p>Slack-specific service details.</p>"
       }
     },
+    "RemoteAgentAPIKeyConfig": {
+      "base": "<p>API key configuration for remote A2A agent.</p>",
+      "refs": {
+        "RemoteAgentAuthorizationConfig$apiKey": "<p>Remote agent configuration with API key authentication.</p>"
+      }
+    },
+    "RemoteAgentAPIKeyConfigApiKeyHeaderString": {
+      "base": null,
+      "refs": {
+        "RemoteAgentAPIKeyConfig$apiKeyHeader": "<p>HTTP header name to send the API key in requests to the service.</p>"
+      }
+    },
+    "RemoteAgentAPIKeyConfigApiKeyNameString": {
+      "base": null,
+      "refs": {
+        "RemoteAgentAPIKeyConfig$apiKeyName": "<p>User friendly API key name specified by end user.</p>"
+      }
+    },
+    "RemoteAgentAPIKeyConfigApiKeyValueString": {
+      "base": "<p>API Key Value for service.</p>",
+      "refs": {
+        "RemoteAgentAPIKeyConfig$apiKeyValue": "<p>API key value for authenticating with the service.</p>"
+      }
+    },
+    "RemoteAgentAuthorizationConfig": {
+      "base": "<p>Authorization configuration for remote A2A agents with token-based auth (API key, OAuth, bearer token).</p>",
+      "refs": {
+        "RemoteAgentServiceDetails$authorizationConfig": "<p>Remote agent authorization configuration.</p>"
+      }
+    },
+    "RemoteAgentAuthorizationMethod": {
+      "base": "<p>Supported authorization methods for remote A2A agents.</p>",
+      "refs": {
+        "RegisteredRemoteAgentDetails$authorizationMethod": "<p>The authorization method used by the remote agent.</p>"
+      }
+    },
+    "RemoteAgentBearerTokenConfig": {
+      "base": "<p>Bearer token configuration for remote A2A agent (RFC 6750).</p>",
+      "refs": {
+        "RemoteAgentAuthorizationConfig$bearerToken": "<p>Remote agent configuration with Bearer token (RFC 6750).</p>"
+      }
+    },
+    "RemoteAgentBearerTokenConfigAuthorizationHeaderString": {
+      "base": null,
+      "refs": {
+        "RemoteAgentBearerTokenConfig$authorizationHeader": "<p>HTTP header name to send the bearer token in requests to the service. Defaults to 'Authorization' per RFC 6750.</p>"
+      }
+    },
+    "RemoteAgentBearerTokenConfigTokenNameString": {
+      "base": null,
+      "refs": {
+        "RemoteAgentBearerTokenConfig$tokenName": "<p>User friendly bearer token name specified by end user.</p>"
+      }
+    },
+    "RemoteAgentBearerTokenConfigTokenValueString": {
+      "base": "<p>Token value for authentication.</p>",
+      "refs": {
+        "RemoteAgentBearerTokenConfig$tokenValue": "<p>Bearer token value in alphanumeric for authenticating with the service.</p>"
+      }
+    },
+    "RemoteAgentConfiguration": {
+      "base": "<p>Configuration for token-based remote A2A agent integration.</p>",
+      "refs": {
+        "ServiceConfiguration$remoteagent": "<p>Remote A2A agent integration configuration (token-based auth).</p>"
+      }
+    },
+    "RemoteAgentEndpoint": {
+      "base": "<p>HTTPS endpoint URL for a remote A2A agent.</p>",
+      "refs": {
+        "RegisteredRemoteAgentDetails$endpoint": null,
+        "RegisteredRemoteAgentSigV4Details$endpoint": null,
+        "RemoteAgentServiceDetails$endpoint": null,
+        "RemoteAgentSigV4ServiceDetails$endpoint": null
+      }
+    },
+    "RemoteAgentName": {
+      "base": "<p>Name identifier for a remote A2A agent.</p>",
+      "refs": {
+        "RegisteredRemoteAgentDetails$name": null,
+        "RegisteredRemoteAgentSigV4Details$name": null,
+        "RemoteAgentServiceDetails$name": null,
+        "RemoteAgentSigV4ServiceDetails$name": null
+      }
+    },
+    "RemoteAgentOAuthClientCredentialsConfig": {
+      "base": "<p>OAuth client credentials configuration for remote A2A agent.</p>",
+      "refs": {
+        "RemoteAgentAuthorizationConfig$oAuthClientCredentials": "<p>Remote agent configuration with OAuth client credentials.</p>"
+      }
+    },
+    "RemoteAgentOAuthClientCredentialsConfigClientNameString": {
+      "base": null,
+      "refs": {
+        "RemoteAgentOAuthClientCredentialsConfig$clientName": "<p>User friendly OAuth client name specified by end user.</p>"
+      }
+    },
+    "RemoteAgentOAuthClientCredentialsConfigExchangeUrlString": {
+      "base": null,
+      "refs": {
+        "RemoteAgentOAuthClientCredentialsConfig$exchangeUrl": "<p>OAuth token exchange URL.</p>"
+      }
+    },
+    "RemoteAgentServiceDetails": {
+      "base": "<p>Complete service details for token-based remote A2A agent integration.</p>",
+      "refs": {
+        "ServiceDetails$remoteagent": "<p>Remote A2A agent service details (token-based auth).</p>"
+      }
+    },
+    "RemoteAgentServiceDetailsDescriptionString": {
+      "base": "<p>Description field</p>",
+      "refs": {
+        "RemoteAgentServiceDetails$description": null
+      }
+    },
+    "RemoteAgentSigV4AuthorizationConfig": {
+      "base": "<p>SigV4 authorization configuration for remote A2A agent.</p>",
+      "refs": {
+        "RemoteAgentSigV4ServiceDetails$authorizationConfig": "<p>Remote agent SigV4 authorization configuration.</p>"
+      }
+    },
+    "RemoteAgentSigV4AuthorizationConfigServiceString": {
+      "base": null,
+      "refs": {
+        "RemoteAgentSigV4AuthorizationConfig$service": "<p>The AWS service name for SigV4 signing.</p>"
+      }
+    },
+    "RemoteAgentSigV4Configuration": {
+      "base": "<p>Configuration for SigV4-authenticated remote A2A agent integration.</p>",
+      "refs": {
+        "ServiceConfiguration$remoteagentsigv4": "<p>Remote A2A agent integration configuration (SigV4 auth).</p>"
+      }
+    },
+    "RemoteAgentSigV4ServiceDetails": {
+      "base": "<p>Complete service details for SigV4-authenticated remote A2A agent integration.</p>",
+      "refs": {
+        "ServiceDetails$remoteagentsigv4": "<p>Remote A2A agent service details (SigV4 auth).</p>"
+      }
+    },
+    "RemoteAgentSigV4ServiceDetailsDescriptionString": {
+      "base": "<p>Description field</p>",
+      "refs": {
+        "RemoteAgentSigV4ServiceDetails$description": null
+      }
+    },
+    "ResourceConfigDnsResolution": {
+      "base": "<p>DNS resolution mode for a Resource Gateway.</p>",
+      "refs": {
+        "CreatePrivateConnectionOutput$dnsResolution": "<p>DNS resolution mode for the Private Connection's resource gateway.</p>",
+        "DescribePrivateConnectionOutput$dnsResolution": "<p>DNS resolution mode for the Private Connection's resource gateway.</p>",
+        "PrivateConnectionSummary$dnsResolution": "<p>DNS resolution mode for the Private Connection's resource gateway.</p>",
+        "ServiceManagedInput$dnsResolution": "<p>DNS resolution mode for the resource gateway. Defaults to PUBLIC when not set.</p>",
+        "UpdatePrivateConnectionCertificateOutput$dnsResolution": "<p>DNS resolution mode for the Private Connection's resource gateway.</p>"
+      }
+    },
     "ResourceConfigurationArn": {
       "base": "<p>The ID or ARN of the Resource Configuration.</p>",
       "refs": {
@@ -1703,11 +2414,22 @@
     "ResourceId": {
       "base": "<p>Generic resource identifier (allows alphanumeric characters, hyphens, and underscores; 1-128 characters)</p>",
       "refs": {
+        "Asset$assetId": "<p>The unique identifier for this asset</p>",
         "ChatExecution$executionId": "<p>The unique identifier for the execution</p>",
+        "CreateAssetFileRequest$assetId": "<p>The unique identifier of the asset to create the file in</p>",
         "CreateChatRequest$userId": "<p>The user identifier for the chat. This field is deprecated and will be ignored — the service resolves user identity from the authenticated session.</p>",
         "CreateChatResponse$executionId": "<p>The unique identifier for the created execution</p>",
+        "DeleteAssetFileRequest$assetId": "<p>The unique identifier of the asset containing the file</p>",
+        "DeleteAssetRequest$assetId": "<p>The unique identifier of the asset to delete</p>",
+        "DeleteTriggerRequest$triggerId": "<p>The unique identifier of the Trigger to delete</p>",
+        "GetAssetContentRequest$assetId": "<p>The unique identifier of the asset</p>",
+        "GetAssetFileRequest$assetId": "<p>The unique identifier of the asset containing the file</p>",
+        "GetAssetRequest$assetId": "<p>The unique identifier of the asset to retrieve</p>",
         "GetBacklogTaskRequest$taskId": "<p>The unique identifier of the task to retrieve</p>",
         "GetRecommendationRequest$recommendationId": "<p>The unique identifier for the recommendation to retrieve</p>",
+        "GetTriggerRequest$triggerId": "<p>The unique identifier of the Trigger to retrieve</p>",
+        "ListAssetFilesRequest$assetId": "<p>The unique identifier of the asset whose files to list</p>",
+        "ListAssetVersionsRequest$assetId": "<p>The unique identifier of the asset whose versions to list</p>",
         "ListChatsRequest$userId": "<p>The user identifier to list chats for. This field is deprecated and will be ignored — the service resolves user identity from the authenticated session.</p>",
         "ListExecutionsRequest$taskId": "<p>The unique identifier of the task whose executions to retrieve</p>",
         "ListJournalRecordsRequest$executionId": "<p>The unique identifier of the execution whose journal records to retrieve</p>",
@@ -1716,11 +2438,14 @@
         "ListRecommendationsRequest$goalId": "<p>Optional goal ID to filter recommendations by specific goal</p>",
         "ReferenceInput$referenceId": "<p>The unique identifier in the external system</p>",
         "ReferenceInput$associationId": "<p>Association identifier of the external system</p>",
-        "SendMessageRequest$executionId": "<p>The execution identifier for the chat session</p>",
         "SendMessageRequest$userId": "<p>User identifier. This field is deprecated and will be ignored — the service resolves user identity from the authenticated session.</p>",
         "TaskFilter$primaryTaskId": "<p>Filter by primary task ID to get linked tasks</p>",
+        "Trigger$triggerId": "<p>The unique identifier for this Trigger</p>",
+        "UpdateAssetFileRequest$assetId": "<p>The unique identifier of the asset containing the file</p>",
+        "UpdateAssetRequest$assetId": "<p>The unique identifier of the asset to update</p>",
         "UpdateBacklogTaskRequest$taskId": "<p>The unique identifier of the task to update</p>",
-        "UpdateRecommendationRequest$recommendationId": "<p>The unique identifier for the recommendation to update</p>"
+        "UpdateRecommendationRequest$recommendationId": "<p>The unique identifier for the recommendation to update</p>",
+        "UpdateTriggerRequest$triggerId": "<p>The unique identifier of the Trigger to update</p>"
       }
     },
     "ResourceNotFoundException": {
@@ -1732,8 +2457,26 @@
       "refs": {
         "AWSConfiguration$assumableRoleArn": "<p>Role ARN to be assumed by AIDevOps to operate on behalf of customer.</p>",
         "EnableOperatorAppInput$operatorAppRoleArn": "<p>The IAM role end users assume to access AIDevOps APIs</p>",
+        "GitHubConfiguration$runtimeRoleArn": "<p>Optional role ARN that AIDevOps assumes at runtime for automatic verification testing and VPC connectivity on this association.</p>",
+        "GitLabConfiguration$runtimeRoleArn": "<p>Optional role ARN that AIDevOps assumes at runtime for automatic verification testing and VPC connectivity on this association.</p>",
+        "MCPServerSigV4AuthorizationConfig$mcpRoleArn": "<p>IAM role ARN to assume for SigV4 signing. Optional — when omitted, credentials are resolved at runtime via a monitor account association.</p>",
         "RegisteredAzureIdentityDetails$webIdentityRoleArn": "<p>The role ARN to be assumed by DevOps Agent for requesting Web Identity Token.</p>",
+        "RegisteredMCPServerSigV4Details$mcpRoleArn": null,
+        "RegisteredRemoteAgentSigV4Details$roleArn": null,
+        "RemoteAgentSigV4AuthorizationConfig$roleArn": null,
         "SourceAwsConfiguration$assumableRoleArn": "<p>Role ARN to be assumed by AIDevOps to operate on behalf of customer.</p>"
+      }
+    },
+    "ScheduleCondition": {
+      "base": "<p>Schedule-based condition that fires the Trigger</p>",
+      "refs": {
+        "TriggerCondition$schedule": "<p>Time-based firing condition</p>"
+      }
+    },
+    "ScheduleExpression": {
+      "base": "<p>Schedule expression used by a TIME_BASED Trigger</p>",
+      "refs": {
+        "ScheduleCondition$expression": "<p>The schedule expression</p>"
       }
     },
     "SchedulerState": {
@@ -1747,7 +2490,8 @@
       "base": "<p>List of OAuth scopes.</p>",
       "refs": {
         "MCPServerOAuth3LOConfig$scopes": "<p>OAuth scopes for 3LO authentication. The service will always request scope offline_access.</p>",
-        "MCPServerOAuthClientCredentialsConfig$scopes": "<p>OAuth scopes for 3LO authentication. The service will always request scope offline_access.</p>"
+        "MCPServerOAuthClientCredentialsConfig$scopes": "<p>OAuth scopes for 3LO authentication. The service will always request scope offline_access.</p>",
+        "RemoteAgentOAuthClientCredentialsConfig$scopes": "<p>OAuth scopes for authentication.</p>"
       }
     },
     "SecurityGroupId": {
@@ -1793,7 +2537,7 @@
       }
     },
     "SendMessageEvents": {
-      "base": "<p>Event stream for chat message responses using the content block model. Events follow a lifecycle: responseCreated -&gt; responseInProgress -&gt; (contentBlockStart/contentBlockDelta/contentBlockStop events) -&gt; responseCompleted|responseFailed</p> <p>SendMessage always uses content block mode — legacy per-field events (outputTextDelta, functionCallArgumentsDelta, etc.) are not emitted.</p>",
+      "base": "<p>Event stream for chat message responses using the content block model. Events follow a lifecycle: responseCreated -&gt; responseInProgress -&gt; (contentBlockStart/contentBlockDelta/contentBlockStop events) -&gt; responseCompleted|responseFailed SendMessage always uses content block mode — legacy per-field events (outputTextDelta, functionCallArgumentsDelta, etc.) are not emitted.</p>",
       "refs": {
         "SendMessageResponse$events": "<p>The stream of chat message events</p>"
       }
@@ -1952,6 +2696,15 @@
       "base": "<p>The request would exceed the service quota limit.</p>",
       "refs": {}
     },
+    "SigV4Region": {
+      "base": "<p>AWS region identifier or wildcard (*) for SigV4a multi-region signing.</p>",
+      "refs": {
+        "MCPServerSigV4AuthorizationConfig$region": "<p>AWS region for SigV4 signing. Use '*' for SigV4a multi-region signing.</p>",
+        "RegisteredMCPServerSigV4Details$region": "<p>AWS region for SigV4 signing. Use '*' for SigV4a multi-region signing.</p>",
+        "RegisteredRemoteAgentSigV4Details$region": null,
+        "RemoteAgentSigV4AuthorizationConfig$region": null
+      }
+    },
     "SlackChannel": {
       "base": "<p>Represents a Slack channel with its ID and optional name.</p>",
       "refs": {
@@ -2005,6 +2758,7 @@
       "base": null,
       "refs": {
         "AccessDeniedException$message": "<p>Detailed error message describing why access was denied.</p>",
+        "AssetIdList$member": null,
         "AssistantMessageBlock$text": "<p>Text content from the assistant.</p>",
         "AzureConfiguration$subscriptionId": "<p>Azure subscription ID corresponding to provided resources.</p>",
         "AzureDevOpsConfiguration$organizationName": "<p>Azure DevOps organization name.</p>",
@@ -2095,10 +2849,10 @@
         "RegisteredMCPServerDetails$endpoint": "<p>The MCP server endpoint URL.</p>",
         "RegisteredMCPServerDetails$apiKeyHeader": "<p>If the MCP server uses API key authentication, these details are provided.</p>",
         "RegisteredNewRelicDetails$accountId": "<p>The NewRelic account ID.</p>",
+        "RegisteredRemoteAgentDetails$apiKeyHeader": "<p>If the remote agent uses API key authentication, the header name.</p>",
         "RegisteredSlackServiceDetails$teamId": "<p>The Slack team ID.</p>",
         "RegisteredSlackServiceDetails$teamName": "<p>The Slack team name.</p>",
         "ResourceNotFoundException$message": "<p>Detailed error message describing which resource was not found.</p>",
-        "Scopes$member": null,
         "SendMessageContentBlockStartEvent$type": "<p>The type of content in this block</p>",
         "SendMessageContentBlockStartEvent$id": "<p>Block identifier</p>",
         "SendMessageContentBlockStartEvent$parentId": "<p>Optional parent block ID for nested content blocks (e.g. subagent tool calls)</p>",
@@ -2106,7 +2860,7 @@
         "SendMessageContentBlockStopEvent$text": "<p>The accumulated complete content text</p>",
         "SendMessageContext$currentPage": "<p>The current page or view the user is on</p>",
         "SendMessageContext$lastMessage": "<p>The ID of the last message in the conversation</p>",
-        "SendMessageContext$userActionResponse": "<p>Response to a UI prompt (not a text conversation message)</p>",
+        "SendMessageContext$userActionResponse": "<p>Response to a UI prompt (not a text conversation message). Operator App SDK clients set this to the control-string sentinel `\"APPROVAL_ACTION\"` when the request is resuming a paused tool call after an operator approval decision; in that case the structured decision context lives on the sibling `approvalAction` member and the chat agent reads from there. Preserved as a String for back-compat: pre-typed-approval clients still encode arbitrary UI-prompt responses as JSON in this field, and the chat agent parses them out during the transition.</p>",
         "SendMessageJsonDelta$partialJson": "<p>Partial JSON string</p>",
         "SendMessageResponseCompletedEvent$responseId": "<p>The response ID</p>",
         "SendMessageResponseCreatedEvent$responseId": "<p>The response ID</p>",
@@ -2229,7 +2983,7 @@
     "TaskFilter": {
       "base": "<p>Filter criteria for listing backlog tasks, supporting time range, priority, status, and type filters.</p>",
       "refs": {
-        "ListBacklogTasksRequest$filter": "<p>Filter criteria to apply when listing tasks</p> <p>Filtering restrictions:</p> <ul> <li>Each filter field list is limited to a single value</li> <li>Filtering by Priority and Status at the same time when not filtering by Type is not permitted</li> <li>Timestamp filters (createdAfter, createdBefore) can be combined with other filters when not sorting by priority</li> </ul>"
+        "ListBacklogTasksRequest$filter": "<p>Filter criteria to apply when listing tasks Filtering restrictions: - Each filter field list is limited to a single value - Filtering by Priority and Status at the same time when not filtering by Type is not permitted - Timestamp filters (createdAfter, createdBefore) can be combined with other filters when not sorting by priority</p>"
       }
     },
     "TaskFilterPriorityList": {
@@ -2259,7 +3013,7 @@
     "TaskSortField": {
       "base": "<p>Fields available for sorting tasks</p>",
       "refs": {
-        "ListBacklogTasksRequest$sortField": "<p>Field to sort by</p> <pre><code>Sorting restrictions: </code></pre> <ul> <li>Only sorting on createdAt is supported when using priority or status filters alone.</li> <li>Sorting by priority is not supported when using Timestamp filters (createdAfter, createdBefore)</li> </ul>"
+        "ListBacklogTasksRequest$sortField": "<p>Field to sort by Sorting restrictions: - Only sorting on createdAt is supported when using priority or status filters alone. - Sorting by priority is not supported when using Timestamp filters (createdAfter, createdBefore)</p>"
       }
     },
     "TaskSortOrder": {
@@ -2291,10 +3045,67 @@
     "Timestamp": {
       "base": null,
       "refs": {
+        "Asset$createdAt": "<p>Timestamp when this asset was created</p>",
+        "Asset$updatedAt": "<p>Timestamp when this asset was last updated</p>",
+        "AssetFile$createdAt": "<p>Timestamp when this file was created</p>",
+        "AssetFile$updatedAt": "<p>Timestamp when this file was last updated</p>",
+        "AssetFileSummary$createdAt": "<p>Timestamp when this file was created</p>",
+        "AssetFileSummary$updatedAt": "<p>Timestamp when this file was last updated</p>",
+        "AssetVersionMetadata$createdAt": "<p>Timestamp when this asset version was created</p>",
+        "AssetVersionMetadata$updatedAt": "<p>Timestamp when this asset version was last updated</p>",
         "ChatExecution$createdAt": "<p>Timestamp when the chat was created</p>",
         "ChatExecution$updatedAt": "<p>Timestamp when the chat was last updated</p>",
         "CreateChatResponse$createdAt": "<p>Timestamp when the chat was created</p>",
-        "ListPendingMessagesResponse$createdAt": "<p>Timestamp when the pending messages were created.</p>"
+        "ListAssetsRequest$updatedAfter": "<p>Filter results to only assets updated after this timestamp</p>",
+        "ListAssetsRequest$updatedBefore": "<p>Filter results to only assets updated before this timestamp</p>",
+        "ListPendingMessagesResponse$createdAt": "<p>Timestamp when the pending messages were created.</p>",
+        "Trigger$createdAt": "<p>Timestamp when this Trigger was created</p>",
+        "Trigger$updatedAt": "<p>Timestamp when this Trigger was last updated</p>"
+      }
+    },
+    "Trigger": {
+      "base": "<p>A Trigger fires on a schedule and invokes an agent</p>",
+      "refs": {
+        "CreateTriggerResponse$trigger": "<p>The Trigger object</p>",
+        "GetTriggerResponse$trigger": "<p>The Trigger object</p>",
+        "TriggerList$member": null,
+        "UpdateTriggerResponse$trigger": "<p>The Trigger object</p>"
+      }
+    },
+    "TriggerAction": {
+      "base": "<p>Action a Trigger performs when it fires</p>",
+      "refs": {
+        "CreateTriggerRequest$action": "<p>The action the new Trigger performs when it fires</p>",
+        "Trigger$action": "<p>The action this Trigger performs when it fires</p>"
+      }
+    },
+    "TriggerCondition": {
+      "base": "<p>Defines the firing condition for a Trigger</p>",
+      "refs": {
+        "CreateTriggerRequest$condition": "<p>The condition that fires the new Trigger</p>",
+        "Trigger$condition": "<p>The condition that fires this Trigger</p>"
+      }
+    },
+    "TriggerList": {
+      "base": "<p>List of Triggers</p>",
+      "refs": {
+        "ListTriggersResponse$items": "<p>The list of Triggers</p>"
+      }
+    },
+    "TriggerStatus": {
+      "base": "<p>The status of a Trigger</p>",
+      "refs": {
+        "CreateTriggerRequest$status": "<p>The initial status of the Trigger</p>",
+        "ListTriggersRequest$status": "<p>Filter results to Triggers in this status</p>",
+        "Trigger$status": "<p>The status of this Trigger</p>",
+        "UpdateTriggerRequest$status": "<p>The new status for the Trigger</p>"
+      }
+    },
+    "TriggerType": {
+      "base": "<p>How a Trigger is fired</p>",
+      "refs": {
+        "CreateTriggerRequest$type": "<p>How the new Trigger fires</p>",
+        "Trigger$type": "<p>How this Trigger fires</p>"
       }
     },
     "UntagResourceRequest": {
@@ -2317,6 +3128,34 @@
     },
     "UpdateAgentSpaceOutput": {
       "base": "<p>Output containing the updated AgentSpace.</p>",
+      "refs": {}
+    },
+    "UpdateAssetFileRequest": {
+      "base": "<p>Request structure for updating an asset file</p>",
+      "refs": {}
+    },
+    "UpdateAssetFileRequestClientTokenString": {
+      "base": null,
+      "refs": {
+        "UpdateAssetFileRequest$clientToken": "<p>A unique, case-sensitive identifier used for idempotent asset file update</p>"
+      }
+    },
+    "UpdateAssetFileResponse": {
+      "base": "<p>Response structure for updating an asset file</p>",
+      "refs": {}
+    },
+    "UpdateAssetRequest": {
+      "base": "<p>Request structure for updating an asset</p>",
+      "refs": {}
+    },
+    "UpdateAssetRequestClientTokenString": {
+      "base": null,
+      "refs": {
+        "UpdateAssetRequest$clientToken": "<p>A unique, case-sensitive identifier used for idempotent asset update</p>"
+      }
+    },
+    "UpdateAssetResponse": {
+      "base": "<p>Response structure for updating an asset</p>",
       "refs": {}
     },
     "UpdateAssociationInput": {
@@ -2367,6 +3206,20 @@
       "base": "<p>Response structure containing the updated recommendation</p>",
       "refs": {}
     },
+    "UpdateTriggerRequest": {
+      "base": "<p>Request structure for updating a Trigger</p>",
+      "refs": {}
+    },
+    "UpdateTriggerRequestClientTokenString": {
+      "base": null,
+      "refs": {
+        "UpdateTriggerRequest$clientToken": "<p>A unique, case-sensitive identifier used for idempotent Trigger update</p>"
+      }
+    },
+    "UpdateTriggerResponse": {
+      "base": "<p>Response structure for updating a Trigger</p>",
+      "refs": {}
+    },
     "UsageMetric": {
       "base": "<p>Represents a usage metric with its configured limit and current usage value.</p>",
       "refs": {
@@ -2410,7 +3263,7 @@
       "refs": {}
     },
     "ValidationException": {
-      "base": "<p>A standard error for input validation failures. This should be thrown by services when a member of the input structure falls outside of the modeled or documented constraints.</p>",
+      "base": "<p>The input fails to satisfy the constraints specified by the service.</p>",
       "refs": {}
     },
     "ValidationExceptionField": {

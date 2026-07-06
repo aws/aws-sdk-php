@@ -1,0 +1,2197 @@
+{
+  "version": "2.0",
+  "service": "<p>The next generation of AWS Resilience Hub is the single location in AWS where you assess and improve the resilience of your critical applications. It helps Site Reliability Engineers (SREs) and development teams proactively reason about resilience at scale — identifying failure modes, discovering hidden dependencies, and report on progress across the enterprise. </p>",
+  "operations": {
+    "CreateAssertion": "<p>Creates a resilience assertion for a service.</p>",
+    "CreateInputSource": "<p>Creates an input source for a service.</p>",
+    "CreatePolicy": "<p>Creates a resilience policy that defines availability and disaster recovery requirements.</p>",
+    "CreateReport": "<p>On-demand report creation. Idempotent — duplicate requests with same clientToken return existing result.</p>",
+    "CreateService": "<p>Creates a service.</p>",
+    "CreateServiceFunction": "<p>Creates a service function within a service.</p>",
+    "CreateServiceFunctionResources": "<p>Associates resources with a service function.</p>",
+    "CreateSystem": "<p>Creates a system that represents a logical grouping of services.</p>",
+    "CreateUserJourney": "<p>Creates a user journey within a system.</p>",
+    "DeleteAssertion": "<p>Deletes a resilience assertion from a service.</p>",
+    "DeleteInputSource": "<p>Deletes an input source.</p>",
+    "DeletePolicy": "<p>Deletes a resilience policy.</p>",
+    "DeleteService": "<p>Deletes a service.</p>",
+    "DeleteServiceFunction": "<p>Deletes a service function.</p>",
+    "DeleteServiceFunctionResources": "<p>Removes resources from a service function.</p>",
+    "DeleteSystem": "<p>Deletes a system.</p>",
+    "DeleteUserJourney": "<p>Deletes a user journey.</p>",
+    "GetFailureModeFinding": "<p>Retrieves a finding by findingId.</p>",
+    "GetPolicy": "<p>Retrieves a resilience policy by ARN.</p>",
+    "GetService": "<p>Retrieves a service by ARN.</p>",
+    "GetSystem": "<p>Retrieves a system by ARN.</p>",
+    "GetUserJourney": "<p>Retrieves a user journey.</p>",
+    "ImportApp": "<p>Imports a V1 app into the V2 resource model, creating a service with the same name.</p>",
+    "ImportPolicy": "<p>Imports a V1 policy into V2, mapping RTO/RPO values from V1 scenarios.</p>",
+    "ListAssertions": "<p>Lists resilience assertions for a service.</p>",
+    "ListDependencies": "<p>Lists dependencies discovered for services.</p>",
+    "ListFailureModeAssessments": "<p>Lists failure mode assessments.</p>",
+    "ListFailureModeFindings": "<p>List findings.</p>",
+    "ListInputSources": "<p>Lists input sources for a service.</p>",
+    "ListPolicies": "<p>Lists resilience policies.</p>",
+    "ListReports": "<p>List reports for a service, or all reports owned by the account if serviceArn is not provided.</p>",
+    "ListResources": "<p>List resources.</p>",
+    "ListServiceEvents": "<p>Lists events for a service.</p>",
+    "ListServiceFunctions": "<p>Lists service functions for a service.</p>",
+    "ListServiceTopologyEdges": "<p>Lists topology edges for a service.</p>",
+    "ListServices": "<p>Lists services.</p>",
+    "ListSystemEvents": "<p>Lists events for a system.</p>",
+    "ListSystems": "<p>Lists systems.</p>",
+    "ListTagsForResource": "<p>Lists the tags for a resource.</p>",
+    "ListUserJourneys": "<p>Lists user journeys for a system.</p>",
+    "StartFailureModeAssessment": "<p>Start a failure mode assessment.</p>",
+    "TagResource": "<p>Adds tags to a resource.</p>",
+    "UntagResource": "<p>Removes tags from a resource.</p>",
+    "UpdateAssertion": "<p>Updates a resilience assertion.</p>",
+    "UpdateDependency": "<p>Updates a dependency classification.</p>",
+    "UpdateFailureModeFinding": "<p>Updates an existing finding.</p>",
+    "UpdatePolicy": "<p>Updates an existing resilience policy.</p>",
+    "UpdateService": "<p>Updates an existing service.</p>",
+    "UpdateServiceFunction": "<p>Updates a service function.</p>",
+    "UpdateSystem": "<p>Updates an existing system.</p>",
+    "UpdateUserJourney": "<p>Updates an existing user journey.</p>"
+  },
+  "shapes": {
+    "AccessDeniedException": {
+      "base": "<p>Access denied — caller lacks required permissions.</p>",
+      "refs": {}
+    },
+    "AccountId": {
+      "base": null,
+      "refs": {
+        "ListServicesRequest$accountId": "<p>Filter services by AWS account ID.</p>",
+        "Service$accountId": "<p>The AWS account ID that owns the service.</p>",
+        "ServiceSummary$accountId": "<p>Displayed only if caller has access.</p>"
+      }
+    },
+    "Achievability": {
+      "base": "<p>Describes the achievability status of a service's resilience targets based on the most recent assessment.</p>",
+      "refs": {
+        "AssessmentSummary$achievability": "<p>The achievability results from the assessment.</p>",
+        "Service$achievability": "<p>The achievability status of the service's resilience targets.</p>",
+        "ServiceSummary$achievability": "<p>The achievability status of the service's resilience targets.</p>"
+      }
+    },
+    "AchievabilityStatus": {
+      "base": null,
+      "refs": {
+        "Achievability$availabilitySlo": "<p>The achievability status of the availability SLO target for the service.</p>",
+        "Achievability$multiAzRtoRpo": "<p>The achievability status of the multi-AZ RTO and RPO targets for the service.</p>",
+        "Achievability$multiRegionRtoRpo": "<p>The achievability status of the multi-Region RTO and RPO targets for the service.</p>"
+      }
+    },
+    "ActorType": {
+      "base": null,
+      "refs": {
+        "EventActor$type": "<p>The type of actor, either USER or SYSTEM.</p>"
+      }
+    },
+    "Arn": {
+      "base": "<p>ARN identifier.</p>",
+      "refs": {
+        "ArnList$member": null,
+        "Assertion$serviceArn": null,
+        "AssessmentSummary$serviceArn": null,
+        "AssociatedSystem$systemArn": null,
+        "CreateAssertionRequest$serviceArn": null,
+        "CreateInputSourceRequest$serviceArn": null,
+        "CreateInputSourceResponse$serviceArn": null,
+        "CreateReportRequest$serviceArn": null,
+        "CreateServiceFunctionRequest$serviceArn": null,
+        "CreateServiceFunctionResourcesRequest$serviceArn": null,
+        "CreateServiceFunctionResourcesResponse$serviceArn": null,
+        "CreateServiceRequest$policyArn": null,
+        "CreateUserJourneyRequest$systemArn": null,
+        "CreateUserJourneyRequest$policyArn": null,
+        "DeleteAssertionRequest$serviceArn": null,
+        "DeleteInputSourceRequest$serviceArn": null,
+        "DeleteInputSourceResponse$serviceArn": null,
+        "DeletePolicyRequest$policyArn": null,
+        "DeletePolicyResponse$policyArn": null,
+        "DeleteServiceFunctionRequest$serviceArn": null,
+        "DeleteServiceFunctionResourcesRequest$serviceArn": null,
+        "DeleteServiceFunctionResourcesResponse$serviceArn": null,
+        "DeleteServiceRequest$serviceArn": null,
+        "DeleteServiceResponse$serviceArn": null,
+        "DeleteSystemRequest$systemArn": null,
+        "DeleteSystemResponse$systemArn": null,
+        "DeleteUserJourneyRequest$systemArn": null,
+        "DependencySummary$serviceArn": null,
+        "EksSource$clusterArn": null,
+        "FindingSummary$serviceArn": null,
+        "GetFailureModeFindingRequest$serviceArn": null,
+        "GetPolicyRequest$policyArn": null,
+        "GetServiceRequest$serviceArn": null,
+        "GetSystemRequest$systemArn": null,
+        "GetUserJourneyRequest$systemArn": null,
+        "ImportAppRequest$v1AppArn": null,
+        "ImportAppRequest$policyArn": null,
+        "ImportPolicyRequest$v1PolicyArn": null,
+        "InputSourceSummary$cfnStackArn": null,
+        "ListAssertionsRequest$serviceArn": null,
+        "ListDependenciesRequest$serviceArn": null,
+        "ListFailureModeAssessmentsRequest$serviceArn": null,
+        "ListFailureModeFindingsRequest$serviceArn": null,
+        "ListInputSourcesRequest$serviceArn": null,
+        "ListReportsRequest$serviceArn": "<p>Optional. If not provided, lists all reports owned by the account.</p>",
+        "ListResourcesRequest$serviceArn": null,
+        "ListServiceEventsRequest$serviceArn": null,
+        "ListServiceFunctionsRequest$serviceArn": null,
+        "ListServiceTopologyEdgesRequest$serviceArn": null,
+        "ListServicesRequest$systemArn": null,
+        "ListServicesRequest$policyArn": null,
+        "ListSystemEventsRequest$systemArn": null,
+        "ListTagsForResourceRequest$resourceArn": null,
+        "ListUserJourneysRequest$systemArn": null,
+        "Policy$policyArn": null,
+        "PolicySummary$policyArn": null,
+        "ReportGenerationResult$serviceArn": "<p>The service this report was generated for.</p>",
+        "ResourceConfiguration$cfnStackArn": null,
+        "Service$serviceArn": null,
+        "Service$policyArn": null,
+        "ServiceEvent$serviceArn": null,
+        "ServiceFunction$serviceArn": null,
+        "ServicePolicyAssociatedMetadata$policyArn": null,
+        "ServicePolicyDisassociatedMetadata$policyArn": null,
+        "ServiceSummary$serviceArn": null,
+        "ServiceSummary$policyArn": null,
+        "ServiceSystemAssociatedMetadata$systemArn": null,
+        "ServiceSystemDisassociatedMetadata$systemArn": null,
+        "StartFailureModeAssessmentRequest$serviceArn": null,
+        "StartFailureModeAssessmentResponse$serviceArn": null,
+        "System$systemArn": null,
+        "SystemEvent$systemArn": null,
+        "SystemPolicyAssociatedMetadata$policyArn": null,
+        "SystemPolicyDisassociatedMetadata$policyArn": null,
+        "SystemServiceAssociatedMetadata$serviceArn": null,
+        "SystemServiceDisassociatedMetadata$serviceArn": null,
+        "SystemSummary$systemArn": null,
+        "TagResourceRequest$resourceArn": null,
+        "UntagResourceRequest$resourceArn": null,
+        "UpdateAssertionRequest$serviceArn": null,
+        "UpdateDependencyRequest$serviceArn": null,
+        "UpdateFailureModeFindingRequest$serviceArn": null,
+        "UpdatePolicyRequest$policyArn": null,
+        "UpdateServiceFunctionRequest$serviceArn": null,
+        "UpdateServiceRequest$serviceArn": null,
+        "UpdateServiceRequest$policyArn": null,
+        "UpdateSystemRequest$systemArn": null,
+        "UpdateUserJourneyRequest$systemArn": null,
+        "UpdateUserJourneyRequest$policyArn": null,
+        "UserJourney$policyArn": null
+      }
+    },
+    "ArnList": {
+      "base": null,
+      "refs": {
+        "ServiceFunctionResourcesAddedMetadata$resourcesAdded": "<p>The list of resource ARNs that were added.</p>",
+        "ServiceFunctionResourcesRemovedMetadata$resourcesRemoved": "<p>The list of resource ARNs that were removed.</p>",
+        "ServiceFunctionUpdatedMetadata$resourcesAdded": "<p>The list of resource ARNs that were added.</p>",
+        "ServiceFunctionUpdatedMetadata$resourcesRemoved": "<p>The list of resource ARNs that were removed.</p>"
+      }
+    },
+    "Assertion": {
+      "base": "<p>Represents a resilience assertion for a service.</p>",
+      "refs": {
+        "AssertionList$member": null,
+        "CreateAssertionResponse$assertion": "<p>The created assertion.</p>",
+        "UpdateAssertionResponse$assertion": "<p>The updated assertion.</p>"
+      }
+    },
+    "AssertionCreatedMetadata": {
+      "base": "<p>Metadata for an assertion created event.</p>",
+      "refs": {
+        "ServiceEventMetadata$assertionCreated": "<p>Metadata for an assertion created event.</p>"
+      }
+    },
+    "AssertionDeletedMetadata": {
+      "base": "<p>Metadata for an assertion deleted event.</p>",
+      "refs": {
+        "ServiceEventMetadata$assertionDeleted": "<p>Metadata for an assertion deleted event.</p>"
+      }
+    },
+    "AssertionList": {
+      "base": null,
+      "refs": {
+        "ListAssertionsResponse$assertions": "<p>The list of assertions.</p>"
+      }
+    },
+    "AssertionSource": {
+      "base": null,
+      "refs": {
+        "Assertion$source": "<p>The source of the assertion, indicating whether it was AI-generated or created by a user.</p>",
+        "ListAssertionsRequest$source": "<p>Filter assertions by source type.</p>"
+      }
+    },
+    "AssertionText": {
+      "base": null,
+      "refs": {
+        "Assertion$text": "<p>The text content of the assertion.</p>",
+        "CreateAssertionRequest$text": "<p>The text content of the assertion.</p>",
+        "UpdateAssertionRequest$text": "<p>The updated text content of the assertion.</p>"
+      }
+    },
+    "AssertionUpdatedMetadata": {
+      "base": "<p>Metadata for an assertion updated event.</p>",
+      "refs": {
+        "ServiceEventMetadata$assertionUpdated": "<p>Metadata for an assertion updated event.</p>"
+      }
+    },
+    "AssessmentCost": {
+      "base": "<p>Represents the cost of running a failure mode assessment.</p>",
+      "refs": {
+        "AssessmentSummary$assessmentCost": "<p>The cost of the assessment.</p>",
+        "Service$estimatedAssessmentCost": "<p>The estimated cost of running an assessment on the service.</p>"
+      }
+    },
+    "AssessmentErrorCode": {
+      "base": null,
+      "refs": {
+        "AssessmentSummary$errorCode": "<p>The error code if the assessment failed.</p>"
+      }
+    },
+    "AssessmentStatus": {
+      "base": null,
+      "refs": {
+        "AssessmentSummary$assessmentStatus": "<p>The current status of the assessment.</p>",
+        "ListServicesRequest$assessmentStatus": "<p>Filter services by assessment status.</p>",
+        "Service$assessmentStatus": "<p>The current assessment status of the service.</p>",
+        "ServiceSummary$assessmentStatus": "<p>The current assessment status of the service.</p>",
+        "StartFailureModeAssessmentResponse$assessmentStatus": "<p>The status of the started assessment.</p>"
+      }
+    },
+    "AssessmentStep": {
+      "base": null,
+      "refs": {
+        "AssessmentSummary$assessmentStep": "<p>The current step of the assessment process.</p>"
+      }
+    },
+    "AssessmentSummary": {
+      "base": "<p>Contains summary information about a failure mode assessment.</p>",
+      "refs": {
+        "AssessmentSummaryList$member": null
+      }
+    },
+    "AssessmentSummaryList": {
+      "base": null,
+      "refs": {
+        "ListFailureModeAssessmentsResponse$assessmentSummaries": "<p>The list of assessment summaries.</p>"
+      }
+    },
+    "AssociatedSystem": {
+      "base": "<p>Represents a system associated with a service.</p>",
+      "refs": {
+        "AssociatedSystemList$member": null
+      }
+    },
+    "AssociatedSystemList": {
+      "base": null,
+      "refs": {
+        "CreateServiceRequest$associatedSystems": "<p>The systems to associate with the service.</p>",
+        "ImportAppRequest$associatedSystems": "<p>The systems to associate with the imported service.</p>",
+        "Service$associatedSystems": "<p>The systems associated with the service.</p>",
+        "ServiceSummary$associatedSystems": "<p>The systems associated with the service.</p>",
+        "UpdateServiceRequest$associatedSystems": "<p>The updated systems to associate with the service.</p>"
+      }
+    },
+    "AvailabilitySlo": {
+      "base": "<p>Defines the availability service level objective (SLO) for a resilience policy.</p>",
+      "refs": {
+        "CreatePolicyRequest$availabilitySlo": "<p>The availability SLO for the resilience policy.</p>",
+        "ImportPolicyRequest$availabilitySlo": "<p>The availability SLO to set on the imported policy.</p>",
+        "Policy$availabilitySlo": "<p>The availability SLO defined in the policy.</p>",
+        "PolicySummary$availabilitySlo": "<p>The availability SLO defined in the policy.</p>",
+        "UpdatePolicyRequest$availabilitySlo": "<p>The updated availability SLO for the policy.</p>"
+      }
+    },
+    "AvailabilitySloTargetDouble": {
+      "base": null,
+      "refs": {
+        "AvailabilitySlo$target": "<p>The target availability percentage, expressed as a value between 0 and 100.</p>"
+      }
+    },
+    "AwsAccountId": {
+      "base": null,
+      "refs": {
+        "Resource$awsAccountId": "<p>The AWS account ID that owns the resource.</p>",
+        "S3ReportOutputConfiguration$bucketOwner": "<p>Account ID of the bucket owner for cross-account access verification.</p>"
+      }
+    },
+    "AwsRegion": {
+      "base": null,
+      "refs": {
+        "ListResourcesRequest$awsRegion": "<p>Filter resources by AWS Region.</p>",
+        "RegionList$member": null,
+        "Resource$awsRegion": "<p>The AWS Region where the resource is located.</p>"
+      }
+    },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "CreateSystemRequest$sharingEnabled": "<p>Indicates whether cross-account sharing is enabled for the system.</p>",
+        "ImportAppRequest$skipManuallyAddedResources": "<p>Whether to skip manually added resources during import.</p>",
+        "Service$rerunAssessment": "<p>Indicates whether the assessment should be rerun.</p>",
+        "System$sharingEnabled": "<p>Indicates whether cross-account sharing is enabled.</p>",
+        "UpdateSystemRequest$sharingEnabled": "<p>Whether cross-account sharing is enabled for the system.</p>"
+      }
+    },
+    "ClientToken": {
+      "base": "<p>Idempotency token.</p>",
+      "refs": {
+        "CreateAssertionRequest$clientToken": null,
+        "CreateInputSourceRequest$clientToken": null,
+        "CreatePolicyRequest$clientToken": null,
+        "CreateReportRequest$clientToken": null,
+        "CreateServiceFunctionRequest$clientToken": null,
+        "CreateServiceRequest$clientToken": null,
+        "CreateSystemRequest$clientToken": null,
+        "CreateUserJourneyRequest$clientToken": null,
+        "ImportAppRequest$clientToken": null,
+        "ImportPolicyRequest$clientToken": null,
+        "StartFailureModeAssessmentRequest$clientToken": null
+      }
+    },
+    "ConflictException": {
+      "base": "<p>Conflict — resource already exists.</p>",
+      "refs": {}
+    },
+    "CostCurrency": {
+      "base": null,
+      "refs": {
+        "AssessmentCost$currency": "<p>The currency of the assessment cost.</p>"
+      }
+    },
+    "CreateAssertionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAssertionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateInputSourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateInputSourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreatePolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreatePolicyResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateReportRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateReportResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateServiceFunctionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateServiceFunctionResourcesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateServiceFunctionResourcesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateServiceFunctionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateServiceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateServiceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateSystemRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateSystemResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateUserJourneyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateUserJourneyResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CrossAccountRole": {
+      "base": "<p>Specifies a cross-account IAM role ARN and optional external ID.</p>",
+      "refs": {
+        "CrossAccountRoleList$member": null
+      }
+    },
+    "CrossAccountRoleExternalIdString": {
+      "base": null,
+      "refs": {
+        "CrossAccountRole$externalId": "<p>The external ID used for assuming the cross-account role.</p>"
+      }
+    },
+    "CrossAccountRoleList": {
+      "base": null,
+      "refs": {
+        "PermissionModel$crossAccountRoles": "<p>The list of cross-account IAM role ARNs.</p>"
+      }
+    },
+    "DataRecoveryTargets": {
+      "base": "<p>Defines data recovery targets for a resilience policy.</p>",
+      "refs": {
+        "CreatePolicyRequest$dataRecovery": "<p>The data recovery targets for the resilience policy.</p>",
+        "Policy$dataRecovery": "<p>The data recovery targets defined in the policy.</p>",
+        "PolicySummary$dataRecovery": "<p>The data recovery targets defined in the policy.</p>",
+        "UpdatePolicyRequest$dataRecovery": "<p>The updated data recovery targets for the policy.</p>"
+      }
+    },
+    "DataRecoveryTargetsTimeBetweenBackupsInMinutesInteger": {
+      "base": null,
+      "refs": {
+        "DataRecoveryTargets$timeBetweenBackupsInMinutes": "<p>The target time between backups, in minutes.</p>"
+      }
+    },
+    "DeleteAssertionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteAssertionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteInputSourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteInputSourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeletePolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeletePolicyResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteServiceFunctionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteServiceFunctionResourcesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteServiceFunctionResourcesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteServiceFunctionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteServiceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteServiceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteSystemRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteSystemResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteUserJourneyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteUserJourneyResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DependencyCriticality": {
+      "base": null,
+      "refs": {
+        "DependencySummary$criticality": "<p>The criticality level of the dependency.</p>",
+        "UpdateDependencyRequest$criticality": "<p>The updated criticality level of the dependency.</p>",
+        "UpdateDependencyResponse$criticality": "<p>The criticality level of the dependency.</p>"
+      }
+    },
+    "DependencyDiscoveryConfig": {
+      "base": "<p>Configuration for dependency discovery on a service.</p>",
+      "refs": {
+        "Service$dependencyDiscovery": "<p>The dependency discovery configuration for the service.</p>",
+        "ServiceSummary$dependencyDiscovery": "<p>The dependency discovery configuration.</p>"
+      }
+    },
+    "DependencyDiscoveryInput": {
+      "base": "<p>Caller-settable values for dependency discovery. INITIALIZING is system-managed.</p>",
+      "refs": {
+        "CreateServiceRequest$dependencyDiscovery": null,
+        "UpdateServiceRequest$dependencyDiscovery": null
+      }
+    },
+    "DependencyDiscoveryStatus": {
+      "base": null,
+      "refs": {
+        "DependencyDiscoveryConfig$status": "<p>The current status of dependency discovery.</p>"
+      }
+    },
+    "DependencySummary": {
+      "base": "<p>Contains summary information about a discovered dependency.</p>",
+      "refs": {
+        "DependencySummaryList$member": null
+      }
+    },
+    "DependencySummaryList": {
+      "base": null,
+      "refs": {
+        "ListDependenciesResponse$dependencySummaries": "<p>The list of dependency summaries.</p>"
+      }
+    },
+    "DisasterRecoverySource": {
+      "base": "<p>Contains the effective disaster recovery approach value for a service.</p>",
+      "refs": {
+        "EffectivePolicyValues$multiAzDrApproach": "<p>The effective multi-AZ disaster recovery approach for the service.</p>",
+        "EffectivePolicyValues$multiRegionDrApproach": "<p>The effective multi-Region disaster recovery approach for the service.</p>"
+      }
+    },
+    "Double": {
+      "base": null,
+      "refs": {
+        "AssessmentCost$amount": "<p>The cost amount for the assessment.</p>",
+        "SloSource$value": "<p>The availability SLO percentage value.</p>"
+      }
+    },
+    "EdgePropertyList": {
+      "base": null,
+      "refs": {
+        "ServiceTopologyEdgeSummary$properties": "<p>The properties of the topology edge.</p>"
+      }
+    },
+    "EdgePropertySummary": {
+      "base": "<p>Contains property information for a service topology edge.</p>",
+      "refs": {
+        "EdgePropertyList$member": null
+      }
+    },
+    "EffectivePolicyValues": {
+      "base": "<p>Contains the effective resilience policy values for a service.</p>",
+      "refs": {
+        "Service$effectivePolicyValues": "<p>The effective policy values for the service.</p>"
+      }
+    },
+    "EksNamespace": {
+      "base": "<p>Kubernetes namespace name (RFC 1123 Label).</p>",
+      "refs": {
+        "EksSourceNamespacesList$member": null
+      }
+    },
+    "EksSource": {
+      "base": "<p>Defines an Amazon EKS cluster and its namespaces as an input source for resource discovery.</p>",
+      "refs": {
+        "InputSourceSummary$eks": "<p>The Amazon EKS configuration, if this input source uses EKS.</p>",
+        "ResourceConfiguration$eks": "<p>The Amazon EKS configuration for resource discovery.</p>"
+      }
+    },
+    "EksSourceNamespacesList": {
+      "base": null,
+      "refs": {
+        "EksSource$namespaces": "<p>The list of Kubernetes namespaces within the EKS cluster.</p>"
+      }
+    },
+    "EntityDescription": {
+      "base": "<p>Resource description.</p>",
+      "refs": {
+        "CreateServiceFunctionRequest$description": null,
+        "CreateSystemRequest$description": null,
+        "CreateUserJourneyRequest$description": null,
+        "Finding$description": null,
+        "FindingSummary$description": null,
+        "ServiceFunction$description": null,
+        "SuggestedChangesList$member": null,
+        "System$description": null,
+        "UpdateServiceFunctionRequest$description": null,
+        "UpdateSystemRequest$description": null,
+        "UpdateUserJourneyRequest$description": null,
+        "UserJourney$description": null
+      }
+    },
+    "EntityId": {
+      "base": null,
+      "refs": {
+        "CreateServiceFunctionResourcesRequest$serviceFunctionId": "<p>The identifier of the service function to associate resources with.</p>",
+        "CreateServiceFunctionResourcesResponse$serviceFunctionId": "<p>The identifier of the service function.</p>",
+        "DeleteServiceFunctionRequest$serviceFunctionId": "<p>The identifier of the service function to delete.</p>",
+        "DeleteServiceFunctionResourcesRequest$serviceFunctionId": "<p>The identifier of the service function to remove resources from.</p>",
+        "DeleteServiceFunctionResourcesResponse$serviceFunctionId": "<p>The identifier of the service function.</p>",
+        "DeleteServiceFunctionResponse$serviceFunctionId": "<p>The identifier of the deleted service function.</p>",
+        "FunctionsList$member": null,
+        "ListResourcesRequest$serviceFunctionId": "<p>Filter resources by service function identifier.</p>",
+        "ListResourcesResponse$serviceFunctionId": "<p>The service function identifier for the returned resources.</p>",
+        "ServiceFunction$serviceFunctionId": "<p>The unique identifier of the service function.</p>",
+        "UpdateServiceFunctionRequest$serviceFunctionId": "<p>The identifier of the service function to update.</p>"
+      }
+    },
+    "EntityLabel": {
+      "base": "<p>Entity label (not part of ARN — spaces allowed).</p>",
+      "refs": {
+        "CreateServiceFunctionRequest$name": null,
+        "CreateUserJourneyRequest$name": null,
+        "ServiceFunction$name": null,
+        "UpdateServiceFunctionRequest$name": null,
+        "UpdateUserJourneyRequest$name": null,
+        "UserJourney$name": null,
+        "UserJourneySummary$name": null
+      }
+    },
+    "EntityName": {
+      "base": "<p>Resource name (used in ARN — no spaces allowed).</p>",
+      "refs": {
+        "AssociatedSystem$systemName": null,
+        "CreatePolicyRequest$name": null,
+        "CreateServiceRequest$name": null,
+        "CreateSystemRequest$name": null,
+        "DisasterRecoverySource$policyName": null,
+        "Policy$name": null,
+        "PolicySummary$name": null,
+        "Service$name": null,
+        "ServiceSummary$name": null,
+        "SloSource$policyName": null,
+        "System$name": null,
+        "SystemSummary$name": null,
+        "TargetSource$policyName": null
+      }
+    },
+    "EventActor": {
+      "base": "<p>Identifies the actor that triggered an event.</p>",
+      "refs": {
+        "ServiceEvent$actor": "<p>The actor that triggered the event.</p>",
+        "SystemEvent$actor": "<p>The actor that triggered the event.</p>"
+      }
+    },
+    "FailedReportOutput": {
+      "base": "<p>Details when report generation failed.</p>",
+      "refs": {
+        "ReportOutput$failedReportOutput": "<p>Details when report generation failed.</p>"
+      }
+    },
+    "FailureCategory": {
+      "base": null,
+      "refs": {
+        "Finding$failureCategory": "<p>The failure category of the finding.</p>",
+        "FindingSummary$failureCategory": "<p>The failure category of the finding.</p>",
+        "ListFailureModeFindingsRequest$failureCategory": "<p>Filter findings by failure category.</p>"
+      }
+    },
+    "Finding": {
+      "base": "<p>Represents a resilience finding from a failure mode assessment.</p>",
+      "refs": {
+        "GetFailureModeFindingResponse$finding": "<p>The requested finding.</p>",
+        "UpdateFailureModeFindingResponse$finding": "<p>The updated finding.</p>"
+      }
+    },
+    "FindingCommentString": {
+      "base": null,
+      "refs": {
+        "Finding$comment": "<p>A user-provided comment about the finding.</p>"
+      }
+    },
+    "FindingSeverity": {
+      "base": null,
+      "refs": {
+        "Finding$severity": "<p>The severity of the finding.</p>",
+        "FindingSummary$severity": "<p>The severity of the finding.</p>",
+        "ListFailureModeFindingsRequest$severity": "<p>Filter findings by severity.</p>"
+      }
+    },
+    "FindingStatus": {
+      "base": null,
+      "refs": {
+        "Finding$status": "<p>The current status of the finding.</p>",
+        "FindingSummary$status": "<p>The current status of the finding.</p>",
+        "ListFailureModeFindingsRequest$status": "<p>Filter findings by status.</p>",
+        "UpdateFailureModeFindingRequest$status": "<p>The new status for the finding.</p>"
+      }
+    },
+    "FindingSummary": {
+      "base": "<p>Contains summary information about a finding.</p>",
+      "refs": {
+        "FindingsList$member": null
+      }
+    },
+    "FindingsList": {
+      "base": null,
+      "refs": {
+        "ListFailureModeFindingsResponse$findingsSummary": "<p>The list of finding summaries.</p>"
+      }
+    },
+    "FunctionsList": {
+      "base": null,
+      "refs": {
+        "Finding$serviceFunctions": "<p>The service functions associated with the finding.</p>"
+      }
+    },
+    "GetFailureModeFindingRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetFailureModeFindingResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetPolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetPolicyResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetServiceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetServiceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetSystemRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetSystemResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetUserJourneyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetUserJourneyResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "IamRoleArn": {
+      "base": "<p>ARN of the IAM Role for the profile. Null if the permission profile is the 'Admin' profile.</p>",
+      "refs": {
+        "CrossAccountRole$crossAccountRoleArn": null
+      }
+    },
+    "IamRoleName": {
+      "base": "<p>IAM role name (supports up to 64 characters per IAM limits).</p>",
+      "refs": {
+        "PermissionModel$invokerRoleName": null
+      }
+    },
+    "ImportAppRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ImportAppResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ImportPolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ImportPolicyResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "InfrastructureAndCodeRecommendation": {
+      "base": "<p>An infrastructure and code recommendation to address a finding.</p>",
+      "refs": {
+        "InfrastructureAndCodeRecommendationsList$member": null
+      }
+    },
+    "InfrastructureAndCodeRecommendationsList": {
+      "base": null,
+      "refs": {
+        "Finding$infrastructureAndCodeRecommendations": "<p>Infrastructure and code recommendations to address the finding.</p>"
+      }
+    },
+    "InputSource": {
+      "base": "<p>Identifies an input source by its identifier and type.</p>",
+      "refs": {
+        "ServiceResource$inputSource": "<p>The input source that discovered the resource.</p>"
+      }
+    },
+    "InputSourceId": {
+      "base": null,
+      "refs": {
+        "CreateInputSourceResponse$inputSourceId": "<p>The unique identifier assigned to the created input source.</p>",
+        "DeleteInputSourceRequest$inputSourceId": "<p>The identifier of the input source to delete.</p>",
+        "DeleteInputSourceResponse$inputSourceId": "<p>The identifier of the deleted input source.</p>",
+        "InputSourceSummary$inputSourceId": "<p>The unique identifier of the input source.</p>"
+      }
+    },
+    "InputSourceSummary": {
+      "base": "<p>Contains summary information about an input source for a service.</p>",
+      "refs": {
+        "InputSourceSummaryList$member": null
+      }
+    },
+    "InputSourceSummaryList": {
+      "base": null,
+      "refs": {
+        "ListInputSourcesResponse$inputSourceSummaries": "<p>The list of input source summaries.</p>"
+      }
+    },
+    "InputSourceType": {
+      "base": null,
+      "refs": {
+        "InputSource$type": "<p>The type of the input source.</p>",
+        "InputSourceSummary$type": "<p>The type of the input source.</p>",
+        "ListInputSourcesRequest$type": "<p>Filter input sources by type.</p>"
+      }
+    },
+    "Integer": {
+      "base": null,
+      "refs": {
+        "AssessmentSummary$totalFindings": "<p>The total number of findings generated by the assessment.</p>",
+        "AssessmentSummary$billableAssessmentUnitCount": "<p>The number of billable assessment units consumed by the assessment.</p>",
+        "Policy$associatedServiceCount": "<p>The number of services associated with this policy.</p>",
+        "PolicySummary$associatedServiceCount": "<p>The number of services associated with this policy.</p>",
+        "Service$openFindingsCount": "<p>The number of open findings for the service.</p>",
+        "Service$resolvedFindingsCount": "<p>The number of resolved findings for the service.</p>",
+        "ServiceFunction$resourceCount": "<p>The number of resources associated with the service function.</p>",
+        "ServiceResourcesAssociatedMetadata$resourceCount": "<p>The number of resources associated.</p>",
+        "ServiceResourcesDisassociatedMetadata$resourceCount": "<p>The number of resources disassociated.</p>",
+        "ServiceSummary$openFindingsCount": "<p>The number of open findings.</p>",
+        "ServiceSummary$resolvedFindingsCount": "<p>The number of resolved findings.</p>",
+        "SystemSummary$userJourneysCount": "<p>The number of user journeys in the system.</p>",
+        "SystemSummary$servicesCount": "<p>The number of services in the system.</p>",
+        "TargetSource$value": "<p>The RTO or RPO value in minutes.</p>",
+        "ThrottlingException$retryAfterSeconds": "<p>The number of seconds to wait before retrying the request.</p>"
+      }
+    },
+    "InternalServerException": {
+      "base": "<p>Internal service error.</p>",
+      "refs": {}
+    },
+    "KmsKeyId": {
+      "base": "<p>KMS key identifier — accepts key ID, key ARN, alias name, or alias ARN.</p>",
+      "refs": {
+        "CreatePolicyRequest$kmsKeyId": null,
+        "CreateServiceRequest$kmsKeyId": null,
+        "CreateSystemRequest$kmsKeyId": null,
+        "ImportAppRequest$kmsKeyId": null,
+        "ImportPolicyRequest$kmsKeyId": null,
+        "Policy$kmsKeyId": null,
+        "Service$kmsKeyId": null,
+        "System$kmsKeyId": null
+      }
+    },
+    "ListAssertionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAssertionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDependenciesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDependenciesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListFailureModeAssessmentsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListFailureModeAssessmentsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListFailureModeFindingsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListFailureModeFindingsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListInputSourcesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListInputSourcesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListPoliciesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListPoliciesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListReportsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListReportsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListResourcesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListResourcesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListServiceEventsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListServiceEventsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListServiceFunctionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListServiceFunctionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListServiceTopologyEdgesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListServiceTopologyEdgesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListServicesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListServicesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSystemEventsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSystemEventsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSystemsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSystemsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListUserJourneysRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListUserJourneysResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "Long": {
+      "base": null,
+      "refs": {
+        "QueryDataPoint$queryCount": "<p>The number of queries at this data point.</p>"
+      }
+    },
+    "LongDescription": {
+      "base": "<p>Resource description for services and policies.</p>",
+      "refs": {
+        "CreatePolicyRequest$description": null,
+        "CreateServiceRequest$description": null,
+        "Policy$description": null,
+        "Service$description": null,
+        "UpdatePolicyRequest$description": null,
+        "UpdateServiceRequest$description": null
+      }
+    },
+    "MaxResults": {
+      "base": "<p>Pagination page size.</p>",
+      "refs": {
+        "ListAssertionsRequest$maxResults": null,
+        "ListDependenciesRequest$maxResults": null,
+        "ListFailureModeAssessmentsRequest$maxResults": null,
+        "ListFailureModeFindingsRequest$maxResults": null,
+        "ListInputSourcesRequest$maxResults": null,
+        "ListPoliciesRequest$maxResults": null,
+        "ListReportsRequest$maxResults": null,
+        "ListResourcesRequest$maxResults": null,
+        "ListServiceEventsRequest$maxResults": null,
+        "ListServiceFunctionsRequest$maxResults": null,
+        "ListServiceTopologyEdgesRequest$maxResults": null,
+        "ListServicesRequest$maxResults": null,
+        "ListSystemEventsRequest$maxResults": null,
+        "ListSystemsRequest$maxResults": null,
+        "ListUserJourneysRequest$maxResults": null
+      }
+    },
+    "MultiAzDisasterRecoveryApproach": {
+      "base": null,
+      "refs": {
+        "ImportPolicyRequest$multiAzDisasterRecoveryApproach": "<p>The multi-AZ disaster recovery approach for the imported policy.</p>",
+        "MultiAzTargets$disasterRecoveryApproach": "<p>The disaster recovery approach for multi-AZ.</p>"
+      }
+    },
+    "MultiAzTargets": {
+      "base": "<p>Defines the multi-AZ disaster recovery targets for a resilience policy.</p>",
+      "refs": {
+        "CreatePolicyRequest$multiAz": "<p>The multi-AZ disaster recovery targets for the resilience policy.</p>",
+        "Policy$multiAz": "<p>The multi-AZ disaster recovery targets defined in the policy.</p>",
+        "PolicySummary$multiAz": "<p>The multi-AZ disaster recovery targets defined in the policy.</p>",
+        "UpdatePolicyRequest$multiAz": "<p>The updated multi-AZ disaster recovery targets for the policy.</p>"
+      }
+    },
+    "MultiAzTargetsRpoInMinutesInteger": {
+      "base": null,
+      "refs": {
+        "MultiAzTargets$rpoInMinutes": "<p>The recovery point objective (RPO) target for multi-AZ, in minutes.</p>"
+      }
+    },
+    "MultiAzTargetsRtoInMinutesInteger": {
+      "base": null,
+      "refs": {
+        "MultiAzTargets$rtoInMinutes": "<p>The recovery time objective (RTO) target for multi-AZ, in minutes.</p>"
+      }
+    },
+    "MultiRegionDisasterRecoveryApproach": {
+      "base": null,
+      "refs": {
+        "ImportPolicyRequest$multiRegionDisasterRecoveryApproach": "<p>The multi-Region disaster recovery approach for the imported policy.</p>",
+        "MultiRegionTargets$disasterRecoveryApproach": "<p>The disaster recovery approach for multi-Region.</p>"
+      }
+    },
+    "MultiRegionTargets": {
+      "base": "<p>Defines the multi-Region disaster recovery targets for a resilience policy.</p>",
+      "refs": {
+        "CreatePolicyRequest$multiRegion": "<p>The multi-Region disaster recovery targets for the resilience policy.</p>",
+        "Policy$multiRegion": "<p>The multi-Region disaster recovery targets defined in the policy.</p>",
+        "PolicySummary$multiRegion": "<p>The multi-Region disaster recovery targets defined in the policy.</p>",
+        "UpdatePolicyRequest$multiRegion": "<p>The updated multi-Region disaster recovery targets for the policy.</p>"
+      }
+    },
+    "MultiRegionTargetsRpoInMinutesInteger": {
+      "base": null,
+      "refs": {
+        "MultiRegionTargets$rpoInMinutes": "<p>The recovery point objective (RPO) target for multi-Region, in minutes.</p>"
+      }
+    },
+    "MultiRegionTargetsRtoInMinutesInteger": {
+      "base": null,
+      "refs": {
+        "MultiRegionTargets$rtoInMinutes": "<p>The recovery time objective (RTO) target for multi-Region, in minutes.</p>"
+      }
+    },
+    "NextToken": {
+      "base": "<p>Pagination token.</p>",
+      "refs": {
+        "ListAssertionsRequest$nextToken": null,
+        "ListAssertionsResponse$nextToken": null,
+        "ListDependenciesRequest$nextToken": null,
+        "ListDependenciesResponse$nextToken": null,
+        "ListFailureModeAssessmentsRequest$nextToken": null,
+        "ListFailureModeAssessmentsResponse$nextToken": null,
+        "ListFailureModeFindingsRequest$nextToken": null,
+        "ListFailureModeFindingsResponse$nextToken": null,
+        "ListInputSourcesRequest$nextToken": null,
+        "ListInputSourcesResponse$nextToken": null,
+        "ListPoliciesRequest$nextToken": null,
+        "ListPoliciesResponse$nextToken": null,
+        "ListReportsRequest$nextToken": null,
+        "ListReportsResponse$nextToken": null,
+        "ListResourcesRequest$nextToken": null,
+        "ListResourcesResponse$nextToken": null,
+        "ListServiceEventsRequest$nextToken": null,
+        "ListServiceEventsResponse$nextToken": null,
+        "ListServiceFunctionsRequest$nextToken": null,
+        "ListServiceFunctionsResponse$nextToken": null,
+        "ListServiceTopologyEdgesRequest$nextToken": null,
+        "ListServiceTopologyEdgesResponse$nextToken": null,
+        "ListServicesRequest$nextToken": null,
+        "ListServicesResponse$nextToken": null,
+        "ListSystemEventsRequest$nextToken": null,
+        "ListSystemEventsResponse$nextToken": null,
+        "ListSystemsRequest$nextToken": null,
+        "ListSystemsResponse$nextToken": null,
+        "ListUserJourneysRequest$nextToken": null,
+        "ListUserJourneysResponse$nextToken": null
+      }
+    },
+    "ObservabilityRecommendation": {
+      "base": "<p>An observability recommendation to address a finding.</p>",
+      "refs": {
+        "ObservabilityRecommendationsList$member": null
+      }
+    },
+    "ObservabilityRecommendationsList": {
+      "base": null,
+      "refs": {
+        "Finding$observabilityRecommendations": "<p>Observability recommendations to address the finding.</p>"
+      }
+    },
+    "OrganizationId": {
+      "base": null,
+      "refs": {
+        "Service$organizationId": "<p>The AWS Organizations identifier for the service.</p>",
+        "ServiceSummary$organizationId": "<p>Displayed only if caller has access.</p>",
+        "System$organizationId": "<p>The AWS Organizations identifier for the system.</p>",
+        "SystemSummary$organizationId": "<p>Displayed only if caller has access.</p>"
+      }
+    },
+    "OuId": {
+      "base": null,
+      "refs": {
+        "ListServicesRequest$ouId": "<p>Filter services by organizational unit (OU) identifier.</p>",
+        "ListSystemsRequest$ouId": "<p>Filter systems by organizational unit (OU) identifier.</p>",
+        "Service$ouId": "<p>The organizational unit (OU) identifier for the service.</p>",
+        "ServiceSummary$ouId": "<p>Displayed only if caller has access.</p>",
+        "System$ouId": "<p>The organizational unit (OU) identifier for the system.</p>",
+        "SystemSummary$ouId": "<p>Displayed only if caller has access.</p>"
+      }
+    },
+    "PermissionModel": {
+      "base": "<p>Defines the permission model for a service.</p>",
+      "refs": {
+        "CreateServiceRequest$permissionModel": "<p>The permission model for the service.</p>",
+        "Service$permissionModel": "<p>The permission model for the service.</p>",
+        "UpdateServiceRequest$permissionModel": "<p>The updated permission model for the service.</p>"
+      }
+    },
+    "Policy": {
+      "base": "<p>Represents a resilience policy that defines availability and disaster recovery requirements.</p>",
+      "refs": {
+        "CreatePolicyResponse$policy": "<p>The created resilience policy.</p>",
+        "GetPolicyResponse$policy": "<p>The requested resilience policy.</p>",
+        "ImportPolicyResponse$policy": "<p>The imported policy.</p>",
+        "UpdatePolicyResponse$policy": "<p>The updated policy.</p>"
+      }
+    },
+    "PolicyComponent": {
+      "base": null,
+      "refs": {
+        "Finding$policyComponent": "<p>The policy component associated with the finding.</p>",
+        "FindingSummary$policyComponent": "<p>The policy component associated with the finding.</p>"
+      }
+    },
+    "PolicySummary": {
+      "base": "<p>Contains summary information about a resilience policy.</p>",
+      "refs": {
+        "PolicySummaryList$member": null
+      }
+    },
+    "PolicySummaryList": {
+      "base": null,
+      "refs": {
+        "ListPoliciesResponse$policySummaries": "<p>The list of policy summaries.</p>"
+      }
+    },
+    "PolicyValueSource": {
+      "base": null,
+      "refs": {
+        "DisasterRecoverySource$source": "<p>Indicates whether the value comes from the service's own account or a cross-account policy.</p>",
+        "SloSource$source": "<p>Indicates whether the value comes from the service's own account or a cross-account policy.</p>",
+        "TargetSource$source": "<p>Indicates whether the value comes from the service's own account or a cross-account policy.</p>"
+      }
+    },
+    "QueryDataPoint": {
+      "base": "<p>A data point in a dependency query range.</p>",
+      "refs": {
+        "QueryDataPointList$member": null
+      }
+    },
+    "QueryDataPointList": {
+      "base": null,
+      "refs": {
+        "QueryRange$dataPoints": "<p>The data points within the query range.</p>"
+      }
+    },
+    "QueryGranularity": {
+      "base": null,
+      "refs": {
+        "ListDependenciesRequest$queryRangeGranularity": "<p>The granularity for the dependency query range.</p>",
+        "QueryRange$granularity": "<p>The granularity of the query range data points.</p>"
+      }
+    },
+    "QueryRange": {
+      "base": "<p>Defines a time range for dependency query data.</p>",
+      "refs": {
+        "DependencySummary$queryRange": "<p>The query range data for the dependency.</p>"
+      }
+    },
+    "RegionList": {
+      "base": null,
+      "refs": {
+        "CreateServiceRequest$regions": "<p>The AWS Regions where the service operates.</p>",
+        "DependencySummary$sourceRegions": "<p>The source Regions from which the dependency was detected.</p>",
+        "Service$regions": "<p>The AWS Regions where the service operates.</p>",
+        "ServiceSummary$regions": "<p>The AWS Regions where the service operates.</p>",
+        "UpdateServiceRequest$regions": "<p>The updated AWS Regions where the service operates.</p>"
+      }
+    },
+    "ReportGenerationErrorCode": {
+      "base": "<p>Error codes for failed report generation.</p>",
+      "refs": {
+        "FailedReportOutput$errorCode": "<p>The error code describing why the report generation failed.</p>"
+      }
+    },
+    "ReportGenerationResult": {
+      "base": "<p>Result of a report generation attempt.</p>",
+      "refs": {
+        "CreateReportResponse$reportGenerationResult": "<p>The result of the report generation request.</p>",
+        "ReportGenerationResultList$member": null
+      }
+    },
+    "ReportGenerationResultList": {
+      "base": null,
+      "refs": {
+        "ListReportsResponse$reportGenerationResults": "<p>The list of report generation results.</p>"
+      }
+    },
+    "ReportGenerationStatus": {
+      "base": "<p>Status of report generation.</p>",
+      "refs": {
+        "ReportGenerationResult$status": "<p>The status of the report generation.</p>"
+      }
+    },
+    "ReportOutput": {
+      "base": "<p>Union of possible report outputs.</p>",
+      "refs": {
+        "ReportGenerationResult$reportOutput": "<p>Present when status is SUCCEEDED or FAILED.</p>"
+      }
+    },
+    "ReportOutputConfiguration": {
+      "base": "<p>Configuration for a report output destination.</p>",
+      "refs": {
+        "ReportOutputConfigurationList$member": null
+      }
+    },
+    "ReportOutputConfigurationList": {
+      "base": "<p>List of report output configurations.</p>",
+      "refs": {
+        "ServiceReportConfiguration$reportOutputs": "<p>Output destinations for generated reports.</p>"
+      }
+    },
+    "ReportType": {
+      "base": null,
+      "refs": {
+        "CreateReportRequest$reportType": "<p>The type of report to generate.</p>",
+        "ListReportsRequest$reportType": "<p>Filter reports by type.</p>",
+        "ReportGenerationResult$reportType": "<p>The type of the generated report.</p>"
+      }
+    },
+    "Resource": {
+      "base": "<p>Represents an AWS resource discovered by Resilience Hub.</p>",
+      "refs": {
+        "ServiceResource$resource": "<p>The resource details.</p>"
+      }
+    },
+    "ResourceConfiguration": {
+      "base": "<p>Resource configuration for an input source. Provide exactly one field.</p>",
+      "refs": {
+        "CreateInputSourceRequest$resourceConfiguration": null
+      }
+    },
+    "ResourceDiscoveryErrorCode": {
+      "base": null,
+      "refs": {
+        "ResourceDiscoveryStatus$errorCode": "<p>The error code if resource discovery failed.</p>"
+      }
+    },
+    "ResourceDiscoveryRunStatus": {
+      "base": null,
+      "refs": {
+        "ResourceDiscoveryStatus$status": "<p>The current status of resource discovery.</p>"
+      }
+    },
+    "ResourceDiscoveryStatus": {
+      "base": "<p>Contains the status of resource discovery for a service.</p>",
+      "refs": {
+        "Service$resourceDiscovery": "<p>The resource discovery status for the service.</p>"
+      }
+    },
+    "ResourceList": {
+      "base": null,
+      "refs": {
+        "CreateServiceFunctionResourcesRequest$resources": "<p>The list of resources to associate with the service function.</p>",
+        "CreateServiceFunctionResourcesResponse$resources": "<p>The list of resources that were associated.</p>",
+        "DeleteServiceFunctionResourcesRequest$resources": "<p>The list of resources to remove from the service function.</p>",
+        "DeleteServiceFunctionResourcesResponse$resources": "<p>The list of resources that were removed.</p>"
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p>Resource not found.</p>",
+      "refs": {}
+    },
+    "ResourceTag": {
+      "base": "<p>A tag key-value pair used for resource discovery.</p>",
+      "refs": {
+        "ResourceTagList$member": null
+      }
+    },
+    "ResourceTagList": {
+      "base": null,
+      "refs": {
+        "InputSourceSummary$resourceTags": "<p>The resource tags used for discovery, if this input source uses tags.</p>",
+        "ResourceConfiguration$resourceTags": "<p>The resource tags for tag-based resource discovery.</p>"
+      }
+    },
+    "ResourceTagValuesList": {
+      "base": null,
+      "refs": {
+        "ResourceTag$values": "<p>The list of tag values.</p>"
+      }
+    },
+    "ResourceTypeList": {
+      "base": null,
+      "refs": {
+        "ServiceResourcesAssociatedMetadata$resourceTypes": "<p>The types of resources associated.</p>",
+        "ServiceResourcesDisassociatedMetadata$resourceTypes": "<p>The types of resources disassociated.</p>"
+      }
+    },
+    "S3BucketPath": {
+      "base": "<p>S3 bucket path (with or without s3:// prefix).</p>",
+      "refs": {
+        "S3ReportOutputConfiguration$bucketPath": "<p>S3 bucket path where reports will be written (e.g., my-bucket/ngrh-reports/).</p>"
+      }
+    },
+    "S3ReportOutput": {
+      "base": "<p>S3 location where report was written.</p>",
+      "refs": {
+        "ReportOutput$s3ReportOutput": "<p>The S3 location where the report was written.</p>"
+      }
+    },
+    "S3ReportOutputConfiguration": {
+      "base": "<p>S3 configuration for report output.</p>",
+      "refs": {
+        "ReportOutputConfiguration$s3": null
+      }
+    },
+    "S3Url": {
+      "base": "<p>S3 URL — virtual hosted-style or s3:// URI.</p>",
+      "refs": {
+        "InputSourceSummary$tfStateFileUrl": null,
+        "InputSourceSummary$designFileS3Url": null,
+        "ResourceConfiguration$tfStateFileUrl": null,
+        "ResourceConfiguration$designFileS3Url": null
+      }
+    },
+    "Service": {
+      "base": "<p>Represents a service in Resilience Hub. A service is the primary unit of resilience assessment.</p>",
+      "refs": {
+        "CreateServiceResponse$service": "<p>The created service.</p>",
+        "GetServiceResponse$service": "<p>The requested service.</p>",
+        "ImportAppResponse$service": "<p>The imported service.</p>",
+        "UpdateServiceResponse$service": "<p>The updated service.</p>"
+      }
+    },
+    "ServiceAchievabilityUpdatedMetadata": {
+      "base": "<p>Metadata for a service achievability updated event.</p>",
+      "refs": {
+        "ServiceEventMetadata$serviceAchievabilityUpdated": "<p>Metadata for a service achievability updated event.</p>"
+      }
+    },
+    "ServiceCreatedMetadata": {
+      "base": "<p>Metadata for a service created event.</p>",
+      "refs": {
+        "ServiceEventMetadata$serviceCreated": "<p>Metadata for a service created event.</p>"
+      }
+    },
+    "ServiceDeletedMetadata": {
+      "base": "<p>Metadata for a service deleted event.</p>",
+      "refs": {
+        "ServiceEventMetadata$serviceDeleted": "<p>Metadata for a service deleted event.</p>"
+      }
+    },
+    "ServiceEvent": {
+      "base": "<p>Represents an event in the service event log.</p>",
+      "refs": {
+        "ServiceEventList$member": null
+      }
+    },
+    "ServiceEventDetails": {
+      "base": "<p>Contains the details of a service event.</p>",
+      "refs": {
+        "ServiceEvent$eventDetails": "<p>The details of the event.</p>"
+      }
+    },
+    "ServiceEventList": {
+      "base": null,
+      "refs": {
+        "ListServiceEventsResponse$events": "<p>The list of service events.</p>"
+      }
+    },
+    "ServiceEventMetadata": {
+      "base": "<p>Type-specific metadata for each service event type.</p>",
+      "refs": {
+        "ServiceEventDetails$eventMetadata": null
+      }
+    },
+    "ServiceEventType": {
+      "base": null,
+      "refs": {
+        "ServiceEvent$eventType": "<p>The type of the event.</p>",
+        "ServiceEventTypeList$member": null
+      }
+    },
+    "ServiceEventTypeList": {
+      "base": null,
+      "refs": {
+        "ListServiceEventsRequest$eventTypes": "<p>Filter events by type.</p>"
+      }
+    },
+    "ServiceFunction": {
+      "base": "<p>Represents a logical component of a service.</p>",
+      "refs": {
+        "CreateServiceFunctionResponse$serviceFunction": "<p>The created service function.</p>",
+        "ServiceFunctionList$member": null,
+        "UpdateServiceFunctionResponse$serviceFunction": "<p>The updated service function.</p>"
+      }
+    },
+    "ServiceFunctionCreatedMetadata": {
+      "base": "<p>Metadata for a service function created event.</p>",
+      "refs": {
+        "ServiceEventMetadata$serviceFunctionCreated": "<p>Metadata for a service function created event.</p>"
+      }
+    },
+    "ServiceFunctionCriticality": {
+      "base": null,
+      "refs": {
+        "CreateServiceFunctionRequest$criticality": "<p>The criticality level of the service function.</p>",
+        "ServiceFunction$criticality": "<p>The criticality level of the service function.</p>",
+        "UpdateServiceFunctionRequest$criticality": "<p>The updated criticality level of the service function.</p>"
+      }
+    },
+    "ServiceFunctionDeletedMetadata": {
+      "base": "<p>Metadata for a service function deleted event.</p>",
+      "refs": {
+        "ServiceEventMetadata$serviceFunctionDeleted": "<p>Metadata for a service function deleted event.</p>"
+      }
+    },
+    "ServiceFunctionList": {
+      "base": null,
+      "refs": {
+        "ListServiceFunctionsResponse$serviceFunctions": "<p>The list of service functions.</p>"
+      }
+    },
+    "ServiceFunctionResourcesAddedMetadata": {
+      "base": "<p>Metadata for a service function resources added event.</p>",
+      "refs": {
+        "ServiceEventMetadata$serviceFunctionResourcesAdded": "<p>Metadata for a service function resources added event.</p>"
+      }
+    },
+    "ServiceFunctionResourcesRemovedMetadata": {
+      "base": "<p>Metadata for a service function resources removed event.</p>",
+      "refs": {
+        "ServiceEventMetadata$serviceFunctionResourcesRemoved": "<p>Metadata for a service function resources removed event.</p>"
+      }
+    },
+    "ServiceFunctionSource": {
+      "base": null,
+      "refs": {
+        "ServiceFunction$source": "<p>The source of the service function.</p>"
+      }
+    },
+    "ServiceFunctionUpdatedMetadata": {
+      "base": "<p>Metadata for a service function updated event.</p>",
+      "refs": {
+        "ServiceEventMetadata$serviceFunctionUpdated": "<p>Metadata for a service function updated event.</p>"
+      }
+    },
+    "ServiceInputSourcesUpdatedMetadata": {
+      "base": "<p>Metadata for a service input sources updated event.</p>",
+      "refs": {
+        "ServiceEventMetadata$serviceInputSourcesUpdated": "<p>Metadata for a service input sources updated event.</p>"
+      }
+    },
+    "ServicePolicyAssociatedMetadata": {
+      "base": "<p>Metadata for a service policy associated event.</p>",
+      "refs": {
+        "ServiceEventMetadata$servicePolicyAssociated": "<p>Metadata for a service policy associated event.</p>"
+      }
+    },
+    "ServicePolicyDisassociatedMetadata": {
+      "base": "<p>Metadata for a service policy disassociated event.</p>",
+      "refs": {
+        "ServiceEventMetadata$servicePolicyDisassociated": "<p>Metadata for a service policy disassociated event.</p>"
+      }
+    },
+    "ServiceQuotaExceededException": {
+      "base": "<p>Service quota exceeded.</p>",
+      "refs": {}
+    },
+    "ServiceReference": {
+      "base": "<p>A reference to a service by ID and name.</p>",
+      "refs": {
+        "ServiceReferenceList$member": null
+      }
+    },
+    "ServiceReferenceChanges": {
+      "base": "<p>Describes changes to service references.</p>",
+      "refs": {
+        "UserJourneyChanges$associatedServices": "<p>Changes to the services associated with the user journey.</p>"
+      }
+    },
+    "ServiceReferenceList": {
+      "base": null,
+      "refs": {
+        "ServiceReferenceChanges$added": "<p>The list of service references that were added.</p>",
+        "ServiceReferenceChanges$removed": "<p>The list of service references that were removed.</p>",
+        "SystemUserJourneyCreatedMetadata$associatedServices": "<p>The services associated with the created user journey.</p>",
+        "SystemUserJourneyDeletedMetadata$associatedServicesAtDeletion": "<p>The services that were associated at the time of deletion.</p>"
+      }
+    },
+    "ServiceReportConfiguration": {
+      "base": "<p>Configuration for automatic report generation on a Service.</p>",
+      "refs": {
+        "CreateServiceRequest$reportConfiguration": null,
+        "Service$reportConfiguration": null,
+        "UpdateServiceRequest$reportConfiguration": null
+      }
+    },
+    "ServiceResource": {
+      "base": "<p>Represents a resource associated with a service.</p>",
+      "refs": {
+        "ServiceResourceList$member": null
+      }
+    },
+    "ServiceResourceList": {
+      "base": null,
+      "refs": {
+        "ListResourcesResponse$serviceResources": "<p>The list of service resources.</p>"
+      }
+    },
+    "ServiceResourcesAssociatedMetadata": {
+      "base": "<p>Metadata for a service resources associated event.</p>",
+      "refs": {
+        "ServiceEventMetadata$serviceResourcesAssociated": "<p>Metadata for a service resources associated event.</p>"
+      }
+    },
+    "ServiceResourcesDisassociatedMetadata": {
+      "base": "<p>Metadata for a service resources disassociated event.</p>",
+      "refs": {
+        "ServiceEventMetadata$serviceResourcesDisassociated": "<p>Metadata for a service resources disassociated event.</p>"
+      }
+    },
+    "ServiceSummary": {
+      "base": "<p>Contains summary information about a service.</p>",
+      "refs": {
+        "ServiceSummaryList$member": null
+      }
+    },
+    "ServiceSummaryList": {
+      "base": null,
+      "refs": {
+        "ListServicesResponse$serviceSummaries": "<p>The list of service summaries.</p>"
+      }
+    },
+    "ServiceSystemAssociatedMetadata": {
+      "base": "<p>Metadata for a service system associated event.</p>",
+      "refs": {
+        "ServiceEventMetadata$serviceSystemAssociated": "<p>Metadata for a service system associated event.</p>"
+      }
+    },
+    "ServiceSystemDisassociatedMetadata": {
+      "base": "<p>Metadata for a service system disassociated event.</p>",
+      "refs": {
+        "ServiceEventMetadata$serviceSystemDisassociated": "<p>Metadata for a service system disassociated event.</p>"
+      }
+    },
+    "ServiceTopologyEdgeSummary": {
+      "base": "<p>Contains summary information about a service topology edge.</p>",
+      "refs": {
+        "ServiceTopologyEdgeSummaryList$member": null
+      }
+    },
+    "ServiceTopologyEdgeSummaryList": {
+      "base": null,
+      "refs": {
+        "ListServiceTopologyEdgesResponse$serviceTopologyEdgeSummaries": "<p>The list of service topology edge summaries.</p>"
+      }
+    },
+    "ServiceWorkflowUpdatedMetadata": {
+      "base": "<p>Metadata for a service workflow updated event.</p>",
+      "refs": {
+        "ServiceEventMetadata$serviceWorkflowUpdated": "<p>Metadata for a service workflow updated event.</p>"
+      }
+    },
+    "SloSource": {
+      "base": "<p>Contains the effective availability SLO value and its source.</p>",
+      "refs": {
+        "EffectivePolicyValues$availabilitySlo": "<p>The effective availability SLO value for the service.</p>"
+      }
+    },
+    "StartFailureModeAssessmentRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartFailureModeAssessmentResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$message": null,
+        "AssertionCreatedMetadata$assertionId": "<p>The unique identifier of the created assertion.</p>",
+        "AssertionCreatedMetadata$assertionName": "<p>The name of the created assertion.</p>",
+        "AssertionDeletedMetadata$assertionId": "<p>The unique identifier of the deleted assertion.</p>",
+        "AssertionDeletedMetadata$assertionName": "<p>The name of the deleted assertion.</p>",
+        "AssertionUpdatedMetadata$assertionId": "<p>The unique identifier of the updated assertion.</p>",
+        "AssertionUpdatedMetadata$assertionName": "<p>The name of the updated assertion.</p>",
+        "AssessmentSummary$errorMessage": "<p>A message describing the error if the assessment failed.</p>",
+        "ConflictException$message": null,
+        "DependencySummary$dependencyName": "<p>The name of the dependency.</p>",
+        "DependencySummary$dnsName": "<p>The DNS name associated with the dependency.</p>",
+        "DependencySummary$location": "<p>The location of the dependency.</p>",
+        "DependencySummary$provider": "<p>The provider of the dependency.</p>",
+        "DependencySummary$comment": "<p>A user-provided comment about the dependency.</p>",
+        "DisasterRecoverySource$value": "<p>The disaster recovery approach value.</p>",
+        "EdgePropertySummary$label": "<p>Human-readable relationship description. Only present for LLM-inferred edges.</p>",
+        "EventActor$principalId": "<p>The principal ID of the actor.</p>",
+        "EventActor$accountId": "<p>The AWS account ID of the actor.</p>",
+        "EventActor$userName": "<p>The user name of the actor.</p>",
+        "FailedReportOutput$errorMessage": "<p>The error message describing why the report generation failed.</p>",
+        "Finding$name": "<p>The name of the finding.</p>",
+        "Finding$reasoning": "<p>The reasoning behind the finding.</p>",
+        "FindingSummary$name": "<p>The name of the finding.</p>",
+        "InputSource$identifier": "<p>The identifier of the input source.</p>",
+        "InternalServerException$message": null,
+        "Resource$identifier": "<p>The identifier of the resource.</p>",
+        "Resource$resourceType": "<p>The type of the resource.</p>",
+        "ResourceDiscoveryStatus$errorMessage": "<p>A message describing the error if resource discovery failed.</p>",
+        "ResourceList$member": null,
+        "ResourceNotFoundException$message": null,
+        "ResourceNotFoundException$resourceId": "<p>The identifier of the resource that was not found.</p>",
+        "ResourceNotFoundException$resourceType": "<p>The type of the resource that was not found.</p>",
+        "ResourceTypeList$member": null,
+        "S3ReportOutput$s3ObjectKey": "<p>The S3 object key for the generated report.</p>",
+        "ServiceAchievabilityUpdatedMetadata$assessmentId": "<p>The assessment identifier that triggered the update.</p>",
+        "ServiceAchievabilityUpdatedMetadata$availabilitySlo": "<p>The updated achievability status of the availability SLO.</p>",
+        "ServiceAchievabilityUpdatedMetadata$multiAzRtoRpo": "<p>The updated achievability status of the multi-AZ RTO and RPO targets.</p>",
+        "ServiceAchievabilityUpdatedMetadata$multiRegionRtoRpo": "<p>The updated achievability status of the multi-Region RTO and RPO targets.</p>",
+        "ServiceEventDetails$title": "<p>The title of the event.</p>",
+        "ServiceEventDetails$description": "<p>The description of the event.</p>",
+        "ServiceFunctionCreatedMetadata$serviceFunctionId": "<p>The identifier of the created service function.</p>",
+        "ServiceFunctionCreatedMetadata$serviceFunctionName": "<p>The name of the created service function.</p>",
+        "ServiceFunctionDeletedMetadata$serviceFunctionId": "<p>The identifier of the deleted service function.</p>",
+        "ServiceFunctionDeletedMetadata$serviceFunctionName": "<p>The name of the deleted service function.</p>",
+        "ServiceFunctionResourcesAddedMetadata$serviceFunctionId": "<p>The identifier of the service function.</p>",
+        "ServiceFunctionResourcesAddedMetadata$serviceFunctionName": "<p>The name of the service function.</p>",
+        "ServiceFunctionResourcesRemovedMetadata$serviceFunctionId": "<p>The identifier of the service function.</p>",
+        "ServiceFunctionResourcesRemovedMetadata$serviceFunctionName": "<p>The name of the service function.</p>",
+        "ServiceFunctionUpdatedMetadata$serviceFunctionId": "<p>The identifier of the service function.</p>",
+        "ServiceFunctionUpdatedMetadata$serviceFunctionName": "<p>The name of the service function.</p>",
+        "ServicePolicyAssociatedMetadata$policyName": "<p>The name of the associated policy.</p>",
+        "ServicePolicyDisassociatedMetadata$policyName": "<p>The name of the disassociated policy.</p>",
+        "ServiceQuotaExceededException$message": null,
+        "ServiceReference$serviceId": "<p>The identifier of the referenced service.</p>",
+        "ServiceReference$serviceName": "<p>The name of the referenced service.</p>",
+        "ServiceResource$resourceIdentifier": "<p>The identifier of the resource.</p>",
+        "ServiceSystemAssociatedMetadata$systemName": "<p>The name of the associated system.</p>",
+        "ServiceSystemDisassociatedMetadata$systemId": "<p>The identifier of the disassociated system.</p>",
+        "ServiceSystemDisassociatedMetadata$systemName": "<p>The name of the disassociated system.</p>",
+        "ServiceTopologyEdgeSummary$sourceResourceIdentifier": "<p>The identifier of the source resource.</p>",
+        "ServiceTopologyEdgeSummary$destinationResourceIdentifier": "<p>The identifier of the destination resource.</p>",
+        "ServiceWorkflowUpdatedMetadata$serviceFunctionId": "<p>The identifier of the service function.</p>",
+        "ServiceWorkflowUpdatedMetadata$serviceFunctionName": "<p>The name of the service function.</p>",
+        "StringChange$oldValue": "<p>The old value.</p>",
+        "StringChange$newValue": "<p>The new value.</p>",
+        "SystemEventDetails$title": "<p>The title of the event.</p>",
+        "SystemEventDetails$description": "<p>The description of the event.</p>",
+        "SystemPolicyAssociatedMetadata$policyName": "<p>The name of the associated policy.</p>",
+        "SystemPolicyDisassociatedMetadata$policyName": "<p>The name of the disassociated policy.</p>",
+        "SystemServiceAssociatedMetadata$serviceName": "<p>The name of the associated service.</p>",
+        "SystemServiceDisassociatedMetadata$serviceName": "<p>The name of the disassociated service.</p>",
+        "SystemServiceDisassociatedMetadata$comment": "<p>A comment about the disassociation.</p>",
+        "SystemUserJourneyCreatedMetadata$userJourneyName": "<p>The name of the created user journey.</p>",
+        "SystemUserJourneyDeletedMetadata$userJourneyName": "<p>The name of the deleted user journey.</p>",
+        "SystemUserJourneyUpdatedMetadata$userJourneyName": "<p>The name of the updated user journey.</p>",
+        "ThrottlingException$message": null,
+        "UpdateDependencyRequest$comment": "<p>A comment about the dependency.</p>",
+        "UpdateDependencyResponse$dependencyName": "<p>The name of the updated dependency.</p>",
+        "UpdateDependencyResponse$location": "<p>The location of the dependency.</p>",
+        "UpdateDependencyResponse$comment": "<p>The comment about the dependency.</p>",
+        "UpdateDependencyResponse$provider": "<p>The provider of the dependency.</p>",
+        "UserJourneyNameList$member": null,
+        "ValidationException$message": null,
+        "ValidationExceptionField$name": "<p>The name of the field that failed validation.</p>",
+        "ValidationExceptionField$message": "<p>The validation error message for the field.</p>"
+      }
+    },
+    "StringChange": {
+      "base": "<p>Describes a change from one string value to another.</p>",
+      "refs": {
+        "UserJourneyChanges$journeyDescription": "<p>Changes to the user journey description.</p>"
+      }
+    },
+    "SuggestedChangesList": {
+      "base": null,
+      "refs": {
+        "InfrastructureAndCodeRecommendation$suggestedChanges": "<p>The list of suggested changes.</p>",
+        "ObservabilityRecommendation$suggestedChanges": "<p>The list of suggested observability changes.</p>",
+        "TestingRecommendation$suggestedChanges": "<p>The list of suggested testing changes.</p>"
+      }
+    },
+    "System": {
+      "base": "<p>Represents a system in Resilience Hub. A system is a logical grouping of services.</p>",
+      "refs": {
+        "CreateSystemResponse$system": "<p>The created system.</p>",
+        "GetSystemResponse$system": "<p>The requested system.</p>",
+        "UpdateSystemResponse$system": "<p>The updated system.</p>"
+      }
+    },
+    "SystemCreatedMetadata": {
+      "base": "<p>Metadata for a system created event.</p>",
+      "refs": {
+        "SystemEventMetadata$systemCreated": "<p>Metadata for a system created event.</p>"
+      }
+    },
+    "SystemDeletedMetadata": {
+      "base": "<p>Metadata for a system deleted event.</p>",
+      "refs": {
+        "SystemEventMetadata$systemDeleted": "<p>Metadata for a system deleted event.</p>"
+      }
+    },
+    "SystemEvent": {
+      "base": "<p>Represents an event in the system event log.</p>",
+      "refs": {
+        "SystemEventList$member": null
+      }
+    },
+    "SystemEventDetails": {
+      "base": "<p>Contains the details of a system event.</p>",
+      "refs": {
+        "SystemEvent$eventDetails": "<p>The details of the event.</p>"
+      }
+    },
+    "SystemEventList": {
+      "base": null,
+      "refs": {
+        "ListSystemEventsResponse$events": "<p>The list of system events.</p>"
+      }
+    },
+    "SystemEventMetadata": {
+      "base": "<p>Type-specific metadata for each system event type.</p>",
+      "refs": {
+        "SystemEventDetails$eventMetadata": null
+      }
+    },
+    "SystemEventType": {
+      "base": null,
+      "refs": {
+        "SystemEvent$eventType": "<p>The type of the event.</p>",
+        "SystemEventTypeList$member": null
+      }
+    },
+    "SystemEventTypeList": {
+      "base": null,
+      "refs": {
+        "ListSystemEventsRequest$eventTypes": "<p>Filter events by type.</p>"
+      }
+    },
+    "SystemId": {
+      "base": "<p>System ID for cross-account use without exposing account structure.</p>",
+      "refs": {
+        "System$systemId": null,
+        "SystemSummary$systemId": null
+      }
+    },
+    "SystemPolicyAssociatedMetadata": {
+      "base": "<p>Metadata for a system policy associated event.</p>",
+      "refs": {
+        "SystemEventMetadata$systemPolicyAssociated": "<p>Metadata for a system policy associated event.</p>"
+      }
+    },
+    "SystemPolicyDisassociatedMetadata": {
+      "base": "<p>Metadata for a system policy disassociated event.</p>",
+      "refs": {
+        "SystemEventMetadata$systemPolicyDisassociated": "<p>Metadata for a system policy disassociated event.</p>"
+      }
+    },
+    "SystemServiceAssociatedMetadata": {
+      "base": "<p>Metadata for a system service associated event.</p>",
+      "refs": {
+        "SystemEventMetadata$systemServiceAssociated": "<p>Metadata for a system service associated event.</p>"
+      }
+    },
+    "SystemServiceDisassociatedMetadata": {
+      "base": "<p>Metadata for a system service disassociated event.</p>",
+      "refs": {
+        "SystemEventMetadata$systemServiceDisassociated": "<p>Metadata for a system service disassociated event.</p>"
+      }
+    },
+    "SystemSummary": {
+      "base": "<p>Contains summary information about a system.</p>",
+      "refs": {
+        "SystemSummaryList$member": null
+      }
+    },
+    "SystemSummaryList": {
+      "base": null,
+      "refs": {
+        "ListSystemsResponse$systemSummaries": "<p>The list of system summaries.</p>"
+      }
+    },
+    "SystemUserJourneyCreatedMetadata": {
+      "base": "<p>Metadata for a system user journey created event.</p>",
+      "refs": {
+        "SystemEventMetadata$systemUserJourneyCreated": "<p>Metadata for a system user journey created event.</p>"
+      }
+    },
+    "SystemUserJourneyDeletedMetadata": {
+      "base": "<p>Metadata for a system user journey deleted event.</p>",
+      "refs": {
+        "SystemEventMetadata$systemUserJourneyDeleted": "<p>Metadata for a system user journey deleted event.</p>"
+      }
+    },
+    "SystemUserJourneyUpdatedMetadata": {
+      "base": "<p>Metadata for a system user journey updated event.</p>",
+      "refs": {
+        "SystemEventMetadata$systemUserJourneyUpdated": "<p>Metadata for a system user journey updated event.</p>"
+      }
+    },
+    "TagKey": {
+      "base": "<p>Tag key.</p>",
+      "refs": {
+        "ResourceTag$key": null,
+        "TagKeyList$member": null,
+        "TagMap$key": null
+      }
+    },
+    "TagKeyList": {
+      "base": null,
+      "refs": {
+        "UntagResourceRequest$tagKeys": "<p>The tag keys to remove from the resource.</p>"
+      }
+    },
+    "TagMap": {
+      "base": "<p>Resource tags.</p>",
+      "refs": {
+        "CreatePolicyRequest$tags": null,
+        "CreateServiceRequest$tags": null,
+        "CreateSystemRequest$tags": null,
+        "ImportAppRequest$tags": null,
+        "ImportPolicyRequest$tags": null,
+        "ListTagsForResourceResponse$tags": null,
+        "Policy$tags": null,
+        "Service$tags": null,
+        "System$tags": null,
+        "TagResourceRequest$tags": null
+      }
+    },
+    "TagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "TagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "TagValue": {
+      "base": "<p>Tag value.</p>",
+      "refs": {
+        "ResourceTagValuesList$member": null,
+        "TagMap$value": null
+      }
+    },
+    "TargetSource": {
+      "base": "<p>Contains an effective RTO or RPO value and its source.</p>",
+      "refs": {
+        "EffectivePolicyValues$multiAzRto": "<p>The effective multi-AZ RTO value for the service, in minutes.</p>",
+        "EffectivePolicyValues$multiAzRpo": "<p>The effective multi-AZ RPO value for the service, in minutes.</p>",
+        "EffectivePolicyValues$multiRegionRto": "<p>The effective multi-Region RTO value for the service, in minutes.</p>",
+        "EffectivePolicyValues$multiRegionRpo": "<p>The effective multi-Region RPO value for the service, in minutes.</p>",
+        "EffectivePolicyValues$dataRecoveryTimeBetweenBackups": "<p>The effective data recovery time between backups value for the service.</p>"
+      }
+    },
+    "TestingRecommendation": {
+      "base": "<p>A testing recommendation to address a finding.</p>",
+      "refs": {
+        "TestingRecommendationsList$member": null
+      }
+    },
+    "TestingRecommendationsList": {
+      "base": null,
+      "refs": {
+        "Finding$testingRecommendations": "<p>Testing recommendations to address the finding.</p>"
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>Too many requests — rate limit exceeded.</p>",
+      "refs": {}
+    },
+    "Timestamp": {
+      "base": null,
+      "refs": {
+        "Assertion$createdAt": "<p>The timestamp when the assertion was created.</p>",
+        "Assertion$updatedAt": "<p>The timestamp when the assertion was last updated.</p>",
+        "AssessmentSummary$startedAt": "<p>The timestamp when the assessment started.</p>",
+        "AssessmentSummary$endedAt": "<p>The timestamp when the assessment ended.</p>",
+        "DependencyDiscoveryConfig$updatedAt": "<p>The timestamp when dependency discovery was last updated.</p>",
+        "DependencySummary$lastDetectedTime": "<p>The timestamp when the dependency was last detected.</p>",
+        "Finding$updatedAt": "<p>The timestamp when the finding was last updated.</p>",
+        "FindingSummary$updatedAt": "<p>The timestamp when the finding was last updated.</p>",
+        "InputSourceSummary$createdAt": "<p>The timestamp when the input source was created.</p>",
+        "ListDependenciesRequest$queryRangeStartTime": "<p>The start time for the dependency query range.</p>",
+        "ListDependenciesRequest$queryRangeEndTime": "<p>The end time for the dependency query range.</p>",
+        "ListServiceEventsRequest$startTime": "<p>The start time for filtering events.</p>",
+        "ListServiceEventsRequest$endTime": "<p>The end time for filtering events.</p>",
+        "ListSystemEventsRequest$startTime": "<p>The start time for filtering events.</p>",
+        "ListSystemEventsRequest$endTime": "<p>The end time for filtering events.</p>",
+        "Policy$createdAt": "<p>The timestamp when the policy was created.</p>",
+        "Policy$updatedAt": "<p>The timestamp when the policy was last updated.</p>",
+        "PolicySummary$createdAt": "<p>The timestamp when the policy was created.</p>",
+        "PolicySummary$updatedAt": "<p>The timestamp when the policy was last updated.</p>",
+        "QueryDataPoint$timestamp": "<p>The timestamp of the data point.</p>",
+        "QueryRange$startTime": "<p>The start time of the query range.</p>",
+        "QueryRange$endTime": "<p>The end time of the query range.</p>",
+        "ReportGenerationResult$createdAt": "<p>The timestamp when the report was created.</p>",
+        "ResourceDiscoveryStatus$lastRunAt": "<p>The timestamp of the last resource discovery run.</p>",
+        "Service$createdAt": "<p>The timestamp when the service was created.</p>",
+        "Service$updatedAt": "<p>The timestamp when the service was last updated.</p>",
+        "ServiceEvent$timestamp": "<p>The timestamp of the event.</p>",
+        "ServiceFunction$createdAt": "<p>The timestamp when the service function was created.</p>",
+        "ServiceFunction$updatedAt": "<p>The timestamp when the service function was last updated.</p>",
+        "ServiceSummary$createdAt": "<p>The timestamp when the service was created.</p>",
+        "ServiceSummary$updatedAt": "<p>The timestamp when the service was last updated.</p>",
+        "StartFailureModeAssessmentResponse$startedAt": "<p>The timestamp when the assessment started.</p>",
+        "System$createdAt": "<p>The timestamp when the system was created.</p>",
+        "System$updatedAt": "<p>The timestamp when the system was last updated.</p>",
+        "SystemEvent$timestamp": "<p>The timestamp of the event.</p>",
+        "SystemSummary$createdAt": "<p>The timestamp when the system was created.</p>",
+        "SystemSummary$updatedAt": "<p>The timestamp when the system was last updated.</p>",
+        "UpdateDependencyResponse$updatedAt": "<p>The timestamp when the dependency was updated.</p>",
+        "UserJourney$createdAt": "<p>The timestamp when the user journey was created.</p>",
+        "UserJourney$updatedAt": "<p>The timestamp when the user journey was last updated.</p>",
+        "UserJourneySummary$createdAt": "<p>The timestamp when the user journey was created.</p>",
+        "UserJourneySummary$updatedAt": "<p>The timestamp when the user journey was last updated.</p>"
+      }
+    },
+    "TopologyType": {
+      "base": null,
+      "refs": {
+        "EdgePropertySummary$topologyType": "<p>The topology type of the edge.</p>"
+      }
+    },
+    "UntagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UntagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAssertionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAssertionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateDependencyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateDependencyResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateFailureModeFindingRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateFailureModeFindingRequestCommentString": {
+      "base": null,
+      "refs": {
+        "UpdateFailureModeFindingRequest$comment": "<p>A comment about the finding update.</p>"
+      }
+    },
+    "UpdateFailureModeFindingResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdatePolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdatePolicyResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateServiceFunctionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateServiceFunctionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateServiceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateServiceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateSystemRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateSystemResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateUserJourneyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateUserJourneyResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UserJourney": {
+      "base": "<p>Represents a user journey that defines a critical path through a system.</p>",
+      "refs": {
+        "CreateUserJourneyResponse$userJourney": "<p>The created user journey.</p>",
+        "GetUserJourneyResponse$userJourney": "<p>The requested user journey.</p>",
+        "UpdateUserJourneyResponse$userJourney": "<p>The updated user journey.</p>"
+      }
+    },
+    "UserJourneyChanges": {
+      "base": "<p>Describes changes made to a user journey.</p>",
+      "refs": {
+        "SystemUserJourneyUpdatedMetadata$changes": "<p>The changes made to the user journey.</p>"
+      }
+    },
+    "UserJourneyId": {
+      "base": null,
+      "refs": {
+        "DeleteUserJourneyRequest$userJourneyId": "<p>The identifier of the user journey to delete.</p>",
+        "DeleteUserJourneyResponse$userJourneyId": "<p>The identifier of the deleted user journey.</p>",
+        "GetUserJourneyRequest$userJourneyId": "<p>The identifier of the user journey to retrieve.</p>",
+        "ListServicesRequest$userJourneyId": "<p>Filter services by user journey identifier.</p>",
+        "UpdateUserJourneyRequest$userJourneyId": "<p>The identifier of the user journey to update.</p>",
+        "UserJourney$userJourneyId": "<p>The unique identifier of the user journey.</p>",
+        "UserJourneyIdList$member": null,
+        "UserJourneySummary$userJourneyId": "<p>The unique identifier of the user journey.</p>"
+      }
+    },
+    "UserJourneyIdList": {
+      "base": null,
+      "refs": {
+        "AssociatedSystem$userJourneyIds": "<p>The list of user journey identifiers that associate this system with the service.</p>"
+      }
+    },
+    "UserJourneyNameList": {
+      "base": null,
+      "refs": {
+        "SystemServiceAssociatedMetadata$userJourneys": "<p>The user journeys linking the service to the system.</p>",
+        "SystemServiceDisassociatedMetadata$userJourneysAffected": "<p>The user journeys affected by the disassociation.</p>"
+      }
+    },
+    "UserJourneySummary": {
+      "base": "<p>Contains summary information about a user journey.</p>",
+      "refs": {
+        "UserJourneySummaryList$member": null
+      }
+    },
+    "UserJourneySummaryList": {
+      "base": null,
+      "refs": {
+        "ListUserJourneysResponse$userJourneySummaries": "<p>The list of user journey summaries.</p>"
+      }
+    },
+    "Uuid": {
+      "base": null,
+      "refs": {
+        "Assertion$assertionId": "<p>The unique identifier of the assertion.</p>",
+        "AssessmentSummary$assessmentId": "<p>The unique identifier of the assessment.</p>",
+        "DeleteAssertionRequest$assertionId": "<p>The unique identifier of the assertion to delete.</p>",
+        "DeleteAssertionResponse$assertionId": "<p>The unique identifier of the deleted assertion.</p>",
+        "DependencySummary$dependencyId": "<p>The unique identifier of the dependency.</p>",
+        "Finding$findingId": "<p>The unique identifier of the finding.</p>",
+        "FindingSummary$findingId": "<p>The unique identifier of the finding.</p>",
+        "GetFailureModeFindingRequest$findingId": "<p>The unique identifier of the finding to retrieve.</p>",
+        "ReportGenerationResult$assessmentId": "<p>Present for FAILURE_MODE reports.</p>",
+        "ServiceEvent$eventId": "<p>The unique identifier of the event.</p>",
+        "StartFailureModeAssessmentResponse$assessmentId": "<p>The unique identifier of the started assessment.</p>",
+        "SystemEvent$eventId": "<p>The unique identifier of the event.</p>",
+        "UpdateAssertionRequest$assertionId": "<p>The unique identifier of the assertion to update.</p>",
+        "UpdateDependencyRequest$dependencyId": "<p>The identifier of the dependency to update.</p>",
+        "UpdateDependencyResponse$dependencyId": "<p>The identifier of the updated dependency.</p>",
+        "UpdateFailureModeFindingRequest$findingId": "<p>The identifier of the finding to update.</p>"
+      }
+    },
+    "ValidationException": {
+      "base": "<p>Validation error — invalid input parameters.</p>",
+      "refs": {}
+    },
+    "ValidationExceptionField": {
+      "base": "<p>Describes a field that failed validation.</p>",
+      "refs": {
+        "ValidationExceptionFieldList$member": null
+      }
+    },
+    "ValidationExceptionFieldList": {
+      "base": null,
+      "refs": {
+        "ValidationException$fieldList": "<p>The list of fields that failed validation.</p>"
+      }
+    },
+    "ValidationExceptionReason": {
+      "base": null,
+      "refs": {
+        "ValidationException$reason": "<p>The reason for the validation failure.</p>"
+      }
+    }
+  }
+}

@@ -32,6 +32,7 @@
     "CreateGlossaryTerm": "<p>Creates a business glossary term.</p> <p>A glossary term represents an individual entry within the Amazon DataZone glossary, serving as a standardized definition for a specific business concept or data element. Each term can include rich metadata such as detailed definitions, synonyms, related terms, and usage examples. Glossary terms can be linked directly to data assets, providing business context to technical data elements. This linking capability helps users understand the business meaning of data fields and ensures consistent interpretation across different systems and teams. Terms can also have relationships with other terms, creating a semantic network that reflects the complexity of business concepts.</p> <p>Prerequisites:</p> <ul> <li> <p>Domain must exist. </p> </li> <li> <p>Glossary must exist.</p> </li> <li> <p>The term name must be unique within the glossary.</p> </li> <li> <p>Ensure term does not conflict with existing terms in hierarchy.</p> </li> </ul>",
     "CreateGroupProfile": "<p>Creates a group profile in Amazon DataZone.</p>",
     "CreateListingChangeSet": "<p>Publishes a listing (a record of an asset at a given time) or removes a listing from the catalog. </p>",
+    "CreateNotebook": "<p>Creates a <a href=\"https://docs.aws.amazon.com/sagemaker-unified-studio/latest/userguide/notebooks.html\">notebook</a> in Amazon SageMaker Unified Studio. A notebook is a collaborative document within a project that contains code cells for interactive computing.</p>",
     "CreateProject": "<p>Creates an Amazon DataZone project.</p>",
     "CreateProjectMembership": "<p>Creates a project membership in Amazon DataZone.</p>",
     "CreateProjectProfile": "<p>Creates a project profile.</p>",
@@ -58,7 +59,9 @@
     "DeleteFormType": "<p>Deletes and metadata form type in Amazon DataZone.</p> <p>Prerequisites:</p> <ul> <li> <p>The form type must exist in the domain. </p> </li> <li> <p>The form type must not be in use by any asset types or assets.</p> </li> <li> <p>The domain must be valid and accessible.</p> </li> <li> <p>User must have delete permissions on the form type.</p> </li> <li> <p>Any dependencies (such as linked asset types) must be removed first.</p> </li> </ul>",
     "DeleteGlossary": "<p>Deletes a business glossary in Amazon DataZone.</p> <p>Prerequisites:</p> <ul> <li> <p>The glossary must be in DISABLED state. </p> </li> <li> <p>The glossary must not have any glossary terms associated with it.</p> </li> <li> <p>The glossary must exist in the specified domain.</p> </li> <li> <p>The caller must have the <code>datazone:DeleteGlossary</code> permission in the domain and glossary.</p> </li> <li> <p>Glossary should not be linked to any active metadata forms.</p> </li> </ul>",
     "DeleteGlossaryTerm": "<p>Deletes a business glossary term in Amazon DataZone.</p> <p>Prerequisites:</p> <ul> <li> <p>Glossary term must exist and be active. </p> </li> <li> <p>The term must not be linked to other assets or child terms.</p> </li> <li> <p>Caller must have delete permissions in the domain/glossary.</p> </li> <li> <p>Ensure all associations (such as to assets or parent terms) are removed before deletion.</p> </li> </ul>",
+    "DeleteLineageEvent": "<p>Deletes the specified lineage event.</p>",
     "DeleteListing": "<p>Deletes a listing (a record of an asset at a given time).</p>",
+    "DeleteNotebook": "<p>Deletes a <a href=\"https://docs.aws.amazon.com/sagemaker-unified-studio/latest/userguide/notebooks.html\">notebook</a> in Amazon SageMaker Unified Studio.</p>",
     "DeleteProject": "<p>Deletes a project in Amazon DataZone. </p>",
     "DeleteProjectMembership": "<p>Deletes project membership in Amazon DataZone.</p>",
     "DeleteProjectProfile": "<p>Deletes a project profile.</p>",
@@ -96,7 +99,9 @@
     "GetLineageNode": "<p>Gets the data lineage node.</p>",
     "GetListing": "<p>Gets a listing (a record of an asset at a given time). If you specify a listing version, only details that are specific to that version are returned.</p>",
     "GetMetadataGenerationRun": "<p>Gets a metadata generation run in Amazon DataZone.</p> <p>Prerequisites:</p> <ul> <li> <p>Valid domain and run identifier. </p> </li> <li> <p>The metadata generation run must exist.</p> </li> <li> <p>User must have read access to the metadata run.</p> </li> </ul>",
-    "GetNotebookRun": "<p>Gets the details of a notebook run in an Amazon DataZone domain.</p>",
+    "GetNotebook": "<p>Gets the details of a <a href=\"https://docs.aws.amazon.com/sagemaker-unified-studio/latest/userguide/notebooks.html\">notebook</a> in Amazon SageMaker Unified Studio.</p>",
+    "GetNotebookExport": "<p>Gets the details of a notebook export in Amazon SageMaker Unified Studio.</p>",
+    "GetNotebookRun": "<p>Gets the details of a <a href=\"https://docs.aws.amazon.com/sagemaker-unified-studio/latest/userguide/notebooks.html\">notebook run</a> in Amazon SageMaker Unified Studio.</p>",
     "GetProject": "<p>Gets a project in Amazon DataZone.</p>",
     "GetProjectProfile": "<p>The details of the project profile.</p>",
     "GetRule": "<p>Gets the details of a rule in Amazon DataZone. A rule is a formal agreement that enforces specific requirements across user workflows (e.g., publishing assets to the catalog, requesting subscriptions, creating projects) within the Amazon DataZone data portal. These rules help maintain consistency, ensure compliance, and uphold governance standards in data management processes. For instance, a metadata enforcement rule can specify the required information for creating a subscription request or publishing a data asset to the catalog, ensuring alignment with organizational standards.</p>",
@@ -127,7 +132,8 @@
     "ListLineageEvents": "<p>Lists lineage events.</p>",
     "ListLineageNodeHistory": "<p>Lists the history of the specified data lineage node.</p>",
     "ListMetadataGenerationRuns": "<p>Lists all metadata generation runs.</p> <p>Metadata generation runs represent automated processes that leverage AI/ML capabilities to create or enhance asset metadata at scale. This feature helps organizations maintain comprehensive and consistent metadata across large numbers of assets without manual intervention. It can automatically generate business descriptions, tags, and other metadata elements, significantly reducing the time and effort required for metadata management while improving consistency and completeness.</p> <p>Prerequisites:</p> <ul> <li> <p>Valid domain identifier. </p> </li> <li> <p>User must have access to metadata generation runs in the domain.</p> </li> </ul>",
-    "ListNotebookRuns": "<p>Lists notebook runs in an Amazon DataZone domain.</p>",
+    "ListNotebookRuns": "<p>Lists <a href=\"https://docs.aws.amazon.com/sagemaker-unified-studio/latest/userguide/notebooks.html\">notebook runs</a> in Amazon SageMaker Unified Studio.</p>",
+    "ListNotebooks": "<p>Lists <a href=\"https://docs.aws.amazon.com/sagemaker-unified-studio/latest/userguide/notebooks.html\">notebooks</a> in Amazon SageMaker Unified Studio.</p>",
     "ListNotifications": "<p>Lists all Amazon DataZone notifications.</p>",
     "ListPolicyGrants": "<p>Lists policy grants.</p>",
     "ListProjectMemberships": "<p>Lists all members of the specified project.</p>",
@@ -157,8 +163,10 @@
     "SearchUserProfiles": "<p>Searches user profiles in Amazon DataZone.</p>",
     "StartDataSourceRun": "<p>Start the run of the specified data source in Amazon DataZone.</p>",
     "StartMetadataGenerationRun": "<p>Starts the metadata generation run.</p> <p>Prerequisites:</p> <ul> <li> <p>Asset must be created and belong to the specified domain and project. </p> </li> <li> <p>Asset type must be supported for metadata generation (e.g., Amazon Web Services Glue table).</p> </li> <li> <p>Asset must have a structured schema with valid rows and columns.</p> </li> <li> <p>Valid values for --type: BUSINESS_DESCRIPTIONS, BUSINESS_NAMES, BUSINESS_GLOSSARY_ASSOCIATIONS.</p> </li> <li> <p>The user must have permission to run metadata generation in the domain/project.</p> </li> </ul>",
-    "StartNotebookRun": "<p>Starts a notebook run in an Amazon DataZone domain. A notebook run represents the execution of a Amazon DataZone notebook within a project. You can configure compute, network, timeout, and environment settings for the run.</p>",
-    "StopNotebookRun": "<p>Stops a running notebook run in an Amazon DataZone domain.</p>",
+    "StartNotebookExport": "<p>Starts a notebook export in Amazon SageMaker Unified Studio. This operation exports a notebook to a specified file format and stores the output in Amazon Simple Storage Service.</p>",
+    "StartNotebookImport": "<p>Starts a notebook import in Amazon SageMaker Unified Studio. This operation imports a notebook from an Amazon Simple Storage Service location into a project.</p>",
+    "StartNotebookRun": "<p>Starts a notebook run in Amazon SageMaker Unified Studio. A notebook run represents the execution of an <a href=\"https://docs.aws.amazon.com/sagemaker-unified-studio/latest/userguide/notebooks.html\">Amazon SageMaker notebook</a> within a project. You can configure compute, network, timeout, and environment settings for the run.</p>",
+    "StopNotebookRun": "<p>Stops a running <a href=\"https://docs.aws.amazon.com/sagemaker-unified-studio/latest/userguide/notebooks.html\">notebook run</a> in Amazon SageMaker Unified Studio.</p>",
     "TagResource": "<p>Tags a resource in Amazon DataZone.</p>",
     "UntagResource": "<p>Untags a resource in Amazon DataZone.</p>",
     "UpdateAccountPool": "<p>Updates the account pool.</p>",
@@ -174,6 +182,7 @@
     "UpdateGlossary": "<p>Updates the business glossary in Amazon DataZone.</p> <p>Prerequisites:</p> <ul> <li> <p>The glossary must exist in the given domain. </p> </li> <li> <p>The caller must have the <code>datazone:UpdateGlossary</code> permission to update it.</p> </li> <li> <p>When updating the name, the new name must be unique within the domain.</p> </li> <li> <p>The glossary must not be deleted or in a terminal state.</p> </li> </ul>",
     "UpdateGlossaryTerm": "<p>Updates a business glossary term in Amazon DataZone.</p> <p>Prerequisites:</p> <ul> <li> <p>Glossary term must exist in the specified domain. </p> </li> <li> <p>New name must not conflict with existing terms in the same glossary.</p> </li> <li> <p>User must have permissions on the term.</p> </li> <li> <p>The term must not be in DELETED status.</p> </li> </ul>",
     "UpdateGroupProfile": "<p>Updates the specified group profile in Amazon DataZone.</p>",
+    "UpdateNotebook": "<p>Updates a <a href=\"https://docs.aws.amazon.com/sagemaker-unified-studio/latest/userguide/notebooks.html\">notebook</a> in Amazon SageMaker Unified Studio.</p>",
     "UpdateProject": "<p>Updates the specified project in Amazon DataZone.</p>",
     "UpdateProjectProfile": "<p>Updates a project profile.</p>",
     "UpdateRootDomainUnitOwner": "<p>Updates the owner of the root domain unit.</p>",
@@ -850,6 +859,7 @@
     "AuthenticationConfigurationInput": {
       "base": "<p>The authentication configuration of a connection.</p>",
       "refs": {
+        "ConnectivityProperties$authenticationConfiguration": "<p>The authentication settings for this configuration.</p>",
         "GlueConnectionInput$authenticationConfiguration": "<p>The authentication configuration of the Amazon Web Services Glue connection.</p>"
       }
     },
@@ -868,6 +878,7 @@
     "AuthenticationConfigurationPatch": {
       "base": "<p>The authentication configuration patch of a connection. </p>",
       "refs": {
+        "ConnectivityPropertiesPatch$authenticationConfiguration": "<p>The authentication settings to update.</p>",
         "GlueConnectionPatch$authenticationConfiguration": "<p>The authentication configuration of the Amazon Web Services Glue connection patch.</p>"
       }
     },
@@ -1072,6 +1083,7 @@
         "AmazonQPropertiesPatch$isEnabled": "<p>Specifies whether Amazon Q is enabled for the connection.</p>",
         "BusinessNameGenerationConfiguration$enabled": "<p>Specifies whether the business name generation is enabled.</p>",
         "CancelSubscriptionOutput$retainPermissions": "<p>Specifies whether the permissions to the asset are retained after the subscription is cancelled.</p>",
+        "ConnectivityProperties$validateCredentials": "<p>Specifies whether to validate credentials for the connectivity configuration. Defaults to true if not specified.</p>",
         "CreateAssetTypePolicyGrantDetail$includeChildDomainUnits": "<p>Specifies whether the policy grant is applied to child domain units.</p>",
         "CreateConnectionInput$enableTrustedIdentityPropagation": "<p>Specifies whether the trusted identity propagation is enabled.</p>",
         "CreateDataSourceInput$publishOnImport": "<p>Specifies whether the assets that this data source creates in the inventory are to be also automatically published to the catalog.</p>",
@@ -1094,12 +1106,14 @@
         "Deployment$isDeploymentComplete": "<p>Specifies whether the last deployment of the environment is complete.</p>",
         "DomainUnitFilterForProject$includeChildDomainUnits": "<p>Specifies whether to include child domain units.</p>",
         "DomainUnitTarget$includeChildDomainUnits": "<p>Specifies whether to apply a rule to the child domain units.</p>",
+        "EnvironmentBlueprintConfigurationItem$allowUserProvidedConfigurations": "<p>Specifies whether user-provided resource configurations are allowed for the environment blueprint.</p>",
         "EnvironmentConfigurationParameter$isEditable": "<p>Specifies whether the environment parameter is editable.</p>",
         "FormEntryInput$required": "<p>Specifies whether a form entry is required.</p>",
         "FormEntryOutput$required": "<p>Specifies whether a form entry is required.</p>",
         "GetConnectionInput$withSecret": "<p>Specifies whether a connection has a secret.</p>",
         "GetDataExportConfigurationOutput$isExportEnabled": "<p>Specifies whether the export is enabled.</p>",
         "GetDataSourceOutput$publishOnImport": "<p>Specifies whether the assets that this data source creates in the inventory are to be also automatically published to the catalog.</p>",
+        "GetEnvironmentBlueprintConfigurationOutput$allowUserProvidedConfigurations": "<p>Specifies whether user-provided resource configurations are allowed for the environment blueprint.</p>",
         "GetProjectProfileOutput$allowCustomProjectResourceTags": "<p>Specifies whether custom project resource tags are supported.</p>",
         "GetSubscriptionOutput$retainPermissions": "<p>The retain permissions of the subscription.</p>",
         "GlueConnectionInput$validateCredentials": "<p>Speciefies whether to validate credentials of the Amazon Web Services Glue connection.</p>",
@@ -1111,6 +1125,8 @@
         "LakehousePropertiesInput$glueLineageSyncEnabled": "<p>Specifies whether to enable Glue lineage sync for tables managed by Glue crawlers.</p>",
         "LakehousePropertiesOutput$glueLineageSyncEnabled": "<p>Specifies whether Glue lineage sync is enabled for tables managed by Glue crawlers.</p>",
         "LakehousePropertiesPatch$glueLineageSyncEnabled": "<p>Specifies whether to enable Glue lineage sync for tables managed by Glue crawlers.</p>",
+        "LineageSyncInput$enabled": "<p>Specifies whether lineage sync is enabled.</p>",
+        "LineageSyncOutput$enabled": "<p>Specifies whether lineage sync is enabled.</p>",
         "ListEnvironmentBlueprintsInput$managed": "<p>Specifies whether the environment blueprint is managed by Amazon DataZone.</p>",
         "ListRulesInput$dataProduct": "<p>The data product of the rule.</p>",
         "ListRulesInput$includeCascaded": "<p>Specifies whether to include cascading rules in the results.</p>",
@@ -1118,6 +1134,8 @@
         "OverrideProjectOwnersPolicyGrantDetail$includeChildDomainUnits": "<p>Specifies whether the policy is inherited by child domain units.</p>",
         "PhysicalEndpoint$enableTrustedIdentityPropagation": "<p>Specified whether trusted identity propagation for the connection is enabled.</p>",
         "PutDataExportConfigurationInput$enableExport": "<p>Specifies that the export is to be enabled as part of creating data export configuration details.</p>",
+        "PutEnvironmentBlueprintConfigurationInput$allowUserProvidedConfigurations": "<p>Specifies whether user-provided resource configurations are allowed for the environment blueprint.</p>",
+        "PutEnvironmentBlueprintConfigurationOutput$allowUserProvidedConfigurations": "<p>Specifies whether user-provided resource configurations are allowed for the environment blueprint.</p>",
         "RecommendationConfiguration$enableBusinessNameGeneration": "<p>Specifies whether automatic business name generation is to be enabled or not as part of the recommendation configuration.</p>",
         "RedshiftLineageSyncConfigurationInput$enabled": "<p>Specifies whether the Amaon Redshift lineage sync configuration is enabled.</p>",
         "RedshiftLineageSyncConfigurationOutput$enabled": "<p>Specifies whether the Amaon Redshift lineage sync configuration is enabled.</p>",
@@ -1164,7 +1182,7 @@
       "refs": {}
     },
     "CellInformation": {
-      "base": "<p>The information about a cell in a notebook run in Amazon DataZone.</p>",
+      "base": "<p>The information about a cell in a notebook run in Amazon SageMaker Unified Studio.</p>",
       "refs": {
         "CellOrder$member": null
       }
@@ -1172,8 +1190,12 @@
     "CellOrder": {
       "base": null,
       "refs": {
+        "CreateNotebookOutput$cellOrder": "<p>The ordered list of cells in the notebook.</p>",
+        "GetNotebookOutput$cellOrder": "<p>The ordered list of cells in the notebook.</p>",
         "GetNotebookRunOutput$cellOrder": "<p>The ordered list of cells in the notebook run.</p>",
-        "StartNotebookRunOutput$cellOrder": "<p>The ordered list of cells in the notebook run.</p>"
+        "StartNotebookRunOutput$cellOrder": "<p>The ordered list of cells in the notebook run.</p>",
+        "UpdateNotebookInput$cellOrder": "<p>The updated ordered list of cells in the notebook.</p>",
+        "UpdateNotebookOutput$cellOrder": "<p>The ordered list of cells in the notebook.</p>"
       }
     },
     "ChangeAction": {
@@ -1197,6 +1219,7 @@
         "CreateGlossaryInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "CreateGlossaryTermInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "CreateListingChangeSetInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
+        "CreateNotebookInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request. This field is automatically populated if not provided.</p>",
         "CreateRuleInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "DeleteTimeSeriesDataPointsInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request. This field is automatically populated if not provided.</p>",
         "PostLineageEventInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
@@ -1206,9 +1229,12 @@
         "RemoveEntityOwnerInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "RemovePolicyGrantInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "StartMetadataGenerationRunInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request. This field is automatically populated if not provided.</p>",
+        "StartNotebookExportInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request. This field is automatically populated if not provided.</p>",
+        "StartNotebookImportInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request. This field is automatically populated if not provided.</p>",
         "StartNotebookRunInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request. This field is automatically populated if not provided.</p>",
         "StopNotebookRunInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request. This field is automatically populated if not provided.</p>",
         "UpdateGlossaryInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
+        "UpdateNotebookInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request. This field is automatically populated if not provided.</p>",
         "UpdateRootDomainUnitOwnerInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request. This field is automatically populated if not provided.</p>"
       }
     },
@@ -1234,8 +1260,14 @@
         "UpdateAssetFilterOutput$effectiveColumnNames": "<p>The column names of the asset filter.</p>"
       }
     },
+    "CompletedAt": {
+      "base": null,
+      "refs": {
+        "GetNotebookExportOutput$completedAt": "<p>The timestamp of when the notebook export completed.</p>"
+      }
+    },
     "ComputeConfig": {
-      "base": "<p>The compute configuration for a notebook run in Amazon DataZone.</p>",
+      "base": "<p>The compute configuration for a notebook run in Amazon SageMaker Unified Studio.</p>",
       "refs": {
         "GetNotebookRunOutput$computeConfiguration": "<p>The compute configuration of the notebook run.</p>",
         "StartNotebookRunInput$computeConfiguration": "<p>The compute configuration for the notebook run, including instance type and environment version.</p>",
@@ -1251,8 +1283,17 @@
     "ComputeEnvironmentsList": {
       "base": null,
       "refs": {
+        "ConnectivityProperties$validateForComputeEnvironments": "<p>The compute environments to use when validating connectivity. The service validates that the connection is reachable from each specified environment.</p>",
         "GlueConnection$compatibleComputeEnvironments": "<p>The compatible compute environments of the Amazon Web Services Glue connection.</p>",
         "GlueConnectionInput$validateForComputeEnvironments": "<p>Speciefies whether to validate for compute environments of the Amazon Web Services Glue connection.</p>"
+      }
+    },
+    "ComputeId": {
+      "base": null,
+      "refs": {
+        "CreateNotebookOutput$computeId": "<p>The identifier of the compute associated with the notebook.</p>",
+        "GetNotebookOutput$computeId": "<p>The identifier of the compute associated with the notebook.</p>",
+        "UpdateNotebookOutput$computeId": "<p>The identifier of the compute associated with the notebook.</p>"
       }
     },
     "ConfigurableActionParameter": {
@@ -1345,6 +1386,8 @@
     "ConnectionProperties": {
       "base": null,
       "refs": {
+        "ConnectivityProperties$connectionProperties": "<p>The connection properties for this configuration.</p>",
+        "ConnectivityPropertiesPatch$connectionProperties": "<p>The connection properties to update.</p>",
         "GlueConnection$connectionProperties": "<p>The properties of the Amazon Web Services Glue connection.</p>",
         "GlueConnectionInput$connectionProperties": "<p>The connection properties of the Amazon Web Services Glue connection.</p>",
         "GlueConnectionPatch$connectionProperties": "<p>The properties of the Amazon Web Services Glue connection patch.</p>"
@@ -1394,7 +1437,9 @@
         "GlueConnection$status": "<p>The status of the Amazon Web Services Glue connection.</p>",
         "GluePropertiesOutput$status": "<p>The status of a connection.</p>",
         "RedshiftPropertiesOutput$status": "<p>The status in the Amazon Redshift properties.</p>",
-        "S3PropertiesOutput$status": "<p>The status of the Amazon S3 connection.</p>"
+        "S3PropertiesOutput$status": "<p>The status of the Amazon S3 connection.</p>",
+        "SnowflakePropertiesOutput$status": "<p>The status of the Snowflake connection.</p>",
+        "VpcPropertiesOutput$status": "<p>The status of the VPC connection.</p>"
       }
     },
     "ConnectionSummaries": {
@@ -1418,6 +1463,36 @@
         "GlueConnection$connectionType": "<p>The type of the Amazon Web Services Glue connection.</p>",
         "ListConnectionsInput$type": "<p>The type of connection.</p>",
         "UpdateConnectionOutput$type": "<p>The connection type.</p>"
+      }
+    },
+    "ConnectivityProperties": {
+      "base": "<p>Contains the network and authentication settings for a connection, including connection credentials, physical network requirements, and compute-environment validation options.</p>",
+      "refs": {
+        "SnowflakePropertiesInput$connectivityProperties": "<p>The connectivity properties of the Snowflake connection.</p>"
+      }
+    },
+    "ConnectivityPropertiesDescriptionString": {
+      "base": null,
+      "refs": {
+        "ConnectivityProperties$description": "<p>The description of the connectivity configuration.</p>"
+      }
+    },
+    "ConnectivityPropertiesNameString": {
+      "base": null,
+      "refs": {
+        "ConnectivityProperties$name": "<p>The name of the connectivity configuration.</p>"
+      }
+    },
+    "ConnectivityPropertiesPatch": {
+      "base": "<p>Contains the connectivity settings to update on an existing connection. Include only the fields you want to change.</p>",
+      "refs": {
+        "SnowflakePropertiesPatch$connectivityPropertiesPatch": "<p>The connectivity properties patch of the Snowflake connection.</p>"
+      }
+    },
+    "ConnectivityPropertiesPatchDescriptionString": {
+      "base": null,
+      "refs": {
+        "ConnectivityPropertiesPatch$description": "<p>A description of the connectivity properties update.</p>"
       }
     },
     "CreateAccountPoolInput": {
@@ -1646,6 +1721,14 @@
       "base": null,
       "refs": {}
     },
+    "CreateNotebookInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateNotebookOutput": {
+      "base": null,
+      "refs": {}
+    },
     "CreateProjectFromProjectProfilePolicyGrantDetail": {
       "base": "<p>Specifies whether to create a project from project profile policy grant details.</p>",
       "refs": {
@@ -1769,6 +1852,7 @@
         "CreateDataProductRevisionOutput$createdAt": "<p>The timestamp at which the data product revision is created.</p>",
         "CreateDataProductRevisionOutput$firstRevisionCreatedAt": "<p>The timestamp at which the first revision of the data product is created.</p>",
         "CreateDomainUnitOutput$createdAt": "<p>The timestamp at which the domain unit was created.</p>",
+        "CreateNotebookOutput$createdAt": "<p>The timestamp of when the notebook was created.</p>",
         "CreateRuleOutput$createdAt": "<p>The timestamp at which the rule is created.</p>",
         "CreateSubscriptionGrantOutput$createdAt": "<p>A timestamp of when the subscription grant is created.</p>",
         "CreateSubscriptionRequestOutput$createdAt": "<p>A timestamp of when the subscription request is created.</p>",
@@ -1797,6 +1881,8 @@
         "GetLineageNodeOutput$createdAt": "<p>The timestamp at which the data lineage node was created.</p>",
         "GetListingOutput$createdAt": "<p>The timestamp of when the listing was created.</p>",
         "GetMetadataGenerationRunOutput$createdAt": "<p>The timestamp of when the metadata generation run was start.</p>",
+        "GetNotebookExportOutput$createdAt": "<p>The timestamp of when the notebook export was started.</p>",
+        "GetNotebookOutput$createdAt": "<p>The timestamp of when the notebook was created.</p>",
         "GetNotebookRunOutput$createdAt": "<p>The timestamp of when the notebook run was created.</p>",
         "GetRuleOutput$createdAt": "<p>The timestamp at which the rule was created.</p>",
         "GetSubscriptionGrantOutput$createdAt": "<p>The timestamp of when the subscription grant is created.</p>",
@@ -1811,10 +1897,13 @@
         "LineageNodeTypeItem$createdAt": "<p>The timestamp at which the data lineage node type was created.</p>",
         "MetadataGenerationRunItem$createdAt": "<p>The timestamp at which the metadata generation run was created.</p>",
         "NotebookRunSummary$createdAt": "<p>The timestamp of when the notebook run was created.</p>",
+        "NotebookSummary$createdAt": "<p>The timestamp of when the notebook was created.</p>",
         "PolicyGrantMember$createdAt": "<p>Specifies the timestamp at which policy grant member was created.</p>",
         "RejectSubscriptionRequestOutput$createdAt": "<p>The timestamp of when the subscription request was rejected.</p>",
         "RevokeSubscriptionOutput$createdAt": "<p>The timestamp of when the subscription was revoked.</p>",
         "StartMetadataGenerationRunOutput$createdAt": "<p>The timestamp at which the metadata generation run was started.</p>",
+        "StartNotebookExportOutput$createdAt": "<p>The timestamp of when the notebook export was started.</p>",
+        "StartNotebookImportOutput$createdAt": "<p>The timestamp of when the notebook import was started.</p>",
         "StartNotebookRunOutput$createdAt": "<p>The timestamp of when the notebook run was created.</p>",
         "SubscriptionGrantSummary$createdAt": "<p>The timestamp of when a subscription grant was created.</p>",
         "SubscriptionRequestSummary$createdAt": "<p>The timestamp of when a subscription request was created.</p>",
@@ -1822,6 +1911,7 @@
         "SubscriptionTargetSummary$createdAt": "<p>The timestamp of when the subscription target was created.</p>",
         "UpdateAssetFilterOutput$createdAt": "<p>The timestamp at which the asset filter was created.</p>",
         "UpdateDomainUnitOutput$createdAt": "<p>The time stamp at which the domain unit that you want to update was created.</p>",
+        "UpdateNotebookOutput$createdAt": "<p>The timestamp of when the notebook was created.</p>",
         "UpdateRuleOutput$createdAt": "<p>The timestamp at which the rule was created.</p>",
         "UpdateSubscriptionGrantStatusOutput$createdAt": "<p>The timestamp of when the subscription grant status was created.</p>",
         "UpdateSubscriptionRequestOutput$createdAt": "<p>The timestamp of when the subscription request was created.</p>",
@@ -1850,6 +1940,7 @@
         "CreateDataProductRevisionOutput$createdBy": "<p>The user who created the data product revision.</p>",
         "CreateDataProductRevisionOutput$firstRevisionCreatedBy": "<p>The user who created the first revision of the data product.</p>",
         "CreateDomainUnitOutput$createdBy": "<p>The user who created the domain unit.</p>",
+        "CreateNotebookOutput$createdBy": "<p>The identifier of the user who created the notebook.</p>",
         "CreateProjectOutput$createdBy": "<p>The Amazon DataZone user who created the project.</p>",
         "CreateProjectProfileOutput$createdBy": "<p>A user who created a project profile.</p>",
         "CreateRuleOutput$createdBy": "<p>The user who creates the rule.</p>",
@@ -1876,6 +1967,8 @@
         "GetLineageNodeOutput$createdBy": "<p>The user who created the data lineage node.</p>",
         "GetListingOutput$createdBy": "<p>The Amazon DataZone user who created the listing.</p>",
         "GetMetadataGenerationRunOutput$createdBy": "<p>The Amazon DataZone user who started the metadata generation run.</p>",
+        "GetNotebookExportOutput$createdBy": "<p>The identifier of the user who started the notebook export.</p>",
+        "GetNotebookOutput$createdBy": "<p>The identifier of the user who created the notebook.</p>",
         "GetNotebookRunOutput$createdBy": "<p>The identifier of the user who created the notebook run.</p>",
         "GetProjectOutput$createdBy": "<p>The Amazon DataZone user who created the project.</p>",
         "GetProjectProfileOutput$createdBy": "<p>The user who created the project profile.</p>",
@@ -1892,12 +1985,15 @@
         "LineageNodeTypeItem$createdBy": "<p>The user who created the data lineage node type.</p>",
         "MetadataGenerationRunItem$createdBy": "<p>The user who created the metadata generation run.</p>",
         "NotebookRunSummary$createdBy": "<p>The identifier of the user who created the notebook run.</p>",
+        "NotebookSummary$createdBy": "<p>The identifier of the user who created the notebook.</p>",
         "PolicyGrantMember$createdBy": "<p>Specifies the user who created the policy grant member.</p>",
         "ProjectProfileSummary$createdBy": "<p>The user who created the project profile.</p>",
         "ProjectSummary$createdBy": "<p>The Amazon DataZone user who created the project.</p>",
         "RejectSubscriptionRequestOutput$createdBy": "<p>The timestamp of when the subscription request was rejected.</p>",
         "RevokeSubscriptionOutput$createdBy": "<p>The identifier of the user who revoked the subscription.</p>",
         "StartMetadataGenerationRunOutput$createdBy": "<p>The ID of the user who started the metadata generation run.</p>",
+        "StartNotebookExportOutput$createdBy": "<p>The identifier of the user who started the notebook export.</p>",
+        "StartNotebookImportOutput$createdBy": "<p>The identifier of the user who started the notebook import.</p>",
         "StartNotebookRunOutput$createdBy": "<p>The identifier of the user who created the notebook run.</p>",
         "SubscriptionGrantSummary$createdBy": "<p>The datazone user who created the subscription grant.</p>",
         "SubscriptionRequestSummary$createdBy": "<p>The Amazon DataZone user who created the subscription request.</p>",
@@ -1905,6 +2001,7 @@
         "SubscriptionTargetSummary$createdBy": "<p>The Amazon DataZone user who created the subscription target.</p>",
         "UpdateAccountPoolOutput$createdBy": "<p>The user who created the account pool.</p>",
         "UpdateDomainUnitOutput$createdBy": "<p>The user who created the domain unit that you want to update.</p>",
+        "UpdateNotebookOutput$createdBy": "<p>The identifier of the user who created the notebook.</p>",
         "UpdateProjectOutput$createdBy": "<p>The Amazon DataZone user who created the project.</p>",
         "UpdateProjectProfileOutput$createdBy": "<p>The user who created a project profile.</p>",
         "UpdateRuleOutput$createdBy": "<p>The user who created the rule.</p>",
@@ -2431,11 +2528,27 @@
       "base": null,
       "refs": {}
     },
+    "DeleteLineageEventInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteLineageEventOutput": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteListingInput": {
       "base": null,
       "refs": {}
     },
     "DeleteListingOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteNotebookInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteNotebookOutput": {
       "base": null,
       "refs": {}
     },
@@ -2589,6 +2702,8 @@
         "CreateEnvironmentProfileOutput$description": "<p>The description of this Amazon DataZone environment profile.</p>",
         "CreateFormTypeInput$description": "<p>The description of this Amazon DataZone metadata form type.</p>",
         "CreateFormTypeOutput$description": "<p>The description of this Amazon DataZone metadata form type.</p>",
+        "CreateNotebookInput$description": "<p>The description of the notebook.</p>",
+        "CreateNotebookOutput$description": "<p>The description of the notebook.</p>",
         "CreateProjectInput$description": "<p>The description of the Amazon DataZone project.</p>",
         "CreateProjectOutput$description": "<p>The description of the project.</p>",
         "CreateProjectProfileInput$description": "<p>A description of a project profile.</p>",
@@ -2618,12 +2733,16 @@
         "GetEnvironmentProfileOutput$description": "<p>The description of the environment profile.</p>",
         "GetFormTypeOutput$description": "<p>The description of the metadata form type.</p>",
         "GetListingOutput$description": "<p>The description of the listing.</p>",
+        "GetNotebookOutput$description": "<p>The description of the notebook.</p>",
         "GetProjectOutput$description": "<p>The description of the project.</p>",
         "GetProjectProfileOutput$description": "<p>The description of the project profile.</p>",
         "GetProjectProfileOutput$projectResourceTagsDescription": "<p>Field viewable through the UI that provides a project user with the allowed resource tag specifications.</p>",
         "GetRuleOutput$description": "<p>The description of the rule.</p>",
+        "NotebookSummary$description": "<p>The description of the notebook.</p>",
         "ProjectProfileSummary$description": "<p>The description of the project profile.</p>",
         "ProjectSummary$description": "<p>The description of a project.</p>",
+        "StartNotebookImportInput$description": "<p>The description of the imported notebook.</p>",
+        "StartNotebookImportOutput$description": "<p>The description of the imported notebook.</p>",
         "SubscribedListing$description": "<p>The description of the published asset for which the subscription grant is created.</p>",
         "UpdateAccountPoolInput$description": "<p>The description of the account pool that is to be udpated.</p>",
         "UpdateAccountPoolOutput$description": "<p>The description of the account pool that is to be udpated.</p>",
@@ -2635,6 +2754,8 @@
         "UpdateEnvironmentBlueprintOutput$description": "<p>The description to be updated as part of the <code>UpdateEnvironmentBlueprint</code> action.</p>",
         "UpdateEnvironmentOutput$description": "<p>The description to be updated as part of the <code>UpdateEnvironment</code> action.</p>",
         "UpdateEnvironmentProfileOutput$description": "<p>The description to be updated as part of the <code>UpdateEnvironmentProfile</code> action.</p>",
+        "UpdateNotebookInput$description": "<p>The updated description of the notebook.</p>",
+        "UpdateNotebookOutput$description": "<p>The description of the notebook.</p>",
         "UpdateProjectInput$description": "<p>The description to be updated as part of the <code>UpdateProject</code> action.</p>",
         "UpdateProjectOutput$description": "<p>The description of the project that is to be updated.</p>",
         "UpdateProjectProfileInput$description": "<p>The description of a project profile.</p>",
@@ -2756,6 +2877,8 @@
         "CreateGroupProfileInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain in which the group profile is created.</p>",
         "CreateGroupProfileOutput$domainId": "<p>The identifier of the Amazon DataZone domain in which the group profile is created.</p>",
         "CreateListingChangeSetInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain.</p>",
+        "CreateNotebookInput$domainIdentifier": "<p>The identifier of the Amazon SageMaker Unified Studio domain in which to create the notebook.</p>",
+        "CreateNotebookOutput$domainId": "<p>The identifier of the Amazon SageMaker Unified Studio domain.</p>",
         "CreateProjectInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which this project is created.</p>",
         "CreateProjectMembershipInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which project membership is created.</p>",
         "CreateProjectOutput$domainId": "<p>The identifier of the Amazon DataZone domain in which the project was created.</p>",
@@ -2792,7 +2915,10 @@
         "DeleteFormTypeInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the metadata form type is deleted.</p>",
         "DeleteGlossaryInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the business glossary is deleted.</p>",
         "DeleteGlossaryTermInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the business glossary term is deleted.</p>",
+        "DeleteLineageEventInput$domainIdentifier": "<p>The ID of the domain.</p>",
+        "DeleteLineageEventOutput$domainId": "<p>The ID of the domain.</p>",
         "DeleteListingInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain.</p>",
+        "DeleteNotebookInput$domainIdentifier": "<p>The identifier of the Amazon SageMaker Unified Studio domain in which the notebook exists.</p>",
         "DeleteProjectInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the project is deleted.</p>",
         "DeleteProjectMembershipInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain where project membership is deleted.</p>",
         "DeleteProjectProfileInput$domainIdentifier": "<p>The ID of the domain where a project profile is deleted.</p>",
@@ -2863,8 +2989,12 @@
         "GetListingOutput$domainId": "<p>The ID of the Amazon DataZone domain.</p>",
         "GetMetadataGenerationRunInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain the metadata generation run of which you want to get.</p>",
         "GetMetadataGenerationRunOutput$domainId": "<p>The ID of the Amazon DataZone domain the metadata generation run of which you want to get.</p>",
-        "GetNotebookRunInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain in which the notebook run exists.</p>",
-        "GetNotebookRunOutput$domainId": "<p>The identifier of the Amazon DataZone domain.</p>",
+        "GetNotebookExportInput$domainIdentifier": "<p>The identifier of the Amazon SageMaker Unified Studio domain in which the notebook export exists.</p>",
+        "GetNotebookExportOutput$domainId": "<p>The identifier of the Amazon SageMaker Unified Studio domain.</p>",
+        "GetNotebookInput$domainIdentifier": "<p>The identifier of the Amazon SageMaker Unified Studio domain in which the notebook exists.</p>",
+        "GetNotebookOutput$domainId": "<p>The identifier of the Amazon SageMaker Unified Studio domain.</p>",
+        "GetNotebookRunInput$domainIdentifier": "<p>The identifier of the Amazon SageMaker Unified Studio domain in which the notebook run exists.</p>",
+        "GetNotebookRunOutput$domainId": "<p>The identifier of the Amazon SageMaker Unified Studio domain.</p>",
         "GetProjectInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the project exists.</p>",
         "GetProjectOutput$domainId": "<p>The ID of the Amazon DataZone domain in which the project exists.</p>",
         "GetProjectProfileInput$domainIdentifier": "<p>The ID of the domain.</p>",
@@ -2910,7 +3040,8 @@
         "ListLineageEventsInput$domainIdentifier": "<p>The ID of the domain where you want to list lineage events.</p>",
         "ListLineageNodeHistoryInput$domainIdentifier": "<p>The ID of the domain where you want to list the history of the specified data lineage node.</p>",
         "ListMetadataGenerationRunsInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain where you want to list metadata generation runs.</p>",
-        "ListNotebookRunsInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain in which to list notebook runs.</p>",
+        "ListNotebookRunsInput$domainIdentifier": "<p>The identifier of the Amazon SageMaker Unified Studio domain in which to list notebook runs.</p>",
+        "ListNotebooksInput$domainIdentifier": "<p>The identifier of the Amazon SageMaker Unified Studio domain in which to list notebooks.</p>",
         "ListNotificationsInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain.</p>",
         "ListPolicyGrantsInput$domainIdentifier": "<p>The ID of the domain where you want to list policy grants.</p>",
         "ListProjectMembershipsInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain in which you want to list project memberships.</p>",
@@ -2923,7 +3054,8 @@
         "ListSubscriptionsInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain.</p>",
         "ListTimeSeriesDataPointsInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain that houses the assets for which you want to list time series data points.</p>",
         "MetadataGenerationRunItem$domainId": "<p>The ID of the Amazon DataZone domain in which the metadata generation run was created.</p>",
-        "NotebookRunSummary$domainId": "<p>The identifier of the Amazon DataZone domain.</p>",
+        "NotebookRunSummary$domainId": "<p>The identifier of the Amazon SageMaker Unified Studio domain.</p>",
+        "NotebookSummary$domainId": "<p>The identifier of the Amazon SageMaker Unified Studio domain.</p>",
         "NotificationOutput$domainIdentifier": "<p>The identifier of a Amazon DataZone domain in which the notification exists.</p>",
         "PostLineageEventInput$domainIdentifier": "<p>The ID of the domain where you want to post a data lineage event.</p>",
         "PostLineageEventOutput$domainId": "<p>The ID of the domain.</p>",
@@ -2952,10 +3084,14 @@
         "StartDataSourceRunOutput$domainId": "<p>The identifier of the Amazon DataZone domain in which to start a data source run.</p>",
         "StartMetadataGenerationRunInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain where you want to start a metadata generation run.</p>",
         "StartMetadataGenerationRunOutput$domainId": "<p>The ID of the Amazon DataZone domain in which the metadata generation run was started.</p>",
-        "StartNotebookRunInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain in which the notebook run is started.</p>",
-        "StartNotebookRunOutput$domainId": "<p>The identifier of the Amazon DataZone domain.</p>",
-        "StopNotebookRunInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain in which the notebook run is stopped.</p>",
-        "StopNotebookRunOutput$domainId": "<p>The identifier of the Amazon DataZone domain.</p>",
+        "StartNotebookExportInput$domainIdentifier": "<p>The identifier of the Amazon SageMaker Unified Studio domain in which to export the notebook.</p>",
+        "StartNotebookExportOutput$domainId": "<p>The identifier of the Amazon SageMaker Unified Studio domain.</p>",
+        "StartNotebookImportInput$domainIdentifier": "<p>The identifier of the Amazon SageMaker Unified Studio domain in which to import the notebook.</p>",
+        "StartNotebookImportOutput$domainId": "<p>The identifier of the Amazon SageMaker Unified Studio domain.</p>",
+        "StartNotebookRunInput$domainIdentifier": "<p>The identifier of the Amazon SageMaker Unified Studio domain in which the notebook run is started.</p>",
+        "StartNotebookRunOutput$domainId": "<p>The identifier of the Amazon SageMaker Unified Studio domain.</p>",
+        "StopNotebookRunInput$domainIdentifier": "<p>The identifier of the Amazon SageMaker Unified Studio domain in which the notebook run is stopped.</p>",
+        "StopNotebookRunOutput$domainId": "<p>The identifier of the Amazon SageMaker Unified Studio domain.</p>",
         "SubscriptionGrantSummary$domainId": "<p>The identifier of the Amazon DataZone domain in which a subscription grant exists.</p>",
         "SubscriptionRequestSummary$domainId": "<p>The identifier of the Amazon DataZone domain in which a subscription request exists.</p>",
         "SubscriptionSummary$domainId": "<p>The identifier of the Amazon DataZone domain in which a subscription exists.</p>",
@@ -2985,6 +3121,8 @@
         "UpdateGlossaryTermOutput$domainId": "<p>The identifier of the Amazon DataZone domain in which a business glossary term is to be updated.</p>",
         "UpdateGroupProfileInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain in which a group profile is updated.</p>",
         "UpdateGroupProfileOutput$domainId": "<p>The identifier of the Amazon DataZone domain in which a group profile is updated.</p>",
+        "UpdateNotebookInput$domainIdentifier": "<p>The identifier of the Amazon SageMaker Unified Studio domain in which the notebook exists.</p>",
+        "UpdateNotebookOutput$domainId": "<p>The identifier of the Amazon SageMaker Unified Studio domain.</p>",
         "UpdateProjectInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain where a project is being updated.</p>",
         "UpdateProjectOutput$domainId": "<p>The identifier of the Amazon DataZone domain in which a project is updated.</p>",
         "UpdateProjectProfileInput$domainIdentifier": "<p>The ID of the domain where a project profile is to be updated.</p>",
@@ -3354,10 +3492,14 @@
       }
     },
     "EnvironmentConfig": {
-      "base": "<p>The environment configuration for a notebook run in Amazon DataZone.</p>",
+      "base": "<p>The environment configuration for a notebook run in Amazon SageMaker Unified Studio.</p>",
       "refs": {
+        "CreateNotebookOutput$environmentConfiguration": "<p>The environment configuration of the notebook.</p>",
+        "GetNotebookOutput$environmentConfiguration": "<p>The environment configuration of the notebook.</p>",
         "GetNotebookRunOutput$environmentConfiguration": "<p>The environment configuration of the notebook run, including image version and package settings.</p>",
-        "StartNotebookRunOutput$environmentConfiguration": "<p>The environment configuration of the notebook run, including image version and package settings.</p>"
+        "StartNotebookRunOutput$environmentConfiguration": "<p>The environment configuration of the notebook run, including image version and package settings.</p>",
+        "UpdateNotebookInput$environmentConfiguration": "<p>The updated environment configuration for the notebook.</p>",
+        "UpdateNotebookOutput$environmentConfiguration": "<p>The environment configuration of the notebook.</p>"
       }
     },
     "EnvironmentConfiguration": {
@@ -3639,6 +3781,14 @@
         "LineageEventSummary$eventSummary": "<p>The summary of the data lineate event.</p>"
       }
     },
+    "ExportId": {
+      "base": null,
+      "refs": {
+        "GetNotebookExportInput$identifier": "<p>The identifier of the notebook export.</p>",
+        "GetNotebookExportOutput$id": "<p>The identifier of the notebook export.</p>",
+        "StartNotebookExportOutput$id": "<p>The identifier of the notebook export.</p>"
+      }
+    },
     "ExternalIdentifier": {
       "base": null,
       "refs": {
@@ -3669,6 +3819,14 @@
         "GetProjectOutput$failureReasons": "<p>Specifies the error message that is returned if the operation cannot be successfully completed.</p>",
         "ProjectSummary$failureReasons": "<p>Specifies the error message that is returned if the operation cannot be successfully completed.</p>",
         "UpdateProjectOutput$failureReasons": "<p>Specifies the error message that is returned if the operation cannot be successfully completed.</p>"
+      }
+    },
+    "FileFormat": {
+      "base": "<p>The file format for a notebook export in Amazon SageMaker Unified Studio.</p>",
+      "refs": {
+        "GetNotebookExportOutput$fileFormat": "<p>The file format of the notebook export.</p>",
+        "StartNotebookExportInput$fileFormat": "<p>The file format for the notebook export. Valid values are <code>PDF</code> and <code>IPYNB</code>.</p>",
+        "StartNotebookExportOutput$fileFormat": "<p>The file format of the notebook export.</p>"
       }
     },
     "Filter": {
@@ -4155,6 +4313,22 @@
       "base": null,
       "refs": {}
     },
+    "GetNotebookExportInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetNotebookExportOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetNotebookInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetNotebookOutput": {
+      "base": null,
+      "refs": {}
+    },
     "GetNotebookRunInput": {
       "base": null,
       "refs": {}
@@ -4489,7 +4663,8 @@
       "refs": {
         "PhysicalEndpoint$glueConnectionNames": "<p>The Amazon Web Services Glue connection names in the physical endpoint.</p>",
         "SparkGluePropertiesInput$glueConnectionNames": "<p>The Amazon Web Services Glue connection names in the Spark Amazon Web Services Glue properties. Specify either <code>glueConnectionName</code> or <code>glueConnectionNames</code>, but not both.</p>",
-        "SparkGluePropertiesOutput$glueConnectionNames": "<p>The Amazon Web Services Glue connection names in the Spark Amazon Web Services Glue properties.</p>"
+        "SparkGluePropertiesOutput$glueConnectionNames": "<p>The Amazon Web Services Glue connection names in the Spark Amazon Web Services Glue properties.</p>",
+        "VpcPropertiesOutput$glueConnectionNames": "<p>The Amazon Web Services Glue connection names associated with the VPC connection.</p>"
       }
     },
     "GlueConnectionPatch": {
@@ -4816,6 +4991,13 @@
         "UserProfileDetails$iam": "<p>The IAM details of the user profile.</p>"
       }
     },
+    "IdentityMapping": {
+      "base": "<p>Contains the configuration for mapping user identities to Snowflake users, including the username attribute and optional prefix applied during the mapping.</p>",
+      "refs": {
+        "SnowflakePropertiesInput$identityMapping": "<p>The identity mapping configuration for the Snowflake connection.</p>",
+        "SnowflakePropertiesOutput$identityMapping": "<p>The identity mapping configuration for the Snowflake connection.</p>"
+      }
+    },
     "Import": {
       "base": "<p>The details of the import of the metadata form type.</p>",
       "refs": {
@@ -5031,6 +5213,8 @@
     "LineageEventIdentifier": {
       "base": null,
       "refs": {
+        "DeleteLineageEventInput$identifier": "<p>The ID of the lineage event.</p>",
+        "DeleteLineageEventOutput$id": "<p>The ID of the lineage event.</p>",
         "GetLineageEventInput$identifier": "<p>The ID of the lineage event.</p>",
         "GetLineageEventOutput$id": "<p>The ID of the lineage event.</p>",
         "LineageEventSummary$id": "<p>The ID of the data lineage event.</p>",
@@ -5040,6 +5224,7 @@
     "LineageEventProcessingStatus": {
       "base": null,
       "refs": {
+        "DeleteLineageEventOutput$processingStatus": "<p>The progressing status of the lineage event.</p>",
         "GetLineageEventOutput$processingStatus": "<p>The progressing status of the lineage event.</p>",
         "LineageEventSummary$processingStatus": "<p>The processing status of the data lineage event.</p>",
         "LineageInfo$eventStatus": "<p>The data lineage event status.</p>",
@@ -5143,11 +5328,31 @@
         "LineageRunDetails$sqlQueryRunDetails": "<p>The SQL query run details of a data lineage run.</p>"
       }
     },
+    "LineageSyncInput": {
+      "base": "<p>Contains the settings for configuring lineage sync on a Snowflake connection, including the schedule, timezone, and enabled state.</p>",
+      "refs": {
+        "SnowflakePropertiesInput$lineageSync": "<p>The lineage sync configuration for the Snowflake connection.</p>",
+        "SnowflakePropertiesPatch$lineageSync": "<p>The lineage sync configuration for the Snowflake connection.</p>"
+      }
+    },
+    "LineageSyncOutput": {
+      "base": "<p>Contains the current state of lineage sync for a Snowflake connection, including the schedule, timezone, enabled state, and the ID of the associated lineage job.</p>",
+      "refs": {
+        "SnowflakePropertiesOutput$lineageSync": "<p>The lineage sync configuration for the Snowflake connection.</p>"
+      }
+    },
     "LineageSyncSchedule": {
       "base": "<p>The lineage sync schedule.</p>",
       "refs": {
         "RedshiftLineageSyncConfigurationInput$schedule": "<p>The schedule of the Amaon Redshift lineage sync configuration.</p>",
         "RedshiftLineageSyncConfigurationOutput$schedule": "<p>The schedule of teh Amaon Redshift lineage sync configuration.</p>"
+      }
+    },
+    "LineageSyncScheduleCronString": {
+      "base": "<p>The cron expression for the lineage sync schedule.</p>",
+      "refs": {
+        "LineageSyncInput$schedule": "<p>The schedule of the lineage sync.</p>",
+        "LineageSyncOutput$schedule": "<p>The schedule of the lineage sync.</p>"
       }
     },
     "LineageSyncScheduleScheduleString": {
@@ -5341,6 +5546,14 @@
       "refs": {}
     },
     "ListNotebookRunsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListNotebooksInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListNotebooksOutput": {
       "base": null,
       "refs": {}
     },
@@ -5630,6 +5843,7 @@
         "ListLineageNodeHistoryInput$maxResults": "<p>The maximum number of history items to return in a single call to ListLineageNodeHistory. When the number of memberships to be listed is greater than the value of MaxResults, the response contains a NextToken value that you can use in a subsequent call to ListLineageNodeHistory to list the next set of items.</p>",
         "ListMetadataGenerationRunsInput$maxResults": "<p>The maximum number of metadata generation runs to return in a single call to ListMetadataGenerationRuns. When the number of metadata generation runs to be listed is greater than the value of MaxResults, the response contains a NextToken value that you can use in a subsequent call to ListMetadataGenerationRuns to list the next set of revisions.</p>",
         "ListNotebookRunsInput$maxResults": "<p>The maximum number of notebook runs to return in a single call. When the number of notebook runs exceeds the value of <code>MaxResults</code>, the response contains a <code>NextToken</code> value.</p>",
+        "ListNotebooksInput$maxResults": "<p>The maximum number of notebooks to return in a single call. When the number of notebooks exceeds the value of <code>MaxResults</code>, the response contains a <code>NextToken</code> value.</p>",
         "ListNotificationsInput$maxResults": "<p>The maximum number of notifications to return in a single call to <code>ListNotifications</code>. When the number of notifications to be listed is greater than the value of <code>MaxResults</code>, the response contains a <code>NextToken</code> value that you can use in a subsequent call to <code>ListNotifications</code> to list the next set of notifications.</p>",
         "ListProjectMembershipsInput$maxResults": "<p>The maximum number of memberships to return in a single call to <code>ListProjectMemberships</code>. When the number of memberships to be listed is greater than the value of <code>MaxResults</code>, the response contains a <code>NextToken</code> value that you can use in a subsequent call to <code>ListProjectMemberships</code> to list the next set of memberships.</p>",
         "ListProjectProfilesInput$maxResults": "<p>The maximum number of project profiles to return in a single call to ListProjectProfiles. When the number of project profiles to be listed is greater than the value of MaxResults, the response contains a NextToken value that you can use in a subsequent call to ListProjectProfiles to list the next set of project profiles.</p>",
@@ -5679,9 +5893,14 @@
     "Metadata": {
       "base": null,
       "refs": {
+        "CreateNotebookInput$metadata": "<p>The metadata for the notebook, specified as key-value pairs. You can specify up to 50 entries, with keys up to 128 characters and values up to 1024 characters.</p>",
+        "CreateNotebookOutput$metadata": "<p>The metadata of the notebook.</p>",
+        "GetNotebookOutput$metadata": "<p>The metadata of the notebook.</p>",
         "GetNotebookRunOutput$metadata": "<p>The metadata of the notebook run.</p>",
         "StartNotebookRunInput$metadata": "<p>The metadata for the notebook run, specified as key-value pairs. You can specify up to 50 entries, with keys up to 128 characters and values up to 1024 characters.</p>",
-        "StartNotebookRunOutput$metadata": "<p>The metadata of the notebook run.</p>"
+        "StartNotebookRunOutput$metadata": "<p>The metadata of the notebook run.</p>",
+        "UpdateNotebookInput$metadata": "<p>The updated metadata for the notebook, specified as key-value pairs.</p>",
+        "UpdateNotebookOutput$metadata": "<p>The metadata of the notebook.</p>"
       }
     },
     "MetadataFormEnforcementDetail": {
@@ -5878,13 +6097,13 @@
       }
     },
     "NetworkAccessType": {
-      "base": "<p>The network access type for a notebook run in Amazon DataZone.</p>",
+      "base": "<p>The network access type for a notebook run in Amazon SageMaker Unified Studio.</p>",
       "refs": {
         "NetworkConfig$networkAccessType": "<p>The network access type for the notebook run. Valid values are <code>PUBLIC_INTERNET_ONLY</code> and <code>VPC_ONLY</code>.</p>"
       }
     },
     "NetworkConfig": {
-      "base": "<p>The network configuration for a notebook run in Amazon DataZone.</p>",
+      "base": "<p>The network configuration for a notebook run in Amazon SageMaker Unified Studio.</p>",
       "refs": {
         "GetNotebookRunOutput$networkConfiguration": "<p>The network configuration of the notebook run.</p>",
         "StartNotebookRunInput$networkConfiguration": "<p>The network configuration for the notebook run, including network access type and optional VPC settings.</p>",
@@ -5909,18 +6128,75 @@
         "RowFilterExpression$notLike": "<p>The 'not like' clause of the row filter expression.</p>"
       }
     },
+    "NotebookError": {
+      "base": "<p>The error details of a notebook in Amazon SageMaker Unified Studio.</p>",
+      "refs": {
+        "CreateNotebookOutput$error": "<p>The error details if the notebook creation failed.</p>",
+        "GetNotebookOutput$error": "<p>The error details if the notebook is in a failed state.</p>",
+        "UpdateNotebookOutput$error": "<p>The error details if the notebook is in a failed state.</p>"
+      }
+    },
+    "NotebookErrorMessageString": {
+      "base": null,
+      "refs": {
+        "NotebookError$message": "<p>The error message. The maximum length is 256 characters.</p>"
+      }
+    },
+    "NotebookExportError": {
+      "base": "<p>The error details of a failed notebook export in Amazon SageMaker Unified Studio.</p>",
+      "refs": {
+        "GetNotebookExportOutput$error": "<p>The error details if the notebook export failed.</p>"
+      }
+    },
+    "NotebookExportErrorMessageString": {
+      "base": null,
+      "refs": {
+        "NotebookExportError$message": "<p>The error message. The maximum length is 256 characters.</p>"
+      }
+    },
+    "NotebookExportStatus": {
+      "base": "<p>The status of a notebook export in Amazon SageMaker Unified Studio.</p>",
+      "refs": {
+        "GetNotebookExportOutput$status": "<p>The status of the notebook export.</p>",
+        "StartNotebookExportOutput$status": "<p>The status of the notebook export.</p>"
+      }
+    },
     "NotebookId": {
       "base": null,
       "refs": {
+        "CreateNotebookOutput$id": "<p>The identifier of the notebook.</p>",
+        "DeleteNotebookInput$identifier": "<p>The identifier of the notebook to delete.</p>",
+        "GetNotebookExportOutput$notebookId": "<p>The identifier of the notebook.</p>",
+        "GetNotebookInput$identifier": "<p>The identifier of the notebook.</p>",
+        "GetNotebookOutput$id": "<p>The identifier of the notebook.</p>",
         "GetNotebookRunOutput$notebookId": "<p>The identifier of the notebook.</p>",
         "ListNotebookRunsInput$notebookIdentifier": "<p>The identifier of the notebook to filter runs by.</p>",
         "NotebookRunSummary$notebookId": "<p>The identifier of the notebook.</p>",
+        "NotebookSummary$id": "<p>The identifier of the notebook.</p>",
+        "StartNotebookExportInput$notebookIdentifier": "<p>The identifier of the notebook to export.</p>",
+        "StartNotebookExportOutput$notebookId": "<p>The identifier of the notebook.</p>",
+        "StartNotebookImportOutput$notebookId": "<p>The identifier of the imported notebook.</p>",
         "StartNotebookRunInput$notebookIdentifier": "<p>The identifier of the notebook to run.</p>",
-        "StartNotebookRunOutput$notebookId": "<p>The identifier of the notebook.</p>"
+        "StartNotebookRunOutput$notebookId": "<p>The identifier of the notebook.</p>",
+        "UpdateNotebookInput$identifier": "<p>The identifier of the notebook to update.</p>",
+        "UpdateNotebookOutput$id": "<p>The identifier of the notebook.</p>"
+      }
+    },
+    "NotebookName": {
+      "base": null,
+      "refs": {
+        "CreateNotebookInput$name": "<p>The name of the notebook. The name must be between 1 and 256 characters.</p>",
+        "CreateNotebookOutput$name": "<p>The name of the notebook.</p>",
+        "GetNotebookOutput$name": "<p>The name of the notebook.</p>",
+        "NotebookSummary$name": "<p>The name of the notebook.</p>",
+        "StartNotebookImportInput$name": "<p>The name of the imported notebook. The name must be between 1 and 256 characters.</p>",
+        "StartNotebookImportOutput$name": "<p>The name of the imported notebook.</p>",
+        "UpdateNotebookInput$name": "<p>The updated name of the notebook.</p>",
+        "UpdateNotebookOutput$name": "<p>The name of the notebook.</p>"
       }
     },
     "NotebookRunError": {
-      "base": "<p>The error details of a failed notebook run in Amazon DataZone.</p>",
+      "base": "<p>The error details of a failed notebook run in Amazon SageMaker Unified Studio.</p>",
       "refs": {
         "GetNotebookRunOutput$error": "<p>The error details if the notebook run failed.</p>",
         "StartNotebookRunOutput$error": "<p>The error details if the notebook run failed.</p>"
@@ -5944,7 +6220,7 @@
       }
     },
     "NotebookRunStatus": {
-      "base": "<p>The status of a notebook run in Amazon DataZone.</p>",
+      "base": "<p>The status of a notebook run in Amazon SageMaker Unified Studio.</p>",
       "refs": {
         "GetNotebookRunOutput$status": "<p>The status of the notebook run.</p>",
         "ListNotebookRunsInput$status": "<p>The status to filter notebook runs by.</p>",
@@ -5954,7 +6230,7 @@
       }
     },
     "NotebookRunSummary": {
-      "base": "<p>The summary of a notebook run in Amazon DataZone.</p>",
+      "base": "<p>The summary of a notebook run in Amazon SageMaker Unified Studio.</p>",
       "refs": {
         "NotebookRunSummaryList$member": null
       }
@@ -5963,6 +6239,36 @@
       "base": null,
       "refs": {
         "ListNotebookRunsOutput$items": "<p>The results of the <code>ListNotebookRuns</code> action.</p>"
+      }
+    },
+    "NotebookS3Uri": {
+      "base": null,
+      "refs": {
+        "S3Destination$uri": "<p>The Amazon Simple Storage Service URI of the exported notebook.</p>"
+      }
+    },
+    "NotebookStatus": {
+      "base": "<p>The status of a notebook in Amazon SageMaker Unified Studio.</p>",
+      "refs": {
+        "CreateNotebookOutput$status": "<p>The status of the notebook.</p>",
+        "GetNotebookOutput$status": "<p>The status of the notebook.</p>",
+        "ListNotebooksInput$status": "<p>The status to filter notebooks by.</p>",
+        "NotebookSummary$status": "<p>The status of the notebook.</p>",
+        "StartNotebookImportOutput$status": "<p>The status of the notebook import.</p>",
+        "UpdateNotebookInput$status": "<p>The updated status of the notebook.</p>",
+        "UpdateNotebookOutput$status": "<p>The status of the notebook.</p>"
+      }
+    },
+    "NotebookSummary": {
+      "base": "<p>The summary of a notebook in Amazon SageMaker Unified Studio.</p>",
+      "refs": {
+        "NotebookSummaryList$member": null
+      }
+    },
+    "NotebookSummaryList": {
+      "base": null,
+      "refs": {
+        "ListNotebooksOutput$items": "<p>The results of the <code>ListNotebooks</code> action.</p>"
       }
     },
     "NotificationOutput": {
@@ -6057,6 +6363,12 @@
         "OpenLineageRunEventSummary$eventType": "<p>The event type of the open lineage run event summary.</p>"
       }
     },
+    "OutputLocation": {
+      "base": "<p>The output location for a notebook export in Amazon SageMaker Unified Studio.</p>",
+      "refs": {
+        "GetNotebookExportOutput$outputLocation": "<p>The output location of the exported notebook in Amazon Simple Storage Service.</p>"
+      }
+    },
     "OverallDeploymentStatus": {
       "base": null,
       "refs": {
@@ -6113,7 +6425,7 @@
       }
     },
     "PackageConfig": {
-      "base": "<p>The package configuration for a notebook run environment in Amazon DataZone.</p>",
+      "base": "<p>The package configuration for a notebook run environment in Amazon SageMaker Unified Studio.</p>",
       "refs": {
         "EnvironmentConfig$packageConfig": "<p>The package configuration for the notebook run environment.</p>"
       }
@@ -6125,7 +6437,7 @@
       }
     },
     "PackageManager": {
-      "base": "<p>The package manager for a notebook run environment in Amazon DataZone.</p>",
+      "base": "<p>The package manager for a notebook run environment in Amazon SageMaker Unified Studio.</p>",
       "refs": {
         "PackageConfig$packageManager": "<p>The package manager for the notebook run environment. The default value is <code>UV</code>.</p>"
       }
@@ -6177,6 +6489,8 @@
         "ListMetadataGenerationRunsOutput$nextToken": "<p>When the number of metadata generation runs is greater than the default value for the MaxResults parameter, or if you explicitly specify a value for MaxResults that is less than the number of metadata generation runs, the response includes a pagination token named NextToken. You can specify this NextToken value in a subsequent call to ListMetadataGenerationRuns to list the next set of revisions.</p>",
         "ListNotebookRunsInput$nextToken": "<p>When the number of notebook runs is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of notebook runs, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListNotebookRuns</code> to list the next set of notebook runs.</p>",
         "ListNotebookRunsOutput$nextToken": "<p>When the number of notebook runs is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of notebook runs, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListNotebookRuns</code> to list the next set of notebook runs.</p>",
+        "ListNotebooksInput$nextToken": "<p>When the number of notebooks is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of notebooks, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListNotebooks</code> to list the next set of notebooks.</p>",
+        "ListNotebooksOutput$nextToken": "<p>When the number of notebooks is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of notebooks, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListNotebooks</code> to list the next set of notebooks.</p>",
         "ListNotificationsInput$nextToken": "<p>When the number of notifications is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of notifications, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListNotifications</code> to list the next set of notifications.</p>",
         "ListNotificationsOutput$nextToken": "<p>When the number of notifications is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of notifications, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListNotifications</code> to list the next set of notifications.</p>",
         "ListPolicyGrantsInput$nextToken": "<p>When the number of grants is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of grants, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListPolicyGrants</code> to list the next set of grants.</p>",
@@ -6236,9 +6550,14 @@
     "Parameters": {
       "base": null,
       "refs": {
+        "CreateNotebookInput$parameters": "<p>The sensitive parameters for the notebook, specified as key-value pairs. You can specify up to 50 entries, with keys up to 128 characters and values up to 1024 characters.</p>",
+        "CreateNotebookOutput$parameters": "<p>The sensitive parameters of the notebook.</p>",
+        "GetNotebookOutput$parameters": "<p>The sensitive parameters of the notebook.</p>",
         "GetNotebookRunOutput$parameters": "<p>The sensitive parameters of the notebook run.</p>",
         "StartNotebookRunInput$parameters": "<p>The sensitive parameters for the notebook run, specified as key-value pairs. You can specify up to 50 entries, with keys up to 128 characters and values up to 1024 characters.</p>",
-        "StartNotebookRunOutput$parameters": "<p>The sensitive parameters of the notebook run.</p>"
+        "StartNotebookRunOutput$parameters": "<p>The sensitive parameters of the notebook run.</p>",
+        "UpdateNotebookInput$parameters": "<p>The updated sensitive parameters for the notebook, specified as key-value pairs.</p>",
+        "UpdateNotebookOutput$parameters": "<p>The sensitive parameters of the notebook.</p>"
       }
     },
     "Password": {
@@ -6258,6 +6577,7 @@
     "PhysicalConnectionRequirements": {
       "base": "<p>Physical connection requirements of a connection.</p>",
       "refs": {
+        "ConnectivityProperties$physicalConnectionRequirements": "<p>The physical network requirements for the connection, such as the subnet, security group, and VPC settings needed to reach the data source.</p>",
         "GlueConnection$physicalConnectionRequirements": "<p>The physical connection requirements of the Amazon Web Services Glue connection.</p>",
         "GlueConnectionInput$physicalConnectionRequirements": "<p>The physical connection requirements for the Amazon Web Services Glue connection.</p>"
       }
@@ -6397,6 +6717,8 @@
         "CreateFormTypeOutput$originProjectId": "<p>The ID of the project in which this Amazon DataZone metadata form type was originally created.</p>",
         "CreateGlossaryInput$owningProjectIdentifier": "<p>The ID of the project that currently owns business glossary.</p>",
         "CreateGlossaryOutput$owningProjectId": "<p>The ID of the project that currently owns this business glossary.</p>",
+        "CreateNotebookInput$owningProjectIdentifier": "<p>The identifier of the project that owns the notebook.</p>",
+        "CreateNotebookOutput$owningProjectId": "<p>The identifier of the project that owns the notebook.</p>",
         "CreateProjectMembershipInput$projectIdentifier": "<p>The ID of the project for which this project membership was created.</p>",
         "CreateProjectOutput$id": "<p>The ID of the Amazon DataZone project.</p>",
         "CreateSubscriptionTargetOutput$projectId": "<p>???</p>",
@@ -6425,6 +6747,8 @@
         "GetFormTypeOutput$originProjectId": "<p>The ID of the project in which this metadata form type was originally created.</p>",
         "GetGlossaryOutput$owningProjectId": "<p>The ID of the project that owns this business glossary.</p>",
         "GetMetadataGenerationRunOutput$owningProjectId": "<p>The ID of the project that owns the assets for which you're running metadata generation.</p>",
+        "GetNotebookExportOutput$owningProjectId": "<p>The identifier of the project that owns the notebook.</p>",
+        "GetNotebookOutput$owningProjectId": "<p>The identifier of the project that owns the notebook.</p>",
         "GetNotebookRunOutput$owningProjectId": "<p>The identifier of the project that owns the notebook run.</p>",
         "GetProjectInput$identifier": "<p>The ID of the project.</p>",
         "GetProjectOutput$id": "<p>&gt;The ID of the project.</p>",
@@ -6434,6 +6758,7 @@
         "ListEnvironmentProfilesInput$projectIdentifier": "<p>The identifier of the Amazon DataZone project.</p>",
         "ListEnvironmentsInput$projectIdentifier": "<p>The identifier of the Amazon DataZone project.</p>",
         "ListNotebookRunsInput$owningProjectIdentifier": "<p>The identifier of the project that owns the notebook runs.</p>",
+        "ListNotebooksInput$owningProjectIdentifier": "<p>The identifier of the project that owns the notebooks.</p>",
         "ListProjectMembershipsInput$projectIdentifier": "<p>The identifier of the project whose memberships you want to list.</p>",
         "ListSubscriptionGrantsInput$owningProjectId": "<p>The ID of the owning project of the subscription grants.</p>",
         "ListSubscriptionRequestsInput$owningProjectId": "<p>The identifier of the project for the subscription requests.</p>",
@@ -6442,6 +6767,7 @@
         "ListSubscriptionsInput$approverProjectId": "<p>The identifier of the project for the subscription's approver.</p>",
         "MetadataGenerationRunItem$owningProjectId": "<p>The ID of the project that owns the asset for which the metadata generation was ran.</p>",
         "NotebookRunSummary$owningProjectId": "<p>The identifier of the project that owns the notebook run.</p>",
+        "NotebookSummary$owningProjectId": "<p>The identifier of the project that owns the notebook.</p>",
         "ProjectIds$member": null,
         "ProjectPolicyGrantPrincipal$projectIdentifier": "<p>The project ID of the project policy grant principal.</p>",
         "ProjectSummary$id": "<p>The identifier of a project.</p>",
@@ -6450,6 +6776,10 @@
         "StartDataSourceRunOutput$projectId": "<p>The identifier of the project.</p>",
         "StartMetadataGenerationRunInput$owningProjectIdentifier": "<p>The ID of the project that owns the asset for which you want to start a metadata generation run.</p>",
         "StartMetadataGenerationRunOutput$owningProjectId": "<p>The ID of the project that owns the asset for which the metadata generation run was started.</p>",
+        "StartNotebookExportInput$owningProjectIdentifier": "<p>The identifier of the project that owns the notebook.</p>",
+        "StartNotebookExportOutput$owningProjectId": "<p>The identifier of the project that owns the notebook.</p>",
+        "StartNotebookImportInput$owningProjectIdentifier": "<p>The identifier of the project that will own the imported notebook.</p>",
+        "StartNotebookImportOutput$owningProjectId": "<p>The identifier of the project that owns the imported notebook.</p>",
         "StartNotebookRunInput$owningProjectIdentifier": "<p>The identifier of the project that owns the notebook run.</p>",
         "StartNotebookRunOutput$owningProjectId": "<p>The identifier of the project that owns the notebook run.</p>",
         "StopNotebookRunOutput$owningProjectId": "<p>The identifier of the project that owns the notebook run.</p>",
@@ -6462,6 +6792,7 @@
         "UpdateEnvironmentOutput$projectId": "<p>The project identifier of the environment.</p>",
         "UpdateEnvironmentProfileOutput$projectId": "<p>The identifier of the project of the environment profile that is to be updated.</p>",
         "UpdateGlossaryOutput$owningProjectId": "<p>The identifier of the project in which to update a business glossary.</p>",
+        "UpdateNotebookOutput$owningProjectId": "<p>The identifier of the project that owns the notebook.</p>",
         "UpdateProjectInput$identifier": "<p>The identifier of the project that is to be updated.</p>",
         "UpdateProjectOutput$id": "<p>The identifier of the project that is to be updated.</p>",
         "UpdateSubscriptionTargetOutput$projectId": "<p>The identifier of the project in which a subscription target is to be updated.</p>"
@@ -6603,6 +6934,9 @@
       "base": null,
       "refs": {
         "Configuration$properties": "<p>The properties of the connection configuration.</p>",
+        "ConnectivityProperties$sparkProperties": "<p>The Spark properties for this configuration.</p>",
+        "ConnectivityProperties$athenaProperties": "<p>The Athena properties for this configuration.</p>",
+        "ConnectivityProperties$pythonProperties": "<p>The Python properties for this configuration.</p>",
         "GlueConnection$sparkProperties": "<p>The Spark properties of the Amazon Web Services Glue connection.</p>",
         "GlueConnection$athenaProperties": "<p>The Amazon Athena properties of the Amazon Web Services Glue connection.</p>",
         "GlueConnection$pythonProperties": "<p>The Python properties of the Amazon Web Services Glue connection.</p>",
@@ -6673,6 +7007,24 @@
     "PutEnvironmentBlueprintConfigurationOutput": {
       "base": null,
       "refs": {}
+    },
+    "PutResourceConfiguration": {
+      "base": "<p>The resource configuration that is used to configure the environment blueprint.</p>",
+      "refs": {
+        "PutResourceConfigurations$member": null
+      }
+    },
+    "PutResourceConfigurationNameString": {
+      "base": null,
+      "refs": {
+        "PutResourceConfiguration$name": "<p>The name of the resource configuration.</p>"
+      }
+    },
+    "PutResourceConfigurations": {
+      "base": null,
+      "refs": {
+        "PutEnvironmentBlueprintConfigurationInput$resourceConfigurations": "<p>The resource configurations of the environment blueprint.</p>"
+      }
     },
     "QueryGraphInput": {
       "base": null,
@@ -6877,8 +7229,10 @@
       "base": null,
       "refs": {
         "EnabledRegionList$member": null,
+        "PutResourceConfiguration$region": "<p>The Amazon Web Services Region of the resource configuration.</p>",
         "Region$regionName": "<p>The Amazon Web Services Region name.</p>",
-        "RegionalParameterMap$key": null
+        "RegionalParameterMap$key": null,
+        "ResourceConfiguration$region": "<p>The Amazon Web Services Region of the resource configuration.</p>"
       }
     },
     "RegionalParameter": {
@@ -7049,6 +7403,27 @@
       "base": "<p>The details of a provisioned resource of this Amazon DataZone environment.</p>",
       "refs": {
         "ResourceList$member": null
+      }
+    },
+    "ResourceConfiguration": {
+      "base": "<p>The details of the resource configuration.</p>",
+      "refs": {
+        "ResourceConfigurations$member": null
+      }
+    },
+    "ResourceConfigurationParameterMap": {
+      "base": null,
+      "refs": {
+        "PutResourceConfiguration$parameters": "<p>The parameters of the resource configuration.</p>",
+        "ResourceConfiguration$parameters": "<p>The parameters of the resource configuration.</p>"
+      }
+    },
+    "ResourceConfigurations": {
+      "base": null,
+      "refs": {
+        "EnvironmentBlueprintConfigurationItem$resourceConfigurations": "<p>The resource configurations of the environment blueprint.</p>",
+        "GetEnvironmentBlueprintConfigurationOutput$resourceConfigurations": "<p>The resource configurations of the environment blueprint.</p>",
+        "PutEnvironmentBlueprintConfigurationOutput$resourceConfigurations": "<p>The resource configurations of the environment blueprint.</p>"
       }
     },
     "ResourceList": {
@@ -7374,6 +7749,12 @@
         "S3PropertiesPatch$s3AccessGrantLocationId": "<p>The Amazon S3 Access Grant location ID that's part of the Amazon S3 properties patch of a connection.</p>"
       }
     },
+    "S3Destination": {
+      "base": "<p>The Amazon Simple Storage Service destination for a notebook export in Amazon SageMaker Unified Studio.</p>",
+      "refs": {
+        "OutputLocation$s3": "<p>The Amazon Simple Storage Service destination for the notebook export.</p>"
+      }
+    },
     "S3Location": {
       "base": null,
       "refs": {
@@ -7420,6 +7801,12 @@
       "base": "<p>The Amazon S3 properties patch of a connection.</p>",
       "refs": {
         "ConnectionPropertiesPatch$s3Properties": "<p>The Amazon S3 properties of a connection properties patch.</p>"
+      }
+    },
+    "S3SourceLocation": {
+      "base": null,
+      "refs": {
+        "SourceLocation$s3": "<p>The Amazon Simple Storage Service URI of the notebook source file.</p>"
       }
     },
     "S3Uri": {
@@ -7612,6 +7999,14 @@
       "base": null,
       "refs": {}
     },
+    "SecurityGroupId": {
+      "base": null,
+      "refs": {
+        "VpcPropertiesInput$securityGroupId": "<p>The security group ID of the VPC connection. Must match the pattern <code>^sg-[a-z0-9]+$</code>. Maximum length of 32.</p>",
+        "VpcPropertiesOutput$securityGroupId": "<p>The security group ID of the VPC connection.</p>",
+        "VpcPropertiesPatch$securityGroupId": "<p>The security group ID of the VPC connection.</p>"
+      }
+    },
     "SecurityGroupIdList": {
       "base": null,
       "refs": {
@@ -7707,6 +8102,32 @@
         "Model$smithy": "<p>Indicates the smithy model of the API.</p>"
       }
     },
+    "SnowflakePropertiesInput": {
+      "base": "<p>Contains the Snowflake-specific settings required when creating or updating a connection, including the Snowflake role, identity mapping, and lineage sync configuration.</p>",
+      "refs": {
+        "ConnectionPropertiesInput$snowflakeProperties": "<p>The Snowflake-specific connection properties to use when creating the connection.</p>"
+      }
+    },
+    "SnowflakePropertiesOutput": {
+      "base": "<p>Contains the Snowflake-specific settings returned for an existing connection, including the current role, identity mapping, lineage sync state, and connection status.</p>",
+      "refs": {
+        "ConnectionPropertiesOutput$snowflakeProperties": "<p>The Snowflake-specific connection properties for an existing connection.</p>"
+      }
+    },
+    "SnowflakePropertiesPatch": {
+      "base": "<p>Contains the Snowflake-specific settings to update on an existing connection. Include only the fields you want to change.</p>",
+      "refs": {
+        "ConnectionPropertiesPatch$snowflakeProperties": "<p>The Snowflake-specific connection properties to update.</p>"
+      }
+    },
+    "SnowflakeRole": {
+      "base": "<p>The name of the Snowflake role to use for the connection.</p>",
+      "refs": {
+        "SnowflakePropertiesInput$snowflakeRole": "<p>The Snowflake role used to access Snowflake resources.</p>",
+        "SnowflakePropertiesOutput$snowflakeRole": "<p>The Snowflake role used to access Snowflake resources.</p>",
+        "SnowflakePropertiesPatch$snowflakeRole": "<p>The Snowflake role used to access Snowflake resources.</p>"
+      }
+    },
     "SortFieldAccountPool": {
       "base": null,
       "refs": {
@@ -7729,6 +8150,7 @@
     "SortKey": {
       "base": null,
       "refs": {
+        "ListNotebooksInput$sortBy": "<p>The field to sort the results by.</p>",
         "ListSubscriptionGrantsInput$sortBy": "<p>Specifies the way of sorting the results of this action.</p>",
         "ListSubscriptionRequestsInput$sortBy": "<p>Specifies the way to sort the results of this action.</p>",
         "ListSubscriptionTargetsInput$sortBy": "<p>Specifies the way in which the results of this action are to be sorted.</p>",
@@ -7744,6 +8166,7 @@
         "ListLineageEventsInput$sortOrder": "<p>The sort order of the lineage events.</p>",
         "ListLineageNodeHistoryInput$sortOrder": "<p>The order by which you want data lineage node history to be sorted.</p>",
         "ListNotebookRunsInput$sortOrder": "<p>The sort order for the results.</p>",
+        "ListNotebooksInput$sortOrder": "<p>The sort order for the results.</p>",
         "ListProjectMembershipsInput$sortOrder": "<p>The sort order of the project memberships.</p>",
         "ListProjectProfilesInput$sortOrder": "<p>Specifies the sort order of the project profiles.</p>",
         "ListSubscriptionGrantsInput$sortOrder": "<p>Specifies the sort order of this action.</p>",
@@ -7751,6 +8174,13 @@
         "ListSubscriptionTargetsInput$sortOrder": "<p>Specifies the sort order for the results of this action.</p>",
         "ListSubscriptionsInput$sortOrder": "<p>Specifies the sort order for the results of this action.</p>",
         "SearchSort$order": "<p>The order detail of the wya to sort search results.</p>"
+      }
+    },
+    "SourceLocation": {
+      "base": "<p>The source location for a notebook import in Amazon SageMaker Unified Studio.</p>",
+      "refs": {
+        "StartNotebookImportInput$sourceLocation": "<p>The source location of the notebook to import. This specifies the Amazon Simple Storage Service URI of the notebook file.</p>",
+        "StartNotebookImportOutput$sourceLocation": "<p>The source location from which the notebook was imported.</p>"
       }
     },
     "SparkEmrPropertiesInput": {
@@ -7944,6 +8374,22 @@
       "base": null,
       "refs": {}
     },
+    "StartNotebookExportInput": {
+      "base": null,
+      "refs": {}
+    },
+    "StartNotebookExportOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "StartNotebookImportInput": {
+      "base": null,
+      "refs": {}
+    },
+    "StartNotebookImportOutput": {
+      "base": null,
+      "refs": {}
+    },
     "StartNotebookRunInput": {
       "base": null,
       "refs": {}
@@ -7972,7 +8418,7 @@
       "refs": {}
     },
     "StorageConfig": {
-      "base": "<p>The storage configuration for a notebook run in Amazon DataZone.</p>",
+      "base": "<p>The storage configuration for a notebook run in Amazon SageMaker Unified Studio.</p>",
       "refs": {
         "GetNotebookRunOutput$storageConfiguration": "<p>The storage configuration of the notebook run, including the Amazon Simple Storage Service path and KMS key ARN.</p>",
         "StartNotebookRunOutput$storageConfiguration": "<p>The storage configuration of the notebook run, including the Amazon Simple Storage Service path and KMS key ARN.</p>"
@@ -8029,7 +8475,7 @@
         "CreateEnvironmentInput$name": "<p>The name of the Amazon DataZone environment.</p>",
         "CreateEnvironmentInput$environmentAccountIdentifier": "<p>The ID of the account in which the environment is being created.</p>",
         "CreateEnvironmentInput$environmentAccountRegion": "<p>The region of the account in which the environment is being created.</p>",
-        "CreateEnvironmentInput$environmentBlueprintIdentifier": "<p>The ID of the blueprint with which the environment is being created.</p>",
+        "CreateEnvironmentInput$environmentBlueprintIdentifier": "<p>The ID of the blueprint with which the environment is being created.</p> <note> <p>This parameter is only valid for V1 domains. If provided for a V2 domain, the service returns a ValidationException.</p> </note>",
         "CreateEnvironmentInput$environmentConfigurationId": "<p>The configuration ID of the environment.</p>",
         "CreateEnvironmentOutput$createdBy": "<p>The Amazon DataZone user who created this environment.</p>",
         "CreateEnvironmentOutput$provider": "<p>The provider of this Amazon DataZone environment.</p>",
@@ -8038,6 +8484,7 @@
         "CreateGroupProfileInput$clientToken": "<p> A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "CreateGroupProfileOutput$rolePrincipalArn": "<p>The ARN of the IAM role principal. This role is associated with the group profile.</p>",
         "CreateGroupProfileOutput$rolePrincipalId": "<p>The unique identifier of the IAM role principal. This principal is associated with the group profile.</p>",
+        "CreateNotebookOutput$lockedBy": "<p>The identifier of the user who locked the notebook.</p>",
         "CreateProjectInput$projectCategory": "<p>The category of the project. Set to 'ADMIN' designates this as an administrative project for the Amazon DataZone domain.</p>",
         "CreateProjectOutput$projectCategory": "<p>The category of the project.</p>",
         "CreateSubscriptionGrantInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
@@ -8120,6 +8567,7 @@
         "GetLineageNodeOutput$description": "<p>The description of the data lineage node.</p>",
         "GetLineageNodeOutput$typeName": "<p>The name of the type of the specified data lineage node.</p>",
         "GetLineageNodeOutput$sourceIdentifier": "<p>The source identifier of the data lineage node.</p>",
+        "GetNotebookOutput$lockedBy": "<p>The identifier of the user who locked the notebook.</p>",
         "GetProjectOutput$projectCategory": "<p>The category of the project.</p>",
         "GetSubscriptionRequestDetailsOutput$reviewerId": "<p>The identifier of the Amazon DataZone user who reviewed the subscription request.</p>",
         "GetSubscriptionTargetOutput$type": "<p>The type of the subscription target.</p>",
@@ -8145,6 +8593,8 @@
         "IamUserProfileDetails$principalId": "<p>The principal ID as part of the IAM user profile details.</p>",
         "IamUserProfileDetails$sessionName": "<p>The session name for IAM role sessions.</p>",
         "IamUserProfileDetails$groupProfileId": "<p>The identifier of the group profile associated with the IAM user profile. This links the user to a specific group profile within the Amazon DataZone domain.</p>",
+        "IdentityMapping$usernameAttribute": "<p>The username attribute used for the identity mapping.</p>",
+        "IdentityMapping$prefix": "<p>The prefix used for the identity mapping.</p>",
         "InExpression$columnName": "<p>The name of the column.</p>",
         "IsNotNullExpression$columnName": "<p>The name of the column.</p>",
         "IsNullExpression$columnName": "<p>The name of the column.</p>",
@@ -8169,6 +8619,7 @@
         "LineageNodeSummary$sourceIdentifier": "<p>The alternate ID of the data lineage node.</p>",
         "LineageNodeTypeItem$name": "<p>The name of the data lineage node type.</p>",
         "LineageNodeTypeItem$description": "<p>The description of the data lineage node type.</p>",
+        "LineageSyncOutput$lineageJobId": "<p>The ID of the lineage sync job.</p>",
         "ListDataSourcesInput$projectIdentifier": "<p>The identifier of the project in which to list data sources.</p>",
         "ListDataSourcesInput$environmentIdentifier": "<p>The identifier of the environment in which to list the data sources.</p>",
         "ListDataSourcesInput$connectionIdentifier": "<p>The ID of the connection.</p>",
@@ -8213,6 +8664,7 @@
         "ProjectDeletionError$message": "<p>The message of the project deletion error.</p>",
         "ProjectProfileList$member": null,
         "ProjectSummary$projectCategory": "<p>The category of the project.</p>",
+        "PutResourceConfiguration$description": "<p>The description of the resource configuration.</p>",
         "RedshiftLineageSyncConfigurationOutput$lineageJobId": "<p>The lineage job ID of the Amaon Redshift lineage sync configuration.</p>",
         "RedshiftPropertiesOutput$jdbcIamUrl": "<p>The jdbcIam URL of the Amazon Redshift properties.</p>",
         "RedshiftPropertiesOutput$jdbcUrl": "<p>The jdbcURL of the Amazon Redshift properties. </p>",
@@ -8228,9 +8680,15 @@
         "Resource$name": "<p>The name of a provisioned resource of this Amazon DataZone environment.</p>",
         "Resource$value": "<p>The value of a provisioned resource of this Amazon DataZone environment.</p>",
         "Resource$type": "<p>The type of a provisioned resource of this Amazon DataZone environment.</p>",
+        "ResourceConfiguration$identifier": "<p>The identifier of the resource configuration.</p>",
+        "ResourceConfiguration$name": "<p>The name of the resource configuration.</p>",
+        "ResourceConfiguration$description": "<p>The description of the resource configuration.</p>",
+        "ResourceConfigurationParameterMap$key": null,
+        "ResourceConfigurationParameterMap$value": null,
         "S3PropertiesOutput$errorMessage": "<p>The error message that gets displayed.</p>",
         "SecurityGroupIds$member": null,
         "SelfGrantStatusDetail$failureCause": "<p>The reason for why the operation failed.</p>",
+        "SnowflakePropertiesOutput$errorMessage": "<p>An error message returned if the Snowflake connection failed to establish or validate.</p>",
         "SparkEmrPropertiesOutput$computeArn": "<p>The compute ARN of the Spark EMR.</p>",
         "SparkEmrPropertiesOutput$instanceProfileArn": "<p>The instance profile ARN of the Spark EMR.</p>",
         "SparkEmrPropertiesOutput$javaVirtualEnv": "<p>The Java virtual env of the Spark EMR.</p>",
@@ -8288,6 +8746,7 @@
         "UpdateEnvironmentProfileOutput$createdBy": "<p>The Amazon DataZone user who created the environment profile.</p>",
         "UpdateGroupProfileOutput$rolePrincipalArn": "<p>The ARN of the IAM role principal. This role is associated with the updated group profile.</p>",
         "UpdateGroupProfileOutput$rolePrincipalId": "<p>The unique identifier of the IAM role principal. This principal is associated with the updated group profile.</p>",
+        "UpdateNotebookOutput$lockedBy": "<p>The identifier of the user who locked the notebook.</p>",
         "UpdateProjectInput$projectProfileVersion": "<p>The project profile version to which the project should be updated. You can only specify the following string for this parameter: <code>latest</code>.</p>",
         "UpdateProjectOutput$projectCategory": "<p>The category of the project.</p>",
         "UpdateRootDomainUnitOwnerInput$newOwner": "<p>The new owner of the root domain unit.</p>",
@@ -8312,7 +8771,8 @@
       "base": null,
       "refs": {
         "PhysicalConnectionRequirements$subnetId": "<p>The subnet ID of the physical connection requirements of a connection. </p>",
-        "SubnetIdList$member": null
+        "SubnetIdList$member": null,
+        "VpcConnectionSubnetIdList$member": null
       }
     },
     "SubnetIdList": {
@@ -8934,7 +9394,7 @@
       }
     },
     "TimeoutConfig": {
-      "base": "<p>The timeout configuration for a notebook run in Amazon DataZone.</p>",
+      "base": "<p>The timeout configuration for a notebook run in Amazon SageMaker Unified Studio.</p>",
       "refs": {
         "GetNotebookRunOutput$timeoutConfiguration": "<p>The timeout configuration of the notebook run.</p>",
         "StartNotebookRunInput$timeoutConfiguration": "<p>The timeout configuration for the notebook run. The default timeout is 720 minutes (12 hours) and the maximum is 1440 minutes (24 hours).</p>",
@@ -8950,12 +9410,16 @@
     "Timestamp": {
       "base": null,
       "refs": {
+        "CreateNotebookOutput$lockedAt": "<p>The timestamp of when the notebook was locked.</p>",
+        "CreateNotebookOutput$lockExpiresAt": "<p>The timestamp of when the notebook lock expires.</p>",
         "GetJobRunOutput$createdAt": "<p>The timestamp of when the job run was created.</p>",
         "GetJobRunOutput$startTime": "<p>The timestamp of when the job run started.</p>",
         "GetJobRunOutput$endTime": "<p>The timestamp of when the job run ended.</p>",
         "GetLineageEventOutput$eventTime": "<p>The time of the lineage event.</p>",
         "GetLineageNodeInput$eventTimestamp": "<p>The event time stamp for which you want to get the data lineage node.</p>",
         "GetLineageNodeOutput$eventTimestamp": "<p>The timestamp of the event described in the data lineage node.</p>",
+        "GetNotebookOutput$lockedAt": "<p>The timestamp of when the notebook was locked.</p>",
+        "GetNotebookOutput$lockExpiresAt": "<p>The timestamp of when the notebook lock expires.</p>",
         "GetNotebookRunOutput$startedAt": "<p>The timestamp of when the notebook run started executing.</p>",
         "GetNotebookRunOutput$completedAt": "<p>The timestamp of when the notebook run completed.</p>",
         "GlueConnection$creationTime": "<p>The creation time of the Amazon Web Services Glue connection.</p>",
@@ -8988,12 +9452,16 @@
         "SubscribedAsset$failureTimestamp": "<p>The failure timestamp included in the details of the asset for which the subscription grant is created.</p>",
         "TimeSeriesDataPointFormInput$timestamp": "<p>The timestamp of the time series data points form.</p>",
         "TimeSeriesDataPointFormOutput$timestamp": "<p>The timestamp of the time series data points form.</p>",
-        "TimeSeriesDataPointSummaryFormOutput$timestamp": "<p>The timestamp of the time series data points summary form.</p>"
+        "TimeSeriesDataPointSummaryFormOutput$timestamp": "<p>The timestamp of the time series data points summary form.</p>",
+        "UpdateNotebookOutput$lockedAt": "<p>The timestamp of when the notebook was locked.</p>",
+        "UpdateNotebookOutput$lockExpiresAt": "<p>The timestamp of when the notebook lock expires.</p>"
       }
     },
     "Timezone": {
       "base": null,
       "refs": {
+        "LineageSyncInput$timezone": "<p>The timezone of the lineage sync schedule.</p>",
+        "LineageSyncOutput$timezone": "<p>The timezone of the lineage sync schedule.</p>",
         "ScheduleConfiguration$timezone": "<p>The timezone of the data source run. </p>"
       }
     },
@@ -9041,7 +9509,7 @@
       }
     },
     "TriggerSource": {
-      "base": "<p>The source that triggered a notebook run in Amazon DataZone.</p>",
+      "base": "<p>The source that triggered a notebook run in Amazon SageMaker Unified Studio.</p>",
       "refs": {
         "GetNotebookRunOutput$triggerSource": "<p>The source that triggered the notebook run.</p>",
         "NotebookRunSummary$triggerSource": "<p>The source that triggered the notebook run.</p>",
@@ -9050,7 +9518,7 @@
       }
     },
     "TriggerSourceType": {
-      "base": "<p>The type of trigger source for a notebook run in Amazon DataZone.</p>",
+      "base": "<p>The type of trigger source for a notebook run in Amazon SageMaker Unified Studio.</p>",
       "refs": {
         "TriggerSource$type": "<p>The type of the trigger source. Valid values are <code>MANUAL</code>, <code>SCHEDULED</code>, and <code>WORKFLOW</code>.</p>"
       }
@@ -9204,6 +9672,14 @@
       "base": null,
       "refs": {}
     },
+    "UpdateNotebookInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateNotebookOutput": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateProjectInput": {
       "base": null,
       "refs": {}
@@ -9299,6 +9775,7 @@
         "AssetTypeItem$updatedAt": "<p>The timestamp of when the asset type was updated.</p>",
         "CancelSubscriptionOutput$updatedAt": "<p>The timestamp that specifies when the subscription was cancelled.</p>",
         "CreateAssetTypeOutput$updatedAt": "<p>The timestamp of when the custom type was created.</p>",
+        "CreateNotebookOutput$updatedAt": "<p>The timestamp of when the notebook was last updated.</p>",
         "CreateSubscriptionGrantOutput$updatedAt": "<p>A timestamp of when the subscription grant was updated.</p>",
         "CreateSubscriptionRequestOutput$updatedAt": "<p>The timestamp of when the subscription request was updated.</p>",
         "CreateSubscriptionTargetOutput$updatedAt": "<p>The timestamp of when the subscription target was updated.</p>",
@@ -9312,6 +9789,7 @@
         "GetGlossaryTermOutput$updatedAt": "<p>The timestamp of when the business glossary term was updated.</p>",
         "GetLineageNodeOutput$updatedAt": "<p>The timestamp at which the data lineage node was updated.</p>",
         "GetListingOutput$updatedAt": "<p>The timestamp of when the listing was updated.</p>",
+        "GetNotebookOutput$updatedAt": "<p>The timestamp of when the notebook was last updated.</p>",
         "GetNotebookRunOutput$updatedAt": "<p>The timestamp of when the notebook run was last updated.</p>",
         "GetRuleOutput$updatedAt": "<p>The timestamp at which the rule was last updated.</p>",
         "GetSubscriptionGrantOutput$updatedAt": "<p>The timestamp of when the subscription grant was upated.</p>",
@@ -9324,6 +9802,7 @@
         "LineageNodeSummary$updatedAt": "<p>The timestamp at which the data lineage node was updated.</p>",
         "LineageNodeTypeItem$updatedAt": "<p>The timestamp at which the data lineage node type was updated.</p>",
         "NotebookRunSummary$updatedAt": "<p>The timestamp of when the notebook run was last updated.</p>",
+        "NotebookSummary$updatedAt": "<p>The timestamp of when the notebook was last updated.</p>",
         "RejectSubscriptionRequestOutput$updatedAt": "<p>The timestamp of when the subscription request was updated.</p>",
         "RevokeSubscriptionOutput$updatedAt": "<p>The timestamp of when the subscription was revoked.</p>",
         "RuleSummary$updatedAt": "<p>The timestamp at which the rule was last updated.</p>",
@@ -9334,6 +9813,7 @@
         "SubscriptionTargetSummary$updatedAt": "<p>The timestamp of when the subscription target was updated.</p>",
         "UpdateDomainOutput$lastUpdatedAt": "<p>Specifies the timestamp of when the domain was last updated.</p>",
         "UpdateDomainUnitOutput$lastUpdatedAt": "<p>The timestamp at which the domain unit was last updated.</p>",
+        "UpdateNotebookOutput$updatedAt": "<p>The timestamp of when the notebook was last updated.</p>",
         "UpdateRuleOutput$updatedAt": "<p>The timestamp at which the rule was last updated.</p>",
         "UpdateSubscriptionGrantStatusOutput$updatedAt": "<p>The timestamp of when the subscription grant status is to be updated.</p>",
         "UpdateSubscriptionRequestOutput$updatedAt": "<p>The timestamp of when the subscription request was updated.</p>",
@@ -9350,6 +9830,7 @@
         "CancelSubscriptionOutput$updatedBy": "<p>The Amazon DataZone user that cancelled the subscription.</p>",
         "CreateAccountPoolOutput$updatedBy": "<p>The user who last updated the account pool.</p>",
         "CreateAssetTypeOutput$updatedBy": "<p>The Amazon DataZone user that created the custom asset type.</p>",
+        "CreateNotebookOutput$updatedBy": "<p>The identifier of the user who last updated the notebook.</p>",
         "CreateSubscriptionGrantOutput$updatedBy": "<p>The Amazon DataZone user who updated the subscription grant.</p>",
         "CreateSubscriptionRequestOutput$updatedBy": "<p>The Amazon DataZone user who updated the subscription request.</p>",
         "CreateSubscriptionTargetOutput$updatedBy": "<p>The Amazon DataZone user who updated the subscription target.</p>",
@@ -9362,6 +9843,7 @@
         "GetGlossaryTermOutput$updatedBy": "<p>The Amazon DataZone user who updated the business glossary term.</p>",
         "GetLineageNodeOutput$updatedBy": "<p>The user who updated the data lineage node.</p>",
         "GetListingOutput$updatedBy": "<p>The Amazon DataZone user who updated the listing.</p>",
+        "GetNotebookOutput$updatedBy": "<p>The identifier of the user who last updated the notebook.</p>",
         "GetNotebookRunOutput$updatedBy": "<p>The identifier of the user who last updated the notebook run.</p>",
         "GetRuleOutput$lastUpdatedBy": "<p>The timestamp at which the rule was last updated.</p>",
         "GetSubscriptionGrantOutput$updatedBy": "<p>The Amazon DataZone user who updated the subscription grant.</p>",
@@ -9374,6 +9856,7 @@
         "LineageNodeSummary$updatedBy": "<p>The user who updated the data lineage node.</p>",
         "LineageNodeTypeItem$updatedBy": "<p>The user who updated the data lineage node type.</p>",
         "NotebookRunSummary$updatedBy": "<p>The identifier of the user who last updated the notebook run.</p>",
+        "NotebookSummary$updatedBy": "<p>The identifier of the user who last updated the notebook.</p>",
         "RejectSubscriptionRequestOutput$updatedBy": "<p>The Amazon DataZone user who updated the subscription request.</p>",
         "RevokeSubscriptionOutput$updatedBy": "<p>The Amazon DataZone user who revoked the subscription.</p>",
         "RuleSummary$lastUpdatedBy": "<p>The timestamp at which the rule was last updated.</p>",
@@ -9384,6 +9867,7 @@
         "SubscriptionTargetSummary$updatedBy": "<p>The Amazon DataZone user who updated the subscription target.</p>",
         "UpdateAccountPoolOutput$updatedBy": "<p>The user who last updated the account pool.</p>",
         "UpdateDomainUnitOutput$lastUpdatedBy": "<p>The user who last updated the domain unit.</p>",
+        "UpdateNotebookOutput$updatedBy": "<p>The identifier of the user who last updated the notebook.</p>",
         "UpdateRuleOutput$lastUpdatedBy": "<p>The timestamp at which the rule was last updated.</p>",
         "UpdateSubscriptionGrantStatusOutput$updatedBy": "<p>The Amazon DataZone user who updated the subscription grant status.</p>",
         "UpdateSubscriptionRequestOutput$updatedBy": "<p>The Amazon DataZone user who updated the subscription request.</p>",
@@ -9530,6 +10014,40 @@
     "ValidationException": {
       "base": "<p>The input fails to satisfy the constraints specified by the Amazon Web Services service.</p>",
       "refs": {}
+    },
+    "VpcConnectionSubnetIdList": {
+      "base": null,
+      "refs": {
+        "VpcPropertiesInput$subnetIds": "<p>The subnet IDs of the VPC connection. You can specify between 1 and 16 subnet IDs.</p>",
+        "VpcPropertiesOutput$subnetIds": "<p>The subnet IDs of the VPC connection.</p>",
+        "VpcPropertiesPatch$subnetIds": "<p>The subnet IDs of the VPC connection.</p>"
+      }
+    },
+    "VpcId": {
+      "base": null,
+      "refs": {
+        "VpcPropertiesInput$vpcId": "<p>The identifier of the VPC. Must match the pattern <code>^vpc-[a-z0-9]+$</code>. Maximum length of 32.</p>",
+        "VpcPropertiesOutput$vpcId": "<p>The identifier of the VPC.</p>",
+        "VpcPropertiesPatch$vpcId": "<p>The identifier of the VPC.</p>"
+      }
+    },
+    "VpcPropertiesInput": {
+      "base": "<p>The VPC connection properties used when creating a connection.</p>",
+      "refs": {
+        "ConnectionPropertiesInput$vpcProperties": "<p>The VPC properties of a connection.</p>"
+      }
+    },
+    "VpcPropertiesOutput": {
+      "base": "<p>The VPC connection properties returned in responses.</p>",
+      "refs": {
+        "ConnectionPropertiesOutput$vpcProperties": "<p>The VPC properties of a connection.</p>"
+      }
+    },
+    "VpcPropertiesPatch": {
+      "base": "<p>The VPC connection properties used when updating a connection.</p>",
+      "refs": {
+        "ConnectionPropertiesPatch$vpcProperties": "<p>The VPC properties of a connection properties patch.</p>"
+      }
     },
     "WorkflowsMwaaPropertiesInput": {
       "base": "<p>The Amazon MWAA properties.</p>",

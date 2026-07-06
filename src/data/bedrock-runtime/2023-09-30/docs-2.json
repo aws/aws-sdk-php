@@ -7,6 +7,7 @@
     "ConverseStream": "<p>Sends messages to the specified Amazon Bedrock model and returns the response in a stream. <code>ConverseStream</code> provides a consistent API that works with all Amazon Bedrock models that support messages. This allows you to write code once and use it with different models. Should a model have unique inference parameters, you can also pass those unique parameters to the model. </p> <p>To find out if a model supports streaming, call <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GetFoundationModel.html\">GetFoundationModel</a> and check the <code>responseStreamingSupported</code> field in the response.</p> <note> <p>The CLI doesn't support streaming operations in Amazon Bedrock, including <code>ConverseStream</code>.</p> </note> <p>Amazon Bedrock doesn't store any text, images, or documents that you provide as content. The data is only used to generate the response.</p> <p>You can submit a prompt by including it in the <code>messages</code> field, specifying the <code>modelId</code> of a foundation model or inference profile to run inference on it, and including any other fields that are relevant to your use case.</p> <p>You can also submit a prompt from Prompt management by specifying the ARN of the prompt version and including a map of variables to values in the <code>promptVariables</code> field. You can append more messages to the prompt by using the <code>messages</code> field. If you use a prompt from Prompt management, you can't include the following fields in the request: <code>additionalModelRequestFields</code>, <code>inferenceConfig</code>, <code>system</code>, or <code>toolConfig</code>. Instead, these fields must be defined through Prompt management. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-use.html\">Use a prompt from Prompt management</a>.</p> <p>For information about the Converse API, see <i>Use the Converse API</i> in the <i>Amazon Bedrock User Guide</i>. To use a guardrail, see <i>Use a guardrail with the Converse API</i> in the <i>Amazon Bedrock User Guide</i>. To use a tool with a model, see <i>Tool use (Function calling)</i> in the <i>Amazon Bedrock User Guide</i> </p> <p>For example code, see <i>Conversation streaming example</i> in the <i>Amazon Bedrock User Guide</i>. </p> <p>This operation requires permission for the <code>bedrock:InvokeModelWithResponseStream</code> action.</p> <important> <p>To deny all inference access to resources that you specify in the modelId field, you need to deny access to the <code>bedrock:InvokeModel</code> and <code>bedrock:InvokeModelWithResponseStream</code> actions. Doing this also denies access to the resource through the base inference actions (<a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_InvokeModel.html\">InvokeModel</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_InvokeModelWithResponseStream.html\">InvokeModelWithResponseStream</a>). For more information see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/security_iam_id-based-policy-examples.html#security_iam_id-based-policy-examples-deny-inference\">Deny access for inference on specific models</a>. </p> </important> <p>For troubleshooting some of the common errors you might encounter when using the <code>ConverseStream</code> API, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html\">Troubleshooting Amazon Bedrock API Error Codes</a> in the Amazon Bedrock User Guide</p>",
     "CountTokens": "<p>Returns the token count for a given inference request. This operation helps you estimate token usage before sending requests to foundation models by returning the token count that would be used if the same input were sent to the model in an inference request.</p> <p>Token counting is model-specific because different models use different tokenization strategies. The token count returned by this operation will match the token count that would be charged if the same input were sent to the model in an <code>InvokeModel</code> or <code>Converse</code> request.</p> <p>You can use this operation to:</p> <ul> <li> <p>Estimate costs before sending inference requests.</p> </li> <li> <p>Optimize prompts to fit within token limits.</p> </li> <li> <p>Plan for token usage in your applications.</p> </li> </ul> <p>This operation accepts the same input formats as <code>InvokeModel</code> and <code>Converse</code>, allowing you to count tokens for both raw text inputs and structured conversation formats.</p> <p>The following operations are related to <code>CountTokens</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/API/API_runtime_InvokeModel.html\">InvokeModel</a> - Sends inference requests to foundation models</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/API/API_runtime_Converse.html\">Converse</a> - Sends conversation-based inference requests to foundation models</p> </li> </ul>",
     "GetAsyncInvoke": "<p>Retrieve information about an asynchronous invocation.</p>",
+    "InvokeGuardrailChecks": "<p>Evaluates messages against inline guardrail checks. You specify the check configurations directly in the request, and Amazon Bedrock returns per-check results with severity or confidence scores.</p>",
     "InvokeModel": "<p>Invokes the specified Amazon Bedrock model to run inference using the prompt and inference parameters provided in the request body. You use model inference to generate text, images, and embeddings.</p> <p>For example code, see <i>Invoke model code examples</i> in the <i>Amazon Bedrock User Guide</i>. </p> <p>This operation requires permission for the <code>bedrock:InvokeModel</code> action.</p> <important> <p>To deny all inference access to resources that you specify in the modelId field, you need to deny access to the <code>bedrock:InvokeModel</code> and <code>bedrock:InvokeModelWithResponseStream</code> actions. Doing this also denies access to the resource through the Converse API actions (<a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Converse.html\">Converse</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ConverseStream.html\">ConverseStream</a>). For more information see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/security_iam_id-based-policy-examples.html#security_iam_id-based-policy-examples-deny-inference\">Deny access for inference on specific models</a>. </p> </important> <p>For troubleshooting some of the common errors you might encounter when using the <code>InvokeModel</code> API, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html\">Troubleshooting Amazon Bedrock API Error Codes</a> in the Amazon Bedrock User Guide</p>",
     "InvokeModelWithBidirectionalStream": "<p>Invoke the specified Amazon Bedrock model to run inference using the bidirectional stream. The response is returned in a stream that remains open for 8 minutes. A single session can contain multiple prompts and responses from the model. The prompts to the model are provided as audio files and the model's responses are spoken back to the user and transcribed.</p> <p>It is possible for users to interrupt the model's response with a new prompt, which will halt the response speech. The model will retain contextual awareness of the conversation while pivoting to respond to the new prompt.</p>",
     "InvokeModelWithResponseStream": "<p>Invoke the specified Amazon Bedrock model to run inference using the prompt and inference parameters provided in the request body. The response is returned in a stream.</p> <p>To see if a model supports streaming, call <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GetFoundationModel.html\">GetFoundationModel</a> and check the <code>responseStreamingSupported</code> field in the response.</p> <note> <p>The CLI doesn't support streaming operations in Amazon Bedrock, including <code>InvokeModelWithResponseStream</code>.</p> </note> <p>For example code, see <i>Invoke model with streaming code example</i> in the <i>Amazon Bedrock User Guide</i>. </p> <p>This operation requires permissions to perform the <code>bedrock:InvokeModelWithResponseStream</code> action. </p> <important> <p>To deny all inference access to resources that you specify in the modelId field, you need to deny access to the <code>bedrock:InvokeModel</code> and <code>bedrock:InvokeModelWithResponseStream</code> actions. Doing this also denies access to the resource through the Converse API actions (<a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Converse.html\">Converse</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ConverseStream.html\">ConverseStream</a>). For more information see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/security_iam_id-based-policy-examples.html#security_iam_id-based-policy-examples-deny-inference\">Deny access for inference on specific models</a>. </p> </important> <p>For troubleshooting some of the common errors you might encounter when using the <code>InvokeModelWithResponseStream</code> API, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html\">Troubleshooting Amazon Bedrock API Error Codes</a> in the Amazon Bedrock User Guide</p>",
@@ -175,6 +176,7 @@
       "base": null,
       "refs": {
         "CitationsConfig$enabled": "<p>Specifies whether citations from the selected document should be used in the model's response. When set to true, the model can generate citations that reference the source documents used to inform the response.</p>",
+        "GuardrailChecksSensitiveInformationResult$truncated": "<p>Specifies whether the results were truncated because the number of detected entities exceeded the maximum limit.</p>",
         "GuardrailContentFilter$detected": "<p>Indicates whether content that breaches the guardrail configuration is detected.</p>",
         "GuardrailContextualGroundingFilter$detected": "<p>Indicates whether content that fails the contextual grounding evaluation (grounding or relevance score less than the corresponding threshold) was detected.</p>",
         "GuardrailCustomWord$detected": "<p>Indicates whether custom word content that breaches the guardrail configuration is detected.</p>",
@@ -847,6 +849,249 @@
         "GuardrailAutomatedReasoningFinding$valid": "<p>Contains the result when the automated reasoning evaluation determines that the claims in the input are logically valid and definitively true based on the provided premises and policy rules.</p>"
       }
     },
+    "GuardrailChecksConfig": {
+      "base": "<p>The configuration for inline guardrail checks. Specify one or more check types to run against the messages.</p>",
+      "refs": {
+        "InvokeGuardrailChecksRequest$checks": "<p>The inline check configurations that specify which guardrail checks to run against the messages.</p>"
+      }
+    },
+    "GuardrailChecksContentBlock": {
+      "base": "<p>A content block within a message to evaluate.</p>",
+      "refs": {
+        "GuardrailChecksContentBlockList$member": null
+      }
+    },
+    "GuardrailChecksContentBlockList": {
+      "base": "<p>A list of content blocks within a message.</p>",
+      "refs": {
+        "GuardrailChecksMessage$content": "<p>The content blocks for the message.</p>"
+      }
+    },
+    "GuardrailChecksContentFilterCategory": {
+      "base": "<p>The category for content filter evaluation.</p>",
+      "refs": {
+        "GuardrailChecksContentFilterCategoryConfig$category": "<p>The content filter category to evaluate.</p>",
+        "GuardrailChecksContentFilterResultEntry$category": "<p>The content filter category that was evaluated.</p>"
+      }
+    },
+    "GuardrailChecksContentFilterCategoryConfig": {
+      "base": "<p>The configuration for a single content filter category to evaluate.</p>",
+      "refs": {
+        "GuardrailChecksContentFilterCategoryConfigList$member": null
+      }
+    },
+    "GuardrailChecksContentFilterCategoryConfigList": {
+      "base": "<p>A list of content filter category configurations.</p>",
+      "refs": {
+        "GuardrailChecksContentFilterConfig$categories": "<p>The content filter categories to evaluate.</p>"
+      }
+    },
+    "GuardrailChecksContentFilterConfig": {
+      "base": "<p>The configuration for the content filter check, specifying which categories to evaluate.</p>",
+      "refs": {
+        "GuardrailChecksConfig$contentFilter": "<p>The content filter check configuration.</p>"
+      }
+    },
+    "GuardrailChecksContentFilterResult": {
+      "base": "<p>The content filter check results.</p>",
+      "refs": {
+        "GuardrailChecksResults$contentFilter": "<p>The content filter check results.</p>"
+      }
+    },
+    "GuardrailChecksContentFilterResultEntry": {
+      "base": "<p>The evaluation result for a single content filter category.</p>",
+      "refs": {
+        "GuardrailChecksContentFilterResultList$member": null
+      }
+    },
+    "GuardrailChecksContentFilterResultEntrySeverityScoreDouble": {
+      "base": null,
+      "refs": {
+        "GuardrailChecksContentFilterResultEntry$severityScore": "<p>The severity score for the category, ranging from 0.0 to 1.0. Higher values indicate greater severity.</p>"
+      }
+    },
+    "GuardrailChecksContentFilterResultList": {
+      "base": "<p>A list of content filter evaluation results.</p>",
+      "refs": {
+        "GuardrailChecksContentFilterResult$results": "<p>The per-category content filter results.</p>"
+      }
+    },
+    "GuardrailChecksContentFilterUsage": {
+      "base": "<p>The text unit usage for the content filter check.</p>",
+      "refs": {
+        "GuardrailChecksUsageResults$contentFilter": "<p>The text unit usage for the content filter check.</p>"
+      }
+    },
+    "GuardrailChecksMessage": {
+      "base": "<p>A message to evaluate against guardrail checks, containing a role and content blocks.</p>",
+      "refs": {
+        "GuardrailChecksMessageList$member": null
+      }
+    },
+    "GuardrailChecksMessageList": {
+      "base": "<p>A list of messages to evaluate.</p>",
+      "refs": {
+        "InvokeGuardrailChecksRequest$messages": "<p>The messages to evaluate against the specified guardrail checks. Each message includes a role and one or more content blocks.</p>"
+      }
+    },
+    "GuardrailChecksPromptAttackCategory": {
+      "base": "<p>The category for prompt attack evaluation.</p>",
+      "refs": {
+        "GuardrailChecksPromptAttackCategoryConfig$category": "<p>The prompt attack category to evaluate.</p>",
+        "GuardrailChecksPromptAttackResultEntry$category": "<p>The prompt attack category that was evaluated.</p>"
+      }
+    },
+    "GuardrailChecksPromptAttackCategoryConfig": {
+      "base": "<p>The configuration for a single prompt attack category to evaluate.</p>",
+      "refs": {
+        "GuardrailChecksPromptAttackCategoryConfigList$member": null
+      }
+    },
+    "GuardrailChecksPromptAttackCategoryConfigList": {
+      "base": "<p>A list of prompt attack category configurations.</p>",
+      "refs": {
+        "GuardrailChecksPromptAttackConfig$categories": "<p>The prompt attack categories to evaluate.</p>"
+      }
+    },
+    "GuardrailChecksPromptAttackConfig": {
+      "base": "<p>The configuration for the prompt attack check, specifying which categories to evaluate.</p>",
+      "refs": {
+        "GuardrailChecksConfig$promptAttack": "<p>The prompt attack check configuration.</p>"
+      }
+    },
+    "GuardrailChecksPromptAttackResult": {
+      "base": "<p>The prompt attack check results.</p>",
+      "refs": {
+        "GuardrailChecksResults$promptAttack": "<p>The prompt attack check results.</p>"
+      }
+    },
+    "GuardrailChecksPromptAttackResultEntry": {
+      "base": "<p>The evaluation result for a single prompt attack category.</p>",
+      "refs": {
+        "GuardrailChecksPromptAttackResultList$member": null
+      }
+    },
+    "GuardrailChecksPromptAttackResultEntrySeverityScoreDouble": {
+      "base": null,
+      "refs": {
+        "GuardrailChecksPromptAttackResultEntry$severityScore": "<p>The severity score for the category, ranging from 0.0 to 1.0. Higher values indicate greater severity.</p>"
+      }
+    },
+    "GuardrailChecksPromptAttackResultList": {
+      "base": "<p>A list of prompt attack evaluation results.</p>",
+      "refs": {
+        "GuardrailChecksPromptAttackResult$results": "<p>The per-category prompt attack results.</p>"
+      }
+    },
+    "GuardrailChecksPromptAttackUsage": {
+      "base": "<p>The text unit usage for the prompt attack check.</p>",
+      "refs": {
+        "GuardrailChecksUsageResults$promptAttack": "<p>The text unit usage for the prompt attack check.</p>"
+      }
+    },
+    "GuardrailChecksResults": {
+      "base": "<p>The results from the guardrail checks evaluation, organized by check type.</p>",
+      "refs": {
+        "InvokeGuardrailChecksResponse$results": "<p>The per-check results containing findings from the guardrail evaluation.</p>"
+      }
+    },
+    "GuardrailChecksRole": {
+      "base": "<p>The role of the message sender in the conversation.</p>",
+      "refs": {
+        "GuardrailChecksMessage$role": "<p>The role of the message sender.</p>"
+      }
+    },
+    "GuardrailChecksSensitiveInformationConfig": {
+      "base": "<p>The configuration for the sensitive information check, specifying which entity types to detect.</p>",
+      "refs": {
+        "GuardrailChecksConfig$sensitiveInformation": "<p>The sensitive information check configuration.</p>"
+      }
+    },
+    "GuardrailChecksSensitiveInformationEntityConfig": {
+      "base": "<p>The configuration for a single sensitive information entity type to detect.</p>",
+      "refs": {
+        "GuardrailChecksSensitiveInformationEntityConfigList$member": null
+      }
+    },
+    "GuardrailChecksSensitiveInformationEntityConfigList": {
+      "base": "<p>A list of sensitive information entity configurations.</p>",
+      "refs": {
+        "GuardrailChecksSensitiveInformationConfig$entities": "<p>The sensitive information entity types to detect.</p>"
+      }
+    },
+    "GuardrailChecksSensitiveInformationEntityType": {
+      "base": "<p>The type of personally identifiable information (PII) entity to detect.</p>",
+      "refs": {
+        "GuardrailChecksSensitiveInformationEntityConfig$type": "<p>The PII entity type to detect.</p>",
+        "GuardrailChecksSensitiveInformationResultEntry$type": "<p>The PII entity type that was detected.</p>"
+      }
+    },
+    "GuardrailChecksSensitiveInformationResult": {
+      "base": "<p>The sensitive information check results.</p>",
+      "refs": {
+        "GuardrailChecksResults$sensitiveInformation": "<p>The sensitive information check results.</p>"
+      }
+    },
+    "GuardrailChecksSensitiveInformationResultEntry": {
+      "base": "<p>The detection result for a single sensitive information entity found in the evaluated messages.</p>",
+      "refs": {
+        "GuardrailChecksSensitiveInformationResultList$member": null
+      }
+    },
+    "GuardrailChecksSensitiveInformationResultEntryBeginOffsetInteger": {
+      "base": null,
+      "refs": {
+        "GuardrailChecksSensitiveInformationResultEntry$beginOffset": "<p>The start character offset of the detected entity within the content block.</p>"
+      }
+    },
+    "GuardrailChecksSensitiveInformationResultEntryConfidenceScoreDouble": {
+      "base": null,
+      "refs": {
+        "GuardrailChecksSensitiveInformationResultEntry$confidenceScore": "<p>The confidence score for the detection, ranging from 0.0 to 1.0. Higher values indicate greater confidence.</p>"
+      }
+    },
+    "GuardrailChecksSensitiveInformationResultEntryContentIndexInteger": {
+      "base": null,
+      "refs": {
+        "GuardrailChecksSensitiveInformationResultEntry$contentIndex": "<p>The zero-based index of the content block within the message where the entity was detected.</p>"
+      }
+    },
+    "GuardrailChecksSensitiveInformationResultEntryEndOffsetInteger": {
+      "base": null,
+      "refs": {
+        "GuardrailChecksSensitiveInformationResultEntry$endOffset": "<p>The end character offset of the detected entity within the content block.</p>"
+      }
+    },
+    "GuardrailChecksSensitiveInformationResultEntryMessageIndexInteger": {
+      "base": null,
+      "refs": {
+        "GuardrailChecksSensitiveInformationResultEntry$messageIndex": "<p>The zero-based index of the message in the input messages array where the entity was detected.</p>"
+      }
+    },
+    "GuardrailChecksSensitiveInformationResultList": {
+      "base": "<p>A list of sensitive information detection results.</p>",
+      "refs": {
+        "GuardrailChecksSensitiveInformationResult$results": "<p>The detected sensitive information entities.</p>"
+      }
+    },
+    "GuardrailChecksSensitiveInformationUsage": {
+      "base": "<p>The text unit usage for the sensitive information check.</p>",
+      "refs": {
+        "GuardrailChecksUsageResults$sensitiveInformation": "<p>The text unit usage for the sensitive information check.</p>"
+      }
+    },
+    "GuardrailChecksTextContent": {
+      "base": "<p>The text content of a message content block. Minimum length of 1 character.</p>",
+      "refs": {
+        "GuardrailChecksContentBlock$text": "<p>The text content to evaluate.</p>"
+      }
+    },
+    "GuardrailChecksUsageResults": {
+      "base": "<p>The text unit usage for the guardrail checks evaluation, organized by check type.</p>",
+      "refs": {
+        "InvokeGuardrailChecksResponse$usage": "<p>The per-check text unit consumption for the guardrail evaluation.</p>"
+      }
+    },
     "GuardrailConfiguration": {
       "base": "<p>Configuration information for a guardrail that you use with the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Converse.html\">Converse</a> operation.</p>",
       "refs": {
@@ -1423,7 +1668,10 @@
     "Integer": {
       "base": null,
       "refs": {
-        "CountTokensResponse$inputTokens": "<p>The number of tokens in the provided input according to the specified model's tokenization rules. This count represents the number of input tokens that would be processed if the same input were sent to the model in an inference request. Use this value to estimate costs and ensure your inputs stay within model token limits.</p>"
+        "CountTokensResponse$inputTokens": "<p>The number of tokens in the provided input according to the specified model's tokenization rules. This count represents the number of input tokens that would be processed if the same input were sent to the model in an inference request. Use this value to estimate costs and ensure your inputs stay within model token limits.</p>",
+        "GuardrailChecksContentFilterUsage$textUnits": "<p>The number of text units consumed by the content filter check.</p>",
+        "GuardrailChecksPromptAttackUsage$textUnits": "<p>The number of text units consumed by the prompt attack check.</p>",
+        "GuardrailChecksSensitiveInformationUsage$textUnits": "<p>The number of text units consumed by the sensitive information check.</p>"
       }
     },
     "InternalServerException": {
@@ -1442,6 +1690,14 @@
         "GetAsyncInvokeResponse$invocationArn": "<p>The invocation's ARN.</p>",
         "StartAsyncInvokeResponse$invocationArn": "<p>The ARN of the invocation.</p>"
       }
+    },
+    "InvokeGuardrailChecksRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "InvokeGuardrailChecksResponse": {
+      "base": null,
+      "refs": {}
     },
     "InvokeModelIdentifier": {
       "base": null,
@@ -1748,6 +2004,13 @@
       "refs": {
         "ConverseRequest$requestMetadata": "<p>Key-value pairs that you can use to filter invocation logs.</p>",
         "ConverseStreamRequest$requestMetadata": "<p>Key-value pairs that you can use to filter invocation logs.</p>"
+      }
+    },
+    "RequestMetadataJson": {
+      "base": null,
+      "refs": {
+        "InvokeModelRequest$requestMetadata": "<p>Key-value pairs that you can use to filter invocation logs.</p>",
+        "InvokeModelWithResponseStreamRequest$requestMetadata": "<p>Key-value pairs that you can use to filter invocation logs.</p>"
       }
     },
     "RequestMetadataKeyString": {

@@ -1,19 +1,18 @@
 {
   "version": "2.0",
-  "service": "<p><fullname>RDS Data API</fullname> <p>Amazon RDS provides an HTTP endpoint to run SQL statements on an Amazon Aurora DB cluster. To run these statements, you use the RDS Data API (Data API).</p> <p>Data API is available with the following types of Aurora databases:</p> <ul> <li> <p>Aurora PostgreSQL - Serverless v2, provisioned, and Serverless v1</p> </li> <li> <p>Aurora MySQL - Serverless v2, provisioned, and Serverless v1</p> </li> </ul> <p>For more information about the Data API, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/data-api.html\">Using RDS Data API</a> in the <i>Amazon Aurora User Guide</i>.</p></p>",
+  "service": "<p><fullname>RDS Data API</fullname> <p>Amazon RDS provides an HTTP endpoint to run SQL statements on an Amazon Aurora DB cluster. To run these statements, you use the RDS Data API (Data API).</p> <p>Data API is available with the following types of Aurora databases:</p> <ul> <li> <p>Aurora PostgreSQL - Serverless and provisioned</p> </li> <li> <p>Aurora MySQL - Serverless and provisioned</p> </li> </ul> <p>For more information about the Data API, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/data-api.html\">Using RDS Data API</a> in the <i>Amazon Aurora User Guide</i>.</p></p>",
   "operations": {
     "BatchExecuteStatement": "<p>Runs a batch SQL statement over an array of data.</p> <p>You can run bulk update and insert operations for multiple records using a DML statement with different parameter sets. Bulk operations can provide a significant performance improvement over individual insert and update operations.</p> <note> <p>If a call isn't part of a transaction because it doesn't include the <code>transactionID</code> parameter, changes that result from the call are committed automatically.</p> <p>There isn't a fixed upper limit on the number of parameter sets. However, the maximum size of the HTTP request submitted through the Data API is 4 MiB. If the request exceeds this limit, the Data API returns an error and doesn't process the request. This 4-MiB limit includes the size of the HTTP headers and the JSON notation in the request. Thus, the number of parameter sets that you can include depends on a combination of factors, such as the size of the SQL statement and the size of each parameter set.</p> <p>The response size limit is 1 MiB. If the call returns more than 1 MiB of response data, the call is terminated.</p> </note>",
     "BeginTransaction": "<p>Starts a SQL transaction.</p> <note> <p>A transaction can run for a maximum of 24 hours. A transaction is terminated and rolled back automatically after 24 hours.</p> <p>A transaction times out if no calls use its transaction ID in three minutes. If a transaction times out before it's committed, it's rolled back automatically.</p> <p>For Aurora MySQL, DDL statements inside a transaction cause an implicit commit. We recommend that you run each MySQL DDL statement in a separate <code>ExecuteStatement</code> call with <code>continueAfterTimeout</code> enabled.</p> </note>",
     "CommitTransaction": "<p>Ends a SQL transaction started with the <code>BeginTransaction</code> operation and commits the changes.</p>",
-    "ExecuteSql": "<p>Runs one or more SQL statements.</p> <note> <p>This operation isn't supported for Aurora Serverless v2 and provisioned DB clusters. For Aurora Serverless v1 DB clusters, the operation is deprecated. Use the <code>BatchExecuteStatement</code> or <code>ExecuteStatement</code> operation.</p> </note>",
+    "ExecuteSql": "<p>Runs one or more SQL statements.</p> <note> <p>This operation is deprecated. Please use the <code>BatchExecuteStatement</code> or <code>ExecuteStatement</code> operation.</p> </note>",
     "ExecuteStatement": "<p>Runs a SQL statement against a database.</p> <note> <p>If a call isn't part of a transaction because it doesn't include the <code>transactionID</code> parameter, changes that result from the call are committed automatically.</p> <p>If the binary response data from the database is more than 1 MB, the call is terminated.</p> </note>",
     "RollbackTransaction": "<p>Performs a rollback of a transaction. Rolling back a transaction cancels its changes.</p>"
   },
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>You don't have sufficient access to perform this action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Arn": {
       "base": null,
@@ -27,15 +26,15 @@
         "ExecuteSqlRequest$dbClusterOrInstanceArn": "<p>The ARN of the Aurora Serverless DB cluster.</p>",
         "ExecuteSqlRequest$awsSecretStoreArn": "<p>The Amazon Resource Name (ARN) of the secret that enables access to the DB cluster. Enter the database user name and password for the credentials in the secret.</p> <p>For information about creating the secret, see <a href=\"https://docs.aws.amazon.com/secretsmanager/latest/userguide/create_database_secret.html\">Create a database secret</a>.</p>",
         "ExecuteStatementRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the Aurora Serverless DB cluster.</p>",
-        "ExecuteStatementRequest$secretArn": "<p>The ARN of the secret that enables access to the DB cluster. Enter the database user name and password for the credentials in the secret.</p> <p>For information about creating the secret, see <a href=\"https://docs.aws.amazon.com/secretsmanager/latest/userguide/create_database_secret.html\">Create a database secret</a>.</p>",
+        "ExecuteStatementRequest$secretArn": "<p>The ARN of the secret that enables access to the DB cluster. Enter the database user name and password for the credentials in the secret.</p> <p>For information about creating the secret, see <a href=\"https://docs.aws.amazon.com/secretsmanager/latest/userguide/create_database_secret.html\">Create a database secret</a>.</p> <note> <p>When you use the CLI on Linux to reference a secret created in the RDS console, the ARN might include special characters like <code>rds!cluster</code>. If you enclose the ARN in double quotes, the <code>!</code> character might trigger a shell expansion error, such as <code>-bash: !cluster: event not found</code>. To avoid this, escape the exclamation mark (\\!) in the ARN or enclose the entire ARN in single quotes (') instead of double quotes.</p> <p>Alternatively, disable shell history expansion by running <code>set +H</code> before you execute the command.</p> </note>",
         "RollbackTransactionRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the Aurora Serverless DB cluster.</p>",
         "RollbackTransactionRequest$secretArn": "<p>The name or ARN of the secret that enables access to the DB cluster.</p>"
       }
     },
     "ArrayOfArray": {
-      "base": "<p>An array of arrays.</p> <note> <p>Some array entries can be null.</p> </note>",
+      "base": "<p>An array of arrays. Can contain null values.</p>",
       "refs": {
-        "ArrayValue$arrayValues": "<p>An array of arrays.</p>"
+        "ArrayValue$arrayValues": "<p>An array of arrays. Can contain null values.</p>"
       }
     },
     "ArrayValue": {
@@ -53,29 +52,24 @@
       }
     },
     "BadRequestException": {
-      "base": "<p>There is an error in the call or in a SQL statement. (This error only appears in calls from Aurora Serverless v1 databases.)</p>",
-      "refs": {
-      }
+      "base": "<p>There is an error in the call or in a SQL statement. This exception is deprecated.</p>",
+      "refs": {}
     },
     "BatchExecuteStatementRequest": {
       "base": "<p>The request parameters represent the input of a SQL statement over an array of data.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchExecuteStatementResponse": {
       "base": "<p>The response elements represent the output of a SQL statement over an array of data.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "BeginTransactionRequest": {
       "base": "<p>The request parameters represent the input of a request to start a SQL transaction.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "BeginTransactionResponse": {
       "base": "<p>The response elements represent the output of a request to start a SQL transaction.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Blob": {
       "base": null,
@@ -96,9 +90,9 @@
       }
     },
     "BooleanArray": {
-      "base": "<p>An array of Boolean values.</p> <note> <p>Some array entries can be null.</p> </note>",
+      "base": "<p>An array of Boolean values. Can contain null values.</p>",
       "refs": {
-        "ArrayValue$booleanValues": "<p>An array of Boolean values.</p>"
+        "ArrayValue$booleanValues": "<p>An array of Boolean values. Can contain null values.</p>"
       }
     },
     "BoxedBoolean": {
@@ -147,33 +141,27 @@
     },
     "CommitTransactionRequest": {
       "base": "<p>The request parameters represent the input of a commit transaction request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CommitTransactionResponse": {
       "base": "<p>The response elements represent the output of a commit transaction request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DatabaseErrorException": {
       "base": "<p>There was an error in processing the SQL statement.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DatabaseNotFoundException": {
       "base": "<p>The DB cluster doesn't have a DB instance.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DatabaseResumingException": {
-      "base": "<p>A request was cancelled because the Aurora Serverless v2 DB instance was paused. The Data API request automatically resumes the DB instance. Wait a few seconds and try again.</p>",
-      "refs": {
-      }
+      "base": "<p>A request was cancelled because the Aurora Serverless DB instance was paused. The Data API request automatically resumes the DB instance. Wait a few seconds and try again.</p>",
+      "refs": {}
     },
     "DatabaseUnavailableException": {
       "base": "<p>The writer instance in the DB cluster isn't available.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DbName": {
       "base": null,
@@ -195,9 +183,9 @@
       }
     },
     "DoubleArray": {
-      "base": "<p>An array of floating-point numbers.</p> <note> <p>Some array entries can be null.</p> </note>",
+      "base": "<p>An array of floating-point numbers. Can contain null values.</p>",
       "refs": {
-        "ArrayValue$doubleValues": "<p>An array of floating-point numbers.</p>"
+        "ArrayValue$doubleValues": "<p>An array of floating-point numbers. Can contain null values.</p>"
       }
     },
     "ErrorMessage": {
@@ -221,23 +209,19 @@
     },
     "ExecuteSqlRequest": {
       "base": "<p>The request parameters represent the input of a request to run one or more SQL statements.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ExecuteSqlResponse": {
       "base": "<p>The response elements represent the output of a request to run one or more SQL statements.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ExecuteStatementRequest": {
       "base": "<p>The request parameters represent the input of a request to run a SQL statement against a database.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ExecuteStatementResponse": {
       "base": "<p>The response elements represent the output of a request to run a SQL statement against a database.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Field": {
       "base": "<p>Contains a value.</p>",
@@ -256,8 +240,7 @@
     },
     "ForbiddenException": {
       "base": "<p>There are insufficient privileges to make the call.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "FormattedSqlRecords": {
       "base": null,
@@ -267,8 +250,7 @@
     },
     "HttpEndpointNotEnabledException": {
       "base": "<p>The HTTP endpoint for using RDS Data API isn't enabled for the DB cluster.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Id": {
       "base": null,
@@ -292,18 +274,15 @@
     },
     "InternalServerErrorException": {
       "base": "<p>An internal error occurred.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidResourceStateException": {
       "base": "<p>The resource is in an invalid state.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidSecretException": {
       "base": "<p>The Secrets Manager secret used with the request isn't valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Long": {
       "base": null,
@@ -313,9 +292,9 @@
       }
     },
     "LongArray": {
-      "base": "<p>An array of integers.</p> <note> <p>Some array entries can be null.</p> </note>",
+      "base": "<p>An array of integers. Can contain null values.</p>",
       "refs": {
-        "ArrayValue$longValues": "<p>An array of integers.</p>"
+        "ArrayValue$longValues": "<p>An array of integers. Can contain null values.</p>"
       }
     },
     "LongReturnType": {
@@ -333,8 +312,7 @@
     },
     "NotFoundException": {
       "base": "<p>The <code>resourceArn</code>, <code>secretArn</code>, or <code>transactionId</code> value can't be found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ParameterName": {
       "base": null,
@@ -387,13 +365,11 @@
     },
     "RollbackTransactionRequest": {
       "base": "<p>The request parameters represent the input of a request to perform a rollback of a transaction.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RollbackTransactionResponse": {
       "base": "<p>The response elements represent the output of a request to perform a rollback of a transaction.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Row": {
       "base": null,
@@ -403,13 +379,11 @@
     },
     "SecretsErrorException": {
       "base": "<p>There was a problem with the Secrets Manager secret used with the request, caused by one of the following conditions:</p> <ul> <li> <p>RDS Data API timed out retrieving the secret.</p> </li> <li> <p>The secret provided wasn't found.</p> </li> <li> <p>The secret couldn't be decrypted.</p> </li> </ul>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ServiceUnavailableError": {
       "base": "<p>The service specified by the <code>resourceArn</code> parameter isn't available.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SqlParameter": {
       "base": "<p>A parameter used in a SQL statement.</p>",
@@ -458,8 +432,7 @@
     },
     "StatementTimeoutException": {
       "base": "<p>The execution of the SQL statement timed out.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "String": {
       "base": null,
@@ -475,9 +448,9 @@
       }
     },
     "StringArray": {
-      "base": "<p>An array of strings.</p> <note> <p>Some array entries can be null.</p> </note>",
+      "base": "<p>An array of strings. Can contain null values.</p>",
       "refs": {
-        "ArrayValue$stringValues": "<p>An array of strings.</p>"
+        "ArrayValue$stringValues": "<p>An array of strings. Can contain null values.</p>"
       }
     },
     "StructValue": {
@@ -488,8 +461,7 @@
     },
     "TransactionNotFoundException": {
       "base": "<p>The transaction ID wasn't found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TransactionStatus": {
       "base": null,
@@ -506,8 +478,7 @@
     },
     "UnsupportedResultException": {
       "base": "<p>There was a problem with the result because of one of the following conditions:</p> <ul> <li> <p>It contained an unsupported data type.</p> </li> <li> <p>It contained a multidimensional array.</p> </li> <li> <p>The size was too large.</p> </li> </ul>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateResult": {
       "base": "<p>The response elements represent the results of an update.</p>",

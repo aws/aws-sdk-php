@@ -641,6 +641,26 @@
       ],
       "idempotent":true
     },
+    "UpdateAdConfiguration":{
+      "name":"UpdateAdConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/UpdateAdConfiguration",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateAdConfigurationRequest"},
+      "output":{"shape":"UpdateAdConfigurationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"PendingVerification"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ]
+    },
     "UpdateChannel":{
       "name":"UpdateChannel",
       "http":{
@@ -1749,7 +1769,7 @@
     "MediaTailorPlaybackConfigurationsList":{
       "type":"list",
       "member":{"shape":"MediaTailorPlaybackConfiguration"},
-      "max":1,
+      "max":3,
       "min":1
     },
     "MultitrackInputConfiguration":{
@@ -2614,6 +2634,22 @@
     "UntagResourceResponse":{
       "type":"structure",
       "members":{}
+    },
+    "UpdateAdConfigurationRequest":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"AdConfigurationArn"},
+        "name":{"shape":"AdConfigurationName"},
+        "mediaTailorPlaybackConfigurations":{"shape":"MediaTailorPlaybackConfigurationsList"}
+      }
+    },
+    "UpdateAdConfigurationResponse":{
+      "type":"structure",
+      "required":["adConfiguration"],
+      "members":{
+        "adConfiguration":{"shape":"AdConfiguration"}
+      }
     },
     "UpdateChannelRequest":{
       "type":"structure",

@@ -15,6 +15,7 @@
     "DescribeBrokerInstanceOptions" : "<p>Describe available broker instance options.</p>",
     "DescribeConfiguration" : "<p>Returns information about the specified configuration.</p>",
     "DescribeConfigurationRevision" : "<p>Returns the specified configuration revision for the specified configuration.</p>",
+    "DescribeSharedResources" : "<p>Returns the resources shared to a broker.</p>",
     "DescribeUser" : "<p>Returns information about an ActiveMQ user.</p>",
     "ListBrokers" : "<p>Returns a list of all brokers.</p>",
     "ListConfigurationRevisions" : "<p>Returns a list of all revisions for the specified configuration.</p>",
@@ -224,6 +225,10 @@
       "base" : "<p>Returns the specified configuration revision for the specified configuration.</p>",
       "refs" : { }
     },
+    "DescribeSharedResourcesOutput" : {
+      "base" : "<p>Returns the networking resources shared to the broker.</p>",
+      "refs" : { }
+    },
     "DescribeUserOutput" : {
       "base" : "<p>Returns information about an ActiveMQ user.</p>",
       "refs" : { }
@@ -334,6 +339,12 @@
       "base" : "<p>Returns information about the updated broker.</p>",
       "refs" : { }
     },
+    "ResourceShareError" : {
+      "base" : "<p>Returns info about the resource share error after updating the broker.</p>",
+      "refs" : {
+        "__listOfResourceShareError$member" : null
+      }
+    },
     "SanitizationWarning" : {
       "base" : "<p>Returns information about the configuration element or attribute that was sanitized in the configuration.</p>",
       "refs" : {
@@ -344,6 +355,36 @@
       "base" : "<p>The reason for which the configuration elements or attributes were sanitized.</p>",
       "refs" : {
         "SanitizationWarning$Reason" : "<p>The reason for which the configuration elements or attributes were sanitized.</p>"
+      }
+    },
+    "SharedResource" : {
+      "base" : "<p>Represents a resource that is shared with the broker, including its type, ARN, and current status.</p>",
+      "refs" : {
+        "__listOfSharedResource$member" : null
+      }
+    },
+    "SharedResourceError" : {
+      "base" : "<p>Information on the error encountered by the resource.</p>",
+      "refs" : {
+        "SharedResource$Error" : "<p>Information on the error encountered by the resource.</p>"
+      }
+    },
+    "SharedResourceErrorCode" : {
+      "base" : "<p>The error code associated with the error.</p>",
+      "refs" : {
+        "SharedResourceError$Code" : "<p>The error code associated with the error.</p>"
+      }
+    },
+    "SharedResourceStatus" : {
+      "base" : "<p>The status of the shared resource.</p>",
+      "refs" : {
+        "SharedResource$Status" : "<p>The status of the shared resource.</p>"
+      }
+    },
+    "SharedResourceType" : {
+      "base" : "<p>The type of shared resource.</p>",
+      "refs" : {
+        "SharedResource$Type" : "<p>The type of shared resource.</p>"
       }
     },
     "Tags" : {
@@ -515,10 +556,22 @@
         "BrokerEngineType$EngineVersions" : "<p>The list of engine versions.</p>"
       }
     },
+    "__listOfResourceShareError" : {
+      "base" : null,
+      "refs" : {
+        "Error$ResourceShareErrors" : "<p>The list of resource share errors.</p>"
+      }
+    },
     "__listOfSanitizationWarning" : {
       "base" : null,
       "refs" : {
         "UpdateConfigurationOutput$Warnings" : "<p>The list of the first 20 warnings about the configuration elements or attributes that were sanitized.</p>"
+      }
+    },
+    "__listOfSharedResource" : {
+      "base" : null,
+      "refs" : {
+        "DescribeSharedResourcesOutput$SharedResources" : "<p>A list of resources shared to the broker.</p>"
       }
     },
     "__listOfUser" : {
@@ -548,7 +601,11 @@
         "DescribeUserOutput$Groups" : "<p>The list of groups (20 maximum) to which the ActiveMQ user belongs. This value can contain only alphanumeric characters, dashes, periods, underscores, and tildes (- . _ ~). This value must be 2-100 characters long.</p>",
         "LdapServerMetadataInput$Hosts" : "<p>Specifies the location of the LDAP server such as Directory Service for Microsoft Active Directory. Optional failover server.</p>",
         "LdapServerMetadataOutput$Hosts" : "<p>Specifies the location of the LDAP server such as Directory Service for Microsoft Active Directory. Optional failover server.</p>",
+        "SharedResource$DnsNames" : "<p>The DNS names accessible by the broker.</p>",
+        "SharedResource$ResourceShareArns" : "<p>The resource share ARNs to which the resource belongs.</p>",
+        "UpdateBrokerInput$ResourceShareArns" : "<p>The list of resource shares to update on the broker.</p>",
         "UpdateBrokerInput$SecurityGroups" : "<p>The list of security groups (1 minimum, 5 maximum) that authorizes connections to brokers.</p>",
+        "UpdateBrokerOutput$ResourceShareArns" : "<p>The pending broker's target list of resource shares.</p>",
         "UpdateBrokerOutput$SecurityGroups" : "<p>The list of security groups (1 minimum, 5 maximum) that authorizes connections to brokers.</p>",
         "UpdateUserInput$Groups" : "<p>The list of groups (20 maximum) to which the ActiveMQ user belongs. This value can contain only alphanumeric characters, dashes, periods, underscores, and tildes (- . _ ~). This value must be 2-100 characters long.</p>",
         "User$Groups" : "<p>The list of groups (20 maximum) to which the ActiveMQ user belongs. This value can contain only alphanumeric characters, dashes, periods, underscores, and tildes (- . _ ~). This value must be 2-100 characters long. Does not apply to RabbitMQ brokers.</p>",
@@ -645,8 +702,14 @@
         "LogsSummary$AuditLogGroup" : "<p>The location of the CloudWatch Logs log group where audit logs are sent.</p>",
         "LogsSummary$GeneralLogGroup" : "<p>The location of the CloudWatch Logs log group where general logs are sent.</p>",
         "PromoteOutput$BrokerId" : "<p>The unique ID that Amazon MQ generates for the broker.</p>",
+        "ResourceShareError$ErrorCode" : "<p>The error code of the resource share.</p>",
+        "ResourceShareError$ResourceShareArn" : "<p>The ARN of the resource share.</p>",
+        "ResourceShareError$Status" : "<p>The status of the resource share.</p>",
         "SanitizationWarning$AttributeName" : "<p>The name of the configuration attribute that has been sanitized.</p>",
         "SanitizationWarning$ElementName" : "<p>The name of the configuration element that has been sanitized.</p>",
+        "SharedResource$ResourceArn" : "<p>The ARN of the shared resource.</p>",
+        "SharedResourceError$Message" : "<p>The error message.</p>",
+        "DescribeSharedResourcesOutput$NextToken" : "<p>The token that specifies the next page of results Amazon MQ should return. To request the first page, leave nextToken empty.</p>",
         "UpdateBrokerInput$EngineVersion" : "<p>The broker engine version. For more information, see the <a href=\"https://docs.aws.amazon.com//amazon-mq/latest/developer-guide/activemq-version-management.html\">ActiveMQ version management</a> and the <a href=\"https://docs.aws.amazon.com//amazon-mq/latest/developer-guide/rabbitmq-version-management.html\">RabbitMQ version management</a> sections in the Amazon MQ Developer Guide.</p> <note><p>When upgrading to ActiveMQ version 5.18 and above or RabbitMQ version 3.13 and above, you must have autoMinorVersionUpgrade set to true for the broker.</p></note>",
         "UpdateBrokerInput$HostInstanceType" : "<p>The broker's host instance type to upgrade to. For a list of supported instance types, see <a href=\"https://docs.aws.amazon.com//amazon-mq/latest/developer-guide/broker.html#broker-instance-types\">Broker instance types</a>.</p>",
         "UpdateBrokerOutput$BrokerId" : "<p>Required. The unique ID that Amazon MQ generates for the broker.</p>",

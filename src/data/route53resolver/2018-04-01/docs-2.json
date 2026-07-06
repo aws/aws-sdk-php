@@ -2,19 +2,22 @@
   "version": "2.0",
   "service": "<p>When you create a VPC using Amazon VPC, you automatically get DNS resolution within the VPC from Route 53 Resolver. By default, Resolver answers DNS queries for VPC domain names such as domain names for EC2 instances or Elastic Load Balancing load balancers. Resolver performs recursive lookups against public name servers for all other domain names.</p> <p>You can also configure DNS resolution between your VPC and your network over a Direct Connect or VPN connection:</p> <p> <b>Forward DNS queries from resolvers on your network to Route 53 Resolver</b> </p> <p>DNS resolvers on your network can forward DNS queries to Resolver in a specified VPC. This allows your DNS resolvers to easily resolve domain names for Amazon Web Services resources such as EC2 instances or records in a Route 53 private hosted zone. For more information, see <a href=\"https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver.html#resolver-overview-forward-network-to-vpc\">How DNS Resolvers on Your Network Forward DNS Queries to Route 53 Resolver</a> in the <i>Amazon Route 53 Developer Guide</i>.</p> <p> <b>Conditionally forward queries from a VPC to resolvers on your network</b> </p> <p>You can configure Resolver to forward queries that it receives from EC2 instances in your VPCs to DNS resolvers on your network. To forward selected queries, you create Resolver rules that specify the domain names for the DNS queries that you want to forward (such as example.com), and the IP addresses of the DNS resolvers on your network that you want to forward the queries to. If a query matches multiple rules (example.com, acme.example.com), Resolver chooses the rule with the most specific match (acme.example.com) and forwards the query to the IP addresses that you specified in that rule. For more information, see <a href=\"https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver.html#resolver-overview-forward-vpc-to-network\">How Route 53 Resolver Forwards DNS Queries from Your VPCs to Your Network</a> in the <i>Amazon Route 53 Developer Guide</i>.</p> <p>Like Amazon VPC, Resolver is Regional. In each Region where you have VPCs, you can choose whether to forward queries from your VPCs to your network (outbound queries), from your network to your VPCs (inbound queries), or both.</p>",
   "operations": {
-    "AssociateFirewallRuleGroup": "<p>Associates a <a>FirewallRuleGroup</a> with a VPC, to provide DNS filtering for the VPC. </p>",
+    "AssociateFirewallRuleGroup": "<p>Associates a <a>FirewallRuleGroup</a> with a VPC, to provide DNS filtering for the VPC.</p> <p>If the rule group contains any rule configured with the <code>PartnerThreatProtection</code> rule type, the calling account must hold an active AWS Marketplace subscription to the named partner. If the subscription is missing, the association request is rejected.</p>",
     "AssociateResolverEndpointIpAddress": "<p>Adds IP addresses to an inbound or an outbound Resolver endpoint. If you want to add more than one IP address, submit one <code>AssociateResolverEndpointIpAddress</code> request for each IP address.</p> <p>To remove an IP address from an endpoint, see <a href=\"https://docs.aws.amazon.com/Route53/latest/APIReference/API_route53resolver_DisassociateResolverEndpointIpAddress.html\">DisassociateResolverEndpointIpAddress</a>. </p>",
     "AssociateResolverQueryLogConfig": "<p>Associates an Amazon VPC with a specified query logging configuration. Route 53 Resolver logs DNS queries that originate in all of the Amazon VPCs that are associated with a specified query logging configuration. To associate more than one VPC with a configuration, submit one <code>AssociateResolverQueryLogConfig</code> request for each VPC.</p> <note> <p>The VPCs that you associate with a query logging configuration must be in the same Region as the configuration.</p> </note> <p>To remove a VPC from a query logging configuration, see <a href=\"https://docs.aws.amazon.com/Route53/latest/APIReference/API_route53resolver_DisassociateResolverQueryLogConfig.html\">DisassociateResolverQueryLogConfig</a>. </p>",
     "AssociateResolverRule": "<p>Associates a Resolver rule with a VPC. When you associate a rule with a VPC, Resolver forwards all DNS queries for the domain name that is specified in the rule and that originate in the VPC. The queries are forwarded to the IP addresses for the DNS resolvers that are specified in the rule. For more information about rules, see <a href=\"https://docs.aws.amazon.com/Route53/latest/APIReference/API_route53resolver_CreateResolverRule.html\">CreateResolverRule</a>. </p>",
+    "BatchCreateFirewallRule": "<p>Creates multiple DNS Firewall rules in the specified rule group.</p>",
+    "BatchDeleteFirewallRule": "<p>Deletes multiple DNS Firewall rules from the specified rule group.</p>",
+    "BatchUpdateFirewallRule": "<p>Updates multiple DNS Firewall rules in the specified rule group.</p>",
     "CreateFirewallDomainList": "<p>Creates an empty firewall domain list for use in DNS Firewall rules. You can populate the domains for the new list with a file, using <a>ImportFirewallDomains</a>, or with domain strings, using <a>UpdateFirewallDomains</a>. </p>",
-    "CreateFirewallRule": "<p>Creates a single DNS Firewall rule in the specified rule group, using the specified domain list.</p>",
+    "CreateFirewallRule": "<p>Creates a single DNS Firewall rule in the specified rule group. The rule can use any one of the following match sources, and the chosen source must be supplied through the matching request field — they are mutually exclusive:</p> <ul> <li> <p> <code>FirewallDomainListId</code> — match a customer-managed or AWS-managed domain list.</p> </li> <li> <p> <code>DnsThreatProtection</code> — match a built-in DNS Firewall Advanced threat detector (<code>DGA</code>, <code>DNS_TUNNELING</code>, or <code>DICTIONARY_DGA</code>).</p> </li> <li> <p> <code>FirewallRuleType</code> — match one of the rule-type variants returned by <a>ListFirewallRuleTypes</a>: <code>FirewallAdvancedContentCategory</code>, <code>FirewallAdvancedThreatCategory</code>, <code>DnsThreatProtection</code>, or <code>PartnerThreatProtection</code>. The <code>PartnerThreatProtection</code> variant requires an active AWS Marketplace subscription to the named partner product.</p> </li> </ul> <p>For rules that require asynchronous provisioning (today, the <code>PartnerThreatProtection</code> rule type), the rule's <code>Status</code> begins at <code>CREATING</code> and transitions to <code>COMPLETE</code> once the rule is provisioned and the marketplace entitlement is verified. If provisioning fails, <code>Status</code> becomes <code>CREATION_FAILED</code> and <code>StatusMessage</code> contains a human-readable reason; the rule is then immutable and must be removed with <a>DeleteFirewallRule</a>.</p>",
     "CreateFirewallRuleGroup": "<p>Creates an empty DNS Firewall rule group for filtering DNS network traffic in a VPC. You can add rules to the new rule group by calling <a>CreateFirewallRule</a>. </p>",
     "CreateOutpostResolver": "<p>Creates a Route 53 Resolver on an Outpost.</p>",
     "CreateResolverEndpoint": "<p>Creates a Resolver endpoint. There are two types of Resolver endpoints, inbound and outbound:</p> <ul> <li> <p>An <i>inbound Resolver endpoint</i> forwards DNS queries to the DNS service for a VPC from your network.</p> </li> <li> <p>An <i>outbound Resolver endpoint</i> forwards DNS queries from the DNS service for a VPC to your network.</p> </li> </ul>",
     "CreateResolverQueryLogConfig": "<p>Creates a Resolver query logging configuration, which defines where you want Resolver to save DNS query logs that originate in your VPCs. Resolver can log queries only for VPCs that are in the same Region as the query logging configuration.</p> <p>To specify which VPCs you want to log queries for, you use <code>AssociateResolverQueryLogConfig</code>. For more information, see <a href=\"https://docs.aws.amazon.com/Route53/latest/APIReference/API_route53resolver_AssociateResolverQueryLogConfig.html\">AssociateResolverQueryLogConfig</a>. </p> <p>You can optionally use Resource Access Manager (RAM) to share a query logging configuration with other Amazon Web Services accounts. The other accounts can then associate VPCs with the configuration. The query logs that Resolver creates for a configuration include all DNS queries that originate in all VPCs that are associated with the configuration.</p>",
     "CreateResolverRule": "<p>For DNS queries that originate in your VPCs, specifies which Resolver endpoint the queries pass through, one domain name that you want to forward to your network, and the IP addresses of the DNS resolvers in your network.</p>",
     "DeleteFirewallDomainList": "<p>Deletes the specified domain list. </p>",
-    "DeleteFirewallRule": "<p>Deletes the specified firewall rule.</p>",
+    "DeleteFirewallRule": "<p>Deletes the specified firewall rule. Identify the rule using either <code>FirewallDomainListId</code> (for domain-list and DNS Firewall Advanced rules) or <code>FirewallThreatProtectionId</code> (for partner-managed and DNS Firewall Advanced rules) — together with <code>FirewallRuleGroupId</code>.</p> <p> <code>DeleteFirewallRule</code> is the only operation that succeeds against a rule whose <code>Status</code> is <code>CREATION_FAILED</code>.</p>",
     "DeleteFirewallRuleGroup": "<p>Deletes the specified firewall rule group. </p>",
     "DeleteOutpostResolver": "<p>Deletes a Resolver on the Outpost.</p>",
     "DeleteResolverEndpoint": "<p>Deletes a Resolver endpoint. The effect of deleting a Resolver endpoint depends on whether it's an inbound or an outbound Resolver endpoint:</p> <ul> <li> <p> <b>Inbound</b>: DNS queries from your network are no longer routed to the DNS service for the specified VPC.</p> </li> <li> <p> <b>Outbound</b>: DNS queries from a VPC are no longer routed to your network.</p> </li> </ul>",
@@ -45,7 +48,8 @@
     "ListFirewallDomains": "<p>Retrieves the domains that you have defined for the specified firewall domain list. </p> <p>A single call might return only a partial list of the domains. For information, see <code>MaxResults</code>. </p>",
     "ListFirewallRuleGroupAssociations": "<p>Retrieves the firewall rule group associations that you have defined. Each association enables DNS filtering for a VPC with one rule group. </p> <p>A single call might return only a partial list of the associations. For information, see <code>MaxResults</code>. </p>",
     "ListFirewallRuleGroups": "<p>Retrieves the minimal high-level information for the rule groups that you have defined. </p> <p>A single call might return only a partial list of the rule groups. For information, see <code>MaxResults</code>. </p>",
-    "ListFirewallRules": "<p>Retrieves the firewall rules that you have defined for the specified firewall rule group. DNS Firewall uses the rules in a rule group to filter DNS network traffic for a VPC. </p> <p>A single call might return only a partial list of the rules. For information, see <code>MaxResults</code>. </p>",
+    "ListFirewallRuleTypes": "<p>Retrieves the rule-type variants that can be used in the <code>FirewallRuleType</code> field of <a>CreateFirewallRule</a> and <a>UpdateFirewallRule</a>. Each returned <a>FirewallRuleTypeDefinition</a> identifies one variant + value combination — for example, <code>FirewallAdvancedContentCategory</code> + <code>VIOLENCE_AND_HATE_SPEECH</code>, or <code>PartnerThreatProtection</code> + a partner-managed feed.</p> <p>The supported <code>RuleType</code> filter values are <code>FirewallAdvancedContentCategory</code>, <code>FirewallAdvancedThreatCategory</code>, <code>DnsThreatProtection</code>, and <code>PartnerThreatProtection</code>. When a returned definition's variant requires an external subscription (currently only <code>PartnerThreatProtection</code>), the response also includes a <a>SubscriptionInfo</a> identifying the AWS Marketplace product that backs it; absence of <code>SubscriptionInfo</code> means the variant is fully managed by AWS and requires no separate subscription.</p>",
+    "ListFirewallRules": "<p>Retrieves the firewall rules that you have defined for the specified firewall rule group. DNS Firewall uses the rules in a rule group to filter DNS network traffic for a VPC.</p> <p>A single call might return only a partial list of the rules. For information, see <code>MaxResults</code>.</p> <p>For rules that require asynchronous provisioning, the response includes <code>Status</code> (see <a>FirewallRuleStatus</a>) and, on failure, <code>StatusMessage</code> with the reason.</p>",
     "ListOutpostResolvers": "<p>Lists all the Resolvers on Outposts that were created using the current Amazon Web Services account.</p>",
     "ListResolverConfigs": "<p>Retrieves the Resolver configurations that you have defined. Route 53 Resolver uses the configurations to manage DNS resolution behavior for your VPCs.</p>",
     "ListResolverDnssecConfigs": "<p>Lists the configurations for DNSSEC validation that are associated with the current Amazon Web Services account.</p>",
@@ -63,7 +67,7 @@
     "UntagResource": "<p>Removes one or more tags from a specified resource.</p>",
     "UpdateFirewallConfig": "<p>Updates the configuration of the firewall behavior provided by DNS Firewall for a single VPC from Amazon Virtual Private Cloud (Amazon VPC). </p>",
     "UpdateFirewallDomains": "<p>Updates the firewall domain list from an array of domain specifications. </p>",
-    "UpdateFirewallRule": "<p>Updates the specified firewall rule. </p>",
+    "UpdateFirewallRule": "<p>Updates the specified firewall rule. The rule's <code>FirewallRuleType</code>, <code>FirewallDomainListId</code>, and top-level <code>DnsThreatProtection</code> match source cannot be changed after creation. Rules whose <code>Status</code> is <code>CREATING</code> or <code>CREATION_FAILED</code> cannot be updated; remove a failed rule with <a>DeleteFirewallRule</a>.</p>",
     "UpdateFirewallRuleGroupAssociation": "<p>Changes the association of a <a>FirewallRuleGroup</a> with a VPC. The association enables DNS filtering for the VPC. </p>",
     "UpdateOutpostResolver": "<p>You can use <code>UpdateOutpostResolver</code> to update the instance count, type, or name of a Resolver on an Outpost.</p>",
     "UpdateResolverConfig": "<p>Updates the behavior configuration of Route 53 Resolver behavior for a single VPC from Amazon Virtual Private Cloud.</p>",
@@ -91,9 +95,11 @@
     "Action": {
       "base": null,
       "refs": {
+        "CreateFirewallRuleEntry$Action": "<p>The action that DNS Firewall should take on a DNS query when it matches one of the domains in the rule's domain list, or a threat in a DNS Firewall Advanced rule:</p> <ul> <li> <p> <code>ALLOW</code> - Permit the request to go through. Not available for DNS Firewall Advanced rules.</p> </li> <li> <p> <code>ALERT</code> - Permit the request and send metrics and logs to CloudWatch.</p> </li> <li> <p> <code>BLOCK</code> - Disallow the request. This option requires additional details in the rule's <code>BlockResponse</code>.</p> </li> </ul>",
         "CreateFirewallRuleRequest$Action": "<p>The action that DNS Firewall should take on a DNS query when it matches one of the domains in the rule's domain list, or a threat in a DNS Firewall Advanced rule:</p> <ul> <li> <p> <code>ALLOW</code> - Permit the request to go through. Not available for DNS Firewall Advanced rules.</p> </li> <li> <p> <code>ALERT</code> - Permit the request and send metrics and logs to Cloud Watch.</p> </li> <li> <p> <code>BLOCK</code> - Disallow the request. This option requires additional details in the rule's <code>BlockResponse</code>. </p> </li> </ul>",
         "FirewallRule$Action": "<p>The action that DNS Firewall should take on a DNS query when it matches one of the domains in the rule's domain list, or a threat in a DNS Firewall Advanced rule:</p> <ul> <li> <p> <code>ALLOW</code> - Permit the request to go through. Not available for DNS Firewall Advanced rules.</p> </li> <li> <p> <code>ALERT</code> - Permit the request to go through but send an alert to the logs.</p> </li> <li> <p> <code>BLOCK</code> - Disallow the request. If this is specified, additional handling details are provided in the rule's <code>BlockResponse</code> setting. </p> </li> </ul>",
         "ListFirewallRulesRequest$Action": "<p>Optional additional filter for the rules to retrieve.</p> <p>The action that DNS Firewall should take on a DNS query when it matches one of the domains in the rule's domain list, or a threat in a DNS Firewall Advanced rule:</p> <ul> <li> <p> <code>ALLOW</code> - Permit the request to go through. Not availabe for DNS Firewall Advanced rules.</p> </li> <li> <p> <code>ALERT</code> - Permit the request to go through but send an alert to the logs.</p> </li> <li> <p> <code>BLOCK</code> - Disallow the request. If this is specified, additional handling details are provided in the rule's <code>BlockResponse</code> setting. </p> </li> </ul>",
+        "UpdateFirewallRuleEntry$Action": "<p>The action that DNS Firewall should take on a DNS query when it matches one of the domains in the rule's domain list, or a threat in a DNS Firewall Advanced rule:</p> <ul> <li> <p> <code>ALLOW</code> - Permit the request to go through. Not available for DNS Firewall Advanced rules.</p> </li> <li> <p> <code>ALERT</code> - Permit the request and send metrics and logs to CloudWatch.</p> </li> <li> <p> <code>BLOCK</code> - Disallow the request. This option requires additional details in the rule's <code>BlockResponse</code>.</p> </li> </ul>",
         "UpdateFirewallRuleRequest$Action": "<p>The action that DNS Firewall should take on a DNS query when it matches one of the domains in the rule's domain list, or a threat in a DNS Firewall Advanced rule:</p> <ul> <li> <p> <code>ALLOW</code> - Permit the request to go through. Not available for DNS Firewall Advanced rules.</p> </li> <li> <p> <code>ALERT</code> - Permit the request to go through but send an alert to the logs.</p> </li> <li> <p> <code>BLOCK</code> - Disallow the request. This option requires additional details in the rule's <code>BlockResponse</code>. </p> </li> </ul>"
       }
     },
@@ -158,34 +164,102 @@
         "UpdateResolverConfigRequest$AutodefinedReverseFlag": "<p>Indicates whether or not the Resolver will create autodefined rules for reverse DNS lookups. This is enabled by default. Disabling this option will also affect EC2-Classic instances using ClassicLink. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html\">ClassicLink</a> in the <i>Amazon EC2 guide</i>.</p> <important> <p>We are retiring EC2-Classic on August 15, 2022. We recommend that you migrate from EC2-Classic to a VPC. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-migrate.html\">Migrate from EC2-Classic to a VPC</a> in the <i>Amazon EC2 guide</i> and the blog <a href=\"http://aws.amazon.com/blogs/aws/ec2-classic-is-retiring-heres-how-to-prepare/\">EC2-Classic Networking is Retiring – Here’s How to Prepare</a>.</p> </important> <note> <p>It can take some time for the status change to be completed.</p> </note> <p/>"
       }
     },
+    "BatchCreateFirewallRuleError": {
+      "base": "<p>An error that occurred while creating a firewall rule in a batch operation.</p>",
+      "refs": {
+        "BatchCreateFirewallRuleErrors$member": null
+      }
+    },
+    "BatchCreateFirewallRuleErrors": {
+      "base": null,
+      "refs": {
+        "BatchCreateFirewallRuleResponse$CreateErrors": "<p>A list of errors that occurred while creating the firewall rules.</p>"
+      }
+    },
+    "BatchCreateFirewallRuleRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchCreateFirewallRuleResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchDeleteFirewallRuleError": {
+      "base": "<p>An error that occurred while deleting a firewall rule in a batch operation.</p>",
+      "refs": {
+        "BatchDeleteFirewallRuleErrors$member": null
+      }
+    },
+    "BatchDeleteFirewallRuleErrors": {
+      "base": null,
+      "refs": {
+        "BatchDeleteFirewallRuleResponse$DeleteErrors": "<p>A list of errors that occurred while deleting the firewall rules.</p>"
+      }
+    },
+    "BatchDeleteFirewallRuleRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchDeleteFirewallRuleResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchUpdateFirewallRuleError": {
+      "base": "<p>An error that occurred while updating a firewall rule in a batch operation.</p>",
+      "refs": {
+        "BatchUpdateFirewallRuleErrors$member": null
+      }
+    },
+    "BatchUpdateFirewallRuleErrors": {
+      "base": null,
+      "refs": {
+        "BatchUpdateFirewallRuleResponse$UpdateErrors": "<p>A list of errors that occurred while updating the firewall rules.</p>"
+      }
+    },
+    "BatchUpdateFirewallRuleRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchUpdateFirewallRuleResponse": {
+      "base": null,
+      "refs": {}
+    },
     "BlockOverrideDnsType": {
       "base": null,
       "refs": {
+        "CreateFirewallRuleEntry$BlockOverrideDnsType": "<p>The DNS record's type. This determines the format of the record value that you provided in <code>BlockOverrideDomain</code>. Used for the rule action <code>BLOCK</code> with a <code>BlockResponse</code> setting of <code>OVERRIDE</code>.</p>",
         "CreateFirewallRuleRequest$BlockOverrideDnsType": "<p>The DNS record's type. This determines the format of the record value that you provided in <code>BlockOverrideDomain</code>. Used for the rule action <code>BLOCK</code> with a <code>BlockResponse</code> setting of <code>OVERRIDE</code>.</p> <p>This setting is required if the <code>BlockResponse</code> setting is <code>OVERRIDE</code>.</p>",
         "FirewallRule$BlockOverrideDnsType": "<p>The DNS record's type. This determines the format of the record value that you provided in <code>BlockOverrideDomain</code>. Used for the rule action <code>BLOCK</code> with a <code>BlockResponse</code> setting of <code>OVERRIDE</code>.</p>",
+        "UpdateFirewallRuleEntry$BlockOverrideDnsType": "<p>The DNS record's type. This determines the format of the record value that you provided in <code>BlockOverrideDomain</code>. Used for the rule action <code>BLOCK</code> with a <code>BlockResponse</code> setting of <code>OVERRIDE</code>.</p>",
         "UpdateFirewallRuleRequest$BlockOverrideDnsType": "<p>The DNS record's type. This determines the format of the record value that you provided in <code>BlockOverrideDomain</code>. Used for the rule action <code>BLOCK</code> with a <code>BlockResponse</code> setting of <code>OVERRIDE</code>.</p>"
       }
     },
     "BlockOverrideDomain": {
       "base": null,
       "refs": {
+        "CreateFirewallRuleEntry$BlockOverrideDomain": "<p>The custom DNS record to send back in response to the query. Used for the rule action <code>BLOCK</code> with a <code>BlockResponse</code> setting of <code>OVERRIDE</code>.</p>",
         "CreateFirewallRuleRequest$BlockOverrideDomain": "<p>The custom DNS record to send back in response to the query. Used for the rule action <code>BLOCK</code> with a <code>BlockResponse</code> setting of <code>OVERRIDE</code>.</p> <p>This setting is required if the <code>BlockResponse</code> setting is <code>OVERRIDE</code>.</p>",
         "FirewallRule$BlockOverrideDomain": "<p>The custom DNS record to send back in response to the query. Used for the rule action <code>BLOCK</code> with a <code>BlockResponse</code> setting of <code>OVERRIDE</code>.</p>",
+        "UpdateFirewallRuleEntry$BlockOverrideDomain": "<p>The custom DNS record to send back in response to the query. Used for the rule action <code>BLOCK</code> with a <code>BlockResponse</code> setting of <code>OVERRIDE</code>.</p>",
         "UpdateFirewallRuleRequest$BlockOverrideDomain": "<p>The custom DNS record to send back in response to the query. Used for the rule action <code>BLOCK</code> with a <code>BlockResponse</code> setting of <code>OVERRIDE</code>.</p>"
       }
     },
     "BlockOverrideTtl": {
       "base": null,
       "refs": {
+        "CreateFirewallRuleEntry$BlockOverrideTtl": "<p>The recommended amount of time, in seconds, for the DNS resolver or web browser to cache the provided override record. Used for the rule action <code>BLOCK</code> with a <code>BlockResponse</code> setting of <code>OVERRIDE</code>.</p> <p>This setting is required if the <code>BlockResponse</code> setting is <code>OVERRIDE</code>.</p>",
         "CreateFirewallRuleRequest$BlockOverrideTtl": "<p>The recommended amount of time, in seconds, for the DNS resolver or web browser to cache the provided override record. Used for the rule action <code>BLOCK</code> with a <code>BlockResponse</code> setting of <code>OVERRIDE</code>.</p> <p>This setting is required if the <code>BlockResponse</code> setting is <code>OVERRIDE</code>.</p>",
+        "UpdateFirewallRuleEntry$BlockOverrideTtl": "<p>The recommended amount of time, in seconds, for the DNS resolver or web browser to cache the provided override record. Used for the rule action <code>BLOCK</code> with a <code>BlockResponse</code> setting of <code>OVERRIDE</code>.</p> <p>This setting is required if the <code>BlockResponse</code> setting is <code>OVERRIDE</code>.</p>",
         "UpdateFirewallRuleRequest$BlockOverrideTtl": "<p>The recommended amount of time, in seconds, for the DNS resolver or web browser to cache the provided override record. Used for the rule action <code>BLOCK</code> with a <code>BlockResponse</code> setting of <code>OVERRIDE</code>.</p>"
       }
     },
     "BlockResponse": {
       "base": null,
       "refs": {
+        "CreateFirewallRuleEntry$BlockResponse": "<p>The way that you want DNS Firewall to block the request, used with the rule action setting <code>BLOCK</code>.</p> <ul> <li> <p> <code>NODATA</code> - Respond indicating that the query was successful, but no response is available for it.</p> </li> <li> <p> <code>NXDOMAIN</code> - Respond indicating that the domain name that's in the query doesn't exist.</p> </li> <li> <p> <code>OVERRIDE</code> - Provide a custom override in the response. This option requires custom handling details in the rule's <code>BlockOverride*</code> settings.</p> </li> </ul>",
         "CreateFirewallRuleRequest$BlockResponse": "<p>The way that you want DNS Firewall to block the request, used with the rule action setting <code>BLOCK</code>. </p> <ul> <li> <p> <code>NODATA</code> - Respond indicating that the query was successful, but no response is available for it.</p> </li> <li> <p> <code>NXDOMAIN</code> - Respond indicating that the domain name that's in the query doesn't exist.</p> </li> <li> <p> <code>OVERRIDE</code> - Provide a custom override in the response. This option requires custom handling details in the rule's <code>BlockOverride*</code> settings. </p> </li> </ul> <p>This setting is required if the rule action setting is <code>BLOCK</code>.</p>",
         "FirewallRule$BlockResponse": "<p>The way that you want DNS Firewall to block the request. Used for the rule action setting <code>BLOCK</code>.</p> <ul> <li> <p> <code>NODATA</code> - Respond indicating that the query was successful, but no response is available for it.</p> </li> <li> <p> <code>NXDOMAIN</code> - Respond indicating that the domain name that's in the query doesn't exist.</p> </li> <li> <p> <code>OVERRIDE</code> - Provide a custom override in the response. This option requires custom handling details in the rule's <code>BlockOverride*</code> settings. </p> </li> </ul>",
+        "UpdateFirewallRuleEntry$BlockResponse": "<p>The way that you want DNS Firewall to block the request, used with the rule action setting <code>BLOCK</code>.</p> <ul> <li> <p> <code>NODATA</code> - Respond indicating that the query was successful, but no response is available for it.</p> </li> <li> <p> <code>NXDOMAIN</code> - Respond indicating that the domain name that's in the query doesn't exist.</p> </li> <li> <p> <code>OVERRIDE</code> - Provide a custom override in the response. This option requires custom handling details in the rule's <code>BlockOverride*</code> settings.</p> </li> </ul>",
         "UpdateFirewallRuleRequest$BlockResponse": "<p>The way that you want DNS Firewall to block the request. Used for the rule action setting <code>BLOCK</code>.</p> <ul> <li> <p> <code>NODATA</code> - Respond indicating that the query was successful, but no response is available for it.</p> </li> <li> <p> <code>NXDOMAIN</code> - Respond indicating that the domain name that's in the query doesn't exist.</p> </li> <li> <p> <code>OVERRIDE</code> - Provide a custom override in the response. This option requires custom handling details in the rule's <code>BlockOverride*</code> settings. </p> </li> </ul>"
       }
     },
@@ -197,11 +271,21 @@
         "PutResolverRulePolicyResponse$ReturnValue": "<p>Whether the <code>PutResolverRulePolicy</code> request was successful.</p>"
       }
     },
-    "ConfidenceThreshold": {
+    "Category": {
       "base": null,
       "refs": {
+        "FirewallDomainList$Category": "<p>The category of the domain list.</p>",
+        "FirewallDomainListMetadata$Category": "<p>The category of the domain list.</p>"
+      }
+    },
+    "ConfidenceThreshold": {
+      "base": "<p>The confidence threshold for a DNS Firewall Advanced rule. One of:</p> <ul> <li> <p> <code>LOW</code> — Provides the highest detection rate for threats, but also increases false positives.</p> </li> <li> <p> <code>MEDIUM</code> — Provides a balance between detecting threats and false positives.</p> </li> <li> <p> <code>HIGH</code> — Detects only the most well-corroborated threats with a low rate of false positives.</p> </li> </ul>",
+      "refs": {
+        "CreateFirewallRuleEntry$ConfidenceThreshold": "<p>The confidence threshold for DNS Firewall Advanced. You must provide this value when you create or update a DNS Firewall Advanced rule. The confidence level values mean:</p> <ul> <li> <p> <code>LOW</code>: Provides the highest detection rate for threats, but also increases false positives.</p> </li> <li> <p> <code>MEDIUM</code>: Provides a balance between detecting threats and false positives.</p> </li> <li> <p> <code>HIGH</code>: Detects only the most well corroborated threats with a low rate of false positives.</p> </li> </ul>",
         "CreateFirewallRuleRequest$ConfidenceThreshold": "<p> The confidence threshold for DNS Firewall Advanced. You must provide this value when you create a DNS Firewall Advanced rule. The confidence level values mean: </p> <ul> <li> <p> <code>LOW</code>: Provides the highest detection rate for threats, but also increases false positives.</p> </li> <li> <p> <code>MEDIUM</code>: Provides a balance between detecting threats and false positives.</p> </li> <li> <p> <code>HIGH</code>: Detects only the most well corroborated threats with a low rate of false positives. </p> </li> </ul>",
+        "DnsThreatProtectionRuleTypeConfig$ConfidenceThreshold": "<p>The confidence threshold for DNS Firewall Advanced. You must provide this value when you create or update a DNS Firewall Advanced rule. The confidence level values mean:</p> <ul> <li> <p> <code>LOW</code>: Provides the highest detection rate for threats, but also increases false positives.</p> </li> <li> <p> <code>MEDIUM</code>: Provides a balance between detecting threats and false positives.</p> </li> <li> <p> <code>HIGH</code>: Detects only the most well corroborated threats with a low rate of false positives.</p> </li> </ul>",
         "FirewallRule$ConfidenceThreshold": "<p> The confidence threshold for DNS Firewall Advanced. You must provide this value when you create a DNS Firewall Advanced rule. The confidence level values mean: </p> <ul> <li> <p> <code>LOW</code>: Provides the highest detection rate for threats, but also increases false positives.</p> </li> <li> <p> <code>MEDIUM</code>: Provides a balance between detecting threats and false positives.</p> </li> <li> <p> <code>HIGH</code>: Detects only the most well corroborated threats with a low rate of false positives. </p> </li> </ul>",
+        "UpdateFirewallRuleEntry$ConfidenceThreshold": "<p>The confidence threshold for DNS Firewall Advanced. You must provide this value when you create or update a DNS Firewall Advanced rule. The confidence level values mean:</p> <ul> <li> <p> <code>LOW</code>: Provides the highest detection rate for threats, but also increases false positives.</p> </li> <li> <p> <code>MEDIUM</code>: Provides a balance between detecting threats and false positives.</p> </li> <li> <p> <code>HIGH</code>: Detects only the most well corroborated threats with a low rate of false positives.</p> </li> </ul>",
         "UpdateFirewallRuleRequest$ConfidenceThreshold": "<p> The confidence threshold for DNS Firewall Advanced. You must provide this value when you create a DNS Firewall Advanced rule. The confidence level values mean: </p> <ul> <li> <p> <code>LOW</code>: Provides the highest detection rate for threats, but also increases false positives.</p> </li> <li> <p> <code>MEDIUM</code>: Provides a balance between detecting threats and false positives.</p> </li> <li> <p> <code>HIGH</code>: Detects only the most well corroborated threats with a low rate of false positives. </p> </li> </ul>"
       }
     },
@@ -226,6 +310,19 @@
     "CreateFirewallDomainListResponse": {
       "base": null,
       "refs": {}
+    },
+    "CreateFirewallRuleEntries": {
+      "base": null,
+      "refs": {
+        "BatchCreateFirewallRuleRequest$CreateFirewallRuleEntries": "<p>The list of firewall rules to create.</p>"
+      }
+    },
+    "CreateFirewallRuleEntry": {
+      "base": "<p>The details for creating a single firewall rule in a batch operation.</p>",
+      "refs": {
+        "BatchCreateFirewallRuleError$FirewallRule": "<p>The firewall rule entry that caused the error.</p>",
+        "CreateFirewallRuleEntries$member": null
+      }
     },
     "CreateFirewallRuleGroupRequest": {
       "base": null,
@@ -280,6 +377,7 @@
       "refs": {
         "AssociateFirewallRuleGroupRequest$CreatorRequestId": "<p>A unique string that identifies the request and that allows failed requests to be retried without the risk of running the operation twice. <code>CreatorRequestId</code> can be any unique string, for example, a date/time stamp. </p>",
         "CreateFirewallDomainListRequest$CreatorRequestId": "<p>A unique string that identifies the request and that allows you to retry failed requests without the risk of running the operation twice. <code>CreatorRequestId</code> can be any unique string, for example, a date/time stamp. </p>",
+        "CreateFirewallRuleEntry$CreatorRequestId": "<p>A unique string that identifies the request and that allows you to retry failed requests without the risk of running the operation twice. <code>CreatorRequestId</code> can be any unique string, for example, a date/time stamp.</p>",
         "CreateFirewallRuleGroupRequest$CreatorRequestId": "<p>A unique string defined by you to identify the request. This allows you to retry failed requests without the risk of running the operation twice. This can be any unique string, for example, a timestamp. </p>",
         "CreateFirewallRuleRequest$CreatorRequestId": "<p>A unique string that identifies the request and that allows you to retry failed requests without the risk of running the operation twice. <code>CreatorRequestId</code> can be any unique string, for example, a date/time stamp. </p>",
         "CreateOutpostResolverRequest$CreatorRequestId": "<p>A unique string that identifies the request and that allows failed requests to be retried without the risk of running the operation twice. </p> <p> <code>CreatorRequestId</code> can be any unique string, for example, a date/time stamp.</p>",
@@ -312,6 +410,19 @@
     "DeleteFirewallDomainListResponse": {
       "base": null,
       "refs": {}
+    },
+    "DeleteFirewallRuleEntries": {
+      "base": null,
+      "refs": {
+        "BatchDeleteFirewallRuleRequest$DeleteFirewallRuleEntries": "<p>The list of firewall rules to delete.</p>"
+      }
+    },
+    "DeleteFirewallRuleEntry": {
+      "base": "<p>The details for deleting a single firewall rule in a batch operation.</p>",
+      "refs": {
+        "BatchDeleteFirewallRuleError$FirewallRule": "<p>The firewall rule entry that caused the error.</p>",
+        "DeleteFirewallRuleEntries$member": null
+      }
     },
     "DeleteFirewallRuleGroupRequest": {
       "base": null,
@@ -400,18 +511,53 @@
       "base": null,
       "refs": {}
     },
+    "DisplayName": {
+      "base": null,
+      "refs": {
+        "FirewallRuleTypeDefinition$DisplayName": "<p>The display name of the rule type.</p>"
+      }
+    },
+    "Dns64Enabled": {
+      "base": null,
+      "refs": {
+        "CreateResolverEndpointRequest$Dns64Enabled": "<p>Specifies whether DNS64 is enabled for the inbound Resolver endpoint. When set to <code>true</code>, Route 53 Resolver synthesizes AAAA (IPv6) records for IPv4-only services by prepending the <code>64:ff9b::/96</code> prefix to the IPv4 address. This enables IPv6-only clients that send queries through the inbound endpoint to reach IPv4-only services. DNS64 works with NAT64 to provide complete IPv6-to-IPv4 translation. Default is false.</p>",
+        "ResolverEndpoint$Dns64Enabled": "<p>Indicates whether DNS64 is enabled for the inbound Resolver endpoint. When <code>true</code>, Route 53 Resolver synthesizes AAAA (IPv6) records for IPv4-only services by prepending the <code>64:ff9b::/96</code> prefix to the IPv4 address.</p>",
+        "UpdateResolverEndpointRequest$Dns64Enabled": "<p>Specifies whether DNS64 is enabled for the inbound Resolver endpoint. When set to <code>true</code>, Route 53 Resolver synthesizes AAAA (IPv6) records for IPv4-only services by prepending the <code>64:ff9b::/96</code> prefix to the IPv4 address. This enables IPv6-only clients that send queries through the inbound endpoint to reach IPv4-only services. DNS64 works with NAT64 to provide complete IPv6-to-IPv4 translation.</p>"
+      }
+    },
     "DnsThreatProtection": {
       "base": null,
       "refs": {
-        "CreateFirewallRuleRequest$DnsThreatProtection": "<p> Use to create a DNS Firewall Advanced rule. </p>",
-        "FirewallRule$DnsThreatProtection": "<p> The type of the DNS Firewall Advanced rule. Valid values are: </p> <ul> <li> <p> <code>DGA</code>: Domain generation algorithms detection. DGAs are used by attackers to generate a large number of domains to to launch malware attacks.</p> </li> <li> <p> <code>DNS_TUNNELING</code>: DNS tunneling detection. DNS tunneling is used by attackers to exfiltrate data from the client by using the DNS tunnel without making a network connection to the client.</p> </li> </ul>",
-        "UpdateFirewallRuleRequest$DnsThreatProtection": "<p> The type of the DNS Firewall Advanced rule. Valid values are: </p> <ul> <li> <p> <code>DGA</code>: Domain generation algorithms detection. DGAs are used by attackers to generate a large number of domains to to launch malware attacks.</p> </li> <li> <p> <code>DNS_TUNNELING</code>: DNS tunneling detection. DNS tunneling is used by attackers to exfiltrate data from the client by using the DNS tunnel without making a network connection to the client.</p> </li> </ul>"
+        "CreateFirewallRuleEntry$DnsThreatProtection": "<p>The type of the DNS Firewall Advanced rule. This setting is mutually exclusive with <code>FirewallDomainListId</code> and <code>FirewallRuleType</code>. Valid values are:</p> <ul> <li> <p> <code>DGA</code>: Domain generation algorithms detection. DGAs are used by attackers to generate a large number of domains to launch malware attacks.</p> </li> <li> <p> <code>DNS_TUNNELING</code>: DNS tunneling detection. DNS tunneling is used by attackers to exfiltrate data from the client by using the DNS tunnel without making a network connection to the client.</p> </li> <li> <p> <code>DICTIONARY_DGA</code>: Dictionary-based domain generation algorithms detection. Dictionary DGAs use wordlists to generate domains that appear more legitimate, making them harder to detect than traditional DGAs.</p> </li> </ul>",
+        "CreateFirewallRuleRequest$DnsThreatProtection": "<p> The type of the DNS Firewall Advanced rule. This setting is mutually exclusive with <code>FirewallDomainListId</code> and <code>FirewallRuleType</code>. Valid values are: </p> <ul> <li> <p> <code>DGA</code>: Domain generation algorithms detection. DGAs are used by attackers to generate a large number of domains to launch malware attacks.</p> </li> <li> <p> <code>DNS_TUNNELING</code>: DNS tunneling detection. DNS tunneling is used by attackers to exfiltrate data from the client by using the DNS tunnel without making a network connection to the client.</p> </li> <li> <p> <code>DICTIONARY_DGA</code>: Dictionary-based domain generation algorithms detection. Dictionary DGAs use wordlists to generate domains that appear more legitimate, making them harder to detect than traditional DGAs.</p> </li> </ul>",
+        "FirewallRule$DnsThreatProtection": "<p> The type of the DNS Firewall Advanced rule. Valid values are: </p> <ul> <li> <p> <code>DGA</code>: Domain generation algorithms detection. DGAs are used by attackers to generate a large number of domains to launch malware attacks.</p> </li> <li> <p> <code>DNS_TUNNELING</code>: DNS tunneling detection. DNS tunneling is used by attackers to exfiltrate data from the client by using the DNS tunnel without making a network connection to the client.</p> </li> <li> <p> <code>DICTIONARY_DGA</code>: Dictionary-based domain generation algorithms detection. Dictionary DGAs use wordlists to generate domains that appear more legitimate, making them harder to detect than traditional DGAs.</p> </li> </ul>",
+        "UpdateFirewallRuleEntry$DnsThreatProtection": "<p>The type of the DNS Firewall Advanced rule. This setting is mutually exclusive with <code>FirewallDomainListId</code> and <code>FirewallRuleType</code>. Valid values are:</p> <ul> <li> <p> <code>DGA</code>: Domain generation algorithms detection. DGAs are used by attackers to generate a large number of domains to launch malware attacks.</p> </li> <li> <p> <code>DNS_TUNNELING</code>: DNS tunneling detection. DNS tunneling is used by attackers to exfiltrate data from the client by using the DNS tunnel without making a network connection to the client.</p> </li> <li> <p> <code>DICTIONARY_DGA</code>: Dictionary-based domain generation algorithms detection. Dictionary DGAs use wordlists to generate domains that appear more legitimate, making them harder to detect than traditional DGAs.</p> </li> </ul>",
+        "UpdateFirewallRuleRequest$DnsThreatProtection": "<p> The type of the DNS Firewall Advanced rule. This setting is mutually exclusive with <code>FirewallDomainListId</code> and <code>FirewallRuleType</code>. Valid values are: </p> <ul> <li> <p> <code>DGA</code>: Domain generation algorithms detection. DGAs are used by attackers to generate a large number of domains to launch malware attacks.</p> </li> <li> <p> <code>DNS_TUNNELING</code>: DNS tunneling detection. DNS tunneling is used by attackers to exfiltrate data from the client by using the DNS tunnel without making a network connection to the client.</p> </li> <li> <p> <code>DICTIONARY_DGA</code>: Dictionary-based domain generation algorithms detection. Dictionary DGAs use wordlists to generate domains that appear more legitimate, making them harder to detect than traditional DGAs.</p> </li> </ul>"
+      }
+    },
+    "DnsThreatProtectionRuleTypeConfig": {
+      "base": "<p>The configuration for a DNS threat protection rule type within the rule type framework.</p>",
+      "refs": {
+        "FirewallRuleType$DnsThreatProtection": "<p>Configures the rule to match a built-in DNS Firewall Advanced threat detector — <code>DGA</code>, <code>DNS_TUNNELING</code>, or <code>DICTIONARY_DGA</code>. See <a>DnsThreatProtectionRuleTypeConfig</a>.</p>"
+      }
+    },
+    "DnsThreatProtectionRuleTypeValue": {
+      "base": "<p>The identifier of a built-in DNS Firewall Advanced threat detector. Known values are <code>DGA</code>, <code>DNS_TUNNELING</code>, and <code>DICTIONARY_DGA</code>. Returned in the <code>Value</code> field of a <a>FirewallRuleTypeDefinition</a> for the <code>DnsThreatProtection</code> rule type, and used as <code>DnsThreatProtectionRuleTypeConfig.Value</code> when creating a DNS threat protection firewall rule.</p>",
+      "refs": {
+        "DnsThreatProtectionRuleTypeConfig$Value": "<p>The type of DNS threat protection. Valid values are:</p> <ul> <li> <p> <code>DGA</code>: Domain generation algorithms detection. DGAs are used by attackers to generate a large number of domains to launch malware attacks.</p> </li> <li> <p> <code>DNS_TUNNELING</code>: DNS tunneling detection. DNS tunneling is used by attackers to exfiltrate data from the client by using the DNS tunnel without making a network connection to the client.</p> </li> <li> <p> <code>DICTIONARY_DGA</code>: Dictionary-based domain generation algorithms detection. Dictionary DGAs use wordlists to generate domains that appear more legitimate, making them harder to detect than traditional DGAs.</p> </li> </ul>"
       }
     },
     "DomainListFileUrl": {
       "base": null,
       "refs": {
         "ImportFirewallDomainsRequest$DomainFileUrl": "<p>The fully qualified URL or URI of the file stored in Amazon Simple Storage Service (Amazon S3) that contains the list of domains to import.</p> <p>The file must be in an S3 bucket that's in the same Region as your DNS Firewall. The file must be a text file and must contain a single domain per line.</p>"
+      }
+    },
+    "DomainListType": {
+      "base": null,
+      "refs": {
+        "FirewallDomainList$ManagedListType": "<p>The type of the managed domain list, for example <code>THREAT</code>.</p>",
+        "FirewallDomainListMetadata$ManagedListType": "<p>The type of the managed domain list, for example <code>THREAT</code>.</p>"
       }
     },
     "DomainName": {
@@ -472,6 +618,30 @@
         "ListResolverRulesRequest$Filters": "<p>An optional specification to return a subset of Resolver rules, such as all Resolver rules that are associated with the same Resolver endpoint.</p> <note> <p>If you submit a second or subsequent <code>ListResolverRules</code> request and specify the <code>NextToken</code> parameter, you must use the same values for <code>Filters</code>, if any, as in the previous request.</p> </note>"
       }
     },
+    "FirewallAdvancedContentCategoryConfig": {
+      "base": "<p>The configuration for a content category-based filtering rule. This specifies which content category to use for DNS query evaluation.</p>",
+      "refs": {
+        "FirewallRuleType$FirewallAdvancedContentCategory": "<p>Configures the rule to match an AWS-managed content category (for example, <code>VIOLENCE_AND_HATE_SPEECH</code>). See <a>FirewallAdvancedContentCategoryConfig</a>.</p>"
+      }
+    },
+    "FirewallAdvancedContentCategoryValue": {
+      "base": "<p>The identifier of an AWS-managed content category (for example, <code>VIOLENCE_AND_HATE_SPEECH</code>), returned in the <code>Value</code> field of a <a>FirewallRuleTypeDefinition</a> for the <code>FirewallAdvancedContentCategory</code> rule type. Pass this string as <code>FirewallAdvancedContentCategoryConfig.Category</code> when creating a content-category firewall rule.</p>",
+      "refs": {
+        "FirewallAdvancedContentCategoryConfig$Category": "<p>The content category identifier. To retrieve the list of available content categories, call <a>ListFirewallRuleTypes</a> with <code>RuleType</code> set to <code>FirewallAdvancedContentCategory</code>.</p>"
+      }
+    },
+    "FirewallAdvancedThreatCategoryConfig": {
+      "base": "<p>The configuration for a threat category-based filtering rule. This specifies which threat category to use for DNS query evaluation.</p>",
+      "refs": {
+        "FirewallRuleType$FirewallAdvancedThreatCategory": "<p>Configures the rule to match an AWS-managed advanced threat category (for example, <code>PHISHING</code>). See <a>FirewallAdvancedThreatCategoryConfig</a>.</p>"
+      }
+    },
+    "FirewallAdvancedThreatCategoryValue": {
+      "base": "<p>The identifier of an AWS-managed advanced threat category (for example, <code>PHISHING</code>), returned in the <code>Value</code> field of a <a>FirewallRuleTypeDefinition</a> for the <code>FirewallAdvancedThreatCategory</code> rule type. Pass this string as <code>FirewallAdvancedThreatCategoryConfig.Category</code> when creating a threat-category firewall rule.</p>",
+      "refs": {
+        "FirewallAdvancedThreatCategoryConfig$Category": "<p>The threat category identifier. To retrieve the list of available threat categories, call <a>ListFirewallRuleTypes</a> with <code>RuleType</code> set to <code>FirewallAdvancedThreatCategory</code>.</p>"
+      }
+    },
     "FirewallConfig": {
       "base": "<p>Configuration of the firewall behavior provided by DNS Firewall for a single VPC from Amazon Virtual Private Cloud (Amazon VPC). </p>",
       "refs": {
@@ -529,8 +699,10 @@
     "FirewallDomainRedirectionAction": {
       "base": null,
       "refs": {
+        "CreateFirewallRuleEntry$FirewallDomainRedirectionAction": "<p>How you want the rule to evaluate DNS redirection in the DNS redirection chain, such as CNAME or DNAME.</p> <p> <code>INSPECT_REDIRECTION_DOMAIN</code>: (Default) inspects all domains in the redirection chain. The individual domains in the redirection chain must be added to the domain list.</p> <p> <code>TRUST_REDIRECTION_DOMAIN</code>: Inspects only the first domain in the redirection chain. You don't need to add the subsequent domains in the redirection list to the domain list.</p>",
         "CreateFirewallRuleRequest$FirewallDomainRedirectionAction": "<p> How you want the the rule to evaluate DNS redirection in the DNS redirection chain, such as CNAME or DNAME. </p> <p> <code>INSPECT_REDIRECTION_DOMAIN</code>: (Default) inspects all domains in the redirection chain. The individual domains in the redirection chain must be added to the domain list.</p> <p> <code>TRUST_REDIRECTION_DOMAIN</code>: Inspects only the first domain in the redirection chain. You don't need to add the subsequent domains in the domain in the redirection list to the domain list.</p>",
         "FirewallRule$FirewallDomainRedirectionAction": "<p> How you want the the rule to evaluate DNS redirection in the DNS redirection chain, such as CNAME or DNAME. </p> <p> <code>INSPECT_REDIRECTION_DOMAIN</code>: (Default) inspects all domains in the redirection chain. The individual domains in the redirection chain must be added to the domain list.</p> <p> <code>TRUST_REDIRECTION_DOMAIN</code>: Inspects only the first domain in the redirection chain. You don't need to add the subsequent domains in the domain in the redirection list to the domain list.</p>",
+        "UpdateFirewallRuleEntry$FirewallDomainRedirectionAction": "<p>How you want the rule to evaluate DNS redirection in the DNS redirection chain, such as CNAME or DNAME.</p> <p> <code>INSPECT_REDIRECTION_DOMAIN</code>: (Default) inspects all domains in the redirection chain. The individual domains in the redirection chain must be added to the domain list.</p> <p> <code>TRUST_REDIRECTION_DOMAIN</code>: Inspects only the first domain in the redirection chain. You don't need to add the subsequent domains in the redirection list to the domain list.</p>",
         "UpdateFirewallRuleRequest$FirewallDomainRedirectionAction": "<p> How you want the the rule to evaluate DNS redirection in the DNS redirection chain, such as CNAME or DNAME. </p> <p> <code>INSPECT_REDIRECTION_DOMAIN</code>: (Default) inspects all domains in the redirection chain. The individual domains in the redirection chain must be added to the domain list.</p> <p> <code>TRUST_REDIRECTION_DOMAIN</code>: Inspects only the first domain in the redirection chain. You don't need to add the subsequent domains in the domain in the redirection list to the domain list.</p>"
       }
     },
@@ -619,9 +791,46 @@
         "FirewallRuleGroup$Status": "<p>The status of the domain list. </p>"
       }
     },
+    "FirewallRuleStatus": {
+      "base": "<p>The lifecycle state of a DNS Firewall rule. Known values:</p> <ul> <li> <p> <code>CREATING</code> — DNS Firewall is provisioning the rule. Rules created with the <code>PartnerThreatProtection</code> rule type begin in this state while DNS Firewall verifies the calling account's AWS Marketplace entitlement.</p> </li> <li> <p> <code>COMPLETE</code> — The rule is provisioned and enforcing matches.</p> </li> <li> <p> <code>CREATION_FAILED</code> — Provisioning failed. <a>UpdateFirewallRule</a> rejects updates to a rule in this state; the rule must be removed with <a>DeleteFirewallRule</a>.</p> </li> </ul>",
+      "refs": {
+        "FirewallRule$Status": "<p>The lifecycle state of the firewall rule. Possible values:</p> <ul> <li> <p> <code>CREATING</code> — DNS Firewall is provisioning the rule. Rules created with the <code>PartnerThreatProtection</code> rule type begin in this state while DNS Firewall verifies the calling account's AWS Marketplace entitlement.</p> </li> <li> <p> <code>COMPLETE</code> — The rule is provisioned and enforcing matches.</p> </li> <li> <p> <code>CREATION_FAILED</code> — Provisioning failed. <code>StatusMessage</code> contains a human-readable reason. A rule in this state is immutable: <a>UpdateFirewallRule</a> rejects the request, and the rule must be removed with <a>DeleteFirewallRule</a>.</p> </li> </ul> <p>For rules that do not require asynchronous provisioning, this field may be absent.</p>"
+      }
+    },
+    "FirewallRuleStatusMessage": {
+      "base": "<p>A human-readable description of why a firewall rule is in <code>CREATION_FAILED</code> state.</p>",
+      "refs": {
+        "FirewallRule$StatusMessage": "<p>An additional message about the rule's lifecycle state. Populated when <code>Status</code> is <code>CREATION_FAILED</code> to describe why provisioning failed.</p>"
+      }
+    },
+    "FirewallRuleType": {
+      "base": "<p>The rule-type configuration for a DNS Firewall rule. <code>FirewallRuleType</code> is a tagged union — exactly one member must be set per rule, and the member determines what the rule matches against. This shape is mutually exclusive with the top-level <code>FirewallDomainListId</code> and <code>DnsThreatProtection</code> fields on <a>CreateFirewallRule</a> and <a>UpdateFirewallRule</a>.</p> <p>Call <a>ListFirewallRuleTypes</a> to discover which rule-type variants and which values within each variant are available in your account and Region.</p>",
+      "refs": {
+        "CreateFirewallRuleEntry$FirewallRuleType": "<p>The rule type configuration for the firewall rule. This is a tagged union — set exactly one of its members. This setting is mutually exclusive with the top-level <code>FirewallDomainListId</code> and <code>DnsThreatProtection</code> fields. Use one of:</p> <ul> <li> <p> <code>FirewallAdvancedContentCategory</code> — match an AWS-managed content category (for example, <code>VIOLENCE_AND_HATE_SPEECH</code>).</p> </li> <li> <p> <code>FirewallAdvancedThreatCategory</code> — match an AWS-managed advanced threat category (for example, <code>PHISHING</code>).</p> </li> <li> <p> <code>DnsThreatProtection</code> — match a built-in DNS Firewall Advanced threat detector (<code>DGA</code>, <code>DNS_TUNNELING</code>, or <code>DICTIONARY_DGA</code>).</p> </li> <li> <p> <code>PartnerThreatProtection</code> — match a third-party threat feed delivered through AWS Marketplace. The selected partner must be an active subscription on the calling account.</p> </li> </ul> <p>To enumerate the values supported in your account, call <a>ListFirewallRuleTypes</a>.</p>",
+        "CreateFirewallRuleRequest$FirewallRuleType": "<p>The rule type configuration for the firewall rule. This is a tagged union — set exactly one of its members. This setting is mutually exclusive with the top-level <code>FirewallDomainListId</code> and <code>DnsThreatProtection</code> fields. Use one of:</p> <ul> <li> <p> <code>FirewallAdvancedContentCategory</code> — match an AWS-managed content category (for example, <code>VIOLENCE_AND_HATE_SPEECH</code>).</p> </li> <li> <p> <code>FirewallAdvancedThreatCategory</code> — match an AWS-managed advanced threat category (for example, <code>PHISHING</code>).</p> </li> <li> <p> <code>DnsThreatProtection</code> — match a built-in DNS Firewall Advanced threat detector (<code>DGA</code>, <code>DNS_TUNNELING</code>, or <code>DICTIONARY_DGA</code>).</p> </li> <li> <p> <code>PartnerThreatProtection</code> — match a third-party threat feed delivered through AWS Marketplace. The selected partner must be an active subscription on the calling account.</p> </li> </ul> <p>To enumerate the values supported in your account, call <a>ListFirewallRuleTypes</a>.</p>",
+        "FirewallRule$FirewallRuleType": "<p>The rule type configuration for the firewall rule. This is a tagged union — exactly one of its members will be populated. Possible members are:</p> <ul> <li> <p> <code>FirewallAdvancedContentCategory</code> — an AWS-managed content category (for example, <code>VIOLENCE_AND_HATE_SPEECH</code>).</p> </li> <li> <p> <code>FirewallAdvancedThreatCategory</code> — an AWS-managed advanced threat category (for example, <code>PHISHING</code>).</p> </li> <li> <p> <code>DnsThreatProtection</code> — a built-in DNS Firewall Advanced threat detector (<code>DGA</code>, <code>DNS_TUNNELING</code>, or <code>DICTIONARY_DGA</code>).</p> </li> <li> <p> <code>PartnerThreatProtection</code> — a third-party threat feed delivered through AWS Marketplace.</p> </li> </ul> <p>To enumerate the values supported in your account, call <a>ListFirewallRuleTypes</a>.</p>",
+        "UpdateFirewallRuleEntry$FirewallRuleType": "<p>The rule type configuration for the firewall rule. This is a tagged union — set exactly one of its members. This setting is mutually exclusive with the top-level <code>FirewallDomainListId</code> and <code>DnsThreatProtection</code> fields. Use one of:</p> <ul> <li> <p> <code>FirewallAdvancedContentCategory</code> — match an AWS-managed content category (for example, <code>VIOLENCE_AND_HATE_SPEECH</code>).</p> </li> <li> <p> <code>FirewallAdvancedThreatCategory</code> — match an AWS-managed advanced threat category (for example, <code>PHISHING</code>).</p> </li> <li> <p> <code>DnsThreatProtection</code> — match a built-in DNS Firewall Advanced threat detector (<code>DGA</code>, <code>DNS_TUNNELING</code>, or <code>DICTIONARY_DGA</code>).</p> </li> <li> <p> <code>PartnerThreatProtection</code> — match a third-party threat feed delivered through AWS Marketplace. The selected partner must be an active subscription on the calling account.</p> </li> </ul> <p>To enumerate the values supported in your account, call <a>ListFirewallRuleTypes</a>.</p>",
+        "UpdateFirewallRuleRequest$FirewallRuleType": "<p>The rule type configuration for the firewall rule. This is a tagged union — set exactly one of its members. This setting is mutually exclusive with the top-level <code>FirewallDomainListId</code> and <code>DnsThreatProtection</code> fields. Use one of:</p> <ul> <li> <p> <code>FirewallAdvancedContentCategory</code> — match an AWS-managed content category (for example, <code>VIOLENCE_AND_HATE_SPEECH</code>).</p> </li> <li> <p> <code>FirewallAdvancedThreatCategory</code> — match an AWS-managed advanced threat category (for example, <code>PHISHING</code>).</p> </li> <li> <p> <code>DnsThreatProtection</code> — match a built-in DNS Firewall Advanced threat detector (<code>DGA</code>, <code>DNS_TUNNELING</code>, or <code>DICTIONARY_DGA</code>).</p> </li> <li> <p> <code>PartnerThreatProtection</code> — match a third-party threat feed delivered through AWS Marketplace. The selected partner must be an active subscription on the calling account.</p> </li> </ul> <p>To enumerate the values supported in your account, call <a>ListFirewallRuleTypes</a>.</p>"
+      }
+    },
+    "FirewallRuleTypeDefinition": {
+      "base": "<p>The definition of an available rule type that can be used in DNS Firewall rules. This is returned by <a>ListFirewallRuleTypes</a>.</p>",
+      "refs": {
+        "FirewallRuleTypeDefinitions$member": null
+      }
+    },
+    "FirewallRuleTypeDefinitions": {
+      "base": null,
+      "refs": {
+        "ListFirewallRuleTypesResponse$FirewallRuleTypes": "<p>A list of the available rule type definitions.</p>"
+      }
+    },
     "FirewallRules": {
       "base": null,
       "refs": {
+        "BatchCreateFirewallRuleResponse$CreatedFirewallRules": "<p>The firewall rules that were successfully created by the request.</p>",
+        "BatchDeleteFirewallRuleResponse$DeletedFirewallRules": "<p>The firewall rules that were successfully deleted by the request.</p>",
+        "BatchUpdateFirewallRuleResponse$UpdatedFirewallRules": "<p>The firewall rules that were successfully updated by the request.</p>",
         "ListFirewallRulesResponse$FirewallRules": "<p>A list of the rules that you have defined. </p> <p>This might be a partial list of the firewall rules that you've defined. For information, see <code>MaxResults</code>. </p>"
       }
     },
@@ -847,6 +1056,14 @@
         "UpdateIpAddress$Ipv6": "<p> The IPv6 address that you want to use for DNS queries. </p>"
       }
     },
+    "Ipv6InternetAccessEnabled": {
+      "base": null,
+      "refs": {
+        "CreateResolverEndpointRequest$Ipv6InternetAccessEnabled": "<p>Specifies whether IPv6 internet access is enabled for the outbound Resolver endpoint. When set to <code>true</code>, the endpoint elastic network interfaces (ENIs) can forward DNS queries to public IPv6 targets through an internet gateway. Default is false.</p> <important> <p>When you enable IPv6 internet access, use network controls like security groups, NACLs, or egress-only internet gateways to protect the endpoint ENIs from unsolicited ingress traffic. Be aware that some network controls can affect DNS query throughput due to connection tracking. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/userguide/security-group-connection-tracking.html\">Amazon EC2 security group connection tracking</a> and <a href=\"https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/best-practices-resolver-endpoint-scaling.html\">Resolver endpoint scaling</a>.</p> </important>",
+        "ResolverEndpoint$Ipv6InternetAccessEnabled": "<p>Indicates whether IPv6 internet access is enabled for the outbound Resolver endpoint. When <code>true</code>, the endpoint elastic network interfaces (ENIs) can forward DNS queries to public IPv6 targets through an internet gateway.</p>",
+        "UpdateResolverEndpointRequest$Ipv6InternetAccessEnabled": "<p>Specifies whether IPv6 internet access is enabled for the outbound Resolver endpoint. When set to <code>true</code>, the endpoint elastic network interfaces (ENIs) can forward DNS queries to public IPv6 targets through an internet gateway.</p> <important> <p>When you enable IPv6 internet access, use network controls like security groups, NACLs, or egress-only internet gateways to protect the endpoint ENIs from unsolicited ingress traffic. Be aware that some network controls can affect DNS query throughput due to connection tracking. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/userguide/security-group-connection-tracking.html\">Amazon EC2 security group connection tracking</a> and <a href=\"https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/best-practices-resolver-endpoint-scaling.html\">Resolver endpoint scaling</a>.</p> </important>"
+      }
+    },
     "LimitExceededException": {
       "base": "<p>The request caused one or more limits to be exceeded.</p>",
       "refs": {}
@@ -900,6 +1117,14 @@
       "refs": {}
     },
     "ListFirewallRuleGroupsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListFirewallRuleTypesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListFirewallRuleTypesResponse": {
       "base": null,
       "refs": {}
     },
@@ -1003,6 +1228,7 @@
         "ListFirewallDomainListsRequest$MaxResults": "<p>The maximum number of objects that you want Resolver to return for this request. If more objects are available, in the response, Resolver provides a <code>NextToken</code> value that you can use in a subsequent call to get the next batch of objects.</p> <p>If you don't specify a value for <code>MaxResults</code>, Resolver returns up to 100 objects. </p>",
         "ListFirewallRuleGroupAssociationsRequest$MaxResults": "<p>The maximum number of objects that you want Resolver to return for this request. If more objects are available, in the response, Resolver provides a <code>NextToken</code> value that you can use in a subsequent call to get the next batch of objects.</p> <p>If you don't specify a value for <code>MaxResults</code>, Resolver returns up to 100 objects. </p>",
         "ListFirewallRuleGroupsRequest$MaxResults": "<p>The maximum number of objects that you want Resolver to return for this request. If more objects are available, in the response, Resolver provides a <code>NextToken</code> value that you can use in a subsequent call to get the next batch of objects.</p> <p>If you don't specify a value for <code>MaxResults</code>, Resolver returns up to 100 objects. </p>",
+        "ListFirewallRuleTypesRequest$MaxResults": "<p>The maximum number of objects that you want Resolver to return for this request. If more objects are available, in the response, Resolver provides a <code>NextToken</code> value that you can use in a subsequent call to get the next batch of objects.</p>",
         "ListFirewallRulesRequest$MaxResults": "<p>The maximum number of objects that you want Resolver to return for this request. If more objects are available, in the response, Resolver provides a <code>NextToken</code> value that you can use in a subsequent call to get the next batch of objects.</p> <p>If you don't specify a value for <code>MaxResults</code>, Resolver returns up to 100 objects. </p>",
         "ListOutpostResolversRequest$MaxResults": "<p>The maximum number of Resolvers on the Outpost that you want to return in the response to a <code>ListOutpostResolver</code> request. If you don't specify a value for <code>MaxResults</code>, the request returns up to 100 Resolvers.</p>",
         "ListResolverDnssecConfigsRequest$MaxResults": "<p> <i>Optional</i>: An integer that specifies the maximum number of DNSSEC configuration results that you want Amazon Route 53 to return. If you don't specify a value for <code>MaxResults</code>, Route 53 returns up to 100 configuration per page.</p>",
@@ -1033,6 +1259,7 @@
         "AssociateFirewallRuleGroupRequest$Name": "<p>A name that lets you identify the association, to manage and use it.</p>",
         "AssociateResolverRuleRequest$Name": "<p>A name for the association that you're creating between a Resolver rule and a VPC.</p> <p>The name can be up to 64 characters long and can contain letters (a-z, A-Z), numbers (0-9), hyphens (-), underscores (_), and spaces. The name cannot consist of only numbers.</p>",
         "CreateFirewallDomainListRequest$Name": "<p>A name that lets you identify the domain list to manage and use it.</p>",
+        "CreateFirewallRuleEntry$Name": "<p>A name that lets you identify the rule in the rule group.</p>",
         "CreateFirewallRuleGroupRequest$Name": "<p>A name that lets you identify the rule group, to manage and use it.</p>",
         "CreateFirewallRuleRequest$Name": "<p>A name that lets you identify the rule in the rule group.</p>",
         "CreateResolverEndpointRequest$Name": "<p>A friendly name that lets you easily find a configuration in the Resolver dashboard in the Route 53 console.</p>",
@@ -1049,6 +1276,7 @@
         "ResolverRuleAssociation$Name": "<p>The name of an association between a Resolver rule and a VPC.</p> <p>The name can be up to 64 characters long and can contain letters (a-z, A-Z), numbers (0-9), hyphens (-), underscores (_), and spaces. The name cannot consist of only numbers.</p>",
         "ResolverRuleConfig$Name": "<p>The new name for the Resolver rule. The name that you specify appears in the Resolver dashboard in the Route 53 console. </p> <p>The name can be up to 64 characters long and can contain letters (a-z, A-Z), numbers (0-9), hyphens (-), underscores (_), and spaces. The name cannot consist of only numbers.</p>",
         "UpdateFirewallDomainsResponse$Name": "<p>The name of the domain list. </p>",
+        "UpdateFirewallRuleEntry$Name": "<p>The name of the rule.</p>",
         "UpdateFirewallRuleGroupAssociationRequest$Name": "<p>The name of the rule group association.</p>",
         "UpdateFirewallRuleRequest$Name": "<p>The name of the rule.</p>",
         "UpdateResolverEndpointRequest$Name": "<p>The name of the Resolver endpoint that you want to update.</p>"
@@ -1067,6 +1295,8 @@
         "ListFirewallRuleGroupAssociationsResponse$NextToken": "<p>If objects are still available for retrieval, Resolver returns this token in the response. To retrieve the next batch of objects, provide this token in your next request.</p>",
         "ListFirewallRuleGroupsRequest$NextToken": "<p>For the first call to this list request, omit this value.</p> <p>When you request a list of objects, Resolver returns at most the number of objects specified in <code>MaxResults</code>. If more objects are available for retrieval, Resolver returns a <code>NextToken</code> value in the response. To retrieve the next batch of objects, use the token that was returned for the prior request in your next request.</p>",
         "ListFirewallRuleGroupsResponse$NextToken": "<p>If objects are still available for retrieval, Resolver returns this token in the response. To retrieve the next batch of objects, provide this token in your next request.</p>",
+        "ListFirewallRuleTypesRequest$NextToken": "<p>For the first call to this list request, omit this value. When you request a list of objects, Resolver returns at most the number of objects specified in <code>MaxResults</code>. If more objects are available for retrieval, Resolver provides a <code>NextToken</code> value in the response. To retrieve the next batch of objects, use the token that was returned for the prior request in your next request.</p>",
+        "ListFirewallRuleTypesResponse$NextToken": "<p>If objects are still available for retrieval, Resolver returns this token in the response. To retrieve the next batch of objects, provide this token in your next request.</p>",
         "ListFirewallRulesRequest$NextToken": "<p>For the first call to this list request, omit this value.</p> <p>When you request a list of objects, Resolver returns at most the number of objects specified in <code>MaxResults</code>. If more objects are available for retrieval, Resolver returns a <code>NextToken</code> value in the response. To retrieve the next batch of objects, use the token that was returned for the prior request in your next request.</p>",
         "ListFirewallRulesResponse$NextToken": "<p>If objects are still available for retrieval, Resolver returns this token in the response. To retrieve the next batch of objects, provide this token in your next request.</p>",
         "ListOutpostResolversRequest$NextToken": "<p>For the first <code>ListOutpostResolver</code> request, omit this value.</p> <p/>",
@@ -1147,6 +1377,18 @@
         "OutpostResolver$StatusMessage": "<p>A detailed description of the Resolver.</p>"
       }
     },
+    "PartnerThreatProtectionConfig": {
+      "base": "<p>The configuration for a partner threat-protection rule. To enumerate the partners available in your account, call <a>ListFirewallRuleTypes</a> with <code>RuleType</code> set to <code>PartnerThreatProtection</code> — each returned <a>FirewallRuleTypeDefinition</a> includes a <a>SubscriptionInfo</a> identifying the AWS Marketplace product that backs it.</p>",
+      "refs": {
+        "FirewallRuleType$PartnerThreatProtection": "<p>Configures the rule to match a third-party threat feed delivered through AWS Marketplace. The calling account must hold an active subscription to the partner product named in <code>Partner</code>; if the subscription is missing or revoked, the rule is created with <code>Status</code> <code>CREATION_FAILED</code> and cannot be modified — only deleted. See <a>PartnerThreatProtectionConfig</a>.</p>"
+      }
+    },
+    "PartnerValue": {
+      "base": "<p>The identifier of a partner threat-protection product, returned in the <code>Value</code> field of a <a>FirewallRuleTypeDefinition</a> for the <code>PartnerThreatProtection</code> rule type. Pass this string as <code>PartnerThreatProtectionConfig.Partner</code> when creating a partner-managed firewall rule.</p>",
+      "refs": {
+        "PartnerThreatProtectionConfig$Partner": "<p>The identifier of the partner threat-protection product, exactly as returned in the <code>Value</code> field of a <a>FirewallRuleTypeDefinition</a> with <code>RuleType</code> set to <code>PartnerThreatProtection</code>. The calling account must hold an active AWS Marketplace subscription to this product.</p>"
+      }
+    },
     "Port": {
       "base": null,
       "refs": {
@@ -1157,13 +1399,21 @@
       "base": null,
       "refs": {
         "AssociateFirewallRuleGroupRequest$Priority": "<p>The setting that determines the processing order of the rule group among the rule groups that you associate with the specified VPC. DNS Firewall filters VPC traffic starting from the rule group with the lowest numeric priority setting. </p> <p>You must specify a unique priority for each rule group that you associate with a single VPC. To make it easier to insert rule groups later, leave space between the numbers, for example, use 101, 200, and so on. You can change the priority setting for a rule group association after you create it.</p> <p>The allowed values for <code>Priority</code> are between 100 and 9900.</p>",
+        "CreateFirewallRuleEntry$Priority": "<p>The setting that determines the processing order of the rule in the rule group. DNS Firewall processes the rules in a rule group by order of priority, starting from the lowest setting.</p>",
         "CreateFirewallRuleRequest$Priority": "<p>The setting that determines the processing order of the rule in the rule group. DNS Firewall processes the rules in a rule group by order of priority, starting from the lowest setting.</p> <p>You must specify a unique priority for each rule in a rule group. To make it easier to insert rules later, leave space between the numbers, for example, use 100, 200, and so on. You can change the priority setting for the rules in a rule group at any time.</p>",
         "FirewallRule$Priority": "<p>The priority of the rule in the rule group. This value must be unique within the rule group. DNS Firewall processes the rules in a rule group by order of priority, starting from the lowest setting.</p>",
         "FirewallRuleGroupAssociation$Priority": "<p>The setting that determines the processing order of the rule group among the rule groups that are associated with a single VPC. DNS Firewall filters VPC traffic starting from rule group with the lowest numeric priority setting. </p>",
         "ListFirewallRuleGroupAssociationsRequest$Priority": "<p>The setting that determines the processing order of the rule group among the rule groups that are associated with a single VPC. DNS Firewall filters VPC traffic starting from the rule group with the lowest numeric priority setting. </p>",
         "ListFirewallRulesRequest$Priority": "<p>Optional additional filter for the rules to retrieve.</p> <p>The setting that determines the processing order of the rules in a rule group. DNS Firewall processes the rules in a rule group by order of priority, starting from the lowest setting.</p>",
+        "UpdateFirewallRuleEntry$Priority": "<p>The setting that determines the processing order of the rule in the rule group. DNS Firewall processes the rules in a rule group by order of priority, starting from the lowest setting.</p>",
         "UpdateFirewallRuleGroupAssociationRequest$Priority": "<p>The setting that determines the processing order of the rule group among the rule groups that you associate with the specified VPC. DNS Firewall filters VPC traffic starting from the rule group with the lowest numeric priority setting. </p> <p>You must specify a unique priority for each rule group that you associate with a single VPC. To make it easier to insert rule groups later, leave space between the numbers, for example, use 100, 200, and so on. You can change the priority setting for a rule group association after you create it.</p>",
         "UpdateFirewallRuleRequest$Priority": "<p>The setting that determines the processing order of the rule in the rule group. DNS Firewall processes the rules in a rule group by order of priority, starting from the lowest setting.</p> <p>You must specify a unique priority for each rule in a rule group. To make it easier to insert rules later, leave space between the numbers, for example, use 100, 200, and so on. You can change the priority setting for the rules in a rule group at any time.</p>"
+      }
+    },
+    "ProductId": {
+      "base": null,
+      "refs": {
+        "SubscriptionInfo$ProductId": "<p>The AWS Marketplace product identifier of the partner threat-protection product. Use this value to verify or manage the calling account's subscription in AWS Marketplace.</p>"
       }
     },
     "Protocol": {
@@ -1208,10 +1458,13 @@
     "Qtype": {
       "base": null,
       "refs": {
-        "CreateFirewallRuleRequest$Qtype": "<p> The DNS query type you want the rule to evaluate. Allowed values are; </p> <ul> <li> <p> A: Returns an IPv4 address.</p> </li> <li> <p>AAAA: Returns an Ipv6 address.</p> </li> <li> <p>CAA: Restricts CAs that can create SSL/TLS certifications for the domain.</p> </li> <li> <p>CNAME: Returns another domain name.</p> </li> <li> <p>DS: Record that identifies the DNSSEC signing key of a delegated zone.</p> </li> <li> <p>MX: Specifies mail servers.</p> </li> <li> <p>NAPTR: Regular-expression-based rewriting of domain names.</p> </li> <li> <p>NS: Authoritative name servers.</p> </li> <li> <p>PTR: Maps an IP address to a domain name.</p> </li> <li> <p>SOA: Start of authority record for the zone.</p> </li> <li> <p>SPF: Lists the servers authorized to send emails from a domain.</p> </li> <li> <p>SRV: Application specific values that identify servers.</p> </li> <li> <p>TXT: Verifies email senders and application-specific values.</p> </li> <li> <p>A query type you define by using the DNS type ID, for example 28 for AAAA. The values must be defined as TYPENUMBER, where the NUMBER can be 1-65334, for example, TYPE28. For more information, see <a href=\"https://en.wikipedia.org/wiki/List_of_DNS_record_types\">List of DNS record types</a>.</p> </li> </ul>",
-        "DeleteFirewallRuleRequest$Qtype": "<p> The DNS query type that the rule you are deleting evaluates. Allowed values are; </p> <ul> <li> <p> A: Returns an IPv4 address.</p> </li> <li> <p>AAAA: Returns an Ipv6 address.</p> </li> <li> <p>CAA: Restricts CAs that can create SSL/TLS certifications for the domain.</p> </li> <li> <p>CNAME: Returns another domain name.</p> </li> <li> <p>DS: Record that identifies the DNSSEC signing key of a delegated zone.</p> </li> <li> <p>MX: Specifies mail servers.</p> </li> <li> <p>NAPTR: Regular-expression-based rewriting of domain names.</p> </li> <li> <p>NS: Authoritative name servers.</p> </li> <li> <p>PTR: Maps an IP address to a domain name.</p> </li> <li> <p>SOA: Start of authority record for the zone.</p> </li> <li> <p>SPF: Lists the servers authorized to send emails from a domain.</p> </li> <li> <p>SRV: Application specific values that identify servers.</p> </li> <li> <p>TXT: Verifies email senders and application-specific values.</p> </li> <li> <p>A query type you define by using the DNS type ID, for example 28 for AAAA. The values must be defined as TYPENUMBER, where the NUMBER can be 1-65334, for example, TYPE28. For more information, see <a href=\"https://en.wikipedia.org/wiki/List_of_DNS_record_types\">List of DNS record types</a>.</p> </li> </ul>",
-        "FirewallRule$Qtype": "<p> The DNS query type you want the rule to evaluate. Allowed values are; </p> <ul> <li> <p> A: Returns an IPv4 address.</p> </li> <li> <p>AAAA: Returns an Ipv6 address.</p> </li> <li> <p>CAA: Restricts CAs that can create SSL/TLS certifications for the domain.</p> </li> <li> <p>CNAME: Returns another domain name.</p> </li> <li> <p>DS: Record that identifies the DNSSEC signing key of a delegated zone.</p> </li> <li> <p>MX: Specifies mail servers.</p> </li> <li> <p>NAPTR: Regular-expression-based rewriting of domain names.</p> </li> <li> <p>NS: Authoritative name servers.</p> </li> <li> <p>PTR: Maps an IP address to a domain name.</p> </li> <li> <p>SOA: Start of authority record for the zone.</p> </li> <li> <p>SPF: Lists the servers authorized to send emails from a domain.</p> </li> <li> <p>SRV: Application specific values that identify servers.</p> </li> <li> <p>TXT: Verifies email senders and application-specific values.</p> </li> <li> <p>A query type you define by using the DNS type ID, for example 28 for AAAA. The values must be defined as TYPENUMBER, where the NUMBER can be 1-65334, for example, TYPE28. For more information, see <a href=\"https://en.wikipedia.org/wiki/List_of_DNS_record_types\">List of DNS record types</a>.</p> </li> </ul>",
-        "UpdateFirewallRuleRequest$Qtype": "<p> The DNS query type you want the rule to evaluate. Allowed values are; </p> <ul> <li> <p> A: Returns an IPv4 address.</p> </li> <li> <p>AAAA: Returns an Ipv6 address.</p> </li> <li> <p>CAA: Restricts CAs that can create SSL/TLS certifications for the domain.</p> </li> <li> <p>CNAME: Returns another domain name.</p> </li> <li> <p>DS: Record that identifies the DNSSEC signing key of a delegated zone.</p> </li> <li> <p>MX: Specifies mail servers.</p> </li> <li> <p>NAPTR: Regular-expression-based rewriting of domain names.</p> </li> <li> <p>NS: Authoritative name servers.</p> </li> <li> <p>PTR: Maps an IP address to a domain name.</p> </li> <li> <p>SOA: Start of authority record for the zone.</p> </li> <li> <p>SPF: Lists the servers authorized to send emails from a domain.</p> </li> <li> <p>SRV: Application specific values that identify servers.</p> </li> <li> <p>TXT: Verifies email senders and application-specific values.</p> </li> <li> <p>A query type you define by using the DNS type ID, for example 28 for AAAA. The values must be defined as TYPENUMBER, where the NUMBER can be 1-65334, for example, TYPE28. For more information, see <a href=\"https://en.wikipedia.org/wiki/List_of_DNS_record_types\">List of DNS record types</a>.</p> <note> <p>If you set up a firewall BLOCK rule with action NXDOMAIN on query type equals AAAA, this action will not be applied to synthetic IPv6 addresses generated when DNS64 is enabled. </p> </note> </li> </ul>"
+        "CreateFirewallRuleEntry$Qtype": "<p>The DNS query type you want the rule to evaluate. Allowed values are:</p> <ul> <li> <p>A: Returns an IPv4 address.</p> </li> <li> <p>AAAA: Returns an IPv6 address.</p> </li> <li> <p>CAA: Restricts CAs that can create SSL/TLS certifications for the domain.</p> </li> <li> <p>CNAME: Returns another domain name.</p> </li> <li> <p>DS: Record that identifies the DNSSEC signing key of a delegated zone.</p> </li> <li> <p>MX: Specifies mail servers.</p> </li> <li> <p>NAPTR: Regular-expression-based rewriting of domain names.</p> </li> <li> <p>NS: Authoritative name servers.</p> </li> <li> <p>PTR: Maps an IP address to a domain name.</p> </li> <li> <p>SOA: Start of authority record for the zone.</p> </li> <li> <p>SPF: Lists the servers authorized to send emails from a domain.</p> </li> <li> <p>SRV: Application specific values that identify servers.</p> </li> <li> <p>TXT: Verifies email senders and application-specific values.</p> </li> <li> <p>A query type you define by using the DNS type ID, for example 28 for AAAA. The values must be defined as TYPENUMBER, where the NUMBER can be 1-65534, for example, TYPE28. For more information, see <a href=\"https://en.wikipedia.org/wiki/List_of_DNS_record_types\">List of DNS record types</a>.</p> </li> </ul>",
+        "CreateFirewallRuleRequest$Qtype": "<p> The DNS query type you want the rule to evaluate. Allowed values are; </p> <ul> <li> <p> A: Returns an IPv4 address.</p> </li> <li> <p>AAAA: Returns an Ipv6 address.</p> </li> <li> <p>CAA: Restricts CAs that can create SSL/TLS certifications for the domain.</p> </li> <li> <p>CNAME: Returns another domain name.</p> </li> <li> <p>DS: Record that identifies the DNSSEC signing key of a delegated zone.</p> </li> <li> <p>MX: Specifies mail servers.</p> </li> <li> <p>NAPTR: Regular-expression-based rewriting of domain names.</p> </li> <li> <p>NS: Authoritative name servers.</p> </li> <li> <p>PTR: Maps an IP address to a domain name.</p> </li> <li> <p>SOA: Start of authority record for the zone.</p> </li> <li> <p>SPF: Lists the servers authorized to send emails from a domain.</p> </li> <li> <p>SRV: Application specific values that identify servers.</p> </li> <li> <p>TXT: Verifies email senders and application-specific values.</p> </li> <li> <p>A query type you define by using the DNS type ID, for example 28 for AAAA. The values must be defined as TYPENUMBER, where the NUMBER can be 1-65534, for example, TYPE28. For more information, see <a href=\"https://en.wikipedia.org/wiki/List_of_DNS_record_types\">List of DNS record types</a>.</p> </li> </ul>",
+        "DeleteFirewallRuleEntry$Qtype": "<p>The DNS query type that the rule evaluates.</p>",
+        "DeleteFirewallRuleRequest$Qtype": "<p> The DNS query type that the rule you are deleting evaluates. Allowed values are; </p> <ul> <li> <p> A: Returns an IPv4 address.</p> </li> <li> <p>AAAA: Returns an Ipv6 address.</p> </li> <li> <p>CAA: Restricts CAs that can create SSL/TLS certifications for the domain.</p> </li> <li> <p>CNAME: Returns another domain name.</p> </li> <li> <p>DS: Record that identifies the DNSSEC signing key of a delegated zone.</p> </li> <li> <p>MX: Specifies mail servers.</p> </li> <li> <p>NAPTR: Regular-expression-based rewriting of domain names.</p> </li> <li> <p>NS: Authoritative name servers.</p> </li> <li> <p>PTR: Maps an IP address to a domain name.</p> </li> <li> <p>SOA: Start of authority record for the zone.</p> </li> <li> <p>SPF: Lists the servers authorized to send emails from a domain.</p> </li> <li> <p>SRV: Application specific values that identify servers.</p> </li> <li> <p>TXT: Verifies email senders and application-specific values.</p> </li> <li> <p>A query type you define by using the DNS type ID, for example 28 for AAAA. The values must be defined as TYPENUMBER, where the NUMBER can be 1-65534, for example, TYPE28. For more information, see <a href=\"https://en.wikipedia.org/wiki/List_of_DNS_record_types\">List of DNS record types</a>.</p> </li> </ul>",
+        "FirewallRule$Qtype": "<p> The DNS query type you want the rule to evaluate. Allowed values are; </p> <ul> <li> <p> A: Returns an IPv4 address.</p> </li> <li> <p>AAAA: Returns an Ipv6 address.</p> </li> <li> <p>CAA: Restricts CAs that can create SSL/TLS certifications for the domain.</p> </li> <li> <p>CNAME: Returns another domain name.</p> </li> <li> <p>DS: Record that identifies the DNSSEC signing key of a delegated zone.</p> </li> <li> <p>MX: Specifies mail servers.</p> </li> <li> <p>NAPTR: Regular-expression-based rewriting of domain names.</p> </li> <li> <p>NS: Authoritative name servers.</p> </li> <li> <p>PTR: Maps an IP address to a domain name.</p> </li> <li> <p>SOA: Start of authority record for the zone.</p> </li> <li> <p>SPF: Lists the servers authorized to send emails from a domain.</p> </li> <li> <p>SRV: Application specific values that identify servers.</p> </li> <li> <p>TXT: Verifies email senders and application-specific values.</p> </li> <li> <p>A query type you define by using the DNS type ID, for example 28 for AAAA. The values must be defined as TYPENUMBER, where the NUMBER can be 1-65534, for example, TYPE28. For more information, see <a href=\"https://en.wikipedia.org/wiki/List_of_DNS_record_types\">List of DNS record types</a>.</p> </li> </ul>",
+        "UpdateFirewallRuleEntry$Qtype": "<p>The DNS query type you want the rule to evaluate. Allowed values are:</p> <ul> <li> <p>A: Returns an IPv4 address.</p> </li> <li> <p>AAAA: Returns an IPv6 address.</p> </li> <li> <p>CAA: Restricts CAs that can create SSL/TLS certifications for the domain.</p> </li> <li> <p>CNAME: Returns another domain name.</p> </li> <li> <p>DS: Record that identifies the DNSSEC signing key of a delegated zone.</p> </li> <li> <p>MX: Specifies mail servers.</p> </li> <li> <p>NAPTR: Regular-expression-based rewriting of domain names.</p> </li> <li> <p>NS: Authoritative name servers.</p> </li> <li> <p>PTR: Maps an IP address to a domain name.</p> </li> <li> <p>SOA: Start of authority record for the zone.</p> </li> <li> <p>SPF: Lists the servers authorized to send emails from a domain.</p> </li> <li> <p>SRV: Application specific values that identify servers.</p> </li> <li> <p>TXT: Verifies email senders and application-specific values.</p> </li> <li> <p>A query type you define by using the DNS type ID, for example 28 for AAAA. The values must be defined as TYPENUMBER, where the NUMBER can be 1-65534, for example, TYPE28. For more information, see <a href=\"https://en.wikipedia.org/wiki/List_of_DNS_record_types\">List of DNS record types</a>.</p> </li> </ul>",
+        "UpdateFirewallRuleRequest$Qtype": "<p> The DNS query type you want the rule to evaluate. Allowed values are; </p> <ul> <li> <p> A: Returns an IPv4 address.</p> </li> <li> <p>AAAA: Returns an Ipv6 address.</p> </li> <li> <p>CAA: Restricts CAs that can create SSL/TLS certifications for the domain.</p> </li> <li> <p>CNAME: Returns another domain name.</p> </li> <li> <p>DS: Record that identifies the DNSSEC signing key of a delegated zone.</p> </li> <li> <p>MX: Specifies mail servers.</p> </li> <li> <p>NAPTR: Regular-expression-based rewriting of domain names.</p> </li> <li> <p>NS: Authoritative name servers.</p> </li> <li> <p>PTR: Maps an IP address to a domain name.</p> </li> <li> <p>SOA: Start of authority record for the zone.</p> </li> <li> <p>SPF: Lists the servers authorized to send emails from a domain.</p> </li> <li> <p>SRV: Application specific values that identify servers.</p> </li> <li> <p>TXT: Verifies email senders and application-specific values.</p> </li> <li> <p>A query type you define by using the DNS type ID, for example 28 for AAAA. The values must be defined as TYPENUMBER, where the NUMBER can be 1-65534, for example, TYPE28. For more information, see <a href=\"https://en.wikipedia.org/wiki/List_of_DNS_record_types\">List of DNS record types</a>.</p> <note> <p>If you set up a firewall BLOCK rule with action NXDOMAIN on query type equals AAAA, this action will not be applied to synthetic IPv6 addresses generated when DNS64 is enabled. </p> </note> </li> </ul>"
       }
     },
     "ResolverAutodefinedReverseStatus": {
@@ -1431,10 +1684,15 @@
         "AssociateResolverQueryLogConfigRequest$ResourceId": "<p>The ID of an Amazon VPC that you want this query logging configuration to log queries for.</p> <note> <p>The VPCs and the query logging configuration must be in the same Region.</p> </note>",
         "AssociateResolverRuleRequest$ResolverRuleId": "<p>The ID of the Resolver rule that you want to associate with the VPC. To list the existing Resolver rules, use <a href=\"https://docs.aws.amazon.com/Route53/latest/APIReference/API_route53resolver_ListResolverRules.html\">ListResolverRules</a>.</p>",
         "AssociateResolverRuleRequest$VPCId": "<p>The ID of the VPC that you want to associate the Resolver rule with.</p>",
+        "CreateFirewallRuleEntry$FirewallRuleGroupId": "<p>The unique identifier of the firewall rule group where you want to create the rule.</p>",
+        "CreateFirewallRuleEntry$FirewallDomainListId": "<p>The ID of the domain list that you want to use in the rule. This setting is mutually exclusive with <code>DnsThreatProtection</code> and <code>FirewallRuleType</code>.</p>",
         "CreateFirewallRuleRequest$FirewallRuleGroupId": "<p>The unique identifier of the firewall rule group where you want to create the rule. </p>",
         "CreateFirewallRuleRequest$FirewallDomainListId": "<p>The ID of the domain list that you want to use in the rule. Can't be used together with <code>DnsThreatProtecton</code>.</p>",
         "CreateResolverRuleRequest$ResolverEndpointId": "<p>The ID of the outbound Resolver endpoint that you want to use to route DNS queries to the IP addresses that you specify in <code>TargetIps</code>.</p>",
         "DeleteFirewallDomainListRequest$FirewallDomainListId": "<p>The ID of the domain list that you want to delete. </p>",
+        "DeleteFirewallRuleEntry$FirewallRuleGroupId": "<p>The unique identifier of the firewall rule group for the rule.</p>",
+        "DeleteFirewallRuleEntry$FirewallDomainListId": "<p>The ID of the domain list that's used in the rule.</p>",
+        "DeleteFirewallRuleEntry$FirewallThreatProtectionId": "<p>The ID of the DNS Firewall Advanced rule.</p>",
         "DeleteFirewallRuleGroupRequest$FirewallRuleGroupId": "<p>The unique identifier of the firewall rule group that you want to delete. </p>",
         "DeleteFirewallRuleRequest$FirewallRuleGroupId": "<p>The unique identifier of the firewall rule group that you want to delete the rule from. </p>",
         "DeleteFirewallRuleRequest$FirewallDomainListId": "<p>The ID of the domain list that's used in the rule. </p>",
@@ -1503,6 +1761,9 @@
         "UpdateFirewallConfigRequest$ResourceId": "<p>The ID of the VPC that the configuration is for.</p>",
         "UpdateFirewallDomainsRequest$FirewallDomainListId": "<p>The ID of the domain list whose domains you want to update. </p>",
         "UpdateFirewallDomainsResponse$Id": "<p>The ID of the firewall domain list that DNS Firewall just updated.</p>",
+        "UpdateFirewallRuleEntry$FirewallRuleGroupId": "<p>The unique identifier of the firewall rule group for the rule.</p>",
+        "UpdateFirewallRuleEntry$FirewallDomainListId": "<p>The ID of the domain list to use in the rule. This setting is mutually exclusive with <code>DnsThreatProtection</code> and <code>FirewallRuleType</code>.</p>",
+        "UpdateFirewallRuleEntry$FirewallThreatProtectionId": "<p>The ID of the DNS Firewall Advanced rule.</p>",
         "UpdateFirewallRuleGroupAssociationRequest$FirewallRuleGroupAssociationId": "<p>The identifier of the <a>FirewallRuleGroupAssociation</a>. </p>",
         "UpdateFirewallRuleRequest$FirewallRuleGroupId": "<p>The unique identifier of the firewall rule group for the rule. </p>",
         "UpdateFirewallRuleRequest$FirewallDomainListId": "<p>The ID of the domain list to use in the rule. </p>",
@@ -1558,11 +1819,30 @@
         "UpdateResolverEndpointRequest$RniEnhancedMetricsEnabled": "<p>Updates whether RNI enhanced metrics are enabled for the Resolver endpoints. When set to true, one-minute granular metrics are published in CloudWatch for each RNI associated with this endpoint. When set to false, metrics are not published.</p> <note> <p>Standard CloudWatch pricing and charges are applied for using the Route 53 Resolver endpoint RNI enhanced metrics. For more information, see <a href=\"https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/monitoring-resolver-with-cloudwatch.html\">Detailed metrics</a>.</p> </note>"
       }
     },
+    "RuleTypeDescription": {
+      "base": "<p>A human-readable description of a rule-type definition returned by <a>ListFirewallRuleTypes</a>.</p>",
+      "refs": {
+        "FirewallRuleTypeDefinition$Description": "<p>A description of the rule type.</p>"
+      }
+    },
+    "RuleTypeName": {
+      "base": "<p>The variant name of a rule type. Known values are <code>FirewallAdvancedContentCategory</code>, <code>FirewallAdvancedThreatCategory</code>, <code>DnsThreatProtection</code>, and <code>PartnerThreatProtection</code>. Returned in the <code>RuleType</code> field of a <a>FirewallRuleTypeDefinition</a>.</p>",
+      "refs": {
+        "FirewallRuleTypeDefinition$RuleType": "<p>The category or class of the rule type, such as <code>FirewallAdvancedContentCategory</code> or <code>FirewallAdvancedThreatCategory</code>.</p>",
+        "ListFirewallRuleTypesRequest$RuleType": "<p>An optional filter that restricts the response to a single <a>FirewallRuleType</a> variant. Supported values: <code>FirewallAdvancedContentCategory</code>, <code>FirewallAdvancedThreatCategory</code>, <code>DnsThreatProtection</code>, and <code>PartnerThreatProtection</code>. If omitted, definitions across all variants are returned.</p>"
+      }
+    },
     "RuleTypeOption": {
       "base": null,
       "refs": {
         "CreateResolverRuleRequest$RuleType": "<p>When you want to forward DNS queries for specified domain name to resolvers on your network, specify <code>FORWARD</code> or <code>DELEGATE</code>.</p> <p>When you have a forwarding rule to forward DNS queries for a domain to your network and you want Resolver to process queries for a subdomain of that domain, specify <code>SYSTEM</code>.</p> <p>For example, to forward DNS queries for example.com to resolvers on your network, you create a rule and specify <code>FORWARD</code> for <code>RuleType</code>. To then have Resolver process queries for apex.example.com, you create a rule and specify <code>SYSTEM</code> for <code>RuleType</code>.</p> <p>Currently, only Resolver can create rules that have a value of <code>RECURSIVE</code> for <code>RuleType</code>.</p>",
         "ResolverRule$RuleType": "<p>When you want to forward DNS queries for specified domain name to resolvers on your network, specify <code>FORWARD</code> or <code>DELEGATE</code>. If a query matches multiple Resolver rules (example.com and www.example.com), outbound DNS queries are routed using the Resolver rule that contains the most specific domain name (www.example.com).</p> <p>When you have a forwarding rule to forward DNS queries for a domain to your network and you want Resolver to process queries for a subdomain of that domain, specify <code>SYSTEM</code>.</p> <p>For example, to forward DNS queries for example.com to resolvers on your network, you create a rule and specify <code>FORWARD</code> for <code>RuleType</code>. To then have Resolver process queries for apex.example.com, you create a rule and specify <code>SYSTEM</code> for <code>RuleType</code>.</p> <p>Currently, only Resolver can create rules that have a value of <code>RECURSIVE</code> for <code>RuleType</code>.</p>"
+      }
+    },
+    "RuleTypeValue": {
+      "base": "<p>The variant-specific value of a rule type, returned in the <code>Value</code> field of a <a>FirewallRuleTypeDefinition</a>. The interpretation of this string depends on <code>RuleType</code>; see <a>FirewallAdvancedContentCategoryValue</a>, <a>FirewallAdvancedThreatCategoryValue</a>, <a>DnsThreatProtectionRuleTypeValue</a>, or <a>PartnerValue</a>.</p>",
+      "refs": {
+        "FirewallRuleTypeDefinition$Value": "<p>The specific identifier within the rule type category, such as <code>VIOLENCE_AND_HATE_SPEECH</code> or <code>PHISHING</code>.</p>"
       }
     },
     "SecurityGroupIds": {
@@ -1630,6 +1910,12 @@
     "String": {
       "base": null,
       "refs": {
+        "BatchCreateFirewallRuleError$Code": "<p>The error code for the failure.</p>",
+        "BatchCreateFirewallRuleError$Message": "<p>A message that provides details about the error.</p>",
+        "BatchDeleteFirewallRuleError$Code": "<p>The error code for the failure.</p>",
+        "BatchDeleteFirewallRuleError$Message": "<p>A message that provides details about the error.</p>",
+        "BatchUpdateFirewallRuleError$Code": "<p>The error code for the failure.</p>",
+        "BatchUpdateFirewallRuleError$Message": "<p>A message that provides details about the error.</p>",
         "InvalidNextTokenException$Message": null,
         "InvalidParameterException$FieldName": "<p>For an <code>InvalidParameterException</code> error, the name of the parameter that's invalid.</p>",
         "LimitExceededException$Message": null,
@@ -1650,6 +1936,12 @@
         "IpAddressRequest$SubnetId": "<p>The ID of the subnet that contains the IP address. </p>",
         "IpAddressResponse$SubnetId": "<p>The ID of one subnet.</p>",
         "IpAddressUpdate$SubnetId": "<p>The ID of the subnet that includes the IP address that you want to update. To get this ID, use <a href=\"https://docs.aws.amazon.com/Route53/latest/APIReference/API_route53resolver_GetResolverEndpoint.html\">GetResolverEndpoint</a>.</p>"
+      }
+    },
+    "SubscriptionInfo": {
+      "base": "<p>Identifies the AWS Marketplace product that backs a partner-managed rule type. Returned as part of <a>FirewallRuleTypeDefinition</a> when the rule type variant requires an active customer subscription to the named product.</p>",
+      "refs": {
+        "FirewallRuleTypeDefinition$SubscriptionInfo": "<p>For rule types that require an external subscription (today, only the <code>PartnerThreatProtection</code> variant), describes the AWS Marketplace product that backs the rule type. Absent for rule types that are managed by AWS and do not require a separate subscription. See <a>SubscriptionInfo</a>.</p>"
       }
     },
     "Tag": {
@@ -1761,6 +2053,19 @@
       "base": null,
       "refs": {}
     },
+    "UpdateFirewallRuleEntries": {
+      "base": null,
+      "refs": {
+        "BatchUpdateFirewallRuleRequest$UpdateFirewallRuleEntries": "<p>The list of firewall rules to update.</p>"
+      }
+    },
+    "UpdateFirewallRuleEntry": {
+      "base": "<p>The details for updating a single firewall rule in a batch operation.</p>",
+      "refs": {
+        "BatchUpdateFirewallRuleError$FirewallRule": "<p>The firewall rule entry that caused the error.</p>",
+        "UpdateFirewallRuleEntries$member": null
+      }
+    },
     "UpdateFirewallRuleGroupAssociationRequest": {
       "base": null,
       "refs": {}
@@ -1838,6 +2143,12 @@
     "ValidationException": {
       "base": "<p>You have provided an invalid command. If you ran the <code>UpdateFirewallDomains</code> request. supported values are <code>ADD</code>, <code>REMOVE</code>, or <code>REPLACE</code> a domain.</p>",
       "refs": {}
+    },
+    "VendorName": {
+      "base": null,
+      "refs": {
+        "SubscriptionInfo$VendorName": "<p>The name of the AWS Marketplace seller (vendor) that publishes the partner threat-protection product (for example, <code>Palo Alto Networks</code>).</p>"
+      }
     }
   }
 }

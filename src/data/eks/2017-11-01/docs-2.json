@@ -5,6 +5,7 @@
     "AssociateAccessPolicy": "<p>Associates an access policy and its scope to an access entry. For more information about associating access policies, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/access-policies.html\">Associating and disassociating access policies to and from access entries</a> in the <i>Amazon EKS User Guide</i>.</p>",
     "AssociateEncryptionConfig": "<p>Associates an encryption configuration to an existing cluster.</p> <p>Use this API to enable encryption on existing clusters that don't already have encryption enabled. This allows you to implement a defense-in-depth security strategy without migrating applications to new Amazon EKS clusters.</p>",
     "AssociateIdentityProviderConfig": "<p>Associates an identity provider configuration to a cluster.</p> <p>If you want to authenticate identities using an identity provider, you can create an identity provider configuration and associate it to your cluster. After configuring authentication to your cluster you can create Kubernetes <code>Role</code> and <code>ClusterRole</code> objects, assign permissions to them, and then bind them to the identities using Kubernetes <code>RoleBinding</code> and <code>ClusterRoleBinding</code> objects. For more information see <a href=\"https://kubernetes.io/docs/reference/access-authn-authz/rbac/\">Using RBAC Authorization</a> in the Kubernetes documentation.</p>",
+    "CancelUpdate": "<p>Cancels an in-progress update to an Amazon EKS cluster on a best-effort basis. Cancellation is only performed if the update can be cancelled. Currently, this is supported for <code>VersionRollback</code> update types on EKS Auto Mode clusters when nodes are rolling back.</p> <p>A successful cancellation stops the node rollback. After cancellation, nodes converge to the current cluster version honoring configured disruption controls. If the control plane rollback has already begun, the cancellation request fails.</p>",
     "CreateAccessEntry": "<p>Creates an access entry.</p> <p>An access entry allows an IAM principal to access your cluster. Access entries can replace the need to maintain entries in the <code>aws-auth</code> <code>ConfigMap</code> for authentication. You have the following options for authorizing an IAM principal to access Kubernetes objects on your cluster: Kubernetes role-based access control (RBAC), Amazon EKS, or both. Kubernetes RBAC authorization requires you to create and manage Kubernetes <code>Role</code>, <code>ClusterRole</code>, <code>RoleBinding</code>, and <code>ClusterRoleBinding</code> objects, in addition to managing access entries. If you use Amazon EKS authorization exclusively, you don't need to create and manage Kubernetes <code>Role</code>, <code>ClusterRole</code>, <code>RoleBinding</code>, and <code>ClusterRoleBinding</code> objects.</p> <p>For more information about access entries, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/access-entries.html\">Access entries</a> in the <i>Amazon EKS User Guide</i>.</p>",
     "CreateAddon": "<p>Creates an Amazon EKS add-on.</p> <p>Amazon EKS add-ons help to automate the provisioning and lifecycle management of common operational software for Amazon EKS clusters. For more information, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/eks-add-ons.html\">Amazon EKS add-ons</a> in the <i>Amazon EKS User Guide</i>.</p>",
     "CreateCapability": "<p>Creates a managed capability resource for an Amazon EKS cluster.</p> <p>Capabilities provide fully managed capabilities to build and scale with Kubernetes. When you create a capability, Amazon EKSprovisions and manages the infrastructure required to run the capability outside of your cluster. This approach reduces operational overhead and preserves cluster resources.</p> <p>You can only create one Capability of each type on a given Amazon EKS cluster. Valid types are Argo CD for declarative GitOps deployment, Amazon Web Services Controllers for Kubernetes (ACK) for resource management, and Kube Resource Orchestrator (KRO) for Kubernetes custom resource orchestration.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/capabilities.html\">EKS Capabilities</a> in the <i>Amazon EKS User Guide</i>.</p>",
@@ -371,7 +372,7 @@
         "CreateEksAnywhereSubscriptionRequest$autoRenew": "<p>A boolean indicating whether the subscription auto renews at the end of the term.</p>",
         "DeleteAddonRequest$preserve": "<p>Specifying this option preserves the add-on software on your cluster but Amazon EKS stops managing any settings for the add-on. If an IAM account is associated with the add-on, it isn't removed.</p>",
         "EksAnywhereSubscription$autoRenew": "<p>A boolean indicating whether or not a subscription will auto renew when it expires.</p>",
-        "UpdateClusterVersionRequest$force": "<p>Set this value to <code>true</code> to override upgrade-blocking readiness checks when updating a cluster.</p>",
+        "UpdateClusterVersionRequest$force": "<p>Set this value to <code>true</code> to override upgrade-blocking or rollback-blocking readiness checks when updating a cluster.</p>",
         "UpdateEksAnywhereSubscriptionRequest$autoRenew": "<p>A boolean indicating whether or not to automatically renew the subscription.</p>",
         "UpdateNodegroupVersionRequest$force": "<p>Force the update if any <code>Pod</code> on the existing node group can't be drained due to a <code>Pod</code> disruption budget issue. If an update fails because all Pods can't be drained, you can force the update after it fails to terminate the old node whether or not any <code>Pod</code> is running on the node.</p>",
         "VpcConfigResponse$endpointPublicAccess": "<p>Whether the public API server endpoint is enabled.</p>",
@@ -411,7 +412,28 @@
       "refs": {
         "CreateNodegroupRequest$diskSize": "<p>The root device disk size (in GiB) for your node group instances. The default disk size is 20 GiB for Linux and Bottlerocket. The default disk size is 50 GiB for Windows. If you specify <code>launchTemplate</code>, then don't specify <code>diskSize</code>, or the node group deployment will fail. For more information about using launch templates with Amazon EKS, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html\">Customizing managed nodes with launch templates</a> in the <i>Amazon EKS User Guide</i>.</p>",
         "Nodegroup$diskSize": "<p>If the node group wasn't deployed with a launch template, then this is the disk size in the node group configuration. If the node group was deployed with a launch template, then this is <code>null</code>.</p>",
+        "RollbackConfig$timeoutMinutes": "<p>The length of time in minutes to wait before cancelling the update. Timeout is a minimum-bound property, meaning the timeout occurs no sooner than the time you specify, but can occur shortly thereafter. This value can be between 120 (2 hours) and 10080 (7 days). Default: <code>720</code> (12 hours) if not specified.</p>",
         "WarmPoolConfig$maxGroupPreparedCapacity": "<p>The maximum total number of instances across the warm pool and Auto Scaling group combined. This value controls the total prepared capacity available for your node group.</p>"
+      }
+    },
+    "CancelUpdateRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CancelUpdateResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "Cancellation": {
+      "base": "<p>Contains information about the latest cancellation of an update to an Amazon EKS cluster.</p>",
+      "refs": {
+        "Update$cancellation": "<p>The latest cancellation information for the update. This field is present only if any cancellation is attempted for the update.</p>"
+      }
+    },
+    "CancellationStatus": {
+      "base": null,
+      "refs": {
+        "Cancellation$status": "<p>The current status of the cancellation. Valid values are <code>InProgress</code>, <code>Failed</code>, and <code>Successful</code>.</p>"
       }
     },
     "Capability": {
@@ -655,6 +677,13 @@
       "base": "<p>The full description of your connected cluster.</p>",
       "refs": {
         "Cluster$connectorConfig": "<p>The configuration used to connect to a cluster for registration.</p>"
+      }
+    },
+    "ControlPlaneEgressModeType": {
+      "base": null,
+      "refs": {
+        "VpcConfigRequest$controlPlaneEgressMode": "<p>Specifies the control plane egress routing mode for the cluster. If the cluster is set to <code>AWS_MANAGED</code>, Amazon EKS manages the egress path from the control plane and you don't need to configure NAT gateways or other routing infrastructure for control plane traffic. If the cluster is set to <code>CUSTOMER_ROUTED</code>, you manage the egress path from the control plane in your VPC subnets. You are responsible for ensuring that the control plane can reach required endpoints such as webhook servers and OIDC providers. The default value is <code>AWS_MANAGED</code>. Once set to <code>CUSTOMER_ROUTED</code>, this setting cannot be changed back to <code>AWS_MANAGED</code> on the same cluster.</p> <p> <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/control-plane-egress.html\">Learn more about control plane egress routing in the <i>Amazon EKS User Guide</i>.</a> </p>",
+        "VpcConfigResponse$controlPlaneEgressMode": "<p>The current control plane egress routing mode for the cluster. If the cluster is set to <code>AWS_MANAGED</code>, Amazon EKS manages the egress path from the control plane. If the cluster is set to <code>CUSTOMER_ROUTED</code>, you manage the egress path from the control plane in your VPC subnets.</p> <p> <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/control-plane-egress.html\">Learn more about control plane egress routing in the <i>Amazon EKS User Guide</i>.</a> </p>"
       }
     },
     "ControlPlanePlacementRequest": {
@@ -1070,6 +1099,18 @@
       "base": null,
       "refs": {
         "Update$errors": "<p>Any errors associated with a <code>Failed</code> update.</p>"
+      }
+    },
+    "EtcdPlacementRequest": {
+      "base": "<p>The placement configuration for the etcd instances of your local Amazon EKS cluster on an Amazon Web Services Outpost. For more information, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/eks-outposts-capacity-considerations.html\">Capacity considerations</a> in the <i>Amazon EKS User Guide</i>.</p>",
+      "refs": {
+        "OutpostConfigRequest$etcdPlacement": "<p>An object representing the placement configuration for the etcd instances of your local Amazon EKS cluster on an Amazon Web Services Outpost. For more information, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/eks-outposts-capacity-considerations.html\">Capacity considerations</a> in the <i>Amazon EKS User Guide</i>.</p>"
+      }
+    },
+    "EtcdPlacementResponse": {
+      "base": "<p>The placement configuration for the etcd instances of your local Amazon EKS cluster on an Amazon Web Services Outpost. For more information, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/eks-outposts-capacity-considerations.html\">Capacity considerations</a> in the <i>Amazon EKS User Guide</i>.</p>",
+      "refs": {
+        "OutpostConfigResponse$etcdPlacement": "<p>An object representing the placement configuration for the etcd instances of your local Amazon EKS cluster on an Amazon Web Services Outpost. For more information, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/eks-outposts-capacity-considerations.html\">Capacity considerations</a> in the <i>Amazon EKS User Guide</i>.</p>"
       }
     },
     "FargateProfile": {
@@ -1781,6 +1822,12 @@
         "UpdateAddonRequest$serviceAccountRoleArn": "<p>The Amazon Resource Name (ARN) of an existing IAM role to bind to the add-on's service account. The role must be assigned the IAM permissions required by the add-on. If you don't specify an existing IAM role, then the add-on uses the permissions assigned to the node IAM role. For more information, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/create-node-role.html\">Amazon EKS node IAM role</a> in the <i>Amazon EKS User Guide</i>.</p> <note> <p>To specify an existing IAM role, you must have an IAM OpenID Connect (OIDC) provider created for your cluster. For more information, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/enable-iam-roles-for-service-accounts.html\">Enabling IAM roles for service accounts on your cluster</a> in the <i>Amazon EKS User Guide</i>.</p> </note>"
       }
     },
+    "RollbackConfig": {
+      "base": "<p>The rollback configuration for the cluster version rollback.</p>",
+      "refs": {
+        "UpdateClusterVersionRequest$rollbackConfig": "<p>The rollback configuration for the cluster version rollback.</p>"
+      }
+    },
     "ServerException": {
       "base": "<p>These errors are usually caused by a server-side issue.</p>",
       "refs": {}
@@ -1788,6 +1835,15 @@
     "ServiceUnavailableException": {
       "base": "<p>The service is unavailable. Back off and retry the operation.</p>",
       "refs": {}
+    },
+    "SpreadLevel": {
+      "base": null,
+      "refs": {
+        "ControlPlanePlacementRequest$spreadLevel": "<p>Optional parameter to specify the placement group spread level for control plane instances. If not provided, Amazon EKS will deploy control plane instances without a placement group.</p>",
+        "ControlPlanePlacementResponse$spreadLevel": "<p>The spread level used with the placement group for control plane instances on your local Amazon EKS cluster on Amazon Web Services Outposts.</p>",
+        "EtcdPlacementRequest$spreadLevel": "<p>Optional parameter to specify the placement group spread level for etcd instances. If not provided, Amazon EKS will deploy etcd instances without a placement group.</p>",
+        "EtcdPlacementResponse$spreadLevel": "<p>The spread level used with the placement group for etcd instances on your local Amazon EKS cluster on Amazon Web Services Outposts.</p>"
+      }
     },
     "SsoIdentity": {
       "base": "<p>An IAM Identity CenterIAM; Identity Center identity (user or group) that can be assigned permissions in a capability.</p>",
@@ -1879,6 +1935,10 @@
         "AssociatedAccessPolicy$policyArn": "<p>The ARN of the <code>AccessPolicy</code>.</p>",
         "AutoScalingGroup$name": "<p>The name of the Auto Scaling group associated with an Amazon EKS managed node group.</p>",
         "BadRequestException$message": "<p>This exception is thrown if the request contains a semantic error. The precise meaning will depend on the API, and will be documented in the error message.</p>",
+        "CancelUpdateRequest$name": "<p>The name of the Amazon EKS cluster associated with the update.</p>",
+        "CancelUpdateRequest$updateId": "<p>The ID of the update to cancel.</p>",
+        "CancelUpdateRequest$clientRequestToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
+        "Cancellation$reason": "<p>A message providing additional details about the cancellation, such as the reason for the cancellation or failure details.</p>",
         "Capability$capabilityName": "<p>The unique name of the capability within the cluster.</p>",
         "Capability$arn": "<p>The Amazon Resource Name (ARN) of the capability.</p>",
         "Capability$clusterName": "<p>The name of the Amazon EKS cluster that contains this capability.</p>",
@@ -2133,8 +2193,10 @@
         "OidcIdentityProviderConfigRequest$usernamePrefix": "<p>The prefix that is prepended to username claims to prevent clashes with existing names. If you do not provide this field, and <code>username</code> is a value other than <code>email</code>, the prefix defaults to <code>issuerurl#</code>. You can use the value <code>-</code> to disable all prefixing.</p>",
         "OidcIdentityProviderConfigRequest$groupsClaim": "<p>The JWT claim that the provider uses to return your groups.</p>",
         "OidcIdentityProviderConfigRequest$groupsPrefix": "<p>The prefix that is prepended to group claims to prevent clashes with existing names (such as <code>system:</code> groups). For example, the value<code> oidc:</code> will create group names like <code>oidc:engineering</code> and <code>oidc:infra</code>.</p>",
-        "OutpostConfigRequest$controlPlaneInstanceType": "<p>The Amazon EC2 instance type that you want to use for your local Amazon EKS cluster on Outposts. Choose an instance type based on the number of nodes that your cluster will have. For more information, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/eks-outposts-capacity-considerations.html\">Capacity considerations</a> in the <i>Amazon EKS User Guide</i>.</p> <p>The instance type that you specify is used for all Kubernetes control plane instances. The instance type can't be changed after cluster creation. The control plane is not automatically scaled by Amazon EKS.</p> <p> </p>",
-        "OutpostConfigResponse$controlPlaneInstanceType": "<p>The Amazon EC2 instance type used for the control plane. The instance type is the same for all control plane instances.</p>",
+        "OutpostConfigRequest$controlPlaneInstanceType": "<p>The Amazon EC2 instance type for the Kubernetes control plane instances of your local Amazon EKS cluster on Amazon Web Services Outposts. This instance type applies to all control plane instances and cannot be changed after cluster creation.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/eks-outposts-capacity-considerations.html\">Capacity considerations</a> in the <i>Amazon EKS User Guide</i>.</p> <p> </p>",
+        "OutpostConfigRequest$etcdInstanceType": "<p>The Amazon EC2 instance type for etcd instances of your local Amazon EKS cluster on Amazon Web Services Outposts. This instance type applies to all etcd instances and cannot be changed after cluster creation.</p>",
+        "OutpostConfigResponse$controlPlaneInstanceType": "<p>The Amazon EC2 instance type for the Kubernetes control plane instances of your local Amazon EKS cluster on Amazon Web Services Outposts. The instance type is the same for all control plane instances.</p>",
+        "OutpostConfigResponse$etcdInstanceType": "<p>The Amazon EC2 instance type for etcd instances of your local Amazon EKS cluster on Amazon Web Services Outposts. The instance type is the same for all etcd instances.</p>",
         "PodIdentityAssociation$clusterName": "<p>The name of the cluster that the association is in.</p>",
         "PodIdentityAssociation$namespace": "<p>The name of the Kubernetes namespace inside the cluster to create the association in. The service account and the Pods that use the service account must be in this namespace.</p>",
         "PodIdentityAssociation$serviceAccount": "<p>The name of the Kubernetes service account inside the cluster to associate the IAM credentials with.</p>",
@@ -2411,6 +2473,7 @@
       "refs": {
         "AssociateEncryptionConfigResponse$update": null,
         "AssociateIdentityProviderConfigResponse$update": null,
+        "CancelUpdateResponse$update": "<p>The full description of the specified update.</p>",
         "DescribeUpdateResponse$update": "<p>The full description of the specified update.</p>",
         "DisassociateIdentityProviderConfigResponse$update": null,
         "UpdateAddonResponse$update": null,
@@ -2583,7 +2646,7 @@
       "base": "<p>An object representing the VPC configuration to use for an Amazon EKS cluster.</p>",
       "refs": {
         "CreateClusterRequest$resourcesVpcConfig": "<p>The VPC configuration that's used by the cluster control plane. Amazon EKS VPC resources have specific requirements to work properly with Kubernetes. For more information, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/network_reqs.html\">Cluster VPC Considerations</a> and <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/sec-group-reqs.html\">Cluster Security Group Considerations</a> in the <i>Amazon EKS User Guide</i>. You must specify at least two subnets. You can specify up to five security groups. However, we recommend that you use a dedicated security group for your cluster control plane.</p>",
-        "UpdateClusterConfigRequest$resourcesVpcConfig": null
+        "UpdateClusterConfigRequest$resourcesVpcConfig": "<p>An object representing the VPC configuration to use for the cluster update. You can use this parameter to update the control plane egress mode, the subnets used by the cluster, the security groups, and the endpoint access settings.</p>"
       }
     },
     "VpcConfigResponse": {

@@ -159,12 +159,18 @@ abstract class RestSerializer
 
             $body = $args[$name];
             if (!$m['streaming'] && is_string($body)) {
-                $opts['headers']['Content-Length'] = strlen($body);
+                $opts['headers']['Content-Length'] = (string) strlen($body);
             }
 
             // Streaming bodies or payloads that are strings are
             // always just a stream of data.
-            $opts['body'] = Psr7\Utils::streamFor($body);
+            $stream = Psr7\Utils::streamFor($body);
+            // User-owned resource which should be detached instead of closed
+            // during garbage-collection
+            if (is_resource($body)) {
+                $stream = \Aws\detach_on_close_stream($stream);
+            }
+            $opts['body'] = $stream;
             return;
         }
 
@@ -173,20 +179,36 @@ abstract class RestSerializer
 
     private function applyHeader($name, Shape $member, $value, array &$opts)
     {
-        // Handle lists by recursively applying header logic to each element
+        if ($value === null) {
+            return;
+        }
+
+        // Handle lists by applying header logic to each element
         if ($member instanceof ListShape) {
+            if (!is_array($value)) {
+                throw new \InvalidArgumentException('Header values must be scalar or an array of scalars.');
+            }
+
             $listMember = $member->getMember();
             $headerValues = [];
 
             foreach ($value as $listValue) {
+                if ($listValue === null) {
+                    throw new \InvalidArgumentException('Header values must be scalar or an array of scalars.');
+                }
+
                 $tempOpts = ['headers' => []];
                 $this->applyHeader('temp', $listMember, $listValue, $tempOpts);
+                if (!array_key_exists('temp', $tempOpts['headers'])) {
+                    throw new \InvalidArgumentException('Header values must be scalar or an array of scalars.');
+                }
+
                 $convertedValue = $tempOpts['headers']['temp'];
                 $headerValues[] = $convertedValue;
             }
 
             $value = $headerValues;
-        } elseif (!is_null($value)) {
+        } else {
             switch ($member->getType()) {
                 case 'timestamp':
                     $timestampFormat = $member['timestampFormat'] ?? 'rfc822';
@@ -208,7 +230,7 @@ abstract class RestSerializer
             $value = base64_encode($value);
         }
 
-        $opts['headers'][$member['locationName'] ?: $name] = $value;
+        $opts['headers'][$member['locationName'] ?: $name] = self::prepareHeaderValue($value);
     }
 
     /**
@@ -218,8 +240,40 @@ abstract class RestSerializer
     {
         $prefix = $member['locationName'];
         foreach ($value as $k => $v) {
-            $opts['headers'][$prefix . $k] = $v;
+            if ($v === null) {
+                continue;
+            }
+
+            $opts['headers'][$prefix . $k] = self::prepareHeaderValue($v);
         }
+    }
+
+    /**
+     * @return string|string[]
+     */
+    private static function prepareHeaderValue($value)
+    {
+        if (is_scalar($value)) {
+            return (string) $value;
+        }
+
+        if (is_array($value)) {
+            if ($value === []) {
+                return '';
+            }
+
+            foreach ($value as $key => $item) {
+                if (!is_scalar($item)) {
+                    throw new \InvalidArgumentException('Header values must be scalar or an array of scalars.');
+                }
+
+                $value[$key] = (string) $item;
+            }
+
+            return $value;
+        }
+
+        throw new \InvalidArgumentException('Header values must be scalar or an array of scalars.');
     }
 
     private function applyQuery($name, Shape $member, $value, array &$opts)

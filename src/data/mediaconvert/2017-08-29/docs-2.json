@@ -31,8 +31,8 @@
     "PutPolicy": "Create or change your policy. For more information about policies, see the user guide at http://docs.aws.amazon.com/mediaconvert/latest/ug/what-is.html",
     "SearchJobs": "Retrieve a JSON array that includes job details for up to twenty of your most recent jobs. Optionally filter results further according to input file, queue, or status. To retrieve the twenty next most recent jobs, use the nextToken string returned with the array.",
     "StartJobsQuery": "Start an asynchronous jobs query using the provided filters. To receive the list of jobs that match your query, call the GetJobsQueryResults API using the query ID returned by this API.",
-    "TagResource": "Add tags to a MediaConvert queue, preset, or job template. For information about tagging, see the User Guide at https://docs.aws.amazon.com/mediaconvert/latest/ug/tagging-resources.html",
-    "UntagResource": "Remove tags from a MediaConvert queue, preset, or job template. For information about tagging, see the User Guide at https://docs.aws.amazon.com/mediaconvert/latest/ug/tagging-resources.html",
+    "TagResource": "Add tags to a MediaConvert queue, preset, job, or job template. For information about tagging, see the User Guide at https://docs.aws.amazon.com/mediaconvert/latest/ug/tagging-mediaconvert-resources.html.",
+    "UntagResource": "Remove tags from a MediaConvert queue, preset, job, or job template. For information about tagging, see the User Guide at https://docs.aws.amazon.com/mediaconvert/latest/ug/tagging-mediaconvert-resources.html.",
     "UpdateJobTemplate": "Modify one of your existing job templates.",
     "UpdatePreset": "Modify one of your existing presets.",
     "UpdateQueue": "Modify one of your existing queues."
@@ -752,15 +752,21 @@
       }
     },
     "CmafImageBasedTrickPlay": {
-      "base": "Specify whether MediaConvert generates images for trick play. Keep the default value, None, to not generate any images. Choose Thumbnail to generate tiled thumbnails. Choose Thumbnail and full frame to generate tiled thumbnails and full-resolution images of single frames. When you enable Write HLS manifest, MediaConvert creates a child manifest for each set of images that you generate and adds corresponding entries to the parent manifest. When you enable Write DASH manifest, MediaConvert adds an entry in the .mpd manifest for each set of images that you generate. A common application for these images is Roku trick mode. The thumbnails and full-frame images that MediaConvert creates with this feature are compatible with this Roku specification: https://developer.roku.com/docs/developer-program/media-playback/trick-mode/hls-and-dash.md",
+      "base": "Specify whether MediaConvert generates images for trick play. Keep the default value, None, to not generate any images. Choose Thumbnail to generate tiled thumbnails. Choose Thumbnail and full frame to generate tiled thumbnails and full-resolution images of single frames. Choose Advanced to customize thumbnail and tile settings for a single trick play variant. Choose Variants to specify multiple trick play variants, each with its own thumbnail and tile settings. When you enable Write HLS manifest, MediaConvert creates a child manifest for each set of images that you generate and adds corresponding entries to the parent manifest. When you enable Write DASH manifest, MediaConvert adds an entry in the .mpd manifest for each set of images that you generate. A common application for these images is Roku trick mode. The thumbnails and full-frame images that MediaConvert creates with this feature are compatible with this Roku specification: https://developer.roku.com/docs/developer-program/media-playback/trick-mode/hls-and-dash.md",
       "refs": {
-        "CmafGroupSettings$ImageBasedTrickPlay": "Specify whether MediaConvert generates images for trick play. Keep the default value, None, to not generate any images. Choose Thumbnail to generate tiled thumbnails. Choose Thumbnail and full frame to generate tiled thumbnails and full-resolution images of single frames. When you enable Write HLS manifest, MediaConvert creates a child manifest for each set of images that you generate and adds corresponding entries to the parent manifest. When you enable Write DASH manifest, MediaConvert adds an entry in the .mpd manifest for each set of images that you generate. A common application for these images is Roku trick mode. The thumbnails and full-frame images that MediaConvert creates with this feature are compatible with this Roku specification: https://developer.roku.com/docs/developer-program/media-playback/trick-mode/hls-and-dash.md"
+        "CmafGroupSettings$ImageBasedTrickPlay": "Specify whether MediaConvert generates images for trick play. Keep the default value, None, to not generate any images. Choose Thumbnail to generate tiled thumbnails. Choose Thumbnail and full frame to generate tiled thumbnails and full-resolution images of single frames. Choose Advanced to customize thumbnail and tile settings for a single trick play variant. Choose Variants to specify multiple trick play variants, each with its own thumbnail and tile settings. When you enable Write HLS manifest, MediaConvert creates a child manifest for each set of images that you generate and adds corresponding entries to the parent manifest. When you enable Write DASH manifest, MediaConvert adds an entry in the .mpd manifest for each set of images that you generate. A common application for these images is Roku trick mode. The thumbnails and full-frame images that MediaConvert creates with this feature are compatible with this Roku specification: https://developer.roku.com/docs/developer-program/media-playback/trick-mode/hls-and-dash.md"
       }
     },
     "CmafImageBasedTrickPlaySettings": {
       "base": "Tile and thumbnail settings applicable when imageBasedTrickPlay is ADVANCED",
       "refs": {
         "CmafGroupSettings$ImageBasedTrickPlaySettings": "Tile and thumbnail settings applicable when imageBasedTrickPlay is ADVANCED"
+      }
+    },
+    "CmafImageBasedTrickPlayVariant": {
+      "base": "Settings for one image-based trick play variant. Each variant produces its own set of JPEG tile images and corresponding manifest entries.",
+      "refs": {
+        "__listOfCmafImageBasedTrickPlayVariant$member": null
       }
     },
     "CmafInitializationVectorInManifest": {
@@ -772,7 +778,8 @@
     "CmafIntervalCadence": {
       "base": "The cadence MediaConvert follows for generating thumbnails. If set to FOLLOW_IFRAME, MediaConvert generates thumbnails for each IDR frame in the output (matching the GOP cadence). If set to FOLLOW_CUSTOM, MediaConvert generates thumbnails according to the interval you specify in thumbnailInterval. If set to FOLLOW_SEGMENTATION, MediaConvert generates thumbnail playlist entries that align exactly with video segment boundaries. FOLLOW_SEGMENTATION requires 1x1 tiling.",
       "refs": {
-        "CmafImageBasedTrickPlaySettings$IntervalCadence": "The cadence MediaConvert follows for generating thumbnails. If set to FOLLOW_IFRAME, MediaConvert generates thumbnails for each IDR frame in the output (matching the GOP cadence). If set to FOLLOW_CUSTOM, MediaConvert generates thumbnails according to the interval you specify in thumbnailInterval. If set to FOLLOW_SEGMENTATION, MediaConvert generates thumbnail playlist entries that align exactly with video segment boundaries. FOLLOW_SEGMENTATION requires 1x1 tiling."
+        "CmafImageBasedTrickPlaySettings$IntervalCadence": "The cadence MediaConvert follows for generating thumbnails. If set to FOLLOW_IFRAME, MediaConvert generates thumbnails for each IDR frame in the output (matching the GOP cadence). If set to FOLLOW_CUSTOM, MediaConvert generates thumbnails according to the interval you specify in thumbnailInterval. If set to FOLLOW_SEGMENTATION, MediaConvert generates thumbnail playlist entries that align exactly with video segment boundaries. FOLLOW_SEGMENTATION requires 1x1 tiling.",
+        "CmafImageBasedTrickPlayVariant$IntervalCadence": "The cadence MediaConvert follows for generating thumbnails. If set to FOLLOW_IFRAME, MediaConvert generates thumbnails for each IDR frame in the output (matching the GOP cadence). If set to FOLLOW_CUSTOM, MediaConvert generates thumbnails according to the interval you specify in thumbnailInterval. If set to FOLLOW_SEGMENTATION, MediaConvert generates thumbnail playlist entries that align exactly with video segment boundaries. FOLLOW_SEGMENTATION requires 1x1 tiling."
       }
     },
     "CmafKeyProviderType": {
@@ -1019,6 +1026,13 @@
         "ContainerSettings$Container": "Container for this output. Some containers require a container settings object. If not specified, the default object will be created."
       }
     },
+    "ContentLightLevel": {
+      "base": "Content light level information (CTA-861.3). Describes the light level characteristics of the content.",
+      "refs": {
+        "CodecMetadata$ContentLightLevel": "Content light level information (CTA-861.3). Describes the light level characteristics of the content.",
+        "HdrMetadata$ContentLightLevel": "Content light level information (CTA-861.3). Describes the light level characteristics of the content."
+      }
+    },
     "CopyProtectionAction": {
       "base": "The action to take on copy and redistribution control XDS packets. If you select PASSTHROUGH, packets will not be changed. If you select STRIP, any packets will be removed in output captions.",
       "refs": {
@@ -1096,9 +1110,9 @@
       }
     },
     "DashIsoImageBasedTrickPlay": {
-      "base": "Specify whether MediaConvert generates images for trick play. Keep the default value, None, to not generate any images. Choose Thumbnail to generate tiled thumbnails. Choose Thumbnail and full frame to generate tiled thumbnails and full-resolution images of single frames. MediaConvert adds an entry in the .mpd manifest for each set of images that you generate. A common application for these images is Roku trick mode. The thumbnails and full-frame images that MediaConvert creates with this feature are compatible with this Roku specification: https://developer.roku.com/docs/developer-program/media-playback/trick-mode/hls-and-dash.md",
+      "base": "Specify whether MediaConvert generates images for trick play. Keep the default value, None, to not generate any images. Choose Thumbnail to generate tiled thumbnails. Choose Thumbnail and full frame to generate tiled thumbnails and full-resolution images of single frames. Choose Advanced to customize thumbnail and tile settings for a single trick play variant. Choose Variants to specify multiple trick play variants, each with its own thumbnail and tile settings. MediaConvert adds an entry in the .mpd manifest for each set of images that you generate. A common application for these images is Roku trick mode. The thumbnails and full-frame images that MediaConvert creates with this feature are compatible with this Roku specification: https://developer.roku.com/docs/developer-program/media-playback/trick-mode/hls-and-dash.md",
       "refs": {
-        "DashIsoGroupSettings$ImageBasedTrickPlay": "Specify whether MediaConvert generates images for trick play. Keep the default value, None, to not generate any images. Choose Thumbnail to generate tiled thumbnails. Choose Thumbnail and full frame to generate tiled thumbnails and full-resolution images of single frames. MediaConvert adds an entry in the .mpd manifest for each set of images that you generate. A common application for these images is Roku trick mode. The thumbnails and full-frame images that MediaConvert creates with this feature are compatible with this Roku specification: https://developer.roku.com/docs/developer-program/media-playback/trick-mode/hls-and-dash.md"
+        "DashIsoGroupSettings$ImageBasedTrickPlay": "Specify whether MediaConvert generates images for trick play. Keep the default value, None, to not generate any images. Choose Thumbnail to generate tiled thumbnails. Choose Thumbnail and full frame to generate tiled thumbnails and full-resolution images of single frames. Choose Advanced to customize thumbnail and tile settings for a single trick play variant. Choose Variants to specify multiple trick play variants, each with its own thumbnail and tile settings. MediaConvert adds an entry in the .mpd manifest for each set of images that you generate. A common application for these images is Roku trick mode. The thumbnails and full-frame images that MediaConvert creates with this feature are compatible with this Roku specification: https://developer.roku.com/docs/developer-program/media-playback/trick-mode/hls-and-dash.md"
       }
     },
     "DashIsoImageBasedTrickPlaySettings": {
@@ -1107,10 +1121,17 @@
         "DashIsoGroupSettings$ImageBasedTrickPlaySettings": "Tile and thumbnail settings applicable when imageBasedTrickPlay is ADVANCED"
       }
     },
+    "DashIsoImageBasedTrickPlayVariant": {
+      "base": "Settings for one image-based trick play variant. Each variant produces its own set of JPEG tile images and corresponding manifest entries.",
+      "refs": {
+        "__listOfDashIsoImageBasedTrickPlayVariant$member": null
+      }
+    },
     "DashIsoIntervalCadence": {
       "base": "The cadence MediaConvert follows for generating thumbnails. If set to FOLLOW_IFRAME, MediaConvert generates thumbnails for each IDR frame in the output (matching the GOP cadence). If set to FOLLOW_CUSTOM, MediaConvert generates thumbnails according to the interval you specify in thumbnailInterval. If set to FOLLOW_SEGMENTATION, MediaConvert generates thumbnail playlist entries that align exactly with video segment boundaries. FOLLOW_SEGMENTATION requires 1x1 tiling.",
       "refs": {
-        "DashIsoImageBasedTrickPlaySettings$IntervalCadence": "The cadence MediaConvert follows for generating thumbnails. If set to FOLLOW_IFRAME, MediaConvert generates thumbnails for each IDR frame in the output (matching the GOP cadence). If set to FOLLOW_CUSTOM, MediaConvert generates thumbnails according to the interval you specify in thumbnailInterval. If set to FOLLOW_SEGMENTATION, MediaConvert generates thumbnail playlist entries that align exactly with video segment boundaries. FOLLOW_SEGMENTATION requires 1x1 tiling."
+        "DashIsoImageBasedTrickPlaySettings$IntervalCadence": "The cadence MediaConvert follows for generating thumbnails. If set to FOLLOW_IFRAME, MediaConvert generates thumbnails for each IDR frame in the output (matching the GOP cadence). If set to FOLLOW_CUSTOM, MediaConvert generates thumbnails according to the interval you specify in thumbnailInterval. If set to FOLLOW_SEGMENTATION, MediaConvert generates thumbnail playlist entries that align exactly with video segment boundaries. FOLLOW_SEGMENTATION requires 1x1 tiling.",
+        "DashIsoImageBasedTrickPlayVariant$IntervalCadence": "The cadence MediaConvert follows for generating thumbnails. If set to FOLLOW_IFRAME, MediaConvert generates thumbnails for each IDR frame in the output (matching the GOP cadence). If set to FOLLOW_CUSTOM, MediaConvert generates thumbnails according to the interval you specify in thumbnailInterval. If set to FOLLOW_SEGMENTATION, MediaConvert generates thumbnail playlist entries that align exactly with video segment boundaries. FOLLOW_SEGMENTATION requires 1x1 tiling."
       }
     },
     "DashIsoMpdManifestBandwidthType": {
@@ -1308,6 +1329,12 @@
       "base": "Applies only to 29.97 fps outputs. When this feature is enabled, the service will use drop-frame timecode on outputs. If it is not possible to use drop-frame timecode, the system will fall back to non-drop-frame. This setting is enabled by default when Timecode insertion or Timecode track is enabled.",
       "refs": {
         "VideoDescription$DropFrameTimecode": "Applies only to 29.97 fps outputs. When this feature is enabled, the service will use drop-frame timecode on outputs. If it is not possible to use drop-frame timecode, the system will fall back to non-drop-frame. This setting is enabled by default when Timecode insertion or Timecode track is enabled."
+      }
+    },
+    "DurationControl": {
+      "base": "Settings for integer-second duration normalization. When this preprocessor is present, the output duration will be adjusted to an exact integer-second boundary. If the input is within the trim threshold of an integer second, trailing frames are dropped. If within the compression threshold and less than 500ms over the previous integer second, the output is sped up slightly. Otherwise, black frames are padded to the next integer second.",
+      "refs": {
+        "VideoPreprocessor$DurationControl": "Enable integer-second duration normalization. When enabled, the output duration is adjusted to land on an exact integer-second boundary. The adjustment method (trim, compress, or pad) is chosen automatically based on how far the input duration is from the nearest integer second."
       }
     },
     "DvbNitSettings": {
@@ -1733,7 +1760,7 @@
     "Format": {
       "base": null,
       "refs": {
-        "Container$Format": "The format of your media file. For example: MP4, QuickTime (MOV), Matroska (MKV), WebM, MXF, Wave, AVI, or MPEG-TS. Note that this will be blank if your media file has a format that the MediaConvert Probe operation does not recognize."
+        "Container$Format": "The format of your media file. For example: MP4, QuickTime (MOV), Matroska (MKV), WebM, MXF, Wave, AVI, MPEG-TS, MPEG-PS, or MP3. Note that this will be blank if your media file has a format that the MediaConvert Probe operation does not recognize."
       }
     },
     "FrameCaptureSettings": {
@@ -1862,6 +1889,12 @@
       "base": "Entropy encoding mode. Use CABAC (must be in Main or High profile) or CAVLC.",
       "refs": {
         "H264Settings$EntropyEncoding": "Entropy encoding mode. Use CABAC (must be in Main or High profile) or CAVLC."
+      }
+    },
+    "H264ExplicitWeightedPrediction": {
+      "base": "Enable or disable explicit weighted prediction for the H.264 encoder. Weighted prediction improves compression efficiency for content with fading or brightness changes between frames.",
+      "refs": {
+        "H264Settings$ExplicitWeightedPrediction": "Enable or disable explicit weighted prediction for the H.264 encoder. Weighted prediction improves compression efficiency for content with fading or brightness changes between frames."
       }
     },
     "H264FieldEncoding": {
@@ -2219,6 +2252,12 @@
         "VideoPreprocessor$Hdr10Plus": "Enable HDR10+ analysis and metadata injection. Compatible with HEVC only."
       }
     },
+    "HdrMetadata": {
+      "base": "HDR (High Dynamic Range) metadata extracted from the container, including mastering display color volume and content light level information. This metadata is present in HDR10 and similar HDR content.",
+      "refs": {
+        "VideoProperties$HdrMetadata": "HDR (High Dynamic Range) metadata extracted from the container, including mastering display color volume and content light level information. This metadata is present in HDR10 and similar HDR content."
+      }
+    },
     "HlsAdMarkers": {
       "base": "Ad marker for Apple HLS manifest.",
       "refs": {
@@ -2265,12 +2304,6 @@
       "base": "Set Caption segment length control to Match video to create caption segments that align with the video segments from the first video output in this output group. For example, if the video segments are 2 seconds long, your WebVTT segments will also be 2 seconds long. Keep the default setting, Large segments to create caption segments that are 300 seconds long.",
       "refs": {
         "HlsGroupSettings$CaptionSegmentLengthControl": "Set Caption segment length control to Match video to create caption segments that align with the video segments from the first video output in this output group. For example, if the video segments are 2 seconds long, your WebVTT segments will also be 2 seconds long. Keep the default setting, Large segments to create caption segments that are 300 seconds long."
-      }
-    },
-    "HlsClearLead": {
-      "base": "Enable Clear Lead DRM to reduce video startup latency by leaving the first segment unencrypted while DRM license retrieval occurs in parallel. This optimization allows immediate playback startup while maintaining content protection for the remainder of the stream. When enabled, the first output segment remains fully unencrypted, and encryption begins at the start of the second segment. The HLS manifest will omit #EXT-X-KEY tags during the clear segment and insert the first #EXT-X-KEY immediately before the first encrypted fragment. This feature is supported exclusively for CMAF HLS (fMP4) outputs and is compatible with all existing key provider integrations (SPEKE v1, SPEKE v2, and Static Key encryption). Supported codecs: H.264, H.265, and AV1 video codecs, and AAC audio codec. Choose Enabled to activate Clear Lead DRM optimization. Choose Disabled to use standard encryption where all segments are encrypted from the beginning.",
-      "refs": {
-        "CmafEncryptionSettings$ClearLead": "Enable Clear Lead DRM to reduce video startup latency by leaving the first segment unencrypted while DRM license retrieval occurs in parallel. This optimization allows immediate playback startup while maintaining content protection for the remainder of the stream. When enabled, the first output segment remains fully unencrypted, and encryption begins at the start of the second segment. The HLS manifest will omit #EXT-X-KEY tags during the clear segment and insert the first #EXT-X-KEY immediately before the first encrypted fragment. This feature is supported exclusively for CMAF HLS (fMP4) outputs and is compatible with all existing key provider integrations (SPEKE v1, SPEKE v2, and Static Key encryption). Supported codecs: H.264, H.265, and AV1 video codecs, and AAC audio codec. Choose Enabled to activate Clear Lead DRM optimization. Choose Disabled to use standard encryption where all segments are encrypted from the beginning."
       }
     },
     "HlsClientCache": {
@@ -2322,15 +2355,21 @@
       }
     },
     "HlsImageBasedTrickPlay": {
-      "base": "Specify whether MediaConvert generates images for trick play. Keep the default value, None, to not generate any images. Choose Thumbnail to generate tiled thumbnails. Choose Thumbnail and full frame to generate tiled thumbnails and full-resolution images of single frames. MediaConvert creates a child manifest for each set of images that you generate and adds corresponding entries to the parent manifest. A common application for these images is Roku trick mode. The thumbnails and full-frame images that MediaConvert creates with this feature are compatible with this Roku specification: https://developer.roku.com/docs/developer-program/media-playback/trick-mode/hls-and-dash.md",
+      "base": "Specify whether MediaConvert generates images for trick play. Keep the default value, None, to not generate any images. Choose Thumbnail to generate tiled thumbnails. Choose Thumbnail and full frame to generate tiled thumbnails and full-resolution images of single frames. Choose Advanced to customize thumbnail and tile settings for a single trick play variant. Choose Variants to specify multiple trick play variants, each with its own thumbnail and tile settings. MediaConvert creates a child manifest for each set of images that you generate and adds corresponding entries to the parent manifest. A common application for these images is Roku trick mode. The thumbnails and full-frame images that MediaConvert creates with this feature are compatible with this Roku specification: https://developer.roku.com/docs/developer-program/media-playback/trick-mode/hls-and-dash.md",
       "refs": {
-        "HlsGroupSettings$ImageBasedTrickPlay": "Specify whether MediaConvert generates images for trick play. Keep the default value, None, to not generate any images. Choose Thumbnail to generate tiled thumbnails. Choose Thumbnail and full frame to generate tiled thumbnails and full-resolution images of single frames. MediaConvert creates a child manifest for each set of images that you generate and adds corresponding entries to the parent manifest. A common application for these images is Roku trick mode. The thumbnails and full-frame images that MediaConvert creates with this feature are compatible with this Roku specification: https://developer.roku.com/docs/developer-program/media-playback/trick-mode/hls-and-dash.md"
+        "HlsGroupSettings$ImageBasedTrickPlay": "Specify whether MediaConvert generates images for trick play. Keep the default value, None, to not generate any images. Choose Thumbnail to generate tiled thumbnails. Choose Thumbnail and full frame to generate tiled thumbnails and full-resolution images of single frames. Choose Advanced to customize thumbnail and tile settings for a single trick play variant. Choose Variants to specify multiple trick play variants, each with its own thumbnail and tile settings. MediaConvert creates a child manifest for each set of images that you generate and adds corresponding entries to the parent manifest. A common application for these images is Roku trick mode. The thumbnails and full-frame images that MediaConvert creates with this feature are compatible with this Roku specification: https://developer.roku.com/docs/developer-program/media-playback/trick-mode/hls-and-dash.md"
       }
     },
     "HlsImageBasedTrickPlaySettings": {
       "base": "Tile and thumbnail settings applicable when imageBasedTrickPlay is ADVANCED",
       "refs": {
         "HlsGroupSettings$ImageBasedTrickPlaySettings": "Tile and thumbnail settings applicable when imageBasedTrickPlay is ADVANCED"
+      }
+    },
+    "HlsImageBasedTrickPlayVariant": {
+      "base": "Settings for one image-based trick play variant. Each variant produces its own set of JPEG tile images and corresponding manifest entries.",
+      "refs": {
+        "__listOfHlsImageBasedTrickPlayVariant$member": null
       }
     },
     "HlsInitializationVectorInManifest": {
@@ -2342,7 +2381,8 @@
     "HlsIntervalCadence": {
       "base": "The cadence MediaConvert follows for generating thumbnails. If set to FOLLOW_IFRAME, MediaConvert generates thumbnails for each IDR frame in the output (matching the GOP cadence). If set to FOLLOW_CUSTOM, MediaConvert generates thumbnails according to the interval you specify in thumbnailInterval. If set to FOLLOW_SEGMENTATION, MediaConvert generates thumbnail playlist entries that align exactly with video segment boundaries. FOLLOW_SEGMENTATION requires 1x1 tiling.",
       "refs": {
-        "HlsImageBasedTrickPlaySettings$IntervalCadence": "The cadence MediaConvert follows for generating thumbnails. If set to FOLLOW_IFRAME, MediaConvert generates thumbnails for each IDR frame in the output (matching the GOP cadence). If set to FOLLOW_CUSTOM, MediaConvert generates thumbnails according to the interval you specify in thumbnailInterval. If set to FOLLOW_SEGMENTATION, MediaConvert generates thumbnail playlist entries that align exactly with video segment boundaries. FOLLOW_SEGMENTATION requires 1x1 tiling."
+        "HlsImageBasedTrickPlaySettings$IntervalCadence": "The cadence MediaConvert follows for generating thumbnails. If set to FOLLOW_IFRAME, MediaConvert generates thumbnails for each IDR frame in the output (matching the GOP cadence). If set to FOLLOW_CUSTOM, MediaConvert generates thumbnails according to the interval you specify in thumbnailInterval. If set to FOLLOW_SEGMENTATION, MediaConvert generates thumbnail playlist entries that align exactly with video segment boundaries. FOLLOW_SEGMENTATION requires 1x1 tiling.",
+        "HlsImageBasedTrickPlayVariant$IntervalCadence": "The cadence MediaConvert follows for generating thumbnails. If set to FOLLOW_IFRAME, MediaConvert generates thumbnails for each IDR frame in the output (matching the GOP cadence). If set to FOLLOW_CUSTOM, MediaConvert generates thumbnails according to the interval you specify in thumbnailInterval. If set to FOLLOW_SEGMENTATION, MediaConvert generates thumbnail playlist entries that align exactly with video segment boundaries. FOLLOW_SEGMENTATION requires 1x1 tiling."
       }
     },
     "HlsKeyProviderType": {
@@ -2712,7 +2752,7 @@
       "refs": {}
     },
     "ListTagsForResourceRequest": {
-      "base": "List the tags for your AWS Elemental MediaConvert resource by sending a request with the Amazon Resource Name (ARN) of the resource. To get the ARN, send a GET request with the resource name.",
+      "base": "List the tags for a MediaConvert queue, preset, job, or job template by sending a request with the Amazon Resource Name (ARN) of the resource. To get the ARN for a MediaConvert resource, send a GET request with the resource name.",
       "refs": {}
     },
     "ListTagsForResourceResponse": {
@@ -2869,6 +2909,12 @@
       "base": "These settings relate to the MPEG-2 transport stream (MPEG2-TS) container for the MPEG2-TS segments in your HLS outputs.",
       "refs": {
         "ContainerSettings$M3u8Settings": "These settings relate to the MPEG-2 transport stream (MPEG2-TS) container for the MPEG2-TS segments in your HLS outputs."
+      }
+    },
+    "MasteringDisplayColorVolume": {
+      "base": "Mastering display color volume metadata (SMPTE ST 2086). Describes the color volume of the display used to master the content. Chromaticity coordinates are in units of 0.00002. Luminance values are in units of 0.0001 cd/m².",
+      "refs": {
+        "HdrMetadata$MasteringDisplayColorVolume": "Mastering display color volume metadata (SMPTE ST 2086). Describes the color volume of the display used to master the content. Chromaticity coordinates are in units of 0.00002. Luminance values are in units of 0.0001 cd/m²."
       }
     },
     "MatrixCoefficients": {
@@ -3850,7 +3896,7 @@
       }
     },
     "TagResourceRequest": {
-      "base": "To add tags to a queue, preset, or job template, send a request with the Amazon Resource Name (ARN) of the resource and the tags that you want to add.",
+      "base": "To add tags to a MediaConvert queue, preset, job, or job template, send a request with the Amazon Resource Name (ARN) of the resource and the tags that you want to add.",
       "refs": {}
     },
     "TagResourceResponse": {
@@ -4042,7 +4088,7 @@
       }
     },
     "UntagResourceRequest": {
-      "base": "To remove tags from a resource, send a request with the Amazon Resource Name (ARN) of the resource and the keys of the tags that you want to remove.",
+      "base": "To remove tags from a MediaConvert queue, preset, job, or job template, send a request with the Amazon Resource Name (ARN) of the resource and the keys of the tags that you want to remove.",
       "refs": {}
     },
     "UntagResourceResponse": {
@@ -4558,10 +4604,13 @@
       "refs": {
         "CmafGroupSettings$MinFinalSegmentLength": "Keep this setting at the default value of 0, unless you are troubleshooting a problem with how devices play back the end of your video asset. If you know that player devices are hanging on the final segment of your video because the length of your final segment is too short, use this setting to specify a minimum final segment length, in seconds. Choose a value that is greater than or equal to 1 and less than your segment length. When you specify a value for this setting, the encoder will combine any final segment that is shorter than the length that you specify with the previous segment. For example, your segment length is 3 seconds and your final segment is .5 seconds without a minimum final segment length; when you set the minimum final segment length to 1, your final segment is 3.5 seconds.",
         "CmafImageBasedTrickPlaySettings$ThumbnailInterval": "Enter the interval, in seconds, that MediaConvert uses to generate thumbnails. If the interval you enter doesn't align with the output frame rate, MediaConvert automatically rounds the interval to align with the output frame rate. For example, if the output frame rate is 29.97 frames per second and you enter 5, MediaConvert uses a 150 frame interval to generate thumbnails.",
+        "CmafImageBasedTrickPlayVariant$ThumbnailInterval": "Enter the interval, in seconds, that MediaConvert uses to generate thumbnails. If the interval you enter doesn't align with the output frame rate, MediaConvert automatically rounds the interval to align with the output frame rate. For example, if the output frame rate is 29.97 frames per second and you enter 5, MediaConvert uses a 150 frame interval to generate thumbnails.",
         "DashIsoGroupSettings$MinFinalSegmentLength": "Keep this setting at the default value of 0, unless you are troubleshooting a problem with how devices play back the end of your video asset. If you know that player devices are hanging on the final segment of your video because the length of your final segment is too short, use this setting to specify a minimum final segment length, in seconds. Choose a value that is greater than or equal to 1 and less than your segment length. When you specify a value for this setting, the encoder will combine any final segment that is shorter than the length that you specify with the previous segment. For example, your segment length is 3 seconds and your final segment is .5 seconds without a minimum final segment length; when you set the minimum final segment length to 1, your final segment is 3.5 seconds.",
         "DashIsoImageBasedTrickPlaySettings$ThumbnailInterval": "Enter the interval, in seconds, that MediaConvert uses to generate thumbnails. If the interval you enter doesn't align with the output frame rate, MediaConvert automatically rounds the interval to align with the output frame rate. For example, if the output frame rate is 29.97 frames per second and you enter 5, MediaConvert uses a 150 frame interval to generate thumbnails.",
+        "DashIsoImageBasedTrickPlayVariant$ThumbnailInterval": "Enter the interval, in seconds, that MediaConvert uses to generate thumbnails. If the interval you enter doesn't align with the output frame rate, MediaConvert automatically rounds the interval to align with the output frame rate. For example, if the output frame rate is 29.97 frames per second and you enter 5, MediaConvert uses a 150 frame interval to generate thumbnails.",
         "HlsGroupSettings$MinFinalSegmentLength": "Keep this setting at the default value of 0, unless you are troubleshooting a problem with how devices play back the end of your video asset. If you know that player devices are hanging on the final segment of your video because the length of your final segment is too short, use this setting to specify a minimum final segment length, in seconds. Choose a value that is greater than or equal to 1 and less than your segment length. When you specify a value for this setting, the encoder will combine any final segment that is shorter than the length that you specify with the previous segment. For example, your segment length is 3 seconds and your final segment is .5 seconds without a minimum final segment length; when you set the minimum final segment length to 1, your final segment is 3.5 seconds.",
-        "HlsImageBasedTrickPlaySettings$ThumbnailInterval": "Enter the interval, in seconds, that MediaConvert uses to generate thumbnails. If the interval you enter doesn't align with the output frame rate, MediaConvert automatically rounds the interval to align with the output frame rate. For example, if the output frame rate is 29.97 frames per second and you enter 5, MediaConvert uses a 150 frame interval to generate thumbnails."
+        "HlsImageBasedTrickPlaySettings$ThumbnailInterval": "Enter the interval, in seconds, that MediaConvert uses to generate thumbnails. If the interval you enter doesn't align with the output frame rate, MediaConvert automatically rounds the interval to align with the output frame rate. For example, if the output frame rate is 29.97 frames per second and you enter 5, MediaConvert uses a 150 frame interval to generate thumbnails.",
+        "HlsImageBasedTrickPlayVariant$ThumbnailInterval": "Enter the interval, in seconds, that MediaConvert uses to generate thumbnails. If the interval you enter doesn't align with the output frame rate, MediaConvert automatically rounds the interval to align with the output frame rate. For example, if the output frame rate is 29.97 frames per second and you enter 5, MediaConvert uses a 150 frame interval to generate thumbnails."
       }
     },
     "__doubleMin1Max10": {
@@ -4630,10 +4679,14 @@
       "refs": {
         "AudioProperties$BitDepth": "The bit depth of the audio track.",
         "AudioProperties$Channels": "The number of audio channels in the audio track.",
+        "AudioProperties$ObjectCount": "The number of audio objects in an object-based or immersive audio track. This field is present for codecs that support object-based audio, such as E-AC-3 with Joint Object Coding (JOC) or IAMF. This field is null when the audio track does not contain object-based audio metadata.",
         "AudioProperties$SampleRate": "The sample rate of the audio track.",
         "CodecMetadata$BitDepth": "The number of bits used per color component in the video essence such as 8, 10, or 12 bits. Standard range (SDR) video typically uses 8-bit, while 10-bit is common for high dynamic range (HDR).",
         "CodecMetadata$Height": "The height in pixels as coded by the codec. This represents the actual encoded video height as specified in the video stream headers.",
+        "CodecMetadata$Rotation": "The clockwise rotation angle of the video, in degrees, as specified in the codec bitstream via a Display Orientation SEI message (payload type 47 for both H.264 and H.265). This field is null when the video essence does not contain a Display Orientation SEI message or when the rotation is 0 degrees.",
         "CodecMetadata$Width": "The width in pixels as coded by the codec. This represents the actual encoded video width as specified in the video stream headers.",
+        "ContentLightLevel$MaxContentLightLevel": "Maximum content light level (MaxCLL), in cd/m².",
+        "ContentLightLevel$MaxFrameAverageLightLevel": "Maximum frame-average light level (MaxFALL), in cd/m².",
         "DescribeEndpointsRequest$MaxResults": "Optional. Max number of endpoints, up to twenty, that will be returned at one time.",
         "FrameRate$Denominator": "The denominator, or bottom number, in the fractional frame rate. For example, if your frame rate is 24000 / 1001 (23.976 frames per second), then the denominator would be 1001.",
         "FrameRate$Numerator": "The numerator, or top number, in the fractional frame rate. For example, if your frame rate is 24000 / 1001 (23.976 frames per second), then the numerator would be 24000.",
@@ -4641,6 +4694,14 @@
         "Job$ErrorCode": "Error code for the job",
         "Job$JobPercentComplete": "An estimate of how far your job has progressed. This estimate is shown as a percentage of the total time from when your job leaves its queue to when your output files appear in your output Amazon S3 bucket. AWS Elemental MediaConvert provides jobPercentComplete in CloudWatch STATUS_UPDATE events and in the response to GetJob and ListJobs requests. The jobPercentComplete estimate is reliable for the following input containers: Quicktime, Transport Stream, MP4, and MXF. For some jobs, the service can't provide information about job progress. In those cases, jobPercentComplete returns a null value.",
         "Job$RetryCount": "The number of times that the service automatically attempted to process your job after encountering an error.",
+        "MasteringDisplayColorVolume$BluePrimaryX": "Blue primary chromaticity x coordinate, in units of 0.00002.",
+        "MasteringDisplayColorVolume$BluePrimaryY": "Blue primary chromaticity y coordinate, in units of 0.00002.",
+        "MasteringDisplayColorVolume$GreenPrimaryX": "Green primary chromaticity x coordinate, in units of 0.00002.",
+        "MasteringDisplayColorVolume$GreenPrimaryY": "Green primary chromaticity y coordinate, in units of 0.00002.",
+        "MasteringDisplayColorVolume$RedPrimaryX": "Red primary chromaticity x coordinate, in units of 0.00002.",
+        "MasteringDisplayColorVolume$RedPrimaryY": "Red primary chromaticity y coordinate, in units of 0.00002.",
+        "MasteringDisplayColorVolume$WhitePointX": "White point chromaticity x coordinate, in units of 0.00002.",
+        "MasteringDisplayColorVolume$WhitePointY": "White point chromaticity y coordinate, in units of 0.00002.",
         "OutputDetail$DurationInMs": "Duration in milliseconds",
         "ReservationPlan$ReservedSlots": "Specifies the number of reserved transcode slots (RTS) for this queue. The number of RTS determines how many jobs the queue can process in parallel; each RTS can process one job at a time. When you increase this number, you extend your existing commitment with a new 12-month commitment for a larger number of RTS. The new commitment begins when you purchase the additional capacity. You can't decrease the number of RTS in your reserved queue.",
         "ReservationPlanSettings$ReservedSlots": "Specifies the number of reserved transcode slots (RTS) for this queue. The number of RTS determines how many jobs the queue can process in parallel; each RTS can process one job at a time. You can't decrease the number of RTS in your reserved queue. You can increase the number of RTS by extending your existing commitment with a new 12-month commitment for the larger number. The new commitment begins when you purchase the additional capacity. You can't cancel your commitment or revert to your original commitment after you increase the capacity.",
@@ -4649,6 +4710,7 @@
         "VideoDetail$WidthInPx": "Width in pixels for the output",
         "VideoProperties$BitDepth": "The number of bits used per color component such as 8, 10, or 12 bits. Standard range (SDR) video typically uses 8-bit, while 10-bit is common for high dynamic range (HDR).",
         "VideoProperties$Height": "The height of the video track, in pixels.",
+        "VideoProperties$Rotation": "The clockwise rotation angle of the video track, in degrees, as derived from container-level metadata (e.g. the MP4 tkhd transformation matrix or the Matroska ProjectionPoseRoll element). Common values are 90, 180, and 270. This field is null when no rotation metadata is present or when the rotation is 0 degrees. For MP4, non-standard transformation matrices also yield null.",
         "VideoProperties$Width": "The width of the video track, in pixels.",
         "WarningGroup$Code": "Warning code that identifies a specific warning in the job. For more information, see https://docs.aws.amazon.com/mediaconvert/latest/ug/warning_codes.html",
         "WarningGroup$Count": "The number of times this warning occurred in the job.",
@@ -4775,6 +4837,7 @@
         "ColorConversion3DLUTSetting$OutputMasteringLuminance": "Specify which outputs use this 3D LUT, according to their luminance. To apply this 3D LUT to HDR10 or P3D65 (HDR) outputs with a specific luminance: Enter an integer from 0 to 2147483647, corresponding to the output's luminance. To apply this 3D LUT to any output regardless of its luminance: Leave blank, or enter 0.",
         "ColorCorrector$MaxLuminance": "Specify the maximum mastering display luminance. Enter an integer from 0 to 2147483647, in units of 0.0001 nits. For example, enter 10000000 for 1000 nits.",
         "DashIsoGroupSettings$MinBufferTime": "Minimum time of initially buffered media that is needed to ensure smooth playout.",
+        "DurationControl$IntegerDurationMaximumCompressionNumerator": "Required. Numerator of the maximum allowed compression ratio, defined as overrun divided by target duration. For example, numerator 5 with denominator 100 means max 5% compression. Set to 0 to disable compression entirely (only trim or pad will be used).",
         "DvbSubDestinationSettings$DdsXCoordinate": "Use this setting, along with DDS y-coordinate, to specify the upper left corner of the display definition segment (DDS) display window. With this setting, specify the distance, in pixels, between the left side of the frame and the left side of the DDS display window. Keep the default value, 0, to have MediaConvert automatically choose this offset. Related setting: When you use this setting, you must set DDS handling to a value other than None. MediaConvert uses these values to determine whether to write page position data to the DDS or to the page composition segment. All burn-in and DVB-Sub font settings must match.",
         "DvbSubDestinationSettings$DdsYCoordinate": "Use this setting, along with DDS x-coordinate, to specify the upper left corner of the display definition segment (DDS) display window. With this setting, specify the distance, in pixels, between the top of the frame and the top of the DDS display window. Keep the default value, 0, to have MediaConvert automatically choose this offset. Related setting: When you use this setting, you must set DDS handling to a value other than None. MediaConvert uses these values to determine whether to write page position data to the DDS or to the page composition segment (PCS). All burn-in and DVB-Sub font settings must match.",
         "DvbSubDestinationSettings$XPosition": "Specify the horizontal position of the captions, relative to the left side of the output in pixels. A value of 10 would result in the captions starting 10 pixels from the left of the output. If no explicit x_position is provided, the horizontal caption position will be determined by the alignment parameter. Within your job settings, all of your DVB-Sub settings must be identical.",
@@ -4888,6 +4951,7 @@
     "__integerMin0Max500": {
       "base": null,
       "refs": {
+        "DurationControl$IntegerDurationTrimThresholdMilliseconds": "Maximum number of fractional milliseconds past an integer second that qualify for the trim path (frame dropping). Default is 0 (trimming disabled).",
         "M2tsSettings$MaxPcrInterval": "Specify the maximum time, in milliseconds, between Program Clock References (PCRs) inserted into the transport stream.",
         "M3u8Settings$MaxPcrInterval": "Specify the maximum time, in milliseconds, between Program Clock References (PCRs) inserted into the transport stream."
       }
@@ -5118,9 +5182,12 @@
     "__integerMin1Max2048": {
       "base": null,
       "refs": {
-        "CmafImageBasedTrickPlaySettings$TileHeight": "Number of thumbnails in each column of a tile image. Set a value between 2 and 2048. Must be divisible by 2.",
-        "DashIsoImageBasedTrickPlaySettings$TileHeight": "Number of thumbnails in each column of a tile image. Set a value between 2 and 2048. Must be divisible by 2.",
-        "HlsImageBasedTrickPlaySettings$TileHeight": "Number of thumbnails in each column of a tile image. Set a value between 2 and 2048. Must be divisible by 2."
+        "CmafImageBasedTrickPlaySettings$TileHeight": "Number of thumbnails in each column of a tile image. Set a value between 1 and 2048.",
+        "CmafImageBasedTrickPlayVariant$TileHeight": "Number of thumbnails in each column of a tile image. Set a value between 1 and 2048.",
+        "DashIsoImageBasedTrickPlaySettings$TileHeight": "Number of thumbnails in each column of a tile image. Set a value between 1 and 2048.",
+        "DashIsoImageBasedTrickPlayVariant$TileHeight": "Number of thumbnails in each column of a tile image. Set a value between 1 and 2048.",
+        "HlsImageBasedTrickPlaySettings$TileHeight": "Number of thumbnails in each column of a tile image. Set a value between 1 and 2048.",
+        "HlsImageBasedTrickPlayVariant$TileHeight": "Number of thumbnails in each column of a tile image. Set a value between 1 and 2048."
       }
     },
     "__integerMin1Max2147483640": {
@@ -5138,6 +5205,7 @@
         "CmafGroupSettings$SegmentLength": "Specify the length, in whole seconds, of each segment. When you don't specify a value, MediaConvert defaults to 10. Related settings: Use Segment length control to specify whether the encoder enforces this value strictly. Use Segment control to specify whether MediaConvert creates separate segment files or one content file that has metadata to mark the segment boundaries.",
         "DashIsoGroupSettings$FragmentLength": "Length of fragments to generate (in seconds). Fragment length must be compatible with GOP size and Framerate. Note that fragments will end on the next keyframe after this number of seconds, so actual fragment length may be longer. When Emit Single File is checked, the fragmentation is internal to a single output file and it does not cause the creation of many output files as in other output types.",
         "DashIsoGroupSettings$SegmentLength": "Specify the length, in whole seconds, of each segment. When you don't specify a value, MediaConvert defaults to 30. Related settings: Use Segment length control to specify whether the encoder enforces this value strictly. Use Segment control to specify whether MediaConvert creates separate segment files or one content file that has metadata to mark the segment boundaries.",
+        "DurationControl$IntegerDurationMaximumCompressionDenominator": "Required. Denominator of the maximum allowed compression ratio.",
         "DvbSubDestinationSettings$Height": "Specify the height, in pixels, of this set of DVB-Sub captions. The default value is 576 pixels. Related setting: When you use this setting, you must set DDS handling to a value other than None. All burn-in and DVB-Sub font settings must match.",
         "DvbSubDestinationSettings$Width": "Specify the width, in pixels, of this set of DVB-Sub captions. The default value is 720 pixels. Related setting: When you use this setting, you must set DDS handling to a value other than None. All burn-in and DVB-Sub font settings must match.",
         "DvbSubSourceSettings$Pid": "When using DVB-Sub with Burn-in, use this PID for the source content. Unused for DVB-Sub passthrough. All DVB-Sub content is passed through, regardless of selectors.",
@@ -5214,8 +5282,11 @@
       "base": null,
       "refs": {
         "CmafImageBasedTrickPlaySettings$TileWidth": "Number of thumbnails in each row of a tile image. Set a value between 1 and 512.",
+        "CmafImageBasedTrickPlayVariant$TileWidth": "Number of thumbnails in each row of a tile image. Set a value between 1 and 512.",
         "DashIsoImageBasedTrickPlaySettings$TileWidth": "Number of thumbnails in each row of a tile image. Set a value between 1 and 512.",
-        "HlsImageBasedTrickPlaySettings$TileWidth": "Number of thumbnails in each row of a tile image. Set a value between 1 and 512."
+        "DashIsoImageBasedTrickPlayVariant$TileWidth": "Number of thumbnails in each row of a tile image. Set a value between 1 and 512.",
+        "HlsImageBasedTrickPlaySettings$TileWidth": "Number of thumbnails in each row of a tile image. Set a value between 1 and 512.",
+        "HlsImageBasedTrickPlayVariant$TileWidth": "Number of thumbnails in each row of a tile image. Set a value between 1 and 512."
       }
     },
     "__integerMin1Max6": {
@@ -5246,6 +5317,12 @@
       "base": null,
       "refs": {
         "InputVideoGenerator$Duration": "Specify the duration, in milliseconds, for your video generator input.\nEnter an integer from 1 to 86400000."
+      }
+    },
+    "__integerMin1Max9999": {
+      "base": null,
+      "refs": {
+        "CmafEncryptionSettings$ClearLeadSegments": "Reduce video startup latency by leaving initial segments unencrypted while DRM license retrieval occurs in parallel. This optimization allows immediate playback startup while maintaining content protection for the remainder of the stream. Specify the number of initial segments to leave unencrypted. Omit this field to disable Clear Lead. The HLS manifest will omit #EXT-X-KEY tags during clear segments and insert the first #EXT-X-KEY immediately before the first encrypted segment. Because encryption is applied at the fragment level, the actual duration of unencrypted content may be slightly longer than expected if the segment length is not evenly divisible by the fragment length. In such cases, encryption begins at the next fragment boundary after the specified clear lead segments, rather than at the exact segment boundary. This feature is supported exclusively for CMAF HLS (fMP4) outputs and is compatible with all existing key provider integrations (SPEKE v1, SPEKE v2, and Static Key encryption). Supported codecs: H.264, H.265, and AV1 video codecs, and AAC audio codec."
       }
     },
     "__integerMin2000Max30000": {
@@ -5305,7 +5382,10 @@
       "base": null,
       "refs": {
         "CmafImageBasedTrickPlaySettings$ThumbnailHeight": "Height of each thumbnail within each tile image, in pixels. Leave blank to maintain aspect ratio with thumbnail width. If following the aspect ratio would lead to a total tile height greater than 4096, then the job will be rejected. Must be divisible by 2.",
-        "HlsImageBasedTrickPlaySettings$ThumbnailHeight": "Height of each thumbnail within each tile image, in pixels. Leave blank to maintain aspect ratio with thumbnail width. If following the aspect ratio would lead to a total tile height greater than 4096, then the job will be rejected. Must be divisible by 2."
+        "CmafImageBasedTrickPlayVariant$ThumbnailHeight": "Height of each thumbnail within each tile image, in pixels. Leave blank to maintain aspect ratio with thumbnail width. If following the aspect ratio would lead to a total tile height greater than 4096, then the job will be rejected. Must be divisible by 2.",
+        "DashIsoImageBasedTrickPlayVariant$ThumbnailHeight": "Height of each thumbnail within each tile image, in pixels. Leave blank to maintain aspect ratio with thumbnail width. If following the aspect ratio would lead to a total tile height greater than 4096, then the job will be rejected. Must be divisible by 2.",
+        "HlsImageBasedTrickPlaySettings$ThumbnailHeight": "Height of each thumbnail within each tile image, in pixels. Leave blank to maintain aspect ratio with thumbnail width. If following the aspect ratio would lead to a total tile height greater than 4096, then the job will be rejected. Must be divisible by 2.",
+        "HlsImageBasedTrickPlayVariant$ThumbnailHeight": "Height of each thumbnail within each tile image, in pixels. Leave blank to maintain aspect ratio with thumbnail width. If following the aspect ratio would lead to a total tile height greater than 4096, then the job will be rejected. Must be divisible by 2."
       }
     },
     "__integerMin32000Max192000": {
@@ -5450,8 +5530,11 @@
       "base": null,
       "refs": {
         "CmafImageBasedTrickPlaySettings$ThumbnailWidth": "Width of each thumbnail within each tile image, in pixels. Default is 312. Must be divisible by 8.",
+        "CmafImageBasedTrickPlayVariant$ThumbnailWidth": "Width of each thumbnail within each tile image, in pixels. Default is 312. Must be divisible by 8.",
         "DashIsoImageBasedTrickPlaySettings$ThumbnailWidth": "Width of each thumbnail within each tile image, in pixels. Default is 312. Must be divisible by 8.",
-        "HlsImageBasedTrickPlaySettings$ThumbnailWidth": "Width of each thumbnail within each tile image, in pixels. Default is 312. Must be divisible by 8."
+        "DashIsoImageBasedTrickPlayVariant$ThumbnailWidth": "Width of each thumbnail within each tile image, in pixels. Default is 312. Must be divisible by 8.",
+        "HlsImageBasedTrickPlaySettings$ThumbnailWidth": "Width of each thumbnail within each tile image, in pixels. Default is 312. Must be divisible by 8.",
+        "HlsImageBasedTrickPlayVariant$ThumbnailWidth": "Width of each thumbnail within each tile image, in pixels. Default is 312. Must be divisible by 8."
       }
     },
     "__integerMin90Max105": {
@@ -5608,6 +5691,12 @@
         "CmafGroupSettings$AdditionalManifests": "By default, the service creates one top-level .m3u8 HLS manifest and one top -level .mpd DASH manifest for each CMAF output group in your job. These default manifests reference every output in the output group. To create additional top-level manifests that reference a subset of the outputs in the output group, specify a list of them here. For each additional manifest that you specify, the service creates one HLS manifest and one DASH manifest."
       }
     },
+    "__listOfCmafImageBasedTrickPlayVariant": {
+      "base": null,
+      "refs": {
+        "CmafGroupSettings$ImageBasedTrickPlayVariants": "Specify multiple image-based trick play variants. Each entry creates a separate set of JPEG tile images with its own resolution, tile layout, and cadence settings. Set imageBasedTrickPlay to VARIANTS when using this setting."
+      }
+    },
     "__listOfColorConversion3DLUTSetting": {
       "base": null,
       "refs": {
@@ -5619,6 +5708,12 @@
       "base": null,
       "refs": {
         "DashIsoGroupSettings$AdditionalManifests": "By default, the service creates one .mpd DASH manifest for each DASH ISO output group in your job. This default manifest references every output in the output group. To create additional DASH manifests that reference a subset of the outputs in the output group, specify a list of them here."
+      }
+    },
+    "__listOfDashIsoImageBasedTrickPlayVariant": {
+      "base": null,
+      "refs": {
+        "DashIsoGroupSettings$ImageBasedTrickPlayVariants": "Specify multiple image-based trick play variants. Each entry creates a separate set of JPEG tile images with its own resolution, tile layout, and cadence settings. Set imageBasedTrickPlay to VARIANTS when using this setting."
       }
     },
     "__listOfElementalInferenceFeature": {
@@ -5674,6 +5769,12 @@
       "base": null,
       "refs": {
         "HlsGroupSettings$CaptionLanguageMappings": "Language to be used on Caption outputs"
+      }
+    },
+    "__listOfHlsImageBasedTrickPlayVariant": {
+      "base": null,
+      "refs": {
+        "HlsGroupSettings$ImageBasedTrickPlayVariants": "Specify multiple image-based trick play variants. Each entry creates a separate set of JPEG tile images with its own resolution, tile layout, and cadence settings. Set imageBasedTrickPlay to VARIANTS when using this setting."
       }
     },
     "__listOfHopDestination": {
@@ -5950,6 +6051,8 @@
       "base": null,
       "refs": {
         "AudioProperties$BitRate": "The bit rate of the audio track, in bits per second.",
+        "MasteringDisplayColorVolume$MaxLuminance": "Maximum display mastering luminance, in units of 0.0001 cd/m².",
+        "MasteringDisplayColorVolume$MinLuminance": "Minimum display mastering luminance, in units of 0.0001 cd/m².",
         "Metadata$FileSize": "The size of the media file, in bytes.",
         "VideoProperties$BitRate": "The bit rate of the video track, in bits per second."
       }

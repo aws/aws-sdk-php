@@ -349,6 +349,20 @@
       "error":{"httpStatusCode":403},
       "exception":true
     },
+    "AddReplicaLocationInput":{
+      "type":"structure",
+      "required":["Location"],
+      "members":{
+        "Location":{"shape":"Location"},
+        "VpcConfig":{"shape":"VpcConfigInput"}
+      }
+    },
+    "AddReplicaLocations":{
+      "type":"list",
+      "member":{"shape":"AddReplicaLocationInput"},
+      "max":50,
+      "min":1
+    },
     "ArtifactConfigInput":{
       "type":"structure",
       "members":{
@@ -476,6 +490,7 @@
         "BrowserConfigs":{"shape":"BrowserConfigs"},
         "EngineConfigs":{"shape":"EngineConfigs"},
         "VisualReferences":{"shape":"VisualReferencesOutput"},
+        "MultiLocationConfig":{"shape":"MultiLocationConfig"},
         "Tags":{"shape":"TagMap"},
         "ArtifactConfig":{"shape":"ArtifactConfigOutput"},
         "DryRunConfig":{"shape":"DryRunConfigOutput"}
@@ -538,7 +553,8 @@
         "Timeline":{"shape":"CanaryRunTimeline"},
         "ArtifactS3Location":{"shape":"String"},
         "DryRunConfig":{"shape":"CanaryDryRunConfigOutput"},
-        "BrowserType":{"shape":"BrowserType"}
+        "BrowserType":{"shape":"BrowserType"},
+        "Location":{"shape":"Location"}
       }
     },
     "CanaryRunConfigInput":{
@@ -707,6 +723,7 @@
         "ResourcesToReplicateTags":{"shape":"ResourceList"},
         "ProvisionedResourceCleanup":{"shape":"ProvisionedResourceCleanupSetting"},
         "BrowserConfigs":{"shape":"BrowserConfigs"},
+        "AddReplicaLocations":{"shape":"AddReplicaLocations"},
         "Tags":{"shape":"TagMap"},
         "ArtifactConfig":{"shape":"ArtifactConfigInput"}
       }
@@ -1100,6 +1117,19 @@
         "Tags":{"shape":"TagMap"}
       }
     },
+    "Location":{
+      "type":"string",
+      "max":20,
+      "min":1,
+      "pattern":"^[a-z]{2}-((iso[a-z]{0,1}-)|(gov-)){0,1}[a-z]+-{0,1}[0-9]{0,1}$"
+    },
+    "LocationType":{
+      "type":"string",
+      "enum":[
+        "Primary",
+        "Replica"
+      ]
+    },
     "MaxCanaryResults":{
       "type":"integer",
       "max":20,
@@ -1140,6 +1170,15 @@
       "max":3008,
       "min":960
     },
+    "MultiLocationConfig":{
+      "type":"structure",
+      "members":{
+        "LocationType":{"shape":"LocationType"},
+        "PrimaryLocation":{"shape":"Location"},
+        "Replicas":{"shape":"Replicas"},
+        "ReplicationState":{"shape":"ReplicationState"}
+      }
+    },
     "NotFoundException":{
       "type":"structure",
       "members":{
@@ -1161,6 +1200,43 @@
         "AUTOMATIC",
         "OFF"
       ]
+    },
+    "RemoveReplicaLocations":{
+      "type":"list",
+      "member":{"shape":"Location"},
+      "min":1
+    },
+    "Replica":{
+      "type":"structure",
+      "members":{
+        "Location":{"shape":"Location"},
+        "ReplicationStatus":{"shape":"ReplicationStatus"},
+        "CanaryState":{"shape":"CanaryState"},
+        "LastModified":{"shape":"Timestamp"},
+        "VpcConfig":{"shape":"VpcConfigOutput"}
+      }
+    },
+    "Replicas":{
+      "type":"list",
+      "member":{"shape":"Replica"},
+      "max":50,
+      "min":1
+    },
+    "ReplicationState":{
+      "type":"string",
+      "enum":[
+        "InProgress",
+        "InSync",
+        "Inconsistent"
+      ]
+    },
+    "ReplicationStatus":{
+      "type":"structure",
+      "members":{
+        "State":{"shape":"ReplicationState"},
+        "StateReason":{"shape":"String"},
+        "StateReasonCode":{"shape":"String"}
+      }
     },
     "RequestEntityTooLargeException":{
       "type":"structure",
@@ -1442,7 +1518,9 @@
         "ProvisionedResourceCleanup":{"shape":"ProvisionedResourceCleanupSetting"},
         "DryRunId":{"shape":"UUID"},
         "VisualReferences":{"shape":"VisualReferences"},
-        "BrowserConfigs":{"shape":"BrowserConfigs"}
+        "BrowserConfigs":{"shape":"BrowserConfigs"},
+        "AddReplicaLocations":{"shape":"AddReplicaLocations"},
+        "RemoveReplicaLocations":{"shape":"RemoveReplicaLocations"}
       }
     },
     "UpdateCanaryResponse":{

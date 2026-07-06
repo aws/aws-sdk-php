@@ -16,6 +16,23 @@
     "uid":"ecs-2014-11-13"
   },
   "operations":{
+    "ContinueServiceDeployment":{
+      "name":"ContinueServiceDeployment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ContinueServiceDeploymentRequest"},
+      "output":{"shape":"ContinueServiceDeploymentResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServerException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ClientException"},
+        {"shape":"ServiceDeploymentNotFoundException"},
+        {"shape":"UnsupportedFeatureException"}
+      ]
+    },
     "CreateCapacityProvider":{
       "name":"CreateCapacityProvider",
       "http":{
@@ -1914,7 +1931,8 @@
         "cpu":{"shape":"String"},
         "memory":{"shape":"String"},
         "memoryReservation":{"shape":"String"},
-        "gpuIds":{"shape":"GpuIds"}
+        "gpuIds":{"shape":"GpuIds"},
+        "neuronDeviceIds":{"shape":"NeuronDeviceIds"}
       }
     },
     "ContainerCondition":{
@@ -2105,6 +2123,24 @@
       "type":"list",
       "member":{"shape":"Container"}
     },
+    "ContinueServiceDeploymentRequest":{
+      "type":"structure",
+      "required":[
+        "serviceDeploymentArn",
+        "hookId"
+      ],
+      "members":{
+        "serviceDeploymentArn":{"shape":"String"},
+        "hookId":{"shape":"String"},
+        "action":{"shape":"DeploymentLifecycleHookAction"}
+      }
+    },
+    "ContinueServiceDeploymentResponse":{
+      "type":"structure",
+      "members":{
+        "serviceDeploymentArn":{"shape":"String"}
+      }
+    },
     "CpuManufacturer":{
       "type":"string",
       "enum":[
@@ -2183,11 +2219,7 @@
     },
     "CreateExpressGatewayServiceRequest":{
       "type":"structure",
-      "required":[
-        "executionRoleArn",
-        "infrastructureRoleArn",
-        "primaryContainer"
-      ],
+      "required":["infrastructureRoleArn"],
       "members":{
         "executionRoleArn":{"shape":"String"},
         "infrastructureRoleArn":{"shape":"String"},
@@ -2200,7 +2232,8 @@
         "cpu":{"shape":"String"},
         "memory":{"shape":"String"},
         "scalingTarget":{"shape":"ExpressGatewayScalingTarget"},
-        "tags":{"shape":"Tags"}
+        "tags":{"shape":"Tags"},
+        "taskDefinitionArn":{"shape":"String"}
       }
     },
     "CreateExpressGatewayServiceResponse":{
@@ -2252,7 +2285,8 @@
         "enableExecuteCommand":{"shape":"Boolean"},
         "serviceConnectConfiguration":{"shape":"ServiceConnectConfiguration"},
         "volumeConfigurations":{"shape":"ServiceVolumeConfigurations"},
-        "vpcLatticeConfigurations":{"shape":"VpcLatticeConfigurations"}
+        "vpcLatticeConfigurations":{"shape":"VpcLatticeConfigurations"},
+        "monitoring":{"shape":"MonitoringConfiguration"}
       }
     },
     "CreateServiceResponse":{
@@ -2501,6 +2535,13 @@
       "max":100.0,
       "min":0.0
     },
+    "DaemonIpcMode":{
+      "type":"string",
+      "enum":[
+        "none",
+        "shared"
+      ]
+    },
     "DaemonLinuxParameters":{
       "type":"structure",
       "members":{
@@ -2523,6 +2564,13 @@
         "message":{"shape":"String"}
       },
       "exception":true
+    },
+    "DaemonPidMode":{
+      "type":"string",
+      "enum":[
+        "none",
+        "shared"
+      ]
     },
     "DaemonPropagateTags":{
       "type":"string",
@@ -2605,7 +2653,9 @@
         "status":{"shape":"DaemonTaskDefinitionStatus"},
         "registeredAt":{"shape":"Timestamp"},
         "deleteRequestedAt":{"shape":"Timestamp"},
-        "registeredBy":{"shape":"String"}
+        "registeredBy":{"shape":"String"},
+        "pidMode":{"shape":"DaemonPidMode"},
+        "ipcMode":{"shape":"DaemonIpcMode"}
       }
     },
     "DaemonTaskDefinitionRevisionFilter":{
@@ -2847,7 +2897,9 @@
       ],
       "members":{
         "enable":{"shape":"Boolean"},
-        "rollback":{"shape":"Boolean"}
+        "rollback":{"shape":"Boolean"},
+        "resetOnHealthyTask":{"shape":"BoxedBoolean"},
+        "thresholdConfiguration":{"shape":"ThresholdConfiguration"}
       }
     },
     "DeploymentConfiguration":{
@@ -2888,11 +2940,41 @@
     "DeploymentLifecycleHook":{
       "type":"structure",
       "members":{
+        "targetType":{"shape":"DeploymentLifecycleHookTargetType"},
         "hookTargetArn":{"shape":"String"},
         "roleArn":{"shape":"IAMRoleArn"},
         "lifecycleStages":{"shape":"DeploymentLifecycleHookStageList"},
-        "hookDetails":{"shape":"HookDetails"}
+        "hookDetails":{"shape":"HookDetails"},
+        "timeoutConfiguration":{"shape":"DeploymentLifecycleHookTimeoutConfiguration"}
       }
+    },
+    "DeploymentLifecycleHookAction":{
+      "type":"string",
+      "enum":[
+        "ROLLBACK",
+        "CONTINUE"
+      ]
+    },
+    "DeploymentLifecycleHookDetail":{
+      "type":"structure",
+      "members":{
+        "hookId":{"shape":"String"},
+        "targetType":{"shape":"DeploymentLifecycleHookTargetType"},
+        "targetArn":{"shape":"String"},
+        "status":{"shape":"DeploymentLifecycleHookStatus"},
+        "expiresAt":{"shape":"Timestamp"},
+        "timeoutAction":{"shape":"DeploymentLifecycleHookAction"}
+      }
+    },
+    "DeploymentLifecycleHookDetailList":{
+      "type":"list",
+      "member":{"shape":"DeploymentLifecycleHookDetail"}
+    },
+    "DeploymentLifecycleHookDuration":{
+      "type":"integer",
+      "box":true,
+      "max":20160,
+      "min":1
     },
     "DeploymentLifecycleHookList":{
       "type":"list",
@@ -2906,6 +2988,7 @@
         "POST_SCALE_UP",
         "TEST_TRAFFIC_SHIFT",
         "POST_TEST_TRAFFIC_SHIFT",
+        "PRE_PRODUCTION_TRAFFIC_SHIFT",
         "PRODUCTION_TRAFFIC_SHIFT",
         "POST_PRODUCTION_TRAFFIC_SHIFT"
       ]
@@ -2913,6 +2996,30 @@
     "DeploymentLifecycleHookStageList":{
       "type":"list",
       "member":{"shape":"DeploymentLifecycleHookStage"}
+    },
+    "DeploymentLifecycleHookStatus":{
+      "type":"string",
+      "enum":[
+        "AWAITING_ACTION",
+        "IN_PROGRESS",
+        "SUCCEEDED",
+        "FAILED",
+        "TIMED_OUT"
+      ]
+    },
+    "DeploymentLifecycleHookTargetType":{
+      "type":"string",
+      "enum":[
+        "AWS_LAMBDA",
+        "PAUSE"
+      ]
+    },
+    "DeploymentLifecycleHookTimeoutConfiguration":{
+      "type":"structure",
+      "members":{
+        "timeoutInMinutes":{"shape":"DeploymentLifecycleHookDuration"},
+        "action":{"shape":"DeploymentLifecycleHookAction"}
+      }
     },
     "DeploymentRolloutState":{
       "type":"string",
@@ -3462,6 +3569,7 @@
         "serviceRevisionArn":{"shape":"String"},
         "executionRoleArn":{"shape":"String"},
         "taskRoleArn":{"shape":"String"},
+        "taskDefinitionArn":{"shape":"String"},
         "cpu":{"shape":"String"},
         "memory":{"shape":"String"},
         "networkConfiguration":{"shape":"ExpressGatewayServiceNetworkConfiguration"},
@@ -4533,12 +4641,52 @@
         "max":{"shape":"BoxedInteger"}
       }
     },
+    "MetricConfiguration":{
+      "type":"structure",
+      "required":[
+        "metricNames",
+        "resolutionSeconds"
+      ],
+      "members":{
+        "metricNames":{"shape":"MetricNamesList"},
+        "resolutionSeconds":{"shape":"MetricResolutionSeconds"}
+      }
+    },
+    "MetricConfigurationList":{
+      "type":"list",
+      "member":{"shape":"MetricConfiguration"},
+      "max":5,
+      "min":0
+    },
+    "MetricName":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "MetricNamesList":{
+      "type":"list",
+      "member":{"shape":"MetricName"},
+      "max":5,
+      "min":1
+    },
+    "MetricResolutionSeconds":{
+      "type":"integer",
+      "box":true,
+      "max":60,
+      "min":20
+    },
     "MissingVersionException":{
       "type":"structure",
       "members":{
         "message":{"shape":"String"}
       },
       "exception":true
+    },
+    "MonitoringConfiguration":{
+      "type":"structure",
+      "members":{
+        "metricConfigurations":{"shape":"MetricConfigurationList"}
+      }
     },
     "MountPoint":{
       "type":"structure",
@@ -4614,6 +4762,10 @@
         "awsvpc",
         "none"
       ]
+    },
+    "NeuronDeviceIds":{
+      "type":"list",
+      "member":{"shape":"String"}
     },
     "NoUpdateAvailableException":{
       "type":"structure",
@@ -4694,7 +4846,10 @@
     },
     "PlatformDeviceType":{
       "type":"string",
-      "enum":["GPU"]
+      "enum":[
+        "GPU",
+        "NEURON_DEVICE"
+      ]
     },
     "PlatformDevices":{
       "type":"list",
@@ -4881,7 +5036,9 @@
         "cpu":{"shape":"String"},
         "memory":{"shape":"String"},
         "volumes":{"shape":"DaemonVolumeList"},
-        "tags":{"shape":"Tags"}
+        "tags":{"shape":"Tags"},
+        "pidMode":{"shape":"DaemonPidMode"},
+        "ipcMode":{"shape":"DaemonIpcMode"}
       }
     },
     "RegisterDaemonTaskDefinitionResponse":{
@@ -5002,7 +5159,8 @@
       "type":"string",
       "enum":[
         "GPU",
-        "InferenceAccelerator"
+        "InferenceAccelerator",
+        "NeuronDevice"
       ]
     },
     "Resources":{
@@ -5300,6 +5458,7 @@
         "status":{"shape":"ServiceDeploymentStatus"},
         "statusReason":{"shape":"String"},
         "lifecycleStage":{"shape":"ServiceDeploymentLifecycleStage"},
+        "lifecycleHookDetails":{"shape":"DeploymentLifecycleHookDetailList"},
         "deploymentConfiguration":{"shape":"DeploymentConfiguration"},
         "rollback":{"shape":"Rollback"},
         "deploymentCircuitBreaker":{"shape":"ServiceDeploymentCircuitBreaker"},
@@ -5479,7 +5638,8 @@
         "createdAt":{"shape":"Timestamp"},
         "vpcLatticeConfigurations":{"shape":"VpcLatticeConfigurations"},
         "resolvedConfiguration":{"shape":"ResolvedConfiguration"},
-        "ecsManagedResources":{"shape":"ECSManagedResources"}
+        "ecsManagedResources":{"shape":"ECSManagedResources"},
+        "monitoring":{"shape":"MonitoringConfiguration"}
       }
     },
     "ServiceRevisionLoadBalancer":{
@@ -6056,6 +6216,25 @@
       "type":"list",
       "member":{"shape":"Task"}
     },
+    "ThresholdConfiguration":{
+      "type":"structure",
+      "required":[
+        "type",
+        "value"
+      ],
+      "members":{
+        "type":{"shape":"ThresholdType"},
+        "value":{"shape":"Integer"}
+      }
+    },
+    "ThresholdType":{
+      "type":"string",
+      "enum":[
+        "COUNT",
+        "BOUNDED_PERCENT",
+        "UNBOUNDED_PERCENT"
+      ]
+    },
     "TimeoutConfiguration":{
       "type":"structure",
       "members":{
@@ -6274,7 +6453,8 @@
         "networkConfiguration":{"shape":"ExpressGatewayServiceNetworkConfiguration"},
         "cpu":{"shape":"String"},
         "memory":{"shape":"String"},
-        "scalingTarget":{"shape":"ExpressGatewayScalingTarget"}
+        "scalingTarget":{"shape":"ExpressGatewayScalingTarget"},
+        "taskDefinitionArn":{"shape":"String"}
       }
     },
     "UpdateExpressGatewayServiceResponse":{
@@ -6348,7 +6528,8 @@
         "serviceRegistries":{"shape":"ServiceRegistries"},
         "serviceConnectConfiguration":{"shape":"ServiceConnectConfiguration"},
         "volumeConfigurations":{"shape":"ServiceVolumeConfigurations"},
-        "vpcLatticeConfigurations":{"shape":"VpcLatticeConfigurations"}
+        "vpcLatticeConfigurations":{"shape":"VpcLatticeConfigurations"},
+        "monitoring":{"shape":"MonitoringConfiguration"}
       }
     },
     "UpdateServiceResponse":{

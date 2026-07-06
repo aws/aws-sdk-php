@@ -25,6 +25,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteEnvironmentHostAsync(array $args = [])
  * @method \Aws\Result disassociateEipFromVlan(array $args = [])
  * @method \GuzzleHttp\Promise\Promise disassociateEipFromVlanAsync(array $args = [])
+ * @method \Aws\Result getDepotUrl(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getDepotUrlAsync(array $args = [])
  * @method \Aws\Result getEnvironment(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getEnvironmentAsync(array $args = [])
  * @method \Aws\Result getVersions(array $args = [])

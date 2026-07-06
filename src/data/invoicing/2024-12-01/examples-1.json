@@ -32,6 +32,7 @@
     "CreateInvoiceUnit": [
       {
         "input": {
+          "ClientToken": "e362c68e-4e74-48d7-9228-0bc5aa447b42",
           "Description": "Example Invoice Unit Description",
           "InvoiceReceiver": "111111111111",
           "Name": "Example Invoice Unit",
@@ -126,6 +127,7 @@
     "DeleteInvoiceUnit": [
       {
         "input": {
+          "ClientToken": "e362c68e-4e74-48d7-9228-0bc5aa447b44",
           "InvoiceUnitArn": "arn:aws:invoicing::000000000000:invoice-unit/12345678"
         },
         "output": {
@@ -138,6 +140,7 @@
     "DeleteProcurementPortalPreference": [
       {
         "input": {
+          "ClientToken": "e362c68e-4e74-48d7-9228-0bc5aa447b47",
           "ProcurementPortalPreferenceArn": "arn:aws:invoicing::111111111111:procurement-portal-preference/f71dd02e-f855-4b13-b793-0fd25c0b3ecd"
         },
         "output": {
@@ -174,6 +177,8 @@
             "InvoiceId": "abc123",
             "SupplementalDocuments": [
               {
+                "DocumentId": "supp-doc-1",
+                "DocumentType": "TAX_E_INVOICE",
                 "DocumentUrl": "https://abcd123.com?securityTokenForSupplementalDoc",
                 "DocumentUrlExpirationDate": "2025-04-01T01:00:00.000Z"
               }
@@ -325,17 +330,27 @@
                 "TotalAmount": "1.00",
                 "TotalAmountBeforeTax": "1.00"
               },
+              "BillSourceAccounts": [
+                "111111111111"
+              ],
+              "BillSourceAccountsTotalCount": 1,
+              "BillType": "ANNIVERSARY",
               "BillingPeriod": {
                 "Month": 1,
                 "Year": 2025
               },
+              "CommercialInvoiceId": "2222222222",
               "DueDate": "2025-04-01T01:00:00.000Z",
+              "EinvoiceDeliveryStatus": "DELIVERED",
               "Entity": {
+                "BillingEntity": "AWS",
                 "InvoicingEntity": "Amazon Web Services, Inc."
               },
+              "InvoiceFrequency": "RECURRING",
               "InvoiceId": "1111111111",
               "InvoiceType": "INVOICE",
               "IssuedDate": "2025-04-01T01:00:00.000Z",
+              "OriginalInvoiceId": "1111111111",
               "PaymentCurrencyAmount": {
                 "AmountBreakdown": {
                   "Discounts": {
@@ -362,6 +377,9 @@
                 "TotalAmount": "1.00",
                 "TotalAmountBeforeTax": "1.00"
               },
+              "PurchaseOrderNumber": "PO-12345",
+              "ReceiverRole": "BUYER",
+              "TaxAuthorityStatus": "ISSUED",
               "TaxCurrencyAmount": {
                 "AmountBreakdown": {
                   "Discounts": {
@@ -425,14 +443,22 @@
                 "TotalAmount": "1.00",
                 "TotalAmountBeforeTax": "1.00"
               },
+              "BillSourceAccounts": [
+                "111111111111"
+              ],
+              "BillSourceAccountsTotalCount": 1,
+              "BillType": "ANNIVERSARY",
               "BillingPeriod": {
                 "Month": 1,
                 "Year": 2025
               },
               "DueDate": "2025-04-01T01:00:00.000Z",
+              "EinvoiceDeliveryStatus": "DELIVERED",
               "Entity": {
+                "BillingEntity": "AWS",
                 "InvoicingEntity": "Amazon Web Services, Inc."
               },
+              "InvoiceFrequency": "RECURRING",
               "InvoiceId": "1111111111",
               "InvoiceType": "INVOICE",
               "IssuedDate": "2025-04-01T01:00:00.000Z",
@@ -462,6 +488,8 @@
                 "TotalAmount": "1.00",
                 "TotalAmountBeforeTax": "1.00"
               },
+              "ReceiverRole": "BUYER",
+              "TaxAuthorityStatus": "ISSUED",
               "TaxCurrencyAmount": {
                 "AmountBreakdown": {
                   "Discounts": {
@@ -525,14 +553,22 @@
                 "TotalAmount": "1.00",
                 "TotalAmountBeforeTax": "1.00"
               },
+              "BillSourceAccounts": [
+                "111111111111"
+              ],
+              "BillSourceAccountsTotalCount": 1,
+              "BillType": "ANNIVERSARY",
               "BillingPeriod": {
                 "Month": 1,
                 "Year": 2025
               },
               "DueDate": "2025-04-01T01:00:00.000Z",
+              "EinvoiceDeliveryStatus": "DELIVERED",
               "Entity": {
+                "BillingEntity": "AWS",
                 "InvoicingEntity": "Amazon Web Services, Inc."
               },
+              "InvoiceFrequency": "RECURRING",
               "InvoiceId": "1111111111",
               "InvoiceType": "INVOICE",
               "IssuedDate": "2025-04-01T01:00:00.000Z",
@@ -562,6 +598,8 @@
                 "TotalAmount": "1.00",
                 "TotalAmountBeforeTax": "1.00"
               },
+              "ReceiverRole": "BUYER",
+              "TaxAuthorityStatus": "ISSUED",
               "TaxCurrencyAmount": {
                 "AmountBreakdown": {
                   "Discounts": {
@@ -597,6 +635,117 @@
       {
         "input": {
           "Filter": {
+            "ReceiverRole": "SELLER",
+            "TimeInterval": {
+              "EndDate": 1751328000,
+              "StartDate": 1748736000
+            }
+          },
+          "Selector": {
+            "ResourceType": "ACCOUNT_ID",
+            "Value": "111111111111"
+          }
+        },
+        "output": {
+          "InvoiceSummaries": [
+            {
+              "AccountId": "111111111111",
+              "BaseCurrencyAmount": {
+                "AmountBreakdown": {
+                  "Discounts": {
+                    "TotalAmount": "1.00"
+                  },
+                  "SubTotalAmount": "1.00",
+                  "Taxes": {
+                    "TotalAmount": "1.00"
+                  }
+                },
+                "CurrencyCode": "USD",
+                "TotalAmount": "1.00",
+                "TotalAmountBeforeTax": "1.00"
+              },
+              "BillSourceAccounts": [
+                "222222222222"
+              ],
+              "BillSourceAccountsTotalCount": 1,
+              "BillType": "ANNIVERSARY",
+              "BillingPeriod": {
+                "Month": 6,
+                "Year": 2025
+              },
+              "DueDate": "2025-07-15T01:00:00.000Z",
+              "EinvoiceDeliveryStatus": "DELIVERED",
+              "Entity": {
+                "BillingEntity": "AWS_MARKETPLACE",
+                "InvoicingEntity": "Amazon Web Services, Inc."
+              },
+              "InvoiceFrequency": "RECURRING",
+              "InvoiceId": "1111111111",
+              "InvoiceType": "INVOICE",
+              "IssuedDate": "2025-06-15T01:00:00.000Z",
+              "PaymentCurrencyAmount": {
+                "AmountBreakdown": {
+                  "Discounts": {
+                    "TotalAmount": "1.00"
+                  },
+                  "SubTotalAmount": "1.00",
+                  "Taxes": {
+                    "Breakdown": [
+                      {
+                        "Amount": "1",
+                        "Description": "VAT",
+                        "Rate": "1.0"
+                      }
+                    ],
+                    "TotalAmount": "1.00"
+                  }
+                },
+                "CurrencyCode": "USD",
+                "CurrencyExchangeDetails": {
+                  "Rate": "1.0",
+                  "SourceCurrencyCode": "USD",
+                  "TargetCurrencyCode": "USD"
+                },
+                "TotalAmount": "1.00",
+                "TotalAmountBeforeTax": "1.00"
+              },
+              "ReceiverRole": "SELLER",
+              "TaxAuthorityStatus": "ISSUED",
+              "TaxCurrencyAmount": {
+                "AmountBreakdown": {
+                  "Discounts": {
+                    "TotalAmount": "1.00"
+                  },
+                  "SubTotalAmount": "1.00",
+                  "Taxes": {
+                    "Breakdown": [
+                      {
+                        "Amount": "1",
+                        "Description": "VAT",
+                        "Rate": "1.0"
+                      }
+                    ],
+                    "TotalAmount": "1.00"
+                  }
+                },
+                "CurrencyCode": "USD",
+                "CurrencyExchangeDetails": {
+                  "Rate": "1.0",
+                  "SourceCurrencyCode": "USD",
+                  "TargetCurrencyCode": "USD"
+                },
+                "TotalAmount": "1.00",
+                "TotalAmountBeforeTax": "1.00"
+              }
+            }
+          ]
+        },
+        "id": "example-4",
+        "title": "ListInvoiceSummaries filtered by ReceiverRole"
+      },
+      {
+        "input": {
+          "Filter": {
             "BillingPeriod": {
               "Month": 1,
               "Year": 2025
@@ -626,14 +775,22 @@
                 "TotalAmount": "1.00",
                 "TotalAmountBeforeTax": "1.00"
               },
+              "BillSourceAccounts": [
+                "111111111111"
+              ],
+              "BillSourceAccountsTotalCount": 1,
+              "BillType": "ANNIVERSARY",
               "BillingPeriod": {
                 "Month": 1,
                 "Year": 2025
               },
               "DueDate": "2025-04-01T01:00:00.000Z",
+              "EinvoiceDeliveryStatus": "DELIVERED",
               "Entity": {
+                "BillingEntity": "AWS",
                 "InvoicingEntity": "Amazon Web Services, Inc."
               },
+              "InvoiceFrequency": "RECURRING",
               "InvoiceId": "1111111111",
               "InvoiceType": "INVOICE",
               "IssuedDate": "2025-04-01T01:00:00.000Z",
@@ -663,6 +820,8 @@
                 "TotalAmount": "1.00",
                 "TotalAmountBeforeTax": "1.00"
               },
+              "ReceiverRole": "BUYER",
+              "TaxAuthorityStatus": "ISSUED",
               "TaxCurrencyAmount": {
                 "AmountBreakdown": {
                   "Discounts": {
@@ -693,7 +852,7 @@
           ],
           "NextToken": "abcde12345"
         },
-        "id": "example-4",
+        "id": "example-5",
         "title": "ListInvoiceSummaries with AccountId as selector and a billing period and max results"
       },
       {
@@ -728,14 +887,22 @@
                 "TotalAmount": "1.00",
                 "TotalAmountBeforeTax": "1.00"
               },
+              "BillSourceAccounts": [
+                "111111111111"
+              ],
+              "BillSourceAccountsTotalCount": 1,
+              "BillType": "ANNIVERSARY",
               "BillingPeriod": {
                 "Month": 1,
                 "Year": 2025
               },
               "DueDate": "2025-04-01T01:00:00.000Z",
+              "EinvoiceDeliveryStatus": "DELIVERED",
               "Entity": {
+                "BillingEntity": "AWS",
                 "InvoicingEntity": "Amazon Web Services, Inc."
               },
+              "InvoiceFrequency": "RECURRING",
               "InvoiceId": "1111111111",
               "InvoiceType": "INVOICE",
               "IssuedDate": "2025-04-01T01:00:00.000Z",
@@ -765,6 +932,8 @@
                 "TotalAmount": "1.00",
                 "TotalAmountBeforeTax": "1.00"
               },
+              "ReceiverRole": "BUYER",
+              "TaxAuthorityStatus": "ISSUED",
               "TaxCurrencyAmount": {
                 "AmountBreakdown": {
                   "Discounts": {
@@ -794,7 +963,7 @@
             }
           ]
         },
-        "id": "example-5",
+        "id": "example-6",
         "title": "ListInvoiceSummaries with AccountId as selector and a billing period and next token"
       }
     ],
@@ -1034,6 +1203,7 @@
     "PutProcurementPortalPreference": [
       {
         "input": {
+          "ClientToken": "e362c68e-4e74-48d7-9228-0bc5aa447b45",
           "Contacts": [
             {
               "Email": "example-placeholder2@amazon.com",
@@ -1118,6 +1288,7 @@
     "UpdateInvoiceUnit": [
       {
         "input": {
+          "ClientToken": "e362c68e-4e74-48d7-9228-0bc5aa447b42",
           "Description": "Updated IU description",
           "InvoiceUnitArn": "arn:aws:invoicing::000000000000:invoice-unit/12345678",
           "Rule": {
@@ -1136,6 +1307,7 @@
       },
       {
         "input": {
+          "ClientToken": "e362c68e-4e74-48d7-9228-0bc5aa447b43",
           "Description": "Updated IU description. All other fields remain unchanged",
           "InvoiceUnitArn": "arn:aws:invoicing::000000000000:invoice-unit/12345678"
         },
@@ -1149,6 +1321,7 @@
     "UpdateProcurementPortalPreferenceStatus": [
       {
         "input": {
+          "ClientToken": "e362c68e-4e74-48d7-9228-0bc5aa447b46",
           "EinvoiceDeliveryPreferenceStatus": "SUSPENDED",
           "EinvoiceDeliveryPreferenceStatusReason": "suspended example reason",
           "ProcurementPortalPreferenceArn": "arn:aws:invoicing::111111111111:procurement-portal-preference/f71dd02e-f855-4b13-b793-0fd25c0b3ecd",

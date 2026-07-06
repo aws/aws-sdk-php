@@ -45,7 +45,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "idempotent":true
     },
     "CreateProcurementPortalPreference":{
       "name":"CreateProcurementPortalPreference",
@@ -79,7 +80,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "idempotent":true
     },
     "DeleteProcurementPortalPreference":{
       "name":"DeleteProcurementPortalPreference",
@@ -96,7 +98,8 @@
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "idempotent":true
     },
     "GetInvoicePDF":{
       "name":"GetInvoicePDF",
@@ -232,7 +235,8 @@
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "idempotent":true
     },
     "TagResource":{
       "name":"TagResource",
@@ -281,7 +285,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "idempotent":true
     },
     "UpdateProcurementPortalPreferenceStatus":{
       "name":"UpdateProcurementPortalPreferenceStatus",
@@ -299,7 +304,8 @@
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "idempotent":true
     }
   },
   "shapes":{
@@ -355,6 +361,25 @@
       "members":{
         "Profiles":{"shape":"ProfileList"}
       }
+    },
+    "BillSourceAccountList":{
+      "type":"list",
+      "member":{"shape":"AccountIdString"}
+    },
+    "BillType":{
+      "type":"string",
+      "enum":[
+        "ANNIVERSARY",
+        "PURCHASE",
+        "REFUND"
+      ]
+    },
+    "BillingEntity":{
+      "type":"string",
+      "enum":[
+        "AWS",
+        "AWS_MARKETPLACE"
+      ]
     },
     "BillingPeriod":{
       "type":"structure",
@@ -418,7 +443,11 @@
         "Description":{"shape":"DescriptionString"},
         "TaxInheritanceDisabled":{"shape":"TaxInheritanceDisabledFlag"},
         "Rule":{"shape":"InvoiceUnitRule"},
-        "ResourceTags":{"shape":"ResourceTagList"}
+        "ResourceTags":{"shape":"ResourceTagList"},
+        "ClientToken":{
+          "shape":"BasicStringWithoutSpace",
+          "idempotencyToken":true
+        }
       }
     },
     "CreateInvoiceUnitResponse":{
@@ -495,7 +524,11 @@
       "type":"structure",
       "required":["InvoiceUnitArn"],
       "members":{
-        "InvoiceUnitArn":{"shape":"InvoiceUnitArnString"}
+        "InvoiceUnitArn":{"shape":"InvoiceUnitArnString"},
+        "ClientToken":{
+          "shape":"BasicStringWithoutSpace",
+          "idempotencyToken":true
+        }
       }
     },
     "DeleteInvoiceUnitResponse":{
@@ -508,7 +541,11 @@
       "type":"structure",
       "required":["ProcurementPortalPreferenceArn"],
       "members":{
-        "ProcurementPortalPreferenceArn":{"shape":"ProcurementPortalPreferenceArnString"}
+        "ProcurementPortalPreferenceArn":{"shape":"ProcurementPortalPreferenceArnString"},
+        "ClientToken":{
+          "shape":"BasicStringWithoutSpace",
+          "idempotencyToken":true
+        }
       }
     },
     "DeleteProcurementPortalPreferenceResponse":{
@@ -588,6 +625,13 @@
         "EinvoiceDeliveryActivationDate":{"shape":"Timestamp"}
       }
     },
+    "EinvoiceDeliveryStatus":{
+      "type":"string",
+      "enum":[
+        "DELIVERED",
+        "NOT_DELIVERED"
+      ]
+    },
     "EmailString":{
       "type":"string",
       "max":1024,
@@ -597,7 +641,8 @@
     "Entity":{
       "type":"structure",
       "members":{
-        "InvoicingEntity":{"shape":"BasicString"}
+        "InvoicingEntity":{"shape":"BasicString"},
+        "BillingEntity":{"shape":"BillingEntity"}
       }
     },
     "FeesBreakdown":{
@@ -701,6 +746,13 @@
         "CurrencyExchangeDetails":{"shape":"CurrencyExchangeDetails"}
       }
     },
+    "InvoiceFrequency":{
+      "type":"string",
+      "enum":[
+        "ONE_TIME",
+        "RECURRING"
+      ]
+    },
     "InvoicePDF":{
       "type":"structure",
       "members":{
@@ -730,7 +782,8 @@
       "members":{
         "TimeInterval":{"shape":"DateInterval"},
         "BillingPeriod":{"shape":"BillingPeriod"},
-        "InvoicingEntity":{"shape":"BasicString"}
+        "InvoicingEntity":{"shape":"BasicString"},
+        "ReceiverRole":{"shape":"ReceiverRole"}
       }
     },
     "InvoiceSummariesMaxResults":{
@@ -757,11 +810,19 @@
         "InvoiceId":{"shape":"BasicString"},
         "IssuedDate":{"shape":"Timestamp"},
         "DueDate":{"shape":"Timestamp"},
+        "BillSourceAccounts":{"shape":"BillSourceAccountList"},
+        "BillSourceAccountsTotalCount":{"shape":"Integer"},
+        "ReceiverRole":{"shape":"ReceiverRole"},
         "Entity":{"shape":"Entity"},
         "BillingPeriod":{"shape":"BillingPeriod"},
+        "InvoiceFrequency":{"shape":"InvoiceFrequency"},
+        "BillType":{"shape":"BillType"},
         "InvoiceType":{"shape":"InvoiceType"},
+        "CommercialInvoiceId":{"shape":"BasicString"},
         "OriginalInvoiceId":{"shape":"BasicString"},
         "PurchaseOrderNumber":{"shape":"BasicString"},
+        "EinvoiceDeliveryStatus":{"shape":"EinvoiceDeliveryStatus"},
+        "TaxAuthorityStatus":{"shape":"TaxAuthorityStatus"},
         "BaseCurrencyAmount":{"shape":"InvoiceCurrencyAmount"},
         "TaxCurrencyAmount":{"shape":"InvoiceCurrencyAmount"},
         "PaymentCurrencyAmount":{"shape":"InvoiceCurrencyAmount"}
@@ -771,7 +832,8 @@
       "type":"string",
       "enum":[
         "INVOICE",
-        "CREDIT_MEMO"
+        "CREDIT_MEMO",
+        "PAYMENT_RECEIPT"
       ]
     },
     "InvoiceUnit":{
@@ -1074,7 +1136,11 @@
         "EinvoiceDeliveryEnabled":{"shape":"Boolean"},
         "EinvoiceDeliveryPreference":{"shape":"EinvoiceDeliveryPreference"},
         "PurchaseOrderRetrievalEnabled":{"shape":"Boolean"},
-        "Contacts":{"shape":"Contacts"}
+        "Contacts":{"shape":"Contacts"},
+        "ClientToken":{
+          "shape":"BasicStringWithoutSpace",
+          "idempotencyToken":true
+        }
       }
     },
     "PutProcurementPortalPreferenceResponse":{
@@ -1098,6 +1164,14 @@
         "PostalCode":{"shape":"BasicString"}
       },
       "sensitive":true
+    },
+    "ReceiverRole":{
+      "type":"string",
+      "enum":[
+        "SELLER",
+        "RESELLER",
+        "BUYER"
+      ]
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -1176,9 +1250,20 @@
     "SupplementalDocument":{
       "type":"structure",
       "members":{
+        "DocumentType":{"shape":"SupplementalDocumentType"},
+        "DocumentId":{"shape":"StringWithoutNewLine"},
         "DocumentUrl":{"shape":"StringWithoutNewLine"},
         "DocumentUrlExpirationDate":{"shape":"Timestamp"}
       }
+    },
+    "SupplementalDocumentType":{
+      "type":"string",
+      "enum":[
+        "GOVERNMENT_INVOICE",
+        "TAX_E_INVOICE",
+        "PAYMENT_RECEIPT",
+        "SUPPLEMENT"
+      ]
     },
     "SupplementalDocuments":{
       "type":"list",
@@ -1208,6 +1293,13 @@
       "max":2048,
       "min":20,
       "pattern":"arn:aws[-a-z0-9]*:(invoicing)::[0-9]{12}:[-a-zA-Z0-9/:_]+"
+    },
+    "TaxAuthorityStatus":{
+      "type":"string",
+      "enum":[
+        "ISSUED",
+        "CANCELLED"
+      ]
     },
     "TaxInheritanceDisabledFlag":{"type":"boolean"},
     "TaxesBreakdown":{
@@ -1297,7 +1389,11 @@
           "shape":"TaxInheritanceDisabledFlag",
           "box":true
         },
-        "Rule":{"shape":"InvoiceUnitRule"}
+        "Rule":{"shape":"InvoiceUnitRule"},
+        "ClientToken":{
+          "shape":"BasicStringWithoutSpace",
+          "idempotencyToken":true
+        }
       }
     },
     "UpdateInvoiceUnitResponse":{
@@ -1314,7 +1410,11 @@
         "EinvoiceDeliveryPreferenceStatus":{"shape":"ProcurementPortalPreferenceStatus"},
         "EinvoiceDeliveryPreferenceStatusReason":{"shape":"BasicString"},
         "PurchaseOrderRetrievalPreferenceStatus":{"shape":"ProcurementPortalPreferenceStatus"},
-        "PurchaseOrderRetrievalPreferenceStatusReason":{"shape":"BasicString"}
+        "PurchaseOrderRetrievalPreferenceStatusReason":{"shape":"BasicString"},
+        "ClientToken":{
+          "shape":"BasicStringWithoutSpace",
+          "idempotencyToken":true
+        }
       }
     },
     "UpdateProcurementPortalPreferenceStatusResponse":{

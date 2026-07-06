@@ -28,6 +28,8 @@
     "GetManagedScalingPolicy": "<p>Fetches the attached managed scaling policy for an Amazon EMR cluster. </p>",
     "GetOnClusterAppUIPresignedURL": "<p>The presigned URL properties for the cluster's application user interface.</p>",
     "GetPersistentAppUIPresignedURL": "<p>The presigned URL properties for the cluster's application user interface.</p>",
+    "GetSession": "<p>Returns detailed information about a session.</p>",
+    "GetSessionEndpoint": "<p>Returns the Spark Connect endpoint URL and a time-limited authentication token for the specified session. Use the endpoint and token to connect a PySpark client to the session. Call this operation again when the token expires to obtain a new one.</p>",
     "GetStudioSessionMapping": "<p>Fetches mapping details for the specified Amazon EMR Studio and identity (user or group).</p>",
     "ListBootstrapActions": "<p>Provides information about the bootstrap actions associated with a cluster.</p>",
     "ListClusters": "<p>Provides the status of all clusters visible to this Amazon Web Services account. Allows you to filter the list of clusters based on certain criteria; for example, filtering by cluster creation date and time or by status. This call returns a maximum of 50 clusters in unsorted order per call, but returns a marker to track the paging of the cluster list across multiple ListClusters calls.</p>",
@@ -37,6 +39,7 @@
     "ListNotebookExecutions": "<p>Provides summaries of all notebook executions. You can filter the list based on multiple criteria such as status, time range, and editor id. Returns a maximum of 50 notebook executions and a marker to track the paging of a longer notebook execution list across multiple <code>ListNotebookExecutions</code> calls.</p>",
     "ListReleaseLabels": "<p>Retrieves release labels of Amazon EMR services in the Region where the API is called.</p>",
     "ListSecurityConfigurations": "<p>Lists all the security configurations visible to this account, providing their creation dates and times, and their names. This call returns a maximum of 50 clusters per call, but returns a marker to track the paging of the cluster list across multiple ListSecurityConfigurations calls.</p>",
+    "ListSessions": "<p>Lists the sessions on a cluster. You can filter the results by session state. Newer sessions are returned first.</p>",
     "ListSteps": "<p>Provides a list of steps for the cluster in reverse order unless you specify <code>stepIds</code> with the request or filter by <code>StepStates</code>. You can specify a maximum of 10 <code>stepIDs</code>. The CLI automatically paginates results to return a list greater than 50 steps. To return more than 50 steps using the CLI, specify a <code>Marker</code>, which is a pagination token that indicates the next set of steps to retrieve.</p>",
     "ListStudioSessionMappings": "<p>Returns a list of all user or group session mappings for the Amazon EMR Studio specified by <code>StudioId</code>.</p>",
     "ListStudios": "<p>Returns a list of all Amazon EMR Studios associated with the Amazon Web Services account. The list includes details such as ID, Studio Access URL, and creation time for each Studio.</p>",
@@ -58,8 +61,10 @@
     "SetUnhealthyNodeReplacement": "<p>Specify whether to enable unhealthy node replacement, which lets Amazon EMR gracefully replace core nodes on a cluster if any nodes become unhealthy. For example, a node becomes unhealthy if disk usage is above 90%. If unhealthy node replacement is on and <code>TerminationProtected</code> are off, Amazon EMR immediately terminates the unhealthy core nodes. To use unhealthy node replacement and retain unhealthy core nodes, use to turn on termination protection. In such cases, Amazon EMR adds the unhealthy nodes to a denylist, reducing job interruptions and failures.</p> <p>If unhealthy node replacement is on, Amazon EMR notifies YARN and other applications on the cluster to stop scheduling tasks with these nodes, moves the data, and then terminates the nodes.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-node-replacement.html\">graceful node replacement</a> in the <i>Amazon EMR Management Guide</i>.</p>",
     "SetVisibleToAllUsers": "<important> <p>The SetVisibleToAllUsers parameter is no longer supported. Your cluster may be visible to all users in your account. To restrict cluster access using an IAM policy, see <a href=\"https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-access-IAM.html\">Identity and Access Management for Amazon EMR</a>. </p> </important> <p>Sets the <a>Cluster$VisibleToAllUsers</a> value for an Amazon EMR cluster. When <code>true</code>, IAM principals in the Amazon Web Services account can perform Amazon EMR cluster actions that their IAM policies allow. When <code>false</code>, only the IAM principal that created the cluster and the Amazon Web Services account root user can perform Amazon EMR actions on the cluster, regardless of IAM permissions policies attached to other IAM principals.</p> <p>This action works on running clusters. When you create a cluster, use the <a>RunJobFlowInput$VisibleToAllUsers</a> parameter.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/emr/latest/ManagementGuide/security_IAM_emr-with-IAM.html#security_set_visible_to_all_users\">Understanding the Amazon EMR Cluster VisibleToAllUsers Setting</a> in the <i>Amazon EMR Management Guide</i>.</p>",
     "StartNotebookExecution": "<p>Starts a notebook execution.</p>",
+    "StartSession": "<p>Creates and starts a new Spark Connect session on the specified cluster. The cluster must be in the <code>RUNNING</code> or <code>WAITING</code> state and have sessions enabled. This operation is supported in Amazon EMR Spark 8.0.0 and later.</p>",
     "StopNotebookExecution": "<p>Stops a notebook execution.</p>",
     "TerminateJobFlows": "<p>TerminateJobFlows shuts a list of clusters (job flows) down. When a job flow is shut down, any step not yet completed is canceled and the Amazon EC2 instances on which the cluster is running are stopped. Any log files not already saved are uploaded to Amazon S3 if a LogUri was specified when the cluster was created.</p> <p>The maximum number of clusters allowed is 10. The call to <code>TerminateJobFlows</code> is asynchronous. Depending on the configuration of the cluster, it may take up to 1-5 minutes for the cluster to completely terminate and release allocated resources, such as Amazon EC2 instances.</p>",
+    "TerminateSession": "<p>Terminates an active session. After you call this operation, the session enters the <code>TERMINATING</code> state and then transitions to <code>TERMINATED</code>.</p>",
     "UpdateStudio": "<p>Updates an Amazon EMR Studio configuration, including attributes such as name, description, and subnets.</p>",
     "UpdateStudioSessionMapping": "<p>Updates the session policy attached to the user or group for the specified Amazon EMR Studio.</p>"
   },
@@ -140,6 +145,8 @@
         "PutAutoScalingPolicyOutput$ClusterArn": "<p>The Amazon Resource Name (ARN) of the cluster.</p>",
         "RunJobFlowInput$StepExecutionRoleArn": "<p>The Amazon Resource Name (ARN) of the runtime role for steps specified in the RunJobFlow request. The runtime role can be a cross-account IAM role. The runtime role ARN is a combination of account ID, role name, and role type using the following format: <code>arn:partition:iam::account-id:role/role-name</code>.</p> <p>For example, <code>arn:aws:iam::1234567890:role/ReadOnly</code> is a correctly formatted runtime role ARN.</p> <p>This parameter applies only to steps included in the <code>Steps</code> parameter of this RunJobFlow request. It does not apply to steps added later to the cluster.</p>",
         "RunJobFlowOutput$ClusterArn": "<p>The Amazon Resource Name (ARN) of the cluster.</p>",
+        "Session$Arn": "<p>The Amazon Resource Name (ARN) of the session.</p>",
+        "StartSessionOutput$Arn": "<p>The output contains the ARN of the session.</p>",
         "Studio$IdcInstanceArn": "<p> The ARN of the IAM Identity Center instance the Studio application belongs to. </p>"
       }
     },
@@ -227,6 +234,9 @@
         "JobFlowInstancesDetail$KeepJobFlowAliveWhenNoSteps": "<p>Specifies whether the cluster should remain available after completing all steps.</p>",
         "JobFlowInstancesDetail$TerminationProtected": "<p>Specifies whether the Amazon EC2 instances in the cluster are protected from termination by API calls, user intervention, or in the event of a job-flow error.</p>",
         "RunJobFlowInput$VisibleToAllUsers": "<important> <p>The VisibleToAllUsers parameter is no longer supported. By default, the value is set to <code>true</code>. Setting it to <code>false</code> now has no effect.</p> </important> <p>Set this value to <code>true</code> so that IAM principals in the Amazon Web Services account associated with the cluster can perform Amazon EMR actions on the cluster that their IAM policies allow. This value defaults to <code>true</code> for clusters created using the Amazon EMR API or the CLI <a href=\"https://docs.aws.amazon.com/cli/latest/reference/emr/create-cluster.html\">create-cluster</a> command.</p> <p>When set to <code>false</code>, only the IAM principal that created the cluster and the Amazon Web Services account root user can perform Amazon EMR actions for the cluster, regardless of the IAM permissions policies attached to other IAM principals. For more information, see <a href=\"https://docs.aws.amazon.com/emr/latest/ManagementGuide/security_IAM_emr-with-IAM.html#security_set_visible_to_all_users\">Understanding the Amazon EMR cluster VisibleToAllUsers setting</a> in the <i>Amazon EMR Management Guide</i>.</p>",
+        "SessionCloudWatchLoggingConfiguration$Enabled": "<p>Whether CloudWatch Logs is enabled for the session.</p>",
+        "SessionManagedLoggingConfiguration$Enabled": "<p>Whether Amazon EMR-managed logging is enabled for the session.</p>",
+        "SessionS3LoggingConfiguration$Enabled": "<p>Whether Amazon S3 logging is enabled for the session.</p>",
         "SetKeepJobFlowAliveWhenNoStepsInput$KeepJobFlowAliveWhenNoSteps": "<p>A Boolean that indicates whether to terminate the cluster after all steps are executed.</p>",
         "SetTerminationProtectionInput$TerminationProtected": "<p>A Boolean that indicates whether to protect the cluster and prevent the Amazon EC2 instances in the cluster from shutting down due to API calls, user intervention, or job-flow error.</p>",
         "SetVisibleToAllUsersInput$VisibleToAllUsers": "<p>A value of <code>true</code> indicates that an IAM principal in the Amazon Web Services account can perform Amazon EMR actions on the cluster that the IAM policies attached to the principal allow. A value of <code>false</code> indicates that only the IAM principal that created the cluster and the Amazon Web Services root user can perform Amazon EMR actions on the cluster.</p>",
@@ -241,6 +251,7 @@
       "refs": {
         "Cluster$UnhealthyNodeReplacement": "<p>Indicates whether Amazon EMR should gracefully replace Amazon EC2 core instances that have degraded within the cluster.</p>",
         "Cluster$ExtendedSupport": "<p>Reserved.</p>",
+        "Cluster$SessionEnabled": "<p>Indicates whether Spark Connect sessions are enabled on the cluster.</p>",
         "CreateStudioInput$TrustedIdentityPropagationEnabled": "<p> A Boolean indicating whether to enable Trusted identity propagation for the Studio. The default value is <code>false</code>. </p>",
         "EbsConfiguration$EbsOptimized": "<p>Indicates whether an Amazon EBS volume is EBS-optimized. The default is false. You should explicitly set this value to true to enable the Amazon EBS-optimized setting for an EC2 instance.</p>",
         "GetOnClusterAppUIPresignedURLInput$DryRun": "<p>Determines if the user interface presigned URL is for a dry run.</p>",
@@ -252,6 +263,7 @@
         "ModifyClusterInput$ExtendedSupport": "<p>Reserved.</p>",
         "ModifyClusterOutput$ExtendedSupport": "<p>Reserved.</p>",
         "RunJobFlowInput$ExtendedSupport": "<p>Reserved.</p>",
+        "RunJobFlowInput$SessionEnabled": "<p>Indicates whether Spark Connect sessions are enabled on the cluster. When set to <code>true</code>, you can start Spark Connect sessions using the <code>StartSession</code> operation.</p>",
         "SetUnhealthyNodeReplacementInput$UnhealthyNodeReplacement": "<p>Indicates whether to turn on or turn off graceful unhealthy node replacement.</p>",
         "Studio$TrustedIdentityPropagationEnabled": "<p> Indicates whether the Studio has Trusted identity propagation enabled. The default value is <code>false</code>. </p>"
       }
@@ -307,6 +319,18 @@
         "CancelStepsInfo$Status": "<p>The status of a CancelSteps Request. The value may be SUBMITTED or FAILED.</p>"
       }
     },
+    "CertificateAuthority": {
+      "base": "<p>Describes the certificate authority used to establish an mTLS connection to the Spark Connect server when connecting directly over VPC peering.</p>",
+      "refs": {
+        "Session$CertificateAuthority": "<p>The certificate authority used to establish an mTLS connection to the Spark Connect server when connecting directly over VPC peering.</p>"
+      }
+    },
+    "ClientRequestToken": {
+      "base": null,
+      "refs": {
+        "StartSessionInput$ClientRequestToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you retry a request that completed successfully using the same client request token, the service returns the original response without performing the operation again.</p>"
+      }
+    },
     "CloudWatchAlarmDefinition": {
       "base": "<p>The definition of a CloudWatch metric alarm, which determines when an automatic scaling activity is triggered. When the defined alarm conditions are satisfied, scaling activity begins.</p>",
       "refs": {
@@ -328,16 +352,20 @@
     "ClusterId": {
       "base": null,
       "refs": {
+        "AddTagsInput$ClusterId": "<p>The ID of the cluster that scopes the tag operation. Required when the resource being tagged is a session-scoped resource.</p>",
         "Cluster$Id": "<p>The unique identifier for the cluster.</p>",
         "ClusterSummary$Id": "<p>The unique identifier for the cluster.</p>",
         "DescribeClusterInput$ClusterId": "<p>The identifier of the cluster to describe.</p>",
         "DescribeStepInput$ClusterId": "<p>The identifier of the cluster with steps to describe.</p>",
         "GetAutoTerminationPolicyInput$ClusterId": "<p>Specifies the ID of the Amazon EMR cluster for which the auto-termination policy will be fetched.</p>",
         "GetManagedScalingPolicyInput$ClusterId": "<p>Specifies the ID of the cluster for which the managed scaling policy will be fetched. </p>",
+        "GetSessionEndpointInput$ClusterId": "<p>The ID of the cluster that the session belongs to.</p>",
+        "GetSessionInput$ClusterId": "<p>The ID of the cluster that the session belongs to.</p>",
         "ListBootstrapActionsInput$ClusterId": "<p>The cluster identifier for the bootstrap actions to list.</p>",
         "ListInstanceFleetsInput$ClusterId": "<p>The unique identifier of the cluster.</p>",
         "ListInstanceGroupsInput$ClusterId": "<p>The identifier of the cluster for which to list the instance groups.</p>",
         "ListInstancesInput$ClusterId": "<p>The identifier of the cluster for which to list the instances.</p>",
+        "ListSessionsInput$ClusterId": "<p>The ID of the cluster to list sessions for.</p>",
         "ListStepsInput$ClusterId": "<p>The identifier of the cluster for which to list the steps.</p>",
         "ModifyInstanceFleetInput$ClusterId": "<p>The unique identifier of the cluster.</p>",
         "ModifyInstanceGroupsInput$ClusterId": "<p>The ID of the cluster to which the instance group belongs.</p>",
@@ -347,7 +375,13 @@
         "PutManagedScalingPolicyInput$ClusterId": "<p>Specifies the ID of an Amazon EMR cluster where the managed scaling policy is attached. </p>",
         "RemoveAutoScalingPolicyInput$ClusterId": "<p>Specifies the ID of a cluster. The instance group to which the automatic scaling policy is applied is within this cluster.</p>",
         "RemoveAutoTerminationPolicyInput$ClusterId": "<p>Specifies the ID of the Amazon EMR cluster from which the auto-termination policy will be removed.</p>",
-        "RemoveManagedScalingPolicyInput$ClusterId": "<p> Specifies the ID of the cluster from which the managed scaling policy will be removed. </p>"
+        "RemoveManagedScalingPolicyInput$ClusterId": "<p> Specifies the ID of the cluster from which the managed scaling policy will be removed. </p>",
+        "RemoveTagsInput$ClusterId": "<p>The ID of the cluster that scopes the tag operation. Required when the resource being untagged is a session-scoped resource.</p>",
+        "Session$ClusterId": "<p>The ID of the cluster that the session belongs to.</p>",
+        "StartSessionInput$ClusterId": "<p>The ID of the cluster on which to start the session.</p>",
+        "StartSessionOutput$ClusterId": "<p>The ID of the cluster that the session was started on.</p>",
+        "TerminateSessionInput$ClusterId": "<p>The ID of the cluster that the session belongs to.</p>",
+        "TerminateSessionOutput$ClusterId": "<p>The ID of the cluster that the session belonged to.</p>"
       }
     },
     "ClusterState": {
@@ -447,7 +481,9 @@
         "InstanceGroupModifyConfig$Configurations": "<p>A list of new or modified configurations to apply for an instance group.</p>",
         "InstanceTypeConfig$Configurations": "<p>A configuration classification that applies when provisioning cluster instances, which can include configurations for applications and software that run on the cluster.</p>",
         "InstanceTypeSpecification$Configurations": "<p>A configuration classification that applies when provisioning cluster instances, which can include configurations for applications and software bundled with Amazon EMR.</p>",
-        "RunJobFlowInput$Configurations": "<p>For Amazon EMR releases 4.0 and later. The list of configurations supplied for the Amazon EMR cluster that you are creating.</p>"
+        "RunJobFlowInput$Configurations": "<p>For Amazon EMR releases 4.0 and later. The list of configurations supplied for the Amazon EMR cluster that you are creating.</p>",
+        "Session$EngineConfigurations": "<p>The configuration overrides for the session. Only runtime configuration overrides are supported.</p>",
+        "StartSessionInput$EngineConfigurations": "<p>The configuration overrides for the session. Only runtime configuration overrides are supported.</p>"
       }
     },
     "CreatePersistentAppUIInput": {
@@ -481,7 +517,8 @@
     "Credentials": {
       "base": "<p>The credentials that you can use to connect to cluster endpoints. Credentials consist of a username and a password.</p>",
       "refs": {
-        "GetClusterSessionCredentialsOutput$Credentials": "<p>The credentials that you can use to connect to cluster endpoints that support username and password authentication.</p>"
+        "GetClusterSessionCredentialsOutput$Credentials": "<p>The credentials that you can use to connect to cluster endpoints that support username and password authentication.</p>",
+        "GetSessionEndpointOutput$Credentials": "<p>Username and password used to authenticate with the Spark Connect server when connecting directly over VPC peering.</p>"
       }
     },
     "Date": {
@@ -496,6 +533,7 @@
         "DescribeJobFlowsInput$CreatedBefore": "<p>Return only job flows created before this date and time.</p>",
         "DescribeSecurityConfigurationOutput$CreationDateTime": "<p>The date and time the security configuration was created</p>",
         "GetClusterSessionCredentialsOutput$ExpiresAt": "<p>The time when the credentials that are returned by the <code>GetClusterSessionCredentials</code> API expire.</p>",
+        "GetSessionEndpointOutput$AuthTokenExpirationTime": "<p>The time at which the authentication token expires. After this time, call <code>GetSessionEndpoint</code> again to obtain a new token.</p>",
         "InstanceFleetTimeline$CreationDateTime": "<p>The time and date the instance fleet was created.</p>",
         "InstanceFleetTimeline$ReadyDateTime": "<p>The time and date the instance fleet was ready to run jobs.</p>",
         "InstanceFleetTimeline$EndDateTime": "<p>The time and date the instance fleet terminated.</p>",
@@ -524,6 +562,11 @@
         "PersistentAppUI$CreationTime": "<p>The creation date and time for the persistent application user interface object.</p>",
         "PersistentAppUI$LastModifiedTime": "<p>The date and time the persistent application user interface object was last changed.</p>",
         "SecurityConfigurationSummary$CreationDateTime": "<p>The date and time the security configuration was created.</p>",
+        "Session$CreatedAt": "<p>The date and time that the session was created.</p>",
+        "Session$UpdatedAt": "<p>The date and time that the session was last updated.</p>",
+        "Session$StartedAt": "<p>The date and time that the session entered the <code>STARTED</code> state.</p>",
+        "Session$EndedAt": "<p>The date and time that the session was terminated or failed.</p>",
+        "Session$IdleSince": "<p>The date and time that the session last entered the <code>IDLE</code> state.</p>",
         "SessionMappingDetail$CreationTime": "<p>The time the session mapping was created.</p>",
         "SessionMappingDetail$LastModifiedTime": "<p>The time the session mapping was last modified.</p>",
         "SessionMappingSummary$CreationTime": "<p>The time the session mapping was created.</p>",
@@ -797,6 +840,22 @@
       "base": null,
       "refs": {}
     },
+    "GetSessionEndpointInput": {
+      "base": "<p>Input to the <code>GetSessionEndpoint</code> operation.</p>",
+      "refs": {}
+    },
+    "GetSessionEndpointOutput": {
+      "base": "<p>Output of the <code>GetSessionEndpoint</code> operation.</p>",
+      "refs": {}
+    },
+    "GetSessionInput": {
+      "base": "<p>Input to the <code>GetSession</code> operation.</p>",
+      "refs": {}
+    },
+    "GetSessionOutput": {
+      "base": "<p>Output of the <code>GetSession</code> operation.</p>",
+      "refs": {}
+    },
     "GetStudioSessionMappingInput": {
       "base": null,
       "refs": {}
@@ -821,7 +880,9 @@
     "IAMRoleArn": {
       "base": null,
       "refs": {
-        "ExecutionEngineConfig$ExecutionRoleArn": "<p>The execution role ARN required for the notebook execution.</p>"
+        "ExecutionEngineConfig$ExecutionRoleArn": "<p>The execution role ARN required for the notebook execution.</p>",
+        "Session$ExecutionRoleArn": "<p>The execution role ARN for the session. Amazon EMR uses this role to access Amazon Web Services resources on your behalf during session execution.</p>",
+        "StartSessionInput$ExecutionRoleArn": "<p>The execution role ARN for the session. Amazon EMR uses this role to access Amazon Web Services resources on your behalf during session execution.</p>"
       }
     },
     "IdcUserAssignment": {
@@ -1346,6 +1407,14 @@
       "base": null,
       "refs": {}
     },
+    "ListSessionsInput": {
+      "base": "<p>Input to the <code>ListSessions</code> operation.</p>",
+      "refs": {}
+    },
+    "ListSessionsOutput": {
+      "base": "<p>Output of the <code>ListSessions</code> operation.</p>",
+      "refs": {}
+    },
     "ListStepsInput": {
       "base": "<p>This input determines which steps to list.</p>",
       "refs": {}
@@ -1387,13 +1456,15 @@
     "LogTypeMap": {
       "base": null,
       "refs": {
-        "S3LoggingConfiguration$LogTypeUploadPolicy": "<p>A map that specifies the upload policy for each log type. The key is the log type, and the value is the upload policy.</p> <p>Valid log types:</p> <ul> <li> <p> <code>system-logs</code>: System-level logs including daemon logs, bootstrap logs, and other infrastructure logs.</p> </li> <li> <p> <code>application-logs</code>: Application-level logs from frameworks like Hadoop, Spark, Hive, etc.</p> </li> <li> <p> <code>persistent-ui-logs</code>: Logs for persistent application UIs like Spark History Server.</p> </li> </ul> <p>Valid upload policies:</p> <ul> <li> <p> <code>emr-managed</code>: Logs are uploaded to both the EMR-managed S3 bucket and the customer-specified S3 bucket (if LogUri is provided).</p> </li> <li> <p> <code>on-customer-s3only</code>: Logs are uploaded only to the customer-specified S3 bucket. Requires LogUri to be specified in the cluster configuration.</p> </li> <li> <p> <code>disabled</code>: Log upload is disabled for this log type.</p> </li> </ul>"
+        "S3LoggingConfiguration$LogTypeUploadPolicy": "<p>A map that specifies the upload policy for each log type. The key is the log type, and the value is the upload policy.</p> <p>Valid log types:</p> <ul> <li> <p> <code>system-logs</code>: EMR Daemon logs.</p> </li> <li> <p> <code>application-logs</code>: Framework logs from Hadoop, Spark, Hive and other applications running on the cluster.</p> </li> <li> <p> <code>persistent-ui-logs</code>: Logs required for persistent application UIs such as Spark History Server and Tez UI.</p> </li> </ul> <p>Valid upload policies:</p> <ul> <li> <p> <code>emr-managed</code>: Standard behavior. Logs are uploaded to S3 bucket as configured in your LogUri, with certain logs retained by the service for operational support and troubleshooting purposes.</p> </li> <li> <p> <code>on-customer-s3only</code>: Logs are uploaded only to the customer-specified S3 bucket. This requires you to specify a LogUri when creating the cluster. Persistent-ui-logs cannot have on-customer-s3only policy. Allowed policies for persistent-ui-logs are emr-managed and disabled.</p> </li> <li> <p> <code>disabled</code>: No S3 upload for this log type.</p> </li> </ul>"
       }
     },
     "LogTypesMap": {
       "base": null,
       "refs": {
-        "CloudWatchLogConfiguration$LogTypes": "<p>A map of log types to file names for publishing logs to the standard output or standard error streams for CloudWatch. Valid log types include STEP_LOGS, SPARK_DRIVER, and SPARK_EXECUTOR. Valid file names for each type include STDOUT and STDERR.</p>"
+        "CloudWatchLogConfiguration$LogTypes": "<p>A map of log types to file names for publishing logs to the standard output or standard error streams for CloudWatch. Valid log types include STEP_LOGS, SPARK_DRIVER, and SPARK_EXECUTOR. Valid file names for each type include STDOUT and STDERR.</p>",
+        "SessionCloudWatchLoggingConfiguration$LogTypes": "<p>A map of log component names (for example, <code>SPARK_DRIVER</code>, <code>SPARK_EXECUTOR</code>) to the list of log types to publish for that component (for example, <code>stdout</code>, <code>stderr</code>).</p>",
+        "SessionS3LoggingConfiguration$LogTypes": "<p>A map of log component names (for example, <code>SPARK_DRIVER</code>, <code>SPARK_EXECUTOR</code>) to the list of log types to publish for that component (for example, <code>stdout</code>, <code>stderr</code>).</p>"
       }
     },
     "LogUploadPolicyValue": {
@@ -1407,7 +1478,9 @@
       "refs": {
         "AutoTerminationPolicy$IdleTimeout": "<p>Specifies the amount of idle time in seconds after which the cluster automatically terminates. You can specify a minimum of 60 seconds and a maximum of 604800 seconds (seven days).</p>",
         "InstanceGroup$ConfigurationsVersion": "<p>The version number of the requested configuration specification for this instance group.</p>",
-        "InstanceGroup$LastSuccessfullyAppliedConfigurationsVersion": "<p>The version number of a configuration specification that was successfully applied for an instance group last time. </p>"
+        "InstanceGroup$LastSuccessfullyAppliedConfigurationsVersion": "<p>The version number of a configuration specification that was successfully applied for an instance group last time. </p>",
+        "Session$SessionIdleTimeoutInMinutes": "<p>The idle timeout, in minutes. If the session is idle for this duration, Amazon EMR automatically terminates it.</p>",
+        "StartSessionInput$SessionIdleTimeoutInMinutes": "<p>The idle timeout, in minutes. If the session is idle for this duration, Amazon EMR EC2 automatically terminates it.</p>"
       }
     },
     "ManagedScalingPolicy": {
@@ -1457,7 +1530,8 @@
       "base": null,
       "refs": {
         "DescribeReleaseLabelInput$MaxResults": "<p>Reserved for future use. Currently set to null.</p>",
-        "ListReleaseLabelsInput$MaxResults": "<p>Defines the maximum number of release labels to return in a single response. The default is <code>100</code>.</p>"
+        "ListReleaseLabelsInput$MaxResults": "<p>Defines the maximum number of release labels to return in a single response. The default is <code>100</code>.</p>",
+        "ListSessionsInput$MaxResults": "<p>The maximum number of sessions to return in each page of results.</p>"
       }
     },
     "MetricDimension": {
@@ -1884,6 +1958,48 @@
         "JobFlowInstancesConfig$AdditionalSlaveSecurityGroups": "<p>A list of additional Amazon EC2 security group IDs for the core and task nodes.</p>"
       }
     },
+    "SensitiveString": {
+      "base": null,
+      "refs": {
+        "GetSessionEndpointOutput$AuthToken": "<p>A time-limited authentication token used to connect to the Spark Connect endpoint.</p>"
+      }
+    },
+    "Session": {
+      "base": "<p>Detailed information about a Spark Connect session.</p>",
+      "refs": {
+        "GetSessionOutput$Session": "<p>The output displays information about the session.</p>",
+        "SessionList$member": null
+      }
+    },
+    "SessionCloudWatchLoggingConfiguration": {
+      "base": "<p>The CloudWatch Logs configuration for a session.</p>",
+      "refs": {
+        "SessionMonitoringConfiguration$CloudWatchLoggingConfiguration": "<p>The CloudWatch Logs configuration for the session.</p>"
+      }
+    },
+    "SessionId": {
+      "base": null,
+      "refs": {
+        "GetSessionEndpointInput$SessionId": "<p>The ID of the session.</p>",
+        "GetSessionInput$SessionId": "<p>The ID of the session.</p>",
+        "Session$Id": "<p>The ID of the session.</p>",
+        "StartSessionOutput$Id": "<p>The output contains the ID of the session.</p>",
+        "TerminateSessionInput$SessionId": "<p>The ID of the session to terminate.</p>",
+        "TerminateSessionOutput$SessionId": "<p>The ID of the terminated session.</p>"
+      }
+    },
+    "SessionList": {
+      "base": null,
+      "refs": {
+        "ListSessionsOutput$Sessions": "<p>The sessions that match the request.</p>"
+      }
+    },
+    "SessionManagedLoggingConfiguration": {
+      "base": "<p>The Amazon EMR-managed logging configuration for a session.</p>",
+      "refs": {
+        "SessionMonitoringConfiguration$ManagedLoggingConfiguration": "<p>The Amazon EMR-managed logging configuration for the session.</p>"
+      }
+    },
     "SessionMappingDetail": {
       "base": "<p>Details for an Amazon EMR Studio session mapping including creation time, user or group ID, Studio ID, and so on.</p>",
       "refs": {
@@ -1900,6 +2016,34 @@
       "base": null,
       "refs": {
         "ListStudioSessionMappingsOutput$SessionMappings": "<p>A list of session mapping summary objects. Each object includes session mapping details such as creation time, identity type (user or group), and Amazon EMR Studio ID.</p>"
+      }
+    },
+    "SessionMonitoringConfiguration": {
+      "base": "<p>The monitoring configuration for a session. Controls where session logs are published.</p>",
+      "refs": {
+        "Session$MonitoringConfiguration": "<p>The monitoring configuration for the session.</p>",
+        "StartSessionInput$MonitoringConfiguration": "<p>The monitoring configuration that controls where session logs are published, such as Amazon S3, CloudWatch, or managed logging.</p>"
+      }
+    },
+    "SessionS3LoggingConfiguration": {
+      "base": "<p>The Amazon S3 logging configuration for a session.</p>",
+      "refs": {
+        "SessionMonitoringConfiguration$S3LoggingConfiguration": "<p>The Amazon S3 logging configuration for the session.</p>"
+      }
+    },
+    "SessionState": {
+      "base": null,
+      "refs": {
+        "Session$State": "<p>The current state of the session. Valid values are <code>SUBMITTED</code>, <code>STARTING</code>, <code>STARTED</code>, <code>IDLE</code>, <code>BUSY</code>, <code>TERMINATING</code>, <code>TERMINATED</code>, and <code>FAILED</code>.</p>",
+        "SessionStateList$member": null,
+        "StartSessionOutput$State": "<p>The state of the session at the time the request returned. When a session is first created, it enters the <code>SUBMITTED</code> state.</p>",
+        "TerminateSessionOutput$State": "<p>The state of the session after the terminate request has been accepted.</p>"
+      }
+    },
+    "SessionStateList": {
+      "base": null,
+      "refs": {
+        "ListSessionsInput$SessionStates": "<p>An optional filter that limits the results to sessions in the specified states.</p>"
       }
     },
     "SetKeepJobFlowAliveWhenNoStepsInput": {
@@ -1974,6 +2118,14 @@
     },
     "StartNotebookExecutionOutput": {
       "base": null,
+      "refs": {}
+    },
+    "StartSessionInput": {
+      "base": "<p>Input to the <code>StartSession</code> operation.</p>",
+      "refs": {}
+    },
+    "StartSessionOutput": {
+      "base": "<p>Output of the <code>StartSession</code> operation.</p>",
       "refs": {}
     },
     "Statistic": {
@@ -2167,6 +2319,8 @@
         "InstanceStateChangeReason$Message": "<p>The status change reason description.</p>",
         "ListReleaseLabelsInput$NextToken": "<p>Specifies the next page of results. If <code>NextToken</code> is not specified, which is usually the case for the first request of ListReleaseLabels, the first page of results are determined by other filtering parameters or by the latest version. The <code>ListReleaseLabels</code> request fails if the identity (Amazon Web Services account ID) and all filtering parameters are different from the original request, or if the <code>NextToken</code> is expired or tampered with.</p>",
         "ListReleaseLabelsOutput$NextToken": "<p>Used to paginate the next page of results if specified in the next <code>ListReleaseLabels</code> request.</p>",
+        "ListSessionsInput$NextToken": "<p>The pagination token returned by a previous <code>ListSessions</code> call. Use it to retrieve the next page of results.</p>",
+        "ListSessionsOutput$NextToken": "<p>The pagination token to use in a subsequent <code>ListSessions</code> call to retrieve the next page of results. This field is absent when there are no more results.</p>",
         "ListSupportedInstanceTypesInput$ReleaseLabel": "<p>The Amazon EMR release label determines the <a href=\"https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-release-app-versions-6.x.html\">versions of open-source application packages</a> that Amazon EMR has installed on the cluster. Release labels are in the format <code>emr-x.x.x</code>, where x.x.x is an Amazon EMR release number such as <code>emr-6.10.0</code>. For more information about Amazon EMR releases and their included application versions and features, see the <i> <a href=\"https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-release-components.html\">Amazon EMR Release Guide</a> </i>.</p>",
         "ListSupportedInstanceTypesInput$Marker": "<p>The pagination token that marks the next set of results to retrieve.</p>",
         "ListSupportedInstanceTypesOutput$Marker": "<p>The pagination token that marks the next set of results to retrieve.</p>",
@@ -2287,12 +2441,22 @@
         "NotebookExecution$Tags": "<p>A list of tags associated with a notebook execution. Tags are user-defined key-value pairs that consist of a required key string with a maximum of 128 characters and an optional value string with a maximum of 256 characters.</p>",
         "PersistentAppUI$Tags": "<p>A collection of tags for the persistent application user interface object.</p>",
         "RunJobFlowInput$Tags": "<p>A list of tags to associate with a cluster and propagate to Amazon EC2 instances.</p>",
+        "Session$Tags": "<p>The tags associated with the session.</p>",
         "StartNotebookExecutionInput$Tags": "<p>A list of tags associated with a notebook execution. Tags are user-defined key-value pairs that consist of a required key string with a maximum of 128 characters and an optional value string with a maximum of 256 characters.</p>",
+        "StartSessionInput$Tags": "<p>The tags to assign to the session.</p>",
         "Studio$Tags": "<p>A list of tags associated with the Amazon EMR Studio.</p>"
       }
     },
     "TerminateJobFlowsInput": {
       "base": "<p> Input to the <a>TerminateJobFlows</a> operation. </p>",
+      "refs": {}
+    },
+    "TerminateSessionInput": {
+      "base": "<p>Input to the <code>TerminateSession</code> operation.</p>",
+      "refs": {}
+    },
+    "TerminateSessionOutput": {
+      "base": "<p>Output of the <code>TerminateSession</code> operation.</p>",
       "refs": {}
     },
     "ThroughputVal": {
@@ -2365,6 +2529,8 @@
     "XmlString": {
       "base": null,
       "refs": {
+        "CertificateAuthority$CertificateArn": "<p>The Amazon Resource Name (ARN) of the certificate authority in Amazon Web Services Private CA that issued the Spark Connect server certificate.</p>",
+        "CertificateAuthority$CertificateData": "<p>The PEM-encoded root CA certificate data. Provide this certificate to your client's trust store when connecting directly to the Spark Connect server over VPC peering.</p>",
         "CloudWatchLogConfiguration$LogGroupName": "<p>The name of the CloudWatch log group where logs are published.</p>",
         "CloudWatchLogConfiguration$LogStreamNamePrefix": "<p>The prefix of the log stream name.</p>",
         "CloudWatchLogConfiguration$EncryptionKeyArn": "<p>The ARN of the encryption key used to encrypt the logs.</p>",
@@ -2384,6 +2550,7 @@
         "EnvironmentVariablesMap$value": null,
         "GetOnClusterAppUIPresignedURLOutput$PresignedURL": "<p>The cluster's generated presigned URL.</p>",
         "GetPersistentAppUIPresignedURLOutput$PresignedURL": "<p>The returned presigned URL.</p>",
+        "GetSessionEndpointOutput$Endpoint": "<p>The Spark Connect endpoint URL to use in the PySpark client.</p>",
         "HadoopJarStepConfig$Jar": "<p>A path to a JAR file run during the step.</p>",
         "HadoopJarStepConfig$MainClass": "<p>The name of the main class in the specified Java file. If not specified, the JAR file should specify a Main-Class in its manifest file.</p>",
         "InstanceGroupDetail$LastStateChangeReason": "<p>Details regarding the state of the instance group.</p>",
@@ -2416,6 +2583,14 @@
         "S3MonitoringConfiguration$EncryptionKeyArn": "<p>The KMS key ARN to encrypt the logs published to the given Amazon S3 destination.</p>",
         "ScriptBootstrapActionConfig$Path": "<p>Location in Amazon S3 of the script to run during a bootstrap action.</p>",
         "SecurityConfigurationSummary$Name": "<p>The name of the security configuration.</p>",
+        "Session$StateChangeReason": "<p>A human-readable message describing the most recent state change.</p>",
+        "Session$ServerUrl": "<p>The Spark Connect server URL for the session. Use this URL with the <code>Credentials</code> returned by <code>GetSessionEndpoint</code> to connect directly to the session over VPC peering.</p>",
+        "SessionCloudWatchLoggingConfiguration$LogGroup": "<p>The name of the log group where session logs are published.</p>",
+        "SessionCloudWatchLoggingConfiguration$LogStreamNamePrefix": "<p>The prefix applied to the log stream name where session logs are published.</p>",
+        "SessionCloudWatchLoggingConfiguration$EncryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the logs published to CloudWatch Logs.</p>",
+        "SessionManagedLoggingConfiguration$EncryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the managed logs.</p>",
+        "SessionS3LoggingConfiguration$LogUri": "<p>The Amazon S3 destination URI where session logs are published.</p>",
+        "SessionS3LoggingConfiguration$EncryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt logs published to Amazon S3.</p>",
         "StartNotebookExecutionInput$RelativePath": "<p>The path and file name of the notebook file for this execution, relative to the path specified for the Amazon EMR Notebook. For example, if you specify a path of <code>s3://MyBucket/MyNotebooks</code> when you create an Amazon EMR Notebook for a notebook with an ID of <code>e-ABCDEFGHIJK1234567890ABCD</code> (the <code>EditorID</code> of this request), and you specify a <code>RelativePath</code> of <code>my_notebook_executions/notebook_execution.ipynb</code>, the location of the file for the notebook execution is <code>s3://MyBucket/MyNotebooks/e-ABCDEFGHIJK1234567890ABCD/my_notebook_executions/notebook_execution.ipynb</code>.</p>",
         "StartNotebookExecutionInput$NotebookParams": "<p>Input parameters in JSON format passed to the Amazon EMR Notebook at runtime for execution.</p>",
         "StartNotebookExecutionInput$ServiceRole": "<p>The name or ARN of the IAM role that is used as the service role for Amazon EMR (the Amazon EMR role) for the notebook execution.</p>",
@@ -2550,6 +2725,9 @@
         "RunJobFlowInput$OSReleaseLabel": "<p>Specifies a particular Amazon Linux release for all nodes in a cluster launch RunJobFlow request. If a release is not specified, Amazon EMR uses the latest validated Amazon Linux release for cluster launch.</p>",
         "RunJobFlowOutput$JobFlowId": "<p>A unique identifier for the job flow.</p>",
         "SecurityGroupsList$member": null,
+        "Session$Name": "<p>The name of the session, if one was provided at creation time.</p>",
+        "Session$ReleaseLabel": "<p>The Amazon EMR release label of the cluster that the session is running on.</p>",
+        "Session$AccountId": "<p>The Amazon Web Services account ID that owns the session.</p>",
         "SessionMappingDetail$StudioId": "<p>The ID of the Amazon EMR Studio.</p>",
         "SessionMappingDetail$IdentityId": "<p>The globally unique identifier (GUID) of the user or group.</p>",
         "SessionMappingDetail$IdentityName": "<p>The name of the user or group. For more information, see <a href=\"https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_User.html#singlesignon-Type-User-UserName\">UserName</a> and <a href=\"https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_Group.html#singlesignon-Type-Group-DisplayName\">DisplayName</a> in the <i>IAM Identity Center Identity Store API Reference</i>.</p>",
@@ -2562,6 +2740,8 @@
         "StartNotebookExecutionInput$NotebookExecutionName": "<p>An optional name for the notebook execution.</p>",
         "StartNotebookExecutionInput$NotebookInstanceSecurityGroupId": "<p>The unique identifier of the Amazon EC2 security group to associate with the Amazon EMR Notebook for this notebook execution.</p>",
         "StartNotebookExecutionOutput$NotebookExecutionId": "<p>The unique identifier of the notebook execution.</p>",
+        "StartSessionInput$Name": "<p>An optional name for the session.</p>",
+        "StartSessionOutput$AccountId": "<p>The Amazon Web Services account ID that owns the session.</p>",
         "StepConfig$Name": "<p>The name of the step.</p>",
         "StepIdsList$member": null,
         "StopNotebookExecutionInput$NotebookExecutionId": "<p>The unique identifier of the notebook execution.</p>",

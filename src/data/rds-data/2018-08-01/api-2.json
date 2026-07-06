@@ -31,8 +31,8 @@
         {"shape":"TransactionNotFoundException"},
         {"shape":"InvalidSecretException"},
         {"shape":"InvalidResourceStateException"},
-        {"shape":"ServiceUnavailableError"},
         {"shape":"ForbiddenException"},
+        {"shape":"ServiceUnavailableError"},
         {"shape":"DatabaseNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"BadRequestException"},
@@ -58,8 +58,8 @@
         {"shape":"TransactionNotFoundException"},
         {"shape":"InvalidSecretException"},
         {"shape":"InvalidResourceStateException"},
-        {"shape":"ServiceUnavailableError"},
         {"shape":"ForbiddenException"},
+        {"shape":"ServiceUnavailableError"},
         {"shape":"DatabaseNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"BadRequestException"},
@@ -84,8 +84,8 @@
         {"shape":"TransactionNotFoundException"},
         {"shape":"InvalidSecretException"},
         {"shape":"InvalidResourceStateException"},
-        {"shape":"ServiceUnavailableError"},
         {"shape":"ForbiddenException"},
+        {"shape":"ServiceUnavailableError"},
         {"shape":"DatabaseNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"BadRequestException"},
@@ -132,8 +132,8 @@
         {"shape":"TransactionNotFoundException"},
         {"shape":"InvalidSecretException"},
         {"shape":"InvalidResourceStateException"},
-        {"shape":"ServiceUnavailableError"},
         {"shape":"ForbiddenException"},
+        {"shape":"ServiceUnavailableError"},
         {"shape":"DatabaseNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"BadRequestException"},
@@ -159,8 +159,8 @@
         {"shape":"TransactionNotFoundException"},
         {"shape":"InvalidSecretException"},
         {"shape":"InvalidResourceStateException"},
-        {"shape":"ServiceUnavailableError"},
         {"shape":"ForbiddenException"},
+        {"shape":"ServiceUnavailableError"},
         {"shape":"DatabaseNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"BadRequestException"},
@@ -184,12 +184,13 @@
     },
     "Arn":{
       "type":"string",
-      "max":100,
+      "max":570,
       "min":11
     },
     "ArrayOfArray":{
       "type":"list",
-      "member":{"shape":"ArrayValue"}
+      "member":{"shape":"ArrayValue"},
+      "sparse":true
     },
     "ArrayValue":{
       "type":"structure",
@@ -263,7 +264,8 @@
     "Boolean":{"type":"boolean"},
     "BooleanArray":{
       "type":"list",
-      "member":{"shape":"BoxedBoolean"}
+      "member":{"shape":"BoxedBoolean"},
+      "sparse":true
     },
     "BoxedBoolean":{
       "type":"boolean",
@@ -358,8 +360,7 @@
     },
     "DatabaseUnavailableException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":504},
       "exception":true,
       "fault":true
@@ -378,7 +379,8 @@
     },
     "DoubleArray":{
       "type":"list",
-      "member":{"shape":"BoxedDouble"}
+      "member":{"shape":"BoxedDouble"},
+      "sparse":true
     },
     "ErrorMessage":{"type":"string"},
     "ExecuteSqlRequest":{
@@ -481,8 +483,7 @@
     "Integer":{"type":"integer"},
     "InternalServerErrorException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":500},
       "exception":true,
       "fault":true
@@ -512,7 +513,8 @@
     "Long":{"type":"long"},
     "LongArray":{
       "type":"list",
-      "member":{"shape":"BoxedLong"}
+      "member":{"shape":"BoxedLong"},
+      "sparse":true
     },
     "LongReturnType":{
       "type":"string",
@@ -612,8 +614,7 @@
     },
     "ServiceUnavailableError":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":503},
       "exception":true,
       "fault":true
@@ -669,7 +670,8 @@
     "String":{"type":"string"},
     "StringArray":{
       "type":"list",
-      "member":{"shape":"String"}
+      "member":{"shape":"String"},
+      "sparse":true
     },
     "StructValue":{
       "type":"structure",

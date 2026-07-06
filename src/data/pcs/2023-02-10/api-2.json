@@ -593,14 +593,28 @@
     "ComputeNodeGroupSlurmConfiguration":{
       "type":"structure",
       "members":{
+        "scaleDownIdleTimeInSeconds":{"shape":"ComputeNodeGroupSlurmConfigurationScaleDownIdleTimeInSecondsInteger"},
         "slurmCustomSettings":{"shape":"SlurmCustomSettings"}
       }
     },
     "ComputeNodeGroupSlurmConfigurationRequest":{
       "type":"structure",
       "members":{
+        "scaleDownIdleTimeInSeconds":{"shape":"ComputeNodeGroupSlurmConfigurationRequestScaleDownIdleTimeInSecondsInteger"},
         "slurmCustomSettings":{"shape":"SlurmCustomSettings"}
       }
+    },
+    "ComputeNodeGroupSlurmConfigurationRequestScaleDownIdleTimeInSecondsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":10000000,
+      "min":-1
+    },
+    "ComputeNodeGroupSlurmConfigurationScaleDownIdleTimeInSecondsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":10000000,
+      "min":-1
     },
     "ComputeNodeGroupStatus":{
       "type":"string",
@@ -1030,7 +1044,8 @@
       "enum":[
         "ONDEMAND",
         "SPOT",
-        "CAPACITY_BLOCK"
+        "CAPACITY_BLOCK",
+        "INTERRUPTIBLE_CAPACITY_RESERVATION"
       ]
     },
     "Queue":{
@@ -1450,7 +1465,8 @@
           "shape":"SBClientToken",
           "idempotencyToken":true
         },
-        "slurmConfiguration":{"shape":"UpdateClusterSlurmConfigurationRequest"}
+        "slurmConfiguration":{"shape":"UpdateClusterSlurmConfigurationRequest"},
+        "scheduler":{"shape":"UpdateSchedulerRequest"}
       }
     },
     "UpdateClusterResponse":{
@@ -1508,8 +1524,15 @@
     "UpdateComputeNodeGroupSlurmConfigurationRequest":{
       "type":"structure",
       "members":{
+        "scaleDownIdleTimeInSeconds":{"shape":"UpdateComputeNodeGroupSlurmConfigurationRequestScaleDownIdleTimeInSecondsInteger"},
         "slurmCustomSettings":{"shape":"SlurmCustomSettings"}
       }
+    },
+    "UpdateComputeNodeGroupSlurmConfigurationRequestScaleDownIdleTimeInSecondsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":10000000,
+      "min":-1
     },
     "UpdateQueueRequest":{
       "type":"structure",
@@ -1538,6 +1561,13 @@
       "type":"structure",
       "members":{
         "slurmCustomSettings":{"shape":"SlurmCustomSettings"}
+      }
+    },
+    "UpdateSchedulerRequest":{
+      "type":"structure",
+      "required":["version"],
+      "members":{
+        "version":{"shape":"String"}
       }
     },
     "UpdateSlurmRestRequest":{

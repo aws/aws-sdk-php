@@ -2,42 +2,64 @@
   "version": "2.0",
   "service": "<fullname>IoT data</fullname> <p>IoT data enables secure, bi-directional communication between Internet-connected things (such as sensors, actuators, embedded devices, or smart appliances) and the Amazon Web Services cloud. It implements a broker for applications and things to publish messages over HTTP (Publish) and retrieve, update, and delete shadows. A shadow is a persistent representation of your things and their state in the Amazon Web Services cloud.</p> <p>Find the endpoint address for actions in IoT data by running this CLI command:</p> <p> <code>aws iot describe-endpoint --endpoint-type iot:Data-ATS</code> </p> <p>The service name used by <a href=\"https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\">Amazon Web ServicesSignature Version 4</a> to sign requests is: <i>iotdevicegateway</i>.</p>",
   "operations": {
-    "DeleteConnection": "<p>Disconnects a connected MQTT client from Amazon Web Services IoT Core. When you disconnect a client, Amazon Web Services IoT Core closes the client's network connection and optionally cleans the session state.</p>",
+    "DeleteConnection": "<p>Disconnects a connected MQTT client from Amazon Web Services IoT Core. When you disconnect a client, Amazon Web Services IoT Core closes the client's network connection and optionally cleans the session state.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">DeleteConnection</a> action.</p>",
     "DeleteThingShadow": "<p>Deletes the shadow for the specified thing.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">DeleteThingShadow</a> action.</p> <p>For more information, see <a href=\"http://docs.aws.amazon.com/iot/latest/developerguide/API_DeleteThingShadow.html\">DeleteThingShadow</a> in the IoT Developer Guide.</p>",
+    "GetConnection": "<p>Retrieves connection information for the specified MQTT client.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">GetConnection</a> action.</p>",
     "GetRetainedMessage": "<p>Gets the details of a single retained message for the specified topic.</p> <p>This action returns the message payload of the retained message, which can incur messaging costs. To list only the topic names of the retained messages, call <a href=\"https://docs.aws.amazon.com/iot/latest/apireference/API_iotdata_ListRetainedMessages.html\">ListRetainedMessages</a>.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html\">GetRetainedMessage</a> action.</p> <p>For more information about messaging costs, see <a href=\"http://aws.amazon.com/iot-core/pricing/#Messaging\">Amazon Web Services IoT Core pricing - Messaging</a>.</p>",
     "GetThingShadow": "<p>Gets the shadow for the specified thing.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">GetThingShadow</a> action.</p> <p>For more information, see <a href=\"http://docs.aws.amazon.com/iot/latest/developerguide/API_GetThingShadow.html\">GetThingShadow</a> in the IoT Developer Guide.</p>",
     "ListNamedShadowsForThing": "<p>Lists the shadows for the specified thing.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListNamedShadowsForThing</a> action.</p>",
     "ListRetainedMessages": "<p>Lists summary information about the retained messages stored for the account.</p> <p>This action returns only the topic names of the retained messages. It doesn't return any message payloads. Although this action doesn't return a message payload, it can still incur messaging costs.</p> <p>To get the message payload of a retained message, call <a href=\"https://docs.aws.amazon.com/iot/latest/apireference/API_iotdata_GetRetainedMessage.html\">GetRetainedMessage</a> with the topic name of the retained message.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html\">ListRetainedMessages</a> action.</p> <p>For more information about messaging costs, see <a href=\"http://aws.amazon.com/iot-core/pricing/#Messaging\">Amazon Web Services IoT Core pricing - Messaging</a>.</p>",
+    "ListSubscriptions": "<p>Returns a list of all subscriptions for MQTT clients with active sessions, including offline clients with persistent sessions.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListSubscriptions</a> action.</p>",
     "Publish": "<p>Publishes an MQTT message.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">Publish</a> action.</p> <p>For more information about MQTT messages, see <a href=\"http://docs.aws.amazon.com/iot/latest/developerguide/mqtt.html\">MQTT Protocol</a> in the IoT Developer Guide.</p> <p>For more information about messaging costs, see <a href=\"http://aws.amazon.com/iot-core/pricing/#Messaging\">Amazon Web Services IoT Core pricing - Messaging</a>.</p>",
+    "SendDirectMessage": "<p>Sends an MQTT message directly to a specific client identified by its client ID.</p> <p> <code>SendDirectMessage</code> targets a single client ID. The receiving client does not need to subscribe to the topic, but the receiver's policy must allow <code>iot:Receive</code> on the specified topic.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">SendDirectMessage</a> action.</p> <p>For more information about messaging costs, see <a href=\"http://aws.amazon.com/iot-core/pricing/\">Amazon Web Services IoT Core pricing</a>.</p>",
     "UpdateThingShadow": "<p>Updates the shadow for the specified thing.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdateThingShadow</a> action.</p> <p>For more information, see <a href=\"http://docs.aws.amazon.com/iot/latest/developerguide/API_UpdateThingShadow.html\">UpdateThingShadow</a> in the IoT Developer Guide.</p>"
   },
   "shapes": {
     "CleanSession": {
       "base": null,
       "refs": {
-        "DeleteConnectionRequest$cleanSession": "<p>Specifies whether to remove the client's session state when disconnecting. Set to <code>TRUE</code> to delete all session information, including subscriptions and queued messages. Set to <code>FALSE</code> to preserve the session state. By default, this is set to <code>FALSE</code> (preserves the session state).</p>"
+        "DeleteConnectionRequest$cleanSession": "<p>Specifies whether to remove the client's persistent session state when disconnecting. Set to <code>TRUE</code> to delete all session information, including subscriptions and queued messages. Set to <code>FALSE</code> to preserve the session state for <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/mqtt.html#mqtt-persistent-sessions\">persistent sessions</a>. For clean sessions this parameter will be ignored. By default, this is set to <code>FALSE</code> (preserves the session state).</p>",
+        "GetConnectionResponse$cleanSession": "<p>Indicates whether the client is using a clean session. Returns <code>true</code> for clean sessions or <code>false</code> for persistent sessions.</p>"
       }
     },
     "ClientId": {
       "base": null,
       "refs": {
-        "DeleteConnectionRequest$clientId": "<p>The unique identifier of the MQTT client to disconnect. The client ID can't start with a dollar sign ($).</p>"
+        "DeleteConnectionRequest$clientId": "<p>The unique identifier of the MQTT client to disconnect. The client ID can't start with a dollar sign ($).</p> <p>MQTT client IDs must be URL encoded (percent-encoded) when they contain characters that are not valid in HTTP requests, such as spaces, forward slashes (/), and UTF-8 characters.</p>",
+        "GetConnectionRequest$clientId": "<p>The unique identifier of the MQTT client to retrieve connection information. The client ID can't start with a dollar sign ($).</p> <p>MQTT client IDs must be URL encoded (percent-encoded) when they contain characters that are not valid in HTTP requests, such as spaces, forward slashes (/), and UTF-8 characters.</p>",
+        "GetConnectionResponse$clientId": "<p>The unique identifier of the MQTT client. This is the same client ID that was used when the client established the connection.</p>",
+        "ListSubscriptionsRequest$clientId": "<p>The unique identifier of the MQTT client to list subscriptions for. The client ID can't start with a dollar sign ($).</p> <p>MQTT client IDs must be URL encoded (percent-encoded) when they contain characters that are not valid in HTTP requests, such as spaces, forward slashes (/), and UTF-8 characters.</p>",
+        "SendDirectMessageRequest$clientId": "<p>The unique identifier of the MQTT client to send the message to.</p> <p>Client IDs must not exceed 128 characters and can't start with a dollar sign ($). MQTT client IDs must be URL encoded (percent-encoded) when they contain characters that are not valid in HTTP requests, such as spaces, forward slashes (/), and UTF-8 characters. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/iot-core.html#message-broker-limits\">Amazon Web Services IoT Core message broker and protocol limits and quotas</a>.</p>"
+      }
+    },
+    "Confirmation": {
+      "base": null,
+      "refs": {
+        "SendDirectMessageRequest$confirmation": "<p>A Boolean value that specifies whether to wait for delivery confirmation from the receiving client.</p> <p>When set to <code>true</code>, the API delivers the message at QoS 1 and waits for the client to send a delivery confirmation (PUBACK) before returning a successful response. If delivery confirmation is not received within the specified <code>timeout</code> period, the API returns HTTP 504.</p> <p>When set to <code>false</code>, the API delivers the message at QoS 0 and returns after Amazon Web Services IoT Core attempts to deliver the message.</p> <p>Valid values: <code>true</code> | <code>false</code> </p> <p>Default value: <code>false</code> </p>"
       }
     },
     "ConflictException": {
       "base": "<p>The specified version does not match the version of the document.</p>",
       "refs": {}
     },
+    "Connected": {
+      "base": null,
+      "refs": {
+        "GetConnectionResponse$connected": "<p>The connection state of the client. Returns <code>true</code> if the client is currently connected, or <code>false</code> if the client is not connected.</p>"
+      }
+    },
     "ContentType": {
       "base": null,
       "refs": {
-        "PublishRequest$contentType": "<p>A UTF-8 encoded string that describes the content of the publishing message.</p>"
+        "PublishRequest$contentType": "<p>A UTF-8 encoded string that describes the content of the publishing message.</p>",
+        "SendDirectMessageRequest$contentType": "<p>The MQTT5 content type property forwarded to the receiving client (for example, <code>application/json</code>).</p>"
       }
     },
     "CorrelationData": {
       "base": null,
       "refs": {
-        "PublishRequest$correlationData": "<p>The base64-encoded binary data used by the sender of the request message to identify which request the response message is for when it's received. <code>correlationData</code> is an HTTP header value in the API.</p>"
+        "PublishRequest$correlationData": "<p>The base64-encoded binary data used by the sender of the request message to identify which request the response message is for when it's received. <code>correlationData</code> is an HTTP header value in the API.</p>",
+        "SendDirectMessageRequest$correlationData": "<p>The base64-encoded binary data used by the sender of the request message to identify which request the response message is for when it's received. <code>correlationData</code> is an HTTP header value in the API.</p>"
       }
     },
     "DeleteConnectionRequest": {
@@ -52,8 +74,26 @@
       "base": "<p>The output from the DeleteThingShadow operation.</p>",
       "refs": {}
     },
+    "DisconnectReason": {
+      "base": null,
+      "refs": {
+        "GetConnectionResponse$disconnectReason": "<p>The reason for the last disconnection, if the client is currently disconnected. See the <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/life-cycle-events.html#connect-disconnect\">developer guide</a> for valid disconnect reasons.</p>"
+      }
+    },
     "ForbiddenException": {
       "base": "<p>The caller isn't authorized to make the request.</p>",
+      "refs": {}
+    },
+    "GatewayTimeoutException": {
+      "base": "<p>The delivery confirmation was not received from the client within the specified timeout period.</p>",
+      "refs": {}
+    },
+    "GetConnectionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetConnectionResponse": {
+      "base": null,
       "refs": {}
     },
     "GetRetainedMessageRequest": {
@@ -72,6 +112,12 @@
       "base": "<p>The output from the GetThingShadow operation.</p>",
       "refs": {}
     },
+    "IncludeSocketInformation": {
+      "base": null,
+      "refs": {
+        "GetConnectionRequest$includeSocketInformation": "<p>Specifies if socket information (sourcePort, targetPort, sourceIp, targetIp) should be included in the GetConnection response. Set to <code>TRUE</code> to include socket information. Set to <code>FALSE</code> to omit socket information. By default, this is set to <code>FALSE</code>. See the <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/mqtt.html#mqtt-client-disconnect\">developer guide</a> for how to authorize this parameter.</p>"
+      }
+    },
     "InternalFailureException": {
       "base": "<p>An unexpected error has occurred.</p>",
       "refs": {}
@@ -87,6 +133,12 @@
         "GetThingShadowResponse$payload": "<p>The state information, in JSON format.</p>",
         "UpdateThingShadowRequest$payload": "<p>The state information, in JSON format.</p>",
         "UpdateThingShadowResponse$payload": "<p>The state information, in JSON format.</p>"
+      }
+    },
+    "KeepAliveDuration": {
+      "base": null,
+      "refs": {
+        "GetConnectionResponse$keepAliveDuration": "<p>The keep-alive interval in seconds that the client specified when establishing the connection.</p>"
       }
     },
     "ListNamedShadowsForThingRequest": {
@@ -105,10 +157,19 @@
       "base": null,
       "refs": {}
     },
+    "ListSubscriptionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSubscriptionsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "MaxResults": {
       "base": null,
       "refs": {
-        "ListRetainedMessagesRequest$maxResults": "<p>The maximum number of results to return at one time.</p>"
+        "ListRetainedMessagesRequest$maxResults": "<p>The maximum number of results to return at one time.</p>",
+        "ListSubscriptionsRequest$maxResults": "<p>The maximum number of subscriptions to return in a single request. By default, this is set to 20.</p>"
       }
     },
     "MessageExpiry": {
@@ -133,7 +194,9 @@
         "ListNamedShadowsForThingRequest$nextToken": "<p>The token to retrieve the next set of results.</p>",
         "ListNamedShadowsForThingResponse$nextToken": "<p>The token to use to get the next set of results, or <b>null</b> if there are no additional results.</p>",
         "ListRetainedMessagesRequest$nextToken": "<p>To retrieve the next set of results, the <code>nextToken</code> value from a previous response; otherwise <b>null</b> to receive the first set of results.</p>",
-        "ListRetainedMessagesResponse$nextToken": "<p>The token for the next set of results, or null if there are no additional results.</p>"
+        "ListRetainedMessagesResponse$nextToken": "<p>The token for the next set of results, or null if there are no additional results.</p>",
+        "ListSubscriptionsRequest$nextToken": "<p>To retrieve the next set of results, the <code>nextToken</code> value from a previous response; otherwise <b>null</b> to receive the first set of results.</p>",
+        "ListSubscriptionsResponse$nextToken": "<p>The token to use to get the next set of results, or <b>null</b> if there are no additional results.</p>"
       }
     },
     "PageSize": {
@@ -146,13 +209,15 @@
       "base": null,
       "refs": {
         "GetRetainedMessageResponse$payload": "<p>The Base64-encoded message payload of the retained message body.</p>",
-        "PublishRequest$payload": "<p>The message body. MQTT accepts text, binary, and empty (null) message payloads.</p> <p>Publishing an empty (null) payload with <b>retain</b> = <code>true</code> deletes the retained message identified by <b>topic</b> from Amazon Web Services IoT Core.</p>"
+        "PublishRequest$payload": "<p>The message body. MQTT accepts text, binary, and empty (null) message payloads.</p> <p>Publishing an empty (null) payload with <b>retain</b> = <code>true</code> deletes the retained message identified by <b>topic</b> from Amazon Web Services IoT Core.</p>",
+        "SendDirectMessageRequest$payload": "<p>The message body. MQTT accepts text, binary, and empty (null) message payloads.</p>"
       }
     },
     "PayloadFormatIndicator": {
       "base": null,
       "refs": {
-        "PublishRequest$payloadFormatIndicator": "<p>An <code>Enum</code> string value that indicates whether the payload is formatted as UTF-8. <code>payloadFormatIndicator</code> is an HTTP header value in the API.</p>"
+        "PublishRequest$payloadFormatIndicator": "<p>An <code>Enum</code> string value that indicates whether the payload is formatted as UTF-8. <code>payloadFormatIndicator</code> is an HTTP header value in the API.</p>",
+        "SendDirectMessageRequest$payloadFormatIndicator": "<p>An <code>Enum</code> string value that indicates whether the payload is formatted as UTF-8. <code>payloadFormatIndicator</code> is an HTTP header value in the API.</p>"
       }
     },
     "PayloadSize": {
@@ -164,7 +229,7 @@
     "PreventWillMessage": {
       "base": null,
       "refs": {
-        "DeleteConnectionRequest$preventWillMessage": "<p>Controls if Amazon Web Services IoT Core publishes the client's Last Will and Testament (LWT) message upon disconnection. Set to <code>TRUE</code> to prevent publishing the LWT message. Set to <code>FALSE</code> to allow publishing. By default, this is set to <code>FALSE</code> (allows publishing the LWT message).</p>"
+        "DeleteConnectionRequest$preventWillMessage": "<p>Controls if Amazon Web Services IoT Core publishes the client's Last Will and Testament (LWT) message upon disconnection. Set to <code>TRUE</code> to prevent publishing the LWT message. Set to <code>FALSE</code> to ensure that LWT is published. By default, this is set to <code>FALSE</code> (LWT message is published).</p>"
       }
     },
     "PublishRequest": {
@@ -176,7 +241,8 @@
       "refs": {
         "GetRetainedMessageResponse$qos": "<p>The quality of service (QoS) level used to publish the retained message.</p>",
         "PublishRequest$qos": "<p>The Quality of Service (QoS) level. The default QoS level is 0.</p>",
-        "RetainedMessageSummary$qos": "<p>The quality of service (QoS) level used to publish the retained message.</p>"
+        "RetainedMessageSummary$qos": "<p>The quality of service (QoS) level used to publish the retained message.</p>",
+        "SubscriptionSummary$qos": "<p>The Quality of Service (QoS) level for the subscription. Valid values are 0 (at most once) and 1 (at least once).</p>"
       }
     },
     "RequestEntityTooLargeException": {
@@ -187,10 +253,17 @@
       "base": "<p>The specified resource does not exist.</p>",
       "refs": {}
     },
+    "ResponseMessage": {
+      "base": null,
+      "refs": {
+        "SendDirectMessageResponse$message": "<p>The status message indicating the result of the operation.</p>"
+      }
+    },
     "ResponseTopic": {
       "base": null,
       "refs": {
-        "PublishRequest$responseTopic": "<p>A UTF-8 encoded string that's used as the topic name for a response message. The response topic is used to describe the topic which the receiver should publish to as part of the request-response flow. The topic must not contain wildcard characters.</p>"
+        "PublishRequest$responseTopic": "<p>A UTF-8 encoded string that's used as the topic name for a response message. The response topic is used to describe the topic which the receiver should publish to as part of the request-response flow. The topic must not contain wildcard characters.</p>",
+        "SendDirectMessageRequest$responseTopic": "<p>A UTF-8 encoded string that's used as the topic name for a response message. The response topic describes the topic which the receiver should publish to as part of the request-response flow. The topic must not contain wildcard characters. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/iot-core.html#message-broker-limits\">Amazon Web Services IoT Core message broker and protocol limits and quotas</a>.</p>"
       }
     },
     "Retain": {
@@ -211,9 +284,23 @@
         "RetainedMessageList$member": null
       }
     },
+    "SendDirectMessageRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SendDirectMessageResponse": {
+      "base": "<p>The output from the SendDirectMessage operation.</p>",
+      "refs": {}
+    },
     "ServiceUnavailableException": {
       "base": "<p>The service is temporarily unavailable.</p>",
       "refs": {}
+    },
+    "SessionExpiry": {
+      "base": null,
+      "refs": {
+        "GetConnectionResponse$sessionExpiry": "<p>The session expiry interval in seconds for the MQTT client connection. This is configured by the user. This value indicates how long the session will remain active after the client disconnects.</p>"
+      }
     },
     "ShadowName": {
       "base": null,
@@ -224,10 +311,47 @@
         "UpdateThingShadowRequest$shadowName": "<p>The name of the shadow.</p>"
       }
     },
+    "SourceIp": {
+      "base": null,
+      "refs": {
+        "GetConnectionResponse$sourceIp": "<p>The IP address of the client that initiated the connection.</p>"
+      }
+    },
+    "SourcePort": {
+      "base": null,
+      "refs": {
+        "GetConnectionResponse$sourcePort": "<p>The client's source port.</p>"
+      }
+    },
+    "SubscriptionList": {
+      "base": null,
+      "refs": {
+        "ListSubscriptionsResponse$subscriptions": "<p>A list of topic filters and their associated Quality of Service (QoS) levels that the client is subscribed to.</p>"
+      }
+    },
+    "SubscriptionSummary": {
+      "base": "<p>Contains information about a subscription for an MQTT client, including the topic filter and Quality of Service (QoS) level.</p>",
+      "refs": {
+        "SubscriptionList$member": null
+      }
+    },
+    "TargetIp": {
+      "base": null,
+      "refs": {
+        "GetConnectionResponse$targetIp": "<p>The IP address of the Amazon Web Services IoT Core endpoint that the client connected to. For clients connected to VPC endpoints, this is the private IP address of the network interface the client is connected to.</p>"
+      }
+    },
+    "TargetPort": {
+      "base": null,
+      "refs": {
+        "GetConnectionResponse$targetPort": "<p>The port number of the Amazon Web Services IoT Core endpoint that the client connected to.</p>"
+      }
+    },
     "ThingName": {
       "base": null,
       "refs": {
         "DeleteThingShadowRequest$thingName": "<p>The name of the thing.</p>",
+        "GetConnectionResponse$thingName": "<p>The name of the thing associated with the principal of the MQTT client, if applicable.</p>",
         "GetThingShadowRequest$thingName": "<p>The name of the thing.</p>",
         "ListNamedShadowsForThingRequest$thingName": "<p>The name of the thing.</p>",
         "UpdateThingShadowRequest$thingName": "<p>The name of the thing.</p>"
@@ -237,9 +361,17 @@
       "base": "<p>The rate exceeds the limit.</p>",
       "refs": {}
     },
+    "TimeoutInSeconds": {
+      "base": null,
+      "refs": {
+        "SendDirectMessageRequest$timeout": "<p>An integer that represents the maximum time, in seconds, to wait for a delivery confirmation (PUBACK) from the receiving client after the message has been delivered. This parameter is only used when <code>confirmation</code> is set to <code>true</code>. If <code>confirmation</code> is <code>false</code>, this parameter is ignored.</p> <p>The total API response time may be higher than this value due to internal processing. Set your HTTP client timeout to a value greater than this parameter.</p> <p>Valid range: 1 to 15 seconds.</p> <p>Default value: <code>5</code> seconds.</p>"
+      }
+    },
     "Timestamp": {
       "base": null,
       "refs": {
+        "GetConnectionResponse$connectedSince": "<p>Unix timestamp (in milliseconds) indicating when the client connected. Present only when connected is true.</p>",
+        "GetConnectionResponse$disconnectedSince": "<p>Unix timestamp (in milliseconds) indicating when the client disconnected. Present only when connected is false. This information is available for 30 minutes after the client disconnects.</p>",
         "GetRetainedMessageResponse$lastModifiedTime": "<p>The Epoch date and time, in milliseconds, when the retained message was stored by IoT.</p>",
         "ListNamedShadowsForThingResponse$timestamp": "<p>The Epoch date and time the response was generated by IoT.</p>",
         "RetainedMessageSummary$lastModifiedTime": "<p>The Epoch date and time, in milliseconds, when the retained message was stored by IoT.</p>"
@@ -251,7 +383,20 @@
         "GetRetainedMessageRequest$topic": "<p>The topic name of the retained message to retrieve.</p>",
         "GetRetainedMessageResponse$topic": "<p>The topic name to which the retained message was published.</p>",
         "PublishRequest$topic": "<p>The name of the MQTT topic.</p>",
-        "RetainedMessageSummary$topic": "<p>The topic name to which the retained message was published.</p>"
+        "RetainedMessageSummary$topic": "<p>The topic name to which the retained message was published.</p>",
+        "SendDirectMessageRequest$topic": "<p>The topic of the outbound MQTT Publish message to the receiving client. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/iot-core.html#message-broker-limits\">Amazon Web Services IoT Core message broker and protocol limits and quotas</a>.</p>"
+      }
+    },
+    "TopicFilter": {
+      "base": null,
+      "refs": {
+        "SubscriptionSummary$topicFilter": "<p>The topic filter pattern that the client is subscribed to. May include MQTT wildcards such as + (single-level) and # (multi-level).</p>"
+      }
+    },
+    "TraceId": {
+      "base": null,
+      "refs": {
+        "SendDirectMessageResponse$traceId": "<p>A unique identifier for the request. Include this value when contacting Amazon Web Services Support for troubleshooting.</p>"
       }
     },
     "UnauthorizedException": {
@@ -273,7 +418,8 @@
     "UserProperties": {
       "base": null,
       "refs": {
-        "PublishRequest$userProperties": "<p>A JSON string that contains an array of JSON objects. If you don’t use Amazon Web Services SDK or CLI, you must encode the JSON string to base64 format before adding it to the HTTP header. <code>userProperties</code> is an HTTP header value in the API.</p> <p>The following example <code>userProperties</code> parameter is a JSON string which represents two User Properties. Note that it needs to be base64-encoded:</p> <p> <code>[{\"deviceName\": \"alpha\"}, {\"deviceCnt\": \"45\"}]</code> </p>"
+        "PublishRequest$userProperties": "<p>A JSON string that contains an array of JSON objects. If you don’t use Amazon Web Services SDK or CLI, you must encode the JSON string to base64 format before adding it to the HTTP header. <code>userProperties</code> is an HTTP header value in the API.</p> <p>The following example <code>userProperties</code> parameter is a JSON string which represents two User Properties. Note that it needs to be base64-encoded:</p> <p> <code>[{\"deviceName\": \"alpha\"}, {\"deviceCnt\": \"45\"}]</code> </p>",
+        "SendDirectMessageRequest$userProperties": "<p>A JSON string that contains an array of JSON objects. If you don't use Amazon Web Services SDK or CLI, you must encode the JSON string to base64 format before adding it to the HTTP header. <code>userProperties</code> is an HTTP header value in the API.</p> <p>For MQTT 3.1.1 clients, user properties are silently dropped.</p> <p>The following example <code>userProperties</code> parameter is a JSON string which represents two User Properties. Note that it needs to be base64-encoded:</p> <p> <code>[{\"deviceName\": \"alpha\"}, {\"deviceCnt\": \"45\"}]</code> </p>"
       }
     },
     "UserPropertiesBlob": {
@@ -282,11 +428,18 @@
         "GetRetainedMessageResponse$userProperties": "<p>A base64-encoded JSON string that includes an array of JSON objects, or null if the retained message doesn't include any user properties.</p> <p>The following example <code>userProperties</code> parameter is a JSON string that represents two user properties. Note that it will be base64-encoded:</p> <p> <code>[{\"deviceName\": \"alpha\"}, {\"deviceCnt\": \"45\"}]</code> </p>"
       }
     },
+    "VpcEndpointId": {
+      "base": null,
+      "refs": {
+        "GetConnectionResponse$vpcEndpointId": "<p>The ID of the VPC endpoint. Present for clients connected to IoT Core via a <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/IoTCore-VPC.html\">VPC endpoint</a>. </p>"
+      }
+    },
     "errorMessage": {
       "base": null,
       "refs": {
         "ConflictException$message": "<p>The message for the exception.</p>",
         "ForbiddenException$message": null,
+        "GatewayTimeoutException$message": "<p>The message for the exception.</p>",
         "InternalFailureException$message": "<p>The message for the exception.</p>",
         "InvalidRequestException$message": "<p>The message for the exception.</p>",
         "MethodNotAllowedException$message": "<p>The message for the exception.</p>",

@@ -8,10 +8,14 @@
     "CompleteResourceTokenAuth": "<p>Confirms the user authentication session for obtaining OAuth2.0 tokens for a resource.</p>",
     "CreateABTest": "<p>Creates an A/B test for comparing agent configurations. A/B tests split traffic between a control variant and a treatment variant through a gateway, then evaluate performance using online evaluation configurations to determine which variant performs better.</p>",
     "CreateEvent": "<p>Creates an event in an AgentCore Memory resource. Events represent interactions or activities that occur within a session and are associated with specific actors.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:CreateEvent</code> permission.</p> <p>This operation is subject to request rate limiting.</p>",
+    "CreatePaymentInstrument": "<p>Create a new payment instrument for a connector.</p>",
+    "CreatePaymentSession": "<p>Create a new payment session.</p>",
     "DeleteABTest": "<p>Deletes an A/B test and its associated gateway rules.</p>",
     "DeleteBatchEvaluation": "<p>Deletes a batch evaluation and its associated results.</p>",
     "DeleteEvent": "<p>Deletes an event from an AgentCore Memory resource. When you delete an event, it is permanently removed.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:DeleteEvent</code> permission.</p>",
     "DeleteMemoryRecord": "<p>Deletes a memory record from an AgentCore Memory resource. When you delete a memory record, it is permanently removed.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:DeleteMemoryRecord</code> permission.</p>",
+    "DeletePaymentInstrument": "<p>Deletes a payment instrument. This is a soft delete operation that preserves the record for audit and compliance purposes.</p>",
+    "DeletePaymentSession": "<p>Deletes a payment session. This permanently removes the payment session record.</p>",
     "DeleteRecommendation": "<p>Deletes a recommendation and its associated results.</p>",
     "Evaluate": "<p> Performs on-demand evaluation of agent traces using a specified evaluator. This synchronous API accepts traces in OpenTelemetry format and returns immediate scoring results with detailed explanations.</p>",
     "GetABTest": "<p>Retrieves detailed information about an A/B test, including its configuration, status, and statistical results.</p>",
@@ -21,9 +25,13 @@
     "GetCodeInterpreterSession": "<p>Retrieves detailed information about a specific code interpreter session in Amazon Bedrock AgentCore. This operation returns the session's configuration, current status, and metadata.</p> <p>To get a code interpreter session, you must specify both the code interpreter identifier and the session ID. The response includes information about the session's timeout settings and current status.</p> <p>The following operations are related to <code>GetCodeInterpreterSession</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartCodeInterpreterSession.html\">StartCodeInterpreterSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_ListCodeInterpreterSessions.html\">ListCodeInterpreterSessions</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StopCodeInterpreterSession.html\">StopCodeInterpreterSession</a> </p> </li> </ul>",
     "GetEvent": "<p>Retrieves information about a specific event in an AgentCore Memory resource.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:GetEvent</code> permission.</p>",
     "GetMemoryRecord": "<p>Retrieves a specific memory record from an AgentCore Memory resource.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:GetMemoryRecord</code> permission.</p>",
+    "GetPaymentInstrument": "<p>Get a payment instrument by ID.</p>",
+    "GetPaymentInstrumentBalance": "<p>Get the balance of a payment instrument.</p>",
+    "GetPaymentSession": "<p>Get a payment session.</p>",
     "GetRecommendation": "<p>Retrieves detailed information about a recommendation, including its configuration, status, and results.</p>",
     "GetResourceApiKey": "<p>Retrieves the API key associated with an API key credential provider.</p>",
     "GetResourceOauth2Token": "<p>Returns the OAuth 2.0 token of the provided resource.</p>",
+    "GetResourcePaymentToken": "<p>Generates authentication tokens for payment providers that use vendor-specific authentication mechanisms.</p>",
     "GetWorkloadAccessToken": "<p>Obtains a workload access token for agentic workloads not acting on behalf of a user.</p>",
     "GetWorkloadAccessTokenForJWT": "<p>Obtains a workload access token for agentic workloads acting on behalf of a user, using a JWT token.</p>",
     "GetWorkloadAccessTokenForUserId": "<p>Obtains a workload access token for agentic workloads acting on behalf of a user, using the user's ID.</p>",
@@ -40,8 +48,11 @@
     "ListEvents": "<p>Lists events in an AgentCore Memory resource based on specified criteria. We recommend using pagination to ensure that the operation returns quickly and successfully.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:ListEvents</code> permission.</p>",
     "ListMemoryExtractionJobs": "<p>Lists all long-term memory extraction jobs that are eligible to be started with optional filtering.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:ListMemoryExtractionJobs</code> permission.</p>",
     "ListMemoryRecords": "<p>Lists memory records in an AgentCore Memory resource based on specified criteria. We recommend using pagination to ensure that the operation returns quickly and successfully.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:ListMemoryRecords</code> permission.</p>",
+    "ListPaymentInstruments": "<p>List payment instruments for a manager.</p>",
+    "ListPaymentSessions": "<p>List payment sessions.</p>",
     "ListRecommendations": "<p>Lists all recommendations in the account, with optional filtering by status.</p>",
     "ListSessions": "<p>Lists sessions in an AgentCore Memory resource based on specified criteria. We recommend using pagination to ensure that the operation returns quickly and successfully.</p> <p>Empty sessions are automatically deleted after one day.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:ListSessions</code> permission.</p>",
+    "ProcessPayment": "<p>Processes a payment using a payment instrument within a payment session.</p>",
     "RetrieveMemoryRecords": "<p>Searches for and retrieves memory records from an AgentCore Memory resource based on specified search criteria. We recommend using pagination to ensure that the operation returns quickly and successfully.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:RetrieveMemoryRecords</code> permission.</p>",
     "SaveBrowserSessionProfile": "<p>Saves the current state of a browser session as a reusable profile in Amazon Bedrock AgentCore. A browser profile captures persistent browser data such as cookies and local storage from an active session, enabling you to reuse this data in future browser sessions.</p> <p>To save a browser session profile, you must specify the profile identifier, browser identifier, and session ID. The session must be active when saving the profile. Once saved, the profile can be used with the <code>StartBrowserSession</code> operation to initialize new sessions with the stored browser state.</p> <p>Browser profiles are useful for scenarios that require persistent authentication, maintaining user preferences across sessions, or continuing tasks that depend on previously stored browser data.</p> <p>The following operations are related to <code>SaveBrowserSessionProfile</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartBrowserSession.html\">StartBrowserSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetBrowserSession.html\">GetBrowserSession</a> </p> </li> </ul>",
     "SearchRegistryRecords": "<p> Searches for registry records using semantic, lexical, or hybrid queries. Returns metadata for matching records ordered by relevance within the specified registry.</p>",
@@ -190,6 +201,18 @@
         "ListActorsOutput$actorSummaries": "<p>The list of actor summaries.</p>"
       }
     },
+    "AffectedSession": {
+      "base": "<p>A session affected by a detected failure pattern, including root cause details.</p>",
+      "refs": {
+        "AffectedSessionList$member": null
+      }
+    },
+    "AffectedSessionList": {
+      "base": null,
+      "refs": {
+        "RootCauseCluster$affectedSessions": "<p>The list of sessions affected by this root cause.</p>"
+      }
+    },
     "AgentCard": {
       "base": null,
       "refs": {
@@ -215,11 +238,20 @@
         "ToolDescriptionRecommendationConfig$agentTraces": "<p>The agent traces to analyze for generating tool description recommendations.</p>"
       }
     },
+    "Amount": {
+      "base": "<p>Represents a monetary amount with a currency.</p>",
+      "refs": {
+        "AvailableLimits$availableSpendAmount": "<p>The remaining available amount that can be spent.</p>",
+        "SessionLimits$maxSpendAmount": "<p>The maximum amount that can be spent in the session.</p>"
+      }
+    },
     "ApiKeyArn": {
       "base": null,
       "refs": {
         "HarnessGeminiModelConfig$apiKeyArn": "<p>The ARN of your Gemini API key on AgentCore Identity.</p>",
-        "HarnessOpenAiModelConfig$apiKeyArn": "<p>The ARN of your OpenAI API key on AgentCore Identity.</p>"
+        "HarnessLiteLlmModelConfig$apiKeyArn": "<p>The ARN of the API key in AgentCore Identity for authenticating with the model provider.</p>",
+        "HarnessOpenAiModelConfig$apiKeyArn": "<p>The ARN of your OpenAI API key on AgentCore Identity.</p>",
+        "HarnessSkillGitAuth$credentialArn": "<p>The ARN of the credential in AgentCore Identity containing the password or personal access token.</p>"
       }
     },
     "ApiKeyType": {
@@ -265,6 +297,12 @@
         "StreamUpdate$automationStreamUpdate": "<p>The update to an automation stream.</p>"
       }
     },
+    "AvailableLimits": {
+      "base": "<p>The available spending limits for a payment session.</p>",
+      "refs": {
+        "PaymentSession$availableLimits": "<p>The current available spending limits.</p>"
+      }
+    },
     "BasicAuth": {
       "base": "<p>Configuration for HTTP Basic Authentication using credentials stored in Amazon Web Services Secrets Manager. The secret must contain a JSON object with <code>username</code> and <code>password</code> string fields. Username allows alphanumeric characters and <code>@._+=-</code> symbols (pattern: <code>^[a-zA-Z0-9@._+=\\-]+$</code>). Password allows alphanumeric characters and <code>@._+=-!#$%&amp;*</code> symbols (pattern: <code>^[a-zA-Z0-9@._+=\\-!#$%&amp;*]+$</code>). Both fields have a maximum length of 256 characters.</p>",
       "refs": {
@@ -288,9 +326,10 @@
       "refs": {}
     },
     "BatchEvaluationArn": {
-      "base": "<p>ARN for a batch evaluation</p>",
+      "base": "<p>The Amazon Resource Name (ARN) of a batch evaluation.</p>",
       "refs": {
         "BatchEvaluationSummary$batchEvaluationArn": "<p>The Amazon Resource Name (ARN) of the batch evaluation.</p>",
+        "BatchEvaluationTraceConfig$batchEvaluationArn": "<p>The ARN of the completed batch evaluation to use as the trace source.</p>",
         "DeleteBatchEvaluationResponse$batchEvaluationArn": "<p>The Amazon Resource Name (ARN) of the deleted batch evaluation.</p>",
         "GetBatchEvaluationResponse$batchEvaluationArn": "<p>The Amazon Resource Name (ARN) of the batch evaluation.</p>",
         "StartBatchEvaluationResponse$batchEvaluationArn": "<p>The Amazon Resource Name (ARN) of the created batch evaluation.</p>",
@@ -308,7 +347,7 @@
       }
     },
     "BatchEvaluationId": {
-      "base": "<p>Unique identifier for a batch evaluation (name-prefixed format)</p>",
+      "base": "<p>The unique identifier for a batch evaluation.</p>",
       "refs": {
         "BatchEvaluationSummary$batchEvaluationId": "<p>The unique identifier of the batch evaluation.</p>",
         "DeleteBatchEvaluationRequest$batchEvaluationId": "<p>The unique identifier of the batch evaluation to delete.</p>",
@@ -321,7 +360,7 @@
       }
     },
     "BatchEvaluationName": {
-      "base": "<p>Human-readable name for a batch evaluation</p>",
+      "base": "<p>A human-readable name for a batch evaluation.</p>",
       "refs": {
         "BatchEvaluationSummary$batchEvaluationName": "<p>The name of the batch evaluation.</p>",
         "GetBatchEvaluationResponse$batchEvaluationName": "<p>The name of the batch evaluation.</p>",
@@ -330,7 +369,7 @@
       }
     },
     "BatchEvaluationStatus": {
-      "base": null,
+      "base": "<p>The lifecycle status of a batch evaluation job.</p>",
       "refs": {
         "BatchEvaluationSummary$status": "<p>The current status of the batch evaluation.</p>",
         "DeleteBatchEvaluationResponse$status": "<p>The status of the batch evaluation deletion operation.</p>",
@@ -340,7 +379,7 @@
       }
     },
     "BatchEvaluationSummary": {
-      "base": "<p>Summary representation for list responses</p>",
+      "base": "<p>Summary representation for list responses.</p>",
       "refs": {
         "BatchEvaluationSummaryList$member": null
       }
@@ -349,6 +388,12 @@
       "base": null,
       "refs": {
         "ListBatchEvaluationsResponse$batchEvaluations": "<p>The list of batch evaluation summaries.</p>"
+      }
+    },
+    "BatchEvaluationTraceConfig": {
+      "base": "<p>Configuration for using a batch evaluation as the source of agent traces for recommendations.</p>",
+      "refs": {
+        "AgentTracesConfig$batchEvaluation": "<p>Use a completed batch evaluation as the source of agent traces.</p>"
       }
     },
     "BatchUpdateMemoryRecordsInput": {
@@ -368,6 +413,13 @@
         "ScreenshotResult$data": "<p>The base64-encoded image data. Present only when the action succeeded.</p>"
       }
     },
+    "BlockchainChainId": {
+      "base": "<p>Supported blockchain chain identifiers for balance queries. Each value maps to a specific chain supported by the underlying providers (Privy, Coinbase).</p>",
+      "refs": {
+        "GetPaymentInstrumentBalanceRequest$chain": "<p>The specific blockchain chain to query balance on. Required because balances are chain-specific.</p>",
+        "TokenBalance$chain": "<p>The specific blockchain chain.</p>"
+      }
+    },
     "Body": {
       "base": null,
       "refs": {
@@ -381,10 +433,12 @@
       "refs": {
         "BranchFilter$includeParentBranches": "<p>Specifies whether to include parent branches in the results. Set to true to include parent branches, or false to exclude them.</p>",
         "CodeInterpreterResult$isError": "<p>Indicates whether the result represents an error. If true, the content contains error messages or exception information. If false, the content contains successful execution results.</p>",
+        "CoinbaseCdpTokenRequestInput$includeWalletAuthToken": "<p>Set to true for wallet write operations (requires walletSecret configured).</p>",
         "CreateABTestRequest$enableOnCreate": "<p>Whether to enable the A/B test immediately upon creation. If true, traffic splitting begins automatically.</p>",
         "FilterValue$booleanValue": "<p>A boolean value for true/false filtering conditions.</p>",
         "GetResourceOauth2TokenRequest$forceAuthentication": "<p>Indicates whether to always initiate a new three-legged OAuth (3LO) flow, regardless of any existing session.</p>",
         "ListEventsInput$includePayloads": "<p>Specifies whether to include event payloads in the response. Set to true to include payloads, or false to exclude them.</p>",
+        "StripePrivyTokenRequestInput$includeAuthorizationSignature": "<p>Set to true to generate privy-authorization-signature.</p>",
         "ToolArguments$clearContext": "<p>Whether to clear the context for the tool.</p>",
         "VariantResult$isSignificant": "<p>Whether the observed difference is statistically significant.</p>"
       }
@@ -432,12 +486,6 @@
         "MouseMoveResult$status": "<p>The status of the action execution.</p>",
         "MouseScrollResult$status": "<p>The status of the action execution.</p>",
         "ScreenshotResult$status": "<p>The status of the action execution.</p>"
-      }
-    },
-    "BrowserArn": {
-      "base": null,
-      "refs": {
-        "HarnessAgentCoreBrowserConfig$browserArn": "<p>If not populated, the built-in Browser ARN is used.</p>"
       }
     },
     "BrowserEnterprisePolicies": {
@@ -571,6 +619,9 @@
       "base": null,
       "refs": {
         "CreateABTestRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, the service ignores the request, but does not return an error.</p>",
+        "CreatePaymentInstrumentRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
+        "CreatePaymentSessionRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
+        "ProcessPaymentRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
         "SaveBrowserSessionProfileRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock AgentCore ignores the request, but does not return an error.</p>",
         "StartBatchEvaluationRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, the service ignores the request, but does not return an error.</p>",
         "StartBrowserSessionRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock AgentCore ignores the request, but does not return an error. This parameter helps prevent the creation of duplicate sessions if there are temporary network issues.</p>",
@@ -614,7 +665,7 @@
       }
     },
     "CloudWatchLogsFilterOperator": {
-      "base": null,
+      "base": "<p>The comparison operator used to filter CloudWatch Logs entries.</p>",
       "refs": {
         "CloudWatchLogsFilter$operator": "<p>The comparison operator to use for filtering.</p>"
       }
@@ -628,7 +679,7 @@
     "CloudWatchLogsSource": {
       "base": "<p>The configuration for reading agent traces from CloudWatch Logs.</p>",
       "refs": {
-        "DataSourceConfig$cloudWatchLogs": "<p>Pull session spans from CloudWatch</p>"
+        "DataSourceConfig$cloudWatchLogs": "<p>Configuration for pulling agent session traces from CloudWatch Logs.</p>"
       }
     },
     "CloudWatchLogsSourceLogGroupNamesList": {
@@ -656,15 +707,9 @@
       }
     },
     "CloudWatchOutputConfig": {
-      "base": "<p>CloudWatch Logs destination for batch evaluation results</p>",
+      "base": "<p>CloudWatch Logs destination for batch evaluation results.</p>",
       "refs": {
         "OutputConfig$cloudWatchConfig": "<p>The CloudWatch Logs configuration for writing evaluation results.</p>"
-      }
-    },
-    "CodeInterpreterArn": {
-      "base": null,
-      "refs": {
-        "HarnessAgentCoreCodeInterpreterConfig$codeInterpreterArn": "<p>If not populated, the built-in Code Interpreter ARN is used.</p>"
       }
     },
     "CodeInterpreterResult": {
@@ -717,6 +762,31 @@
       "base": "<p>Contains output from a code interpreter stream.</p>",
       "refs": {
         "InvokeCodeInterpreterResponse$stream": "<p>The stream containing the results of the code execution. This includes output, errors, and execution status.</p>"
+      }
+    },
+    "CoinbaseCdpPaymentJwtTokenType": {
+      "base": null,
+      "refs": {
+        "CoinbaseCdpTokenResponseOutput$bearerToken": "<p>Bearer Token for Authorization header.</p>",
+        "CoinbaseCdpTokenResponseOutput$walletAuthToken": "<p>Wallet Auth Token for X-Wallet-Auth header.</p>"
+      }
+    },
+    "CoinbaseCdpPaymentRequestBodyType": {
+      "base": null,
+      "refs": {
+        "CoinbaseCdpTokenRequestInput$requestBody": "<p>Request body JSON — used to generate wallet auth JWT.</p>"
+      }
+    },
+    "CoinbaseCdpTokenRequestInput": {
+      "base": "<p>Coinbase CDP token request parameters.</p>",
+      "refs": {
+        "PaymentTokenRequestInput$coinbaseCdpTokenRequest": "<p>The Coinbase CDP token request.</p>"
+      }
+    },
+    "CoinbaseCdpTokenResponseOutput": {
+      "base": "<p>Coinbase CDP token response.</p>",
+      "refs": {
+        "PaymentTokenResponseOutput$coinbaseCdpTokenResponse": "<p>The Coinbase CDP token response.</p>"
       }
     },
     "CommandExecutionStatus": {
@@ -837,7 +907,7 @@
     "Context": {
       "base": "<p> The contextual information associated with an evaluation, including span context details that identify the specific traces and sessions being evaluated within the agent's execution flow. </p>",
       "refs": {
-        "EvaluationReferenceInput$context": null,
+        "EvaluationReferenceInput$context": "<p> The span context that identifies which session or trace this reference input applies to, used for correlating ground truth with agent output. </p>",
         "EvaluationResultContent$context": "<p> The contextual information associated with this evaluation result, including span context details that identify the specific traces and sessions that were evaluated. </p>"
       }
     },
@@ -869,11 +939,59 @@
       "base": null,
       "refs": {}
     },
+    "CreatePaymentInstrumentRequest": {
+      "base": "<p>Request structure for creating a payment instrument.</p>",
+      "refs": {}
+    },
+    "CreatePaymentInstrumentResponse": {
+      "base": "<p>Response structure for creating a payment instrument.</p>",
+      "refs": {}
+    },
+    "CreatePaymentSessionRequest": {
+      "base": "<p>Request structure for creating a payment session.</p>",
+      "refs": {}
+    },
+    "CreatePaymentSessionRequestExpiryTimeInMinutesInteger": {
+      "base": null,
+      "refs": {
+        "CreatePaymentSessionRequest$expiryTimeInMinutes": "<p>The session expiry time in minutes. Must be between 15 and 480 minutes.</p>"
+      }
+    },
+    "CreatePaymentSessionResponse": {
+      "base": "<p>Response structure for creating a payment session.</p>",
+      "refs": {}
+    },
     "CredentialProviderName": {
       "base": null,
       "refs": {
         "GetResourceApiKeyRequest$resourceCredentialProviderName": "<p>The credential provider name for the resource from which you are retrieving the API key.</p>",
-        "GetResourceOauth2TokenRequest$resourceCredentialProviderName": "<p>The name of the resource's credential provider.</p>"
+        "GetResourceOauth2TokenRequest$resourceCredentialProviderName": "<p>The name of the resource's credential provider.</p>",
+        "GetResourcePaymentTokenRequest$resourceCredentialProviderName": "<p>Name of the payment credential provider to use.</p>"
+      }
+    },
+    "CryptoWalletNetwork": {
+      "base": "<p>Supported blockchain networks for crypto wallets.</p>",
+      "refs": {
+        "EmbeddedCryptoWallet$network": "<p>The blockchain network for this embedded crypto wallet. Supported networks: ETHEREUM, SOLANA.</p>",
+        "TokenBalance$network": "<p>The blockchain network family (ETHEREUM or SOLANA).</p>"
+      }
+    },
+    "CryptoX402PaymentInput": {
+      "base": "<p>The input for a crypto X402 payment.</p>",
+      "refs": {
+        "PaymentInput$cryptoX402": "<p>Input for a crypto X402 payment.</p>"
+      }
+    },
+    "CryptoX402PaymentOutput": {
+      "base": "<p>The output from a crypto X402 payment.</p>",
+      "refs": {
+        "PaymentOutput$cryptoX402": "<p>Output from a crypto X402 payment.</p>"
+      }
+    },
+    "Currency": {
+      "base": "<p>Supported currency codes.</p>",
+      "refs": {
+        "Amount$currency": "<p>The currency code for the amount.</p>"
       }
     },
     "CustomDescriptor": {
@@ -901,7 +1019,7 @@
       }
     },
     "DataSourceConfig": {
-      "base": "<p>Where to pull session spans from</p>",
+      "base": "<p>Configuration for the data source used in evaluation.</p>",
       "refs": {
         "GetBatchEvaluationResponse$dataSourceConfig": "<p>The data source configuration specifying where agent traces are pulled from.</p>",
         "StartBatchEvaluationRequest$dataSourceConfig": "<p>The data source configuration that specifies where to pull agent session traces from for evaluation.</p>"
@@ -910,6 +1028,7 @@
     "DateTimestamp": {
       "base": null,
       "refs": {
+        "AvailableLimits$updatedAt": "<p>The timestamp when the available limits were last updated.</p>",
         "BrowserSessionSummary$createdAt": "<p>The timestamp when the browser session was created. This value is in ISO 8601 format.</p>",
         "BrowserSessionSummary$lastUpdatedAt": "<p>The timestamp when the browser session was last updated. This value is in ISO 8601 format.</p>",
         "CodeInterpreterSessionSummary$createdAt": "<p>The timestamp when the code interpreter session was created. This value is in ISO 8601 format.</p>",
@@ -917,6 +1036,16 @@
         "GetBrowserSessionResponse$createdAt": "<p>The time at which the browser session was created.</p>",
         "GetBrowserSessionResponse$lastUpdatedAt": "<p>The time at which the browser session was last updated.</p>",
         "GetCodeInterpreterSessionResponse$createdAt": "<p>The time at which the code interpreter session was created.</p>",
+        "PaymentInstrument$createdAt": "<p>The timestamp when this payment instrument was created.</p>",
+        "PaymentInstrument$updatedAt": "<p>The timestamp when this payment instrument was last updated.</p>",
+        "PaymentInstrumentSummary$createdAt": "<p>The timestamp when this payment instrument was created.</p>",
+        "PaymentInstrumentSummary$updatedAt": "<p>The timestamp when this payment instrument was last updated.</p>",
+        "PaymentSession$createdAt": "<p>The timestamp when the session was created.</p>",
+        "PaymentSession$updatedAt": "<p>The timestamp when the session was last updated.</p>",
+        "PaymentSessionSummary$createdAt": "<p>The timestamp when the session was created.</p>",
+        "PaymentSessionSummary$updatedAt": "<p>The timestamp when the session was last updated.</p>",
+        "ProcessPaymentResponse$createdAt": "<p>The timestamp when the payment was created.</p>",
+        "ProcessPaymentResponse$updatedAt": "<p>The timestamp when the payment was last updated.</p>",
         "RegistryRecordSummary$createdAt": "<p> The date and time when the registry record was created.</p>",
         "RegistryRecordSummary$updatedAt": "<p> The date and time when the registry record was last updated.</p>",
         "SaveBrowserSessionProfileResponse$lastUpdatedAt": "<p>The timestamp when the browser profile was last updated. This value is in ISO 8601 format.</p>",
@@ -959,6 +1088,22 @@
       "base": null,
       "refs": {}
     },
+    "DeletePaymentInstrumentRequest": {
+      "base": "<p>Request structure for deleting a payment instrument.</p>",
+      "refs": {}
+    },
+    "DeletePaymentInstrumentResponse": {
+      "base": "<p>Response structure for deleting a payment instrument.</p>",
+      "refs": {}
+    },
+    "DeletePaymentSessionRequest": {
+      "base": "<p>Request structure for deleting a payment session.</p>",
+      "refs": {}
+    },
+    "DeletePaymentSessionResponse": {
+      "base": "<p>Response structure for deleting a payment session.</p>",
+      "refs": {}
+    },
     "DeleteRecommendationRequest": {
       "base": null,
       "refs": {}
@@ -988,7 +1133,9 @@
     "Document": {
       "base": null,
       "refs": {
-        "PayloadType$blob": "<p>The binary content of the payload.</p>"
+        "HarnessBedrockModelConfig$additionalParams": "<p>Provider-specific parameters passed through to the model provider unchanged.</p>",
+        "HarnessLiteLlmModelConfig$additionalParams": "<p>Provider-specific parameters passed through to the model provider unchanged.</p>",
+        "HarnessOpenAiModelConfig$additionalParams": "<p>Provider-specific parameters passed through to the model provider unchanged.</p>"
       }
     },
     "DomainPattern": {
@@ -1013,6 +1160,7 @@
         "EvaluationResultContent$value": "<p> The numerical score assigned by the evaluator according to its configured rating scale. For numerical scales, this is a decimal value within the defined range. This field is not allowed for categorical scales. </p>",
         "EvaluatorStatistics$averageScore": "<p>The average score across all evaluated sessions for this evaluator.</p>",
         "FilterValue$doubleValue": "<p>A numeric value for numerical filtering and comparisons.</p>",
+        "InsightsFailureSignal$confidence": "<p>The confidence score of the failure detection.</p>",
         "MemoryRecordMetadataValue$numberValue": "<p>A numeric value.</p>",
         "MemoryRecordSummary$score": "<p>The relevance score of the memory record when returned as part of a search result. Higher values indicate greater relevance to the search query.</p>",
         "ToolResultStructuredContent$executionTime": "<p>The execution time of the tool operation in milliseconds.</p>",
@@ -1025,6 +1173,25 @@
     "DuplicateIdException": {
       "base": "<p> An exception thrown when attempting to create a resource with an identifier that already exists.</p>",
       "refs": {}
+    },
+    "Email": {
+      "base": "<p>Email address with validation for standard email format.</p>",
+      "refs": {
+        "LinkedAccountEmail$emailAddress": "<p>The email address used for the linked account. Must be a valid email format.</p>",
+        "OAuth2Authentication$emailAddress": "<p>The email address from the OAuth2 provider.</p>"
+      }
+    },
+    "EmbeddedCryptoWallet": {
+      "base": "<p>Embedded crypto wallet instrument details.</p>",
+      "refs": {
+        "PaymentInstrumentDetails$embeddedCryptoWallet": "<p>Embedded crypto wallet managed directly by end user.</p>"
+      }
+    },
+    "EmbeddedCryptoWalletRedirectUrlString": {
+      "base": null,
+      "refs": {
+        "EmbeddedCryptoWallet$redirectUrl": "<p>URL for the end user to complete a provider-specific action such as wallet linking or onboarding.</p>"
+      }
     },
     "ErrorDetailsList": {
       "base": null,
@@ -1060,7 +1227,7 @@
       "base": null,
       "refs": {
         "EvaluationReferenceInput$assertions": "<p> A list of assertion statements for session-level evaluation. Each assertion describes an expected behavior or outcome the agent should demonstrate during the session. </p>",
-        "InlineGroundTruth$assertions": "<p>assertions for evaluation, reuses common model EvaluationContentList</p>"
+        "InlineGroundTruth$assertions": "<p>Assertions for evaluation, reuses common model EvaluationContentList.</p>"
       }
     },
     "EvaluationContentTextString": {
@@ -1085,7 +1252,7 @@
       "base": "<p> The expected tool call trajectory for trajectory-based evaluation. </p>",
       "refs": {
         "EvaluationReferenceInput$expectedTrajectory": "<p> The expected tool call sequence for session-level trajectory evaluation. Contains a list of tool names representing the tools the agent is expected to invoke. </p>",
-        "InlineGroundTruth$expectedTrajectory": "<p>expectedTrajectory for evaluation, reuses common model EvaluationExpectedTrajectory</p>"
+        "InlineGroundTruth$expectedTrajectory": "<p>The expected tool call sequence for trajectory evaluation.</p>"
       }
     },
     "EvaluationExplanation": {
@@ -1120,7 +1287,7 @@
       }
     },
     "EvaluationReferenceInputs": {
-      "base": null,
+      "base": "<p> A list of reference inputs containing ground truth data for evaluation. </p>",
       "refs": {
         "EvaluateRequest$evaluationReferenceInputs": "<p> Ground truth data to compare against agent responses during evaluation. Allows to provide expected responses, assertions, and expected tool trajectories at different evaluation levels. Session-level reference inputs apply to the entire conversation, while trace-level reference inputs target specific request-response interactions identified by trace ID. </p>"
       }
@@ -1132,7 +1299,7 @@
       }
     },
     "EvaluationResults": {
-      "base": null,
+      "base": "<p> A list of evaluation results from the evaluators applied to the session. </p>",
       "refs": {
         "EvaluateResponse$evaluationResults": "<p> The detailed evaluation results containing scores, explanations, and metadata. Includes the evaluator information, numerical or categorical ratings based on the evaluator's rating scale, and token usage statistics for the evaluation process. </p>"
       }
@@ -1156,7 +1323,7 @@
       }
     },
     "Evaluator": {
-      "base": "<p>An evaluator to run against sessions</p>",
+      "base": "<p>An evaluator to run against sessions during batch evaluation.</p>",
       "refs": {
         "EvaluatorList$member": null,
         "StartBatchEvaluationRequestEvaluatorsList$member": null
@@ -1263,6 +1430,36 @@
         "FilterInput$eventMetadata": "<p>Event metadata filter criteria to apply when retrieving events.</p>"
       }
     },
+    "ExecutionSummaryAffectedSession": {
+      "base": "<p>A session associated with an execution summary cluster.</p>",
+      "refs": {
+        "ExecutionSummaryAffectedSessionList$member": null
+      }
+    },
+    "ExecutionSummaryAffectedSessionList": {
+      "base": null,
+      "refs": {
+        "ExecutionSummaryCluster$affectedSessions": "<p>The list of sessions with this execution pattern.</p>"
+      }
+    },
+    "ExecutionSummaryCluster": {
+      "base": "<p>A cluster of similar execution patterns identified across sessions.</p>",
+      "refs": {
+        "ExecutionSummaryClusterList$member": null
+      }
+    },
+    "ExecutionSummaryClusterList": {
+      "base": null,
+      "refs": {
+        "ExecutionSummaryClusteringResultContent$executionSummaries": "<p>The list of execution summary clusters identified across analyzed sessions.</p>"
+      }
+    },
+    "ExecutionSummaryClusteringResultContent": {
+      "base": "<p>The execution summary clustering result containing grouped execution patterns identified across evaluated sessions.</p>",
+      "refs": {
+        "GetBatchEvaluationResponse$executionSummaryResult": "<p>The execution summary clustering results from insights, containing grouped execution patterns across evaluated sessions.</p>"
+      }
+    },
     "ExternalProxy": {
       "base": "<p>Configuration for a customer-managed external proxy server. Includes server location, optional domain-based routing patterns, and authentication credentials.</p>",
       "refs": {
@@ -1310,6 +1507,54 @@
       "refs": {
         "ExtractionJobFilterInput$status": "<p>The status of the extraction job. If specified, only extraction jobs with this status are returned.</p>",
         "ExtractionJobMetadata$status": "<p>The current status of the extraction job.</p>"
+      }
+    },
+    "ExtractionMode": {
+      "base": null,
+      "refs": {
+        "CreateEventInput$extractionMode": "<p>Controls long-term memory extraction for this event. When set to <code>SKIP</code>, the event is stored in short-term memory but is excluded from long-term memory extraction. If not specified, the event is processed for extraction as usual.</p>"
+      }
+    },
+    "FailureAnalysisResultContent": {
+      "base": "<p>The failure analysis clustering result containing categorized failure clusters with root causes and remediation recommendations.</p>",
+      "refs": {
+        "GetBatchEvaluationResponse$failureAnalysisResult": "<p>The failure analysis results from insights, containing categorized failure clusters with root causes and recommendations.</p>"
+      }
+    },
+    "FailureCategoryCluster": {
+      "base": "<p>A top-level failure category identified by clustering similar failure patterns across sessions.</p>",
+      "refs": {
+        "FailureCategoryClusterList$member": null
+      }
+    },
+    "FailureCategoryClusterList": {
+      "base": null,
+      "refs": {
+        "FailureAnalysisResultContent$failures": "<p>The list of failure category clusters identified across analyzed sessions.</p>"
+      }
+    },
+    "FailureSpanDetail": {
+      "base": "<p>Details about a specific span where a failure was detected.</p>",
+      "refs": {
+        "FailureSpanDetailList$member": null
+      }
+    },
+    "FailureSpanDetailList": {
+      "base": null,
+      "refs": {
+        "AffectedSession$failureSpans": "<p>The list of spans where failures were detected in this session.</p>"
+      }
+    },
+    "FailureSubCategoryCluster": {
+      "base": "<p>A subcategory of failures within a top-level failure category.</p>",
+      "refs": {
+        "FailureSubCategoryClusterList$member": null
+      }
+    },
+    "FailureSubCategoryClusterList": {
+      "base": null,
+      "refs": {
+        "FailureCategoryCluster$subCategories": "<p>The list of failure subcategories within this category.</p>"
       }
     },
     "FilterInput": {
@@ -1403,6 +1648,30 @@
       "base": null,
       "refs": {}
     },
+    "GetPaymentInstrumentBalanceRequest": {
+      "base": "<p>Request structure for getting payment instrument balance.</p>",
+      "refs": {}
+    },
+    "GetPaymentInstrumentBalanceResponse": {
+      "base": "<p>Response structure for getting payment instrument balance.</p>",
+      "refs": {}
+    },
+    "GetPaymentInstrumentRequest": {
+      "base": "<p>Request structure for getting a payment instrument.</p>",
+      "refs": {}
+    },
+    "GetPaymentInstrumentResponse": {
+      "base": "<p>Response structure for getting a payment instrument.</p>",
+      "refs": {}
+    },
+    "GetPaymentSessionRequest": {
+      "base": "<p>Request structure for getting a payment session.</p>",
+      "refs": {}
+    },
+    "GetPaymentSessionResponse": {
+      "base": "<p>Response structure for getting a payment session.</p>",
+      "refs": {}
+    },
     "GetRecommendationRequest": {
       "base": null,
       "refs": {}
@@ -1424,6 +1693,14 @@
       "refs": {}
     },
     "GetResourceOauth2TokenResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetResourcePaymentTokenRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetResourcePaymentTokenResponse": {
       "base": null,
       "refs": {}
     },
@@ -1452,7 +1729,7 @@
       "refs": {}
     },
     "GroundTruthSource": {
-      "base": "<p>Where to pull ground truth from</p>",
+      "base": "<p>Where to pull ground truth from.</p>",
       "refs": {
         "SessionMetadataShape$groundTruth": "<p>The ground truth data for this session, including expected responses and assertions.</p>"
       }
@@ -1511,10 +1788,40 @@
         "InvokeHarnessRequest$harnessArn": "<p>The ARN of the harness to invoke.</p>"
       }
     },
+    "HarnessAwsSkillPath": {
+      "base": null,
+      "refs": {
+        "HarnessAwsSkillPaths$member": null
+      }
+    },
+    "HarnessAwsSkillPaths": {
+      "base": null,
+      "refs": {
+        "HarnessSkillAwsSkillsSource$paths": "<p>Optionally filter allowed skills with glob syntax, e.g., ['core-skills/*'].</p>"
+      }
+    },
+    "HarnessBedrockApiFormat": {
+      "base": null,
+      "refs": {
+        "HarnessBedrockModelConfig$apiFormat": "<p>The API format to use when calling the Bedrock provider.</p>"
+      }
+    },
     "HarnessBedrockModelConfig": {
       "base": "<p>Configuration for an Amazon Bedrock model provider.</p>",
       "refs": {
         "HarnessModelConfiguration$bedrockModelConfig": "<p>Configuration for an Amazon Bedrock model.</p>"
+      }
+    },
+    "HarnessBrowserArn": {
+      "base": "<p>Browser ARN for Harness tool configuration. Accepts both managed (aws.browser.v1) and custom browser ARNs.</p>",
+      "refs": {
+        "HarnessAgentCoreBrowserConfig$browserArn": "<p>If not populated, the built-in Browser ARN is used.</p>"
+      }
+    },
+    "HarnessCodeInterpreterArn": {
+      "base": "<p>Code Interpreter ARN for Harness tool configuration. Accepts both managed (aws.codeinterpreter.v1) and custom code interpreter ARNs.</p>",
+      "refs": {
+        "HarnessAgentCoreCodeInterpreterConfig$codeInterpreterArn": "<p>If not populated, the built-in Code Interpreter ARN is used.</p>"
       }
     },
     "HarnessContentBlock": {
@@ -1566,6 +1873,12 @@
         "HarnessMessageStartEvent$role": "<p>The role of the message sender.</p>"
       }
     },
+    "HarnessEndpointName": {
+      "base": null,
+      "refs": {
+        "InvokeHarnessRequest$qualifier": "<p>The endpoint name to invoke. If omitted, the DEFAULT endpoint is used.</p>"
+      }
+    },
     "HarnessGatewayOutboundAuth": {
       "base": "<p>Authentication method for calling a Gateway.</p>",
       "refs": {
@@ -1588,6 +1901,18 @@
       "base": null,
       "refs": {
         "HarnessInlineFunctionConfig$description": "<p>Description of what the tool does, provided to the model.</p>"
+      }
+    },
+    "HarnessLiteLlmApiBase": {
+      "base": null,
+      "refs": {
+        "HarnessLiteLlmModelConfig$apiBase": "<p>The base URL for the model provider's API endpoint.</p>"
+      }
+    },
+    "HarnessLiteLlmModelConfig": {
+      "base": "<p>Configuration for a LiteLLM model provider, enabling connection to third-party model providers.</p>",
+      "refs": {
+        "HarnessModelConfiguration$liteLlmModelConfig": "<p>The LiteLLM model configuration for connecting to third-party model providers.</p>"
       }
     },
     "HarnessMessage": {
@@ -1624,6 +1949,12 @@
       "base": "<p>Specification of which model to use.</p>",
       "refs": {
         "InvokeHarnessRequest$model": "<p>The model configuration to use for this invocation. If specified, overrides the harness default.</p>"
+      }
+    },
+    "HarnessOpenAiApiFormat": {
+      "base": null,
+      "refs": {
+        "HarnessOpenAiModelConfig$apiFormat": "<p>The API format to use when calling the OpenAI provider.</p>"
       }
     },
     "HarnessOpenAiModelConfig": {
@@ -1668,10 +1999,46 @@
         "HarnessSkills$member": null
       }
     },
+    "HarnessSkillAwsSkillsSource": {
+      "base": "<p>Passed to show that AWS Skills should be included.</p>",
+      "refs": {
+        "HarnessSkill$awsSkills": "<p>AWS Skills baked into the Harness's underlying Runtime.</p>"
+      }
+    },
+    "HarnessSkillGitAuth": {
+      "base": "<p>Authentication configuration for accessing a private git repository.</p>",
+      "refs": {
+        "HarnessSkillGitSource$auth": "<p>Authentication configuration for private repositories.</p>"
+      }
+    },
+    "HarnessSkillGitSource": {
+      "base": "<p>A git repository source for a skill.</p>",
+      "refs": {
+        "HarnessSkill$git": "<p>A git repository containing the skill.</p>"
+      }
+    },
+    "HarnessSkillGitUrl": {
+      "base": null,
+      "refs": {
+        "HarnessSkillGitSource$url": "<p>The HTTPS URL of the git repository.</p>"
+      }
+    },
     "HarnessSkillPath": {
       "base": null,
       "refs": {
         "HarnessSkill$path": "<p>The filesystem path to the skill definition.</p>"
+      }
+    },
+    "HarnessSkillS3Source": {
+      "base": "<p>An S3 source for a skill.</p>",
+      "refs": {
+        "HarnessSkill$s3": "<p>An S3 source containing the skill.</p>"
+      }
+    },
+    "HarnessSkillS3Uri": {
+      "base": null,
+      "refs": {
+        "HarnessSkillS3Source$uri": "<p>The S3 URI pointing to the skill directory (e.g., s3://bucket/skills/my-skill/).</p>"
       }
     },
     "HarnessSkills": {
@@ -1909,7 +2276,7 @@
     "InlineGroundTruth": {
       "base": "<p>Inline ground truth data containing assertions, expected trajectories, and per-turn expected responses.</p>",
       "refs": {
-        "GroundTruthSource$inline": "<p>Provide ground truth inline</p>"
+        "GroundTruthSource$inline": "<p>Inline ground truth data provided directly in the request.</p>"
       }
     },
     "InlineGroundTruthTurnsList": {
@@ -1930,6 +2297,52 @@
         "ToolArguments$content": "<p>The content for the tool operation.</p>"
       }
     },
+    "Insight": {
+      "base": "<p>A reference to an insight analysis to run against sessions during batch evaluation. Insights provide deeper analysis beyond individual evaluator scores, including failure detection, user intent clustering, and execution summarization.</p>",
+      "refs": {
+        "InsightList$member": null,
+        "StartBatchEvaluationRequestInsightsList$member": null
+      }
+    },
+    "InsightId": {
+      "base": "<p>Canonical insight identifiers using the Builtin.Insight.* naming convention. Used by BatchEvaluate, InternalEvaluate, and ServiceEngineEvaluate flows.</p>",
+      "refs": {
+        "Insight$insightId": "<p>The unique identifier of the insight to run.</p>"
+      }
+    },
+    "InsightList": {
+      "base": null,
+      "refs": {
+        "BatchEvaluationSummary$insights": "<p>The list of insight analyses applied during the batch evaluation.</p>",
+        "GetBatchEvaluationResponse$insights": "<p>The list of insight analyses applied during the batch evaluation.</p>",
+        "StartBatchEvaluationResponse$insights": "<p>The list of insight analyses applied during the batch evaluation.</p>"
+      }
+    },
+    "InsightsFailureCategory": {
+      "base": "<p>Failure category taxonomy for agent session insights. Values must stay in sync with the category registry in AgentCoreLens (amzn_agentcore_lens.config.failure_detection.FAILURE_CATEGORIES).</p>",
+      "refs": {
+        "InsightsFailureSignal$category": "<p>The failure category classification for this signal.</p>"
+      }
+    },
+    "InsightsFailureSignal": {
+      "base": "<p>A signal indicating a detected failure within a span.</p>",
+      "refs": {
+        "InsightsFailureSignalList$member": null
+      }
+    },
+    "InsightsFailureSignalList": {
+      "base": null,
+      "refs": {
+        "FailureSpanDetail$signals": "<p>The failure signals detected in this span.</p>"
+      }
+    },
+    "InstrumentBalanceToken": {
+      "base": "<p>Supported tokens for instrument balance queries. Only tokens supported for X402 payments are returned.</p>",
+      "refs": {
+        "GetPaymentInstrumentBalanceRequest$token": "<p>The token to query balance for. Only tokens supported for X402 payments are returned.</p>",
+        "TokenBalance$token": "<p>The supported token for this balance.</p>"
+      }
+    },
     "Integer": {
       "base": null,
       "refs": {
@@ -1942,6 +2355,12 @@
         "EvaluationJobResults$numberOfSessionsIgnored": "<p>The number of sessions that were ignored during evaluation.</p>",
         "EvaluatorSummary$totalEvaluated": "<p>The total number of sessions evaluated by this evaluator.</p>",
         "EvaluatorSummary$totalFailed": "<p>The total number of sessions that failed evaluation by this evaluator.</p>",
+        "ExecutionSummaryCluster$clusterId": "<p>The unique identifier of the execution summary cluster.</p>",
+        "ExecutionSummaryCluster$affectedSessionCount": "<p>The number of sessions with this execution pattern.</p>",
+        "FailureCategoryCluster$clusterId": "<p>The unique identifier of the failure category cluster.</p>",
+        "FailureCategoryCluster$affectedSessionCount": "<p>The number of sessions affected by this failure category.</p>",
+        "FailureSubCategoryCluster$clusterId": "<p>The unique identifier of the failure subcategory cluster.</p>",
+        "FailureSubCategoryCluster$affectedSessionCount": "<p>The number of sessions affected by this failure subcategory.</p>",
         "HarnessContentBlockDeltaEvent$contentBlockIndex": "<p>The index of the content block being updated.</p>",
         "HarnessContentBlockStartEvent$contentBlockIndex": "<p>The index of the content block within the message.</p>",
         "HarnessContentBlockStopEvent$contentBlockIndex": "<p>The index of the content block that ended.</p>",
@@ -1949,6 +2368,8 @@
         "InvokeHarnessRequest$maxIterations": "<p>The maximum number of iterations the agent loop can execute. If specified, overrides the harness default.</p>",
         "InvokeHarnessRequest$maxTokens": "<p>The maximum number of tokens the agent can generate per iteration. If specified, overrides the harness default.</p>",
         "InvokeHarnessRequest$timeoutSeconds": "<p>The maximum duration in seconds for the agent loop execution. If specified, overrides the harness default.</p>",
+        "ListPaymentInstrumentsRequest$maxResults": "<p>Maximum number of results to return in a single response.</p>",
+        "ListPaymentSessionsRequest$maxResults": "<p>Maximum number of results to return in a single response.</p>",
         "MemoryRecordOutput$errorCode": "<p>The error code returned when the memory record operation fails.</p>",
         "MessageMetadata$messageIndex": "<p>The position of this message within that event’s ordered list of messages.</p>",
         "MouseClickArguments$x": "<p>The X coordinate on screen where the click occurs.</p>",
@@ -1961,10 +2382,17 @@
         "MouseMoveArguments$y": "<p>The target Y coordinate on screen.</p>",
         "MouseScrollArguments$x": "<p>The X coordinate on screen where the scroll occurs.</p>",
         "MouseScrollArguments$y": "<p>The Y coordinate on screen where the scroll occurs.</p>",
+        "PaymentSession$expiryTimeInMinutes": "<p>The session expiry time in minutes.</p>",
+        "PaymentSessionSummary$expiryTimeInMinutes": "<p>The session expiry time in minutes.</p>",
+        "RootCauseCluster$clusterId": "<p>The unique identifier of the root cause cluster.</p>",
+        "RootCauseCluster$affectedSessionCount": "<p>The number of sessions affected by this root cause.</p>",
+        "TokenBalance$decimals": "<p>Number of decimal places for the token (e.g., 6 for USDC).</p>",
         "TokenUsage$inputTokens": "<p> The number of tokens consumed for input processing during the evaluation. Includes tokens from the evaluation prompt, agent traces, and any additional context provided to the evaluator model. </p>",
         "TokenUsage$outputTokens": "<p> The number of tokens generated by the evaluator model in its response. Includes tokens for the score, explanation, and any additional output produced during the evaluation process. </p>",
         "TokenUsage$totalTokens": "<p> The total number of tokens consumed during the evaluation, calculated as the sum of input and output tokens. Used for cost calculation and rate limiting within the service limits. </p>",
         "ToolResultStructuredContent$exitCode": "<p>The exit code from the tool execution.</p>",
+        "UserIntentCluster$clusterId": "<p>The unique identifier of the user intent cluster.</p>",
+        "UserIntentCluster$affectedSessionCount": "<p>The number of sessions with this user intent.</p>",
         "VariantResult$sampleSize": "<p>The number of sessions evaluated for this variant.</p>"
       }
     },
@@ -2106,6 +2534,12 @@
       "base": null,
       "refs": {}
     },
+    "InvokeHarnessRequestRuntimeSessionIdString": {
+      "base": null,
+      "refs": {
+        "InvokeHarnessRequest$runtimeSessionId": "<p>The session ID for the invocation. Use the same session ID across requests to continue a conversation.</p>"
+      }
+    },
     "InvokeHarnessResponse": {
       "base": null,
       "refs": {}
@@ -2114,6 +2548,12 @@
       "base": "<p>The streaming events returned by a harness invocation.</p>",
       "refs": {
         "InvokeHarnessResponse$stream": "<p>The streaming output from the harness invocation.</p>"
+      }
+    },
+    "JwtKeyId": {
+      "base": "<p>JWT Key ID (kid) from the JWT header.</p>",
+      "refs": {
+        "LinkedAccountDeveloperJwt$kid": "<p>The key ID (kid) from the JWT header. Identifies which key was used to sign the JWT.</p>"
       }
     },
     "KeyList": {
@@ -2170,6 +2610,17 @@
         "BrowserActionResult$keyType": "<p>The result of a key type action.</p>"
       }
     },
+    "KmsKeyArn": {
+      "base": null,
+      "refs": {
+        "BatchEvaluationSummary$kmsKeyArn": "<p>The ARN of the KMS key used to encrypt evaluation data.</p>",
+        "GetBatchEvaluationResponse$kmsKeyArn": "<p>The ARN of the KMS key used to encrypt evaluation data.</p>",
+        "GetRecommendationResponse$kmsKeyArn": "<p>The ARN of the KMS key used to encrypt recommendation data.</p>",
+        "StartBatchEvaluationRequest$kmsKeyArn": "<p>The ARN of the KMS key used to encrypt evaluation data. If provided, customer data is encrypted at rest with the specified key.</p>",
+        "StartBatchEvaluationResponse$kmsKeyArn": "<p>The ARN of the KMS key used to encrypt evaluation data.</p>",
+        "StartRecommendationRequest$kmsKeyArn": "<p>The ARN of the KMS key used to encrypt recommendation data. If provided, customer data is encrypted at rest with the specified key.</p>"
+      }
+    },
     "LanguageRuntime": {
       "base": null,
       "refs": {
@@ -2180,6 +2631,48 @@
       "base": "<p>Left expression of the event metadata filter.</p>",
       "refs": {
         "EventMetadataFilterExpression$left": "<p>Left operand of the event metadata filter expression.</p>"
+      }
+    },
+    "LinkedAccount": {
+      "base": "<p>Represents different linked accounts that can be linked to an embedded wallet. Supports email, SMS, JWT, and OAuth2 approaches.</p>",
+      "refs": {
+        "LinkedAccountList$member": null
+      }
+    },
+    "LinkedAccountDeveloperJwt": {
+      "base": "<p>Authentication method using JWT with key ID and subject claims.</p>",
+      "refs": {
+        "LinkedAccount$developerJwt": "<p>Developer JWT linked account with key ID and subject.</p>"
+      }
+    },
+    "LinkedAccountDeveloperJwtSubString": {
+      "base": null,
+      "refs": {
+        "LinkedAccountDeveloperJwt$sub": "<p>The subject (sub) claim from the JWT payload. Identifies the principal that is the subject of the JWT.</p>"
+      }
+    },
+    "LinkedAccountEmail": {
+      "base": "<p>Linked account using an email address.</p>",
+      "refs": {
+        "LinkedAccount$email": "<p>Email-based linked account.</p>"
+      }
+    },
+    "LinkedAccountList": {
+      "base": "<p>A list of linkedAccount methods linked to an embedded wallet.</p>",
+      "refs": {
+        "EmbeddedCryptoWallet$linkedAccounts": "<p>List of linked accounts linked to this wallet. Each represents a way the end user can authenticate to this wallet.</p>"
+      }
+    },
+    "LinkedAccountOAuth2": {
+      "base": "<p>Authentication method using OAuth2 providers. Supports Google, Apple, X, Telegram, and GitHub providers.</p>",
+      "refs": {
+        "LinkedAccount$oAuth2": "<p>OAuth2 provider linked account (Google, Apple, X, Telegram, GitHub).</p>"
+      }
+    },
+    "LinkedAccountSms": {
+      "base": "<p>Linked account using a phone number in E.164 format.</p>",
+      "refs": {
+        "LinkedAccount$sms": "<p>SMS-based linked account using phone number.</p>"
       }
     },
     "ListABTestsRequest": {
@@ -2264,6 +2757,22 @@
       "base": null,
       "refs": {}
     },
+    "ListPaymentInstrumentsRequest": {
+      "base": "<p>Request structure for listing payment instruments.</p>",
+      "refs": {}
+    },
+    "ListPaymentInstrumentsResponse": {
+      "base": "<p>Response structure for listing payment instruments.</p>",
+      "refs": {}
+    },
+    "ListPaymentSessionsRequest": {
+      "base": "<p>Request structure for listing payment sessions.</p>",
+      "refs": {}
+    },
+    "ListPaymentSessionsResponse": {
+      "base": "<p>Response structure for listing payment sessions.</p>",
+      "refs": {}
+    },
     "ListRecommendationsRequest": {
       "base": null,
       "refs": {}
@@ -2296,7 +2805,8 @@
       "base": null,
       "refs": {
         "ContentBlock$size": "<p>The size of the content in bytes.</p>",
-        "HarnessStreamMetrics$latencyMs": "<p>The end-to-end latency of the invocation in milliseconds.</p>"
+        "HarnessStreamMetrics$latencyMs": "<p>The end-to-end latency of the invocation in milliseconds.</p>",
+        "StripePrivyTokenResponseOutput$requestExpiry": "<p>Unix timestamp in milliseconds when the authorization signature expires.</p>"
       }
     },
     "MaxLenString": {
@@ -2329,6 +2839,7 @@
       "refs": {
         "HarnessBedrockModelConfig$maxTokens": "<p>The maximum number of tokens to allow in the generated response per iteration.</p>",
         "HarnessGeminiModelConfig$maxTokens": "<p>The maximum number of tokens to allow in the generated response per iteration.</p>",
+        "HarnessLiteLlmModelConfig$maxTokens": "<p>The maximum number of tokens to allow in the generated response per iteration.</p>",
         "HarnessOpenAiModelConfig$maxTokens": "<p>The maximum number of tokens to allow in the generated response per iteration.</p>"
       }
     },
@@ -2351,6 +2862,12 @@
       "base": null,
       "refs": {
         "MemoryContent$text": "<p>The text content of the memory record.</p>"
+      }
+    },
+    "MemoryDocument": {
+      "base": null,
+      "refs": {
+        "PayloadType$blob": "<p>The binary content of the payload.</p>"
       }
     },
     "MemoryId": {
@@ -2584,6 +3101,7 @@
       "refs": {
         "HarnessBedrockModelConfig$modelId": "<p>The Bedrock model ID.</p>",
         "HarnessGeminiModelConfig$modelId": "<p>The Gemini model ID.</p>",
+        "HarnessLiteLlmModelConfig$modelId": "<p>The LiteLLM model identifier (e.g., \"anthropic/claude-3-sonnet\").</p>",
         "HarnessOpenAiModelConfig$modelId": "<p>The OpenAI model ID.</p>"
       }
     },
@@ -2674,11 +3192,11 @@
     "Namespace": {
       "base": null,
       "refs": {
-        "ListMemoryRecordsInput$namespace": "<p>The namespace prefix to filter memory records by. Returns all memory records in namespaces that start with the provided prefix.</p>",
-        "ListMemoryRecordsInput$namespacePath": "<p>Use namespacePath for hierarchical retrievals. Return all memory records where namespace falls under the same parent hierarchy.</p>",
+        "ListMemoryRecordsInput$namespace": "<p>The namespace prefix to filter memory records by. Returns all memory records in namespaces that start with the provided prefix. Either <code>namespace</code> or <code>namespacePath</code> is required.</p>",
+        "ListMemoryRecordsInput$namespacePath": "<p>Use namespacePath for hierarchical retrievals. Return all memory records where namespace falls under the same parent hierarchy. Either <code>namespace</code> or <code>namespacePath</code> is required.</p>",
         "NamespacesList$member": null,
-        "RetrieveMemoryRecordsInput$namespace": "<p>The namespace prefix to filter memory records by. Searches for memory records in namespaces that start with the provided prefix.</p>",
-        "RetrieveMemoryRecordsInput$namespacePath": "<p>Use namespacePath for hierarchical retrievals. Return all memory records where namespace falls under the same parent hierarchy.</p>"
+        "RetrieveMemoryRecordsInput$namespace": "<p>The namespace prefix to filter memory records by. Searches for memory records in namespaces that start with the provided prefix. Either <code>namespace</code> or <code>namespacePath</code> is required.</p>",
+        "RetrieveMemoryRecordsInput$namespacePath": "<p>Use namespacePath for hierarchical retrievals. Return all memory records where namespace falls under the same parent hierarchy. Either <code>namespace</code> or <code>namespacePath</code> is required.</p>"
       }
     },
     "NamespacesList": {
@@ -2697,6 +3215,9 @@
         "ListBrowserSessionsResponse$nextToken": "<p>The token to use in a subsequent <code>ListBrowserSessions</code> request to get the next set of results.</p>",
         "ListCodeInterpreterSessionsRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results. If not specified, Amazon Bedrock AgentCore returns the first page of results.</p>",
         "ListCodeInterpreterSessionsResponse$nextToken": "<p>The token to use in a subsequent <code>ListCodeInterpreterSessions</code> request to get the next set of results.</p>",
+        "ListPaymentInstrumentsRequest$nextToken": "<p>Token for pagination to retrieve the next set of results.</p>",
+        "ListPaymentSessionsRequest$nextToken": "<p>Token for pagination to retrieve the next set of results.</p>",
+        "ListPaymentSessionsResponse$nextToken": "<p>Token for pagination to retrieve the next set of results.</p>",
         "ListRecommendationsRequest$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results.</p>",
         "ListRecommendationsResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>"
       }
@@ -2713,6 +3234,34 @@
         "ServiceQuotaExceededException$message": null,
         "ThrottlingException$message": null,
         "UnauthorizedException$message": null
+      }
+    },
+    "OAuth2Authentication": {
+      "base": "<p>OAuth2 authentication information for third-party providers.</p>",
+      "refs": {
+        "LinkedAccountOAuth2$google": "<p>Google OAuth2 authentication.</p>",
+        "LinkedAccountOAuth2$apple": "<p>Apple OAuth2 authentication.</p>",
+        "LinkedAccountOAuth2$x": "<p>X (formerly Twitter) OAuth2 authentication.</p>",
+        "LinkedAccountOAuth2$telegram": "<p>Telegram OAuth2 authentication.</p>",
+        "LinkedAccountOAuth2$github": "<p>GitHub OAuth2 authentication.</p>"
+      }
+    },
+    "OAuth2AuthenticationNameString": {
+      "base": null,
+      "refs": {
+        "OAuth2Authentication$name": "<p>The user's name from the OAuth2 provider.</p>"
+      }
+    },
+    "OAuth2AuthenticationSubString": {
+      "base": null,
+      "refs": {
+        "OAuth2Authentication$sub": "<p>The subject (sub) claim from the OAuth2 provider. Uniquely identifies the user at the provider.</p>"
+      }
+    },
+    "OAuth2AuthenticationUsernameString": {
+      "base": null,
+      "refs": {
+        "OAuth2Authentication$username": "<p>The username from the OAuth2 provider.</p>"
       }
     },
     "OAuthCredentialProvider": {
@@ -2779,7 +3328,14 @@
       "base": null,
       "refs": {
         "ABTestEvaluationConfig$onlineEvaluationConfigArn": "<p>The Amazon Resource Name (ARN) of a single online evaluation configuration to use for both variants.</p>",
+        "OnlineEvaluationConfigSource$onlineEvaluationConfigArn": "<p>The Amazon Resource Name (ARN) of the online evaluation configuration to use as the session source.</p>",
         "PerVariantOnlineEvaluationConfig$onlineEvaluationConfigArn": "<p>The Amazon Resource Name (ARN) of the online evaluation configuration for this variant.</p>"
+      }
+    },
+    "OnlineEvaluationConfigSource": {
+      "base": "<p>A reference to an existing online evaluation configuration to use as the data source for batch evaluation.</p>",
+      "refs": {
+        "DataSourceConfig$onlineEvaluationConfigSource": "<p>Reference an existing OnlineEvaluationConfig as session source</p>"
       }
     },
     "OperatorType": {
@@ -2789,7 +3345,7 @@
       }
     },
     "OutputConfig": {
-      "base": "<p>Output destination configuration</p>",
+      "base": "<p>Output destination configuration.</p>",
       "refs": {
         "GetBatchEvaluationResponse$outputConfig": "<p>The output configuration specifying where evaluation results are written.</p>",
         "StartBatchEvaluationResponse$outputConfig": "<p>The output configuration specifying where evaluation results are written.</p>"
@@ -2831,6 +3387,204 @@
         "Event$payload": "<p>The content payload of the event.</p>"
       }
     },
+    "PaymentAgentName": {
+      "base": "<p>The agent name associated with the payment request.</p>",
+      "refs": {
+        "CreatePaymentInstrumentRequest$agentName": "<p>The agent name associated with this request, used for observability.</p>",
+        "CreatePaymentSessionRequest$agentName": "<p>The agent name associated with this request, used for observability.</p>",
+        "GetPaymentInstrumentBalanceRequest$agentName": "<p>The agent name associated with this request, used for observability.</p>",
+        "GetPaymentInstrumentRequest$agentName": "<p>The agent name associated with this request, used for observability.</p>",
+        "GetPaymentSessionRequest$agentName": "<p>The agent name associated with this request, used for observability.</p>",
+        "ListPaymentInstrumentsRequest$agentName": "<p>The agent name associated with this request, used for observability.</p>",
+        "ListPaymentSessionsRequest$agentName": "<p>The agent name associated with this request, used for observability.</p>",
+        "ProcessPaymentRequest$agentName": "<p>The agent name associated with this request, used for observability.</p>"
+      }
+    },
+    "PaymentConnectorId": {
+      "base": null,
+      "refs": {
+        "CreatePaymentInstrumentRequest$paymentConnectorId": "<p>The ID of the payment connector to use for this instrument.</p>",
+        "DeletePaymentInstrumentRequest$paymentConnectorId": "<p>The payment connector ID. Must match the instrument's paymentConnectorId.</p>",
+        "GetPaymentInstrumentBalanceRequest$paymentConnectorId": "<p>The ID of the payment connector associated with this instrument.</p>",
+        "GetPaymentInstrumentRequest$paymentConnectorId": "<p>The ID of the payment connector.</p>",
+        "ListPaymentInstrumentsRequest$paymentConnectorId": "<p>The ID of the payment connector to filter by.</p>",
+        "PaymentInstrument$paymentConnectorId": "<p>The ID of the payment connector associated with this instrument.</p>",
+        "PaymentInstrumentSummary$paymentConnectorId": "<p>The ID of the payment connector associated with this instrument.</p>"
+      }
+    },
+    "PaymentDocument": {
+      "base": "<p>Custom document type for payment payloads.</p>",
+      "refs": {
+        "CryptoX402PaymentInput$payload": "<p>The X402 payment payload.</p>",
+        "CryptoX402PaymentOutput$payload": "<p>The X402 payment response payload.</p>"
+      }
+    },
+    "PaymentHttpMethodType": {
+      "base": null,
+      "refs": {
+        "CoinbaseCdpTokenRequestInput$requestMethod": "<p>The HTTP method for the payment API request.</p>"
+      }
+    },
+    "PaymentInput": {
+      "base": "<p>The payment input details, which vary by payment type.</p>",
+      "refs": {
+        "ProcessPaymentRequest$paymentInput": "<p>The payment input details specific to the payment type.</p>"
+      }
+    },
+    "PaymentInstrument": {
+      "base": "<p>Represents a payment instrument.</p>",
+      "refs": {
+        "CreatePaymentInstrumentResponse$paymentInstrument": "<p>The created payment instrument.</p>",
+        "GetPaymentInstrumentResponse$paymentInstrument": "<p>The payment instrument details.</p>"
+      }
+    },
+    "PaymentInstrumentDetails": {
+      "base": "<p>Details specific to the instrument type.</p>",
+      "refs": {
+        "CreatePaymentInstrumentRequest$paymentInstrumentDetails": "<p>The details of the payment instrument.</p>",
+        "PaymentInstrument$paymentInstrumentDetails": "<p>The details specific to the payment instrument type.</p>"
+      }
+    },
+    "PaymentInstrumentId": {
+      "base": null,
+      "refs": {
+        "DeletePaymentInstrumentRequest$paymentInstrumentId": "<p>The payment instrument ID to delete.</p>",
+        "GetPaymentInstrumentBalanceRequest$paymentInstrumentId": "<p>The ID of the payment instrument to query balance for.</p>",
+        "GetPaymentInstrumentBalanceResponse$paymentInstrumentId": "<p>The ID of the payment instrument.</p>",
+        "GetPaymentInstrumentRequest$paymentInstrumentId": "<p>The ID of the payment instrument to retrieve.</p>",
+        "PaymentInstrument$paymentInstrumentId": "<p>The unique identifier for this payment instrument.</p>",
+        "PaymentInstrumentSummary$paymentInstrumentId": "<p>The unique identifier for this payment instrument.</p>",
+        "ProcessPaymentRequest$paymentInstrumentId": "<p>The ID of the payment instrument to use.</p>",
+        "ProcessPaymentResponse$paymentInstrumentId": "<p>The ID of the payment instrument used.</p>"
+      }
+    },
+    "PaymentInstrumentStatus": {
+      "base": "<p>The status of a payment instrument.</p>",
+      "refs": {
+        "DeletePaymentInstrumentResponse$status": "<p>The status of the instrument after deletion. Always DELETED for successful soft delete.</p>",
+        "PaymentInstrument$status": "<p>The current status of this payment instrument.</p>",
+        "PaymentInstrumentSummary$status": "<p>The current status of this payment instrument.</p>"
+      }
+    },
+    "PaymentInstrumentSummary": {
+      "base": "<p>Summary of a payment instrument for list operations.</p>",
+      "refs": {
+        "PaymentInstrumentSummaryList$member": null
+      }
+    },
+    "PaymentInstrumentSummaryList": {
+      "base": null,
+      "refs": {
+        "ListPaymentInstrumentsResponse$paymentInstruments": "<p>List of payment instrument summaries matching the request criteria.</p>"
+      }
+    },
+    "PaymentInstrumentType": {
+      "base": "<p>The type of payment instrument.</p>",
+      "refs": {
+        "CreatePaymentInstrumentRequest$paymentInstrumentType": "<p>The type of payment instrument being created.</p>",
+        "PaymentInstrument$paymentInstrumentType": "<p>The type of payment instrument (e.g., EMBEDDED_CRYPTO_WALLET).</p>",
+        "PaymentInstrumentSummary$paymentInstrumentType": "<p>The type of payment instrument (e.g., EMBEDDED_CRYPTO_WALLET).</p>"
+      }
+    },
+    "PaymentManagerArn": {
+      "base": null,
+      "refs": {
+        "CreatePaymentInstrumentRequest$paymentManagerArn": "<p>The ARN of the payment manager that owns this payment instrument.</p>",
+        "CreatePaymentSessionRequest$paymentManagerArn": "<p>The ARN of the payment manager that owns this session.</p>",
+        "DeletePaymentInstrumentRequest$paymentManagerArn": "<p>The payment manager ARN. Must match the instrument's paymentManagerArn.</p>",
+        "DeletePaymentSessionRequest$paymentManagerArn": "<p>The payment manager ARN. Must match the session's paymentManagerArn.</p>",
+        "GetPaymentInstrumentBalanceRequest$paymentManagerArn": "<p>The ARN of the payment manager that owns this payment instrument.</p>",
+        "GetPaymentInstrumentRequest$paymentManagerArn": "<p>The ARN of the payment manager that owns this payment instrument.</p>",
+        "GetPaymentSessionRequest$paymentManagerArn": "<p>The ARN of the payment manager that owns this session.</p>",
+        "ListPaymentInstrumentsRequest$paymentManagerArn": "<p>The ARN of the payment manager that owns the payment instruments.</p>",
+        "ListPaymentSessionsRequest$paymentManagerArn": "<p>The ARN of the payment manager that owns the sessions.</p>",
+        "PaymentInstrument$paymentManagerArn": "<p>The ARN of the payment manager that owns this payment instrument.</p>",
+        "PaymentInstrumentSummary$paymentManagerArn": "<p>The ARN of the payment manager that owns this payment instrument.</p>",
+        "PaymentSession$paymentManagerArn": "<p>The ARN of the payment manager that owns this session.</p>",
+        "PaymentSessionSummary$paymentManagerArn": "<p>The ARN of the payment manager that owns this session.</p>",
+        "ProcessPaymentRequest$paymentManagerArn": "<p>The ARN of the payment manager.</p>",
+        "ProcessPaymentResponse$paymentManagerArn": "<p>The ARN of the payment manager.</p>"
+      }
+    },
+    "PaymentOutput": {
+      "base": "<p>The payment output details, which vary by payment type.</p>",
+      "refs": {
+        "ProcessPaymentResponse$paymentOutput": "<p>The payment output details specific to the payment type.</p>"
+      }
+    },
+    "PaymentRequestHostType": {
+      "base": null,
+      "refs": {
+        "CoinbaseCdpTokenRequestInput$requestHost": "<p>The host for the payment API request. Defaults to \"api.cdp.coinbase.com\".</p>"
+      }
+    },
+    "PaymentRequestPathType": {
+      "base": null,
+      "refs": {
+        "CoinbaseCdpTokenRequestInput$requestPath": "<p>The path of the payment API request.</p>"
+      }
+    },
+    "PaymentSession": {
+      "base": "<p>A payment session for managing payment transactions.</p>",
+      "refs": {
+        "CreatePaymentSessionResponse$paymentSession": "<p>The created payment session.</p>",
+        "GetPaymentSessionResponse$paymentSession": "<p>The payment session details.</p>"
+      }
+    },
+    "PaymentSessionId": {
+      "base": null,
+      "refs": {
+        "DeletePaymentSessionRequest$paymentSessionId": "<p>The payment session ID to delete.</p>",
+        "GetPaymentSessionRequest$paymentSessionId": "<p>The ID of the payment session to retrieve.</p>",
+        "PaymentSession$paymentSessionId": "<p>The unique identifier of the payment session.</p>",
+        "PaymentSessionSummary$paymentSessionId": "<p>The unique identifier of the payment session.</p>",
+        "ProcessPaymentRequest$paymentSessionId": "<p>The ID of the payment session.</p>",
+        "ProcessPaymentResponse$paymentSessionId": "<p>The ID of the payment session used.</p>"
+      }
+    },
+    "PaymentSessionStatus": {
+      "base": "<p>The status of a payment session.</p>",
+      "refs": {
+        "DeletePaymentSessionResponse$status": "<p>The status of the deletion. Always DELETED for successful hard delete.</p>"
+      }
+    },
+    "PaymentSessionSummary": {
+      "base": "<p>Summary information about a payment session.</p>",
+      "refs": {
+        "PaymentSessionSummaryList$member": null
+      }
+    },
+    "PaymentSessionSummaryList": {
+      "base": null,
+      "refs": {
+        "ListPaymentSessionsResponse$paymentSessions": "<p>List of payment session summaries matching the request criteria.</p>"
+      }
+    },
+    "PaymentStatus": {
+      "base": "<p>Transaction status enum.</p>",
+      "refs": {
+        "ProcessPaymentResponse$status": "<p>The status of the payment.</p>"
+      }
+    },
+    "PaymentTokenRequestInput": {
+      "base": "<p>Vendor-specific token request configuration.</p>",
+      "refs": {
+        "GetResourcePaymentTokenRequest$paymentTokenRequest": "<p>Vendor-specific token request input. Contains all request parameters in a type-safe, vendor-specific structure.</p>"
+      }
+    },
+    "PaymentTokenResponseOutput": {
+      "base": "<p>Vendor-specific token response configuration.</p>",
+      "refs": {
+        "GetResourcePaymentTokenResponse$paymentTokenResponse": "<p>Vendor-specific token response output. Contains all response data in a type-safe, vendor-specific structure.</p>"
+      }
+    },
+    "PaymentType": {
+      "base": "<p>Payment type enum.</p>",
+      "refs": {
+        "ProcessPaymentRequest$paymentType": "<p>The type of payment to process.</p>",
+        "ProcessPaymentResponse$paymentType": "<p>The type of payment processed.</p>"
+      }
+    },
     "PerVariantOnlineEvaluationConfig": {
       "base": "<p>An online evaluation configuration associated with a specific A/B test variant.</p>",
       "refs": {
@@ -2842,6 +3596,26 @@
       "refs": {
         "ABTestEvaluationConfig$perVariantOnlineEvaluationConfig": "<p>Per-variant online evaluation configurations, allowing different evaluation settings for each variant.</p>"
       }
+    },
+    "PhoneNumber": {
+      "base": "<p>Phone number in E.164 format (e.g., +1234567890).</p>",
+      "refs": {
+        "LinkedAccountSms$phoneNumber": "<p>The phone number in E.164 format (e.g., +1234567890).</p>"
+      }
+    },
+    "ProcessPaymentId": {
+      "base": null,
+      "refs": {
+        "ProcessPaymentResponse$processPaymentId": "<p>The unique identifier of the processed payment.</p>"
+      }
+    },
+    "ProcessPaymentRequest": {
+      "base": "<p>Request structure for processing a payment.</p>",
+      "refs": {}
+    },
+    "ProcessPaymentResponse": {
+      "base": "<p>Response structure for processing a payment.</p>",
+      "refs": {}
     },
     "ProgrammingLanguage": {
       "base": null,
@@ -2937,6 +3711,13 @@
         "RecommendationEvaluationConfigEvaluatorsList$member": null
       }
     },
+    "RecommendationExplanation": {
+      "base": null,
+      "refs": {
+        "SystemPromptRecommendationResult$explanation": "<p>An explanation of why the recommendation was generated and what patterns were identified in the agent traces.</p>",
+        "ToolDescriptionOutput$explanation": "<p>An explanation of why the recommendation was generated for this tool and what patterns were identified in the agent traces.</p>"
+      }
+    },
     "RecommendationId": {
       "base": null,
       "refs": {
@@ -2971,7 +3752,7 @@
       }
     },
     "RecommendationStatus": {
-      "base": null,
+      "base": "<p>The lifecycle status of a recommendation.</p>",
       "refs": {
         "DeleteRecommendationResponse$status": "<p>The status of the recommendation deletion operation.</p>",
         "GetRecommendationResponse$status": "<p>The current status of the recommendation.</p>",
@@ -3001,7 +3782,7 @@
       }
     },
     "RecommendationType": {
-      "base": null,
+      "base": "<p>The type of recommendation to generate.</p>",
       "refs": {
         "GetRecommendationResponse$type": "<p>The type of recommendation.</p>",
         "RecommendationSummary$type": "<p>The type of recommendation.</p>",
@@ -3166,11 +3947,23 @@
         "UpdateABTestRequest$roleArn": "<p>The updated IAM role ARN.</p>"
       }
     },
+    "RootCauseCluster": {
+      "base": "<p>A cluster of similar root causes identified within a failure subcategory.</p>",
+      "refs": {
+        "RootCauseClusterList$member": null
+      }
+    },
+    "RootCauseClusterList": {
+      "base": null,
+      "refs": {
+        "FailureSubCategoryCluster$rootCauses": "<p>The list of root cause clusters identified within this subcategory.</p>"
+      }
+    },
     "RuntimeClientError": {
       "base": "<p>The exception that occurs when there is an error in the runtime client. This can happen due to network issues, invalid configuration, or other client-side problems. Check the error message for specific details about the error.</p>",
       "refs": {
         "InvokeAgentRuntimeCommandStreamOutput$runtimeClientError": null,
-        "InvokeHarnessStreamOutput$runtimeClientError": null
+        "InvokeHarnessStreamOutput$runtimeClientError": "<p>An error returned by the runtime container during agent execution.</p>"
       }
     },
     "S3Location": {
@@ -3371,7 +4164,8 @@
     "SessionFilterConfig": {
       "base": "<p>A time range filter for selecting sessions. Specifies the start and end times to narrow down which sessions are included.</p>",
       "refs": {
-        "CloudWatchFilterConfig$timeRange": "<p>The time range filter for selecting sessions to evaluate.</p>"
+        "CloudWatchFilterConfig$timeRange": "<p>The time range filter for selecting sessions to evaluate.</p>",
+        "OnlineEvaluationConfigSource$timeRange": "<p>Optional session filter configuration to narrow down which sessions from the online evaluation configuration to include.</p>"
       }
     },
     "SessionId": {
@@ -3385,10 +4179,16 @@
         "InvokeAgentRuntimeCommandResponse$runtimeSessionId": "<p>The unique identifier of the runtime session in which the command was executed.</p>",
         "InvokeAgentRuntimeResponse$runtimeSessionId": "<p>The identifier of the runtime session.</p>",
         "InvokeAgentRuntimeResponse$mcpSessionId": "<p>The identifier of the MCP session.</p>",
-        "InvokeHarnessRequest$runtimeSessionId": "<p>The session ID for the invocation. Use the same session ID across requests to continue a conversation.</p>",
         "ListEventsInput$sessionId": "<p>The identifier of the session for which to list events.</p>",
         "SessionSummary$sessionId": "<p>The unique identifier of the session.</p>",
         "StopRuntimeSessionResponse$runtimeSessionId": "<p>The ID of the session that you requested to stop.</p>"
+      }
+    },
+    "SessionLimits": {
+      "base": "<p>The spending limits configuration for a payment session.</p>",
+      "refs": {
+        "CreatePaymentSessionRequest$limits": "<p>The spending limits for this payment session.</p>",
+        "PaymentSession$limits": "<p>The spending limits for the payment session.</p>"
       }
     },
     "SessionMetadataList": {
@@ -3481,6 +4281,12 @@
       "base": null,
       "refs": {
         "StartBatchEvaluationRequest$evaluators": "<p>The list of evaluators to apply during the batch evaluation. Can include both built-in evaluators and custom evaluators. Maximum of 10 evaluators.</p>"
+      }
+    },
+    "StartBatchEvaluationRequestInsightsList": {
+      "base": null,
+      "refs": {
+        "StartBatchEvaluationRequest$insights": "<p>The list of insight analyses to run against sessions during the batch evaluation. Maximum of 10 insights.</p>"
       }
     },
     "StartBatchEvaluationResponse": {
@@ -3614,6 +4420,11 @@
     "String": {
       "base": null,
       "refs": {
+        "AffectedSession$sessionId": "<p>The unique identifier of the affected session.</p>",
+        "AffectedSession$explanation": "<p>An explanation of how the failure manifested in this session.</p>",
+        "AffectedSession$fixType": "<p>The type of fix recommended for this failure.</p>",
+        "AffectedSession$recommendation": "<p>The specific fix recommendation for this session.</p>",
+        "Amount$value": "<p>The numeric value of the amount.</p>",
         "BatchCreateMemoryRecordsInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotent processing of the batch request.</p>",
         "BrowserSessionSummary$browserIdentifier": "<p>The unique identifier of the browser associated with the session. This identifier specifies which browser environment is used for the session.</p>",
         "CloudWatchFilterConfigSessionIdsList$member": null,
@@ -3633,9 +4444,17 @@
         "ContentDeltaEvent$stderr": "<p>The standard error content from the command execution. This field contains the incremental output written to stderr by the executing command.</p>",
         "ControlStats$variantName": "<p>The name of the control variant.</p>",
         "CreateEventInput$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, AgentCore ignores the request, but does not return an error.</p>",
+        "CryptoX402PaymentInput$version": "<p>The version of the X402 protocol.</p>",
+        "CryptoX402PaymentOutput$version": "<p>The version of the X402 protocol.</p>",
+        "EmbeddedCryptoWallet$walletAddress": "<p>The wallet address on the specified blockchain network.</p>",
         "EvaluationResultContent$label": "<p> The categorical label assigned by the evaluator when using a categorical rating scale. This provides a human-readable description of the evaluation result (e.g., \"Excellent\", \"Good\", \"Poor\") corresponding to the numerical value. For numerical scales, this field is optional and provides a natural language explanation of what the value means (e.g., value 0.5 = \"Somewhat Helpful\"). </p>",
         "EvaluatorMetric$evaluatorArn": "<p>The Amazon Resource Name (ARN) of the evaluator.</p>",
         "EvaluatorSummary$evaluatorId": "<p>The unique identifier of the evaluator.</p>",
+        "ExecutionSummaryAffectedSession$sessionId": "<p>The unique identifier of the session.</p>",
+        "ExecutionSummaryAffectedSession$approachTaken": "<p>The approach taken by the agent during this session.</p>",
+        "ExecutionSummaryAffectedSession$finalOutcome": "<p>The final outcome of the session.</p>",
+        "ExecutionSummaryCluster$name": "<p>The name of the execution pattern cluster.</p>",
+        "ExecutionSummaryCluster$description": "<p>A description of the execution pattern.</p>",
         "ExtractionJob$jobId": "<p>The unique identifier of the extraction job.</p>",
         "ExtractionJobFilterInput$strategyId": "<p>The memory strategy identifier to filter extraction jobs by. If specified, only extraction jobs with this strategy ID are returned.</p>",
         "ExtractionJobFilterInput$sessionId": "<p>The unique identifier of the session. If specified, only extraction jobs with this session ID are returned.</p>",
@@ -3645,6 +4464,12 @@
         "ExtractionJobMetadata$strategyId": "<p>The identifier of the memory strategy for this extraction job.</p>",
         "ExtractionJobMetadata$sessionId": "<p>The identifier of the session for this extraction job.</p>",
         "ExtractionJobMetadata$actorId": "<p>The identifier of the actor for this extraction job.</p>",
+        "FailureCategoryCluster$name": "<p>The name of the failure category.</p>",
+        "FailureCategoryCluster$description": "<p>A description of the failure category pattern.</p>",
+        "FailureSpanDetail$spanId": "<p>The unique identifier of the span where the failure occurred.</p>",
+        "FailureSpanDetail$traceId": "<p>The trace identifier associated with the failure span.</p>",
+        "FailureSubCategoryCluster$name": "<p>The name of the failure subcategory.</p>",
+        "FailureSubCategoryCluster$description": "<p>A description of the failure subcategory pattern.</p>",
         "GetABTestResponse$currentRunId": "<p>The identifier of the current run of the A/B test.</p>",
         "GetAgentCardRequest$agentRuntimeArn": "<p>The ARN of the AgentCore Runtime agent for which you want to get the A2A agent card.</p>",
         "GetAgentCardRequest$qualifier": "<p>Optional qualifier to specify an agent alias, such as <code>prod</code>code&gt; or <code>dev</code>. If you don't provide a value, the DEFAULT alias is used. </p>",
@@ -3657,8 +4482,11 @@
         "HarnessReasoningContentBlockDelta$signature": "<p>Signature for the reasoning content.</p>",
         "HarnessReasoningTextBlock$text": "<p>The reasoning text.</p>",
         "HarnessReasoningTextBlock$signature": "<p>Signature for verifying the reasoning content.</p>",
+        "HarnessSkillGitAuth$username": "<p>Username for authentication. Defaults to 'oauth2' if not specified.</p>",
+        "HarnessSkillGitSource$path": "<p>Subdirectory within the repository containing the skill.</p>",
         "HarnessToolUseBlock$serverName": "<p>The name of the MCP server providing this tool.</p>",
         "HarnessToolUseBlockStart$serverName": "<p>The name of the MCP server providing this tool.</p>",
+        "InsightsFailureSignal$evidence": "<p>The evidence supporting the failure detection.</p>",
         "InvalidInputException$message": null,
         "InvokeAgentRuntimeCommandRequest$agentRuntimeArn": "<p>The Amazon Resource Name (ARN) of the agent runtime on which to execute the command. This identifies the specific agent runtime environment where the command will run.</p>",
         "InvokeAgentRuntimeCommandRequest$qualifier": "<p>The qualifier to use for the agent runtime. This is an endpoint name that points to a specific version. If not specified, Amazon Bedrock AgentCore uses the default endpoint of the agent runtime.</p>",
@@ -3677,6 +4505,7 @@
         "InvokeAgentRuntimeResponse$contentType": "<p>The MIME type of the response data. This indicates how to interpret the response data. Common values include application/json for JSON data.</p>",
         "InvokeBrowserRequest$browserIdentifier": "<p>The unique identifier of the browser associated with the session. This must match the identifier used when creating the session with <code>StartBrowserSession</code>.</p>",
         "InvokeCodeInterpreterRequest$codeInterpreterIdentifier": "<p>The unique identifier of the code interpreter associated with the session. This must match the identifier used when creating the session with <code>StartCodeInterpreterSession</code>.</p>",
+        "InvokeHarnessRequest$runtimeUserId": "<p>An identifier for the end user making the request. This value is passed through to the runtime container.</p>",
         "InvokeHarnessRequest$actorId": "<p>The actor ID for memory operations. Overrides the actor ID configured on the harness.</p>",
         "KeyList$member": null,
         "KeyPressArguments$key": "<p>The key name to press (for example, <code>enter</code>, <code>tab</code>, <code>escape</code>).</p>",
@@ -3689,6 +4518,7 @@
         "ListBatchEvaluationsResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
         "ListBrowserSessionsRequest$browserIdentifier": "<p>The unique identifier of the browser to list sessions for. If specified, only sessions for this browser are returned. If not specified, sessions for all browsers are returned.</p>",
         "ListCodeInterpreterSessionsRequest$codeInterpreterIdentifier": "<p>The unique identifier of the code interpreter to list sessions for. If specified, only sessions for this code interpreter are returned. If not specified, sessions for all code interpreters are returned.</p>",
+        "ListPaymentInstrumentsResponse$nextToken": "<p>Token for pagination to retrieve the next set of results.</p>",
         "MemoryRecordOutput$errorMessage": "<p>A human-readable error message describing why the memory record operation failed.</p>",
         "MessageMetadata$eventId": "<p>The identifier of the event associated with this message.</p>",
         "MouseClickResult$error": "<p>The error message. Present only when the action failed.</p>",
@@ -3699,6 +4529,9 @@
         "ResourceContent$mimeType": "<p>The MIME type of the resource content.</p>",
         "ResourceContent$text": "<p>The text resource content.</p>",
         "RetryableConflictException$message": null,
+        "RootCauseCluster$name": "<p>The name of the root cause cluster.</p>",
+        "RootCauseCluster$rootCause": "<p>The root cause explanation for this cluster of failures.</p>",
+        "RootCauseCluster$recommendation": "<p>The recommended fix for this root cause.</p>",
         "SaveBrowserSessionProfileRequest$browserIdentifier": "<p>The unique identifier of the browser associated with the session from which to save the profile.</p>",
         "SaveBrowserSessionProfileResponse$browserIdentifier": "<p>The unique identifier of the browser associated with the session from which the profile was saved.</p>",
         "ScreenshotResult$error": "<p>The error message. Present only when the action failed.</p>",
@@ -3724,11 +4557,16 @@
         "StringMap$value": null,
         "SystemPromptConfigurationBundle$systemPromptJsonPath": "<p>The JSON path within the configuration bundle that contains the system prompt.</p>",
         "ThrottledException$message": null,
+        "TokenBalance$amount": "<p>Raw balance in the smallest denomination (e.g., USDC base units where 1 USDC = 1000000).</p>",
         "ToolResultStructuredContent$taskId": "<p>The identifier of the task that produced the result.</p>",
         "ToolResultStructuredContent$stdout": "<p>The standard output from the tool execution.</p>",
         "ToolResultStructuredContent$stderr": "<p>The standard error output from the tool execution.</p>",
         "UpdateBrowserStreamRequest$browserIdentifier": "<p>The identifier of the browser.</p>",
         "UpdateBrowserStreamResponse$browserIdentifier": "<p>The identifier of the browser.</p>",
+        "UserIntentAffectedSession$sessionId": "<p>The unique identifier of the session.</p>",
+        "UserIntentCluster$name": "<p>The name of the user intent cluster.</p>",
+        "UserIntentCluster$description": "<p>A description of the user intent pattern.</p>",
+        "UserIntentList$member": null,
         "ValidationException$message": null,
         "ValidationExceptionField$name": "<p>The name of the field.</p>",
         "ValidationExceptionField$message": "<p>A message describing why this field failed validation.</p>",
@@ -3771,6 +4609,54 @@
       "base": null,
       "refs": {
         "MemoryRecordMetadataValue$stringListValue": "<p>A list of string values.</p>"
+      }
+    },
+    "StripePrivyAppIdType": {
+      "base": null,
+      "refs": {
+        "StripePrivyTokenResponseOutput$appId": "<p>The Privy app ID for the privy-app-id header.</p>"
+      }
+    },
+    "StripePrivyAuthorizationSignatureType": {
+      "base": null,
+      "refs": {
+        "StripePrivyTokenResponseOutput$authorizationSignature": "<p>Base64-encoded ECDSA P-256 authorization signature (only present when includeAuthorizationSignature is true).</p>"
+      }
+    },
+    "StripePrivyBasicAuthTokenType": {
+      "base": null,
+      "refs": {
+        "StripePrivyTokenResponseOutput$basicAuthToken": "<p>Base64-encoded Basic Auth token (appId:appSecret) for the Authorization header.</p>"
+      }
+    },
+    "StripePrivyRequestBodyType": {
+      "base": null,
+      "refs": {
+        "StripePrivyTokenRequestInput$requestBody": "<p>Request body JSON for the Privy API call.</p>"
+      }
+    },
+    "StripePrivyRequestHostType": {
+      "base": null,
+      "refs": {
+        "StripePrivyTokenRequestInput$requestHost": "<p>The host for the Privy API request. Defaults to \"api.privy.io\".</p>"
+      }
+    },
+    "StripePrivyRequestPathType": {
+      "base": null,
+      "refs": {
+        "StripePrivyTokenRequestInput$requestPath": "<p>The path of the Stripe Privy API request.</p>"
+      }
+    },
+    "StripePrivyTokenRequestInput": {
+      "base": "<p>Stripe Privy token request parameters.</p>",
+      "refs": {
+        "PaymentTokenRequestInput$stripePrivyTokenRequest": "<p>The Stripe Privy token request.</p>"
+      }
+    },
+    "StripePrivyTokenResponseOutput": {
+      "base": "<p>Stripe Privy token response containing appId, basicAuthToken, and optionally authorizationSignature.</p>",
+      "refs": {
+        "PaymentTokenResponseOutput$stripePrivyTokenResponse": "<p>The Stripe Privy token response.</p>"
       }
     },
     "SyntheticTimestamp_date_time": {
@@ -3824,6 +4710,27 @@
         "SystemPromptRecommendationResult$recommendedSystemPrompt": "<p>The optimized system prompt text generated by the recommendation.</p>"
       }
     },
+    "TagKey": {
+      "base": null,
+      "refs": {
+        "TagsMap$key": null
+      }
+    },
+    "TagValue": {
+      "base": null,
+      "refs": {
+        "TagsMap$value": null
+      }
+    },
+    "TagsMap": {
+      "base": null,
+      "refs": {
+        "CreateABTestRequest$tags": "<p>A map of tag keys and values to associate with the A/B test.</p>",
+        "StartBatchEvaluationRequest$tags": "<p>A map of tag keys and values to associate with the batch evaluation.</p>",
+        "StartBatchEvaluationResponse$tags": "<p>The tags associated with the batch evaluation.</p>",
+        "StartRecommendationRequest$tags": "<p>A map of tag keys and values to associate with the recommendation.</p>"
+      }
+    },
     "TargetName": {
       "base": null,
       "refs": {
@@ -3853,6 +4760,7 @@
       "refs": {
         "HarnessBedrockModelConfig$temperature": "<p>The temperature to set when calling the model.</p>",
         "HarnessGeminiModelConfig$temperature": "<p>The temperature to set when calling the model.</p>",
+        "HarnessLiteLlmModelConfig$temperature": "<p>The temperature to set when calling the model.</p>",
         "HarnessOpenAiModelConfig$temperature": "<p>The temperature to set when calling the model.</p>"
       }
     },
@@ -3888,6 +4796,12 @@
         "MemoryRecordUpdateInput$timestamp": "<p>Time at which the memory record was updated</p>",
         "SessionSummary$createdAt": "<p>The timestamp when the session was created.</p>",
         "UpdateABTestResponse$updatedAt": "<p>The timestamp when the A/B test was updated.</p>"
+      }
+    },
+    "TokenBalance": {
+      "base": "<p>A single token balance entry.</p>",
+      "refs": {
+        "GetPaymentInstrumentBalanceResponse$tokenBalance": "<p>The balance of the supported token on the requested chain.</p>"
       }
     },
     "TokenUsage": {
@@ -3998,6 +4912,7 @@
       "refs": {
         "HarnessBedrockModelConfig$topP": "<p>The topP set when calling the model.</p>",
         "HarnessGeminiModelConfig$topP": "<p>The topP set when calling the model.</p>",
+        "HarnessLiteLlmModelConfig$topP": "<p>The topP set when calling the model.</p>",
         "HarnessOpenAiModelConfig$topP": "<p>The topP set when calling the model.</p>"
       }
     },
@@ -4040,6 +4955,25 @@
       "base": null,
       "refs": {}
     },
+    "UserId": {
+      "base": null,
+      "refs": {
+        "CreatePaymentInstrumentRequest$userId": "<p>The user ID associated with this payment instrument.</p>",
+        "CreatePaymentSessionRequest$userId": "<p>The user ID associated with this payment session.</p>",
+        "DeletePaymentInstrumentRequest$userId": "<p>The user ID making the delete request. Must match the instrument's userId.</p>",
+        "DeletePaymentSessionRequest$userId": "<p>The user ID making the delete request. Must match the session's userId.</p>",
+        "GetPaymentInstrumentBalanceRequest$userId": "<p>The user ID associated with this payment instrument.</p>",
+        "GetPaymentInstrumentRequest$userId": "<p>The user ID associated with this payment instrument.</p>",
+        "GetPaymentSessionRequest$userId": "<p>The user ID associated with this payment session.</p>",
+        "ListPaymentInstrumentsRequest$userId": "<p>The user ID associated with the payment instruments.</p>",
+        "ListPaymentSessionsRequest$userId": "<p>The user ID associated with the payment sessions.</p>",
+        "PaymentInstrument$userId": "<p>The user ID associated with this payment instrument.</p>",
+        "PaymentInstrumentSummary$userId": "<p>The user ID associated with this payment instrument.</p>",
+        "PaymentSession$userId": "<p>The user ID associated with this session.</p>",
+        "PaymentSessionSummary$userId": "<p>The user ID associated with this session.</p>",
+        "ProcessPaymentRequest$userId": "<p>The user ID associated with this payment.</p>"
+      }
+    },
     "UserIdType": {
       "base": null,
       "refs": {
@@ -4051,6 +4985,42 @@
       "base": "<p>The OAuth2.0 token or user ID that was used to generate the workload access token used for initiating the user authorization flow to retrieve OAuth2.0 tokens.</p>",
       "refs": {
         "CompleteResourceTokenAuthRequest$userIdentifier": "<p>The OAuth2.0 token or user ID that was used to generate the workload access token used for initiating the user authorization flow to retrieve OAuth2.0 tokens.</p>"
+      }
+    },
+    "UserIntentAffectedSession": {
+      "base": "<p>A session associated with a user intent cluster.</p>",
+      "refs": {
+        "UserIntentAffectedSessionList$member": null
+      }
+    },
+    "UserIntentAffectedSessionList": {
+      "base": null,
+      "refs": {
+        "UserIntentCluster$affectedSessions": "<p>The list of sessions with this user intent.</p>"
+      }
+    },
+    "UserIntentCluster": {
+      "base": "<p>A cluster of similar user intents identified across sessions.</p>",
+      "refs": {
+        "UserIntentClusterList$member": null
+      }
+    },
+    "UserIntentClusterList": {
+      "base": null,
+      "refs": {
+        "UserIntentClusteringResultContent$userIntents": "<p>The list of user intent clusters identified across analyzed sessions.</p>"
+      }
+    },
+    "UserIntentClusteringResultContent": {
+      "base": "<p>The user intent clustering result containing grouped user intents identified across evaluated sessions.</p>",
+      "refs": {
+        "GetBatchEvaluationResponse$userIntentResult": "<p>The user intent clustering results from insights, containing grouped user intents across evaluated sessions.</p>"
+      }
+    },
+    "UserIntentList": {
+      "base": null,
+      "refs": {
+        "UserIntentAffectedSession$userMessages": "<p>The user messages from this session that contributed to the intent cluster.</p>"
       }
     },
     "UserTokenType": {
@@ -4163,6 +5133,7 @@
       "refs": {
         "GetResourceApiKeyRequest$workloadIdentityToken": "<p>The identity token of the workload from which you want to retrieve the API key.</p>",
         "GetResourceOauth2TokenRequest$workloadIdentityToken": "<p>The identity token of the workload from which you want to retrieve the OAuth2 token.</p>",
+        "GetResourcePaymentTokenRequest$workloadIdentityToken": "<p>Workload access token for authorization.</p>",
         "GetWorkloadAccessTokenForJWTResponse$workloadAccessToken": "<p>An opaque token representing the identity of both the workload and the user.</p>",
         "GetWorkloadAccessTokenForUserIdResponse$workloadAccessToken": "<p>The access token for the specified workload.</p>",
         "GetWorkloadAccessTokenResponse$workloadAccessToken": "<p>An opaque token representing the identity of both the workload and the user.</p>"

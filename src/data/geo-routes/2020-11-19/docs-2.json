@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<p>With the Amazon Location Routes API you can calculate routes and estimate travel time based on up-to-date road network and live traffic information.</p> <p>Calculate optimal travel routes and estimate travel times using up-to-date road network and traffic data. Key features include:</p> <ul> <li> <p>Point-to-point routing with estimated travel time, distance, and turn-by-turn directions</p> </li> <li> <p>Multi-point route optimization to minimize travel time or distance</p> </li> <li> <p>Route matrices for efficient multi-destination planning</p> </li> <li> <p>Isoline calculations to determine reachable areas within specified time or distance thresholds</p> </li> <li> <p>Map-matching to align GPS traces with the road network</p> </li> </ul>",
+  "service": "<p>With the Routes API you can calculate routes and estimate travel time based on up-to-date road network and live traffic information. Key features include:</p> <ul> <li> <p>Point-to-point routing with estimated travel time, distance, and turn-by-turn directions. See <a href=\"https://docs.aws.amazon.com/location/latest/APIReference/API_CalculateRoutes.html\">CalculateRoutes</a>.</p> </li> <li> <p>Multi-point route optimization to minimize travel time or distance. See <a href=\"https://docs.aws.amazon.com/location/latest/APIReference/API_OptimizeWaypoints.html\">OptimizeWaypoints</a>.</p> </li> <li> <p>Route matrices for efficient multi-destination planning. See <a href=\"https://docs.aws.amazon.com/location/latest/APIReference/API_CalculateRouteMatrix.html\">CalculateRouteMatrix</a>.</p> </li> <li> <p>Isoline calculations to determine reachable areas within specified time or distance thresholds. See <a href=\"https://docs.aws.amazon.com/location/latest/APIReference/API_CalculateIsolines.html\">CalculateIsolines</a>.</p> </li> <li> <p>Map-matching to align GPS traces with the road network. See <a href=\"https://docs.aws.amazon.com/location/latest/APIReference/API_SnapToRoads.html\">SnapToRoads</a>.</p> </li> </ul>",
   "operations": {
     "CalculateIsolines": "<p>Calculates areas that can be reached within specified time or distance thresholds from a given point. For example, you can use this operation to determine the area within a 30-minute drive of a store location, find neighborhoods within walking distance of a school, or identify delivery zones based on drive time.</p> <p>Isolines (also known as isochrones for time-based calculations) are useful for various applications including:</p> <ul> <li> <p>Service area visualization - Show customers the area you can serve within promised delivery times</p> </li> <li> <p>Site selection - Analyze potential business locations based on population within travel distance</p> </li> <li> <p>Site selection - Determine areas that can be reached within specified response times</p> </li> </ul> <note> <p>Route preferences such as avoiding toll roads or ferries are treated as preferences rather than absolute restrictions. If a viable route cannot be calculated while honoring all preferences, some may be ignored.</p> </note> <p>For more information, see <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/calculate-isolines.html\">Calculate isolines</a> in the <i>Amazon Location Service Developer Guide</i>.</p>",
     "CalculateRouteMatrix": "<p> Use <code>CalculateRouteMatrix</code> to compute results for all pairs of Origins to Destinations. Each row corresponds to one entry in Origins. Each entry in the row corresponds to the route from that entry in Origins to an entry in Destinations positions.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/calculate-route-matrix.html\">Calculate route matrix</a> in the <i>Amazon Location Service Developer Guide</i>.</p>",
@@ -35,7 +35,7 @@
         "IsolineAvoidanceAreaGeometry$BoundingBox": "<p>A rectangular area defined by its southwest and northeast corners: <code>[min longitude, min latitude, max longitude, max latitude]</code>.</p>",
         "RouteAvoidanceAreaGeometry$BoundingBox": "<p>Geometry defined as a bounding box. The first pair represents the X and Y coordinates (longitude and latitude,) of the southwest corner of the bounding box; the second pair represents the X and Y coordinates (longitude and latitude) of the northeast corner.</p>",
         "RouteMatrixAvoidanceAreaGeometry$BoundingBox": "<p>Geometry defined as a bounding box. The first pair represents the X and Y coordinates (longitude and latitude,) of the southwest corner of the bounding box; the second pair represents the X and Y coordinates (longitude and latitude) of the northeast corner.</p>",
-        "RouteMatrixBoundaryGeometry$BoundingBox": "<p>Geometry defined as a bounding box. The first pair represents the X and Y coordinates (longitude and latitude,) of the southwest corner of the bounding box; the second pair represents the X and Y coordinates (longitude and latitude) of the northeast corner.</p>",
+        "RouteMatrixBoundaryGeometry$BoundingBox": "<p>Geometry defined as a bounding box. The first pair represents the X and Y coordinates (longitude and latitude,) of the southwest corner of the bounding box; the second pair represents the X and Y coordinates (longitude and latitude) of the northeast corner.</p> <p>Diagonal distance of the bounding box must be less than or equal to 400,000 meters.</p>",
         "WaypointOptimizationAvoidanceAreaGeometry$BoundingBox": "<p>Geometry defined as a bounding box. The first pair represents the X and Y coordinates (longitude and latitude,) of the southwest corner of the bounding box; the second pair represents the X and Y coordinates (longitude and latitude) of the northeast corner.</p>"
       }
     },
@@ -54,13 +54,13 @@
     "CalculateRouteMatrixRequestDestinationsList": {
       "base": null,
       "refs": {
-        "CalculateRouteMatrixRequest$Destinations": "<p>List of destinations for the route.</p> <note> <p>Route calculations are billed for each origin and destination pair. If you use a large matrix of origins and destinations, your costs will increase accordingly. For more information, see <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/routes-pricing.html\">Routes pricing</a> in the <i>Amazon Location Service Developer Guide</i>.</p> </note>"
+        "CalculateRouteMatrixRequest$Destinations": "<p>List of destinations for the route in World Geodetic System (WGS 84) format: [longitude, latitude].</p> <note> <p>Route calculations are billed for each origin and destination pair. If you use a large matrix of origins and destinations, your costs will increase accordingly. For more information, see <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/routes-pricing.html\">Routes pricing</a> in the <i>Amazon Location Service Developer Guide</i>.</p> </note> <p>The maximum number of destinations depends on the routing boundary configuration:</p> <ul> <li> <p>With <code>RoutingBoundary.Geometry</code> set: maximum 500 destinations</p> </li> <li> <p>With <code>RoutingBoundary.Unbounded</code> set to <code>true</code>: maximum 100 destinations</p> </li> <li> <p>For <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers in <code>ap-southeast-1</code> and <code>ap-southeast-5</code>: maximum 350 destinations</p> </li> </ul> <p>The total matrix size (origins × destinations) must not exceed:</p> <ul> <li> <p>With <code>RoutingBoundary.Geometry</code>: 160,000</p> </li> <li> <p>With <code>RoutingBoundary.Unbounded</code>: 100</p> </li> <li> <p>For <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers in <code>ap-southeast-1</code> and <code>ap-southeast-5</code>: 122,500</p> </li> </ul>"
       }
     },
     "CalculateRouteMatrixRequestOriginsList": {
       "base": null,
       "refs": {
-        "CalculateRouteMatrixRequest$Origins": "<p>The position for the origin in World Geodetic System (WGS 84) format: [longitude, latitude].</p> <note> <p>Route calculations are billed for each origin and destination pair. Using a large amount of Origins in a request can lead you to incur unexpected charges. For more information, see <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/routes-pricing.html\">Routes pricing</a> in the <i>Amazon Location Service Developer Guide</i>.</p> </note>"
+        "CalculateRouteMatrixRequest$Origins": "<p>List of origins for the route in World Geodetic System (WGS 84) format: [longitude, latitude].</p> <note> <p>Route calculations are billed for each origin and destination pair. Using a large amount of Origins in a request can lead you to incur unexpected charges. For more information, see <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/routes-pricing.html\">Routes pricing</a> in the <i>Amazon Location Service Developer Guide</i>.</p> </note> <p>The maximum number of origins depends on the routing boundary configuration:</p> <ul> <li> <p>With <code>RoutingBoundary.Geometry</code> set: maximum 500 origins</p> </li> <li> <p>With <code>RoutingBoundary.Unbounded</code> set to <code>true</code>: maximum 15 origins</p> </li> <li> <p>For <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers in <code>ap-southeast-1</code> and <code>ap-southeast-5</code>: maximum 350 origins</p> </li> </ul> <p>The total matrix size (origins × destinations) must not exceed:</p> <ul> <li> <p>With <code>RoutingBoundary.Geometry</code>: 160,000</p> </li> <li> <p>With <code>RoutingBoundary.Unbounded</code>: 100</p> </li> <li> <p>For <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers in <code>ap-southeast-1</code> and <code>ap-southeast-5</code>: 122,500</p> </li> </ul>"
       }
     },
     "CalculateRouteMatrixResponse": {
@@ -94,9 +94,9 @@
       "refs": {}
     },
     "Circle": {
-      "base": "<p>Geometry defined as a circle. When request routing boundary was set as <code>AutoCircle</code>, the response routing boundary will return <code>Circle</code> derived from the <code>AutoCircle</code> settings.</p>",
+      "base": "<p>Geometry defined as a circle. The circle defines the routing boundary area. Any waypoints outside the circle will result in a route matrix entry error.</p> <p>You can specify a <code>Circle</code> directly in the request, or it will be auto-derived when <code>AutoCircle</code> is used. When <code>AutoCircle</code> is set in the request, the response routing boundary will return <code>Circle</code> derived from the <code>AutoCircle</code> settings.</p>",
       "refs": {
-        "RouteMatrixBoundaryGeometry$Circle": "<p>Geometry defined as a circle. When request routing boundary was set as <code>AutoCircle</code>, the response routing boundary will return <code>Circle</code> derived from the <code>AutoCircle</code> settings.</p>"
+        "RouteMatrixBoundaryGeometry$Circle": "<p>Geometry defined as a circle. The circle defines the routing boundary area. Any waypoints outside the circle will result in a route matrix entry error.</p> <p>You can specify a <code>Circle</code> directly in the request, or it will be auto-derived when <code>AutoCircle</code> is used. When <code>AutoCircle</code> is set in the request, the response routing boundary will return <code>Circle</code> derived from the <code>AutoCircle</code> settings.</p>"
       }
     },
     "ClusterIndex": {
@@ -124,6 +124,7 @@
         "RouteFerrySpan$Country": "<p>3 letter Country code corresponding to the Span.</p>",
         "RoutePedestrianSpan$Country": "<p>3 letter Country code corresponding to the Span.</p>",
         "RouteToll$Country": "<p>The alpha-2 or alpha-3 character code for the country.</p>",
+        "RouteTransitSpan$Country": "<p>3 letter Country code corresponding to the Span.</p>",
         "RouteVehicleSpan$Country": "<p>3 letter Country code corresponding to the Span.</p>"
       }
     },
@@ -171,22 +172,28 @@
         "IsolineMatchingOptions$Radius": "<p>The maximum distance in meters to search for roads to match to. Points with no roads within this radius will fail to match. The roads that are considered within this radius are determined by the specified <code>Strategy</code> </p> <p> <b>Unit</b>: <code>meters</code> </p>",
         "IsolineOriginOptions$AvoidActionsForDistance": "<p>The distance in meters from the origin point within which certain routing actions (such as U-turns or left turns across traffic) are restricted. This helps generate more practical routes by avoiding potentially dangerous maneuvers near the starting point.</p>",
         "OptimizeWaypointsResponse$Distance": "<p>Overall distance to travel the whole sequence.</p>",
-        "RouteFerryOverviewSummary$Distance": "<p>Distance of the step.</p>",
+        "RouteFerryOverviewSummary$Distance": "<p>Distance of the entire leg.</p> <p> <b>Unit</b>: <code>meters</code> </p>",
         "RouteFerrySpan$Distance": "<p>Distance of the computed span. This feature doesn't split a span, but is always computed on a span split by other properties.</p> <p> <b>Unit</b>: <code>meters</code> </p>",
         "RouteFerryTravelStep$Distance": "<p>Distance of the step.</p>",
         "RouteMatchingOptions$OnRoadThreshold": "<p>If the distance to a highway/bridge/tunnel/sliproad is within threshold, the waypoint will be snapped to the highway/bridge/tunnel/sliproad.</p> <p> <b>Unit</b>: <code>meters</code> </p>",
         "RouteMatchingOptions$Radius": "<p>Considers all roads within the provided radius to match the provided destination to. The roads that are considered are determined by the provided Strategy.</p> <p> <b>Unit</b>: <code>meters</code> </p>",
         "RouteMatrixEntry$Distance": "<p>The total distance of travel for the route.</p>",
         "RouteMatrixMatchingOptions$Radius": "<p>Considers all roads within the provided radius to match the provided destination to. The roads that are considered are determined by the provided Strategy.</p> <p> <b>Unit</b>: <code>meters</code> </p>",
-        "RoutePedestrianOverviewSummary$Distance": "<p>Distance of the step.</p>",
+        "RoutePedestrianOverviewSummary$Distance": "<p>Distance of the entire leg.</p> <p> <b>Unit</b>: <code>meters</code> </p>",
         "RoutePedestrianSpan$Distance": "<p>Distance of the computed span. This feature doesn't split a span, but is always computed on a span split by other properties.</p>",
         "RoutePedestrianTravelStep$Distance": "<p>Distance of the step.</p>",
+        "RouteRentalOverviewSummary$Distance": "<p>Distance of the entire leg.</p> <p> <b>Unit</b>: <code>meters</code> </p>",
+        "RouteRentalTravelStep$Distance": "<p>Distance of the step.</p> <p> <b>Unit</b>: <code>meters</code> </p>",
         "RouteSummary$Distance": "<p>Distance of the route.</p>",
-        "RouteVehicleOverviewSummary$Distance": "<p>Distance of the step.</p>",
+        "RouteTaxiOverviewSummary$Distance": "<p>Distance of the entire leg.</p> <p> <b>Unit</b>: <code>meters</code> </p>",
+        "RouteTaxiTravelStep$Distance": "<p>Distance of the step.</p> <p> <b>Unit</b>: <code>meters</code> </p>",
+        "RouteTransitOverviewSummary$Distance": "<p>Distance of the entire leg.</p> <p> <b>Unit</b>: <code>meters</code> </p>",
+        "RouteTransitSpan$Distance": "<p>Distance of the computed span. This feature doesn't split a span, but is always computed on a span split by other properties.</p> <p> <b>Unit</b>: <code>meters</code> </p>",
+        "RouteTransitTravelStep$Distance": "<p>Distance of the step.</p> <p> <b>Unit</b>: <code>meters</code> </p>",
+        "RouteVehicleOverviewSummary$Distance": "<p>Distance of the entire leg.</p> <p> <b>Unit</b>: <code>meters</code> </p>",
         "RouteVehicleSpan$Distance": "<p>Distance of the computed span. This feature doesn't split a span, but is always computed on a span split by other properties.</p>",
         "RouteVehicleTravelStep$Distance": "<p>Distance of the step.</p>",
-        "WaypointOptimizationConnection$Distance": "<p>Distance of the step.</p>",
-        "WaypointOptimizationDrivingDistanceOptions$DrivingDistance": "<p>DrivingDistance assigns all the waypoints that are within driving distance of each other into a single cluster.</p>"
+        "WaypointOptimizationConnection$Distance": "<p>Distance of the step.</p>"
       }
     },
     "DistanceThresholdList": {
@@ -220,31 +227,53 @@
         "RouteDriverScheduleInterval$RestDuration": "<p>Resting time before the driver can continue driving.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
         "RouteFerryAfterTravelStep$Duration": "<p>Duration of the step.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
         "RouteFerryBeforeTravelStep$Duration": "<p>Duration of the step.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
-        "RouteFerryOverviewSummary$Duration": "<p>Duration of the step.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteFerryOverviewSummary$Duration": "<p>Duration of the entire leg.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
         "RouteFerrySpan$Duration": "<p>Duration of the computed span. This feature doesn't split a span, but is always computed on a span split by other properties.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
         "RouteFerryTravelOnlySummary$Duration": "<p>Total duration in free flowing traffic, which is the best case or shortest duration possible to cover the leg.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
         "RouteFerryTravelStep$Duration": "<p>Duration of the step.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
         "RouteMatrixEntry$Duration": "<p>The expected duration of travel for the route.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
         "RouteMatrixTrafficOptions$FlowEventThresholdOverride": "<p>Duration for which flow traffic is considered valid. For this period, the flow traffic is used over historical traffic data. Flow traffic refers to congestion, which changes very quickly. Duration in seconds for which flow traffic event would be considered valid. While flow traffic event is valid it will be used over the historical traffic data. </p>",
-        "RoutePedestrianOverviewSummary$Duration": "<p>Duration of the step.</p>",
+        "RoutePedestrianAfterTravelStep$Duration": "<p>Duration of the step.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RoutePedestrianOverviewSummary$Duration": "<p>Duration of the entire leg.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
         "RoutePedestrianSpan$BestCaseDuration": "<p>Duration of the computed span without traffic congestion.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
         "RoutePedestrianSpan$Duration": "<p>Duration of the computed span. This feature doesn't split a span, but is always computed on a span split by other properties.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
         "RoutePedestrianSpan$TypicalDuration": "<p>Duration of the computed span under typical traffic congestion.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
         "RoutePedestrianTravelOnlySummary$Duration": "<p>Duration of the step.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
         "RoutePedestrianTravelStep$Duration": "<p>Duration of the step.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteRentalAfterTravelStep$Duration": "<p>Duration of the step.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteRentalBeforeTravelStep$Duration": "<p>Duration of the step.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteRentalOverviewSummary$Duration": "<p>Duration of the entire leg.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteRentalTravelOnlySummary$Duration": "<p>Duration of the travel portion of the rental leg.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteRentalTravelStep$Duration": "<p>Duration of the step.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
         "RouteSpanDynamicSpeedDetails$TurnDuration": "<p>Estimated time to turn from this span into the next. </p> <p> <b>Unit</b>: <code>seconds</code> </p>",
         "RouteSummary$Duration": "<p>Duration of the route.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteTaxiAfterTravelStep$Duration": "<p>Duration of the step.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteTaxiBeforeTravelStep$Duration": "<p>Duration of the step.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteTaxiOverviewSummary$Duration": "<p>Duration of the entire leg.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteTaxiTravelOnlySummary$Duration": "<p>Duration of the travel portion of the taxi leg.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteTaxiTravelStep$Duration": "<p>Duration of the step.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
         "RouteTollPrice$PerDuration": "<p>Duration for which the price corresponds to.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
         "RouteTrafficOptions$FlowEventThresholdOverride": "<p>Duration for which flow traffic is considered valid. For this period, the flow traffic is used over historical traffic data. Flow traffic refers to congestion, which changes very quickly. Duration in seconds for which flow traffic event would be considered valid. While flow traffic event is valid it will be used over the historical traffic data. </p>",
+        "RouteTransitAfterTravelStep$Duration": "<p>Duration of the step.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteTransitArrival$Delay": "<p>The delay from the scheduled arrival time.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteTransitBeforeTravelStep$Duration": "<p>Duration of the step.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteTransitDeparture$Delay": "<p>The delay from the scheduled departure time.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteTransitIntermediateStop$Duration": "<p>Duration of the stop.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteTransitNextDeparture$Delay": "<p>The delay from the scheduled departure time.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteTransitOverviewSummary$Duration": "<p>Duration of the entire leg.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteTransitSpan$Duration": "<p>Duration of the computed span. This feature doesn't split a span, but is always computed on a span split by other properties.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteTransitTravelOnlySummary$Duration": "<p>Duration of the travel portion of the transit leg.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteTransitTravelStep$Duration": "<p>Duration of the step.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteVehicleAfterTravelStep$Duration": "<p>Duration of the step.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
         "RouteVehicleOverviewSummary$BestCaseDuration": "<p>Total duration in free flowing traffic, which is the best case or shortest duration possible to cover the leg.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
-        "RouteVehicleOverviewSummary$Duration": "<p>Duration of the step.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
-        "RouteVehicleOverviewSummary$TypicalDuration": "<p>Duration of the computed span under typical traffic congestion. </p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteVehicleOverviewSummary$Duration": "<p>Duration of the entire leg.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteVehicleOverviewSummary$TypicalDuration": "<p>Duration of the leg under typical traffic congestion.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
         "RouteVehicleSpan$BestCaseDuration": "<p>Duration of the computed span without traffic congestion.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
         "RouteVehicleSpan$Duration": "<p>Duration of the computed span. This feature doesn't split a span, but is always computed on a span split by other properties.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
         "RouteVehicleSpan$TypicalDuration": "<p>Duration of the computed span under typical traffic congestion. </p> <p> <b>Unit</b>: <code>seconds</code> </p>",
         "RouteVehicleTravelOnlySummary$BestCaseDuration": "<p>Total duration in free flowing traffic, which is the best case or shortest duration possible to cover the leg.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
         "RouteVehicleTravelOnlySummary$Duration": "<p>Duration of the step.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
-        "RouteVehicleTravelOnlySummary$TypicalDuration": "<p>Duration of the computed span under typical traffic congestion.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteVehicleTravelOnlySummary$TypicalDuration": "<p>Duration of the leg under typical traffic congestion.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
         "RouteVehicleTravelStep$Duration": "<p>Duration of the step.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
         "WaypointOptimizationConnection$RestDuration": "<p>Resting time before the driver can continue driving.</p>",
         "WaypointOptimizationConnection$TravelDuration": "<p>Total duration.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
@@ -257,6 +286,13 @@
         "WaypointOptimizationTimeBreakdown$TravelDuration": "<p>Traveling phase of the cycle.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
         "WaypointOptimizationTimeBreakdown$WaitDuration": "<p>Waiting phase of the cycle.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
         "WaypointOptimizationWaypoint$ServiceDuration": "<p>Service time spent at the waypoint. At an appointment, the service time should be the appointment duration.</p> <p> <b>Unit</b>: <code>seconds</code> </p>"
+      }
+    },
+    "EnergyKilowattHours": {
+      "base": null,
+      "refs": {
+        "RouteChargeStepDetails$ArrivalCharge": "<p>Estimated vehicle battery charge before this step (in kWh). </p>",
+        "RouteChargeStepDetails$DesiredCharge": "<p>Details that are specific to a Charge step.</p> <p> <b>Unit</b>: <code>KwH</code> </p>"
       }
     },
     "GeometryFormat": {
@@ -283,6 +319,13 @@
         "RouteWaypoint$Heading": "<p> GPS Heading at the position. Not supported in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>",
         "WaypointOptimizationDestinationOptions$Heading": "<p>GPS Heading at the position.</p>",
         "WaypointOptimizationWaypoint$Heading": "<p>GPS Heading at the position.</p>"
+      }
+    },
+    "HexColor": {
+      "base": null,
+      "refs": {
+        "RouteTransitTransportModeDetails$Color": "<p>Color of the transport polyline and background for the transport name.</p>",
+        "RouteTransitTransportModeDetails$TextColor": "<p>Color of the transport name text.</p>"
       }
     },
     "IndexList": {
@@ -696,7 +739,7 @@
         "RouteContinueStepDetails$Intersection": "<p>Name of the intersection, if applicable to the step.</p>",
         "RouteEnterHighwayStepDetails$Intersection": "<p>Name of the intersection, if applicable to the step.</p>",
         "RouteExitStepDetails$Intersection": "<p>Name of the intersection, if applicable to the step.</p>",
-        "RouteFerrySpan$Names": "<p>Provides an array of names of the ferry span in available languages.</p>",
+        "RouteFerrySpan$Names": "<p>Names of the ferry span in available languages.</p>",
         "RouteKeepStepDetails$Intersection": "<p>Name of the intersection, if applicable to the step.</p>",
         "RoutePedestrianSpan$Names": "<p>Provides an array of names of the pedestrian span in available languages.</p>",
         "RoutePedestrianTravelStep$ExitNumber": "<p>Exit number of the road exit, if applicable.</p>",
@@ -706,6 +749,7 @@
         "RouteRoundaboutEnterStepDetails$Intersection": "<p>Name of the intersection, if applicable to the step.</p>",
         "RouteRoundaboutExitStepDetails$Intersection": "<p>Name of the intersection, if applicable to the step.</p>",
         "RouteRoundaboutPassStepDetails$Intersection": "<p>Name of the intersection, if applicable to the step.</p>",
+        "RouteTransitSpan$Names": "<p>Names of the transit span in available languages.</p>",
         "RouteTurnStepDetails$Intersection": "<p>Name of the intersection, if applicable to the step.</p>",
         "RouteUTurnStepDetails$Intersection": "<p>Name of the intersection, if applicable to the step.</p>",
         "RouteVehicleSpan$Names": "<p>Provides an array of names of the vehicle span in available languages.</p>",
@@ -803,9 +847,21 @@
         "RoutePassThroughPlace$Position": "<p>Position in World Geodetic System (WGS 84) format: [longitude, latitude].</p>",
         "RoutePedestrianPlace$OriginalPosition": "<p>Position provided in the request.</p>",
         "RoutePedestrianPlace$Position": "<p>Position in World Geodetic System (WGS 84) format: [longitude, latitude].</p>",
+        "RouteRentalPlace$OriginalPosition": "<p>Position provided in the request.</p>",
+        "RouteRentalPlace$Position": "<p>Position in World Geodetic System (WGS 84) format: [longitude, latitude].</p>",
+        "RouteTaxiPlace$OriginalPosition": "<p>Position provided in the request.</p>",
+        "RouteTaxiPlace$Position": "<p>Position in World Geodetic System (WGS 84) format: [longitude, latitude].</p>",
         "RouteTollPaymentSite$Position": "<p>Position in World Geodetic System (WGS 84) format: [longitude, latitude].</p>",
+        "RouteTransitPlace$OriginalPosition": "<p>Position provided in the request.</p>",
+        "RouteTransitPlace$Position": "<p>Position in World Geodetic System (WGS 84) format: [longitude, latitude].</p>",
         "RouteVehiclePlace$OriginalPosition": "<p>Position provided in the request.</p>",
         "RouteVehiclePlace$Position": "<p>Position in World Geodetic System (WGS 84) format: [longitude, latitude].</p>"
+      }
+    },
+    "PowerKilowatts": {
+      "base": null,
+      "refs": {
+        "RouteChargeStepDetails$ConsumablePower": "<p>Maximum charging power available to the vehicle.</p> <p> <b>Unit</b>: <code>KwH</code> </p>"
       }
     },
     "RoadSnapHazardousCargoType": {
@@ -934,10 +990,66 @@
         "RouteList$member": null
       }
     },
+    "RouteAccessPointDetails": {
+      "base": "<p>Details of the access point.</p>",
+      "refs": {
+        "RoutePedestrianPlace$AccessPointDetails": "<p>Details of the access point.</p>",
+        "RouteRentalPlace$AccessPointDetails": "<p>Details of the access point.</p>",
+        "RouteTaxiPlace$AccessPointDetails": "<p>Details of the access point.</p>",
+        "RouteVehiclePlace$AccessPointDetails": "<p>Details of the access point.</p>"
+      }
+    },
+    "RouteAccessibilityAttribute": {
+      "base": null,
+      "refs": {
+        "RouteAccessibilityAttributeList$member": null
+      }
+    },
+    "RouteAccessibilityAttributeList": {
+      "base": null,
+      "refs": {
+        "RouteIntermodalOptions$AccessibilityAttributes": "<p>Accessibility attributes to consider when calculating the route.</p>",
+        "RouteTransitOptions$AccessibilityAttributes": "<p>Accessibility attributes to consider when calculating the route.</p>"
+      }
+    },
+    "RouteAccessibilityAvailability": {
+      "base": null,
+      "refs": {
+        "RouteAccessibilityAvailabilityDetails$Wheelchair": "<p>Wheelchair accessibility status.</p>"
+      }
+    },
+    "RouteAccessibilityAvailabilityDetails": {
+      "base": "<p>Details about the availability of accessibility features.</p>",
+      "refs": {
+        "RouteAccessPointDetails$Accessibility": "<p>Wheelchair accessibility information for the access point.</p>",
+        "RouteStationDetails$Accessibility": "<p>Wheelchair accessibility information for the station.</p>",
+        "RouteTransitTransportModeDetails$Accessibility": "<p>Wheelchair accessibility information for the transit vehicle.</p>"
+      }
+    },
     "RouteAllowOptions": {
       "base": "<p>Features that are allowed while calculating a route.</p>",
       "refs": {
         "CalculateRoutesRequest$Allow": "<p> Features that are allowed while calculating a route. Not supported in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>"
+      }
+    },
+    "RouteAttribution": {
+      "base": "<p>Required attribution to display.</p>",
+      "refs": {
+        "RouteAttributionList$member": null
+      }
+    },
+    "RouteAttributionList": {
+      "base": null,
+      "refs": {
+        "RouteRentalLegDetails$Attributions": "<p>List of required attributions to display.</p>",
+        "RouteTaxiLegDetails$Attributions": "<p>List of required attributions to display.</p>",
+        "RouteTransitLegDetails$Attributions": "<p>List of required attributions to display.</p>"
+      }
+    },
+    "RouteAttributionType": {
+      "base": null,
+      "refs": {
+        "RouteAttribution$AttributionType": "<p>The type of the attribution link.</p>"
       }
     },
     "RouteAvoidanceArea": {
@@ -1013,6 +1125,12 @@
         "RouteCarOptions$Occupancy": "<p> The number of occupants in the vehicle. Not supported in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p> <p>Default value: <code>1</code> </p>"
       }
     },
+    "RouteChargeStepDetails": {
+      "base": "<p>Details about the EV charge at the current step.</p>",
+      "refs": {
+        "RouteVehicleAfterTravelStep$ChargeStepDetails": "<p>Details that are specific to a Charge step.</p> <p> <b>Unit</b>: <code>KwH </code> </p>"
+      }
+    },
     "RouteContinueHighwayStepDetails": {
       "base": "<p>Details related to the continue highway step.</p>",
       "refs": {
@@ -1023,6 +1141,8 @@
       "base": "<p>Details related to the continue step.</p>",
       "refs": {
         "RoutePedestrianTravelStep$ContinueStepDetails": "<p>Details related to the continue step.</p>",
+        "RouteRentalTravelStep$ContinueStepDetails": null,
+        "RouteTaxiTravelStep$ContinueStepDetails": null,
         "RouteVehicleTravelStep$ContinueStepDetails": "<p>Details that are specific to a Continue step.</p>"
       }
     },
@@ -1072,7 +1192,9 @@
       "base": null,
       "refs": {
         "RouteCarOptions$EngineType": "<p> Engine type of the vehicle. Not supported in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>",
+        "RouteRentalTransportModeDetails$Engine": "<p>Vehicle engine type.</p>",
         "RouteScooterOptions$EngineType": "<p> Engine type of the vehicle. Not supported in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>",
+        "RouteTaxiTransportModeDetails$Engine": "<p>Vehicle engine type.</p>",
         "RouteTruckOptions$EngineType": "<p>Engine type of the vehicle.</p>"
       }
     },
@@ -1091,6 +1213,8 @@
     "RouteExitStepDetails": {
       "base": "<p>Details related to the exit step.</p>",
       "refs": {
+        "RouteRentalTravelStep$ExitStepDetails": null,
+        "RouteTaxiTravelStep$ExitStepDetails": null,
         "RouteVehicleTravelStep$ExitStepDetails": "<p>Details that are specific to a Roundabout Exit step.</p>"
       }
     },
@@ -1173,7 +1297,7 @@
       }
     },
     "RouteFerryOverviewSummary": {
-      "base": "<p>Summarized details of the leg.</p>",
+      "base": "<p>Summary including duration and distance for the entire leg.</p>",
       "refs": {
         "RouteFerrySummary$Overview": "<p>Summarized details for the leg including before travel, travel and after travel steps.</p>"
       }
@@ -1181,8 +1305,8 @@
     "RouteFerryPlace": {
       "base": "<p>Position provided in the request.</p>",
       "refs": {
-        "RouteFerryArrival$Place": "<p>The place details.</p>",
-        "RouteFerryDeparture$Place": "<p>The place details.</p>"
+        "RouteFerryArrival$Place": "<p>Place details corresponding to the arrival.</p>",
+        "RouteFerryDeparture$Place": "<p>Place details corresponding to the departure.</p>"
       }
     },
     "RouteFerryPlaceWaypointIndexInteger": {
@@ -1264,10 +1388,81 @@
         "RouteViolatedConstraints$HazardousCargos": "<p>List of Hazardous cargo contained in the vehicle.</p>"
       }
     },
+    "RouteIntermodalEnabledLegs": {
+      "base": null,
+      "refs": {
+        "RouteIntermodalEnabledLegsList$member": null
+      }
+    },
+    "RouteIntermodalEnabledLegsList": {
+      "base": null,
+      "refs": {
+        "RouteIntermodalRentalOptions$EnabledFor": "<p>Specifies the portion of the route for which this leg type is enabled. By default, the leg type is enabled for all legs. Valid values:</p> <ul> <li> <p> <code>FirstLeg</code> - Enable this leg type for the first non-pedestrian leg of the route.</p> </li> <li> <p> <code>LastLeg</code> - Enable this leg type for the last non-pedestrian leg of the route.</p> </li> <li> <p> <code>EntireRoute</code> - Enable this leg type for the entire route.</p> </li> <li> <p> <code>None</code> - Disable this leg type entirely.</p> </li> </ul>",
+        "RouteIntermodalTaxiOptions$EnabledFor": "<p>Specifies the portion of the route for which this leg type is enabled. By default, the leg type is enabled for all legs. Valid values:</p> <ul> <li> <p> <code>FirstLeg</code> - Enable this leg type for the first non-pedestrian leg of the route.</p> </li> <li> <p> <code>LastLeg</code> - Enable this leg type for the last non-pedestrian leg of the route.</p> </li> <li> <p> <code>EntireRoute</code> - Enable this leg type for the entire route.</p> </li> <li> <p> <code>None</code> - Disable this leg type entirely.</p> </li> </ul>",
+        "RouteIntermodalTransitOptions$EnabledFor": "<p>Specifies the portion of the route for which this leg type is enabled. By default, the leg type is enabled for all legs. Valid values:</p> <ul> <li> <p> <code>FirstLeg</code> - Enable this leg type for the first non-pedestrian leg of the route.</p> </li> <li> <p> <code>LastLeg</code> - Enable this leg type for the last non-pedestrian leg of the route.</p> </li> <li> <p> <code>EntireRoute</code> - Enable this leg type for the entire route.</p> </li> <li> <p> <code>None</code> - Disable this leg type entirely.</p> </li> </ul>",
+        "RouteIntermodalVehicleOptions$EnabledFor": "<p>Specifies the portion of the route for which this leg type is enabled. By default, the leg type is enabled for all legs. Valid values:</p> <ul> <li> <p> <code>FirstLeg</code> - Enable this leg type for the first non-pedestrian leg of the route.</p> </li> <li> <p> <code>LastLeg</code> - Enable this leg type for the last non-pedestrian leg of the route.</p> </li> <li> <p> <code>EntireRoute</code> - Enable this leg type for the entire route.</p> </li> <li> <p> <code>None</code> - Disable this leg type entirely.</p> </li> </ul>"
+      }
+    },
+    "RouteIntermodalOptions": {
+      "base": "<p>Options related to intermodal routing.</p> <note> <p>Not supported in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers.</p> </note>",
+      "refs": {
+        "RouteTravelModeOptions$Intermodal": "<p>Travel mode options when the provided travel mode is <code>Intermodal</code>.</p> <note> <p>Not supported in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers.</p> </note>"
+      }
+    },
+    "RouteIntermodalOptionsMaxTransfersInteger": {
+      "base": null,
+      "refs": {
+        "RouteIntermodalOptions$MaxTransfers": "<p>Maximum number of transfers allowed when calculating the route.</p>"
+      }
+    },
+    "RouteIntermodalPedestrianOptions": {
+      "base": "<p>Options for the pedestrian leg of the intermodal route.</p>",
+      "refs": {
+        "RouteIntermodalOptions$Pedestrian": "<p>Options for the pedestrian leg of the intermodal route.</p>"
+      }
+    },
+    "RouteIntermodalPedestrianOptionsMaxDistanceLong": {
+      "base": null,
+      "refs": {
+        "RouteIntermodalPedestrianOptions$MaxDistance": "<p>Maximum walking distance allowed.</p> <p> <b>Unit</b>: <code>meters</code> </p>"
+      }
+    },
+    "RouteIntermodalPedestrianOptionsSpeedDouble": {
+      "base": null,
+      "refs": {
+        "RouteIntermodalPedestrianOptions$Speed": "<p>Walking speed.</p> <p> <b>Unit</b>: <code>kilometers per hour</code> </p>"
+      }
+    },
+    "RouteIntermodalRentalOptions": {
+      "base": "<p>Options for the rental leg of the intermodal route.</p>",
+      "refs": {
+        "RouteIntermodalOptions$Rental": "<p>Options for the rental leg of the intermodal route.</p>"
+      }
+    },
+    "RouteIntermodalTaxiOptions": {
+      "base": "<p>Options for the taxi leg of the intermodal route.</p>",
+      "refs": {
+        "RouteIntermodalOptions$Taxi": "<p>Options for the taxi leg of the intermodal route.</p>"
+      }
+    },
+    "RouteIntermodalTransitOptions": {
+      "base": "<p>Options for the transit leg of the intermodal route.</p>",
+      "refs": {
+        "RouteIntermodalOptions$Transit": "<p>Options for the transit leg of the intermodal route.</p>"
+      }
+    },
+    "RouteIntermodalVehicleOptions": {
+      "base": "<p>Options for the vehicle leg of the intermodal route.</p>",
+      "refs": {
+        "RouteIntermodalOptions$Vehicle": "<p>Options for the vehicle leg of the intermodal route.</p>"
+      }
+    },
     "RouteKeepStepDetails": {
       "base": "<p>Details that are specific to a Keep step.</p>",
       "refs": {
         "RoutePedestrianTravelStep$KeepStepDetails": "<p>Details that are specific to a Keep step.</p>",
+        "RouteRentalTravelStep$KeepStepDetails": null,
+        "RouteTaxiTravelStep$KeepStepDetails": null,
         "RouteVehicleTravelStep$KeepStepDetails": "<p>Details that are specific to a Keep step.</p>"
       }
     },
@@ -1358,21 +1553,21 @@
       }
     },
     "RouteMatrixAutoCircle": {
-      "base": "<p>Provides the circle that was used while calculating the route.</p>",
+      "base": "<p> <code>AutoCircle</code> requests the route matrix service to define a <code>Circle</code> boundary that best attempts to include most waypoints (<code>Origins</code> and <code>Destinations</code>) using the <code>AutoCircle</code> settings. Any waypoints outside of the auto-defined <code>Circle</code> boundary will be considered out of the routing boundary, which results in a route matrix entry error.</p> <p> <code>AutoCircle</code> is only used in the request to configure a <code>Circle</code> for the route calculation. The derived <code>Circle</code> will also be provided in the response.</p>",
       "refs": {
-        "RouteMatrixBoundaryGeometry$AutoCircle": "<p>Provides the circle that was used while calculating the route.</p>"
+        "RouteMatrixBoundaryGeometry$AutoCircle": "<p> <code>AutoCircle</code> requests the route matrix service to define a <code>Circle</code> boundary that best attempts to include most waypoints (<code>Origins</code> and <code>Destinations</code>) using the <code>AutoCircle</code> settings. Any waypoints outside of the auto-defined <code>Circle</code> boundary will be considered out of the routing boundary, which results in a route matrix entry error.</p> <p> <code>AutoCircle</code> is only used in the request to configure a <code>Circle</code> for the route calculation. The derived <code>Circle</code> will also be provided in the response.</p>"
       }
     },
     "RouteMatrixAutoCircleMarginLong": {
       "base": null,
       "refs": {
-        "RouteMatrixAutoCircle$Margin": "<p>The margin provided for the calculation.</p>"
+        "RouteMatrixAutoCircle$Margin": "<p>The minimal distance, in meters, between any waypoint and the perimeter of the circle auto-defined for the boundary. Some margin is usually recommended so that the routing has enough leeway to travel from one waypoint to another optimally without conflicting with the routing boundary.</p> <p>The total of <code>MaxRadius</code> and <code>Margin</code> must be less than or equal to 200,000 meters.</p>"
       }
     },
     "RouteMatrixAutoCircleMaxRadiusLong": {
       "base": null,
       "refs": {
-        "RouteMatrixAutoCircle$MaxRadius": "<p>The maximum size of the radius provided for the calculation.</p>"
+        "RouteMatrixAutoCircle$MaxRadius": "<p>The maximum radius, in meters, that the auto-defined <code>Circle</code> boundary should have, before the <code>Margin</code> distance is added to the circle.</p> <p>The total of <code>MaxRadius</code> and <code>Margin</code> must be less than or equal to 200,000 meters.</p>"
       }
     },
     "RouteMatrixAvoidanceArea": {
@@ -1426,8 +1621,8 @@
     "RouteMatrixBoundary": {
       "base": "<p>Boundary within which the matrix is to be calculated. All data, origins and destinations outside the boundary are considered invalid.</p>",
       "refs": {
-        "CalculateRouteMatrixRequest$RoutingBoundary": "<p> Boundary within which the matrix is to be calculated. All data, origins and destinations outside the boundary are considered invalid. For <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers, <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions support only <code>Unbounded</code> set to <code>true</code>. </p> <p>Default value: <code>Unbounded set to true</code> </p> <note> <p>When request routing boundary was set as AutoCircle, the response routing boundary will return Circle derived from the AutoCircle settings.</p> </note>",
-        "CalculateRouteMatrixResponse$RoutingBoundary": "<p>Boundary within which the matrix is to be calculated. All data, origins and destinations outside the boundary are considered invalid.</p> <note> <p>When request routing boundary was set as AutoCircle, the response routing boundary will return Circle derived from the AutoCircle settings.</p> </note>"
+        "CalculateRouteMatrixRequest$RoutingBoundary": "<p> Boundary within which the matrix is to be calculated. All data, origins and destinations outside the boundary are considered invalid. For <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers, <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions support only <code>Unbounded</code> set to <code>true</code>. </p> <p>Default value: <code>Unbounded set to true</code> </p> <note> <p>When <code>AutoCircle</code> is set in the request, the response routing boundary will return <code>Circle</code> derived from the <code>AutoCircle</code> settings.</p> </note>",
+        "CalculateRouteMatrixResponse$RoutingBoundary": "<p>Boundary within which the matrix is to be calculated. All data, origins and destinations outside the boundary are considered invalid.</p> <note> <p>When <code>AutoCircle</code> is set in the request, the response routing boundary will return <code>Circle</code> derived from the <code>AutoCircle</code> settings.</p> </note>"
       }
     },
     "RouteMatrixBoundaryGeometry": {
@@ -1439,7 +1634,7 @@
     "RouteMatrixBoundaryGeometryPolygonList": {
       "base": null,
       "refs": {
-        "RouteMatrixBoundaryGeometry$Polygon": "<p>Geometry defined as a polygon with only one linear ring.</p>"
+        "RouteMatrixBoundaryGeometry$Polygon": "<p>Geometry defined as a polygon with only one linear ring. A linear ring is a closed sequence of four or more coordinates. The first and last coordinates are the same, forming a closed boundary. Each coordinate is a position in [longitude, latitude] format.</p> <p>The structure is an array of linear rings (only 1 allowed). Each linear ring is an array of coordinates (minimum 4), and each coordinate is an array of two doubles [longitude, latitude].</p> <p>Maximum distance between any two vertices must be less than or equal to 400,000 meters.</p>"
       }
     },
     "RouteMatrixCarOptions": {
@@ -1694,6 +1889,8 @@
         "RouteFerryNotice$Impact": "<p>Impact corresponding to the issue. While Low impact notices can be safely ignored, High impact notices must be evaluated further to determine the impact.</p>",
         "RoutePedestrianNotice$Impact": "<p>Impact corresponding to the issue. While Low impact notices can be safely ignored, High impact notices must be evaluated further to determine the impact.</p>",
         "RouteResponseNotice$Impact": "<p>Impact corresponding to the issue. While Low impact notices can be safely ignored, High impact notices must be evaluated further to determine the impact.</p>",
+        "RouteTaxiNotice$Impact": "<p>Impact corresponding to the issue. While Low impact notices can be safely ignored, High impact notices must be evaluated further to determine the impact.</p>",
+        "RouteTransitNotice$Impact": "<p>Impact corresponding to the issue. While Low impact notices can be safely ignored, High impact notices must be evaluated further to determine the impact.</p>",
         "RouteVehicleNotice$Impact": "<p>Impact corresponding to the issue. While Low impact notices can be safely ignored, High impact notices must be evaluated further to determine the impact.</p>"
       }
     },
@@ -1728,7 +1925,7 @@
     "RoutePassThroughPlace": {
       "base": "<p>The place where the waypoint is passed through and not treated as a stop.</p>",
       "refs": {
-        "RoutePassThroughWaypoint$Place": "<p>The place details.</p>"
+        "RoutePassThroughWaypoint$Place": "<p>Place details corresponding to the pass-through waypoint.</p>"
       }
     },
     "RoutePassThroughPlaceWaypointIndexInteger": {
@@ -1754,7 +1951,26 @@
       "refs": {
         "RouteFerryLegDetails$PassThroughWaypoints": "<p>Waypoints that were passed through during the leg. This includes the waypoints that were configured with the PassThrough option.</p>",
         "RoutePedestrianLegDetails$PassThroughWaypoints": "<p>Waypoints that were passed through during the leg. This includes the waypoints that were configured with the PassThrough option.</p>",
+        "RouteTransitLegDetails$PassThroughWaypoints": "<p>Waypoints that were passed through during the leg. This includes the waypoints that were configured with the PassThrough option. Not populated when the TravelMode is <code>Transit</code> or <code>Intermodal</code>.</p>",
         "RouteVehicleLegDetails$PassThroughWaypoints": "<p>Waypoints that were passed through during the leg. This includes the waypoints that were configured with the PassThrough option.</p>"
+      }
+    },
+    "RoutePedestrianAfterTravelStep": {
+      "base": "<p>Steps of a leg that must be performed after the travel portion of the leg.</p>",
+      "refs": {
+        "RoutePedestrianAfterTravelStepList$member": null
+      }
+    },
+    "RoutePedestrianAfterTravelStepList": {
+      "base": null,
+      "refs": {
+        "RoutePedestrianLegDetails$AfterTravelSteps": "<p>Steps of a leg that must be performed after the travel portion of the leg.</p>"
+      }
+    },
+    "RoutePedestrianAfterTravelStepType": {
+      "base": null,
+      "refs": {
+        "RoutePedestrianAfterTravelStep$Type": "<p>Type of the step.</p>"
       }
     },
     "RoutePedestrianArrival": {
@@ -1806,7 +2022,7 @@
       }
     },
     "RoutePedestrianOverviewSummary": {
-      "base": "<p>Provides a summary of a pedestrian route step.</p>",
+      "base": "<p>Summary including duration and distance for the entire leg.</p>",
       "refs": {
         "RoutePedestrianSummary$Overview": "<p>Summarized details for the leg including before travel, travel and after travel steps.</p>"
       }
@@ -1814,8 +2030,14 @@
     "RoutePedestrianPlace": {
       "base": "<p>Place details corresponding to the arrival or departure.</p>",
       "refs": {
-        "RoutePedestrianArrival$Place": "<p>The place details.</p>",
-        "RoutePedestrianDeparture$Place": "<p>The place details.</p>"
+        "RoutePedestrianArrival$Place": "<p>Place details corresponding to the arrival.</p>",
+        "RoutePedestrianDeparture$Place": "<p>Place details corresponding to the departure.</p>"
+      }
+    },
+    "RoutePedestrianPlaceType": {
+      "base": null,
+      "refs": {
+        "RoutePedestrianPlace$Type": "<p>The type of the place.</p>"
       }
     },
     "RoutePedestrianPlaceWaypointIndexInteger": {
@@ -1893,7 +2115,156 @@
     "RouteRampStepDetails": {
       "base": "<p>Details that are specific to a ramp step.</p>",
       "refs": {
+        "RouteRentalTravelStep$RampStepDetails": null,
+        "RouteTaxiTravelStep$RampStepDetails": null,
         "RouteVehicleTravelStep$RampStepDetails": "<p>Details that are specific to a Ramp step.</p>"
+      }
+    },
+    "RouteRentalAfterTravelStep": {
+      "base": "<p>A step that must be performed after the travel portion of the leg.</p>",
+      "refs": {
+        "RouteRentalAfterTravelStepList$member": null
+      }
+    },
+    "RouteRentalAfterTravelStepList": {
+      "base": null,
+      "refs": {
+        "RouteRentalLegDetails$AfterTravelSteps": "<p>Steps of a leg that must be performed after the travel portion of the leg.</p>"
+      }
+    },
+    "RouteRentalAfterTravelStepType": {
+      "base": null,
+      "refs": {
+        "RouteRentalAfterTravelStep$Type": "<p>Type of the step.</p>"
+      }
+    },
+    "RouteRentalAgency": {
+      "base": "<p>Details about the rental agency.</p>",
+      "refs": {
+        "RouteRentalLegDetails$Agency": "<p>Details about the rental agency.</p>"
+      }
+    },
+    "RouteRentalArrival": {
+      "base": "<p>Details corresponding to the arrival for the leg.</p>",
+      "refs": {
+        "RouteRentalLegDetails$Arrival": "<p>Details corresponding to the arrival for the leg.</p>"
+      }
+    },
+    "RouteRentalBeforeTravelStep": {
+      "base": "<p>A step that must be performed before the travel portion of the leg.</p>",
+      "refs": {
+        "RouteRentalBeforeTravelStepList$member": null
+      }
+    },
+    "RouteRentalBeforeTravelStepList": {
+      "base": null,
+      "refs": {
+        "RouteRentalLegDetails$BeforeTravelSteps": "<p>Steps of a leg that must be performed before the travel portion of the leg.</p>"
+      }
+    },
+    "RouteRentalBeforeTravelStepType": {
+      "base": null,
+      "refs": {
+        "RouteRentalBeforeTravelStep$Type": "<p>Type of the step.</p>"
+      }
+    },
+    "RouteRentalDeparture": {
+      "base": "<p>Details corresponding to the departure for the leg.</p>",
+      "refs": {
+        "RouteRentalLegDetails$Departure": "<p>Details corresponding to the departure for the leg.</p>"
+      }
+    },
+    "RouteRentalLegDetails": {
+      "base": "<p>Populated when the Leg type is Rental, and provides additional information that is specific to rental vehicle travel.</p>",
+      "refs": {
+        "RouteLeg$RentalLegDetails": "<p>Details related to the rental leg.</p> <note> <p>Not supported in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers.</p> </note>"
+      }
+    },
+    "RouteRentalMode": {
+      "base": null,
+      "refs": {
+        "RouteRentalModeList$member": null,
+        "RouteRentalTransportModeDetails$Mode": "<p>Mode of the rental transport.</p>"
+      }
+    },
+    "RouteRentalModeList": {
+      "base": null,
+      "refs": {
+        "RouteIntermodalRentalOptions$AllowedModes": "<p>Allowed rental transport modes when calculating the route. By default, all transport modes are allowed. Cannot be used together with <code>ExcludedModes</code>.</p>",
+        "RouteIntermodalRentalOptions$ExcludedModes": "<p>Excluded rental transport modes when calculating the route. By default, all transport modes are allowed. Cannot be used together with <code>AllowedModes</code>.</p>"
+      }
+    },
+    "RouteRentalOverviewSummary": {
+      "base": "<p>Summary including duration and distance for the entire leg.</p>",
+      "refs": {
+        "RouteRentalSummary$Overview": "<p>Summary including duration and distance for the entire leg.</p>"
+      }
+    },
+    "RouteRentalPlace": {
+      "base": "<p>Place details corresponding to the arrival or departure.</p>",
+      "refs": {
+        "RouteRentalArrival$Place": "<p>Place details corresponding to the arrival.</p>",
+        "RouteRentalDeparture$Place": "<p>Place details corresponding to the departure.</p>"
+      }
+    },
+    "RouteRentalPlaceType": {
+      "base": null,
+      "refs": {
+        "RouteRentalPlace$Type": "<p>The type of the place.</p>"
+      }
+    },
+    "RouteRentalPlaceWaypointIndexInteger": {
+      "base": null,
+      "refs": {
+        "RouteRentalPlace$WaypointIndex": "<p>Index of the waypoint in the request.</p>"
+      }
+    },
+    "RouteRentalSummary": {
+      "base": "<p>Summary of the rental leg.</p>",
+      "refs": {
+        "RouteRentalLegDetails$Summary": "<p>Summary of the rental leg.</p>"
+      }
+    },
+    "RouteRentalTransportModeDetails": {
+      "base": "<p>Transport mode details for the rental leg.</p>",
+      "refs": {
+        "RouteRentalLegDetails$Transport": "<p>Transport mode details for the rental leg.</p>"
+      }
+    },
+    "RouteRentalTransportModeDetailsAvailableSeatsInteger": {
+      "base": null,
+      "refs": {
+        "RouteRentalTransportModeDetails$AvailableSeats": "<p>Number of available seats in the vehicle.</p>"
+      }
+    },
+    "RouteRentalTravelOnlySummary": {
+      "base": "<p>Summary including duration and distance for the travel portion of the leg only.</p>",
+      "refs": {
+        "RouteRentalSummary$TravelOnly": "<p>Summary including duration and distance for the travel portion of the leg only.</p>"
+      }
+    },
+    "RouteRentalTravelStep": {
+      "base": "<p>A step that must be performed during the travel portion of the leg.</p>",
+      "refs": {
+        "RouteRentalTravelStepList$member": null
+      }
+    },
+    "RouteRentalTravelStepGeometryOffsetInteger": {
+      "base": null,
+      "refs": {
+        "RouteRentalTravelStep$GeometryOffset": "<p>Offset in the leg geometry corresponding to the start of this step.</p>"
+      }
+    },
+    "RouteRentalTravelStepList": {
+      "base": null,
+      "refs": {
+        "RouteRentalLegDetails$TravelSteps": "<p>Steps of a leg that must be performed during the travel portion of the leg.</p>"
+      }
+    },
+    "RouteRentalTravelStepType": {
+      "base": null,
+      "refs": {
+        "RouteRentalTravelStep$Type": "<p>Type of the step.</p>"
       }
     },
     "RouteResponseNotice": {
@@ -1933,6 +2304,8 @@
       "base": "<p>Details about the roundabout leg.</p>",
       "refs": {
         "RoutePedestrianTravelStep$RoundaboutEnterStepDetails": "<p>Details that are specific to a Roundabout Enter step.</p>",
+        "RouteRentalTravelStep$RoundaboutEnterStepDetails": null,
+        "RouteTaxiTravelStep$RoundaboutEnterStepDetails": null,
         "RouteVehicleTravelStep$RoundaboutEnterStepDetails": "<p>Details that are specific to a Roundabout Enter step.</p>"
       }
     },
@@ -1940,6 +2313,8 @@
       "base": "<p>Details about the roundabout step.</p>",
       "refs": {
         "RoutePedestrianTravelStep$RoundaboutExitStepDetails": "<p>Details that are specific to a Roundabout Exit step.</p>",
+        "RouteRentalTravelStep$RoundaboutExitStepDetails": null,
+        "RouteTaxiTravelStep$RoundaboutExitStepDetails": null,
         "RouteVehicleTravelStep$RoundaboutExitStepDetails": "<p>Details that are specific to a Roundabout Exit step.</p>"
       }
     },
@@ -1953,6 +2328,8 @@
       "base": "<p>Details about the step.</p>",
       "refs": {
         "RoutePedestrianTravelStep$RoundaboutPassStepDetails": "<p>Details that are specific to a Roundabout Pass step.</p>",
+        "RouteRentalTravelStep$RoundaboutPassStepDetails": null,
+        "RouteTaxiTravelStep$RoundaboutPassStepDetails": null,
         "RouteVehicleTravelStep$RoundaboutPassStepDetails": "<p>Details that are specific to a Roundabout Pass step.</p>"
       }
     },
@@ -2107,6 +2484,16 @@
         "RouteVehicleSpan$TruckAccess": "<p>Access attributes for a truck corresponding to the span.</p>"
       }
     },
+    "RouteStationDetails": {
+      "base": "<p>Details about the station.</p>",
+      "refs": {
+        "RoutePedestrianPlace$StationDetails": "<p>Details about the station.</p>",
+        "RouteRentalPlace$StationDetails": "<p>Details about the station.</p>",
+        "RouteTaxiPlace$StationDetails": "<p>Details about the station.</p>",
+        "RouteTransitPlace$StationDetails": "<p>Details about the station.</p>",
+        "RouteVehiclePlace$StationDetails": "<p>Details about the station.</p>"
+      }
+    },
     "RouteSteeringDirection": {
       "base": null,
       "refs": {
@@ -2126,6 +2513,171 @@
       "base": "<p>Summarized details for the leg including travel steps only. The Distance for the travel only portion of the journey is the same as the Distance within the Overview summary.</p>",
       "refs": {
         "Route$Summary": "<p>Summarized details of the leg.</p>"
+      }
+    },
+    "RouteTaxiAfterTravelStep": {
+      "base": "<p>A step that must be performed after the travel portion of the leg.</p>",
+      "refs": {
+        "RouteTaxiAfterTravelStepList$member": null
+      }
+    },
+    "RouteTaxiAfterTravelStepList": {
+      "base": null,
+      "refs": {
+        "RouteTaxiLegDetails$AfterTravelSteps": "<p>Steps of a leg that must be performed after the travel portion of the leg.</p>"
+      }
+    },
+    "RouteTaxiAfterTravelStepType": {
+      "base": null,
+      "refs": {
+        "RouteTaxiAfterTravelStep$Type": "<p>Type of the step.</p>"
+      }
+    },
+    "RouteTaxiAgency": {
+      "base": "<p>Details about the taxi agency.</p>",
+      "refs": {
+        "RouteTaxiLegDetails$Agency": "<p>Details about the taxi agency.</p>"
+      }
+    },
+    "RouteTaxiArrival": {
+      "base": "<p>Details corresponding to the arrival for the leg.</p>",
+      "refs": {
+        "RouteTaxiLegDetails$Arrival": "<p>Details corresponding to the arrival for the leg.</p>"
+      }
+    },
+    "RouteTaxiBeforeTravelStep": {
+      "base": "<p>A step that must be performed before the travel portion of the leg.</p>",
+      "refs": {
+        "RouteTaxiBeforeTravelStepList$member": null
+      }
+    },
+    "RouteTaxiBeforeTravelStepList": {
+      "base": null,
+      "refs": {
+        "RouteTaxiLegDetails$BeforeTravelSteps": "<p>Steps of a leg that must be performed before the travel portion of the leg.</p>"
+      }
+    },
+    "RouteTaxiBeforeTravelStepType": {
+      "base": null,
+      "refs": {
+        "RouteTaxiBeforeTravelStep$Type": "<p>Type of the step.</p>"
+      }
+    },
+    "RouteTaxiDeparture": {
+      "base": "<p>Details corresponding to the departure for the leg.</p>",
+      "refs": {
+        "RouteTaxiLegDetails$Departure": "<p>Details corresponding to the departure for the leg.</p>"
+      }
+    },
+    "RouteTaxiLegDetails": {
+      "base": "<p>Populated when the Leg type is Taxi, and provides additional information that is specific to taxi travel.</p>",
+      "refs": {
+        "RouteLeg$TaxiLegDetails": "<p>Details related to the taxi leg.</p> <note> <p>Not supported in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers.</p> </note>"
+      }
+    },
+    "RouteTaxiMode": {
+      "base": null,
+      "refs": {
+        "RouteTaxiModeList$member": null,
+        "RouteTaxiTransportModeDetails$Mode": "<p>Mode of the taxi transport.</p>"
+      }
+    },
+    "RouteTaxiModeList": {
+      "base": null,
+      "refs": {
+        "RouteIntermodalTaxiOptions$AllowedModes": "<p>Allowed taxi transport modes when calculating the route. By default, all transport modes are allowed. Cannot be used together with <code>ExcludedModes</code>.</p>",
+        "RouteIntermodalTaxiOptions$ExcludedModes": "<p>Excluded taxi transport modes when calculating the route. By default, all transport modes are allowed. Cannot be used together with <code>AllowedModes</code>.</p>"
+      }
+    },
+    "RouteTaxiNotice": {
+      "base": "<p>A notice that indicates an issue that occurred during route calculation.</p>",
+      "refs": {
+        "RouteTaxiNoticeList$member": null
+      }
+    },
+    "RouteTaxiNoticeCode": {
+      "base": null,
+      "refs": {
+        "RouteTaxiNotice$Code": "<p>Code corresponding to the issue.</p>"
+      }
+    },
+    "RouteTaxiNoticeList": {
+      "base": null,
+      "refs": {
+        "RouteTaxiLegDetails$Notices": "<p>List of notices that indicate issues that occurred during route calculation.</p>"
+      }
+    },
+    "RouteTaxiOverviewSummary": {
+      "base": "<p>Summary including duration and distance for the entire leg.</p>",
+      "refs": {
+        "RouteTaxiSummary$Overview": "<p>Summary including duration and distance for the entire leg.</p>"
+      }
+    },
+    "RouteTaxiPlace": {
+      "base": "<p>Place details corresponding to the arrival or departure.</p>",
+      "refs": {
+        "RouteTaxiArrival$Place": "<p>Place details corresponding to the arrival.</p>",
+        "RouteTaxiDeparture$Place": "<p>Place details corresponding to the departure.</p>"
+      }
+    },
+    "RouteTaxiPlaceType": {
+      "base": null,
+      "refs": {
+        "RouteTaxiPlace$Type": "<p>The type of the place.</p>"
+      }
+    },
+    "RouteTaxiPlaceWaypointIndexInteger": {
+      "base": null,
+      "refs": {
+        "RouteTaxiPlace$WaypointIndex": "<p>Index of the waypoint in the request.</p>"
+      }
+    },
+    "RouteTaxiSummary": {
+      "base": "<p>Summary of the taxi leg.</p>",
+      "refs": {
+        "RouteTaxiLegDetails$Summary": "<p>Summary of the taxi leg.</p>"
+      }
+    },
+    "RouteTaxiTransportModeDetails": {
+      "base": "<p>Transport mode details for the taxi leg.</p>",
+      "refs": {
+        "RouteTaxiLegDetails$Transport": "<p>Transport mode details for the taxi leg.</p>"
+      }
+    },
+    "RouteTaxiTransportModeDetailsAvailableSeatsInteger": {
+      "base": null,
+      "refs": {
+        "RouteTaxiTransportModeDetails$AvailableSeats": "<p>Number of available seats in the vehicle.</p>"
+      }
+    },
+    "RouteTaxiTravelOnlySummary": {
+      "base": "<p>Summary including duration and distance for the travel portion of the leg only.</p>",
+      "refs": {
+        "RouteTaxiSummary$TravelOnly": "<p>Summary including duration and distance for the travel portion of the leg only.</p>"
+      }
+    },
+    "RouteTaxiTravelStep": {
+      "base": "<p>A step that must be performed during the travel portion of the leg.</p>",
+      "refs": {
+        "RouteTaxiTravelStepList$member": null
+      }
+    },
+    "RouteTaxiTravelStepGeometryOffsetInteger": {
+      "base": null,
+      "refs": {
+        "RouteTaxiTravelStep$GeometryOffset": "<p>Offset in the leg geometry corresponding to the start of this step.</p>"
+      }
+    },
+    "RouteTaxiTravelStepList": {
+      "base": null,
+      "refs": {
+        "RouteTaxiLegDetails$TravelSteps": "<p>Steps of a leg that must be performed during the travel portion of the leg.</p>"
+      }
+    },
+    "RouteTaxiTravelStepType": {
+      "base": null,
+      "refs": {
+        "RouteTaxiTravelStep$Type": "<p>Type of the step.</p>"
       }
     },
     "RouteToll": {
@@ -2310,6 +2862,298 @@
         "RouteTrailerOptions$TrailerCount": "<p>Number of trailers attached to the vehicle.</p> <p>Default value: <code>0</code> </p>"
       }
     },
+    "RouteTransitAfterTravelStep": {
+      "base": "<p>A step that must be performed after the travel portion of the leg.</p>",
+      "refs": {
+        "RouteTransitAfterTravelStepList$member": null
+      }
+    },
+    "RouteTransitAfterTravelStepList": {
+      "base": null,
+      "refs": {
+        "RouteTransitLegDetails$AfterTravelSteps": "<p>Steps of a leg that must be performed after the travel portion of the leg.</p>"
+      }
+    },
+    "RouteTransitAfterTravelStepType": {
+      "base": null,
+      "refs": {
+        "RouteTransitAfterTravelStep$Type": "<p>Type of the step.</p>"
+      }
+    },
+    "RouteTransitAgency": {
+      "base": "<p>Details about the transit agency.</p>",
+      "refs": {
+        "RouteTransitLegDetails$Agency": "<p>Details about the transit agency.</p>"
+      }
+    },
+    "RouteTransitArrival": {
+      "base": "<p>Details corresponding to the arrival for the leg.</p>",
+      "refs": {
+        "RouteTransitLegDetails$Arrival": "<p>Details corresponding to the arrival for the leg.</p>"
+      }
+    },
+    "RouteTransitBeforeTravelStep": {
+      "base": "<p>A step that must be performed before the travel portion of the leg.</p>",
+      "refs": {
+        "RouteTransitBeforeTravelStepList$member": null
+      }
+    },
+    "RouteTransitBeforeTravelStepList": {
+      "base": null,
+      "refs": {
+        "RouteTransitLegDetails$BeforeTravelSteps": "<p>Steps of a leg that must be performed before the travel portion of the leg.</p>"
+      }
+    },
+    "RouteTransitBeforeTravelStepType": {
+      "base": null,
+      "refs": {
+        "RouteTransitBeforeTravelStep$Type": "<p>Type of the step.</p>"
+      }
+    },
+    "RouteTransitDeparture": {
+      "base": "<p>Details corresponding to the departure for the leg.</p>",
+      "refs": {
+        "RouteTransitIntermediateStop$Departure": "<p>Departure details for the intermediate stop.</p>",
+        "RouteTransitLegDetails$Departure": "<p>Details corresponding to the departure for the leg.</p>"
+      }
+    },
+    "RouteTransitIncident": {
+      "base": "<p>An incident describes disruptions on the transit route.</p>",
+      "refs": {
+        "RouteTransitIncidentList$member": null
+      }
+    },
+    "RouteTransitIncidentEffect": {
+      "base": null,
+      "refs": {
+        "RouteTransitIncident$Effect": "<p>The effect of the incident on the transit service.</p>"
+      }
+    },
+    "RouteTransitIncidentList": {
+      "base": null,
+      "refs": {
+        "RouteTransitLegDetails$Incidents": "<p>Incidents affecting this leg of the transit route.</p>"
+      }
+    },
+    "RouteTransitIncidentType": {
+      "base": null,
+      "refs": {
+        "RouteTransitIncident$Type": "<p>Type of the incident.</p>"
+      }
+    },
+    "RouteTransitIntermediateStop": {
+      "base": "<p>An intermediate stop between departure and destination of the transit route.</p>",
+      "refs": {
+        "RouteTransitIntermediateStopList$member": null
+      }
+    },
+    "RouteTransitIntermediateStopAttribute": {
+      "base": null,
+      "refs": {
+        "RouteTransitIntermediateStopAttributeList$member": null
+      }
+    },
+    "RouteTransitIntermediateStopAttributeList": {
+      "base": null,
+      "refs": {
+        "RouteTransitIntermediateStop$Attributes": "<p>Attributes of the intermediate stop.</p>"
+      }
+    },
+    "RouteTransitIntermediateStopGeometryOffsetInteger": {
+      "base": null,
+      "refs": {
+        "RouteTransitIntermediateStop$GeometryOffset": "<p>Offset in the leg geometry corresponding to the start of this stop.</p>"
+      }
+    },
+    "RouteTransitIntermediateStopList": {
+      "base": null,
+      "refs": {
+        "RouteTransitLegDetails$IntermediateStops": "<p>Intermediate stops between departure and destination of the transit route.</p>"
+      }
+    },
+    "RouteTransitLegDetails": {
+      "base": "<p>Populated when the Leg type is Transit, and provides additional information that is specific to public transit travel.</p>",
+      "refs": {
+        "RouteLeg$TransitLegDetails": "<p>Details related to the transit leg.</p>"
+      }
+    },
+    "RouteTransitMode": {
+      "base": null,
+      "refs": {
+        "RouteTransitModeList$member": null,
+        "RouteTransitTransportModeDetails$Mode": "<p>Mode of the transit transport.</p>"
+      }
+    },
+    "RouteTransitModeList": {
+      "base": null,
+      "refs": {
+        "RouteIntermodalTransitOptions$AllowedModes": "<p>Allowed transit transport modes when calculating the route. By default, all transport modes are allowed. Cannot be used together with <code>ExcludedModes</code>.</p>",
+        "RouteIntermodalTransitOptions$ExcludedModes": "<p>Excluded transit transport modes when calculating the route. By default, all transport modes are allowed. Cannot be used together with <code>AllowedModes</code>.</p>",
+        "RouteTransitOptions$AllowedModes": "<p>Allowed transit transport modes when calculating the route. By default, all transport modes are allowed. Cannot be used together with <code>ExcludedModes</code>.</p>",
+        "RouteTransitOptions$ExcludedModes": "<p>Excluded transit transport modes when calculating the route. By default, all transport modes are allowed. Cannot be used together with <code>AllowedModes</code>.</p>"
+      }
+    },
+    "RouteTransitNextDeparture": {
+      "base": "<p>Details about the next available departure for the transit service.</p>",
+      "refs": {
+        "RouteTransitNextDepartureList$member": null
+      }
+    },
+    "RouteTransitNextDepartureList": {
+      "base": null,
+      "refs": {
+        "RouteTransitLegDetails$NextDepartures": "<p>List of next departures that cover the same section of the route.</p>"
+      }
+    },
+    "RouteTransitNotice": {
+      "base": "<p>A notice that indicates an issue that occurred during route calculation.</p>",
+      "refs": {
+        "RouteTransitNoticeList$member": null
+      }
+    },
+    "RouteTransitNoticeCode": {
+      "base": null,
+      "refs": {
+        "RouteTransitNotice$Code": "<p>Code corresponding to the issue.</p>"
+      }
+    },
+    "RouteTransitNoticeList": {
+      "base": null,
+      "refs": {
+        "RouteTransitLegDetails$Notices": "<p>List of notices that indicate issues that occurred during route calculation.</p>"
+      }
+    },
+    "RouteTransitOptions": {
+      "base": "<p>Options related to transit routing.</p> <note> <p>Not supported in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers.</p> </note>",
+      "refs": {
+        "RouteTravelModeOptions$Transit": "<p>Travel mode options when the provided travel mode is <code>Transit</code>.</p> <note> <p>Not supported in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers.</p> </note>"
+      }
+    },
+    "RouteTransitOptionsMaxTransfersInteger": {
+      "base": null,
+      "refs": {
+        "RouteTransitOptions$MaxTransfers": "<p>Maximum number of transfers allowed when calculating the route.</p>"
+      }
+    },
+    "RouteTransitOverviewSummary": {
+      "base": "<p>Summary including duration and distance for the entire leg.</p>",
+      "refs": {
+        "RouteTransitSummary$Overview": "<p>Summary including duration and distance for the entire leg.</p>"
+      }
+    },
+    "RouteTransitPedestrianOptions": {
+      "base": "<p>Options for the pedestrian leg of the transit route.</p>",
+      "refs": {
+        "RouteTransitOptions$Pedestrian": "<p>Options for the pedestrian leg of the transit route.</p>"
+      }
+    },
+    "RouteTransitPedestrianOptionsMaxDistanceLong": {
+      "base": null,
+      "refs": {
+        "RouteTransitPedestrianOptions$MaxDistance": "<p>Maximum walking distance allowed.</p> <p> <b>Unit</b>: <code>meters</code> </p>"
+      }
+    },
+    "RouteTransitPedestrianOptionsSpeedDouble": {
+      "base": null,
+      "refs": {
+        "RouteTransitPedestrianOptions$Speed": "<p>Walking speed.</p> <p> <b>Unit</b>: <code>kilometers per hour</code> </p>"
+      }
+    },
+    "RouteTransitPlace": {
+      "base": "<p>Place details corresponding to the arrival or departure.</p>",
+      "refs": {
+        "RouteTransitArrival$Place": "<p>Place details corresponding to the arrival.</p>",
+        "RouteTransitDeparture$Place": "<p>Place details corresponding to the departure.</p>"
+      }
+    },
+    "RouteTransitPlaceType": {
+      "base": null,
+      "refs": {
+        "RouteTransitPlace$Type": "<p>The type of the place.</p>"
+      }
+    },
+    "RouteTransitPlaceWaypointIndexInteger": {
+      "base": null,
+      "refs": {
+        "RouteTransitPlace$WaypointIndex": "<p>Index of the waypoint in the request.</p>"
+      }
+    },
+    "RouteTransitSpan": {
+      "base": "<p>Span computed for the requested SpanAdditionalFeatures.</p>",
+      "refs": {
+        "RouteTransitSpanList$member": null
+      }
+    },
+    "RouteTransitSpanGeometryOffsetInteger": {
+      "base": null,
+      "refs": {
+        "RouteTransitSpan$GeometryOffset": "<p>Offset in the leg geometry corresponding to the start of this span.</p>"
+      }
+    },
+    "RouteTransitSpanList": {
+      "base": null,
+      "refs": {
+        "RouteTransitLegDetails$Spans": "<p>Spans that were computed for the requested SpanAdditionalFeatures. Not populated when the TravelMode is <code>Transit</code> or <code>Intermodal</code>.</p>"
+      }
+    },
+    "RouteTransitSpanRegionString": {
+      "base": null,
+      "refs": {
+        "RouteTransitSpan$Region": "<p>2-3 letter Region code corresponding to the Span. This is either a province or a state.</p>"
+      }
+    },
+    "RouteTransitSummary": {
+      "base": "<p>Summary of the transit leg.</p>",
+      "refs": {
+        "RouteTransitLegDetails$Summary": "<p>Summary of the transit leg.</p>"
+      }
+    },
+    "RouteTransitTransportModeDetails": {
+      "base": "<p>Transport mode details for the transit leg.</p>",
+      "refs": {
+        "RouteTransitIntermediateStop$Transport": "<p>Transport mode details at the intermediate stop.</p>",
+        "RouteTransitLegDetails$Transport": "<p>Transport mode details for the transit leg.</p>",
+        "RouteTransitNextDeparture$Transport": "<p>Transport mode details for this departure.</p>"
+      }
+    },
+    "RouteTransitTravelOnlySummary": {
+      "base": "<p>Summary including duration and distance for the travel portion of the leg only.</p>",
+      "refs": {
+        "RouteTransitSummary$TravelOnly": "<p>Summary including duration and distance for the travel portion of the leg only.</p>"
+      }
+    },
+    "RouteTransitTravelStep": {
+      "base": "<p>A step that must be performed during the travel portion of the leg.</p>",
+      "refs": {
+        "RouteTransitTravelStepList$member": null
+      }
+    },
+    "RouteTransitTravelStepGeometryOffsetInteger": {
+      "base": null,
+      "refs": {
+        "RouteTransitTravelStep$GeometryOffset": "<p>Offset in the leg geometry corresponding to the start of this step.</p>"
+      }
+    },
+    "RouteTransitTravelStepList": {
+      "base": null,
+      "refs": {
+        "RouteTransitLegDetails$TravelSteps": "<p>Steps of a leg that must be performed during the travel portion of the leg.</p>"
+      }
+    },
+    "RouteTransitTravelStepType": {
+      "base": null,
+      "refs": {
+        "RouteTransitTravelStep$Type": "<p>Type of the step.</p>"
+      }
+    },
+    "RouteTransitTripStatus": {
+      "base": null,
+      "refs": {
+        "RouteTransitArrival$Status": "<p>The status of the arrival.</p>",
+        "RouteTransitDeparture$Status": "<p>The status of the departure.</p>",
+        "RouteTransitNextDeparture$Status": "<p>The status of the departure.</p>"
+      }
+    },
     "RouteTransponder": {
       "base": "<p>Transponders for which this toll can be applied.</p>",
       "refs": {
@@ -2425,13 +3269,35 @@
       "base": "<p>Details related to the turn step.</p>",
       "refs": {
         "RoutePedestrianTravelStep$TurnStepDetails": "<p>Details that are specific to a turn step.</p>",
+        "RouteRentalTravelStep$TurnStepDetails": null,
+        "RouteTaxiTravelStep$TurnStepDetails": null,
         "RouteVehicleTravelStep$TurnStepDetails": "<p>Details that are specific to a Turn step.</p>"
       }
     },
     "RouteUTurnStepDetails": {
       "base": "<p>Details related to the U-turn step.</p>",
       "refs": {
+        "RouteRentalTravelStep$UTurnStepDetails": null,
+        "RouteTaxiTravelStep$UTurnStepDetails": null,
         "RouteVehicleTravelStep$UTurnStepDetails": "<p>Details that are specific to a Turn step.</p>"
+      }
+    },
+    "RouteVehicleAfterTravelStep": {
+      "base": "<p>Steps of a leg that must be performed after the travel portion of the leg.</p>",
+      "refs": {
+        "RouteVehicleAfterTravelStepList$member": null
+      }
+    },
+    "RouteVehicleAfterTravelStepList": {
+      "base": null,
+      "refs": {
+        "RouteVehicleLegDetails$AfterTravelSteps": "<p>Steps of a leg that must be performed after the travel portion of the leg.</p>"
+      }
+    },
+    "RouteVehicleAfterTravelStepType": {
+      "base": null,
+      "refs": {
+        "RouteVehicleAfterTravelStep$Type": "<p>Type of the step.</p>"
       }
     },
     "RouteVehicleArrival": {
@@ -2490,6 +3356,19 @@
         "RouteVehicleLicensePlate$LastCharacter": "<p>The last character of the License Plate.</p>"
       }
     },
+    "RouteVehicleMode": {
+      "base": null,
+      "refs": {
+        "RouteVehicleModeList$member": null
+      }
+    },
+    "RouteVehicleModeList": {
+      "base": null,
+      "refs": {
+        "RouteIntermodalVehicleOptions$AllowedModes": "<p>Allowed vehicle transport modes when calculating the route. By default, all transport modes are allowed. Cannot be used together with <code>ExcludedModes</code>.</p>",
+        "RouteIntermodalVehicleOptions$ExcludedModes": "<p>Excluded vehicle transport modes when calculating the route. By default, all transport modes are allowed. Cannot be used together with <code>AllowedModes</code>.</p>"
+      }
+    },
     "RouteVehicleNotice": {
       "base": "<p>Notices are additional information returned that indicate issues that occurred during route calculation.</p>",
       "refs": {
@@ -2521,7 +3400,7 @@
       }
     },
     "RouteVehicleOverviewSummary": {
-      "base": "<p>Summarized details of the leg.</p>",
+      "base": "<p>Summary including duration and distance for the entire leg.</p>",
       "refs": {
         "RouteVehicleSummary$Overview": "<p>Summarized details for the leg including before travel, travel and after travel steps.</p>"
       }
@@ -2529,8 +3408,14 @@
     "RouteVehiclePlace": {
       "base": "<p>Place details corresponding to the arrival or departure.</p>",
       "refs": {
-        "RouteVehicleArrival$Place": "<p>The place details.</p>",
-        "RouteVehicleDeparture$Place": "<p>The place details.</p>"
+        "RouteVehicleArrival$Place": "<p>Place details corresponding to the arrival.</p>",
+        "RouteVehicleDeparture$Place": "<p>Place details corresponding to the departure.</p>"
+      }
+    },
+    "RouteVehiclePlaceType": {
+      "base": null,
+      "refs": {
+        "RouteVehiclePlace$Type": "<p>The type of the place.</p>"
       }
     },
     "RouteVehiclePlaceWaypointIndexInteger": {
@@ -2633,6 +3518,27 @@
       "base": null,
       "refs": {
         "RouteWaypoint$StopDuration": "<p> Duration of the stop. Not supported in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p> <p> <b>Unit</b>: <code>seconds</code> </p>"
+      }
+    },
+    "RouteWebLink": {
+      "base": "<p>The URL to an external resource.</p>",
+      "refs": {
+        "RouteAttribution$WebLink": "<p>The URL to an external resource.</p>",
+        "RouteWebLinkList$member": null
+      }
+    },
+    "RouteWebLinkDeviceType": {
+      "base": null,
+      "refs": {
+        "RouteWebLink$DeviceType": "<p>Device type for which the link is intended.</p>"
+      }
+    },
+    "RouteWebLinkList": {
+      "base": null,
+      "refs": {
+        "RouteRentalLegDetails$BookingWebLinks": "<p>Web links to external ticket booking services for the rental.</p>",
+        "RouteTaxiLegDetails$BookingWebLinks": "<p>Web links to external ticket booking services for the taxi.</p>",
+        "RouteTransitLegDetails$BookingWebLinks": "<p>Web links to external ticket booking services for the transit.</p>"
       }
     },
     "RouteWeightConstraint": {
@@ -2741,7 +3647,7 @@
     "SensitiveDouble": {
       "base": null,
       "refs": {
-        "Circle$Radius": "<p>Radius of the Circle.</p> <p> <b>Unit</b>: <code>meters</code> </p>"
+        "Circle$Radius": "<p>Radius of the Circle.</p> <p> <b>Unit</b>: <code>meters</code> </p> <p>Valid Range: Minimum value of 0. Maximum value of 200000.</p>"
       }
     },
     "SensitiveString": {
@@ -2759,17 +3665,61 @@
         "RouteFerryTravelStep$Instruction": "<p>Brief description of the step in the requested language.</p> <note> <p>Only available when the TravelStepType is Default.</p> </note>",
         "RouteMatrixMatchingOptions$NameHint": "<p>Attempts to match the provided position to a road similar to the provided name.</p>",
         "RouteNumber$Value": "<p>The route number.</p>",
+        "RoutePedestrianAfterTravelStep$Instruction": "<p>Brief description of the step in the requested language.</p> <note> <p>Only available when the TravelStepType is Default.</p> </note>",
         "RoutePedestrianPlace$Name": "<p>The name of the place.</p>",
         "RoutePedestrianTravelStep$Instruction": "<p>Brief description of the step in the requested language.</p> <note> <p>Only available when the TravelStepType is Default.</p> </note>",
+        "RouteRentalAfterTravelStep$Instruction": "<p>Brief description of the step in the requested language.</p>",
+        "RouteRentalAgency$Name": "<p>Name of the agency.</p>",
+        "RouteRentalAgency$Url": "<p>URL to the agency's website.</p>",
+        "RouteRentalBeforeTravelStep$Instruction": "<p>Brief description of the step in the requested language.</p>",
+        "RouteRentalPlace$Name": "<p>The name of the place.</p>",
+        "RouteRentalTransportModeDetails$Category": "<p>Human readable transport category.</p>",
+        "RouteRentalTransportModeDetails$Color": "<p>Color of the transport polyline and background for the transport name.</p>",
+        "RouteRentalTransportModeDetails$LicensePlate": "<p>Vehicle license plate number.</p>",
+        "RouteRentalTransportModeDetails$Model": "<p>Vehicle model.</p>",
+        "RouteRentalTransportModeDetails$Name": "<p>Vehicle name or mobility provider name.</p>",
+        "RouteRentalTransportModeDetails$TextColor": "<p>Color of the transport name text.</p>",
+        "RouteRentalTravelStep$Instruction": "<p>Brief description of the step in the requested language.</p>",
+        "RouteStationDetails$PlatformName": "<p>Platform name or number.</p>",
+        "RouteStationDetails$ShortName": "<p>Short text or a number that identifies the station.</p>",
+        "RouteTaxiAfterTravelStep$Instruction": "<p>Brief description of the step in the requested language.</p>",
+        "RouteTaxiAgency$Name": "<p>Name of the agency.</p>",
+        "RouteTaxiAgency$Url": "<p>URL to the agency's website.</p>",
+        "RouteTaxiBeforeTravelStep$Instruction": "<p>Brief description of the step in the requested language.</p>",
+        "RouteTaxiPlace$Name": "<p>The name of the place.</p>",
+        "RouteTaxiTransportModeDetails$Category": "<p>Human readable transport category.</p>",
+        "RouteTaxiTransportModeDetails$Color": "<p>Color of the transport polyline and background for the transport name.</p>",
+        "RouteTaxiTransportModeDetails$LicensePlate": "<p>Vehicle license plate number.</p>",
+        "RouteTaxiTransportModeDetails$Model": "<p>Vehicle model.</p>",
+        "RouteTaxiTransportModeDetails$Name": "<p>Vehicle name or mobility provider name.</p>",
+        "RouteTaxiTransportModeDetails$TextColor": "<p>Color of the transport name text.</p>",
+        "RouteTaxiTravelStep$Instruction": "<p>Brief description of the step in the requested language.</p>",
         "RouteTollRate$ApplicableTimes": "<p>Time when the rate is valid.</p>",
         "RouteTollRate$Id": "<p>The Toll rate Id.</p>",
         "RouteTollRate$Name": "<p>The name of the toll.</p>",
         "RouteTollSystem$Name": "<p>The toll system name.</p>",
+        "RouteTransitAfterTravelStep$Instruction": "<p>Brief description of the step in the requested language.</p>",
+        "RouteTransitAgency$Name": "<p>Name of the agency.</p>",
+        "RouteTransitAgency$Url": "<p>URL to the agency's website.</p>",
+        "RouteTransitBeforeTravelStep$Instruction": "<p>Brief description of the step in the requested language.</p>",
+        "RouteTransitIncident$Description": "<p>A human readable description of the incident.</p>",
+        "RouteTransitIncident$Url": "<p>URL to the original incident published at the agency website.</p>",
+        "RouteTransitNextDeparture$PlatformName": "<p>Platform name or number for the departure.</p>",
+        "RouteTransitPlace$Name": "<p>The name of the place.</p>",
+        "RouteTransitTransportModeDetails$Headsign": "<p>Transit route headsign.</p>",
+        "RouteTransitTransportModeDetails$LongRouteName": "<p>Long name of the transit route.</p>",
+        "RouteTransitTransportModeDetails$RouteName": "<p>Transit route name.</p>",
+        "RouteTransitTransportModeDetails$ShortRouteName": "<p>Short name of the transit route.</p>",
+        "RouteTransitTravelStep$Instruction": "<p>Brief description of the step in the requested language.</p>",
         "RouteTransponder$SystemName": "<p>Names of the toll system collecting the toll.</p>",
+        "RouteVehicleAfterTravelStep$Instruction": "<p>Brief description of the step in the requested language.</p> <note> <p>Only available when the TravelStepType is Default.</p> </note>",
         "RouteVehicleIncident$Description": "<p>Brief readable description of the incident.</p>",
         "RouteVehicleNoticeDetail$Title": "<p>The notice title.</p>",
         "RouteVehiclePlace$Name": "<p>The name of the place.</p>",
         "RouteVehicleTravelStep$Instruction": "<p>Brief description of the step in the requested language.</p> <note> <p>Only available when the TravelStepType is Default.</p> </note>",
+        "RouteWebLink$AnchorText": "<p>The interactive or clickable portion of the text.</p>",
+        "RouteWebLink$Description": "<p>Text describing the URL.</p>",
+        "RouteWebLink$Url": "<p>The URL of the link.</p>",
         "RouteZone$Name": "<p>The name of the zone.</p>",
         "WaypointOptimizationFailedConstraint$Reason": "<p>Reason for the failed constraint.</p>"
       }
@@ -2865,11 +3815,20 @@
         "CalculateRoutesRequest$DepartureTime": "<p>Time of departure from the origin.</p> <p>Time format:<code>YYYY-MM-DDThh:mm:ss.sssZ | YYYY-MM-DDThh:mm:ss.sss+hh:mm</code> </p> <p>Examples:</p> <p> <code>2020-04-22T17:57:24Z</code> </p> <p> <code>2020-04-22T17:57:24+02:00</code> </p>",
         "OptimizeWaypointsRequest$DepartureTime": "<p>Departure time from the waypoint.</p> <p>Time format:<code>YYYY-MM-DDThh:mm:ss.sssZ | YYYY-MM-DDThh:mm:ss.sss+hh:mm</code> </p> <p>Examples:</p> <p> <code>2020-04-22T17:57:24Z</code> </p> <p> <code>2020-04-22T17:57:24+02:00</code> </p>",
         "RoadSnapTracePoint$Timestamp": "<p>Timestamp of the event.</p>",
-        "RouteFerryArrival$Time": "<p>The time.</p>",
-        "RouteFerryDeparture$Time": "<p>The time.</p>",
-        "RoutePedestrianArrival$Time": "<p>The time.</p>",
-        "RoutePedestrianDeparture$Time": "<p>The time.</p>",
-        "RouteVehicleArrival$Time": "<p>The time.</p>",
+        "RouteFerryArrival$Time": "<p>The arrival time.</p>",
+        "RouteFerryDeparture$Time": "<p>The departure time.</p>",
+        "RoutePedestrianArrival$Time": "<p>The arrival time.</p>",
+        "RoutePedestrianDeparture$Time": "<p>The departure time.</p>",
+        "RouteRentalArrival$Time": "<p>The arrival time.</p>",
+        "RouteRentalDeparture$Time": "<p>The departure time.</p>",
+        "RouteTaxiArrival$Time": "<p>The arrival time.</p>",
+        "RouteTaxiDeparture$Time": "<p>The departure time.</p>",
+        "RouteTransitArrival$Time": "<p>The arrival time.</p>",
+        "RouteTransitDeparture$Time": "<p>The departure time.</p>",
+        "RouteTransitIncident$EndTime": "<p>The end time of the incident.</p>",
+        "RouteTransitIncident$StartTime": "<p>The start time of the incident.</p>",
+        "RouteTransitNextDeparture$Time": "<p>The departure time.</p>",
+        "RouteVehicleArrival$Time": "<p>The arrival time.</p>",
         "RouteVehicleDeparture$Time": "<p>The departure time.</p>",
         "RouteVehicleIncident$EndTime": "<p>End timestamp of the incident.</p>",
         "RouteVehicleIncident$StartTime": "<p>Start time of the incident.</p>",
@@ -3051,6 +4010,12 @@
       "base": "<p>Driving distance related options.</p>",
       "refs": {
         "WaypointOptimizationClusteringOptions$DrivingDistanceOptions": "<p>Driving distance options to be used when the clustering algorithm is DrivingDistance.</p>"
+      }
+    },
+    "WaypointOptimizationDrivingDistanceOptionsDrivingDistanceLong": {
+      "base": null,
+      "refs": {
+        "WaypointOptimizationDrivingDistanceOptions$DrivingDistance": "<p>DrivingDistance assigns all the waypoints that are within driving distance of each other into a single cluster.</p>"
       }
     },
     "WaypointOptimizationExclusionOptions": {
@@ -3244,7 +4209,7 @@
     "WaypointOptimizationWaypointList": {
       "base": null,
       "refs": {
-        "OptimizeWaypointsRequest$Waypoints": "<p>List of waypoints between the <code>Origin</code> and <code>Destination</code>.</p>"
+        "OptimizeWaypointsRequest$Waypoints": "<p>List of waypoints between the <code>Origin</code> and <code>Destination</code>, in World Geodetic System (WGS 84) format: [longitude, latitude].</p> <p>The maximum number of waypoints allowed per request:</p> <ul> <li> <p>Maximum 50 waypoints per request</p> </li> <li> <p>Maximum 20 waypoints when using constraints (<code>AccessHours</code>, <code>AppointmentTime</code>, <code>ServiceDuration</code>, <code>Heading</code>, <code>SideOfStreet</code>, <code>Before</code>)</p> </li> </ul>"
       }
     },
     "WeightKilograms": {

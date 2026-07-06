@@ -37,6 +37,7 @@
       "input":{"shape":"CreateEnvironmentInput"},
       "output":{"shape":"CreateEnvironmentOutput"},
       "errors":[
+        {"shape":"ServiceUnavailableException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
       ],
@@ -71,6 +72,7 @@
       "input":{"shape":"DeleteEnvironmentInput"},
       "output":{"shape":"DeleteEnvironmentOutput"},
       "errors":[
+        {"shape":"ServiceUnavailableException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
@@ -92,7 +94,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
       ],
-      "endpoint":{"hostPrefix":"api."}
+      "endpoint":{"hostPrefix":"api."},
+      "readonly":true
     },
     "InvokeRestApi":{
       "name":"InvokeRestApi",
@@ -126,7 +129,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
       ],
-      "endpoint":{"hostPrefix":"api."}
+      "endpoint":{"hostPrefix":"api."},
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -142,7 +146,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
       ],
-      "endpoint":{"hostPrefix":"api."}
+      "endpoint":{"hostPrefix":"api."},
+      "readonly":true
     },
     "PublishMetrics":{
       "name":"PublishMetrics",
@@ -204,6 +209,7 @@
       "input":{"shape":"UpdateEnvironmentInput"},
       "output":{"shape":"UpdateEnvironmentOutput"},
       "errors":[
+        {"shape":"ServiceUnavailableException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
@@ -364,8 +370,7 @@
     },
     "DeleteEnvironmentOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Dimension":{
       "type":"structure",
@@ -388,8 +393,7 @@
     },
     "Document":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "document":true
     },
     "Double":{
@@ -745,8 +749,7 @@
     },
     "PublishMetricsOutput":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "deprecated":true,
       "deprecatedMessage":"This type is for internal use and not meant for public use. Data set for this type will be ignored."
     },
@@ -796,15 +799,13 @@
     },
     "RestApiRequestBody":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "document":true,
       "sensitive":true
     },
     "RestApiResponse":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "document":true,
       "sensitive":true
     },
@@ -847,6 +848,15 @@
       "member":{"shape":"SecurityGroupId"},
       "max":5,
       "min":1
+    },
+    "ServiceUnavailableException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "error":{"httpStatusCode":503},
+      "exception":true,
+      "fault":true
     },
     "StatisticSet":{
       "type":"structure",
@@ -908,8 +918,7 @@
     },
     "TagResourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -975,8 +984,7 @@
     },
     "UntagResourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateCreatedAt":{"type":"timestamp"},
     "UpdateEnvironmentInput":{
@@ -1067,7 +1075,8 @@
       "type":"string",
       "enum":[
         "PRIVATE_ONLY",
-        "PUBLIC_ONLY"
+        "PUBLIC_ONLY",
+        "PUBLIC_AND_PRIVATE"
       ]
     },
     "WebserverUrl":{

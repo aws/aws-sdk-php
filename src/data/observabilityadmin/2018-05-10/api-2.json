@@ -797,7 +797,8 @@
       "members":{
         "Region":{"shape":"Region"},
         "Account":{"shape":"AccountIdentifier"},
-        "DestinationLogsConfiguration":{"shape":"DestinationLogsConfiguration"}
+        "DestinationLogsConfiguration":{"shape":"DestinationLogsConfiguration"},
+        "DestinationMetricsConfiguration":{"shape":"DestinationMetricsConfiguration"}
       }
     },
     "CentralizationRuleSource":{
@@ -806,7 +807,8 @@
       "members":{
         "Regions":{"shape":"Regions"},
         "Scope":{"shape":"SourceFilterString"},
-        "SourceLogsConfiguration":{"shape":"SourceLogsConfiguration"}
+        "SourceLogsConfiguration":{"shape":"SourceLogsConfiguration"},
+        "SourceMetricsConfiguration":{"shape":"SourceMetricsConfiguration"}
       }
     },
     "CentralizationRuleSummaries":{
@@ -1021,6 +1023,12 @@
         "LogsEncryptionConfiguration":{"shape":"LogsEncryptionConfiguration"},
         "BackupConfiguration":{"shape":"LogsBackupConfiguration"},
         "LogGroupNameConfiguration":{"shape":"LogGroupNameConfiguration"}
+      }
+    },
+    "DestinationMetricsConfiguration":{
+      "type":"structure",
+      "members":{
+        "BackupConfiguration":{"shape":"MetricsBackupConfiguration"}
       }
     },
     "DestinationType":{
@@ -1494,7 +1502,8 @@
         "USAGE_LOGS",
         "SECURITY_FINDING_LOGS",
         "ACCESS_LOGS",
-        "CONNECTION_LOGS"
+        "CONNECTION_LOGS",
+        "S3_SERVER_ACCESS_LOGS"
       ]
     },
     "LogTypes":{
@@ -1533,6 +1542,18 @@
     "Long":{
       "type":"long",
       "box":true
+    },
+    "MetricsBackupConfiguration":{
+      "type":"structure",
+      "required":["Region"],
+      "members":{
+        "Region":{"shape":"Region"}
+      }
+    },
+    "MetricsFilterString":{
+      "type":"string",
+      "max":2000,
+      "min":1
     },
     "MskEnhancedMonitoringLevel":{
       "type":"string",
@@ -1679,7 +1700,8 @@
         "AWS::CloudFront::Distribution",
         "AWS::SecurityHub::HubV2",
         "AWS::CloudWatch::OTelEnrichment",
-        "AWS::MSK::Cluster"
+        "AWS::MSK::Cluster",
+        "AWS::S3::Bucket"
       ]
     },
     "ResourceTypes":{
@@ -1740,6 +1762,13 @@
       },
       "exception":true
     },
+    "SignalType":{
+      "type":"string",
+      "enum":[
+        "LOG",
+        "METRIC"
+      ]
+    },
     "SingleHeader":{
       "type":"structure",
       "members":{
@@ -1773,6 +1802,12 @@
         "LogGroupSelectionCriteria":{"shape":"LogsFilterString"},
         "DataSourceSelectionCriteria":{"shape":"DataSourceFilterString"},
         "EncryptedLogGroupStrategy":{"shape":"EncryptedLogGroupStrategy"}
+      }
+    },
+    "SourceMetricsConfiguration":{
+      "type":"structure",
+      "members":{
+        "MetricsSelectionCriteria":{"shape":"MetricsFilterString"}
       }
     },
     "Sources":{
@@ -2047,7 +2082,8 @@
       ],
       "members":{
         "Records":{"shape":"Records"},
-        "Configuration":{"shape":"TelemetryPipelineConfiguration"}
+        "Configuration":{"shape":"TelemetryPipelineConfiguration"},
+        "SignalType":{"shape":"SignalType"}
       }
     },
     "TestTelemetryPipelineOutput":{

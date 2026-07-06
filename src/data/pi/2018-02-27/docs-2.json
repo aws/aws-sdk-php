@@ -11,6 +11,7 @@
     "GetResourceMetrics": "<p>Retrieve Performance Insights metrics for a set of data sources over a time period. You can provide specific dimension groups and dimensions, and provide filtering criteria for each group. You must specify an aggregate function for each metric.</p> <note> <p>Each response element returns a maximum of 500 bytes. For larger elements, such as SQL statements, only the first 500 bytes are returned.</p> </note>",
     "ListAvailableResourceDimensions": "<p>Retrieve the dimensions that can be queried for each specified metric type on a specified DB instance.</p>",
     "ListAvailableResourceMetrics": "<p>Retrieve metrics of the specified types that can be queried for a specified DB instance. </p>",
+    "ListPerformanceAnalysisReportRecommendations": "<p>Retrieves recommendations for a performance analysis report.</p>",
     "ListPerformanceAnalysisReports": "<p>Lists all the analysis reports created for the DB instance. The reports are sorted based on the start time of each report.</p>",
     "ListTagsForResource": "<p>Retrieves all the metadata tags associated with Amazon RDS Performance Insights resource.</p>",
     "TagResource": "<p>Adds metadata tags to the Amazon RDS Performance Insights resource.</p>",
@@ -55,7 +56,8 @@
         "AnalysisReport$AnalysisReportId": "<p>The name of the analysis report.</p>",
         "CreatePerformanceAnalysisReportResponse$AnalysisReportId": "<p>A unique identifier for the created analysis report.</p>",
         "DeletePerformanceAnalysisReportRequest$AnalysisReportId": "<p>The unique identifier of the analysis report for deletion.</p>",
-        "GetPerformanceAnalysisReportRequest$AnalysisReportId": "<p>A unique identifier of the created analysis report. For example, <code>report-12345678901234567</code> </p>"
+        "GetPerformanceAnalysisReportRequest$AnalysisReportId": "<p>A unique identifier of the created analysis report. For example, <code>report-12345678901234567</code> </p>",
+        "ListPerformanceAnalysisReportRecommendationsRequest$AnalysisReportId": "<p>A unique identifier of the created analysis report. For example, <code>report-12345678901234567</code> </p>"
       }
     },
     "AnalysisReportSummary": {
@@ -353,6 +355,7 @@
         "GetResourceMetricsRequest$Identifier": "<p>An immutable identifier for a data source that is unique for an Amazon Web Services Region. Performance Insights gathers metrics from this data source. In the console, the identifier is shown as <i>ResourceID</i>. When you call <code>DescribeDBInstances</code>, the identifier is returned as <code>DbiResourceId</code>.</p> <p>To use a DB instance as a data source, specify its <code>DbiResourceId</code> value. For example, specify <code>db-ABCDEFGHIJKLMNOPQRSTU1VW2X</code>.</p>",
         "ListAvailableResourceDimensionsRequest$Identifier": "<p>An immutable identifier for a data source that is unique within an Amazon Web Services Region. Performance Insights gathers metrics from this data source. To use an Amazon RDS DB instance as a data source, specify its <code>DbiResourceId</code> value. For example, specify <code>db-ABCDEFGHIJKLMNOPQRSTU1VWZ</code>. </p>",
         "ListAvailableResourceMetricsRequest$Identifier": "<p>An immutable identifier for a data source that is unique within an Amazon Web Services Region. Performance Insights gathers metrics from this data source. To use an Amazon RDS DB instance as a data source, specify its <code>DbiResourceId</code> value. For example, specify <code>db-ABCDEFGHIJKLMNOPQRSTU1VWZ</code>. </p>",
+        "ListPerformanceAnalysisReportRecommendationsRequest$Identifier": "<p>An immutable identifier for a data source that is unique for an Amazon Web Services Region. Performance Insights gathers metrics from this data source. In the console, the identifier is shown as <i>ResourceID</i>. When you call <code>DescribeDBInstances</code>, the identifier is returned as <code>DbiResourceId</code>.</p> <p>To use a DB instance as a data source, specify its <code>DbiResourceId</code> value. For example, specify <code>db-ABCDEFGHIJKLMNOPQRSTU1VW2X</code>.</p>",
         "ListPerformanceAnalysisReportsRequest$Identifier": "<p>An immutable identifier for a data source that is unique for an Amazon Web Services Region. Performance Insights gathers metrics from this data source. In the console, the identifier is shown as <i>ResourceID</i>. When you call <code>DescribeDBInstances</code>, the identifier is returned as <code>DbiResourceId</code>.</p> <p>To use a DB instance as a data source, specify its <code>DbiResourceId</code> value. For example, specify <code>db-ABCDEFGHIJKLMNOPQRSTU1VW2X</code>.</p>"
       }
     },
@@ -406,6 +409,14 @@
       "base": null,
       "refs": {}
     },
+    "ListPerformanceAnalysisReportRecommendationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListPerformanceAnalysisReportRecommendationsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListPerformanceAnalysisReportsRequest": {
       "base": null,
       "refs": {}
@@ -426,7 +437,8 @@
       "base": null,
       "refs": {
         "Insight$Description": "<p>Description of the insight. For example: <code>A high severity Insight found between 02:00 to 02:30, where there was an unusually high DB load 600x above baseline. Likely performance impact</code>.</p>",
-        "Recommendation$RecommendationDescription": "<p>The recommendation details to help resolve the performance issue. For example, <code>Investigate the following SQLs that contributed to 100% of the total DBLoad during that time period: sql-id</code> </p>"
+        "Recommendation$RecommendationDescription": "<p>The recommendation details to help resolve the performance issue. For example, <code>Investigate the following SQLs that contributed to 100% of the total DBLoad during that time period: sql-id</code> </p>",
+        "Recommendation$RecommendationDetails": "<p>Detailed information about the recommendation, including steps to resolve the performance issue.</p>"
       }
     },
     "MaxResults": {
@@ -436,6 +448,7 @@
         "GetResourceMetricsRequest$MaxResults": "<p>The maximum number of items to return in the response.</p>",
         "ListAvailableResourceDimensionsRequest$MaxResults": "<p>The maximum number of items to return in the response. If more items exist than the specified <code>MaxRecords</code> value, a pagination token is included in the response so that the remaining results can be retrieved.</p>",
         "ListAvailableResourceMetricsRequest$MaxResults": "<p>The maximum number of items to return. If the <code>MaxRecords</code> value is less than the number of existing items, the response includes a pagination token. </p>",
+        "ListPerformanceAnalysisReportRecommendationsRequest$MaxResults": "<p>The maximum number of items to return in the response. If more items exist than the specified <code>MaxResults</code> value, a pagination token is included in the response so that the remaining results can be retrieved. </p>",
         "ListPerformanceAnalysisReportsRequest$MaxResults": "<p>The maximum number of items to return in the response. If more items exist than the specified <code>MaxResults</code> value, a pagination token is included in the response so that the remaining results can be retrieved. </p>"
       }
     },
@@ -505,6 +518,8 @@
         "ListAvailableResourceDimensionsResponse$NextToken": "<p>An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the token, up to the value specified by <code>MaxRecords</code>.</p>",
         "ListAvailableResourceMetricsRequest$NextToken": "<p>An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the token, up to the value specified by <code>MaxRecords</code>. </p>",
         "ListAvailableResourceMetricsResponse$NextToken": "<p>A pagination token that indicates the response didn’t return all available records because <code>MaxRecords</code> was specified in the previous request. To get the remaining records, specify <code>NextToken</code> in a separate request with this value. </p>",
+        "ListPerformanceAnalysisReportRecommendationsRequest$NextToken": "<p>An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the token, up to the value specified by <code>MaxResults</code>.</p>",
+        "ListPerformanceAnalysisReportRecommendationsResponse$NextToken": "<p>An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the token, up to the value specified by <code>MaxResults</code>.</p>",
         "ListPerformanceAnalysisReportsRequest$NextToken": "<p>An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the token, up to the value specified by <code>MaxResults</code>.</p>",
         "ListPerformanceAnalysisReportsResponse$NextToken": "<p>An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the token, up to the value specified by <code>MaxResults</code>.</p>"
       }
@@ -531,10 +546,17 @@
         "RecommendationList$member": null
       }
     },
+    "RecommendationIdList": {
+      "base": null,
+      "refs": {
+        "ListPerformanceAnalysisReportRecommendationsRequest$RecommendationIds": "<p>A list of recommendation identifiers to filter the results.</p>"
+      }
+    },
     "RecommendationList": {
       "base": null,
       "refs": {
-        "Insight$Recommendations": "<p>List of recommendations for the insight. For example, <code>Investigate the following SQLs that contributed to 100% of the total DBLoad during that time period: sql-id</code>.</p>"
+        "Insight$Recommendations": "<p>List of recommendations for the insight. For example, <code>Investigate the following SQLs that contributed to 100% of the total DBLoad during that time period: sql-id</code>.</p>",
+        "ListPerformanceAnalysisReportRecommendationsResponse$Recommendations": "<p>The list of recommendations for the analysis report.</p>"
       }
     },
     "RequestString": {
@@ -617,6 +639,7 @@
         "GetResourceMetricsRequest$ServiceType": "<p>The Amazon Web Services service for which Performance Insights returns metrics. Valid values are as follows:</p> <ul> <li> <p> <code>RDS</code> </p> </li> <li> <p> <code>DOCDB</code> </p> </li> </ul>",
         "ListAvailableResourceDimensionsRequest$ServiceType": "<p>The Amazon Web Services service for which Performance Insights returns metrics.</p>",
         "ListAvailableResourceMetricsRequest$ServiceType": "<p>The Amazon Web Services service for which Performance Insights returns metrics.</p>",
+        "ListPerformanceAnalysisReportRecommendationsRequest$ServiceType": "<p>The Amazon Web Services service for which Performance Insights returns metrics. Valid value is <code>RDS</code>.</p>",
         "ListPerformanceAnalysisReportsRequest$ServiceType": "<p>The Amazon Web Services service for which Performance Insights returns metrics. Valid value is <code>RDS</code>.</p>",
         "ListTagsForResourceRequest$ServiceType": "<p>List the tags for the Amazon Web Services service for which Performance Insights returns metrics. Valid value is <code>RDS</code>.</p>",
         "TagResourceRequest$ServiceType": "<p>The Amazon Web Services service for which Performance Insights returns metrics. Valid value is <code>RDS</code>.</p>",
@@ -644,6 +667,7 @@
         "Insight$InsightType": "<p>The type of insight. For example, <code>HighDBLoad</code>, <code>HighCPU</code>, or <code>DominatingSQLs</code>.</p>",
         "MetricDimensionGroups$Metric": "<p>The metric type to which the dimension information belongs.</p>",
         "Recommendation$RecommendationId": "<p>The unique identifier for the recommendation.</p>",
+        "RecommendationIdList$member": null,
         "ResponseResourceMetric$Metric": "<p>The full name of the metric.</p>",
         "ResponseResourceMetric$Unit": "<p>The unit of the metric.</p>",
         "ResponseResourceMetricKey$Metric": "<p>The name of a Performance Insights metric to be measured.</p> <p>Valid values for <code>Metric</code> are:</p> <ul> <li> <p> <code>db.load.avg</code> - A scaled representation of the number of active sessions for the database engine.</p> </li> <li> <p> <code>db.sampledload.avg</code> - The raw number of active sessions for the database engine.</p> </li> <li> <p>The counter metrics listed in <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_PerfInsights_Counters.html#USER_PerfInsights_Counters.OS\">Performance Insights operating system counters</a> in the <i>Amazon Aurora User Guide</i>.</p> </li> <li> <p>The counter metrics listed in <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PerfInsights_Counters.html#USER_PerfInsights_Counters.OS\">Performance Insights operating system counters</a> in the <i>Amazon RDS User Guide</i>.</p> </li> </ul> <p>If the number of active sessions is less than an internal Performance Insights threshold, <code>db.load.avg</code> and <code>db.sampledload.avg</code> are the same value. If the number of active sessions is greater than the internal threshold, Performance Insights samples the active sessions, with <code>db.load.avg</code> showing the scaled values, <code>db.sampledload.avg</code> showing the raw values, and <code>db.sampledload.avg</code> less than <code>db.load.avg</code>. For most use cases, you can query <code>db.load.avg</code> only. </p>"

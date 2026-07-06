@@ -1205,7 +1205,6 @@
       "type":"structure",
       "required":[
         "KeyId",
-        "GranteePrincipal",
         "Operations"
       ],
       "members":{
@@ -1216,7 +1215,9 @@
         "Constraints":{"shape":"GrantConstraints"},
         "GrantTokens":{"shape":"GrantTokenList"},
         "Name":{"shape":"GrantNameType"},
-        "DryRun":{"shape":"NullableBooleanType"}
+        "DryRun":{"shape":"NullableBooleanType"},
+        "GranteeServicePrincipal":{"shape":"ServicePrincipalType"},
+        "RetiringServicePrincipal":{"shape":"ServicePrincipalType"}
       }
     },
     "CreateGrantResponse":{
@@ -1830,11 +1831,18 @@
         "KeyAgreementAlgorithms":{"shape":"KeyAgreementAlgorithmSpecList"}
       }
     },
+    "GrantConstraintSourceArnType":{
+      "type":"string",
+      "max":512,
+      "min":20,
+      "pattern":"^arn:aws[a-z0-9-]*:[a-z0-9-]+:[a-z0-9-]*:[0-9]{12}:.+$"
+    },
     "GrantConstraints":{
       "type":"structure",
       "members":{
         "EncryptionContextSubset":{"shape":"EncryptionContextType"},
-        "EncryptionContextEquals":{"shape":"EncryptionContextType"}
+        "EncryptionContextEquals":{"shape":"EncryptionContextType"},
+        "SourceArn":{"shape":"GrantConstraintSourceArnType"}
       }
     },
     "GrantIdType":{
@@ -1857,7 +1865,9 @@
         "RetiringPrincipal":{"shape":"PrincipalIdType"},
         "IssuingAccount":{"shape":"PrincipalIdType"},
         "Operations":{"shape":"GrantOperationList"},
-        "Constraints":{"shape":"GrantConstraints"}
+        "Constraints":{"shape":"GrantConstraints"},
+        "GranteeServicePrincipal":{"shape":"ServicePrincipalType"},
+        "RetiringServicePrincipal":{"shape":"ServicePrincipalType"}
       }
     },
     "GrantNameType":{
@@ -2262,7 +2272,8 @@
         "Marker":{"shape":"MarkerType"},
         "KeyId":{"shape":"KeyIdType"},
         "GrantId":{"shape":"GrantIdType"},
-        "GranteePrincipal":{"shape":"PrincipalIdType"}
+        "GranteePrincipal":{"shape":"PrincipalIdType"},
+        "GranteeServicePrincipal":{"shape":"ServicePrincipalType"}
       }
     },
     "ListGrantsResponse":{
@@ -2342,11 +2353,11 @@
     },
     "ListRetirableGrantsRequest":{
       "type":"structure",
-      "required":["RetiringPrincipal"],
       "members":{
         "Limit":{"shape":"LimitType"},
         "Marker":{"shape":"MarkerType"},
-        "RetiringPrincipal":{"shape":"PrincipalIdType"}
+        "RetiringPrincipal":{"shape":"PrincipalIdType"},
+        "RetiringServicePrincipal":{"shape":"ServicePrincipalType"}
       }
     },
     "MacAlgorithmSpec":{
@@ -2626,6 +2637,12 @@
         "KeyState":{"shape":"KeyState"},
         "PendingWindowInDays":{"shape":"PendingWindowInDaysType"}
       }
+    },
+    "ServicePrincipalType":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^([A-Za-z0-9\\-]+)\\.([A-Za-z0-9\\-]+)(\\.[A-Za-z0-9\\-]+)+$"
     },
     "SignRequest":{
       "type":"structure",

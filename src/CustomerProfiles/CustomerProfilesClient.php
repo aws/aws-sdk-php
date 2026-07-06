@@ -11,6 +11,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise batchGetCalculatedAttributeForProfileAsync(array $args = [])
  * @method \Aws\Result batchGetProfile(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchGetProfileAsync(array $args = [])
+ * @method \Aws\Result batchPutProfileObject(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchPutProfileObjectAsync(array $args = [])
  * @method \Aws\Result createCalculatedAttributeDefinition(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createCalculatedAttributeDefinitionAsync(array $args = [])
  * @method \Aws\Result createDomain(array $args = [])

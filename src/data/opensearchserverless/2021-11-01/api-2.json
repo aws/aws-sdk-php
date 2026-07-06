@@ -762,6 +762,14 @@
       "max":1011,
       "min":1
     },
+    "AutoscalingStatus":{
+      "type":"string",
+      "enum":[
+        "ACTION_SCALING_UP",
+        "ACTION_SCALING_DOWN",
+        "NO_ACTION"
+      ]
+    },
     "BatchGetCollectionGroupRequest":{
       "type":"structure",
       "members":{
@@ -836,6 +844,13 @@
       "type":"boolean",
       "box":true
     },
+    "CapacityDetails":{
+      "type":"structure",
+      "members":{
+        "capacityInOcu":{"shape":"Float"},
+        "autoscalingStatus":{"shape":"AutoscalingStatus"}
+      }
+    },
     "CapacityLimits":{
       "type":"structure",
       "members":{
@@ -859,6 +874,7 @@
         "arn":{"shape":"String"},
         "kmsKeyArn":{"shape":"String"},
         "standbyReplicas":{"shape":"StandbyReplicas"},
+        "deletionProtection":{"shape":"DeletionProtection"},
         "vectorOptions":{"shape":"VectorOptions"},
         "createdDate":{"shape":"Long"},
         "lastModifiedDate":{"shape":"Long"},
@@ -898,10 +914,10 @@
     "CollectionGroupCapacityLimits":{
       "type":"structure",
       "members":{
-        "maxIndexingCapacityInOCU":{"shape":"CollectionGroupIndexingCapacityValue"},
-        "maxSearchCapacityInOCU":{"shape":"CollectionGroupSearchCapacityValue"},
-        "minIndexingCapacityInOCU":{"shape":"CollectionGroupIndexingCapacityValue"},
-        "minSearchCapacityInOCU":{"shape":"CollectionGroupSearchCapacityValue"}
+        "maxIndexingCapacityInOCU":{"shape":"CollectionGroupMaxIndexingCapacityValue"},
+        "maxSearchCapacityInOCU":{"shape":"CollectionGroupMaxSearchCapacityValue"},
+        "minIndexingCapacityInOCU":{"shape":"CollectionGroupMinIndexingCapacityValue"},
+        "minSearchCapacityInOCU":{"shape":"CollectionGroupMinSearchCapacityValue"}
       }
     },
     "CollectionGroupDetail":{
@@ -915,7 +931,9 @@
         "tags":{"shape":"Tags"},
         "createdDate":{"shape":"Long"},
         "capacityLimits":{"shape":"CollectionGroupCapacityLimits"},
-        "numberOfCollections":{"shape":"Integer"}
+        "currentCapacity":{"shape":"CurrentCapacity"},
+        "numberOfCollections":{"shape":"Integer"},
+        "generation":{"shape":"ServerlessGeneration"}
       }
     },
     "CollectionGroupDetails":{
@@ -947,10 +965,25 @@
       "max":100,
       "min":1
     },
-    "CollectionGroupIndexingCapacityValue":{
+    "CollectionGroupMaxIndexingCapacityValue":{
       "type":"float",
       "box":true,
       "min":1
+    },
+    "CollectionGroupMaxSearchCapacityValue":{
+      "type":"float",
+      "box":true,
+      "min":1
+    },
+    "CollectionGroupMinIndexingCapacityValue":{
+      "type":"float",
+      "box":true,
+      "min":0
+    },
+    "CollectionGroupMinSearchCapacityValue":{
+      "type":"float",
+      "box":true,
+      "min":0
     },
     "CollectionGroupName":{
       "type":"string",
@@ -962,11 +995,6 @@
       "type":"list",
       "member":{"shape":"CollectionGroupName"},
       "max":100,
-      "min":1
-    },
-    "CollectionGroupSearchCapacityValue":{
-      "type":"float",
-      "box":true,
       "min":1
     },
     "CollectionGroupSummaries":{
@@ -981,7 +1009,8 @@
         "name":{"shape":"CollectionGroupName"},
         "numberOfCollections":{"shape":"Integer"},
         "createdDate":{"shape":"Long"},
-        "capacityLimits":{"shape":"CollectionGroupCapacityLimits"}
+        "capacityLimits":{"shape":"CollectionGroupCapacityLimits"},
+        "generation":{"shape":"ServerlessGeneration"}
       }
     },
     "CollectionId":{
@@ -998,7 +1027,7 @@
     },
     "CollectionName":{
       "type":"string",
-      "max":32,
+      "max":64,
       "min":3,
       "pattern":"[a-z][a-z0-9-]+"
     },
@@ -1095,6 +1124,7 @@
         "arn":{"shape":"String"},
         "kmsKeyArn":{"shape":"String"},
         "standbyReplicas":{"shape":"StandbyReplicas"},
+        "deletionProtection":{"shape":"DeletionProtection"},
         "vectorOptions":{"shape":"VectorOptions"},
         "createdDate":{"shape":"Long"},
         "lastModifiedDate":{"shape":"Long"},
@@ -1111,7 +1141,8 @@
         "description":{"shape":"String"},
         "tags":{"shape":"Tags"},
         "createdDate":{"shape":"Long"},
-        "capacityLimits":{"shape":"CollectionGroupCapacityLimits"}
+        "capacityLimits":{"shape":"CollectionGroupCapacityLimits"},
+        "generation":{"shape":"ServerlessGeneration"}
       }
     },
     "CreateCollectionGroupRequest":{
@@ -1126,6 +1157,7 @@
         "description":{"shape":"CreateCollectionGroupRequestDescriptionString"},
         "tags":{"shape":"Tags"},
         "capacityLimits":{"shape":"CollectionGroupCapacityLimits"},
+        "generation":{"shape":"ServerlessGeneration"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -1155,6 +1187,7 @@
         "vectorOptions":{"shape":"VectorOptions"},
         "collectionGroupName":{"shape":"CollectionGroupName"},
         "encryptionConfig":{"shape":"EncryptionConfig"},
+        "deletionProtection":{"shape":"DeletionProtection"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -1302,6 +1335,13 @@
         "createVpcEndpointDetail":{"shape":"CreateVpcEndpointDetail"}
       }
     },
+    "CurrentCapacity":{
+      "type":"structure",
+      "members":{
+        "search":{"shape":"CapacityDetails"},
+        "indexing":{"shape":"CapacityDetails"}
+      }
+    },
     "DeleteAccessPolicyRequest":{
       "type":"structure",
       "required":[
@@ -1326,7 +1366,8 @@
       "members":{
         "id":{"shape":"CollectionId"},
         "name":{"shape":"CollectionName"},
-        "status":{"shape":"CollectionStatus"}
+        "status":{"shape":"CollectionStatus"},
+        "deletionProtection":{"shape":"DeletionProtection"}
       }
     },
     "DeleteCollectionGroupRequest":{
@@ -1454,6 +1495,13 @@
         "deleteVpcEndpointDetail":{"shape":"DeleteVpcEndpointDetail"}
       }
     },
+    "DeletionProtection":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "Document":{
       "type":"structure",
       "members":{},
@@ -1506,6 +1554,10 @@
         "collectionEndpoint":{"shape":"String"},
         "dashboardEndpoint":{"shape":"String"}
       }
+    },
+    "Float":{
+      "type":"float",
+      "box":true
     },
     "GetAccessPolicyRequest":{
       "type":"structure",
@@ -1974,7 +2026,7 @@
     "Resource":{"type":"string"},
     "ResourceName":{
       "type":"string",
-      "pattern":"index/[a-z][a-z0-9-]{3,32}/([a-z;0-9&$%][+.~=\\-_a-z;0-9&$%]*)"
+      "pattern":"index/[a-z][a-z0-9-]{3,63}/([a-z;0-9&$%][+.~=\\-_a-z;0-9&$%]*)"
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -2108,6 +2160,13 @@
       "enum":[
         "encryption",
         "network"
+      ]
+    },
+    "ServerlessGeneration":{
+      "type":"string",
+      "enum":[
+        "CLASSIC",
+        "NEXTGEN"
       ]
     },
     "ServerlessVectorAccelerationStatus":{
@@ -2263,7 +2322,8 @@
         "vectorOptions":{"shape":"VectorOptions"},
         "arn":{"shape":"String"},
         "createdDate":{"shape":"Long"},
-        "lastModifiedDate":{"shape":"Long"}
+        "lastModifiedDate":{"shape":"Long"},
+        "deletionProtection":{"shape":"DeletionProtection"}
       }
     },
     "UpdateCollectionGroupDetail":{
@@ -2275,7 +2335,8 @@
         "description":{"shape":"String"},
         "capacityLimits":{"shape":"CollectionGroupCapacityLimits"},
         "createdDate":{"shape":"Long"},
-        "lastModifiedDate":{"shape":"Long"}
+        "lastModifiedDate":{"shape":"Long"},
+        "generation":{"shape":"ServerlessGeneration"}
       }
     },
     "UpdateCollectionGroupRequest":{
@@ -2309,6 +2370,7 @@
         "id":{"shape":"CollectionId"},
         "description":{"shape":"UpdateCollectionRequestDescriptionString"},
         "vectorOptions":{"shape":"VectorOptions"},
+        "deletionProtection":{"shape":"DeletionProtection"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true

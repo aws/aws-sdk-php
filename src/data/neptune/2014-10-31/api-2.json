@@ -155,7 +155,8 @@
         {"shape":"DBInstanceNotFoundFault"},
         {"shape":"DBSubnetGroupDoesNotCoverEnoughAZs"},
         {"shape":"GlobalClusterNotFoundFault"},
-        {"shape":"InvalidGlobalClusterStateFault"}
+        {"shape":"InvalidGlobalClusterStateFault"},
+        {"shape":"NetworkTypeNotSupportedFault"}
       ]
     },
     "CreateDBClusterEndpoint":{
@@ -817,7 +818,8 @@
         {"shape":"InvalidDBSecurityGroupStateFault"},
         {"shape":"InvalidDBInstanceStateFault"},
         {"shape":"DBClusterAlreadyExistsFault"},
-        {"shape":"StorageTypeNotSupportedFault"}
+        {"shape":"StorageTypeNotSupportedFault"},
+        {"shape":"NetworkTypeNotSupportedFault"}
       ]
     },
     "ModifyDBClusterEndpoint":{
@@ -1128,7 +1130,8 @@
         {"shape":"InvalidSubnet"},
         {"shape":"OptionGroupNotFoundFault"},
         {"shape":"KMSKeyNotAccessibleFault"},
-        {"shape":"DBClusterParameterGroupNotFoundFault"}
+        {"shape":"DBClusterParameterGroupNotFoundFault"},
+        {"shape":"NetworkTypeNotSupportedFault"}
       ]
     },
     "RestoreDBClusterToPointInTime":{
@@ -1159,7 +1162,8 @@
         {"shape":"KMSKeyNotAccessibleFault"},
         {"shape":"OptionGroupNotFoundFault"},
         {"shape":"StorageQuotaExceededFault"},
-        {"shape":"DBClusterParameterGroupNotFoundFault"}
+        {"shape":"DBClusterParameterGroupNotFoundFault"},
+        {"shape":"NetworkTypeNotSupportedFault"}
       ]
     },
     "StartDBCluster":{
@@ -1356,7 +1360,8 @@
         "BackupRetentionPeriod":{"shape":"IntegerOptional"},
         "StorageType":{"shape":"String"},
         "AllocatedStorage":{"shape":"IntegerOptional"},
-        "Iops":{"shape":"IntegerOptional"}
+        "Iops":{"shape":"IntegerOptional"},
+        "NetworkType":{"shape":"String"}
       }
     },
     "CopyDBClusterParameterGroupMessage":{
@@ -1485,7 +1490,8 @@
         "DeletionProtection":{"shape":"BooleanOptional"},
         "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfiguration"},
         "GlobalClusterIdentifier":{"shape":"GlobalClusterIdentifier"},
-        "StorageType":{"shape":"String"}
+        "StorageType":{"shape":"String"},
+        "NetworkType":{"shape":"String"}
       }
     },
     "CreateDBClusterParameterGroupMessage":{
@@ -1721,7 +1727,8 @@
         "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfigurationInfo"},
         "GlobalClusterIdentifier":{"shape":"GlobalClusterIdentifier"},
         "IOOptimizedNextAllowedModificationTime":{"shape":"TStamp"},
-        "StorageType":{"shape":"String"}
+        "StorageType":{"shape":"String"},
+        "NetworkType":{"shape":"String"}
       },
       "wrapper":true
     },
@@ -2121,7 +2128,8 @@
         "PerformanceInsightsEnabled":{"shape":"BooleanOptional"},
         "PerformanceInsightsKMSKeyId":{"shape":"String"},
         "EnabledCloudwatchLogsExports":{"shape":"LogTypeList"},
-        "DeletionProtection":{"shape":"BooleanOptional"}
+        "DeletionProtection":{"shape":"BooleanOptional"},
+        "NetworkType":{"shape":"String"}
       },
       "wrapper":true
     },
@@ -2315,7 +2323,8 @@
         "VpcId":{"shape":"String"},
         "SubnetGroupStatus":{"shape":"String"},
         "Subnets":{"shape":"SubnetList"},
-        "DBSubnetGroupArn":{"shape":"String"}
+        "DBSubnetGroupArn":{"shape":"String"},
+        "SupportedNetworkTypes":{"shape":"StringList"}
       },
       "wrapper":true
     },
@@ -3295,7 +3304,8 @@
         "DeletionProtection":{"shape":"BooleanOptional"},
         "CopyTagsToSnapshot":{"shape":"BooleanOptional"},
         "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfiguration"},
-        "StorageType":{"shape":"String"}
+        "StorageType":{"shape":"String"},
+        "NetworkType":{"shape":"String"}
       }
     },
     "ModifyDBClusterParameterGroupMessage":{
@@ -3446,6 +3456,16 @@
         "GlobalCluster":{"shape":"GlobalCluster"}
       }
     },
+    "NetworkTypeNotSupportedFault":{
+      "type":"structure",
+      "members":{},
+      "error":{
+        "code":"NetworkTypeNotSupported",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "OptionGroupMembership":{
       "type":"structure",
       "members":{
@@ -3493,7 +3513,8 @@
         "MaxIopsPerDbInstance":{"shape":"IntegerOptional"},
         "MinIopsPerGib":{"shape":"DoubleOptional"},
         "MaxIopsPerGib":{"shape":"DoubleOptional"},
-        "SupportsGlobalDatabases":{"shape":"Boolean"}
+        "SupportsGlobalDatabases":{"shape":"Boolean"},
+        "SupportedNetworkTypes":{"shape":"StringList"}
       },
       "wrapper":true
     },
@@ -3787,7 +3808,8 @@
         "DeletionProtection":{"shape":"BooleanOptional"},
         "CopyTagsToSnapshot":{"shape":"BooleanOptional"},
         "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfiguration"},
-        "StorageType":{"shape":"String"}
+        "StorageType":{"shape":"String"},
+        "NetworkType":{"shape":"String"}
       }
     },
     "RestoreDBClusterFromSnapshotResult":{
@@ -3819,7 +3841,8 @@
         "DBClusterParameterGroupName":{"shape":"String"},
         "DeletionProtection":{"shape":"BooleanOptional"},
         "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfiguration"},
-        "StorageType":{"shape":"String"}
+        "StorageType":{"shape":"String"},
+        "NetworkType":{"shape":"String"}
       }
     },
     "RestoreDBClusterToPointInTimeResult":{

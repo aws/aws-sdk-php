@@ -587,7 +587,8 @@
         "submittedAt":{"shape":"Date"},
         "inputS3Uri":{"shape":"S3Uri"},
         "outputS3Uri":{"shape":"S3Uri"},
-        "message":{"shape":"Message"}
+        "message":{"shape":"Message"},
+        "importConfiguration":{"shape":"ImportConfiguration"}
       }
     },
     "DICOMImportJobSummaries":{
@@ -856,6 +857,31 @@
         "imageSetWorkflowStatus":{"shape":"ImageSetWorkflowStatus"}
       }
     },
+    "DicomJsonMetadataImportConfiguration":{
+      "type":"structure",
+      "required":["dicomMetadataMappings"],
+      "members":{
+        "dicomMetadataMappings":{"shape":"DicomMetadataMappings"}
+      }
+    },
+    "DicomMetadataMapping":{
+      "type":"structure",
+      "required":[
+        "studyInstanceUID",
+        "metadataFilePath"
+      ],
+      "members":{
+        "studyInstanceUID":{"shape":"DICOMStudyInstanceUID"},
+        "seriesInstanceUID":{"shape":"DICOMSeriesInstanceUID"},
+        "metadataFilePath":{"shape":"MetadataFilePath"}
+      }
+    },
+    "DicomMetadataMappings":{
+      "type":"list",
+      "member":{"shape":"DicomMetadataMapping"},
+      "max":1000,
+      "min":1
+    },
     "GetDICOMImportJobRequest":{
       "type":"structure",
       "required":[
@@ -1118,6 +1144,13 @@
         "isPrimary":{"shape":"Boolean"}
       }
     },
+    "ImportConfiguration":{
+      "type":"structure",
+      "members":{
+        "dicomJsonMetadataImportConfiguration":{"shape":"DicomJsonMetadataImportConfiguration"}
+      },
+      "union":true
+    },
     "Integer":{
       "type":"integer",
       "box":true
@@ -1316,6 +1349,12 @@
       "members":{
         "copiableAttributes":{"shape":"CopiableAttributes"}
       }
+    },
+    "MetadataFilePath":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"[a-zA-Z0-9!-~]+([a-zA-Z0-9!-~ ]*[a-zA-Z0-9!-~]+)*"
     },
     "MetadataUpdates":{
       "type":"structure",
@@ -1529,7 +1568,8 @@
         },
         "inputS3Uri":{"shape":"S3Uri"},
         "outputS3Uri":{"shape":"S3Uri"},
-        "inputOwnerAccountId":{"shape":"AwsAccountId"}
+        "inputOwnerAccountId":{"shape":"AwsAccountId"},
+        "importConfiguration":{"shape":"ImportConfiguration"}
       }
     },
     "StartDICOMImportJobResponse":{

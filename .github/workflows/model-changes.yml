@@ -13,11 +13,12 @@ jobs:
     name: Check for model changes
     steps:
       - name: Checkout codebase
-        uses: actions/checkout@v6
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           fetch-depth: 0
+          persist-credentials: false
       - run: |
-          BASE_REPO="${{ github.event.pull_request.base.repo.clone_url }}"
+          BASE_REPO="${GITHUB_EVENT_PULL_REQUEST_BASE_REPO_CLONE_URL}"
           git fetch $BASE_REPO master:master -q
           CHANGED_FILES=$(git diff --name-only FETCH_HEAD...HEAD -- src/data/)
           if [ ! -z "$CHANGED_FILES" ]; then
@@ -25,3 +26,5 @@ jobs:
             echo "$CHANGED_FILES"
             exit 1
           fi
+        env:
+          GITHUB_EVENT_PULL_REQUEST_BASE_REPO_CLONE_URL: ${{ github.event.pull_request.base.repo.clone_url }}

@@ -841,8 +841,10 @@
         "ProgramInformation":{"shape":"DashProgramInformation"},
         "DvbSettings":{"shape":"DashDvbSettings"},
         "Compactness":{"shape":"DashCompactness"},
+        "AudioTimelinePattern":{"shape":"DashAudioTimelinePattern"},
         "SubtitleConfiguration":{"shape":"DashSubtitleConfiguration"},
-        "UriPathType":{"shape":"UriPathType"}
+        "UriPathType":{"shape":"UriPathType"},
+        "AvailabilityStartTimeConfiguration":{"shape":"DashAvailabilityStartTimeConfiguration"}
       }
     },
     "CreateDashManifestConfigurationManifestWindowSecondsInteger":{
@@ -1117,6 +1119,20 @@
       "member":{"shape":"CustomAdType"},
       "max":25,
       "min":0
+    },
+    "DashAudioTimelinePattern":{
+      "type":"string",
+      "enum":[
+        "NONE",
+        "PATTERNED"
+      ]
+    },
+    "DashAvailabilityStartTimeConfiguration":{
+      "type":"structure",
+      "members":{
+        "FixedAvailabilityStartTime":{"shape":"SyntheticTimestamp_date_time"}
+      },
+      "union":true
     },
     "DashBaseUrl":{
       "type":"structure",
@@ -1704,8 +1720,10 @@
         "ProgramInformation":{"shape":"DashProgramInformation"},
         "DvbSettings":{"shape":"DashDvbSettings"},
         "Compactness":{"shape":"DashCompactness"},
+        "AudioTimelinePattern":{"shape":"DashAudioTimelinePattern"},
         "SubtitleConfiguration":{"shape":"DashSubtitleConfiguration"},
-        "UriPathType":{"shape":"UriPathType"}
+        "UriPathType":{"shape":"UriPathType"},
+        "AvailabilityStartTimeConfiguration":{"shape":"DashAvailabilityStartTimeConfiguration"}
       }
     },
     "GetDashManifests":{
@@ -2615,7 +2633,9 @@
         "PROVIDER_PROMO",
         "DISTRIBUTOR_PROMO",
         "PROVIDER_AD_BLOCK",
-        "DISTRIBUTOR_AD_BLOCK"
+        "DISTRIBUTOR_AD_BLOCK",
+        "CONTENT_IDENTIFICATION",
+        "CALL_AD_SERVER"
       ]
     },
     "ScteFilterList":{
@@ -2736,6 +2756,10 @@
       }
     },
     "String":{"type":"string"},
+    "SyntheticTimestamp_date_time":{
+      "type":"timestamp",
+      "timestampFormat":"iso8601"
+    },
     "TagArn":{"type":"string"},
     "TagKey":{"type":"string"},
     "TagKeyList":{

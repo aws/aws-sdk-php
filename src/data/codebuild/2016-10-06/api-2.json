@@ -1879,6 +1879,14 @@
         "fetchSubmodules":{"shape":"WrapperBoolean"}
       }
     },
+    "HostKernel":{
+      "type":"string",
+      "enum":[
+        "LINUX_KERNEL_4",
+        "LINUX_KERNEL_6",
+        "LINUX_KERNEL_LATEST"
+      ]
+    },
     "Identifiers":{
       "type":"list",
       "member":{"shape":"NonEmptyString"}
@@ -2397,7 +2405,8 @@
         "certificate":{"shape":"String"},
         "registryCredential":{"shape":"RegistryCredential"},
         "imagePullCredentialsType":{"shape":"ImagePullCredentialsType"},
-        "dockerServer":{"shape":"DockerServer"}
+        "dockerServer":{"shape":"DockerServer"},
+        "hostKernel":{"shape":"HostKernel"}
       }
     },
     "ProjectFileSystemLocation":{
@@ -3063,7 +3072,8 @@
         "imagePullCredentialsTypeOverride":{"shape":"ImagePullCredentialsType"},
         "debugSessionEnabled":{"shape":"WrapperBoolean"},
         "fleetOverride":{"shape":"ProjectFleet"},
-        "autoRetryLimitOverride":{"shape":"WrapperInt"}
+        "autoRetryLimitOverride":{"shape":"WrapperInt"},
+        "hostKernelOverride":{"shape":"HostKernel"}
       }
     },
     "StartBuildOutput":{

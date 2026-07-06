@@ -1016,8 +1016,14 @@
         "queryVector":{"shape":"VectorData"},
         "filter":{"shape":"Document"},
         "returnMetadata":{"shape":"Boolean"},
-        "returnDistance":{"shape":"Boolean"}
+        "returnDistance":{"shape":"Boolean"},
+        "nextToken":{"shape":"QueryVectorsNextToken"}
       }
+    },
+    "QueryVectorsNextToken":{
+      "type":"string",
+      "max":4096,
+      "min":1
     },
     "QueryVectorsOutput":{
       "type":"structure",
@@ -1027,7 +1033,8 @@
       ],
       "members":{
         "vectors":{"shape":"QueryVectorsOutputList"},
-        "distanceMetric":{"shape":"DistanceMetric"}
+        "distanceMetric":{"shape":"DistanceMetric"},
+        "nextToken":{"shape":"QueryVectorsNextToken"}
       }
     },
     "QueryVectorsOutputList":{

@@ -384,7 +384,7 @@
         "TableCell$Highlighted": "<p> <code>TRUE</code> means that the table cell has a high enough confidence and is relevant to the query, so the value or content should be highlighted.</p>",
         "TableCell$Header": "<p> <code>TRUE</code> means that the table cell should be treated as a header.</p>",
         "WorkDocsConfiguration$CrawlComments": "<p> <code>TRUE</code> to include comments on documents in your index. Including comments in your index means each comment is a document that can be searched on.</p> <p>The default is set to <code>FALSE</code>.</p>",
-        "WorkDocsConfiguration$UseChangeLog": "<p> <code>TRUE</code> to use the Amazon WorkDocs change log to determine which documents require updating in the index. Depending on the change log's size, it may take longer for Amazon Kendra to use the change log than to scan all of your documents in Amazon WorkDocs.</p>"
+        "WorkDocsConfiguration$UseChangeLog": "<p> <code>TRUE</code> to use the WorkDocs change log to determine which documents require updating in the index. Depending on the change log's size, it may take longer for Amazon Kendra to use the change log than to scan all of your documents in WorkDocs.</p>"
       }
     },
     "BoxConfiguration": {
@@ -850,8 +850,8 @@
         "SlackConfiguration$ExclusionPatterns": "<p>A list of regular expression patterns to exclude certain attached files in your Slack workspace team. Files that match the patterns are excluded from the index. Files that don’t match the patterns are included in the index. If a file matches both an inclusion and exclusion pattern, the exclusion pattern takes precedence and the file isn't included in the index.</p>",
         "WebCrawlerConfiguration$UrlInclusionPatterns": "<p>A list of regular expression patterns to include certain URLs to crawl. URLs that match the patterns are included in the index. URLs that don't match the patterns are excluded from the index. If a URL matches both an inclusion and exclusion pattern, the exclusion pattern takes precedence and the URL file isn't included in the index.</p>",
         "WebCrawlerConfiguration$UrlExclusionPatterns": "<p>A list of regular expression patterns to exclude certain URLs to crawl. URLs that match the patterns are excluded from the index. URLs that don't match the patterns are included in the index. If a URL matches both an inclusion and exclusion pattern, the exclusion pattern takes precedence and the URL file isn't included in the index.</p>",
-        "WorkDocsConfiguration$InclusionPatterns": "<p>A list of regular expression patterns to include certain files in your Amazon WorkDocs site repository. Files that match the patterns are included in the index. Files that don't match the patterns are excluded from the index. If a file matches both an inclusion and exclusion pattern, the exclusion pattern takes precedence and the file isn't included in the index.</p>",
-        "WorkDocsConfiguration$ExclusionPatterns": "<p>A list of regular expression patterns to exclude certain files in your Amazon WorkDocs site repository. Files that match the patterns are excluded from the index. Files that don’t match the patterns are included in the index. If a file matches both an inclusion and exclusion pattern, the exclusion pattern takes precedence and the file isn't included in the index.</p>"
+        "WorkDocsConfiguration$InclusionPatterns": "<p>A list of regular expression patterns to include certain files in your WorkDocs site repository. Files that match the patterns are included in the index. Files that don't match the patterns are excluded from the index. If a file matches both an inclusion and exclusion pattern, the exclusion pattern takes precedence and the file isn't included in the index.</p>",
+        "WorkDocsConfiguration$ExclusionPatterns": "<p>A list of regular expression patterns to exclude certain files in your WorkDocs site repository. Files that match the patterns are excluded from the index. Files that don’t match the patterns are included in the index. If a file matches both an inclusion and exclusion pattern, the exclusion pattern takes precedence and the file isn't included in the index.</p>"
       }
     },
     "DataSourceInclusionsExclusionsStringsMember": {
@@ -970,7 +970,7 @@
         "ServiceNowServiceCatalogConfiguration$FieldMappings": "<p>Maps attributes or field names of catalogs to Amazon Kendra index field names. To create custom fields, use the <code>UpdateIndex</code> API before you map to ServiceNow fields. For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/field-mapping.html\">Mapping data source fields</a>. The ServiceNow data source field names must exist in your ServiceNow custom metadata.</p>",
         "SharePointConfiguration$FieldMappings": "<p>A list of <code>DataSourceToIndexFieldMapping</code> objects that map SharePoint data source attributes or field names to Amazon Kendra index field names. To create custom fields, use the <code>UpdateIndex</code> API before you map to SharePoint fields. For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/field-mapping.html\">Mapping data source fields</a>. The SharePoint data source field names must exist in your SharePoint custom metadata.</p>",
         "SlackConfiguration$FieldMappings": "<p>A list of <code>DataSourceToIndexFieldMapping</code> objects that map Slack data source attributes or field names to Amazon Kendra index field names. To create custom fields, use the <code>UpdateIndex</code> API before you map to Slack fields. For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/field-mapping.html\">Mapping data source fields</a>. The Slack data source field names must exist in your Slack custom metadata.</p>",
-        "WorkDocsConfiguration$FieldMappings": "<p>A list of <code>DataSourceToIndexFieldMapping</code> objects that map Amazon WorkDocs data source attributes or field names to Amazon Kendra index field names. To create custom fields, use the <code>UpdateIndex</code> API before you map to Amazon WorkDocs fields. For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/field-mapping.html\">Mapping data source fields</a>. The Amazon WorkDocs data source field names must exist in your Amazon WorkDocs custom metadata.</p>"
+        "WorkDocsConfiguration$FieldMappings": "<p>A list of <code>DataSourceToIndexFieldMapping</code> objects that map WorkDocs data source attributes or field names to Amazon Kendra index field names. To create custom fields, use the <code>UpdateIndex</code> API before you map to WorkDocs fields. For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/field-mapping.html\">Mapping data source fields</a>. The WorkDocs data source field names must exist in your WorkDocs custom metadata.</p>"
       }
     },
     "DataSourceType": {
@@ -2709,7 +2709,7 @@
     "OrganizationId": {
       "base": null,
       "refs": {
-        "WorkDocsConfiguration$OrganizationId": "<p>The identifier of the directory corresponding to your Amazon WorkDocs site repository.</p> <p>You can find the organization ID in the <a href=\"https://console.aws.amazon.com/directoryservicev2/\">Directory Service</a> by going to <b>Active Directory</b>, then <b>Directories</b>. Your Amazon WorkDocs site directory has an ID, which is the organization ID. You can also set up a new Amazon WorkDocs directory in the Directory Service console and enable a Amazon WorkDocs site for the directory in the Amazon WorkDocs console.</p>"
+        "WorkDocsConfiguration$OrganizationId": "<p>The identifier of the directory corresponding to your WorkDocs site repository.</p> <p>You can find the organization ID in the <a href=\"https://console.aws.amazon.com/directoryservicev2/\">Directory Service</a> by going to <b>Active Directory</b>, then <b>Directories</b>. Your WorkDocs site directory has an ID, which is the organization ID. You can also set up a new WorkDocs directory in the Directory Service console and enable a WorkDocs site for the directory in the WorkDocs console.</p>"
       }
     },
     "OrganizationName": {
@@ -4087,9 +4087,9 @@
       }
     },
     "WorkDocsConfiguration": {
-      "base": "<p>Provides the configuration information to connect to Amazon WorkDocs as your data source.</p> <p>Amazon WorkDocs connector is available in Oregon, North Virginia, Sydney, Singapore and Ireland regions.</p>",
+      "base": "<p>Provides the configuration information to connect to WorkDocs as your data source.</p> <p>WorkDocs connector is available in Oregon, North Virginia, Sydney, Singapore and Ireland regions.</p>",
       "refs": {
-        "DataSourceConfiguration$WorkDocsConfiguration": "<p>Provides the configuration information to connect to Amazon WorkDocs as your data source.</p>"
+        "DataSourceConfiguration$WorkDocsConfiguration": "<p>Provides the configuration information to connect to WorkDocs as your data source.</p>"
       }
     }
   }

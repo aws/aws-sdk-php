@@ -208,6 +208,37 @@
             ],
             "readonly": true
         },
+        "InvokeGuardrailChecks": {
+            "name": "InvokeGuardrailChecks",
+            "http": {
+                "method": "POST",
+                "requestUri": "\/guardrail-checks\/invoke",
+                "responseCode": 200
+            },
+            "input": {
+                "shape": "InvokeGuardrailChecksRequest"
+            },
+            "output": {
+                "shape": "InvokeGuardrailChecksResponse"
+            },
+            "errors": [
+                {
+                    "shape": "AccessDeniedException"
+                },
+                {
+                    "shape": "ThrottlingException"
+                },
+                {
+                    "shape": "InternalServerException"
+                },
+                {
+                    "shape": "ServiceUnavailableException"
+                },
+                {
+                    "shape": "ValidationException"
+                }
+            ]
+        },
         "InvokeModel": {
             "name": "InvokeModel",
             "http": {
@@ -1003,7 +1034,8 @@
             "type": "string",
             "enum": [
                 "user",
-                "assistant"
+                "assistant",
+                "system"
             ]
         },
         "ConversationalModelId": {
@@ -1937,6 +1969,429 @@
                 },
                 "logicWarning": {
                     "shape": "GuardrailAutomatedReasoningLogicWarning"
+                }
+            }
+        },
+        "GuardrailChecksConfig": {
+            "type": "structure",
+            "members": {
+                "contentFilter": {
+                    "shape": "GuardrailChecksContentFilterConfig"
+                },
+                "promptAttack": {
+                    "shape": "GuardrailChecksPromptAttackConfig"
+                },
+                "sensitiveInformation": {
+                    "shape": "GuardrailChecksSensitiveInformationConfig"
+                }
+            }
+        },
+        "GuardrailChecksContentBlock": {
+            "type": "structure",
+            "members": {
+                "text": {
+                    "shape": "GuardrailChecksTextContent"
+                }
+            },
+            "union": true
+        },
+        "GuardrailChecksContentBlockList": {
+            "type": "list",
+            "member": {
+                "shape": "GuardrailChecksContentBlock"
+            },
+            "min": 1
+        },
+        "GuardrailChecksContentFilterCategory": {
+            "type": "string",
+            "enum": [
+                "VIOLENCE",
+                "HATE",
+                "SEXUAL",
+                "MISCONDUCT",
+                "INSULTS"
+            ]
+        },
+        "GuardrailChecksContentFilterCategoryConfig": {
+            "type": "structure",
+            "required": [
+                "category"
+            ],
+            "members": {
+                "category": {
+                    "shape": "GuardrailChecksContentFilterCategory"
+                }
+            }
+        },
+        "GuardrailChecksContentFilterCategoryConfigList": {
+            "type": "list",
+            "member": {
+                "shape": "GuardrailChecksContentFilterCategoryConfig"
+            },
+            "max": 5,
+            "min": 1
+        },
+        "GuardrailChecksContentFilterConfig": {
+            "type": "structure",
+            "required": [
+                "categories"
+            ],
+            "members": {
+                "categories": {
+                    "shape": "GuardrailChecksContentFilterCategoryConfigList"
+                }
+            }
+        },
+        "GuardrailChecksContentFilterResult": {
+            "type": "structure",
+            "required": [
+                "results"
+            ],
+            "members": {
+                "results": {
+                    "shape": "GuardrailChecksContentFilterResultList"
+                }
+            }
+        },
+        "GuardrailChecksContentFilterResultEntry": {
+            "type": "structure",
+            "required": [
+                "category",
+                "severityScore"
+            ],
+            "members": {
+                "category": {
+                    "shape": "GuardrailChecksContentFilterCategory"
+                },
+                "severityScore": {
+                    "shape": "GuardrailChecksContentFilterResultEntrySeverityScoreDouble"
+                }
+            }
+        },
+        "GuardrailChecksContentFilterResultEntrySeverityScoreDouble": {
+            "type": "double",
+            "box": true,
+            "max": 1,
+            "min": 0
+        },
+        "GuardrailChecksContentFilterResultList": {
+            "type": "list",
+            "member": {
+                "shape": "GuardrailChecksContentFilterResultEntry"
+            }
+        },
+        "GuardrailChecksContentFilterUsage": {
+            "type": "structure",
+            "required": [
+                "textUnits"
+            ],
+            "members": {
+                "textUnits": {
+                    "shape": "Integer"
+                }
+            }
+        },
+        "GuardrailChecksMessage": {
+            "type": "structure",
+            "required": [
+                "role",
+                "content"
+            ],
+            "members": {
+                "role": {
+                    "shape": "GuardrailChecksRole"
+                },
+                "content": {
+                    "shape": "GuardrailChecksContentBlockList"
+                }
+            }
+        },
+        "GuardrailChecksMessageList": {
+            "type": "list",
+            "member": {
+                "shape": "GuardrailChecksMessage"
+            },
+            "min": 1
+        },
+        "GuardrailChecksPromptAttackCategory": {
+            "type": "string",
+            "enum": [
+                "JAILBREAK",
+                "PROMPT_INJECTION",
+                "PROMPT_LEAKAGE"
+            ]
+        },
+        "GuardrailChecksPromptAttackCategoryConfig": {
+            "type": "structure",
+            "required": [
+                "category"
+            ],
+            "members": {
+                "category": {
+                    "shape": "GuardrailChecksPromptAttackCategory"
+                }
+            }
+        },
+        "GuardrailChecksPromptAttackCategoryConfigList": {
+            "type": "list",
+            "member": {
+                "shape": "GuardrailChecksPromptAttackCategoryConfig"
+            },
+            "max": 3,
+            "min": 1
+        },
+        "GuardrailChecksPromptAttackConfig": {
+            "type": "structure",
+            "required": [
+                "categories"
+            ],
+            "members": {
+                "categories": {
+                    "shape": "GuardrailChecksPromptAttackCategoryConfigList"
+                }
+            }
+        },
+        "GuardrailChecksPromptAttackResult": {
+            "type": "structure",
+            "required": [
+                "results"
+            ],
+            "members": {
+                "results": {
+                    "shape": "GuardrailChecksPromptAttackResultList"
+                }
+            }
+        },
+        "GuardrailChecksPromptAttackResultEntry": {
+            "type": "structure",
+            "required": [
+                "category",
+                "severityScore"
+            ],
+            "members": {
+                "category": {
+                    "shape": "GuardrailChecksPromptAttackCategory"
+                },
+                "severityScore": {
+                    "shape": "GuardrailChecksPromptAttackResultEntrySeverityScoreDouble"
+                }
+            }
+        },
+        "GuardrailChecksPromptAttackResultEntrySeverityScoreDouble": {
+            "type": "double",
+            "box": true,
+            "max": 1,
+            "min": 0
+        },
+        "GuardrailChecksPromptAttackResultList": {
+            "type": "list",
+            "member": {
+                "shape": "GuardrailChecksPromptAttackResultEntry"
+            }
+        },
+        "GuardrailChecksPromptAttackUsage": {
+            "type": "structure",
+            "required": [
+                "textUnits"
+            ],
+            "members": {
+                "textUnits": {
+                    "shape": "Integer"
+                }
+            }
+        },
+        "GuardrailChecksResults": {
+            "type": "structure",
+            "members": {
+                "contentFilter": {
+                    "shape": "GuardrailChecksContentFilterResult"
+                },
+                "promptAttack": {
+                    "shape": "GuardrailChecksPromptAttackResult"
+                },
+                "sensitiveInformation": {
+                    "shape": "GuardrailChecksSensitiveInformationResult"
+                }
+            }
+        },
+        "GuardrailChecksRole": {
+            "type": "string",
+            "enum": [
+                "user",
+                "assistant",
+                "system"
+            ]
+        },
+        "GuardrailChecksSensitiveInformationConfig": {
+            "type": "structure",
+            "required": [
+                "entities"
+            ],
+            "members": {
+                "entities": {
+                    "shape": "GuardrailChecksSensitiveInformationEntityConfigList"
+                }
+            }
+        },
+        "GuardrailChecksSensitiveInformationEntityConfig": {
+            "type": "structure",
+            "required": [
+                "type"
+            ],
+            "members": {
+                "type": {
+                    "shape": "GuardrailChecksSensitiveInformationEntityType"
+                }
+            }
+        },
+        "GuardrailChecksSensitiveInformationEntityConfigList": {
+            "type": "list",
+            "member": {
+                "shape": "GuardrailChecksSensitiveInformationEntityConfig"
+            },
+            "max": 31,
+            "min": 1
+        },
+        "GuardrailChecksSensitiveInformationEntityType": {
+            "type": "string",
+            "enum": [
+                "ADDRESS",
+                "AGE",
+                "AWS_ACCESS_KEY",
+                "AWS_SECRET_KEY",
+                "CA_HEALTH_NUMBER",
+                "CA_SOCIAL_INSURANCE_NUMBER",
+                "CREDIT_DEBIT_CARD_CVV",
+                "CREDIT_DEBIT_CARD_EXPIRY",
+                "CREDIT_DEBIT_CARD_NUMBER",
+                "DRIVER_ID",
+                "EMAIL",
+                "INTERNATIONAL_BANK_ACCOUNT_NUMBER",
+                "IP_ADDRESS",
+                "LICENSE_PLATE",
+                "MAC_ADDRESS",
+                "NAME",
+                "PASSWORD",
+                "PHONE",
+                "PIN",
+                "SWIFT_CODE",
+                "UK_NATIONAL_HEALTH_SERVICE_NUMBER",
+                "UK_NATIONAL_INSURANCE_NUMBER",
+                "UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER",
+                "URL",
+                "USERNAME",
+                "US_BANK_ACCOUNT_NUMBER",
+                "US_BANK_ROUTING_NUMBER",
+                "US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER",
+                "US_PASSPORT_NUMBER",
+                "US_SOCIAL_SECURITY_NUMBER",
+                "VEHICLE_IDENTIFICATION_NUMBER"
+            ]
+        },
+        "GuardrailChecksSensitiveInformationResult": {
+            "type": "structure",
+            "required": [
+                "results"
+            ],
+            "members": {
+                "results": {
+                    "shape": "GuardrailChecksSensitiveInformationResultList"
+                },
+                "truncated": {
+                    "shape": "Boolean"
+                }
+            }
+        },
+        "GuardrailChecksSensitiveInformationResultEntry": {
+            "type": "structure",
+            "required": [
+                "type",
+                "confidenceScore",
+                "beginOffset",
+                "endOffset",
+                "messageIndex",
+                "contentIndex"
+            ],
+            "members": {
+                "type": {
+                    "shape": "GuardrailChecksSensitiveInformationEntityType"
+                },
+                "confidenceScore": {
+                    "shape": "GuardrailChecksSensitiveInformationResultEntryConfidenceScoreDouble"
+                },
+                "beginOffset": {
+                    "shape": "GuardrailChecksSensitiveInformationResultEntryBeginOffsetInteger"
+                },
+                "endOffset": {
+                    "shape": "GuardrailChecksSensitiveInformationResultEntryEndOffsetInteger"
+                },
+                "messageIndex": {
+                    "shape": "GuardrailChecksSensitiveInformationResultEntryMessageIndexInteger"
+                },
+                "contentIndex": {
+                    "shape": "GuardrailChecksSensitiveInformationResultEntryContentIndexInteger"
+                }
+            }
+        },
+        "GuardrailChecksSensitiveInformationResultEntryBeginOffsetInteger": {
+            "type": "integer",
+            "box": true,
+            "min": 0
+        },
+        "GuardrailChecksSensitiveInformationResultEntryConfidenceScoreDouble": {
+            "type": "double",
+            "box": true,
+            "max": 1,
+            "min": 0
+        },
+        "GuardrailChecksSensitiveInformationResultEntryContentIndexInteger": {
+            "type": "integer",
+            "box": true,
+            "min": 0
+        },
+        "GuardrailChecksSensitiveInformationResultEntryEndOffsetInteger": {
+            "type": "integer",
+            "box": true,
+            "min": 0
+        },
+        "GuardrailChecksSensitiveInformationResultEntryMessageIndexInteger": {
+            "type": "integer",
+            "box": true,
+            "min": 0
+        },
+        "GuardrailChecksSensitiveInformationResultList": {
+            "type": "list",
+            "member": {
+                "shape": "GuardrailChecksSensitiveInformationResultEntry"
+            }
+        },
+        "GuardrailChecksSensitiveInformationUsage": {
+            "type": "structure",
+            "required": [
+                "textUnits"
+            ],
+            "members": {
+                "textUnits": {
+                    "shape": "Integer"
+                }
+            }
+        },
+        "GuardrailChecksTextContent": {
+            "type": "string",
+            "min": 1,
+            "sensitive": true
+        },
+        "GuardrailChecksUsageResults": {
+            "type": "structure",
+            "members": {
+                "contentFilter": {
+                    "shape": "GuardrailChecksContentFilterUsage"
+                },
+                "promptAttack": {
+                    "shape": "GuardrailChecksPromptAttackUsage"
+                },
+                "sensitiveInformation": {
+                    "shape": "GuardrailChecksSensitiveInformationUsage"
                 }
             }
         },
@@ -2881,6 +3336,36 @@
             "min": 1,
             "pattern": "arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:async-invoke\/[a-z0-9]{12}"
         },
+        "InvokeGuardrailChecksRequest": {
+            "type": "structure",
+            "required": [
+                "messages",
+                "checks"
+            ],
+            "members": {
+                "messages": {
+                    "shape": "GuardrailChecksMessageList"
+                },
+                "checks": {
+                    "shape": "GuardrailChecksConfig"
+                }
+            }
+        },
+        "InvokeGuardrailChecksResponse": {
+            "type": "structure",
+            "required": [
+                "results",
+                "usage"
+            ],
+            "members": {
+                "results": {
+                    "shape": "GuardrailChecksResults"
+                },
+                "usage": {
+                    "shape": "GuardrailChecksUsageResults"
+                }
+            }
+        },
         "InvokeModelIdentifier": {
             "type": "string",
             "max": 2048,
@@ -2935,6 +3420,11 @@
                     "shape": "ServiceTierType",
                     "location": "header",
                     "locationName": "X-Amzn-Bedrock-Service-Tier"
+                },
+                "requestMetadata": {
+                    "shape": "RequestMetadataJson",
+                    "location": "header",
+                    "locationName": "X-Amzn-Bedrock-Request-Metadata"
                 }
             },
             "payload": "body"
@@ -3092,6 +3582,11 @@
                     "shape": "ServiceTierType",
                     "location": "header",
                     "locationName": "X-Amzn-Bedrock-Service-Tier"
+                },
+                "requestMetadata": {
+                    "shape": "RequestMetadataJson",
+                    "location": "header",
+                    "locationName": "X-Amzn-Bedrock-Request-Metadata"
                 }
             },
             "payload": "body"
@@ -3512,6 +4007,12 @@
             },
             "max": 16,
             "min": 1,
+            "sensitive": true
+        },
+        "RequestMetadataJson": {
+            "type": "string",
+            "max": 8500,
+            "min": 0,
             "sensitive": true
         },
         "RequestMetadataKeyString": {

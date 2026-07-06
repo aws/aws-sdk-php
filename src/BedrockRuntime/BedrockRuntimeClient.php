@@ -15,6 +15,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise countTokensAsync(array $args = [])
  * @method \Aws\Result getAsyncInvoke(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getAsyncInvokeAsync(array $args = [])
+ * @method \Aws\Result invokeGuardrailChecks(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise invokeGuardrailChecksAsync(array $args = [])
  * @method \Aws\Result invokeModel(array $args = [])
  * @method \GuzzleHttp\Promise\Promise invokeModelAsync(array $args = [])
  * @method \Aws\Result invokeModelWithResponseStream(array $args = [])

@@ -66,6 +66,25 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "CancelUpdate":{
+      "name":"CancelUpdate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/clusters/{name}/updates/{updateId}/cancel-update"
+      },
+      "input":{"shape":"CancelUpdateRequest"},
+      "output":{"shape":"CancelUpdateResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ClientException"},
+        {"shape":"ServerException"},
+        {"shape":"ResourceInUseException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidStateException"}
+      ]
+    },
     "CreateAccessEntry":{
       "name":"CreateAccessEntry",
       "http":{
@@ -1461,6 +1480,50 @@
       "type":"integer",
       "box":true
     },
+    "CancelUpdateRequest":{
+      "type":"structure",
+      "required":[
+        "name",
+        "updateId"
+      ],
+      "members":{
+        "name":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"name"
+        },
+        "updateId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"updateId"
+        },
+        "clientRequestToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CancelUpdateResponse":{
+      "type":"structure",
+      "members":{
+        "update":{"shape":"Update"}
+      }
+    },
+    "Cancellation":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"CancellationStatus"},
+        "reason":{"shape":"String"}
+      }
+    },
+    "CancellationStatus":{
+      "type":"string",
+      "enum":[
+        "InProgress",
+        "Failed",
+        "Successful"
+      ]
+    },
     "Capability":{
       "type":"structure",
       "members":{
@@ -1572,7 +1635,8 @@
       "type":"string",
       "enum":[
         "UPGRADE_READINESS",
-        "MISCONFIGURATION"
+        "MISCONFIGURATION",
+        "ROLLBACK_READINESS"
       ]
     },
     "CategoryList":{
@@ -1791,16 +1855,26 @@
         "roleArn":{"shape":"String"}
       }
     },
+    "ControlPlaneEgressModeType":{
+      "type":"string",
+      "enum":[
+        "AWS_MANAGED",
+        "CUSTOMER_ROUTED",
+        "CUSTOMER_ISOLATED"
+      ]
+    },
     "ControlPlanePlacementRequest":{
       "type":"structure",
       "members":{
-        "groupName":{"shape":"String"}
+        "groupName":{"shape":"String"},
+        "spreadLevel":{"shape":"SpreadLevel"}
       }
     },
     "ControlPlanePlacementResponse":{
       "type":"structure",
       "members":{
-        "groupName":{"shape":"String"}
+        "groupName":{"shape":"String"},
+        "spreadLevel":{"shape":"SpreadLevel"}
       }
     },
     "ControlPlaneScalingConfig":{
@@ -2894,6 +2968,18 @@
       "type":"list",
       "member":{"shape":"ErrorDetail"}
     },
+    "EtcdPlacementRequest":{
+      "type":"structure",
+      "members":{
+        "spreadLevel":{"shape":"SpreadLevel"}
+      }
+    },
+    "EtcdPlacementResponse":{
+      "type":"structure",
+      "members":{
+        "spreadLevel":{"shape":"SpreadLevel"}
+      }
+    },
     "FargateProfile":{
       "type":"structure",
       "members":{
@@ -3900,7 +3986,9 @@
       "members":{
         "outpostArns":{"shape":"StringList"},
         "controlPlaneInstanceType":{"shape":"String"},
-        "controlPlanePlacement":{"shape":"ControlPlanePlacementRequest"}
+        "controlPlanePlacement":{"shape":"ControlPlanePlacementRequest"},
+        "etcdInstanceType":{"shape":"String"},
+        "etcdPlacement":{"shape":"EtcdPlacementRequest"}
       }
     },
     "OutpostConfigResponse":{
@@ -3912,7 +4000,9 @@
       "members":{
         "outpostArns":{"shape":"StringList"},
         "controlPlaneInstanceType":{"shape":"String"},
-        "controlPlanePlacement":{"shape":"ControlPlanePlacementResponse"}
+        "controlPlanePlacement":{"shape":"ControlPlanePlacementResponse"},
+        "etcdInstanceType":{"shape":"String"},
+        "etcdPlacement":{"shape":"EtcdPlacementResponse"}
       }
     },
     "PercentCapacity":{
@@ -4100,6 +4190,12 @@
       "max":255,
       "min":1
     },
+    "RollbackConfig":{
+      "type":"structure",
+      "members":{
+        "timeoutMinutes":{"shape":"BoxedInteger"}
+      }
+    },
     "ServerException":{
       "type":"structure",
       "members":{
@@ -4121,6 +4217,13 @@
       "error":{"httpStatusCode":503},
       "exception":true,
       "fault":true
+    },
+    "SpreadLevel":{
+      "type":"string",
+      "enum":[
+        "host",
+        "rack"
+      ]
     },
     "SsoIdentity":{
       "type":"structure",
@@ -4295,7 +4398,8 @@
         "type":{"shape":"UpdateType"},
         "params":{"shape":"UpdateParams"},
         "createdAt":{"shape":"Timestamp"},
-        "errors":{"shape":"ErrorDetails"}
+        "errors":{"shape":"ErrorDetails"},
+        "cancellation":{"shape":"Cancellation"}
       }
     },
     "UpdateAccessConfigRequest":{
@@ -4463,7 +4567,8 @@
           "shape":"String",
           "idempotencyToken":true
         },
-        "force":{"shape":"Boolean"}
+        "force":{"shape":"Boolean"},
+        "rollbackConfig":{"shape":"RollbackConfig"}
       }
     },
     "UpdateClusterVersionResponse":{
@@ -4620,6 +4725,10 @@
         "RemoteNetworkConfig",
         "DeletionProtection",
         "NodeRepairConfig",
+        "RoleArn",
+        "RoleMappingsToAddOrUpdate",
+        "RoleMappingsToRemove",
+        "NetworkAccess",
         "VendedLogs",
         "UpdatedTier",
         "PreviousTier",
@@ -4627,7 +4736,8 @@
         "WarmPoolMaxGroupPreparedCapacity",
         "WarmPoolMinSize",
         "WarmPoolState",
-        "WarmPoolReuseOnScaleIn"
+        "WarmPoolReuseOnScaleIn",
+        "ControlPlaneEgressMode"
       ]
     },
     "UpdateParams":{
@@ -4708,8 +4818,11 @@
         "AutoModeUpdate",
         "RemoteNetworkConfigUpdate",
         "DeletionProtectionUpdate",
+        "CapabilityUpdate",
         "ControlPlaneScalingConfigUpdate",
-        "VendedLogsUpdate"
+        "VendedLogsUpdate",
+        "ControlPlaneEgressUpdate",
+        "VersionRollback"
       ]
     },
     "UpgradePolicyRequest":{
@@ -4739,7 +4852,8 @@
         "securityGroupIds":{"shape":"StringList"},
         "endpointPublicAccess":{"shape":"BoxedBoolean"},
         "endpointPrivateAccess":{"shape":"BoxedBoolean"},
-        "publicAccessCidrs":{"shape":"StringList"}
+        "publicAccessCidrs":{"shape":"StringList"},
+        "controlPlaneEgressMode":{"shape":"ControlPlaneEgressModeType"}
       }
     },
     "VpcConfigResponse":{
@@ -4751,7 +4865,8 @@
         "vpcId":{"shape":"String"},
         "endpointPublicAccess":{"shape":"Boolean"},
         "endpointPrivateAccess":{"shape":"Boolean"},
-        "publicAccessCidrs":{"shape":"StringList"}
+        "publicAccessCidrs":{"shape":"StringList"},
+        "controlPlaneEgressMode":{"shape":"ControlPlaneEgressModeType"}
       }
     },
     "WarmPoolConfig":{

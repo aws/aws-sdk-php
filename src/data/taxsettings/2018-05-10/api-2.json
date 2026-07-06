@@ -2,16 +2,15 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2018-05-10",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"tax",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
     "protocols":["rest-json"],
     "serviceFullName":"Tax Settings",
     "serviceId":"TaxSettings",
     "signatureVersion":"v4",
     "signingName":"tax",
-    "uid":"taxsettings-2018-05-10",
-    "auth":["aws.auth#sigv4"]
+    "uid":"taxsettings-2018-05-10"
   },
   "operations":{
     "BatchDeleteTaxRegistration":{
@@ -42,7 +41,8 @@
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "BatchPutTaxRegistration":{
       "name":"BatchPutTaxRegistration",
@@ -54,8 +54,8 @@
       "input":{"shape":"BatchPutTaxRegistrationRequest"},
       "output":{"shape":"BatchPutTaxRegistrationResponse"},
       "errors":[
-        {"shape":"ValidationException"},
         {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -104,7 +104,8 @@
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetTaxInheritance":{
       "name":"GetTaxInheritance",
@@ -119,7 +120,8 @@
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetTaxRegistration":{
       "name":"GetTaxRegistration",
@@ -134,7 +136,8 @@
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetTaxRegistrationDocument":{
       "name":"GetTaxRegistrationDocument",
@@ -148,7 +151,8 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListSupplementalTaxRegistrations":{
       "name":"ListSupplementalTaxRegistrations",
@@ -163,7 +167,8 @@
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTaxExemptions":{
       "name":"ListTaxExemptions",
@@ -178,7 +183,8 @@
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTaxRegistrations":{
       "name":"ListTaxRegistrations",
@@ -193,7 +199,8 @@
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "PutSupplementalTaxRegistration":{
       "name":"PutSupplementalTaxRegistration",
@@ -205,8 +212,8 @@
       "input":{"shape":"PutSupplementalTaxRegistrationRequest"},
       "output":{"shape":"PutSupplementalTaxRegistrationResponse"},
       "errors":[
-        {"shape":"ValidationException"},
         {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -254,8 +261,8 @@
       "input":{"shape":"PutTaxRegistrationRequest"},
       "output":{"shape":"PutTaxRegistrationResponse"},
       "errors":[
-        {"shape":"ValidationException"},
         {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
       ]
     }
@@ -277,9 +284,9 @@
       "type":"structure",
       "members":{
         "accountId":{"shape":"AccountId"},
-        "accountMetaData":{"shape":"AccountMetaData"},
+        "taxRegistration":{"shape":"TaxRegistrationWithJurisdiction"},
         "taxInheritanceDetails":{"shape":"TaxInheritanceDetails"},
-        "taxRegistration":{"shape":"TaxRegistrationWithJurisdiction"}
+        "accountMetaData":{"shape":"AccountMetaData"}
       },
       "sensitive":true
     },
@@ -291,7 +298,7 @@
       "type":"string",
       "max":12,
       "min":12,
-      "pattern":"^\\d+$"
+      "pattern":"\\d+"
     },
     "AccountIds":{
       "type":"list",
@@ -301,103 +308,109 @@
       "type":"structure",
       "members":{
         "accountName":{"shape":"AccountName"},
+        "seller":{"shape":"Seller"},
         "address":{"shape":"Address"},
-        "addressRoleMap":{"shape":"AddressRoleMap"},
         "addressType":{"shape":"AddressRoleType"},
-        "seller":{"shape":"Seller"}
+        "addressRoleMap":{"shape":"AddressRoleMap"}
       },
       "sensitive":true
     },
     "AccountName":{
       "type":"string",
-      "pattern":"^[\\s\\S]*$"
+      "pattern":"[\\s\\S]*"
     },
     "AdditionalInfoRequest":{
       "type":"structure",
       "members":{
-        "canadaAdditionalInfo":{"shape":"CanadaAdditionalInfo"},
-        "egyptAdditionalInfo":{"shape":"EgyptAdditionalInfo"},
-        "estoniaAdditionalInfo":{"shape":"EstoniaAdditionalInfo"},
-        "georgiaAdditionalInfo":{"shape":"GeorgiaAdditionalInfo"},
-        "greeceAdditionalInfo":{"shape":"GreeceAdditionalInfo"},
-        "indonesiaAdditionalInfo":{"shape":"IndonesiaAdditionalInfo"},
-        "israelAdditionalInfo":{"shape":"IsraelAdditionalInfo"},
-        "italyAdditionalInfo":{"shape":"ItalyAdditionalInfo"},
-        "kenyaAdditionalInfo":{"shape":"KenyaAdditionalInfo"},
         "malaysiaAdditionalInfo":{"shape":"MalaysiaAdditionalInfo"},
-        "polandAdditionalInfo":{"shape":"PolandAdditionalInfo"},
-        "romaniaAdditionalInfo":{"shape":"RomaniaAdditionalInfo"},
-        "saudiArabiaAdditionalInfo":{"shape":"SaudiArabiaAdditionalInfo"},
-        "southKoreaAdditionalInfo":{"shape":"SouthKoreaAdditionalInfo"},
+        "israelAdditionalInfo":{"shape":"IsraelAdditionalInfo"},
+        "estoniaAdditionalInfo":{"shape":"EstoniaAdditionalInfo"},
+        "canadaAdditionalInfo":{"shape":"CanadaAdditionalInfo"},
         "spainAdditionalInfo":{"shape":"SpainAdditionalInfo"},
+        "kenyaAdditionalInfo":{"shape":"KenyaAdditionalInfo"},
+        "southKoreaAdditionalInfo":{"shape":"SouthKoreaAdditionalInfo"},
         "turkeyAdditionalInfo":{"shape":"TurkeyAdditionalInfo"},
+        "georgiaAdditionalInfo":{"shape":"GeorgiaAdditionalInfo"},
+        "italyAdditionalInfo":{"shape":"ItalyAdditionalInfo"},
+        "romaniaAdditionalInfo":{"shape":"RomaniaAdditionalInfo"},
         "ukraineAdditionalInfo":{"shape":"UkraineAdditionalInfo"},
+        "polandAdditionalInfo":{"shape":"PolandAdditionalInfo"},
+        "saudiArabiaAdditionalInfo":{"shape":"SaudiArabiaAdditionalInfo"},
+        "indonesiaAdditionalInfo":{"shape":"IndonesiaAdditionalInfo"},
+        "vietnamAdditionalInfo":{"shape":"VietnamAdditionalInfo"},
+        "egyptAdditionalInfo":{"shape":"EgyptAdditionalInfo"},
+        "greeceAdditionalInfo":{"shape":"GreeceAdditionalInfo"},
         "uzbekistanAdditionalInfo":{"shape":"UzbekistanAdditionalInfo"},
-        "vietnamAdditionalInfo":{"shape":"VietnamAdditionalInfo"}
+        "philippinesAdditionalInfo":{"shape":"PhilippinesAdditionalInfo"},
+        "belgiumAdditionalInfo":{"shape":"BelgiumAdditionalInfo"},
+        "chileAdditionalInfo":{"shape":"ChileAdditionalInfo"},
+        "franceAdditionalInfo":{"shape":"FranceAdditionalInfo"}
       }
     },
     "AdditionalInfoResponse":{
       "type":"structure",
       "members":{
-        "brazilAdditionalInfo":{"shape":"BrazilAdditionalInfo"},
-        "canadaAdditionalInfo":{"shape":"CanadaAdditionalInfo"},
-        "egyptAdditionalInfo":{"shape":"EgyptAdditionalInfo"},
+        "malaysiaAdditionalInfo":{"shape":"MalaysiaAdditionalInfo"},
+        "israelAdditionalInfo":{"shape":"IsraelAdditionalInfo"},
         "estoniaAdditionalInfo":{"shape":"EstoniaAdditionalInfo"},
+        "canadaAdditionalInfo":{"shape":"CanadaAdditionalInfo"},
+        "brazilAdditionalInfo":{"shape":"BrazilAdditionalInfo"},
+        "spainAdditionalInfo":{"shape":"SpainAdditionalInfo"},
+        "kenyaAdditionalInfo":{"shape":"KenyaAdditionalInfo"},
+        "southKoreaAdditionalInfo":{"shape":"SouthKoreaAdditionalInfo"},
+        "turkeyAdditionalInfo":{"shape":"TurkeyAdditionalInfo"},
         "georgiaAdditionalInfo":{"shape":"GeorgiaAdditionalInfo"},
-        "greeceAdditionalInfo":{"shape":"GreeceAdditionalInfo"},
+        "italyAdditionalInfo":{"shape":"ItalyAdditionalInfo"},
+        "romaniaAdditionalInfo":{"shape":"RomaniaAdditionalInfo"},
+        "ukraineAdditionalInfo":{"shape":"UkraineAdditionalInfo"},
+        "polandAdditionalInfo":{"shape":"PolandAdditionalInfo"},
+        "saudiArabiaAdditionalInfo":{"shape":"SaudiArabiaAdditionalInfo"},
         "indiaAdditionalInfo":{"shape":"IndiaAdditionalInfo"},
         "indonesiaAdditionalInfo":{"shape":"IndonesiaAdditionalInfo"},
-        "israelAdditionalInfo":{"shape":"IsraelAdditionalInfo"},
-        "italyAdditionalInfo":{"shape":"ItalyAdditionalInfo"},
-        "kenyaAdditionalInfo":{"shape":"KenyaAdditionalInfo"},
-        "malaysiaAdditionalInfo":{"shape":"MalaysiaAdditionalInfo"},
-        "polandAdditionalInfo":{"shape":"PolandAdditionalInfo"},
-        "romaniaAdditionalInfo":{"shape":"RomaniaAdditionalInfo"},
-        "saudiArabiaAdditionalInfo":{"shape":"SaudiArabiaAdditionalInfo"},
-        "southKoreaAdditionalInfo":{"shape":"SouthKoreaAdditionalInfo"},
-        "spainAdditionalInfo":{"shape":"SpainAdditionalInfo"},
-        "turkeyAdditionalInfo":{"shape":"TurkeyAdditionalInfo"},
-        "ukraineAdditionalInfo":{"shape":"UkraineAdditionalInfo"},
+        "vietnamAdditionalInfo":{"shape":"VietnamAdditionalInfo"},
+        "egyptAdditionalInfo":{"shape":"EgyptAdditionalInfo"},
+        "greeceAdditionalInfo":{"shape":"GreeceAdditionalInfo"},
         "uzbekistanAdditionalInfo":{"shape":"UzbekistanAdditionalInfo"},
-        "vietnamAdditionalInfo":{"shape":"VietnamAdditionalInfo"}
+        "philippinesAdditionalInfo":{"shape":"PhilippinesAdditionalInfo"},
+        "belgiumAdditionalInfo":{"shape":"BelgiumAdditionalInfo"},
+        "chileAdditionalInfo":{"shape":"ChileAdditionalInfo"},
+        "franceAdditionalInfo":{"shape":"FranceAdditionalInfo"}
       }
     },
     "Address":{
       "type":"structure",
       "required":[
-        "addressLine1",
-        "city",
-        "countryCode",
-        "postalCode"
+        "postalCode",
+        "countryCode"
       ],
       "members":{
         "addressLine1":{"shape":"AddressLine1"},
         "addressLine2":{"shape":"AddressLine2"},
         "addressLine3":{"shape":"AddressLine3"},
-        "city":{"shape":"City"},
-        "countryCode":{"shape":"CountryCode"},
         "districtOrCounty":{"shape":"District"},
+        "city":{"shape":"City"},
+        "stateOrRegion":{"shape":"State"},
         "postalCode":{"shape":"PostalCode"},
-        "stateOrRegion":{"shape":"State"}
+        "countryCode":{"shape":"CountryCode"}
       }
     },
     "AddressLine1":{
       "type":"string",
       "max":180,
       "min":1,
-      "pattern":"^(?!\\s*$)[\\s\\S]+$"
+      "pattern":"(?!\\s*$)[\\s\\S]+"
     },
     "AddressLine2":{
       "type":"string",
       "max":60,
       "min":1,
-      "pattern":"^(?!\\s*$)[\\s\\S]+$"
+      "pattern":"(?!\\s*$)[\\s\\S]+"
     },
     "AddressLine3":{
       "type":"string",
       "max":60,
       "min":1,
-      "pattern":"^(?!\\s*$)[\\s\\S]+$"
+      "pattern":"(?!\\s*$)[\\s\\S]+"
     },
     "AddressRoleMap":{
       "type":"map",
@@ -444,8 +457,8 @@
       ],
       "members":{
         "accountId":{"shape":"AccountId"},
-        "code":{"shape":"ErrorCode"},
-        "message":{"shape":"ErrorMessage"}
+        "message":{"shape":"ErrorMessage"},
+        "code":{"shape":"ErrorCode"}
       }
     },
     "BatchDeleteTaxRegistrationErrors":{
@@ -488,8 +501,8 @@
     "BatchGetTaxExemptionsResponse":{
       "type":"structure",
       "members":{
-        "failedAccounts":{"shape":"AccountIds"},
-        "taxExemptionDetailsMap":{"shape":"TaxExemptionDetailsMap"}
+        "taxExemptionDetailsMap":{"shape":"TaxExemptionDetailsMap"},
+        "failedAccounts":{"shape":"AccountIds"}
       }
     },
     "BatchPutTaxRegistrationError":{
@@ -500,8 +513,8 @@
       ],
       "members":{
         "accountId":{"shape":"AccountId"},
-        "code":{"shape":"ErrorCode"},
-        "message":{"shape":"ErrorMessage"}
+        "message":{"shape":"ErrorMessage"},
+        "code":{"shape":"ErrorCode"}
       }
     },
     "BatchPutTaxRegistrationErrors":{
@@ -529,8 +542,15 @@
       "type":"structure",
       "required":["errors"],
       "members":{
-        "errors":{"shape":"BatchPutTaxRegistrationErrors"},
-        "status":{"shape":"TaxRegistrationStatus"}
+        "status":{"shape":"TaxRegistrationStatus"},
+        "errors":{"shape":"BatchPutTaxRegistrationErrors"}
+      }
+    },
+    "BelgiumAdditionalInfo":{
+      "type":"structure",
+      "members":{
+        "peppolId":{"shape":"PeppolId"},
+        "isMercuriusBoxEnabled":{"shape":"Boolean"}
       }
     },
     "Boolean":{
@@ -546,36 +566,36 @@
     },
     "BusinessRegistrationNumber":{
       "type":"string",
-      "pattern":"^[0-9]{12}$"
+      "pattern":"([0-9]{12}|LL[0-9]{5})"
     },
     "BusinessRepresentativeName":{
       "type":"string",
       "max":200,
       "min":1,
-      "pattern":"^[0-9\\u3130-\\u318F\\uAC00-\\uD7AF,.( )-\\\\s]*$"
+      "pattern":"[0-9\\u3130-\\u318F\\uAC00-\\uD7AF,.( )-\\\\s]*"
     },
     "CanadaAdditionalInfo":{
       "type":"structure",
       "members":{
+        "provincialSalesTaxId":{"shape":"CanadaProvincialSalesTaxIdString"},
         "canadaQuebecSalesTaxNumber":{"shape":"CanadaQuebecSalesTaxNumberString"},
         "canadaRetailSalesTaxNumber":{"shape":"CanadaRetailSalesTaxNumberString"},
-        "isResellerAccount":{"shape":"Boolean"},
-        "provincialSalesTaxId":{"shape":"CanadaProvincialSalesTaxIdString"}
+        "isResellerAccount":{"shape":"Boolean"}
       }
     },
     "CanadaProvincialSalesTaxIdString":{
       "type":"string",
       "max":16,
       "min":7,
-      "pattern":"^([0-9A-Z/-]+)$"
+      "pattern":"([0-9A-Z/-]+)"
     },
     "CanadaQuebecSalesTaxNumberString":{
       "type":"string",
-      "pattern":"^([0-9]{10})(TQ[0-9]{4})?$"
+      "pattern":"([0-9]{10})(TQ[0-9]{4})?"
     },
     "CanadaRetailSalesTaxNumberString":{
       "type":"string",
-      "pattern":"^([0-9]{6}-[0-9]{1})$"
+      "pattern":"([0-9]{6}-[0-9]{1})"
     },
     "CaseCreationLimitExceededException":{
       "type":"structure",
@@ -593,31 +613,45 @@
       "type":"string",
       "max":1024,
       "min":0,
-      "pattern":"^\\d+$"
+      "pattern":"\\d+"
     },
     "CertifiedEmailId":{
       "type":"string",
-      "pattern":"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,20}$"
+      "pattern":"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,20}"
+    },
+    "ChileAdditionalInfo":{
+      "type":"structure",
+      "members":{
+        "documentType":{"shape":"ChileDocumentType"},
+        "businessActivity":{"shape":"GenericString"}
+      }
+    },
+    "ChileDocumentType":{
+      "type":"string",
+      "enum":[
+        "Invoice",
+        "Receipt"
+      ]
     },
     "CigNumber":{
       "type":"string",
-      "pattern":"^([0-9A-Z]{1,15})$"
+      "pattern":"([0-9A-Z]{1,15})"
     },
     "City":{
       "type":"string",
       "max":50,
       "min":1,
-      "pattern":"^(?!\\s*$)[\\s\\S]+$"
+      "pattern":"(?!\\s*$)[\\s\\S]+"
     },
     "ConflictException":{
       "type":"structure",
       "required":[
-        "errorCode",
-        "message"
+        "message",
+        "errorCode"
       ],
       "members":{
-        "errorCode":{"shape":"ErrorCode"},
-        "message":{"shape":"ErrorMessage"}
+        "message":{"shape":"ErrorMessage"},
+        "errorCode":{"shape":"ErrorCode"}
       },
       "error":{
         "httpStatusCode":409,
@@ -627,31 +661,38 @@
     },
     "ContractingAuthorityCode":{
       "type":"string",
-      "pattern":"^\\d{4}\\.[A-Z]\\d{5}\\.\\d{4}$"
+      "pattern":"\\d{4}\\.[A-Z]\\d{5}\\.\\d{4}"
     },
     "CountryCode":{
       "type":"string",
       "max":2,
       "min":2,
-      "pattern":"^[a-zA-Z]+$"
+      "pattern":"[a-zA-Z]+"
     },
     "CupNumber":{
       "type":"string",
-      "pattern":"^([0-9A-Z]{1,15})$"
+      "pattern":"([0-9A-Z]{1,15})"
+    },
+    "CustomerType":{
+      "type":"string",
+      "enum":[
+        "Business",
+        "Individual"
+      ]
     },
     "DateOfBirth":{
       "type":"string",
       "max":10,
       "min":10,
-      "pattern":"^(\\d{4}-(0[0-9]|1[0-2])-([0-2][0-9]|3[0-1]))$"
+      "pattern":"(\\d{4}-(0[0-9]|1[0-2])-([0-2][0-9]|3[0-1]))"
     },
     "DateString":{
       "type":"string",
-      "pattern":"^(\\d{4}-(0[0-9]|1[0-2])-([0-2][0-9]|3[0-1]))$"
+      "pattern":"(\\d{4}-(0[0-9]|1[0-2])-([0-2][0-9]|3[0-1]))"
     },
     "DecisionNumber":{
       "type":"string",
-      "pattern":"^([a-zA-Z0-9/.\\-]{0,200})$"
+      "pattern":"([a-zA-Z0-9/.\\-]{0,200})"
     },
     "DeleteSupplementalTaxRegistrationRequest":{
       "type":"structure",
@@ -662,8 +703,7 @@
     },
     "DeleteSupplementalTaxRegistrationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteTaxRegistrationRequest":{
       "type":"structure",
@@ -673,12 +713,11 @@
     },
     "DeleteTaxRegistrationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DestinationFilePath":{
       "type":"string",
-      "pattern":"^[\\s\\S]*$"
+      "pattern":"[\\s\\S]*"
     },
     "DestinationS3Location":{
       "type":"structure",
@@ -692,13 +731,13 @@
       "type":"string",
       "max":50,
       "min":0,
-      "pattern":"^[\\s\\S]*$"
+      "pattern":"[\\s\\S]*"
     },
     "District":{
       "type":"string",
       "max":50,
       "min":1,
-      "pattern":"^(?!\\s*$)[\\s\\S]+$"
+      "pattern":"(?!\\s*$)[\\s\\S]+"
     },
     "EgyptAdditionalInfo":{
       "type":"structure",
@@ -709,11 +748,11 @@
     },
     "ElectronicTransactionCodeNumber":{
       "type":"string",
-      "pattern":"^\\d{17}$"
+      "pattern":"\\d{17}"
     },
     "EnterpriseIdentificationNumber":{
       "type":"string",
-      "pattern":"^(\\d{10}|(\\d{10}-\\d{3}))$"
+      "pattern":"(\\d{10}|(\\d{10}-\\d{3}))"
     },
     "EntityExemptionAccountStatus":{
       "type":"string",
@@ -728,13 +767,13 @@
       "type":"string",
       "max":50,
       "min":0,
-      "pattern":"^[\\s\\S]*$"
+      "pattern":"[\\s\\S]*"
     },
     "ErrorMessage":{
       "type":"string",
       "max":1024,
       "min":0,
-      "pattern":"^[\\s\\S]*$",
+      "pattern":"[\\s\\S]*",
       "sensitive":true
     },
     "EstoniaAdditionalInfo":{
@@ -747,19 +786,19 @@
     "ExemptionCertificate":{
       "type":"structure",
       "required":[
-        "documentFile",
-        "documentName"
+        "documentName",
+        "documentFile"
       ],
       "members":{
-        "documentFile":{"shape":"ExemptionFileBlob"},
-        "documentName":{"shape":"ExemptionDocumentName"}
+        "documentName":{"shape":"ExemptionDocumentName"},
+        "documentFile":{"shape":"ExemptionFileBlob"}
       }
     },
     "ExemptionDocumentName":{
       "type":"string",
       "max":128,
       "min":0,
-      "pattern":"^([A-Za-z0-9-_.]+).(pdf|jpg|png)$"
+      "pattern":"([A-Za-z0-9_.-]+)\\.([pP][dD][fF]|[jJ][pP][gG]|[pP][nN][gG])"
     },
     "ExemptionFileBlob":{
       "type":"blob",
@@ -768,18 +807,25 @@
     },
     "FieldName":{
       "type":"string",
-      "pattern":"^(?!\\s*$)[\\s\\S]+$"
+      "pattern":"(?!\\s*$)[\\s\\S]+"
     },
     "FileBlob":{
       "type":"blob",
       "max":5242880,
       "min":1
     },
+    "FranceAdditionalInfo":{
+      "type":"structure",
+      "required":["sirenNumber"],
+      "members":{
+        "sirenNumber":{"shape":"SirenNumber"}
+      }
+    },
     "GenericString":{
       "type":"string",
       "max":200,
       "min":1,
-      "pattern":"^[\\s\\S]*$"
+      "pattern":"[\\s\\S]*"
     },
     "GeorgiaAdditionalInfo":{
       "type":"structure",
@@ -790,8 +836,7 @@
     },
     "GetTaxExemptionTypesRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetTaxExemptionTypesResponse":{
       "type":"structure",
@@ -801,8 +846,7 @@
     },
     "GetTaxInheritanceRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetTaxInheritanceResponse":{
       "type":"structure",
@@ -858,14 +902,14 @@
     },
     "IndividualRegistrationNumber":{
       "type":"string",
-      "pattern":"^([0-9]{10})$"
+      "pattern":"([0-9]{10})"
     },
     "IndonesiaAdditionalInfo":{
       "type":"structure",
       "members":{
-        "decisionNumber":{"shape":"DecisionNumber"},
+        "taxRegistrationNumberType":{"shape":"IndonesiaTaxRegistrationNumberType"},
         "ppnExceptionDesignationCode":{"shape":"PpnExceptionDesignationCode"},
-        "taxRegistrationNumberType":{"shape":"IndonesiaTaxRegistrationNumberType"}
+        "decisionNumber":{"shape":"DecisionNumber"}
       }
     },
     "IndonesiaTaxRegistrationNumberType":{
@@ -890,17 +934,17 @@
     },
     "InheritanceObtainedReason":{
       "type":"string",
-      "pattern":"^[\\s\\S]*$"
+      "pattern":"[\\s\\S]*"
     },
     "InternalServerException":{
       "type":"structure",
       "required":[
-        "errorCode",
-        "message"
+        "message",
+        "errorCode"
       ],
       "members":{
-        "errorCode":{"shape":"ErrorCode"},
-        "message":{"shape":"ErrorMessage"}
+        "message":{"shape":"ErrorMessage"},
+        "errorCode":{"shape":"ErrorCode"}
       },
       "error":{"httpStatusCode":500},
       "exception":true,
@@ -909,12 +953,12 @@
     "IsraelAdditionalInfo":{
       "type":"structure",
       "required":[
-        "customerType",
-        "dealerType"
+        "dealerType",
+        "customerType"
       ],
       "members":{
-        "customerType":{"shape":"IsraelCustomerType"},
-        "dealerType":{"shape":"IsraelDealerType"}
+        "dealerType":{"shape":"IsraelDealerType"},
+        "customerType":{"shape":"IsraelCustomerType"}
       }
     },
     "IsraelCustomerType":{
@@ -934,24 +978,25 @@
     "ItalyAdditionalInfo":{
       "type":"structure",
       "members":{
+        "sdiAccountId":{"shape":"SdiAccountId"},
         "cigNumber":{"shape":"CigNumber"},
         "cupNumber":{"shape":"CupNumber"},
-        "sdiAccountId":{"shape":"SdiAccountId"},
-        "taxCode":{"shape":"TaxCode"}
+        "taxCode":{"shape":"TaxCode"},
+        "customerType":{"shape":"CustomerType"}
       }
     },
     "ItemOfBusiness":{
       "type":"string",
       "max":100,
       "min":1,
-      "pattern":"^[0-9\\u3130-\\u318F\\uAC00-\\uD7AF,.( )-\\\\s]*$"
+      "pattern":"[0-9\\u3130-\\u318F\\uAC00-\\uD7AF,.( )-\\\\s]*"
     },
     "Jurisdiction":{
       "type":"structure",
       "required":["countryCode"],
       "members":{
-        "countryCode":{"shape":"CountryCode"},
-        "stateOrRegion":{"shape":"State"}
+        "stateOrRegion":{"shape":"State"},
+        "countryCode":{"shape":"CountryCode"}
       }
     },
     "KenyaAdditionalInfo":{
@@ -963,25 +1008,25 @@
     },
     "KepEmailId":{
       "type":"string",
-      "pattern":"^[\\s\\S]*$"
+      "pattern":"[\\s\\S]*"
     },
     "LegalName":{
       "type":"string",
       "max":200,
       "min":1,
-      "pattern":"^(?!\\s*$)[\\s\\S]+$"
+      "pattern":"(?!\\s*$)[\\s\\S]+"
     },
     "LegalNatureCode":{
       "type":"string",
       "max":1024,
       "min":0,
-      "pattern":"^\\d+$"
+      "pattern":"\\d+"
     },
     "LineOfBusiness":{
       "type":"string",
       "max":100,
       "min":1,
-      "pattern":"^[0-9\\u3130-\\u318F\\uAC00-\\uD7AF,.( )-\\\\s]*$"
+      "pattern":"[0-9\\u3130-\\u318F\\uAC00-\\uD7AF,.( )-\\\\s]*"
     },
     "ListSupplementalTaxRegistrationsRequest":{
       "type":"structure",
@@ -994,8 +1039,8 @@
       "type":"structure",
       "required":["taxRegistrations"],
       "members":{
-        "nextToken":{"shape":"PaginationTokenString"},
-        "taxRegistrations":{"shape":"SupplementalTaxRegistrationList"}
+        "taxRegistrations":{"shape":"SupplementalTaxRegistrationList"},
+        "nextToken":{"shape":"PaginationTokenString"}
       }
     },
     "ListTaxExemptionsRequest":{
@@ -1030,9 +1075,9 @@
     "MalaysiaAdditionalInfo":{
       "type":"structure",
       "members":{
-        "businessRegistrationNumber":{"shape":"BusinessRegistrationNumber"},
         "serviceTaxCodes":{"shape":"MalaysiaServiceTaxCodesList"},
-        "taxInformationNumber":{"shape":"TaxInformationNumber"}
+        "taxInformationNumber":{"shape":"TaxInformationNumber"},
+        "businessRegistrationNumber":{"shape":"BusinessRegistrationNumber"}
       }
     },
     "MalaysiaServiceTaxCode":{
@@ -1060,15 +1105,19 @@
       "type":"string",
       "max":2000,
       "min":1,
-      "pattern":"^[-A-Za-z0-9_+\\=\\/]+$"
+      "pattern":"[-A-Za-z0-9_+\\=\\/]+"
     },
     "Pan":{
       "type":"string",
-      "pattern":"^[A-Z]{5}[0-9]{4}[A-Z]{1}$"
+      "pattern":"[A-Z]{5}[0-9]{4}[A-Z]{1}"
     },
     "PaymentVoucherNumber":{
       "type":"string",
-      "pattern":"^(\\d{17}|[A-Za-z]{3}\\d{13})$"
+      "pattern":"(\\d{17}|[A-Za-z]{3}\\d{13}|(?=[^A-Za-z]*[A-Za-z][^A-Za-z]*$)[0-9A-Za-z]{17})"
+    },
+    "PeppolId":{
+      "type":"string",
+      "pattern":"[0-9]{10}"
     },
     "PersonType":{
       "type":"string",
@@ -1078,22 +1127,37 @@
         "Business"
       ]
     },
+    "PhilippinesAdditionalInfo":{
+      "type":"structure",
+      "members":{
+        "isVatRegistered":{"shape":"Boolean"}
+      }
+    },
     "PolandAdditionalInfo":{
       "type":"structure",
       "members":{
         "individualRegistrationNumber":{"shape":"IndividualRegistrationNumber"},
-        "isGroupVatEnabled":{"shape":"Boolean"}
+        "isGroupVatEnabled":{"shape":"Boolean"},
+        "taxRegistrationNumberType":{"shape":"PolandTaxRegistrationNumberType"}
       }
+    },
+    "PolandTaxRegistrationNumberType":{
+      "type":"string",
+      "enum":[
+        "EUTaxRegistrationNumber",
+        "LocalTaxRegistrationNumber",
+        "LocalRegistrationNumber"
+      ]
     },
     "PostalCode":{
       "type":"string",
       "max":20,
       "min":1,
-      "pattern":"^(?!\\s*$)[\\s\\S]+$"
+      "pattern":"(?!\\s*$)[\\s\\S]+"
     },
     "PpnExceptionDesignationCode":{
       "type":"string",
-      "pattern":"^(01|02|03|07|08)$"
+      "pattern":"(01|02|03|07|08)"
     },
     "PutSupplementalTaxRegistrationRequest":{
       "type":"structure",
@@ -1118,14 +1182,14 @@
       "required":[
         "accountIds",
         "authority",
-        "exemptionCertificate",
-        "exemptionType"
+        "exemptionType",
+        "exemptionCertificate"
       ],
       "members":{
         "accountIds":{"shape":"PutTaxExemptionRequestAccountIdsList"},
         "authority":{"shape":"Authority"},
-        "exemptionCertificate":{"shape":"ExemptionCertificate"},
-        "exemptionType":{"shape":"GenericString"}
+        "exemptionType":{"shape":"GenericString"},
+        "exemptionCertificate":{"shape":"ExemptionCertificate"}
       }
     },
     "PutTaxExemptionRequestAccountIdsList":{
@@ -1148,8 +1212,7 @@
     },
     "PutTaxInheritanceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutTaxRegistrationRequest":{
       "type":"structure",
@@ -1169,7 +1232,7 @@
       "type":"string",
       "max":200,
       "min":1,
-      "pattern":"^(?!\\s*$)[\\s\\S]+$"
+      "pattern":"(?!\\s*$)[\\s\\S]+"
     },
     "RegistrationType":{
       "type":"string",
@@ -1182,17 +1245,17 @@
       "type":"string",
       "max":8,
       "min":8,
-      "pattern":"^\\d+$"
+      "pattern":"\\d+"
     },
     "ResourceNotFoundException":{
       "type":"structure",
       "required":[
-        "errorCode",
-        "message"
+        "message",
+        "errorCode"
       ],
       "members":{
-        "errorCode":{"shape":"ErrorCode"},
-        "message":{"shape":"ErrorMessage"}
+        "message":{"shape":"ErrorMessage"},
+        "errorCode":{"shape":"ErrorCode"}
       },
       "error":{
         "httpStatusCode":404,
@@ -1211,19 +1274,19 @@
       "type":"string",
       "max":63,
       "min":3,
-      "pattern":"^(?=^.{3,63}$)(?!^(\\d+\\.)+\\d+$)(^(([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])$)$"
+      "pattern":"(?=^.{3,63}$)(?!^(\\d+\\.)+\\d+$)(^(([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])$)"
     },
     "S3Key":{
       "type":"string",
       "max":1024,
       "min":1,
-      "pattern":"^.*\\S.*$"
+      "pattern":".*\\S.*"
     },
     "S3Prefix":{
       "type":"string",
       "max":512,
       "min":0,
-      "pattern":"^.*\\S.*$"
+      "pattern":".*\\S.*"
     },
     "SaudiArabiaAdditionalInfo":{
       "type":"structure",
@@ -1241,11 +1304,11 @@
     },
     "SdiAccountId":{
       "type":"string",
-      "pattern":"^[0-9A-Z]{6,7}$"
+      "pattern":"[0-9A-Z]{6,7}"
     },
     "SecondaryTaxId":{
       "type":"string",
-      "pattern":"^([0-9]{10})$"
+      "pattern":"([0-9]{10})"
     },
     "Sector":{
       "type":"string",
@@ -1257,7 +1320,11 @@
     },
     "Seller":{
       "type":"string",
-      "pattern":"^[\\s\\S]*$"
+      "pattern":"[\\s\\S]*"
+    },
+    "SirenNumber":{
+      "type":"string",
+      "pattern":"[0-9]{9}"
     },
     "SourceS3Location":{
       "type":"structure",
@@ -1274,13 +1341,13 @@
       "type":"structure",
       "required":[
         "businessRepresentativeName",
-        "itemOfBusiness",
-        "lineOfBusiness"
+        "lineOfBusiness",
+        "itemOfBusiness"
       ],
       "members":{
         "businessRepresentativeName":{"shape":"BusinessRepresentativeName"},
-        "itemOfBusiness":{"shape":"ItemOfBusiness"},
-        "lineOfBusiness":{"shape":"LineOfBusiness"}
+        "lineOfBusiness":{"shape":"LineOfBusiness"},
+        "itemOfBusiness":{"shape":"ItemOfBusiness"}
       }
     },
     "SpainAdditionalInfo":{
@@ -1294,24 +1361,24 @@
       "type":"string",
       "max":50,
       "min":1,
-      "pattern":"^(?!\\s*$)[\\s\\S]+$"
+      "pattern":"(?!\\s*$)[\\s\\S]+"
     },
     "SupplementalTaxRegistration":{
       "type":"structure",
       "required":[
-        "address",
-        "authorityId",
-        "legalName",
         "registrationId",
         "registrationType",
+        "legalName",
+        "address",
+        "authorityId",
         "status"
       ],
       "members":{
-        "address":{"shape":"Address"},
-        "authorityId":{"shape":"GenericString"},
-        "legalName":{"shape":"LegalName"},
         "registrationId":{"shape":"RegistrationId"},
         "registrationType":{"shape":"SupplementalTaxRegistrationType"},
+        "legalName":{"shape":"LegalName"},
+        "address":{"shape":"Address"},
+        "authorityId":{"shape":"GenericString"},
         "status":{"shape":"TaxRegistrationStatus"}
       },
       "sensitive":true
@@ -1319,16 +1386,16 @@
     "SupplementalTaxRegistrationEntry":{
       "type":"structure",
       "required":[
-        "address",
-        "legalName",
         "registrationId",
-        "registrationType"
+        "registrationType",
+        "legalName",
+        "address"
       ],
       "members":{
-        "address":{"shape":"Address"},
-        "legalName":{"shape":"LegalName"},
         "registrationId":{"shape":"RegistrationId"},
-        "registrationType":{"shape":"SupplementalTaxRegistrationType"}
+        "registrationType":{"shape":"SupplementalTaxRegistrationType"},
+        "legalName":{"shape":"LegalName"},
+        "address":{"shape":"Address"}
       },
       "sensitive":true
     },
@@ -1342,11 +1409,11 @@
     },
     "TaxCode":{
       "type":"string",
-      "pattern":"^([0-9]{11}|[A-Z]{6}[0-9]{2}[A-Z][0-9]{2}[A-Z][0-9]{3}[A-Z])$"
+      "pattern":"([0-9]{11}|[A-Z]{6}[0-9]{2}[A-Z][0-9]{2}[A-Z][0-9]{3}[A-Z])"
     },
     "TaxDocumentAccessToken":{
       "type":"string",
-      "pattern":"^[\\s\\S]*$"
+      "pattern":"[\\s\\S]*"
     },
     "TaxDocumentMetadata":{
       "type":"structure",
@@ -1367,7 +1434,7 @@
     },
     "TaxDocumentName":{
       "type":"string",
-      "pattern":"^[\\s\\S]*$"
+      "pattern":"[\\s\\S]*"
     },
     "TaxExemption":{
       "type":"structure",
@@ -1377,20 +1444,20 @@
       ],
       "members":{
         "authority":{"shape":"Authority"},
+        "taxExemptionType":{"shape":"TaxExemptionType"},
         "effectiveDate":{"shape":"Timestamp"},
         "expirationDate":{"shape":"Timestamp"},
-        "status":{"shape":"EntityExemptionAccountStatus"},
         "systemEffectiveDate":{"shape":"Timestamp"},
-        "taxExemptionType":{"shape":"TaxExemptionType"}
+        "status":{"shape":"EntityExemptionAccountStatus"}
       }
     },
     "TaxExemptionDetails":{
       "type":"structure",
       "members":{
+        "taxExemptions":{"shape":"TaxExemptions"},
         "heritageObtainedDetails":{"shape":"Boolean"},
         "heritageObtainedParentEntity":{"shape":"GenericString"},
-        "heritageObtainedReason":{"shape":"GenericString"},
-        "taxExemptions":{"shape":"TaxExemptions"}
+        "heritageObtainedReason":{"shape":"GenericString"}
       }
     },
     "TaxExemptionDetailsMap":{
@@ -1401,9 +1468,9 @@
     "TaxExemptionType":{
       "type":"structure",
       "members":{
-        "applicableJurisdictions":{"shape":"Authorities"},
+        "displayName":{"shape":"DisplayName"},
         "description":{"shape":"GenericString"},
-        "displayName":{"shape":"DisplayName"}
+        "applicableJurisdictions":{"shape":"Authorities"}
       }
     },
     "TaxExemptionTypes":{
@@ -1416,57 +1483,57 @@
     },
     "TaxInformationNumber":{
       "type":"string",
-      "pattern":"^[A-Z]{1,2}[0-9]{1,11}$"
+      "pattern":"(IG|C|CS|P|D|F|FA|PT|TA|TC|TN|TR|TP|J|LE)[0-9]{10,13}"
     },
     "TaxInheritanceDetails":{
       "type":"structure",
       "members":{
-        "inheritanceObtainedReason":{"shape":"InheritanceObtainedReason"},
-        "parentEntityId":{"shape":"AccountId"}
+        "parentEntityId":{"shape":"AccountId"},
+        "inheritanceObtainedReason":{"shape":"InheritanceObtainedReason"}
       }
     },
     "TaxOffice":{
       "type":"string",
-      "pattern":"^[\\s\\S]*$"
+      "pattern":"[\\s\\S]*"
     },
     "TaxRegistration":{
       "type":"structure",
       "required":[
-        "legalAddress",
-        "legalName",
         "registrationId",
         "registrationType",
-        "status"
+        "legalName",
+        "status",
+        "legalAddress"
       ],
       "members":{
-        "additionalTaxInformation":{"shape":"AdditionalInfoResponse"},
-        "certifiedEmailId":{"shape":"CertifiedEmailId"},
-        "legalAddress":{"shape":"Address"},
-        "legalName":{"shape":"LegalName"},
         "registrationId":{"shape":"RegistrationId"},
         "registrationType":{"shape":"TaxRegistrationType"},
-        "sector":{"shape":"Sector"},
+        "legalName":{"shape":"LegalName"},
         "status":{"shape":"TaxRegistrationStatus"},
-        "taxDocumentMetadatas":{"shape":"TaxDocumentMetadatas"}
+        "sector":{"shape":"Sector"},
+        "taxDocumentMetadatas":{"shape":"TaxDocumentMetadatas"},
+        "certifiedEmailId":{"shape":"CertifiedEmailId"},
+        "additionalTaxInformation":{"shape":"AdditionalInfoResponse"},
+        "legalAddress":{"shape":"Address"}
       },
       "sensitive":true
     },
     "TaxRegistrationDocFile":{
       "type":"structure",
       "required":[
-        "fileContent",
-        "fileName"
+        "fileName",
+        "fileContent"
       ],
       "members":{
-        "fileContent":{"shape":"FileBlob"},
-        "fileName":{"shape":"TaxDocumentName"}
+        "fileName":{"shape":"TaxDocumentName"},
+        "fileContent":{"shape":"FileBlob"}
       }
     },
     "TaxRegistrationDocument":{
       "type":"structure",
       "members":{
-        "file":{"shape":"TaxRegistrationDocFile"},
-        "s3Location":{"shape":"SourceS3Location"}
+        "s3Location":{"shape":"SourceS3Location"},
+        "file":{"shape":"TaxRegistrationDocFile"}
       }
     },
     "TaxRegistrationDocuments":{
@@ -1482,14 +1549,14 @@
         "registrationType"
       ],
       "members":{
-        "additionalTaxInformation":{"shape":"AdditionalInfoRequest"},
-        "certifiedEmailId":{"shape":"CertifiedEmailId"},
-        "legalAddress":{"shape":"Address"},
-        "legalName":{"shape":"LegalName"},
         "registrationId":{"shape":"RegistrationId"},
         "registrationType":{"shape":"TaxRegistrationType"},
+        "legalName":{"shape":"LegalName"},
+        "legalAddress":{"shape":"Address"},
         "sector":{"shape":"Sector"},
-        "verificationDetails":{"shape":"VerificationDetails"}
+        "additionalTaxInformation":{"shape":"AdditionalInfoRequest"},
+        "verificationDetails":{"shape":"VerificationDetails"},
+        "certifiedEmailId":{"shape":"CertifiedEmailId"}
       },
       "sensitive":true
     },
@@ -1518,28 +1585,30 @@
         "CNPJ",
         "SST",
         "TIN",
-        "NRIC"
+        "NRIC",
+        "PAN",
+        "NIP"
       ]
     },
     "TaxRegistrationWithJurisdiction":{
       "type":"structure",
       "required":[
-        "jurisdiction",
-        "legalName",
         "registrationId",
         "registrationType",
-        "status"
+        "legalName",
+        "status",
+        "jurisdiction"
       ],
       "members":{
-        "additionalTaxInformation":{"shape":"AdditionalInfoResponse"},
-        "certifiedEmailId":{"shape":"CertifiedEmailId"},
-        "jurisdiction":{"shape":"Jurisdiction"},
-        "legalName":{"shape":"LegalName"},
         "registrationId":{"shape":"RegistrationId"},
         "registrationType":{"shape":"TaxRegistrationType"},
-        "sector":{"shape":"Sector"},
+        "legalName":{"shape":"LegalName"},
         "status":{"shape":"TaxRegistrationStatus"},
-        "taxDocumentMetadatas":{"shape":"TaxDocumentMetadatas"}
+        "sector":{"shape":"Sector"},
+        "taxDocumentMetadatas":{"shape":"TaxDocumentMetadatas"},
+        "certifiedEmailId":{"shape":"CertifiedEmailId"},
+        "additionalTaxInformation":{"shape":"AdditionalInfoResponse"},
+        "jurisdiction":{"shape":"Jurisdiction"}
       },
       "sensitive":true
     },
@@ -1547,10 +1616,10 @@
     "TurkeyAdditionalInfo":{
       "type":"structure",
       "members":{
-        "industries":{"shape":"Industries"},
+        "taxOffice":{"shape":"TaxOffice"},
         "kepEmailId":{"shape":"KepEmailId"},
         "secondaryTaxId":{"shape":"SecondaryTaxId"},
-        "taxOffice":{"shape":"TaxOffice"}
+        "industries":{"shape":"Industries"}
       }
     },
     "UkraineAdditionalInfo":{
@@ -1569,13 +1638,13 @@
     },
     "UniqueIdentificationNumber":{
       "type":"string",
-      "pattern":"^[a-zA-Z0-9]{39}$"
+      "pattern":"[a-zA-Z0-9]{39}"
     },
     "Url":{
       "type":"string",
       "max":200,
       "min":1,
-      "pattern":"^https.*\\S.*$"
+      "pattern":"https.*\\S.*"
     },
     "UzbekistanAdditionalInfo":{
       "type":"structure",
@@ -1594,13 +1663,13 @@
     "ValidationException":{
       "type":"structure",
       "required":[
-        "errorCode",
-        "message"
+        "message",
+        "errorCode"
       ],
       "members":{
+        "message":{"shape":"ErrorMessage"},
         "errorCode":{"shape":"ValidationExceptionErrorCode"},
-        "fieldList":{"shape":"ValidationExceptionFieldList"},
-        "message":{"shape":"ErrorMessage"}
+        "fieldList":{"shape":"ValidationExceptionFieldList"}
       },
       "error":{
         "httpStatusCode":400,
@@ -1615,7 +1684,9 @@
         "ExpiredToken",
         "InvalidToken",
         "FieldValidationFailed",
-        "MissingInput"
+        "MissingInput",
+        "NonIndiaCustomerCanNotSetPAN",
+        "GSTExistenceBlockSetPAN"
       ]
     },
     "ValidationExceptionField":{
@@ -1631,7 +1702,7 @@
     },
     "VatRegistrationNumber":{
       "type":"string",
-      "pattern":"^[0-9]{12}$"
+      "pattern":"[0-9]{12}"
     },
     "VerificationDetails":{
       "type":"structure",
@@ -1643,8 +1714,8 @@
     "VietnamAdditionalInfo":{
       "type":"structure",
       "members":{
-        "electronicTransactionCodeNumber":{"shape":"ElectronicTransactionCodeNumber"},
         "enterpriseIdentificationNumber":{"shape":"EnterpriseIdentificationNumber"},
+        "electronicTransactionCodeNumber":{"shape":"ElectronicTransactionCodeNumber"},
         "paymentVoucherNumber":{"shape":"PaymentVoucherNumber"},
         "paymentVoucherNumberDate":{"shape":"DateString"}
       }

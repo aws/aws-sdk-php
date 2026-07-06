@@ -194,6 +194,12 @@
       "min":1,
       "pattern":"arn:.*:kms:[a-zA-Z0-9\\-]+:\\d{12}:(key|alias)/[a-zA-Z_0-9+=,.@\\-_/]+"
     },
+    "AWSKMSKeyARNForSSE":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"arn:.*:kms:[a-zA-Z0-9\\-]+:\\d{12}:key/[a-zA-Z_0-9+=,.@\\-_/]+"
+    },
     "AmazonOpenSearchServerlessBufferingHints":{
       "type":"structure",
       "members":{
@@ -791,7 +797,7 @@
     "DeliveryStreamEncryptionConfiguration":{
       "type":"structure",
       "members":{
-        "KeyARN":{"shape":"AWSKMSKeyARN"},
+        "KeyARN":{"shape":"AWSKMSKeyARNForSSE"},
         "KeyType":{"shape":"KeyType"},
         "Status":{"shape":"DeliveryStreamEncryptionStatus"},
         "FailureDescription":{"shape":"FailureDescription"}
@@ -801,7 +807,7 @@
       "type":"structure",
       "required":["KeyType"],
       "members":{
-        "KeyARN":{"shape":"AWSKMSKeyARN"},
+        "KeyARN":{"shape":"AWSKMSKeyARNForSSE"},
         "KeyType":{"shape":"KeyType"}
       }
     },

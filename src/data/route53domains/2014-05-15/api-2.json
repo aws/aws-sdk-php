@@ -70,7 +70,8 @@
       "output":{"shape":"CheckDomainAvailabilityResponse"},
       "errors":[
         {"shape":"InvalidInput"},
-        {"shape":"UnsupportedTLD"}
+        {"shape":"UnsupportedTLD"},
+        {"shape":"TLDInMaintenance"}
       ]
     },
     "CheckDomainTransferability":{
@@ -83,7 +84,8 @@
       "output":{"shape":"CheckDomainTransferabilityResponse"},
       "errors":[
         {"shape":"InvalidInput"},
-        {"shape":"UnsupportedTLD"}
+        {"shape":"UnsupportedTLD"},
+        {"shape":"TLDInMaintenance"}
       ]
     },
     "DeleteDomain":{
@@ -227,7 +229,8 @@
       "output":{"shape":"GetDomainSuggestionsResponse"},
       "errors":[
         {"shape":"InvalidInput"},
-        {"shape":"UnsupportedTLD"}
+        {"shape":"UnsupportedTLD"},
+        {"shape":"TLDInMaintenance"}
       ]
     },
     "GetOperationDetail":{
@@ -303,7 +306,8 @@
       "errors":[
         {"shape":"InvalidInput"},
         {"shape":"OperationLimitExceeded"},
-        {"shape":"UnsupportedTLD"}
+        {"shape":"UnsupportedTLD"},
+        {"shape":"TLDInMaintenance"}
       ]
     },
     "RegisterDomain":{
@@ -364,7 +368,8 @@
       "errors":[
         {"shape":"InvalidInput"},
         {"shape":"OperationLimitExceeded"},
-        {"shape":"UnsupportedTLD"}
+        {"shape":"UnsupportedTLD"},
+        {"shape":"TLDInMaintenance"}
       ]
     },
     "ResendOperationAuthorization":{
@@ -375,7 +380,8 @@
       },
       "input":{"shape":"ResendOperationAuthorizationRequest"},
       "errors":[
-        {"shape":"InvalidInput"}
+        {"shape":"InvalidInput"},
+        {"shape":"TLDInMaintenance"}
       ]
     },
     "RetrieveDomainAuthCode":{
@@ -388,7 +394,8 @@
       "output":{"shape":"RetrieveDomainAuthCodeResponse"},
       "errors":[
         {"shape":"InvalidInput"},
-        {"shape":"UnsupportedTLD"}
+        {"shape":"UnsupportedTLD"},
+        {"shape":"TLDInMaintenance"}
       ]
     },
     "TransferDomain":{
@@ -1710,6 +1717,14 @@
       ]
     },
     "String":{"type":"string"},
+    "TLDInMaintenance":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ErrorMessage"},
+        "tld":{"shape":"TldName"}
+      },
+      "exception":true
+    },
     "TLDRulesViolation":{
       "type":"structure",
       "members":{
@@ -1752,7 +1767,6 @@
       "type":"structure",
       "required":[
         "DomainName",
-        "DurationInYears",
         "AdminContact",
         "RegistrantContact",
         "TechContact"

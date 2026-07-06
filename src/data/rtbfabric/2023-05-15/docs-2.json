@@ -3,21 +3,29 @@
   "service": "<p>Amazon Web Services RTB Fabric provides secure, low-latency infrastructure for connecting real-time bidding (RTB) applications. Rather than hosting applications directly, RTB Fabric acts as the connecting fabric that enables your applications to communicate efficiently over private networks instead of the public internet. You maintain complete control over your applications, data, and bidding decisions, while RTB Fabric provides the underlying infrastructure for secure, reliable connectivity.</p> <p>You can use these APIs to complete RTB Fabric tasks, such as setting up audit log ingestions or viewing user access. For more information about RTB Fabric, including the required permissions to use the service, see the <a href=\"https://docs.aws.amazon.com/rtb-fabric/latest/userguide/\">Amazon Web Services RTB Fabric User Guide</a>.</p>",
   "operations": {
     "AcceptLink": "<p>Accepts a link request between gateways.</p> <p>When a requester gateway requests to link with a responder gateway, the responder can use this operation to accept the link request and establish the connection.</p>",
+    "AssociateCertificate": "<p>Associates an ACM certificate with a responder gateway.</p>",
     "CreateInboundExternalLink": "<p>Creates an inbound external link.</p>",
     "CreateLink": "<p>Creates a new link between gateways.</p> <p>Establishes a connection that allows gateways to communicate and exchange bid requests and responses.</p>",
+    "CreateLinkRoutingRule": "<p>Creates a routing rule for a link.</p> <p>Routing rules use priority-based evaluation where lower priority numbers are evaluated first. Each rule specifies conditions that must all match for the rule to apply.</p>",
     "CreateOutboundExternalLink": "<p>Creates an outbound external link.</p>",
     "CreateRequesterGateway": "<p>Creates a requester gateway.</p>",
     "CreateResponderGateway": "<p>Creates a responder gateway.</p> <important> <p>A domain name or managed endpoint is required.</p> </important>",
     "DeleteInboundExternalLink": "<p>Deletes an inbound external link.</p>",
     "DeleteLink": "<p>Deletes a link between gateways.</p> <p>Permanently removes the connection between gateways. This action cannot be undone.</p>",
+    "DeleteLinkRoutingRule": "<p>Deletes a routing rule from a link.</p>",
     "DeleteOutboundExternalLink": "<p>Deletes an outbound external link.</p>",
     "DeleteRequesterGateway": "<p>Deletes a requester gateway.</p>",
     "DeleteResponderGateway": "<p>Deletes a responder gateway.</p>",
+    "DisassociateCertificate": "<p>Removes a certificate association from a responder gateway.</p>",
+    "GetCertificateAssociation": "<p>Retrieves the details of a certificate association with a responder gateway.</p>",
     "GetInboundExternalLink": "<p>Retrieves information about an inbound external link.</p>",
     "GetLink": "<p>Retrieves information about a link between gateways.</p> <p>Returns detailed information about the link configuration, status, and associated gateways.</p>",
+    "GetLinkRoutingRule": "<p>Retrieves the details of a routing rule for a link.</p>",
     "GetOutboundExternalLink": "<p>Retrieves information about an outbound external link.</p>",
     "GetRequesterGateway": "<p>Retrieves information about a requester gateway.</p>",
     "GetResponderGateway": "<p>Retrieves information about a responder gateway.</p>",
+    "ListCertificateAssociations": "<p>Lists the certificate associations for a responder gateway.</p>",
+    "ListLinkRoutingRules": "<p>Lists the routing rules for a link.</p>",
     "ListLinks": "<p>Lists links associated with gateways.</p> <p>Returns a list of all links for the specified gateways, including their status and configuration details.</p>",
     "ListRequesterGateways": "<p>Lists requester gateways.</p>",
     "ListResponderGateways": "<p>Lists reponder gateways.</p>",
@@ -27,6 +35,7 @@
     "UntagResource": "<p>Removes a tag or tags from a resource.</p>",
     "UpdateLink": "<p>Updates the configuration of a link between gateways.</p> <p>Allows you to modify settings and parameters for an existing link.</p>",
     "UpdateLinkModuleFlow": "<p>Updates a link module flow.</p>",
+    "UpdateLinkRoutingRule": "<p>Updates a routing rule for a link.</p>",
     "UpdateRequesterGateway": "<p>Updates a requester gateway.</p>",
     "UpdateResponderGateway": "<p>Updates a responder gateway.</p>"
   },
@@ -43,11 +52,31 @@
       "base": "<p>The request could not be completed because you do not have sufficient access to perform this action.</p>",
       "refs": {}
     },
+    "AcmCertificateArn": {
+      "base": null,
+      "refs": {
+        "AssociateCertificateRequest$acmCertificateArn": "<p>The Amazon Resource Name (ARN) of the ACM certificate to associate.</p>",
+        "AssociateCertificateResponse$acmCertificateArn": "<p>The Amazon Resource Name (ARN) of the ACM certificate.</p>",
+        "CertificateAssociationSummary$acmCertificateArn": "<p>The Amazon Resource Name (ARN) of the ACM certificate.</p>",
+        "DisassociateCertificateRequest$acmCertificateArn": "<p>The Amazon Resource Name (ARN) of the ACM certificate to disassociate.</p>",
+        "DisassociateCertificateResponse$acmCertificateArn": "<p>The Amazon Resource Name (ARN) of the ACM certificate.</p>",
+        "GetCertificateAssociationRequest$acmCertificateArn": "<p>The Amazon Resource Name (ARN) of the ACM certificate.</p>",
+        "GetCertificateAssociationResponse$acmCertificateArn": "<p>The Amazon Resource Name (ARN) of the ACM certificate.</p>"
+      }
+    },
     "Action": {
       "base": "<p>Describes a bid action.</p>",
       "refs": {
         "OpenRtbAttributeModuleParameters$action": "<p>Describes a bid action.</p>"
       }
+    },
+    "AssociateCertificateRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "AssociateCertificateResponse": {
+      "base": null,
+      "refs": {}
     },
     "AutoScalingGroupName": {
       "base": null,
@@ -85,6 +114,27 @@
       "refs": {
         "CreateLinkRequest$httpResponderAllowed": "<p>Boolean to specify if an HTTP responder is allowed.</p>",
         "GetLinkResponse$httpResponderAllowed": "<p>Boolean to specify if an HTTP responder is allowed.</p>"
+      }
+    },
+    "CertificateAssociationStatus": {
+      "base": "<p>The status of a certificate association with a gateway.</p>",
+      "refs": {
+        "AssociateCertificateResponse$status": "<p>The status of the certificate association.</p>",
+        "CertificateAssociationSummary$status": "<p>The status of the certificate association.</p>",
+        "DisassociateCertificateResponse$status": "<p>The status of the certificate association.</p>",
+        "GetCertificateAssociationResponse$status": "<p>The status of the certificate association.</p>"
+      }
+    },
+    "CertificateAssociationSummary": {
+      "base": "<p>Describes a summary of a certificate association.</p>",
+      "refs": {
+        "CertificateAssociationSummaryList$member": null
+      }
+    },
+    "CertificateAssociationSummaryList": {
+      "base": null,
+      "refs": {
+        "ListCertificateAssociationsResponse$certificateAssociations": "<p>The list of certificate associations for the gateway.</p>"
       }
     },
     "CertificateAuthorityCertificates": {
@@ -130,6 +180,14 @@
       "refs": {
         "CreateLinkResponse$customerProvidedId": "<p>The customer-provided unique identifier of the link.</p>"
       }
+    },
+    "CreateLinkRoutingRuleRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateLinkRoutingRuleResponse": {
+      "base": null,
+      "refs": {}
     },
     "CreateOutboundExternalLinkRequest": {
       "base": null,
@@ -219,6 +277,14 @@
       "base": null,
       "refs": {}
     },
+    "DeleteLinkRoutingRuleRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteLinkRoutingRuleResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteOutboundExternalLinkRequest": {
       "base": null,
       "refs": {}
@@ -240,6 +306,14 @@
       "refs": {}
     },
     "DeleteResponderGatewayResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DisassociateCertificateRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DisassociateCertificateResponse": {
       "base": null,
       "refs": {}
     },
@@ -330,35 +404,47 @@
         "AcceptLinkRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "AcceptLinkResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "AcceptLinkResponse$peerGatewayId": "<p>The unique identifier of the peer gateway.</p>",
+        "AssociateCertificateRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "AssociateCertificateResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "CreateInboundExternalLinkRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "CreateInboundExternalLinkResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "CreateLinkRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "CreateLinkRequest$peerGatewayId": "<p>The unique identifier of the peer gateway.</p>",
         "CreateLinkResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "CreateLinkResponse$peerGatewayId": "<p>The unique identifier of the peer gateway.</p>",
+        "CreateLinkRoutingRuleRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "CreateOutboundExternalLinkRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "CreateOutboundExternalLinkResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "CreateRequesterGatewayResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "CreateResponderGatewayResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "DeleteInboundExternalLinkRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "DeleteLinkRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "DeleteLinkRoutingRuleRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "DeleteOutboundExternalLinkRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "DeleteRequesterGatewayRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "DeleteRequesterGatewayResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "DeleteResponderGatewayRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "DeleteResponderGatewayResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "DisassociateCertificateRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "DisassociateCertificateResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "GatewayIdList$member": null,
+        "GetCertificateAssociationRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "GetCertificateAssociationResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "GetInboundExternalLinkRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "GetInboundExternalLinkResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "GetLinkRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "GetLinkResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "GetLinkResponse$peerGatewayId": "<p>The unique identifier of the peer gateway.</p>",
+        "GetLinkRoutingRuleRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "GetLinkRoutingRuleResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "GetOutboundExternalLinkRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "GetOutboundExternalLinkResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "GetRequesterGatewayRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "GetRequesterGatewayResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "GetResponderGatewayRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "GetResponderGatewayResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "ListCertificateAssociationsRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "ListLinkRoutingRulesRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "ListLinksRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "ListLinksResponseStructure$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "ListLinksResponseStructure$peerGatewayId": "<p>The unique identifier of the peer gateway.</p>",
@@ -368,6 +454,7 @@
         "UpdateLinkModuleFlowRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "UpdateLinkModuleFlowResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "UpdateLinkRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "UpdateLinkRoutingRuleRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "UpdateRequesterGatewayRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "UpdateRequesterGatewayResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "UpdateResponderGatewayRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
@@ -388,6 +475,14 @@
         "GetResponderGatewayResponse$gatewayType": "<p>The type of gateway. Valid values are <code>EXTERNAL</code> or <code>INTERNAL</code>.</p>"
       }
     },
+    "GetCertificateAssociationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetCertificateAssociationResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetInboundExternalLinkRequest": {
       "base": null,
       "refs": {}
@@ -401,6 +496,14 @@
       "refs": {}
     },
     "GetLinkResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetLinkRoutingRuleRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetLinkRoutingRuleResponse": {
       "base": null,
       "refs": {}
     },
@@ -525,7 +628,8 @@
         "GetRequesterGatewayResponse$totalLinksCount": "<p>The total count of links for the requester gateway.</p>",
         "GetResponderGatewayResponse$activeLinksCount": "<p>The count of active links for the responder gateway.</p>",
         "GetResponderGatewayResponse$totalLinksCount": "<p>The total count of links for the responder gateway.</p>",
-        "GetResponderGatewayResponse$inboundLinksCount": "<p>The count of inbound links for the responder gateway.</p>",
+        "GetResponderGatewayResponse$inboundLinksCount": "<p>Deprecated. Use 'linksRequestedCount' instead.</p>",
+        "GetResponderGatewayResponse$linksRequestedCount": "<p>The count of requested links waiting for the responder gateway to accept or reject.</p>",
         "ListLinksRequest$maxResults": "<p>The maximum number of results that are returned per call. You can use <code>nextToken</code> to obtain further pages of results.</p> <p>This is only an upper limit. The actual number of results returned per call might be fewer than the specified maximum.</p>"
       }
     },
@@ -608,26 +712,32 @@
         "AcceptLinkResponse$linkId": "<p>The unique identifier of the link.</p>",
         "CreateInboundExternalLinkResponse$linkId": "<p>The unique identifier of the link.</p>",
         "CreateLinkResponse$linkId": "<p>The unique identifier of the link.</p>",
+        "CreateLinkRoutingRuleRequest$linkId": "<p>The unique identifier of the link.</p>",
         "CreateOutboundExternalLinkResponse$linkId": "<p>The unique identifier of the link.</p>",
         "DeleteInboundExternalLinkRequest$linkId": "<p>The unique identifier of the link.</p>",
         "DeleteInboundExternalLinkResponse$linkId": "<p>The unique identifier of the link.</p>",
         "DeleteLinkRequest$linkId": "<p>The unique identifier of the link.</p>",
         "DeleteLinkResponse$linkId": "<p>The unique identifier of the link.</p>",
+        "DeleteLinkRoutingRuleRequest$linkId": "<p>The unique identifier of the link.</p>",
         "DeleteOutboundExternalLinkRequest$linkId": "<p>The unique identifier of the link.</p>",
         "DeleteOutboundExternalLinkResponse$linkId": "<p>The unique identifier of the link.</p>",
         "GetInboundExternalLinkRequest$linkId": "<p>The unique identifier of the link.</p>",
         "GetInboundExternalLinkResponse$linkId": "<p>The unique identifier of the link.</p>",
         "GetLinkRequest$linkId": "<p>The unique identifier of the link.</p>",
         "GetLinkResponse$linkId": "<p>The unique identifier of the link.</p>",
+        "GetLinkRoutingRuleRequest$linkId": "<p>The unique identifier of the link.</p>",
+        "GetLinkRoutingRuleResponse$linkId": "<p>The unique identifier of the link.</p>",
         "GetOutboundExternalLinkRequest$linkId": "<p>The unique identifier of the link.</p>",
         "GetOutboundExternalLinkResponse$linkId": "<p>The unique identifier of the link.</p>",
+        "ListLinkRoutingRulesRequest$linkId": "<p>The unique identifier of the link.</p>",
         "ListLinksResponseStructure$linkId": "<p>The unique identifier of the link.</p>",
         "RejectLinkRequest$linkId": "<p>The unique identifier of the link.</p>",
         "RejectLinkResponse$linkId": "<p>The unique identifier of the link.</p>",
         "UpdateLinkModuleFlowRequest$linkId": "<p>The unique identifier of the link.</p>",
         "UpdateLinkModuleFlowResponse$linkId": "<p>The unique identifier of the link.</p>",
         "UpdateLinkRequest$linkId": "<p>The unique identifier of the link.</p>",
-        "UpdateLinkResponse$linkId": "<p>The unique identifier of the link.</p>"
+        "UpdateLinkResponse$linkId": "<p>The unique identifier of the link.</p>",
+        "UpdateLinkRoutingRuleRequest$linkId": "<p>The unique identifier of the link.</p>"
       }
     },
     "LinkList": {
@@ -651,6 +761,18 @@
         "ListLinksResponseStructure$logSettings": null,
         "RejectLinkResponse$logSettings": null,
         "UpdateLinkRequest$logSettings": "<p>Settings for the application logs.</p>"
+      }
+    },
+    "LinkRoutingRuleList": {
+      "base": null,
+      "refs": {
+        "ListLinkRoutingRulesResponse$rules": "<p>The list of routing rules for the link.</p>"
+      }
+    },
+    "LinkRoutingRuleSummary": {
+      "base": "<p>A summary of a link routing rule.</p>",
+      "refs": {
+        "LinkRoutingRuleList$member": null
       }
     },
     "LinkStatus": {
@@ -680,6 +802,34 @@
         "GetLinkResponse$timeoutInMillis": "<p>The timeout value in milliseconds.</p>",
         "UpdateLinkRequest$timeoutInMillis": "<p>The timeout value in milliseconds.</p>"
       }
+    },
+    "ListCertificateAssociationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListCertificateAssociationsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListCertificateAssociationsRequest$maxResults": "<p>The maximum number of results that are returned per call. You can use <code>nextToken</code> to obtain further pages of results.</p> <p>This is only an upper limit. The actual number of results returned per call might be fewer than the specified maximum.</p>"
+      }
+    },
+    "ListCertificateAssociationsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListLinkRoutingRulesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListLinkRoutingRulesRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListLinkRoutingRulesRequest$maxResults": "<p>The maximum number of results that are returned per call. You can use <code>nextToken</code> to obtain further pages of results.</p> <p>This is only an upper limit. The actual number of results returned per call might be fewer than the specified maximum.</p>"
+      }
+    },
+    "ListLinkRoutingRulesResponse": {
+      "base": null,
+      "refs": {}
     },
     "ListLinksRequest": {
       "base": null,
@@ -844,6 +994,24 @@
         "ListenerConfig$protocols": "<p>The protocol for connections from clients to the gateway</p>"
       }
     },
+    "QueryStringKeyValuePair": {
+      "base": "<p>A key-value pair for query string matching in a routing rule condition.</p>",
+      "refs": {
+        "RuleCondition$queryStringEquals": "<p>A query string key-value pair that must be present and match exactly.</p>"
+      }
+    },
+    "QueryStringKeyValuePairKeyString": {
+      "base": null,
+      "refs": {
+        "QueryStringKeyValuePair$key": "<p>The key of the query string parameter to match. Must contain only RFC 3986 unreserved characters.</p>"
+      }
+    },
+    "QueryStringKeyValuePairValueString": {
+      "base": null,
+      "refs": {
+        "QueryStringKeyValuePair$value": "<p>The value of the query string parameter to match. Must contain only RFC 3986 unreserved characters.</p>"
+      }
+    },
     "RateLimiterModuleParameters": {
       "base": "<p>Describes the parameters of a rate limit.</p>",
       "refs": {
@@ -930,6 +1098,77 @@
         "UntagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource that you want to untag.</p>"
       }
     },
+    "RuleCondition": {
+      "base": "<p>The conditions for a routing rule. All specified fields must match for the rule to apply (AND logic). At least one condition field must be set.</p>",
+      "refs": {
+        "CreateLinkRoutingRuleRequest$conditions": "<p>The conditions for the routing rule. All specified fields must match for the rule to apply. At least one condition field must be set.</p>",
+        "GetLinkRoutingRuleResponse$conditions": "<p>The conditions for the routing rule.</p>",
+        "LinkRoutingRuleSummary$conditions": "<p>The conditions for the routing rule.</p>",
+        "UpdateLinkRoutingRuleRequest$conditions": "<p>The updated conditions for the routing rule. All specified fields must match for the rule to apply. At least one condition field must be set.</p>"
+      }
+    },
+    "RuleConditionHostHeaderString": {
+      "base": null,
+      "refs": {
+        "RuleCondition$hostHeader": "<p>The exact host header value to match.</p>"
+      }
+    },
+    "RuleConditionHostHeaderWildcardString": {
+      "base": null,
+      "refs": {
+        "RuleCondition$hostHeaderWildcard": "<p>A wildcard pattern for host header matching (for example, <code>*.example.com</code>).</p>"
+      }
+    },
+    "RuleConditionPathExactString": {
+      "base": null,
+      "refs": {
+        "RuleCondition$pathExact": "<p>The exact path to match. Must start with <code>/</code>.</p>"
+      }
+    },
+    "RuleConditionPathPrefixString": {
+      "base": null,
+      "refs": {
+        "RuleCondition$pathPrefix": "<p>The path prefix to match. The request path must start with this value. Must start with <code>/</code>.</p>"
+      }
+    },
+    "RuleConditionQueryStringExistsString": {
+      "base": null,
+      "refs": {
+        "RuleCondition$queryStringExists": "<p>A query string key that must be present in the request (any value is accepted).</p>"
+      }
+    },
+    "RuleId": {
+      "base": "<p>Identifier for a routing rule</p>",
+      "refs": {
+        "CreateLinkRoutingRuleResponse$ruleId": "<p>The unique identifier of the routing rule.</p>",
+        "DeleteLinkRoutingRuleRequest$ruleId": "<p>The unique identifier of the routing rule.</p>",
+        "DeleteLinkRoutingRuleResponse$ruleId": "<p>The unique identifier of the routing rule.</p>",
+        "GetLinkRoutingRuleRequest$ruleId": "<p>The unique identifier of the routing rule.</p>",
+        "GetLinkRoutingRuleResponse$ruleId": "<p>The unique identifier of the routing rule.</p>",
+        "LinkRoutingRuleSummary$ruleId": "<p>The unique identifier of the routing rule.</p>",
+        "UpdateLinkRoutingRuleRequest$ruleId": "<p>The unique identifier of the routing rule.</p>",
+        "UpdateLinkRoutingRuleResponse$ruleId": "<p>The unique identifier of the routing rule.</p>"
+      }
+    },
+    "RulePriority": {
+      "base": "<p>WAF-style evaluation priority. Lower number = evaluated first (priority 1 before 10). Gaps are allowed (1, 10, 20 is valid). Must be between 1 and 1000 inclusive. Uniqueness per link among non-deleted rules is enforced at the API layer (HTTP 409 on conflict).</p>",
+      "refs": {
+        "CreateLinkRoutingRuleRequest$priority": "<p>The priority of the routing rule. Lower numbers are evaluated first. Valid values are 1 to 1000. Priority must be unique among non-deleted rules within a link.</p>",
+        "GetLinkRoutingRuleResponse$priority": "<p>The priority of the routing rule.</p>",
+        "LinkRoutingRuleSummary$priority": "<p>The priority of the routing rule.</p>",
+        "UpdateLinkRoutingRuleRequest$priority": "<p>The updated priority of the routing rule. Lower numbers are evaluated first. Valid values are 1 to 1000. Priority must be unique among non-deleted rules within a link.</p>"
+      }
+    },
+    "RuleStatus": {
+      "base": "<p>Status of a routing rule</p>",
+      "refs": {
+        "CreateLinkRoutingRuleResponse$status": "<p>The status of the routing rule.</p>",
+        "DeleteLinkRoutingRuleResponse$status": "<p>The status of the routing rule.</p>",
+        "GetLinkRoutingRuleResponse$status": "<p>The status of the routing rule.</p>",
+        "LinkRoutingRuleSummary$status": "<p>The status of the routing rule.</p>",
+        "UpdateLinkRoutingRuleResponse$status": "<p>The status of the routing rule.</p>"
+      }
+    },
     "SecurityGroupId": {
       "base": null,
       "refs": {
@@ -953,8 +1192,10 @@
       "base": null,
       "refs": {
         "AccessDeniedException$message": null,
+        "AssociateCertificateRequest$clientToken": "<p>Specifies a unique, case-sensitive identifier that you provide to ensure the idempotency of the request. This lets you safely retry the request without accidentally performing the same operation a second time. Passing the same value to a later call to an operation requires that you also pass the same value for all other parameters. We recommend that you use a <a href=\"https://wikipedia.org/wiki/Universally_unique_identifier\">UUID type of value</a>.</p> <p>If you don't provide this value, then Amazon Web Services generates a random one for you.</p> <p>If you retry the operation with the same <code>ClientToken</code>, but with different parameters, the retry fails with an <code>IdempotentParameterMismatch</code> error.</p>",
         "ConflictException$message": null,
         "CreateInboundExternalLinkRequest$clientToken": "<p>The unique client token.</p>",
+        "CreateLinkRoutingRuleRequest$clientToken": "<p>Specifies a unique, case-sensitive identifier that you provide to ensure the idempotency of the request. This lets you safely retry the request without accidentally performing the same operation a second time. Passing the same value to a later call to an operation requires that you also pass the same value for all other parameters. We recommend that you use a <a href=\"https://wikipedia.org/wiki/Universally_unique_identifier\">UUID type of value</a>.</p> <p>If you don't provide this value, then Amazon Web Services generates a random one for you.</p> <p>If you retry the operation with the same <code>ClientToken</code>, but with different parameters, the retry fails with an <code>IdempotentParameterMismatch</code> error.</p>",
         "CreateOutboundExternalLinkRequest$clientToken": "<p>The unique client token.</p>",
         "CreateRequesterGatewayRequest$clientToken": "<p>The unique client token.</p>",
         "CreateResponderGatewayRequest$clientToken": "<p>The unique client token.</p>",
@@ -963,6 +1204,10 @@
         "HeaderTagAction$name": "<p>The name of the bid action.</p>",
         "HeaderTagAction$value": "<p>The value of the bid action.</p>",
         "InternalServerException$message": null,
+        "ListCertificateAssociationsRequest$nextToken": "<p>If <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged. Each pagination token expires after 24 hours. Using an expired pagination token will return an <i>HTTP 400 InvalidToken error</i>.</p>",
+        "ListCertificateAssociationsResponse$nextToken": "<p>If <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged. Each pagination token expires after 24 hours. Using an expired pagination token will return an <i>HTTP 400 InvalidToken error</i>.</p>",
+        "ListLinkRoutingRulesRequest$nextToken": "<p>If <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged. Each pagination token expires after 24 hours. Using an expired pagination token will return an <i>HTTP 400 InvalidToken error</i>.</p>",
+        "ListLinkRoutingRulesResponse$nextToken": "<p>If <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged. Each pagination token expires after 24 hours. Using an expired pagination token will return an <i>HTTP 400 InvalidToken error</i>.</p>",
         "ListLinksRequest$nextToken": "<p>If <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged. Each pagination token expires after 24 hours. Using an expired pagination token will return an <i>HTTP 400 InvalidToken error</i>.</p>",
         "ListLinksResponse$nextToken": "<p>If <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged. Each pagination token expires after 24 hours. Using an expired pagination token will return an <i>HTTP 400 InvalidToken error</i>.</p>",
         "ListRequesterGatewaysRequest$nextToken": "<p>If <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged. Each pagination token expires after 24 hours. Using an expired pagination token will return an <i>HTTP 400 InvalidToken error</i>.</p>",
@@ -1019,11 +1264,13 @@
       "refs": {
         "CreateInboundExternalLinkRequest$tags": "<p>A map of the key-value pairs of the tag or tags to assign to the resource.</p>",
         "CreateLinkRequest$tags": "<p>A map of the key-value pairs of the tag or tags to assign to the resource.</p>",
+        "CreateLinkRoutingRuleRequest$tags": "<p>A map of the key-value pairs of the tag or tags to assign to the resource.</p>",
         "CreateOutboundExternalLinkRequest$tags": "<p>A map of the key-value pairs of the tag or tags to assign to the resource.</p>",
         "CreateRequesterGatewayRequest$tags": "<p>A map of the key-value pairs of the tag or tags to assign to the resource.</p>",
         "CreateResponderGatewayRequest$tags": "<p>A map of the key-value pairs of the tag or tags to assign to the resource.</p>",
         "GetInboundExternalLinkResponse$tags": "<p>A map of the key-value pairs for the tag or tags assigned to the specified resource.</p>",
         "GetLinkResponse$tags": "<p>A map of the key-value pairs for the tag or tags assigned to the specified resource.</p>",
+        "GetLinkRoutingRuleResponse$tags": "<p>A map of the key-value pairs for the tag or tags assigned to the specified resource.</p>",
         "GetOutboundExternalLinkResponse$tags": "<p>A map of the key-value pairs for the tag or tags assigned to the specified resource.</p>",
         "GetRequesterGatewayResponse$tags": "<p>A map of the key-value pairs for the tag or tags assigned to the specified resource.</p>",
         "GetResponderGatewayResponse$tags": "<p>A map of the key-value pairs for the tag or tags assigned to the specified resource.</p>",
@@ -1041,22 +1288,32 @@
       "refs": {
         "AcceptLinkResponse$createdAt": "<p>The timestamp of when the link was created.</p>",
         "AcceptLinkResponse$updatedAt": "<p>The timestamp of when the link was updated.</p>",
+        "CertificateAssociationSummary$associatedAt": "<p>The timestamp of when the certificate was associated.</p>",
+        "CertificateAssociationSummary$updatedAt": "<p>The timestamp of when the certificate association was last updated.</p>",
         "CreateLinkResponse$createdAt": "<p>The timestamp of when the link was created.</p>",
         "CreateLinkResponse$updatedAt": "<p>The timestamp of when the link was updated.</p>",
+        "CreateLinkRoutingRuleResponse$createdAt": "<p>The timestamp of when the routing rule was created.</p>",
+        "GetCertificateAssociationResponse$associatedAt": "<p>The timestamp of when the certificate was associated.</p>",
+        "GetCertificateAssociationResponse$updatedAt": "<p>The timestamp of when the certificate association was last updated.</p>",
         "GetInboundExternalLinkResponse$createdAt": "<p>The timestamp of when the inbound external link was created.</p>",
         "GetInboundExternalLinkResponse$updatedAt": "<p>The timestamp of when the inbound external link was updated.</p>",
         "GetLinkResponse$createdAt": "<p>The timestamp of when the link was created.</p>",
         "GetLinkResponse$updatedAt": "<p>The timestamp of when the link was updated.</p>",
+        "GetLinkRoutingRuleResponse$createdAt": "<p>The timestamp of when the routing rule was created.</p>",
+        "GetLinkRoutingRuleResponse$updatedAt": "<p>The timestamp of when the routing rule was last updated.</p>",
         "GetOutboundExternalLinkResponse$createdAt": "<p>The timestamp of when the outbound external link was created.</p>",
         "GetOutboundExternalLinkResponse$updatedAt": "<p>The timestamp of when the outbound external link was updated.</p>",
         "GetRequesterGatewayResponse$createdAt": "<p>The timestamp of when the requester gateway was created.</p>",
         "GetRequesterGatewayResponse$updatedAt": "<p>The timestamp of when the requester gateway was updated.</p>",
         "GetResponderGatewayResponse$createdAt": "<p>The timestamp of when the responder gateway was created.</p>",
         "GetResponderGatewayResponse$updatedAt": "<p>The timestamp of when the responder gateway was updated.</p>",
+        "LinkRoutingRuleSummary$createdAt": "<p>The timestamp of when the routing rule was created.</p>",
+        "LinkRoutingRuleSummary$updatedAt": "<p>The timestamp of when the routing rule was last updated.</p>",
         "ListLinksResponseStructure$createdAt": "<p>The timestamp of when the link was created.</p>",
         "ListLinksResponseStructure$updatedAt": "<p>The timestamp of when the link was updated.</p>",
         "RejectLinkResponse$createdAt": "<p>The timestamp of when the link was created.</p>",
-        "RejectLinkResponse$updatedAt": "<p>The timestamp of when the link was updated.</p>"
+        "RejectLinkResponse$updatedAt": "<p>The timestamp of when the link was updated.</p>",
+        "UpdateLinkRoutingRuleResponse$updatedAt": "<p>The timestamp of when the routing rule was last updated.</p>"
       }
     },
     "TrustStoreConfiguration": {
@@ -1102,6 +1359,14 @@
       "refs": {}
     },
     "UpdateLinkResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateLinkRoutingRuleRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateLinkRoutingRuleResponse": {
       "base": null,
       "refs": {}
     },

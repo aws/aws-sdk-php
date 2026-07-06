@@ -78,7 +78,7 @@ abstract class AbstractRpcV2Serializer
         // Content-Type must not be set
         if ($operation['input'] !== null) {
             $body = $this->serialize($operation->getInput(), $commandArgs);
-            $headers['Content-Length'] = strlen($body);
+            $headers['Content-Length'] = (string) strlen($body);
         } else {
             unset($headers['Content-Type']);
         }

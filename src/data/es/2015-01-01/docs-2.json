@@ -260,6 +260,26 @@
         "AutoTune$AutoTuneType": "<p>Specifies Auto-Tune type. Valid value is SCHEDULED_ACTION. </p>"
       }
     },
+    "AutomatedSnapshotPauseOptions": {
+      "base": "<p>Specifies the automated snapshot pause options for the domain. These options allow you to temporarily pause automated snapshots for a specified time period.</p>",
+      "refs": {
+        "AutomatedSnapshotPauseOptionsStatus$Options": "<p>Automated snapshot pause options for the specified Elasticsearch domain.</p>",
+        "ElasticsearchDomainStatus$AutomatedSnapshotPauseOptions": "<p>The current status of the Elasticsearch domain's automated snapshot pause options.</p>"
+      }
+    },
+    "AutomatedSnapshotPauseOptionsStatus": {
+      "base": "<p>The status of automated snapshot pause options for the specified Elasticsearch domain.</p>",
+      "refs": {
+        "ElasticsearchDomainConfig$AutomatedSnapshotPauseOptions": "<p>Specifies <code>AutomatedSnapshotPauseOptions</code> for the domain. </p>"
+      }
+    },
+    "AutomatedSnapshotPauseRequestOptions": {
+      "base": "<p>Specifies the automated snapshot pause request options for the domain.</p> <important> <p>Suspending snapshots reduces data protection. You cannot restore your domain to points in time when snapshots are suspended. Use this feature only for short-term operational needs such as migrations or maintenance windows.</p> </important> <p>Maximum suspension duration: 3 days.</p>",
+      "refs": {
+        "CreateElasticsearchDomainRequest$AutomatedSnapshotPauseOptions": "<p>Specifies the automated snapshot pause options for the domain.</p> <important> <p>Suspending snapshots reduces data protection. You cannot restore your domain to points in time when snapshots are suspended. Use this feature only for short-term operational needs such as migrations or maintenance windows.</p> </important> <p>Maximum suspension duration: 3 days.</p>",
+        "UpdateElasticsearchDomainConfigRequest$AutomatedSnapshotPauseOptions": "<p>Specifies the automated snapshot pause options for the domain.</p> <important> <p>Suspending snapshots reduces data protection. You cannot restore your domain to points in time when snapshots are suspended. Use this feature only for short-term operational needs such as migrations or maintenance windows.</p> </important> <p>Maximum suspension duration: 3 days.</p>"
+      }
+    },
     "BackendRole": {
       "base": null,
       "refs": {
@@ -280,6 +300,8 @@
         "AdvancedSecurityOptionsInput$InternalUserDatabaseEnabled": "<p>True if the internal user database is enabled.</p>",
         "AdvancedSecurityOptionsInput$AnonymousAuthEnabled": "<p>True if Anonymous auth is enabled. Anonymous auth can be enabled only when AdvancedSecurity is enabled on existing domains.</p>",
         "AutoTuneStatus$PendingDeletion": "<p>Indicates whether the Elasticsearch domain is being deleted.</p>",
+        "AutomatedSnapshotPauseOptions$Enabled": "<p>Whether automated snapshot pause is enabled for the domain.</p>",
+        "AutomatedSnapshotPauseRequestOptions$Enabled": "<p>Whether to enable or disable automated snapshot pause for the domain.</p>",
         "CognitoOptions$Enabled": "<p>Specifies the option to enable Cognito for Kibana authentication.</p>",
         "ColdStorageOptions$Enabled": "<p>Enable cold storage option. Accepted values true or false</p>",
         "DomainEndpointOptions$EnforceHTTPS": "<p>Specify if only HTTPS endpoint should be enabled for the Elasticsearch domain.</p>",
@@ -1493,6 +1515,7 @@
         "AccessPoliciesStatus$Status": "<p>The status of the access policy for the Elasticsearch domain. See <code>OptionStatus</code> for the status information that's included. </p>",
         "AdvancedOptionsStatus$Status": "<p> Specifies the status of <code>OptionStatus</code> for advanced options for the specified Elasticsearch domain.</p>",
         "AdvancedSecurityOptionsStatus$Status": "<p> Status of the advanced security options for the specified Elasticsearch domain.</p>",
+        "AutomatedSnapshotPauseOptionsStatus$Status": "<p>The current status of the automated snapshot pause options for the specified Elasticsearch domain.</p>",
         "CognitoOptionsStatus$Status": "<p>Specifies the status of the Cognito options for the specified Elasticsearch domain.</p>",
         "DeploymentStrategyOptionsStatus$Status": "<p>Specifies the status of the deployment strategy options for the specified Elasticsearch domain.</p>",
         "DomainEndpointOptionsStatus$Status": "<p>The status of the endpoint options for the Elasticsearch domain. See <code>OptionStatus</code> for the status information that's included. </p>",
@@ -1634,6 +1657,12 @@
       "base": null,
       "refs": {
         "MasterUserOptions$MasterUserPassword": "<p>The master user's password, which is stored in the Amazon Elasticsearch Service domain's internal database.</p>"
+      }
+    },
+    "PauseState": {
+      "base": null,
+      "refs": {
+        "AutomatedSnapshotPauseOptions$State": "<p>The current state of the automated snapshot pause. Valid values are <code>Active</code>, <code>Completed</code>, <code>Scheduled</code>, and <code>Disabled</code>.</p>"
       }
     },
     "PolicyDocument": {
@@ -2047,6 +2076,10 @@
       "refs": {
         "AutoTuneStatus$CreationDate": "<p>Timestamp which tells Auto-Tune options creation date .</p>",
         "AutoTuneStatus$UpdateDate": "<p>Timestamp which tells Auto-Tune options last updated time.</p>",
+        "AutomatedSnapshotPauseOptions$StartTime": "<p>The timestamp at which the automated snapshot pause begins.</p>",
+        "AutomatedSnapshotPauseOptions$EndTime": "<p>The timestamp at which the automated snapshot pause ends.</p>",
+        "AutomatedSnapshotPauseRequestOptions$StartTime": "<p>The timestamp at which the automated snapshot pause should begin.</p>",
+        "AutomatedSnapshotPauseRequestOptions$EndTime": "<p>The timestamp at which the automated snapshot pause should end. The maximum allowed duration between <code>StartTime</code> and <code>EndTime</code> is 3 days.</p>",
         "ChangeProgressDetails$StartTime": "<p>The time that the configuration change was initiated, in Universal Coordinated Time (UTC).</p>",
         "ChangeProgressDetails$LastUpdatedTime": "<p>The last time that the configuration change was updated.</p>",
         "ChangeProgressStatusDetails$StartTime": "<p>The time at which the configuration change is made on the domain.</p>",

@@ -1,18 +1,20 @@
 {
   "version": "2.0",
-  "service": "<p>AppConfig feature flags and dynamic configurations help software builders quickly and securely adjust application behavior in production environments without full code deployments. AppConfig speeds up software release frequency, improves application resiliency, and helps you address emergent issues more quickly. With feature flags, you can gradually release new capabilities to users and measure the impact of those changes before fully deploying the new capabilities to all users. With operational flags and dynamic configurations, you can update block lists, allow lists, throttling limits, logging verbosity, and perform other operational tuning to quickly respond to issues in production environments.</p> <note> <p>AppConfig is a tool in Amazon Web Services Systems Manager.</p> </note> <p>Despite the fact that application configuration content can vary greatly from application to application, AppConfig supports the following use cases, which cover a broad spectrum of customer needs:</p> <ul> <li> <p> <b>Feature flags and toggles</b> - Safely release new capabilities to your customers in a controlled environment. Instantly roll back changes if you experience a problem.</p> </li> <li> <p> <b>Application tuning</b> - Carefully introduce application changes while testing the impact of those changes with users in production environments.</p> </li> <li> <p> <b>Allow list or block list</b> - Control access to premium features or instantly block specific users without deploying new code. </p> </li> <li> <p> <b>Centralized configuration storage</b> - Keep your configuration data organized and consistent across all of your workloads. You can use AppConfig to deploy configuration data stored in the AppConfig hosted configuration store, Secrets Manager, Systems Manager, Parameter Store, or Amazon S3.</p> </li> </ul> <p> <b>How AppConfig works</b> </p> <p>This section provides a high-level description of how AppConfig works and how you get started.</p> <dl> <dt>1. Identify configuration values in code you want to manage in the cloud</dt> <dd> <p>Before you start creating AppConfig artifacts, we recommend you identify configuration data in your code that you want to dynamically manage using AppConfig. Good examples include feature flags or toggles, allow and block lists, logging verbosity, service limits, and throttling rules, to name a few.</p> <p>If your configuration data already exists in the cloud, you can take advantage of AppConfig validation, deployment, and extension features to further streamline configuration data management.</p> </dd> <dt>2. Create an application namespace</dt> <dd> <p>To create a namespace, you create an AppConfig artifact called an application. An application is simply an organizational construct like a folder.</p> </dd> <dt>3. Create environments</dt> <dd> <p>For each AppConfig application, you define one or more environments. An environment is a logical grouping of targets, such as applications in a <code>Beta</code> or <code>Production</code> environment, Lambda functions, or containers. You can also define environments for application subcomponents, such as the <code>Web</code>, <code>Mobile</code>, and <code>Back-end</code>.</p> <p>You can configure Amazon CloudWatch alarms for each environment. The system monitors alarms during a configuration deployment. If an alarm is triggered, the system rolls back the configuration.</p> </dd> <dt>4. Create a configuration profile</dt> <dd> <p>A configuration profile includes, among other things, a URI that enables AppConfig to locate your configuration data in its stored location and a profile type. AppConfig supports two configuration profile types: feature flags and freeform configurations. Feature flag configuration profiles store their data in the AppConfig hosted configuration store and the URI is simply <code>hosted</code>. For freeform configuration profiles, you can store your data in the AppConfig hosted configuration store or any Amazon Web Services service that integrates with AppConfig, as described in <a href=\"http://docs.aws.amazon.com/appconfig/latest/userguide/appconfig-free-form-configurations-creating.html\">Creating a free form configuration profile</a> in the the <i>AppConfig User Guide</i>.</p> <p>A configuration profile can also include optional validators to ensure your configuration data is syntactically and semantically correct. AppConfig performs a check using the validators when you start a deployment. If any errors are detected, the deployment rolls back to the previous configuration data.</p> </dd> <dt>5. Deploy configuration data</dt> <dd> <p>When you create a new deployment, you specify the following:</p> <ul> <li> <p>An application ID</p> </li> <li> <p>A configuration profile ID</p> </li> <li> <p>A configuration version</p> </li> <li> <p>An environment ID where you want to deploy the configuration data</p> </li> <li> <p>A deployment strategy ID that defines how fast you want the changes to take effect</p> </li> </ul> <p>When you call the <a href=\"https://docs.aws.amazon.com/appconfig/2019-10-09/APIReference/API_StartDeployment.html\">StartDeployment</a> API action, AppConfig performs the following tasks:</p> <ol> <li> <p>Retrieves the configuration data from the underlying data store by using the location URI in the configuration profile.</p> </li> <li> <p>Verifies the configuration data is syntactically and semantically correct by using the validators you specified when you created your configuration profile.</p> </li> <li> <p>Caches a copy of the data so it is ready to be retrieved by your application. This cached copy is called the <i>deployed data</i>.</p> </li> </ol> </dd> <dt>6. Retrieve the configuration</dt> <dd> <p>You can configure AppConfig Agent as a local host and have the agent poll AppConfig for configuration updates. The agent calls the <a href=\"https://docs.aws.amazon.com/appconfig/2019-10-09/APIReference/API_appconfigdata_StartConfigurationSession.html\">StartConfigurationSession</a> and <a href=\"https://docs.aws.amazon.com/appconfig/2019-10-09/APIReference/API_appconfigdata_GetLatestConfiguration.html\">GetLatestConfiguration</a> API actions and caches your configuration data locally. To retrieve the data, your application makes an HTTP call to the localhost server. AppConfig Agent supports several use cases, as described in <a href=\"http://docs.aws.amazon.com/appconfig/latest/userguide/appconfig-retrieving-simplified-methods.html\">Simplified retrieval methods</a> in the the <i>AppConfig User Guide</i>.</p> <p>If AppConfig Agent isn't supported for your use case, you can configure your application to poll AppConfig for configuration updates by directly calling the <a href=\"https://docs.aws.amazon.com/appconfig/2019-10-09/APIReference/API_appconfigdata_StartConfigurationSession.html\">StartConfigurationSession</a> and <a href=\"https://docs.aws.amazon.com/appconfig/2019-10-09/APIReference/API_appconfigdata_GetLatestConfiguration.html\">GetLatestConfiguration</a> API actions. </p> </dd> </dl> <p>This reference is intended to be used with the <a href=\"http://docs.aws.amazon.com/appconfig/latest/userguide/what-is-appconfig.html\">AppConfig User Guide</a>.</p>",
+  "service": "<p>AppConfig helps you safely change application behavior in production without redeploying code. Using feature flags and dynamic free-form configurations, you can control how your application runs in real time. This approach reduces risk, accelerates releases, and enables faster responses to issues. You can gradually roll out new features to specific users, monitor their impact, and expand availability with confidence. You can also update block lists, allow lists, throttling limits, and logging levels instantly, allowing you to mitigate issues and fine-tune performance without a deployment.</p> <p>AppConfig supports a broad spectrum of use cases:</p> <ul> <li> <p> <b>Feature flags and toggles</b> – Gradually release new capabilities to targeted users, monitor impact, and instantly roll back changes if issues occur.</p> </li> <li> <p> <b>Application tuning</b> – Introduce changes safely in production, measure their effects, and refine behavior without redeploying code.</p> </li> <li> <p> <b>Allow list or block list</b> – Control access to features or restrict specific users in real time, without modifying application code. </p> </li> <li> <p> <b>Centralized configuration storage</b> – Manage configuration data consistently across workloads. AppConfig can deploy configuration from the AppConfig hosted configuration store, Secrets Manager, Systems Manager, Systems Manager Parameter Store, or Amazon S3.</p> </li> </ul> <p> <b>How AppConfig works</b> </p> <p>This section provides a high-level description of how AppConfig works and how you get started.</p> <dl> <dt>1. Identify configuration data to manage in AppConfig</dt> <dd> <p>Before creating a configuration profile, identify the configuration data in your code that you want to manage dynamically using AppConfig. Common examples include feature flags, allow and block lists, logging levels, service limits, and throttling rules. These values tend to change frequently and can cause issues if misconfigured.</p> <p>If your configuration data already exists in cloud services such as Systems Manager Parameter Store or Amazon S3, you can use AppConfig to validate, deploy, and manage that data more effectively.</p> </dd> <dt>2. Create a configuration profile in AppConfig</dt> <dd> <p>A configuration profile defines how AppConfig locates and manages your configuration data. It includes a URI that points to the data source and a profile type.</p> <p>AppConfig supports two profile types</p> <ul> <li> <p> <b>Feature flags</b> – Enable controlled feature releases, gradual rollouts, and testing in production.</p> </li> <li> <p> <b>Free-form configurations</b> – Store and retrieve configuration data from external sources and update it without redeploying code.</p> </li> </ul> <p>Both profile types help decouple configuration from code, support continuous delivery, and reduce deployment risk.</p> <p>You can also add optional validators to ensure that configuration data is syntactically and semantically correct. During deployment, AppConfig evaluates these validators and automatically rolls back changes if validation fails.</p> <p>Each configuration profile is associated with an application, which acts as a logical container for your configuration resources. For more information about creating a configuration profile, see <a href=\"http://docs.aws.amazon.com/appconfig/latest/userguide/appconfig-creating-configuration-profile.html\">Creating a configuration profile in AppConfig</a> in the the <i>AppConfig User Guide</i>.</p> </dd> <dt>3. Deploy configuration data</dt> <dd> <p>When you start a deployment, AppConfig:</p> <ol> <li> <p>Retrieves configuration data from the source defined in the configuration profile</p> </li> <li> <p>Validates the data using the configured validators</p> </li> <li> <p>Delivers the validated configuration to AppConfig Agent</p> </li> </ol> <p>The delivered configuration becomes the deployed version used by your application. For more information about deploying a configuration, see <a href=\"http://docs.aws.amazon.com/appconfig/latest/userguide/deploying-feature-flags.html\">Deploying feature flags and configuration data in AppConfig</a>.</p> </dd> <dt>4. Retrieve configuration data</dt> <dd> <p>Your application retrieves configuration data by calling a local endpoint exposed by AppConfig Agent, which caches the deployed configuration. Retrieving data is a metered event. AppConfig Agent supports a variety of use cases, as described in <a href=\"http://docs.aws.amazon.com/appconfig/latest/userguide/appconfig-agent-how-to-use.html\">How to use AppConfig Agent to retrieve configuration data</a>.</p> <p>If the agent is not suitable for your use case, your application can retrieve configuration data directly from AppConfig by calling the <a href=\"https://docs.aws.amazon.com/appconfig/2019-10-09/APIReference/API_appconfigdata_StartConfigurationSession.html\">StartConfigurationSession</a> and <a href=\"https://docs.aws.amazon.com/appconfig/2019-10-09/APIReference/API_appconfigdata_GetLatestConfiguration.html\">GetLatestConfiguration</a> API actions. </p> <p>For more information about retrieving a configuration, see <a href=\"http://docs.aws.amazon.com/appconfig/latest/userguide/retrieving-feature-flags.html\">Retrieving feature flags and configuration data in AppConfig</a>.</p> </dd> </dl> <p>This reference is intended to be used with the <a href=\"http://docs.aws.amazon.com/appconfig/latest/userguide/what-is-appconfig.html\">AppConfig User Guide</a>.</p>",
   "operations": {
     "CreateApplication": "<p>Creates an application. In AppConfig, an application is simply an organizational construct like a folder. This organizational construct has a relationship with some unit of executable code. For example, you could create an application called MyMobileApp to organize and manage configuration data for a mobile application installed by your users.</p>",
     "CreateConfigurationProfile": "<p>Creates a configuration profile, which is information that enables AppConfig to access the configuration source. Valid configuration sources include the following:</p> <ul> <li> <p>Configuration data in YAML, JSON, and other formats stored in the AppConfig hosted configuration store</p> </li> <li> <p>Configuration data stored as objects in an Amazon Simple Storage Service (Amazon S3) bucket</p> </li> <li> <p>Pipelines stored in CodePipeline</p> </li> <li> <p>Secrets stored in Secrets Manager</p> </li> <li> <p>Standard and secure string parameters stored in Amazon Web Services Systems Manager Parameter Store</p> </li> <li> <p>Configuration data in SSM documents stored in the Systems Manager document store</p> </li> </ul> <p>A configuration profile includes the following information:</p> <ul> <li> <p>The URI location of the configuration data.</p> </li> <li> <p>The Identity and Access Management (IAM) role that provides access to the configuration data.</p> </li> <li> <p>A validator for the configuration data. Available validators include either a JSON Schema or an Amazon Web Services Lambda function.</p> </li> </ul> <p>For more information, see <a href=\"http://docs.aws.amazon.com/appconfig/latest/userguide/appconfig-creating-configuration-and-profile.html\">Create a Configuration and a Configuration Profile</a> in the <i>AppConfig User Guide</i>.</p>",
     "CreateDeploymentStrategy": "<p>Creates a deployment strategy that defines important criteria for rolling out your configuration to the designated targets. A deployment strategy includes the overall duration required, a percentage of targets to receive the deployment during each interval, an algorithm that defines how percentage grows, and bake time.</p>",
     "CreateEnvironment": "<p>Creates an environment. For each application, you define one or more environments. An environment is a deployment group of AppConfig targets, such as applications in a <code>Beta</code> or <code>Production</code> environment. You can also define environments for application subcomponents such as the <code>Web</code>, <code>Mobile</code> and <code>Back-end</code> components for your application. You can configure Amazon CloudWatch alarms for each environment. The system monitors alarms during a configuration deployment. If an alarm is triggered, the system rolls back the configuration.</p>",
+    "CreateExperimentDefinition": "<p>Creates an experiment definition in AppConfig. An experiment definition describes the purpose, scope, and operational configuration of an experiment, including the target audience, feature flag, and treatment configurations.</p>",
     "CreateExtension": "<p>Creates an AppConfig extension. An extension augments your ability to inject logic or behavior at different points during the AppConfig workflow of creating or deploying a configuration.</p> <p>You can create your own extensions or use the Amazon Web Services authored extensions provided by AppConfig. For an AppConfig extension that uses Lambda, you must create a Lambda function to perform any computation and processing defined in the extension. If you plan to create custom versions of the Amazon Web Services authored notification extensions, you only need to specify an Amazon Resource Name (ARN) in the <code>Uri</code> field for the new extension version.</p> <ul> <li> <p>For a custom EventBridge notification extension, enter the ARN of the EventBridge default events in the <code>Uri</code> field.</p> </li> <li> <p>For a custom Amazon SNS notification extension, enter the ARN of an Amazon SNS topic in the <code>Uri</code> field.</p> </li> <li> <p>For a custom Amazon SQS notification extension, enter the ARN of an Amazon SQS message queue in the <code>Uri</code> field. </p> </li> </ul> <p>For more information about extensions, see <a href=\"https://docs.aws.amazon.com/appconfig/latest/userguide/working-with-appconfig-extensions.html\">Extending workflows</a> in the <i>AppConfig User Guide</i>.</p>",
     "CreateExtensionAssociation": "<p>When you create an extension or configure an Amazon Web Services authored extension, you associate the extension with an AppConfig application, environment, or configuration profile. For example, you can choose to run the <code>AppConfig deployment events to Amazon SNS</code> Amazon Web Services authored extension and receive notifications on an Amazon SNS topic anytime a configuration deployment is started for a specific application. Defining which extension to associate with an AppConfig resource is called an <i>extension association</i>. An extension association is a specified relationship between an extension and an AppConfig resource, such as an application or a configuration profile. For more information about extensions and associations, see <a href=\"https://docs.aws.amazon.com/appconfig/latest/userguide/working-with-appconfig-extensions.html\">Extending workflows</a> in the <i>AppConfig User Guide</i>.</p>",
-    "CreateHostedConfigurationVersion": "<p>Creates a new configuration in the AppConfig hosted configuration store. If you're creating a feature flag, we recommend you familiarize yourself with the JSON schema for feature flag data. For more information, see <a href=\"https://docs.aws.amazon.com/appconfig/latest/userguide/appconfig-creating-configuration-and-profile-feature-flags.html#appconfig-type-reference-feature-flags\">Type reference for AWS.AppConfig.FeatureFlags</a> in the <i>AppConfig User Guide</i>.</p>",
+    "CreateHostedConfigurationVersion": "<p>Creates a new configuration in the AppConfig hosted configuration store. If you're creating a feature flag, we recommend you familiarize yourself with the JSON schema for feature flag data. For more information, see <a href=\"https://docs.aws.amazon.com/appconfig/latest/userguide/appconfig-type-reference-feature-flags.html\">Type reference for AWS.AppConfig.FeatureFlags</a> in the <i>AppConfig User Guide</i>.</p>",
     "DeleteApplication": "<p>Deletes an application.</p>",
     "DeleteConfigurationProfile": "<p>Deletes a configuration profile.</p> <p>To prevent users from unintentionally deleting actively-used configuration profiles, enable <a href=\"https://docs.aws.amazon.com/appconfig/latest/userguide/deletion-protection.html\">deletion protection</a>.</p>",
     "DeleteDeploymentStrategy": "<p>Deletes a deployment strategy.</p>",
     "DeleteEnvironment": "<p>Deletes an environment.</p> <p>To prevent users from unintentionally deleting actively-used environments, enable <a href=\"https://docs.aws.amazon.com/appconfig/latest/userguide/deletion-protection.html\">deletion protection</a>.</p>",
+    "DeleteExperimentDefinition": "<p>Deletes an experiment definition. You can archive the definition to hide it from the active list while preserving it for future reference, or permanently delete it along with all associated run history.</p>",
     "DeleteExtension": "<p>Deletes an AppConfig extension. You must delete all associations to an extension before you delete the extension.</p>",
     "DeleteExtensionAssociation": "<p>Deletes an extension association. This action doesn't delete extensions defined in the association.</p>",
     "DeleteHostedConfigurationVersion": "<p>Deletes a version of a configuration from the AppConfig hosted configuration store.</p>",
@@ -23,6 +25,8 @@
     "GetDeployment": "<p>Retrieves information about a configuration deployment.</p>",
     "GetDeploymentStrategy": "<p>Retrieves information about a deployment strategy. A deployment strategy defines important criteria for rolling out your configuration to the designated targets. A deployment strategy includes the overall duration required, a percentage of targets to receive the deployment during each interval, an algorithm that defines how percentage grows, and bake time.</p>",
     "GetEnvironment": "<p>Retrieves information about an environment. An environment is a deployment group of AppConfig applications, such as applications in a <code>Production</code> environment or in an <code>EU_Region</code> environment. Each configuration deployment targets an environment. You can enable one or more Amazon CloudWatch alarms for an environment. If an alarm is triggered during a deployment, AppConfig roles back the configuration.</p>",
+    "GetExperimentDefinition": "<p>Retrieves information about an experiment definition.</p>",
+    "GetExperimentRun": "<p>Retrieves information about an experiment run, including its status, start time, and exposure settings.</p>",
     "GetExtension": "<p>Returns information about an AppConfig extension.</p>",
     "GetExtensionAssociation": "<p>Returns information about an AppConfig extension association. For more information about extensions and associations, see <a href=\"https://docs.aws.amazon.com/appconfig/latest/userguide/working-with-appconfig-extensions.html\">Extending workflows</a> in the <i>AppConfig User Guide</i>.</p>",
     "GetHostedConfigurationVersion": "<p>Retrieves information about a specific configuration version.</p>",
@@ -31,12 +35,17 @@
     "ListDeploymentStrategies": "<p>Lists deployment strategies.</p>",
     "ListDeployments": "<p>Lists the deployments for an environment in descending deployment number order.</p>",
     "ListEnvironments": "<p>Lists the environments for an application.</p>",
+    "ListExperimentDefinitions": "<p>Lists the experiment definitions for an account. You can filter results by application, configuration profile, environment, or status.</p>",
+    "ListExperimentRunEvents": "<p>Lists the events for a specified experiment run. Events provide a timeline of actions and state changes that occurred during the run.</p>",
+    "ListExperimentRuns": "<p>Lists the experiment runs for a specified experiment definition. You can filter by status.</p>",
     "ListExtensionAssociations": "<p>Lists all AppConfig extension associations in the account. For more information about extensions and associations, see <a href=\"https://docs.aws.amazon.com/appconfig/latest/userguide/working-with-appconfig-extensions.html\">Extending workflows</a> in the <i>AppConfig User Guide</i>.</p>",
     "ListExtensions": "<p>Lists all custom and Amazon Web Services authored AppConfig extensions in the account. For more information about extensions, see <a href=\"https://docs.aws.amazon.com/appconfig/latest/userguide/working-with-appconfig-extensions.html\">Extending workflows</a> in the <i>AppConfig User Guide</i>.</p>",
     "ListHostedConfigurationVersions": "<p>Lists configurations stored in the AppConfig hosted configuration store by version. </p>",
     "ListTagsForResource": "<p>Retrieves the list of key-value tags assigned to the resource.</p>",
-    "StartDeployment": "<p>Starts a deployment.</p>",
+    "StartDeployment": "<p>Starts a deployment.</p> <note> <p>AppConfig Agent supports deploying feature flag or free-form configuration data to specific segments or individual users during a gradual rollout. Entity-based gradual deployments ensure that once a user or segment receives a configuration version, they continue to receive that same version throughout the deployment period, regardless of which compute resource serves their requests. For more information, see <a href=\"https://docs.aws.amazon.com/appconfig/latest/userguide/appconfig-agent-how-to-use.html#appconfig-entity-based-gradual-deployments\">Using AppConfig Agent for user-based or entity-based gradual deployments</a> </p> </note>",
+    "StartExperimentRun": "<p>Starts an experiment run for the specified experiment definition. An experiment run delivers treatments to the target audience and collects metrics. You can start multiple experiment runs from the same experiment definition.</p>",
     "StopDeployment": "<p>Stops a deployment. This API action works only on deployments that have a status of <code>DEPLOYING</code>, unless an <code>AllowRevert</code> parameter is supplied. If the <code>AllowRevert</code> parameter is supplied, the status of an in-progress deployment will be <code>ROLLED_BACK</code>. The status of a completed deployment will be <code>REVERTED</code>. AppConfig only allows a revert within 72 hours of deployment completion.</p>",
+    "StopExperimentRun": "<p>Stops a running experiment. Stopping an experiment run ends audience exposure and returns users to the currently deployed feature flag configuration.</p>",
     "TagResource": "<p>Assigns metadata to an AppConfig resource. Tags help organize and categorize your AppConfig resources. Each tag consists of a key and an optional value, both of which you define. You can specify a maximum of 50 tags for a resource.</p>",
     "UntagResource": "<p>Deletes a tag key and value from an AppConfig resource.</p>",
     "UpdateAccountSettings": "<p>Updates the value of the <code>DeletionProtection</code> parameter.</p>",
@@ -44,6 +53,8 @@
     "UpdateConfigurationProfile": "<p>Updates a configuration profile.</p>",
     "UpdateDeploymentStrategy": "<p>Updates a deployment strategy.</p>",
     "UpdateEnvironment": "<p>Updates an environment.</p>",
+    "UpdateExperimentDefinition": "<p>Updates an experiment definition. You can update treatments, the control, audience rules, and other properties. You cannot update an experiment definition while an experiment run is active.</p>",
+    "UpdateExperimentRun": "<p>Updates a running experiment. Use this operation to increase audience exposure, modify treatment assignment overrides, or update the description of an active experiment run. Audience exposure can only be increased, not decreased.</p>",
     "UpdateExtension": "<p>Updates an AppConfig extension. For more information about extensions, see <a href=\"https://docs.aws.amazon.com/appconfig/latest/userguide/working-with-appconfig-extensions.html\">Extending workflows</a> in the <i>AppConfig User Guide</i>.</p>",
     "UpdateExtensionAssociation": "<p>Updates an association. For more information about extensions and associations, see <a href=\"https://docs.aws.amazon.com/appconfig/latest/userguide/working-with-appconfig-extensions.html\">Extending workflows</a> in the <i>AppConfig User Guide</i>.</p>",
     "ValidateConfiguration": "<p>Uses the validators in a configuration profile to validate a configuration.</p>"
@@ -126,6 +137,7 @@
         "ActionInvocation$RoleArn": "<p>An Amazon Resource Name (ARN) for an Identity and Access Management assume role.</p>",
         "ConfigurationProfile$KmsKeyArn": "<p>The Amazon Resource Name of the Key Management Service key to encrypt new configuration data versions in the AppConfig hosted configuration store. This attribute is only used for <code>hosted</code> configuration types. To encrypt data managed in other configuration stores, see the documentation for how to specify an KMS key for that particular service.</p>",
         "Deployment$KmsKeyArn": "<p>The Amazon Resource Name of the Key Management Service key used to encrypt configuration data. You can encrypt secrets stored in Secrets Manager, Amazon Simple Storage Service (Amazon S3) objects encrypted with SSE-KMS, or secure string parameters stored in Amazon Web Services Systems Manager Parameter Store. </p>",
+        "ExperimentRunEvent$AssociatedDeployment": "<p>The Amazon Resource Name (ARN) of the deployment associated with this event.</p>",
         "Extension$Arn": "<p>The system-generated Amazon Resource Name (ARN) for the extension.</p>",
         "ExtensionAssociation$ExtensionArn": "<p>The ARN of the extension defined in the association.</p>",
         "ExtensionAssociation$ResourceArn": "<p>The ARNs of applications, configuration profiles, or environments defined in the association.</p>",
@@ -139,6 +151,31 @@
         "ListTagsForResourceRequest$ResourceArn": "<p>The resource ARN.</p>",
         "TagResourceRequest$ResourceArn": "<p>The ARN of the resource for which to retrieve tags.</p>",
         "UntagResourceRequest$ResourceArn": "<p>The ARN of the resource for which to remove tags.</p>"
+      }
+    },
+    "AttributeKey": {
+      "base": null,
+      "refs": {
+        "AttributeValueMap$key": null
+      }
+    },
+    "AttributeString": {
+      "base": null,
+      "refs": {
+        "AttributeValue$StringValue": "<p>A string value for the attribute.</p>",
+        "StringList$member": null
+      }
+    },
+    "AttributeValue": {
+      "base": "<p>A value for a feature flag attribute. Only one of the members can be set.</p>",
+      "refs": {
+        "AttributeValueMap$value": null
+      }
+    },
+    "AttributeValueMap": {
+      "base": null,
+      "refs": {
+        "FlagValue$AttributeValues": "<p>The attribute values associated with this flag value.</p>"
       }
     },
     "BadRequestDetails": {
@@ -168,10 +205,13 @@
     "Boolean": {
       "base": null,
       "refs": {
+        "AttributeValue$BooleanValue": "<p>A Boolean value for the attribute.</p>",
         "DeletionProtectionSettings$Enabled": "<p>A parameter that indicates if deletion protection is enabled or not.</p>",
+        "FlagValue$Enabled": "<p>Whether the feature flag is enabled for this treatment.</p>",
         "Parameter$Required": "<p>A parameter value must be specified in the extension association.</p>",
         "Parameter$Dynamic": "<p>Indicates whether this parameter's value can be supplied at the extension's action point instead of during extension association. Dynamic parameters can't be marked <code>Required</code>.</p>",
-        "StopDeploymentRequest$AllowRevert": "<p>A Boolean that enables AppConfig to rollback a <code>COMPLETED</code> deployment to the previous configuration version. This action moves the deployment to a status of <code>REVERTED</code>.</p>"
+        "StopDeploymentRequest$AllowRevert": "<p>A Boolean that enables AppConfig to rollback a <code>COMPLETED</code> deployment to the previous configuration version. This action moves the deployment to a status of <code>REVERTED</code>.</p>",
+        "VendedMetricsSettings$Enabled": "<p>Whether vended metrics are enabled for the account.</p>"
       }
     },
     "BytesMeasure": {
@@ -233,6 +273,10 @@
       "base": null,
       "refs": {}
     },
+    "CreateExperimentDefinitionRequest": {
+      "base": null,
+      "refs": {}
+    },
     "CreateExtensionAssociationRequest": {
       "base": null,
       "refs": {}
@@ -261,6 +305,10 @@
       "base": null,
       "refs": {}
     },
+    "DeleteExperimentDefinitionRequest": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteExtensionAssociationRequest": {
       "base": null,
       "refs": {}
@@ -272,6 +320,12 @@
     "DeleteHostedConfigurationVersionRequest": {
       "base": null,
       "refs": {}
+    },
+    "DeleteType": {
+      "base": null,
+      "refs": {
+        "DeleteExperimentDefinitionRequest$DeleteType": "<p>The type of deletion to perform. Valid values include archive (hide but preserve) and permanent (delete permanently).</p>"
+      }
     },
     "DeletionProtectionCheck": {
       "base": null,
@@ -321,6 +375,14 @@
         "Deployments$Items": "<p>The elements from this collection.</p>"
       }
     },
+    "DeploymentParameters": {
+      "base": "<p>Optional deployment parameters for an experiment run, including extension parameters and tags.</p>",
+      "refs": {
+        "StartExperimentRunRequest$DeploymentParameters": "<p>Optional deployment parameters including a KMS key for encryption.</p>",
+        "StopExperimentRunRequest$DeploymentParameters": "<p>Optional deployment parameters for the stop operation.</p>",
+        "UpdateExperimentRunRequest$DeploymentParameters": "<p>Updated deployment parameters.</p>"
+      }
+    },
     "DeploymentState": {
       "base": null,
       "refs": {
@@ -359,6 +421,12 @@
         "DeploymentList$member": null
       }
     },
+    "DeploymentType": {
+      "base": null,
+      "refs": {
+        "DeploymentSummary$Type": "<p>The type of deployment.</p>"
+      }
+    },
     "Deployments": {
       "base": null,
       "refs": {}
@@ -373,23 +441,53 @@
         "CreateConfigurationProfileRequest$Description": "<p>A description of the configuration profile.</p>",
         "CreateDeploymentStrategyRequest$Description": "<p>A description of the deployment strategy.</p>",
         "CreateEnvironmentRequest$Description": "<p>A description of the environment.</p>",
+        "CreateExperimentDefinitionRequest$Hypothesis": "<p>A description of the goal or hypothesis the experiment is designed to validate.</p>",
+        "CreateExperimentDefinitionRequest$AudienceDescription": "<p>A description of the intended audience for the experiment.</p>",
+        "CreateExperimentDefinitionRequest$LaunchCriteria": "<p>Information about the conditions under which you would launch the winning treatment.</p>",
         "CreateExtensionRequest$Description": "<p>Information about the extension.</p>",
-        "CreateHostedConfigurationVersionRequest$Description": "<p>A description of the configuration.</p>",
+        "CreateHostedConfigurationVersionRequest$Description": "<p>A description of the configuration.</p> <note> <p>Due to HTTP limitations, this field only supports ASCII characters.</p> </note>",
         "Deployment$Description": "<p>The description of the deployment.</p>",
         "DeploymentEvent$Description": "<p>A description of the deployment event. Descriptions include, but are not limited to, the following:</p> <ul> <li> <p>The Amazon Web Services account or the Amazon CloudWatch alarm ARN that initiated a rollback.</p> </li> <li> <p>The percentage of hosts that received the deployment.</p> </li> <li> <p>A recommendation to attempt a new deployment (in the case of an internal error).</p> </li> </ul>",
         "DeploymentStrategy$Description": "<p>The description of the deployment strategy.</p>",
         "Environment$Description": "<p>The description of the environment.</p>",
+        "ExperimentDefinition$Hypothesis": "<p>The hypothesis that the experiment is designed to validate.</p>",
+        "ExperimentDefinition$AudienceDescription": "<p>A description of the intended audience for the experiment.</p>",
+        "ExperimentDefinition$LaunchCriteria": "<p>The conditions under which the winning treatment should be launched.</p>",
+        "ExperimentDefinitionSnapshot$Hypothesis": "<p>The hypothesis at the time the run was started.</p>",
+        "ExperimentDefinitionSnapshot$AudienceDescription": "<p>The audience description at the time the run was started.</p>",
+        "ExperimentDefinitionSnapshot$LaunchCriteria": "<p>The launch criteria at the time the run was started.</p>",
+        "ExperimentDefinitionSummary$Hypothesis": "<p>The hypothesis that the experiment is designed to validate.</p>",
+        "ExperimentRun$Description": "<p>A description of the experiment run.</p>",
+        "ExperimentRunEvent$Description": "<p>A description of the event.</p>",
+        "ExperimentRunResult$ExecutiveSummary": "<p>A summary of the experiment outcome and key findings.</p>",
+        "ExperimentRunResult$ReasonsToLaunch": "<p>Evidence in favor of launching the winning treatment.</p>",
+        "ExperimentRunResult$ReasonsNotToLaunch": "<p>Evidence against launching the treatment.</p>",
+        "ExperimentRunSummary$Description": "<p>A description of the experiment run.</p>",
         "Extension$Description": "<p>Information about the extension.</p>",
         "ExtensionSummary$Description": "<p>Information about the extension.</p>",
         "HostedConfigurationVersion$Description": "<p>A description of the configuration.</p>",
         "HostedConfigurationVersionSummary$Description": "<p>A description of the configuration.</p>",
         "Parameter$Description": "<p>Information about the parameter.</p>",
         "StartDeploymentRequest$Description": "<p>A description of the deployment.</p>",
+        "StartExperimentRunRequest$Description": "<p>A description of this experiment run.</p>",
+        "Treatment$Description": "<p>A description of the treatment.</p>",
+        "TreatmentInput$Description": "<p>A description of the treatment.</p>",
         "UpdateApplicationRequest$Description": "<p>A description of the application.</p>",
         "UpdateConfigurationProfileRequest$Description": "<p>A description of the configuration profile.</p>",
         "UpdateDeploymentStrategyRequest$Description": "<p>A description of the deployment strategy.</p>",
         "UpdateEnvironmentRequest$Description": "<p>A description of the environment.</p>",
+        "UpdateExperimentDefinitionRequest$Hypothesis": "<p>An updated hypothesis.</p>",
+        "UpdateExperimentDefinitionRequest$AudienceDescription": "<p>An updated audience description.</p>",
+        "UpdateExperimentDefinitionRequest$LaunchCriteria": "<p>Updated launch criteria.</p>",
+        "UpdateExperimentRunRequest$Description": "<p>An updated description for the experiment run.</p>",
         "UpdateExtensionRequest$Description": "<p>Information about the extension.</p>"
+      }
+    },
+    "Double": {
+      "base": null,
+      "refs": {
+        "AttributeValue$NumberValue": "<p>A numeric value for the attribute.</p>",
+        "NumberList$member": null
       }
     },
     "DynamicParameterKey": {
@@ -401,7 +499,14 @@
     "DynamicParameterMap": {
       "base": null,
       "refs": {
+        "DeploymentParameters$DynamicExtensionParameters": "<p>A map of extension parameters for the deployment.</p>",
         "StartDeploymentRequest$DynamicExtensionParameters": "<p>A map of dynamic extension parameter names to values to pass to associated extensions with <code>PRE_START_DEPLOYMENT</code> actions.</p>"
+      }
+    },
+    "EntityId": {
+      "base": null,
+      "refs": {
+        "TreatmentOverrideMap$key": null
       }
     },
     "Environment": {
@@ -424,6 +529,97 @@
     },
     "Environments": {
       "base": null,
+      "refs": {}
+    },
+    "ExperimentDefinition": {
+      "base": "<p>Describes an experiment definition, including the target audience, feature flag, treatments, and current status.</p>",
+      "refs": {}
+    },
+    "ExperimentDefinitionList": {
+      "base": null,
+      "refs": {
+        "ExperimentDefinitions$Items": "<p>The list of experiment definitions.</p>"
+      }
+    },
+    "ExperimentDefinitionSnapshot": {
+      "base": "<p>A snapshot of the experiment definition captured at the time an experiment run was started. This preserves the configuration that was active during the run.</p>",
+      "refs": {
+        "ExperimentRun$ExperimentDefinitionSnapshot": "<p>A snapshot of the experiment definition at the time the run was started.</p>"
+      }
+    },
+    "ExperimentDefinitionStatus": {
+      "base": null,
+      "refs": {
+        "ExperimentDefinition$Status": "<p>The current status of the experiment definition. Valid values: <code>ACTIVE</code>, <code>IDLE</code>, <code>ARCHIVED</code>.</p>",
+        "ExperimentDefinitionSummary$Status": "<p>The current status of the experiment definition.</p>",
+        "ListExperimentDefinitionsRequest$Status": "<p>A filter for the experiment definition status.</p>"
+      }
+    },
+    "ExperimentDefinitionSummary": {
+      "base": "<p>Summary information about an experiment definition.</p>",
+      "refs": {
+        "ExperimentDefinitionList$member": null
+      }
+    },
+    "ExperimentDefinitions": {
+      "base": "<p>The response for a list experiment definitions request.</p>",
+      "refs": {}
+    },
+    "ExperimentRun": {
+      "base": "<p>Describes an experiment run, including its status, exposure settings, and treatment overrides.</p>",
+      "refs": {}
+    },
+    "ExperimentRunEvent": {
+      "base": "<p>Describes an event that occurred during an experiment run.</p>",
+      "refs": {
+        "ExperimentRunEventList$member": null
+      }
+    },
+    "ExperimentRunEventList": {
+      "base": null,
+      "refs": {
+        "ExperimentRunEvents$Items": "<p>The list of experiment run events.</p>"
+      }
+    },
+    "ExperimentRunEventType": {
+      "base": null,
+      "refs": {
+        "ExperimentRunEvent$EventType": "<p>The type of event. Valid values: <code>RUN_STARTED</code>, <code>EXPOSURE_UPDATED</code>, <code>OVERRIDES_UPDATED</code>, <code>RUN_STOPPED</code>.</p>"
+      }
+    },
+    "ExperimentRunEvents": {
+      "base": "<p>The response for a list experiment run events request.</p>",
+      "refs": {}
+    },
+    "ExperimentRunResult": {
+      "base": "<p>The result of an experiment run, including the executive summary and launch decision rationale.</p>",
+      "refs": {
+        "ExperimentRun$Result": "<p>The result of the experiment run, including the executive summary and launch decision rationale.</p>",
+        "StopExperimentRunRequest$Result": "<p>The result of the experiment run, including an executive summary and reasons for or against launching.</p>"
+      }
+    },
+    "ExperimentRunStatus": {
+      "base": null,
+      "refs": {
+        "ExperimentRun$Status": "<p>The current status of the experiment run. Valid values: <code>RUNNING</code>, <code>DONE</code>.</p>",
+        "ExperimentRunSummary$Status": "<p>The current status of the experiment run.</p>",
+        "ListExperimentRunsRequest$Status": "<p>A filter for the experiment run status.</p>"
+      }
+    },
+    "ExperimentRunSummary": {
+      "base": "<p>Summary information about an experiment run.</p>",
+      "refs": {
+        "ExperimentRunSummaryList$member": null
+      }
+    },
+    "ExperimentRunSummaryList": {
+      "base": null,
+      "refs": {
+        "ExperimentRuns$Items": "<p>The list of experiment runs.</p>"
+      }
+    },
+    "ExperimentRuns": {
+      "base": "<p>The response for a list experiment runs request.</p>",
       "refs": {}
     },
     "Extension": {
@@ -474,6 +670,22 @@
       "base": null,
       "refs": {}
     },
+    "FlagKey": {
+      "base": null,
+      "refs": {
+        "CreateExperimentDefinitionRequest$FlagKey": "<p>The key of the existing feature flag to use with the experiment.</p>",
+        "ExperimentDefinition$FlagKey": "<p>The key of the feature flag used by the experiment.</p>",
+        "ExperimentDefinitionSnapshot$FlagKey": "<p>The feature flag key at the time the run was started.</p>",
+        "ExperimentDefinitionSummary$FlagKey": "<p>The key of the feature flag used by the experiment.</p>"
+      }
+    },
+    "FlagValue": {
+      "base": "<p>The feature flag value configuration for a treatment, including the enabled state and attribute values.</p>",
+      "refs": {
+        "Treatment$FlagValue": "<p>The feature flag value served to users assigned to this treatment.</p>",
+        "TreatmentInput$FlagValue": "<p>The feature flag value to serve to users assigned to this treatment.</p>"
+      }
+    },
     "Float": {
       "base": null,
       "refs": {
@@ -502,6 +714,14 @@
       "refs": {}
     },
     "GetEnvironmentRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetExperimentDefinitionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetExperimentRunRequest": {
       "base": null,
       "refs": {}
     },
@@ -565,73 +785,75 @@
         "ConfigurationProfile$Id": "<p>The configuration profile ID.</p>",
         "ConfigurationProfileSummary$ApplicationId": "<p>The application ID.</p>",
         "ConfigurationProfileSummary$Id": "<p>The ID of the configuration profile.</p>",
-        "CreateConfigurationProfileRequest$ApplicationId": "<p>The application ID.</p>",
-        "CreateEnvironmentRequest$ApplicationId": "<p>The application ID.</p>",
-        "CreateHostedConfigurationVersionRequest$ApplicationId": "<p>The application ID.</p>",
-        "CreateHostedConfigurationVersionRequest$ConfigurationProfileId": "<p>The configuration profile ID.</p>",
-        "DeleteApplicationRequest$ApplicationId": "<p>The ID of the application to delete.</p>",
-        "DeleteConfigurationProfileRequest$ApplicationId": "<p>The application ID that includes the configuration profile you want to delete.</p>",
-        "DeleteConfigurationProfileRequest$ConfigurationProfileId": "<p>The ID of the configuration profile you want to delete.</p>",
-        "DeleteEnvironmentRequest$EnvironmentId": "<p>The ID of the environment that you want to delete.</p>",
-        "DeleteEnvironmentRequest$ApplicationId": "<p>The application ID that includes the environment that you want to delete.</p>",
         "DeleteExtensionAssociationRequest$ExtensionAssociationId": "<p>The ID of the extension association to delete.</p>",
-        "DeleteHostedConfigurationVersionRequest$ApplicationId": "<p>The application ID.</p>",
-        "DeleteHostedConfigurationVersionRequest$ConfigurationProfileId": "<p>The configuration profile ID.</p>",
         "Deployment$ApplicationId": "<p>The ID of the application that was deployed.</p>",
         "Deployment$EnvironmentId": "<p>The ID of the environment that was deployed.</p>",
         "Deployment$DeploymentStrategyId": "<p>The ID of the deployment strategy that was deployed.</p>",
         "Deployment$ConfigurationProfileId": "<p>The ID of the configuration profile that was deployed.</p>",
         "DeploymentStrategy$Id": "<p>The deployment strategy ID.</p>",
+        "DeploymentSummary$ConfigurationProfileId": "<p>The ID of the configuration profile that was deployed.</p>",
         "Environment$ApplicationId": "<p>The application ID.</p>",
         "Environment$Id": "<p>The environment ID.</p>",
+        "ExperimentDefinition$ApplicationId": "<p>The application ID.</p>",
+        "ExperimentDefinition$Id": "<p>The experiment definition ID.</p>",
+        "ExperimentDefinition$ConfigurationProfileId": "<p>The configuration profile ID associated with the experiment.</p>",
+        "ExperimentDefinition$EnvironmentId": "<p>The environment ID where the experiment runs.</p>",
+        "ExperimentDefinitionSnapshot$ApplicationId": "<p>The application ID at the time the run was started.</p>",
+        "ExperimentDefinitionSnapshot$Id": "<p>The experiment definition ID.</p>",
+        "ExperimentDefinitionSnapshot$ConfigurationProfileId": "<p>The configuration profile ID at the time the run was started.</p>",
+        "ExperimentDefinitionSnapshot$EnvironmentId": "<p>The environment ID at the time the run was started.</p>",
+        "ExperimentDefinitionSummary$ApplicationId": "<p>The application ID.</p>",
+        "ExperimentDefinitionSummary$Id": "<p>The experiment definition ID.</p>",
+        "ExperimentDefinitionSummary$ConfigurationProfileId": "<p>The configuration profile ID associated with the experiment.</p>",
+        "ExperimentDefinitionSummary$EnvironmentId": "<p>The environment ID where the experiment runs.</p>",
+        "ExperimentRun$ApplicationId": "<p>The application ID.</p>",
+        "ExperimentRun$ExperimentDefinitionId": "<p>The experiment definition ID.</p>",
+        "ExperimentRunSummary$ExperimentDefinitionId": "<p>The experiment definition ID.</p>",
         "Extension$Id": "<p>The system-generated ID of the extension.</p>",
         "ExtensionSummary$Id": "<p>The system-generated ID of the extension.</p>",
-        "GetApplicationRequest$ApplicationId": "<p>The ID of the application you want to get.</p>",
-        "GetConfigurationProfileRequest$ApplicationId": "<p>The ID of the application that includes the configuration profile you want to get.</p>",
-        "GetConfigurationProfileRequest$ConfigurationProfileId": "<p>The ID of the configuration profile that you want to get.</p>",
-        "GetDeploymentRequest$ApplicationId": "<p>The ID of the application that includes the deployment you want to get. </p>",
-        "GetDeploymentRequest$EnvironmentId": "<p>The ID of the environment that includes the deployment you want to get. </p>",
-        "GetEnvironmentRequest$ApplicationId": "<p>The ID of the application that includes the environment you want to get.</p>",
-        "GetEnvironmentRequest$EnvironmentId": "<p>The ID of the environment that you want to get.</p>",
         "GetExtensionAssociationRequest$ExtensionAssociationId": "<p>The extension association ID to get.</p>",
-        "GetHostedConfigurationVersionRequest$ApplicationId": "<p>The application ID.</p>",
-        "GetHostedConfigurationVersionRequest$ConfigurationProfileId": "<p>The configuration profile ID.</p>",
         "HostedConfigurationVersion$ApplicationId": "<p>The application ID.</p>",
         "HostedConfigurationVersion$ConfigurationProfileId": "<p>The configuration profile ID.</p>",
         "HostedConfigurationVersionSummary$ApplicationId": "<p>The application ID.</p>",
         "HostedConfigurationVersionSummary$ConfigurationProfileId": "<p>The configuration profile ID.</p>",
-        "ListConfigurationProfilesRequest$ApplicationId": "<p>The application ID.</p>",
-        "ListDeploymentsRequest$ApplicationId": "<p>The application ID.</p>",
-        "ListDeploymentsRequest$EnvironmentId": "<p>The environment ID.</p>",
-        "ListEnvironmentsRequest$ApplicationId": "<p>The application ID.</p>",
-        "ListHostedConfigurationVersionsRequest$ApplicationId": "<p>The application ID.</p>",
-        "ListHostedConfigurationVersionsRequest$ConfigurationProfileId": "<p>The configuration profile ID.</p>",
-        "StartDeploymentRequest$ApplicationId": "<p>The application ID.</p>",
-        "StartDeploymentRequest$EnvironmentId": "<p>The environment ID.</p>",
-        "StartDeploymentRequest$ConfigurationProfileId": "<p>The configuration profile ID.</p>",
-        "StopDeploymentRequest$ApplicationId": "<p>The application ID.</p>",
-        "StopDeploymentRequest$EnvironmentId": "<p>The environment ID.</p>",
-        "UpdateApplicationRequest$ApplicationId": "<p>The application ID.</p>",
-        "UpdateConfigurationProfileRequest$ApplicationId": "<p>The application ID.</p>",
-        "UpdateConfigurationProfileRequest$ConfigurationProfileId": "<p>The ID of the configuration profile.</p>",
-        "UpdateEnvironmentRequest$ApplicationId": "<p>The application ID.</p>",
-        "UpdateEnvironmentRequest$EnvironmentId": "<p>The environment ID.</p>",
-        "UpdateExtensionAssociationRequest$ExtensionAssociationId": "<p>The system-generated ID for the association.</p>",
-        "ValidateConfigurationRequest$ApplicationId": "<p>The application ID.</p>",
-        "ValidateConfigurationRequest$ConfigurationProfileId": "<p>The configuration profile ID.</p>"
+        "UpdateExtensionAssociationRequest$ExtensionAssociationId": "<p>The system-generated ID for the association.</p>"
       }
     },
     "Identifier": {
       "base": null,
       "refs": {
         "ActionInvocation$ExtensionIdentifier": "<p>The name, the ID, or the Amazon Resource Name (ARN) of the extension.</p>",
+        "CreateExperimentDefinitionRequest$ApplicationIdentifier": "<p>The application ID or name.</p>",
+        "CreateExperimentDefinitionRequest$ConfigurationProfileIdentifier": "<p>The configuration profile ID or name that stores the feature flag.</p>",
+        "CreateExperimentDefinitionRequest$EnvironmentIdentifier": "<p>The environment ID or name where the experiment will run.</p>",
         "CreateExtensionAssociationRequest$ExtensionIdentifier": "<p>The name, the ID, or the Amazon Resource Name (ARN) of the extension.</p>",
         "CreateExtensionAssociationRequest$ResourceIdentifier": "<p>The ARN of an application, configuration profile, or environment.</p>",
+        "DeleteExperimentDefinitionRequest$ApplicationIdentifier": "<p>The application ID or name.</p>",
+        "DeleteExperimentDefinitionRequest$ExperimentDefinitionIdentifier": "<p>The experiment definition ID or name.</p>",
         "DeleteExtensionRequest$ExtensionIdentifier": "<p>The name, ID, or Amazon Resource Name (ARN) of the extension you want to delete.</p>",
         "ExtensionAssociation$Id": "<p>The system-generated ID for the association.</p>",
         "ExtensionAssociationSummary$Id": "<p>The extension association ID. This ID is used to call other <code>ExtensionAssociation</code> API actions such as <code>GetExtensionAssociation</code> or <code>DeleteExtensionAssociation</code>.</p>",
+        "GetExperimentDefinitionRequest$ApplicationIdentifier": "<p>The application ID or name.</p>",
+        "GetExperimentDefinitionRequest$ExperimentDefinitionIdentifier": "<p>The experiment definition ID or name.</p>",
+        "GetExperimentRunRequest$ApplicationIdentifier": "<p>The application ID or name.</p>",
+        "GetExperimentRunRequest$ExperimentDefinitionIdentifier": "<p>The experiment definition ID or name.</p>",
         "GetExtensionRequest$ExtensionIdentifier": "<p>The name, the ID, or the Amazon Resource Name (ARN) of the extension.</p>",
+        "ListExperimentDefinitionsRequest$ApplicationIdentifier": "<p>The application ID or name to filter results.</p>",
+        "ListExperimentDefinitionsRequest$ConfigurationProfileIdentifier": "<p>The configuration profile ID or name to filter results.</p>",
+        "ListExperimentDefinitionsRequest$EnvironmentIdentifier": "<p>The environment ID or name to filter results.</p>",
+        "ListExperimentRunEventsRequest$ApplicationIdentifier": "<p>The application ID or name.</p>",
+        "ListExperimentRunEventsRequest$ExperimentDefinitionIdentifier": "<p>The experiment definition ID or name.</p>",
+        "ListExperimentRunsRequest$ApplicationIdentifier": "<p>The application ID or name.</p>",
+        "ListExperimentRunsRequest$ExperimentDefinitionIdentifier": "<p>The experiment definition ID or name.</p>",
         "ListExtensionAssociationsRequest$ExtensionIdentifier": "<p>The name, the ID, or the Amazon Resource Name (ARN) of the extension.</p>",
+        "StartExperimentRunRequest$ApplicationIdentifier": "<p>The application ID or name.</p>",
+        "StartExperimentRunRequest$ExperimentDefinitionIdentifier": "<p>The experiment definition ID or name.</p>",
+        "StopExperimentRunRequest$ApplicationIdentifier": "<p>The application ID or name.</p>",
+        "StopExperimentRunRequest$ExperimentDefinitionIdentifier": "<p>The experiment definition ID or name.</p>",
+        "UpdateExperimentDefinitionRequest$ApplicationIdentifier": "<p>The application ID or name.</p>",
+        "UpdateExperimentDefinitionRequest$ExperimentDefinitionIdentifier": "<p>The experiment definition ID or name.</p>",
+        "UpdateExperimentRunRequest$ApplicationIdentifier": "<p>The application ID or name.</p>",
+        "UpdateExperimentRunRequest$ExperimentDefinitionIdentifier": "<p>The experiment definition ID or name.</p>",
         "UpdateExtensionRequest$ExtensionIdentifier": "<p>The name, the ID, or the Amazon Resource Name (ARN) of the extension.</p>"
       }
     },
@@ -646,6 +868,8 @@
         "DeleteHostedConfigurationVersionRequest$VersionNumber": "<p>The versions number to delete.</p>",
         "Deployment$DeploymentNumber": "<p>The sequence number of the deployment.</p>",
         "DeploymentSummary$DeploymentNumber": "<p>The sequence number of the deployment.</p>",
+        "ExperimentRun$Run": "<p>The experiment run number.</p>",
+        "ExperimentRunSummary$Run": "<p>The experiment run number.</p>",
         "Extension$VersionNumber": "<p>The extension version number.</p>",
         "ExtensionAssociation$ExtensionVersionNumber": "<p>The version number for the extension defined in the association.</p>",
         "ExtensionSummary$VersionNumber": "<p>The extension version number.</p>",
@@ -655,6 +879,7 @@
         "HostedConfigurationVersion$VersionNumber": "<p>The configuration version.</p>",
         "HostedConfigurationVersionSummary$VersionNumber": "<p>The configuration version.</p>",
         "ListExtensionAssociationsRequest$ExtensionVersionNumber": "<p>The version number for the extension defined in the association.</p>",
+        "StartDeploymentRequest$LatestDeploymentNumber": "<p>The number of the latest deployment. Use this value to ensure that the deployment starts from the expected state and to prevent conflicting updates.</p>",
         "StopDeploymentRequest$DeploymentNumber": "<p>The sequence number of the deployment.</p>",
         "UpdateExtensionRequest$VersionNumber": "<p>The extension version number.</p>"
       }
@@ -682,7 +907,18 @@
         "Deployment$CompletedAt": "<p>The time the deployment completed. </p>",
         "DeploymentEvent$OccurredAt": "<p>The date and time the event occurred.</p>",
         "DeploymentSummary$StartedAt": "<p>Time the deployment started.</p>",
-        "DeploymentSummary$CompletedAt": "<p>Time the deployment completed.</p>"
+        "DeploymentSummary$CompletedAt": "<p>Time the deployment completed.</p>",
+        "ExperimentDefinition$CreatedAt": "<p>The date and time the experiment definition was created, in ISO 8601 format.</p>",
+        "ExperimentDefinition$UpdatedAt": "<p>The date and time the experiment definition was last updated, in ISO 8601 format.</p>",
+        "ExperimentDefinitionSummary$CreatedAt": "<p>The date and time the experiment definition was created, in ISO 8601 format.</p>",
+        "ExperimentDefinitionSummary$UpdatedAt": "<p>The date and time the experiment definition was last updated, in ISO 8601 format.</p>",
+        "ExperimentRun$StartedAt": "<p>The date and time the experiment run started, in ISO 8601 format.</p>",
+        "ExperimentRun$UpdatedAt": "<p>The date and time the experiment run was last updated, in ISO 8601 format.</p>",
+        "ExperimentRun$EndedAt": "<p>The date and time the experiment run ended, in ISO 8601 format.</p>",
+        "ExperimentRunEvent$OccurredAt": "<p>The date and time the event occurred, in ISO 8601 format.</p>",
+        "ExperimentRunSummary$StartedAt": "<p>The date and time the experiment run started, in ISO 8601 format.</p>",
+        "ExperimentRunSummary$UpdatedAt": "<p>The date and time the experiment run was last updated, in ISO 8601 format.</p>",
+        "ExperimentRunSummary$EndedAt": "<p>The date and time the experiment run ended, in ISO 8601 format.</p>"
       }
     },
     "KmsKeyIdentifier": {
@@ -691,6 +927,7 @@
         "ConfigurationProfile$KmsKeyIdentifier": "<p>The Key Management Service key identifier (key ID, key alias, or key ARN) provided when the resource was created or updated.</p>",
         "CreateConfigurationProfileRequest$KmsKeyIdentifier": "<p>The identifier for an Key Management Service key to encrypt new configuration data versions in the AppConfig hosted configuration store. This attribute is only used for <code>hosted</code> configuration types. The identifier can be an KMS key ID, alias, or the Amazon Resource Name (ARN) of the key ID or alias. To encrypt data managed in other configuration stores, see the documentation for how to specify an KMS key for that particular service.</p>",
         "Deployment$KmsKeyIdentifier": "<p>The Key Management Service key identifier (key ID, key alias, or key ARN) provided when the resource was created or updated.</p>",
+        "ExperimentDefinition$KmsKeyIdentifier": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt experiment data.</p>",
         "StartDeploymentRequest$KmsKeyIdentifier": "<p>The KMS key identifier (key ID, key alias, or key ARN). AppConfig uses this ID to encrypt the configuration data using a customer managed key. </p>"
       }
     },
@@ -720,6 +957,18 @@
       "base": null,
       "refs": {}
     },
+    "ListExperimentDefinitionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListExperimentRunEventsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListExperimentRunsRequest": {
+      "base": null,
+      "refs": {}
+    },
     "ListExtensionAssociationsRequest": {
       "base": null,
       "refs": {}
@@ -742,7 +991,16 @@
         "ConfigurationProfile$Name": "<p>The name of the configuration profile.</p>",
         "ConfigurationProfileSummary$Name": "<p>The name of the configuration profile.</p>",
         "CreateConfigurationProfileRequest$Name": "<p>A name for the configuration profile.</p>",
-        "UpdateConfigurationProfileRequest$Name": "<p>The name of the configuration profile.</p>"
+        "CreateHostedConfigurationVersionRequest$ConfigurationProfileId": "<p>The configuration profile ID.</p>",
+        "DeleteConfigurationProfileRequest$ConfigurationProfileId": "<p>The ID of the configuration profile you want to delete.</p>",
+        "DeleteHostedConfigurationVersionRequest$ConfigurationProfileId": "<p>The configuration profile ID.</p>",
+        "GetConfigurationProfileRequest$ConfigurationProfileId": "<p>The ID of the configuration profile that you want to get.</p>",
+        "GetHostedConfigurationVersionRequest$ConfigurationProfileId": "<p>The configuration profile ID.</p>",
+        "ListHostedConfigurationVersionsRequest$ConfigurationProfileId": "<p>The configuration profile ID.</p>",
+        "StartDeploymentRequest$ConfigurationProfileId": "<p>The configuration profile ID.</p>",
+        "UpdateConfigurationProfileRequest$ConfigurationProfileId": "<p>The ID of the configuration profile.</p>",
+        "UpdateConfigurationProfileRequest$Name": "<p>The name of the configuration profile.</p>",
+        "ValidateConfigurationRequest$ConfigurationProfileId": "<p>The configuration profile ID.</p>"
       }
     },
     "MaxResults": {
@@ -753,6 +1011,9 @@
         "ListDeploymentStrategiesRequest$MaxResults": "<p>The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.</p>",
         "ListDeploymentsRequest$MaxResults": "<p>The maximum number of items that may be returned for this call. If there are items that have not yet been returned, the response will include a non-null <code>NextToken</code> that you can provide in a subsequent call to get the next set of results.</p>",
         "ListEnvironmentsRequest$MaxResults": "<p>The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.</p>",
+        "ListExperimentDefinitionsRequest$MaxResults": "<p>The maximum number of items to return for this call.</p>",
+        "ListExperimentRunEventsRequest$MaxResults": "<p>The maximum number of items to return.</p>",
+        "ListExperimentRunsRequest$MaxResults": "<p>The maximum number of items to return.</p>",
         "ListExtensionAssociationsRequest$MaxResults": "<p>The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.</p>",
         "ListExtensionsRequest$MaxResults": "<p>The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.</p>",
         "ListHostedConfigurationVersionsRequest$MaxResults": "<p>The maximum number of items to return for this call. If <code>MaxResults</code> is not provided in the call, AppConfig returns the maximum of 50. The call also returns a token that you can specify in a subsequent call to get the next set of results.</p>"
@@ -761,7 +1022,7 @@
     "MinutesBetween0And24Hours": {
       "base": null,
       "refs": {
-        "CreateDeploymentStrategyRequest$DeploymentDurationInMinutes": "<p>Total amount of time for a deployment to last.</p>",
+        "CreateDeploymentStrategyRequest$DeploymentDurationInMinutes": "<p>Total amount of time for a deployment to last.</p> <note> <p>AppConfig Agent supports deploying feature flag or free-form configuration data to specific segments or individual users during a gradual rollout. Entity-based gradual deployments ensure that once a user or segment receives a configuration version, they continue to receive that same version throughout the deployment period, regardless of which compute resource serves their requests. For more information, see <a href=\"https://docs.aws.amazon.com/appconfig/latest/userguide/appconfig-agent-how-to-use.html#appconfig-entity-based-gradual-deployments\">Using AppConfig Agent for user-based or entity-based gradual deployments</a> </p> </note>",
         "CreateDeploymentStrategyRequest$FinalBakeTimeInMinutes": "<p>Specifies the amount of time AppConfig monitors for Amazon CloudWatch alarms after the configuration has been deployed to 100% of its targets, before considering the deployment to be complete. If an alarm is triggered during this time, AppConfig rolls back the deployment. You must configure permissions for AppConfig to roll back based on CloudWatch alarms. For more information, see <a href=\"https://docs.aws.amazon.com/appconfig/latest/userguide/getting-started-with-appconfig-cloudwatch-alarms-permissions.html\">Configuring permissions for rollback based on Amazon CloudWatch alarms</a> in the <i>AppConfig User Guide</i>.</p>",
         "Deployment$DeploymentDurationInMinutes": "<p>Total amount of time the deployment lasted.</p>",
         "Deployment$FinalBakeTimeInMinutes": "<p>The amount of time that AppConfig monitored for alarms before considering the deployment to be complete and no longer eligible for automatic rollback.</p>",
@@ -794,16 +1055,54 @@
         "ActionInvocation$ActionName": "<p>The name of the action.</p>",
         "Application$Name": "<p>The application name.</p>",
         "CreateApplicationRequest$Name": "<p>A name for the application.</p>",
+        "CreateConfigurationProfileRequest$ApplicationId": "<p>The application ID.</p>",
         "CreateDeploymentStrategyRequest$Name": "<p>A name for the deployment strategy.</p>",
+        "CreateEnvironmentRequest$ApplicationId": "<p>The application ID.</p>",
         "CreateEnvironmentRequest$Name": "<p>A name for the environment.</p>",
+        "CreateHostedConfigurationVersionRequest$ApplicationId": "<p>The application ID.</p>",
+        "DeleteApplicationRequest$ApplicationId": "<p>The ID of the application to delete.</p>",
+        "DeleteConfigurationProfileRequest$ApplicationId": "<p>The application ID that includes the configuration profile you want to delete.</p>",
+        "DeleteEnvironmentRequest$EnvironmentId": "<p>The ID of the environment that you want to delete.</p>",
+        "DeleteEnvironmentRequest$ApplicationId": "<p>The application ID that includes the environment that you want to delete.</p>",
+        "DeleteHostedConfigurationVersionRequest$ApplicationId": "<p>The application ID.</p>",
         "Deployment$ConfigurationName": "<p>The name of the configuration.</p>",
         "DeploymentStrategy$Name": "<p>The name of the deployment strategy.</p>",
         "DeploymentSummary$ConfigurationName": "<p>The name of the configuration.</p>",
         "Environment$Name": "<p>The name of the environment.</p>",
+        "ExperimentDefinition$Name": "<p>The name of the experiment definition.</p>",
+        "ExperimentDefinitionSnapshot$Name": "<p>The name of the experiment definition at the time the run was started.</p>",
+        "ExperimentDefinitionSummary$Name": "<p>The name of the experiment definition.</p>",
         "Extension$Name": "<p>The extension name.</p>",
         "ExtensionSummary$Name": "<p>The extension name.</p>",
+        "GetApplicationRequest$ApplicationId": "<p>The ID of the application you want to get.</p>",
+        "GetConfigurationProfileRequest$ApplicationId": "<p>The ID of the application that includes the configuration profile you want to get.</p>",
+        "GetDeploymentRequest$ApplicationId": "<p>The ID of the application that includes the deployment you want to get. </p>",
+        "GetDeploymentRequest$EnvironmentId": "<p>The ID of the environment that includes the deployment you want to get. </p>",
+        "GetEnvironmentRequest$ApplicationId": "<p>The ID of the application that includes the environment you want to get.</p>",
+        "GetEnvironmentRequest$EnvironmentId": "<p>The ID of the environment that you want to get.</p>",
+        "GetHostedConfigurationVersionRequest$ApplicationId": "<p>The application ID.</p>",
+        "ListConfigurationProfilesRequest$ApplicationId": "<p>The application ID.</p>",
+        "ListDeploymentsRequest$ApplicationId": "<p>The application ID.</p>",
+        "ListDeploymentsRequest$EnvironmentId": "<p>The environment ID.</p>",
+        "ListEnvironmentsRequest$ApplicationId": "<p>The application ID.</p>",
+        "ListHostedConfigurationVersionsRequest$ApplicationId": "<p>The application ID.</p>",
+        "StartDeploymentRequest$ApplicationId": "<p>The application ID.</p>",
+        "StartDeploymentRequest$EnvironmentId": "<p>The environment ID.</p>",
+        "StopDeploymentRequest$ApplicationId": "<p>The application ID.</p>",
+        "StopDeploymentRequest$EnvironmentId": "<p>The environment ID.</p>",
+        "UpdateApplicationRequest$ApplicationId": "<p>The application ID.</p>",
         "UpdateApplicationRequest$Name": "<p>The name of the application.</p>",
-        "UpdateEnvironmentRequest$Name": "<p>The name of the environment.</p>"
+        "UpdateConfigurationProfileRequest$ApplicationId": "<p>The application ID.</p>",
+        "UpdateEnvironmentRequest$ApplicationId": "<p>The application ID.</p>",
+        "UpdateEnvironmentRequest$EnvironmentId": "<p>The environment ID.</p>",
+        "UpdateEnvironmentRequest$Name": "<p>The name of the environment.</p>",
+        "ValidateConfigurationRequest$ApplicationId": "<p>The application ID.</p>"
+      }
+    },
+    "NameWithReservedAwsPrefix": {
+      "base": null,
+      "refs": {
+        "CreateExperimentDefinitionRequest$Name": "<p>A name for the experiment definition.</p>"
       }
     },
     "NextToken": {
@@ -814,6 +1113,9 @@
         "DeploymentStrategies$NextToken": "<p>The token for the next set of items to return. Use this token to get the next set of results.</p>",
         "Deployments$NextToken": "<p>The token for the next set of items to return. Use this token to get the next set of results.</p>",
         "Environments$NextToken": "<p>The token for the next set of items to return. Use this token to get the next set of results.</p>",
+        "ExperimentDefinitions$NextToken": "<p>A token to use for the next set of results.</p>",
+        "ExperimentRunEvents$NextToken": "<p>A token to use for the next set of results.</p>",
+        "ExperimentRuns$NextToken": "<p>A token to use for the next set of results.</p>",
         "ExtensionAssociations$NextToken": "<p>The token for the next set of items to return. Use this token to get the next set of results.</p>",
         "Extensions$NextToken": "<p>The token for the next set of items to return. Use this token to get the next set of results.</p>",
         "HostedConfigurationVersions$NextToken": "<p>The token for the next set of items to return. Use this token to get the next set of results.</p>",
@@ -822,9 +1124,27 @@
         "ListDeploymentStrategiesRequest$NextToken": "<p>A token to start the list. Use this token to get the next set of results.</p>",
         "ListDeploymentsRequest$NextToken": "<p>The token returned by a prior call to this operation indicating the next set of results to be returned. If not specified, the operation will return the first set of results.</p>",
         "ListEnvironmentsRequest$NextToken": "<p>A token to start the list. Use this token to get the next set of results.</p>",
+        "ListExperimentDefinitionsRequest$NextToken": "<p>A token to start the list from a previously truncated response.</p>",
+        "ListExperimentRunEventsRequest$NextToken": "<p>A token to start the list from a previously truncated response.</p>",
+        "ListExperimentRunsRequest$NextToken": "<p>A token to start the list from a previously truncated response.</p>",
         "ListExtensionAssociationsRequest$NextToken": "<p>A token to start the list. Use this token to get the next set of results or pass null to get the first set of results. </p>",
         "ListExtensionsRequest$NextToken": "<p>A token to start the list. Use this token to get the next set of results. </p>",
         "ListHostedConfigurationVersionsRequest$NextToken": "<p>A token to start the list. Use this token to get the next set of results. </p>"
+      }
+    },
+    "NullablePercentage": {
+      "base": null,
+      "refs": {
+        "ExperimentRun$ExposurePercentage": "<p>The percentage of the target audience exposed to treatments.</p>",
+        "ExperimentRunEvent$ExposurePercentage": "<p>The exposure percentage at the time of the event.</p>",
+        "StartExperimentRunRequest$ExposurePercentage": "<p>The percentage of the target audience to expose to treatments. Set to 0 to validate the experiment before exposing production users.</p>",
+        "UpdateExperimentRunRequest$ExposurePercentage": "<p>The new exposure percentage. This value can only be increased from the current setting.</p>"
+      }
+    },
+    "NumberList": {
+      "base": null,
+      "refs": {
+        "AttributeValue$NumberArray": "<p>An array of numeric values for the attribute.</p>"
       }
     },
     "Parameter": {
@@ -864,6 +1184,15 @@
         "DeploymentSummary$PercentageComplete": "<p>The percentage of targets for which the deployment is available.</p>"
       }
     },
+    "PositiveInteger": {
+      "base": null,
+      "refs": {
+        "GetExperimentRunRequest$Run": "<p>The run number to retrieve.</p>",
+        "ListExperimentRunEventsRequest$Run": "<p>The run number.</p>",
+        "StopExperimentRunRequest$Run": "<p>The run number to stop.</p>",
+        "UpdateExperimentRunRequest$Run": "<p>The run number to update.</p>"
+      }
+    },
     "QueryName": {
       "base": null,
       "refs": {
@@ -895,15 +1224,32 @@
         "UpdateConfigurationProfileRequest$RetrievalRoleArn": "<p>The ARN of an IAM role with permission to access the configuration at the specified <code>LocationUri</code>.</p> <important> <p>A retrieval role ARN is not required for configurations stored in CodePipeline or the AppConfig hosted configuration store. It is required for all other sources that store your configuration. </p> </important>"
       }
     },
+    "Rule": {
+      "base": null,
+      "refs": {
+        "CreateExperimentDefinitionRequest$AudienceRule": "<p>A rule that defines which users are eligible to be assigned to treatments during the experiment.</p>",
+        "ExperimentDefinition$AudienceRule": "<p>The rule that defines which users are eligible to be assigned to treatments.</p>",
+        "ExperimentDefinitionSnapshot$AudienceRule": "<p>The audience rule at the time the run was started.</p>",
+        "UpdateExperimentDefinitionRequest$AudienceRule": "<p>An updated audience rule.</p>"
+      }
+    },
     "ServiceQuotaExceededException": {
-      "base": "<p>The number of one more AppConfig resources exceeds the maximum allowed. Verify that your environment doesn't exceed the following service quotas:</p> <p>Applications: 100 max</p> <p>Deployment strategies: 20 max</p> <p>Configuration profiles: 100 max per application</p> <p>Environments: 20 max per application</p> <p>To resolve this issue, you can delete one or more resources and try again. Or, you can request a quota increase. For more information about quotas and to request an increase, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/appconfig.html#limits_appconfig\">Service quotas for AppConfig</a> in the Amazon Web Services General Reference.</p>",
+      "base": "<p>The number of one more AppConfig resources exceeds the maximum allowed. Verify that your environment doesn't exceed the following service quotas:</p> <p>Applications: 100 max</p> <p>To resolve this issue, you can delete one or more resources and try again. Or, you can request a quota increase. For more information about quotas and to request an increase, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/appconfig.html#limits_appconfig\">Service quotas for AppConfig</a> in the Amazon Web Services General Reference.</p>",
       "refs": {}
     },
     "StartDeploymentRequest": {
       "base": null,
       "refs": {}
     },
+    "StartExperimentRunRequest": {
+      "base": null,
+      "refs": {}
+    },
     "StopDeploymentRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StopExperimentRunRequest": {
       "base": null,
       "refs": {}
     },
@@ -925,6 +1271,12 @@
         "ResourceNotFoundException$Message": null,
         "ResourceNotFoundException$ResourceName": null,
         "ServiceQuotaExceededException$Message": null
+      }
+    },
+    "StringList": {
+      "base": null,
+      "refs": {
+        "AttributeValue$StringArray": "<p>An array of string values for the attribute.</p>"
       }
     },
     "StringWithLengthBetween0And32768": {
@@ -978,10 +1330,13 @@
         "CreateConfigurationProfileRequest$Tags": "<p>Metadata to assign to the configuration profile. Tags help organize and categorize your AppConfig resources. Each tag consists of a key and an optional value, both of which you define.</p>",
         "CreateDeploymentStrategyRequest$Tags": "<p>Metadata to assign to the deployment strategy. Tags help organize and categorize your AppConfig resources. Each tag consists of a key and an optional value, both of which you define.</p>",
         "CreateEnvironmentRequest$Tags": "<p>Metadata to assign to the environment. Tags help organize and categorize your AppConfig resources. Each tag consists of a key and an optional value, both of which you define.</p>",
+        "CreateExperimentDefinitionRequest$Tags": "<p>The tags to assign to the experiment definition. Tags help organize and categorize your AppConfig resources.</p>",
         "CreateExtensionAssociationRequest$Tags": "<p>Adds one or more tags for the specified extension association. Tags are metadata that help you categorize resources in different ways, for example, by purpose, owner, or environment. Each tag consists of a key and an optional value, both of which you define. </p>",
         "CreateExtensionRequest$Tags": "<p>Adds one or more tags for the specified extension. Tags are metadata that help you categorize resources in different ways, for example, by purpose, owner, or environment. Each tag consists of a key and an optional value, both of which you define. </p>",
+        "DeploymentParameters$Tags": "<p>The tags to assign to the deployment.</p>",
         "ResourceTags$Tags": "<p>Metadata to assign to AppConfig resources. Tags help organize and categorize your AppConfig resources. Each tag consists of a key and an optional value, both of which you define.</p>",
         "StartDeploymentRequest$Tags": "<p>Metadata to assign to the deployment. Tags help organize and categorize your AppConfig resources. Each tag consists of a key and an optional value, both of which you define.</p>",
+        "StartExperimentRunRequest$Tags": "<p>The tags to assign to the experiment run.</p>",
         "TagResourceRequest$Tags": "<p>The key-value string map. The valid character set is [a-zA-Z+-=._:/]. The tag key can be up to 128 characters and must not start with <code>aws:</code>. The tag value can be up to 256 characters.</p>"
       }
     },
@@ -995,10 +1350,63 @@
         "TagMap$value": null
       }
     },
+    "Treatment": {
+      "base": "<p>Describes a treatment in an experiment, including its traffic allocation weight and feature flag value.</p>",
+      "refs": {
+        "ExperimentDefinition$Control": "<p>The control treatment used as the baseline for comparison.</p>",
+        "ExperimentDefinitionSnapshot$Control": "<p>The control treatment at the time the run was started.</p>",
+        "TreatmentList$member": null
+      }
+    },
+    "TreatmentInput": {
+      "base": "<p>Input structure for defining a treatment when creating or updating an experiment definition.</p>",
+      "refs": {
+        "CreateExperimentDefinitionRequest$Control": "<p>The control treatment that represents the baseline experience for comparison.</p>",
+        "TreatmentInputList$member": null,
+        "UpdateExperimentDefinitionRequest$Control": "<p>An updated control treatment.</p>"
+      }
+    },
+    "TreatmentInputList": {
+      "base": null,
+      "refs": {
+        "CreateExperimentDefinitionRequest$Treatments": "<p>A list of treatments to evaluate during the experiment. Each treatment defines a distinct variation compared to the control.</p>",
+        "UpdateExperimentDefinitionRequest$Treatments": "<p>An updated list of treatments.</p>"
+      }
+    },
+    "TreatmentKey": {
+      "base": null,
+      "refs": {
+        "Treatment$Key": "<p>The unique key that identifies this treatment.</p>",
+        "TreatmentOverrideMap$value": null
+      }
+    },
+    "TreatmentList": {
+      "base": null,
+      "refs": {
+        "ExperimentDefinition$Treatments": "<p>The list of treatments defined for the experiment.</p>",
+        "ExperimentDefinitionSnapshot$Treatments": "<p>The treatments at the time the run was started.</p>"
+      }
+    },
+    "TreatmentOverrideMap": {
+      "base": null,
+      "refs": {
+        "TreatmentOverrides$Inline": "<p>A map of entity IDs to treatment keys. Each entry assigns the specified entity to the specified treatment, bypassing random assignment.</p>"
+      }
+    },
+    "TreatmentOverrides": {
+      "base": "<p>Treatment assignment overrides that assign specific entity IDs to treatments, bypassing random assignment.</p>",
+      "refs": {
+        "ExperimentRun$TreatmentOverrides": "<p>Treatment assignment overrides that assign specific entity IDs to treatments.</p>",
+        "ExperimentRunEvent$TreatmentOverrides": "<p>The treatment overrides at the time of the event.</p>",
+        "StartExperimentRunRequest$TreatmentOverrides": "<p>Treatment assignment overrides that assign specific entity IDs to treatments directly, bypassing random assignment.</p>",
+        "UpdateExperimentRunRequest$TreatmentOverrides": "<p>Updated treatment assignment overrides.</p>"
+      }
+    },
     "TriggeredBy": {
       "base": null,
       "refs": {
-        "DeploymentEvent$TriggeredBy": "<p>The entity that triggered the deployment event. Events can be triggered by a user, AppConfig, an Amazon CloudWatch alarm, or an internal error.</p>"
+        "DeploymentEvent$TriggeredBy": "<p>The entity that triggered the deployment event. Events can be triggered by a user, AppConfig, an Amazon CloudWatch alarm, or an internal error.</p>",
+        "ExperimentRunEvent$TriggeredBy": "<p>The principal that triggered the event.</p>"
       }
     },
     "UntagResourceRequest": {
@@ -1022,6 +1430,14 @@
       "refs": {}
     },
     "UpdateEnvironmentRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateExperimentDefinitionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateExperimentRunRequest": {
       "base": null,
       "refs": {}
     },
@@ -1075,6 +1491,13 @@
         "ConfigurationProfileSummary$ValidatorTypes": "<p>The types of validators in the configuration profile.</p>"
       }
     },
+    "VendedMetricsSettings": {
+      "base": "<p>Configuration settings for vended metrics.</p>",
+      "refs": {
+        "AccountSettings$VendedMetrics": "<p>Configuration for vended metrics in the account.</p>",
+        "UpdateAccountSettingsRequest$VendedMetrics": "<p>Configuration for vended metrics in the account.</p>"
+      }
+    },
     "Version": {
       "base": null,
       "refs": {
@@ -1094,6 +1517,13 @@
         "DeploymentSummary$VersionLabel": "<p>A user-defined label for an AppConfig hosted configuration version.</p>",
         "HostedConfigurationVersion$VersionLabel": "<p>A user-defined label for an AppConfig hosted configuration version.</p>",
         "HostedConfigurationVersionSummary$VersionLabel": "<p>A user-defined label for an AppConfig hosted configuration version.</p>"
+      }
+    },
+    "Weight": {
+      "base": null,
+      "refs": {
+        "Treatment$Weight": "<p>The traffic allocation weight for this treatment.</p>",
+        "TreatmentInput$Weight": "<p>The traffic allocation weight for this treatment.</p>"
       }
     }
   }

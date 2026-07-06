@@ -30,6 +30,9 @@
     "GetPermissionPolicy": "<p>Returns the IAM policy that is attached to the specified rule group.</p> <p>You must be the owner of the rule group to perform this operation.</p>",
     "GetRateBasedStatementManagedKeys": "<p>Retrieves the IP addresses that are currently blocked by a rate-based rule instance. This is only available for rate-based rules that aggregate solely on the IP address or on the forwarded IP address. </p> <p>The maximum number of addresses that can be blocked for a single rate-based rule instance is 10,000. If more than 10,000 addresses exceed the rate limit, those with the highest rates are blocked.</p> <p>For a rate-based rule that you've defined inside a rule group, provide the name of the rule group reference statement in your request, in addition to the rate-based rule name and the web ACL name. </p> <p>WAF monitors web requests and manages keys independently for each unique combination of web ACL, optional rule group, and rate-based rule. For example, if you define a rate-based rule inside a rule group, and then use the rule group in a web ACL, WAF monitors web requests and manages keys for that web ACL, rule group reference statement, and rate-based rule instance. If you use the same rule group in a second web ACL, WAF monitors web requests and manages keys for this second usage completely independent of your first. </p>",
     "GetRegexPatternSet": "<p>Retrieves the specified <a>RegexPatternSet</a>.</p>",
+    "GetRevenueStatistics": "<p>Retrieves ranked monetization statistics. Use the <code>StatisticType</code> parameter to specify the ranking: <code>TOP_SOURCES_BY_REVENUE</code> for top sources by revenue, or <code>TOP_PATHS_BY_REVENUE</code> for top content paths by revenue. This operation is only available for <code>CLOUDFRONT</code> scope. The maximum supported time window is 90 days. When no <code>CurrencyMode</code> filter is provided, results default to <code>REAL</code>. To retrieve test data, include a <code>CurrencyMode</code> filter with the value <code>TEST</code>.</p>",
+    "GetRevenueStatisticsSummary": "<p>Retrieves a summary of monetization revenue for the specified time window. Returns total revenue, revenue by verification tier, total settlements, and total HTTP 402 responses served. This operation is only available for <code>CLOUDFRONT</code> scope. The maximum supported time window is 90 days. When no <code>CurrencyMode</code> filter is provided, results default to <code>REAL</code>. To retrieve test data, include a <code>CurrencyMode</code> filter with the value <code>TEST</code>.</p>",
+    "GetRevenueStatisticsTimeSeries": "<p>Retrieves time series data for monetization revenue. Returns data points aggregated at the specified interval for the given time window. This operation is only available for <code>CLOUDFRONT</code> scope. The maximum supported time window is 90 days. When no <code>CurrencyMode</code> filter is provided, results default to <code>REAL</code>. To retrieve test data, include a <code>CurrencyMode</code> filter with the value <code>TEST</code>.</p>",
     "GetRuleGroup": "<p>Retrieves the specified <a>RuleGroup</a>.</p>",
     "GetSampledRequests": "<p>Gets detailed information about a specified number of requests--a sample--that WAF randomly selects from among the first 5,000 requests that your Amazon Web Services resource received during a time range that you choose. You can specify a sample size of up to 500 requests, and you can specify any time range in the previous three hours.</p> <p> <code>GetSampledRequests</code> returns a time range, which is usually the time range that you specified. However, if your resource (such as a CloudFront distribution) received 5,000 requests before the specified time range elapsed, <code>GetSampledRequests</code> returns an updated time range. This new time range indicates the actual period during which WAF selected the requests in the sample.</p>",
     "GetTopPathStatisticsByTraffic": "<p>Retrieves aggregated statistics about the top URI paths accessed by bot traffic for a specified web ACL and time window. You can use this operation to analyze which paths on your web application receive the most bot traffic and identify the specific bots accessing those paths. The operation supports filtering by bot category, organization, or name, and allows you to drill down into specific path prefixes to view detailed URI-level statistics.</p>",
@@ -45,6 +48,7 @@
     "ListRegexPatternSets": "<p>Retrieves an array of <a>RegexPatternSetSummary</a> objects for the regex pattern sets that you manage.</p>",
     "ListResourcesForWebACL": "<p>Retrieves an array of the Amazon Resource Names (ARNs) for the resources that are associated with the specified web ACL. </p> <p>For Amazon CloudFront, don't use this call. Instead, use the CloudFront call <code>ListDistributionsByWebACLId</code>. For information, see <a href=\"https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_ListDistributionsByWebACLId.html\">ListDistributionsByWebACLId</a> in the <i>Amazon CloudFront API Reference</i>. </p> <p> <b>Required permissions for customer-managed IAM policies</b> </p> <p>This call requires permissions that are specific to the protected resource type. For details, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/security_iam_service-with-iam.html#security_iam_action-ListResourcesForWebACL\">Permissions for ListResourcesForWebACL</a> in the <i>WAF Developer Guide</i>.</p>",
     "ListRuleGroups": "<p>Retrieves an array of <a>RuleGroupSummary</a> objects for the rule groups that you manage. </p>",
+    "ListSettlementRecords": "<p>Retrieves individual settlement transaction records for monetization. Each record represents a single payment transaction between a client and your protected resource. This operation is only available for <code>CLOUDFRONT</code> scope. The maximum supported time window is 90 days. When no <code>CurrencyMode</code> filter is provided, results default to <code>REAL</code>. To retrieve test data, include a <code>CurrencyMode</code> filter with the value <code>TEST</code>.</p>",
     "ListTagsForResource": "<p>Retrieves the <a>TagInfoForResource</a> for the specified resource. Tags are key:value pairs that you can use to categorize and manage your resources, for purposes like billing. For example, you might set the tag key to \"customer\" and the value to the customer name or ID. You can specify one or more tags to add to each Amazon Web Services resource, up to 50 tags for a resource.</p> <p>You can tag the Amazon Web Services resources that you manage through WAF: web ACLs, rule groups, IP sets, and regex pattern sets. You can't manage or view tags through the WAF console. </p>",
     "ListWebACLs": "<p>Retrieves an array of <a>WebACLSummary</a> objects for the web ACLs that you manage.</p>",
     "PutLoggingConfiguration": "<p>Enables the specified <a>LoggingConfiguration</a>, to start logging from a web ACL, according to the configuration provided. </p> <p>If you configure data protection for the web ACL, the protection applies to the data that WAF sends to the logs. </p> <note> <p>This operation completely replaces any mutable specifications that you already have for a logging configuration with the ones that you provide to this call. </p> <p>To modify an existing logging configuration, do the following: </p> <ol> <li> <p>Retrieve it by calling <a>GetLoggingConfiguration</a> </p> </li> <li> <p>Update its settings as needed</p> </li> <li> <p>Provide the complete logging configuration specification to this call</p> </li> </ol> </note> <note> <p>You can define one logging destination per web ACL.</p> </note> <p>You can access information about the traffic that WAF inspects using the following steps:</p> <ol> <li> <p>Create your logging destination. You can use an Amazon CloudWatch Logs log group, an Amazon Simple Storage Service (Amazon S3) bucket, or an Amazon Kinesis Data Firehose. </p> <p>The name that you give the destination must start with <code>aws-waf-logs-</code>. Depending on the type of destination, you might need to configure additional settings or permissions. </p> <p>For configuration requirements and pricing information for each destination type, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/logging.html\">Logging web ACL traffic</a> in the <i>WAF Developer Guide</i>.</p> </li> <li> <p>Associate your logging destination to your web ACL using a <code>PutLoggingConfiguration</code> request.</p> </li> </ol> <p>When you successfully enable logging using a <code>PutLoggingConfiguration</code> request, WAF creates an additional role or policy that is required to write logs to the logging destination. For an Amazon CloudWatch Logs log group, WAF creates a resource policy on the log group. For an Amazon S3 bucket, WAF creates a bucket policy. For an Amazon Kinesis Data Firehose, WAF creates a service-linked role.</p> <p>For additional information about web ACL logging, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/logging.html\">Logging web ACL traffic information</a> in the <i>WAF Developer Guide</i>.</p>",
@@ -257,6 +261,12 @@
       "refs": {
         "DefaultAction$Block": "<p>Specifies that WAF should block requests by default. </p>",
         "RuleAction$Block": "<p>Instructs WAF to block the web request.</p>"
+      }
+    },
+    "BlockchainChain": {
+      "base": null,
+      "refs": {
+        "PaymentNetwork$Chain": "<p>The blockchain network for receiving payments. Production networks: <code>BASE</code> (Base mainnet), <code>SOLANA</code> (Solana mainnet). Test networks: <code>BASE_SEPOLIA</code> (Base Sepolia testnet), <code>SOLANA_DEVNET</code> (Solana Devnet).</p>"
       }
     },
     "Body": {
@@ -492,6 +502,35 @@
         "AWSManagedRulesACFPRuleSet$CreationPath": "<p>The path of the account creation endpoint for your application. This is the page on your website that accepts the completed registration form for a new user. This page must accept <code>POST</code> requests.</p> <p>For example, for the URL <code>https://example.com/web/newaccount</code>, you would provide the path <code>/web/newaccount</code>. Account creation page paths that start with the path that you provide are considered a match. For example <code>/web/newaccount</code> matches the account creation paths <code>/web/newaccount</code>, <code>/web/newaccount/</code>, <code>/web/newaccountPage</code>, and <code>/web/newaccount/thisPage</code>, but doesn't match the path <code>/home/web/newaccount</code> or <code>/website/newaccount</code>. </p>"
       }
     },
+    "CryptoConfig": {
+      "base": "<p>The cryptocurrency payment configuration for AI bot monetization. Contains the list of blockchain payment networks where you receive payments.</p>",
+      "refs": {
+        "MonetizationConfig$CryptoConfig": "<p>The cryptocurrency payment configuration, including the blockchain networks and wallet addresses where you receive payments.</p>"
+      }
+    },
+    "CryptoCurrency": {
+      "base": null,
+      "refs": {
+        "Price$Currency": "<p>The cryptocurrency for payment. Currently only <code>USDC</code> is supported.</p>"
+      }
+    },
+    "Currency": {
+      "base": null,
+      "refs": {
+        "GetRevenueStatisticsRequest$Currency": "<p>The currency for the revenue amounts in the response.</p>",
+        "GetRevenueStatisticsSummaryRequest$Currency": "<p>The currency for the revenue amounts in the response. Currently only <code>USDC</code> is supported.</p>",
+        "GetRevenueStatisticsTimeSeriesRequest$Currency": "<p>The currency for the amounts in the response.</p>",
+        "ListSettlementRecordsRequest$Currency": "<p>The currency for the amounts in the response.</p>",
+        "RevenueBreakdown$Currency": "<p>The currency of the revenue amounts.</p>",
+        "SettlementRecord$Currency": "<p>The currency of the payment amount.</p>"
+      }
+    },
+    "CurrencyMode": {
+      "base": null,
+      "refs": {
+        "MonetizationConfig$CurrencyMode": "<p>Specifies whether the configuration uses real or test currency. Set to <code>REAL</code> to settle payments in USDC on production blockchain networks (Base, Solana). Set to <code>TEST</code> to settle on testnet networks (Base Sepolia, Solana Devnet) with tokens that have no monetary value. If not specified, defaults to <code>REAL</code>.</p>"
+      }
+    },
     "CustomHTTPHeader": {
       "base": "<p>A custom header for custom request and response handling. This is used in <a>CustomResponse</a> and <a>CustomRequestHandling</a>.</p>",
       "refs": {
@@ -547,6 +586,18 @@
       "base": "<p>The response body to use in a custom response to a web request. This is referenced by key from <a>CustomResponse</a> <code>CustomResponseBodyKey</code>.</p>",
       "refs": {
         "CustomResponseBodies$value": null
+      }
+    },
+    "DataPointEntry": {
+      "base": "<p>A single data point in a revenue time series, representing aggregated monetization metrics for a specific time interval.</p>",
+      "refs": {
+        "DataPointsList$member": null
+      }
+    },
+    "DataPointsList": {
+      "base": null,
+      "refs": {
+        "GetRevenueStatisticsTimeSeriesResponse$DataPoints": "<p>The list of time series data points.</p>"
       }
     },
     "DataProtection": {
@@ -984,12 +1035,25 @@
       "base": null,
       "refs": {
         "BotStatistics$BotName": "<p>The name of the bot. For example, <code>gptbot</code> or <code>googlebot</code>.</p>",
+        "DataPointEntry$Category": "<p>The bot category for this data point, when grouped by category.</p>",
+        "DataPointEntry$Intent": "<p>The intent classification for this data point, when grouped by intent.</p>",
+        "DataPointEntry$GroupByValue": "<p>The group-by dimension value for this data point.</p>",
         "FilterSource$BotCategory": "<p>The bot category that was used to filter the results. For example, <code>ai</code> or <code>search_engine</code>.</p>",
         "FilterSource$BotOrganization": "<p>The bot organization that was used to filter the results. For example, <code>OpenAI</code> or <code>Google</code>.</p>",
         "FilterSource$BotName": "<p>The bot name that was used to filter the results. For example, <code>gptbot</code> or <code>googlebot</code>.</p>",
         "GetTopPathStatisticsByTrafficRequest$BotCategory": "<p>Filters the results to include only traffic from bots in the specified category. For example, you can filter by <code>ai</code> to see only AI crawler traffic, or <code>search_engine</code> to see only search engine bot traffic. When you apply this filter, the <code>Source</code> field is populated in the response.</p>",
         "GetTopPathStatisticsByTrafficRequest$BotOrganization": "<p>Filters the results to include only traffic from bots belonging to the specified organization. For example, you can filter by <code>openai</code> or <code>google</code>. When you apply this filter, the <code>Source</code> field is populated in the response.</p>",
-        "GetTopPathStatisticsByTrafficRequest$BotName": "<p>Filters the results to include only traffic from the specified bot. For example, you can filter by <code>gptbot</code> or <code>googlebot</code>. When you apply this filter, the <code>Source</code> field is populated in the response.</p>"
+        "GetTopPathStatisticsByTrafficRequest$BotName": "<p>Filters the results to include only traffic from the specified bot. For example, you can filter by <code>gptbot</code> or <code>googlebot</code>. When you apply this filter, the <code>Source</code> field is populated in the response.</p>",
+        "SettlementRecord$SourceName": "<p>The name of the AI bot that made the payment.</p>",
+        "SettlementRecord$Organization": "<p>The organization associated with the AI bot.</p>",
+        "SettlementRecord$SourceCategory": "<p>The category of the AI bot source.</p>",
+        "SettlementRecord$Intent": "<p>The declared intent of the AI bot request.</p>",
+        "SettlementRecord$ContentPath": "<p>The content path that was accessed.</p>",
+        "SourceStatistics$SourceName": "<p>The name of the AI bot.</p>",
+        "SourceStatistics$SourceCategory": "<p>The category of this AI bot source.</p>",
+        "SourceStatistics$Intent": "<p>The declared intent of the AI bot (for example, summarize, index, or train).</p>",
+        "SourceStatistics$Organization": "<p>The organization associated with the AI bot.</p>",
+        "SourceStatistics$GroupByValue": "<p>The value for the group-by dimension, when grouping is applied.</p>"
       }
     },
     "Filters": {
@@ -1116,6 +1180,30 @@
       "base": null,
       "refs": {}
     },
+    "GetRevenueStatisticsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRevenueStatisticsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRevenueStatisticsSummaryRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRevenueStatisticsSummaryResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRevenueStatisticsTimeSeriesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRevenueStatisticsTimeSeriesResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetRuleGroupRequest": {
       "base": null,
       "refs": {}
@@ -1155,6 +1243,13 @@
     "GetWebACLResponse": {
       "base": null,
       "refs": {}
+    },
+    "GroupByType": {
+      "base": null,
+      "refs": {
+        "GetRevenueStatisticsRequest$GroupBy": "<p>The dimension to group results by: <code>NAME</code>, <code>CATEGORY</code>, <code>INTENT</code>, <code>ORGANIZATION</code>, or <code>WEBACL</code>. Required when <code>StatisticType</code> is <code>TOP_SOURCES_BY_REVENUE</code>. Not required for <code>TOP_PATHS_BY_REVENUE</code>, where results are grouped by content path. If <code>StatisticType</code> is <code>TOP_SOURCES_BY_REVENUE</code> and <code>GroupBy</code> is omitted, the request is rejected with a <code>WAFInvalidParameterException</code>.</p>",
+        "GetRevenueStatisticsTimeSeriesRequest$GroupBy": "<p>The dimension to group results by.</p>"
+      }
     },
     "HTTPHeader": {
       "base": "<p>Part of the response from <a>GetSampledRequests</a>. This is a complex type that appears as <code>Headers</code> in the response syntax. <code>HTTPHeader</code> contains the names and values of all of the headers that appear in one of the web requests. </p>",
@@ -1295,6 +1390,12 @@
       "base": null,
       "refs": {
         "AWSManagedRulesBotControlRuleSet$InspectionLevel": "<p>The inspection level to use for the Bot Control rule group. The common level is the least expensive. The targeted level includes all common level rules and adds rules with more advanced inspection criteria. For details, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/aws-managed-rule-groups-bot.html\">WAF Bot Control rule group</a> in the <i>WAF Developer Guide</i>.</p>"
+      }
+    },
+    "IntervalType": {
+      "base": null,
+      "refs": {
+        "GetRevenueStatisticsTimeSeriesRequest$Interval": "<p>The time interval for aggregating data points: <code>MINUTELY</code>, <code>FIVE_MINUTELY</code>, <code>HOURLY</code>, or <code>DAILY</code>.</p>"
       }
     },
     "JA3Fingerprint": {
@@ -1496,6 +1597,14 @@
       "base": null,
       "refs": {}
     },
+    "ListSettlementRecordsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSettlementRecordsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListTagsForResourceRequest": {
       "base": null,
       "refs": {}
@@ -1688,6 +1797,12 @@
         "Headers$MatchScope": "<p>The parts of the headers to match with the rule inspection criteria. If you specify <code>ALL</code>, WAF inspects both keys and values. </p> <p> <code>All</code> does not require a match to be found in the keys and a match to be found in the values. It requires a match to be found in the keys or the values or both. To require a match in the keys and in the values, use a logical <code>AND</code> statement to combine two match rules, one that inspects the keys and another that inspects the values. </p>"
       }
     },
+    "MaxDataPoints": {
+      "base": null,
+      "refs": {
+        "GetRevenueStatisticsTimeSeriesRequest$Limit": "<p>The maximum number of data points to return. Minimum: 1. Maximum: 10000.</p>"
+      }
+    },
     "Method": {
       "base": "<p>Inspect the HTTP method of the web request. The method indicates the type of operation that the request is asking the origin to perform. </p> <p>This is used in the <a>FieldToMatch</a> specification for some web request component types. </p> <p>JSON specification: <code>\"Method\": {}</code> </p>",
       "refs": {
@@ -1707,9 +1822,75 @@
         "GetMobileSdkReleaseResponse$MobileSdkRelease": "<p>Information for a specified SDK release, including release notes and tags.</p>"
       }
     },
+    "MonetizationAmountValue": {
+      "base": null,
+      "refs": {
+        "DataPointEntry$TotalAmount": "<p>The total revenue amount during this interval in the specified currency.</p>",
+        "RevenueBreakdown$TotalAmount": "<p>The total revenue amount in the specified currency.</p>",
+        "RevenueBreakdown$VerifiedAmount": "<p>The revenue amount from verified AI bots.</p>",
+        "RevenueBreakdown$UnverifiedAmount": "<p>The revenue amount from unverified AI bots.</p>",
+        "RevenuePathStatistics$Amount": "<p>The total revenue amount from this path in the specified currency.</p>",
+        "SettlementRecord$Amount": "<p>The payment amount in the specified currency.</p>",
+        "SourceStatistics$Amount": "<p>The total revenue amount from this source in the specified currency.</p>"
+      }
+    },
+    "MonetizationConfig": {
+      "base": "<p>The monetization configuration for a web ACL or rule group. Specifies the cryptocurrency payment networks and currency mode for AI bot monetization. You must provide this configuration when any rule in the web ACL or rule group uses the <code>Monetize</code> action.</p>",
+      "refs": {
+        "CreateRuleGroupRequest$MonetizationConfig": "<p>The monetization configuration for the rule group. Provide this when any rule in the rule group uses the <code>Monetize</code> action.</p>",
+        "CreateWebACLRequest$MonetizationConfig": "<p>The monetization configuration for the web ACL. Provide this when any rule in the web ACL uses the <code>Monetize</code> action.</p>",
+        "RuleGroup$MonetizationConfig": "<p>The monetization configuration for the rule group. Required when any rule in the rule group uses the <code>Monetize</code> action. When a rule group with a <code>MonetizationConfig</code> is used in a web ACL, the rule group's configuration applies to rules within that group unless overridden at the web ACL level.</p>",
+        "UpdateRuleGroupRequest$MonetizationConfig": "<p>The monetization configuration for the rule group. Provide this when any rule in the rule group uses the <code>Monetize</code> action.</p>",
+        "UpdateWebACLRequest$MonetizationConfig": "<p>The monetization configuration for the web ACL. Provide this when any rule in the web ACL uses the <code>Monetize</code> action.</p>",
+        "WebACL$MonetizationConfig": "<p>The monetization configuration for the web ACL. Required when any rule in the web ACL uses the <code>Monetize</code> action. Specifies the cryptocurrency payment networks and currency mode for AI bot monetization.</p>"
+      }
+    },
+    "MonetizationFilter": {
+      "base": "<p>A filter for narrowing monetization statistics and settlement record results. Specify a filter name and one or more values to match.</p> <p>Filter behavior:</p> <ul> <li> <p>Multiple values within one filter: OR (match any)</p> </li> <li> <p>Multiple filters: AND (all must match)</p> </li> <li> <p>No duplicate filter names allowed (rejected with error)</p> </li> <li> <p>Duplicate values within a filter are silently deduplicated</p> </li> <li> <p>If no <code>CurrencyMode</code> filter is specified, defaults to <code>REAL</code> </p> </li> </ul>",
+      "refs": {
+        "MonetizationFilterList$member": null
+      }
+    },
+    "MonetizationFilterList": {
+      "base": null,
+      "refs": {
+        "GetRevenueStatisticsRequest$Filters": "<p>Optional filters to narrow the results.</p>",
+        "GetRevenueStatisticsSummaryRequest$Filters": "<p>Optional filters to narrow the results. You can filter by source name, category, organization, intent, verified status, content path, web ACL ARN, or currency mode.</p>",
+        "GetRevenueStatisticsTimeSeriesRequest$Filters": "<p>Optional filters to narrow the results.</p>",
+        "ListSettlementRecordsRequest$Filters": "<p>Optional filters to narrow the results. You can filter by payer address, status, source name, network, or other settlement fields.</p>"
+      }
+    },
+    "MonetizationFilterName": {
+      "base": null,
+      "refs": {
+        "MonetizationFilter$Name": "<p>The filter name. Format: Key is a string, Value is a list of strings.</p> <p>Enum-restricted (invalid values rejected):</p> <ul> <li> <p> <code>CurrencyMode</code>: <code>REAL</code>, <code>TEST</code> </p> </li> <li> <p> <code>ChainName</code>: <code>BASE</code>, <code>SOLANA</code>, <code>BASE_SEPOLIA</code>, <code>SOLANA_DEVNET</code> </p> </li> <li> <p> <code>SettlementStatus</code>: <code>SETTLED</code>, <code>PENDING</code>, <code>FAILED</code>, <code>SERVICE_ERROR</code>, <code>SKIPPED_ORIGIN_ERROR</code>, <code>DUPLICATE</code> </p> </li> <li> <p> <code>HttpSourceName</code>: <code>CF</code>, <code>ALB</code>, <code>APIGW</code>, <code>APPRUNNER</code>, <code>COGNITO</code>, <code>VERIFIED_ACCESS</code> </p> </li> </ul> <p>ARN-validated:</p> <ul> <li> <p> <code>WebACLArn</code>: valid WAFv2 web ACL ARN</p> </li> </ul> <p>Free-text (any string up to 256 chars):</p> <ul> <li> <p> <code>SourceName</code>: The name of the bot. Populated from Bot Control verified bot labels.</p> </li> <li> <p> <code>SourceCategory</code>: The category classification of the bot. From Bot Control categorization.</p> </li> <li> <p> <code>Intent</code>: The declared intent of the bot request.</p> </li> <li> <p> <code>Organization</code>: The organization operating the bot.</p> </li> <li> <p> <code>UriPathPrefix</code>: The URI path of the request that was monetized.</p> </li> <li> <p> <code>RequestId</code>: The WAF request ID associated with the transaction. Matches the requestId in WAF logs. Pattern: <code>^[a-zA-Z0-9:._\\-=+/]+$</code> </p> </li> <li> <p> <code>TransactionId</code>: The blockchain transaction identifier. Pattern: <code>^[a-zA-Z0-9:._\\-=+/]+$</code> </p> </li> <li> <p> <code>TerminatingRuleName</code>: The name of the WAF rule that triggered the Monetize action.</p> </li> <li> <p> <code>PayerAddress</code>: The blockchain wallet address of the paying client. Pattern: <code>^[a-zA-Z0-9:._\\-=+/]+$</code> </p> </li> <li> <p> <code>HttpSourceId</code>: The identifier of the Amazon Web Services resource associated with the web ACL (for example, CloudFront distribution ID).</p> </li> </ul>"
+      }
+    },
+    "MonetizationFilterValue": {
+      "base": null,
+      "refs": {
+        "MonetizationFilterValueList$member": null
+      }
+    },
+    "MonetizationFilterValueList": {
+      "base": null,
+      "refs": {
+        "MonetizationFilter$Values": "<p>The values to filter on. Specify as a list of strings. Results match any of the specified values (OR logic). Duplicate values are silently deduplicated. Maximum: 20 values per filter.</p>"
+      }
+    },
+    "MonetizeAction": {
+      "base": "<p>Specifies the monetize action settings for a rule. When WAF applies this action, it returns an HTTP 402 Payment Required response containing pricing information that the requesting client uses to complete payment and gain access to the resource. This is a terminating action-if the client does not complete the 402 payment flow, the request is blocked. This action is available only for web ACLs associated with Amazon CloudFront distributions. You must configure a <code>MonetizationConfig</code> on the web ACL or rule group before adding rules that use this action. You cannot use the Monetize action for rate-based rules.</p>",
+      "refs": {
+        "RuleAction$Monetize": "<p>Instructs WAF to return an HTTP 402 Payment Required response with a price manifest. The requesting client can complete payment and resubmit the request to gain access. This is a terminating action-requests that do not complete payment are blocked. This action is available only for web ACLs associated with Amazon CloudFront distributions and requires a <code>MonetizationConfig</code> on the web ACL.</p>"
+      }
+    },
     "NextMarker": {
       "base": null,
       "refs": {
+        "GetRevenueStatisticsRequest$NextMarker": "<p>When you get a paginated response, this marker indicates that additional results are available. Use it in a subsequent request to retrieve the next page of results.</p>",
+        "GetRevenueStatisticsResponse$NextMarker": "<p>When you get a paginated response, this marker indicates that additional results are available.</p>",
+        "GetRevenueStatisticsTimeSeriesRequest$NextMarker": "<p>When you get a paginated response, this marker indicates that additional results are available.</p>",
+        "GetRevenueStatisticsTimeSeriesResponse$NextMarker": "<p>When you get a paginated response, this marker indicates that additional results are available.</p>",
         "GetTopPathStatisticsByTrafficRequest$NextMarker": "<p>When you request a list of objects with a <code>Limit</code> setting, if the number of objects that are still available for retrieval exceeds the limit, WAF returns a <code>NextMarker</code> value in the response. To retrieve the next batch of objects, provide the marker from the prior call in your next request.</p>",
         "GetTopPathStatisticsByTrafficResponse$NextMarker": "<p>When you request a list of objects with a <code>Limit</code> setting, if the number of objects that are still available for retrieval exceeds the limit, WAF returns a <code>NextMarker</code> value in the response. To retrieve the next batch of objects, provide the marker from the prior call in your next request.</p>",
         "ListAPIKeysRequest$NextMarker": "<p>When you request a list of objects with a <code>Limit</code> setting, if the number of objects that are still available for retrieval exceeds the limit, WAF returns a <code>NextMarker</code> value in the response. To retrieve the next batch of objects, provide the marker from the prior call in your next request.</p>",
@@ -1730,6 +1911,8 @@
         "ListRegexPatternSetsResponse$NextMarker": "<p>When you request a list of objects with a <code>Limit</code> setting, if the number of objects that are still available for retrieval exceeds the limit, WAF returns a <code>NextMarker</code> value in the response. To retrieve the next batch of objects, provide the marker from the prior call in your next request.</p>",
         "ListRuleGroupsRequest$NextMarker": "<p>When you request a list of objects with a <code>Limit</code> setting, if the number of objects that are still available for retrieval exceeds the limit, WAF returns a <code>NextMarker</code> value in the response. To retrieve the next batch of objects, provide the marker from the prior call in your next request.</p>",
         "ListRuleGroupsResponse$NextMarker": "<p>When you request a list of objects with a <code>Limit</code> setting, if the number of objects that are still available for retrieval exceeds the limit, WAF returns a <code>NextMarker</code> value in the response. To retrieve the next batch of objects, provide the marker from the prior call in your next request.</p>",
+        "ListSettlementRecordsRequest$NextMarker": "<p>When you get a paginated response, this marker indicates that additional results are available.</p>",
+        "ListSettlementRecordsResponse$NextMarker": "<p>When you get a paginated response, this marker indicates that additional results are available.</p>",
         "ListTagsForResourceRequest$NextMarker": "<p>When you request a list of objects with a <code>Limit</code> setting, if the number of objects that are still available for retrieval exceeds the limit, WAF returns a <code>NextMarker</code> value in the response. To retrieve the next batch of objects, provide the marker from the prior call in your next request.</p>",
         "ListTagsForResourceResponse$NextMarker": "<p>When you request a list of objects with a <code>Limit</code> setting, if the number of objects that are still available for retrieval exceeds the limit, WAF returns a <code>NextMarker</code> value in the response. To retrieve the next batch of objects, provide the marker from the prior call in your next request.</p>",
         "ListWebACLsRequest$NextMarker": "<p>When you request a list of objects with a <code>Limit</code> setting, if the number of objects that are still available for retrieval exceeds the limit, WAF returns a <code>NextMarker</code> value in the response. To retrieve the next batch of objects, provide the marker from the prior call in your next request.</p>",
@@ -1837,6 +2020,7 @@
     "PathStatisticsLimit": {
       "base": null,
       "refs": {
+        "GetRevenueStatisticsRequest$Limit": "<p>The maximum number of results to return.</p>",
         "GetTopPathStatisticsByTrafficRequest$Limit": "<p>The maximum number of path statistics to return. Valid values are 1 to 100.</p>"
       }
     },
@@ -1850,7 +2034,8 @@
     "PathString": {
       "base": null,
       "refs": {
-        "PathStatistics$Path": "<p>The URI path. For example, <code>/api/</code> or <code>/api/v1/users</code>.</p>"
+        "PathStatistics$Path": "<p>The URI path. For example, <code>/api/</code> or <code>/api/v1/users</code>.</p>",
+        "RevenuePathStatistics$Path": "<p>The URI path.</p>"
       }
     },
     "PayloadType": {
@@ -1861,11 +2046,25 @@
         "RequestInspectionACFP$PayloadType": "<p>The payload type for your account creation endpoint, either JSON or form encoded.</p>"
       }
     },
+    "PaymentNetwork": {
+      "base": "<p>A blockchain payment network configuration for receiving AI bot monetization payments. Specifies the blockchain chain, your wallet address on that chain, and the price per request.</p>",
+      "refs": {
+        "PaymentNetworks$member": null
+      }
+    },
+    "PaymentNetworks": {
+      "base": null,
+      "refs": {
+        "CryptoConfig$PaymentNetworks": "<p>The blockchain payment networks configured to receive payments. You can specify 1 to 2 networks. All networks must be in the same environment-either all production networks (Base, Solana) or all test networks (Base Sepolia, Solana Devnet).</p>"
+      }
+    },
     "PercentageValue": {
       "base": null,
       "refs": {
         "BotStatistics$Percentage": "<p>The percentage of total requests to the associated path that came from this bot.</p>",
-        "PathStatistics$Percentage": "<p>The percentage of total requests that were made to this path.</p>"
+        "PathStatistics$Percentage": "<p>The percentage of total requests that were made to this path.</p>",
+        "RevenuePathStatistics$Percentage": "<p>The percentage of total revenue from this path.</p>",
+        "SourceStatistics$Percentage": "<p>The percentage of total revenue from this source.</p>"
       }
     },
     "PhoneNumberField": {
@@ -1905,6 +2104,30 @@
       "base": null,
       "refs": {
         "ByteMatchStatement$PositionalConstraint": "<p>The area within the portion of the web request that you want WAF to search for <code>SearchString</code>. Valid values include the following:</p> <p> <b>CONTAINS</b> </p> <p>The specified part of the web request must include the value of <code>SearchString</code>, but the location doesn't matter.</p> <p> <b>CONTAINS_WORD</b> </p> <p>The specified part of the web request must include the value of <code>SearchString</code>, and <code>SearchString</code> must contain only alphanumeric characters or underscore (A-Z, a-z, 0-9, or _). In addition, <code>SearchString</code> must be a word, which means that both of the following are true:</p> <ul> <li> <p> <code>SearchString</code> is at the beginning of the specified part of the web request or is preceded by a character other than an alphanumeric character or underscore (_). Examples include the value of a header and <code>;BadBot</code>.</p> </li> <li> <p> <code>SearchString</code> is at the end of the specified part of the web request or is followed by a character other than an alphanumeric character or underscore (_), for example, <code>BadBot;</code> and <code>-BadBot;</code>.</p> </li> </ul> <p> <b>EXACTLY</b> </p> <p>The value of the specified part of the web request must exactly match the value of <code>SearchString</code>.</p> <p> <b>STARTS_WITH</b> </p> <p>The value of <code>SearchString</code> must appear at the beginning of the specified part of the web request.</p> <p> <b>ENDS_WITH</b> </p> <p>The value of <code>SearchString</code> must appear at the end of the specified part of the web request.</p>"
+      }
+    },
+    "Price": {
+      "base": "<p>The price per request for a payment network, specifying the amount and cryptocurrency.</p>",
+      "refs": {
+        "Prices$member": null
+      }
+    },
+    "PriceAmount": {
+      "base": null,
+      "refs": {
+        "Price$Amount": "<p>The price per request as a decimal string in the specified currency. Minimum: 0.001. Maximum: 999999999.999. Supports up to 3 decimal places.</p>"
+      }
+    },
+    "PriceMultiplier": {
+      "base": null,
+      "refs": {
+        "MonetizeAction$PriceMultiplier": "<p>An integer multiplier applied to the base price defined in the web ACL's <code>MonetizationConfig</code>. The effective price for the request is the base price multiplied by this value. Specify as a string. Valid values: 1 to 100.</p>"
+      }
+    },
+    "Prices": {
+      "base": null,
+      "refs": {
+        "PaymentNetwork$Prices": "<p>The price configuration for this payment network. Currently supports a single price entry in USDC.</p>"
       }
     },
     "PricingPlanFeatureName": {
@@ -1971,6 +2194,18 @@
       "base": "<p>Inspect the query string of the web request. This is the part of a URL that appears after a <code>?</code> character, if any.</p> <p>This is used in the <a>FieldToMatch</a> specification for some web request component types. </p> <p>JSON specification: <code>\"QueryString\": {}</code> </p>",
       "refs": {
         "FieldToMatch$QueryString": "<p>Inspect the query string. This is the part of a URL that appears after a <code>?</code> character, if any.</p>"
+      }
+    },
+    "RankingSortBy": {
+      "base": null,
+      "refs": {
+        "GetRevenueStatisticsRequest$SortBy": "<p>The field to sort results by: <code>REVENUE</code>, <code>PERCENTAGE</code>, or <code>NAME</code>.</p>"
+      }
+    },
+    "RankingStatisticType": {
+      "base": null,
+      "refs": {
+        "GetRevenueStatisticsRequest$StatisticType": "<p> <code>TOP_SOURCES_BY_REVENUE</code> ranks revenue from AI bot traffic, grouped by the dimension you specify in the <code>GroupBy</code> parameter (<code>NAME</code>, <code>CATEGORY</code>, <code>INTENT</code>, <code>ORGANIZATION</code>, or <code>WEBACL</code>); <code>GroupBy</code> is required for this statistic type. <code>TOP_PATHS_BY_REVENUE</code> ranks revenue by path.</p>"
       }
     },
     "RateBasedStatement": {
@@ -2181,8 +2416,14 @@
       "base": null,
       "refs": {
         "BotStatistics$RequestCount": "<p>The number of requests from this bot to the associated path within the specified time window.</p>",
+        "DataPointEntry$MonetizeServedCount": "<p>The number of HTTP 402 Payment Required responses served during this interval.</p>",
+        "DataPointEntry$SettledCount": "<p>The number of successfully settled payments during this interval.</p>",
         "GetTopPathStatisticsByTrafficResponse$TotalRequestCount": "<p>The total number of requests that match the query criteria within the specified time window.</p>",
-        "PathStatistics$RequestCount": "<p>The number of requests to this path within the specified time window.</p>"
+        "PathStatistics$RequestCount": "<p>The number of requests to this path within the specified time window.</p>",
+        "RevenueBreakdown$TotalSettled": "<p>The total number of successfully settled payment transactions.</p>",
+        "RevenueBreakdown$TotalMonetizeServed": "<p>The total number of HTTP 402 Payment Required responses served to AI agents.</p>",
+        "RevenuePathStatistics$RequestCount": "<p>The number of monetized requests to this path.</p>",
+        "SourceStatistics$RequestCount": "<p>The number of monetized requests from this source.</p>"
       }
     },
     "RequestInspection": {
@@ -2207,18 +2448,18 @@
       "base": null,
       "refs": {
         "AssociateWebACLRequest$WebACLArn": "<p>The Amazon Resource Name (ARN) of the web ACL that you want to associate with the resource.</p>",
-        "AssociateWebACLRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource to associate with the web ACL. </p> <p>The ARN must be in one of the following formats:</p> <ul> <li> <p>For an Application Load Balancer: <code>arn:<i>partition</i>:elasticloadbalancing:<i>region</i>:<i>account-id</i>:loadbalancer/app/<i>load-balancer-name</i>/<i>load-balancer-id</i> </code> </p> </li> <li> <p>For an Amazon API Gateway REST API: <code>arn:<i>partition</i>:apigateway:<i>region</i>::/restapis/<i>api-id</i>/stages/<i>stage-name</i> </code> </p> </li> <li> <p>For an AppSync GraphQL API: <code>arn:<i>partition</i>:appsync:<i>region</i>:<i>account-id</i>:apis/<i>GraphQLApiId</i> </code> </p> </li> <li> <p>For an Amazon Cognito user pool: <code>arn:<i>partition</i>:cognito-idp:<i>region</i>:<i>account-id</i>:userpool/<i>user-pool-id</i> </code> </p> </li> <li> <p>For an App Runner service: <code>arn:<i>partition</i>:apprunner:<i>region</i>:<i>account-id</i>:service/<i>apprunner-service-name</i>/<i>apprunner-service-id</i> </code> </p> </li> <li> <p>For an Amazon Web Services Verified Access instance: <code>arn:<i>partition</i>:ec2:<i>region</i>:<i>account-id</i>:verified-access-instance/<i>instance-id</i> </code> </p> </li> <li> <p>For an Amplify application: <code>arn:<i>partition</i>:amplify:<i>region</i>:<i>account-id</i>:apps/<i>app-id</i> </code> </p> </li> </ul>",
+        "AssociateWebACLRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource to associate with the web ACL. </p> <p>The ARN must be in one of the following formats:</p> <ul> <li> <p>For an Application Load Balancer: <code>arn:<i>partition</i>:elasticloadbalancing:<i>region</i>:<i>account-id</i>:loadbalancer/app/<i>load-balancer-name</i>/<i>load-balancer-id</i> </code> </p> </li> <li> <p>For an Amazon API Gateway REST API: <code>arn:<i>partition</i>:apigateway:<i>region</i>::/restapis/<i>api-id</i>/stages/<i>stage-name</i> </code> </p> </li> <li> <p>For an AppSync GraphQL API: <code>arn:<i>partition</i>:appsync:<i>region</i>:<i>account-id</i>:apis/<i>GraphQLApiId</i> </code> </p> </li> <li> <p>For an Amazon Cognito user pool: <code>arn:<i>partition</i>:cognito-idp:<i>region</i>:<i>account-id</i>:userpool/<i>user-pool-id</i> </code> </p> </li> <li> <p>For an App Runner service: <code>arn:<i>partition</i>:apprunner:<i>region</i>:<i>account-id</i>:service/<i>apprunner-service-name</i>/<i>apprunner-service-id</i> </code> </p> </li> <li> <p>For an Amazon Web Services Verified Access instance: <code>arn:<i>partition</i>:ec2:<i>region</i>:<i>account-id</i>:verified-access-instance/<i>instance-id</i> </code> </p> </li> <li> <p>For an Amplify application: <code>arn:<i>partition</i>:amplify:<i>region</i>:<i>account-id</i>:apps/<i>app-id</i> </code> </p> </li> <li> <p>For an Amazon Bedrock AgentCore Gateway: <code>arn:<i>partition</i>:bedrock-agentcore:<i>region</i>:<i>account-id</i>:gateway/<i>gateway-id</i> </code> </p> </li> </ul>",
         "DeleteFirewallManagerRuleGroupsRequest$WebACLArn": "<p>The Amazon Resource Name (ARN) of the web ACL.</p>",
         "DeleteLoggingConfigurationRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the web ACL from which you want to delete the <a>LoggingConfiguration</a>.</p>",
         "DeletePermissionPolicyRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the rule group from which you want to delete the policy.</p> <p>You must be the owner of the rule group to perform this operation.</p>",
         "DescribeManagedRuleGroupResponse$SnsTopicArn": "<p>The Amazon resource name (ARN) of the Amazon Simple Notification Service SNS topic that's used to provide notification of changes to the managed rule group. You can subscribe to the SNS topic to receive notifications when the managed rule group is modified, such as for new versions and for version expiration. For more information, see the <a href=\"https://docs.aws.amazon.com/sns/latest/dg/welcome.html\">Amazon Simple Notification Service Developer Guide</a>.</p>",
-        "DisassociateWebACLRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource to disassociate from the web ACL. </p> <p>The ARN must be in one of the following formats:</p> <ul> <li> <p>For an Application Load Balancer: <code>arn:<i>partition</i>:elasticloadbalancing:<i>region</i>:<i>account-id</i>:loadbalancer/app/<i>load-balancer-name</i>/<i>load-balancer-id</i> </code> </p> </li> <li> <p>For an Amazon API Gateway REST API: <code>arn:<i>partition</i>:apigateway:<i>region</i>::/restapis/<i>api-id</i>/stages/<i>stage-name</i> </code> </p> </li> <li> <p>For an AppSync GraphQL API: <code>arn:<i>partition</i>:appsync:<i>region</i>:<i>account-id</i>:apis/<i>GraphQLApiId</i> </code> </p> </li> <li> <p>For an Amazon Cognito user pool: <code>arn:<i>partition</i>:cognito-idp:<i>region</i>:<i>account-id</i>:userpool/<i>user-pool-id</i> </code> </p> </li> <li> <p>For an App Runner service: <code>arn:<i>partition</i>:apprunner:<i>region</i>:<i>account-id</i>:service/<i>apprunner-service-name</i>/<i>apprunner-service-id</i> </code> </p> </li> <li> <p>For an Amazon Web Services Verified Access instance: <code>arn:<i>partition</i>:ec2:<i>region</i>:<i>account-id</i>:verified-access-instance/<i>instance-id</i> </code> </p> </li> <li> <p>For an Amplify application: <code>arn:<i>partition</i>:amplify:<i>region</i>:<i>account-id</i>:apps/<i>app-id</i> </code> </p> </li> </ul>",
+        "DisassociateWebACLRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource to disassociate from the web ACL. </p> <p>The ARN must be in one of the following formats:</p> <ul> <li> <p>For an Application Load Balancer: <code>arn:<i>partition</i>:elasticloadbalancing:<i>region</i>:<i>account-id</i>:loadbalancer/app/<i>load-balancer-name</i>/<i>load-balancer-id</i> </code> </p> </li> <li> <p>For an Amazon API Gateway REST API: <code>arn:<i>partition</i>:apigateway:<i>region</i>::/restapis/<i>api-id</i>/stages/<i>stage-name</i> </code> </p> </li> <li> <p>For an AppSync GraphQL API: <code>arn:<i>partition</i>:appsync:<i>region</i>:<i>account-id</i>:apis/<i>GraphQLApiId</i> </code> </p> </li> <li> <p>For an Amazon Cognito user pool: <code>arn:<i>partition</i>:cognito-idp:<i>region</i>:<i>account-id</i>:userpool/<i>user-pool-id</i> </code> </p> </li> <li> <p>For an App Runner service: <code>arn:<i>partition</i>:apprunner:<i>region</i>:<i>account-id</i>:service/<i>apprunner-service-name</i>/<i>apprunner-service-id</i> </code> </p> </li> <li> <p>For an Amazon Web Services Verified Access instance: <code>arn:<i>partition</i>:ec2:<i>region</i>:<i>account-id</i>:verified-access-instance/<i>instance-id</i> </code> </p> </li> <li> <p>For an Amplify application: <code>arn:<i>partition</i>:amplify:<i>region</i>:<i>account-id</i>:apps/<i>app-id</i> </code> </p> </li> <li> <p>For an Amazon Bedrock AgentCore Gateway: <code>arn:<i>partition</i>:bedrock-agentcore:<i>region</i>:<i>account-id</i>:gateway/<i>gateway-id</i> </code> </p> </li> </ul>",
         "GetLoggingConfigurationRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the web ACL for which you want to get the <a>LoggingConfiguration</a>.</p>",
         "GetPermissionPolicyRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the rule group for which you want to get the policy.</p>",
         "GetRuleGroupRequest$ARN": "<p>The Amazon Resource Name (ARN) of the entity.</p>",
         "GetSampledRequestsRequest$WebAclArn": "<p>The Amazon resource name (ARN) of the <code>WebACL</code> for which you want a sample of requests.</p>",
         "GetTopPathStatisticsByTrafficRequest$WebAclArn": "<p>The Amazon Resource Name (ARN) of the web ACL for which you want to retrieve path statistics.</p>",
-        "GetWebACLForResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource whose web ACL you want to retrieve. </p> <p>The ARN must be in one of the following formats:</p> <ul> <li> <p>For an Application Load Balancer: <code>arn:<i>partition</i>:elasticloadbalancing:<i>region</i>:<i>account-id</i>:loadbalancer/app/<i>load-balancer-name</i>/<i>load-balancer-id</i> </code> </p> </li> <li> <p>For an Amazon API Gateway REST API: <code>arn:<i>partition</i>:apigateway:<i>region</i>::/restapis/<i>api-id</i>/stages/<i>stage-name</i> </code> </p> </li> <li> <p>For an AppSync GraphQL API: <code>arn:<i>partition</i>:appsync:<i>region</i>:<i>account-id</i>:apis/<i>GraphQLApiId</i> </code> </p> </li> <li> <p>For an Amazon Cognito user pool: <code>arn:<i>partition</i>:cognito-idp:<i>region</i>:<i>account-id</i>:userpool/<i>user-pool-id</i> </code> </p> </li> <li> <p>For an App Runner service: <code>arn:<i>partition</i>:apprunner:<i>region</i>:<i>account-id</i>:service/<i>apprunner-service-name</i>/<i>apprunner-service-id</i> </code> </p> </li> <li> <p>For an Amazon Web Services Verified Access instance: <code>arn:<i>partition</i>:ec2:<i>region</i>:<i>account-id</i>:verified-access-instance/<i>instance-id</i> </code> </p> </li> <li> <p>For an Amplify application: <code>arn:<i>partition</i>:amplify:<i>region</i>:<i>account-id</i>:apps/<i>app-id</i> </code> </p> </li> </ul>",
+        "GetWebACLForResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource whose web ACL you want to retrieve. </p> <p>The ARN must be in one of the following formats:</p> <ul> <li> <p>For an Application Load Balancer: <code>arn:<i>partition</i>:elasticloadbalancing:<i>region</i>:<i>account-id</i>:loadbalancer/app/<i>load-balancer-name</i>/<i>load-balancer-id</i> </code> </p> </li> <li> <p>For an Amazon API Gateway REST API: <code>arn:<i>partition</i>:apigateway:<i>region</i>::/restapis/<i>api-id</i>/stages/<i>stage-name</i> </code> </p> </li> <li> <p>For an AppSync GraphQL API: <code>arn:<i>partition</i>:appsync:<i>region</i>:<i>account-id</i>:apis/<i>GraphQLApiId</i> </code> </p> </li> <li> <p>For an Amazon Cognito user pool: <code>arn:<i>partition</i>:cognito-idp:<i>region</i>:<i>account-id</i>:userpool/<i>user-pool-id</i> </code> </p> </li> <li> <p>For an App Runner service: <code>arn:<i>partition</i>:apprunner:<i>region</i>:<i>account-id</i>:service/<i>apprunner-service-name</i>/<i>apprunner-service-id</i> </code> </p> </li> <li> <p>For an Amazon Web Services Verified Access instance: <code>arn:<i>partition</i>:ec2:<i>region</i>:<i>account-id</i>:verified-access-instance/<i>instance-id</i> </code> </p> </li> <li> <p>For an Amplify application: <code>arn:<i>partition</i>:amplify:<i>region</i>:<i>account-id</i>:apps/<i>app-id</i> </code> </p> </li> <li> <p>For an Amazon Bedrock AgentCore Gateway: <code>arn:<i>partition</i>:bedrock-agentcore:<i>region</i>:<i>account-id</i>:gateway/<i>gateway-id</i> </code> </p> </li> </ul>",
         "GetWebACLRequest$ARN": "<p>The Amazon Resource Name (ARN) of the web ACL that you want to retrieve. </p>",
         "IPSet$ARN": "<p>The Amazon Resource Name (ARN) of the entity.</p>",
         "IPSetReferenceStatement$ARN": "<p>The Amazon Resource Name (ARN) of the <a>IPSet</a> that this statement references.</p>",
@@ -2239,6 +2480,7 @@
         "RuleGroup$ARN": "<p>The Amazon Resource Name (ARN) of the entity.</p>",
         "RuleGroupReferenceStatement$ARN": "<p>The Amazon Resource Name (ARN) of the entity.</p>",
         "RuleGroupSummary$ARN": "<p>The Amazon Resource Name (ARN) of the entity.</p>",
+        "SettlementRecord$WebAclArn": "<p>The ARN of the web ACL that processed the request.</p>",
         "TagInfoForResource$ResourceARN": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
         "TagResourceRequest$ResourceARN": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
         "UntagResourceRequest$ResourceARN": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
@@ -2370,6 +2612,24 @@
         "SampledHTTPRequest$ResponseCodeSent": "<p>The response code that was sent for the request.</p>"
       }
     },
+    "RevenueBreakdown": {
+      "base": "<p>A summary of AI bot monetization revenue, including total revenue, revenue by verification tier, and request counts.</p>",
+      "refs": {
+        "GetRevenueStatisticsSummaryResponse$RevenueBreakdown": "<p>The revenue breakdown summary for the specified time window and filters.</p>"
+      }
+    },
+    "RevenuePathStatistics": {
+      "base": "<p>Revenue statistics for a single content path, including the path, revenue amount, and request count.</p>",
+      "refs": {
+        "RevenuePathStatisticsList$member": null
+      }
+    },
+    "RevenuePathStatisticsList": {
+      "base": null,
+      "refs": {
+        "GetRevenueStatisticsResponse$RevenuePathStatistics": "<p>Statistics for top revenue paths. Populated when <code>StatisticType</code> is <code>TOP_PATHS_BY_REVENUE</code>.</p>"
+      }
+    },
     "Rule": {
       "base": "<p>A single rule, which you can use in a <a>WebACL</a> or <a>RuleGroup</a> to identify web requests that you want to manage in some way. Each rule includes one top-level <a>Statement</a> that WAF uses to identify matching web requests, and parameters that govern how WAF handles them. </p>",
       "refs": {
@@ -2494,6 +2754,9 @@
         "GetManagedRuleSetRequest$Scope": "<p>Specifies whether this is for a global resource type, such as a Amazon CloudFront distribution. For an Amplify application, use <code>CLOUDFRONT</code>.</p> <p>To work with CloudFront, you must also specify the Region US East (N. Virginia) as follows: </p> <ul> <li> <p>CLI - Specify the Region when you use the CloudFront scope: <code>--scope=CLOUDFRONT --region=us-east-1</code>. </p> </li> <li> <p>API and SDKs - For all calls, use the Region endpoint us-east-1. </p> </li> </ul>",
         "GetRateBasedStatementManagedKeysRequest$Scope": "<p>Specifies whether this is for a global resource type, such as a Amazon CloudFront distribution. For an Amplify application, use <code>CLOUDFRONT</code>.</p> <p>To work with CloudFront, you must also specify the Region US East (N. Virginia) as follows: </p> <ul> <li> <p>CLI - Specify the Region when you use the CloudFront scope: <code>--scope=CLOUDFRONT --region=us-east-1</code>. </p> </li> <li> <p>API and SDKs - For all calls, use the Region endpoint us-east-1. </p> </li> </ul>",
         "GetRegexPatternSetRequest$Scope": "<p>Specifies whether this is for a global resource type, such as a Amazon CloudFront distribution. For an Amplify application, use <code>CLOUDFRONT</code>.</p> <p>To work with CloudFront, you must also specify the Region US East (N. Virginia) as follows: </p> <ul> <li> <p>CLI - Specify the Region when you use the CloudFront scope: <code>--scope=CLOUDFRONT --region=us-east-1</code>. </p> </li> <li> <p>API and SDKs - For all calls, use the Region endpoint us-east-1. </p> </li> </ul>",
+        "GetRevenueStatisticsRequest$Scope": "<p>Specifies whether this is for a Amazon CloudFront distribution (<code>CLOUDFRONT</code>) or for a regional application (<code>REGIONAL</code>).</p>",
+        "GetRevenueStatisticsSummaryRequest$Scope": "<p>Specifies whether this is for a Amazon CloudFront distribution (<code>CLOUDFRONT</code>) or for a regional application (<code>REGIONAL</code>). AI bot monetization is only available for <code>CLOUDFRONT</code> scope.</p>",
+        "GetRevenueStatisticsTimeSeriesRequest$Scope": "<p>Specifies whether this is for a Amazon CloudFront distribution (<code>CLOUDFRONT</code>) or for a regional application (<code>REGIONAL</code>).</p>",
         "GetRuleGroupRequest$Scope": "<p>Specifies whether this is for a global resource type, such as a Amazon CloudFront distribution. For an Amplify application, use <code>CLOUDFRONT</code>.</p> <p>To work with CloudFront, you must also specify the Region US East (N. Virginia) as follows: </p> <ul> <li> <p>CLI - Specify the Region when you use the CloudFront scope: <code>--scope=CLOUDFRONT --region=us-east-1</code>. </p> </li> <li> <p>API and SDKs - For all calls, use the Region endpoint us-east-1. </p> </li> </ul>",
         "GetSampledRequestsRequest$Scope": "<p>Specifies whether this is for a global resource type, such as a Amazon CloudFront distribution. For an Amplify application, use <code>CLOUDFRONT</code>.</p> <p>To work with CloudFront, you must also specify the Region US East (N. Virginia) as follows: </p> <ul> <li> <p>CLI - Specify the Region when you use the CloudFront scope: <code>--scope=CLOUDFRONT --region=us-east-1</code>. </p> </li> <li> <p>API and SDKs - For all calls, use the Region endpoint us-east-1. </p> </li> </ul>",
         "GetTopPathStatisticsByTrafficRequest$Scope": "<p>Specifies whether the web ACL is for an Amazon Web Services CloudFront distribution or for a regional application. A regional application can be an Application Load Balancer, an AppSync GraphQL API, an Amazon Cognito user pool, an Amazon Web Services App Runner service, or an Amazon Web Services Verified Access instance.</p>",
@@ -2506,6 +2769,7 @@
         "ListManagedRuleSetsRequest$Scope": "<p>Specifies whether this is for a global resource type, such as a Amazon CloudFront distribution. For an Amplify application, use <code>CLOUDFRONT</code>.</p> <p>To work with CloudFront, you must also specify the Region US East (N. Virginia) as follows: </p> <ul> <li> <p>CLI - Specify the Region when you use the CloudFront scope: <code>--scope=CLOUDFRONT --region=us-east-1</code>. </p> </li> <li> <p>API and SDKs - For all calls, use the Region endpoint us-east-1. </p> </li> </ul>",
         "ListRegexPatternSetsRequest$Scope": "<p>Specifies whether this is for a global resource type, such as a Amazon CloudFront distribution. For an Amplify application, use <code>CLOUDFRONT</code>.</p> <p>To work with CloudFront, you must also specify the Region US East (N. Virginia) as follows: </p> <ul> <li> <p>CLI - Specify the Region when you use the CloudFront scope: <code>--scope=CLOUDFRONT --region=us-east-1</code>. </p> </li> <li> <p>API and SDKs - For all calls, use the Region endpoint us-east-1. </p> </li> </ul>",
         "ListRuleGroupsRequest$Scope": "<p>Specifies whether this is for a global resource type, such as a Amazon CloudFront distribution. For an Amplify application, use <code>CLOUDFRONT</code>.</p> <p>To work with CloudFront, you must also specify the Region US East (N. Virginia) as follows: </p> <ul> <li> <p>CLI - Specify the Region when you use the CloudFront scope: <code>--scope=CLOUDFRONT --region=us-east-1</code>. </p> </li> <li> <p>API and SDKs - For all calls, use the Region endpoint us-east-1. </p> </li> </ul>",
+        "ListSettlementRecordsRequest$Scope": "<p>Specifies whether this is for a Amazon CloudFront distribution (<code>CLOUDFRONT</code>) or for a regional application (<code>REGIONAL</code>).</p>",
         "ListWebACLsRequest$Scope": "<p>Specifies whether this is for a global resource type, such as a Amazon CloudFront distribution. For an Amplify application, use <code>CLOUDFRONT</code>.</p> <p>To work with CloudFront, you must also specify the Region US East (N. Virginia) as follows: </p> <ul> <li> <p>CLI - Specify the Region when you use the CloudFront scope: <code>--scope=CLOUDFRONT --region=us-east-1</code>. </p> </li> <li> <p>API and SDKs - For all calls, use the Region endpoint us-east-1. </p> </li> </ul>",
         "PutManagedRuleSetVersionsRequest$Scope": "<p>Specifies whether this is for a global resource type, such as a Amazon CloudFront distribution. For an Amplify application, use <code>CLOUDFRONT</code>.</p> <p>To work with CloudFront, you must also specify the Region US East (N. Virginia) as follows: </p> <ul> <li> <p>CLI - Specify the Region when you use the CloudFront scope: <code>--scope=CLOUDFRONT --region=us-east-1</code>. </p> </li> <li> <p>API and SDKs - For all calls, use the Region endpoint us-east-1. </p> </li> </ul>",
         "UpdateIPSetRequest$Scope": "<p>Specifies whether this is for a global resource type, such as a Amazon CloudFront distribution. For an Amplify application, use <code>CLOUDFRONT</code>.</p> <p>To work with CloudFront, you must also specify the Region US East (N. Virginia) as follows: </p> <ul> <li> <p>CLI - Specify the Region when you use the CloudFront scope: <code>--scope=CLOUDFRONT --region=us-east-1</code>. </p> </li> <li> <p>API and SDKs - For all calls, use the Region endpoint us-east-1. </p> </li> </ul>",
@@ -2532,6 +2796,51 @@
       "refs": {
         "AWSManagedRulesAntiDDoSRuleSet$SensitivityToBlock": "<p>The sensitivity that the rule group rule <code>DDoSRequests</code> uses when matching against the DDoS suspicion labeling on a request. The managed rule group adds the labeling during DDoS events, before the <code>DDoSRequests</code> rule runs. </p> <p>The higher the sensitivity, the more levels of labeling that the rule matches: </p> <ul> <li> <p>Low sensitivity is less sensitive, causing the rule to match only on the most likely participants in an attack, which are the requests with the high suspicion label <code>awswaf:managed:aws:anti-ddos:high-suspicion-ddos-request</code>.</p> </li> <li> <p>Medium sensitivity causes the rule to match on the medium and high suspicion labels.</p> </li> <li> <p>High sensitivity causes the rule to match on all of the suspicion labels: low, medium, and high.</p> </li> </ul> <p>Default: <code>LOW</code> </p>",
         "ClientSideAction$Sensitivity": "<p>The sensitivity that the rule group rule <code>ChallengeDDoSRequests</code> uses when matching against the DDoS suspicion labeling on a request. The managed rule group adds the labeling during DDoS events, before the <code>ChallengeDDoSRequests</code> rule runs. </p> <p>The higher the sensitivity, the more levels of labeling that the rule matches: </p> <ul> <li> <p>Low sensitivity is less sensitive, causing the rule to match only on the most likely participants in an attack, which are the requests with the high suspicion label <code>awswaf:managed:aws:anti-ddos:high-suspicion-ddos-request</code>.</p> </li> <li> <p>Medium sensitivity causes the rule to match on the medium and high suspicion labels.</p> </li> <li> <p>High sensitivity causes the rule to match on all of the suspicion labels: low, medium, and high.</p> </li> </ul> <p>Default: <code>HIGH</code> </p>"
+      }
+    },
+    "SettlementFilterString": {
+      "base": null,
+      "refs": {
+        "SettlementRecord$PayerAddress": "<p>The blockchain wallet address of the paying AI agent.</p>",
+        "SettlementRecord$WalletAddress": "<p>Your receiving wallet address.</p>",
+        "SettlementRecord$Network": "<p>The blockchain network on which the settlement occurred.</p>",
+        "SettlementRecord$RequestId": "<p>The WAF request ID associated with this settlement.</p>"
+      }
+    },
+    "SettlementIdString": {
+      "base": null,
+      "refs": {
+        "SettlementRecord$TransactionId": "<p>The blockchain transaction identifier. You can use this to verify the transaction on a blockchain explorer.</p>"
+      }
+    },
+    "SettlementRecord": {
+      "base": "<p>A single settlement transaction record for AI bot monetization. Contains details about the payment including timestamp, amount, status, and the parties involved.</p>",
+      "refs": {
+        "SettlementRecordList$member": null
+      }
+    },
+    "SettlementRecordLimit": {
+      "base": null,
+      "refs": {
+        "ListSettlementRecordsRequest$Limit": "<p>The maximum number of settlement records to return. Minimum: 1. Maximum: 100.</p>"
+      }
+    },
+    "SettlementRecordList": {
+      "base": null,
+      "refs": {
+        "ListSettlementRecordsResponse$Settlements": "<p>The list of settlement records.</p>"
+      }
+    },
+    "SettlementSortBy": {
+      "base": null,
+      "refs": {
+        "ListSettlementRecordsRequest$SortBy": "<p>The field to sort settlement records by: <code>TIMESTAMP</code>, <code>AMOUNT</code>, <code>NAME</code>, or <code>STATUS</code>.</p>"
+      }
+    },
+    "SettlementStatus": {
+      "base": null,
+      "refs": {
+        "SettlementRecord$Status": "<p>The status of the settlement. Possible values:</p> <ul> <li> <p> <code>SETTLED</code> - The payment was successfully settled on the blockchain and the transfer from the payer's wallet to the publisher's wallet is confirmed. The <code>TransactionId</code> field contains the on-chain transaction hash. Content is served to the client.</p> </li> <li> <p> <code>PENDING</code> - The blockchain transaction has been submitted but not yet confirmed on-chain. This is a transient state that automatically resolves to either <code>SETTLED</code> or <code>FAILED</code>. No action is required. While pending, content is not served and the API returns a 402 response. Clients can retry the request.</p> </li> <li> <p> <code>FAILED</code> - The payment settlement was attempted but failed. Possible causes include insufficient funds, an expired payment authorization, or a reverted blockchain transaction. The <code>failureReason</code> field contains a machine-readable error code. Content is not served.</p> </li> <li> <p> <code>SERVICE_ERROR</code> - Settlement could not be completed due to an internal service issue or an issue with the payment network. Content is not served. The client's payment authorization remains valid and the request can be retried.</p> </li> <li> <p> <code>SKIPPED_ORIGIN_ERROR</code> - The origin returned a non-2xx response, so settlement was intentionally skipped. The client is not charged.</p> </li> <li> <p> <code>DUPLICATE</code> - A prior request with the same payment payload has already been settled. This status typically appears when a previous attempt timed out but the payment was ultimately processed. The client is not charged again.</p> </li> </ul>"
       }
     },
     "SingleCookieName": {
@@ -2575,6 +2884,25 @@
       "refs": {
         "CaptchaResponse$SolveTimestamp": "<p>The time that the <code>CAPTCHA</code> was last solved for the supplied token. </p>",
         "ChallengeResponse$SolveTimestamp": "<p>The time that the challenge was last solved for the supplied token. </p>"
+      }
+    },
+    "SortOrder": {
+      "base": null,
+      "refs": {
+        "GetRevenueStatisticsRequest$SortOrder": "<p>The sort order: <code>ASC</code> for ascending or <code>DESC</code> for descending.</p>",
+        "ListSettlementRecordsRequest$SortOrder": "<p>The sort order: <code>ASC</code> for ascending or <code>DESC</code> for descending.</p>"
+      }
+    },
+    "SourceStatistics": {
+      "base": "<p>Revenue statistics for a single AI bot source, including the bot name, revenue amount, request count, and verification status.</p>",
+      "refs": {
+        "SourceStatisticsList$member": null
+      }
+    },
+    "SourceStatisticsList": {
+      "base": null,
+      "refs": {
+        "GetRevenueStatisticsResponse$SourceStatistics": "<p>Statistics for top revenue sources (AI bots). Populated when <code>StatisticType</code> is <code>TOP_SOURCES_BY_REVENUE</code>.</p>"
       }
     },
     "SourceType": {
@@ -2711,12 +3039,22 @@
         "XssMatchStatement$TextTransformations": "<p>Text transformations eliminate some of the unusual formatting that attackers use in web requests in an effort to bypass detection. Text transformations are used in rule match statements, to transform the <code>FieldToMatch</code> request component before inspecting it, and they're used in rate-based rule statements, to transform request components before using them as custom aggregation keys. If you specify one or more transformations to apply, WAF performs all transformations on the specified content, starting from the lowest priority setting, and then uses the transformed component contents. </p>"
       }
     },
+    "TimeSeriesStatisticType": {
+      "base": null,
+      "refs": {
+        "GetRevenueStatisticsTimeSeriesRequest$StatisticType": "<p>The type of time series data to retrieve: <code>DATE_HISTOGRAM</code> for revenue over time, or <code>PAYMENT_TRAFFIC</code> for payment traffic patterns.</p>"
+      }
+    },
     "TimeWindow": {
       "base": "<p>In a <a>GetSampledRequests</a> request, the <code>StartTime</code> and <code>EndTime</code> objects specify the time range for which you want WAF to return a sample of web requests.</p> <p>You must specify the times in Coordinated Universal Time (UTC) format. UTC format includes the special designator, <code>Z</code>. For example, <code>\"2016-09-27T14:50Z\"</code>. You can specify any time range in the previous three hours.</p> <p>In a <a>GetSampledRequests</a> response, the <code>StartTime</code> and <code>EndTime</code> objects specify the time range for which WAF actually returned a sample of web requests. WAF gets the specified number of requests from among the first 5,000 requests that your Amazon Web Services resource receives during the specified time period. If your resource receives more than 5,000 requests during that period, WAF stops sampling after the 5,000th request. In that case, <code>EndTime</code> is the time that WAF received the 5,000th request.</p>",
       "refs": {
+        "GetRevenueStatisticsRequest$TimeWindow": "<p>The time range for the query. Specify start and end timestamps.</p>",
+        "GetRevenueStatisticsSummaryRequest$TimeWindow": "<p>The time range for the revenue summary query. Specify start and end timestamps.</p>",
+        "GetRevenueStatisticsTimeSeriesRequest$TimeWindow": "<p>The time range for the query. Specify start and end timestamps.</p>",
         "GetSampledRequestsRequest$TimeWindow": "<p>The start date and time and the end date and time of the range for which you want <code>GetSampledRequests</code> to return a sample of requests. You must specify the times in Coordinated Universal Time (UTC) format. UTC format includes the special designator, <code>Z</code>. For example, <code>\"2016-09-27T14:50Z\"</code>. You can specify any time range in the previous three hours. If you specify a start time that's earlier than three hours ago, WAF sets it to three hours ago.</p>",
         "GetSampledRequestsResponse$TimeWindow": "<p>Usually, <code>TimeWindow</code> is the time range that you specified in the <code>GetSampledRequests</code> request. However, if your Amazon Web Services resource received more than 5,000 requests during the time range that you specified in the request, <code>GetSampledRequests</code> returns the time range for the first 5,000 requests. Times are in Coordinated Universal Time (UTC) format.</p>",
-        "GetTopPathStatisticsByTrafficRequest$TimeWindow": "<p>The time window for which you want to retrieve path statistics. The time window must be within the data retention period for your web ACL.</p>"
+        "GetTopPathStatisticsByTrafficRequest$TimeWindow": "<p>The time window for which you want to retrieve path statistics. The time window must be within the data retention period for your web ACL.</p>",
+        "ListSettlementRecordsRequest$TimeWindow": "<p>The time range for the query. Specify start and end timestamps.</p>"
       }
     },
     "TimeWindowDay": {
@@ -2736,6 +3074,7 @@
       "base": null,
       "refs": {
         "APIKeySummary$CreationTimestamp": "<p>The date and time that the key was created. </p>",
+        "DataPointEntry$Date": "<p>The timestamp for this data point.</p>",
         "GetDecryptedAPIKeyResponse$CreationTimestamp": "<p>The date and time that the key was created. </p>",
         "ManagedRuleGroupVersion$LastUpdateTimestamp": "<p>The date and time that the managed rule group owner updated the rule group version information. </p>",
         "ManagedRuleSetVersion$PublishTimestamp": "<p>The time that you first published this version. </p> <p>Times are in Coordinated Universal Time (UTC) format. UTC format includes the special designator, Z. For example, \"2016-09-27T14:50Z\". </p>",
@@ -2744,6 +3083,8 @@
         "MobileSdkRelease$Timestamp": "<p>The timestamp of the release. </p>",
         "ReleaseSummary$Timestamp": "<p>The timestamp of the release. </p>",
         "SampledHTTPRequest$Timestamp": "<p>The time at which WAF received the request from your Amazon Web Services resource, in Unix time format (in seconds).</p>",
+        "SettlementRecord$Timestamp": "<p>The timestamp when the settlement was recorded.</p>",
+        "SettlementRecord$RequestTimestamp": "<p>The timestamp of the original web request.</p>",
         "TimeWindow$StartTime": "<p>The beginning of the time range from which you want <code>GetSampledRequests</code> to return a sample of the requests that your Amazon Web Services resource received. You must specify the times in Coordinated Universal Time (UTC) format. UTC format includes the special designator, <code>Z</code>. For example, <code>\"2016-09-27T14:50Z\"</code>. You can specify any time range in the previous three hours.</p>",
         "TimeWindow$EndTime": "<p>The end of the time range from which you want <code>GetSampledRequests</code> to return a sample of the requests that your Amazon Web Services resource received. You must specify the times in Coordinated Universal Time (UTC) format. UTC format includes the special designator, <code>Z</code>. For example, <code>\"2016-09-27T14:50Z\"</code>. You can specify any time range in the previous three hours.</p>",
         "UpdateManagedRuleSetVersionExpiryDateRequest$ExpiryTimestamp": "<p>The time that you want the version to expire.</p> <p>Times are in Coordinated Universal Time (UTC) format. UTC format includes the special designator, Z. For example, \"2016-09-27T14:50Z\". </p>",
@@ -2862,6 +3203,13 @@
         "ManagedProductDescriptor$VendorName": "<p>The name of the managed rule group vendor. You use this, along with the rule group name, to identify a rule group.</p>",
         "ManagedRuleGroupStatement$VendorName": "<p>The name of the managed rule group vendor. You use this, along with the rule group name, to identify a rule group.</p>",
         "ManagedRuleGroupSummary$VendorName": "<p>The name of the managed rule group vendor. You use this, along with the rule group name, to identify a rule group.</p>"
+      }
+    },
+    "VerifiedStatus": {
+      "base": null,
+      "refs": {
+        "SettlementRecord$Verified": "<p>Whether the AI bot's identity was verified.</p>",
+        "SourceStatistics$Verified": "<p>Indicates whether the AI bot's identity was verified — for example, through a cryptographically signed request (Web Bot Auth) or another published verification method. This value is meaningful only when GroupBy is NAME, where each result represents a single, identifiable bot. For all other GroupBy values (CATEGORY, INTENT, ORGANIZATION, or WEBACL), a result aggregates multiple bots that may have different verification states, so Verified is always returned as false and should be ignored. Type and required-ness are unchanged (Boolean, optional).</p>"
       }
     },
     "VersionKeyString": {
@@ -2988,6 +3336,12 @@
     "WAFUnsupportedAggregateKeyTypeException": {
       "base": "<p>The rule that you've named doesn't aggregate solely on the IP address or solely on the forwarded IP address. This call is only available for rate-based rules with an <code>AggregateKeyType</code> setting of <code>IP</code> or <code>FORWARDED_IP</code>.</p>",
       "refs": {}
+    },
+    "WalletAddress": {
+      "base": null,
+      "refs": {
+        "PaymentNetwork$WalletAddress": "<p>Your wallet address on the specified blockchain where payments are sent. For EVM chains (Base, Base Sepolia), provide a valid Ethereum address (42 characters including 0x prefix). For Solana chains, provide a valid Base58-encoded public key (32-44 characters).</p> <p>For EVM addresses, WAF performs EIP-55 checksum validation for typo detection when the address uses a mix of lower and upper case letters. You can bypass this validation by providing the address in all lowercase or all uppercase.</p>"
+      }
     },
     "WebACL": {
       "base": "<p> A web ACL defines a collection of rules to use to inspect and control web requests. Each rule has a statement that defines what to look for in web requests and an action that WAF applies to requests that match the statement. In the web ACL, you assign a default action to take (allow, block) for any request that does not match any of the rules. The rules in a web ACL can be a combination of the types <a>Rule</a>, <a>RuleGroup</a>, and managed rule group. You can associate a web ACL with one or more Amazon Web Services resources to protect. The resource types include Amazon CloudFront distribution, Amazon API Gateway REST API, Application Load Balancer, AppSync GraphQL API, Amazon Cognito user pool, App Runner service, Amplify application, and Amazon Web Services Verified Access instance. </p>",

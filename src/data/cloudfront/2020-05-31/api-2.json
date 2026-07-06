@@ -4534,7 +4534,8 @@
       "members":{
         "Name":{"shape":"FunctionName"},
         "FunctionConfig":{"shape":"FunctionConfig"},
-        "FunctionCode":{"shape":"FunctionBlob"}
+        "FunctionCode":{"shape":"FunctionBlob"},
+        "Tags":{"shape":"Tags"}
       }
     },
     "CreateFunctionResult":{
@@ -4653,7 +4654,8 @@
       "members":{
         "Name":{"shape":"KeyValueStoreName"},
         "Comment":{"shape":"KeyValueStoreComment"},
-        "ImportSource":{"shape":"ImportSource"}
+        "ImportSource":{"shape":"ImportSource"},
+        "Tags":{"shape":"Tags"}
       }
     },
     "CreateKeyValueStoreResult":{
@@ -4904,6 +4906,7 @@
       "members":{
         "Name":{"shape":"string"},
         "CaCertificatesBundleSource":{"shape":"CaCertificatesBundleSource"},
+        "UseClientCertificateOCSPEndpoint":{"shape":"boolean"},
         "Tags":{"shape":"Tags"}
       }
     },
@@ -11511,7 +11514,8 @@
         "Status":{"shape":"TrustStoreStatus"},
         "NumberOfCaCertificates":{"shape":"integer"},
         "LastModifiedTime":{"shape":"timestamp"},
-        "Reason":{"shape":"string"}
+        "Reason":{"shape":"string"},
+        "UseClientCertificateOCSPEndpoint":{"shape":"boolean"}
       }
     },
     "TrustStoreConfig":{
@@ -12377,7 +12381,6 @@
       "type":"structure",
       "required":[
         "Id",
-        "CaCertificatesBundleSource",
         "IfMatch"
       ],
       "members":{
@@ -12390,6 +12393,11 @@
           "shape":"CaCertificatesBundleSource",
           "locationName":"CaCertificatesBundleSource",
           "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2020-05-31/"}
+        },
+        "UseClientCertificateOCSPEndpoint":{
+          "shape":"boolean",
+          "location":"header",
+          "locationName":"UseClientCertificateOCSPEndpoint"
         },
         "IfMatch":{
           "shape":"string",
@@ -12512,7 +12520,8 @@
       "type":"string",
       "enum":[
         "required",
-        "optional"
+        "optional",
+        "passthrough"
       ]
     },
     "ViewerProtocolPolicy":{

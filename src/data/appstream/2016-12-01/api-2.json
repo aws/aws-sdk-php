@@ -327,7 +327,8 @@
         {"shape":"ResourceAlreadyExistsException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"IncompatibleImageException"},
-        {"shape":"DryRunOperationException"}
+        {"shape":"DryRunOperationException"},
+        {"shape":"InvalidParameterCombinationException"}
       ]
     },
     "CreateStack":{
@@ -1402,7 +1403,8 @@
         "S3BucketArn":{"shape":"S3BucketArn"},
         "ScreenshotsUploadEnabled":{"shape":"BooleanObject"},
         "ScreenResolution":{"shape":"ScreenResolution"},
-        "ScreenImageFormat":{"shape":"ScreenImageFormat"}
+        "ScreenImageFormat":{"shape":"ScreenImageFormat"},
+        "UserControlMode":{"shape":"UserControlMode"}
       }
     },
     "AgentAccessConfigForUpdate":{
@@ -1412,7 +1414,8 @@
         "S3BucketArn":{"shape":"S3BucketArn"},
         "ScreenshotsUploadEnabled":{"shape":"BooleanObject"},
         "ScreenResolution":{"shape":"ScreenResolution"},
-        "ScreenImageFormat":{"shape":"ScreenImageFormat"}
+        "ScreenImageFormat":{"shape":"ScreenImageFormat"},
+        "UserControlMode":{"shape":"UserControlMode"}
       }
     },
     "AgentAccessSetting":{
@@ -1435,7 +1438,8 @@
       "type":"string",
       "enum":[
         "COMPUTER_VISION",
-        "COMPUTER_INPUT"
+        "COMPUTER_INPUT",
+        "FORWARD_MCP_TOOLS"
       ]
     },
     "AgentSoftwareVersion":{
@@ -2132,14 +2136,11 @@
     },
     "CreateImportedImageRequest":{
       "type":"structure",
-      "required":[
-        "Name",
-        "SourceAmiId",
-        "IamRoleArn"
-      ],
+      "required":["Name"],
       "members":{
         "Name":{"shape":"Name"},
         "SourceAmiId":{"shape":"PhotonAmiId"},
+        "WorkspaceImageId":{"shape":"WorkspaceImageId"},
         "IamRoleArn":{"shape":"Arn"},
         "Description":{"shape":"ImageImportDescription"},
         "DisplayName":{"shape":"ImageImportDisplayName"},
@@ -3044,7 +3045,8 @@
       "enum":[
         "EXPORTING",
         "COMPLETED",
-        "FAILED"
+        "FAILED",
+        "TIMED_OUT"
       ]
     },
     "ExportImageTasks":{
@@ -3378,7 +3380,8 @@
       "type":"string",
       "enum":[
         "CUSTOM",
-        "NATIVE"
+        "NATIVE",
+        "BYOL"
       ]
     },
     "IncompatibleImageException":{
@@ -4431,6 +4434,14 @@
       "pattern":"^[A-Za-z0-9_\\-\\s]+$",
       "sensitive":true
     },
+    "UserControlMode":{
+      "type":"string",
+      "enum":[
+        "VIEW_ONLY",
+        "VIEW_STOP",
+        "DISABLED"
+      ]
+    },
     "UserId":{
       "type":"string",
       "max":128,
@@ -4525,6 +4536,12 @@
         "SubnetIds":{"shape":"SubnetIdList"},
         "SecurityGroupIds":{"shape":"SecurityGroupIdList"}
       }
+    },
+    "WorkspaceImageId":{
+      "type":"string",
+      "max":67,
+      "min":12,
+      "pattern":"^wsi-[0-9a-z]{8,63}$"
     }
   }
 }

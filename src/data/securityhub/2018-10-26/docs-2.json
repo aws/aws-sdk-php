@@ -55,6 +55,7 @@
     "EnableOrganizationAdminAccount": "<p>Designates the Security Hub CSPM administrator account for an organization. Can only be called by the organization management account.</p>",
     "EnableSecurityHub": "<p>Enables Security Hub CSPM for your account in the current Region or the Region you specify in the request.</p> <p>When you enable Security Hub CSPM, you grant to Security Hub CSPM the permissions necessary to gather findings from other services that are integrated with Security Hub CSPM.</p> <p>When you use the <code>EnableSecurityHub</code> operation to enable Security Hub CSPM, you also automatically enable the following standards:</p> <ul> <li> <p>Center for Internet Security (CIS) Amazon Web Services Foundations Benchmark v1.2.0</p> </li> <li> <p>Amazon Web Services Foundational Security Best Practices</p> </li> </ul> <p>Other standards are not automatically enabled. </p> <p>To opt out of automatically enabled standards, set <code>EnableDefaultStandards</code> to <code>false</code>.</p> <p>After you enable Security Hub CSPM, to enable a standard, use the <code>BatchEnableStandards</code> operation. To disable a standard, use the <code>BatchDisableStandards</code> operation.</p> <p>To learn more, see the <a href=\"https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-settingup.html\">setup information</a> in the <i>Security Hub CSPM User Guide</i>.</p>",
     "EnableSecurityHubV2": "<p>Enables the service in account for the current Amazon Web Services Region or specified Amazon Web Services Region.</p>",
+    "GenerateRecommendedPolicyV2": "<p>Begins the recommended policy generation to remediate a Security Hub finding. <code>GenerateRecommendedPolicyV2</code> only supports findings for unused permissions.</p>",
     "GetAdministratorAccount": "<p>Provides the details for the Security Hub CSPM administrator account for the current member account.</p> <p>Can be used by both member accounts that are managed using Organizations and accounts that were invited manually.</p>",
     "GetAggregatorV2": "<p>Returns the configuration of the specified Aggregator V2.</p>",
     "GetAutomationRuleV2": "<p>Returns an automation rule for the V2 service.</p>",
@@ -73,6 +74,7 @@
     "GetInvitationsCount": "<note> <p>We recommend using Organizations instead of Security Hub CSPM invitations to manage your member accounts. For information, see <a href=\"https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-accounts-orgs.html\">Managing Security Hub CSPM administrator and member accounts with Organizations</a> in the <i>Security Hub CSPM User Guide</i>.</p> </note> <p>Returns the count of all Security Hub CSPM membership invitations that were sent to the calling member account, not including the currently accepted invitation. </p>",
     "GetMasterAccount": "<p>This method is deprecated. Instead, use <code>GetAdministratorAccount</code>.</p> <p>The Security Hub CSPM console continues to use <code>GetMasterAccount</code>. It will eventually change to use <code>GetAdministratorAccount</code>. Any IAM policies that specifically control access to this function must continue to use <code>GetMasterAccount</code>. You should also add <code>GetAdministratorAccount</code> to your policies to ensure that the correct permissions are in place after the console begins to use <code>GetAdministratorAccount</code>.</p> <p>Provides the details for the Security Hub CSPM administrator account for the current member account.</p> <p>Can be used by both member accounts that are managed using Organizations and accounts that were invited manually.</p>",
     "GetMembers": "<p>Returns the details for the Security Hub CSPM member accounts for the specified account IDs.</p> <p>An administrator account can be either the delegated Security Hub CSPM administrator account for an organization or an administrator account that enabled Security Hub CSPM manually.</p> <p>The results include both member accounts that are managed using Organizations and accounts that were invited manually.</p>",
+    "GetRecommendedPolicyV2": "<p>Retrieves the recommended policy to remediate a Security Hub finding. <code>GetRecommendedPolicyV2</code> only supports findings for unused permissions.</p>",
     "GetResourcesStatisticsV2": "<p>Retrieves statistical information about Amazon Web Services resources and their associated security findings.</p> <p>You can use the <code>Scopes</code> parameter to define the data boundary for the query. Currently, <code>Scopes</code> supports <code>AwsOrganizations</code>, which lets you aggregate resources from your entire organization or from specific organizational units. Only the delegated administrator account can use <code>Scopes</code>.</p>",
     "GetResourcesTrendsV2": "<p>Returns resource trend data based on the specified criteria. This operation helps you analyze patterns and changes in resource compliance over time.</p>",
     "GetResourcesV2": "<p>Returns a list of resources.</p> <p>You can use the <code>Scopes</code> parameter to define the data boundary for the query. Currently, <code>Scopes</code> supports <code>AwsOrganizations</code>, which lets you retrieve resources from your entire organization or from specific organizational units. Only the delegated administrator account can use <code>Scopes</code>.</p> <p>You can use the <code>Filters</code> parameter to refine results based on resource attributes. You can use <code>Scopes</code> and <code>Filters</code> independently or together. When both are provided, <code>Scopes</code> narrows the data set first, and then <code>Filters</code> refines results within that scoped data set.</p>",
@@ -5252,6 +5254,12 @@
         "DateFilter$DateRange": "<p>A date range for the date filter.</p>"
       }
     },
+    "DateRangeComparison": {
+      "base": null,
+      "refs": {
+        "DateRange$Comparison": "<p>The condition to apply to a date range filter. If you specify <code>WITHIN</code>, Security Hub filters for dates within the specified date range. If you specify <code>OLDER_THAN</code>, Security Hub filters for dates before the specified date range. If you don't specify a value, the default is <code>WITHIN</code>.</p>"
+      }
+    },
     "DateRangeUnit": {
       "base": null,
       "refs": {
@@ -5759,6 +5767,14 @@
         "FirewallPolicyDetails$StatelessRuleGroupReferences": "<p>The stateless rule groups that are used in the firewall policy.</p>"
       }
     },
+    "GenerateRecommendedPolicyV2Request": {
+      "base": null,
+      "refs": {}
+    },
+    "GenerateRecommendedPolicyV2Response": {
+      "base": null,
+      "refs": {}
+    },
     "GeneratorDetails": {
       "base": "<p> Provides metadata for the Amazon CodeGuru detector associated with a finding. This field pertains to findings that relate to Lambda functions. Amazon Inspector identifies policy violations and vulnerabilities in Lambda function code based on internal detectors developed in collaboration with Amazon CodeGuru. Security Hub CSPM receives those findings. </p>",
       "refs": {
@@ -5912,6 +5928,14 @@
       "refs": {}
     },
     "GetMembersResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRecommendedPolicyV2Request": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRecommendedPolicyV2Response": {
       "base": null,
       "refs": {}
     },
@@ -6711,6 +6735,7 @@
         "GetFindingsTrendsV2Request$MaxResults": "<p>The maximum number of trend data points to return in a single response.</p>",
         "GetFindingsV2Request$MaxResults": "<p>The maximum number of results to return.</p>",
         "GetInsightsRequest$MaxResults": "<p>The maximum number of items to return in the response.</p>",
+        "GetRecommendedPolicyV2Request$MaxResults": "<p>The maximum number of recommendation steps to return.</p>",
         "GetResourcesTrendsV2Request$MaxResults": "<p>The maximum number of trend data points to return in a single response.</p>",
         "GetResourcesV2Request$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListAggregatorsV2Request$MaxResults": "<p>The maximum number of results to return.</p>",
@@ -6851,6 +6876,8 @@
         "GetFindingsV2Response$NextToken": "<p>The pagination token to use to request the next page of results. Otherwise, this parameter is null.</p>",
         "GetInsightsRequest$NextToken": "<p>The token that is required for pagination. On your first call to the <code>GetInsights</code> operation, set the value of this parameter to <code>NULL</code>.</p> <p>For subsequent calls to the operation, to continue listing data, set the value of this parameter to the value returned from the previous response.</p>",
         "GetInsightsResponse$NextToken": "<p>The pagination token to use to request the next page of results.</p>",
+        "GetRecommendedPolicyV2Request$NextToken": "<p>The token used to paginate the <code>RecommendationSteps</code> list returned. On your first call to <code>GetRecommendedPolicyV2</code>, omit this parameter or set it to <code>NULL</code>. For subsequent calls, use the <code>NextToken</code> value returned in the previous response to retrieve the next page of results.</p>",
+        "GetRecommendedPolicyV2Response$NextToken": "<p>The pagination token to use to request the next page of results.</p>",
         "GetResourcesTrendsV2Request$NextToken": "<p>The token to use for paginating results. This value is returned in the response if more results are available.</p>",
         "GetResourcesTrendsV2Response$NextToken": "<p>The token to use for retrieving the next page of results, if more trend data is available.</p>",
         "GetResourcesV2Request$NextToken": "<p>The token required for pagination. On your first call, set the value of this parameter to <code>NULL</code>. For subsequent calls, to continue listing data, set the value of this parameter to the value returned in the previous response.</p>",
@@ -8363,6 +8390,7 @@
         "FirewallPolicyStatefulRuleGroupReferencesDetails$ResourceArn": "<p>The ARN of the stateful rule group.</p>",
         "FirewallPolicyStatelessCustomActionsDetails$ActionName": "<p>The name of the custom action.</p>",
         "FirewallPolicyStatelessRuleGroupReferencesDetails$ResourceArn": "<p>The ARN of the stateless rule group.</p>",
+        "GenerateRecommendedPolicyV2Request$MetadataUid": "<p>The unique identifier (ID) of Security Hub OCSF findings found under the <code>metadata.uid</code> field of the finding.</p>",
         "GeneratorDetails$Name": "<p> The name of the detector used to identify the code vulnerability. </p>",
         "GeneratorDetails$Description": "<p> The description of the detector used to identify the code vulnerability. </p>",
         "GetAggregatorV2Request$AggregatorV2Arn": "<p>The ARN of the Aggregator V2.</p>",
@@ -8393,6 +8421,8 @@
         "GetFindingAggregatorResponse$FindingAggregationRegion": "<p>The home Region. Findings generated in linked Regions are replicated and sent to the home Region.</p>",
         "GetFindingAggregatorResponse$RegionLinkingMode": "<p>Indicates whether to link all Regions, all Regions except for a list of excluded Regions, or a list of included Regions.</p>",
         "GetInsightResultsRequest$InsightArn": "<p>The ARN of the insight for which to return results.</p>",
+        "GetRecommendedPolicyV2Request$MetadataUid": "<p>The unique identifier (ID) of Security Hub OCSF findings found under the <code>metadata.uid</code> field of the finding.</p>",
+        "GetRecommendedPolicyV2Response$ResourceArn": "<p>The ARN of the resource of the finding.</p>",
         "GetSecurityControlDefinitionRequest$SecurityControlId": "<p> The ID of the security control to retrieve the definition for. This field doesn’t accept an Amazon Resource Name (ARN). </p>",
         "GroupByResult$GroupByField": "<p>The attribute by which filtered security findings should be grouped.</p>",
         "GroupByValue$FieldValue": "<p>The value of the field by which findings are grouped.</p>",
@@ -8514,6 +8544,8 @@
         "PropagatingVgwSetDetails$GatewayId": "<p> The ID of the virtual private gateway. </p>",
         "Recommendation$Text": "<p>Describes the recommended steps to take to remediate an issue identified in a finding.</p> <p>Length Constraints: Minimum of 1 length. Maximum of 512 length.</p>",
         "Recommendation$Url": "<p>A URL to a page or site that contains information about how to remediate a finding.</p>",
+        "RecommendationError$Code": "<p>The error code for a failed retrieval of a recommended policy for a finding.</p>",
+        "RecommendationError$Message": "<p>The error message for a failed retrieval of a recommended policy for a finding.</p>",
         "Record$JsonPath": "<p>The path, as a JSONPath expression, to the field in the record that contains the data. If the field name is longer than 20 characters, it is truncated. If the path is longer than 250 characters, it is truncated.</p>",
         "RegisterConnectorV2Request$AuthCode": "<p>The authCode retrieved from authUrl to complete the OAuth 2.0 authorization code flow.</p>",
         "RegisterConnectorV2Request$AuthState": "<p>The authState retrieved from authUrl to complete the OAuth 2.0 authorization code flow.</p>",
@@ -8687,6 +8719,10 @@
         "UnprocessedSecurityControl$ErrorReason": "<p> The reason why the security control was unprocessed. </p>",
         "UnprocessedStandardsControlAssociation$ErrorReason": "<p>The reason why the standard and control association was unprocessed. </p>",
         "UnprocessedStandardsControlAssociationUpdate$ErrorReason": "<p>The reason why a control's enablement status in the specified standard couldn't be updated. </p>",
+        "UnusedPermissionsRecommendationStep$RecommendedAction": "<p>A recommendation of whether to create or detach a policy for an unused permissions finding.</p>",
+        "UnusedPermissionsRecommendationStep$ExistingPolicy": "<p>The contents of the existing policy identified by <code>ExistingPolicyId</code> which needs to be replaced, when the <code>RecommendedAction</code> is <code>CREATE_POLICY</code>.</p>",
+        "UnusedPermissionsRecommendationStep$ExistingPolicyId": "<p>The ID of an existing policy to be replaced or detached.</p>",
+        "UnusedPermissionsRecommendationStep$RecommendedPolicy": "<p>The contents of the least-privileged recommended replacement for <code>ExistingPolicyId</code>, when the <code>RecommendedAction</code> is <code>CREATE_POLICY</code>.</p>",
         "UpdateActionTargetRequest$ActionTargetArn": "<p>The ARN of the custom action target to update.</p>",
         "UpdateActionTargetRequest$Name": "<p>The updated name of the custom action target.</p>",
         "UpdateActionTargetRequest$Description": "<p>The updated description for the custom action target.</p>",
@@ -9260,6 +9296,36 @@
       "base": "<p>A recommendation on how to remediate the issue identified in a finding.</p>",
       "refs": {
         "Remediation$Recommendation": "<p>A recommendation on the steps to take to remediate the issue identified by a finding.</p>"
+      }
+    },
+    "RecommendationError": {
+      "base": "<p>Contains information about the reason that the retrieval of a recommended policy for a finding failed.</p>",
+      "refs": {
+        "GetRecommendedPolicyV2Response$Error": "<p>Detailed information for a <code>FAILED</code> retrieval status.</p>"
+      }
+    },
+    "RecommendationStatus": {
+      "base": null,
+      "refs": {
+        "GetRecommendedPolicyV2Response$Status": "<p>The current status of the recommended policy retrieval.</p>"
+      }
+    },
+    "RecommendationStep": {
+      "base": "<p>Contains information about a recommended step to remediate a Security Hub finding.</p>",
+      "refs": {
+        "RecommendationSteps$member": null
+      }
+    },
+    "RecommendationSteps": {
+      "base": null,
+      "refs": {
+        "GetRecommendedPolicyV2Response$RecommendationSteps": "<p>The recommended steps to take to resolve the finding.</p>"
+      }
+    },
+    "RecommendationType": {
+      "base": null,
+      "refs": {
+        "GetRecommendedPolicyV2Response$RecommendationType": "<p>The type of recommendation for the finding.</p>"
       }
     },
     "Record": {
@@ -10285,7 +10351,7 @@
     "StringFilterComparison": {
       "base": null,
       "refs": {
-        "StringFilter$Comparison": "<p>The condition to apply to a string value when filtering Security Hub CSPM findings.</p> <p>To search for values that have the filter value, use one of the following comparison operators:</p> <ul> <li> <p>To search for values that include the filter value, use <code>CONTAINS</code>. For example, the filter <code>Title CONTAINS CloudFront</code> matches findings that have a <code>Title</code> that includes the string CloudFront.</p> </li> <li> <p>To search for values that exactly match the filter value, use <code>EQUALS</code>. For example, the filter <code>AwsAccountId EQUALS 123456789012</code> only matches findings that have an account ID of <code>123456789012</code>.</p> </li> <li> <p>To search for values that start with the filter value, use <code>PREFIX</code>. For example, the filter <code>ResourceRegion PREFIX us</code> matches findings that have a <code>ResourceRegion</code> that starts with <code>us</code>. A <code>ResourceRegion</code> that starts with a different value, such as <code>af</code>, <code>ap</code>, or <code>ca</code>, doesn't match.</p> </li> </ul> <p> <code>CONTAINS</code>, <code>EQUALS</code>, and <code>PREFIX</code> filters on the same field are joined by <code>OR</code>. A finding matches if it matches any one of those filters. For example, the filters <code>Title CONTAINS CloudFront OR Title CONTAINS CloudWatch</code> match a finding that includes either <code>CloudFront</code>, <code>CloudWatch</code>, or both strings in the title.</p> <p>To search for values that don’t have the filter value, use one of the following comparison operators:</p> <ul> <li> <p>To search for values that exclude the filter value, use <code>NOT_CONTAINS</code>. For example, the filter <code>Title NOT_CONTAINS CloudFront</code> matches findings that have a <code>Title</code> that excludes the string CloudFront.</p> </li> <li> <p>To search for values other than the filter value, use <code>NOT_EQUALS</code>. For example, the filter <code>AwsAccountId NOT_EQUALS 123456789012</code> only matches findings that have an account ID other than <code>123456789012</code>.</p> </li> <li> <p>To search for values that don't start with the filter value, use <code>PREFIX_NOT_EQUALS</code>. For example, the filter <code>ResourceRegion PREFIX_NOT_EQUALS us</code> matches findings with a <code>ResourceRegion</code> that starts with a value other than <code>us</code>.</p> </li> </ul> <p> <code>NOT_CONTAINS</code>, <code>NOT_EQUALS</code>, and <code>PREFIX_NOT_EQUALS</code> filters on the same field are joined by <code>AND</code>. A finding matches only if it matches all of those filters. For example, the filters <code>Title NOT_CONTAINS CloudFront AND Title NOT_CONTAINS CloudWatch</code> match a finding that excludes both <code>CloudFront</code> and <code>CloudWatch</code> in the title.</p> <p>You can’t have both a <code>CONTAINS</code> filter and a <code>NOT_CONTAINS</code> filter on the same field. Similarly, you can't provide both an <code>EQUALS</code> filter and a <code>NOT_EQUALS</code> or <code>PREFIX_NOT_EQUALS</code> filter on the same field. Combining filters in this way returns an error. <code>CONTAINS</code> filters can only be used with other <code>CONTAINS</code> filters. <code>NOT_CONTAINS</code> filters can only be used with other <code>NOT_CONTAINS</code> filters. </p> <p>You can combine <code>PREFIX</code> filters with <code>NOT_EQUALS</code> or <code>PREFIX_NOT_EQUALS</code> filters for the same field. Security Hub CSPM first processes the <code>PREFIX</code> filters, and then the <code>NOT_EQUALS</code> or <code>PREFIX_NOT_EQUALS</code> filters.</p> <p>For example, for the following filters, Security Hub CSPM first identifies findings that have resource types that start with either <code>AwsIam</code> or <code>AwsEc2</code>. It then excludes findings that have a resource type of <code>AwsIamPolicy</code> and findings that have a resource type of <code>AwsEc2NetworkInterface</code>.</p> <ul> <li> <p> <code>ResourceType PREFIX AwsIam</code> </p> </li> <li> <p> <code>ResourceType PREFIX AwsEc2</code> </p> </li> <li> <p> <code>ResourceType NOT_EQUALS AwsIamPolicy</code> </p> </li> <li> <p> <code>ResourceType NOT_EQUALS AwsEc2NetworkInterface</code> </p> </li> </ul> <p> <code>CONTAINS</code> and <code>NOT_CONTAINS</code> operators can be used only with automation rules V1. <code>CONTAINS_WORD</code> operator is only supported in <code>GetFindingsV2</code>, <code>GetFindingStatisticsV2</code>, <code>GetResourcesV2</code>, and <code>GetResourcesStatisticsV2</code> APIs. For more information, see <a href=\"https://docs.aws.amazon.com/securityhub/latest/userguide/automation-rules.html\">Automation rules</a> in the <i>Security Hub CSPM User Guide</i>.</p>"
+        "StringFilter$Comparison": "<p>The condition to apply to a string value when filtering Security Hub CSPM findings.</p> <p>To search for values that have the filter value, use one of the following comparison operators:</p> <ul> <li> <p>To search for values that include the filter value, use <code>CONTAINS</code>. For example, the filter <code>Title CONTAINS CloudFront</code> matches findings that have a <code>Title</code> that includes the string CloudFront.</p> </li> <li> <p>To search for values that exactly match the filter value, use <code>EQUALS</code>. For example, the filter <code>AwsAccountId EQUALS 123456789012</code> only matches findings that have an account ID of <code>123456789012</code>.</p> </li> <li> <p>To search for values that start with the filter value, use <code>PREFIX</code>. For example, the filter <code>ResourceRegion PREFIX us</code> matches findings that have a <code>ResourceRegion</code> that starts with <code>us</code>. A <code>ResourceRegion</code> that starts with a different value, such as <code>af</code>, <code>ap</code>, or <code>ca</code>, doesn't match.</p> </li> </ul> <p> <code>CONTAINS</code>, <code>EQUALS</code>, and <code>PREFIX</code> filters on the same field are joined by <code>OR</code>. A finding matches if it matches any one of those filters. For example, the filters <code>Title CONTAINS CloudFront OR Title CONTAINS CloudWatch</code> match a finding that includes either <code>CloudFront</code>, <code>CloudWatch</code>, or both strings in the title.</p> <p>To search for values that don’t have the filter value, use one of the following comparison operators:</p> <ul> <li> <p>To search for values that exclude the filter value, use <code>NOT_CONTAINS</code>. For example, the filter <code>Title NOT_CONTAINS CloudFront</code> matches findings that have a <code>Title</code> that excludes the string CloudFront.</p> </li> <li> <p>To search for values other than the filter value, use <code>NOT_EQUALS</code>. For example, the filter <code>AwsAccountId NOT_EQUALS 123456789012</code> only matches findings that have an account ID other than <code>123456789012</code>.</p> </li> <li> <p>To search for values that don't start with the filter value, use <code>PREFIX_NOT_EQUALS</code>. For example, the filter <code>ResourceRegion PREFIX_NOT_EQUALS us</code> matches findings with a <code>ResourceRegion</code> that starts with a value other than <code>us</code>.</p> </li> </ul> <p> <code>NOT_CONTAINS</code>, <code>NOT_EQUALS</code>, and <code>PREFIX_NOT_EQUALS</code> filters on the same field are joined by <code>AND</code>. A finding matches only if it matches all of those filters. For example, the filters <code>Title NOT_CONTAINS CloudFront AND Title NOT_CONTAINS CloudWatch</code> match a finding that excludes both <code>CloudFront</code> and <code>CloudWatch</code> in the title.</p> <p>You can’t have both a <code>CONTAINS</code> filter and a <code>NOT_CONTAINS</code> filter on the same field. Similarly, you can't provide both an <code>EQUALS</code> filter and a <code>NOT_EQUALS</code> or <code>PREFIX_NOT_EQUALS</code> filter on the same field. Combining filters in this way returns an error. <code>CONTAINS</code> filters can only be used with other <code>CONTAINS</code> filters. <code>NOT_CONTAINS</code> filters can only be used with other <code>NOT_CONTAINS</code> filters. </p> <p>You can combine <code>PREFIX</code> filters with <code>NOT_EQUALS</code> or <code>PREFIX_NOT_EQUALS</code> filters for the same field. Security Hub CSPM first processes the <code>PREFIX</code> filters, and then the <code>NOT_EQUALS</code> or <code>PREFIX_NOT_EQUALS</code> filters.</p> <p>For example, for the following filters, Security Hub CSPM first identifies findings that have resource types that start with either <code>AwsIam</code> or <code>AwsEc2</code>. It then excludes findings that have a resource type of <code>AwsIamPolicy</code> and findings that have a resource type of <code>AwsEc2NetworkInterface</code>.</p> <ul> <li> <p> <code>ResourceType PREFIX AwsIam</code> </p> </li> <li> <p> <code>ResourceType PREFIX AwsEc2</code> </p> </li> <li> <p> <code>ResourceType NOT_EQUALS AwsIamPolicy</code> </p> </li> <li> <p> <code>ResourceType NOT_EQUALS AwsEc2NetworkInterface</code> </p> </li> </ul> <p>The <code>CONTAINS</code> operator works with automation rules V1 and V2. The <code>NOT_CONTAINS</code> operator works only with automation rules V1. The <code>CONTAINS_WORD</code> operator works only in the <code>GetFindingsV2</code>, <code>GetFindingStatisticsV2</code>, <code>GetResourcesV2</code>, and <code>GetResourcesStatisticsV2</code> APIs. For more information, see <a href=\"https://docs.aws.amazon.com/securityhub/latest/userguide/automation-rules.html\">Automation rules</a> in the <i>Security Hub CSPM User Guide</i>.</p>"
       }
     },
     "StringFilterList": {
@@ -10597,6 +10663,7 @@
         "StandardsControlAssociationSummary$UpdatedAt": "<p>The last time that a control's enablement status in a specified standard was updated.</p>",
         "StartConfigurationPolicyAssociationResponse$UpdatedAt": "<p> The date and time, in UTC and ISO 8601 format, that the configuration policy association was last updated. </p>",
         "TrendsMetricsResult$Timestamp": "<p>The timestamp for this data point in the findings trend metrics.</p>",
+        "UnusedPermissionsRecommendationStep$PolicyUpdatedAt": "<p>The time at which the existing policy for the unused permissions finding was last updated.</p>",
         "UpdateConfigurationPolicyResponse$UpdatedAt": "<p> The date and time, in UTC and ISO 8601 format, that the configuration policy was last updated. </p>",
         "UpdateConfigurationPolicyResponse$CreatedAt": "<p> The date and time, in UTC and ISO 8601 format, that the configuration policy was created. </p>"
       }
@@ -10722,6 +10789,12 @@
     "UntagResourceResponse": {
       "base": null,
       "refs": {}
+    },
+    "UnusedPermissionsRecommendationStep": {
+      "base": "<p>Contains information about the action to take for a policy in an unused permissions finding.</p>",
+      "refs": {
+        "RecommendationStep$UnusedPermissions": "<p>A recommended step to remediate an unused permissions finding.</p>"
+      }
     },
     "UpdateActionTargetRequest": {
       "base": null,

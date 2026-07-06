@@ -28,10 +28,134 @@
         {"shape":"TagPolicyException"},
         {"shape":"TooManyTagsException"},
         {"shape":"InvalidArnException"},
-        {"shape":"ThrottlingException"},
         {"shape":"InvalidTagException"},
-        {"shape":"ResourceNotFoundException"}
-      ]
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM"}
+      }
+    },
+    "CreateAcmeDomainValidation":{
+      "name":"CreateAcmeDomainValidation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateAcmeDomainValidationRequest"},
+      "output":{"shape":"CreateAcmeDomainValidationResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM-ACME"}
+      }
+    },
+    "CreateAcmeEndpoint":{
+      "name":"CreateAcmeEndpoint",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateAcmeEndpointRequest"},
+      "output":{"shape":"CreateAcmeEndpointResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true,
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM-ACME"}
+      }
+    },
+    "CreateAcmeExternalAccountBinding":{
+      "name":"CreateAcmeExternalAccountBinding",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateAcmeExternalAccountBindingRequest"},
+      "output":{"shape":"CreateAcmeExternalAccountBindingResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true,
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM-ACME"}
+      }
+    },
+    "DeleteAcmeDomainValidation":{
+      "name":"DeleteAcmeDomainValidation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteAcmeDomainValidationRequest"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true,
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM-ACME"}
+      }
+    },
+    "DeleteAcmeEndpoint":{
+      "name":"DeleteAcmeEndpoint",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteAcmeEndpointRequest"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true,
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM-ACME"}
+      }
+    },
+    "DeleteAcmeExternalAccountBinding":{
+      "name":"DeleteAcmeExternalAccountBinding",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteAcmeExternalAccountBindingRequest"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true,
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM-ACME"}
+      }
     },
     "DeleteCertificate":{
       "name":"DeleteCertificate",
@@ -43,11 +167,95 @@
       "errors":[
         {"shape":"ResourceInUseException"},
         {"shape":"InvalidArnException"},
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ResourceNotFoundException"}
-      ]
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM"}
+      }
+    },
+    "DescribeAcmeAccount":{
+      "name":"DescribeAcmeAccount",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeAcmeAccountRequest"},
+      "output":{"shape":"DescribeAcmeAccountResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true,
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM-ACME"}
+      }
+    },
+    "DescribeAcmeDomainValidation":{
+      "name":"DescribeAcmeDomainValidation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeAcmeDomainValidationRequest"},
+      "output":{"shape":"DescribeAcmeDomainValidationResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true,
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM-ACME"}
+      }
+    },
+    "DescribeAcmeEndpoint":{
+      "name":"DescribeAcmeEndpoint",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeAcmeEndpointRequest"},
+      "output":{"shape":"DescribeAcmeEndpointResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true,
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM-ACME"}
+      }
+    },
+    "DescribeAcmeExternalAccountBinding":{
+      "name":"DescribeAcmeExternalAccountBinding",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeAcmeExternalAccountBindingRequest"},
+      "output":{"shape":"DescribeAcmeExternalAccountBindingResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true,
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM-ACME"}
+      }
     },
     "DescribeCertificate":{
       "name":"DescribeCertificate",
@@ -59,8 +267,12 @@
       "output":{"shape":"DescribeCertificateResponse"},
       "errors":[
         {"shape":"InvalidArnException"},
+        {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM"}
+      }
     },
     "ExportCertificate":{
       "name":"ExportCertificate",
@@ -72,10 +284,14 @@
       "output":{"shape":"ExportCertificateResponse"},
       "errors":[
         {"shape":"InvalidArnException"},
-        {"shape":"ThrottlingException"},
         {"shape":"RequestInProgressException"},
-        {"shape":"ResourceNotFoundException"}
-      ]
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM"}
+      }
     },
     "GetAccountConfiguration":{
       "name":"GetAccountConfiguration",
@@ -85,9 +301,32 @@
       },
       "output":{"shape":"GetAccountConfigurationResponse"},
       "errors":[
-        {"shape":"ThrottlingException"},
-        {"shape":"AccessDeniedException"}
-      ]
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM"}
+      }
+    },
+    "GetAcmeExternalAccountBindingCredentials":{
+      "name":"GetAcmeExternalAccountBindingCredentials",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetAcmeExternalAccountBindingCredentialsRequest"},
+      "output":{"shape":"GetAcmeExternalAccountBindingCredentialsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true,
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM-ACME"}
+      }
     },
     "GetCertificate":{
       "name":"GetCertificate",
@@ -100,8 +339,12 @@
       "errors":[
         {"shape":"InvalidArnException"},
         {"shape":"RequestInProgressException"},
+        {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM"}
+      }
     },
     "ImportCertificate":{
       "name":"ImportCertificate",
@@ -119,8 +362,91 @@
         {"shape":"InvalidTagException"},
         {"shape":"ConflictException"},
         {"shape":"LimitExceededException"},
+        {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM"}
+      }
+    },
+    "ListAcmeAccounts":{
+      "name":"ListAcmeAccounts",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListAcmeAccountsRequest"},
+      "output":{"shape":"ListAcmeAccountsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true,
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM-ACME"}
+      }
+    },
+    "ListAcmeDomainValidations":{
+      "name":"ListAcmeDomainValidations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListAcmeDomainValidationsRequest"},
+      "output":{"shape":"ListAcmeDomainValidationsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true,
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM-ACME"}
+      }
+    },
+    "ListAcmeEndpoints":{
+      "name":"ListAcmeEndpoints",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListAcmeEndpointsRequest"},
+      "output":{"shape":"ListAcmeEndpointsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true,
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM-ACME"}
+      }
+    },
+    "ListAcmeExternalAccountBindings":{
+      "name":"ListAcmeExternalAccountBindings",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListAcmeExternalAccountBindingsRequest"},
+      "output":{"shape":"ListAcmeExternalAccountBindingsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true,
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM-ACME"}
+      }
     },
     "ListCertificates":{
       "name":"ListCertificates",
@@ -131,9 +457,12 @@
       "input":{"shape":"ListCertificatesRequest"},
       "output":{"shape":"ListCertificatesResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"InvalidArgsException"}
-      ]
+        {"shape":"InvalidArgsException"},
+        {"shape":"ValidationException"}
+      ],
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM"}
+      }
     },
     "ListTagsForCertificate":{
       "name":"ListTagsForCertificate",
@@ -145,8 +474,29 @@
       "output":{"shape":"ListTagsForCertificateResponse"},
       "errors":[
         {"shape":"InvalidArnException"},
+        {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM"}
+      }
+    },
+    "ListTagsForResource":{
+      "name":"ListTagsForResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListTagsForResourceRequest"},
+      "output":{"shape":"ListTagsForResourceResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true,
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM"}
+      }
     },
     "PutAccountConfiguration":{
       "name":"PutAccountConfiguration",
@@ -156,11 +506,14 @@
       },
       "input":{"shape":"PutAccountConfigurationRequest"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
-        {"shape":"AccessDeniedException"}
-      ]
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM"}
+      }
     },
     "RemoveTagsFromCertificate":{
       "name":"RemoveTagsFromCertificate",
@@ -173,10 +526,14 @@
         {"shape":"InvalidParameterException"},
         {"shape":"TagPolicyException"},
         {"shape":"InvalidArnException"},
-        {"shape":"ThrottlingException"},
         {"shape":"InvalidTagException"},
-        {"shape":"ResourceNotFoundException"}
-      ]
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM"}
+      }
     },
     "RenewCertificate":{
       "name":"RenewCertificate",
@@ -188,8 +545,12 @@
       "errors":[
         {"shape":"InvalidArnException"},
         {"shape":"RequestInProgressException"},
+        {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM"}
+      }
     },
     "RequestCertificate":{
       "name":"RequestCertificate",
@@ -207,7 +568,10 @@
         {"shape":"InvalidTagException"},
         {"shape":"InvalidDomainValidationOptionsException"},
         {"shape":"LimitExceededException"}
-      ]
+      ],
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM"}
+      }
     },
     "ResendValidationEmail":{
       "name":"ResendValidationEmail",
@@ -219,9 +583,53 @@
       "errors":[
         {"shape":"InvalidArnException"},
         {"shape":"InvalidDomainValidationOptionsException"},
+        {"shape":"ValidationException"},
         {"shape":"InvalidStateException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM"}
+      }
+    },
+    "RevokeAcmeAccount":{
+      "name":"RevokeAcmeAccount",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RevokeAcmeAccountRequest"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true,
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM-ACME"}
+      }
+    },
+    "RevokeAcmeExternalAccountBinding":{
+      "name":"RevokeAcmeExternalAccountBinding",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RevokeAcmeExternalAccountBindingRequest"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true,
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM-ACME"}
+      }
     },
     "RevokeCertificate":{
       "name":"RevokeCertificate",
@@ -234,11 +642,15 @@
       "errors":[
         {"shape":"ResourceInUseException"},
         {"shape":"InvalidArnException"},
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ResourceNotFoundException"}
-      ]
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM"}
+      }
     },
     "SearchCertificates":{
       "name":"SearchCertificates",
@@ -249,10 +661,84 @@
       "input":{"shape":"SearchCertificatesRequest"},
       "output":{"shape":"SearchCertificatesResponse"},
       "errors":[
+        {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"AccessDeniedException"}
-      ]
+        {"shape":"ThrottlingException"}
+      ],
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM"}
+      }
+    },
+    "TagResource":{
+      "name":"TagResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"TagResourceRequest"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM"}
+      }
+    },
+    "UntagResource":{
+      "name":"UntagResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UntagResourceRequest"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM"}
+      }
+    },
+    "UpdateAcmeDomainValidation":{
+      "name":"UpdateAcmeDomainValidation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateAcmeDomainValidationRequest"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true,
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM-ACME"}
+      }
+    },
+    "UpdateAcmeEndpoint":{
+      "name":"UpdateAcmeEndpoint",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateAcmeEndpointRequest"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true,
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM-ACME"}
+      }
     },
     "UpdateCertificateOptions":{
       "name":"UpdateCertificateOptions",
@@ -264,9 +750,13 @@
       "errors":[
         {"shape":"InvalidArnException"},
         {"shape":"LimitExceededException"},
+        {"shape":"ValidationException"},
         {"shape":"InvalidStateException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM"}
+      }
     }
   },
   "shapes":{
@@ -292,7 +782,10 @@
         "Type":{"shape":"CertificateType"},
         "ExportOption":{"shape":"CertificateExport"},
         "ManagedBy":{"shape":"CertificateManagedBy"},
-        "ValidationMethod":{"shape":"ValidationMethod"}
+        "ValidationMethod":{"shape":"ValidationMethod"},
+        "CertificateKeyPairOrigin":{"shape":"CertificateKeyPairOrigin"},
+        "AcmeEndpointArn":{"shape":"Arn"},
+        "AcmeAccountId":{"shape":"AcmeAccountId"}
       }
     },
     "AcmCertificateMetadataFilter":{
@@ -305,9 +798,208 @@
         "Exported":{"shape":"NullableBoolean"},
         "ExportOption":{"shape":"CertificateExport"},
         "ManagedBy":{"shape":"CertificateManagedBy"},
-        "ValidationMethod":{"shape":"ValidationMethod"}
+        "ValidationMethod":{"shape":"ValidationMethod"},
+        "CertificateKeyPairOrigin":{"shape":"CertificateKeyPairOrigin"},
+        "AcmeEndpointArn":{"shape":"Arn"},
+        "AcmeAccountId":{"shape":"AcmeAccountId"}
       },
       "union":true
+    },
+    "AcmeAccount":{
+      "type":"structure",
+      "members":{
+        "AccountUrl":{"shape":"String"},
+        "PublicKeyThumbprint":{"shape":"String"},
+        "Status":{"shape":"AcmeAccountStatus"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "AcmeExternalAccountBindingArn":{"shape":"AcmeExternalAccountBindingArn"},
+        "Contacts":{"shape":"ContactList"}
+      }
+    },
+    "AcmeAccountId":{
+      "type":"string",
+      "max":36,
+      "min":36
+    },
+    "AcmeAccountList":{
+      "type":"list",
+      "member":{"shape":"AcmeAccountSummary"}
+    },
+    "AcmeAccountStatus":{
+      "type":"string",
+      "enum":[
+        "VALID",
+        "DEACTIVATED",
+        "REVOKED"
+      ]
+    },
+    "AcmeAccountSummary":{
+      "type":"structure",
+      "members":{
+        "AccountUrl":{"shape":"String"},
+        "PublicKeyThumbprint":{"shape":"String"},
+        "Status":{"shape":"AcmeAccountStatus"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "AcmeExternalAccountBindingArn":{"shape":"AcmeExternalAccountBindingArn"},
+        "Contacts":{"shape":"ContactList"}
+      }
+    },
+    "AcmeAuthorizationBehavior":{
+      "type":"string",
+      "enum":["PRE_APPROVED"]
+    },
+    "AcmeContact":{
+      "type":"string",
+      "enum":[
+        "REQUIRED",
+        "NOT_REQUIRED"
+      ]
+    },
+    "AcmeDomainValidation":{
+      "type":"structure",
+      "members":{
+        "AcmeDomainValidationArn":{"shape":"AcmeDomainValidationArn"},
+        "AcmeEndpointArn":{"shape":"AcmeEndpointArn"},
+        "DomainName":{"shape":"DomainName"},
+        "PrevalidationType":{"shape":"PrevalidationType"},
+        "PrevalidationDetails":{"shape":"PrevalidationDetails"},
+        "Status":{"shape":"AcmeDomainValidationStatus"},
+        "FailureDetails":{"shape":"FailureDetails"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "UpdatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "AcmeDomainValidationArn":{
+      "type":"string",
+      "max":200,
+      "min":1,
+      "pattern":"arn:aws[a-z-]*:acm:[a-z0-9-]+:[0-9]{12}:acme-endpoint/[a-zA-Z0-9-]+/acme-domain-validation/[a-zA-Z0-9-]+"
+    },
+    "AcmeDomainValidationFailureReason":{
+      "type":"string",
+      "enum":[
+        "ACCESS_DENIED",
+        "DOMAIN_MISMATCH",
+        "DOMAIN_NOT_ALLOWED",
+        "ENDPOINT_NOT_ACTIVE",
+        "HOSTED_ZONE_NOT_FOUND",
+        "INTERNAL_FAILURE",
+        "INVALID_CHANGE_BATCH",
+        "INVALID_PUBLIC_DOMAIN",
+        "TIMED_OUT"
+      ]
+    },
+    "AcmeDomainValidationList":{
+      "type":"list",
+      "member":{"shape":"AcmeDomainValidationSummary"}
+    },
+    "AcmeDomainValidationStatus":{
+      "type":"string",
+      "enum":[
+        "VALIDATING",
+        "VALID",
+        "INVALID",
+        "DELETING"
+      ]
+    },
+    "AcmeDomainValidationSummary":{
+      "type":"structure",
+      "members":{
+        "AcmeDomainValidationArn":{"shape":"AcmeDomainValidationArn"},
+        "AcmeEndpointArn":{"shape":"AcmeEndpointArn"},
+        "DomainName":{"shape":"DomainName"},
+        "PrevalidationType":{"shape":"PrevalidationType"},
+        "PrevalidationDetails":{"shape":"PrevalidationDetails"},
+        "Status":{"shape":"AcmeDomainValidationStatus"},
+        "FailureDetails":{"shape":"FailureDetails"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "UpdatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "AcmeEndpoint":{
+      "type":"structure",
+      "members":{
+        "AcmeEndpointArn":{"shape":"AcmeEndpointArn"},
+        "EndpointUrl":{"shape":"String"},
+        "Status":{"shape":"AcmeEndpointStatus"},
+        "FailureReason":{"shape":"String"},
+        "AuthorizationBehavior":{"shape":"AcmeAuthorizationBehavior"},
+        "Contact":{"shape":"AcmeContact"},
+        "CertificateAuthority":{"shape":"CertificateAuthority"},
+        "CertificateTags":{"shape":"TagList"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "UpdatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "AcmeEndpointArn":{
+      "type":"string",
+      "max":200,
+      "min":1,
+      "pattern":"arn:aws[a-z-]*:acm:[a-z0-9-]+:[0-9]{12}:acme-endpoint/[a-zA-Z0-9-]+"
+    },
+    "AcmeEndpointList":{
+      "type":"list",
+      "member":{"shape":"AcmeEndpointSummary"}
+    },
+    "AcmeEndpointStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "ACTIVE",
+        "DELETING",
+        "FAILED"
+      ]
+    },
+    "AcmeEndpointSummary":{
+      "type":"structure",
+      "members":{
+        "AcmeEndpointArn":{"shape":"AcmeEndpointArn"},
+        "EndpointUrl":{"shape":"String"},
+        "Status":{"shape":"AcmeEndpointStatus"},
+        "FailureReason":{"shape":"String"},
+        "AuthorizationBehavior":{"shape":"AcmeAuthorizationBehavior"},
+        "Contact":{"shape":"AcmeContact"},
+        "CertificateAuthority":{"shape":"CertificateAuthority"},
+        "CertificateTags":{"shape":"TagList"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "UpdatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "AcmeExternalAccountBinding":{
+      "type":"structure",
+      "members":{
+        "AcmeExternalAccountBindingArn":{"shape":"AcmeExternalAccountBindingArn"},
+        "AcmeEndpointArn":{"shape":"AcmeEndpointArn"},
+        "RoleArn":{"shape":"RoleArn"},
+        "ExpiresAt":{"shape":"Timestamp"},
+        "RevokedAt":{"shape":"Timestamp"},
+        "LastUsedAt":{"shape":"Timestamp"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "UpdatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "AcmeExternalAccountBindingArn":{
+      "type":"string",
+      "max":200,
+      "min":1,
+      "pattern":"arn:aws[a-z-]*:acm:[a-z0-9-]+:[0-9]{12}:acme-endpoint/[a-zA-Z0-9-]+/acme-external-account-binding/[a-zA-Z0-9-]+"
+    },
+    "AcmeExternalAccountBindingList":{
+      "type":"list",
+      "member":{"shape":"AcmeExternalAccountBindingSummary"}
+    },
+    "AcmeExternalAccountBindingSummary":{
+      "type":"structure",
+      "members":{
+        "AcmeExternalAccountBindingArn":{"shape":"AcmeExternalAccountBindingArn"},
+        "AcmeEndpointArn":{"shape":"AcmeEndpointArn"},
+        "RoleArn":{"shape":"RoleArn"},
+        "ExpiresAt":{"shape":"Timestamp"},
+        "RevokedAt":{"shape":"Timestamp"},
+        "LastUsedAt":{"shape":"Timestamp"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "UpdatedAt":{"shape":"Timestamp"}
+      }
     },
     "AddTagsToCertificateRequest":{
       "type":"structure",
@@ -327,6 +1019,13 @@
       "pattern":"arn:[\\w+=/,.@-]+:acm:[\\w+=/,.@-]*:[0-9]+:[\\w+=,.@-]+(/[\\w+=,.@-]+)*"
     },
     "AvailabilityErrorMessage":{"type":"string"},
+    "CertificateAuthority":{
+      "type":"structure",
+      "members":{
+        "PublicCertificateAuthority":{"shape":"PublicCertificateAuthority"}
+      },
+      "union":true
+    },
     "CertificateBody":{
       "type":"string",
       "max":32768,
@@ -378,7 +1077,10 @@
         "ExtendedKeyUsages":{"shape":"ExtendedKeyUsageList"},
         "CertificateAuthorityArn":{"shape":"Arn"},
         "RenewalEligibility":{"shape":"RenewalEligibility"},
-        "Options":{"shape":"CertificateOptions"}
+        "Options":{"shape":"CertificateOptions"},
+        "CertificateKeyPairOrigin":{"shape":"CertificateKeyPairOrigin"},
+        "AcmeEndpointArn":{"shape":"Arn"},
+        "AcmeAccountId":{"shape":"AcmeAccountId"}
       }
     },
     "CertificateExport":{
@@ -413,6 +1115,20 @@
       "max":15,
       "min":1
     },
+    "CertificateKeyPairOrigin":{
+      "type":"string",
+      "enum":[
+        "AWS_MANAGED",
+        "ACME",
+        "CUSTOMER_PROVIDED"
+      ]
+    },
+    "CertificateKeyPairOrigins":{
+      "type":"list",
+      "member":{"shape":"CertificateKeyPairOrigin"},
+      "max":3,
+      "min":1
+    },
     "CertificateManagedBy":{
       "type":"string",
       "enum":["CLOUDFRONT"]
@@ -427,7 +1143,12 @@
     "CertificateOptions":{
       "type":"structure",
       "members":{
-        "CertificateTransparencyLoggingPreference":{"shape":"CertificateTransparencyLoggingPreference"},
+        "CertificateTransparencyLoggingPreference":{
+          "shape":"CertificateTransparencyLoggingPreference",
+          "deprecated":true,
+          "deprecatedMessage":"Certificate transparency logging opt-out is no longer available.",
+          "deprecatedSince":"12th June 2026"
+        },
         "Export":{"shape":"CertificateExport"}
       }
     },
@@ -481,7 +1202,8 @@
         "IssuedAt":{"shape":"TStamp"},
         "ImportedAt":{"shape":"TStamp"},
         "RevokedAt":{"shape":"TStamp"},
-        "ManagedBy":{"shape":"CertificateManagedBy"}
+        "ManagedBy":{"shape":"CertificateManagedBy"},
+        "CertificateKeyPairOrigin":{"shape":"CertificateKeyPairOrigin"}
       }
     },
     "CertificateSummaryList":{
@@ -490,6 +1212,9 @@
     },
     "CertificateTransparencyLoggingPreference":{
       "type":"string",
+      "deprecated":true,
+      "deprecatedMessage":"Certificate transparency logging opt-out is no longer available.",
+      "deprecatedSince":"12th June 2026",
       "enum":[
         "ENABLED",
         "DISABLED"
@@ -528,8 +1253,85 @@
       },
       "exception":true
     },
+    "ContactList":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "sensitive":true
+    },
     "CoralAvailabilityThrottledResource":{"type":"string"},
     "CoralAvailabilityThrottlingReason":{"type":"string"},
+    "CreateAcmeDomainValidationRequest":{
+      "type":"structure",
+      "required":[
+        "AcmeEndpointArn",
+        "DomainName",
+        "PrevalidationOptions"
+      ],
+      "members":{
+        "IdempotencyToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "AcmeEndpointArn":{"shape":"AcmeEndpointArn"},
+        "DomainName":{"shape":"DomainName"},
+        "PrevalidationOptions":{"shape":"PrevalidationOptions"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateAcmeDomainValidationResponse":{
+      "type":"structure",
+      "required":["AcmeDomainValidationArn"],
+      "members":{
+        "AcmeDomainValidationArn":{"shape":"AcmeDomainValidationArn"}
+      }
+    },
+    "CreateAcmeEndpointRequest":{
+      "type":"structure",
+      "required":[
+        "AuthorizationBehavior",
+        "CertificateAuthority"
+      ],
+      "members":{
+        "IdempotencyToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "AuthorizationBehavior":{"shape":"AcmeAuthorizationBehavior"},
+        "Contact":{"shape":"AcmeContact"},
+        "CertificateAuthority":{"shape":"CertificateAuthority"},
+        "Tags":{"shape":"TagList"},
+        "CertificateTags":{"shape":"TagList"}
+      }
+    },
+    "CreateAcmeEndpointResponse":{
+      "type":"structure",
+      "members":{
+        "AcmeEndpointArn":{"shape":"AcmeEndpointArn"}
+      }
+    },
+    "CreateAcmeExternalAccountBindingRequest":{
+      "type":"structure",
+      "required":[
+        "AcmeEndpointArn",
+        "RoleArn"
+      ],
+      "members":{
+        "IdempotencyToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "AcmeEndpointArn":{"shape":"AcmeEndpointArn"},
+        "RoleArn":{"shape":"RoleArn"},
+        "Expiration":{"shape":"Expiration"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateAcmeExternalAccountBindingResponse":{
+      "type":"structure",
+      "members":{
+        "ExternalAccountBinding":{"shape":"AcmeExternalAccountBinding"}
+      }
+    },
     "CustomAttribute":{
       "type":"structure",
       "members":{
@@ -541,11 +1343,88 @@
       "type":"list",
       "member":{"shape":"CustomAttribute"}
     },
+    "DeleteAcmeDomainValidationRequest":{
+      "type":"structure",
+      "required":["AcmeDomainValidationArn"],
+      "members":{
+        "AcmeDomainValidationArn":{"shape":"AcmeDomainValidationArn"}
+      }
+    },
+    "DeleteAcmeEndpointRequest":{
+      "type":"structure",
+      "required":["AcmeEndpointArn"],
+      "members":{
+        "AcmeEndpointArn":{"shape":"AcmeEndpointArn"}
+      }
+    },
+    "DeleteAcmeExternalAccountBindingRequest":{
+      "type":"structure",
+      "required":["AcmeExternalAccountBindingArn"],
+      "members":{
+        "AcmeExternalAccountBindingArn":{"shape":"AcmeExternalAccountBindingArn"}
+      }
+    },
     "DeleteCertificateRequest":{
       "type":"structure",
       "required":["CertificateArn"],
       "members":{
         "CertificateArn":{"shape":"Arn"}
+      }
+    },
+    "DescribeAcmeAccountRequest":{
+      "type":"structure",
+      "required":[
+        "AcmeEndpointArn",
+        "AccountUrl"
+      ],
+      "members":{
+        "AcmeEndpointArn":{"shape":"AcmeEndpointArn"},
+        "AccountUrl":{"shape":"String"}
+      }
+    },
+    "DescribeAcmeAccountResponse":{
+      "type":"structure",
+      "members":{
+        "AcmeAccount":{"shape":"AcmeAccount"}
+      }
+    },
+    "DescribeAcmeDomainValidationRequest":{
+      "type":"structure",
+      "required":["AcmeDomainValidationArn"],
+      "members":{
+        "AcmeDomainValidationArn":{"shape":"AcmeDomainValidationArn"}
+      }
+    },
+    "DescribeAcmeDomainValidationResponse":{
+      "type":"structure",
+      "members":{
+        "AcmeDomainValidation":{"shape":"AcmeDomainValidation"}
+      }
+    },
+    "DescribeAcmeEndpointRequest":{
+      "type":"structure",
+      "required":["AcmeEndpointArn"],
+      "members":{
+        "AcmeEndpointArn":{"shape":"AcmeEndpointArn"}
+      }
+    },
+    "DescribeAcmeEndpointResponse":{
+      "type":"structure",
+      "members":{
+        "AcmeEndpoint":{"shape":"AcmeEndpoint"}
+      }
+    },
+    "DescribeAcmeExternalAccountBindingRequest":{
+      "type":"structure",
+      "required":["AcmeExternalAccountBindingArn"],
+      "members":{
+        "AcmeExternalAccountBindingArn":{"shape":"AcmeExternalAccountBindingArn"}
+      }
+    },
+    "DescribeAcmeExternalAccountBindingResponse":{
+      "type":"structure",
+      "members":{
+        "ExternalAccountBinding":{"shape":"AcmeExternalAccountBinding"}
       }
     },
     "DescribeCertificateRequest":{
@@ -593,6 +1472,21 @@
         "ComparisonOperator":{"shape":"ComparisonOperator"}
       }
     },
+    "DnsPrevalidationDetails":{
+      "type":"structure",
+      "members":{
+        "DomainScope":{"shape":"DomainScope"},
+        "HostedZoneId":{"shape":"HostedZoneId"},
+        "ResourceRecord":{"shape":"ResourceRecord"}
+      }
+    },
+    "DnsPrevalidationOptions":{
+      "type":"structure",
+      "members":{
+        "DomainScope":{"shape":"DomainScope"},
+        "HostedZoneId":{"shape":"HostedZoneId"}
+      }
+    },
     "DomainComponentList":{
       "type":"list",
       "member":{"shape":"String"}
@@ -603,11 +1497,32 @@
       "max":100,
       "min":1
     },
+    "DomainName":{
+      "type":"string",
+      "max":253,
+      "min":1,
+      "pattern":"([a-z0-9]([a-z0-9-]*[a-z0-9])?\\.)*[a-z0-9]([a-z0-9-]*[a-z0-9])?"
+    },
     "DomainNameString":{
       "type":"string",
       "max":253,
       "min":1,
       "pattern":"(\\*\\.)?(((?!-)[A-Za-z0-9-]{0,62}[A-Za-z0-9])\\.)+((?!-)[A-Za-z0-9-]{1,62}[A-Za-z0-9])"
+    },
+    "DomainScope":{
+      "type":"structure",
+      "members":{
+        "ExactDomain":{"shape":"DomainScopeOption"},
+        "Subdomains":{"shape":"DomainScopeOption"},
+        "Wildcards":{"shape":"DomainScopeOption"}
+      }
+    },
+    "DomainScopeOption":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "DomainStatus":{
       "type":"string",
@@ -651,6 +1566,22 @@
       "type":"list",
       "member":{"shape":"DomainValidationOption"},
       "max":100,
+      "min":1
+    },
+    "Expiration":{
+      "type":"structure",
+      "required":[
+        "Value",
+        "Type"
+      ],
+      "members":{
+        "Value":{"shape":"ExpirationValueLong"},
+        "Type":{"shape":"TimeType"}
+      }
+    },
+    "ExpirationValueLong":{
+      "type":"long",
+      "box":true,
       "min":1
     },
     "ExpiryEventsConfiguration":{
@@ -714,6 +1645,13 @@
       "type":"list",
       "member":{"shape":"ExtendedKeyUsageName"}
     },
+    "FailureDetails":{
+      "type":"structure",
+      "members":{
+        "Reason":{"shape":"AcmeDomainValidationFailureReason"},
+        "Message":{"shape":"String"}
+      }
+    },
     "FailureReason":{
       "type":"string",
       "enum":[
@@ -774,6 +1712,20 @@
         "ExpiryEvents":{"shape":"ExpiryEventsConfiguration"}
       }
     },
+    "GetAcmeExternalAccountBindingCredentialsRequest":{
+      "type":"structure",
+      "required":["AcmeExternalAccountBindingArn"],
+      "members":{
+        "AcmeExternalAccountBindingArn":{"shape":"AcmeExternalAccountBindingArn"}
+      }
+    },
+    "GetAcmeExternalAccountBindingCredentialsResponse":{
+      "type":"structure",
+      "members":{
+        "KeyId":{"shape":"String"},
+        "MacKey":{"shape":"MacKey"}
+      }
+    },
     "GetCertificateRequest":{
       "type":"structure",
       "required":["CertificateArn"],
@@ -787,6 +1739,12 @@
         "Certificate":{"shape":"CertificateBody"},
         "CertificateChain":{"shape":"CertificateChain"}
       }
+    },
+    "HostedZoneId":{
+      "type":"string",
+      "max":32,
+      "min":1,
+      "pattern":"Z[A-Z0-9]+"
     },
     "HttpRedirect":{
       "type":"structure",
@@ -824,6 +1782,15 @@
     "InUseList":{
       "type":"list",
       "member":{"shape":"String"}
+    },
+    "InternalServerException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "exception":true,
+      "fault":true,
+      "retryable":{"throttling":false}
     },
     "InvalidArgsException":{
       "type":"structure",
@@ -924,10 +1891,97 @@
       },
       "exception":true
     },
+    "ListAcmeAccountsRequest":{
+      "type":"structure",
+      "required":["AcmeEndpointArn"],
+      "members":{
+        "NextToken":{"shape":"String"},
+        "MaxResults":{"shape":"ListAcmeAccountsRequestMaxResultsInteger"},
+        "AcmeEndpointArn":{"shape":"AcmeEndpointArn"}
+      }
+    },
+    "ListAcmeAccountsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListAcmeAccountsResponse":{
+      "type":"structure",
+      "members":{
+        "AcmeAccounts":{"shape":"AcmeAccountList"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "ListAcmeDomainValidationsRequest":{
+      "type":"structure",
+      "required":["AcmeEndpointArn"],
+      "members":{
+        "NextToken":{"shape":"String"},
+        "MaxResults":{"shape":"ListAcmeDomainValidationsRequestMaxResultsInteger"},
+        "AcmeEndpointArn":{"shape":"AcmeEndpointArn"}
+      }
+    },
+    "ListAcmeDomainValidationsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListAcmeDomainValidationsResponse":{
+      "type":"structure",
+      "members":{
+        "AcmeDomainValidations":{"shape":"AcmeDomainValidationList"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "ListAcmeEndpointsRequest":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"String"},
+        "MaxResults":{"shape":"ListAcmeEndpointsRequestMaxResultsInteger"}
+      }
+    },
+    "ListAcmeEndpointsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListAcmeEndpointsResponse":{
+      "type":"structure",
+      "members":{
+        "AcmeEndpoints":{"shape":"AcmeEndpointList"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "ListAcmeExternalAccountBindingsRequest":{
+      "type":"structure",
+      "required":["AcmeEndpointArn"],
+      "members":{
+        "NextToken":{"shape":"String"},
+        "MaxResults":{"shape":"ListAcmeExternalAccountBindingsRequestMaxResultsInteger"},
+        "AcmeEndpointArn":{"shape":"AcmeEndpointArn"}
+      }
+    },
+    "ListAcmeExternalAccountBindingsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListAcmeExternalAccountBindingsResponse":{
+      "type":"structure",
+      "members":{
+        "ExternalAccountBindings":{"shape":"AcmeExternalAccountBindingList"},
+        "NextToken":{"shape":"String"}
+      }
+    },
     "ListCertificatesRequest":{
       "type":"structure",
       "members":{
         "CertificateStatuses":{"shape":"CertificateStatuses"},
+        "CertificateKeyPairOrigins":{"shape":"CertificateKeyPairOrigins"},
         "Includes":{"shape":"Filters"},
         "NextToken":{"shape":"NextToken"},
         "MaxItems":{"shape":"MaxItems"},
@@ -954,6 +2008,23 @@
       "members":{
         "Tags":{"shape":"TagList"}
       }
+    },
+    "ListTagsForResourceRequest":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{"shape":"Arn"}
+      }
+    },
+    "ListTagsForResourceResponse":{
+      "type":"structure",
+      "members":{
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "MacKey":{
+      "type":"string",
+      "sensitive":true
     },
     "MaxItems":{
       "type":"integer",
@@ -995,6 +2066,24 @@
       "box":true,
       "min":1
     },
+    "PrevalidationDetails":{
+      "type":"structure",
+      "members":{
+        "DnsPrevalidation":{"shape":"DnsPrevalidationDetails"}
+      },
+      "union":true
+    },
+    "PrevalidationOptions":{
+      "type":"structure",
+      "members":{
+        "DnsPrevalidation":{"shape":"DnsPrevalidationOptions"}
+      },
+      "union":true
+    },
+    "PrevalidationType":{
+      "type":"string",
+      "enum":["DNS_PREVALIDATION"]
+    },
     "PrivateKey":{
       "type":"string",
       "max":524288,
@@ -1007,6 +2096,24 @@
       "max":5120,
       "min":1,
       "sensitive":true
+    },
+    "PublicCertificateAuthority":{
+      "type":"structure",
+      "members":{
+        "AllowedKeyAlgorithms":{"shape":"PublicKeyAlgorithmList"}
+      }
+    },
+    "PublicKeyAlgorithm":{
+      "type":"string",
+      "enum":[
+        "RSA_2048",
+        "EC_prime256v1",
+        "EC_secp384r1"
+      ]
+    },
+    "PublicKeyAlgorithmList":{
+      "type":"list",
+      "member":{"shape":"PublicKeyAlgorithm"}
     },
     "PutAccountConfigurationRequest":{
       "type":"structure",
@@ -1153,6 +2260,24 @@
         "A_A_COMPROMISE"
       ]
     },
+    "RevokeAcmeAccountRequest":{
+      "type":"structure",
+      "required":[
+        "AcmeEndpointArn",
+        "AccountUrl"
+      ],
+      "members":{
+        "AcmeEndpointArn":{"shape":"AcmeEndpointArn"},
+        "AccountUrl":{"shape":"String"}
+      }
+    },
+    "RevokeAcmeExternalAccountBindingRequest":{
+      "type":"structure",
+      "required":["AcmeExternalAccountBindingArn"],
+      "members":{
+        "AcmeExternalAccountBindingArn":{"shape":"AcmeExternalAccountBindingArn"}
+      }
+    },
     "RevokeCertificateRequest":{
       "type":"structure",
       "required":[
@@ -1169,6 +2294,12 @@
       "members":{
         "CertificateArn":{"shape":"Arn"}
       }
+    },
+    "RoleArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"arn:aws[a-z-]*:iam::[0-9]{12}:role/.+"
     },
     "SearchCertificatesRequest":{
       "type":"structure",
@@ -1207,7 +2338,10 @@
         "MANAGED_BY",
         "EXPORT_OPTION",
         "VALIDATION_METHOD",
-        "IMPORTED_AT"
+        "IMPORTED_AT",
+        "ACME_ENDPOINT_ARN",
+        "ACME_ACCOUNT_ID",
+        "CERTIFICATE_KEY_PAIR_ORIGIN"
       ]
     },
     "SearchCertificatesSortOrder":{
@@ -1230,6 +2364,13 @@
       "pattern":"[0-9a-f]{2}(:[0-9a-f]{2}){1,19}"
     },
     "ServiceErrorMessage":{"type":"string"},
+    "ServiceQuotaExceededException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "exception":true
+    },
     "SortBy":{
       "type":"string",
       "enum":["CREATED_AT"]
@@ -1269,7 +2410,13 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"[\\p{L}\\p{Z}\\p{N}_.:\\/=+\\-@]*"
+      "pattern":"([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)"
+    },
+    "TagKeyList":{
+      "type":"list",
+      "member":{"shape":"TagKey"},
+      "max":50,
+      "min":1
     },
     "TagList":{
       "type":"list",
@@ -1284,11 +2431,22 @@
       },
       "exception":true
     },
+    "TagResourceRequest":{
+      "type":"structure",
+      "required":[
+        "ResourceArn",
+        "Tags"
+      ],
+      "members":{
+        "ResourceArn":{"shape":"Arn"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
     "TagValue":{
       "type":"string",
       "max":256,
       "min":0,
-      "pattern":"[\\p{L}\\p{Z}\\p{N}_.:\\/=+\\-@]*"
+      "pattern":"([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)"
     },
     "ThrottlingException":{
       "type":"structure",
@@ -1309,6 +2467,15 @@
       "type":"list",
       "member":{"shape":"ThrottlingReason"}
     },
+    "TimeType":{
+      "type":"string",
+      "enum":[
+        "MINUTES",
+        "HOURS",
+        "DAYS"
+      ]
+    },
+    "Timestamp":{"type":"timestamp"},
     "TimestampRange":{
       "type":"structure",
       "members":{
@@ -1322,6 +2489,35 @@
         "message":{"shape":"String"}
       },
       "exception":true
+    },
+    "UntagResourceRequest":{
+      "type":"structure",
+      "required":[
+        "ResourceArn",
+        "TagKeys"
+      ],
+      "members":{
+        "ResourceArn":{"shape":"Arn"},
+        "TagKeys":{"shape":"TagKeyList"}
+      }
+    },
+    "UpdateAcmeDomainValidationRequest":{
+      "type":"structure",
+      "required":["AcmeDomainValidationArn"],
+      "members":{
+        "AcmeDomainValidationArn":{"shape":"AcmeDomainValidationArn"},
+        "PrevalidationOptions":{"shape":"PrevalidationOptions"}
+      }
+    },
+    "UpdateAcmeEndpointRequest":{
+      "type":"structure",
+      "required":["AcmeEndpointArn"],
+      "members":{
+        "AcmeEndpointArn":{"shape":"AcmeEndpointArn"},
+        "AuthorizationBehavior":{"shape":"AcmeAuthorizationBehavior"},
+        "Contact":{"shape":"AcmeContact"},
+        "CertificateAuthority":{"shape":"CertificateAuthority"}
+      }
     },
     "UpdateCertificateOptionsRequest":{
       "type":"structure",
@@ -1381,6 +2577,12 @@
         "NotAfter":{"shape":"TStamp"},
         "NotBefore":{"shape":"TStamp"}
       }
+    }
+  },
+  "clientContextParams":{
+    "ServiceType":{
+      "documentation":"The service type: ACM or ACM-ACME. Injected via @staticContextParams.",
+      "type":"string"
     }
   }
 }

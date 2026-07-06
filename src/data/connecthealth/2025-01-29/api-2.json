@@ -1257,6 +1257,19 @@
             },
             "event": true
         },
+        "MedicalScribeBinaryAudioEvent": {
+            "type": "structure",
+            "required": [
+                "audioChunk"
+            ],
+            "members": {
+                "audioChunk": {
+                    "shape": "AudioChunk",
+                    "eventpayload": true
+                }
+            },
+            "event": true
+        },
         "MedicalScribeChannelDefinition": {
             "type": "structure",
             "required": [
@@ -1309,6 +1322,9 @@
             "members": {
                 "audioEvent": {
                     "shape": "MedicalScribeAudioEvent"
+                },
+                "binaryAudioEvent": {
+                    "shape": "MedicalScribeBinaryAudioEvent"
                 },
                 "sessionControlEvent": {
                     "shape": "MedicalScribeSessionControlEvent"
@@ -1654,7 +1670,7 @@
         },
         "SensitiveMarkdownString": {
             "type": "string",
-            "pattern": "[a-zA-Z0-9\\s\\*_\\-#\\[\\]\\(\\)\\.,:;!?'\"`<>~\/]+",
+            "pattern": "[\\p{L}\\p{N}\\s\\*_\\-#\\[\\]\\(\\)\\.,:;!?'\"`<>~\/|+=&%@\\\\{}^]+",
             "sensitive": true
         },
         "SensitiveNonEmptyString": {

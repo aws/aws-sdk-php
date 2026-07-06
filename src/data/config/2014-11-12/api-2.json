@@ -1806,7 +1806,8 @@
         "MaximumExecutionFrequency":{"shape":"MaximumExecutionFrequency"},
         "ConfigRuleState":{"shape":"ConfigRuleState"},
         "CreatedBy":{"shape":"StringWithCharLimit256"},
-        "EvaluationModes":{"shape":"EvaluationModes"}
+        "EvaluationModes":{"shape":"EvaluationModes"},
+        "RuleEvaluationVisibility":{"shape":"RuleEvaluationVisibility"}
       }
     },
     "ConfigRuleComplianceFilters":{
@@ -2638,7 +2639,8 @@
     "DescribeConfigRulesFilters":{
       "type":"structure",
       "members":{
-        "EvaluationMode":{"shape":"EvaluationMode"}
+        "EvaluationMode":{"shape":"EvaluationMode"},
+        "RuleEvaluationVisibility":{"shape":"RuleEvaluationVisibility"}
       }
     },
     "DescribeConfigRulesRequest":{
@@ -4368,7 +4370,8 @@
         "OrganizationManagedRuleMetadata":{"shape":"OrganizationManagedRuleMetadata"},
         "OrganizationCustomRuleMetadata":{"shape":"OrganizationCustomRuleMetadata"},
         "ExcludedAccounts":{"shape":"ExcludedAccounts"},
-        "OrganizationCustomPolicyRuleMetadata":{"shape":"OrganizationCustomPolicyRuleMetadata"}
+        "OrganizationCustomPolicyRuleMetadata":{"shape":"OrganizationCustomPolicyRuleMetadata"},
+        "Tags":{"shape":"TagsList"}
       }
     },
     "PutOrganizationConfigRuleResponse":{
@@ -4387,7 +4390,8 @@
         "DeliveryS3Bucket":{"shape":"DeliveryS3Bucket"},
         "DeliveryS3KeyPrefix":{"shape":"DeliveryS3KeyPrefix"},
         "ConformancePackInputParameters":{"shape":"ConformancePackInputParameters"},
-        "ExcludedAccounts":{"shape":"ExcludedAccounts"}
+        "ExcludedAccounts":{"shape":"ExcludedAccounts"},
+        "Tags":{"shape":"TagsList"}
       }
     },
     "PutOrganizationConformancePackResponse":{
@@ -5542,6 +5546,13 @@
       "max":2557,
       "min":30
     },
+    "RuleEvaluationVisibility":{
+      "type":"string",
+      "enum":[
+        "EXTERNAL",
+        "INTERNAL"
+      ]
+    },
     "RuleLimit":{
       "type":"integer",
       "max":50,
@@ -5567,7 +5578,8 @@
         "ComplianceResourceTypes":{"shape":"ComplianceResourceTypes"},
         "TagKey":{"shape":"StringWithCharLimit128"},
         "TagValue":{"shape":"StringWithCharLimit256"},
-        "ComplianceResourceId":{"shape":"BaseResourceId"}
+        "ComplianceResourceId":{"shape":"BaseResourceId"},
+        "ServicePrincipals":{"shape":"ServicePrincipals"}
       }
     },
     "SelectAggregateResourceConfigRequest":{
@@ -5624,6 +5636,12 @@
     "ServicePrincipalValueList":{
       "type":"list",
       "member":{"shape":"ServicePrincipalValue"}
+    },
+    "ServicePrincipals":{
+      "type":"list",
+      "member":{"shape":"StringWithCharLimit128"},
+      "max":100,
+      "min":0
     },
     "SortBy":{
       "type":"string",

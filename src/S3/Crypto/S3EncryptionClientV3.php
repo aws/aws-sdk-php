@@ -250,12 +250,19 @@ class S3EncryptionClientV3 extends AbstractCryptoClientV3
 
         $envelope = new MetadataEnvelope();
 
+        $bodyStream = Psr7\Utils::streamFor($args['Body']);
+        // User-owned resource which should be detached instead of closed
+        // during garbage-collection
+        if (is_resource($args['Body'])) {
+            $bodyStream = \Aws\detach_on_close_stream($bodyStream);
+        }
+
         return Promise\Create::promiseFor(
             //= ../specification/s3-encryption/client.md#required-api-operations
             //= type=implication
             //# - PutObject MUST encrypt its input data before it is uploaded to S3.
             $this->encrypt(
-                Psr7\Utils::streamFor($args['Body']),
+                $bodyStream,
                 $algorithmSuite,
                 $options,
                 $provider,

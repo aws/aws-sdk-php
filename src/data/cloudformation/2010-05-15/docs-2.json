@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<fullname>CloudFormation</fullname> <p>CloudFormation allows you to create and manage Amazon Web Services infrastructure deployments predictably and repeatedly. You can use CloudFormation to leverage Amazon Web Services products, such as Amazon Elastic Compute Cloud, Amazon Elastic Block Store, Amazon Simple Notification Service, ELB, and Amazon EC2 Auto Scaling to build highly reliable, highly scalable, cost-effective applications without creating or configuring the underlying Amazon Web Services infrastructure.</p> <p>With CloudFormation, you declare all your resources and dependencies in a template file. The template defines a collection of resources as a single unit called a stack. CloudFormation creates and deletes all member resources of the stack together and manages all dependencies between the resources for you.</p> <p>For more information about CloudFormation, see the <a href=\"http://aws.amazon.com/cloudformation/\">CloudFormation product page</a>.</p> <p>CloudFormation makes use of other Amazon Web Services products. If you need additional technical information about a specific Amazon Web Services product, you can find the product's technical documentation at <a href=\"https://docs.aws.amazon.com/\">docs.aws.amazon.com</a>.</p>",
+  "service": "<fullname>CloudFormation</fullname> <p>CloudFormation allows you to create and manage Amazon Web Services infrastructure deployments predictably and repeatedly. You can use CloudFormation to leverage Amazon Web Services products, such as Amazon Elastic Compute Cloud, Amazon Elastic Block Store, Amazon Simple Notification Service, Elastic Load Balancing, and Amazon EC2 Auto Scaling to build highly reliable, highly scalable, cost-effective applications without creating or configuring the underlying Amazon Web Services infrastructure.</p> <p>With CloudFormation, you declare all your resources and dependencies in a template file. The template defines a collection of resources as a single unit called a stack. CloudFormation creates and deletes all member resources of the stack together and manages all dependencies between the resources for you.</p> <p>For more information about CloudFormation, see the <a href=\"http://aws.amazon.com/cloudformation/\">CloudFormation product page</a>.</p> <p>CloudFormation makes use of other Amazon Web Services products. If you need additional technical information about a specific Amazon Web Services product, you can find the product's technical documentation at <a href=\"https://docs.aws.amazon.com/\">docs.aws.amazon.com</a>.</p>",
   "operations": {
     "ActivateOrganizationsAccess": "<p>Activate trusted access with Organizations. With trusted access between StackSets and Organizations activated, the management account has permissions to create and manage StackSets for your organization.</p>",
     "ActivateType": "<p>Activates a public third-party extension, such as a resource or module, to make it available for use in stack templates in your current account and Region. It can also create CloudFormation Hooks, which allow you to evaluate resource configurations before CloudFormation provisions them. Hooks integrate with both CloudFormation and Cloud Control API operations.</p> <p>After you activate an extension, you can use <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_SetTypeConfiguration.html\">SetTypeConfiguration</a> to set specific properties for the extension.</p> <p>To see which extensions have been activated, use <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_ListTypes.html\">ListTypes</a>. To see configuration details for an extension, use <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_DescribeType.html\">DescribeType</a>.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/registry-public-activate-extension.html\">Activate a third-party public extension in your account</a> in the <i>CloudFormation User Guide</i>. For information about creating Hooks, see the <a href=\"https://docs.aws.amazon.com/cloudformation-cli/latest/hooks-userguide/what-is-cloudformation-hooks.html\">CloudFormation Hooks User Guide</a>.</p>",
@@ -745,6 +745,24 @@
         "StackSummary$DeletionTime": "<p>The time the stack was deleted.</p>"
       }
     },
+    "DeploymentConfig": {
+      "base": "<p>The deployment configuration for a stack operation, including the deployment mode.</p>",
+      "refs": {
+        "CreateChangeSetInput$DeploymentConfig": "<p>The deployment configuration for this stack operation, including the deployment mode.</p>",
+        "CreateStackInput$DeploymentConfig": "<p>The deployment configuration for this stack operation, including the deployment mode.</p>",
+        "DeleteStackInput$DeploymentConfig": "<p>The deployment configuration for this stack operation, including the deployment mode.</p>",
+        "DescribeChangeSetOutput$DeploymentConfig": "<p>The deployment configuration specified when the change set was created.</p>",
+        "RollbackStackInput$DeploymentConfig": "<p>The deployment configuration for this stack operation, including the deployment mode.</p>",
+        "Stack$DeploymentConfig": "<p>The deployment configuration for the stack, including the deployment mode used for stack operations.</p>",
+        "UpdateStackInput$DeploymentConfig": "<p>The deployment configuration for this stack operation, including the deployment mode.</p>"
+      }
+    },
+    "DeploymentConfigMode": {
+      "base": null,
+      "refs": {
+        "DeploymentConfig$Mode": "<p>Specifies the deployment mode for the stack operation. Possible values are:</p> <ul> <li> <p> <code>STANDARD</code> - Use the standard deployment behavior, ensuring resources are ready to serve traffic before completing the operation. This is the default. You do not need to specify this value explicitly.</p> </li> <li> <p> <code>EXPRESS</code> - Complete the stack operation when resource configuration is applied, without waiting for resources to become ready to serve traffic. Resources continue becoming ready in the background.</p> </li> </ul>"
+      }
+    },
     "DeploymentMode": {
       "base": null,
       "refs": {
@@ -1014,9 +1032,18 @@
       "base": null,
       "refs": {
         "CreateStackInput$DisableRollback": "<p>Set to <code>true</code> to disable rollback of the stack if stack creation failed. You can specify either <code>DisableRollback</code> or <code>OnFailure</code>, but not both.</p> <p>Default: <code>false</code> </p>",
+        "DeploymentConfig$DisableRollback": "<p>Specifies whether to disable rollback of the stack if the stack operation fails.</p> <p>Default: <code>false</code> </p>",
         "ExecuteChangeSetInput$DisableRollback": "<p>Preserves the state of previously provisioned resources when an operation fails. This parameter can't be specified when the <code>OnStackFailure</code> parameter to the <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_CreateChangeSet.html\">CreateChangeSet</a> API operation was specified.</p> <ul> <li> <p> <code>True</code> - if the stack creation fails, do nothing. This is equivalent to specifying <code>DO_NOTHING</code> for the <code>OnStackFailure</code> parameter to the <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_CreateChangeSet.html\">CreateChangeSet</a> API operation.</p> </li> <li> <p> <code>False</code> - if the stack creation fails, roll back the stack. This is equivalent to specifying <code>ROLLBACK</code> for the <code>OnStackFailure</code> parameter to the <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_CreateChangeSet.html\">CreateChangeSet</a> API operation.</p> </li> </ul> <p>Default: <code>True</code> </p>",
         "Stack$DisableRollback": "<p>Boolean to enable or disable rollback on stack creation failures:</p> <ul> <li> <p> <code>true</code>: disable rollback.</p> </li> <li> <p> <code>false</code>: enable rollback.</p> </li> </ul>",
         "UpdateStackInput$DisableRollback": "<p>Preserve the state of previously provisioned resources when an operation fails.</p> <p>Default: <code>False</code> </p>"
+      }
+    },
+    "DisableValidation": {
+      "base": "<p>Boolean to enable or disable pre-deployment validations in changeset and stack operations:</p> <ul> <li> <p> <code>true</code>: disable pre-deployment validations.</p> </li> <li> <p> <code>false</code>: enable pre-deployment validations.</p> </li> </ul>",
+      "refs": {
+        "CreateChangeSetInput$DisableValidation": "<p> Set to <code>true</code> to disable pre-deployment validations in changeset or stack operations. </p> <p> Default: <code>false</code> </p>",
+        "CreateStackInput$DisableValidation": "<p> Set to <code>true</code> to disable pre-deployment validations in changeset or stack operations. </p> <p> Default: <code>false</code> </p>",
+        "UpdateStackInput$DisableValidation": "<p> Set to <code>true</code> to disable pre-deployment validations in changeset or stack operations. </p> <p> Default: <code>false</code> </p>"
       }
     },
     "DriftIgnoredReason": {
@@ -2759,7 +2786,7 @@
     "ResourceSignalUniqueId": {
       "base": null,
       "refs": {
-        "SignalResourceInput$UniqueId": "<p>A unique ID of the signal. When you signal Amazon EC2 instances or Amazon EC2 Auto Scaling groups, specify the instance ID that you are signaling as the unique ID. If you send multiple signals to a single resource (such as signaling a wait condition), each signal requires a different unique ID.</p>"
+        "SignalResourceInput$UniqueId": "<p>A unique ID of the signal. When you signal Amazon EC2 instances or Auto Scaling groups, specify the instance ID that you are signaling as the unique ID. If you send multiple signals to a single resource (such as signaling a wait condition), each signal requires a different unique ID.</p>"
       }
     },
     "ResourceStatus": {
@@ -3314,7 +3341,7 @@
         "DeleteChangeSetInput$StackName": "<p>If you specified the name of a change set to delete, specify the stack name or Amazon Resource Name (ARN) that's associated with it.</p>",
         "DescribeChangeSetHooksInput$StackName": "<p>If you specified the name of a change set, specify the stack name or stack ID (ARN) of the change set you want to describe.</p>",
         "DescribeChangeSetInput$StackName": "<p>If you specified the name of a change set, specify the stack name or ID (ARN) of the change set you want to describe.</p>",
-        "DescribeEventsInput$StackName": "<p>The name or unique stack ID for which you want to retrieve events.</p>",
+        "DescribeEventsInput$StackName": "<p>The name or unique stack ID for which you want to retrieve events. If you specified the name of a change set, specify the stack name or ID (ARN) of the change set you want to describe.</p>",
         "DescribeStackResourceDriftsInput$StackName": "<p>The name of the stack for which you want drift information.</p>",
         "DetectStackDriftInput$StackName": "<p>The name of the stack for which you want to detect drift.</p>",
         "DetectStackResourceDriftInput$StackName": "<p>The name of the stack to which the resource belongs.</p>",

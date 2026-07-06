@@ -139,6 +139,12 @@
         "AnswerMachineDetectionConfig$awaitAnswerMachinePrompt": "<p>Enable or disable await answer machine prompt</p>"
       }
     },
+    "BrowserId": {
+      "base": "<p>Browser Id for web notification event trigger</p>",
+      "refs": {
+        "WebNotificationContext$browserId": null
+      }
+    },
     "Campaign": {
       "base": "<p>An Amazon Connect campaign.</p>",
       "refs": {
@@ -233,6 +239,12 @@
         "SmsChannelSubtypeConfig$capacity": null,
         "TelephonyChannelSubtypeConfig$capacity": null,
         "WhatsAppChannelSubtypeConfig$capacity": null
+      }
+    },
+    "ChannelContext": {
+      "base": "<p>Additional metadata related to the event trigger context</p>",
+      "refs": {
+        "EventTriggerContext$channelContext": null
       }
     },
     "ChannelSubtype": {
@@ -523,6 +535,12 @@
       "base": "<p>Event trigger of the campaign</p>",
       "refs": {
         "Source$eventTrigger": null
+      }
+    },
+    "EventTriggerContext": {
+      "base": "<p>Event trigger context data</p>",
+      "refs": {
+        "ProfileOutboundRequest$eventTriggerContext": null
       }
     },
     "EventType": {
@@ -823,6 +841,12 @@
         "LocalTimeZoneConfig$localTimeZoneDetection": null
       }
     },
+    "LocalTimeZoneDetectionScope": {
+      "base": "<p>Local TimeZone Detection scope.</p>",
+      "refs": {
+        "LocalTimeZoneConfig$localTimeZoneDetectionScope": null
+      }
+    },
     "LocalTimeZoneDetectionType": {
       "base": "<p>Local TimeZone Detection method.</p>",
       "refs": {
@@ -1035,6 +1059,12 @@
       "base": "<p>Request would cause a service quota to be exceeded.</p>",
       "refs": {}
     },
+    "SessionId": {
+      "base": "<p>Session Id for web notification event trigger</p>",
+      "refs": {
+        "WebNotificationContext$sessionId": null
+      }
+    },
     "SmsChannelSubtypeConfig": {
       "base": "<p>SMS Channel Subtype config</p>",
       "refs": {
@@ -1065,6 +1095,12 @@
         "Campaign$source": null,
         "CreateCampaignRequest$source": null,
         "UpdateCampaignSourceRequest$source": null
+      }
+    },
+    "SourceEvent": {
+      "base": "<p>Source event object for event triggers</p>",
+      "refs": {
+        "EventTriggerContext$sourceEvent": null
       }
     },
     "SourcePhoneNumber": {
@@ -1288,6 +1324,12 @@
     "ValidationException": {
       "base": "<p>The input fails to satisfy the constraints specified by an AWS service.</p>",
       "refs": {}
+    },
+    "WebNotificationContext": {
+      "base": "<p>Context metadata for the web notification type channel</p>",
+      "refs": {
+        "ChannelContext$webNotificationContext": null
+      }
     },
     "WhatsAppChannelSubtypeConfig": {
       "base": "<p>WhatsApp Channel Subtype config</p>",

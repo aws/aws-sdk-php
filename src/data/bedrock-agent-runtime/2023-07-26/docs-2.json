@@ -2,6 +2,7 @@
   "version": "2.0",
   "service": "<p>Contains APIs related to model invocation and querying of knowledge bases.</p>",
   "operations": {
+    "AgenticRetrieveStream": "<p>Retrieves information from one or more knowledge bases using an agentic approach. Agentic retrieval uses a foundation model to intelligently decompose complex queries into sub-queries and iteratively retrieve relevant information from your knowledge bases. This approach improves retrieval accuracy for complex, multi-step questions that a single retrieval pass might not fully address.</p> <p>The operation returns results through a stream that includes retrieval results, trace events for visibility into the process, and a generated response synthesized from the results by default, which can be turned off.</p>",
     "CreateInvocation": "<p>Creates a new invocation within a session. An invocation groups the related invocation steps that store the content from a conversation. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p> <p>Related APIs</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_ListInvocations.html\">ListInvocations</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_ListSessions.html\">ListSessions</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_GetSession.html\">GetSession</a> </p> </li> </ul>",
     "CreateSession": "<p>Creates a session to temporarily store conversations for generative AI (GenAI) applications built with open-source frameworks such as LangGraph and LlamaIndex. Sessions enable you to save the state of conversations at checkpoints, with the added security and infrastructure of Amazon Web Services. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p> <p>By default, Amazon Bedrock uses Amazon Web Services-managed keys for session encryption, including session metadata, or you can use your own KMS key. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/session-encryption.html\">Amazon Bedrock session encryption</a>.</p> <note> <p> You use a session to store state and conversation history for generative AI applications built with open-source frameworks. For Amazon Bedrock Agents, the service automatically manages conversation context and associates them with the agent-specific sessionId you specify in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html\">InvokeAgent</a> API operation. </p> </note> <p>Related APIs:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_ListSessions.html\">ListSessions</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_GetSession.html\">GetSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_EndSession.html\">EndSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_DeleteSession.html\">DeleteSession</a> </p> </li> </ul>",
     "DeleteAgentMemory": "<p>Deletes memory from the specified memory identifier.</p>",
@@ -9,6 +10,7 @@
     "EndSession": "<p>Ends the session. After you end a session, you can still access its content but you can’t add to it. To delete the session and it's content, you use the DeleteSession API operation. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>",
     "GenerateQuery": "<p>Generates an SQL query from a natural language query. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-generate-query.html\">Generate a query for structured data</a> in the Amazon Bedrock User Guide.</p>",
     "GetAgentMemory": "<p>Gets the sessions stored in the memory of the agent.</p>",
+    "GetDocumentContent": "<p>Retrieves the content of an ingested document from a knowledge base. Returns a pre-signed URL for secure document access.</p>",
     "GetExecutionFlowSnapshot": "<p>Retrieves the flow definition snapshot used for a flow execution. The snapshot represents the flow metadata and definition as it existed at the time the execution was started. Note that even if the flow is edited after an execution starts, the snapshot connected to the execution remains unchanged.</p> <note> <p>Flow executions is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
     "GetFlowExecution": "<p>Retrieves details about a specific flow execution, including its status, start and end times, and any errors that occurred during execution.</p>",
     "GetInvocationStep": "<p>Retrieves the details of a specific invocation step within an invocation in a session. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>",
@@ -26,8 +28,8 @@
     "PutInvocationStep": "<p>Add an invocation step to an invocation in a session. An invocation step stores fine-grained state checkpoints, including text and images, for each interaction. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p> <p>Related APIs:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_GetInvocationStep.html\">GetInvocationStep</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_ListInvocationSteps.html\">ListInvocationSteps</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_ListInvocations.html\">ListInvocations</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_ListInvocations.html\">ListSessions</a> </p> </li> </ul>",
     "Rerank": "<p>Reranks the relevance of sources based on queries. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/rerank.html\">Improve the relevance of query responses with a reranker model</a>.</p>",
     "Retrieve": "<p>Queries a knowledge base and retrieves information from it.</p>",
-    "RetrieveAndGenerate": "<p>Queries a knowledge base and generates responses based on the retrieved results and using the specified foundation model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a>. The response only cites sources that are relevant to the query.</p>",
-    "RetrieveAndGenerateStream": "<p>Queries a knowledge base and generates responses based on the retrieved results, with output in streaming format.</p> <note> <p>The CLI doesn't support streaming operations in Amazon Bedrock, including <code>InvokeModelWithResponseStream</code>.</p> </note> <p>This operation requires permission for the <code> bedrock:RetrieveAndGenerate</code> action.</p>",
+    "RetrieveAndGenerate": "<p>Queries a knowledge base and generates responses based on the retrieved results and using the specified foundation model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a>. The response only cites sources that are relevant to the query.</p> <note> <p>This API cannot be used with managed knowledge bases. Use <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_AgenticRetrieveStream.html\">AgenticRetrieveStream</a> or <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Retrieve.html\">Retrieve</a> with managed knowledge bases.</p> </note>",
+    "RetrieveAndGenerateStream": "<p>Queries a knowledge base and generates responses based on the retrieved results, with output in streaming format.</p> <note> <p>This API cannot be used with managed knowledge bases. Use <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_AgenticRetrieveStream.html\">AgenticRetrieveStream</a> or <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Retrieve.html\">Retrieve</a> with managed knowledge bases.</p> </note> <note> <p>The CLI doesn't support streaming operations in Amazon Bedrock, including <code>InvokeModelWithResponseStream</code>.</p> </note> <p>This operation requires permission for the <code> bedrock:RetrieveAndGenerate</code> action.</p>",
     "StartFlowExecution": "<p>Starts an execution of an Amazon Bedrock flow. Unlike flows that run until completion or time out after five minutes, flow executions let you run flows asynchronously for longer durations. Flow executions also yield control so that your application can perform other tasks.</p> <p>This operation returns an Amazon Resource Name (ARN) that you can use to track and manage your flow execution.</p> <note> <p>Flow executions is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
     "StopFlowExecution": "<p>Stops an Amazon Bedrock flow's execution. This operation prevents further processing of the flow and changes the execution status to <code>Aborted</code>.</p>",
     "TagResource": "<p>Associate tags with a resource. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Tagging resources</a> in the Amazon Bedrock User Guide.</p>",
@@ -50,6 +52,7 @@
     "AccessDeniedException": {
       "base": "<p>The request is denied because of missing access permissions. Check your permissions and retry your request.</p>",
       "refs": {
+        "AgenticRetrieveStreamResponseOutput$accessDeniedException": "<p>Access to the resource was denied.</p>",
         "FlowResponseStream$accessDeniedException": "<p>The request is denied because of missing access permissions. Check your permissions and retry your request.</p>",
         "InlineAgentResponseStream$accessDeniedException": "<p>The request is denied because of missing access permissions. Check your permissions and retry your request.</p>",
         "OptimizedPromptStream$accessDeniedException": "<p>The request is denied because of missing access permissions. Check your permissions and retry your request.</p>",
@@ -124,6 +127,7 @@
         "BedrockRerankingModelConfiguration$additionalModelRequestFields": "<p>A JSON object whose keys are request fields for the model and whose values are values for those fields.</p>",
         "ExternalSourcesGenerationConfiguration$additionalModelRequestFields": "<p> Additional model parameters and their corresponding values not included in the textInferenceConfig structure for an external source. Takes in custom model parameters specific to the language model being used. </p>",
         "GenerationConfiguration$additionalModelRequestFields": "<p> Additional model parameters and corresponding values not included in the textInferenceConfig structure for a knowledge base. This allows users to provide custom model parameters specific to the language model being used. </p>",
+        "ManagedSearchBedrockRerankingModelConfiguration$additionalModelRequestFields": "<p>Additional request fields to pass to the reranking model.</p>",
         "OrchestrationConfiguration$additionalModelRequestFields": "<p> Additional model parameters and corresponding values not included in the textInferenceConfig structure for a knowledge base. This allows users to provide custom model parameters specific to the language model being used. </p>",
         "VectorSearchBedrockRerankingModelConfiguration$additionalModelRequestFields": "<p>A JSON object whose keys are request fields for the model and whose values are values for those fields.</p>"
       }
@@ -231,6 +235,307 @@
         "TracePart$agentVersion": "<p>The version of the agent.</p>"
       }
     },
+    "AgenticRetrieveAction": {
+      "base": "<p>An action taken during agentic retrieval.</p>",
+      "refs": {
+        "AgenticRetrieveActions$member": "<p>A single retrieval action.</p>"
+      }
+    },
+    "AgenticRetrieveActionDetails": {
+      "base": "<p>Details of a retrieve action including the query and target retrievers.</p>",
+      "refs": {
+        "AgenticRetrieveAction$retrieve": "<p>Details of the retrieve action.</p>"
+      }
+    },
+    "AgenticRetrieveActions": {
+      "base": "<p>List of actions taken during an agentic retrieval step.</p>",
+      "refs": {
+        "AgenticRetrieveTraceEventAttributes$actions": "<p>The list of actions taken during this step.</p>"
+      }
+    },
+    "AgenticRetrieveBedrockGuardrailConfiguration": {
+      "base": "<p>Configuration for a Bedrock guardrail applied during agentic retrieval.</p>",
+      "refs": {
+        "AgenticRetrievePolicyConfiguration$bedrockGuardrailConfiguration": "<p>Configuration for Bedrock guardrails to apply during retrieval.</p>"
+      }
+    },
+    "AgenticRetrieveBedrockGuardrailConfigurationGuardrailIdString": {
+      "base": null,
+      "refs": {
+        "AgenticRetrieveBedrockGuardrailConfiguration$guardrailId": "<p>The unique identifier of the guardrail.</p>"
+      }
+    },
+    "AgenticRetrieveBedrockGuardrailConfigurationGuardrailVersionString": {
+      "base": null,
+      "refs": {
+        "AgenticRetrieveBedrockGuardrailConfiguration$guardrailVersion": "<p>The version of the guardrail to use.</p>"
+      }
+    },
+    "AgenticRetrieveBedrockRerankingConfiguration": {
+      "base": "<p>Configuration for a Bedrock reranking model.</p>",
+      "refs": {
+        "AgenticRetrieveRerankingConfiguration$bedrockRerankingConfiguration": "<p>The Bedrock reranking model configuration.</p>"
+      }
+    },
+    "AgenticRetrieveBedrockRerankingModelConfiguration": {
+      "base": "<p>Model configuration for a Bedrock reranking model.</p>",
+      "refs": {
+        "AgenticRetrieveBedrockRerankingConfiguration$modelConfiguration": "<p>The model configuration containing the model ARN.</p>"
+      }
+    },
+    "AgenticRetrieveCitation": {
+      "base": "<p>A citation mapping a span of the generated answer to supporting results.</p>",
+      "refs": {
+        "AgenticRetrieveCitationList$member": null
+      }
+    },
+    "AgenticRetrieveCitationList": {
+      "base": "<p>List of citations.</p>",
+      "refs": {
+        "AgenticRetrieveGeneratedResponse$citations": "<p>Citations mapping spans of the answer to supporting results.</p>"
+      }
+    },
+    "AgenticRetrieveCitationReference": {
+      "base": "<p>A reference to a specific result item.</p>",
+      "refs": {
+        "AgenticRetrieveCitationReferenceList$member": null
+      }
+    },
+    "AgenticRetrieveCitationReferenceList": {
+      "base": "<p>List of citation references.</p>",
+      "refs": {
+        "AgenticRetrieveCitation$references": "<p>References to results that support this span.</p>"
+      }
+    },
+    "AgenticRetrieveConfiguration": {
+      "base": "<p>Configuration settings for the agentic retrieval operation.</p>",
+      "refs": {
+        "AgenticRetrieveStreamRequest$agenticRetrieveConfiguration": "<p>Configuration settings for the agentic retrieval operation.</p>"
+      }
+    },
+    "AgenticRetrieveConfigurationMaxAgentIterationInteger": {
+      "base": null,
+      "refs": {
+        "AgenticRetrieveConfiguration$maxAgentIteration": "<p>The maximum number of agent iterations for retrieval.</p>"
+      }
+    },
+    "AgenticRetrieveFailure": {
+      "base": "<p>A failure that occurred during agentic retrieval.</p>",
+      "refs": {
+        "AgenticRetrieveFailures$member": "<p>A single failure.</p>"
+      }
+    },
+    "AgenticRetrieveFailures": {
+      "base": "<p>List of failures that occurred during agentic retrieval.</p>",
+      "refs": {
+        "AgenticRetrieveTraceEventAttributes$failures": "<p>Failures that occurred during this step.</p>"
+      }
+    },
+    "AgenticRetrieveFullDocExpansionDetails": {
+      "base": "<p>Details of a full document expansion action.</p>",
+      "refs": {
+        "AgenticRetrieveAction$fullDocumentExpansion": "<p>Details of a full document expansion action.</p>"
+      }
+    },
+    "AgenticRetrieveGeneratedResponse": {
+      "base": "<p>The generated response synthesized from retrieved results.</p>",
+      "refs": {
+        "AgenticRetrieveResultEvent$generatedResponse": "<p>The generated response. Present only when generateResponse is true.</p>"
+      }
+    },
+    "AgenticRetrieveGuardrailWarning": {
+      "base": "<p>A warning generated by a guardrail during agentic retrieval.</p>",
+      "refs": {
+        "AgenticRetrieveWarning$guardrail": "<p>A warning from a guardrail evaluation.</p>"
+      }
+    },
+    "AgenticRetrieveMessage": {
+      "base": "<p>A message in the agentic retrieval conversation.</p>",
+      "refs": {
+        "AgenticRetrieveStreamRequestMessagesList$member": "<p>A single message in the conversation.</p>"
+      }
+    },
+    "AgenticRetrieveMessageContent": {
+      "base": "<p>The content of an agentic retrieval message.</p>",
+      "refs": {
+        "AgenticRetrieveActionDetails$inputQuery": "<p>The input query used for retrieval.</p>",
+        "AgenticRetrieveMessage$content": "<p>The content of the message.</p>"
+      }
+    },
+    "AgenticRetrieveMetadata": {
+      "base": "<p>Metadata key-value pairs associated with a retrieved item.</p>",
+      "refs": {
+        "AgenticRetrieveResultItem$metadata": "<p>Metadata associated with the retrieved item.</p>",
+        "AgenticRetrieveTraceResultItem$metadata": "<p>Metadata associated with the retrieved item.</p>"
+      }
+    },
+    "AgenticRetrievePolicyConfiguration": {
+      "base": "<p>Policy configuration for agentic retrieval.</p>",
+      "refs": {
+        "AgenticRetrieveStreamRequest$policyConfiguration": "<p>Policy configuration for guardrails and content filtering.</p>"
+      }
+    },
+    "AgenticRetrieveRerankingConfiguration": {
+      "base": "<p>Configuration for the reranking model.</p>",
+      "refs": {
+        "AgenticRetrieveConfiguration$rerankingConfiguration": "<p>The reranking model configuration. Required when rerankingModelType is CUSTOM.</p>"
+      }
+    },
+    "AgenticRetrieveRerankingConfigurationType": {
+      "base": "<p>The type of reranking configuration.</p>",
+      "refs": {
+        "AgenticRetrieveRerankingConfiguration$type": "<p>The type of reranking configuration.</p>"
+      }
+    },
+    "AgenticRetrieveRerankingModelType": {
+      "base": "<p>The type of reranking model.</p>",
+      "refs": {
+        "AgenticRetrieveConfiguration$rerankingModelType": "<p>The type of reranking model to use. CUSTOM uses a specified model, MANAGED uses the service default. If not specified, defaults to MANAGED for managed embedding knowledge bases and NONE for custom embedding knowledge bases.</p>"
+      }
+    },
+    "AgenticRetrieveResponseEvent": {
+      "base": "<p>A chunk of the generated answer text.</p>",
+      "refs": {
+        "AgenticRetrieveStreamResponseOutput$responseEvent": "<p>A chunk of the generated answer. Emitted only when generateResponse is true.</p>"
+      }
+    },
+    "AgenticRetrieveResultEvent": {
+      "base": "<p>An event containing agentic retrieval results.</p>",
+      "refs": {
+        "AgenticRetrieveStreamResponseOutput$result": "<p>A retrieval result event containing the retrieved items.</p>"
+      }
+    },
+    "AgenticRetrieveResultItem": {
+      "base": "<p>A single item from the agentic retrieval results.</p>",
+      "refs": {
+        "AgenticRetrieveResults$member": "<p>A single retrieval result item.</p>"
+      }
+    },
+    "AgenticRetrieveResults": {
+      "base": "<p>List of agentic retrieval result items.</p>",
+      "refs": {
+        "AgenticRetrieveResultEvent$results": "<p>The list of retrieved result items.</p>"
+      }
+    },
+    "AgenticRetrieveSourceMetadata": {
+      "base": "<p>Metadata about a retrieval source.</p>",
+      "refs": {
+        "AgenticRetrieveSourceMetadataList$member": "<p>Metadata for a retrieval source.</p>"
+      }
+    },
+    "AgenticRetrieveSourceMetadataList": {
+      "base": "<p>List of retrieval source metadata.</p>",
+      "refs": {
+        "AgenticRetrieveTraceEventAttributes$retrievalMetadata": "<p>Metadata about the retrieval sources used.</p>"
+      }
+    },
+    "AgenticRetrieveSourceRetriever": {
+      "base": "<p>A source retriever that produced retrieval results.</p>",
+      "refs": {
+        "AgenticRetrieveFullDocExpansionDetails$sourceRetriever": "<p>The source retriever associated with the document.</p>",
+        "AgenticRetrieveResultItem$sourceRetriever": "<p>The source retriever that produced this result.</p>",
+        "AgenticRetrieveSourceRetrieverList$member": "<p>A source retriever.</p>",
+        "AgenticRetrieveTraceResultItem$sourceRetriever": "<p>The source retriever that produced this result.</p>"
+      }
+    },
+    "AgenticRetrieveSourceRetrieverList": {
+      "base": "<p>List of source retrievers.</p>",
+      "refs": {
+        "AgenticRetrieveActionDetails$sourceRetrievers": "<p>The list of source retrievers targeted by this action.</p>"
+      }
+    },
+    "AgenticRetrieveStatus": {
+      "base": "<p>The status of an agentic retrieval step.</p>",
+      "refs": {
+        "AgenticRetrieveTraceEventAttributes$status": "<p>The status of the current step.</p>"
+      }
+    },
+    "AgenticRetrieveStep": {
+      "base": "<p>The step in the agentic retrieval process.</p>",
+      "refs": {
+        "AgenticRetrieveTraceEventAttributes$step": "<p>The current step in the retrieval process.</p>"
+      }
+    },
+    "AgenticRetrieveStreamRequest": {
+      "base": "<p>Request structure for the agentic retrieve stream operation.</p>",
+      "refs": {}
+    },
+    "AgenticRetrieveStreamRequestMessagesList": {
+      "base": "<p>List of messages in the agentic retrieval conversation.</p>",
+      "refs": {
+        "AgenticRetrieveStreamRequest$messages": "<p>The list of messages for the agentic retrieval conversation.</p>"
+      }
+    },
+    "AgenticRetrieveStreamRequestRetrieversList": {
+      "base": "<p>List of retrievers for agentic retrieval.</p>",
+      "refs": {
+        "AgenticRetrieveStreamRequest$retrievers": "<p>The list of retrievers to use for agentic retrieval.</p>"
+      }
+    },
+    "AgenticRetrieveStreamResponse": {
+      "base": "<p>Response structure for the agentic retrieve stream operation.</p>",
+      "refs": {}
+    },
+    "AgenticRetrieveStreamResponseOutput": {
+      "base": "<p>The streaming output for agentic retrieval, containing results, traces, and errors.</p>",
+      "refs": {
+        "AgenticRetrieveStreamResponse$stream": "<p>The output stream containing retrieval results and trace events.</p>"
+      }
+    },
+    "AgenticRetrieveTraceEvent": {
+      "base": "<p>A trace event providing visibility into the agentic retrieval process.</p>",
+      "refs": {
+        "AgenticRetrieveStreamResponseOutput$traceEvent": "<p>A trace event providing visibility into the retrieval process.</p>"
+      }
+    },
+    "AgenticRetrieveTraceEventAttributes": {
+      "base": "<p>Attributes describing the details of an agentic retrieval trace event.</p>",
+      "refs": {
+        "AgenticRetrieveTraceEvent$attributes": "<p>The attributes describing the trace event details.</p>"
+      }
+    },
+    "AgenticRetrieveTraceResultItem": {
+      "base": "<p>A result item from an agentic retrieval trace.</p>",
+      "refs": {
+        "AgenticRetrieveTraceResults$member": "<p>A single trace result item.</p>"
+      }
+    },
+    "AgenticRetrieveTraceResults": {
+      "base": "<p>List of trace result items from agentic retrieval.</p>",
+      "refs": {
+        "AgenticRetrieveTraceEventAttributes$retrievalResponse": "<p>The retrieval results from this step.</p>"
+      }
+    },
+    "AgenticRetrieveType": {
+      "base": "<p>The type of retrieval source.</p>",
+      "refs": {
+        "AgenticRetrieveSourceMetadata$retrievalType": "<p>The type of retrieval source.</p>"
+      }
+    },
+    "AgenticRetrieveWarning": {
+      "base": "<p>A warning generated during agentic retrieval.</p>",
+      "refs": {
+        "AgenticRetrieveWarnings$member": "<p>A single warning.</p>"
+      }
+    },
+    "AgenticRetrieveWarningMessage": {
+      "base": "<p>A general warning message from agentic retrieval.</p>",
+      "refs": {
+        "AgenticRetrieveWarning$message": "<p>A general warning message.</p>"
+      }
+    },
+    "AgenticRetrieveWarnings": {
+      "base": "<p>List of warnings generated during agentic retrieval.</p>",
+      "refs": {
+        "AgenticRetrieveTraceEventAttributes$warnings": "<p>Warnings generated during this step.</p>"
+      }
+    },
+    "AgenticRetriever": {
+      "base": "<p>A retriever used in agentic retrieval.</p>",
+      "refs": {
+        "AgenticRetrieveStreamRequestRetrieversList$member": "<p>A retriever configuration.</p>"
+      }
+    },
     "AnalyzePromptEvent": {
       "base": "<p>An event in which the prompt was analyzed in preparation for optimization.</p>",
       "refs": {
@@ -309,6 +614,7 @@
     "BadGatewayException": {
       "base": "<p>There was an issue with a dependency due to a server issue. Retry your request.</p>",
       "refs": {
+        "AgenticRetrieveStreamResponseOutput$badGatewayException": "<p>A bad gateway error occurred.</p>",
         "FlowResponseStream$badGatewayException": "<p>There was an issue with a dependency due to a server issue. Retry your request.</p>",
         "InlineAgentResponseStream$badGatewayException": "<p>There was an issue with a dependency due to a server issue. Retry your request. </p>",
         "OptimizedPromptStream$badGatewayException": "<p>There was an issue with a dependency due to a server issue. Retry your request.</p>",
@@ -322,9 +628,23 @@
         "PromptConfiguration$basePromptTemplate": "<p>Defines the prompt template with which to replace the default prompt template. You can use placeholder variables in the base prompt template to customize the prompt. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-placeholders.html\">Prompt template placeholder variables</a>. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/advanced-prompts-configure.html\">Configure the prompt templates</a>.</p>"
       }
     },
+    "BedrockFoundationModelConfiguration": {
+      "base": "<p>Configuration for a Bedrock foundation model.</p>",
+      "refs": {
+        "FoundationModelConfiguration$bedrockFoundationModelConfiguration": "<p>The Bedrock foundation model configuration.</p>"
+      }
+    },
+    "BedrockFoundationModelModelConfiguration": {
+      "base": "<p>Model configuration for a Bedrock foundation model.</p>",
+      "refs": {
+        "BedrockFoundationModelConfiguration$modelConfiguration": "<p>The model configuration containing the model ARN.</p>"
+      }
+    },
     "BedrockModelArn": {
       "base": null,
       "refs": {
+        "AgenticRetrieveBedrockRerankingModelConfiguration$modelArn": "<p>The ARN of the Bedrock reranking model.</p>",
+        "BedrockFoundationModelModelConfiguration$modelArn": "<p>The ARN of the Bedrock foundation model.</p>",
         "BedrockRerankingModelConfiguration$modelArn": "<p>The ARN of the reranker model.</p>",
         "ExternalSourcesRetrieveAndGenerateConfiguration$modelArn": "<p>The model Amazon Resource Name (ARN) for the external source wrapper object in the <code>retrieveAndGenerate</code> function.</p>",
         "ImplicitFilterConfiguration$modelArn": "<p>The model that generates the filter.</p>",
@@ -352,6 +672,7 @@
     "BedrockRerankingModelArn": {
       "base": null,
       "refs": {
+        "ManagedSearchBedrockRerankingModelConfiguration$modelArn": "<p>The ARN of the Bedrock reranking model.</p>",
         "VectorSearchBedrockRerankingModelConfiguration$modelArn": "<p>The ARN of the reranker model to use.</p>"
       }
     },
@@ -382,12 +703,14 @@
     "Blob": {
       "base": null,
       "refs": {
-        "ReasoningContentBlock$redactedContent": "<p>The content in the reasoning that was encrypted by the model provider for trust and safety reasons.</p>"
+        "ReasoningContentBlock$redactedContent": "<p>The content in the reasoning that was encrypted by the model provider for trust and safety reasons.</p>",
+        "RetrievalContent$byteContent": "<p>The binary content of the retrieved item.</p>"
       }
     },
     "Boolean": {
       "base": null,
       "refs": {
+        "AgenticRetrieveStreamRequest$generateResponse": "<p>Whether to generate a response based on the retrieved results.</p>",
         "CodeInterpreterInvocationOutput$executionTimeout": "<p>Indicates if the execution of the code timed out.</p>",
         "InvokeAgentRequest$enableTrace": "<p>Specifies whether to turn on the trace or not to track the agent's reasoning process. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-test.html#trace-events\">Trace enablement</a>.</p>",
         "InvokeAgentRequest$endSession": "<p>Specifies whether to end the session with the agent or not.</p>",
@@ -511,6 +834,7 @@
     "ConflictException": {
       "base": "<p>There was a conflict performing an operation. Resolve the conflict and retry your request.</p>",
       "refs": {
+        "AgenticRetrieveStreamResponseOutput$conflictException": "<p>A conflict occurred with the current state of the resource.</p>",
         "FlowResponseStream$conflictException": "<p>There was a conflict performing an operation. Resolve the conflict and retry your request.</p>",
         "InlineAgentResponseStream$conflictException": "<p>There was a conflict performing an operation. Resolve the conflict and retry your request. </p>",
         "ResponseStream$conflictException": "<p>There was a conflict performing an operation. Resolve the conflict and retry your request.</p>",
@@ -557,6 +881,7 @@
     "ConversationRole": {
       "base": null,
       "refs": {
+        "AgenticRetrieveMessage$role": "<p>The role of the message sender (e.g., user or assistant).</p>",
         "Message$role": "<p>The message's role.</p>"
       }
     },
@@ -607,6 +932,12 @@
       "base": "<p> The event in the custom orchestration sequence. Events are the responses which the custom orchestration Lambda function sends as response to the agent. </p>",
       "refs": {
         "CustomOrchestrationTrace$event": "<p> The event details used with the custom orchestration. </p>"
+      }
+    },
+    "DataSourceId": {
+      "base": null,
+      "refs": {
+        "GetDocumentContentRequest$dataSourceId": "<p>The unique identifier of the data source that contains the document.</p>"
       }
     },
     "DateTimestamp": {
@@ -665,6 +996,7 @@
     "DependencyFailedException": {
       "base": "<p>There was an issue with a dependency. Check the resource configurations and retry the request.</p>",
       "refs": {
+        "AgenticRetrieveStreamResponseOutput$dependencyFailedException": "<p>A dependency failed during the operation.</p>",
         "FlowResponseStream$dependencyFailedException": "<p>There was an issue with a dependency. Check the resource configurations and retry the request.</p>",
         "InlineAgentResponseStream$dependencyFailedException": "<p>There was an issue with a dependency. Check the resource configurations and retry the request.</p>",
         "OptimizedPromptStream$dependencyFailedException": "<p>There was an issue with a dependency. Check the resource configurations and retry the request.</p>",
@@ -675,6 +1007,7 @@
     "Document": {
       "base": null,
       "refs": {
+        "AgenticRetrieveMetadata$value": "<p>The metadata value.</p>",
         "FlowExecutionContent$document": "<p>The document content of the field, which can contain text or structured data.</p>",
         "FlowInputContent$document": "<p>The input to send to the prompt flow input node.</p>",
         "FlowMultiTurnInputContent$document": "<p>The requested additional input to send back to the multi-turn flow node.</p>",
@@ -688,6 +1021,19 @@
         "NodeExecutionContent$document": "<p>The document content of the field, which can contain text or structured data.</p>",
         "PromptConfiguration$additionalModelRequestFields": "<p>If the Converse or ConverseStream operations support the model, <code>additionalModelRequestFields</code> contains additional inference parameters, beyond the base set of inference parameters in the <code>inferenceConfiguration</code> field. </p> <p>For more information, see <i>Inference request parameters and response fields for foundation models</i> in the Amazon Bedrock user guide.</p>",
         "RerankDocument$jsonDocument": "<p>Contains a JSON document to rerank.</p>"
+      }
+    },
+    "DocumentId": {
+      "base": null,
+      "refs": {
+        "GetDocumentContentRequest$documentId": "<p>The unique identifier of the document to retrieve content for.</p>",
+        "KnowledgeBaseRetrievalResult$documentId": "<p>The unique identifier of the document. Use with <code>GetDocumentContent</code> to retrieve the full document.</p>"
+      }
+    },
+    "DocumentOutputFormat": {
+      "base": null,
+      "refs": {
+        "GetDocumentContentRequest$outputFormat": "<p>The output format for the document content. <code>RAW</code> returns the original file. <code>EXTRACTED</code> returns parsed text as JSON. Defaults to <code>RAW</code>.</p>"
       }
     },
     "Double": {
@@ -833,7 +1179,7 @@
     "FilterValue": {
       "base": null,
       "refs": {
-        "FilterAttribute$value": "<p>The value to whcih to compare the value of the metadata attribute.</p>"
+        "FilterAttribute$value": "<p>The value to which to compare the value of the metadata attribute.</p>"
       }
     },
     "FinalResponse": {
@@ -1252,6 +1598,24 @@
         "FlowTraceNodeOutputField$next": "<p>The next node that receives output data from this field.</p>"
       }
     },
+    "FoundationModelConfiguration": {
+      "base": "<p>Configuration for the foundation model.</p>",
+      "refs": {
+        "AgenticRetrieveConfiguration$foundationModelConfiguration": "<p>The foundation model configuration. Required when foundationModelType is CUSTOM.</p>"
+      }
+    },
+    "FoundationModelConfigurationType": {
+      "base": "<p>The type of foundation model configuration.</p>",
+      "refs": {
+        "FoundationModelConfiguration$type": "<p>The type of foundation model configuration.</p>"
+      }
+    },
+    "FoundationModelType": {
+      "base": "<p>The type of foundation model.</p>",
+      "refs": {
+        "AgenticRetrieveConfiguration$foundationModelType": "<p>The type of foundation model to use. CUSTOM uses a specified model, MANAGED uses the service default.</p>"
+      }
+    },
     "Function": {
       "base": null,
       "refs": {
@@ -1353,6 +1717,14 @@
       "base": null,
       "refs": {}
     },
+    "GetDocumentContentRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDocumentContentResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetExecutionFlowSnapshotRequest": {
       "base": null,
       "refs": {}
@@ -1396,6 +1768,7 @@
     "GuardrailAction": {
       "base": null,
       "refs": {
+        "AgenticRetrieveGuardrailWarning$action": "<p>The action taken by the guardrail.</p>",
         "GuardrailTrace$action": "<p>The trace action details used with the Guardrail.</p>"
       }
     },
@@ -1798,6 +2171,9 @@
     "Integer": {
       "base": null,
       "refs": {
+        "AgenticRetrieveCitation$endIndex": "<p>Character offset end (exclusive) in the answer text.</p>",
+        "AgenticRetrieveCitation$startIndex": "<p>Character offset start in the answer text.</p>",
+        "AgenticRetrieveCitationReference$resultIndex": "<p>Index into the results array on the same event.</p>",
         "ApiResult$httpStatusCode": "<p>http status code from API execution response (for example: 200, 400, 500).</p>",
         "FailureTrace$failureCode": "<p>The failure code for the trace.</p>",
         "FlowTraceNodeInputExecutionChainItem$index": "<p>The index position of this item in the execution chain.</p>",
@@ -1809,6 +2185,7 @@
     "InternalServerException": {
       "base": "<p>An internal server error occurred. Retry your request.</p>",
       "refs": {
+        "AgenticRetrieveStreamResponseOutput$internalServerException": "<p>An internal server error occurred.</p>",
         "FlowResponseStream$internalServerException": "<p>An internal server error occurred. Retry your request.</p>",
         "InlineAgentResponseStream$internalServerException": "<p>An internal server error occurred. Retry your request.</p>",
         "OptimizedPromptStream$internalServerException": "<p>An internal server error occurred. Retry your request.</p>",
@@ -1964,6 +2341,13 @@
         "KnowledgeBase$knowledgeBaseId": "<p> The unique identifier for a knowledge base associated with the inline agent. </p>",
         "KnowledgeBaseConfiguration$knowledgeBaseId": "<p>The unique identifier for a knowledge base attached to the agent.</p>",
         "KnowledgeBaseRetrieveAndGenerateConfiguration$knowledgeBaseId": "<p>The unique identifier of the knowledge base that is queried.</p>",
+        "KnowledgeBaseRetrieverConfiguration$knowledgeBaseId": "<p>The unique identifier of the knowledge base.</p>"
+      }
+    },
+    "KnowledgeBaseIdentifier": {
+      "base": null,
+      "refs": {
+        "GetDocumentContentRequest$knowledgeBaseId": "<p>The unique identifier of the knowledge base that contains the document.</p>",
         "RetrieveRequest$knowledgeBaseId": "<p>The unique identifier of the knowledge base to query.</p>"
       }
     },
@@ -2028,6 +2412,12 @@
       "base": "<p>Contains details about the resource being queried.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Retrieve.html#API_agent-runtime_Retrieve_RequestSyntax\">Retrieve request</a> – in the <code>knowledgeBaseConfiguration</code> field</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_RequestSyntax\">RetrieveAndGenerate request</a> – in the <code>knowledgeBaseConfiguration</code> field</p> </li> </ul>",
       "refs": {
         "RetrieveAndGenerateConfiguration$knowledgeBaseConfiguration": "<p>Contains details about the knowledge base for retrieving information and generating responses.</p>"
+      }
+    },
+    "KnowledgeBaseRetrieverConfiguration": {
+      "base": "<p>Configuration for retrieving from a Bedrock knowledge base.</p>",
+      "refs": {
+        "RetrieverConfiguration$knowledgeBase": "<p>Configuration for a knowledge base retriever.</p>"
       }
     },
     "KnowledgeBaseVectorSearchConfiguration": {
@@ -2114,8 +2504,52 @@
     "Long": {
       "base": null,
       "refs": {
+        "AgenticRetrieveTraceEvent$timestamp": "<p>The timestamp when the trace event occurred.</p>",
+        "GetDocumentContentResponse$documentContentLength": "<p>The size of the document content in bytes available at the pre-signed URL.</p>",
         "Metadata$operationTotalTimeMs": "<p>The total time it took for the agent to complete execution. This field is only set for the final response.</p>",
         "Metadata$totalTimeMs": "<p> The total execution time for the specific invocation being processed (model, knowledge base, guardrail, agent collaborator, or code interpreter). It represents how long the individual invocation took.</p>"
+      }
+    },
+    "ManagedSearchBedrockRerankingConfiguration": {
+      "base": "<p>Configuration for a Bedrock reranking model used in managed search.</p>",
+      "refs": {
+        "ManagedSearchRerankingConfiguration$bedrockRerankingConfiguration": "<p>The Bedrock reranking model configuration for managed search.</p>"
+      }
+    },
+    "ManagedSearchBedrockRerankingConfigurationNumberOfRerankedResultsInteger": {
+      "base": null,
+      "refs": {
+        "ManagedSearchBedrockRerankingConfiguration$numberOfRerankedResults": "<p>The number of results to return after reranking.</p>"
+      }
+    },
+    "ManagedSearchBedrockRerankingModelConfiguration": {
+      "base": "<p>Model configuration for a Bedrock reranking model used in managed search.</p>",
+      "refs": {
+        "ManagedSearchBedrockRerankingConfiguration$modelConfiguration": "<p>The model configuration containing the model ARN for reranking.</p>"
+      }
+    },
+    "ManagedSearchConfiguration": {
+      "base": "<p>Configuration for managed search in a knowledge base. Managed search automatically determines the best search strategy based on your data store configuration.</p>",
+      "refs": {
+        "KnowledgeBaseRetrievalConfiguration$managedSearchConfiguration": "<p>Contains configurations for managed search. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-config.html\">Query configurations</a>.</p>"
+      }
+    },
+    "ManagedSearchConfigurationNumberOfResultsInteger": {
+      "base": null,
+      "refs": {
+        "ManagedSearchConfiguration$numberOfResults": "<p>The number of results to retrieve.</p>"
+      }
+    },
+    "ManagedSearchRerankingConfiguration": {
+      "base": "<p>Configuration for the reranking model used in managed search.</p>",
+      "refs": {
+        "ManagedSearchConfiguration$rerankingConfiguration": "<p>Contains configurations for reranking the results retrieved from the managed search.</p>"
+      }
+    },
+    "ManagedSearchRerankingConfigurationType": {
+      "base": "<p>The type of reranking configuration for managed search.</p>",
+      "refs": {
+        "ManagedSearchRerankingConfiguration$type": "<p>The type of reranking configuration.</p>"
       }
     },
     "MaxResults": {
@@ -2230,6 +2664,7 @@
     "MetadataConfigurationForReranking": {
       "base": "<p>Contains configurations for the metadata to use in reranking.</p>",
       "refs": {
+        "ManagedSearchBedrockRerankingConfiguration$metadataConfiguration": "<p>The metadata configuration for reranking.</p>",
         "VectorSearchBedrockRerankingConfiguration$metadataConfiguration": "<p>Contains configurations for the metadata to use in reranking.</p>"
       }
     },
@@ -2239,7 +2674,8 @@
         "ByteContentFile$mediaType": "<p>The MIME type of data contained in the file used for chat.</p>",
         "InvokeAgentResponse$contentType": "<p>The MIME type of the input data in the request. The default value is <code>application/json</code>.</p>",
         "InvokeInlineAgentResponse$contentType": "<p> The MIME type of the input data in the request. The default value is application/json. </p>",
-        "OutputFile$type": "<p>The type of file that contains response from the code interpreter.</p>"
+        "OutputFile$type": "<p>The type of file that contains response from the code interpreter.</p>",
+        "RetrievalContent$mimeType": "<p>The MIME type of the retrieved content.</p>"
       }
     },
     "ModelIdentifier": {
@@ -2288,6 +2724,8 @@
     "NextToken": {
       "base": null,
       "refs": {
+        "AgenticRetrieveResultEvent$nextToken": "<p>Opaque continuation token for paginated results.</p>",
+        "AgenticRetrieveStreamRequest$nextToken": "<p>Opaque continuation token for paginated results.</p>",
         "GetAgentMemoryRequest$nextToken": "<p>If the total number of results is greater than the maxItems value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results.</p>",
         "GetAgentMemoryResponse$nextToken": "<p>If the total number of results is greater than the maxItems value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
         "ListFlowExecutionEventsRequest$nextToken": "<p>A token to retrieve the next set of results. This value is returned in the response if more results are available.</p>",
@@ -2696,6 +3134,12 @@
         "Trace$preProcessingTrace": "<p>Details about the pre-processing step, in which the agent contextualizes and categorizes user inputs.</p>"
       }
     },
+    "PresignedUrl": {
+      "base": null,
+      "refs": {
+        "GetDocumentContentResponse$presignedUrl": "<p>A pre-signed URL for downloading the document content. The URL expires after 5 minutes.</p>"
+      }
+    },
     "PromptConfiguration": {
       "base": "<p> Contains configurations to override a prompt template in one part of an agent sequence. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/advanced-prompts.html\">Advanced prompts</a>. </p>",
       "refs": {
@@ -2990,6 +3434,12 @@
         "MetadataConfigurationForReranking$selectiveModeConfiguration": "<p>Contains configurations for the metadata fields to include or exclude when considering reranking.</p>"
       }
     },
+    "RerankingModelType": {
+      "base": null,
+      "refs": {
+        "ManagedSearchConfiguration$rerankingModelType": "<p>The type of reranking model to use when reranking results retrieved from the managed search. Use <code>CUSTOM</code> to specify a model, <code>MANAGED</code> to use the service default, or <code>NONE</code> to disable reranking.</p>"
+      }
+    },
     "ResourceDescription": {
       "base": "<p>/ @documentation(&quot;Description of the using the resource.&quot;)</p>",
       "refs": {
@@ -3007,6 +3457,7 @@
     "ResourceNotFoundException": {
       "base": "<p>The specified resource Amazon Resource Name (ARN) was not found. Check the Amazon Resource Name (ARN) and try your request again.</p>",
       "refs": {
+        "AgenticRetrieveStreamResponseOutput$resourceNotFoundException": "<p>The specified resource was not found.</p>",
         "FlowResponseStream$resourceNotFoundException": "<p>The specified resource Amazon Resource Name (ARN) was not found. Check the Amazon Resource Name (ARN) and try your request again.</p>",
         "InlineAgentResponseStream$resourceNotFoundException": "<p>The specified resource Amazon Resource Name (ARN) was not found. Check the Amazon Resource Name (ARN) and try your request again. </p>",
         "ResponseStream$resourceNotFoundException": "<p>The specified resource Amazon Resource Name (ARN) was not found. Check the Amazon Resource Name (ARN) and try your request again.</p>",
@@ -3033,11 +3484,20 @@
         "InvokeAgentResponse$completion": "<p>The agent's response to the user prompt.</p>"
       }
     },
+    "RetrievalContent": {
+      "base": "<p>The content retrieved from a knowledge source.</p>",
+      "refs": {
+        "AgenticRetrieveResultItem$content": "<p>The retrieved content.</p>",
+        "AgenticRetrieveTraceResultItem$content": "<p>The retrieved content.</p>"
+      }
+    },
     "RetrievalFilter": {
       "base": "<p>Specifies the filters to use on the metadata attributes in the knowledge base data sources before returning results. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-config.html\">Query configurations</a>. See the examples below to see how to use these filters.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Retrieve.html#API_agent-runtime_Retrieve_RequestSyntax\">Retrieve request</a> – in the <code>filter</code> field</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_RequestSyntax\">RetrieveAndGenerate request</a> – in the <code>filter</code> field</p> </li> </ul>",
       "refs": {
         "KnowledgeBaseVectorSearchConfiguration$filter": "<p>Specifies the filters to use on the metadata in the knowledge base data sources before returning results. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-config.html\">Query configurations</a>.</p>",
-        "RetrievalFilterList$member": null
+        "ManagedSearchConfiguration$filter": null,
+        "RetrievalFilterList$member": null,
+        "RetrievalOverrides$filter": "<p>A filter to apply to the retrieval results.</p>"
       }
     },
     "RetrievalFilterList": {
@@ -3045,6 +3505,18 @@
       "refs": {
         "RetrievalFilter$andAll": "<p>Knowledge base data sources are returned if their metadata attributes fulfill all the filter conditions inside this list.</p>",
         "RetrievalFilter$orAll": "<p>Knowledge base data sources are returned if their metadata attributes fulfill at least one of the filter conditions inside this list.</p>"
+      }
+    },
+    "RetrievalOverrides": {
+      "base": "<p>Overrides for retrieval behavior.</p>",
+      "refs": {
+        "KnowledgeBaseRetrieverConfiguration$retrievalOverrides": "<p>Overrides for retrieval behavior such as filters and result limits.</p>"
+      }
+    },
+    "RetrievalOverridesMaxNumberOfResultsInteger": {
+      "base": null,
+      "refs": {
+        "RetrievalOverrides$maxNumberOfResults": "<p>The maximum number of results to return.</p>"
       }
     },
     "RetrievalResultConfluenceLocation": {
@@ -3090,6 +3562,12 @@
         "RetrievalResultLocation$customDocumentLocation": "<p>Specifies the location of a document in a custom data source.</p>"
       }
     },
+    "RetrievalResultGoogleDriveLocation": {
+      "base": "<p>The Google Drive location of a retrieval result.</p>",
+      "refs": {
+        "RetrievalResultLocation$googleDriveLocation": "<p>The Google Drive data source location.</p>"
+      }
+    },
     "RetrievalResultKendraDocumentLocation": {
       "base": "<p>The location of a result in Amazon Kendra.</p>",
       "refs": {
@@ -3126,6 +3604,12 @@
       "base": null,
       "refs": {
         "RetrievalResultMetadata$value": null
+      }
+    },
+    "RetrievalResultOneDriveLocation": {
+      "base": "<p>The Microsoft OneDrive location of a retrieval result.</p>",
+      "refs": {
+        "RetrievalResultLocation$oneDriveLocation": "<p>The Microsoft OneDrive data source location.</p>"
       }
     },
     "RetrievalResultS3Location": {
@@ -3247,6 +3731,12 @@
         "KnowledgeBaseLookupOutput$retrievedReferences": "<p>Contains metadata about the sources cited for the generated response.</p>"
       }
     },
+    "RetrieverConfiguration": {
+      "base": "<p>Configuration for a retriever, specified as a union of retriever types.</p>",
+      "refs": {
+        "AgenticRetriever$configuration": "<p>The configuration for this retriever.</p>"
+      }
+    },
     "ReturnControlInvocationResults": {
       "base": null,
       "refs": {
@@ -3345,6 +3835,7 @@
     "ServiceQuotaExceededException": {
       "base": "<p>The number of requests exceeds the service quota. Resubmit your request later.</p>",
       "refs": {
+        "AgenticRetrieveStreamResponseOutput$serviceQuotaExceededException": "<p>The service quota has been exceeded.</p>",
         "FlowResponseStream$serviceQuotaExceededException": "<p>The number of requests exceeds the service quota. Resubmit your request later.</p>",
         "InlineAgentResponseStream$serviceQuotaExceededException": "<p>The number of requests exceeds the service quota. Resubmit your request later.</p>",
         "ResponseStream$serviceQuotaExceededException": "<p>The number of requests exceeds the service quota. Resubmit your request later.</p>",
@@ -3519,6 +4010,21 @@
         "ActionGroupInvocationInput$invocationId": "<p>The unique identifier of the invocation. Only returned if the <code>executionType</code> is <code>RETURN_CONTROL</code>.</p>",
         "AgentCollaboratorInvocationInput$agentCollaboratorName": "<p>The collaborator's name.</p>",
         "AgentCollaboratorInvocationOutput$agentCollaboratorName": "<p>The output's agent collaborator name.</p>",
+        "AgenticRetrieveFailure$message": "<p>A message describing the failure.</p>",
+        "AgenticRetrieveFullDocExpansionDetails$documentId": "<p>The identifier of the document to expand.</p>",
+        "AgenticRetrieveGeneratedResponse$answer": "<p>The generated answer text.</p>",
+        "AgenticRetrieveGuardrailWarning$id": "<p>The unique identifier of the guardrail.</p>",
+        "AgenticRetrieveGuardrailWarning$message": "<p>A message describing the guardrail evaluation result.</p>",
+        "AgenticRetrieveGuardrailWarning$version": "<p>The version of the guardrail.</p>",
+        "AgenticRetrieveMessageContent$text": "<p>The text content of the message.</p>",
+        "AgenticRetrieveMetadata$key": "<p>The metadata key.</p>",
+        "AgenticRetrieveResponseEvent$text": "<p>The generated text chunk.</p>",
+        "AgenticRetrieveSourceMetadata$identifier": "<p>The identifier of the retrieval source.</p>",
+        "AgenticRetrieveSourceRetriever$identifier": "<p>The unique identifier of the source retriever.</p>",
+        "AgenticRetrieveTraceEvent$id": "<p>The unique identifier of the trace event.</p>",
+        "AgenticRetrieveTraceEventAttributes$message": "<p>A human-readable message describing the trace event.</p>",
+        "AgenticRetrieveWarningMessage$message": "<p>The warning message text.</p>",
+        "AgenticRetriever$description": "<p>A description of the retriever's purpose.</p>",
         "AnalyzePromptEvent$message": "<p>A message describing the analysis of the prompt.</p>",
         "ApiContentMap$key": null,
         "ApiInvocationInput$actionGroup": "<p>The action group that the API operation belongs to.</p>",
@@ -3555,6 +4061,7 @@
         "FunctionResult$agentId": "<p>The agent's ID.</p>",
         "FunctionResult$function": "<p>The name of the function that was called.</p>",
         "GeneratedQuery$sql": "<p>An SQL query that corresponds to the natural language query.</p>",
+        "GetDocumentContentResponse$mimeType": "<p>The MIME type of the document content. For <code>RAW</code> format, this is the original file type (for example, <code>application/pdf</code>). For <code>EXTRACTED</code> format, this is always <code>application/json</code>.</p>",
         "GetExecutionFlowSnapshotResponse$definition": "<p>The flow definition used for the flow execution, including the nodes, connections, and configuration at the time when the execution started.</p> <p>The definition returns as a string that follows the structure of a <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_FlowDefinition.html\">FlowDefinition</a> object.</p>",
         "GuardrailCustomWord$match": "<p>The match details for the custom word filter in the Guardrail.</p>",
         "GuardrailManagedWord$match": "<p>The match details for the managed word filter in the Guardrail.</p>",
@@ -3583,13 +4090,16 @@
         "ReasoningTextBlock$text": "<p>Text describing the reasoning that the model used to return the content in the content block.</p>",
         "RepromptResponse$text": "<p>The text reprompting the input.</p>",
         "ResponseBody$key": null,
+        "RetrievalContent$text": "<p>The text content of the retrieved item.</p>",
         "RetrievalResultConfluenceLocation$url": "<p>The Confluence host URL for the data source location.</p>",
         "RetrievalResultContent$byteContent": "<p>A data URI with base64-encoded content from the data source. The URI is in the following format: returned in the following format: <code>data:image/jpeg;base64,${base64-encoded string}</code>.</p>",
         "RetrievalResultContent$text": "<p>The cited text from the data source.</p>",
         "RetrievalResultContentColumn$columnName": "<p>The name of the column.</p>",
         "RetrievalResultContentColumn$columnValue": "<p>The value in the column.</p>",
         "RetrievalResultCustomDocumentLocation$id": "<p>The ID of the document.</p>",
+        "RetrievalResultGoogleDriveLocation$url": "<p>The Google Drive URL for the data source location.</p>",
         "RetrievalResultKendraDocumentLocation$uri": "<p>The document's uri.</p>",
+        "RetrievalResultOneDriveLocation$url": "<p>The OneDrive URL for the data source location.</p>",
         "RetrievalResultS3Location$uri": "<p>The S3 URI for the data source location.</p>",
         "RetrievalResultSalesforceLocation$url": "<p>The Salesforce host URL for the data source location.</p>",
         "RetrievalResultSharePointLocation$url": "<p>The SharePoint site URL for the data source location.</p>",
@@ -3605,6 +4115,7 @@
         "SessionState$invocationId": "<p>The identifier of the invocation of an action. This value must match the <code>invocationId</code> returned in the <code>InvokeAgent</code> response for the action whose results are provided in the <code>returnControlInvocationResults</code> field. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-returncontrol.html\">Return control to the agent developer</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-session-state.html\">Control session context</a>.</p>",
         "StopSequences$member": null,
         "TextResponsePart$text": "<p>The part of the generated text that contains a citation.</p>",
+        "UserContext$userId": "<p>The identifier of the user making the retrieval request.</p>",
         "VideoSegment$summary": "<p>A text summary describing the content of the video segment.</p>"
       }
     },
@@ -3725,6 +4236,7 @@
     "ThrottlingException": {
       "base": "<p>The number of requests exceeds the limit. Resubmit your request later.</p>",
       "refs": {
+        "AgenticRetrieveStreamResponseOutput$throttlingException": "<p>The request was throttled.</p>",
         "FlowResponseStream$throttlingException": "<p>The number of requests exceeds the limit. Resubmit your request later.</p>",
         "InlineAgentResponseStream$throttlingException": "<p>The number of requests exceeds the limit. Resubmit your request later.</p>",
         "OptimizedPromptStream$throttlingException": "<p>Your request was throttled because of service-wide limitations. Resubmit your request later or in a different region. You can also purchase <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> to increase the rate or number of tokens you can process.</p>",
@@ -3821,6 +4333,16 @@
         "Metadata$usage": "<p>Specific to model invocation and contains details about the usage of a foundation model.</p>"
       }
     },
+    "UserContext": {
+      "base": "<p>Contains information about the user making the request. Use this to pass user identity information for access control filtering, so that retrieval results only include documents the user is authorized to access.</p>",
+      "refs": {
+        "AgenticRetrieveStreamRequest$userContext": "<p>Contains information about the user making the request. This is used for access control filtering to ensure that retrieval results only include documents the user is authorized to access.</p>",
+        "GetDocumentContentRequest$userContext": null,
+        "RetrieveAndGenerateRequest$userContext": null,
+        "RetrieveAndGenerateStreamRequest$userContext": null,
+        "RetrieveRequest$userContext": null
+      }
+    },
     "Uuid": {
       "base": null,
       "refs": {
@@ -3848,6 +4370,7 @@
     "ValidationException": {
       "base": "<p>Input validation failed. Check your request parameters and retry the request.</p>",
       "refs": {
+        "AgenticRetrieveStreamResponseOutput$validationException": "<p>The request validation failed.</p>",
         "FlowResponseStream$validationException": "<p>Input validation failed. Check your request parameters and retry the request.</p>",
         "InlineAgentResponseStream$validationException": "<p>Input validation failed. Check your request parameters and retry the request.</p>",
         "OptimizedPromptStream$validationException": "<p>Input validation failed. Check your request parameters and retry the request.</p>",

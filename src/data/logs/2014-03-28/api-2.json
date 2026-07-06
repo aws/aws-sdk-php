@@ -486,6 +486,23 @@
         {"shape":"ServiceUnavailableException"}
       ]
     },
+    "DeleteSyslogConfiguration":{
+      "name":"DeleteSyslogConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteSyslogConfigurationRequest"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidOperationException"},
+        {"shape":"OperationAbortedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceUnavailableException"}
+      ]
+    },
     "DeleteTransformer":{
       "name":"DeleteTransformer",
       "http":{
@@ -1194,6 +1211,23 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "ListSyslogConfigurations":{
+      "name":"ListSyslogConfigurations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListSyslogConfigurationsRequest"},
+      "output":{"shape":"ListSyslogConfigurationsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidOperationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceUnavailableException"}
+      ]
+    },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
       "http":{
@@ -1487,6 +1521,23 @@
         {"shape":"InvalidOperationException"}
       ]
     },
+    "PutSyslogConfiguration":{
+      "name":"PutSyslogConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutSyslogConfigurationRequest"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidOperationException"},
+        {"shape":"OperationAbortedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceUnavailableException"}
+      ]
+    },
     "PutTransformer":{
       "name":"PutTransformer",
       "http":{
@@ -1704,6 +1755,7 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ]
@@ -2005,7 +2057,9 @@
         "allowedOutputFormats":{"shape":"OutputFormats"},
         "allowedActionForAllowVendedLogsDeliveryForResource":{"shape":"AllowedActionForAllowVendedLogsDeliveryForResource"},
         "allowedFieldDelimiters":{"shape":"AllowedFieldDelimiters"},
-        "allowedSuffixPathFields":{"shape":"RecordFields"}
+        "allowedSuffixPathFields":{"shape":"RecordFields"},
+        "deliverySourceConfiguration":{"shape":"DeliverySourceConfigurationSchemas"},
+        "s3TablesIntegration":{"shape":"S3TablesIntegration"}
       }
     },
     "ConfigurationTemplateDeliveryConfigValues":{
@@ -2196,6 +2250,7 @@
         "scheduleExpression":{"shape":"ScheduleExpression"},
         "timezone":{"shape":"ScheduleTimezone"},
         "startTimeOffset":{"shape":"StartTimeOffset"},
+        "endTimeOffset":{"shape":"EndTimeOffset"},
         "destinationConfiguration":{"shape":"DestinationConfiguration"},
         "scheduleStartTime":{"shape":"Timestamp"},
         "scheduleEndTime":{"shape":"Timestamp"},
@@ -2453,6 +2508,14 @@
         "filterName":{"shape":"FilterName"}
       }
     },
+    "DeleteSyslogConfigurationRequest":{
+      "type":"structure",
+      "required":["logGroupIdentifier"],
+      "members":{
+        "logGroupIdentifier":{"shape":"LogGroupIdentifier"},
+        "vpcEndpointId":{"shape":"VpcEndpointId"}
+      }
+    },
     "DeleteTransformerRequest":{
       "type":"structure",
       "required":["logGroupIdentifier"],
@@ -2552,14 +2615,86 @@
         "resourceArns":{"shape":"ResourceArns"},
         "service":{"shape":"Service"},
         "logType":{"shape":"LogType"},
-        "tags":{"shape":"Tags"}
+        "tags":{"shape":"Tags"},
+        "deliverySourceConfiguration":{"shape":"DeliverySourceConfiguration"},
+        "status":{"shape":"DeliverySourceStatus"},
+        "statusReason":{"shape":"DeliverySourceStatusReason"}
       }
+    },
+    "DeliverySourceConfiguration":{
+      "type":"map",
+      "key":{"shape":"DeliverySourceConfigurationKey"},
+      "value":{"shape":"DeliverySourceConfigurationValue"}
+    },
+    "DeliverySourceConfigurationKey":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "DeliverySourceConfigurationNumericValue":{
+      "type":"double",
+      "box":true
+    },
+    "DeliverySourceConfigurationSchema":{
+      "type":"structure",
+      "required":[
+        "keyName",
+        "valueType",
+        "defaultValue"
+      ],
+      "members":{
+        "keyName":{"shape":"DeliverySourceConfigurationSchemaField"},
+        "valueType":{"shape":"DeliverySourceConfigurationSchemaValueType"},
+        "defaultValue":{"shape":"DeliverySourceConfigurationSchemaField"},
+        "supportedValues":{"shape":"DeliverySourceConfigurationSupportedValues"},
+        "minValue":{"shape":"DeliverySourceConfigurationNumericValue"},
+        "maxValue":{"shape":"DeliverySourceConfigurationNumericValue"}
+      }
+    },
+    "DeliverySourceConfigurationSchemaField":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "DeliverySourceConfigurationSchemaValueType":{
+      "type":"string",
+      "enum":[
+        "string",
+        "boolean",
+        "int",
+        "double",
+        "long"
+      ]
+    },
+    "DeliverySourceConfigurationSchemas":{
+      "type":"list",
+      "member":{"shape":"DeliverySourceConfigurationSchema"}
+    },
+    "DeliverySourceConfigurationSupportedValues":{
+      "type":"list",
+      "member":{"shape":"DeliverySourceConfigurationSchemaField"}
+    },
+    "DeliverySourceConfigurationValue":{
+      "type":"string",
+      "max":255,
+      "min":1
     },
     "DeliverySourceName":{
       "type":"string",
       "max":60,
       "min":1,
       "pattern":"[\\w-]*"
+    },
+    "DeliverySourceStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "INACTIVE"
+      ]
+    },
+    "DeliverySourceStatusReason":{
+      "type":"string",
+      "enum":["RESOURCE_DELETED"]
     },
     "DeliverySources":{
       "type":"list",
@@ -3014,6 +3149,7 @@
       "type":"string",
       "max":256
     },
+    "EndTimeOffset":{"type":"long"},
     "Entity":{
       "type":"structure",
       "members":{
@@ -3107,6 +3243,11 @@
     "EventsLimit":{
       "type":"integer",
       "max":10000,
+      "min":1
+    },
+    "EventsLimitStartQuery":{
+      "type":"integer",
+      "max":100000,
       "min":1
     },
     "ExecutionStatus":{
@@ -3255,6 +3396,7 @@
         "filterPattern":{"shape":"FilterPattern"},
         "nextToken":{"shape":"NextToken"},
         "limit":{"shape":"EventsLimit"},
+        "startFromHead":{"shape":"StartFromHead"},
         "interleaved":{
           "shape":"Interleaved",
           "deprecated":true,
@@ -3602,8 +3744,10 @@
         "scheduleExpression":{"shape":"ScheduleExpression"},
         "timezone":{"shape":"ScheduleTimezone"},
         "startTimeOffset":{"shape":"StartTimeOffset"},
+        "endTimeOffset":{"shape":"EndTimeOffset"},
         "destinationConfiguration":{"shape":"DestinationConfiguration"},
         "state":{"shape":"ScheduledQueryState"},
+        "scheduleType":{"shape":"ScheduleType"},
         "lastTriggeredTime":{"shape":"Timestamp"},
         "lastExecutionStatus":{"shape":"ExecutionStatus"},
         "scheduleStartTime":{"shape":"Timestamp"},
@@ -4039,7 +4183,8 @@
       "members":{
         "maxResults":{"shape":"ListScheduledQueriesMaxResults"},
         "nextToken":{"shape":"NextToken"},
-        "state":{"shape":"ScheduledQueryState"}
+        "state":{"shape":"ScheduledQueryState"},
+        "scheduleType":{"shape":"ScheduleType"}
       }
     },
     "ListScheduledQueriesResponse":{
@@ -4067,6 +4212,27 @@
       "type":"structure",
       "members":{
         "sources":{"shape":"S3TableIntegrationSources"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListSyslogConfigurationsMaxResults":{
+      "type":"integer",
+      "max":50,
+      "min":0
+    },
+    "ListSyslogConfigurationsRequest":{
+      "type":"structure",
+      "members":{
+        "logGroupIdentifier":{"shape":"LogGroupIdentifier"},
+        "vpcEndpointId":{"shape":"VpcEndpointId"},
+        "nextToken":{"shape":"NextToken"},
+        "maxResults":{"shape":"ListSyslogConfigurationsMaxResults"}
+      }
+    },
+    "ListSyslogConfigurationsResponse":{
+      "type":"structure",
+      "members":{
+        "syslogConfigurations":{"shape":"SyslogConfigurations"},
         "nextToken":{"shape":"NextToken"}
       }
     },
@@ -4952,7 +5118,8 @@
         "name":{"shape":"DeliverySourceName"},
         "resourceArn":{"shape":"Arn"},
         "logType":{"shape":"LogType"},
-        "tags":{"shape":"Tags"}
+        "tags":{"shape":"Tags"},
+        "deliverySourceConfiguration":{"shape":"DeliverySourceConfiguration"}
       }
     },
     "PutDeliverySourceResponse":{
@@ -5152,6 +5319,14 @@
         "applyOnTransformedLogs":{"shape":"ApplyOnTransformedLogs"},
         "fieldSelectionCriteria":{"shape":"FieldSelectionCriteria"},
         "emitSystemFields":{"shape":"EmitSystemFields"}
+      }
+    },
+    "PutSyslogConfigurationRequest":{
+      "type":"structure",
+      "required":["logGroupIdentifier"],
+      "members":{
+        "logGroupIdentifier":{"shape":"LogGroupIdentifier"},
+        "vpcEndpointId":{"shape":"VpcEndpointId"}
       }
     },
     "PutTransformerRequest":{
@@ -5500,6 +5675,23 @@
       "type":"list",
       "member":{"shape":"S3TableIntegrationSource"}
     },
+    "S3TablesDatasourceName":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "S3TablesDatasourceType":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "S3TablesIntegration":{
+      "type":"structure",
+      "members":{
+        "datasourceName":{"shape":"S3TablesDatasourceName"},
+        "datasourceType":{"shape":"S3TablesDatasourceType"}
+      }
+    },
     "S3Uri":{
       "type":"string",
       "max":1024,
@@ -5512,6 +5704,13 @@
     "ScheduleTimezone":{
       "type":"string",
       "min":1
+    },
+    "ScheduleType":{
+      "type":"string",
+      "enum":[
+        "CUSTOMER_MANAGED",
+        "AWS_MANAGED"
+      ]
     },
     "ScheduledQueryDescription":{
       "type":"string",
@@ -5537,7 +5736,8 @@
     },
     "ScheduledQueryIdentifier":{
       "type":"string",
-      "pattern":"[\\w#+=/:,.@-]*"
+      "max":300,
+      "min":1
     },
     "ScheduledQueryLogGroupIdentifiers":{
       "type":"list",
@@ -5547,9 +5747,8 @@
     },
     "ScheduledQueryName":{
       "type":"string",
-      "max":255,
-      "min":1,
-      "pattern":"^[a-zA-Z0-9_\\-/.#]+$"
+      "max":300,
+      "min":1
     },
     "ScheduledQueryState":{
       "type":"string",
@@ -5564,6 +5763,7 @@
         "scheduledQueryArn":{"shape":"Arn"},
         "name":{"shape":"ScheduledQueryName"},
         "state":{"shape":"ScheduledQueryState"},
+        "scheduleType":{"shape":"ScheduleType"},
         "lastTriggeredTime":{"shape":"Timestamp"},
         "lastExecutionStatus":{"shape":"ExecutionStatus"},
         "scheduleExpression":{"shape":"ScheduleExpression"},
@@ -5751,7 +5951,7 @@
         "startTime":{"shape":"Timestamp"},
         "endTime":{"shape":"Timestamp"},
         "queryString":{"shape":"QueryString"},
-        "limit":{"shape":"EventsLimit"}
+        "limit":{"shape":"EventsLimitStartQuery"}
       }
     },
     "StartQueryResponse":{
@@ -5862,6 +6062,23 @@
         "MINUTES",
         "HOURS"
       ]
+    },
+    "SyslogConfiguration":{
+      "type":"structure",
+      "members":{
+        "logGroupArn":{"shape":"LogGroupArn"},
+        "sourceType":{"shape":"SyslogSourceType"},
+        "vpcEndpointId":{"shape":"VpcEndpointId"},
+        "createdAt":{"shape":"Timestamp"}
+      }
+    },
+    "SyslogConfigurations":{
+      "type":"list",
+      "member":{"shape":"SyslogConfiguration"}
+    },
+    "SyslogSourceType":{
+      "type":"string",
+      "enum":["VPCE"]
     },
     "SystemField":{"type":"string"},
     "TableBody":{
@@ -6232,6 +6449,7 @@
         "scheduleExpression":{"shape":"ScheduleExpression"},
         "timezone":{"shape":"ScheduleTimezone"},
         "startTimeOffset":{"shape":"StartTimeOffset"},
+        "endTimeOffset":{"shape":"EndTimeOffset"},
         "destinationConfiguration":{"shape":"DestinationConfiguration"},
         "scheduleStartTime":{"shape":"Timestamp"},
         "scheduleEndTime":{"shape":"Timestamp"},
@@ -6251,8 +6469,10 @@
         "scheduleExpression":{"shape":"ScheduleExpression"},
         "timezone":{"shape":"ScheduleTimezone"},
         "startTimeOffset":{"shape":"StartTimeOffset"},
+        "endTimeOffset":{"shape":"EndTimeOffset"},
         "destinationConfiguration":{"shape":"DestinationConfiguration"},
         "state":{"shape":"ScheduledQueryState"},
+        "scheduleType":{"shape":"ScheduleType"},
         "lastTriggeredTime":{"shape":"Timestamp"},
         "lastExecutionStatus":{"shape":"ExecutionStatus"},
         "scheduleStartTime":{"shape":"Timestamp"},
@@ -6290,6 +6510,10 @@
       "type":"string",
       "max":128,
       "min":1
+    },
+    "VpcEndpointId":{
+      "type":"string",
+      "pattern":"^vpce-[0-9a-f]{1,64}$"
     },
     "WithKey":{
       "type":"string",

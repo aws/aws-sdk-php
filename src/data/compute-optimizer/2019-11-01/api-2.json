@@ -821,7 +821,8 @@
     "EBSEffectiveRecommendationPreferences":{
       "type":"structure",
       "members":{
-        "savingsEstimationMode":{"shape":"EBSSavingsEstimationMode"}
+        "savingsEstimationMode":{"shape":"EBSSavingsEstimationMode"},
+        "lookBackPeriod":{"shape":"LookBackPeriodPreference"}
       }
     },
     "EBSEstimatedMonthlySavings":{
@@ -859,7 +860,9 @@
         "VolumeReadOpsPerSecond",
         "VolumeWriteOpsPerSecond",
         "VolumeReadBytesPerSecond",
-        "VolumeWriteBytesPerSecond"
+        "VolumeWriteBytesPerSecond",
+        "VolumeIOPSExceeded",
+        "VolumeThroughputExceeded"
       ]
     },
     "EBSSavingsEstimationMode":{
@@ -898,7 +901,8 @@
     "ECSEffectiveRecommendationPreferences":{
       "type":"structure",
       "members":{
-        "savingsEstimationMode":{"shape":"ECSSavingsEstimationMode"}
+        "savingsEstimationMode":{"shape":"ECSSavingsEstimationMode"},
+        "lookBackPeriod":{"shape":"LookBackPeriodPreference"}
       }
     },
     "ECSEstimatedMonthlySavings":{
@@ -1407,7 +1411,8 @@
         "EffectiveRecommendationPreferencesSavingsEstimationMode",
         "RecommendationOptionsSavingsOpportunityAfterDiscountsPercentage",
         "RecommendationOptionsEstimatedMonthlySavingsCurrencyAfterDiscounts",
-        "RecommendationOptionsEstimatedMonthlySavingsValueAfterDiscounts"
+        "RecommendationOptionsEstimatedMonthlySavingsValueAfterDiscounts",
+        "EffectiveRecommendationPreferencesLookBackPeriod"
       ]
     },
     "ExportableECSServiceFields":{
@@ -1437,6 +1442,22 @@
         "UtilizationMetricsActiveConnectionCountMaximum",
         "UtilizationMetricsPacketsInFromSourceMaximum",
         "UtilizationMetricsPacketsInFromDestinationMaximum",
+        "UtilizationMetricsConsumedReadCapacityUnitsSum",
+        "UtilizationMetricsConsumedWriteCapacityUnitsSum",
+        "UtilizationMetricsNewConnectionsSum",
+        "UtilizationMetricsEngineCPUUtilizationMaximum",
+        "UtilizationMetricsCacheHitsSum",
+        "UtilizationMetricsCacheMissesSum",
+        "UtilizationMetricsKeyspaceHitsSum",
+        "UtilizationMetricsKeyspaceMissesSum",
+        "UtilizationMetricsIsIdleMinimum",
+        "UtilizationMetricsUserConnectedSum",
+        "UtilizationMetricsInvocationsSum",
+        "UtilizationMetricsGetTypeCmdsSum",
+        "UtilizationMetricsSetTypeCmdsSum",
+        "UtilizationMetricsElastiCacheProcessingUnitsSum",
+        "UtilizationMetricsCurrConnectionsSum",
+        "UtilizationMetricsDatabaseConnectionsSum",
         "Finding",
         "FindingDescription",
         "Tags"
@@ -1697,6 +1718,8 @@
         "UtilizationMetricsVolumeWriteOpsPerSecondMaximum",
         "UtilizationMetricsVolumeReadBytesPerSecondMaximum",
         "UtilizationMetricsVolumeWriteBytesPerSecondMaximum",
+        "UtilizationMetricsVolumeIOPSExceededMaximum",
+        "UtilizationMetricsVolumeThroughputExceededMaximum",
         "LookbackPeriodInDays",
         "CurrentConfigurationVolumeType",
         "CurrentConfigurationVolumeBaselineIOPS",
@@ -1724,7 +1747,8 @@
         "EffectiveRecommendationPreferencesSavingsEstimationMode",
         "RecommendationOptionsSavingsOpportunityAfterDiscountsPercentage",
         "RecommendationOptionsEstimatedMonthlySavingsCurrencyAfterDiscounts",
-        "RecommendationOptionsEstimatedMonthlySavingsValueAfterDiscounts"
+        "RecommendationOptionsEstimatedMonthlySavingsValueAfterDiscounts",
+        "EffectiveRecommendationPreferencesLookBackPeriod"
       ]
     },
     "ExportableVolumeFields":{
@@ -2157,6 +2181,23 @@
         "False"
       ]
     },
+    "IdleDimension":{
+      "type":"structure",
+      "members":{
+        "key":{"shape":"IdleDimensionKey"},
+        "values":{"shape":"IdleDimensionValues"}
+      }
+    },
+    "IdleDimensionKey":{"type":"string"},
+    "IdleDimensionValue":{"type":"string"},
+    "IdleDimensionValues":{
+      "type":"list",
+      "member":{"shape":"IdleDimensionValue"}
+    },
+    "IdleDimensions":{
+      "type":"list",
+      "member":{"shape":"IdleDimension"}
+    },
     "IdleEstimatedMonthlySavings":{
       "type":"structure",
       "members":{
@@ -2193,7 +2234,23 @@
         "VolumeWriteOpsPerSecond",
         "ActiveConnectionCount",
         "PacketsInFromSource",
-        "PacketsInFromDestination"
+        "PacketsInFromDestination",
+        "ConsumedReadCapacityUnits",
+        "ConsumedWriteCapacityUnits",
+        "ConsumedChangeDataCaptureUnits",
+        "NewConnections",
+        "EngineCPUUtilization",
+        "CacheHits",
+        "CacheMisses",
+        "KeyspaceHits",
+        "KeyspaceMisses",
+        "IsIdle",
+        "UserConnected",
+        "Invocations",
+        "GetTypeCmds",
+        "SetTypeCmds",
+        "ElastiCacheProcessingUnits",
+        "CurrConnections"
       ]
     },
     "IdleRecommendation":{
@@ -2252,7 +2309,13 @@
         "EBSVolume",
         "ECSService",
         "RDSDBInstance",
-        "NatGateway"
+        "NatGateway",
+        "DynamoDBTable",
+        "ElastiCacheCluster",
+        "MemoryDBCluster",
+        "DocumentDBCluster",
+        "WorkSpaces",
+        "SageMakerEndpoint"
       ]
     },
     "IdleRecommendations":{
@@ -2289,7 +2352,8 @@
       "members":{
         "name":{"shape":"IdleMetricName"},
         "statistic":{"shape":"MetricStatistic"},
-        "value":{"shape":"MetricValue"}
+        "value":{"shape":"MetricValue"},
+        "dimensions":{"shape":"IdleDimensions"}
       }
     },
     "IdleUtilizationMetrics":{
@@ -3372,7 +3436,13 @@
         "RdsDBInstance",
         "RdsDBInstanceStorage",
         "AuroraDBClusterStorage",
-        "NatGateway"
+        "NatGateway",
+        "DynamoDBTable",
+        "ElastiCacheCluster",
+        "MemoryDBCluster",
+        "DocumentDBCluster",
+        "WorkSpaces",
+        "SageMakerEndpoint"
       ]
     },
     "RecommendationSources":{

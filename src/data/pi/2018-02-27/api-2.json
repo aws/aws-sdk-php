@@ -142,6 +142,20 @@
         {"shape":"NotAuthorizedException"}
       ]
     },
+    "ListPerformanceAnalysisReportRecommendations":{
+      "name":"ListPerformanceAnalysisReportRecommendations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListPerformanceAnalysisReportRecommendationsRequest"},
+      "output":{"shape":"ListPerformanceAnalysisReportRecommendationsResponse"},
+      "errors":[
+        {"shape":"InvalidArgumentException"},
+        {"shape":"InternalServiceError"},
+        {"shape":"NotAuthorizedException"}
+      ]
+    },
     "ListPerformanceAnalysisReports":{
       "name":"ListPerformanceAnalysisReports",
       "http":{
@@ -283,8 +297,7 @@
       "required":[
         "ServiceType",
         "Identifier",
-        "StartTime",
-        "EndTime"
+        "StartTime"
       ],
       "members":{
         "ServiceType":{"shape":"ServiceType"},
@@ -685,6 +698,29 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListPerformanceAnalysisReportRecommendationsRequest":{
+      "type":"structure",
+      "required":[
+        "ServiceType",
+        "Identifier",
+        "AnalysisReportId"
+      ],
+      "members":{
+        "ServiceType":{"shape":"ServiceType"},
+        "Identifier":{"shape":"IdentifierString"},
+        "AnalysisReportId":{"shape":"AnalysisReportId"},
+        "RecommendationIds":{"shape":"RecommendationIdList"},
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListPerformanceAnalysisReportRecommendationsResponse":{
+      "type":"structure",
+      "members":{
+        "Recommendations":{"shape":"RecommendationList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "ListPerformanceAnalysisReportsRequest":{
       "type":"structure",
       "required":[
@@ -819,8 +855,13 @@
       "type":"structure",
       "members":{
         "RecommendationId":{"shape":"String"},
-        "RecommendationDescription":{"shape":"MarkdownString"}
+        "RecommendationDescription":{"shape":"MarkdownString"},
+        "RecommendationDetails":{"shape":"MarkdownString"}
       }
+    },
+    "RecommendationIdList":{
+      "type":"list",
+      "member":{"shape":"String"}
     },
     "RecommendationList":{
       "type":"list",

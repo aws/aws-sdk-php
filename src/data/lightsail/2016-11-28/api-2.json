@@ -6261,7 +6261,8 @@
         "name":{"shape":"ResourceName"},
         "regionName":{"shape":"RegionName"},
         "protocolPolicy":{"shape":"OriginProtocolPolicyEnum"},
-        "responseTimeout":{"shape":"integer"}
+        "responseTimeout":{"shape":"integer"},
+        "ipAddressType":{"shape":"OriginIpAddressTypeEnum"}
       }
     },
     "Instance":{
@@ -7161,8 +7162,17 @@
         "resourceType":{"shape":"ResourceType"},
         "regionName":{"shape":"RegionName"},
         "protocolPolicy":{"shape":"OriginProtocolPolicyEnum"},
-        "responseTimeout":{"shape":"integer"}
+        "responseTimeout":{"shape":"integer"},
+        "ipAddressType":{"shape":"OriginIpAddressTypeEnum"}
       }
+    },
+    "OriginIpAddressTypeEnum":{
+      "type":"string",
+      "enum":[
+        "ipv4",
+        "ipv6",
+        "dualstack"
+      ]
     },
     "OriginProtocolPolicyEnum":{
       "type":"string",
@@ -7419,14 +7429,17 @@
         "eu-west-3",
         "eu-central-1",
         "eu-north-1",
+        "eu-south-2",
         "ca-central-1",
+        "ap-east-1",
         "ap-south-1",
         "ap-southeast-1",
         "ap-southeast-2",
         "ap-northeast-1",
         "ap-northeast-2",
         "ap-southeast-3",
-        "ap-southeast-5"
+        "ap-southeast-5",
+        "sa-east-1"
       ]
     },
     "RegionSetupInProgressException":{

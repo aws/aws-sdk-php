@@ -1384,7 +1384,8 @@
         "mlInputChannelArn":{"shape":"MLInputChannelArn"},
         "status":{"shape":"MLInputChannelStatus"},
         "creatorAccountId":{"shape":"AccountId"},
-        "description":{"shape":"ResourceDescription"}
+        "description":{"shape":"ResourceDescription"},
+        "payerConfiguration":{"shape":"PayerConfiguration"}
       }
     },
     "CollaborationMLInputChannelSummaryConfiguredModelAlgorithmAssociationsList":{
@@ -1462,6 +1463,7 @@
         "metricsStatusDetails":{"shape":"String"},
         "logsStatus":{"shape":"LogsStatus"},
         "logsStatusDetails":{"shape":"String"},
+        "mlModelInferencePayerAccountId":{"shape":"AccountId"},
         "createTime":{"shape":"SyntheticTimestamp_date_time"},
         "updateTime":{"shape":"SyntheticTimestamp_date_time"},
         "creatorAccountId":{"shape":"AccountId"}
@@ -1496,7 +1498,8 @@
         "collaborationIdentifier":{"shape":"UUID"},
         "status":{"shape":"TrainedModelStatus"},
         "configuredModelAlgorithmAssociationArn":{"shape":"ConfiguredModelAlgorithmAssociationArn"},
-        "creatorAccountId":{"shape":"AccountId"}
+        "creatorAccountId":{"shape":"AccountId"},
+        "mlModelTrainingPayerAccountId":{"shape":"AccountId"}
       }
     },
     "ColumnClassificationDetails":{
@@ -1823,7 +1826,8 @@
         "retentionInDays":{"shape":"CreateMLInputChannelRequestRetentionInDaysInteger"},
         "description":{"shape":"ResourceDescription"},
         "kmsKeyArn":{"shape":"KmsKeyArn"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "payerConfiguration":{"shape":"PayerConfiguration"}
       }
     },
     "CreateMLInputChannelRequestConfiguredModelAlgorithmAssociationsList":{
@@ -1871,7 +1875,8 @@
         "trainingInputMode":{"shape":"TrainingInputMode"},
         "description":{"shape":"ResourceDescription"},
         "kmsKeyArn":{"shape":"KmsKeyArn"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "mlModelTrainingPayerAccountId":{"shape":"AccountId"}
       }
     },
     "CreateTrainedModelResponse":{
@@ -2322,6 +2327,7 @@
         "privacyBudgets":{"shape":"PrivacyBudgets"},
         "description":{"shape":"ResourceDescription"},
         "syntheticDataConfiguration":{"shape":"SyntheticDataConfiguration"},
+        "payerConfiguration":{"shape":"PayerConfiguration"},
         "createTime":{"shape":"SyntheticTimestamp_date_time"},
         "updateTime":{"shape":"SyntheticTimestamp_date_time"},
         "creatorAccountId":{"shape":"AccountId"}
@@ -2401,6 +2407,7 @@
         "logsStatus":{"shape":"LogsStatus"},
         "logsStatusDetails":{"shape":"String"},
         "trainingContainerImageDigest":{"shape":"String"},
+        "mlModelTrainingPayerAccountId":{"shape":"AccountId"},
         "createTime":{"shape":"SyntheticTimestamp_date_time"},
         "updateTime":{"shape":"SyntheticTimestamp_date_time"},
         "creatorAccountId":{"shape":"AccountId"}
@@ -2617,6 +2624,7 @@
         "privacyBudgets":{"shape":"PrivacyBudgets"},
         "description":{"shape":"ResourceDescription"},
         "syntheticDataConfiguration":{"shape":"SyntheticDataConfiguration"},
+        "payerConfiguration":{"shape":"PayerConfiguration"},
         "createTime":{"shape":"SyntheticTimestamp_date_time"},
         "updateTime":{"shape":"SyntheticTimestamp_date_time"},
         "inputChannel":{"shape":"InputChannel"},
@@ -2713,7 +2721,8 @@
         "metricsStatusDetails":{"shape":"String"},
         "logsStatus":{"shape":"LogsStatus"},
         "logsStatusDetails":{"shape":"String"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "mlModelInferencePayerAccountId":{"shape":"AccountId"}
       }
     },
     "GetTrainedModelRequest":{
@@ -2772,6 +2781,7 @@
         "logsStatus":{"shape":"LogsStatus"},
         "logsStatusDetails":{"shape":"String"},
         "trainingContainerImageDigest":{"shape":"String"},
+        "mlModelTrainingPayerAccountId":{"shape":"AccountId"},
         "createTime":{"shape":"SyntheticTimestamp_date_time"},
         "updateTime":{"shape":"SyntheticTimestamp_date_time"},
         "hyperparameters":{"shape":"HyperParameters"},
@@ -3847,7 +3857,8 @@
         "protectedQueryIdentifier":{"shape":"UUID"},
         "mlInputChannelArn":{"shape":"MLInputChannelArn"},
         "status":{"shape":"MLInputChannelStatus"},
-        "description":{"shape":"ResourceDescription"}
+        "description":{"shape":"ResourceDescription"},
+        "payerConfiguration":{"shape":"PayerConfiguration"}
       }
     },
     "MLInputChannelSummaryConfiguredModelAlgorithmAssociationsList":{
@@ -4044,8 +4055,15 @@
     },
     "ParameterValue":{
       "type":"string",
-      "max":250,
+      "max":1000,
       "min":0
+    },
+    "PayerConfiguration":{
+      "type":"structure",
+      "members":{
+        "computePayerAccountId":{"shape":"AccountId"},
+        "syntheticDataPayerAccountId":{"shape":"AccountId"}
+      }
     },
     "PolicyExistenceCondition":{
       "type":"string",
@@ -4368,7 +4386,8 @@
         "containerExecutionParameters":{"shape":"InferenceContainerExecutionParameters"},
         "environment":{"shape":"InferenceEnvironmentMap"},
         "kmsKeyArn":{"shape":"KmsKeyArn"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "mlModelInferencePayerAccountId":{"shape":"AccountId"}
       }
     },
     "StartTrainedModelInferenceJobResponse":{
@@ -4534,7 +4553,7 @@
     "TrainedModelArtifactMaxSizeValue":{
       "type":"double",
       "box":true,
-      "max":10.0,
+      "max":100.0,
       "min":0.01
     },
     "TrainedModelExportFileType":{
@@ -4608,7 +4627,7 @@
     "TrainedModelExportsMaxSizeValue":{
       "type":"double",
       "box":true,
-      "max":10.0,
+      "max":50.0,
       "min":0.01
     },
     "TrainedModelInferenceJobArn":{
@@ -4662,6 +4681,7 @@
         "metricsStatusDetails":{"shape":"String"},
         "logsStatus":{"shape":"LogsStatus"},
         "logsStatusDetails":{"shape":"String"},
+        "mlModelInferencePayerAccountId":{"shape":"AccountId"},
         "createTime":{"shape":"SyntheticTimestamp_date_time"},
         "updateTime":{"shape":"SyntheticTimestamp_date_time"}
       }
@@ -4691,7 +4711,7 @@
     "TrainedModelInferenceMaxOutputSizeValue":{
       "type":"double",
       "box":true,
-      "max":50.0,
+      "max":100.0,
       "min":0.01
     },
     "TrainedModelList":{
@@ -4737,7 +4757,8 @@
         "membershipIdentifier":{"shape":"UUID"},
         "collaborationIdentifier":{"shape":"UUID"},
         "status":{"shape":"TrainedModelStatus"},
-        "configuredModelAlgorithmAssociationArn":{"shape":"ConfiguredModelAlgorithmAssociationArn"}
+        "configuredModelAlgorithmAssociationArn":{"shape":"ConfiguredModelAlgorithmAssociationArn"},
+        "mlModelTrainingPayerAccountId":{"shape":"AccountId"}
       }
     },
     "TrainedModelsConfigurationPolicy":{
@@ -4864,7 +4885,7 @@
     "WorkerComputeConfigurationNumberInteger":{
       "type":"integer",
       "box":true,
-      "max":400,
+      "max":1024,
       "min":2
     },
     "WorkerComputeConfigurationProperties":{

@@ -101,6 +101,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getBackupVaultNotificationsAsync(array $args = [])
  * @method \Aws\Result getLegalHold(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getLegalHoldAsync(array $args = [])
+ * @method \Aws\Result getPITRMalwareScanResults(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getPITRMalwareScanResultsAsync(array $args = [])
  * @method \Aws\Result getRecoveryPointIndexDetails(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getRecoveryPointIndexDetailsAsync(array $args = [])
  * @method \Aws\Result getRecoveryPointRestoreMetadata(array $args = [])

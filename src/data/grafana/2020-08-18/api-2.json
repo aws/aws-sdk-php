@@ -678,6 +678,7 @@
         },
         "networkAccessControl":{"shape":"NetworkAccessConfiguration"},
         "grafanaVersion":{"shape":"GrafanaVersion"},
+        "ipAddressType":{"shape":"IPAddressType"},
         "kmsKeyId":{"shape":"KmsKeyId"}
       }
     },
@@ -779,6 +780,11 @@
     "DataSourceTypesList":{
       "type":"list",
       "member":{"shape":"DataSourceType"}
+    },
+    "DegradedWorkspaceReason":{
+      "type":"string",
+      "max":255,
+      "min":1
     },
     "DeleteWorkspaceApiKeyRequest":{
       "type":"structure",
@@ -1004,6 +1010,13 @@
     "GrafanaVersionList":{
       "type":"list",
       "member":{"shape":"GrafanaVersion"}
+    },
+    "IPAddressType":{
+      "type":"string",
+      "enum":[
+        "IPv4",
+        "DualStack"
+      ]
     },
     "IamRoleArn":{
       "type":"string",
@@ -1753,7 +1766,8 @@
         "vpcConfiguration":{"shape":"VpcConfiguration"},
         "removeVpcConfiguration":{"shape":"Boolean"},
         "networkAccessControl":{"shape":"NetworkAccessConfiguration"},
-        "removeNetworkAccessConfiguration":{"shape":"Boolean"}
+        "removeNetworkAccessConfiguration":{"shape":"Boolean"},
+        "ipAddressType":{"shape":"IPAddressType"}
       }
     },
     "UpdateWorkspaceResponse":{
@@ -1884,7 +1898,9 @@
         "vpcConfiguration":{"shape":"VpcConfiguration"},
         "networkAccessControl":{"shape":"NetworkAccessConfiguration"},
         "grafanaToken":{"shape":"GrafanaToken"},
-        "kmsKeyId":{"shape":"KmsKeyId"}
+        "ipAddressType":{"shape":"IPAddressType"},
+        "kmsKeyId":{"shape":"KmsKeyId"},
+        "degradedWorkspaceReason":{"shape":"DegradedWorkspaceReason"}
       }
     },
     "WorkspaceId":{
@@ -1915,7 +1931,8 @@
         "UPGRADE_FAILED",
         "LICENSE_REMOVAL_FAILED",
         "VERSION_UPDATING",
-        "VERSION_UPDATE_FAILED"
+        "VERSION_UPDATE_FAILED",
+        "DEGRADED"
       ]
     },
     "WorkspaceSummary":{

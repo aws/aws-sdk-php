@@ -15,6 +15,8 @@
     "CreateConfiguredTableAssociationAnalysisRule": "<p> Creates a new analysis rule for an associated configured table.</p>",
     "CreateIdMappingTable": "<p>Creates an ID mapping table.</p>",
     "CreateIdNamespaceAssociation": "<p>Creates an ID namespace association.</p>",
+    "CreateIntermediateTable": "<p>Creates an intermediate table in a membership. An intermediate table stores a query definition that you can execute later using <code>PopulateIntermediateTable</code> to materialize cached results. The intermediate table is owned by the member with the CAN_QUERY ability. This operation does not execute the stored query.</p>",
+    "CreateIntermediateTableAnalysisRule": "<p>Creates an analysis rule for an intermediate table. Only the CUSTOM analysis rule type is supported. The service automatically determines whether the rule is first-party or multi-party restricted based on the intermediate table's inherited constraints. Only the intermediate table owner can call this operation.</p>",
     "CreateMembership": "<p>Creates a membership for a specific collaboration identifier and joins the collaboration.</p>",
     "CreatePrivacyBudgetTemplate": "<p>Creates a privacy budget template for a specified collaboration. Each collaboration can have only one privacy budget template. If you need to change the privacy budget template, use the <a>UpdatePrivacyBudgetTemplate</a> operation.</p>",
     "DeleteAnalysisTemplate": "<p>Deletes an analysis template.</p>",
@@ -26,9 +28,12 @@
     "DeleteConfiguredTableAssociationAnalysisRule": "<p>Deletes an analysis rule for a configured table association.</p>",
     "DeleteIdMappingTable": "<p>Deletes an ID mapping table.</p>",
     "DeleteIdNamespaceAssociation": "<p>Deletes an ID namespace association.</p>",
+    "DeleteIntermediateTable": "<p>Deletes an intermediate table. When you delete the table, the service marks it as DELETED, removes its analysis rule and schema, and triggers storage cleanup. This operation is idempotent. Only the intermediate table owner can call this operation.</p>",
+    "DeleteIntermediateTableAnalysisRule": "<p>Deletes an analysis rule from an intermediate table. After the analysis rule is deleted, the intermediate table becomes unqueryable until a new analysis rule is attached. Only the intermediate table owner can call this operation.</p>",
     "DeleteMember": "<p>Removes the specified member from a collaboration. The removed member is placed in the Removed status and can't interact with the collaboration. The removed member's data is inaccessible to active members of the collaboration.</p>",
     "DeleteMembership": "<p>Deletes a specified membership. All resources under a membership must be deleted.</p>",
     "DeletePrivacyBudgetTemplate": "<p>Deletes a privacy budget template for a specified collaboration.</p>",
+    "DisallowIntermediateTable": "<p>Invalidates a specific intermediate table that references the caller's base table. The data provider (base table owner) calls this operation, not the intermediate table owner. By default, invalidation cascades to descendant intermediate tables.</p>",
     "GetAnalysisTemplate": "<p>Retrieves an analysis template.</p>",
     "GetCollaboration": "<p>Returns metadata about a collaboration.</p>",
     "GetCollaborationAnalysisTemplate": "<p>Retrieves an analysis template within a collaboration.</p>",
@@ -43,6 +48,8 @@
     "GetConfiguredTableAssociationAnalysisRule": "<p> Retrieves the analysis rule for a configured table association.</p>",
     "GetIdMappingTable": "<p>Retrieves an ID mapping table.</p>",
     "GetIdNamespaceAssociation": "<p>Retrieves an ID namespace association.</p>",
+    "GetIntermediateTable": "<p>Retrieves an intermediate table. Returns the full details of the intermediate table, including schema, table dependencies, inherited constraints, child resources, and status. Only the intermediate table owner can call this operation.</p>",
+    "GetIntermediateTableAnalysisRule": "<p>Retrieves the analysis rule for an intermediate table.</p>",
     "GetMembership": "<p>Retrieves a specified membership for an identifier.</p>",
     "GetPrivacyBudgetTemplate": "<p>Returns details for a specified privacy budget template.</p>",
     "GetProtectedJob": "<p>Returns job processing metadata.</p>",
@@ -62,6 +69,8 @@
     "ListConfiguredTables": "<p>Lists configured tables.</p>",
     "ListIdMappingTables": "<p>Returns a list of ID mapping tables.</p>",
     "ListIdNamespaceAssociations": "<p>Returns a list of ID namespace associations.</p>",
+    "ListIntermediateTableVersions": "<p>Lists the version history of an intermediate table. Each call to <code>PopulateIntermediateTable</code> creates a new version. We recommend using pagination to ensure that the operation returns quickly and successfully.</p>",
+    "ListIntermediateTables": "<p>Lists intermediate tables owned by the caller in a membership. We recommend using pagination to ensure that the operation returns quickly and successfully.</p>",
     "ListMembers": "<p>Lists all members within a collaboration.</p>",
     "ListMemberships": "<p>Lists all memberships resources within the caller's account.</p>",
     "ListPrivacyBudgetTemplates": "<p>Returns detailed information about the privacy budget templates in a specified membership.</p>",
@@ -71,6 +80,7 @@
     "ListSchemas": "<p>Lists the schemas for relations within a collaboration.</p>",
     "ListTagsForResource": "<p>Lists all of the tags that have been added to a resource.</p>",
     "PopulateIdMappingTable": "<p>Defines the information that's necessary to populate an ID mapping table.</p>",
+    "PopulateIntermediateTable": "<p>Executes the stored query of an intermediate table to materialize data into managed storage. With this operation, you can perform initial population and subsequent refreshes. Each call creates a new version. The returned analysis ID can be tracked using <code>GetProtectedQuery</code>. Only the intermediate table owner can call this operation.</p>",
     "PreviewPrivacyImpact": "<p>An estimate of the number of aggregation functions that the member who can query can run given epsilon and noise parameters.</p>",
     "StartProtectedJob": "<p>Creates a protected job that is started by Clean Rooms.</p>",
     "StartProtectedQuery": "<p>Creates a protected query that is started by Clean Rooms.</p>",
@@ -86,6 +96,8 @@
     "UpdateConfiguredTableAssociationAnalysisRule": "<p> Updates the analysis rule for a configured table association.</p>",
     "UpdateIdMappingTable": "<p>Provides the details that are necessary to update an ID mapping table.</p>",
     "UpdateIdNamespaceAssociation": "<p>Provides the details that are necessary to update an ID namespace association.</p>",
+    "UpdateIntermediateTable": "<p>Updates an intermediate table. You can update the description, KMS key ARN, and column types of existing columns. Only the intermediate table owner can call this operation.</p>",
+    "UpdateIntermediateTableAnalysisRule": "<p>Updates the analysis rule policy for an intermediate table. Only the intermediate table owner can call this operation.</p>",
     "UpdateMembership": "<p>Updates a membership.</p>",
     "UpdatePrivacyBudgetTemplate": "<p>Updates the privacy budget template for the specified collaboration.</p>",
     "UpdateProtectedJob": "<p>Updates the processing of a currently running job.</p>",
@@ -148,9 +160,12 @@
     "AccountId": {
       "base": null,
       "refs": {
+        "AccountIdList$member": null,
+        "AllowedAnalysisProviderList$member": null,
         "AllowedResultReceivers$member": null,
         "AnalysisRuleCustomAllowedAnalysisProvidersList$member": null,
         "ApprovalStatuses$key": null,
+        "ChildResource$ownerAccountId": "<p>The Amazon Web Services account ID of the member who owns the child resource.</p>",
         "Collaboration$creatorAccountId": "<p>The identifier used to reference members of the collaboration. Currently only supports Amazon Web Services account ID.</p>",
         "CollaborationAnalysisTemplate$creatorAccountId": "<p>The identifier used to reference members of the collaboration. Currently only supports Amazon Web Services account ID.</p>",
         "CollaborationAnalysisTemplateSummary$creatorAccountId": "<p>The identifier used to reference members of the collaboration. Currently only supports Amazon Web Services account ID.</p>",
@@ -162,22 +177,41 @@
         "CollaborationPrivacyBudgetTemplate$creatorAccountId": "<p>The unique identifier of the account that created this collaboration privacy budget template.</p>",
         "CollaborationPrivacyBudgetTemplateSummary$creatorAccountId": "<p>The unique identifier of the account that created this collaboration privacy budget template.</p>",
         "CollaborationSummary$creatorAccountId": "<p>The identifier used to reference members of the collaboration. Currently only supports Amazon Web Services account ID.</p>",
+        "ColumnLineageEntry$sourceAccountId": "<p>The Amazon Web Services account ID of the owner of the source table.</p>",
         "ConsolidatedPolicyCustomAllowedAnalysisProvidersList$member": null,
         "DeleteMemberInput$accountId": "<p>The account ID of the member to remove.</p>",
+        "InheritedAdditionalAnalysesSource$sourceAccountId": "<p>The Amazon Web Services account ID of the member who owns the parent table.</p>",
+        "InheritedAllowedAdditionalAnalysesSource$sourceAccountId": "<p>The Amazon Web Services account ID of the member who owns the parent table.</p>",
+        "InheritedAllowedResultReceiversSource$sourceAccountId": "<p>The Amazon Web Services account ID of the member who owns the parent table.</p>",
+        "IntermediateTableDependency$creatorAccountId": "<p>The Amazon Web Services account ID of the member who owns the dependency table.</p>",
         "MemberChangeSpecification$accountId": "<p>The Amazon Web Services account ID of the member to add to the collaboration.</p>",
         "MemberSpecification$accountId": "<p>The identifier used to reference members of the collaboration. Currently only supports Amazon Web Services account ID.</p>",
         "MemberSummary$accountId": "<p>The identifier used to reference members of the collaboration. Currently only supports Amazon Web Services account ID.</p>",
         "Membership$collaborationCreatorAccountId": "<p>The identifier used to reference members of the collaboration. Currently only supports Amazon Web Services account ID.</p>",
         "MembershipSummary$collaborationCreatorAccountId": "<p>The identifier of the Amazon Web Services principal that created the collaboration. Currently only supports Amazon Web Services account ID.</p>",
+        "PopulateIntermediateTableInput$analysisPayerAccountId": "<p>The account ID of the member that pays for the analysis compute costs.</p>",
+        "ProtectedJob$jobComputePayerAccountId": "<p>The account ID of the member that pays for the job compute costs.</p>",
         "ProtectedJobMemberOutputConfigurationInput$accountId": "<p> The account ID.</p>",
         "ProtectedJobMemberOutputConfigurationOutput$accountId": "<p> The account ID.</p>",
         "ProtectedJobReceiverAccountIds$member": null,
         "ProtectedJobSingleMemberOutput$accountId": "<p>The Amazon Web Services account ID of the member in the collaboration who can receive results from analyses.</p>",
+        "ProtectedJobSummary$jobComputePayerAccountId": "<p>The account ID of the member that pays for the job compute costs.</p>",
+        "ProtectedQuery$queryComputePayerAccountId": "<p>The account ID of the member that pays for the query compute costs.</p>",
         "ProtectedQueryMemberOutputConfiguration$accountId": "<p>The unique identifier for the account.</p>",
         "ProtectedQuerySingleMemberOutput$accountId": "<p>The Amazon Web Services account ID of the member in the collaboration who can receive results for the query.</p>",
+        "ProtectedQuerySummary$queryComputePayerAccountId": "<p>The account ID of the member that pays for the query compute costs.</p>",
         "ReceiverAccountIds$member": null,
         "Schema$creatorAccountId": "<p>The unique account ID for the Amazon Web Services account that owns the schema.</p>",
-        "SchemaSummary$creatorAccountId": "<p>The unique account ID for the Amazon Web Services account that owns the schema.</p>"
+        "SchemaSummary$creatorAccountId": "<p>The unique account ID for the Amazon Web Services account that owns the schema.</p>",
+        "StartProtectedJobInput$jobComputePayerAccountId": "<p>The account ID of the member that pays for the job compute costs.</p>",
+        "StartProtectedQueryInput$queryComputePayerAccountId": "<p>The account ID of the member that pays for the query compute costs.</p>"
+      }
+    },
+    "AccountIdList": {
+      "base": null,
+      "refs": {
+        "InheritedAllowedResultReceivers$value": "<p>The effective list of Amazon Web Services account IDs allowed to receive results, inherited from parent tables.</p>",
+        "InheritedAllowedResultReceiversSource$value": "<p>The allowed result receiver account IDs defined on the parent table.</p>"
       }
     },
     "AdditionalAnalyses": {
@@ -188,7 +222,10 @@
         "AnalysisRuleList$additionalAnalyses": "<p> An indicator as to whether additional analyses (such as Clean Rooms ML) can be applied to the output of the direct query.</p>",
         "ConsolidatedPolicyAggregation$additionalAnalyses": "<p> Additional analyses for the consolidated policy aggregation.</p>",
         "ConsolidatedPolicyCustom$additionalAnalyses": "<p> Additional analyses for the consolidated policy.</p>",
-        "ConsolidatedPolicyList$additionalAnalyses": "<p> Additional analyses for the consolidated policy list.</p>"
+        "ConsolidatedPolicyList$additionalAnalyses": "<p> Additional analyses for the consolidated policy list.</p>",
+        "InheritedAdditionalAnalyses$value": "<p>The effective additional analyses setting inherited from parent tables.</p>",
+        "InheritedAdditionalAnalysesSource$value": "<p>The additional analyses setting defined on the parent table.</p>",
+        "IntermediateTableAnalysisRuleCustom$additionalAnalyses": "<p>The setting that controls whether additional analyses are allowed on the intermediate table.</p>"
       }
     },
     "AdditionalAnalysesResourceArn": {
@@ -244,12 +281,28 @@
     "AllowedAdditionalAnalyses": {
       "base": null,
       "refs": {
+        "AnalysisRuleCustom$allowedAdditionalAnalyses": "<p>The list of allowed additional analyses for the custom analysis rule.</p>",
         "ConfiguredTableAssociationAnalysisRuleAggregation$allowedAdditionalAnalyses": "<p> The list of resources or wildcards (ARNs) that are allowed to perform additional analysis on query output.</p> <p>The <code>allowedAdditionalAnalyses</code> parameter is currently supported for the list analysis rule (<code>AnalysisRuleList</code>) and the custom analysis rule (<code>AnalysisRuleCustom</code>).</p>",
         "ConfiguredTableAssociationAnalysisRuleCustom$allowedAdditionalAnalyses": "<p> The list of resources or wildcards (ARNs) that are allowed to perform additional analysis on query output.</p>",
         "ConfiguredTableAssociationAnalysisRuleList$allowedAdditionalAnalyses": "<p> The list of resources or wildcards (ARNs) that are allowed to perform additional analysis on query output.</p>",
         "ConsolidatedPolicyAggregation$allowedAdditionalAnalyses": "<p> The additional analyses allowed by the consolidated policy aggregation.</p>",
         "ConsolidatedPolicyCustom$allowedAdditionalAnalyses": "<p> The additional analyses allowed by the consolidated policy.</p>",
-        "ConsolidatedPolicyList$allowedAdditionalAnalyses": "<p> The additional analyses allowed by the consolidated policy list.</p>"
+        "ConsolidatedPolicyList$allowedAdditionalAnalyses": "<p> The additional analyses allowed by the consolidated policy list.</p>",
+        "InheritedAllowedAdditionalAnalyses$value": "<p>The effective list of allowed additional analyses inherited from parent tables.</p>",
+        "InheritedAllowedAdditionalAnalysesSource$value": "<p>The allowed additional analyses defined on the parent table.</p>",
+        "IntermediateTableAnalysisRuleCustom$allowedAdditionalAnalyses": "<p>The list of allowed additional analyses for the intermediate table.</p>"
+      }
+    },
+    "AllowedAnalysesList": {
+      "base": null,
+      "refs": {
+        "IntermediateTableAnalysisRuleCustom$allowedAnalyses": "<p>The list of allowed analyses that can be performed on the intermediate table.</p>"
+      }
+    },
+    "AllowedAnalysisProviderList": {
+      "base": null,
+      "refs": {
+        "IntermediateTableAnalysisRuleCustom$allowedAnalysisProviders": "<p>The list of Amazon Web Services account IDs for the allowed analysis providers.</p>"
       }
     },
     "AllowedColumnList": {
@@ -263,12 +316,14 @@
     "AllowedResultReceivers": {
       "base": null,
       "refs": {
+        "AnalysisRuleCustom$allowedResultReceivers": "<p>The list of Amazon Web Services account IDs that are allowed to receive results from queries run on the configured table.</p>",
         "ConfiguredTableAssociationAnalysisRuleAggregation$allowedResultReceivers": "<p> The list of collaboration members who are allowed to receive results of queries run with this configured table.</p>",
         "ConfiguredTableAssociationAnalysisRuleCustom$allowedResultReceivers": "<p> The list of collaboration members who are allowed to receive results of queries run with this configured table.</p>",
         "ConfiguredTableAssociationAnalysisRuleList$allowedResultReceivers": "<p> The list of collaboration members who are allowed to receive results of queries run with this configured table.</p>",
         "ConsolidatedPolicyAggregation$allowedResultReceivers": "<p> The allowed result receivers.</p>",
         "ConsolidatedPolicyCustom$allowedResultReceivers": "<p> The allowed result receivers.</p>",
-        "ConsolidatedPolicyList$allowedResultReceivers": "<p> The allowed result receivers.</p>"
+        "ConsolidatedPolicyList$allowedResultReceivers": "<p> The allowed result receivers.</p>",
+        "IntermediateTableAnalysisRuleCustom$allowedResultReceivers": "<p>The list of Amazon Web Services account IDs that are allowed to receive results from queries run on the intermediate table.</p>"
       }
     },
     "AllowedResultRegions": {
@@ -284,6 +339,14 @@
         "AnalysisTemplate$format": "<p>The format of the analysis template.</p>",
         "CollaborationAnalysisTemplate$format": "<p>The format of the analysis template in the collaboration.</p>",
         "CreateAnalysisTemplateInput$format": "<p>The format of the analysis template.</p>"
+      }
+    },
+    "AnalysisIdentifier": {
+      "base": null,
+      "refs": {
+        "IntermediateTableActiveVersion$analysisId": "<p>The identifier of the protected query that created this version.</p>",
+        "IntermediateTableVersionSummary$analysisId": "<p>The identifier of the protected query that created this version.</p>",
+        "PopulateIntermediateTableOutput$analysisId": "<p>The identifier for the protected query execution. Use this value with <code>GetProtectedQuery</code> to track the population progress.</p>"
       }
     },
     "AnalysisMethod": {
@@ -343,6 +406,7 @@
         "ConsolidatedPolicyAggregation$dimensionColumns": "<p> The dimension columns of the consolidated policy aggregation.</p>",
         "ConsolidatedPolicyCustom$disallowedOutputColumns": "<p> Disallowed output columns</p>",
         "ConsolidatedPolicyList$listColumns": "<p> The columns in the consolidated policy list.</p>",
+        "IntermediateTableAnalysisRuleCustom$disallowedOutputColumns": "<p>The list of columns that are not allowed in the query output.</p>",
         "QueryConstraintRequireOverlap$columns": "<p>The columns that are required to overlap.</p>"
       }
     },
@@ -352,9 +416,18 @@
         "AggregateColumnColumnNamesList$member": null,
         "AggregationConstraint$columnName": "<p>Column in aggregation constraint for which there must be a minimum number of distinct values in an output row for it to be in the query output.</p>",
         "AnalysisRuleColumnList$member": null,
+        "AnalysisRuleColumnNameList$member": null,
         "AnalysisRuleIdMappingTableJoinColumnsList$member": null,
         "AnalysisRuleListJoinColumnsList$member": null,
+        "ColumnLineageEntry$column": "<p>The name of the column in the intermediate table.</p>",
+        "ColumnLineageEntry$sourceColumn": "<p>The name of the column in the source table.</p>",
         "ConsolidatedPolicyListJoinColumnsList$member": null
+      }
+    },
+    "AnalysisRuleColumnNameList": {
+      "base": null,
+      "refs": {
+        "InheritedDisallowedOutputColumns$value": "<p>The list of column names that are disallowed from appearing in query output, inherited from parent tables.</p>"
       }
     },
     "AnalysisRuleCustom": {
@@ -472,6 +545,7 @@
         "CollaborationAnalysisTemplate$arn": "<p>The Amazon Resource Name (ARN) of the analysis template.</p>",
         "CollaborationAnalysisTemplateSummary$arn": "<p>The Amazon Resource Name (ARN) of the analysis template.</p>",
         "GetCollaborationAnalysisTemplateInput$analysisTemplateArn": "<p>The Amazon Resource Name (ARN) associated with the analysis template within a collaboration.</p>",
+        "PopulationAnalysisSqlParameters$analysisTemplateArn": "<p>The Amazon Resource Name (ARN) of the analysis template to use for populating the intermediate table.</p>",
         "ProtectedJobParameters$analysisTemplateArn": "<p> The ARN of the analysis template.</p>",
         "ProtectedQuerySQLParameters$analysisTemplateArn": "<p>The Amazon Resource Name (ARN) associated with the analysis template within a collaboration.</p>"
       }
@@ -485,6 +559,7 @@
     "AnalysisTemplateArnOrQueryWildcard": {
       "base": null,
       "refs": {
+        "AllowedAnalysesList$member": null,
         "AnalysisRuleCustomAllowedAnalysesList$member": null,
         "ConsolidatedPolicyCustomAllowedAnalysesList$member": null
       }
@@ -673,6 +748,22 @@
         "BudgetParameter$autoRefresh": "<p>Whether this individual budget parameter automatically refreshes when the budget period resets.</p>"
       }
     },
+    "BaseTableDependencyType": {
+      "base": null,
+      "refs": {
+        "ColumnLineageEntry$sourceType": "<p>The type of the source table.</p>",
+        "InheritedAdditionalAnalysesSource$type": "<p>The type of the parent table.</p>",
+        "InheritedAllowedAdditionalAnalysesSource$type": "<p>The type of the parent table.</p>",
+        "InheritedAllowedResultReceiversSource$type": "<p>The type of the parent table.</p>",
+        "IntermediateTableDependency$type": "<p>The type of the dependency table.</p>"
+      }
+    },
+    "BaseTableParentType": {
+      "base": null,
+      "refs": {
+        "IntermediateTableDependency$parentType": "<p>Whether the dependency is direct or indirect. A direct dependency is a table explicitly referenced in the stored query, while an indirect dependency is referenced through another intermediate table.</p>"
+      }
+    },
     "BatchGetCollaborationAnalysisTemplateError": {
       "base": "<p>Details of errors thrown by the call to retrieve multiple analysis templates within a collaboration by their identifiers.</p>",
       "refs": {
@@ -761,20 +852,21 @@
         "DataEncryptionMetadata$allowDuplicates": "<p>Indicates whether Fingerprint columns can contain duplicate entries (<code>TRUE</code>) or are to contain only non-repeated values (<code>FALSE</code>).</p>",
         "DataEncryptionMetadata$allowJoinsOnColumnsWithDifferentNames": "<p>Indicates whether Fingerprint columns can be joined on any other Fingerprint column with a different name (<code>TRUE</code>) or can only be joined on Fingerprint columns of the same name (<code>FALSE</code>).</p>",
         "DataEncryptionMetadata$preserveNulls": "<p>Indicates whether NULL values are to be copied as NULL to encrypted tables (<code>TRUE</code>) or cryptographically processed (<code>FALSE</code>).</p>",
+        "DisallowIntermediateTableInput$includeDescendants": "<p>Specifies whether to cascade the disallow action to descendant intermediate tables. Default is <code>true</code>.</p>",
         "IdMappingConfig$allowUseAsDimensionColumn": "<p>An indicator as to whether you can use your column as a dimension column in the ID mapping table (<code>TRUE</code>) or not (<code>FALSE</code>).</p> <p>Default is <code>FALSE</code>.</p>",
         "IdMappingTableInputReferenceConfig$manageResourcePolicies": "<p>When <code>TRUE</code>, Clean Rooms manages permissions for the ID mapping table resource. </p> <p>When <code>FALSE</code>, the resource owner manages permissions for the ID mapping table resource.</p>",
         "IdNamespaceAssociationInputReferenceConfig$manageResourcePolicies": "<p>When <code>TRUE</code>, Clean Rooms manages permissions for the ID namespace association resource.</p> <p>When <code>FALSE</code>, the resource owner manages permissions for the ID namespace association resource.</p>",
-        "JobComputePaymentConfig$isResponsible": "<p>Indicates whether the collaboration creator has configured the collaboration member to pay for query and job compute costs (<code>TRUE</code>) or has not configured the collaboration member to pay for query and job compute costs (<code>FALSE</code>).</p> <p>Exactly one member can be configured to pay for query and job compute costs. An error is returned if the collaboration creator sets a <code>TRUE</code> value for more than one member in the collaboration. </p> <p>An error is returned if the collaboration creator sets a <code>FALSE</code> value for the member who can run queries and jobs.</p>",
+        "JobComputePaymentConfig$isResponsible": "<p>Indicates whether the collaboration creator has configured the collaboration member to pay for query and job compute costs (<code>TRUE</code>) or has not configured the collaboration member to pay for query and job compute costs (<code>FALSE</code>).</p> <p>One or more members can be configured as payer candidates for query and job compute costs.</p> <p>An error is returned if the collaboration creator sets a <code>FALSE</code> value for the member who can run queries and jobs.</p>",
         "Membership$isMetricsEnabled": "<p>An indicator as to whether Amazon CloudWatch metrics are enabled for the membership.</p> <p>When <code>true</code>, metrics about query execution are collected in Amazon CloudWatch.</p>",
-        "MembershipJobComputePaymentConfig$isResponsible": "<p>Indicates whether the collaboration member has accepted to pay for job compute costs (<code>TRUE</code>) or has not accepted to pay for query and job compute costs (<code>FALSE</code>).</p> <p>There is only one member who pays for queries and jobs. </p> <p>An error message is returned for the following reasons: </p> <ul> <li> <p>If you set the value to <code>FALSE</code> but you are responsible to pay for query and job compute costs. </p> </li> <li> <p>If you set the value to <code>TRUE</code> but you are not responsible to pay for query and job compute costs. </p> </li> </ul>",
+        "MembershipJobComputePaymentConfig$isResponsible": "<p>Indicates whether the collaboration member has accepted to pay for job compute costs (<code>TRUE</code>) or has not accepted to pay for query and job compute costs (<code>FALSE</code>).</p> <p>There can be one or more members who are designated as payer candidates for queries and jobs. </p> <p>An error message is returned for the following reasons: </p> <ul> <li> <p>If you set the value to <code>FALSE</code> but you are responsible to pay for query and job compute costs. </p> </li> <li> <p>If you set the value to <code>TRUE</code> but you are not responsible to pay for query and job compute costs. </p> </li> </ul>",
         "MembershipModelInferencePaymentConfig$isResponsible": "<p>Indicates whether the collaboration member has accepted to pay for model inference costs (<code>TRUE</code>) or has not accepted to pay for model inference costs (<code>FALSE</code>).</p> <p>If the collaboration creator has not specified anyone to pay for model inference costs, then the member who can query is the default payer. </p> <p>An error message is returned for the following reasons: </p> <ul> <li> <p>If you set the value to <code>FALSE</code> but you are responsible to pay for model inference costs. </p> </li> <li> <p>If you set the value to <code>TRUE</code> but you are not responsible to pay for model inference costs. </p> </li> </ul>",
         "MembershipModelTrainingPaymentConfig$isResponsible": "<p>Indicates whether the collaboration member has accepted to pay for model training costs (<code>TRUE</code>) or has not accepted to pay for model training costs (<code>FALSE</code>).</p> <p>If the collaboration creator has not specified anyone to pay for model training costs, then the member who can query is the default payer. </p> <p>An error message is returned for the following reasons: </p> <ul> <li> <p>If you set the value to <code>FALSE</code> but you are responsible to pay for model training costs. </p> </li> <li> <p>If you set the value to <code>TRUE</code> but you are not responsible to pay for model training costs. </p> </li> </ul>",
         "MembershipQueryComputePaymentConfig$isResponsible": "<p>Indicates whether the collaboration member has accepted to pay for query compute costs (<code>TRUE</code>) or has not accepted to pay for query compute costs (<code>FALSE</code>).</p> <p>If the collaboration creator has not specified anyone to pay for query compute costs, then the member who can query is the default payer. </p> <p>An error message is returned for the following reasons: </p> <ul> <li> <p>If you set the value to <code>FALSE</code> but you are responsible to pay for query compute costs. </p> </li> <li> <p>If you set the value to <code>TRUE</code> but you are not responsible to pay for query compute costs. </p> </li> </ul>",
         "MembershipSyntheticDataGenerationPaymentConfig$isResponsible": "<p>Indicates if this membership is responsible for paying for synthetic data generation.</p>",
-        "ModelInferencePaymentConfig$isResponsible": "<p>Indicates whether the collaboration creator has configured the collaboration member to pay for model inference costs (<code>TRUE</code>) or has not configured the collaboration member to pay for model inference costs (<code>FALSE</code>).</p> <p>Exactly one member can be configured to pay for model inference costs. An error is returned if the collaboration creator sets a <code>TRUE</code> value for more than one member in the collaboration. </p> <p>If the collaboration creator hasn't specified anyone as the member paying for model inference costs, then the member who can query is the default payer. An error is returned if the collaboration creator sets a <code>FALSE</code> value for the member who can query.</p>",
-        "ModelTrainingPaymentConfig$isResponsible": "<p>Indicates whether the collaboration creator has configured the collaboration member to pay for model training costs (<code>TRUE</code>) or has not configured the collaboration member to pay for model training costs (<code>FALSE</code>).</p> <p>Exactly one member can be configured to pay for model training costs. An error is returned if the collaboration creator sets a <code>TRUE</code> value for more than one member in the collaboration. </p> <p>If the collaboration creator hasn't specified anyone as the member paying for model training costs, then the member who can query is the default payer. An error is returned if the collaboration creator sets a <code>FALSE</code> value for the member who can query.</p>",
+        "ModelInferencePaymentConfig$isResponsible": "<p>Indicates whether the collaboration creator has configured the collaboration member to pay for model inference costs (<code>TRUE</code>) or has not configured the collaboration member to pay for model inference costs (<code>FALSE</code>).</p> <p>One or more members can be configured as payer candidates for model inference costs.</p> <p>If the collaboration creator hasn't specified anyone as the member paying for model inference costs, then the member who can query is the default payer.</p>",
+        "ModelTrainingPaymentConfig$isResponsible": "<p>Indicates whether the collaboration creator has configured the collaboration member to pay for model training costs (<code>TRUE</code>) or has not configured the collaboration member to pay for model training costs (<code>FALSE</code>).</p> <p>One or more members can be configured as payer candidates for model training costs.</p> <p>If the collaboration creator hasn't specified anyone as the member paying for model training costs, then the member who can query is the default payer.</p>",
         "ProtectedQueryS3OutputConfiguration$singleFileOutput": "<p>Indicates whether files should be output as a single file (<code>TRUE</code>) or output as multiple files (<code>FALSE</code>). This parameter is only supported for analyses with the Spark analytics engine.</p>",
-        "QueryComputePaymentConfig$isResponsible": "<p>Indicates whether the collaboration creator has configured the collaboration member to pay for query compute costs (<code>TRUE</code>) or has not configured the collaboration member to pay for query compute costs (<code>FALSE</code>).</p> <p>Exactly one member can be configured to pay for query compute costs. An error is returned if the collaboration creator sets a <code>TRUE</code> value for more than one member in the collaboration. </p> <p>If the collaboration creator hasn't specified anyone as the member paying for query compute costs, then the member who can query is the default payer. An error is returned if the collaboration creator sets a <code>FALSE</code> value for the member who can query.</p>",
+        "QueryComputePaymentConfig$isResponsible": "<p>Indicates whether the collaboration creator has configured the collaboration member to pay for query compute costs (<code>TRUE</code>) or has not configured the collaboration member to pay for query compute costs (<code>FALSE</code>).</p> <p>One or more members can be configured as payer candidates for query compute costs.</p> <p>If the collaboration creator hasn't specified anyone as the member paying for query compute costs, then the member who can query is the default payer.</p>",
         "SyntheticDataColumnProperties$isPredictiveValue": "<p>Indicates if this column contains predictive values that should be treated as target variables in machine learning models. This affects how the synthetic data generation preserves statistical relationships.</p>",
         "SyntheticDataGenerationPaymentConfig$isResponsible": "<p>Indicates who is responsible for paying for synthetic data generation.</p>"
       }
@@ -875,6 +967,26 @@
         "Change$types": "<p>The list of change types that were applied.</p>"
       }
     },
+    "ChildResource": {
+      "base": "<p>Contains information about a child resource of a given resource in a collaboration.</p>",
+      "refs": {
+        "ChildResourceList$member": null
+      }
+    },
+    "ChildResourceList": {
+      "base": null,
+      "refs": {
+        "ConfiguredTableAssociation$childResources": "<p>The child resources that depend on this configured table association.</p>",
+        "IdMappingTable$childResources": "<p>The child resources that depend on this ID mapping table.</p>",
+        "IntermediateTable$childResources": "<p>The child resources that depend on this intermediate table.</p>"
+      }
+    },
+    "ChildResourceType": {
+      "base": null,
+      "refs": {
+        "ChildResource$resourceType": "<p>The type of the child resource.</p>"
+      }
+    },
     "CleanroomsArn": {
       "base": null,
       "refs": {
@@ -938,6 +1050,8 @@
         "IdMappingTableSummary$collaborationArn": "<p>The Amazon Resource Name (ARN) of the collaboration that contains this ID mapping table.</p>",
         "IdNamespaceAssociation$collaborationArn": "<p>The Amazon Resource Name (ARN) of the collaboration that contains this ID namespace association.</p>",
         "IdNamespaceAssociationSummary$collaborationArn": "<p>The Amazon Resource Name (ARN) of the collaboration that contains this ID namespace association.</p>",
+        "IntermediateTable$collaborationArn": "<p>The Amazon Resource Name (ARN) of the collaboration that contains the intermediate table.</p>",
+        "IntermediateTableSummary$collaborationArn": "<p>The Amazon Resource Name (ARN) of the collaboration that contains the intermediate table.</p>",
         "Membership$collaborationArn": "<p>The unique ARN for the membership's associated collaboration.</p>",
         "MembershipSummary$collaborationArn": "<p>The unique ARN for the membership's associated collaboration.</p>",
         "PrivacyBudgetSummary$collaborationArn": "<p>The ARN of the collaboration that contains this privacy budget.</p>",
@@ -1135,9 +1249,22 @@
         "MLSyntheticDataParameters$columnClassification": "<p>Classification details for data columns that specify how each column should be treated during synthetic data generation.</p>"
       }
     },
+    "ColumnLineageEntry": {
+      "base": "<p>Contains column lineage information that traces a disallowed output column back to its source in a base table.</p>",
+      "refs": {
+        "ColumnLineageList$member": null
+      }
+    },
+    "ColumnLineageList": {
+      "base": null,
+      "refs": {
+        "InheritedDisallowedOutputColumns$columnLineage": "<p>The lineage information that traces each disallowed output column back to its source in a parent table.</p>"
+      }
+    },
     "ColumnList": {
       "base": null,
       "refs": {
+        "IntermediateTableSchema$columns": "<p>The list of columns in the intermediate table schema.</p>",
         "Schema$columns": "<p>The columns for the relation that this schema represents.</p>",
         "Schema$partitionKeys": "<p>The partition keys for the dataset underlying this schema.</p>"
       }
@@ -1154,6 +1281,7 @@
         "AllowedColumnList$member": null,
         "Column$name": "<p>The name of the column.</p>",
         "DifferentialPrivacyColumn$name": "<p>The name of the column, such as user_id, that contains the unique identifier of your users, whose privacy you want to protect. If you want to turn on differential privacy for two or more tables in a collaboration, you must configure the same column as the user identifier column in both analysis rules.</p>",
+        "IntermediateTableColumn$name": "<p>The name of the column.</p>",
         "SnowflakeTableSchemaV1$columnName": "<p> The column name.</p>"
       }
     },
@@ -1390,6 +1518,12 @@
         "UpdateConfiguredTableAssociationInput$configuredTableAssociationIdentifier": "<p>The unique identifier for the configured table association to update. Currently accepts the configured table association ID.</p>"
       }
     },
+    "ConfiguredTableAssociationSchemaTypeProperties": {
+      "base": "<p>Contains the schema type properties for a configured table association.</p>",
+      "refs": {
+        "SchemaTypeProperties$configuredTableAssociation": "<p>The schema type properties for a configured table association.</p>"
+      }
+    },
     "ConfiguredTableAssociationSummary": {
       "base": "<p>The configured table association summary for the objects listed by the request.</p>",
       "refs": {
@@ -1572,6 +1706,28 @@
       "base": null,
       "refs": {}
     },
+    "CreateIntermediateTableAnalysisRuleInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateIntermediateTableAnalysisRuleOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateIntermediateTableInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateIntermediateTableInputRetentionInDaysInteger": {
+      "base": null,
+      "refs": {
+        "CreateIntermediateTableInput$retentionInDays": "<p>The number of days to retain populated data versions. Minimum value of 1, maximum value of 365.</p>"
+      }
+    },
+    "CreateIntermediateTableOutput": {
+      "base": null,
+      "refs": {}
+    },
     "CreateMembershipInput": {
       "base": null,
       "refs": {}
@@ -1679,6 +1835,22 @@
       "base": null,
       "refs": {}
     },
+    "DeleteIntermediateTableAnalysisRuleInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteIntermediateTableAnalysisRuleOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteIntermediateTableInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteIntermediateTableOutput": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteMemberInput": {
       "base": null,
       "refs": {}
@@ -1702,6 +1874,12 @@
     "DeletePrivacyBudgetTemplateOutput": {
       "base": null,
       "refs": {}
+    },
+    "DependencyList": {
+      "base": null,
+      "refs": {
+        "IntermediateTable$tableDependencies": "<p>The list of base tables that this intermediate table depends on.</p>"
+      }
     },
     "DifferentialPrivacyAggregationExpression": {
       "base": null,
@@ -1733,7 +1911,8 @@
       "base": "<p>Specifies the unique identifier for your users.</p>",
       "refs": {
         "AnalysisRuleCustom$differentialPrivacy": "<p>The differential privacy configuration.</p>",
-        "ConsolidatedPolicyCustom$differentialPrivacy": null
+        "ConsolidatedPolicyCustom$differentialPrivacy": null,
+        "IntermediateTableAnalysisRuleCustom$differentialPrivacy": null
       }
     },
     "DifferentialPrivacyParameters": {
@@ -1844,15 +2023,34 @@
         "ConfigurationDetails$directAnalysisConfigurationDetails": "<p> The direct analysis configuration details.</p>"
       }
     },
+    "DisallowIntermediateTableInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DisallowIntermediateTableOutput": {
+      "base": null,
+      "refs": {}
+    },
     "DisplayName": {
       "base": null,
       "refs": {
+        "ChildResource$resourceName": "<p>The name of the child resource.</p>",
         "Collaboration$creatorDisplayName": "<p>A display name of the collaboration creator.</p>",
         "CollaborationSummary$creatorDisplayName": "<p>The display name of the collaboration creator.</p>",
+        "ColumnLineageEntry$sourceName": "<p>The name of the source table.</p>",
         "ConfiguredTable$name": "<p>A name for the configured table.</p>",
         "ConfiguredTableSummary$name": "<p>The name of the configured table.</p>",
         "CreateCollaborationInput$creatorDisplayName": "<p>The display name of the collaboration creator.</p>",
         "CreateConfiguredTableInput$name": "<p>The name of the configured table.</p>",
+        "CreateIntermediateTableInput$name": "<p>The display name for the intermediate table.</p>",
+        "DisallowIntermediateTableInput$intermediateTableName": "<p>The name of the intermediate table to disallow.</p>",
+        "InheritedAdditionalAnalysesSource$name": "<p>The name of the parent table.</p>",
+        "InheritedAllowedAdditionalAnalysesSource$name": "<p>The name of the parent table.</p>",
+        "InheritedAllowedResultReceiversSource$name": "<p>The name of the parent table.</p>",
+        "IntermediateTable$name": "<p>The name of the intermediate table.</p>",
+        "IntermediateTableDependency$name": "<p>The name of the dependency table.</p>",
+        "IntermediateTableOutputConfiguration$name": "<p>The name of the intermediate table.</p>",
+        "IntermediateTableSummary$name": "<p>The name of the intermediate table.</p>",
         "MemberChangeSpecification$displayName": "<p>Specifies the display name that will be shown for this member in the collaboration. While this field is required when inviting new members, it becomes optional when modifying abilities of existing collaboration members. </p>",
         "MemberSpecification$displayName": "<p>The member's display name.</p>",
         "MemberSummary$displayName": "<p>The member's display name.</p>",
@@ -2032,6 +2230,22 @@
       "refs": {}
     },
     "GetIdNamespaceAssociationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetIntermediateTableAnalysisRuleInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetIntermediateTableAnalysisRuleOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetIntermediateTableInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetIntermediateTableOutput": {
       "base": null,
       "refs": {}
     },
@@ -2274,6 +2488,249 @@
         "IdNamespaceAssociationInputReferencePropertiesSummary$idNamespaceType": "<p>The ID namespace type for this ID namespace association.</p>"
       }
     },
+    "InheritedAdditionalAnalyses": {
+      "base": "<p>Contains the inherited additional analyses constraint and its sources from parent tables.</p>",
+      "refs": {
+        "IntermediateTableInheritedConstraints$additionalAnalyses": "<p>The inherited additional analyses constraint.</p>"
+      }
+    },
+    "InheritedAdditionalAnalysesSource": {
+      "base": "<p>Contains information about a parent table that contributes an additional analyses constraint.</p>",
+      "refs": {
+        "InheritedAdditionalAnalysesSourceList$member": null
+      }
+    },
+    "InheritedAdditionalAnalysesSourceList": {
+      "base": null,
+      "refs": {
+        "InheritedAdditionalAnalyses$sources": "<p>The list of parent tables that contribute to this inherited constraint.</p>"
+      }
+    },
+    "InheritedAllowedAdditionalAnalyses": {
+      "base": "<p>Contains the inherited allowed additional analyses constraint and its sources from parent tables.</p>",
+      "refs": {
+        "IntermediateTableInheritedConstraints$allowedAdditionalAnalyses": "<p>The inherited allowed additional analyses constraint.</p>"
+      }
+    },
+    "InheritedAllowedAdditionalAnalysesSource": {
+      "base": "<p>Contains information about a parent table that contributes an allowed additional analyses constraint.</p>",
+      "refs": {
+        "InheritedAllowedAdditionalAnalysesSourceList$member": null
+      }
+    },
+    "InheritedAllowedAdditionalAnalysesSourceList": {
+      "base": null,
+      "refs": {
+        "InheritedAllowedAdditionalAnalyses$sources": "<p>The list of parent tables that contribute to this inherited constraint.</p>"
+      }
+    },
+    "InheritedAllowedResultReceivers": {
+      "base": "<p>Contains the inherited allowed result receivers constraint and its sources from parent tables.</p>",
+      "refs": {
+        "IntermediateTableInheritedConstraints$allowedResultReceivers": "<p>The inherited allowed result receivers constraint.</p>"
+      }
+    },
+    "InheritedAllowedResultReceiversSource": {
+      "base": "<p>Contains information about a parent table that contributes an allowed result receivers constraint.</p>",
+      "refs": {
+        "InheritedAllowedResultReceiversSourceList$member": null
+      }
+    },
+    "InheritedAllowedResultReceiversSourceList": {
+      "base": null,
+      "refs": {
+        "InheritedAllowedResultReceivers$sources": "<p>The list of parent tables that contribute to this inherited constraint.</p>"
+      }
+    },
+    "InheritedDisallowedOutputColumns": {
+      "base": "<p>Contains the inherited disallowed output columns constraint and the column lineage tracing each column to its source.</p>",
+      "refs": {
+        "IntermediateTableInheritedConstraints$disallowedOutputColumns": "<p>The inherited disallowed output columns constraint.</p>"
+      }
+    },
+    "Integer": {
+      "base": null,
+      "refs": {
+        "IntermediateTable$retentionInDays": "<p>The number of days that populated data is retained before expiring.</p>",
+        "IntermediateTableSummary$retentionInDays": "<p>The number of days that populated data is retained before expiring.</p>"
+      }
+    },
+    "IntermediateTable": {
+      "base": "<p>Contains the details of an intermediate table in Clean Rooms. An intermediate table stores a query definition and its materialized results within a collaboration.</p>",
+      "refs": {
+        "CreateIntermediateTableOutput$intermediateTable": "<p>The intermediate table that was created.</p>",
+        "GetIntermediateTableOutput$intermediateTable": "<p>The intermediate table retrieved.</p>",
+        "UpdateIntermediateTableOutput$intermediateTable": "<p>The updated intermediate table.</p>"
+      }
+    },
+    "IntermediateTableActiveVersion": {
+      "base": "<p>Contains the details of the currently active version of an intermediate table.</p>",
+      "refs": {
+        "IntermediateTable$intermediateTableVersion": "<p>The details of the currently active version of the intermediate table.</p>"
+      }
+    },
+    "IntermediateTableAnalysisRule": {
+      "base": "<p>Contains the details of an analysis rule for an intermediate table.</p>",
+      "refs": {
+        "CreateIntermediateTableAnalysisRuleOutput$analysisRule": "<p>The analysis rule that was created for the intermediate table.</p>",
+        "GetIntermediateTableAnalysisRuleOutput$analysisRule": "<p>The analysis rule for the intermediate table.</p>",
+        "UpdateIntermediateTableAnalysisRuleOutput$analysisRule": "<p>The updated analysis rule for the intermediate table.</p>"
+      }
+    },
+    "IntermediateTableAnalysisRuleCustom": {
+      "base": "<p>Contains the custom analysis rule configuration for an intermediate table.</p>",
+      "refs": {
+        "IntermediateTableAnalysisRulePolicyV1$custom": "<p>The custom analysis rule policy.</p>"
+      }
+    },
+    "IntermediateTableAnalysisRulePolicy": {
+      "base": "<p>Contains the policy for an intermediate table analysis rule.</p>",
+      "refs": {
+        "CreateIntermediateTableAnalysisRuleInput$analysisRulePolicy": "<p>The analysis rule policy to apply to the intermediate table.</p>",
+        "IntermediateTableAnalysisRule$analysisRulePolicy": "<p>The policy of the analysis rule.</p>",
+        "UpdateIntermediateTableAnalysisRuleInput$analysisRulePolicy": "<p>The updated analysis rule policy for the intermediate table.</p>"
+      }
+    },
+    "IntermediateTableAnalysisRulePolicyV1": {
+      "base": "<p>Contains the version 1 policy for an intermediate table analysis rule.</p>",
+      "refs": {
+        "IntermediateTableAnalysisRulePolicy$v1": "<p>The version 1 policy for the analysis rule.</p>"
+      }
+    },
+    "IntermediateTableAnalysisRuleType": {
+      "base": null,
+      "refs": {
+        "CreateIntermediateTableAnalysisRuleInput$analysisRuleType": "<p>The type of analysis rule to create. Currently, only <code>CUSTOM</code> is supported.</p>",
+        "DeleteIntermediateTableAnalysisRuleInput$analysisRuleType": "<p>The type of analysis rule to delete. Currently, only <code>CUSTOM</code> is supported.</p>",
+        "GetIntermediateTableAnalysisRuleInput$analysisRuleType": "<p>The type of analysis rule to retrieve. Currently, only <code>CUSTOM</code> is supported.</p>",
+        "IntermediateTableAnalysisRule$analysisRuleType": "<p>The type of the analysis rule.</p>",
+        "IntermediateTableAnalysisRuleTypeList$member": null,
+        "UpdateIntermediateTableAnalysisRuleInput$analysisRuleType": "<p>The type of analysis rule to update. Currently, only <code>CUSTOM</code> is supported.</p>"
+      }
+    },
+    "IntermediateTableAnalysisRuleTypeList": {
+      "base": null,
+      "refs": {
+        "IntermediateTable$analysisRuleTypes": "<p>The types of analysis rules associated with the intermediate table.</p>",
+        "IntermediateTableSummary$analysisRuleTypes": "<p>The types of analysis rules associated with the intermediate table.</p>"
+      }
+    },
+    "IntermediateTableArn": {
+      "base": null,
+      "refs": {
+        "IntermediateTable$arn": "<p>The Amazon Resource Name (ARN) of the intermediate table.</p>",
+        "IntermediateTableAnalysisRule$intermediateTableArn": "<p>The Amazon Resource Name (ARN) of the intermediate table associated with this analysis rule.</p>",
+        "IntermediateTableOutputConfiguration$arn": "<p>The Amazon Resource Name (ARN) of the intermediate table.</p>",
+        "IntermediateTableSummary$arn": "<p>The Amazon Resource Name (ARN) of the intermediate table.</p>"
+      }
+    },
+    "IntermediateTableColumn": {
+      "base": "<p>Contains the name and type of a column in an intermediate table.</p>",
+      "refs": {
+        "IntermediateTableColumnList$member": null
+      }
+    },
+    "IntermediateTableColumnList": {
+      "base": null,
+      "refs": {
+        "UpdateIntermediateTableInput$columns": "<p>The list of columns with updated type definitions. Only the type of existing columns can be updated.</p>"
+      }
+    },
+    "IntermediateTableColumnTypeString": {
+      "base": null,
+      "refs": {
+        "IntermediateTableColumn$type": "<p>The data type of the column.</p>"
+      }
+    },
+    "IntermediateTableComputeConfiguration": {
+      "base": "<p>The compute configuration for an intermediate table population operation.</p>",
+      "refs": {
+        "PopulateIntermediateTableInput$computeConfiguration": "<p>The compute configuration for the population query execution.</p>"
+      }
+    },
+    "IntermediateTableDependency": {
+      "base": "<p>Contains information about a base table that an intermediate table depends on.</p>",
+      "refs": {
+        "DependencyList$member": null
+      }
+    },
+    "IntermediateTableIdentifier": {
+      "base": null,
+      "refs": {
+        "CreateIntermediateTableAnalysisRuleInput$intermediateTableIdentifier": "<p>The unique identifier of the intermediate table for which to create the analysis rule.</p>",
+        "DeleteIntermediateTableAnalysisRuleInput$intermediateTableIdentifier": "<p>The unique identifier of the intermediate table from which to delete the analysis rule.</p>",
+        "DeleteIntermediateTableInput$intermediateTableIdentifier": "<p>The unique identifier of the intermediate table to delete.</p>",
+        "GetIntermediateTableAnalysisRuleInput$intermediateTableIdentifier": "<p>The unique identifier of the intermediate table for which to retrieve the analysis rule.</p>",
+        "GetIntermediateTableInput$intermediateTableIdentifier": "<p>The unique identifier of the intermediate table to retrieve.</p>",
+        "IntermediateTableVersionSummary$tableId": "<p>The unique identifier of the intermediate table that this version belongs to.</p>",
+        "ListIntermediateTableVersionsInput$intermediateTableIdentifier": "<p>The unique identifier of the intermediate table for which to list versions.</p>",
+        "PopulateIntermediateTableInput$intermediateTableIdentifier": "<p>The unique identifier of the intermediate table to populate.</p>",
+        "UpdateIntermediateTableAnalysisRuleInput$intermediateTableIdentifier": "<p>The unique identifier of the intermediate table for which to update the analysis rule.</p>",
+        "UpdateIntermediateTableInput$intermediateTableIdentifier": "<p>The unique identifier of the intermediate table to update.</p>"
+      }
+    },
+    "IntermediateTableInheritedConstraints": {
+      "base": "<p>Contains the privacy constraints inherited from parent tables for an intermediate table version.</p>",
+      "refs": {
+        "IntermediateTableActiveVersion$inheritedConstraints": "<p>The privacy constraints inherited from parent tables at the time this version was populated.</p>"
+      }
+    },
+    "IntermediateTableOutputConfiguration": {
+      "base": "<p>Contains the output configuration of an intermediate table when a protected query populates it.</p>",
+      "refs": {
+        "ProtectedQueryOutputConfiguration$intermediateTable": "<p>The intermediate table output configuration, present when the protected query was triggered by a populate operation.</p>",
+        "ProtectedQuerySummary$intermediateTableConfiguration": "<p>The intermediate table configuration, present when the protected query was triggered by a populate operation.</p>"
+      }
+    },
+    "IntermediateTableSchema": {
+      "base": "<p>Contains the schema definition of an intermediate table.</p>",
+      "refs": {
+        "IntermediateTable$schema": "<p>The schema of the intermediate table, containing column definitions. Available after the table has been successfully populated.</p>"
+      }
+    },
+    "IntermediateTableSchemaTypeProperties": {
+      "base": "<p>Contains the schema type properties for an intermediate table.</p>",
+      "refs": {
+        "SchemaTypeProperties$intermediateTable": "<p>The schema type properties for an intermediate table.</p>"
+      }
+    },
+    "IntermediateTableStatus": {
+      "base": null,
+      "refs": {
+        "IntermediateTable$status": "<p>The current status of the intermediate table.</p>",
+        "IntermediateTableSummary$status": "<p>The current status of the intermediate table.</p>"
+      }
+    },
+    "IntermediateTableSummary": {
+      "base": "<p>Contains summary information about an intermediate table.</p>",
+      "refs": {
+        "IntermediateTableSummaryList$member": null
+      }
+    },
+    "IntermediateTableSummaryList": {
+      "base": null,
+      "refs": {
+        "ListIntermediateTablesOutput$intermediateTableSummaries": "<p>The list of intermediate table summaries.</p>"
+      }
+    },
+    "IntermediateTableVersionStatus": {
+      "base": null,
+      "refs": {
+        "IntermediateTableVersionSummary$status": "<p>The status of the version.</p>"
+      }
+    },
+    "IntermediateTableVersionSummary": {
+      "base": "<p>Contains summary information about a version of an intermediate table.</p>",
+      "refs": {
+        "IntermediateTableVersionSummaryList$member": null
+      }
+    },
+    "IntermediateTableVersionSummaryList": {
+      "base": null,
+      "refs": {
+        "ListIntermediateTableVersionsOutput$intermediateTableVersionSummaries": "<p>The list of intermediate table version summaries.</p>"
+      }
+    },
     "InternalServerException": {
       "base": "<p>Unexpected error during processing of request.</p>",
       "refs": {}
@@ -2334,8 +2791,13 @@
       "base": null,
       "refs": {
         "CreateIdMappingTableInput$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services KMS key. This value is used to encrypt the mapping table data that is stored by Clean Rooms.</p>",
+        "CreateIntermediateTableInput$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the customer-managed KMS key used to encrypt the intermediate table data.</p>",
         "IdMappingTable$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services KMS key.</p>",
-        "UpdateIdMappingTableInput$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services KMS key.</p>"
+        "IntermediateTable$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the intermediate table data.</p>",
+        "IntermediateTableActiveVersion$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt this version's data.</p>",
+        "IntermediateTableVersionSummary$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt this version's data.</p>",
+        "UpdateIdMappingTableInput$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services KMS key.</p>",
+        "UpdateIntermediateTableInput$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the customer-managed KMS key to use for encrypting future population data.</p>"
       }
     },
     "KeyPrefix": {
@@ -2450,6 +2912,22 @@
       "base": null,
       "refs": {}
     },
+    "ListIntermediateTableVersionsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListIntermediateTableVersionsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListIntermediateTablesInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListIntermediateTablesOutput": {
+      "base": null,
+      "refs": {}
+    },
     "ListMembersInput": {
       "base": null,
       "refs": {}
@@ -2525,6 +3003,7 @@
       "base": "<p>The ML member abilities for a collaboration member.</p>",
       "refs": {
         "CreateCollaborationInput$creatorMLMemberAbilities": "<p>The ML abilities granted to the collaboration creator.</p>",
+        "MemberChangeSpecification$mlMemberAbilities": null,
         "MemberSpecification$mlMemberAbilities": "<p>The ML abilities granted to the collaboration member.</p>",
         "MemberSummary$mlAbilities": "<p>Provides a summary of the ML abilities for the collaboration member.</p>",
         "Membership$mlMemberAbilities": "<p>Specifies the ML member abilities that are granted to a collaboration member.</p>",
@@ -2571,6 +3050,8 @@
         "ListConfiguredTablesInput$maxResults": "<p>The maximum number of results that are returned for an API request call. The service chooses a default number if you don't set one. The service might return a `nextToken` even if the `maxResults` value has not been met.</p>",
         "ListIdMappingTablesInput$maxResults": "<p>The maximum size of the results that is returned per call. Service chooses a default if it has not been set. Service may return a nextToken even if the maximum results has not been met.</p>",
         "ListIdNamespaceAssociationsInput$maxResults": "<p>The maximum size of the results that is returned per call. Service chooses a default if it has not been set. Service may return a nextToken even if the maximum results has not been met.</p>",
+        "ListIntermediateTableVersionsInput$maxResults": "<p>The maximum number of results that are returned for an API request call. The service chooses a default number if you don't set one. The service might return a <code>nextToken</code> even if the <code>maxResults</code> value has not been met.</p>",
+        "ListIntermediateTablesInput$maxResults": "<p>The maximum number of results that are returned for an API request call. The service chooses a default number if you don't set one. The service might return a <code>nextToken</code> even if the <code>maxResults</code> value has not been met.</p>",
         "ListMembersInput$maxResults": "<p>The maximum number of results that are returned for an API request call. The service chooses a default number if you don't set one. The service might return a `nextToken` even if the `maxResults` value has not been met.</p>",
         "ListMembershipsInput$maxResults": "<p>The maximum number of results that are returned for an API request call. The service chooses a default number if you don't set one. The service might return a `nextToken` even if the `maxResults` value has not been met.</p>",
         "ListPrivacyBudgetTemplatesInput$maxResults": "<p>The maximum number of results that are returned for an API request call. The service chooses a default number if you don't set one. The service might return a `nextToken` even if the `maxResults` value has not been met.</p>",
@@ -2658,6 +3139,8 @@
         "IdMappingTableSummary$membershipArn": "<p>The Amazon Resource Name (ARN) of the membership resource for this ID mapping table.</p>",
         "IdNamespaceAssociation$membershipArn": "<p>The Amazon Resource Name (ARN) of the membership resource for this ID namespace association.</p>",
         "IdNamespaceAssociationSummary$membershipArn": "<p>The Amazon Resource Name (ARN) of the membership resource for this ID namespace association.</p>",
+        "IntermediateTable$membershipArn": "<p>The Amazon Resource Name (ARN) of the membership that contains the intermediate table.</p>",
+        "IntermediateTableSummary$membershipArn": "<p>The Amazon Resource Name (ARN) of the membership that contains the intermediate table.</p>",
         "MemberSummary$membershipArn": "<p>The unique ARN for the member's associated membership, if present.</p>",
         "Membership$arn": "<p>The unique ARN for the membership.</p>",
         "MembershipSummary$arn": "<p>The unique ARN for the membership.</p>",
@@ -2682,6 +3165,8 @@
         "CreateConfiguredTableAssociationInput$membershipIdentifier": "<p>A unique identifier for one of your memberships for a collaboration. The configured table is associated to the collaboration that this membership belongs to. Currently accepts a membership ID.</p>",
         "CreateIdMappingTableInput$membershipIdentifier": "<p>The unique identifier of the membership that contains the ID mapping table.</p>",
         "CreateIdNamespaceAssociationInput$membershipIdentifier": "<p>The unique identifier of the membership that contains the ID namespace association.</p>",
+        "CreateIntermediateTableAnalysisRuleInput$membershipIdentifier": "<p>The unique identifier of the membership that contains the intermediate table.</p>",
+        "CreateIntermediateTableInput$membershipIdentifier": "<p>The unique identifier of the membership where the intermediate table is created.</p>",
         "CreatePrivacyBudgetTemplateInput$membershipIdentifier": "<p>A unique identifier for one of your memberships for a collaboration. The privacy budget template is created in the collaboration that this membership belongs to. Accepts a membership ID.</p>",
         "DeleteAnalysisTemplateInput$membershipIdentifier": "<p>The identifier for a membership resource.</p>",
         "DeleteConfiguredAudienceModelAssociationInput$membershipIdentifier": "<p>A unique identifier of the membership that contains the audience model association that you want to delete.</p>",
@@ -2689,14 +3174,19 @@
         "DeleteConfiguredTableAssociationInput$membershipIdentifier": "<p>A unique identifier for the membership that the configured table association belongs to. Currently accepts the membership ID.</p>",
         "DeleteIdMappingTableInput$membershipIdentifier": "<p>The unique identifier of the membership that contains the ID mapping table that you want to delete.</p>",
         "DeleteIdNamespaceAssociationInput$membershipIdentifier": "<p>The unique identifier of the membership that contains the ID namespace association that you want to delete.</p>",
+        "DeleteIntermediateTableAnalysisRuleInput$membershipIdentifier": "<p>The unique identifier of the membership that contains the intermediate table.</p>",
+        "DeleteIntermediateTableInput$membershipIdentifier": "<p>The unique identifier of the membership that contains the intermediate table.</p>",
         "DeleteMembershipInput$membershipIdentifier": "<p>The identifier for a membership resource.</p>",
         "DeletePrivacyBudgetTemplateInput$membershipIdentifier": "<p>A unique identifier for one of your memberships for a collaboration. The privacy budget template is deleted from the collaboration that this membership belongs to. Accepts a membership ID.</p>",
+        "DisallowIntermediateTableInput$membershipIdentifier": "<p>The unique identifier of the membership that contains the intermediate table to disallow.</p>",
         "GetAnalysisTemplateInput$membershipIdentifier": "<p>The identifier for a membership resource.</p>",
         "GetConfiguredAudienceModelAssociationInput$membershipIdentifier": "<p>A unique identifier for the membership that contains the configured audience model association that you want to retrieve.</p>",
         "GetConfiguredTableAssociationAnalysisRuleInput$membershipIdentifier": "<p> A unique identifier for the membership that the configured table association belongs to. Currently accepts the membership ID.</p>",
         "GetConfiguredTableAssociationInput$membershipIdentifier": "<p>A unique identifier for the membership that the configured table association belongs to. Currently accepts the membership ID.</p>",
         "GetIdMappingTableInput$membershipIdentifier": "<p>The unique identifier of the membership that contains the ID mapping table that you want to retrieve.</p>",
         "GetIdNamespaceAssociationInput$membershipIdentifier": "<p>The unique identifier of the membership that contains the ID namespace association that you want to retrieve.</p>",
+        "GetIntermediateTableAnalysisRuleInput$membershipIdentifier": "<p>The unique identifier of the membership that contains the intermediate table.</p>",
+        "GetIntermediateTableInput$membershipIdentifier": "<p>The unique identifier of the membership that contains the intermediate table.</p>",
         "GetMembershipInput$membershipIdentifier": "<p>The identifier for a membership resource.</p>",
         "GetPrivacyBudgetTemplateInput$membershipIdentifier": "<p>A unique identifier for one of your memberships for a collaboration. The privacy budget template is retrieved from the collaboration that this membership belongs to. Accepts a membership ID.</p>",
         "GetProtectedJobInput$membershipIdentifier": "<p> The identifier for a membership in a protected job instance.</p>",
@@ -2708,11 +3198,14 @@
         "ListConfiguredTableAssociationsInput$membershipIdentifier": "<p>A unique identifier for the membership to list configured table associations for. Currently accepts the membership ID.</p>",
         "ListIdMappingTablesInput$membershipIdentifier": "<p>The unique identifier of the membership that contains the ID mapping tables that you want to view.</p>",
         "ListIdNamespaceAssociationsInput$membershipIdentifier": "<p>The unique identifier of the membership that contains the ID namespace association that you want to view.</p>",
+        "ListIntermediateTableVersionsInput$membershipIdentifier": "<p>The unique identifier of the membership that contains the intermediate table.</p>",
+        "ListIntermediateTablesInput$membershipIdentifier": "<p>The unique identifier of the membership for which to list intermediate tables.</p>",
         "ListPrivacyBudgetTemplatesInput$membershipIdentifier": "<p>A unique identifier for one of your memberships for a collaboration. The privacy budget templates are retrieved from the collaboration that this membership belongs to. Accepts a membership ID.</p>",
         "ListPrivacyBudgetsInput$membershipIdentifier": "<p>A unique identifier for one of your memberships for a collaboration. The privacy budget is retrieved from the collaboration that this membership belongs to. Accepts a membership ID.</p>",
         "ListProtectedJobsInput$membershipIdentifier": "<p>The identifier for the membership in the collaboration.</p>",
         "ListProtectedQueriesInput$membershipIdentifier": "<p>The identifier for the membership in the collaboration.</p>",
         "PopulateIdMappingTableInput$membershipIdentifier": "<p>The unique identifier of the membership that contains the ID mapping table that you want to populate.</p>",
+        "PopulateIntermediateTableInput$membershipIdentifier": "<p>The unique identifier of the membership that contains the intermediate table.</p>",
         "PreviewPrivacyImpactInput$membershipIdentifier": "<p>A unique identifier for one of your memberships for a collaboration. Accepts a membership ID.</p>",
         "PrivacyBudgetSummary$membershipId": "<p>The identifier for a membership resource.</p>",
         "ProtectedJob$membershipId": "<p>he identifier for the membership.</p>",
@@ -2725,6 +3218,8 @@
         "UpdateConfiguredTableAssociationInput$membershipIdentifier": "<p>The unique ID for the membership that the configured table association belongs to.</p>",
         "UpdateIdMappingTableInput$membershipIdentifier": "<p>The unique identifier of the membership that contains the ID mapping table that you want to update.</p>",
         "UpdateIdNamespaceAssociationInput$membershipIdentifier": "<p>The unique identifier of the membership that contains the ID namespace association that you want to update.</p>",
+        "UpdateIntermediateTableAnalysisRuleInput$membershipIdentifier": "<p>The unique identifier of the membership that contains the intermediate table.</p>",
+        "UpdateIntermediateTableInput$membershipIdentifier": "<p>The unique identifier of the membership that contains the intermediate table.</p>",
         "UpdateMembershipInput$membershipIdentifier": "<p>The unique identifier of the membership.</p>",
         "UpdatePrivacyBudgetTemplateInput$membershipIdentifier": "<p>A unique identifier for one of your memberships for a collaboration. The privacy budget template is updated in the collaboration that this membership belongs to. Accepts a membership ID.</p>",
         "UpdateProtectedJobInput$membershipIdentifier": "<p>The identifier for a member of a protected job instance.</p>",
@@ -2734,7 +3229,8 @@
     "MembershipJobComputePaymentConfig": {
       "base": "<p>An object representing the payment responsibilities accepted by the collaboration member for query and job compute costs.</p>",
       "refs": {
-        "MembershipPaymentConfiguration$jobCompute": "<p>The payment responsibilities accepted by the collaboration member for job compute costs.</p>"
+        "MembershipPaymentConfiguration$jobCompute": "<p>The payment responsibilities accepted by the collaboration member for job compute costs.</p>",
+        "UpdateMembershipPaymentConfiguration$jobCompute": null
       }
     },
     "MembershipJobLogStatus": {
@@ -2748,7 +3244,8 @@
     "MembershipMLPaymentConfig": {
       "base": "<p>An object representing the collaboration member's machine learning payment responsibilities set by the collaboration creator.</p>",
       "refs": {
-        "MembershipPaymentConfiguration$machineLearning": "<p>The payment responsibilities accepted by the collaboration member for machine learning costs.</p>"
+        "MembershipPaymentConfiguration$machineLearning": "<p>The payment responsibilities accepted by the collaboration member for machine learning costs.</p>",
+        "UpdateMembershipPaymentConfiguration$machineLearning": null
       }
     },
     "MembershipModelInferencePaymentConfig": {
@@ -2802,7 +3299,8 @@
     "MembershipQueryComputePaymentConfig": {
       "base": "<p>An object representing the payment responsibilities accepted by the collaboration member for query compute costs.</p>",
       "refs": {
-        "MembershipPaymentConfiguration$queryCompute": "<p>The payment responsibilities accepted by the collaboration member for query compute costs.</p>"
+        "MembershipPaymentConfiguration$queryCompute": "<p>The payment responsibilities accepted by the collaboration member for query compute costs.</p>",
+        "UpdateMembershipPaymentConfiguration$queryCompute": null
       }
     },
     "MembershipQueryLogStatus": {
@@ -2880,6 +3378,10 @@
         "ListIdMappingTablesOutput$nextToken": "<p>The token value provided to access the next page of results.</p>",
         "ListIdNamespaceAssociationsInput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
         "ListIdNamespaceAssociationsOutput$nextToken": "<p>The token value provided to access the next page of results.</p>",
+        "ListIntermediateTableVersionsInput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
+        "ListIntermediateTableVersionsOutput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
+        "ListIntermediateTablesInput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
+        "ListIntermediateTablesOutput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
         "ListMembersInput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
         "ListMembersOutput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
         "ListMembershipsInput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
@@ -2899,6 +3401,8 @@
     "ParameterMap": {
       "base": null,
       "refs": {
+        "IntermediateTableActiveVersion$parameters": "<p>The runtime parameters that were used when populating this version.</p>",
+        "PopulateIntermediateTableInput$parameters": "<p>The runtime parameter values that override the defaults in the stored query.</p>",
         "ProtectedQuerySQLParameters$parameters": "<p>The protected query SQL parameters.</p>"
       }
     },
@@ -2926,6 +3430,7 @@
       "base": "<p>An object representing the collaboration member's payment responsibilities set by the collaboration creator.</p>",
       "refs": {
         "CreateCollaborationInput$creatorPaymentConfiguration": "<p>The collaboration creator's payment responsibilities set by the collaboration creator. </p> <p>If the collaboration creator hasn't specified anyone as the member paying for query compute costs, then the member who can query is the default payer.</p>",
+        "MemberChangeSpecification$paymentConfiguration": null,
         "MemberSpecification$paymentConfiguration": "<p>The collaboration member's payment responsibilities set by the collaboration creator. </p> <p>If the collaboration creator hasn't speciﬁed anyone as the member paying for query compute costs, then the member who can query is the default payer.</p>",
         "MemberSummary$paymentConfiguration": "<p>The collaboration member's payment responsibilities set by the collaboration creator. </p>"
       }
@@ -2937,6 +3442,41 @@
     "PopulateIdMappingTableOutput": {
       "base": null,
       "refs": {}
+    },
+    "PopulateIntermediateTableAnalysisType": {
+      "base": null,
+      "refs": {
+        "IntermediateTableActiveVersion$analysisType": "<p>The type of analysis that created this version.</p>",
+        "IntermediateTableVersionSummary$analysisType": "<p>The type of analysis that created this version.</p>",
+        "PopulateIntermediateTableOutput$analysisType": "<p>The type of analysis performed to populate the intermediate table.</p>"
+      }
+    },
+    "PopulateIntermediateTableInput": {
+      "base": null,
+      "refs": {}
+    },
+    "PopulateIntermediateTableOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "PopulationAnalysisConfiguration": {
+      "base": "<p>Contains the configuration that defines the analysis used to populate an intermediate table.</p>",
+      "refs": {
+        "CreateIntermediateTableInput$populationAnalysisConfiguration": "<p>The configuration that defines the analysis used to populate the intermediate table. This configuration contains the SQL query or analysis template reference.</p>",
+        "IntermediateTable$populationAnalysisConfiguration": "<p>The analysis configuration that defines the query used to populate the intermediate table.</p>"
+      }
+    },
+    "PopulationAnalysisSqlParameters": {
+      "base": "<p>Contains the SQL parameters used to populate an intermediate table.</p>",
+      "refs": {
+        "PopulationAnalysisConfiguration$sqlParameters": "<p>The SQL parameters for the population analysis, including the query string or analysis template ARN.</p>"
+      }
+    },
+    "PopulationAnalysisSqlParametersQueryStringString": {
+      "base": null,
+      "refs": {
+        "PopulationAnalysisSqlParameters$queryString": "<p>The SQL query string used to populate the intermediate table. Maximum length of 500,000 characters.</p>"
+      }
     },
     "PreviewPrivacyImpactInput": {
       "base": null,
@@ -3517,19 +4057,29 @@
         "CreateConfiguredAudienceModelAssociationInput$description": "<p>A description of the configured audience model association.</p>",
         "CreateIdMappingTableInput$description": "<p>A description of the ID mapping table.</p>",
         "CreateIdNamespaceAssociationInput$description": "<p>The description of the ID namespace association.</p>",
+        "CreateIntermediateTableInput$description": "<p>A description of the intermediate table.</p>",
         "IdMappingTable$description": "<p>The description of the ID mapping table.</p>",
         "IdMappingTableSummary$description": "<p>The description of this ID mapping table.</p>",
         "IdNamespaceAssociation$description": "<p>The description of the ID namespace association.</p>",
         "IdNamespaceAssociationSummary$description": "<p>The description of the ID namespace association.</p>",
+        "IntermediateTable$description": "<p>The description of the intermediate table.</p>",
+        "IntermediateTableSummary$description": "<p>The description of the intermediate table.</p>",
         "UpdateAnalysisTemplateInput$description": "<p>A new description for the analysis template.</p>",
         "UpdateConfiguredAudienceModelAssociationInput$description": "<p>A new description for the configured audience model association.</p>",
         "UpdateIdMappingTableInput$description": "<p>A new description for the ID mapping table.</p>",
-        "UpdateIdNamespaceAssociationInput$description": "<p>A new description for the ID namespace association.</p>"
+        "UpdateIdNamespaceAssociationInput$description": "<p>A new description for the ID namespace association.</p>",
+        "UpdateIntermediateTableInput$description": "<p>A new description for the intermediate table.</p>"
       }
     },
     "ResourceNotFoundException": {
       "base": "<p>Request references a resource which does not exist.</p>",
       "refs": {}
+    },
+    "ResourceStatus": {
+      "base": null,
+      "refs": {
+        "ChildResource$resourceStatus": "<p>The current status of the child resource.</p>"
+      }
     },
     "ResourceType": {
       "base": null,
@@ -3822,6 +4372,7 @@
         "ConflictException$resourceId": "<p>The ID of the conflicting resource.</p>",
         "Hash$sha256": "<p> The SHA-256 hash value.</p>",
         "IdMappingTableInputSource$idNamespaceAssociationId": "<p>The unique identifier of the ID namespace association.</p>",
+        "IntermediateTable$statusReason": "<p>The reason for the current status of the intermediate table.</p>",
         "InternalServerException$message": null,
         "ProtectedJobError$message": "<p> The message for the protected job error.</p>",
         "ProtectedJobError$code": "<p> The error code for the protected job.</p>",
@@ -3946,6 +4497,7 @@
         "CreateConfiguredTableInput$tags": "<p>An optional label that you can assign to a resource when you create it. Each tag consists of a key and an optional value, both of which you define. When you use tagging, you can also use tag-based access control in IAM policies to control access to this resource.</p>",
         "CreateIdMappingTableInput$tags": "<p>An optional label that you can assign to a resource when you create it. Each tag consists of a key and an optional value, both of which you define. When you use tagging, you can also use tag-based access control in IAM policies to control access to this resource.</p>",
         "CreateIdNamespaceAssociationInput$tags": "<p>An optional label that you can assign to a resource when you create it. Each tag consists of a key and an optional value, both of which you define. When you use tagging, you can also use tag-based access control in IAM policies to control access to this resource.</p>",
+        "CreateIntermediateTableInput$tags": "<p>An optional label that you can assign to a resource when you create it. Each tag consists of a key and an optional value, both of which you define. When you use tagging, you can also use tag-based access control in IAM policies to control access to this resource.</p>",
         "CreateMembershipInput$tags": "<p>An optional label that you can assign to a resource when you create it. Each tag consists of a key and an optional value, both of which you define. When you use tagging, you can also use tag-based access control in IAM policies to control access to this resource.</p>",
         "CreatePrivacyBudgetTemplateInput$tags": "<p>An optional label that you can assign to a resource when you create it. Each tag consists of a key and an optional value, both of which you define. When you use tagging, you can also use tag-based access control in IAM policies to control access to this resource.</p>",
         "ListTagsForResourceOutput$tags": "<p>A map of objects specifying each key name and value.</p>",
@@ -4043,6 +4595,15 @@
         "IdNamespaceAssociation$updateTime": "<p>The most recent time at which the ID namespace association was updated.</p>",
         "IdNamespaceAssociationSummary$createTime": "<p>The time at which this ID namespace association was created.</p>",
         "IdNamespaceAssociationSummary$updateTime": "<p>The most recent time at which this ID namespace association has been updated.</p>",
+        "IntermediateTable$createTime": "<p>The time the intermediate table was created.</p>",
+        "IntermediateTable$updateTime": "<p>The time the intermediate table was last updated.</p>",
+        "IntermediateTableActiveVersion$expirationTime": "<p>The time when this version expires based on the retention period.</p>",
+        "IntermediateTableAnalysisRule$createTime": "<p>The time the analysis rule was created.</p>",
+        "IntermediateTableAnalysisRule$updateTime": "<p>The time the analysis rule was last updated.</p>",
+        "IntermediateTableSummary$createTime": "<p>The time the intermediate table was created.</p>",
+        "IntermediateTableSummary$updateTime": "<p>The time the intermediate table was last updated.</p>",
+        "IntermediateTableVersionSummary$createTime": "<p>The time the version was created.</p>",
+        "IntermediateTableVersionSummary$expirationTime": "<p>The time when this version expires based on the retention period.</p>",
         "MemberSummary$createTime": "<p>The time when the member was created.</p>",
         "MemberSummary$updateTime": "<p>The time the member metadata was last updated.</p>",
         "Membership$createTime": "<p>The time when the membership was created.</p>",
@@ -4072,6 +4633,7 @@
         "AnalysisTemplate$membershipId": "<p>The identifier of a member who created the analysis template.</p>",
         "AnalysisTemplateSummary$membershipId": "<p>The identifier for a membership resource.</p>",
         "AnalysisTemplateSummary$collaborationId": "<p>A unique identifier for the collaboration that the analysis template summary belongs to. Currently accepts collaboration ID.</p>",
+        "ChildResource$resourceId": "<p>The unique identifier of the child resource.</p>",
         "Collaboration$id": "<p>The unique ID for the collaboration.</p>",
         "Collaboration$membershipId": "<p>The unique ID for your membership within the collaboration.</p>",
         "CollaborationAnalysisTemplate$collaborationId": "<p>A unique identifier for the collaboration that the analysis templates belong to. Currently accepts collaboration ID.</p>",
@@ -4090,6 +4652,7 @@
         "CollaborationPrivacyBudgetTemplateSummary$collaborationId": "<p>The unique identifier of the collaboration that contains this collaboration privacy budget template.</p>",
         "CollaborationSummary$id": "<p>The identifier for the collaboration.</p>",
         "CollaborationSummary$membershipId": "<p>The identifier of a member in a collaboration.</p>",
+        "ColumnLineageEntry$sourceId": "<p>The unique identifier of the source table.</p>",
         "ConfiguredAudienceModelAssociation$membershipId": "<p>A unique identifier for the membership that contains this configured audience model association.</p>",
         "ConfiguredAudienceModelAssociation$collaborationId": "<p>A unique identifier of the collaboration that contains this configured audience model association.</p>",
         "ConfiguredAudienceModelAssociationSummary$collaborationId": "<p>A unique identifier of the collaboration that configured audience model is associated with.</p>",
@@ -4099,6 +4662,7 @@
         "ConfiguredTableAssociation$id": "<p>The unique ID for the configured table association.</p>",
         "ConfiguredTableAssociation$configuredTableId": "<p>The unique ID for the configured table that the association refers to.</p>",
         "ConfiguredTableAssociation$membershipId": "<p>The unique ID for the membership this configured table association belongs to.</p>",
+        "ConfiguredTableAssociationSchemaTypeProperties$configuredTableAssociationId": "<p>The unique identifier of the configured table association.</p>",
         "ConfiguredTableAssociationSummary$configuredTableId": "<p>The unique configured table ID that this configured table association refers to.</p>",
         "ConfiguredTableAssociationSummary$id": "<p>The unique ID for the configured table association.</p>",
         "DeleteIdMappingTableInput$idMappingTableIdentifier": "<p>The unique identifier of the ID mapping table that you want to delete.</p>",
@@ -4106,18 +4670,35 @@
         "IdMappingTable$id": "<p>The unique identifier of the ID mapping table.</p>",
         "IdMappingTable$membershipId": "<p>The unique identifier of the membership resource for the ID mapping table.</p>",
         "IdMappingTable$collaborationId": "<p>The unique identifier of the collaboration that contains this ID mapping table.</p>",
+        "IdMappingTableSchemaTypeProperties$idMappingTableId": "<p>The unique identifier of the ID mapping table.</p>",
         "IdMappingTableSummary$collaborationId": "<p>The unique identifier of the collaboration that contains this ID mapping table.</p>",
         "IdMappingTableSummary$id": "<p>The unique identifier of this ID mapping table.</p>",
         "IdNamespaceAssociation$membershipId": "<p>The unique identifier of the membership resource for this ID namespace association.</p>",
         "IdNamespaceAssociation$collaborationId": "<p>The unique identifier of the collaboration that contains this ID namespace association.</p>",
         "IdNamespaceAssociationSummary$collaborationId": "<p>The unique identifier of the collaboration that contains this ID namespace association.</p>",
         "IdNamespaceAssociationSummary$id": "<p>The unique identifier of this ID namespace association.</p>",
+        "InheritedAdditionalAnalysesSource$id": "<p>The unique identifier of the parent table.</p>",
+        "InheritedAllowedAdditionalAnalysesSource$id": "<p>The unique identifier of the parent table.</p>",
+        "InheritedAllowedResultReceiversSource$id": "<p>The unique identifier of the parent table.</p>",
+        "IntermediateTable$id": "<p>The unique identifier of the intermediate table.</p>",
+        "IntermediateTable$membershipId": "<p>The unique identifier of the membership that contains the intermediate table.</p>",
+        "IntermediateTable$collaborationId": "<p>The unique identifier of the collaboration that contains the intermediate table.</p>",
+        "IntermediateTableActiveVersion$versionId": "<p>The unique identifier of the active version.</p>",
+        "IntermediateTableAnalysisRule$intermediateTableIdentifier": "<p>The unique identifier of the intermediate table associated with this analysis rule.</p>",
+        "IntermediateTableDependency$id": "<p>The unique identifier of the dependency table.</p>",
+        "IntermediateTableOutputConfiguration$id": "<p>The unique identifier of the intermediate table.</p>",
+        "IntermediateTableSchemaTypeProperties$intermediateTableId": "<p>The unique identifier of the intermediate table.</p>",
+        "IntermediateTableSummary$id": "<p>The unique identifier of the intermediate table.</p>",
+        "IntermediateTableSummary$membershipId": "<p>The unique identifier of the membership that contains the intermediate table.</p>",
+        "IntermediateTableSummary$collaborationId": "<p>The unique identifier of the collaboration that contains the intermediate table.</p>",
+        "IntermediateTableVersionSummary$versionId": "<p>The unique identifier of the version.</p>",
         "MemberSummary$membershipId": "<p>The unique ID for the member's associated membership, if present.</p>",
         "Membership$id": "<p>The unique ID of the membership.</p>",
         "Membership$collaborationId": "<p>The unique ID for the membership's collaboration.</p>",
         "MembershipSummary$id": "<p>The unique ID for the membership's collaboration.</p>",
         "PopulateIdMappingTableInput$idMappingTableIdentifier": "<p>The unique identifier of the ID mapping table that you want to populate.</p>",
         "PopulateIdMappingTableOutput$idMappingJobId": "<p>The unique identifier of the mapping job that will populate the ID mapping table.</p>",
+        "PopulateIntermediateTableOutput$versionId": "<p>The unique identifier of the version created by this population operation.</p>",
         "PrivacyBudgetSummary$id": "<p>The unique identifier of the privacy budget.</p>",
         "PrivacyBudgetSummary$collaborationId": "<p>The unique identifier of the collaboration that contains this privacy budget.</p>",
         "PrivacyBudgetTemplate$membershipId": "<p>The identifier for a membership resource.</p>",
@@ -4222,6 +4803,22 @@
       "base": null,
       "refs": {}
     },
+    "UpdateIntermediateTableAnalysisRuleInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateIntermediateTableAnalysisRuleOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateIntermediateTableInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateIntermediateTableOutput": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateMembershipInput": {
       "base": null,
       "refs": {}
@@ -4229,6 +4826,12 @@
     "UpdateMembershipOutput": {
       "base": null,
       "refs": {}
+    },
+    "UpdateMembershipPaymentConfiguration": {
+      "base": "<p>An object representing the payment responsibilities to update for the membership.</p>",
+      "refs": {
+        "UpdateMembershipInput$membershipPaymentConfiguration": "<p>The payment configuration to update for the membership.</p>"
+      }
     },
     "UpdatePrivacyBudgetTemplateInput": {
       "base": null,
@@ -4288,7 +4891,8 @@
     "WorkerComputeConfiguration": {
       "base": "<p> The configuration of the compute resources for workers running an analysis with the Clean Rooms SQL analytics engine.</p>",
       "refs": {
-        "ComputeConfiguration$worker": "<p> The worker configuration for the compute environment.</p>"
+        "ComputeConfiguration$worker": "<p> The worker configuration for the compute environment.</p>",
+        "IntermediateTableComputeConfiguration$queryComputeConfiguration": null
       }
     },
     "WorkerComputeConfigurationNumberInteger": {

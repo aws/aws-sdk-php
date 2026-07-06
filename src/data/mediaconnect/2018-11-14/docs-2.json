@@ -343,6 +343,12 @@
         "VideoMonitoringSetting$BlackFrames": "<p>Detects video frames that are black. </p>"
       }
     },
+    "BlackFramesConfiguration": {
+      "base": "<p>Detects black frames in the router input's source content and reports them through a CloudWatch metric, an EventBridge event, and a router input message.</p>",
+      "refs": {
+        "ContentQualityAnalysisFeatureConfiguration$BlackFrames": "<p>Settings for black frames detection.</p>"
+      }
+    },
     "Blob": {
       "base": null,
       "refs": {
@@ -422,6 +428,14 @@
         "ListedBridge$BridgeState": "<p>The state of the bridge. </p>"
       }
     },
+    "ClientToken": {
+      "base": null,
+      "refs": {
+        "CreateRouterInputRequest$ClientToken": "<p>A unique identifier for the request to ensure idempotency.</p>",
+        "CreateRouterNetworkInterfaceRequest$ClientToken": "<p>A unique identifier for the request to ensure idempotency.</p>",
+        "CreateRouterOutputRequest$ClientToken": "<p>A unique identifier for the request to ensure idempotency.</p>"
+      }
+    },
     "Colorimetry": {
       "base": null,
       "refs": {
@@ -439,10 +453,19 @@
         "GatewayInstance$ConnectionStatus": "<p>The connection state of the instance. </p>"
       }
     },
+    "ContentQualityAnalysisFeatureConfiguration": {
+      "base": "<p>Configures the content quality analysis features for the router input.</p>",
+      "refs": {
+        "RouterContentQualityAnalysisConfiguration$ContentLevel": "<p>The content quality analysis configuration.</p>"
+      }
+    },
     "ContentQualityAnalysisState": {
       "base": null,
       "refs": {
-        "MonitoringConfig$ContentQualityAnalysisState": "<p> Indicates whether content quality analysis is enabled or disabled.</p>"
+        "BlackFramesConfiguration$State": "<p>Indicates whether black frames detection is enabled or disabled.</p>",
+        "FrozenFramesConfiguration$State": "<p>Indicates whether frozen frames detection is enabled or disabled.</p>",
+        "MonitoringConfig$ContentQualityAnalysisState": "<p> Indicates whether content quality analysis is enabled or disabled.</p>",
+        "SilentAudioConfiguration$State": "<p>Indicates whether silent audio detection is enabled or disabled.</p>"
       }
     },
     "CreateBridge420Exception": {
@@ -967,6 +990,12 @@
         "VideoMonitoringSetting$FrozenFrames": "<p>Detects video frames that have not changed. </p>"
       }
     },
+    "FrozenFramesConfiguration": {
+      "base": "<p>Detects frozen video frames in the router input's source content and reports them through a CloudWatch metric, an EventBridge event, and a router input message.</p>",
+      "refs": {
+        "ContentQualityAnalysisFeatureConfiguration$FrozenFrames": "<p>Settings for frozen frames detection.</p>"
+      }
+    },
     "Gateway": {
       "base": "<p>The settings for a gateway, including its networks. </p>",
       "refs": {
@@ -1159,7 +1188,7 @@
         "SilentAudio$ThresholdSeconds": "<p>Specifies the number of consecutive seconds of silence that triggers an event or alert. </p>",
         "Source$DataTransferSubscriberFeePercent": "<p> Percentage from 0-100 of the data transfer cost to be billed to the subscriber.</p>",
         "Source$IngestPort": "<p> The port that the flow will be listening on for incoming content.</p>",
-        "Source$SenderControlPort": "<p> The IP address that the flow communicates with to initiate connection with the sender.</p>",
+        "Source$SenderControlPort": "<p> The port that the flow uses to send outbound requests to initiate connection with the sender.</p>",
         "Transport$MaxBitrate": "<p> The smoothing max bitrate (in bps) for RIST, RTP, and RTP-FEC streams.</p>",
         "Transport$MaxLatency": "<p> The maximum latency in milliseconds. This parameter applies only to RIST-based and Zixi-based streams.</p>",
         "Transport$MaxSyncBuffer": "<p> The size of the buffer (in milliseconds) to use to sync incoming source data.</p>",
@@ -1713,6 +1742,14 @@
         "__listOfNdiMediaStreamInfo$member": null
       }
     },
+    "NdiOutputTimecodeSource": {
+      "base": null,
+      "refs": {
+        "AddOutputRequest$NdiOutputTimecodeSource": "<p>Controls how MediaConnect generates timecodes for NDI output frames. If you don't specify this field, MediaConnect uses <code>EMBEDDED_TIMECODE</code>.</p> <ul> <li> <p> <code>EMBEDDED_TIMECODE</code> (default) - Preserves timecodes from the input transport stream. The timecodes must be embedded in the video stream as SEI timing messages. If no embedded timecode is detected, MediaConnect uses the UTC system time instead.</p> </li> <li> <p> <code>UTC_SYSTEM_TIME</code> - Generates timecodes based on the system clock time when each frame is sent.</p> </li> </ul>",
+        "Transport$NdiOutputTimecodeSource": "<p>The timecode source for NDI output frames. For NDI outputs, this field is always present and defaults to <code>EMBEDDED_TIMECODE</code>.</p> <ul> <li> <p> <code>EMBEDDED_TIMECODE</code> - Preserves timecodes from the input transport stream. The timecodes must be embedded in the video stream as SEI timing messages. If no embedded timecode is detected, MediaConnect uses the UTC system time instead.</p> </li> <li> <p> <code>UTC_SYSTEM_TIME</code> - Generates timecodes based on the system clock time when each frame is sent.</p> </li> </ul>",
+        "UpdateFlowOutputRequest$NdiOutputTimecodeSource": "<p>Controls how MediaConnect generates timecodes for NDI output frames. If you don't specify this field, MediaConnect leaves the value unchanged.</p> <ul> <li> <p> <code>EMBEDDED_TIMECODE</code> - Preserves timecodes from the input transport stream. The timecodes must be embedded in the video stream as SEI timing messages. If no embedded timecode is detected, MediaConnect uses the UTC system time instead.</p> </li> <li> <p> <code>UTC_SYSTEM_TIME</code> - Generates timecodes based on the system clock time when each frame is sent.</p> </li> </ul>"
+      }
+    },
     "NdiSourceInfo": {
       "base": "<p> Information about a single NDI® sender, including its name. </p>",
       "refs": {
@@ -1824,6 +1861,12 @@
       "base": "<p>A rule that allows a specific CIDR block to access the public router network interface.</p>",
       "refs": {
         "PublicRouterNetworkInterfaceConfigurationAllowRulesList$member": null
+      }
+    },
+    "PublicRouterNetworkInterfaceRuleCidrString": {
+      "base": null,
+      "refs": {
+        "PublicRouterNetworkInterfaceRule$Cidr": "<p>The CIDR block that is allowed to access the public router network interface.</p>"
       }
     },
     "PurchaseOfferingRequest": {
@@ -2042,6 +2085,28 @@
       "base": null,
       "refs": {
         "SecretsManagerEncryptionKeyConfiguration$RoleArn": "<p>The ARN of the IAM role assumed by MediaConnect to access the Secrets Manager secret.</p>"
+      }
+    },
+    "RouterContentQualityAnalysisConfiguration": {
+      "base": "<p>The content quality analysis configuration for the router input.</p> <important> <p>The content quality analysis feature only monitors the first video stream and the first audio stream it encounters within the router input source.</p> </important>",
+      "refs": {
+        "CreateRouterInputRequest$ContentQualityAnalysisConfiguration": "<p>The content quality analysis configuration for the router input.</p>",
+        "RouterInput$ContentQualityAnalysisConfiguration": "<p>The content quality analysis configuration for the router input.</p>",
+        "UpdateRouterInputRequest$ContentQualityAnalysisConfiguration": "<p>The content quality analysis configuration for the router input.</p>"
+      }
+    },
+    "RouterContentQualityAnalysisType": {
+      "base": null,
+      "refs": {
+        "RouterInput$ContentQualityAnalysisType": "<p>The type of content quality analysis applied to the router input.</p>"
+      }
+    },
+    "RouterCqaThresholdSeconds": {
+      "base": null,
+      "refs": {
+        "BlackFramesConfiguration$ThresholdSeconds": "<p>The number of consecutive seconds of black frames that MediaConnect must detect before it reports an issue.</p>",
+        "FrozenFramesConfiguration$ThresholdSeconds": "<p>The number of consecutive seconds of a frozen frame that MediaConnect must detect before it reports an issue.</p>",
+        "SilentAudioConfiguration$ThresholdSeconds": "<p>The number of consecutive seconds of silence that MediaConnect must detect before it reports an issue.</p>"
       }
     },
     "RouterInput": {
@@ -2545,6 +2610,12 @@
         "AudioMonitoringSetting$SilentAudio": "<p> Detects periods of silence. </p>"
       }
     },
+    "SilentAudioConfiguration": {
+      "base": "<p>Detects silent audio in the router input's source content and reports it through a CloudWatch metric, an EventBridge event, and a router input message.</p>",
+      "refs": {
+        "ContentQualityAnalysisFeatureConfiguration$SilentAudio": "<p>Settings for silent audio detection.</p>"
+      }
+    },
     "Source": {
       "base": "<p> The settings for the source of the flow.</p>",
       "refs": {
@@ -2712,7 +2783,7 @@
       "base": null,
       "refs": {
         "AddOutputRequest$RouterIntegrationState": "<p>Indicates whether to enable or disable router integration when creating a new flow output.</p>",
-        "BlackFrames$State": "<p> Indicates whether the <code>BlackFrames</code> metric is enabled or disabled..</p>",
+        "BlackFrames$State": "<p> Indicates whether the <code>BlackFrames</code> metric is enabled or disabled.</p>",
         "FailoverConfig$State": "<p>The state of source failover on the flow. If the state is inactive, the flow can have only one source. If the state is active, the flow can have one or two sources. </p>",
         "FrozenFrames$State": "<p>Indicates whether the <code>FrozenFrames</code> metric is enabled or disabled.</p>",
         "Output$RouterIntegrationState": "<p>Indicates if router integration is enabled or disabled on the flow output.</p>",
@@ -2824,12 +2895,9 @@
         "CreateGatewayRequest$Name": "<p> The name of the gateway. This name can not be modified after the gateway is created.</p>",
         "CreateRouterInputRequest$RegionName": "<p>The Amazon Web Services Region for the router input. Defaults to the current region if not specified.</p>",
         "CreateRouterInputRequest$AvailabilityZone": "<p>The Availability Zone where you want to create the router input. This must be a valid Availability Zone for the region specified by <code>regionName</code>, or the current region if no <code>regionName</code> is provided. </p>",
-        "CreateRouterInputRequest$ClientToken": "<p>A unique identifier for the request to ensure idempotency.</p>",
         "CreateRouterNetworkInterfaceRequest$RegionName": "<p>The Amazon Web Services Region for the router network interface. Defaults to the current region if not specified.</p>",
-        "CreateRouterNetworkInterfaceRequest$ClientToken": "<p>A unique identifier for the request to ensure idempotency.</p>",
         "CreateRouterOutputRequest$RegionName": "<p>The Amazon Web Services Region for the router output. Defaults to the current region if not specified.</p>",
         "CreateRouterOutputRequest$AvailabilityZone": "<p>The Availability Zone where you want to create the router output. This must be a valid Availability Zone for the region specified by <code>regionName</code>, or the current region if no <code>regionName</code> is provided. </p>",
-        "CreateRouterOutputRequest$ClientToken": "<p>A unique identifier for the request to ensure idempotency.</p>",
         "DeleteBridgeResponse$BridgeArn": "<p> The ARN of the deleted bridge.</p>",
         "DeleteFlowResponse$FlowArn": "<p> The ARN of the flow that was deleted.</p>",
         "DeleteGatewayResponse$GatewayArn": "<p> The ARN of the gateway that was deleted.</p>",
@@ -2976,7 +3044,6 @@
         "Output$PeerIpAddress": "<p>The IP address of the device that is currently receiving content from this output.</p> <note> <ul> <li> <p>For outputs that use protocols where you specify the destination (such as SRT Caller or Zixi Push), this value matches the configured destination address.</p> </li> <li> <p>For outputs that use listener protocols (such as SRT Listener), this value shows the address of the connected receiver. </p> </li> <li> <p>Peer IP addresses aren't available for entitlements, managed MediaLive outputs, NDI® sources and outputs, and CDI/ST2110 outputs. </p> </li> <li> <p>The peer IP address might not be visible for flows that haven't been started yet, or flows that were started before May 2025. In these cases, restart your flow to see the peer IP address.</p> </li> </ul> </note>",
         "Output$ConnectedRouterInputArn": "<p>The ARN of the router input that's connected to this flow output.</p>",
         "PreferredDayTimeMaintenanceConfiguration$Time": "<p>The preferred time for maintenance operations.</p>",
-        "PublicRouterNetworkInterfaceRule$Cidr": "<p>The CIDR block that is allowed to access the public router network interface.</p>",
         "PurchaseOfferingRequest$OfferingArn": "<p> The Amazon Resource Name (ARN) of the offering.</p>",
         "PurchaseOfferingRequest$ReservationName": "<p> The name that you want to use for the reservation.</p>",
         "PurchaseOfferingRequest$Start": "<p> The date and time that you want the reservation to begin, in Coordinated Universal Time (UTC). </p> <p>You can specify any date and time between 12:00am on the first day of the current month to the current time on today's date, inclusive. Specify the start in a 24-hour notation. Use the following format: <code>YYYY-MM-DDTHH:mm:SSZ</code>, where <code>T</code> and <code>Z</code> are literal characters. For example, to specify 11:30pm on March 5, 2020, enter <code>2020-03-05T23:30:00Z</code>.</p>",
@@ -3043,7 +3110,7 @@
         "Source$EntitlementArn": "<p> The ARN of the entitlement that allows you to subscribe to content that comes from another Amazon Web Services account. The entitlement is set by the content originator and the ARN is generated as part of the originator's flow.</p>",
         "Source$IngestIp": "<p> The IP address that the flow will be listening on for incoming content.</p>",
         "Source$Name": "<p> The name of the source.</p>",
-        "Source$SenderIpAddress": "<p> The port that the flow uses to send outbound requests to initiate connection with the sender.</p>",
+        "Source$SenderIpAddress": "<p> The IP address that the flow communicates with to initiate connection with the sender.</p>",
         "Source$SourceArn": "<p> The ARN of the source.</p>",
         "Source$VpcInterfaceName": "<p> The name of the VPC interface that is used for this source.</p>",
         "Source$WhitelistCidr": "<p> The range of IP addresses that should be allowed to contribute content to your source. These IP addresses should be in the form of a Classless Inter-Domain Routing (CIDR) block; for example, 10.0.0.0/16.</p>",

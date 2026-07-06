@@ -1265,6 +1265,34 @@
       "min":1,
       "pattern":"[a-zA-Z0-9-_:]+"
     },
+    "ConsentPopupConfig":{
+      "type":"structure",
+      "required":["enabled"],
+      "members":{
+        "enabled":{"shape":"Boolean"},
+        "header":{"shape":"ConsentPopupConfigHeaderString"},
+        "content":{"shape":"ConsentPopupConfigContentString"},
+        "closeButtonLabel":{"shape":"ConsentPopupConfigCloseButtonLabelString"}
+      }
+    },
+    "ConsentPopupConfigCloseButtonLabelString":{
+      "type":"string",
+      "max":20,
+      "min":0,
+      "pattern":"[\\S\\s]*"
+    },
+    "ConsentPopupConfigContentString":{
+      "type":"string",
+      "max":5000,
+      "min":0,
+      "pattern":"[\\S\\s]*"
+    },
+    "ConsentPopupConfigHeaderString":{
+      "type":"string",
+      "max":100,
+      "min":0,
+      "pattern":"[\\S\\s]*"
+    },
     "CreateBotRequest":{
       "type":"structure",
       "required":[
@@ -2316,7 +2344,8 @@
         "enableClientMetrics":{"shape":"Boolean"},
         "readReceiptConfig":{"shape":"ReadReceiptConfig"},
         "dataRetention":{"shape":"Boolean"},
-        "enableTrustedDataFormat":{"shape":"Boolean"}
+        "enableTrustedDataFormat":{"shape":"Boolean"},
+        "consentPopup":{"shape":"ConsentPopupConfig"}
       }
     },
     "OidcConfigInfo":{
@@ -2616,12 +2645,19 @@
         "showMasterRecoveryKey":{"shape":"Boolean"},
         "shredder":{"shape":"ShredderSettings"},
         "ssoMaxIdleMinutes":{"shape":"Integer"},
+        "maxNonSsoSessionMinutes":{"shape":"SecurityGroupSettingsMaxNonSsoSessionMinutesInteger"},
         "federationMode":{"shape":"Integer"},
         "lockoutThreshold":{"shape":"Integer"},
         "permittedNetworks":{"shape":"PermittedNetworksList"},
         "permittedWickrAwsNetworks":{"shape":"WickrAwsNetworksList"},
         "permittedWickrEnterpriseNetworks":{"shape":"PermittedWickrEnterpriseNetworksList"}
       }
+    },
+    "SecurityGroupSettingsMaxNonSsoSessionMinutesInteger":{
+      "type":"integer",
+      "box":true,
+      "max":525600,
+      "min":0
     },
     "SecurityGroupSettingsRequest":{
       "type":"structure",

@@ -151,6 +151,10 @@
         "AliasList$member": null
       }
     },
+    "AliasLimitExceededException": {
+      "base": "<p>Lambda couldn't create the alias because your Amazon Web Services account has exceeded the maximum number of aliases allowed per Lambda function. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html\">Lambda quotas</a>.</p>",
+      "refs": {}
+    },
     "AliasList": {
       "base": null,
       "refs": {
@@ -234,6 +238,8 @@
         "KafkaSchemaRegistryAccessConfig$URI": "<p> The URI of the secret (Secrets Manager secret ARN) to authenticate with your schema registry. </p>",
         "Layer$SigningProfileVersionArn": "<p>The Amazon Resource Name (ARN) for a signing profile version.</p>",
         "Layer$SigningJobArn": "<p>The Amazon Resource Name (ARN) of a signing job.</p>",
+        "LayerVersionContentOutput$SigningProfileVersionArn": "<p>The Amazon Resource Name (ARN) for a signing profile version.</p>",
+        "LayerVersionContentOutput$SigningJobArn": "<p>The Amazon Resource Name (ARN) of a signing job.</p>",
         "ListEventSourceMappingsRequest$EventSourceArn": "<p>The Amazon Resource Name (ARN) of the event source.</p> <ul> <li> <p> <b>Amazon Kinesis</b> – The ARN of the data stream or a stream consumer.</p> </li> <li> <p> <b>Amazon DynamoDB Streams</b> – The ARN of the stream.</p> </li> <li> <p> <b>Amazon Simple Queue Service</b> – The ARN of the queue.</p> </li> <li> <p> <b>Amazon Managed Streaming for Apache Kafka</b> – The ARN of the cluster or the ARN of the VPC connection (for <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-msk.html#msk-multi-vpc\">cross-account event source mappings</a>).</p> </li> <li> <p> <b>Amazon MQ</b> – The ARN of the broker.</p> </li> <li> <p> <b>Amazon DocumentDB</b> – The ARN of the DocumentDB change stream.</p> </li> </ul>",
         "SigningProfileVersionArns$member": null
       }
@@ -319,6 +325,18 @@
       "base": "<p>Configuration options for callback operations in durable executions, including timeout settings and retry behavior.</p>",
       "refs": {
         "OperationUpdate$CallbackOptions": null
+      }
+    },
+    "CallbackOptionsHeartbeatTimeoutSecondsInteger": {
+      "base": null,
+      "refs": {
+        "CallbackOptions$HeartbeatTimeoutSeconds": "<p>The heartbeat timeout for the callback operation, in seconds. If not specified or set to 0, heartbeat timeout is disabled.</p>"
+      }
+    },
+    "CallbackOptionsTimeoutSecondsInteger": {
+      "base": null,
+      "refs": {
+        "CallbackOptions$TimeoutSeconds": "<p>The timeout for the callback operation in seconds. If not specified or set to 0, the callback has no timeout.</p>"
       }
     },
     "CallbackStartedDetails": {
@@ -523,6 +541,18 @@
       "refs": {
         "CheckpointDurableExecutionRequest$ClientToken": "<p>An optional idempotency token to ensure that duplicate checkpoint requests are handled correctly. If provided, Lambda uses this token to detect and handle duplicate requests within a 15-minute window.</p>"
       }
+    },
+    "CodeArtifactUserDeletedException": {
+      "base": "<p>The Lambda function couldn't be invoked because its code artifact user has been deleted. Wait for Lambda to provision a new code artifact user, or update the function's code package to recreate it.</p>",
+      "refs": {}
+    },
+    "CodeArtifactUserFailedException": {
+      "base": "<p>The Lambda function couldn't be invoked because provisioning of its code artifact user failed. Update the function's code package or check the Lambda function's <code>State</code> and <code>StateReasonCode</code> for additional context.</p>",
+      "refs": {}
+    },
+    "CodeArtifactUserPendingException": {
+      "base": "<p>The Lambda function couldn't be invoked because its code artifact user is still being provisioned. Wait for the function's <code>State</code> to become <code>Active</code> and try the request again.</p>",
+      "refs": {}
     },
     "CodeSigningConfig": {
       "base": "<p>Details about a <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-codesigning.html\">Code signing configuration</a>. </p>",
@@ -860,8 +890,6 @@
     "DurationSeconds": {
       "base": null,
       "refs": {
-        "CallbackOptions$TimeoutSeconds": "<p>The timeout for the callback operation in seconds. If not specified or set to 0, the callback has no timeout.</p>",
-        "CallbackOptions$HeartbeatTimeoutSeconds": "<p>The heartbeat timeout for the callback operation, in seconds. If not specified or set to 0, heartbeat timeout is disabled.</p>",
         "CallbackStartedDetails$HeartbeatTimeout": "<p>The heartbeat timeout value, in seconds.</p>",
         "CallbackStartedDetails$Timeout": "<p>The timeout value, in seconds.</p>",
         "ExecutionStartedDetails$ExecutionTimeout": "<p>The maximum amount of time that the durable execution is allowed to run, in seconds.</p>",
@@ -900,6 +928,10 @@
     },
     "ENILimitReachedException": {
       "base": "<p>Lambda couldn't create an elastic network interface in the VPC, specified as part of Lambda function configuration, because the limit for network interfaces has been reached. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html\">Lambda quotas</a>.</p>",
+      "refs": {}
+    },
+    "ENINotReadyException": {
+      "base": "<p>Lambda couldn't invoke the Lambda function because the elastic network interface (ENI) configured for its VPC connection isn't ready yet. Wait a few moments and try the request again. For more information about VPC configuration, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-vpc.html\">Configuring a Lambda function to access resources in a VPC</a>.</p>",
       "refs": {}
     },
     "Enabled": {
@@ -1327,6 +1359,12 @@
         "GetFunctionResponse$Code": "<p>The deployment package of the function or version.</p>"
       }
     },
+    "FunctionCodeLocationError": {
+      "base": "<p>Details about an error related to retrieving a function's deployment package.</p>",
+      "refs": {
+        "FunctionCodeLocation$Error": "<p>An object that contains details about an error related to function deployment package retrieval.</p>"
+      }
+    },
     "FunctionConfiguration": {
       "base": "<p>Details about a function's configuration.</p>",
       "refs": {
@@ -1358,18 +1396,14 @@
       "refs": {
         "CreateAliasRequest$FunctionName": "<p>The name or ARN of the Lambda function.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> - <code>MyFunction</code>.</p> </li> <li> <p> <b>Function ARN</b> - <code>arn:aws:lambda:us-west-2:123456789012:function:MyFunction</code>.</p> </li> <li> <p> <b>Partial ARN</b> - <code>123456789012:function:MyFunction</code>.</p> </li> </ul> <p>The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.</p>",
         "CreateFunctionRequest$FunctionName": "<p>The name or ARN of the Lambda function.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> – <code>my-function</code>.</p> </li> <li> <p> <b>Function ARN</b> – <code>arn:aws:lambda:us-west-2:123456789012:function:my-function</code>.</p> </li> <li> <p> <b>Partial ARN</b> – <code>123456789012:function:my-function</code>.</p> </li> </ul> <p>The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.</p>",
-        "CreateFunctionUrlConfigRequest$FunctionName": "<p>The name or ARN of the Lambda function.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> – <code>my-function</code>.</p> </li> <li> <p> <b>Function ARN</b> – <code>arn:aws:lambda:us-west-2:123456789012:function:my-function</code>.</p> </li> <li> <p> <b>Partial ARN</b> – <code>123456789012:function:my-function</code>.</p> </li> </ul> <p>The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.</p>",
         "DeleteAliasRequest$FunctionName": "<p>The name or ARN of the Lambda function.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> - <code>MyFunction</code>.</p> </li> <li> <p> <b>Function ARN</b> - <code>arn:aws:lambda:us-west-2:123456789012:function:MyFunction</code>.</p> </li> <li> <p> <b>Partial ARN</b> - <code>123456789012:function:MyFunction</code>.</p> </li> </ul> <p>The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.</p>",
         "DeleteFunctionConcurrencyRequest$FunctionName": "<p>The name or ARN of the Lambda function.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> – <code>my-function</code>.</p> </li> <li> <p> <b>Function ARN</b> – <code>arn:aws:lambda:us-west-2:123456789012:function:my-function</code>.</p> </li> <li> <p> <b>Partial ARN</b> – <code>123456789012:function:my-function</code>.</p> </li> </ul> <p>The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.</p>",
-        "DeleteFunctionUrlConfigRequest$FunctionName": "<p>The name or ARN of the Lambda function.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> – <code>my-function</code>.</p> </li> <li> <p> <b>Function ARN</b> – <code>arn:aws:lambda:us-west-2:123456789012:function:my-function</code>.</p> </li> <li> <p> <b>Partial ARN</b> – <code>123456789012:function:my-function</code>.</p> </li> </ul> <p>The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.</p>",
         "DeleteProvisionedConcurrencyConfigRequest$FunctionName": "<p>The name or ARN of the Lambda function.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> – <code>my-function</code>.</p> </li> <li> <p> <b>Function ARN</b> – <code>arn:aws:lambda:us-west-2:123456789012:function:my-function</code>.</p> </li> <li> <p> <b>Partial ARN</b> – <code>123456789012:function:my-function</code>.</p> </li> </ul> <p>The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.</p>",
         "GetAliasRequest$FunctionName": "<p>The name or ARN of the Lambda function.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> - <code>MyFunction</code>.</p> </li> <li> <p> <b>Function ARN</b> - <code>arn:aws:lambda:us-west-2:123456789012:function:MyFunction</code>.</p> </li> <li> <p> <b>Partial ARN</b> - <code>123456789012:function:MyFunction</code>.</p> </li> </ul> <p>The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.</p>",
         "GetFunctionCodeSigningConfigResponse$FunctionName": "<p>The name or ARN of the Lambda function.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> - <code>MyFunction</code>.</p> </li> <li> <p> <b>Function ARN</b> - <code>arn:aws:lambda:us-west-2:123456789012:function:MyFunction</code>.</p> </li> <li> <p> <b>Partial ARN</b> - <code>123456789012:function:MyFunction</code>.</p> </li> </ul> <p>The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.</p>",
         "GetFunctionConcurrencyRequest$FunctionName": "<p>The name or ARN of the Lambda function.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> – <code>my-function</code>.</p> </li> <li> <p> <b>Function ARN</b> – <code>arn:aws:lambda:us-west-2:123456789012:function:my-function</code>.</p> </li> <li> <p> <b>Partial ARN</b> – <code>123456789012:function:my-function</code>.</p> </li> </ul> <p>The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.</p>",
-        "GetFunctionUrlConfigRequest$FunctionName": "<p>The name or ARN of the Lambda function.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> – <code>my-function</code>.</p> </li> <li> <p> <b>Function ARN</b> – <code>arn:aws:lambda:us-west-2:123456789012:function:my-function</code>.</p> </li> <li> <p> <b>Partial ARN</b> – <code>123456789012:function:my-function</code>.</p> </li> </ul> <p>The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.</p>",
         "GetProvisionedConcurrencyConfigRequest$FunctionName": "<p>The name or ARN of the Lambda function.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> – <code>my-function</code>.</p> </li> <li> <p> <b>Function ARN</b> – <code>arn:aws:lambda:us-west-2:123456789012:function:my-function</code>.</p> </li> <li> <p> <b>Partial ARN</b> – <code>123456789012:function:my-function</code>.</p> </li> </ul> <p>The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.</p>",
         "ListAliasesRequest$FunctionName": "<p>The name or ARN of the Lambda function.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> - <code>MyFunction</code>.</p> </li> <li> <p> <b>Function ARN</b> - <code>arn:aws:lambda:us-west-2:123456789012:function:MyFunction</code>.</p> </li> <li> <p> <b>Partial ARN</b> - <code>123456789012:function:MyFunction</code>.</p> </li> </ul> <p>The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.</p>",
-        "ListFunctionUrlConfigsRequest$FunctionName": "<p>The name or ARN of the Lambda function.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> – <code>my-function</code>.</p> </li> <li> <p> <b>Function ARN</b> – <code>arn:aws:lambda:us-west-2:123456789012:function:my-function</code>.</p> </li> <li> <p> <b>Partial ARN</b> – <code>123456789012:function:my-function</code>.</p> </li> </ul> <p>The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.</p>",
         "ListProvisionedConcurrencyConfigsRequest$FunctionName": "<p>The name or ARN of the Lambda function.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> – <code>my-function</code>.</p> </li> <li> <p> <b>Function ARN</b> – <code>arn:aws:lambda:us-west-2:123456789012:function:my-function</code>.</p> </li> <li> <p> <b>Partial ARN</b> – <code>123456789012:function:my-function</code>.</p> </li> </ul> <p>The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.</p>",
         "PublishVersionRequest$FunctionName": "<p>The name or ARN of the Lambda function.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> - <code>MyFunction</code>.</p> </li> <li> <p> <b>Function ARN</b> - <code>arn:aws:lambda:us-west-2:123456789012:function:MyFunction</code>.</p> </li> <li> <p> <b>Partial ARN</b> - <code>123456789012:function:MyFunction</code>.</p> </li> </ul> <p>The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.</p>",
         "PutFunctionCodeSigningConfigResponse$FunctionName": "<p>The name or ARN of the Lambda function.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> - <code>MyFunction</code>.</p> </li> <li> <p> <b>Function ARN</b> - <code>arn:aws:lambda:us-west-2:123456789012:function:MyFunction</code>.</p> </li> <li> <p> <b>Partial ARN</b> - <code>123456789012:function:MyFunction</code>.</p> </li> </ul> <p>The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.</p>",
@@ -1377,8 +1411,7 @@
         "PutProvisionedConcurrencyConfigRequest$FunctionName": "<p>The name or ARN of the Lambda function.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> – <code>my-function</code>.</p> </li> <li> <p> <b>Function ARN</b> – <code>arn:aws:lambda:us-west-2:123456789012:function:my-function</code>.</p> </li> <li> <p> <b>Partial ARN</b> – <code>123456789012:function:my-function</code>.</p> </li> </ul> <p>The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.</p>",
         "UpdateAliasRequest$FunctionName": "<p>The name or ARN of the Lambda function.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> - <code>MyFunction</code>.</p> </li> <li> <p> <b>Function ARN</b> - <code>arn:aws:lambda:us-west-2:123456789012:function:MyFunction</code>.</p> </li> <li> <p> <b>Partial ARN</b> - <code>123456789012:function:MyFunction</code>.</p> </li> </ul> <p>The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.</p>",
         "UpdateFunctionCodeRequest$FunctionName": "<p>The name or ARN of the Lambda function.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> – <code>my-function</code>.</p> </li> <li> <p> <b>Function ARN</b> – <code>arn:aws:lambda:us-west-2:123456789012:function:my-function</code>.</p> </li> <li> <p> <b>Partial ARN</b> – <code>123456789012:function:my-function</code>.</p> </li> </ul> <p>The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.</p>",
-        "UpdateFunctionConfigurationRequest$FunctionName": "<p>The name or ARN of the Lambda function.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> – <code>my-function</code>.</p> </li> <li> <p> <b>Function ARN</b> – <code>arn:aws:lambda:us-west-2:123456789012:function:my-function</code>.</p> </li> <li> <p> <b>Partial ARN</b> – <code>123456789012:function:my-function</code>.</p> </li> </ul> <p>The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.</p>",
-        "UpdateFunctionUrlConfigRequest$FunctionName": "<p>The name or ARN of the Lambda function.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> – <code>my-function</code>.</p> </li> <li> <p> <b>Function ARN</b> – <code>arn:aws:lambda:us-west-2:123456789012:function:my-function</code>.</p> </li> <li> <p> <b>Partial ARN</b> – <code>123456789012:function:my-function</code>.</p> </li> </ul> <p>The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.</p>"
+        "UpdateFunctionConfigurationRequest$FunctionName": "<p>The name or ARN of the Lambda function.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> – <code>my-function</code>.</p> </li> <li> <p> <b>Function ARN</b> – <code>arn:aws:lambda:us-west-2:123456789012:function:my-function</code>.</p> </li> <li> <p> <b>Partial ARN</b> – <code>123456789012:function:my-function</code>.</p> </li> </ul> <p>The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.</p>"
       }
     },
     "FunctionResponseType": {
@@ -1441,6 +1474,16 @@
       "base": null,
       "refs": {
         "ListFunctionUrlConfigsResponse$FunctionUrlConfigs": "<p>A list of function URL configurations.</p>"
+      }
+    },
+    "FunctionUrlFunctionName": {
+      "base": null,
+      "refs": {
+        "CreateFunctionUrlConfigRequest$FunctionName": "<p>The name or ARN of the Lambda function.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> – <code>my-function</code>.</p> </li> <li> <p> <b>Function ARN</b> – <code>arn:aws:lambda:us-west-2:123456789012:function:my-function</code>.</p> </li> <li> <p> <b>Partial ARN</b> – <code>123456789012:function:my-function</code>.</p> </li> </ul> <p>The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.</p>",
+        "DeleteFunctionUrlConfigRequest$FunctionName": "<p>The name or ARN of the Lambda function.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> – <code>my-function</code>.</p> </li> <li> <p> <b>Function ARN</b> – <code>arn:aws:lambda:us-west-2:123456789012:function:my-function</code>.</p> </li> <li> <p> <b>Partial ARN</b> – <code>123456789012:function:my-function</code>.</p> </li> </ul> <p>The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.</p>",
+        "GetFunctionUrlConfigRequest$FunctionName": "<p>The name or ARN of the Lambda function.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> – <code>my-function</code>.</p> </li> <li> <p> <b>Function ARN</b> – <code>arn:aws:lambda:us-west-2:123456789012:function:my-function</code>.</p> </li> <li> <p> <b>Partial ARN</b> – <code>123456789012:function:my-function</code>.</p> </li> </ul> <p>The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.</p>",
+        "ListFunctionUrlConfigsRequest$FunctionName": "<p>The name or ARN of the Lambda function.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> – <code>my-function</code>.</p> </li> <li> <p> <b>Function ARN</b> – <code>arn:aws:lambda:us-west-2:123456789012:function:my-function</code>.</p> </li> <li> <p> <b>Partial ARN</b> – <code>123456789012:function:my-function</code>.</p> </li> </ul> <p>The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.</p>",
+        "UpdateFunctionUrlConfigRequest$FunctionName": "<p>The name or ARN of the Lambda function.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> – <code>my-function</code>.</p> </li> <li> <p> <b>Function ARN</b> – <code>arn:aws:lambda:us-west-2:123456789012:function:my-function</code>.</p> </li> <li> <p> <b>Partial ARN</b> – <code>123456789012:function:my-function</code>.</p> </li> </ul> <p>The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.</p>"
       }
     },
     "FunctionUrlQualifier": {
@@ -1855,6 +1898,7 @@
         "CreateFunctionRequest$KMSKeyArn": "<p>The ARN of the Key Management Service (KMS) customer managed key that's used to encrypt the following resources:</p> <ul> <li> <p>The function's <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-envvars.html#configuration-envvars-encryption\">environment variables</a>.</p> </li> <li> <p>The function's <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/snapstart-security.html\">Lambda SnapStart</a> snapshots.</p> </li> <li> <p>When used with <code>SourceKMSKeyArn</code>, the unzipped version of the .zip deployment package that's used for function invocations. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/encrypt-zip-package.html#enable-zip-custom-encryption\"> Specifying a customer managed key for Lambda</a>.</p> </li> <li> <p>The optimized version of the container image that's used for function invocations. Note that this is not the same key that's used to protect your container image in the Amazon Elastic Container Registry (Amazon ECR). For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/images-create.html#images-lifecycle\">Function lifecycle</a>.</p> </li> </ul> <p>If you don't provide a customer managed key, Lambda uses an <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-owned-cmk\">Amazon Web Services owned key</a> or an <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-cmk\">Amazon Web Services managed key</a>.</p>",
         "EventSourceMappingConfiguration$KMSKeyArn": "<p> The ARN of the Key Management Service (KMS) customer managed key that Lambda uses to encrypt your function's <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-eventfiltering.html#filtering-basics\">filter criteria</a>.</p>",
         "FunctionCode$SourceKMSKeyArn": "<p>The ARN of the Key Management Service (KMS) customer managed key that's used to encrypt your function's .zip deployment package. If you don't provide a customer managed key, Lambda uses an <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-owned-cmk\">Amazon Web Services owned key</a>.</p>",
+        "FunctionCodeLocation$SourceKMSKeyArn": "<p>The ARN of the Key Management Service (KMS) customer managed key that's used to encrypt your function's .zip deployment package. If you don't provide a customer managed key, Lambda uses an <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-owned-cmk\">Amazon Web Services owned key</a>.</p>",
         "FunctionConfiguration$KMSKeyArn": "<p>The ARN of the Key Management Service (KMS) customer managed key that's used to encrypt the following resources:</p> <ul> <li> <p>The function's <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-envvars.html#configuration-envvars-encryption\">environment variables</a>.</p> </li> <li> <p>The function's <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/snapstart-security.html\">Lambda SnapStart</a> snapshots.</p> </li> <li> <p>When used with <code>SourceKMSKeyArn</code>, the unzipped version of the .zip deployment package that's used for function invocations. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/encrypt-zip-package.html#enable-zip-custom-encryption\"> Specifying a customer managed key for Lambda</a>.</p> </li> <li> <p>The optimized version of the container image that's used for function invocations. Note that this is not the same key that's used to protect your container image in the Amazon Elastic Container Registry (Amazon ECR). For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/images-create.html#images-lifecycle\">Function lifecycle</a>.</p> </li> </ul> <p>If you don't provide a customer managed key, Lambda uses an <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-owned-cmk\">Amazon Web Services owned key</a> or an <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-cmk\">Amazon Web Services managed key</a>.</p>",
         "UpdateEventSourceMappingRequest$KMSKeyArn": "<p> The ARN of the Key Management Service (KMS) customer managed key that Lambda uses to encrypt your function's <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-eventfiltering.html#filtering-basics\">filter criteria</a>. By default, Lambda does not encrypt your filter criteria object. Specify this property to encrypt data using your own customer managed key. </p>",
         "UpdateFunctionCodeRequest$SourceKMSKeyArn": "<p>The ARN of the Key Management Service (KMS) customer managed key that's used to encrypt your function's .zip deployment package. If you don't provide a customer managed key, Lambda uses an Amazon Web Services managed key.</p>",
@@ -2360,6 +2404,10 @@
         "ProvisionedPollerConfig$MinimumPollers": "<p>The minimum number of event pollers this event source can scale down to. For Amazon SQS events source mappings, default is 2, and minimum 2 required. For Amazon MSK and self-managed Apache Kafka event source mappings, default is 1.</p>"
       }
     },
+    "ModeNotSupportedException": {
+      "base": "<p>The Lambda function doesn't support the invocation mode requested. For example, calling <code>Invoke</code> with <code>InvocationType=RequestResponse</code> on a function configured for asynchronous-only invocation, or vice versa. For more information about invocation types, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-options.html\">Invoking Lambda functions</a>.</p>",
+      "refs": {}
+    },
     "NameSpacedFunctionArn": {
       "base": null,
       "refs": {
@@ -2419,8 +2467,8 @@
         "GetProvisionedConcurrencyConfigResponse$AllocatedProvisionedConcurrentExecutions": "<p>The amount of provisioned concurrency allocated. When a weighted alias is used during linear and canary deployments, this value fluctuates depending on the amount of concurrency that is provisioned for the function versions.</p>",
         "ProvisionedConcurrencyConfigListItem$AvailableProvisionedConcurrentExecutions": "<p>The amount of provisioned concurrency available.</p>",
         "ProvisionedConcurrencyConfigListItem$AllocatedProvisionedConcurrentExecutions": "<p>The amount of provisioned concurrency allocated. When a weighted alias is used during linear and canary deployments, this value fluctuates depending on the amount of concurrency that is provisioned for the function versions.</p>",
-        "PutProvisionedConcurrencyConfigResponse$AvailableProvisionedConcurrentExecutions": "<p>The amount of provisioned concurrency available.</p>",
-        "PutProvisionedConcurrencyConfigResponse$AllocatedProvisionedConcurrentExecutions": "<p>The amount of provisioned concurrency allocated. When a weighted alias is used during linear and canary deployments, this value fluctuates depending on the amount of concurrency that is provisioned for the function versions.</p>"
+        "PutProvisionedConcurrencyConfigResponse$AllocatedProvisionedConcurrentExecutions": "<p>The amount of provisioned concurrency allocated. When a weighted alias is used during linear and canary deployments, this value fluctuates depending on the amount of concurrency that is provisioned for the function versions.</p>",
+        "PutProvisionedConcurrencyConfigResponse$AvailableProvisionedConcurrentExecutions": "<p>The amount of provisioned concurrency available.</p>"
       }
     },
     "NullableBoolean": {
@@ -2500,7 +2548,7 @@
         "ChainedInvokeDetails$Result": "<p>The response payload from the chained invocation.</p>",
         "ContextDetails$Result": "<p>The response payload from the context.</p>",
         "EventResult$Payload": "<p>The result payload.</p>",
-        "OperationUpdate$Payload": "<p>The payload for successful operations.</p>",
+        "OperationUpdate$Payload": "<p>The payload for successful operations. The maximum payload size is 6 MB for synchronous <code>EXECUTION</code> operations (RequestResponse invocationType), 1 MB for asynchronous <code>EXECUTION</code> (Event invocationType) and <code>CHAINED_INVOKE</code> operations, and 256 KB for <code>CONTEXT</code>, <code>STEP</code>, <code>WAIT</code>, and <code>CALLBACK</code> operations.</p>",
         "StepDetails$Result": "<p>The JSON response payload from the step operation.</p>"
       }
     },
@@ -2618,6 +2666,26 @@
         "AddPermissionRequest$PrincipalOrgID": "<p>The identifier for your organization in Organizations. Use this to grant permissions to all the Amazon Web Services accounts under this organization.</p>"
       }
     },
+    "PropagateTags": {
+      "base": "<p>Configuration for tag propagation to managed resources launched by the capacity provider.</p>",
+      "refs": {
+        "CapacityProvider$PropagateTags": null,
+        "CreateCapacityProviderRequest$PropagateTags": "<p>The tag propagation configuration for the capacity provider. Specifies tags to apply to managed resources at launch.</p>",
+        "UpdateCapacityProviderRequest$PropagateTags": null
+      }
+    },
+    "PropagateTagsExplicitTagsMap": {
+      "base": null,
+      "refs": {
+        "PropagateTags$ExplicitTags": "<p>A list of tags to apply to managed resources when <code>Mode</code> is set to <code>Explicit</code>. You can specify up to 40 tags.</p>"
+      }
+    },
+    "PropagateTagsMode": {
+      "base": null,
+      "refs": {
+        "PropagateTags$Mode": "<p>The tag propagation mode. Set to <code>Explicit</code> to propagate the tags specified in <code>ExplicitTags</code> to managed resources. Set to <code>None</code> to disable tag propagation.</p>"
+      }
+    },
     "ProvisionedConcurrencyConfigList": {
       "base": null,
       "refs": {
@@ -2655,6 +2723,10 @@
       "refs": {
         "ProvisionedPollerConfig$PollerGroupName": "<p>(Amazon MSK and self-managed Apache Kafka) The name of the provisioned poller group. Use this option to group multiple ESMs within the event source's VPC to share Event Poller Unit (EPU) capacity. You can use this option to optimize Provisioned mode costs for your ESMs. You can group up to 100 ESMs per poller group and aggregate maximum pollers across all ESMs in a group cannot exceed 2000.</p>"
       }
+    },
+    "PublicPolicyException": {
+      "base": "<p>The resource-based policy you tried to add to the Lambda function would grant public access to it, and your account's <code>BlockPublicAccess</code> setting prevents public access. For more information about blocking public access to Lambda functions, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/access-control-resource-based.html#access-control-block-public-access\">Block public access to Lambda resources</a>.</p>",
+      "refs": {}
     },
     "PublishLayerVersionRequest": {
       "base": null,
@@ -2783,6 +2855,13 @@
         "PutFunctionConcurrencyRequest$ReservedConcurrentExecutions": "<p>The number of simultaneous executions to reserve for the function.</p>"
       }
     },
+    "ResolvedS3Object": {
+      "base": "<p>Details about the resolved Amazon S3 object that contains a function's deployment package.</p>",
+      "refs": {
+        "FunctionCodeLocation$ResolvedS3Object": "<p>The resolved Amazon S3 object that contains the deployment package.</p>",
+        "LayerVersionContentOutput$ResolvedS3Object": null
+      }
+    },
     "ResourceArn": {
       "base": null,
       "refs": {
@@ -2828,7 +2907,7 @@
       "base": null,
       "refs": {
         "GetDurableExecutionHistoryRequest$ReverseOrder": "<p>When set to <code>true</code>, returns the history events in reverse chronological order (newest first). By default, events are returned in chronological order (oldest first).</p>",
-        "ListDurableExecutionsByFunctionRequest$ReverseOrder": "<p>Set to true to return results in reverse chronological order (newest first). Default is false.</p>"
+        "ListDurableExecutionsByFunctionRequest$ReverseOrder": "<p>Set to true to return results in chronological order (oldest first). Default is false.</p>"
       }
     },
     "RoleArn": {
@@ -2877,6 +2956,7 @@
       "refs": {
         "FunctionCode$S3Bucket": "<p>An Amazon S3 bucket in the same Amazon Web Services Region as your function. The bucket can be in a different Amazon Web Services account.</p>",
         "LayerVersionContentInput$S3Bucket": "<p>The Amazon S3 bucket of the layer archive.</p>",
+        "ResolvedS3Object$S3Bucket": "<p>The Amazon S3 bucket that contains the deployment package.</p>",
         "UpdateFunctionCodeRequest$S3Bucket": "<p>An Amazon S3 bucket in the same Amazon Web Services Region as your function. The bucket can be in a different Amazon Web Services account. Use only with a function defined with a .zip file archive deployment package.</p>"
       }
     },
@@ -2897,7 +2977,16 @@
       "refs": {
         "FunctionCode$S3Key": "<p>The Amazon S3 key of the deployment package.</p>",
         "LayerVersionContentInput$S3Key": "<p>The Amazon S3 key of the layer archive.</p>",
+        "ResolvedS3Object$S3Key": "<p>The Amazon S3 key of the deployment package.</p>",
         "UpdateFunctionCodeRequest$S3Key": "<p>The Amazon S3 key of the deployment package. Use only with a function defined with a .zip file archive deployment package.</p>"
+      }
+    },
+    "S3ObjectStorageMode": {
+      "base": "<p>The storage mode for a function's deployment package.</p>",
+      "refs": {
+        "FunctionCode$S3ObjectStorageMode": "<p>Specifies how the deployment package is stored. Use <code>COPY</code> (default) to upload a copy of your deployment package to Lambda. Use <code>REFERENCE</code> to have Lambda reference the deployment package from the specified Amazon S3 bucket.</p>",
+        "LayerVersionContentInput$S3ObjectStorageMode": null,
+        "UpdateFunctionCodeRequest$S3ObjectStorageMode": "<p>Specifies how the deployment package is stored. Use <code>COPY</code> (default) to upload a copy of your deployment package to Lambda. Use <code>REFERENCE</code> to have Lambda reference the deployment package from the specified Amazon S3 bucket.</p>"
       }
     },
     "S3ObjectVersion": {
@@ -2905,6 +2994,7 @@
       "refs": {
         "FunctionCode$S3ObjectVersion": "<p>For versioned objects, the version of the deployment package object to use.</p>",
         "LayerVersionContentInput$S3ObjectVersion": "<p>For versioned objects, the version of the layer archive object to use.</p>",
+        "ResolvedS3Object$S3ObjectVersion": "<p>The version of the deployment package object.</p>",
         "UpdateFunctionCodeRequest$S3ObjectVersion": "<p>For versioned objects, the version of the deployment package object to use.</p>"
       }
     },
@@ -2985,8 +3075,16 @@
       "base": null,
       "refs": {
         "EnvironmentError$Message": "<p>The error message.</p>",
+        "FunctionCodeLocationError$Message": "<p>A description of the error.</p>",
         "ImageConfigError$Message": "<p>Error message.</p>",
         "RuntimeVersionError$Message": "<p>The error message.</p>"
+      }
+    },
+    "SensitiveStringOnServerOnly": {
+      "base": null,
+      "refs": {
+        "FunctionCodeLocation$Location": "<p>A presigned URL that you can use to download the deployment package.</p>",
+        "LayerVersionContentOutput$Location": "<p>A link to the layer archive in Amazon S3 that is valid for 10 minutes.</p>"
       }
     },
     "SerializedRequestEntityTooLargeException": {
@@ -2995,6 +3093,10 @@
     },
     "ServiceException": {
       "base": "<p>The Lambda service encountered an internal error.</p>",
+      "refs": {}
+    },
+    "ServiceQuotaExceededException": {
+      "base": "<p>The request would exceed a service quota. For more information about Lambda service quotas, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html\">Lambda quotas</a>. To request a quota increase, see <a href=\"https://docs.aws.amazon.com/servicequotas/latest/userguide/request-quota-increase.html\">Requesting a quota increase</a> in the <i>Service Quotas User Guide</i>.</p>",
       "refs": {}
     },
     "SigningProfileVersionArns": {
@@ -3030,6 +3132,10 @@
       "refs": {
         "SnapStartResponse$OptimizationStatus": "<p>When you provide a <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-versions.html#versioning-versions-using\">qualified Amazon Resource Name (ARN)</a>, this response element indicates whether SnapStart is activated for the specified function version.</p>"
       }
+    },
+    "SnapStartRegenerationFailureException": {
+      "base": "<p>Lambda couldn't regenerate the SnapStart snapshot for the function. SnapStart-enabled functions periodically regenerate snapshots when their underlying runtime or dependencies change; this regeneration failed. Wait for Lambda to retry, or update the function's configuration to trigger a new snapshot. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/snapstart.html\">Lambda SnapStart</a>.</p>",
+      "refs": {}
     },
     "SnapStartResponse": {
       "base": "<p>The function's <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/snapstart.html\">SnapStart</a> setting.</p>",
@@ -3160,18 +3266,25 @@
         "AddPermissionRequest$RevisionId": "<p>Update the policy only if the revision ID matches the ID that's specified. Use this option to avoid modifying a policy that has changed since you last read it.</p>",
         "AddPermissionResponse$Statement": "<p>The permission statement that's added to the function policy.</p>",
         "AliasConfiguration$RevisionId": "<p>A unique identifier that changes when you update the alias.</p>",
+        "AliasLimitExceededException$Type": "<p>The exception type.</p>",
+        "AliasLimitExceededException$message": "<p>The exception message.</p>",
         "CallbackTimeoutException$Type": "<p>The exception type.</p>",
         "CallbackTimeoutException$Message": null,
         "CapacityProviderLimitExceededException$Type": "<p>The exception type.</p>",
         "CapacityProviderLimitExceededException$message": null,
         "CheckpointUpdatedExecutionState$NextMarker": "<p>Indicates that more results are available. Use this value in a subsequent call to retrieve the next page of results.</p>",
+        "CodeArtifactUserDeletedException$Type": "<p>The exception type.</p>",
+        "CodeArtifactUserDeletedException$message": "<p>The exception message.</p>",
+        "CodeArtifactUserFailedException$Type": "<p>The exception type.</p>",
+        "CodeArtifactUserFailedException$message": "<p>The exception message.</p>",
+        "CodeArtifactUserPendingException$Type": "<p>The exception type.</p>",
+        "CodeArtifactUserPendingException$message": "<p>The exception message.</p>",
         "CodeSigningConfigNotFoundException$Type": null,
         "CodeSigningConfigNotFoundException$Message": null,
         "CodeStorageExceededException$Type": "<p>The exception type.</p>",
         "CodeStorageExceededException$message": null,
         "CodeVerificationFailedException$Type": null,
         "CodeVerificationFailedException$Message": null,
-        "DeleteEventSourceMappingRequest$UUID": "<p>The identifier of the event source mapping.</p>",
         "DurableExecutionAlreadyStartedException$Type": "<p>The exception type.</p>",
         "DurableExecutionAlreadyStartedException$Message": null,
         "EC2AccessDeniedException$Type": null,
@@ -3191,17 +3304,17 @@
         "EFSMountTimeoutException$Message": null,
         "ENILimitReachedException$Type": null,
         "ENILimitReachedException$Message": null,
+        "ENINotReadyException$Type": "<p>The exception type.</p>",
+        "ENINotReadyException$Message": "<p>The exception message.</p>",
         "EnvironmentError$ErrorCode": "<p>The error code.</p>",
-        "EventSourceMappingConfiguration$UUID": "<p>The identifier of the event source mapping.</p>",
         "EventSourceMappingConfiguration$LastProcessingResult": "<p>The result of the event source mapping's last processing attempt.</p>",
         "EventSourceMappingConfiguration$State": "<p>The state of the event source mapping. It can be one of the following: <code>Creating</code>, <code>Enabling</code>, <code>Enabled</code>, <code>Disabling</code>, <code>Disabled</code>, <code>Updating</code>, or <code>Deleting</code>.</p>",
         "EventSourceMappingConfiguration$StateTransitionReason": "<p>Indicates whether a user or Lambda made the last change to the event source mapping.</p>",
         "FunctionCode$ImageUri": "<p>URI of a <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/lambda-images.html\">container image</a> in the Amazon ECR registry.</p>",
         "FunctionCodeLocation$RepositoryType": "<p>The service that's hosting the file.</p>",
-        "FunctionCodeLocation$Location": "<p>A presigned URL that you can use to download the deployment package.</p>",
         "FunctionCodeLocation$ImageUri": "<p>URI of a container image in the Amazon ECR registry.</p>",
         "FunctionCodeLocation$ResolvedImageUri": "<p>The resolved URI for the image.</p>",
-        "FunctionCodeLocation$SourceKMSKeyArn": "<p>The ARN of the Key Management Service (KMS) customer managed key that's used to encrypt your function's .zip deployment package. If you don't provide a customer managed key, Lambda uses an <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-owned-cmk\">Amazon Web Services owned key</a>.</p>",
+        "FunctionCodeLocationError$ErrorCode": "<p>The error code for the failed retrieval.</p>",
         "FunctionConfiguration$CodeSha256": "<p>The SHA256 hash of the function's deployment package.</p>",
         "FunctionConfiguration$RevisionId": "<p>The latest updated revision of the function or alias.</p>",
         "FunctionConfiguration$ConfigSha256": "<p>The SHA256 hash of the function configuration.</p>",
@@ -3211,7 +3324,6 @@
         "GetDurableExecutionHistoryResponse$NextMarker": "<p>If present, indicates that more history events are available. Use this value as the <code>Marker</code> parameter in a subsequent request to retrieve the next page of results.</p>",
         "GetDurableExecutionStateRequest$Marker": "<p>If <code>NextMarker</code> was returned from a previous request, use this value to retrieve the next page of operations. Each pagination token expires after 24 hours.</p>",
         "GetDurableExecutionStateResponse$NextMarker": "<p>If present, indicates that more operations are available. Use this value as the <code>Marker</code> parameter in a subsequent request to retrieve the next page of results.</p>",
-        "GetEventSourceMappingRequest$UUID": "<p>The identifier of the event source mapping.</p>",
         "GetLayerVersionPolicyResponse$Policy": "<p>The policy document.</p>",
         "GetLayerVersionPolicyResponse$RevisionId": "<p>A unique identifier for the current revision of the policy.</p>",
         "GetPolicyResponse$Policy": "<p>The resource-based policy.</p>",
@@ -3249,10 +3361,7 @@
         "KMSInvalidStateException$Message": null,
         "KMSNotFoundException$Type": null,
         "KMSNotFoundException$Message": null,
-        "LayerVersionContentOutput$Location": "<p>A link to the layer archive in Amazon S3 that is valid for 10 minutes.</p>",
         "LayerVersionContentOutput$CodeSha256": "<p>The SHA-256 hash of the layer archive.</p>",
-        "LayerVersionContentOutput$SigningProfileVersionArn": "<p>The Amazon Resource Name (ARN) for a signing profile version.</p>",
-        "LayerVersionContentOutput$SigningJobArn": "<p>The Amazon Resource Name (ARN) of a signing job.</p>",
         "ListAliasesRequest$Marker": "<p>Specify the pagination token that's returned by a previous request to retrieve the next page of results.</p>",
         "ListAliasesResponse$NextMarker": "<p>The pagination token that's included if more results are available.</p>",
         "ListCapacityProvidersRequest$Marker": "<p>Specify the pagination token that's returned by a previous request to retrieve the next page of results.</p>",
@@ -3281,6 +3390,8 @@
         "ListProvisionedConcurrencyConfigsResponse$NextMarker": "<p>The pagination token that's included if more results are available.</p>",
         "ListVersionsByFunctionRequest$Marker": "<p>Specify the pagination token that's returned by a previous request to retrieve the next page of results.</p>",
         "ListVersionsByFunctionResponse$NextMarker": "<p>The pagination token that's included if more results are available.</p>",
+        "ModeNotSupportedException$Type": "<p>The exception type.</p>",
+        "ModeNotSupportedException$message": "<p>The exception message.</p>",
         "NoPublishedVersionException$Type": "<p>The exception type.</p>",
         "NoPublishedVersionException$Message": null,
         "PolicyLengthExceededException$Type": null,
@@ -3290,6 +3401,8 @@
         "ProvisionedConcurrencyConfigListItem$StatusReason": "<p>For failed allocations, the reason that provisioned concurrency could not be allocated.</p>",
         "ProvisionedConcurrencyConfigNotFoundException$Type": null,
         "ProvisionedConcurrencyConfigNotFoundException$message": null,
+        "PublicPolicyException$Type": "<p>The exception type.</p>",
+        "PublicPolicyException$Message": "<p>The exception message.</p>",
         "PublishVersionRequest$CodeSha256": "<p>Only publish a version if the hash value matches the value that's specified. Use this option to avoid publishing a version if the function code has changed since you last updated it. You can get the hash for the version that you uploaded from the output of <a>UpdateFunctionCode</a>.</p>",
         "PublishVersionRequest$RevisionId": "<p>Only update the function if the revision ID matches the ID that's specified. Use this option to avoid publishing a version if the function configuration has changed since you last updated it.</p>",
         "PutProvisionedConcurrencyConfigResponse$StatusReason": "<p>For failed allocations, the reason that provisioned concurrency could not be allocated.</p>",
@@ -3318,10 +3431,14 @@
         "SerializedRequestEntityTooLargeException$message": null,
         "ServiceException$Type": null,
         "ServiceException$Message": null,
+        "ServiceQuotaExceededException$Type": "<p>The exception type.</p>",
+        "ServiceQuotaExceededException$Message": "<p>The exception message.</p>",
         "SnapStartException$Type": null,
         "SnapStartException$Message": null,
         "SnapStartNotReadyException$Type": null,
         "SnapStartNotReadyException$Message": null,
+        "SnapStartRegenerationFailureException$Type": "<p>The exception type.</p>",
+        "SnapStartRegenerationFailureException$Message": "<p>The exception message.</p>",
         "SnapStartTimeoutException$Type": null,
         "SnapStartTimeoutException$Message": null,
         "StringList$member": null,
@@ -3333,7 +3450,6 @@
         "UnsupportedMediaTypeException$Type": null,
         "UnsupportedMediaTypeException$message": null,
         "UpdateAliasRequest$RevisionId": "<p>Only update the alias if the revision ID matches the ID that's specified. Use this option to avoid modifying an alias that has changed since you last read it.</p>",
-        "UpdateEventSourceMappingRequest$UUID": "<p>The identifier of the event source mapping.</p>",
         "UpdateFunctionCodeRequest$ImageUri": "<p>URI of a container image in the Amazon ECR registry. Do not use for a function defined with a .zip file archive.</p>",
         "UpdateFunctionCodeRequest$RevisionId": "<p>Update the function only if the revision ID matches the ID that's specified. Use this option to avoid modifying a function that has changed since you last read it.</p>",
         "UpdateFunctionConfigurationRequest$RevisionId": "<p>Update the function only if the revision ID matches the ID that's specified. Use this option to avoid modifying a function that has changed since you last read it.</p>"
@@ -3373,6 +3489,7 @@
     "TagKey": {
       "base": null,
       "refs": {
+        "PropagateTagsExplicitTagsMap$key": null,
         "TagKeyList$member": null,
         "Tags$key": null
       }
@@ -3390,6 +3507,7 @@
     "TagValue": {
       "base": null,
       "refs": {
+        "PropagateTagsExplicitTagsMap$value": null,
         "Tags$value": null
       }
     },
@@ -3559,6 +3677,15 @@
         "AmazonManagedKafkaEventSourceConfig$ConsumerGroupId": "<p>The identifier for the Kafka consumer group to join. The consumer group ID must be unique among all your Kafka event sources. After creating a Kafka event source mapping with the consumer group ID specified, you cannot update this value. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-msk.html#services-msk-consumer-group-id\">Customizable consumer group ID</a>.</p>",
         "SelfManagedKafkaEventSourceConfig$ConsumerGroupId": "<p> The identifier for the Kafka consumer group to join. The consumer group ID must be unique among all your Kafka event sources. After creating a Kafka event source mapping with the consumer group ID specified, you cannot update this value. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-kafka-process.html#services-smaa-topic-add\">Customizable consumer group ID</a>.</p>",
         "SourceAccessConfiguration$URI": "<p>The value for your chosen configuration in <code>Type</code>. For example: <code>\"URI\": \"arn:aws:secretsmanager:us-east-1:01234567890:secret:MyBrokerSecretName\"</code>.</p>"
+      }
+    },
+    "UUIDString": {
+      "base": null,
+      "refs": {
+        "DeleteEventSourceMappingRequest$UUID": "<p>The identifier of the event source mapping.</p>",
+        "EventSourceMappingConfiguration$UUID": "<p>The identifier of the event source mapping.</p>",
+        "GetEventSourceMappingRequest$UUID": "<p>The identifier of the event source mapping.</p>",
+        "UpdateEventSourceMappingRequest$UUID": "<p>The identifier of the event source mapping.</p>"
       }
     },
     "UnqualifiedFunctionName": {

@@ -738,8 +738,7 @@
     },
     "EntryPointArgument":{
       "type":"string",
-      "min":1,
-      "pattern":".*\\S.*",
+      "min":0,
       "sensitive":true
     },
     "EntryPointArguments":{
@@ -984,13 +983,15 @@
       "required":["imageUri"],
       "members":{
         "imageUri":{"shape":"ImageUri"},
-        "resolvedImageDigest":{"shape":"ImageDigest"}
+        "resolvedImageDigest":{"shape":"ImageDigest"},
+        "applicationLevelDigestResolution":{"shape":"Boolean"}
       }
     },
     "ImageConfigurationInput":{
       "type":"structure",
       "members":{
-        "imageUri":{"shape":"ImageUri"}
+        "imageUri":{"shape":"ImageUri"},
+        "applicationLevelDigestResolution":{"shape":"Boolean"}
       }
     },
     "ImageDigest":{
@@ -1113,7 +1114,9 @@
         "attemptUpdatedAt":{"shape":"Date"},
         "startedAt":{"shape":"Date"},
         "endedAt":{"shape":"Date"},
-        "queuedDurationMilliseconds":{"shape":"Long"}
+        "queuedDurationMilliseconds":{"shape":"Long"},
+        "imageConfiguration":{"shape":"ImageConfiguration"},
+        "workerTypeSpecifications":{"shape":"WorkerTypeSpecificationMap"}
       }
     },
     "JobRunAttemptSummary":{

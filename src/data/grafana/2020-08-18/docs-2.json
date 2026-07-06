@@ -204,6 +204,12 @@
         "WorkspaceDescription$dataSources": "<p>Specifies the Amazon Web Services data sources that have been configured to have IAM roles and permissions created to allow Amazon Managed Grafana to read data from these sources.</p> <p>This list is only used when the workspace was created through the Amazon Web Services console, and the <code>permissionType</code> is <code>SERVICE_MANAGED</code>.</p>"
       }
     },
+    "DegradedWorkspaceReason": {
+      "base": null,
+      "refs": {
+        "WorkspaceDescription$degradedWorkspaceReason": "<p>If the workspace is in the <code>DEGRADED</code> status, this field describes the reason the workspace is degraded.</p>"
+      }
+    },
     "DeleteWorkspaceApiKeyRequest": {
       "base": null,
       "refs": {}
@@ -307,6 +313,14 @@
       "base": null,
       "refs": {
         "ListVersionsResponse$grafanaVersions": "<p>The Grafana versions available to create. If a workspace ID is included in the request, the Grafana versions to which this workspace can be upgraded.</p>"
+      }
+    },
+    "IPAddressType": {
+      "base": null,
+      "refs": {
+        "CreateWorkspaceRequest$ipAddressType": "<p>Specifies whether the workspace supports IPv4 only, or IPv4 and IPv6. Valid values are <code>IPv4</code> and <code>DualStack</code>. For more information about IP address types, see <a href=\"https://docs.aws.amazon.com/grafana/latest/userguide/AMG-configure-nac.html\">Network access control</a>.</p>",
+        "UpdateWorkspaceRequest$ipAddressType": "<p>Specifies whether the workspace supports IPv4 only, or IPv4 and IPv6. Valid values are <code>IPv4</code> and <code>DualStack</code>. For more information about IP address types, see <a href=\"https://docs.aws.amazon.com/grafana/latest/userguide/AMG-configure-nac.html\">Network access control</a>.</p>",
+        "WorkspaceDescription$ipAddressType": "<p>The type of IP addresses supported for connection to the workspace. Valid values are <code>IPv4</code> and <code>DualStack</code>.</p>"
       }
     },
     "IamRoleArn": {

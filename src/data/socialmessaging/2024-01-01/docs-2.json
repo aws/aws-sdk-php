@@ -3,25 +3,35 @@
   "service": "<p> <i>Amazon Web Services End User Messaging Social</i>, also referred to as Social messaging, is a messaging service that enables application developers to incorporate WhatsApp into their existing workflows. The <i>Amazon Web Services End User Messaging Social API</i> provides information about the <i>Amazon Web Services End User Messaging Social API</i> resources, including supported HTTP methods, parameters, and schemas.</p> <p>The <i>Amazon Web Services End User Messaging Social API</i> provides programmatic access to options that are unique to the WhatsApp Business Platform.</p> <p>If you're new to the <i>Amazon Web Services End User Messaging Social API</i>, it's also helpful to review <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/what-is-service.html\">What is Amazon Web Services End User Messaging Social</a> in the <i>Amazon Web Services End User Messaging Social User Guide</i>. The <i>Amazon Web Services End User Messaging Social User Guide</i> provides tutorials, code samples, and procedures that demonstrate how to use <i>Amazon Web Services End User Messaging Social API</i> features programmatically and how to integrate functionality into applications. The guide also provides key information, such as integration with other Amazon Web Services services, and the quotas that apply to use of the service.</p> <p> <b>Regional availability</b> </p> <p>The <i>Amazon Web Services End User Messaging Social API</i> is available across several Amazon Web Services Regions and it provides a dedicated endpoint for each of these Regions. For a list of all the Regions and endpoints where the API is currently available, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/rande.html#pinpoint_region\">Amazon Web Services Service Endpoints</a> and <a href=\"https://docs.aws.amazon.com/general/latest/gr/end-user-messaging.html\">Amazon Web Services End User Messaging endpoints and quotas</a> in the Amazon Web Services General Reference. To learn more about Amazon Web Services Regions, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/rande-manage.html\">Managing Amazon Web Services Regions</a> in the Amazon Web Services General Reference.</p> <p>In each Region, Amazon Web Services maintains multiple Availability Zones. These Availability Zones are physically isolated from each other, but are united by private, low-latency, high-throughput, and highly redundant network connections. These Availability Zones enable us to provide very high levels of availability and redundancy, while also minimizing latency. To learn more about the number of Availability Zones that are available in each Region, see <a href=\"https://aws.amazon.com/about-aws/global-infrastructure/\">Amazon Web Services Global Infrastructure.</a> </p>",
   "operations": {
     "AssociateWhatsAppBusinessAccount": "<p>This is only used through the Amazon Web Services console during sign-up to associate your WhatsApp Business Account to your Amazon Web Services account.</p>",
+    "CreateWhatsAppFlow": "<p>Creates a new WhatsApp Flow. Flows enable businesses to create rich, interactive forms and experiences that users can complete without leaving WhatsApp. The Flow is created in DRAFT status. If <code>publish</code> is set to <code>true</code> and a valid <code>flowJson</code> is provided, the Flow is published immediately.</p>",
     "CreateWhatsAppMessageTemplate": "<p>Creates a new WhatsApp message template from a custom definition.</p> <note> <p>Amazon Web Services End User Messaging Social does not store any WhatsApp message template content.</p> </note>",
     "CreateWhatsAppMessageTemplateFromLibrary": "<p>Creates a new WhatsApp message template using a template from Meta's template library.</p>",
     "CreateWhatsAppMessageTemplateMedia": "<p>Uploads media for use in a WhatsApp message template.</p>",
+    "DeleteWhatsAppFlow": "<p>Deletes a WhatsApp Flow permanently. Only Flows in DRAFT status can be deleted. Published or deprecated Flows cannot be deleted.</p>",
     "DeleteWhatsAppMessageMedia": "<p>Delete a media object from the WhatsApp service. If the object is still in an Amazon S3 bucket you should delete it from there too.</p>",
     "DeleteWhatsAppMessageTemplate": "<p>Deletes a WhatsApp message template.</p>",
+    "DeprecateWhatsAppFlow": "<p>Deprecates a published WhatsApp Flow, marking it as no longer recommended for use. The Flow must be in PUBLISHED status. This is an irreversible operation.</p>",
     "DisassociateWhatsAppBusinessAccount": "<p>Disassociate a WhatsApp Business Account (WABA) from your Amazon Web Services account.</p>",
     "GetLinkedWhatsAppBusinessAccount": "<p>Get the details of your linked WhatsApp Business Account.</p>",
     "GetLinkedWhatsAppBusinessAccountPhoneNumber": "<p>Retrieve the WABA account id and phone number details of a WhatsApp business account phone number.</p>",
+    "GetWhatsAppFlow": "<p>Retrieves the metadata and status of a WhatsApp Flow, including validation errors, preview information, and health status.</p>",
+    "GetWhatsAppFlowPreview": "<p>Generates a web preview URL for testing a WhatsApp Flow before publishing. Preview URLs expire in 30 days and can be shared with stakeholders for review.</p>",
     "GetWhatsAppMessageMedia": "<p>Get a media file from the WhatsApp service. On successful completion the media file is retrieved from Meta and stored in the specified Amazon S3 bucket. Use either <code>destinationS3File</code> or <code>destinationS3PresignedUrl</code> for the destination. If both are used then an <code>InvalidParameterException</code> is returned.</p>",
     "GetWhatsAppMessageTemplate": "<p>Retrieves a specific WhatsApp message template.</p>",
     "ListLinkedWhatsAppBusinessAccounts": "<p>List all WhatsApp Business Accounts linked to your Amazon Web Services account.</p>",
     "ListTagsForResource": "<p>List all tags associated with a resource, such as a phone number or WABA.</p>",
+    "ListWhatsAppFlowAssets": "<p>Lists the assets (Flow JSON definition) of a WhatsApp Flow with presigned download URLs. Download URLs are generated by Meta and expire after a short period.</p>",
+    "ListWhatsAppFlows": "<p>Lists all WhatsApp Flows for a WhatsApp Business Account. Returns summary information including Flow ID, name, status, and categories.</p>",
     "ListWhatsAppMessageTemplates": "<p>Lists WhatsApp message templates for a specific WhatsApp Business Account.</p>",
     "ListWhatsAppTemplateLibrary": "<p>Lists templates available in Meta's template library for WhatsApp messaging.</p>",
     "PostWhatsAppMessageMedia": "<p>Upload a media file to the WhatsApp service. Only the specified <code>originationPhoneNumberId</code> has the permissions to send the media file when using <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_SendWhatsAppMessage.html\">SendWhatsAppMessage</a>. You must use either <code>sourceS3File</code> or <code>sourceS3PresignedUrl</code> for the source. If both or neither are specified then an <code>InvalidParameterException</code> is returned.</p>",
+    "PublishWhatsAppFlow": "<p>Publishes a WhatsApp Flow, making it available for use in template messages. The Flow must be in DRAFT status with valid Flow JSON that passes Meta's validation. This is an irreversible operation.</p>",
     "PutWhatsAppBusinessAccountEventDestinations": "<p>Add an event destination to log event data from WhatsApp for a WhatsApp Business Account (WABA). A WABA can only have one event destination at a time. All resources associated with the WABA use the same event destination.</p>",
     "SendWhatsAppMessage": "<p>Send a WhatsApp message. For examples of sending a message using the Amazon Web Services CLI, see <a href=\"https://docs.aws.amazon.com/social-messaging/latest/userguide/send-message.html\">Sending messages</a> in the <i> <i>Amazon Web Services End User Messaging Social User Guide</i> </i>.</p>",
     "TagResource": "<p>Adds or overwrites only the specified tags for the specified resource. When you specify an existing tag key, the value is overwritten with the new value.</p>",
     "UntagResource": "<p>Removes the specified tags from a resource. </p>",
+    "UpdateWhatsAppFlow": "<p>Updates the metadata of a WhatsApp Flow, such as its name or categories. This does not update the Flow JSON definition. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_UpdateWhatsAppFlowAssets.html\">UpdateWhatsAppFlowAssets</a> to update the Flow JSON.</p>",
+    "UpdateWhatsAppFlowAssets": "<p>Updates the Flow JSON definition (assets) of a WhatsApp Flow. Updating a published Flow's assets reverts it to DRAFT status, requiring re-publishing.</p>",
     "UpdateWhatsAppMessageTemplate": "<p>Updates an existing WhatsApp message template.</p>"
   },
   "shapes": {
@@ -83,7 +93,9 @@
     "Boolean": {
       "base": null,
       "refs": {
+        "CreateWhatsAppFlowInput$publish": "<p>Set to <code>true</code> to publish the Flow immediately after creation. Requires a valid <code>flowJson</code> that passes Meta's validation.</p>",
         "DeleteWhatsAppMessageMediaOutput$success": "<p>Success indicator for deleting the media file.</p>",
+        "GetWhatsAppFlowPreviewInput$invalidate": "<p>Set to <code>true</code> to force generation of a new preview URL. Use this if the previous URL has been compromised or you want a fresh expiration period.</p>",
         "GetWhatsAppMessageMediaInput$metadataOnly": "<p>Set to <code>True</code> to get only the metadata for the file.</p>"
       }
     },
@@ -99,6 +111,14 @@
       "refs": {
         "LibraryTemplateBodyInputs$codeExpirationMinutes": "<p>The number of minutes until a verification code or OTP expires.</p>"
       }
+    },
+    "CreateWhatsAppFlowInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateWhatsAppFlowOutput": {
+      "base": null,
+      "refs": {}
     },
     "CreateWhatsAppMessageTemplateFromLibraryInput": {
       "base": null,
@@ -130,6 +150,14 @@
         "DeleteWhatsAppMessageTemplateInput$deleteAllLanguages": "<p>If true, deletes all language versions of the template.</p>"
       }
     },
+    "DeleteWhatsAppFlowInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteWhatsAppFlowOutput": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteWhatsAppMessageMediaInput": {
       "base": null,
       "refs": {}
@@ -148,6 +176,14 @@
     },
     "DependencyException": {
       "base": "<p>Thrown when performing an action because a dependency would be broken.</p>",
+      "refs": {}
+    },
+    "DeprecateWhatsAppFlowInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeprecateWhatsAppFlowOutput": {
+      "base": null,
       "refs": {}
     },
     "DisassociateWhatsAppBusinessAccountInput": {
@@ -209,6 +245,22 @@
       "refs": {}
     },
     "GetLinkedWhatsAppBusinessAccountPhoneNumberOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetWhatsAppFlowInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetWhatsAppFlowOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetWhatsAppFlowPreviewInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetWhatsAppFlowPreviewOutput": {
       "base": null,
       "refs": {}
     },
@@ -303,20 +355,31 @@
     "LinkedWhatsAppBusinessAccountId": {
       "base": null,
       "refs": {
+        "AssociateWhatsAppBusinessAccountOutput$linkedWhatsAppBusinessAccountId": "<p>The ID of the WhatsApp Business Account that was linked to your Amazon Web Services account.</p>",
+        "CreateWhatsAppFlowInput$id": "<p>The ID of the WhatsApp Business Account to associate with this Flow.</p>",
         "CreateWhatsAppMessageTemplateFromLibraryInput$id": "<p>The ID of the WhatsApp Business Account to associate with this template.</p>",
         "CreateWhatsAppMessageTemplateInput$id": "<p>The ID of the WhatsApp Business Account to associate with this template.</p>",
         "CreateWhatsAppMessageTemplateMediaInput$id": "<p>The ID of the WhatsApp Business Account associated with this media upload.</p>",
+        "DeleteWhatsAppFlowInput$id": "<p>The ID of the WhatsApp Business Account associated with this Flow.</p>",
         "DeleteWhatsAppMessageTemplateInput$id": "<p>The ID of the WhatsApp Business Account associated with this template.</p>",
+        "DeprecateWhatsAppFlowInput$id": "<p>The ID of the WhatsApp Business Account associated with this Flow.</p>",
         "DisassociateWhatsAppBusinessAccountInput$id": "<p>The unique identifier of your WhatsApp Business Account. WABA identifiers are formatted as <code>waba-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_ListLinkedWhatsAppBusinessAccounts.html\">ListLinkedWhatsAppBusinessAccounts</a> to list all WABAs and their details.</p>",
         "GetLinkedWhatsAppBusinessAccountInput$id": "<p>The unique identifier, from Amazon Web Services, of the linked WhatsApp Business Account. WABA identifiers are formatted as <code>waba-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_ListLinkedWhatsAppBusinessAccounts.html\">ListLinkedWhatsAppBusinessAccounts</a> to list all WABAs and their details.</p>",
         "GetLinkedWhatsAppBusinessAccountPhoneNumberOutput$linkedWhatsAppBusinessAccountId": "<p>The WABA identifier linked to the phone number, formatted as <code>waba-01234567890123456789012345678901</code>.</p>",
+        "GetWhatsAppFlowInput$id": "<p>The ID of the WhatsApp Business Account associated with this Flow.</p>",
+        "GetWhatsAppFlowPreviewInput$id": "<p>The ID of the WhatsApp Business Account associated with this Flow.</p>",
         "GetWhatsAppMessageTemplateInput$id": "<p>The ID of the WhatsApp Business Account associated with this template.</p>",
         "LinkedWhatsAppBusinessAccount$id": "<p>The ID of the linked WhatsApp Business Account, formatted as <code>waba-01234567890123456789012345678901</code>.</p>",
         "LinkedWhatsAppBusinessAccountIdMetaData$wabaId": "<p>The Amazon Resource Name (ARN) of the WhatsApp Business Account ID.</p>",
         "LinkedWhatsAppBusinessAccountSummary$id": "<p>The ID of the linked WhatsApp Business Account, formatted as <code>waba-01234567890123456789012345678901</code>.</p>",
+        "ListWhatsAppFlowAssetsInput$id": "<p>The ID of the WhatsApp Business Account associated with this Flow.</p>",
+        "ListWhatsAppFlowsInput$id": "<p>The ID of the WhatsApp Business Account to list Flows for.</p>",
         "ListWhatsAppMessageTemplatesInput$id": "<p>The ID of the WhatsApp Business Account to list templates for.</p>",
         "ListWhatsAppTemplateLibraryInput$id": "<p>The ID of the WhatsApp Business Account to list library templates for.</p>",
+        "PublishWhatsAppFlowInput$id": "<p>The ID of the WhatsApp Business Account associated with this Flow.</p>",
         "PutWhatsAppBusinessAccountEventDestinationsInput$id": "<p>The unique identifier of your WhatsApp Business Account. WABA identifiers are formatted as <code>waba-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_ListLinkedWhatsAppBusinessAccounts.html\">ListLinkedWhatsAppBusinessAccounts</a> to list all WABAs and their details.</p>",
+        "UpdateWhatsAppFlowAssetsInput$id": "<p>The ID of the WhatsApp Business Account associated with this Flow.</p>",
+        "UpdateWhatsAppFlowInput$id": "<p>The ID of the WhatsApp Business Account associated with this Flow.</p>",
         "UpdateWhatsAppMessageTemplateInput$id": "<p>The ID of the WhatsApp Business Account associated with this template.</p>",
         "WhatsAppSetupFinalization$phoneNumberParent": "<p>Used to add a new phone number to an existing WhatsApp Business Account. This field can't be used when the <code>waba</code> field is present.</p>"
       }
@@ -362,6 +425,22 @@
       "base": null,
       "refs": {}
     },
+    "ListWhatsAppFlowAssetsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListWhatsAppFlowAssetsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListWhatsAppFlowsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListWhatsAppFlowsOutput": {
+      "base": null,
+      "refs": {}
+    },
     "ListWhatsAppMessageTemplatesInput": {
       "base": null,
       "refs": {}
@@ -388,8 +467,230 @@
       "base": null,
       "refs": {
         "ListLinkedWhatsAppBusinessAccountsInput$maxResults": "<p>The maximum number of results to return.</p>",
+        "ListWhatsAppFlowAssetsInput$maxResults": "<p>The maximum number of results to return per page.</p>",
+        "ListWhatsAppFlowsInput$maxResults": "<p>The maximum number of results to return per page.</p>",
         "ListWhatsAppMessageTemplatesInput$maxResults": "<p>The maximum number of results to return per page (1-100).</p>",
         "ListWhatsAppTemplateLibraryInput$maxResults": "<p>The maximum number of results to return per page (1-100).</p>"
+      }
+    },
+    "MetaFlowApplicationId": {
+      "base": null,
+      "refs": {
+        "MetaFlowApplicationInfo$id": "<p>The unique identifier of the Meta application.</p>"
+      }
+    },
+    "MetaFlowApplicationInfo": {
+      "base": "<p>Contains the Meta application metadata associated with a WhatsApp Flow.</p>",
+      "refs": {
+        "GetWhatsAppFlowOutput$application": "<p>The Meta application information associated with this Flow.</p>"
+      }
+    },
+    "MetaFlowApplicationLink": {
+      "base": null,
+      "refs": {
+        "MetaFlowApplicationInfo$link": "<p>The URL link for the Meta application.</p>"
+      }
+    },
+    "MetaFlowApplicationName": {
+      "base": null,
+      "refs": {
+        "MetaFlowApplicationInfo$name": "<p>The name of the Meta application.</p>"
+      }
+    },
+    "MetaFlowAsset": {
+      "base": "<p>Represents a single asset file associated with a WhatsApp Flow, including a presigned download URL.</p>",
+      "refs": {
+        "MetaFlowAssetList$member": null
+      }
+    },
+    "MetaFlowAssetDownloadUrl": {
+      "base": null,
+      "refs": {
+        "MetaFlowAsset$downloadUrl": "<p>A presigned URL from Meta for downloading the asset. The URL expires after a short period.</p>"
+      }
+    },
+    "MetaFlowAssetList": {
+      "base": null,
+      "refs": {
+        "ListWhatsAppFlowAssetsOutput$flowAssets": "<p>A list of Flow assets with download URLs.</p>"
+      }
+    },
+    "MetaFlowAssetName": {
+      "base": null,
+      "refs": {
+        "MetaFlowAsset$name": "<p>The filename of the asset (for example, flow.json).</p>"
+      }
+    },
+    "MetaFlowAssetType": {
+      "base": null,
+      "refs": {
+        "MetaFlowAsset$assetType": "<p>The type of asset. Currently the only supported value is FLOW_JSON.</p>"
+      }
+    },
+    "MetaFlowCategory": {
+      "base": "<p>The category that classifies the business purpose of a WhatsApp Flow.</p>",
+      "refs": {
+        "MetaFlowCategoryList$member": null
+      }
+    },
+    "MetaFlowCategoryList": {
+      "base": null,
+      "refs": {
+        "CreateWhatsAppFlowInput$categories": "<p>The categories that classify the business purpose of the Flow. At least one category is required.</p>",
+        "GetWhatsAppFlowOutput$categories": "<p>The categories that classify the business purpose of the Flow.</p>",
+        "MetaFlowSummary$flowCategories": "<p>The categories that classify the business purpose of the Flow.</p>",
+        "UpdateWhatsAppFlowInput$categories": "<p>The updated categories for the Flow.</p>"
+      }
+    },
+    "MetaFlowDataApiVersion": {
+      "base": null,
+      "refs": {
+        "GetWhatsAppFlowOutput$dataApiVersion": "<p>The data API version for data exchange endpoint Flows.</p>"
+      }
+    },
+    "MetaFlowEndpointUri": {
+      "base": null,
+      "refs": {
+        "GetWhatsAppFlowOutput$endpointUri": "<p>The endpoint URI for data exchange Flows, if configured.</p>"
+      }
+    },
+    "MetaFlowHealthEntity": {
+      "base": "<p>Represents a single entity in the health status check for a WhatsApp Flow.</p>",
+      "refs": {
+        "MetaFlowHealthEntityList$member": null
+      }
+    },
+    "MetaFlowHealthEntityList": {
+      "base": null,
+      "refs": {
+        "MetaFlowHealthStatus$entities": "<p>A list of health status entities with per-entity availability information.</p>"
+      }
+    },
+    "MetaFlowHealthEntityType": {
+      "base": null,
+      "refs": {
+        "MetaFlowHealthEntity$entityType": "<p>The type of entity (for example, FLOW, WABA, BUSINESS, or APP).</p>"
+      }
+    },
+    "MetaFlowHealthStatus": {
+      "base": "<p>Contains the overall health status and per-entity breakdown for a WhatsApp Flow.</p>",
+      "refs": {
+        "GetWhatsAppFlowOutput$healthStatus": "<p>The health status information for this Flow from Meta.</p>"
+      }
+    },
+    "MetaFlowHealthStatusAvailability": {
+      "base": null,
+      "refs": {
+        "MetaFlowHealthEntity$canSendMessage": "<p>The messaging availability status for this entity (for example, AVAILABLE, LIMITED, or BLOCKED).</p>",
+        "MetaFlowHealthStatus$canSendMessage": "<p>The overall messaging availability status (for example, AVAILABLE, LIMITED, or BLOCKED).</p>"
+      }
+    },
+    "MetaFlowId": {
+      "base": null,
+      "refs": {
+        "CreateWhatsAppFlowInput$cloneFlowId": "<p>The ID of an existing Flow within the same WhatsApp Business Account to clone.</p>",
+        "CreateWhatsAppFlowOutput$flowId": "<p>The unique identifier assigned to the Flow by Meta.</p>",
+        "DeleteWhatsAppFlowInput$flowId": "<p>The unique identifier of the Flow to delete.</p>",
+        "DeprecateWhatsAppFlowInput$flowId": "<p>The unique identifier of the Flow to deprecate.</p>",
+        "GetWhatsAppFlowInput$flowId": "<p>The unique identifier of the Flow to retrieve.</p>",
+        "GetWhatsAppFlowOutput$flowId": "<p>The unique identifier of the Flow.</p>",
+        "GetWhatsAppFlowPreviewInput$flowId": "<p>The unique identifier of the Flow to preview.</p>",
+        "GetWhatsAppFlowPreviewOutput$flowId": "<p>The unique identifier of the Flow.</p>",
+        "ListWhatsAppFlowAssetsInput$flowId": "<p>The unique identifier of the Flow whose assets to list.</p>",
+        "MetaFlowSummary$flowId": "<p>The unique identifier of the Flow assigned by Meta.</p>",
+        "PublishWhatsAppFlowInput$flowId": "<p>The unique identifier of the Flow to publish.</p>",
+        "UpdateWhatsAppFlowAssetsInput$flowId": "<p>The unique identifier of the Flow whose assets to update.</p>",
+        "UpdateWhatsAppFlowInput$flowId": "<p>The unique identifier of the Flow to update.</p>"
+      }
+    },
+    "MetaFlowJsonBlob": {
+      "base": null,
+      "refs": {
+        "CreateWhatsAppFlowInput$flowJson": "<p>The Flow JSON definition that describes the screens, components, and logic of the Flow. Maximum size is 10 MB.</p>",
+        "UpdateWhatsAppFlowAssetsInput$flowJson": "<p>The updated Flow JSON definition. Maximum size is 10 MB.</p>"
+      }
+    },
+    "MetaFlowJsonVersion": {
+      "base": null,
+      "refs": {
+        "GetWhatsAppFlowOutput$jsonVersion": "<p>The version of the Flow JSON schema used by this Flow (for example, 7.3).</p>"
+      }
+    },
+    "MetaFlowName": {
+      "base": null,
+      "refs": {
+        "CreateWhatsAppFlowInput$flowName": "<p>The name of the Flow. Must be unique within the WhatsApp Business Account.</p>",
+        "GetWhatsAppFlowOutput$flowName": "<p>The name of the Flow.</p>",
+        "MetaFlowSummary$flowName": "<p>The name of the Flow.</p>",
+        "UpdateWhatsAppFlowInput$flowName": "<p>The updated name for the Flow.</p>"
+      }
+    },
+    "MetaFlowPreviewInfo": {
+      "base": "<p>Contains the preview URL for testing a WhatsApp Flow and its expiration timestamp.</p>",
+      "refs": {
+        "GetWhatsAppFlowOutput$preview": "<p>The preview URL and its expiration timestamp for testing the Flow.</p>",
+        "GetWhatsAppFlowPreviewOutput$preview": "<p>The preview URL and its expiration timestamp.</p>"
+      }
+    },
+    "MetaFlowPreviewUrl": {
+      "base": null,
+      "refs": {
+        "MetaFlowPreviewInfo$previewUrl": "<p>The web URL for previewing the Flow. Can be shared with stakeholders for review.</p>"
+      }
+    },
+    "MetaFlowStatus": {
+      "base": null,
+      "refs": {
+        "GetWhatsAppFlowOutput$flowStatus": "<p>The lifecycle status of the Flow. Valid values are DRAFT, PUBLISHED, DEPRECATED, BLOCKED, and THROTTLED.</p>",
+        "MetaFlowSummary$flowStatus": "<p>The lifecycle status of the Flow (DRAFT, PUBLISHED, DEPRECATED, BLOCKED, or THROTTLED).</p>"
+      }
+    },
+    "MetaFlowSummary": {
+      "base": "<p>Contains summary information about a WhatsApp Flow, including its ID, name, status, and categories.</p>",
+      "refs": {
+        "MetaFlowSummaryList$member": null
+      }
+    },
+    "MetaFlowSummaryList": {
+      "base": null,
+      "refs": {
+        "ListWhatsAppFlowsOutput$flows": "<p>A list of Flow summaries.</p>"
+      }
+    },
+    "MetaFlowTimestamp": {
+      "base": null,
+      "refs": {
+        "MetaFlowPreviewInfo$expiresAt": "<p>The timestamp when the preview URL expires.</p>"
+      }
+    },
+    "MetaFlowValidationError": {
+      "base": null,
+      "refs": {
+        "ValidationErrorList$member": null
+      }
+    },
+    "MetaFlowWabaCurrency": {
+      "base": null,
+      "refs": {
+        "MetaFlowWhatsAppBusinessAccountInfo$currency": "<p>The currency code for the WhatsApp Business Account (for example, USD).</p>"
+      }
+    },
+    "MetaFlowWabaTemplateNamespace": {
+      "base": null,
+      "refs": {
+        "MetaFlowWhatsAppBusinessAccountInfo$messageTemplateNamespace": "<p>The message template namespace for the WhatsApp Business Account.</p>"
+      }
+    },
+    "MetaFlowWabaTimezoneId": {
+      "base": null,
+      "refs": {
+        "MetaFlowWhatsAppBusinessAccountInfo$timezoneId": "<p>The timezone ID for the WhatsApp Business Account.</p>"
+      }
+    },
+    "MetaFlowWhatsAppBusinessAccountInfo": {
+      "base": "<p>Contains WhatsApp Business Account metadata associated with a Flow, as returned by Meta.</p>",
+      "refs": {
+        "GetWhatsAppFlowOutput$whatsAppBusinessAccount": "<p>The WhatsApp Business Account information from Meta associated with this Flow.</p>"
       }
     },
     "MetaIndustries": {
@@ -508,19 +809,23 @@
     "MetaTemplateLanguage": {
       "base": null,
       "refs": {
+        "GetWhatsAppMessageTemplateInput$templateLanguageCode": "<p>The language code of the message template (for example, <code>en</code> or <code>en_US</code>). Use together with <code>templateName</code> as an alternative to <code>metaTemplateId</code> to identify a template.</p>",
         "MetaLibraryTemplate$templateLanguage": "<p>The language code for the template (for example, en_US).</p>",
         "MetaLibraryTemplateDefinition$templateLanguage": "<p>The language code for the template (for example, en_US).</p>",
-        "TemplateSummary$templateLanguage": "<p>The language code of the template (for example, en_US).</p>"
+        "TemplateSummary$templateLanguage": "<p>The language code of the template (for example, en_US).</p>",
+        "UpdateWhatsAppMessageTemplateInput$templateLanguageCode": "<p>The language code of the message template (for example, <code>en</code> or <code>en_US</code>). Use together with <code>templateName</code> as an alternative to <code>metaTemplateId</code> to identify a template.</p>"
       }
     },
     "MetaTemplateName": {
       "base": null,
       "refs": {
         "DeleteWhatsAppMessageTemplateInput$templateName": "<p>The name of the template to delete.</p>",
+        "GetWhatsAppMessageTemplateInput$templateName": "<p>The name of the message template. Use together with <code>templateLanguageCode</code> as an alternative to <code>metaTemplateId</code> to identify a template.</p>",
         "MetaLibraryTemplate$templateName": "<p>The name to assign to the template.</p>",
         "MetaLibraryTemplate$libraryTemplateName": "<p>The name of the template in Meta's library.</p>",
         "MetaLibraryTemplateDefinition$templateName": "<p>The name of the template.</p>",
-        "TemplateSummary$templateName": "<p>The name of the template.</p>"
+        "TemplateSummary$templateName": "<p>The name of the template.</p>",
+        "UpdateWhatsAppMessageTemplateInput$templateName": "<p>The name of the message template. Use together with <code>templateLanguageCode</code> as an alternative to <code>metaTemplateId</code> to identify a template.</p>"
       }
     },
     "MetaTemplateQualityScore": {
@@ -582,6 +887,10 @@
       "refs": {
         "ListLinkedWhatsAppBusinessAccountsInput$nextToken": "<p>The next token for pagination.</p>",
         "ListLinkedWhatsAppBusinessAccountsOutput$nextToken": "<p>The next token for pagination.</p>",
+        "ListWhatsAppFlowAssetsInput$nextToken": "<p>The token for the next page of results.</p>",
+        "ListWhatsAppFlowAssetsOutput$nextToken": "<p>The token to retrieve the next page of results, if any.</p>",
+        "ListWhatsAppFlowsInput$nextToken": "<p>The token for the next page of results.</p>",
+        "ListWhatsAppFlowsOutput$nextToken": "<p>The token to retrieve the next page of results, if any.</p>",
         "ListWhatsAppMessageTemplatesInput$nextToken": "<p>The token for the next page of results.</p>",
         "ListWhatsAppMessageTemplatesOutput$nextToken": "<p>The token to retrieve the next page of results, if any.</p>",
         "ListWhatsAppTemplateLibraryInput$nextToken": "<p>The token for the next page of results.</p>",
@@ -609,6 +918,14 @@
       "refs": {}
     },
     "PostWhatsAppMessageMediaOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "PublishWhatsAppFlowInput": {
+      "base": null,
+      "refs": {}
+    },
+    "PublishWhatsAppFlowOutput": {
       "base": null,
       "refs": {}
     },
@@ -688,6 +1005,7 @@
         "GetWhatsAppMessageMediaOutput$mimeType": "<p>The MIME type of the media.</p>",
         "Headers$key": null,
         "Headers$value": null,
+        "MetaFlowHealthEntity$id": "<p>The unique identifier of the entity.</p>",
         "MetaTemplateBodyExampleParams$member": null,
         "SendWhatsAppMessageInput$metaApiVersion": "<p>The API version for the request formatted as <code>v{VersionNumber}</code>. For a list of supported API versions and Amazon Web Services Regions, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/end-user-messaging.html\"> <i>Amazon Web Services End User Messaging Social API</i> Service Endpoints</a> in the <i>Amazon Web Services General Reference</i>.</p>",
         "SendWhatsAppMessageOutput$messageId": "<p>The unique identifier of the message.</p>",
@@ -790,6 +1108,22 @@
       "base": null,
       "refs": {}
     },
+    "UpdateWhatsAppFlowAssetsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateWhatsAppFlowAssetsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateWhatsAppFlowInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateWhatsAppFlowOutput": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateWhatsAppMessageTemplateInput": {
       "base": null,
       "refs": {}
@@ -797,6 +1131,15 @@
     "UpdateWhatsAppMessageTemplateOutput": {
       "base": null,
       "refs": {}
+    },
+    "ValidationErrorList": {
+      "base": null,
+      "refs": {
+        "CreateWhatsAppFlowOutput$validationErrors": "<p>A list of validation errors returned by Meta, if any. Validation errors must be resolved before the Flow can be published.</p>",
+        "GetWhatsAppFlowOutput$validationErrors": "<p>A list of validation errors from Meta, if any.</p>",
+        "MetaFlowSummary$validationErrors": "<p>A list of validation errors from Meta, if any.</p>",
+        "UpdateWhatsAppFlowAssetsOutput$validationErrors": "<p>A list of validation errors returned by Meta, if any. Validation errors must be resolved before the Flow can be published.</p>"
+      }
     },
     "ValidationException": {
       "base": "<p>The request contains an invalid parameter value. </p>",
@@ -841,6 +1184,7 @@
         "LinkedAccountWithIncompleteSetup$key": null,
         "LinkedWhatsAppBusinessAccount$wabaId": "<p>The WhatsApp Business Account ID from meta.</p>",
         "LinkedWhatsAppBusinessAccountSummary$wabaId": "<p>The WhatsApp Business Account ID provided by Meta.</p>",
+        "MetaFlowWhatsAppBusinessAccountInfo$id": "<p>The WhatsApp Business Account ID from Meta.</p>",
         "WabaSetupFinalization$id": "<p>The ID of the linked WhatsApp Business Account, formatted as <code>waba-01234567890123456789012345678901</code>.</p>"
       }
     },
@@ -851,12 +1195,20 @@
         "LinkedWhatsAppBusinessAccountSummary$linkDate": "<p>The date the WhatsApp Business Account was linked.</p>"
       }
     },
+    "WhatsAppBusinessAccountMarketingMessagesOnboardingStatus": {
+      "base": null,
+      "refs": {
+        "LinkedWhatsAppBusinessAccount$marketingMessagesOnboardingStatus": "<p>The onboarding status for the Marketing Messages API. This value is fetched from Meta and indicates whether the WhatsApp Business Account is onboarded for Meta's Marketing Messages API.</p>",
+        "LinkedWhatsAppBusinessAccountSummary$marketingMessagesOnboardingStatus": "<p>The onboarding status for the Marketing Messages API. This value is fetched from Meta and indicates whether the WhatsApp Business Account is onboarded for Meta's Marketing Messages API.</p>"
+      }
+    },
     "WhatsAppBusinessAccountName": {
       "base": null,
       "refs": {
         "LinkedWhatsAppBusinessAccount$wabaName": "<p>The name of the linked WhatsApp Business Account.</p>",
         "LinkedWhatsAppBusinessAccountIdMetaData$accountName": "<p>The name of your account.</p>",
-        "LinkedWhatsAppBusinessAccountSummary$wabaName": "<p>The name of the linked WhatsApp Business Account.</p>"
+        "LinkedWhatsAppBusinessAccountSummary$wabaName": "<p>The name of the linked WhatsApp Business Account.</p>",
+        "MetaFlowWhatsAppBusinessAccountInfo$name": "<p>The name of the WhatsApp Business Account.</p>"
       }
     },
     "WhatsAppDisplayPhoneNumber": {

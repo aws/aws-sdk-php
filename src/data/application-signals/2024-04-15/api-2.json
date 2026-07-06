@@ -13,6 +13,20 @@
     "uid":"application-signals-2024-04-15"
   },
   "operations":{
+    "BatchDeleteInstrumentationConfigurations":{
+      "name":"BatchDeleteInstrumentationConfigurations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/batch-delete-instrumentation-configurations",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchDeleteInstrumentationConfigurationsRequest"},
+      "output":{"shape":"BatchDeleteInstrumentationConfigurationsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "BatchGetServiceLevelObjectiveBudgetReport":{
       "name":"BatchGetServiceLevelObjectiveBudgetReport",
       "http":{
@@ -40,6 +54,22 @@
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
+      ]
+    },
+    "CreateInstrumentationConfiguration":{
+      "name":"CreateInstrumentationConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/create-instrumentation-configuration",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateInstrumentationConfigurationRequest"},
+      "output":{"shape":"CreateInstrumentationConfigurationResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"}
       ]
     },
     "CreateServiceLevelObjective":{
@@ -74,6 +104,21 @@
       ],
       "idempotent":true
     },
+    "DeleteInstrumentationConfiguration":{
+      "name":"DeleteInstrumentationConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/delete-instrumentation-configuration",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteInstrumentationConfigurationRequest"},
+      "output":{"shape":"DeleteInstrumentationConfigurationResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "DeleteServiceLevelObjective":{
       "name":"DeleteServiceLevelObjective",
       "http":{
@@ -89,6 +134,37 @@
         {"shape":"ThrottlingException"}
       ],
       "idempotent":true
+    },
+    "GetInstrumentationConfiguration":{
+      "name":"GetInstrumentationConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/get-instrumentation-configuration",
+        "responseCode":200
+      },
+      "input":{"shape":"GetInstrumentationConfigurationRequest"},
+      "output":{"shape":"GetInstrumentationConfigurationResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "GetInstrumentationConfigurationStatus":{
+      "name":"GetInstrumentationConfigurationStatus",
+      "http":{
+        "method":"POST",
+        "requestUri":"/get-instrumentation-configuration-status",
+        "responseCode":200
+      },
+      "input":{"shape":"GetInstrumentationConfigurationStatusRequest"},
+      "output":{"shape":"GetInstrumentationConfigurationStatusResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
     },
     "GetService":{
       "name":"GetService",
@@ -166,6 +242,21 @@
         {"shape":"AccessDeniedException"}
       ],
       "readonly":true
+    },
+    "ListInstrumentationConfigurations":{
+      "name":"ListInstrumentationConfigurations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/list-instrumentation-configurations",
+        "responseCode":200
+      },
+      "input":{"shape":"ListInstrumentationConfigurationsRequest"},
+      "output":{"shape":"InstrumentationConfigurationsPage"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
     },
     "ListServiceDependencies":{
       "name":"ListServiceDependencies",
@@ -300,6 +391,21 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
+    "ReportInstrumentationConfigurationStatus":{
+      "name":"ReportInstrumentationConfigurationStatus",
+      "http":{
+        "method":"POST",
+        "requestUri":"/report-instrumentation-configuration-status",
+        "responseCode":200
+      },
+      "input":{"shape":"ReportInstrumentationConfigurationStatusRequest"},
+      "output":{"shape":"ReportInstrumentationConfigurationStatusResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
       ],
       "idempotent":true
     },
@@ -513,6 +619,118 @@
       "type":"string",
       "pattern":"[0-9]{12}"
     },
+    "BatchDeleteByResourceArns":{
+      "type":"structure",
+      "required":[
+        "ResourceArns",
+        "InstrumentationType"
+      ],
+      "members":{
+        "ResourceArns":{"shape":"BatchDeleteByResourceArnsResourceArnsList"},
+        "InstrumentationType":{"shape":"InstrumentationType"}
+      }
+    },
+    "BatchDeleteByResourceArnsResourceArnsList":{
+      "type":"list",
+      "member":{"shape":"BatchDeleteByResourceArnsResourceArnsListMemberString"},
+      "max":50,
+      "min":1
+    },
+    "BatchDeleteByResourceArnsResourceArnsListMemberString":{
+      "type":"string",
+      "max":2048,
+      "min":20
+    },
+    "BatchDeleteDeletionTarget":{
+      "type":"structure",
+      "members":{
+        "Scope":{"shape":"BatchDeleteScope"},
+        "ResourceArns":{"shape":"BatchDeleteByResourceArns"}
+      },
+      "union":true
+    },
+    "BatchDeleteError":{
+      "type":"structure",
+      "required":[
+        "ResourceArn",
+        "Code",
+        "Message"
+      ],
+      "members":{
+        "ResourceArn":{"shape":"String"},
+        "Code":{"shape":"BatchDeleteErrorCode"},
+        "Message":{"shape":"String"}
+      }
+    },
+    "BatchDeleteErrorCode":{
+      "type":"string",
+      "enum":[
+        "ResourceNotFoundException",
+        "AccessDeniedException",
+        "InternalServiceException"
+      ]
+    },
+    "BatchDeleteErrorList":{
+      "type":"list",
+      "member":{"shape":"BatchDeleteError"}
+    },
+    "BatchDeleteInstrumentationConfigurationsRequest":{
+      "type":"structure",
+      "required":["DeletionTarget"],
+      "members":{
+        "DeletionTarget":{"shape":"BatchDeleteDeletionTarget"}
+      }
+    },
+    "BatchDeleteInstrumentationConfigurationsResponse":{
+      "type":"structure",
+      "required":[
+        "DeletedCount",
+        "SuccessfulDeletions",
+        "Errors"
+      ],
+      "members":{
+        "DeletedCount":{"shape":"Integer"},
+        "SuccessfulDeletions":{"shape":"BatchDeleteSuccessfulDeletionList"},
+        "Errors":{"shape":"BatchDeleteErrorList"}
+      }
+    },
+    "BatchDeleteScope":{
+      "type":"structure",
+      "required":[
+        "Service",
+        "Environment",
+        "InstrumentationType"
+      ],
+      "members":{
+        "Service":{"shape":"BatchDeleteScopeServiceString"},
+        "Environment":{"shape":"BatchDeleteScopeEnvironmentString"},
+        "InstrumentationType":{"shape":"InstrumentationType"}
+      }
+    },
+    "BatchDeleteScopeEnvironmentString":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[A-Za-z0-9:/+=,.@_-]+"
+    },
+    "BatchDeleteScopeServiceString":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[A-Za-z0-9:/+=,.@_-]+"
+    },
+    "BatchDeleteSuccessfulDeletion":{
+      "type":"structure",
+      "members":{
+        "ResourceArn":{"shape":"String"},
+        "SignalType":{"shape":"String"},
+        "LocationHash":{"shape":"String"}
+      }
+    },
+    "BatchDeleteSuccessfulDeletionList":{
+      "type":"list",
+      "member":{"shape":"BatchDeleteSuccessfulDeletion"}
+    },
     "BatchGetServiceLevelObjectiveBudgetReportInput":{
       "type":"structure",
       "required":[
@@ -632,6 +850,74 @@
         "CanaryName":{"shape":"String"}
       }
     },
+    "CaptureConfiguration":{
+      "type":"structure",
+      "members":{
+        "CodeCapture":{"shape":"CodeCaptureConfiguration"}
+      },
+      "union":true
+    },
+    "CaptureLimitsConfig":{
+      "type":"structure",
+      "members":{
+        "MaxHits":{"shape":"CaptureLimitsConfigMaxHitsInteger"},
+        "MaxStringLength":{"shape":"CaptureLimitsConfigMaxStringLengthInteger"},
+        "MaxCollectionWidth":{"shape":"CaptureLimitsConfigMaxCollectionWidthInteger"},
+        "MaxCollectionDepth":{"shape":"CaptureLimitsConfigMaxCollectionDepthInteger"},
+        "MaxStackFrames":{"shape":"CaptureLimitsConfigMaxStackFramesInteger"},
+        "MaxStackTraceSize":{"shape":"CaptureLimitsConfigMaxStackTraceSizeInteger"},
+        "MaxObjectDepth":{"shape":"CaptureLimitsConfigMaxObjectDepthInteger"},
+        "MaxFieldsPerObject":{"shape":"CaptureLimitsConfigMaxFieldsPerObjectInteger"}
+      }
+    },
+    "CaptureLimitsConfigMaxCollectionDepthInteger":{
+      "type":"integer",
+      "box":true,
+      "max":5,
+      "min":1
+    },
+    "CaptureLimitsConfigMaxCollectionWidthInteger":{
+      "type":"integer",
+      "box":true,
+      "max":20,
+      "min":1
+    },
+    "CaptureLimitsConfigMaxFieldsPerObjectInteger":{
+      "type":"integer",
+      "box":true,
+      "max":20,
+      "min":1
+    },
+    "CaptureLimitsConfigMaxHitsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
+    "CaptureLimitsConfigMaxObjectDepthInteger":{
+      "type":"integer",
+      "box":true,
+      "max":5,
+      "min":1
+    },
+    "CaptureLimitsConfigMaxStackFramesInteger":{
+      "type":"integer",
+      "box":true,
+      "max":20,
+      "min":1
+    },
+    "CaptureLimitsConfigMaxStackTraceSizeInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
+    "CaptureLimitsConfigMaxStringLengthInteger":{
+      "type":"integer",
+      "box":true,
+      "max":255,
+      "min":1
+    },
     "ChangeEvent":{
       "type":"structure",
       "required":[
@@ -665,6 +951,79 @@
       "member":{"shape":"ChangeEvent"},
       "max":250,
       "min":0
+    },
+    "CodeCaptureConfiguration":{
+      "type":"structure",
+      "required":["CaptureLimits"],
+      "members":{
+        "CaptureArguments":{"shape":"CodeCaptureConfigurationCaptureArgumentsList"},
+        "CaptureReturn":{"shape":"Boolean"},
+        "CaptureStackTrace":{"shape":"Boolean"},
+        "CaptureLocals":{"shape":"CodeCaptureConfigurationCaptureLocalsList"},
+        "CaptureLimits":{"shape":"CaptureLimitsConfig"}
+      }
+    },
+    "CodeCaptureConfigurationCaptureArgumentsList":{
+      "type":"list",
+      "member":{"shape":"CodeCaptureConfigurationCaptureArgumentsListMemberString"},
+      "max":10,
+      "min":0
+    },
+    "CodeCaptureConfigurationCaptureArgumentsListMemberString":{
+      "type":"string",
+      "max":80,
+      "min":1
+    },
+    "CodeCaptureConfigurationCaptureLocalsList":{
+      "type":"list",
+      "member":{"shape":"CodeCaptureConfigurationCaptureLocalsListMemberString"},
+      "max":20,
+      "min":0
+    },
+    "CodeCaptureConfigurationCaptureLocalsListMemberString":{
+      "type":"string",
+      "max":80,
+      "min":1
+    },
+    "CodeLocation":{
+      "type":"structure",
+      "required":[
+        "Language",
+        "FilePath"
+      ],
+      "members":{
+        "Language":{"shape":"ProgrammingLanguage"},
+        "CodeUnit":{"shape":"CodeLocationCodeUnitString"},
+        "ClassName":{"shape":"CodeLocationClassNameString"},
+        "MethodName":{"shape":"CodeLocationMethodNameString"},
+        "FilePath":{"shape":"CodeLocationFilePathString"},
+        "LineNumber":{"shape":"CodeLocationLineNumberInteger"}
+      }
+    },
+    "CodeLocationClassNameString":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "CodeLocationCodeUnitString":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "CodeLocationFilePathString":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "CodeLocationLineNumberInteger":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
+    "CodeLocationMethodNameString":{
+      "type":"string",
+      "max":80,
+      "min":1
     },
     "CompositeSliComponent":{
       "type":"structure",
@@ -706,6 +1065,89 @@
         "DIRECT"
       ]
     },
+    "CreateInstrumentationConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "InstrumentationType",
+        "Service",
+        "Environment",
+        "SignalType",
+        "Location",
+        "CaptureConfiguration"
+      ],
+      "members":{
+        "InstrumentationType":{"shape":"InstrumentationType"},
+        "Service":{"shape":"CreateInstrumentationConfigurationRequestServiceString"},
+        "Environment":{"shape":"CreateInstrumentationConfigurationRequestEnvironmentString"},
+        "SignalType":{"shape":"DynamicInstrumentationSignalType"},
+        "Location":{"shape":"Location"},
+        "Description":{"shape":"CreateInstrumentationConfigurationRequestDescriptionString"},
+        "ExpiresAt":{"shape":"Timestamp"},
+        "AttributeFilters":{"shape":"DynamicInstrumentationAttributeFilters"},
+        "CaptureConfiguration":{"shape":"CaptureConfiguration"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateInstrumentationConfigurationRequestDescriptionString":{
+      "type":"string",
+      "max":50,
+      "min":1
+    },
+    "CreateInstrumentationConfigurationRequestEnvironmentString":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[A-Za-z0-9:/+=,.@_-]+"
+    },
+    "CreateInstrumentationConfigurationRequestServiceString":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[A-Za-z0-9:/+=,.@_-]+"
+    },
+    "CreateInstrumentationConfigurationResponse":{
+      "type":"structure",
+      "required":[
+        "InstrumentationType",
+        "Service",
+        "Environment",
+        "SignalType",
+        "Location",
+        "LocationHash",
+        "CaptureConfiguration",
+        "CreatedAt",
+        "ARN"
+      ],
+      "members":{
+        "InstrumentationType":{"shape":"InstrumentationType"},
+        "Service":{"shape":"CreateInstrumentationConfigurationResponseServiceString"},
+        "Environment":{"shape":"CreateInstrumentationConfigurationResponseEnvironmentString"},
+        "SignalType":{"shape":"DynamicInstrumentationSignalType"},
+        "Location":{"shape":"Location"},
+        "LocationHash":{"shape":"CreateInstrumentationConfigurationResponseLocationHashString"},
+        "Description":{"shape":"String"},
+        "ExpiresAt":{"shape":"Timestamp"},
+        "AttributeFilters":{"shape":"DynamicInstrumentationAttributeFilters"},
+        "CaptureConfiguration":{"shape":"CaptureConfiguration"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "ARN":{"shape":"InstrumentationConfigurationArn"}
+      }
+    },
+    "CreateInstrumentationConfigurationResponseEnvironmentString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "CreateInstrumentationConfigurationResponseLocationHashString":{
+      "type":"string",
+      "max":16,
+      "min":16
+    },
+    "CreateInstrumentationConfigurationResponseServiceString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
     "CreateServiceLevelObjectiveInput":{
       "type":"structure",
       "required":["Name"],
@@ -736,6 +1178,40 @@
     "DeleteGroupingConfigurationOutput":{
       "type":"structure",
       "members":{}
+    },
+    "DeleteInstrumentationConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "InstrumentationType",
+        "Service",
+        "Environment",
+        "SignalType",
+        "LocationIdentifier"
+      ],
+      "members":{
+        "InstrumentationType":{"shape":"InstrumentationType"},
+        "Service":{"shape":"DeleteInstrumentationConfigurationRequestServiceString"},
+        "Environment":{"shape":"DeleteInstrumentationConfigurationRequestEnvironmentString"},
+        "SignalType":{"shape":"DynamicInstrumentationSignalType"},
+        "LocationIdentifier":{"shape":"LocationIdentifier"}
+      }
+    },
+    "DeleteInstrumentationConfigurationRequestEnvironmentString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "DeleteInstrumentationConfigurationRequestServiceString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "DeleteInstrumentationConfigurationResponse":{
+      "type":"structure",
+      "required":["DeletionStatus"],
+      "members":{
+        "DeletionStatus":{"shape":"DynamicInstrumentationDeletionStatus"}
+      }
     },
     "DeleteServiceLevelObjectiveInput":{
       "type":"structure",
@@ -817,6 +1293,35 @@
         "MONTH"
       ]
     },
+    "DynamicInstrumentationAttributeFilterGroup":{
+      "type":"map",
+      "key":{"shape":"DynamicInstrumentationAttributeFilterGroupKeyString"},
+      "value":{"shape":"DynamicInstrumentationAttributeFilterGroupValueString"}
+    },
+    "DynamicInstrumentationAttributeFilterGroupKeyString":{
+      "type":"string",
+      "max":50,
+      "min":1
+    },
+    "DynamicInstrumentationAttributeFilterGroupValueString":{
+      "type":"string",
+      "max":100,
+      "min":1
+    },
+    "DynamicInstrumentationAttributeFilters":{
+      "type":"list",
+      "member":{"shape":"DynamicInstrumentationAttributeFilterGroup"},
+      "max":10,
+      "min":1
+    },
+    "DynamicInstrumentationDeletionStatus":{
+      "type":"string",
+      "enum":["DELETED"]
+    },
+    "DynamicInstrumentationSignalType":{
+      "type":"string",
+      "enum":["SNAPSHOT"]
+    },
     "Edge":{
       "type":"structure",
       "members":{
@@ -871,6 +1376,108 @@
       "min":1
     },
     "FaultDescription":{"type":"string"},
+    "GetInstrumentationConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "InstrumentationType",
+        "Service",
+        "Environment",
+        "SignalType",
+        "LocationIdentifier"
+      ],
+      "members":{
+        "InstrumentationType":{"shape":"InstrumentationType"},
+        "Service":{"shape":"GetInstrumentationConfigurationRequestServiceString"},
+        "Environment":{"shape":"GetInstrumentationConfigurationRequestEnvironmentString"},
+        "SignalType":{"shape":"DynamicInstrumentationSignalType"},
+        "LocationIdentifier":{"shape":"LocationIdentifier"}
+      }
+    },
+    "GetInstrumentationConfigurationRequestEnvironmentString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "GetInstrumentationConfigurationRequestServiceString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "GetInstrumentationConfigurationResponse":{
+      "type":"structure",
+      "required":["Configuration"],
+      "members":{
+        "Configuration":{"shape":"InstrumentationConfiguration"}
+      }
+    },
+    "GetInstrumentationConfigurationStatusRequest":{
+      "type":"structure",
+      "required":[
+        "InstrumentationType",
+        "Service",
+        "Environment",
+        "SignalType",
+        "LocationIdentifier"
+      ],
+      "members":{
+        "InstrumentationType":{"shape":"InstrumentationType"},
+        "Service":{"shape":"GetInstrumentationConfigurationStatusRequestServiceString"},
+        "Environment":{"shape":"GetInstrumentationConfigurationStatusRequestEnvironmentString"},
+        "SignalType":{"shape":"DynamicInstrumentationSignalType"},
+        "LocationIdentifier":{"shape":"LocationIdentifier"},
+        "Status":{"shape":"InstrumentationConfigurationStatus"},
+        "StartTime":{"shape":"Timestamp"},
+        "EndTime":{"shape":"Timestamp"},
+        "MaxResults":{"shape":"GetInstrumentationConfigurationStatusRequestMaxResultsInteger"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "GetInstrumentationConfigurationStatusRequestEnvironmentString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "GetInstrumentationConfigurationStatusRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "GetInstrumentationConfigurationStatusRequestServiceString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "GetInstrumentationConfigurationStatusResponse":{
+      "type":"structure",
+      "required":[
+        "Service",
+        "Environment",
+        "SignalType",
+        "Location",
+        "Status",
+        "Events"
+      ],
+      "members":{
+        "Service":{"shape":"GetInstrumentationConfigurationStatusResponseServiceString"},
+        "Environment":{"shape":"GetInstrumentationConfigurationStatusResponseEnvironmentString"},
+        "SignalType":{"shape":"DynamicInstrumentationSignalType"},
+        "Location":{"shape":"Location"},
+        "Status":{"shape":"InstrumentationConfigurationStatus"},
+        "Events":{"shape":"InstrumentationStatusEventList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "GetInstrumentationConfigurationStatusResponseEnvironmentString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "GetInstrumentationConfigurationStatusResponseServiceString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
     "GetServiceInput":{
       "type":"structure",
       "required":[
@@ -985,6 +1592,196 @@
       "max":128,
       "min":1,
       "pattern":"[a-zA-Z0-9\\s+\\-=\\._:/@]*"
+    },
+    "InstrumentationConfiguration":{
+      "type":"structure",
+      "required":[
+        "InstrumentationType",
+        "Service",
+        "Environment",
+        "SignalType",
+        "Location",
+        "LocationHash",
+        "CaptureConfiguration",
+        "CreatedAt",
+        "ARN"
+      ],
+      "members":{
+        "InstrumentationType":{"shape":"InstrumentationType"},
+        "Service":{"shape":"InstrumentationConfigurationServiceString"},
+        "Environment":{"shape":"InstrumentationConfigurationEnvironmentString"},
+        "SignalType":{"shape":"DynamicInstrumentationSignalType"},
+        "Location":{"shape":"Location"},
+        "LocationHash":{"shape":"InstrumentationConfigurationLocationHashString"},
+        "Description":{"shape":"InstrumentationConfigurationDescriptionString"},
+        "ExpiresAt":{"shape":"Timestamp"},
+        "AttributeFilters":{"shape":"DynamicInstrumentationAttributeFilters"},
+        "CaptureConfiguration":{"shape":"CaptureConfiguration"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "ARN":{"shape":"InstrumentationConfigurationArn"}
+      }
+    },
+    "InstrumentationConfigurationArn":{
+      "type":"string",
+      "pattern":"arn:[^:]+:application-signals:[^:]+:[0-9]{12}:instrumentationConfig/.+/[0-9a-f]{16}"
+    },
+    "InstrumentationConfigurationDescriptionString":{
+      "type":"string",
+      "max":50,
+      "min":1
+    },
+    "InstrumentationConfigurationEnvironmentString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "InstrumentationConfigurationLocationHashString":{
+      "type":"string",
+      "max":16,
+      "min":16
+    },
+    "InstrumentationConfigurationServiceString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "InstrumentationConfigurationStatus":{
+      "type":"string",
+      "enum":[
+        "READY",
+        "ERROR",
+        "ACTIVE",
+        "DISABLED"
+      ]
+    },
+    "InstrumentationConfigurationStatusReport":{
+      "type":"structure",
+      "required":[
+        "InstrumentationType",
+        "SignalType",
+        "LocationHash",
+        "Status",
+        "Time"
+      ],
+      "members":{
+        "InstrumentationType":{"shape":"InstrumentationType"},
+        "SignalType":{"shape":"DynamicInstrumentationSignalType"},
+        "LocationHash":{"shape":"InstrumentationConfigurationStatusReportLocationHashString"},
+        "Status":{"shape":"InstrumentationConfigurationStatus"},
+        "Time":{"shape":"Timestamp"},
+        "ErrorCause":{"shape":"InstrumentationErrorCause"}
+      }
+    },
+    "InstrumentationConfigurationStatusReportLocationHashString":{
+      "type":"string",
+      "max":16,
+      "min":16
+    },
+    "InstrumentationConfigurationWithoutServiceEnv":{
+      "type":"structure",
+      "required":[
+        "InstrumentationType",
+        "SignalType",
+        "Location",
+        "LocationHash",
+        "CaptureConfiguration",
+        "CreatedAt",
+        "ARN"
+      ],
+      "members":{
+        "InstrumentationType":{"shape":"InstrumentationType"},
+        "SignalType":{"shape":"DynamicInstrumentationSignalType"},
+        "Location":{"shape":"Location"},
+        "LocationHash":{"shape":"InstrumentationConfigurationWithoutServiceEnvLocationHashString"},
+        "Description":{"shape":"InstrumentationConfigurationWithoutServiceEnvDescriptionString"},
+        "ExpiresAt":{"shape":"Timestamp"},
+        "AttributeFilters":{"shape":"DynamicInstrumentationAttributeFilters"},
+        "CaptureConfiguration":{"shape":"CaptureConfiguration"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "ARN":{"shape":"InstrumentationConfigurationArn"}
+      }
+    },
+    "InstrumentationConfigurationWithoutServiceEnvDescriptionString":{
+      "type":"string",
+      "max":50,
+      "min":1
+    },
+    "InstrumentationConfigurationWithoutServiceEnvLocationHashString":{
+      "type":"string",
+      "max":16,
+      "min":16
+    },
+    "InstrumentationConfigurationsPage":{
+      "type":"structure",
+      "required":[
+        "Service",
+        "Environment",
+        "Changed",
+        "SyncedAt",
+        "SyncInterval"
+      ],
+      "members":{
+        "Service":{"shape":"InstrumentationConfigurationsPageServiceString"},
+        "Environment":{"shape":"InstrumentationConfigurationsPageEnvironmentString"},
+        "Changed":{"shape":"Boolean"},
+        "LatestConfigurations":{"shape":"InstrumentationConfigurationsWithoutServiceEnv"},
+        "SyncedAt":{"shape":"Timestamp"},
+        "SyncInterval":{"shape":"InstrumentationConfigurationsPageSyncIntervalInteger"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "InstrumentationConfigurationsPageEnvironmentString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "InstrumentationConfigurationsPageServiceString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "InstrumentationConfigurationsPageSyncIntervalInteger":{
+      "type":"integer",
+      "box":true,
+      "min":60
+    },
+    "InstrumentationConfigurationsWithoutServiceEnv":{
+      "type":"list",
+      "member":{"shape":"InstrumentationConfigurationWithoutServiceEnv"}
+    },
+    "InstrumentationErrorCause":{
+      "type":"string",
+      "enum":[
+        "FILE_NOT_FOUND",
+        "METHOD_NOT_FOUND",
+        "LINE_NOT_EXECUTABLE",
+        "OVERLOADED_METHODS",
+        "LANGUAGE_MISMATCH",
+        "RUNTIME_ERROR"
+      ]
+    },
+    "InstrumentationStatusEvent":{
+      "type":"structure",
+      "required":["Time"],
+      "members":{
+        "Time":{"shape":"Timestamp"},
+        "ErrorCause":{"shape":"InstrumentationErrorCause"}
+      }
+    },
+    "InstrumentationStatusEventList":{
+      "type":"list",
+      "member":{"shape":"InstrumentationStatusEvent"}
+    },
+    "InstrumentationType":{
+      "type":"string",
+      "enum":[
+        "BREAKPOINT",
+        "PROBE"
+      ]
+    },
+    "Integer":{
+      "type":"integer",
+      "box":true
     },
     "Interval":{
       "type":"structure",
@@ -1122,6 +1919,40 @@
         "UpdatedAt":{"shape":"Timestamp"},
         "NextToken":{"shape":"NextToken"}
       }
+    },
+    "ListInstrumentationConfigurationsRequest":{
+      "type":"structure",
+      "required":[
+        "Service",
+        "Environment",
+        "InstrumentationType"
+      ],
+      "members":{
+        "Service":{"shape":"ListInstrumentationConfigurationsRequestServiceString"},
+        "Environment":{"shape":"ListInstrumentationConfigurationsRequestEnvironmentString"},
+        "InstrumentationType":{"shape":"InstrumentationType"},
+        "SyncedAt":{"shape":"Timestamp"},
+        "MaxResults":{"shape":"ListInstrumentationConfigurationsRequestMaxResultsInteger"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListInstrumentationConfigurationsRequestEnvironmentString":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[A-Za-z0-9:/+=,.@_-]+"
+    },
+    "ListInstrumentationConfigurationsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListInstrumentationConfigurationsRequestServiceString":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[A-Za-z0-9:/+=,.@_-]+"
     },
     "ListServiceDependenciesInput":{
       "type":"structure",
@@ -1469,6 +2300,26 @@
         "Tags":{"shape":"TagList"}
       }
     },
+    "Location":{
+      "type":"structure",
+      "members":{
+        "CodeLocation":{"shape":"CodeLocation"}
+      },
+      "union":true
+    },
+    "LocationIdentifier":{
+      "type":"structure",
+      "members":{
+        "CodeLocation":{"shape":"CodeLocation"},
+        "LocationHash":{"shape":"LocationIdentifierLocationHashString"}
+      },
+      "union":true
+    },
+    "LocationIdentifierLocationHashString":{
+      "type":"string",
+      "max":16,
+      "min":16
+    },
     "LogGroupReferences":{
       "type":"list",
       "member":{"shape":"Attributes"}
@@ -1632,6 +2483,14 @@
       "box":true,
       "min":1
     },
+    "ProgrammingLanguage":{
+      "type":"string",
+      "enum":[
+        "Java",
+        "Python",
+        "Javascript"
+      ]
+    },
     "PutGroupingConfigurationInput":{
       "type":"structure",
       "required":["GroupingAttributeDefinitions"],
@@ -1652,6 +2511,58 @@
       "members":{
         "Expression":{"shape":"Expression"}
       }
+    },
+    "ReportInstrumentationConfigurationStatusRequest":{
+      "type":"structure",
+      "required":[
+        "Service",
+        "Environment",
+        "Configurations"
+      ],
+      "members":{
+        "Service":{"shape":"ReportInstrumentationConfigurationStatusRequestServiceString"},
+        "Environment":{"shape":"ReportInstrumentationConfigurationStatusRequestEnvironmentString"},
+        "Configurations":{"shape":"ReportInstrumentationConfigurationStatusRequestConfigurationsList"}
+      }
+    },
+    "ReportInstrumentationConfigurationStatusRequestConfigurationsList":{
+      "type":"list",
+      "member":{"shape":"InstrumentationConfigurationStatusReport"},
+      "max":100,
+      "min":1
+    },
+    "ReportInstrumentationConfigurationStatusRequestEnvironmentString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "ReportInstrumentationConfigurationStatusRequestServiceString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "ReportInstrumentationConfigurationStatusResponse":{
+      "type":"structure",
+      "required":[
+        "Service",
+        "Environment",
+        "UnprocessedStatusEvents"
+      ],
+      "members":{
+        "Service":{"shape":"ReportInstrumentationConfigurationStatusResponseServiceString"},
+        "Environment":{"shape":"ReportInstrumentationConfigurationStatusResponseEnvironmentString"},
+        "UnprocessedStatusEvents":{"shape":"UnprocessedStatusEventList"}
+      }
+    },
+    "ReportInstrumentationConfigurationStatusResponseEnvironmentString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "ReportInstrumentationConfigurationStatusResponseServiceString":{
+      "type":"string",
+      "max":255,
+      "min":1
     },
     "RequestBasedServiceLevelIndicator":{
       "type":"structure",
@@ -2261,6 +3172,42 @@
     "TotalBudgetSeconds":{
       "type":"integer",
       "box":true
+    },
+    "UnprocessedStatusEvent":{
+      "type":"structure",
+      "required":[
+        "InstrumentationType",
+        "SignalType",
+        "LocationHash",
+        "Status",
+        "Time",
+        "FailedReason"
+      ],
+      "members":{
+        "InstrumentationType":{"shape":"InstrumentationType"},
+        "SignalType":{"shape":"DynamicInstrumentationSignalType"},
+        "LocationHash":{"shape":"UnprocessedStatusEventLocationHashString"},
+        "Status":{"shape":"InstrumentationConfigurationStatus"},
+        "Time":{"shape":"Timestamp"},
+        "FailedReason":{"shape":"UnprocessedStatusEventFailureReason"}
+      }
+    },
+    "UnprocessedStatusEventFailureReason":{
+      "type":"string",
+      "enum":[
+        "THROTTLED",
+        "INTERNAL_ERROR",
+        "VALIDATION_ERROR"
+      ]
+    },
+    "UnprocessedStatusEventList":{
+      "type":"list",
+      "member":{"shape":"UnprocessedStatusEvent"}
+    },
+    "UnprocessedStatusEventLocationHashString":{
+      "type":"string",
+      "max":16,
+      "min":16
     },
     "UntagResourceRequest":{
       "type":"structure",

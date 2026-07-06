@@ -783,6 +783,23 @@
       ],
       "idempotent":true
     },
+    "GetPITRMalwareScanResults":{
+      "name":"GetPITRMalwareScanResults",
+      "http":{
+        "method":"GET",
+        "requestUri":"/scan/pitr-malware-scan-results",
+        "responseCode":200
+      },
+      "input":{"shape":"GetPITRMalwareScanResultsInput"},
+      "output":{"shape":"GetPITRMalwareScanResultsOutput"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"MissingParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "idempotent":true
+    },
     "GetRecoveryPointIndexDetails":{
       "name":"GetRecoveryPointIndexDetails",
       "http":{
@@ -3105,6 +3122,8 @@
         "BackupVaultArn":{"shape":"String"},
         "BackupVaultName":{"shape":"String"},
         "CompletionDate":{"shape":"Timestamp"},
+        "ContinuousScanEndTime":{"shape":"Timestamp"},
+        "ContinuousScanStartTime":{"shape":"Timestamp"},
         "CreatedBy":{"shape":"ScanJobCreator"},
         "CreationDate":{"shape":"Timestamp"},
         "IamRoleArn":{"shape":"String"},
@@ -3399,6 +3418,51 @@
         "CancellationDate":{"shape":"timestamp"},
         "RetainRecordUntil":{"shape":"timestamp"},
         "RecoveryPointSelection":{"shape":"RecoveryPointSelection"}
+      }
+    },
+    "GetPITRMalwareScanResultsInput":{
+      "type":"structure",
+      "required":[
+        "RecoveryPointArn",
+        "BackupVaultName",
+        "ScanEndTime",
+        "MalwareScanner"
+      ],
+      "members":{
+        "RecoveryPointArn":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"RecoveryPointArn"
+        },
+        "BackupVaultName":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"BackupVaultName"
+        },
+        "ScanEndTime":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"ScanEndTime"
+        },
+        "MalwareScanner":{
+          "shape":"MalwareScanner",
+          "location":"querystring",
+          "locationName":"MalwareScanner"
+        }
+      }
+    },
+    "GetPITRMalwareScanResultsOutput":{
+      "type":"structure",
+      "required":[
+        "ScanEndTime",
+        "ScanResult"
+      ],
+      "members":{
+        "ScanEndTime":{"shape":"Timestamp"},
+        "ScanResult":{"shape":"ScanResultInfo"},
+        "LastScanJobTime":{"shape":"Timestamp"},
+        "ScanId":{"shape":"String"},
+        "ScanMode":{"shape":"ScanMode"}
       }
     },
     "GetRecoveryPointIndexDetailsInput":{
@@ -5640,6 +5704,8 @@
         "BackupVaultArn":{"shape":"String"},
         "BackupVaultName":{"shape":"String"},
         "CompletionDate":{"shape":"Timestamp"},
+        "ContinuousScanEndTime":{"shape":"Timestamp"},
+        "ContinuousScanStartTime":{"shape":"Timestamp"},
         "CreatedBy":{"shape":"ScanJobCreator"},
         "CreationDate":{"shape":"Timestamp"},
         "IamRoleArn":{"shape":"String"},
@@ -5752,7 +5818,8 @@
       "type":"string",
       "enum":[
         "NO_THREATS_FOUND",
-        "THREATS_FOUND"
+        "THREATS_FOUND",
+        "UNKNOWN"
       ]
     },
     "ScanResults":{
@@ -5931,6 +5998,7 @@
       ],
       "members":{
         "BackupVaultName":{"shape":"String"},
+        "ContinuousScanEndTime":{"shape":"Timestamp"},
         "IamRoleArn":{"shape":"String"},
         "IdempotencyToken":{"shape":"String"},
         "MalwareScanner":{"shape":"MalwareScanner"},

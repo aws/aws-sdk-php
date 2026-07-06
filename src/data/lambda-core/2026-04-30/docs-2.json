@@ -1,0 +1,313 @@
+{
+  "version": "2.0",
+  "service": "<p>AWS Lambda Core is a set of APIs for managing shared infrastructure resources used by AWS Lambda. The Lambda Core API provides operations for creating and managing network connectors that enable Lambda MicroVMs to access resources in your Amazon Virtual Private Cloud (Amazon VPC).</p> <p>Network connectors provision elastic network interfaces (ENIs) in your VPC subnets, providing a managed network path from Lambda compute environments to private resources such as Amazon RDS databases, Amazon ElastiCache clusters, and internal APIs. You create a network connector once and attach it to one or more Lambda MicroVMs at run time.</p>",
+  "operations": {
+    "CreateNetworkConnector": "<p>Creates a network connector that enables Lambda compute resources to route outbound traffic through your Amazon VPC. The network connector provisions elastic network interfaces (ENIs) in the subnets you specify, providing a managed network path to private resources such as databases, caches, and internal APIs.</p> <p>This operation is asynchronous. The network connector starts in <code>PENDING</code> state while ENIs are provisioned in your VPC (provisioning typically takes up to 10 minutes). Use <code>GetNetworkConnector</code> to poll the connector state until it reaches <code>ACTIVE</code>. Once active, you can attach the connector to Lambda MicroVMs at run time using the <code>egressNetworkConnectors</code> parameter on <code>RunMicroVm</code>.</p> <p>This operation is idempotent when you provide a <code>ClientToken</code> — if you retry a request that completed successfully using the same client token, the operation returns the existing connector without creating a duplicate.</p>",
+    "DeleteNetworkConnector": "<p>Initiates deletion of a network connector. The connector transitions to <code>DELETING</code> state while elastic network interfaces are cleaned up asynchronously. After deletion completes, subsequent calls to <code>GetNetworkConnector</code> return <code>ResourceNotFoundException</code>.</p> <p>This operation is idempotent — calling delete on a connector that is already deleting or has been deleted succeeds without error. You can delete connectors in <code>ACTIVE</code> or <code>FAILED</code> states. Before deleting a connector, ensure that no Lambda MicroVMs are using it, as they will lose VPC egress connectivity immediately.</p>",
+    "GetNetworkConnector": "<p>Retrieves the current configuration, state, and metadata of a network connector. The <code>Identifier</code> parameter accepts the connector ID, name, or full ARN. Use this operation to poll connector state after creation or update, or to inspect the current VPC configuration and any failure reasons.</p> <p>The response includes the full connector configuration, current state, and — if the connector has been updated — the <code>LastUpdateStatus</code> and <code>LastUpdateStatusReasonCode</code> fields that indicate whether the most recent update succeeded or failed.</p>",
+    "ListNetworkConnectors": "<p>Returns a paginated list of network connectors in your account for the current Region. You can optionally filter results by connector state. Use the <code>Marker</code> parameter from a previous response to retrieve the next page of results.</p> <p>Each item in the response includes the connector ARN, name, ID, type, current state, and last modified timestamp. To retrieve full configuration details for a specific connector, use <code>GetNetworkConnector</code>.</p>",
+    "UpdateNetworkConnector": "<p>Updates the VPC configuration or operator role of an existing network connector. You can modify the subnet IDs, security group IDs, network protocol, or operator role. The connector must be in <code>ACTIVE</code> state to accept updates.</p> <p>This operation is asynchronous. The connector remains in <code>ACTIVE</code> state during the update — existing workloads that reference this connector are not disrupted. Use <code>GetNetworkConnector</code> to monitor the <code>LastUpdateStatus</code> field, which transitions through <code>InProgress</code> to <code>Successful</code> or <code>Failed</code>. If the update fails, the <code>LastUpdateStatusReasonCode</code> field provides a specific error code for troubleshooting. This operation is idempotent when you provide a <code>ClientToken</code>.</p>"
+  },
+  "shapes": {
+    "AssociatedComputeResourceTypesList": {
+      "base": null,
+      "refs": {
+        "NetworkConnectorVpcEgressConfiguration$AssociatedComputeResourceTypes": "<p>The types of Lambda compute resources that can use this connector. Currently, only <code>MicroVm</code> is supported.</p>"
+      }
+    },
+    "ClientTokenString": {
+      "base": null,
+      "refs": {
+        "CreateNetworkConnectorRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you retry a request with the same client token, the API returns the existing connector without creating a duplicate.</p>",
+        "UpdateNetworkConnectorRequest$ClientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the update request.</p>"
+      }
+    },
+    "ComputeResourceType": {
+      "base": null,
+      "refs": {
+        "AssociatedComputeResourceTypesList$member": null
+      }
+    },
+    "CoreTimestamp": {
+      "base": null,
+      "refs": {
+        "GetNetworkConnectorResponse$LastModified": "<p>The date and time when the connector configuration was last modified.</p>",
+        "NetworkConnectorSummary$LastModified": "<p>The date and time when the connector was last modified.</p>",
+        "UpdateNetworkConnectorResponse$LastModified": "<p>The timestamp of this update.</p>"
+      }
+    },
+    "CreateNetworkConnectorRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateNetworkConnectorResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteNetworkConnectorRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteNetworkConnectorResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetNetworkConnectorRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetNetworkConnectorResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "InvalidParameterValueException": {
+      "base": "<p>One of the parameters in the request is not valid. Check the error message for details about which parameter failed validation.</p>",
+      "refs": {}
+    },
+    "ListNetworkConnectorsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListNetworkConnectorsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "MaxHundredListItems": {
+      "base": null,
+      "refs": {
+        "ListNetworkConnectorsRequest$MaxItems": "<p>The maximum number of connectors to return per page. Valid range: 1 to 100.</p>"
+      }
+    },
+    "NetworkConnectorArn": {
+      "base": null,
+      "refs": {
+        "CreateNetworkConnectorResponse$Arn": "<p>The Amazon Resource Name (ARN) of the network connector.</p>",
+        "DeleteNetworkConnectorResponse$Arn": "<p>The Amazon Resource Name (ARN) of the network connector.</p>",
+        "GetNetworkConnectorResponse$Arn": "<p>The Amazon Resource Name (ARN) of the network connector.</p>",
+        "NetworkConnectorSummary$Arn": "<p>The ARN of the network connector.</p>",
+        "UpdateNetworkConnectorResponse$Arn": "<p>The Amazon Resource Name (ARN) of the network connector.</p>"
+      }
+    },
+    "NetworkConnectorConfiguration": {
+      "base": "<p>The network configuration for a network connector. Different connector types use different configuration shapes; specify the configuration that matches your connector type.</p>",
+      "refs": {
+        "CreateNetworkConnectorRequest$Configuration": "<p>The network configuration for the connector. Specify a <code>VpcEgressConfiguration</code> to enable outbound traffic routing through your VPC.</p>",
+        "CreateNetworkConnectorResponse$Configuration": "<p>The network configuration of the connector, including VPC subnets and security groups.</p>",
+        "DeleteNetworkConnectorResponse$Configuration": "<p>The network configuration of the connector, including VPC subnets and security groups.</p>",
+        "GetNetworkConnectorResponse$Configuration": "<p>The network configuration of the connector, including VPC subnets and security groups.</p>",
+        "UpdateNetworkConnectorRequest$Configuration": "<p>The updated network configuration for the connector. Provide the full <code>VpcEgressConfiguration</code> including all subnet IDs and security group IDs — this replaces the existing configuration.</p>",
+        "UpdateNetworkConnectorResponse$Configuration": "<p>The network configuration of the connector, including VPC subnets and security groups.</p>"
+      }
+    },
+    "NetworkConnectorId": {
+      "base": "<p>The unique identifier for a network connector, assigned by the service at creation time</p>",
+      "refs": {
+        "CreateNetworkConnectorResponse$Id": null,
+        "DeleteNetworkConnectorResponse$Id": null,
+        "GetNetworkConnectorResponse$Id": null,
+        "NetworkConnectorSummary$Id": null,
+        "UpdateNetworkConnectorResponse$Id": null
+      }
+    },
+    "NetworkConnectorIdentifier": {
+      "base": "<p>A flexible identifier that accepts a network connector ID, name, or ARN</p>",
+      "refs": {
+        "DeleteNetworkConnectorRequest$Identifier": null,
+        "GetNetworkConnectorRequest$Identifier": null,
+        "UpdateNetworkConnectorRequest$Identifier": null
+      }
+    },
+    "NetworkConnectorLastUpdateStatus": {
+      "base": null,
+      "refs": {
+        "GetNetworkConnectorResponse$LastUpdateStatus": "<p>The status of the most recent update operation (<code>Successful</code>, <code>Failed</code>, or <code>InProgress</code>).</p>",
+        "UpdateNetworkConnectorResponse$LastUpdateStatus": "<p>The status of this update operation (typically <code>InProgress</code> immediately after the call).</p>"
+      }
+    },
+    "NetworkConnectorLastUpdateStatusReason": {
+      "base": null,
+      "refs": {
+        "GetNetworkConnectorResponse$LastUpdateStatusReason": "<p>A human-readable explanation of the last update status.</p>",
+        "UpdateNetworkConnectorResponse$LastUpdateStatusReason": "<p>A human-readable explanation of the update status.</p>"
+      }
+    },
+    "NetworkConnectorLastUpdateStatusReasonCode": {
+      "base": null,
+      "refs": {
+        "GetNetworkConnectorResponse$LastUpdateStatusReasonCode": "<p>A machine-readable code indicating the reason for the last update status. Use this for programmatic error handling.</p>"
+      }
+    },
+    "NetworkConnectorLimitExceededException": {
+      "base": "<p>The account has reached the maximum number of network connectors allowed. Delete unused connectors or request a limit increase through Service Quotas.</p>",
+      "refs": {}
+    },
+    "NetworkConnectorName": {
+      "base": null,
+      "refs": {
+        "CreateNetworkConnectorRequest$Name": "<p>A unique name for the network connector within your account and Region. You can use the name to identify the connector in subsequent API calls.</p>",
+        "CreateNetworkConnectorResponse$Name": "<p>The name of the network connector.</p>",
+        "DeleteNetworkConnectorResponse$Name": "<p>The name of the network connector.</p>",
+        "GetNetworkConnectorResponse$Name": "<p>The name of the network connector.</p>",
+        "NetworkConnectorSummary$Name": "<p>The name of the network connector.</p>",
+        "UpdateNetworkConnectorResponse$Name": "<p>The name of the network connector.</p>"
+      }
+    },
+    "NetworkConnectorRoleArn": {
+      "base": null,
+      "refs": {
+        "CreateNetworkConnectorRequest$OperatorRole": "<p>The ARN of the IAM role that Lambda assumes to manage elastic network interfaces in your VPC. This role must have permissions for <code>ec2:CreateNetworkInterface</code>, <code>ec2:DeleteNetworkInterface</code>, and related describe operations.</p>",
+        "CreateNetworkConnectorResponse$OperatorRole": "<p>The ARN of the IAM role that Lambda uses to manage the underlying ENI resources for this connector.</p>",
+        "DeleteNetworkConnectorResponse$OperatorRole": "<p>The ARN of the IAM role that Lambda uses to manage the underlying ENI resources for this connector.</p>",
+        "GetNetworkConnectorResponse$OperatorRole": "<p>The ARN of the IAM role that Lambda uses to manage the underlying ENI resources for this connector.</p>",
+        "UpdateNetworkConnectorRequest$OperatorRole": "<p>The updated ARN of the IAM role that Lambda assumes to manage ENIs. Use this to change the operator role without recreating the connector.</p>",
+        "UpdateNetworkConnectorResponse$OperatorRole": "<p>The ARN of the IAM role that Lambda uses to manage the underlying ENI resources for this connector.</p>"
+      }
+    },
+    "NetworkConnectorSecurityGroupId": {
+      "base": null,
+      "refs": {
+        "NetworkConnectorSecurityGroupIds$member": null
+      }
+    },
+    "NetworkConnectorSecurityGroupIds": {
+      "base": null,
+      "refs": {
+        "NetworkConnectorVpcEgressConfiguration$SecurityGroupIds": "<p>The IDs of the VPC security groups to attach to the ENIs. Specify 0 to 5 security groups. All security groups must be in the same VPC as the subnets.</p>"
+      }
+    },
+    "NetworkConnectorState": {
+      "base": null,
+      "refs": {
+        "CreateNetworkConnectorResponse$State": "<p>The current state of the network connector.</p>",
+        "DeleteNetworkConnectorResponse$State": "<p>The current state of the network connector. The State field is typically <code>DELETING</code> after this call.</p>",
+        "GetNetworkConnectorResponse$State": "<p>The current state of the network connector.</p>",
+        "ListNetworkConnectorsRequest$State": "<p>Optional filter to return only connectors in the specified state (for example, <code>ACTIVE</code> or <code>FAILED</code>).</p>",
+        "NetworkConnectorSummary$State": "<p>The current state of the network connector.</p>",
+        "UpdateNetworkConnectorResponse$State": "<p>The current state of the network connector.</p>"
+      }
+    },
+    "NetworkConnectorStateReasonCode": {
+      "base": null,
+      "refs": {
+        "GetNetworkConnectorResponse$StateReasonCode": "<p>A machine-readable code indicating the reason for the current state. Use this for programmatic error handling.</p>"
+      }
+    },
+    "NetworkConnectorSubnetId": {
+      "base": null,
+      "refs": {
+        "NetworkConnectorSubnetIds$member": null
+      }
+    },
+    "NetworkConnectorSubnetIds": {
+      "base": null,
+      "refs": {
+        "NetworkConnectorVpcEgressConfiguration$SubnetIds": "<p>The IDs of the VPC subnets where Lambda provisions elastic network interfaces (ENIs). Specify 1 to 16 subnets. All subnets must be in the same VPC.</p>"
+      }
+    },
+    "NetworkConnectorSummary": {
+      "base": "<p>Summary information about a network connector returned by <code>ListNetworkConnectors</code>. Contains identifying fields and current state. To retrieve full configuration details, use <code>GetNetworkConnector</code>.</p>",
+      "refs": {
+        "NetworkConnectorsList$member": null
+      }
+    },
+    "NetworkConnectorTagKey": {
+      "base": null,
+      "refs": {
+        "NetworkConnectorTags$key": null
+      }
+    },
+    "NetworkConnectorTagValue": {
+      "base": null,
+      "refs": {
+        "NetworkConnectorTags$value": null
+      }
+    },
+    "NetworkConnectorTags": {
+      "base": null,
+      "refs": {
+        "CreateNetworkConnectorRequest$Tags": "<p>A map of key-value pairs to associate with the network connector for organization, cost allocation, or access control.</p>"
+      }
+    },
+    "NetworkConnectorType": {
+      "base": null,
+      "refs": {
+        "NetworkConnectorSummary$Type": "<p>The type of the network connector (<code>VPC_EGRESS</code>).</p>"
+      }
+    },
+    "NetworkConnectorVersion": {
+      "base": null,
+      "refs": {
+        "GetNetworkConnectorResponse$Version": "<p>The version number of the connector configuration, incremented on each update.</p>"
+      }
+    },
+    "NetworkConnectorVpcEgressConfiguration": {
+      "base": "<p>Configuration for a VPC egress network connector. Specifies the VPC subnets, security groups, network protocol, and associated Lambda compute resource types.</p>",
+      "refs": {
+        "NetworkConnectorConfiguration$VpcEgressConfiguration": "<p>Configuration for a VPC egress network connector. Specifies the subnets, security groups, and network protocol for routing outbound traffic through your VPC.</p>"
+      }
+    },
+    "NetworkConnectorsList": {
+      "base": null,
+      "refs": {
+        "ListNetworkConnectorsResponse$NetworkConnectors": "<p>A list of network connector summaries for the current page of results.</p>"
+      }
+    },
+    "NetworkProtocol": {
+      "base": null,
+      "refs": {
+        "NetworkConnectorVpcEgressConfiguration$NetworkProtocol": "<p>The network protocol for the connector. Specify <code>IPv4</code> for IPv4-only networking, or <code>DualStack</code> for both IPv4 and IPv6.</p>"
+      }
+    },
+    "ResourceConflictException": {
+      "base": "<p>The request could not be completed due to a conflict with the current state of the resource. For example, attempting to update a connector that is not in <code>ACTIVE</code> state.</p>",
+      "refs": {}
+    },
+    "ResourceNotFoundException": {
+      "base": "<p>The specified network connector does not exist. Verify the identifier (ID, name, or ARN) and Region.</p>",
+      "refs": {}
+    },
+    "ServiceException": {
+      "base": "<p>An internal service error occurred. Retry the request with exponential backoff.</p>",
+      "refs": {}
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "GetNetworkConnectorResponse$StateReason": "<p>A human-readable explanation of the current state, populated when the state is <code>FAILED</code> or <code>DELETE_FAILED</code>.</p>",
+        "InvalidParameterValueException$Type": "<p>The exception type.</p>",
+        "InvalidParameterValueException$message": null,
+        "ListNetworkConnectorsRequest$Marker": "<p>The pagination token from a previous <code>ListNetworkConnectors</code> response. Use this value to retrieve the next page of results.</p>",
+        "ListNetworkConnectorsResponse$NextMarker": "<p>The pagination token to include in a subsequent request to retrieve the next page. This value is null when there are no more results.</p>",
+        "NetworkConnectorLimitExceededException$Type": "<p>The exception type.</p>",
+        "NetworkConnectorLimitExceededException$message": "<p>A human-readable description of the error.</p>",
+        "ResourceConflictException$Type": "<p>The exception type.</p>",
+        "ResourceConflictException$message": null,
+        "ResourceNotFoundException$Type": "<p>The exception type.</p>",
+        "ResourceNotFoundException$Message": null,
+        "ServiceException$Type": "<p>The exception type.</p>",
+        "ServiceException$Message": null,
+        "TooManyRequestsException$retryAfterSeconds": "<p>The number of seconds to wait before retrying the request.</p>",
+        "TooManyRequestsException$Type": "<p>The exception type.</p>",
+        "TooManyRequestsException$message": null
+      }
+    },
+    "ThrottleReason": {
+      "base": null,
+      "refs": {
+        "TooManyRequestsException$Reason": "<p>The reason for the throttling.</p>"
+      }
+    },
+    "TooManyRequestsException": {
+      "base": "<p>The request was throttled due to exceeding the allowed request rate. Retry the request after a brief wait using exponential backoff.</p>",
+      "refs": {}
+    },
+    "UpdateNetworkConnectorRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateNetworkConnectorResponse": {
+      "base": null,
+      "refs": {}
+    }
+  }
+}

@@ -2,23 +2,45 @@
   "version": "2.0",
   "service": "<p><fullname>Certificate Manager</fullname> <p>You can use Certificate Manager (ACM) to manage SSL/TLS certificates for your Amazon Web Services-based websites and applications. For more information about using ACM, see the <a href=\"https://docs.aws.amazon.com/acm/latest/userguide/\">Certificate Manager User Guide</a>.</p></p>",
   "operations": {
-    "AddTagsToCertificate": "<p>Adds one or more tags to an ACM certificate. Tags are labels that you can use to identify and organize your Amazon Web Services resources. Each tag consists of a <code>key</code> and an optional <code>value</code>. You specify the certificate on input by its Amazon Resource Name (ARN). You specify the tag by using a key-value pair. </p> <p>You can apply a tag to just one certificate if you want to identify a specific characteristic of that certificate, or you can apply the same tag to multiple certificates if you want to filter for a common relationship among those certificates. Similarly, you can apply the same tag to multiple resources if you want to specify a relationship among those resources. For example, you can add the same tag to an ACM certificate and an Elastic Load Balancing load balancer to indicate that they are both used by the same website. For more information, see <a href=\"https://docs.aws.amazon.com/acm/latest/userguide/tags.html\">Tagging ACM certificates</a>. </p> <p>To remove one or more tags, use the <a>RemoveTagsFromCertificate</a> action. To view all of the tags that have been applied to the certificate, use the <a>ListTagsForCertificate</a> action. </p>",
-    "DeleteCertificate": "<p>Deletes a certificate and its associated private key. If this action succeeds, the certificate is not available for use by Amazon Web Services services integrated with ACM. Deleting a certificate is eventually consistent. The may be a short delay before the certificate no longer appears in the list that can be displayed by calling the <a>ListCertificates</a> action or be retrieved by calling the <a>GetCertificate</a> action.</p> <note> <p>You cannot delete an ACM certificate that is being used by another Amazon Web Services service. To delete a certificate that is in use, you must first remove the certificate association using the console or the CLI for the associated service.</p> <p>Deleting a certificate issued by a private certificate authority (CA) has no effect on the CA. You will continue to be charged for the CA until it is deleted. For more information, see <a href=\"https://docs.aws.amazon.com/privateca/latest/userguide/PCADeleteCA.html\"> Deleting Your Private CA</a> in the <i>Private Certificate Authority User Guide</i>.</p> </note> <p>Deleting a certificate issued by a private certificate authority (CA) has no effect on the CA. You will continue to be charged for the CA until it is deleted. For more information, see <a href=\"https://docs.aws.amazon.com/privateca/latest/userguide/PCADeleteCA.html\">Deleting your private CA</a> in the <i>Amazon Web Services Private Certificate Authority User Guide</i>.</p>",
+    "AddTagsToCertificate": "<p>Adds one or more tags to an ACM certificate. Tags are labels that you can use to identify and organize your Amazon Web Services resources. Each tag consists of a <code>key</code> and an optional <code>value</code>. You specify the certificate on input by its Amazon Resource Name (ARN). You specify the tag by using a key-value pair. </p> <note> <p>This action applies only to the <code>certificate</code> resource type. For all other ACM resource types, use <a>TagResource</a> instead.</p> </note> <p>You can apply a tag to just one certificate if you want to identify a specific characteristic of that certificate, or you can apply the same tag to multiple certificates if you want to filter for a common relationship among those certificates. Similarly, you can apply the same tag to multiple resources if you want to specify a relationship among those resources. For example, you can add the same tag to an ACM certificate and an Elastic Load Balancing load balancer to indicate that they are both used by the same website. For more information, see <a href=\"https://docs.aws.amazon.com/acm/latest/userguide/tags.html\">Tagging ACM certificates</a>. </p> <p>To remove one or more tags, use the <a>RemoveTagsFromCertificate</a> action. To view all of the tags that have been applied to the certificate, use the <a>ListTagsForCertificate</a> action. </p>",
+    "CreateAcmeDomainValidation": "<p>Creates a domain validation for an ACME endpoint. Domain validations authorize the endpoint to issue certificates for specified domain names. You configure prevalidation to prove domain ownership.</p>",
+    "CreateAcmeEndpoint": "<p>Creates an ACME endpoint, which is a managed ACME server with a unique endpoint URL. After creation, ACME clients can use the endpoint URL to automate certificate issuance using the ACME protocol.</p>",
+    "CreateAcmeExternalAccountBinding": "<p>Creates an external account binding (EAB) for an ACME endpoint. An EAB provides credentials that authorize an ACME client to register an account with the endpoint. Each EAB is associated with an IAM role that controls what certificate operations the ACME client can perform.</p>",
+    "DeleteAcmeDomainValidation": "<p>Deletes a domain validation. After deletion, the ACME endpoint can no longer issue certificates for the associated domain.</p>",
+    "DeleteAcmeEndpoint": "<p>Deletes an ACME endpoint. After deletion, the endpoint URL is no longer accessible and ACME clients cannot issue certificates through it. Any existing external account bindings and domain validations associated with the endpoint are also deleted.</p>",
+    "DeleteAcmeExternalAccountBinding": "<p>Deletes an external account binding. Previously fetched credentials for this binding will no longer be usable for account registration. A deleted binding cannot be recovered.</p>",
+    "DeleteCertificate": "<p>Deletes a certificate and its associated private key. If this action succeeds, the certificate is not available for use by Amazon Web Services services integrated with ACM. Deleting a certificate is eventually consistent. The may be a short delay before the certificate no longer appears in the list that can be displayed by calling the <a>ListCertificates</a> action or be retrieved by calling the <a>GetCertificate</a> action.</p> <note> <p>You cannot delete an ACM certificate that is being used by another Amazon Web Services service. To delete a certificate that is in use, you must first remove the certificate association using the console or the CLI for the associated service.</p> <p>Deleting a certificate issued by a private certificate authority (CA) has no effect on the CA. You will continue to be charged for the CA until it is deleted. For more information, see <a href=\"https://docs.aws.amazon.com/privateca/latest/userguide/PCADeleteCA.html\"> Deleting Your Private CA</a> in the <i>Private Certificate Authority User Guide</i>.</p> <p>You cannot delete a certificate with a <code>CertificateKeyPairOrigin</code> of <code>ACME</code>. ACM automatically deletes these certificates 1 year after they expire.</p> </note> <p>Deleting a certificate issued by a private certificate authority (CA) has no effect on the CA. You will continue to be charged for the CA until it is deleted. For more information, see <a href=\"https://docs.aws.amazon.com/privateca/latest/userguide/PCADeleteCA.html\">Deleting your private CA</a> in the <i>Amazon Web Services Private Certificate Authority User Guide</i>.</p>",
+    "DescribeAcmeAccount": "<p>Returns detailed metadata about the specified ACME account, including its status, public key thumbprint, and associated external account binding.</p>",
+    "DescribeAcmeDomainValidation": "<p>Returns detailed metadata about the specified domain validation, including its status, domain scope, and DNS resource records required for validation.</p>",
+    "DescribeAcmeEndpoint": "<p>Returns detailed metadata about the specified ACME endpoint, including its status, URL, authorization behavior, and certificate authority configuration.</p>",
+    "DescribeAcmeExternalAccountBinding": "<p>Returns detailed metadata about the specified external account binding, including the associated IAM role, expiration time, and usage history.</p>",
     "DescribeCertificate": "<p>Returns detailed metadata about the specified ACM certificate.</p> <p>If you have just created a certificate using the <code>RequestCertificate</code> action, there is a delay of several seconds before you can retrieve information about it.</p>",
     "ExportCertificate": "<p>Exports a private certificate issued by a private certificate authority (CA) or a public certificate for use anywhere. The exported file contains the certificate, the certificate chain, and the encrypted private key associated with the public key that is embedded in the certificate. For security, you must assign a passphrase for the private key when exporting it. </p> <p>For information about exporting and formatting a certificate using the ACM console or CLI, see <a href=\"https://docs.aws.amazon.com/acm/latest/userguide/export-private.html\">Export a private certificate</a> and <a href=\"https://docs.aws.amazon.com/acm/latest/userguide/export-public-certificate\">Export a public certificate</a>.</p> <note> <p>ACM public certificates created prior to June 17, 2025 cannot be exported.</p> </note>",
     "GetAccountConfiguration": "<p>Returns the account configuration options associated with an Amazon Web Services account.</p>",
+    "GetAcmeExternalAccountBindingCredentials": "<p>Retrieves the key ID and MAC key credentials for an external account binding. These credentials are used by ACME clients during account registration to bind to the endpoint.</p>",
     "GetCertificate": "<p>Retrieves a certificate and its certificate chain. The certificate may be either a public or private certificate issued using the ACM <code>RequestCertificate</code> action, or a certificate imported into ACM using the <code>ImportCertificate</code> action. The chain consists of the certificate of the issuing CA and the intermediate certificates of any other subordinate CAs. All of the certificates are base64 encoded. You can use <a href=\"https://wiki.openssl.org/index.php/Command_Line_Utilities\">OpenSSL</a> to decode the certificates and inspect individual fields.</p>",
     "ImportCertificate": "<p>Imports a certificate into Certificate Manager (ACM) to use with services that are integrated with ACM. Note that <a href=\"https://docs.aws.amazon.com/acm/latest/userguide/acm-services.html\">integrated services</a> allow only certificate types and keys they support to be associated with their resources. Further, their support differs depending on whether the certificate is imported into IAM or into ACM. For more information, see the documentation for each service. For more information about importing certificates into ACM, see <a href=\"https://docs.aws.amazon.com/acm/latest/userguide/import-certificate.html\">Importing Certificates</a> in the <i>Certificate Manager User Guide</i>. </p> <note> <p>ACM does not provide <a href=\"https://docs.aws.amazon.com/acm/latest/userguide/acm-renewal.html\">managed renewal</a> for certificates that you import.</p> </note> <p>Note the following guidelines when importing third party certificates:</p> <ul> <li> <p>You must enter the private key that matches the certificate you are importing.</p> </li> <li> <p>The private key must be unencrypted. You cannot import a private key that is protected by a password or a passphrase.</p> </li> <li> <p>The private key must be no larger than 5 KB (5,120 bytes).</p> </li> <li> <p>The certificate, private key, and certificate chain must be PEM-encoded.</p> </li> <li> <p>The current time must be between the <code>Not Before</code> and <code>Not After</code> certificate fields.</p> </li> <li> <p>The <code>Issuer</code> field must not be empty.</p> </li> <li> <p>The OCSP authority URL, if present, must not exceed 1000 characters.</p> </li> <li> <p>To import a new certificate, omit the <code>CertificateArn</code> argument. Include this argument only when you want to replace a previously imported certificate.</p> </li> <li> <p>When you import a certificate by using the CLI, you must specify the certificate, the certificate chain, and the private key by their file names preceded by <code>fileb://</code>. For example, you can specify a certificate saved in the <code>C:\\temp</code> folder as <code>fileb://C:\\temp\\certificate_to_import.pem</code>. If you are making an HTTP or HTTPS Query request, include these arguments as BLOBs. </p> </li> <li> <p>When you import a certificate by using an SDK, you must specify the certificate, the certificate chain, and the private key files in the manner required by the programming language you're using. </p> </li> <li> <p>The cryptographic algorithm of an imported certificate must match the algorithm of the signing CA. For example, if the signing CA key type is RSA, then the certificate key type must also be RSA.</p> </li> </ul> <p>This operation returns the <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Name (ARN)</a> of the imported certificate.</p>",
-    "ListCertificates": "<p>Retrieves a list of certificate ARNs and domain names. You can request that only certificates that match a specific status be listed. You can also filter by specific attributes of the certificate. Default filtering returns only <code>RSA_2048</code> certificates. For more information, see <a>Filters</a>.</p>",
-    "ListTagsForCertificate": "<p>Lists the tags that have been applied to the ACM certificate. Use the certificate's Amazon Resource Name (ARN) to specify the certificate. To add a tag to an ACM certificate, use the <a>AddTagsToCertificate</a> action. To delete a tag, use the <a>RemoveTagsFromCertificate</a> action. </p>",
+    "ListAcmeAccounts": "<p>Retrieves a list of ACME accounts registered with the specified ACME endpoint. ACME accounts are created when clients use external account binding credentials to register.</p>",
+    "ListAcmeDomainValidations": "<p>Retrieves a list of domain validations for the specified ACME endpoint.</p>",
+    "ListAcmeEndpoints": "<p>Retrieves a list of ACME endpoints in your account. Use this operation to view all configured ACME endpoints and their current status.</p>",
+    "ListAcmeExternalAccountBindings": "<p>Retrieves a list of external account bindings for the specified ACME endpoint.</p>",
+    "ListCertificates": "<p>Retrieves a list of certificate ARNs and domain names. You can request that only certificates that match a specific status be listed. You can also filter by specific attributes of the certificate. Default filtering returns only <code>RSA_2048</code> certificates. For more information, see <a>Filters</a>.</p> <note> <p>By default, this action does not return certificates with a <code>CertificateKeyPairOrigin</code> of <code>ACME</code>. To include ACME certificates, specify <code>ACME</code> in the <code>CertificateKeyPairOrigins</code> filter.</p> </note>",
+    "ListTagsForCertificate": "<p>Lists the tags that have been applied to the ACM certificate. Use the certificate's Amazon Resource Name (ARN) to specify the certificate. To add a tag to an ACM certificate, use the <a>AddTagsToCertificate</a> action. To delete a tag, use the <a>RemoveTagsFromCertificate</a> action. </p> <note> <p>This action applies only to the <code>certificate</code> resource type. For all other ACM resource types, use <a>ListTagsForResource</a> instead.</p> </note>",
+    "ListTagsForResource": "<p>Lists the tags associated with an ACM resource.</p> <note> <p>Use this action for all ACM resource types except the <code>certificate</code> resource type. For certificate resources, use <a>ListTagsForCertificate</a> instead.</p> </note> <p>To add one or more tags, use the <a>TagResource</a> action. To remove one or more tags, use the <a>UntagResource</a> action.</p>",
     "PutAccountConfiguration": "<p>Adds or modifies account-level configurations in ACM. </p> <p>The supported configuration option is <code>DaysBeforeExpiry</code>. This option specifies the number of days prior to certificate expiration when ACM starts generating <code>EventBridge</code> events. ACM sends one event per day per certificate until the certificate expires. By default, accounts receive events starting 45 days before certificate expiration.</p>",
-    "RemoveTagsFromCertificate": "<p>Remove one or more tags from an ACM certificate. A tag consists of a key-value pair. If you do not specify the value portion of the tag when calling this function, the tag will be removed regardless of value. If you specify a value, the tag is removed only if it is associated with the specified value. </p> <p>To add tags to a certificate, use the <a>AddTagsToCertificate</a> action. To view all of the tags that have been applied to a specific ACM certificate, use the <a>ListTagsForCertificate</a> action. </p>",
+    "RemoveTagsFromCertificate": "<p>Remove one or more tags from an ACM certificate. A tag consists of a key-value pair. If you do not specify the value portion of the tag when calling this function, the tag will be removed regardless of value. If you specify a value, the tag is removed only if it is associated with the specified value. </p> <note> <p>This action applies only to the <code>certificate</code> resource type. For all other ACM resource types, use <a>UntagResource</a> instead.</p> </note> <p>To add tags to a certificate, use the <a>AddTagsToCertificate</a> action. To view all of the tags that have been applied to a specific ACM certificate, use the <a>ListTagsForCertificate</a> action. </p>",
     "RenewCertificate": "<p>Renews an <a href=\"https://docs.aws.amazon.com/acm/latest/userguide/managed-renewal.html\">eligible ACM certificate</a>. In order to renew your Amazon Web Services Private CA certificates with ACM, you must first <a href=\"https://docs.aws.amazon.com/privateca/latest/userguide/assign-permissions.html#PcaPermissions\">grant the ACM service principal permission to do so</a>. For more information, see <a href=\"https://docs.aws.amazon.com/acm/latest/userguide/managed-renewal.html\">Testing Managed Renewal</a> in the ACM User Guide.</p>",
     "RequestCertificate": "<p>Requests an ACM certificate for use with other Amazon Web Services services. To request an ACM certificate, you must specify a fully qualified domain name (FQDN) in the <code>DomainName</code> parameter. You can also specify additional FQDNs in the <code>SubjectAlternativeNames</code> parameter. </p> <p>If you are requesting a private certificate, domain validation is not required. If you are requesting a public certificate, each domain name that you specify must be validated to verify that you own or control the domain. You can use <a href=\"https://docs.aws.amazon.com/acm/latest/userguide/gs-acm-validate-dns.html\">DNS validation</a> or <a href=\"https://docs.aws.amazon.com/acm/latest/userguide/gs-acm-validate-email.html\">email validation</a>. We recommend that you use DNS validation.</p> <note> <p>ACM behavior differs from the <a href=\"https://datatracker.ietf.org/doc/html/rfc6125#appendix-B.2\">RFC 6125</a> specification of the certificate validation process. ACM first checks for a Subject Alternative Name, and, if it finds one, ignores the common name (CN).</p> </note> <p>After successful completion of the <code>RequestCertificate</code> action, there is a delay of several seconds before you can retrieve information about the new certificate.</p>",
     "ResendValidationEmail": "<p>Resends the email that requests domain ownership validation. The domain owner or an authorized representative must approve the ACM certificate before it can be issued. The certificate can be approved by clicking a link in the mail to navigate to the Amazon certificate approval website and then clicking <b>I Approve</b>. However, the validation email can be blocked by spam filters. Therefore, if you do not receive the original mail, you can request that the mail be resent within 72 hours of requesting the ACM certificate. If more than 72 hours have elapsed since your original request or since your last attempt to resend validation mail, you must request a new certificate. For more information about setting up your contact email addresses, see <a href=\"https://docs.aws.amazon.com/acm/latest/userguide/setup-email.html\">Configure Email for your Domain</a>. </p>",
+    "RevokeAcmeAccount": "<p>Revokes an ACME account, preventing it from requesting or revoking certificates. This operation is irreversible.</p>",
+    "RevokeAcmeExternalAccountBinding": "<p>Revokes an external account binding, preventing new ACME accounts from being registered using this binding. Existing ACME accounts that were previously registered using the binding are not affected and must be revoked separately.</p>",
     "RevokeCertificate": "<p>Revokes a public ACM certificate. You can only revoke certificates that have been previously exported.</p> <important> <p>Once a certificate is revoked, you cannot reuse the certificate. Revoking a certificate is permanent.</p> </important>",
     "SearchCertificates": "<p>Retrieves a list of certificates matching search criteria. You can filter certificates by X.509 attributes and ACM specific properties like certificate status, type and renewal eligibility. This operation provides more flexible filtering than <a>ListCertificates</a> by supporting complex filter statements.</p>",
-    "UpdateCertificateOptions": "<p>Updates a certificate. You can use this function to specify whether to opt in to or out of recording your certificate in a certificate transparency log and exporting. For more information, see <a href=\"https://docs.aws.amazon.com/acm/latest/userguide/acm-bestpractices.html#best-practices-transparency\"> Opting Out of Certificate Transparency Logging</a> and <a href=\"https://docs.aws.amazon.com/acm/latest/userguide/acm-exportable-certificates.html\">Certificate Manager Exportable Managed Certificates</a>.</p>"
+    "TagResource": "<p>Adds one or more tags to an ACM resource. Tags are labels that you can use to identify and organize your Amazon Web Services resources. Each tag consists of a <code>key</code> and an optional <code>value</code>.</p> <note> <p>Use this action for all ACM resource types except the <code>certificate</code> resource type. For certificate resources, use <a>AddTagsToCertificate</a> instead.</p> </note> <p>To remove one or more tags, use the <a>UntagResource</a> action. To view all of the tags that have been applied to a resource, use the <a>ListTagsForResource</a> action.</p>",
+    "UntagResource": "<p>Removes one or more tags from an ACM resource.</p> <note> <p>Use this action for all ACM resource types except the <code>certificate</code> resource type. For certificate resources, use <a>RemoveTagsFromCertificate</a> instead.</p> </note> <p>To add one or more tags, use the <a>TagResource</a> action. To view all of the tags that have been applied to a resource, use the <a>ListTagsForResource</a> action.</p>",
+    "UpdateAcmeDomainValidation": "<p>Updates the prevalidation configuration of an existing domain validation.</p>",
+    "UpdateAcmeEndpoint": "<p>Updates the configuration of an existing ACME endpoint. You can change the authorization behavior, contact requirement, or certificate authority settings.</p>",
+    "UpdateCertificateOptions": "<p>Updates a certificate. You can use this function to specify whether to export your certificate. Certificate transparency logging opt-out is no longer available. For more information, see <a href=\"https://docs.aws.amazon.com/acm/latest/userguide/acm-concepts.html#concept-transparency\">Certificate Transparency Logging</a> and <a href=\"https://docs.aws.amazon.com/acm/latest/userguide/acm-exportable-certificates.html\">Certificate Manager Exportable Managed Certificates</a>.</p>"
   },
   "shapes": {
     "AccessDeniedException": {
@@ -37,6 +59,178 @@
         "CertificateFilter$AcmCertificateMetadataFilter": "<p>Filter by ACM certificate metadata.</p>"
       }
     },
+    "AcmeAccount": {
+      "base": "<p>Contains detailed information about an ACME account.</p>",
+      "refs": {
+        "DescribeAcmeAccountResponse$AcmeAccount": "<p>The ACME account details.</p>"
+      }
+    },
+    "AcmeAccountId": {
+      "base": null,
+      "refs": {
+        "AcmCertificateMetadata$AcmeAccountId": "<p>The ACME account identifier associated with the certificate.</p>",
+        "AcmCertificateMetadataFilter$AcmeAccountId": "<p>Filter by ACME account identifier.</p>",
+        "CertificateDetail$AcmeAccountId": "<p>The ACME account identifier associated with the certificate.</p>"
+      }
+    },
+    "AcmeAccountList": {
+      "base": null,
+      "refs": {
+        "ListAcmeAccountsResponse$AcmeAccounts": "<p>The list of ACME accounts.</p>"
+      }
+    },
+    "AcmeAccountStatus": {
+      "base": null,
+      "refs": {
+        "AcmeAccount$Status": "<p>The status of the ACME account.</p>",
+        "AcmeAccountSummary$Status": "<p>The status of the ACME account.</p>"
+      }
+    },
+    "AcmeAccountSummary": {
+      "base": "<p>Contains summary information about an ACME account.</p>",
+      "refs": {
+        "AcmeAccountList$member": null
+      }
+    },
+    "AcmeAuthorizationBehavior": {
+      "base": null,
+      "refs": {
+        "AcmeEndpoint$AuthorizationBehavior": "<p>The authorization behavior of the ACME endpoint.</p>",
+        "AcmeEndpointSummary$AuthorizationBehavior": "<p>The authorization behavior of the ACME endpoint.</p>",
+        "CreateAcmeEndpointRequest$AuthorizationBehavior": "<p>The authorization behavior for the ACME endpoint.</p>",
+        "UpdateAcmeEndpointRequest$AuthorizationBehavior": "<p>The updated authorization behavior.</p>"
+      }
+    },
+    "AcmeContact": {
+      "base": null,
+      "refs": {
+        "AcmeEndpoint$Contact": "<p>Whether ACME clients must provide contact information during account registration.</p>",
+        "AcmeEndpointSummary$Contact": "<p>Whether ACME clients must provide contact information during account registration.</p>",
+        "CreateAcmeEndpointRequest$Contact": "<p>Specifies whether ACME clients must provide contact information during account registration.</p>",
+        "UpdateAcmeEndpointRequest$Contact": "<p>The updated contact requirement.</p>"
+      }
+    },
+    "AcmeDomainValidation": {
+      "base": "<p>Contains detailed information about an ACME domain validation.</p>",
+      "refs": {
+        "DescribeAcmeDomainValidationResponse$AcmeDomainValidation": "<p>The ACME domain validation details.</p>"
+      }
+    },
+    "AcmeDomainValidationArn": {
+      "base": null,
+      "refs": {
+        "AcmeDomainValidation$AcmeDomainValidationArn": "<p>The Amazon Resource Name (ARN) of the ACME domain validation.</p>",
+        "AcmeDomainValidationSummary$AcmeDomainValidationArn": "<p>The Amazon Resource Name (ARN) of the ACME domain validation.</p>",
+        "CreateAcmeDomainValidationResponse$AcmeDomainValidationArn": "<p>The Amazon Resource Name (ARN) of the created domain validation.</p>",
+        "DeleteAcmeDomainValidationRequest$AcmeDomainValidationArn": "<p>The Amazon Resource Name (ARN) of the ACME domain validation to delete.</p>",
+        "DescribeAcmeDomainValidationRequest$AcmeDomainValidationArn": "<p>The Amazon Resource Name (ARN) of the ACME domain validation.</p>",
+        "UpdateAcmeDomainValidationRequest$AcmeDomainValidationArn": "<p>The Amazon Resource Name (ARN) of the ACME domain validation to update.</p>"
+      }
+    },
+    "AcmeDomainValidationFailureReason": {
+      "base": null,
+      "refs": {
+        "FailureDetails$Reason": "<p>The reason for the failure.</p>"
+      }
+    },
+    "AcmeDomainValidationList": {
+      "base": null,
+      "refs": {
+        "ListAcmeDomainValidationsResponse$AcmeDomainValidations": "<p>The list of domain validations.</p>"
+      }
+    },
+    "AcmeDomainValidationStatus": {
+      "base": null,
+      "refs": {
+        "AcmeDomainValidation$Status": "<p>The status of the domain validation.</p>",
+        "AcmeDomainValidationSummary$Status": "<p>The status of the domain validation.</p>"
+      }
+    },
+    "AcmeDomainValidationSummary": {
+      "base": "<p>Contains summary information about an ACME domain validation.</p>",
+      "refs": {
+        "AcmeDomainValidationList$member": null
+      }
+    },
+    "AcmeEndpoint": {
+      "base": "<p>Contains detailed information about an ACME endpoint.</p>",
+      "refs": {
+        "DescribeAcmeEndpointResponse$AcmeEndpoint": "<p>The ACME endpoint details.</p>"
+      }
+    },
+    "AcmeEndpointArn": {
+      "base": null,
+      "refs": {
+        "AcmeDomainValidation$AcmeEndpointArn": "<p>The Amazon Resource Name (ARN) of the ACME endpoint.</p>",
+        "AcmeDomainValidationSummary$AcmeEndpointArn": "<p>The Amazon Resource Name (ARN) of the ACME endpoint.</p>",
+        "AcmeEndpoint$AcmeEndpointArn": "<p>The Amazon Resource Name (ARN) of the ACME endpoint.</p>",
+        "AcmeEndpointSummary$AcmeEndpointArn": "<p>The Amazon Resource Name (ARN) of the ACME endpoint.</p>",
+        "AcmeExternalAccountBinding$AcmeEndpointArn": "<p>The Amazon Resource Name (ARN) of the ACME endpoint.</p>",
+        "AcmeExternalAccountBindingSummary$AcmeEndpointArn": "<p>The Amazon Resource Name (ARN) of the ACME endpoint.</p>",
+        "CreateAcmeDomainValidationRequest$AcmeEndpointArn": "<p>The Amazon Resource Name (ARN) of the ACME endpoint.</p>",
+        "CreateAcmeEndpointResponse$AcmeEndpointArn": "<p>The Amazon Resource Name (ARN) of the created ACME endpoint.</p>",
+        "CreateAcmeExternalAccountBindingRequest$AcmeEndpointArn": "<p>The Amazon Resource Name (ARN) of the ACME endpoint.</p>",
+        "DeleteAcmeEndpointRequest$AcmeEndpointArn": "<p>The Amazon Resource Name (ARN) of the ACME endpoint to delete.</p>",
+        "DescribeAcmeAccountRequest$AcmeEndpointArn": "<p>The Amazon Resource Name (ARN) of the ACME endpoint.</p>",
+        "DescribeAcmeEndpointRequest$AcmeEndpointArn": "<p>The Amazon Resource Name (ARN) of the ACME endpoint.</p>",
+        "ListAcmeAccountsRequest$AcmeEndpointArn": "<p>The Amazon Resource Name (ARN) of the ACME endpoint.</p>",
+        "ListAcmeDomainValidationsRequest$AcmeEndpointArn": "<p>The Amazon Resource Name (ARN) of the ACME endpoint.</p>",
+        "ListAcmeExternalAccountBindingsRequest$AcmeEndpointArn": "<p>The Amazon Resource Name (ARN) of the ACME endpoint.</p>",
+        "RevokeAcmeAccountRequest$AcmeEndpointArn": "<p>The Amazon Resource Name (ARN) of the ACME endpoint.</p>",
+        "UpdateAcmeEndpointRequest$AcmeEndpointArn": "<p>The Amazon Resource Name (ARN) of the ACME endpoint to update.</p>"
+      }
+    },
+    "AcmeEndpointList": {
+      "base": null,
+      "refs": {
+        "ListAcmeEndpointsResponse$AcmeEndpoints": "<p>The list of ACME endpoints.</p>"
+      }
+    },
+    "AcmeEndpointStatus": {
+      "base": null,
+      "refs": {
+        "AcmeEndpoint$Status": "<p>The status of the ACME endpoint.</p>",
+        "AcmeEndpointSummary$Status": "<p>The status of the ACME endpoint.</p>"
+      }
+    },
+    "AcmeEndpointSummary": {
+      "base": "<p>Contains summary information about an ACME endpoint.</p>",
+      "refs": {
+        "AcmeEndpointList$member": null
+      }
+    },
+    "AcmeExternalAccountBinding": {
+      "base": "<p>Contains detailed information about an ACME external account binding.</p>",
+      "refs": {
+        "CreateAcmeExternalAccountBindingResponse$ExternalAccountBinding": "<p>The created external account binding.</p>",
+        "DescribeAcmeExternalAccountBindingResponse$ExternalAccountBinding": "<p>The external account binding details.</p>"
+      }
+    },
+    "AcmeExternalAccountBindingArn": {
+      "base": null,
+      "refs": {
+        "AcmeAccount$AcmeExternalAccountBindingArn": "<p>The Amazon Resource Name (ARN) of the external account binding associated with this ACME account.</p>",
+        "AcmeAccountSummary$AcmeExternalAccountBindingArn": "<p>The Amazon Resource Name (ARN) of the external account binding associated with this ACME account.</p>",
+        "AcmeExternalAccountBinding$AcmeExternalAccountBindingArn": "<p>The Amazon Resource Name (ARN) of the ACME external account binding.</p>",
+        "AcmeExternalAccountBindingSummary$AcmeExternalAccountBindingArn": "<p>The Amazon Resource Name (ARN) of the ACME external account binding.</p>",
+        "DeleteAcmeExternalAccountBindingRequest$AcmeExternalAccountBindingArn": "<p>The Amazon Resource Name (ARN) of the ACME external account binding to delete.</p>",
+        "DescribeAcmeExternalAccountBindingRequest$AcmeExternalAccountBindingArn": "<p>The Amazon Resource Name (ARN) of the ACME external account binding.</p>",
+        "GetAcmeExternalAccountBindingCredentialsRequest$AcmeExternalAccountBindingArn": "<p>The Amazon Resource Name (ARN) of the ACME external account binding.</p>",
+        "RevokeAcmeExternalAccountBindingRequest$AcmeExternalAccountBindingArn": "<p>The Amazon Resource Name (ARN) of the ACME external account binding to revoke.</p>"
+      }
+    },
+    "AcmeExternalAccountBindingList": {
+      "base": null,
+      "refs": {
+        "ListAcmeExternalAccountBindingsResponse$ExternalAccountBindings": "<p>The list of external account bindings.</p>"
+      }
+    },
+    "AcmeExternalAccountBindingSummary": {
+      "base": "<p>Contains summary information about an ACME external account binding.</p>",
+      "refs": {
+        "AcmeExternalAccountBindingList$member": null
+      }
+    },
     "AddTagsToCertificateRequest": {
       "base": null,
       "refs": {}
@@ -44,9 +238,12 @@
     "Arn": {
       "base": null,
       "refs": {
+        "AcmCertificateMetadata$AcmeEndpointArn": "<p>The ARN of the ACME endpoint used to issue the certificate.</p>",
+        "AcmCertificateMetadataFilter$AcmeEndpointArn": "<p>Filter by ACME endpoint ARN.</p>",
         "AddTagsToCertificateRequest$CertificateArn": "<p>String that contains the ARN of the ACM certificate to which the tag is to be applied. This must be of the form:</p> <p> <code>arn:aws:acm:region:123456789012:certificate/12345678-1234-1234-1234-123456789012</code> </p> <p>For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs)</a>.</p>",
         "CertificateDetail$CertificateArn": "<p>The Amazon Resource Name (ARN) of the certificate. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i>.</p>",
         "CertificateDetail$CertificateAuthorityArn": "<p>The Amazon Resource Name (ARN) of the private certificate authority (CA) that issued the certificate. This has the following format: </p> <p> <code>arn:aws:acm-pca:region:account:certificate-authority/12345678-1234-1234-1234-123456789012</code> </p>",
+        "CertificateDetail$AcmeEndpointArn": "<p>The ARN of the ACME endpoint used to issue the certificate.</p>",
         "CertificateFilter$CertificateArn": "<p>Filter by certificate ARN.</p>",
         "CertificateSearchResult$CertificateArn": "<p>The Amazon Resource Name (ARN) of the certificate.</p>",
         "CertificateSummary$CertificateArn": "<p>Amazon Resource Name (ARN) of the certificate. This is of the form:</p> <p> <code>arn:aws:acm:region:123456789012:certificate/12345678-1234-1234-1234-123456789012</code> </p> <p>For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs)</a>.</p>",
@@ -57,12 +254,15 @@
         "ImportCertificateRequest$CertificateArn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Name (ARN)</a> of an imported certificate to replace. To import a new certificate, omit this field. </p>",
         "ImportCertificateResponse$CertificateArn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Name (ARN)</a> of the imported certificate.</p>",
         "ListTagsForCertificateRequest$CertificateArn": "<p>String that contains the ARN of the ACM certificate for which you want to list the tags. This must have the following form:</p> <p> <code>arn:aws:acm:region:123456789012:certificate/12345678-1234-1234-1234-123456789012</code> </p> <p>For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs)</a>.</p>",
+        "ListTagsForResourceRequest$ResourceArn": "<p>The ARN of the ACM resource for which to list tags.</p>",
         "RemoveTagsFromCertificateRequest$CertificateArn": "<p>String that contains the ARN of the ACM Certificate with one or more tags that you want to remove. This must be of the form:</p> <p> <code>arn:aws:acm:region:123456789012:certificate/12345678-1234-1234-1234-123456789012</code> </p> <p>For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs)</a>.</p>",
         "RenewCertificateRequest$CertificateArn": "<p>String that contains the ARN of the ACM certificate to be renewed. This must be of the form:</p> <p> <code>arn:aws:acm:region:123456789012:certificate/12345678-1234-1234-1234-123456789012</code> </p> <p>For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs)</a>.</p>",
         "RequestCertificateResponse$CertificateArn": "<p>String that contains the ARN of the issued certificate. This must be of the form:</p> <p> <code>arn:aws:acm:us-east-1:123456789012:certificate/12345678-1234-1234-1234-123456789012</code> </p>",
         "ResendValidationEmailRequest$CertificateArn": "<p>String that contains the ARN of the requested certificate. The certificate ARN is generated and returned by the <a>RequestCertificate</a> action as soon as the request is made. By default, using this parameter causes email to be sent to all top-level domains you specified in the certificate request. The ARN must be of the form: </p> <p> <code>arn:aws:acm:us-east-1:123456789012:certificate/12345678-1234-1234-1234-123456789012</code> </p>",
         "RevokeCertificateRequest$CertificateArn": "<p>The Amazon Resource Name (ARN) of the public or private certificate that will be revoked. The ARN must have the following form: </p> <p> <code>arn:aws:acm:region:account:certificate/12345678-1234-1234-1234-123456789012</code> </p>",
         "RevokeCertificateResponse$CertificateArn": "<p>The Amazon Resource Name (ARN) of the public or private certificate that was revoked.</p>",
+        "TagResourceRequest$ResourceArn": "<p>The ARN of the ACM resource to which the tag is to be applied.</p>",
+        "UntagResourceRequest$ResourceArn": "<p>The ARN of the ACM resource from which the tag is to be removed.</p>",
         "UpdateCertificateOptionsRequest$CertificateArn": "<p>ARN of the requested certificate to update. This must be of the form:</p> <p> <code>arn:aws:acm:us-east-1:<i>account</i>:certificate/<i>12345678-1234-1234-1234-123456789012</i> </code> </p>"
       }
     },
@@ -70,6 +270,15 @@
       "base": null,
       "refs": {
         "ThrottlingException$message": null
+      }
+    },
+    "CertificateAuthority": {
+      "base": "<p>Defines the certificate authority to use for an ACME endpoint.</p>",
+      "refs": {
+        "AcmeEndpoint$CertificateAuthority": "<p>The certificate authority configuration for the ACME endpoint.</p>",
+        "AcmeEndpointSummary$CertificateAuthority": "<p>The certificate authority configuration for the ACME endpoint.</p>",
+        "CreateAcmeEndpointRequest$CertificateAuthority": "<p>The type of certificate authority to use for issuing certificates through this ACME endpoint.</p>",
+        "UpdateAcmeEndpointRequest$CertificateAuthority": "<p>The updated certificate authority configuration.</p>"
       }
     },
     "CertificateBody": {
@@ -135,6 +344,22 @@
         "CertificateFilterStatement$Or": "<p>A list of filter statements where at least one must be true.</p>"
       }
     },
+    "CertificateKeyPairOrigin": {
+      "base": "<p>The origin of the certificate's key pair.</p>",
+      "refs": {
+        "AcmCertificateMetadata$CertificateKeyPairOrigin": "<p>The origin of the certificate's key pair.</p>",
+        "AcmCertificateMetadataFilter$CertificateKeyPairOrigin": "<p>Filter by certificate key pair origin.</p>",
+        "CertificateDetail$CertificateKeyPairOrigin": "<p>The origin of the certificate's key pair.</p>",
+        "CertificateKeyPairOrigins$member": null,
+        "CertificateSummary$CertificateKeyPairOrigin": "<p>The origin of the certificate's key pair.</p>"
+      }
+    },
+    "CertificateKeyPairOrigins": {
+      "base": "<p>A list of <code>CertificateKeyPairOrigin</code> values used to filter certificates.</p>",
+      "refs": {
+        "ListCertificatesRequest$CertificateKeyPairOrigins": "<p>Filter the certificate list by certificate key pair origin. Specify one or more <code>CertificateKeyPairOrigin</code> values. Default filtering returns only certificates with key pair origin of <code>AWS_MANAGED</code> and <code>CUSTOMER_PROVIDED</code>.</p>"
+      }
+    },
     "CertificateManagedBy": {
       "base": null,
       "refs": {
@@ -153,11 +378,11 @@
       }
     },
     "CertificateOptions": {
-      "base": "<p>Structure that contains options for your certificate. You can use this structure to specify whether to opt in to or out of certificate transparency logging and export your certificate. </p> <p>Some browsers require that public certificates issued for your domain be recorded in a log. Certificates that are not logged typically generate a browser error. Transparency makes it possible for you to detect SSL/TLS certificates that have been mistakenly or maliciously issued for your domain. For general information, see <a href=\"https://docs.aws.amazon.com/acm/latest/userguide/acm-concepts.html#concept-transparency\">Certificate Transparency Logging</a>.</p> <p>You can export public ACM certificates to use with Amazon Web Services services as well as outside Amazon Web Services Cloud. For more information, see <a href=\"https://docs.aws.amazon.com/acm/latest/userguide/acm-exportable-certificates.html\">Certificate Manager exportable public certificate</a>.</p>",
+      "base": "<p>Structure that contains options for your certificate. You can use this structure to specify whether to export your certificate.</p> <p>Certificate transparency logging opt-out is no longer available. All public certificates are recorded in a certificate transparency log. For general information, see <a href=\"https://docs.aws.amazon.com/acm/latest/userguide/acm-concepts.html#concept-transparency\">Certificate Transparency Logging</a>.</p> <p>You can export public ACM certificates to use with Amazon Web Services services as well as outside Amazon Web Services Cloud. For more information, see <a href=\"https://docs.aws.amazon.com/acm/latest/userguide/acm-exportable-certificates.html\">Certificate Manager exportable public certificate</a>.</p>",
       "refs": {
-        "CertificateDetail$Options": "<p>Value that specifies whether to add the certificate to a transparency log. Certificate transparency makes it possible to detect SSL certificates that have been mistakenly or maliciously issued. A browser might respond to certificate that has not been logged by showing an error message. The logs are cryptographically secure. </p>",
-        "RequestCertificateRequest$Options": "<p>You can use this parameter to specify whether to add the certificate to a certificate transparency log and export your certificate.</p> <p>Certificate transparency makes it possible to detect SSL/TLS certificates that have been mistakenly or maliciously issued. Certificates that have not been logged typically produce an error message in a browser. For more information, see <a href=\"https://docs.aws.amazon.com/acm/latest/userguide/acm-bestpractices.html#best-practices-transparency\">Opting Out of Certificate Transparency Logging</a>.</p> <p>You can export public ACM certificates to use with Amazon Web Services services as well as outside the Amazon Web Services Cloud. For more information, see <a href=\"https://docs.aws.amazon.com/acm/latest/userguide/acm-exportable-certificates.html\">Certificate Manager exportable public certificate</a>.</p>",
-        "UpdateCertificateOptionsRequest$Options": "<p>Use to update the options for your certificate. Currently, you can specify whether to add your certificate to a transparency log or export your certificate. Certificate transparency makes it possible to detect SSL/TLS certificates that have been mistakenly or maliciously issued. Certificates that have not been logged typically produce an error message in a browser. </p>"
+        "CertificateDetail$Options": "<p>Contains the certificate options. Certificate transparency logging opt-out is no longer available. All public certificates are recorded in a certificate transparency log.</p>",
+        "RequestCertificateRequest$Options": "<p>You can use this parameter to specify whether to export your certificate.</p> <p>Certificate transparency logging opt-out is no longer available. All public certificates are recorded in a certificate transparency log. For more information, see <a href=\"https://docs.aws.amazon.com/acm/latest/userguide/acm-concepts.html#concept-transparency\">Certificate Transparency Logging</a>.</p> <p>You can export public ACM certificates to use with Amazon Web Services services as well as outside the Amazon Web Services Cloud. For more information, see <a href=\"https://docs.aws.amazon.com/acm/latest/userguide/acm-exportable-certificates.html\">Certificate Manager exportable public certificate</a>.</p>",
+        "UpdateCertificateOptionsRequest$Options": "<p>Use to update the options for your certificate. Currently, you can specify whether to export your certificate. Certificate transparency logging opt-out is no longer available. All public certificates are recorded in a certificate transparency log. For more information, see <a href=\"https://docs.aws.amazon.com/acm/latest/userguide/acm-concepts.html#concept-transparency\">Certificate Transparency Logging</a>.</p>"
       }
     },
     "CertificateSearchResult": {
@@ -203,7 +428,7 @@
     "CertificateTransparencyLoggingPreference": {
       "base": null,
       "refs": {
-        "CertificateOptions$CertificateTransparencyLoggingPreference": "<p>You can opt out of certificate transparency logging by specifying the <code>DISABLED</code> option. Opt in by specifying <code>ENABLED</code>. </p>"
+        "CertificateOptions$CertificateTransparencyLoggingPreference": "<p>This parameter has been deprecated. Certificate transparency logging opt-out is no longer available. All public certificates are recorded in a certificate transparency log.</p>"
       }
     },
     "CertificateType": {
@@ -232,6 +457,13 @@
       "base": "<p>You are trying to update a resource or configuration that is already being created or updated. Wait for the previous operation to finish and try again.</p>",
       "refs": {}
     },
+    "ContactList": {
+      "base": null,
+      "refs": {
+        "AcmeAccount$Contacts": "<p>The contact information for the ACME account.</p>",
+        "AcmeAccountSummary$Contacts": "<p>The contact information for the ACME account.</p>"
+      }
+    },
     "CoralAvailabilityThrottledResource": {
       "base": null,
       "refs": {
@@ -243,6 +475,30 @@
       "refs": {
         "ThrottlingReason$reason": "<p>A description of why a request was throttled.</p>"
       }
+    },
+    "CreateAcmeDomainValidationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAcmeDomainValidationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAcmeEndpointRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAcmeEndpointResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAcmeExternalAccountBindingRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAcmeExternalAccountBindingResponse": {
+      "base": null,
+      "refs": {}
     },
     "CustomAttribute": {
       "base": "<p>Defines the X.500 relative distinguished name (RDN).</p>",
@@ -256,7 +512,51 @@
         "DistinguishedName$CustomAttributes": "<p>A list of custom attributes in the distinguished name. Each custom attribute contains an object identifier (OID) and its corresponding value.</p>"
       }
     },
+    "DeleteAcmeDomainValidationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteAcmeEndpointRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteAcmeExternalAccountBindingRequest": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteCertificateRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeAcmeAccountRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeAcmeAccountResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeAcmeDomainValidationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeAcmeDomainValidationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeAcmeEndpointRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeAcmeEndpointResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeAcmeExternalAccountBindingRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeAcmeExternalAccountBindingResponse": {
       "base": null,
       "refs": {}
     },
@@ -282,6 +582,18 @@
         "SubjectAlternativeNameFilter$DnsName": "<p>Filter by DNS name in subject alternative names.</p>"
       }
     },
+    "DnsPrevalidationDetails": {
+      "base": "<p>DNS prevalidation details including the resource record for validation.</p>",
+      "refs": {
+        "PrevalidationDetails$DnsPrevalidation": "<p>DNS-based prevalidation details.</p>"
+      }
+    },
+    "DnsPrevalidationOptions": {
+      "base": "<p>DNS prevalidation options for domain validation.</p>",
+      "refs": {
+        "PrevalidationOptions$DnsPrevalidation": "<p>DNS-based prevalidation options.</p>"
+      }
+    },
     "DomainComponentList": {
       "base": "<p>A list of domain component strings.</p>",
       "refs": {
@@ -294,6 +606,14 @@
         "CertificateDetail$SubjectAlternativeNames": "<p>One or more domain names (subject alternative names) included in the certificate. This list contains the domain names that are bound to the public key that is contained in the certificate. The subject alternative names include the canonical domain name (CN) of the certificate and additional domain names that can be used to connect to the website. </p>",
         "CertificateSummary$SubjectAlternativeNameSummaries": "<p>One or more domain names (subject alternative names) included in the certificate. This list contains the domain names that are bound to the public key that is contained in the certificate. The subject alternative names include the canonical domain name (CN) of the certificate and additional domain names that can be used to connect to the website. </p> <p>When called by <a href=\"https://docs.aws.amazon.com/acm/latest/APIReference/API_ListCertificates.html\">ListCertificates</a>, this parameter will only return the first 100 subject alternative names included in the certificate. To display the full list of subject alternative names, use <a href=\"https://docs.aws.amazon.com/acm/latest/APIReference/API_DescribeCertificate.html\">DescribeCertificate</a>.</p>",
         "RequestCertificateRequest$SubjectAlternativeNames": "<p>Additional FQDNs to be included in the Subject Alternative Name extension of the ACM certificate. For example, add the name www.example.net to a certificate for which the <code>DomainName</code> field is www.example.com if users can reach your site by using either name. The maximum number of domain names that you can add to an ACM certificate is 100. However, the initial quota is 10 domain names. If you need more than 10 names, you must request a quota increase. For more information, see <a href=\"https://docs.aws.amazon.com/acm/latest/userguide/acm-limits.html\">Quotas</a>.</p> <p> The maximum length of a SAN DNS name is 253 octets. The name is made up of multiple labels separated by periods. No label can be longer than 63 octets. Consider the following examples: </p> <ul> <li> <p> <code>(63 octets).(63 octets).(63 octets).(61 octets)</code> is legal because the total length is 253 octets (63+1+63+1+63+1+61) and no label exceeds 63 octets.</p> </li> <li> <p> <code>(64 octets).(63 octets).(63 octets).(61 octets)</code> is not legal because the total length exceeds 253 octets (64+1+63+1+63+1+61) and the first label exceeds 63 octets.</p> </li> <li> <p> <code>(63 octets).(63 octets).(63 octets).(62 octets)</code> is not legal because the total length of the DNS name (63+1+63+1+63+1+62) exceeds 253 octets.</p> </li> </ul>"
+      }
+    },
+    "DomainName": {
+      "base": null,
+      "refs": {
+        "AcmeDomainValidation$DomainName": "<p>The domain name being validated.</p>",
+        "AcmeDomainValidationSummary$DomainName": "<p>The domain name being validated.</p>",
+        "CreateAcmeDomainValidationRequest$DomainName": "<p>The domain name to validate.</p>"
       }
     },
     "DomainNameString": {
@@ -309,6 +629,21 @@
         "RequestCertificateRequest$DomainName": "<p>Fully qualified domain name (FQDN), such as www.example.com, that you want to secure with an ACM certificate. Use an asterisk (*) to create a wildcard certificate that protects several sites in the same domain. For example, *.example.com protects www.example.com, site.example.com, and images.example.com. </p> <p>In compliance with <a href=\"https://datatracker.ietf.org/doc/html/rfc5280\">RFC 5280</a>, the length of the domain name (technically, the Common Name) that you provide cannot exceed 64 octets (characters), including periods. To add a longer domain name, specify it in the Subject Alternative Name field, which supports names up to 253 octets in length. </p>",
         "ResendValidationEmailRequest$Domain": "<p>The fully qualified domain name (FQDN) of the certificate that needs to be validated.</p>",
         "ResendValidationEmailRequest$ValidationDomain": "<p>The base validation domain that will act as the suffix of the email addresses that are used to send the emails. This must be the same as the <code>Domain</code> value or a superdomain of the <code>Domain</code> value. For example, if you requested a certificate for <code>site.subdomain.example.com</code> and specify a <b>ValidationDomain</b> of <code>subdomain.example.com</code>, ACM sends email to the the following five addresses:</p> <ul> <li> <p>admin@subdomain.example.com</p> </li> <li> <p>administrator@subdomain.example.com</p> </li> <li> <p>hostmaster@subdomain.example.com</p> </li> <li> <p>postmaster@subdomain.example.com</p> </li> <li> <p>webmaster@subdomain.example.com</p> </li> </ul>"
+      }
+    },
+    "DomainScope": {
+      "base": "<p>Specifies the scope of domain validation.</p>",
+      "refs": {
+        "DnsPrevalidationDetails$DomainScope": "<p>The scope of domains covered by this prevalidation.</p>",
+        "DnsPrevalidationOptions$DomainScope": "<p>The scope of domains covered by this prevalidation.</p>"
+      }
+    },
+    "DomainScopeOption": {
+      "base": null,
+      "refs": {
+        "DomainScope$ExactDomain": "<p>Whether validation applies to the exact domain.</p>",
+        "DomainScope$Subdomains": "<p>Whether validation applies to subdomains.</p>",
+        "DomainScope$Wildcards": "<p>Whether validation applies to wildcard domains.</p>"
       }
     },
     "DomainStatus": {
@@ -340,6 +675,18 @@
       "base": null,
       "refs": {
         "RequestCertificateRequest$DomainValidationOptions": "<p>The domain name that you want ACM to use to send you emails so that you can validate domain ownership.</p>"
+      }
+    },
+    "Expiration": {
+      "base": "<p>Specifies an expiration configuration.</p>",
+      "refs": {
+        "CreateAcmeExternalAccountBindingRequest$Expiration": "<p>The expiration configuration for the external account binding.</p>"
+      }
+    },
+    "ExpirationValueLong": {
+      "base": null,
+      "refs": {
+        "Expiration$Value": "<p>The numeric value of the expiration.</p>"
       }
     },
     "ExpiryEventsConfiguration": {
@@ -391,6 +738,13 @@
         "X509Attributes$ExtendedKeyUsages": "<p>Contains a list of Extended Key Usage X.509 v3 extension objects. Each object specifies a purpose for which the certificate public key can be used and consists of a name and an object identifier (OID). </p>"
       }
     },
+    "FailureDetails": {
+      "base": "<p>Contains details about a failure.</p>",
+      "refs": {
+        "AcmeDomainValidation$FailureDetails": "<p>Details about the failure, if the validation failed.</p>",
+        "AcmeDomainValidationSummary$FailureDetails": "<p>Details about the failure, if the validation failed.</p>"
+      }
+    },
     "FailureReason": {
       "base": null,
       "refs": {
@@ -427,6 +781,14 @@
       "base": null,
       "refs": {}
     },
+    "GetAcmeExternalAccountBindingCredentialsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAcmeExternalAccountBindingCredentialsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetCertificateRequest": {
       "base": null,
       "refs": {}
@@ -434,6 +796,13 @@
     "GetCertificateResponse": {
       "base": null,
       "refs": {}
+    },
+    "HostedZoneId": {
+      "base": null,
+      "refs": {
+        "DnsPrevalidationDetails$HostedZoneId": "<p>The Route 53 hosted zone ID for DNS validation.</p>",
+        "DnsPrevalidationOptions$HostedZoneId": "<p>The Route 53 hosted zone ID for DNS validation.</p>"
+      }
     },
     "HttpRedirect": {
       "base": "<p>Contains information for HTTP-based domain validation of certificates requested through Amazon CloudFront and issued by ACM. This field exists only when the certificate type is <code>AMAZON_ISSUED</code> and the validation method is <code>HTTP</code>.</p>",
@@ -461,6 +830,10 @@
       "refs": {
         "CertificateDetail$InUseBy": "<p>A list of ARNs for the Amazon Web Services resources that are using the certificate. A certificate can be used by multiple Amazon Web Services resources. </p>"
       }
+    },
+    "InternalServerException": {
+      "base": "<p>The request processing has failed because of an unknown error, exception, or failure.</p>",
+      "refs": {}
     },
     "InvalidArgsException": {
       "base": "<p>One or more of request parameters specified is not valid.</p>",
@@ -541,6 +914,62 @@
       "base": "<p>An ACM quota has been exceeded.</p>",
       "refs": {}
     },
+    "ListAcmeAccountsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAcmeAccountsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListAcmeAccountsRequest$MaxResults": "<p>The maximum number of results to return.</p>"
+      }
+    },
+    "ListAcmeAccountsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAcmeDomainValidationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAcmeDomainValidationsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListAcmeDomainValidationsRequest$MaxResults": "<p>The maximum number of results to return.</p>"
+      }
+    },
+    "ListAcmeDomainValidationsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAcmeEndpointsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAcmeEndpointsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListAcmeEndpointsRequest$MaxResults": "<p>The maximum number of results to return.</p>"
+      }
+    },
+    "ListAcmeEndpointsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAcmeExternalAccountBindingsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAcmeExternalAccountBindingsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListAcmeExternalAccountBindingsRequest$MaxResults": "<p>The maximum number of results to return.</p>"
+      }
+    },
+    "ListAcmeExternalAccountBindingsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListCertificatesRequest": {
       "base": null,
       "refs": {}
@@ -556,6 +985,20 @@
     "ListTagsForCertificateResponse": {
       "base": null,
       "refs": {}
+    },
+    "ListTagsForResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "MacKey": {
+      "base": null,
+      "refs": {
+        "GetAcmeExternalAccountBindingCredentialsResponse$MacKey": "<p>The MAC key for the external account binding credentials.</p>"
+      }
     },
     "MaxItems": {
       "base": null,
@@ -581,7 +1024,7 @@
         "AcmCertificateMetadataFilter$Exported": "<p>Filter by whether the certificate has been exported.</p>",
         "CertificateSummary$HasAdditionalSubjectAlternativeNames": "<p>When called by <a href=\"https://docs.aws.amazon.com/acm/latest/APIReference/API_ListCertificates.html\">ListCertificates</a>, indicates whether the full list of subject alternative names has been included in the response. If false, the response includes all of the subject alternative names included in the certificate. If true, the response only includes the first 100 subject alternative names included in the certificate. To display the full list of subject alternative names, use <a href=\"https://docs.aws.amazon.com/acm/latest/APIReference/API_DescribeCertificate.html\">DescribeCertificate</a>.</p>",
         "CertificateSummary$InUse": "<p>Indicates whether the certificate is currently in use by any Amazon Web Services resources.</p>",
-        "CertificateSummary$Exported": "<p>Indicates whether the certificate has been exported. This value exists only when the certificate type is <code>PRIVATE</code>.</p>"
+        "CertificateSummary$Exported": "<p>Indicates whether the certificate has been exported.</p>"
       }
     },
     "OtherName": {
@@ -608,6 +1051,27 @@
         "ExpiryEventsConfiguration$DaysBeforeExpiry": "<p>Specifies the number of days prior to certificate expiration when ACM starts generating <code>EventBridge</code> events. ACM sends one event per day per certificate until the certificate expires. By default, accounts receive events starting 45 days before certificate expiration.</p>"
       }
     },
+    "PrevalidationDetails": {
+      "base": "<p>Contains details about the prevalidation configuration.</p>",
+      "refs": {
+        "AcmeDomainValidation$PrevalidationDetails": "<p>Details about the prevalidation configuration.</p>",
+        "AcmeDomainValidationSummary$PrevalidationDetails": "<p>Details about the prevalidation configuration.</p>"
+      }
+    },
+    "PrevalidationOptions": {
+      "base": "<p>Specifies prevalidation options for domain validation.</p>",
+      "refs": {
+        "CreateAcmeDomainValidationRequest$PrevalidationOptions": "<p>The prevalidation options for the domain.</p>",
+        "UpdateAcmeDomainValidationRequest$PrevalidationOptions": "<p>The updated prevalidation options.</p>"
+      }
+    },
+    "PrevalidationType": {
+      "base": null,
+      "refs": {
+        "AcmeDomainValidation$PrevalidationType": "<p>The type of prevalidation used.</p>",
+        "AcmeDomainValidationSummary$PrevalidationType": "<p>The type of prevalidation used.</p>"
+      }
+    },
     "PrivateKey": {
       "base": null,
       "refs": {
@@ -618,6 +1082,24 @@
       "base": null,
       "refs": {
         "ImportCertificateRequest$PrivateKey": "<p>The private key that matches the public key in the certificate.</p>"
+      }
+    },
+    "PublicCertificateAuthority": {
+      "base": "<p>Configuration for a public certificate authority.</p>",
+      "refs": {
+        "CertificateAuthority$PublicCertificateAuthority": "<p>Configuration for using a public certificate authority.</p>"
+      }
+    },
+    "PublicKeyAlgorithm": {
+      "base": null,
+      "refs": {
+        "PublicKeyAlgorithmList$member": null
+      }
+    },
+    "PublicKeyAlgorithmList": {
+      "base": null,
+      "refs": {
+        "PublicCertificateAuthority$AllowedKeyAlgorithms": "<p>The key algorithms allowed for certificates issued by this certificate authority.</p>"
       }
     },
     "PutAccountConfigurationRequest": {
@@ -687,6 +1169,7 @@
     "ResourceRecord": {
       "base": "<p>Contains a DNS record value that you can use to validate ownership or control of a domain. This is used by the <a>DescribeCertificate</a> action. </p>",
       "refs": {
+        "DnsPrevalidationDetails$ResourceRecord": "<p>The DNS resource record to create for domain validation.</p>",
         "DomainValidation$ResourceRecord": "<p>Contains the CNAME record that you add to your DNS database for domain validation. For more information, see <a href=\"https://docs.aws.amazon.com/acm/latest/userguide/gs-acm-validate-dns.html\">Use DNS to Validate Domain Ownership</a>.</p> <note> <p>The CNAME information that you need does not include the name of your domain. If you include your domain name in the DNS database CNAME record, validation fails. For example, if the name is <code>_a79865eb4cd1a6ab990a45779b4e0b96.yourdomain.com</code>, only <code>_a79865eb4cd1a6ab990a45779b4e0b96</code> must be used.</p> </note>"
       }
     },
@@ -697,6 +1180,14 @@
         "RevokeCertificateRequest$RevocationReason": "<p>Specifies why you revoked the certificate.</p>"
       }
     },
+    "RevokeAcmeAccountRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "RevokeAcmeExternalAccountBindingRequest": {
+      "base": null,
+      "refs": {}
+    },
     "RevokeCertificateRequest": {
       "base": null,
       "refs": {}
@@ -704,6 +1195,14 @@
     "RevokeCertificateResponse": {
       "base": null,
       "refs": {}
+    },
+    "RoleArn": {
+      "base": null,
+      "refs": {
+        "AcmeExternalAccountBinding$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role associated with the external account binding.</p>",
+        "AcmeExternalAccountBindingSummary$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role associated with the external account binding.</p>",
+        "CreateAcmeExternalAccountBindingRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role to associate with the external account binding.</p>"
+      }
     },
     "SearchCertificatesRequest": {
       "base": null,
@@ -744,6 +1243,10 @@
         "AccessDeniedException$Message": null
       }
     },
+    "ServiceQuotaExceededException": {
+      "base": "<p>A service quota has been exceeded.</p>",
+      "refs": {}
+    },
     "SortBy": {
       "base": null,
       "refs": {
@@ -759,13 +1262,26 @@
     "String": {
       "base": null,
       "refs": {
+        "AcmeAccount$AccountUrl": "<p>The URL of the ACME account.</p>",
+        "AcmeAccount$PublicKeyThumbprint": "<p>The thumbprint of the public key associated with the ACME account.</p>",
+        "AcmeAccountSummary$AccountUrl": "<p>The URL of the ACME account.</p>",
+        "AcmeAccountSummary$PublicKeyThumbprint": "<p>The thumbprint of the public key associated with the ACME account.</p>",
+        "AcmeEndpoint$EndpointUrl": "<p>The URL of the ACME endpoint.</p>",
+        "AcmeEndpoint$FailureReason": "<p>The reason the ACME endpoint failed, if applicable.</p>",
+        "AcmeEndpointSummary$EndpointUrl": "<p>The URL of the ACME endpoint.</p>",
+        "AcmeEndpointSummary$FailureReason": "<p>The reason the ACME endpoint failed, if applicable.</p>",
         "CertificateDetail$Serial": "<p>The serial number of the certificate.</p>",
         "CertificateDetail$Subject": "<p>The name of the entity that is associated with the public key contained in the certificate.</p>",
         "CertificateDetail$Issuer": "<p>The name of the certificate authority that issued and signed the certificate.</p>",
         "CertificateDetail$SignatureAlgorithm": "<p>The algorithm that was used to sign the certificate.</p>",
         "ConflictException$message": null,
+        "ContactList$member": null,
+        "CreateAcmeDomainValidationRequest$IdempotencyToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
+        "CreateAcmeEndpointRequest$IdempotencyToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
+        "CreateAcmeExternalAccountBindingRequest$IdempotencyToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "CustomAttribute$ObjectIdentifier": "<p>Specifies the object identifier (OID) of the attribute type of the relative distinguished name (RDN).</p>",
         "CustomAttribute$Value": "<p>Specifies the attribute value of relative distinguished name (RDN).</p>",
+        "DescribeAcmeAccountRequest$AccountUrl": "<p>The URL of the ACME account.</p>",
         "DistinguishedName$CommonName": "<p>The common name (CN) attribute.</p>",
         "DistinguishedName$Country": "<p>The country (C) attribute.</p>",
         "DistinguishedName$DistinguishedNameQualifier": "<p>The distinguished name qualifier attribute.</p>",
@@ -782,14 +1298,17 @@
         "DistinguishedName$Title": "<p>The title attribute.</p>",
         "DomainComponentList$member": null,
         "ExtendedKeyUsage$OID": "<p>An object identifier (OID) for the extension value. OIDs are strings of numbers separated by periods. The following OIDs are defined in RFC 3280 and RFC 5280. </p> <ul> <li> <p> <code>1.3.6.1.5.5.7.3.1 (TLS_WEB_SERVER_AUTHENTICATION)</code> </p> </li> <li> <p> <code>1.3.6.1.5.5.7.3.2 (TLS_WEB_CLIENT_AUTHENTICATION)</code> </p> </li> <li> <p> <code>1.3.6.1.5.5.7.3.3 (CODE_SIGNING)</code> </p> </li> <li> <p> <code>1.3.6.1.5.5.7.3.4 (EMAIL_PROTECTION)</code> </p> </li> <li> <p> <code>1.3.6.1.5.5.7.3.8 (TIME_STAMPING)</code> </p> </li> <li> <p> <code>1.3.6.1.5.5.7.3.9 (OCSP_SIGNING)</code> </p> </li> <li> <p> <code>1.3.6.1.5.5.7.3.5 (IPSEC_END_SYSTEM)</code> </p> </li> <li> <p> <code>1.3.6.1.5.5.7.3.6 (IPSEC_TUNNEL)</code> </p> </li> <li> <p> <code>1.3.6.1.5.5.7.3.7 (IPSEC_USER)</code> </p> </li> </ul>",
+        "FailureDetails$Message": "<p>A message describing the failure.</p>",
         "GeneralName$DnsName": "<p>Represents <code>GeneralName</code> as a DNS name.</p>",
         "GeneralName$IpAddress": "<p>Represents <code>GeneralName</code> as an IPv4 or IPv6 address.</p>",
         "GeneralName$RegisteredId": "<p>Represents <code>GeneralName</code> as an object identifier (OID).</p>",
         "GeneralName$Rfc822Name": "<p>Represents <code>GeneralName</code> as an <a href=\"https://datatracker.ietf.org/doc/html/rfc822\">RFC 822</a> email address.</p>",
         "GeneralName$UniformResourceIdentifier": "<p>Represents <code>GeneralName</code> as a URI.</p>",
+        "GetAcmeExternalAccountBindingCredentialsResponse$KeyId": "<p>The key identifier for the external account binding credentials.</p>",
         "HttpRedirect$RedirectFrom": "<p>The URL including the domain to be validated. The certificate authority sends <code>GET</code> requests here during validation.</p>",
         "HttpRedirect$RedirectTo": "<p>The URL hosting the validation token. <code>RedirectFrom</code> must return this content or redirect here.</p>",
         "InUseList$member": null,
+        "InternalServerException$message": null,
         "InvalidArgsException$message": null,
         "InvalidArnException$message": null,
         "InvalidDomainValidationOptionsException$message": null,
@@ -797,6 +1316,14 @@
         "InvalidStateException$message": null,
         "InvalidTagException$message": null,
         "LimitExceededException$message": null,
+        "ListAcmeAccountsRequest$NextToken": "<p>A token for pagination.</p>",
+        "ListAcmeAccountsResponse$NextToken": "<p>A token for pagination.</p>",
+        "ListAcmeDomainValidationsRequest$NextToken": "<p>A token for pagination.</p>",
+        "ListAcmeDomainValidationsResponse$NextToken": "<p>A token for pagination.</p>",
+        "ListAcmeEndpointsRequest$NextToken": "<p>A token for pagination.</p>",
+        "ListAcmeEndpointsResponse$NextToken": "<p>A token for pagination.</p>",
+        "ListAcmeExternalAccountBindingsRequest$NextToken": "<p>A token for pagination.</p>",
+        "ListAcmeExternalAccountBindingsResponse$NextToken": "<p>A token for pagination.</p>",
         "OtherName$ObjectIdentifier": "<p>Specifies an OID.</p>",
         "OtherName$Value": "<p>Specifies an OID value.</p>",
         "RequestInProgressException$message": null,
@@ -804,6 +1331,8 @@
         "ResourceNotFoundException$message": null,
         "ResourceRecord$Name": "<p>The name of the DNS record to create in your domain. This is supplied by ACM.</p>",
         "ResourceRecord$Value": "<p>The value of the CNAME record to add to your DNS database. This is supplied by ACM.</p>",
+        "RevokeAcmeAccountRequest$AccountUrl": "<p>The URL of the ACME account to revoke.</p>",
+        "ServiceQuotaExceededException$message": null,
         "TagPolicyException$message": null,
         "TooManyTagsException$message": null,
         "ValidationEmailList$member": null
@@ -856,21 +1385,40 @@
     "TagKey": {
       "base": null,
       "refs": {
-        "Tag$Key": "<p>The key of the tag.</p>"
+        "Tag$Key": "<p>The key of the tag.</p>",
+        "TagKeyList$member": null
+      }
+    },
+    "TagKeyList": {
+      "base": null,
+      "refs": {
+        "UntagResourceRequest$TagKeys": "<p>The key of each tag to remove.</p>"
       }
     },
     "TagList": {
       "base": null,
       "refs": {
+        "AcmeEndpoint$CertificateTags": "<p>Tags applied to certificates issued through this ACME endpoint.</p>",
+        "AcmeEndpointSummary$CertificateTags": "<p>Tags applied to certificates issued through this ACME endpoint.</p>",
         "AddTagsToCertificateRequest$Tags": "<p>The key-value pair that defines the tag. The tag value is optional.</p>",
+        "CreateAcmeDomainValidationRequest$Tags": "<p>One or more tags to associate with the domain validation.</p>",
+        "CreateAcmeEndpointRequest$Tags": "<p>One or more tags to associate with the ACME endpoint.</p>",
+        "CreateAcmeEndpointRequest$CertificateTags": "<p>Tags to apply to certificates issued through this ACME endpoint.</p>",
+        "CreateAcmeExternalAccountBindingRequest$Tags": "<p>One or more tags to associate with the external account binding.</p>",
         "ImportCertificateRequest$Tags": "<p>One or more resource tags to associate with the imported certificate. </p> <p>Note: You cannot apply tags when reimporting a certificate.</p>",
         "ListTagsForCertificateResponse$Tags": "<p>The key-value pairs that define the applied tags.</p>",
+        "ListTagsForResourceResponse$Tags": "<p>The tags associated with the resource.</p>",
         "RemoveTagsFromCertificateRequest$Tags": "<p>The key-value pair that defines the tag to remove.</p>",
-        "RequestCertificateRequest$Tags": "<p>One or more resource tags to associate with the certificate.</p>"
+        "RequestCertificateRequest$Tags": "<p>One or more resource tags to associate with the certificate.</p>",
+        "TagResourceRequest$Tags": "<p>The key-value pair that defines the tag to apply.</p>"
       }
     },
     "TagPolicyException": {
       "base": "<p>A specified tag did not comply with an existing tag policy and was rejected.</p>",
+      "refs": {}
+    },
+    "TagResourceRequest": {
+      "base": null,
       "refs": {}
     },
     "TagValue": {
@@ -895,6 +1443,37 @@
         "ThrottlingException$throttlingReasons": "<p>One or more reasons why the request was throttled.</p>"
       }
     },
+    "TimeType": {
+      "base": null,
+      "refs": {
+        "Expiration$Type": "<p>The time unit for the expiration value.</p>"
+      }
+    },
+    "Timestamp": {
+      "base": null,
+      "refs": {
+        "AcmeAccount$CreatedAt": "<p>The time at which the ACME account was created.</p>",
+        "AcmeAccountSummary$CreatedAt": "<p>The time at which the ACME account was created.</p>",
+        "AcmeDomainValidation$CreatedAt": "<p>The time at which the domain validation was created.</p>",
+        "AcmeDomainValidation$UpdatedAt": "<p>The time at which the domain validation was last updated.</p>",
+        "AcmeDomainValidationSummary$CreatedAt": "<p>The time at which the domain validation was created.</p>",
+        "AcmeDomainValidationSummary$UpdatedAt": "<p>The time at which the domain validation was last updated.</p>",
+        "AcmeEndpoint$CreatedAt": "<p>The time at which the ACME endpoint was created.</p>",
+        "AcmeEndpoint$UpdatedAt": "<p>The time at which the ACME endpoint was last updated.</p>",
+        "AcmeEndpointSummary$CreatedAt": "<p>The time at which the ACME endpoint was created.</p>",
+        "AcmeEndpointSummary$UpdatedAt": "<p>The time at which the ACME endpoint was last updated.</p>",
+        "AcmeExternalAccountBinding$ExpiresAt": "<p>The time at which the external account binding expires.</p>",
+        "AcmeExternalAccountBinding$RevokedAt": "<p>The time at which the external account binding was revoked.</p>",
+        "AcmeExternalAccountBinding$LastUsedAt": "<p>The time at which the external account binding was last used.</p>",
+        "AcmeExternalAccountBinding$CreatedAt": "<p>The time at which the external account binding was created.</p>",
+        "AcmeExternalAccountBinding$UpdatedAt": "<p>The time at which the external account binding was last updated.</p>",
+        "AcmeExternalAccountBindingSummary$ExpiresAt": "<p>The time at which the external account binding expires.</p>",
+        "AcmeExternalAccountBindingSummary$RevokedAt": "<p>The time at which the external account binding was revoked.</p>",
+        "AcmeExternalAccountBindingSummary$LastUsedAt": "<p>The time at which the external account binding was last used.</p>",
+        "AcmeExternalAccountBindingSummary$CreatedAt": "<p>The time at which the external account binding was created.</p>",
+        "AcmeExternalAccountBindingSummary$UpdatedAt": "<p>The time at which the external account binding was last updated.</p>"
+      }
+    },
     "TimestampRange": {
       "base": "<p>Specifies a time range for filtering certificates.</p>",
       "refs": {
@@ -904,6 +1483,18 @@
     },
     "TooManyTagsException": {
       "base": "<p>The request contains too many tags. Try the request again with fewer tags.</p>",
+      "refs": {}
+    },
+    "UntagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAcmeDomainValidationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAcmeEndpointRequest": {
+      "base": null,
       "refs": {}
     },
     "UpdateCertificateOptionsRequest": {

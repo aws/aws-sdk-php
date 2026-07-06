@@ -994,6 +994,15 @@
         "RunLogLocation$engineLogStream": "<p>The log stream ARN for the engine log.</p>"
       }
     },
+    "EngineSettings": {
+      "base": null,
+      "refs": {
+        "DefaultRunSetting$engineSettings": "<p>Engine-specific settings for the workflow run. Use this field to specify configuration options that are specific to the workflow engine (for example, Nextflow profiles).</p>",
+        "GetRunResponse$engineSettings": "<p>The engine-specific settings for the workflow run.</p>",
+        "InlineSetting$engineSettings": "<p>Per-run engine-specific settings. Use this field to specify configuration options that are specific to the workflow engine (for example, Nextflow profiles). Overrides <code>defaultRunSetting.engineSettings</code> for this run.</p>",
+        "StartRunRequest$engineSettings": "<p>Engine-specific settings for the workflow run. Use this field to specify configuration options that are specific to the workflow engine (for example, Nextflow profiles).</p>"
+      }
+    },
     "EngineVersion": {
       "base": null,
       "refs": {
@@ -3226,6 +3235,14 @@
         "SchemaItem$value": null
       }
     },
+    "ScratchStorageMode": {
+      "base": null,
+      "refs": {
+        "DefaultRunSetting$scratchStorageMode": "<p>Optional configuration for enabling scratch ephemeral storage mounted at /tmp. If not specified, this will default to SHARED. This configuration is applicable only for CPU tasks. For tasks using GPUs, scratch storage is always LOCAL.</p>",
+        "GetRunResponse$scratchStorageMode": "<p>Optional configuration for enabling scratch ephemeral storage mounted at /tmp. If absent, this will default to SHARED. This configuration is applicable only for CPU tasks. For tasks using GPUs, scratch storage is always LOCAL.</p>",
+        "StartRunRequest$scratchStorageMode": "<p>Optional configuration for enabling scratch ephemeral storage mounted at /tmp. If not specified, this will default to SHARED. This configuration is applicable only for CPU tasks. For tasks using GPUs, scratch storage is always LOCAL.</p>"
+      }
+    },
     "SecurityGroupId": {
       "base": null,
       "refs": {
@@ -4563,6 +4580,7 @@
         "CreateWorkflowRequest$name": "<p>Name (optional but highly recommended) for the workflow to locate relevant information in the CloudWatch logs and Amazon Web Services HealthOmics console. </p>",
         "GetWorkflowResponse$name": "<p>The workflow's name.</p>",
         "ListWorkflowsRequest$name": "<p>Filter the list by workflow name.</p>",
+        "RunListItem$workflowName": "<p>The name of the workflow.</p>",
         "UpdateWorkflowRequest$name": "<p>A name for the workflow.</p>",
         "WorkflowListItem$name": "<p>The workflow's name.</p>"
       }
@@ -4602,7 +4620,29 @@
         "CreateWorkflowRequest$parameterTemplate": "<p>A parameter template for the workflow. If this field is blank, Amazon Web Services HealthOmics will automatically parse the parameter template values from your workflow definition file. To override these service generated default values, provide a parameter template. To view an example of a parameter template, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/parameter-templates.html\">Parameter template files</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
         "CreateWorkflowVersionRequest$parameterTemplate": "<p>A parameter template for this workflow version. If this field is blank, Amazon Web Services HealthOmics will automatically parse the parameter template values from your workflow definition file. To override these service generated default values, provide a parameter template. To view an example of a parameter template, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/parameter-templates.html\">Parameter template files</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
         "GetWorkflowResponse$parameterTemplate": "<p>The workflow's parameter template.</p>",
-        "GetWorkflowVersionResponse$parameterTemplate": "<p>The parameter template for the workflow version.</p>"
+        "GetWorkflowVersionResponse$parameterTemplate": "<p>The parameter template for the workflow version.</p>",
+        "WorkflowProfileParameterTemplates$value": null
+      }
+    },
+    "WorkflowProfileList": {
+      "base": null,
+      "refs": {
+        "GetWorkflowResponse$profiles": "<p>The list of Nextflow profiles that are available for this workflow. Profiles allow you to select predefined configuration settings at runtime.</p>",
+        "GetWorkflowVersionResponse$profiles": "<p>The list of Nextflow profiles that are available for this workflow version. Profiles allow you to select predefined configuration settings at runtime.</p>"
+      }
+    },
+    "WorkflowProfileName": {
+      "base": null,
+      "refs": {
+        "WorkflowProfileList$member": null,
+        "WorkflowProfileParameterTemplates$key": null
+      }
+    },
+    "WorkflowProfileParameterTemplates": {
+      "base": null,
+      "refs": {
+        "GetWorkflowResponse$profileParameterTemplates": "<p>A mapping of profile names to their parameter templates. Each profile defines its own set of parameters that you can use when starting a run with that profile.</p>",
+        "GetWorkflowVersionResponse$profileParameterTemplates": "<p>A mapping of profile names to their parameter templates. Each profile defines its own set of parameters that you can use when starting a run with that profile.</p>"
       }
     },
     "WorkflowRequestId": {

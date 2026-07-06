@@ -32,6 +32,7 @@
     "DeleteProtectConfiguration": "<p>Permanently delete the protect configuration. The protect configuration must have deletion protection disabled and must not be associated as the account default protect configuration or associated with a configuration set.</p>",
     "DeleteProtectConfigurationRuleSetNumberOverride": "<p>Permanently delete the protect configuration rule set number override.</p>",
     "DeleteRcsAgent": "<p>Deletes an existing RCS agent. If deletion protection is enabled, an error is returned.</p>",
+    "DeleteRcsMessageSpendLimitOverride": "<p>Deletes an account-level monthly spending limit override for sending RCS messages. Deleting a spend limit override sets the <code>EnforcedLimit</code> to equal the <code>MaxLimit</code>, which is set by Amazon Web Services.</p>",
     "DeleteRegistration": "<p>Permanently delete an existing registration from your account.</p>",
     "DeleteRegistrationAttachment": "<p>Permanently delete the specified registration attachment.</p>",
     "DeleteRegistrationFieldValue": "<p>Delete the value in a registration form field.</p>",
@@ -86,6 +87,7 @@
     "SendMediaMessage": "<p>Creates a new multimedia message (MMS) and sends it to a recipient's phone number. </p>",
     "SendNotifyTextMessage": "<p>Sends a templated text message through a notify configuration to a recipient's phone number.</p>",
     "SendNotifyVoiceMessage": "<p>Sends a templated voice message through a notify configuration to a recipient's phone number.</p>",
+    "SendRcsMessage": "<p>Creates a new RCS message and sends it to a recipient's phone number. RCS messages support rich content including text, files, rich cards, and carousels with interactive suggested actions.</p>",
     "SendTextMessage": "<p>Creates a new text message and sends it to a recipient's phone number. SendTextMessage only sends an SMS message to one recipient each time it is invoked.</p> <p>SMS throughput limits are measured in Message Parts per Second (MPS). Your MPS limit depends on the destination country of your messages, as well as the type of phone number (origination number) that you use to send the message. For more information about MPS, see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/sms-limitations-mps.html\">Message Parts per Second (MPS) limits</a> in the <i>End User Messaging SMS User Guide</i>.</p>",
     "SendVoiceMessage": "<p>Allows you to send a request that sends a voice message. This operation uses <a href=\"http://aws.amazon.com/polly/\">Amazon Polly</a> to convert a text script into a voice message.</p>",
     "SetAccountDefaultProtectConfiguration": "<p>Set a protect configuration as your account default. You can only have one account default protect configuration at a time. The current account default protect configuration is replaced with the provided protect configuration.</p>",
@@ -94,6 +96,7 @@
     "SetDefaultSenderId": "<p>Sets default sender ID on a configuration set.</p> <p>When sending a text message to a destination country that supports sender IDs, the default sender ID on the configuration set specified will be used if no dedicated origination phone numbers or registered sender IDs are available in your account.</p>",
     "SetMediaMessageSpendLimitOverride": "<p>Sets an account level monthly spend limit override for sending MMS messages. The requested spend limit must be less than or equal to the <code>MaxLimit</code>, which is set by Amazon Web Services. </p>",
     "SetNotifyMessageSpendLimitOverride": "<p>Sets an account level monthly spend limit override for sending notify messages. The requested spend limit must be less than or equal to the <code>MaxLimit</code>, which is set by Amazon Web Services. </p>",
+    "SetRcsMessageSpendLimitOverride": "<p>Sets an account level monthly spend limit override for sending RCS messages. The requested spend limit must be less than or equal to the <code>MaxLimit</code>, which is set by Amazon Web Services.</p>",
     "SetTextMessageSpendLimitOverride": "<p>Sets an account level monthly spend limit override for sending text messages. The requested spend limit must be less than or equal to the <code>MaxLimit</code>, which is set by Amazon Web Services. </p>",
     "SetVoiceMessageSpendLimitOverride": "<p>Sets an account level monthly spend limit override for sending voice messages. The requested spend limit must be less than or equal to the <code>MaxLimit</code>, which is set by Amazon Web Services. </p>",
     "SubmitRegistrationVersion": "<p>Submit the specified registration for review and approval.</p>",
@@ -230,6 +233,7 @@
         "SendMediaMessageRequest$MessageFeedbackEnabled": "<p>Set to true to enable message feedback for the message. When a user receives the message you need to update the message status using <a>PutMessageFeedback</a>.</p>",
         "SendNotifyTextMessageRequest$MessageFeedbackEnabled": "<p>Set to true to enable message feedback for the message. When a user receives the message you need to update the message status using <a>PutMessageFeedback</a>.</p>",
         "SendNotifyVoiceMessageRequest$MessageFeedbackEnabled": "<p>Set to true to enable message feedback for the message. When a user receives the message you need to update the message status using <a>PutMessageFeedback</a>.</p>",
+        "SendRcsMessageRequest$MessageFeedbackEnabled": "<p>Set to true to enable message feedback for the message. When a user receives the message you need to update the message status using <a>PutMessageFeedback</a>.</p>",
         "SendTextMessageRequest$MessageFeedbackEnabled": "<p>Set to true to enable message feedback for the message. When a user receives the message you need to update the message status using <a>PutMessageFeedback</a>.</p>",
         "SendVoiceMessageRequest$MessageFeedbackEnabled": "<p>Set to true to enable message feedback for the message. When a user receives the message you need to update the message status using <a>PutMessageFeedback</a>.</p>",
         "SetDefaultMessageFeedbackEnabledRequest$MessageFeedbackEnabled": "<p>Set to true to enable message feedback.</p>",
@@ -381,6 +385,7 @@
         "SendMediaMessageRequest$ConfigurationSetName": "<p>The name of the configuration set to use. This can be either the ConfigurationSetName or ConfigurationSetArn.</p>",
         "SendNotifyTextMessageRequest$ConfigurationSetName": "<p>The name of the configuration set to use. This can be either the ConfigurationSetName or ConfigurationSetArn.</p>",
         "SendNotifyVoiceMessageRequest$ConfigurationSetName": "<p>The name of the configuration set to use. This can be either the ConfigurationSetName or ConfigurationSetArn.</p>",
+        "SendRcsMessageRequest$ConfigurationSetName": "<p>The name of the configuration set to use. This can be either the ConfigurationSetName or ConfigurationSetArn.</p>",
         "SendTextMessageRequest$ConfigurationSetName": "<p>The name of the configuration set to use. This can be either the ConfigurationSetName or ConfigurationSetArn.</p>",
         "SendVoiceMessageRequest$ConfigurationSetName": "<p>The name of the configuration set to use. This can be either the ConfigurationSetName or ConfigurationSetArn.</p>",
         "SetDefaultMessageFeedbackEnabledRequest$ConfigurationSetName": "<p>The name of the configuration set to use. This can be either the ConfigurationSetName or ConfigurationSetArn.</p>",
@@ -412,6 +417,7 @@
         "SendMediaMessageRequest$Context": "<p>You can specify custom data in this field. If you do, that data is logged to the event destination.</p>",
         "SendNotifyTextMessageRequest$Context": "<p>You can specify custom data in this field. If you do, that data is logged to the event destination.</p>",
         "SendNotifyVoiceMessageRequest$Context": "<p>You can specify custom data in this field. If you do, that data is logged to the event destination.</p>",
+        "SendRcsMessageRequest$Context": "<p>You can specify custom data in this field. If you do, that data is logged to the event destination.</p>",
         "SendTextMessageRequest$Context": "<p>You can specify custom data in this field. If you do, that data is logged to the event destination.</p>",
         "SendVoiceMessageRequest$Context": "<p>You can specify custom data in this field. If you do, that data is logged to the event destination.</p>"
       }
@@ -671,6 +677,14 @@
       "refs": {}
     },
     "DeleteRcsAgentResult": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRcsMessageSpendLimitOverrideRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRcsMessageSpendLimitOverrideResult": {
       "base": null,
       "refs": {}
     },
@@ -1103,12 +1117,14 @@
         "CloudWatchLogsDestination$IamRoleArn": "<p>The Amazon Resource Name (ARN) of an Identity and Access Management role that is able to write event data to an Amazon CloudWatch destination.</p>",
         "CreatePoolResult$TwoWayChannelRole": "<p>An optional IAM Role Arn for a service to assume, to be able to post inbound SMS messages.</p>",
         "CreateRcsAgentResult$TwoWayChannelRole": "<p>An optional IAM Role Arn for a service to assume, to be able to post inbound SMS messages.</p>",
+        "CreateRcsAgentResult$TwoWayMediaS3Role": "<p>The ARN of the IAM role used to write inbound RCS media files to the S3 bucket. The role must have <code>s3:PutObject</code> permission on the bucket and a trust policy allowing <code>sms-voice.amazonaws.com</code> to assume it.</p>",
         "DeletePoolResult$TwoWayChannelRole": "<p>An optional IAM Role Arn for a service to assume, to be able to post inbound SMS messages.</p>",
         "DeleteRcsAgentResult$TwoWayChannelRole": "<p>An optional IAM Role Arn for a service to assume, to be able to post inbound SMS messages.</p>",
         "KinesisFirehoseDestination$IamRoleArn": "<p>The ARN of an Identity and Access Management role that is able to write event data to an Amazon Data Firehose destination.</p>",
         "PhoneNumberInformation$TwoWayChannelRole": "<p>An optional IAM Role Arn for a service to assume, to be able to post inbound SMS messages.</p>",
         "PoolInformation$TwoWayChannelRole": "<p>An optional IAM Role Arn for a service to assume, to be able to post inbound SMS messages.</p>",
         "RcsAgentInformation$TwoWayChannelRole": "<p>An optional IAM Role Arn for a service to assume, to be able to post inbound SMS messages.</p>",
+        "RcsAgentInformation$TwoWayMediaS3Role": "<p>The ARN of the IAM role used to write inbound RCS media files to the S3 bucket.</p>",
         "ReleasePhoneNumberResult$TwoWayChannelRole": "<p>An optional IAM Role Arn for a service to assume, to be able to post inbound SMS messages.</p>",
         "RequestPhoneNumberResult$TwoWayChannelRole": "<p>An optional IAM Role Arn for a service to assume, to be able to post inbound SMS messages.</p>",
         "UpdatePhoneNumberRequest$TwoWayChannelRole": "<p>An optional IAM Role Arn for a service to assume, to be able to post inbound SMS messages.</p>",
@@ -1116,7 +1132,14 @@
         "UpdatePoolRequest$TwoWayChannelRole": "<p>An optional IAM Role Arn for a service to assume, to be able to post inbound SMS messages.</p>",
         "UpdatePoolResult$TwoWayChannelRole": "<p>An optional IAM Role Arn for a service to assume, to be able to post inbound SMS messages.</p>",
         "UpdateRcsAgentRequest$TwoWayChannelRole": "<p>An optional IAM Role Arn for a service to assume, to be able to post inbound SMS messages.</p>",
-        "UpdateRcsAgentResult$TwoWayChannelRole": "<p>An optional IAM Role Arn for a service to assume, to be able to post inbound SMS messages.</p>"
+        "UpdateRcsAgentResult$TwoWayChannelRole": "<p>An optional IAM Role Arn for a service to assume, to be able to post inbound SMS messages.</p>",
+        "UpdateRcsAgentResult$TwoWayMediaS3Role": "<p>The ARN of the IAM role used to write inbound RCS media files to the S3 bucket.</p>"
+      }
+    },
+    "IamRoleArnOrUnset": {
+      "base": "<p>IAM role ARN or UNSET_RCS_MEDIA_CONFIGURATION to clear media config. Pass UNSET_RCS_MEDIA_CONFIGURATION to clear the media configuration from an RCS agent.</p>",
+      "refs": {
+        "UpdateRcsAgentRequest$TwoWayMediaS3Role": "<p>The ARN of the IAM role used to write inbound RCS media files to the S3 bucket. The role must have <code>s3:PutObject</code> permission on the bucket and a trust policy allowing <code>sms-voice.amazonaws.com</code> to assume it. To remove the media configuration, pass the sentinel value <code>UNSET_RCS_MEDIA_CONFIGURATION</code> for both this field and TwoWayMediaS3BucketName.</p>"
       }
     },
     "Integer": {
@@ -1331,6 +1354,7 @@
       "base": null,
       "refs": {
         "SendMediaMessageRequest$MaxPrice": "<p>The maximum amount that you want to spend, in US dollars, per each MMS message.</p>",
+        "SendRcsMessageRequest$MaxPrice": "<p>The maximum amount that you want to spend, in US dollars, per each RCS message.</p>",
         "SendTextMessageRequest$MaxPrice": "<p>The maximum amount that you want to spend, in US dollars, per each text message. If the calculated amount to send the text message is greater than <code>MaxPrice</code>, the message is not sent and an error is returned.</p>",
         "SendVoiceMessageRequest$MaxPricePerMinute": "<p>The maximum amount to spend per voice message, in US dollars.</p>"
       }
@@ -1376,6 +1400,7 @@
     "MediaUrlList": {
       "base": null,
       "refs": {
+        "RcsFallbackConfiguration$MediaUrls": "<p>An array of S3 URIs to media files for MMS fallback. Only valid when Channel is MMS.</p>",
         "SendMediaMessageRequest$MediaUrls": "<p>An array of URLs to each media file to send. </p> <p>The media files have to be stored in an S3 bucket. Supported media file formats are listed in <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/mms-limitations-character.html\">MMS file types, size and character limits</a>. For more information on creating an S3 bucket and managing objects, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html\">Creating a bucket</a>, <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/upload-objects.html\">Uploading objects</a> in the <i>Amazon S3 User Guide</i>, and <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/send-mms-message.html#send-mms-message-bucket\">Setting up an Amazon S3 bucket for MMS files</a> in the <i>Amazon Web Services End User Messaging SMS User Guide</i>.</p>"
       }
     },
@@ -1436,12 +1461,15 @@
       "refs": {
         "DeleteMediaMessageSpendLimitOverrideResult$MonthlyLimit": "<p>The current monthly limit, in US dollars.</p>",
         "DeleteNotifyMessageSpendLimitOverrideResult$MonthlyLimit": "<p>The current monthly limit, in US dollars.</p>",
+        "DeleteRcsMessageSpendLimitOverrideResult$MonthlyLimit": "<p>The current monthly limit to enforce on RCS message spending.</p>",
         "DeleteTextMessageSpendLimitOverrideResult$MonthlyLimit": "<p>The current monthly limit, in US dollars.</p>",
         "DeleteVoiceMessageSpendLimitOverrideResult$MonthlyLimit": "<p>The current monthly limit, in US dollars.</p>",
         "SetMediaMessageSpendLimitOverrideRequest$MonthlyLimit": "<p>The new monthly limit to enforce on text messages.</p>",
         "SetMediaMessageSpendLimitOverrideResult$MonthlyLimit": "<p>The current monthly limit to enforce on sending text messages.</p>",
         "SetNotifyMessageSpendLimitOverrideRequest$MonthlyLimit": "<p>The new monthly limit to enforce on notify messages.</p>",
         "SetNotifyMessageSpendLimitOverrideResult$MonthlyLimit": "<p>The current monthly limit, in US dollars.</p>",
+        "SetRcsMessageSpendLimitOverrideRequest$MonthlyLimit": "<p>The new monthly limit to enforce on RCS message spending.</p>",
+        "SetRcsMessageSpendLimitOverrideResult$MonthlyLimit": "<p>The current monthly limit to enforce on RCS message spending.</p>",
         "SetTextMessageSpendLimitOverrideRequest$MonthlyLimit": "<p>The new monthly limit to enforce on text messages.</p>",
         "SetTextMessageSpendLimitOverrideResult$MonthlyLimit": "<p>The current monthly limit to enforce on sending text messages.</p>",
         "SetVoiceMessageSpendLimitOverrideRequest$MonthlyLimit": "<p>The new monthly limit to enforce on voice messages.</p>",
@@ -1659,7 +1687,7 @@
     "NotifyPoolIdOrUnset": {
       "base": "<p>A pool identifier (ID or ARN) or the special value UNSET_DEFAULT_POOL_FOR_NOTIFY. Pass UNSET_DEFAULT_POOL_FOR_NOTIFY to clear the default pool from a NotifyConfiguration. This shape is used exclusively in UpdateNotifyConfigurationRequest.</p>",
       "refs": {
-        "UpdateNotifyConfigurationRequest$PoolId": "<p>The pool ID or ARN to associate, or the special value UNSET_DEFAULT_POOL_FOR_NOTIFY to clear the current default pool.</p>"
+        "UpdateNotifyConfigurationRequest$PoolId": "<p>The pool identifier or Amazon Resource Name (ARN) to associate with the notify configuration. Pass the special value <code>UNSET_DEFAULT_POOL_FOR_NOTIFY</code> to clear the current default pool from the notify configuration.</p>"
       }
     },
     "NotifyTemplateFilter": {
@@ -1693,7 +1721,7 @@
         "SendNotifyTextMessageResult$TemplateId": "<p>The unique identifier of the template used for the message.</p>",
         "SendNotifyVoiceMessageRequest$TemplateId": "<p>The unique identifier of the template to use for the message.</p>",
         "SendNotifyVoiceMessageResult$TemplateId": "<p>The unique identifier of the template used for the message.</p>",
-        "UpdateNotifyConfigurationRequest$DefaultTemplateId": "<p>The template ID to set as the default, or the special value UNSET_DEFAULT_TEMPLATE to clear the current default template.</p>",
+        "UpdateNotifyConfigurationRequest$DefaultTemplateId": "<p>The default template identifier to associate with the notify configuration. If specified, this template is used when sending messages without an explicit template identifier. Pass the special value <code>UNSET_DEFAULT_TEMPLATE</code> to clear the current default template from the notify configuration.</p>",
         "UpdateNotifyConfigurationResult$DefaultTemplateId": "<p>The default template identifier associated with the notify configuration.</p>"
       }
     },
@@ -1922,12 +1950,14 @@
         "PutOptedOutNumberResult$OptedOutNumber": "<p>The phone number that was added to the OptOutList.</p>",
         "PutProtectConfigurationRuleSetNumberOverrideRequest$DestinationPhoneNumber": "<p>The destination phone number in E.164 format.</p>",
         "PutProtectConfigurationRuleSetNumberOverrideResult$DestinationPhoneNumber": "<p>The destination phone number in E.164 format.</p>",
+        "RcsDialPhoneAction$PhoneNumber": "<p>The phone number to dial in E.164 format.</p>",
         "RegistrationAssociationMetadata$PhoneNumber": "<p>The phone number associated with the registration in E.164 format.</p>",
         "ReleasePhoneNumberResult$PhoneNumber": "<p>The phone number that was released.</p>",
         "RequestPhoneNumberResult$PhoneNumber": "<p>The new phone number that was requested.</p>",
         "SendMediaMessageRequest$DestinationPhoneNumber": "<p>The destination phone number in E.164 format.</p>",
         "SendNotifyTextMessageRequest$DestinationPhoneNumber": "<p>The destination phone number in E.164 format.</p>",
         "SendNotifyVoiceMessageRequest$DestinationPhoneNumber": "<p>The destination phone number in E.164 format.</p>",
+        "SendRcsMessageRequest$DestinationPhoneNumber": "<p>The destination phone number in E.164 format.</p>",
         "SendTextMessageRequest$DestinationPhoneNumber": "<p>The destination phone number in E.164 format.</p>",
         "SendVoiceMessageRequest$DestinationPhoneNumber": "<p>The destination phone number in E.164 format.</p>",
         "UpdatePhoneNumberResult$PhoneNumber": "<p>The phone number that was updated.</p>",
@@ -2129,6 +2159,7 @@
         "SendMediaMessageRequest$DryRun": "<p>When set to true, the message is checked and validated, but isn't sent to the end recipient.</p>",
         "SendNotifyTextMessageRequest$DryRun": "<p>When set to true, the message is checked and validated, but isn't sent to the end recipient.</p>",
         "SendNotifyVoiceMessageRequest$DryRun": "<p>When set to true, the message is checked and validated, but isn't sent to the end recipient.</p>",
+        "SendRcsMessageRequest$DryRun": "<p>When set to true, the message is checked and validated, but isn't sent to the end recipient.</p>",
         "SendTextMessageRequest$DryRun": "<p>When set to true, the message is checked and validated, but isn't sent to the end recipient. You are not charged for using <code>DryRun</code>.</p> <p>The Message Parts per Second (MPS) limit when using <code>DryRun</code> is five. If your origination identity has a lower MPS limit then the lower MPS limit is used. For more information about MPS limits, see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/sms-limitations-mps.html\">Message Parts per Second (MPS) limits</a> in the <i>End User Messaging SMS User Guide</i>..</p>",
         "SendVoiceMessageRequest$DryRun": "<p>When set to true, the message is checked and validated, but isn't sent to the end recipient.</p>",
         "SenderIdInformation$DeletionProtectionEnabled": "<p>By default this is set to false. When set to true the sender ID can't be deleted.</p>",
@@ -2251,6 +2282,7 @@
         "ProtectConfigurationIdList$member": null,
         "PutProtectConfigurationRuleSetNumberOverrideRequest$ProtectConfigurationId": "<p>The unique identifier for the protect configuration.</p>",
         "SendMediaMessageRequest$ProtectConfigurationId": "<p>The unique identifier of the protect configuration to use.</p>",
+        "SendRcsMessageRequest$ProtectConfigurationId": "<p>The unique identifier of the protect configuration to use.</p>",
         "SendTextMessageRequest$ProtectConfigurationId": "<p>The unique identifier for the protect configuration.</p>",
         "SendVoiceMessageRequest$ProtectConfigurationId": "<p>The unique identifier for the protect configuration.</p>",
         "SetAccountDefaultProtectConfigurationRequest$ProtectConfigurationId": "<p>The unique identifier for the protect configuration.</p>",
@@ -2410,6 +2442,317 @@
         "DeleteRcsAgentResult$Status": "<p>The current status of the RCS agent.</p>",
         "RcsAgentInformation$Status": "<p>The current status of the RCS agent.</p>",
         "UpdateRcsAgentResult$Status": "<p>The current status of the RCS agent.</p>"
+      }
+    },
+    "RcsCalendarEventDescription": {
+      "base": null,
+      "refs": {
+        "RcsCreateCalendarEventAction$Description": "<p>An optional description for the calendar event. Maximum 500 characters.</p>"
+      }
+    },
+    "RcsCalendarEventTitle": {
+      "base": null,
+      "refs": {
+        "RcsCreateCalendarEventAction$Title": "<p>The title of the calendar event. Maximum 100 characters.</p>"
+      }
+    },
+    "RcsCardContent": {
+      "base": "<p>The content of a rich card, including title, description, media, and card-level suggested actions.</p>",
+      "refs": {
+        "RcsStandaloneCard$CardContent": "<p>The content of the rich card, including title, description, media, and card-level suggested actions.</p>"
+      }
+    },
+    "RcsCardDescription": {
+      "base": null,
+      "refs": {
+        "RcsCardContent$Description": "<p>The description text of the card. Maximum 2000 characters.</p>",
+        "RcsCarouselCardContent$Description": "<p>The description text of the carousel card. Maximum 2000 characters.</p>"
+      }
+    },
+    "RcsCardMedia": {
+      "base": "<p>The media content of a rich card, including the file URL, optional thumbnail, and display height.</p>",
+      "refs": {
+        "RcsCardContent$Media": "<p>The media content of the card, including the file URL, optional thumbnail, and display height.</p>"
+      }
+    },
+    "RcsCardMediaHeightString": {
+      "base": null,
+      "refs": {
+        "RcsCardMedia$Height": "<p>The display height of the media in the card. Valid values are SHORT, MEDIUM, and TALL.</p>"
+      }
+    },
+    "RcsCardSuggestedActionList": {
+      "base": null,
+      "refs": {
+        "RcsCardContent$Suggestions": "<p>Card-level suggested actions. Maximum 4 suggestions per card.</p>",
+        "RcsCarouselCardContent$Suggestions": "<p>Card-level suggested actions for this carousel card. Maximum 4 suggestions per card.</p>"
+      }
+    },
+    "RcsCardTitle": {
+      "base": null,
+      "refs": {
+        "RcsCardContent$Title": "<p>The title of the card. Maximum 200 characters.</p>",
+        "RcsCarouselCardContent$Title": "<p>The title of the carousel card. Maximum 200 characters.</p>"
+      }
+    },
+    "RcsCarousel": {
+      "base": "<p>A carousel of 2 to 10 scrollable rich cards.</p>",
+      "refs": {
+        "RcsContent$Carousel": "<p>A carousel of 2 to 10 scrollable cards, each with media, title, description, and suggested actions.</p>"
+      }
+    },
+    "RcsCarouselCardContent": {
+      "base": "<p>The content of a carousel card, including title, description, media, and card-level suggested actions. Media height is restricted to SHORT or MEDIUM.</p>",
+      "refs": {
+        "RcsCarouselCardContentList$member": null
+      }
+    },
+    "RcsCarouselCardContentList": {
+      "base": null,
+      "refs": {
+        "RcsCarousel$CardContents": "<p>The list of cards in the carousel. Minimum 2, maximum 10 cards.</p>"
+      }
+    },
+    "RcsCarouselCardMedia": {
+      "base": "<p>The media content of a carousel card. Display height is restricted to SHORT or MEDIUM (TALL is not supported in carousels).</p>",
+      "refs": {
+        "RcsCarouselCardContent$Media": "<p>The media content of the carousel card. Media height is restricted to SHORT or MEDIUM (TALL is not supported in carousels).</p>"
+      }
+    },
+    "RcsCarouselCardMediaHeightString": {
+      "base": null,
+      "refs": {
+        "RcsCarouselCardMedia$Height": "<p>The display height of the media in the carousel card. Valid values are SHORT and MEDIUM.</p>"
+      }
+    },
+    "RcsCarouselCardWidthString": {
+      "base": null,
+      "refs": {
+        "RcsCarousel$CardWidth": "<p>The width of cards in the carousel. Valid values are SMALL and MEDIUM.</p>"
+      }
+    },
+    "RcsContent": {
+      "base": "<p>The message body of an RCS message. Exactly one content type must be specified.</p>",
+      "refs": {
+        "RcsMessageContent$Content": "<p>The content of the RCS message. Exactly one content type must be specified: TextMessage, FileMessage, RichCard, or Carousel.</p>"
+      }
+    },
+    "RcsCreateCalendarEventAction": {
+      "base": "<p>A suggested action that creates a calendar event on the recipient's device.</p>",
+      "refs": {
+        "RcsSuggestedAction$CreateCalendarEvent": "<p>A suggested action that creates a calendar event on the user's device.</p>"
+      }
+    },
+    "RcsDialPhoneAction": {
+      "base": "<p>A suggested action that initiates a phone call to a specified number when tapped by the recipient.</p>",
+      "refs": {
+        "RcsSuggestedAction$DialPhone": "<p>A suggested action that initiates a phone call to the specified number.</p>"
+      }
+    },
+    "RcsEventType": {
+      "base": "<p>RCS event type identifier. Validated at the service layer.</p>",
+      "refs": {
+        "RcsEventTypeList$member": null
+      }
+    },
+    "RcsEventTypeList": {
+      "base": null,
+      "refs": {
+        "CreateRcsAgentResult$TwoWayRcsEventsEnabled": "<p>The list of RCS event types enabled for two-way messaging on the agent.</p>",
+        "DeleteRcsAgentResult$TwoWayRcsEventsEnabled": "<p>The list of RCS event types that were enabled for two-way messaging on the deleted agent.</p>",
+        "RcsAgentInformation$TwoWayRcsEventsEnabled": "<p>The list of RCS event types enabled for two-way messaging on the agent.</p>",
+        "UpdateRcsAgentRequest$TwoWayRcsEventsEnabled": "<p>The list of RCS event types to enable for two-way messaging. Pass an empty list to disable all event types. The special value <code>ALL</code> enables all current and future event types and must be the sole element if used.</p>",
+        "UpdateRcsAgentResult$TwoWayRcsEventsEnabled": "<p>The list of RCS event types enabled for two-way messaging on the agent.</p>"
+      }
+    },
+    "RcsFallbackChannel": {
+      "base": null,
+      "refs": {
+        "RcsFallbackConfiguration$Channel": "<p>The fallback channel to use when RCS delivery fails. Valid values are SMS and MMS. SMS and MMS are mutually exclusive.</p>"
+      }
+    },
+    "RcsFallbackConfiguration": {
+      "base": "<p>Configuration for SMS or MMS fallback when RCS delivery fails or the TimeToLive expires without delivery confirmation.</p>",
+      "refs": {
+        "SendRcsMessageRequest$FallbackConfiguration": "<p>Configuration for SMS or MMS fallback when RCS delivery fails. If provided, the service sends a fallback message via the specified channel when the RCS message fails or the TimeToLive expires.</p>"
+      }
+    },
+    "RcsFallbackMessageBody": {
+      "base": null,
+      "refs": {
+        "RcsFallbackConfiguration$MessageBody": "<p>The text body of the fallback message. Required for SMS fallback. For MMS fallback, at least one of MessageBody or MediaUrls must be provided.</p>"
+      }
+    },
+    "RcsFallbackOriginationIdentity": {
+      "base": null,
+      "refs": {
+        "RcsFallbackConfiguration$OriginationIdentity": "<p>The origination identity to use for the fallback message. This can be a PhoneNumber, PhoneNumberId, PhoneNumberArn, SenderId, or SenderIdArn. Pool IDs and pool ARNs are not accepted. If not specified and the original message was sent via a pool, the service selects a suitable number from the pool.</p>"
+      }
+    },
+    "RcsFileMessage": {
+      "base": "<p>A file message containing a media file (image, video, audio, or PDF) with an optional thumbnail.</p>",
+      "refs": {
+        "RcsContent$FileMessage": "<p>A file message containing a media file (image, video, audio, or PDF) with an optional thumbnail.</p>"
+      }
+    },
+    "RcsLocationLabel": {
+      "base": null,
+      "refs": {
+        "RcsShowLocationAction$Label": "<p>An optional label for the location pin. Maximum 100 characters.</p>"
+      }
+    },
+    "RcsMediaUrl": {
+      "base": null,
+      "refs": {
+        "RcsCardMedia$FileUrl": "<p>The S3 URI of the media file for the card, in the format <code>s3://bucket-name/key</code>. Maximum 2000 characters.</p>",
+        "RcsCardMedia$ThumbnailUrl": "<p>The S3 URI of an optional thumbnail image for the card media. Maximum 2000 characters.</p>",
+        "RcsCarouselCardMedia$FileUrl": "<p>The S3 URI of the media file for the carousel card. Maximum 2000 characters.</p>",
+        "RcsCarouselCardMedia$ThumbnailUrl": "<p>The S3 URI of an optional thumbnail image for the carousel card media. Maximum 2000 characters.</p>",
+        "RcsFileMessage$FileUrl": "<p>The S3 URI of the media file to send, in the format <code>s3://bucket-name/key</code>. The service downloads the file from your S3 bucket, rehosts it, and generates a presigned URL for the aggregator. Maximum 2000 characters.</p>",
+        "RcsFileMessage$ThumbnailUrl": "<p>The S3 URI of an optional thumbnail image for the media file, in the format <code>s3://bucket-name/key</code>. Maximum 2000 characters.</p>"
+      }
+    },
+    "RcsMessageContent": {
+      "base": "<p>The content of an RCS message, containing the message body (text, file, rich card, or carousel) and optional message-level suggested actions.</p>",
+      "refs": {
+        "SendRcsMessageRequest$RcsMessageContent": "<p>The content of the RCS message. Contains the message content (text, file, rich card, or carousel) and optional message-level suggested actions.</p>"
+      }
+    },
+    "RcsMessageOriginationIdentity": {
+      "base": null,
+      "refs": {
+        "SendRcsMessageRequest$OriginationIdentity": "<p>The origination identity of the message. This can be either the RcsAgentId, RcsAgentArn, PoolId, or PoolArn.</p>"
+      }
+    },
+    "RcsMessageTrafficType": {
+      "base": "<p>RCS message traffic type. Validated at the service layer.</p>",
+      "refs": {
+        "SendRcsMessageRequest$MessageTrafficType": "<p>The traffic type of the RCS message. Valid values are AUTHENTICATION, TRANSACTION, PROMOTION, SERVICE_REQUEST, and ACKNOWLEDGEMENT. This field is reserved for future use.</p>"
+      }
+    },
+    "RcsOpenUrlAction": {
+      "base": "<p>A suggested action that opens a URL in the recipient's browser or an in-app webview.</p>",
+      "refs": {
+        "RcsSuggestedAction$OpenUrl": "<p>A suggested action that opens a URL in the user's browser or a webview.</p>"
+      }
+    },
+    "RcsOpenUrlActionApplicationString": {
+      "base": null,
+      "refs": {
+        "RcsOpenUrlAction$Application": "<p>How to open the URL. BROWSER opens in the device's default browser. WEBVIEW opens in an in-app webview.</p>"
+      }
+    },
+    "RcsOpenUrlActionWebviewViewModeString": {
+      "base": null,
+      "refs": {
+        "RcsOpenUrlAction$WebviewViewMode": "<p>The display mode of the webview. Valid values are FULL, HALF, and TALL. Only applicable when Application is WEBVIEW.</p>"
+      }
+    },
+    "RcsOpenUrlValue": {
+      "base": null,
+      "refs": {
+        "RcsOpenUrlAction$Url": "<p>The URL to open. Must start with https://. Maximum 2048 characters.</p>"
+      }
+    },
+    "RcsPostbackData": {
+      "base": null,
+      "refs": {
+        "RcsCreateCalendarEventAction$PostbackData": "<p>The postback data sent to your webhook when the user taps this action. Maximum 2048 characters.</p>",
+        "RcsDialPhoneAction$PostbackData": "<p>The postback data sent to your webhook when the user taps this action. Maximum 2048 characters.</p>",
+        "RcsOpenUrlAction$PostbackData": "<p>The postback data sent to your webhook when the user taps this action. Maximum 2048 characters.</p>",
+        "RcsReplyAction$PostbackData": "<p>The postback data sent to your webhook when the user taps this reply. Maximum 2048 characters.</p>",
+        "RcsRequestLocationAction$PostbackData": "<p>The postback data sent to your webhook when the user taps this action. Maximum 2048 characters.</p>",
+        "RcsShowLocationAction$PostbackData": "<p>The postback data sent to your webhook when the user taps this action. Maximum 2048 characters.</p>"
+      }
+    },
+    "RcsReplyAction": {
+      "base": "<p>A suggested reply action that sends predefined text and postback data when tapped by the recipient.</p>",
+      "refs": {
+        "RcsSuggestedAction$Reply": "<p>A suggested reply that sends predefined text and postback data when tapped.</p>"
+      }
+    },
+    "RcsRequestLocationAction": {
+      "base": "<p>A suggested action that requests the recipient's current location.</p>",
+      "refs": {
+        "RcsSuggestedAction$RequestLocation": "<p>A suggested action that requests the user's current location.</p>"
+      }
+    },
+    "RcsShowLocationAction": {
+      "base": "<p>A suggested action that shows a location on a map when tapped by the recipient.</p>",
+      "refs": {
+        "RcsSuggestedAction$ShowLocation": "<p>A suggested action that shows a location on a map.</p>"
+      }
+    },
+    "RcsShowLocationActionLatitudeDouble": {
+      "base": null,
+      "refs": {
+        "RcsShowLocationAction$Latitude": "<p>The latitude of the location. Valid values are -90 to 90.</p>"
+      }
+    },
+    "RcsShowLocationActionLongitudeDouble": {
+      "base": null,
+      "refs": {
+        "RcsShowLocationAction$Longitude": "<p>The longitude of the location. Valid values are -180 to 180.</p>"
+      }
+    },
+    "RcsStandaloneCard": {
+      "base": "<p>A standalone rich card with media, title, description, and suggested actions.</p>",
+      "refs": {
+        "RcsContent$RichCard": "<p>A standalone rich card with media, title, description, and suggested actions.</p>"
+      }
+    },
+    "RcsStandaloneCardCardOrientationString": {
+      "base": null,
+      "refs": {
+        "RcsStandaloneCard$CardOrientation": "<p>The orientation of the rich card. Valid values are HORIZONTAL and VERTICAL.</p>"
+      }
+    },
+    "RcsStandaloneCardThumbnailImageAlignmentString": {
+      "base": null,
+      "refs": {
+        "RcsStandaloneCard$ThumbnailImageAlignment": "<p>The alignment of the thumbnail image in a horizontal card. Valid values are LEFT and RIGHT. Only applicable when CardOrientation is HORIZONTAL.</p>"
+      }
+    },
+    "RcsSuggestedAction": {
+      "base": "<p>A suggested action displayed to the RCS message recipient. Can be a reply, open URL, dial phone, show location, request location, or create calendar event.</p>",
+      "refs": {
+        "RcsCardSuggestedActionList$member": null,
+        "RcsSuggestedActionList$member": null
+      }
+    },
+    "RcsSuggestedActionList": {
+      "base": null,
+      "refs": {
+        "RcsMessageContent$Suggestions": "<p>Message-level suggested actions displayed to the recipient. Maximum 11 suggestions per message.</p>"
+      }
+    },
+    "RcsSuggestedActionText": {
+      "base": null,
+      "refs": {
+        "RcsCreateCalendarEventAction$Text": "<p>The display text of the action. Maximum 25 characters.</p>",
+        "RcsDialPhoneAction$Text": "<p>The display text of the action. Maximum 25 characters.</p>",
+        "RcsOpenUrlAction$Text": "<p>The display text of the action. Maximum 25 characters.</p>",
+        "RcsReplyAction$Text": "<p>The display text of the suggested reply. Maximum 25 characters.</p>",
+        "RcsRequestLocationAction$Text": "<p>The display text of the action. Maximum 25 characters.</p>",
+        "RcsShowLocationAction$Text": "<p>The display text of the action. Maximum 25 characters.</p>"
+      }
+    },
+    "RcsTextBody": {
+      "base": null,
+      "refs": {
+        "RcsTextMessage$Body": "<p>The text body of the RCS message. Maximum 3072 characters.</p>"
+      }
+    },
+    "RcsTextMessage": {
+      "base": "<p>A plain text RCS message body.</p>",
+      "refs": {
+        "RcsContent$TextMessage": "<p>A plain text RCS message.</p>"
+      }
+    },
+    "RcsTimeToLive": {
+      "base": null,
+      "refs": {
+        "SendRcsMessageRequest$TimeToLive": "<p>The duration in seconds that the RCS message is valid for delivery. If the message cannot be delivered within this duration, it is considered expired. Valid values are 1 to 172800 (48 hours). If a FallbackConfiguration is provided, the fallback is triggered when the duration expires without delivery confirmation.</p>"
       }
     },
     "RegistrationAssociationBehavior": {
@@ -2900,6 +3243,14 @@
       "base": null,
       "refs": {}
     },
+    "SendRcsMessageRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SendRcsMessageResult": {
+      "base": null,
+      "refs": {}
+    },
     "SendTextMessageRequest": {
       "base": null,
       "refs": {}
@@ -2923,7 +3274,7 @@
         "DeleteConfigurationSetResult$DefaultSenderId": "<p>The default Sender ID of the configuration set that was deleted.</p>",
         "DeleteDefaultSenderIdResult$SenderId": "<p>The current sender ID for the configuration set.</p>",
         "ReleaseSenderIdResult$SenderId": "<p>The sender ID that was released.</p>",
-        "RequestSenderIdRequest$SenderId": "<p>The sender ID string to request.</p>",
+        "RequestSenderIdRequest$SenderId": "<p>The sender ID string to request. The sender ID can be 1-11 alphanumeric characters including letters (A-Z, a-z), numbers (0-9), or hyphens (-). The sender ID must contain at least one letter and cannot start or end with a hyphen.</p>",
         "RequestSenderIdResult$SenderId": "<p>The sender ID that was requested.</p>",
         "SenderIdInformation$SenderId": "<p>The alphanumeric sender ID in a specific country that you'd like to describe.</p>",
         "SetDefaultSenderIdRequest$SenderId": "<p>The current sender ID for the configuration set. When sending a text message to a destination country which supports SenderIds, the default sender ID on the configuration set specified on <a>SendTextMessage</a> will be used if no dedicated origination phone numbers or registered SenderIds are available in your account, instead of a generic sender ID, such as 'NOTICE'.</p>",
@@ -3036,6 +3387,14 @@
       "refs": {}
     },
     "SetNotifyMessageSpendLimitOverrideResult": {
+      "base": null,
+      "refs": {}
+    },
+    "SetRcsMessageSpendLimitOverrideRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SetRcsMessageSpendLimitOverrideResult": {
       "base": null,
       "refs": {}
     },
@@ -3253,6 +3612,7 @@
         "SendNotifyTextMessageResult$ResolvedMessageBody": "<p>The message body after template variable substitution has been applied.</p>",
         "SendNotifyVoiceMessageResult$MessageId": "<p>The unique identifier for the message.</p>",
         "SendNotifyVoiceMessageResult$ResolvedMessageBody": "<p>The message body after template variable substitution has been applied.</p>",
+        "SendRcsMessageResult$MessageId": "<p>The unique identifier for the message.</p>",
         "SendTextMessageResult$MessageId": "<p>The unique identifier for the message.</p>",
         "SendVoiceMessageResult$MessageId": "<p>The unique identifier for the message.</p>",
         "SenderIdInformation$SenderIdArn": "<p>The Amazon Resource Name (ARN) associated with the SenderId.</p>",
@@ -3468,7 +3828,7 @@
     "TextMessageOriginationIdentity": {
       "base": null,
       "refs": {
-        "SendTextMessageRequest$OriginationIdentity": "<p>The origination identity of the message. This can be either the PhoneNumber, PhoneNumberId, PhoneNumberArn, SenderId, SenderIdArn, PoolId, or PoolArn.</p> <important> <p>If you are using a shared End User Messaging SMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>"
+        "SendTextMessageRequest$OriginationIdentity": "<p>The origination identity of the message. This can be either the PhoneNumber, PhoneNumberId, PhoneNumberArn, RcsAgentId, RcsAgentArn, SenderId, SenderIdArn, PoolId, or PoolArn.</p> <important> <p>If you are using a shared End User Messaging SMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>"
       }
     },
     "TextValidation": {
@@ -3551,6 +3911,8 @@
         "PutProtectConfigurationRuleSetNumberOverrideResult$ExpirationTimestamp": "<p>The time the rule will expire at.</p>",
         "PutResourcePolicyResult$CreatedTimestamp": "<p>The time when the resource-based policy was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
         "RcsAgentInformation$CreatedTimestamp": "<p>The time when the RCS agent was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
+        "RcsCreateCalendarEventAction$StartTime": "<p>The start time of the calendar event in ISO 8601 format.</p>",
+        "RcsCreateCalendarEventAction$EndTime": "<p>The end time of the calendar event in ISO 8601 format.</p>",
         "RegistrationAttachmentsInformation$CreatedTimestamp": "<p>The time when the registration attachment was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
         "RegistrationInformation$CreatedTimestamp": "<p>The time when the registration was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
         "RegistrationVersionStatusHistory$DraftTimestamp": "<p>The time when the registration was in the draft state, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
@@ -3592,6 +3954,29 @@
         "UpdatePoolResult$TwoWayChannelArn": "<p>The Amazon Resource Name (ARN) of the two way channel.</p>",
         "UpdateRcsAgentRequest$TwoWayChannelArn": "<p>The Amazon Resource Name (ARN) of the two way channel.</p>",
         "UpdateRcsAgentResult$TwoWayChannelArn": "<p>The Amazon Resource Name (ARN) of the two way channel.</p>"
+      }
+    },
+    "TwoWayMediaS3BucketName": {
+      "base": null,
+      "refs": {
+        "CreateRcsAgentResult$TwoWayMediaS3BucketName": "<p>The name of the S3 bucket where inbound RCS media files are stored.</p>",
+        "RcsAgentInformation$TwoWayMediaS3BucketName": "<p>The name of the S3 bucket where inbound RCS media files are stored.</p>",
+        "UpdateRcsAgentResult$TwoWayMediaS3BucketName": "<p>The name of the S3 bucket where inbound RCS media files are stored.</p>"
+      }
+    },
+    "TwoWayMediaS3BucketNameOrUnset": {
+      "base": "<p>S3 bucket name or UNSET_RCS_MEDIA_CONFIGURATION to clear media config. Pass UNSET_RCS_MEDIA_CONFIGURATION to clear the media configuration from an RCS agent.</p>",
+      "refs": {
+        "UpdateRcsAgentRequest$TwoWayMediaS3BucketName": "<p>The name of the S3 bucket where inbound RCS media files are stored. Two-way messaging must be enabled on the agent. To remove the media configuration, pass the sentinel value <code>UNSET_RCS_MEDIA_CONFIGURATION</code> for both this field and TwoWayMediaS3Role.</p>"
+      }
+    },
+    "TwoWayMediaS3KeyPrefix": {
+      "base": null,
+      "refs": {
+        "CreateRcsAgentResult$TwoWayMediaS3KeyPrefix": "<p>The key prefix used for inbound RCS media objects in the S3 bucket.</p>",
+        "RcsAgentInformation$TwoWayMediaS3KeyPrefix": "<p>The key prefix used for inbound RCS media objects in the S3 bucket.</p>",
+        "UpdateRcsAgentRequest$TwoWayMediaS3KeyPrefix": "<p>The key prefix used for inbound RCS media objects in the S3 bucket.</p>",
+        "UpdateRcsAgentResult$TwoWayMediaS3KeyPrefix": "<p>The key prefix used for inbound RCS media objects in the S3 bucket.</p>"
       }
     },
     "UntagResourceRequest": {

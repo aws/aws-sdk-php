@@ -50,6 +50,7 @@
     "GetBackupVaultAccessPolicy": "<p>Returns the access policy document that is associated with the named backup vault.</p>",
     "GetBackupVaultNotifications": "<p>Returns event notifications for the specified backup vault.</p>",
     "GetLegalHold": "<p>This action returns details for a specified legal hold. The details are the body of a legal hold in JSON format, in addition to metadata.</p>",
+    "GetPITRMalwareScanResults": "<p>Returns the malware scan results for a specified point in time within a continuous (point-in-time recovery) backup.</p>",
     "GetRecoveryPointIndexDetails": "<p>This operation returns the metadata and details specific to the backup index associated with the specified recovery point.</p>",
     "GetRecoveryPointRestoreMetadata": "<p>Returns a set of metadata key-value pairs that were used to create the backup.</p>",
     "GetRestoreJobMetadata": "<p>This request returns the metadata for the specified restore job.</p>",
@@ -1146,6 +1147,14 @@
       "base": null,
       "refs": {}
     },
+    "GetPITRMalwareScanResultsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetPITRMalwareScanResultsOutput": {
+      "base": null,
+      "refs": {}
+    },
     "GetRecoveryPointIndexDetailsInput": {
       "base": null,
       "refs": {}
@@ -1682,6 +1691,7 @@
       "base": null,
       "refs": {
         "DescribeScanJobOutput$MalwareScanner": "<p>The scanning engine used for the corresponding scan job. Currently only <code>GUARDUTY</code> is supported.</p>",
+        "GetPITRMalwareScanResultsInput$MalwareScanner": "<p>The scanning engine used for the corresponding scan job. Currently only <code>GUARDDUTY</code> is supported.</p>",
         "ListScanJobSummariesInput$MalwareScanner": "<p>Returns only the scan jobs for the specified malware scanner. Currently the only MalwareScanner is <code>GUARDDUTY</code>. But the field also supports <code>ANY</code>, and <code>AGGREGATE_ALL</code>.</p>",
         "ListScanJobsInput$ByMalwareScanner": "<p>Returns only the scan jobs for the specified malware scanner. Currently only supports <code>GUARDDUTY</code>.</p>",
         "ScanAction$MalwareScanner": "<p>The malware scanner to use for the scan action. Currently only <code>GUARDDUTY</code> is supported.</p>",
@@ -2337,6 +2347,7 @@
       "base": null,
       "refs": {
         "DescribeScanJobOutput$ScanMode": "<p>Specifies the scan type used for the scan job.</p>",
+        "GetPITRMalwareScanResultsOutput$ScanMode": "<p>Specifies the scan type used for the scan job.</p>",
         "ScanAction$ScanMode": "<p>The scanning mode to use for the scan action.</p> <p>Valid values: <code>FULL_SCAN</code> | <code>INCREMENTAL_SCAN</code>.</p>",
         "ScanJob$ScanMode": "<p>Specifies the scan type use for the scan job.</p> <p>Includes:</p> <p> <code>FULL_SCAN</code> will scan the entire data lineage within the backup.</p> <p> <code>INCREMENTAL_SCAN</code> will scan the data difference between the target recovery point and base recovery point ARN.</p>",
         "StartScanJobInput$ScanMode": "<p>Specifies the scan type use for the scan job.</p> <p>Includes:</p> <ul> <li> <p> <code>FULL_SCAN</code> will scan the entire data lineage within the backup.</p> </li> <li> <p> <code>INCREMENTAL_SCAN</code> will scan the data difference between the target recovery point and base recovery point ARN.</p> </li> </ul>"
@@ -2360,6 +2371,7 @@
       "base": "<p>Contains information about the results of a scan job.</p>",
       "refs": {
         "DescribeScanJobOutput$ScanResult": "<p> Contains the <code>ScanResultsStatus</code> for the scanning job and returns <code>THREATS_FOUND</code> or <code>NO_THREATS_FOUND</code> for completed jobs.</p>",
+        "GetPITRMalwareScanResultsOutput$ScanResult": "<p>Contains the <code>ScanResultStatus</code> for the scan and returns <code>THREATS_FOUND</code>, <code>NO_THREATS_FOUND</code>, or <code>UNKNOWN</code>.</p>",
         "ScanJob$ScanResult": "<p>Contains the scan results information, including the status of threats found during scanning.</p>"
       }
     },
@@ -2369,7 +2381,7 @@
         "ListScanJobSummariesInput$ScanResultStatus": "<p>Returns only the scan jobs for the specified scan results.</p>",
         "ListScanJobsInput$ByScanResultStatus": "<p>Returns only the scan jobs for the specified scan results:</p> <ul> <li> <p> <code>THREATS_FOUND</code> </p> </li> <li> <p> <code>NO_THREATS_FOUND</code> </p> </li> </ul>",
         "ScanJobSummary$ScanResultStatus": "<p>The scan result status for the scan jobs included in this summary.</p> <p>Valid values: <code>THREATS_FOUND</code> | <code>NO_THREATS_FOUND</code>.</p>",
-        "ScanResultInfo$ScanResultStatus": "<p>The status of the scan results.</p> <p>Valid values: <code>THREATS_FOUND</code> | <code>NO_THREATS_FOUND</code>.</p>"
+        "ScanResultInfo$ScanResultStatus": "<p>The status of the scan results.</p> <p>Valid values: <code>THREATS_FOUND</code> | <code>NO_THREATS_FOUND</code> | <code>UNKNOWN</code>.</p>"
       }
     },
     "ScanResults": {
@@ -2502,6 +2514,9 @@
         "DescribeScanJobOutput$ScanJobId": "<p>The scan job ID that uniquely identified the request to Backup.</p>",
         "DescribeScanJobOutput$ScannerRoleArn": "<p>Specifies the scanner IAM role ARN used to for the scan job.</p>",
         "DescribeScanJobOutput$StatusMessage": "<p>A detailed message explaining the status of the job to back up a resource.</p>",
+        "GetPITRMalwareScanResultsInput$RecoveryPointArn": "<p>An ARN that uniquely identifies the target recovery point for scanning; for example, <code>arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45</code>.</p>",
+        "GetPITRMalwareScanResultsInput$BackupVaultName": "<p>The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.</p>",
+        "GetPITRMalwareScanResultsOutput$ScanId": "<p>The scan ID generated by Amazon GuardDuty for the corresponding Scan Job ID request from Backup.</p>",
         "GetRestoreTestingInferredMetadataInput$BackupVaultAccountId": "<p>The account ID of the specified backup vault.</p>",
         "GetRestoreTestingInferredMetadataInput$BackupVaultName": "<p>The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web ServicesRegion where they are created. They consist of letters, numbers, and hyphens.</p>",
         "GetRestoreTestingInferredMetadataInput$RecoveryPointArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a recovery point; for example, <code>arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45</code>. </p>",
@@ -2675,7 +2690,12 @@
         "CreateRestoreTestingPlanOutput$CreationTime": "<p>The date and time a restore testing plan was created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087AM.</p>",
         "CreateRestoreTestingSelectionOutput$CreationTime": "<p>The time that the resource testing selection was created.</p>",
         "DescribeScanJobOutput$CompletionDate": "<p>The date and time that a backup index finished creation, in Unix format and Coordinated Universal Time (UTC). The value of <code>CompletionDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
+        "DescribeScanJobOutput$ContinuousScanEndTime": "<p>The point in time the scan job scanned up to for a continuous backup.</p>",
+        "DescribeScanJobOutput$ContinuousScanStartTime": "<p>The point in time the scan job started scan from for a continuous backup.</p>",
         "DescribeScanJobOutput$CreationDate": "<p>The date and time that a backup index finished creation, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
+        "GetPITRMalwareScanResultsInput$ScanEndTime": "<p>The point in time within the continuous backup to examine for malware scan results.</p>",
+        "GetPITRMalwareScanResultsOutput$ScanEndTime": "<p>The point in time that was queried. This echoes back the time specified in the request.</p>",
+        "GetPITRMalwareScanResultsOutput$LastScanJobTime": "<p>The completion time of the most recent scan job that covered the specified point in time.</p>",
         "ListScanJobsInput$ByCompleteAfter": "<p>Returns only scan jobs completed after a date expressed in Unix format and Coordinated Universal Time (UTC).</p>",
         "ListScanJobsInput$ByCompleteBefore": "<p>Returns only backup jobs completed before a date expressed in Unix format and Coordinated Universal Time (UTC).</p>",
         "RestoreTestingPlanForGet$CreationTime": "<p>The date and time that a restore testing plan was created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
@@ -2687,7 +2707,10 @@
         "RestoreTestingSelectionForGet$CreationTime": "<p>The date and time that a restore testing selection was created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 201812:11:30.087 AM.</p>",
         "RestoreTestingSelectionForList$CreationTime": "<p>The date and time that a restore testing selection was created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26,2018 12:11:30.087 AM.</p>",
         "ScanJob$CompletionDate": "<p>The date and time that a scan job is completed, in Unix format and Coordinated Universal Time (UTC). The value of <code>CompletionDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
+        "ScanJob$ContinuousScanEndTime": "<p>The point in time the scan job scanned up to for a continuous backup.</p>",
+        "ScanJob$ContinuousScanStartTime": "<p>The point in time the scan job started scan from for a continuous backup.</p>",
         "ScanJob$CreationDate": "<p>The date and time that a scan job is created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
+        "StartScanJobInput$ContinuousScanEndTime": "<p>The point in time the scan job will scan up to for a continuous backup.</p>",
         "StartScanJobOutput$CreationDate": "<p>The date and time that a backup job is created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
         "UpdateRestoreTestingPlanOutput$CreationTime": "<p>The time the resource testing plan was created.</p>",
         "UpdateRestoreTestingPlanOutput$UpdateTime": "<p>The time the update completed for the restore testing plan.</p>",

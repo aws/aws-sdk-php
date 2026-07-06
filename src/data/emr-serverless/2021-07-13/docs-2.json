@@ -168,6 +168,8 @@
         "GetDashboardForJobRunRequest$accessSystemProfileLogs": "<p>Allows access to system profile logs for Lake Formation-enabled jobs. Default is false.</p>",
         "IdentityCenterConfiguration$userBackgroundSessionsEnabled": "<p>Enables user background sessions for this application so Livy sessions can continue running after users log out of their interactive notebook or their Identity Center sessions expire.</p>",
         "IdentityCenterConfigurationInput$userBackgroundSessionsEnabled": "<p>Enables user background sessions for this application so Livy sessions can continue running after users log out of their interactive notebook or their Identity Center sessions expire.</p>",
+        "ImageConfiguration$applicationLevelDigestResolution": "<p>Boolean value indicating if the digest resolution is application level or workload level. If true, a custom image URI is resolved at application start time and all workloads submitted will use that image digest. If false, the custom image URI is resolved at the workload submission time.</p>",
+        "ImageConfigurationInput$applicationLevelDigestResolution": "<p>Boolean value indicating if the digest resolution is application level or workload level. If true, a custom image URI is resolved at application start time and all workloads submitted will use that image digest. If false, the custom image URI is resolved at the workload submission time.</p>",
         "InteractiveConfiguration$studioEnabled": "<p>Enables you to connect an application to Amazon EMR Studio to run interactive workloads in a notebook.</p>",
         "InteractiveConfiguration$livyEndpointEnabled": "<p>Enables an Apache Livy endpoint that you can connect to and run interactive jobs.</p>",
         "InteractiveConfiguration$sessionEnabled": "<p>Enables interactive sessions on the application. When set to <code>true</code>, you can start interactive sessions using the <code>StartSession</code> operation.</p>",
@@ -498,6 +500,7 @@
       "base": "<p>The applied image configuration.</p>",
       "refs": {
         "Application$imageConfiguration": "<p>The image configuration applied to all worker types.</p>",
+        "JobRun$imageConfiguration": null,
         "WorkerTypeSpecification$imageConfiguration": "<p>The image configuration for a worker type.</p>"
       }
     },
@@ -974,7 +977,7 @@
     "SessionAuthToken": {
       "base": null,
       "refs": {
-        "GetSessionEndpointResponse$authToken": "<p>Authentication token for accessing the session endpoint.</p>"
+        "GetSessionEndpointResponse$authToken": "<p>The authentication token for connecting to the session endpoint. Call <code>GetSessionEndpoint</code> again to obtain a new token before it expires.</p>"
       }
     },
     "SessionConfigurationOverrides": {
@@ -1237,7 +1240,8 @@
     "WorkerTypeSpecificationMap": {
       "base": null,
       "refs": {
-        "Application$workerTypeSpecifications": "<p>The specification applied to each worker type.</p>"
+        "Application$workerTypeSpecifications": "<p>The specification applied to each worker type.</p>",
+        "JobRun$workerTypeSpecifications": "<p>The specification applied to each worker type. Includes the JobRun-level ImageConfiguration when the applicationLevelDigestResolution is false for the application.</p>"
       }
     },
     "WorkerTypeString": {

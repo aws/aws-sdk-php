@@ -357,7 +357,7 @@
     "AudioNormalizationAlgorithm": {
       "base": "Audio Normalization Algorithm",
       "refs": {
-        "AudioNormalizationSettings$Algorithm": "Audio normalization algorithm to use. itu17701 conforms to the CALM Act specification, itu17702 conforms to the EBU R-128 specification."
+        "AudioNormalizationSettings$Algorithm": "Choose one of the following audio normalization algorithms:\n\nITU-R BS.1770-1: Ungated loudness. A measurement of ungated average loudness for an entire piece of content,\nsuitable for measurement of short-form content under ATSC recommendation A/85. Supports up to 5.1 audio channels.\n\nITU-R BS.1770-2: Gated loudness. A measurement of gated average loudness compliant with the requirements of\nEBU-R128. Supports up to 5.1 audio channels.\n\nITU-R BS.1770-3: Modified peak. The same loudness measurement algorithm as 1770-2, with an updated true peak\nmeasurement.\n\nITU-R BS.1770-4: Higher channel count. Allows for more audio channels than the other algorithms, including\nconfigurations such as 7.1."
       }
     },
     "AudioNormalizationAlgorithmControl": {
@@ -369,7 +369,8 @@
     "AudioNormalizationSettings": {
       "base": "Audio Normalization Settings",
       "refs": {
-        "AudioDescription$AudioNormalizationSettings": "Advanced audio normalization settings."
+        "AudioDescription$AudioNormalizationSettings": "Advanced audio normalization settings.",
+        "AudioPreMixerSettings$AudioNormalizationSettings": "Audio normalization settings for loudness control.\nWhen specified, audio loudness will be normalized according to the chosen algorithm."
       }
     },
     "AudioOnlyHlsSegmentType": {
@@ -415,7 +416,7 @@
       }
     },
     "AudioTrack": {
-      "base": "Audio Track",
+      "base": "Represents a single audio track for selection with optional pre-mixer settings",
       "refs": {
         "__listOfAudioTrack$member": null
       }
@@ -2871,7 +2872,8 @@
         "SrtOutputSettings$Destination": null,
         "AdditionalDestinations$Destination": "The destination location",
         "MediaPackageAdditionalDestinations$Destination": "The destination location",
-        "MediaConnectRouterOutputSettings$Destination": "Destination for this MediaConnect Router Output. The referenced OutputDestination must have MediaConnect Router settings configured."
+        "MediaConnectRouterOutputSettings$Destination": "Destination for this MediaConnect Router Output. The referenced OutputDestination must have MediaConnect Router settings configured.",
+        "__listOfOutputLocationRef$member": null
       }
     },
     "OutputLockingSettings": {
@@ -2974,7 +2976,8 @@
     "RemixSettings": {
       "base": "Remix Settings",
       "refs": {
-        "AudioDescription$RemixSettings": "Settings that control how input audio channels are remixed into the output audio channels."
+        "AudioDescription$RemixSettings": "Settings that control how input audio channels are remixed into the output audio channels.",
+        "AudioPreMixerSettings$RemixSettings": "Settings that control how input audio channels are remixed.\nWhen specified, allows fine-grained control over channel mapping and gain levels.\nTakes precedence over the 'channels' setting."
       }
     },
     "RenewalSettings": {
@@ -4174,7 +4177,8 @@
       "base": null,
       "refs": {
         "AudioPidSelection$Pid": "Selects a specific PID from within a source.",
-        "VideoSelectorPid$Pid": "Selects a specific PID from within a video source."
+        "VideoSelectorPid$Pid": "Selects a specific PID from within a video source.",
+        "AudioPid$Pid": "PID value from within a source."
       }
     },
     "__integerMin1": {
@@ -4291,7 +4295,8 @@
       "base": null,
       "refs": {
         "H265Settings$Slices": "Number of slices per picture. Must be less than or equal to the number of macroblock rows for progressive pictures, and less than or equal to half the number of macroblock rows for interlaced pictures.\nThis field is optional; when no value is specified the encoder will choose the number of slices based on encode resolution.",
-        "RemixSettings$ChannelsIn": "Number of input channels to be used."
+        "RemixSettings$ChannelsIn": "Number of input channels to be used.",
+        "AudioPreMixerSettings$Channels": "Number of audio channels.\nIf specified, the audio will be remixed to match this channel count.\nIgnored if remixSettings is specified."
       }
     },
     "__integerMin1Max20": {
@@ -5313,7 +5318,11 @@
         "InferenceSettings$FeedArn": "The ARN of the feed resource that is associated with this channel. The feed is a resource in the Elemental Inference service.",
         "MediaConnectRouterOutputConnectionMap$Pipeline0": "The ARN of the MediaConnect Router Input connected to pipeline 0.",
         "MediaConnectRouterOutputConnectionMap$Pipeline1": "The ARN of the MediaConnect Router Input connected to pipeline 1.",
-        "MediaConnectRouterOutputDestinationSettings$SecretArn": "ARN of the secret used to encrypt this input. Used only with the SECRETS_MANAGER encryption type."
+        "MediaConnectRouterOutputDestinationSettings$SecretArn": "ARN of the secret used to encrypt this input. Used only with the SECRETS_MANAGER encryption type.",
+        "MediaConnectRouterOutputConnection$RouterInputArn": "The ARN of the MediaConnect Router Input connected to this pipeline.",
+        "AudioFeedInput$AudioSelectorName": "The name of the audio selector in the channel that will be sent to the Elemental Inference feed input.",
+        "AudioFeedInput$FeedInput": "The name of the feed input on the Elemental Inference feed that will receive the audio from the specified audio selector.",
+        "SmartSubtitleSourceSettings$InferenceFeedOutput": "The name of the Elemental Inference feed output that supplies subtitle input into this caption selector."
       }
     },
     "__stringMax1000": {
@@ -7601,7 +7610,7 @@
     "MediaConnectRouterOutputConnectionMap": {
       "base": "Map of MediaLive pipeline IDs to the ARNs of the MediaConnect Router Inputs to which this Output is connected.",
       "refs": {
-        "MediaConnectRouterOutputSettings$ConnectedRouterInputs": "Shows the MediaConnect Router Inputs that are connected to this output. This parameter is purely informative, and editing it will have no effect. To connect or disconnect MediaConnect Router Inputs, go to MediaConnect."
+        "MediaConnectRouterOutputSettings$ConnectedRouterInputs": "This parameter is deprecated and unused."
       }
     },
     "MediaConnectRouterOutputDestinationSettings": {
@@ -7626,6 +7635,90 @@
       "base": null,
       "refs": {
         "OutputDestination$MediaConnectRouterSettings": "Destination settings for a MediaConnect Router output; one destination for each redundant encoder."
+      }
+    },
+    "__listOfOutputLocationRef": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "MediaConnectRouterOutputConnection": {
+      "base": "Connection details for a single pipeline of a MediaConnect Router output.",
+      "refs": {
+        "MediaConnectRouterOutputConnections$member": null
+      }
+    },
+    "MediaConnectRouterOutputConnections": {
+      "base": "A map of output names to the MediaConnect Router connection for this pipeline.",
+      "refs": {
+        "PipelineDetail$MediaConnectRouterOutputConnectionMap": "A map of output names to the MediaConnect Router connection for this pipeline. Only present for channels with MediaConnect Router outputs."
+      }
+    },
+    "AudioFeedInput": {
+      "base": "Maps an audio selector in the channel to a feed input on the associated Elemental Inference feed.",
+      "refs": {
+        "__listOfAudioFeedInput$member": null
+      }
+    },
+    "CaptionSynchronizationMode": {
+      "base": "Controls how MediaLive synchronizes Elemental Inference generated subtitles with video output.\n\nvideo_aligned_captions - MediaLive delays video to ensure captions are synchronized with\n     audio and video.\nno_video_delay - MediaLive does not delay video for caption alignment. Captions output\n     timing is adjusted to align with video as captions become available.",
+      "refs": {
+        "SmartSubtitleSourceSettings$CaptionSynchronizationMode": "Controls whether MediaLive delays video to synchronize captions with audio and video output."
+      }
+    },
+    "SmartSubtitleSourceSettings": {
+      "base": "Smart Subtitle Source Settings",
+      "refs": {
+        "CaptionSelectorSettings$SmartSubtitleSourceSettings": null
+      }
+    },
+    "__listOfAudioFeedInput": {
+      "base": null,
+      "refs": {
+        "DescribeInferenceSettings$AudioFeedInputs": "A list of audio feed inputs that map audio selectors in the channel to feed inputs on the associated Elemental Inference feed.",
+        "InferenceSettings$AudioFeedInputs": "A list of audio feed inputs that map audio selectors in the channel to feed inputs on the associated Elemental Inference feed."
+      }
+    },
+    "AudioNormalizationPeakCalculation": {
+      "base": "Audio Normalization Peak Calculation",
+      "refs": {
+        "AudioNormalizationSettings$PeakCalculation": "If set to TRUE_PEAK, calculate the TruePeak for each output's audio track loudness."
+      }
+    },
+    "AudioPid": {
+      "base": "Represents a single PID value for audio selection with optional pre-mixer settings",
+      "refs": {
+        "__listOfAudioPid$member": null
+      }
+    },
+    "AudioPreMixerSettings": {
+      "base": "Audio pre-mixer settings for normalizing audio before interleaving.\nThese settings can be applied to individual PIDs or tracks before they are combined.",
+      "refs": {
+        "AudioPid$PremixSettings": "Optional audio pre-mixer settings for this PID.\nWhen specified, allows per-PID audio processing including channel remixing,\ngain adjustment, and loudness normalization before interleaving.",
+        "AudioTrack$PremixSettings": "Optional audio pre-mixer settings for this track.\nWhen specified, allows per-track audio processing including channel remixing,\ngain adjustment, and loudness normalization before interleaving."
+      }
+    },
+    "__doubleMinNegative100Max0": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "__doubleMinNegative60Max60": {
+      "base": null,
+      "refs": {
+        "AudioPreMixerSettings$GainDb": "Gain adjustment in dB to apply.\nRange: -60 to +60 dB"
+      }
+    },
+    "__doubleMinNegative8Max0": {
+      "base": null,
+      "refs": {
+        "AudioNormalizationSettings$PeakLimiterThreshold": "Peak limiter threshold in decibels relative to true peak (dBTP) if TRUE_PEAK is enabled.\nIf TRUE_PEAK is not enabled a full scale (dbFS) value is used.\nThe peak inter-audio sample loudness in your output will be limited to the value that you specify,\nwithout affecting the overall target LKFS. Leave blank to use the default value 0."
+      }
+    },
+    "__listOfAudioPid": {
+      "base": null,
+      "refs": {
+        "AudioPidSelection$Pids": "Selects one or more unique PIDs from within a source.\nWhen using 'pids', you can specify per-PID audio pre-mixer settings."
       }
     }
   },

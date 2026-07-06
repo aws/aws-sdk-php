@@ -67,6 +67,7 @@
       "errors":[
         {"shape":"DuplicateTagKeysException"},
         {"shape":"TooManyTagsException"},
+        {"shape":"LimitExceededException"},
         {"shape":"DirectConnectServerException"},
         {"shape":"DirectConnectClientException"}
       ]
@@ -82,6 +83,7 @@
       "errors":[
         {"shape":"DuplicateTagKeysException"},
         {"shape":"TooManyTagsException"},
+        {"shape":"LimitExceededException"},
         {"shape":"DirectConnectServerException"},
         {"shape":"DirectConnectClientException"}
       ]
@@ -97,6 +99,7 @@
       "errors":[
         {"shape":"DuplicateTagKeysException"},
         {"shape":"TooManyTagsException"},
+        {"shape":"LimitExceededException"},
         {"shape":"DirectConnectServerException"},
         {"shape":"DirectConnectClientException"}
       ]
@@ -111,7 +114,8 @@
       "output":{"shape":"Connection"},
       "errors":[
         {"shape":"DirectConnectServerException"},
-        {"shape":"DirectConnectClientException"}
+        {"shape":"DirectConnectClientException"},
+        {"shape":"LimitExceededException"}
       ]
     },
     "AssociateHostedConnection":{
@@ -326,6 +330,7 @@
       "errors":[
         {"shape":"DuplicateTagKeysException"},
         {"shape":"TooManyTagsException"},
+        {"shape":"LimitExceededException"},
         {"shape":"DirectConnectServerException"},
         {"shape":"DirectConnectClientException"}
       ]
@@ -341,6 +346,7 @@
       "errors":[
         {"shape":"DuplicateTagKeysException"},
         {"shape":"TooManyTagsException"},
+        {"shape":"LimitExceededException"},
         {"shape":"DirectConnectServerException"},
         {"shape":"DirectConnectClientException"}
       ]
@@ -356,6 +362,7 @@
       "errors":[
         {"shape":"DuplicateTagKeysException"},
         {"shape":"TooManyTagsException"},
+        {"shape":"LimitExceededException"},
         {"shape":"DirectConnectServerException"},
         {"shape":"DirectConnectClientException"}
       ]
@@ -1201,6 +1208,7 @@
         "portEncryptionStatus":{"shape":"PortEncryptionStatus"},
         "encryptionMode":{"shape":"EncryptionMode"},
         "macSecKeys":{"shape":"MacSecKeyList"},
+        "rateLimiterStatus":{"shape":"RateLimiterStatus"},
         "partnerInterconnectMacSecCapable":{"shape":"PartnerInterconnectMacSecCapable"}
       }
     },
@@ -1955,7 +1963,8 @@
         "providerName":{"shape":"ProviderName"},
         "macSecCapable":{"shape":"MacSecCapable"},
         "encryptionMode":{"shape":"EncryptionMode"},
-        "macSecKeys":{"shape":"MacSecKeyList"}
+        "macSecKeys":{"shape":"MacSecKeyList"},
+        "rateLimiterStatus":{"shape":"RateLimiterStatus"}
       }
     },
     "LagId":{"type":"string"},
@@ -1982,6 +1991,11 @@
         "lags":{"shape":"LagList"},
         "nextToken":{"shape":"PaginationToken"}
       }
+    },
+    "LimitExceededException":{
+      "type":"structure",
+      "members":{},
+      "exception":true
     },
     "ListVirtualInterfaceTestHistoryRequest":{
       "type":"structure",
@@ -2087,7 +2101,8 @@
         "virtualGatewayId":{"shape":"VirtualGatewayId"},
         "directConnectGatewayId":{"shape":"DirectConnectGatewayId"},
         "tags":{"shape":"TagList"},
-        "enableSiteLink":{"shape":"EnableSiteLink"}
+        "enableSiteLink":{"shape":"EnableSiteLink"},
+        "rateLimit":{"shape":"RateLimit"}
       }
     },
     "NewPrivateVirtualInterfaceAllocation":{
@@ -2106,7 +2121,8 @@
         "amazonAddress":{"shape":"AmazonAddress"},
         "addressFamily":{"shape":"AddressFamily"},
         "customerAddress":{"shape":"CustomerAddress"},
-        "tags":{"shape":"TagList"}
+        "tags":{"shape":"TagList"},
+        "rateLimit":{"shape":"RateLimit"}
       }
     },
     "NewPublicVirtualInterface":{
@@ -2125,7 +2141,8 @@
         "customerAddress":{"shape":"CustomerAddress"},
         "addressFamily":{"shape":"AddressFamily"},
         "routeFilterPrefixes":{"shape":"RouteFilterPrefixList"},
-        "tags":{"shape":"TagList"}
+        "tags":{"shape":"TagList"},
+        "rateLimit":{"shape":"RateLimit"}
       }
     },
     "NewPublicVirtualInterfaceAllocation":{
@@ -2144,7 +2161,8 @@
         "customerAddress":{"shape":"CustomerAddress"},
         "addressFamily":{"shape":"AddressFamily"},
         "routeFilterPrefixes":{"shape":"RouteFilterPrefixList"},
-        "tags":{"shape":"TagList"}
+        "tags":{"shape":"TagList"},
+        "rateLimit":{"shape":"RateLimit"}
       }
     },
     "NewTransitVirtualInterface":{
@@ -2161,7 +2179,8 @@
         "addressFamily":{"shape":"AddressFamily"},
         "directConnectGatewayId":{"shape":"DirectConnectGatewayId"},
         "tags":{"shape":"TagList"},
-        "enableSiteLink":{"shape":"EnableSiteLink"}
+        "enableSiteLink":{"shape":"EnableSiteLink"},
+        "rateLimit":{"shape":"RateLimit"}
       }
     },
     "NewTransitVirtualInterfaceAllocation":{
@@ -2176,7 +2195,8 @@
         "amazonAddress":{"shape":"AmazonAddress"},
         "customerAddress":{"shape":"CustomerAddress"},
         "addressFamily":{"shape":"AddressFamily"},
-        "tags":{"shape":"TagList"}
+        "tags":{"shape":"TagList"},
+        "rateLimit":{"shape":"RateLimit"}
       }
     },
     "NniPartnerType":{
@@ -2199,6 +2219,16 @@
       "member":{"shape":"ProviderName"}
     },
     "ProviderName":{"type":"string"},
+    "RateLimit":{"type":"string"},
+    "RateLimiterStatus":{
+      "type":"structure",
+      "members":{
+        "maxAllowed":{"shape":"Count"},
+        "inUse":{"shape":"Count"},
+        "remaining":{"shape":"Count"},
+        "totalBandwidth":{"shape":"Bandwidth"}
+      }
+    },
     "Region":{"type":"string"},
     "RequestMACSec":{"type":"boolean"},
     "ResourceArn":{"type":"string"},
@@ -2405,7 +2435,8 @@
         "virtualInterfaceId":{"shape":"VirtualInterfaceId"},
         "mtu":{"shape":"MTU"},
         "enableSiteLink":{"shape":"EnableSiteLink"},
-        "virtualInterfaceName":{"shape":"VirtualInterfaceName"}
+        "virtualInterfaceName":{"shape":"VirtualInterfaceName"},
+        "rateLimit":{"shape":"RateLimit"}
       }
     },
     "VLAN":{"type":"integer"},
@@ -2462,7 +2493,8 @@
         "awsDeviceV2":{"shape":"AwsDeviceV2"},
         "awsLogicalDeviceId":{"shape":"AwsLogicalDeviceId"},
         "tags":{"shape":"TagList"},
-        "siteLinkEnabled":{"shape":"SiteLinkEnabled"}
+        "siteLinkEnabled":{"shape":"SiteLinkEnabled"},
+        "rateLimit":{"shape":"RateLimit"}
       }
     },
     "VirtualInterfaceId":{"type":"string"},

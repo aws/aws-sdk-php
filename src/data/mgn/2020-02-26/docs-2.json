@@ -456,6 +456,8 @@
         "ImportErrorData$ec2LaunchTemplateID": "<p>Import error data ec2 LaunchTemplate ID.</p>",
         "JobPostLaunchActionsLaunchStatus$executionID": "<p>AWS Systems Manager Document's execution ID of the of the Job Post Launch Actions.</p>",
         "JobPostLaunchActionsLaunchStatus$failureReason": "<p>AWS Systems Manager Document's failure reason.</p>",
+        "LastKnownCheck$name": "<p>Last known check name.</p>",
+        "LastKnownCheck$error": "<p>Last known check error.</p>",
         "LaunchConfiguration$ec2LaunchTemplateID": "<p>Launch configuration EC2 Launch template ID.</p>",
         "NetworkInterface$macAddress": "<p>Network interface Mac address.</p>",
         "OS$fullString": "<p>OS full string.</p>",
@@ -1078,6 +1080,18 @@
         "ImportTask$progressPercentage": "<p>Import task progress percentage.</p>"
       }
     },
+    "FqdnForActionFramework": {
+      "base": null,
+      "refs": {
+        "UpdateSourceServerRequest$fqdnForActionFramework": "<p>Update Source Server request FQDN for action framework.</p>"
+      }
+    },
+    "FsxOntapConfiguration": {
+      "base": "<p>FSx for ONTAP storage configuration.</p>",
+      "refs": {
+        "StorageConfiguration$fsxOntapConfiguration": "<p>Storage configuration FSx ONTAP configuration.</p>"
+      }
+    },
     "GetLaunchConfigurationRequest": {
       "base": null,
       "refs": {}
@@ -1441,6 +1455,31 @@
         "ValidationException$code": null,
         "ValidationExceptionField$name": "<p>Validate exception field name.</p>",
         "ValidationExceptionField$message": "<p>Validate exception field message.</p>"
+      }
+    },
+    "LastKnownCheck": {
+      "base": "<p>Last known check performed on a launched instance.</p>",
+      "refs": {
+        "LastKnownChecksList$member": null
+      }
+    },
+    "LastKnownCheckStatus": {
+      "base": null,
+      "refs": {
+        "LastKnownCheck$status": "<p>Last known check status.</p>",
+        "LaunchedInstance$lastKnownFsxChecksStatus": "<p>Launched instance last known FSx checks status.</p>"
+      }
+    },
+    "LastKnownCheckType": {
+      "base": null,
+      "refs": {
+        "LastKnownCheck$type": "<p>Last known check type.</p>"
+      }
+    },
+    "LastKnownChecksList": {
+      "base": "<p>List of last known checks.</p>",
+      "refs": {
+        "LaunchedInstance$lastKnownChecks": "<p>Launched instance last known checks.</p>"
       }
     },
     "LaunchConfiguration": {
@@ -2427,7 +2466,8 @@
       "base": null,
       "refs": {
         "PutTemplateActionRequest$operatingSystem": "<p>Operating system eligible for this template post migration custom action.</p>",
-        "TemplateActionDocument$operatingSystem": "<p>Operating system eligible for this template post migration custom action.</p>"
+        "TemplateActionDocument$operatingSystem": "<p>Operating system eligible for this template post migration custom action.</p>",
+        "UpdateSourceServerRequest$platform": "<p>Update Source Server request platform operating system.</p>"
       }
     },
     "OperationUnion": {
@@ -2819,6 +2859,7 @@
     "SecretArn": {
       "base": null,
       "refs": {
+        "FsxOntapConfiguration$credentialsSecretArn": "<p>FSx ONTAP configuration credentials secret ARN.</p>",
         "SourceServerConnectorAction$credentialsSecretArn": "<p>Source Server connector action credentials secret arn.</p>"
       }
     },
@@ -3227,6 +3268,28 @@
       "base": null,
       "refs": {}
     },
+    "StorageConfiguration": {
+      "base": "<p>Storage configuration for replication.</p>",
+      "refs": {
+        "CreateReplicationConfigurationTemplateRequest$storageConfiguration": "<p>Request to configure storage during Replication Settings template creation.</p>",
+        "ReplicationConfiguration$storageConfiguration": "<p>Replication Configuration storage configuration.</p>",
+        "ReplicationConfigurationTemplate$storageConfiguration": "<p>Replication Configuration template storage configuration.</p>",
+        "UpdateReplicationConfigurationRequest$storageConfiguration": "<p>Update replication configuration storage configuration.</p>",
+        "UpdateReplicationConfigurationTemplateRequest$storageConfiguration": "<p>Update replication configuration template storage configuration request.</p>"
+      }
+    },
+    "StorageType": {
+      "base": null,
+      "refs": {
+        "StorageConfiguration$storageType": "<p>Storage configuration storage type.</p>"
+      }
+    },
+    "StorageVirtualMachineId": {
+      "base": null,
+      "refs": {
+        "FsxOntapConfiguration$storageVirtualMachineId": "<p>FSx ONTAP configuration storage virtual machine ID.</p>"
+      }
+    },
     "StrictlyPositiveInteger": {
       "base": null,
       "refs": {
@@ -3421,6 +3484,7 @@
       "refs": {
         "ImportFileEnrichment$createdAt": "<p>The timestamp when the enrichment job was created.</p>",
         "ImportFileEnrichment$endedAt": "<p>The timestamp when the enrichment job completed or failed.</p>",
+        "LastKnownCheck$checkedAt": "<p>Last known check timestamp.</p>",
         "NetworkMigrationAnalysisJobDetails$createdAt": "<p>The timestamp when the job was created.</p>",
         "NetworkMigrationAnalysisJobDetails$endedAt": "<p>The timestamp when the job completed or failed.</p>",
         "NetworkMigrationCodeGenerationArtifact$createdAt": "<p>The timestamp when the artifact was created.</p>",
@@ -3512,7 +3576,8 @@
     "UserProvidedId": {
       "base": null,
       "refs": {
-        "SourceServer$userProvidedID": "<p>Source server user provided ID.</p>"
+        "SourceServer$userProvidedID": "<p>Source server user provided ID.</p>",
+        "UpdateSourceServerRequest$userProvidedID": "<p>Update Source Server request user provided ID.</p>"
       }
     },
     "ValidationException": {
@@ -3648,6 +3713,7 @@
     "referencedSegmentsList": {
       "base": null,
       "refs": {
+        "NetworkMigrationCodeGenerationSegment$referencedSegments": "<p>A list of other segments that this segment depends on or references.</p>",
         "NetworkMigrationMapperSegment$referencedSegments": "<p>A list of other segments that this segment depends on or references.</p>"
       }
     }

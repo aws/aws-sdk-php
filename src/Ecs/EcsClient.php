@@ -6,6 +6,8 @@ use Aws\AwsClient;
 /**
  * This client is used to interact with **Amazon ECS**.
  *
+ * @method \Aws\Result continueServiceDeployment(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise continueServiceDeploymentAsync(array $args = [])
  * @method \Aws\Result createCapacityProvider(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createCapacityProviderAsync(array $args = [])
  * @method \Aws\Result createCluster(array $args = [])

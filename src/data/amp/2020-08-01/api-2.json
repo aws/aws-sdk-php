@@ -2763,13 +2763,25 @@
           "idempotencyToken":true
         },
         "limitsPerLabelSet":{"shape":"LimitsPerLabelSetList"},
-        "retentionPeriodInDays":{"shape":"UpdateWorkspaceConfigurationRequestRetentionPeriodInDaysInteger"}
+        "retentionPeriodInDays":{"shape":"UpdateWorkspaceConfigurationRequestRetentionPeriodInDaysInteger"},
+        "outOfOrderTimeWindowInSeconds":{"shape":"UpdateWorkspaceConfigurationRequestOutOfOrderTimeWindowInSecondsInteger"},
+        "ruleQueryOffsetInSeconds":{"shape":"UpdateWorkspaceConfigurationRequestRuleQueryOffsetInSecondsInteger"}
       }
+    },
+    "UpdateWorkspaceConfigurationRequestOutOfOrderTimeWindowInSecondsInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
     },
     "UpdateWorkspaceConfigurationRequestRetentionPeriodInDaysInteger":{
       "type":"integer",
       "box":true,
       "min":1
+    },
+    "UpdateWorkspaceConfigurationRequestRuleQueryOffsetInSecondsInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
     },
     "UpdateWorkspaceConfigurationResponse":{
       "type":"structure",
@@ -2850,13 +2862,25 @@
       "members":{
         "status":{"shape":"WorkspaceConfigurationStatus"},
         "limitsPerLabelSet":{"shape":"LimitsPerLabelSetList"},
-        "retentionPeriodInDays":{"shape":"WorkspaceConfigurationDescriptionRetentionPeriodInDaysInteger"}
+        "retentionPeriodInDays":{"shape":"WorkspaceConfigurationDescriptionRetentionPeriodInDaysInteger"},
+        "outOfOrderTimeWindowInSeconds":{"shape":"WorkspaceConfigurationDescriptionOutOfOrderTimeWindowInSecondsInteger"},
+        "ruleQueryOffsetInSeconds":{"shape":"WorkspaceConfigurationDescriptionRuleQueryOffsetInSecondsInteger"}
       }
+    },
+    "WorkspaceConfigurationDescriptionOutOfOrderTimeWindowInSecondsInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
     },
     "WorkspaceConfigurationDescriptionRetentionPeriodInDaysInteger":{
       "type":"integer",
       "box":true,
       "min":1
+    },
+    "WorkspaceConfigurationDescriptionRuleQueryOffsetInSecondsInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
     },
     "WorkspaceConfigurationStatus":{
       "type":"structure",
