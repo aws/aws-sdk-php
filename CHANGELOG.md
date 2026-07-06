@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.387.3 - 2026-07-06
 
 * `Aws\CloudWatchLogs` - Added PutStorageTierPolicy and GetStorageTierPolicy APIs to Amazon CloudWatch Logs. Customers can now configure account-level Intelligent Tiering to automatically optimize log storage costs by moving infrequently accessed data to lower-cost storage tiers.
 * `Aws\OpenSearchService` - This release introduces Saved Object Migration APIs, enabling users to migrate dashboards, visualizations, index patterns, and other saved objects from a data source into an Amazon OpenSearch Service application workspace with configurable export filters and conflict resolution strategies.
