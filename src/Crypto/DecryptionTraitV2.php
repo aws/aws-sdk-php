@@ -401,7 +401,7 @@ trait DecryptionTraitV2
                     $cipherOptions['TagLength']
                 );
                 $cipherOptions['Aad'] = isset($cipherOptions['Aad'])
-                    ? $cipherOptions['Aad'] + $algorithmSuiteIdAsBytes
+                    ? $cipherOptions['Aad'] . $algorithmSuiteIdAsBytes
                     : $algorithmSuiteIdAsBytes;
 
                 return new AesGcmDecryptingStream(

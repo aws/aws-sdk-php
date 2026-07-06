@@ -610,6 +610,107 @@ class EncryptionDecryptionTraitV3Test extends TestCase
     }
     
     /**
+     * The documented `Aad` cipher option must round-trip: an object encrypted
+     * with an Aad must decrypt back to the same plaintext when the same Aad is
+     * supplied.
+     */
+    public function testAadOptionRoundTrips(): void
+    {
+        $plaintext = new Stream(fopen('data://text/plain,Hello World', 'r'));
+        $algorithmSuite = AlgorithmSuite::ALG_AES_256_GCM_HKDF_SHA512_COMMIT_KEY;
+
+        $kms = $this->getKmsClient();
+        $keyId = '11111111-2222-3333-4444-555555555555';
+        $provider = new KmsMaterialsProviderV3($kms, $keyId);
+        $dataKey = random_bytes(32);
+        $this->addMockResults($kms, [
+            new Result(['CiphertextBlob' => 'encrypted', 'Plaintext' => $dataKey]),
+            new Result(['Plaintext' => $dataKey]),
+        ]);
+
+        $envelope = new MetadataEnvelope();
+        $options = [
+            '@CipherOptions' => [
+                'Cipher' => 'gcm',
+                'KeySize' => 256,
+                'Aad' => 'document-id:42',
+            ],
+            '@KmsEncryptionContext' => [],
+            '@SecurityProfile' => 'V3',
+        ];
+
+        $cipherText = @$this->encryptionClass->encrypt(
+            $plaintext,
+            $algorithmSuite,
+            $options,
+            $provider,
+            $envelope
+        );
+
+        $decrypted = $this->decryptionClass->decrypt(
+            $cipherText,
+            $provider,
+            $envelope,
+            'REQUIRE_ENCRYPT_REQUIRE_DECRYPT',
+            $options
+        );
+
+        $this->assertSame('Hello World', (string) $decrypted);
+    }
+
+    /**
+     * Decrypt must reject an object whose advertised GCM tag length is not
+     * supported.
+     */
+    public function testRejectsUnsupportedGcmTagLength(): void
+    {
+        $plaintext = new Stream(fopen('data://text/plain,Hello World', 'r'));
+        $algorithmSuite = AlgorithmSuite::ALG_AES_256_GCM_IV12_TAG16_NO_KDF;
+
+        $kms = $this->getKmsClient();
+        $keyId = '11111111-2222-3333-4444-555555555555';
+        $provider = new KmsMaterialsProviderV3($kms, $keyId);
+        $dataKey = random_bytes(32);
+        $this->addMockResults($kms, [
+            new Result(['CiphertextBlob' => 'encrypted', 'Plaintext' => $dataKey]),
+            new Result(['Plaintext' => $dataKey]),
+        ]);
+
+        $envelope = new MetadataEnvelope();
+        $options = [
+            '@CipherOptions' => [
+                'Cipher' => 'gcm',
+                'KeySize' => 256,
+            ],
+            '@KmsEncryptionContext' => [],
+            '@SecurityProfile' => 'V3',
+        ];
+
+        $cipherText = $this->encryptionClass->encrypt(
+            $plaintext,
+            $algorithmSuite,
+            $options,
+            $provider,
+            $envelope
+        );
+
+        // Advertise an unsupported tag length in the object metadata.
+        $envelope[MetadataEnvelope::CRYPTO_TAG_LENGTH_HEADER] = '8';
+
+        $this->expectException(CryptoException::class);
+        $this->expectExceptionMessage('Unsupported GCM tag length');
+
+        $decrypted = $this->decryptionClass->decrypt(
+            $cipherText,
+            $provider,
+            $envelope,
+            'FORBID_ENCRYPT_ALLOW_DECRYPT',
+            $options
+        );
+        (string) $decrypted;
+    }
+
+    /**
      * Test that IV is of the appropriate length
      */
     public function testValidateIvIsSetAndAppropriateLength(): void

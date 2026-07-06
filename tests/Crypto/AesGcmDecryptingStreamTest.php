@@ -80,10 +80,27 @@ class AesGcmDecryptingStreamTest extends TestCase
             Psr7\Utils::streamFor($cipherText),
             $key,
             $iv,
-            'invalid_tag',
+            str_repeat('x', 16),
             $additionalData,
             16,
             $keySize
+        );
+        $decryptingStream->getContents();
+    }
+
+    public function testThrowsForUnsupportedTagLength()
+    {
+        $this->expectExceptionMessage('Unsupported GCM tag length');
+        $this->expectException(\Aws\Exception\CryptoException::class);
+
+        $decryptingStream = new AesGcmDecryptingStream(
+            Psr7\Utils::streamFor('some ciphertext bytes'),
+            'key',
+            random_bytes(openssl_cipher_iv_length('aes-256-gcm')),
+            'x', // 8-bit tag; only 128-bit tags are permitted
+            json_encode(['foo' => 'bar']),
+            1,
+            256
         );
         $decryptingStream->getContents();
     }

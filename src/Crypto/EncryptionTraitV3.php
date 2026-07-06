@@ -433,13 +433,13 @@ trait EncryptionTraitV3
 
                 if (!empty($cipherOptions['Aad'])) {
                     trigger_error("'Aad' has been supplied for content encryption"
-                        . " with " . $encryptClass->getAesName() . ". The"
+                        . " with " . $encryptClass::getStaticAesName() . ". The"
                         . " PHP SDK encryption client can decrypt an object"
                         . " encrypted in this way, but other AWS SDKs may not be"
                         . " able to.", E_USER_NOTICE);
                 }
                 $cipherOptions['Aad'] = isset($cipherOptions['Aad'])
-                    ? $cipherOptions['Aad'] + $algorithmSuiteIdAsBytes
+                    ? $cipherOptions['Aad'] . $algorithmSuiteIdAsBytes
                     : $algorithmSuiteIdAsBytes;
                 //= ../specification/s3-encryption/key-derivation.md#hkdf-operation
                 //= type=implication
