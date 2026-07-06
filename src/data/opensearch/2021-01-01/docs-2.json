@@ -56,6 +56,7 @@
     "GetDirectQueryDataSource": "<p> Returns detailed configuration information for a specific direct query data source in Amazon OpenSearch Service. </p>",
     "GetDomainMaintenanceStatus": "<p>The status of the maintenance action.</p>",
     "GetIndex": "<p>Retrieves information about an OpenSearch index including its schema and semantic enrichment configuration. Use this operation to view the current index structure and semantic search settings.</p>",
+    "GetMigration": "<p>Retrieves the current status and progress of a migration job, including the number of exported and imported objects and error details if the migration failed.</p>",
     "GetPackageVersionHistory": "<p>Returns a list of Amazon OpenSearch Service package versions, along with their creation time, commit message, and plugin properties (if the package is a zip plugin package). For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
     "GetUpgradeHistory": "<p>Retrieves the complete history of the last 10 upgrades performed on an Amazon OpenSearch Service domain.</p>",
     "GetUpgradeStatus": "<p>Returns the most recent status of the last upgrade or upgrade eligibility check performed on an Amazon OpenSearch Service domain.</p>",
@@ -69,6 +70,7 @@
     "ListDomainsForPackage": "<p>Lists all Amazon OpenSearch Service domains associated with a given package. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
     "ListInsights": "<p>Lists insights for an Amazon OpenSearch Service domain or Amazon Web Services account. Returns a paginated list of insights based on the specified entity, filters, time range, and sort order.</p>",
     "ListInstanceTypeDetails": "<p>Lists all instance types and available features for a given OpenSearch or Elasticsearch version.</p>",
+    "ListMigrations": "<p>Lists migration jobs for an Amazon OpenSearch Service application. You can filter results by migration status. Use pagination to ensure that the operation returns quickly and successfully.</p>",
     "ListPackagesForDomain": "<p>Lists all packages associated with an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
     "ListScheduledActions": "<p>Retrieves a list of configuration changes that are scheduled for a domain. These changes can be <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/service-software.html\">service software updates</a> or <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/auto-tune.html#auto-tune-types\">blue/green Auto-Tune enhancements</a>.</p>",
     "ListTags": "<p>Returns all resource tags for an Amazon OpenSearch Service domain, data source, or application. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains-awsresourcetagging.html\">Tagging Amazon OpenSearch Service resources</a>.</p>",
@@ -84,6 +86,7 @@
     "RevokeVpcEndpointAccess": "<p>Revokes access to an Amazon OpenSearch Service domain that was provided through an interface VPC endpoint.</p>",
     "RollbackServiceSoftwareUpdate": "<p>Rolls back a service software update for a domain to the previous version. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/service-software.html\">Service software updates in Amazon OpenSearch Service</a>.</p>",
     "StartDomainMaintenance": "<p>Starts the node maintenance process on the data node. These processes can include a node reboot, an Opensearch or Elasticsearch process restart, or a Dashboard or Kibana restart.</p>",
+    "StartMigration": "<p>Initiates a migration job to migrate saved objects from a data source to an Amazon OpenSearch Service application workspace. Saved objects include dashboards, visualizations, index patterns, and searches. You can specify export filters to control the scope of the migration and a conflict resolution strategy for handling existing objects in the target workspace.</p>",
     "StartServiceSoftwareUpdate": "<p>Schedules a service software update for an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/service-software.html\">Service software updates in Amazon OpenSearch Service</a>.</p>",
     "UpdateApplication": "<p>Updates the configuration and settings of an existing OpenSearch application.</p>",
     "UpdateDataSource": "<p>Updates a direct-query data source. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/direct-query-s3-creating.html\">Working with Amazon OpenSearch Service data source integrations with Amazon S3</a>.</p>",
@@ -158,6 +161,7 @@
         "IamIdentityCenterOptionsInput$iamIdentityCenterInstanceArn": null,
         "ListTagsRequest$ARN": "<p>Amazon Resource Name (ARN) for the domain, data source, or application to view tags for.</p>",
         "MasterUserOptions$MasterUserARN": "<p>Amazon Resource Name (ARN) for the master user. Only specify if <code>InternalUserDatabaseEnabled</code> is <code>false</code>.</p>",
+        "MigrationSource$datasourceArn": "<p>The Amazon Resource Name (ARN) of the data source to migrate saved objects from.</p>",
         "PutDefaultApplicationSettingRequest$applicationArn": null,
         "PutDefaultApplicationSettingResponse$applicationArn": null,
         "RemoveTagsRequest$ARN": "<p>The Amazon Resource Name (ARN) of the domain, data source, or application from which you want to delete the specified tags.</p>",
@@ -325,8 +329,12 @@
         "DeregisterCapabilityRequest$applicationId": "<p>The unique identifier of the OpenSearch UI application to deregister the capability from.</p>",
         "GetCapabilityRequest$applicationId": "<p>The unique identifier of the OpenSearch UI application.</p>",
         "GetCapabilityResponse$applicationId": "<p>The unique identifier of the OpenSearch UI application.</p>",
+        "GetMigrationResponse$applicationId": "<p>The unique identifier of the OpenSearch application associated with the migration.</p>",
+        "ListMigrationsRequest$applicationId": "<p>The unique identifier of the OpenSearch application to list migrations for.</p>",
+        "MigrationSummary$applicationId": "<p>The unique identifier of the OpenSearch application associated with the migration.</p>",
         "RegisterCapabilityRequest$applicationId": "<p>The unique identifier of the OpenSearch UI application to register the capability for.</p>",
-        "RegisterCapabilityResponse$applicationId": "<p>The unique identifier of the OpenSearch UI application.</p>"
+        "RegisterCapabilityResponse$applicationId": "<p>The unique identifier of the OpenSearch UI application.</p>",
+        "StartMigrationRequest$applicationId": "<p>The unique identifier of the OpenSearch application to migrate saved objects into.</p>"
       }
     },
     "ApplicationName": {
@@ -586,6 +594,7 @@
         "DomainStatus$UpgradeProcessing": "<p>The status of a domain version upgrade to a new version of OpenSearch or Elasticsearch. True if OpenSearch Service is in the process of a version upgrade. False if the configuration is active.</p>",
         "EBSOptions$EBSEnabled": "<p>Indicates whether EBS volumes are attached to data nodes in an OpenSearch Service domain.</p>",
         "EncryptionAtRestOptions$Enabled": "<p>True to enable encryption at rest.</p>",
+        "ExportOptions$includeReferencesDeep": "<p>Specifies whether to include all objects referenced by the exported objects, recursively.</p>",
         "IAMFederationOptionsInput$Enabled": "<p>Specifies whether IAM identity federation is enabled for the OpenSearch domain.</p>",
         "IAMFederationOptionsOutput$Enabled": "<p>Indicates whether IAM identity federation is currently enabled for the domain.</p>",
         "IamIdentityCenterOptions$enabled": "<p>Indicates whether IAM Identity Center is enabled for the OpenSearch application.</p>",
@@ -603,6 +612,7 @@
         "KeyStoreAccessOption$KeyStoreAccessEnabled": "<p>This indicates whether Key Store access is enabled </p>",
         "ListInstanceTypeDetailsRequest$RetrieveAZs": "<p>An optional parameter that specifies the Availability Zones for the domain.</p>",
         "LogPublishingOption$Enabled": "<p>Whether the log should be published.</p>",
+        "MigrationWorkspace$createWorkspace": "<p>Specifies whether to create a new workspace as the migration target. If <code>true</code>, you must also specify <code>name</code>.</p>",
         "NodeConfig$Enabled": "<p>A boolean value indicating whether a specific node type is active or inactive.</p>",
         "NodeToNodeEncryptionOptions$Enabled": "<p>True to enable node-to-node encryption.</p>",
         "OffPeakWindowOptions$Enabled": "<p>Whether to enable an off-peak window.</p> <p>This option is only available when modifying a domain created prior to February 16, 2023, not when creating a new domain. All domains created after this date have the off-peak window enabled by default. You can't disable the off-peak window after it's enabled for a domain.</p>",
@@ -760,7 +770,8 @@
       "refs": {
         "AttachDataSourceRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request. If you retry a request with the same client token and the same parameters, the retry succeeds without performing any further actions.</p>",
         "CreateApplicationRequest$clientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
-        "CreateVpcEndpointRequest$ClientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>"
+        "CreateVpcEndpointRequest$ClientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
+        "StartMigrationRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon OpenSearch Service ignores the request but does not return an error.</p>"
       }
     },
     "CloudWatchDirectQueryDataSource": {
@@ -1788,6 +1799,12 @@
         "ErrorDetails$ErrorType": "<p>The type of error that occurred.</p>"
       }
     },
+    "ExportOptions": {
+      "base": "<p>Options to filter the scope of saved objects to export during a migration.</p>",
+      "refs": {
+        "MigrationOptions$exportOptions": "<p>Options to filter the scope of saved objects to export from the source.</p>"
+      }
+    },
     "Filter": {
       "base": "<p>A filter used to limit results when describing inbound or outbound cross-cluster connections. You can specify multiple values per filter. A cross-cluster connection must match at least one of the specified values for it to be returned from an operation.</p>",
       "refs": {
@@ -1888,6 +1905,14 @@
       "refs": {}
     },
     "GetIndexResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetMigrationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetMigrationResponse": {
       "base": null,
       "refs": {}
     },
@@ -2276,7 +2301,12 @@
     "Integer": {
       "base": null,
       "refs": {
+        "GetMigrationResponse$exportedCount": "<p>The number of saved objects exported from the source data source.</p>",
+        "GetMigrationResponse$importedCount": "<p>The number of saved objects successfully imported into the target workspace.</p>",
         "ListDataSourceAttachmentsRequest$maxResults": "<p>The maximum number of results to return per page. The default is 50.</p>",
+        "ListMigrationsRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>",
+        "MigrationSummary$exportedCount": "<p>The number of saved objects exported from the source data source.</p>",
+        "MigrationSummary$importedCount": "<p>The number of saved objects successfully imported into the target workspace.</p>",
         "ReservedInstance$Duration": "<p>The duration, in seconds, for which the OpenSearch instance is reserved.</p>",
         "ReservedInstance$InstanceCount": "<p>The number of OpenSearch instances that have been reserved.</p>",
         "ReservedInstanceOffering$Duration": "<p>The duration, in seconds, for which the offering will reserve the OpenSearch instance.</p>"
@@ -2484,6 +2514,14 @@
       "base": null,
       "refs": {}
     },
+    "ListMigrationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListMigrationsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListPackagesForDomainRequest": {
       "base": "<p>Container for the request parameters to the <code>ListPackagesForDomain</code> operation.</p>",
       "refs": {}
@@ -2646,6 +2684,45 @@
       "refs": {
         "ChangeProgressDetails$Message": "<p>A message corresponding to the status of the configuration change.</p>",
         "DryRunResults$Message": "<p>A message corresponding to the deployment type.</p>"
+      }
+    },
+    "MigrationError": {
+      "base": "<p>Contains error details for a migration that failed or completed with errors.</p>",
+      "refs": {
+        "GetMigrationResponse$error": "<p>Error details if the migration failed or completed with errors.</p>",
+        "MigrationSummary$error": "<p>Error details if the migration failed or completed with errors.</p>"
+      }
+    },
+    "MigrationOptions": {
+      "base": "<p>The configuration options for a saved objects migration job.</p>",
+      "refs": {
+        "StartMigrationRequest$migrationOptions": "<p>The configuration options for the migration, including the source data source, target workspace, export filters, and conflict resolution strategy.</p>"
+      }
+    },
+    "MigrationSource": {
+      "base": "<p>The source configuration for a migration, specifying the data source from which to export saved objects.</p>",
+      "refs": {
+        "GetMigrationResponse$source": "<p>The source configuration for the migration, including the data source ARN.</p>",
+        "MigrationOptions$source": "<p>The data source from which to export saved objects.</p>",
+        "MigrationSummary$source": "<p>The source configuration for the migration.</p>"
+      }
+    },
+    "MigrationSummary": {
+      "base": "<p>A summary of a migration job, including its status and progress.</p>",
+      "refs": {
+        "MigrationSummaryList$member": null
+      }
+    },
+    "MigrationSummaryList": {
+      "base": null,
+      "refs": {
+        "ListMigrationsResponse$migrations": "<p>A list of migration job summaries for the specified application.</p>"
+      }
+    },
+    "MigrationWorkspace": {
+      "base": "<p>The target workspace configuration for a migration. You can specify an existing workspace by ID or request creation of a new workspace.</p>",
+      "refs": {
+        "MigrationOptions$workspace": "<p>The target workspace configuration for importing saved objects. You can specify an existing workspace or request creation of a new workspace.</p>"
       }
     },
     "MinimumInstanceCount": {
@@ -3418,6 +3495,18 @@
         "AdvancedSecurityOptions$SAMLOptions": "<p>Container for information about the SAML configuration for OpenSearch Dashboards.</p>"
       }
     },
+    "SavedObjectIdentifier": {
+      "base": "<p>Identifies a specific saved object by its type and unique identifier.</p>",
+      "refs": {
+        "SavedObjectIdentifierList$member": null
+      }
+    },
+    "SavedObjectIdentifierList": {
+      "base": null,
+      "refs": {
+        "ExportOptions$objects": "<p>A list of specific saved objects to include in the migration, identified by type and ID.</p>"
+      }
+    },
     "ScheduleAt": {
       "base": null,
       "refs": {
@@ -3569,6 +3658,14 @@
       "base": "<p>The result of a <code>StartDomainMaintenance</code> request that information about the requested action. </p>",
       "refs": {}
     },
+    "StartMigrationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartMigrationResponse": {
+      "base": null,
+      "refs": {}
+    },
     "StartServiceSoftwareUpdateRequest": {
       "base": "<p>Container for the request parameters to the <code>StartServiceSoftwareUpdate</code> operation.</p>",
       "refs": {}
@@ -3661,6 +3758,9 @@
         "EndpointsMap$key": null,
         "GetApplicationResponse$endpoint": "<p>The endpoint URL of the OpenSearch application.</p>",
         "GetDirectQueryDataSourceResponse$DataSourceArn": "<p> The unique, system-generated identifier that represents the data source. </p>",
+        "GetMigrationRequest$migrationId": "<p>The unique identifier of the migration job to retrieve.</p>",
+        "GetMigrationResponse$migrationId": "<p>The unique identifier of the migration job.</p>",
+        "GetMigrationResponse$status": "<p>The current status of the migration job. Valid values are <code>PENDING</code>, <code>IN_PROGRESS</code>, <code>SUCCEEDED</code>, and <code>FAILED</code>.</p>",
         "GetPackageVersionHistoryResponse$NextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Send the request again using the returned token to retrieve the next page.</p>",
         "GetUpgradeHistoryResponse$NextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Send the request again using the returned token to retrieve the next page.</p>",
         "Insight$DisplayName": "<p>The display name of the insight.</p>",
@@ -3674,7 +3774,18 @@
         "ListDataSourceAttachmentsResponse$nextToken": "<p>The pagination token to use in a subsequent call to retrieve the next set of results.</p>",
         "ListDomainsForPackageResponse$NextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Send the request again using the returned token to retrieve the next page.</p>",
         "ListInsightsRequest$NextToken": "<p>If your initial <code>ListInsights</code> operation returns a <code>NextToken</code>, include the returned <code>NextToken</code> in subsequent <code>ListInsights</code> operations to retrieve the next page of results.</p>",
+        "ListMigrationsRequest$status": "<p>Filters the results by migration status. Valid values are <code>PENDING</code>, <code>IN_PROGRESS</code>, <code>SUCCEEDED</code>, and <code>FAILED</code>.</p>",
+        "ListMigrationsRequest$nextToken": "<p>The pagination token from a previous call to retrieve the next set of results.</p>",
+        "ListMigrationsResponse$nextToken": "<p>The pagination token to use in a subsequent call to retrieve the next set of results.</p>",
         "ListPackagesForDomainResponse$NextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Send the request again using the returned token to retrieve the next page.</p>",
+        "MigrationError$code": "<p>The error code identifying the type of failure.</p>",
+        "MigrationError$message": "<p>A human-readable description of the error.</p>",
+        "MigrationOptions$conflictResolution": "<p>The strategy for resolving conflicts when saved objects already exist in the target workspace. Valid values are <code>CREATE_NEW_COPIES</code>, which creates new objects with unique IDs, and <code>overwrite</code>, which replaces existing objects.</p>",
+        "MigrationSummary$migrationId": "<p>The unique identifier of the migration job.</p>",
+        "MigrationSummary$status": "<p>The current status of the migration job.</p>",
+        "MigrationWorkspace$workspaceId": "<p>The unique identifier of an existing workspace to use as the migration target. Specify either this parameter or <code>createWorkspace</code>.</p>",
+        "MigrationWorkspace$name": "<p>The name of the new workspace to create. Required when <code>createWorkspace</code> is <code>true</code>.</p>",
+        "MigrationWorkspace$type": "<p>The type of the new workspace to create.</p>",
         "ModifyingProperties$Name": "<p>The name of the property that is currently being modified.</p>",
         "ModifyingProperties$ActiveValue": "<p>The current value of the domain property that is being modified.</p>",
         "ModifyingProperties$PendingValue": "<p>The value that the property that is currently being modified will eventually have.</p>",
@@ -3690,11 +3801,15 @@
         "SAMLOptionsInput$RolesKey": "<p>Element of the SAML assertion to use for backend roles. Default is <code>roles</code>.</p>",
         "SAMLOptionsOutput$SubjectKey": "<p>The key used for matching the SAML subject attribute.</p>",
         "SAMLOptionsOutput$RolesKey": "<p>The key used for matching the SAML roles attribute.</p>",
+        "SavedObjectIdentifier$type": "<p>The type of the saved object, such as <code>dashboard</code>, <code>visualization</code>, <code>index-pattern</code>, <code>search</code>, or <code>query</code>.</p>",
+        "SavedObjectIdentifier$id": "<p>The unique identifier of the saved object.</p>",
         "ScheduledAction$Id": "<p>The unique identifier of the scheduled action.</p>",
         "ScheduledAction$Description": "<p>A description of the action to be taken.</p>",
         "ServiceSoftwareOptions$CurrentVersion": "<p>The current service software version present on the domain.</p>",
         "ServiceSoftwareOptions$NewVersion": "<p>The new service software version, if one is available.</p>",
         "ServiceSoftwareOptions$Description": "<p>A description of the service software update status.</p>",
+        "StartMigrationResponse$migrationId": "<p>The unique identifier of the migration job.</p>",
+        "StartMigrationResponse$status": "<p>The initial status of the migration job. The status is <code>PENDING</code> when a migration is first created.</p>",
         "StringList$member": null,
         "UpdateDataSourceResponse$Message": "<p>A message associated with the updated data source.</p>",
         "UpdateDirectQueryDataSourceResponse$DataSourceArn": "<p> The unique, system-generated identifier that represents the data source. </p>",
@@ -3714,6 +3829,7 @@
       "refs": {
         "ChangeProgressStatusDetails$PendingProperties": "<p>The list of properties in the domain configuration change that are still pending.</p>",
         "ChangeProgressStatusDetails$CompletedProperties": "<p>The list of properties in the domain configuration change that have completed.</p>",
+        "ExportOptions$types": "<p>A list of saved object types to include in the migration. Valid values include <code>dashboard</code>, <code>visualization</code>, <code>index-pattern</code>, <code>search</code>, and <code>query</code>.</p>",
         "RemoveTagsRequest$TagKeys": "<p>The list of tag keys to remove from the domain, data source, or application.</p>",
         "VPCDerivedInfo$SubnetIds": "<p>A list of subnet IDs associated with the VPC endpoints for the domain.</p>",
         "VPCDerivedInfo$AvailabilityZones": "<p>The list of Availability Zones associated with the VPC subnets.</p>",
@@ -3893,8 +4009,12 @@
         "DomainMaintenanceDetails$UpdatedAt": "<p>The time at which the action was updated.</p>",
         "GetDomainMaintenanceStatusResponse$CreatedAt": "<p>The time at which the action was created.</p>",
         "GetDomainMaintenanceStatusResponse$UpdatedAt": "<p>The time at which the action was updated.</p>",
+        "GetMigrationResponse$createdAt": "<p>The date and time when the migration job was created.</p>",
+        "GetMigrationResponse$updatedAt": "<p>The date and time when the migration job was last updated.</p>",
         "Insight$CreationTime": "<p>The timestamp when the insight was created, in epoch milliseconds.</p>",
         "Insight$UpdateTime": "<p>The timestamp when the insight was last updated, in epoch milliseconds.</p>",
+        "MigrationSummary$createdAt": "<p>The date and time when the migration job was created.</p>",
+        "MigrationSummary$updatedAt": "<p>The date and time when the migration job was last updated.</p>",
         "OptionStatus$CreationDate": "<p>The timestamp when the entity was created.</p>",
         "OptionStatus$UpdateDate": "<p>The timestamp of the last time the entity was updated.</p>",
         "ReservedInstance$StartTime": "<p>The date and time when the reservation was purchased.</p>"

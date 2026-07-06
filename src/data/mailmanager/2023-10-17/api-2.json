@@ -5,8 +5,11 @@
     "auth":["aws.auth#sigv4"],
     "endpointPrefix":"mail-manager",
     "jsonVersion":"1.0",
-    "protocol":"json",
-    "protocols":["json"],
+    "protocol":"smithy-rpc-v2-cbor",
+    "protocols":[
+      "smithy-rpc-v2-cbor",
+      "json"
+    ],
     "serviceFullName":"MailManager",
     "serviceId":"MailManager",
     "signatureVersion":"v4",
@@ -939,6 +942,10 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{
+        "httpStatusCode":403,
+        "senderFault":true
+      },
       "exception":true
     },
     "ActionFailurePolicy":{
@@ -1255,6 +1262,10 @@
       "type":"structure",
       "members":{
         "Message":{"shape":"ErrorMessage"}
+      },
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
       },
       "exception":true
     },
@@ -2861,6 +2872,10 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{
+        "httpStatusCode":404,
+        "senderFault":true
+      },
       "exception":true
     },
     "ResultField":{
@@ -3414,6 +3429,10 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{
+        "httpStatusCode":402,
+        "senderFault":true
+      },
       "exception":true
     },
     "SmtpPassword":{
@@ -3636,6 +3655,10 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{
+        "httpStatusCode":429,
+        "senderFault":true
+      },
       "exception":true
     },
     "Timestamp":{"type":"timestamp"},
@@ -3790,6 +3813,10 @@
       "type":"structure",
       "members":{
         "Message":{"shape":"ErrorMessage"}
+      },
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
       },
       "exception":true
     },

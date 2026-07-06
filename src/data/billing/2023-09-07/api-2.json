@@ -91,6 +91,21 @@
       ],
       "idempotent":true
     },
+    "GetBillingPreferences":{
+      "name":"GetBillingPreferences",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetBillingPreferencesRequest"},
+      "output":{"shape":"GetBillingPreferencesResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "GetBillingView":{
       "name":"GetBillingView",
       "http":{
@@ -107,6 +122,36 @@
         {"shape":"InternalServerException"}
       ],
       "readonly":true
+    },
+    "GetCreditAllocationHistory":{
+      "name":"GetCreditAllocationHistory",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetCreditAllocationHistoryRequest"},
+      "output":{"shape":"GetCreditAllocationHistoryResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "GetCredits":{
+      "name":"GetCredits",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetCreditsRequest"},
+      "output":{"shape":"GetCreditsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ]
     },
     "GetResourcePolicy":{
       "name":"GetResourcePolicy",
@@ -175,6 +220,21 @@
       ],
       "readonly":true
     },
+    "RedeemCredits":{
+      "name":"RedeemCredits",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RedeemCreditsRequest"},
+      "output":{"shape":"RedeemCreditsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -202,6 +262,21 @@
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "UpdateBillingPreferences":{
+      "name":"UpdateBillingPreferences",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateBillingPreferencesRequest"},
+      "output":{"shape":"UpdateBillingPreferencesResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
@@ -241,6 +316,11 @@
       "type":"string",
       "pattern":"[0-9]{12}"
     },
+    "AccountName":{
+      "type":"string",
+      "max":50,
+      "min":1
+    },
     "ActiveTimeRange":{
       "type":"structure",
       "required":[
@@ -251,6 +331,24 @@
         "activeAfterInclusive":{"shape":"Timestamp"},
         "activeBeforeInclusive":{"shape":"Timestamp"}
       }
+    },
+    "Amount":{
+      "type":"structure",
+      "required":[
+        "currencyCode",
+        "currencyAmount"
+      ],
+      "members":{
+        "currencyCode":{"shape":"CurrencyCode"},
+        "currencyAmount":{"shape":"CurrencyAmount"}
+      }
+    },
+    "ApplicationType":{
+      "type":"string",
+      "enum":[
+        "BEFORE_CROSS_SERVICE_DISCOUNTS",
+        "AFTER_DISCOUNTS"
+      ]
     },
     "AssociateSourceViewsRequest":{
       "type":"structure",
@@ -269,6 +367,93 @@
       "members":{
         "arn":{"shape":"BillingViewArn"}
       }
+    },
+    "BillingFeature":{
+      "type":"string",
+      "enum":[
+        "RI_SHARING",
+        "RI_SHARING_HISTORY",
+        "CREDIT_SHARING",
+        "CREDIT_SHARING_HISTORY",
+        "CREDIT_LEVEL_SHARING",
+        "BILLING_ALERTS",
+        "CREDIT_PREFERENCE_OPTIONS"
+      ]
+    },
+    "BillingFeatureFilter":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"BillingFeatureFilterName"},
+        "value":{"shape":"BillingFeatureFilterValues"}
+      }
+    },
+    "BillingFeatureFilterName":{
+      "type":"string",
+      "enum":["PREFERENCE_KEY"]
+    },
+    "BillingFeatureFilterValue":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"[a-zA-Z0-9-/]+"
+    },
+    "BillingFeatureFilterValues":{
+      "type":"list",
+      "member":{"shape":"BillingFeatureFilterValue"},
+      "max":10,
+      "min":1
+    },
+    "BillingMonth":{
+      "type":"string",
+      "max":7,
+      "min":1
+    },
+    "BillingPeriod":{
+      "type":"structure",
+      "required":[
+        "year",
+        "month"
+      ],
+      "members":{
+        "year":{"shape":"BillingYear"},
+        "month":{"shape":"Month"}
+      }
+    },
+    "BillingPreferenceForKey":{
+      "type":"structure",
+      "required":[
+        "key",
+        "value"
+      ],
+      "members":{
+        "key":{"shape":"PreferenceKey"},
+        "value":{"shape":"PreferenceValue"}
+      }
+    },
+    "BillingPreferenceSummary":{
+      "type":"structure",
+      "required":[
+        "feature",
+        "key",
+        "value"
+      ],
+      "members":{
+        "feature":{"shape":"BillingFeature"},
+        "key":{"shape":"PreferenceKey"},
+        "value":{"shape":"PreferenceValue"},
+        "accountName":{"shape":"AccountName"},
+        "accountId":{"shape":"AccountId"},
+        "billingPeriod":{"shape":"BillingPeriod"}
+      }
+    },
+    "BillingPreferences":{
+      "type":"list",
+      "member":{"shape":"BillingPreferenceSummary"}
+    },
+    "BillingPreferencesPerKey":{
+      "type":"list",
+      "member":{"shape":"BillingPreferenceForKey"},
+      "min":1
     },
     "BillingViewArn":{
       "type":"string",
@@ -395,6 +580,12 @@
       "max":100,
       "min":1
     },
+    "BillingYear":{
+      "type":"integer",
+      "box":true,
+      "max":2120,
+      "min":2005
+    },
     "Boolean":{
       "type":"boolean",
       "box":true
@@ -460,6 +651,98 @@
         "createdAt":{"shape":"Timestamp"}
       }
     },
+    "CreditAllocationHistoryEntry":{
+      "type":"structure",
+      "required":[
+        "creditId",
+        "creditAmount",
+        "accountId",
+        "appliedServiceName",
+        "billingMonth",
+        "isEstimatedBill"
+      ],
+      "members":{
+        "creditId":{"shape":"CreditId"},
+        "creditAmount":{"shape":"Amount"},
+        "description":{"shape":"String"},
+        "accountId":{"shape":"AccountId"},
+        "appliedServiceName":{"shape":"String"},
+        "billingMonth":{"shape":"BillingMonth"},
+        "isEstimatedBill":{"shape":"Boolean"}
+      }
+    },
+    "CreditAllocationHistoryList":{
+      "type":"list",
+      "member":{"shape":"CreditAllocationHistoryEntry"}
+    },
+    "CreditData":{
+      "type":"structure",
+      "required":[
+        "creditId",
+        "accountId",
+        "creditType",
+        "initialAmount",
+        "remainingAmount",
+        "description",
+        "startDate"
+      ],
+      "members":{
+        "creditId":{"shape":"CreditId"},
+        "accountId":{"shape":"AccountId"},
+        "creditType":{"shape":"String"},
+        "initialAmount":{"shape":"Amount"},
+        "remainingAmount":{"shape":"Amount"},
+        "estimatedAmount":{"shape":"Amount"},
+        "applicableProductNames":{"shape":"ProductNames"},
+        "description":{"shape":"String"},
+        "startDate":{"shape":"Timestamp"},
+        "endDate":{"shape":"Timestamp"},
+        "exhaustDate":{"shape":"Timestamp"},
+        "applicationType":{"shape":"ApplicationType"},
+        "shareableAccounts":{"shape":"ShareableAccountIds"},
+        "accountHasCreditSharingEnabled":{"shape":"Boolean"},
+        "creditConsoleVisibility":{"shape":"String"},
+        "creditSharingType":{"shape":"CreditSharingType"},
+        "costCategoryArn":{"shape":"String"},
+        "ruleName":{"shape":"String"},
+        "creditStatus":{"shape":"CreditStatus"},
+        "purchaseTypeApplications":{"shape":"PurchaseTypeApplications"}
+      }
+    },
+    "CreditDataList":{
+      "type":"list",
+      "member":{"shape":"CreditData"}
+    },
+    "CreditId":{
+      "type":"string",
+      "max":32,
+      "min":1,
+      "pattern":"[0-9]+"
+    },
+    "CreditSharingType":{
+      "type":"string",
+      "enum":[
+        "DEFAULT",
+        "DISABLED",
+        "CUSTOM",
+        "COST_CATEGORY_RULE"
+      ]
+    },
+    "CreditStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "CurrencyAmount":{
+      "type":"string",
+      "pattern":"[0-9]+(.[0-9]+)"
+    },
+    "CurrencyCode":{
+      "type":"string",
+      "pattern":"[A-Z]{3}"
+    },
     "DeleteBillingViewRequest":{
       "type":"structure",
       "required":["arn"],
@@ -522,10 +805,50 @@
         "timeRange":{"shape":"TimeRange"}
       }
     },
+    "FailedMonthsList":{
+      "type":"list",
+      "member":{"shape":"BillingMonth"}
+    },
     "FieldName":{
       "type":"string",
       "max":100,
       "min":0
+    },
+    "GetBillingPreferencesRequest":{
+      "type":"structure",
+      "required":["features"],
+      "members":{
+        "nextToken":{"shape":"PageToken"},
+        "maxResults":{"shape":"GetBillingPreferencesRequestMaxResultsInteger"},
+        "features":{"shape":"GetBillingPreferencesRequestFeaturesList"},
+        "filters":{"shape":"GetBillingPreferencesRequestFiltersList"}
+      }
+    },
+    "GetBillingPreferencesRequestFeaturesList":{
+      "type":"list",
+      "member":{"shape":"BillingFeature"},
+      "max":1,
+      "min":1
+    },
+    "GetBillingPreferencesRequestFiltersList":{
+      "type":"list",
+      "member":{"shape":"BillingFeatureFilter"},
+      "max":1,
+      "min":1
+    },
+    "GetBillingPreferencesRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":50,
+      "min":1
+    },
+    "GetBillingPreferencesResponse":{
+      "type":"structure",
+      "required":["billingPreferences"],
+      "members":{
+        "billingPreferences":{"shape":"BillingPreferences"},
+        "nextToken":{"shape":"PageToken"}
+      }
     },
     "GetBillingViewRequest":{
       "type":"structure",
@@ -539,6 +862,57 @@
       "required":["billingView"],
       "members":{
         "billingView":{"shape":"BillingViewElement"}
+      }
+    },
+    "GetCreditAllocationHistoryRequest":{
+      "type":"structure",
+      "required":[
+        "accountId",
+        "startDate",
+        "endDate"
+      ],
+      "members":{
+        "accountId":{"shape":"AccountId"},
+        "creditId":{"shape":"Long"},
+        "startDate":{"shape":"Timestamp"},
+        "endDate":{"shape":"Timestamp"},
+        "nextToken":{"shape":"PageToken"},
+        "maxResults":{"shape":"GetCreditAllocationHistoryRequestMaxResultsInteger"}
+      }
+    },
+    "GetCreditAllocationHistoryRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
+    "GetCreditAllocationHistoryResponse":{
+      "type":"structure",
+      "required":["partialResults"],
+      "members":{
+        "creditAllocationHistoryList":{"shape":"CreditAllocationHistoryList"},
+        "partialResults":{"shape":"Boolean"},
+        "failedMonths":{"shape":"FailedMonthsList"},
+        "nextToken":{"shape":"PageToken"}
+      }
+    },
+    "GetCreditsRequest":{
+      "type":"structure",
+      "required":[
+        "accountId",
+        "startDate"
+      ],
+      "members":{
+        "accountId":{"shape":"String"},
+        "startDate":{"shape":"Timestamp"},
+        "endDate":{"shape":"Timestamp"},
+        "payerAccountFlag":{"shape":"Boolean"}
+      }
+    },
+    "GetCreditsResponse":{
+      "type":"structure",
+      "members":{
+        "credits":{"shape":"CreditDataList"}
       }
     },
     "GetResourcePolicyRequest":{
@@ -620,16 +994,79 @@
         "resourceTags":{"shape":"ResourceTagList"}
       }
     },
-    "PageToken":{
-      "type":"string",
-      "max":2047,
+    "Long":{
+      "type":"long",
+      "box":true
+    },
+    "Month":{
+      "type":"integer",
+      "box":true,
+      "max":12,
       "min":1
     },
+    "PageToken":{
+      "type":"string",
+      "max":4095,
+      "min":1,
+      "pattern":"[-a-zA-Z0-9+=/_]+"
+    },
     "PolicyDocument":{"type":"string"},
+    "PreferenceKey":{
+      "type":"string",
+      "max":2148,
+      "min":1,
+      "pattern":"[a-zA-Z0-9-\\/\\*: ]+"
+    },
+    "PreferenceValue":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "ProductName":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "ProductNames":{
+      "type":"list",
+      "member":{"shape":"ProductName"},
+      "max":1000,
+      "min":0
+    },
+    "PromoCode":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":".*[^<>\"&\\%|'  ]*.*"
+    },
+    "PurchaseType":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "PurchaseTypeApplications":{
+      "type":"list",
+      "member":{"shape":"PurchaseType"},
+      "max":50,
+      "min":0
+    },
     "QuotaCode":{
       "type":"string",
       "max":1024,
       "min":1
+    },
+    "RedeemCreditsRequest":{
+      "type":"structure",
+      "required":["promoCode"],
+      "members":{
+        "promoCode":{"shape":"PromoCode"}
+      }
+    },
+    "RedeemCreditsResponse":{
+      "type":"structure",
+      "members":{}
     },
     "ResourceArn":{
       "type":"string",
@@ -722,6 +1159,11 @@
       },
       "exception":true
     },
+    "ShareableAccountIds":{
+      "type":"list",
+      "member":{"shape":"AccountId"}
+    },
+    "String":{"type":"string"},
     "StringSearch":{
       "type":"structure",
       "required":[
@@ -799,6 +1241,21 @@
       }
     },
     "UntagResourceResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "UpdateBillingPreferencesRequest":{
+      "type":"structure",
+      "required":[
+        "feature",
+        "billingPreferencesPerKey"
+      ],
+      "members":{
+        "feature":{"shape":"BillingFeature"},
+        "billingPreferencesPerKey":{"shape":"BillingPreferencesPerKey"}
+      }
+    },
+    "UpdateBillingPreferencesResponse":{
       "type":"structure",
       "members":{}
     },

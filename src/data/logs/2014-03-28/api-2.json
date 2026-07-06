@@ -1080,6 +1080,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "GetStorageTierPolicy":{
+      "name":"GetStorageTierPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetStorageTierPolicyRequest"},
+      "output":{"shape":"GetStorageTierPolicyResponse"},
+      "errors":[
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"OperationAbortedException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "GetTransformer":{
       "name":"GetTransformer",
       "http":{
@@ -1503,6 +1519,22 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"OperationAbortedException"},
         {"shape":"ServiceUnavailableException"}
+      ]
+    },
+    "PutStorageTierPolicy":{
+      "name":"PutStorageTierPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutStorageTierPolicyRequest"},
+      "output":{"shape":"PutStorageTierPolicyResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"OperationAbortedException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "PutSubscriptionFilter":{
@@ -3757,6 +3789,17 @@
         "lastUpdatedTime":{"shape":"Timestamp"}
       }
     },
+    "GetStorageTierPolicyRequest":{
+      "type":"structure",
+      "members":{}
+    },
+    "GetStorageTierPolicyResponse":{
+      "type":"structure",
+      "members":{
+        "storageTier":{"shape":"StorageTier"},
+        "lastUpdatedTime":{"shape":"Timestamp"}
+      }
+    },
     "GetTransformerRequest":{
       "type":"structure",
       "required":["logGroupIdentifier"],
@@ -5301,6 +5344,20 @@
         "retentionInDays":{"shape":"Days"}
       }
     },
+    "PutStorageTierPolicyRequest":{
+      "type":"structure",
+      "required":["storageTier"],
+      "members":{
+        "storageTier":{"shape":"StorageTier"}
+      }
+    },
+    "PutStorageTierPolicyResponse":{
+      "type":"structure",
+      "members":{
+        "storageTier":{"shape":"StorageTier"},
+        "lastUpdatedTime":{"shape":"Timestamp"}
+      }
+    },
     "PutSubscriptionFilterRequest":{
       "type":"structure",
       "required":[
@@ -5982,6 +6039,13 @@
       "members":{
         "success":{"shape":"Success"}
       }
+    },
+    "StorageTier":{
+      "type":"string",
+      "enum":[
+        "STANDARD",
+        "INTELLIGENT_TIERING"
+      ]
     },
     "StoredBytes":{
       "type":"long",
