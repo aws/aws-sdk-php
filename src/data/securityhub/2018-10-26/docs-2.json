@@ -21,6 +21,7 @@
     "CreateAutomationRule": "<p> Creates an automation rule based on input parameters. </p>",
     "CreateAutomationRuleV2": "<p>Creates a V2 automation rule.</p>",
     "CreateConfigurationPolicy": "<p> Creates a configuration policy with the defined configuration. Only the Security Hub CSPM delegated administrator can invoke this operation from the home Region. </p>",
+    "CreateConnector": "<p>Creates a cloud service provider management (CSPM) connector in Security Hub CSPM. A connector establishes a connection between Security Hub CSPM and a third-party cloud provider, enabling Security Hub CSPM to ingest security findings and resource data from the connected environment.</p>",
     "CreateConnectorV2": "<p>Grants permission to create a connectorV2 based on input parameters.</p>",
     "CreateFindingAggregator": "<note> <p>The <i>aggregation Region</i> is now called the <i>home Region</i>.</p> </note> <p>Used to enable cross-Region aggregation. This operation can be invoked from the home Region only.</p> <p>For information about how cross-Region aggregation works, see <a href=\"https://docs.aws.amazon.com/securityhub/latest/userguide/finding-aggregation.html\">Understanding cross-Region aggregation in Security Hub CSPM</a> in the <i>Security Hub CSPM User Guide</i>. </p>",
     "CreateInsight": "<p>Creates a custom insight in Security Hub CSPM. An insight is a consolidation of findings that relate to a security issue that requires attention or remediation.</p> <p>To group the related findings in the insight, use the <code>GroupByAttribute</code>.</p>",
@@ -31,6 +32,7 @@
     "DeleteAggregatorV2": "<p>Deletes the Aggregator V2.</p>",
     "DeleteAutomationRuleV2": "<p>Deletes a V2 automation rule.</p>",
     "DeleteConfigurationPolicy": "<p> Deletes a configuration policy. Only the Security Hub CSPM delegated administrator can invoke this operation from the home Region. For the deletion to succeed, you must first disassociate a configuration policy from target accounts, organizational units, or the root by invoking the <code>StartConfigurationPolicyDisassociation</code> operation. </p>",
+    "DeleteConnector": "<p>Deletes a CSPM connector. When you delete a connector, Security Hub CSPM stops ingesting findings and resource data from the connected cloud provider environment.</p>",
     "DeleteConnectorV2": "<p>Grants permission to delete a connectorV2.</p>",
     "DeleteFindingAggregator": "<note> <p>The <i>aggregation Region</i> is now called the <i>home Region</i>.</p> </note> <p>Deletes a finding aggregator. When you delete the finding aggregator, you stop cross-Region aggregation. Finding replication stops occurring from the linked Regions to the home Region.</p> <p>When you stop cross-Region aggregation, findings that were already replicated and sent to the home Region are still visible from the home Region. However, new findings and finding updates are no longer replicated and sent to the home Region. </p>",
     "DeleteInsight": "<p>Deletes the insight specified by the <code>InsightArn</code>.</p>",
@@ -47,13 +49,15 @@
     "DisableImportFindingsForProduct": "<p>Disables the integration of the specified product with Security Hub CSPM. After the integration is disabled, findings from that product are no longer sent to Security Hub CSPM.</p>",
     "DisableOrganizationAdminAccount": "<p>Disables a Security Hub CSPM administrator account. Can only be called by the organization management account.</p>",
     "DisableSecurityHub": "<p>Disables Security Hub CSPM in your account only in the current Amazon Web Services Region. To disable Security Hub CSPM in all Regions, you must submit one request per Region where you have enabled Security Hub CSPM.</p> <p>You can't disable Security Hub CSPM in an account that is currently the Security Hub CSPM administrator.</p> <p>When you disable Security Hub CSPM, your existing findings and insights and any Security Hub CSPM configuration settings are deleted after 90 days and cannot be recovered. Any standards that were enabled are disabled, and your administrator and member account associations are removed.</p> <p>If you want to save your existing findings, you must export them before you disable Security Hub CSPM.</p>",
-    "DisableSecurityHubV2": "<p>Disable the service for the current Amazon Web Services Region or specified Amazon Web Services Region.</p>",
+    "DisableSecurityHubFeatureV2": "<p>Disables an opt-in feature for the calling account in the current Amazon Web Services Region. The operation is idempotent. If the feature is already disabled, no changes are made. You cannot disable a feature that is managed by an organization policy.</p>",
+    "DisableSecurityHubV2": "<p>Disable the service for the current Amazon Web Services Region or specified Amazon Web Services Region. Disabling the service also disables all opt-in features that are currently enabled in that Region.</p>",
     "DisassociateFromAdministratorAccount": "<p>Disassociates the current Security Hub CSPM member account from the associated administrator account.</p> <p>This operation is only used by accounts that are not part of an organization. For organization accounts, only the administrator account can disassociate a member account.</p>",
     "DisassociateFromMasterAccount": "<p>This method is deprecated. Instead, use <code>DisassociateFromAdministratorAccount</code>.</p> <p>The Security Hub CSPM console continues to use <code>DisassociateFromMasterAccount</code>. It will eventually change to use <code>DisassociateFromAdministratorAccount</code>. Any IAM policies that specifically control access to this function must continue to use <code>DisassociateFromMasterAccount</code>. You should also add <code>DisassociateFromAdministratorAccount</code> to your policies to ensure that the correct permissions are in place after the console begins to use <code>DisassociateFromAdministratorAccount</code>.</p> <p>Disassociates the current Security Hub CSPM member account from the associated administrator account.</p> <p>This operation is only used by accounts that are not part of an organization. For organization accounts, only the administrator account can disassociate a member account.</p>",
     "DisassociateMembers": "<p>Disassociates the specified member accounts from the associated administrator account.</p> <p>Can be used to disassociate both accounts that are managed using Organizations and accounts that were invited manually.</p>",
     "EnableImportFindingsForProduct": "<p>Enables the integration of a partner product with Security Hub CSPM. Integrated products send findings to Security Hub CSPM.</p> <p>When you enable a product integration, a permissions policy that grants permission for the product to send findings to Security Hub CSPM is applied.</p>",
     "EnableOrganizationAdminAccount": "<p>Designates the Security Hub CSPM administrator account for an organization. Can only be called by the organization management account.</p>",
     "EnableSecurityHub": "<p>Enables Security Hub CSPM for your account in the current Region or the Region you specify in the request.</p> <p>When you enable Security Hub CSPM, you grant to Security Hub CSPM the permissions necessary to gather findings from other services that are integrated with Security Hub CSPM.</p> <p>When you use the <code>EnableSecurityHub</code> operation to enable Security Hub CSPM, you also automatically enable the following standards:</p> <ul> <li> <p>Center for Internet Security (CIS) Amazon Web Services Foundations Benchmark v1.2.0</p> </li> <li> <p>Amazon Web Services Foundational Security Best Practices</p> </li> </ul> <p>Other standards are not automatically enabled. </p> <p>To opt out of automatically enabled standards, set <code>EnableDefaultStandards</code> to <code>false</code>.</p> <p>After you enable Security Hub CSPM, to enable a standard, use the <code>BatchEnableStandards</code> operation. To disable a standard, use the <code>BatchDisableStandards</code> operation.</p> <p>To learn more, see the <a href=\"https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-settingup.html\">setup information</a> in the <i>Security Hub CSPM User Guide</i>.</p>",
+    "EnableSecurityHubFeatureV2": "<p>Enables an opt-in feature for the calling account in the current Amazon Web Services Region. The service must be enabled before you can enable a feature. The operation is idempotent. If the feature is already enabled, no changes are made. You cannot enable a feature that is managed by an organization policy.</p>",
     "EnableSecurityHubV2": "<p>Enables the service in account for the current Amazon Web Services Region or specified Amazon Web Services Region.</p>",
     "GenerateRecommendedPolicyV2": "<p>Begins the recommended policy generation to remediate a Security Hub finding. <code>GenerateRecommendedPolicyV2</code> only supports findings for unused permissions.</p>",
     "GetAdministratorAccount": "<p>Provides the details for the Security Hub CSPM administrator account for the current member account.</p> <p>Can be used by both member accounts that are managed using Organizations and accounts that were invited manually.</p>",
@@ -61,6 +65,7 @@
     "GetAutomationRuleV2": "<p>Returns an automation rule for the V2 service.</p>",
     "GetConfigurationPolicy": "<p> Provides information about a configuration policy. Only the Security Hub CSPM delegated administrator can invoke this operation from the home Region. </p>",
     "GetConfigurationPolicyAssociation": "<p> Returns the association between a configuration and a target account, organizational unit, or the root. The configuration can be a configuration policy or self-managed behavior. Only the Security Hub CSPM delegated administrator can invoke this operation from the home Region. </p>",
+    "GetConnector": "<p>Retrieves details for a CSPM connector based on the connector ID.</p>",
     "GetConnectorV2": "<p>Grants permission to retrieve details for a connectorV2 based on connector id.</p>",
     "GetEnabledStandards": "<p>Returns a list of the standards that are currently enabled.</p>",
     "GetFindingAggregator": "<note> <p>The <i>aggregation Region</i> is now called the <i>home Region</i>.</p> </note> <p>Returns the current configuration in the calling account for cross-Region aggregation. A finding aggregator is a resource that establishes the home Region and any linked Regions.</p>",
@@ -85,6 +90,7 @@
     "ListAutomationRulesV2": "<p>Returns a list of automation rules and metadata for the calling account.</p>",
     "ListConfigurationPolicies": "<p> Lists the configuration policies that the Security Hub CSPM delegated administrator has created for your organization. Only the delegated administrator can invoke this operation from the home Region. </p>",
     "ListConfigurationPolicyAssociations": "<p> Provides information about the associations for your configuration policies and self-managed behavior. Only the Security Hub CSPM delegated administrator can invoke this operation from the home Region. </p>",
+    "ListConnectors": "<p>Lists the CSPM connectors and their metadata for the calling account.</p>",
     "ListConnectorsV2": "<p>Grants permission to retrieve a list of connectorsV2 and their metadata for the calling account.</p>",
     "ListEnabledProductsForImport": "<p>Lists all findings-generating solutions (products) that you are subscribed to receive findings from in Security Hub CSPM.</p>",
     "ListFindingAggregators": "<p>If cross-Region aggregation is enabled, then <code>ListFindingAggregators</code> returns the Amazon Resource Name (ARN) of the finding aggregator. You can run this operation from any Amazon Web Services Region.</p>",
@@ -103,6 +109,7 @@
     "UpdateAggregatorV2": "<p>Udpates the configuration for the Aggregator V2.</p>",
     "UpdateAutomationRuleV2": "<p>Updates a V2 automation rule.</p>",
     "UpdateConfigurationPolicy": "<p> Updates a configuration policy. Only the Security Hub CSPM delegated administrator can invoke this operation from the home Region. </p>",
+    "UpdateConnector": "<p>Updates a CSPM connector's configuration, such as the scope or regions for the connected cloud provider.</p>",
     "UpdateConnectorV2": "<p>Grants permission to update a connectorV2 based on its id and input parameters.</p>",
     "UpdateFindingAggregator": "<note> <p>The <i>aggregation Region</i> is now called the <i>home Region</i>.</p> </note> <p>Updates cross-Region aggregation settings. You can use this operation to update the Region linking mode and the list of included or excluded Amazon Web Services Regions. However, you can't use this operation to change the home Region.</p> <p>You can invoke this operation from the current home Region only. </p>",
     "UpdateFindings": "<p> <code>UpdateFindings</code> is a deprecated operation. Instead of <code>UpdateFindings</code>, use the <code>BatchUpdateFindings</code> operation.</p> <p>The <code>UpdateFindings</code> operation updates the <code>Note</code> and <code>RecordState</code> of the Security Hub CSPM aggregated findings that the filter attributes specify. Any member account that can view the finding can also see the update to the finding.</p> <p>Finding updates made with <code>UpdateFindings</code> aren't persisted if the same finding is later updated by the finding provider through the <code>BatchImportFindings</code> operation. In addition, Security Hub CSPM doesn't record updates made with <code>UpdateFindings</code> in the finding history.</p>",
@@ -4460,6 +4467,49 @@
         "ResourceDetails$AwsXrayEncryptionConfig": "<p>Information about the encryption configuration for X-Ray.</p>"
       }
     },
+    "AzureDetail": {
+      "base": "<p>The detailed Azure configuration for a connector.</p>",
+      "refs": {
+        "CspmProviderDetail$Azure": "<p>The Azure provider detail.</p>",
+        "ProviderDetail$Azure": "<p>Details about a Microsoft Azure CSPM integration.</p>"
+      }
+    },
+    "AzureProviderConfiguration": {
+      "base": "<p>The configuration for connecting to an Azure environment.</p>",
+      "refs": {
+        "CspmProviderConfiguration$Azure": "<p>The Azure provider configuration.</p>",
+        "ProviderConfiguration$Azure": "<p>The configuration settings required to establish a CSPM integration with Microsoft Azure.</p>"
+      }
+    },
+    "AzureRegionList": {
+      "base": null,
+      "refs": {
+        "AzureDetail$AzureRegions": "<p>The list of Azure regions being monitored.</p>",
+        "AzureProviderConfiguration$AzureRegions": "<p>The list of Azure regions to monitor.</p>",
+        "AzureUpdateConfiguration$AzureRegions": "<p>The updated list of Azure regions to monitor.</p>"
+      }
+    },
+    "AzureResourceDetails": {
+      "base": "<p>Details about an Azure resource that is related to a finding. This field is a JSON object that contains provider-specific resource details.</p>",
+      "refs": {
+        "ResourceDetails$AzureResource": "<p>Details about an Azure resource that is related to a finding.</p>"
+      }
+    },
+    "AzureScopeConfiguration": {
+      "base": "<p>The scope configuration for an Azure connector, defining the tenant or subscription scope.</p>",
+      "refs": {
+        "AzureDetail$ScopeConfiguration": "<p>The scope configuration that defines which Azure resources are monitored.</p>",
+        "AzureProviderConfiguration$ScopeConfiguration": "<p>The scope configuration that defines which Azure resources are monitored.</p>",
+        "AzureUpdateConfiguration$ScopeConfiguration": "<p>The updated scope configuration.</p>"
+      }
+    },
+    "AzureUpdateConfiguration": {
+      "base": "<p>The configuration for updating an Azure connector's scope and regions.</p>",
+      "refs": {
+        "CspmProviderUpdateConfiguration$Azure": "<p>The Azure update configuration.</p>",
+        "ProviderUpdateConfiguration$Azure": "<p>The parameters required to update the configuration for a Microsoft Azure CSPM integration.</p>"
+      }
+    },
     "BatchDeleteAutomationRulesRequest": {
       "base": null,
       "refs": {}
@@ -4903,8 +4953,15 @@
       "refs": {
         "CreateAggregatorV2Request$ClientToken": "<p>A unique identifier used to ensure idempotency.</p>",
         "CreateAutomationRuleV2Request$ClientToken": "<p>A unique identifier used to ensure idempotency.</p>",
+        "CreateConnectorRequest$ClientToken": "<p>A unique identifier used to ensure idempotency of the request.</p>",
         "CreateConnectorV2Request$ClientToken": "<p>A unique identifier used to ensure idempotency.</p>",
         "CreateTicketV2Request$ClientToken": "<p>The client idempotency token.</p>"
+      }
+    },
+    "CloudProviderName": {
+      "base": null,
+      "refs": {
+        "Resource$Provider": "<p>The cloud provider that the resource belongs to. Valid values are <code>AWS</code> and <code>Azure</code>.</p>"
       }
     },
     "CloudWatchLogsLogGroupArnConfigDetails": {
@@ -5039,7 +5096,8 @@
         "CreateConnectorV2Response$ConnectorStatus": "<p>The current status of the connectorV2.</p>",
         "HealthCheck$ConnectorStatus": "<p>The status of the connectorV2.</p>",
         "ListConnectorsV2Request$ConnectorStatus": "<p>The status for the connectorV2.</p>",
-        "ProviderSummary$ConnectorStatus": "<p>The status for the connectorV2.</p>"
+        "ProviderSummary$ConnectorStatus": "<p>The status for the connectorV2.</p>",
+        "UpdateConnectorV2Response$ConnectorStatus": "<p>The status of the connector after the update.</p>"
       }
     },
     "ConnectorSummary": {
@@ -5122,6 +5180,14 @@
       "base": null,
       "refs": {}
     },
+    "CreateConnectorRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateConnectorResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CreateConnectorV2Request": {
       "base": null,
       "refs": {}
@@ -5175,6 +5241,77 @@
       "refs": {
         "ListInvitationsRequest$MaxResults": "<p>The maximum number of items to return in the response. </p>",
         "ListMembersRequest$MaxResults": "<p>The maximum number of items to return in the response. </p>"
+      }
+    },
+    "CspmConnectorProviderName": {
+      "base": "<p>The name of the cloud provider for a CSPM connector.</p>",
+      "refs": {
+        "CspmProviderSummary$ProviderName": "<p>The name of the cloud provider.</p>",
+        "ListConnectorsRequest$ProviderName": "<p>The name of the cloud provider to filter connectors by.</p>"
+      }
+    },
+    "CspmConnectorStatus": {
+      "base": "<p>The connectivity status of a CSPM connector.</p>",
+      "refs": {
+        "CreateConnectorResponse$ConnectorStatus": "<p>The connectivity status of the connector.</p>",
+        "CspmHealthCheck$ConnectorStatus": "<p>The connectivity status of the connector.</p>",
+        "CspmProviderSummary$ConnectorStatus": "<p>The connectivity status of the connector.</p>",
+        "ListConnectorsRequest$ConnectorStatus": "<p>The connectivity status to filter connectors by.</p>",
+        "UpdateConnectorResponse$ConnectorStatus": "<p>The connectivity status of the connector after the update.</p>"
+      }
+    },
+    "CspmConnectorSummary": {
+      "base": "<p>A summary of a CSPM connector.</p>",
+      "refs": {
+        "CspmConnectorSummaryList$member": null
+      }
+    },
+    "CspmConnectorSummaryList": {
+      "base": null,
+      "refs": {
+        "ListConnectorsResponse$Connectors": "<p>An array of connector summaries.</p>"
+      }
+    },
+    "CspmEnablementStatus": {
+      "base": "<p>The enablement status of a CSPM connector. Indicates the lifecycle state of the connector resource.</p>",
+      "refs": {
+        "CreateConnectorResponse$EnablementStatus": "<p>The enablement status of the connector.</p>",
+        "CspmConnectorSummary$EnablementStatus": "<p>The enablement status of the connector.</p>",
+        "DeleteConnectorResponse$EnablementStatus": "<p>The enablement status of the connector after the delete request.</p>",
+        "GetConnectorResponse$EnablementStatus": "<p>The enablement status of the connector.</p>",
+        "ListConnectorsRequest$EnablementStatus": "<p>The enablement status to filter connectors by.</p>",
+        "UpdateConnectorResponse$EnablementStatus": "<p>The enablement status of the connector after the update.</p>"
+      }
+    },
+    "CspmHealthCheck": {
+      "base": "<p>Information about the operational status and health of a CSPM connector.</p>",
+      "refs": {
+        "GetConnectorResponse$Health": "<p>The health status of the connector, including connectivity status and last check time.</p>"
+      }
+    },
+    "CspmProviderConfiguration": {
+      "base": "<p>The cloud provider configuration for creating a connector. This is a union type that currently supports Azure.</p>",
+      "refs": {
+        "CreateConnectorRequest$Provider": "<p>The configuration for the cloud provider to connect to. Currently supports Azure.</p>"
+      }
+    },
+    "CspmProviderDetail": {
+      "base": "<p>The detailed cloud provider configuration for a connector. This is a union type that currently supports Azure.</p>",
+      "refs": {
+        "CspmProviderSummary$ProviderConfiguration": "<p>The provider configuration details.</p>",
+        "GetConnectorResponse$ProviderDetail": "<p>The cloud provider configuration details for the connector.</p>"
+      }
+    },
+    "CspmProviderSummary": {
+      "base": "<p>A summary of the cloud provider configuration for a connector.</p>",
+      "refs": {
+        "CspmConnectorSummary$ProviderSummary": "<p>A summary of the cloud provider configuration for the connector.</p>"
+      }
+    },
+    "CspmProviderUpdateConfiguration": {
+      "base": "<p>The cloud provider configuration for updating a connector. This is a union type that currently supports Azure.</p>",
+      "refs": {
+        "UpdateConnectorRequest$Provider": "<p>The updated cloud provider configuration for the connector.</p>"
       }
     },
     "CustomDataIdentifiersDetections": {
@@ -5306,6 +5443,14 @@
       "base": null,
       "refs": {}
     },
+    "DeleteConnectorRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteConnectorResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteConnectorV2Request": {
       "base": null,
       "refs": {}
@@ -5432,6 +5577,14 @@
       "base": null,
       "refs": {}
     },
+    "DisableSecurityHubFeatureV2Request": {
+      "base": null,
+      "refs": {}
+    },
+    "DisableSecurityHubFeatureV2Response": {
+      "base": null,
+      "refs": {}
+    },
     "DisableSecurityHubRequest": {
       "base": null,
       "refs": {}
@@ -5539,6 +5692,14 @@
       "base": null,
       "refs": {}
     },
+    "EnableSecurityHubFeatureV2Request": {
+      "base": null,
+      "refs": {}
+    },
+    "EnableSecurityHubFeatureV2Response": {
+      "base": null,
+      "refs": {}
+    },
     "EnableSecurityHubRequest": {
       "base": null,
       "refs": {}
@@ -5567,6 +5728,17 @@
         "SecurityHubPolicy$EnabledStandardIdentifiers": "<p> A list that defines which security standards are enabled in the configuration policy. </p>"
       }
     },
+    "EnablementStatus": {
+      "base": null,
+      "refs": {
+        "ConnectorSummary$EnablementStatus": "<p>The enablement status of the connector.</p>",
+        "CreateConnectorV2Response$EnablementStatus": "<p>The enablement status of the connector after creation.</p>",
+        "DeleteConnectorV2Response$EnablementStatus": "<p>The enablement status of the connector after deletion.</p>",
+        "GetConnectorV2Response$EnablementStatus": "<p>The enablement status of the connector.</p>",
+        "ListConnectorsV2Request$EnablementStatus": "<p>The enablement status to filter connectors by.</p>",
+        "UpdateConnectorV2Response$EnablementStatus": "<p>The enablement status of the connector after the update.</p>"
+      }
+    },
     "EnumConfigurationOptions": {
       "base": "<p> The options for customizing a security control parameter that is an enum. </p>",
       "refs": {
@@ -5583,6 +5755,37 @@
       "base": "<p>Defines the settings and parameters required for integrating external security tools and services.</p>",
       "refs": {
         "AutomationRulesActionV2$ExternalIntegrationConfiguration": "<p>The settings for integrating automation rule actions with external systems or service.</p>"
+      }
+    },
+    "FeatureDetail": {
+      "base": "<p>Contains the status and metadata for an opt-in feature.</p>",
+      "refs": {
+        "Features$value": null
+      }
+    },
+    "FeatureName": {
+      "base": "<p>The name of an opt-in feature. Valid values: <code>NETWORK_SCANNING</code>.</p>",
+      "refs": {
+        "DisableSecurityHubFeatureV2Request$FeatureName": "<p>The name of the feature to disable.</p>",
+        "EnableSecurityHubFeatureV2Request$FeatureName": "<p>The name of the feature to enable.</p>"
+      }
+    },
+    "FeatureNameKey": {
+      "base": "<p>The name of a feature, used as a key in the features map.</p>",
+      "refs": {
+        "Features$key": null
+      }
+    },
+    "FeatureStatus": {
+      "base": "<p>The enablement status of a feature. Valid values: <code>ENABLED</code> | <code>DISABLED</code>.</p>",
+      "refs": {
+        "FeatureDetail$FeatureStatus": "<p>The current enablement status of the feature. Valid values: <code>ENABLED</code> | <code>DISABLED</code>.</p>"
+      }
+    },
+    "Features": {
+      "base": "<p>A map of feature names to their current detail, including enablement status and metadata.</p>",
+      "refs": {
+        "DescribeSecurityHubV2Response$Features": "<p>A map of opt-in features and their current status and metadata for the account in the current Region.</p>"
       }
     },
     "FieldMap": {
@@ -5710,7 +5913,7 @@
     "FindingsTrendsStringField": {
       "base": null,
       "refs": {
-        "FindingsTrendsStringFilter$FieldName": "<p>The name of the findings field to filter on.</p>"
+        "FindingsTrendsStringFilter$FieldName": "<p>The name of the findings field to filter on. You can specify one of the following fields.</p> <ul> <li> <p> <code>account_id</code> – The Amazon Web Services account ID associated with the finding.</p> </li> <li> <p> <code>region</code> – The Amazon Web Services Region associated with the finding.</p> </li> <li> <p> <code>finding_types</code> – The finding types associated with the finding.</p> </li> <li> <p> <code>finding_status</code> – The status of the finding.</p> </li> <li> <p> <code>finding_cve_ids</code> – The Common Vulnerabilities and Exposures (CVE) identifiers associated with the finding.</p> </li> <li> <p> <code>finding_compliance_status</code> – The compliance status of the finding.</p> </li> <li> <p> <code>finding_control_id</code> – The identifier of the security control associated with the finding.</p> </li> <li> <p> <code>finding_class_name</code> – The finding class, such as <code>Compliance Finding</code>.</p> </li> <li> <p> <code>finding_provider</code> – The name of the product that generated the finding.</p> </li> <li> <p> <code>finding_activity_name</code> – The activity name associated with the finding.</p> </li> <li> <p> <code>resource_cloud_providers</code> – The cloud providers of the resources that the finding is associated with. Valid values are <code>AWS</code> and <code>Azure</code>.</p> </li> <li> <p> <code>resource_regions</code> – The Regions of the associated resources. For an Amazon Web Services resource, this is the Amazon Web Services Region. For an Azure resource, this is the Azure Region, such as <code>eastus</code>.</p> </li> <li> <p> <code>resource_owner_ids</code> – The identifiers of the accounts that own the associated resources. For an Amazon Web Services resource, this is the Amazon Web Services account ID. For an Azure resource, this is the Azure subscription ID.</p> </li> <li> <p> <code>resource_owner_organization_ids</code> – The identifiers of the organizations that own the associated resources. For an Amazon Web Services resource, this is the Amazon Web Services organization ID. For an Azure resource, this is the Azure tenant ID.</p> </li> </ul>"
       }
     },
     "FindingsTrendsStringFilter": {
@@ -5824,6 +6027,14 @@
       "refs": {}
     },
     "GetConfigurationPolicyResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetConnectorRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetConnectorResponse": {
       "base": null,
       "refs": {}
     },
@@ -6025,6 +6236,25 @@
       "base": "<p>Information about the operational status and health of a connectorV2.</p>",
       "refs": {
         "GetConnectorV2Response$Health": "<p>The current health status for connectorV2</p>"
+      }
+    },
+    "HealthIssue": {
+      "base": "<p>Represents a specific health issue detected for a connector.</p>",
+      "refs": {
+        "HealthIssueList$member": null
+      }
+    },
+    "HealthIssueCode": {
+      "base": "<p>The error code for a connector health issue.</p>",
+      "refs": {
+        "HealthIssue$Code": "<p>The error code that identifies the type of health issue.</p>"
+      }
+    },
+    "HealthIssueList": {
+      "base": null,
+      "refs": {
+        "CspmHealthCheck$Issues": "<p>A list of health issues associated with the connector.</p>",
+        "HealthCheck$Issues": "<p>A list of health issues associated with the connector, including error codes and messages.</p>"
       }
     },
     "IcmpTypeCode": {
@@ -6476,6 +6706,12 @@
         "AwsEc2VpcDetails$Ipv6CidrBlockAssociationSet": "<p>Information about the IPv6 CIDR blocks associated with the VPC.</p>"
       }
     },
+    "IsoString": {
+      "base": null,
+      "refs": {
+        "DescribeSecurityHubV2Response$SubscribedAt": "<p>The date and time when the service was enabled in the account.</p>"
+      }
+    },
     "JiraCloudDetail": {
       "base": "<p>Information about the configuration and status of a Jira Cloud integration.</p>",
       "refs": {
@@ -6547,6 +6783,14 @@
       "refs": {}
     },
     "ListConfigurationPolicyAssociationsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListConnectorsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListConnectorsResponse": {
       "base": null,
       "refs": {}
     },
@@ -6743,6 +6987,7 @@
         "ListAutomationRulesV2Request$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListConfigurationPoliciesRequest$MaxResults": "<p> The maximum number of results that's returned by <code>ListConfigurationPolicies</code> in each page of the response. When this parameter is used, <code>ListConfigurationPolicies</code> returns the specified number of results in a single page and a <code>NextToken</code> response element. You can see the remaining results of the initial request by sending another <code>ListConfigurationPolicies</code> request with the returned <code>NextToken</code> value. A valid range for <code>MaxResults</code> is between 1 and 100. </p>",
         "ListConfigurationPolicyAssociationsRequest$MaxResults": "<p> The maximum number of results that's returned by <code>ListConfigurationPolicies</code> in each page of the response. When this parameter is used, <code>ListConfigurationPolicyAssociations</code> returns the specified number of results in a single page and a <code>NextToken</code> response element. You can see the remaining results of the initial request by sending another <code>ListConfigurationPolicyAssociations</code> request with the returned <code>NextToken</code> value. A valid range for <code>MaxResults</code> is between 1 and 100. </p>",
+        "ListConnectorsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListConnectorsV2Request$MaxResults": "<p>The maximum number of results to be returned.</p>",
         "ListEnabledProductsForImportRequest$MaxResults": "<p>The maximum number of items to return in the response.</p>",
         "ListFindingAggregatorsRequest$MaxResults": "<p>The maximum number of results to return. This operation currently only returns a single result.</p>",
@@ -6892,6 +7137,8 @@
         "ListConfigurationPoliciesResponse$NextToken": "<p> The <code>NextToken</code> value to include in the next <code>ListConfigurationPolicies</code> request. When the results of a <code>ListConfigurationPolicies</code> request exceed <code>MaxResults</code>, this value can be used to retrieve the next page of results. This value is <code>null</code> when there are no more results to return. </p>",
         "ListConfigurationPolicyAssociationsRequest$NextToken": "<p> The <code>NextToken</code> value that's returned from a previous paginated <code>ListConfigurationPolicyAssociations</code> request where <code>MaxResults</code> was used but the results exceeded the value of that parameter. Pagination continues from the end of the previous response that returned the <code>NextToken</code> value. This value is <code>null</code> when there are no more results to return. </p>",
         "ListConfigurationPolicyAssociationsResponse$NextToken": "<p> The <code>NextToken</code> value to include in the next <code>ListConfigurationPolicyAssociations</code> request. When the results of a <code>ListConfigurationPolicyAssociations</code> request exceed <code>MaxResults</code>, this value can be used to retrieve the next page of results. This value is <code>null</code> when there are no more results to return. </p>",
+        "ListConnectorsRequest$NextToken": "<p>The pagination token to request the next page of results.</p>",
+        "ListConnectorsResponse$NextToken": "<p>The pagination token to use to request the next page of results. If there are no additional results, this value is null.</p>",
         "ListConnectorsV2Request$NextToken": "<p>The pagination token per the Amazon Web Services Pagination standard</p>",
         "ListConnectorsV2Response$NextToken": "<p>The pagination token to use to request the next page of results. Otherwise, this parameter is null.</p>",
         "ListEnabledProductsForImportRequest$NextToken": "<p>The token that is required for pagination. On your first call to the <code>ListEnabledProductsForImport</code> operation, set the value of this parameter to <code>NULL</code>.</p> <p>For subsequent calls to the operation, to continue listing data, set the value of this parameter to the value returned from the previous response.</p>",
@@ -8254,6 +8501,9 @@
         "AwsXrayEncryptionConfigDetails$KeyId": "<p>The identifier of the KMS key that is used for encryption. Provided if <code>Type</code> is <code>KMS</code>.</p>",
         "AwsXrayEncryptionConfigDetails$Status": "<p>The current status of the encryption configuration. Valid values are <code>ACTIVE</code> or <code>UPDATING</code>.</p> <p>When <code>Status</code> is equal to <code>UPDATING</code>, X-Ray might use both the old and new encryption.</p>",
         "AwsXrayEncryptionConfigDetails$Type": "<p>The type of encryption. <code>KMS</code> indicates that the encryption uses KMS keys. <code>NONE</code> indicates the default encryption.</p>",
+        "AzureDetail$AWSConfigConnectorArn": "<p>The ARN of the AWS Config connector used to establish the connection to Azure.</p>",
+        "AzureProviderConfiguration$AWSConfigConnectorArn": "<p>The ARN of the AWS Config connector used to establish the connection to Azure.</p>",
+        "AzureRegionList$member": null,
         "BatchUpdateFindingsUnprocessedFinding$ErrorCode": "<p>The code associated with the error. Possible values are:</p> <ul> <li> <p> <code>ConcurrentUpdateError</code> - Another request attempted to update the finding while this request was being processed. This error may also occur if you call <a href=\"https://docs.aws.amazon.com/securityhub/1.0/APIReference/API_BatchUpdateFindings.html\"> <code>BatchUpdateFindings</code> </a> and <a href=\"https://docs.aws.amazon.com/securityhub/1.0/APIReference/API_BatchImportFindings.html\"> <code>BatchImportFindings</code> </a> at the same time.</p> </li> <li> <p> <code>DuplicatedFindingIdentifier</code> - The request included two or more findings with the same <code>FindingIdentifier</code>.</p> </li> <li> <p> <code>FindingNotFound</code> - The <code>FindingIdentifier</code> included in the request did not match an existing finding.</p> </li> <li> <p> <code>FindingSizeExceeded</code> - The finding size was greater than the permissible value of 240 KB.</p> </li> <li> <p> <code>InternalFailure</code> - An internal service failure occurred when updating the finding.</p> </li> <li> <p> <code>InvalidInput</code> - The finding update contained an invalid value that did not satisfy the <a href=\"https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-findings-format.html\">Amazon Web Services Security Finding Format</a> syntax.</p> </li> </ul>",
         "BatchUpdateFindingsUnprocessedFinding$ErrorMessage": "<p>The message associated with the error. Possible values are:</p> <ul> <li> <p> <code>Concurrent finding updates detected</code> </p> </li> <li> <p> <code>Finding Identifier is duplicated</code> </p> </li> <li> <p> <code>Finding Not Found</code> </p> </li> <li> <p> <code>Finding size exceeded 240 KB</code> </p> </li> <li> <p> <code>Internal service failure</code> </p> </li> <li> <p> <code>Invalid Input</code> </p> </li> </ul>",
         "BatchUpdateFindingsV2ProcessedFinding$MetadataUid": "<p>The metadata.uid of a processed finding.</p>",
@@ -8292,6 +8542,7 @@
         "ConnectorSummary$ConnectorId": "<p>The UUID of the connectorV2 to identify connectorV2 resource.</p>",
         "ConnectorSummary$Name": "<p>The Name field contains the user-defined name assigned to the integration connector. This helps identify and manage multiple connectors within Security Hub.</p>",
         "ConnectorSummary$Description": "<p>The description of the connectorV2.</p>",
+        "ConnectorSummary$EnablementStatusReason": "<p>The reason for the current enablement status. Provides additional context when the connector is in a failed state.</p>",
         "ContainerDetails$ContainerRuntime": "<p>The runtime of the container. </p>",
         "ContainerDetails$Name": "<p>The name of the container related to a finding.</p>",
         "ContainerDetails$ImageId": "<p>The identifier of the container image related to a finding.</p>",
@@ -8320,6 +8571,10 @@
         "CreateConfigurationPolicyResponse$Id": "<p> The universally unique identifier (UUID) of the configuration policy. </p>",
         "CreateConfigurationPolicyResponse$Name": "<p> The name of the configuration policy. </p>",
         "CreateConfigurationPolicyResponse$Description": "<p> The description of the configuration policy. </p>",
+        "CreateConnectorRequest$Name": "<p>The name of the connector. Must be unique within the account.</p>",
+        "CreateConnectorRequest$Description": "<p>The description of the connector.</p>",
+        "CreateConnectorResponse$ConnectorArn": "<p>The Amazon Resource Name (ARN) of the connector.</p>",
+        "CreateConnectorResponse$ConnectorId": "<p>The unique identifier of the connector.</p>",
         "CreateConnectorV2Request$Name": "<p>The unique name of the connectorV2.</p>",
         "CreateConnectorV2Request$Description": "<p>The description of the connectorV2.</p>",
         "CreateConnectorV2Request$KmsKeyArn": "<p>The Amazon Resource Name (ARN) of KMS key used to encrypt secrets for the connectorV2.</p>",
@@ -8337,6 +8592,12 @@
         "CreateTicketV2Request$FindingMetadataUid": "<p>The the unique ID for the finding.</p>",
         "CreateTicketV2Response$TicketId": "<p>The ID for the ticketv2.</p>",
         "CreateTicketV2Response$TicketSrcUrl": "<p>The url to the created ticket.</p>",
+        "CspmConnectorSummary$ConnectorArn": "<p>The Amazon Resource Name (ARN) of the connector.</p>",
+        "CspmConnectorSummary$ConnectorId": "<p>The unique identifier of the connector.</p>",
+        "CspmConnectorSummary$Name": "<p>The name of the connector.</p>",
+        "CspmConnectorSummary$Description": "<p>The description of the connector.</p>",
+        "CspmConnectorSummary$CreatedBy": "<p>The service principal that created the connector.</p>",
+        "CspmHealthCheck$Message": "<p>A message describing the reason for the current connector status.</p>",
         "CustomDataIdentifiersDetections$Arn": "<p>The ARN of the custom identifier that was used to detect the sensitive data.</p>",
         "CustomDataIdentifiersDetections$Name": "<p>he name of the custom identifier that detected the sensitive data.</p>",
         "Cvss$Version": "<p>The version of CVSS for the CVSS score.</p>",
@@ -8350,6 +8611,7 @@
         "DeleteAggregatorV2Request$AggregatorV2Arn": "<p>The ARN of the Aggregator V2.</p>",
         "DeleteAutomationRuleV2Request$Identifier": "<p>The ARN of the V2 automation rule.</p>",
         "DeleteConfigurationPolicyRequest$Identifier": "<p> The Amazon Resource Name (ARN) or universally unique identifier (UUID) of the configuration policy. </p>",
+        "DeleteConnectorRequest$ConnectorId": "<p>The unique identifier of the connector to delete.</p>",
         "DeleteConnectorV2Request$ConnectorId": "<p>The UUID of the connectorV2 to identify connectorV2 resource.</p>",
         "DeleteFindingAggregatorRequest$FindingAggregatorArn": "<p>The ARN of the finding aggregator to delete. To obtain the ARN, use <code>ListFindingAggregators</code>.</p>",
         "DeleteInsightRequest$InsightArn": "<p>The ARN of the insight to delete.</p>",
@@ -8359,7 +8621,6 @@
         "DescribeHubResponse$SubscribedAt": "<p>The date and time when Security Hub CSPM was enabled in the account.</p>",
         "DescribeProductsRequest$ProductArn": "<p>The ARN of the integration to return.</p>",
         "DescribeSecurityHubV2Response$HubV2Arn": "<p>The ARN of the service resource.</p>",
-        "DescribeSecurityHubV2Response$SubscribedAt": "<p>The date and time when the service was enabled in the account.</p>",
         "DescribeStandardsControlsRequest$StandardsSubscriptionArn": "<p>The ARN of a resource that represents your subscription to a supported standard. To get the subscription ARNs of the standards you have enabled, use the <code>GetEnabledStandards</code> operation.</p>",
         "DisableImportFindingsForProductRequest$ProductSubscriptionArn": "<p>The ARN of the integrated product to disable the integration for.</p>",
         "DisableOrganizationAdminAccountRequest$AdminAccountId": "<p>The Amazon Web Services account identifier of the Security Hub CSPM administrator account.</p>",
@@ -8410,12 +8671,19 @@
         "GetConfigurationPolicyResponse$Id": "<p> The UUID of the configuration policy. </p>",
         "GetConfigurationPolicyResponse$Name": "<p> The name of the configuration policy. </p>",
         "GetConfigurationPolicyResponse$Description": "<p> The description of the configuration policy. </p>",
+        "GetConnectorRequest$ConnectorId": "<p>The unique identifier of the connector to retrieve.</p>",
+        "GetConnectorResponse$ConnectorArn": "<p>The Amazon Resource Name (ARN) of the connector.</p>",
+        "GetConnectorResponse$ConnectorId": "<p>The unique identifier of the connector.</p>",
+        "GetConnectorResponse$Name": "<p>The name of the connector.</p>",
+        "GetConnectorResponse$Description": "<p>The description of the connector.</p>",
+        "GetConnectorResponse$CreatedBy": "<p>The service principal that created the connector.</p>",
         "GetConnectorV2Request$ConnectorId": "<p>The UUID of the connectorV2 to identify connectorV2 resource.</p>",
         "GetConnectorV2Response$ConnectorArn": "<p>The Amazon Resource Name (ARN) of the connectorV2.</p>",
         "GetConnectorV2Response$ConnectorId": "<p>The UUID of the connectorV2 to identify connectorV2 resource.</p>",
         "GetConnectorV2Response$Name": "<p>The name of the connectorV2.</p>",
         "GetConnectorV2Response$Description": "<p>The description of the connectorV2.</p>",
         "GetConnectorV2Response$KmsKeyArn": "<p>The Amazon Resource Name (ARN) of KMS key used for the connectorV2.</p>",
+        "GetConnectorV2Response$EnablementStatusReason": "<p>The reason for the current enablement status. Provides additional context when the connector is in a failed state.</p>",
         "GetFindingAggregatorRequest$FindingAggregatorArn": "<p>The ARN of the finding aggregator to return details for. To obtain the ARN, use <code>ListFindingAggregators</code>.</p>",
         "GetFindingAggregatorResponse$FindingAggregatorArn": "<p>The ARN of the finding aggregator.</p>",
         "GetFindingAggregatorResponse$FindingAggregationRegion": "<p>The home Region. Findings generated in linked Regions are replicated and sent to the home Region.</p>",
@@ -8427,6 +8695,7 @@
         "GroupByResult$GroupByField": "<p>The attribute by which filtered security findings should be grouped.</p>",
         "GroupByValue$FieldValue": "<p>The value of the field by which findings are grouped.</p>",
         "HealthCheck$Message": "<p>The message for the reason of connectorStatus change.</p>",
+        "HealthIssue$Message": "<p>A human-readable message that describes the health issue.</p>",
         "ImportFindingsError$Id": "<p>The identifier of the finding that could not be updated.</p>",
         "ImportFindingsError$ErrorCode": "<p>The code of the error returned by the <code>BatchImportFindings</code> operation.</p>",
         "ImportFindingsError$ErrorMessage": "<p>The message of the error returned by the <code>BatchImportFindings</code> operation.</p>",
@@ -8568,10 +8837,18 @@
         "ResourceInUseException$Code": null,
         "ResourceNotFoundException$Message": null,
         "ResourceNotFoundException$Code": null,
+        "ResourceOwnerAccount$Id": "<p>The unique identifier of the account that owns the resource, for example, Azure Subscription Id or Amazon Web Services Account Id.</p>",
+        "ResourceOwnerOrg$Id": "<p>The unique identifier of the organization that owns the resource, for example, Azure Tenant Id.</p>",
         "ResourceResult$ResourceGuid": "<p>The global identifier used to identify a resource.</p>",
         "ResourceResult$ResourceId": "<p>The unique identifier for a resource.</p>",
-        "ResourceResult$AccountId": "<p>The Amazon Web Services account that owns the resource.</p>",
-        "ResourceResult$Region": "<p>The Amazon Web Services Region where the resource is located.</p>",
+        "ResourceResult$AccountId": "<p>The Amazon Web Services account that recorded the resource data in Security Hub.</p>",
+        "ResourceResult$AccountName": "<p>The name of the Amazon Web Services account that's associated with the resource.</p>",
+        "ResourceResult$Region": "<p>The Amazon Web Services Region that recorded the resource data in Security Hub.</p>",
+        "ResourceResult$ResourceProvider": "<p>The cloud provider where the resource exists. Valid values are <code>AWS</code> and <code>Azure</code>. This field is always included.</p>",
+        "ResourceResult$ResourceOwnerAccountId": "<p>The identifier of the cloud account that owns the resource. For Amazon Web Services resources, this is the Amazon Web Services account ID. For Azure resources, this is the Azure subscription ID.</p>",
+        "ResourceResult$ResourceOwnerOrgId": "<p>The identifier of the cloud organization that owns the resource. For Amazon Web Services resources, this is the Organizations ID. For Azure resources, this is the Azure tenant ID.</p>",
+        "ResourceResult$ResourceCloudPartition": "<p>The cloud partition where the resource exists. For Amazon Web Services, valid values include <code>aws</code>, <code>aws-cn</code>, and <code>aws-us-gov</code>. This field isn't returned for cloud providers that don't use partitions.</p>",
+        "ResourceResult$ResourceRegion": "<p>The native cloud region where the resource is located. For Amazon Web Services, this is an Amazon Web Services Region (for example, <code>us-east-1</code>). For Azure resources, this is the Azure region (for example, <code>westus2</code>). This field is always included.</p>",
         "ResourceResult$ResourceType": "<p>The type of resource.</p>",
         "ResourceResult$ResourceName": "<p>The name of the resource.</p>",
         "ResourceResult$ResourceCreationTimeDt": "<p>The time when the resource was created.</p>",
@@ -8609,6 +8886,7 @@
         "RuleGroupSourceStatefulRulesRuleOptionsSettingsList$member": null,
         "RuleGroupSourceStatelessRuleMatchAttributesDestinations$AddressDefinition": "<p>An IP address or a block of IP addresses.</p>",
         "RuleGroupSourceStatelessRuleMatchAttributesSources$AddressDefinition": "<p>An IP address or a block of IP addresses.</p>",
+        "ScopeValueList$member": null,
         "SecurityControl$SecurityControlId": "<p> The unique identifier of a security control across standards. Values for this field typically consist of an Amazon Web Services service name and a number, such as APIGateway.3. </p>",
         "SecurityControl$SecurityControlArn": "<p> The Amazon Resource Name (ARN) for a security control across standards, such as <code>arn:aws:securityhub:eu-central-1:123456789012:security-control/S3.1</code>. This parameter doesn't mention a specific standard. </p>",
         "SecurityControl$Title": "<p>The title of a security control. </p>",
@@ -8745,6 +9023,8 @@
         "UpdateConfigurationPolicyResponse$Id": "<p> The UUID of the configuration policy. </p>",
         "UpdateConfigurationPolicyResponse$Name": "<p> The name of the configuration policy. </p>",
         "UpdateConfigurationPolicyResponse$Description": "<p> The description of the configuration policy. </p>",
+        "UpdateConnectorRequest$ConnectorId": "<p>The unique identifier of the connector to update.</p>",
+        "UpdateConnectorRequest$Description": "<p>The updated description of the connector.</p>",
         "UpdateConnectorV2Request$ConnectorId": "<p>The UUID of the connectorV2 to identify connectorV2 resource.</p>",
         "UpdateConnectorV2Request$Description": "<p>The description of the connectorV2.</p>",
         "UpdateFindingAggregatorRequest$FindingAggregatorArn": "<p>The ARN of the finding aggregator. To obtain the ARN, use <code>ListFindingAggregators</code>.</p>",
@@ -9250,7 +9530,8 @@
     "ProviderDetail": {
       "base": "<p>The third-party provider detail for a service configuration.</p>",
       "refs": {
-        "GetConnectorV2Response$ProviderDetail": "<p>The third-party provider detail for a service configuration.</p>"
+        "GetConnectorV2Response$ProviderDetail": "<p>The third-party provider detail for a service configuration.</p>",
+        "ProviderSummary$ProviderConfiguration": null
       }
     },
     "ProviderSummary": {
@@ -9471,6 +9752,24 @@
       "base": "<p>The request was rejected because we can't find the specified resource.</p>",
       "refs": {}
     },
+    "ResourceOwner": {
+      "base": "<p>Information about the owner of a resource, including the account and organization that the resource belongs to.</p>",
+      "refs": {
+        "Resource$Owner": "<p>Information about the account and organization that own the resource.</p>"
+      }
+    },
+    "ResourceOwnerAccount": {
+      "base": "<p>Information about the account that owns a resource, for example, an Azure Subscription or Amazon Web Services Account.</p>",
+      "refs": {
+        "ResourceOwner$Account": "<p>Information about the account that owns the resource, for example, an Azure Subscription or Amazon Web Services Account.</p>"
+      }
+    },
+    "ResourceOwnerOrg": {
+      "base": "<p>Information about the organization that owns a resource, for example, an Azure Tenant.</p>",
+      "refs": {
+        "ResourceOwner$Org": "<p>Information about the organization that owns the resource, for example, an Azure Tenant.</p>"
+      }
+    },
     "ResourceResult": {
       "base": "<p>Provides comprehensive details about an Amazon Web Services resource and its associated security findings.</p>",
       "refs": {
@@ -9640,7 +9939,7 @@
     "ResourcesTrendsStringField": {
       "base": null,
       "refs": {
-        "ResourcesTrendsStringFilter$FieldName": "<p>The name of the resources field to filter on, such as resourceType, accountId, or region.</p>"
+        "ResourcesTrendsStringFilter$FieldName": "<p>The name of the resources field to filter on. You can specify one of the following fields.</p> <ul> <li> <p> <code>account_id</code> – The Amazon Web Services account ID that owns the resource.</p> </li> <li> <p> <code>region</code> – The Amazon Web Services Region of the resource.</p> </li> <li> <p> <code>resource_type</code> – The type of the resource.</p> </li> <li> <p> <code>resource_category</code> – The category of the resource.</p> </li> <li> <p> <code>resource_cloud_provider</code> – The cloud provider of the resource. Valid values are <code>AWS</code> and <code>Azure</code>.</p> </li> <li> <p> <code>resource_region</code> – The Region of the resource. For an Amazon Web Services resource, this is the Amazon Web Services Region. For an Azure resource, this is the Azure Region, such as <code>eastus</code>.</p> </li> <li> <p> <code>resource_owner_id</code> – The identifier of the account that owns the resource. For an Amazon Web Services resource, this is the Amazon Web Services account ID. For an Azure resource, this is the Azure subscription ID.</p> </li> <li> <p> <code>resource_owner_organization_id</code> – The identifier of the organization that owns the resource. For an Amazon Web Services resource, this is the Amazon Web Services organization ID. For an Azure resource, this is the Azure tenant ID.</p> </li> </ul>"
       }
     },
     "ResourcesTrendsStringFilter": {
@@ -9906,6 +10205,18 @@
         "UpdateAutomationRuleV2Request$RuleStatus": "<p>The status of the automation rule.</p>"
       }
     },
+    "ScopeType": {
+      "base": "<p>The type of scope for an Azure connector. Valid values are <code>TENANT</code> (monitor all subscriptions in the tenant) and <code>SUBSCRIPTION</code> (monitor specific subscriptions).</p>",
+      "refs": {
+        "AzureScopeConfiguration$ScopeType": "<p>The type of scope. Valid values are <code>tenant</code> and <code>subscription</code>.</p>"
+      }
+    },
+    "ScopeValueList": {
+      "base": null,
+      "refs": {
+        "AzureScopeConfiguration$ScopeValues": "<p>The list of scope values, such as subscription IDs, when the scope type is <code>subscription</code>.</p>"
+      }
+    },
     "SecurityControl": {
       "base": "<p> A security control in Security Hub CSPM describes a security best practice related to a specific resource. </p>",
       "refs": {
@@ -9965,6 +10276,20 @@
       "base": "<p> An object that defines which security controls are enabled in an Security Hub CSPM configuration policy. The enablement status of a control is aligned across all of the enabled standards in an account. </p>",
       "refs": {
         "SecurityHubPolicy$SecurityControlsConfiguration": "<p> An object that defines which security controls are enabled in the configuration policy. The enablement status of a control is aligned across all of the enabled standards in an account. </p>"
+      }
+    },
+    "SecurityControlsProvider": {
+      "base": null,
+      "refs": {
+        "SecurityControl$Provider": "<p>The cloud provider whose resources the security control evaluates. For example, <code>AWS</code> or <code>Azure</code>.</p>",
+        "SecurityControlDefinition$Provider": "<p>The cloud provider whose resources the security control evaluates. For example, <code>AWS</code> or <code>Azure</code>.</p>",
+        "SecurityControlsProviders$member": null
+      }
+    },
+    "SecurityControlsProviders": {
+      "base": null,
+      "refs": {
+        "ListSecurityControlDefinitionsRequest$Providers": "<p>A list of cloud providers to filter the security control definitions by. For example, specify <code>Azure</code> to return only controls that evaluate Azure resources.</p>"
       }
     },
     "SecurityGroups": {
@@ -10228,6 +10553,21 @@
         "Standard$StandardsManagedBy": "<p>Provides details about the management of a standard. </p>"
       }
     },
+    "StandardsProvider": {
+      "base": null,
+      "refs": {
+        "Standard$Provider": "<p>The cloud provider whose resources the standard evaluates. For example, <code>AWS</code> or <code>Azure</code>.</p>",
+        "StandardsProviders$member": null,
+        "StandardsSubscription$Provider": "<p>The cloud provider whose resources the standard evaluates. For example, <code>AWS</code> or <code>Azure</code>.</p>"
+      }
+    },
+    "StandardsProviders": {
+      "base": null,
+      "refs": {
+        "DescribeStandardsRequest$Providers": "<p>A list of cloud providers to filter the standards by. For example, specify <code>Azure</code> to return only standards that evaluate Azure resources.</p>",
+        "GetEnabledStandardsRequest$Providers": "<p>A list of cloud providers to filter the enabled standards by. For example, specify <code>Azure</code> to return only enabled standards that evaluate Azure resources.</p>"
+      }
+    },
     "StandardsStatus": {
       "base": null,
       "refs": {
@@ -10385,6 +10725,9 @@
         "AutomationRulesFindingFilters$ResourceApplicationArn": "<p> The Amazon Resource Name (ARN) of the application that is related to a finding. </p> <p> Array Members: Minimum number of 1 item. Maximum number of 20 items. </p>",
         "AutomationRulesFindingFilters$ResourceApplicationName": "<p> The name of the application that is related to a finding. </p> <p> Array Members: Minimum number of 1 item. Maximum number of 20 items. </p>",
         "AutomationRulesFindingFilters$AwsAccountName": "<p>The name of the Amazon Web Services account in which a finding was generated. </p> <p> Array Members: Minimum number of 1 item. Maximum number of 20 items. </p>",
+        "AutomationRulesFindingFilters$ResourceProvider": "<p>The cloud provider that the resource belongs to. Valid values are <code>AWS</code> and <code>Azure</code>.</p>",
+        "AutomationRulesFindingFilters$ResourceOwnerAccountId": "<p>The unique identifier of the account that owns the resource that the finding applies to, for example, Azure Subscription Id or Amazon Web Services Account Id</p>",
+        "AutomationRulesFindingFilters$ResourceOwnerOrgId": "<p>The unique identifier of the organization that owns the resource that the finding applies to, for example, Azure Tenant Id</p>",
         "AwsSecurityFindingFilters$ProductArn": "<p>The ARN generated by Security Hub CSPM that uniquely identifies a third-party company (security findings provider) after this provider's product (solution that generates findings) is registered with Security Hub CSPM.</p>",
         "AwsSecurityFindingFilters$AwsAccountId": "<p>The Amazon Web Services account ID in which a finding is generated.</p>",
         "AwsSecurityFindingFilters$Id": "<p>The security findings provider-specific identifier for a finding.</p>",
@@ -10455,7 +10798,10 @@
         "AwsSecurityFindingFilters$ComplianceSecurityControlParametersValue": "<p> The current value of a security control parameter. </p>",
         "AwsSecurityFindingFilters$AwsAccountName": "<p>The name of the Amazon Web Services account in which a finding is generated.</p>",
         "AwsSecurityFindingFilters$ResourceApplicationName": "<p> The name of the application that is related to a finding. </p>",
-        "AwsSecurityFindingFilters$ResourceApplicationArn": "<p> The ARN of the application that is related to a finding. </p>"
+        "AwsSecurityFindingFilters$ResourceApplicationArn": "<p> The ARN of the application that is related to a finding. </p>",
+        "AwsSecurityFindingFilters$ResourceOwnerAccountId": "<p>The unique identifier of the account that owns the resource that the finding applies to, for example, Azure Subscription Id or Amazon Web Services Account Id</p>",
+        "AwsSecurityFindingFilters$ResourceOwnerOrgId": "<p>The unique identifier of the organization that owns the resource that the finding applies to, for example, Azure Tenant Id</p>",
+        "AwsSecurityFindingFilters$ResourceProvider": "<p>The cloud provider that the resource belongs to. Valid values are <code>AWS</code> and <code>Azure</code>.</p>"
       }
     },
     "StringList": {
@@ -10541,6 +10887,7 @@
         "CreateAutomationRuleRequest$Tags": "<p> User-defined tags associated with an automation rule. </p>",
         "CreateAutomationRuleV2Request$Tags": "<p>A list of key-value pairs associated with the V2 automation rule.</p>",
         "CreateConfigurationPolicyRequest$Tags": "<p> User-defined tags associated with a configuration policy. For more information, see <a href=\"https://docs.aws.amazon.com/securityhub/latest/userguide/tagging-resources.html\">Tagging Security Hub CSPM resources</a> in the <i>Security Hub CSPM user guide</i>. </p>",
+        "CreateConnectorRequest$Tags": "<p>The tags to add to the connector resource.</p>",
         "CreateConnectorV2Request$Tags": "<p>The tags to add to the connectorV2 when you create.</p>",
         "EnableSecurityHubRequest$Tags": "<p>The tags to add to the hub resource when you enable Security Hub CSPM.</p>",
         "EnableSecurityHubV2Request$Tags": "<p>The tags to add to the hub V2 resource when you enable Security Hub.</p>",
@@ -10639,12 +10986,17 @@
         "ConnectorSummary$CreatedAt": "<p>ISO 8601 UTC timestamp for the time create the connectorV2.</p>",
         "CreateConfigurationPolicyResponse$UpdatedAt": "<p> The date and time, in UTC and ISO 8601 format, that the configuration policy was last updated. </p>",
         "CreateConfigurationPolicyResponse$CreatedAt": "<p> The date and time, in UTC and ISO 8601 format, that the configuration policy was created. </p>",
+        "CspmConnectorSummary$CreatedAt": "<p>The ISO 8601 UTC timestamp indicating when the connector was created.</p>",
+        "CspmHealthCheck$LastCheckedAt": "<p>The ISO 8601 UTC timestamp indicating when the health status was last checked.</p>",
+        "FeatureDetail$UpdatedAt": "<p>The date and time when the feature status was last updated.</p>",
         "FindingHistoryRecord$UpdateTime": "<p> A timestamp that indicates when Security Hub CSPM processed the updated finding record.</p> <p>For more information about the validation and formatting of timestamp fields in Security Hub CSPM, see <a href=\"https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps\">Timestamps</a>.</p>",
         "GetAutomationRuleV2Response$CreatedAt": "<p>The timestamp when the V2 automation rule was created.</p>",
         "GetAutomationRuleV2Response$UpdatedAt": "<p>The timestamp when the V2 automation rule was updated.</p>",
         "GetConfigurationPolicyAssociationResponse$UpdatedAt": "<p> The date and time, in UTC and ISO 8601 format, that the configuration policy association was last updated. </p>",
         "GetConfigurationPolicyResponse$UpdatedAt": "<p> The date and time, in UTC and ISO 8601 format, that the configuration policy was last updated. </p>",
         "GetConfigurationPolicyResponse$CreatedAt": "<p> The date and time, in UTC and ISO 8601 format, that the configuration policy was created. </p>",
+        "GetConnectorResponse$CreatedAt": "<p>The ISO 8601 UTC timestamp indicating when the connector was created.</p>",
+        "GetConnectorResponse$LastUpdatedAt": "<p>The ISO 8601 UTC timestamp indicating when the connector was last updated.</p>",
         "GetConnectorV2Response$CreatedAt": "<p>ISO 8601 UTC timestamp for the time create the connectorV2.</p>",
         "GetConnectorV2Response$LastUpdatedAt": "<p>ISO 8601 UTC timestamp for the time update the connectorV2 connectorStatus.</p>",
         "GetFindingHistoryRequest$StartTime": "<p>A timestamp that indicates the start time of the requested finding history.</p> <p>If you provide values for both <code>StartTime</code> and <code>EndTime</code>, Security Hub CSPM returns finding history for the specified time period. If you provide a value for <code>StartTime</code> but not for <code>EndTime</code>, Security Hub CSPM returns finding history from the <code>StartTime</code> to the time at which the API is called. If you provide a value for <code>EndTime</code> but not for <code>StartTime</code>, Security Hub CSPM returns finding history from the <a href=\"https://docs.aws.amazon.com/securityhub/1.0/APIReference/API_AwsSecurityFindingFilters.html#securityhub-Type-AwsSecurityFindingFilters-CreatedAt\">CreatedAt</a> timestamp of the finding to the <code>EndTime</code>. If you provide neither <code>StartTime</code> nor <code>EndTime</code>, Security Hub CSPM returns finding history from the <code>CreatedAt</code> timestamp of the finding to the time at which the API is called. In all of these scenarios, the response is limited to 100 results.</p> <p>For more information about the validation and formatting of timestamp fields in Security Hub CSPM, see <a href=\"https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps\">Timestamps</a>.</p>",
@@ -10837,6 +11189,14 @@
       "refs": {}
     },
     "UpdateConfigurationPolicyResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateConnectorRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateConnectorResponse": {
       "base": null,
       "refs": {}
     },

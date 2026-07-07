@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Lambda` - AWS Lambda Durable Functions now supports customer managed KMS keys. This allows customers to configure a KMS key in Durable Config to have all their durable execution data encrypted.
+* `Aws\Connect` - Adds support for CreateAuthCode and DeleteSession APIs.
+* `Aws\Inspector2` - This release extends vulnerability management to Azure VM, container registries and function apps. Adds support for per-member-account scan configuration settings.
+* `Aws\SecurityHub` - release SecurityHub MultiCloud integration with Azure
+* `Aws\ConfigService` - Added support for connecting AWS Config to third-party cloud service providers. New APIs include PutConnector, GetConnector, DeleteConnector, and ListConnectors for managing connectors, and PutThirdPartyServiceLinkedConfigurationRecorder for creating third-party service-linked recorders.
+* `Aws\MarketplaceCatalog` - This release enhances the ListEntities API to support ResellerRole filter for ResaleAuthorization entity.
+* `Aws\MarketplaceMetering` - The usage reporting window for the BatchMeterUsage API has been extended from 6 hours to 24 hours. Sellers can now submit usage records for up to 24 hours after a metered event occurs. The existing 6-hour grace period at the end of a billing cycle still applies.
+* `Aws\PartnerCentralRevenueMeasurement` - Add support for AWS Partner Central Revenue Measurement API for creating, managing, and tracking revenue attributions and marketplace revenue share allocations.
+* `Aws\Route53GlobalResolver` - Adds ListSharedDNSViews operation to list all DNS Views shared with caller using AWS Resource Access Manager. Also updates ListHostedZoneAssociations operation so that resource ARN param is optional, allowing caller to list all HostedZoneAssociations in account.
+* `Aws\EC2` - This launch surfaces the public SSM parameter associated with public AMIs in the AMI metadata.
+* `Aws\SSM` - Adding SSM Cloud Connector to support Azure Virtual Machines onboarding to AWS Systems Manager
+
 ## 3.387.3 - 2026-07-06
 
 * `Aws\CloudWatchLogs` - Added PutStorageTierPolicy and GetStorageTierPolicy APIs to Amazon CloudWatch Logs. Customers can now configure account-level Intelligent Tiering to automatically optimize log storage costs by moving infrequently accessed data to lower-cost storage tiers.

@@ -591,6 +591,23 @@
         {"shape":"ServiceQuotaExceededException"}
       ]
     },
+    "CreateAuthCode":{
+      "name":"CreateAuthCode",
+      "http":{
+        "method":"POST",
+        "requestUri":"/auth/code/{InstanceId}"
+      },
+      "input":{"shape":"CreateAuthCodeRequest"},
+      "output":{"shape":"CreateAuthCodeResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "CreateContact":{
       "name":"CreateContact",
       "http":{
@@ -1659,6 +1676,23 @@
         {"shape":"InternalServiceException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceInUseException"}
+      ]
+    },
+    "DeleteSession":{
+      "name":"DeleteSession",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/auth/sessions/{InstanceId}/{SessionId}"
+      },
+      "input":{"shape":"DeleteSessionRequest"},
+      "output":{"shape":"DeleteSessionResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "DeleteTaskTemplate":{
@@ -2850,7 +2884,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"UserNotFoundException"},
         {"shape":"InternalServiceException"},
-        {"shape":"DuplicateResourceException"}
+        {"shape":"DuplicateResourceException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "GetFlowAssociation":{
@@ -7516,6 +7551,24 @@
       }
     },
     "AudioQualityScore":{"type":"float"},
+    "AuthCode":{
+      "type":"string",
+      "sensitive":true
+    },
+    "AuthCodeEntityType":{
+      "type":"string",
+      "enum":["CUSTOMER_PROFILE"]
+    },
+    "AuthScope":{
+      "type":"structure",
+      "required":["EntityType"],
+      "members":{
+        "SecurityProfileIds":{"shape":"SecurityProfileIds"},
+        "EntityType":{"shape":"AuthCodeEntityType"},
+        "EntityId":{"shape":"EntityId"},
+        "DomainName":{"shape":"CustomerProfilesDomainName"}
+      }
+    },
     "AuthenticationError":{
       "type":"string",
       "max":2048,
@@ -9177,6 +9230,36 @@
         "FileStatus":{"shape":"FileStatusType"}
       }
     },
+    "CreateAuthCodeRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "Scope",
+        "SessionInactivityDurationMinutes"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "Scope":{"shape":"AuthScope"},
+        "MaxSessionDurationMinutes":{
+          "shape":"MaxSessionDurationMinutes",
+          "box":true
+        },
+        "SessionInactivityDurationMinutes":{"shape":"SessionInactivityDurationMinutes"}
+      }
+    },
+    "CreateAuthCodeResponse":{
+      "type":"structure",
+      "members":{
+        "AuthCode":{"shape":"AuthCode"},
+        "SessionId":{"shape":"SessionId"},
+        "EntityType":{"shape":"AuthCodeEntityType"},
+        "EntityId":{"shape":"EntityId"}
+      }
+    },
     "CreateCaseActionDefinition":{
       "type":"structure",
       "required":[
@@ -10332,9 +10415,9 @@
       "type":"structure",
       "members":{
         "AccessToken":{"shape":"SecurityToken"},
-        "AccessTokenExpiration":{"shape":"timestamp"},
+        "AccessTokenExpiration":{"shape":"Timestamp"},
         "RefreshToken":{"shape":"SecurityToken"},
-        "RefreshTokenExpiration":{"shape":"timestamp"}
+        "RefreshTokenExpiration":{"shape":"Timestamp"}
       },
       "sensitive":true
     },
@@ -10441,6 +10524,12 @@
       "type":"string",
       "max":32,
       "min":1
+    },
+    "CustomerProfilesDomainName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9_-]+$"
     },
     "CustomerQualityMetrics":{
       "type":"structure",
@@ -11397,6 +11486,29 @@
           "locationName":"SecurityProfileId"
         }
       }
+    },
+    "DeleteSessionRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "SessionId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "SessionId":{
+          "shape":"SessionId",
+          "location":"uri",
+          "locationName":"SessionId"
+        }
+      }
+    },
+    "DeleteSessionResponse":{
+      "type":"structure",
+      "members":{}
     },
     "DeleteTaskTemplateRequest":{
       "type":"structure",
@@ -13441,6 +13553,12 @@
       "type":"string",
       "min":1
     },
+    "EntityId":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":".*"
+    },
     "EntityType":{
       "type":"string",
       "enum":[
@@ -15275,10 +15393,10 @@
     "GetFederationTokenResponse":{
       "type":"structure",
       "members":{
-        "Credentials":{"shape":"Credentials"},
-        "SignInUrl":{"shape":"Url"},
+        "UserId":{"shape":"AgentResourceId"},
         "UserArn":{"shape":"ARN"},
-        "UserId":{"shape":"AgentResourceId"}
+        "Credentials":{"shape":"Credentials"},
+        "SignInUrl":{"shape":"Url"}
       }
     },
     "GetFlowAssociationRequest":{
@@ -18918,6 +19036,12 @@
       "type":"integer",
       "max":100,
       "min":1
+    },
+    "MaxSessionDurationMinutes":{
+      "type":"integer",
+      "box":true,
+      "max":43200,
+      "min":1440
     },
     "MaximumResultReturnedException":{
       "type":"structure",
@@ -23121,6 +23245,15 @@
         "AttachedFileServiceQuotaExceededExceptionReason":{"shape":"AttachedFileServiceQuotaExceededExceptionReason"}
       },
       "union":true
+    },
+    "SessionId":{
+      "type":"string",
+      "max":36
+    },
+    "SessionInactivityDurationMinutes":{
+      "type":"integer",
+      "max":20160,
+      "min":0
     },
     "SignInConfig":{
       "type":"structure",

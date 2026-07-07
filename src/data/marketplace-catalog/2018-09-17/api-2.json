@@ -1698,7 +1698,8 @@
         "ResellerLegalName":{"shape":"ResaleAuthorizationResellerLegalNameFilter"},
         "Status":{"shape":"ResaleAuthorizationStatusFilter"},
         "OfferExtendedStatus":{"shape":"ResaleAuthorizationOfferExtendedStatusFilter"},
-        "LastModifiedDate":{"shape":"ResaleAuthorizationLastModifiedDateFilter"}
+        "LastModifiedDate":{"shape":"ResaleAuthorizationLastModifiedDateFilter"},
+        "ResellerRole":{"shape":"ResaleAuthorizationResellerRoleFilter"}
       }
     },
     "ResaleAuthorizationLastModifiedDateFilter":{
@@ -1907,6 +1908,25 @@
       "min":1,
       "pattern":"^(.)+$"
     },
+    "ResaleAuthorizationResellerRoleFilter":{
+      "type":"structure",
+      "members":{
+        "ValueList":{"shape":"ResaleAuthorizationResellerRoleFilterValueList"}
+      }
+    },
+    "ResaleAuthorizationResellerRoleFilterValueList":{
+      "type":"list",
+      "member":{"shape":"ResaleAuthorizationResellerRoleString"},
+      "max":10,
+      "min":1
+    },
+    "ResaleAuthorizationResellerRoleString":{
+      "type":"string",
+      "enum":[
+        "ChannelPartner",
+        "Distributor"
+      ]
+    },
     "ResaleAuthorizationSort":{
       "type":"structure",
       "members":{
@@ -1965,7 +1985,8 @@
         "Status":{"shape":"ResaleAuthorizationStatusString"},
         "OfferExtendedStatus":{"shape":"ResaleAuthorizationOfferExtendedStatusString"},
         "CreatedDate":{"shape":"DateTimeISO8601"},
-        "AvailabilityEndDate":{"shape":"DateTimeISO8601"}
+        "AvailabilityEndDate":{"shape":"DateTimeISO8601"},
+        "ResellerRole":{"shape":"ResaleAuthorizationResellerRoleString"}
       }
     },
     "ResourceARN":{

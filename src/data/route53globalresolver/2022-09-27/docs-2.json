@@ -37,8 +37,9 @@
     "ListFirewallDomains": "<p>Lists all the domains in DNS Firewall domain list you have created.</p> <important> <p>Route 53 Global Resolver is a global service that supports resolvers in multiple Amazon Web Services Regions but you must specify the US East (Ohio) Region to create, update, or otherwise work with Route 53 Global Resolver resources. That is, for example, specify <code>--region us-east-2</code> on Amazon Web Services CLI commands.</p> </important>",
     "ListFirewallRules": "<p>Lists all DNS firewall rules for a DNS view with pagination support.</p> <important> <p>Route 53 Global Resolver is a global service that supports resolvers in multiple Amazon Web Services Regions but you must specify the US East (Ohio) Region to create, update, or otherwise work with Route 53 Global Resolver resources. That is, for example, specify <code>--region us-east-2</code> on Amazon Web Services CLI commands.</p> </important>",
     "ListGlobalResolvers": "<p>Lists all Route 53 Global Resolver instances in your account with pagination support.</p> <important> <p>Route 53 Global Resolver is a global service that supports resolvers in multiple Amazon Web Services Regions but you must specify the US East (Ohio) Region to create, update, or otherwise work with Route 53 Global Resolver resources. That is, for example, specify <code>--region us-east-2</code> on Amazon Web Services CLI commands.</p> </important>",
-    "ListHostedZoneAssociations": "<p>Lists all hosted zone associations for a Route 53 Global Resolver resource with pagination support.</p> <important> <p>Route 53 Global Resolver is a global service that supports resolvers in multiple Amazon Web Services Regions but you must specify the US East (Ohio) Region to create, update, or otherwise work with Route 53 Global Resolver resources. That is, for example, specify <code>--region us-east-2</code> on Amazon Web Services CLI commands.</p> </important>",
+    "ListHostedZoneAssociations": "<p>Lists hosted zone associations with pagination support. Specify a DNS view through the <code>resourceArn</code> parameter to list the hosted zone associations for that DNS view, or omit it to list all hosted zone associations in your Amazon Web Services account.</p> <important> <p>Route 53 Global Resolver is a global service that supports resolvers in multiple Amazon Web Services Regions but you must specify the US East (Ohio) Region to create, update, or otherwise work with Route 53 Global Resolver resources. That is, for example, specify <code>--region us-east-2</code> on Amazon Web Services CLI commands.</p> </important>",
     "ListManagedFirewallDomainLists": "<p>Returns a paginated list of the Amazon Web Services Managed DNS Lists and the categories for DNS Firewall. The categories are either <code>THREAT</code> or <code>CONTENT</code>.</p> <important> <p>Route 53 Global Resolver is a global service that supports resolvers in multiple Amazon Web Services Regions but you must specify the US East (Ohio) Region to create, update, or otherwise work with Route 53 Global Resolver resources. That is, for example, specify <code>--region us-east-2</code> on Amazon Web Services CLI commands.</p> </important>",
+    "ListSharedDNSViews": "<p>Lists the DNS views that have been shared with your Amazon Web Services account through Amazon Web Services Resource Access Manager (Amazon Web Services RAM), with pagination support.</p> <important> <p>Route 53 Global Resolver is a global service that supports resolvers in multiple Amazon Web Services Regions but you must specify the US East (Ohio) Region to create, update, or otherwise work with Route 53 Global Resolver resources. That is, for example, specify <code>--region us-east-2</code> on Amazon Web Services CLI commands.</p> </important>",
     "ListTagsForResource": "<p>Lists the tags associated with a Route 53 Global Resolver resource.</p> <important> <p>Route 53 Global Resolver is a global service that supports resolvers in multiple Amazon Web Services Regions but you must specify the US East (Ohio) Region to create, update, or otherwise work with Route 53 Global Resolver resources. That is, for example, specify <code>--region us-east-2</code> on Amazon Web Services CLI commands.</p> </important>",
     "TagResource": "<p>Adds or updates tags for a Route 53 Global Resolver resource. Tags are key-value pairs that help you organize and identify your resources.</p> <important> <p>Route 53 Global Resolver is a global service that supports resolvers in multiple Amazon Web Services Regions but you must specify the US East (Ohio) Region to create, update, or otherwise work with Route 53 Global Resolver resources. That is, for example, specify <code>--region us-east-2</code> on Amazon Web Services CLI commands.</p> </important>",
     "UntagResource": "<p>Removes tags from a Route 53 Global Resolver resource.</p> <important> <p>Route 53 Global Resolver is a global service that supports resolvers in multiple Amazon Web Services Regions but you must specify the US East (Ohio) Region to create, update, or otherwise work with Route 53 Global Resolver resources. That is, for example, specify <code>--region us-east-2</code> on Amazon Web Services CLI commands.</p> </important>",
@@ -84,6 +85,12 @@
       "base": null,
       "refs": {
         "ListAccessTokensOutput$accessTokens": "<p>List of the tokens.</p>"
+      }
+    },
+    "AccountId": {
+      "base": null,
+      "refs": {
+        "SharedDNSViewSummary$ownerAccountId": "<p>The ID of the Amazon Web Services account that owns the DNS view and shared it with your Amazon Web Services account.</p>"
       }
     },
     "AssociateHostedZoneInput": {
@@ -310,6 +317,7 @@
         "GetFirewallDomainListOutput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency. This means that making the same request multiple times with the same <code>clientToken</code> has the same result every time.</p>",
         "GetGlobalResolverOutput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency. This means that making the same request multiple times with the same <code>clientToken</code> has the same result every time.</p>",
         "GlobalResolversItem$clientToken": "<p>The unique string that identifies the request and ensures idempotency.</p>",
+        "SharedDNSViewSummary$clientToken": "<p>The unique string that identifies the request and ensures idempotency.</p>",
         "UpdateDNSViewOutput$clientToken": "<p>The unique string that identifies the request and ensures idempotency.</p>",
         "UpdateFirewallRuleInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency. This means that making the same request multiple times with the same <code>clientToken</code> has the same result every time.</p>",
         "UpdateGlobalResolverOutput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency. This means that making the same request multiple times with the same <code>clientToken</code> has the same result every time.</p>"
@@ -511,6 +519,7 @@
         "DisableDNSViewOutput$dnssecValidation": "<p>Whether DNSSEC validation is enabled for the disabled DNS view.</p>",
         "EnableDNSViewOutput$dnssecValidation": "<p>Whether DNSSEC validation is enabled for the enabled DNS view.</p>",
         "GetDNSViewOutput$dnssecValidation": "<p>Specifies whether DNSSEC is enabled or disabled for the DNS view.</p>",
+        "SharedDNSViewSummary$dnssecValidation": "<p>Whether DNSSEC validation is enabled for the DNS view.</p>",
         "UpdateDNSViewInput$dnssecValidation": "<p>Whether to enable DNSSEC validation for the DNS view.</p>",
         "UpdateDNSViewOutput$dnssecValidation": "<p>Whether DNSSEC validation is enabled for the updated DNS view.</p>"
       }
@@ -549,6 +558,7 @@
         "DisableDNSViewOutput$ednsClientSubnet": "<p>Whether EDNS Client Subnet injection is enabled for the disabled DNS view.</p>",
         "EnableDNSViewOutput$ednsClientSubnet": "<p>Whether EDNS Client Subnet injection is enabled for the enabled DNS view.</p>",
         "GetDNSViewOutput$ednsClientSubnet": "<p>Specifies whether edns0 client subnet is enabled.</p>",
+        "SharedDNSViewSummary$ednsClientSubnet": "<p>Whether EDNS Client Subnet injection is enabled for the DNS view.</p>",
         "UpdateDNSViewInput$ednsClientSubnet": "<p>Whether to enable EDNS Client Subnet injection for the DNS view.</p>",
         "UpdateDNSViewOutput$ednsClientSubnet": "<p>Whether EDNS Client Subnet injection is enabled for the updated DNS view.</p>"
       }
@@ -645,6 +655,7 @@
         "DisableDNSViewOutput$firewallRulesFailOpen": "<p>The firewall rules fail-open behavior configured for the disabled DNS view.</p>",
         "EnableDNSViewOutput$firewallRulesFailOpen": "<p>The firewall rules fail-open behavior configured for the enabled DNS view.</p>",
         "GetDNSViewOutput$firewallRulesFailOpen": "<p>Specifies the DNS Firewall failure mode configuration. When enabled, the DNS Firewall allows DNS queries to proceed if it's unable to properly evaluate them. When disabled, the DNS Firewall blocks DNS queries it's unable to evaluate.</p>",
+        "SharedDNSViewSummary$firewallRulesFailOpen": "<p>Whether firewall rules fail open when they cannot be evaluated.</p>",
         "UpdateDNSViewInput$firewallRulesFailOpen": "<p>Whether firewall rules should fail open when they cannot be evaluated.</p>",
         "UpdateDNSViewOutput$firewallRulesFailOpen": "<p>Whether firewall rules fail open when they cannot be evaluated for the updated DNS view.</p>"
       }
@@ -886,6 +897,8 @@
         "GlobalResolversItem$updatedAt": "<p>The date and time when the global resolver was last updated.</p>",
         "HostedZoneAssociationSummary$createdAt": "<p>The date and time when the hosted zone association was created.</p>",
         "HostedZoneAssociationSummary$updatedAt": "<p>The date and time when the hosted zone association was last updated.</p>",
+        "SharedDNSViewSummary$createdAt": "<p>The date and time when the DNS view was created.</p>",
+        "SharedDNSViewSummary$updatedAt": "<p>The date and time when the DNS view was last updated.</p>",
         "UpdateAccessSourceOutput$createdAt": "<p>The date and time when the access source was originally created.</p>",
         "UpdateAccessSourceOutput$updatedAt": "<p>The date and time when the access source was last updated.</p>",
         "UpdateDNSViewOutput$createdAt": "<p>The date and time when the DNS view was originally created.</p>",
@@ -924,6 +937,7 @@
         "ListGlobalResolversInput$maxResults": "<p>The maximum number of Route 53 Global Resolver instances to return in the response. Valid range is 1-100.</p>",
         "ListHostedZoneAssociationsInput$maxResults": "<p>The maximum number of results to retrieve in a single call.</p>",
         "ListManagedFirewallDomainListsInput$maxResults": "<p>The maximum number of results to retrieve in a single call.</p>",
+        "ListSharedDNSViewsInput$maxResults": "<p>The maximum number of results to retrieve in a single call.</p>",
         "ThrottlingException$retryAfterSeconds": "<p>Number of seconds in which the caller can retry the request.</p>"
       }
     },
@@ -1015,6 +1029,14 @@
       "base": null,
       "refs": {}
     },
+    "ListSharedDNSViewsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSharedDNSViewsOutput": {
+      "base": null,
+      "refs": {}
+    },
     "ListTagsForResourceRequest": {
       "base": null,
       "refs": {}
@@ -1044,6 +1066,7 @@
         "DisableDNSViewOutput$status": "<p>The current status of the disabled DNS view.</p>",
         "EnableDNSViewOutput$status": "<p>The current status of the enabled DNS view.</p>",
         "GetDNSViewOutput$status": "<p>Operational status of the DNS view.</p>",
+        "SharedDNSViewSummary$status": "<p>The current status of the DNS view.</p>",
         "UpdateDNSViewOutput$status": "<p>The current status of the updated DNS view.</p>"
       }
     },
@@ -1102,8 +1125,9 @@
         "GetHostedZoneAssociationOutput$resourceArn": "<p>Amazon Resource Name (ARN) of the DNS view the private hosted zone is associated to.</p>",
         "GlobalResolversItem$arn": "<p>The Amazon Resource Name (ARN) of the global resolver.</p>",
         "HostedZoneAssociationSummary$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource associated with the hosted zone.</p>",
-        "ListHostedZoneAssociationsInput$resourceArn": "<p>Amazon Resource Name (ARN) of the DNS view.</p>",
+        "ListHostedZoneAssociationsInput$resourceArn": "<p>The Amazon Resource Name (ARN) of the DNS view to list hosted zone associations for. This parameter is optional; if you omit it, all hosted zone associations in your Amazon Web Services account are returned.</p>",
         "ListTagsForResourceRequest$resourceArn": "<p>Amazon Resource Name (ARN) for the resource.</p>",
+        "SharedDNSViewSummary$arn": "<p>The Amazon Resource Name (ARN) of the DNS view.</p>",
         "TagResourceRequest$resourceArn": "<p>Amazon Resource Name (ARN) of the resource to be tagged.</p>",
         "UntagResourceRequest$resourceArn": "<p>Amazon Resource Name (ARN) of the resource.</p>",
         "UpdateAccessSourceOutput$arn": "<p>The Amazon Resource Name (ARN) of the updated access source.</p>",
@@ -1142,6 +1166,7 @@
         "GetManagedFirewallDomainListOutput$description": "<p>Description of the Managed Domain List.</p>",
         "GlobalResolversItem$description": "<p>A description of the global resolver.</p>",
         "ManagedFirewallDomainListsItem$description": "<p>A description of the managed firewall domain list.</p>",
+        "SharedDNSViewSummary$description": "<p>A description of the DNS view.</p>",
         "UpdateDNSViewInput$description": "<p>A description of the DNS view.</p>",
         "UpdateDNSViewOutput$description": "<p>The description of the updated DNS view.</p>",
         "UpdateFirewallRuleInput$description": "<p>The description for the Firewall rule.</p>",
@@ -1251,6 +1276,8 @@
         "ListFirewallDomainsInput$firewallDomainListId": "<p>ID of the DNS Firewall domain list.</p>",
         "ListFirewallRulesInput$dnsViewId": "<p>ID of the DNS view.</p>",
         "ManagedFirewallDomainListsItem$id": "<p>The unique identifier of the managed firewall domain list.</p>",
+        "SharedDNSViewSummary$id": "<p>The unique identifier of the DNS view.</p>",
+        "SharedDNSViewSummary$globalResolverId": "<p>The ID of the global resolver that the DNS view is associated with.</p>",
         "UpdateAccessSourceInput$accessSourceId": "<p>The unique identifier of the access source to update.</p>",
         "UpdateAccessSourceOutput$id": "<p>The unique identifier of the updated access source.</p>",
         "UpdateAccessSourceOutput$dnsViewId": "<p>The ID of the DNS view associated with the updated access source.</p>",
@@ -1310,6 +1337,7 @@
         "HostedZoneAssociationSummary$name": "<p>The name of the hosted zone association.</p>",
         "ImportFirewallDomainsOutput$name": "<p>Name of the DNS Firewall domain list.</p>",
         "ManagedFirewallDomainListsItem$name": "<p>The name of the managed firewall domain list.</p>",
+        "SharedDNSViewSummary$name": "<p>The name of the DNS view.</p>",
         "UpdateDNSViewInput$name": "<p>The name of the DNS view.</p>",
         "UpdateDNSViewOutput$name": "<p>The name of the updated DNS view.</p>",
         "UpdateFirewallDomainsOutput$name": "<p>The name of the domain list.</p>",
@@ -1346,6 +1374,18 @@
     "ServiceQuotaExceededException": {
       "base": "<p>The request would exceed one or more service quotas. Check your current usage and quotas, then try again.</p>",
       "refs": {}
+    },
+    "SharedDNSViewSummary": {
+      "base": "<p>Summary information about a DNS view that has been shared with your Amazon Web Services account through Amazon Web Services RAM.</p>",
+      "refs": {
+        "SharedDNSViews$member": null
+      }
+    },
+    "SharedDNSViews": {
+      "base": null,
+      "refs": {
+        "ListSharedDNSViewsOutput$dnsViews": "<p>An array of information about the DNS views shared with your Amazon Web Services account, including the Amazon Web Services account that owns each DNS view.</p>"
+      }
     },
     "Sni": {
       "base": null,
@@ -1392,6 +1432,8 @@
         "ListManagedFirewallDomainListsInput$nextToken": "<p>A pagination token used for large sets of results that can't be returned in a single response.</p>",
         "ListManagedFirewallDomainListsInput$managedFirewallDomainListType": "<p>The category of the Manage DNS list either <code>THREAT</code> or <code>CONTENT</code>.</p>",
         "ListManagedFirewallDomainListsOutput$nextToken": "<p>A pagination token used for large sets of results that can't be returned in a single response. Provide this token in the next call to get the results not returned in this call.</p>",
+        "ListSharedDNSViewsInput$nextToken": "<p>A pagination token used for large sets of results that can't be returned in a single response.</p>",
+        "ListSharedDNSViewsOutput$nextToken": "<p>A pagination token used for large sets of results that can't be returned in a single response. Provide this token in the next call to get the results not returned in this call.</p>",
         "ManagedFirewallDomainListsItem$managedListType": "<p>The type of the managed firewall domain list.</p>",
         "ResourceNotFoundException$message": null,
         "ResourceNotFoundException$resourceId": "<p>The unique ID of the resource referenced in the failed request.</p>",

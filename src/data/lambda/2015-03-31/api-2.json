@@ -63,8 +63,12 @@
       "output":{"shape":"CheckpointDurableExecutionResponse"},
       "errors":[
         {"shape":"InvalidParameterValueException"},
+        {"shape":"KMSInvalidStateException"},
         {"shape":"ServiceException"},
-        {"shape":"TooManyRequestsException"}
+        {"shape":"TooManyRequestsException"},
+        {"shape":"KMSNotFoundException"},
+        {"shape":"KMSAccessDeniedException"},
+        {"shape":"KMSDisabledException"}
       ],
       "idempotent":true
     },
@@ -439,9 +443,13 @@
       "output":{"shape":"GetDurableExecutionResponse"},
       "errors":[
         {"shape":"InvalidParameterValueException"},
+        {"shape":"KMSInvalidStateException"},
         {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"KMSNotFoundException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"KMSAccessDeniedException"},
+        {"shape":"KMSDisabledException"}
       ],
       "readonly":true
     },
@@ -456,9 +464,13 @@
       "output":{"shape":"GetDurableExecutionHistoryResponse"},
       "errors":[
         {"shape":"InvalidParameterValueException"},
+        {"shape":"KMSInvalidStateException"},
         {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"KMSNotFoundException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"KMSAccessDeniedException"},
+        {"shape":"KMSDisabledException"}
       ],
       "readonly":true
     },
@@ -473,8 +485,12 @@
       "output":{"shape":"GetDurableExecutionStateResponse"},
       "errors":[
         {"shape":"InvalidParameterValueException"},
+        {"shape":"KMSInvalidStateException"},
         {"shape":"ServiceException"},
-        {"shape":"TooManyRequestsException"}
+        {"shape":"TooManyRequestsException"},
+        {"shape":"KMSNotFoundException"},
+        {"shape":"KMSAccessDeniedException"},
+        {"shape":"KMSDisabledException"}
       ],
       "readonly":true
     },
@@ -1332,10 +1348,14 @@
       "output":{"shape":"SendDurableExecutionCallbackFailureResponse"},
       "errors":[
         {"shape":"InvalidParameterValueException"},
+        {"shape":"KMSInvalidStateException"},
         {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"},
+        {"shape":"KMSNotFoundException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"CallbackTimeoutException"}
+        {"shape":"CallbackTimeoutException"},
+        {"shape":"KMSAccessDeniedException"},
+        {"shape":"KMSDisabledException"}
       ]
     },
     "SendDurableExecutionCallbackHeartbeat":{
@@ -1366,10 +1386,14 @@
       "output":{"shape":"SendDurableExecutionCallbackSuccessResponse"},
       "errors":[
         {"shape":"InvalidParameterValueException"},
+        {"shape":"KMSInvalidStateException"},
         {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"},
+        {"shape":"KMSNotFoundException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"CallbackTimeoutException"}
+        {"shape":"CallbackTimeoutException"},
+        {"shape":"KMSAccessDeniedException"},
+        {"shape":"KMSDisabledException"}
       ]
     },
     "StopDurableExecution":{
@@ -1383,9 +1407,13 @@
       "output":{"shape":"StopDurableExecutionResponse"},
       "errors":[
         {"shape":"InvalidParameterValueException"},
+        {"shape":"KMSInvalidStateException"},
         {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"KMSNotFoundException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"KMSAccessDeniedException"},
+        {"shape":"KMSDisabledException"}
       ]
     },
     "TagResource":{
@@ -2685,6 +2713,7 @@
     "DurableConfig":{
       "type":"structure",
       "members":{
+        "KMSKeyArn":{"shape":"KMSKeyArn"},
         "RetentionPeriodInDays":{"shape":"RetentionPeriodInDays"},
         "ExecutionTimeout":{"shape":"ExecutionTimeout"}
       }
@@ -3123,8 +3152,13 @@
         "FunctionArn":{"shape":"NameSpacedFunctionArn"},
         "Status":{"shape":"ExecutionStatus"},
         "StartTimestamp":{"shape":"ExecutionTimestamp"},
-        "EndTimestamp":{"shape":"ExecutionTimestamp"}
+        "EndTimestamp":{"shape":"ExecutionTimestamp"},
+        "KMSKeyArn":{"shape":"KMSKeyArn"}
       }
+    },
+    "ExecutionDataIncluded":{
+      "type":"boolean",
+      "box":true
     },
     "ExecutionDetails":{
       "type":"structure",
@@ -3594,6 +3628,11 @@
           "shape":"DurableExecutionArn",
           "location":"uri",
           "locationName":"DurableExecutionArn"
+        },
+        "IncludeExecutionData":{
+          "shape":"IncludeExecutionData",
+          "location":"querystring",
+          "locationName":"IncludeExecutionData"
         }
       }
     },
@@ -3617,7 +3656,9 @@
         "Status":{"shape":"ExecutionStatus"},
         "EndTimestamp":{"shape":"ExecutionTimestamp"},
         "Version":{"shape":"VersionWithLatestPublished"},
-        "TraceHeader":{"shape":"TraceHeader"}
+        "TraceHeader":{"shape":"TraceHeader"},
+        "ExecutionDataIncluded":{"shape":"ExecutionDataIncluded"},
+        "DurableConfig":{"shape":"DurableConfig"}
       }
     },
     "GetDurableExecutionStateRequest":{

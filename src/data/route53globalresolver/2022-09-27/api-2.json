@@ -667,7 +667,7 @@
       "name":"ListHostedZoneAssociations",
       "http":{
         "method":"GET",
-        "requestUri":"/hosted-zone-associations/resource-arn/{resourceArn+}",
+        "requestUri":"/hosted-zone-associations",
         "responseCode":200
       },
       "input":{"shape":"ListHostedZoneAssociationsInput"},
@@ -690,6 +690,23 @@
       },
       "input":{"shape":"ListManagedFirewallDomainListsInput"},
       "output":{"shape":"ListManagedFirewallDomainListsOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
+    },
+    "ListSharedDNSViews":{
+      "name":"ListSharedDNSViews",
+      "http":{
+        "method":"GET",
+        "requestUri":"/shared-dns-views",
+        "responseCode":200
+      },
+      "input":{"shape":"ListSharedDNSViewsInput"},
+      "output":{"shape":"ListSharedDNSViewsOutput"},
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
@@ -956,6 +973,12 @@
     "AccessTokens":{
       "type":"list",
       "member":{"shape":"AccessTokenItem"}
+    },
+    "AccountId":{
+      "type":"string",
+      "max":32,
+      "min":12,
+      "pattern":"[0-9]+"
     },
     "AssociateHostedZoneInput":{
       "type":"structure",
@@ -2748,7 +2771,6 @@
     },
     "ListHostedZoneAssociationsInput":{
       "type":"structure",
-      "required":["resourceArn"],
       "members":{
         "maxResults":{
           "shape":"Integer",
@@ -2762,7 +2784,7 @@
         },
         "resourceArn":{
           "shape":"ResourceArn",
-          "location":"uri",
+          "location":"querystring",
           "locationName":"resourceArn"
         }
       }
@@ -2802,6 +2824,29 @@
       "members":{
         "nextToken":{"shape":"String"},
         "managedFirewallDomainLists":{"shape":"ManagedFirewallDomainLists"}
+      }
+    },
+    "ListSharedDNSViewsInput":{
+      "type":"structure",
+      "members":{
+        "maxResults":{
+          "shape":"Integer",
+          "location":"querystring",
+          "locationName":"max_results"
+        },
+        "nextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"next_token"
+        }
+      }
+    },
+    "ListSharedDNSViewsOutput":{
+      "type":"structure",
+      "required":["dnsViews"],
+      "members":{
+        "nextToken":{"shape":"String"},
+        "dnsViews":{"shape":"SharedDNSViews"}
       }
     },
     "ListTagsForResourceRequest":{
@@ -2920,6 +2965,42 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "SharedDNSViewSummary":{
+      "type":"structure",
+      "required":[
+        "id",
+        "arn",
+        "clientToken",
+        "dnssecValidation",
+        "ednsClientSubnet",
+        "firewallRulesFailOpen",
+        "name",
+        "globalResolverId",
+        "createdAt",
+        "updatedAt",
+        "status",
+        "ownerAccountId"
+      ],
+      "members":{
+        "id":{"shape":"ResourceId"},
+        "arn":{"shape":"ResourceArn"},
+        "clientToken":{"shape":"ClientToken"},
+        "dnssecValidation":{"shape":"DnsSecValidationType"},
+        "ednsClientSubnet":{"shape":"EdnsClientSubnetType"},
+        "firewallRulesFailOpen":{"shape":"FirewallRulesFailOpenType"},
+        "name":{"shape":"ResourceName"},
+        "description":{"shape":"ResourceDescription"},
+        "globalResolverId":{"shape":"ResourceId"},
+        "createdAt":{"shape":"ISO8601TimeString"},
+        "updatedAt":{"shape":"ISO8601TimeString"},
+        "status":{"shape":"ProfileResourceStatus"},
+        "ownerAccountId":{"shape":"AccountId"}
+      }
+    },
+    "SharedDNSViews":{
+      "type":"list",
+      "member":{"shape":"SharedDNSViewSummary"}
     },
     "Sni":{
       "type":"string",

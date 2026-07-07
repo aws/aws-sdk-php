@@ -89,6 +89,41 @@
         "title": "Sample CreateCisScanConfiguration Call"
       }
     ],
+    "CreateConnector": [
+      {
+        "input": {
+          "name": "my-azure-connector",
+          "description": "Azure subscription scanner",
+          "provider": "AZURE",
+          "providerDetail": {
+            "azure": {
+              "autoInstallVMScanner": true,
+              "awsConfigConnectorArn": "arn:aws:config:us-east-1:123456789012:connector/azure/a7bc5463-04ce-4b52-901e-f26f7292a4a7/2fbed4bd-5b95-4947-a751-8defc76ecdae",
+              "azureRegions": [
+                "eastus"
+              ],
+              "scopeConfiguration": {
+                "vmScanning": {
+                  "scopeType": "SUBSCRIPTION",
+                  "scopeValues": [
+                    "552802f5-1492-4184-bbae-7291c9939b16"
+                  ]
+                }
+              }
+            }
+          },
+          "tags": {
+            "env": "prod",
+            "owner": "security-team"
+          }
+        },
+        "output": {
+          "connectorArn": "arn:aws:inspector2:us-east-1:123456789012:connector/6ccf8549-b52b-57ca-bf52-a2266da3c53a"
+        },
+        "id": "example-1",
+        "title": "Create an Azure customer-managed connector for VM scanning at SUBSCRIPTION scope"
+      }
+    ],
     "DeleteCisScanConfiguration": [
       {
         "input": {
@@ -99,6 +134,16 @@
         },
         "id": "example-1",
         "title": "Sample DeleteCisScanConfiguration Call"
+      }
+    ],
+    "DeleteConnector": [
+      {
+        "input": {
+          "connectorArn": "arn:aws:inspector2:us-east-1:123456789012:connector/6ccf8549-b52b-57ca-bf52-a2266da3c53a"
+        },
+        "output": {},
+        "id": "example-1",
+        "title": "Delete a customer-managed connector"
       }
     ],
     "GetCisScanReport": [
@@ -266,6 +311,87 @@
         "title": "Sample ListCisScans Call"
       }
     ],
+    "ListConnectorScanConfigurations": [
+      {
+        "input": {
+          "awsConfigConnectorArns": [
+            "arn:aws:config:us-east-1:123456789012:connector/azure/a7bc5463-04ce-4b52-901e-f26f7292a4a7/2fbed4bd-5b95-4947-a751-8defc76ecdae"
+          ],
+          "maxResults": 10
+        },
+        "output": {
+          "scanConfigurations": [
+            {
+              "awsConfigConnectorArn": "arn:aws:config:us-east-1:123456789012:connector/azure/a7bc5463-04ce-4b52-901e-f26f7292a4a7/2fbed4bd-5b95-4947-a751-8defc76ecdae",
+              "connectorArns": [
+                "arn:aws:inspector2:us-east-1:123456789012:connector/6ccf8549-b52b-57ca-bf52-a2266da3c53a"
+              ],
+              "scanConfiguration": {
+                "containerImageScanning": {
+                  "pullDuration": "DAYS_14",
+                  "pushDuration": "DAYS_30"
+                }
+              }
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "List scan configurations for a specific AWS Config connector"
+      }
+    ],
+    "ListConnectors": [
+      {
+        "input": {
+          "filterCriteria": {
+            "connectorType": [
+              {
+                "value": "CUSTOMER_MANAGED",
+                "comparison": "EQUALS"
+              }
+            ],
+            "provider": [
+              {
+                "value": "AZURE",
+                "comparison": "EQUALS"
+              }
+            ]
+          },
+          "maxResults": 10
+        },
+        "output": {
+          "items": [
+            {
+              "name": "my-azure-connector",
+              "awsConfigConnectorArn": "arn:aws:config:us-east-1:123456789012:connector/azure/a7bc5463-04ce-4b52-901e-f26f7292a4a7/2fbed4bd-5b95-4947-a751-8defc76ecdae",
+              "azureRegions": [
+                "eastus"
+              ],
+              "connectorArn": "arn:aws:inspector2:us-east-1:123456789012:connector/6ccf8549-b52b-57ca-bf52-a2266da3c53a",
+              "createdAt": "2026-04-20T21:00:00.000Z",
+              "description": "Azure subscription scanner",
+              "enablementStatus": "ENABLED",
+              "health": {
+                "connectorStatus": "CONNECTED",
+                "lastCheckedAt": "2026-04-20T21:57:06.400Z"
+              },
+              "provider": "AZURE",
+              "scopeConfiguration": {
+                "vmScanning": {
+                  "scopeType": "SUBSCRIPTION",
+                  "scopeValues": [
+                    "552802f5-1492-4184-bbae-7291c9939b16"
+                  ],
+                  "state": "ACTIVE"
+                }
+              },
+              "updatedAt": "2026-04-20T21:57:06.400Z"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "List all Azure customer-managed connectors"
+      }
+    ],
     "SendCisSessionHealth": [
       {
         "input": {
@@ -375,6 +501,42 @@
         },
         "id": "example-1",
         "title": "Sample UpdateCisScanConfiguration Call"
+      }
+    ],
+    "UpdateConnector": [
+      {
+        "input": {
+          "connectorArn": "arn:aws:inspector2:us-east-1:123456789012:connector/6ccf8549-b52b-57ca-bf52-a2266da3c53a",
+          "providerDetail": {
+            "azure": {
+              "azureRegions": [
+                "eastus",
+                "westus"
+              ]
+            }
+          }
+        },
+        "output": {
+          "connectorArn": "arn:aws:inspector2:us-east-1:123456789012:connector/6ccf8549-b52b-57ca-bf52-a2266da3c53a"
+        },
+        "id": "example-1",
+        "title": "Expand the Azure regions covered by a connector"
+      }
+    ],
+    "UpdateConnectorScanConfiguration": [
+      {
+        "input": {
+          "awsConfigConnectorArn": "arn:aws:config:us-east-1:123456789012:connector/azure/a7bc5463-04ce-4b52-901e-f26f7292a4a7/2fbed4bd-5b95-4947-a751-8defc76ecdae",
+          "scanConfiguration": {
+            "containerImageScanning": {
+              "pullDuration": "DAYS_14",
+              "pushDuration": "DAYS_30"
+            }
+          }
+        },
+        "output": {},
+        "id": "example-1",
+        "title": "Set 30-day push and 14-day pull rescan durations for an Azure container registry connector"
       }
     ]
   }

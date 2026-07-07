@@ -113,6 +113,18 @@
         {"shape":"ResourceInUseException"}
       ]
     },
+    "DeleteConnector":{
+      "name":"DeleteConnector",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteConnectorRequest"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"}
+      ]
+    },
     "DeleteDeliveryChannel":{
       "name":"DeleteDeliveryChannel",
       "http":{
@@ -780,6 +792,19 @@
         {"shape":"InvalidNextTokenException"}
       ]
     },
+    "GetConnector":{
+      "name":"GetConnector",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetConnectorRequest"},
+      "output":{"shape":"GetConnectorResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"}
+      ]
+    },
     "GetCustomRulePolicy":{
       "name":"GetCustomRulePolicy",
       "http":{
@@ -932,6 +957,18 @@
         {"shape":"InvalidNextTokenException"}
       ]
     },
+    "ListConnectors":{
+      "name":"ListConnectors",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListConnectorsRequest"},
+      "output":{"shape":"ListConnectorsResponse"},
+      "errors":[
+        {"shape":"ValidationException"}
+      ]
+    },
     "ListDiscoveredResources":{
       "name":"ListDiscoveredResources",
       "http":{
@@ -1063,6 +1100,21 @@
         {"shape":"ResourceInUseException"},
         {"shape":"InvalidParameterValueException"},
         {"shape":"MaxNumberOfConformancePacksExceededException"}
+      ]
+    },
+    "PutConnector":{
+      "name":"PutConnector",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutConnectorRequest"},
+      "output":{"shape":"PutConnectorResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"InsufficientPermissionsException"},
+        {"shape":"MaxNumberOfConnectorsExceededException"},
+        {"shape":"ValidationException"}
       ]
     },
     "PutDeliveryChannel":{
@@ -1228,6 +1280,20 @@
         {"shape":"ValidationException"},
         {"shape":"TooManyTagsException"},
         {"shape":"ResourceConcurrentModificationException"}
+      ]
+    },
+    "PutThirdPartyServiceLinkedConfigurationRecorder":{
+      "name":"PutThirdPartyServiceLinkedConfigurationRecorder",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutThirdPartyServiceLinkedConfigurationRecorderRequest"},
+      "output":{"shape":"PutThirdPartyServiceLinkedConfigurationRecorderResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"InsufficientPermissionsException"},
+        {"shape":"ValidationException"}
       ]
     },
     "SelectAggregateResourceConfig":{
@@ -1623,6 +1689,27 @@
       "max":64,
       "min":1
     },
+    "AzureClientIdentifier":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "AzureConnectorConfiguration":{
+      "type":"structure",
+      "required":[
+        "tenantIdentifier",
+        "clientIdentifier"
+      ],
+      "members":{
+        "tenantIdentifier":{"shape":"AzureTenantIdentifier"},
+        "clientIdentifier":{"shape":"AzureClientIdentifier"}
+      }
+    },
+    "AzureTenantIdentifier":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
     "BaseConfigurationItem":{
       "type":"structure",
       "members":{
@@ -1982,7 +2069,9 @@
         "recordingGroup":{"shape":"RecordingGroup"},
         "recordingMode":{"shape":"RecordingMode"},
         "recordingScope":{"shape":"RecordingScope"},
-        "servicePrincipal":{"shape":"ServicePrincipal"}
+        "servicePrincipal":{"shape":"ServicePrincipal"},
+        "connectorArn":{"shape":"AmazonResourceName"},
+        "scopeConfiguration":{"shape":"ScopeConfiguration"}
       }
     },
     "ConfigurationRecorderFilter":{
@@ -2050,7 +2139,8 @@
         "arn":{"shape":"AmazonResourceName"},
         "name":{"shape":"RecorderName"},
         "servicePrincipal":{"shape":"ServicePrincipal"},
-        "recordingScope":{"shape":"RecordingScope"}
+        "recordingScope":{"shape":"RecordingScope"},
+        "provider":{"shape":"Provider"}
       }
     },
     "ConfigurationStateId":{"type":"string"},
@@ -2290,6 +2380,72 @@
       "members":{},
       "exception":true
     },
+    "Connector":{
+      "type":"structure",
+      "required":[
+        "name",
+        "arn",
+        "connectorConfiguration",
+        "createdTime"
+      ],
+      "members":{
+        "name":{"shape":"ConnectorName"},
+        "arn":{"shape":"AmazonResourceName"},
+        "connectorConfiguration":{"shape":"ConnectorConfiguration"},
+        "createdTime":{"shape":"Date"}
+      }
+    },
+    "ConnectorConfiguration":{
+      "type":"structure",
+      "members":{
+        "azure":{"shape":"AzureConnectorConfiguration"}
+      }
+    },
+    "ConnectorFilter":{
+      "type":"structure",
+      "members":{
+        "filterName":{"shape":"ConnectorFilterName"},
+        "filterValues":{"shape":"FilterValueList"}
+      }
+    },
+    "ConnectorFilterList":{
+      "type":"list",
+      "member":{"shape":"ConnectorFilter"},
+      "max":5,
+      "min":0
+    },
+    "ConnectorFilterName":{
+      "type":"string",
+      "enum":["provider"]
+    },
+    "ConnectorName":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "ConnectorSummaries":{
+      "type":"list",
+      "member":{"shape":"ConnectorSummary"},
+      "max":100,
+      "min":0
+    },
+    "ConnectorSummary":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "name",
+        "provider",
+        "tenantIdentifier",
+        "createdTime"
+      ],
+      "members":{
+        "arn":{"shape":"AmazonResourceName"},
+        "name":{"shape":"ConnectorName"},
+        "provider":{"shape":"Provider"},
+        "tenantIdentifier":{"shape":"AzureTenantIdentifier"},
+        "createdTime":{"shape":"Date"}
+      }
+    },
     "ControlsList":{
       "type":"list",
       "member":{"shape":"StringWithCharLimit128"},
@@ -2357,6 +2513,13 @@
       "required":["ConformancePackName"],
       "members":{
         "ConformancePackName":{"shape":"ConformancePackName"}
+      }
+    },
+    "DeleteConnectorRequest":{
+      "type":"structure",
+      "required":["Arn"],
+      "members":{
+        "Arn":{"shape":"AmazonResourceName"}
       }
     },
     "DeleteDeliveryChannelRequest":{
@@ -2451,9 +2614,9 @@
     },
     "DeleteServiceLinkedConfigurationRecorderRequest":{
       "type":"structure",
-      "required":["ServicePrincipal"],
       "members":{
-        "ServicePrincipal":{"shape":"ServicePrincipal"}
+        "ServicePrincipal":{"shape":"ServicePrincipal"},
+        "Arn":{"shape":"AmazonResourceName"}
       }
     },
     "DeleteServiceLinkedConfigurationRecorderResponse":{
@@ -2647,8 +2810,8 @@
       "type":"structure",
       "members":{
         "ConfigRuleNames":{"shape":"ConfigRuleNames"},
-        "NextToken":{"shape":"String"},
-        "Filters":{"shape":"DescribeConfigRulesFilters"}
+        "Filters":{"shape":"DescribeConfigRulesFilters"},
+        "NextToken":{"shape":"String"}
       }
     },
     "DescribeConfigRulesResponse":{
@@ -3155,6 +3318,12 @@
       "member":{"shape":"FieldInfo"}
     },
     "FieldName":{"type":"string"},
+    "FilterValueList":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":10,
+      "min":0
+    },
     "GetAggregateComplianceDetailsByConfigRuleRequest":{
       "type":"structure",
       "required":[
@@ -3348,6 +3517,20 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "GetConnectorRequest":{
+      "type":"structure",
+      "required":["Arn"],
+      "members":{
+        "Arn":{"shape":"AmazonResourceName"}
+      }
+    },
+    "GetConnectorResponse":{
+      "type":"structure",
+      "required":["Connector"],
+      "members":{
+        "Connector":{"shape":"Connector"}
+      }
+    },
     "GetCustomRulePolicyRequest":{
       "type":"structure",
       "members":{
@@ -3506,6 +3689,12 @@
       "exception":true
     },
     "IncludeGlobalResourceTypes":{"type":"boolean"},
+    "IncludedRegions":{
+      "type":"list",
+      "member":{"shape":"ThirdPartyCloudRegion"},
+      "max":200,
+      "min":0
+    },
     "InsufficientDeliveryPolicyException":{
       "type":"structure",
       "members":{},
@@ -3657,6 +3846,27 @@
         "ConformancePackComplianceScores":{"shape":"ConformancePackComplianceScores"}
       }
     },
+    "ListConnectorsMaxResults":{
+      "type":"integer",
+      "max":100,
+      "min":0
+    },
+    "ListConnectorsRequest":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{"shape":"ListConnectorsMaxResults"},
+        "NextToken":{"shape":"String"},
+        "Filters":{"shape":"ConnectorFilterList"}
+      }
+    },
+    "ListConnectorsResponse":{
+      "type":"structure",
+      "required":["ConnectorSummaries"],
+      "members":{
+        "ConnectorSummaries":{"shape":"ConnectorSummaries"},
+        "NextToken":{"shape":"String"}
+      }
+    },
     "ListDiscoveredResourcesRequest":{
       "type":"structure",
       "required":["resourceType"],
@@ -3749,6 +3959,11 @@
       "exception":true
     },
     "MaxNumberOfConformancePacksExceededException":{
+      "type":"structure",
+      "members":{},
+      "exception":true
+    },
+    "MaxNumberOfConnectorsExceededException":{
       "type":"structure",
       "members":{},
       "exception":true
@@ -4254,6 +4469,10 @@
       "max":10000,
       "min":0
     },
+    "Provider":{
+      "type":"string",
+      "enum":["AZURE"]
+    },
     "PutAggregationAuthorizationRequest":{
       "type":"structure",
       "required":[
@@ -4323,6 +4542,21 @@
       "type":"structure",
       "members":{
         "ConformancePackArn":{"shape":"ConformancePackArn"}
+      }
+    },
+    "PutConnectorRequest":{
+      "type":"structure",
+      "required":["ConnectorConfiguration"],
+      "members":{
+        "ConnectorConfiguration":{"shape":"ConnectorConfiguration"},
+        "Tags":{"shape":"TagsList"}
+      }
+    },
+    "PutConnectorResponse":{
+      "type":"structure",
+      "required":["Arn"],
+      "members":{
+        "Arn":{"shape":"AmazonResourceName"}
       }
     },
     "PutDeliveryChannelRequest":{
@@ -4489,6 +4723,31 @@
       "type":"structure",
       "members":{
         "QueryArn":{"shape":"QueryArn"}
+      }
+    },
+    "PutThirdPartyServiceLinkedConfigurationRecorderRequest":{
+      "type":"structure",
+      "required":[
+        "ServicePrincipal",
+        "ConnectorArn",
+        "ScopeConfiguration"
+      ],
+      "members":{
+        "ServicePrincipal":{"shape":"ServicePrincipal"},
+        "ConnectorArn":{"shape":"AmazonResourceName"},
+        "ScopeConfiguration":{"shape":"ScopeConfiguration"},
+        "Tags":{"shape":"TagsList"}
+      }
+    },
+    "PutThirdPartyServiceLinkedConfigurationRecorderResponse":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "Name"
+      ],
+      "members":{
+        "Arn":{"shape":"AmazonResourceName"},
+        "Name":{"shape":"RecorderName"}
       }
     },
     "QueryArn":{
@@ -5582,6 +5841,33 @@
         "ServicePrincipals":{"shape":"ServicePrincipals"}
       }
     },
+    "ScopeConfiguration":{
+      "type":"structure",
+      "required":[
+        "scopeType",
+        "allRegions"
+      ],
+      "members":{
+        "scopeType":{"shape":"ScopeType"},
+        "scopeValues":{"shape":"ScopeValues"},
+        "allRegions":{"shape":"Boolean"},
+        "includedRegions":{"shape":"IncludedRegions"}
+      }
+    },
+    "ScopeType":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "ScopeValue":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "ScopeValues":{
+      "type":"list",
+      "member":{"shape":"ScopeValue"}
+    },
     "SelectAggregateResourceConfigRequest":{
       "type":"structure",
       "required":[
@@ -5920,6 +6206,11 @@
         "DocumentName":{"shape":"SSMDocumentName"},
         "DocumentVersion":{"shape":"SSMDocumentVersion"}
       }
+    },
+    "ThirdPartyCloudRegion":{
+      "type":"string",
+      "max":128,
+      "min":1
     },
     "TimeWindow":{
       "type":"structure",

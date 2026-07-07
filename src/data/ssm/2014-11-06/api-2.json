@@ -136,6 +136,20 @@
         {"shape":"InvalidTargetMaps"}
       ]
     },
+    "CreateCloudConnector":{
+      "name":"CreateCloudConnector",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateCloudConnectorRequest"},
+      "output":{"shape":"CreateCloudConnectorResult"},
+      "errors":[
+        {"shape":"InternalServerError"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"}
+      ]
+    },
     "CreateDocument":{
       "name":"CreateDocument",
       "http":{
@@ -259,6 +273,20 @@
         {"shape":"InvalidDocument"},
         {"shape":"InvalidInstanceId"},
         {"shape":"TooManyUpdates"}
+      ]
+    },
+    "DeleteCloudConnector":{
+      "name":"DeleteCloudConnector",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteCloudConnectorRequest"},
+      "output":{"shape":"DeleteCloudConnectorResult"},
+      "errors":[
+        {"shape":"InternalServerError"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"}
       ]
     },
     "DeleteDocument":{
@@ -971,6 +999,20 @@
         {"shape":"UnsupportedCalendarException"}
       ]
     },
+    "GetCloudConnector":{
+      "name":"GetCloudConnector",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetCloudConnectorRequest"},
+      "output":{"shape":"GetCloudConnectorResult"},
+      "errors":[
+        {"shape":"InternalServerError"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
     "GetCommandInvocation":{
       "name":"GetCommandInvocation",
       "http":{
@@ -1349,6 +1391,19 @@
         {"shape":"InternalServerError"},
         {"shape":"InvalidNextToken"}
       ]
+    },
+    "ListCloudConnectors":{
+      "name":"ListCloudConnectors",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListCloudConnectorsRequest"},
+      "output":{"shape":"ListCloudConnectorsResult"},
+      "errors":[
+        {"shape":"InternalServerError"}
+      ],
+      "readonly":true
     },
     "ListCommandInvocations":{
       "name":"ListCommandInvocations",
@@ -2004,6 +2059,20 @@
         {"shape":"TooManyUpdates"}
       ]
     },
+    "UpdateCloudConnector":{
+      "name":"UpdateCloudConnector",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateCloudConnectorRequest"},
+      "output":{"shape":"UpdateCloudConnectorResult"},
+      "errors":[
+        {"shape":"InternalServerError"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"}
+      ]
+    },
     "UpdateDocument":{
       "name":"UpdateDocument",
       "http":{
@@ -2183,6 +2252,20 @@
         {"shape":"ServiceSettingNotFound"},
         {"shape":"TooManyUpdates"}
       ]
+    },
+    "ValidateCloudConnector":{
+      "name":"ValidateCloudConnector",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ValidateCloudConnectorRequest"},
+      "output":{"shape":"ValidateCloudConnectorResult"},
+      "errors":[
+        {"shape":"InternalServerError"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
     }
   },
   "shapes":{
@@ -2639,7 +2722,8 @@
         "LastExecutedBefore",
         "LastExecutedAfter",
         "AssociationName",
-        "ResourceGroupName"
+        "ResourceGroupName",
+        "CloudConnectorId"
       ]
     },
     "AssociationFilterList":{
@@ -3137,6 +3221,78 @@
         "Local"
       ]
     },
+    "AvailabilityZone":{
+      "type":"string",
+      "max":120
+    },
+    "AvailabilityZoneId":{
+      "type":"string",
+      "max":50
+    },
+    "AzureApplicationDisplayName":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"^([\\p{L}\\p{Z}\\p{N}\\p{P}\\p{M}]*)$"
+    },
+    "AzureApplicationId":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    },
+    "AzureConfiguration":{
+      "type":"structure",
+      "required":[
+        "TenantId",
+        "ApplicationId"
+      ],
+      "members":{
+        "TenantId":{"shape":"AzureTenantId"},
+        "TenantDisplayName":{"shape":"AzureTenantDisplayName"},
+        "ApplicationId":{"shape":"AzureApplicationId"},
+        "ApplicationDisplayName":{"shape":"AzureApplicationDisplayName"},
+        "Targets":{"shape":"ConfigurationTargets"}
+      }
+    },
+    "AzureSubscription":{
+      "type":"structure",
+      "required":["Id"],
+      "members":{
+        "Id":{"shape":"AzureSubscriptionId"},
+        "DisplayName":{"shape":"AzureSubscriptionDisplayName"}
+      }
+    },
+    "AzureSubscriptionDisplayName":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "pattern":"^([\\p{L}\\p{Z}\\p{N}\\p{P}\\p{M}]*)$"
+    },
+    "AzureSubscriptionId":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    },
+    "AzureSubscriptionList":{
+      "type":"list",
+      "member":{"shape":"AzureSubscription"},
+      "max":75,
+      "min":1
+    },
+    "AzureTenantDisplayName":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"^([\\p{L}\\p{Z}\\p{N}\\p{P}\\p{M}]*)$"
+    },
+    "AzureTenantId":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    },
     "BaselineDescription":{
       "type":"string",
       "max":1024,
@@ -3238,6 +3394,88 @@
       "type":"string",
       "max":64,
       "min":1
+    },
+    "CloudConnectorArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:aws(-cn|-us-gov)?:ssm:([^:]+):\\d{12}:cloud-connector/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "CloudConnectorConfiguration":{
+      "type":"structure",
+      "members":{
+        "AzureConfiguration":{"shape":"AzureConfiguration"}
+      },
+      "union":true
+    },
+    "CloudConnectorDescription":{
+      "type":"string",
+      "max":1024,
+      "min":0,
+      "pattern":"^([\\p{L}\\p{Z}\\p{N}\\p{P}\\p{M}]*)$"
+    },
+    "CloudConnectorFilter":{
+      "type":"structure",
+      "members":{
+        "FilterKey":{"shape":"CloudConnectorFilterKey"},
+        "FilterValues":{"shape":"CloudConnectorFilterValues"}
+      }
+    },
+    "CloudConnectorFilterKey":{
+      "type":"string",
+      "enum":[
+        "SubscriptionId",
+        "TenantId"
+      ]
+    },
+    "CloudConnectorFilterList":{
+      "type":"list",
+      "member":{"shape":"CloudConnectorFilter"},
+      "max":2,
+      "min":1
+    },
+    "CloudConnectorFilterValue":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "CloudConnectorFilterValues":{
+      "type":"list",
+      "member":{"shape":"CloudConnectorFilterValue"},
+      "max":1,
+      "min":1
+    },
+    "CloudConnectorIamRoleArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:aws[a-z0-9-]*:iam::\\d{12}:role\\/[\\w-\\/.@+=,]{1,1017}$"
+    },
+    "CloudConnectorId":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "CloudConnectorMaxResults":{
+      "type":"integer",
+      "max":10,
+      "min":0
+    },
+    "CloudConnectorSummary":{
+      "type":"structure",
+      "members":{
+        "CloudConnectorId":{"shape":"CloudConnectorId"},
+        "DisplayName":{"shape":"DisplayName"},
+        "Description":{"shape":"CloudConnectorDescription"},
+        "RoleArn":{"shape":"CloudConnectorIamRoleArn"},
+        "CreatedAt":{"shape":"DateTime"},
+        "UpdatedAt":{"shape":"DateTime"}
+      }
+    },
+    "CloudConnectorSummaryList":{
+      "type":"list",
+      "member":{"shape":"CloudConnectorSummary"}
     },
     "CloudWatchLogGroupName":{
       "type":"string",
@@ -3610,6 +3848,26 @@
       "max":255,
       "min":1
     },
+    "ConfigConnectorArn":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"^arn:aws(-cn|-us-gov)?:config:([^:]+):\\d{12}:connector/.+$"
+    },
+    "ConfigurationTargets":{
+      "type":"structure",
+      "members":{
+        "Subscriptions":{"shape":"AzureSubscriptionList"}
+      },
+      "union":true
+    },
+    "ConflictException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"String"}
+      },
+      "exception":true
+    },
     "ConnectionStatus":{
       "type":"string",
       "enum":[
@@ -3746,6 +4004,29 @@
       "type":"structure",
       "members":{
         "AssociationDescription":{"shape":"AssociationDescription"}
+      }
+    },
+    "CreateCloudConnectorRequest":{
+      "type":"structure",
+      "required":[
+        "DisplayName",
+        "RoleArn",
+        "Configuration",
+        "ConfigConnectorArn"
+      ],
+      "members":{
+        "DisplayName":{"shape":"DisplayName"},
+        "RoleArn":{"shape":"CloudConnectorIamRoleArn"},
+        "Description":{"shape":"CloudConnectorDescription"},
+        "Configuration":{"shape":"CloudConnectorConfiguration"},
+        "ConfigConnectorArn":{"shape":"ConfigConnectorArn"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateCloudConnectorResult":{
+      "type":"structure",
+      "members":{
+        "CloudConnectorId":{"shape":"CloudConnectorId"}
       }
     },
     "CreateDocumentRequest":{
@@ -3956,6 +4237,19 @@
     "DeleteAssociationResult":{
       "type":"structure",
       "members":{}
+    },
+    "DeleteCloudConnectorRequest":{
+      "type":"structure",
+      "required":["CloudConnectorId"],
+      "members":{
+        "CloudConnectorId":{"shape":"CloudConnectorId"}
+      }
+    },
+    "DeleteCloudConnectorResult":{
+      "type":"structure",
+      "members":{
+        "CloudConnectorId":{"shape":"CloudConnectorId"}
+      }
     },
     "DeleteDocumentRequest":{
       "type":"structure",
@@ -4883,6 +5177,12 @@
       "type":"structure",
       "members":{}
     },
+    "DisplayName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^([\\p{L}\\p{Z}\\p{N}\\p{P}\\p{M}]*)$"
+    },
     "DocumentARN":{
       "type":"string",
       "pattern":"^[a-zA-Z0-9_\\-.:/]{3,128}$"
@@ -5441,6 +5741,26 @@
         "State":{"shape":"CalendarState"},
         "AtTime":{"shape":"ISO8601String"},
         "NextTransitionTime":{"shape":"ISO8601String"}
+      }
+    },
+    "GetCloudConnectorRequest":{
+      "type":"structure",
+      "required":["CloudConnectorId"],
+      "members":{
+        "CloudConnectorId":{"shape":"CloudConnectorId"}
+      }
+    },
+    "GetCloudConnectorResult":{
+      "type":"structure",
+      "members":{
+        "CloudConnectorArn":{"shape":"CloudConnectorArn"},
+        "DisplayName":{"shape":"DisplayName"},
+        "Description":{"shape":"CloudConnectorDescription"},
+        "RoleArn":{"shape":"CloudConnectorIamRoleArn"},
+        "Configuration":{"shape":"CloudConnectorConfiguration"},
+        "ConfigConnectorArn":{"shape":"ConfigConnectorArn"},
+        "CreatedAt":{"shape":"DateTime"},
+        "UpdatedAt":{"shape":"DateTime"}
       }
     },
     "GetCommandInvocationRequest":{
@@ -6144,10 +6464,16 @@
         "InstanceStatus":{"shape":"InstanceStatus"},
         "IpAddress":{"shape":"IpAddress"},
         "ManagedStatus":{"shape":"ManagedStatus"},
+        "Name":{"shape":"NodeName"},
         "PlatformType":{"shape":"PlatformType"},
         "PlatformName":{"shape":"PlatformName"},
         "PlatformVersion":{"shape":"PlatformVersion"},
-        "ResourceType":{"shape":"ResourceType"}
+        "ResourceType":{"shape":"ResourceType"},
+        "SourceType":{"shape":"SourceType"},
+        "SourceId":{"shape":"SourceId"},
+        "SourceLocation":{"shape":"SourceLocation"},
+        "AvailabilityZone":{"shape":"AvailabilityZone"},
+        "AvailabilityZoneId":{"shape":"AvailabilityZoneId"}
       }
     },
     "InstanceInformation":{
@@ -6182,7 +6508,8 @@
         "LastSuccessfulAssociationExecutionDate":{"shape":"DateTime"},
         "AssociationOverview":{"shape":"InstanceAggregatedAssociationOverview"},
         "SourceId":{"shape":"SourceId"},
-        "SourceType":{"shape":"SourceType"}
+        "SourceType":{"shape":"SourceType"},
+        "SourceLocation":{"shape":"SourceLocation"}
       }
     },
     "InstanceInformationFilter":{
@@ -6391,7 +6718,9 @@
         "LastSuccessfulAssociationExecutionDate":{"shape":"DateTime"},
         "AssociationOverview":{"shape":"InstanceAggregatedAssociationOverview"},
         "SourceId":{"shape":"SourceId"},
-        "SourceType":{"shape":"SourceType"}
+        "SourceType":{"shape":"SourceType"},
+        "SourceLocation":{"shape":"SourceLocation"},
+        "AvailabilityZone":{"shape":"AvailabilityZone"}
       }
     },
     "InstancePropertyFilter":{
@@ -7222,6 +7551,24 @@
       "type":"structure",
       "members":{
         "Associations":{"shape":"AssociationList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListCloudConnectorsRequest":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{
+          "shape":"CloudConnectorMaxResults",
+          "box":true
+        },
+        "NextToken":{"shape":"NextToken"},
+        "Filters":{"shape":"CloudConnectorFilterList"}
+      }
+    },
+    "ListCloudConnectorsResult":{
+      "type":"structure",
+      "members":{
+        "CloudConnectors":{"shape":"CloudConnectorSummaryList"},
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -8128,7 +8475,9 @@
         "PlatformType",
         "PlatformVersion",
         "Region",
-        "ResourceType"
+        "ResourceType",
+        "SourceType",
+        "AvailabilityZone"
       ]
     },
     "NodeCaptureTime":{"type":"timestamp"},
@@ -8161,7 +8510,12 @@
         "OrganizationalUnitId",
         "OrganizationalUnitPath",
         "Region",
-        "AccountId"
+        "AccountId",
+        "SourceType",
+        "SourceId",
+        "SourceLocation",
+        "AvailabilityZone",
+        "AvailabilityZoneId"
       ]
     },
     "NodeFilterList":{
@@ -8199,6 +8553,12 @@
       "member":{"shape":"Node"},
       "max":50,
       "min":0
+    },
+    "NodeName":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"
     },
     "NodeOrganizationalUnitId":{
       "type":"string",
@@ -10384,7 +10744,8 @@
         "OpsItem",
         "OpsMetadata",
         "Automation",
-        "Association"
+        "Association",
+        "CloudConnector"
       ]
     },
     "ResponseCode":{"type":"integer"},
@@ -10798,12 +11159,19 @@
       "min":0,
       "pattern":"^[a-zA-Z0-9:_-]*$"
     },
+    "SourceLocation":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^.{1,128}$"
+    },
     "SourceType":{
       "type":"string",
       "enum":[
         "AWS::EC2::Instance",
         "AWS::IoT::Thing",
-        "AWS::SSM::ManagedInstance"
+        "AWS::SSM::ManagedInstance",
+        "Microsoft.Compute/virtualMachines"
       ]
     },
     "StandardErrorContent":{
@@ -11459,6 +11827,22 @@
         "AssociationDescription":{"shape":"AssociationDescription"}
       }
     },
+    "UpdateCloudConnectorRequest":{
+      "type":"structure",
+      "required":["CloudConnectorId"],
+      "members":{
+        "CloudConnectorId":{"shape":"CloudConnectorId"},
+        "DisplayName":{"shape":"DisplayName"},
+        "Configuration":{"shape":"CloudConnectorConfiguration"},
+        "Description":{"shape":"CloudConnectorDescription"}
+      }
+    },
+    "UpdateCloudConnectorResult":{
+      "type":"structure",
+      "members":{
+        "CloudConnectorId":{"shape":"CloudConnectorId"}
+      }
+    },
     "UpdateDocumentDefaultVersionRequest":{
       "type":"structure",
       "required":[
@@ -11805,6 +12189,30 @@
       "type":"list",
       "member":{"shape":"ValidNextStep"}
     },
+    "ValidateCloudConnectorMaxResults":{
+      "type":"integer",
+      "max":75,
+      "min":0
+    },
+    "ValidateCloudConnectorRequest":{
+      "type":"structure",
+      "required":["CloudConnectorId"],
+      "members":{
+        "CloudConnectorId":{"shape":"CloudConnectorId"},
+        "MaxResults":{
+          "shape":"ValidateCloudConnectorMaxResults",
+          "box":true
+        },
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ValidateCloudConnectorResult":{
+      "type":"structure",
+      "members":{
+        "ValidationFindings":{"shape":"ValidationFindingList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "ValidationException":{
       "type":"structure",
       "members":{
@@ -11812,6 +12220,56 @@
         "ReasonCode":{"shape":"String"}
       },
       "exception":true
+    },
+    "ValidationFinding":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"ValidationFindingType"},
+        "Code":{"shape":"ValidationFindingCode"},
+        "Message":{"shape":"String"},
+        "ProviderMessage":{"shape":"String"},
+        "Scope":{"shape":"ValidationFindingScope"}
+      }
+    },
+    "ValidationFindingCode":{
+      "type":"string",
+      "enum":[
+        "TargetInaccessible",
+        "TargetUnusable",
+        "TargetStateWarning",
+        "AwsRoleAssumptionFailed",
+        "WebIdentityTokenFailed",
+        "OutboundWebIdentityFederationDisabled",
+        "ProviderCredentialCreationFailed",
+        "TenantSummary",
+        "SubscriptionAccessible"
+      ]
+    },
+    "ValidationFindingList":{
+      "type":"list",
+      "member":{"shape":"ValidationFinding"}
+    },
+    "ValidationFindingScope":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"ValidationFindingScopeType"},
+        "Id":{"shape":"String"}
+      }
+    },
+    "ValidationFindingScopeType":{
+      "type":"string",
+      "enum":[
+        "azure:tenant",
+        "azure:subscription"
+      ]
+    },
+    "ValidationFindingType":{
+      "type":"string",
+      "enum":[
+        "INFO",
+        "WARN",
+        "ERROR"
+      ]
     },
     "Version":{
       "type":"string",

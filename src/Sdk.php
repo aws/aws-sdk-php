@@ -584,6 +584,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionPartnerCentralBenefits(array $args = [])
  * @method \Aws\PartnerCentralChannel\PartnerCentralChannelClient createPartnerCentralChannel(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionPartnerCentralChannel(array $args = [])
+ * @method \Aws\PartnerCentralRevenueMeasurement\PartnerCentralRevenueMeasurementClient createPartnerCentralRevenueMeasurement(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionPartnerCentralRevenueMeasurement(array $args = [])
  * @method \Aws\PartnerCentralSelling\PartnerCentralSellingClient createPartnerCentralSelling(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionPartnerCentralSelling(array $args = [])
  * @method \Aws\PaymentCryptography\PaymentCryptographyClient createPaymentCryptography(array $args = [])

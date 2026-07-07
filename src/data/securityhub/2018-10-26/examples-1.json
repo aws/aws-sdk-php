@@ -701,6 +701,38 @@
         "title": "To create a configuration policy"
       }
     ],
+    "CreateConnector": [
+      {
+        "input": {
+          "Description": "Connector for Azure tenant monitoring",
+          "Name": "MyAzureConnector",
+          "Provider": {
+            "Azure": {
+              "AWSConfigConnectorArn": "arn:aws:config:us-east-1:123456789012:connector/azure-connector-1234",
+              "AzureRegions": [
+                "eastus",
+                "westus2"
+              ],
+              "ScopeConfiguration": {
+                "ScopeType": "TENANT"
+              }
+            }
+          }
+        },
+        "output": {
+          "ConnectorArn": "arn:aws:securityhub:us-east-1:123456789012:connector/cspm-a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+          "ConnectorId": "cspm-a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+          "EnablementStatus": "PENDING_ENABLEMENT"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "This operation creates a CSPM connector to connect Security Hub to an Azure environment.",
+        "id": "to-create-a-cspm-connector-1716000000000",
+        "title": "To create a CSPM connector"
+      }
+    ],
     "CreateFindingAggregator": [
       {
         "input": {
@@ -833,6 +865,23 @@
         "description": "This operation deletes the specified configuration policy.",
         "id": "to-delete-a-configuration-policy-1695174614062",
         "title": "To delete a configuration policy"
+      }
+    ],
+    "DeleteConnector": [
+      {
+        "input": {
+          "ConnectorId": "cspm-a1b2c3d4-5678-90ab-cdef-EXAMPLE11111"
+        },
+        "output": {
+          "EnablementStatus": "PENDING_DELETION"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "This operation deletes a CSPM connector.",
+        "id": "to-delete-a-cspm-connector-1716000000000",
+        "title": "To delete a CSPM connector"
       }
     ],
     "DeleteFindingAggregator": [
@@ -1304,6 +1353,45 @@
         "description": "This operation provides details about configuration associations for a specific target account, organizational unit, or the root.",
         "id": "to-get-details-about-a-configuration-association-1695177816371",
         "title": "To get details about a configuration association"
+      }
+    ],
+    "GetConnector": [
+      {
+        "input": {
+          "ConnectorId": "cspm-a1b2c3d4-5678-90ab-cdef-EXAMPLE11111"
+        },
+        "output": {
+          "ConnectorArn": "arn:aws:securityhub:us-east-1:123456789012:connector/cspm-a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+          "ConnectorId": "cspm-a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+          "CreatedAt": "2026-01-15T10:30:00.000Z",
+          "CreatedBy": "securityhub.amazonaws.com",
+          "Description": "Connector for Azure tenant monitoring",
+          "Health": {
+            "ConnectorStatus": "CONNECTED",
+            "LastCheckedAt": "2026-05-20T14:00:00.000Z"
+          },
+          "LastUpdatedAt": "2026-05-20T14:00:00.000Z",
+          "Name": "MyAzureConnector",
+          "ProviderDetail": {
+            "Azure": {
+              "AWSConfigConnectorArn": "arn:aws:config:us-east-1:123456789012:connector/azure-connector-1234",
+              "AzureRegions": [
+                "eastus",
+                "westus2"
+              ],
+              "ScopeConfiguration": {
+                "ScopeType": "TENANT"
+              }
+            }
+          }
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "This operation retrieves details for a CSPM connector.",
+        "id": "to-get-a-cspm-connector-1716000000000",
+        "title": "To get details of a CSPM connector"
       }
     ],
     "GetEnabledStandards": [
@@ -1786,6 +1874,34 @@
         "title": "To list configuration associations"
       }
     ],
+    "ListConnectors": [
+      {
+        "input": {
+          "MaxResults": 10
+        },
+        "output": {
+          "Connectors": [
+            {
+              "ConnectorArn": "arn:aws:securityhub:us-east-1:123456789012:connector/cspm-a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+              "ConnectorId": "cspm-a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+              "CreatedAt": "2026-01-15T10:30:00.000Z",
+              "Name": "MyAzureConnector",
+              "ProviderSummary": {
+                "ConnectorStatus": "CONNECTED",
+                "ProviderName": "AZURE"
+              }
+            }
+          ]
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "This operation lists the CSPM connectors for the calling account.",
+        "id": "to-list-cspm-connectors-1716000000000",
+        "title": "To list CSPM connectors"
+      }
+    ],
     "ListEnabledProductsForImport": [
       {
         "output": {
@@ -2184,6 +2300,41 @@
         "description": "This operation updates the specified configuration policy.",
         "id": "to-update-a-configuration-policy-1695174120555",
         "title": "To update a configuration policy"
+      }
+    ],
+    "UpdateConnector": [
+      {
+        "input": {
+          "ConnectorId": "cspm-a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+          "Description": "Updated connector description",
+          "Provider": {
+            "Azure": {
+              "AzureRegions": [
+                "eastus",
+                "westus2",
+                "northeurope"
+              ],
+              "ScopeConfiguration": {
+                "ScopeType": "SUBSCRIPTION",
+                "ScopeValues": [
+                  "sub-1234-5678-abcd",
+                  "sub-9012-3456-efgh"
+                ]
+              }
+            }
+          }
+        },
+        "output": {
+          "ConnectorStatus": "CONNECTED",
+          "EnablementStatus": "PENDING_UPDATE"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "This operation updates the configuration of a CSPM connector.",
+        "id": "to-update-a-cspm-connector-1716000000000",
+        "title": "To update a CSPM connector"
       }
     ],
     "UpdateFindingAggregator": [

@@ -79,6 +79,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listHostedZoneAssociationsAsync(array $args = [])
  * @method \Aws\Result listManagedFirewallDomainLists(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listManagedFirewallDomainListsAsync(array $args = [])
+ * @method \Aws\Result listSharedDNSViews(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listSharedDNSViewsAsync(array $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])

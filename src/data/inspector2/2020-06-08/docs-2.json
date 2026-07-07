@@ -16,12 +16,14 @@
     "CreateCisScanConfiguration": "<p>Creates a CIS scan configuration.</p>",
     "CreateCodeSecurityIntegration": "<p>Creates a code security integration with a source code repository provider.</p> <p>After calling the <code>CreateCodeSecurityIntegration</code> operation, you complete authentication and authorization with your provider. Next you call the <code>UpdateCodeSecurityIntegration</code> operation to provide the <code>details</code> to complete the integration setup</p>",
     "CreateCodeSecurityScanConfiguration": "<p>Creates a scan configuration for code security scanning.</p>",
+    "CreateConnector": "<p>Creates a connector that links an external cloud provider to Amazon Inspector for vulnerability scanning.</p>",
     "CreateFilter": "<p>Creates a filter resource using specified filter criteria. When the filter action is set to <code>SUPPRESS</code> this action creates a suppression rule.</p>",
     "CreateFindingsReport": "<p>Creates a finding report. By default only <code>ACTIVE</code> findings are returned in the report. To see <code>SUPRESSED</code> or <code>CLOSED</code> findings you must specify a value for the <code>findingStatus</code> filter criteria. </p>",
     "CreateSbomExport": "<p>Creates a software bill of materials (SBOM) report.</p>",
     "DeleteCisScanConfiguration": "<p>Deletes a CIS scan configuration.</p>",
     "DeleteCodeSecurityIntegration": "<p>Deletes a code security integration.</p>",
     "DeleteCodeSecurityScanConfiguration": "<p>Deletes a code security scan configuration.</p>",
+    "DeleteConnector": "<p>Deletes a connector from your account.</p>",
     "DeleteFilter": "<p>Deletes a filter resource.</p>",
     "DescribeOrganizationConfiguration": "<p>Describe Amazon Inspector configuration settings for an Amazon Web Services organization.</p>",
     "Disable": "<p>Disables Amazon Inspector scans for one or more Amazon Web Services accounts. Disabling all scan types in an account disables the Amazon Inspector service.</p>",
@@ -35,7 +37,7 @@
     "GetCodeSecurityIntegration": "<p>Retrieves information about a code security integration.</p>",
     "GetCodeSecurityScan": "<p>Retrieves information about a specific code security scan.</p>",
     "GetCodeSecurityScanConfiguration": "<p>Retrieves information about a code security scan configuration.</p>",
-    "GetConfiguration": "<p>Retrieves setting configurations for Inspector scans.</p>",
+    "GetConfiguration": "<p>Retrieves setting configurations for Amazon Inspector scans. If you specify an <code>accountId</code>, this operation returns the scan configuration for that member account. You must be the delegated administrator for the specified member account. If you do not specify an <code>accountId</code>, this operation returns your own scan configuration.</p>",
     "GetDelegatedAdminAccount": "<p>Retrieves information about the Amazon Inspector delegated administrator for your organization.</p>",
     "GetEc2DeepInspectionConfiguration": "<p>Retrieves the activation status of Amazon Inspector deep inspection and custom paths associated with your account. </p>",
     "GetEncryptionKey": "<p>Gets an encryption key.</p>",
@@ -50,6 +52,8 @@
     "ListCodeSecurityIntegrations": "<p>Lists all code security integrations in your account.</p>",
     "ListCodeSecurityScanConfigurationAssociations": "<p>Lists the associations between code repositories and Amazon Inspector code security scan configurations.</p>",
     "ListCodeSecurityScanConfigurations": "<p>Lists all code security scan configurations in your account.</p>",
+    "ListConnectorScanConfigurations": "<p>Lists scan configurations for Amazon Web Services Config connectors. Results are paginated. Use the <code>nextToken</code> parameter to retrieve the next page of results.</p>",
+    "ListConnectors": "<p>Lists connectors in your account. Results are paginated. Use the <code>nextToken</code> parameter to retrieve the next page of results.</p>",
     "ListCoverage": "<p>Lists coverage details for your environment.</p>",
     "ListCoverageStatistics": "<p>Lists Amazon Inspector coverage statistics for your environment.</p>",
     "ListDelegatedAdminAccounts": "<p>Lists information about the Amazon Inspector delegated administrator of your organization.</p>",
@@ -71,7 +75,9 @@
     "UpdateCisScanConfiguration": "<p>Updates a CIS scan configuration.</p>",
     "UpdateCodeSecurityIntegration": "<p>Updates an existing code security integration.</p> <p>After calling the <code>CreateCodeSecurityIntegration</code> operation, you complete authentication and authorization with your provider. Next you call the <code>UpdateCodeSecurityIntegration</code> operation to provide the <code>details</code> to complete the integration setup</p>",
     "UpdateCodeSecurityScanConfiguration": "<p>Updates an existing code security scan configuration.</p>",
-    "UpdateConfiguration": "<p>Updates setting configurations for your Amazon Inspector account. When you use this API as an Amazon Inspector delegated administrator this updates the setting for all accounts you manage. Member accounts in an organization cannot update this setting.</p>",
+    "UpdateConfiguration": "<p>Updates the scan configuration for your Amazon Inspector account. If you don't specify an <code>accountId</code>, this operation updates the delegated administrator's configuration and propagates it to member accounts that have not been individually configured. If you specify an <code>accountId</code>, this operation updates that member account's configuration. Only the delegated administrator can specify an <code>accountId</code>; member accounts cannot call this operation.</p>",
+    "UpdateConnector": "<p>Updates the description or provider-specific configuration details of an existing connector.</p>",
+    "UpdateConnectorScanConfiguration": "<p>Updates scan configuration settings for resources associated with an Amazon Web Services Config connector.</p>",
     "UpdateEc2DeepInspectionConfiguration": "<p>Activates, deactivates Amazon Inspector deep inspection, or updates custom paths for your account. </p>",
     "UpdateEncryptionKey": "<p>Updates an encryption key. A <code>ResourceNotFoundException</code> means that an Amazon Web Services owned key is being used for encryption.</p>",
     "UpdateFilter": "<p>Specifies the action that is to be applied to the findings that match the filter.</p>",
@@ -130,6 +136,7 @@
         "Finding$awsAccountId": "<p>The Amazon Web Services account ID associated with the finding.</p>",
         "FindingTypeAggregationResponse$accountId": "<p>The ID of the Amazon Web Services account associated with the findings.</p>",
         "GetCisScanResultDetailsRequest$accountId": "<p>The account ID.</p>",
+        "GetConfigurationRequest$accountId": "<p>The 12-digit Amazon Web Services account ID of the member account whose scan configuration you want to retrieve. When specified, you must be the delegated administrator for this member account. If not specified, the operation returns your own configuration.</p>",
         "GetMemberRequest$accountId": "<p>The Amazon Web Services account ID of the member account to retrieve information on.</p>",
         "ImageLayerAggregationResponse$accountId": "<p>The ID of the Amazon Web Services account that owns the container image hosting the layer image.</p>",
         "LambdaFunctionAggregationResponse$accountId": "<p>The ID of the Amazon Web Services account that owns the Amazon Web Services Lambda function. </p>",
@@ -141,7 +148,8 @@
         "PackageAggregationResponse$accountId": "<p>The ID of the Amazon Web Services account associated with the findings.</p>",
         "ReportTargetAccounts$member": null,
         "RepositoryAggregationResponse$accountId": "<p>The ID of the Amazon Web Services account associated with the findings.</p>",
-        "TitleAggregationResponse$accountId": "<p>The ID of the Amazon Web Services account associated with the findings.</p>"
+        "TitleAggregationResponse$accountId": "<p>The ID of the Amazon Web Services account associated with the findings.</p>",
+        "UpdateConfigurationRequest$accountId": "<p>The 12-digit Amazon Web Services account ID of the member account whose scan configuration you want to update. When specified, you must be the delegated administrator for this member account. If not specified, the operation updates your own configuration and propagates changes to any member accounts that have not been individually configured.</p>"
       }
     },
     "AccountIdFilterList": {
@@ -267,7 +275,8 @@
     "ArchitectureList": {
       "base": null,
       "refs": {
-        "AwsLambdaFunctionDetails$architectures": "<p>The instruction set architecture that the Amazon Web Services Lambda function supports. Architecture is a string array with one of the valid values. The default architecture value is <code>x86_64</code>.</p>"
+        "AwsLambdaFunctionDetails$architectures": "<p>The instruction set architecture that the Amazon Web Services Lambda function supports. Architecture is a string array with one of the valid values. The default architecture value is <code>x86_64</code>.</p>",
+        "ServerlessFunction$architectures": "<p>The architectures of the serverless function.</p>"
       }
     },
     "Arn": {
@@ -329,6 +338,41 @@
         "DescribeOrganizationConfigurationResponse$autoEnable": "<p>The scan types are automatically enabled for new members of your organization.</p>",
         "UpdateOrganizationConfigurationRequest$autoEnable": "<p>Defines which scan types are enabled automatically for new members of your Amazon Inspector organization.</p>",
         "UpdateOrganizationConfigurationResponse$autoEnable": "<p>The updated status of scan types automatically enabled for new members of your Amazon Inspector organization.</p>"
+      }
+    },
+    "AwsConfigConnectorArn": {
+      "base": null,
+      "refs": {
+        "AwsConfigConnectorArnFilter$value": "<p>The Amazon Web Services Config connector ARN value to filter by.</p>",
+        "AwsConfigConnectorArnList$member": null,
+        "AzureProviderDetailCreate$awsConfigConnectorArn": "<p>The ARN of the Amazon Web Services Config connector to associate with this connector.</p>",
+        "Connector$awsConfigConnectorArn": "<p>The ARN of the Amazon Web Services Config connector associated with this connector.</p>",
+        "ConnectorScanConfigurationItem$awsConfigConnectorArn": "<p>The ARN of the Amazon Web Services Config connector.</p>",
+        "UpdateConnectorScanConfigurationRequest$awsConfigConnectorArn": "<p>The ARN of the Amazon Web Services Config connector.</p>"
+      }
+    },
+    "AwsConfigConnectorArnComparison": {
+      "base": null,
+      "refs": {
+        "AwsConfigConnectorArnFilter$comparison": "<p>The comparison operator for the Amazon Web Services Config connector ARN filter.</p>"
+      }
+    },
+    "AwsConfigConnectorArnFilter": {
+      "base": "<p>A filter that matches connectors by the ARN of the associated Amazon Web Services Config connector.</p>",
+      "refs": {
+        "AwsConfigConnectorArnFilterList$member": null
+      }
+    },
+    "AwsConfigConnectorArnFilterList": {
+      "base": null,
+      "refs": {
+        "ConnectorFilterCriteria$awsConfigConnectorArns": "<p>Filter by Amazon Web Services Config connector ARNs.</p>"
+      }
+    },
+    "AwsConfigConnectorArnList": {
+      "base": null,
+      "refs": {
+        "ListConnectorScanConfigurationsRequest$awsConfigConnectorArns": "<p>The list of Amazon Web Services Config connector ARNs to filter results.</p>"
       }
     },
     "AwsEc2InstanceDetails": {
@@ -419,6 +463,45 @@
       "base": "<p> A summary of information about the Amazon Web Services Lambda function.</p>",
       "refs": {
         "ResourceDetails$awsLambdaFunction": "<p>A summary of the information about an Amazon Web Services Lambda function affected by a finding.</p>"
+      }
+    },
+    "AzureProviderDetailCreate": {
+      "base": "<p>The Azure-specific configuration details for creating a connector, including the Amazon Web Services Config connector association, scan scope, and regions to scan.</p>",
+      "refs": {
+        "ProviderDetailCreate$azure": "<p>The Azure-specific details for creating a connector.</p>"
+      }
+    },
+    "AzureProviderDetailUpdate": {
+      "base": "<p>The Azure-specific configuration details for updating a connector, including the scan scope and regions to scan.</p>",
+      "refs": {
+        "ProviderDetailUpdate$azure": "<p>The Azure-specific details for updating a connector.</p>"
+      }
+    },
+    "AzureRegion": {
+      "base": null,
+      "refs": {
+        "AzureRegionList$member": null
+      }
+    },
+    "AzureRegionList": {
+      "base": null,
+      "refs": {
+        "AzureProviderDetailCreate$azureRegions": "<p>The Azure regions to scan.</p>",
+        "AzureProviderDetailUpdate$azureRegions": "<p>The updated Azure regions to scan.</p>",
+        "Connector$azureRegions": "<p>The Azure regions configured for the connector.</p>"
+      }
+    },
+    "AzureScopeConfiguration": {
+      "base": "<p>The scope of Azure resources that Amazon Inspector scans, defined separately for VM, container image, and serverless scanning. Returned as part of a connector's configuration.</p>",
+      "refs": {
+        "Connector$scopeConfiguration": "<p>The Azure scope configuration for the connector.</p>"
+      }
+    },
+    "AzureScopeConfigurationInput": {
+      "base": "<p>The scope of Azure resources to scan, defined separately for VM, container image, and serverless scanning. Provide this when you create or update an Azure connector.</p>",
+      "refs": {
+        "AzureProviderDetailCreate$scopeConfiguration": "<p>The scope configuration that defines which Azure resources to scan.</p>",
+        "AzureProviderDetailUpdate$scopeConfiguration": "<p>The updated scope configuration that defines which Azure resources to scan.</p>"
       }
     },
     "BadRequestException": {
@@ -521,6 +604,9 @@
         "AutoEnable$lambda": "<p>Represents whether Amazon Web Services Lambda standard scans are automatically enabled for new members of your Amazon Inspector organization. </p>",
         "AutoEnable$lambdaCode": "<p>Represents whether Lambda code scans are automatically enabled for new members of your Amazon Inspector organization. </p>",
         "AutoEnable$codeRepository": "<p>Represents whether code repository scans are automatically enabled for new members of your Amazon Inspector organization.</p>",
+        "AzureProviderDetailCreate$autoInstallVMScanner": "<p>Specifies whether to automatically install the VM scanner on connected Azure resources. Defaults to <code>true</code>.</p>",
+        "AzureProviderDetailUpdate$autoInstallVMScanner": "<p>Specifies whether to automatically install the VM scanner on connected Azure resources.</p>",
+        "Connector$autoInstallVMScanner": "<p>Specifies whether the VM scanner is automatically installed on connected resources.</p>",
         "DescribeOrganizationConfigurationResponse$maxAccountLimitReached": "<p>Represents whether your organization has reached the maximum Amazon Web Services account limit for Amazon Inspector.</p>",
         "Ec2Configuration$activateVMScanner": "<p>Whether to activate Amazon Inspector VM scanner for Amazon EC2 scanning.</p>",
         "ListMembersRequest$onlyAssociated": "<p>Specifies whether to list only currently associated members if <code>True</code> or to list all members within the organization if <code>False</code>.</p>",
@@ -1037,6 +1123,27 @@
         "EnableRequest$clientToken": "<p>The idempotency token for the request.</p>"
       }
     },
+    "CloudProvider": {
+      "base": null,
+      "refs": {
+        "FreeTrialInfo$cloudProvider": "<p>The cloud provider associated with the free trial information.</p>",
+        "Usage$cloudProvider": "<p>The cloud provider associated with the usage information.</p>"
+      }
+    },
+    "CloudSecurityGroupIdList": {
+      "base": null,
+      "refs": {
+        "ServerlessFunction$securityGroupIds": "<p>The security group IDs associated with the serverless function.</p>",
+        "Vm$securityGroupIds": "<p>The security group IDs associated with the VM instance.</p>"
+      }
+    },
+    "CloudSubnetIdList": {
+      "base": null,
+      "refs": {
+        "ServerlessFunction$subnetIds": "<p>The subnet IDs associated with the serverless function.</p>",
+        "Vm$subnetIds": "<p>The subnet IDs of the VM instance.</p>"
+      }
+    },
     "ClusterDetails": {
       "base": "<p>Details about the task or pod in the cluster.</p>",
       "refs": {
@@ -1345,6 +1452,220 @@
       "base": "<p>A conflict occurred. This exception occurs when the same resource is being modified by concurrent requests.</p>",
       "refs": {}
     },
+    "Connector": {
+      "base": "<p>Describes a connector that links an external cloud provider to Amazon Inspector for vulnerability scanning.</p>",
+      "refs": {
+        "ConnectorList$member": null
+      }
+    },
+    "ConnectorArn": {
+      "base": null,
+      "refs": {
+        "Connector$connectorArn": "<p>The Amazon Resource Name (ARN) of the connector.</p>",
+        "ConnectorArnFilter$value": "<p>The connector ARN value to filter by.</p>",
+        "ConnectorArnList$member": null,
+        "CreateConnectorResponse$connectorArn": "<p>The Amazon Resource Name (ARN) of the created connector.</p>",
+        "DeleteConnectorRequest$connectorArn": "<p>The Amazon Resource Name (ARN) of the connector to delete.</p>",
+        "UpdateConnectorRequest$connectorArn": "<p>The Amazon Resource Name (ARN) of the connector to update.</p>",
+        "UpdateConnectorResponse$connectorArn": "<p>The Amazon Resource Name (ARN) of the updated connector.</p>"
+      }
+    },
+    "ConnectorArnComparison": {
+      "base": null,
+      "refs": {
+        "ConnectorArnFilter$comparison": "<p>The comparison operator for the connector ARN filter.</p>"
+      }
+    },
+    "ConnectorArnFilter": {
+      "base": "<p>A filter that matches connectors by connector ARN.</p>",
+      "refs": {
+        "ConnectorArnFilterList$member": null
+      }
+    },
+    "ConnectorArnFilterList": {
+      "base": null,
+      "refs": {
+        "ConnectorFilterCriteria$connectorArns": "<p>Filter by connector ARNs.</p>"
+      }
+    },
+    "ConnectorArnList": {
+      "base": null,
+      "refs": {
+        "ConnectorScanConfigurationItem$connectorArns": "<p>The list of connector ARNs associated with this Amazon Web Services Config connector.</p>"
+      }
+    },
+    "ConnectorCloudProvider": {
+      "base": null,
+      "refs": {
+        "Connector$provider": "<p>The cloud provider for the connector.</p>",
+        "CreateConnectorRequest$provider": "<p>The cloud provider for the connector.</p>",
+        "ProviderFilter$value": "<p>The cloud provider value to filter by.</p>"
+      }
+    },
+    "ConnectorContainerImageScanConfiguration": {
+      "base": "<p>The container image scanning settings for a connector, including how long pushed and pulled images continue to be rescanned for vulnerabilities.</p>",
+      "refs": {
+        "ConnectorScanConfiguration$containerImageScanning": "<p>The container image scanning configuration, including push and pull duration settings.</p>"
+      }
+    },
+    "ConnectorDescription": {
+      "base": null,
+      "refs": {
+        "Connector$description": "<p>A description of the connector.</p>",
+        "CreateConnectorRequest$description": "<p>A description of the connector.</p>",
+        "UpdateConnectorRequest$description": "<p>The updated description of the connector.</p>"
+      }
+    },
+    "ConnectorFilterCriteria": {
+      "base": "<p>Contains the filter criteria for narrowing the results returned by a <code>ListConnectors</code> request. You can filter by connector ARN, Amazon Web Services account ID, Amazon Web Services Config connector ARN, connector type, or cloud provider.</p>",
+      "refs": {
+        "ListConnectorsRequest$filterCriteria": "<p>The filter criteria to apply to the list of connectors.</p>"
+      }
+    },
+    "ConnectorHealth": {
+      "base": "<p>The health and connectivity status of a connector, including the last time the status was checked and any diagnostic message. Returned as part of the <code>Connector</code> structure.</p>",
+      "refs": {
+        "Connector$health": "<p>The health of the connector, which indicates whether Amazon Inspector can reach and scan the connected resources.</p>"
+      }
+    },
+    "ConnectorHealthStatus": {
+      "base": null,
+      "refs": {
+        "ConnectorHealth$connectorStatus": "<p>The health status of the connector.</p>"
+      }
+    },
+    "ConnectorList": {
+      "base": null,
+      "refs": {
+        "ListConnectorsResponse$items": "<p>A list of connectors.</p>"
+      }
+    },
+    "ConnectorName": {
+      "base": null,
+      "refs": {
+        "Connector$name": "<p>The name of the connector.</p>",
+        "CreateConnectorRequest$name": "<p>The name of the connector.</p>"
+      }
+    },
+    "ConnectorNextToken": {
+      "base": null,
+      "refs": {
+        "ListConnectorScanConfigurationsRequest$nextToken": "<p>A token to use for paginating results. Set this value to null for the first request. For subsequent calls, use the <code>nextToken</code> value returned from the previous request.</p>",
+        "ListConnectorScanConfigurationsResponse$nextToken": "<p>A pagination token. If this value is not null, there are additional results available. Use this token in the <code>nextToken</code> parameter of a subsequent request to retrieve the next page of results.</p>",
+        "ListConnectorsRequest$nextToken": "<p>A token to use for paginating results. Set this value to null for the first request. For subsequent calls, use the <code>nextToken</code> value returned from the previous request.</p>",
+        "ListConnectorsResponse$nextToken": "<p>A pagination token. If this value is not null, there are additional results available. Use this token in the <code>nextToken</code> parameter of a subsequent request to retrieve the next page of results.</p>"
+      }
+    },
+    "ConnectorScanConfiguration": {
+      "base": "<p>The scan settings that Amazon Inspector applies to resources discovered through a connector.</p>",
+      "refs": {
+        "ConnectorScanConfigurationItem$scanConfiguration": "<p>The scan configuration settings.</p>",
+        "UpdateConnectorScanConfigurationRequest$scanConfiguration": "<p>The scan configuration settings to apply.</p>"
+      }
+    },
+    "ConnectorScanConfigurationItem": {
+      "base": "<p>Represents a scan configuration and the connectors it applies to. Returned in the results of a <code>ListConnectorScanConfigurations</code> request.</p>",
+      "refs": {
+        "ConnectorScanConfigurationItemList$member": null
+      }
+    },
+    "ConnectorScanConfigurationItemList": {
+      "base": null,
+      "refs": {
+        "ListConnectorScanConfigurationsResponse$scanConfigurations": "<p>A list of scan configuration items.</p>"
+      }
+    },
+    "ConnectorTagKey": {
+      "base": null,
+      "refs": {
+        "ConnectorTagMap$key": null
+      }
+    },
+    "ConnectorTagMap": {
+      "base": null,
+      "refs": {
+        "Connector$tags": "<p>The tags associated with the connector.</p>",
+        "CreateConnectorRequest$tags": "<p>The tags to apply to the connector.</p>"
+      }
+    },
+    "ConnectorTagValue": {
+      "base": null,
+      "refs": {
+        "ConnectorTagMap$value": null
+      }
+    },
+    "ConnectorType": {
+      "base": null,
+      "refs": {
+        "ConnectorTypeFilter$value": "<p>The connector type value to filter by.</p>"
+      }
+    },
+    "ConnectorTypeComparison": {
+      "base": null,
+      "refs": {
+        "ConnectorTypeFilter$comparison": "<p>The comparison operator for the connector type filter.</p>"
+      }
+    },
+    "ConnectorTypeFilter": {
+      "base": "<p>A filter that matches connectors by connector type.</p>",
+      "refs": {
+        "ConnectorTypeFilterList$member": null
+      }
+    },
+    "ConnectorTypeFilterList": {
+      "base": null,
+      "refs": {
+        "ConnectorFilterCriteria$connectorType": "<p>Filter by connector type.</p>"
+      }
+    },
+    "ContainerImageAggregation": {
+      "base": "<p>An aggregation of information about container images.</p>",
+      "refs": {
+        "AggregationRequest$containerImageAggregation": "<p>An object that contains details about an aggregation request based on container images.</p>"
+      }
+    },
+    "ContainerImageAggregationResponse": {
+      "base": "<p>A response that contains the results of a container image aggregation.</p>",
+      "refs": {
+        "AggregationResponse$containerImageAggregation": "<p>An object that contains details about an aggregation response based on container images.</p>"
+      }
+    },
+    "ContainerImageMetadata": {
+      "base": "<p>Contains metadata about a container image associated with a covered resource.</p>",
+      "refs": {
+        "ResourceScanMetadata$containerImage": "<p>The container image metadata associated with a covered resource.</p>"
+      }
+    },
+    "ContainerImagePullDateRescanDuration": {
+      "base": null,
+      "refs": {
+        "ConnectorContainerImageScanConfiguration$pullDuration": "<p>The amount of time after a container image is last pulled from a repository during which Amazon Inspector continues to rescan the image for vulnerabilities. Valid values are <code>DAYS_3</code>, <code>DAYS_7</code>, <code>DAYS_14</code>, <code>DAYS_30</code>, <code>DAYS_60</code>, <code>DAYS_90</code>, and <code>DAYS_180</code>.</p>"
+      }
+    },
+    "ContainerImageRescanDuration": {
+      "base": null,
+      "refs": {
+        "ConnectorContainerImageScanConfiguration$pushDuration": "<p>The amount of time after a container image is pushed to a repository during which Amazon Inspector continues to rescan the image for vulnerabilities. Valid values are <code>LIFETIME</code>, <code>DAYS_3</code>, <code>DAYS_7</code>, <code>DAYS_14</code>, <code>DAYS_30</code>, <code>DAYS_60</code>, <code>DAYS_90</code>, and <code>DAYS_180</code>.</p>"
+      }
+    },
+    "ContainerImageSortBy": {
+      "base": null,
+      "refs": {
+        "ContainerImageAggregation$sortBy": "<p>The value to sort results by. Specify a field name from the aggregation response, such as <code>CRITICAL</code>, <code>HIGH</code>, or <code>ALL</code>.</p>"
+      }
+    },
+    "ContainerRegistryMetadata": {
+      "base": "<p>Contains metadata about a container registry associated with a covered resource.</p>",
+      "refs": {
+        "ResourceScanMetadata$containerRegistry": "<p>The container registry metadata associated with a covered resource.</p>"
+      }
+    },
+    "ContainerRepositoryMetadata": {
+      "base": "<p>Contains metadata about a container repository associated with a covered resource.</p>",
+      "refs": {
+        "ResourceScanMetadata$containerRepository": "<p>The container repository metadata associated with a covered resource.</p>"
+      }
+    },
     "ContinuousIntegrationScanConfiguration": {
       "base": "<p>Configuration settings for continuous integration scans that run automatically when code changes are made.</p>",
       "refs": {
@@ -1414,7 +1735,9 @@
       "base": null,
       "refs": {
         "CoverageFilterCriteria$ec2InstanceTags": "<p>The Amazon EC2 instance tags to filter on.</p>",
-        "CoverageFilterCriteria$lambdaFunctionTags": "<p>Returns coverage statistics for Amazon Web Services Lambda functions filtered by tag.</p>"
+        "CoverageFilterCriteria$lambdaFunctionTags": "<p>Returns coverage statistics for Amazon Web Services Lambda functions filtered by tag.</p>",
+        "CoverageFilterCriteria$cloudVmInstanceTags": "<p>The cloud VM instance tags to filter coverage results by.</p>",
+        "CoverageFilterCriteria$cloudServerlessFunctionTags": "<p>The cloud serverless function tags to filter coverage results by.</p>"
       }
     },
     "CoverageNumberFilter": {
@@ -1464,7 +1787,16 @@
         "CoverageFilterCriteria$codeRepositoryProjectName": "<p>Filter criteria for code repositories based on project name.</p>",
         "CoverageFilterCriteria$codeRepositoryProviderType": "<p>Filter criteria for code repositories based on provider type (such as GitHub, GitLab, etc.).</p>",
         "CoverageFilterCriteria$codeRepositoryProviderTypeVisibility": "<p>Filter criteria for code repositories based on visibility setting (public or private).</p>",
-        "CoverageFilterCriteria$lastScannedCommitId": "<p>Filter criteria for code repositories based on the ID of the last scanned commit.</p>"
+        "CoverageFilterCriteria$lastScannedCommitId": "<p>Filter criteria for code repositories based on the ID of the last scanned commit.</p>",
+        "CoverageFilterCriteria$cloudProvider": "<p>The cloud provider to filter coverage results by.</p>",
+        "CoverageFilterCriteria$cloudProviderAccountId": "<p>The cloud provider account ID to filter coverage results by.</p>",
+        "CoverageFilterCriteria$cloudProviderRegion": "<p>The cloud provider region to filter coverage results by.</p>",
+        "CoverageFilterCriteria$cloudContainerImageTags": "<p>The cloud container image tags to filter coverage results by.</p>",
+        "CoverageFilterCriteria$cloudContainerRepositoryName": "<p>The cloud container repository name to filter coverage results by.</p>",
+        "CoverageFilterCriteria$cloudContainerRegistryName": "<p>The cloud container registry name to filter coverage results by.</p>",
+        "CoverageFilterCriteria$cloudServerlessFunctionName": "<p>The cloud serverless function name to filter coverage results by.</p>",
+        "CoverageFilterCriteria$cloudServerlessFunctionRuntime": "<p>The cloud serverless function runtime to filter coverage results by.</p>",
+        "CoverageFilterCriteria$cloudProviderOrgId": "<p>The cloud provider organization ID to filter coverage results by.</p>"
       }
     },
     "CoverageStringInput": {
@@ -1512,6 +1844,14 @@
       "refs": {}
     },
     "CreateCodeSecurityScanConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateConnectorRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateConnectorResponse": {
       "base": null,
       "refs": {}
     },
@@ -1656,12 +1996,16 @@
       "base": null,
       "refs": {
         "AwsEcrContainerAggregation$lastInUseAt": "<p>The last time an Amazon ECR image was used in an Amazon ECS task or Amazon EKS pod.</p>",
+        "ContainerImageAggregation$lastInUseAt": "<p>The last in-use timestamps to aggregate findings for.</p>",
         "FilterCriteria$firstObservedAt": "<p>Details on the date and time a finding was first seen used to filter findings.</p>",
         "FilterCriteria$lastObservedAt": "<p>Details on the date and time a finding was last seen used to filter findings.</p>",
         "FilterCriteria$updatedAt": "<p>Details on the date and time a finding was last updated at used to filter findings.</p>",
         "FilterCriteria$ecrImagePushedAt": "<p>Details on the Amazon ECR image push date and time used to filter findings.</p>",
         "FilterCriteria$ecrImageLastInUseAt": "<p>Filter criteria indicating when an Amazon ECR image was last used in an Amazon ECS cluster task or Amazon EKS cluster pod.</p>",
-        "FilterCriteria$lambdaFunctionLastModifiedAt": "<p>Filters the list of Amazon Web Services Lambda functions by the date and time that a user last updated the configuration, in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\">ISO 8601 format</a> </p>"
+        "FilterCriteria$lambdaFunctionLastModifiedAt": "<p>Filters the list of Amazon Web Services Lambda functions by the date and time that a user last updated the configuration, in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\">ISO 8601 format</a> </p>",
+        "FilterCriteria$cloudImagePushedAt": "<p>Filter criteria for when a container image was pushed.</p>",
+        "FilterCriteria$cloudImageLastInUseAt": "<p>Filter criteria for the last time a container image was in use.</p>",
+        "FilterCriteria$cloudServerlessFunctionLastModifiedAt": "<p>Filter criteria for when a serverless function was last modified.</p>"
       }
     },
     "DateTimeTimestamp": {
@@ -1672,6 +2016,9 @@
         "AwsEcrContainerImageDetails$pushedAt": "<p>The date and time the Amazon ECR container image was pushed.</p>",
         "AwsEcrContainerImageDetails$lastInUseAt": "<p>The last time an Amazon ECR image was used in an Amazon ECS task or Amazon EKS pod.</p>",
         "CodeRepositoryOnDemandScan$lastScanAt": "<p>The timestamp when the last on-demand scan was performed.</p>",
+        "ContainerImageAggregationResponse$lastInUseAt": "<p>The last time the container image was in use.</p>",
+        "ContainerImageMetadata$imagePulledAt": "<p>The date and time the container image was pulled.</p>",
+        "ContainerImageMetadata$lastInUseAt": "<p>The last time the container image was in use.</p>",
         "CoverageDateFilter$startInclusive": "<p>A timestamp representing the start of the time period to filter results by.</p>",
         "CoverageDateFilter$endInclusive": "<p>A timestamp representing the end of the time period to filter results by.</p>",
         "CoveredResource$lastScannedAt": "<p>The date and time the resource was last checked for vulnerabilities.</p>",
@@ -1684,11 +2031,16 @@
         "Finding$firstObservedAt": "<p>The date and time that the finding was first observed.</p>",
         "Finding$lastObservedAt": "<p> The date and time the finding was last observed. This timestamp for this field remains unchanged until a finding is updated. </p>",
         "Finding$updatedAt": "<p>The date and time the finding was last updated at.</p>",
+        "Image$pushedAt": "<p>The date and time the container image was pushed.</p>",
+        "Image$lastInUseAt": "<p>The last time the container image was in use.</p>",
         "LambdaFunctionAggregationResponse$lastModifiedAt": "<p>The date that the Amazon Web Services Lambda function included in the aggregation results was last changed.</p>",
         "Member$updatedAt": "<p>A timestamp showing when the status of this member was last updated.</p>",
         "PackageVulnerabilityDetails$vendorCreatedAt": "<p>The date and time that this vulnerability was first added to the vendor's database.</p>",
         "PackageVulnerabilityDetails$vendorUpdatedAt": "<p>The date and time the vendor last updated this vulnerability in their database.</p>",
-        "VMScannerState$activatedAt": "<p>The date and time the VM scanner was activated.</p>"
+        "ServerlessFunction$lastModifiedAt": "<p>The date and time the serverless function was last modified.</p>",
+        "ServerlessFunctionAggregationResponse$lastModifiedAt": "<p>The date and time the serverless function was last modified.</p>",
+        "VMScannerState$activatedAt": "<p>The date and time the VM scanner was activated.</p>",
+        "Vm$launchedAt": "<p>The date and time the VM instance was launched.</p>"
       }
     },
     "Day": {
@@ -1749,6 +2101,14 @@
       "refs": {}
     },
     "DeleteCodeSecurityScanConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteConnectorRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteConnectorResponse": {
       "base": null,
       "refs": {}
     },
@@ -1995,6 +2355,12 @@
     "EnableResponse": {
       "base": null,
       "refs": {}
+    },
+    "EnablementStatus": {
+      "base": null,
+      "refs": {
+        "Connector$enablementStatus": "<p>The enablement status of the connector, which indicates whether the connector is active and scanning resources.</p>"
+      }
     },
     "Epss": {
       "base": "<p>Details about the Exploit Prediction Scoring System (EPSS) score.</p>",
@@ -2552,10 +2918,22 @@
         "ListCoverageStatisticsRequest$groupBy": "<p>The value to group the results by.</p>"
       }
     },
+    "Image": {
+      "base": "<p>Contains details about a container image involved in a finding.</p>",
+      "refs": {
+        "ResourceDetails$image": "<p>An object that contains details about a container image involved in the finding.</p>"
+      }
+    },
     "ImageHash": {
       "base": null,
       "refs": {
         "AwsEcrContainerImageDetails$imageHash": "<p>The image hash of the Amazon ECR container image.</p>"
+      }
+    },
+    "ImageInUseCountLong": {
+      "base": null,
+      "refs": {
+        "Image$inUseCount": "<p>The number of times the container image is in use.</p>"
       }
     },
     "ImageLayerAggregation": {
@@ -2579,7 +2957,15 @@
     "ImageTagList": {
       "base": null,
       "refs": {
-        "AwsEcrContainerImageDetails$imageTags": "<p>The image tags attached to the Amazon ECR container image.</p>"
+        "AwsEcrContainerImageDetails$imageTags": "<p>The image tags attached to the Amazon ECR container image.</p>",
+        "Image$imageTags": "<p>The image tags attached to the container image.</p>"
+      }
+    },
+    "InheritanceMode": {
+      "base": "<p>The inheritance behavior for a scan-type configuration. Used with <code>UpdateConfigurationInheritance</code> to reset a member account's configuration to inherit from the delegated administrator. The only valid value is <code>INHERIT_FROM_ADMIN</code>, which resets the member account's configuration so that it inherits scan settings from the delegated administrator.</p>",
+      "refs": {
+        "UpdateConfigurationInheritance$ec2Configuration": "<p>The inheritance mode for Amazon EC2 scan configuration. Set to <code>INHERIT_FROM_ADMIN</code> to reset the member account's Amazon EC2 scan configuration to inherit from the delegated administrator. If omitted, the member account's existing Amazon EC2 scan configuration is not changed.</p>",
+        "UpdateConfigurationInheritance$ecrConfiguration": "<p>The inheritance mode for Amazon ECR scan configuration. Set to <code>INHERIT_FROM_ADMIN</code> to reset the member account's Amazon ECR scan configuration to inherit from the delegated administrator. If omitted, the member account's existing Amazon ECR scan configuration is not changed.</p>"
       }
     },
     "InspectorScoreDetails": {
@@ -2607,6 +2993,7 @@
         "CodeSnippetResult$startLine": "<p>The line number of the first line of a code snippet.</p>",
         "CodeSnippetResult$endLine": "<p>The line number of the last line of a code snippet.</p>",
         "InternalServerException$retryAfterSeconds": "<p>The number of seconds to wait before retrying the request.</p>",
+        "ListConnectorsRequest$maxResults": "<p>The maximum number of results to return in a single call. To retrieve the remaining results, make another request with the <code>nextToken</code> value returned from this request.</p>",
         "StatusCounts$failed": "<p>The number of checks that failed.</p>",
         "StatusCounts$skipped": "<p>The number of checks that were skipped.</p>",
         "StatusCounts$passed": "<p>The number of checks that passed.</p>",
@@ -2657,7 +3044,8 @@
     "IpV4AddressList": {
       "base": null,
       "refs": {
-        "AwsEc2InstanceDetails$ipV4Addresses": "<p>The IPv4 addresses of the Amazon EC2 instance.</p>"
+        "AwsEc2InstanceDetails$ipV4Addresses": "<p>The IPv4 addresses of the Amazon EC2 instance.</p>",
+        "Vm$ipV4Addresses": "<p>The IPv4 addresses of the VM instance.</p>"
       }
     },
     "IpV6Address": {
@@ -2669,7 +3057,8 @@
     "IpV6AddressList": {
       "base": null,
       "refs": {
-        "AwsEc2InstanceDetails$ipV6Addresses": "<p>The IPv6 addresses of the Amazon EC2 instance.</p>"
+        "AwsEc2InstanceDetails$ipV6Addresses": "<p>The IPv6 addresses of the Amazon EC2 instance.</p>",
+        "Vm$ipV6Addresses": "<p>The IPv6 addresses of the VM instance.</p>"
       }
     },
     "KmsKeyArn": {
@@ -2878,6 +3267,28 @@
       "base": null,
       "refs": {}
     },
+    "ListConnectorScanConfigurationsMaxResults": {
+      "base": null,
+      "refs": {
+        "ListConnectorScanConfigurationsRequest$maxResults": "<p>The maximum number of results to return in a single call. Valid range is 1 to 50. To retrieve the remaining results, make another request with the <code>nextToken</code> value returned from this request.</p>"
+      }
+    },
+    "ListConnectorScanConfigurationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListConnectorScanConfigurationsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListConnectorsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListConnectorsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListCoverageMaxResults": {
       "base": null,
       "refs": {
@@ -3011,6 +3422,10 @@
         "ClusterDetails$stoppedUnitCount": "<p>The number of tasks or pods where an image was stopped on the cluster in the last 24 hours.</p>",
         "CodeRepositoryAggregationResponse$exploitAvailableActiveFindingsCount": "<p>The number of active findings that have an exploit available for the code repository.</p>",
         "CodeRepositoryAggregationResponse$fixAvailableActiveFindingsCount": "<p>The number of active findings that have a fix available for the code repository.</p>",
+        "ContainerImageAggregationResponse$inUseCount": "<p>The number of times the container image is in use.</p>",
+        "ContainerImageAggregationResponse$exploitAvailableActiveFindingsCount": "<p>The number of active findings with an exploit available for the container image.</p>",
+        "ContainerImageAggregationResponse$fixAvailableActiveFindingsCount": "<p>The number of active findings with a fix available for the container image.</p>",
+        "ContainerImageMetadata$inUseCount": "<p>The number of times the container image is in use.</p>",
         "CoverageNumberFilter$upperInclusive": "<p>The upper inclusive for the coverage number.&gt;</p>",
         "CoverageNumberFilter$lowerInclusive": "<p>The lower inclusive for the coverage number.</p>",
         "Ec2InstanceAggregationResponse$networkFindings": "<p>The number of network findings for the Amazon EC2 instance.</p>",
@@ -3019,10 +3434,15 @@
         "FindingTypeAggregationResponse$fixAvailableCount": "<p> Details about the number of fixes. </p>",
         "ListCoverageStatisticsResponse$totalCounts": "<p>The total number for all groups.</p>",
         "RepositoryAggregationResponse$affectedImages": "<p>The number of container images impacted by the findings.</p>",
+        "ServerlessFunctionAggregationResponse$exploitAvailableActiveFindingsCount": "<p>The number of active findings with an exploit available for the serverless function.</p>",
+        "ServerlessFunctionAggregationResponse$fixAvailableActiveFindingsCount": "<p>The number of active findings with a fix available for the serverless function.</p>",
         "SeverityCounts$all": "<p>The total count of findings from all severities.</p>",
         "SeverityCounts$medium": "<p>The total count of medium severity findings.</p>",
         "SeverityCounts$high": "<p>The total count of high severity findings.</p>",
-        "SeverityCounts$critical": "<p>The total count of critical severity findings.</p>"
+        "SeverityCounts$critical": "<p>The total count of critical severity findings.</p>",
+        "VmInstanceAggregationResponse$networkFindings": "<p>The number of network findings for the VM instance. This field applies only to Amazon Web Services resources.</p>",
+        "VmInstanceAggregationResponse$exploitAvailableActiveFindingsCount": "<p>The number of active findings with an exploit available for the VM instance.</p>",
+        "VmInstanceAggregationResponse$fixAvailableActiveFindingsCount": "<p>The number of active findings with a fix available for the VM instance.</p>"
       }
     },
     "MapComparison": {
@@ -3042,7 +3462,9 @@
       "refs": {
         "Ec2InstanceAggregation$instanceTags": "<p>The Amazon EC2 instance tags to aggregate findings for.</p>",
         "FilterCriteria$resourceTags": "<p>Details on the resource tags used to filter findings.</p>",
-        "LambdaFunctionAggregation$functionTags": "<p>The tags to include in the aggregation results.</p>"
+        "LambdaFunctionAggregation$functionTags": "<p>The tags to include in the aggregation results.</p>",
+        "ServerlessFunctionAggregation$functionTags": "<p>The function tags to aggregate findings for.</p>",
+        "VmInstanceAggregation$instanceTags": "<p>The instance tags to aggregate findings for.</p>"
       }
     },
     "MapKey": {
@@ -3189,12 +3611,15 @@
         "AwsEcrContainerImageDetails$architecture": "<p>The architecture of the Amazon ECR container image.</p>",
         "AwsEcrContainerImageDetails$registry": "<p>The registry for the Amazon ECR container image.</p>",
         "AwsLambdaFunctionDetails$codeSha256": "<p>The SHA256 hash of the Amazon Web Services Lambda function's deployment package.</p>",
+        "CloudSecurityGroupIdList$member": null,
+        "CloudSubnetIdList$member": null,
         "CodeFilePath$fileName": "<p>The name of the file the code vulnerability was found in.</p>",
         "CodeFilePath$filePath": "<p>The file path to the code that a vulnerability was found in.</p>",
         "CodeSnippetError$errorMessage": "<p>The error message received when Amazon Inspector failed to retrieve a code snippet.</p>",
         "CodeVulnerabilityDetails$ruleId": "<p>The identifier for a rule that was used to detect the code vulnerability.</p>",
         "CodeVulnerabilityDetails$detectorId": "<p>The ID for the Amazon CodeGuru detector associated with the finding. For more information on detectors see <a href=\"https://docs.aws.amazon.com/codeguru/detector-library\">Amazon CodeGuru Detector Library</a>.</p>",
         "CodeVulnerabilityDetails$detectorName": "<p>The name of the detector used to identify the code vulnerability. For more information on detectors see <a href=\"https://docs.aws.amazon.com/codeguru/detector-library\">CodeGuru Detector Library</a>.</p>",
+        "ContainerImageAggregationResponse$resourceId": "<p>The resource ID for the container image.</p>",
         "CoverageMapFilter$key": "<p>The tag key associated with the coverage map filter.</p>",
         "CoverageMapFilter$value": "<p>The tag value associated with the coverage map filter.</p>",
         "CvssScore$scoringVector": "<p>The vector string of the CVSS score.</p>",
@@ -3215,6 +3640,10 @@
         "FindingDetailsError$errorMessage": "<p>The error message.</p>",
         "GetEc2DeepInspectionConfigurationResponse$errorMessage": "<p>An error message explaining why Amazon Inspector deep inspection configurations could not be retrieved for your account.</p>",
         "GetSbomExportResponse$errorMessage": "<p>An error message.</p>",
+        "Image$repositoryName": "<p>The name of the repository the container image resides in.</p>",
+        "Image$registry": "<p>The registry for the container image.</p>",
+        "Image$imageDigest": "<p>The image digest of the container image.</p>",
+        "Image$architecture": "<p>The architecture of the container image.</p>",
         "ImageLayerAggregationResponse$repository": "<p>The repository the layer resides in.</p>",
         "ImageLayerAggregationResponse$resourceId": "<p>The resource ID of the container image layer.</p>",
         "ImageLayerAggregationResponse$layerHash": "<p>The layer hash.</p>",
@@ -3238,12 +3667,26 @@
         "Resource$region": "<p>The Amazon Web Services Region the impacted resource is located in.</p>",
         "ResourceMapFilter$key": "<p>The filter's key.</p>",
         "ResourceMapFilter$value": "<p>The filter's value.</p>",
+        "ServerlessFunction$serverlessFunctionName": "<p>The name of the serverless function.</p>",
+        "ServerlessFunction$runtime": "<p>The runtime of the serverless function.</p>",
+        "ServerlessFunction$version": "<p>The version of the serverless function.</p>",
+        "ServerlessFunction$codeDigest": "<p>The code digest of the serverless function.</p>",
+        "ServerlessFunction$networkId": "<p>The network ID associated with the serverless function.</p>",
+        "ServerlessFunction$executionRole": "<p>The execution role of the serverless function.</p>",
+        "ServerlessFunctionAggregationResponse$resourceId": "<p>The resource ID for the serverless function.</p>",
         "State$errorMessage": "<p>The error message received when the account failed to enable Amazon Inspector.</p>",
         "StringList$member": null,
         "TagFilter$key": "<p>The tag filter key.</p>",
         "TagFilter$value": "<p>The tag filter value.</p>",
         "TitleAggregationResponse$title": "<p>The title that the findings were aggregated on.</p>",
         "UpdateEc2DeepInspectionConfigurationResponse$errorMessage": "<p>An error message explaining why new Amazon Inspector deep inspection custom paths could not be added.</p>",
+        "Vm$type": "<p>The type of the VM instance.</p>",
+        "Vm$vmName": "<p>The name of the VM instance.</p>",
+        "Vm$vmImageReference": "<p>The image reference of the VM instance.</p>",
+        "Vm$networkId": "<p>The network ID associated with the VM instance.</p>",
+        "Vm$executionRole": "<p>The execution role of the VM instance.</p>",
+        "Vm$keyName": "<p>The key name associated with the VM instance.</p>",
+        "VmInstanceAggregationResponse$resourceId": "<p>The resource ID for the VM instance.</p>",
         "Vulnerability$id": "<p>The ID for the specific vulnerability.</p>"
       }
     },
@@ -3264,9 +3707,11 @@
       "base": null,
       "refs": {
         "AwsEcrContainerAggregation$inUseCount": "<p>The number of Amazon ECS tasks or Amazon EKS pods where the Amazon ECR container image is in use.</p>",
+        "ContainerImageAggregation$inUseCount": "<p>The in-use counts to aggregate findings for.</p>",
         "FilterCriteria$inspectorScore": "<p>The Amazon Inspector score to filter on.</p>",
         "FilterCriteria$ecrImageInUseCount": "<p>Filter criteria indicating when details for an Amazon ECR image include when an Amazon ECR image is in use.</p>",
-        "FilterCriteria$epssScore": "<p>The EPSS score used to filter findings.</p>"
+        "FilterCriteria$epssScore": "<p>The EPSS score used to filter findings.</p>",
+        "FilterCriteria$cloudImageInUseCount": "<p>Filter criteria for the in-use count of a container image.</p>"
       }
     },
     "OneAccountIdFilterList": {
@@ -3357,7 +3802,8 @@
     "PackageType": {
       "base": null,
       "refs": {
-        "AwsLambdaFunctionDetails$packageType": "<p>The type of deployment package. Set to <code>Image</code> for container image and set <code>Zip</code> for .zip file archive.</p>"
+        "AwsLambdaFunctionDetails$packageType": "<p>The type of deployment package. Set to <code>Image</code> for container image and set <code>Zip</code> for .zip file archive.</p>",
+        "ServerlessFunction$packageType": "<p>The package type of the serverless function.</p>"
       }
     },
     "PackageVersion": {
@@ -3419,7 +3865,9 @@
       "base": null,
       "refs": {
         "AwsEc2InstanceDetails$platform": "<p>The platform of the Amazon EC2 instance.</p>",
-        "AwsEcrContainerImageDetails$platform": "<p>The platform of the Amazon ECR container image.</p>"
+        "AwsEcrContainerImageDetails$platform": "<p>The platform of the Amazon ECR container image.</p>",
+        "Image$platform": "<p>The platform of the container image.</p>",
+        "Vm$platform": "<p>The platform of the VM instance.</p>"
       }
     },
     "PlatformFilterList": {
@@ -3508,6 +3956,94 @@
       "base": null,
       "refs": {
         "ScopeSettings$projectSelectionScope": "<p>The scope of projects to be selected for scanning within the integrated repositories. Setting the value to <code>ALL</code> applies the scope settings to all existing and future projects imported into Amazon Inspector.</p>"
+      }
+    },
+    "Provider": {
+      "base": null,
+      "refs": {
+        "AmiAggregationResponse$cloudProvider": "<p>The cloud service provider associated with this Amazon Machine Image (AMI) aggregation. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Findings from Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Findings from Microsoft Azure resources.</p> </li> </ul>",
+        "ContainerImageAggregationResponse$cloudProvider": "<p>The cloud service provider associated with this container image aggregation. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Findings from Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Findings from Microsoft Azure resources.</p> </li> </ul>",
+        "CoveredResource$provider": "<p>The cloud provider of the covered resource.</p>",
+        "RepositoryAggregationResponse$cloudProvider": "<p>The cloud service provider associated with this repository aggregation. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Findings from Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Findings from Microsoft Azure resources.</p> </li> </ul>",
+        "Resource$provider": "<p>The cloud provider of the resource.</p>",
+        "ServerlessFunctionAggregationResponse$cloudProvider": "<p>The cloud service provider associated with this serverless function aggregation. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Findings from Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Findings from Microsoft Azure resources.</p> </li> </ul>",
+        "VmInstanceAggregationResponse$cloudProvider": "<p>The cloud service provider associated with this VM instance aggregation. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Findings from Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Findings from Microsoft Azure resources.</p> </li> </ul>"
+      }
+    },
+    "ProviderAccountId": {
+      "base": null,
+      "refs": {
+        "AmiAggregationResponse$cloudAccountId": "<p>The cloud account ID for the AMI aggregation.</p>",
+        "ContainerImageAggregationResponse$cloudAccountId": "<p>The cloud account ID for the container image aggregation.</p>",
+        "CoveredResource$providerAccountId": "<p>The cloud provider account ID of the covered resource.</p>",
+        "RepositoryAggregationResponse$cloudAccountId": "<p>The cloud account ID for the repository aggregation.</p>",
+        "Resource$providerAccountId": "<p>The cloud provider account ID of the resource.</p>",
+        "ServerlessFunctionAggregationResponse$cloudAccountId": "<p>The cloud account ID for the serverless function aggregation.</p>",
+        "VmInstanceAggregationResponse$cloudAccountId": "<p>The cloud account ID for the VM instance aggregation.</p>"
+      }
+    },
+    "ProviderComparison": {
+      "base": null,
+      "refs": {
+        "ProviderFilter$comparison": "<p>The comparison operator for the provider filter.</p>"
+      }
+    },
+    "ProviderDetailCreate": {
+      "base": "<p>The provider-specific configuration details for creating a connector.</p>",
+      "refs": {
+        "CreateConnectorRequest$providerDetail": "<p>The provider-specific configuration details for the connector.</p>"
+      }
+    },
+    "ProviderDetailUpdate": {
+      "base": "<p>The provider-specific configuration details for updating a connector.</p>",
+      "refs": {
+        "UpdateConnectorRequest$providerDetail": "<p>The updated provider-specific configuration details for the connector.</p>"
+      }
+    },
+    "ProviderFilter": {
+      "base": "<p>A filter that matches connectors by cloud provider.</p>",
+      "refs": {
+        "ProviderFilterList$member": null
+      }
+    },
+    "ProviderFilterList": {
+      "base": null,
+      "refs": {
+        "ConnectorFilterCriteria$provider": "<p>Filter by cloud provider.</p>"
+      }
+    },
+    "ProviderOrgId": {
+      "base": null,
+      "refs": {
+        "AmiAggregationResponse$cloudOrgId": "<p>The cloud organization ID for the AMI aggregation.</p>",
+        "ContainerImageAggregationResponse$cloudOrgId": "<p>The cloud organization ID for the container image aggregation.</p>",
+        "CoveredResource$providerOrgId": "<p>The cloud provider organization ID of the covered resource.</p>",
+        "RepositoryAggregationResponse$cloudOrgId": "<p>The cloud organization ID for the repository aggregation.</p>",
+        "Resource$providerOrgId": "<p>The cloud provider organization ID of the resource.</p>",
+        "ServerlessFunctionAggregationResponse$cloudOrgId": "<p>The cloud organization ID for the serverless function aggregation.</p>",
+        "VmInstanceAggregationResponse$cloudOrgId": "<p>The cloud organization ID for the VM instance aggregation.</p>"
+      }
+    },
+    "ProviderPartition": {
+      "base": null,
+      "refs": {
+        "AmiAggregationResponse$cloudPartition": "<p>The cloud infrastructure partition associated with this AMI aggregation. Valid values:</p> <ul> <li> <p> <code>aws</code> – Amazon Web Services commercial Regions.</p> </li> <li> <p> <code>aws-cn</code> – Amazon Web Services China Regions.</p> </li> <li> <p> <code>aws-us-gov</code> – Amazon Web Services GovCloud (US) Regions.</p> </li> <li> <p> <code>AzureCloud</code> – Azure commercial Regions.</p> </li> </ul>",
+        "ContainerImageAggregationResponse$cloudPartition": "<p>The cloud infrastructure partition associated with this container image aggregation. Valid values:</p> <ul> <li> <p> <code>aws</code> – Amazon Web Services commercial Regions.</p> </li> <li> <p> <code>aws-cn</code> – Amazon Web Services China Regions.</p> </li> <li> <p> <code>aws-us-gov</code> – Amazon Web Services GovCloud (US) Regions.</p> </li> <li> <p> <code>AzureCloud</code> – Azure commercial Regions.</p> </li> </ul>",
+        "CoveredResource$providerPartition": "<p>The cloud provider partition of the covered resource.</p>",
+        "RepositoryAggregationResponse$cloudPartition": "<p>The cloud infrastructure partition associated with this repository aggregation. Valid values:</p> <ul> <li> <p> <code>aws</code> – Amazon Web Services commercial Regions.</p> </li> <li> <p> <code>aws-cn</code> – Amazon Web Services China Regions.</p> </li> <li> <p> <code>aws-us-gov</code> – Amazon Web Services GovCloud (US) Regions.</p> </li> <li> <p> <code>AzureCloud</code> – Azure commercial Regions.</p> </li> </ul>",
+        "ServerlessFunctionAggregationResponse$cloudPartition": "<p>The cloud infrastructure partition associated with this serverless function aggregation. Valid values:</p> <ul> <li> <p> <code>aws</code> – Amazon Web Services commercial Regions.</p> </li> <li> <p> <code>aws-cn</code> – Amazon Web Services China Regions.</p> </li> <li> <p> <code>aws-us-gov</code> – Amazon Web Services GovCloud (US) Regions.</p> </li> <li> <p> <code>AzureCloud</code> – Azure commercial Regions.</p> </li> </ul>",
+        "VmInstanceAggregationResponse$cloudPartition": "<p>The cloud infrastructure partition associated with this VM instance aggregation. Valid values:</p> <ul> <li> <p> <code>aws</code> – Amazon Web Services commercial Regions.</p> </li> <li> <p> <code>aws-cn</code> – Amazon Web Services China Regions.</p> </li> <li> <p> <code>aws-us-gov</code> – Amazon Web Services GovCloud (US) Regions.</p> </li> <li> <p> <code>AzureCloud</code> – Azure commercial Regions.</p> </li> </ul>"
+      }
+    },
+    "ProviderRegion": {
+      "base": null,
+      "refs": {
+        "AmiAggregationResponse$cloudRegion": "<p>The cloud Region associated with this AMI aggregation. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> </ul>",
+        "ContainerImageAggregationResponse$cloudRegion": "<p>The cloud Region associated with this container image aggregation. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> </ul>",
+        "CoveredResource$providerRegion": "<p>The cloud provider region of the covered resource.</p>",
+        "RepositoryAggregationResponse$cloudRegion": "<p>The cloud Region associated with this repository aggregation. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> </ul>",
+        "ServerlessFunctionAggregationResponse$cloudRegion": "<p>The cloud Region associated with this serverless function aggregation. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> </ul>",
+        "VmInstanceAggregationResponse$cloudRegion": "<p>The cloud Region associated with this VM instance aggregation. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> </ul>"
       }
     },
     "Reason": {
@@ -3858,12 +4394,54 @@
         "UpdateCisScanConfigurationRequest$schedule": "<p>The schedule for the CIS scan configuration.</p>"
       }
     },
+    "ScopeConfiguration": {
+      "base": "<p>The scope of resources that Amazon Inspector scans for a single scanning type, including the scope level, the targeted resources, and the current state.</p>",
+      "refs": {
+        "AzureScopeConfiguration$vmScanning": "<p>The scope configuration for VM scanning.</p>",
+        "AzureScopeConfiguration$containerImageScanning": "<p>The scope configuration for container image scanning.</p>",
+        "AzureScopeConfiguration$serverlessScanning": "<p>The scope configuration for serverless scanning.</p>"
+      }
+    },
+    "ScopeConfigurationInput": {
+      "base": "<p>The scope of resources to scan for a single scanning type. Provide this as part of an <code>AzureScopeConfigurationInput</code> when you create or update a connector.</p>",
+      "refs": {
+        "AzureScopeConfigurationInput$vmScanning": "<p>The scope configuration input for VM scanning.</p>",
+        "AzureScopeConfigurationInput$containerImageScanning": "<p>The scope configuration input for container image scanning.</p>",
+        "AzureScopeConfigurationInput$serverlessScanning": "<p>The scope configuration input for serverless scanning.</p>"
+      }
+    },
     "ScopeSettings": {
       "base": "<p>Defines the scope of repositories to be included in code security scans.</p>",
       "refs": {
         "CodeSecurityScanConfigurationSummary$scopeSettings": "<p>The scope settings that define which repositories will be scanned. If the <code>ScopeSetting</code> parameter is <code>ALL</code> the scan configuration applies to all existing and future projects imported into Amazon Inspector.</p>",
         "CreateCodeSecurityScanConfigurationRequest$scopeSettings": "<p>The scope settings that define which repositories will be scanned. Include this parameter to create a default scan configuration. Otherwise Amazon Inspector creates a general scan configuration. </p> <p>A default scan configuration automatically applies to all existing and future projects imported into Amazon Inspector. Use the <code>BatchAssociateCodeSecurityScanConfiguration</code> operation to associate a general scan configuration with projects.</p>",
         "GetCodeSecurityScanConfigurationResponse$scopeSettings": "<p>The scope settings that define which repositories will be scanned. If the <code>ScopeSetting</code> parameter is <code>ALL</code> the scan configuration applies to all existing and future projects imported into Amazon Inspector.</p>"
+      }
+    },
+    "ScopeState": {
+      "base": null,
+      "refs": {
+        "ScopeConfiguration$state": "<p>The current state of the scope configuration.</p>"
+      }
+    },
+    "ScopeType": {
+      "base": null,
+      "refs": {
+        "ScopeConfiguration$scopeType": "<p>The type of scope. Valid values are <code>TENANT</code>, which scans all resources in the Azure tenant, and <code>SUBSCRIPTION</code>, which scans only the resources in the specified Azure subscriptions.</p>",
+        "ScopeConfigurationInput$scopeType": "<p>The type of scope. Valid values are <code>TENANT</code>, which scans all resources in the Azure tenant, and <code>SUBSCRIPTION</code>, which scans only the resources in the specified Azure subscriptions.</p>"
+      }
+    },
+    "ScopeValue": {
+      "base": null,
+      "refs": {
+        "ScopeValueList$member": null
+      }
+    },
+    "ScopeValueList": {
+      "base": null,
+      "refs": {
+        "ScopeConfiguration$scopeValues": "<p>The list of scope values. For subscription-level scope, these are Azure subscription IDs.</p>",
+        "ScopeConfigurationInput$scopeValues": "<p>The list of scope values. For subscription-level scope, these are Azure subscription IDs.</p>"
       }
     },
     "SearchVulnerabilitiesFilterCriteria": {
@@ -3908,6 +4486,48 @@
       "base": null,
       "refs": {}
     },
+    "ServerlessFunction": {
+      "base": "<p>Contains details about a serverless function involved in a finding.</p>",
+      "refs": {
+        "ResourceDetails$serverlessFunction": "<p>An object that contains details about a serverless function involved in the finding.</p>"
+      }
+    },
+    "ServerlessFunctionAggregation": {
+      "base": "<p>An aggregation of information about serverless functions.</p>",
+      "refs": {
+        "AggregationRequest$serverlessFunctionAggregation": "<p>An object that contains details about an aggregation request based on serverless functions.</p>"
+      }
+    },
+    "ServerlessFunctionAggregationResponse": {
+      "base": "<p>A response that contains the results of a serverless function aggregation.</p>",
+      "refs": {
+        "AggregationResponse$serverlessFunctionAggregation": "<p>An object that contains details about an aggregation response based on serverless functions.</p>"
+      }
+    },
+    "ServerlessFunctionLayerList": {
+      "base": null,
+      "refs": {
+        "ServerlessFunction$layers": "<p>The layers of the serverless function.</p>"
+      }
+    },
+    "ServerlessFunctionLayerUrn": {
+      "base": null,
+      "refs": {
+        "ServerlessFunctionLayerList$member": null
+      }
+    },
+    "ServerlessFunctionMetadata": {
+      "base": "<p>Contains metadata about a serverless function associated with a covered resource.</p>",
+      "refs": {
+        "ResourceScanMetadata$serverlessFunction": "<p>The serverless function metadata associated with a covered resource.</p>"
+      }
+    },
+    "ServerlessFunctionSortBy": {
+      "base": null,
+      "refs": {
+        "ServerlessFunctionAggregation$sortBy": "<p>The value to sort results by. Specify a field name from the aggregation response, such as <code>CRITICAL</code>, <code>HIGH</code>, or <code>ALL</code>.</p>"
+      }
+    },
     "Service": {
       "base": null,
       "refs": {
@@ -3932,6 +4552,7 @@
         "AmiAggregationResponse$severityCounts": "<p>An object that contains the count of matched findings per severity.</p>",
         "AwsEcrContainerAggregationResponse$severityCounts": "<p>The number of finding by severity.</p>",
         "CodeRepositoryAggregationResponse$severityCounts": null,
+        "ContainerImageAggregationResponse$severityCounts": null,
         "Ec2InstanceAggregationResponse$severityCounts": "<p>An object that contains the count of matched findings per severity.</p>",
         "FindingTypeAggregationResponse$severityCounts": "<p>The value to sort results by.</p>",
         "ImageLayerAggregationResponse$severityCounts": "<p>An object that represents the count of matched findings per severity.</p>",
@@ -3939,7 +4560,9 @@
         "LambdaLayerAggregationResponse$severityCounts": "<p>An object that contains the counts of aggregated finding per severity.</p>",
         "PackageAggregationResponse$severityCounts": "<p>An object that contains the count of matched findings per severity.</p>",
         "RepositoryAggregationResponse$severityCounts": "<p>An object that represent the count of matched findings per severity.</p>",
-        "TitleAggregationResponse$severityCounts": "<p>An object that represent the count of matched findings per severity.</p>"
+        "ServerlessFunctionAggregationResponse$severityCounts": null,
+        "TitleAggregationResponse$severityCounts": "<p>An object that represent the count of matched findings per severity.</p>",
+        "VmInstanceAggregationResponse$severityCounts": null
       }
     },
     "SortCriteria": {
@@ -3961,6 +4584,7 @@
         "AmiAggregation$sortOrder": "<p>The order to sort results by.</p>",
         "AwsEcrContainerAggregation$sortOrder": "<p>The sort order (ascending or descending).</p>",
         "CodeRepositoryAggregation$sortOrder": "<p>The order to sort results by (ascending or descending) in the code repository aggregation.</p>",
+        "ContainerImageAggregation$sortOrder": "<p>The order to sort results by. Valid values are <code>ASC</code> and <code>DESC</code>.</p>",
         "Ec2InstanceAggregation$sortOrder": "<p>The order to sort results by.</p>",
         "FindingTypeAggregation$sortOrder": "<p>The order to sort results by.</p>",
         "ImageLayerAggregation$sortOrder": "<p>The order to sort results by.</p>",
@@ -3968,8 +4592,10 @@
         "LambdaLayerAggregation$sortOrder": "<p>The order to use for sorting the results.</p>",
         "PackageAggregation$sortOrder": "<p>The order to sort results by.</p>",
         "RepositoryAggregation$sortOrder": "<p>The order to sort results by.</p>",
+        "ServerlessFunctionAggregation$sortOrder": "<p>The order to sort results by. Valid values are <code>ASC</code> and <code>DESC</code>.</p>",
         "SortCriteria$sortOrder": "<p>The order by which findings are sorted.</p>",
-        "TitleAggregation$sortOrder": "<p>The order to sort results by.</p>"
+        "TitleAggregation$sortOrder": "<p>The order to sort results by.</p>",
+        "VmInstanceAggregation$sortOrder": "<p>The order to sort results by. Valid values are <code>ASC</code> and <code>DESC</code>.</p>"
       }
     },
     "SourceLayerHash": {
@@ -4100,18 +4726,40 @@
         "ConflictException$message": null,
         "ConflictException$resourceId": "<p>The ID of the conflicting resource.</p>",
         "ConflictException$resourceType": "<p>The type of the conflicting resource.</p>",
+        "Connector$enablementStatusReason": "<p>Additional information about the current enablement status of the connector.</p>",
+        "ConnectorHealth$message": "<p>A message providing additional details about the connector health status.</p>",
+        "ContainerImageAggregationResponse$imageDigest": "<p>The image digest for the container image.</p>",
+        "ContainerImageAggregationResponse$repository": "<p>The repository for the container image.</p>",
+        "ContainerImageAggregationResponse$registry": "<p>The registry for the container image.</p>",
+        "ContainerImageAggregationResponse$architecture": "<p>The architecture of the container image.</p>",
+        "ContainerImageAggregationResponse$accountId": "<p>The account ID associated with the container image.</p>",
+        "ContainerRegistryMetadata$name": "<p>The name of the container registry.</p>",
+        "ContainerRepositoryMetadata$name": "<p>The name of the container repository.</p>",
+        "ContainerRepositoryMetadata$scanFrequency": "<p>The scan frequency for the container repository.</p>",
+        "CreateConnectorRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure that the operation completes no more than one time. If this token matches a previous request, the service ignores the request but does not return an error.</p>",
         "Destination$bucketName": "<p>The name of the Amazon S3 bucket to export findings to.</p>",
         "Destination$keyPrefix": "<p>The prefix that the findings will be written under.</p>",
         "Destination$kmsKeyArn": "<p>The ARN of the KMS key used to encrypt data when exporting findings.</p>",
         "Ec2InstanceAggregationResponse$operatingSystem": "<p>The operating system of the Amazon EC2 instance.</p>",
         "Ec2InstanceAggregationResponse$accountId": "<p>The Amazon Web Services account for the Amazon EC2 instance.</p>",
         "EcrRepositoryMetadata$name": "<p>The name of the Amazon ECR repository.</p>",
+        "FindingTypeAggregationResponse$cloudProvider": "<p>The cloud service provider associated with this finding type aggregation. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Findings from Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Findings from Microsoft Azure resources.</p> </li> </ul>",
+        "FindingTypeAggregationResponse$cloudAccountId": "<p>The cloud account ID for the finding type aggregation.</p>",
+        "FindingTypeAggregationResponse$cloudOrgId": "<p>The cloud organization ID for the finding type aggregation.</p>",
+        "FindingTypeAggregationResponse$cloudRegion": "<p>The cloud Region associated with this finding type aggregation. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> </ul>",
+        "FindingTypeAggregationResponse$cloudPartition": "<p>The cloud infrastructure partition associated with this finding type aggregation. Valid values:</p> <ul> <li> <p> <code>aws</code> – Amazon Web Services commercial Regions.</p> </li> <li> <p> <code>aws-cn</code> – Amazon Web Services China Regions.</p> </li> <li> <p> <code>aws-us-gov</code> – Amazon Web Services GovCloud (US) Regions.</p> </li> <li> <p> <code>AzureCloud</code> – Azure commercial Regions.</p> </li> </ul>",
         "FreeTrialInfoError$message": "<p>The error message returned.</p>",
         "GetCisScanReportResponse$url": "<p> The URL where a PDF or CSV of the CIS scan report can be downloaded. </p>",
         "GetCodeSecurityIntegrationResponse$statusReason": "<p>The reason for the current status of the code security integration.</p>",
         "GetCodeSecurityScanResponse$accountId": "<p>The Amazon Web Services account ID associated with the scan.</p>",
         "GetCodeSecurityScanResponse$statusReason": "<p>The reason for the current status of the scan.</p>",
         "GetCodeSecurityScanResponse$lastCommitId": "<p>The identifier of the last commit that was scanned. This is only returned if the scan was successful or skipped.</p>",
+        "Image$author": "<p>The author of the container image.</p>",
+        "ImageLayerAggregationResponse$cloudProvider": "<p>The cloud service provider associated with this image layer aggregation. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Findings from Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Findings from Microsoft Azure resources.</p> </li> </ul>",
+        "ImageLayerAggregationResponse$cloudAccountId": "<p>The cloud account ID for the image layer aggregation.</p>",
+        "ImageLayerAggregationResponse$cloudOrgId": "<p>The cloud organization ID for the image layer aggregation.</p>",
+        "ImageLayerAggregationResponse$cloudRegion": "<p>The cloud Region associated with this image layer aggregation. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> </ul>",
+        "ImageLayerAggregationResponse$cloudPartition": "<p>The cloud infrastructure partition associated with this image layer aggregation. Valid values:</p> <ul> <li> <p> <code>aws</code> – Amazon Web Services commercial Regions.</p> </li> <li> <p> <code>aws-cn</code> – Amazon Web Services China Regions.</p> </li> <li> <p> <code>aws-us-gov</code> – Amazon Web Services GovCloud (US) Regions.</p> </li> <li> <p> <code>AzureCloud</code> – Azure commercial Regions.</p> </li> </ul>",
         "InternalServerException$message": null,
         "LambdaFunctionAggregationResponse$functionName": "<p>The Amazon Web Services Lambda function names included in the aggregation results.</p>",
         "LambdaFunctionAggregationResponse$runtime": "<p>The runtimes included in the aggregation results.</p>",
@@ -4120,6 +4768,12 @@
         "ListCodeSecurityIntegrationsRequest$nextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request. For subsequent calls, use the NextToken value returned from the previous request to continue listing results after the first page.</p>",
         "ListCodeSecurityIntegrationsResponse$nextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request. For subsequent calls, use the NextToken value returned from the previous request to continue listing results after the first page.</p>",
         "ResourceNotFoundException$message": null,
+        "ScopeConfiguration$stateReason": "<p>The reason for the current state of the scope configuration.</p>",
+        "ServerlessFunctionAggregationResponse$functionName": "<p>The name of the serverless function.</p>",
+        "ServerlessFunctionAggregationResponse$runtime": "<p>The runtime of the serverless function.</p>",
+        "ServerlessFunctionAggregationResponse$accountId": "<p>The account ID associated with the serverless function.</p>",
+        "ServerlessFunctionMetadata$serverlessFunctionName": "<p>The name of the serverless function.</p>",
+        "ServerlessFunctionMetadata$runtime": "<p>The runtime of the serverless function.</p>",
         "ServiceQuotaExceededException$message": null,
         "ServiceQuotaExceededException$resourceId": "<p>The ID of the resource that exceeds a service quota.</p>",
         "TagList$member": null,
@@ -4127,7 +4781,10 @@
         "TitleAggregationResponse$vulnerabilityId": "<p>The vulnerability ID of the finding.</p>",
         "ValidationException$message": null,
         "ValidationExceptionField$name": "<p>The name of the validation exception.</p>",
-        "ValidationExceptionField$message": "<p>The validation exception message.</p>"
+        "ValidationExceptionField$message": "<p>The validation exception message.</p>",
+        "VmInstanceAggregationResponse$vmImageReference": "<p>The VM image reference for the VM instance.</p>",
+        "VmInstanceAggregationResponse$operatingSystem": "<p>The operating system of the VM instance.</p>",
+        "VmInstanceAggregationResponse$accountId": "<p>The account ID associated with the VM instance.</p>"
       }
     },
     "StringComparison": {
@@ -4161,6 +4818,18 @@
         "CodeRepositoryAggregation$projectNames": "<p>The project names to include in the aggregation results.</p>",
         "CodeRepositoryAggregation$providerTypes": "<p>The repository provider types to include in the aggregation results.</p>",
         "CodeRepositoryAggregation$resourceIds": "<p>The resource IDs to include in the aggregation results.</p>",
+        "ConnectorFilterCriteria$accounts": "<p>Filter by Amazon Web Services account IDs.</p>",
+        "ContainerImageAggregation$resourceIds": "<p>The resource IDs to aggregate findings for.</p>",
+        "ContainerImageAggregation$imageDigests": "<p>The image digests to aggregate findings for.</p>",
+        "ContainerImageAggregation$repositories": "<p>The image repositories to aggregate findings for.</p>",
+        "ContainerImageAggregation$registries": "<p>The image registries to aggregate findings for.</p>",
+        "ContainerImageAggregation$architectures": "<p>The image architectures to aggregate findings for.</p>",
+        "ContainerImageAggregation$imageTags": "<p>The image tags to aggregate findings for.</p>",
+        "ContainerImageAggregation$cloudProviders": "<p>The cloud providers to aggregate findings for. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Findings from Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Findings from Microsoft Azure resources.</p> </li> </ul>",
+        "ContainerImageAggregation$cloudPartitions": "<p>The cloud partitions to aggregate findings for. Valid values:</p> <ul> <li> <p> <code>aws</code> – Amazon Web Services commercial Regions.</p> </li> <li> <p> <code>aws-cn</code> – Amazon Web Services China Regions.</p> </li> <li> <p> <code>aws-us-gov</code> – Amazon Web Services GovCloud (US) Regions.</p> </li> <li> <p> <code>AzureCloud</code> – Azure commercial Regions.</p> </li> </ul>",
+        "ContainerImageAggregation$cloudRegions": "<p>The cloud regions to aggregate findings for. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> </ul>",
+        "ContainerImageAggregation$cloudOrgIds": "<p>The cloud organization IDs to aggregate findings for.</p>",
+        "ContainerImageAggregation$cloudAccountIds": "<p>The cloud account IDs to aggregate findings for.</p>",
         "Ec2InstanceAggregation$amis": "<p>The AMI IDs associated with the Amazon EC2 instances to aggregate findings for.</p>",
         "Ec2InstanceAggregation$operatingSystems": "<p>The operating system types to aggregate findings for. Valid values must be uppercase and underscore separated, examples are <code>ORACLE_LINUX_7</code> and <code>ALPINE_LINUX_3_8</code>.</p>",
         "Ec2InstanceAggregation$instanceIds": "<p>The Amazon EC2 instance IDs to aggregate findings for.</p>",
@@ -4198,9 +4867,29 @@
         "FilterCriteria$codeVulnerabilityFilePath": "<p>The file path to the file in a Lambda function that contains a code vulnerability used to filter findings.</p>",
         "FilterCriteria$codeRepositoryProjectName": "<p>Filter criteria for findings based on the project name in a code repository.</p>",
         "FilterCriteria$codeRepositoryProviderType": "<p>Filter criteria for findings based on the repository provider type (such as GitHub, GitLab, etc.).</p>",
+        "FilterCriteria$cloudProvider": "<p>Filter criteria for the cloud provider.</p>",
+        "FilterCriteria$cloudProviderRegion": "<p>Filter criteria for the cloud provider region.</p>",
+        "FilterCriteria$cloudProviderAccountId": "<p>Filter criteria for the cloud provider account ID.</p>",
+        "FilterCriteria$cloudProviderOrgId": "<p>Filter criteria for the cloud provider organization ID.</p>",
+        "FilterCriteria$cloudVmImageReference": "<p>Filter criteria for the image reference of a VM instance.</p>",
+        "FilterCriteria$cloudVmNetworkId": "<p>Filter criteria for the network ID of a VM instance.</p>",
+        "FilterCriteria$cloudVmSubnetIds": "<p>Filter criteria for the subnet IDs of a VM instance.</p>",
+        "FilterCriteria$cloudImageRepositoryName": "<p>Filter criteria for the repository name of a container image.</p>",
+        "FilterCriteria$cloudImageRegistry": "<p>Filter criteria for the registry of a container image.</p>",
+        "FilterCriteria$cloudImageDigest": "<p>Filter criteria for the digest of a container image.</p>",
+        "FilterCriteria$cloudImageTags": "<p>Filter criteria for the tags of a container image.</p>",
+        "FilterCriteria$cloudImageArchitecture": "<p>Filter criteria for the architecture of a container image.</p>",
+        "FilterCriteria$cloudServerlessFunctionName": "<p>Filter criteria for the name of a serverless function.</p>",
+        "FilterCriteria$cloudServerlessFunctionRuntime": "<p>Filter criteria for the runtime of a serverless function.</p>",
+        "FilterCriteria$cloudServerlessFunctionExecutionRole": "<p>Filter criteria for the execution role of a serverless function.</p>",
         "ImageLayerAggregation$repositories": "<p>The repository associated with the container image hosting the layers.</p>",
         "ImageLayerAggregation$resourceIds": "<p>The ID of the container image layer.</p>",
         "ImageLayerAggregation$layerHashes": "<p>The hashes associated with the layers.</p>",
+        "ImageLayerAggregation$cloudProviders": "<p>The cloud providers to aggregate findings for. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Findings from Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Findings from Microsoft Azure resources.</p> </li> </ul>",
+        "ImageLayerAggregation$cloudAccountIds": "<p>The cloud account IDs to aggregate findings for.</p>",
+        "ImageLayerAggregation$cloudOrgIds": "<p>The cloud organization IDs to aggregate findings for.</p>",
+        "ImageLayerAggregation$cloudRegions": "<p>The cloud regions to aggregate findings for. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> </ul>",
+        "ImageLayerAggregation$cloudPartitions": "<p>The cloud partitions to aggregate findings for. Valid values:</p> <ul> <li> <p> <code>aws</code> – Amazon Web Services commercial Regions.</p> </li> <li> <p> <code>aws-cn</code> – Amazon Web Services China Regions.</p> </li> <li> <p> <code>aws-us-gov</code> – Amazon Web Services GovCloud (US) Regions.</p> </li> <li> <p> <code>AzureCloud</code> – Azure commercial Regions.</p> </li> </ul>",
         "LambdaFunctionAggregation$resourceIds": "<p>The resource IDs to include in the aggregation results.</p>",
         "LambdaFunctionAggregation$functionNames": "<p>The Amazon Web Services Lambda function names to include in the aggregation results.</p>",
         "LambdaFunctionAggregation$runtimes": "<p>Returns findings aggregated by Amazon Web Services Lambda function runtime environments.</p>",
@@ -4210,8 +4899,24 @@
         "ListFindingAggregationsRequest$accountIds": "<p>The Amazon Web Services account IDs to retrieve finding aggregation data for.</p>",
         "PackageAggregation$packageNames": "<p>The names of packages to aggregate findings on.</p>",
         "RepositoryAggregation$repositories": "<p>The names of repositories to aggregate findings on.</p>",
+        "ServerlessFunctionAggregation$resourceIds": "<p>The resource IDs to aggregate findings for.</p>",
+        "ServerlessFunctionAggregation$functionNames": "<p>The function names to aggregate findings for.</p>",
+        "ServerlessFunctionAggregation$runtimes": "<p>The runtimes to aggregate findings for.</p>",
+        "ServerlessFunctionAggregation$cloudProviders": "<p>The cloud providers to aggregate findings for. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Findings from Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Findings from Microsoft Azure resources.</p> </li> </ul>",
+        "ServerlessFunctionAggregation$cloudPartitions": "<p>The cloud partitions to aggregate findings for. Valid values:</p> <ul> <li> <p> <code>aws</code> – Amazon Web Services commercial Regions.</p> </li> <li> <p> <code>aws-cn</code> – Amazon Web Services China Regions.</p> </li> <li> <p> <code>aws-us-gov</code> – Amazon Web Services GovCloud (US) Regions.</p> </li> <li> <p> <code>AzureCloud</code> – Azure commercial Regions.</p> </li> </ul>",
+        "ServerlessFunctionAggregation$cloudRegions": "<p>The cloud regions to aggregate findings for. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> </ul>",
+        "ServerlessFunctionAggregation$cloudOrgIds": "<p>The cloud organization IDs to aggregate findings for.</p>",
+        "ServerlessFunctionAggregation$cloudAccountIds": "<p>The cloud account IDs to aggregate findings for.</p>",
         "TitleAggregation$titles": "<p>The finding titles to aggregate on.</p>",
-        "TitleAggregation$vulnerabilityIds": "<p>The vulnerability IDs of the findings.</p>"
+        "TitleAggregation$vulnerabilityIds": "<p>The vulnerability IDs of the findings.</p>",
+        "VmInstanceAggregation$resourceIds": "<p>The resource IDs to aggregate findings for.</p>",
+        "VmInstanceAggregation$operatingSystems": "<p>The operating systems to aggregate findings for.</p>",
+        "VmInstanceAggregation$vmImageReferences": "<p>The VM image references to aggregate findings for.</p>",
+        "VmInstanceAggregation$cloudProviders": "<p>The cloud providers to aggregate findings for. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Findings from Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Findings from Microsoft Azure resources.</p> </li> </ul>",
+        "VmInstanceAggregation$cloudPartitions": "<p>The cloud partitions to aggregate findings for. Valid values:</p> <ul> <li> <p> <code>aws</code> – Amazon Web Services commercial Regions.</p> </li> <li> <p> <code>aws-cn</code> – Amazon Web Services China Regions.</p> </li> <li> <p> <code>aws-us-gov</code> – Amazon Web Services GovCloud (US) Regions.</p> </li> <li> <p> <code>AzureCloud</code> – Azure commercial Regions.</p> </li> </ul>",
+        "VmInstanceAggregation$cloudRegions": "<p>The cloud regions to aggregate findings for. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> </ul>",
+        "VmInstanceAggregation$cloudOrgIds": "<p>The cloud organization IDs to aggregate findings for.</p>",
+        "VmInstanceAggregation$cloudAccountIds": "<p>The cloud account IDs to aggregate findings for.</p>"
       }
     },
     "StringInput": {
@@ -4223,7 +4928,8 @@
     "StringList": {
       "base": null,
       "refs": {
-        "AwsEcrContainerAggregationResponse$imageTags": "<p>The container image stags.</p>"
+        "AwsEcrContainerAggregationResponse$imageTags": "<p>The container image stags.</p>",
+        "ContainerImageAggregationResponse$imageTags": "<p>The image tags attached to the container image.</p>"
       }
     },
     "SubnetId": {
@@ -4275,6 +4981,14 @@
         "CodeSnippetResult$suggestedFixes": "<p>Details of a suggested code fix.</p>"
       }
     },
+    "SyntheticTimestamp_date_time": {
+      "base": null,
+      "refs": {
+        "Connector$createdAt": "<p>The date and time when the connector was created.</p>",
+        "Connector$updatedAt": "<p>The date and time when the connector was last updated.</p>",
+        "ConnectorHealth$lastCheckedAt": "<p>The date and time when the connector health was last checked.</p>"
+      }
+    },
     "TagComparison": {
       "base": null,
       "refs": {
@@ -4302,6 +5016,7 @@
     "TagList": {
       "base": null,
       "refs": {
+        "ContainerImageMetadata$imageTags": "<p>The tags attached to the container image.</p>",
         "EcrContainerImageMetadata$tags": "<p>Tags associated with the Amazon ECR image metadata.</p>"
       }
     },
@@ -4323,7 +5038,11 @@
         "LambdaFunctionMetadata$functionTags": "<p>The resource tags on an Amazon Web Services Lambda function.</p>",
         "ListTagsForResourceResponse$tags": "<p>The tags associated with the resource.</p>",
         "Resource$tags": "<p>The tags attached to the resource.</p>",
-        "TagResourceRequest$tags": "<p>The tags to be added to a resource.</p>"
+        "ServerlessFunctionAggregationResponse$tags": "<p>The tags attached to the serverless function.</p>",
+        "ServerlessFunctionMetadata$functionTags": "<p>The tags associated with the serverless function.</p>",
+        "TagResourceRequest$tags": "<p>The tags to be added to a resource.</p>",
+        "VmInstanceAggregationResponse$tags": "<p>The tags attached to the VM instance.</p>",
+        "VmInstanceMetadata$tags": "<p>The tags associated with the VM instance.</p>"
       }
     },
     "TagResourceRequest": {
@@ -4545,11 +5264,33 @@
       "base": null,
       "refs": {}
     },
+    "UpdateConfigurationInheritance": {
+      "base": "<p>The per-scan-type inheritance reset settings for the <code>UpdateConfiguration</code> operation. Each member is independently optional. Including a member in this structure resets that scan type's configuration to inherit from the delegated administrator.</p>",
+      "refs": {
+        "UpdateConfigurationRequest$updateConfigurationInheritance": "<p>Specifies which scan-type configurations to reset to the delegated administrator's inherited values for the targeted member account. Each member of this structure is independently optional. When specified, <code>ec2Configuration</code> and <code>ecrConfiguration</code> must be absent, and <code>accountId</code> must also be present. Only <code>INHERIT_FROM_ADMIN</code> is valid for each member. If not specified, the operation uses the <code>ec2Configuration</code> and <code>ecrConfiguration</code> parameters instead.</p>"
+      }
+    },
     "UpdateConfigurationRequest": {
       "base": null,
       "refs": {}
     },
     "UpdateConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateConnectorRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateConnectorResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateConnectorScanConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateConnectorScanConfigurationResponse": {
       "base": null,
       "refs": {}
     },
@@ -4721,6 +5462,54 @@
       "base": null,
       "refs": {
         "AwsLambdaFunctionDetails$version": "<p>The version of the Amazon Web Services Lambda function.</p>"
+      }
+    },
+    "Vm": {
+      "base": "<p>Contains details about a VM instance involved in a finding.</p>",
+      "refs": {
+        "ResourceDetails$vm": "<p>An object that contains details about a VM instance involved in the finding.</p>"
+      }
+    },
+    "VmInstanceAggregation": {
+      "base": "<p>An aggregation of information about VM instances.</p>",
+      "refs": {
+        "AggregationRequest$vmInstanceAggregation": "<p>An object that contains details about an aggregation request based on virtual machine (VM) instances.</p>"
+      }
+    },
+    "VmInstanceAggregationResponse": {
+      "base": "<p>A response that contains the results of a VM instance aggregation.</p>",
+      "refs": {
+        "AggregationResponse$vmInstanceAggregation": "<p>An object that contains details about an aggregation response based on VM instances.</p>"
+      }
+    },
+    "VmInstanceMetadata": {
+      "base": "<p>Contains metadata about a virtual machine (VM) instance associated with a covered resource.</p>",
+      "refs": {
+        "ResourceScanMetadata$vmInstance": "<p>The VM instance metadata associated with a covered resource.</p>"
+      }
+    },
+    "VmInstanceMetadataInventoryHashString": {
+      "base": null,
+      "refs": {
+        "VmInstanceMetadata$inventoryHash": "<p>The inventory hash of the VM instance.</p>"
+      }
+    },
+    "VmInstanceMetadataVmImageReferenceString": {
+      "base": null,
+      "refs": {
+        "VmInstanceMetadata$vmImageReference": "<p>The image reference of the VM instance.</p>"
+      }
+    },
+    "VmInstanceSortBy": {
+      "base": null,
+      "refs": {
+        "VmInstanceAggregation$sortBy": "<p>The value to sort results by. Specify a field name from the aggregation response, such as <code>CRITICAL</code>, <code>HIGH</code>, <code>ALL</code>, or <code>NETWORK_FINDINGS</code>.</p>"
+      }
+    },
+    "VmPlatform": {
+      "base": null,
+      "refs": {
+        "VmInstanceMetadata$platform": "<p>The platform of the VM instance.</p>"
       }
     },
     "VpcId": {

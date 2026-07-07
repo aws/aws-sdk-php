@@ -322,6 +322,25 @@
         {"shape":"ResourceConflictException"}
       ]
     },
+    "CreateConnector":{
+      "name":"CreateConnector",
+      "http":{
+        "method":"POST",
+        "requestUri":"/connectors"
+      },
+      "input":{"shape":"CreateConnectorRequest"},
+      "output":{"shape":"CreateConnectorResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"InvalidAccessException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ]
+    },
     "CreateConnectorV2":{
       "name":"CreateConnectorV2",
       "http":{
@@ -486,6 +505,24 @@
         {"shape":"LimitExceededException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ResourceConflictException"}
+      ]
+    },
+    "DeleteConnector":{
+      "name":"DeleteConnector",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/connectors/{ConnectorId+}"
+      },
+      "input":{"shape":"DeleteConnectorRequest"},
+      "output":{"shape":"DeleteConnectorResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"InvalidAccessException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "DeleteConnectorV2":{
@@ -739,6 +776,22 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "DisableSecurityHubFeatureV2":{
+      "name":"DisableSecurityHubFeatureV2",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/hubv2/feature/{FeatureName}"
+      },
+      "input":{"shape":"DisableSecurityHubFeatureV2Request"},
+      "output":{"shape":"DisableSecurityHubFeatureV2Response"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"}
+      ]
+    },
     "DisableSecurityHubV2":{
       "name":"DisableSecurityHubV2",
       "http":{
@@ -851,6 +904,22 @@
         {"shape":"InvalidAccessException"},
         {"shape":"ResourceConflictException"},
         {"shape":"AccessDeniedException"}
+      ]
+    },
+    "EnableSecurityHubFeatureV2":{
+      "name":"EnableSecurityHubFeatureV2",
+      "http":{
+        "method":"POST",
+        "requestUri":"/hubv2/feature/{FeatureName}"
+      },
+      "input":{"shape":"EnableSecurityHubFeatureV2Request"},
+      "output":{"shape":"EnableSecurityHubFeatureV2Response"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"}
       ]
     },
     "EnableSecurityHubV2":{
@@ -967,6 +1036,24 @@
         {"shape":"LimitExceededException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
+      ]
+    },
+    "GetConnector":{
+      "name":"GetConnector",
+      "http":{
+        "method":"GET",
+        "requestUri":"/connectors/{ConnectorId+}"
+      },
+      "input":{"shape":"GetConnectorRequest"},
+      "output":{"shape":"GetConnectorResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"InvalidAccessException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "GetConnectorV2":{
@@ -1364,6 +1451,24 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "ListConnectors":{
+      "name":"ListConnectors",
+      "http":{
+        "method":"GET",
+        "requestUri":"/connectors"
+      },
+      "input":{"shape":"ListConnectorsRequest"},
+      "output":{"shape":"ListConnectorsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"InvalidAccessException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "ListConnectorsV2":{
       "name":"ListConnectorsV2",
       "http":{
@@ -1645,6 +1750,24 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceConflictException"}
+      ]
+    },
+    "UpdateConnector":{
+      "name":"UpdateConnector",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/connectors/{ConnectorId+}"
+      },
+      "input":{"shape":"UpdateConnectorRequest"},
+      "output":{"shape":"UpdateConnectorResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidAccessException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "UpdateConnectorV2":{
@@ -2198,7 +2321,10 @@
         "UserDefinedFields":{"shape":"MapFilterList"},
         "ResourceApplicationArn":{"shape":"StringFilterList"},
         "ResourceApplicationName":{"shape":"StringFilterList"},
-        "AwsAccountName":{"shape":"StringFilterList"}
+        "AwsAccountName":{"shape":"StringFilterList"},
+        "ResourceProvider":{"shape":"StringFilterList"},
+        "ResourceOwnerAccountId":{"shape":"StringFilterList"},
+        "ResourceOwnerOrgId":{"shape":"StringFilterList"}
       }
     },
     "AutomationRulesMetadata":{
@@ -7340,7 +7466,10 @@
         "ComplianceSecurityControlParametersValue":{"shape":"StringFilterList"},
         "AwsAccountName":{"shape":"StringFilterList"},
         "ResourceApplicationName":{"shape":"StringFilterList"},
-        "ResourceApplicationArn":{"shape":"StringFilterList"}
+        "ResourceApplicationArn":{"shape":"StringFilterList"},
+        "ResourceOwnerAccountId":{"shape":"StringFilterList"},
+        "ResourceOwnerOrgId":{"shape":"StringFilterList"},
+        "ResourceProvider":{"shape":"StringFilterList"}
       }
     },
     "AwsSecurityFindingIdentifier":{
@@ -7815,6 +7944,62 @@
         "Type":{"shape":"NonEmptyString"}
       }
     },
+    "AzureDetail":{
+      "type":"structure",
+      "required":[
+        "AWSConfigConnectorArn",
+        "ScopeConfiguration",
+        "AzureRegions"
+      ],
+      "members":{
+        "AWSConfigConnectorArn":{"shape":"NonEmptyString"},
+        "ScopeConfiguration":{"shape":"AzureScopeConfiguration"},
+        "AzureRegions":{"shape":"AzureRegionList"}
+      }
+    },
+    "AzureProviderConfiguration":{
+      "type":"structure",
+      "required":[
+        "AWSConfigConnectorArn",
+        "ScopeConfiguration",
+        "AzureRegions"
+      ],
+      "members":{
+        "AWSConfigConnectorArn":{"shape":"NonEmptyString"},
+        "ScopeConfiguration":{"shape":"AzureScopeConfiguration"},
+        "AzureRegions":{"shape":"AzureRegionList"}
+      }
+    },
+    "AzureRegionList":{
+      "type":"list",
+      "member":{"shape":"NonEmptyString"},
+      "max":100,
+      "min":1
+    },
+    "AzureResourceDetails":{
+      "type":"structure",
+      "members":{},
+      "document":true
+    },
+    "AzureScopeConfiguration":{
+      "type":"structure",
+      "required":["ScopeType"],
+      "members":{
+        "ScopeType":{"shape":"ScopeType"},
+        "ScopeValues":{"shape":"ScopeValueList"}
+      }
+    },
+    "AzureUpdateConfiguration":{
+      "type":"structure",
+      "required":[
+        "ScopeConfiguration",
+        "AzureRegions"
+      ],
+      "members":{
+        "ScopeConfiguration":{"shape":"AzureScopeConfiguration"},
+        "AzureRegions":{"shape":"AzureRegionList"}
+      }
+    },
     "BatchDeleteAutomationRulesRequest":{
       "type":"structure",
       "required":["AutomationRulesArns"],
@@ -8139,6 +8324,13 @@
       "min":1,
       "pattern":"^[\\x21-\\x7E]{1,64}$"
     },
+    "CloudProviderName":{
+      "type":"string",
+      "enum":[
+        "Azure",
+        "AWS"
+      ]
+    },
     "CloudWatchLogsLogGroupArnConfigDetails":{
       "type":"structure",
       "members":{
@@ -8295,16 +8487,19 @@
       "type":"string",
       "enum":[
         "JIRA_CLOUD",
-        "SERVICENOW"
+        "SERVICENOW",
+        "AZURE"
       ]
     },
     "ConnectorStatus":{
       "type":"string",
       "enum":[
         "CONNECTED",
+        "DEGRADED",
         "FAILED_TO_CONNECT",
+        "PENDING_AUTHORIZATION",
         "PENDING_CONFIGURATION",
-        "PENDING_AUTHORIZATION"
+        "UNKNOWN"
       ]
     },
     "ConnectorSummary":{
@@ -8321,7 +8516,9 @@
         "Name":{"shape":"NonEmptyString"},
         "Description":{"shape":"NonEmptyString"},
         "ProviderSummary":{"shape":"ProviderSummary"},
-        "CreatedAt":{"shape":"Timestamp"}
+        "CreatedAt":{"shape":"Timestamp"},
+        "EnablementStatus":{"shape":"EnablementStatus"},
+        "EnablementStatusReason":{"shape":"NonEmptyString"}
       }
     },
     "ConnectorSummaryList":{
@@ -8484,6 +8681,36 @@
         "ConfigurationPolicy":{"shape":"Policy"}
       }
     },
+    "CreateConnectorRequest":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Provider"
+      ],
+      "members":{
+        "Name":{"shape":"NonEmptyString"},
+        "Description":{"shape":"NonEmptyString"},
+        "Provider":{"shape":"CspmProviderConfiguration"},
+        "Tags":{"shape":"TagMap"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateConnectorResponse":{
+      "type":"structure",
+      "required":[
+        "ConnectorArn",
+        "ConnectorId"
+      ],
+      "members":{
+        "ConnectorArn":{"shape":"NonEmptyString"},
+        "ConnectorId":{"shape":"NonEmptyString"},
+        "ConnectorStatus":{"shape":"CspmConnectorStatus"},
+        "EnablementStatus":{"shape":"CspmEnablementStatus"}
+      }
+    },
     "CreateConnectorV2Request":{
       "type":"structure",
       "required":[
@@ -8512,7 +8739,8 @@
         "ConnectorArn":{"shape":"NonEmptyString"},
         "ConnectorId":{"shape":"NonEmptyString"},
         "AuthUrl":{"shape":"NonEmptyString"},
-        "ConnectorStatus":{"shape":"ConnectorStatus"}
+        "ConnectorStatus":{"shape":"ConnectorStatus"},
+        "EnablementStatus":{"shape":"EnablementStatus"}
       }
     },
     "CreateFindingAggregatorRequest":{
@@ -8600,6 +8828,87 @@
       "type":"integer",
       "max":50,
       "min":1
+    },
+    "CspmConnectorProviderName":{
+      "type":"string",
+      "enum":["AZURE"]
+    },
+    "CspmConnectorStatus":{
+      "type":"string",
+      "enum":[
+        "CONNECTED",
+        "DEGRADED",
+        "FAILED_TO_CONNECT",
+        "UNKNOWN"
+      ]
+    },
+    "CspmConnectorSummary":{
+      "type":"structure",
+      "members":{
+        "ConnectorArn":{"shape":"NonEmptyString"},
+        "ConnectorId":{"shape":"NonEmptyString"},
+        "Name":{"shape":"NonEmptyString"},
+        "Description":{"shape":"NonEmptyString"},
+        "ProviderSummary":{"shape":"CspmProviderSummary"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "CreatedBy":{"shape":"NonEmptyString"},
+        "EnablementStatus":{"shape":"CspmEnablementStatus"}
+      }
+    },
+    "CspmConnectorSummaryList":{
+      "type":"list",
+      "member":{"shape":"CspmConnectorSummary"}
+    },
+    "CspmEnablementStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "PENDING_ENABLEMENT",
+        "PENDING_UPDATE",
+        "PENDING_DELETION"
+      ]
+    },
+    "CspmHealthCheck":{
+      "type":"structure",
+      "required":[
+        "ConnectorStatus",
+        "LastCheckedAt"
+      ],
+      "members":{
+        "ConnectorStatus":{"shape":"CspmConnectorStatus"},
+        "Message":{"shape":"NonEmptyString"},
+        "LastCheckedAt":{"shape":"Timestamp"},
+        "Issues":{"shape":"HealthIssueList"}
+      }
+    },
+    "CspmProviderConfiguration":{
+      "type":"structure",
+      "members":{
+        "Azure":{"shape":"AzureProviderConfiguration"}
+      },
+      "union":true
+    },
+    "CspmProviderDetail":{
+      "type":"structure",
+      "members":{
+        "Azure":{"shape":"AzureDetail"}
+      },
+      "union":true
+    },
+    "CspmProviderSummary":{
+      "type":"structure",
+      "members":{
+        "ProviderName":{"shape":"CspmConnectorProviderName"},
+        "ConnectorStatus":{"shape":"CspmConnectorStatus"},
+        "ProviderConfiguration":{"shape":"CspmProviderDetail"}
+      }
+    },
+    "CspmProviderUpdateConfiguration":{
+      "type":"structure",
+      "members":{
+        "Azure":{"shape":"AzureUpdateConfiguration"}
+      },
+      "union":true
     },
     "CustomDataIdentifiersDetections":{
       "type":"structure",
@@ -8753,6 +9062,23 @@
       "type":"structure",
       "members":{}
     },
+    "DeleteConnectorRequest":{
+      "type":"structure",
+      "required":["ConnectorId"],
+      "members":{
+        "ConnectorId":{
+          "shape":"NonEmptyString",
+          "location":"uri",
+          "locationName":"ConnectorId"
+        }
+      }
+    },
+    "DeleteConnectorResponse":{
+      "type":"structure",
+      "members":{
+        "EnablementStatus":{"shape":"CspmEnablementStatus"}
+      }
+    },
     "DeleteConnectorV2Request":{
       "type":"structure",
       "required":["ConnectorId"],
@@ -8766,7 +9092,9 @@
     },
     "DeleteConnectorV2Response":{
       "type":"structure",
-      "members":{}
+      "members":{
+        "EnablementStatus":{"shape":"EnablementStatus"}
+      }
     },
     "DeleteFindingAggregatorRequest":{
       "type":"structure",
@@ -8934,7 +9262,8 @@
       "type":"structure",
       "members":{
         "HubV2Arn":{"shape":"NonEmptyString"},
-        "SubscribedAt":{"shape":"NonEmptyString"}
+        "SubscribedAt":{"shape":"IsoString"},
+        "Features":{"shape":"Features"}
       }
     },
     "DescribeStandardsControlsRequest":{
@@ -8977,6 +9306,11 @@
           "shape":"MaxResults",
           "location":"querystring",
           "locationName":"MaxResults"
+        },
+        "Providers":{
+          "shape":"StandardsProviders",
+          "location":"querystring",
+          "locationName":"Providers"
         }
       }
     },
@@ -9017,6 +9351,21 @@
       }
     },
     "DisableOrganizationAdminAccountResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "DisableSecurityHubFeatureV2Request":{
+      "type":"structure",
+      "required":["FeatureName"],
+      "members":{
+        "FeatureName":{
+          "shape":"FeatureName",
+          "location":"uri",
+          "locationName":"FeatureName"
+        }
+      }
+    },
+    "DisableSecurityHubFeatureV2Response":{
       "type":"structure",
       "members":{}
     },
@@ -9112,6 +9461,21 @@
         "Feature":{"shape":"SecurityHubFeature"}
       }
     },
+    "EnableSecurityHubFeatureV2Request":{
+      "type":"structure",
+      "required":["FeatureName"],
+      "members":{
+        "FeatureName":{
+          "shape":"FeatureName",
+          "location":"uri",
+          "locationName":"FeatureName"
+        }
+      }
+    },
+    "EnableSecurityHubFeatureV2Response":{
+      "type":"structure",
+      "members":{}
+    },
     "EnableSecurityHubRequest":{
       "type":"structure",
       "members":{
@@ -9144,6 +9508,18 @@
       "type":"list",
       "member":{"shape":"NonEmptyString"}
     },
+    "EnablementStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "PENDING_ENABLEMENT",
+        "FAILED_TO_ENABLE",
+        "PENDING_UPDATE",
+        "FAILED_TO_UPDATE",
+        "PENDING_DELETION",
+        "FAILED_TO_DELETE"
+      ]
+    },
     "EnumConfigurationOptions":{
       "type":"structure",
       "members":{
@@ -9164,6 +9540,30 @@
       "members":{
         "ConnectorArn":{"shape":"NonEmptyString"}
       }
+    },
+    "FeatureDetail":{
+      "type":"structure",
+      "members":{
+        "FeatureStatus":{"shape":"FeatureStatus"},
+        "UpdatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "FeatureName":{
+      "type":"string",
+      "enum":["NETWORK_SCANNING"]
+    },
+    "FeatureNameKey":{"type":"string"},
+    "FeatureStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "Features":{
+      "type":"map",
+      "key":{"shape":"FeatureNameKey"},
+      "value":{"shape":"FeatureDetail"}
     },
     "FieldMap":{
       "type":"map",
@@ -9288,7 +9688,11 @@
         "finding_control_id",
         "finding_class_name",
         "finding_provider",
-        "finding_activity_name"
+        "finding_activity_name",
+        "resource_cloud_providers",
+        "resource_regions",
+        "resource_owner_ids",
+        "resource_owner_organization_ids"
       ]
     },
     "FindingsTrendsStringFilter":{
@@ -9472,6 +9876,40 @@
         "ConfigurationPolicy":{"shape":"Policy"}
       }
     },
+    "GetConnectorRequest":{
+      "type":"structure",
+      "required":["ConnectorId"],
+      "members":{
+        "ConnectorId":{
+          "shape":"NonEmptyString",
+          "location":"uri",
+          "locationName":"ConnectorId"
+        }
+      }
+    },
+    "GetConnectorResponse":{
+      "type":"structure",
+      "required":[
+        "ConnectorId",
+        "Name",
+        "CreatedAt",
+        "LastUpdatedAt",
+        "Health",
+        "ProviderDetail"
+      ],
+      "members":{
+        "ConnectorArn":{"shape":"NonEmptyString"},
+        "ConnectorId":{"shape":"NonEmptyString"},
+        "Name":{"shape":"NonEmptyString"},
+        "Description":{"shape":"NonEmptyString"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "LastUpdatedAt":{"shape":"Timestamp"},
+        "Health":{"shape":"CspmHealthCheck"},
+        "ProviderDetail":{"shape":"CspmProviderDetail"},
+        "CreatedBy":{"shape":"NonEmptyString"},
+        "EnablementStatus":{"shape":"CspmEnablementStatus"}
+      }
+    },
     "GetConnectorV2Request":{
       "type":"structure",
       "required":["ConnectorId"],
@@ -9502,7 +9940,9 @@
         "CreatedAt":{"shape":"Timestamp"},
         "LastUpdatedAt":{"shape":"Timestamp"},
         "Health":{"shape":"HealthCheck"},
-        "ProviderDetail":{"shape":"ProviderDetail"}
+        "ProviderDetail":{"shape":"ProviderDetail"},
+        "EnablementStatus":{"shape":"EnablementStatus"},
+        "EnablementStatusReason":{"shape":"NonEmptyString"}
       }
     },
     "GetEnabledStandardsRequest":{
@@ -9510,7 +9950,8 @@
       "members":{
         "StandardsSubscriptionArns":{"shape":"StandardsSubscriptionArns"},
         "NextToken":{"shape":"NextToken"},
-        "MaxResults":{"shape":"MaxResults"}
+        "MaxResults":{"shape":"MaxResults"},
+        "Providers":{"shape":"StandardsProviders"}
       }
     },
     "GetEnabledStandardsResponse":{
@@ -9837,6 +10278,13 @@
         "metadata.product.name",
         "metadata.product.uid",
         "resources.type",
+        "resources.cloud_partition",
+        "resources.name",
+        "resources.owner.account.uid",
+        "resources.owner.org.uid",
+        "resources.owner.account.name",
+        "resources.provider",
+        "resources.region",
         "resources.uid",
         "severity",
         "status",
@@ -9893,8 +10341,36 @@
       "members":{
         "ConnectorStatus":{"shape":"ConnectorStatus"},
         "Message":{"shape":"NonEmptyString"},
-        "LastCheckedAt":{"shape":"Timestamp"}
+        "LastCheckedAt":{"shape":"Timestamp"},
+        "Issues":{"shape":"HealthIssueList"}
       }
+    },
+    "HealthIssue":{
+      "type":"structure",
+      "required":[
+        "Code",
+        "Message"
+      ],
+      "members":{
+        "Code":{"shape":"HealthIssueCode"},
+        "Message":{"shape":"NonEmptyString"}
+      }
+    },
+    "HealthIssueCode":{
+      "type":"string",
+      "enum":[
+        "AUTHENTICATION_FAILURE",
+        "STREAM_AUTHORIZATION_FAILURE",
+        "DISCOVERY_FAILURE",
+        "STREAM_LIMIT_EXCEEDED",
+        "STREAM_DISCONNECTED",
+        "RECORDING_FAILURE",
+        "NO_HEALTH_DATA"
+      ]
+    },
+    "HealthIssueList":{
+      "type":"list",
+      "member":{"shape":"HealthIssue"}
     },
     "IcmpTypeCode":{
       "type":"structure",
@@ -10122,6 +10598,7 @@
       "type":"list",
       "member":{"shape":"Ipv6CidrBlockAssociation"}
     },
+    "IsoString":{"type":"string"},
     "JiraCloudDetail":{
       "type":"structure",
       "members":{
@@ -10266,6 +10743,44 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListConnectorsRequest":{
+      "type":"structure",
+      "members":{
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"NextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"MaxResults"
+        },
+        "ProviderName":{
+          "shape":"CspmConnectorProviderName",
+          "location":"querystring",
+          "locationName":"ProviderName"
+        },
+        "ConnectorStatus":{
+          "shape":"CspmConnectorStatus",
+          "location":"querystring",
+          "locationName":"ConnectorStatus"
+        },
+        "EnablementStatus":{
+          "shape":"CspmEnablementStatus",
+          "location":"querystring",
+          "locationName":"EnablementStatus"
+        }
+      }
+    },
+    "ListConnectorsResponse":{
+      "type":"structure",
+      "required":["Connectors"],
+      "members":{
+        "NextToken":{"shape":"NextToken"},
+        "Connectors":{"shape":"CspmConnectorSummaryList"}
+      }
+    },
     "ListConnectorsV2Request":{
       "type":"structure",
       "members":{
@@ -10288,6 +10803,11 @@
           "shape":"ConnectorStatus",
           "location":"querystring",
           "locationName":"ConnectorStatus"
+        },
+        "EnablementStatus":{
+          "shape":"EnablementStatus",
+          "location":"querystring",
+          "locationName":"EnablementStatus"
         }
       }
     },
@@ -10437,6 +10957,11 @@
           "shape":"MaxResults",
           "location":"querystring",
           "locationName":"MaxResults"
+        },
+        "Providers":{
+          "shape":"SecurityControlsProviders",
+          "location":"querystring",
+          "locationName":"Providers"
         }
       }
     },
@@ -10934,6 +11459,11 @@
         "remediation.desc",
         "remediation.references",
         "resources.cloud_partition",
+        "resources.name",
+        "resources.owner.account.uid",
+        "resources.owner.org.uid",
+        "resources.owner.account.name",
+        "resources.provider",
         "resources.region",
         "resources.type",
         "resources.uid",
@@ -11101,7 +11631,10 @@
       "enum":[
         "aws",
         "aws-cn",
-        "aws-us-gov"
+        "aws-us-gov",
+        "aws-us-iso",
+        "aws-us-iso-b",
+        "AzureCloud"
       ]
     },
     "PatchSummary":{
@@ -11230,7 +11763,8 @@
       "type":"structure",
       "members":{
         "JiraCloud":{"shape":"JiraCloudProviderConfiguration"},
-        "ServiceNow":{"shape":"ServiceNowProviderConfiguration"}
+        "ServiceNow":{"shape":"ServiceNowProviderConfiguration"},
+        "Azure":{"shape":"AzureProviderConfiguration"}
       },
       "union":true
     },
@@ -11238,7 +11772,8 @@
       "type":"structure",
       "members":{
         "JiraCloud":{"shape":"JiraCloudDetail"},
-        "ServiceNow":{"shape":"ServiceNowDetail"}
+        "ServiceNow":{"shape":"ServiceNowDetail"},
+        "Azure":{"shape":"AzureDetail"}
       },
       "union":true
     },
@@ -11246,14 +11781,16 @@
       "type":"structure",
       "members":{
         "ProviderName":{"shape":"ConnectorProviderName"},
-        "ConnectorStatus":{"shape":"ConnectorStatus"}
+        "ConnectorStatus":{"shape":"ConnectorStatus"},
+        "ProviderConfiguration":{"shape":"ProviderDetail"}
       }
     },
     "ProviderUpdateConfiguration":{
       "type":"structure",
       "members":{
         "JiraCloud":{"shape":"JiraCloudUpdateConfiguration"},
-        "ServiceNow":{"shape":"ServiceNowUpdateConfiguration"}
+        "ServiceNow":{"shape":"ServiceNowUpdateConfiguration"},
+        "Azure":{"shape":"AzureUpdateConfiguration"}
       },
       "union":true
     },
@@ -11391,6 +11928,8 @@
         "Id":{"shape":"NonEmptyString"},
         "Partition":{"shape":"Partition"},
         "Region":{"shape":"NonEmptyString"},
+        "Provider":{"shape":"CloudProviderName"},
+        "Owner":{"shape":"ResourceOwner"},
         "ResourceRole":{"shape":"NonEmptyString"},
         "Tags":{"shape":"FieldMap"},
         "DataClassification":{"shape":"DataClassificationDetails"},
@@ -11413,6 +11952,7 @@
         "AI/ML",
         "Identity",
         "Network",
+        "Messaging",
         "Other"
       ]
     },
@@ -11532,7 +12072,8 @@
         "AwsMskCluster":{"shape":"AwsMskClusterDetails"},
         "AwsS3AccessPoint":{"shape":"AwsS3AccessPointDetails"},
         "AwsEc2ClientVpnEndpoint":{"shape":"AwsEc2ClientVpnEndpointDetails"},
-        "CodeRepository":{"shape":"CodeRepositoryDetails"}
+        "CodeRepository":{"shape":"CodeRepositoryDetails"},
+        "AzureResource":{"shape":"AzureResourceDetails"}
       }
     },
     "ResourceFindingsSummary":{
@@ -11557,7 +12098,13 @@
       "type":"string",
       "enum":[
         "AccountId",
+        "AccountName",
         "Region",
+        "ResourceProvider",
+        "ResourceOwnerAccountId",
+        "ResourceOwnerOrgId",
+        "ResourceCloudPartition",
+        "ResourceRegion",
         "ResourceCategory",
         "ResourceType",
         "ResourceName",
@@ -11598,12 +12145,32 @@
       "error":{"httpStatusCode":404},
       "exception":true
     },
+    "ResourceOwner":{
+      "type":"structure",
+      "members":{
+        "Account":{"shape":"ResourceOwnerAccount"},
+        "Org":{"shape":"ResourceOwnerOrg"}
+      }
+    },
+    "ResourceOwnerAccount":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"NonEmptyString"}
+      }
+    },
+    "ResourceOwnerOrg":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"NonEmptyString"}
+      }
+    },
     "ResourceResult":{
       "type":"structure",
       "required":[
         "ResourceId",
         "AccountId",
         "Region",
+        "ResourceType",
         "ResourceDetailCaptureTimeDt",
         "ResourceConfig"
       ],
@@ -11611,7 +12178,13 @@
         "ResourceGuid":{"shape":"NonEmptyString"},
         "ResourceId":{"shape":"NonEmptyString"},
         "AccountId":{"shape":"NonEmptyString"},
+        "AccountName":{"shape":"NonEmptyString"},
         "Region":{"shape":"NonEmptyString"},
+        "ResourceProvider":{"shape":"NonEmptyString"},
+        "ResourceOwnerAccountId":{"shape":"NonEmptyString"},
+        "ResourceOwnerOrgId":{"shape":"NonEmptyString"},
+        "ResourceCloudPartition":{"shape":"NonEmptyString"},
+        "ResourceRegion":{"shape":"NonEmptyString"},
         "ResourceCategory":{"shape":"ResourceCategory"},
         "ResourceType":{"shape":"NonEmptyString"},
         "ResourceName":{"shape":"NonEmptyString"},
@@ -11753,7 +12326,13 @@
         "ResourceGuid",
         "ResourceId",
         "AccountId",
+        "AccountName",
         "Region",
+        "ResourceProvider",
+        "ResourceOwnerAccountId",
+        "ResourceOwnerOrgId",
+        "ResourceCloudPartition",
+        "ResourceRegion",
         "ResourceCategory",
         "ResourceType",
         "ResourceName",
@@ -11812,7 +12391,11 @@
         "account_id",
         "region",
         "resource_type",
-        "resource_category"
+        "resource_category",
+        "resource_cloud_provider",
+        "resource_region",
+        "resource_owner_id",
+        "resource_owner_organization_id"
       ]
     },
     "ResourcesTrendsStringFilter":{
@@ -12078,6 +12661,19 @@
         "DISABLED"
       ]
     },
+    "ScopeType":{
+      "type":"string",
+      "enum":[
+        "TENANT",
+        "SUBSCRIPTION"
+      ]
+    },
+    "ScopeValueList":{
+      "type":"list",
+      "member":{"shape":"NonEmptyString"},
+      "max":100,
+      "min":0
+    },
     "SecurityControl":{
       "type":"structure",
       "required":[
@@ -12099,7 +12695,8 @@
         "SecurityControlStatus":{"shape":"ControlStatus"},
         "UpdateStatus":{"shape":"UpdateStatus"},
         "Parameters":{"shape":"Parameters"},
-        "LastUpdateReason":{"shape":"AlphaNumericNonEmptyString"}
+        "LastUpdateReason":{"shape":"AlphaNumericNonEmptyString"},
+        "Provider":{"shape":"SecurityControlsProvider"}
       }
     },
     "SecurityControlCustomParameter":{
@@ -12131,7 +12728,8 @@
         "SeverityRating":{"shape":"SeverityRating"},
         "CurrentRegionAvailability":{"shape":"RegionAvailabilityStatus"},
         "CustomizableProperties":{"shape":"CustomizableProperties"},
-        "ParameterDefinitions":{"shape":"ParameterDefinitions"}
+        "ParameterDefinitions":{"shape":"ParameterDefinitions"},
+        "Provider":{"shape":"SecurityControlsProvider"}
       }
     },
     "SecurityControlDefinitions":{
@@ -12164,6 +12762,17 @@
         "DisabledSecurityControlIdentifiers":{"shape":"DisabledSecurityControlIdentifierList"},
         "SecurityControlCustomParameters":{"shape":"SecurityControlCustomParametersList"}
       }
+    },
+    "SecurityControlsProvider":{
+      "type":"string",
+      "enum":[
+        "AWS",
+        "Azure"
+      ]
+    },
+    "SecurityControlsProviders":{
+      "type":"list",
+      "member":{"shape":"SecurityControlsProvider"}
     },
     "SecurityGroups":{
       "type":"list",
@@ -12387,6 +12996,7 @@
         "Name":{"shape":"NonEmptyString"},
         "Description":{"shape":"NonEmptyString"},
         "EnabledByDefault":{"shape":"Boolean"},
+        "Provider":{"shape":"StandardsProvider"},
         "StandardsManagedBy":{"shape":"StandardsManagedBy"}
       }
     },
@@ -12518,6 +13128,17 @@
         "Product":{"shape":"NonEmptyString"}
       }
     },
+    "StandardsProvider":{
+      "type":"string",
+      "enum":[
+        "AWS",
+        "Azure"
+      ]
+    },
+    "StandardsProviders":{
+      "type":"list",
+      "member":{"shape":"StandardsProvider"}
+    },
     "StandardsStatus":{
       "type":"string",
       "enum":[
@@ -12549,7 +13170,8 @@
         "StandardsInput":{"shape":"StandardsInputParameterMap"},
         "StandardsStatus":{"shape":"StandardsStatus"},
         "StandardsControlsUpdatable":{"shape":"StandardsControlsUpdatable"},
-        "StandardsStatusReason":{"shape":"StandardsStatusReason"}
+        "StandardsStatusReason":{"shape":"StandardsStatusReason"},
+        "Provider":{"shape":"StandardsProvider"}
       }
     },
     "StandardsSubscriptionArns":{
@@ -12646,6 +13268,7 @@
       "enum":[
         "NO_AVAILABLE_CONFIGURATION_RECORDER",
         "MAXIMUM_NUMBER_OF_CONFIG_RULES_EXCEEDED",
+        "NO_AVAILABLE_MULTICLOUD_CONNECTOR",
         "INTERNAL_ERROR"
       ]
     },
@@ -13083,6 +13706,26 @@
         "ConfigurationPolicy":{"shape":"Policy"}
       }
     },
+    "UpdateConnectorRequest":{
+      "type":"structure",
+      "required":["ConnectorId"],
+      "members":{
+        "ConnectorId":{
+          "shape":"NonEmptyString",
+          "location":"uri",
+          "locationName":"ConnectorId"
+        },
+        "Description":{"shape":"NonEmptyString"},
+        "Provider":{"shape":"CspmProviderUpdateConfiguration"}
+      }
+    },
+    "UpdateConnectorResponse":{
+      "type":"structure",
+      "members":{
+        "ConnectorStatus":{"shape":"CspmConnectorStatus"},
+        "EnablementStatus":{"shape":"CspmEnablementStatus"}
+      }
+    },
     "UpdateConnectorV2Request":{
       "type":"structure",
       "required":["ConnectorId"],
@@ -13098,7 +13741,10 @@
     },
     "UpdateConnectorV2Response":{
       "type":"structure",
-      "members":{}
+      "members":{
+        "ConnectorStatus":{"shape":"ConnectorStatus"},
+        "EnablementStatus":{"shape":"EnablementStatus"}
+      }
     },
     "UpdateFindingAggregatorRequest":{
       "type":"structure",
