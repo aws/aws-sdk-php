@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.388.0 - 2026-07-07
 
 * `Aws\Lambda` - AWS Lambda Durable Functions now supports customer managed KMS keys. This allows customers to configure a KMS key in Durable Config to have all their durable execution data encrypted.
 * `Aws\Connect` - Adds support for CreateAuthCode and DeleteSession APIs.
