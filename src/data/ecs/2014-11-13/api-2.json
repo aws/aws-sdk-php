@@ -5217,6 +5217,12 @@
         "operatingSystemFamily":{"shape":"OSFamily"}
       }
     },
+    "RuntimePlatformOverride":{
+      "type":"structure",
+      "members":{
+        "cpuArchitecture":{"shape":"String"}
+      }
+    },
     "S3FilesVolumeConfiguration":{
       "type":"structure",
       "required":["fileSystemArn"],
@@ -5639,6 +5645,7 @@
         "vpcLatticeConfigurations":{"shape":"VpcLatticeConfigurations"},
         "resolvedConfiguration":{"shape":"ResolvedConfiguration"},
         "ecsManagedResources":{"shape":"ECSManagedResources"},
+        "overrides":{"shape":"ServiceRevisionOverrides"},
         "monitoring":{"shape":"MonitoringConfiguration"}
       }
     },
@@ -5652,6 +5659,12 @@
     "ServiceRevisionLoadBalancers":{
       "type":"list",
       "member":{"shape":"ServiceRevisionLoadBalancer"}
+    },
+    "ServiceRevisionOverrides":{
+      "type":"structure",
+      "members":{
+        "runtimePlatform":{"shape":"RuntimePlatformOverride"}
+      }
     },
     "ServiceRevisionSummary":{
       "type":"structure",

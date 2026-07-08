@@ -2964,6 +2964,13 @@
       "members":{},
       "document":true
     },
+    "AdvertisedScopeMappingType":{
+      "type":"map",
+      "key":{"shape":"AllowedScopeType"},
+      "value":{"shape":"AllowedScopeType"},
+      "max":50,
+      "min":1
+    },
     "AgentCardDefinition":{
       "type":"structure",
       "members":{
@@ -5215,6 +5222,7 @@
         "allowedAudience":{"shape":"AllowedAudienceList"},
         "allowedClients":{"shape":"AllowedClientsList"},
         "allowedScopes":{"shape":"AllowedScopesType"},
+        "advertisedScopeMapping":{"shape":"AdvertisedScopeMappingType"},
         "customClaims":{"shape":"CustomClaimValidationsType"},
         "privateEndpoint":{"shape":"PrivateEndpoint"},
         "privateEndpointOverrides":{"shape":"PrivateEndpointOverrides"},

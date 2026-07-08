@@ -42,7 +42,7 @@
     "ListSystems": "<p>Lists systems.</p>",
     "ListTagsForResource": "<p>Lists the tags for a resource.</p>",
     "ListUserJourneys": "<p>Lists user journeys for a system.</p>",
-    "StartFailureModeAssessment": "<p>Start a failure mode assessment.</p>",
+    "StartFailureModeAssessment": "<p>Starts a failure mode assessment.</p>",
     "TagResource": "<p>Adds tags to a resource.</p>",
     "UntagResource": "<p>Removes tags from a resource.</p>",
     "UpdateAssertion": "<p>Updates a resilience assertion.</p>",
@@ -80,7 +80,8 @@
       "refs": {
         "Achievability$availabilitySlo": "<p>The achievability status of the availability SLO target for the service.</p>",
         "Achievability$multiAzRtoRpo": "<p>The achievability status of the multi-AZ RTO and RPO targets for the service.</p>",
-        "Achievability$multiRegionRtoRpo": "<p>The achievability status of the multi-Region RTO and RPO targets for the service.</p>"
+        "Achievability$multiRegionRtoRpo": "<p>The achievability status of the multi-Region RTO and RPO targets for the service.</p>",
+        "Achievability$dataRecoveryTimeBetweenBackups": "<p>The achievability status of the data recovery time between backups for the service.</p>"
       }
     },
     "ActorType": {
@@ -253,14 +254,27 @@
         "AssessmentSummary$errorCode": "<p>The error code if the assessment failed.</p>"
       }
     },
+    "AssessmentSortField": {
+      "base": "<p>The field by which to sort failure mode assessment results.</p>",
+      "refs": {
+        "ListFailureModeAssessmentsRequest$sortBy": "<p>The field to use for sorting failure mode assessments.</p>"
+      }
+    },
     "AssessmentStatus": {
       "base": null,
       "refs": {
+        "AssessmentStatusList$member": null,
         "AssessmentSummary$assessmentStatus": "<p>The current status of the assessment.</p>",
         "ListServicesRequest$assessmentStatus": "<p>Filter services by assessment status.</p>",
         "Service$assessmentStatus": "<p>The current assessment status of the service.</p>",
         "ServiceSummary$assessmentStatus": "<p>The current assessment status of the service.</p>",
         "StartFailureModeAssessmentResponse$assessmentStatus": "<p>The status of the started assessment.</p>"
+      }
+    },
+    "AssessmentStatusList": {
+      "base": null,
+      "refs": {
+        "ListFailureModeAssessmentsRequest$assessmentStatuses": "<p>Specifies the assessment statuses to include in the results.</p>"
       }
     },
     "AssessmentStep": {
@@ -317,7 +331,9 @@
       "base": null,
       "refs": {
         "Resource$awsAccountId": "<p>The AWS account ID that owns the resource.</p>",
-        "S3ReportOutputConfiguration$bucketOwner": "<p>Account ID of the bucket owner for cross-account access verification.</p>"
+        "S3ReportOutputConfiguration$bucketOwner": "<p>Account ID of the bucket owner for cross-account access verification.</p>",
+        "ServiceTopologyEdgeSummary$sourceAccount": "<p>The AWS account ID of the source resource.</p>",
+        "ServiceTopologyEdgeSummary$destinationAccount": "<p>The AWS account ID of the destination resource.</p>"
       }
     },
     "AwsRegion": {
@@ -325,7 +341,9 @@
       "refs": {
         "ListResourcesRequest$awsRegion": "<p>Filter resources by AWS Region.</p>",
         "RegionList$member": null,
-        "Resource$awsRegion": "<p>The AWS Region where the resource is located.</p>"
+        "Resource$awsRegion": "<p>The AWS Region where the resource is located.</p>",
+        "ServiceTopologyEdgeSummary$sourceRegion": "<p>The AWS Region of the source resource.</p>",
+        "ServiceTopologyEdgeSummary$destinationRegion": "<p>The AWS Region of the destination resource.</p>"
       }
     },
     "Boolean": {
@@ -333,6 +351,7 @@
       "refs": {
         "CreateSystemRequest$sharingEnabled": "<p>Indicates whether cross-account sharing is enabled for the system.</p>",
         "ImportAppRequest$skipManuallyAddedResources": "<p>Whether to skip manually added resources during import.</p>",
+        "ListResourcesRequest$billable": "<p>Specifies whether to filter non-billable resources. When true (the default), the operation returns only billable resources.</p>",
         "Service$rerunAssessment": "<p>Indicates whether the assessment should be rerun.</p>",
         "System$sharingEnabled": "<p>Indicates whether cross-account sharing is enabled.</p>",
         "UpdateSystemRequest$sharingEnabled": "<p>Whether cross-account sharing is enabled for the system.</p>"
@@ -546,6 +565,18 @@
       "refs": {
         "Service$dependencyDiscovery": "<p>The dependency discovery configuration for the service.</p>",
         "ServiceSummary$dependencyDiscovery": "<p>The dependency discovery configuration.</p>"
+      }
+    },
+    "DependencyDiscoveryConfigEligibleResourceCountInteger": {
+      "base": null,
+      "refs": {
+        "DependencyDiscoveryConfig$eligibleResourceCount": "<p>The count of resources eligible for dependency attribution.</p>"
+      }
+    },
+    "DependencyDiscoveryConfigMessageString": {
+      "base": null,
+      "refs": {
+        "DependencyDiscoveryConfig$message": "<p>A status message for dependency discovery, displayed during the initialization state.</p>"
       }
     },
     "DependencyDiscoveryInput": {
@@ -1388,6 +1419,18 @@
         "ResourceTag$values": "<p>The list of tag values.</p>"
       }
     },
+    "ResourceTypeFilter": {
+      "base": null,
+      "refs": {
+        "ResourceTypeFilterList$member": null
+      }
+    },
+    "ResourceTypeFilterList": {
+      "base": null,
+      "refs": {
+        "ListResourcesRequest$resourceTypes": "<p>The CloudFormation resource types to include in the response.</p>"
+      }
+    },
     "ResourceTypeList": {
       "base": null,
       "refs": {
@@ -1665,6 +1708,12 @@
       "base": "<p>Contains the effective availability SLO value and its source.</p>",
       "refs": {
         "EffectivePolicyValues$availabilitySlo": "<p>The effective availability SLO value for the service.</p>"
+      }
+    },
+    "SortOrder": {
+      "base": "<p>The order in which to sort results.</p>",
+      "refs": {
+        "ListFailureModeAssessmentsRequest$sortOrder": "<p>The sort order for results.</p>"
       }
     },
     "StartFailureModeAssessmentRequest": {
@@ -1981,6 +2030,8 @@
         "InputSourceSummary$createdAt": "<p>The timestamp when the input source was created.</p>",
         "ListDependenciesRequest$queryRangeStartTime": "<p>The start time for the dependency query range.</p>",
         "ListDependenciesRequest$queryRangeEndTime": "<p>The end time for the dependency query range.</p>",
+        "ListFailureModeAssessmentsRequest$startedAfter": "<p>Specifies that only assessments that started at or after this timestamp appear in the results.</p>",
+        "ListFailureModeAssessmentsRequest$endedBefore": "<p>Specifies that only assessments that ended at or before this timestamp appear in the results.</p>",
         "ListServiceEventsRequest$startTime": "<p>The start time for filtering events.</p>",
         "ListServiceEventsRequest$endTime": "<p>The end time for filtering events.</p>",
         "ListSystemEventsRequest$startTime": "<p>The start time for filtering events.</p>",

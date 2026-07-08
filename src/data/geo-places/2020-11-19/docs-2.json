@@ -1,12 +1,12 @@
 {
   "version": "2.0",
-  "service": "<p> The Places API enables powerful location search and geocoding capabilities for your applications, offering global coverage with rich, detailed information. Key features include: </p> <ul> <li> <p>Forward and reverse geocoding for addresses and coordinates</p> </li> <li> <p>Comprehensive place searches with detailed information, including:</p> <ul> <li> <p>Business names and addresses</p> </li> <li> <p>Contact information</p> </li> <li> <p>Hours of operation</p> </li> <li> <p>POI (Points of Interest) categories</p> </li> <li> <p>Food types for restaurants</p> </li> <li> <p>Chain affiliation for relevant businesses</p> </li> </ul> </li> <li> <p>Global data coverage with a wide range of POI categories</p> </li> <li> <p>Regular data updates to ensure accuracy and relevance</p> </li> </ul>",
+  "service": "<p> The Places API enables powerful location search and geocoding capabilities for your applications, offering global coverage with rich, detailed information. Key features include: </p> <ul> <li> <p>Forward and reverse geocoding for addresses and coordinates. See <a href=\"https://docs.aws.amazon.com/location/latest/APIReference/API_geoplaces_Geocode.html\">Geocode</a> and <a href=\"https://docs.aws.amazon.com/location/latest/APIReference/API_geoplaces_ReverseGeocode.html\">ReverseGeocode</a>.</p> </li> <li> <p>Comprehensive place searches with detailed information. See <a href=\"https://docs.aws.amazon.com/location/latest/APIReference/API_geoplaces_SearchText.html\">SearchText</a>, <a href=\"https://docs.aws.amazon.com/location/latest/APIReference/API_geoplaces_SearchNearby.html\">SearchNearby</a>, and <a href=\"https://docs.aws.amazon.com/location/latest/APIReference/API_geoplaces_GetPlace.html\">GetPlace</a>. Place information you can find include:</p> <ul> <li> <p>Business names and addresses</p> </li> <li> <p>Contact information</p> </li> <li> <p>Hours of operation</p> </li> <li> <p>Points of Interest (POI) categories</p> </li> <li> <p>Food types for restaurants</p> </li> <li> <p>Chain affiliation for relevant businesses</p> </li> </ul> </li> <li> <p>Address and place completion as users type, enhancing input efficiency by completing partial queries with valid addresses. See <a href=\"https://docs.aws.amazon.com/location/latest/APIReference/API_geoplaces_Autocomplete.html\">Autocomplete</a>.</p> </li> <li> <p>Intelligent place and query recommendation based on user's input or context, returning relevant places, points of interest, query terms, or search categories. See <a href=\"https://docs.aws.amazon.com/location/latest/APIReference/API_geoplaces_Suggest.html\">Suggest</a>.</p> </li> <li> <p>Global data coverage with a wide range of POI categories.</p> </li> <li> <p>Regular data updates to ensure accuracy and relevance.</p> </li> <li> <p>Bulk address validation for verifying and standardizing large volumes of addresses in a single operation using <a href=\"https://docs.aws.amazon.com/location/latest/APIReference/Welcome.html#Welcome_Amazon_Location_Service_Jobs\">Amazon Location Service Jobs</a>.</p> </li> </ul>",
   "operations": {
-    "Autocomplete": "<p> <code>Autocomplete</code> completes potential places and addresses as the user types, based on the partial input. The API enhances the efficiency and accuracy of address by completing query based on a few entered keystrokes. It helps you by completing partial queries with valid address completion. Also, the API supports the filtering of results based on geographic location, country, or specific place types, and can be tailored using optional parameters like language and political views.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/autocomplete.html\">Autocomplete</a> in the <i>Amazon Location Service Developer Guide</i>.</p>",
-    "Geocode": "<p> <code>Geocode</code> converts a textual address or place into geographic coordinates. You can obtain geographic coordinates, address component, and other related information. It supports flexible queries, including free-form text or structured queries with components like street names, postal codes, and regions. The Geocode API can also provide additional features such as time zone information and the inclusion of political views.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/geocode.html\">Geocode</a> in the <i>Amazon Location Service Developer Guide</i>.</p>",
+    "Autocomplete": "<p> <code>Autocomplete</code> completes potential places and addresses as the user types, based on the partial input. The API enhances the efficiency and accuracy of address by completing query based on a few entered keystrokes. It helps you by completing partial queries with valid address completion. Also, the API supports the filtering of results based on geographic location, country, or specific place types, and can be tailored using optional parameters like language and political views. Not supported in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/autocomplete.html\">Autocomplete</a> in the <i>Amazon Location Service Developer Guide</i>.</p>",
+    "Geocode": "<p> <code>Geocode</code> converts a textual address or place into geographic coordinates. You can obtain geographic coordinates, address component, and other related information. It supports flexible queries, including free-form text or structured queries with components like street names, postal codes, and regions. The Geocode API can also provide additional features such as time zone information and the inclusion of political views. Not supported in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/geocode.html\">Geocode</a> in the <i>Amazon Location Service Developer Guide</i>.</p>",
     "GetPlace": "<p> <code>GetPlace</code> finds a place by its unique ID. A <code>PlaceId</code> is returned by other place operations.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/get-place.html\">GetPlace</a> in the <i>Amazon Location Service Developer Guide</i>.</p>",
     "ReverseGeocode": "<p> <code>ReverseGeocode</code> converts geographic coordinates into a human-readable address or place. You can obtain address component, and other related information such as place type, category, street information. The Reverse Geocode API supports filtering to on place type so that you can refine result based on your need. Also, The Reverse Geocode API can also provide additional features such as time zone information and the inclusion of political views.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/reverse-geocode.html\">Reverse Geocode</a> in the <i>Amazon Location Service Developer Guide</i>.</p>",
-    "SearchNearby": "<p> <code>SearchNearby</code> queries for points of interest within a radius from a central coordinates, returning place results with optional filters such as categories, business chains, food types and more. The API returns details such as a place name, address, phone, category, food type, contact, opening hours. Also, the API can return phonemes, time zones and more based on requested parameters.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/search-nearby.html\">Search Nearby</a> in the <i>Amazon Location Service Developer Guide</i>.</p>",
+    "SearchNearby": "<p> <code>SearchNearby</code> queries for points of interest within a radius from a central coordinates, returning place results with optional filters such as categories, business chains, food types and more. The API returns details such as a place name, address, phone, category, food type, contact, opening hours. Also, the API can return phonemes, time zones and more based on requested parameters. Not supported in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/search-nearby.html\">Search Nearby</a> in the <i>Amazon Location Service Developer Guide</i>.</p>",
     "SearchText": "<p> <code>SearchText</code> searches for geocode and place information. You can then complete a follow-up query suggested from the <code>Suggest</code> API via a query id.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/search-text.html\">Search Text</a> in the <i>Amazon Location Service Developer Guide</i>.</p>",
     "Suggest": "<p> <code>Suggest</code> provides intelligent predictions or recommendations based on the user's input or context, such as relevant places, points of interest, query terms or search category. It is designed to help users find places or point of interests candidates or identify a follow on query based on incomplete or misspelled queries. It returns a list of possible matches or refinements that can be used to formulate a more accurate query. Users can select the most appropriate suggestion and use it for further searching. The API provides options for filtering results by location and other attributes, and allows for additional features like phonemes and timezones. The response includes refined query terms and detailed place information.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/suggest.html\">Suggest</a> in the <i>Amazon Location Service Developer Guide</i>.</p>"
   },
@@ -32,6 +32,12 @@
         "SearchNearbyResultItem$AccessPoints": "<p>Position of the access point in World Geodetic System (WGS 84) format: [longitude, latitude].</p>",
         "SearchTextResultItem$AccessPoints": "<p>Position of the access point in World Geodetic System (WGS 84) format: [longitude, latitude].</p>",
         "SuggestPlaceResult$AccessPoints": "<p> Position of the access point in World Geodetic System (WGS 84) format: [longitude, latitude]. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>"
+      }
+    },
+    "AccessPointType": {
+      "base": null,
+      "refs": {
+        "AccessPoint$Type": "<p>The type of access point, indicating its intended use. Only applies to results of type place.</p>"
       }
     },
     "AccessRestriction": {
@@ -139,6 +145,39 @@
       "base": null,
       "refs": {
         "Address$SubDistrict": "<p>A subdivision of a district. </p> <p>Example: <code>Minden-Lübbecke</code>.</p>"
+      }
+    },
+    "AddressTranslationComponent": {
+      "base": null,
+      "refs": {
+        "AddressTranslationComponentList$member": null
+      }
+    },
+    "AddressTranslationComponentList": {
+      "base": null,
+      "refs": {
+        "GeocodeRequest$AddressTranslations": "<p>Specifies which address components to include translations for. Translations include all name variants and alternative names for the requested fields in all available languages. Valid values are <code>District</code>, <code>Locality</code>, <code>Region</code>, and <code>SubRegion</code>.</p>"
+      }
+    },
+    "AdminNames": {
+      "base": "<p>The official administrative names for an address component, returned when <code>AddressNamesMode</code> is set to <code>Administrative</code>.</p>",
+      "refs": {
+        "AdminNamesList$member": null
+      }
+    },
+    "AdminNamesList": {
+      "base": null,
+      "refs": {
+        "TranslationDetails$Locality": "<p>A list of administrative names and translations for the locality address component.</p>",
+        "TranslationDetails$Region": "<p>A list of administrative names and translations for the region address component.</p>",
+        "TranslationDetails$District": "<p>A list of administrative names and translations for the district address component.</p>",
+        "TranslationDetails$SubRegion": "<p>A list of administrative names and translations for the sub-region address component.</p>"
+      }
+    },
+    "AdminNamesPreference": {
+      "base": null,
+      "refs": {
+        "AdminNames$Preference": "<p>Indicates the preference level of the administrative name. Valid values are <code>Primary</code> and <code>Alternative</code>.</p>"
       }
     },
     "ApiKey": {
@@ -305,6 +344,7 @@
       "refs": {
         "AccessRestriction$Categories": "<p>Categories of results that results must belong too.</p>",
         "ContactDetails$Categories": "<p>Categories of results that results must belong too.</p>",
+        "CrossReference$SourceCategories": "<p>The list of place category identifiers this supplier reference relates to.</p>",
         "GeocodeResultItem$Categories": "<p>Categories of results that results must belong to.</p>",
         "GetPlaceResponse$Categories": "<p>Categories of results that results must belong to.</p>",
         "OpeningHours$Categories": "<p>Categories of results that results must belong too.</p>",
@@ -427,6 +467,33 @@
         "Country$Name": "<p>Name of the country.</p>"
       }
     },
+    "CrossReference": {
+      "base": "<p>A reference to a third-party supplier's identifier for a place, enabling correlation of places across external systems.</p>",
+      "refs": {
+        "CrossReferenceList$member": null
+      }
+    },
+    "CrossReferenceList": {
+      "base": null,
+      "refs": {
+        "GetPlaceResponse$CrossReferences": "<p>The list of supplier references available for this place. Requires the <code>CrossReferences</code> additional feature to be enabled.</p>",
+        "SearchNearbyResultItem$CrossReferences": "<p>The list of supplier references available for this place. Requires the <code>CrossReferences</code> additional feature to be enabled.</p>",
+        "SearchTextResultItem$CrossReferences": "<p>The list of supplier references available for this place. Requires the <code>CrossReferences</code> additional feature to be enabled.</p>",
+        "SuggestPlaceResult$CrossReferences": "<p>The list of supplier references available for this place. Requires the <code>CrossReferences</code> additional feature to be enabled.</p>"
+      }
+    },
+    "CrossReferenceSourcePlaceIdString": {
+      "base": null,
+      "refs": {
+        "CrossReference$SourcePlaceId": "<p>The place identifier assigned by the third-party supplier.</p>"
+      }
+    },
+    "CrossReferenceSourceString": {
+      "base": null,
+      "refs": {
+        "CrossReference$Source": "<p>The name of the third-party data supplier (for example, <code>Yelp</code> or <code>TripAdvisor</code>).</p>"
+      }
+    },
     "DistanceMeters": {
       "base": null,
       "refs": {
@@ -539,6 +606,12 @@
       "base": null,
       "refs": {
         "GeocodeRequest$AdditionalFeatures": "<p>A list of optional additional parameters, such as time zone, that can be requested for each result.</p>"
+      }
+    },
+    "GeocodeAddressNamesMode": {
+      "base": null,
+      "refs": {
+        "GeocodeRequest$AddressNamesMode": "<p>Specifies how address names are returned. If not set, the service returns normalized (official) names by default. When set to <code>Matched</code>, address names in the response are based on the input query rather than official names. When set to <code>Administrative</code>, the service returns the official administrative names for address components. <code>Administrative</code> currently applies only to addresses in the United States.</p>"
       }
     },
     "GeocodeFilter": {
@@ -687,6 +760,12 @@
         "GetPlaceRequest$AdditionalFeatures": "<p> A list of optional additional parameters such as time zone that can be requested for each result. For <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers, <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions support only the <code>TimeZone</code> value. </p>"
       }
     },
+    "GetPlaceAddressNamesMode": {
+      "base": null,
+      "refs": {
+        "GetPlaceRequest$AddressNamesMode": "<p>Specifies how address names are returned. When set to <code>Administrative</code>, the service returns the official administrative names for address components. <code>Administrative</code> currently applies only to addresses in the United States.</p>"
+      }
+    },
     "GetPlaceIntendedUse": {
       "base": null,
       "refs": {
@@ -824,16 +903,17 @@
     "LanguageTag": {
       "base": null,
       "refs": {
-        "AutocompleteRequest$Language": "<p>A list of <a href=\"https://en.wikipedia.org/wiki/IETF_language_tag\">BCP 47</a> compliant language codes for the results to be rendered in. If there is no data for the result in the requested language, data will be returned in the default language for the entry.</p>",
-        "AutocompleteResultItem$Language": "<p>A list of <a href=\"https://en.wikipedia.org/wiki/IETF_language_tag\">BCP 47</a> compliant language codes for the results to be rendered in. If there is no data for the result in the requested language, data will be returned in the default language for the entry.</p>",
-        "GeocodeRequest$Language": "<p>A list of <a href=\"https://en.wikipedia.org/wiki/IETF_language_tag\">BCP 47</a> compliant language codes for the results to be rendered in. If there is no data for the result in the requested language, data will be returned in the default language for the entry.</p>",
-        "GetPlaceRequest$Language": "<p> A list of <a href=\"https://en.wikipedia.org/wiki/IETF_language_tag\">BCP 47</a> compliant language codes for the results to be rendered in. If there is no data for the result in the requested language, data will be returned in the default language for the entry. For <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers, <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions support only the following codes: <code>en, id, km, lo, ms, my, pt, th, tl, vi, zh</code> </p>",
-        "PhonemeTranscription$Language": "<p>A list of <a href=\"https://en.wikipedia.org/wiki/IETF_language_tag\">BCP 47</a> compliant language codes for the results to be rendered in. If there is no data for the result in the requested language, data will be returned in the default language for the entry.</p>",
-        "ReverseGeocodeRequest$Language": "<p> A list of <a href=\"https://en.wikipedia.org/wiki/IETF_language_tag\">BCP 47</a> compliant language codes for the results to be rendered in. If there is no data for the result in the requested language, data will be returned in the default language for the entry. For <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers, <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions support only the following codes: <code>en, id, km, lo, ms, my, pt, th, tl, vi, zh</code> </p>",
-        "SearchNearbyRequest$Language": "<p>A list of <a href=\"https://en.wikipedia.org/wiki/IETF_language_tag\">BCP 47</a> compliant language codes for the results to be rendered in. If there is no data for the result in the requested language, data will be returned in the default language for the entry.</p>",
-        "SearchTextRequest$Language": "<p>A list of <a href=\"https://en.wikipedia.org/wiki/IETF_language_tag\">BCP 47</a> compliant language codes for the results to be rendered in. If there is no data for the result in the requested language, data will be returned in the default language for the entry. For <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers, <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions support only the following codes: <code>en, id, km, lo, ms, my, pt, th, tl, vi, zh</code> </p>",
-        "StreetComponents$Language": "<p>A <a href=\"https://en.wikipedia.org/wiki/IETF_language_tag\">BCP 47</a> compliant language codes for the results to be rendered in. If there is no data for the result in the requested language, data will be returned in the default language for the entry.</p>",
-        "SuggestRequest$Language": "<p> A list of <a href=\"https://en.wikipedia.org/wiki/IETF_language_tag\">BCP 47</a> compliant language codes for the results to be rendered in. If there is no data for the result in the requested language, data will be returned in the default language for the entry. For <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers, <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions support only the following codes: <code>en, id, km, lo, ms, my, pt, th, tl, vi, zh</code> </p>"
+        "AutocompleteRequest$Language": "<p>A list of <a href=\"https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry\">BCP 47</a> compliant language codes for the results to be rendered in. If there is no data for the result in the requested language, data will be returned in the default language for the entry.</p>",
+        "AutocompleteResultItem$Language": "<p>A list of <a href=\"https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry\">BCP 47</a> compliant language codes for the results to be rendered in. If there is no data for the result in the requested language, data will be returned in the default language for the entry.</p>",
+        "GeocodeRequest$Language": "<p>A list of <a href=\"https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry\">BCP 47</a> compliant language codes for the results to be rendered in. If there is no data for the result in the requested language, data will be returned in the default language for the entry.</p>",
+        "GetPlaceRequest$Language": "<p> A list of <a href=\"https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry\">BCP 47</a> compliant language codes for the results to be rendered in. If there is no data for the result in the requested language, data will be returned in the default language for the entry. For <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers, <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions support only the following codes: <code>en, id, km, lo, ms, my, pt, th, tl, vi, zh</code> </p>",
+        "PhonemeTranscription$Language": "<p>A list of <a href=\"https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry\">BCP 47</a> compliant language codes for the results to be rendered in. If there is no data for the result in the requested language, data will be returned in the default language for the entry.</p>",
+        "ReverseGeocodeRequest$Language": "<p> A list of <a href=\"https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry\">BCP 47</a> compliant language codes for the results to be rendered in. If there is no data for the result in the requested language, data will be returned in the default language for the entry. For <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers, <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions support only the following codes: <code>en, id, km, lo, ms, my, pt, th, tl, vi, zh</code> </p>",
+        "SearchNearbyRequest$Language": "<p>A list of <a href=\"https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry\">BCP 47</a> compliant language codes for the results to be rendered in. If there is no data for the result in the requested language, data will be returned in the default language for the entry.</p>",
+        "SearchTextRequest$Language": "<p>A list of <a href=\"https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry\">BCP 47</a> compliant language codes for the results to be rendered in. If there is no data for the result in the requested language, data will be returned in the default language for the entry. For <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers, <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions support only the following codes: <code>en, id, km, lo, ms, my, pt, th, tl, vi, zh</code> </p>",
+        "StreetComponents$Language": "<p>A <a href=\"https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry\">BCP 47</a> compliant language codes for the results to be rendered in. If there is no data for the result in the requested language, data will be returned in the default language for the entry.</p>",
+        "SuggestRequest$Language": "<p> A list of <a href=\"https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry\">BCP 47</a> compliant language codes for the results to be rendered in. If there is no data for the result in the requested language, data will be returned in the default language for the entry. For <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers, <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions support only the following codes: <code>en, id, km, lo, ms, my, pt, th, tl, vi, zh</code> </p>",
+        "TranslationName$Language": "<p>A <a href=\"https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry\">BCP 47</a> compliant language code for the translation name.</p>"
       }
     },
     "MatchScore": {
@@ -915,7 +995,7 @@
       "refs": {
         "GetPlaceResponse$OpeningHours": "<p> List of opening hours objects. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>",
         "SearchNearbyResultItem$OpeningHours": "<p>List of opening hours objects.</p>",
-        "SearchTextResultItem$OpeningHours": "<p>List of opening hours objects.</p>"
+        "SearchTextResultItem$OpeningHours": "<p> List of opening hours objects. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>"
       }
     },
     "ParsedQueryComponent": {
@@ -945,7 +1025,8 @@
         "GeocodeParsedQueryAddressComponents$SubBlock": "<p>Name of sub-block. </p> <p>Example: <code>Sunny Mansion 203 sub-block: 4</code> </p>",
         "GeocodeParsedQueryAddressComponents$Street": "<p>The name of the street results should be present in.</p>",
         "GeocodeParsedQueryAddressComponents$AddressNumber": "<p>The number that identifies an address within a street.</p>",
-        "GeocodeParsedQueryAddressComponents$Building": "<p>The name of the building at the address.</p>"
+        "GeocodeParsedQueryAddressComponents$Building": "<p>The name of the building at the address.</p>",
+        "GeocodeParsedQueryAddressComponents$OtherComponents": "<p>Additional information extracted from the query that does not correspond to standard address components.</p>"
       }
     },
     "ParsedQueryComponentQueryComponentString": {
@@ -1044,6 +1125,21 @@
         "PhonemeTranscription$Value": "<p>Value which indicates how to pronounce the value.</p>"
       }
     },
+    "PlaceAttribute": {
+      "base": null,
+      "refs": {
+        "PlaceAttributeList$member": null
+      }
+    },
+    "PlaceAttributeList": {
+      "base": null,
+      "refs": {
+        "GetPlaceResponse$PlaceAttributes": "<p>A list of place attributes for the result, such as whether the business offers drive-through service.</p>",
+        "SearchNearbyResultItem$PlaceAttributes": "<p>A list of place attributes for the result, such as whether the business offers drive-through service.</p>",
+        "SearchTextResultItem$PlaceAttributes": "<p>A list of place attributes for the result, such as whether the business offers drive-through service.</p>",
+        "SuggestPlaceResult$PlaceAttributes": "<p>A list of place attributes for the result, such as whether the business offers drive-through service.</p>"
+      }
+    },
     "PlaceType": {
       "base": null,
       "refs": {
@@ -1107,7 +1203,8 @@
     "PostalCodeMode": {
       "base": null,
       "refs": {
-        "AutocompleteRequest$PostalCodeMode": "<p>The <code>PostalCodeMode</code> affects how postal code results are returned. If a postal code spans multiple localities and this value is empty, partial district or locality information may be returned under a single postal code result entry. If it's populated with the value <code>EnumerateSpannedLocalities</code>, all cities in that postal code are returned.</p>"
+        "AutocompleteRequest$PostalCodeMode": "<p>The <code>PostalCodeMode</code> affects how postal code results are returned. If a postal code spans multiple localities and this value is empty, partial district or locality information may be returned under a single postal code result entry. If it's populated with the value <code>EnumerateSpannedLocalities</code>, all cities in that postal code are returned. If it's populated with the value <code>EnumerateSpannedDistricts</code>, all combinations of the postal code with the corresponding district and city names are returned.</p>",
+        "GeocodeRequest$PostalCodeMode": "<p>The <code>PostalCodeMode</code> affects how postal code results are returned. If a postal code spans multiple localities and this value is empty, partial district or locality information may be returned under a single postal code result entry. If it's populated with the value <code>EnumerateSpannedLocalities</code>, all cities in that postal code are returned. If it's populated with the value <code>EnumerateSpannedDistricts</code>, all combinations of the postal code with the corresponding district and city names are returned.</p>"
       }
     },
     "PostalCodeType": {
@@ -1193,7 +1290,8 @@
       "refs": {
         "GeocodeResultItem$MainAddress": "<p>The main address corresponding to a place of type Secondary Address.</p>",
         "GetPlaceResponse$MainAddress": "<p> The main address corresponding to a place of type Secondary Address. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>",
-        "RelatedPlaceList$member": null
+        "RelatedPlaceList$member": null,
+        "ReverseGeocodeResultItem$MainAddress": "<p>The main address corresponding to a place of type Secondary Address.</p>"
       }
     },
     "RelatedPlaceList": {
@@ -1225,6 +1323,12 @@
       "base": null,
       "refs": {
         "ReverseGeocodeRequest$AdditionalFeatures": "<p> A list of optional additional parameters, such as time zone that can be requested for each result. For <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers, <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions support only the <code>TimeZone</code> value. </p>"
+      }
+    },
+    "ReverseGeocodeAddressNamesMode": {
+      "base": null,
+      "refs": {
+        "ReverseGeocodeRequest$AddressNamesMode": "<p>Specifies how address names are returned. When set to <code>Administrative</code>, the service returns the official administrative names for address components. <code>Administrative</code> currently applies only to addresses in the United States.</p>"
       }
     },
     "ReverseGeocodeFilter": {
@@ -1437,6 +1541,12 @@
         "SearchTextResultItem$Title": "<p>The item's title.</p>"
       }
     },
+    "SearchTextTravelMode": {
+      "base": null,
+      "refs": {
+        "SearchTextRequest$TravelMode": "<p>Indicates the mode of mobility used by the end user. This is used to improve the relevance of search results. Valid values are <code>Car</code>, <code>Scooter</code>, and <code>Truck</code>.</p>"
+      }
+    },
     "SecondaryAddressComponent": {
       "base": "<p>Components that correspond to secondary identifiers on an address. The only component type supported currently is Unit.</p>",
       "refs": {
@@ -1476,16 +1586,29 @@
     "SensitiveBoolean": {
       "base": null,
       "refs": {
+        "AccessPoint$Primary": "<p>Set to <code>true</code> for the primary access position when the place has more than one access point.</p>",
         "AccessRestriction$Restricted": "<p>The restriction.</p>",
+        "AutocompleteResultItem$EstimatedPointAddress": "<p>If <code>true</code>, indicates that the coordinates of the position and access points of the point address are estimated.</p>",
         "Category$Primary": "<p>Boolean which indicates if this category is the primary offered by the place.</p>",
         "FoodType$Primary": "<p>Boolean which indicates if this food type is the primary offered by the place. For example, if a location serves fast food, but also dessert, he primary would likely be fast food.</p>",
         "GeocodeResultItem$AddressNumberCorrected": "<p>Boolean indicating if the address provided has been corrected.</p>",
+        "GeocodeResultItem$EstimatedPointAddress": "<p>If <code>true</code>, indicates that the coordinates of the position and access points of the point address are estimated.</p>",
         "GetPlaceResponse$AddressNumberCorrected": "<p> Boolean indicating if the address provided has been corrected. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>",
+        "GetPlaceResponse$EstimatedPointAddress": "<p>If <code>true</code>, indicates that the coordinates of the position and access points of the point address are estimated.</p>",
         "OpeningHours$OpenNow": "<p>Boolean which indicates if the result/place is currently open. </p>",
         "PhonemeTranscription$Preferred": "<p>Boolean which indicates if it the preferred pronunciation.</p>",
         "ReverseGeocodeResultItem$AddressNumberCorrected": "<p> Boolean indicating if the address provided has been corrected. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>",
+        "ReverseGeocodeResultItem$EstimatedPointAddress": "<p>If <code>true</code>, indicates that the coordinates of the position and access points of the point address are estimated.</p>",
         "SearchNearbyResultItem$AddressNumberCorrected": "<p>Boolean indicating if the address provided has been corrected.</p>",
-        "SearchTextResultItem$AddressNumberCorrected": "<p>Boolean indicating if the address provided has been corrected.</p>"
+        "SearchTextResultItem$AddressNumberCorrected": "<p>Boolean indicating if the address provided has been corrected.</p>",
+        "TranslationName$Primary": "<p>If <code>true</code>, indicates this is the primary name variant for the given language.</p>",
+        "TranslationName$Transliterated": "<p>If <code>true</code>, indicates this name is a transliterated version rather than a native script translation.</p>"
+      }
+    },
+    "SensitiveString": {
+      "base": null,
+      "refs": {
+        "AccessPoint$Label": "<p>A short textual description of the access point, such as <code>\"North Entrance\"</code>.</p>"
       }
     },
     "StreetComponents": {
@@ -1682,6 +1805,12 @@
         "SuggestResultItem$SuggestResultItemType": "<p>The result type. Place results represent the final result for a point of interest, Query results represent a follow up query which can be completed through the SearchText operation.</p>"
       }
     },
+    "SuggestTravelMode": {
+      "base": null,
+      "refs": {
+        "SuggestRequest$TravelMode": "<p>Indicates the mode of mobility used by the end user. This is used to improve the relevance of search results. Valid values are <code>Car</code>, <code>Scooter</code>, and <code>Truck</code>.</p>"
+      }
+    },
     "ThrottlingException": {
       "base": "<p>The request was denied due to request throttling.</p>",
       "refs": {}
@@ -1722,6 +1851,36 @@
         "SearchNearbyResponse$NextToken": "<p>If <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. </p>",
         "SearchTextRequest$NextToken": "<p>If <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. </p>",
         "SearchTextResponse$NextToken": "<p>If <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. </p>"
+      }
+    },
+    "TranslationDetails": {
+      "base": "<p>Translation details for the address, including alternative names and translations in available languages.</p>",
+      "refs": {
+        "GeocodeResultItem$Translations": "<p>All name translations and alternative names for the requested address fields in all available languages.</p>"
+      }
+    },
+    "TranslationName": {
+      "base": "<p>A translation or alternative name for an address component.</p>",
+      "refs": {
+        "TranslationNameList$member": null
+      }
+    },
+    "TranslationNameList": {
+      "base": null,
+      "refs": {
+        "AdminNames$Names": "<p>A list of translation names for the administrative address component, including name variants and translations in available languages.</p>"
+      }
+    },
+    "TranslationNameType": {
+      "base": null,
+      "refs": {
+        "TranslationName$Type": "<p>The type of translation name. Valid values are <code>Abbreviation</code>, <code>AreaCode</code>, <code>BaseName</code>, <code>Exonym</code>, <code>Shortened</code>, and <code>Synonym</code>.</p>"
+      }
+    },
+    "TranslationNameValueString": {
+      "base": null,
+      "refs": {
+        "TranslationName$Value": "<p>The translated or alternative name value.</p>"
       }
     },
     "TypePlacement": {

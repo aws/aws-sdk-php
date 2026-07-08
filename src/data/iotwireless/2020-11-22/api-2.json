@@ -2648,6 +2648,13 @@
       "type":"list",
       "member":{"shape":"DakCertificateMetadata"}
     },
+    "DefaultSessionParametersMulticast":{
+      "type":"structure",
+      "members":{
+        "DlDr":{"shape":"DlDr"},
+        "DlFreq":{"shape":"DlFreq"}
+      }
+    },
     "DeleteDestinationRequest":{
       "type":"structure",
       "required":["Name"],
@@ -4930,7 +4937,8 @@
       "members":{
         "RfRegion":{"shape":"SupportedRfRegion"},
         "DlClass":{"shape":"DlClass"},
-        "ParticipatingGateways":{"shape":"ParticipatingGatewaysMulticast"}
+        "ParticipatingGateways":{"shape":"ParticipatingGatewaysMulticast"},
+        "DefaultSessionParameters":{"shape":"DefaultSessionParametersMulticast"}
       }
     },
     "LoRaWANMulticastGet":{
@@ -4940,7 +4948,8 @@
         "DlClass":{"shape":"DlClass"},
         "NumberOfDevicesRequested":{"shape":"NumberOfDevicesRequested"},
         "NumberOfDevicesInGroup":{"shape":"NumberOfDevicesInGroup"},
-        "ParticipatingGateways":{"shape":"ParticipatingGatewaysMulticast"}
+        "ParticipatingGateways":{"shape":"ParticipatingGatewaysMulticast"},
+        "DefaultSessionParameters":{"shape":"DefaultSessionParametersMulticast"}
       }
     },
     "LoRaWANMulticastMetadata":{

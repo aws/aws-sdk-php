@@ -43,7 +43,7 @@
     "ListHostedConfigurationVersions": "<p>Lists configurations stored in the AppConfig hosted configuration store by version. </p>",
     "ListTagsForResource": "<p>Retrieves the list of key-value tags assigned to the resource.</p>",
     "StartDeployment": "<p>Starts a deployment.</p> <note> <p>AppConfig Agent supports deploying feature flag or free-form configuration data to specific segments or individual users during a gradual rollout. Entity-based gradual deployments ensure that once a user or segment receives a configuration version, they continue to receive that same version throughout the deployment period, regardless of which compute resource serves their requests. For more information, see <a href=\"https://docs.aws.amazon.com/appconfig/latest/userguide/appconfig-agent-how-to-use.html#appconfig-entity-based-gradual-deployments\">Using AppConfig Agent for user-based or entity-based gradual deployments</a> </p> </note>",
-    "StartExperimentRun": "<p>Starts an experiment run for the specified experiment definition. An experiment run delivers treatments to the target audience and collects metrics. You can start multiple experiment runs from the same experiment definition.</p>",
+    "StartExperimentRun": "<p>Starts an experiment run for the specified experiment definition. An experiment run delivers treatments to the target audience and collects metrics. You can start multiple experiment runs from the same experiment definition.</p> <note> <p>Billing for this experiment begins when you call this operation and continues until the experiment is stopped. For pricing details, see <a href=\"https://aws.amazon.com/systems-manager/pricing/\">AppConfig pricing</a>.</p> </note>",
     "StopDeployment": "<p>Stops a deployment. This API action works only on deployments that have a status of <code>DEPLOYING</code>, unless an <code>AllowRevert</code> parameter is supplied. If the <code>AllowRevert</code> parameter is supplied, the status of an in-progress deployment will be <code>ROLLED_BACK</code>. The status of a completed deployment will be <code>REVERTED</code>. AppConfig only allows a revert within 72 hours of deployment completion.</p>",
     "StopExperimentRun": "<p>Stops a running experiment. Stopping an experiment run ends audience exposure and returns users to the currently deployed feature flag configuration.</p>",
     "TagResource": "<p>Assigns metadata to an AppConfig resource. Tags help organize and categorize your AppConfig resources. Each tag consists of a key and an optional value, both of which you define. You can specify a maximum of 50 tags for a resource.</p>",
@@ -207,11 +207,11 @@
       "refs": {
         "AttributeValue$BooleanValue": "<p>A Boolean value for the attribute.</p>",
         "DeletionProtectionSettings$Enabled": "<p>A parameter that indicates if deletion protection is enabled or not.</p>",
-        "FlagValue$Enabled": "<p>Whether the feature flag is enabled for this treatment.</p>",
+        "FlagValue$Enabled": "<p>Specifies whether the feature flag is enabled for this treatment.</p>",
         "Parameter$Required": "<p>A parameter value must be specified in the extension association.</p>",
         "Parameter$Dynamic": "<p>Indicates whether this parameter's value can be supplied at the extension's action point instead of during extension association. Dynamic parameters can't be marked <code>Required</code>.</p>",
         "StopDeploymentRequest$AllowRevert": "<p>A Boolean that enables AppConfig to rollback a <code>COMPLETED</code> deployment to the previous configuration version. This action moves the deployment to a status of <code>REVERTED</code>.</p>",
-        "VendedMetricsSettings$Enabled": "<p>Whether vended metrics are enabled for the account.</p>"
+        "VendedMetricsSettings$Enabled": "<p>Specifies whether vended metrics are enabled for the account.</p>"
       }
     },
     "BytesMeasure": {
@@ -376,11 +376,11 @@
       }
     },
     "DeploymentParameters": {
-      "base": "<p>Optional deployment parameters for an experiment run, including extension parameters and tags.</p>",
+      "base": "<p>The deployment parameters for an experiment run, including dynamic extension parameters and tags.</p>",
       "refs": {
-        "StartExperimentRunRequest$DeploymentParameters": "<p>Optional deployment parameters including a KMS key for encryption.</p>",
-        "StopExperimentRunRequest$DeploymentParameters": "<p>Optional deployment parameters for the stop operation.</p>",
-        "UpdateExperimentRunRequest$DeploymentParameters": "<p>Updated deployment parameters.</p>"
+        "StartExperimentRunRequest$DeploymentParameters": "<p>The deployment parameters for the experiment run, including a KMS key identifier for encryption.</p>",
+        "StopExperimentRunRequest$DeploymentParameters": "<p>The deployment parameters for the stop operation.</p>",
+        "UpdateExperimentRunRequest$DeploymentParameters": "<p>The updated deployment parameters for the experiment run.</p>"
       }
     },
     "DeploymentState": {
@@ -1370,7 +1370,7 @@
       "base": null,
       "refs": {
         "CreateExperimentDefinitionRequest$Treatments": "<p>A list of treatments to evaluate during the experiment. Each treatment defines a distinct variation compared to the control.</p>",
-        "UpdateExperimentDefinitionRequest$Treatments": "<p>An updated list of treatments.</p>"
+        "UpdateExperimentDefinitionRequest$Treatments": "<p>The updated list of treatments to evaluate during the experiment. Each treatment defines a distinct variation compared to the control.</p>"
       }
     },
     "TreatmentKey": {
@@ -1399,7 +1399,7 @@
         "ExperimentRun$TreatmentOverrides": "<p>Treatment assignment overrides that assign specific entity IDs to treatments.</p>",
         "ExperimentRunEvent$TreatmentOverrides": "<p>The treatment overrides at the time of the event.</p>",
         "StartExperimentRunRequest$TreatmentOverrides": "<p>Treatment assignment overrides that assign specific entity IDs to treatments directly, bypassing random assignment.</p>",
-        "UpdateExperimentRunRequest$TreatmentOverrides": "<p>Updated treatment assignment overrides.</p>"
+        "UpdateExperimentRunRequest$TreatmentOverrides": "<p>The updated treatment assignment overrides that assign specific entity IDs to treatments, bypassing random assignment.</p>"
       }
     },
     "TriggeredBy": {
@@ -1492,10 +1492,10 @@
       }
     },
     "VendedMetricsSettings": {
-      "base": "<p>Configuration settings for vended metrics.</p>",
+      "base": "<p>The configuration settings for vended metrics in your AppConfig account.</p>",
       "refs": {
-        "AccountSettings$VendedMetrics": "<p>Configuration for vended metrics in the account.</p>",
-        "UpdateAccountSettingsRequest$VendedMetrics": "<p>Configuration for vended metrics in the account.</p>"
+        "AccountSettings$VendedMetrics": "<p>The configuration for vended metrics in the account.</p>",
+        "UpdateAccountSettingsRequest$VendedMetrics": "<p>The configuration for vended metrics in the account.</p>"
       }
     },
     "Version": {

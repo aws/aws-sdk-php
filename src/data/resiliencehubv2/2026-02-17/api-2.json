@@ -912,7 +912,8 @@
       "members":{
         "availabilitySlo":{"shape":"AchievabilityStatus"},
         "multiAzRtoRpo":{"shape":"AchievabilityStatus"},
-        "multiRegionRtoRpo":{"shape":"AchievabilityStatus"}
+        "multiRegionRtoRpo":{"shape":"AchievabilityStatus"},
+        "dataRecoveryTimeBetweenBackups":{"shape":"AchievabilityStatus"}
       }
     },
     "AchievabilityStatus":{
@@ -1009,6 +1010,10 @@
         "DESIGN_FILE_ACCESS_DENIED"
       ]
     },
+    "AssessmentSortField":{
+      "type":"string",
+      "enum":["STARTED_AT"]
+    },
     "AssessmentStatus":{
       "type":"string",
       "enum":[
@@ -1019,12 +1024,24 @@
         "SUCCESS"
       ]
     },
+    "AssessmentStatusList":{
+      "type":"list",
+      "member":{"shape":"AssessmentStatus"},
+      "max":5,
+      "min":0
+    },
     "AssessmentStep":{
       "type":"string",
       "enum":[
+        "TOPOLOGY_GENERATION",
+        "INPUT_VALIDATION",
+        "DESIGN_ANALYSIS",
         "TOPOLOGY_ENHANCEMENT",
         "SERVICE_FUNCTION_GENERATION",
-        "RESILIENCE_ASSESSMENT"
+        "POLICY_VALIDATION",
+        "RESILIENCE_ASSESSMENT",
+        "FAILURE_MODE_FINDINGS_CONSOLIDATION",
+        "FAILURE_MODE_FINDINGS_ENRICHMENT"
       ]
     },
     "AssessmentSummary":{
@@ -1514,8 +1531,20 @@
       "required":["status"],
       "members":{
         "status":{"shape":"DependencyDiscoveryStatus"},
-        "updatedAt":{"shape":"Timestamp"}
+        "updatedAt":{"shape":"Timestamp"},
+        "eligibleResourceCount":{"shape":"DependencyDiscoveryConfigEligibleResourceCountInteger"},
+        "message":{"shape":"DependencyDiscoveryConfigMessageString"}
       }
+    },
+    "DependencyDiscoveryConfigEligibleResourceCountInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "DependencyDiscoveryConfigMessageString":{
+      "type":"string",
+      "max":1024,
+      "min":0
     },
     "DependencyDiscoveryInput":{
       "type":"string",
@@ -2067,6 +2096,31 @@
           "location":"querystring",
           "locationName":"serviceArn"
         },
+        "assessmentStatuses":{
+          "shape":"AssessmentStatusList",
+          "location":"querystring",
+          "locationName":"assessmentStatuses"
+        },
+        "startedAfter":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"startedAfter"
+        },
+        "endedBefore":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"endedBefore"
+        },
+        "sortBy":{
+          "shape":"AssessmentSortField",
+          "location":"querystring",
+          "locationName":"sortBy"
+        },
+        "sortOrder":{
+          "shape":"SortOrder",
+          "location":"querystring",
+          "locationName":"sortOrder"
+        },
         "maxResults":{
           "shape":"MaxResults",
           "location":"querystring",
@@ -2239,6 +2293,16 @@
           "shape":"AwsRegion",
           "location":"querystring",
           "locationName":"awsRegion"
+        },
+        "resourceTypes":{
+          "shape":"ResourceTypeFilterList",
+          "location":"querystring",
+          "locationName":"resourceTypes"
+        },
+        "billable":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"billable"
         },
         "maxResults":{
           "shape":"MaxResults",
@@ -2900,6 +2964,17 @@
       "max":10,
       "min":0
     },
+    "ResourceTypeFilter":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "ResourceTypeFilterList":{
+      "type":"list",
+      "member":{"shape":"ResourceTypeFilter"},
+      "max":5,
+      "min":1
+    },
     "ResourceTypeList":{
       "type":"list",
       "member":{"shape":"String"}
@@ -3286,6 +3361,10 @@
       "members":{
         "sourceResourceIdentifier":{"shape":"String"},
         "destinationResourceIdentifier":{"shape":"String"},
+        "sourceRegion":{"shape":"AwsRegion"},
+        "destinationRegion":{"shape":"AwsRegion"},
+        "sourceAccount":{"shape":"AwsAccountId"},
+        "destinationAccount":{"shape":"AwsAccountId"},
         "properties":{"shape":"EdgePropertyList"}
       }
     },
@@ -3307,6 +3386,13 @@
         "policyName":{"shape":"EntityName"},
         "source":{"shape":"PolicyValueSource"}
       }
+    },
+    "SortOrder":{
+      "type":"string",
+      "enum":[
+        "ASC",
+        "DESC"
+      ]
     },
     "StartFailureModeAssessmentRequest":{
       "type":"structure",

@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\GeoPlaces` - Added AddressNamesMode, AddressNameTranslations, MobilityMode, PostalCodeMode, SecondaryAddresses, and DriveThrough features across Places V2 APIs to support address name formatting, multilingual translations, travel-aware search, multi-city postal codes, and unit-level address resolution.
+* `Aws\IoTWireless` - Default session downlink transmission parameters have been added to the existing Multicast Group APIs. Explicit transmission parameters are no longer required when starting a multicast session during the FUOTA procedure.
+* `Aws\BedrockAgentCoreControl` - AgentCore Gateway now supports mapping allowed scopes to separate advertised scopes on the inbound authorizer.
+* `Aws\EC2` - Replace Root Volume now supports a VolumeId parameter. This allows the customer to pass in a pre-prepared volume as the target root volume for an RRV workflow.
+* `Aws\Resiliencehubv2` - Next Generation Resilience Hub now supports filtering and sorting failure mode assessments, resource type filtering in ListResources, cross-region and cross-account topology edges, data recovery achievability status, and more granular dependency discovery progress tracking.
+* `Aws\AppConfig` - Update ExperimentRun APIs to support ConflictExceptions.
+* `Aws\ECS` - Amazon ECS now automatically detects the correct CPU architecture for Express Mode services.
+
 ## 3.388.0 - 2026-07-07
 
 * `Aws\Lambda` - AWS Lambda Durable Functions now supports customer managed KMS keys. This allows customers to configure a KMS key in Durable Config to have all their durable execution data encrypted.
