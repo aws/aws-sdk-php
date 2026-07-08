@@ -34,6 +34,25 @@
       },
       "authtype":"none"
     },
+    "CreateOAuth2TokenWithIAM":{
+      "name":"CreateOAuth2TokenWithIAM",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/token?x-amz-client-auth-method=iam",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateOAuth2TokenWithIAMRequest"},
+      "output":{"shape":"CreateOAuth2TokenWithIAMResponse"},
+      "errors":[
+        {"shape":"TooManyRequestsError"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "staticContextParams":{
+        "IsOAuthEndpoint":{"value":true}
+      }
+    },
     "DeleteConsoleAuthorizationConfiguration":{
       "name":"DeleteConsoleAuthorizationConfiguration",
       "http":{
@@ -116,6 +135,26 @@
         "IsControlPlane":{"value":true}
       }
     },
+    "IntrospectOAuth2TokenWithIAM":{
+      "name":"IntrospectOAuth2TokenWithIAM",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/introspect?x-amz-client-auth-method=iam",
+        "responseCode":200
+      },
+      "input":{"shape":"IntrospectOAuth2TokenWithIAMRequest"},
+      "output":{"shape":"IntrospectOAuth2TokenWithIAMResponse"},
+      "errors":[
+        {"shape":"TooManyRequestsError"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true,
+      "staticContextParams":{
+        "IsOAuthEndpoint":{"value":true}
+      }
+    },
     "ListResourcePermissionStatements":{
       "name":"ListResourcePermissionStatements",
       "http":{
@@ -180,6 +219,26 @@
       "staticContextParams":{
         "IsControlPlane":{"value":true}
       }
+    },
+    "RevokeOAuth2TokenWithIAM":{
+      "name":"RevokeOAuth2TokenWithIAM",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/revoke?x-amz-client-auth-method=iam",
+        "responseCode":200
+      },
+      "input":{"shape":"RevokeOAuth2TokenWithIAMRequest"},
+      "output":{"shape":"RevokeOAuth2TokenWithIAMResponse"},
+      "errors":[
+        {"shape":"TooManyRequestsError"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true,
+      "staticContextParams":{
+        "IsOAuthEndpoint":{"value":true}
+      }
     }
   },
   "shapes":{
@@ -218,14 +277,28 @@
       },
       "sensitive":true
     },
+    "AccountId":{
+      "type":"string",
+      "max":12,
+      "min":12,
+      "pattern":"[0-9]{12}"
+    },
     "AuthorizationCode":{
       "type":"string",
       "max":512,
       "min":1
     },
+    "BearerTokenType":{
+      "type":"string",
+      "pattern":"Bearer"
+    },
     "Boolean":{
       "type":"boolean",
       "box":true
+    },
+    "ClientCredentialsGrantType":{
+      "type":"string",
+      "pattern":"client_credentials"
     },
     "ClientId":{
       "type":"string",
@@ -357,6 +430,47 @@
         }
       }
     },
+    "CreateOAuth2TokenWithIAMRequest":{
+      "type":"structure",
+      "required":[
+        "grantType",
+        "resource"
+      ],
+      "members":{
+        "grantType":{
+          "shape":"ClientCredentialsGrantType",
+          "locationName":"grant_type"
+        },
+        "resource":{"shape":"CreateOAuth2TokenWithIAMRequestResourceString"}
+      }
+    },
+    "CreateOAuth2TokenWithIAMRequestResourceString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "CreateOAuth2TokenWithIAMResponse":{
+      "type":"structure",
+      "required":[
+        "accessToken",
+        "tokenType",
+        "expiresIn"
+      ],
+      "members":{
+        "accessToken":{
+          "shape":"OAuthAccessToken",
+          "locationName":"access_token"
+        },
+        "tokenType":{
+          "shape":"BearerTokenType",
+          "locationName":"token_type"
+        },
+        "expiresIn":{
+          "shape":"TokenExpiresIn",
+          "locationName":"expires_in"
+        }
+      }
+    },
     "DeleteConsoleAuthorizationConfigurationInput":{
       "type":"structure",
       "members":{
@@ -456,6 +570,90 @@
       "exception":true,
       "fault":true
     },
+    "IntrospectOAuth2TokenWithIAMRequest":{
+      "type":"structure",
+      "required":["token"],
+      "members":{
+        "token":{
+          "shape":"IntrospectionToken",
+          "locationName":"token"
+        },
+        "tokenTypeHint":{
+          "shape":"TokenTypeHint",
+          "locationName":"token_type_hint"
+        }
+      }
+    },
+    "IntrospectOAuth2TokenWithIAMResponse":{
+      "type":"structure",
+      "required":["active"],
+      "members":{
+        "active":{"shape":"Boolean"},
+        "clientId":{
+          "shape":"String",
+          "locationName":"client_id"
+        },
+        "userId":{
+          "shape":"String",
+          "locationName":"user_id"
+        },
+        "tokenType":{
+          "shape":"IntrospectedTokenType",
+          "locationName":"token_type"
+        },
+        "exp":{
+          "shape":"Long",
+          "locationName":"exp"
+        },
+        "iat":{
+          "shape":"Long",
+          "locationName":"iat"
+        },
+        "nbf":{
+          "shape":"Long",
+          "locationName":"nbf"
+        },
+        "sub":{
+          "shape":"String",
+          "locationName":"sub"
+        },
+        "aud":{
+          "shape":"String",
+          "locationName":"aud"
+        },
+        "iss":{
+          "shape":"String",
+          "locationName":"iss"
+        },
+        "jti":{
+          "shape":"String",
+          "locationName":"jti"
+        },
+        "accountId":{
+          "shape":"AccountId",
+          "locationName":"account_id"
+        },
+        "signinSession":{
+          "shape":"String",
+          "locationName":"signin_session"
+        },
+        "resource":{
+          "shape":"String",
+          "locationName":"resource"
+        }
+      }
+    },
+    "IntrospectedTokenType":{
+      "type":"string",
+      "pattern":"(access_token|refresh_token)"
+    },
+    "IntrospectionToken":{
+      "type":"string",
+      "max":4096,
+      "min":1,
+      "pattern":"ASO[AR][A-Za-z0-9+/=_\\-]+",
+      "sensitive":true
+    },
     "ListResourcePermissionStatementsInput":{
       "type":"structure",
       "members":{
@@ -470,6 +668,10 @@
         "permissionStatements":{"shape":"PermissionStatementSummaries"},
         "nextToken":{"shape":"NextToken"}
       }
+    },
+    "Long":{
+      "type":"long",
+      "box":true
     },
     "NextToken":{
       "type":"string",
@@ -490,6 +692,12 @@
         "CONFLICT",
         "SERVICE_QUOTA_EXCEEDED"
       ]
+    },
+    "OAuthAccessToken":{
+      "type":"string",
+      "max":4096,
+      "min":1,
+      "sensitive":true
     },
     "PermissionStatementSummaries":{
       "type":"list",
@@ -614,6 +822,27 @@
       },
       "exception":true
     },
+    "RevocationToken":{
+      "type":"string",
+      "max":4096,
+      "min":1,
+      "pattern":"ASOR[A-Za-z0-9+/=_\\-]+",
+      "sensitive":true
+    },
+    "RevokeOAuth2TokenWithIAMRequest":{
+      "type":"structure",
+      "required":["token"],
+      "members":{
+        "token":{
+          "shape":"RevocationToken",
+          "locationName":"token"
+        }
+      }
+    },
+    "RevokeOAuth2TokenWithIAMResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "required":[
@@ -663,9 +892,19 @@
       "min":12,
       "pattern":"(\\d{12}|o-[a-z0-9]{10}|r-[0-9a-z]{4,32})"
     },
+    "TokenExpiresIn":{
+      "type":"integer",
+      "box":true,
+      "max":3600,
+      "min":1
+    },
     "TokenType":{
       "type":"string",
       "pattern":"aws_sigv4"
+    },
+    "TokenTypeHint":{
+      "type":"string",
+      "pattern":"(access_token|refresh_token)"
     },
     "TooManyRequestsError":{
       "type":"structure",

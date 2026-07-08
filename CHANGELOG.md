@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Signin` - Adds support for OAuth 2.0 token operations in AWS Sign-In, CreateOAuth2TokenWithIAM (client credentials flow), IntrospectOAuth2TokenWithIAM (token inspection), and RevokeOAuth2TokenWithIAM (token revocation).
+
 ## 3.388.1 - 2026-07-08
 
 * `Aws\GeoPlaces` - Added AddressNamesMode, AddressNameTranslations, MobilityMode, PostalCodeMode, SecondaryAddresses, and DriveThrough features across Places V2 APIs to support address name formatting, multilingual translations, travel-aware search, multi-city postal codes, and unit-level address resolution.
