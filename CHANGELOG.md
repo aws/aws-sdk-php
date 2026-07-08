@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.388.1 - 2026-07-08
 
 * `Aws\GeoPlaces` - Added AddressNamesMode, AddressNameTranslations, MobilityMode, PostalCodeMode, SecondaryAddresses, and DriveThrough features across Places V2 APIs to support address name formatting, multilingual translations, travel-aware search, multi-city postal codes, and unit-level address resolution.
 * `Aws\IoTWireless` - Default session downlink transmission parameters have been added to the existing Multicast Group APIs. Explicit transmission parameters are no longer required when starting a multicast session during the FUOTA procedure.
