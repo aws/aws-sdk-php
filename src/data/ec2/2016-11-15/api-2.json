@@ -13716,6 +13716,18 @@
         "Platform":{
           "shape":"PlatformValues",
           "locationName":"platform"
+        },
+        "AvailabilityZoneId":{
+          "shape":"AvailabilityZoneId",
+          "locationName":"availabilityZoneId"
+        },
+        "AvailabilityZone":{
+          "shape":"AvailabilityZoneName",
+          "locationName":"availabilityZone"
+        },
+        "SubnetId":{
+          "shape":"SubnetId",
+          "locationName":"subnetId"
         }
       }
     },
@@ -28937,6 +28949,20 @@
         "termination"
       ]
     },
+    "FleetHttpTokensState":{
+      "type":"string",
+      "enum":[
+        "optional",
+        "required"
+      ]
+    },
+    "FleetIamInstanceProfileSpecificationRequest":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"String"},
+        "Name":{"shape":"String"}
+      }
+    },
     "FleetId":{"type":"string"},
     "FleetIdSet":{
       "type":"list",
@@ -28945,6 +28971,21 @@
     "FleetInstanceMatchCriteria":{
       "type":"string",
       "enum":["open"]
+    },
+    "FleetInstanceMetadataEndpointState":{
+      "type":"string",
+      "enum":[
+        "disabled",
+        "enabled"
+      ]
+    },
+    "FleetInstanceMetadataOptionsRequest":{
+      "type":"structure",
+      "members":{
+        "HttpTokens":{"shape":"FleetHttpTokensState"},
+        "HttpPutResponseHopLimit":{"shape":"Integer"},
+        "HttpEndpoint":{"shape":"FleetInstanceMetadataEndpointState"}
+      }
     },
     "FleetLaunchTemplateConfig":{
       "type":"structure",
@@ -29055,10 +29096,13 @@
         "WeightedCapacity":{"shape":"Double"},
         "Priority":{"shape":"Double"},
         "Placement":{"shape":"Placement"},
+        "KeyName":{"shape":"String"},
         "BlockDeviceMappings":{
           "shape":"FleetBlockDeviceMappingRequestList",
           "locationName":"BlockDeviceMapping"
         },
+        "IamInstanceProfile":{"shape":"FleetIamInstanceProfileSpecificationRequest"},
+        "MetadataOptions":{"shape":"FleetInstanceMetadataOptionsRequest"},
         "InstanceRequirements":{"shape":"InstanceRequirementsRequest"},
         "ImageId":{"shape":"String"},
         "AvailabilityZoneId":{"shape":"AvailabilityZoneId"}
@@ -29086,7 +29130,8 @@
       "members":{
         "LaunchTemplateId":{"shape":"LaunchTemplateId"},
         "LaunchTemplateName":{"shape":"LaunchTemplateName"},
-        "Version":{"shape":"String"}
+        "Version":{"shape":"String"},
+        "LaunchTemplateSpecificationUserData":{"shape":"SensitiveUserData"}
       }
     },
     "FleetOnDemandAllocationStrategy":{

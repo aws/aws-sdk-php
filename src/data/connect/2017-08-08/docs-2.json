@@ -75,6 +75,7 @@
     "CreateWorkspacePage": "<p>Associates a view with a page in a workspace, defining what users see when they navigate to that page.</p>",
     "DeactivateEvaluationForm": "<p>Deactivates an evaluation form in the specified Connect Customer instance. After a form is deactivated, it is no longer available for users to start new evaluations based on the form. </p>",
     "DeleteAttachedFile": "<p>Deletes an attached file along with the underlying S3 Object.</p> <important> <p>The attached file is <b>permanently deleted</b> if S3 bucket versioning is not enabled.</p> </important>",
+    "DeleteContactData": "<p>Deletes the specified fields containing personally identifiable information (PII) from a contact in the specified Connect Customer instance. This operation redacts PII (such as customer endpoints, additional email recipients, and the email subject) from the contact and its associated contact trace record (CTR). The contact must be in a terminated state.</p> <important> <p>This operation performs a hard deletion of the specified PII and cannot be undone. There is no retention period; after the data is deleted, it cannot be recovered. Only fields that Connect Customer identifies and stores as PII are removed. Any PII that you place in fields outside the scope of this operation remains your responsibility to remove.</p> </important>",
     "DeleteContactEvaluation": "<p>Deletes a contact evaluation in the specified Connect Customer instance.</p>",
     "DeleteContactFlow": "<p>Deletes a flow for the specified Connect Customer instance.</p>",
     "DeleteContactFlowModule": "<p>Deletes the specified flow module.</p>",
@@ -2423,6 +2424,18 @@
         "Contact$ContactEvaluations": "<p>Information about the contact evaluations where the key is the FormId, which is a unique identifier for the form.</p>"
       }
     },
+    "ContactField": {
+      "base": null,
+      "refs": {
+        "ContactFields$member": null
+      }
+    },
+    "ContactFields": {
+      "base": null,
+      "refs": {
+        "DeleteContactDataRequest$ContactFields": "<p>The categories of PII to redact from the contact. Valid values are <code>CUSTOMER_ENDPOINT</code>, <code>ADDITIONAL_EMAIL_RECIPIENTS</code>, and <code>EMAIL_SUBJECT</code>. <code>ADDITIONAL_EMAIL_RECIPIENTS</code> and <code>EMAIL_SUBJECT</code> are supported only for contacts in the email channel.</p>"
+      }
+    },
     "ContactFilter": {
       "base": "<p>Filters user data based on the contact information that is associated to the users. It contains a list of <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/about-contact-states.html\">contact states</a>.</p>",
       "refs": {
@@ -2794,6 +2807,7 @@
         "CreatePersistentContactAssociationRequest$InitialContactId": "<p>This is the contactId of the current contact that the <code>CreatePersistentContactAssociation</code> API is being called from.</p>",
         "CreatePersistentContactAssociationRequest$SourceContactId": "<p>The contactId from which a persistent chat session must be started.</p>",
         "CreatePersistentContactAssociationResponse$ContinuedFromContactId": "<p>The contactId from which a persistent chat session is started. This field is populated only for persistent chat.</p>",
+        "DeleteContactDataRequest$ContactId": "<p>The identifier of the contact. PII can be deleted only from a contact that has been disconnected (is in a terminated state).</p>",
         "DeletePushNotificationRegistrationRequest$ContactId": "<p>The identifier of the contact within the Connect Customer instance.</p>",
         "DescribeContactRequest$ContactId": "<p>The identifier of the contact.</p>",
         "DismissUserContactRequest$ContactId": "<p>The identifier of the contact.</p>",
@@ -2920,6 +2934,10 @@
     },
     "ContactNotFoundException": {
       "base": "<p>The contact with the specified ID does not exist.</p>",
+      "refs": {}
+    },
+    "ContactNotTerminatedException": {
+      "base": "<p>The contact has not been disconnected and is not in a terminated state. PII can be deleted only from a contact that has been disconnected. This error is returned with an HTTP 409 status code.</p>",
       "refs": {}
     },
     "ContactParticipantRole": {
@@ -3934,6 +3952,14 @@
     },
     "DeleteAttachedFileResponse": {
       "base": "Response from DeleteAttachedFile API",
+      "refs": {}
+    },
+    "DeleteContactDataRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteContactDataResponse": {
+      "base": null,
       "refs": {}
     },
     "DeleteContactEvaluationRequest": {
@@ -7213,6 +7239,7 @@
         "DeactivateEvaluationFormRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DefaultVocabulary$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeleteAttachedFileRequest$InstanceId": "<p>The unique identifier of the Connect instance.</p>",
+        "DeleteContactDataRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeleteContactEvaluationRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeleteContactFlowModuleRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeleteContactFlowModuleVersionRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -8703,6 +8730,7 @@
         "ConflictException$Message": null,
         "ContactFlowNotPublishedException$Message": null,
         "ContactNotFoundException$Message": "<p>The message.</p>",
+        "ContactNotTerminatedException$Message": null,
         "DestinationNotAllowedException$Message": "<p>The message about the outbound calls.</p>",
         "DuplicateResourceException$Message": null,
         "IdempotencyException$Message": null,

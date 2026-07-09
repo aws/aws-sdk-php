@@ -564,7 +564,11 @@
     "KmsKeyArn": {
       "base": null,
       "refs": {
-        "S3EncryptionConfig$KmsKeyArn": "<p>The ARN of the customer-managed KMS key to use, if you specify <code>SSE-KMS</code> for <code>EncryptionMode</code> </p>"
+        "AddReplicaLocationInput$KmsKeyArn": "<p>The Amazon Resource Name (ARN) of the customer-managed AWS Key Management Service (AWS KMS) key used to encrypt the canary replica's AWS Lambda function environment variables at rest. If you don't specify a value, the service uses an AWS-managed key.</p>",
+        "Canary$KmsKeyArn": "<p>The Amazon Resource Name (ARN) of the customer-managed AWS Key Management Service (AWS KMS) key used to encrypt the canary's AWS Lambda function environment variables at rest. If you don't specify a value, the service uses an AWS-managed key.</p>",
+        "CreateCanaryRequest$KmsKeyArn": "<p>The Amazon Resource Name (ARN) of the customer-managed AWS Key Management Service (AWS KMS) key used to encrypt the canary's AWS Lambda function environment variables at rest. If you don't specify a value, the service uses an AWS-managed key.</p>",
+        "S3EncryptionConfig$KmsKeyArn": "<p>The ARN of the customer-managed KMS key to use, if you specify <code>SSE-KMS</code> for <code>EncryptionMode</code> </p>",
+        "UpdateCanaryRequest$KmsKeyArn": "<p>The Amazon Resource Name (ARN) of the customer-managed AWS Key Management Service (AWS KMS) key used to encrypt the canary's AWS Lambda function environment variables at rest. If you don't specify a value, the service uses an AWS-managed key. If you omit this parameter, the service retains the existing value. To revert to the AWS-managed key, set this parameter to an empty string.</p>"
       }
     },
     "ListAssociatedGroupsRequest": {

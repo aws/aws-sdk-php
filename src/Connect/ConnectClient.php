@@ -151,6 +151,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deactivateEvaluationFormAsync(array $args = [])
  * @method \Aws\Result deleteAttachedFile(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteAttachedFileAsync(array $args = [])
+ * @method \Aws\Result deleteContactData(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteContactDataAsync(array $args = [])
  * @method \Aws\Result deleteContactEvaluation(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteContactEvaluationAsync(array $args = [])
  * @method \Aws\Result deleteContactFlow(array $args = [])

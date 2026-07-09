@@ -1306,6 +1306,23 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "DeleteContactData":{
+      "name":"DeleteContactData",
+      "http":{
+        "method":"POST",
+        "requestUri":"/contact/delete/{InstanceId}/{ContactId}"
+      },
+      "input":{"shape":"DeleteContactDataRequest"},
+      "output":{"shape":"DeleteContactDataResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ContactNotTerminatedException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "DeleteContactEvaluation":{
       "name":"DeleteContactEvaluation",
       "http":{
@@ -8610,6 +8627,18 @@
       "key":{"shape":"EvaluationId"},
       "value":{"shape":"ContactEvaluation"}
     },
+    "ContactField":{
+      "type":"string",
+      "enum":[
+        "CUSTOMER_ENDPOINT",
+        "ADDITIONAL_EMAIL_RECIPIENTS",
+        "EMAIL_SUBJECT"
+      ]
+    },
+    "ContactFields":{
+      "type":"list",
+      "member":{"shape":"ContactField"}
+    },
     "ContactFilter":{
       "type":"structure",
       "members":{
@@ -8987,6 +9016,14 @@
         "Message":{"shape":"Message"}
       },
       "error":{"httpStatusCode":410},
+      "exception":true
+    },
+    "ContactNotTerminatedException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"Message"}
+      },
+      "error":{"httpStatusCode":409},
       "exception":true
     },
     "ContactParticipantRole":{
@@ -10964,6 +11001,31 @@
       }
     },
     "DeleteAttachedFileResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "DeleteContactDataRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactId",
+        "ContactFields"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "ContactId":{
+          "shape":"ContactId",
+          "location":"uri",
+          "locationName":"ContactId"
+        },
+        "ContactFields":{"shape":"ContactFields"}
+      }
+    },
+    "DeleteContactDataResponse":{
       "type":"structure",
       "members":{}
     },

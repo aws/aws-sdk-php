@@ -46,7 +46,7 @@
   },
   "shapes": {
     "AccessDeniedException": {
-      "base": "<p/>",
+      "base": "<p>User does not have sufficient access to perform this action.</p>",
       "refs": {}
     },
     "AdBreakId": {
@@ -97,7 +97,8 @@
     "AdDurationSeconds": {
       "base": null,
       "refs": {
-        "InsertAdBreakRequest$durationSeconds": "<p>Duration of the ad break, in seconds.</p>"
+        "InsertAdBreakRequest$durationSeconds": "<p>Duration of the ad break, in seconds.</p>",
+        "PostRollConfiguration$durationSeconds": "<p>Duration of the post-roll ad break, in seconds.</p>"
       }
     },
     "AudioConfiguration": {
@@ -179,6 +180,7 @@
       "refs": {
         "CreateChannelRequest$authorized": "<p>Whether the channel is private (enabled for playback authorization). Default: <code>false</code>.</p>",
         "CreateChannelRequest$insecureIngest": "<p>Whether the channel allows insecure RTMP and SRT ingest. Default: <code>false</code>.</p>",
+        "PostRollConfiguration$enabled": "<p>Whether the post-roll ad configuration is enabled.</p>",
         "StreamSessionSummary$hasErrorEvent": "<p>If <code>true</code>, this stream encountered a quota breach or failure.</p>",
         "UpdateChannelRequest$authorized": "<p>Whether the channel is private (enabled for playback authorization).</p>",
         "UpdateChannelRequest$insecureIngest": "<p>Whether the channel allows insecure RTMP and SRT ingest. Default: <code>false</code>.</p>"
@@ -262,7 +264,7 @@
       }
     },
     "ChannelNotBroadcasting": {
-      "base": "<p/>",
+      "base": "<p>The stream is offline for the given channel ARN.</p>",
       "refs": {}
     },
     "ChannelPlaybackRestrictionPolicyArn": {
@@ -307,7 +309,7 @@
       }
     },
     "ConflictException": {
-      "base": "<p/>",
+      "base": "<p>Updating or deleting a resource can cause an inconsistent state.</p>",
       "refs": {}
     },
     "ContainerFormat": {
@@ -512,7 +514,7 @@
       }
     },
     "InternalServerException": {
-      "base": "<p/>",
+      "base": "<p>Unexpected error during processing of request.</p>",
       "refs": {}
     },
     "IsAuthorized": {
@@ -706,7 +708,7 @@
       }
     },
     "PendingVerification": {
-      "base": "<p/>",
+      "base": "<p>Your account is pending verification.</p>",
       "refs": {}
     },
     "PlaybackKeyPair": {
@@ -842,6 +844,15 @@
         "Stream$playbackUrl": "<p>URL of the master playlist, required by the video player to play the HLS stream.</p>"
       }
     },
+    "PostRollConfiguration": {
+      "base": "<p>Configuration for the post-roll ad break to use for this ad configuration.</p>",
+      "refs": {
+        "AdConfiguration$postRollConfiguration": "<p>Configuration for the post-roll ad break to use for this ad configuration.</p>",
+        "AdConfigurationSummary$postRollConfiguration": "<p>Configuration for the post-roll ad break to use for this ad configuration.</p>",
+        "CreateAdConfigurationRequest$postRollConfiguration": "<p>Configuration for the post-roll ad break to use for this ad configuration. Default: disabled (<code>enabled</code> set to false, <code>durationSeconds</code> set to 15).</p>",
+        "UpdateAdConfigurationRequest$postRollConfiguration": "<p>Configuration for the post-roll ad break to use for this ad configuration.</p>"
+      }
+    },
     "PutMetadataRequest": {
       "base": null,
       "refs": {}
@@ -938,7 +949,7 @@
       }
     },
     "ResourceNotFoundException": {
-      "base": "<p/>",
+      "base": "<p>Request references a resource which does not exist.</p>",
       "refs": {}
     },
     "S3DestinationBucketName": {
@@ -954,11 +965,11 @@
       }
     },
     "ServiceQuotaExceededException": {
-      "base": "<p/>",
+      "base": "<p>Request would cause a service quota to be exceeded.</p>",
       "refs": {}
     },
     "ServiceUnavailable": {
-      "base": "<p/>",
+      "base": "<p>The service is temporarily unavailable.</p>",
       "refs": {}
     },
     "Srt": {
@@ -1137,7 +1148,7 @@
       }
     },
     "StreamUnavailable": {
-      "base": "<p/>",
+      "base": "<p>The stream is temporarily unavailable.</p>",
       "refs": {}
     },
     "StreamViewerCount": {
@@ -1332,7 +1343,7 @@
       }
     },
     "ThrottlingException": {
-      "base": "<p/>",
+      "base": "<p>Request was denied due to request throttling.</p>",
       "refs": {}
     },
     "ThumbnailConfiguration": {
@@ -1412,7 +1423,7 @@
       "refs": {}
     },
     "ValidationException": {
-      "base": "<p/>",
+      "base": "<p>The input fails to satisfy the constraints specified by an Amazon Web Services service.</p>",
       "refs": {}
     },
     "VideoConfiguration": {

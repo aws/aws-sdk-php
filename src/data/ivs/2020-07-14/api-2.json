@@ -764,6 +764,7 @@
         "arn":{"shape":"AdConfigurationArn"},
         "name":{"shape":"AdConfigurationName"},
         "mediaTailorPlaybackConfigurations":{"shape":"MediaTailorPlaybackConfigurationsList"},
+        "postRollConfiguration":{"shape":"PostRollConfiguration"},
         "tags":{"shape":"Tags"}
       }
     },
@@ -793,6 +794,7 @@
         "arn":{"shape":"AdConfigurationArn"},
         "name":{"shape":"AdConfigurationName"},
         "mediaTailorPlaybackConfigurations":{"shape":"MediaTailorPlaybackConfigurationsList"},
+        "postRollConfiguration":{"shape":"PostRollConfiguration"},
         "tags":{"shape":"Tags"}
       }
     },
@@ -1222,6 +1224,7 @@
       "members":{
         "name":{"shape":"AdConfigurationName"},
         "mediaTailorPlaybackConfigurations":{"shape":"MediaTailorPlaybackConfigurationsList"},
+        "postRollConfiguration":{"shape":"PostRollConfiguration"},
         "tags":{"shape":"Tags"}
       }
     },
@@ -1958,6 +1961,17 @@
       }
     },
     "PlaybackURL":{"type":"string"},
+    "PostRollConfiguration":{
+      "type":"structure",
+      "required":[
+        "durationSeconds",
+        "enabled"
+      ],
+      "members":{
+        "durationSeconds":{"shape":"AdDurationSeconds"},
+        "enabled":{"shape":"Boolean"}
+      }
+    },
     "PutMetadataRequest":{
       "type":"structure",
       "required":[
@@ -2641,7 +2655,8 @@
       "members":{
         "arn":{"shape":"AdConfigurationArn"},
         "name":{"shape":"AdConfigurationName"},
-        "mediaTailorPlaybackConfigurations":{"shape":"MediaTailorPlaybackConfigurationsList"}
+        "mediaTailorPlaybackConfigurations":{"shape":"MediaTailorPlaybackConfigurationsList"},
+        "postRollConfiguration":{"shape":"PostRollConfiguration"}
       }
     },
     "UpdateAdConfigurationResponse":{
