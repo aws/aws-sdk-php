@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.388.3 - 2026-07-09
 
 * `Aws\IVS` - adds support for AWS IVS ad configuration APIs to allow for a postRollConfiguration object on the ad configuration resource
 * `Aws\EC2` - Added support for additional override parameters in CreateFleet, including LaunchTemplateSpecificationUserData, KeyName, IamInstanceProfile, and MetadataOptions. The CreateFleet response now also includes SubnetId, AvailabilityZone, and AvailabilityZoneId for launched instances.
