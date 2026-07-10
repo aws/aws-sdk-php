@@ -64,8 +64,10 @@ class MultipartCopy extends AbstractUploadManager
 
     /** @var string|array */
     private $source;
-    /** @var string|null */
+    /** @var string|null User-provided versionId (from source string or config). */
     private $sourceVersionId;
+    /** @var string|null HeadObject-derived versionId (used only for Phase 1 reads). */
+    private ?string $headDerivedVersionId = null;
     /** @var ResultInterface|null */
     private $sourceMetadata;
     /** @var string|null */
@@ -481,13 +483,17 @@ class MultipartCopy extends AbstractUploadManager
     /**
      * Captures VersionId and ETag from a source HeadObject result.
      *
+     * HeadObject-derived VersionId is used only for Phase 1 source reads
+     * (tags/annotations). Only user-provided versionId is attached to
+     * UploadPartCopy requests.
+     *
      * @param ResultInterface $r
      * @return void
      */
     private function captureSourceIdentifiers(ResultInterface $r): void
     {
-        if (empty($this->sourceVersionId) && !empty($r['VersionId'])) {
-            $this->sourceVersionId = $r['VersionId'];
+        if (!empty($r['VersionId'])) {
+            $this->headDerivedVersionId = $r['VersionId'];
         }
 
         if (!empty($r['ETag'])) {
@@ -536,6 +542,9 @@ class MultipartCopy extends AbstractUploadManager
     /**
      * Builds Bucket/Key (and VersionId if pinned) for source-side reads.
      *
+     * Uses the user-provided sourceVersionId if available, otherwise falls
+     * back to the HeadObject-derived versionId for Phase 1 consistency.
+     *
      * @return array
      */
     private function buildSourceObjectParams(): array
@@ -557,8 +566,9 @@ class MultipartCopy extends AbstractUploadManager
             ];
         }
 
-        if (!empty($this->sourceVersionId)) {
-            $p['VersionId'] = $this->sourceVersionId;
+        $versionId = $this->sourceVersionId ?? $this->headDerivedVersionId;
+        if (!empty($versionId)) {
+            $p['VersionId'] = $versionId;
         }
 
         return $p;
