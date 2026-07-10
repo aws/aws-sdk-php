@@ -1924,7 +1924,8 @@
         "CapacityProviderScalingConfig":{"shape":"CapacityProviderScalingConfig"},
         "KmsKeyArn":{"shape":"KMSKeyArn"},
         "LastModified":{"shape":"Timestamp"},
-        "PropagateTags":{"shape":"PropagateTags"}
+        "PropagateTags":{"shape":"PropagateTags"},
+        "TelemetryConfig":{"shape":"CapacityProviderTelemetryConfig"}
       }
     },
     "CapacityProviderArn":{
@@ -1951,6 +1952,13 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "CapacityProviderLoggingConfig":{
+      "type":"structure",
+      "members":{
+        "SystemLogLevel":{"shape":"SystemLogLevel"},
+        "LogGroup":{"shape":"LogGroup"}
+      }
     },
     "CapacityProviderMaxVCpuCount":{
       "type":"integer",
@@ -2016,6 +2024,12 @@
       "member":{"shape":"SubnetId"},
       "max":16,
       "min":1
+    },
+    "CapacityProviderTelemetryConfig":{
+      "type":"structure",
+      "members":{
+        "LoggingConfig":{"shape":"CapacityProviderLoggingConfig"}
+      }
     },
     "CapacityProviderVpcConfig":{
       "type":"structure",
@@ -2353,7 +2367,8 @@
         "CapacityProviderScalingConfig":{"shape":"CapacityProviderScalingConfig"},
         "KmsKeyArn":{"shape":"KMSKeyArnNonEmpty"},
         "Tags":{"shape":"Tags"},
-        "PropagateTags":{"shape":"PropagateTags"}
+        "PropagateTags":{"shape":"PropagateTags"},
+        "TelemetryConfig":{"shape":"CapacityProviderTelemetryConfig"}
       }
     },
     "CreateCapacityProviderResponse":{
@@ -4338,11 +4353,6 @@
           "location":"uri",
           "locationName":"FunctionName"
         },
-        "InvocationType":{
-          "shape":"ResponseStreamingInvocationType",
-          "location":"header",
-          "locationName":"X-Amz-Invocation-Type"
-        },
         "LogType":{
           "shape":"LogType",
           "location":"header",
@@ -4363,6 +4373,11 @@
           "shape":"TenantId",
           "location":"header",
           "locationName":"X-Amz-Tenant-Id"
+        },
+        "InvocationType":{
+          "shape":"ResponseStreamingInvocationType",
+          "location":"header",
+          "locationName":"X-Amz-Invocation-Type"
         }
       },
       "payload":"Payload"
@@ -6886,7 +6901,8 @@
           "locationName":"CapacityProviderName"
         },
         "CapacityProviderScalingConfig":{"shape":"CapacityProviderScalingConfig"},
-        "PropagateTags":{"shape":"PropagateTags"}
+        "PropagateTags":{"shape":"PropagateTags"},
+        "TelemetryConfig":{"shape":"CapacityProviderTelemetryConfig"}
       }
     },
     "UpdateCapacityProviderResponse":{

@@ -411,6 +411,27 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "CreateKnowledgeBase":{
+      "name":"CreateKnowledgeBase",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/accounts/{AwsAccountId}/knowledge-bases",
+        "responseCode":202
+      },
+      "input":{"shape":"CreateKnowledgeBaseRequest"},
+      "output":{"shape":"CreateKnowledgeBaseResponse"},
+      "errors":[
+        {"shape":"ResourceExistsException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"PreconditionNotMetException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "CreateNamespace":{
       "name":"CreateNamespace",
       "http":{
@@ -4346,6 +4367,28 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "UpdateKnowledgeBase":{
+      "name":"UpdateKnowledgeBase",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/accounts/{AwsAccountId}/knowledge-bases/{KnowledgeBaseId}",
+        "responseCode":202
+      },
+      "input":{"shape":"UpdateKnowledgeBaseRequest"},
+      "output":{"shape":"UpdateKnowledgeBaseResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"PreconditionNotMetException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
     "UpdateKnowledgeBasePermissions":{
       "name":"UpdateKnowledgeBasePermissions",
       "http":{
@@ -4827,6 +4870,15 @@
         "BaseEndpoint":{"shape":"Endpoint"},
         "ApiKey":{"shape":"APIKey"},
         "Email":{"shape":"Email"}
+      }
+    },
+    "AccessControlConfiguration":{
+      "type":"structure",
+      "members":{
+        "isACLEnabled":{
+          "shape":"Boolean",
+          "box":true
+        }
       }
     },
     "AccessDeniedException":{
@@ -6665,6 +6717,14 @@
         "AuthenticationType":{"shape":"ConnectionAuthType"},
         "AuthenticationMetadata":{"shape":"AuthenticationMetadata"}
       }
+    },
+    "AuthType":{
+      "type":"string",
+      "enum":[
+        "THREE_LEGGED_OAUTH",
+        "TWO_LEGGED_OAUTH",
+        "SERVICE_ACCOUNT"
+      ]
     },
     "AuthenticationMetadata":{
       "type":"structure",
@@ -9574,6 +9634,52 @@
         }
       }
     },
+    "CreateKnowledgeBaseRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "KnowledgeBaseId",
+        "Name",
+        "DataSourceArn",
+        "KnowledgeBaseConfiguration"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"KbAwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "KnowledgeBaseId":{"shape":"KnowledgeBaseId"},
+        "Name":{"shape":"KnowledgeBaseName"},
+        "DataSourceArn":{"shape":"DataSourceArn"},
+        "KnowledgeBaseConfiguration":{"shape":"KnowledgeBaseConfiguration"},
+        "Description":{"shape":"KnowledgeBaseDescription"},
+        "Permissions":{"shape":"ResourcePermissionList"},
+        "MediaExtractionConfiguration":{"shape":"MediaExtractionConfiguration"},
+        "AccessControlConfiguration":{"shape":"AccessControlConfiguration"},
+        "PrimaryOwnerArn":{"shape":"String"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateKnowledgeBaseResponse":{
+      "type":"structure",
+      "required":[
+        "KnowledgeBaseArn",
+        "KnowledgeBaseId",
+        "CreationStatus"
+      ],
+      "members":{
+        "KnowledgeBaseArn":{"shape":"KnowledgeBaseArn"},
+        "KnowledgeBaseId":{"shape":"KnowledgeBaseId"},
+        "CreationStatus":{"shape":"DataSetStatus"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "box":true,
+          "location":"statusCode"
+        }
+      }
+    },
     "CreateNamespaceRequest":{
       "type":"structure",
       "required":[
@@ -10051,6 +10157,14 @@
         "Password":{"shape":"Password"},
         "AlternateDataSourceParameters":{"shape":"DataSourceParametersList"}
       }
+    },
+    "CredentialStatus":{
+      "type":"string",
+      "enum":[
+        "CONNECTED",
+        "AUTH_FAILED",
+        "NOT_VERIFIED"
+      ]
     },
     "CrossDatasetTypes":{
       "type":"string",
@@ -11277,7 +11391,9 @@
         "VpcConnectionProperties":{"shape":"VpcConnectionProperties"},
         "SslProperties":{"shape":"SslProperties"},
         "ErrorInfo":{"shape":"DataSourceErrorInfo"},
-        "SecretArn":{"shape":"SecretArn"}
+        "SecretArn":{"shape":"SecretArn"},
+        "CredentialStatus":{"shape":"CredentialStatus"},
+        "LastCredentialVerifiedAt":{"shape":"Timestamp"}
       }
     },
     "DataSourceArn":{
@@ -11366,7 +11482,11 @@
         "CustomConnectionParameters":{"shape":"CustomConnectionParameters"},
         "WebCrawlerParameters":{"shape":"WebCrawlerParameters"},
         "ConfluenceParameters":{"shape":"ConfluenceParameters"},
-        "QBusinessParameters":{"shape":"QBusinessParameters"}
+        "QBusinessParameters":{"shape":"QBusinessParameters"},
+        "SharePointParameters":{"shape":"SharePointParameters"},
+        "GoogleDriveParameters":{"shape":"GoogleDriveParameters"},
+        "OneDriveParameters":{"shape":"OneDriveParameters"},
+        "FMKBParameters":{"shape":"FMKBParameters"}
       }
     },
     "DataSourceParametersList":{
@@ -15726,6 +15846,20 @@
       "min":1,
       "sensitive":true
     },
+    "FMKBKnowledgeBaseArn":{
+      "type":"string",
+      "max":128,
+      "min":47,
+      "pattern":"^arn:aws(-cn|-us-gov)?:bedrock:[a-zA-Z0-9-]*:[0-9]{12}:knowledge-base/[0-9a-zA-Z]+"
+    },
+    "FMKBParameters":{
+      "type":"structure",
+      "required":["KnowledgeBaseArn"],
+      "members":{
+        "KnowledgeBaseArn":{"shape":"FMKBKnowledgeBaseArn"},
+        "LinkedDataSourceIds":{"shape":"LinkedDataSourceIds"}
+      }
+    },
     "FailedKeyRegistrationEntries":{
       "type":"list",
       "member":{"shape":"FailedKeyRegistrationEntry"}
@@ -17681,6 +17815,12 @@
         "SideSpecificBorder":{"shape":"TableSideBorderOptions"}
       }
     },
+    "GoogleDriveParameters":{
+      "type":"structure",
+      "members":{
+        "AuthType":{"shape":"AuthType"}
+      }
+    },
     "GradientColor":{
       "type":"structure",
       "members":{
@@ -19049,6 +19189,7 @@
         "DataSourceArn":{"shape":"DataSourceArn"},
         "KnowledgeBaseConfiguration":{"shape":"KnowledgeBaseConfiguration"},
         "MediaExtractionConfiguration":{"shape":"MediaExtractionConfiguration"},
+        "AccessControlConfiguration":{"shape":"AccessControlConfiguration"},
         "Type":{"shape":"String"},
         "CreatedAt":{"shape":"Timestamp"},
         "UpdatedAt":{"shape":"Timestamp"},
@@ -19081,11 +19222,7 @@
     "KnowledgeBaseConfiguration":{
       "type":"structure",
       "members":{
-        "templateConfiguration":{"shape":"KbTemplateConfiguration"},
-        "eventEnabled":{
-          "shape":"Boolean",
-          "box":true
-        }
+        "templateConfiguration":{"shape":"KbTemplateConfiguration"}
       },
       "sensitive":true
     },
@@ -19142,13 +19279,14 @@
         "DIRECT_QUICKSIGHT_VIEWER_OR_OWNER",
         "DIRECT_QUICKSIGHT_SOLE_OWNER",
         "KNOWLEDGE_BASE_SIZE_BYTES",
-        "PRIMARY_OWNER"
+        "PRIMARY_OWNER",
+        "DATASOURCE_ARN"
       ]
     },
     "KnowledgeBaseSearchFilters":{
       "type":"list",
       "member":{"shape":"KnowledgeBaseSearchFilter"},
-      "max":5,
+      "max":6,
       "min":1
     },
     "KnowledgeBaseSearchOperator":{
@@ -19510,6 +19648,18 @@
       "members":{
         "Permissions":{"shape":"ResourcePermissionList"}
       }
+    },
+    "LinkedDataSourceId":{
+      "type":"string",
+      "max":10,
+      "min":1,
+      "pattern":"^[0-9a-zA-Z]+$"
+    },
+    "LinkedDataSourceIds":{
+      "type":"list",
+      "member":{"shape":"LinkedDataSourceId"},
+      "max":5,
+      "min":0
     },
     "ListActionConnectorsRequest":{
       "type":"structure",
@@ -22028,6 +22178,24 @@
     "OnClause":{
       "type":"string",
       "max":512,
+      "min":1
+    },
+    "OneDriveClientId":{
+      "type":"string",
+      "max":100,
+      "min":1
+    },
+    "OneDriveParameters":{
+      "type":"structure",
+      "members":{
+        "TenantId":{"shape":"OneDriveTenantId"},
+        "ClientId":{"shape":"OneDriveClientId"},
+        "AuthType":{"shape":"AuthType"}
+      }
+    },
+    "OneDriveTenantId":{
+      "type":"string",
+      "max":100,
       "min":1
     },
     "Opacity":{
@@ -25348,6 +25516,31 @@
       "members":{
         "BackgroundColor":{"shape":"ConditionalFormattingColor"}
       }
+    },
+    "SharePointClientId":{
+      "type":"string",
+      "max":100,
+      "min":1
+    },
+    "SharePointDomain":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "SharePointParameters":{
+      "type":"structure",
+      "required":["SharePointDomain"],
+      "members":{
+        "SharePointDomain":{"shape":"SharePointDomain"},
+        "TenantId":{"shape":"SharePointTenantId"},
+        "ClientId":{"shape":"SharePointClientId"},
+        "AuthType":{"shape":"AuthType"}
+      }
+    },
+    "SharePointTenantId":{
+      "type":"string",
+      "max":100,
+      "min":1
     },
     "SharedColumnSemanticMetadata":{
       "type":"structure",
@@ -29993,6 +30186,51 @@
         "KnowledgeBaseArn":{"shape":"KnowledgeBaseArn"},
         "KnowledgeBaseId":{"shape":"KnowledgeBaseId"},
         "Permissions":{"shape":"ResourcePermissionList"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "box":true,
+          "location":"statusCode"
+        }
+      }
+    },
+    "UpdateKnowledgeBaseRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "KnowledgeBaseId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"KbAwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "KnowledgeBaseId":{
+          "shape":"KnowledgeBaseId",
+          "location":"uri",
+          "locationName":"KnowledgeBaseId"
+        },
+        "Name":{"shape":"KnowledgeBaseName"},
+        "Description":{"shape":"KnowledgeBaseDescription"},
+        "KnowledgeBaseConfiguration":{"shape":"KnowledgeBaseConfiguration"},
+        "MediaExtractionConfiguration":{"shape":"MediaExtractionConfiguration"},
+        "IsEmailNotificationOptedForIngestionFailures":{
+          "shape":"Boolean",
+          "box":true
+        },
+        "AccessControlConfiguration":{"shape":"AccessControlConfiguration"}
+      }
+    },
+    "UpdateKnowledgeBaseResponse":{
+      "type":"structure",
+      "required":[
+        "KnowledgeBaseArn",
+        "KnowledgeBaseId"
+      ],
+      "members":{
+        "KnowledgeBaseArn":{"shape":"KnowledgeBaseArn"},
+        "KnowledgeBaseId":{"shape":"KnowledgeBaseId"},
         "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",

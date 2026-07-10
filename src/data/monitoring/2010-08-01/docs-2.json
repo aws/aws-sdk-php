@@ -286,6 +286,21 @@
         "AnomalyDetectorConfiguration$ExcludedTimeRanges": "<p>An array of time ranges to exclude from use when the anomaly detection model is trained. Use this to make sure that events that could cause unusual values for the metric, such as deployments, aren't used when CloudWatch creates the model.</p>"
       }
     },
+    "AnomalyDetectorId": {
+      "base": null,
+      "refs": {
+        "AnomalyDetector$AnomalyDetectorId": "<p>The unique identifier of the anomaly detector.</p> <note> <p>The identifier does not restrict access to a specific anomaly detector in an IAM policy. Permissions for anomaly detector operations apply to all anomaly detectors in the account.</p> </note>",
+        "AnomalyDetectorIds$member": null,
+        "DeleteAnomalyDetectorInput$AnomalyDetectorId": "<p>Specifies the unique identifier of the anomaly detector to delete. If you specify this parameter, you do not need to specify a metric to identify the detector.</p>",
+        "PutAnomalyDetectorOutput$AnomalyDetectorId": "<p>The unique identifier of the anomaly detector that you created or updated.</p>"
+      }
+    },
+    "AnomalyDetectorIds": {
+      "base": null,
+      "refs": {
+        "DescribeAnomalyDetectorsInput$AnomalyDetectorIds": "<p>Specifies the unique identifiers of the anomaly detectors to describe. You can specify up to 50 identifiers. If you specify this parameter, you cannot also specify the <code>Namespace</code>, <code>MetricName</code>, <code>Dimensions</code>, or <code>AnomalyDetectorTypes</code> metric filters.</p>"
+      }
+    },
     "AnomalyDetectorMetricStat": {
       "base": null,
       "refs": {

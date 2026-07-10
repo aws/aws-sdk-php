@@ -942,6 +942,7 @@
     "AnomalyDetector":{
       "type":"structure",
       "members":{
+        "AnomalyDetectorId":{"shape":"AnomalyDetectorId"},
         "Namespace":{
           "shape":"Namespace",
           "deprecated":true,
@@ -979,6 +980,17 @@
     "AnomalyDetectorExcludedTimeRanges":{
       "type":"list",
       "member":{"shape":"Range"}
+    },
+    "AnomalyDetectorId":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[A-Za-z0-9_./:%()+-]+"
+    },
+    "AnomalyDetectorIds":{
+      "type":"list",
+      "member":{"shape":"AnomalyDetectorId"},
+      "max":50
     },
     "AnomalyDetectorMetricStat":{
       "type":"string",
@@ -1279,6 +1291,7 @@
     "DeleteAnomalyDetectorInput":{
       "type":"structure",
       "members":{
+        "AnomalyDetectorId":{"shape":"AnomalyDetectorId"},
         "Namespace":{
           "shape":"Namespace",
           "deprecated":true,
@@ -1427,6 +1440,7 @@
     "DescribeAnomalyDetectorsInput":{
       "type":"structure",
       "members":{
+        "AnomalyDetectorIds":{"shape":"AnomalyDetectorIds"},
         "NextToken":{"shape":"NextToken"},
         "MaxResults":{"shape":"MaxReturnedResultsCount"},
         "Namespace":{"shape":"Namespace"},
@@ -2745,7 +2759,9 @@
     },
     "PutAnomalyDetectorOutput":{
       "type":"structure",
-      "members":{}
+      "members":{
+        "AnomalyDetectorId":{"shape":"AnomalyDetectorId"}
+      }
     },
     "PutCompositeAlarmInput":{
       "type":"structure",

@@ -391,6 +391,12 @@
       "base": "<p>The maximum number of capacity providers for your account has been exceeded. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html\">Lambda quotas</a> </p>",
       "refs": {}
     },
+    "CapacityProviderLoggingConfig": {
+      "base": "<p>The capacity provider's Amazon CloudWatch Logs configuration settings.</p>",
+      "refs": {
+        "CapacityProviderTelemetryConfig$LoggingConfig": "<p>The capacity provider's Amazon CloudWatch Logs configuration settings.</p>"
+      }
+    },
     "CapacityProviderMaxVCpuCount": {
       "base": null,
       "refs": {
@@ -457,6 +463,14 @@
       "base": null,
       "refs": {
         "CapacityProviderVpcConfig$SubnetIds": "<p>A list of subnet IDs where the capacity provider launches compute instances.</p>"
+      }
+    },
+    "CapacityProviderTelemetryConfig": {
+      "base": "<p>Configuration that specifies the telemetry collection for the capacity provider.</p>",
+      "refs": {
+        "CapacityProvider$TelemetryConfig": "<p>The telemetry configuration for the capacity provider, including logging settings.</p>",
+        "CreateCapacityProviderRequest$TelemetryConfig": "<p>The telemetry configuration for the capacity provider. Specifies logging settings for managed resources.</p>",
+        "UpdateCapacityProviderRequest$TelemetryConfig": "<p>The updated telemetry configuration for the capacity provider.</p>"
       }
     },
     "CapacityProviderVpcConfig": {
@@ -2250,6 +2264,7 @@
     "LogGroup": {
       "base": null,
       "refs": {
+        "CapacityProviderLoggingConfig$LogGroup": "<p>The name of the Amazon CloudWatch log group the capacity provider sends logs to. By default, Lambda capacity providers send logs to a default log group named <code>/aws/lambda/capacity-provider/&lt;capacity provider name&gt;</code>. To use a different log group, enter an existing log group or enter a new log group name.</p>",
         "LoggingConfig$LogGroup": "<p>The name of the Amazon CloudWatch log group the function sends logs to. By default, Lambda functions send logs to a default log group named <code>/aws/lambda/&lt;function name&gt;</code>. To use a different log group, enter an existing log group or enter a new log group name.</p>"
       }
     },
@@ -3493,6 +3508,7 @@
     "SystemLogLevel": {
       "base": null,
       "refs": {
+        "CapacityProviderLoggingConfig$SystemLogLevel": "<p>Set this property to filter the system logs for your capacity provider that Lambda sends to CloudWatch. Lambda only sends system logs at the selected level of detail and lower, where <code>DEBUG</code> is the highest level and <code>WARN</code> is the lowest.</p>",
         "LoggingConfig$SystemLogLevel": "<p>Set this property to filter the system logs for your function that Lambda sends to CloudWatch. Lambda only sends system logs at the selected level of detail and lower, where <code>DEBUG</code> is the highest level and <code>WARN</code> is the lowest.</p>"
       }
     },

@@ -23,6 +23,7 @@
     "CreateGroupMembership": "<p>Adds an Amazon Quick Sight user to an Amazon Quick Sight group. </p>",
     "CreateIAMPolicyAssignment": "<p>Creates an assignment with one specified IAM policy, identified by its Amazon Resource Name (ARN). This policy assignment is attached to the specified groups or users of Amazon Quick Sight. Assignment names are unique per Amazon Web Services account. To avoid overwriting rules in other namespaces, use assignment names that are unique.</p>",
     "CreateIngestion": "<p>Creates and starts a new SPICE ingestion for a dataset. You can manually refresh datasets in an Enterprise edition account 32 times in a 24-hour period. You can manually refresh datasets in a Standard edition account 8 times in a 24-hour period. Each 24-hour period is measured starting 24 hours before the current date and time.</p> <p>Any ingestions operating on tagged datasets inherit the same tags automatically for use in access control. For an example, see <a href=\"http://aws.amazon.com/premiumsupport/knowledge-center/iam-ec2-resource-tags/\">How do I create an IAM policy to control access to Amazon EC2 resources using tags?</a> in the Amazon Web Services Knowledge Center. Tags are visible on the tagged dataset, but not on the ingestion resource.</p>",
+    "CreateKnowledgeBase": "<p>Creates a knowledge base from a specified data source. Supported data source connector types include:</p> <ul> <li> <p> <code>S3_KNOWLEDGE_BASE</code> – Uses an Amazon S3 bucket as the data source.</p> </li> <li> <p> <code>WEB_CRAWLER</code> – Uses web pages indexed by the built-in web crawler as the data source.</p> </li> <li> <p> <code>GOOGLE_DRIVE</code> – Uses Google Drive as the data source. Supports service account authentication only.</p> </li> <li> <p> <code>SHAREPOINT</code> – Uses SharePoint as the data source. Supports two-legged OAuth only.</p> </li> <li> <p> <code>ONE_DRIVE</code> – Uses OneDrive as the data source. Supports two-legged OAuth only.</p> </li> </ul>",
     "CreateNamespace": "<p>(Enterprise edition only) Creates a new namespace for you to use with Amazon Quick Sight.</p> <p>A namespace allows you to isolate the Quick Sight users and groups that are registered for that namespace. Users that access the namespace can share assets only with other users or groups in the same namespace. They can't see users and groups in other namespaces. You can create a namespace after your Amazon Web Services account is subscribed to Quick Sight. The namespace must be unique within the Amazon Web Services account. By default, there is a limit of 100 namespaces per Amazon Web Services account. To increase your limit, create a ticket with Amazon Web Services Support. </p>",
     "CreateOAuthClientApplication": "<p>Creates an OAuthClientApplication.</p>",
     "CreateRefreshSchedule": "<p>Creates a refresh schedule for a dataset. You can create up to 5 different schedules for a single dataset.</p>",
@@ -244,6 +245,7 @@
     "UpdateIdentityPropagationConfig": "<p>Adds or updates services and authorized targets to configure what the Quick Sight IAM Identity Center application can access.</p> <p>This operation is only supported for Quick Sight accounts using IAM Identity Center</p>",
     "UpdateIpRestriction": "<p>Updates the content and status of IP rules. Traffic from a source is allowed when the source satisfies either the <code>IpRestrictionRule</code>, <code>VpcIdRestrictionRule</code>, or <code>VpcEndpointIdRestrictionRule</code>. To use this operation, you must provide the entire map of rules. You can use the <code>DescribeIpRestriction</code> operation to get the current rule map.</p>",
     "UpdateKeyRegistration": "<p>Updates a customer managed key in a Quick Sight account.</p>",
+    "UpdateKnowledgeBase": "<p>Updates the properties of an existing knowledge base.</p>",
     "UpdateKnowledgeBasePermissions": "<p>Updates the resource permissions for a knowledge base.</p>",
     "UpdateOAuthClientApplication": "<p>Updates an OAuthClientApplication.</p>",
     "UpdatePublicSharingSettings": "<important> <p>This API controls public sharing settings for your entire Quick Sight account, affecting data security and access. When you enable public sharing:</p> <ul> <li> <p>Dashboards can be shared publicly</p> </li> <li> <p>This setting affects your entire Amazon Web Services account and all Quick Sight users</p> </li> </ul> <p> <b>Before proceeding:</b> Ensure you understand the security implications and have proper IAM permissions configured.</p> </important> <p>Use the <code>UpdatePublicSharingSettings</code> operation to turn on or turn off the public sharing settings of an Amazon Quick Sight dashboard.</p> <p>To use this operation, turn on session capacity pricing for your Amazon Quick Sight account.</p> <p>Before you can turn on public sharing on your account, make sure to give public sharing permissions to an administrative user in the Identity and Access Management (IAM) console. For more information on using IAM with Amazon Quick Sight, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/security_iam_service-with-iam.html\">Using Quick with IAM</a> in the <i>Amazon Quick Sight User Guide</i>.</p>",
@@ -281,6 +283,14 @@
       "base": "<p>Configuration for API key-based authentication to external services.</p>",
       "refs": {
         "AuthenticationMetadata$ApiKeyConnectionMetadata": "<p>API key authentication metadata.</p>"
+      }
+    },
+    "AccessControlConfiguration": {
+      "base": "<p>The access control settings for a knowledge base. Use this structure to enable or disable document-level access control lists (ACLs) that filter query results based on the permissions from the source data connector.</p>",
+      "refs": {
+        "CreateKnowledgeBaseRequest$AccessControlConfiguration": "<p>The access control configuration for the knowledge base. If you don't specify this parameter, document-level ACLs are disabled.</p>",
+        "KnowledgeBase$AccessControlConfiguration": "<p>The access control configuration for the knowledge base.</p>",
+        "UpdateKnowledgeBaseRequest$AccessControlConfiguration": "<p>The access control configuration for the knowledge base. If you don't specify this parameter, the existing setting is retained.</p>"
       }
     },
     "AccessDeniedException": {
@@ -2020,6 +2030,14 @@
         "UpdateActionConnectorRequest$AuthenticationConfig": "<p>The updated authentication configuration for connecting to the external service.</p>"
       }
     },
+    "AuthType": {
+      "base": null,
+      "refs": {
+        "GoogleDriveParameters$AuthType": "<p>The authentication type for the Google Drive data source. Valid values include:</p> <ul> <li> <p> <code>SERVICE_ACCOUNT</code> – Server-to-server authentication using a Google service account key.</p> </li> <li> <p> <code>THREE_LEGGED_OAUTH</code> – Interactive OAuth that requires user consent.</p> </li> </ul>",
+        "OneDriveParameters$AuthType": "<p>The authentication type for the OneDrive data source. Valid values include:</p> <ul> <li> <p> <code>TWO_LEGGED_OAUTH</code> – Server-to-server authentication using client credentials that do not require user interaction.</p> </li> <li> <p> <code>THREE_LEGGED_OAUTH</code> – Interactive OAuth that requires user consent.</p> </li> </ul>",
+        "SharePointParameters$AuthType": "<p>The authentication type for the SharePoint data source. Valid values include:</p> <ul> <li> <p> <code>TWO_LEGGED_OAUTH</code> – Server-to-server authentication using client credentials that do not require user interaction.</p> </li> <li> <p> <code>THREE_LEGGED_OAUTH</code> – Interactive OAuth that requires user consent.</p> </li> </ul>"
+      }
+    },
     "AuthenticationMetadata": {
       "base": "<p>Union type containing authentication metadata for different authentication methods.</p>",
       "refs": {
@@ -2735,6 +2753,7 @@
     "Boolean": {
       "base": null,
       "refs": {
+        "AccessControlConfiguration$isACLEnabled": "<p>Specifies whether ACLs are enabled for the knowledge base.</p>",
         "AccountSettings$PublicSharingEnabled": "<p>A Boolean value that indicates whether public sharing is turned on for an Quick account. For more information about turning on public sharing, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_UpdatePublicSharingSettings.html\">UpdatePublicSharingSettings</a>.</p>",
         "AccountSettings$TerminationProtectionEnabled": "<p>A boolean value that determines whether or not an Quick Sight account can be deleted. A <code>True</code> value doesn't allow the account to be deleted and results in an error message if a user tries to make a <code>DeleteAccountSubsctiption</code> request. A <code>False</code> value will allow the ccount to be deleted. </p>",
         "AssetBundleExportJobResourceIdOverrideConfiguration$PrefixForAllResources": "<p>An option to request a CloudFormation variable for a prefix to be prepended to each resource's ID before import. The prefix is only added to the asset IDs and does not change the name of the asset.</p>",
@@ -2776,8 +2795,7 @@
         "GutterStyle$Show": "<p>This Boolean value controls whether to display a gutter space between sheet tiles. </p>",
         "IdentityCenterConfiguration$EnableIdentityPropagation": "<p>A Boolean option that controls whether Trusted Identity Propagation should be used.</p>",
         "JoinKeyProperties$UniqueKey": "<p>A value that indicates that a row in a table is uniquely identified by the columns in a join key. This is used by Quick Sight to optimize query performance.</p>",
-        "KnowledgeBase$IsEmailNotificationOptedForIngestionFailures": "<p>Indicates whether email notifications are enabled for ingestion failures.</p>",
-        "KnowledgeBaseConfiguration$eventEnabled": "<p>Indicates whether event notifications are enabled for the knowledge base.</p>",
+        "KnowledgeBase$IsEmailNotificationOptedForIngestionFailures": "<p>Specifies whether email notifications are enabled for ingestion failures.</p>",
         "MarginStyle$Show": "<p>This Boolean value controls whether to display sheet margins.</p>",
         "NestedFilter$IncludeInnerSet": "<p>A boolean condition to include or exclude the subset that is defined by the values of the nested inner filter.</p>",
         "NumericRangeFilter$IncludeMinimum": "<p>Determines whether the minimum value in the filter value range should be included in the filtered results.</p>",
@@ -2811,6 +2829,7 @@
         "TopicNumericRangeFilter$Inclusive": "<p>A Boolean value that indicates whether the endpoints of the numeric range are included in the filter. If set to true, topics whose numeric field value is equal to the endpoint values will be included in the filter. If set to false, topics whose numeric field value is equal to the endpoint values will be excluded from the filter.</p>",
         "TopicRefreshSchedule$BasedOnSpiceSchedule": "<p>A Boolean value that controls whether to schedule runs at the same schedule that is specified in SPICE dataset.</p>",
         "UpdateAccountSettingsRequest$TerminationProtectionEnabled": "<p>A boolean value that determines whether or not an Quick Sight account can be deleted. A <code>True</code> value doesn't allow the account to be deleted and results in an error message if a user tries to make a <code>DeleteAccountSubscription</code> request. A <code>False</code> value will allow the account to be deleted.</p>",
+        "UpdateKnowledgeBaseRequest$IsEmailNotificationOptedForIngestionFailures": "<p>Specifies whether email notifications are enabled for ingestion failures.</p>",
         "UpdatePublicSharingSettingsRequest$PublicSharingEnabled": "<p>A Boolean value that indicates whether public sharing is turned on for an Quick account.</p>",
         "UpdateUserRequest$UnapplyCustomPermissions": "<p>A flag that you use to indicate that you want to remove all custom permissions from this user. Using this parameter resets the user to the state it was in before a custom permissions profile was applied. This parameter defaults to NULL and it doesn't accept any other value.</p>",
         "UploadSettings$ContainsHeader": "<p>Whether the file has a header row, or the files each have a header row.</p>",
@@ -4467,6 +4486,14 @@
       "base": null,
       "refs": {}
     },
+    "CreateKnowledgeBaseRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateKnowledgeBaseResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CreateNamespaceRequest": {
       "base": null,
       "refs": {}
@@ -4579,6 +4606,12 @@
       "base": "<p>The combination of user name and password that are used as credentials.</p>",
       "refs": {
         "DataSourceCredentials$CredentialPair": "<p>Credential pair. For more information, see <code> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_CredentialPair.html\">CredentialPair</a> </code>.</p>"
+      }
+    },
+    "CredentialStatus": {
+      "base": null,
+      "refs": {
+        "DataSource$CredentialStatus": "<p>The credential verification status of the data source. Valid values include:</p> <ul> <li> <p> <code>CONNECTED</code> – Credential validation succeeded.</p> </li> <li> <p> <code>AUTH_FAILED</code> – Credential validation failed.</p> </li> <li> <p> <code>NOT_VERIFIED</code> – Credential validation has not been performed.</p> </li> </ul>"
       }
     },
     "CrossDatasetTypes": {
@@ -5442,6 +5475,7 @@
     "DataSetStatus": {
       "base": null,
       "refs": {
+        "CreateKnowledgeBaseResponse$CreationStatus": "<p>The creation status of the knowledge base.</p>",
         "KnowledgeBase$Status": "<p>The status of the knowledge base.</p>",
         "KnowledgeBaseSummary$Status": "<p>The status of the knowledge base.</p>"
       }
@@ -5540,6 +5574,7 @@
     "DataSourceArn": {
       "base": null,
       "refs": {
+        "CreateKnowledgeBaseRequest$DataSourceArn": "<p>The Amazon Resource Name (ARN) of the data source for the knowledge base.</p>",
         "KnowledgeBase$DataSourceArn": "<p>The ARN of the data source associated with the knowledge base.</p>",
         "KnowledgeBaseSummary$DataSourceArn": "<p>The ARN of the data source associated with the knowledge base.</p>"
       }
@@ -7335,6 +7370,18 @@
         "TopicIRMetric$Expression": "<p>The expression for the <code>TopicIRMetric</code>.</p>"
       }
     },
+    "FMKBKnowledgeBaseArn": {
+      "base": null,
+      "refs": {
+        "FMKBParameters$KnowledgeBaseArn": "<p>The Amazon Resource Name (ARN) of the Amazon Bedrock knowledge base.</p>"
+      }
+    },
+    "FMKBParameters": {
+      "base": "<p>The connection parameters for a fully managed knowledge base data source. Provide these parameters in the <code>DataSourceParameters</code> object when you create or update a data source that uses a fully managed knowledge base.</p>",
+      "refs": {
+        "DataSourceParameters$FMKBParameters": "<p>The parameters for a fully managed knowledge base data source.</p>"
+      }
+    },
     "FailedKeyRegistrationEntries": {
       "base": null,
       "refs": {
@@ -8724,6 +8771,12 @@
         "TableCellStyle$Border": "<p>The borders for the table cells.</p>"
       }
     },
+    "GoogleDriveParameters": {
+      "base": "<p>The connection parameters for a Google Drive data source. Provide these parameters in the <code>DataSourceParameters</code> object when you create or update a data source that uses Google Drive.</p>",
+      "refs": {
+        "DataSourceParameters$GoogleDriveParameters": "<p>The parameters for a Google Drive data source.</p>"
+      }
+    },
     "GradientColor": {
       "base": "<p>Determines the gradient color settings.</p>",
       "refs": {
@@ -9867,12 +9920,14 @@
       "base": null,
       "refs": {
         "BatchDeleteKnowledgeBaseRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the knowledge base.</p>",
+        "CreateKnowledgeBaseRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the knowledge base.</p>",
         "DeleteKnowledgeBaseRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the knowledge base.</p>",
         "DescribeKnowledgeBasePermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the knowledge base.</p>",
         "DescribeKnowledgeBaseRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the knowledge base.</p>",
         "ListKnowledgeBasesRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the knowledge base.</p>",
         "SearchKnowledgeBasesRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the knowledge base.</p>",
-        "UpdateKnowledgeBasePermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the knowledge base.</p>"
+        "UpdateKnowledgeBasePermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the knowledge base.</p>",
+        "UpdateKnowledgeBaseRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the knowledge base.</p>"
       }
     },
     "KbIngestionId": {
@@ -9922,23 +9977,29 @@
       "base": null,
       "refs": {
         "BatchDeleteKnowledgeBaseSuccess$KnowledgeBaseArn": "<p>The ARN of the successfully deleted knowledge base.</p>",
+        "CreateKnowledgeBaseResponse$KnowledgeBaseArn": "<p>The Amazon Resource Name (ARN) of the knowledge base.</p>",
         "DeleteKnowledgeBaseResponse$KnowledgeBaseArn": "<p>The ARN of the deleted knowledge base.</p>",
         "DescribeKnowledgeBasePermissionsResponse$KnowledgeBaseArn": "<p>The Amazon Resource Name (ARN) of the knowledge base.</p>",
         "KnowledgeBase$KnowledgeBaseArn": "<p>The Amazon Resource Name (ARN) of the knowledge base.</p>",
         "KnowledgeBaseSummary$KnowledgeBaseArn": "<p>The Amazon Resource Name (ARN) of the knowledge base.</p>",
-        "UpdateKnowledgeBasePermissionsResponse$KnowledgeBaseArn": "<p>The Amazon Resource Name (ARN) of the knowledge base.</p>"
+        "UpdateKnowledgeBasePermissionsResponse$KnowledgeBaseArn": "<p>The Amazon Resource Name (ARN) of the knowledge base.</p>",
+        "UpdateKnowledgeBaseResponse$KnowledgeBaseArn": "<p>The Amazon Resource Name (ARN) of the knowledge base.</p>"
       }
     },
     "KnowledgeBaseConfiguration": {
       "base": "<p>The configuration settings for a knowledge base.</p>",
       "refs": {
-        "KnowledgeBase$KnowledgeBaseConfiguration": "<p>The configuration settings for the knowledge base.</p>"
+        "CreateKnowledgeBaseRequest$KnowledgeBaseConfiguration": null,
+        "KnowledgeBase$KnowledgeBaseConfiguration": "<p>The configuration settings for the knowledge base.</p>",
+        "UpdateKnowledgeBaseRequest$KnowledgeBaseConfiguration": null
       }
     },
     "KnowledgeBaseDescription": {
       "base": null,
       "refs": {
-        "KnowledgeBase$Description": "<p>The description of the knowledge base.</p>"
+        "CreateKnowledgeBaseRequest$Description": "<p>A description for the knowledge base. If you don't specify a description, the knowledge base is created without one.</p>",
+        "KnowledgeBase$Description": "<p>The description of the knowledge base.</p>",
+        "UpdateKnowledgeBaseRequest$Description": "<p>A description for the knowledge base. If you don't specify a description, the existing description is retained.</p>"
       }
     },
     "KnowledgeBaseId": {
@@ -9947,6 +10008,8 @@
         "BatchDeleteKnowledgeBaseFailure$KnowledgeBaseId": "<p>The unique identifier of the knowledge base that failed to be deleted.</p>",
         "BatchDeleteKnowledgeBaseRequestKnowledgeBaseIdsList$member": null,
         "BatchDeleteKnowledgeBaseSuccess$KnowledgeBaseId": "<p>The unique identifier of the successfully deleted knowledge base.</p>",
+        "CreateKnowledgeBaseRequest$KnowledgeBaseId": "<p>The unique identifier for the knowledge base.</p>",
+        "CreateKnowledgeBaseResponse$KnowledgeBaseId": "<p>The unique identifier for the knowledge base.</p>",
         "DeleteKnowledgeBaseRequest$KnowledgeBaseId": "<p>The unique identifier for the knowledge base.</p>",
         "DeleteKnowledgeBaseResponse$KnowledgeBaseId": "<p>The ID of the deleted knowledge base.</p>",
         "DescribeKnowledgeBasePermissionsRequest$KnowledgeBaseId": "<p>The unique identifier for the knowledge base.</p>",
@@ -9955,7 +10018,9 @@
         "KnowledgeBase$KnowledgeBaseId": "<p>The unique identifier for the knowledge base.</p>",
         "KnowledgeBaseSummary$KnowledgeBaseId": "<p>The unique identifier for the knowledge base.</p>",
         "UpdateKnowledgeBasePermissionsRequest$KnowledgeBaseId": "<p>The unique identifier for the knowledge base.</p>",
-        "UpdateKnowledgeBasePermissionsResponse$KnowledgeBaseId": "<p>The unique identifier for the knowledge base.</p>"
+        "UpdateKnowledgeBasePermissionsResponse$KnowledgeBaseId": "<p>The unique identifier for the knowledge base.</p>",
+        "UpdateKnowledgeBaseRequest$KnowledgeBaseId": "<p>The unique identifier for the knowledge base.</p>",
+        "UpdateKnowledgeBaseResponse$KnowledgeBaseId": "<p>The unique identifier for the knowledge base.</p>"
       }
     },
     "KnowledgeBaseIngestionSummary": {
@@ -9969,8 +10034,10 @@
     "KnowledgeBaseName": {
       "base": null,
       "refs": {
+        "CreateKnowledgeBaseRequest$Name": "<p>The name of the knowledge base.</p>",
         "KnowledgeBase$Name": "<p>The name of the knowledge base.</p>",
-        "KnowledgeBaseSummary$Name": "<p>The name of the knowledge base.</p>"
+        "KnowledgeBaseSummary$Name": "<p>The name of the knowledge base.</p>",
+        "UpdateKnowledgeBaseRequest$Name": "<p>The name of the knowledge base. If you don't specify a name, the existing name is retained.</p>"
       }
     },
     "KnowledgeBaseSearchFilter": {
@@ -9980,7 +10047,7 @@
       }
     },
     "KnowledgeBaseSearchFilterName": {
-      "base": null,
+      "base": "<p>The name of a field that you can use to filter knowledge base search results. Valid values include:</p> <ul> <li> <p> <code>DATASOURCE_ARN</code> – The Amazon Resource Name (ARN) of the associated data source.</p> </li> <li> <p> <code>DIRECT_QUICKSIGHT_OWNER</code> – An Amazon QuickSight user or group with direct owner permissions.</p> </li> <li> <p> <code>DIRECT_QUICKSIGHT_SOLE_OWNER</code> – An Amazon QuickSight user or group that is the sole direct owner.</p> </li> <li> <p> <code>DIRECT_QUICKSIGHT_VIEWER_OR_OWNER</code> – An Amazon QuickSight user or group with direct viewer or owner permissions.</p> </li> <li> <p> <code>KNOWLEDGE_BASE_ID</code> – The unique identifier of the knowledge base.</p> </li> <li> <p> <code>KNOWLEDGE_BASE_NAME</code> – The display name of the knowledge base.</p> </li> <li> <p> <code>KNOWLEDGE_BASE_SIZE_BYTES</code> – The size of the knowledge base in bytes.</p> </li> <li> <p> <code>PRIMARY_OWNER</code> – The Amazon Resource Name (ARN) of the primary owner of the knowledge base.</p> </li> </ul>",
       "refs": {
         "KnowledgeBaseSearchFilter$name": "<p>The name of the field to filter on.</p>"
       }
@@ -10327,6 +10394,18 @@
         "CreateDashboardRequest$LinkSharingConfiguration": "<p>A structure that contains the permissions of a shareable link to the dashboard.</p>",
         "DescribeDashboardPermissionsResponse$LinkSharingConfiguration": "<p>A structure that contains the configuration of a shareable link that grants access to the dashboard. Your users can use the link to view and interact with the dashboard, if the dashboard has been shared with them. For more information about sharing dashboards, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/sharing-a-dashboard.html\">Sharing Dashboards</a>.</p>",
         "UpdateDashboardPermissionsResponse$LinkSharingConfiguration": "<p>Updates the permissions of a shared link to an Quick Sight dashboard.</p>"
+      }
+    },
+    "LinkedDataSourceId": {
+      "base": null,
+      "refs": {
+        "LinkedDataSourceIds$member": null
+      }
+    },
+    "LinkedDataSourceIds": {
+      "base": null,
+      "refs": {
+        "FMKBParameters$LinkedDataSourceIds": "<p>The IDs of the linked data sources.</p>"
       }
     },
     "ListActionConnectorsRequest": {
@@ -11045,7 +11124,9 @@
     "MediaExtractionConfiguration": {
       "base": "<p>The configuration for media extraction from knowledge base documents.</p>",
       "refs": {
-        "KnowledgeBase$MediaExtractionConfiguration": "<p>The media extraction configuration for the knowledge base.</p>"
+        "CreateKnowledgeBaseRequest$MediaExtractionConfiguration": null,
+        "KnowledgeBase$MediaExtractionConfiguration": "<p>The media extraction configuration for the knowledge base.</p>",
+        "UpdateKnowledgeBaseRequest$MediaExtractionConfiguration": null
       }
     },
     "MemberIdArnPair": {
@@ -11652,6 +11733,24 @@
       "base": null,
       "refs": {
         "JoinInstruction$OnClause": "<p>The join instructions provided in the <code>ON</code> clause of a join.</p>"
+      }
+    },
+    "OneDriveClientId": {
+      "base": null,
+      "refs": {
+        "OneDriveParameters$ClientId": "<p>The client ID for the OneDrive data source.</p>"
+      }
+    },
+    "OneDriveParameters": {
+      "base": "<p>The connection parameters for an OneDrive data source. Provide these parameters in the <code>DataSourceParameters</code> object when you create or update a data source that uses OneDrive.</p>",
+      "refs": {
+        "DataSourceParameters$OneDriveParameters": "<p>The parameters for an OneDrive data source.</p>"
+      }
+    },
+    "OneDriveTenantId": {
+      "base": null,
+      "refs": {
+        "OneDriveParameters$TenantId": "<p>The tenant ID for the OneDrive data source.</p>"
       }
     },
     "Opacity": {
@@ -13351,6 +13450,7 @@
         "CreateDataSetRequest$Permissions": "<p>A list of resource permissions on the dataset.</p>",
         "CreateDataSourceRequest$Permissions": "<p>A list of resource permissions on the data source.</p>",
         "CreateFolderRequest$Permissions": "<p>A structure that describes the principals and the resource-level permissions of a folder.</p> <p>To specify no permissions, omit <code>Permissions</code>.</p>",
+        "CreateKnowledgeBaseRequest$Permissions": "<p>A list of resource permissions on the knowledge base. Each entry grants a specified Amazon QuickSight principal either owner or viewer access. If you don't specify permissions, only the primary owner (if provided) receives owner access.</p>",
         "CreateTemplateRequest$Permissions": "<p>A list of resource permissions to be set on the template. </p>",
         "CreateThemeRequest$Permissions": "<p>A valid grouping of resource permissions to apply to the new theme. </p>",
         "DescribeActionConnectorPermissionsResponse$Permissions": "<p>The list of permissions associated with the action connector, including the principals and their allowed actions.</p>",
@@ -14301,6 +14401,30 @@
       "base": "<p>The shape conditional formatting of a filled map visual.</p>",
       "refs": {
         "FilledMapShapeConditionalFormatting$Format": "<p>The conditional formatting that determines the background color of a filled map's shape.</p>"
+      }
+    },
+    "SharePointClientId": {
+      "base": null,
+      "refs": {
+        "SharePointParameters$ClientId": "<p>The client ID for the SharePoint data source.</p>"
+      }
+    },
+    "SharePointDomain": {
+      "base": null,
+      "refs": {
+        "SharePointParameters$SharePointDomain": "<p>The SharePoint domain for the data source.</p>"
+      }
+    },
+    "SharePointParameters": {
+      "base": "<p>The connection parameters for a SharePoint data source. Provide these parameters in the <code>DataSourceParameters</code> object when you create or update a data source that uses SharePoint.</p>",
+      "refs": {
+        "DataSourceParameters$SharePointParameters": "<p>The parameters for a SharePoint data source.</p>"
+      }
+    },
+    "SharePointTenantId": {
+      "base": null,
+      "refs": {
+        "SharePointParameters$TenantId": "<p>The tenant ID for the SharePoint data source.</p>"
       }
     },
     "SharedColumnSemanticMetadata": {
@@ -15531,6 +15655,7 @@
         "CreateGroupResponse$Status": "<p>The HTTP status of the request.</p>",
         "CreateIAMPolicyAssignmentResponse$Status": "<p>The HTTP status of the request.</p>",
         "CreateIngestionResponse$Status": "<p>The HTTP status of the request.</p>",
+        "CreateKnowledgeBaseResponse$Status": "<p>The HTTP status of the request.</p>",
         "CreateNamespaceResponse$Status": "<p>The HTTP status of the request.</p>",
         "CreateOAuthClientApplicationResponse$Status": "<p>The HTTP status of the request.</p>",
         "CreateRefreshScheduleResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -15728,6 +15853,7 @@
         "UpdateIdentityPropagationConfigResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateIpRestrictionResponse$Status": "<p>The HTTP status of the request. </p>",
         "UpdateKnowledgeBasePermissionsResponse$Status": "<p>The HTTP status of the request.</p>",
+        "UpdateKnowledgeBaseResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateOAuthClientApplicationResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdatePublicSharingSettingsResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateQPersonalizationConfigurationResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -15843,6 +15969,8 @@
         "CreateIAMPolicyAssignmentResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CreateIngestionRequest$DataSetId": "<p>The ID of the dataset used in the ingestion.</p>",
         "CreateIngestionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "CreateKnowledgeBaseRequest$PrimaryOwnerArn": "<p>The Amazon Resource Name (ARN) of the primary owner for the knowledge base. The specified user is always granted owner access, regardless of what is specified in the <code>Permissions</code> field. If you don't specify a primary owner, the knowledge base is created without one.</p>",
+        "CreateKnowledgeBaseResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CreateNamespaceResponse$CapacityRegion": "<p>The Amazon Web Services Region; that you want to use for the free SPICE capacity for the new namespace. This is set to the region that you run CreateNamespace in. </p>",
         "CreateNamespaceResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CreateOAuthClientApplicationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -16319,6 +16447,7 @@
         "UpdateIdentityPropagationConfigResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateIpRestrictionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateKnowledgeBasePermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "UpdateKnowledgeBaseResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateOAuthClientApplicationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdatePublicSharingSettingsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateQPersonalizationConfigurationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -16882,6 +17011,7 @@
         "CreateDataSetRequest$Tags": "<p>Contains a map of the key-value pairs for the resource tag or tags assigned to the dataset.</p>",
         "CreateDataSourceRequest$Tags": "<p>Contains a map of the key-value pairs for the resource tag or tags assigned to the data source.</p>",
         "CreateFolderRequest$Tags": "<p>Tags for the folder.</p>",
+        "CreateKnowledgeBaseRequest$Tags": "<p>The tags to assign to the knowledge base. If you don't specify tags, the knowledge base is created without tags.</p>",
         "CreateNamespaceRequest$Tags": "<p>The tags that you want to associate with the namespace that you're creating.</p>",
         "CreateOAuthClientApplicationRequest$Tags": "<p>Contains a map of the key-value pairs for the resource tag or tags assigned to the OAuthClientApplication.</p>",
         "CreateTemplateRequest$Tags": "<p>Contains a map of the key-value pairs for the resource tag or tags assigned to the resource.</p>",
@@ -17310,6 +17440,7 @@
         "DataSetSummary$LastUpdatedTime": "<p>The last time that this dataset was updated.</p>",
         "DataSource$CreatedTime": "<p>The time that this data source was created.</p>",
         "DataSource$LastUpdatedTime": "<p>The last time that this data source was updated.</p>",
+        "DataSource$LastCredentialVerifiedAt": "<p>The time that the credentials were last verified.</p>",
         "DataSourceSummary$CreatedTime": "<p>The date and time that the data source was created. This value is expressed in MM-DD-YYYY HH:MM:SS format.</p>",
         "DataSourceSummary$LastUpdatedTime": "<p>The date and time the data source was last updated. This value is expressed in MM-DD-YYYY HH:MM:SS format.</p>",
         "DeleteAnalysisResponse$DeletionTime": "<p>The date and time that the analysis is scheduled to be deleted.</p>",
@@ -18533,6 +18664,14 @@
       "refs": {}
     },
     "UpdateKnowledgeBasePermissionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateKnowledgeBaseRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateKnowledgeBaseResponse": {
       "base": null,
       "refs": {}
     },
