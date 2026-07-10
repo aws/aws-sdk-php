@@ -800,6 +800,29 @@ class MultipartContext implements Context, SnippetAcceptingContext
     }
 
     /**
+     * @When I call multipartCopy on :filename in the versioned bucket without a version_id
+     *
+     * Live-server regression for the fix that stops pinning HeadObject-derived
+     * VersionId on UploadPartCopy requests: when no source_version_id is
+     * supplied, the copy must follow the *current* version of the object
+     * (here, "v2") rather than whatever version HeadObject happened to see
+     * first.
+     */
+    public function iCallMultipartCopyOnInTheVersionedBucketWithoutAVersionId($filename)
+    {
+        $bucket = self::getVersionedResourceName();
+        $copier = new MultipartCopy(
+            $this->s3Client,
+            "/{$bucket}/{$filename}",
+            [
+                'bucket' => $bucket,
+                'key'    => $filename . '-copy',
+            ]
+        );
+        $this->runCopy($copier);
+    }
+
+    /**
      * @Then the copied file :destKey should contain :body
      */
     public function theCopiedFileShouldContain($destKey, $body)

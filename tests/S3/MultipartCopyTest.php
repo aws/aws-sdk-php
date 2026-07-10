@@ -921,9 +921,12 @@ class MultipartCopyTest extends TestCase
         $this->assertArrayNotHasKey('ListObjectAnnotations', $counts);
     }
 
-    public function testVersionIdAndETagFromHeadObjectArePinnedOnUploadPartCopy()
+    public function testHeadObjectDerivedVersionIdIsNotPinnedOnUploadPartCopy()
     {
-        // Trigger a real HeadObject by NOT pre-supplying source_metadata.
+        // When the user does NOT specify a sourceVersionId, the SDK must NOT
+        // attach the HeadObject-derived versionId to UploadPartCopy requests.
+        // Only the ETag conditional (CopySourceIfMatch) is used for consistency.
+        // Regression test for: https://github.com/aws/aws-sdk-java-v2/issues/7117
         $client = $this->getTestClient('s3');
         $this->addMockResults($client, [
             new Result([
@@ -956,7 +959,50 @@ class MultipartCopyTest extends TestCase
 
         $this->assertNotEmpty($uploadPartCopyCmds);
         foreach ($uploadPartCopyCmds as $cmd) {
-            $this->assertStringContainsString('?versionId=src-version', $cmd['CopySource']);
+            $this->assertStringNotContainsString('?versionId=', $cmd['CopySource'],
+                'UploadPartCopy must NOT attach HeadObject-derived versionId');
+            $this->assertSame('"src-etag"', $cmd['CopySourceIfMatch']);
+        }
+    }
+
+    public function testUserProvidedVersionIdIsPinnedOnUploadPartCopy()
+    {
+        // When the user explicitly provides a versionId via the source string,
+        // it MUST be attached to UploadPartCopy requests.
+        $client = $this->getTestClient('s3');
+        $this->addMockResults($client, [
+            new Result([
+                'ContentLength' => 11 * self::MB,
+                'ContentType'   => 'text/plain',
+                'ETag'          => '"src-etag"',
+                'VersionId'     => 'user-version',
+            ]),
+            new Result(['UploadId' => 'baz']),
+            new Result(['CopyPartResult' => ['ETag' => 'A']]),
+            new Result(['CopyPartResult' => ['ETag' => 'B']]),
+            new Result(['CopyPartResult' => ['ETag' => 'C']]),
+            new Result(['Location' => 'http://foo/bar']),
+        ]);
+
+        $uploadPartCopyCmds = [];
+        $client->getHandlerList()->appendSign(Middleware::tap(
+            function (CommandInterface $cmd) use (&$uploadPartCopyCmds) {
+                if ($cmd->getName() === 'UploadPartCopy') {
+                    $uploadPartCopyCmds[] = $cmd->toArray();
+                }
+            }
+        ));
+
+        // User explicitly provides versionId in the source string
+        $uploader = new MultipartCopy($client, '/srcbucket/srckey?versionId=user-version', [
+            'bucket' => 'foo',
+            'key'    => 'bar',
+        ]);
+        $uploader->upload();
+
+        $this->assertNotEmpty($uploadPartCopyCmds);
+        foreach ($uploadPartCopyCmds as $cmd) {
+            $this->assertStringContainsString('?versionId=user-version', $cmd['CopySource']);
             $this->assertSame('"src-etag"', $cmd['CopySourceIfMatch']);
         }
     }

@@ -109,3 +109,11 @@ Feature: S3 Multipart Uploads
     And I overwrite "versioned" in the versioned bucket with body "v2"
     When I call multipartCopy on the original version of "versioned" in the versioned bucket
     Then the copied file "versioned-copy" should contain "v1"
+
+  @versioned
+  Scenario: Copying without a source_version_id follows the current version
+    Given I have a versioning-enabled bucket
+    And I have an uploaded file named "current" in the versioned bucket with body "v1"
+    And I overwrite "current" in the versioned bucket with body "v2"
+    When I call multipartCopy on "current" in the versioned bucket without a version_id
+    Then the copied file "current-copy" should contain "v2"
