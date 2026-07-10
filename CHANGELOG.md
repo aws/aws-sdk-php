@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.388.4 - 2026-07-10
 
 * `Aws\S3\MultipartCopy` - Stop pinning HeadObject-derived VersionId on UploadPartCopy requests. Only user-provided versionId is now attached to copy-part requests.
 * `Aws\CloudWatch` - CloudWatch now assigns a unique identifier to each anomaly detector. PutAnomalyDetector and DescribeAnomalyDetectors return this AnomalyDetectorId, which you can use to describe or delete a specific anomaly detector directly.
