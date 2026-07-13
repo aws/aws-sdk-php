@@ -1291,7 +1291,9 @@
         "AutoTuneOptions":{"shape":"AutoTuneOptionsInput"},
         "TagList":{"shape":"TagList"},
         "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptions"},
-        "AutomatedSnapshotPauseOptions":{"shape":"AutomatedSnapshotPauseRequestOptions"}
+        "AutomatedSnapshotPauseOptions":{"shape":"AutomatedSnapshotPauseRequestOptions"},
+        "UseCase":{"shape":"DomainUseCase"},
+        "EngineMode":{"shape":"DomainEngineMode"}
       }
     },
     "CreateElasticsearchDomainResponse":{
@@ -1827,6 +1829,13 @@
         "Status":{"shape":"OptionStatus"}
       }
     },
+    "DomainEngineMode":{
+      "type":"string",
+      "enum":[
+        "GENERAL",
+        "OPTIMIZED"
+      ]
+    },
     "DomainId":{
       "type":"string",
       "max":64,
@@ -1906,6 +1915,15 @@
         "UpdatingServiceSoftware",
         "Isolated",
         "Deleting"
+      ]
+    },
+    "DomainUseCase":{
+      "type":"string",
+      "enum":[
+        "SEARCH",
+        "VECTOR",
+        "OBSERVABILITY",
+        "MIXED"
       ]
     },
     "Double":{"type":"double"},
@@ -2067,7 +2085,9 @@
         "ChangeProgressDetails":{"shape":"ChangeProgressDetails"},
         "ModifyingProperties":{"shape":"ModifyingPropertiesList"},
         "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptionsStatus"},
-        "AutomatedSnapshotPauseOptions":{"shape":"AutomatedSnapshotPauseOptionsStatus"}
+        "AutomatedSnapshotPauseOptions":{"shape":"AutomatedSnapshotPauseOptionsStatus"},
+        "UseCase":{"shape":"UseCaseStatus"},
+        "EngineMode":{"shape":"EngineModeStatus"}
       }
     },
     "ElasticsearchDomainStatus":{
@@ -2107,7 +2127,9 @@
         "DomainProcessingStatus":{"shape":"DomainProcessingStatusType"},
         "ModifyingProperties":{"shape":"ModifyingPropertiesList"},
         "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptions"},
-        "AutomatedSnapshotPauseOptions":{"shape":"AutomatedSnapshotPauseOptions"}
+        "AutomatedSnapshotPauseOptions":{"shape":"AutomatedSnapshotPauseOptions"},
+        "UseCase":{"shape":"DomainUseCase"},
+        "EngineMode":{"shape":"DomainEngineMode"}
       }
     },
     "ElasticsearchDomainStatusList":{
@@ -2163,6 +2185,17 @@
       "type":"map",
       "key":{"shape":"String"},
       "value":{"shape":"ServiceUrl"}
+    },
+    "EngineModeStatus":{
+      "type":"structure",
+      "required":[
+        "Options",
+        "Status"
+      ],
+      "members":{
+        "Options":{"shape":"DomainEngineMode"},
+        "Status":{"shape":"OptionStatus"}
+      }
     },
     "EngineType":{
       "type":"string",
@@ -3248,7 +3281,9 @@
         "AutoTuneOptions":{"shape":"AutoTuneOptions"},
         "DryRun":{"shape":"DryRun"},
         "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptions"},
-        "AutomatedSnapshotPauseOptions":{"shape":"AutomatedSnapshotPauseRequestOptions"}
+        "AutomatedSnapshotPauseOptions":{"shape":"AutomatedSnapshotPauseRequestOptions"},
+        "UseCase":{"shape":"DomainUseCase"},
+        "EngineMode":{"shape":"DomainEngineMode"}
       }
     },
     "UpdateElasticsearchDomainConfigResponse":{
@@ -3361,6 +3396,17 @@
     "UpgradeStepsList":{
       "type":"list",
       "member":{"shape":"UpgradeStepItem"}
+    },
+    "UseCaseStatus":{
+      "type":"structure",
+      "required":[
+        "Options",
+        "Status"
+      ],
+      "members":{
+        "Options":{"shape":"DomainUseCase"},
+        "Status":{"shape":"OptionStatus"}
+      }
     },
     "UserPoolId":{
       "type":"string",

@@ -379,6 +379,48 @@
       "base": "<p>A bad request exception object.</p>",
       "refs": {}
     },
+    "BedrockGuardrail": {
+      "base": "<p>Contains information about a Bedrock guardrail associated with a finding.</p>",
+      "refs": {
+        "BedrockGuardrails$member": null
+      }
+    },
+    "BedrockGuardrailArnString": {
+      "base": null,
+      "refs": {
+        "BedrockGuardrail$Arn": "<p>The ARN of the Bedrock guardrail.</p>"
+      }
+    },
+    "BedrockGuardrailDetails": {
+      "base": "<p>Contains information about the Bedrock guardrail that was involved in a finding.</p>",
+      "refs": {
+        "Resource$BedrockGuardrailDetails": "<p>Contains information about the Bedrock guardrail that was involved in a finding.</p>"
+      }
+    },
+    "BedrockGuardrailDetailsGuardrailArnString": {
+      "base": null,
+      "refs": {
+        "BedrockGuardrailDetails$GuardrailArn": "<p>The ARN of the Bedrock guardrail. This field is deprecated. Use the <code>guardrails</code> list instead.</p>"
+      }
+    },
+    "BedrockGuardrailDetailsGuardrailVersionString": {
+      "base": null,
+      "refs": {
+        "BedrockGuardrailDetails$GuardrailVersion": "<p>The version of the Bedrock guardrail. This field is deprecated. Use the <code>guardrails</code> list instead.</p>"
+      }
+    },
+    "BedrockGuardrailVersionString": {
+      "base": null,
+      "refs": {
+        "BedrockGuardrail$Version": "<p>The version of the Bedrock guardrail.</p>"
+      }
+    },
+    "BedrockGuardrails": {
+      "base": null,
+      "refs": {
+        "BedrockGuardrailDetails$Guardrails": "<p>The list of Bedrock guardrails associated with the finding.</p>"
+      }
+    },
     "Behavior": {
       "base": null,
       "refs": {
@@ -516,6 +558,12 @@
         "InvestigationSummary$Confidence": "<p>The confidence level of the investigation's assessment.</p>"
       }
     },
+    "ConfidenceLevel": {
+      "base": null,
+      "refs": {
+        "ContentPolicyFilter$Confidence": "<p>The confidence level that the content matched the filter.</p>"
+      }
+    },
     "ConflictException": {
       "base": "<p>A request conflict exception object.</p>",
       "refs": {}
@@ -563,6 +611,30 @@
       "refs": {
         "EcsTaskDetails$Containers": "<p>The containers that's associated with the task.</p>",
         "KubernetesWorkloadDetails$Containers": "<p>Containers running as part of the Kubernetes workload.</p>"
+      }
+    },
+    "ContentPolicyFilter": {
+      "base": "<p>Contains information about a content policy filter that matched during a guardrail evaluation.</p>",
+      "refs": {
+        "ContentPolicyFilters$member": null
+      }
+    },
+    "ContentPolicyFilterAction": {
+      "base": null,
+      "refs": {
+        "ContentPolicyFilter$Action": "<p>The action taken by the guardrail filter.</p>"
+      }
+    },
+    "ContentPolicyFilterType": {
+      "base": null,
+      "refs": {
+        "ContentPolicyFilter$Type": "<p>The type of content that was filtered by the guardrail.</p>"
+      }
+    },
+    "ContentPolicyFilters": {
+      "base": null,
+      "refs": {
+        "BedrockGuardrailDetails$ContentPolicyFilters": "<p>The list of content policy filters that matched during the guardrail evaluation.</p>"
       }
     },
     "ContinuousScanDetails": {
@@ -1894,6 +1966,18 @@
         "UntagResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) for the resource to remove tags from.</p>"
       }
     },
+    "GuardrailAction": {
+      "base": null,
+      "refs": {
+        "BedrockGuardrailDetails$GuardrailAction": "<p>Indicates whether the guardrail intervened or not.</p>"
+      }
+    },
+    "GuardrailSource": {
+      "base": null,
+      "refs": {
+        "BedrockGuardrailDetails$GuardrailSource": "<p>Indicates whether the guardrail was applied on the input or output of the model invocation.</p>"
+      }
+    },
     "HighestSeverityThreatDetails": {
       "base": "<p>Contains details of the highest severity threat detected during scan and number of infected files.</p>",
       "refs": {
@@ -2505,6 +2589,7 @@
         "CoverageEksClusterDetails$CoveredNodes": "<p>Represents the nodes within the EKS cluster that have a <code>HEALTHY</code> coverage status.</p>",
         "CoverageEksClusterDetails$CompatibleNodes": "<p>Represents all the nodes within the EKS cluster in your account.</p>",
         "DescribePublishingDestinationResponse$PublishingFailureStartTimestamp": "<p>The time, in epoch millisecond format, at which GuardDuty was first unable to publish findings to the destination.</p>",
+        "ObservationNumbers$member": null,
         "Threat$Count": "<p>The number of occurrences of this specific threat detected during the scan.</p>"
       }
     },
@@ -2783,6 +2868,24 @@
         "Session$MfaStatus": "<p>Indicates whether or not multi-factor authencation (MFA) was used during authentication.</p> <p>In Amazon Web Services CloudTrail, you can find this value as <code>userIdentity.sessionContext.attributes.mfaAuthenticated</code>.</p>"
       }
     },
+    "ModelDetail": {
+      "base": "<p>Contains information about the AI model involved in a finding.</p>",
+      "refs": {
+        "ModelDetails$member": null
+      }
+    },
+    "ModelDetailModelIdString": {
+      "base": null,
+      "refs": {
+        "ModelDetail$ModelId": "<p>The identifier of the AI model.</p>"
+      }
+    },
+    "ModelDetails": {
+      "base": null,
+      "refs": {
+        "Resource$ModelDetails": "<p>Contains information about the AI models involved in a finding.</p>"
+      }
+    },
     "Name": {
       "base": null,
       "refs": {
@@ -2913,6 +3016,12 @@
       "base": null,
       "refs": {
         "Condition$NotMatches": "<p>Represents the <i>not match</i> condition to be applied to a single field when querying for findings. </p> <note> <p> The <i>not-matches</i> condition is available only for create-filter and update-filter APIs. </p> </note>"
+      }
+    },
+    "ObservationNumbers": {
+      "base": null,
+      "refs": {
+        "Observations$Number": "<p>The numeric values that were unusual.</p>"
       }
     },
     "ObservationTexts": {
@@ -3542,6 +3651,7 @@
     "ScanConfigurationContinuousScanDetails": {
       "base": "<p>Contains information about the time range within the continuous backup in Amazon Web Services Backup that was scanned for a point-in-time recovery resource.</p>",
       "refs": {
+        "RecoveryPointDetails$ContinuousScanDetails": null,
         "ScanConfigurationRecoveryPoint$ContinuousScanDetails": "<p>The time range within the continuous backup in Amazon Web Services Backup that was scanned for a point-in-time recovery resource.</p>"
       }
     },

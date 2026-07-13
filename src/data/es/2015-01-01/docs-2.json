@@ -774,6 +774,15 @@
         "ElasticsearchDomainConfig$DomainEndpointOptions": "<p>Specifies the <code>DomainEndpointOptions</code> for the Elasticsearch domain.</p>"
       }
     },
+    "DomainEngineMode": {
+      "base": "<p>The engine mode for the domain. Valid values are <code>GENERAL</code> (the standard Elasticsearch/OpenSearch engine) and <code>OPTIMIZED</code> (the cost- and performance-optimized engine for observability and log-analytics workloads). If you don't specify an engine mode, <code>GENERAL</code> is used. <code>OPTIMIZED</code> requires OpenSearch 3.5 or later, OpenSearch Optimized instance types (OR1, OR2, OM2, or OI2) for the data tier, and encryption at rest, and is available only for the <code>OBSERVABILITY</code> and <code>MIXED</code> use cases. The engine mode can't be changed after the domain is created.</p>",
+      "refs": {
+        "CreateElasticsearchDomainRequest$EngineMode": "<p>The engine mode for the domain. For valid values and requirements, see <code>DomainEngineMode</code>.</p>",
+        "ElasticsearchDomainStatus$EngineMode": "<p>The engine mode for the domain.</p>",
+        "EngineModeStatus$Options": "<p>The engine mode configured for the domain.</p>",
+        "UpdateElasticsearchDomainConfigRequest$EngineMode": "<p>The engine mode for the domain. For valid values and requirements, see <code>DomainEngineMode</code>.</p>"
+      }
+    },
     "DomainId": {
       "base": "<p>Unique identifier for an Elasticsearch domain.</p>",
       "refs": {
@@ -876,6 +885,15 @@
       "base": null,
       "refs": {
         "ElasticsearchDomainStatus$DomainProcessingStatus": "<p>The status of any changes that are currently in progress for the domain.</p>"
+      }
+    },
+    "DomainUseCase": {
+      "base": "<p>The primary use case for the domain, which determines the default configuration and the engine modes that are available. Valid values are <code>SEARCH</code> (full-text search, e-commerce, content discovery, and hybrid and semantic search), <code>VECTOR</code> (k-NN and semantic search, and retrieval-augmented generation), <code>OBSERVABILITY</code> (logs, metrics, traces, and dashboards), and <code>MIXED</code> (a combination of search and analytics). If you don't specify a use case, <code>MIXED</code> is used.</p>",
+      "refs": {
+        "CreateElasticsearchDomainRequest$UseCase": "<p>The primary use case for the domain. For valid values, see <code>DomainUseCase</code>.</p>",
+        "ElasticsearchDomainStatus$UseCase": "<p>The primary use case for the domain.</p>",
+        "UpdateElasticsearchDomainConfigRequest$UseCase": "<p>The primary use case for the domain. For valid values, see <code>DomainUseCase</code>.</p>",
+        "UseCaseStatus$Options": "<p>The use case configured for the domain.</p>"
       }
     },
     "Double": {
@@ -1042,6 +1060,12 @@
       "base": null,
       "refs": {
         "ElasticsearchDomainStatus$Endpoints": "<p>Map containing the Elasticsearch domain endpoints used to submit index and search requests. Example <code>key, value</code>: <code>'vpc','vpc-endpoint-h2dsd34efgyghrtguk5gt6j2foh4.us-east-1.es.amazonaws.com'</code>.</p>"
+      }
+    },
+    "EngineModeStatus": {
+      "base": "<p>The status of the engine mode for the domain.</p>",
+      "refs": {
+        "ElasticsearchDomainConfig$EngineMode": "<p>The engine mode configured for the domain.</p>"
       }
     },
     "EngineType": {
@@ -1523,9 +1547,11 @@
         "ElasticsearchClusterConfigStatus$Status": "<p> Specifies the status of the configuration for the specified Elasticsearch domain.</p>",
         "ElasticsearchVersionStatus$Status": "<p> Specifies the status of the Elasticsearch version options for the specified Elasticsearch domain.</p>",
         "EncryptionAtRestOptionsStatus$Status": "<p> Specifies the status of the Encryption At Rest options for the specified Elasticsearch domain.</p>",
+        "EngineModeStatus$Status": "<p>The current status of the engine mode for the domain.</p>",
         "LogPublishingOptionsStatus$Status": "<p>The status of the log publishing options for the Elasticsearch domain. See <code>OptionStatus</code> for the status information that's included. </p>",
         "NodeToNodeEncryptionOptionsStatus$Status": "<p>Specifies the status of the node-to-node encryption options for the specified Elasticsearch domain.</p>",
         "SnapshotOptionsStatus$Status": "<p>Specifies the status of a daily automated snapshot.</p>",
+        "UseCaseStatus$Status": "<p>The current status of the use case for the domain.</p>",
         "VPCDerivedInfoStatus$Status": "<p> Specifies the status of the VPC options for the specified Elasticsearch domain.</p>"
       }
     },
@@ -2149,6 +2175,12 @@
       "base": null,
       "refs": {
         "UpgradeHistory$StepsList": "<p> A list of <code> <a>UpgradeStepItem</a> </code> s representing information about each step performed as pard of a specific Upgrade or Upgrade Eligibility Check. </p>"
+      }
+    },
+    "UseCaseStatus": {
+      "base": "<p>The status of the use case for the domain.</p>",
+      "refs": {
+        "ElasticsearchDomainConfig$UseCase": "<p>The use case configured for the domain.</p>"
       }
     },
     "UserPoolId": {

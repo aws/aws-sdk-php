@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Lambda` - Add Java 8, 11 and 17 on AL2023 (java8.al2023, java11.al2023, java17.al2023) support to AWS Lambda.
+* `Aws\ElasticsearchService` - Adds support for the EngineMode and UseCase parameters on Amazon Elasticsearch Service domains, enabling GENERAL or OPTIMIZED engine modes and SEARCH, VECTOR, OBSERVABILITY, or MIXED usecases when creating and updating domain configurations.
+* `Aws\RedshiftServerless` - Add support for preserving datasharing, zero-ETL and S3 event integrations on snapshot restore to serverless namespace.
+* `Aws\GameLift` - Amazon GameLift Servers now includes fleet expiration for managed fleets. A managed fleet expires one year after creation, transitioning to EXPIRED status, emitting a FLEET EXPIRED event, and scaling to zero instances. Expired fleets cannot host new game sessions or increase capacity.
+* `Aws\GuardDuty` - GuardDuty AI Protection is now publicly available. Findings include Bedrock guardrail details, model details, observation numbers, and continuous scan details. GuardrailArn and GuardrailVersion are deprecated in favor of the guardrails list.
+
 ## 3.388.4 - 2026-07-10
 
 * `Aws\S3\MultipartCopy` - Stop pinning HeadObject-derived VersionId on UploadPartCopy requests. Only user-provided versionId is now attached to copy-part requests.
