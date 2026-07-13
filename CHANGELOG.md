@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.388.5 - 2026-07-13
 
 * `Aws\Lambda` - Add Java 8, 11 and 17 on AL2023 (java8.al2023, java11.al2023, java17.al2023) support to AWS Lambda.
 * `Aws\ElasticsearchService` - Adds support for the EngineMode and UseCase parameters on Amazon Elasticsearch Service domains, enabling GENERAL or OPTIMIZED engine modes and SEARCH, VECTOR, OBSERVABILITY, or MIXED usecases when creating and updating domain configurations.
