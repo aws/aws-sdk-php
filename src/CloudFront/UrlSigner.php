@@ -15,15 +15,13 @@ class UrlSigner
     /**
      * @param $keyPairId  string     ID of the key pair
      * @param $privateKey string     Path to the private key used for signing
-     * @param $algorithm  int|string OpenSSL signature algorithm constant (e.g.
-     *                               OPENSSL_ALGO_SHA1, OPENSSL_ALGO_SHA256) or
-     *                               algorithm name string (e.g. "sha256").
-     *                               Defaults to OPENSSL_ALGO_SHA1.
+     * @param $algorithm  int|string Algorithm (name or openssl constant) to be used. Defaults to SHA1.
+     *                               Supported algorithms are SHA1 and SHA256.
      *
      * @throws \RuntimeException if the openssl extension is missing
-     * @throws \InvalidArgumentException if the private key cannot be found.
+     * @throws \InvalidArgumentException if the private key cannot be found or the passed algorithm is not supported.
      */
-    public function __construct($keyPairId, $privateKey, $algorithm = OPENSSL_ALGO_SHA1)
+    public function __construct($keyPairId, $privateKey, $algorithm = Signer::DEFAULT_ALGORITHM)
     {
         $this->signer = new Signer($keyPairId, $privateKey, '', $algorithm);
     }

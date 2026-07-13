@@ -95,6 +95,14 @@ class SignerTest extends TestCase
         $this->assertDoesNotMatchRegularExpression('/[\+\=\/]/', $signature['Signature']);
     }
 
+    public function testSignsWithUnsupportedAlgorithmThrowsException()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unsupported signature algorithm: SHA512');
+
+        new Signer('test', $this->testKeyFile, self::PASSPHRASE, 'sha512');
+    }
+
     public function testSha1SignatureOmitsHashAlgorithmParam()
     {
         $signature = $this->instance->getSignature('test.mp4', time() + 1000);

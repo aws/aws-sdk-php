@@ -74,6 +74,15 @@ class CookieSignerTest extends TestCase
 
     public function testSha256CookieIncludesHashAlgorithmAttribute()
     {
+        $s = new CookieSigner('a', $this->key, 'SHA256');
+        $cookie = $s->getSignedCookie('https://bar.com', strtotime('+10 minutes'));
+
+        $this->assertArrayHasKey('CloudFront-Hash-Algorithm', $cookie);
+        $this->assertSame('SHA256', $cookie['CloudFront-Hash-Algorithm']);
+    }
+
+    public function testSha256ConstantCookieIncludesHashAlgorithmAttribute()
+    {
         $s = new CookieSigner('a', $this->key, OPENSSL_ALGO_SHA256);
         $cookie = $s->getSignedCookie('https://bar.com', strtotime('+10 minutes'));
 

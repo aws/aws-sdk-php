@@ -10,6 +10,12 @@ class Signer
     private $pkHandle;
     private $algorithm;
 
+    public const DEFAULT_ALGORITHM = 'SHA1';
+    public const SUPPORTED_ALGORITHM = [
+        OPENSSL_ALGO_SHA1 => 'SHA1',
+        OPENSSL_ALGO_SHA256 => 'SHA256',
+    ];
+
     /**
      * A signer for creating the signature values used in CloudFront signed URLs
      * and signed cookies.
@@ -17,15 +23,13 @@ class Signer
      * @param $keyPairId  string     ID of the key pair
      * @param $privateKey string     Path to the private key used for signing
      * @param $passphrase string     Passphrase to private key file, if one exists
-     * @param $algorithm  int|string OpenSSL signature algorithm constant (e.g.
-     *                               OPENSSL_ALGO_SHA1, OPENSSL_ALGO_SHA256) or
-     *                               algorithm name string (e.g. "sha256").
-     *                               Defaults to OPENSSL_ALGO_SHA1.
+     * @param $algorithm  int|string Algorithm (name or openssl constant) to be used. Defaults to SHA1.
+     *                                Supported algorithms are SHA1 and SHA256.
      *
      * @throws \RuntimeException if the openssl extension is missing
-     * @throws \InvalidArgumentException if the private key cannot be found.
+     * @throws \InvalidArgumentException if the private key cannot be found or the passed algorithm is not supported.
      */
-    public function __construct($keyPairId, $privateKey, $passphrase = "", $algorithm = OPENSSL_ALGO_SHA1)
+    public function __construct($keyPairId, $privateKey, $passphrase = "", $algorithm = self::DEFAULT_ALGORITHM)
     {
         if (!extension_loaded('openssl')) {
             //@codeCoverageIgnoreStart
@@ -35,6 +39,12 @@ class Signer
         }
 
         $this->keyPairId = $keyPairId;
+
+        $algorithm = \strtoupper(self::SUPPORTED_ALGORITHM[$algorithm] ?? $algorithm);
+        if (!\in_array($algorithm, self::SUPPORTED_ALGORITHM)) {
+            throw new \InvalidArgumentException("Unsupported signature algorithm: $algorithm");
+        }
+
         $this->algorithm = $algorithm;
 
         if (!$this->pkHandle = openssl_pkey_get_private($privateKey, $passphrase)) {
@@ -102,38 +112,11 @@ class Signer
         $signatureHash['Signature'] = $this->encode($this->sign($policy));
         $signatureHash['Key-Pair-Id'] = $this->keyPairId;
 
-        $hashAlgParam = $this->getCloudFrontAlgorithmParam();
-        if ($hashAlgParam !== null) {
-            $signatureHash['Hash-Algorithm'] = $hashAlgParam;
+        if ($this->algorithm !== self::DEFAULT_ALGORITHM) {
+            $signatureHash['Hash-Algorithm'] = $this->algorithm;
         }
 
         return $signatureHash;
-    }
-
-    /**
-     * Maps the OpenSSL algorithm to the value CloudFront expects in the
-     * Hash-Algorithm query parameter / cookie attribute. Returns null for
-     * SHA1 (the default; no parameter needed for backward compatibility).
-     */
-    private function getCloudFrontAlgorithmParam()
-    {
-        static $map = [
-            OPENSSL_ALGO_SHA256 => 'SHA256',
-        ];
-
-        if (is_int($this->algorithm)) {
-            return isset($map[$this->algorithm]) ? $map[$this->algorithm] : null;
-        }
-
-        // Normalize string forms: "sha256", "SHA-256", "sha256WithRSAEncryption" → "SHA256"
-        $normalized = strtoupper(preg_replace('/[^a-zA-Z0-9]/', '', $this->algorithm));
-        foreach ($map as $param) {
-            if ($normalized === $param) {
-                return $param;
-            }
-        }
-
-        return null;
     }
 
     private function createCannedPolicy($resource, $expiration)
