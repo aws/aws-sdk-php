@@ -86,13 +86,27 @@ class SignerTest extends TestCase
             self::PASSPHRASE,
             OPENSSL_ALGO_SHA256
         );
-        $signature = $sha256Signer->getSignature('test.mp4', time() + 1000);
+
+        $policy = '{"Statement":[{"Resource":"test.mp4","Condition":{"DateLessThan":{"AWS:EpochTime":1470000000}}}]}';
+        $signature = $sha256Signer->getSignature(null, null, $policy);
 
         $this->assertArrayHasKey('Signature', $signature);
         $this->assertArrayHasKey('Key-Pair-Id', $signature);
         $this->assertArrayHasKey('Hash-Algorithm', $signature);
         $this->assertSame('SHA256', $signature['Hash-Algorithm']);
-        $this->assertDoesNotMatchRegularExpression('/[\+\=\/]/', $signature['Signature']);
+
+        // Verify the signature using the public key
+        $pubKey = openssl_pkey_get_details(
+            openssl_pkey_get_private("file://{$this->testKeyFile}", self::PASSPHRASE)
+        )['key'];
+
+        $decodedSignature = base64_decode(strtr($signature['Signature'], '-_~', '+=/'));
+
+        $this->assertSame(1, openssl_verify($policy, $decodedSignature, $pubKey, OPENSSL_ALGO_SHA256));
+        $this->assertSame(
+            'FYeSxAa0dBVIgRRYx3MIZqLByin2vkrE1hNHa-tNuWkGYWVGjDowyx7RT6C5sbb3tOori74BJhoAYmG8QgmXKb6Gia69kOmgmVv4CkSvXsjb4AcRalDheZXVt7xaAQKSMk27uhleAiompseAhZY~GPlJe818JIIoq8BJpjvj1py8yX8p5Py~qDM1vbEkGCXz7sayzwQ8cLLfXa087aQW2PsUt6tUpdb~CAaJMjodlaTDAZg~3DtM4AHoYnf0~zuhbJDzmTgDjX19cejjU35WWyxBcyOloYgM8WCkl2DP4BX-wBLUxEDeH5hOlTMuqiCH4lBt2aBi~OD6yj20toQZiQ__',
+            $signature['Signature']
+        );
     }
 
     public function testSignsWithUnsupportedAlgorithmThrowsException()
