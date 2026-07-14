@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.388.6 - 2026-07-14
 
 * `Aws\Crypto` - Fixes AAD concatenation and tag validation
 * `Aws\drs` - Fast recovery of EC2 based drs workloads by skipping the conversion step
