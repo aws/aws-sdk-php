@@ -965,13 +965,13 @@
       "type":"string",
       "max":255,
       "min":0,
-      "pattern":"(us(-gov)?|ap|ca|cn|eu|eusc|sa|af|me|il)-([a-z]{2}-)?(central|north|(north(?:east|west))|south|south(?:east|west)|east|west)-[0-9][a-z]"
+      "pattern":"(us(-gov)?|ap|ca|cn|eu|eusc|sa|af|me|mx|il)-([a-z]{2}-)?(central|north|(north(?:east|west))|south|south(?:east|west)|east|west)-[0-9][a-z]"
     },
     "AwsRegion":{
       "type":"string",
       "max":255,
       "min":0,
-      "pattern":"(us(-gov)?|ap|ca|cn|eu|eusc|sa|af|me|il)-([a-z]{2}-)?(central|north|(north(?:east|west))|south|south(?:east|west)|east|west)-[0-9]"
+      "pattern":"(us(-gov)?|ap|ca|cn|eu|eusc|sa|af|me|mx|il)-([a-z]{2}-)?(central|north|(north(?:east|west))|south|south(?:east|west)|east|west)-[0-9]"
     },
     "Boolean":{
       "type":"boolean",
@@ -1057,7 +1057,8 @@
         "licensing":{"shape":"Licensing"},
         "exportBucketArn":{"shape":"ARN"},
         "postLaunchEnabled":{"shape":"Boolean"},
-        "launchIntoSourceInstance":{"shape":"Boolean"}
+        "launchIntoSourceInstance":{"shape":"Boolean"},
+        "recoveryMode":{"shape":"RecoveryMode"}
       }
     },
     "CreateLaunchConfigurationTemplateResponse":{
@@ -2024,7 +2025,8 @@
         "copyTags":{"shape":"Boolean"},
         "licensing":{"shape":"Licensing"},
         "postLaunchEnabled":{"shape":"Boolean"},
-        "launchIntoInstanceProperties":{"shape":"LaunchIntoInstanceProperties"}
+        "launchIntoInstanceProperties":{"shape":"LaunchIntoInstanceProperties"},
+        "recoveryMode":{"shape":"RecoveryMode"}
       }
     },
     "LaunchConfigurationTemplate":{
@@ -2040,7 +2042,8 @@
         "licensing":{"shape":"Licensing"},
         "exportBucketArn":{"shape":"ARN"},
         "postLaunchEnabled":{"shape":"Boolean"},
-        "launchIntoSourceInstance":{"shape":"Boolean"}
+        "launchIntoSourceInstance":{"shape":"Boolean"},
+        "recoveryMode":{"shape":"RecoveryMode"}
       }
     },
     "LaunchConfigurationTemplateID":{
@@ -2241,8 +2244,8 @@
     "PITPolicy":{
       "type":"list",
       "member":{"shape":"PITPolicyRule"},
-      "max":10,
-      "min":1
+      "max":3,
+      "min":3
     },
     "PITPolicyRule":{
       "type":"structure",
@@ -2567,6 +2570,13 @@
         "jobID":{"shape":"JobID"},
         "lastRecoveryResult":{"shape":"RecoveryResult"}
       }
+    },
+    "RecoveryMode":{
+      "type":"string",
+      "enum":[
+        "FAST",
+        "OPTIMAL"
+      ]
     },
     "RecoveryResult":{
       "type":"string",
@@ -3225,7 +3235,8 @@
         "copyTags":{"shape":"Boolean"},
         "licensing":{"shape":"Licensing"},
         "postLaunchEnabled":{"shape":"Boolean"},
-        "launchIntoInstanceProperties":{"shape":"LaunchIntoInstanceProperties"}
+        "launchIntoInstanceProperties":{"shape":"LaunchIntoInstanceProperties"},
+        "recoveryMode":{"shape":"RecoveryMode"}
       }
     },
     "UpdateLaunchConfigurationTemplateRequest":{
@@ -3240,7 +3251,8 @@
         "licensing":{"shape":"Licensing"},
         "exportBucketArn":{"shape":"ARN"},
         "postLaunchEnabled":{"shape":"Boolean"},
-        "launchIntoSourceInstance":{"shape":"Boolean"}
+        "launchIntoSourceInstance":{"shape":"Boolean"},
+        "recoveryMode":{"shape":"RecoveryMode"}
       }
     },
     "UpdateLaunchConfigurationTemplateResponse":{

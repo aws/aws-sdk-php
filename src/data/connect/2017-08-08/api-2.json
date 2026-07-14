@@ -4579,6 +4579,23 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "SearchRules":{
+      "name":"SearchRules",
+      "http":{
+        "method":"POST",
+        "requestUri":"/search-rules"
+      },
+      "input":{"shape":"SearchRulesRequest"},
+      "output":{"shape":"SearchRulesResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "SearchSecurityProfiles":{
       "name":"SearchSecurityProfiles",
       "http":{
@@ -22117,6 +22134,7 @@
         "RuleId":{"shape":"RuleId"},
         "RuleArn":{"shape":"ARN"},
         "TriggerEventSource":{"shape":"RuleTriggerEventSource"},
+        "RuleCapabilityTiers":{"shape":"RuleCapabilityTiers"},
         "Function":{"shape":"RuleFunction"},
         "Actions":{"shape":"RuleActions"},
         "PublishStatus":{"shape":"RulePublishStatus"},
@@ -22146,6 +22164,32 @@
       "type":"list",
       "member":{"shape":"RuleAction"}
     },
+    "RuleAttributeAndCondition":{
+      "type":"structure",
+      "members":{
+        "TagConditions":{"shape":"TagAndConditionList"}
+      }
+    },
+    "RuleAttributeFilter":{
+      "type":"structure",
+      "members":{
+        "OrConditions":{"shape":"RuleAttributeOrConditionList"},
+        "AndCondition":{"shape":"RuleAttributeAndCondition"},
+        "TagCondition":{"shape":"TagCondition"}
+      }
+    },
+    "RuleAttributeOrConditionList":{
+      "type":"list",
+      "member":{"shape":"RuleAttributeAndCondition"}
+    },
+    "RuleCapabilityTier":{
+      "type":"string",
+      "enum":["GenerativeAI"]
+    },
+    "RuleCapabilityTiers":{
+      "type":"list",
+      "member":{"shape":"RuleCapabilityTier"}
+    },
     "RuleFunction":{"type":"string"},
     "RuleId":{
       "type":"string",
@@ -22165,6 +22209,37 @@
         "PUBLISHED"
       ]
     },
+    "RuleSearchSummary":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "RuleId",
+        "RuleArn",
+        "TriggerEventSource",
+        "ActionSummaries",
+        "PublishStatus",
+        "CreatedTime",
+        "LastUpdatedTime",
+        "LastUpdatedBy"
+      ],
+      "members":{
+        "Name":{"shape":"RuleName"},
+        "RuleId":{"shape":"RuleId"},
+        "RuleArn":{"shape":"ARN"},
+        "TriggerEventSource":{"shape":"RuleTriggerEventSource"},
+        "ActionSummaries":{"shape":"ActionSummaries"},
+        "RuleCapabilityTiers":{"shape":"RuleCapabilityTiers"},
+        "PublishStatus":{"shape":"RulePublishStatus"},
+        "CreatedTime":{"shape":"Timestamp"},
+        "LastUpdatedTime":{"shape":"Timestamp"},
+        "LastUpdatedBy":{"shape":"ARN"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
+    "RuleSearchSummaryList":{
+      "type":"list",
+      "member":{"shape":"RuleSearchSummary"}
+    },
     "RuleSummary":{
       "type":"structure",
       "required":[
@@ -22183,6 +22258,7 @@
         "RuleArn":{"shape":"ARN"},
         "EventSourceName":{"shape":"EventSourceName"},
         "PublishStatus":{"shape":"RulePublishStatus"},
+        "RuleCapabilityTiers":{"shape":"RuleCapabilityTiers"},
         "ActionSummaries":{"shape":"ActionSummaries"},
         "CreatedTime":{"shape":"Timestamp"},
         "LastUpdatedTime":{"shape":"Timestamp"}
@@ -22204,6 +22280,24 @@
       "type":"structure",
       "members":{
         "Behavior":{"shape":"Behavior"}
+      }
+    },
+    "RulesSearchConditionList":{
+      "type":"list",
+      "member":{"shape":"RulesSearchCriteria"}
+    },
+    "RulesSearchCriteria":{
+      "type":"structure",
+      "members":{
+        "OrConditions":{"shape":"RulesSearchConditionList"},
+        "AndConditions":{"shape":"RulesSearchConditionList"},
+        "StringCondition":{"shape":"StringCondition"}
+      }
+    },
+    "RulesSearchFilter":{
+      "type":"structure",
+      "members":{
+        "AttributeFilter":{"shape":"RuleAttributeFilter"}
       }
     },
     "S3Config":{
@@ -22714,6 +22808,29 @@
         "RoutingProfiles":{"shape":"RoutingProfileList"},
         "NextToken":{"shape":"NextToken2500"},
         "ApproximateTotalCount":{"shape":"ApproximateTotalCount"}
+      }
+    },
+    "SearchRulesRequest":{
+      "type":"structure",
+      "required":["InstanceId"],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "MaxResults":{
+          "shape":"MaxResult200",
+          "box":true
+        },
+        "NextToken":{"shape":"NextToken2500"},
+        "SearchCriteria":{"shape":"RulesSearchCriteria"},
+        "SearchFilter":{"shape":"RulesSearchFilter"}
+      }
+    },
+    "SearchRulesResponse":{
+      "type":"structure",
+      "required":["Rules"],
+      "members":{
+        "Rules":{"shape":"RuleSearchSummaryList"},
+        "ApproximateTotalCount":{"shape":"ApproximateTotalCount"},
+        "NextToken":{"shape":"NextToken2500"}
       }
     },
     "SearchSecurityProfilesRequest":{

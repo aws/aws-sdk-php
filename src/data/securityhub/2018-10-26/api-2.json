@@ -1909,6 +1909,22 @@
     }
   },
   "shapes":{
+    "AIDetails":{
+      "type":"structure",
+      "members":{
+        "HostResourceGuid":{"shape":"NonEmptyString"},
+        "HostResourceType":{"shape":"NonEmptyString"},
+        "CanonicalId":{"shape":"NonEmptyString"},
+        "SelfHostedAIModelResourceCount":{"shape":"Integer"},
+        "SelfHostedAIAgentResourceCount":{"shape":"Integer"},
+        "SelfHostedAIModelServingResourceCount":{"shape":"Integer"},
+        "SelfHostedAIExternalEndpointResourceCount":{"shape":"Integer"},
+        "SelfHostedAIDevelopmentResourceCount":{"shape":"Integer"},
+        "SelfHostedAIAgentFrameworkResourceCount":{"shape":"Integer"},
+        "SelfHostedAIAgentToolsAndIdentityResourceCount":{"shape":"Integer"},
+        "SelfHostedTotalAIResourceCount":{"shape":"Integer"}
+      }
+    },
     "AcceptAdministratorInvitationRequest":{
       "type":"structure",
       "required":[
@@ -9416,6 +9432,13 @@
       "type":"structure",
       "members":{}
     },
+    "DiscoveryType":{
+      "type":"string",
+      "enum":[
+        "Managed",
+        "SelfHosted"
+      ]
+    },
     "DnsRequestAction":{
       "type":"structure",
       "members":{
@@ -12108,7 +12131,11 @@
         "ResourceCategory",
         "ResourceType",
         "ResourceName",
-        "FindingsSummary.FindingType"
+        "FindingsSummary.FindingType",
+        "ResourceSubCategory",
+        "DiscoveryType",
+        "ResourceInfo.AIDetails.HostResourceType",
+        "ResourceInfo.AIDetails.CanonicalId"
       ]
     },
     "ResourceGroupByRule":{
@@ -12131,6 +12158,12 @@
       },
       "error":{"httpStatusCode":400},
       "exception":true
+    },
+    "ResourceInfo":{
+      "type":"structure",
+      "members":{
+        "AIDetails":{"shape":"AIDetails"}
+      }
     },
     "ResourceList":{
       "type":"list",
@@ -12192,7 +12225,10 @@
         "ResourceDetailCaptureTimeDt":{"shape":"NonEmptyString"},
         "FindingsSummary":{"shape":"ResourceFindingsSummaryList"},
         "ResourceTags":{"shape":"ResourceTagList"},
-        "ResourceConfig":{"shape":"ResourceConfig"}
+        "ResourceConfig":{"shape":"ResourceConfig"},
+        "ResourceSubCategory":{"shape":"ResourceSubCategory"},
+        "DiscoveryType":{"shape":"DiscoveryType"},
+        "ResourceInfo":{"shape":"ResourceInfo"}
       }
     },
     "ResourceScopes":{
@@ -12213,6 +12249,22 @@
         "Informational":{"shape":"Integer"},
         "Unknown":{"shape":"Integer"}
       }
+    },
+    "ResourceSubCategory":{
+      "type":"string",
+      "enum":[
+        "Model",
+        "ModelServing",
+        "Agent",
+        "AgentFramework",
+        "AgentToolsAndIdentity",
+        "SafetyAndGuardrail",
+        "KnowledgeAndData",
+        "OrchestrationAndPipeline",
+        "ExternalEndpoint",
+        "Development",
+        "Other"
+      ]
     },
     "ResourceTag":{
       "type":"structure",
@@ -12306,7 +12358,15 @@
         "FindingsSummary.Severities.Medium",
         "FindingsSummary.Severities.Low",
         "FindingsSummary.Severities.Informational",
-        "FindingsSummary.Severities.Unknown"
+        "FindingsSummary.Severities.Unknown",
+        "ResourceInfo.AIDetails.SelfHostedAIModelResourceCount",
+        "ResourceInfo.AIDetails.SelfHostedAIAgentResourceCount",
+        "ResourceInfo.AIDetails.SelfHostedAIModelServingResourceCount",
+        "ResourceInfo.AIDetails.SelfHostedAIExternalEndpointResourceCount",
+        "ResourceInfo.AIDetails.SelfHostedAIDevelopmentResourceCount",
+        "ResourceInfo.AIDetails.SelfHostedAIAgentFrameworkResourceCount",
+        "ResourceInfo.AIDetails.SelfHostedAIAgentToolsAndIdentityResourceCount",
+        "ResourceInfo.AIDetails.SelfHostedTotalAIResourceCount"
       ]
     },
     "ResourcesNumberFilter":{
@@ -12337,7 +12397,12 @@
         "ResourceType",
         "ResourceName",
         "FindingsSummary.FindingType",
-        "FindingsSummary.ProductName"
+        "FindingsSummary.ProductName",
+        "ResourceSubCategory",
+        "DiscoveryType",
+        "ResourceInfo.AIDetails.HostResourceGuid",
+        "ResourceInfo.AIDetails.HostResourceType",
+        "ResourceInfo.AIDetails.CanonicalId"
       ]
     },
     "ResourcesStringFilter":{

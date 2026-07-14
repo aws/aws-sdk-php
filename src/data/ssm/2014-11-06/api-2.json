@@ -3079,7 +3079,7 @@
       "members":{
         "Parameters":{"shape":"AutomationParameterMap"},
         "TargetParameterName":{"shape":"AutomationParameterKey"},
-        "Targets":{"shape":"Targets"},
+        "Targets":{"shape":"AutomationTargets"},
         "TargetMaps":{"shape":"TargetMaps"},
         "TargetLocations":{"shape":"TargetLocations"},
         "TargetLocationsURL":{"shape":"TargetLocationsURL"}
@@ -3213,6 +3213,12 @@
       "type":"string",
       "max":50,
       "min":1
+    },
+    "AutomationTargets":{
+      "type":"list",
+      "member":{"shape":"Target"},
+      "max":1,
+      "min":0
     },
     "AutomationType":{
       "type":"string",
@@ -11224,7 +11230,7 @@
         "ClientToken":{"shape":"IdempotencyToken"},
         "Mode":{"shape":"ExecutionMode"},
         "TargetParameterName":{"shape":"AutomationParameterKey"},
-        "Targets":{"shape":"Targets"},
+        "Targets":{"shape":"AutomationTargets"},
         "TargetMaps":{"shape":"TargetMaps"},
         "MaxConcurrency":{"shape":"MaxConcurrency"},
         "MaxErrors":{"shape":"MaxErrors"},
@@ -11539,7 +11545,7 @@
         },
         "IncludeChildOrganizationUnits":{"shape":"Boolean"},
         "ExcludeAccounts":{"shape":"ExcludeAccounts"},
-        "Targets":{"shape":"Targets"},
+        "Targets":{"shape":"AutomationTargets"},
         "TargetsMaxConcurrency":{"shape":"MaxConcurrency"},
         "TargetsMaxErrors":{"shape":"MaxErrors"}
       }

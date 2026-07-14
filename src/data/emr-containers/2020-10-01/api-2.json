@@ -525,7 +525,8 @@
           "shape":"ClientToken",
           "idempotencyToken":true
         },
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "sessionIdleTimeoutInMinutes":{"shape":"SessionIdleTimeoutInMinutes"}
       }
     },
     "CreateManagedEndpointResponse":{
@@ -578,7 +579,8 @@
           "idempotencyToken":true
         },
         "tags":{"shape":"TagMap"},
-        "securityConfigurationId":{"shape":"ResourceIdString"}
+        "securityConfigurationId":{"shape":"ResourceIdString"},
+        "sessionEnabled":{"shape":"Boolean"}
       }
     },
     "CreateVirtualClusterResponse":{
@@ -779,7 +781,7 @@
       "type":"structure",
       "members":{
         "namespace":{"shape":"KubernetesNamespace"},
-        "nodeLabel":{"shape":"ResourceNameString"}
+        "nodeLabel":{"shape":"NodeLabelString"}
       }
     },
     "EncryptionConfiguration":{
@@ -807,6 +809,7 @@
         "certificateAuthority":{"shape":"Certificate"},
         "configurationOverrides":{"shape":"ConfigurationOverrides"},
         "serverUrl":{"shape":"UriString"},
+        "authProxyUrl":{"shape":"UriString"},
         "createdAt":{"shape":"Date"},
         "securityGroup":{"shape":"String256"},
         "subnetIds":{"shape":"SubnetIds"},
@@ -912,6 +915,7 @@
       "members":{
         "id":{"shape":"ResourceIdString"},
         "credentials":{"shape":"Credentials"},
+        "endpointCredentials":{"shape":"Credentials"},
         "expiresAt":{"shape":"Date"}
       }
     },
@@ -1323,6 +1327,12 @@
       "min":1,
       "pattern":".*\\S.*"
     },
+    "NodeLabelString":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
+    },
     "ParametricCloudWatchMonitoringConfiguration":{
       "type":"structure",
       "members":{
@@ -1440,7 +1450,8 @@
       "type":"structure",
       "required":["logUri"],
       "members":{
-        "logUri":{"shape":"UriString"}
+        "logUri":{"shape":"UriString"},
+        "encryptionKeyArn":{"shape":"KmsKeyArn"}
       }
     },
     "SecretsManagerArn":{
@@ -1491,6 +1502,7 @@
       "max":100,
       "sensitive":true
     },
+    "SessionIdleTimeoutInMinutes":{"type":"integer"},
     "SessionTagValue":{
       "type":"string",
       "max":512,
@@ -1728,7 +1740,8 @@
         "containerProvider":{"shape":"ContainerProvider"},
         "createdAt":{"shape":"Date"},
         "tags":{"shape":"TagMap"},
-        "securityConfigurationId":{"shape":"ResourceIdString"}
+        "securityConfigurationId":{"shape":"ResourceIdString"},
+        "sessionEnabled":{"shape":"Boolean"}
       }
     },
     "VirtualClusterArn":{

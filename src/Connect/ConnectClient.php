@@ -555,6 +555,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise searchResourceTagsAsync(array $args = [])
  * @method \Aws\Result searchRoutingProfiles(array $args = [])
  * @method \GuzzleHttp\Promise\Promise searchRoutingProfilesAsync(array $args = [])
+ * @method \Aws\Result searchRules(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise searchRulesAsync(array $args = [])
  * @method \Aws\Result searchSecurityProfiles(array $args = [])
  * @method \GuzzleHttp\Promise\Promise searchSecurityProfilesAsync(array $args = [])
  * @method \Aws\Result searchTestCases(array $args = [])

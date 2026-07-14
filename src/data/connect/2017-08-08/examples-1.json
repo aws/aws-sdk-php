@@ -1,4 +1,50 @@
 {
   "version": "1.0",
-  "examples": {}
+  "examples": {
+    "SearchRules": [
+      {
+        "input": {
+          "InstanceId": "12345678-1234-1234-1234-123456789012",
+          "MaxResults": 10,
+          "SearchCriteria": {
+            "StringCondition": {
+              "ComparisonType": "EXACT",
+              "FieldName": "PublishStatus",
+              "Value": "PUBLISHED"
+            }
+          }
+        },
+        "output": {
+          "ApproximateTotalCount": 1,
+          "Rules": [
+            {
+              "ActionSummaries": [
+                {
+                  "ActionType": "CREATE_TASK"
+                }
+              ],
+              "CreatedTime": "2026-01-15T10:00:00Z",
+              "LastUpdatedBy": "arn:aws:connect:us-west-2:123456789012:instance/12345678-1234-1234-1234-123456789012/agent/agent-id",
+              "LastUpdatedTime": "2026-03-20T14:30:00Z",
+              "Name": "MyRule",
+              "PublishStatus": "PUBLISHED",
+              "RuleArn": "arn:aws:connect:us-west-2:123456789012:instance/12345678-1234-1234-1234-123456789012/rule/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+              "RuleCapabilityTiers": [],
+              "RuleId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+              "TriggerEventSource": {
+                "EventSourceName": "OnPostCallAnalysisAvailable"
+              }
+            }
+          ]
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "Searches for published rules in an Amazon Connect instance.",
+        "id": "searchrules-1719100000000",
+        "title": "SearchRules"
+      }
+    ]
+  }
 }

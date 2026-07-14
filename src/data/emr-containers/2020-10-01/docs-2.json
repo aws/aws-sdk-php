@@ -56,7 +56,9 @@
     "Boolean": {
       "base": null,
       "refs": {
-        "ListVirtualClustersRequest$eksAccessEntryIntegrated": "<p>Optional Boolean that specifies whether the operation should return the virtual clusters that have the access entry integration enabled or disabled. If not specified, the operation returns all applicable virtual clusters.</p>"
+        "CreateVirtualClusterRequest$sessionEnabled": "<p>Indicates whether the virtual cluster has session support enabled.</p>",
+        "ListVirtualClustersRequest$eksAccessEntryIntegrated": "<p>Optional Boolean that specifies whether the operation should return the virtual clusters that have the access entry integration enabled or disabled. If not specified, the operation returns all applicable virtual clusters.</p>",
+        "VirtualCluster$sessionEnabled": "<p>Indicates whether the virtual cluster has session support enabled. </p>"
       }
     },
     "CancelJobRunRequest": {
@@ -195,7 +197,8 @@
     "Credentials": {
       "base": "<p>The structure containing the session token being returned.</p>",
       "refs": {
-        "GetManagedEndpointSessionCredentialsResponse$credentials": "<p>The structure containing the session credentials.</p>"
+        "GetManagedEndpointSessionCredentialsResponse$credentials": "<p>The structure containing the session credentials.</p>",
+        "GetManagedEndpointSessionCredentialsResponse$endpointCredentials": "<p>The structure containing the session token being returned.</p>"
       }
     },
     "Date": {
@@ -489,7 +492,8 @@
       "refs": {
         "CreateJobTemplateRequest$kmsKeyArn": "<p>The KMS key ARN used to encrypt the job template.</p>",
         "JobTemplate$kmsKeyArn": "<p> The KMS key ARN used to encrypt the job template.</p>",
-        "ManagedLogs$encryptionKeyArn": "<p>The Amazon resource name (ARN) of the encryption key for logs.</p>"
+        "ManagedLogs$encryptionKeyArn": "<p>The Amazon resource name (ARN) of the encryption key for logs.</p>",
+        "S3MonitoringConfiguration$encryptionKeyArn": "<p>The Amazon resource name (ARN) of the encryption key for logs.</p>"
       }
     },
     "KubernetesNamespace": {
@@ -596,6 +600,12 @@
         "ListSecurityConfigurationsResponse$nextToken": "<p>The token for the next set of security configurations to return.</p>",
         "ListVirtualClustersRequest$nextToken": "<p>The token for the next set of virtual clusters to return. </p>",
         "ListVirtualClustersResponse$nextToken": "<p>This output displays the token for the next set of virtual clusters.</p>"
+      }
+    },
+    "NodeLabelString": {
+      "base": null,
+      "refs": {
+        "EksInfo$nodeLabel": "<p>The nodeLabel of the nodes where the resources of this virtual cluster can get scheduled. It requires relevant scaling and policy engine addons.</p>"
       }
     },
     "ParametricCloudWatchMonitoringConfiguration": {
@@ -718,7 +728,6 @@
         "CreateSecurityConfigurationResponse$name": "<p>The name of the security configuration.</p>",
         "CreateVirtualClusterRequest$name": "<p>The specified name of the virtual cluster.</p>",
         "CreateVirtualClusterResponse$name": "<p>This output contains the name of the virtual cluster.</p>",
-        "EksInfo$nodeLabel": "<p>The nodeLabel of the nodes where the resources of this virtual cluster can get scheduled. It requires relevant scaling and policy engine addons.</p>",
         "Endpoint$name": "<p>The name of the endpoint.</p>",
         "JobRun$name": "<p>The name of the job run.</p>",
         "JobTemplate$name": "<p>The name of the job template.</p>",
@@ -810,6 +819,12 @@
       "base": null,
       "refs": {
         "Configuration$properties": "<p>A set of properties specified within a configuration classification.</p>"
+      }
+    },
+    "SessionIdleTimeoutInMinutes": {
+      "base": null,
+      "refs": {
+        "CreateManagedEndpointRequest$sessionIdleTimeoutInMinutes": "<p>The idle timeout in minutes for the managed endpoint session.</p>"
       }
     },
     "SessionTagValue": {
@@ -998,6 +1013,7 @@
       "base": null,
       "refs": {
         "Endpoint$serverUrl": "<p>The server URL of the endpoint.</p>",
+        "Endpoint$authProxyUrl": "<p>The auth proxy URL of the endpoint.</p>",
         "ParametricS3MonitoringConfiguration$logUri": "<p>Amazon S3 destination URI for log publishing.</p>",
         "S3MonitoringConfiguration$logUri": "<p>Amazon S3 destination URI for log publishing.</p>"
       }

@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Crypto` - Fixes AAD concatenation and tag validation
+* `Aws\drs` - Fast recovery of EC2 based drs workloads by skipping the conversion step
+* `Aws\SecurityHub` - AWS Security Hub now provides an AI inventory, giving central security teams a continuously updated, organization-wide view of AI assets and their security posture
+* `Aws\EMRContainers` - Introduced 5 new fields across 3 APIs as part of Spark Connect server launch for EMR on EKS. The fields added are sessionIdleTimeoutInMinutes, sessionEnabled, endpointToken, authProxyUrl and encryptionKeyArn.
+* `Aws\Lambda` - AWS Lambda now returns a new DependencyError value in StateReasonCode and LastUpdateStatusReasonCode to provide more actionable information when a function reaches a failed state due to an error from an upstream dependency or service.
+* `Aws\ServiceDiscovery` - Fixed Cloud Map endpoint resolution to correctly route to the dualstack endpoint when dualstack is enabled.
+* `Aws\SSM` - Update AWS Systems Manager Automation Targets to be correct max value.
+* `Aws\Connect` - This release adds SearchRules API which can be used to search for rules within an Amazon Connect instance.
+* `Aws\MQ` - This release adds storage size parameter for Amazon MQ for RabbitMQ cluster deployment broker on engine version RabbitMQ 4.2. You can now set a configurable storage size within a range of sizes dependent on broker instance size.
+
 ## 3.388.5 - 2026-07-13
 
 * `Aws\Lambda` - Add Java 8, 11 and 17 on AL2023 (java8.al2023, java11.al2023, java17.al2023) support to AWS Lambda.
