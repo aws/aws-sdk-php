@@ -11,8 +11,23 @@ class Signer
     private $algorithm;
 
     public const DEFAULT_ALGORITHM = 'SHA1';
-    public const SUPPORTED_ALGORITHM = [
-        OPENSSL_ALGO_SHA1 => 'SHA1',
+
+    /**
+     * Supported signing algorithms, keyed by their canonical (normalized)
+     * name. Values are unused sentinels — presence via isset() is the check.
+     */
+    public const SUPPORTED_ALGORITHMS = [
+        'SHA1'   => true,
+        'SHA256' => true,
+    ];
+
+    /**
+     * Mapping of OpenSSL algorithm integer constants to their canonical
+     * string name. Used to normalize callers who pass e.g. OPENSSL_ALGO_SHA256
+     * into the string form stored in {@see self::$algorithm}.
+     */
+    private const OPENSSL_ALGORITHM_NAMES = [
+        OPENSSL_ALGO_SHA1   => 'SHA1',
         OPENSSL_ALGO_SHA256 => 'SHA256',
     ];
 
@@ -20,17 +35,27 @@ class Signer
      * A signer for creating the signature values used in CloudFront signed URLs
      * and signed cookies.
      *
-     * @param $keyPairId  string     ID of the key pair
-     * @param $privateKey string     Path to the private key used for signing
-     * @param $passphrase string     Passphrase to private key file, if one exists
-     * @param $algorithm  int|string Algorithm (name or openssl constant) to be used. Defaults to SHA1.
-     *                                Supported algorithms are SHA1 and SHA256.
+     * @param string     $keyPairId  ID of the key pair.
+     * @param string     $privateKey Path to the private key used for signing,
+     *                               or a PEM-encoded key string.
+     * @param string     $passphrase Passphrase to private key file, if one exists.
+     * @param int|string $algorithm  Signing hash algorithm. Accepts either an
+     *                               OpenSSL constant (OPENSSL_ALGO_SHA1,
+     *                               OPENSSL_ALGO_SHA256) or the canonical name
+     *                               string ("SHA1", "SHA256"). Defaults to SHA1.
      *
-     * @throws \RuntimeException if the openssl extension is missing
-     * @throws \InvalidArgumentException if the private key cannot be found or the passed algorithm is not supported.
+     * @throws \RuntimeException if the openssl extension is missing.
+     * @throws \InvalidArgumentException if the private key cannot be found,
+     *                                   the key type is not supported by
+     *                                   CloudFront (RSA or ECDSA P-256), or
+     *                                   the requested algorithm is not supported.
      */
-    public function __construct($keyPairId, $privateKey, $passphrase = "", $algorithm = self::DEFAULT_ALGORITHM)
-    {
+    public function __construct(
+        $keyPairId,
+        $privateKey,
+        $passphrase = "",
+        string|int $algorithm = self::DEFAULT_ALGORITHM
+    ) {
         if (!extension_loaded('openssl')) {
             //@codeCoverageIgnoreStart
             throw new \RuntimeException('The openssl extension is required to '
@@ -40,9 +65,18 @@ class Signer
 
         $this->keyPairId = $keyPairId;
 
-        $algorithm = \strtoupper(self::SUPPORTED_ALGORITHM[$algorithm] ?? $algorithm);
-        if (!\in_array($algorithm, self::SUPPORTED_ALGORITHM)) {
-            throw new \InvalidArgumentException("Unsupported signature algorithm: $algorithm");
+        // Normalize an OpenSSL integer constant to its canonical string form,
+        // then uppercase for consistent comparison. After this, $algorithm is
+        // always the canonical string (matching DEFAULT_ALGORITHM's storage).
+        if (is_int($algorithm) && isset(self::OPENSSL_ALGORITHM_NAMES[$algorithm])) {
+            $algorithm = self::OPENSSL_ALGORITHM_NAMES[$algorithm];
+        }
+        $algorithm = strtoupper((string) $algorithm);
+        if (!isset(self::SUPPORTED_ALGORITHMS[$algorithm])) {
+            throw new \InvalidArgumentException(
+                "Unsupported signature algorithm: {$algorithm}. Supported algorithms are: "
+                . implode(', ', array_keys(self::SUPPORTED_ALGORITHMS)) . '.'
+            );
         }
 
         $this->algorithm = $algorithm;
@@ -61,13 +95,54 @@ class Signer
                 throw new \InvalidArgumentException(implode("\n",$errorMessages));
             }
         }
+
+        $this->validateKeyType($this->pkHandle);
     }
 
-    public function __destruct()
+    /**
+     * Ensures the loaded key is one CloudFront can verify: RSA of any modulus
+     * size, or ECDSA on the P-256 curve (prime256v1 / secp256r1). Anything
+     * else (DSA, EdDSA, EC on a non-P-256 curve, etc.) is rejected with an
+     * actionable error message rather than surfacing as an opaque openssl_sign
+     * failure at signing time.
+     *
+     * @param \OpenSSLAsymmetricKey|resource $pkHandle
+     *
+     * @throws \InvalidArgumentException on unsupported key material.
+     */
+    private function validateKeyType($pkHandle): void
     {
-        if (PHP_MAJOR_VERSION < 8) {
-            $this->pkHandle && openssl_pkey_free($this->pkHandle);
+        $details = openssl_pkey_get_details($pkHandle);
+        if ($details === false) {
+            throw new \InvalidArgumentException(
+                'Unable to read the details of the provided private key.'
+            );
         }
+
+        $type = $details['type'] ?? null;
+        if ($type === OPENSSL_KEYTYPE_RSA) {
+            return;
+        }
+
+        if (defined('OPENSSL_KEYTYPE_EC') && $type === OPENSSL_KEYTYPE_EC) {
+            $curve = $details['ec']['curve_name'] ?? 'unknown';
+            // OpenSSL reports the P-256 curve as either "prime256v1" (its
+            // canonical name) or "secp256r1" (SEC 2 alias); accept both.
+            if ($curve === 'prime256v1' || $curve === 'secp256r1') {
+                return;
+            }
+
+            throw new \InvalidArgumentException(
+                "Unsupported CloudFront key type: ECDSA on curve '{$curve}'. "
+                . 'CloudFront requires ECDSA keys to be on the P-256 curve '
+                . '(prime256v1 / secp256r1).'
+            );
+        }
+
+        throw new \InvalidArgumentException(
+            'Unsupported CloudFront key type. CloudFront requires an RSA or '
+            . 'ECDSA P-256 (prime256v1) private key.'
+        );
     }
 
     /**
