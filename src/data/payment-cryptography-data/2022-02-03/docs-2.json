@@ -443,6 +443,7 @@
         "SessionKeyEmv2000$ApplicationTransactionCounter": "<p>The transaction counter that is provided by the terminal during transaction processing.</p>",
         "SessionKeyEmvCommon$ApplicationTransactionCounter": "<p>The transaction counter that is provided by the terminal during transaction processing.</p>",
         "SessionKeyMastercard$ApplicationTransactionCounter": "<p>The transaction counter that is provided by the terminal during transaction processing.</p>",
+        "SessionKeyUnionPay$ApplicationTransactionCounter": "<p>The transaction counter that the terminal provides during transaction processing. This value is in hexadecimal format. For example, enter a decimal counter of 109 as <code>006D</code>.</p>",
         "VisaAttributes$ApplicationTransactionCounter": "<p>The transaction counter of the current transaction that is provided by the terminal during transaction processing.</p>"
       }
     },
@@ -738,6 +739,7 @@
         "SessionKeyEmv2000$PanSequenceNumber": "<p>A number that identifies and differentiates payment cards with the same Primary Account Number (PAN).</p>",
         "SessionKeyEmvCommon$PanSequenceNumber": "<p>A number that identifies and differentiates payment cards with the same Primary Account Number (PAN).</p>",
         "SessionKeyMastercard$PanSequenceNumber": "<p>A number that identifies and differentiates payment cards with the same Primary Account Number (PAN).</p>",
+        "SessionKeyUnionPay$PanSequenceNumber": "<p>A number that identifies and differentiates payment cards with the same Primary Account Number (PAN). If not used, enter <code>00</code>.</p>",
         "SessionKeyVisa$PanSequenceNumber": "<p>A number that identifies and differentiates payment cards with the same Primary Account Number (PAN).</p>",
         "VisaAttributes$PanSequenceNumber": "<p>A number that identifies and differentiates payment cards with the same Primary Account Number (PAN). Typically 00 is used, if no value is provided by the terminal.</p>"
       }
@@ -862,6 +864,7 @@
         "SessionKeyEmv2000$PrimaryAccountNumber": "<p>The Primary Account Number (PAN) of the cardholder. A PAN is a unique identifier for a payment credit or debit card and associates the card to a specific account holder.</p>",
         "SessionKeyEmvCommon$PrimaryAccountNumber": "<p>The Primary Account Number (PAN) of the cardholder. A PAN is a unique identifier for a payment credit or debit card and associates the card to a specific account holder.</p>",
         "SessionKeyMastercard$PrimaryAccountNumber": "<p>The Primary Account Number (PAN) of the cardholder. A PAN is a unique identifier for a payment credit or debit card and associates the card to a specific account holder.</p>",
+        "SessionKeyUnionPay$PrimaryAccountNumber": "<p>The Primary Account Number (PAN) of the cardholder. A PAN is a unique identifier for a payment credit or debit card and associates the card to a specific account holder.</p>",
         "SessionKeyVisa$PrimaryAccountNumber": "<p>The Primary Account Number (PAN) of the cardholder. A PAN is a unique identifier for a payment credit or debit card and associates the card to a specific account holder.</p>",
         "TranslationPinDataAs2805Format0$PrimaryAccountNumber": "<p>The Primary Account Number (PAN) of the cardholder. A PAN is a unique identifier for a payment credit or debit card and associates the card to a specific account holder.</p>",
         "TranslationPinDataIsoFormat034$PrimaryAccountNumber": "<p>The Primary Account Number (PAN) of the cardholder. A PAN is a unique identifier for a payment credit or debit card and associates the card to a specific account holder.</p>",
@@ -962,6 +965,12 @@
       "base": "<p>Parameters to derive session key for Mastercard payment card for ARQC verification.</p>",
       "refs": {
         "SessionKeyDerivation$Mastercard": "<p>Parameters to derive session key for a Mastercard payment card for ARQC verification.</p>"
+      }
+    },
+    "SessionKeyUnionPay": {
+      "base": "<p>Parameters to derive session key for a UnionPay payment card for Authorization Request Cryptogram (ARQC) generation and verification.</p>",
+      "refs": {
+        "SessionKeyDerivation$UnionPay": "<p>Parameters to derive session key for a UnionPay payment card for Authorization Request Cryptogram (ARQC) generation and verification.</p>"
       }
     },
     "SessionKeyVisa": {

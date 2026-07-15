@@ -1576,7 +1576,8 @@
         "Mastercard":{"shape":"SessionKeyMastercard"},
         "Emv2000":{"shape":"SessionKeyEmv2000"},
         "Amex":{"shape":"SessionKeyAmex"},
-        "Visa":{"shape":"SessionKeyVisa"}
+        "Visa":{"shape":"SessionKeyVisa"},
+        "UnionPay":{"shape":"SessionKeyUnionPay"}
       },
       "union":true
     },
@@ -1587,7 +1588,8 @@
         "EMV2000",
         "AMEX",
         "MASTERCARD_SESSION_KEY",
-        "VISA"
+        "VISA",
+        "UNION_PAY"
       ]
     },
     "SessionKeyDerivationValue":{
@@ -1637,6 +1639,19 @@
         "PanSequenceNumber":{"shape":"NumberLengthEquals2"},
         "ApplicationTransactionCounter":{"shape":"HexLengthEquals4"},
         "UnpredictableNumber":{"shape":"HexLengthEquals8"}
+      }
+    },
+    "SessionKeyUnionPay":{
+      "type":"structure",
+      "required":[
+        "PrimaryAccountNumber",
+        "PanSequenceNumber",
+        "ApplicationTransactionCounter"
+      ],
+      "members":{
+        "PrimaryAccountNumber":{"shape":"PrimaryAccountNumberType"},
+        "PanSequenceNumber":{"shape":"NumberLengthEquals2"},
+        "ApplicationTransactionCounter":{"shape":"HexLengthEquals4"}
       }
     },
     "SessionKeyVisa":{

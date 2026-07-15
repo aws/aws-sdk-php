@@ -2,6 +2,7 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2017-07-01",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"healthlake",
     "jsonVersion":"1.0",
     "protocol":"json",
@@ -12,10 +13,28 @@
     "signatureVersion":"v4",
     "signingName":"healthlake",
     "targetPrefix":"HealthLake",
-    "uid":"healthlake-2017-07-01",
-    "auth":["aws.auth#sigv4"]
+    "uid":"healthlake-2017-07-01"
   },
   "operations":{
+    "CreateDataTransformationProfile":{
+      "name":"CreateDataTransformationProfile",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateDataTransformationProfileRequest"},
+      "output":{"shape":"CreateDataTransformationProfileResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "endpoint":{"hostPrefix":"datatransformation."}
+    },
     "CreateFHIRDatastore":{
       "name":"CreateFHIRDatastore",
       "http":{
@@ -25,11 +44,29 @@
       "input":{"shape":"CreateFHIRDatastoreRequest"},
       "output":{"shape":"CreateFHIRDatastoreResponse"},
       "errors":[
-        {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
       ]
+    },
+    "DeleteDataTransformationProfile":{
+      "name":"DeleteDataTransformationProfile",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteDataTransformationProfileRequest"},
+      "output":{"shape":"DeleteDataTransformationProfileResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "endpoint":{"hostPrefix":"datatransformation."},
+      "idempotent":true
     },
     "DeleteFHIRDatastore":{
       "name":"DeleteFHIRDatastore",
@@ -40,13 +77,31 @@
       "input":{"shape":"DeleteFHIRDatastoreRequest"},
       "output":{"shape":"DeleteFHIRDatastoreResponse"},
       "errors":[
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ]
+    },
+    "DescribeDataTransformationJob":{
+      "name":"DescribeDataTransformationJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeDataTransformationJobRequest"},
+      "output":{"shape":"DescribeDataTransformationJobResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "endpoint":{"hostPrefix":"datatransformation."},
+      "readonly":true
     },
     "DescribeFHIRDatastore":{
       "name":"DescribeFHIRDatastore",
@@ -57,9 +112,9 @@
       "input":{"shape":"DescribeFHIRDatastoreRequest"},
       "output":{"shape":"DescribeFHIRDatastoreResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -72,9 +127,9 @@
       "input":{"shape":"DescribeFHIRExportJobRequest"},
       "output":{"shape":"DescribeFHIRExportJobResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -87,11 +142,81 @@
       "input":{"shape":"DescribeFHIRImportJobRequest"},
       "output":{"shape":"DescribeFHIRImportJobResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
       ]
+    },
+    "GetDataTransformationProfile":{
+      "name":"GetDataTransformationProfile",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetDataTransformationProfileRequest"},
+      "output":{"shape":"GetDataTransformationProfileResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "endpoint":{"hostPrefix":"datatransformation."},
+      "readonly":true
+    },
+    "ListDataTransformationJobs":{
+      "name":"ListDataTransformationJobs",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListDataTransformationJobsRequest"},
+      "output":{"shape":"ListDataTransformationJobsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "endpoint":{"hostPrefix":"datatransformation."},
+      "readonly":true
+    },
+    "ListDataTransformationProfileVersions":{
+      "name":"ListDataTransformationProfileVersions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListDataTransformationProfileVersionsRequest"},
+      "output":{"shape":"ListDataTransformationProfileVersionsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "endpoint":{"hostPrefix":"datatransformation."},
+      "readonly":true
+    },
+    "ListDataTransformationProfiles":{
+      "name":"ListDataTransformationProfiles",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListDataTransformationProfilesRequest"},
+      "output":{"shape":"ListDataTransformationProfilesResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "endpoint":{"hostPrefix":"datatransformation."},
+      "readonly":true
     },
     "ListFHIRDatastores":{
       "name":"ListFHIRDatastores",
@@ -102,8 +227,8 @@
       "input":{"shape":"ListFHIRDatastoresRequest"},
       "output":{"shape":"ListFHIRDatastoresResponse"},
       "errors":[
-        {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -116,10 +241,10 @@
       "input":{"shape":"ListFHIRExportJobsRequest"},
       "output":{"shape":"ListFHIRExportJobsResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -132,10 +257,10 @@
       "input":{"shape":"ListFHIRImportJobsRequest"},
       "output":{"shape":"ListFHIRImportJobsResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -148,9 +273,45 @@
       "input":{"shape":"ListTagsForResourceRequest"},
       "output":{"shape":"ListTagsForResourceResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"}
       ]
+    },
+    "PublishDataTransformationProfile":{
+      "name":"PublishDataTransformationProfile",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PublishDataTransformationProfileRequest"},
+      "output":{"shape":"PublishDataTransformationProfileResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "endpoint":{"hostPrefix":"datatransformation."}
+    },
+    "StartDataTransformationJob":{
+      "name":"StartDataTransformationJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartDataTransformationJobRequest"},
+      "output":{"shape":"StartDataTransformationJobResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "endpoint":{"hostPrefix":"datatransformation."},
+      "idempotent":true
     },
     "StartFHIRExportJob":{
       "name":"StartFHIRExportJob",
@@ -161,10 +322,11 @@
       "input":{"shape":"StartFHIRExportJobRequest"},
       "output":{"shape":"StartFHIRExportJobResponse"},
       "errors":[
-        {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"FailedDependencyException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -177,10 +339,11 @@
       "input":{"shape":"StartFHIRImportJobRequest"},
       "output":{"shape":"StartFHIRImportJobResponse"},
       "errors":[
-        {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"FailedDependencyException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -193,8 +356,8 @@
       "input":{"shape":"TagResourceRequest"},
       "output":{"shape":"TagResourceResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"}
       ]
     },
     "UntagResource":{
@@ -206,9 +369,27 @@
       "input":{"shape":"UntagResourceRequest"},
       "output":{"shape":"UntagResourceResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"}
       ]
+    },
+    "UpdateDataTransformationProfile":{
+      "name":"UpdateDataTransformationProfile",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateDataTransformationProfileRequest"},
+      "output":{"shape":"UpdateDataTransformationProfileResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "endpoint":{"hostPrefix":"datatransformation."},
+      "idempotent":true
     },
     "UpdateFHIRDatastore":{
       "name":"UpdateFHIRDatastore",
@@ -219,28 +400,106 @@
       "input":{"shape":"UpdateFHIRDatastoreRequest"},
       "output":{"shape":"UpdateFHIRDatastoreResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"AccessDeniedException"},
-        {"shape":"ConflictException"},
         {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
       ]
+    },
+    "UpdateProfileWithAgent":{
+      "name":"UpdateProfileWithAgent",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateProfileWithAgentRequest"},
+      "output":{"shape":"UpdateProfileWithAgentResponse"},
+      "errors":[
+        {"shape":"NotImplementedOperationException"},
+        {"shape":"ConversationNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AgentMessageOutOfContextException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"UnsupportedMIMETypeException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "endpoint":{"hostPrefix":"datatransformation."}
     }
   },
   "shapes":{
     "AccessDeniedException":{
       "type":"structure",
       "members":{
+        "Message":{"shape":"HealthLakeString"}
+      },
+      "exception":true
+    },
+    "AgentInputMessage":{
+      "type":"structure",
+      "required":[
+        "Body",
+        "Type"
+      ],
+      "members":{
+        "Body":{"shape":"AgentMessageString"},
+        "Type":{"shape":"AgentInputMessageType"}
+      }
+    },
+    "AgentInputMessageType":{
+      "type":"string",
+      "enum":[
+        "normal",
+        "confirmation_response"
+      ]
+    },
+    "AgentMessageOutOfContextException":{
+      "type":"structure",
+      "required":["Message"],
+      "members":{
         "Message":{"shape":"String"}
       },
       "exception":true
+    },
+    "AgentMessageString":{
+      "type":"string",
+      "max":40960,
+      "min":1,
+      "sensitive":true
+    },
+    "AgentOutputMessage":{
+      "type":"structure",
+      "required":[
+        "Body",
+        "Type"
+      ],
+      "members":{
+        "Body":{"shape":"AgentMessageString"},
+        "Type":{"shape":"AgentOutputMessageType"},
+        "OptionsList":{"shape":"DataTransformationChatOptionsList"}
+      }
+    },
+    "AgentOutputMessageType":{
+      "type":"string",
+      "enum":[
+        "INITIAL_GREETING",
+        "normal",
+        "confirmation",
+        "complete",
+        "error",
+        "options",
+        "choices"
+      ]
     },
     "AmazonResourceName":{
       "type":"string",
       "max":1011,
       "min":1,
-      "pattern":"^arn:aws((-us-gov)|(-iso)|(-iso-b)|(-cn))?:healthlake:[a-z0-9-]+:\\d{12}:datastore\\/fhir\\/.{32}"
+      "pattern":"arn:aws((-us-gov)|(-iso)|(-iso-b)|(-cn))?:healthlake:[a-z0-9-]+:\\d{12}:(datastore\\/fhir\\/.{32}|dataTransformationProfile\\/[a-f0-9]{32})"
     },
     "AnalyticsConfiguration":{
       "type":"structure",
@@ -267,18 +526,37 @@
         "AWS_AUTH"
       ]
     },
-    "Boolean":{"type":"boolean"},
+    "Boolean":{
+      "type":"boolean",
+      "box":true
+    },
     "BoundedLengthString":{
       "type":"string",
       "max":5000,
       "min":1,
       "pattern":"[\\P{M}\\p{M}]{1,5000}"
     },
+    "BoundedString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "ChangeDescription":{
+      "type":"string",
+      "max":1000,
+      "min":0
+    },
+    "ClientToken":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9-]+"
+    },
     "ClientTokenString":{
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^[a-zA-Z0-9-]+$"
+      "pattern":"[a-zA-Z0-9-]+"
     },
     "CmkType":{
       "type":"string",
@@ -291,9 +569,71 @@
     "ConflictException":{
       "type":"structure",
       "members":{
+        "Message":{"shape":"HealthLakeString"}
+      },
+      "exception":true
+    },
+    "ConversationIdString":{
+      "type":"string",
+      "max":36,
+      "min":1
+    },
+    "ConversationNotFoundException":{
+      "type":"structure",
+      "required":["Message"],
+      "members":{
         "Message":{"shape":"String"}
       },
       "exception":true
+    },
+    "CreateDataTransformationProfileRequest":{
+      "type":"structure",
+      "required":[
+        "SourceFormat",
+        "Source",
+        "ProfileName"
+      ],
+      "members":{
+        "SourceFormat":{"shape":"SourceFormat"},
+        "Source":{"shape":"CreateDataTransformationProfileSource"},
+        "KmsKeyId":{"shape":"KmsKeyId"},
+        "ProfileDescription":{"shape":"ProfileDescription"},
+        "ProfileName":{"shape":"ProfileNameString"},
+        "Tags":{"shape":"TagMap"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateDataTransformationProfileResponse":{
+      "type":"structure",
+      "required":[
+        "ProfileId",
+        "Version",
+        "SourceFormat",
+        "TargetFormat",
+        "ProfileName",
+        "LastUpdatedAt"
+      ],
+      "members":{
+        "ProfileId":{"shape":"ProfileIdString"},
+        "Version":{"shape":"ProfileVersion"},
+        "SourceFormat":{"shape":"SourceFormat"},
+        "TargetFormat":{"shape":"TargetFormat"},
+        "ProfileName":{"shape":"ProfileNameString"},
+        "LastUpdatedAt":{"shape":"DateTime"}
+      }
+    },
+    "CreateDataTransformationProfileSource":{
+      "type":"structure",
+      "members":{
+        "StarterProfile":{"shape":"StarterProfileSource"},
+        "ExistingVersionedProfileId":{"shape":"ExistingVersionedProfileSource"},
+        "ProfileMapping":{"shape":"ProfileMappingSource"},
+        "SampleData":{"shape":"SampleDataSource"}
+      },
+      "union":true
     },
     "CreateFHIRDatastoreRequest":{
       "type":"structure",
@@ -329,30 +669,134 @@
         "DatastoreEndpoint":{"shape":"BoundedLengthString"}
       }
     },
+    "DataTransformationChatOptionString":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "sensitive":true
+    },
+    "DataTransformationChatOptionsList":{
+      "type":"list",
+      "member":{"shape":"DataTransformationChatOptionString"}
+    },
+    "DataTransformationIamRoleArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws(-[^:]+)?:iam::[0-9]{12}:role/.+"
+    },
+    "DataTransformationJobId":{
+      "type":"string",
+      "max":32,
+      "min":1,
+      "pattern":"[a-zA-Z0-9-]+"
+    },
+    "DataTransformationJobName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[\\p{L}\\p{Z}\\p{N}_.:/=+\\-%@]*"
+    },
+    "DataTransformationNextToken":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "DataTransformationProfileSummary":{
+      "type":"structure",
+      "required":[
+        "ProfileId",
+        "Version",
+        "SourceFormat",
+        "TargetFormat"
+      ],
+      "members":{
+        "ProfileId":{"shape":"ProfileIdString"},
+        "Version":{"shape":"ProfileVersion"},
+        "SourceFormat":{"shape":"SourceFormat"},
+        "TargetFormat":{"shape":"TargetFormat"},
+        "ProfileName":{"shape":"ProfileNameString"},
+        "ProfileDescription":{"shape":"ProfileDescription"},
+        "LastUpdatedAt":{"shape":"DateTime"}
+      }
+    },
+    "DataTransformationProfileSummaryList":{
+      "type":"list",
+      "member":{"shape":"DataTransformationProfileSummary"}
+    },
+    "DataTransformationProfileVersionSummary":{
+      "type":"structure",
+      "required":[
+        "ProfileId",
+        "Version",
+        "SourceFormat",
+        "TargetFormat"
+      ],
+      "members":{
+        "ProfileId":{"shape":"ProfileIdString"},
+        "Version":{"shape":"ProfileVersion"},
+        "SourceFormat":{"shape":"SourceFormat"},
+        "TargetFormat":{"shape":"TargetFormat"},
+        "ProfileName":{"shape":"ProfileNameString"},
+        "ChangeDescription":{"shape":"ChangeDescription"},
+        "LastUpdatedAt":{"shape":"DateTime"}
+      }
+    },
+    "DataTransformationProfileVersionSummaryList":{
+      "type":"list",
+      "member":{"shape":"DataTransformationProfileVersionSummary"}
+    },
+    "DataTransformationS3Configuration":{
+      "type":"structure",
+      "required":[
+        "S3Uri",
+        "KmsKeyId"
+      ],
+      "members":{
+        "S3Uri":{"shape":"DataTransformationS3Uri"},
+        "KmsKeyId":{"shape":"KmsKeyId"}
+      }
+    },
+    "DataTransformationS3Uri":{
+      "type":"string",
+      "max":2048,
+      "min":8,
+      "pattern":"s3://[a-z0-9][a-z0-9.\\-]{1,61}[a-z0-9](/.+)?"
+    },
+    "DataTransformationTagKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "DataTransformationTagValue":{
+      "type":"string",
+      "max":256,
+      "min":0
+    },
     "DatastoreArn":{
       "type":"string",
-      "pattern":"^arn:aws((-us-gov)|(-iso)|(-iso-b)|(-cn))?:healthlake:[a-zA-Z0-9-]+:[0-9]{12}:datastore/.+?"
+      "pattern":"arn:aws((-us-gov)|(-iso)|(-iso-b)|(-cn))?:healthlake:[a-zA-Z0-9-]+:[0-9]{12}:datastore/.+?"
     },
     "DatastoreFilter":{
       "type":"structure",
       "members":{
         "DatastoreName":{"shape":"DatastoreName"},
         "DatastoreStatus":{"shape":"DatastoreStatus"},
-        "CreatedBefore":{"shape":"Timestamp"},
-        "CreatedAfter":{"shape":"Timestamp"}
+        "CreatedBefore":{"shape":"HealthLakeTimestamp"},
+        "CreatedAfter":{"shape":"HealthLakeTimestamp"}
       }
     },
     "DatastoreId":{
       "type":"string",
       "max":32,
       "min":1,
-      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-%@]*)$"
+      "pattern":"([\\p{L}\\p{Z}\\p{N}_.:/=+\\-%@]*)"
     },
     "DatastoreName":{
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-%@]*)$"
+      "pattern":"([\\p{L}\\p{Z}\\p{N}_.:/=+\\-%@]*)"
     },
     "DatastoreProperties":{
       "type":"structure",
@@ -368,9 +812,9 @@
         "DatastoreArn":{"shape":"DatastoreArn"},
         "DatastoreName":{"shape":"DatastoreName"},
         "DatastoreStatus":{"shape":"DatastoreStatus"},
-        "CreatedAt":{"shape":"Timestamp"},
+        "CreatedAt":{"shape":"HealthLakeTimestamp"},
         "DatastoreTypeVersion":{"shape":"FHIRVersion"},
-        "DatastoreEndpoint":{"shape":"String"},
+        "DatastoreEndpoint":{"shape":"HealthLakeString"},
         "SseConfiguration":{"shape":"SseConfiguration"},
         "PreloadDataConfig":{"shape":"PreloadDataConfig"},
         "IdentityProviderConfiguration":{"shape":"IdentityProviderConfiguration"},
@@ -396,9 +840,29 @@
         "UPDATE_FAILED"
       ]
     },
+    "DateTime":{"type":"timestamp"},
     "DefaultProfiles":{
       "type":"list",
-      "member":{"shape":"String"}
+      "member":{"shape":"HealthLakeString"}
+    },
+    "DeleteDataTransformationProfileRequest":{
+      "type":"structure",
+      "required":["ProfileId"],
+      "members":{
+        "ProfileId":{"shape":"ProfileIdString"}
+      }
+    },
+    "DeleteDataTransformationProfileResponse":{
+      "type":"structure",
+      "required":[
+        "ProfileId",
+        "DeletionTime"
+      ],
+      "members":{
+        "ProfileId":{"shape":"ProfileIdString"},
+        "ProfileName":{"shape":"ProfileNameString"},
+        "DeletionTime":{"shape":"DateTime"}
+      }
     },
     "DeleteFHIRDatastoreRequest":{
       "type":"structure",
@@ -420,6 +884,20 @@
         "DatastoreArn":{"shape":"DatastoreArn"},
         "DatastoreStatus":{"shape":"DatastoreStatus"},
         "DatastoreEndpoint":{"shape":"BoundedLengthString"}
+      }
+    },
+    "DescribeDataTransformationJobRequest":{
+      "type":"structure",
+      "required":["JobId"],
+      "members":{
+        "JobId":{"shape":"DataTransformationJobId"}
+      }
+    },
+    "DescribeDataTransformationJobResponse":{
+      "type":"structure",
+      "required":["TransformationJobProperties"],
+      "members":{
+        "TransformationJobProperties":{"shape":"TransformationJobProperties"}
       }
     },
     "DescribeFHIRDatastoreRequest":{
@@ -497,6 +975,17 @@
       "max":4096,
       "min":1
     },
+    "ExistingVersionedProfileSource":{
+      "type":"structure",
+      "required":[
+        "ProfileId",
+        "Version"
+      ],
+      "members":{
+        "ProfileId":{"shape":"String"},
+        "Version":{"shape":"Integer"}
+      }
+    },
     "ExportJobProperties":{
       "type":"structure",
       "required":[
@@ -510,8 +999,8 @@
         "JobId":{"shape":"JobId"},
         "JobName":{"shape":"JobName"},
         "JobStatus":{"shape":"JobStatus"},
-        "SubmitTime":{"shape":"Timestamp"},
-        "EndTime":{"shape":"Timestamp"},
+        "SubmitTime":{"shape":"HealthLakeTimestamp"},
+        "EndTime":{"shape":"HealthLakeTimestamp"},
         "DatastoreId":{"shape":"DatastoreId"},
         "OutputDataConfig":{"shape":"OutputDataConfig"},
         "DataAccessRoleArn":{"shape":"IamRoleArn"},
@@ -526,8 +1015,59 @@
       "type":"string",
       "enum":["R4"]
     },
-    "GenericDouble":{"type":"double"},
-    "GenericLong":{"type":"long"},
+    "FailedDependencyException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"HealthLakeString"}
+      },
+      "exception":true
+    },
+    "GenericDouble":{
+      "type":"double",
+      "box":true
+    },
+    "GenericLong":{
+      "type":"long",
+      "box":true
+    },
+    "GetDataTransformationProfileRequest":{
+      "type":"structure",
+      "required":["ProfileId"],
+      "members":{
+        "ProfileId":{"shape":"ProfileIdString"},
+        "ProfileVersion":{"shape":"ProfileVersion"}
+      }
+    },
+    "GetDataTransformationProfileResponse":{
+      "type":"structure",
+      "required":[
+        "ProfileId",
+        "Version",
+        "SourceFormat",
+        "TargetFormat",
+        "ProfileMapping",
+        "LastUpdatedAt"
+      ],
+      "members":{
+        "ProfileId":{"shape":"ProfileIdString"},
+        "Version":{"shape":"ProfileVersion"},
+        "SourceFormat":{"shape":"SourceFormat"},
+        "TargetFormat":{"shape":"TargetFormat"},
+        "ProfileMapping":{"shape":"ProfileMapping"},
+        "ProfileName":{"shape":"ProfileNameString"},
+        "ProfileDescription":{"shape":"ProfileDescription"},
+        "ChangeDescription":{"shape":"ChangeDescription"},
+        "LastUpdatedAt":{"shape":"DateTime"}
+      }
+    },
+    "HealthLakeBoolean":{"type":"boolean"},
+    "HealthLakeString":{
+      "type":"string",
+      "max":10000,
+      "min":0,
+      "pattern":"[\\P{M}\\p{M}]{0,10000}"
+    },
+    "HealthLakeTimestamp":{"type":"timestamp"},
     "IamRoleArn":{
       "type":"string",
       "max":2048,
@@ -539,7 +1079,7 @@
       "required":["AuthorizationStrategy"],
       "members":{
         "AuthorizationStrategy":{"shape":"AuthorizationStrategy"},
-        "FineGrainedAuthorizationEnabled":{"shape":"Boolean"},
+        "FineGrainedAuthorizationEnabled":{"shape":"HealthLakeBoolean"},
         "Metadata":{"shape":"ConfigurationMetadata"},
         "IdpLambdaArn":{"shape":"LambdaArn"}
       }
@@ -557,8 +1097,8 @@
         "JobId":{"shape":"JobId"},
         "JobName":{"shape":"JobName"},
         "JobStatus":{"shape":"JobStatus"},
-        "SubmitTime":{"shape":"Timestamp"},
-        "EndTime":{"shape":"Timestamp"},
+        "SubmitTime":{"shape":"HealthLakeTimestamp"},
+        "EndTime":{"shape":"HealthLakeTimestamp"},
         "DatastoreId":{"shape":"DatastoreId"},
         "InputDataConfig":{"shape":"InputDataConfig"},
         "JobOutputDataConfig":{"shape":"OutputDataConfig"},
@@ -579,10 +1119,14 @@
       },
       "union":true
     },
+    "Integer":{
+      "type":"integer",
+      "box":true
+    },
     "InternalServerException":{
       "type":"structure",
       "members":{
-        "Message":{"shape":"String"}
+        "Message":{"shape":"HealthLakeString"}
       },
       "exception":true,
       "fault":true
@@ -591,13 +1135,13 @@
       "type":"string",
       "max":32,
       "min":1,
-      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-%@]*)$"
+      "pattern":"([\\p{L}\\p{Z}\\p{N}_.:/=+\\-%@]*)"
     },
     "JobName":{
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-%@]*)$"
+      "pattern":"([\\p{L}\\p{Z}\\p{N}_.:/=+\\-%@]*)"
     },
     "JobProgressReport":{
       "type":"structure",
@@ -609,7 +1153,16 @@
         "TotalNumberOfResourcesImported":{"shape":"GenericLong"},
         "TotalNumberOfResourcesWithCustomerError":{"shape":"GenericLong"},
         "TotalNumberOfFilesReadWithCustomerError":{"shape":"GenericLong"},
-        "Throughput":{"shape":"GenericDouble"}
+        "TotalNumberOfScannedNonFhirFiles":{"shape":"GenericLong"},
+        "TotalSizeOfScannedNonFhirFilesInMB":{"shape":"GenericDouble"},
+        "TotalNumberOfImportedNonFhirFiles":{"shape":"GenericLong"},
+        "TotalNumberOfNonFhirResourcesScanned":{"shape":"GenericLong"},
+        "TotalNumberOfNonFhirResourcesImported":{"shape":"GenericLong"},
+        "TotalNumberOfNonFhirResourcesWithCustomerError":{"shape":"GenericLong"},
+        "TotalNumberOfNonFhirFilesReadWithCustomerError":{"shape":"GenericLong"},
+        "Throughput":{"shape":"GenericDouble"},
+        "TotalFilesConverted":{"shape":"GenericLong"},
+        "TotalResourcesGenerated":{"shape":"GenericLong"}
       }
     },
     "JobStatus":{
@@ -635,11 +1188,69 @@
         "KmsKeyId":{"shape":"EncryptionKeyID"}
       }
     },
+    "KmsKeyId":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
     "LambdaArn":{
       "type":"string",
       "max":256,
       "min":49,
       "pattern":"arn:aws:lambda:[a-z]{2}-[a-z]+-\\d{1}:\\d{12}:function:[a-zA-Z0-9\\-_\\.]+(:(\\$LATEST|[a-zA-Z0-9\\-_]+))?"
+    },
+    "ListDataTransformationJobsRequest":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"DataTransformationNextToken"},
+        "JobStatus":{"shape":"TransformationJobStatus"},
+        "JobName":{"shape":"DataTransformationJobName"},
+        "SubmittedAfter":{"shape":"DateTime"},
+        "SubmittedBefore":{"shape":"DateTime"}
+      }
+    },
+    "ListDataTransformationJobsResponse":{
+      "type":"structure",
+      "required":["Items"],
+      "members":{
+        "Items":{"shape":"TransformationJobSummaryList"},
+        "NextToken":{"shape":"DataTransformationNextToken"}
+      }
+    },
+    "ListDataTransformationProfileVersionsRequest":{
+      "type":"structure",
+      "required":["ProfileId"],
+      "members":{
+        "ProfileId":{"shape":"ProfileIdString"},
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"DataTransformationNextToken"}
+      }
+    },
+    "ListDataTransformationProfileVersionsResponse":{
+      "type":"structure",
+      "required":["Items"],
+      "members":{
+        "Items":{"shape":"DataTransformationProfileVersionSummaryList"},
+        "NextToken":{"shape":"DataTransformationNextToken"}
+      }
+    },
+    "ListDataTransformationProfilesRequest":{
+      "type":"structure",
+      "required":["SourceFormat"],
+      "members":{
+        "SourceFormat":{"shape":"SourceFormat"},
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"DataTransformationNextToken"}
+      }
+    },
+    "ListDataTransformationProfilesResponse":{
+      "type":"structure",
+      "required":["Items"],
+      "members":{
+        "Items":{"shape":"DataTransformationProfileSummaryList"},
+        "NextToken":{"shape":"DataTransformationNextToken"}
+      }
     },
     "ListFHIRDatastoresRequest":{
       "type":"structure",
@@ -666,8 +1277,8 @@
         "MaxResults":{"shape":"MaxResultsInteger"},
         "JobName":{"shape":"JobName"},
         "JobStatus":{"shape":"JobStatus"},
-        "SubmittedBefore":{"shape":"Timestamp"},
-        "SubmittedAfter":{"shape":"Timestamp"}
+        "SubmittedBefore":{"shape":"HealthLakeTimestamp"},
+        "SubmittedAfter":{"shape":"HealthLakeTimestamp"}
       }
     },
     "ListFHIRExportJobsResponse":{
@@ -687,8 +1298,8 @@
         "MaxResults":{"shape":"MaxResultsInteger"},
         "JobName":{"shape":"JobName"},
         "JobStatus":{"shape":"JobStatus"},
-        "SubmittedBefore":{"shape":"Timestamp"},
-        "SubmittedAfter":{"shape":"Timestamp"}
+        "SubmittedBefore":{"shape":"HealthLakeTimestamp"},
+        "SubmittedAfter":{"shape":"HealthLakeTimestamp"}
       }
     },
     "ListFHIRImportJobsResponse":{
@@ -712,8 +1323,19 @@
         "Tags":{"shape":"TagList"}
       }
     },
+    "Long":{
+      "type":"long",
+      "box":true
+    },
+    "MaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
     "MaxResultsInteger":{
       "type":"integer",
+      "box":true,
       "max":500,
       "min":1
     },
@@ -721,11 +1343,12 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-%@]*)$"
+      "pattern":"([\\p{L}\\p{Z}\\p{N}_.:/=+\\-%@]*)"
     },
     "NextToken":{
       "type":"string",
       "max":8192,
+      "min":0,
       "pattern":"\\p{ASCII}{0,8192}"
     },
     "NlpConfiguration":{
@@ -738,10 +1361,19 @@
       "type":"string",
       "enum":[
         "ENABLED",
-        "DISABLED",
         "ENABLING",
+        "DISABLED",
         "DISABLING"
       ]
+    },
+    "NotImplementedOperationException":{
+      "type":"structure",
+      "required":["Message"],
+      "members":{
+        "Message":{"shape":"String"}
+      },
+      "exception":true,
+      "fault":true
     },
     "OutputDataConfig":{
       "type":"structure",
@@ -767,10 +1399,89 @@
         "DefaultProfiles":{"shape":"DefaultProfiles"}
       }
     },
+    "ProfileDescription":{
+      "type":"string",
+      "max":1000,
+      "min":0
+    },
+    "ProfileIdString":{
+      "type":"string",
+      "max":32,
+      "min":32,
+      "pattern":"[a-f0-9]{32}"
+    },
+    "ProfileMapping":{
+      "type":"map",
+      "key":{"shape":"ProfileMappingKey"},
+      "value":{"shape":"ProfileMappingValue"},
+      "max":500,
+      "min":1,
+      "sensitive":true
+    },
+    "ProfileMappingKey":{
+      "type":"string",
+      "max":500,
+      "min":1
+    },
+    "ProfileMappingSource":{
+      "type":"structure",
+      "required":["ProfileMapping"],
+      "members":{
+        "ProfileMapping":{"shape":"StringMap"}
+      },
+      "sensitive":true
+    },
+    "ProfileMappingValue":{
+      "type":"string",
+      "max":102400,
+      "min":0
+    },
+    "ProfileNameString":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "ProfileVersion":{
+      "type":"integer",
+      "box":true,
+      "max":99,
+      "min":0
+    },
+    "PublishDataTransformationProfileRequest":{
+      "type":"structure",
+      "required":[
+        "ProfileId",
+        "SourceFormat"
+      ],
+      "members":{
+        "ProfileId":{"shape":"ProfileIdString"},
+        "SourceFormat":{"shape":"SourceFormat"},
+        "FromExistingVersion":{"shape":"ProfileVersion"},
+        "ChangeDescription":{"shape":"ChangeDescription"}
+      }
+    },
+    "PublishDataTransformationProfileResponse":{
+      "type":"structure",
+      "required":[
+        "ProfileId",
+        "Version",
+        "SourceFormat",
+        "TargetFormat",
+        "LastUpdatedAt"
+      ],
+      "members":{
+        "ProfileId":{"shape":"ProfileIdString"},
+        "Version":{"shape":"ProfileVersion"},
+        "SourceFormat":{"shape":"SourceFormat"},
+        "TargetFormat":{"shape":"TargetFormat"},
+        "ProfileName":{"shape":"ProfileNameString"},
+        "LastUpdatedAt":{"shape":"DateTime"}
+      }
+    },
     "ResourceNotFoundException":{
       "type":"structure",
       "members":{
-        "Message":{"shape":"String"}
+        "Message":{"shape":"HealthLakeString"}
       },
       "exception":true
     },
@@ -788,13 +1499,72 @@
     "S3Uri":{
       "type":"string",
       "max":1024,
+      "min":0,
       "pattern":"s3://[a-z0-9][\\.\\-a-z0-9]{1,61}[a-z0-9](/.*)?"
+    },
+    "SampleDataS3Uri":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"s3://[a-z0-9][a-z0-9.\\-]{1,61}[a-z0-9](/.*)?"
+    },
+    "SampleDataSource":{
+      "type":"structure",
+      "required":["S3Uri"],
+      "members":{
+        "S3Uri":{"shape":"SampleDataS3Uri"}
+      }
+    },
+    "ServiceQuotaExceededException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"HealthLakeString"}
+      },
+      "exception":true
+    },
+    "SourceFormat":{
+      "type":"string",
+      "enum":[
+        "CCDA",
+        "CSV"
+      ]
     },
     "SseConfiguration":{
       "type":"structure",
       "required":["KmsEncryptionConfig"],
       "members":{
         "KmsEncryptionConfig":{"shape":"KmsEncryptionConfig"}
+      }
+    },
+    "StartDataTransformationJobRequest":{
+      "type":"structure",
+      "required":[
+        "InputDataConfig",
+        "OutputDataConfig",
+        "DataAccessRoleArn",
+        "ClientToken",
+        "ProfileId"
+      ],
+      "members":{
+        "InputDataConfig":{"shape":"TransformationInputDataConfig"},
+        "OutputDataConfig":{"shape":"TransformationOutputDataConfig"},
+        "DataAccessRoleArn":{"shape":"DataTransformationIamRoleArn"},
+        "ClientToken":{"shape":"ClientToken"},
+        "JobName":{"shape":"DataTransformationJobName"},
+        "ProfileId":{"shape":"ProfileIdString"},
+        "DriftDetectionEnabled":{"shape":"Boolean"},
+        "ProvenanceEnabled":{"shape":"Boolean"}
+      }
+    },
+    "StartDataTransformationJobResponse":{
+      "type":"structure",
+      "required":[
+        "JobId",
+        "JobStatus"
+      ],
+      "members":{
+        "JobId":{"shape":"DataTransformationJobId"},
+        "JobStatus":{"shape":"TransformationJobStatus"}
       }
     },
     "StartFHIRExportJobRequest":{
@@ -845,7 +1615,10 @@
           "shape":"ClientTokenString",
           "idempotencyToken":true
         },
-        "ValidationLevel":{"shape":"ValidationLevel"}
+        "ValidationLevel":{"shape":"ValidationLevel"},
+        "ProfileId":{"shape":"BoundedLengthString"},
+        "InputFormat":{"shape":"BoundedLengthString"},
+        "DriftDetectionEnabled":{"shape":"HealthLakeBoolean"}
       }
     },
     "StartFHIRImportJobResponse":{
@@ -860,10 +1633,18 @@
         "DatastoreId":{"shape":"DatastoreId"}
       }
     },
-    "String":{
-      "type":"string",
-      "max":10000,
-      "pattern":"[\\P{M}\\p{M}]{0,10000}"
+    "StarterProfileSource":{
+      "type":"structure",
+      "required":["StarterProfileName"],
+      "members":{
+        "StarterProfileName":{"shape":"String"}
+      }
+    },
+    "String":{"type":"string"},
+    "StringMap":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"String"}
     },
     "Tag":{
       "type":"structure",
@@ -880,7 +1661,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"
+      "pattern":"([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)"
     },
     "TagKeyList":{
       "type":"list",
@@ -892,6 +1673,13 @@
       "type":"list",
       "member":{"shape":"Tag"},
       "max":200,
+      "min":0
+    },
+    "TagMap":{
+      "type":"map",
+      "key":{"shape":"DataTransformationTagKey"},
+      "value":{"shape":"DataTransformationTagValue"},
+      "max":50,
       "min":0
     },
     "TagResourceRequest":{
@@ -913,16 +1701,124 @@
       "type":"string",
       "max":256,
       "min":0,
-      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"
+      "pattern":"([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)"
+    },
+    "TargetFormat":{
+      "type":"string",
+      "enum":["FHIR_R4"]
     },
     "ThrottlingException":{
       "type":"structure",
+      "members":{
+        "Message":{"shape":"HealthLakeString"}
+      },
+      "exception":true
+    },
+    "TransformationInputDataConfig":{
+      "type":"structure",
+      "required":["S3Uri"],
+      "members":{
+        "S3Uri":{"shape":"DataTransformationS3Uri"},
+        "SourceFormat":{"shape":"SourceFormat"}
+      }
+    },
+    "TransformationJobProgressReport":{
+      "type":"structure",
+      "required":[
+        "TotalFilesScanned",
+        "TotalFilesConverted",
+        "TotalFilesFailed",
+        "TotalResourcesGenerated"
+      ],
+      "members":{
+        "TotalFilesScanned":{"shape":"Long"},
+        "TotalFilesConverted":{"shape":"Long"},
+        "TotalFilesFailed":{"shape":"Long"},
+        "TotalResourcesGenerated":{"shape":"Long"}
+      }
+    },
+    "TransformationJobProperties":{
+      "type":"structure",
+      "required":[
+        "JobId",
+        "JobStatus",
+        "InputDataConfig",
+        "OutputDataConfig",
+        "DataAccessRoleArn",
+        "SubmitTime"
+      ],
+      "members":{
+        "JobId":{"shape":"DataTransformationJobId"},
+        "JobStatus":{"shape":"TransformationJobStatus"},
+        "InputDataConfig":{"shape":"TransformationInputDataConfig"},
+        "OutputDataConfig":{"shape":"TransformationOutputDataConfig"},
+        "DataAccessRoleArn":{"shape":"DataTransformationIamRoleArn"},
+        "SubmitTime":{"shape":"DateTime"},
+        "JobName":{"shape":"DataTransformationJobName"},
+        "ProfileId":{"shape":"ProfileIdString"},
+        "ProfileName":{"shape":"ProfileNameString"},
+        "ProfileVersion":{"shape":"Integer"},
+        "EndTime":{"shape":"DateTime"},
+        "DriftDetectionEnabled":{"shape":"Boolean"},
+        "ProvenanceEnabled":{"shape":"Boolean"},
+        "Message":{"shape":"BoundedString"},
+        "JobProgressReport":{"shape":"TransformationJobProgressReport"}
+      }
+    },
+    "TransformationJobStatus":{
+      "type":"string",
+      "enum":[
+        "SUBMITTED",
+        "QUEUED",
+        "IN_PROGRESS",
+        "COMPLETED",
+        "COMPLETED_WITH_ERRORS",
+        "FAILED"
+      ]
+    },
+    "TransformationJobSummary":{
+      "type":"structure",
+      "required":[
+        "JobId",
+        "JobStatus",
+        "SubmitTime"
+      ],
+      "members":{
+        "JobId":{"shape":"DataTransformationJobId"},
+        "JobStatus":{"shape":"TransformationJobStatus"},
+        "SubmitTime":{"shape":"DateTime"},
+        "JobName":{"shape":"DataTransformationJobName"},
+        "EndTime":{"shape":"DateTime"},
+        "SourceFormat":{"shape":"SourceFormat"}
+      }
+    },
+    "TransformationJobSummaryList":{
+      "type":"list",
+      "member":{"shape":"TransformationJobSummary"}
+    },
+    "TransformationOutputDataConfig":{
+      "type":"structure",
+      "required":["S3Configuration"],
+      "members":{
+        "S3Configuration":{"shape":"DataTransformationS3Configuration"}
+      }
+    },
+    "UnauthorizedException":{
+      "type":"structure",
+      "required":["Message"],
       "members":{
         "Message":{"shape":"String"}
       },
       "exception":true
     },
-    "Timestamp":{"type":"timestamp"},
+    "UnsupportedMIMETypeException":{
+      "type":"structure",
+      "required":["Message"],
+      "members":{
+        "Message":{"shape":"String"}
+      },
+      "exception":true
+    },
     "UntagResourceRequest":{
       "type":"structure",
       "required":[
@@ -938,14 +1834,42 @@
       "type":"structure",
       "members":{}
     },
+    "UpdateDataTransformationProfileRequest":{
+      "type":"structure",
+      "required":[
+        "ProfileId",
+        "ProfileMapping"
+      ],
+      "members":{
+        "ProfileId":{"shape":"ProfileIdString"},
+        "ProfileMapping":{"shape":"ProfileMapping"},
+        "ChangeDescription":{"shape":"ChangeDescription"}
+      }
+    },
+    "UpdateDataTransformationProfileResponse":{
+      "type":"structure",
+      "required":[
+        "ProfileId",
+        "SourceFormat",
+        "TargetFormat",
+        "LastUpdatedAt"
+      ],
+      "members":{
+        "ProfileId":{"shape":"ProfileIdString"},
+        "SourceFormat":{"shape":"SourceFormat"},
+        "TargetFormat":{"shape":"TargetFormat"},
+        "ProfileName":{"shape":"ProfileNameString"},
+        "LastUpdatedAt":{"shape":"DateTime"}
+      }
+    },
     "UpdateFHIRDatastoreRequest":{
       "type":"structure",
       "required":["DatastoreId"],
       "members":{
         "DatastoreId":{"shape":"DatastoreId"},
         "DatastoreName":{"shape":"DatastoreName"},
-        "NlpConfiguration":{"shape":"NlpConfiguration"},
         "AnalyticsConfiguration":{"shape":"AnalyticsConfiguration"},
+        "NlpConfiguration":{"shape":"NlpConfiguration"},
         "ProfileConfiguration":{"shape":"ProfileConfiguration"},
         "IdentityProviderConfiguration":{"shape":"IdentityProviderConfiguration"}
       }
@@ -957,10 +1881,35 @@
         "DatastoreProperties":{"shape":"DatastoreProperties"}
       }
     },
+    "UpdateProfileWithAgentRequest":{
+      "type":"structure",
+      "required":[
+        "ProfileId",
+        "SourceFormat",
+        "InputMessage"
+      ],
+      "members":{
+        "ProfileId":{"shape":"ProfileIdString"},
+        "SourceFormat":{"shape":"SourceFormat"},
+        "InputMessage":{"shape":"AgentInputMessage"},
+        "ConversationId":{"shape":"ConversationIdString"}
+      }
+    },
+    "UpdateProfileWithAgentResponse":{
+      "type":"structure",
+      "required":[
+        "AgentResponse",
+        "ConversationId"
+      ],
+      "members":{
+        "AgentResponse":{"shape":"AgentOutputMessage"},
+        "ConversationId":{"shape":"ConversationIdString"}
+      }
+    },
     "ValidationException":{
       "type":"structure",
       "members":{
-        "Message":{"shape":"String"}
+        "Message":{"shape":"HealthLakeString"}
       },
       "exception":true
     },

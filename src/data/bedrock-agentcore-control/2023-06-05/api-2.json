@@ -2778,6 +2778,7 @@
       "input":{"shape":"UpdatePolicyRequest"},
       "output":{"shape":"UpdatePolicyResponse"},
       "errors":[
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"ConflictException"},
@@ -8357,7 +8358,7 @@
     },
     "HarnessEndpointArn":{
       "type":"string",
-      "pattern":"arn:([^:]+)?:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:harness/[a-zA-Z][a-zA-Z0-9_]{0,39}-[a-zA-Z0-9]{10}/endpoint/[a-zA-Z][a-zA-Z0-9_]{0,47}"
+      "pattern":"arn:([^:]+)?:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:harness/[a-zA-Z][a-zA-Z0-9_]{0,39}-[a-zA-Z0-9]{10}/harness-endpoint/[a-zA-Z][a-zA-Z0-9_]{0,47}"
     },
     "HarnessEndpointDescription":{
       "type":"string",
@@ -8426,7 +8427,8 @@
         "maxTokens":{"shape":"MaxTokens"},
         "temperature":{"shape":"Temperature"},
         "topP":{"shape":"TopP"},
-        "topK":{"shape":"TopK"}
+        "topK":{"shape":"TopK"},
+        "additionalParams":{"shape":"Document"}
       }
     },
     "HarnessId":{
@@ -8594,11 +8596,13 @@
     },
     "HarnessSkillGitUrl":{
       "type":"string",
+      "max":16383,
       "min":8,
       "pattern":"https://[^#@]+"
     },
     "HarnessSkillPath":{
       "type":"string",
+      "max":4096,
       "min":1
     },
     "HarnessSkillS3Source":{
@@ -8610,6 +8614,7 @@
     },
     "HarnessSkillS3Uri":{
       "type":"string",
+      "max":16383,
       "min":5,
       "pattern":"s3://.*"
     },

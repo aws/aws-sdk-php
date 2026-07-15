@@ -2,25 +2,71 @@
   "version": "2.0",
   "service": "<p>This is the <i>AWS HealthLake API Reference</i>. For an introduction to the service, see <a href=\"https://docs.aws.amazon.com/healthlake/latest/devguide/what-is.html\">What is AWS HealthLake?</a> in the <i>AWS HealthLake Developer Guide</i>.</p>",
   "operations": {
+    "CreateDataTransformationProfile": "<p>Creates a data transformation profile in DRAFT state. Specify a built-in starter profile, an existing profile version, raw profile content, or a sample data file as the source.</p>",
     "CreateFHIRDatastore": "<p>Create a FHIR-enabled data store.</p>",
+    "DeleteDataTransformationProfile": "<p>Deletes a data transformation profile and all its versions, including the DRAFT and all published versions.</p>",
     "DeleteFHIRDatastore": "<p>Delete a FHIR-enabled data store.</p>",
+    "DescribeDataTransformationJob": "<p>Describes a data transformation job, including its current status, configuration, and progress information.</p>",
     "DescribeFHIRDatastore": "<p>Get properties for a FHIR-enabled data store.</p>",
     "DescribeFHIRExportJob": "<p>Get FHIR export job properties.</p>",
     "DescribeFHIRImportJob": "<p>Get the import job properties to learn more about the job or job progress.</p>",
+    "GetDataTransformationProfile": "<p>Retrieves a data transformation profile's metadata and profile content at a specific version. Specify version 0 to retrieve the DRAFT, a version number between 1 and 99 to retrieve a specific published version, or omit the version to retrieve the latest published version.</p>",
+    "ListDataTransformationJobs": "<p>Lists data transformation jobs for your AWS account. Results can be filtered by status, job name, and submit time window. Results are paginated. Use the <code>NextToken</code> parameter to retrieve additional results.</p>",
+    "ListDataTransformationProfileVersions": "<p>Lists all versions of a specific data transformation profile (DRAFT and published), in reverse chronological order (newest first). Use <code>GetDataTransformationProfile</code> to retrieve profile content. Results are paginated. Use the <code>NextToken</code> parameter to retrieve additional results.</p>",
+    "ListDataTransformationProfiles": "<p>Lists all data transformation profiles in your account, returning the latest version summary for each. Use <code>GetDataTransformationProfile</code> to retrieve profile content. Results are paginated. Use the <code>NextToken</code> parameter to retrieve additional results.</p>",
     "ListFHIRDatastores": "<p>List all FHIR-enabled data stores in a user’s account, regardless of data store status.</p>",
     "ListFHIRExportJobs": "<p>Lists all FHIR export jobs associated with an account and their statuses.</p>",
     "ListFHIRImportJobs": "<p>List all FHIR import jobs associated with an account and their statuses.</p>",
     "ListTagsForResource": "<p>Returns a list of all existing tags associated with a data store.</p>",
+    "PublishDataTransformationProfile": "<p>Promotes the current DRAFT version of a data transformation profile to a new immutable published version. Also supports rollback by publishing from a previously published version.</p>",
+    "StartDataTransformationJob": "<p>Starts an asynchronous data transformation job that converts source files from Amazon Simple Storage Service (Amazon S3) and writes the output to Amazon S3 or AWS HealthLake.</p>",
     "StartFHIRExportJob": "<p>Start a FHIR export job.</p>",
     "StartFHIRImportJob": "<p>Start importing bulk FHIR data into an ACTIVE data store. The import job imports FHIR data found in the <code>InputDataConfig</code> object and stores processing results in the <code>JobOutputDataConfig</code> object.</p>",
     "TagResource": "<p>Add a user-specifed key and value tag to a data store.</p>",
     "UntagResource": "<p>Remove a user-specifed key and value tag from a data store.</p>",
-    "UpdateFHIRDatastore": "<p>Update the properties of a FHIR-enabled data store.</p>"
+    "UpdateDataTransformationProfile": "<p>Updates the DRAFT version (version 0) of a data transformation profile with new profile content. The update replaces all existing DRAFT content.</p>",
+    "UpdateFHIRDatastore": "<p>Update the properties of a FHIR-enabled data store.</p>",
+    "UpdateProfileWithAgent": "<p>Updates a data transformation profile using chat-based interaction with an agent. Supports multi-turn conversations for iteratively customizing profiles.</p>"
   },
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>Access is denied. Your account is not authorized to perform this operation.</p>",
       "refs": {}
+    },
+    "AgentInputMessage": {
+      "base": "<p>Represents a message sent to the agent during chat-based profile customization.</p>",
+      "refs": {
+        "UpdateProfileWithAgentRequest$InputMessage": "<p>The message to send to the agent.</p>"
+      }
+    },
+    "AgentInputMessageType": {
+      "base": null,
+      "refs": {
+        "AgentInputMessage$Type": "<p>The type of input message, which determines how the agent processes your request. Valid values:</p> <ul> <li> <p> <code>normal</code>: A regular message to the agent.</p> </li> <li> <p> <code>confirmation_response</code>: A response to a confirmation request from the agent.</p> </li> </ul>"
+      }
+    },
+    "AgentMessageOutOfContextException": {
+      "base": "<p>The agent message does not fit within the current conversation context. Start a new conversation or provide a message that relates to the current profile customization session.</p>",
+      "refs": {}
+    },
+    "AgentMessageString": {
+      "base": null,
+      "refs": {
+        "AgentInputMessage$Body": "<p>The text of your message to the agent.</p>",
+        "AgentOutputMessage$Body": "<p>The text of the agent's response.</p>"
+      }
+    },
+    "AgentOutputMessage": {
+      "base": "<p>Represents a response message from the agent during chat-based profile customization.</p>",
+      "refs": {
+        "UpdateProfileWithAgentResponse$AgentResponse": "<p>The response message from the agent.</p>"
+      }
+    },
+    "AgentOutputMessageType": {
+      "base": null,
+      "refs": {
+        "AgentOutputMessage$Type": "<p>The type of output message, which indicates how to interpret the agent's response.</p>"
+      }
     },
     "AmazonResourceName": {
       "base": null,
@@ -53,18 +99,45 @@
     "Boolean": {
       "base": null,
       "refs": {
-        "IdentityProviderConfiguration$FineGrainedAuthorizationEnabled": "<p>The parameter to enable SMART on FHIR fine-grained authorization for the data store.</p>"
+        "StartDataTransformationJobRequest$DriftDetectionEnabled": "<p>Specifies whether drift detection is enabled for this job. When enabled, AWS HealthLake writes a drift report to the output Amazon S3 location alongside the converted files.</p>",
+        "StartDataTransformationJobRequest$ProvenanceEnabled": "<p>Specifies whether FHIR R4 Provenance resource generation is enabled for this transformation job. When provenance is enabled, the service also generates related DocumentReference and Device resources. If you don't specify a value, the default is <code>true</code>. To disable provenance output, set this parameter to <code>false</code>.</p>",
+        "TransformationJobProperties$DriftDetectionEnabled": "<p>Specifies whether drift detection is enabled for this job. When enabled, AWS HealthLake writes a drift report to the output Amazon S3 location alongside the converted files.</p>",
+        "TransformationJobProperties$ProvenanceEnabled": "<p>Specifies whether FHIR R4 Provenance resource generation is enabled for this transformation job. When provenance is enabled, the service also generates related DocumentReference and Device resources.</p>"
       }
     },
     "BoundedLengthString": {
-      "base": null,
+      "base": "<p>A bounded-length string value.</p>",
       "refs": {
         "CreateFHIRDatastoreResponse$DatastoreEndpoint": "<p>The AWS endpoint created for the data store.</p>",
-        "DeleteFHIRDatastoreResponse$DatastoreEndpoint": "<p>The AWS endpoint of the data store to be deleted.</p>"
+        "DeleteFHIRDatastoreResponse$DatastoreEndpoint": "<p>The AWS endpoint of the data store to be deleted.</p>",
+        "StartFHIRImportJobRequest$ProfileId": null,
+        "StartFHIRImportJobRequest$InputFormat": null
+      }
+    },
+    "BoundedString": {
+      "base": null,
+      "refs": {
+        "TransformationJobProperties$Message": "<p>An informational message about the job, such as an error description if the job failed.</p>"
+      }
+    },
+    "ChangeDescription": {
+      "base": null,
+      "refs": {
+        "DataTransformationProfileVersionSummary$ChangeDescription": "<p>A description of what changed in this version.</p>",
+        "GetDataTransformationProfileResponse$ChangeDescription": "<p>A description of what changed in this version.</p>",
+        "PublishDataTransformationProfileRequest$ChangeDescription": "<p>A description of what changed or why this version is being published.</p>",
+        "UpdateDataTransformationProfileRequest$ChangeDescription": "<p>A description of what changed in this update.</p>"
+      }
+    },
+    "ClientToken": {
+      "base": null,
+      "refs": {
+        "CreateDataTransformationProfileRequest$ClientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, the service ignores the request but does not return an error.</p>",
+        "StartDataTransformationJobRequest$ClientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, the service ignores the request but does not return an error.</p>"
       }
     },
     "ClientTokenString": {
-      "base": null,
+      "base": "<p>A client-provided idempotency token.</p>",
       "refs": {
         "CreateFHIRDatastoreRequest$ClientToken": "<p>An optional user-provided token to ensure API idempotency.</p>",
         "StartFHIRExportJobRequest$ClientToken": "<p>An optional user provided token used for ensuring API idempotency.</p>",
@@ -87,6 +160,31 @@
       "base": "<p>The data store is in a transition state and the user requested action cannot be performed.</p>",
       "refs": {}
     },
+    "ConversationIdString": {
+      "base": null,
+      "refs": {
+        "UpdateProfileWithAgentRequest$ConversationId": "<p>The conversation identifier for multi-turn interactions. Omit to start a new conversation.</p>",
+        "UpdateProfileWithAgentResponse$ConversationId": "<p>The conversation identifier to use for follow-up messages in this conversation.</p>"
+      }
+    },
+    "ConversationNotFoundException": {
+      "base": "<p>The specified conversation identifier does not exist. Verify the conversation ID or omit it to start a new conversation.</p>",
+      "refs": {}
+    },
+    "CreateDataTransformationProfileRequest": {
+      "base": "<p>The request parameters for the <code>CreateDataTransformationProfile</code> operation.</p>",
+      "refs": {}
+    },
+    "CreateDataTransformationProfileResponse": {
+      "base": "<p>The response from the <code>CreateDataTransformationProfile</code> operation.</p>",
+      "refs": {}
+    },
+    "CreateDataTransformationProfileSource": {
+      "base": "<p>The source for initial content when creating a data transformation profile. Specify exactly one variant: a built-in starter profile, an existing profile version to clone, raw profile content, or a sample data file.</p>",
+      "refs": {
+        "CreateDataTransformationProfileRequest$Source": "<p>The source for the initial profile content. Specify a built-in starter profile, an existing profile version to clone, raw profile content for CI/CD workflows, or a sample data file in Amazon S3.</p>"
+      }
+    },
     "CreateFHIRDatastoreRequest": {
       "base": null,
       "refs": {}
@@ -95,8 +193,105 @@
       "base": null,
       "refs": {}
     },
-    "DatastoreArn": {
+    "DataTransformationChatOptionString": {
       "base": null,
+      "refs": {
+        "DataTransformationChatOptionsList$member": null
+      }
+    },
+    "DataTransformationChatOptionsList": {
+      "base": null,
+      "refs": {
+        "AgentOutputMessage$OptionsList": "<p>A list of selectable options presented when the response type is <code>options</code>.</p>"
+      }
+    },
+    "DataTransformationIamRoleArn": {
+      "base": null,
+      "refs": {
+        "StartDataTransformationJobRequest$DataAccessRoleArn": "<p>The Amazon Resource Name (ARN) of the AWS Identity and Access Management (IAM) role that AWS HealthLake assumes to read from and write to the specified Amazon S3 locations.</p>",
+        "TransformationJobProperties$DataAccessRoleArn": "<p>The Amazon Resource Name (ARN) of the AWS Identity and Access Management (IAM) role that grants AWS HealthLake access to the specified Amazon S3 locations. AWS HealthLake assumes this role to read input files and write output files.</p>"
+      }
+    },
+    "DataTransformationJobId": {
+      "base": null,
+      "refs": {
+        "DescribeDataTransformationJobRequest$JobId": "<p>The unique identifier of the data transformation job to describe.</p>",
+        "StartDataTransformationJobResponse$JobId": "<p>The unique identifier assigned to the data transformation job.</p>",
+        "TransformationJobProperties$JobId": "<p>The unique identifier of the data transformation job.</p>",
+        "TransformationJobSummary$JobId": "<p>The unique identifier of the job.</p>"
+      }
+    },
+    "DataTransformationJobName": {
+      "base": null,
+      "refs": {
+        "ListDataTransformationJobsRequest$JobName": "<p>Filters the results to include only jobs with the specified name.</p>",
+        "StartDataTransformationJobRequest$JobName": "<p>A descriptive name for the data transformation job.</p>",
+        "TransformationJobProperties$JobName": "<p>The name of the data transformation job.</p>",
+        "TransformationJobSummary$JobName": "<p>The name of the job.</p>"
+      }
+    },
+    "DataTransformationNextToken": {
+      "base": null,
+      "refs": {
+        "ListDataTransformationJobsRequest$NextToken": "<p>The pagination token from a previous response. Pass this value to retrieve the next page of results.</p>",
+        "ListDataTransformationJobsResponse$NextToken": "<p>The pagination token to use in the next request. If this value is <code>null</code>, there are no more results.</p>",
+        "ListDataTransformationProfileVersionsRequest$NextToken": "<p>The pagination token from a previous response. Pass this value to retrieve the next page of results.</p>",
+        "ListDataTransformationProfileVersionsResponse$NextToken": "<p>The pagination token to use in the next request. If this value is <code>null</code>, there are no more results.</p>",
+        "ListDataTransformationProfilesRequest$NextToken": "<p>The pagination token from a previous response. Pass this value to retrieve the next page of results.</p>",
+        "ListDataTransformationProfilesResponse$NextToken": "<p>The pagination token to use in the next request. If this value is <code>null</code>, there are no more results.</p>"
+      }
+    },
+    "DataTransformationProfileSummary": {
+      "base": "<p>Contains summary information about a data transformation profile. To retrieve profile content, call <code>GetDataTransformationProfile</code>.</p>",
+      "refs": {
+        "DataTransformationProfileSummaryList$member": null
+      }
+    },
+    "DataTransformationProfileSummaryList": {
+      "base": null,
+      "refs": {
+        "ListDataTransformationProfilesResponse$Items": "<p>The list of data transformation profile summaries.</p>"
+      }
+    },
+    "DataTransformationProfileVersionSummary": {
+      "base": "<p>Contains summary information about a specific version of a data transformation profile. To retrieve profile content, call <code>GetDataTransformationProfile</code>.</p>",
+      "refs": {
+        "DataTransformationProfileVersionSummaryList$member": null
+      }
+    },
+    "DataTransformationProfileVersionSummaryList": {
+      "base": null,
+      "refs": {
+        "ListDataTransformationProfileVersionsResponse$Items": "<p>The list of data transformation profile version summaries.</p>"
+      }
+    },
+    "DataTransformationS3Configuration": {
+      "base": "<p>The Amazon S3 output configuration for a data transformation job, including the output location and encryption settings.</p>",
+      "refs": {
+        "TransformationOutputDataConfig$S3Configuration": "<p>The Amazon S3 output location and AWS Key Management Service (AWS KMS) encryption configuration.</p>"
+      }
+    },
+    "DataTransformationS3Uri": {
+      "base": null,
+      "refs": {
+        "DataTransformationS3Configuration$S3Uri": "<p>The Amazon S3 URI where AWS HealthLake writes the converted output files.</p>",
+        "TransformationInputDataConfig$S3Uri": "<p>The Amazon S3 URI of the input data to transform.</p>"
+      }
+    },
+    "DataTransformationTagKey": {
+      "base": "<p>The key of the tag. Tag keys are case-sensitive and must be unique per resource.</p>",
+      "refs": {
+        "TagMap$key": null
+      }
+    },
+    "DataTransformationTagValue": {
+      "base": "<p>The value of the tag. Tag values are case-sensitive and can be empty strings.</p>",
+      "refs": {
+        "TagMap$value": null
+      }
+    },
+    "DatastoreArn": {
+      "base": "<p>The ARN of a data store.</p>",
       "refs": {
         "CreateFHIRDatastoreResponse$DatastoreArn": "<p>The Amazon Resource Name (ARN) for the data store.</p>",
         "DatastoreProperties$DatastoreArn": "<p>The Amazon Resource Name (ARN) used in the creation of the data store.</p>",
@@ -110,7 +305,7 @@
       }
     },
     "DatastoreId": {
-      "base": null,
+      "base": "<p>The identifier of a data store.</p>",
       "refs": {
         "CreateFHIRDatastoreResponse$DatastoreId": "<p>The data store identifier.</p>",
         "DatastoreProperties$DatastoreId": "<p>The data store identifier.</p>",
@@ -131,7 +326,7 @@
       }
     },
     "DatastoreName": {
-      "base": null,
+      "base": "<p>The name of a data store.</p>",
       "refs": {
         "CreateFHIRDatastoreRequest$DatastoreName": "<p>The data store name (user-generated).</p>",
         "DatastoreFilter$DatastoreName": "<p>Filter data store results by name.</p>",
@@ -154,12 +349,30 @@
       }
     },
     "DatastoreStatus": {
-      "base": null,
+      "base": "<p>The status of a data store.</p>",
       "refs": {
         "CreateFHIRDatastoreResponse$DatastoreStatus": "<p>The data store status.</p>",
         "DatastoreFilter$DatastoreStatus": "<p>Filter data store results by status.</p>",
         "DatastoreProperties$DatastoreStatus": "<p>The data store status.</p>",
         "DeleteFHIRDatastoreResponse$DatastoreStatus": "<p>The data store status.</p>"
+      }
+    },
+    "DateTime": {
+      "base": null,
+      "refs": {
+        "CreateDataTransformationProfileResponse$LastUpdatedAt": "<p>The timestamp when the profile was last updated.</p>",
+        "DataTransformationProfileSummary$LastUpdatedAt": "<p>The timestamp when the profile was last updated.</p>",
+        "DataTransformationProfileVersionSummary$LastUpdatedAt": "<p>The timestamp when this version was last updated.</p>",
+        "DeleteDataTransformationProfileResponse$DeletionTime": "<p>The timestamp when the profile was deleted.</p>",
+        "GetDataTransformationProfileResponse$LastUpdatedAt": "<p>The timestamp when this version was last updated.</p>",
+        "ListDataTransformationJobsRequest$SubmittedAfter": "<p>Filters the results to include only jobs submitted at or after this timestamp.</p>",
+        "ListDataTransformationJobsRequest$SubmittedBefore": "<p>Filters the results to include only jobs submitted at or before this timestamp.</p>",
+        "PublishDataTransformationProfileResponse$LastUpdatedAt": "<p>The timestamp when the profile was last updated.</p>",
+        "TransformationJobProperties$SubmitTime": "<p>The timestamp when the job was submitted.</p>",
+        "TransformationJobProperties$EndTime": "<p>The timestamp when the job completed or failed.</p>",
+        "TransformationJobSummary$SubmitTime": "<p>The timestamp when the job was submitted.</p>",
+        "TransformationJobSummary$EndTime": "<p>The timestamp when the job completed.</p>",
+        "UpdateDataTransformationProfileResponse$LastUpdatedAt": "<p>The timestamp when the profile was last updated.</p>"
       }
     },
     "DefaultProfiles": {
@@ -168,12 +381,28 @@
         "ProfileConfiguration$DefaultProfiles": "<p>The list of default profiles for the data store.</p>"
       }
     },
+    "DeleteDataTransformationProfileRequest": {
+      "base": "<p>The request parameters for the <code>DeleteDataTransformationProfile</code> operation.</p>",
+      "refs": {}
+    },
+    "DeleteDataTransformationProfileResponse": {
+      "base": "<p>The response from the <code>DeleteDataTransformationProfile</code> operation.</p>",
+      "refs": {}
+    },
     "DeleteFHIRDatastoreRequest": {
       "base": null,
       "refs": {}
     },
     "DeleteFHIRDatastoreResponse": {
       "base": null,
+      "refs": {}
+    },
+    "DescribeDataTransformationJobRequest": {
+      "base": "<p>The request parameters for the <code>DescribeDataTransformationJob</code> operation.</p>",
+      "refs": {}
+    },
+    "DescribeDataTransformationJobResponse": {
+      "base": "<p>The response from the <code>DescribeDataTransformationJob</code> operation.</p>",
       "refs": {}
     },
     "DescribeFHIRDatastoreRequest": {
@@ -201,7 +430,7 @@
       "refs": {}
     },
     "EncryptionKeyID": {
-      "base": null,
+      "base": "<p>The identifier of an encryption key.</p>",
       "refs": {
         "KmsEncryptionConfig$KmsKeyId": "<p>The Key Management Service (KMS) encryption key id/alias used to encrypt the data store contents at rest.</p>",
         "S3Configuration$KmsKeyId": "<p>The Key Management Service (KMS) key ID used to access the S3 bucket. </p>"
@@ -225,6 +454,12 @@
         "ErrorCause$ErrorMessage": "<p>The error message text for <code>ErrorCause</code>.</p>"
       }
     },
+    "ExistingVersionedProfileSource": {
+      "base": "<p>Identifies an existing data transformation profile and version to clone when creating a new profile.</p>",
+      "refs": {
+        "CreateDataTransformationProfileSource$ExistingVersionedProfileId": "<p>Creates the profile by cloning an existing profile at a specific version.</p>"
+      }
+    },
     "ExportJobProperties": {
       "base": "<p>The properties of a FHIR export job.</p>",
       "refs": {
@@ -239,32 +474,91 @@
       }
     },
     "FHIRVersion": {
-      "base": null,
+      "base": "<p>The FHIR version supported by the data store.</p>",
       "refs": {
         "CreateFHIRDatastoreRequest$DatastoreTypeVersion": "<p>The FHIR release version supported by the data store. Current support is for version <code>R4</code>.</p>",
         "DatastoreProperties$DatastoreTypeVersion": "<p>The FHIR release version supported by the data store. Current support is for version <code>R4</code>.</p>"
       }
     },
+    "FailedDependencyException": {
+      "base": "<p>A dependent service failed to fulfill the request.</p>",
+      "refs": {}
+    },
     "GenericDouble": {
-      "base": null,
+      "base": "<p>A double-precision floating-point number.</p>",
       "refs": {
         "JobProgressReport$TotalSizeOfScannedFilesInMB": "<p>The size (in MB) of files scanned from the S3 input bucket.</p>",
+        "JobProgressReport$TotalSizeOfScannedNonFhirFilesInMB": "<p>The size (in MB) of non-FHIR files scanned from the S3 input bucket.</p>",
         "JobProgressReport$Throughput": "<p>The transaction rate the import job is processed at.</p>"
       }
     },
     "GenericLong": {
-      "base": null,
+      "base": "<p>A long integer value.</p>",
       "refs": {
         "JobProgressReport$TotalNumberOfScannedFiles": "<p>The number of files scanned from the S3 input bucket.</p>",
         "JobProgressReport$TotalNumberOfImportedFiles": "<p>The number of files imported.</p>",
         "JobProgressReport$TotalNumberOfResourcesScanned": "<p>The number of resources scanned from the S3 input bucket.</p>",
         "JobProgressReport$TotalNumberOfResourcesImported": "<p>The number of resources imported.</p>",
         "JobProgressReport$TotalNumberOfResourcesWithCustomerError": "<p>The number of resources that failed due to customer error.</p>",
-        "JobProgressReport$TotalNumberOfFilesReadWithCustomerError": "<p>The number of files that failed to be read from the S3 input bucket due to customer error.</p>"
+        "JobProgressReport$TotalNumberOfFilesReadWithCustomerError": "<p>The number of files that failed to be read from the S3 input bucket due to customer error.</p>",
+        "JobProgressReport$TotalNumberOfScannedNonFhirFiles": "<p>The number of non-FHIR files scanned from the S3 input bucket.</p>",
+        "JobProgressReport$TotalNumberOfImportedNonFhirFiles": "<p>The number of non-FHIR files imported.</p>",
+        "JobProgressReport$TotalNumberOfNonFhirResourcesScanned": "<p>The number of non-FHIR resources scanned from the S3 input bucket.</p>",
+        "JobProgressReport$TotalNumberOfNonFhirResourcesImported": "<p>The number of non-FHIR resources imported.</p>",
+        "JobProgressReport$TotalNumberOfNonFhirResourcesWithCustomerError": "<p>The number of non-FHIR resources that failed due to customer error.</p>",
+        "JobProgressReport$TotalNumberOfNonFhirFilesReadWithCustomerError": "<p>The number of non-FHIR files that failed to be read from the S3 input bucket due to customer error.</p>",
+        "JobProgressReport$TotalFilesConverted": "<p>Number of CCDA files successfully transformed during the import's transformation phase. Populated only for import jobs that use the two-Step-Function (transformation + ingestion) flow; null for legacy single-SF imports and for pure FHIR imports that skip transformation.</p>",
+        "JobProgressReport$TotalResourcesGenerated": "<p>Number of FHIR resources produced by the transformation phase. Populated only for import jobs that use the two-Step-Function flow; null for legacy single-SF imports and for pure FHIR imports.</p>"
+      }
+    },
+    "GetDataTransformationProfileRequest": {
+      "base": "<p>The request parameters for the <code>GetDataTransformationProfile</code> operation.</p>",
+      "refs": {}
+    },
+    "GetDataTransformationProfileResponse": {
+      "base": "<p>The response from the <code>GetDataTransformationProfile</code> operation.</p>",
+      "refs": {}
+    },
+    "HealthLakeBoolean": {
+      "base": "<p>A boolean value.</p>",
+      "refs": {
+        "IdentityProviderConfiguration$FineGrainedAuthorizationEnabled": "<p>The parameter to enable SMART on FHIR fine-grained authorization for the data store.</p>",
+        "StartFHIRImportJobRequest$DriftDetectionEnabled": null
+      }
+    },
+    "HealthLakeString": {
+      "base": "<p>A general-purpose string value.</p>",
+      "refs": {
+        "AccessDeniedException$Message": null,
+        "ConflictException$Message": null,
+        "DatastoreProperties$DatastoreEndpoint": "<p>The AWS endpoint for the data store.</p>",
+        "DefaultProfiles$member": null,
+        "FailedDependencyException$Message": "<p>A message describing the error.</p>",
+        "InternalServerException$Message": null,
+        "ResourceNotFoundException$Message": null,
+        "ServiceQuotaExceededException$Message": "<p>A message describing the error.</p>",
+        "ThrottlingException$Message": null,
+        "ValidationException$Message": null
+      }
+    },
+    "HealthLakeTimestamp": {
+      "base": "<p>A timestamp value.</p>",
+      "refs": {
+        "DatastoreFilter$CreatedBefore": "<p>Filter to set cutoff dates for records. All data stores created before the specified date are included in the results. </p>",
+        "DatastoreFilter$CreatedAfter": "<p>Filter to set cutoff dates for records. All data stores created after the specified date are included in the results.</p>",
+        "DatastoreProperties$CreatedAt": "<p>The time the data store was created. </p>",
+        "ExportJobProperties$SubmitTime": "<p>The time the export job was initiated.</p>",
+        "ExportJobProperties$EndTime": "<p>The time the export job completed.</p>",
+        "ImportJobProperties$SubmitTime": "<p>The time the import job was submitted for processing.</p>",
+        "ImportJobProperties$EndTime": "<p>The time the import job was completed.</p>",
+        "ListFHIRExportJobsRequest$SubmittedBefore": "<p>Limits the response to FHIR export jobs submitted before a user- specified date.</p>",
+        "ListFHIRExportJobsRequest$SubmittedAfter": "<p>Limits the response to FHIR export jobs submitted after a user-specified date.</p>",
+        "ListFHIRImportJobsRequest$SubmittedBefore": "<p>Limits the response to FHIR import jobs submitted before a user- specified date. </p>",
+        "ListFHIRImportJobsRequest$SubmittedAfter": "<p>Limits the response to FHIR import jobs submitted after a user-specified date.</p>"
       }
     },
     "IamRoleArn": {
-      "base": null,
+      "base": "<p>The IAM role ARN for data access.</p>",
       "refs": {
         "ExportJobProperties$DataAccessRoleArn": "<p>The Amazon Resource Name (ARN) used during the initiation of the export job.</p>",
         "ImportJobProperties$DataAccessRoleArn": "<p>The Amazon Resource Name (ARN) that grants AWS HealthLake access to the input data.</p>",
@@ -300,12 +594,19 @@
         "StartFHIRImportJobRequest$InputDataConfig": "<p>The input properties for the import job request.</p>"
       }
     },
+    "Integer": {
+      "base": null,
+      "refs": {
+        "ExistingVersionedProfileSource$Version": "<p>The version number of the existing profile to clone from.</p>",
+        "TransformationJobProperties$ProfileVersion": "<p>The version number of the data transformation profile used for this job.</p>"
+      }
+    },
     "InternalServerException": {
       "base": "<p>An unknown internal error occurred in the service.</p>",
       "refs": {}
     },
     "JobId": {
-      "base": null,
+      "base": "<p>The unique identifier of a job.</p>",
       "refs": {
         "DescribeFHIRExportJobRequest$JobId": "<p>The export job identifier.</p>",
         "DescribeFHIRImportJobRequest$JobId": "<p>The import job identifier.</p>",
@@ -316,7 +617,7 @@
       }
     },
     "JobName": {
-      "base": null,
+      "base": "<p>The human-readable name of a job.</p>",
       "refs": {
         "ExportJobProperties$JobName": "<p>The export job name.</p>",
         "ImportJobProperties$JobName": "<p>The import job name.</p>",
@@ -333,7 +634,7 @@
       }
     },
     "JobStatus": {
-      "base": null,
+      "base": "<p>The status of a job.</p>",
       "refs": {
         "ExportJobProperties$JobStatus": "<p>The export job status.</p>",
         "ImportJobProperties$JobStatus": "<p>The import job status.</p>",
@@ -349,11 +650,42 @@
         "SseConfiguration$KmsEncryptionConfig": "<p>The Key Management Service (KMS) encryption configuration used to provide details for data encryption.</p>"
       }
     },
+    "KmsKeyId": {
+      "base": null,
+      "refs": {
+        "CreateDataTransformationProfileRequest$KmsKeyId": "<p>The AWS Key Management Service (AWS KMS) key identifier used to encrypt the profile content at rest.</p>",
+        "DataTransformationS3Configuration$KmsKeyId": "<p>The AWS Key Management Service (AWS KMS) key identifier used to encrypt the transformation job output written to Amazon S3.</p>"
+      }
+    },
     "LambdaArn": {
       "base": null,
       "refs": {
         "IdentityProviderConfiguration$IdpLambdaArn": "<p>The Amazon Resource Name (ARN) of the Lambda function to use to decode the access token created by the authorization server.</p>"
       }
+    },
+    "ListDataTransformationJobsRequest": {
+      "base": "<p>The request parameters for the <code>ListDataTransformationJobs</code> operation.</p>",
+      "refs": {}
+    },
+    "ListDataTransformationJobsResponse": {
+      "base": "<p>The response from the <code>ListDataTransformationJobs</code> operation.</p>",
+      "refs": {}
+    },
+    "ListDataTransformationProfileVersionsRequest": {
+      "base": "<p>The request parameters for the <code>ListDataTransformationProfileVersions</code> operation.</p>",
+      "refs": {}
+    },
+    "ListDataTransformationProfileVersionsResponse": {
+      "base": "<p>The response from the <code>ListDataTransformationProfileVersions</code> operation.</p>",
+      "refs": {}
+    },
+    "ListDataTransformationProfilesRequest": {
+      "base": "<p>The request parameters for the <code>ListDataTransformationProfiles</code> operation.</p>",
+      "refs": {}
+    },
+    "ListDataTransformationProfilesResponse": {
+      "base": "<p>The response from the <code>ListDataTransformationProfiles</code> operation.</p>",
+      "refs": {}
     },
     "ListFHIRDatastoresRequest": {
       "base": null,
@@ -387,8 +719,25 @@
       "base": null,
       "refs": {}
     },
-    "MaxResultsInteger": {
+    "Long": {
       "base": null,
+      "refs": {
+        "TransformationJobProgressReport$TotalFilesScanned": "<p>The total number of source files scanned by the job.</p>",
+        "TransformationJobProgressReport$TotalFilesConverted": "<p>The total number of source files successfully converted.</p>",
+        "TransformationJobProgressReport$TotalFilesFailed": "<p>The total number of source files that failed conversion.</p>",
+        "TransformationJobProgressReport$TotalResourcesGenerated": "<p>The total number of FHIR R4 resources generated across all converted files.</p>"
+      }
+    },
+    "MaxResults": {
+      "base": null,
+      "refs": {
+        "ListDataTransformationJobsRequest$MaxResults": "<p>The maximum number of jobs to return per page. If you don't specify a value, the service returns up to 100 results.</p>",
+        "ListDataTransformationProfileVersionsRequest$MaxResults": "<p>The maximum number of profile versions to return per page. If you don't specify a value, the service returns up to 100 results.</p>",
+        "ListDataTransformationProfilesRequest$MaxResults": "<p>The maximum number of profiles to return per page. If you don't specify a value, the service returns up to 100 results.</p>"
+      }
+    },
+    "MaxResultsInteger": {
+      "base": "<p>The maximum number of results to return per page.</p>",
       "refs": {
         "ListFHIRDatastoresRequest$MaxResults": "<p>The maximum number of data stores returned on a page.</p>",
         "ListFHIRExportJobsRequest$MaxResults": "<p>Limits the number of results returned for a ListFHIRExportJobs to a maximum quantity specified by the user.</p>",
@@ -396,14 +745,14 @@
       }
     },
     "Message": {
-      "base": null,
+      "base": "<p>A message associated with a job or error.</p>",
       "refs": {
         "ExportJobProperties$Message": "<p>An explanation of any errors that might have occurred during the export job.</p>",
         "ImportJobProperties$Message": "<p>An explanation of any errors that might have occurred during the FHIR import job.</p>"
       }
     },
     "NextToken": {
-      "base": null,
+      "base": "<p>An opaque pagination token.</p>",
       "refs": {
         "ListFHIRDatastoresRequest$NextToken": "<p>The token used to retrieve the next page of data stores when results are paginated.</p>",
         "ListFHIRDatastoresResponse$NextToken": "<p>The pagination token used to retrieve the next page of results.</p>",
@@ -427,6 +776,10 @@
         "NlpConfiguration$Status": "<p>The status of the NLP configuration.</p>"
       }
     },
+    "NotImplementedOperationException": {
+      "base": "<p>The requested operation is not yet available. Check the service documentation for a list of supported operations.</p>",
+      "refs": {}
+    },
     "OutputDataConfig": {
       "base": "<p>The output data configuration supplied when the export job was created.</p>",
       "refs": {
@@ -444,7 +797,7 @@
       }
     },
     "PreloadDataType": {
-      "base": null,
+      "base": "<p>The type of preloaded data.</p>",
       "refs": {
         "PreloadDataConfig$PreloadDataType": "<p>The type of preloaded data. Only Synthea preloaded data is supported.</p>"
       }
@@ -457,6 +810,93 @@
         "UpdateFHIRDatastoreRequest$ProfileConfiguration": "<p>The profile configuration for the data store.</p>"
       }
     },
+    "ProfileDescription": {
+      "base": null,
+      "refs": {
+        "CreateDataTransformationProfileRequest$ProfileDescription": "<p>A human-readable description of the profile's purpose.</p>",
+        "DataTransformationProfileSummary$ProfileDescription": "<p>A description of the profile's purpose.</p>",
+        "GetDataTransformationProfileResponse$ProfileDescription": "<p>The description of the profile.</p>"
+      }
+    },
+    "ProfileIdString": {
+      "base": null,
+      "refs": {
+        "CreateDataTransformationProfileResponse$ProfileId": "<p>The unique identifier of the created profile.</p>",
+        "DataTransformationProfileSummary$ProfileId": "<p>The unique identifier of the profile.</p>",
+        "DataTransformationProfileVersionSummary$ProfileId": "<p>The unique identifier of the profile.</p>",
+        "DeleteDataTransformationProfileRequest$ProfileId": "<p>The unique identifier of the profile to delete.</p>",
+        "DeleteDataTransformationProfileResponse$ProfileId": "<p>The unique identifier of the deleted profile.</p>",
+        "GetDataTransformationProfileRequest$ProfileId": "<p>The unique identifier of the profile to retrieve.</p>",
+        "GetDataTransformationProfileResponse$ProfileId": "<p>The unique identifier of the profile.</p>",
+        "ListDataTransformationProfileVersionsRequest$ProfileId": "<p>The unique identifier of the profile whose versions to list.</p>",
+        "PublishDataTransformationProfileRequest$ProfileId": "<p>The unique identifier of the profile to publish.</p>",
+        "PublishDataTransformationProfileResponse$ProfileId": "<p>The unique identifier of the published profile.</p>",
+        "StartDataTransformationJobRequest$ProfileId": "<p>The unique identifier of the data transformation profile to use for conversion.</p>",
+        "TransformationJobProperties$ProfileId": "<p>The unique identifier of the data transformation profile used for this job.</p>",
+        "UpdateDataTransformationProfileRequest$ProfileId": "<p>The unique identifier of the profile to update.</p>",
+        "UpdateDataTransformationProfileResponse$ProfileId": "<p>The unique identifier of the updated profile.</p>",
+        "UpdateProfileWithAgentRequest$ProfileId": "<p>The unique identifier of the profile to update via the agent.</p>"
+      }
+    },
+    "ProfileMapping": {
+      "base": null,
+      "refs": {
+        "GetDataTransformationProfileResponse$ProfileMapping": "<p>The profile content as a map of file paths to content strings.</p>",
+        "UpdateDataTransformationProfileRequest$ProfileMapping": "<p>The new profile content for the DRAFT version. This is a full replacement of all profile files.</p>"
+      }
+    },
+    "ProfileMappingKey": {
+      "base": null,
+      "refs": {
+        "ProfileMapping$key": null
+      }
+    },
+    "ProfileMappingSource": {
+      "base": "<p>Contains raw content to use as the source when creating a data transformation profile directly from a mapping.</p>",
+      "refs": {
+        "CreateDataTransformationProfileSource$ProfileMapping": "<p>Creates the profile from raw profile content that you provide directly. Use this variant for continuous integration and continuous delivery (CI/CD) workflows.</p>"
+      }
+    },
+    "ProfileMappingValue": {
+      "base": null,
+      "refs": {
+        "ProfileMapping$value": null
+      }
+    },
+    "ProfileNameString": {
+      "base": null,
+      "refs": {
+        "CreateDataTransformationProfileRequest$ProfileName": "<p>A name for the data transformation profile.</p>",
+        "CreateDataTransformationProfileResponse$ProfileName": "<p>The name of the created profile.</p>",
+        "DataTransformationProfileSummary$ProfileName": "<p>The name of the profile.</p>",
+        "DataTransformationProfileVersionSummary$ProfileName": "<p>The name of the profile.</p>",
+        "DeleteDataTransformationProfileResponse$ProfileName": "<p>The name of the deleted profile.</p>",
+        "GetDataTransformationProfileResponse$ProfileName": "<p>The name of the profile.</p>",
+        "PublishDataTransformationProfileResponse$ProfileName": "<p>The name of the published profile.</p>",
+        "TransformationJobProperties$ProfileName": "<p>The name of the data transformation profile used for this job.</p>",
+        "UpdateDataTransformationProfileResponse$ProfileName": "<p>The name of the updated profile.</p>"
+      }
+    },
+    "ProfileVersion": {
+      "base": null,
+      "refs": {
+        "CreateDataTransformationProfileResponse$Version": "<p>The version number of the newly created profile. The starting version is always 0, which indicates the profile is in DRAFT state.</p>",
+        "DataTransformationProfileSummary$Version": "<p>The latest version number of the profile.</p>",
+        "DataTransformationProfileVersionSummary$Version": "<p>The version number.</p>",
+        "GetDataTransformationProfileRequest$ProfileVersion": "<p>The version number to retrieve. Specify 0 to retrieve the DRAFT version. If you omit this parameter, the service returns the latest published version.</p>",
+        "GetDataTransformationProfileResponse$Version": "<p>The version number of the retrieved profile.</p>",
+        "PublishDataTransformationProfileRequest$FromExistingVersion": "<p>The version number of a previously published version to republish as the new latest version. Use this parameter for rollback scenarios. If you omit this parameter, the service publishes the current DRAFT version.</p>",
+        "PublishDataTransformationProfileResponse$Version": "<p>The new version number that was created.</p>"
+      }
+    },
+    "PublishDataTransformationProfileRequest": {
+      "base": "<p>The request parameters for the <code>PublishDataTransformationProfile</code> operation.</p>",
+      "refs": {}
+    },
+    "PublishDataTransformationProfileResponse": {
+      "base": "<p>The response from the <code>PublishDataTransformationProfile</code> operation.</p>",
+      "refs": {}
+    },
     "ResourceNotFoundException": {
       "base": "<p>The requested data store was not found.</p>",
       "refs": {}
@@ -468,10 +908,43 @@
       }
     },
     "S3Uri": {
-      "base": null,
+      "base": "<p>The S3 URI for data import or export.</p>",
       "refs": {
         "InputDataConfig$S3Uri": "<p>The <code>S3Uri</code> is the user-specified S3 location of the FHIR data to be imported into AWS HealthLake.</p>",
         "S3Configuration$S3Uri": "<p>The <code>S3Uri</code> is the user-specified S3 location of the FHIR data to be imported into AWS HealthLake.</p>"
+      }
+    },
+    "SampleDataS3Uri": {
+      "base": null,
+      "refs": {
+        "SampleDataSource$S3Uri": "<p>The Amazon S3 URI of the sample data file.</p>"
+      }
+    },
+    "SampleDataSource": {
+      "base": "<p>Identifies a sample data file in Amazon S3 to use as the source when creating a data transformation profile. Valid only when the source format is Comma-separated values (CSV).</p>",
+      "refs": {
+        "CreateDataTransformationProfileSource$SampleData": "<p>Creates the profile from a sample data file stored in Amazon S3. Valid only when the source format is Comma-separated values (CSV).</p>"
+      }
+    },
+    "ServiceQuotaExceededException": {
+      "base": "<p>The request exceeds the service quota.</p>",
+      "refs": {}
+    },
+    "SourceFormat": {
+      "base": null,
+      "refs": {
+        "CreateDataTransformationProfileRequest$SourceFormat": "<p>The source data format that this profile converts from (Consolidated Clinical Document Architecture (C-CDA) or Comma-separated values (CSV)).</p>",
+        "CreateDataTransformationProfileResponse$SourceFormat": "<p>The source data format of the profile.</p>",
+        "DataTransformationProfileSummary$SourceFormat": "<p>The source data format that this profile converts from.</p>",
+        "DataTransformationProfileVersionSummary$SourceFormat": "<p>The source data format that this profile converts from.</p>",
+        "GetDataTransformationProfileResponse$SourceFormat": "<p>The source data format of the profile.</p>",
+        "ListDataTransformationProfilesRequest$SourceFormat": "<p>Filters the results by source data format.</p>",
+        "PublishDataTransformationProfileRequest$SourceFormat": "<p>The source data format of the profile.</p>",
+        "PublishDataTransformationProfileResponse$SourceFormat": "<p>The source data format of the profile.</p>",
+        "TransformationInputDataConfig$SourceFormat": "<p>The format of the source data files (C-CDA or CSV).</p>",
+        "TransformationJobSummary$SourceFormat": "<p>The source data format for this job.</p>",
+        "UpdateDataTransformationProfileResponse$SourceFormat": "<p>The source data format of the profile.</p>",
+        "UpdateProfileWithAgentRequest$SourceFormat": "<p>The source data format for the transformation.</p>"
       }
     },
     "SseConfiguration": {
@@ -480,6 +953,14 @@
         "CreateFHIRDatastoreRequest$SseConfiguration": "<p>The server-side encryption key configuration for a customer-provided encryption key specified for creating a data store. </p>",
         "DatastoreProperties$SseConfiguration": "<p> The server-side encryption key configuration for a customer provided encryption key.</p>"
       }
+    },
+    "StartDataTransformationJobRequest": {
+      "base": "<p>The request parameters for the <code>StartDataTransformationJob</code> operation.</p>",
+      "refs": {}
+    },
+    "StartDataTransformationJobResponse": {
+      "base": "<p>The response from the <code>StartDataTransformationJob</code> operation.</p>",
+      "refs": {}
     },
     "StartFHIRExportJobRequest": {
       "base": null,
@@ -497,17 +978,30 @@
       "base": null,
       "refs": {}
     },
+    "StarterProfileSource": {
+      "base": "<p>Identifies a built-in starter profile to use as the source when creating a data transformation profile. Valid only when the source format is Consolidated Clinical Document Architecture (C-CDA).</p>",
+      "refs": {
+        "CreateDataTransformationProfileSource$StarterProfile": "<p>Creates the profile from a built-in starter profile. Valid only when the source format is Consolidated Clinical Document Architecture (C-CDA).</p>"
+      }
+    },
     "String": {
       "base": null,
       "refs": {
-        "AccessDeniedException$Message": null,
-        "ConflictException$Message": null,
-        "DatastoreProperties$DatastoreEndpoint": "<p>The AWS endpoint for the data store.</p>",
-        "DefaultProfiles$member": null,
-        "InternalServerException$Message": null,
-        "ResourceNotFoundException$Message": null,
-        "ThrottlingException$Message": null,
-        "ValidationException$Message": null
+        "AgentMessageOutOfContextException$Message": null,
+        "ConversationNotFoundException$Message": null,
+        "ExistingVersionedProfileSource$ProfileId": "<p>The unique identifier of the existing profile to clone from.</p>",
+        "NotImplementedOperationException$Message": null,
+        "StarterProfileSource$StarterProfileName": "<p>The name of the built-in starter profile.</p>",
+        "StringMap$key": null,
+        "StringMap$value": null,
+        "UnauthorizedException$Message": null,
+        "UnsupportedMIMETypeException$Message": null
+      }
+    },
+    "StringMap": {
+      "base": null,
+      "refs": {
+        "ProfileMappingSource$ProfileMapping": "<p>The content as a map of file paths to profile strings.</p>"
       }
     },
     "Tag": {
@@ -537,6 +1031,12 @@
         "TagResourceRequest$Tags": "<p>The user-specified key and value pair tags being added to a data store.</p>"
       }
     },
+    "TagMap": {
+      "base": "<p>A map of tag keys to tag values associated with the resource.</p>",
+      "refs": {
+        "CreateDataTransformationProfileRequest$Tags": "<p>The tags to associate with the profile at creation time.</p>"
+      }
+    },
     "TagResourceRequest": {
       "base": null,
       "refs": {}
@@ -551,25 +1051,75 @@
         "Tag$Value": "<p> The value portion of a tag. Tag values are case-sensitive.</p>"
       }
     },
+    "TargetFormat": {
+      "base": null,
+      "refs": {
+        "CreateDataTransformationProfileResponse$TargetFormat": "<p>The target output format. Always <code>FHIR_R4</code>.</p>",
+        "DataTransformationProfileSummary$TargetFormat": "<p>The target output format of the profile.</p>",
+        "DataTransformationProfileVersionSummary$TargetFormat": "<p>The target output format of the profile.</p>",
+        "GetDataTransformationProfileResponse$TargetFormat": "<p>The target output format of the profile.</p>",
+        "PublishDataTransformationProfileResponse$TargetFormat": "<p>The target output format of the profile.</p>",
+        "UpdateDataTransformationProfileResponse$TargetFormat": "<p>The target output format of the profile.</p>"
+      }
+    },
     "ThrottlingException": {
       "base": "<p>The user has exceeded their maximum number of allowed calls to the given API. </p>",
       "refs": {}
     },
-    "Timestamp": {
+    "TransformationInputDataConfig": {
+      "base": "<p>The Amazon S3 location and source format configuration for input data in a transformation job.</p>",
+      "refs": {
+        "StartDataTransformationJobRequest$InputDataConfig": "<p>The Amazon S3 location and format of the source files to transform.</p>",
+        "TransformationJobProperties$InputDataConfig": "<p>The Amazon S3 location and format of the source files for this job.</p>"
+      }
+    },
+    "TransformationJobProgressReport": {
+      "base": "<p>Contains progress metrics for a data transformation job, including counts of files scanned, converted, and failed.</p>",
+      "refs": {
+        "TransformationJobProperties$JobProgressReport": "<p>The progress report for the data transformation job, including counts of files processed and resources generated.</p>"
+      }
+    },
+    "TransformationJobProperties": {
+      "base": "<p>Contains the properties of a data transformation job, including its status, configuration, and progress information. You retrieve this structure by calling <code>DescribeDataTransformationJob</code>.</p>",
+      "refs": {
+        "DescribeDataTransformationJobResponse$TransformationJobProperties": "<p>The properties of the data transformation job, including status, configuration, and progress information.</p>"
+      }
+    },
+    "TransformationJobStatus": {
       "base": null,
       "refs": {
-        "DatastoreFilter$CreatedBefore": "<p>Filter to set cutoff dates for records. All data stores created before the specified date are included in the results. </p>",
-        "DatastoreFilter$CreatedAfter": "<p>Filter to set cutoff dates for records. All data stores created after the specified date are included in the results.</p>",
-        "DatastoreProperties$CreatedAt": "<p>The time the data store was created. </p>",
-        "ExportJobProperties$SubmitTime": "<p>The time the export job was initiated.</p>",
-        "ExportJobProperties$EndTime": "<p>The time the export job completed.</p>",
-        "ImportJobProperties$SubmitTime": "<p>The time the import job was submitted for processing.</p>",
-        "ImportJobProperties$EndTime": "<p>The time the import job was completed.</p>",
-        "ListFHIRExportJobsRequest$SubmittedBefore": "<p>Limits the response to FHIR export jobs submitted before a user- specified date.</p>",
-        "ListFHIRExportJobsRequest$SubmittedAfter": "<p>Limits the response to FHIR export jobs submitted after a user-specified date.</p>",
-        "ListFHIRImportJobsRequest$SubmittedBefore": "<p>Limits the response to FHIR import jobs submitted before a user- specified date. </p>",
-        "ListFHIRImportJobsRequest$SubmittedAfter": "<p>Limits the response to FHIR import jobs submitted after a user-specified date.</p>"
+        "ListDataTransformationJobsRequest$JobStatus": "<p>Filters the results to include only jobs with the specified status.</p>",
+        "StartDataTransformationJobResponse$JobStatus": "<p>The initial status of the data transformation job.</p>",
+        "TransformationJobProperties$JobStatus": "<p>The current status of the data transformation job.</p>",
+        "TransformationJobSummary$JobStatus": "<p>The current status of the job.</p>"
       }
+    },
+    "TransformationJobSummary": {
+      "base": "<p>Contains summary information about a data transformation job. To retrieve full job details, call <code>DescribeDataTransformationJob</code>.</p>",
+      "refs": {
+        "TransformationJobSummaryList$member": null
+      }
+    },
+    "TransformationJobSummaryList": {
+      "base": null,
+      "refs": {
+        "ListDataTransformationJobsResponse$Items": "<p>The list of data transformation job summaries.</p>"
+      }
+    },
+    "TransformationOutputDataConfig": {
+      "base": "<p>The Amazon S3 output location and encryption configuration for a transformation job.</p>",
+      "refs": {
+        "StartDataTransformationJobRequest$OutputDataConfig": "<p>The Amazon S3 output location and AWS Key Management Service (AWS KMS) encryption configuration.</p>",
+        "TransformationJobProperties$OutputDataConfig": "<p>The Amazon S3 location and encryption configuration for the converted output.</p>"
+      }
+    },
+    "UnauthorizedException": {
+      "base": "<p>You are not authorized to make this request. Verify that your AWS credentials are valid and that you have the required permissions.</p>",
+      "refs": {}
+    },
+    "UnsupportedMIMETypeException": {
+      "base": "<p>The content type in your request is not supported. Use a supported content type for this operation.</p>",
+      "refs": {}
     },
     "UntagResourceRequest": {
       "base": null,
@@ -577,6 +1127,14 @@
     },
     "UntagResourceResponse": {
       "base": null,
+      "refs": {}
+    },
+    "UpdateDataTransformationProfileRequest": {
+      "base": "<p>The request parameters for the <code>UpdateDataTransformationProfile</code> operation.</p>",
+      "refs": {}
+    },
+    "UpdateDataTransformationProfileResponse": {
+      "base": "<p>The response from the <code>UpdateDataTransformationProfile</code> operation.</p>",
       "refs": {}
     },
     "UpdateFHIRDatastoreRequest": {
@@ -587,12 +1145,20 @@
       "base": null,
       "refs": {}
     },
+    "UpdateProfileWithAgentRequest": {
+      "base": "<p>The request parameters for the <code>UpdateProfileWithAgent</code> operation.</p>",
+      "refs": {}
+    },
+    "UpdateProfileWithAgentResponse": {
+      "base": "<p>The response from the <code>UpdateProfileWithAgent</code> operation.</p>",
+      "refs": {}
+    },
     "ValidationException": {
       "base": "<p>The user input parameter was invalid.</p>",
       "refs": {}
     },
     "ValidationLevel": {
-      "base": null,
+      "base": "<p>The level of FHIR validation to apply.</p>",
       "refs": {
         "ImportJobProperties$ValidationLevel": "<p>The validation level of the import job.</p>",
         "StartFHIRImportJobRequest$ValidationLevel": "<p>The validation level of the import job.</p>"

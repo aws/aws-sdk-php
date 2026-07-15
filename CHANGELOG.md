@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFront` - Adds SHA-256 support to `Signer`.
+* `Aws\BedrockAgentCoreControl` - Fix HarnessEndpointArn pattern to match the actual service-emitted ARN format ('harness-endpoint' instead of 'endpoint'). Add additionalParams to Gemini model configuration for passing provider-specific parameters through to the model unchanged.
+* `Aws\PaymentCryptographyData` - Adds support for UnionPay session key derivation to the GenerateAuthRequestCryptogram, VerifyAuthRequestCryptogram, GenerateMac, and VerifyMac APIs.
+* `Aws\ElasticLoadBalancingv2` - This release adds support for the IpAddressType field on SourceIpConfig, enabling Network Load Balancer listener rules to match traffic based on whether the source IP is IPv4 or IPv6.
+* `Aws\HealthLake` - AWS HealthLake now offers data transformation in Preview to convert CSV and C-CDA data to FHIR R4. Customers can maintain reusable mapping profiles, run sync or async jobs with provenance tracking and drift detection, and use an AI agent to build and edit mapping logic from natural language.
+* `Aws\RDS` - Adds support for modifying EngineLifecycleSupport on DB instances and DB clusters through ModifyDBInstance and ModifyDBCluster.
+
 ## 3.388.6 - 2026-07-14
 
 * `Aws\Crypto` - Fixes AAD concatenation and tag validation

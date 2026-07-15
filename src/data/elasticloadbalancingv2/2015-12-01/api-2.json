@@ -2951,10 +2951,18 @@
         "EnablePrefixForIpv6SourceNat":{"shape":"EnablePrefixForIpv6SourceNatEnum"}
       }
     },
+    "SourceIpAddressTypeEnum":{
+      "type":"string",
+      "enum":[
+        "ipv4",
+        "ipv6"
+      ]
+    },
     "SourceIpConditionConfig":{
       "type":"structure",
       "members":{
-        "Values":{"shape":"ListOfString"}
+        "Values":{"shape":"ListOfString"},
+        "IpAddressType":{"shape":"SourceIpAddressTypeEnum"}
       }
     },
     "SourceNatIpv6Prefix":{"type":"string"},
