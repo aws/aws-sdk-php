@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.388.7 - 2026-07-15
 
 * `Aws\CloudFront` - Adds SHA-256 support to `Signer`.
 * `Aws\BedrockAgentCoreControl` - Fix HarnessEndpointArn pattern to match the actual service-emitted ARN format ('harness-endpoint' instead of 'endpoint'). Add additionalParams to Gemini model configuration for passing provider-specific parameters through to the model unchanged.
