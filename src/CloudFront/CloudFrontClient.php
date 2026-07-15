@@ -361,6 +361,8 @@ class CloudFrontClient extends AwsClient
      *   URLs for private distributions.
      * - private_key: (string) The filepath to the private key used to sign
      *   CloudFront URLs for private distributions.
+     * - algorithm: (int|string) Algorithm (name or openssl constant) to be used.
+     *   Defaults to SHA1. Supported algorithms are SHA1 and SHA256.
      *
      * @param array $options Array of configuration options used when signing
      *
@@ -379,7 +381,8 @@ class CloudFrontClient extends AwsClient
 
         $urlSigner = new UrlSigner(
             $options['key_pair_id'],
-            $options['private_key']
+            $options['private_key'],
+            $options['algorithm'] ?? Signer::DEFAULT_ALGORITHM,
         );
 
         return $urlSigner->getSignedUrl(
@@ -404,6 +407,9 @@ class CloudFrontClient extends AwsClient
      *   URLs for private distributions.
      * - private_key: (string) The filepath ot the private key used to sign
      *   CloudFront URLs for private distributions.
+     * - algorithm: (int|string) OpenSSL signature algorithm constant (e.g.
+     *   OPENSSL_ALGO_SHA1, OPENSSL_ALGO_SHA256) or algorithm name string
+     *   (e.g. "sha256"). Defaults to OPENSSL_ALGO_SHA1.
      *
      * @param array $options Array of configuration options used when signing
      *
@@ -422,7 +428,8 @@ class CloudFrontClient extends AwsClient
 
         $cookieSigner = new CookieSigner(
             $options['key_pair_id'],
-            $options['private_key']
+            $options['private_key'],
+            $options['algorithm'] ?? Signer::DEFAULT_ALGORITHM,
         );
 
         return $cookieSigner->getSignedCookie(

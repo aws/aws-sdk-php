@@ -78,6 +78,116 @@ class SignerTest extends TestCase
         $this->assertArrayHasKey('Key-Pair-Id', $signature);
     }
 
+    public function testSignsWithAlternativeAlgorithm()
+    {
+        $sha256Signer = new Signer(
+            'test',
+            $this->testKeyFile,
+            self::PASSPHRASE,
+            OPENSSL_ALGO_SHA256
+        );
+
+        $policy = '{"Statement":[{"Resource":"test.mp4","Condition":{"DateLessThan":{"AWS:EpochTime":1470000000}}}]}';
+        $signature = $sha256Signer->getSignature(null, null, $policy);
+
+        $this->assertArrayHasKey('Signature', $signature);
+        $this->assertArrayHasKey('Key-Pair-Id', $signature);
+        $this->assertArrayHasKey('Hash-Algorithm', $signature);
+        $this->assertSame('SHA256', $signature['Hash-Algorithm']);
+
+        // Verify the signature using the public key
+        $pubKey = openssl_pkey_get_details(
+            openssl_pkey_get_private("file://{$this->testKeyFile}", self::PASSPHRASE)
+        )['key'];
+
+        $decodedSignature = base64_decode(strtr($signature['Signature'], '-_~', '+=/'));
+
+        $this->assertSame(1, openssl_verify($policy, $decodedSignature, $pubKey, OPENSSL_ALGO_SHA256));
+        $this->assertSame(
+            'FYeSxAa0dBVIgRRYx3MIZqLByin2vkrE1hNHa-tNuWkGYWVGjDowyx7RT6C5sbb3tOori74BJhoAYmG8QgmXKb6Gia69kOmgmVv4CkSvXsjb4AcRalDheZXVt7xaAQKSMk27uhleAiompseAhZY~GPlJe818JIIoq8BJpjvj1py8yX8p5Py~qDM1vbEkGCXz7sayzwQ8cLLfXa087aQW2PsUt6tUpdb~CAaJMjodlaTDAZg~3DtM4AHoYnf0~zuhbJDzmTgDjX19cejjU35WWyxBcyOloYgM8WCkl2DP4BX-wBLUxEDeH5hOlTMuqiCH4lBt2aBi~OD6yj20toQZiQ__',
+            $signature['Signature']
+        );
+    }
+
+    public function testSignsWithUnsupportedAlgorithmThrowsException()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unsupported signature algorithm: SHA512');
+
+        new Signer('test', $this->testKeyFile, self::PASSPHRASE, 'sha512');
+    }
+
+    public function testSha1SignatureOmitsHashAlgorithmParam()
+    {
+        $signature = $this->instance->getSignature('test.mp4', time() + 1000);
+
+        $this->assertArrayNotHasKey('Hash-Algorithm', $signature);
+    }
+
+    public function testAcceptsEcdsaP256Key()
+    {
+        $key = openssl_pkey_new([
+            'private_key_type' => OPENSSL_KEYTYPE_EC,
+            'curve_name'       => 'prime256v1',
+        ]);
+        if ($key === false) {
+            $this->markTestSkipped('OpenSSL build does not support prime256v1 EC keys');
+        }
+        openssl_pkey_export($key, $pem);
+
+        // ECDSA + SHA-256 is the mandatory CloudFront combo per the SEP.
+        $signer = new Signer('kp', $pem, '', OPENSSL_ALGO_SHA256);
+
+        $resource = 'https://example.com/video.mp4';
+        $expires  = time() + 600;
+        $sig      = $signer->getSignature($resource, $expires);
+
+        $this->assertArrayHasKey('Signature', $sig);
+        $this->assertSame('SHA256', $sig['Hash-Algorithm']);
+
+        // ECDSA signatures are non-deterministic, so cryptographically verify
+        // against the public key rather than assert a fixed expected value.
+        $pubPem  = openssl_pkey_get_details($key)['key'];
+        $decoded = base64_decode(strtr($sig['Signature'], '-_~', '+=/'));
+        $policy  = '{"Statement":[{"Resource":"' . $resource
+            . '","Condition":{"DateLessThan":{"AWS:EpochTime":' . $sig['Expires'] . '}}}]}';
+
+        $this->assertSame(1, openssl_verify($policy, $decoded, $pubPem, OPENSSL_ALGO_SHA256));
+    }
+
+    public function testRejectsEcdsaKeyOnNonP256Curve()
+    {
+        $key = @openssl_pkey_new([
+            'private_key_type' => OPENSSL_KEYTYPE_EC,
+            'curve_name'       => 'secp384r1',
+        ]);
+        if ($key === false) {
+            $this->markTestSkipped('OpenSSL build does not support secp384r1 EC keys');
+        }
+        openssl_pkey_export($key, $pem);
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessageMatches("/ECDSA on curve 'secp384r1'.*P-256/s");
+        new Signer('kp', $pem);
+    }
+
+    public function testRejectsDsaKey()
+    {
+        $key = @openssl_pkey_new([
+            'private_key_type' => OPENSSL_KEYTYPE_DSA,
+            'private_key_bits' => 1024,
+        ]);
+        if ($key === false) {
+            $this->markTestSkipped('OpenSSL build does not support DSA key generation');
+        }
+        openssl_pkey_export($key, $pem);
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessageMatches('/RSA or ECDSA P-256/');
+        new Signer('kp', $pem);
+    }
+
+
     /**
      * @return array<array<int|string>>
      */
