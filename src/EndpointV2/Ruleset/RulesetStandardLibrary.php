@@ -59,12 +59,24 @@ class RulesetStandardLibrary
      */
     public function getAttr($from, $path)
     {
-        // Handles the case where "[<int|string]" is provided as the top-level path
-        if (preg_match('/^\[(\w+)\]$/', $path, $matches)) {
-            $index = is_numeric($matches[1]) ? (int) $matches[1] : $matches[1];
-
-            return $from[$index] ?? null;
+        // Handles the case where "[<int|string>]" is provided as the top-level
+        // path. `\w` alone doesn't cover negative indices (e.g. `[-2]`) which
+        // the smithy rules engine uses to reference the second-to-last element,
+        // so we accept either a signed integer or a bare identifier.
+        if (preg_match('/^\[(-?\d+|\w+)\]$/', $path, $matches)) {
+            $token = $matches[1];
+            if (is_numeric($token)) {
+                $index = (int) $token;
+                // Fold negative indices to Python-style access from the end,
+                // matching the reference engine's semantics.
+                if ($index < 0 && is_array($from)) {
+                    $index += count($from);
+                }
+                return $from[$index] ?? null;
+            }
+            return $from[$token] ?? null;
         }
+
 
         $parts = explode('.', $path);
         foreach ($parts as $part) {

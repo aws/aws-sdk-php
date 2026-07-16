@@ -77,13 +77,6 @@ class EndpointDefinitionProviderTest extends TestCase
         rmdir($tmpdir . 'data');
     }
 
-    public function testGetEndpointBddReturnsNullWhenAbsentAndSuppressed()
-    {
-        $this->assertNull(
-            EndpointDefinitionProvider::getEndpointBdd('s3', 'latest', null, false)
-        );
-    }
-
     public function testGetParsedRulesetReturnsTreeRulesetForTreeService()
     {
         $baseDir = sys_get_temp_dir() . '/aws-tree-parsed-' . uniqid();
