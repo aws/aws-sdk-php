@@ -49,6 +49,40 @@
         {"shape":"ThrottlingException"}
       ],
       "readonly":true
+    },
+    "GetEstimatedWaterAllocation":{
+      "name":"GetEstimatedWaterAllocation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/estimated-water-allocation",
+        "responseCode":200
+      },
+      "input":{"shape":"GetEstimatedWaterAllocationRequest"},
+      "output":{"shape":"GetEstimatedWaterAllocationResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
+    },
+    "GetEstimatedWaterAllocationDimensionValues":{
+      "name":"GetEstimatedWaterAllocationDimensionValues",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/estimated-water-allocation-dimension-values",
+        "responseCode":200
+      },
+      "input":{"shape":"GetEstimatedWaterAllocationDimensionValuesRequest"},
+      "output":{"shape":"GetEstimatedWaterAllocationDimensionValuesResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
     }
   },
   "shapes":{
@@ -83,7 +117,7 @@
       ],
       "members":{
         "Dimension":{"shape":"Dimension"},
-        "Value":{"shape":"String"}
+        "Value":{"shape":"DimensionValue"}
       }
     },
     "DimensionEntryList":{
@@ -99,14 +133,19 @@
       "key":{"shape":"Dimension"},
       "value":{"shape":"DimensionValueList"}
     },
+    "DimensionValue":{
+      "type":"string",
+      "max":256,
+      "min":0
+    },
     "DimensionValueList":{
       "type":"list",
-      "member":{"shape":"String"}
+      "member":{"shape":"DimensionValue"}
     },
     "DimensionsMap":{
       "type":"map",
       "key":{"shape":"Dimension"},
-      "value":{"shape":"String"}
+      "value":{"shape":"DimensionValue"}
     },
     "Double":{
       "type":"double",
@@ -167,6 +206,25 @@
       "type":"list",
       "member":{"shape":"EstimatedCarbonEmissions"}
     },
+    "EstimatedWaterAllocation":{
+      "type":"structure",
+      "required":[
+        "TimePeriod",
+        "DimensionsValues",
+        "ModelVersion",
+        "AllocationValues"
+      ],
+      "members":{
+        "TimePeriod":{"shape":"TimePeriod"},
+        "DimensionsValues":{"shape":"DimensionsMap"},
+        "ModelVersion":{"shape":"ModelVersion"},
+        "AllocationValues":{"shape":"WaterAllocationMap"}
+      }
+    },
+    "EstimatedWaterAllocationList":{
+      "type":"list",
+      "member":{"shape":"EstimatedWaterAllocation"}
+    },
     "FilterExpression":{
       "type":"structure",
       "members":{
@@ -212,6 +270,48 @@
       "required":["Results"],
       "members":{
         "Results":{"shape":"EstimatedCarbonEmissionsList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "GetEstimatedWaterAllocationDimensionValuesRequest":{
+      "type":"structure",
+      "required":[
+        "TimePeriod",
+        "Dimensions"
+      ],
+      "members":{
+        "TimePeriod":{"shape":"TimePeriod"},
+        "Dimensions":{"shape":"DimensionList"},
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "GetEstimatedWaterAllocationDimensionValuesResponse":{
+      "type":"structure",
+      "required":["Results"],
+      "members":{
+        "Results":{"shape":"DimensionEntryList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "GetEstimatedWaterAllocationRequest":{
+      "type":"structure",
+      "required":["TimePeriod"],
+      "members":{
+        "TimePeriod":{"shape":"TimePeriod"},
+        "GroupBy":{"shape":"DimensionList"},
+        "FilterBy":{"shape":"FilterExpression"},
+        "AllocationTypes":{"shape":"WaterAllocationTypeList"},
+        "Granularity":{"shape":"TimeGranularity"},
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "GetEstimatedWaterAllocationResponse":{
+      "type":"structure",
+      "required":["Results"],
+      "members":{
+        "Results":{"shape":"EstimatedWaterAllocationList"},
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -312,6 +412,34 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "WaterAllocation":{
+      "type":"structure",
+      "required":[
+        "Value",
+        "Unit"
+      ],
+      "members":{
+        "Value":{"shape":"Double"},
+        "Unit":{"shape":"WaterAllocationUnit"}
+      }
+    },
+    "WaterAllocationMap":{
+      "type":"map",
+      "key":{"shape":"WaterAllocationType"},
+      "value":{"shape":"WaterAllocation"}
+    },
+    "WaterAllocationType":{
+      "type":"string",
+      "enum":["TOTAL_WATER_WITHDRAWALS"]
+    },
+    "WaterAllocationTypeList":{
+      "type":"list",
+      "member":{"shape":"WaterAllocationType"}
+    },
+    "WaterAllocationUnit":{
+      "type":"string",
+      "enum":["m3"]
     }
   }
 }

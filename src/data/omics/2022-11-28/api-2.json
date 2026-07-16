@@ -4568,7 +4568,8 @@
         "gpus":{"shape":"GetRunTaskResponseGpusInteger"},
         "instanceType":{"shape":"TaskInstanceType"},
         "failureReason":{"shape":"TaskFailureReason"},
-        "imageDetails":{"shape":"ImageDetails"}
+        "imageDetails":{"shape":"ImageDetails"},
+        "uuid":{"shape":"TaskUuid"}
       }
     },
     "GetRunTaskResponseCpusInteger":{
@@ -7890,7 +7891,8 @@
         "startTime":{"shape":"TaskTimestamp"},
         "stopTime":{"shape":"TaskTimestamp"},
         "gpus":{"shape":"TaskListItemGpusInteger"},
-        "instanceType":{"shape":"TaskInstanceType"}
+        "instanceType":{"shape":"TaskInstanceType"},
+        "uuid":{"shape":"TaskUuid"}
       }
     },
     "TaskListItemCpusInteger":{
@@ -7944,6 +7946,12 @@
     "TaskTimestamp":{
       "type":"timestamp",
       "timestampFormat":"iso8601"
+    },
+    "TaskUuid":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
     },
     "ThrottlingException":{
       "type":"structure",

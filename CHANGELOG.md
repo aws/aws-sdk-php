@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EndpointV2` - Adds BDD artifacts, which result in an average performance increase of 35% (faster) endpoint resolution.
+* `Aws\Redshift` - Amazon Redshift - Added support for rg.large and rg.12xlarge node types in CreateCluster, ModifyCluster, and ResizeCluster API operations.
+* `Aws\Sustainability` - Adds support for retrieving estimated water allocation data.
+* `Aws\SageMaker` - Release support for g7 instance type for SageMaker inference endpoints.
+* `Aws\S3` - Documentation update for removing the 30 day minimum restriction for transition to Standard-IA or OneZone-IA storage classes
+* `Aws\Omics` - Adds support for returning the task UUID (universally unique identifier) in GetRunTask and ListRunTasks responses
+* `Aws\EMR` - Amazon EMR updates the Session object returned by GetSession API
+* `Aws\ChimeSDKVoice` - Marked CreateProxySession, DeleteProxySession, GetProxySession, ListProxySessions, UpdateProxySession, PutVoiceConnectorProxy, DeleteVoiceConnectorProxy, and GetVoiceConnectorProxy as deprecated.
+
 ## 3.388.7 - 2026-07-15
 
 * `Aws\CloudFront` - Adds SHA-256 support to `Signer`.

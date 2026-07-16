@@ -118,6 +118,94 @@
         "id": "example-1",
         "title": "GetEstimatedCarbonEmissionsDimensionValuesSuccess"
       }
+    ],
+    "GetEstimatedWaterAllocation": [
+      {
+        "input": {
+          "AllocationTypes": [
+            "TOTAL_WATER_WITHDRAWALS"
+          ],
+          "Granularity": "YEARLY_CALENDAR",
+          "GroupBy": [
+            "SERVICE"
+          ],
+          "TimePeriod": {
+            "End": "2026-01-01T00:00:00.00Z",
+            "Start": "2025-01-01T00:00:00.00Z"
+          }
+        },
+        "output": {
+          "Results": [
+            {
+              "AllocationValues": {
+                "TOTAL_WATER_WITHDRAWALS": {
+                  "Unit": "m3",
+                  "Value": 1
+                }
+              },
+              "DimensionsValues": {
+                "SERVICE": "AmazonEC2"
+              },
+              "ModelVersion": "v1.0.0",
+              "TimePeriod": {
+                "End": "2026-01-01T00:00:00Z",
+                "Start": "2025-01-01T00:00:00Z"
+              }
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "GetEstimatedWaterAllocationSuccess"
+      }
+    ],
+    "GetEstimatedWaterAllocationDimensionValues": [
+      {
+        "input": {
+          "Dimensions": [
+            "REGION",
+            "SERVICE",
+            "USAGE_ACCOUNT_ID"
+          ],
+          "TimePeriod": {
+            "End": "2026-01-01T00:00:00.00Z",
+            "Start": "2025-01-01T00:00:00.00Z"
+          }
+        },
+        "output": {
+          "Results": [
+            {
+              "Dimension": "SERVICE",
+              "Value": "AmazonEC2"
+            },
+            {
+              "Dimension": "SERVICE",
+              "Value": "AmazonS3"
+            },
+            {
+              "Dimension": "SERVICE",
+              "Value": "AmazonCloudFront"
+            },
+            {
+              "Dimension": "REGION",
+              "Value": "global"
+            },
+            {
+              "Dimension": "REGION",
+              "Value": "us-east-1"
+            },
+            {
+              "Dimension": "REGION",
+              "Value": "us-west-2"
+            },
+            {
+              "Dimension": "USAGE_ACCOUNT_ID",
+              "Value": "111222333444"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "GetEstimatedWaterAllocationDimensionValuesSuccess"
+      }
     ]
   }
 }
