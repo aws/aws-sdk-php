@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.388.8 - 2026-07-16
 
 * `Aws\EndpointV2` - Adds BDD artifacts, which result in an average performance increase of 35% (faster) endpoint resolution.
 * `Aws\Redshift` - Amazon Redshift - Added support for rg.large and rg.12xlarge node types in CreateCluster, ModifyCluster, and ResizeCluster API operations.
