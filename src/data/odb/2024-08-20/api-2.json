@@ -1156,6 +1156,34 @@
       },
       "exception":true
     },
+    "AdminPasswordSource":{
+      "type":"string",
+      "enum":[
+        "CUSTOMER_MANAGED_AWS_SECRET",
+        "API_REQUEST_PARAMETER"
+      ]
+    },
+    "AdminPasswordSourceConfiguration":{
+      "type":"structure",
+      "members":{
+        "customerManagedAwsSecret":{"shape":"CustomerManagedAwsSecretConfiguration"}
+      },
+      "union":true
+    },
+    "AdminPasswordSourceConfigurationInput":{
+      "type":"structure",
+      "members":{
+        "customerManagedAwsSecret":{"shape":"CustomerManagedAwsSecretConfigurationInput"}
+      },
+      "union":true
+    },
+    "AdminPasswordSourceSummary":{
+      "type":"structure",
+      "members":{
+        "adminPasswordSource":{"shape":"AdminPasswordSource"},
+        "adminPasswordSourceConfiguration":{"shape":"AdminPasswordSourceConfiguration"}
+      }
+    },
     "Arn":{
       "type":"string",
       "max":2048,
@@ -1289,7 +1317,8 @@
         "timeDisasterRecoveryRoleChanged":{"shape":"SyntheticTimestamp_date_time"},
         "timeUntilReconnectCloneEnabled":{"shape":"SyntheticTimestamp_date_time"},
         "nextLongTermBackupTimeStamp":{"shape":"SyntheticTimestamp_date_time"},
-        "timeUndeleted":{"shape":"SyntheticTimestamp_date_time"}
+        "timeUndeleted":{"shape":"SyntheticTimestamp_date_time"},
+        "adminPasswordSourceSummary":{"shape":"AdminPasswordSourceSummary"}
       }
     },
     "AutonomousDatabaseApex":{
@@ -1548,7 +1577,8 @@
         "timeDisasterRecoveryRoleChanged":{"shape":"SyntheticTimestamp_date_time"},
         "timeUntilReconnectCloneEnabled":{"shape":"SyntheticTimestamp_date_time"},
         "nextLongTermBackupTimeStamp":{"shape":"SyntheticTimestamp_date_time"},
-        "timeUndeleted":{"shape":"SyntheticTimestamp_date_time"}
+        "timeUndeleted":{"shape":"SyntheticTimestamp_date_time"},
+        "adminPasswordSourceSummary":{"shape":"AdminPasswordSourceSummary"}
       }
     },
     "AutonomousDatabaseVersionList":{
@@ -1567,7 +1597,8 @@
       "type":"structure",
       "members":{
         "status":{"shape":"AutonomousDatabaseWalletStatus"},
-        "timeRotated":{"shape":"SyntheticTimestamp_date_time"}
+        "timeRotated":{"shape":"SyntheticTimestamp_date_time"},
+        "passwordSourceSummary":{"shape":"WalletPasswordSourceSummary"}
       }
     },
     "AutonomousDatabaseWalletFile":{
@@ -2103,6 +2134,8 @@
         "sourceConfiguration":{"shape":"SourceConfiguration"},
         "encryptionKeyProvider":{"shape":"EncryptionKeyProviderInput"},
         "encryptionKeyConfiguration":{"shape":"EncryptionKeyConfigurationInput"},
+        "adminPasswordSource":{"shape":"AdminPasswordSource"},
+        "adminPasswordSourceConfiguration":{"shape":"AdminPasswordSourceConfigurationInput"},
         "clientToken":{
           "shape":"CreateAutonomousDatabaseInputClientTokenString",
           "idempotencyToken":true
@@ -2183,14 +2216,13 @@
     },
     "CreateAutonomousDatabaseWalletInput":{
       "type":"structure",
-      "required":[
-        "autonomousDatabaseId",
-        "password"
-      ],
+      "required":["autonomousDatabaseId"],
       "members":{
         "autonomousDatabaseId":{"shape":"ResourceIdOrArn"},
         "walletType":{"shape":"WalletType"},
         "password":{"shape":"CreateAutonomousDatabaseWalletInputPasswordString"},
+        "passwordSource":{"shape":"WalletPasswordSource"},
+        "passwordSourceConfiguration":{"shape":"WalletPasswordSourceConfigurationInput"},
         "clientToken":{
           "shape":"CreateAutonomousDatabaseWalletInputClientTokenString",
           "idempotencyToken":true
@@ -2615,6 +2647,22 @@
     "CustomerContacts":{
       "type":"list",
       "member":{"shape":"CustomerContact"}
+    },
+    "CustomerManagedAwsSecretConfiguration":{
+      "type":"structure",
+      "members":{
+        "iamRoleArn":{"shape":"RoleArn"},
+        "secretId":{"shape":"SecretIdOrArn"},
+        "externalIdType":{"shape":"ExternalIdType"}
+      }
+    },
+    "CustomerManagedAwsSecretConfigurationInput":{
+      "type":"structure",
+      "members":{
+        "secretId":{"shape":"SecretIdOrArn"},
+        "iamRoleArn":{"shape":"RoleArn"},
+        "externalIdType":{"shape":"ExternalIdType"}
+      }
     },
     "DataCollectionOptions":{
       "type":"structure",
@@ -3392,7 +3440,8 @@
     "InitializeServiceInput":{
       "type":"structure",
       "members":{
-        "ociIdentityDomain":{"shape":"Boolean"}
+        "ociIdentityDomain":{"shape":"Boolean"},
+        "autonomousDatabaseOciAwsSecretsManagerIntegration":{"shape":"Access"}
       }
     },
     "InitializeServiceOutput":{
@@ -4077,7 +4126,10 @@
     },
     "OciAwsIntegration":{
       "type":"string",
-      "enum":["KmsTde"]
+      "enum":[
+        "KmsTde",
+        "SecretsManager"
+      ]
     },
     "OciDnsForwardingConfig":{
       "type":"structure",
@@ -4120,7 +4172,9 @@
       "type":"structure",
       "members":{
         "iamRoleArn":{"shape":"RoleArn"},
-        "awsIntegration":{"shape":"OciAwsIntegration"}
+        "awsIntegration":{"shape":"OciAwsIntegration"},
+        "status":{"shape":"OciIamRoleStatus"},
+        "statusReason":{"shape":"String"}
       }
     },
     "OciIamRoleList":{
@@ -4128,6 +4182,16 @@
       "member":{"shape":"OciIamRole"},
       "max":10,
       "min":0
+    },
+    "OciIamRoleStatus":{
+      "type":"string",
+      "enum":[
+        "PROVISIONING",
+        "AVAILABLE",
+        "PROVISION_FAILED",
+        "TERMINATING",
+        "TERMINATE_FAILED"
+      ]
     },
     "OciIdentityDomain":{
       "type":"structure",
@@ -4630,6 +4694,11 @@
       "type":"list",
       "member":{"shape":"ScheduledOperationDetails"}
     },
+    "SecretIdOrArn":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
     "SensitiveString":{
       "type":"string",
       "sensitive":true
@@ -4988,7 +5057,9 @@
         "autoRefreshPointLagInSeconds":{"shape":"UpdateAutonomousDatabaseInputAutoRefreshPointLagInSecondsInteger"},
         "timeOfAutoRefreshStart":{"shape":"SyntheticTimestamp_date_time"},
         "encryptionKeyProvider":{"shape":"EncryptionKeyProviderInput"},
-        "encryptionKeyConfiguration":{"shape":"EncryptionKeyConfigurationInput"}
+        "encryptionKeyConfiguration":{"shape":"EncryptionKeyConfigurationInput"},
+        "adminPasswordSource":{"shape":"AdminPasswordSource"},
+        "adminPasswordSourceConfiguration":{"shape":"AdminPasswordSourceConfigurationInput"}
       }
     },
     "UpdateAutonomousDatabaseInputAdminPasswordString":{
@@ -5177,6 +5248,34 @@
     "VpcEndpointType":{
       "type":"string",
       "enum":["SERVICENETWORK"]
+    },
+    "WalletPasswordSource":{
+      "type":"string",
+      "enum":[
+        "CUSTOMER_MANAGED_AWS_SECRET",
+        "API_REQUEST_PARAMETER"
+      ]
+    },
+    "WalletPasswordSourceConfiguration":{
+      "type":"structure",
+      "members":{
+        "customerManagedAwsSecret":{"shape":"CustomerManagedAwsSecretConfiguration"}
+      },
+      "union":true
+    },
+    "WalletPasswordSourceConfigurationInput":{
+      "type":"structure",
+      "members":{
+        "customerManagedAwsSecret":{"shape":"CustomerManagedAwsSecretConfigurationInput"}
+      },
+      "union":true
+    },
+    "WalletPasswordSourceSummary":{
+      "type":"structure",
+      "members":{
+        "passwordSource":{"shape":"WalletPasswordSource"},
+        "passwordSourceConfiguration":{"shape":"WalletPasswordSourceConfiguration"}
+      }
     },
     "WalletType":{
       "type":"string",

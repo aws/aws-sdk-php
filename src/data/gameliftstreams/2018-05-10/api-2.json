@@ -822,7 +822,7 @@
     },
     "EnvironmentVariablesValueString":{
       "type":"string",
-      "max":1024,
+      "max":4096,
       "min":0
     },
     "ExecutablePath":{
@@ -996,8 +996,16 @@
         "LastUpdatedAt":{"shape":"Timestamp"},
         "CreatedAt":{"shape":"Timestamp"},
         "ApplicationArn":{"shape":"Arn"},
-        "ExportFilesMetadata":{"shape":"ExportFilesMetadata"}
+        "ExportFilesMetadata":{"shape":"ExportFilesMetadata"},
+        "RoleArn":{"shape":"IamRoleArn"}
       }
+    },
+    "IamRoleArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws[a-zA-Z-]*:iam::\\d{12}:role/.+",
+      "sensitive":true
     },
     "Id":{
       "type":"string",
@@ -1395,7 +1403,8 @@
         "SessionLengthSeconds":{"shape":"SessionLengthSeconds"},
         "AdditionalLaunchArgs":{"shape":"GameLaunchArgList"},
         "AdditionalEnvironmentVariables":{"shape":"EnvironmentVariables"},
-        "PerformanceStatsConfiguration":{"shape":"PerformanceStatsConfiguration"}
+        "PerformanceStatsConfiguration":{"shape":"PerformanceStatsConfiguration"},
+        "RoleArn":{"shape":"IamRoleArn"}
       }
     },
     "StartStreamSessionOutput":{
@@ -1421,7 +1430,8 @@
         "LastUpdatedAt":{"shape":"Timestamp"},
         "CreatedAt":{"shape":"Timestamp"},
         "ApplicationArn":{"shape":"Arn"},
-        "ExportFilesMetadata":{"shape":"ExportFilesMetadata"}
+        "ExportFilesMetadata":{"shape":"ExportFilesMetadata"},
+        "RoleArn":{"shape":"IamRoleArn"}
       }
     },
     "StreamClass":{
@@ -1526,6 +1536,7 @@
         "invalidSignalRequest",
         "placementTimeout",
         "applicationLogS3DestinationError",
+        "assumeRoleFailed",
         "applicationExit",
         "connectionTimeout",
         "reconnectionTimeout",
@@ -1546,7 +1557,8 @@
         "CreatedAt":{"shape":"Timestamp"},
         "ApplicationArn":{"shape":"Arn"},
         "ExportFilesMetadata":{"shape":"ExportFilesMetadata"},
-        "Location":{"shape":"LocationName"}
+        "Location":{"shape":"LocationName"},
+        "RoleArn":{"shape":"IamRoleArn"}
       }
     },
     "StreamSessionSummaryList":{

@@ -575,6 +575,67 @@
         "description": "The following example creates a Aurora DB cluster with express configuration.",
         "id": "example-3",
         "title": "To create a Aurora DB cluster with express configuration"
+      },
+      {
+        "input": {
+          "AssociatedRoles": [
+            {
+              "FeatureName": "s3Import",
+              "RoleArn": "arn:aws:iam::123456789012:role/RDSLoadFromS3"
+            }
+          ],
+          "DBClusterIdentifier": "sample-cluster",
+          "Engine": "aurora-postgresql",
+          "MasterUserPassword": "mypassword",
+          "MasterUsername": "admin"
+        },
+        "output": {
+          "DBCluster": {
+            "AllocatedStorage": 1,
+            "AssociatedRoles": [
+              {
+                "FeatureName": "s3Import",
+                "RoleArn": "arn:aws:iam::123456789012:role/RDSLoadFromS3",
+                "Status": "ACTIVE"
+              }
+            ],
+            "AvailabilityZones": [
+              "us-east-1a",
+              "us-east-1b",
+              "us-east-1c"
+            ],
+            "BackupRetentionPeriod": 1,
+            "ClusterCreateTime": "2024-06-07T23:26:08.371Z",
+            "CopyTagsToSnapshot": false,
+            "DBClusterArn": "arn:aws:rds:us-east-1:123456789012:cluster:sample-cluster",
+            "DBClusterIdentifier": "sample-cluster",
+            "DBClusterMembers": [],
+            "DBClusterParameterGroup": "default.aurora-postgresql17",
+            "DBSubnetGroup": "default",
+            "DbClusterResourceId": "cluster-ANPAJ4AE5446DAEXAMPLE",
+            "DeletionProtection": false,
+            "Endpoint": "sample-cluster.cluster-cnpexample.us-east-1.rds.amazonaws.com",
+            "Engine": "aurora-postgresql",
+            "EngineMode": "provisioned",
+            "EngineVersion": "17.7",
+            "HostedZoneId": "Z2R2ITUGPM61AM",
+            "HttpEndpointEnabled": false,
+            "IAMDatabaseAuthenticationEnabled": false,
+            "MasterUsername": "admin",
+            "MultiAZ": false,
+            "Port": 5432,
+            "PreferredBackupWindow": "09:56-10:26",
+            "PreferredMaintenanceWindow": "wed:03:33-wed:04:03",
+            "ReadReplicaIdentifiers": [],
+            "ReaderEndpoint": "sample-cluster.cluster-ro-cnpexample.us-east-1.rds.amazonaws.com",
+            "Status": "creating",
+            "StorageEncrypted": false,
+            "VpcSecurityGroups": []
+          }
+        },
+        "description": "The following example creates an Aurora PostgreSQL-compatible DB cluster and associates an IAM role for Amazon S3 import in a single call.",
+        "id": "example-4",
+        "title": "To create an Aurora DB cluster with an associated IAM role for Amazon S3 import"
       }
     ],
     "CreateDBClusterEndpoint": [
@@ -4152,6 +4213,58 @@
         "description": "The following example restores an Aurora DB cluster from a DB cluster snapshot named sample-cluster-snapshot without VPC networking and with internet-based connectivity enabled through an internet access gateway. The EnableVPCNetworking and EnableInternetAccessGateway parameters must always be specified together. IAM database authentication is required when both parameters are specified.",
         "id": "example-2",
         "title": "To restore a DB cluster from a snapshot without VPC networking"
+      },
+      {
+        "input": {
+          "AssociatedRoles": [
+            {
+              "FeatureName": "s3Import",
+              "RoleArn": "arn:aws:iam::123456789012:role/RDSLoadFromS3"
+            }
+          ],
+          "DBClusterIdentifier": "restored-cluster",
+          "Engine": "aurora-postgresql",
+          "SnapshotIdentifier": "test-instance-snapshot"
+        },
+        "output": {
+          "DBCluster": {
+            "AssociatedRoles": [
+              {
+                "FeatureName": "s3Import",
+                "RoleArn": "arn:aws:iam::123456789012:role/RDSLoadFromS3",
+                "Status": "ACTIVE"
+              }
+            ],
+            "ClusterCreateTime": "2024-06-05T15:06:58.634Z",
+            "CopyTagsToSnapshot": false,
+            "CrossAccountClone": false,
+            "DBClusterArn": "arn:aws:rds:us-west-2:123456789012:cluster:restored-cluster",
+            "DBClusterIdentifier": "restored-cluster",
+            "DBClusterMembers": [],
+            "DBClusterParameterGroup": "default.aurora-postgresql17",
+            "DatabaseName": "",
+            "DbClusterResourceId": "cluster-5DSB5IFQDDUVAWOUWM1EXAMPLE",
+            "DeletionProtection": false,
+            "DomainMemberships": [],
+            "Engine": "aurora-postgresql",
+            "EngineMode": "provisioned",
+            "EngineVersion": "17.7",
+            "HttpEndpointEnabled": false,
+            "IAMDatabaseAuthenticationEnabled": true,
+            "MasterUsername": "postgres",
+            "MultiAZ": false,
+            "Port": 5432,
+            "PreferredBackupWindow": "09:33-10:03",
+            "PreferredMaintenanceWindow": "sun:12:22-sun:12:52",
+            "ReadReplicaIdentifiers": [],
+            "Status": "creating",
+            "StorageEncrypted": false,
+            "VpcSecurityGroups": []
+          }
+        },
+        "description": "The following example restores an Aurora PostgreSQL DB cluster from a snapshot and associates an IAM role for Amazon S3 import in a single call.",
+        "id": "example-3",
+        "title": "To restore a DB cluster from a snapshot with an associated IAM role"
       }
     ],
     "RestoreDBClusterToPointInTime": [

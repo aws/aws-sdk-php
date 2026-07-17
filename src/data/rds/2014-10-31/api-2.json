@@ -320,6 +320,7 @@
         {"shape":"InvalidDBInstanceStateFault"},
         {"shape":"KMSKeyNotAccessibleFault"},
         {"shape":"InvalidVPCNetworkStateFault"},
+        {"shape":"DBClusterRoleQuotaExceededFault"},
         {"shape":"InvalidDBClusterStateFault"},
         {"shape":"InvalidDBSubnetGroupStateFault"},
         {"shape":"DBSubnetGroupNotFoundFault"},
@@ -2521,6 +2522,7 @@
         {"shape":"DBClusterNotFoundFault"},
         {"shape":"StorageTypeNotSupportedFault"},
         {"shape":"InvalidVPCNetworkStateFault"},
+        {"shape":"DBClusterRoleQuotaExceededFault"},
         {"shape":"InvalidDBClusterStateFault"},
         {"shape":"DBClusterAlreadyExistsFault"},
         {"shape":"NetworkTypeNotSupported"},
@@ -2562,6 +2564,7 @@
         {"shape":"InvalidDBInstanceStateFault"},
         {"shape":"KMSKeyNotAccessibleFault"},
         {"shape":"InvalidVPCNetworkStateFault"},
+        {"shape":"DBClusterRoleQuotaExceededFault"},
         {"shape":"DBSubnetGroupNotFoundFault"},
         {"shape":"InvalidRestoreFault"},
         {"shape":"DBClusterQuotaExceededFault"}
@@ -2598,6 +2601,7 @@
         {"shape":"KMSKeyNotAccessibleFault"},
         {"shape":"DBClusterAutomatedBackupNotFoundFault"},
         {"shape":"InvalidVPCNetworkStateFault"},
+        {"shape":"DBClusterRoleQuotaExceededFault"},
         {"shape":"InvalidDBClusterStateFault"},
         {"shape":"DBSubnetGroupNotFoundFault"},
         {"shape":"InvalidRestoreFault"},
@@ -3027,7 +3031,7 @@
       ],
       "members":{
         "DBClusterIdentifier":{"shape":"String"},
-        "RoleArn":{"shape":"String"},
+        "RoleArn":{"shape":"IAMRoleArn"},
         "FeatureName":{"shape":"String"}
       }
     },
@@ -3762,7 +3766,8 @@
         "EngineLifecycleSupport":{"shape":"String"},
         "TagSpecifications":{"shape":"TagSpecificationList"},
         "MasterUserAuthenticationType":{"shape":"MasterUserAuthenticationType"},
-        "WithExpressConfiguration":{"shape":"BooleanOptional"}
+        "WithExpressConfiguration":{"shape":"BooleanOptional"},
+        "AssociatedRoles":{"shape":"DBClusterAssociatedRoles"}
       }
     },
     "CreateDBClusterParameterGroupMessage":{
@@ -4383,6 +4388,23 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "DBClusterAssociatedRole":{
+      "type":"structure",
+      "required":["RoleArn"],
+      "members":{
+        "RoleArn":{"shape":"IAMRoleArn"},
+        "FeatureName":{"shape":"String"}
+      }
+    },
+    "DBClusterAssociatedRoles":{
+      "type":"list",
+      "member":{
+        "shape":"DBClusterAssociatedRole",
+        "locationName":"DBClusterAssociatedRole"
+      },
+      "max":15,
+      "min":0
     },
     "DBClusterAutomatedBackup":{
       "type":"structure",
@@ -7311,6 +7333,12 @@
         "ENABLED"
       ]
     },
+    "IAMRoleArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws[a-z-]*:iam::[0-9]*:role/.*"
+    },
     "IPRange":{
       "type":"structure",
       "members":{
@@ -9144,7 +9172,7 @@
       ],
       "members":{
         "DBClusterIdentifier":{"shape":"String"},
-        "RoleArn":{"shape":"String"},
+        "RoleArn":{"shape":"IAMRoleArn"},
         "FeatureName":{"shape":"String"}
       }
     },
@@ -9387,7 +9415,8 @@
         "ManageMasterUserPassword":{"shape":"BooleanOptional"},
         "MasterUserSecretKmsKeyId":{"shape":"String"},
         "EngineLifecycleSupport":{"shape":"String"},
-        "TagSpecifications":{"shape":"TagSpecificationList"}
+        "TagSpecifications":{"shape":"TagSpecificationList"},
+        "AssociatedRoles":{"shape":"DBClusterAssociatedRoles"}
       }
     },
     "RestoreDBClusterFromS3Result":{
@@ -9443,7 +9472,8 @@
         "EngineLifecycleSupport":{"shape":"String"},
         "TagSpecifications":{"shape":"TagSpecificationList"},
         "EnableVPCNetworking":{"shape":"BooleanOptional"},
-        "EnableInternetAccessGateway":{"shape":"BooleanOptional"}
+        "EnableInternetAccessGateway":{"shape":"BooleanOptional"},
+        "AssociatedRoles":{"shape":"DBClusterAssociatedRoles"}
       }
     },
     "RestoreDBClusterFromSnapshotResult":{
@@ -9495,7 +9525,8 @@
         "EngineLifecycleSupport":{"shape":"String"},
         "TagSpecifications":{"shape":"TagSpecificationList"},
         "EnableVPCNetworking":{"shape":"BooleanOptional"},
-        "EnableInternetAccessGateway":{"shape":"BooleanOptional"}
+        "EnableInternetAccessGateway":{"shape":"BooleanOptional"},
+        "AssociatedRoles":{"shape":"DBClusterAssociatedRoles"}
       }
     },
     "RestoreDBClusterToPointInTimeResult":{

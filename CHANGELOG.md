@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CognitoIdentityProvider` - Amazon Cognito user pools now support sending SMS via AWS End User Messaging. A new EumsSms object in SmsConfigurationType lets you deliver MFA and verification texts through AWS End User Messaging, alongside the existing Amazon SNS option.
+* `Aws\Odb` - Adds support for sourcing Autonomous Database admin and wallet passwords from customer-managed AWS Secrets Manager secrets, including password source configuration and summaries, and enabling or disabling the OCI IAM service role for Secrets Manager integration via InitializeService.
+* `Aws\RDS` - Adds the AssociatedRoles parameter to CreateDBCluster, RestoreDBClusterFromSnapshot, RestoreDBClusterToPointInTime, and RestoreDBClusterFromS3, letting customers associate IAM roles with an Aurora DB cluster at create or restore time instead of calling AddRoleToDBCluster afterward.
+* `Aws\GameLiftStreams` - Amazon GameLift Streams now supports assigning an IAM role to a stream session, enabling your application to securely access resources in your AWS account, such as Amazon S3 buckets and DynamoDB tables.
+* `Aws\KinesisAnalyticsV2` - Support for Flink 2.3 in Managed Service for Apache Flink
+
 ## 3.388.8 - 2026-07-16
 
 * `Aws\EndpointV2` - Adds BDD artifacts, which result in an average performance increase of 35% (faster) endpoint resolution.

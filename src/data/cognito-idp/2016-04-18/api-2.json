@@ -3872,7 +3872,8 @@
       "members":{
         "JobName":{"shape":"UserImportJobNameType"},
         "UserPoolId":{"shape":"UserPoolIdType"},
-        "CloudWatchLogsRoleArn":{"shape":"ArnType"}
+        "CloudWatchLogsRoleArn":{"shape":"ArnType"},
+        "PasswordHashingAlgorithm":{"shape":"PasswordHashingAlgorithmType"}
       }
     },
     "CreateUserImportJobResponse":{
@@ -4608,6 +4609,19 @@
         "AWS_OWNED_KEY",
         "CUSTOMER_MANAGED_KEY"
       ]
+    },
+    "EumsSmsConfigurationType":{
+      "type":"structure",
+      "required":["CallerArn"],
+      "members":{
+        "CallerArn":{"shape":"ArnType"},
+        "ExternalId":{"shape":"StringType"},
+        "OriginationIdentity":{"shape":"StringType"},
+        "ConfigurationSetName":{"shape":"StringType"},
+        "InEntityId":{"shape":"StringType"},
+        "InTemplateId":{"shape":"StringType"},
+        "Region":{"shape":"RegionCodeType"}
+      }
     },
     "EventContextDataType":{
       "type":"structure",
@@ -5728,6 +5742,12 @@
       },
       "exception":true
     },
+    "OptionalArnType":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "pattern":"(arn:[\\w+=/,.@-]+:[\\w+=/,.@-]+:([\\w+=/,.@-]*)?:[0-9]+:[\\w+=/,.@-]+(:[\\w+=/,.@-]+)?(:[\\w+=/,.@-]+)?)?"
+    },
     "PaginationKey":{
       "type":"string",
       "max":131072,
@@ -5738,6 +5758,15 @@
       "type":"string",
       "min":1,
       "pattern":"[\\S]+"
+    },
+    "PasswordHashingAlgorithmType":{
+      "type":"string",
+      "enum":[
+        "BCRYPT",
+        "SCRYPT",
+        "ARGON2ID",
+        "PBKDF2_SHA256"
+      ]
     },
     "PasswordHistoryPolicyViolationException":{
       "type":"structure",
@@ -6408,11 +6437,11 @@
     },
     "SmsConfigurationType":{
       "type":"structure",
-      "required":["SnsCallerArn"],
       "members":{
-        "SnsCallerArn":{"shape":"ArnType"},
+        "SnsCallerArn":{"shape":"OptionalArnType"},
         "ExternalId":{"shape":"StringType"},
-        "SnsRegion":{"shape":"RegionCodeType"}
+        "SnsRegion":{"shape":"RegionCodeType"},
+        "EumsSms":{"shape":"EumsSmsConfigurationType"}
       }
     },
     "SmsInviteMessageType":{
@@ -7104,7 +7133,8 @@
         "ImportedUsers":{"shape":"LongType"},
         "SkippedUsers":{"shape":"LongType"},
         "FailedUsers":{"shape":"LongType"},
-        "CompletionMessage":{"shape":"CompletionMessageType"}
+        "CompletionMessage":{"shape":"CompletionMessageType"},
+        "PasswordHashingAlgorithm":{"shape":"PasswordHashingAlgorithmType"}
       }
     },
     "UserImportJobsListType":{

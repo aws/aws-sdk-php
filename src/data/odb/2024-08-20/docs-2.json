@@ -85,6 +85,7 @@
         "CreateOdbNetworkInput$zeroEtlAccess": "<p>Specifies the configuration for Zero-ETL access from the ODB network.</p>",
         "CreateOdbNetworkInput$stsAccess": "<p>The Amazon Web Services Security Token Service (STS) access configuration for the ODB network.</p>",
         "CreateOdbNetworkInput$kmsAccess": "<p>The Amazon Web Services Key Management Service (KMS) access configuration for the ODB network.</p>",
+        "InitializeServiceInput$autonomousDatabaseOciAwsSecretsManagerIntegration": "<p>Specifies whether to enable or disable the OCI service-account role for Amazon Web Services Secrets Manager integration with Autonomous Database.</p>",
         "UpdateOdbNetworkInput$s3Access": "<p>Specifies the updated configuration for Amazon S3 access from the ODB network.</p>",
         "UpdateOdbNetworkInput$zeroEtlAccess": "<p>Specifies the updated configuration for Zero-ETL access from the ODB network.</p>",
         "UpdateOdbNetworkInput$stsAccess": "<p>The Amazon Web Services Security Token Service (STS) access configuration for the ODB network.</p>",
@@ -94,6 +95,34 @@
     "AccessDeniedException": {
       "base": "<p>You don't have sufficient access to perform this action. Make sure you have the required permissions and try again.</p>",
       "refs": {}
+    },
+    "AdminPasswordSource": {
+      "base": "<p>The source of the admin password for an Autonomous Database.</p>",
+      "refs": {
+        "AdminPasswordSourceSummary$adminPasswordSource": "<p>The source of the admin password for the Autonomous Database.</p>",
+        "CreateAutonomousDatabaseInput$adminPasswordSource": "<p>The source of the admin password for the Autonomous Database. When set to <code>CUSTOMER_MANAGED_AWS_SECRET</code>, the admin password is retrieved from an Amazon Web Services Secrets Manager secret.</p>",
+        "UpdateAutonomousDatabaseInput$adminPasswordSource": "<p>The source of the admin password for the Autonomous Database. When set to <code>CUSTOMER_MANAGED_AWS_SECRET</code>, the admin password is retrieved from an Amazon Web Services Secrets Manager secret.</p>"
+      }
+    },
+    "AdminPasswordSourceConfiguration": {
+      "base": "<p>The configuration of the admin password source. This is a union, so only one of the following members can be specified.</p>",
+      "refs": {
+        "AdminPasswordSourceSummary$adminPasswordSourceConfiguration": "<p>The configuration of the admin password source for the Autonomous Database.</p>"
+      }
+    },
+    "AdminPasswordSourceConfigurationInput": {
+      "base": "<p>The input configuration for the admin password source. This is a union, so only one of the following members can be specified.</p>",
+      "refs": {
+        "CreateAutonomousDatabaseInput$adminPasswordSourceConfiguration": "<p>The configuration of the admin password source for the Autonomous Database.</p>",
+        "UpdateAutonomousDatabaseInput$adminPasswordSourceConfiguration": "<p>The configuration of the admin password source for the Autonomous Database.</p>"
+      }
+    },
+    "AdminPasswordSourceSummary": {
+      "base": "<p>A summary of the admin password source configuration for an Autonomous Database.</p>",
+      "refs": {
+        "AutonomousDatabase$adminPasswordSourceSummary": "<p>The summary of the admin password source configuration for the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$adminPasswordSourceSummary": "<p>The summary of the admin password source configuration for the Autonomous Database.</p>"
+      }
     },
     "Arn": {
       "base": null,
@@ -856,6 +885,20 @@
         "UpdateAutonomousDatabaseInput$customerContactsToSendToOCI": "<p>The list of customer contacts to receive operational notifications from OCI for the Autonomous Database.</p>"
       }
     },
+    "CustomerManagedAwsSecretConfiguration": {
+      "base": "<p>The configuration of a customer-managed Amazon Web Services Secrets Manager secret used to supply a password.</p>",
+      "refs": {
+        "AdminPasswordSourceConfiguration$customerManagedAwsSecret": "<p>The configuration for a customer-managed Amazon Web Services Secrets Manager secret used as the admin password source.</p>",
+        "WalletPasswordSourceConfiguration$customerManagedAwsSecret": "<p>The configuration for a customer-managed Amazon Web Services Secrets Manager secret used as the wallet password source.</p>"
+      }
+    },
+    "CustomerManagedAwsSecretConfigurationInput": {
+      "base": "<p>The input configuration for a customer-managed Amazon Web Services Secrets Manager secret used to supply a password.</p>",
+      "refs": {
+        "AdminPasswordSourceConfigurationInput$customerManagedAwsSecret": "<p>The configuration for using a customer-managed Amazon Web Services Secrets Manager secret as the admin password source.</p>",
+        "WalletPasswordSourceConfigurationInput$customerManagedAwsSecret": "<p>The configuration for using a customer-managed Amazon Web Services Secrets Manager secret as the wallet password source.</p>"
+      }
+    },
     "DataCollectionOptions": {
       "base": "<p>Information about the data collection options enabled for a VM cluster.</p>",
       "refs": {
@@ -1244,7 +1287,9 @@
       "base": null,
       "refs": {
         "AwsEncryptionKeyConfiguration$externalIdType": "<p>The type of external identifier associated with the encryption key.</p>",
-        "AwsEncryptionKeyConfigurationInput$externalIdType": "<p>The type of external identifier associated with the encryption key.</p>"
+        "AwsEncryptionKeyConfigurationInput$externalIdType": "<p>The type of external identifier associated with the encryption key.</p>",
+        "CustomerManagedAwsSecretConfiguration$externalIdType": "<p>The type of Oracle Cloud Identifier (OCID) used as the external ID when assuming the IAM role.</p>",
+        "CustomerManagedAwsSecretConfigurationInput$externalIdType": "<p>The type of Oracle Cloud Identifier (OCID) used as the external ID when assuming the IAM role.</p>"
       }
     },
     "FailoverAutonomousDatabaseInput": {
@@ -2168,6 +2213,12 @@
         "GetOciOnboardingStatusOutput$autonomousDatabaseOciIntegrationIamRoles": "<p>The list of Amazon Web Services Identity and Access Management (IAM) service roles used for Autonomous Database integration with Oracle Cloud Infrastructure (OCI).</p>"
       }
     },
+    "OciIamRoleStatus": {
+      "base": "<p>The lifecycle status of an Amazon Web Services Identity and Access Management (IAM) service role used for Autonomous Database integration with Oracle Cloud Infrastructure (OCI).</p>",
+      "refs": {
+        "OciIamRole$status": "<p>The current lifecycle status of the IAM service role.</p>"
+      }
+    },
     "OciIdentityDomain": {
       "base": "<p>Information about an Oracle Cloud Infrastructure (OCI) identity domain configuration.</p>",
       "refs": {
@@ -2680,6 +2731,8 @@
         "AssociateIamRoleToResourceInput$iamRoleArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Identity and Access Management (IAM) service role to associate with the resource.</p>",
         "AwsEncryptionKeyConfiguration$iamRoleArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Identity and Access Management (IAM) role that grants access to the KMS key.</p>",
         "AwsEncryptionKeyConfigurationInput$iamRoleArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Identity and Access Management (IAM) role that grants access to the KMS key.</p>",
+        "CustomerManagedAwsSecretConfiguration$iamRoleArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Identity and Access Management (IAM) role that OCI assumes to retrieve the secret value.</p>",
+        "CustomerManagedAwsSecretConfigurationInput$iamRoleArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Identity and Access Management (IAM) role that OCI assumes to retrieve the secret value.</p>",
         "DisassociateIamRoleFromResourceInput$iamRoleArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Identity and Access Management (IAM) service role to disassociate from the resource.</p>",
         "IamRole$iamRoleArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Identity and Access Management (IAM) service role.</p>",
         "OciIamRole$iamRoleArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Identity and Access Management (IAM) service role.</p>"
@@ -2704,6 +2757,13 @@
         "AutonomousDatabaseSummary$scheduledOperations": "<p>The list of scheduled start and stop times for the Autonomous Database.</p>",
         "CreateAutonomousDatabaseInput$scheduledOperations": "<p>The list of scheduled start and stop times for the Autonomous Database.</p>",
         "UpdateAutonomousDatabaseInput$scheduledOperations": "<p>The list of scheduled start and stop times for the Autonomous Database.</p>"
+      }
+    },
+    "SecretIdOrArn": {
+      "base": "<p>The identifier or Amazon Resource Name (ARN) of an Amazon Web Services Secrets Manager secret.</p>",
+      "refs": {
+        "CustomerManagedAwsSecretConfiguration$secretId": "<p>The identifier or ARN of the Amazon Web Services Secrets Manager secret that contains the password.</p>",
+        "CustomerManagedAwsSecretConfigurationInput$secretId": "<p>The identifier or ARN of the Amazon Web Services Secrets Manager secret that contains the password.</p>"
       }
     },
     "SensitiveString": {
@@ -3085,6 +3145,7 @@
         "ListOdbPeeringConnectionsOutput$nextToken": "<p>The pagination token for the next page of ODB peering connections.</p>",
         "ListSystemVersionsOutput$nextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
         "OciDnsForwardingConfig$ociDnsListenerIp": "<p>OCI DNS listener IP for custom DNS setup.</p>",
+        "OciIamRole$statusReason": "<p>Additional information about the current status of the IAM service role, if applicable.</p>",
         "OciIdentityDomain$ociIdentityDomainId": "<p>The unique identifier of the OCI identity domain.</p>",
         "OciIdentityDomain$ociIdentityDomainResourceUrl": "<p>The resource URL for accessing the OCI identity domain.</p>",
         "OciIdentityDomain$ociIdentityDomainUrl": "<p>The URL of the OCI identity domain.</p>",
@@ -3548,6 +3609,31 @@
       "base": null,
       "refs": {
         "ServiceNetworkEndpoint$vpcEndpointType": "<p>The type of the VPC endpoint.</p>"
+      }
+    },
+    "WalletPasswordSource": {
+      "base": "<p>The source of the password for an Autonomous Database wallet.</p>",
+      "refs": {
+        "CreateAutonomousDatabaseWalletInput$passwordSource": "<p>The source of the password for encrypting the wallet. When set to <code>CUSTOMER_MANAGED_AWS_SECRET</code>, the password is retrieved from an Amazon Web Services Secrets Manager secret.</p>",
+        "WalletPasswordSourceSummary$passwordSource": "<p>The source of the password for the Autonomous Database wallet.</p>"
+      }
+    },
+    "WalletPasswordSourceConfiguration": {
+      "base": "<p>The configuration of the wallet password source. This is a union, so only one of the following members can be specified.</p>",
+      "refs": {
+        "WalletPasswordSourceSummary$passwordSourceConfiguration": "<p>The configuration of the password source for the Autonomous Database wallet.</p>"
+      }
+    },
+    "WalletPasswordSourceConfigurationInput": {
+      "base": "<p>The input configuration for the wallet password source. This is a union, so only one of the following members can be specified.</p>",
+      "refs": {
+        "CreateAutonomousDatabaseWalletInput$passwordSourceConfiguration": "<p>The configuration of the password source for the Autonomous Database wallet.</p>"
+      }
+    },
+    "WalletPasswordSourceSummary": {
+      "base": "<p>A summary of the password source configuration for an Autonomous Database wallet.</p>",
+      "refs": {
+        "AutonomousDatabaseWalletDetails$passwordSourceSummary": "<p>The summary of the password source configuration for the Autonomous Database wallet.</p>"
       }
     },
     "WalletType": {
