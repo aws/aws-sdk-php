@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.388.9 - 2026-07-17
 
 * `Aws\CognitoIdentityProvider` - Amazon Cognito user pools now support sending SMS via AWS End User Messaging. A new EumsSms object in SmsConfigurationType lets you deliver MFA and verification texts through AWS End User Messaging, alongside the existing Amazon SNS option.
 * `Aws\Odb` - Adds support for sourcing Autonomous Database admin and wallet passwords from customer-managed AWS Secrets Manager secrets, including password source configuration and summaries, and enabling or disabling the OCI IAM service role for Secrets Manager integration via InitializeService.
