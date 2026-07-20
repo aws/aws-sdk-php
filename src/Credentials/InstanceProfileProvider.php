@@ -7,8 +7,8 @@ use Aws\Exception\InvalidJsonException;
 use Aws\Sdk;
 use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\Promise;
-use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Promise\PromiseInterface;
+use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -26,7 +26,7 @@ class InstanceProfileProvider
     const CFG_EC2_METADATA_SERVICE_ENDPOINT_MODE = 'ec2_metadata_service_endpoint_mode';
     const DEFAULT_TIMEOUT = 1.0;
     const DEFAULT_RETRIES = 3;
-    const DEFAULT_TOKEN_TTL_SECONDS = 21600;
+    const DEFAULT_TOKEN_TTL_SECONDS = '21600';
     const DEFAULT_AWS_EC2_METADATA_V1_DISABLED = false;
     const ENDPOINT_MODE_IPv4 = 'IPv4';
     const ENDPOINT_MODE_IPv6 = 'IPv6';
