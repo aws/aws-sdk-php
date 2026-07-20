@@ -681,6 +681,23 @@
         "PRE_ADS_REQUEST_FUNCTION_COMPLETED"
       ]
     },
+    "AdsPersonalizationConcurrency":{
+      "type":"structure",
+      "members":{
+        "MaxConcurrentAdsRequests":{"shape":"__integer"},
+        "EnableVodVastParallelization":{"shape":"__boolean"}
+      }
+    },
+    "AdsPersonalizationTimeouts":{
+      "type":"structure",
+      "members":{
+        "AdsRequestTimeoutMilliseconds":{"shape":"__integer"},
+        "LiveMaximumAdsPersonalizationTimeMilliseconds":{"shape":"__integer"},
+        "VodMaximumAdsPersonalizationTimeMilliseconds":{"shape":"__integer"},
+        "PrefetchAdsRequestTimeoutMilliseconds":{"shape":"__integer"},
+        "PrefetchMaximumAdsPersonalizationTimeMilliseconds":{"shape":"__integer"}
+      }
+    },
     "Alert":{
       "type":"structure",
       "required":[
@@ -1698,7 +1715,9 @@
         "VideoContentSourceUrl":{"shape":"__string"},
         "AdConditioningConfiguration":{"shape":"AdConditioningConfiguration"},
         "AdDecisionServerConfiguration":{"shape":"AdDecisionServerConfiguration"},
-        "FunctionMapping":{"shape":"FunctionMapping"}
+        "FunctionMapping":{"shape":"FunctionMapping"},
+        "AdsPersonalizationTimeouts":{"shape":"AdsPersonalizationTimeouts"},
+        "AdsPersonalizationConcurrency":{"shape":"AdsPersonalizationConcurrency"}
       }
     },
     "GetPrefetchScheduleRequest":{
@@ -2247,7 +2266,9 @@
         "VideoContentSourceUrl":{"shape":"__string"},
         "AdConditioningConfiguration":{"shape":"AdConditioningConfiguration"},
         "AdDecisionServerConfiguration":{"shape":"AdDecisionServerConfiguration"},
-        "FunctionMapping":{"shape":"FunctionMapping"}
+        "FunctionMapping":{"shape":"FunctionMapping"},
+        "AdsPersonalizationTimeouts":{"shape":"AdsPersonalizationTimeouts"},
+        "AdsPersonalizationConcurrency":{"shape":"AdsPersonalizationConcurrency"}
       }
     },
     "PlaybackMode":{
@@ -2393,7 +2414,9 @@
         "VideoContentSourceUrl":{"shape":"__string"},
         "AdConditioningConfiguration":{"shape":"AdConditioningConfiguration"},
         "AdDecisionServerConfiguration":{"shape":"AdDecisionServerConfiguration"},
-        "FunctionMapping":{"shape":"FunctionMapping"}
+        "FunctionMapping":{"shape":"FunctionMapping"},
+        "AdsPersonalizationTimeouts":{"shape":"AdsPersonalizationTimeouts"},
+        "AdsPersonalizationConcurrency":{"shape":"AdsPersonalizationConcurrency"}
       }
     },
     "PutPlaybackConfigurationResponse":{
@@ -2426,7 +2449,9 @@
         "VideoContentSourceUrl":{"shape":"__string"},
         "AdConditioningConfiguration":{"shape":"AdConditioningConfiguration"},
         "AdDecisionServerConfiguration":{"shape":"AdDecisionServerConfiguration"},
-        "FunctionMapping":{"shape":"FunctionMapping"}
+        "FunctionMapping":{"shape":"FunctionMapping"},
+        "AdsPersonalizationTimeouts":{"shape":"AdsPersonalizationTimeouts"},
+        "AdsPersonalizationConcurrency":{"shape":"AdsPersonalizationConcurrency"}
       }
     },
     "RecurringConsumption":{

@@ -3830,7 +3830,8 @@
         "text":{"shape":"SensitiveText"},
         "toolUse":{"shape":"HarnessToolUseBlockDelta"},
         "toolResult":{"shape":"HarnessToolResultBlocksDelta"},
-        "reasoningContent":{"shape":"HarnessReasoningContentBlockDelta"}
+        "reasoningContent":{"shape":"HarnessReasoningContentBlockDelta"},
+        "toolResultMetadata":{"shape":"HarnessToolResultMetadataBlockDelta"}
       },
       "union":true
     },
@@ -3910,7 +3911,8 @@
         "maxTokens":{"shape":"MaxTokens"},
         "temperature":{"shape":"Temperature"},
         "topP":{"shape":"TopP"},
-        "topK":{"shape":"TopK"}
+        "topK":{"shape":"TopK"},
+        "additionalParams":{"shape":"Document"}
       }
     },
     "HarnessInlineFunctionConfig":{
@@ -4102,11 +4104,13 @@
     },
     "HarnessSkillGitUrl":{
       "type":"string",
+      "max":16383,
       "min":8,
       "pattern":"https://[^#@]+"
     },
     "HarnessSkillPath":{
       "type":"string",
+      "max":4096,
       "min":1
     },
     "HarnessSkillS3Source":{
@@ -4118,6 +4122,7 @@
     },
     "HarnessSkillS3Uri":{
       "type":"string",
+      "max":16383,
       "min":5,
       "pattern":"s3://.*"
     },
@@ -4272,6 +4277,13 @@
     "HarnessToolResultContentBlocks":{
       "type":"list",
       "member":{"shape":"HarnessToolResultContentBlock"}
+    },
+    "HarnessToolResultMetadataBlockDelta":{
+      "type":"structure",
+      "required":["metadata"],
+      "members":{
+        "metadata":{"shape":"SensitiveText"}
+      }
     },
     "HarnessToolType":{
       "type":"string",
@@ -4704,6 +4716,16 @@
           "location":"header",
           "locationName":"Mcp-Protocol-Version"
         },
+        "mcpMethod":{
+          "shape":"StringType",
+          "location":"header",
+          "locationName":"Mcp-Method"
+        },
+        "mcpName":{
+          "shape":"StringType",
+          "location":"header",
+          "locationName":"Mcp-Name"
+        },
         "runtimeUserId":{
           "shape":"StringType",
           "location":"header",
@@ -4942,6 +4964,26 @@
           "location":"header",
           "locationName":"X-Amzn-Bedrock-AgentCore-Runtime-User-Id"
         },
+        "traceParent":{
+          "shape":"InvokeHarnessRequestTraceParentString",
+          "location":"header",
+          "locationName":"traceparent"
+        },
+        "traceState":{
+          "shape":"InvokeHarnessRequestTraceStateString",
+          "location":"header",
+          "locationName":"tracestate"
+        },
+        "traceId":{
+          "shape":"InvokeHarnessRequestTraceIdString",
+          "location":"header",
+          "locationName":"X-Amzn-Trace-Id"
+        },
+        "baggage":{
+          "shape":"InvokeHarnessRequestBaggageString",
+          "location":"header",
+          "locationName":"baggage"
+        },
         "messages":{"shape":"HarnessMessages"},
         "model":{"shape":"HarnessModelConfiguration"},
         "systemPrompt":{"shape":"HarnessSystemPrompt"},
@@ -4954,11 +4996,31 @@
         "actorId":{"shape":"String"}
       }
     },
+    "InvokeHarnessRequestBaggageString":{
+      "type":"string",
+      "max":8192,
+      "min":0
+    },
     "InvokeHarnessRequestRuntimeSessionIdString":{
       "type":"string",
       "max":100,
       "min":33,
       "pattern":"[a-zA-Z0-9][a-zA-Z0-9-_]*"
+    },
+    "InvokeHarnessRequestTraceIdString":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "InvokeHarnessRequestTraceParentString":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "InvokeHarnessRequestTraceStateString":{
+      "type":"string",
+      "max":512,
+      "min":0
     },
     "InvokeHarnessResponse":{
       "type":"structure",

@@ -143,6 +143,24 @@
         "__adsInteractionPublishOptInEventTypesList$member": null
       }
     },
+    "AdsPersonalizationConcurrency": {
+      "base": "<p>The concurrency settings for ad decision server interactions during ad personalization.</p>",
+      "refs": {
+        "GetPlaybackConfigurationResponse$AdsPersonalizationConcurrency": "<p>The concurrency settings for ad decision server interactions. These settings control how many simultaneous ADS requests MediaTailor makes per manifest request.</p>",
+        "PlaybackConfiguration$AdsPersonalizationConcurrency": "<p>The concurrency settings for ad decision server interactions. These settings control how many simultaneous ADS requests MediaTailor makes per manifest request.</p>",
+        "PutPlaybackConfigurationRequest$AdsPersonalizationConcurrency": "<p>The concurrency settings for ad decision server interactions. These settings control how many simultaneous ADS requests MediaTailor makes per manifest request.</p>",
+        "PutPlaybackConfigurationResponse$AdsPersonalizationConcurrency": "<p>The concurrency settings for ad decision server interactions. These settings control how many simultaneous ADS requests MediaTailor makes per manifest request.</p>"
+      }
+    },
+    "AdsPersonalizationTimeouts": {
+      "base": "<p>The timeout settings for ad decision server interactions during ad personalization.</p>",
+      "refs": {
+        "GetPlaybackConfigurationResponse$AdsPersonalizationTimeouts": "<p>The timeout settings for ad decision server interactions. These settings control how long MediaTailor waits for ADS responses and the total time budget for ad personalization across live, VOD, and prefetch workflows.</p>",
+        "PlaybackConfiguration$AdsPersonalizationTimeouts": "<p>The timeout settings for ad decision server interactions. These settings control how long MediaTailor waits for ADS responses and the total time budget for ad personalization across live, VOD, and prefetch workflows.</p>",
+        "PutPlaybackConfigurationRequest$AdsPersonalizationTimeouts": "<p>The timeout settings for ad decision server interactions. These settings control how long MediaTailor waits for ADS responses and the total time budget for ad personalization across live, VOD, and prefetch workflows.</p>",
+        "PutPlaybackConfigurationResponse$AdsPersonalizationTimeouts": "<p>The timeout settings for ad decision server interactions. These settings control how long MediaTailor waits for ADS responses and the total time budget for ad personalization across live, VOD, and prefetch workflows.</p>"
+      }
+    },
     "Alert": {
       "base": "<p>Alert configuration parameters.</p>",
       "refs": {
@@ -491,7 +509,7 @@
       }
     },
     "Function": {
-      "base": "<p>-- Define Mixin --</p>",
+      "base": "<p>Defines reusable logic that MediaTailor executes at lifecycle hooks during ad insertion. The <code>FunctionType</code> determines the function's runtime behavior. For more information about functions, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/monetization-functions.html\">Working with functions</a> in the <i>MediaTailor User Guide</i>.</p>",
       "refs": {
         "__listOfFunctionsResponse$member": null
       }
@@ -616,7 +634,7 @@
       }
     },
     "HttpRequestConfiguration": {
-      "base": "<p>-- Function Configuration DataStructure</p>",
+      "base": "<p>The configuration for an <code>HTTP_REQUEST</code> function. Specifies the HTTP method, URL, headers, body, timeout, and output expressions for the request. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/monetization-functions-types-http-request.html\">HTTP_REQUEST</a> in the <i>MediaTailor User Guide</i>.</p>",
       "refs": {
         "Function$HttpRequestConfiguration": "<p>The configuration for an <code>HTTP_REQUEST</code> function.</p>",
         "GetFunctionResponse$HttpRequestConfiguration": "<p>The configuration for an <code>HTTP_REQUEST</code> function.</p>",
@@ -1250,12 +1268,19 @@
     "__boolean": {
       "base": null,
       "refs": {
-        "AdMarkerPassthrough$Enabled": "<p>Enables ad marker passthrough for your configuration.</p>"
+        "AdMarkerPassthrough$Enabled": "<p>Enables ad marker passthrough for your configuration.</p>",
+        "AdsPersonalizationConcurrency$EnableVodVastParallelization": "<p>Enables parallel processing of ad decision server requests in VOD workflows when the ADS returns VAST responses. The default is false.</p>"
       }
     },
     "__integer": {
       "base": null,
       "refs": {
+        "AdsPersonalizationConcurrency$MaxConcurrentAdsRequests": "<p>The maximum number of simultaneous requests that MediaTailor makes to the ad decision server per manifest request. The default is 1.</p>",
+        "AdsPersonalizationTimeouts$AdsRequestTimeoutMilliseconds": "<p>The maximum time, in milliseconds, that MediaTailor waits for a single ad decision server response during live or VOD playback. The default is 3000.</p>",
+        "AdsPersonalizationTimeouts$LiveMaximumAdsPersonalizationTimeMilliseconds": "<p>The maximum total time, in milliseconds, that MediaTailor spends on ad decision server activity for live manifests, including making requests, waiting for responses, and following VAST wrapper redirects. The default is 10000.</p>",
+        "AdsPersonalizationTimeouts$VodMaximumAdsPersonalizationTimeMilliseconds": "<p>The maximum total time, in milliseconds, that MediaTailor spends on ad decision server activity for VOD manifests, including making requests, waiting for responses, and following VAST wrapper redirects. The default is 10000.</p>",
+        "AdsPersonalizationTimeouts$PrefetchAdsRequestTimeoutMilliseconds": "<p>The maximum time, in milliseconds, that MediaTailor waits for a single ad decision server response during prefetch retrieval. If not set, the value of AdsRequestTimeoutMilliseconds is used.</p>",
+        "AdsPersonalizationTimeouts$PrefetchMaximumAdsPersonalizationTimeMilliseconds": "<p>The maximum total time, in milliseconds, that MediaTailor spends on ad decision server activity during prefetch retrieval, including making requests, waiting for responses, and following VAST wrapper redirects.</p>",
         "ConfigureLogsForPlaybackConfigurationRequest$PercentEnabled": "<p>The percentage of session logs that MediaTailor sends to your CloudWatch Logs account. For example, if your playback configuration has 1000 sessions and percentEnabled is set to <code>60</code>, MediaTailor sends logs for 600 of the sessions to CloudWatch Logs. MediaTailor decides at random which of the playback configuration sessions to send logs for. If you want to view logs for a specific session, you can use the <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/debug-log-mode.html\">debug log mode</a>.</p> <p>Valid values: <code>0</code> - <code>100</code> </p>",
         "ConfigureLogsForPlaybackConfigurationResponse$PercentEnabled": "<p>The percentage of session logs that MediaTailor sends to your Cloudwatch Logs account.</p>",
         "DashPlaylistSettings$ManifestWindowSeconds": "<p>The total duration (in seconds) of each manifest. Minimum value: <code>30</code> seconds. Maximum value: <code>3600</code> seconds.</p>",

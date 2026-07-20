@@ -1099,6 +1099,20 @@
         {"shape":"ConflictException"}
       ]
     },
+    "PutAccountPricingAttributes":{
+      "name":"PutAccountPricingAttributes",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/v2/email/account/pricing-attributes"
+      },
+      "input":{"shape":"PutAccountPricingAttributesRequest"},
+      "output":{"shape":"PutAccountPricingAttributesResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"}
+      ]
+    },
     "PutAccountSendingAttributes":{
       "name":"PutAccountSendingAttributes",
       "http":{
@@ -3072,7 +3086,8 @@
         "SendingEnabled":{"shape":"Enabled"},
         "SuppressionAttributes":{"shape":"SuppressionAttributes"},
         "Details":{"shape":"AccountDetails"},
-        "VdmAttributes":{"shape":"VdmAttributes"}
+        "VdmAttributes":{"shape":"VdmAttributes"},
+        "PricingAttributes":{"shape":"PricingAttributes"}
       }
     },
     "GetBlacklistReportsRequest":{
@@ -4569,6 +4584,22 @@
       "min":1
     },
     "PoolName":{"type":"string"},
+    "PricingAttributes":{
+      "type":"structure",
+      "members":{
+        "CurrentPlan":{"shape":"PricingPlan"},
+        "NextPlan":{"shape":"PricingPlan"}
+      }
+    },
+    "PricingPlan":{
+      "type":"string",
+      "enum":[
+        "NONE",
+        "ESSENTIALS",
+        "PRO",
+        "ENTERPRISE"
+      ]
+    },
     "PrimaryNameServer":{"type":"string"},
     "PrivateKey":{
       "type":"string",
@@ -4604,6 +4635,17 @@
       }
     },
     "PutAccountDetailsResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "PutAccountPricingAttributesRequest":{
+      "type":"structure",
+      "required":["Plan"],
+      "members":{
+        "Plan":{"shape":"PricingPlan"}
+      }
+    },
+    "PutAccountPricingAttributesResponse":{
       "type":"structure",
       "members":{}
     },

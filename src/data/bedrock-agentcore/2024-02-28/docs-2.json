@@ -1134,6 +1134,7 @@
       "base": null,
       "refs": {
         "HarnessBedrockModelConfig$additionalParams": "<p>Provider-specific parameters passed through to the model provider unchanged.</p>",
+        "HarnessGeminiModelConfig$additionalParams": "<p>Provider-specific parameters passed through to the Gemini model provider unchanged.</p>",
         "HarnessLiteLlmModelConfig$additionalParams": "<p>Provider-specific parameters passed through to the model provider unchanged.</p>",
         "HarnessOpenAiModelConfig$additionalParams": "<p>Provider-specific parameters passed through to the model provider unchanged.</p>"
       }
@@ -2163,6 +2164,12 @@
         "HarnessToolResultBlock$content": "<p>The content of the tool result.</p>"
       }
     },
+    "HarnessToolResultMetadataBlockDelta": {
+      "base": "<p>Delta payload for a tool result metadata.</p>",
+      "refs": {
+        "HarnessContentBlockDelta$toolResultMetadata": "<p>A tool result metadata delta.</p>"
+      }
+    },
     "HarnessToolType": {
       "base": null,
       "refs": {
@@ -2534,10 +2541,34 @@
       "base": null,
       "refs": {}
     },
+    "InvokeHarnessRequestBaggageString": {
+      "base": null,
+      "refs": {
+        "InvokeHarnessRequest$baggage": "<p>W3C Baggage header for user-defined context propagation. Format: key1=value1,key2=value2</p>"
+      }
+    },
     "InvokeHarnessRequestRuntimeSessionIdString": {
       "base": null,
       "refs": {
         "InvokeHarnessRequest$runtimeSessionId": "<p>The session ID for the invocation. Use the same session ID across requests to continue a conversation.</p>"
+      }
+    },
+    "InvokeHarnessRequestTraceIdString": {
+      "base": null,
+      "refs": {
+        "InvokeHarnessRequest$traceId": "<p>Trace ID for maintaining observability through the operation.</p>"
+      }
+    },
+    "InvokeHarnessRequestTraceParentString": {
+      "base": null,
+      "refs": {
+        "InvokeHarnessRequest$traceParent": "<p>W3C trace context parent header containing version, trace ID, parent span ID, and trace flags.</p>"
+      }
+    },
+    "InvokeHarnessRequestTraceStateString": {
+      "base": null,
+      "refs": {
+        "InvokeHarnessRequest$traceState": "<p>W3C trace context state header for vendor-specific trace information.</p>"
       }
     },
     "InvokeHarnessResponse": {
@@ -4123,6 +4154,7 @@
         "HarnessSystemContentBlock$text": "<p>The text content of the system prompt block.</p>",
         "HarnessToolResultBlockDelta$text": "<p>A text tool result delta.</p>",
         "HarnessToolResultContentBlock$text": "<p>Text content.</p>",
+        "HarnessToolResultMetadataBlockDelta$metadata": "<p>The partial JSON-string fragment of the tool result metadata.</p>",
         "HarnessToolUseBlockDelta$input": "<p>The partial JSON input for the tool call.</p>"
       }
     },
@@ -4596,6 +4628,8 @@
       "refs": {
         "InvokeAgentRuntimeRequest$mcpSessionId": "<p>The identifier of the MCP session.</p>",
         "InvokeAgentRuntimeRequest$mcpProtocolVersion": "<p>The version of the MCP protocol being used.</p>",
+        "InvokeAgentRuntimeRequest$mcpMethod": "<p>The MCP method being invoked. For example, <code>tools/call</code>, <code>resources/read</code>, or <code>prompts/get</code>.</p>",
+        "InvokeAgentRuntimeRequest$mcpName": "<p>The name of the MCP resource, tool, or prompt being accessed. The value depends on the method:</p> <ul> <li> <p> <code>tools/call</code> – The tool name.</p> </li> <li> <p> <code>resources/read</code> – The resource URI.</p> </li> <li> <p> <code>prompts/get</code> – The prompt name.</p> </li> </ul>",
         "InvokeAgentRuntimeRequest$runtimeUserId": "<p>The identifier of the runtime user.</p>"
       }
     },

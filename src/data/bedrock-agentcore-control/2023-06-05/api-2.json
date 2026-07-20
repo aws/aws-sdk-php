@@ -4000,7 +4000,8 @@
       "type":"structure",
       "required":["connectorId"],
       "members":{
-        "connectorId":{"shape":"ConnectorId"}
+        "connectorId":{"shape":"ConnectorId"},
+        "version":{"shape":"ConnectorVersion"}
       }
     },
     "ConnectorTargetConfiguration":{
@@ -4011,6 +4012,12 @@
         "enabled":{"shape":"EnabledConnectors"},
         "configurations":{"shape":"ConnectorConfigurations"}
       }
+    },
+    "ConnectorVersion":{
+      "type":"string",
+      "max":32,
+      "min":5,
+      "pattern":"(?:0|[1-9]\\d*)\\.(?:0|[1-9]\\d*)\\.(?:0|[1-9]\\d*)"
     },
     "ConsolidationConfiguration":{
       "type":"structure",

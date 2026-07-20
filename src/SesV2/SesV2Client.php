@@ -157,6 +157,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise putAccountDedicatedIpWarmupAttributesAsync(array $args = [])
  * @method \Aws\Result putAccountDetails(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putAccountDetailsAsync(array $args = [])
+ * @method \Aws\Result putAccountPricingAttributes(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putAccountPricingAttributesAsync(array $args = [])
  * @method \Aws\Result putAccountSendingAttributes(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putAccountSendingAttributesAsync(array $args = [])
  * @method \Aws\Result putAccountSuppressionAttributes(array $args = [])
