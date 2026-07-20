@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.388.10 - 2026-07-20
 
 * `Aws\Inspector2` - Adds Windows path support for deep inspection. Fixes tag propagation for connector CloudFormation stack operations.
 * `Aws\MediaTailor` - This change adds api support for configuring ad decision server timeouts and concurrency fields on MediaTailor playback configurations
