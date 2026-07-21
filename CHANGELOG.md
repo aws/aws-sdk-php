@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.388.11 - 2026-07-21
 
 * `Aws\TimestreamInfluxDB` - This release adds support for custom plugins in Amazon Timestream for InfluxDB. InfluxDB 3 Core and Enterprise DB parameter groups now accept a plugin repository URL and optional AWS Secrets Manager secret ARN, so the Processing Engine loads your Python plugins from a public or private repository.
 * `Aws\SSM` - Added a WarningMessage field to Automation along with corresponding public documentation.
