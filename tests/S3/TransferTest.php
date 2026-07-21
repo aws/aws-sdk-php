@@ -421,6 +421,55 @@ class TransferTest extends TestCase
         ];
     }
 
+    /**
+     * Backslash-based traversal. On Windows, PHP's filesystem layer
+     * (fopen, mkdir, dirname) treats '\' as a directory separator, so a
+     * key containing a raw backslash escapes the destination even though
+     * the historical guard only tokenized on '/'. The guard now splits on
+     * both separators. Provider values are S3 keys that match the synced
+     * 'bar/' prefix; after prefix strip the remaining objectKey contains
+     * the backslash traversal.
+     */
+    #[DataProvider('providedBackslashKeysOutsideTarget')]
+    public function testCannotDownloadObjectsWithBackslashTraversal($key)
+    {
+        $this->expectException(\Aws\Exception\AwsException::class);
+        $s3 = $this->getTestClient('s3');
+        $lso = [
+            'IsTruncated' => false,
+            'Contents' => [
+                ['Key' => $key]
+            ]
+        ];
+        $this->addMockResults($s3, [
+            new Result($lso),
+            new Result(['Body' => 'test']),
+        ]);
+
+        $dir = sys_get_temp_dir() . '/unittest';
+        $this->deleteDirectory($dir);
+        mkdir($dir);
+        $res = fopen('php://temp', 'r+');
+        $t = new Transfer($s3, 's3://foo/bar/', $dir, ['debug' => $res]);
+        try {
+            $t->transfer();
+        } finally {
+            $this->deleteDirectory($dir);
+        }
+    }
+
+    public static function providedBackslashKeysOutsideTarget(): array
+    {
+        return [
+            // Direct analog of the AppSec-reported shape: `inbox/..\shell.php`
+            // under a synced `inbox/` prefix. Here the prefix is `bar/`.
+            'raw backslash traversal'           => ['bar/..\\shell.php'],
+            'backslash under nested subdir'     => ['bar/inner\\..\\..\\shell.php'],
+            'mixed forward-and-back separators' => ['bar/inner/..\\..\\shell.php'],
+            'deep backslash climb'              => ['bar/a\\..\\..\\b'],
+        ];
+    }
+
     public function testCanUploadToBareBucket()
     {
         $s3 = $this->getMockS3Client();
