@@ -25,4 +25,7 @@ parameters:
     - '#Access to undefined constant GuzzleHttp\\ClientInterface::MAJOR_VERSION#'
     - '#Access to undefined constant GuzzleHttp\\ClientInterface::VERSION\.#'
 
+    # These exception classes only exist in Guzzle 8, but instances cannot occur under Guzzle 7
+    - '#Class GuzzleHttp\\Exception\\(NetworkException|ResponseException|ResponseTransferException) not found\.#'
+
   reportUnmatchedIgnoredErrors: false

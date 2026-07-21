@@ -2,8 +2,12 @@
 namespace Aws\Test\Handler\Guzzle;
 
 use Aws\Handler\Guzzle\GuzzleHandler;
+use Aws\Test\CreatesGuzzleExceptionsTrait;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\NetworkException;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\ResponseTransferException;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Promise\RejectionException;
 use GuzzleHttp\Psr7;
@@ -16,6 +20,8 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(GuzzleHandler::class)]
 class HandlerTest extends TestCase
 {
+    use CreatesGuzzleExceptionsTrait;
+
     public function testHandlerWorksWithSuccessfulRequest()
     {
         $mock = new MockHandler([new Response(200, [], Psr7\Utils::streamFor('foo'))]);
@@ -37,10 +43,10 @@ class HandlerTest extends TestCase
     {
         $wasRejected = false;
         $request = new Request('PUT', 'http://example.com');
-        $mock = new MockHandler([new RequestException(
+        $mock = new MockHandler([self::createRequestException(
             'message',
             $request,
-            new Response('500')
+            new Response(500)
         )]);
         $client = new Client(['handler' => $mock]);
         $handler = new GuzzleHandler($client);
@@ -62,6 +68,103 @@ class HandlerTest extends TestCase
         }
 
         $this->assertTrue($wasRejected, 'Reject callback was not triggered.');
+    }
+
+    public function testHandlerMarksConnectExceptionAsConnectionError()
+    {
+        $request = new Request('PUT', 'http://example.com');
+        $mock = new MockHandler([
+            new ConnectException('message', $request),
+        ]);
+        $client = new Client(['handler' => $mock]);
+        $handler = new GuzzleHandler($client);
+
+        $promise = $handler($request);
+
+        try {
+            $promise->wait();
+            $this->fail('An exception should have been thrown.');
+        } catch (RejectionException $e) {
+            $error = $e->getReason();
+            $this->assertTrue($error['connection_error']);
+            $this->assertNull($error['response']);
+        }
+    }
+
+    public function testHandlerMarksCurlRecvErrorAsConnectionError()
+    {
+        $request = new Request('PUT', 'http://example.com');
+        $exception = new class ('message', $request) extends RequestException {
+            public function getHandlerContext(): array
+            {
+                return ['errno' => 56];
+            }
+        };
+        $mock = new MockHandler([$exception]);
+        $client = new Client(['handler' => $mock]);
+        $handler = new GuzzleHandler($client);
+
+        $promise = $handler($request);
+
+        try {
+            $promise->wait();
+            $this->fail('An exception should have been thrown.');
+        } catch (RejectionException $e) {
+            $error = $e->getReason();
+            $this->assertTrue($error['connection_error']);
+            $this->assertNull($error['response']);
+        }
+    }
+
+    public function testHandlerMarksNetworkExceptionAsConnectionError()
+    {
+        if (!class_exists(NetworkException::class)) {
+            $this->markTestSkipped('NetworkException is only available in Guzzle 8.');
+        }
+
+        $request = new Request('PUT', 'http://example.com');
+        $mock = new MockHandler([
+            new NetworkException('message', $request),
+        ]);
+        $client = new Client(['handler' => $mock]);
+        $handler = new GuzzleHandler($client);
+
+        $promise = $handler($request);
+
+        try {
+            $promise->wait();
+            $this->fail('An exception should have been thrown.');
+        } catch (RejectionException $e) {
+            $error = $e->getReason();
+            $this->assertTrue($error['connection_error']);
+            $this->assertNull($error['response']);
+        }
+    }
+
+    public function testHandlerMarksResponseTransferExceptionAsConnectionError()
+    {
+        if (!class_exists(ResponseTransferException::class)) {
+            $this->markTestSkipped('ResponseTransferException is only available in Guzzle 8.');
+        }
+
+        $request = new Request('PUT', 'http://example.com');
+        $response = new Response(200);
+        $mock = new MockHandler([
+            new ResponseTransferException('message', $request, $response),
+        ]);
+        $client = new Client(['handler' => $mock]);
+        $handler = new GuzzleHandler($client);
+
+        $promise = $handler($request);
+
+        try {
+            $promise->wait();
+            $this->fail('An exception should have been thrown.');
+        } catch (RejectionException $e) {
+            $error = $e->getReason();
+            $this->assertTrue($error['connection_error']);
+            $this->assertSame($response, $error['response']);
+        }
     }
 
     public function testHandlerWillInvokeOnTransferStatsCallback()

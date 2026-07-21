@@ -29,11 +29,22 @@ $burgomaster->recursiveCopy('vendor/guzzlehttp/psr7/src', 'GuzzleHttp/Psr7');
 $burgomaster->recursiveCopy('vendor/guzzlehttp/promises/src', 'GuzzleHttp/Promise');
 $burgomaster->recursiveCopy('vendor/psr/http-message/src', 'Psr/Http/Message');
 
+if (file_exists($projectRoot . 'vendor/psr/http-factory/src')) {
+    $burgomaster->recursiveCopy(
+        $projectRoot . 'vendor/psr/http-factory/src',
+        'Psr/Http/Message'
+    );
+}
+
 $autoloaderContents = [
     'Aws/functions.php',
-    'GuzzleHttp/functions_include.php',
-    'JmesPath/JmesPath.php',
 ];
+
+if (file_exists($projectRoot . 'vendor/guzzlehttp/guzzle/src/functions_include.php')) {
+    $autoloaderContents[] = 'GuzzleHttp/functions_include.php';
+}
+
+$autoloaderContents[] = 'JmesPath/JmesPath.php';
 
 if (file_exists($projectRoot . 'vendor/symfony/polyfill-intl-idn')) {
     $burgomaster->recursiveCopy($projectRoot . 'vendor/symfony/polyfill-intl-idn', 'Symfony/Polyfill/Intl/Idn');

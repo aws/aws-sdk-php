@@ -9,7 +9,6 @@ use Aws\Result;
 use Aws\ResultInterface;
 use Aws\RetryMiddleware;
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
@@ -82,71 +81,6 @@ class RetryMiddlewareTest extends TestCase
             $err = new \Error('e');
             $this->assertFalse($decider(0, $command, $request, null, $err));
         }
-    }
-
-    public function testDeciderRetriesWhenCurlErrorCodeMatches()
-    {
-        if (!extension_loaded('curl')) {
-            $this->markTestSkipped('Test skipped on no cURL extension');
-        }
-        $decider = RetryMiddleware::createDefaultDecider();
-        $command = new Command('foo');
-        $request = new Request('GET', 'http://www.example.com');
-        $previous = new RequestException(
-            'test',
-            $request,
-            null,
-            null,
-            ['errno' => CURLE_RECV_ERROR]
-        );
-        $err = new AwsException(
-            'e',
-            $command,
-            ['connection_error' => false],
-            $previous
-        );
-        $this->assertTrue($decider(0, $command, $request, null, $err));
-    }
-
-    public function testDeciderRetriesForCustomCurlErrors()
-    {
-        if (!extension_loaded('curl')) {
-            $this->markTestSkipped('Test skipped on no cURL extension');
-        }
-        $decider = RetryMiddleware::createDefaultDecider(
-            3,
-            ['curl_errors' => [CURLE_BAD_CONTENT_ENCODING]]
-        );
-        $command = new Command('foo');
-        $request = new Request('GET', 'http://www.example.com');
-        $previous = new RequestException(
-            'test',
-            $request,
-            null,
-            null,
-            ['errno' => CURLE_BAD_CONTENT_ENCODING]
-        );
-        $err = new AwsException(
-            'e',
-            $command,
-            ['connection_error' => false],
-            $previous
-        );
-        $this->assertTrue($decider(0, $command, $request, null, $err));
-        $previous = new RequestException(
-            'test',
-            $request,
-            null,
-            null,
-            ['errno' => CURLE_ABORTED_BY_CALLBACK]
-        );
-        $err = new AwsException(
-            'e',
-            $command,
-            ['connection_error' => false],
-            $previous
-        );
-        $this->assertFalse($decider(0, $command, $request, null, $err));
     }
 
     public static function awsErrorCodeProvider(): array

@@ -6,10 +6,10 @@ use Aws\Credentials\CredentialsInterface;
 use Aws\Credentials\EcsCredentialProvider;
 use Aws\Exception\CredentialsException;
 use Aws\Handler\Guzzle\GuzzleHandler;
+use Aws\Test\CreatesGuzzleExceptionsTrait;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
@@ -24,6 +24,8 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(EcsCredentialProvider::class)]
 class EcsCredentialProviderTest extends TestCase
 {
+    use CreatesGuzzleExceptionsTrait;
+
     private $uripath;
     private $fulluripath;
     private $authtokenpath;
@@ -447,13 +449,18 @@ EOF;
         $creds = ['foo_key', 'baz_secret', 'qux_token', "@{$expiry}"];
         $credsObject = new Credentials($creds[0], $creds[1], $creds[2], $expiry);
 
+        $rejectionConnectionError = Promise\Create::rejectionFor([
+            'connection_error' => true,
+            'exception' => new \Exception('cURL error 28: Connection timed out after 1000 milliseconds'),
+        ]);
         $connectException = new ConnectException(
             'cURL error 28: Connection timed out after 1000 milliseconds',
             new Psr7\Request('GET', '/latest')
         );
-        $rejectionConnection = Promise\Create::rejectionFor([
+        $rejectionWrappedConnectException = Promise\Create::rejectionFor([
             'exception' => $connectException,
         ]);
+        $rejectionRawConnectException = Promise\Create::rejectionFor($connectException);
 
         $promiseCreds = Promise\Create::promiseFor(
             new Response(200, [], Psr7\Utils::streamFor(
@@ -472,22 +479,42 @@ EOF;
                 ],
                 $credsObject
             ],
-            'With retries for ConnectException (Guzzle 7)' => [
+            'With retries for connection_error metadata' => [
                 [
                     'responses' => [
-                        $rejectionConnection,
+                        $rejectionConnectionError,
                         $promiseCreds
                     ],
                     'credentials' => $creds
                 ],
                 $credsObject
             ],
-            'With 4 retries for ConnectException (Guzzle 7)' => [
+            'With retries for wrapped ConnectException' => [
                 [
                     'responses' => [
-                        $rejectionConnection,
-                        $rejectionConnection,
-                        $rejectionConnection,
+                        $rejectionWrappedConnectException,
+                        $promiseCreds
+                    ],
+                    'credentials' => $creds
+                ],
+                $credsObject
+            ],
+            'With retries for raw ConnectException' => [
+                [
+                    'responses' => [
+                        $rejectionRawConnectException,
+                        $promiseCreds
+                    ],
+                    'credentials' => $creds
+                ],
+                $credsObject
+            ],
+            'With 4 retries for connection_error metadata' => [
+                [
+                    'responses' => [
+                        $rejectionConnectionError,
+                        $rejectionConnectionError,
+                        $rejectionConnectionError,
                         $promiseCreds
                     ],
                     'credentials' => $creds
@@ -529,18 +556,15 @@ EOF;
         $getRequest = new Psr7\Request('GET', '/latest');
 
         $rejectionCreds = Promise\Create::rejectionFor([
-            'exception' => new RequestException(
+            'exception' => self::createRequestException(
                 '401 Unathorized',
                 $getRequest,
                 new Psr7\Response(401)
             )
         ]);
-        $connectException = new ConnectException(
-            'cURL error 28: Connection timed out after 1000 milliseconds',
-            new Psr7\Request('GET', '/latest')
-        );
         $rejectionConnection = Promise\Create::rejectionFor([
-            'exception' => $connectException,
+            'connection_error' => true,
+            'exception' => new \Exception('cURL error 28: Connection timed out after 1000 milliseconds'),
         ]);
 
         return [
@@ -568,12 +592,9 @@ EOF;
     {
         putenv('AWS_METADATA_SERVICE_NUM_ATTEMPTS=1');
 
-        $connectException = new ConnectException(
-            'cURL error 28: Connection timed out after 1000 milliseconds',
-            new Psr7\Request('GET', '/latest')
-        );
         $rejectionConnection = Promise\Create::rejectionFor([
-            'exception' => $connectException,
+            'connection_error' => true,
+            'exception' => new \Exception('cURL error 28: Connection timed out after 1000 milliseconds'),
         ]);
 
         $provider = new EcsCredentialProvider([
@@ -608,12 +629,9 @@ EOF;
 
         $credsObject = new Credentials($creds[0], $creds[1], $creds[2], $expiry);
 
-        $connectException = new ConnectException(
-            'cURL error 28: Connection timed out after 1000 milliseconds',
-            new Psr7\Request('GET', '/latest')
-        );
         $rejectionConnection = Promise\Create::rejectionFor([
-            'exception' => $connectException,
+            'connection_error' => true,
+            'exception' => new \Exception('cURL error 28: Connection timed out after 1000 milliseconds'),
         ]);
         $promiseCreds = Promise\Create::promiseFor(
             new Response(200, [], Psr7\Utils::streamFor(
@@ -689,6 +707,10 @@ EOF;
             $creds
         ) {
             if (!empty($responses)) {
+                if (!isset($responses[$getRequests])) {
+                    throw new \Exception('No responses');
+                }
+
                 return $responses[$getRequests++];
             }
             return Promise\Create::promiseFor(
