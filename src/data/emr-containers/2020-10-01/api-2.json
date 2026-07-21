@@ -109,6 +109,19 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "DeleteSecurityConfiguration":{
+      "name":"DeleteSecurityConfiguration",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/securityconfigurations/{securityConfigurationId}"
+      },
+      "input":{"shape":"DeleteSecurityConfigurationRequest"},
+      "output":{"shape":"DeleteSecurityConfigurationResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "DeleteVirtualCluster":{
       "name":"DeleteVirtualCluster",
       "http":{
@@ -342,6 +355,13 @@
         "ENABLED",
         "DISABLED"
       ]
+    },
+    "AuthenticationConfiguration":{
+      "type":"structure",
+      "members":{
+        "identityCenterConfiguration":{"shape":"IdentityCenterConfiguration"},
+        "iamConfiguration":{"shape":"IAMConfiguration"}
+      }
     },
     "AuthorizationConfiguration":{
       "type":"structure",
@@ -651,6 +671,23 @@
         "virtualClusterId":{"shape":"ResourceIdString"}
       }
     },
+    "DeleteSecurityConfigurationRequest":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{
+          "shape":"ResourceIdString",
+          "location":"uri",
+          "locationName":"securityConfigurationId"
+        }
+      }
+    },
+    "DeleteSecurityConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"ResourceIdString"}
+      }
+    },
     "DeleteVirtualClusterRequest":{
       "type":"structure",
       "required":["id"],
@@ -783,6 +820,10 @@
         "namespace":{"shape":"KubernetesNamespace"},
         "nodeLabel":{"shape":"NodeLabelString"}
       }
+    },
+    "EmrIdentityCenterApplicationARN":{
+      "type":"string",
+      "pattern":"^arn:(aws[a-zA-Z0-9-]*):sso:::application/ssoins-[0-9a-zA-Z/\\\\-_]+/apl-[0-9a-zA-Z/\\\\-_]+"
     },
     "EncryptionConfiguration":{
       "type":"structure",
@@ -919,11 +960,32 @@
         "expiresAt":{"shape":"Date"}
       }
     },
+    "IAMConfiguration":{
+      "type":"structure",
+      "members":{
+        "systemRole":{"shape":"IAMRoleArn"}
+      }
+    },
     "IAMRoleArn":{
       "type":"string",
       "max":2048,
       "min":20,
       "pattern":"^arn:(aws[a-zA-Z0-9-]*):iam::(\\d{12})?:(role((\\u002F)|(\\u002F[\\u0021-\\u007F]+\\u002F))[\\w+=,.@-]+)$"
+    },
+    "IdentityCenterConfiguration":{
+      "type":"structure",
+      "members":{
+        "enableIdentityCenter":{"shape":"Boolean"},
+        "identityCenterApplicationAssignmentRequired":{"shape":"Boolean"},
+        "identityCenterInstanceARN":{"shape":"IdentityCenterInstanceARN"},
+        "emrIdentityCenterApplicationARN":{"shape":"EmrIdentityCenterApplicationARN"}
+      }
+    },
+    "IdentityCenterInstanceARN":{
+      "type":"string",
+      "max":1224,
+      "min":10,
+      "pattern":"^arn:(aws[a-zA-Z0-9-]*):sso:::instance/ssoins-[0-9a-zA-Z/\\\\-_]+"
     },
     "InTransitEncryptionConfiguration":{
       "type":"structure",
@@ -1488,7 +1550,8 @@
     "SecurityConfigurationData":{
       "type":"structure",
       "members":{
-        "authorizationConfiguration":{"shape":"AuthorizationConfiguration"}
+        "authorizationConfiguration":{"shape":"AuthorizationConfiguration"},
+        "authenticationConfiguration":{"shape":"AuthenticationConfiguration"}
       }
     },
     "SecurityConfigurations":{

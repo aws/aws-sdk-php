@@ -31,6 +31,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result putProcurementPortalPreference(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putProcurementPortalPreferenceAsync(array $args = [])
+ * @method \Aws\Result sendProcurementPortalValidation(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise sendProcurementPortalValidationAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])
@@ -39,5 +41,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateInvoiceUnitAsync(array $args = [])
  * @method \Aws\Result updateProcurementPortalPreferenceStatus(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateProcurementPortalPreferenceStatusAsync(array $args = [])
+ * @method \Aws\Result verifyProcurementPortalValidation(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise verifyProcurementPortalValidationAsync(array $args = [])
  */
 class InvoicingClient extends AwsClient {}

@@ -238,6 +238,23 @@
       ],
       "idempotent":true
     },
+    "SendProcurementPortalValidation":{
+      "name":"SendProcurementPortalValidation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"SendProcurementPortalValidationRequest"},
+      "output":{"shape":"SendProcurementPortalValidationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -302,6 +319,23 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
+    "VerifyProcurementPortalValidation":{
+      "name":"VerifyProcurementPortalValidation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"VerifyProcurementPortalValidationRequest"},
+      "output":{"shape":"VerifyProcurementPortalValidationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ],
@@ -1046,6 +1080,7 @@
       "type":"string",
       "enum":[
         "PENDING_VERIFICATION",
+        "VALIDATED",
         "TEST_INITIALIZED",
         "TEST_INITIALIZATION_FAILED",
         "TEST_FAILED",
@@ -1225,6 +1260,24 @@
       "member":{"shape":"BasicStringWithoutSpace"},
       "max":100,
       "min":0
+    },
+    "SendProcurementPortalValidationRequest":{
+      "type":"structure",
+      "required":["ProcurementPortalPreferenceArn"],
+      "members":{
+        "ProcurementPortalPreferenceArn":{"shape":"ProcurementPortalPreferenceArnString"},
+        "ClientToken":{
+          "shape":"BasicStringWithoutSpace",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "SendProcurementPortalValidationResponse":{
+      "type":"structure",
+      "required":["ProcurementPortalPreferenceArn"],
+      "members":{
+        "ProcurementPortalPreferenceArn":{"shape":"ProcurementPortalPreferenceArnString"}
+      }
     },
     "SensitiveBasicStringWithoutSpace":{
       "type":"string",
@@ -1467,6 +1520,28 @@
         "unknownOperation",
         "other"
       ]
+    },
+    "VerifyProcurementPortalValidationRequest":{
+      "type":"structure",
+      "required":[
+        "ProcurementPortalPreferenceArn",
+        "Code"
+      ],
+      "members":{
+        "ProcurementPortalPreferenceArn":{"shape":"ProcurementPortalPreferenceArnString"},
+        "Code":{"shape":"BasicStringWithoutSpace"},
+        "ClientToken":{
+          "shape":"BasicStringWithoutSpace",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "VerifyProcurementPortalValidationResponse":{
+      "type":"structure",
+      "required":["ProcurementPortalPreferenceArn"],
+      "members":{
+        "ProcurementPortalPreferenceArn":{"shape":"ProcurementPortalPreferenceArnString"}
+      }
     },
     "Year":{
       "type":"integer",

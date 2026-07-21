@@ -473,6 +473,24 @@
         {"shape":"InvalidTagFault"}
       ]
     },
+    "CreateQev2IdcApplication":{
+      "name":"CreateQev2IdcApplication",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateQev2IdcApplicationMessage"},
+      "output":{
+        "shape":"CreateQev2IdcApplicationResult",
+        "resultWrapper":"CreateQev2IdcApplicationResult"
+      },
+      "errors":[
+        {"shape":"Qev2IdcApplicationAlreadyExistsFault"},
+        {"shape":"DependentServiceUnavailableFault"},
+        {"shape":"UnsupportedOperationFault"},
+        {"shape":"DependentServiceAccessDeniedFault"}
+      ]
+    },
     "CreateRedshiftIdcApplication":{
       "name":"CreateRedshiftIdcApplication",
       "http":{
@@ -797,6 +815,20 @@
         {"shape":"ClusterNotFoundFault"},
         {"shape":"UnauthorizedPartnerIntegrationFault"},
         {"shape":"UnsupportedOperationFault"}
+      ]
+    },
+    "DeleteQev2IdcApplication":{
+      "name":"DeleteQev2IdcApplication",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteQev2IdcApplicationMessage"},
+      "errors":[
+        {"shape":"Qev2IdcApplicationNotExistsFault"},
+        {"shape":"DependentServiceUnavailableFault"},
+        {"shape":"UnsupportedOperationFault"},
+        {"shape":"DependentServiceAccessDeniedFault"}
       ]
     },
     "DeleteRedshiftIdcApplication":{
@@ -1344,6 +1376,24 @@
         {"shape":"ClusterNotFoundFault"},
         {"shape":"UnauthorizedPartnerIntegrationFault"},
         {"shape":"UnsupportedOperationFault"}
+      ]
+    },
+    "DescribeQev2IdcApplications":{
+      "name":"DescribeQev2IdcApplications",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeQev2IdcApplicationsMessage"},
+      "output":{
+        "shape":"DescribeQev2IdcApplicationsResult",
+        "resultWrapper":"DescribeQev2IdcApplicationsResult"
+      },
+      "errors":[
+        {"shape":"Qev2IdcApplicationNotExistsFault"},
+        {"shape":"DependentServiceUnavailableFault"},
+        {"shape":"UnsupportedOperationFault"},
+        {"shape":"DependentServiceAccessDeniedFault"}
       ]
     },
     "DescribeRedshiftIdcApplications":{
@@ -2059,6 +2109,24 @@
         {"shape":"UnauthorizedOperation"},
         {"shape":"RedshiftIdcApplicationNotExistsFault"},
         {"shape":"DependentServiceUnavailableFault"},
+        {"shape":"DependentServiceAccessDeniedFault"}
+      ]
+    },
+    "ModifyQev2IdcApplication":{
+      "name":"ModifyQev2IdcApplication",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyQev2IdcApplicationMessage"},
+      "output":{
+        "shape":"ModifyQev2IdcApplicationResult",
+        "resultWrapper":"ModifyQev2IdcApplicationResult"
+      },
+      "errors":[
+        {"shape":"Qev2IdcApplicationNotExistsFault"},
+        {"shape":"DependentServiceUnavailableFault"},
+        {"shape":"UnsupportedOperationFault"},
         {"shape":"DependentServiceAccessDeniedFault"}
       ]
     },
@@ -3729,6 +3797,26 @@
         "Description":{"shape":"IntegrationDescription"}
       }
     },
+    "CreateQev2IdcApplicationMessage":{
+      "type":"structure",
+      "required":[
+        "IdcInstanceArn",
+        "Qev2IdcApplicationName",
+        "IdcDisplayName"
+      ],
+      "members":{
+        "IdcInstanceArn":{"shape":"String"},
+        "Qev2IdcApplicationName":{"shape":"Qev2IdcApplicationName"},
+        "IdcDisplayName":{"shape":"IdcDisplayNameString"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateQev2IdcApplicationResult":{
+      "type":"structure",
+      "members":{
+        "Qev2IdcApplication":{"shape":"Qev2IdcApplication"}
+      }
+    },
     "CreateRedshiftIdcApplicationMessage":{
       "type":"structure",
       "required":[
@@ -4107,6 +4195,13 @@
       "required":["IntegrationArn"],
       "members":{
         "IntegrationArn":{"shape":"IntegrationArn"}
+      }
+    },
+    "DeleteQev2IdcApplicationMessage":{
+      "type":"structure",
+      "required":["Qev2IdcApplicationArn"],
+      "members":{
+        "Qev2IdcApplicationArn":{"shape":"String"}
       }
     },
     "DeleteRedshiftIdcApplicationMessage":{
@@ -4562,6 +4657,21 @@
       "type":"structure",
       "members":{
         "PartnerIntegrationInfoList":{"shape":"PartnerIntegrationInfoList"}
+      }
+    },
+    "DescribeQev2IdcApplicationsMessage":{
+      "type":"structure",
+      "members":{
+        "Qev2IdcApplicationArn":{"shape":"String"},
+        "MaxRecords":{"shape":"IntegerOptional"},
+        "Marker":{"shape":"String"}
+      }
+    },
+    "DescribeQev2IdcApplicationsResult":{
+      "type":"structure",
+      "members":{
+        "Qev2IdcApplications":{"shape":"Qev2IdcApplicationList"},
+        "Marker":{"shape":"String"}
       }
     },
     "DescribeRedshiftIdcApplicationsMessage":{
@@ -6184,6 +6294,20 @@
         "DryRun":{"shape":"BooleanOptional"}
       }
     },
+    "ModifyQev2IdcApplicationMessage":{
+      "type":"structure",
+      "required":["Qev2IdcApplicationArn"],
+      "members":{
+        "Qev2IdcApplicationArn":{"shape":"String"},
+        "IdcDisplayName":{"shape":"IdcDisplayNameString"}
+      }
+    },
+    "ModifyQev2IdcApplicationResult":{
+      "type":"structure",
+      "members":{
+        "Qev2IdcApplication":{"shape":"Qev2IdcApplication"}
+      }
+    },
     "ModifyRedshiftIdcApplicationMessage":{
       "type":"structure",
       "required":["RedshiftIdcApplicationArn"],
@@ -6582,6 +6706,49 @@
       "members":{
         "ResourcePolicy":{"shape":"ResourcePolicy"}
       }
+    },
+    "Qev2IdcApplication":{
+      "type":"structure",
+      "members":{
+        "IdcInstanceArn":{"shape":"String"},
+        "Qev2IdcApplicationName":{"shape":"Qev2IdcApplicationName"},
+        "Qev2IdcApplicationArn":{"shape":"String"},
+        "IdcManagedApplicationArn":{"shape":"String"},
+        "IdcOnboardStatus":{"shape":"String"},
+        "IdcDisplayName":{"shape":"IdcDisplayNameString"},
+        "Tags":{"shape":"TagList"}
+      },
+      "wrapper":true
+    },
+    "Qev2IdcApplicationAlreadyExistsFault":{
+      "type":"structure",
+      "members":{},
+      "error":{
+        "code":"Qev2IdcApplicationAlreadyExists",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "Qev2IdcApplicationList":{
+      "type":"list",
+      "member":{"shape":"Qev2IdcApplication"}
+    },
+    "Qev2IdcApplicationName":{
+      "type":"string",
+      "max":63,
+      "min":1,
+      "pattern":"[a-z][a-z0-9]*(-[a-z0-9]+)*"
+    },
+    "Qev2IdcApplicationNotExistsFault":{
+      "type":"structure",
+      "members":{},
+      "error":{
+        "code":"Qev2IdcApplicationNotExists",
+        "httpStatusCode":404,
+        "senderFault":true
+      },
+      "exception":true
     },
     "ReadWriteAccess":{
       "type":"structure",

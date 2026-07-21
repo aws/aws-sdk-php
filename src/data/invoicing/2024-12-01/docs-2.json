@@ -15,10 +15,12 @@
     "ListProcurementPortalPreferences": "<p> <i> <b>This feature API is subject to changing at any time. For more information, see the <a href=\"https://aws.amazon.com/service-terms/\">Amazon Web Services Service Terms</a> (Betas and Previews).</b> </i> </p> <p>Retrieves a list of procurement portal preferences associated with the Amazon Web Services account.</p>",
     "ListTagsForResource": "<p>Lists the tags for a resource. </p>",
     "PutProcurementPortalPreference": "<p> <i> <b>This feature API is subject to changing at any time. For more information, see the <a href=\"https://aws.amazon.com/service-terms/\">Amazon Web Services Service Terms</a> (Betas and Previews).</b> </i> </p> <p>Updates an existing procurement portal preference configuration. This operation can modify settings for e-invoice delivery and purchase order retrieval.</p>",
+    "SendProcurementPortalValidation": "<p> <i> <b>This feature API is subject to changing at any time. For more information, see the <a href=\"https://aws.amazon.com/service-terms/\">Amazon Web Services Service Terms</a> (Betas and Previews).</b> </i> </p> <p>Sends a validation request for a procurement portal preference. This operation initiates the validation process by issuing a validation code that confirms ownership and connectivity of the configured procurement portal endpoint. Use <code>VerifyProcurementPortalValidation</code> to submit the received code and complete validation.</p>",
     "TagResource": "<p>Adds a tag to a resource. </p>",
     "UntagResource": "<p> Removes a tag from a resource. </p>",
     "UpdateInvoiceUnit": "<p>You can update the invoice unit configuration at any time, and Amazon Web Services will use the latest configuration at the end of the month.</p>",
-    "UpdateProcurementPortalPreferenceStatus": "<p> <i> <b>This feature API is subject to changing at any time. For more information, see the <a href=\"https://aws.amazon.com/service-terms/\">Amazon Web Services Service Terms</a> (Betas and Previews).</b> </i> </p> <p>Updates the status of a procurement portal preference, including the activation state of e-invoice delivery and purchase order retrieval features.</p>"
+    "UpdateProcurementPortalPreferenceStatus": "<p> <i> <b>This feature API is subject to changing at any time. For more information, see the <a href=\"https://aws.amazon.com/service-terms/\">Amazon Web Services Service Terms</a> (Betas and Previews).</b> </i> </p> <p>Updates the status of a procurement portal preference, including the activation state of e-invoice delivery and purchase order retrieval features.</p>",
+    "VerifyProcurementPortalValidation": "<p> <i> <b>This feature API is subject to changing at any time. For more information, see the <a href=\"https://aws.amazon.com/service-terms/\">Amazon Web Services Service Terms</a> (Betas and Previews).</b> </i> </p> <p>Submits a validation code to complete the validation of a procurement portal preference. Use this operation after calling <code>SendProcurementPortalValidation</code> to confirm ownership and connectivity of the configured procurement portal endpoint.</p>"
   },
   "shapes": {
     "AccessDeniedException": {
@@ -142,6 +144,7 @@
         "PutProcurementPortalPreferenceRequest$ProcurementPortalInstanceEndpoint": "<p>The updated endpoint URL where e-invoices will be delivered to the procurement portal. Must be a valid HTTPS URL.</p>",
         "PutProcurementPortalPreferenceRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure idempotency of the request.</p>",
         "SellerOfRecords$member": null,
+        "SendProcurementPortalValidationRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure idempotency of the request.</p>",
         "TestEnvPreference$BuyerIdentifier": "<p>The unique identifier for the buyer in the test environment of the procurement portal.</p>",
         "TestEnvPreference$SupplierIdentifier": "<p>The unique identifier for the supplier in the test environment of the procurement portal.</p>",
         "TestEnvPreference$ProcurementPortalSharedSecret": "<p>The shared secret or authentication credential used for secure communication with the test environment.</p>",
@@ -152,7 +155,9 @@
         "TestEnvPreferenceInput$ProcurementPortalSharedSecret": "<p>The shared secret or authentication credential to use for secure communication in the test environment.</p>",
         "TestEnvPreferenceInput$ProcurementPortalInstanceEndpoint": "<p>The endpoint URL where e-invoices will be delivered in the test environment.</p>",
         "UpdateInvoiceUnitRequest$ClientToken": "<p> A unique, case-sensitive identifier that you provide to ensure idempotency of the request. </p>",
-        "UpdateProcurementPortalPreferenceStatusRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure idempotency of the request.</p>"
+        "UpdateProcurementPortalPreferenceStatusRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure idempotency of the request.</p>",
+        "VerifyProcurementPortalValidationRequest$Code": "<p>The validation code received from the procurement portal in response to a previous <code>SendProcurementPortalValidation</code> request.</p>",
+        "VerifyProcurementPortalValidationRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure idempotency of the request.</p>"
       }
     },
     "BatchGetInvoiceProfileRequest": {
@@ -647,8 +652,12 @@
         "ProcurementPortalPreferenceSummary$ProcurementPortalPreferenceArn": "<p>The Amazon Resource Name (ARN) of the procurement portal preference.</p>",
         "PutProcurementPortalPreferenceRequest$ProcurementPortalPreferenceArn": "<p>The Amazon Resource Name (ARN) of the procurement portal preference to update.</p>",
         "PutProcurementPortalPreferenceResponse$ProcurementPortalPreferenceArn": "<p>The Amazon Resource Name (ARN) of the updated procurement portal preference.</p>",
+        "SendProcurementPortalValidationRequest$ProcurementPortalPreferenceArn": "<p>The Amazon Resource Name (ARN) of the procurement portal preference to validate.</p>",
+        "SendProcurementPortalValidationResponse$ProcurementPortalPreferenceArn": "<p>The Amazon Resource Name (ARN) of the procurement portal preference for which the validation request was sent.</p>",
         "UpdateProcurementPortalPreferenceStatusRequest$ProcurementPortalPreferenceArn": "<p>The Amazon Resource Name (ARN) of the procurement portal preference to update.</p>",
-        "UpdateProcurementPortalPreferenceStatusResponse$ProcurementPortalPreferenceArn": "<p>The Amazon Resource Name (ARN) of the procurement portal preference with updated status.</p>"
+        "UpdateProcurementPortalPreferenceStatusResponse$ProcurementPortalPreferenceArn": "<p>The Amazon Resource Name (ARN) of the procurement portal preference with updated status.</p>",
+        "VerifyProcurementPortalValidationRequest$ProcurementPortalPreferenceArn": "<p>The Amazon Resource Name (ARN) of the procurement portal preference to validate.</p>",
+        "VerifyProcurementPortalValidationResponse$ProcurementPortalPreferenceArn": "<p>The Amazon Resource Name (ARN) of the procurement portal preference for which validation was completed.</p>"
       }
     },
     "ProcurementPortalPreferenceSelector": {
@@ -784,6 +793,14 @@
       "refs": {
         "ProcurementPortalPreferenceSelector$SellerOfRecords": "<p> The list of seller of record IDs to which this preference applies. </p>"
       }
+    },
+    "SendProcurementPortalValidationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SendProcurementPortalValidationResponse": {
+      "base": null,
+      "refs": {}
     },
     "SensitiveBasicStringWithoutSpace": {
       "base": null,
@@ -964,6 +981,14 @@
       "refs": {
         "ValidationException$reason": "<p>You don't have sufficient access to perform this action. </p>"
       }
+    },
+    "VerifyProcurementPortalValidationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "VerifyProcurementPortalValidationResponse": {
+      "base": null,
+      "refs": {}
     },
     "Year": {
       "base": null,

@@ -25,6 +25,7 @@
     "CreateHsmClientCertificate": "<p>Creates an HSM client certificate that an Amazon Redshift cluster will use to connect to the client's HSM in order to store and retrieve the keys used to encrypt the cluster databases.</p> <p>The command returns a public key, which you must store in the HSM. In addition to creating the HSM certificate, you must create an Amazon Redshift HSM configuration that provides a cluster the information needed to store and use encryption keys in the HSM. For more information, go to <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-db-encryption.html#working-with-HSM\">Hardware Security Modules</a> in the <i>Amazon Redshift Cluster Management Guide</i>.</p>",
     "CreateHsmConfiguration": "<p>Creates an HSM configuration that contains the information required by an Amazon Redshift cluster to store and use database encryption keys in a Hardware Security Module (HSM). After creating the HSM configuration, you can specify it as a parameter when creating a cluster. The cluster will then store its encryption keys in the HSM.</p> <p>In addition to creating an HSM configuration, you must also create an HSM client certificate. For more information, go to <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-HSM.html\">Hardware Security Modules</a> in the Amazon Redshift Cluster Management Guide.</p>",
     "CreateIntegration": "<p>Creates a zero-ETL integration or S3 event integration with Amazon Redshift.</p>",
+    "CreateQev2IdcApplication": "<p>Creates an Amazon Redshift Query Editor (QEV2) IAM Identity Center application.</p>",
     "CreateRedshiftIdcApplication": "<p>Creates an Amazon Redshift application for use with IAM Identity Center.</p>",
     "CreateScheduledAction": "<p>Creates a scheduled action. A scheduled action contains a schedule and an Amazon Redshift API action. For example, you can create a schedule of when to run the <code>ResizeCluster</code> API operation. </p>",
     "CreateSnapshotCopyGrant": "<p>Creates a snapshot copy grant that permits Amazon Redshift to use an encrypted symmetric key from Key Management Service (KMS) to encrypt copied snapshots in a destination region.</p> <p> For more information about managing snapshot copy grants, go to <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-db-encryption.html\">Amazon Redshift Database Encryption</a> in the <i>Amazon Redshift Cluster Management Guide</i>. </p>",
@@ -45,6 +46,7 @@
     "DeleteHsmConfiguration": "<p>Deletes the specified Amazon Redshift HSM configuration.</p>",
     "DeleteIntegration": "<p>Deletes a zero-ETL integration or S3 event integration with Amazon Redshift.</p>",
     "DeletePartner": "<p>Deletes a partner integration from a cluster. Data can still flow to the cluster until the integration is deleted at the partner's website.</p>",
+    "DeleteQev2IdcApplication": "<p>Deletes an Amazon Redshift Query Editor (QEV2) IAM Identity Center application.</p>",
     "DeleteRedshiftIdcApplication": "<p>Deletes an Amazon Redshift IAM Identity Center application.</p>",
     "DeleteResourcePolicy": "<p>Deletes the resource policy for a specified resource.</p>",
     "DeleteScheduledAction": "<p>Deletes a scheduled action. </p>",
@@ -82,6 +84,7 @@
     "DescribeNodeConfigurationOptions": "<p>Returns properties of possible node configurations such as node type, number of nodes, and disk usage for the specified action type.</p>",
     "DescribeOrderableClusterOptions": "<p>Returns a list of orderable cluster options. Before you create a new cluster you can use this operation to find what options are available, such as the EC2 Availability Zones (AZ) in the specific Amazon Web Services Region that you can specify, and the node types you can request. The node types differ by available storage, memory, CPU and price. With the cost involved you might want to obtain a list of cluster options in the specific region and specify values when creating a cluster. For more information about managing clusters, go to <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-clusters.html\">Amazon Redshift Clusters</a> in the <i>Amazon Redshift Cluster Management Guide</i>.</p>",
     "DescribePartners": "<p>Returns information about the partner integrations defined for a cluster.</p>",
+    "DescribeQev2IdcApplications": "<p>Lists the Amazon Redshift Query Editor (QEV2) IAM Identity Center applications. To retrieve additional results, use the MaxRecords and Marker parameters.</p>",
     "DescribeRedshiftIdcApplications": "<p>Lists the Amazon Redshift IAM Identity Center applications.</p>",
     "DescribeReservedNodeExchangeStatus": "<p>Returns exchange status details and associated metadata for a reserved-node exchange. Statuses include such values as in progress and requested.</p>",
     "DescribeReservedNodeOfferings": "<p>Returns a list of the available reserved node offerings by Amazon Redshift with their descriptions including the node type, the fixed and recurring costs of reserving the node and duration the node will be reserved for you. These descriptions help you determine which reserve node offering you want to purchase. You then use the unique offering ID in you call to <a>PurchaseReservedNodeOffering</a> to reserve one or more nodes for your Amazon Redshift cluster. </p> <p> For more information about reserved node offerings, go to <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/purchase-reserved-node-instance.html\">Purchasing Reserved Nodes</a> in the <i>Amazon Redshift Cluster Management Guide</i>.</p>",
@@ -122,6 +125,7 @@
     "ModifyEventSubscription": "<p>Modifies an existing Amazon Redshift event notification subscription.</p>",
     "ModifyIntegration": "<p>Modifies a zero-ETL integration or S3 event integration with Amazon Redshift.</p>",
     "ModifyLakehouseConfiguration": "<p>Modifies the lakehouse configuration for a cluster. This operation allows you to manage Amazon Redshift federated permissions and Amazon Web Services IAM Identity Center trusted identity propagation.</p>",
+    "ModifyQev2IdcApplication": "<p>Modifies an Amazon Redshift Query Editor (QEV2) IAM Identity Center application.</p>",
     "ModifyRedshiftIdcApplication": "<p>Changes an existing Amazon Redshift IAM Identity Center application.</p>",
     "ModifyScheduledAction": "<p>Modifies a scheduled action. </p>",
     "ModifySnapshotCopyRetentionPeriod": "<p>Modifies the number of days to retain snapshots in the destination Amazon Web Services Region after they are copied from the source Amazon Web Services Region. By default, this operation only changes the retention period of copied automated snapshots. The retention periods for both new and existing copied automated snapshots are updated with the new retention period. You can set the manual option to change only the retention periods of copied manual snapshots. If you set this option, only newly copied manual snapshots have the new retention period. </p>",
@@ -914,6 +918,14 @@
       "base": null,
       "refs": {}
     },
+    "CreateQev2IdcApplicationMessage": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateQev2IdcApplicationResult": {
+      "base": null,
+      "refs": {}
+    },
     "CreateRedshiftIdcApplicationMessage": {
       "base": null,
       "refs": {}
@@ -1135,6 +1147,10 @@
       "base": null,
       "refs": {}
     },
+    "DeleteQev2IdcApplicationMessage": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteRedshiftIdcApplicationMessage": {
       "base": null,
       "refs": {}
@@ -1344,6 +1360,14 @@
       "refs": {}
     },
     "DescribePartnersOutputMessage": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeQev2IdcApplicationsMessage": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeQev2IdcApplicationsResult": {
       "base": null,
       "refs": {}
     },
@@ -1772,8 +1796,11 @@
     "IdcDisplayNameString": {
       "base": null,
       "refs": {
+        "CreateQev2IdcApplicationMessage$IdcDisplayName": "<p>The display name for the Amazon Redshift Query Editor (QEV2) IAM Identity Center application. It appears in the console.</p>",
         "CreateRedshiftIdcApplicationMessage$IdcDisplayName": "<p>The display name for the Amazon Redshift IAM Identity Center application instance. It appears in the console.</p>",
+        "ModifyQev2IdcApplicationMessage$IdcDisplayName": "<p>The display name for the Amazon Redshift Query Editor (QEV2) IAM Identity Center application. It appears in the console.</p>",
         "ModifyRedshiftIdcApplicationMessage$IdcDisplayName": "<p>The display name for the Amazon Redshift IAM Identity Center application to change. It appears on the console.</p>",
+        "Qev2IdcApplication$IdcDisplayName": "<p>The display name for the Amazon Redshift Query Editor (QEV2) IAM Identity Center application. It appears in the console.</p>",
         "RedshiftIdcApplication$IdcDisplayName": "<p>The display name for the Amazon Redshift IAM Identity Center application. It appears on the console.</p>"
       }
     },
@@ -1907,6 +1934,7 @@
         "DescribeIntegrationsMessage$MaxRecords": "<p>The maximum number of response records to return in each call. If the number of remaining response records exceeds the specified <code>MaxRecords</code> value, a value is returned in a <code>marker</code> field of the response. You can retrieve the next set of records by retrying the command with the returned marker value. </p> <p>Default: <code>100</code> </p> <p>Constraints: minimum 20, maximum 100.</p>",
         "DescribeNodeConfigurationOptionsMessage$MaxRecords": "<p>The maximum number of response records to return in each call. If the number of remaining response records exceeds the specified <code>MaxRecords</code> value, a value is returned in a <code>marker</code> field of the response. You can retrieve the next set of records by retrying the command with the returned marker value. </p> <p>Default: <code>500</code> </p> <p>Constraints: minimum 100, maximum 500.</p>",
         "DescribeOrderableClusterOptionsMessage$MaxRecords": "<p>The maximum number of response records to return in each call. If the number of remaining response records exceeds the specified <code>MaxRecords</code> value, a value is returned in a <code>marker</code> field of the response. You can retrieve the next set of records by retrying the command with the returned marker value. </p> <p>Default: <code>100</code> </p> <p>Constraints: minimum 20, maximum 100.</p>",
+        "DescribeQev2IdcApplicationsMessage$MaxRecords": "<p>The maximum number of response records to return in each call. If the number of remaining response records exceeds the specified MaxRecords value, a value is returned in a marker field of the response. You can retrieve the next set of records by retrying the command with the returned marker value.</p>",
         "DescribeRedshiftIdcApplicationsMessage$MaxRecords": "<p>The maximum number of response records to return in each call. If the number of remaining response records exceeds the specified MaxRecords value, a value is returned in a marker field of the response. You can retrieve the next set of records by retrying the command with the returned marker value.</p>",
         "DescribeReservedNodeExchangeStatusInputMessage$MaxRecords": "<p>The maximum number of response records to return in each call. If the number of remaining response records exceeds the specified <code>MaxRecords</code> value, a value is returned in a <code>Marker</code> field of the response. You can retrieve the next set of records by retrying the command with the returned marker value.</p>",
         "DescribeReservedNodeOfferingsMessage$MaxRecords": "<p>The maximum number of response records to return in each call. If the number of remaining response records exceeds the specified <code>MaxRecords</code> value, a value is returned in a <code>marker</code> field of the response. You can retrieve the next set of records by retrying the command with the returned marker value. </p> <p>Default: <code>100</code> </p> <p>Constraints: minimum 20, maximum 100.</p>",
@@ -2360,6 +2388,14 @@
       "base": null,
       "refs": {}
     },
+    "ModifyQev2IdcApplicationMessage": {
+      "base": null,
+      "refs": {}
+    },
+    "ModifyQev2IdcApplicationResult": {
+      "base": null,
+      "refs": {}
+    },
     "ModifyRedshiftIdcApplicationMessage": {
       "base": null,
       "refs": {}
@@ -2621,6 +2657,35 @@
     },
     "PutResourcePolicyResult": {
       "base": null,
+      "refs": {}
+    },
+    "Qev2IdcApplication": {
+      "base": "<p>Contains configuration and status information for an Amazon Redshift Query Editor (QEV2) application that is registered with IAM Identity Center.</p>",
+      "refs": {
+        "CreateQev2IdcApplicationResult$Qev2IdcApplication": null,
+        "ModifyQev2IdcApplicationResult$Qev2IdcApplication": null,
+        "Qev2IdcApplicationList$member": null
+      }
+    },
+    "Qev2IdcApplicationAlreadyExistsFault": {
+      "base": "<p>The Amazon Redshift Query Editor (QEV2) IAM Identity Center application already exists. Use a different application name or describe existing applications to find the ARN.</p>",
+      "refs": {}
+    },
+    "Qev2IdcApplicationList": {
+      "base": null,
+      "refs": {
+        "DescribeQev2IdcApplicationsResult$Qev2IdcApplications": "<p>The list of Amazon Redshift Query Editor (QEV2) IAM Identity Center applications.</p>"
+      }
+    },
+    "Qev2IdcApplicationName": {
+      "base": null,
+      "refs": {
+        "CreateQev2IdcApplicationMessage$Qev2IdcApplicationName": "<p>The name of the Amazon Redshift Query Editor (QEV2) application in IAM Identity Center.</p>",
+        "Qev2IdcApplication$Qev2IdcApplicationName": "<p>The name of the Amazon Redshift Query Editor (QEV2) application in IAM Identity Center.</p>"
+      }
+    },
+    "Qev2IdcApplicationNotExistsFault": {
+      "base": "<p>The specified Amazon Redshift Query Editor (QEV2) IAM Identity Center application doesn't exist. Verify that the application ARN is correct and that the application exists in this Region.</p>",
       "refs": {}
     },
     "ReadWriteAccess": {
@@ -3470,6 +3535,7 @@
         "CreateHsmConfigurationMessage$HsmPartitionPassword": "<p>The password required to access the HSM partition.</p>",
         "CreateHsmConfigurationMessage$HsmServerPublicCertificate": "<p>The HSMs public certificate file. When using Cloud HSM, the file name is server.pem.</p>",
         "CreateIntegrationMessage$KMSKeyId": "<p>An Key Management Service (KMS) key identifier for the key to use to encrypt the integration. If you don't specify an encryption key, the default Amazon Web Services owned key is used.</p>",
+        "CreateQev2IdcApplicationMessage$IdcInstanceArn": "<p>The Amazon Resource Name (ARN) of the IAM Identity Center instance used to create the Amazon Redshift Query Editor (QEV2) managed application.</p>",
         "CreateRedshiftIdcApplicationMessage$IdcInstanceArn": "<p>The Amazon resource name (ARN) of the IAM Identity Center instance where Amazon Redshift creates a new managed application.</p>",
         "CreateRedshiftIdcApplicationMessage$IamRoleArn": "<p>The IAM role ARN for the Amazon Redshift IAM Identity Center application instance. It has the required permissions to be assumed and invoke the IDC Identity Center API.</p>",
         "CreateScheduledActionMessage$ScheduledActionName": "<p>The name of the scheduled action. The name must be unique within an account. For more information about this parameter, see <a>ScheduledAction</a>. </p>",
@@ -3507,6 +3573,7 @@
         "DeleteEventSubscriptionMessage$SubscriptionName": "<p>The name of the Amazon Redshift event notification subscription to be deleted.</p>",
         "DeleteHsmClientCertificateMessage$HsmClientCertificateIdentifier": "<p>The identifier of the HSM client certificate to be deleted.</p>",
         "DeleteHsmConfigurationMessage$HsmConfigurationIdentifier": "<p>The identifier of the Amazon Redshift HSM configuration to be deleted.</p>",
+        "DeleteQev2IdcApplicationMessage$Qev2IdcApplicationArn": "<p>The Amazon Resource Name (ARN) for the Amazon Redshift Query Editor (QEV2) IAM Identity Center application to delete.</p>",
         "DeleteRedshiftIdcApplicationMessage$RedshiftIdcApplicationArn": "<p>The ARN for a deleted Amazon Redshift IAM Identity Center application.</p>",
         "DeleteResourcePolicyMessage$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource of which its resource policy is deleted.</p>",
         "DeleteScheduledActionMessage$ScheduledActionName": "<p>The name of the scheduled action to delete. </p>",
@@ -3579,6 +3646,9 @@
         "DescribeOrderableClusterOptionsMessage$ClusterVersion": "<p>The version filter value. Specify this parameter to show only the available offerings matching the specified version.</p> <p>Default: All versions.</p> <p>Constraints: Must be one of the version returned from <a>DescribeClusterVersions</a>.</p>",
         "DescribeOrderableClusterOptionsMessage$NodeType": "<p>The node type filter value. Specify this parameter to show only the available offerings matching the specified node type.</p>",
         "DescribeOrderableClusterOptionsMessage$Marker": "<p>An optional parameter that specifies the starting point to return a set of response records. When the results of a <a>DescribeOrderableClusterOptions</a> request exceed the value specified in <code>MaxRecords</code>, Amazon Web Services returns a value in the <code>Marker</code> field of the response. You can retrieve the next set of response records by providing the returned marker value in the <code>Marker</code> parameter and retrying the request. </p>",
+        "DescribeQev2IdcApplicationsMessage$Qev2IdcApplicationArn": "<p>The Amazon Resource Name (ARN) for the Amazon Redshift Query Editor (QEV2) application that integrates with IAM Identity Center.</p>",
+        "DescribeQev2IdcApplicationsMessage$Marker": "<p>A value that indicates the starting point for the next set of response records in a subsequent request. If a value is returned in a response, you can retrieve the next set of records by providing this returned marker value in the Marker parameter and retrying the command. If the Marker field is empty, all response records have been retrieved for the request. </p>",
+        "DescribeQev2IdcApplicationsResult$Marker": "<p>A value that indicates the starting point for the next set of response records in a subsequent request. If a value is returned in a response, you can retrieve the next set of records by providing this returned marker value in the Marker parameter and retrying the command. If the Marker field is empty, all response records have been retrieved for the request. </p>",
         "DescribeRedshiftIdcApplicationsMessage$RedshiftIdcApplicationArn": "<p>The ARN for the Redshift application that integrates with IAM Identity Center.</p>",
         "DescribeRedshiftIdcApplicationsMessage$Marker": "<p>A value that indicates the starting point for the next set of response records in a subsequent request. If a value is returned in a response, you can retrieve the next set of records by providing this returned marker value in the Marker parameter and retrying the command. If the Marker field is empty, all response records have been retrieved for the request. </p>",
         "DescribeRedshiftIdcApplicationsResult$Marker": "<p>A value that indicates the starting point for the next set of response records in a subsequent request. If a value is returned in a response, you can retrieve the next set of records by providing this returned marker value in the Marker parameter and retrying the command. If the Marker field is empty, all response records have been retrieved for the request. </p>",
@@ -3747,6 +3817,7 @@
         "ModifyEventSubscriptionMessage$Severity": "<p>Specifies the Amazon Redshift event severity to be published by the event notification subscription.</p> <p>Values: ERROR, INFO</p>",
         "ModifyLakehouseConfigurationMessage$ClusterIdentifier": "<p>The unique identifier of the cluster whose lakehouse configuration you want to modify.</p>",
         "ModifyLakehouseConfigurationMessage$LakehouseIdcApplicationArn": "<p>The Amazon Resource Name (ARN) of the IAM Identity Center application used for enabling Amazon Web Services IAM Identity Center trusted identity propagation on a cluster enabled with Amazon Redshift federated permissions.</p>",
+        "ModifyQev2IdcApplicationMessage$Qev2IdcApplicationArn": "<p>The Amazon Resource Name (ARN) for the Amazon Redshift Query Editor (QEV2) application that integrates with IAM Identity Center.</p>",
         "ModifyRedshiftIdcApplicationMessage$RedshiftIdcApplicationArn": "<p>The ARN for the Redshift application that integrates with IAM Identity Center.</p>",
         "ModifyRedshiftIdcApplicationMessage$IamRoleArn": "<p>The IAM role ARN associated with the Amazon Redshift IAM Identity Center application to change. It has the required permissions to be assumed and invoke the IDC Identity Center API.</p>",
         "ModifyScheduledActionMessage$ScheduledActionName": "<p>The name of the scheduled action to modify. </p>",
@@ -3786,6 +3857,10 @@
         "PurchaseReservedNodeOfferingMessage$ReservedNodeOfferingId": "<p>The unique identifier of the reserved node offering you want to purchase.</p>",
         "PutResourcePolicyMessage$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource of which its resource policy is updated.</p>",
         "PutResourcePolicyMessage$Policy": "<p>The content of the resource policy being updated.</p>",
+        "Qev2IdcApplication$IdcInstanceArn": "<p>The Amazon Resource Name (ARN) for the IAM Identity Center instance that the Amazon Redshift Query Editor (QEV2) application integrates with.</p>",
+        "Qev2IdcApplication$Qev2IdcApplicationArn": "<p>The Amazon Resource Name (ARN) for the Amazon Redshift Query Editor (QEV2) application that integrates with IAM Identity Center.</p>",
+        "Qev2IdcApplication$IdcManagedApplicationArn": "<p>The Amazon Resource Name (ARN) for the Amazon Redshift Query Editor (QEV2) IAM Identity Center managed application.</p>",
+        "Qev2IdcApplication$IdcOnboardStatus": "<p>The onboarding status for the Amazon Redshift Query Editor (QEV2) IAM Identity Center application.</p>",
         "RebootClusterMessage$ClusterIdentifier": "<p>The cluster identifier.</p>",
         "Recommendation$Id": "<p>A unique identifier of the Advisor recommendation.</p>",
         "Recommendation$ClusterIdentifier": "<p>The unique identifier of the cluster for which the recommendation is returned.</p>",
@@ -4161,6 +4236,7 @@
         "CreateHsmClientCertificateMessage$Tags": "<p>A list of tag instances.</p>",
         "CreateHsmConfigurationMessage$Tags": "<p>A list of tag instances.</p>",
         "CreateIntegrationMessage$TagList": "<p>A list of tags.</p>",
+        "CreateQev2IdcApplicationMessage$Tags": "<p>A list of tags to associate with the application. Tags are key-value pairs that you can use to organize and identify your resources.</p>",
         "CreateRedshiftIdcApplicationMessage$Tags": "<p>A list of tags.</p>",
         "CreateSnapshotCopyGrantMessage$Tags": "<p>A list of tag instances.</p>",
         "CreateSnapshotScheduleMessage$Tags": "<p>An optional set of tags you can use to search for the schedule.</p>",
@@ -4172,6 +4248,7 @@
         "HsmConfiguration$Tags": "<p>The list of tags for the HSM configuration.</p>",
         "IPRange$Tags": "<p>The list of tags for the IP range.</p>",
         "Integration$Tags": "<p>The list of tags associated with the integration.</p>",
+        "Qev2IdcApplication$Tags": "<p>A list of tags associated with the application. Tags are key-value pairs that you can use to organize and identify your resources.</p>",
         "RedshiftIdcApplication$Tags": "<p>A list of tags.</p>",
         "Snapshot$Tags": "<p>The list of tags for the cluster snapshot.</p>",
         "SnapshotCopyGrant$Tags": "<p>A list of tag instances.</p>",

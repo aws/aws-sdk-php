@@ -1109,7 +1109,9 @@
         "gen1LookbackDuration":{"shape":"Duration"},
         "retentionCheckInterval":{"shape":"Duration"},
         "deleteGracePeriod":{"shape":"Duration"},
-        "hardDeleteDefaultDuration":{"shape":"Duration"}
+        "hardDeleteDefaultDuration":{"shape":"Duration"},
+        "pluginRepositoryUrl":{"shape":"String"},
+        "pluginRepositorySecretArn":{"shape":"PluginRepositorySecretArn"}
       }
     },
     "InfluxDBv3CoreParametersDataFusionConfigString":{
@@ -1270,6 +1272,8 @@
         "retentionCheckInterval":{"shape":"Duration"},
         "deleteGracePeriod":{"shape":"Duration"},
         "hardDeleteDefaultDuration":{"shape":"Duration"},
+        "pluginRepositoryUrl":{"shape":"String"},
+        "pluginRepositorySecretArn":{"shape":"PluginRepositorySecretArn"},
         "ingestQueryInstances":{"shape":"InfluxDBv3EnterpriseParametersIngestQueryInstancesInteger"},
         "queryOnlyInstances":{"shape":"InfluxDBv3EnterpriseParametersQueryOnlyInstancesInteger"},
         "dedicatedCompactor":{"shape":"Boolean"},
@@ -1624,6 +1628,12 @@
       "max":4,
       "min":2,
       "pattern":"(?:100|[1-9]?[0-9])%"
+    },
+    "PluginRepositorySecretArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:(aws|aws-cn|aws-us-gov):secretsmanager:[a-z0-9\\-]+:[0-9]{12}:secret:[a-zA-Z0-9/_+=.@\\-]+"
     },
     "Port":{
       "type":"integer",

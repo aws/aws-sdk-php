@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\TimestreamInfluxDB` - This release adds support for custom plugins in Amazon Timestream for InfluxDB. InfluxDB 3 Core and Enterprise DB parameter groups now accept a plugin repository URL and optional AWS Secrets Manager secret ARN, so the Processing Engine loads your Python plugins from a public or private repository.
+* `Aws\SSM` - Added a WarningMessage field to Automation along with corresponding public documentation.
+* `Aws\SecurityHub` - Security Hub standard and control multicloud API documentation updates
+* `Aws\EntityResolution` - Add support for real time matching with AWS Entity Resolution matching workflows with advanced rule sets.
+* `Aws\Invoicing` - Added the SendProcurementPortalValidation and VerifyProcurementPortalValidation APIs. You can use the AWS SDKs to self-service activate your Procurement Portal Preferences created on the Billing Preferences page with a one-time-passcode (OTP) delivered to your portal.
+* `Aws\RedshiftDataAPIService` - update the workgroupArn to include EUSC partition, tests in THF Gamma and Prod no issue
+* `Aws\EMRContainers` - Added support for the DeleteSecurityConfiguration API, which allows customers to delete security configurations in Amazon EMR on EKS. Also added authenticationConfiguration in securityConfigurationdata structure.
+* `Aws\Inspector2` - GA date - July 21st 2026, remove Tags field from ListCodeSecurityIntegration and ListCodeSecurityScanConfiguration.
+* `Aws\Redshift` - Amazon Redshift - Added support for managing Query Editor V2 IAM Identity Center applications via new CreateQev2IdcApplication, DescribeQev2IdcApplications, ModifyQev2IdcApplication, and DeleteQev2IdcApplication API operations.
+
 ## 3.388.10 - 2026-07-20
 
 * `Aws\Inspector2` - Adds Windows path support for deep inspection. Fixes tag propagation for connector CloudFormation stack operations.

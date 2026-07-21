@@ -9,6 +9,7 @@
     "CreateVirtualCluster": "<p>Creates a virtual cluster. Virtual cluster is a managed entity on Amazon EMR on EKS. You can create, describe, list and delete virtual clusters. They do not consume any additional resource in your system. A single virtual cluster maps to a single Kubernetes namespace. Given this relationship, you can model virtual clusters the same way you model Kubernetes namespaces to meet your requirements.</p>",
     "DeleteJobTemplate": "<p>Deletes a job template. Job template stores values of StartJobRun API request in a template and can be used to start a job run. Job template allows two use cases: avoid repeating recurring StartJobRun API request values, enforcing certain values in StartJobRun API request.</p>",
     "DeleteManagedEndpoint": "<p>Deletes a managed endpoint. A managed endpoint is a gateway that connects Amazon EMR Studio to Amazon EMR on EKS so that Amazon EMR Studio can communicate with your virtual cluster.</p>",
+    "DeleteSecurityConfiguration": "<p>Deletes a security configuration.</p>",
     "DeleteVirtualCluster": "<p>Deletes a virtual cluster. Virtual cluster is a managed entity on Amazon EMR on EKS. You can create, describe, list and delete virtual clusters. They do not consume any additional resource in your system. A single virtual cluster maps to a single Kubernetes namespace. Given this relationship, you can model virtual clusters the same way you model Kubernetes namespaces to meet your requirements.</p>",
     "DescribeJobRun": "<p>Displays detailed information about a job run. A job run is a unit of work, such as a Spark jar, PySpark script, or SparkSQL query, that you submit to Amazon EMR on EKS.</p>",
     "DescribeJobTemplate": "<p>Displays detailed information about a specified job template. Job template stores values of StartJobRun API request in a template and can be used to start a job run. Job template allows two use cases: avoid repeating recurring StartJobRun API request values, enforcing certain values in StartJobRun API request.</p>",
@@ -41,6 +42,12 @@
         "ManagedLogs$allowAWSToRetainLogs": "<p>Determines whether Amazon Web Services can retain logs.</p>"
       }
     },
+    "AuthenticationConfiguration": {
+      "base": "<p>Authentication configuration for the security configuration.</p>",
+      "refs": {
+        "SecurityConfigurationData$authenticationConfiguration": "<p>Authentication-related configuration input for the security configuration.</p>"
+      }
+    },
     "AuthorizationConfiguration": {
       "base": "<p>Authorization-related configuration inputs for the security configuration.</p>",
       "refs": {
@@ -57,6 +64,8 @@
       "base": null,
       "refs": {
         "CreateVirtualClusterRequest$sessionEnabled": "<p>Indicates whether the virtual cluster has session support enabled.</p>",
+        "IdentityCenterConfiguration$enableIdentityCenter": "<p>Determines whether Identity Center is enabled for the security configuration.</p>",
+        "IdentityCenterConfiguration$identityCenterApplicationAssignmentRequired": "<p>Determines whether user assignment is required for the Identity Center application.</p>",
         "ListVirtualClustersRequest$eksAccessEntryIntegrated": "<p>Optional Boolean that specifies whether the operation should return the virtual clusters that have the access entry integration enabled or disabled. If not specified, the operation returns all applicable virtual clusters.</p>",
         "VirtualCluster$sessionEnabled": "<p>Indicates whether the virtual cluster has session support enabled. </p>"
       }
@@ -240,6 +249,14 @@
       "base": null,
       "refs": {}
     },
+    "DeleteSecurityConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteSecurityConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteVirtualClusterRequest": {
       "base": null,
       "refs": {}
@@ -296,6 +313,12 @@
       "base": "<p>The information about the Amazon EKS cluster.</p>",
       "refs": {
         "ContainerInfo$eksInfo": "<p>The information about the Amazon EKS cluster.</p>"
+      }
+    },
+    "EmrIdentityCenterApplicationARN": {
+      "base": null,
+      "refs": {
+        "IdentityCenterConfiguration$emrIdentityCenterApplicationARN": "<p>The ARN of the EMR Identity Center application.</p>"
       }
     },
     "EncryptionConfiguration": {
@@ -385,15 +408,34 @@
       "base": null,
       "refs": {}
     },
+    "IAMConfiguration": {
+      "base": "<p>IAM configuration for the security configuration.</p>",
+      "refs": {
+        "AuthenticationConfiguration$iamConfiguration": "<p>IAM configuration for authentication in the security configuration.</p>"
+      }
+    },
     "IAMRoleArn": {
       "base": null,
       "refs": {
         "CreateManagedEndpointRequest$executionRoleArn": "<p>The ARN of the execution role.</p>",
         "Endpoint$executionRoleArn": "<p>The execution role ARN of the endpoint.</p>",
         "GetManagedEndpointSessionCredentialsRequest$executionRoleArn": "<p>The IAM Execution Role ARN that will be used by the job run. </p>",
+        "IAMConfiguration$systemRole": "<p>The ARN of the system role used by the security configuration.</p>",
         "JobRun$executionRoleArn": "<p>The execution role ARN of the job run.</p>",
         "LakeFormationConfiguration$queryEngineRoleArn": "<p>The query engine IAM role ARN that is tied to the secure Spark job. The <code>QueryEngine</code> role assumes the <code>JobExecutionRole</code> to execute all the Lake Formation calls.</p>",
         "StartJobRunRequest$executionRoleArn": "<p>The execution role ARN for the job run.</p>"
+      }
+    },
+    "IdentityCenterConfiguration": {
+      "base": "<p>Identity Center related configuration for the security configuration.</p>",
+      "refs": {
+        "AuthenticationConfiguration$identityCenterConfiguration": "<p>Identity Center configuration for authentication in the security configuration.</p>"
+      }
+    },
+    "IdentityCenterInstanceARN": {
+      "base": null,
+      "refs": {
+        "IdentityCenterConfiguration$identityCenterInstanceARN": "<p>The ARN of the Identity Center instance.</p>"
       }
     },
     "InTransitEncryptionConfiguration": {
@@ -691,6 +733,8 @@
         "DeleteManagedEndpointRequest$virtualClusterId": "<p>The ID of the endpoint's virtual cluster.</p>",
         "DeleteManagedEndpointResponse$id": "<p>The output displays the ID of the managed endpoint.</p>",
         "DeleteManagedEndpointResponse$virtualClusterId": "<p>The output displays the ID of the endpoint's virtual cluster.</p>",
+        "DeleteSecurityConfigurationRequest$id": "<p>The ID of the security configuration to delete.</p>",
+        "DeleteSecurityConfigurationResponse$id": "<p>The ID of the security configuration that was deleted.</p>",
         "DeleteVirtualClusterRequest$id": "<p>The ID of the virtual cluster that will be deleted.</p>",
         "DeleteVirtualClusterResponse$id": "<p>This output contains the ID of the virtual cluster that will be deleted. </p>",
         "DescribeJobRunRequest$id": "<p>The ID of the job run request. </p>",
