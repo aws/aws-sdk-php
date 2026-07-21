@@ -51,9 +51,8 @@ class EcsCredentialProvider
      */
     public function __construct(array $config = [])
     {
-        $this->timeout = (float) isset($config['timeout'])
-            ? $config['timeout']
-            : (getenv(self::ENV_TIMEOUT) ?: self::DEFAULT_ENV_TIMEOUT);
+        $timeout = $config['timeout'] ?? (getenv(self::ENV_TIMEOUT) ?: self::DEFAULT_ENV_TIMEOUT);
+        $this->timeout = is_string($timeout) && is_numeric($timeout) ? (float) $timeout : $timeout;
         $this->retries = (int) isset($config['retries'])
             ? $config['retries']
             : ((int) getenv(self::ENV_RETRIES) ?: self::DEFAULT_ENV_RETRIES);
