@@ -244,9 +244,13 @@ class Transfer implements PromisorInterface
 
     private function resolvesOutsideTargetDirectory($sink, $objectKey)
     {
+        // Split on both '/' and '\'. PHP on Windows treats '\' as a directory
+        // separator in fopen/mkdir/dirname, so a key containing a raw
+        // backslash byte can escape the destination if we only split on '/'.
+        $separators = '#[/\\\\]#';
         $resolved = [];
-        $sections = explode('/', $sink);
-        $targetSectionsLength = count(explode('/', $objectKey));
+        $sections = preg_split($separators, $sink);
+        $targetSectionsLength = count(preg_split($separators, $objectKey));
         $targetSections = array_slice($sections, -($targetSectionsLength + 1));
         $targetDirectory = $targetSections[0];
 
