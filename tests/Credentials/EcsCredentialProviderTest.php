@@ -108,6 +108,47 @@ class EcsCredentialProviderTest extends TestCase
         new EcsCredentialProvider();
     }
 
+    #[DataProvider('timeoutProvider')]
+    public function testNormalizesTimeout(array $config, $environmentTimeout)
+    {
+        $originalTimeout = getenv(EcsCredentialProvider::ENV_TIMEOUT);
+        if ($environmentTimeout === null) {
+            putenv(EcsCredentialProvider::ENV_TIMEOUT);
+        } else {
+            putenv(EcsCredentialProvider::ENV_TIMEOUT . '=' . $environmentTimeout);
+        }
+
+        try {
+            $expiration = time() + 1000;
+            $response = new Response(200, [], json_encode(
+                self::getCredentialArray('foo', 'baz', null, "@{$expiration}")
+            ));
+            $config['client'] = function (
+                RequestInterface $request,
+                array $options
+            ) use ($response) {
+                $this->assertSame(1.5, $options['timeout']);
+                return Promise\Create::promiseFor($response);
+            };
+
+            (new EcsCredentialProvider($config))()->wait();
+        } finally {
+            if ($originalTimeout === false) {
+                putenv(EcsCredentialProvider::ENV_TIMEOUT);
+            } else {
+                putenv(EcsCredentialProvider::ENV_TIMEOUT . '=' . $originalTimeout);
+            }
+        }
+    }
+
+    public static function timeoutProvider()
+    {
+        return [
+            'configuration' => [['timeout' => '1.5'], null],
+            'environment' => [[], '1.5'],
+        ];
+    }
+
     public function testRequestHeaderWithAuthorisationKey()
     {
         $TOKEN_VALUE = "GA%24102391AAA+BBBBB4==";

@@ -949,6 +949,43 @@ class InstanceProfileProviderTest extends TestCase
         new InstanceProfileProvider();
     }
 
+    public function testNormalizesConfiguredTimeout()
+    {
+        $originalTimeout = getenv(InstanceProfileProvider::ENV_TIMEOUT);
+        putenv(InstanceProfileProvider::ENV_TIMEOUT);
+
+        try {
+            $expiration = time() + 1000;
+            $responses = [
+                new Response(200, [], 'token'),
+                new Response(200, [], json_encode(
+                    self::getCredentialArray('foo', 'baz', null, "@{$expiration}")
+                )),
+            ];
+            $client = function (
+                RequestInterface $request,
+                array $options
+            ) use (&$responses) {
+                $this->assertSame(1.5, $options['timeout']);
+                return Promise\Create::promiseFor(array_shift($responses));
+            };
+            $provider = new InstanceProfileProvider([
+                'client' => $client,
+                'profile' => 'MockProfile',
+                'timeout' => '1.5',
+            ]);
+
+            $credentials = $provider()->wait();
+            $this->assertSame('foo', $credentials->getAccessKeyId());
+        } finally {
+            if ($originalTimeout === false) {
+                putenv(InstanceProfileProvider::ENV_TIMEOUT);
+            } else {
+                putenv(InstanceProfileProvider::ENV_TIMEOUT . '=' . $originalTimeout);
+            }
+        }
+    }
+
     #[DoesNotPerformAssertions]
     public function testEnvDisableFlag()
     {
