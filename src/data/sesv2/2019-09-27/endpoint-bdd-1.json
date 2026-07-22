@@ -110,6 +110,21 @@
             ]
         },
         {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "fn": "getAttr",
+                    "argv": [
+                        {
+                            "ref": "PartitionResult"
+                        },
+                        "name"
+                    ]
+                },
+                "aws-us-gov"
+            ]
+        },
+        {
             "fn": "booleanEquals",
             "argv": [
                 {
@@ -150,7 +165,7 @@
         {
             "conditions": [],
             "endpoint": {
-                "url": "https://{EndpointId}.endpoints.email.global.{PartitionResult#dualStackDnsSuffix}",
+                "url": "https://{EndpointId}.endpoints.email.us-gov.{PartitionResult#dualStackDnsSuffix}",
                 "properties": {
                     "authSchemes": [
                         {
@@ -170,6 +185,44 @@
             "conditions": [],
             "error": "DualStack is enabled but this partition does not support DualStack",
             "type": "error"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://{EndpointId}.endpoints.email.us-gov.{PartitionResult#dnsSuffix}",
+                "properties": {
+                    "authSchemes": [
+                        {
+                            "name": "sigv4a",
+                            "signingName": "ses",
+                            "signingRegionSet": [
+                                "*"
+                            ]
+                        }
+                    ]
+                },
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://{EndpointId}.endpoints.email.global.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {
+                    "authSchemes": [
+                        {
+                            "name": "sigv4a",
+                            "signingName": "ses",
+                            "signingRegionSet": [
+                                "*"
+                            ]
+                        }
+                    ]
+                },
+                "headers": {}
+            },
+            "type": "endpoint"
         },
         {
             "conditions": [],
@@ -274,6 +327,6 @@
         }
     ],
     "root": 2,
-    "nodeCount": 21,
-    "nodes": "/////wAAAAH/////AAAAAAAAAAMAAAAEAAAAAQAAAAUAAAAEAAAABAAAAA4F9eEQAAAAAgAAABAAAAAGAAAABAAAAA4AAAAHAAAABQAAAAoAAAAIAAAABgAAAAkF9eEPAAAABwX14Q4F9eEDAAAABgAAAAwAAAALAAAACAX14QwF9eENAAAABwAAAA0F9eELAAAACAX14QoF9eELAAAABQX14QcAAAAPAAAABgX14QgF9eEJAAAAAwAAABEF9eEGAAAABAAAABUAAAASAAAABQX14QUAAAATAAAABgAAABQF9eEEAAAABwX14QIF9eEDAAAABQX14QUF9eEB"
+    "nodeCount": 23,
+    "nodes": "/////wAAAAH/////AAAAAAAAAAMAAAAEAAAAAQAAAAUAAAAEAAAABAAAAA4F9eESAAAAAgAAABAAAAAGAAAABAAAAA4AAAAHAAAABQAAAAoAAAAIAAAABgAAAAkF9eERAAAABwX14RAF9eEDAAAABgAAAAwAAAALAAAACQX14Q4F9eEPAAAABwAAAA0F9eENAAAACQX14QwF9eENAAAABQX14QkAAAAPAAAABgX14QoF9eELAAAAAwAAABEF9eEIAAAABAAAABcAAAASAAAABQX14QcAAAATAAAABgAAABUAAAAUAAAACAX14QQF9eEGAAAABwAAABYF9eEDAAAACAX14QIF9eEFAAAABQX14QcF9eEB"
 }

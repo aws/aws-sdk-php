@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3` - Aws\S3\Transfer::resolvesOutsideTargetDirectory() now treats both '/' and '\' as directory separators when tokenizing the sink path. Aligns the legacy Transfer guard with the newer S3Transfer\DirectoryDownloader on Windows, where PHP's filesystem layer resolves backslashes as separators.
+* `Aws\GuardDuty` - Amazon GuardDuty now returns filter lifecycle metadata in GetFilter responses. The response includes createdAt and updatedAt timestamps and a version number that increments on each update, giving you visibility into when a filter was created and last modified.
+* `Aws\ElasticLoadBalancingv2` - This adds CLI examples for the IpAddressType field on SourceIpConfig, enabling Network Load Balancer listener rules to match traffic based on whether the source IP is IPv4 or IPv6.
+* `Aws\CloudWatch` - Adds documented value constraints for CloudWatch Log Alarm scheduled query configuration fields, and makes LogGroupIdentifiers optional for log alarms.
+* `Aws\PrometheusService` - Add CloudWatch dataset destinations for Amazon Managed Service for Prometheus collectors.
+* `Aws\ObservabilityAdmin` - Enablement for ALB and Bedrock Knowledge Base logs via Observability Admin Telemetry Rule for account and organization level
+* `Aws\SESv2` - Launching DEED and MREP in US GOV
+* `Aws\PartnerCentralAccount` - Adds Qualifications Association APIs that enable partners to associate a subsidiary account's qualifications with a primary account. Once associated, qualifications are shared across all connected accounts and scorecards are consolidated. Partners can start and track association and disassociation.
+* `Aws\PCS` - AWS PCS Node Lifecycle Actions provides a structured way to run custom scripts at defined points in a compute node's lifecycle directly through the AWS PCS compute node group API.
+* `Aws\ARCRegionSwitch` - Adds support for a client token in StartPlanExecution to make plan execution requests idempotent for safe retries.
+
 ## 3.388.11 - 2026-07-21
 
 * `Aws\TimestreamInfluxDB` - This release adds support for custom plugins in Amazon Timestream for InfluxDB. InfluxDB 3 Core and Enterprise DB parameter groups now accept a plugin repository URL and optional AWS Secrets Manager secret ARN, so the Processing Engine loads your Python plugins from a public or private repository.

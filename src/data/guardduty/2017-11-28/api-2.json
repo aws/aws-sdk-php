@@ -4548,6 +4548,11 @@
       "max":100,
       "min":1
     },
+    "FilterVersion":{
+      "type":"long",
+      "box":true,
+      "min":1
+    },
     "Finding":{
       "type":"structure",
       "required":[
@@ -4970,6 +4975,18 @@
         "Tags":{
           "shape":"TagMap",
           "locationName":"tags"
+        },
+        "CreatedAt":{
+          "shape":"Timestamp",
+          "locationName":"createdAt"
+        },
+        "UpdatedAt":{
+          "shape":"Timestamp",
+          "locationName":"updatedAt"
+        },
+        "Version":{
+          "shape":"FilterVersion",
+          "locationName":"version"
         }
       }
     },

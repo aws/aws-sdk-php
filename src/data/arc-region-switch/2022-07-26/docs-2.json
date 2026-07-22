@@ -194,6 +194,10 @@
       "base": null,
       "refs": {}
     },
+    "ConflictException": {
+      "base": "<p>The client token was already used with different request parameters. A client token must map to the same parameters for every request. To retry this operation, provide a new client token.</p>",
+      "refs": {}
+    },
     "CreatePlanRequest": {
       "base": null,
       "refs": {}
@@ -1293,6 +1297,12 @@
       "base": null,
       "refs": {}
     },
+    "StartPlanExecutionRequestClientTokenString": {
+      "base": null,
+      "refs": {
+        "StartPlanExecutionRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, the service ignores the request and returns the result of the original successful request. If you don't provide a client token, the service automatically generates one. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>"
+      }
+    },
     "StartPlanExecutionResponse": {
       "base": null,
       "refs": {}
@@ -1357,6 +1367,9 @@
         "AssociatedAlarmMap$key": null,
         "AuroraProvisionedScalingConfiguration$externalId": "<p>The external ID (secret key) for the configuration.</p>",
         "AuroraServerlessScalingConfiguration$externalId": "<p>The external ID (secret key) for the configuration.</p>",
+        "ConflictException$message": null,
+        "ConflictException$resourceId": "<p>The identifier of the resource involved in the client token conflict.</p>",
+        "ConflictException$resourceType": "<p>The type of the resource involved in the client token conflict.</p>",
         "CreatePlanRequest$description": "<p>The description of a Region switch plan.</p>",
         "DocumentDbConfiguration$externalId": "<p>The external ID (secret key) for the configuration.</p>",
         "EksCluster$externalId": "<p>The external ID (secret key) for the configuration.</p>",

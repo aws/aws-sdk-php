@@ -813,7 +813,7 @@
     },
     "AggregationExpression":{
       "type":"string",
-      "max":256,
+      "max":2048,
       "min":1
     },
     "AlarmArn":{
@@ -1569,7 +1569,11 @@
         "Failures":{"shape":"BatchFailures"}
       }
     },
-    "EndTimeOffset":{"type":"long"},
+    "EndTimeOffset":{
+      "type":"long",
+      "max":2592000,
+      "min":0
+    },
     "Entity":{
       "type":"structure",
       "members":{
@@ -3050,7 +3054,10 @@
     },
     "ScheduleConfiguration":{
       "type":"structure",
-      "required":["ScheduleExpression"],
+      "required":[
+        "ScheduleExpression",
+        "StartTimeOffset"
+      ],
       "members":{
         "ScheduleExpression":{"shape":"ScheduleExpression"},
         "StartTimeOffset":{"shape":"StartTimeOffset"},
@@ -3160,7 +3167,11 @@
       "type":"structure",
       "members":{}
     },
-    "StartTimeOffset":{"type":"long"},
+    "StartTimeOffset":{
+      "type":"long",
+      "max":2592000,
+      "min":1
+    },
     "Stat":{"type":"string"},
     "StateReason":{
       "type":"string",

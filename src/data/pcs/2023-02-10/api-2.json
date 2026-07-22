@@ -563,6 +563,7 @@
         "instanceConfigs":{"shape":"InstanceList"},
         "spotOptions":{"shape":"SpotOptions"},
         "slurmConfiguration":{"shape":"ComputeNodeGroupSlurmConfiguration"},
+        "nodeLifecycleActions":{"shape":"NodeLifecycleActions"},
         "errorInfo":{"shape":"ErrorInfoList"}
       }
     },
@@ -717,6 +718,7 @@
         "instanceConfigs":{"shape":"InstanceList"},
         "spotOptions":{"shape":"SpotOptions"},
         "slurmConfiguration":{"shape":"ComputeNodeGroupSlurmConfigurationRequest"},
+        "nodeLifecycleActions":{"shape":"NodeLifecycleActionsRequest"},
         "clientToken":{
           "shape":"SBClientToken",
           "idempotencyToken":true
@@ -855,6 +857,13 @@
     "ErrorInfoList":{
       "type":"list",
       "member":{"shape":"ErrorInfo"}
+    },
+    "ExecutionPolicy":{
+      "type":"string",
+      "enum":[
+        "FIRST_BOOT_ONLY",
+        "EVERY_BOOT"
+      ]
     },
     "GetClusterRequest":{
       "type":"structure",
@@ -1039,6 +1048,74 @@
         "networkType":{"shape":"NetworkType"}
       }
     },
+    "NodeLifecycleActions":{
+      "type":"structure",
+      "required":["stages"],
+      "members":{
+        "stages":{"shape":"NodeLifecycleStages"},
+        "scriptCachingPolicy":{"shape":"ScriptCachingPolicy"}
+      }
+    },
+    "NodeLifecycleActionsRequest":{
+      "type":"structure",
+      "required":["stages"],
+      "members":{
+        "stages":{"shape":"NodeLifecycleStages"},
+        "scriptCachingPolicy":{"shape":"ScriptCachingPolicy"}
+      }
+    },
+    "NodeLifecycleScript":{
+      "type":"structure",
+      "required":[
+        "name",
+        "scriptSource"
+      ],
+      "members":{
+        "name":{"shape":"NodeLifecycleScriptNameString"},
+        "scriptSource":{"shape":"ScriptSource"},
+        "arguments":{"shape":"NodeLifecycleScriptArguments"},
+        "onError":{"shape":"OnError"},
+        "executionPolicy":{"shape":"ExecutionPolicy"}
+      }
+    },
+    "NodeLifecycleScriptArgument":{
+      "type":"string",
+      "max":256,
+      "min":0
+    },
+    "NodeLifecycleScriptArguments":{
+      "type":"list",
+      "member":{"shape":"NodeLifecycleScriptArgument"},
+      "max":20,
+      "min":0
+    },
+    "NodeLifecycleScriptList":{
+      "type":"list",
+      "member":{"shape":"NodeLifecycleScript"},
+      "max":20,
+      "min":1
+    },
+    "NodeLifecycleScriptNameString":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[A-Za-z0-9][A-Za-z0-9 _-]*"
+    },
+    "NodeLifecycleStages":{
+      "type":"structure",
+      "members":{
+        "nodeBootstrapped":{"shape":"NodeLifecycleScriptList"},
+        "nodeReady":{"shape":"NodeLifecycleScriptList"}
+      }
+    },
+    "OnError":{
+      "type":"string",
+      "enum":[
+        "TERMINATE",
+        "STOP_SEQUENCE",
+        "CONTINUE"
+      ]
+    },
     "PurchaseOption":{
       "type":"string",
       "enum":[
@@ -1156,7 +1233,11 @@
       "members":{
         "nodeID":{"shape":"String"},
         "sharedSecret":{"shape":"SharedSecret"},
-        "endpoints":{"shape":"Endpoints"}
+        "endpoints":{"shape":"Endpoints"},
+        "clusterName":{"shape":"String"},
+        "computeNodeGroupId":{"shape":"String"},
+        "computeNodeGroupName":{"shape":"String"},
+        "nodeLifecycleActions":{"shape":"NodeLifecycleActions"}
       }
     },
     "RequestTagMap":{
@@ -1257,6 +1338,39 @@
     "SchedulerType":{
       "type":"string",
       "enum":["SLURM"]
+    },
+    "ScriptCachingPolicy":{
+      "type":"string",
+      "enum":[
+        "CACHE_ONCE",
+        "REFRESH_ON_REBOOT"
+      ]
+    },
+    "ScriptSource":{
+      "type":"structure",
+      "required":["scriptLocation"],
+      "members":{
+        "scriptLocation":{"shape":"ScriptSourceScriptLocationString"},
+        "s3VersionId":{"shape":"ScriptSourceS3VersionIdString"},
+        "checksum":{"shape":"ScriptSourceChecksumString"}
+      }
+    },
+    "ScriptSourceChecksumString":{
+      "type":"string",
+      "max":64,
+      "min":64,
+      "pattern":"[a-fA-F0-9]{64}"
+    },
+    "ScriptSourceS3VersionIdString":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "ScriptSourceScriptLocationString":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"(s3://[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]/.+|https://([a-zA-Z0-9](?:[a-zA-Z0-9_-]{0,61}[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,63}(?::[0-9]{1,5})?(?:[/?#][^\\s]*)?)"
     },
     "SecurityGroupId":{
       "type":"string",
@@ -1509,6 +1623,7 @@
         "scalingConfiguration":{"shape":"ScalingConfigurationRequest"},
         "iamInstanceProfileArn":{"shape":"InstanceProfileArn"},
         "slurmConfiguration":{"shape":"UpdateComputeNodeGroupSlurmConfigurationRequest"},
+        "nodeLifecycleActions":{"shape":"UpdateNodeLifecycleActionsRequest"},
         "clientToken":{
           "shape":"SBClientToken",
           "idempotencyToken":true
@@ -1533,6 +1648,14 @@
       "box":true,
       "max":10000000,
       "min":-1
+    },
+    "UpdateNodeLifecycleActionsRequest":{
+      "type":"structure",
+      "required":["stages"],
+      "members":{
+        "stages":{"shape":"NodeLifecycleStages"},
+        "scriptCachingPolicy":{"shape":"ScriptCachingPolicy"}
+      }
     },
     "UpdateQueueRequest":{
       "type":"structure",

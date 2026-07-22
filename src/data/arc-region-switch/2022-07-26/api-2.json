@@ -249,7 +249,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"IllegalStateException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"IllegalArgumentException"}
+        {"shape":"IllegalArgumentException"},
+        {"shape":"ConflictException"}
       ]
     },
     "TagResource":{
@@ -580,6 +581,20 @@
     "CancelPlanExecutionResponse":{
       "type":"structure",
       "members":{}
+    },
+    "ConflictException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"String"},
+        "resourceId":{"shape":"String"},
+        "resourceType":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
+      "exception":true
     },
     "CreatePlanRequest":{
       "type":"structure",
@@ -1908,8 +1923,18 @@
         "mode":{"shape":"ExecutionMode"},
         "comment":{"shape":"ExecutionComment"},
         "latestVersion":{"shape":"String"},
-        "recoveryExecutionId":{"shape":"RecoveryExecutionId"}
+        "recoveryExecutionId":{"shape":"RecoveryExecutionId"},
+        "clientToken":{
+          "shape":"StartPlanExecutionRequestClientTokenString",
+          "idempotencyToken":true
+        }
       }
+    },
+    "StartPlanExecutionRequestClientTokenString":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[\\x21-\\x7E]+"
     },
     "StartPlanExecutionResponse":{
       "type":"structure",

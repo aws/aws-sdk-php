@@ -1619,6 +1619,12 @@
         "UpdateFilterRequest$Rank": "<p>Specifies the position of the filter in the list of current filters. Also specifies the order in which this filter is applied to the findings.</p>"
       }
     },
+    "FilterVersion": {
+      "base": null,
+      "refs": {
+        "GetFilterResponse$Version": "<p>The version of the filter. Every time the filter is updated, the version increments by 1. This field is not available for legacy filters that were created before the lifecycle metadata feature was enabled.</p>"
+      }
+    },
     "Finding": {
       "base": "<p>Contains information about the finding that is generated when abnormal or suspicious activity is detected.</p>",
       "refs": {
@@ -4587,6 +4593,8 @@
         "EksCluster$CreatedAt": "<p>The timestamp indicating when the Amazon EKS cluster was created, in UTC format.</p>",
         "EksClusterDetails$CreatedAt": "<p>The timestamp when the EKS cluster was created.</p>",
         "FindingTypeStatistics$LastGeneratedAt": "<p>The timestamp at which this finding type was last generated in your environment.</p>",
+        "GetFilterResponse$CreatedAt": "<p>The timestamp when the filter was created. This field is not available for filters that were created before the lifecycle metadata feature was enabled (legacy filters).</p>",
+        "GetFilterResponse$UpdatedAt": "<p>The timestamp when the filter was last updated. For legacy filters, this field is present only after the filter has been updated at least once since the lifecycle metadata feature was enabled.</p>",
         "GetMalwareProtectionPlanResponse$CreatedAt": "<p>The timestamp when the Malware Protection plan resource was created.</p>",
         "GetMalwareScanResponse$ScanStartedAt": "<p>The timestamp representing when the malware scan was started.</p>",
         "GetMalwareScanResponse$ScanCompletedAt": "<p>The timestamp representing when the malware scan was completed.</p>",

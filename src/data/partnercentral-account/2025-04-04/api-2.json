@@ -272,6 +272,57 @@
       ],
       "readonly":true
     },
+    "GetQualificationsAssociationDetails":{
+      "name":"GetQualificationsAssociationDetails",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetQualificationsAssociationDetailsRequest"},
+      "output":{"shape":"GetQualificationsAssociationDetailsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "GetQualificationsAssociationTask":{
+      "name":"GetQualificationsAssociationTask",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetQualificationsAssociationTaskRequest"},
+      "output":{"shape":"GetQualificationsAssociationTaskResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "GetQualificationsDisassociationTask":{
+      "name":"GetQualificationsDisassociationTask",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetQualificationsDisassociationTaskRequest"},
+      "output":{"shape":"GetQualificationsDisassociationTaskResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
     "GetVerification":{
       "name":"GetVerification",
       "http":{
@@ -436,6 +487,42 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ServiceQuotaExceededException"}
+      ],
+      "idempotent":true
+    },
+    "StartQualificationsAssociationTask":{
+      "name":"StartQualificationsAssociationTask",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartQualificationsAssociationTaskRequest"},
+      "output":{"shape":"StartQualificationsAssociationTaskResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "StartQualificationsDisassociationTask":{
+      "name":"StartQualificationsDisassociationTask",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartQualificationsDisassociationTaskRequest"},
+      "output":{"shape":"StartQualificationsDisassociationTaskResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
       ],
       "idempotent":true
     },
@@ -607,6 +694,12 @@
       "type":"structure",
       "members":{}
     },
+    "AssociatedPartnerList":{
+      "type":"list",
+      "member":{"shape":"QualificationsAssociationPartner"},
+      "max":6,
+      "min":0
+    },
     "AwsAccountId":{
       "type":"string",
       "pattern":"[0-9]{12}"
@@ -621,7 +714,13 @@
         "INVALID_ACCOUNT_LINKING_STATUS",
         "INVALID_ACCOUNT_STATE",
         "INCOMPATIBLE_DOMAIN",
-        "INELIGIBLE_ACCOUNT_TIER"
+        "INELIGIBLE_ACCOUNT_TIER",
+        "MISSING_ACTIVE_SUBSIDIARY_CONNECTION",
+        "INCOMPATIBLE_SUBSIDIARY_CONNECTION",
+        "INCOMPATIBLE_PRIMARY_PARTNER",
+        "QUALIFICATIONS_ASSOCIATION_LIMIT_EXCEEDED",
+        "QUALIFICATIONS_ASSOCIATION_NOT_FOUND",
+        "QUALIFICATIONS_ASSOCIATION_EXISTS"
       ]
     },
     "BusinessValidationError":{
@@ -836,7 +935,8 @@
         "INCOMPATIBLE_CONNECTION_STATE",
         "INCOMPATIBLE_CONNECTION_PREFERENCES_REVISION",
         "ACCOUNT_ALREADY_VERIFIED",
-        "VERIFICATION_ALREADY_IN_PROGRESS"
+        "VERIFICATION_ALREADY_IN_PROGRESS",
+        "INCOMPATIBLE_QUALIFICATIONS_ASSOCIATION_TASK_STATE"
       ]
     },
     "Connection":{
@@ -1429,6 +1529,101 @@
         "ProfileId":{"shape":"PartnerProfileId"}
       }
     },
+    "GetQualificationsAssociationDetailsRequest":{
+      "type":"structure",
+      "required":[
+        "Catalog",
+        "Identifier"
+      ],
+      "members":{
+        "Catalog":{"shape":"Catalog"},
+        "Identifier":{"shape":"PartnerIdentifier"}
+      }
+    },
+    "GetQualificationsAssociationDetailsResponse":{
+      "type":"structure",
+      "required":[
+        "Catalog",
+        "Arn",
+        "Id",
+        "Status"
+      ],
+      "members":{
+        "Catalog":{"shape":"Catalog"},
+        "Arn":{"shape":"PartnerArn"},
+        "Id":{"shape":"PartnerId"},
+        "Status":{"shape":"QualificationsAssociationStatus"},
+        "PrimaryPartner":{"shape":"QualificationsAssociationPartner"},
+        "AssociatedPartners":{"shape":"AssociatedPartnerList"},
+        "UpdatedAt":{"shape":"DateTime"}
+      }
+    },
+    "GetQualificationsAssociationTaskRequest":{
+      "type":"structure",
+      "required":[
+        "Catalog",
+        "Identifier"
+      ],
+      "members":{
+        "Catalog":{"shape":"Catalog"},
+        "Identifier":{"shape":"PartnerIdentifier"}
+      }
+    },
+    "GetQualificationsAssociationTaskResponse":{
+      "type":"structure",
+      "required":[
+        "Catalog",
+        "Arn",
+        "Id",
+        "TaskId",
+        "Status",
+        "PrimaryPartner",
+        "StartedAt"
+      ],
+      "members":{
+        "Catalog":{"shape":"Catalog"},
+        "Arn":{"shape":"PartnerArn"},
+        "Id":{"shape":"PartnerId"},
+        "TaskId":{"shape":"QualificationsAssociationTaskId"},
+        "Status":{"shape":"QualificationsAssociationTaskStatus"},
+        "PrimaryPartner":{"shape":"QualificationsAssociationPartner"},
+        "StartedAt":{"shape":"DateTime"},
+        "EndedAt":{"shape":"DateTime"}
+      }
+    },
+    "GetQualificationsDisassociationTaskRequest":{
+      "type":"structure",
+      "required":[
+        "Catalog",
+        "Identifier"
+      ],
+      "members":{
+        "Catalog":{"shape":"Catalog"},
+        "Identifier":{"shape":"PartnerIdentifier"}
+      }
+    },
+    "GetQualificationsDisassociationTaskResponse":{
+      "type":"structure",
+      "required":[
+        "Catalog",
+        "Arn",
+        "Id",
+        "TaskId",
+        "Status",
+        "AssociatedPartner",
+        "StartedAt"
+      ],
+      "members":{
+        "Catalog":{"shape":"Catalog"},
+        "Arn":{"shape":"PartnerArn"},
+        "Id":{"shape":"PartnerId"},
+        "TaskId":{"shape":"QualificationsDisassociationTaskId"},
+        "Status":{"shape":"QualificationsDisassociationTaskStatus"},
+        "AssociatedPartner":{"shape":"QualificationsAssociationPartner"},
+        "StartedAt":{"shape":"DateTime"},
+        "EndedAt":{"shape":"DateTime"}
+      }
+    },
     "GetVerificationRequest":{
       "type":"structure",
       "required":["VerificationType"],
@@ -1896,6 +2091,46 @@
         "ProfileId":{"shape":"PartnerProfileId"}
       }
     },
+    "QualificationsAssociationPartner":{
+      "type":"structure",
+      "members":{
+        "ProfileId":{"shape":"PartnerProfileId"},
+        "AccountId":{"shape":"AwsAccountId"}
+      }
+    },
+    "QualificationsAssociationStatus":{
+      "type":"string",
+      "enum":[
+        "ASSOCIATED",
+        "NOT_ASSOCIATED"
+      ]
+    },
+    "QualificationsAssociationTaskId":{
+      "type":"string",
+      "max":80,
+      "min":1,
+      "pattern":"pqatask-[A-Za-z0-9]{13}"
+    },
+    "QualificationsAssociationTaskStatus":{
+      "type":"string",
+      "enum":[
+        "IN_PROGRESS",
+        "SUCCEEDED"
+      ]
+    },
+    "QualificationsDisassociationTaskId":{
+      "type":"string",
+      "max":80,
+      "min":1,
+      "pattern":"pqdtask-[A-Za-z0-9]{13}"
+    },
+    "QualificationsDisassociationTaskStatus":{
+      "type":"string",
+      "enum":[
+        "IN_PROGRESS",
+        "SUCCEEDED"
+      ]
+    },
     "RegistrantVerificationDetails":{
       "type":"structure",
       "members":{}
@@ -2002,7 +2237,9 @@
         "RECEIVER_PROFILE_NOT_FOUND",
         "CONNECTION_INVITATION_NOT_FOUND",
         "CONNECTION_NOT_FOUND",
-        "VERIFICATION_NOT_FOUND"
+        "VERIFICATION_NOT_FOUND",
+        "QUALIFICATIONS_ASSOCIATION_TASK_NOT_FOUND",
+        "QUALIFICATIONS_DISASSOCIATION_TASK_NOT_FOUND"
       ]
     },
     "Revision":{
@@ -2110,6 +2347,82 @@
         "Status":{"shape":"ProfileTaskStatus"},
         "EndedAt":{"shape":"DateTime"},
         "ErrorDetailList":{"shape":"ErrorDetailList"}
+      }
+    },
+    "StartQualificationsAssociationTaskRequest":{
+      "type":"structure",
+      "required":[
+        "Catalog",
+        "Identifier",
+        "PrimaryPartner"
+      ],
+      "members":{
+        "Catalog":{"shape":"Catalog"},
+        "Identifier":{"shape":"PartnerIdentifier"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "PrimaryPartner":{"shape":"QualificationsAssociationPartner"}
+      }
+    },
+    "StartQualificationsAssociationTaskResponse":{
+      "type":"structure",
+      "required":[
+        "Catalog",
+        "Arn",
+        "Id",
+        "TaskId",
+        "Status",
+        "PrimaryPartner",
+        "StartedAt"
+      ],
+      "members":{
+        "Catalog":{"shape":"Catalog"},
+        "Arn":{"shape":"PartnerArn"},
+        "Id":{"shape":"PartnerId"},
+        "TaskId":{"shape":"QualificationsAssociationTaskId"},
+        "Status":{"shape":"QualificationsAssociationTaskStatus"},
+        "PrimaryPartner":{"shape":"QualificationsAssociationPartner"},
+        "StartedAt":{"shape":"DateTime"}
+      }
+    },
+    "StartQualificationsDisassociationTaskRequest":{
+      "type":"structure",
+      "required":[
+        "Catalog",
+        "Identifier",
+        "AssociatedPartner"
+      ],
+      "members":{
+        "Catalog":{"shape":"Catalog"},
+        "Identifier":{"shape":"PartnerIdentifier"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "AssociatedPartner":{"shape":"QualificationsAssociationPartner"}
+      }
+    },
+    "StartQualificationsDisassociationTaskResponse":{
+      "type":"structure",
+      "required":[
+        "Catalog",
+        "Arn",
+        "Id",
+        "TaskId",
+        "Status",
+        "AssociatedPartner",
+        "StartedAt"
+      ],
+      "members":{
+        "Catalog":{"shape":"Catalog"},
+        "Arn":{"shape":"PartnerArn"},
+        "Id":{"shape":"PartnerId"},
+        "TaskId":{"shape":"QualificationsDisassociationTaskId"},
+        "Status":{"shape":"QualificationsDisassociationTaskStatus"},
+        "AssociatedPartner":{"shape":"QualificationsAssociationPartner"},
+        "StartedAt":{"shape":"DateTime"}
       }
     },
     "StartVerificationRequest":{

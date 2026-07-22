@@ -978,6 +978,17 @@
       "type":"boolean",
       "box":true
     },
+    "CloudWatchConfiguration":{
+      "type":"structure",
+      "required":["datasetArn"],
+      "members":{
+        "datasetArn":{"shape":"CloudWatchDatasetArn"}
+      }
+    },
+    "CloudWatchDatasetArn":{
+      "type":"string",
+      "pattern":"arn:aws[-a-z]*:cloudwatch:[-a-z0-9]+:[0-9]{12}:dataset\\/.+"
+    },
     "CloudWatchLogDestination":{
       "type":"structure",
       "required":["logGroupArn"],
@@ -1634,7 +1645,8 @@
     "Destination":{
       "type":"structure",
       "members":{
-        "ampConfiguration":{"shape":"AmpConfiguration"}
+        "ampConfiguration":{"shape":"AmpConfiguration"},
+        "cloudWatchConfiguration":{"shape":"CloudWatchConfiguration"}
       },
       "union":true
     },

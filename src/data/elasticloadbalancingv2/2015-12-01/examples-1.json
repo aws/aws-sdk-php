@@ -259,6 +259,56 @@
         "description": "This example creates a rule that forwards requests to the specified target group if the URL contains the specified pattern (for example, /img/*).",
         "id": "elbv2-create-rule-1",
         "title": "To create a rule"
+      },
+      {
+        "input": {
+          "Actions": [
+            {
+              "TargetGroupArn": "arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/my-ipv4-targets/1234567890abcdef",
+              "Type": "forward"
+            }
+          ],
+          "Conditions": [
+            {
+              "Field": "source-ip",
+              "SourceIpConfig": {
+                "IpAddressType": "ipv4"
+              }
+            }
+          ],
+          "ListenerArn": "arn:aws:elasticloadbalancing:us-west-2:123456789012:listener/net/my-nlb/1234567890abcdef/1234567890abcdef",
+          "Priority": 10
+        },
+        "output": {
+          "Rules": [
+            {
+              "Actions": [
+                {
+                  "TargetGroupArn": "arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/my-ipv4-targets/1234567890abcdef",
+                  "Type": "forward"
+                }
+              ],
+              "Conditions": [
+                {
+                  "Field": "source-ip",
+                  "SourceIpConfig": {
+                    "IpAddressType": "ipv4"
+                  }
+                }
+              ],
+              "IsDefault": false,
+              "Priority": "10",
+              "RuleArn": "arn:aws:elasticloadbalancing:us-west-2:123456789012:listener-rule/net/my-nlb/1234567890abcdef/1234567890abcdef/1234567890abcdef"
+            }
+          ]
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "This example creates a rule on a dual-stack Network Load Balancer that routes IPv4 source traffic to an IPv4 target group.",
+        "id": "elbv2-create-rule-2",
+        "title": "To create a listener rule that routes IPv4 traffic on a Network Load Balancer"
       }
     ],
     "CreateTargetGroup": [
@@ -557,6 +607,72 @@
         "description": "This example describes the specified rule.",
         "id": "elbv2-describe-rules-1",
         "title": "To describe a rule"
+      },
+      {
+        "input": {
+          "ListenerArn": "arn:aws:elasticloadbalancing:us-west-2:123456789012:listener/net/my-nlb/1234567890abcdef/1234567890abcdef"
+        },
+        "output": {
+          "Rules": [
+            {
+              "Actions": [
+                {
+                  "TargetGroupArn": "arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/my-ipv4-targets/1234567890abcdef",
+                  "Type": "forward"
+                }
+              ],
+              "Conditions": [
+                {
+                  "Field": "source-ip",
+                  "SourceIpConfig": {
+                    "IpAddressType": "ipv4"
+                  }
+                }
+              ],
+              "IsDefault": false,
+              "Priority": "10",
+              "RuleArn": "arn:aws:elasticloadbalancing:us-west-2:123456789012:listener-rule/net/my-nlb/1234567890abcdef/1234567890abcdef/aabbccdd11223344"
+            },
+            {
+              "Actions": [
+                {
+                  "TargetGroupArn": "arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/my-ipv6-targets/abcdef1234567890",
+                  "Type": "forward"
+                }
+              ],
+              "Conditions": [
+                {
+                  "Field": "source-ip",
+                  "SourceIpConfig": {
+                    "IpAddressType": "ipv6"
+                  }
+                }
+              ],
+              "IsDefault": false,
+              "Priority": "20",
+              "RuleArn": "arn:aws:elasticloadbalancing:us-west-2:123456789012:listener-rule/net/my-nlb/1234567890abcdef/1234567890abcdef/eeff00112233aabb"
+            },
+            {
+              "Actions": [
+                {
+                  "TargetGroupArn": "arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/my-ipv4-targets/1234567890abcdef",
+                  "Type": "forward"
+                }
+              ],
+              "Conditions": [],
+              "IsDefault": true,
+              "Priority": "default",
+              "RuleArn": "arn:aws:elasticloadbalancing:us-west-2:123456789012:listener-rule/net/my-nlb/1234567890abcdef/1234567890abcdef/default"
+            }
+          ]
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "This example describes the rules for the specified Network Load Balancer listener, including rules that route based on source IP address type.",
+        "id": "elbv2-describe-rules-2",
+        "title": "To describe rules for a Network Load Balancer listener"
       }
     ],
     "DescribeSSLPolicies": [
@@ -1111,6 +1227,47 @@
         "description": "This example modifies the condition for the specified rule.",
         "id": "elbv2-modify-rule-1",
         "title": "To modify a rule"
+      },
+      {
+        "input": {
+          "Actions": [
+            {
+              "TargetGroupArn": "arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/my-new-ipv4-targets/1234567890abcdef",
+              "Type": "forward"
+            }
+          ],
+          "RuleArn": "arn:aws:elasticloadbalancing:us-west-2:123456789012:listener-rule/net/my-nlb/1234567890abcdef/1234567890abcdef/1234567890abcdef"
+        },
+        "output": {
+          "Rules": [
+            {
+              "Actions": [
+                {
+                  "TargetGroupArn": "arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/my-new-ipv4-targets/1234567890abcdef",
+                  "Type": "forward"
+                }
+              ],
+              "Conditions": [
+                {
+                  "Field": "source-ip",
+                  "SourceIpConfig": {
+                    "IpAddressType": "ipv4"
+                  }
+                }
+              ],
+              "IsDefault": false,
+              "Priority": "10",
+              "RuleArn": "arn:aws:elasticloadbalancing:us-west-2:123456789012:listener-rule/net/my-nlb/1234567890abcdef/1234567890abcdef/1234567890abcdef"
+            }
+          ]
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "This example modifies an NLB listener rule to forward traffic to a different target group.",
+        "id": "elbv2-modify-rule-2",
+        "title": "To modify a Network Load Balancer listener rule"
       }
     ],
     "ModifyTargetGroup": [

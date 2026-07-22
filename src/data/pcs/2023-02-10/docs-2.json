@@ -18,7 +18,7 @@
     "RegisterComputeNodeGroupInstance": "<p><important> <p>This API action isn't intended for you to use.</p> </important> <p>PCS uses this API action to register the compute nodes it launches in your account.</p></p>",
     "TagResource": "<p>Adds or edits tags on an PCS resource. Each tag consists of a tag key and a tag value. The tag key and tag value are case-sensitive strings. The tag value can be an empty (null) string. To add a tag, specify a new tag key and a tag value. To edit a tag, specify an existing tag key and a new tag value.</p>",
     "UntagResource": "<p>Deletes tags from an PCS resource. To delete a tag, specify the tag key and the Amazon Resource Name (ARN) of the PCS resource.</p>",
-    "UpdateCluster": "<p>Updates a cluster configuration. You can upgrade the Slurm version, modify scheduler settings, and update accounting configuration for an existing cluster. For more information about upgrading the Slurm version, see <a href=\"https://docs.aws.amazon.com/pcs/latest/userguide/working-with_clusters_upgrade.html\">Upgrading the Slurm version on a cluster</a> in the <i>PCS User Guide</i>. </p> <note> <p>You can only update clusters that are in <code>ACTIVE</code>, <code>UPDATE_FAILED</code>, or <code>SUSPENDED</code> state. All associated resources (queues and compute node groups) must be in <code>ACTIVE</code> state before you can update the cluster.</p> </note>",
+    "UpdateCluster": "<p>Updates a cluster configuration. You can update the scheduler version, modify scheduler settings, and update accounting configuration for an existing cluster. For more information about updating the scheduler version, see <a href=\"https://docs.aws.amazon.com/pcs/latest/userguide/working-with_clusters_version_update.html\">Updating the scheduler version on a cluster</a> in the <i>PCS User Guide</i>. </p> <note> <p>You can only update clusters that are in <code>ACTIVE</code>, <code>UPDATE_FAILED</code>, or <code>SUSPENDED</code> state. All associated resources (queues and compute node groups) must be in <code>ACTIVE</code> state before you can update the cluster.</p> </note>",
     "UpdateComputeNodeGroup": "<p>Updates a compute node group. You can update many of the fields related to your compute node group including the configurations for networking, compute nodes, and settings specific to your scheduler (such as Slurm).</p>",
     "UpdateQueue": "<p>Updates the compute node group configuration of a queue. Use this API to change the compute node groups that the queue can send jobs to.</p>"
   },
@@ -345,6 +345,12 @@
         "Queue$errorInfo": "<p>The list of errors that occurred during queue provisioning.</p>"
       }
     },
+    "ExecutionPolicy": {
+      "base": "<p>The policy that determines when a node lifecycle script runs. Valid values:</p> <ul> <li> <p> <code>FIRST_BOOT_ONLY</code> – Runs the script only the first time the compute node boots.</p> </li> <li> <p> <code>EVERY_BOOT</code> – Runs the script every time the compute node boots, including reboots.</p> </li> </ul>",
+      "refs": {
+        "NodeLifecycleScript$executionPolicy": "<p>The policy that determines when the script runs. The default value is <code>FIRST_BOOT_ONLY</code>. Valid values:</p> <ul> <li> <p> <code>FIRST_BOOT_ONLY</code> – Runs the script only the first time the compute node boots.</p> </li> <li> <p> <code>EVERY_BOOT</code> – Runs the script every time the compute node boots, including reboots.</p> </li> </ul>"
+      }
+    },
     "GetClusterRequest": {
       "base": null,
       "refs": {}
@@ -469,6 +475,64 @@
       "base": "<p>The networking configuration for the cluster's control plane.</p>",
       "refs": {
         "CreateClusterRequest$networking": "<p>The networking configuration used to set up the cluster's control plane.</p>"
+      }
+    },
+    "NodeLifecycleActions": {
+      "base": "<p>The lifecycle actions configured on a compute node group. Lifecycle actions define scripts that PCS runs on compute nodes at specific stages of their lifecycle.</p>",
+      "refs": {
+        "ComputeNodeGroup$nodeLifecycleActions": "<p>The lifecycle actions to run on compute nodes in the compute node group. Use lifecycle actions to run custom scripts at defined stages of a compute node's lifecycle, such as when a compute node finishes bootstrapping or becomes ready to accept jobs.</p>",
+        "RegisterComputeNodeGroupInstanceResponse$nodeLifecycleActions": "<p>The node lifecycle actions configured for the node group, including scripts to run when a compute node finishes bootstrapping or becomes ready to accept jobs.</p>"
+      }
+    },
+    "NodeLifecycleActionsRequest": {
+      "base": "<p>The lifecycle actions to configure on a compute node group when you create it. Lifecycle actions define scripts that PCS runs on compute nodes at specific stages of their lifecycle.</p>",
+      "refs": {
+        "CreateComputeNodeGroupRequest$nodeLifecycleActions": "<p>The lifecycle actions to run on compute nodes in the compute node group. Use lifecycle actions to run custom scripts at defined stages of a compute node's lifecycle, such as when a compute node finishes bootstrapping or becomes ready to accept jobs.</p>"
+      }
+    },
+    "NodeLifecycleScript": {
+      "base": "<p>A script to run during a compute node lifecycle stage.</p>",
+      "refs": {
+        "NodeLifecycleScriptList$member": null
+      }
+    },
+    "NodeLifecycleScriptArgument": {
+      "base": null,
+      "refs": {
+        "NodeLifecycleScriptArguments$member": null
+      }
+    },
+    "NodeLifecycleScriptArguments": {
+      "base": null,
+      "refs": {
+        "NodeLifecycleScript$arguments": "<p>The command-line arguments to pass to the script. You can specify up to 20 arguments, and each argument can be up to 256 characters long.</p>"
+      }
+    },
+    "NodeLifecycleScriptList": {
+      "base": null,
+      "refs": {
+        "NodeLifecycleStages$nodeBootstrapped": "<p>The scripts to run after PCS finishes setting up the compute node and before the Slurm daemon (<code>slurmd</code>) starts. Use this stage for tasks that must complete before the node accepts jobs, such as mounting shared storage, configuring networking, or installing software packages.</p>",
+        "NodeLifecycleStages$nodeReady": "<p>The scripts to run after the Slurm daemon (<code>slurmd</code>) starts and the compute node registers with the Slurm controller. Use this stage for tasks that require Slurm to be running, such as running Slurm commands.</p>"
+      }
+    },
+    "NodeLifecycleScriptNameString": {
+      "base": null,
+      "refs": {
+        "NodeLifecycleScript$name": "<p>A unique name for the script. The name can be up to 64 characters long. Valid characters are letters, numbers, spaces, underscores (<code>_</code>), and hyphens (<code>-</code>). The first character must be a letter or a number.</p>"
+      }
+    },
+    "NodeLifecycleStages": {
+      "base": "<p>The stages of a compute node's lifecycle where you can configure scripts to run.</p>",
+      "refs": {
+        "NodeLifecycleActions$stages": "<p>The lifecycle stages where you configure scripts to run.</p>",
+        "NodeLifecycleActionsRequest$stages": "<p>The lifecycle stages where you configure scripts to run.</p>",
+        "UpdateNodeLifecycleActionsRequest$stages": "<p>The lifecycle stages where you configure scripts to run.</p>"
+      }
+    },
+    "OnError": {
+      "base": "<p>The behavior when a node lifecycle script fails. Valid values:</p> <ul> <li> <p> <code>TERMINATE</code> – Terminates the compute node.</p> </li> <li> <p> <code>STOP_SEQUENCE</code> – Stops running subsequent scripts in the sequence but doesn't terminate the compute node.</p> </li> <li> <p> <code>CONTINUE</code> – Ignores the error and continues running the next script.</p> </li> </ul>",
+      "refs": {
+        "NodeLifecycleScript$onError": "<p>The behavior when the script fails. The default value is <code>TERMINATE</code>. Valid values:</p> <ul> <li> <p> <code>TERMINATE</code> – Terminates the compute node.</p> </li> <li> <p> <code>STOP_SEQUENCE</code> – Stops running subsequent scripts in the sequence but doesn't terminate the compute node.</p> </li> <li> <p> <code>CONTINUE</code> – Ignores the error and continues running the next script.</p> </li> </ul>"
       }
     },
     "PurchaseOption": {
@@ -631,6 +695,38 @@
         "SchedulerRequest$type": "<p>The software PCS uses to manage cluster scaling and job scheduling.</p>"
       }
     },
+    "ScriptCachingPolicy": {
+      "base": "<p>The caching policy for a node lifecycle script. Valid values:</p> <ul> <li> <p> <code>CACHE_ONCE</code> – Downloads the script once and reuses it on subsequent boots.</p> </li> <li> <p> <code>REFRESH_ON_REBOOT</code> – Downloads the script on every boot.</p> </li> </ul>",
+      "refs": {
+        "NodeLifecycleActions$scriptCachingPolicy": "<p>The caching policy for node lifecycle scripts. The default value is <code>CACHE_ONCE</code>. Valid values:</p> <ul> <li> <p> <code>CACHE_ONCE</code> – Downloads each script once and reuses it on subsequent boots.</p> </li> <li> <p> <code>REFRESH_ON_REBOOT</code> – Downloads each script on every boot.</p> </li> </ul>",
+        "NodeLifecycleActionsRequest$scriptCachingPolicy": "<p>The caching policy for node lifecycle scripts. The default value is <code>CACHE_ONCE</code>. Valid values:</p> <ul> <li> <p> <code>CACHE_ONCE</code> – Downloads each script once and reuses it on subsequent boots.</p> </li> <li> <p> <code>REFRESH_ON_REBOOT</code> – Downloads each script on every boot.</p> </li> </ul>",
+        "UpdateNodeLifecycleActionsRequest$scriptCachingPolicy": "<p>The caching policy for node lifecycle scripts. The default value is <code>CACHE_ONCE</code>. Valid values:</p> <ul> <li> <p> <code>CACHE_ONCE</code> – Downloads each script once and reuses it on subsequent boots.</p> </li> <li> <p> <code>REFRESH_ON_REBOOT</code> – Downloads each script on every boot.</p> </li> </ul>"
+      }
+    },
+    "ScriptSource": {
+      "base": "<p>The source location and integrity information for a node lifecycle script.</p>",
+      "refs": {
+        "NodeLifecycleScript$scriptSource": "<p>The source location and integrity information for the script.</p>"
+      }
+    },
+    "ScriptSourceChecksumString": {
+      "base": null,
+      "refs": {
+        "ScriptSource$checksum": "<p>The SHA-256 checksum of the script content, as a 64-character hexadecimal string. This value is optional. When specified, PCS uses this value to verify the integrity of the downloaded script.</p>"
+      }
+    },
+    "ScriptSourceS3VersionIdString": {
+      "base": null,
+      "refs": {
+        "ScriptSource$s3VersionId": "<p>The Amazon S3 version ID of the script. Use this value to pin the script to a specific version in a versioned Amazon S3 bucket. This value is only valid when <code>scriptLocation</code> is an Amazon S3 URI.</p>"
+      }
+    },
+    "ScriptSourceScriptLocationString": {
+      "base": null,
+      "refs": {
+        "ScriptSource$scriptLocation": "<p>The location of the script. Specify either an Amazon S3 URI in the format <code>s3://bucket-name/key</code> or an HTTPS URL.</p>"
+      }
+    },
     "SecurityGroupId": {
       "base": null,
       "refs": {
@@ -782,10 +878,13 @@
         "QueueSummary$arn": "<p>The unique Amazon Resource Name (ARN) of the queue.</p>",
         "QueueSummary$clusterId": "<p>The ID of the cluster of the queue.</p>",
         "RegisterComputeNodeGroupInstanceResponse$nodeID": "<p>The scheduler node ID for this instance.</p>",
+        "RegisterComputeNodeGroupInstanceResponse$clusterName": "<p>The name of the cluster that the compute node registered into.</p>",
+        "RegisterComputeNodeGroupInstanceResponse$computeNodeGroupId": "<p>The ID of the compute node group that the compute node registered into.</p>",
+        "RegisterComputeNodeGroupInstanceResponse$computeNodeGroupName": "<p>The name of the compute node group that the compute node registered into.</p>",
         "ResourceNotFoundException$message": null,
         "ResourceNotFoundException$resourceId": "<p> The unique identifier of the resource that was not found. </p>",
         "ResourceNotFoundException$resourceType": "<p> The type or category of the resource that was not found. </p>",
-        "Scheduler$version": "<p>The version of the specified scheduling software that PCS uses to manage cluster scaling and job scheduling. You can upgrade this version using the <code>UpdateCluster</code> API action. For more information, see <a href=\"https://docs.aws.amazon.com/pcs/latest/userguide/working-with_clusters_upgrade.html\">Upgrading the Slurm version on a cluster</a> and <a href=\"https://docs.aws.amazon.com/pcs/latest/userguide/slurm-versions.html\">Slurm versions in PCS</a> in the <i>PCS User Guide</i>.</p> <p>Valid Values: <code>23.11 | 24.05 | 24.11 | 25.05 | 25.11</code> </p>",
+        "Scheduler$version": "<p>The version of the specified scheduling software that PCS uses to manage cluster scaling and job scheduling. You can update this version using the <code>UpdateCluster</code> API action. For more information, see <a href=\"https://docs.aws.amazon.com/pcs/latest/userguide/working-with_clusters_version_update.html\">Updating the scheduler version on a cluster</a> and <a href=\"https://docs.aws.amazon.com/pcs/latest/userguide/slurm-versions.html\">Slurm versions in PCS</a> in the <i>PCS User Guide</i>.</p> <p>Valid Values: <code>23.11 | 24.05 | 24.11 | 25.05 | 25.11</code> </p>",
         "SchedulerRequest$version": "<p>The version of the specified scheduling software that PCS uses to manage cluster scaling and job scheduling. For more information, see <a href=\"https://docs.aws.amazon.com/pcs/latest/userguide/slurm-versions.html\">Slurm versions in PCS</a> in the <i>PCS User Guide</i>.</p> <p>Valid Values: <code>24.11 | 25.05 | 25.11</code> </p>",
         "ServiceQuotaExceededException$message": null,
         "ServiceQuotaExceededException$serviceCode": "<p> The service code associated with the quota that was exceeded. </p>",
@@ -800,7 +899,7 @@
         "SlurmdbdCustomSetting$parameterValue": "<p>The values for the configured SlurmDBD settings.</p>",
         "StringList$member": null,
         "ThrottlingException$message": null,
-        "UpdateSchedulerRequest$version": "<p>The Slurm version to upgrade the cluster to. You can only upgrade to a newer version. For more information about supported versions and upgrade paths, see <a href=\"https://docs.aws.amazon.com/pcs/latest/userguide/working-with_clusters_upgrade.html\">Upgrading the Slurm version on a cluster</a> in the <i>PCS User Guide</i>.</p> <p>Valid Values: <code>24.05 | 24.11 | 25.05 | 25.11</code> </p>",
+        "UpdateSchedulerRequest$version": "<p>The scheduler version to update the cluster to. You can only update to a newer version. For more information about supported versions and update paths, see <a href=\"https://docs.aws.amazon.com/pcs/latest/userguide/working-with_clusters_version_update.html\">Updating the scheduler version on a cluster</a> in the <i>PCS User Guide</i>.</p> <p>Valid Values: <code>24.05 | 24.11 | 25.05 | 25.11</code> </p>",
         "ValidationException$message": null,
         "ValidationExceptionField$name": "<p>The name of the exception.</p>",
         "ValidationExceptionField$message": "<p>The message body of the exception.</p>"
@@ -937,6 +1036,12 @@
         "UpdateComputeNodeGroupSlurmConfigurationRequest$scaleDownIdleTimeInSeconds": "<p>The time (in seconds) before an idle node is scaled down. If not specified, the cluster-level setting applies. This overrides the cluster-level <code>scaleDownIdleTimeInSeconds</code> setting. A value of <code>-1</code> removes the override and applies the cluster-level setting to this compute node group. Requires Slurm version 25.11 or later.</p>"
       }
     },
+    "UpdateNodeLifecycleActionsRequest": {
+      "base": "<p>The lifecycle actions to configure on a compute node group when you update it. Lifecycle actions define scripts that PCS runs on compute nodes at specific stages of their lifecycle.</p>",
+      "refs": {
+        "UpdateComputeNodeGroupRequest$nodeLifecycleActions": "<p>The lifecycle actions to run on compute nodes in the compute node group. Use lifecycle actions to run custom scripts at defined stages of a compute node's lifecycle, such as when a compute node finishes bootstrapping or becomes ready to accept jobs.</p>"
+      }
+    },
     "UpdateQueueRequest": {
       "base": null,
       "refs": {}
@@ -952,9 +1057,9 @@
       }
     },
     "UpdateSchedulerRequest": {
-      "base": "<p>The scheduler configuration for updating a cluster. Use this to specify the Slurm version to upgrade to.</p>",
+      "base": "<p>The scheduler configuration for updating a cluster. Use this to specify the scheduler version to update to.</p>",
       "refs": {
-        "UpdateClusterRequest$scheduler": "<p>The scheduler configuration to update for the cluster. Use this to upgrade the Slurm version. For more information, see <a href=\"https://docs.aws.amazon.com/pcs/latest/userguide/working-with_clusters_upgrade.html\">Upgrading the Slurm version on a cluster</a> in the <i>PCS User Guide</i>.</p>"
+        "UpdateClusterRequest$scheduler": "<p>The scheduler configuration to update for the cluster. Use this to update the scheduler version. For more information, see <a href=\"https://docs.aws.amazon.com/pcs/latest/userguide/working-with_clusters_version_update.html\">Updating the scheduler version on a cluster</a> in the <i>PCS User Guide</i>.</p>"
       }
     },
     "UpdateSlurmRestRequest": {

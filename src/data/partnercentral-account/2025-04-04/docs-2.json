@@ -17,6 +17,9 @@
     "GetPartner": "<p>Retrieves detailed information about a specific partner account.</p>",
     "GetProfileUpdateTask": "<p>Retrieves information about a specific profile update task.</p>",
     "GetProfileVisibility": "<p>Retrieves the visibility settings for a partner profile, determining who can see the profile information.</p>",
+    "GetQualificationsAssociationDetails": "<p>Returns your current qualifications association status, the primary partner, and the full list of partners associated under the primary partner.</p>",
+    "GetQualificationsAssociationTask": "<p>Retrieves the status and details of the most recent qualifications association task for your partner account. Use this operation to poll the progress of an association task initiated by <code>StartQualificationsAssociationTask</code>.</p>",
+    "GetQualificationsDisassociationTask": "<p>Retrieves the status and details of the most recent qualifications disassociation task for your partner account. Use this operation to poll the progress of a disassociation task initiated by <code>StartQualificationsDisassociationTask</code>.</p>",
     "GetVerification": "<p>Retrieves the current status and details of a verification process for a partner account. This operation allows partners to check the progress and results of business or registrant verification processes.</p>",
     "ListConnectionInvitations": "<p>Lists connection invitations for the partner account, with optional filtering by status, type, and other criteria.</p>",
     "ListConnections": "<p>Lists active connections for the partner account, with optional filtering by connection type and participant.</p>",
@@ -27,6 +30,8 @@
     "RejectConnectionInvitation": "<p>Rejects a connection invitation from another partner, declining the partnership request.</p>",
     "SendEmailVerificationCode": "<p>Sends an email verification code to the specified email address for account verification purposes.</p>",
     "StartProfileUpdateTask": "<p>Initiates a profile update task to modify partner profile information asynchronously.</p>",
+    "StartQualificationsAssociationTask": "<p>Initiates an asynchronous task to associate your partner qualifications with a primary account. You must be a subsidiary of the primary account with an active subsidiary connection. Use <code>GetQualificationsAssociationTask</code> to monitor task progress.</p>",
+    "StartQualificationsDisassociationTask": "<p>Initiates an asynchronous task to disassociate your partner qualifications from a primary account. You must currently be associated and cannot disassociate if you are the primary partner. Use <code>GetQualificationsDisassociationTask</code> to monitor task progress.</p>",
     "StartVerification": "<p>Initiates a new verification process for a partner account. This operation begins the verification workflow for either business registration or individual registrant identity verification as required by AWS Partner Central.</p>",
     "TagResource": "<p>Adds or updates tags for a specified AWS Partner Central Account resource.</p>",
     "UntagResource": "<p>Removes specified tags from an AWS Partner Central Account resource.</p>",
@@ -83,6 +88,12 @@
       "base": null,
       "refs": {}
     },
+    "AssociatedPartnerList": {
+      "base": "<p>A list of partner profile and account identifiers representing all partners associated under the primary partner.</p>",
+      "refs": {
+        "GetQualificationsAssociationDetailsResponse$AssociatedPartners": "<p>The list of all partner profile and account identifiers currently associated under the primary partner. This field is null when the status is <code>NOT_ASSOCIATED</code>.</p>"
+      }
+    },
     "AwsAccountId": {
       "base": null,
       "refs": {
@@ -90,7 +101,8 @@
         "Connection$OtherParticipantAccountId": "<p>The AWS account ID of the other participant in the connection.</p>",
         "ConnectionSummary$OtherParticipantAccountId": "<p>The AWS account ID of the other participant in the connection.</p>",
         "ConnectionTypeDetail$CanceledBy": "<p>The AWS account ID of the participant who cancelled this connection type.</p>",
-        "GetConnectionResponse$OtherParticipantAccountId": "<p>The AWS account ID of the other participant in the connection.</p>"
+        "GetConnectionResponse$OtherParticipantAccountId": "<p>The AWS account ID of the other participant in the connection.</p>",
+        "QualificationsAssociationPartner$AccountId": "<p>The 12-digit AWS account ID linked to the partner profile. Required in requests if <code>ProfileId</code> is not provided.</p>"
       }
     },
     "BusinessValidationCode": {
@@ -187,6 +199,12 @@
         "GetProfileUpdateTaskResponse$Catalog": "<p>The catalog identifier for the partner account.</p>",
         "GetProfileVisibilityRequest$Catalog": "<p>The catalog identifier for the partner account.</p>",
         "GetProfileVisibilityResponse$Catalog": "<p>The catalog identifier for the partner account.</p>",
+        "GetQualificationsAssociationDetailsRequest$Catalog": "<p>The catalog in which to look up the qualifications association. Valid values: <code>AWS</code>, <code>Sandbox</code>.</p>",
+        "GetQualificationsAssociationDetailsResponse$Catalog": "<p>The catalog identifier echoed from the request.</p>",
+        "GetQualificationsAssociationTaskRequest$Catalog": "<p>The catalog in which to look up the qualifications association task. Valid values: <code>AWS</code>, <code>Sandbox</code>.</p>",
+        "GetQualificationsAssociationTaskResponse$Catalog": "<p>The catalog identifier echoed from the request.</p>",
+        "GetQualificationsDisassociationTaskRequest$Catalog": "<p>The catalog in which to look up the qualifications disassociation task. Valid values: <code>AWS</code>, <code>Sandbox</code>.</p>",
+        "GetQualificationsDisassociationTaskResponse$Catalog": "<p>The catalog identifier echoed from the request.</p>",
         "ListConnectionInvitationsRequest$Catalog": "<p>The catalog identifier for the partner account.</p>",
         "ListConnectionsRequest$Catalog": "<p>The catalog identifier for the partner account.</p>",
         "ListPartnersRequest$Catalog": "<p>The catalog identifier to list partners from.</p>",
@@ -200,6 +218,10 @@
         "SendEmailVerificationCodeRequest$Catalog": "<p>The catalog identifier for the partner account.</p>",
         "StartProfileUpdateTaskRequest$Catalog": "<p>The catalog identifier for the partner account.</p>",
         "StartProfileUpdateTaskResponse$Catalog": "<p>The catalog identifier for the partner account.</p>",
+        "StartQualificationsAssociationTaskRequest$Catalog": "<p>The catalog in which to perform the qualifications association. Valid values: <code>AWS</code>, <code>Sandbox</code>.</p>",
+        "StartQualificationsAssociationTaskResponse$Catalog": "<p>The catalog identifier echoed from the request.</p>",
+        "StartQualificationsDisassociationTaskRequest$Catalog": "<p>The catalog in which to perform the qualifications disassociation. Valid values: <code>AWS</code>, <code>Sandbox</code>.</p>",
+        "StartQualificationsDisassociationTaskResponse$Catalog": "<p>The catalog identifier echoed from the request.</p>",
         "UpdateConnectionPreferencesRequest$Catalog": "<p>The catalog identifier for the partner account.</p>",
         "UpdateConnectionPreferencesResponse$Catalog": "<p>The catalog identifier for the partner account.</p>"
       }
@@ -217,6 +239,8 @@
         "DisassociateAwsTrainingCertificationEmailDomainRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
         "RejectConnectionInvitationRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
         "StartProfileUpdateTaskRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
+        "StartQualificationsAssociationTaskRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
+        "StartQualificationsDisassociationTaskRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
         "StartVerificationRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. This prevents duplicate verification processes from being started accidentally.</p>"
       }
     },
@@ -440,6 +464,11 @@
         "GetPartnerResponse$CreatedAt": "<p>The timestamp when the partner account was created.</p>",
         "GetProfileUpdateTaskResponse$StartedAt": "<p>The timestamp when the profile update task was started.</p>",
         "GetProfileUpdateTaskResponse$EndedAt": "<p>The timestamp when the profile update task was completed or failed.</p>",
+        "GetQualificationsAssociationDetailsResponse$UpdatedAt": "<p>The timestamp when the qualifications association was last updated, in ISO 8601 format. This field is null when the status is <code>NOT_ASSOCIATED</code>.</p>",
+        "GetQualificationsAssociationTaskResponse$StartedAt": "<p>The timestamp when the qualifications association task started, in ISO 8601 format.</p>",
+        "GetQualificationsAssociationTaskResponse$EndedAt": "<p>The timestamp when the qualifications association task ended, in ISO 8601 format. This field is present only when the status is <code>SUCCEEDED</code>.</p>",
+        "GetQualificationsDisassociationTaskResponse$StartedAt": "<p>The timestamp when the qualifications disassociation task started, in ISO 8601 format.</p>",
+        "GetQualificationsDisassociationTaskResponse$EndedAt": "<p>The timestamp when the qualifications disassociation task ended, in ISO 8601 format. This field is present only when the status is <code>SUCCEEDED</code>.</p>",
         "GetVerificationResponse$StartedAt": "<p>The timestamp when the verification process was initiated.</p>",
         "GetVerificationResponse$CompletedAt": "<p>The timestamp when the verification process was completed. This field is null if the verification is still in progress.</p>",
         "PartnerDomain$RegisteredAt": "<p>The timestamp when the domain was registered and verified for the partner account.</p>",
@@ -450,6 +479,8 @@
         "RejectConnectionInvitationResponse$ExpiresAt": "<p>The timestamp when the connection invitation would have expired.</p>",
         "StartProfileUpdateTaskResponse$StartedAt": "<p>The timestamp when the profile update task was started.</p>",
         "StartProfileUpdateTaskResponse$EndedAt": "<p>The timestamp when the profile update task ended (null for in-progress tasks).</p>",
+        "StartQualificationsAssociationTaskResponse$StartedAt": "<p>The timestamp when the qualifications association task started, in ISO 8601 format.</p>",
+        "StartQualificationsDisassociationTaskResponse$StartedAt": "<p>The timestamp when the qualifications disassociation task started, in ISO 8601 format.</p>",
         "StartVerificationResponse$StartedAt": "<p>The timestamp when the verification process was successfully initiated.</p>",
         "StartVerificationResponse$CompletedAt": "<p>The timestamp when the verification process was completed. This field is typically null for newly started verifications unless they complete immediately.</p>",
         "UpdateConnectionPreferencesResponse$UpdatedAt": "<p>The timestamp when the connection preferences were last updated.</p>"
@@ -577,6 +608,30 @@
       "refs": {}
     },
     "GetProfileVisibilityResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetQualificationsAssociationDetailsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetQualificationsAssociationDetailsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetQualificationsAssociationTaskRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetQualificationsAssociationTaskResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetQualificationsDisassociationTaskRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetQualificationsDisassociationTaskResponse": {
       "base": null,
       "refs": {}
     },
@@ -766,10 +821,15 @@
         "GetPartnerResponse$Arn": "<p>The Amazon Resource Name (ARN) of the partner account.</p>",
         "GetProfileUpdateTaskResponse$Arn": "<p>The Amazon Resource Name (ARN) of the profile update task.</p>",
         "GetProfileVisibilityResponse$Arn": "<p>The Amazon Resource Name (ARN) of the partner account.</p>",
+        "GetQualificationsAssociationDetailsResponse$Arn": "<p>The Amazon Resource Name (ARN) that uniquely identifies your partner resource.</p>",
+        "GetQualificationsAssociationTaskResponse$Arn": "<p>The Amazon Resource Name (ARN) that uniquely identifies your partner resource.</p>",
+        "GetQualificationsDisassociationTaskResponse$Arn": "<p>The Amazon Resource Name (ARN) that uniquely identifies your partner resource.</p>",
         "PartnerSummary$Arn": "<p>The Amazon Resource Name (ARN) of the partner account.</p>",
         "PutAllianceLeadContactResponse$Arn": "<p>The Amazon Resource Name (ARN) of the partner account.</p>",
         "PutProfileVisibilityResponse$Arn": "<p>The Amazon Resource Name (ARN) of the partner account.</p>",
-        "StartProfileUpdateTaskResponse$Arn": "<p>The Amazon Resource Name (ARN) of the started profile update task.</p>"
+        "StartProfileUpdateTaskResponse$Arn": "<p>The Amazon Resource Name (ARN) of the started profile update task.</p>",
+        "StartQualificationsAssociationTaskResponse$Arn": "<p>The Amazon Resource Name (ARN) that uniquely identifies your partner resource.</p>",
+        "StartQualificationsDisassociationTaskResponse$Arn": "<p>The Amazon Resource Name (ARN) that uniquely identifies your partner resource.</p>"
       }
     },
     "PartnerDomain": {
@@ -794,10 +854,15 @@
         "GetPartnerResponse$Id": "<p>The unique identifier of the partner account.</p>",
         "GetProfileUpdateTaskResponse$Id": "<p>The unique identifier of the partner account.</p>",
         "GetProfileVisibilityResponse$Id": "<p>The unique identifier of the partner account.</p>",
+        "GetQualificationsAssociationDetailsResponse$Id": "<p>Your unique partner identifier in the AWS Partner Network.</p>",
+        "GetQualificationsAssociationTaskResponse$Id": "<p>Your unique partner identifier in the AWS Partner Network.</p>",
+        "GetQualificationsDisassociationTaskResponse$Id": "<p>Your unique partner identifier in the AWS Partner Network.</p>",
         "PartnerSummary$Id": "<p>The unique identifier of the partner account.</p>",
         "PutAllianceLeadContactResponse$Id": "<p>The unique identifier of the partner account.</p>",
         "PutProfileVisibilityResponse$Id": "<p>The unique identifier of the partner account.</p>",
-        "StartProfileUpdateTaskResponse$Id": "<p>The unique identifier of the partner account.</p>"
+        "StartProfileUpdateTaskResponse$Id": "<p>The unique identifier of the partner account.</p>",
+        "StartQualificationsAssociationTaskResponse$Id": "<p>Your unique partner identifier in the AWS Partner Network.</p>",
+        "StartQualificationsDisassociationTaskResponse$Id": "<p>Your unique partner identifier in the AWS Partner Network.</p>"
       }
     },
     "PartnerIdentifier": {
@@ -810,9 +875,14 @@
         "GetPartnerRequest$Identifier": "<p>The unique identifier of the partner account to retrieve.</p>",
         "GetProfileUpdateTaskRequest$Identifier": "<p>The unique identifier of the partner account.</p>",
         "GetProfileVisibilityRequest$Identifier": "<p>The unique identifier of the partner account.</p>",
+        "GetQualificationsAssociationDetailsRequest$Identifier": "<p>Your partner identifier. You can provide either a partner ID (for example, <code>partner-abc123</code>) or a partner ARN. You must own this identifier.</p>",
+        "GetQualificationsAssociationTaskRequest$Identifier": "<p>Your partner identifier. You can provide either a partner ID (for example, <code>partner-abc123</code>) or a partner ARN. You must own this identifier.</p>",
+        "GetQualificationsDisassociationTaskRequest$Identifier": "<p>Your partner identifier. You can provide either a partner ID (for example, <code>partner-abc123</code>) or a partner ARN. You must own this identifier.</p>",
         "PutAllianceLeadContactRequest$Identifier": "<p>The unique identifier of the partner account.</p>",
         "PutProfileVisibilityRequest$Identifier": "<p>The unique identifier of the partner account.</p>",
-        "StartProfileUpdateTaskRequest$Identifier": "<p>The unique identifier of the partner account.</p>"
+        "StartProfileUpdateTaskRequest$Identifier": "<p>The unique identifier of the partner account.</p>",
+        "StartQualificationsAssociationTaskRequest$Identifier": "<p>Your partner identifier. You can provide either a partner ID (for example, <code>partner-abc123</code>) or a partner ARN. You must own this identifier.</p>",
+        "StartQualificationsDisassociationTaskRequest$Identifier": "<p>Your partner identifier. You can provide either a partner ID (for example, <code>partner-abc123</code>) or a partner ARN. You must own this identifier.</p>"
       }
     },
     "PartnerProfile": {
@@ -834,7 +904,8 @@
         "GetProfileVisibilityResponse$ProfileId": "<p>The unique identifier of the partner profile.</p>",
         "PartnerProfile$ProfileId": "<p>The unique identifier of the partner profile.</p>",
         "PartnerProfileSummary$Id": "<p>The unique identifier of the partner profile.</p>",
-        "PutProfileVisibilityResponse$ProfileId": "<p>The unique identifier of the partner profile.</p>"
+        "PutProfileVisibilityResponse$ProfileId": "<p>The unique identifier of the partner profile.</p>",
+        "QualificationsAssociationPartner$ProfileId": "<p>The unique identifier for the partner profile, in the format <code>pprofile-*</code>. Required in requests if <code>AccountId</code> is not provided.</p>"
       }
     },
     "PartnerProfileSummary": {
@@ -909,6 +980,53 @@
     "PutProfileVisibilityResponse": {
       "base": null,
       "refs": {}
+    },
+    "QualificationsAssociationPartner": {
+      "base": "<p>Identifies a partner in a qualifications association group. Contains the partner's profile identifier and AWS account identifier. In requests, provide at least one of <code>ProfileId</code> or <code>AccountId</code>. In responses, both fields are populated.</p>",
+      "refs": {
+        "AssociatedPartnerList$member": null,
+        "GetQualificationsAssociationDetailsResponse$PrimaryPartner": "<p>The primary partner's profile and account identifiers. This field is null when the status is <code>NOT_ASSOCIATED</code>.</p>",
+        "GetQualificationsAssociationTaskResponse$PrimaryPartner": "<p>The primary partner's profile and account identifiers that the task is associating qualifications with.</p>",
+        "GetQualificationsDisassociationTaskResponse$AssociatedPartner": "<p>The primary partner's profile and account identifiers that the task is disassociating qualifications from.</p>",
+        "StartQualificationsAssociationTaskRequest$PrimaryPartner": "<p>The primary (acquiring) partner's profile and account identifier to associate qualifications with. You must provide at least one of <code>ProfileId</code> or <code>AccountId</code>. You cannot specify yourself as the primary partner.</p>",
+        "StartQualificationsAssociationTaskResponse$PrimaryPartner": "<p>The resolved primary partner's profile and account identifiers, including both <code>ProfileId</code> and <code>AccountId</code>.</p>",
+        "StartQualificationsDisassociationTaskRequest$AssociatedPartner": "<p>The primary partner's profile and account identifier that you are currently associated with and will disassociate from. You must provide at least one of <code>ProfileId</code> or <code>AccountId</code>. The specified partner must match your current primary association.</p>",
+        "StartQualificationsDisassociationTaskResponse$AssociatedPartner": "<p>The resolved primary partner's profile and account identifiers that the task is disassociating qualifications from.</p>"
+      }
+    },
+    "QualificationsAssociationStatus": {
+      "base": "<p>The current state of a partner qualifications association. Valid values: <code>ASSOCIATED</code> (the partner is associated with a primary), <code>NOT_ASSOCIATED</code> (the partner has no active association).</p>",
+      "refs": {
+        "GetQualificationsAssociationDetailsResponse$Status": "<p>The current qualifications association status. Valid values: <code>ASSOCIATED</code> (the partner is associated with a primary), <code>NOT_ASSOCIATED</code> (the partner has no active association).</p>"
+      }
+    },
+    "QualificationsAssociationTaskId": {
+      "base": "<p>The unique identifier for a qualifications association task, in the format <code>pqatask-[a-z2-7]{13}</code>.</p>",
+      "refs": {
+        "GetQualificationsAssociationTaskResponse$TaskId": "<p>The unique identifier of the qualifications association task, in the format <code>pqatask-[a-z2-7]{13}</code>.</p>",
+        "StartQualificationsAssociationTaskResponse$TaskId": "<p>The unique identifier of the started qualifications association task, in the format <code>pqatask-[a-z2-7]{13}</code>.</p>"
+      }
+    },
+    "QualificationsAssociationTaskStatus": {
+      "base": "<p>The current status of a qualifications association task. Valid values: <code>IN_PROGRESS</code> (task is running), <code>SUCCEEDED</code> (task completed successfully).</p>",
+      "refs": {
+        "GetQualificationsAssociationTaskResponse$Status": "<p>The current status of the qualifications association task. Valid values: <code>IN_PROGRESS</code>, <code>SUCCEEDED</code>.</p>",
+        "StartQualificationsAssociationTaskResponse$Status": "<p>The current status of the qualifications association task. The initial value is <code>IN_PROGRESS</code>.</p>"
+      }
+    },
+    "QualificationsDisassociationTaskId": {
+      "base": "<p>The unique identifier for a qualifications disassociation task, in the format <code>pqdtask-[a-z2-7]{13}</code>.</p>",
+      "refs": {
+        "GetQualificationsDisassociationTaskResponse$TaskId": "<p>The unique identifier of the qualifications disassociation task, in the format <code>pqdtask-[a-z2-7]{13}</code>.</p>",
+        "StartQualificationsDisassociationTaskResponse$TaskId": "<p>The unique identifier of the started qualifications disassociation task, in the format <code>pqdtask-[a-z2-7]{13}</code>.</p>"
+      }
+    },
+    "QualificationsDisassociationTaskStatus": {
+      "base": "<p>The current status of a qualifications disassociation task. Valid values: <code>IN_PROGRESS</code> (task is running), <code>SUCCEEDED</code> (task completed successfully).</p>",
+      "refs": {
+        "GetQualificationsDisassociationTaskResponse$Status": "<p>The current status of the qualifications disassociation task. Valid values: <code>IN_PROGRESS</code>, <code>SUCCEEDED</code>.</p>",
+        "StartQualificationsDisassociationTaskResponse$Status": "<p>The current status of the qualifications disassociation task. The initial value is <code>IN_PROGRESS</code>.</p>"
+      }
     },
     "RegistrantVerificationDetails": {
       "base": "<p>Contains the personal information required for verifying an individual's identity as part of the partner registration process in AWS Partner Central.</p>",
@@ -1019,6 +1137,22 @@
       "refs": {}
     },
     "StartProfileUpdateTaskResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "StartQualificationsAssociationTaskRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartQualificationsAssociationTaskResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "StartQualificationsDisassociationTaskRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartQualificationsDisassociationTaskResponse": {
       "base": null,
       "refs": {}
     },
