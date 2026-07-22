@@ -230,4 +230,74 @@ class RateLimiterTest extends TestCase
             );
         }
     }
+
+    public function testGetSendDelayMsReturnsZeroWhenDisabled()
+    {
+        $rateLimiter = new RateLimiter();
+        $this->assertSame(0, $rateLimiter->getSendDelayMs());
+        $this->assertSame(0, $rateLimiter->getSendDelayMs());
+    }
+
+    public function testGetSendDelayMsReturnsZeroWhenTokensAvailable()
+    {
+        $now = 0.0;
+        $rateLimiter = new RateLimiter([
+            'time_provider' => function () use (&$now) {
+                return $now;
+            },
+        ]);
+
+        // Enable the bucket via the public API; with an initial measuredTxRate
+        // of 0, this settles at fillRate = minFillRate (0.5) and
+        // maxCapacity = minCapacity (1), with currentCapacity drained to 0.
+        $rateLimiter->updateSendingRate(true);
+
+        // Advance the clock enough to refill one token (>= 1 / 0.5 = 2 s).
+        $now = 3.0;
+
+        $this->assertSame(0, $rateLimiter->getSendDelayMs());
+        // A second call at the same virtual time drains the bucket back to
+        // empty, so it must now return a non-zero delay — proving the debit
+        // from the first call landed.
+        $this->assertGreaterThan(0, $rateLimiter->getSendDelayMs());
+    }
+
+    public function testGetSendDelayMsReflectsFillRateDeficit()
+    {
+        $now = 0.0;
+        $rateLimiter = new RateLimiter([
+            'time_provider' => function () use (&$now) {
+                return $now;
+            },
+        ]);
+
+        // Enabling the bucket at t=0 with measuredTxRate=0 leaves it at
+        // fillRate=0.5 and currentCapacity=0.
+        $rateLimiter->updateSendingRate(true);
+
+        // fillRate = 0.5 tokens/s → 2000 ms to accrue 1 token.
+        $this->assertSame(2000, $rateLimiter->getSendDelayMs());
+    }
+
+    public function testGetSendDelayMsDoesNotBlock()
+    {
+        $now = 0.0;
+        $rateLimiter = new RateLimiter([
+            'time_provider' => function () use (&$now) {
+                return $now;
+            },
+        ]);
+        $rateLimiter->updateSendingRate(true);
+
+        $start = microtime(true);
+        $delayMs = $rateLimiter->getSendDelayMs();
+        $elapsed = microtime(true) - $start;
+
+        $this->assertGreaterThan(0, $delayMs, 'Expected a non-zero delay hint');
+        $this->assertLessThan(
+            0.05,
+            $elapsed,
+            'getSendDelayMs() blocked the PHP thread instead of returning a delay hint'
+        );
+    }
 }

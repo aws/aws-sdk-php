@@ -640,25 +640,9 @@ class RetryMiddlewareTest extends TestCase
             ]
         );
 
-        $time = microtime(true);
-        $attempt = 0;
-        $expectedTimes = [0, 0, 0, 1.9, 3.8, 5.7];
-
-        // Errors within MockHandler closure get caught silently
-        $errors = [];
-
-        $assertFunction = function() use (&$time, &$attempt, &$errors, $expectedTimes) {
-            try {
-                $this->assertLessThanOrEqual(
-                    0.5,
-                    abs($expectedTimes[$attempt] - (microtime(true) - $time))
-                );
-            } catch (\Exception $e) {
-                $errors[] = $e;
-            }
-
-            $time = microtime(true);
-            $attempt++;
+        $observedDelays = [];
+        $recorder = function () use (&$observedDelays, $command) {
+            $observedDelays[] = $command['@http']['delay'] ?? null;
         };
 
         $mock = new MockHandler(
@@ -670,12 +654,13 @@ class RetryMiddlewareTest extends TestCase
                 $throttlingErrorShapeException,
                 $result200,
             ],
-            $assertFunction,
-            $assertFunction
+            $recorder,
+            $recorder
         );
 
         $times = [0, 0];
-        foreach ($expectedTimes as $index => $expected) {
+        $expectedAttempts = 6;
+        for ($index = 0; $index < $expectedAttempts; $index++) {
             for ($i = 0; $i < 5; $i++) {
                 $times[] = 0.1 * ($index + 1);
             }
@@ -696,24 +681,42 @@ class RetryMiddlewareTest extends TestCase
                         return $times[$i];
                     }
                 ]),
-                'throttling_error_codes' => ['CustomThrottlingException']
+                'throttling_error_codes' => ['CustomThrottlingException'],
+                'exponential_base' => 1,
             ]
         );
 
         $wrapped($command, $request)->wait();
 
-        // Throw first silently caught error if any
-        if (!empty($errors)) {
-            throw $errors[0];
-        }
+        $this->assertCount($expectedAttempts, $observedDelays);
+        $this->assertCount(0, $mock, 'Not all responses were consumed');
 
-        $this->assertCount($attempt, $expectedTimes);
+        $this->assertSame(
+            null,
+            $observedDelays[0] === 0 ? null : $observedDelays[0],
+            'First attempt should not carry a retry backoff'
+        );
+
+        // Non-throttling exceptions: base_delay * 2^attemptIndex ms.
+        $this->assertGreaterThanOrEqual(50, $observedDelays[1]);
+        $this->assertLessThanOrEqual(50, $observedDelays[1]);
+        $this->assertGreaterThanOrEqual(100, $observedDelays[2]);
+        $this->assertLessThanOrEqual(100, $observedDelays[2]);
+
+        // Throttling: base 1000 ms with exp-backoff, plus rate-limiter contribution.
+        $this->assertGreaterThanOrEqual(4000, $observedDelays[3]);
+        $this->assertGreaterThanOrEqual(8000, $observedDelays[4]);
+        $this->assertGreaterThanOrEqual(16000, $observedDelays[5]);
     }
 
     public function testAddRetryHeader()
     {
-        $nextHandler = function (CommandInterface $command, RequestInterface $request) {
-            $this->assertTrue($request->hasHeader('aws-sdk-retry'));
+        $observedHeaders = [];
+        $nextHandler = function (CommandInterface $command, RequestInterface $request)
+            use (&$observedHeaders)
+        {
+            $this->assertTrue($request->hasHeader('amz-sdk-request'));
+            $observedHeaders[] = $request->getHeaderLine('amz-sdk-request');
             return new RejectedPromise(
                 new AwsException('e', $command, ['connection_error' => true])
             );
@@ -730,6 +733,10 @@ class RetryMiddlewareTest extends TestCase
             $retryMW(new Command('SomeCommand'), new Request('GET', ''))->wait();
             $this->fail();
         } catch (AwsException $e) { }
+
+        $this->assertSame('attempt=1; max=5', $observedHeaders[0]);
+        $this->assertSame('attempt=2; max=5', $observedHeaders[1]);
+        $this->assertSame('attempt=5; max=5', end($observedHeaders));
     }
 
     public function testDeciderRetriesWhenStatusCodeMatches()
@@ -791,6 +798,59 @@ class RetryMiddlewareTest extends TestCase
             $command,
             ['connection_error' => false],
             $previous
+        );
+        $this->assertTrue($decider(0, $command, $err));
+    }
+
+    public function testDeciderRetriesForPartialReadCurlErrors()
+    {
+        if (!extension_loaded('curl')) {
+            $this->markTestSkipped('Test skipped on no cURL extension');
+        }
+        $decider = RetryMiddleware::createDefaultDecider();
+        $command = new Command('foo');
+        $request = new Request('GET', 'http://www.example.com');
+
+        foreach ([
+            'CURLE_PARTIAL_FILE',
+            'CURLE_GOT_NOTHING',
+            'CURLE_RECV_ERROR',
+            'CURLE_HTTP2_STREAM',
+        ] as $constName) {
+            if (!defined($constName)) {
+                continue;
+            }
+            $previous = new RequestException(
+                'test',
+                $request,
+                null,
+                null,
+                ['errno' => constant($constName)]
+            );
+            $err = new AwsException(
+                'e',
+                $command,
+                ['connection_error' => false],
+                $previous
+            );
+            $this->assertTrue(
+                $decider(0, $command, $err),
+                "Decider should retry on cURL errno {$constName}"
+            );
+        }
+    }
+
+    public function testDeciderRetriesInternalErrorCode()
+    {
+        $decider = RetryMiddleware::createDefaultDecider();
+        $command = new Command('foo');
+        $err = new AwsException(
+            'We encountered an internal error. Please try again.',
+            $command,
+            [
+                'response' => new Response(200),
+                'code' => 'InternalError',
+            ]
         );
         $this->assertTrue($decider(0, $command, $err));
     }

@@ -106,12 +106,22 @@ class ConfigurationProvider extends AbstractConfigurationProvider
     public static function env()
     {
         return function () {
-            // Use config from environment variables, if available
-            $mode = getenv(self::ENV_MODE);
-            $maxAttempts = getenv(self::ENV_MAX_ATTEMPTS)
-                ? getenv(self::ENV_MAX_ATTEMPTS)
-                : self::DEFAULT_MAX_ATTEMPTS;
-            if (!empty($mode)) {
+            $modeEnv = getenv(self::ENV_MODE);
+            $maxAttemptsEnv = getenv(self::ENV_MAX_ATTEMPTS);
+
+            if (!empty($modeEnv) || !empty($maxAttemptsEnv)) {
+                $mode = !empty($modeEnv)
+                    ? $modeEnv
+                    : self::getDefaultMode();
+                $maxAttempts = !empty($maxAttemptsEnv)
+                    ? $maxAttemptsEnv
+                    : self::DEFAULT_MAX_ATTEMPTS;
+
+                if (empty($modeEnv) && !OptIn::isEnabled()) {
+                    return self::reject('Could not find environment variable'
+                        . ' config in ' . self::ENV_MODE);
+                }
+
                 return Promise\Create::promiseFor(
                     new Configuration($mode, $maxAttempts)
                 );
@@ -136,10 +146,6 @@ class ConfigurationProvider extends AbstractConfigurationProvider
         };
     }
 
-    /**
-     * Returns the default retry mode. Reflects the AWS_NEW_RETRIES_2026
-     * opt-in: 'standard' when the env flag is set, 'legacy' otherwise.
-     */
     public static function getDefaultMode(): string
     {
         return OptIn::isEnabled() ? 'standard' : self::DEFAULT_MODE;
@@ -175,18 +181,30 @@ class ConfigurationProvider extends AbstractConfigurationProvider
             if (!isset($data[$profile])) {
                 return self::reject("'$profile' not found in config file");
             }
-            if (!isset($data[$profile][self::INI_MODE])) {
+
+            $hasMode = isset($data[$profile][self::INI_MODE]);
+            $hasMaxAttempts = isset($data[$profile][self::INI_MAX_ATTEMPTS]);
+
+            if (!$hasMode && !$hasMaxAttempts) {
                 return self::reject("Required retry config values
                     not present in INI profile '{$profile}' ({$filename})");
             }
 
-            $maxAttempts = isset($data[$profile][self::INI_MAX_ATTEMPTS])
+            if (!$hasMode && !OptIn::isEnabled()) {
+                return self::reject("Required retry config values
+                    not present in INI profile '{$profile}' ({$filename})");
+            }
+
+            $mode = $hasMode
+                ? $data[$profile][self::INI_MODE]
+                : self::getDefaultMode();
+            $maxAttempts = $hasMaxAttempts
                 ? $data[$profile][self::INI_MAX_ATTEMPTS]
                 : self::DEFAULT_MAX_ATTEMPTS;
 
             return Promise\Create::promiseFor(
                 new Configuration(
-                    $data[$profile][self::INI_MODE],
+                    $mode,
                     $maxAttempts
                 )
             );
