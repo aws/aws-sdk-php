@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.388.12 - 2026-07-22
 
 * `Aws\S3` - Aws\S3\Transfer::resolvesOutsideTargetDirectory() now treats both '/' and '\' as directory separators when tokenizing the sink path. Aligns the legacy Transfer guard with the newer S3Transfer\DirectoryDownloader on Windows, where PHP's filesystem layer resolves backslashes as separators.
 * `Aws\GuardDuty` - Amazon GuardDuty now returns filter lifecycle metadata in GetFilter responses. The response includes createdAt and updatedAt timestamps and a version number that increments on each update, giving you visibility into when a filter was created and last modified.
