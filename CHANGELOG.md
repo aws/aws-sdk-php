@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.388.13 - 2026-07-23
 
 * `Aws\Credentials` - Normalizes numeric-string metadata timeouts to floats in the ECS and instance profile credential providers while preserving their existing configuration and environment precedence.
 * `Aws\BedrockAgentCore` - Adds support for the Bring Your Own Storage(BYOS) feature in AgentCore Browser and Code Interpreter. Enables mounting S3Files and EFS File Systems via Access points.
