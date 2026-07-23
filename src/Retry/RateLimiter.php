@@ -67,6 +67,29 @@ class RateLimiter
         $this->acquireToken(1);
     }
 
+    /**
+     * @return int Non-blocking delay hint in milliseconds; 0 if a token is
+     *             available immediately. A token is debited on each call.
+     */
+    public function getSendDelayMs(): int
+    {
+        if (!$this->enabled) {
+            return 0;
+        }
+
+        $this->refillTokenBucket();
+        $delayMs = 0;
+        if (1 > $this->currentCapacity) {
+            $needed = 1 - $this->currentCapacity;
+            $fillRate = max($this->fillRate, $this->minFillRate);
+            $delayMs = (int) ceil(1000 * $needed / $fillRate);
+        }
+
+        $this->currentCapacity = max(0, $this->currentCapacity - 1);
+
+        return $delayMs;
+    }
+
     public function updateSendingRate($isThrottled)
     {
         $this->updateMeasuredRate();

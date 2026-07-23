@@ -259,13 +259,17 @@ final class Middleware
      */
     public static function invocationId()
     {
-        return function (callable $handler) {
+        $headerName = \Aws\Retry\V3\OptIn::isEnabled()
+            ? 'amz-sdk-invocation-id'
+            : 'aws-sdk-invocation-id';
+
+        return function (callable $handler) use ($headerName) {
             return function (
                 CommandInterface $command,
                 RequestInterface $request
-            ) use ($handler){
+            ) use ($handler, $headerName){
                 return $handler($command, $request->withHeader(
-                    'aws-sdk-invocation-id',
+                    $headerName,
                     md5(uniqid(gethostname(), true))
                 ));
             };

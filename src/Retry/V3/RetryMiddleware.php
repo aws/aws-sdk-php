@@ -51,6 +51,7 @@ class RetryMiddleware
     private static array $standardTransientErrors = [
         'RequestTimeout'            => true,
         'RequestTimeoutException'   => true,
+        'InternalError'             => true,
     ];
 
     private static array $standardTransientStatusCodes = [
@@ -90,10 +91,7 @@ class RetryMiddleware
      */
     public static function createDefaultDecider(array $options = []): \Closure
     {
-        $retryCurlErrors = [];
-        if (extension_loaded('curl')) {
-            $retryCurlErrors[CURLE_RECV_ERROR] = true;
-        }
+        $retryCurlErrors = self::defaultRetryCurlErrors();
 
         return function (
             int $attempts,
@@ -128,10 +126,7 @@ class RetryMiddleware
             ? ($options['delayer'])(...)
             : null;
 
-        $this->retryCurlErrors = [];
-        if (extension_loaded('curl')) {
-            $this->retryCurlErrors[CURLE_RECV_ERROR] = true;
-        }
+        $this->retryCurlErrors = self::defaultRetryCurlErrors();
         if (!empty($options['curl_errors']) && is_array($options['curl_errors'])) {
             foreach ($options['curl_errors'] as $code) {
                 $this->retryCurlErrors[$code] = true;
@@ -143,6 +138,25 @@ class RetryMiddleware
         }
     }
 
+    private static function defaultRetryCurlErrors(): array
+    {
+        $errors = [];
+        if (!extension_loaded('curl')) {
+            return $errors;
+        }
+        foreach ([
+            'CURLE_RECV_ERROR',
+            'CURLE_PARTIAL_FILE',
+            'CURLE_GOT_NOTHING',
+            'CURLE_HTTP2_STREAM',
+        ] as $name) {
+            if (defined($name)) {
+                $errors[constant($name)] = true;
+            }
+        }
+        return $errors;
+    }
+
     public function __invoke(CommandInterface $cmd, RequestInterface $req): PromiseInterface
     {
         $handler = $this->nextHandler;
@@ -152,7 +166,10 @@ class RetryMiddleware
         $requestStats = [];
         $capacityUsed = null;
 
-        $req = $this->addRetryHeader($req, 0, 0);
+        $maxAttemptsForHeader = ($cmd['@retries'] !== null)
+            ? $cmd['@retries'] + 1
+            : $this->maxAttempts;
+        $req = $this->addRetryHeaderV3($req, 1, $maxAttemptsForHeader);
 
         $callback = function ($value) use (
             $handler,
@@ -247,10 +264,8 @@ class RetryMiddleware
 
             $acquired = $this->quotaManager->acquireRetryQuota($isThrottling);
             if ($acquired === false) {
-                // Long-polling: sleep and surface the error rather than retry.
                 if (LongPolling::isLongPolling($this->service, $cmd->getName())) {
                     $cmd['@http']['delay'] = $delayByMs;
-                    usleep((int) ($delayByMs * 1000));
                 }
 
                 if ($isError) {
@@ -271,21 +286,27 @@ class RetryMiddleware
             $attempts++;
             $cmd['@http']['delay'] = $delayByMs;
 
+            if ($this->mode === 'adaptive') {
+                $rlDelayMs = $this->rateLimiter->getSendDelayMs();
+                if ($rlDelayMs > 0) {
+                    $cmd['@http']['delay'] = ($cmd['@http']['delay'] ?? 0) + $rlDelayMs;
+                }
+            }
+
             if ($this->collectStats) {
                 $this->updateStats($attempts - 1, $delayByMs, $requestStats);
             }
 
-            $req = $this->addRetryHeader($req, $attempts - 1, $delayByMs);
-
-            if ($this->mode === 'adaptive') {
-                $this->rateLimiter->getSendToken();
-            }
+            $req = $this->addRetryHeaderV3($req, $attempts, $maxAttempts);
 
             return $handler($cmd, $req)->then($callback, $callback);
         };
 
         if ($this->mode === 'adaptive') {
-            $this->rateLimiter->getSendToken();
+            $rlDelayMs = $this->rateLimiter->getSendDelayMs();
+            if ($rlDelayMs > 0) {
+                $cmd['@http']['delay'] = ($cmd['@http']['delay'] ?? 0) + $rlDelayMs;
+            }
         }
 
         return $handler($cmd, $req)->then($callback, $callback);

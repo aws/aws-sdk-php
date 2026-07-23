@@ -11,6 +11,14 @@ trait RetryHelperTrait
         return $request->withHeader('aws-sdk-retry', "{$retries}/{$delayBy}");
     }
 
+    private function addRetryHeaderV3($request, int $attempt, int $maxAttempts)
+    {
+        return $request->withHeader(
+            'amz-sdk-request',
+            "attempt={$attempt}; max={$maxAttempts}"
+        );
+    }
+
 
     private function updateStats($retries, $delay, array &$stats)
     {
