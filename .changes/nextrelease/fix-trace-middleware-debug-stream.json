@@ -1,0 +1,7 @@
+[
+    {
+        "type": "bugfix",
+        "category": "TraceMiddleware",
+        "description": "Defer closing the `@http.debug` resource on streamed response bodies so Guzzle's stream_notification callback can keep writing to it while the body is being read. Fixes \"fprintf(): supplied resource is not a valid stream resource\" warnings when using the S3 stream wrapper with debug enabled."
+    }
+]
