@@ -3,7 +3,7 @@ namespace Aws\Credentials;
 
 use Aws\Arn\Arn;
 use Aws\Exception\CredentialsException;
-use GuzzleHttp\Exception\ConnectException;
+use Aws\Handler\HttpHandlerError;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Promise;
@@ -104,13 +104,14 @@ class EcsCredentialProvider
                             CredentialSources::ECS
                         );
                     })->otherwise(function ($reason) {
-                        $reason = is_array($reason) ? $reason['exception'] : $reason;
+                        $connectionError = is_array($reason) && !empty($reason['connection_error']);
+                        $exception = is_array($reason) ? ($reason['exception'] ?? null) : $reason;
+                        $isRetryable = $connectionError || ($exception instanceof \Throwable && HttpHandlerError::isConnectionError($exception));
 
-                        $isRetryable = $reason instanceof ConnectException;
                         if ($isRetryable && ($this->attempts < $this->retries)) {
                             sleep((int)pow(1.2, $this->attempts));
                         } else {
-                            $msg = $reason->getMessage();
+                            $msg = $exception instanceof \Throwable ? $exception->getMessage() : \Aws\describe_type($reason);
                             throw new CredentialsException(
                                 sprintf('Error retrieving credentials from container metadata after attempt %d/%d (%s)', $this->attempts, $this->retries, $msg)
                             );
