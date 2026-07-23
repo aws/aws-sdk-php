@@ -59,6 +59,7 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ActiveWaitingRequestsExceededException"},
         {"shape":"InternalServerException"}
       ],
       "readonly":true
@@ -108,6 +109,7 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ActiveWaitingRequestsExceededException"},
         {"shape":"InternalServerException"}
       ],
       "readonly":true
@@ -123,6 +125,7 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ActiveWaitingRequestsExceededException"},
         {"shape":"InternalServerException"}
       ],
       "readonly":true
@@ -158,6 +161,21 @@
         {"shape":"QueryTimeoutException"},
         {"shape":"InternalServerException"},
         {"shape":"DatabaseConnectionException"}
+      ],
+      "readonly":true
+    },
+    "ListSessions":{
+      "name":"ListSessions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListSessionsRequest"},
+      "output":{"shape":"ListSessionsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
       ],
       "readonly":true
     },
@@ -209,6 +227,13 @@
       },
       "exception":true
     },
+    "ActiveWaitingRequestsExceededException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"String"}
+      },
+      "exception":true
+    },
     "BatchExecuteStatementException":{
       "type":"structure",
       "required":[
@@ -241,7 +266,9 @@
         },
         "ResultFormat":{"shape":"ResultFormatString"},
         "SessionKeepAliveSeconds":{"shape":"SessionAliveSeconds"},
-        "SessionId":{"shape":"UUID"}
+        "SessionId":{"shape":"UUID"},
+        "ExecutionMode":{"shape":"ExecutionMode"},
+        "WaitTimeSeconds":{"shape":"WaitTimeSeconds"}
       }
     },
     "BatchExecuteStatementOutput":{
@@ -255,7 +282,10 @@
         "Database":{"shape":"String"},
         "SecretArn":{"shape":"SecretArn"},
         "WorkgroupName":{"shape":"WorkgroupNameString"},
-        "SessionId":{"shape":"UUID"}
+        "SessionId":{"shape":"UUID"},
+        "Status":{"shape":"StatementStatusString"},
+        "RedshiftPid":{"shape":"BoxedLong"},
+        "HasResultSet":{"shape":"BoxedBoolean"}
       }
     },
     "Blob":{"type":"blob"},
@@ -346,7 +376,8 @@
       "type":"structure",
       "required":["Id"],
       "members":{
-        "Id":{"shape":"UUID"}
+        "Id":{"shape":"UUID"},
+        "WaitTimeSeconds":{"shape":"WaitTimeSeconds"}
       }
     },
     "DescribeStatementResponse":{
@@ -373,7 +404,8 @@
         "SubStatements":{"shape":"SubStatementList"},
         "WorkgroupName":{"shape":"WorkgroupNameString"},
         "ResultFormat":{"shape":"ResultFormatString"},
-        "SessionId":{"shape":"String"}
+        "SessionId":{"shape":"String"},
+        "ExecutionMode":{"shape":"ExecutionMode"}
       }
     },
     "DescribeTableRequest":{
@@ -432,7 +464,8 @@
         },
         "ResultFormat":{"shape":"ResultFormatString"},
         "SessionKeepAliveSeconds":{"shape":"SessionAliveSeconds"},
-        "SessionId":{"shape":"UUID"}
+        "SessionId":{"shape":"UUID"},
+        "WaitTimeSeconds":{"shape":"WaitTimeSeconds"}
       }
     },
     "ExecuteStatementOutput":{
@@ -446,8 +479,18 @@
         "Database":{"shape":"String"},
         "SecretArn":{"shape":"SecretArn"},
         "WorkgroupName":{"shape":"WorkgroupNameString"},
-        "SessionId":{"shape":"UUID"}
+        "SessionId":{"shape":"UUID"},
+        "Status":{"shape":"StatementStatusString"},
+        "RedshiftPid":{"shape":"BoxedLong"},
+        "HasResultSet":{"shape":"BoxedBoolean"}
       }
+    },
+    "ExecutionMode":{
+      "type":"string",
+      "enum":[
+        "TRANSACTION",
+        "AUTO_COMMIT"
+      ]
     },
     "Field":{
       "type":"structure",
@@ -474,7 +517,8 @@
       "required":["Id"],
       "members":{
         "Id":{"shape":"UUID"},
-        "NextToken":{"shape":"String"}
+        "NextToken":{"shape":"String"},
+        "WaitTimeSeconds":{"shape":"WaitTimeSeconds"}
       }
     },
     "GetStatementResultResponse":{
@@ -492,7 +536,8 @@
       "required":["Id"],
       "members":{
         "Id":{"shape":"UUID"},
-        "NextToken":{"shape":"String"}
+        "NextToken":{"shape":"String"},
+        "WaitTimeSeconds":{"shape":"WaitTimeSeconds"}
       }
     },
     "GetStatementResultV2Response":{
@@ -555,6 +600,27 @@
       "type":"structure",
       "members":{
         "Schemas":{"shape":"SchemaList"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "ListSessionsRequest":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"String"},
+        "MaxResults":{"shape":"ListStatementsLimit"},
+        "SessionId":{"shape":"UUID"},
+        "Status":{"shape":"SessionStatusString"},
+        "RoleLevel":{"shape":"Boolean"},
+        "ClusterIdentifier":{"shape":"ClusterIdentifierString"},
+        "WorkgroupName":{"shape":"WorkgroupNameString"},
+        "Database":{"shape":"String"}
+      }
+    },
+    "ListSessionsResponse":{
+      "type":"structure",
+      "required":["Sessions"],
+      "members":{
+        "Sessions":{"shape":"SessionList"},
         "NextToken":{"shape":"String"}
       }
     },
@@ -664,6 +730,39 @@
       "box":true,
       "max":86400,
       "min":0
+    },
+    "SessionData":{
+      "type":"structure",
+      "required":[
+        "SessionId",
+        "Status",
+        "CreatedAt"
+      ],
+      "members":{
+        "SessionId":{"shape":"UUID"},
+        "Status":{"shape":"SessionStatusString"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "UpdatedAt":{"shape":"Timestamp"},
+        "Database":{"shape":"String"},
+        "DbUser":{"shape":"String"},
+        "ClusterIdentifier":{"shape":"String"},
+        "WorkgroupName":{"shape":"WorkgroupNameString"},
+        "SessionAliveSeconds":{"shape":"SessionAliveSeconds"},
+        "SessionTtl":{"shape":"Timestamp"},
+        "CurrentStatementId":{"shape":"UUID"}
+      }
+    },
+    "SessionList":{
+      "type":"list",
+      "member":{"shape":"SessionData"}
+    },
+    "SessionStatusString":{
+      "type":"string",
+      "enum":[
+        "AVAILABLE",
+        "BUSY",
+        "CLOSED"
+      ]
     },
     "SqlList":{
       "type":"list",
@@ -792,11 +891,17 @@
       },
       "exception":true
     },
+    "WaitTimeSeconds":{
+      "type":"integer",
+      "box":true,
+      "max":30,
+      "min":1
+    },
     "WorkgroupNameString":{
       "type":"string",
       "max":128,
       "min":3,
-      "pattern":".*((^[a-z0-9-]{3,63}$)|^(arn:(aws(-[a-z]+)*):redshift-serverless:([a-z]{2}(-gov|(-iso[a-z]?))?|eusc-[a-z]+)-[a-z]+-\\d{1}:\\d{12}:workgroup/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))"
+      "pattern":"([a-z0-9-]{3,63}|arn:(aws(-[a-z]+)*):redshift-serverless:([a-z]{2}(-gov|(-iso[a-z]?))?|eusc-[a-z]+)-[a-z]+-\\d{1}:\\d{12}:workgroup/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})"
     },
     "bool":{"type":"boolean"}
   }

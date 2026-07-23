@@ -11,6 +11,7 @@
     "GetStatementResultV2": "<p>Fetches the temporarily cached result of an SQL statement in CSV format. The <code>ExecuteStatement</code> or <code>BatchExecuteStatement</code> operation that ran the SQL statement must have specified <code>ResultFormat</code> as <code>CSV</code>. A token is returned to page through the statement results.</p> <p>For more information about the Amazon Redshift Data API and CLI usage examples, see <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/data-api.html\">Using the Amazon Redshift Data API</a> in the <i>Amazon Redshift Management Guide</i>. </p>",
     "ListDatabases": "<p>List the databases in a cluster. A token is returned to page through the database list. Depending on the authorization method, use one of the following combinations of request parameters: </p> <ul> <li> <p>Secrets Manager - when connecting to a cluster, provide the <code>secret-arn</code> of a secret stored in Secrets Manager which has <code>username</code> and <code>password</code>. The specified secret contains credentials to connect to the <code>database</code> you specify. When you are connecting to a cluster, you also supply the database name, If you provide a cluster identifier (<code>dbClusterIdentifier</code>), it must match the cluster identifier stored in the secret. When you are connecting to a serverless workgroup, you also supply the database name.</p> </li> <li> <p>Temporary credentials - when connecting to your data warehouse, choose one of the following options:</p> <ul> <li> <p>When connecting to a serverless workgroup, specify the workgroup name and database name. The database user name is derived from the IAM identity. For example, <code>arn:iam::123456789012:user:foo</code> has the database user name <code>IAM:foo</code>. Also, permission to call the <code>redshift-serverless:GetCredentials</code> operation is required.</p> </li> <li> <p>When connecting to a cluster as an IAM identity, specify the cluster identifier and the database name. The database user name is derived from the IAM identity. For example, <code>arn:iam::123456789012:user:foo</code> has the database user name <code>IAM:foo</code>. Also, permission to call the <code>redshift:GetClusterCredentialsWithIAM</code> operation is required.</p> </li> <li> <p>When connecting to a cluster as a database user, specify the cluster identifier, the database name, and the database user name. Also, permission to call the <code>redshift:GetClusterCredentials</code> operation is required.</p> </li> </ul> </li> </ul> <p>For more information about the Amazon Redshift Data API and CLI usage examples, see <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/data-api.html\">Using the Amazon Redshift Data API</a> in the <i>Amazon Redshift Management Guide</i>. </p>",
     "ListSchemas": "<p>Lists the schemas in a database. A token is returned to page through the schema list. Depending on the authorization method, use one of the following combinations of request parameters: </p> <ul> <li> <p>Secrets Manager - when connecting to a cluster, provide the <code>secret-arn</code> of a secret stored in Secrets Manager which has <code>username</code> and <code>password</code>. The specified secret contains credentials to connect to the <code>database</code> you specify. When you are connecting to a cluster, you also supply the database name, If you provide a cluster identifier (<code>dbClusterIdentifier</code>), it must match the cluster identifier stored in the secret. When you are connecting to a serverless workgroup, you also supply the database name.</p> </li> <li> <p>Temporary credentials - when connecting to your data warehouse, choose one of the following options:</p> <ul> <li> <p>When connecting to a serverless workgroup, specify the workgroup name and database name. The database user name is derived from the IAM identity. For example, <code>arn:iam::123456789012:user:foo</code> has the database user name <code>IAM:foo</code>. Also, permission to call the <code>redshift-serverless:GetCredentials</code> operation is required.</p> </li> <li> <p>When connecting to a cluster as an IAM identity, specify the cluster identifier and the database name. The database user name is derived from the IAM identity. For example, <code>arn:iam::123456789012:user:foo</code> has the database user name <code>IAM:foo</code>. Also, permission to call the <code>redshift:GetClusterCredentialsWithIAM</code> operation is required.</p> </li> <li> <p>When connecting to a cluster as a database user, specify the cluster identifier, the database name, and the database user name. Also, permission to call the <code>redshift:GetClusterCredentials</code> operation is required.</p> </li> </ul> </li> </ul> <p>For more information about the Amazon Redshift Data API and CLI usage examples, see <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/data-api.html\">Using the Amazon Redshift Data API</a> in the <i>Amazon Redshift Management Guide</i>. </p>",
+    "ListSessions": "<p>Lists the sessions that the caller created in the last 24 hours. By default, only sessions with a status of <code>AVAILABLE</code> or <code>BUSY</code> are returned. You can filter the results by session status, compute target (cluster or serverless workgroup), or database. To retrieve the metadata for a single session, provide the <code>SessionId</code> parameter. Use <code>NextToken</code> to page through the session list.</p> <p>Returns only the sessions that the caller created. When identity-enhanced role sessions are used, you must provide either the <code>ClusterIdentifier</code> or <code>WorkgroupName</code> parameter to ensure that the AWS IAM Identity Center user can only access the Amazon Redshift IAM Identity Center applications they are assigned. For more information, see <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/trustedidentitypropagation-overview.html\"> Trusted identity propagation overview</a>.</p>",
     "ListStatements": "<p>List of SQL statements. By default, only finished statements are shown. A token is returned to page through the statement list. </p> <p>When you use identity-enhanced role sessions to list statements, you must provide either the <code>cluster-identifier</code> or <code>workgroup-name</code> parameter. This ensures that the IdC user can only access the Amazon Redshift IdC applications they are assigned. For more information, see <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/trustedidentitypropagation-overview.html\"> Trusted identity propagation overview</a>.</p> <p>For more information about the Amazon Redshift Data API and CLI usage examples, see <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/data-api.html\">Using the Amazon Redshift Data API</a> in the <i>Amazon Redshift Management Guide</i>. </p>",
     "ListTables": "<p>List the tables in a database. If neither <code>SchemaPattern</code> nor <code>TablePattern</code> are specified, then all tables in the database are returned. A token is returned to page through the table list. Depending on the authorization method, use one of the following combinations of request parameters: </p> <ul> <li> <p>Secrets Manager - when connecting to a cluster, provide the <code>secret-arn</code> of a secret stored in Secrets Manager which has <code>username</code> and <code>password</code>. The specified secret contains credentials to connect to the <code>database</code> you specify. When you are connecting to a cluster, you also supply the database name, If you provide a cluster identifier (<code>dbClusterIdentifier</code>), it must match the cluster identifier stored in the secret. When you are connecting to a serverless workgroup, you also supply the database name.</p> </li> <li> <p>Temporary credentials - when connecting to your data warehouse, choose one of the following options:</p> <ul> <li> <p>When connecting to a serverless workgroup, specify the workgroup name and database name. The database user name is derived from the IAM identity. For example, <code>arn:iam::123456789012:user:foo</code> has the database user name <code>IAM:foo</code>. Also, permission to call the <code>redshift-serverless:GetCredentials</code> operation is required.</p> </li> <li> <p>When connecting to a cluster as an IAM identity, specify the cluster identifier and the database name. The database user name is derived from the IAM identity. For example, <code>arn:iam::123456789012:user:foo</code> has the database user name <code>IAM:foo</code>. Also, permission to call the <code>redshift:GetClusterCredentialsWithIAM</code> operation is required.</p> </li> <li> <p>When connecting to a cluster as a database user, specify the cluster identifier, the database name, and the database user name. Also, permission to call the <code>redshift:GetClusterCredentials</code> operation is required.</p> </li> </ul> </li> </ul> <p>For more information about the Amazon Redshift Data API and CLI usage examples, see <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/data-api.html\">Using the Amazon Redshift Data API</a> in the <i>Amazon Redshift Management Guide</i>. </p>"
   },
@@ -21,6 +22,10 @@
     },
     "ActiveStatementsExceededException": {
       "base": "<p>The number of active statements exceeds the limit.</p>",
+      "refs": {}
+    },
+    "ActiveWaitingRequestsExceededException": {
+      "base": "<p>The number of active requests with <code>WaitTimeSeconds</code> for the same SQL statement exceeds the limit.</p>",
       "refs": {}
     },
     "BatchExecuteStatementException": {
@@ -48,6 +53,7 @@
         "CancelStatementResponse$Status": "<p>A value that indicates whether the cancel statement succeeded (true). </p>",
         "DescribeStatementResponse$HasResultSet": "<p>A value that indicates whether the statement has a result set. The result set can be empty. The value is true for an empty result set. The value is true if any substatement returns a result set.</p>",
         "ExecuteStatementInput$WithEvent": "<p>A value that indicates whether to send an event to the Amazon EventBridge event bus after the SQL statement runs. </p>",
+        "ListSessionsRequest$RoleLevel": "<p>Specifies whether to return all sessions created by the caller's IAM role, including sessions from previous IAM sessions. If false, only sessions created in the current IAM session are returned. The default is true.</p>",
         "ListStatementsRequest$RoleLevel": "<p>A value that filters which statements to return in the response. If true, all statements run by the caller's IAM role are returned. If false, only statements run by the caller's IAM role in the current IAM session are returned. The default is true. </p>",
         "StatementData$IsBatchStatement": "<p>A value that indicates whether the statement is a batch query request.</p>",
         "SubStatementData$HasResultSet": "<p>A value that indicates whether the statement has a result set. The result set can be empty. The value is true for an empty result set.</p>"
@@ -56,6 +62,8 @@
     "BoxedBoolean": {
       "base": null,
       "refs": {
+        "BatchExecuteStatementOutput$HasResultSet": "<p>A value that indicates whether the statement has a result set. The result set can be empty. The value is true for an empty result set. The value is true if any substatement returns a result set.</p>",
+        "ExecuteStatementOutput$HasResultSet": "<p>A value that indicates whether the statement has a result set. The result set can be empty. The value is true for an empty result set.</p>",
         "Field$isNull": "<p>A value that indicates whether the data is NULL. </p>",
         "Field$booleanValue": "<p>A value of the Boolean data type. </p>"
       }
@@ -69,6 +77,8 @@
     "BoxedLong": {
       "base": null,
       "refs": {
+        "BatchExecuteStatementOutput$RedshiftPid": "<p>The process identifier from Amazon Redshift. </p>",
+        "ExecuteStatementOutput$RedshiftPid": "<p>The process identifier from Amazon Redshift. </p>",
         "Field$longValue": "<p>A value of the long data type. </p>"
       }
     },
@@ -97,6 +107,7 @@
         "ExecuteStatementOutput$ClusterIdentifier": "<p>The cluster identifier. This element is not returned when connecting to a serverless workgroup. </p>",
         "ListDatabasesRequest$ClusterIdentifier": "<p>The cluster identifier. This parameter is required when connecting to a cluster and authenticating using either Secrets Manager or temporary credentials. </p>",
         "ListSchemasRequest$ClusterIdentifier": "<p>The cluster identifier. This parameter is required when connecting to a cluster and authenticating using either Secrets Manager or temporary credentials. </p>",
+        "ListSessionsRequest$ClusterIdentifier": "<p>The cluster identifier. Only sessions on this cluster are returned. When providing <code>ClusterIdentifier</code>, then <code>WorkgroupName</code> can't be specified.</p>",
         "ListStatementsRequest$ClusterIdentifier": "<p>The cluster identifier. Only statements that ran on this cluster are returned. When providing <code>ClusterIdentifier</code>, then <code>WorkgroupName</code> can't be specified.</p>",
         "ListTablesRequest$ClusterIdentifier": "<p>The cluster identifier. This parameter is required when connecting to a cluster and authenticating using either Secrets Manager or temporary credentials. </p>"
       }
@@ -166,6 +177,13 @@
       "base": null,
       "refs": {}
     },
+    "ExecutionMode": {
+      "base": null,
+      "refs": {
+        "BatchExecuteStatementInput$ExecutionMode": "<p>Determines how the SQL statements in the batch are run. If set to <code>TRANSACTION</code> (the default), all SQL statements are run as a single transaction and they are committed or rolled back together. If set to <code>AUTO_COMMIT</code>, each SQL statement is committed individually, and a failure of one statement does not affect the others.</p>",
+        "DescribeStatementResponse$ExecutionMode": "<p>The execution mode of the batch request. <code>TRANSACTION</code> indicates all SQL statements are run as a single transaction. <code>AUTO_COMMIT</code> indicates each SQL statement is committed individually.</p>"
+      }
+    },
     "Field": {
       "base": "<p>A data value in a column. </p>",
       "refs": {
@@ -229,9 +247,18 @@
       "base": null,
       "refs": {}
     },
+    "ListSessionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSessionsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListStatementsLimit": {
       "base": null,
       "refs": {
+        "ListSessionsRequest$MaxResults": "<p>The maximum number of sessions to return in the response. If more sessions exist than fit in one response, the operation returns <code>NextToken</code> to paginate the results.</p>",
         "ListStatementsRequest$MaxResults": "<p>The maximum number of SQL statements to return in the response. If more SQL statements exist than fit in one response, then <code>NextToken</code> is returned to page through the results. </p>"
       }
     },
@@ -337,13 +364,33 @@
       "base": null,
       "refs": {
         "BatchExecuteStatementInput$SessionKeepAliveSeconds": "<p>The number of seconds to keep the session alive after the query finishes. The maximum time a session can keep alive is 24 hours. After 24 hours, the session is forced closed and the query is terminated.</p>",
-        "ExecuteStatementInput$SessionKeepAliveSeconds": "<p>The number of seconds to keep the session alive after the query finishes. The maximum time a session can keep alive is 24 hours. After 24 hours, the session is forced closed and the query is terminated.</p>"
+        "ExecuteStatementInput$SessionKeepAliveSeconds": "<p>The number of seconds to keep the session alive after the query finishes. The maximum time a session can keep alive is 24 hours. After 24 hours, the session is forced closed and the query is terminated.</p>",
+        "SessionData$SessionAliveSeconds": "<p>The number of seconds that the session is kept alive after a query finishes.</p>"
+      }
+    },
+    "SessionData": {
+      "base": "<p>Contains the metadata for a session returned by <code>ListSessions</code>, including its status, compute target, database connection, and lifecycle timestamps.</p>",
+      "refs": {
+        "SessionList$member": null
+      }
+    },
+    "SessionList": {
+      "base": null,
+      "refs": {
+        "ListSessionsResponse$Sessions": "<p>The sessions that match the request.</p>"
+      }
+    },
+    "SessionStatusString": {
+      "base": null,
+      "refs": {
+        "ListSessionsRequest$Status": "<p>The status of the sessions to list. If no status is specified, sessions with a status of <code>AVAILABLE</code> or <code>BUSY</code> are returned. Status values are defined as follows:</p> <ul> <li> <p>AVAILABLE – The session is open and ready to run a SQL statement.</p> </li> <li> <p>BUSY – The session is currently running a SQL statement.</p> </li> <li> <p>CLOSED – The session is closed and can no longer run SQL statements.</p> </li> </ul>",
+        "SessionData$Status": "<p>The status of the session. Status values are defined as follows:</p> <ul> <li> <p>AVAILABLE – The session is open and ready to run a SQL statement.</p> </li> <li> <p>BUSY – The session is currently running a SQL statement.</p> </li> <li> <p>CLOSED – The session is closed and can no longer run SQL statements.</p> </li> </ul>"
       }
     },
     "SqlList": {
       "base": null,
       "refs": {
-        "BatchExecuteStatementInput$Sqls": "<p>One or more SQL statements to run. The SQL statements are run as a single transaction. They run serially in the order of the array. Subsequent SQL statements don't start until the previous statement in the array completes. If any SQL statement fails, then because they are run as one transaction, all work is rolled back.</p>"
+        "BatchExecuteStatementInput$Sqls": "<p>One or more SQL statements to run. The SQL statements run serially in the order of the array. Subsequent SQL statements don't start until the previous statement in the array completes. By default, the SQL statements are run as a single transaction. If any SQL statement fails, all work is rolled back. To change this behavior, see the <code>ExecutionMode</code> parameter.</p>"
       }
     },
     "SqlParameter": {
@@ -355,7 +402,7 @@
     "SqlParametersList": {
       "base": null,
       "refs": {
-        "BatchExecuteStatementInput$Parameters": "<p>The parameters for the SQL statements. The parameters are shared across all SQL statements in the batch.</p>",
+        "BatchExecuteStatementInput$Parameters": "<p>The parameters for the SQL statements. The parameters are available to all SQL statements in the batch. Each statement can reference any subset of the provided parameters. Each provided parameter must be referenced by at least one SQL statement in the batch.</p>",
         "DescribeStatementResponse$QueryParameters": "<p>The parameters for the SQL statement.</p>",
         "ExecuteStatementInput$Parameters": "<p>The parameters for the SQL statement.</p>",
         "StatementData$QueryParameters": "<p>The parameters used in a SQL statement.</p>"
@@ -391,6 +438,8 @@
     "StatementStatusString": {
       "base": null,
       "refs": {
+        "BatchExecuteStatementOutput$Status": "<p>The status of the SQL statement. Status values are defined as follows: </p> <ul> <li> <p>ABORTED - The query run was stopped by the user. </p> </li> <li> <p>FAILED - The query run failed. </p> </li> <li> <p>FINISHED - The query has finished running. </p> </li> <li> <p>PICKED - The query has been chosen to be run. </p> </li> <li> <p>STARTED - The query run has started. </p> </li> <li> <p>SUBMITTED - The query was submitted, but not yet processed. </p> </li> </ul>",
+        "ExecuteStatementOutput$Status": "<p>The status of the SQL statement. Status values are defined as follows: </p> <ul> <li> <p>ABORTED - The query run was stopped by the user. </p> </li> <li> <p>FAILED - The query run failed. </p> </li> <li> <p>FINISHED - The query has finished running. </p> </li> <li> <p>PICKED - The query has been chosen to be run. </p> </li> <li> <p>STARTED - The query run has started. </p> </li> <li> <p>SUBMITTED - The query was submitted, but not yet processed. </p> </li> </ul>",
         "SubStatementData$Status": "<p>The status of the SQL statement. An example is the that the SQL statement finished. </p>"
       }
     },
@@ -424,6 +473,7 @@
       "refs": {
         "ActiveSessionsExceededException$Message": null,
         "ActiveStatementsExceededException$Message": null,
+        "ActiveWaitingRequestsExceededException$Message": null,
         "BatchExecuteStatementException$Message": null,
         "BatchExecuteStatementException$StatementId": "<p>Statement identifier of the exception.</p>",
         "BatchExecuteStatementInput$DbUser": "<p>The database user name. This parameter is required when connecting to a cluster as a database user and authenticating using temporary credentials. </p>",
@@ -474,6 +524,9 @@
         "ListSchemasRequest$SchemaPattern": "<p>A pattern to filter results by schema name. Within a schema pattern, \"%\" means match any substring of 0 or more characters and \"_\" means match any one character. Only schema name entries matching the search pattern are returned. </p>",
         "ListSchemasRequest$NextToken": "<p>A value that indicates the starting point for the next set of response records in a subsequent request. If a value is returned in a response, you can retrieve the next set of records by providing this returned NextToken value in the next NextToken parameter and retrying the command. If the NextToken field is empty, all response records have been retrieved for the request. </p>",
         "ListSchemasResponse$NextToken": "<p>A value that indicates the starting point for the next set of response records in a subsequent request. If a value is returned in a response, you can retrieve the next set of records by providing this returned NextToken value in the next NextToken parameter and retrying the command. If the NextToken field is empty, all response records have been retrieved for the request. </p>",
+        "ListSessionsRequest$NextToken": "<p>A value that indicates the starting point for the next set of response records in a subsequent request. If a value is returned in a response, you can retrieve the next set of records by providing this returned NextToken value in the next NextToken parameter and retrying the command. If the NextToken field is empty, all response records have been retrieved for the request.</p>",
+        "ListSessionsRequest$Database": "<p>The name of the database. Only sessions connected to this database are returned.</p>",
+        "ListSessionsResponse$NextToken": "<p>A value that indicates the starting point for the next set of response records in a subsequent request. If a value is returned in a response, you can retrieve the next set of records by providing this returned NextToken value in the next NextToken parameter and retrying the command. If the NextToken field is empty, all response records have been retrieved for the request.</p>",
         "ListStatementsRequest$NextToken": "<p>A value that indicates the starting point for the next set of response records in a subsequent request. If a value is returned in a response, you can retrieve the next set of records by providing this returned NextToken value in the next NextToken parameter and retrying the command. If the NextToken field is empty, all response records have been retrieved for the request. </p>",
         "ListStatementsRequest$Database": "<p>The name of the database when listing statements run against a <code>ClusterIdentifier</code> or <code>WorkgroupName</code>. </p>",
         "ListStatementsResponse$NextToken": "<p>A value that indicates the starting point for the next set of response records in a subsequent request. If a value is returned in a response, you can retrieve the next set of records by providing this returned NextToken value in the next NextToken parameter and retrying the command. If the NextToken field is empty, all response records have been retrieved for the request. </p>",
@@ -489,6 +542,9 @@
         "ResourceNotFoundException$Message": "<p>The exception message.</p>",
         "ResourceNotFoundException$ResourceId": "<p>Resource identifier associated with the exception.</p>",
         "SchemaList$member": null,
+        "SessionData$Database": "<p>The name of the database that the session is connected to.</p>",
+        "SessionData$DbUser": "<p>The database user name.</p>",
+        "SessionData$ClusterIdentifier": "<p>The cluster identifier. This element is not returned when connecting to a serverless workgroup.</p>",
         "SubStatementData$Error": "<p>The error message from the cluster if the SQL statement encountered an error while running.</p>",
         "TableMember$name": "<p>The name of the table. </p>",
         "TableMember$type": "<p>The type of the table. Possible values include TABLE, VIEW, SYSTEM TABLE, GLOBAL TEMPORARY, LOCAL TEMPORARY, ALIAS, and SYNONYM. </p>",
@@ -527,6 +583,9 @@
         "DescribeStatementResponse$CreatedAt": "<p>The date and time (UTC) when the SQL statement was submitted to run. </p>",
         "DescribeStatementResponse$UpdatedAt": "<p>The date and time (UTC) that the metadata for the SQL statement was last updated. An example is the time the status last changed. </p>",
         "ExecuteStatementOutput$CreatedAt": "<p>The date and time (UTC) the statement was created. </p>",
+        "SessionData$CreatedAt": "<p>The date and time (UTC) when the session was created.</p>",
+        "SessionData$UpdatedAt": "<p>The date and time (UTC) that the session metadata was last updated. An example is the time the status last changed.</p>",
+        "SessionData$SessionTtl": "<p>The date and time (UTC) when the session is set to expire and be closed.</p>",
         "StatementData$CreatedAt": "<p>The date and time (UTC) the statement was created. </p>",
         "StatementData$UpdatedAt": "<p>The date and time (UTC) that the statement metadata was last updated.</p>",
         "SubStatementData$CreatedAt": "<p>The date and time (UTC) the statement was created. </p>",
@@ -547,6 +606,9 @@
         "ExecuteStatementOutput$SessionId": "<p>The session identifier of the query.</p>",
         "GetStatementResultRequest$Id": "<p>The identifier of the SQL statement whose results are to be fetched. This value is a universally unique identifier (UUID) generated by Amazon Redshift Data API. A suffix indicates then number of the SQL statement. For example, <code>d9b6c0c9-0747-4bf4-b142-e8883122f766:2</code> has a suffix of <code>:2</code> that indicates the second SQL statement of a batch query. This identifier is returned by <code>BatchExecuteStatment</code>, <code>ExecuteStatment</code>, and <code>ListStatements</code>. </p>",
         "GetStatementResultV2Request$Id": "<p>The identifier of the SQL statement whose results are to be fetched. This value is a universally unique identifier (UUID) generated by Amazon Redshift Data API. A suffix indicates then number of the SQL statement. For example, <code>d9b6c0c9-0747-4bf4-b142-e8883122f766:2</code> has a suffix of <code>:2</code> that indicates the second SQL statement of a batch query. This identifier is returned by <code>BatchExecuteStatment</code>, <code>ExecuteStatment</code>, and <code>ListStatements</code>. </p>",
+        "ListSessionsRequest$SessionId": "<p>The identifier of a specific session to return metadata for. This value is a universally unique identifier (UUID) generated by Amazon Redshift Data API. When you provide <code>SessionId</code>, you can't specify <code>Status</code>, <code>ClusterIdentifier</code>, <code>WorkgroupName</code>, or <code>Database</code>.</p>",
+        "SessionData$SessionId": "<p>The session identifier. This value is a universally unique identifier (UUID) generated by Amazon Redshift Data API.</p>",
+        "SessionData$CurrentStatementId": "<p>The identifier of the SQL statement currently running in the session. This value is a universally unique identifier (UUID) generated by Amazon Redshift Data API. This element is returned only when the session status is <code>BUSY</code>.</p>",
         "StatementData$Id": "<p>The SQL statement identifier. This value is a universally unique identifier (UUID) generated by Amazon Redshift Data API. </p>",
         "StatementData$SessionId": "<p>The session identifier of the query.</p>",
         "SubStatementData$Id": "<p>The identifier of the SQL statement. This value is a universally unique identifier (UUID) generated by Amazon Redshift Data API. A suffix indicates the number of the SQL statement. For example, <code>d9b6c0c9-0747-4bf4-b142-e8883122f766:2</code> has a suffix of <code>:2</code> that indicates the second SQL statement of a batch query.</p>"
@@ -555,6 +617,16 @@
     "ValidationException": {
       "base": "<p>The Amazon Redshift Data API operation failed due to invalid input. </p>",
       "refs": {}
+    },
+    "WaitTimeSeconds": {
+      "base": null,
+      "refs": {
+        "BatchExecuteStatementInput$WaitTimeSeconds": "<p>The number of seconds to wait for all SQL statements in the batch to complete execution before returning the response. If the SQL statements do not complete within the specified time, the response returns the current status. The maximum value is 30 seconds.</p>",
+        "DescribeStatementRequest$WaitTimeSeconds": "<p>The number of seconds to wait for the SQL statement to complete execution before returning the description. The maximum value is 30 seconds.</p>",
+        "ExecuteStatementInput$WaitTimeSeconds": "<p>The number of seconds to wait for the SQL statement to complete execution before returning the response. If the SQL statement does not complete within the specified time, the response returns the current status. The maximum value is 30 seconds.</p>",
+        "GetStatementResultRequest$WaitTimeSeconds": "<p>The number of seconds to wait for the SQL statement to complete execution before returning the result. The maximum value is 30 seconds.</p>",
+        "GetStatementResultV2Request$WaitTimeSeconds": "<p>The number of seconds to wait for the SQL statement to complete execution before returning the result. The maximum value is 30 seconds.</p>"
+      }
     },
     "WorkgroupNameString": {
       "base": null,
@@ -567,8 +639,10 @@
         "ExecuteStatementOutput$WorkgroupName": "<p>The serverless workgroup name or Amazon Resource Name (ARN). This element is not returned when connecting to a provisioned cluster.</p>",
         "ListDatabasesRequest$WorkgroupName": "<p>The serverless workgroup name or Amazon Resource Name (ARN). This parameter is required when connecting to a serverless workgroup and authenticating using either Secrets Manager or temporary credentials.</p>",
         "ListSchemasRequest$WorkgroupName": "<p>The serverless workgroup name or Amazon Resource Name (ARN). This parameter is required when connecting to a serverless workgroup and authenticating using either Secrets Manager or temporary credentials.</p>",
+        "ListSessionsRequest$WorkgroupName": "<p>The serverless workgroup name or Amazon Resource Name (ARN). Only sessions on this workgroup are returned. When providing <code>WorkgroupName</code>, then <code>ClusterIdentifier</code> can't be specified.</p>",
         "ListStatementsRequest$WorkgroupName": "<p>The serverless workgroup name or Amazon Resource Name (ARN). Only statements that ran on this workgroup are returned. When providing <code>WorkgroupName</code>, then <code>ClusterIdentifier</code> can't be specified.</p>",
-        "ListTablesRequest$WorkgroupName": "<p>The serverless workgroup name or Amazon Resource Name (ARN). This parameter is required when connecting to a serverless workgroup and authenticating using either Secrets Manager or temporary credentials.</p>"
+        "ListTablesRequest$WorkgroupName": "<p>The serverless workgroup name or Amazon Resource Name (ARN). This parameter is required when connecting to a serverless workgroup and authenticating using either Secrets Manager or temporary credentials.</p>",
+        "SessionData$WorkgroupName": "<p>The serverless workgroup name or Amazon Resource Name (ARN). This element is not returned when connecting to a provisioned cluster.</p>"
       }
     },
     "bool": {

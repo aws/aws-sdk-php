@@ -5,8 +5,11 @@
     "auth":["aws.auth#sigv4"],
     "endpointPrefix":"backup-gateway",
     "jsonVersion":"1.0",
-    "protocol":"json",
-    "protocols":["json"],
+    "protocol":"smithy-rpc-v2-cbor",
+    "protocols":[
+      "smithy-rpc-v2-cbor",
+      "json"
+    ],
     "serviceFullName":"AWS Backup Gateway",
     "serviceId":"Backup Gateway",
     "signatureVersion":"v4",
@@ -107,7 +110,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetGateway":{
       "name":"GetGateway",
@@ -122,7 +126,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetHypervisor":{
       "name":"GetHypervisor",
@@ -137,7 +142,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetHypervisorPropertyMappings":{
       "name":"GetHypervisorPropertyMappings",
@@ -152,7 +158,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetVirtualMachine":{
       "name":"GetVirtualMachine",
@@ -167,7 +174,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ImportHypervisorConfiguration":{
       "name":"ImportHypervisorConfiguration",
@@ -197,7 +205,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListHypervisors":{
       "name":"ListHypervisors",
@@ -211,7 +220,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -240,7 +250,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "PutBandwidthRateLimitSchedule":{
       "name":"PutBandwidthRateLimitSchedule",
@@ -411,6 +422,10 @@
         "ErrorCode":{"shape":"string"},
         "Message":{"shape":"string"}
       },
+      "error":{
+        "httpStatusCode":403,
+        "senderFault":true
+      },
       "exception":true
     },
     "ActivationKey":{
@@ -472,6 +487,10 @@
       "members":{
         "ErrorCode":{"shape":"string"},
         "Message":{"shape":"string"}
+      },
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
       },
       "exception":true
     },
@@ -746,6 +765,7 @@
         "ErrorCode":{"shape":"string"},
         "Message":{"shape":"string"}
       },
+      "error":{"httpStatusCode":500},
       "exception":true,
       "fault":true
     },
@@ -936,6 +956,10 @@
         "ErrorCode":{"shape":"string"},
         "Message":{"shape":"string"}
       },
+      "error":{
+        "httpStatusCode":404,
+        "senderFault":true
+      },
       "exception":true
     },
     "ServerArn":{
@@ -1030,8 +1054,7 @@
     },
     "TestHypervisorConfigurationOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ThrottlingException":{
       "type":"structure",
@@ -1039,6 +1062,10 @@
       "members":{
         "ErrorCode":{"shape":"string"},
         "Message":{"shape":"string"}
+      },
+      "error":{
+        "httpStatusCode":429,
+        "senderFault":true
       },
       "exception":true
     },
@@ -1117,6 +1144,10 @@
       "members":{
         "ErrorCode":{"shape":"string"},
         "Message":{"shape":"string"}
+      },
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
       },
       "exception":true
     },

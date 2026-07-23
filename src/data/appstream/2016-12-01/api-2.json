@@ -4,8 +4,11 @@
     "apiVersion":"2016-12-01",
     "endpointPrefix":"appstream2",
     "jsonVersion":"1.1",
-    "protocol":"json",
-    "protocols":["json"],
+    "protocol":"smithy-rpc-v2-cbor",
+    "protocols":[
+      "smithy-rpc-v2-cbor",
+      "json"
+    ],
     "serviceFullName":"Amazon AppStream",
     "serviceId":"AppStream",
     "signatureVersion":"v4",
@@ -1862,6 +1865,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "ContentRedirection":{
@@ -2899,6 +2903,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":412},
       "exception":true
     },
     "DynamicAppProvidersEnabled":{
@@ -2968,6 +2973,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "EntitlementAttribute":{
@@ -2995,6 +3001,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "ErrorDetails":{
@@ -3389,6 +3396,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "InstanceDrainStatus":{
@@ -3409,6 +3417,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "InvalidParameterCombinationException":{
@@ -3416,6 +3425,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "InvalidRoleException":{
@@ -3423,6 +3433,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "LastReportGenerationExecutionError":{
@@ -3454,6 +3465,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "ListAssociatedFleetsRequest":{
@@ -3570,6 +3582,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "OrganizationalUnitDistinguishedName":{
@@ -3638,6 +3651,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "ResourceAlreadyExistsException":{
@@ -3645,6 +3659,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "ResourceError":{
@@ -3669,6 +3684,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "ResourceNotAvailableException":{
@@ -3676,6 +3692,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "ResourceNotFoundException":{
@@ -3683,6 +3700,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":404},
       "exception":true
     },
     "RuntimeValidationConfig":{

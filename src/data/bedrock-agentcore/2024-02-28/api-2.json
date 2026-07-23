@@ -2681,6 +2681,31 @@
       },
       "exception":true
     },
+    "EfsAccessPointArn":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "pattern":"arn:aws[-a-z]*:elasticfilesystem:[0-9a-z-:]+:access-point/fsap-[0-9a-f]{8,40}"
+    },
+    "EfsConfiguration":{
+      "type":"structure",
+      "required":[
+        "accessPointArn",
+        "mountPath",
+        "fileSystemArn"
+      ],
+      "members":{
+        "accessPointArn":{"shape":"EfsAccessPointArn"},
+        "mountPath":{"shape":"MountPath"},
+        "fileSystemArn":{"shape":"EfsFileSystemArn"}
+      }
+    },
+    "EfsFileSystemArn":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"arn:aws[-a-z]*:elasticfilesystem:[a-z0-9-]+:[0-9]{12}:file-system/fs-[0-9a-f]{8,40}"
+    },
     "Email":{
       "type":"string",
       "max":254,
@@ -3361,6 +3386,7 @@
         "streams":{"shape":"BrowserSessionStream"},
         "proxyConfiguration":{"shape":"ProxyConfiguration"},
         "certificates":{"shape":"Certificates"},
+        "filesystemConfigurations":{"shape":"ToolsFileSystemConfigurations"},
         "sessionReplayArtifact":{"shape":"String"},
         "lastUpdatedAt":{"shape":"DateTimestamp"}
       }
@@ -3398,7 +3424,8 @@
         "createdAt":{"shape":"DateTimestamp"},
         "sessionTimeoutSeconds":{"shape":"CodeInterpreterSessionTimeout"},
         "status":{"shape":"CodeInterpreterSessionStatus"},
-        "certificates":{"shape":"Certificates"}
+        "certificates":{"shape":"Certificates"},
+        "filesystemConfigurations":{"shape":"ToolsFileSystemConfigurations"}
       }
     },
     "GetEventInput":{
@@ -5839,6 +5866,12 @@
       "min":1
     },
     "ModelId":{"type":"string"},
+    "MountPath":{
+      "type":"string",
+      "max":200,
+      "min":6,
+      "pattern":"/mnt/[a-zA-Z0-9._-]+/?"
+    },
     "MouseButton":{
       "type":"string",
       "enum":[
@@ -6848,6 +6881,31 @@
       },
       "exception":true
     },
+    "S3FilesAccessPointArn":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"arn:aws[-a-z]*:s3files:[0-9a-z-:]+:file-system/fs-[0-9a-f]{17,40}/access-point/fsap-[0-9a-f]{17,40}"
+    },
+    "S3FilesConfiguration":{
+      "type":"structure",
+      "required":[
+        "accessPointArn",
+        "mountPath",
+        "fileSystemArn"
+      ],
+      "members":{
+        "accessPointArn":{"shape":"S3FilesAccessPointArn"},
+        "mountPath":{"shape":"MountPath"},
+        "fileSystemArn":{"shape":"S3FilesFileSystemArn"}
+      }
+    },
+    "S3FilesFileSystemArn":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"arn:aws[-a-z]*:s3files:[a-z0-9-]+:[0-9]{12}:file-system/fs-[0-9a-f]{17,40}"
+    },
     "S3Location":{
       "type":"structure",
       "required":[
@@ -7285,6 +7343,7 @@
         "proxyConfiguration":{"shape":"ProxyConfiguration"},
         "enterprisePolicies":{"shape":"BrowserEnterprisePolicies"},
         "certificates":{"shape":"Certificates"},
+        "filesystemConfigurations":{"shape":"ToolsFileSystemConfigurations"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -7337,6 +7396,7 @@
         "name":{"shape":"Name"},
         "sessionTimeoutSeconds":{"shape":"CodeInterpreterSessionTimeout"},
         "certificates":{"shape":"Certificates"},
+        "filesystemConfigurations":{"shape":"ToolsFileSystemConfigurations"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -8014,6 +8074,20 @@
         "protocolVersion":{"shape":"SchemaVersion"},
         "inlineContent":{"shape":"InlineContent"}
       }
+    },
+    "ToolsFileSystemConfiguration":{
+      "type":"structure",
+      "members":{
+        "s3FilesConfiguration":{"shape":"S3FilesConfiguration"},
+        "efsConfiguration":{"shape":"EfsConfiguration"}
+      },
+      "union":true
+    },
+    "ToolsFileSystemConfigurations":{
+      "type":"list",
+      "member":{"shape":"ToolsFileSystemConfiguration"},
+      "max":10,
+      "min":0
     },
     "TopK":{
       "type":"integer",

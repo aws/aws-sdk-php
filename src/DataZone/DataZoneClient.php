@@ -333,6 +333,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise startNotebookImportAsync(array $args = [])
  * @method \Aws\Result startNotebookRun(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startNotebookRunAsync(array $args = [])
+ * @method \Aws\Result startNotebookSync(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise startNotebookSyncAsync(array $args = [])
  * @method \Aws\Result stopNotebookRun(array $args = [])
  * @method \GuzzleHttp\Promise\Promise stopNotebookRunAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])

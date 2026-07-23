@@ -52,6 +52,38 @@
         },
         "id": "example-1",
         "title": "Creating a Channel"
+      },
+      {
+        "input": {
+          "ChannelGroupName": "exampleChannelGroup",
+          "ChannelName": "exampleCmafChannel",
+          "Description": "Non-epoch-locked CMAF channel",
+          "InputType": "CMAF",
+          "OutputLockingMode": "NON_EPOCH_LOCKED"
+        },
+        "output": {
+          "Arn": "arn:aws:mediapackagev2:us-west-2:123456789012:channelGroup/exampleChannelGroup/channel/exampleCmafChannel",
+          "ChannelGroupName": "exampleChannelGroup",
+          "ChannelName": "exampleCmafChannel",
+          "CreatedAt": "2022-10-18T09:36:00.00Z",
+          "Description": "Non-epoch-locked CMAF channel",
+          "ETag": "GlfT+dwAyGIR4wuy8nKWl1RDPwSrjQej9qUutLZxoxk=",
+          "IngestEndpoints": [
+            {
+              "Id": "1",
+              "Url": "https://abcde-1.ingest.vwxyz.mediapackagev2.us-west-2.amazonaws.com/v1/exampleChannelGroup/exampleCmafChannel"
+            },
+            {
+              "Id": "2",
+              "Url": "https://abcde-2.ingest.vwxyz.mediapackagev2.us-west-2.amazonaws.com/v1/exampleChannelGroup/exampleCmafChannel"
+            }
+          ],
+          "InputType": "CMAF",
+          "ModifiedAt": "2022-10-18T09:36:00.00Z",
+          "OutputLockingMode": "NON_EPOCH_LOCKED"
+        },
+        "id": "example-2",
+        "title": "Creating a CMAF Channel with non-epoch-locked output locking mode"
       }
     ],
     "CreateChannelGroup": [
@@ -557,6 +589,7 @@
               }
             },
             "IncludeIframeOnlyStreams": true,
+            "OutputTimestampMode": "REBASED_TO_CHANNEL_START",
             "Scte": {
               "ScteFilter": [
                 "SPLICE_INSERT",
@@ -775,6 +808,7 @@
               }
             },
             "IncludeIframeOnlyStreams": true,
+            "OutputTimestampMode": "REBASED_TO_CHANNEL_START",
             "Scte": {
               "ScteFilter": [
                 "SPLICE_INSERT",
@@ -990,6 +1024,39 @@
         },
         "id": "example-1",
         "title": "Getting a Channel"
+      },
+      {
+        "input": {
+          "ChannelGroupName": "exampleChannelGroup",
+          "ChannelName": "exampleCmafChannel"
+        },
+        "output": {
+          "Arn": "arn:aws:mediapackagev2:us-west-2:123456789012:channelGroup/exampleChannelGroup/channel/exampleCmafChannel",
+          "ChannelGroupName": "exampleChannelGroup",
+          "ChannelName": "exampleCmafChannel",
+          "CreatedAt": "2022-10-18T09:36:00.00Z",
+          "Description": "Non-epoch-locked CMAF channel",
+          "ETag": "GlfT+dwAyGIR4wuy8nKWl1RDPwSrjQej9qUutLZxoxk=",
+          "IngestEndpoints": [
+            {
+              "Id": "1",
+              "Url": "https://abcde-1.ingest.vwxyz.mediapackagev2.us-west-2.amazonaws.com/v1/exampleChannelGroup/exampleCmafChannel"
+            },
+            {
+              "Id": "2",
+              "Url": "https://abcde-2.ingest.vwxyz.mediapackagev2.us-west-2.amazonaws.com/v1/exampleChannelGroup/exampleCmafChannel"
+            }
+          ],
+          "InputType": "CMAF",
+          "ModifiedAt": "2022-10-18T09:36:00.00Z",
+          "OutputLockingMode": "NON_EPOCH_LOCKED",
+          "Tags": {
+            "key1": "value1",
+            "key2": "value2"
+          }
+        },
+        "id": "example-2",
+        "title": "Getting a CMAF Channel with non-epoch-locked output locking mode"
       }
     ],
     "GetChannelGroup": [
@@ -1911,6 +1978,40 @@
         },
         "id": "example-1",
         "title": "Updating a Channel"
+      },
+      {
+        "input": {
+          "ChannelGroupName": "exampleChannelGroup",
+          "ChannelName": "exampleCmafChannel",
+          "Description": "Updated non-epoch-locked CMAF channel"
+        },
+        "output": {
+          "Arn": "arn:aws:mediapackagev2:us-west-2:123456789012:channelGroup/exampleChannelGroup/channel/exampleCmafChannel",
+          "ChannelGroupName": "exampleChannelGroup",
+          "ChannelName": "exampleCmafChannel",
+          "CreatedAt": "2022-10-18T09:36:00.00Z",
+          "Description": "Updated non-epoch-locked CMAF channel",
+          "ETag": "GlfT+dwAyGIR4wuy8nKWl1RDPwSrjQej9qUutLZxoxk=",
+          "IngestEndpoints": [
+            {
+              "Id": "1",
+              "Url": "https://abcde-1.ingest.vwxyz.mediapackagev2.us-west-2.amazonaws.com/v1/exampleChannelGroup/exampleCmafChannel"
+            },
+            {
+              "Id": "2",
+              "Url": "https://abcde-2.ingest.vwxyz.mediapackagev2.us-west-2.amazonaws.com/v1/exampleChannelGroup/exampleCmafChannel"
+            }
+          ],
+          "InputType": "CMAF",
+          "ModifiedAt": "2022-10-18T10:36:00.00Z",
+          "OutputLockingMode": "NON_EPOCH_LOCKED",
+          "Tags": {
+            "key1": "value1",
+            "key2": "value2"
+          }
+        },
+        "id": "example-2",
+        "title": "Updating a CMAF Channel with non-epoch-locked output locking mode"
       }
     ],
     "UpdateChannelGroup": [

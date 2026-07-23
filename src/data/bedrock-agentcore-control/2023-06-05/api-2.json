@@ -3018,7 +3018,7 @@
     },
     "AgentRuntimeArn":{
       "type":"string",
-      "pattern":"arn:(-[^:]+)?:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:agent/[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}:([0-9]{0,4}[1-9][0-9]{0,4})"
+      "pattern":"arn:aws(-[^:]+)?:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:runtime/[a-zA-Z][a-zA-Z0-9_]{0,47}-[a-zA-Z0-9]{10}"
     },
     "AgentRuntimeArtifact":{
       "type":"structure",
@@ -3054,7 +3054,7 @@
     },
     "AgentRuntimeEndpointArn":{
       "type":"string",
-      "pattern":"arn:(-[^:]+)?:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:agentEndpoint/[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}"
+      "pattern":"arn:aws(-[^:]+)?:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:runtime/[a-zA-Z][a-zA-Z0-9_]{0,47}-[a-zA-Z0-9]{10}/runtime-endpoint/[a-zA-Z][a-zA-Z0-9_]{0,47}"
     },
     "AgentRuntimeEndpointId":{
       "type":"string",
@@ -3440,7 +3440,7 @@
     },
     "BrowserProfileArn":{
       "type":"string",
-      "pattern":"arn:(-[^:]+)?:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:browser-profile/[a-zA-Z][a-zA-Z0-9_]{0,47}-[a-zA-Z0-9]{10}"
+      "pattern":"arn:aws(-[^:]+)?:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:browser-profile/[a-zA-Z][a-zA-Z0-9_]{0,47}-[a-zA-Z0-9]{10}"
     },
     "BrowserProfileId":{
       "type":"string",
@@ -4214,6 +4214,7 @@
         "browserSigning":{"shape":"BrowserSigningConfigInput"},
         "enterprisePolicies":{"shape":"BrowserEnterprisePolicies"},
         "certificates":{"shape":"Certificates"},
+        "filesystemConfigurations":{"shape":"ToolsFileSystemConfigurations"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -4248,6 +4249,7 @@
         "executionRoleArn":{"shape":"RoleArn"},
         "networkConfiguration":{"shape":"CodeInterpreterNetworkConfiguration"},
         "certificates":{"shape":"Certificates"},
+        "filesystemConfigurations":{"shape":"ToolsFileSystemConfigurations"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -6265,6 +6267,25 @@
         "mountPath":{"shape":"MountPath"}
       }
     },
+    "EfsConfiguration":{
+      "type":"structure",
+      "required":[
+        "accessPointArn",
+        "mountPath",
+        "fileSystemArn"
+      ],
+      "members":{
+        "accessPointArn":{"shape":"EfsAccessPointArn"},
+        "mountPath":{"shape":"MountPath"},
+        "fileSystemArn":{"shape":"EfsFileSystemArn"}
+      }
+    },
+    "EfsFileSystemArn":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"arn:aws[-a-z]*:elasticfilesystem:[a-z0-9-]+:[0-9]{12}:file-system/fs-[0-9a-f]{8,40}"
+    },
     "EnabledConnectors":{
       "type":"list",
       "member":{"shape":"String"},
@@ -7142,6 +7163,7 @@
         "browserSigning":{"shape":"BrowserSigningConfigOutput"},
         "enterprisePolicies":{"shape":"BrowserEnterprisePolicies"},
         "certificates":{"shape":"Certificates"},
+        "filesystemConfigurations":{"shape":"ToolsFileSystemConfigurations"},
         "status":{"shape":"BrowserStatus"},
         "failureReason":{"shape":"String"},
         "createdAt":{"shape":"DateTimestamp"},
@@ -7179,6 +7201,7 @@
         "networkConfiguration":{"shape":"CodeInterpreterNetworkConfiguration"},
         "status":{"shape":"CodeInterpreterStatus"},
         "certificates":{"shape":"Certificates"},
+        "filesystemConfigurations":{"shape":"ToolsFileSystemConfigurations"},
         "failureReason":{"shape":"String"},
         "createdAt":{"shape":"DateTimestamp"},
         "lastUpdatedAt":{"shape":"DateTimestamp"}
@@ -12199,6 +12222,25 @@
         "mountPath":{"shape":"MountPath"}
       }
     },
+    "S3FilesConfiguration":{
+      "type":"structure",
+      "required":[
+        "accessPointArn",
+        "mountPath",
+        "fileSystemArn"
+      ],
+      "members":{
+        "accessPointArn":{"shape":"S3FilesAccessPointArn"},
+        "mountPath":{"shape":"MountPath"},
+        "fileSystemArn":{"shape":"S3FilesFileSystemArn"}
+      }
+    },
+    "S3FilesFileSystemArn":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"arn:aws[-a-z]*:s3files:[a-z0-9-]+:[0-9]{12}:file-system/fs-[0-9a-f]{17,40}"
+    },
     "S3Location":{
       "type":"structure",
       "required":[
@@ -13314,6 +13356,20 @@
         "protocolVersion":{"shape":"SchemaVersion"},
         "inlineContent":{"shape":"InlineContent"}
       }
+    },
+    "ToolsFileSystemConfiguration":{
+      "type":"structure",
+      "members":{
+        "s3FilesConfiguration":{"shape":"S3FilesConfiguration"},
+        "efsConfiguration":{"shape":"EfsConfiguration"}
+      },
+      "union":true
+    },
+    "ToolsFileSystemConfigurations":{
+      "type":"list",
+      "member":{"shape":"ToolsFileSystemConfiguration"},
+      "max":10,
+      "min":0
     },
     "TopK":{
       "type":"integer",

@@ -4,8 +4,11 @@
     "apiVersion":"2022-10-19",
     "endpointPrefix":"kendra-ranking",
     "jsonVersion":"1.0",
-    "protocol":"json",
-    "protocols":["json"],
+    "protocol":"smithy-rpc-v2-cbor",
+    "protocols":[
+      "smithy-rpc-v2-cbor",
+      "json"
+    ],
     "serviceAbbreviation":"Kendra Ranking",
     "serviceFullName":"Amazon Kendra Intelligent Ranking",
     "serviceId":"Kendra Ranking",
@@ -169,6 +172,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":403},
       "exception":true
     },
     "AmazonResourceName":{
@@ -199,6 +203,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":409},
       "exception":true
     },
     "CreateRescoreExecutionPlanRequest":{
@@ -318,6 +323,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":500},
       "exception":true,
       "fault":true
     },
@@ -448,6 +454,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":404},
       "exception":true
     },
     "ResourceUnavailableException":{
@@ -455,6 +462,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":404},
       "exception":true
     },
     "SearchQuery":{
@@ -467,6 +475,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":402},
       "exception":true
     },
     "Tag":{
@@ -522,6 +531,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":429},
       "exception":true
     },
     "Timestamp":{"type":"timestamp"},
@@ -565,6 +575,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     }
   }

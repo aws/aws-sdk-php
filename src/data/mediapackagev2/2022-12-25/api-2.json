@@ -691,7 +691,8 @@
         "CreatedAt":{"shape":"Timestamp"},
         "ModifiedAt":{"shape":"Timestamp"},
         "Description":{"shape":"ResourceDescription"},
-        "InputType":{"shape":"InputType"}
+        "InputType":{"shape":"InputType"},
+        "OutputLockingMode":{"shape":"OutputLockingMode"}
       }
     },
     "CmafEncryptionMethod":{
@@ -791,6 +792,7 @@
         "Description":{"shape":"ResourceDescription"},
         "InputSwitchConfiguration":{"shape":"InputSwitchConfiguration"},
         "OutputHeaderConfiguration":{"shape":"OutputHeaderConfiguration"},
+        "OutputLockingMode":{"shape":"OutputLockingMode"},
         "Tags":{
           "shape":"TagMap",
           "locationName":"tags"
@@ -818,7 +820,8 @@
         "ETag":{"shape":"EntityTag"},
         "Tags":{"shape":"TagMap"},
         "InputSwitchConfiguration":{"shape":"InputSwitchConfiguration"},
-        "OutputHeaderConfiguration":{"shape":"OutputHeaderConfiguration"}
+        "OutputHeaderConfiguration":{"shape":"OutputHeaderConfiguration"},
+        "OutputLockingMode":{"shape":"OutputLockingMode"}
       }
     },
     "CreateDashManifestConfiguration":{
@@ -1693,7 +1696,8 @@
         "ETag":{"shape":"EntityTag"},
         "Tags":{"shape":"TagMap"},
         "InputSwitchConfiguration":{"shape":"InputSwitchConfiguration"},
-        "OutputHeaderConfiguration":{"shape":"OutputHeaderConfiguration"}
+        "OutputHeaderConfiguration":{"shape":"OutputHeaderConfiguration"},
+        "OutputLockingMode":{"shape":"OutputLockingMode"}
       }
     },
     "GetDashManifestConfiguration":{
@@ -2382,6 +2386,20 @@
         "PublishMQCS":{"shape":"Boolean"}
       }
     },
+    "OutputLockingMode":{
+      "type":"string",
+      "enum":[
+        "EPOCH_LOCKED",
+        "NON_EPOCH_LOCKED"
+      ]
+    },
+    "OutputTimestampMode":{
+      "type":"string",
+      "enum":[
+        "PASSTHROUGH",
+        "REBASED_TO_CHANNEL_START"
+      ]
+    },
     "PolicyText":{
       "type":"string",
       "max":6144,
@@ -2675,7 +2693,8 @@
         "IncludeIframeOnlyStreams":{"shape":"Boolean"},
         "TsIncludeDvbSubtitles":{"shape":"Boolean"},
         "Scte":{"shape":"Scte"},
-        "Encryption":{"shape":"Encryption"}
+        "Encryption":{"shape":"Encryption"},
+        "OutputTimestampMode":{"shape":"OutputTimestampMode"}
       }
     },
     "SegmentSegmentDurationSecondsInteger":{
@@ -2919,7 +2938,8 @@
           "locationName":"tags"
         },
         "InputSwitchConfiguration":{"shape":"InputSwitchConfiguration"},
-        "OutputHeaderConfiguration":{"shape":"OutputHeaderConfiguration"}
+        "OutputHeaderConfiguration":{"shape":"OutputHeaderConfiguration"},
+        "OutputLockingMode":{"shape":"OutputLockingMode"}
       }
     },
     "UpdateOriginEndpointRequest":{
@@ -3129,7 +3149,11 @@
         "MISSING_CERTIFICATE_DOMAIN_NAME",
         "INVALID_ARN",
         "SCTE_IN_MANIFESTS_INVALID_CONFIGURATION",
-        "CUSTOM_AD_TYPES_INVALID_CONFIGURATION"
+        "CUSTOM_AD_TYPES_INVALID_CONFIGURATION",
+        "ONLY_CMAF_INPUT_TYPE_ALLOW_OUTPUT_LOCKING_MODE",
+        "ONLY_NON_EPOCH_LOCKED_ALLOW_OUTPUT_TIMESTAMP_MODE",
+        "OUTPUT_TIMESTAMP_MODE_IMMUTABLE",
+        "NON_EPOCH_LOCKED_WITH_FORCE_ENDPOINT_ERROR_CONFIGURATION"
       ]
     }
   }

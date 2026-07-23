@@ -5,8 +5,11 @@
     "auth":["aws.auth#sigv4"],
     "endpointPrefix":"workspaces-instances",
     "jsonVersion":"1.0",
-    "protocol":"json",
-    "protocols":["json"],
+    "protocol":"smithy-rpc-v2-cbor",
+    "protocols":[
+      "smithy-rpc-v2-cbor",
+      "json"
+    ],
     "serviceFullName":"Amazon Workspaces Instances",
     "serviceId":"Workspaces Instances",
     "signatureVersion":"v4",
@@ -247,6 +250,10 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{
+        "httpStatusCode":403,
+        "senderFault":true
+      },
       "exception":true
     },
     "AmdSevSnpEnum":{
@@ -349,6 +356,7 @@
       "type":"string",
       "max":64,
       "min":1,
+      "pattern":"[\\x20-\\x7E]+",
       "sensitive":true
     },
     "ConflictException":{
@@ -362,6 +370,10 @@
         "Message":{"shape":"String"},
         "ResourceId":{"shape":"String"},
         "ResourceType":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
       },
       "exception":true
     },
@@ -714,6 +726,8 @@
     },
     "InstanceType":{
       "type":"string",
+      "max":64,
+      "min":1,
       "pattern":"([a-z0-9-]+)\\.([a-z0-9]+)"
     },
     "InstanceTypeInfo":{
@@ -746,6 +760,7 @@
         "Message":{"shape":"String"},
         "RetryAfterSeconds":{"shape":"Integer"}
       },
+      "error":{"httpStatusCode":500},
       "exception":true,
       "fault":true,
       "retryable":{"throttling":false}
@@ -1033,6 +1048,10 @@
         "ResourceId":{"shape":"String"},
         "ResourceType":{"shape":"String"}
       },
+      "error":{
+        "httpStatusCode":404,
+        "senderFault":true
+      },
       "exception":true
     },
     "ResourceTypeEnum":{
@@ -1081,6 +1100,10 @@
         "ResourceType":{"shape":"String"},
         "ServiceCode":{"shape":"String"},
         "QuotaCode":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":402,
+        "senderFault":true
       },
       "exception":true
     },
@@ -1208,6 +1231,10 @@
         "QuotaCode":{"shape":"String"},
         "RetryAfterSeconds":{"shape":"Integer"}
       },
+      "error":{
+        "httpStatusCode":429,
+        "senderFault":true
+      },
       "exception":true,
       "retryable":{"throttling":true}
     },
@@ -1243,6 +1270,10 @@
         "Message":{"shape":"String"},
         "Reason":{"shape":"ValidationExceptionReason"},
         "FieldList":{"shape":"ValidationExceptionFieldList"}
+      },
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
       },
       "exception":true
     },

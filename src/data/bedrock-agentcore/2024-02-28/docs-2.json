@@ -1175,6 +1175,24 @@
       "base": "<p> An exception thrown when attempting to create a resource with an identifier that already exists.</p>",
       "refs": {}
     },
+    "EfsAccessPointArn": {
+      "base": null,
+      "refs": {
+        "EfsConfiguration$accessPointArn": "<p>The Amazon Resource Name (ARN) of the Amazon Elastic File System (Amazon EFS) access point to mount.</p>"
+      }
+    },
+    "EfsConfiguration": {
+      "base": "<p>The configuration for mounting an Amazon Elastic File System (Amazon EFS) access point that you own into a session.</p>",
+      "refs": {
+        "ToolsFileSystemConfiguration$efsConfiguration": "<p>The configuration for mounting your own Amazon Elastic File System (Amazon EFS) access point into the session.</p>"
+      }
+    },
+    "EfsFileSystemArn": {
+      "base": "<p>The Amazon Resource Name (ARN) of an Amazon Elastic File System (Amazon EFS) file system. The access points you specify must belong to this file system.</p>",
+      "refs": {
+        "EfsConfiguration$fileSystemArn": "<p>The Amazon Resource Name (ARN) of the Amazon Elastic File System (Amazon EFS) file system that owns the access point.</p>"
+      }
+    },
     "Email": {
       "base": "<p>Email address with validation for standard email format.</p>",
       "refs": {
@@ -3136,6 +3154,13 @@
         "HarnessOpenAiModelConfig$modelId": "<p>The OpenAI model ID.</p>"
       }
     },
+    "MountPath": {
+      "base": null,
+      "refs": {
+        "EfsConfiguration$mountPath": "<p>The absolute path within the session at which the access point is mounted, for example <code>/mnt/efs</code>. Each mount path must be unique across all file system configurations in the session.</p>",
+        "S3FilesConfiguration$mountPath": "<p>The absolute path within the session at which the access point is mounted, for example <code>/mnt/s3data</code>. Each mount path must be unique across all file system configurations in the session.</p>"
+      }
+    },
     "MouseButton": {
       "base": "<p>The mouse button to use for a browser mouse action.</p>",
       "refs": {
@@ -3995,6 +4020,24 @@
       "refs": {
         "InvokeAgentRuntimeCommandStreamOutput$runtimeClientError": null,
         "InvokeHarnessStreamOutput$runtimeClientError": "<p>An error returned by the runtime container during agent execution.</p>"
+      }
+    },
+    "S3FilesAccessPointArn": {
+      "base": null,
+      "refs": {
+        "S3FilesConfiguration$accessPointArn": "<p>The Amazon Resource Name (ARN) of the Amazon Simple Storage Service (Amazon S3) Files access point to mount.</p>"
+      }
+    },
+    "S3FilesConfiguration": {
+      "base": "<p>The configuration for mounting an Amazon Simple Storage Service (Amazon S3) Files access point that you own into a session.</p>",
+      "refs": {
+        "ToolsFileSystemConfiguration$s3FilesConfiguration": "<p>The configuration for mounting your own Amazon Simple Storage Service (Amazon S3) Files access point into the session.</p>"
+      }
+    },
+    "S3FilesFileSystemArn": {
+      "base": "<p>The Amazon Resource Name (ARN) of an Amazon Simple Storage Service (Amazon S3) Files file system. The access points you specify must belong to this file system.</p>",
+      "refs": {
+        "S3FilesConfiguration$fileSystemArn": "<p>The Amazon Resource Name (ARN) of the Amazon Simple Storage Service (Amazon S3) Files file system that owns the access point.</p>"
       }
     },
     "S3Location": {
@@ -4933,6 +4976,21 @@
       "base": "<p> The MCP tools definition with a protocol version and inline content. The <code>protocolVersion</code> identifies the MCP protocol version that the tools conform to. This differs from <code>schemaVersion</code> in the server definition, which identifies the server configuration schema format.</p>",
       "refs": {
         "McpDescriptor$tools": "<p> The MCP tools definition that describes the available tools.</p>"
+      }
+    },
+    "ToolsFileSystemConfiguration": {
+      "base": "<p>Specifies a file system to mount into the session by providing exactly one of the following:</p> <ul> <li> <p> <code>s3FilesConfiguration</code> - Mounts an Amazon Simple Storage Service (Amazon S3) Files access point.</p> </li> <li> <p> <code>efsConfiguration</code> - Mounts an Amazon Elastic File System (Amazon EFS) access point.</p> </li> </ul>",
+      "refs": {
+        "ToolsFileSystemConfigurations$member": null
+      }
+    },
+    "ToolsFileSystemConfigurations": {
+      "base": "<p>The file system configurations to mount into the session. Each configuration maps an access point to a path inside the session. You can specify up to 4 configurations. The maximum is 2 Amazon Simple Storage Service (Amazon S3) Files access points and 2 Amazon Elastic File System (Amazon EFS) access points.</p>",
+      "refs": {
+        "GetBrowserSessionResponse$filesystemConfigurations": "<p>The file system configurations for the browser session. Each entry describes an access point and its mount path.</p>",
+        "GetCodeInterpreterSessionResponse$filesystemConfigurations": "<p>The file system configurations for the code interpreter session. Each entry describes an access point and its mount path.</p>",
+        "StartBrowserSessionRequest$filesystemConfigurations": "<p>The file system configurations to mount into the browser session. Use these configurations to mount your own Amazon Simple Storage Service (Amazon S3) Files or Amazon Elastic File System (Amazon EFS) access points. Your session can then read and write your data. If you don't specify this field, no additional file systems are mounted.</p>",
+        "StartCodeInterpreterSessionRequest$filesystemConfigurations": "<p>The file system configurations to mount into the code interpreter session. Use these configurations to mount your own Amazon Simple Storage Service (Amazon S3) Files or Amazon Elastic File System (Amazon EFS) access points. Your session can then read and write your data. If you don't specify this field, no additional file systems are mounted.</p>"
       }
     },
     "TopK": {

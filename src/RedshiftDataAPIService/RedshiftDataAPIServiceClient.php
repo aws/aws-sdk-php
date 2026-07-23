@@ -23,6 +23,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listDatabasesAsync(array $args = [])
  * @method \Aws\Result listSchemas(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listSchemasAsync(array $args = [])
+ * @method \Aws\Result listSessions(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listSessionsAsync(array $args = [])
  * @method \Aws\Result listStatements(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listStatementsAsync(array $args = [])
  * @method \Aws\Result listTables(array $args = [])

@@ -807,6 +807,12 @@
         "ApplicationArns":{"shape":"ArnList"}
       }
     },
+    "DisplayConfiguration":{
+      "type":"structure",
+      "members":{
+        "Resolution":{"shape":"Resolution"}
+      }
+    },
     "EnvironmentVariables":{
       "type":"map",
       "key":{"shape":"EnvironmentVariablesKeyString"},
@@ -997,7 +1003,8 @@
         "CreatedAt":{"shape":"Timestamp"},
         "ApplicationArn":{"shape":"Arn"},
         "ExportFilesMetadata":{"shape":"ExportFilesMetadata"},
-        "RoleArn":{"shape":"IamRoleArn"}
+        "RoleArn":{"shape":"IamRoleArn"},
+        "DisplayConfiguration":{"shape":"DisplayConfiguration"}
       }
     },
     "IamRoleArn":{
@@ -1307,6 +1314,29 @@
       "type":"list",
       "member":{"shape":"ReplicationStatus"}
     },
+    "Resolution":{
+      "type":"structure",
+      "required":[
+        "Width",
+        "Height"
+      ],
+      "members":{
+        "Width":{"shape":"ResolutionWidth"},
+        "Height":{"shape":"ResolutionHeight"}
+      }
+    },
+    "ResolutionHeight":{
+      "type":"integer",
+      "box":true,
+      "max":4096,
+      "min":320
+    },
+    "ResolutionWidth":{
+      "type":"integer",
+      "box":true,
+      "max":4096,
+      "min":320
+    },
     "ResourceNotFoundException":{
       "type":"structure",
       "required":["Message"],
@@ -1404,7 +1434,8 @@
         "AdditionalLaunchArgs":{"shape":"GameLaunchArgList"},
         "AdditionalEnvironmentVariables":{"shape":"EnvironmentVariables"},
         "PerformanceStatsConfiguration":{"shape":"PerformanceStatsConfiguration"},
-        "RoleArn":{"shape":"IamRoleArn"}
+        "RoleArn":{"shape":"IamRoleArn"},
+        "DisplayConfiguration":{"shape":"DisplayConfiguration"}
       }
     },
     "StartStreamSessionOutput":{
@@ -1431,7 +1462,8 @@
         "CreatedAt":{"shape":"Timestamp"},
         "ApplicationArn":{"shape":"Arn"},
         "ExportFilesMetadata":{"shape":"ExportFilesMetadata"},
-        "RoleArn":{"shape":"IamRoleArn"}
+        "RoleArn":{"shape":"IamRoleArn"},
+        "DisplayConfiguration":{"shape":"DisplayConfiguration"}
       }
     },
     "StreamClass":{

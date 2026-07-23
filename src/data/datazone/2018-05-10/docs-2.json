@@ -166,6 +166,7 @@
     "StartNotebookExport": "<p>Starts a notebook export in Amazon SageMaker Unified Studio. This operation exports a notebook to a specified file format and stores the output in Amazon Simple Storage Service.</p>",
     "StartNotebookImport": "<p>Starts a notebook import in Amazon SageMaker Unified Studio. This operation imports a notebook from an Amazon Simple Storage Service location into a project.</p>",
     "StartNotebookRun": "<p>Starts a notebook run in Amazon SageMaker Unified Studio. A notebook run represents the execution of an <a href=\"https://docs.aws.amazon.com/sagemaker-unified-studio/latest/userguide/notebooks.html\">Amazon SageMaker notebook</a> within a project. You can configure compute, network, timeout, and environment settings for the run.</p>",
+    "StartNotebookSync": "<p>Starts a notebook sync in Amazon SageMaker Unified Studio. This operation syncs a notebook from a Git repository into a project.</p>",
     "StopNotebookRun": "<p>Stops a running <a href=\"https://docs.aws.amazon.com/sagemaker-unified-studio/latest/userguide/notebooks.html\">notebook run</a> in Amazon SageMaker Unified Studio.</p>",
     "TagResource": "<p>Tags a resource in Amazon DataZone.</p>",
     "UntagResource": "<p>Untags a resource in Amazon DataZone.</p>",
@@ -1232,6 +1233,7 @@
         "StartNotebookExportInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request. This field is automatically populated if not provided.</p>",
         "StartNotebookImportInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request. This field is automatically populated if not provided.</p>",
         "StartNotebookRunInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request. This field is automatically populated if not provided.</p>",
+        "StartNotebookSyncInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request. This field is automatically populated if not provided.</p>",
         "StopNotebookRunInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request. This field is automatically populated if not provided.</p>",
         "UpdateGlossaryInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "UpdateNotebookInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request. This field is automatically populated if not provided.</p>",
@@ -1258,6 +1260,18 @@
         "CreateAssetFilterOutput$effectiveColumnNames": "<p>The column names in the asset filter.</p>",
         "GetAssetFilterOutput$effectiveColumnNames": "<p>The column names of the asset filter.</p>",
         "UpdateAssetFilterOutput$effectiveColumnNames": "<p>The column names of the asset filter.</p>"
+      }
+    },
+    "CommitHash": {
+      "base": null,
+      "refs": {
+        "GitMetadata$commitHash": "<p>The commit hash in the Git repository.</p>"
+      }
+    },
+    "CommitMessage": {
+      "base": null,
+      "refs": {
+        "GitMetadata$commitMessage": "<p>The commit message associated with the Git commit.</p>"
       }
     },
     "CompletedAt": {
@@ -1905,6 +1919,7 @@
         "StartNotebookExportOutput$createdAt": "<p>The timestamp of when the notebook export was started.</p>",
         "StartNotebookImportOutput$createdAt": "<p>The timestamp of when the notebook import was started.</p>",
         "StartNotebookRunOutput$createdAt": "<p>The timestamp of when the notebook run was created.</p>",
+        "StartNotebookSyncOutput$createdAt": "<p>The timestamp of when the notebook sync was started.</p>",
         "SubscriptionGrantSummary$createdAt": "<p>The timestamp of when a subscription grant was created.</p>",
         "SubscriptionRequestSummary$createdAt": "<p>The timestamp of when a subscription request was created.</p>",
         "SubscriptionSummary$createdAt": "<p>The timestamp of when the subscription was created.</p>",
@@ -1995,6 +2010,7 @@
         "StartNotebookExportOutput$createdBy": "<p>The identifier of the user who started the notebook export.</p>",
         "StartNotebookImportOutput$createdBy": "<p>The identifier of the user who started the notebook import.</p>",
         "StartNotebookRunOutput$createdBy": "<p>The identifier of the user who created the notebook run.</p>",
+        "StartNotebookSyncOutput$createdBy": "<p>The identifier of the user who started the notebook sync.</p>",
         "SubscriptionGrantSummary$createdBy": "<p>The datazone user who created the subscription grant.</p>",
         "SubscriptionRequestSummary$createdBy": "<p>The Amazon DataZone user who created the subscription request.</p>",
         "SubscriptionSummary$createdBy": "<p>The Amazon DataZone user who created the subscription.</p>",
@@ -2743,6 +2759,8 @@
         "ProjectSummary$description": "<p>The description of a project.</p>",
         "StartNotebookImportInput$description": "<p>The description of the imported notebook.</p>",
         "StartNotebookImportOutput$description": "<p>The description of the imported notebook.</p>",
+        "StartNotebookSyncInput$description": "<p>The description of the notebook.</p>",
+        "StartNotebookSyncOutput$description": "<p>The description of the synced notebook.</p>",
         "SubscribedListing$description": "<p>The description of the published asset for which the subscription grant is created.</p>",
         "UpdateAccountPoolInput$description": "<p>The description of the account pool that is to be udpated.</p>",
         "UpdateAccountPoolOutput$description": "<p>The description of the account pool that is to be udpated.</p>",
@@ -3090,6 +3108,8 @@
         "StartNotebookImportOutput$domainId": "<p>The identifier of the Amazon SageMaker Unified Studio domain.</p>",
         "StartNotebookRunInput$domainIdentifier": "<p>The identifier of the Amazon SageMaker Unified Studio domain in which the notebook run is started.</p>",
         "StartNotebookRunOutput$domainId": "<p>The identifier of the Amazon SageMaker Unified Studio domain.</p>",
+        "StartNotebookSyncInput$domainIdentifier": "<p>The identifier of the Amazon SageMaker Unified Studio domain in which to sync the notebook.</p>",
+        "StartNotebookSyncOutput$domainId": "<p>The identifier of the Amazon SageMaker Unified Studio domain.</p>",
         "StopNotebookRunInput$domainIdentifier": "<p>The identifier of the Amazon SageMaker Unified Studio domain in which the notebook run is stopped.</p>",
         "StopNotebookRunOutput$domainId": "<p>The identifier of the Amazon SageMaker Unified Studio domain.</p>",
         "SubscriptionGrantSummary$domainId": "<p>The identifier of the Amazon DataZone domain in which a subscription grant exists.</p>",
@@ -3829,6 +3849,12 @@
         "StartNotebookExportOutput$fileFormat": "<p>The file format of the notebook export.</p>"
       }
     },
+    "FileName": {
+      "base": null,
+      "refs": {
+        "GitMetadata$fileName": "<p>The name of the file in the Git repository.</p>"
+      }
+    },
     "Filter": {
       "base": "<p>A search filter in Amazon DataZone.</p>",
       "refs": {
@@ -4426,6 +4452,34 @@
     "GetUserProfileOutput": {
       "base": null,
       "refs": {}
+    },
+    "GitBranch": {
+      "base": null,
+      "refs": {
+        "GitMetadata$branch": "<p>The name of the Git branch.</p>"
+      }
+    },
+    "GitConnectionId": {
+      "base": null,
+      "refs": {
+        "GitMetadata$connectionId": "<p>The identifier of the Git connection.</p>"
+      }
+    },
+    "GitMetadata": {
+      "base": "<p>The Git metadata for a notebook sync operation in Amazon SageMaker Unified Studio. Contains information about the Git repository, branch, and commit associated with the notebook.</p>",
+      "refs": {
+        "CreateNotebookOutput$gitMetadata": "<p>The Git metadata associated with the notebook.</p>",
+        "GetNotebookOutput$gitMetadata": "<p>The Git metadata associated with the notebook.</p>",
+        "StartNotebookSyncInput$gitMetadata": "<p>The Git metadata for the notebook sync, including repository, branch, and commit information.</p>",
+        "StartNotebookSyncOutput$gitMetadata": "<p>The Git metadata associated with the synced notebook.</p>",
+        "UpdateNotebookOutput$gitMetadata": "<p>The Git metadata associated with the notebook.</p>"
+      }
+    },
+    "GitRepository": {
+      "base": null,
+      "refs": {
+        "GitMetadata$repository": "<p>The name of the Git repository.</p>"
+      }
     },
     "GlobalParameterMap": {
       "base": null,
@@ -6178,6 +6232,8 @@
         "StartNotebookImportOutput$notebookId": "<p>The identifier of the imported notebook.</p>",
         "StartNotebookRunInput$notebookIdentifier": "<p>The identifier of the notebook to run.</p>",
         "StartNotebookRunOutput$notebookId": "<p>The identifier of the notebook.</p>",
+        "StartNotebookSyncInput$notebookId": "<p>The identifier of an existing notebook to sync. If not specified, a new notebook is created.</p>",
+        "StartNotebookSyncOutput$notebookId": "<p>The identifier of the synced notebook.</p>",
         "UpdateNotebookInput$identifier": "<p>The identifier of the notebook to update.</p>",
         "UpdateNotebookOutput$id": "<p>The identifier of the notebook.</p>"
       }
@@ -6191,6 +6247,8 @@
         "NotebookSummary$name": "<p>The name of the notebook.</p>",
         "StartNotebookImportInput$name": "<p>The name of the imported notebook. The name must be between 1 and 256 characters.</p>",
         "StartNotebookImportOutput$name": "<p>The name of the imported notebook.</p>",
+        "StartNotebookSyncInput$name": "<p>The name of the notebook. The name must be between 1 and 256 characters.</p>",
+        "StartNotebookSyncOutput$name": "<p>The name of the synced notebook.</p>",
         "UpdateNotebookInput$name": "<p>The updated name of the notebook.</p>",
         "UpdateNotebookOutput$name": "<p>The name of the notebook.</p>"
       }
@@ -6255,6 +6313,7 @@
         "ListNotebooksInput$status": "<p>The status to filter notebooks by.</p>",
         "NotebookSummary$status": "<p>The status of the notebook.</p>",
         "StartNotebookImportOutput$status": "<p>The status of the notebook import.</p>",
+        "StartNotebookSyncOutput$status": "<p>The status of the notebook sync.</p>",
         "UpdateNotebookInput$status": "<p>The updated status of the notebook.</p>",
         "UpdateNotebookOutput$status": "<p>The status of the notebook.</p>"
       }
@@ -6782,6 +6841,8 @@
         "StartNotebookImportOutput$owningProjectId": "<p>The identifier of the project that owns the imported notebook.</p>",
         "StartNotebookRunInput$owningProjectIdentifier": "<p>The identifier of the project that owns the notebook run.</p>",
         "StartNotebookRunOutput$owningProjectId": "<p>The identifier of the project that owns the notebook run.</p>",
+        "StartNotebookSyncInput$owningProjectIdentifier": "<p>The identifier of the project that will own the synced notebook.</p>",
+        "StartNotebookSyncOutput$owningProjectId": "<p>The identifier of the project that owns the synced notebook.</p>",
         "StopNotebookRunOutput$owningProjectId": "<p>The identifier of the project that owns the notebook run.</p>",
         "SubscribedListing$ownerProjectId": "<p>The identifier of the project of the published asset for which the subscription grant is created.</p>",
         "SubscribedProject$id": "<p>The identifier of the project that has the subscription grant.</p>",
@@ -8180,7 +8241,9 @@
       "base": "<p>The source location for a notebook import in Amazon SageMaker Unified Studio.</p>",
       "refs": {
         "StartNotebookImportInput$sourceLocation": "<p>The source location of the notebook to import. This specifies the Amazon Simple Storage Service URI of the notebook file.</p>",
-        "StartNotebookImportOutput$sourceLocation": "<p>The source location from which the notebook was imported.</p>"
+        "StartNotebookImportOutput$sourceLocation": "<p>The source location from which the notebook was imported.</p>",
+        "StartNotebookSyncInput$sourceLocation": "<p>The source location of the notebook to sync. This specifies the Amazon Simple Storage Service URI of the notebook file.</p>",
+        "StartNotebookSyncOutput$sourceLocation": "<p>The source location from which the notebook was synced.</p>"
       }
     },
     "SparkEmrPropertiesInput": {
@@ -8395,6 +8458,14 @@
       "refs": {}
     },
     "StartNotebookRunOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "StartNotebookSyncInput": {
+      "base": null,
+      "refs": {}
+    },
+    "StartNotebookSyncOutput": {
       "base": null,
       "refs": {}
     },
@@ -9422,6 +9493,7 @@
         "GetNotebookOutput$lockExpiresAt": "<p>The timestamp of when the notebook lock expires.</p>",
         "GetNotebookRunOutput$startedAt": "<p>The timestamp of when the notebook run started executing.</p>",
         "GetNotebookRunOutput$completedAt": "<p>The timestamp of when the notebook run completed.</p>",
+        "GitMetadata$committedAt": "<p>The timestamp of when the commit was made.</p>",
         "GlueConnection$creationTime": "<p>The creation time of the Amazon Web Services Glue connection.</p>",
         "GlueConnection$lastUpdatedTime": "<p>The timestamp at which the Amazon Web Services Glue connection was last updated.</p>",
         "GlueConnection$lastConnectionValidationTime": "<p>The last validation time of the Amazon Web Services Glue connection.</p>",
