@@ -32,6 +32,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise adminGetDeviceAsync(array $args = [])
  * @method \Aws\Result adminGetUser(array $args = [])
  * @method \GuzzleHttp\Promise\Promise adminGetUserAsync(array $args = [])
+ * @method \Aws\Result adminGetUserAuthFactors(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise adminGetUserAuthFactorsAsync(array $args = [])
  * @method \Aws\Result adminInitiateAuth(array $args = [])
  * @method \GuzzleHttp\Promise\Promise adminInitiateAuthAsync(array $args = [])
  * @method \Aws\Result adminLinkProviderForUser(array $args = [])

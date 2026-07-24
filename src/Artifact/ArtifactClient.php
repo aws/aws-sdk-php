@@ -33,6 +33,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result putAccountSettings(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putAccountSettingsAsync(array $args = [])
+ * @method \Aws\Result putComplianceInquiryFeedback(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putComplianceInquiryFeedbackAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])

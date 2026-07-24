@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Handler` - Adds Guzzle 8 support.
+* `Aws\ApplicationInsights` - This release adds Smithy RPC v2 CBOR as an additional protocol alongside the existing AWS JSON 1.1. The SDK will prioritize its most performant protocol.
+* `Aws\Artifact` - Added the PutComplianceInquiryFeedback API, enabling customers to submit feedback on compliance inquiry responses. Customers can rate responses as helpful or not helpful and provide optional reason codes and comments.
+* `Aws\RTBFabric` - The deprecated inboundLinksCount field has been removed from the GetResponderGateway API response. Customers who previously relied on this field should use linksRequestedCount instead.
+* `Aws\DynamoDB` - Endpoint test standardizations
+* `Aws\CognitoIdentityProvider` - Amazon Cognito user pools now support the AdminGetUserAuthFactors operation, which lets administrators retrieve the configured authentication factors (such as password, SMS, email, and TOTP) available for a specific user in a user pool.
+* `Aws\NeptuneGraph` - Update validations for Tag Keys and KMS Key ARNs.
+* `Aws\Odb` - Documentation-only update to clarify the operation-specific valid values for the externalIdType field.
+
 ## 3.388.13 - 2026-07-23
 
 * `Aws\Credentials` - Normalizes numeric-string metadata timeouts to floats in the ECS and instance profile credential providers while preserving their existing configuration and environment precedence.

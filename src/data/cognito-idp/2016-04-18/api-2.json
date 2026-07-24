@@ -261,6 +261,24 @@
         {"shape":"InternalErrorException"}
       ]
     },
+    "AdminGetUserAuthFactors":{
+      "name":"AdminGetUserAuthFactors",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AdminGetUserAuthFactorsRequest"},
+      "output":{"shape":"AdminGetUserAuthFactorsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"NotAuthorizedException"},
+        {"shape":"OperationNotEnabledException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"UserNotFoundException"},
+        {"shape":"InternalErrorException"}
+      ]
+    },
     "AdminInitiateAuth":{
       "name":"AdminInitiateAuth",
       "http":{
@@ -2863,6 +2881,27 @@
         "Device":{"shape":"DeviceType"}
       }
     },
+    "AdminGetUserAuthFactorsRequest":{
+      "type":"structure",
+      "required":[
+        "UserPoolId",
+        "Username"
+      ],
+      "members":{
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "Username":{"shape":"UsernameType"}
+      }
+    },
+    "AdminGetUserAuthFactorsResponse":{
+      "type":"structure",
+      "required":["Username"],
+      "members":{
+        "Username":{"shape":"UsernameType"},
+        "PreferredMfaSetting":{"shape":"StringType"},
+        "UserMFASettingList":{"shape":"UserMFASettingListType"},
+        "ConfiguredUserAuthFactors":{"shape":"ConfiguredUserAuthFactorsListType"}
+      }
+    },
     "AdminGetUserRequest":{
       "type":"structure",
       "required":[
@@ -3217,7 +3256,7 @@
     "AllowedFirstAuthFactorsListType":{
       "type":"list",
       "member":{"shape":"AuthFactorType"},
-      "max":4,
+      "max":5,
       "min":1
     },
     "AnalyticsConfigurationType":{
@@ -3384,7 +3423,8 @@
         "PASSWORD",
         "EMAIL_OTP",
         "SMS_OTP",
-        "WEB_AUTHN"
+        "WEB_AUTHN",
+        "SOFTWARE_TOKEN"
       ]
     },
     "AuthFlowType":{

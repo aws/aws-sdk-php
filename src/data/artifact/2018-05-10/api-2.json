@@ -273,6 +273,25 @@
       ],
       "idempotent":true
     },
+    "PutComplianceInquiryFeedback":{
+      "name":"PutComplianceInquiryFeedback",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/v1/compliance-inquiry/putFeedback",
+        "responseCode":200
+      },
+      "input":{"shape":"PutComplianceInquiryFeedbackRequest"},
+      "output":{"shape":"PutComplianceInquiryFeedbackResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"}
+      ],
+      "idempotent":true
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -391,7 +410,7 @@
         "inquiryContent"
       ],
       "members":{
-        "name":{"shape":"String"},
+        "name":{"shape":"InquiryName"},
         "inquiryContent":{"shape":"InquiryContent"},
         "clientToken":{
           "shape":"IdempotentClientToken",
@@ -457,6 +476,32 @@
         "documentPresignedUrl":{"shape":"PresignedUrl"},
         "tags":{"shape":"TagsMap"}
       }
+    },
+    "FeedbackCommentAttribute":{
+      "type":"string",
+      "max":1000,
+      "min":1,
+      "pattern":"[a-zA-Z0-9\\s.,;:!?'\\-()/@#&+=]+",
+      "sensitive":true
+    },
+    "FeedbackRating":{
+      "type":"string",
+      "enum":[
+        "THUMBS_UP",
+        "THUMBS_DOWN"
+      ]
+    },
+    "FeedbackReasonCode":{
+      "type":"string",
+      "enum":[
+        "OTHER",
+        "PARTIAL_RESPONSE",
+        "IRRELEVANT_RESPONSE"
+      ]
+    },
+    "FeedbackReasonCodeList":{
+      "type":"list",
+      "member":{"shape":"FeedbackReasonCode"}
     },
     "GetAccountSettingsRequest":{
       "type":"structure",
@@ -637,6 +682,10 @@
     "InquiryId":{
       "type":"string",
       "pattern":"compliance-inquiry-[a-zA-Z0-9]{16}"
+    },
+    "InquiryName":{
+      "type":"string",
+      "sensitive":true
     },
     "InquiryStatus":{
       "type":"string",
@@ -892,6 +941,32 @@
       "type":"structure",
       "members":{
         "accountSettings":{"shape":"AccountSettings"}
+      }
+    },
+    "PutComplianceInquiryFeedbackRequest":{
+      "type":"structure",
+      "required":[
+        "complianceInquiryId",
+        "rating"
+      ],
+      "members":{
+        "complianceInquiryId":{"shape":"InquiryId"},
+        "queryIdentifier":{"shape":"Integer"},
+        "rating":{"shape":"FeedbackRating"},
+        "responseRevisionId":{"shape":"Integer"},
+        "reasonCodes":{"shape":"FeedbackReasonCodeList"},
+        "comment":{"shape":"FeedbackCommentAttribute"},
+        "clientToken":{
+          "shape":"IdempotentClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "PutComplianceInquiryFeedbackResponse":{
+      "type":"structure",
+      "required":["submittedAt"],
+      "members":{
+        "submittedAt":{"shape":"TimestampAttribute"}
       }
     },
     "QueriesList":{

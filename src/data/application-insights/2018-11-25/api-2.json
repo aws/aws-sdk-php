@@ -4,8 +4,11 @@
     "apiVersion":"2018-11-25",
     "endpointPrefix":"applicationinsights",
     "jsonVersion":"1.1",
-    "protocol":"json",
-    "protocols":["json"],
+    "protocol":"smithy-rpc-v2-cbor",
+    "protocols":[
+      "smithy-rpc-v2-cbor",
+      "json"
+    ],
     "serviceAbbreviation":"Application Insights",
     "serviceFullName":"Amazon CloudWatch Application Insights",
     "serviceId":"Application Insights",
@@ -493,6 +496,7 @@
       "members":{
         "Message":{"shape":"ErrorMsg"}
       },
+      "error":{"httpStatusCode":403},
       "exception":true
     },
     "AccountId":{
@@ -1454,6 +1458,7 @@
       "members":{
         "Message":{"shape":"ExceptionMessage"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "Tier":{
@@ -1493,6 +1498,7 @@
         "Message":{"shape":"ExceptionMessage"},
         "ResourceName":{"shape":"AmazonResourceName"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "Unit":{"type":"string"},

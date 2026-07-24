@@ -16,6 +16,7 @@
     "ListReports": "<p>List available reports.</p>",
     "ListTagsForResource": "<p>List tags for a resource.</p>",
     "PutAccountSettings": "<p>Put the account settings for Artifact.</p>",
+    "PutComplianceInquiryFeedback": "<p>Submits feedback on a compliance inquiry response.</p>",
     "TagResource": "<p>Add tags to a resource.</p>",
     "UntagResource": "<p>Remove tags from a resource.</p>"
   },
@@ -119,6 +120,30 @@
       "base": null,
       "refs": {}
     },
+    "FeedbackCommentAttribute": {
+      "base": null,
+      "refs": {
+        "PutComplianceInquiryFeedbackRequest$comment": "<p>An optional comment for the feedback.</p>"
+      }
+    },
+    "FeedbackRating": {
+      "base": null,
+      "refs": {
+        "PutComplianceInquiryFeedbackRequest$rating": "<p>The rating for the feedback. Valid values are THUMBS_UP and THUMBS_DOWN.</p>"
+      }
+    },
+    "FeedbackReasonCode": {
+      "base": null,
+      "refs": {
+        "FeedbackReasonCodeList$member": null
+      }
+    },
+    "FeedbackReasonCodeList": {
+      "base": null,
+      "refs": {
+        "PutComplianceInquiryFeedbackRequest$reasonCodes": "<p>The reason codes that describe why you rated the response. Valid values are OTHER, PARTIAL_RESPONSE, and IRRELEVANT_RESPONSE.</p>"
+      }
+    },
     "GetAccountSettingsRequest": {
       "base": null,
       "refs": {}
@@ -174,7 +199,8 @@
     "IdempotentClientToken": {
       "base": null,
       "refs": {
-        "CreateComplianceInquiryRequest$clientToken": "<p>Idempotency token for the request.</p>"
+        "CreateComplianceInquiryRequest$clientToken": "<p>Idempotency token for the request.</p>",
+        "PutComplianceInquiryFeedbackRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, the service ignores the request, but does not return an error.</p>"
       }
     },
     "InputSource": {
@@ -221,7 +247,14 @@
         "GetComplianceInquiryMetadataRequest$complianceInquiryId": "<p>Unique resource ID for the compliance inquiry.</p>",
         "InquiryDetail$id": "<p>Unique resource ID for the compliance inquiry.</p>",
         "InquirySummary$id": "<p>Unique resource ID for the compliance inquiry.</p>",
-        "ListComplianceInquiryQueriesRequest$complianceInquiryId": "<p>Unique resource ID for the compliance inquiry.</p>"
+        "ListComplianceInquiryQueriesRequest$complianceInquiryId": "<p>Unique resource ID for the compliance inquiry.</p>",
+        "PutComplianceInquiryFeedbackRequest$complianceInquiryId": "<p>The unique identifier for the compliance inquiry.</p>"
+      }
+    },
+    "InquiryName": {
+      "base": null,
+      "refs": {
+        "CreateComplianceInquiryRequest$name": "<p>Title of the inquiry.</p>"
       }
     },
     "InquiryStatus": {
@@ -256,6 +289,8 @@
       "base": null,
       "refs": {
         "InternalServerException$retryAfterSeconds": "<p>Number of seconds in which the caller can retry the request.</p>",
+        "PutComplianceInquiryFeedbackRequest$queryIdentifier": "<p>The sequential identifier of the query to provide feedback on.</p>",
+        "PutComplianceInquiryFeedbackRequest$responseRevisionId": "<p>The response revision ID. Use this value to prevent submitting feedback on a stale response.</p>",
         "QueryIdentifiersList$member": null,
         "QuerySummary$queryIdentifier": "<p>Sequential identifier of the query within the inquiry.</p>",
         "ThrottlingException$retryAfterSeconds": "<p>Number of seconds in which the caller can retry the request.</p>"
@@ -391,6 +426,14 @@
       "base": null,
       "refs": {}
     },
+    "PutComplianceInquiryFeedbackRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "PutComplianceInquiryFeedbackResponse": {
+      "base": null,
+      "refs": {}
+    },
     "QueriesList": {
       "base": null,
       "refs": {
@@ -516,7 +559,6 @@
         "ConflictException$message": null,
         "ConflictException$resourceId": "<p>Identifier of the affected resource.</p>",
         "ConflictException$resourceType": "<p>Type of the affected resource.</p>",
-        "CreateComplianceInquiryRequest$name": "<p>Title of the inquiry.</p>",
         "GetTermForReportResponse$termToken": "<p>Unique token representing this request event.</p>",
         "InquiryDetail$arn": "<p>ARN of the compliance inquiry resource.</p>",
         "InquiryDetail$name": "<p>Title of the inquiry.</p>",
@@ -589,6 +631,7 @@
         "InquiryDetail$createdAt": "<p>Timestamp indicating when the resource was created.</p>",
         "InquiryDetail$updatedAt": "<p>Timestamp indicating when the resource was last modified.</p>",
         "InquirySummary$createdAt": "<p>Timestamp indicating when the resource was created.</p>",
+        "PutComplianceInquiryFeedbackResponse$submittedAt": "<p>The timestamp when the feedback was submitted.</p>",
         "QuerySummary$createdAt": "<p>Timestamp when the query was created.</p>",
         "ReportDetail$periodStart": "<p>Timestamp indicating the report resource effective start.</p>",
         "ReportDetail$periodEnd": "<p>Timestamp indicating the report resource effective end.</p>",
