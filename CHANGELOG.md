@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.389.0 - 2026-07-24
 
 * `Aws\Handler` - Adds Guzzle 8 support.
 * `Aws\ApplicationInsights` - This release adds Smithy RPC v2 CBOR as an additional protocol alongside the existing AWS JSON 1.1. The SDK will prioritize its most performant protocol.
