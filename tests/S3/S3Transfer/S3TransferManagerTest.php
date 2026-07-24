@@ -3838,6 +3838,11 @@ EOF
             if ($newKey !== $key) {
                 $caseHeaders[$newKey] = $value;
                 unset($caseHeaders[$key]);
+                $key = $newKey;
+            }
+
+            if (!is_array($caseHeaders[$key])) {
+                $caseHeaders[$key] = (string) $caseHeaders[$key];
             }
         }
     }

@@ -173,7 +173,7 @@ class RetryMiddlewareTest extends TestCase
                 [
                     'response' => (new Response(
                         500,
-                    ))->withHeader('x-amz-retry-after', $value),
+                    ))->withHeader('x-amz-retry-after', (string) $value),
                 ],
             );
         };

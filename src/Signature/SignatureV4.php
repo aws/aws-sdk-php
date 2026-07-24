@@ -444,9 +444,13 @@ class SignatureV4 implements SignatureInterface
             ->withoutHeader('Authorization');
         $uri = $request->getUri();
 
+        $path = method_exists(Psr7\Uri::class, 'rawPath')
+            ? Psr7\Uri::rawPath($uri)
+            : $uri->getPath();
+
         return [
             'method'  => $request->getMethod(),
-            'path'    => $uri->getPath(),
+            'path'    => $path,
             'query'   => Psr7\Query::parse($uri->getQuery()),
             'uri'     => $uri,
             'headers' => $request->getHeaders(),

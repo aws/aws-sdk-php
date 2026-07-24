@@ -673,7 +673,7 @@ class SignatureV4Test extends TestCase
 
         static $headers = [
             'X-Amz-Content-Sha256' => 'blah',
-            'aws-sdk-invocation-id' => 1,
+            'aws-sdk-invocation-id' => '1',
             'aws-sdk-retry' => 'foo',
             'transfer-encoding' => 'chunked'
         ];

@@ -84,8 +84,7 @@ class RestXmlParserTest extends TestCase
             'X-Count' => '0',
             'X-Enabled' => 'false',
             'X-Ratio' => '0.0',
-            'X-Tags' => null,  // Empty list
-            'X-Empty' => ''  // Empty string should still be skipped
+            'X-Empty' => ''
         ], '<?xml version="1.0" encoding="UTF-8"?><response/>');
 
         $command = $this->getMockBuilder(CommandInterface::class)->getMock();

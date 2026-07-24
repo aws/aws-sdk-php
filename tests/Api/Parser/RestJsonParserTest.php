@@ -146,11 +146,10 @@ class RestJsonParserTest extends TestCase
 
         $response = new Response(200, [
             'Content-Length' => '0',
-            'X-Count' => 0,
+            'X-Count' => '0',
             'X-Enabled' => 'false',
             'X-Ratio' => '0.0',
-            'X-Tags' => null,  // Empty list
-            'X-Empty' => ''  // Empty string should still be skipped
+            'X-Empty' => ''
         ], '{}');
 
         $command = $this->getMockBuilder(CommandInterface::class)->getMock();
