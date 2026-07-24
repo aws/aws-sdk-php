@@ -10,7 +10,7 @@ function gmdate($format, $ts = null)
         return \gmdate($format, $_SERVER['aws_time']);
     }
     return isset($_SERVER['aws_time'])
-        ? $_SERVER['aws_time']
+        ? (string) $_SERVER['aws_time']
         : \gmdate($format, $ts ?: time());
 }
 

@@ -27,6 +27,8 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(Waiter::class)]
 class WaiterTest extends TestCase
 {
+    use CreatesGuzzleExceptionsTrait;
+
     use UsesServiceTrait;
     use MetricsBuilderTestTrait;
 
@@ -525,7 +527,7 @@ EOXML;
                 $response = new Response(200, [], $responseBody);
                 return new RejectedPromise([
                     'connection_error' => true,
-                    'exception' => new RequestException(
+                    'exception' => self::createRequestException(
                         'Error',
                         $request,
                         $response

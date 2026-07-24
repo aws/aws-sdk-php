@@ -1,9 +1,7 @@
 <?php
 namespace Aws\Handler\Guzzle;
 
-use Exception;
-use GuzzleHttp\Exception\ConnectException;
-use GuzzleHttp\Exception\RequestException;
+use Aws\Handler\HttpHandlerError;
 use GuzzleHttp\Utils;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Client;
@@ -31,7 +29,7 @@ class GuzzleHandler
      * @param Psr7Request $request
      * @param array       $options
      *
-     * @return Promise\Promise
+     * @return Promise\PromiseInterface
      */
     public function __invoke(Psr7Request $request, array $options = [])
     {
@@ -43,21 +41,12 @@ class GuzzleHandler
 
         return $this->client->sendAsync($request, $this->parseOptions($options))
             ->otherwise(
-                static function ($e) {
-                    $error = [
+                static function (\Throwable $e) {
+                    return new Promise\RejectedPromise([
                         'exception'        => $e,
-                        'connection_error' => $e instanceof ConnectException,
-                        'response'         => null,
-                    ];
-
-                    if (
-                        ($e instanceof RequestException)
-                        && $e->getResponse()
-                    ) {
-                        $error['response'] = $e->getResponse();
-                    }
-
-                    return new Promise\RejectedPromise($error);
+                        'connection_error' => HttpHandlerError::isConnectionError($e),
+                        'response'         => HttpHandlerError::getResponse($e),
+                    ]);
                 }
             );
     }

@@ -14,7 +14,7 @@ trait S3EncryptionClientTestingTrait
         $fields[MetadataEnvelope::IV_HEADER]
             = base64_encode($provider->generateIv('aes-256-cbc'));
         $fields[MetadataEnvelope::CRYPTO_TAG_LENGTH_HEADER]
-            = 0;
+            = '0';
         $fields[MetadataEnvelope::CONTENT_KEY_V2_HEADER]
             = base64_encode('cek');
         $fields[MetadataEnvelope::MATERIALS_DESCRIPTION_HEADER]
@@ -33,7 +33,7 @@ trait S3EncryptionClientTestingTrait
         $fields[MetadataEnvelope::IV_HEADER]
             = base64_encode($provider->generateIv('aes-256-cbc'));
         $fields[MetadataEnvelope::CRYPTO_TAG_LENGTH_HEADER]
-            = 0;
+            = '0';
         $fields[MetadataEnvelope::CONTENT_KEY_V2_HEADER]
             = base64_encode('cek');
         $fields[MetadataEnvelope::MATERIALS_DESCRIPTION_HEADER]
@@ -52,7 +52,7 @@ trait S3EncryptionClientTestingTrait
         $fields[MetadataEnvelope::IV_HEADER]
             = base64_encode($provider->generateIv('aes-256-cbc'));
         $fields[MetadataEnvelope::CRYPTO_TAG_LENGTH_HEADER]
-            = 0;
+            = '0';
         $fields[MetadataEnvelope::CONTENT_KEY_V2_HEADER]
             = base64_encode('cek');
         $fields[MetadataEnvelope::MATERIALS_DESCRIPTION_HEADER]
@@ -71,7 +71,7 @@ trait S3EncryptionClientTestingTrait
         $fields[MetadataEnvelope::IV_HEADER]
             = base64_encode($provider->generateIv('aes-256-gcm'));
         $fields[MetadataEnvelope::CRYPTO_TAG_LENGTH_HEADER]
-            = 0;
+            = '0';
         $fields[MetadataEnvelope::CONTENT_KEY_V2_HEADER]
             = base64_encode('cek');
         $fields[MetadataEnvelope::MATERIALS_DESCRIPTION_HEADER]
@@ -90,7 +90,7 @@ trait S3EncryptionClientTestingTrait
         $fields[MetadataEnvelope::IV_HEADER]
             = base64_encode($provider->generateIv('aes-256-cbc'));
         $fields[MetadataEnvelope::CRYPTO_TAG_LENGTH_HEADER]
-            = 0;
+            = '0';
         $fields[MetadataEnvelope::CONTENT_KEY_V2_HEADER]
             = base64_encode('cek');
         $fields[MetadataEnvelope::MATERIALS_DESCRIPTION_HEADER]
@@ -109,7 +109,7 @@ trait S3EncryptionClientTestingTrait
         $fields[MetadataEnvelope::IV_HEADER]
             = base64_encode($provider->generateIv('aes-256-gcm'));
         $fields[MetadataEnvelope::CRYPTO_TAG_LENGTH_HEADER]
-            = 0;
+            = '0';
         $fields[MetadataEnvelope::CONTENT_KEY_V2_HEADER]
             = base64_encode('cek');
         $fields[MetadataEnvelope::MATERIALS_DESCRIPTION_HEADER]
@@ -128,7 +128,7 @@ trait S3EncryptionClientTestingTrait
         $fields[MetadataEnvelope::IV_HEADER]
             = base64_encode($provider->generateIv('aes-256-gcm'));
         $fields[MetadataEnvelope::CRYPTO_TAG_LENGTH_HEADER]
-            = 0;
+            = '0';
         $fields[MetadataEnvelope::CONTENT_KEY_V2_HEADER]
             = base64_encode('cek');
         $fields[MetadataEnvelope::MATERIALS_DESCRIPTION_HEADER]
