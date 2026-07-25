@@ -3,7 +3,12 @@ parameters:
   level: 0
 
   parallel:
-    processTimeout: 300.0
+    # Raised from 300s to accommodate the additional docblock-parsing
+    # work introduced by the `@phpstan-method` array-shape annotations
+    # generated on every service client. Even at level 0, PHPStan has to
+    # lex every annotation to build its type registry, and there are
+    # ~36k of them across ~450 clients.
+    processTimeout: 1800.0
 
   excludePaths:
       - %rootDir%/../../../src/Crypto/Polyfill/*

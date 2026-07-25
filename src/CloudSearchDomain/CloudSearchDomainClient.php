@@ -12,11 +12,57 @@ use GuzzleHttp\Psr7;
  * This client is used to search and upload documents to an **Amazon CloudSearch** Domain.
  *
  * @method \Aws\Result search(array $args = [])
+ * @phpstan-method \Aws\Result search(array{
+ *     cursor?: string,
+ *     expr?: string,
+ *     facet?: string,
+ *     filterQuery?: string,
+ *     highlight?: string,
+ *     partial?: bool,
+ *     query?: string,
+ *     queryOptions?: string,
+ *     queryParser?: 'dismax'|'lucene'|'simple'|'structured',
+ *     return?: string,
+ *     size?: int,
+ *     sort?: string,
+ *     start?: int,
+ *     stats?: string,
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise searchAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise searchAsync(array{
+ *     cursor?: string,
+ *     expr?: string,
+ *     facet?: string,
+ *     filterQuery?: string,
+ *     highlight?: string,
+ *     partial?: bool,
+ *     query?: string,
+ *     queryOptions?: string,
+ *     queryParser?: 'dismax'|'lucene'|'simple'|'structured',
+ *     return?: string,
+ *     size?: int,
+ *     sort?: string,
+ *     start?: int,
+ *     stats?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result suggest(array $args = [])
+ * @phpstan-method \Aws\Result suggest(array{query?: string, suggester?: string, size?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise suggestAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise suggestAsync(array{query?: string, suggester?: string, size?: int, ...} $args = [])
  * @method \Aws\Result uploadDocuments(array $args = [])
+ * @phpstan-method \Aws\Result uploadDocuments(array{
+ *     documents?: string|resource|\Psr\Http\Message\StreamInterface,
+ *     contentType?: 'application/json'|'application/xml',
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise uploadDocumentsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise uploadDocumentsAsync(array{
+ *     documents?: string|resource|\Psr\Http\Message\StreamInterface,
+ *     contentType?: 'application/json'|'application/xml',
+ *     ...,
+ * } $args = [])
  */
 class CloudSearchDomainClient extends AwsClient
 {

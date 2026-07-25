@@ -12,51 +12,205 @@ use Psr\Http\Message\RequestInterface;
  * Client used to interact with **Amazon Simple Queue Service (Amazon SQS)**.
  *
  * @method \Aws\Result addPermission(array $args = [])
+ * @phpstan-method \Aws\Result addPermission(array{QueueUrl?: string, Label?: string, AWSAccountIds?: list<string>, Actions?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise addPermissionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise addPermissionAsync(array{QueueUrl?: string, Label?: string, AWSAccountIds?: list<string>, Actions?: list<string>, ...} $args = [])
  * @method \Aws\Result cancelMessageMoveTask(array $args = [])
+ * @phpstan-method \Aws\Result cancelMessageMoveTask(array{TaskHandle?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise cancelMessageMoveTaskAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise cancelMessageMoveTaskAsync(array{TaskHandle?: string, ...} $args = [])
  * @method \Aws\Result changeMessageVisibility(array $args = [])
+ * @phpstan-method \Aws\Result changeMessageVisibility(array{QueueUrl?: string, ReceiptHandle?: string, VisibilityTimeout?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise changeMessageVisibilityAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise changeMessageVisibilityAsync(array{QueueUrl?: string, ReceiptHandle?: string, VisibilityTimeout?: int, ...} $args = [])
  * @method \Aws\Result changeMessageVisibilityBatch(array $args = [])
+ * @phpstan-method \Aws\Result changeMessageVisibilityBatch(array{
+ *     QueueUrl?: string,
+ *     Entries?: list<array{Id?: string, ReceiptHandle?: string, VisibilityTimeout?: int, ...}>,
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise changeMessageVisibilityBatchAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise changeMessageVisibilityBatchAsync(array{
+ *     QueueUrl?: string,
+ *     Entries?: list<array{Id?: string, ReceiptHandle?: string, VisibilityTimeout?: int, ...}>,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result createQueue(array $args = [])
+ * @phpstan-method \Aws\Result createQueue(array{QueueName?: string, Attributes?: array<string, string>, tags?: array<string, string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise createQueueAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createQueueAsync(array{QueueName?: string, Attributes?: array<string, string>, tags?: array<string, string>, ...} $args = [])
  * @method \Aws\Result deleteMessage(array $args = [])
+ * @phpstan-method \Aws\Result deleteMessage(array{QueueUrl?: string, ReceiptHandle?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteMessageAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteMessageAsync(array{QueueUrl?: string, ReceiptHandle?: string, ...} $args = [])
  * @method \Aws\Result deleteMessageBatch(array $args = [])
+ * @phpstan-method \Aws\Result deleteMessageBatch(array{QueueUrl?: string, Entries?: list<array{Id?: string, ReceiptHandle?: string, ...}>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteMessageBatchAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteMessageBatchAsync(array{QueueUrl?: string, Entries?: list<array{Id?: string, ReceiptHandle?: string, ...}>, ...} $args = [])
  * @method \Aws\Result deleteQueue(array $args = [])
+ * @phpstan-method \Aws\Result deleteQueue(array{QueueUrl?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteQueueAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteQueueAsync(array{QueueUrl?: string, ...} $args = [])
  * @method \Aws\Result getQueueAttributes(array $args = [])
+ * @phpstan-method \Aws\Result getQueueAttributes(array{
+ *     QueueUrl?: string,
+ *     AttributeNames?: list<'All'|'ApproximateNumberOfMessages'|'ApproximateNumberOfMessagesDelayed'|'ApproximateNumberOfMessagesNotVisible'|'ContentBasedDeduplication'|'CreatedTimestamp'|'DeduplicationScope'|'DelaySeconds'|'FifoQueue'|'FifoThroughputLimit'|'KmsDataKeyReusePeriodSeconds'|'KmsMasterKeyId'|'LastModifiedTimestamp'|'MaximumMessageSize'|'MessageRetentionPeriod'|'Policy'|'QueueArn'|'ReceiveMessageWaitTimeSeconds'|'RedriveAllowPolicy'|'RedrivePolicy'|'SqsManagedSseEnabled'|'VisibilityTimeout'>,
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise getQueueAttributesAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getQueueAttributesAsync(array{
+ *     QueueUrl?: string,
+ *     AttributeNames?: list<'All'|'ApproximateNumberOfMessages'|'ApproximateNumberOfMessagesDelayed'|'ApproximateNumberOfMessagesNotVisible'|'ContentBasedDeduplication'|'CreatedTimestamp'|'DeduplicationScope'|'DelaySeconds'|'FifoQueue'|'FifoThroughputLimit'|'KmsDataKeyReusePeriodSeconds'|'KmsMasterKeyId'|'LastModifiedTimestamp'|'MaximumMessageSize'|'MessageRetentionPeriod'|'Policy'|'QueueArn'|'ReceiveMessageWaitTimeSeconds'|'RedriveAllowPolicy'|'RedrivePolicy'|'SqsManagedSseEnabled'|'VisibilityTimeout'>,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result getQueueUrl(array $args = [])
+ * @phpstan-method \Aws\Result getQueueUrl(array{QueueName?: string, QueueOwnerAWSAccountId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getQueueUrlAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getQueueUrlAsync(array{QueueName?: string, QueueOwnerAWSAccountId?: string, ...} $args = [])
  * @method \Aws\Result listDeadLetterSourceQueues(array $args = [])
+ * @phpstan-method \Aws\Result listDeadLetterSourceQueues(array{QueueUrl?: string, NextToken?: string, MaxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listDeadLetterSourceQueuesAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listDeadLetterSourceQueuesAsync(array{QueueUrl?: string, NextToken?: string, MaxResults?: int, ...} $args = [])
  * @method \Aws\Result listMessageMoveTasks(array $args = [])
+ * @phpstan-method \Aws\Result listMessageMoveTasks(array{SourceArn?: string, MaxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listMessageMoveTasksAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listMessageMoveTasksAsync(array{SourceArn?: string, MaxResults?: int, ...} $args = [])
  * @method \Aws\Result listQueueTags(array $args = [])
+ * @phpstan-method \Aws\Result listQueueTags(array{QueueUrl?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listQueueTagsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listQueueTagsAsync(array{QueueUrl?: string, ...} $args = [])
  * @method \Aws\Result listQueues(array $args = [])
+ * @phpstan-method \Aws\Result listQueues(array{QueueNamePrefix?: string, NextToken?: string, MaxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listQueuesAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listQueuesAsync(array{QueueNamePrefix?: string, NextToken?: string, MaxResults?: int, ...} $args = [])
  * @method \Aws\Result purgeQueue(array $args = [])
+ * @phpstan-method \Aws\Result purgeQueue(array{QueueUrl?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise purgeQueueAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise purgeQueueAsync(array{QueueUrl?: string, ...} $args = [])
  * @method \Aws\Result receiveMessage(array $args = [])
+ * @phpstan-method \Aws\Result receiveMessage(array{
+ *     QueueUrl?: string,
+ *     AttributeNames?: list<'All'|'ApproximateNumberOfMessages'|'ApproximateNumberOfMessagesDelayed'|'ApproximateNumberOfMessagesNotVisible'|'ContentBasedDeduplication'|'CreatedTimestamp'|'DeduplicationScope'|'DelaySeconds'|'FifoQueue'|'FifoThroughputLimit'|'KmsDataKeyReusePeriodSeconds'|'KmsMasterKeyId'|'LastModifiedTimestamp'|'MaximumMessageSize'|'MessageRetentionPeriod'|'Policy'|'QueueArn'|'ReceiveMessageWaitTimeSeconds'|'RedriveAllowPolicy'|'RedrivePolicy'|'SqsManagedSseEnabled'|'VisibilityTimeout'>,
+ *     MessageSystemAttributeNames?: list<'AWSTraceHeader'|'All'|'ApproximateFirstReceiveTimestamp'|'ApproximateReceiveCount'|'DeadLetterQueueSourceArn'|'MessageDeduplicationId'|'MessageGroupId'|'SenderId'|'SentTimestamp'|'SequenceNumber'>,
+ *     MessageAttributeNames?: list<string>,
+ *     MaxNumberOfMessages?: int,
+ *     VisibilityTimeout?: int,
+ *     WaitTimeSeconds?: int,
+ *     ReceiveRequestAttemptId?: string,
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise receiveMessageAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise receiveMessageAsync(array{
+ *     QueueUrl?: string,
+ *     AttributeNames?: list<'All'|'ApproximateNumberOfMessages'|'ApproximateNumberOfMessagesDelayed'|'ApproximateNumberOfMessagesNotVisible'|'ContentBasedDeduplication'|'CreatedTimestamp'|'DeduplicationScope'|'DelaySeconds'|'FifoQueue'|'FifoThroughputLimit'|'KmsDataKeyReusePeriodSeconds'|'KmsMasterKeyId'|'LastModifiedTimestamp'|'MaximumMessageSize'|'MessageRetentionPeriod'|'Policy'|'QueueArn'|'ReceiveMessageWaitTimeSeconds'|'RedriveAllowPolicy'|'RedrivePolicy'|'SqsManagedSseEnabled'|'VisibilityTimeout'>,
+ *     MessageSystemAttributeNames?: list<'AWSTraceHeader'|'All'|'ApproximateFirstReceiveTimestamp'|'ApproximateReceiveCount'|'DeadLetterQueueSourceArn'|'MessageDeduplicationId'|'MessageGroupId'|'SenderId'|'SentTimestamp'|'SequenceNumber'>,
+ *     MessageAttributeNames?: list<string>,
+ *     MaxNumberOfMessages?: int,
+ *     VisibilityTimeout?: int,
+ *     WaitTimeSeconds?: int,
+ *     ReceiveRequestAttemptId?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result removePermission(array $args = [])
+ * @phpstan-method \Aws\Result removePermission(array{QueueUrl?: string, Label?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise removePermissionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise removePermissionAsync(array{QueueUrl?: string, Label?: string, ...} $args = [])
  * @method \Aws\Result sendMessage(array $args = [])
+ * @phpstan-method \Aws\Result sendMessage(array{
+ *     QueueUrl?: string,
+ *     MessageBody?: string,
+ *     DelaySeconds?: int,
+ *     MessageAttributes?: array<string, array{
+ *         StringValue?: string,
+ *         BinaryValue?: string|resource|\Psr\Http\Message\StreamInterface,
+ *         StringListValues?: list<string>,
+ *         BinaryListValues?: list<string|resource|\Psr\Http\Message\StreamInterface>,
+ *         DataType?: string,
+ *         ...,
+ *     }>,
+ *     MessageSystemAttributes?: array<string, array{
+ *         StringValue?: string,
+ *         BinaryValue?: string|resource|\Psr\Http\Message\StreamInterface,
+ *         StringListValues?: list<string>,
+ *         BinaryListValues?: list<string|resource|\Psr\Http\Message\StreamInterface>,
+ *         DataType?: string,
+ *         ...,
+ *     }>,
+ *     MessageDeduplicationId?: string,
+ *     MessageGroupId?: string,
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise sendMessageAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise sendMessageAsync(array{
+ *     QueueUrl?: string,
+ *     MessageBody?: string,
+ *     DelaySeconds?: int,
+ *     MessageAttributes?: array<string, array{
+ *         StringValue?: string,
+ *         BinaryValue?: string|resource|\Psr\Http\Message\StreamInterface,
+ *         StringListValues?: list<string>,
+ *         BinaryListValues?: list<string|resource|\Psr\Http\Message\StreamInterface>,
+ *         DataType?: string,
+ *         ...,
+ *     }>,
+ *     MessageSystemAttributes?: array<string, array{
+ *         StringValue?: string,
+ *         BinaryValue?: string|resource|\Psr\Http\Message\StreamInterface,
+ *         StringListValues?: list<string>,
+ *         BinaryListValues?: list<string|resource|\Psr\Http\Message\StreamInterface>,
+ *         DataType?: string,
+ *         ...,
+ *     }>,
+ *     MessageDeduplicationId?: string,
+ *     MessageGroupId?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result sendMessageBatch(array $args = [])
+ * @phpstan-method \Aws\Result sendMessageBatch(array{
+ *     QueueUrl?: string,
+ *     Entries?: list<array{
+ *         Id?: string,
+ *         MessageBody?: string,
+ *         DelaySeconds?: int,
+ *         MessageAttributes?: array<string, array>,
+ *         MessageSystemAttributes?: array<string, array>,
+ *         MessageDeduplicationId?: string,
+ *         MessageGroupId?: string,
+ *         ...,
+ *     }>,
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise sendMessageBatchAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise sendMessageBatchAsync(array{
+ *     QueueUrl?: string,
+ *     Entries?: list<array{
+ *         Id?: string,
+ *         MessageBody?: string,
+ *         DelaySeconds?: int,
+ *         MessageAttributes?: array<string, array>,
+ *         MessageSystemAttributes?: array<string, array>,
+ *         MessageDeduplicationId?: string,
+ *         MessageGroupId?: string,
+ *         ...,
+ *     }>,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result setQueueAttributes(array $args = [])
+ * @phpstan-method \Aws\Result setQueueAttributes(array{QueueUrl?: string, Attributes?: array<string, string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise setQueueAttributesAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise setQueueAttributesAsync(array{QueueUrl?: string, Attributes?: array<string, string>, ...} $args = [])
  * @method \Aws\Result startMessageMoveTask(array $args = [])
+ * @phpstan-method \Aws\Result startMessageMoveTask(array{SourceArn?: string, DestinationArn?: string, MaxNumberOfMessagesPerSecond?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise startMessageMoveTaskAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise startMessageMoveTaskAsync(array{SourceArn?: string, DestinationArn?: string, MaxNumberOfMessagesPerSecond?: int, ...} $args = [])
  * @method \Aws\Result tagQueue(array $args = [])
+ * @phpstan-method \Aws\Result tagQueue(array{QueueUrl?: string, Tags?: array<string, string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise tagQueueAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise tagQueueAsync(array{QueueUrl?: string, Tags?: array<string, string>, ...} $args = [])
  * @method \Aws\Result untagQueue(array $args = [])
+ * @phpstan-method \Aws\Result untagQueue(array{QueueUrl?: string, TagKeys?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise untagQueueAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise untagQueueAsync(array{QueueUrl?: string, TagKeys?: list<string>, ...} $args = [])
  */
 class SqsClient extends AwsClient
 {
