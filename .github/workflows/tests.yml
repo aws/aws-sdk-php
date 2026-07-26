@@ -85,12 +85,6 @@ jobs:
       - name: Run test suite
         run: make test
 
-      # static analysis
-      - name: Static analysis
-        run: |
-          composer require --dev nette/neon "^3.4.4" phpstan/phpstan "2.2.2" --ignore-platform-req=php --update-with-all-dependencies
-          vendor/bin/phpstan analyse src
-
       # generate package
       - if: ${{ matrix.composer-options == '' }}
         name: Package generation

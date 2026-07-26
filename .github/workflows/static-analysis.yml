@@ -1,0 +1,36 @@
+name: Static Analysis
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+permissions:
+  contents: read
+
+jobs:
+  phpstan:
+    runs-on: ubuntu-latest
+    name: PHPStan
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
+        with:
+          coverage: none
+          php-version: '8.1'
+          ini-values: memory_limit=4G
+
+      - name: Checkout codebase
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: PHPStan
+        run: |
+          composer require --dev nette/neon "^3.4.4" phpstan/phpstan "2.2.2" --ignore-platform-req=php --update-with-all-dependencies
+          vendor/bin/phpstan analyze src

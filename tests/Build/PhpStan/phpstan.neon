@@ -1,0 +1,15 @@
+# PHPStan config for validating @phpstan-method emission on generated clients.
+#
+# From the SDK root:
+#   vendor/bin/phpstan analyze --configuration=tests/Build/PhpStan/phpstan.neon
+#
+# Expects PHPStan >= 2.2 for bare `...` unsealed array shapes.
+
+includes:
+    - ../../../phpstan.neon
+
+parameters:
+    level: 8
+    paths:
+        - fixture.php
+    reportUnmatchedIgnoredErrors: false

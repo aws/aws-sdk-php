@@ -16,71 +16,239 @@ use Psr\Http\Message\RequestInterface;
  * This client is used to interact with the **Amazon Glacier** service.
  *
  * @method \Aws\Result abortMultipartUpload(array $args = [])
+ * @phpstan-method \Aws\Result abortMultipartUpload(array{accountId?: string, vaultName?: string, uploadId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise abortMultipartUploadAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise abortMultipartUploadAsync(array{accountId?: string, vaultName?: string, uploadId?: string, ...} $args = [])
  * @method \Aws\Result abortVaultLock(array $args = [])
+ * @phpstan-method \Aws\Result abortVaultLock(array{accountId?: string, vaultName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise abortVaultLockAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise abortVaultLockAsync(array{accountId?: string, vaultName?: string, ...} $args = [])
  * @method \Aws\Result addTagsToVault(array $args = [])
+ * @phpstan-method \Aws\Result addTagsToVault(array{accountId?: string, vaultName?: string, Tags?: array<string, string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise addTagsToVaultAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise addTagsToVaultAsync(array{accountId?: string, vaultName?: string, Tags?: array<string, string>, ...} $args = [])
  * @method \Aws\Result completeMultipartUpload(array $args = [])
+ * @phpstan-method \Aws\Result completeMultipartUpload(array{accountId?: string, vaultName?: string, uploadId?: string, archiveSize?: string, checksum?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise completeMultipartUploadAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise completeMultipartUploadAsync(array{accountId?: string, vaultName?: string, uploadId?: string, archiveSize?: string, checksum?: string, ...} $args = [])
  * @method \Aws\Result completeVaultLock(array $args = [])
+ * @phpstan-method \Aws\Result completeVaultLock(array{accountId?: string, vaultName?: string, lockId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise completeVaultLockAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise completeVaultLockAsync(array{accountId?: string, vaultName?: string, lockId?: string, ...} $args = [])
  * @method \Aws\Result createVault(array $args = [])
+ * @phpstan-method \Aws\Result createVault(array{accountId?: string, vaultName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise createVaultAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createVaultAsync(array{accountId?: string, vaultName?: string, ...} $args = [])
  * @method \Aws\Result deleteArchive(array $args = [])
+ * @phpstan-method \Aws\Result deleteArchive(array{accountId?: string, vaultName?: string, archiveId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteArchiveAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteArchiveAsync(array{accountId?: string, vaultName?: string, archiveId?: string, ...} $args = [])
  * @method \Aws\Result deleteVault(array $args = [])
+ * @phpstan-method \Aws\Result deleteVault(array{accountId?: string, vaultName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteVaultAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteVaultAsync(array{accountId?: string, vaultName?: string, ...} $args = [])
  * @method \Aws\Result deleteVaultAccessPolicy(array $args = [])
+ * @phpstan-method \Aws\Result deleteVaultAccessPolicy(array{accountId?: string, vaultName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteVaultAccessPolicyAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteVaultAccessPolicyAsync(array{accountId?: string, vaultName?: string, ...} $args = [])
  * @method \Aws\Result deleteVaultNotifications(array $args = [])
+ * @phpstan-method \Aws\Result deleteVaultNotifications(array{accountId?: string, vaultName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteVaultNotificationsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteVaultNotificationsAsync(array{accountId?: string, vaultName?: string, ...} $args = [])
  * @method \Aws\Result describeJob(array $args = [])
+ * @phpstan-method \Aws\Result describeJob(array{accountId?: string, vaultName?: string, jobId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeJobAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeJobAsync(array{accountId?: string, vaultName?: string, jobId?: string, ...} $args = [])
  * @method \Aws\Result describeVault(array $args = [])
+ * @phpstan-method \Aws\Result describeVault(array{accountId?: string, vaultName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeVaultAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeVaultAsync(array{accountId?: string, vaultName?: string, ...} $args = [])
  * @method \Aws\Result getDataRetrievalPolicy(array $args = [])
+ * @phpstan-method \Aws\Result getDataRetrievalPolicy(array{accountId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getDataRetrievalPolicyAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getDataRetrievalPolicyAsync(array{accountId?: string, ...} $args = [])
  * @method \Aws\Result getJobOutput(array $args = [])
+ * @phpstan-method \Aws\Result getJobOutput(array{accountId?: string, vaultName?: string, jobId?: string, range?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getJobOutputAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getJobOutputAsync(array{accountId?: string, vaultName?: string, jobId?: string, range?: string, ...} $args = [])
  * @method \Aws\Result getVaultAccessPolicy(array $args = [])
+ * @phpstan-method \Aws\Result getVaultAccessPolicy(array{accountId?: string, vaultName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getVaultAccessPolicyAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getVaultAccessPolicyAsync(array{accountId?: string, vaultName?: string, ...} $args = [])
  * @method \Aws\Result getVaultLock(array $args = [])
+ * @phpstan-method \Aws\Result getVaultLock(array{accountId?: string, vaultName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getVaultLockAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getVaultLockAsync(array{accountId?: string, vaultName?: string, ...} $args = [])
  * @method \Aws\Result getVaultNotifications(array $args = [])
+ * @phpstan-method \Aws\Result getVaultNotifications(array{accountId?: string, vaultName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getVaultNotificationsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getVaultNotificationsAsync(array{accountId?: string, vaultName?: string, ...} $args = [])
  * @method \Aws\Result initiateJob(array $args = [])
+ * @phpstan-method \Aws\Result initiateJob(array{
+ *     accountId?: string,
+ *     vaultName?: string,
+ *     jobParameters?: array{
+ *         Format?: string,
+ *         Type?: string,
+ *         ArchiveId?: string,
+ *         Description?: string,
+ *         SNSTopic?: string,
+ *         RetrievalByteRange?: string,
+ *         Tier?: string,
+ *         InventoryRetrievalParameters?: array{StartDate?: string, EndDate?: string, Limit?: string, Marker?: string, ...},
+ *         SelectParameters?: array{
+ *             InputSerialization?: array,
+ *             ExpressionType?: 'SQL',
+ *             Expression?: string,
+ *             OutputSerialization?: array,
+ *             ...,
+ *         },
+ *         OutputLocation?: array{S3?: array, ...},
+ *         ...,
+ *     },
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise initiateJobAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise initiateJobAsync(array{
+ *     accountId?: string,
+ *     vaultName?: string,
+ *     jobParameters?: array{
+ *         Format?: string,
+ *         Type?: string,
+ *         ArchiveId?: string,
+ *         Description?: string,
+ *         SNSTopic?: string,
+ *         RetrievalByteRange?: string,
+ *         Tier?: string,
+ *         InventoryRetrievalParameters?: array{StartDate?: string, EndDate?: string, Limit?: string, Marker?: string, ...},
+ *         SelectParameters?: array{
+ *             InputSerialization?: array,
+ *             ExpressionType?: 'SQL',
+ *             Expression?: string,
+ *             OutputSerialization?: array,
+ *             ...,
+ *         },
+ *         OutputLocation?: array{S3?: array, ...},
+ *         ...,
+ *     },
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result initiateMultipartUpload(array $args = [])
+ * @phpstan-method \Aws\Result initiateMultipartUpload(array{accountId?: string, vaultName?: string, archiveDescription?: string, partSize?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise initiateMultipartUploadAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise initiateMultipartUploadAsync(array{accountId?: string, vaultName?: string, archiveDescription?: string, partSize?: string, ...} $args = [])
  * @method \Aws\Result initiateVaultLock(array $args = [])
+ * @phpstan-method \Aws\Result initiateVaultLock(array{accountId?: string, vaultName?: string, policy?: array{Policy?: string, ...}, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise initiateVaultLockAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise initiateVaultLockAsync(array{accountId?: string, vaultName?: string, policy?: array{Policy?: string, ...}, ...} $args = [])
  * @method \Aws\Result listJobs(array $args = [])
+ * @phpstan-method \Aws\Result listJobs(array{
+ *     accountId?: string,
+ *     vaultName?: string,
+ *     limit?: string,
+ *     marker?: string,
+ *     statuscode?: string,
+ *     completed?: string,
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise listJobsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listJobsAsync(array{
+ *     accountId?: string,
+ *     vaultName?: string,
+ *     limit?: string,
+ *     marker?: string,
+ *     statuscode?: string,
+ *     completed?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listMultipartUploads(array $args = [])
+ * @phpstan-method \Aws\Result listMultipartUploads(array{accountId?: string, vaultName?: string, marker?: string, limit?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listMultipartUploadsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listMultipartUploadsAsync(array{accountId?: string, vaultName?: string, marker?: string, limit?: string, ...} $args = [])
  * @method \Aws\Result listParts(array $args = [])
+ * @phpstan-method \Aws\Result listParts(array{accountId?: string, vaultName?: string, uploadId?: string, marker?: string, limit?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listPartsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listPartsAsync(array{accountId?: string, vaultName?: string, uploadId?: string, marker?: string, limit?: string, ...} $args = [])
  * @method \Aws\Result listProvisionedCapacity(array $args = [])
+ * @phpstan-method \Aws\Result listProvisionedCapacity(array{accountId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listProvisionedCapacityAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listProvisionedCapacityAsync(array{accountId?: string, ...} $args = [])
  * @method \Aws\Result listTagsForVault(array $args = [])
+ * @phpstan-method \Aws\Result listTagsForVault(array{accountId?: string, vaultName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForVaultAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listTagsForVaultAsync(array{accountId?: string, vaultName?: string, ...} $args = [])
  * @method \Aws\Result listVaults(array $args = [])
+ * @phpstan-method \Aws\Result listVaults(array{accountId?: string, marker?: string, limit?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listVaultsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listVaultsAsync(array{accountId?: string, marker?: string, limit?: string, ...} $args = [])
  * @method \Aws\Result purchaseProvisionedCapacity(array $args = [])
+ * @phpstan-method \Aws\Result purchaseProvisionedCapacity(array{accountId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise purchaseProvisionedCapacityAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise purchaseProvisionedCapacityAsync(array{accountId?: string, ...} $args = [])
  * @method \Aws\Result removeTagsFromVault(array $args = [])
+ * @phpstan-method \Aws\Result removeTagsFromVault(array{accountId?: string, vaultName?: string, TagKeys?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise removeTagsFromVaultAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise removeTagsFromVaultAsync(array{accountId?: string, vaultName?: string, TagKeys?: list<string>, ...} $args = [])
  * @method \Aws\Result setDataRetrievalPolicy(array $args = [])
+ * @phpstan-method \Aws\Result setDataRetrievalPolicy(array{accountId?: string, Policy?: array{Rules?: list<array>, ...}, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise setDataRetrievalPolicyAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise setDataRetrievalPolicyAsync(array{accountId?: string, Policy?: array{Rules?: list<array>, ...}, ...} $args = [])
  * @method \Aws\Result setVaultAccessPolicy(array $args = [])
+ * @phpstan-method \Aws\Result setVaultAccessPolicy(array{accountId?: string, vaultName?: string, policy?: array{Policy?: string, ...}, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise setVaultAccessPolicyAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise setVaultAccessPolicyAsync(array{accountId?: string, vaultName?: string, policy?: array{Policy?: string, ...}, ...} $args = [])
  * @method \Aws\Result setVaultNotifications(array $args = [])
+ * @phpstan-method \Aws\Result setVaultNotifications(array{
+ *     accountId?: string,
+ *     vaultName?: string,
+ *     vaultNotificationConfig?: array{SNSTopic?: string, Events?: list<string>, ...},
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise setVaultNotificationsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise setVaultNotificationsAsync(array{
+ *     accountId?: string,
+ *     vaultName?: string,
+ *     vaultNotificationConfig?: array{SNSTopic?: string, Events?: list<string>, ...},
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result uploadArchive(array $args = [])
+ * @phpstan-method \Aws\Result uploadArchive(array{
+ *     vaultName?: string,
+ *     accountId?: string,
+ *     archiveDescription?: string,
+ *     checksum?: string,
+ *     body?: string|resource|\Psr\Http\Message\StreamInterface,
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise uploadArchiveAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise uploadArchiveAsync(array{
+ *     vaultName?: string,
+ *     accountId?: string,
+ *     archiveDescription?: string,
+ *     checksum?: string,
+ *     body?: string|resource|\Psr\Http\Message\StreamInterface,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result uploadMultipartPart(array $args = [])
+ * @phpstan-method \Aws\Result uploadMultipartPart(array{
+ *     accountId?: string,
+ *     vaultName?: string,
+ *     uploadId?: string,
+ *     checksum?: string,
+ *     range?: string,
+ *     body?: string|resource|\Psr\Http\Message\StreamInterface,
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise uploadMultipartPartAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise uploadMultipartPartAsync(array{
+ *     accountId?: string,
+ *     vaultName?: string,
+ *     uploadId?: string,
+ *     checksum?: string,
+ *     range?: string,
+ *     body?: string|resource|\Psr\Http\Message\StreamInterface,
+ *     ...,
+ * } $args = [])
  */
 class GlacierClient extends AwsClient
 {
