@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.389.1 - 2026-07-27
 
 * `Aws\CleanRoomsML` - This release adds support for the CR.8X worker type for SQL (32 vCPU)
 * `Aws\PartnerCentralAccount` - Adds optional headquarters location to StartProfileUpdateTask, letting partners record their headquarters as an ISO 3166 country and subdivision code on their profile. When headquarters is provided, both the country and subdivision codes are required.
