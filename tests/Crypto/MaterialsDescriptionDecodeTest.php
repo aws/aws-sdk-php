@@ -50,18 +50,36 @@ class MaterialsDescriptionDecodeTest extends TestCase
             'mime 0x80'         => ['=?utf-8?B?gA==?='],
             'mime 0xff'         => ['=?utf-8?B?/w==?='],
             'mime abc+0xff'     => ['=?utf-8?B?YWJj/w==?='],
-            'raw invalid utf-8' => ["\x80"],
+            'raw trailing 0xff' => ["abc\xff"],
+        ];
+    }
+
+    public static function nonObjectMaterialDescriptions(): array
+    {
+        return [
+            'scalar json' => ['123'],
+        ];
+    }
+
+    public static function absentMaterialDescriptions(): array
+    {
+        return [
+            'absent header' => [null],
         ];
     }
 
     #[DataProvider('malformedMaterialDescriptions')]
-    public function testV2TraitRejectsMalformedMaterialDescription(string $matdesc): void
+    #[DataProvider('nonObjectMaterialDescriptions')]
+    #[DataProvider('absentMaterialDescriptions')]
+    public function testV2TraitRejectsMalformedMaterialDescription(?string $matdesc): void
     {
         $envelope = new MetadataEnvelope();
         $envelope[MetadataEnvelope::IV_HEADER] = base64_encode(str_repeat("\0", 12));
         $envelope[MetadataEnvelope::CRYPTO_TAG_LENGTH_HEADER] = '128';
         $envelope[MetadataEnvelope::CONTENT_KEY_V2_HEADER] = base64_encode(str_repeat("\0", 32));
-        $envelope[MetadataEnvelope::MATERIALS_DESCRIPTION_HEADER] = $matdesc;
+        if ($matdesc !== null) {
+            $envelope[MetadataEnvelope::MATERIALS_DESCRIPTION_HEADER] = $matdesc;
+        }
 
         $provider = new KmsMaterialsProviderV2($this->getTestClient('Kms'), self::KEY_ID);
 
@@ -73,6 +91,7 @@ class MaterialsDescriptionDecodeTest extends TestCase
     }
 
     #[DataProvider('malformedMaterialDescriptions')]
+    #[DataProvider('nonObjectMaterialDescriptions')]
     public function testV3TraitRejectsMalformedEncryptionContext(string $matdesc): void
     {
         $envelope = new MetadataEnvelope();
