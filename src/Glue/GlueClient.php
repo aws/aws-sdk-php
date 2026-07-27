@@ -25,6 +25,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise batchGetCustomEntityTypesAsync(array $args = [])
  * @method \Aws\Result batchGetDataQualityResult(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchGetDataQualityResultAsync(array $args = [])
+ * @method \Aws\Result batchGetDataQualityRulesetEvaluationRun(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchGetDataQualityRulesetEvaluationRunAsync(array $args = [])
  * @method \Aws\Result batchGetDevEndpoints(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchGetDevEndpointsAsync(array $args = [])
  * @method \Aws\Result batchGetIterableForms(array $args = [])

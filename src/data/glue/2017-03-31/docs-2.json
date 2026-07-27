@@ -12,6 +12,7 @@
     "BatchGetCrawlers": "<p>Returns a list of resource metadata for a given list of crawler names. After calling the <code>ListCrawlers</code> operation, you can call this operation to access the data to which you have been granted permissions. This operation supports all IAM permissions, including permission conditions that uses tags.</p>",
     "BatchGetCustomEntityTypes": "<p>Retrieves the details for the custom patterns specified by a list of names.</p>",
     "BatchGetDataQualityResult": "<p>Retrieves a list of data quality results for the specified result IDs.</p>",
+    "BatchGetDataQualityRulesetEvaluationRun": "<p>Retrieves the details of multiple evaluation runs in a single request.</p>",
     "BatchGetDevEndpoints": "<p>Returns a list of resource metadata for a given list of development endpoint names. After calling the <code>ListDevEndpoints</code> operation, you can call this operation to access the data to which you have been granted permissions. This operation supports all IAM permissions, including permission conditions that uses tags.</p>",
     "BatchGetIterableForms": "<p>Retrieves multiple items from an iterable form on an asset in Glue Data Catalog in a single request.</p>",
     "BatchGetJobs": "<p>Returns a list of resource metadata for a given list of job names. After calling the <code>ListJobs</code> operation, you can call this operation to access the data to which you have been granted permissions. This operation supports all IAM permissions, including permission conditions that uses tags. </p>",
@@ -909,6 +910,14 @@
       "base": null,
       "refs": {}
     },
+    "BatchGetDataQualityRulesetEvaluationRunRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchGetDataQualityRulesetEvaluationRunResponse": {
+      "base": null,
+      "refs": {}
+    },
     "BatchGetDevEndpointsRequest": {
       "base": null,
       "refs": {}
@@ -1096,6 +1105,12 @@
       "base": null,
       "refs": {
         "EventBatchingCondition$BatchWindow": "<p>Window of time in seconds after which EventBridge event trigger fires. Window starts when first event is received.</p>"
+      }
+    },
+    "BinEdges": {
+      "base": null,
+      "refs": {
+        "DistributionData$BinEdges": "<p>The bin edge values for the distribution.</p>"
       }
     },
     "BinaryColumnStatisticsData": {
@@ -1602,6 +1617,16 @@
       "base": "<p>Specifies a data store in the Glue Data Catalog.</p>",
       "refs": {
         "CodeGenConfigurationNode$CatalogSource": "<p>Specifies a data store in the Glue Data Catalog.</p>"
+      }
+    },
+    "CatalogTableConfigOptions": {
+      "base": "<p>The configuration for a Glue Data Catalog table used to store data quality results.</p>",
+      "refs": {
+        "DataQualityRuleResultsOptions$CatalogTableConfig": "<p>The Glue Data Catalog table configuration for storing the rule results.</p>",
+        "DistributionResultsOptions$CatalogTableConfig": "<p>The Glue Data Catalog table configuration for storing the distribution results.</p>",
+        "ObservationResultsOptions$CatalogTableConfig": "<p>The Glue Data Catalog table configuration for storing the observation results.</p>",
+        "ProfilingResultsOptions$CatalogTableConfig": "<p>The Glue Data Catalog table configuration for storing the profiling results.</p>",
+        "RowLevelResultsOptions$CatalogTableConfig": "<p>The Glue Data Catalog table configuration for storing the results.</p>"
       }
     },
     "CatalogTablesList": {
@@ -2368,6 +2393,12 @@
         "IntegrationConfig$ContinuousSync": "<p>Enables continuous synchronization for on-demand data extractions from SaaS applications to Amazon Web Services data services like Amazon Redshift and Amazon S3.</p>"
       }
     },
+    "Count": {
+      "base": null,
+      "refs": {
+        "DistributionData$Count": "<p>The frequency count for each bin in the distribution.</p>"
+      }
+    },
     "Crawl": {
       "base": "<p>The details of a crawl in the workflow.</p>",
       "refs": {
@@ -3116,6 +3147,7 @@
     "DataQualityEvaluationRunAdditionalRunOptions": {
       "base": "<p>Additional run options you can specify for an evaluation run.</p>",
       "refs": {
+        "DataQualityRulesetEvaluationRun$AdditionalRunOptions": null,
         "GetDataQualityRulesetEvaluationRunResponse$AdditionalRunOptions": "<p>Additional run options you can specify for an evaluation run.</p>",
         "StartDataQualityRulesetEvaluationRunRequest$AdditionalRunOptions": "<p>Additional run options you can specify for an evaluation run.</p>"
       }
@@ -3184,6 +3216,7 @@
     "DataQualityResultIdList": {
       "base": null,
       "refs": {
+        "DataQualityRulesetEvaluationRun$ResultIds": "<p>A list of result IDs for the data quality results for the run.</p>",
         "GetDataQualityRulesetEvaluationRunResponse$ResultIds": "<p>A list of result IDs for the data quality results for the run.</p>"
       }
     },
@@ -3198,6 +3231,13 @@
       "base": null,
       "refs": {
         "BatchGetDataQualityResultResponse$Results": "<p>A list of <code>DataQualityResult</code> objects representing the data quality results.</p>"
+      }
+    },
+    "DataQualityRuleRecommendationRunAdditionalRunOptions": {
+      "base": "<p>Additional run options you can specify for a recommendation run.</p>",
+      "refs": {
+        "GetDataQualityRuleRecommendationRunResponse$AdditionalRunOptions": "<p>Additional run options you can specify for a recommendation run.</p>",
+        "StartDataQualityRuleRecommendationRunRequest$AdditionalRunOptions": "<p>Additional run options you can specify for a recommendation run.</p>"
       }
     },
     "DataQualityRuleRecommendationRunDescription": {
@@ -3247,6 +3287,18 @@
         "GetDataQualityResultResponse$RuleResults": "<p>A list of <code>DataQualityRuleResult</code> objects representing the results for each rule. </p>"
       }
     },
+    "DataQualityRuleResultsOptions": {
+      "base": "<p>The configuration for writing data quality rule results.</p>",
+      "refs": {
+        "DataQualityEvaluationRunAdditionalRunOptions$DataQualityRuleResults": "<p>The configuration for writing rule results to a Glue Data Catalog table.</p>"
+      }
+    },
+    "DataQualityRulesetEvaluationRun": {
+      "base": "<p>The details of a data quality ruleset evaluation run.</p>",
+      "refs": {
+        "DataQualityRulesetEvaluationRunsList$member": null
+      }
+    },
     "DataQualityRulesetEvaluationRunDescription": {
       "base": "<p>Describes the result of a data quality ruleset evaluation run.</p>",
       "refs": {
@@ -3259,10 +3311,23 @@
         "ListDataQualityRulesetEvaluationRunsRequest$Filter": "<p>The filter criteria.</p>"
       }
     },
+    "DataQualityRulesetEvaluationRunIdList": {
+      "base": null,
+      "refs": {
+        "BatchGetDataQualityRulesetEvaluationRunRequest$RunIds": "<p>A list of unique run identifiers for the evaluation runs to retrieve.</p>",
+        "BatchGetDataQualityRulesetEvaluationRunResponse$RunsNotFound": "<p>A list of run IDs that were not found.</p>"
+      }
+    },
     "DataQualityRulesetEvaluationRunList": {
       "base": null,
       "refs": {
         "ListDataQualityRulesetEvaluationRunsResponse$Runs": "<p>A list of <code>DataQualityRulesetEvaluationRunDescription</code> objects representing data quality ruleset runs.</p>"
+      }
+    },
+    "DataQualityRulesetEvaluationRunsList": {
+      "base": null,
+      "refs": {
+        "BatchGetDataQualityRulesetEvaluationRunResponse$Runs": "<p>A list of evaluation run details for the requested run IDs.</p>"
       }
     },
     "DataQualityRulesetFilterCriteria": {
@@ -3310,6 +3375,7 @@
         "DataQualityResultFilterCriteria$DataSource": "<p>Filter results by the specified data source. For example, retrieving all results for an Glue table.</p>",
         "DataQualityRuleRecommendationRunDescription$DataSource": "<p>The data source (Glue table) associated with the recommendation run.</p>",
         "DataQualityRuleRecommendationRunFilter$DataSource": "<p>Filter based on a specified data source (Glue table).</p>",
+        "DataQualityRulesetEvaluationRun$DataSource": null,
         "DataQualityRulesetEvaluationRunDescription$DataSource": "<p>The data source (an Glue table) associated with the run.</p>",
         "DataQualityRulesetEvaluationRunFilter$DataSource": "<p>Filter based on a data source (an Glue table) associated with the run.</p>",
         "DataSourceMap$value": null,
@@ -3323,6 +3389,7 @@
     "DataSourceMap": {
       "base": null,
       "refs": {
+        "DataQualityRulesetEvaluationRun$AdditionalDataSources": "<p>A map of reference strings to additional data sources you can specify for an evaluation run.</p>",
         "GetDataQualityRulesetEvaluationRunResponse$AdditionalDataSources": "<p>A map of reference strings to additional data sources you can specify for an evaluation run.</p>",
         "StartDataQualityRulesetEvaluationRunRequest$AdditionalDataSources": "<p>A map of reference strings to additional data sources you can specify for an evaluation run.</p>"
       }
@@ -3967,6 +4034,19 @@
         "ConnectionTypeVariant$DisplayName": "<p>The human-readable name for the connection type variant that is displayed in the Glue console.</p>"
       }
     },
+    "DistributionData": {
+      "base": "<p>The distribution data for a statistic.</p>",
+      "refs": {
+        "EvaluatedDistributionsMap$value": null,
+        "StatisticSummary$DistributionValue": "<p>The distribution value for the statistic.</p>"
+      }
+    },
+    "DistributionResultsOptions": {
+      "base": "<p>The configuration for writing distribution results.</p>",
+      "refs": {
+        "ProfilingResultsOptions$DistributionResults": "<p>The configuration for writing distribution results.</p>"
+      }
+    },
     "Double": {
       "base": null,
       "refs": {
@@ -4428,6 +4508,12 @@
         "CodeGenConfigurationNode$EvaluateDataQualityMultiFrame": "<p>Specifies your data quality evaluation criteria. Allows multiple input data and returns a collection of Dynamic Frames.</p>"
       }
     },
+    "EvaluatedDistributionsMap": {
+      "base": null,
+      "refs": {
+        "DataQualityAnalyzerResult$EvaluatedDistributions": "<p>A map of distribution metrics associated with the evaluation of the analyzer.</p>"
+      }
+    },
     "EvaluatedMetricsMap": {
       "base": null,
       "refs": {
@@ -4492,6 +4578,7 @@
     "ExecutionTime": {
       "base": null,
       "refs": {
+        "DataQualityRulesetEvaluationRun$ExecutionTime": "<p>The amount of time (in seconds) that the run consumed resources.</p>",
         "GetDataQualityRuleRecommendationRunResponse$ExecutionTime": "<p>The amount of time (in seconds) that the run consumed resources.</p>",
         "GetDataQualityRulesetEvaluationRunResponse$ExecutionTime": "<p>The amount of time (in seconds) that the run consumed resources.</p>",
         "GetMLTaskRunResponse$ExecutionTime": "<p>The amount of time (in seconds) that the task run consumed resources.</p>",
@@ -4884,6 +4971,7 @@
         "AmazonRedshiftNodeData$MergeClause": "<p>The SQL used in a custom merge to deal with matching records.</p>",
         "AmazonRedshiftNodeData$CrawlerConnection": "<p>Specifies the name of the connection that is associated with the catalog table used.</p>",
         "AmazonRedshiftNodeData$StagingTable": "<p>The name of the temporary staging table that is used when doing a MERGE or APPEND with upsert.</p>",
+        "BinEdges$member": null,
         "Blueprint$BlueprintLocation": "<p>Specifies the path in Amazon S3 where the blueprint is published.</p>",
         "Blueprint$BlueprintServiceLocation": "<p>Specifies a path in Amazon S3 where the blueprint is copied when you call <code>CreateBlueprint/UpdateBlueprint</code> to register the blueprint in Glue.</p>",
         "ConnectorOptions$key": null,
@@ -4907,6 +4995,8 @@
         "DQAdditionalOptions$value": null,
         "DataQualityEvaluationRunAdditionalRunOptions$CustomLogGroupPrefix": "<p>A custom prefix for the CloudWatch log group names. When specified, evaluation run logs are written to <code>&lt;CustomLogGroupPrefix&gt;/error</code> and <code>&lt;CustomLogGroupPrefix&gt;/output</code> instead of the default <code>/aws-glue/data-quality/error</code> and <code>/aws-glue/data-quality/output</code> log groups.</p>",
         "DataQualityResult$EvaluationContext": "<p>In the context of a job in Glue Studio, each node in the canvas is typically assigned some sort of name and data quality nodes will have names. In the case of multiple nodes, the <code>evaluationContext</code> can differentiate the nodes.</p>",
+        "DataQualityRuleRecommendationRunAdditionalRunOptions$CustomLogGroupPrefix": "<p>A custom prefix for the CloudWatch log group names. When specified, recommendation run logs are written to <code>&lt;CustomLogGroupPrefix&gt;/error</code> and <code>&lt;CustomLogGroupPrefix&gt;/output</code> instead of the default <code>/aws-glue/data-quality/error</code> and <code>/aws-glue/data-quality/output</code> log groups.</p>",
+        "DataQualityRulesetEvaluationRun$ErrorString": "<p>The error strings that are associated with the run.</p>",
         "DeleteDevEndpointRequest$EndpointName": "<p>The name of the <code>DevEndpoint</code>.</p>",
         "DevEndpoint$EndpointName": "<p>The name of the <code>DevEndpoint</code>.</p>",
         "DevEndpoint$SubnetId": "<p>The subnet ID for this <code>DevEndpoint</code>.</p>",
@@ -6063,7 +6153,9 @@
         "DataQualityResultIdList$member": null,
         "DataQualityResultIds$member": null,
         "DataQualityRuleRecommendationRunDescription$RunId": "<p>The unique run identifier associated with this run.</p>",
+        "DataQualityRulesetEvaluationRun$RunId": "<p>The unique run identifier associated with this run.</p>",
         "DataQualityRulesetEvaluationRunDescription$RunId": "<p>The unique run identifier associated with this run.</p>",
+        "DataQualityRulesetEvaluationRunIdList$member": null,
         "DataQualityRulesetListDetails$RecommendationRunId": "<p>When a ruleset was created from a recommendation run, this run ID is generated to link the two together.</p>",
         "DatapointInclusionAnnotation$ProfileId": "<p>The ID of the data quality profile the statistic belongs to.</p>",
         "DatapointInclusionAnnotation$StatisticId": "<p>The Statistic ID.</p>",
@@ -8011,6 +8103,9 @@
         "CatalogEntry$DatabaseName": "<p>The database in which the table metadata resides.</p>",
         "CatalogEntry$TableName": "<p>The name of the table in question.</p>",
         "CatalogImportStatus$ImportedBy": "<p>The name of the person who initiated the migration.</p>",
+        "CatalogTableConfigOptions$DatabaseName": "<p>The name of the database in the Glue Data Catalog.</p>",
+        "CatalogTableConfigOptions$TableName": "<p>The name of the table in the Glue Data Catalog.</p>",
+        "CatalogTableConfigOptions$CatalogId": "<p>A unique identifier for the Glue Data Catalog.</p>",
         "CatalogTablesList$member": null,
         "CatalogTarget$DatabaseName": "<p>The name of the database to be synchronized.</p>",
         "ClassifierNameList$member": null,
@@ -8097,6 +8192,7 @@
         "DataQualityResult$JobName": "<p>The job name associated with the data quality result, if any.</p>",
         "DataQualityResultDescription$JobName": "<p>The job name associated with the data quality result.</p>",
         "DataQualityResultFilterCriteria$JobName": "<p>Filter results by the specified job name.</p>",
+        "DataQualityRuleRecommendationRunDescription$CreatedRulesetName": "<p>The name of the ruleset that was created by the recommendation run.</p>",
         "DataQualityRuleResult$Name": "<p>The name of the data quality rule.</p>",
         "DataQualityRulesetEvaluationRunFilter$RulesetName": "<p>Filter results by the name of the ruleset.</p>",
         "DataQualityRulesetFilterCriteria$Name": "<p>The name of the ruleset filter criteria.</p>",
@@ -8156,11 +8252,13 @@
         "DescribeEntityRequest$ConnectionName": "<p>The name of the connection that contains the connection type credentials.</p>",
         "DevEndpoint$SecurityConfiguration": "<p>The name of the <code>SecurityConfiguration</code> structure to be used with this <code>DevEndpoint</code>.</p>",
         "DevEndpointNameList$member": null,
+        "DistributionData$DataType": "<p>The data type of the column for the distribution.</p>",
         "Edge$SourceId": "<p>The unique of the node within the workflow where the edge starts.</p>",
         "Edge$DestinationId": "<p>The unique of the node within the workflow where the edge ends.</p>",
         "EncryptionAtRest$SseAwsKmsKeyId": "<p>The ID of the KMS key to use for encryption at rest.</p>",
         "ErrorByName$key": null,
         "ErrorDetail$ErrorCode": "<p>The code associated with this error.</p>",
+        "EvaluatedDistributionsMap$key": null,
         "EvaluatedMetricsMap$key": null,
         "FederatedCatalog$ConnectionName": "<p>The name of the connection to an external data source, for example a Redshift-federated catalog.</p>",
         "FederatedCatalog$ConnectionType": "<p>The type of connection used to access the federated catalog, specifying the protocol or method for connection to the external data source.</p>",
@@ -8676,8 +8774,10 @@
         "CsvClassifier$AllowSingleColumn": "<p>Enables the processing of files that contain only one column.</p>",
         "CsvClassifier$CustomDatatypeConfigured": "<p>Enables the custom datatype to be configured.</p>",
         "DataQualityEvaluationRunAdditionalRunOptions$CloudWatchMetricsEnabled": "<p>Whether or not to enable CloudWatch metrics.</p>",
+        "DataQualityRuleResultsOptions$WriteDataQualityRuleResultsEnabled": "<p>Set to true to write data quality rule results.</p>",
         "DeltaTarget$WriteManifest": "<p>Specifies whether to write the manifest files to the Delta table path.</p>",
         "DeltaTarget$CreateNativeDeltaTable": "<p>Specifies whether the crawler will create native tables, to allow integration with query engines that support querying of the Delta transaction log directly.</p>",
+        "DistributionResultsOptions$WriteDistributionResultsEnabled": "<p>Set to true to write distribution results.</p>",
         "DynamoDBTarget$scanAll": "<p>Indicates whether to scan all the records, or to sample rows from the table. Scanning all the records can take a long time when the table is not a high throughput table.</p> <p>A value of <code>true</code> means to scan all records, while a value of <code>false</code> means to sample the records. If no value is specified, the value defaults to <code>true</code>.</p>",
         "EntityNotFoundException$FromFederationSource": "<p>Indicates whether or not the exception relates to a federated source.</p>",
         "FindMatchesParameters$EnforceProvidedLabels": "<p>The value to switch on or off to force the output to match the provided labels from users. If the value is <code>True</code>, the <code>find matches</code> transform forces the output to match the provided labels. The results override the normal conflation results. If the value is <code>False</code>, the <code>find matches</code> transform does not ensure all the labels provided are respected, and the results rely on the trained model.</p> <p>Note that setting this value to true may increase the conflation execution time.</p>",
@@ -8696,6 +8796,8 @@
         "JobUpdate$JobRunQueuingEnabled": "<p>Specifies whether job run queuing is enabled for the job runs for this job.</p> <p>A value of true means job run queuing is enabled for the job runs. If false or not populated, the job runs will not be considered for queueing.</p> <p>If this field does not match the value set in the job run, then the value from the job run field will be used.</p>",
         "LakeFormationConfiguration$UseLakeFormationCredentials": "<p>Specifies whether to use Lake Formation credentials for the crawler instead of the IAM role credentials.</p>",
         "MongoDBTarget$ScanAll": "<p>Indicates whether to scan all the records, or to sample rows from the table. Scanning all the records can take a long time when the table is not a high throughput table.</p> <p>A value of <code>true</code> means to scan all records, while a value of <code>false</code> means to sample the records. If no value is specified, the value defaults to <code>true</code>.</p>",
+        "ObservationResultsOptions$WriteObservationResultsEnabled": "<p>Set to true to write observation results.</p>",
+        "ProfilingResultsOptions$WriteProfilingResultsEnabled": "<p>Set to true to write profiling results.</p>",
         "StartJobRunRequest$JobRunQueuingEnabled": "<p>Specifies whether job run queuing is enabled for the job run.</p> <p>A value of true means job run queuing is enabled for the job run. If false or not populated, the job run will not be considered for queueing.</p>",
         "StartMaterializedViewRefreshTaskRunRequest$FullRefresh": "<p>Specifies whether this is a full refresh of the task run.</p>",
         "Table$IsMultiDialectView": "<p>Specifies whether the view supports the SQL dialects of one or more different query engines and can therefore be read by those engines.</p>",
@@ -8749,6 +8851,7 @@
     "NullableInteger": {
       "base": null,
       "refs": {
+        "Count$member": null,
         "CreateDevEndpointRequest$NumberOfWorkers": "<p>The number of workers of a defined <code>workerType</code> that are allocated to the development endpoint.</p> <p>The maximum number of workers you can define are 299 for <code>G.1X</code>, and 149 for <code>G.2X</code>. </p>",
         "CreateDevEndpointResponse$NumberOfWorkers": "<p>The number of workers of a defined <code>workerType</code> that are allocated to the development endpoint.</p>",
         "CreateJobRequest$NumberOfWorkers": "<p>The number of workers of a defined <code>workerType</code> that are allocated when a job runs.</p>",
@@ -8756,6 +8859,7 @@
         "CreateMLTransformRequest$MaxRetries": "<p>The maximum number of times to retry a task for this transform after a task run fails.</p>",
         "CreateSessionRequest$NumberOfWorkers": "<p>The number of workers of a defined <code>WorkerType</code> to use for the session. </p>",
         "CreateWorkflowRequest$MaxConcurrentRuns": "<p>You can use this parameter to prevent unwanted multiple updates to data, to control costs, or in some cases, to prevent exceeding the maximum number of concurrent runs of any of the component jobs. If you leave this parameter blank, there is no limit to the number of concurrent workflow runs.</p>",
+        "DataQualityRulesetEvaluationRun$NumberOfWorkers": "<p>The number of <code>G.1X</code> workers to be used in the run. The default is 5.</p>",
         "DataQualityRulesetListDetails$RuleCount": "<p>The number of rules in the ruleset.</p>",
         "DevEndpoint$NumberOfWorkers": "<p>The number of workers of a defined <code>workerType</code> that are allocated to the development endpoint.</p> <p>The maximum number of workers you can define are 299 for <code>G.1X</code>, and 149 for <code>G.2X</code>. </p>",
         "GetDataQualityRuleRecommendationRunResponse$NumberOfWorkers": "<p>The number of <code>G.1X</code> workers to be used in the run. The default is 5.</p>",
@@ -8776,6 +8880,7 @@
         "JobUpdate$NumberOfWorkers": "<p>The number of workers of a defined <code>workerType</code> that are allocated when a job runs.</p>",
         "MLTransform$NumberOfWorkers": "<p>The number of workers of a defined <code>workerType</code> that are allocated when a task of the transform runs.</p> <p>If <code>WorkerType</code> is set, then <code>NumberOfWorkers</code> is required (and vice versa).</p>",
         "MLTransform$MaxRetries": "<p>The maximum number of times to retry after an <code>MLTaskRun</code> of the machine learning transform fails.</p>",
+        "RowLevelResultsOptions$MaxRowsToWrite": "<p>The maximum number of rows to write in the results.</p>",
         "S3Target$SampleSize": "<p>Sets the number of files in each leaf folder to be crawled when crawling sample files in a dataset. If not set, all the files are crawled. A valid value is an integer between 1 and 249.</p>",
         "Session$NumberOfWorkers": "<p>The number of workers of a defined <code>WorkerType</code> to use for the session.</p>",
         "StartDataQualityRuleRecommendationRunRequest$NumberOfWorkers": "<p>The number of <code>G.1X</code> workers to be used in the run. The default is 5.</p>",
@@ -8837,6 +8942,24 @@
       "base": "<p>A structure containing properties for OAuth2 in the CreateConnection request.</p>",
       "refs": {
         "AuthenticationConfigurationInput$OAuth2Properties": "<p>The properties for OAuth2 authentication in the CreateConnection request.</p>"
+      }
+    },
+    "ObservationConfiguration": {
+      "base": null,
+      "refs": {
+        "DataQualityEvaluationRunAdditionalRunOptions$ObservationScope": "<p>The scope of the observation for the evaluation run. Specifies whether anomaly detection is enabled or disabled.</p>"
+      }
+    },
+    "ObservationMode": {
+      "base": null,
+      "refs": {
+        "DataQualityEvaluationRunAdditionalRunOptions$ObservationMode": "<p>The observation mode for the evaluation run. Specifies how anomaly detection bounds are calculated.</p>"
+      }
+    },
+    "ObservationResultsOptions": {
+      "base": "<p>The configuration for writing observation results.</p>",
+      "refs": {
+        "DataQualityEvaluationRunAdditionalRunOptions$ObservationResults": "<p>The configuration for writing observation results to a Glue Data Catalog table.</p>"
       }
     },
     "OffsetConfiguration": {
@@ -9532,6 +9655,12 @@
         "UpdateUsageProfileRequest$Configuration": "<p>A <code>ProfileConfiguration</code> object specifying the job and session values for the profile.</p>"
       }
     },
+    "ProfilingResultsOptions": {
+      "base": "<p>The configuration for writing profiling results.</p>",
+      "refs": {
+        "DataQualityEvaluationRunAdditionalRunOptions$ProfilingResults": "<p>The configuration for writing profiling results to a Glue Data Catalog table.</p>"
+      }
+    },
     "PropertiesMap": {
       "base": null,
       "refs": {
@@ -10021,6 +10150,12 @@
         "RegisterConnectionTypeRequest$RestConfiguration": "<p>Defines the HTTP request and response configuration, validation endpoint, and entity configurations for REST API interactions.</p>"
       }
     },
+    "ResultTypeEnum": {
+      "base": null,
+      "refs": {
+        "RowLevelResultsOptions$ResultType": "<p>The result type to include in the row-level results output.</p>"
+      }
+    },
     "ResumeWorkflowRunRequest": {
       "base": null,
       "refs": {}
@@ -10065,6 +10200,7 @@
       "refs": {
         "CreateJobRequest$Role": "<p>The name or Amazon Resource Name (ARN) of the IAM role associated with this job.</p>",
         "CreateMLTransformRequest$Role": "<p>The name or Amazon Resource Name (ARN) of the IAM role with the required permissions. The required permissions include both Glue service role permissions to Glue resources, and Amazon S3 permissions required by the transform. </p> <ul> <li> <p>This role needs Glue service role permissions to allow access to resources in Glue. See <a href=\"https://docs.aws.amazon.com/glue/latest/dg/attach-policy-iam-user.html\">Attach a Policy to IAM Users That Access Glue</a>.</p> </li> <li> <p>This role needs permission to your Amazon Simple Storage Service (Amazon S3) sources, targets, temporary directory, scripts, and any libraries used by the task run for this transform.</p> </li> </ul>",
+        "DataQualityRulesetEvaluationRun$Role": "<p>An IAM role supplied to encrypt the results of the run.</p>",
         "GetDataQualityRuleRecommendationRunResponse$Role": "<p>An IAM role supplied to encrypt the results of the run.</p>",
         "GetDataQualityRulesetEvaluationRunResponse$Role": "<p>An IAM role supplied to encrypt the results of the run.</p>",
         "GetMLTransformResponse$Role": "<p>The name or Amazon Resource Name (ARN) of the IAM role with the required permissions.</p>",
@@ -10080,6 +10216,12 @@
       "base": "<p>Specifies a route node that directs data to different output paths based on defined filtering conditions.</p>",
       "refs": {
         "CodeGenConfigurationNode$Route": "<p>Specifies a route node that directs data to different output paths based on defined filtering conditions.</p>"
+      }
+    },
+    "RowLevelResultsOptions": {
+      "base": "<p>The configuration for writing row-level evaluation results.</p>",
+      "refs": {
+        "DataQualityEvaluationRunAdditionalRunOptions$RowLevelResults": "<p>The configuration for writing row-level evaluation results to a Glue Data Catalog table.</p>"
       }
     },
     "RowTag": {
@@ -10099,6 +10241,7 @@
     "RulesetNames": {
       "base": null,
       "refs": {
+        "DataQualityRulesetEvaluationRun$RulesetNames": "<p>A list of ruleset names for the run.</p>",
         "GetDataQualityRulesetEvaluationRunResponse$RulesetNames": "<p>A list of ruleset names for the run. Currently, this parameter takes only one Ruleset name.</p>",
         "StartDataQualityRulesetEvaluationRunRequest$RulesetNames": "<p>A list of ruleset names.</p>"
       }
@@ -11694,6 +11837,7 @@
         "ListBlueprintsRequest$Tags": "<p>Filters the list by an Amazon Web Services resource tag.</p>",
         "ListCrawlersRequest$Tags": "<p>Specifies to return only these tagged resources.</p>",
         "ListCustomEntityTypesRequest$Tags": "<p>A list of key-value pair tags.</p>",
+        "ListDataQualityRuleRecommendationRunsRequest$Tags": "<p>A list of key-value pair tags to filter recommendation runs.</p>",
         "ListDataQualityRulesetsRequest$Tags": "<p>A list of key-value pair tags.</p>",
         "ListDevEndpointsRequest$Tags": "<p>Specifies to return only these tagged resources.</p>",
         "ListJobsRequest$Tags": "<p>Specifies to return only these tagged resources.</p>",
@@ -11792,6 +11936,7 @@
       "refs": {
         "CancelMLTaskRunResponse$Status": "<p>The status for this run.</p>",
         "DataQualityRuleRecommendationRunDescription$Status": "<p>The status for this run.</p>",
+        "DataQualityRulesetEvaluationRun$Status": "<p>The status for this run.</p>",
         "DataQualityRulesetEvaluationRunDescription$Status": "<p>The status for this run.</p>",
         "GetDataQualityRuleRecommendationRunResponse$Status": "<p>The status for this run.</p>",
         "GetDataQualityRulesetEvaluationRunResponse$Status": "<p>The status for this run.</p>",
@@ -11833,6 +11978,7 @@
         "CreateMLTransformRequest$Timeout": "<p>The timeout of the task run for this transform in minutes. This is the maximum time that a task run for this transform can consume resources before it is terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours).</p>",
         "CreateSessionRequest$Timeout": "<p> The number of minutes before session times out. Default for Spark ETL jobs is 48 hours (2880 minutes). Consult the documentation for other job types. </p>",
         "CreateSessionRequest$IdleTimeout": "<p> The number of minutes when idle before session times out. Default for Spark ETL jobs is value of Timeout. Consult the documentation for other job types. </p>",
+        "DataQualityRulesetEvaluationRun$Timeout": "<p>The timeout for a run in minutes. This is the maximum time that a run can consume resources before it is terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours).</p>",
         "GetDataQualityRuleRecommendationRunResponse$Timeout": "<p>The timeout for a run in minutes. This is the maximum time that a run can consume resources before it is terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours).</p>",
         "GetDataQualityRulesetEvaluationRunResponse$Timeout": "<p>The timeout for a run in minutes. This is the maximum time that a run can consume resources before it is terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours).</p>",
         "GetMLTransformResponse$Timeout": "<p>The timeout for a task run for this transform in minutes. This is the maximum time that a task run for this transform can consume resources before it is terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours).</p>",
@@ -11874,6 +12020,9 @@
         "DataQualityRuleRecommendationRunDescription$StartedOn": "<p>The date and time when this run started.</p>",
         "DataQualityRuleRecommendationRunFilter$StartedBefore": "<p>Filter based on time for results started before provided time.</p>",
         "DataQualityRuleRecommendationRunFilter$StartedAfter": "<p>Filter based on time for results started after provided time.</p>",
+        "DataQualityRulesetEvaluationRun$StartedOn": "<p>The date and time when this run started.</p>",
+        "DataQualityRulesetEvaluationRun$LastModifiedOn": "<p>A timestamp. The last point in time when this run was modified.</p>",
+        "DataQualityRulesetEvaluationRun$CompletedOn": "<p>The date and time when this run was completed.</p>",
         "DataQualityRulesetEvaluationRunDescription$StartedOn": "<p>The date and time when the run started.</p>",
         "DataQualityRulesetEvaluationRunFilter$StartedBefore": "<p>Filter results by runs that started before this time.</p>",
         "DataQualityRulesetEvaluationRunFilter$StartedAfter": "<p>Filter results by runs that started after this time.</p>",
@@ -12647,6 +12796,7 @@
     "UriString": {
       "base": null,
       "refs": {
+        "CatalogTableConfigOptions$S3Location": "<p>The Amazon S3 location for storing the results.</p>",
         "CreateJobRequest$LogUri": "<p>This field is reserved for future use.</p>",
         "DataQualityEvaluationRunAdditionalRunOptions$ResultsS3Prefix": "<p>Prefix for Amazon S3 to store results.</p>",
         "ExportLabelsTaskRunProperties$OutputS3Path": "<p>The Amazon Simple Storage Service (Amazon S3) path where you will export the labels.</p>",

@@ -407,6 +407,46 @@
     "UpdateWorkteam": "<p>Updates an existing work team with new member definitions or description.</p>"
   },
   "shapes": {
+    "AIAdapterId": {
+      "base": "<p>A unique identifier for a LoRA adapter within a recommendation job request. The ID must start and end with an alphanumeric character, can contain hyphens between alphanumeric characters, and can be up to 63 characters long. This ID is used as the inference component name when the adapter is deployed.</p>",
+      "refs": {
+        "AIAdapterModelPackageEntry$AdapterId": "<p>A unique identifier for the adapter. This ID is used as the inference component name when the adapter is deployed. The ID must start and end with an alphanumeric character, can contain hyphens between alphanumeric characters, and can be up to 63 characters long.</p>",
+        "AIAdapterS3Entry$AdapterId": "<p>A unique identifier for the adapter. This ID is used as the inference component name when the adapter is deployed. The ID must start and end with an alphanumeric character, can contain hyphens between alphanumeric characters, and can be up to 63 characters long.</p>"
+      }
+    },
+    "AIAdapterModelPackageEntry": {
+      "base": "<p>A LoRA adapter entry identified by a model package ARN.</p>",
+      "refs": {
+        "AIAdapterModelPackageEntryList$member": null
+      }
+    },
+    "AIAdapterModelPackageEntryList": {
+      "base": null,
+      "refs": {
+        "AIAdapterSource$ModelPackageArns": "<p>A list of LoRA adapters identified by their model package ARNs. Use this when your adapters were produced by a SageMaker AI fine-tuning workflow that registers model packages.</p>",
+        "AIRecommendationAdapterDetails$ModelPackageArns": "<p>The list of LoRA adapters with their model package ARNs.</p>"
+      }
+    },
+    "AIAdapterS3Entry": {
+      "base": "<p>A LoRA adapter entry identified by an Amazon S3 URI.</p>",
+      "refs": {
+        "AIAdapterS3EntryList$member": null
+      }
+    },
+    "AIAdapterS3EntryList": {
+      "base": null,
+      "refs": {
+        "AIAdapterSource$S3Uris": "<p>A list of LoRA adapters identified by their Amazon S3 URIs. Use this when your adapters are stored as raw artifacts in Amazon S3.</p>",
+        "AIRecommendationAdapterDetails$S3Uris": "<p>The list of LoRA adapters with their Amazon S3 URIs.</p>"
+      }
+    },
+    "AIAdapterSource": {
+      "base": "<p>The source of LoRA adapters for an AI recommendation job. This is a union type — specify exactly one of the members.</p>",
+      "refs": {
+        "CreateAIRecommendationJobRequest$AdapterSource": "<p>The LoRA adapter source for the recommendation job. Specify either a list of model package ARNs or Amazon S3 URIs for your LoRA adapters. When this parameter is absent, the recommendation job runs without LoRA adapter support.</p>",
+        "DescribeAIRecommendationJobResponse$AdapterSource": "<p>The LoRA adapter source that was specified when the recommendation job was created. This field is absent when the job was created without LoRA adapters.</p>"
+      }
+    },
     "AIBenchmarkEndpoint": {
       "base": "<p>The SageMaker endpoint configuration for benchmarking.</p>",
       "refs": {
@@ -607,6 +647,12 @@
         "AIRecommendationList$member": null
       }
     },
+    "AIRecommendationAdapterDetails": {
+      "base": "<p>The per-recommendation LoRA adapter details. Contains both the model package ARNs and Amazon S3 URIs for each adapter, regardless of which form was originally supplied in the request. When the customer supplies only Amazon S3 URIs, Amazon SageMaker AI creates model packages on their behalf.</p>",
+      "refs": {
+        "AIRecommendation$AdapterDetails": "<p>The LoRA adapter details for this recommendation. This field contains both the model package ARNs and Amazon S3 URIs for each adapter, regardless of which form was originally supplied. This field is absent when the job was created without LoRA adapters.</p>"
+      }
+    },
     "AIRecommendationAllowOptimization": {
       "base": null,
       "refs": {
@@ -744,6 +790,12 @@
       "base": null,
       "refs": {
         "AIRecommendationConstraint$Metric": "<p>The performance metric. Valid values are <code>ttft-ms</code> (time to first token in milliseconds), <code>throughput</code>, and <code>cost</code>.</p>"
+      }
+    },
+    "AIRecommendationMinCpuMemoryRequiredInMb": {
+      "base": null,
+      "refs": {
+        "AIRecommendationDeploymentConfiguration$MinCpuMemoryRequiredInMb": "<p>The minimum host (CPU) memory, in MiB, to reserve per model copy when deploying the recommendation as an Inference Component. This value maps to the base Inference Component's <code>ComputeResourceRequirements$MinMemoryRequiredInMb</code> and is sized so that <code>CopyCountPerInstance</code> copies co-place within the instance's allocatable host memory.</p>"
       }
     },
     "AIRecommendationModelDetails": {
@@ -12995,6 +13047,7 @@
     "ModelPackageArn": {
       "base": null,
       "refs": {
+        "AIAdapterModelPackageEntry$ModelPackageArn": "<p>The Amazon Resource Name (ARN) of the model package that contains the LoRA adapter artifacts.</p>",
         "AIRecommendationModelDetails$ModelPackageArn": "<p>The Amazon Resource Name (ARN) of the model package.</p>",
         "BatchDescribeModelPackageErrorMap$key": null,
         "BatchDescribeModelPackageSummary$ModelPackageArn": "<p>The Amazon Resource Name (ARN) of the model package.</p>",
@@ -14598,6 +14651,13 @@
       "base": "<p>Summarizes an optimization job by providing some of its key properties.</p>",
       "refs": {
         "OptimizationJobSummaries$member": null
+      }
+    },
+    "OptimizationJobTrainingPlanArns": {
+      "base": "<p>Amazon Resource Names (ARNs) of the training plans whose reserved capacity backs the optimization job. Bounded to a single plan for now; the list shape allows widening to multiple plans in the future without a breaking scalar-to-list change.</p>",
+      "refs": {
+        "CreateOptimizationJobRequest$TrainingPlanArns": "<p>The Amazon Resource Name (ARN) of the training plan to use for this optimization job.</p> <p>When you use reserved capacity from a training plan, the optimization job runs on that reserved capacity instead of on-demand capacity. If you omit this field, the job uses on-demand capacity. Currently, you can specify at most one training plan.</p> <p>For more information about how to reserve GPU capacity for your optimization jobs using Amazon SageMaker Training Plans, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/reserve-capacity-with-training-plans.html\">Reserve capacity with training plans</a>.</p>",
+        "DescribeOptimizationJobResponse$TrainingPlanArns": "<p>The Amazon Resource Name (ARN) of the training plan associated with this optimization job. This field appears only when you specified a training plan when you created the job. Optimization jobs that use on-demand capacity don't return this field.</p>"
       }
     },
     "OptimizationModelAcceptEula": {
@@ -16988,6 +17048,7 @@
     "S3Uri": {
       "base": null,
       "refs": {
+        "AIAdapterS3Entry$S3Uri": "<p>The Amazon S3 URI of the directory that contains the LoRA adapter artifacts in PEFT format.</p>",
         "AIBenchmarkOutputConfig$S3OutputLocation": "<p>The Amazon S3 URI where benchmark results are stored.</p>",
         "AIBenchmarkOutputResult$S3OutputLocation": "<p>The Amazon S3 URI where benchmark results are stored.</p>",
         "AIModelSourceS3$S3Uri": "<p>The Amazon S3 URI of the model artifacts.</p>",
@@ -19827,6 +19888,7 @@
         "DescribeTrainingPlanResponse$TrainingPlanArn": "<p>The Amazon Resource Name (ARN); of the training plan.</p>",
         "ListClustersRequest$TrainingPlanArn": "<p>The Amazon Resource Name (ARN); of the training plan to filter clusters by. For more information about reserving GPU capacity for your SageMaker HyperPod clusters using Amazon SageMaker Training Plan, see <code> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateTrainingPlan.html\">CreateTrainingPlan</a> </code>.</p>",
         "ListTrainingJobsRequest$TrainingPlanArnEquals": "<p>The Amazon Resource Name (ARN); of the training plan to filter training jobs by. For more information about reserving GPU capacity for your SageMaker training jobs using Amazon SageMaker Training Plan, see <code> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateTrainingPlan.html\">CreateTrainingPlan</a> </code>.</p>",
+        "OptimizationJobTrainingPlanArns$member": null,
         "ResourceConfig$TrainingPlanArn": "<p>The Amazon Resource Name (ARN); of the training plan to use for this resource configuration.</p>",
         "TrainingJobSummary$TrainingPlanArn": "<p>The Amazon Resource Name (ARN); of the training plan associated with this training job.</p> <p>For more information about how to reserve GPU capacity for your SageMaker HyperPod clusters using Amazon SageMaker Training Plan, see <code> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateTrainingPlan.html\">CreateTrainingPlan</a> </code>.</p>",
         "TrainingPlanArns$member": null,

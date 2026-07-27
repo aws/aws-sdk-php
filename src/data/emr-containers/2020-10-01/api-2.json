@@ -340,6 +340,21 @@
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"}
       ]
+    },
+    "UpdateVirtualCluster":{
+      "name":"UpdateVirtualCluster",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/virtualclusters/{virtualClusterId}"
+      },
+      "input":{"shape":"UpdateVirtualClusterRequest"},
+      "output":{"shape":"UpdateVirtualClusterResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
     }
   },
   "shapes":{
@@ -600,7 +615,8 @@
         },
         "tags":{"shape":"TagMap"},
         "securityConfigurationId":{"shape":"ResourceIdString"},
-        "sessionEnabled":{"shape":"Boolean"}
+        "sessionEnabled":{"shape":"Boolean"},
+        "schedulerConfiguration":{"shape":"SchedulerConfiguration"}
       }
     },
     "CreateVirtualClusterResponse":{
@@ -987,6 +1003,12 @@
       "min":10,
       "pattern":"^arn:(aws[a-zA-Z0-9-]*):sso:::instance/ssoins-[0-9a-zA-Z/\\\\-_]+"
     },
+    "InQueueJobLimitInteger":{
+      "type":"integer",
+      "box":true,
+      "max":10000,
+      "min":100
+    },
     "InTransitEncryptionConfiguration":{
       "type":"structure",
       "members":{
@@ -1014,6 +1036,12 @@
         "sparkSubmitJobDriver":{"shape":"SparkSubmitJobDriver"},
         "sparkSqlJobDriver":{"shape":"SparkSqlJobDriver"}
       }
+    },
+    "JobLimitInteger":{
+      "type":"integer",
+      "box":true,
+      "max":10000,
+      "min":1
     },
     "JobRun":{
       "type":"structure",
@@ -1395,6 +1423,10 @@
       "min":1,
       "pattern":"^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
     },
+    "NonNegativeInteger":{
+      "type":"integer",
+      "min":0
+    },
     "ParametricCloudWatchMonitoringConfiguration":{
       "type":"structure",
       "members":{
@@ -1514,6 +1546,26 @@
       "members":{
         "logUri":{"shape":"UriString"},
         "encryptionKeyArn":{"shape":"KmsKeyArn"}
+      }
+    },
+    "SchedulerConfiguration":{
+      "type":"structure",
+      "members":{
+        "maxInQueueJobRuns":{
+          "shape":"InQueueJobLimitInteger",
+          "box":true
+        },
+        "maxConcurrentJobRuns":{
+          "shape":"JobLimitInteger",
+          "box":true
+        }
+      }
+    },
+    "SchedulerStatus":{
+      "type":"structure",
+      "members":{
+        "currentInQueueJobRuns":{"shape":"NonNegativeInteger"},
+        "currentConcurrentJobRuns":{"shape":"NonNegativeInteger"}
       }
     },
     "SecretsManagerArn":{
@@ -1779,6 +1831,31 @@
       "type":"structure",
       "members":{}
     },
+    "UpdateVirtualClusterRequest":{
+      "type":"structure",
+      "required":[
+        "id",
+        "clientToken"
+      ],
+      "members":{
+        "id":{
+          "shape":"ResourceIdString",
+          "location":"uri",
+          "locationName":"virtualClusterId"
+        },
+        "schedulerConfiguration":{"shape":"SchedulerConfiguration"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "UpdateVirtualClusterResponse":{
+      "type":"structure",
+      "members":{
+        "virtualCluster":{"shape":"VirtualCluster"}
+      }
+    },
     "UriString":{
       "type":"string",
       "max":10280,
@@ -1804,7 +1881,9 @@
         "createdAt":{"shape":"Date"},
         "tags":{"shape":"TagMap"},
         "securityConfigurationId":{"shape":"ResourceIdString"},
-        "sessionEnabled":{"shape":"Boolean"}
+        "sessionEnabled":{"shape":"Boolean"},
+        "schedulerConfiguration":{"shape":"SchedulerConfiguration"},
+        "schedulerStatus":{"shape":"SchedulerStatus"}
       }
     },
     "VirtualClusterArn":{

@@ -7900,7 +7900,10 @@
     },
     "CapabilityState":{
       "type":"string",
-      "enum":["DENY"]
+      "enum":[
+        "DENY",
+        "ALLOW"
+      ]
     },
     "CapacityBytesRangeFilter":{
       "type":"structure",
@@ -9207,6 +9210,7 @@
         },
         "CustomPermissionsName":{"shape":"CustomPermissionsName"},
         "Capabilities":{"shape":"Capabilities"},
+        "Governance":{"shape":"Governance"},
         "Tags":{"shape":"TagList"}
       }
     },
@@ -10377,7 +10381,8 @@
       "members":{
         "Arn":{"shape":"Arn"},
         "CustomPermissionsName":{"shape":"CustomPermissionsName"},
-        "Capabilities":{"shape":"Capabilities"}
+        "Capabilities":{"shape":"Capabilities"},
+        "Governance":{"shape":"Governance"}
       }
     },
     "CustomPermissionsList":{
@@ -12028,6 +12033,16 @@
         "VAR",
         "VARP"
       ]
+    },
+    "DefaultCategoryEffect":{
+      "type":"string",
+      "enum":["DENY_BY_DEFAULT"]
+    },
+    "DefaultCategoryEffectsMap":{
+      "type":"map",
+      "key":{"shape":"GovernanceCategoryName"},
+      "value":{"shape":"DefaultCategoryEffect"},
+      "max":50
     },
     "DefaultDateTimePickerControlOptions":{
       "type":"structure",
@@ -17829,6 +17844,17 @@
       "members":{
         "AuthType":{"shape":"AuthType"}
       }
+    },
+    "Governance":{
+      "type":"structure",
+      "members":{
+        "DefaultCategoryEffects":{"shape":"DefaultCategoryEffectsMap"}
+      }
+    },
+    "GovernanceCategoryName":{
+      "type":"string",
+      "max":128,
+      "min":1
     },
     "GradientColor":{
       "type":"structure",
@@ -29461,7 +29487,8 @@
           "location":"uri",
           "locationName":"CustomPermissionsName"
         },
-        "Capabilities":{"shape":"Capabilities"}
+        "Capabilities":{"shape":"Capabilities"},
+        "Governance":{"shape":"Governance"}
       }
     },
     "UpdateCustomPermissionsResponse":{
