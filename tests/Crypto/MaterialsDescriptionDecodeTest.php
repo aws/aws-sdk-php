@@ -44,6 +44,7 @@ class MaterialsDescriptionDecodeTest extends TestCase
         };
     }
 
+    // Values that do not decode as JSON.
     public static function malformedMaterialDescriptions(): array
     {
         return [
@@ -54,6 +55,7 @@ class MaterialsDescriptionDecodeTest extends TestCase
         ];
     }
 
+    // Valid JSON that isn't an object.
     public static function nonObjectMaterialDescriptions(): array
     {
         return [
@@ -61,6 +63,7 @@ class MaterialsDescriptionDecodeTest extends TestCase
         ];
     }
 
+    // No material description header at all.
     public static function absentMaterialDescriptions(): array
     {
         return [
@@ -68,6 +71,7 @@ class MaterialsDescriptionDecodeTest extends TestCase
         ];
     }
 
+    // A malformed x-amz-matdesc value throws CryptoException.
     #[DataProvider('malformedMaterialDescriptions')]
     #[DataProvider('nonObjectMaterialDescriptions')]
     #[DataProvider('absentMaterialDescriptions')]
@@ -90,6 +94,7 @@ class MaterialsDescriptionDecodeTest extends TestCase
         ]);
     }
 
+    // A malformed x-amz-t value throws CryptoException.
     #[DataProvider('malformedMaterialDescriptions')]
     #[DataProvider('nonObjectMaterialDescriptions')]
     public function testV3TraitRejectsMalformedEncryptionContext(string $matdesc): void
