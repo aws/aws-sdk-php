@@ -4600,6 +4600,54 @@
     }
   },
   "shapes":{
+    "AIAdapterId":{
+      "type":"string",
+      "max":63,
+      "min":1,
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9])*"
+    },
+    "AIAdapterModelPackageEntry":{
+      "type":"structure",
+      "required":[
+        "AdapterId",
+        "ModelPackageArn"
+      ],
+      "members":{
+        "AdapterId":{"shape":"AIAdapterId"},
+        "ModelPackageArn":{"shape":"ModelPackageArn"}
+      }
+    },
+    "AIAdapterModelPackageEntryList":{
+      "type":"list",
+      "member":{"shape":"AIAdapterModelPackageEntry"},
+      "max":10,
+      "min":1
+    },
+    "AIAdapterS3Entry":{
+      "type":"structure",
+      "required":[
+        "AdapterId",
+        "S3Uri"
+      ],
+      "members":{
+        "AdapterId":{"shape":"AIAdapterId"},
+        "S3Uri":{"shape":"S3Uri"}
+      }
+    },
+    "AIAdapterS3EntryList":{
+      "type":"list",
+      "member":{"shape":"AIAdapterS3Entry"},
+      "max":10,
+      "min":1
+    },
+    "AIAdapterSource":{
+      "type":"structure",
+      "members":{
+        "ModelPackageArns":{"shape":"AIAdapterModelPackageEntryList"},
+        "S3Uris":{"shape":"AIAdapterS3EntryList"}
+      },
+      "union":true
+    },
     "AIBenchmarkEndpoint":{
       "type":"structure",
       "required":["Identifier"],
@@ -4792,7 +4840,19 @@
         "ModelDetails":{"shape":"AIRecommendationModelDetails"},
         "DeploymentConfiguration":{"shape":"AIRecommendationDeploymentConfiguration"},
         "AIBenchmarkJobArn":{"shape":"AIBenchmarkJobArn"},
-        "ExpectedPerformance":{"shape":"ExpectedPerformanceList"}
+        "ExpectedPerformance":{"shape":"ExpectedPerformanceList"},
+        "AdapterDetails":{"shape":"AIRecommendationAdapterDetails"}
+      }
+    },
+    "AIRecommendationAdapterDetails":{
+      "type":"structure",
+      "required":[
+        "ModelPackageArns",
+        "S3Uris"
+      ],
+      "members":{
+        "ModelPackageArns":{"shape":"AIAdapterModelPackageEntryList"},
+        "S3Uris":{"shape":"AIAdapterS3EntryList"}
       }
     },
     "AIRecommendationAllowOptimization":{
@@ -4829,7 +4889,8 @@
         "InstanceType":{"shape":"AIRecommendationInstanceType"},
         "InstanceCount":{"shape":"AIRecommendationInstanceCount"},
         "CopyCountPerInstance":{"shape":"AIRecommendationCopyCountPerInstance"},
-        "EnvironmentVariables":{"shape":"EnvironmentMap"}
+        "EnvironmentVariables":{"shape":"EnvironmentMap"},
+        "MinCpuMemoryRequiredInMb":{"shape":"AIRecommendationMinCpuMemoryRequiredInMb"}
       }
     },
     "AIRecommendationDeploymentS3Channel":{
@@ -4970,6 +5031,11 @@
         "throughput",
         "cost"
       ]
+    },
+    "AIRecommendationMinCpuMemoryRequiredInMb":{
+      "type":"integer",
+      "box":true,
+      "min":1
     },
     "AIRecommendationModelDetails":{
       "type":"structure",
@@ -9721,6 +9787,7 @@
         "InferenceSpecification":{"shape":"AIRecommendationInferenceSpecification"},
         "OptimizeModel":{"shape":"AIRecommendationAllowOptimization"},
         "ComputeSpec":{"shape":"AIRecommendationComputeSpec"},
+        "AdapterSource":{"shape":"AIAdapterSource"},
         "Tags":{"shape":"TagList"}
       }
     },
@@ -10993,7 +11060,8 @@
         "OutputConfig":{"shape":"OptimizationJobOutputConfig"},
         "StoppingCondition":{"shape":"StoppingCondition"},
         "Tags":{"shape":"TagList"},
-        "VpcConfig":{"shape":"OptimizationVpcConfig"}
+        "VpcConfig":{"shape":"OptimizationVpcConfig"},
+        "TrainingPlanArns":{"shape":"OptimizationJobTrainingPlanArns"}
       }
     },
     "CreateOptimizationJobResponse":{
@@ -12671,6 +12739,7 @@
         "Recommendations":{"shape":"AIRecommendationList"},
         "RoleArn":{"shape":"RoleArn"},
         "ComputeSpec":{"shape":"AIRecommendationComputeSpec"},
+        "AdapterSource":{"shape":"AIAdapterSource"},
         "CreationTime":{"shape":"Timestamp"},
         "StartTime":{"shape":"Timestamp"},
         "EndTime":{"shape":"Timestamp"},
@@ -14471,7 +14540,8 @@
         "OptimizationOutput":{"shape":"OptimizationOutput"},
         "RoleArn":{"shape":"RoleArn"},
         "StoppingCondition":{"shape":"StoppingCondition"},
-        "VpcConfig":{"shape":"OptimizationVpcConfig"}
+        "VpcConfig":{"shape":"OptimizationVpcConfig"},
+        "TrainingPlanArns":{"shape":"OptimizationJobTrainingPlanArns"}
       }
     },
     "DescribePartnerAppRequest":{
@@ -19111,6 +19181,12 @@
         "ml.g6.16xlarge",
         "ml.g6.24xlarge",
         "ml.g6.48xlarge",
+        "ml.g7e.2xlarge",
+        "ml.g7e.4xlarge",
+        "ml.g7e.8xlarge",
+        "ml.g7e.12xlarge",
+        "ml.g7e.24xlarge",
+        "ml.g7e.48xlarge",
         "ml.p5.4xlarge",
         "ml.p5en.48xlarge",
         "ml.g6e.xlarge",
@@ -24422,7 +24498,14 @@
         "ml.inf2.48xlarge",
         "ml.trn1.2xlarge",
         "ml.trn1.32xlarge",
-        "ml.trn1n.32xlarge"
+        "ml.trn1n.32xlarge",
+        "ml.p6-b200.48xlarge",
+        "ml.g7e.2xlarge",
+        "ml.g7e.4xlarge",
+        "ml.g7e.8xlarge",
+        "ml.g7e.12xlarge",
+        "ml.g7e.24xlarge",
+        "ml.g7e.48xlarge"
       ]
     },
     "OptimizationJobEnvironmentVariables":{
@@ -24497,6 +24580,12 @@
         "MaxInstanceCount":{"shape":"OptimizationJobMaxInstanceCount"},
         "OptimizationTypes":{"shape":"OptimizationTypes"}
       }
+    },
+    "OptimizationJobTrainingPlanArns":{
+      "type":"list",
+      "member":{"shape":"TrainingPlanArn"},
+      "max":1,
+      "min":0
     },
     "OptimizationModelAcceptEula":{"type":"boolean"},
     "OptimizationModelAccessConfig":{

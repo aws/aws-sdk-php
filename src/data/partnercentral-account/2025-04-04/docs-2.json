@@ -404,7 +404,8 @@
     "CountryCode": {
       "base": null,
       "refs": {
-        "BusinessVerificationDetails$CountryCode": "<p>The ISO 3166-1 alpha-2 country code where the business is legally registered and operates.</p>"
+        "BusinessVerificationDetails$CountryCode": "<p>The ISO 3166-1 alpha-2 country code where the business is legally registered and operates.</p>",
+        "Headquarters$CountryCode": "<p>The ISO 3166-1 alpha-2 country code of the partner's headquarters. For example, <code>US</code>, <code>BR</code>, or <code>DE</code>.</p>"
       }
     },
     "CreateConnectionInvitationRequest": {
@@ -642,6 +643,13 @@
     "GetVerificationResponse": {
       "base": null,
       "refs": {}
+    },
+    "Headquarters": {
+      "base": "<p>Contains the partner's headquarters location using International Organization for Standardization (ISO) 3166 country and subdivision codes.</p>",
+      "refs": {
+        "PartnerProfile$Headquarters": "<p>The ISO 3166 country and subdivision codes for the partner's headquarters location. If no headquarters location is set, this field is not included in the response.</p>",
+        "TaskDetails$Headquarters": "<p>The ISO 3166 country and subdivision codes for the partner's headquarters location. If you omit this field, the service retains the existing headquarters value.</p>"
+      }
     },
     "IndustrySegment": {
       "base": null,
@@ -1181,6 +1189,12 @@
         "ThrottlingException$ServiceCode": "<p>The service code associated with the throttling error.</p>",
         "ThrottlingException$QuotaCode": "<p>The quota code associated with the throttling error.</p>",
         "ValidationException$Message": null
+      }
+    },
+    "SubdivisionCode": {
+      "base": null,
+      "refs": {
+        "Headquarters$SubdivisionCode": "<p>The subdivision portion of the ISO 3166-2 code for the partner's headquarters (for example, <code>SP</code> from <code>BR-SP</code>, <code>NSW</code> from <code>AU-NSW</code>, or <code>13</code> from <code>JP-13</code>).</p>"
       }
     },
     "Tag": {

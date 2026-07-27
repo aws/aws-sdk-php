@@ -170,6 +170,24 @@
       ],
       "readonly":true
     },
+    "GetPrimaryEmailUpdateStatus":{
+      "name":"GetPrimaryEmailUpdateStatus",
+      "http":{
+        "method":"POST",
+        "requestUri":"/getPrimaryEmailUpdateStatus",
+        "responseCode":200
+      },
+      "input":{"shape":"GetPrimaryEmailUpdateStatusRequest"},
+      "output":{"shape":"GetPrimaryEmailUpdateStatusResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
     "GetRegionOptStatus":{
       "name":"GetRegionOptStatus",
       "http":{
@@ -546,6 +564,20 @@
         "PrimaryEmail":{"shape":"PrimaryEmailAddress"}
       }
     },
+    "GetPrimaryEmailUpdateStatusRequest":{
+      "type":"structure",
+      "members":{
+        "AccountId":{"shape":"AccountId"}
+      }
+    },
+    "GetPrimaryEmailUpdateStatusResponse":{
+      "type":"structure",
+      "required":["Status"],
+      "members":{
+        "Status":{"shape":"PrimaryEmailUpdateStatus"},
+        "UpdatedAt":{"shape":"Timestamp"}
+      }
+    },
     "GetRegionOptStatusRequest":{
       "type":"structure",
       "required":["RegionName"],
@@ -638,7 +670,9 @@
       "type":"string",
       "enum":[
         "PENDING",
-        "ACCEPTED"
+        "ACCEPTED",
+        "COMPLETED",
+        "FAILED"
       ]
     },
     "PutAccountNameRequest":{
@@ -767,6 +801,7 @@
       "sensitive":true
     },
     "String":{"type":"string"},
+    "Timestamp":{"type":"timestamp"},
     "Title":{
       "type":"string",
       "max":50,

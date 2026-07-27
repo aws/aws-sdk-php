@@ -2825,6 +2825,10 @@
         "PRIVATE_VPC"
       ]
     },
+    "Double":{
+      "type":"double",
+      "box":true
+    },
     "Endpoint":{
       "type":"structure",
       "members":{
@@ -4673,6 +4677,7 @@
         "targetEndpoint":{"shape":"Endpoint"},
         "executionStatus":{"shape":"TaskExecutionStatus"},
         "logsLocation":{"shape":"LogLocation"},
+        "taskHours":{"shape":"Double"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
@@ -4706,6 +4711,7 @@
         "title":{"shape":"String"},
         "riskType":{"shape":"RiskType"},
         "executionStatus":{"shape":"TaskExecutionStatus"},
+        "taskHours":{"shape":"Double"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }

@@ -3055,7 +3055,7 @@
       }
     },
     "CapabilityState": {
-      "base": null,
+      "base": "<p>The permission state of a capability in a custom permissions profile. Valid values:</p> <ul> <li> <p> <code>DENY</code> – Amazon Quick denies this capability for users assigned to the profile.</p> </li> <li> <p> <code>ALLOW</code> – Amazon Quick grants this capability to users assigned to the profile. This value is only relevant when governance is enabled for the capability's category. Without governance, the default effect is always <code>ALLOW</code>. In a governed category, this value overrides the category-level deny-by-default behavior for that capability only.</p> </li> </ul>",
       "refs": {
         "Capabilities$ExportToCsv": "<p>The ability to export to CSV files from the UI.</p>",
         "Capabilities$ExportToExcel": "<p>The ability to export to Excel files from the UI.</p>",
@@ -6050,6 +6050,18 @@
         "TopicColumn$Aggregation": "<p>The type of aggregation that is performed on the column data when it's queried.</p>"
       }
     },
+    "DefaultCategoryEffect": {
+      "base": "<p>The default effect that Amazon Quick applies to capabilities in a governed category when you do not explicitly list those capabilities in <code>Capabilities</code>. Valid values:</p> <ul> <li> <p> <code>DENY_BY_DEFAULT</code> – Amazon Quick denies any capability access in the given category that the profile does not explicitly set to <code>ALLOW</code>.</p> </li> </ul>",
+      "refs": {
+        "DefaultCategoryEffectsMap$value": null
+      }
+    },
+    "DefaultCategoryEffectsMap": {
+      "base": null,
+      "refs": {
+        "Governance$DefaultCategoryEffects": "<p>A map of <code>DefaultCategoryEffects</code>.</p>"
+      }
+    },
     "DefaultDateTimePickerControlOptions": {
       "base": "<p>The default options that correspond to the filter control type of a <code>DateTimePicker</code>.</p>",
       "refs": {
@@ -8784,6 +8796,20 @@
       "base": "<p>The connection parameters for a Google Drive data source. Provide these parameters in the <code>DataSourceParameters</code> object when you create or update a data source that uses Google Drive.</p>",
       "refs": {
         "DataSourceParameters$GoogleDriveParameters": "<p>The parameters for a Google Drive data source.</p>"
+      }
+    },
+    "Governance": {
+      "base": "<p>Contains the governance configuration for a custom permissions profile. When governance controls are defined for a category, any capabilities in that category not explicitly set to <code>ALLOW</code> in <code>Capabilities</code> are denied. Even newly added capabilities in the category are implicitly disabled when Amazon Quick releases them.</p>",
+      "refs": {
+        "CreateCustomPermissionsRequest$Governance": "<p>The governance configuration for the custom permissions profile. When governance controls are defined for a category, any capabilities in that category not explicitly set to <code>ALLOW</code> in <code>Capabilities</code> are denied. Even newly added capabilities in the category are implicitly disabled when Amazon Quick releases them.</p>",
+        "CustomPermissions$Governance": "<p>The governance configuration for the custom permissions profile. When you enable governance for a category, Amazon Quick denies access to any current or new capability in that category unless you explicitly set that capability to <code>ALLOW</code> in <code>Capabilities</code>.</p>",
+        "UpdateCustomPermissionsRequest$Governance": "<p>The governance configuration for the custom permissions profile. The <code>UpdateCustomPermissions</code> operation replaces all existing <code>Capabilities</code> and <code>Governance</code> values. If you omit this parameter, Amazon Quick removes governance from the profile and the existing custom permission behavior applies.</p>"
+      }
+    },
+    "GovernanceCategoryName": {
+      "base": "<p>The name of a governance category. A governance category groups related capabilities so that you can apply a default effect to all capabilities in the category at once. Valid values:</p> <ul> <li> <p> <code>AI</code> – Capabilities related to Amazon Quick AI features.</p> </li> </ul>",
+      "refs": {
+        "DefaultCategoryEffectsMap$key": null
       }
     },
     "GradientColor": {

@@ -23,6 +23,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getGovCloudAccountInformationAsync(array $args = [])
  * @method \Aws\Result getPrimaryEmail(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getPrimaryEmailAsync(array $args = [])
+ * @method \Aws\Result getPrimaryEmailUpdateStatus(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getPrimaryEmailUpdateStatusAsync(array $args = [])
  * @method \Aws\Result getRegionOptStatus(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getRegionOptStatusAsync(array $args = [])
  * @method \Aws\Result listRegions(array $args = [])

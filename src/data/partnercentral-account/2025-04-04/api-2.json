@@ -1648,6 +1648,17 @@
         "CompletedAt":{"shape":"DateTime"}
       }
     },
+    "Headquarters":{
+      "type":"structure",
+      "required":[
+        "CountryCode",
+        "SubdivisionCode"
+      ],
+      "members":{
+        "CountryCode":{"shape":"CountryCode"},
+        "SubdivisionCode":{"shape":"SubdivisionCode"}
+      }
+    },
     "IndustrySegment":{
       "type":"string",
       "enum":[
@@ -1936,6 +1947,7 @@
         "IndustrySegments":{"shape":"IndustrySegmentList"},
         "TranslationSourceLocale":{"shape":"Locale"},
         "LocalizedContents":{"shape":"LocalizedContentList"},
+        "Headquarters":{"shape":"Headquarters"},
         "ProfileId":{"shape":"PartnerProfileId"}
       }
     },
@@ -2453,6 +2465,12 @@
       }
     },
     "String":{"type":"string"},
+    "SubdivisionCode":{
+      "type":"string",
+      "max":3,
+      "min":1,
+      "pattern":"[A-Z0-9]{1,3}"
+    },
     "Tag":{
       "type":"structure",
       "required":[
@@ -2526,7 +2544,8 @@
         "PrimarySolutionType":{"shape":"PrimarySolutionType"},
         "IndustrySegments":{"shape":"IndustrySegmentList"},
         "TranslationSourceLocale":{"shape":"Locale"},
-        "LocalizedContents":{"shape":"LocalizedContentList"}
+        "LocalizedContents":{"shape":"LocalizedContentList"},
+        "Headquarters":{"shape":"Headquarters"}
       }
     },
     "TaskDetailsDescriptionString":{
