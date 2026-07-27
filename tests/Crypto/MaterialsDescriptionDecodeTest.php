@@ -47,8 +47,10 @@ class MaterialsDescriptionDecodeTest extends TestCase
     public static function malformedMaterialDescriptions(): array
     {
         return [
-            'raw high byte'     => ["\xff"],
-            'mime encoded word' => ['=?utf-8?B?/w==?='],
+            'mime 0x80'         => ['=?utf-8?B?gA==?='],
+            'mime 0xff'         => ['=?utf-8?B?/w==?='],
+            'mime abc+0xff'     => ['=?utf-8?B?YWJj/w==?='],
+            'raw invalid utf-8' => ["\x80"],
         ];
     }
 
