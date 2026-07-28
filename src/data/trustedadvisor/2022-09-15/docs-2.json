@@ -11,6 +11,7 @@
     "ListOrganizationRecommendations": "<p>List a filterable set of Recommendations within an Organization. This API only supports prioritized recommendations and provides global priority recommendations, eliminating the need to call the API in each AWS Region. </p>",
     "ListRecommendationResources": "<p>List Resources of a Recommendation. This API provides global recommendations, eliminating the need to call the API in each AWS Region.</p>",
     "ListRecommendations": "<p>List a filterable set of Recommendations. This API provides global recommendations, eliminating the need to call the API in each AWS Region.</p>",
+    "ListRecommendationsForResource": "<p>List all Trusted Advisor recommendations for a given AWS resource ARN.</p>",
     "UpdateOrganizationRecommendationLifecycle": "<p>Update the lifecycle of a Recommendation within an Organization. This API only supports prioritized recommendations and updates global priority recommendations, eliminating the need to call the API in each AWS Region. </p>",
     "UpdateRecommendationLifecycle": "<p>Update the lifecyle of a Recommendation. This API only supports prioritized recommendations and updates global priority recommendations, eliminating the need to call the API in each AWS Region.</p>"
   },
@@ -33,6 +34,7 @@
       "refs": {
         "AccountRecommendationLifecycleSummary$accountRecommendationArn": "<p>The Recommendation ARN</p>",
         "Recommendation$arn": "<p>The ARN of the Recommendation</p>",
+        "RecommendationForResourceSummary$recommendationArn": "<p>The Recommendation ARN</p>",
         "RecommendationResourceSummary$recommendationArn": "<p>The Recommendation ARN</p>",
         "RecommendationSummary$arn": "<p>The ARN of the Recommendation</p>"
       }
@@ -57,6 +59,13 @@
         "ListOrganizationRecommendationAccountsResponse$accountRecommendationLifecycleSummaries": "<p>The account recommendations lifecycles that are applicable to the Recommendation</p>"
       }
     },
+    "AwsResourceArn": {
+      "base": null,
+      "refs": {
+        "ListRecommendationsForResourceRequest$awsResourceArn": "<p>The ARN of the AWS resource to query recommendations for</p>",
+        "RecommendationForResourceSummary$awsResourceArn": "<p>The AWS Resource ARN</p>"
+      }
+    },
     "BatchUpdateRecommendationResourceExclusionRequest": {
       "base": null,
       "refs": {}
@@ -68,13 +77,16 @@
     "Boolean": {
       "base": null,
       "refs": {
+        "CheckSummary$resourceArnQueryable": "<p>Indicates whether this check is supported by the ListRecommendationsForResource API.</p>",
         "RecommendationResourceExclusion$isExcluded": "<p>The exclusion status</p>"
       }
     },
     "CheckArn": {
       "base": null,
       "refs": {
-        "CheckSummary$arn": "<p>The ARN of the AWS Trusted Advisor Check</p>"
+        "CheckSummary$arn": "<p>The ARN of the AWS Trusted Advisor Check</p>",
+        "ListRecommendationsForResourceRequest$checkArn": "<p>The AWS Trusted Advisor Check ARN that relates to the Recommendation</p>",
+        "RecommendationForResourceSummary$checkArn": "<p>The Check ARN</p>"
       }
     },
     "CheckIdentifier": {
@@ -113,6 +125,7 @@
         "ListOrganizationRecommendationResourcesRequest$exclusionStatus": "<p>The exclusion status of the resource</p>",
         "ListRecommendationResourcesRequest$exclusionStatus": "<p>The exclusion status of the resource</p>",
         "OrganizationRecommendationResourceSummary$exclusionStatus": "<p>The exclusion status of the Recommendation Resource</p>",
+        "RecommendationForResourceSummary$exclusionStatus": "<p>The exclusion status of the recommendation</p>",
         "RecommendationResourceSummary$exclusionStatus": "<p>The exclusion status of the Recommendation Resource</p>"
       }
     },
@@ -266,6 +279,32 @@
         "ListRecommendationResourcesResponse$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results. </p>"
       }
     },
+    "ListRecommendationsForResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRecommendationsForResourceRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListRecommendationsForResourceRequest$maxResults": "<p>The maximum number of results to return per page</p>"
+      }
+    },
+    "ListRecommendationsForResourceRequestNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListRecommendationsForResourceRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results. </p>"
+      }
+    },
+    "ListRecommendationsForResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRecommendationsForResourceResponseNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListRecommendationsForResourceResponse$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results. </p>"
+      }
+    },
     "ListRecommendationsRequest": {
       "base": null,
       "refs": {}
@@ -379,12 +418,25 @@
         "RecommendationPillarSpecificAggregates$costOptimizing": "<p>Cost optimizing aggregates</p>"
       }
     },
+    "RecommendationForResourceSummary": {
+      "base": "<p>Summary of a Recommendation for a specific AWS Resource</p>",
+      "refs": {
+        "RecommendationForResourceSummaryList$member": null
+      }
+    },
+    "RecommendationForResourceSummaryList": {
+      "base": null,
+      "refs": {
+        "ListRecommendationsForResourceResponse$recommendationForResourceSummaries": "<p>List of Trusted Advisor recommendations associated with the given AWS resource</p>"
+      }
+    },
     "RecommendationLanguage": {
       "base": null,
       "refs": {
         "GetRecommendationRequest$language": "<p>The ISO 639-1 code for the language that you want your recommendations to appear in.</p>",
         "ListChecksRequest$language": "<p>The ISO 639-1 code for the language that you want your checks to appear in.</p>",
         "ListRecommendationResourcesRequest$language": "<p>The ISO 639-1 code for the language that you want your recommendations to appear in.</p>",
+        "ListRecommendationsForResourceRequest$language": "<p>The ISO 639-1 code for the language that you want your recommendations to appear in.</p>",
         "ListRecommendationsRequest$language": "<p>The ISO 639-1 code for the language that you want your recommendations to appear in.</p>"
       }
     },
@@ -403,6 +455,7 @@
       "refs": {
         "ListChecksRequest$pillar": "<p>The pillar of the check</p>",
         "ListOrganizationRecommendationsRequest$pillar": "<p>The pillar of the Recommendation</p>",
+        "ListRecommendationsForResourceRequest$pillar": "<p>The pillar that the recommendation belongs to</p>",
         "ListRecommendationsRequest$pillar": "<p>The pillar of the Recommendation</p>",
         "RecommendationPillarList$member": null
       }
@@ -414,6 +467,7 @@
         "OrganizationRecommendation$pillars": "<p>The Pillars that the Recommendation is optimizing</p>",
         "OrganizationRecommendationSummary$pillars": "<p>The Pillars that the Recommendation is optimizing</p>",
         "Recommendation$pillars": "<p>The Pillars that the Recommendation is optimizing</p>",
+        "RecommendationForResourceSummary$pillars": "<p>The Pillars that the Recommendation is optimizing</p>",
         "RecommendationSummary$pillars": "<p>The Pillars that the Recommendation is optimizing</p>"
       }
     },
@@ -541,7 +595,9 @@
       "refs": {
         "ListOrganizationRecommendationResourcesRequest$status": "<p>The status of the resource</p>",
         "ListRecommendationResourcesRequest$status": "<p>The status of the resource</p>",
+        "ListRecommendationsForResourceRequest$status": "<p>The current status of the Recommendation Resource</p>",
         "OrganizationRecommendationResourceSummary$status": "<p>The current status of the Recommendation Resource</p>",
+        "RecommendationForResourceSummary$status": "<p>The current status of the recommendation</p>",
         "RecommendationResourceSummary$status": "<p>The current status of the Recommendation Resource</p>"
       }
     },
@@ -561,6 +617,8 @@
         "CheckSummary$id": "<p>The unique identifier of the AWS Trusted Advisor Check</p>",
         "CheckSummary$name": "<p>The name of the AWS Trusted Advisor Check</p>",
         "CheckSummary$description": "<p>A description of what the AWS Trusted Advisor Check is monitoring</p>",
+        "CheckSummary$checkGranularity": "<p>The granularity level at which the check operates: resource, account, or account_region.</p>",
+        "CheckSummary$recommendationId": "<p>The recommendation identifier associated with the check.</p>",
         "ConflictException$message": null,
         "InternalServerException$message": null,
         "ListOrganizationRecommendationResourcesRequest$regionCode": "<p>The AWS Region code of the resource</p>",
@@ -590,6 +648,7 @@
         "RecommendationSummary$checkArn": "<p>The AWS Trusted Advisor Check ARN that relates to the Recommendation</p>",
         "RecommendationSummary$name": "<p>The name of the AWS Trusted Advisor Recommendation</p>",
         "ResourceNotFoundException$message": null,
+        "StringList$member": null,
         "StringMap$key": null,
         "StringMap$value": null,
         "ThrottlingException$message": null,
@@ -598,11 +657,18 @@
         "ValidationException$message": null
       }
     },
+    "StringList": {
+      "base": null,
+      "refs": {
+        "CheckSummary$awsResourceTypes": "<p>The AWS resource types that this check evaluates (for example, AWS::EC2::Instance).</p>"
+      }
+    },
     "StringMap": {
       "base": null,
       "refs": {
         "CheckSummary$metadata": "<p>The column headings for the metadata returned in the resource</p>",
         "OrganizationRecommendationResourceSummary$metadata": "<p>Metadata associated with the Recommendation Resource</p>",
+        "RecommendationForResourceSummary$metadata": "<p>Metadata associated with the recommendation</p>",
         "RecommendationResourceSummary$metadata": "<p>Metadata associated with the Recommendation Resource</p>"
       }
     },
@@ -619,6 +685,7 @@
         "Recommendation$createdAt": "<p>When the Recommendation was created, if created by AWS Trusted Advisor Priority</p>",
         "Recommendation$lastUpdatedAt": "<p>When the Recommendation was last updated</p>",
         "Recommendation$resolvedAt": "<p>When the Recommendation was resolved</p>",
+        "RecommendationForResourceSummary$lastUpdatedAt": "<p>When the recommendation was last updated</p>",
         "RecommendationResourceSummary$lastUpdatedAt": "<p>When the Recommendation Resource was last updated</p>",
         "RecommendationSummary$createdAt": "<p>When the Recommendation was created, if created by AWS Trusted Advisor Priority</p>",
         "RecommendationSummary$lastUpdatedAt": "<p>When the Recommendation was last updated</p>"

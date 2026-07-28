@@ -23,6 +23,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listRecommendationResourcesAsync(array $args = [])
  * @method \Aws\Result listRecommendations(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listRecommendationsAsync(array $args = [])
+ * @method \Aws\Result listRecommendationsForResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listRecommendationsForResourceAsync(array $args = [])
  * @method \Aws\Result updateOrganizationRecommendationLifecycle(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateOrganizationRecommendationLifecycleAsync(array $args = [])
  * @method \Aws\Result updateRecommendationLifecycle(array $args = [])

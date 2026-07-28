@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DataSync` - Adds Enhanced mode support for EFS and FSx Lustre locations without an agent, and for HDFS (TDE), Azure Blob, and object storage locations with an agent. HDFS Enhanced mode supports multiple NameNodes for High Availability. Enhanced mode agents can now be deployed on Microsoft Hyper-V.
+* `Aws\BedrockAgentCoreControl` - AgentCore Identity now supports Private Key JWT client authentication for OAuth 2.0 credential providers. Agents can authenticate to identity provider token endpoints with a JWT client assertion signed by a customer-managed AWS KMS asymmetric key, eliminating the need for client secrets.
+* `Aws\Connect` - Documentation updates for SearchRules, AssociateRoutingProfileQueues, CreateRoutingProfile, AssociateContactWithUser CreateTaskTemplate, and UpdateTaskTemplate
+* `Aws\RolesAnywhere` - Increases certificate string length for trust anchor source data to support new adjustable trust anchor limits.
+* `Aws\TrustedAdvisor` - Adds ListRecommendationsForResource API and four CheckSummary fields (resourceArnQueryable, awsResourceTypes, checkGranularity, recommendationId) to retrieve recommendations for a given resource ARN.
+
 ## 3.389.1 - 2026-07-27
 
 * `Aws\CleanRoomsML` - This release adds support for the CR.8X worker type for SQL (32 vCPU)

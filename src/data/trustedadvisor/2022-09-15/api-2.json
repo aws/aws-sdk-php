@@ -172,6 +172,23 @@
       ],
       "readonly":true
     },
+    "ListRecommendationsForResource":{
+      "name":"ListRecommendationsForResource",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/recommendations-for-resource/{awsResourceArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"ListRecommendationsForResourceRequest"},
+      "output":{"shape":"ListRecommendationsForResourceResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
+    },
     "UpdateOrganizationRecommendationLifecycle":{
       "name":"UpdateOrganizationRecommendationLifecycle",
       "http":{
@@ -257,6 +274,12 @@
       "type":"list",
       "member":{"shape":"AccountRecommendationLifecycleSummary"}
     },
+    "AwsResourceArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws(-\\w+)*:[\\w\\d-]+:([\\w\\d-]*)?:[\\w\\d_-]*([:/].+)*"
+    },
     "BatchUpdateRecommendationResourceExclusionRequest":{
       "type":"structure",
       "required":["recommendationResourceExclusions"],
@@ -307,7 +330,11 @@
         "pillars":{"shape":"RecommendationPillarList"},
         "awsServices":{"shape":"RecommendationAwsServiceList"},
         "source":{"shape":"RecommendationSource"},
-        "metadata":{"shape":"StringMap"}
+        "metadata":{"shape":"StringMap"},
+        "resourceArnQueryable":{"shape":"Boolean"},
+        "awsResourceTypes":{"shape":"StringList"},
+        "checkGranularity":{"shape":"String"},
+        "recommendationId":{"shape":"String"}
       }
     },
     "CheckSummaryList":{
@@ -705,6 +732,71 @@
       "max":10000,
       "min":4
     },
+    "ListRecommendationsForResourceRequest":{
+      "type":"structure",
+      "required":["awsResourceArn"],
+      "members":{
+        "nextToken":{
+          "shape":"ListRecommendationsForResourceRequestNextTokenString",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"ListRecommendationsForResourceRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "awsResourceArn":{
+          "shape":"AwsResourceArn",
+          "location":"uri",
+          "locationName":"awsResourceArn"
+        },
+        "pillar":{
+          "shape":"RecommendationPillar",
+          "location":"querystring",
+          "locationName":"pillar"
+        },
+        "status":{
+          "shape":"ResourceStatus",
+          "location":"querystring",
+          "locationName":"status"
+        },
+        "checkArn":{
+          "shape":"CheckArn",
+          "location":"querystring",
+          "locationName":"checkArn"
+        },
+        "language":{
+          "shape":"RecommendationLanguage",
+          "location":"querystring",
+          "locationName":"language"
+        }
+      }
+    },
+    "ListRecommendationsForResourceRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":600,
+      "min":1
+    },
+    "ListRecommendationsForResourceRequestNextTokenString":{
+      "type":"string",
+      "max":10000,
+      "min":4
+    },
+    "ListRecommendationsForResourceResponse":{
+      "type":"structure",
+      "required":["recommendationForResourceSummaries"],
+      "members":{
+        "nextToken":{"shape":"ListRecommendationsForResourceResponseNextTokenString"},
+        "recommendationForResourceSummaries":{"shape":"RecommendationForResourceSummaryList"}
+      }
+    },
+    "ListRecommendationsForResourceResponseNextTokenString":{
+      "type":"string",
+      "max":10000,
+      "min":4
+    },
     "ListRecommendationsRequest":{
       "type":"structure",
       "members":{
@@ -962,6 +1054,33 @@
         "estimatedPercentMonthlySavings":{"shape":"Double"}
       }
     },
+    "RecommendationForResourceSummary":{
+      "type":"structure",
+      "required":[
+        "checkArn",
+        "recommendationArn",
+        "awsResourceArn",
+        "status",
+        "lastUpdatedAt",
+        "exclusionStatus",
+        "metadata",
+        "pillars"
+      ],
+      "members":{
+        "checkArn":{"shape":"CheckArn"},
+        "recommendationArn":{"shape":"AccountRecommendationArn"},
+        "awsResourceArn":{"shape":"AwsResourceArn"},
+        "status":{"shape":"ResourceStatus"},
+        "lastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "exclusionStatus":{"shape":"ExclusionStatus"},
+        "metadata":{"shape":"StringMap"},
+        "pillars":{"shape":"RecommendationPillarList"}
+      }
+    },
+    "RecommendationForResourceSummaryList":{
+      "type":"list",
+      "member":{"shape":"RecommendationForResourceSummary"}
+    },
     "RecommendationLanguage":{
       "type":"string",
       "enum":[
@@ -1180,6 +1299,10 @@
       "enum":["no_data_ok"]
     },
     "String":{"type":"string"},
+    "StringList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
     "StringMap":{
       "type":"map",
       "key":{"shape":"String"},
