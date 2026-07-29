@@ -5754,6 +5754,14 @@
       "max":900,
       "min":1
     },
+    "BetweenConfiguration":{
+      "type":"structure",
+      "members":{
+        "LowBoundKey":{"shape":"String"},
+        "HighBoundKey":{"shape":"String"},
+        "Template":{"shape":"String"}
+      }
+    },
     "BinEdges":{
       "type":"list",
       "member":{"shape":"GenericString"}
@@ -7010,6 +7018,11 @@
       "member":{"shape":"ConnectionString"},
       "max":1000
     },
+    "ConnectionStringToStringMap":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"String"}
+    },
     "ConnectionType":{
       "type":"string",
       "enum":[
@@ -7234,7 +7247,8 @@
         "DefaultValue":{"shape":"String"},
         "AllowedValues":{"shape":"ListOfString"},
         "PropertyLocation":{"shape":"PropertyLocation"},
-        "PropertyType":{"shape":"PropertyType"}
+        "PropertyType":{"shape":"PropertyType"},
+        "Format":{"shape":"String"}
       }
     },
     "ConnectorPropertyKey":{
@@ -10313,7 +10327,13 @@
       ],
       "members":{
         "Name":{"shape":"String"},
-        "FieldDataType":{"shape":"FieldDataType"}
+        "FieldDataType":{"shape":"FieldDataType"},
+        "ResponseDateFormat":{"shape":"String"},
+        "IsPartitionable":{"shape":"Bool"},
+        "IsNullable":{"shape":"Bool"},
+        "IsQueryable":{"shape":"Bool"},
+        "IsOrderable":{"shape":"Bool"},
+        "FilterOverrides":{"shape":"FilterOverrides"}
       }
     },
     "FieldDefinitionMap":{
@@ -10389,6 +10409,18 @@
         "Filters":{"shape":"FilterExpressions"}
       }
     },
+    "FilterConfiguration":{
+      "type":"structure",
+      "required":["FilterMode"],
+      "members":{
+        "FilterMode":{"shape":"FilterMode"},
+        "OperatorMappings":{"shape":"ConnectionStringToStringMap"},
+        "DateTimeFormat":{"shape":"String"},
+        "StripQuotes":{"shape":"Bool"},
+        "BetweenConfiguration":{"shape":"BetweenConfiguration"},
+        "FilterStringConfiguration":{"shape":"FilterStringConfiguration"}
+      }
+    },
     "FilterExpression":{
       "type":"structure",
       "required":[
@@ -10410,6 +10442,13 @@
       "enum":[
         "AND",
         "OR"
+      ]
+    },
+    "FilterMode":{
+      "type":"string",
+      "enum":[
+        "QUERY_PARAMS",
+        "FILTER_STRING"
       ]
     },
     "FilterOperation":{
@@ -10435,6 +10474,15 @@
         "NE"
       ]
     },
+    "FilterOverrides":{
+      "type":"structure",
+      "members":{
+        "FieldName":{"shape":"String"},
+        "OperatorMappings":{"shape":"ConnectionStringToStringMap"},
+        "BetweenConfiguration":{"shape":"BetweenConfiguration"},
+        "DateTimeFormat":{"shape":"String"}
+      }
+    },
     "FilterPredicate":{
       "type":"string",
       "max":100000,
@@ -10445,6 +10493,15 @@
       "max":2048,
       "min":0,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\t]*"
+    },
+    "FilterStringConfiguration":{
+      "type":"structure",
+      "required":["QueryParameterName"],
+      "members":{
+        "QueryParameterName":{"shape":"String"},
+        "QuoteStringValues":{"shape":"Bool"},
+        "QuoteCharacter":{"shape":"String"}
+      }
     },
     "FilterValue":{
       "type":"structure",
@@ -17301,7 +17358,8 @@
         "RequestPath":{"shape":"PathString"},
         "RequestParameters":{"shape":"ConnectorPropertyList"},
         "ResponseConfiguration":{"shape":"ResponseConfiguration"},
-        "PaginationConfiguration":{"shape":"PaginationConfiguration"}
+        "PaginationConfiguration":{"shape":"PaginationConfiguration"},
+        "FilterConfiguration":{"shape":"FilterConfiguration"}
       }
     },
     "SourceControlAuthStrategy":{

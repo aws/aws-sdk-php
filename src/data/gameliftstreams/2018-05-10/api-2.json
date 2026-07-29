@@ -124,6 +124,26 @@
         {"shape":"ValidationException"}
       ]
     },
+    "CreateStreamUrl":{
+      "name":"CreateStreamUrl",
+      "http":{
+        "method":"POST",
+        "requestUri":"/streamgroups/{Identifier}/streamurls",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateStreamUrlInput"},
+      "output":{"shape":"CreateStreamUrlOutput"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ],
+      "idempotent":true
+    },
     "DeleteApplication":{
       "name":"DeleteApplication",
       "http":{
@@ -250,6 +270,42 @@
       ],
       "readonly":true
     },
+    "GetStreamUrl":{
+      "name":"GetStreamUrl",
+      "http":{
+        "method":"GET",
+        "requestUri":"/streamgroups/{Identifier}/streamurls/{StreamUrlIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetStreamUrlInput"},
+      "output":{"shape":"GetStreamUrlOutput"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
+    "ListApplicationShaderCaches":{
+      "name":"ListApplicationShaderCaches",
+      "http":{
+        "method":"GET",
+        "requestUri":"/applications/{Identifier}/shadercaches",
+        "responseCode":200
+      },
+      "input":{"shape":"ListApplicationShaderCachesInput"},
+      "output":{"shape":"ListApplicationShaderCachesOutput"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
     "ListApplications":{
       "name":"ListApplications",
       "http":{
@@ -319,6 +375,23 @@
       ],
       "readonly":true
     },
+    "ListStreamUrls":{
+      "name":"ListStreamUrls",
+      "http":{
+        "method":"GET",
+        "requestUri":"/streamurls",
+        "responseCode":200
+      },
+      "input":{"shape":"ListStreamUrlsInput"},
+      "output":{"shape":"ListStreamUrlsOutput"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
       "http":{
@@ -344,6 +417,23 @@
         "responseCode":204
       },
       "input":{"shape":"RemoveStreamGroupLocationsInput"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"}
+      ],
+      "idempotent":true
+    },
+    "RevokeStreamUrl":{
+      "name":"RevokeStreamUrl",
+      "http":{
+        "method":"POST",
+        "requestUri":"/streamgroups/{Identifier}/streamurls/{StreamUrlIdentifier}/revoke",
+        "responseCode":204
+      },
+      "input":{"shape":"RevokeStreamUrlInput"},
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
@@ -750,6 +840,63 @@
         "SignalResponse":{"shape":"SignalResponse"}
       }
     },
+    "CreateStreamUrlInput":{
+      "type":"structure",
+      "required":[
+        "Identifier",
+        "ApplicationIdentifier",
+        "Protocol",
+        "UrlExpiresAfterMinutes",
+        "Locations"
+      ],
+      "members":{
+        "Identifier":{
+          "shape":"Identifier",
+          "location":"uri",
+          "locationName":"Identifier"
+        },
+        "ApplicationIdentifier":{"shape":"Identifier"},
+        "Protocol":{"shape":"Protocol"},
+        "UrlExpiresAfterMinutes":{"shape":"UrlExpiresAfterMinutes"},
+        "UsageLimit":{"shape":"UsageLimit"},
+        "Description":{"shape":"Description"},
+        "Locations":{"shape":"LocationList"},
+        "SessionLengthSeconds":{"shape":"SessionLengthSeconds"},
+        "AdditionalLaunchArgs":{"shape":"GameLaunchArgList"},
+        "AdditionalEnvironmentVariables":{"shape":"EnvironmentVariables"},
+        "RoleArn":{"shape":"IamRoleArn"},
+        "DisplayConfiguration":{"shape":"DisplayConfiguration"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateStreamUrlOutput":{
+      "type":"structure",
+      "required":["Arn"],
+      "members":{
+        "Arn":{"shape":"Arn"},
+        "StreamUrlId":{"shape":"Id"},
+        "StreamUrl":{"shape":"StreamSessionStreamUrl"},
+        "Status":{"shape":"StreamUrlStatus"},
+        "StatusReason":{"shape":"StreamUrlStatusReason"},
+        "ExpiresAt":{"shape":"Timestamp"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "UsageLimit":{"shape":"UsageLimit"},
+        "RemainingUses":{"shape":"RemainingUses"},
+        "StreamGroupArn":{"shape":"Arn"},
+        "ApplicationArn":{"shape":"Arn"},
+        "Protocol":{"shape":"Protocol"},
+        "Locations":{"shape":"LocationList"},
+        "SessionLengthSeconds":{"shape":"SessionLengthSeconds"},
+        "Description":{"shape":"Description"},
+        "AdditionalLaunchArgs":{"shape":"GameLaunchArgList"},
+        "AdditionalEnvironmentVariables":{"shape":"EnvironmentVariables"},
+        "RoleArn":{"shape":"IamRoleArn"},
+        "DisplayConfiguration":{"shape":"DisplayConfiguration"}
+      }
+    },
     "DefaultApplication":{
       "type":"structure",
       "members":{
@@ -1007,6 +1154,51 @@
         "DisplayConfiguration":{"shape":"DisplayConfiguration"}
       }
     },
+    "GetStreamUrlInput":{
+      "type":"structure",
+      "required":[
+        "Identifier",
+        "StreamUrlIdentifier"
+      ],
+      "members":{
+        "Identifier":{
+          "shape":"Identifier",
+          "location":"uri",
+          "locationName":"Identifier"
+        },
+        "StreamUrlIdentifier":{
+          "shape":"Identifier",
+          "location":"uri",
+          "locationName":"StreamUrlIdentifier"
+        }
+      }
+    },
+    "GetStreamUrlOutput":{
+      "type":"structure",
+      "required":["Arn"],
+      "members":{
+        "Arn":{"shape":"Arn"},
+        "StreamUrlId":{"shape":"Id"},
+        "StreamUrl":{"shape":"StreamSessionStreamUrl"},
+        "Status":{"shape":"StreamUrlStatus"},
+        "StatusReason":{"shape":"StreamUrlStatusReason"},
+        "ExpiresAt":{"shape":"Timestamp"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "UsageLimit":{"shape":"UsageLimit"},
+        "RemainingUses":{"shape":"RemainingUses"},
+        "StreamGroupArn":{"shape":"Arn"},
+        "ApplicationArn":{"shape":"Arn"},
+        "Protocol":{"shape":"Protocol"},
+        "Locations":{"shape":"LocationList"},
+        "SessionLengthSeconds":{"shape":"SessionLengthSeconds"},
+        "Description":{"shape":"Description"},
+        "AdditionalLaunchArgs":{"shape":"GameLaunchArgList"},
+        "AdditionalEnvironmentVariables":{"shape":"EnvironmentVariables"},
+        "RoleArn":{"shape":"IamRoleArn"},
+        "DisplayConfiguration":{"shape":"DisplayConfiguration"},
+        "StreamSessions":{"shape":"StreamSessionSummaryList"}
+      }
+    },
     "IamRoleArn":{
       "type":"string",
       "max":2048,
@@ -1052,6 +1244,23 @@
       "member":{"shape":"Ipv4CidrBlock"},
       "max":5,
       "min":1
+    },
+    "ListApplicationShaderCachesInput":{
+      "type":"structure",
+      "required":["Identifier"],
+      "members":{
+        "Identifier":{
+          "shape":"Identifier",
+          "location":"uri",
+          "locationName":"Identifier"
+        }
+      }
+    },
+    "ListApplicationShaderCachesOutput":{
+      "type":"structure",
+      "members":{
+        "Items":{"shape":"ShaderCacheSummaryList"}
+      }
     },
     "ListApplicationsInput":{
       "type":"structure",
@@ -1167,6 +1376,38 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListStreamUrlsInput":{
+      "type":"structure",
+      "members":{
+        "Status":{
+          "shape":"StreamUrlStatus",
+          "location":"querystring",
+          "locationName":"Status"
+        },
+        "StreamGroupIdentifier":{
+          "shape":"Identifier",
+          "location":"querystring",
+          "locationName":"StreamGroupIdentifier"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"NextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"MaxResults"
+        }
+      }
+    },
+    "ListStreamUrlsOutput":{
+      "type":"structure",
+      "members":{
+        "Items":{"shape":"StreamUrlSummaryList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "ListTagsForResourceRequest":{
       "type":"structure",
       "required":["ResourceArn"],
@@ -1244,6 +1485,10 @@
       "max":100,
       "min":1
     },
+    "Long":{
+      "type":"long",
+      "box":true
+    },
     "MaxResults":{
       "type":"integer",
       "box":true,
@@ -1276,6 +1521,11 @@
     "Protocol":{
       "type":"string",
       "enum":["WebRTC"]
+    },
+    "RemainingUses":{
+      "type":"integer",
+      "box":true,
+      "min":0
     },
     "RemoveStreamGroupLocationsInput":{
       "type":"structure",
@@ -1349,6 +1599,33 @@
       },
       "exception":true
     },
+    "RevocationMode":{
+      "type":"string",
+      "enum":[
+        "REVOKE_URL",
+        "REVOKE_AND_TERMINATE_SESSIONS"
+      ]
+    },
+    "RevokeStreamUrlInput":{
+      "type":"structure",
+      "required":[
+        "Identifier",
+        "StreamUrlIdentifier"
+      ],
+      "members":{
+        "Identifier":{
+          "shape":"Identifier",
+          "location":"uri",
+          "locationName":"Identifier"
+        },
+        "StreamUrlIdentifier":{
+          "shape":"Identifier",
+          "location":"uri",
+          "locationName":"StreamUrlIdentifier"
+        },
+        "RevocationMode":{"shape":"RevocationMode"}
+      }
+    },
     "RuntimeEnvironment":{
       "type":"structure",
       "required":[
@@ -1395,6 +1672,37 @@
       "box":true,
       "max":86400,
       "min":1
+    },
+    "ShaderCacheStatus":{
+      "type":"string",
+      "enum":[
+        "INITIALIZED",
+        "PROCESSING",
+        "READY",
+        "DELETING",
+        "ERROR"
+      ]
+    },
+    "ShaderCacheSummary":{
+      "type":"structure",
+      "required":[
+        "Identifier",
+        "ApplicationArn"
+      ],
+      "members":{
+        "Identifier":{"shape":"Identifier"},
+        "ApplicationArn":{"shape":"Arn"},
+        "Status":{"shape":"ShaderCacheStatus"},
+        "LastUpdatedAt":{"shape":"Timestamp"},
+        "StorageBytes":{"shape":"Long"},
+        "AssociatedStreamGroups":{"shape":"ArnList"}
+      }
+    },
+    "ShaderCacheSummaryList":{
+      "type":"list",
+      "member":{"shape":"ShaderCacheSummary"},
+      "max":1000,
+      "min":0
     },
     "SignalRequest":{
       "type":"string",
@@ -1577,6 +1885,12 @@
         "apiTerminated"
       ]
     },
+    "StreamSessionStreamUrl":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "sensitive":true
+    },
     "StreamSessionSummary":{
       "type":"structure",
       "members":{
@@ -1598,6 +1912,48 @@
       "member":{"shape":"StreamSessionSummary"}
     },
     "StreamUrl":{"type":"string"},
+    "StreamUrlStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "EXPIRED",
+        "REVOKED",
+        "LIMIT_REACHED"
+      ]
+    },
+    "StreamUrlStatusReason":{
+      "type":"string",
+      "enum":[
+        "userRevoked",
+        "revokedAndTerminatingSessions",
+        "revokedAndSessionsTerminated",
+        "streamGroupDeleted",
+        "applicationDeleted"
+      ]
+    },
+    "StreamUrlSummary":{
+      "type":"structure",
+      "required":["Arn"],
+      "members":{
+        "Arn":{"shape":"Arn"},
+        "StreamUrlId":{"shape":"Id"},
+        "StreamUrl":{"shape":"StreamSessionStreamUrl"},
+        "Status":{"shape":"StreamUrlStatus"},
+        "StatusReason":{"shape":"StreamUrlStatusReason"},
+        "ExpiresAt":{"shape":"Timestamp"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "UsageLimit":{"shape":"UsageLimit"},
+        "RemainingUses":{"shape":"RemainingUses"},
+        "StreamGroupArn":{"shape":"Arn"},
+        "ApplicationArn":{"shape":"Arn"},
+        "SessionLengthSeconds":{"shape":"SessionLengthSeconds"},
+        "Description":{"shape":"Description"}
+      }
+    },
+    "StreamUrlSummaryList":{
+      "type":"list",
+      "member":{"shape":"StreamUrlSummary"}
+    },
     "String":{"type":"string"},
     "TagKey":{
       "type":"string",
@@ -1773,6 +2129,16 @@
         "ExpiresAt":{"shape":"Timestamp"},
         "AssociatedApplications":{"shape":"ArnList"}
       }
+    },
+    "UrlExpiresAfterMinutes":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
+    "UsageLimit":{
+      "type":"integer",
+      "box":true,
+      "min":1
     },
     "UserId":{
       "type":"string",

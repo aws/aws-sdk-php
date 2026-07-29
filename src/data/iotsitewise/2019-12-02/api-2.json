@@ -48,6 +48,25 @@
       ],
       "endpoint":{"hostPrefix":"api."}
     },
+    "BatchAssociateDataSegmentsToDataset":{
+      "name":"BatchAssociateDataSegmentsToDataset",
+      "http":{
+        "method":"POST",
+        "requestUri":"/datasets/{datasetId}/data-segments/associate",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchAssociateDataSegmentsToDatasetRequest"},
+      "output":{"shape":"BatchAssociateDataSegmentsToDatasetResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ConflictingOperationException"}
+      ],
+      "endpoint":{"hostPrefix":"api."}
+    },
     "BatchAssociateProjectAssets":{
       "name":"BatchAssociateProjectAssets",
       "http":{
@@ -65,6 +84,41 @@
         {"shape":"LimitExceededException"}
       ],
       "endpoint":{"hostPrefix":"monitor."}
+    },
+    "BatchDeleteDatasetDataSegments":{
+      "name":"BatchDeleteDatasetDataSegments",
+      "http":{
+        "method":"POST",
+        "requestUri":"/datasets/{datasetId}/data-segments/batch-delete"
+      },
+      "input":{"shape":"BatchDeleteDatasetDataSegmentsRequest"},
+      "output":{"shape":"BatchDeleteDatasetDataSegmentsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictingOperationException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"api."}
+    },
+    "BatchDisassociateDataSegmentsFromDataset":{
+      "name":"BatchDisassociateDataSegmentsFromDataset",
+      "http":{
+        "method":"POST",
+        "requestUri":"/datasets/{datasetId}/data-segments/disassociate",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchDisassociateDataSegmentsFromDatasetRequest"},
+      "output":{"shape":"BatchDisassociateDataSegmentsFromDatasetResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictingOperationException"}
+      ],
+      "endpoint":{"hostPrefix":"api."}
     },
     "BatchDisassociateProjectAssets":{
       "name":"BatchDisassociateProjectAssets",
@@ -150,6 +204,66 @@
       ],
       "endpoint":{"hostPrefix":"data."}
     },
+    "CancelEnrichmentJob":{
+      "name":"CancelEnrichmentJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/workspaces/{workspaceName}/enrichment-jobs/{jobId}/cancel",
+        "responseCode":200
+      },
+      "input":{"shape":"CancelEnrichmentJobRequest"},
+      "output":{"shape":"CancelEnrichmentJobResponse"},
+      "errors":[
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ConflictingOperationException"}
+      ],
+      "endpoint":{"hostPrefix":"data."},
+      "idempotent":true
+    },
+    "CancelPipelineExecution":{
+      "name":"CancelPipelineExecution",
+      "http":{
+        "method":"POST",
+        "requestUri":"/workspaces/{workspaceName}/pipelines/{pipelineName}/executions/{pipelineExecutionId}/cancel",
+        "responseCode":202
+      },
+      "input":{"shape":"CancelPipelineExecutionRequest"},
+      "output":{"shape":"CancelPipelineExecutionResponse"},
+      "errors":[
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictingOperationException"}
+      ],
+      "endpoint":{"hostPrefix":"data."}
+    },
+    "CancelQuery":{
+      "name":"CancelQuery",
+      "http":{
+        "method":"POST",
+        "requestUri":"/workspaces/{workspaceName}/queries/{queryId}/cancel",
+        "responseCode":202
+      },
+      "input":{"shape":"CancelQueryRequest"},
+      "output":{"shape":"CancelQueryResponse"},
+      "errors":[
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictingOperationException"}
+      ],
+      "endpoint":{"hostPrefix":"data."},
+      "idempotent":true
+    },
     "CreateAccessPolicy":{
       "name":"CreateAccessPolicy",
       "http":{
@@ -167,6 +281,27 @@
         {"shape":"LimitExceededException"}
       ],
       "endpoint":{"hostPrefix":"monitor."}
+    },
+    "CreateApplication":{
+      "name":"CreateApplication",
+      "http":{
+        "method":"POST",
+        "requestUri":"/applications",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateApplicationRequest"},
+      "output":{"shape":"CreateApplicationResponse"},
+      "errors":[
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ConflictingOperationException"}
+      ],
+      "endpoint":{"hostPrefix":"api."},
+      "idempotent":true
     },
     "CreateAsset":{
       "name":"CreateAsset",
@@ -307,6 +442,46 @@
       ],
       "endpoint":{"hostPrefix":"api."}
     },
+    "CreateDatasetExportJob":{
+      "name":"CreateDatasetExportJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/workspaces/{workspaceName}/dataset-export-jobs",
+        "responseCode":202
+      },
+      "input":{"shape":"CreateDatasetExportJobRequest"},
+      "output":{"shape":"CreateDatasetExportJobResponse"},
+      "errors":[
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictingOperationException"}
+      ],
+      "endpoint":{"hostPrefix":"data."},
+      "idempotent":true
+    },
+    "CreateEnrichmentJob":{
+      "name":"CreateEnrichmentJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/workspaces/{workspaceName}/enrichment-jobs",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateEnrichmentJobRequest"},
+      "output":{"shape":"CreateEnrichmentJobResponse"},
+      "errors":[
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictingOperationException"}
+      ],
+      "endpoint":{"hostPrefix":"data."}
+    },
     "CreateGateway":{
       "name":"CreateGateway",
       "http":{
@@ -324,6 +499,27 @@
         {"shape":"LimitExceededException"}
       ],
       "endpoint":{"hostPrefix":"api."}
+    },
+    "CreatePipeline":{
+      "name":"CreatePipeline",
+      "http":{
+        "method":"POST",
+        "requestUri":"/workspaces/{workspaceName}/pipelines",
+        "responseCode":200
+      },
+      "input":{"shape":"CreatePipelineRequest"},
+      "output":{"shape":"CreatePipelineResponse"},
+      "errors":[
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictingOperationException"}
+      ],
+      "endpoint":{"hostPrefix":"api."},
+      "idempotent":true
     },
     "CreatePortal":{
       "name":"CreatePortal",
@@ -361,6 +557,45 @@
       ],
       "endpoint":{"hostPrefix":"monitor."}
     },
+    "CreateTask":{
+      "name":"CreateTask",
+      "http":{
+        "method":"POST",
+        "requestUri":"/workspaces/{workspaceName}/tasks",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateTaskRequest"},
+      "output":{"shape":"CreateTaskResponse"},
+      "errors":[
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictingOperationException"}
+      ],
+      "endpoint":{"hostPrefix":"api."},
+      "idempotent":true
+    },
+    "CreateWorkspace":{
+      "name":"CreateWorkspace",
+      "http":{
+        "method":"POST",
+        "requestUri":"/workspaces"
+      },
+      "input":{"shape":"CreateWorkspaceRequest"},
+      "output":{"shape":"CreateWorkspaceResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ConflictingOperationException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"}
+      ],
+      "endpoint":{"hostPrefix":"api."}
+    },
     "DeleteAccessPolicy":{
       "name":"DeleteAccessPolicy",
       "http":{
@@ -377,6 +612,26 @@
         {"shape":"ThrottlingException"}
       ],
       "endpoint":{"hostPrefix":"monitor."}
+    },
+    "DeleteApplication":{
+      "name":"DeleteApplication",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/workspaces/{workspaceName}/applications/{id}",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteApplicationRequest"},
+      "output":{"shape":"DeleteApplicationResponse"},
+      "errors":[
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictingOperationException"}
+      ],
+      "endpoint":{"hostPrefix":"api."},
+      "idempotent":true
     },
     "DeleteAsset":{
       "name":"DeleteAsset",
@@ -521,6 +776,26 @@
       ],
       "endpoint":{"hostPrefix":"api."}
     },
+    "DeletePipeline":{
+      "name":"DeletePipeline",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/workspaces/{workspaceName}/pipelines/{pipelineName}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeletePipelineRequest"},
+      "output":{"shape":"DeletePipelineResponse"},
+      "errors":[
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictingOperationException"}
+      ],
+      "endpoint":{"hostPrefix":"api."},
+      "idempotent":true
+    },
     "DeletePortal":{
       "name":"DeletePortal",
       "http":{
@@ -556,6 +831,26 @@
       ],
       "endpoint":{"hostPrefix":"monitor."}
     },
+    "DeleteTask":{
+      "name":"DeleteTask",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/workspaces/{workspaceName}/tasks/{taskName}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteTaskRequest"},
+      "output":{"shape":"DeleteTaskResponse"},
+      "errors":[
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictingOperationException"}
+      ],
+      "endpoint":{"hostPrefix":"api."},
+      "idempotent":true
+    },
     "DeleteTimeSeries":{
       "name":"DeleteTimeSeries",
       "http":{
@@ -571,6 +866,25 @@
         {"shape":"ConflictingOperationException"}
       ],
       "endpoint":{"hostPrefix":"api."}
+    },
+    "DeleteWorkspace":{
+      "name":"DeleteWorkspace",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/workspaces/{workspaceName}"
+      },
+      "input":{"shape":"DeleteWorkspaceRequest"},
+      "output":{"shape":"DeleteWorkspaceResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ConflictingOperationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"}
+      ],
+      "endpoint":{"hostPrefix":"api."},
+      "idempotent":true
     },
     "DescribeAccessPolicy":{
       "name":"DescribeAccessPolicy",
@@ -604,6 +918,25 @@
         {"shape":"ThrottlingException"}
       ],
       "endpoint":{"hostPrefix":"api."}
+    },
+    "DescribeApplication":{
+      "name":"DescribeApplication",
+      "http":{
+        "method":"GET",
+        "requestUri":"/workspaces/{workspaceName}/applications/{id}",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeApplicationRequest"},
+      "output":{"shape":"DescribeApplicationResponse"},
+      "errors":[
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "endpoint":{"hostPrefix":"api."},
+      "readonly":true
     },
     "DescribeAsset":{
       "name":"DescribeAsset",
@@ -782,6 +1115,25 @@
       ],
       "endpoint":{"hostPrefix":"api."}
     },
+    "DescribeDatasetExportJob":{
+      "name":"DescribeDatasetExportJob",
+      "http":{
+        "method":"GET",
+        "requestUri":"/workspaces/{workspaceName}/dataset-export-jobs/{jobId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeDatasetExportJobRequest"},
+      "output":{"shape":"DescribeDatasetExportJobResponse"},
+      "errors":[
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"data."},
+      "readonly":true
+    },
     "DescribeDefaultEncryptionConfiguration":{
       "name":"DescribeDefaultEncryptionConfiguration",
       "http":{
@@ -792,10 +1144,32 @@
       "output":{"shape":"DescribeDefaultEncryptionConfigurationResponse"},
       "errors":[
         {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"InternalFailureException"},
         {"shape":"ThrottlingException"}
       ],
       "endpoint":{"hostPrefix":"api."}
+    },
+    "DescribeEnrichmentJob":{
+      "name":"DescribeEnrichmentJob",
+      "http":{
+        "method":"GET",
+        "requestUri":"/workspaces/{workspaceName}/enrichment-jobs/{jobId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeEnrichmentJobRequest"},
+      "output":{"shape":"DescribeEnrichmentJobResponse"},
+      "errors":[
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ConflictingOperationException"}
+      ],
+      "endpoint":{"hostPrefix":"data."},
+      "readonly":true
     },
     "DescribeExecution":{
       "name":"DescribeExecution",
@@ -861,6 +1235,44 @@
       ],
       "endpoint":{"hostPrefix":"api."}
     },
+    "DescribePipeline":{
+      "name":"DescribePipeline",
+      "http":{
+        "method":"GET",
+        "requestUri":"/workspaces/{workspaceName}/pipelines/{pipelineName}",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribePipelineRequest"},
+      "output":{"shape":"DescribePipelineResponse"},
+      "errors":[
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"api."},
+      "readonly":true
+    },
+    "DescribePipelineExecution":{
+      "name":"DescribePipelineExecution",
+      "http":{
+        "method":"GET",
+        "requestUri":"/workspaces/{workspaceName}/pipelines/{pipelineName}/executions/{pipelineExecutionId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribePipelineExecutionRequest"},
+      "output":{"shape":"DescribePipelineExecutionResponse"},
+      "errors":[
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"data."},
+      "readonly":true
+    },
     "DescribePortal":{
       "name":"DescribePortal",
       "http":{
@@ -895,6 +1307,44 @@
       ],
       "endpoint":{"hostPrefix":"monitor."}
     },
+    "DescribeQuery":{
+      "name":"DescribeQuery",
+      "http":{
+        "method":"GET",
+        "requestUri":"/workspaces/{workspaceName}/queries/{queryId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeQueryRequest"},
+      "output":{"shape":"DescribeQueryResponse"},
+      "errors":[
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"data."},
+      "readonly":true
+    },
+    "DescribeSearch":{
+      "name":"DescribeSearch",
+      "http":{
+        "method":"GET",
+        "requestUri":"/workspaces/{workspaceName}/searches/{searchId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeSearchRequest"},
+      "output":{"shape":"DescribeSearchResponse"},
+      "errors":[
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"data."},
+      "readonly":true
+    },
     "DescribeStorageConfiguration":{
       "name":"DescribeStorageConfiguration",
       "http":{
@@ -913,6 +1363,25 @@
       ],
       "endpoint":{"hostPrefix":"api."}
     },
+    "DescribeTask":{
+      "name":"DescribeTask",
+      "http":{
+        "method":"GET",
+        "requestUri":"/workspaces/{workspaceName}/tasks/{taskName}",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeTaskRequest"},
+      "output":{"shape":"DescribeTaskResponse"},
+      "errors":[
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"api."},
+      "readonly":true
+    },
     "DescribeTimeSeries":{
       "name":"DescribeTimeSeries",
       "http":{
@@ -928,6 +1397,24 @@
         {"shape":"ThrottlingException"}
       ],
       "endpoint":{"hostPrefix":"api."}
+    },
+    "DescribeWorkspace":{
+      "name":"DescribeWorkspace",
+      "http":{
+        "method":"GET",
+        "requestUri":"/workspaces/{workspaceName}"
+      },
+      "input":{"shape":"DescribeWorkspaceRequest"},
+      "output":{"shape":"DescribeWorkspaceResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"}
+      ],
+      "endpoint":{"hostPrefix":"api."},
+      "readonly":true
     },
     "DisassociateAssets":{
       "name":"DisassociateAssets",
@@ -1050,6 +1537,25 @@
       ],
       "endpoint":{"hostPrefix":"data."}
     },
+    "GetCaptureData":{
+      "name":"GetCaptureData",
+      "http":{
+        "method":"POST",
+        "requestUri":"/workspaces/{workspaceName}/get-capture-data",
+        "responseCode":200
+      },
+      "input":{"shape":"GetCaptureDataRequest"},
+      "output":{"shape":"GetCaptureDataResponse"},
+      "errors":[
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"data."},
+      "readonly":true
+    },
     "GetInterpolatedAssetPropertyValues":{
       "name":"GetInterpolatedAssetPropertyValues",
       "http":{
@@ -1066,6 +1572,44 @@
         {"shape":"ServiceUnavailableException"}
       ],
       "endpoint":{"hostPrefix":"data."}
+    },
+    "GetQueryResults":{
+      "name":"GetQueryResults",
+      "http":{
+        "method":"GET",
+        "requestUri":"/workspaces/{workspaceName}/queries/{queryId}/results",
+        "responseCode":200
+      },
+      "input":{"shape":"GetQueryResultsRequest"},
+      "output":{"shape":"GetQueryResultsResponse"},
+      "errors":[
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"data."},
+      "readonly":true
+    },
+    "GetSearchResults":{
+      "name":"GetSearchResults",
+      "http":{
+        "method":"GET",
+        "requestUri":"/workspaces/{workspaceName}/searches/{searchId}/results",
+        "responseCode":200
+      },
+      "input":{"shape":"GetSearchResultsRequest"},
+      "output":{"shape":"GetSearchResultsResponse"},
+      "errors":[
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"data."},
+      "readonly":true
     },
     "InvokeAssistant":{
       "name":"InvokeAssistant",
@@ -1119,6 +1663,25 @@
       ],
       "endpoint":{"hostPrefix":"api."}
     },
+    "ListApplications":{
+      "name":"ListApplications",
+      "http":{
+        "method":"GET",
+        "requestUri":"/applications",
+        "responseCode":200
+      },
+      "input":{"shape":"ListApplicationsRequest"},
+      "output":{"shape":"ListApplicationsResponse"},
+      "errors":[
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"api."},
+      "readonly":true
+    },
     "ListAssetModelCompositeModels":{
       "name":"ListAssetModelCompositeModels",
       "http":{
@@ -1161,6 +1724,7 @@
       "output":{"shape":"ListAssetModelsResponse"},
       "errors":[
         {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"InternalFailureException"},
         {"shape":"ThrottlingException"}
       ],
@@ -1324,6 +1888,59 @@
       ],
       "endpoint":{"hostPrefix":"monitor."}
     },
+    "ListDatasetDataSegmentRelationships":{
+      "name":"ListDatasetDataSegmentRelationships",
+      "http":{
+        "method":"GET",
+        "requestUri":"/datasets/{datasetId}/data-segment-relationships"
+      },
+      "input":{"shape":"ListDatasetDataSegmentRelationshipsRequest"},
+      "output":{"shape":"ListDatasetDataSegmentRelationshipsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"api."},
+      "readonly":true
+    },
+    "ListDatasetDataSegments":{
+      "name":"ListDatasetDataSegments",
+      "http":{
+        "method":"GET",
+        "requestUri":"/datasets/{datasetId}/data-segments"
+      },
+      "input":{"shape":"ListDatasetDataSegmentsRequest"},
+      "output":{"shape":"ListDatasetDataSegmentsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"api."},
+      "readonly":true
+    },
+    "ListDatasetExportJobs":{
+      "name":"ListDatasetExportJobs",
+      "http":{
+        "method":"GET",
+        "requestUri":"/workspaces/{workspaceName}/dataset-export-jobs",
+        "responseCode":200
+      },
+      "input":{"shape":"ListDatasetExportJobsRequest"},
+      "output":{"shape":"ListDatasetExportJobsResponse"},
+      "errors":[
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"data."},
+      "readonly":true
+    },
     "ListDatasets":{
       "name":"ListDatasets",
       "http":{
@@ -1334,10 +1951,32 @@
       "output":{"shape":"ListDatasetsResponse"},
       "errors":[
         {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"InternalFailureException"},
         {"shape":"ThrottlingException"}
       ],
       "endpoint":{"hostPrefix":"api."}
+    },
+    "ListEnrichmentJobs":{
+      "name":"ListEnrichmentJobs",
+      "http":{
+        "method":"GET",
+        "requestUri":"/workspaces/{workspaceName}/enrichment-jobs",
+        "responseCode":200
+      },
+      "input":{"shape":"ListEnrichmentJobsRequest"},
+      "output":{"shape":"ListEnrichmentJobsResponse"},
+      "errors":[
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ConflictingOperationException"}
+      ],
+      "endpoint":{"hostPrefix":"data."},
+      "readonly":true
     },
     "ListExecutions":{
       "name":"ListExecutions",
@@ -1385,6 +2024,44 @@
         {"shape":"ThrottlingException"}
       ],
       "endpoint":{"hostPrefix":"api."}
+    },
+    "ListPipelineExecutions":{
+      "name":"ListPipelineExecutions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/workspaces/{workspaceName}/pipelines/{pipelineName}/executions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListPipelineExecutionsRequest"},
+      "output":{"shape":"ListPipelineExecutionsResponse"},
+      "errors":[
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"data."},
+      "readonly":true
+    },
+    "ListPipelines":{
+      "name":"ListPipelines",
+      "http":{
+        "method":"GET",
+        "requestUri":"/workspaces/{workspaceName}/pipelines",
+        "responseCode":200
+      },
+      "input":{"shape":"ListPipelinesRequest"},
+      "output":{"shape":"ListPipelinesResponse"},
+      "errors":[
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"api."},
+      "readonly":true
     },
     "ListPortals":{
       "name":"ListPortals",
@@ -1434,6 +2111,44 @@
       ],
       "endpoint":{"hostPrefix":"monitor."}
     },
+    "ListQueries":{
+      "name":"ListQueries",
+      "http":{
+        "method":"GET",
+        "requestUri":"/workspaces/{workspaceName}/queries",
+        "responseCode":200
+      },
+      "input":{"shape":"ListQueriesRequest"},
+      "output":{"shape":"ListQueriesResponse"},
+      "errors":[
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"data."},
+      "readonly":true
+    },
+    "ListSearches":{
+      "name":"ListSearches",
+      "http":{
+        "method":"POST",
+        "requestUri":"/workspaces/{workspaceName}/searches/list",
+        "responseCode":200
+      },
+      "input":{"shape":"ListSearchesRequest"},
+      "output":{"shape":"ListSearchesResponse"},
+      "errors":[
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"data."},
+      "readonly":true
+    },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
       "http":{
@@ -1453,6 +2168,25 @@
       ],
       "endpoint":{"hostPrefix":"api."}
     },
+    "ListTasks":{
+      "name":"ListTasks",
+      "http":{
+        "method":"GET",
+        "requestUri":"/workspaces/{workspaceName}/tasks",
+        "responseCode":200
+      },
+      "input":{"shape":"ListTasksRequest"},
+      "output":{"shape":"ListTasksResponse"},
+      "errors":[
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"api."},
+      "readonly":true
+    },
     "ListTimeSeries":{
       "name":"ListTimeSeries",
       "http":{
@@ -1468,6 +2202,23 @@
         {"shape":"ThrottlingException"}
       ],
       "endpoint":{"hostPrefix":"api."}
+    },
+    "ListWorkspaces":{
+      "name":"ListWorkspaces",
+      "http":{
+        "method":"GET",
+        "requestUri":"/workspaces"
+      },
+      "input":{"shape":"ListWorkspacesRequest"},
+      "output":{"shape":"ListWorkspacesResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"}
+      ],
+      "endpoint":{"hostPrefix":"api."},
+      "readonly":true
     },
     "PutAssetModelInterfaceRelationship":{
       "name":"PutAssetModelInterfaceRelationship",
@@ -1498,6 +2249,7 @@
       "output":{"shape":"PutDefaultEncryptionConfigurationResponse"},
       "errors":[
         {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"InternalFailureException"},
         {"shape":"ThrottlingException"},
         {"shape":"LimitExceededException"},
@@ -1540,6 +2292,68 @@
         {"shape":"ConflictingOperationException"}
       ],
       "endpoint":{"hostPrefix":"api."}
+    },
+    "StartPipelineExecution":{
+      "name":"StartPipelineExecution",
+      "http":{
+        "method":"POST",
+        "requestUri":"/workspaces/{workspaceName}/pipelines/{pipelineName}/executions",
+        "responseCode":202
+      },
+      "input":{"shape":"StartPipelineExecutionRequest"},
+      "output":{"shape":"StartPipelineExecutionResponse"},
+      "errors":[
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictingOperationException"}
+      ],
+      "endpoint":{"hostPrefix":"data."},
+      "idempotent":true
+    },
+    "StartQuery":{
+      "name":"StartQuery",
+      "http":{
+        "method":"POST",
+        "requestUri":"/workspaces/{workspaceName}/queries",
+        "responseCode":202
+      },
+      "input":{"shape":"StartQueryRequest"},
+      "output":{"shape":"StartQueryResponse"},
+      "errors":[
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictingOperationException"}
+      ],
+      "endpoint":{"hostPrefix":"data."},
+      "idempotent":true
+    },
+    "StartSearch":{
+      "name":"StartSearch",
+      "http":{
+        "method":"POST",
+        "requestUri":"/workspaces/{workspaceName}/searches",
+        "responseCode":202
+      },
+      "input":{"shape":"StartSearchRequest"},
+      "output":{"shape":"StartSearchResponse"},
+      "errors":[
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictingOperationException"}
+      ],
+      "endpoint":{"hostPrefix":"data."},
+      "idempotent":true
     },
     "TagResource":{
       "name":"TagResource",
@@ -1722,6 +2536,7 @@
       "output":{"shape":"UpdateDatasetResponse"},
       "errors":[
         {"shape":"InvalidRequestException"},
+        {"shape":"ResourceAlreadyExistsException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalFailureException"},
         {"shape":"LimitExceededException"},
@@ -1765,6 +2580,27 @@
       ],
       "endpoint":{"hostPrefix":"api."}
     },
+    "UpdatePipeline":{
+      "name":"UpdatePipeline",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/workspaces/{workspaceName}/pipelines/{pipelineName}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdatePipelineRequest"},
+      "output":{"shape":"UpdatePipelineResponse"},
+      "errors":[
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictingOperationException"}
+      ],
+      "endpoint":{"hostPrefix":"api."},
+      "idempotent":true
+    },
     "UpdatePortal":{
       "name":"UpdatePortal",
       "http":{
@@ -1799,6 +2635,45 @@
         {"shape":"ThrottlingException"}
       ],
       "endpoint":{"hostPrefix":"monitor."}
+    },
+    "UpdateTask":{
+      "name":"UpdateTask",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/workspaces/{workspaceName}/tasks/{taskName}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateTaskRequest"},
+      "output":{"shape":"UpdateTaskResponse"},
+      "errors":[
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictingOperationException"}
+      ],
+      "endpoint":{"hostPrefix":"api."},
+      "idempotent":true
+    },
+    "UpdateWorkspace":{
+      "name":"UpdateWorkspace",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/workspaces/{workspaceName}"
+      },
+      "input":{"shape":"UpdateWorkspaceRequest"},
+      "output":{"shape":"UpdateWorkspaceResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ConflictingOperationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"}
+      ],
+      "endpoint":{"hostPrefix":"api."},
+      "idempotent":true
     }
   },
   "shapes":{
@@ -1935,6 +2810,59 @@
       "type":"string",
       "max":1011,
       "min":1
+    },
+    "Annotation":{
+      "type":"structure",
+      "members":{}
+    },
+    "ApplicationDescription":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_-]+"
+    },
+    "ApplicationId":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"[a-z0-9-]{36}"
+    },
+    "ApplicationList":{
+      "type":"list",
+      "member":{"shape":"ApplicationSummary"}
+    },
+    "ApplicationName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[A-Za-z0-9](?:[A-Za-z0-9 ._()\\-]*[A-Za-z0-9._()\\-])?"
+    },
+    "ApplicationStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "ACTIVE",
+        "DELETING"
+      ]
+    },
+    "ApplicationSummary":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "id",
+        "name",
+        "status",
+        "createdAt",
+        "workspaceName"
+      ],
+      "members":{
+        "arn":{"shape":"ARN"},
+        "id":{"shape":"ApplicationId"},
+        "name":{"shape":"ApplicationName"},
+        "status":{"shape":"ApplicationStatus"},
+        "createdAt":{"shape":"Timestamp"},
+        "workspaceName":{"shape":"WorkspaceName"}
+      }
     },
     "AssetBindingValueFilter":{
       "type":"structure",
@@ -2497,6 +3425,25 @@
         }
       }
     },
+    "AssociateDataSegmentEntries":{
+      "type":"list",
+      "member":{"shape":"AssociateDataSegmentEntry"}
+    },
+    "AssociateDataSegmentEntry":{
+      "type":"structure",
+      "required":[
+        "sourceDatasetId",
+        "timeSeriesId",
+        "startTimestamp",
+        "endTimestamp"
+      ],
+      "members":{
+        "sourceDatasetId":{"shape":"ID"},
+        "timeSeriesId":{"shape":"TimeSeriesId"},
+        "startTimestamp":{"shape":"TimeInNanos"},
+        "endTimestamp":{"shape":"TimeInNanos"}
+      }
+    },
     "AssociateTimeSeriesToAssetPropertyRequest":{
       "type":"structure",
       "required":[
@@ -2568,6 +3515,40 @@
         "SSO"
       ]
     },
+    "BatchAssociateDataSegmentsToDatasetRequest":{
+      "type":"structure",
+      "required":[
+        "datasetId",
+        "workspaceName",
+        "associateDataSegmentEntries"
+      ],
+      "members":{
+        "datasetId":{
+          "shape":"ID",
+          "location":"uri",
+          "locationName":"datasetId"
+        },
+        "workspaceName":{"shape":"WorkspaceName"},
+        "associateDataSegmentEntries":{"shape":"AssociateDataSegmentEntries"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "BatchAssociateDataSegmentsToDatasetResponse":{
+      "type":"structure",
+      "required":[
+        "datasetId",
+        "datasetVersion",
+        "failedAssociations"
+      ],
+      "members":{
+        "datasetId":{"shape":"ID"},
+        "datasetVersion":{"shape":"Version"},
+        "failedAssociations":{"shape":"FailedDataSegmentAssociations"}
+      }
+    },
     "BatchAssociateProjectAssetsErrors":{
       "type":"list",
       "member":{"shape":"AssetErrorDetails"}
@@ -2595,6 +3576,74 @@
       "type":"structure",
       "members":{
         "errors":{"shape":"BatchAssociateProjectAssetsErrors"}
+      }
+    },
+    "BatchDeleteDatasetDataSegmentsRequest":{
+      "type":"structure",
+      "required":[
+        "datasetId",
+        "workspaceName",
+        "deleteDataSegmentEntries"
+      ],
+      "members":{
+        "datasetId":{
+          "shape":"ID",
+          "location":"uri",
+          "locationName":"datasetId"
+        },
+        "workspaceName":{"shape":"WorkspaceName"},
+        "deleteDataSegmentEntries":{"shape":"DeleteDataSegmentEntries"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "BatchDeleteDatasetDataSegmentsResponse":{
+      "type":"structure",
+      "required":[
+        "datasetId",
+        "datasetVersion",
+        "errors"
+      ],
+      "members":{
+        "datasetId":{"shape":"ID"},
+        "datasetVersion":{"shape":"Version"},
+        "errors":{"shape":"FailedDataSegmentDeletions"}
+      }
+    },
+    "BatchDisassociateDataSegmentsFromDatasetRequest":{
+      "type":"structure",
+      "required":[
+        "datasetId",
+        "workspaceName",
+        "disassociateDataSegmentEntries"
+      ],
+      "members":{
+        "datasetId":{
+          "shape":"ID",
+          "location":"uri",
+          "locationName":"datasetId"
+        },
+        "workspaceName":{"shape":"WorkspaceName"},
+        "disassociateDataSegmentEntries":{"shape":"DisassociateDataSegmentEntries"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "BatchDisassociateDataSegmentsFromDatasetResponse":{
+      "type":"structure",
+      "required":[
+        "datasetId",
+        "datasetVersion",
+        "failedDisassociations"
+      ],
+      "members":{
+        "datasetId":{"shape":"ID"},
+        "datasetVersion":{"shape":"Version"},
+        "failedDisassociations":{"shape":"FailedDataSegmentDisassociations"}
       }
     },
     "BatchDisassociateProjectAssetsErrors":{
@@ -3036,6 +4085,110 @@
       "max":63,
       "min":3
     },
+    "BulkImportJobName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^[\\p{L}\\p{N}\\p{Zs}._:/-]+$"
+    },
+    "CancelEnrichmentJobRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceName",
+        "jobId"
+      ],
+      "members":{
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"uri",
+          "locationName":"workspaceName"
+        },
+        "jobId":{
+          "shape":"ID",
+          "location":"uri",
+          "locationName":"jobId"
+        }
+      }
+    },
+    "CancelEnrichmentJobResponse":{
+      "type":"structure",
+      "required":[
+        "jobId",
+        "status"
+      ],
+      "members":{
+        "jobId":{"shape":"ID"},
+        "status":{"shape":"EnrichmentJobStatus"}
+      }
+    },
+    "CancelPipelineExecutionRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceName",
+        "pipelineName",
+        "pipelineExecutionId"
+      ],
+      "members":{
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"uri",
+          "locationName":"workspaceName"
+        },
+        "pipelineName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"pipelineName"
+        },
+        "pipelineExecutionId":{
+          "shape":"ID",
+          "location":"uri",
+          "locationName":"pipelineExecutionId"
+        },
+        "reason":{"shape":"CancelPipelineExecutionRequestReasonString"}
+      }
+    },
+    "CancelPipelineExecutionRequestReasonString":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "CancelPipelineExecutionResponse":{
+      "type":"structure",
+      "required":["state"],
+      "members":{
+        "state":{"shape":"PipelineExecutionState"}
+      }
+    },
+    "CancelQueryRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceName",
+        "queryId"
+      ],
+      "members":{
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"uri",
+          "locationName":"workspaceName"
+        },
+        "queryId":{
+          "shape":"QueryId",
+          "location":"uri",
+          "locationName":"queryId"
+        }
+      }
+    },
+    "CancelQueryResponse":{
+      "type":"structure",
+      "required":[
+        "queryId",
+        "status"
+      ],
+      "members":{
+        "queryId":{"shape":"QueryId"},
+        "status":{"shape":"QueryStatus"}
+      }
+    },
     "CapabilityConfiguration":{
       "type":"string",
       "max":10000000,
@@ -3057,6 +4210,7 @@
         "NOT_APPLICABLE"
       ]
     },
+    "CaptureBlob":{"type":"blob"},
     "Citation":{
       "type":"structure",
       "members":{
@@ -3074,12 +4228,37 @@
       "min":36,
       "pattern":"\\S{36,64}"
     },
+    "ColumnDataType":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
     "ColumnInfo":{
       "type":"structure",
       "members":{
         "name":{"shape":"String"},
         "type":{"shape":"ColumnType"}
       }
+    },
+    "ColumnInformation":{
+      "type":"structure",
+      "required":[
+        "name",
+        "type"
+      ],
+      "members":{
+        "name":{"shape":"ColumnLabel"},
+        "type":{"shape":"ColumnDataType"}
+      }
+    },
+    "ColumnInformationList":{
+      "type":"list",
+      "member":{"shape":"ColumnInformation"}
+    },
+    "ColumnLabel":{
+      "type":"string",
+      "max":256,
+      "min":1
     },
     "ColumnName":{
       "type":"string",
@@ -3104,9 +4283,19 @@
         "scalarType":{"shape":"ScalarType"}
       }
     },
+    "ColumnValue":{
+      "type":"string",
+      "max":1048576,
+      "min":0
+    },
     "ColumnsList":{
       "type":"list",
       "member":{"shape":"ColumnInfo"}
+    },
+    "CommandList":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "sensitive":true
     },
     "CompositeModelProperty":{
       "type":"structure",
@@ -3295,6 +4484,103 @@
         "CLOUD"
       ]
     },
+    "ComputeNode":{
+      "type":"structure",
+      "required":[
+        "computeNodeName",
+        "taskName"
+      ],
+      "members":{
+        "computeNodeName":{"shape":"ResourceName"},
+        "taskName":{"shape":"ResourceName"},
+        "environmentVariables":{"shape":"EnvironmentVariablesMap"},
+        "dependsOn":{"shape":"ComputeNodeNameList"}
+      }
+    },
+    "ComputeNodeEnvironmentVariablesMap":{
+      "type":"map",
+      "key":{"shape":"ResourceName"},
+      "value":{"shape":"EnvironmentVariablesMap"},
+      "max":50,
+      "min":0
+    },
+    "ComputeNodeErrorCode":{
+      "type":"string",
+      "enum":[
+        "VALIDATION_ERROR",
+        "INTERNAL_FAILURE",
+        "EXECUTION_ERROR",
+        "TIMED_OUT"
+      ]
+    },
+    "ComputeNodeExecutionDetails":{
+      "type":"structure",
+      "required":[
+        "computeNodeName",
+        "taskName",
+        "taskArn",
+        "taskVersion",
+        "dependsOn",
+        "status"
+      ],
+      "members":{
+        "computeNodeName":{"shape":"ResourceName"},
+        "taskName":{"shape":"ResourceName"},
+        "taskArn":{"shape":"ARN"},
+        "taskVersion":{"shape":"Version"},
+        "dependsOn":{"shape":"ComputeNodeNameList"},
+        "status":{"shape":"ComputeNodeExecutionStatus"},
+        "startTime":{"shape":"Timestamp"},
+        "endTime":{"shape":"Timestamp"},
+        "executionEnvironmentVariables":{"shape":"ExecutionEnvironmentVariablesMap"}
+      }
+    },
+    "ComputeNodeExecutionDetailsList":{
+      "type":"list",
+      "member":{"shape":"ComputeNodeExecutionDetails"}
+    },
+    "ComputeNodeExecutionState":{
+      "type":"string",
+      "enum":[
+        "NOT_STARTED",
+        "QUEUED",
+        "RUNNING",
+        "SUCCEEDED",
+        "FAILED"
+      ]
+    },
+    "ComputeNodeExecutionStateDetails":{
+      "type":"structure",
+      "required":[
+        "code",
+        "message"
+      ],
+      "members":{
+        "code":{"shape":"ComputeNodeErrorCode"},
+        "message":{"shape":"String"},
+        "details":{"shape":"DetailedErrorList"}
+      }
+    },
+    "ComputeNodeExecutionStatus":{
+      "type":"structure",
+      "required":["state"],
+      "members":{
+        "state":{"shape":"ComputeNodeExecutionState"},
+        "stateDetails":{"shape":"ComputeNodeExecutionStateDetails"}
+      }
+    },
+    "ComputeNodeList":{
+      "type":"list",
+      "member":{"shape":"ComputeNode"},
+      "max":50,
+      "min":0
+    },
+    "ComputeNodeNameList":{
+      "type":"list",
+      "member":{"shape":"ResourceName"},
+      "max":10,
+      "min":0
+    },
     "ConfigurationErrorDetails":{
       "type":"structure",
       "required":[
@@ -3336,6 +4622,24 @@
       },
       "error":{"httpStatusCode":409},
       "exception":true
+    },
+    "ContainerTaskConfiguration":{
+      "type":"structure",
+      "required":[
+        "ecrUri",
+        "taskExecutionRole",
+        "processingType",
+        "processingUnit"
+      ],
+      "members":{
+        "ecrUri":{"shape":"EcrUri"},
+        "taskExecutionRole":{"shape":"IamRoleArn"},
+        "processingType":{"shape":"ProcessingType"},
+        "processingUnit":{"shape":"ProcessingUnit"},
+        "command":{"shape":"CommandList"},
+        "timeoutSeconds":{"shape":"TimeoutSeconds"},
+        "environmentVariables":{"shape":"EnvironmentVariablesMap"}
+      }
     },
     "Content":{
       "type":"structure",
@@ -3392,6 +4696,42 @@
         "accessPolicyArn":{"shape":"ARN"}
       }
     },
+    "CreateApplicationRequest":{
+      "type":"structure",
+      "required":[
+        "idcInstanceArn",
+        "workspaceName",
+        "name"
+      ],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "idcInstanceArn":{"shape":"ARN"},
+        "workspaceName":{"shape":"WorkspaceName"},
+        "name":{"shape":"ApplicationName"},
+        "description":{"shape":"Description"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateApplicationResponse":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "id",
+        "dnsSubdomain",
+        "name",
+        "status"
+      ],
+      "members":{
+        "arn":{"shape":"ARN"},
+        "id":{"shape":"ApplicationId"},
+        "dnsSubdomain":{"shape":"DnsSubdomain"},
+        "name":{"shape":"ApplicationName"},
+        "status":{"shape":"ApplicationStatus"}
+      }
+    },
     "CreateAssetModelCompositeModelRequest":{
       "type":"structure",
       "required":[
@@ -3444,7 +4784,8 @@
       "members":{
         "assetModelCompositeModelId":{"shape":"ID"},
         "assetModelCompositeModelPath":{"shape":"AssetModelCompositeModelPath"},
-        "assetModelStatus":{"shape":"AssetModelStatus"}
+        "assetModelStatus":{"shape":"AssetModelStatus"},
+        "assetModelId":{"shape":"ID"}
       }
     },
     "CreateAssetModelRequest":{
@@ -3517,17 +4858,18 @@
         "jobName",
         "jobRoleArn",
         "files",
-        "errorReportLocation",
-        "jobConfiguration"
+        "errorReportLocation"
       ],
       "members":{
-        "jobName":{"shape":"Name"},
+        "jobName":{"shape":"BulkImportJobName"},
         "jobRoleArn":{"shape":"ARN"},
         "files":{"shape":"Files"},
         "errorReportLocation":{"shape":"ErrorReportLocation"},
         "jobConfiguration":{"shape":"JobConfiguration"},
         "adaptiveIngestion":{"shape":"AdaptiveIngestion"},
-        "deleteFilesAfterImport":{"shape":"DeleteFilesAfterImport"}
+        "deleteFilesAfterImport":{"shape":"DeleteFilesAfterImport"},
+        "datasetId":{"shape":"ID"},
+        "workspaceName":{"shape":"WorkspaceName"}
       }
     },
     "CreateBulkImportJobResponse":{
@@ -3539,7 +4881,7 @@
       ],
       "members":{
         "jobId":{"shape":"ID"},
-        "jobName":{"shape":"Name"},
+        "jobName":{"shape":"BulkImportJobName"},
         "jobStatus":{"shape":"JobStatus"}
       }
     },
@@ -3605,6 +4947,40 @@
         "dashboardArn":{"shape":"ARN"}
       }
     },
+    "CreateDatasetExportJobRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceName",
+        "destinationS3Uri",
+        "input",
+        "errorReportLocation"
+      ],
+      "members":{
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"uri",
+          "locationName":"workspaceName"
+        },
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "destinationS3Uri":{"shape":"S3Uri"},
+        "input":{"shape":"ProcessingInput"},
+        "errorReportLocation":{"shape":"ExportErrorReportLocation"}
+      }
+    },
+    "CreateDatasetExportJobResponse":{
+      "type":"structure",
+      "required":[
+        "jobId",
+        "workspaceName"
+      ],
+      "members":{
+        "jobId":{"shape":"DatasetExportJobId"},
+        "workspaceName":{"shape":"WorkspaceName"}
+      }
+    },
     "CreateDatasetRequest":{
       "type":"structure",
       "required":[
@@ -3614,7 +4990,11 @@
       "members":{
         "datasetId":{"shape":"ID"},
         "datasetName":{"shape":"RestrictedName"},
-        "datasetDescription":{"shape":"RestrictedDescription"},
+        "datasetDescription":{"shape":"Description"},
+        "datasetType":{"shape":"DatasetTypeEnum"},
+        "datasetConfig":{"shape":"DatasetConfig"},
+        "workspaceName":{"shape":"WorkspaceName"},
+        "metadata":{"shape":"Metadata"},
         "datasetSource":{"shape":"DatasetSource"},
         "clientToken":{
           "shape":"ClientToken",
@@ -3634,6 +5014,38 @@
         "datasetId":{"shape":"ID"},
         "datasetArn":{"shape":"ARN"},
         "datasetStatus":{"shape":"DatasetStatus"}
+      }
+    },
+    "CreateEnrichmentJobRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceName",
+        "jobConfiguration"
+      ],
+      "members":{
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"uri",
+          "locationName":"workspaceName"
+        },
+        "jobConfiguration":{"shape":"EnrichmentJobConfiguration"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateEnrichmentJobResponse":{
+      "type":"structure",
+      "required":[
+        "jobId",
+        "status",
+        "createdAt"
+      ],
+      "members":{
+        "jobId":{"shape":"ID"},
+        "status":{"shape":"EnrichmentJobStatus"},
+        "createdAt":{"shape":"Timestamp"}
       }
     },
     "CreateGatewayRequest":{
@@ -3661,6 +5073,45 @@
       }
     },
     "CreateMissingProperty":{"type":"boolean"},
+    "CreatePipelineRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceName",
+        "pipelineName",
+        "computations"
+      ],
+      "members":{
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"uri",
+          "locationName":"workspaceName"
+        },
+        "pipelineName":{"shape":"ResourceName"},
+        "description":{"shape":"Description"},
+        "environmentVariables":{"shape":"EnvironmentVariablesMap"},
+        "computations":{"shape":"ComputeNodeList"},
+        "tags":{"shape":"TagMap"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreatePipelineResponse":{
+      "type":"structure",
+      "required":[
+        "pipelineName",
+        "pipelineArn",
+        "version",
+        "status"
+      ],
+      "members":{
+        "pipelineName":{"shape":"ResourceName"},
+        "pipelineArn":{"shape":"ARN"},
+        "version":{"shape":"Version"},
+        "status":{"shape":"ResourceStatus"}
+      }
+    },
     "CreatePortalRequest":{
       "type":"structure",
       "required":[
@@ -3731,6 +5182,74 @@
         "projectArn":{"shape":"ARN"}
       }
     },
+    "CreateTaskRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceName",
+        "taskName",
+        "taskConfiguration"
+      ],
+      "members":{
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"uri",
+          "locationName":"workspaceName"
+        },
+        "taskName":{"shape":"ResourceName"},
+        "description":{"shape":"Description"},
+        "taskConfiguration":{"shape":"TaskConfiguration"},
+        "tags":{"shape":"TagMap"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateTaskResponse":{
+      "type":"structure",
+      "required":[
+        "taskName",
+        "taskArn",
+        "version",
+        "status"
+      ],
+      "members":{
+        "taskName":{"shape":"ResourceName"},
+        "taskArn":{"shape":"ARN"},
+        "version":{"shape":"Version"},
+        "status":{"shape":"ResourceStatus"}
+      }
+    },
+    "CreateWorkspaceRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceName",
+        "encryptionConfiguration"
+      ],
+      "members":{
+        "workspaceName":{"shape":"WorkspaceName"},
+        "workspaceDescription":{"shape":"Description"},
+        "encryptionConfiguration":{"shape":"WorkspaceEncryptionConfiguration"},
+        "tags":{"shape":"TagMap"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateWorkspaceResponse":{
+      "type":"structure",
+      "required":[
+        "workspaceName",
+        "workspaceArn",
+        "workspaceStatus"
+      ],
+      "members":{
+        "workspaceName":{"shape":"WorkspaceName"},
+        "workspaceArn":{"shape":"ARN"},
+        "workspaceStatus":{"shape":"WorkspaceStatus"}
+      }
+    },
     "Csv":{
       "type":"structure",
       "required":["columnNames"],
@@ -3795,11 +5314,155 @@
         "assetModelProperty":{"shape":"AssetModelPropertyBindingValueFilter"}
       }
     },
+    "DataSegmentEnrichment":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "status":{"shape":"EnrichmentStatus"},
+        "lastEnrichedAt":{"shape":"Timestamp"}
+      }
+    },
+    "DataSegmentErrorCode":{
+      "type":"string",
+      "enum":[
+        "INTERNAL_FAILURE",
+        "VALIDATION_ERROR",
+        "RESOURCE_NOT_FOUND",
+        "LIMIT_EXCEEDED",
+        "CONFLICTING_OPERATION"
+      ]
+    },
+    "DataSegmentErrorMessage":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "DataSegmentRelationshipSummaries":{
+      "type":"list",
+      "member":{"shape":"DataSegmentRelationshipSummary"}
+    },
+    "DataSegmentRelationshipSummary":{
+      "type":"structure",
+      "required":[
+        "targetDatasetId",
+        "sourceDatasetId",
+        "timeSeriesId",
+        "startTimestamp",
+        "endTimestamp"
+      ],
+      "members":{
+        "targetDatasetId":{"shape":"ID"},
+        "sourceDatasetId":{"shape":"ID"},
+        "timeSeriesId":{"shape":"TimeSeriesId"},
+        "startTimestamp":{"shape":"TimeInNanos"},
+        "endTimestamp":{"shape":"TimeInNanos"}
+      }
+    },
+    "DataSegmentSummaries":{
+      "type":"list",
+      "member":{"shape":"DataSegmentSummary"}
+    },
+    "DataSegmentSummary":{
+      "type":"structure",
+      "required":[
+        "sourceDatasetId",
+        "timeSeriesId",
+        "startTimestamp",
+        "endTimestamp",
+        "alias",
+        "dataType"
+      ],
+      "members":{
+        "sourceDatasetId":{"shape":"ID"},
+        "timeSeriesId":{"shape":"TimeSeriesId"},
+        "startTimestamp":{"shape":"TimeInNanos"},
+        "endTimestamp":{"shape":"TimeInNanos"},
+        "alias":{"shape":"PropertyAlias"},
+        "dataType":{"shape":"PropertyDataType"},
+        "enrichment":{"shape":"DataSegmentEnrichment"}
+      }
+    },
+    "DataSetIdList":{
+      "type":"list",
+      "member":{"shape":"DatasetId"},
+      "max":100,
+      "min":1
+    },
     "DataSetReference":{
       "type":"structure",
       "members":{
         "datasetArn":{"shape":"String"},
         "source":{"shape":"Source"}
+      }
+    },
+    "DatasetConfig":{
+      "type":"structure",
+      "members":{
+        "session":{"shape":"SessionConfig"}
+      }
+    },
+    "DatasetEnrichment":{
+      "type":"structure",
+      "members":{
+        "video":{"shape":"DatasetEnrichmentEntry"}
+      }
+    },
+    "DatasetEnrichmentEntry":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "status":{"shape":"DatasetEnrichmentStatus"},
+        "lastEnrichedAt":{"shape":"Timestamp"}
+      }
+    },
+    "DatasetEnrichmentStatus":{
+      "type":"string",
+      "enum":[
+        "FULLY_ENRICHED",
+        "PARTIALLY_ENRICHED",
+        "NOT_ENRICHED"
+      ]
+    },
+    "DatasetExportJobFilter":{
+      "type":"string",
+      "enum":[
+        "ALL",
+        "SUBMITTED",
+        "RUNNING",
+        "COMPLETED",
+        "COMPLETED_WITH_ERRORS",
+        "FAILED"
+      ]
+    },
+    "DatasetExportJobId":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+    },
+    "DatasetExportJobStatus":{
+      "type":"string",
+      "enum":[
+        "SUBMITTED",
+        "RUNNING",
+        "COMPLETED",
+        "COMPLETED_WITH_ERRORS",
+        "FAILED"
+      ]
+    },
+    "DatasetId":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "DatasetItem":{
+      "type":"structure",
+      "required":["datasetId"],
+      "members":{
+        "datasetId":{"shape":"DatasetId"},
+        "trimSettings":{"shape":"TrimSettings"},
+        "exportDataTypes":{"shape":"ExportDataTypeList"}
       }
     },
     "DatasetSource":{
@@ -3816,11 +5479,17 @@
     },
     "DatasetSourceFormat":{
       "type":"string",
-      "enum":["KNOWLEDGE_BASE"]
+      "enum":[
+        "KNOWLEDGE_BASE",
+        "TIMESERIES"
+      ]
     },
     "DatasetSourceType":{
       "type":"string",
-      "enum":["KENDRA"]
+      "enum":[
+        "KENDRA",
+        "SITEWISE"
+      ]
     },
     "DatasetState":{
       "type":"string",
@@ -3859,11 +5528,22 @@
         "id":{"shape":"ID"},
         "arn":{"shape":"ARN"},
         "name":{"shape":"RestrictedName"},
-        "description":{"shape":"RestrictedDescription"},
+        "description":{"shape":"Description"},
+        "sourceType":{"shape":"DatasetSourceType"},
+        "datasetType":{"shape":"DatasetTypeEnum"},
         "creationDate":{"shape":"Timestamp"},
         "lastUpdateDate":{"shape":"Timestamp"},
-        "status":{"shape":"DatasetStatus"}
+        "status":{"shape":"DatasetStatus"},
+        "enrichmentStatus":{"shape":"DatasetEnrichment"}
       }
+    },
+    "DatasetTypeEnum":{
+      "type":"string",
+      "enum":[
+        "SESSION",
+        "CURATED",
+        "EXTERNAL"
+      ]
     },
     "Datum":{
       "type":"structure",
@@ -3900,6 +5580,29 @@
       }
     },
     "DeleteAccessPolicyResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "DeleteApplicationRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceName",
+        "id"
+      ],
+      "members":{
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"uri",
+          "locationName":"workspaceName"
+        },
+        "id":{
+          "shape":"ApplicationId",
+          "location":"uri",
+          "locationName":"id"
+        }
+      }
+    },
+    "DeleteApplicationResponse":{
       "type":"structure",
       "members":{}
     },
@@ -3947,7 +5650,8 @@
       "type":"structure",
       "required":["assetModelStatus"],
       "members":{
-        "assetModelStatus":{"shape":"AssetModelStatus"}
+        "assetModelStatus":{"shape":"AssetModelStatus"},
+        "assetModelId":{"shape":"ID"}
       }
     },
     "DeleteAssetModelInterfaceRelationshipRequest":{
@@ -4026,6 +5730,7 @@
       "type":"structure",
       "required":["assetModelStatus"],
       "members":{
+        "assetModelId":{"shape":"ID"},
         "assetModelStatus":{"shape":"AssetModelStatus"}
       }
     },
@@ -4050,6 +5755,7 @@
       "type":"structure",
       "required":["assetStatus"],
       "members":{
+        "assetId":{"shape":"ID"},
         "assetStatus":{"shape":"AssetStatus"}
       }
     },
@@ -4098,6 +5804,25 @@
       "type":"structure",
       "members":{}
     },
+    "DeleteDataSegmentEntries":{
+      "type":"list",
+      "member":{"shape":"DeleteDataSegmentEntry"},
+      "max":10,
+      "min":1
+    },
+    "DeleteDataSegmentEntry":{
+      "type":"structure",
+      "required":[
+        "timeSeriesId",
+        "startTimestamp",
+        "endTimestamp"
+      ],
+      "members":{
+        "timeSeriesId":{"shape":"ID"},
+        "startTimestamp":{"shape":"TimeInNanos"},
+        "endTimestamp":{"shape":"TimeInNanos"}
+      }
+    },
     "DeleteDatasetRequest":{
       "type":"structure",
       "required":["datasetId"],
@@ -4106,6 +5831,11 @@
           "shape":"ID",
           "location":"uri",
           "locationName":"datasetId"
+        },
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"querystring",
+          "locationName":"workspaceName"
         },
         "clientToken":{
           "shape":"ClientToken",
@@ -4132,6 +5862,32 @@
           "location":"uri",
           "locationName":"gatewayId"
         }
+      }
+    },
+    "DeletePipelineRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceName",
+        "pipelineName"
+      ],
+      "members":{
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"uri",
+          "locationName":"workspaceName"
+        },
+        "pipelineName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"pipelineName"
+        }
+      }
+    },
+    "DeletePipelineResponse":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "status":{"shape":"ResourceStatus"}
       }
     },
     "DeletePortalRequest":{
@@ -4179,6 +5935,32 @@
       "type":"structure",
       "members":{}
     },
+    "DeleteTaskRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceName",
+        "taskName"
+      ],
+      "members":{
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"uri",
+          "locationName":"workspaceName"
+        },
+        "taskName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"taskName"
+        }
+      }
+    },
+    "DeleteTaskResponse":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "status":{"shape":"ResourceStatus"}
+      }
+    },
     "DeleteTimeSeriesRequest":{
       "type":"structure",
       "members":{
@@ -4200,7 +5982,36 @@
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
+        },
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"querystring",
+          "locationName":"workspaceName"
         }
+      }
+    },
+    "DeleteWorkspaceRequest":{
+      "type":"structure",
+      "required":["workspaceName"],
+      "members":{
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"uri",
+          "locationName":"workspaceName"
+        },
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
+        }
+      }
+    },
+    "DeleteWorkspaceResponse":{
+      "type":"structure",
+      "required":["workspaceStatus"],
+      "members":{
+        "workspaceStatus":{"shape":"WorkspaceStatus"}
       }
     },
     "DescribeAccessPolicyRequest":{
@@ -4262,6 +6073,51 @@
         "actionPayload":{"shape":"ActionPayload"},
         "executionTime":{"shape":"Timestamp"},
         "resolveTo":{"shape":"ResolveTo"}
+      }
+    },
+    "DescribeApplicationRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceName",
+        "id"
+      ],
+      "members":{
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"uri",
+          "locationName":"workspaceName"
+        },
+        "id":{
+          "shape":"ApplicationId",
+          "location":"uri",
+          "locationName":"id"
+        }
+      }
+    },
+    "DescribeApplicationResponse":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "createdAt",
+        "dnsSubdomain",
+        "id",
+        "idcApplicationArn",
+        "name",
+        "status",
+        "updatedAt",
+        "workspaceName"
+      ],
+      "members":{
+        "arn":{"shape":"ARN"},
+        "createdAt":{"shape":"Timestamp"},
+        "dnsSubdomain":{"shape":"DnsSubdomain"},
+        "description":{"shape":"ApplicationDescription"},
+        "id":{"shape":"ApplicationId"},
+        "idcApplicationArn":{"shape":"ARN"},
+        "name":{"shape":"ApplicationName"},
+        "status":{"shape":"ApplicationStatus"},
+        "updatedAt":{"shape":"Timestamp"},
+        "workspaceName":{"shape":"WorkspaceName"}
       }
     },
     "DescribeAssetCompositeModelRequest":{
@@ -4537,6 +6393,11 @@
           "shape":"ID",
           "location":"uri",
           "locationName":"jobId"
+        },
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"querystring",
+          "locationName":"workspaceName"
         }
       }
     },
@@ -4549,7 +6410,6 @@
         "jobRoleArn",
         "files",
         "errorReportLocation",
-        "jobConfiguration",
         "jobCreationDate",
         "jobLastUpdateDate"
       ],
@@ -4564,7 +6424,9 @@
         "jobCreationDate":{"shape":"Timestamp"},
         "jobLastUpdateDate":{"shape":"Timestamp"},
         "adaptiveIngestion":{"shape":"AdaptiveIngestion"},
-        "deleteFilesAfterImport":{"shape":"DeleteFilesAfterImport"}
+        "deleteFilesAfterImport":{"shape":"DeleteFilesAfterImport"},
+        "datasetId":{"shape":"ID"},
+        "workspaceName":{"shape":"WorkspaceName"}
       }
     },
     "DescribeComputationModelExecutionSummaryRequest":{
@@ -4677,6 +6539,47 @@
         "dashboardLastUpdateDate":{"shape":"Timestamp"}
       }
     },
+    "DescribeDatasetExportJobRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceName",
+        "jobId"
+      ],
+      "members":{
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"uri",
+          "locationName":"workspaceName"
+        },
+        "jobId":{
+          "shape":"DatasetExportJobId",
+          "location":"uri",
+          "locationName":"jobId"
+        }
+      }
+    },
+    "DescribeDatasetExportJobResponse":{
+      "type":"structure",
+      "required":[
+        "jobId",
+        "workspaceName",
+        "status",
+        "startedAt",
+        "destinationS3Uri",
+        "errorReportLocation",
+        "input"
+      ],
+      "members":{
+        "jobId":{"shape":"DatasetExportJobId"},
+        "workspaceName":{"shape":"WorkspaceName"},
+        "status":{"shape":"DatasetExportJobStatus"},
+        "startedAt":{"shape":"Timestamp"},
+        "completedAt":{"shape":"Timestamp"},
+        "destinationS3Uri":{"shape":"S3Uri"},
+        "errorReportLocation":{"shape":"ExportErrorReportLocation"},
+        "input":{"shape":"ProcessingInput"}
+      }
+    },
     "DescribeDatasetRequest":{
       "type":"structure",
       "required":["datasetId"],
@@ -4685,6 +6588,16 @@
           "shape":"ID",
           "location":"uri",
           "locationName":"datasetId"
+        },
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"querystring",
+          "locationName":"workspaceName"
+        },
+        "datasetVersion":{
+          "shape":"Version",
+          "location":"querystring",
+          "locationName":"datasetVersion"
         }
       }
     },
@@ -4704,12 +6617,17 @@
         "datasetId":{"shape":"ID"},
         "datasetArn":{"shape":"ARN"},
         "datasetName":{"shape":"RestrictedName"},
-        "datasetDescription":{"shape":"RestrictedDescription"},
+        "datasetDescription":{"shape":"Description"},
+        "datasetType":{"shape":"DatasetTypeEnum"},
+        "datasetConfig":{"shape":"DatasetConfig"},
+        "workspaceName":{"shape":"WorkspaceName"},
+        "metadata":{"shape":"Metadata"},
         "datasetSource":{"shape":"DatasetSource"},
         "datasetStatus":{"shape":"DatasetStatus"},
         "datasetCreationDate":{"shape":"Timestamp"},
         "datasetLastUpdateDate":{"shape":"Timestamp"},
-        "datasetVersion":{"shape":"Version"}
+        "datasetVersion":{"shape":"Version"},
+        "enrichmentStatus":{"shape":"DatasetEnrichment"}
       }
     },
     "DescribeDefaultEncryptionConfigurationRequest":{
@@ -4726,6 +6644,48 @@
         "encryptionType":{"shape":"EncryptionType"},
         "kmsKeyArn":{"shape":"ARN"},
         "configurationStatus":{"shape":"ConfigurationStatus"}
+      }
+    },
+    "DescribeEnrichmentJobRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceName",
+        "jobId"
+      ],
+      "members":{
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"uri",
+          "locationName":"workspaceName"
+        },
+        "jobId":{
+          "shape":"ID",
+          "location":"uri",
+          "locationName":"jobId"
+        }
+      }
+    },
+    "DescribeEnrichmentJobResponse":{
+      "type":"structure",
+      "required":[
+        "jobId",
+        "status",
+        "workspaceName",
+        "jobType",
+        "jobConfiguration",
+        "createdAt"
+      ],
+      "members":{
+        "jobId":{"shape":"ID"},
+        "status":{"shape":"EnrichmentJobStatus"},
+        "workspaceName":{"shape":"WorkspaceName"},
+        "jobType":{"shape":"JobType"},
+        "jobConfiguration":{"shape":"EnrichmentJobConfiguration"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"},
+        "completedAt":{"shape":"Timestamp"},
+        "cancelledAt":{"shape":"Timestamp"},
+        "failureMessage":{"shape":"String"}
       }
     },
     "DescribeExecutionRequest":{
@@ -4830,13 +6790,134 @@
     },
     "DescribeLoggingOptionsRequest":{
       "type":"structure",
-      "members":{}
+      "members":{
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"querystring",
+          "locationName":"workspaceName"
+        }
+      }
     },
     "DescribeLoggingOptionsResponse":{
       "type":"structure",
       "required":["loggingOptions"],
       "members":{
         "loggingOptions":{"shape":"LoggingOptions"}
+      }
+    },
+    "DescribePipelineExecutionRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceName",
+        "pipelineName",
+        "pipelineExecutionId"
+      ],
+      "members":{
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"uri",
+          "locationName":"workspaceName"
+        },
+        "pipelineName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"pipelineName"
+        },
+        "pipelineExecutionId":{
+          "shape":"ID",
+          "location":"uri",
+          "locationName":"pipelineExecutionId"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"DescribePipelineExecutionRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "DescribePipelineExecutionRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":250,
+      "min":1
+    },
+    "DescribePipelineExecutionResponse":{
+      "type":"structure",
+      "required":[
+        "pipelineExecutionId",
+        "pipelineName",
+        "workspaceName",
+        "pipelineVersion",
+        "status",
+        "requestEnvironmentVariables",
+        "computeNodeExecutionDetails"
+      ],
+      "members":{
+        "pipelineExecutionId":{"shape":"ID"},
+        "pipelineName":{"shape":"ResourceName"},
+        "workspaceName":{"shape":"WorkspaceName"},
+        "pipelineVersion":{"shape":"Version"},
+        "status":{"shape":"PipelineExecutionStatus"},
+        "startTime":{"shape":"Timestamp"},
+        "endTime":{"shape":"Timestamp"},
+        "requestEnvironmentVariables":{"shape":"ExecutionEnvironmentVariables"},
+        "executionPriority":{"shape":"ExecutionPriority"},
+        "computeNodeExecutionDetails":{"shape":"ComputeNodeExecutionDetailsList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "DescribePipelineRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceName",
+        "pipelineName"
+      ],
+      "members":{
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"uri",
+          "locationName":"workspaceName"
+        },
+        "pipelineName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"pipelineName"
+        },
+        "pipelineVersion":{
+          "shape":"Version",
+          "location":"querystring",
+          "locationName":"version"
+        }
+      }
+    },
+    "DescribePipelineResponse":{
+      "type":"structure",
+      "required":[
+        "pipelineName",
+        "workspaceName",
+        "pipelineArn",
+        "version",
+        "computations",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "pipelineName":{"shape":"ResourceName"},
+        "workspaceName":{"shape":"WorkspaceName"},
+        "description":{"shape":"Description"},
+        "pipelineArn":{"shape":"ARN"},
+        "version":{"shape":"Version"},
+        "environmentVariables":{"shape":"EnvironmentVariablesMap"},
+        "computations":{"shape":"ComputeNodeList"},
+        "status":{"shape":"ResourceStatus"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"}
       }
     },
     "DescribePortalRequest":{
@@ -4914,6 +6995,80 @@
         "projectLastUpdateDate":{"shape":"Timestamp"}
       }
     },
+    "DescribeQueryRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceName",
+        "queryId"
+      ],
+      "members":{
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"uri",
+          "locationName":"workspaceName"
+        },
+        "queryId":{
+          "shape":"QueryId",
+          "location":"uri",
+          "locationName":"queryId"
+        }
+      }
+    },
+    "DescribeQueryResponse":{
+      "type":"structure",
+      "required":[
+        "queryId",
+        "status",
+        "submittedAt"
+      ],
+      "members":{
+        "queryId":{"shape":"QueryId"},
+        "status":{"shape":"QueryStatus"},
+        "submittedAt":{"shape":"Timestamp"},
+        "completedAt":{"shape":"Timestamp"},
+        "statistics":{"shape":"QueryStatistics"},
+        "errorMessage":{"shape":"QueryErrorMessage"}
+      }
+    },
+    "DescribeSearchRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceName",
+        "searchId"
+      ],
+      "members":{
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"uri",
+          "locationName":"workspaceName"
+        },
+        "searchId":{
+          "shape":"SearchId",
+          "location":"uri",
+          "locationName":"searchId"
+        }
+      }
+    },
+    "DescribeSearchResponse":{
+      "type":"structure",
+      "required":[
+        "searchId",
+        "workspaceName",
+        "status",
+        "queryStatement",
+        "searchType"
+      ],
+      "members":{
+        "searchId":{"shape":"SearchId"},
+        "workspaceName":{"shape":"WorkspaceName"},
+        "status":{"shape":"SearchStatus"},
+        "queryStatement":{"shape":"SearchQueryStatement"},
+        "searchType":{"shape":"SearchType"},
+        "statusReason":{"shape":"String"},
+        "startedAt":{"shape":"Timestamp"},
+        "groupId":{"shape":"GroupId"}
+      }
+    },
     "DescribeStorageConfigurationRequest":{
       "type":"structure",
       "members":{}
@@ -4936,6 +7091,54 @@
         "disallowIngestNullNaN":{"shape":"DisallowIngestNullNaN"}
       }
     },
+    "DescribeTaskRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceName",
+        "taskName"
+      ],
+      "members":{
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"uri",
+          "locationName":"workspaceName"
+        },
+        "taskName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"taskName"
+        },
+        "taskVersion":{
+          "shape":"Version",
+          "location":"querystring",
+          "locationName":"version"
+        }
+      }
+    },
+    "DescribeTaskResponse":{
+      "type":"structure",
+      "required":[
+        "workspaceName",
+        "taskName",
+        "taskArn",
+        "version",
+        "taskConfiguration",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "workspaceName":{"shape":"WorkspaceName"},
+        "taskName":{"shape":"ResourceName"},
+        "description":{"shape":"Description"},
+        "taskArn":{"shape":"ARN"},
+        "version":{"shape":"Version"},
+        "taskConfiguration":{"shape":"TaskConfiguration"},
+        "status":{"shape":"ResourceStatus"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"}
+      }
+    },
     "DescribeTimeSeriesRequest":{
       "type":"structure",
       "members":{
@@ -4953,6 +7156,11 @@
           "shape":"CustomID",
           "location":"querystring",
           "locationName":"propertyId"
+        },
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"querystring",
+          "locationName":"workspaceName"
         }
       }
     },
@@ -4974,7 +7182,38 @@
         "dataTypeSpec":{"shape":"Name"},
         "timeSeriesCreationDate":{"shape":"Timestamp"},
         "timeSeriesLastUpdateDate":{"shape":"Timestamp"},
-        "timeSeriesArn":{"shape":"ARN"}
+        "timeSeriesArn":{"shape":"ARN"},
+        "workspaceName":{"shape":"WorkspaceName"}
+      }
+    },
+    "DescribeWorkspaceRequest":{
+      "type":"structure",
+      "required":["workspaceName"],
+      "members":{
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"uri",
+          "locationName":"workspaceName"
+        }
+      }
+    },
+    "DescribeWorkspaceResponse":{
+      "type":"structure",
+      "required":[
+        "workspaceArn",
+        "workspaceName",
+        "workspaceStatus",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "workspaceArn":{"shape":"ARN"},
+        "workspaceName":{"shape":"WorkspaceName"},
+        "workspaceDescription":{"shape":"Description"},
+        "workspaceStatus":{"shape":"WorkspaceStatus"},
+        "encryptionConfiguration":{"shape":"WorkspaceEncryptionConfigurationInfo"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"}
       }
     },
     "Description":{
@@ -5001,10 +7240,34 @@
         "INCOMPATIBLE_FORWARDING_CONFIGURATION"
       ]
     },
+    "DetailedErrorList":{
+      "type":"list",
+      "member":{"shape":"DetailedPipelineError"}
+    },
     "DetailedErrorMessage":{"type":"string"},
     "DetailedErrors":{
       "type":"list",
       "member":{"shape":"DetailedError"}
+    },
+    "DetailedPipelineError":{
+      "type":"structure",
+      "required":[
+        "code",
+        "message"
+      ],
+      "members":{
+        "code":{"shape":"DetailedPipelineErrorCode"},
+        "message":{"shape":"String"}
+      }
+    },
+    "DetailedPipelineErrorCode":{
+      "type":"string",
+      "enum":[
+        "VALIDATION_ERROR",
+        "INTERNAL_FAILURE",
+        "EXECUTION_ERROR",
+        "TIMED_OUT"
+      ]
     },
     "DisallowIngestNullNaN":{"type":"boolean"},
     "DisassociateAssetsRequest":{
@@ -5026,6 +7289,25 @@
           "shape":"ClientToken",
           "idempotencyToken":true
         }
+      }
+    },
+    "DisassociateDataSegmentEntries":{
+      "type":"list",
+      "member":{"shape":"DisassociateDataSegmentEntry"}
+    },
+    "DisassociateDataSegmentEntry":{
+      "type":"structure",
+      "required":[
+        "sourceDatasetId",
+        "timeSeriesId",
+        "startTimestamp",
+        "endTimestamp"
+      ],
+      "members":{
+        "sourceDatasetId":{"shape":"ID"},
+        "timeSeriesId":{"shape":"TimeSeriesId"},
+        "startTimestamp":{"shape":"TimeInNanos"},
+        "endTimestamp":{"shape":"TimeInNanos"}
       }
     },
     "DisassociateTimeSeriesFromAssetPropertyRequest":{
@@ -5064,9 +7346,22 @@
         "DISABLED"
       ]
     },
+    "DnsSubdomain":{
+      "type":"string",
+      "max":63,
+      "min":1,
+      "pattern":"[a-z0-9]([a-z0-9-]*[a-z0-9])?"
+    },
     "ETag":{
       "type":"string",
       "pattern":"^[\\w-]{43}$"
+    },
+    "EcrUri":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"((\\d{12}\\.dkr\\.ecr\\.[a-z0-9-]+\\.[a-z.]+)|public\\.ecr\\.aws/[a-z][a-z0-9]+([._-][a-z0-9]+)*)/[a-z0-9]+((\\.||__|_|-+)[a-z0-9]+)*(/[a-z0-9]+((\\.||__|_|-+)[a-z0-9]+)*)*(:[a-zA-Z0-9._-]+|@sha256:[a-f0-9]{64})?",
+      "sensitive":true
     },
     "Email":{
       "type":"string",
@@ -5082,11 +7377,92 @@
         "KMS_BASED_ENCRYPTION"
       ]
     },
+    "EnrichmentJobConfiguration":{
+      "type":"structure",
+      "members":{
+        "eventDetection":{"shape":"EventDetection"}
+      },
+      "union":true
+    },
+    "EnrichmentJobStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "RUNNING",
+        "COMPLETED",
+        "FAILED",
+        "TIMED_OUT",
+        "CANCELLED"
+      ]
+    },
+    "EnrichmentJobSummaries":{
+      "type":"list",
+      "member":{"shape":"EnrichmentJobSummary"}
+    },
+    "EnrichmentJobSummary":{
+      "type":"structure",
+      "required":[
+        "jobId",
+        "status",
+        "workspaceName",
+        "jobType",
+        "datasetId",
+        "createdAt"
+      ],
+      "members":{
+        "jobId":{"shape":"ID"},
+        "status":{"shape":"EnrichmentJobStatus"},
+        "workspaceName":{"shape":"WorkspaceName"},
+        "jobType":{"shape":"JobType"},
+        "datasetId":{"shape":"ID"},
+        "propertyAlias":{"shape":"AssetPropertyAlias"},
+        "timeSeriesId":{"shape":"TimeSeriesId"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "EnrichmentStatus":{
+      "type":"string",
+      "enum":[
+        "ENRICHED",
+        "NOT_ENRICHED"
+      ]
+    },
+    "EnrichmentTrimSettings":{
+      "type":"structure",
+      "required":[
+        "startTime",
+        "endTime"
+      ],
+      "members":{
+        "startTime":{"shape":"TimeInNanos"},
+        "endTime":{"shape":"TimeInNanos"}
+      }
+    },
     "EntryId":{
       "type":"string",
       "max":64,
       "min":1,
       "pattern":"^[a-zA-Z0-9_-]+$"
+    },
+    "EnvironmentVariableName":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"(?!(?i)AWS_)[a-zA-Z_][a-zA-Z0-9_]*"
+    },
+    "EnvironmentVariableValue":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "EnvironmentVariablesMap":{
+      "type":"map",
+      "key":{"shape":"EnvironmentVariableName"},
+      "value":{"shape":"EnvironmentVariableValue"},
+      "max":20,
+      "min":0,
+      "sensitive":true
     },
     "ErrorCode":{
       "type":"string",
@@ -5117,6 +7493,19 @@
       "members":{
         "bucket":{"shape":"Bucket"},
         "prefix":{"shape":"String"}
+      }
+    },
+    "EventDetection":{
+      "type":"structure",
+      "required":[
+        "datasetId",
+        "trimSettings"
+      ],
+      "members":{
+        "datasetId":{"shape":"ID"},
+        "timeSeriesId":{"shape":"TimeSeriesId"},
+        "propertyAlias":{"shape":"AssetPropertyAlias"},
+        "trimSettings":{"shape":"EnrichmentTrimSettings"}
       }
     },
     "ExceptionMessage":{"type":"string"},
@@ -5186,6 +7575,38 @@
       "type":"string",
       "pattern":"^[a-zA-Z0-9 _\\-#$*!@]+$"
     },
+    "ExecutionEnvironmentVariables":{
+      "type":"structure",
+      "members":{
+        "global":{"shape":"EnvironmentVariablesMap"},
+        "computeNodes":{"shape":"ComputeNodeEnvironmentVariablesMap"}
+      },
+      "sensitive":true
+    },
+    "ExecutionEnvironmentVariablesMap":{
+      "type":"map",
+      "key":{"shape":"ExecutionEnvironmentVariablesMapKeyString"},
+      "value":{"shape":"ExecutionEnvironmentVariablesMapValueString"},
+      "max":200,
+      "min":0,
+      "sensitive":true
+    },
+    "ExecutionEnvironmentVariablesMapKeyString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "ExecutionEnvironmentVariablesMapValueString":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "ExecutionPriority":{
+      "type":"integer",
+      "box":true,
+      "max":2,
+      "min":0
+    },
     "ExecutionResult":{
       "type":"map",
       "key":{"shape":"ExecutionResultKey"},
@@ -5239,6 +7660,47 @@
         "executionEntityVersion":{"shape":"Version"}
       }
     },
+    "ExportDataType":{
+      "type":"string",
+      "enum":[
+        "VIDEO",
+        "TELEMETRY",
+        "ANNOTATION"
+      ]
+    },
+    "ExportDataTypeList":{
+      "type":"list",
+      "member":{"shape":"ExportDataType"},
+      "max":3,
+      "min":1
+    },
+    "ExportErrorReportLocation":{
+      "type":"structure",
+      "required":["s3Uri"],
+      "members":{
+        "s3Uri":{"shape":"S3Uri"}
+      }
+    },
+    "ExportJobSummary":{
+      "type":"structure",
+      "required":[
+        "jobId",
+        "status",
+        "startedAt",
+        "destinationS3Uri"
+      ],
+      "members":{
+        "jobId":{"shape":"DatasetExportJobId"},
+        "status":{"shape":"DatasetExportJobStatus"},
+        "startedAt":{"shape":"Timestamp"},
+        "completedAt":{"shape":"Timestamp"},
+        "destinationS3Uri":{"shape":"S3Uri"}
+      }
+    },
+    "ExportJobSummaryList":{
+      "type":"list",
+      "member":{"shape":"ExportJobSummary"}
+    },
     "Expression":{
       "type":"string",
       "max":1024,
@@ -5265,6 +7727,73 @@
       "min":2,
       "pattern":"[a-zA-Z0-9_][a-zA-Z_\\-0-9.:]*[a-zA-Z0-9_]+"
     },
+    "FailedDataSegmentAssociation":{
+      "type":"structure",
+      "required":[
+        "sourceDatasetId",
+        "timeSeriesId",
+        "startTimestamp",
+        "endTimestamp",
+        "errorCode",
+        "errorMessage"
+      ],
+      "members":{
+        "sourceDatasetId":{"shape":"ID"},
+        "timeSeriesId":{"shape":"TimeSeriesId"},
+        "startTimestamp":{"shape":"TimeInNanos"},
+        "endTimestamp":{"shape":"TimeInNanos"},
+        "errorCode":{"shape":"DataSegmentErrorCode"},
+        "errorMessage":{"shape":"DataSegmentErrorMessage"}
+      }
+    },
+    "FailedDataSegmentAssociations":{
+      "type":"list",
+      "member":{"shape":"FailedDataSegmentAssociation"}
+    },
+    "FailedDataSegmentDeletion":{
+      "type":"structure",
+      "required":[
+        "timeSeriesId",
+        "startTimestamp",
+        "endTimestamp",
+        "errorCode",
+        "errorMessage"
+      ],
+      "members":{
+        "timeSeriesId":{"shape":"ID"},
+        "startTimestamp":{"shape":"TimeInNanos"},
+        "endTimestamp":{"shape":"TimeInNanos"},
+        "errorCode":{"shape":"DataSegmentErrorCode"},
+        "errorMessage":{"shape":"DataSegmentErrorMessage"}
+      }
+    },
+    "FailedDataSegmentDeletions":{
+      "type":"list",
+      "member":{"shape":"FailedDataSegmentDeletion"}
+    },
+    "FailedDataSegmentDisassociation":{
+      "type":"structure",
+      "required":[
+        "sourceDatasetId",
+        "timeSeriesId",
+        "startTimestamp",
+        "endTimestamp",
+        "errorCode",
+        "errorMessage"
+      ],
+      "members":{
+        "sourceDatasetId":{"shape":"ID"},
+        "timeSeriesId":{"shape":"TimeSeriesId"},
+        "startTimestamp":{"shape":"TimeInNanos"},
+        "endTimestamp":{"shape":"TimeInNanos"},
+        "errorCode":{"shape":"DataSegmentErrorCode"},
+        "errorMessage":{"shape":"DataSegmentErrorMessage"}
+      }
+    },
+    "FailedDataSegmentDisassociations":{
+      "type":"list",
+      "member":{"shape":"FailedDataSegmentDisassociation"}
+    },
     "File":{
       "type":"structure",
       "required":[
@@ -5274,19 +7803,36 @@
       "members":{
         "bucket":{"shape":"Bucket"},
         "key":{"shape":"String"},
-        "versionId":{"shape":"String"}
+        "versionId":{"shape":"String"},
+        "alias":{"shape":"AssetPropertyAlias"},
+        "startTime":{"shape":"TimeInNanos"},
+        "fileFormat":{"shape":"FileFormat"}
       }
     },
     "FileFormat":{
       "type":"structure",
       "members":{
         "csv":{"shape":"Csv"},
-        "parquet":{"shape":"Parquet"}
+        "parquet":{"shape":"Parquet"},
+        "mp4":{"shape":"Mp4"},
+        "annotation":{"shape":"Annotation"}
       }
     },
     "Files":{
       "type":"list",
       "member":{"shape":"File"}
+    },
+    "Float":{
+      "type":"float",
+      "box":true
+    },
+    "FormatSettings":{
+      "type":"structure",
+      "members":{
+        "framesPerSecond":{"shape":"PositiveInteger"},
+        "widthInPixels":{"shape":"PositiveInteger"},
+        "heightInPixels":{"shape":"PositiveInteger"}
+      }
     },
     "ForwardingConfig":{
       "type":"structure",
@@ -5525,6 +8071,48 @@
         "propertyValue":{"shape":"AssetPropertyValue"}
       }
     },
+    "GetCaptureDataNextToken":{
+      "type":"string",
+      "max":4096,
+      "min":1
+    },
+    "GetCaptureDataRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceName",
+        "startTime",
+        "endTime"
+      ],
+      "members":{
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"uri",
+          "locationName":"workspaceName"
+        },
+        "startTime":{"shape":"TimeInNanos"},
+        "endTime":{"shape":"TimeInNanos"},
+        "timeSeriesId":{"shape":"TimeSeriesId"},
+        "propertyAlias":{"shape":"AssetPropertyAlias"},
+        "formatSettings":{"shape":"FormatSettings"},
+        "nextToken":{"shape":"GetCaptureDataNextToken"}
+      }
+    },
+    "GetCaptureDataResponse":{
+      "type":"structure",
+      "required":[
+        "data",
+        "startTime",
+        "endTime",
+        "dataType"
+      ],
+      "members":{
+        "data":{"shape":"CaptureBlob"},
+        "startTime":{"shape":"TimeInNanos"},
+        "endTime":{"shape":"TimeInNanos"},
+        "dataType":{"shape":"VideoDataType"},
+        "nextToken":{"shape":"GetCaptureDataNextToken"}
+      }
+    },
     "GetInterpolatedAssetPropertyValuesRequest":{
       "type":"structure",
       "required":[
@@ -5610,6 +8198,86 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "GetQueryResultsRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceName",
+        "queryId"
+      ],
+      "members":{
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"uri",
+          "locationName":"workspaceName"
+        },
+        "queryId":{
+          "shape":"QueryId",
+          "location":"uri",
+          "locationName":"queryId"
+        },
+        "maxResults":{
+          "shape":"QueryMaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"QueryNextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "GetQueryResultsResponse":{
+      "type":"structure",
+      "members":{
+        "columnInfo":{"shape":"ColumnInformationList"},
+        "rows":{"shape":"RowList"},
+        "nextToken":{"shape":"QueryNextToken"}
+      }
+    },
+    "GetSearchResultsRequest":{
+      "type":"structure",
+      "required":[
+        "searchId",
+        "workspaceName"
+      ],
+      "members":{
+        "searchId":{
+          "shape":"SearchId",
+          "location":"uri",
+          "locationName":"searchId"
+        },
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"uri",
+          "locationName":"workspaceName"
+        },
+        "maxResults":{
+          "shape":"GetSearchResultsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "GetSearchResultsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":10000,
+      "min":1
+    },
+    "GetSearchResultsResponse":{
+      "type":"structure",
+      "required":["searchResults"],
+      "members":{
+        "searchResults":{"shape":"SearchResultList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "Greengrass":{
       "type":"structure",
       "required":["groupArn"],
@@ -5624,6 +8292,18 @@
         "coreDeviceThingName":{"shape":"CoreDeviceThingName"},
         "coreDeviceOperatingSystem":{"shape":"CoreDeviceOperatingSystem"}
       }
+    },
+    "GroupId":{
+      "type":"string",
+      "max":36,
+      "min":2,
+      "pattern":"[a-zA-Z0-9][a-zA-Z0-9-]*"
+    },
+    "GroupIdFilterList":{
+      "type":"list",
+      "member":{"shape":"GroupId"},
+      "max":100,
+      "min":1
     },
     "GroupIdentity":{
       "type":"structure",
@@ -5678,6 +8358,13 @@
       "max":1600,
       "min":1,
       "pattern":"^arn:aws(-cn|-us-gov)?:[a-zA-Z0-9-:\\/_\\.\\+=,@]+$"
+    },
+    "IamRoleArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws(-cn|-us-gov)?:iam::\\d{12}:role/[\\w+=,.@/-]+",
+      "sensitive":true
     },
     "Identity":{
       "type":"structure",
@@ -5878,7 +8565,6 @@
     },
     "JobConfiguration":{
       "type":"structure",
-      "required":["fileFormat"],
       "members":{
         "fileFormat":{"shape":"FileFormat"}
       }
@@ -5910,6 +8596,10 @@
         "name":{"shape":"Name"},
         "status":{"shape":"JobStatus"}
       }
+    },
+    "JobType":{
+      "type":"string",
+      "enum":["EVENT_DETECTION"]
     },
     "KendraSourceDetail":{
       "type":"structure",
@@ -6032,6 +8722,29 @@
       "members":{
         "actionSummaries":{"shape":"ActionSummaries"},
         "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListApplicationsRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListApplicationsResponse":{
+      "type":"structure",
+      "required":["applications"],
+      "members":{
+        "nextToken":{"shape":"NextToken"},
+        "applications":{"shape":"ApplicationList"}
       }
     },
     "ListAssetModelCompositeModelsRequest":{
@@ -6337,6 +9050,11 @@
           "shape":"ListBulkImportJobsFilter",
           "location":"querystring",
           "locationName":"filter"
+        },
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"querystring",
+          "locationName":"workspaceName"
         }
       }
     },
@@ -6480,6 +9198,119 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListDatasetDataSegmentRelationshipsRequest":{
+      "type":"structure",
+      "required":[
+        "datasetId",
+        "workspaceName"
+      ],
+      "members":{
+        "datasetId":{
+          "shape":"ID",
+          "location":"uri",
+          "locationName":"datasetId"
+        },
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"querystring",
+          "locationName":"workspaceName"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListDatasetDataSegmentRelationshipsResponse":{
+      "type":"structure",
+      "required":["dataSegmentRelationshipSummaries"],
+      "members":{
+        "dataSegmentRelationshipSummaries":{"shape":"DataSegmentRelationshipSummaries"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListDatasetDataSegmentsRequest":{
+      "type":"structure",
+      "required":[
+        "datasetId",
+        "workspaceName"
+      ],
+      "members":{
+        "datasetId":{
+          "shape":"ID",
+          "location":"uri",
+          "locationName":"datasetId"
+        },
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"querystring",
+          "locationName":"workspaceName"
+        },
+        "datasetVersion":{
+          "shape":"Version",
+          "location":"querystring",
+          "locationName":"datasetVersion"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListDatasetDataSegmentsResponse":{
+      "type":"structure",
+      "required":["dataSegments"],
+      "members":{
+        "dataSegments":{"shape":"DataSegmentSummaries"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListDatasetExportJobsRequest":{
+      "type":"structure",
+      "required":["workspaceName"],
+      "members":{
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"uri",
+          "locationName":"workspaceName"
+        },
+        "filter":{
+          "shape":"DatasetExportJobFilter",
+          "location":"querystring",
+          "locationName":"filter"
+        },
+        "maxResults":{
+          "shape":"ListExportJobsMaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"ListExportJobsNextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListDatasetExportJobsResponse":{
+      "type":"structure",
+      "required":["jobs"],
+      "members":{
+        "jobs":{"shape":"ExportJobSummaryList"},
+        "nextToken":{"shape":"ListExportJobsNextToken"}
+      }
+    },
     "ListDatasetsRequest":{
       "type":"structure",
       "required":["sourceType"],
@@ -6488,6 +9319,16 @@
           "shape":"DatasetSourceType",
           "location":"querystring",
           "locationName":"sourceType"
+        },
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"querystring",
+          "locationName":"workspaceName"
+        },
+        "datasetType":{
+          "shape":"DatasetTypeEnum",
+          "location":"querystring",
+          "locationName":"datasetType"
         },
         "nextToken":{
           "shape":"NextToken",
@@ -6506,6 +9347,71 @@
       "required":["datasetSummaries"],
       "members":{
         "datasetSummaries":{"shape":"DatasetSummaries"},
+        "nextToken":{"shape":"NextToken"},
+        "workspaceName":{"shape":"WorkspaceName"}
+      }
+    },
+    "ListEnrichmentJobsRequest":{
+      "type":"structure",
+      "required":["workspaceName"],
+      "members":{
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"uri",
+          "locationName":"workspaceName"
+        },
+        "datasetId":{
+          "shape":"ID",
+          "location":"querystring",
+          "locationName":"datasetId"
+        },
+        "propertyAlias":{
+          "shape":"AssetPropertyAlias",
+          "location":"querystring",
+          "locationName":"propertyAlias"
+        },
+        "timeSeriesId":{
+          "shape":"TimeSeriesId",
+          "location":"querystring",
+          "locationName":"timeSeriesId"
+        },
+        "status":{
+          "shape":"EnrichmentJobStatus",
+          "location":"querystring",
+          "locationName":"status"
+        },
+        "jobType":{
+          "shape":"JobType",
+          "location":"querystring",
+          "locationName":"jobType"
+        },
+        "startDate":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"startDate"
+        },
+        "endDate":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"endDate"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListEnrichmentJobsResponse":{
+      "type":"structure",
+      "required":["jobs"],
+      "members":{
+        "jobs":{"shape":"EnrichmentJobSummaries"},
         "nextToken":{"shape":"NextToken"}
       }
     },
@@ -6561,6 +9467,17 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListExportJobsMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":250,
+      "min":1
+    },
+    "ListExportJobsNextToken":{
+      "type":"string",
+      "max":4096,
+      "min":1
+    },
     "ListGatewaysRequest":{
       "type":"structure",
       "members":{
@@ -6611,6 +9528,109 @@
       "members":{
         "interfaceRelationshipSummaries":{"shape":"InterfaceRelationshipSummaries"},
         "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListPipelineExecutionsRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceName",
+        "pipelineName"
+      ],
+      "members":{
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"uri",
+          "locationName":"workspaceName"
+        },
+        "pipelineName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"pipelineName"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"ListPipelineExecutionsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "state":{
+          "shape":"PipelineExecutionState",
+          "location":"querystring",
+          "locationName":"state"
+        },
+        "startTimeAfter":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"startTimeAfter"
+        },
+        "startTimeBefore":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"startTimeBefore"
+        },
+        "endTimeAfter":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"endTimeAfter"
+        },
+        "endTimeBefore":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"endTimeBefore"
+        }
+      }
+    },
+    "ListPipelineExecutionsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":250,
+      "min":1
+    },
+    "ListPipelineExecutionsResponse":{
+      "type":"structure",
+      "required":["pipelineExecutionSummaries"],
+      "members":{
+        "pipelineExecutionSummaries":{"shape":"PipelineExecutionSummaryList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListPipelinesRequest":{
+      "type":"structure",
+      "required":["workspaceName"],
+      "members":{
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"uri",
+          "locationName":"workspaceName"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"ListPipelinesRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListPipelinesRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":250,
+      "min":1
+    },
+    "ListPipelinesResponse":{
+      "type":"structure",
+      "required":["pipelineSummaries"],
+      "members":{
+        "pipelineSummaries":{"shape":"PipelineSummaries"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "ListPortalsRequest":{
@@ -6693,6 +9713,78 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListQueriesRequest":{
+      "type":"structure",
+      "required":["workspaceName"],
+      "members":{
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"uri",
+          "locationName":"workspaceName"
+        },
+        "filter":{
+          "shape":"QueryFilter",
+          "location":"querystring",
+          "locationName":"filter"
+        },
+        "maxResults":{
+          "shape":"QueryMaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"QueryListNextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListQueriesResponse":{
+      "type":"structure",
+      "required":["queries"],
+      "members":{
+        "queries":{"shape":"QuerySummaryList"},
+        "nextToken":{"shape":"QueryListNextToken"}
+      }
+    },
+    "ListSearchesFilters":{
+      "type":"structure",
+      "members":{
+        "statusFilter":{"shape":"SearchStatusFilterList"},
+        "startedAfter":{"shape":"Timestamp"},
+        "startedBefore":{"shape":"Timestamp"},
+        "groupIdFilter":{"shape":"GroupIdFilterList"},
+        "searchTypeFilter":{"shape":"SearchTypeFilterList"}
+      }
+    },
+    "ListSearchesRequest":{
+      "type":"structure",
+      "required":["workspaceName"],
+      "members":{
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"uri",
+          "locationName":"workspaceName"
+        },
+        "maxResults":{"shape":"ListSearchesRequestMaxResultsInteger"},
+        "nextToken":{"shape":"NextToken"},
+        "listSearchesFilters":{"shape":"ListSearchesFilters"}
+      }
+    },
+    "ListSearchesRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
+    "ListSearchesResponse":{
+      "type":"structure",
+      "required":["searchSummaries"],
+      "members":{
+        "searchSummaries":{"shape":"SearchSummaries"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListTagsForResourceRequest":{
       "type":"structure",
       "required":["resourceArn"],
@@ -6708,6 +9800,41 @@
       "type":"structure",
       "members":{
         "tags":{"shape":"TagMap"}
+      }
+    },
+    "ListTasksRequest":{
+      "type":"structure",
+      "required":["workspaceName"],
+      "members":{
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"uri",
+          "locationName":"workspaceName"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"ListTasksRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListTasksRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":250,
+      "min":1
+    },
+    "ListTasksResponse":{
+      "type":"structure",
+      "required":["taskSummaries"],
+      "members":{
+        "taskSummaries":{"shape":"TaskSummaries"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "ListTimeSeriesRequest":{
@@ -6737,6 +9864,11 @@
           "shape":"ListTimeSeriesType",
           "location":"querystring",
           "locationName":"timeSeriesType"
+        },
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"querystring",
+          "locationName":"workspaceName"
         }
       }
     },
@@ -6745,7 +9877,8 @@
       "required":["TimeSeriesSummaries"],
       "members":{
         "TimeSeriesSummaries":{"shape":"TimeSeriesSummaries"},
-        "nextToken":{"shape":"NextToken"}
+        "nextToken":{"shape":"NextToken"},
+        "workspaceName":{"shape":"WorkspaceName"}
       }
     },
     "ListTimeSeriesType":{
@@ -6754,6 +9887,29 @@
         "ASSOCIATED",
         "DISASSOCIATED"
       ]
+    },
+    "ListWorkspacesRequest":{
+      "type":"structure",
+      "members":{
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListWorkspacesResponse":{
+      "type":"structure",
+      "required":["workspaceSummaries"],
+      "members":{
+        "workspaceSummaries":{"shape":"WorkspaceSummaries"},
+        "nextToken":{"shape":"NextToken"}
+      }
     },
     "Location":{
       "type":"structure",
@@ -6775,6 +9931,10 @@
       "members":{
         "level":{"shape":"LoggingLevel"}
       }
+    },
+    "Long":{
+      "type":"long",
+      "box":true
     },
     "Macro":{
       "type":"string",
@@ -6818,6 +9978,21 @@
       "min":1,
       "sensitive":true
     },
+    "Metadata":{
+      "type":"map",
+      "key":{"shape":"MetadataKey"},
+      "value":{"shape":"MetadataValue"}
+    },
+    "MetadataKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "MetadataValue":{
+      "type":"string",
+      "max":2048,
+      "min":0
+    },
     "Metric":{
       "type":"structure",
       "required":["window"],
@@ -6857,6 +10032,10 @@
       }
     },
     "MonitorErrorMessage":{"type":"string"},
+    "Mp4":{
+      "type":"structure",
+      "members":{}
+    },
     "MultiLayerStorage":{
       "type":"structure",
       "required":["customerManagedS3Storage"],
@@ -6891,6 +10070,11 @@
       "max":999999999,
       "min":0
     },
+    "PaginationToken":{
+      "type":"string",
+      "max":4096,
+      "min":1
+    },
     "Parquet":{
       "type":"structure",
       "members":{}
@@ -6901,6 +10085,87 @@
         "ADMINISTRATOR",
         "VIEWER"
       ]
+    },
+    "PipelineErrorCode":{
+      "type":"string",
+      "enum":[
+        "VALIDATION_ERROR",
+        "INTERNAL_FAILURE",
+        "EXECUTION_ERROR",
+        "TIMED_OUT"
+      ]
+    },
+    "PipelineExecutionState":{
+      "type":"string",
+      "enum":[
+        "NOT_STARTED",
+        "RUNNING",
+        "SUCCEEDED",
+        "FAILED",
+        "CANCELLING",
+        "CANCELLED"
+      ]
+    },
+    "PipelineExecutionStateDetails":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "code":{"shape":"PipelineErrorCode"},
+        "message":{"shape":"String"},
+        "details":{"shape":"DetailedErrorList"}
+      }
+    },
+    "PipelineExecutionStatus":{
+      "type":"structure",
+      "required":["state"],
+      "members":{
+        "state":{"shape":"PipelineExecutionState"},
+        "stateDetails":{"shape":"PipelineExecutionStateDetails"}
+      }
+    },
+    "PipelineExecutionSummary":{
+      "type":"structure",
+      "required":[
+        "pipelineExecutionId",
+        "pipelineVersion",
+        "status"
+      ],
+      "members":{
+        "pipelineExecutionId":{"shape":"ID"},
+        "pipelineVersion":{"shape":"Version"},
+        "status":{"shape":"PipelineExecutionStatus"},
+        "executionPriority":{"shape":"ExecutionPriority"},
+        "startTime":{"shape":"Timestamp"},
+        "endTime":{"shape":"Timestamp"}
+      }
+    },
+    "PipelineExecutionSummaryList":{
+      "type":"list",
+      "member":{"shape":"PipelineExecutionSummary"}
+    },
+    "PipelineSummaries":{
+      "type":"list",
+      "member":{"shape":"PipelineSummary"}
+    },
+    "PipelineSummary":{
+      "type":"structure",
+      "required":[
+        "pipelineName",
+        "pipelineArn",
+        "version",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "pipelineName":{"shape":"ResourceName"},
+        "description":{"shape":"Description"},
+        "pipelineArn":{"shape":"ARN"},
+        "version":{"shape":"Version"},
+        "status":{"shape":"ResourceStatus"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"}
+      }
     },
     "PortalClientId":{
       "type":"string",
@@ -6985,6 +10250,11 @@
       "max":128,
       "min":1
     },
+    "PositiveInteger":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
     "PreconditionFailedException":{
       "type":"structure",
       "required":[
@@ -7001,6 +10271,40 @@
       "exception":true
     },
     "PrimitiveBoolean":{"type":"boolean"},
+    "ProcessingInput":{
+      "type":"structure",
+      "members":{
+        "timeseries":{"shape":"TimeseriesList"},
+        "dataset":{"shape":"DatasetItem"}
+      },
+      "union":true
+    },
+    "ProcessingType":{
+      "type":"string",
+      "enum":[
+        "GENERIC_COMPUTE_PROCESSING",
+        "HARDWARE_ACCELERATED_PROCESSING"
+      ]
+    },
+    "ProcessingUnit":{
+      "type":"string",
+      "enum":[
+        "UNITS_2",
+        "UNITS_4",
+        "UNITS_8",
+        "UNITS_12",
+        "UNITS_16",
+        "UNITS_24",
+        "UNITS_32",
+        "UNITS_36",
+        "UNITS_48",
+        "UNITS_60",
+        "UNITS_64",
+        "UNITS_72",
+        "UNITS_84",
+        "UNITS_96"
+      ]
+    },
     "ProjectResource":{
       "type":"structure",
       "required":["id"],
@@ -7057,7 +10361,10 @@
         "INTEGER",
         "DOUBLE",
         "BOOLEAN",
-        "STRUCT"
+        "STRUCT",
+        "VIDEO",
+        "ANNOTATION",
+        "JSON"
       ]
     },
     "PropertyMapping":{
@@ -7210,7 +10517,8 @@
       "type":"structure",
       "required":["loggingOptions"],
       "members":{
-        "loggingOptions":{"shape":"LoggingOptions"}
+        "loggingOptions":{"shape":"LoggingOptions"},
+        "workspaceName":{"shape":"WorkspaceName"}
       }
     },
     "PutLoggingOptionsResponse":{
@@ -7261,10 +10569,92 @@
         "UNCERTAIN"
       ]
     },
+    "QueryErrorMessage":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "QueryFilter":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "QueryId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9-]+"
+    },
+    "QueryListNextToken":{
+      "type":"string",
+      "max":4096,
+      "min":1
+    },
+    "QueryMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":10000,
+      "min":1
+    },
+    "QueryNextToken":{
+      "type":"string",
+      "max":4096,
+      "min":1
+    },
     "QueryStatement":{
       "type":"string",
+      "max":10000,
       "min":1,
-      "pattern":"^[\\s\\S]+$"
+      "pattern":"^[\\s\\S]+$",
+      "sensitive":true
+    },
+    "QueryStatistics":{
+      "type":"structure",
+      "required":[
+        "rowCount",
+        "bytesScanned",
+        "executionTimeInMillis"
+      ],
+      "members":{
+        "rowCount":{"shape":"Long"},
+        "bytesScanned":{"shape":"Long"},
+        "executionTimeInMillis":{"shape":"Long"}
+      }
+    },
+    "QueryStatus":{
+      "type":"string",
+      "enum":[
+        "SUBMITTED",
+        "RUNNING",
+        "COMPLETED",
+        "FAILED",
+        "CANCELED",
+        "CANCELING"
+      ]
+    },
+    "QueryString":{
+      "type":"string",
+      "max":10240,
+      "min":1,
+      "sensitive":true
+    },
+    "QuerySummary":{
+      "type":"structure",
+      "required":[
+        "queryId",
+        "status",
+        "submittedAt"
+      ],
+      "members":{
+        "queryId":{"shape":"QueryId"},
+        "status":{"shape":"QueryStatus"},
+        "submittedAt":{"shape":"Timestamp"},
+        "completedAt":{"shape":"Timestamp"}
+      }
+    },
+    "QuerySummaryList":{
+      "type":"list",
+      "member":{"shape":"QuerySummary"}
     },
     "QueryTimeoutException":{
       "type":"structure",
@@ -7330,7 +10720,27 @@
       "exception":true
     },
     "ResourceArn":{"type":"string"},
+    "ResourceError":{
+      "type":"structure",
+      "members":{
+        "code":{"shape":"ResourceErrorCode"},
+        "message":{"shape":"String"}
+      }
+    },
+    "ResourceErrorCode":{
+      "type":"string",
+      "enum":[
+        "VALIDATION_ERROR",
+        "INTERNAL_FAILURE"
+      ]
+    },
     "ResourceId":{"type":"string"},
+    "ResourceName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_-]+"
+    },
     "ResourceNotFoundException":{
       "type":"structure",
       "required":["message"],
@@ -7339,6 +10749,23 @@
       },
       "error":{"httpStatusCode":404},
       "exception":true
+    },
+    "ResourceState":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "ACTIVE",
+        "UPDATING",
+        "DELETING",
+        "FAILED"
+      ]
+    },
+    "ResourceStatus":{
+      "type":"structure",
+      "members":{
+        "error":{"shape":"ResourceError"},
+        "state":{"shape":"ResourceState"}
+      }
     },
     "ResourceType":{
       "type":"string",
@@ -7372,7 +10799,12 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"^[a-zA-Z0-9 _\\-#$*!@]+$"
+      "pattern":"^[a-zA-Z0-9 _\\-#$*!@.]+$"
+    },
+    "Result":{
+      "type":"list",
+      "member":{"shape":"ColumnValue"},
+      "sparse":true
     },
     "ResultProperty":{
       "type":"string",
@@ -7394,9 +10826,19 @@
         "data":{"shape":"DatumList"}
       }
     },
+    "RowList":{
+      "type":"list",
+      "member":{"shape":"Result"}
+    },
     "Rows":{
       "type":"list",
       "member":{"shape":"Row"}
+    },
+    "S3Uri":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"s3://[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]/.+"
     },
     "SSOApplicationId":{
       "type":"string",
@@ -7415,6 +10857,105 @@
       ]
     },
     "ScalarValue":{"type":"string"},
+    "SearchFilters":{
+      "type":"structure",
+      "members":{
+        "timeSeriesIds":{"shape":"TimeSeriesIdList"},
+        "datasetIds":{"shape":"DataSetIdList"},
+        "timeIntervals":{"shape":"TimeIntervalList"}
+      }
+    },
+    "SearchId":{
+      "type":"string",
+      "max":36,
+      "min":23,
+      "pattern":"[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*"
+    },
+    "SearchQueryStatement":{
+      "type":"string",
+      "max":5000,
+      "min":1,
+      "sensitive":true
+    },
+    "SearchResult":{
+      "type":"structure",
+      "required":[
+        "searchId",
+        "workspaceName",
+        "datasetId",
+        "timeSeriesId",
+        "startTimestamp",
+        "endTimestamp",
+        "topTimestamp",
+        "score"
+      ],
+      "members":{
+        "searchId":{"shape":"SearchId"},
+        "workspaceName":{"shape":"WorkspaceName"},
+        "datasetId":{"shape":"DatasetId"},
+        "timeSeriesId":{"shape":"TimeSeriesId"},
+        "startTimestamp":{"shape":"TimeInNanos"},
+        "endTimestamp":{"shape":"TimeInNanos"},
+        "topTimestamp":{"shape":"TimeInNanos"},
+        "score":{"shape":"Float"}
+      }
+    },
+    "SearchResultList":{
+      "type":"list",
+      "member":{"shape":"SearchResult"}
+    },
+    "SearchStatus":{
+      "type":"string",
+      "enum":[
+        "QUEUED",
+        "RUNNING",
+        "SUCCEEDED",
+        "FAILED"
+      ]
+    },
+    "SearchStatusFilterList":{
+      "type":"list",
+      "member":{"shape":"SearchStatus"},
+      "max":4,
+      "min":1
+    },
+    "SearchSummaries":{
+      "type":"list",
+      "member":{"shape":"SearchSummary"}
+    },
+    "SearchSummary":{
+      "type":"structure",
+      "required":[
+        "searchId",
+        "workspaceName",
+        "status",
+        "queryStatement",
+        "searchType"
+      ],
+      "members":{
+        "searchId":{"shape":"SearchId"},
+        "workspaceName":{"shape":"WorkspaceName"},
+        "status":{"shape":"SearchStatus"},
+        "queryStatement":{"shape":"SearchQueryStatement"},
+        "searchType":{"shape":"SearchType"},
+        "statusReason":{"shape":"String"},
+        "startedAt":{"shape":"Timestamp"},
+        "groupId":{"shape":"GroupId"}
+      }
+    },
+    "SearchType":{
+      "type":"string",
+      "enum":[
+        "DEEP",
+        "QUICK"
+      ]
+    },
+    "SearchTypeFilterList":{
+      "type":"list",
+      "member":{"shape":"SearchType"},
+      "max":2,
+      "min":1
+    },
     "SelectAll":{
       "type":"string",
       "pattern":"\\*"
@@ -7428,6 +10969,17 @@
       "error":{"httpStatusCode":503},
       "exception":true,
       "fault":true
+    },
+    "SessionConfig":{
+      "type":"structure",
+      "required":[
+        "sessionStartTimestamp",
+        "sessionEndTimestamp"
+      ],
+      "members":{
+        "sessionStartTimestamp":{"shape":"TimeInNanos"},
+        "sessionEndTimestamp":{"shape":"TimeInNanos"}
+      }
     },
     "SiemensIE":{
       "type":"structure",
@@ -7447,6 +10999,104 @@
       "type":"structure",
       "members":{
         "kendra":{"shape":"KendraSourceDetail"}
+      }
+    },
+    "StartPipelineExecutionRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceName",
+        "pipelineName"
+      ],
+      "members":{
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"uri",
+          "locationName":"workspaceName"
+        },
+        "pipelineName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"pipelineName"
+        },
+        "executionEnvironmentVariableOverrides":{"shape":"ExecutionEnvironmentVariables"},
+        "executionPriority":{"shape":"ExecutionPriority"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "StartPipelineExecutionResponse":{
+      "type":"structure",
+      "required":["pipelineExecutionId"],
+      "members":{
+        "pipelineExecutionId":{"shape":"ID"}
+      }
+    },
+    "StartQueryRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceName",
+        "queryStatement"
+      ],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"uri",
+          "locationName":"workspaceName"
+        },
+        "queryStatement":{"shape":"QueryString"}
+      }
+    },
+    "StartQueryResponse":{
+      "type":"structure",
+      "required":[
+        "queryId",
+        "status"
+      ],
+      "members":{
+        "queryId":{"shape":"QueryId"},
+        "status":{"shape":"QueryStatus"}
+      }
+    },
+    "StartSearchRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceName",
+        "queryStatement"
+      ],
+      "members":{
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"uri",
+          "locationName":"workspaceName"
+        },
+        "queryStatement":{"shape":"SearchQueryStatement"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "searchType":{"shape":"SearchType"},
+        "searchFilters":{"shape":"SearchFilters"},
+        "groupId":{"shape":"GroupId"}
+      }
+    },
+    "StartSearchResponse":{
+      "type":"structure",
+      "required":[
+        "searchId",
+        "workspaceName",
+        "status"
+      ],
+      "members":{
+        "searchId":{"shape":"SearchId"},
+        "workspaceName":{"shape":"WorkspaceName"},
+        "status":{"shape":"SearchStatus"},
+        "groupId":{"shape":"GroupId"}
       }
     },
     "StorageType":{
@@ -7513,6 +11163,37 @@
         "COMPUTATION_MODEL"
       ]
     },
+    "TaskConfiguration":{
+      "type":"structure",
+      "members":{
+        "containerTaskConfiguration":{"shape":"ContainerTaskConfiguration"}
+      },
+      "union":true
+    },
+    "TaskSummaries":{
+      "type":"list",
+      "member":{"shape":"TaskSummary"}
+    },
+    "TaskSummary":{
+      "type":"structure",
+      "required":[
+        "taskName",
+        "taskArn",
+        "version",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "taskName":{"shape":"ResourceName"},
+        "description":{"shape":"Description"},
+        "taskArn":{"shape":"ARN"},
+        "version":{"shape":"Version"},
+        "status":{"shape":"ResourceStatus"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"}
+      }
+    },
     "ThrottlingException":{
       "type":"structure",
       "required":["message"],
@@ -7535,6 +11216,23 @@
       "max":9223372036854774,
       "min":1
     },
+    "TimeInterval":{
+      "type":"structure",
+      "required":[
+        "startTime",
+        "endTime"
+      ],
+      "members":{
+        "startTime":{"shape":"TimeInNanos"},
+        "endTime":{"shape":"TimeInNanos"}
+      }
+    },
+    "TimeIntervalList":{
+      "type":"list",
+      "member":{"shape":"TimeInterval"},
+      "max":100,
+      "min":1
+    },
     "TimeOrdering":{
       "type":"string",
       "enum":[
@@ -7546,6 +11244,12 @@
       "type":"string",
       "max":73,
       "min":36
+    },
+    "TimeSeriesIdList":{
+      "type":"list",
+      "member":{"shape":"TimeSeriesId"},
+      "max":100,
+      "min":1
     },
     "TimeSeriesSummaries":{
       "type":"list",
@@ -7571,6 +11275,27 @@
         "timeSeriesLastUpdateDate":{"shape":"Timestamp"},
         "timeSeriesArn":{"shape":"ARN"}
       }
+    },
+    "TimeoutSeconds":{
+      "type":"long",
+      "box":true,
+      "max":86400,
+      "min":60
+    },
+    "TimeseriesItem":{
+      "type":"structure",
+      "members":{
+        "timeSeriesId":{"shape":"TimeSeriesId"},
+        "propertyAlias":{"shape":"AssetPropertyAlias"},
+        "trimSettings":{"shape":"TrimSettings"},
+        "formatSettings":{"shape":"FormatSettings"}
+      }
+    },
+    "TimeseriesList":{
+      "type":"list",
+      "member":{"shape":"TimeseriesItem"},
+      "max":100,
+      "min":1
     },
     "Timestamp":{"type":"timestamp"},
     "Timestamps":{
@@ -7623,6 +11348,17 @@
     "TraversalType":{
       "type":"string",
       "enum":["PATH_TO_ROOT"]
+    },
+    "TrimSettings":{
+      "type":"structure",
+      "required":[
+        "startTime",
+        "endTime"
+      ],
+      "members":{
+        "startTime":{"shape":"TimeInNanos"},
+        "endTime":{"shape":"TimeInNanos"}
+      }
     },
     "TumblingWindow":{
       "type":"structure",
@@ -7743,7 +11479,8 @@
       ],
       "members":{
         "assetModelCompositeModelPath":{"shape":"AssetModelCompositeModelPath"},
-        "assetModelStatus":{"shape":"AssetModelStatus"}
+        "assetModelStatus":{"shape":"AssetModelStatus"},
+        "assetModelId":{"shape":"ID"}
       }
     },
     "UpdateAssetModelRequest":{
@@ -7789,6 +11526,7 @@
       "type":"structure",
       "required":["assetModelStatus"],
       "members":{
+        "assetModelId":{"shape":"ID"},
         "assetModelStatus":{"shape":"AssetModelStatus"}
       }
     },
@@ -7843,6 +11581,7 @@
       "type":"structure",
       "required":["assetStatus"],
       "members":{
+        "assetId":{"shape":"ID"},
         "assetStatus":{"shape":"AssetStatus"}
       }
     },
@@ -7916,8 +11655,11 @@
           "location":"uri",
           "locationName":"datasetId"
         },
+        "workspaceName":{"shape":"WorkspaceName"},
         "datasetName":{"shape":"RestrictedName"},
-        "datasetDescription":{"shape":"RestrictedDescription"},
+        "datasetDescription":{"shape":"Description"},
+        "datasetConfig":{"shape":"DatasetConfig"},
+        "metadata":{"shape":"Metadata"},
         "datasetSource":{"shape":"DatasetSource"},
         "clientToken":{
           "shape":"ClientToken",
@@ -7974,6 +11716,39 @@
           "locationName":"gatewayId"
         },
         "gatewayName":{"shape":"GatewayName"}
+      }
+    },
+    "UpdatePipelineRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceName",
+        "pipelineName"
+      ],
+      "members":{
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"uri",
+          "locationName":"workspaceName"
+        },
+        "pipelineName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"pipelineName"
+        },
+        "description":{"shape":"Description"},
+        "environmentVariables":{"shape":"EnvironmentVariablesMap"},
+        "computations":{"shape":"ComputeNodeList"}
+      }
+    },
+    "UpdatePipelineResponse":{
+      "type":"structure",
+      "required":[
+        "version",
+        "status"
+      ],
+      "members":{
+        "version":{"shape":"Version"},
+        "status":{"shape":"ResourceStatus"}
       }
     },
     "UpdatePortalRequest":{
@@ -8036,6 +11811,62 @@
       "type":"structure",
       "members":{}
     },
+    "UpdateTaskRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceName",
+        "taskName"
+      ],
+      "members":{
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"uri",
+          "locationName":"workspaceName"
+        },
+        "taskName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"taskName"
+        },
+        "description":{"shape":"Description"},
+        "taskConfiguration":{"shape":"TaskConfiguration"}
+      }
+    },
+    "UpdateTaskResponse":{
+      "type":"structure",
+      "required":[
+        "version",
+        "status"
+      ],
+      "members":{
+        "version":{"shape":"Version"},
+        "status":{"shape":"ResourceStatus"}
+      }
+    },
+    "UpdateWorkspaceRequest":{
+      "type":"structure",
+      "required":["workspaceName"],
+      "members":{
+        "workspaceName":{
+          "shape":"WorkspaceName",
+          "location":"uri",
+          "locationName":"workspaceName"
+        },
+        "workspaceDescription":{"shape":"Description"},
+        "encryptionConfiguration":{"shape":"WorkspaceEncryptionConfiguration"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "UpdateWorkspaceResponse":{
+      "type":"structure",
+      "required":["workspaceStatus"],
+      "members":{
+        "workspaceStatus":{"shape":"WorkspaceStatus"}
+      }
+    },
     "Url":{
       "type":"string",
       "max":256,
@@ -8087,6 +11918,10 @@
       "min":1,
       "pattern":"^(0|([1-9]{1}\\d*))$"
     },
+    "VideoDataType":{
+      "type":"string",
+      "enum":["VIDEO-MP4"]
+    },
     "WarmTierRetentionPeriod":{
       "type":"structure",
       "members":{
@@ -8100,6 +11935,78 @@
         "ENABLED",
         "DISABLED"
       ]
+    },
+    "WorkspaceEncryptionConfiguration":{
+      "type":"structure",
+      "required":["encryptionType"],
+      "members":{
+        "encryptionType":{"shape":"EncryptionType"},
+        "kmsKeyId":{"shape":"KmsKeyId"}
+      }
+    },
+    "WorkspaceEncryptionConfigurationInfo":{
+      "type":"structure",
+      "required":["encryptionType"],
+      "members":{
+        "encryptionType":{"shape":"EncryptionType"},
+        "kmsKeyArn":{"shape":"ARN"}
+      }
+    },
+    "WorkspaceErrorDetails":{
+      "type":"structure",
+      "required":[
+        "code",
+        "message"
+      ],
+      "members":{
+        "code":{"shape":"ErrorCode"},
+        "message":{"shape":"Description"}
+      }
+    },
+    "WorkspaceName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9_-]+$"
+    },
+    "WorkspaceState":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "ACTIVE",
+        "UPDATING",
+        "DELETING",
+        "FAILED"
+      ]
+    },
+    "WorkspaceStatus":{
+      "type":"structure",
+      "required":["state"],
+      "members":{
+        "state":{"shape":"WorkspaceState"},
+        "error":{"shape":"WorkspaceErrorDetails"}
+      }
+    },
+    "WorkspaceSummaries":{
+      "type":"list",
+      "member":{"shape":"WorkspaceSummary"}
+    },
+    "WorkspaceSummary":{
+      "type":"structure",
+      "required":[
+        "name",
+        "arn",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "name":{"shape":"WorkspaceName"},
+        "arn":{"shape":"ARN"},
+        "status":{"shape":"WorkspaceStatus"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"}
+      }
     }
   }
 }

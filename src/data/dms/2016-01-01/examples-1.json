@@ -25,39 +25,80 @@
         "title": "Add tags to resource"
       }
     ],
+    "CancelMetadataModelConversion": [
+      {
+        "input": {
+          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+          "RequestIdentifier": "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111"
+        },
+        "output": {
+          "Request": {
+            "MigrationProjectArn": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+            "RequestIdentifier": "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+            "Status": "CANCELING"
+          }
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example cancels a metadata model conversion operation.",
+        "id": "cancel-metadata-model-conversion-1689722427798",
+        "title": "Cancel a metadata model conversion"
+      }
+    ],
+    "CancelMetadataModelCreation": [
+      {
+        "input": {
+          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+          "RequestIdentifier": "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111"
+        },
+        "output": {
+          "Request": {
+            "MigrationProjectArn": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+            "RequestIdentifier": "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+            "Status": "CANCELING"
+          }
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example cancels a metadata model creation operation.",
+        "id": "cancel-metadata-model-creation-1689722427798",
+        "title": "Cancel a metadata model creation"
+      }
+    ],
     "CreateDataProvider": [
       {
         "input": {
-          "DataProviderName": "sqlServer-dev",
-          "Description": "description",
+          "DataProviderName": "example-data-provider",
+          "Description": "Example data provider for documentation",
           "Engine": "sqlserver",
           "Settings": {
             "MicrosoftSqlServerSettings": {
-              "DatabaseName": "DatabaseName",
-              "Port": 11112,
-              "ServerName": "ServerName2",
-              "SslMode": "none"
+              "CertificateArn": "arn:aws:dms:us-east-1:111122223333:cert:EXAMPLEABCDEFGHIJKLMNOPQRS",
+              "DatabaseName": "ExampleDatabase",
+              "Port": 1433,
+              "ServerName": "example-source-server.us-east-1.rds.amazonaws.com",
+              "SslMode": "verify-full"
             }
-          },
-          "Tags": [
-            {
-              "Key": "access",
-              "Value": "authorizedusers"
-            }
-          ]
+          }
         },
         "output": {
           "DataProvider": {
-            "DataProviderArn": "arn:aws:dms:us-east-1:012345678901:data-provider:my-target-dataprovider",
-            "DataProviderCreationTime": "2023-05-12T10:50:41.988561Z",
-            "DataProviderName": "my-target-dataprovider",
-            "Engine": "postgres",
+            "DataProviderArn": "arn:aws:dms:us-east-1:111122223333:data-provider:EXAMPLEABCDEFGHIJKLMNOPQRS",
+            "DataProviderCreationTime": "2026-01-09T12:30:00.000000Z",
+            "DataProviderName": "example-data-provider",
+            "Description": "Example data provider for documentation",
+            "Engine": "sqlserver",
             "Settings": {
-              "PostgreSqlSettings": {
-                "DatabaseName": "target",
-                "Port": 5432,
-                "ServerName": "postrgesql.a1b2c3d4e5f6.us-east-1.rds.amazonaws.com",
-                "SslMode": "none"
+              "MicrosoftSqlServerSettings": {
+                "CertificateArn": "arn:aws:dms:us-east-1:111122223333:cert:EXAMPLEABCDEFGHIJKLMNOPQRS",
+                "DatabaseName": "ExampleDatabase",
+                "Port": 1433,
+                "ServerName": "example-source-server.us-east-1.rds.amazonaws.com",
+                "SslMode": "verify-full"
               }
             }
           }
@@ -66,9 +107,9 @@
           "input": {},
           "output": {}
         },
-        "description": "Creates the data provider with the specified parameters.",
+        "description": "The following example creates a Microsoft SQL Server data provider.",
         "id": "create-data-provider-1689726511871",
-        "title": "Create Data Provider"
+        "title": "Create a Microsoft SQL Server data provider"
       }
     ],
     "CreateEndpoint": [
@@ -118,29 +159,28 @@
     "CreateInstanceProfile": [
       {
         "input": {
-          "Description": "Description",
-          "InstanceProfileName": "my-instance-profile",
-          "KmsKeyArn": "arn:aws:kms:us-east-1:012345678901:key/01234567-89ab-cdef-0123-456789abcdef",
-          "NetworkType": "DUAL",
-          "PubliclyAccessible": true,
-          "SubnetGroupIdentifier": "my-subnet-group",
-          "Tags": [
-            {
-              "Key": "access",
-              "Value": "authorizedusers"
-            }
+          "Description": "Example instance profile for documentation",
+          "InstanceProfileName": "example-instance-profile",
+          "KmsKeyArn": "arn:aws:kms:us-east-1:111122223333:key/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+          "NetworkType": "IPV4",
+          "PubliclyAccessible": false,
+          "SubnetGroupIdentifier": "example-replication-subnet-group",
+          "VpcSecurityGroups": [
+            "sg-0123456789abcdef0"
           ]
         },
         "output": {
           "InstanceProfile": {
-            "InstanceProfileArn": "arn:aws:dms:us-east-1:012345678901:instance-profile:my-instance-profile",
-            "InstanceProfileCreationTime": "2022-12-16T09:44:43.543246Z",
-            "InstanceProfileName": "my-instance-profile",
-            "KmsKeyArn": "arn:aws:kms:us-east-1:012345678901:key/01234567-89ab-cdef-0123-456789abcdef",
-            "PubliclyAccessible": true,
-            "SubnetGroupIdentifier": "public-subnets",
+            "Description": "Example instance profile for documentation",
+            "InstanceProfileArn": "arn:aws:dms:us-east-1:111122223333:instance-profile:EXAMPLEABCDEFGHIJKLMNOPQRS",
+            "InstanceProfileCreationTime": "2026-01-09T12:30:00.000000Z",
+            "InstanceProfileName": "example-instance-profile",
+            "KmsKeyArn": "arn:aws:kms:us-east-1:111122223333:key/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+            "NetworkType": "IPV4",
+            "PubliclyAccessible": false,
+            "SubnetGroupIdentifier": "example-replication-subnet-group",
             "VpcSecurityGroups": [
-              "sg-0123456"
+              "sg-0123456789abcdef0"
             ]
           }
         },
@@ -148,79 +188,75 @@
           "input": {},
           "output": {}
         },
-        "description": "Creates the instance profile using the specified parameters.",
+        "description": "The following example creates an instance profile.",
         "id": "create-instance-profile-1689716070633",
-        "title": "Create Instance Profile"
+        "title": "Create an instance profile"
       }
     ],
     "CreateMigrationProject": [
       {
         "input": {
-          "Description": "description",
-          "InstanceProfileIdentifier": "ip-au-17",
-          "MigrationProjectName": "my-migration-project",
+          "Description": "Example migration project for documentation",
+          "InstanceProfileIdentifier": "arn:aws:dms:us-east-1:111122223333:instance-profile:EXAMPLEABCDEFGHIJKLMNOPQRS",
+          "MigrationProjectName": "example-migration-project",
           "SchemaConversionApplicationAttributes": {
-            "S3BucketPath": "arn:aws:s3:::mylogin-bucket",
-            "S3BucketRoleArn": "arn:aws:iam::012345678901:role/Admin"
+            "S3BucketPath": "s3://amzn-s3-demo-bucket",
+            "S3BucketRoleArn": "arn:aws:iam::111122223333:role/example-s3-access-role"
           },
           "SourceDataProviderDescriptors": [
             {
-              "DataProviderIdentifier": "arn:aws:dms:us-east-1:012345678901:data-provider:EXAMPLEABCDEFGHIJKLMNOPQRSTUVWXYZ012345",
-              "SecretsManagerAccessRoleArn": "arn:aws:iam::012345678901:role/myuser-admin-access",
-              "SecretsManagerSecretId": "arn:aws:secretsmanager:us-east-1:012345678901:secret:myorg/example1/ALL.SOURCE.ORACLE_12-A1B2C3"
-            }
-          ],
-          "Tags": [
-            {
-              "Key": "access",
-              "Value": "authorizedusers"
+              "DataProviderIdentifier": "arn:aws:dms:us-east-1:111122223333:data-provider:EXAMPLEABCDEFGHIJKLMNOPQRS",
+              "SecretsManagerAccessRoleArn": "arn:aws:iam::111122223333:role/example-secrets-manager-role",
+              "SecretsManagerSecretId": "arn:aws:secretsmanager:us-east-1:111122223333:secret:example-source-secret-A1B2C3"
             }
           ],
           "TargetDataProviderDescriptors": [
             {
-              "DataProviderIdentifier": "arn:aws:dms:us-east-1:012345678901:data-provider:EXAMPLEABCDEFGHIJKLMNOPQRSTUVWXYZ012345",
-              "SecretsManagerAccessRoleArn": "arn:aws:iam::012345678901:role/myuser-admin-access",
-              "SecretsManagerSecretId": "arn:aws:secretsmanager:us-east-1:012345678901:secret:myorg/example1/TARGET.postgresql-A1B2C3"
+              "DataProviderIdentifier": "arn:aws:dms:us-east-1:111122223333:data-provider:EXAMPLEABCDEFGHIJKLMNOPQRS",
+              "SecretsManagerAccessRoleArn": "arn:aws:iam::111122223333:role/example-secrets-manager-role",
+              "SecretsManagerSecretId": "arn:aws:secretsmanager:us-east-1:111122223333:secret:example-target-secret-A1B2C3"
             }
           ],
-          "TransformationRules": "{\"key0\":\"value0\",\"key1\":\"value1\",\"key2\":\"value2\"}"
+          "TransformationRules": "{\"rules\":[{\"rule-type\":\"transformation\",\"rule-id\":\"1\",\"rule-name\":\"1\",\"rule-target\":\"schema\",\"rule-action\":\"rename\",\"object-locator\":{\"schema-name\":\"ExampleSchema\"},\"value\":\"TargetSchema\"}]}"
         },
         "output": {
           "MigrationProject": {
-            "InstanceProfileArn": "arn:aws:dms:us-east-1:012345678901:instance-profile:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
-            "InstanceProfileName": "my-instance-profile",
-            "MigrationProjectArn": "arn:aws:dms:us-east-1:012345678901:migration-project:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
-            "MigrationProjectCreationTime": "2023-04-19T11:45:15.805253Z",
-            "MigrationProjectName": "my-migration-project",
+            "Description": "Example migration project for documentation",
+            "InstanceProfileArn": "arn:aws:dms:us-east-1:111122223333:instance-profile:EXAMPLEABCDEFGHIJKLMNOPQRS",
+            "InstanceProfileName": "example-instance-profile",
+            "MigrationProjectArn": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+            "MigrationProjectCreationTime": "2026-01-09T12:30:00.000000Z",
+            "MigrationProjectName": "example-migration-project",
             "SchemaConversionApplicationAttributes": {
-              "S3BucketPath": "my-s3-bucket/my_folder",
-              "S3BucketRoleArn": "arn:aws:iam::012345678901:role/my-s3role"
+              "S3BucketPath": "s3://amzn-s3-demo-bucket",
+              "S3BucketRoleArn": "arn:aws:iam::111122223333:role/example-s3-access-role"
             },
             "SourceDataProviderDescriptors": [
               {
-                "DataProviderArn": "arn:aws:dms:us-east-1:012345678901:data-provider:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
-                "DataProviderName": "source-oracle-12",
-                "SecretsManagerAccessRoleArn": "arn:aws:iam::012345678901:role/my-access-role",
-                "SecretsManagerSecretId": "arn:aws:secretsmanager:us-east-1:012345678901:secret:myuser/ALL.SOURCE.ORACLE_12-0123456"
+                "DataProviderArn": "arn:aws:dms:us-east-1:111122223333:data-provider:EXAMPLEABCDEFGHIJKLMNOPQRS",
+                "DataProviderName": "example-data-provider",
+                "SecretsManagerAccessRoleArn": "arn:aws:iam::111122223333:role/example-secrets-manager-role",
+                "SecretsManagerSecretId": "arn:aws:secretsmanager:us-east-1:111122223333:secret:example-source-secret-A1B2C3"
               }
             ],
             "TargetDataProviderDescriptors": [
               {
-                "DataProviderArn": "arn:aws:dms:us-east-1:012345678901:data-provider:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
-                "DataProviderName": "target-dataprovider-3",
-                "SecretsManagerAccessRoleArn": "arn:aws:iam::012345678901:role/dmytbon-admin-access",
-                "SecretsManagerSecretId": "arn:aws:secretsmanager:us-east-1:012345678901:secret:myuser/TARGET.postgresql-0123456"
+                "DataProviderArn": "arn:aws:dms:us-east-1:111122223333:data-provider:EXAMPLEABCDEFGHIJKLMNOPQRS",
+                "DataProviderName": "example-data-provider",
+                "SecretsManagerAccessRoleArn": "arn:aws:iam::111122223333:role/example-secrets-manager-role",
+                "SecretsManagerSecretId": "arn:aws:secretsmanager:us-east-1:111122223333:secret:example-target-secret-A1B2C3"
               }
-            ]
+            ],
+            "TransformationRules": "{\"rules\":[{\"rule-type\":\"transformation\",\"rule-id\":\"1\",\"rule-name\":\"1\",\"rule-target\":\"schema\",\"rule-action\":\"rename\",\"object-locator\":{\"schema-name\":\"ExampleSchema\"},\"value\":\"TargetSchema\"}]}"
           }
         },
         "comments": {
           "input": {},
           "output": {}
         },
-        "description": "Creates the migration project with the specified parameters.",
+        "description": "The following example creates a migration project.",
         "id": "create-migration-project-1689716672685",
-        "title": "Create Migration Project"
+        "title": "Create a migration project"
       }
     ],
     "CreateReplicationInstance": [
@@ -410,20 +446,22 @@
     "DeleteDataProvider": [
       {
         "input": {
-          "DataProviderIdentifier": "arn:aws:dms:us-east-1:012345678901:data-provider:EXAMPLEABCDEFGHIJKLMNOPQRSTUVWXYZ012345"
+          "DataProviderIdentifier": "arn:aws:dms:us-east-1:111122223333:data-provider:EXAMPLEABCDEFGHIJKLMNOPQRS"
         },
         "output": {
           "DataProvider": {
-            "DataProviderArn": "arn:aws:dms:us-east-1:012345678901:data-provider:my-target-data-provider",
-            "DataProviderCreationTime": "2023-05-12T10:50:41.988561Z",
-            "DataProviderName": "my-target-data-provider",
-            "Engine": "postgres",
+            "DataProviderArn": "arn:aws:dms:us-east-1:111122223333:data-provider:EXAMPLEABCDEFGHIJKLMNOPQRS",
+            "DataProviderCreationTime": "2026-01-09T12:30:00.000000Z",
+            "DataProviderName": "example-data-provider",
+            "Description": "Example data provider for documentation",
+            "Engine": "sqlserver",
             "Settings": {
-              "PostgreSqlSettings": {
-                "DatabaseName": "target",
-                "Port": 5432,
-                "ServerName": "postrgesql.0a1b2c3d4e5f.us-east-1.rds.amazonaws.com",
-                "SslMode": "none"
+              "MicrosoftSqlServerSettings": {
+                "CertificateArn": "arn:aws:dms:us-east-1:111122223333:cert:EXAMPLEABCDEFGHIJKLMNOPQRS",
+                "DatabaseName": "ExampleDatabase",
+                "Port": 1433,
+                "ServerName": "example-source-server.us-east-1.rds.amazonaws.com",
+                "SslMode": "verify-full"
               }
             }
           }
@@ -432,9 +470,9 @@
           "input": {},
           "output": {}
         },
-        "description": "Deletes the specified data provider.",
+        "description": "The following example deletes a data provider identified by its ARN.",
         "id": "delete-data-provider-1689724476356",
-        "title": "Delete Data Provider"
+        "title": "Delete a data provider"
       }
     ],
     "DeleteEndpoint": [
@@ -467,18 +505,20 @@
     "DeleteInstanceProfile": [
       {
         "input": {
-          "InstanceProfileIdentifier": "arn:aws:dms:us-east-1:012345678901:instance-profile:EXAMPLEABCDEFGHIJKLMNOPQRSTUVWXYZ012345"
+          "InstanceProfileIdentifier": "arn:aws:dms:us-east-1:111122223333:instance-profile:EXAMPLEABCDEFGHIJKLMNOPQRS"
         },
         "output": {
           "InstanceProfile": {
-            "InstanceProfileArn": "arn:aws:dms:us-east-1:012345678901:instance-profile:my-instance-profile",
-            "InstanceProfileCreationTime": "2022-12-16T09:44:43.543246Z",
-            "InstanceProfileName": "my-instance-profile",
-            "KmsKeyArn": "arn:aws:kms:us-east-1:012345678901:key/01234567-89ab-cdef-0123-456789abcdef",
-            "PubliclyAccessible": true,
-            "SubnetGroupIdentifier": "public-subnets",
+            "Description": "Example instance profile for documentation",
+            "InstanceProfileArn": "arn:aws:dms:us-east-1:111122223333:instance-profile:EXAMPLEABCDEFGHIJKLMNOPQRS",
+            "InstanceProfileCreationTime": "2026-01-09T12:30:00.000000Z",
+            "InstanceProfileName": "example-instance-profile",
+            "KmsKeyArn": "arn:aws:kms:us-east-1:111122223333:key/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+            "NetworkType": "IPV4",
+            "PubliclyAccessible": false,
+            "SubnetGroupIdentifier": "example-replication-subnet-group",
             "VpcSecurityGroups": [
-              "sg-0123456"
+              "sg-0123456789abcdef0"
             ]
           }
         },
@@ -486,52 +526,54 @@
           "input": {},
           "output": {}
         },
-        "description": "Deletes the specified instance profile.",
+        "description": "The following example deletes an instance profile identified by its ARN.",
         "id": "delete-instance-profile-1689716924105",
-        "title": "Delete Instance Profile"
+        "title": "Delete an instance profile"
       }
     ],
     "DeleteMigrationProject": [
       {
         "input": {
-          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:012345678901:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRSTUVWXYZ012345"
+          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS"
         },
         "output": {
           "MigrationProject": {
-            "InstanceProfileArn": "arn:aws:dms:us-east-1:012345678901:instance-profile:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
-            "InstanceProfileName": "my-instance-profile",
-            "MigrationProjectArn": "arn:aws:dms:us-east-1:012345678901:migration-project:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
-            "MigrationProjectCreationTime": "2023-04-19T11:45:15.805253Z",
-            "MigrationProjectName": "my-migration-project",
+            "Description": "Example migration project for documentation",
+            "InstanceProfileArn": "arn:aws:dms:us-east-1:111122223333:instance-profile:EXAMPLEABCDEFGHIJKLMNOPQRS",
+            "InstanceProfileName": "example-instance-profile",
+            "MigrationProjectArn": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+            "MigrationProjectCreationTime": "2026-01-09T12:30:00.000000Z",
+            "MigrationProjectName": "example-migration-project",
             "SchemaConversionApplicationAttributes": {
-              "S3BucketPath": "my-s3-bucket/my_folder",
-              "S3BucketRoleArn": "arn:aws:iam::012345678901:role/my-s3role"
+              "S3BucketPath": "s3://amzn-s3-demo-bucket",
+              "S3BucketRoleArn": "arn:aws:iam::111122223333:role/example-s3-access-role"
             },
             "SourceDataProviderDescriptors": [
               {
-                "DataProviderArn": "arn:aws:dms:us-east-1:012345678901:data-provider:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
-                "DataProviderName": "all-source-oracle-12",
-                "SecretsManagerAccessRoleArn": "arn:aws:iam::012345678901:role/my-access-role",
-                "SecretsManagerSecretId": "arn:aws:secretsmanager:us-east-1:012345678901:secret:myuser/ALL.SOURCE.ORACLE_12-0123456"
+                "DataProviderArn": "arn:aws:dms:us-east-1:111122223333:data-provider:EXAMPLEABCDEFGHIJKLMNOPQRS",
+                "DataProviderName": "example-data-provider",
+                "SecretsManagerAccessRoleArn": "arn:aws:iam::111122223333:role/example-secrets-manager-role",
+                "SecretsManagerSecretId": "arn:aws:secretsmanager:us-east-1:111122223333:secret:example-source-secret-A1B2C3"
               }
             ],
             "TargetDataProviderDescriptors": [
               {
-                "DataProviderArn": "arn:aws:dms:us-east-1:012345678901:data-provider:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
-                "DataProviderName": "sde-obilyns-dataprovider-3",
-                "SecretsManagerAccessRoleArn": "arn:aws:iam::437223687239:role/dmytbon-admin-access",
-                "SecretsManagerSecretId": "arn:aws:secretsmanager:us-east-1:012345678901:secret:myuser/TARGET.postgresql-0123456"
+                "DataProviderArn": "arn:aws:dms:us-east-1:111122223333:data-provider:EXAMPLEABCDEFGHIJKLMNOPQRS",
+                "DataProviderName": "example-data-provider",
+                "SecretsManagerAccessRoleArn": "arn:aws:iam::111122223333:role/example-secrets-manager-role",
+                "SecretsManagerSecretId": "arn:aws:secretsmanager:us-east-1:111122223333:secret:example-target-secret-A1B2C3"
               }
-            ]
+            ],
+            "TransformationRules": "{\"rules\":[{\"rule-type\":\"transformation\",\"rule-id\":\"1\",\"rule-name\":\"1\",\"rule-target\":\"schema\",\"rule-action\":\"rename\",\"object-locator\":{\"schema-name\":\"ExampleSchema\"},\"value\":\"TargetSchema\"}]}"
           }
         },
         "comments": {
           "input": {},
           "output": {}
         },
-        "description": "Deletes the specified migration project.",
+        "description": "The following example deletes a migration project identified by its ARN.",
         "id": "delete-migration-project-1689717217454",
-        "title": "Delete Migration Project"
+        "title": "Delete a migration project"
       }
     ],
     "DeleteReplicationInstance": [
@@ -739,19 +781,19 @@
     "DescribeConversionConfiguration": [
       {
         "input": {
-          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:012345678901:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRSTUVWXYZ012345"
+          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS"
         },
         "output": {
-          "ConversionConfiguration": "{\"Common project settings\":{\"ShowSeverityLevelInSql\":\"CRITICAL\"},\"ORACLE_TO_POSTGRESQL\" : {\"ToTimeZone\":false,\"LastDayBuiltinFunctionOracle\":false,   \"NextDayBuiltinFunctionOracle\":false,\"ConvertProceduresToFunction\":false,\"NvlBuiltinFunctionOracle\":false,\"DbmsAssertBuiltinFunctionOracle\":false}}",
-          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:012345678901:migration-project:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012"
+          "ConversionConfiguration": "{\"Common project settings\":{\"ShowSeverityLevelInSql\":\"CRITICAL\",\"EnableGenAiConversion\":false},\"MSSQL_TO_AURORA_POSTGRESQL\":{\"ConvertProceduresToFunction\":true,\"UniqueIndexGeneration\":true,\"CaseSensitivityNames\":false},\"Conversion version\":{\"MSSQL_TO_AURORA_POSTGRESQL_target_engine_version\":\"15\"}}",
+          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS"
         },
         "comments": {
           "input": {},
           "output": {}
         },
-        "description": "Returns configuration parameters for a schema conversion project.",
+        "description": "The following example retrieves the conversion configuration for a migration project.",
         "id": "describe-conversion-configuration-1689717690907",
-        "title": "Describe Conversion Configuration"
+        "title": "Retrieving conversion configuration for a migration project"
       }
     ],
     "DescribeDataProviders": [
@@ -761,39 +803,38 @@
             {
               "Name": "data-provider-identifier",
               "Values": [
-                "arn:aws:dms:us-east-1:012345678901:data-provider:EXAMPLEABCDEFGHIJKLMNOPQRSTUVWXYZ012345"
+                "arn:aws:dms:us-east-1:111122223333:data-provider:EXAMPLEABCDEFGHIJKLMNOPQRS"
               ]
             }
-          ],
-          "Marker": "EXAMPLEABCDEFGHIJKLMNOPQRSTUVWXYZ012345",
-          "MaxRecords": 20
+          ]
         },
         "output": {
           "DataProviders": [
             {
-              "DataProviderArn": "arn:aws:dms:us-east-1:012345678901:data-provider:my-target-data-provider",
-              "DataProviderCreationTime": "2023-05-12T10:50:41.988561Z",
-              "DataProviderName": "my-target-data-provider",
-              "Engine": "postgres",
+              "DataProviderArn": "arn:aws:dms:us-east-1:111122223333:data-provider:EXAMPLEABCDEFGHIJKLMNOPQRS",
+              "DataProviderCreationTime": "2026-01-09T12:30:00.000000Z",
+              "DataProviderName": "example-data-provider",
+              "Description": "Example data provider for documentation",
+              "Engine": "sqlserver",
               "Settings": {
-                "PostgreSqlSettings": {
-                  "DatabaseName": "target",
-                  "Port": 5432,
-                  "ServerName": "postrgesql.0a1b2c3d4e5f.us-east-1.rds.amazonaws.com",
-                  "SslMode": "none"
+                "MicrosoftSqlServerSettings": {
+                  "CertificateArn": "arn:aws:dms:us-east-1:111122223333:cert:EXAMPLEABCDEFGHIJKLMNOPQRS",
+                  "DatabaseName": "ExampleDatabase",
+                  "Port": 1433,
+                  "ServerName": "example-source-server.us-east-1.rds.amazonaws.com",
+                  "SslMode": "verify-full"
                 }
               }
             }
-          ],
-          "Marker": "EXAMPLEABCDEFGHIJKLMNOPQRSTUVWXYZ012345"
+          ]
         },
         "comments": {
           "input": {},
           "output": {}
         },
-        "description": "",
+        "description": "The following example retrieves the details of a data provider identified by its ARN.",
         "id": "describe-data-providers-1689725897156",
-        "title": "Describe Data Providers"
+        "title": "Describe data providers with a filter"
       }
     ],
     "DescribeEndpointTypes": [
@@ -857,23 +898,41 @@
         "input": {
           "Filters": [
             {
-              "Name": "instance-profile-identifier",
+              "Name": "request-id",
               "Values": [
-                "arn:aws:dms:us-east-1:012345678901:instance-profile:EXAMPLEABCDEFGHIJKLMNOPQRSTUVWXYZ012345"
+                "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+                "a1b2c3d4-5678-90ab-cdef-EXAMPLE22222",
+                "a1b2c3d4-5678-90ab-cdef-EXAMPLE33333"
               ]
             }
           ],
-          "Marker": "0123456789abcdefghijklmnopqrs",
-          "MaxRecords": 20,
-          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:012345678901:migration-project:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012"
+          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS"
         },
         "output": {
-          "Marker": "0123456789abcdefghijklmnopqrs",
           "Requests": [
             {
-              "MigrationProjectArn": "arn:aws:dms:us-east-1:012345678901:migration-project:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
-              "RequestIdentifier": "01234567-89ab-cdef-0123-456789abcdef",
+              "MigrationProjectArn": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+              "RequestIdentifier": "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
               "Status": "SUCCESS"
+            },
+            {
+              "MigrationProjectArn": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+              "Progress": {
+                "ProgressPercent": 50.0,
+                "ProgressStep": "IN_PROGRESS"
+              },
+              "RequestIdentifier": "a1b2c3d4-5678-90ab-cdef-EXAMPLE22222",
+              "Status": "IN_PROGRESS"
+            },
+            {
+              "Error": {
+                "defaultErrorDetails": {
+                  "Message": "The database user in your target secret does not have sufficient privileges. Grant the required privileges and try again."
+                }
+              },
+              "MigrationProjectArn": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+              "RequestIdentifier": "a1b2c3d4-5678-90ab-cdef-EXAMPLE33333",
+              "Status": "FAILED"
             }
           ]
         },
@@ -881,9 +940,9 @@
           "input": {},
           "output": {}
         },
-        "description": "Returns a paginated list of extension pack associations for the specified migration project.",
+        "description": "The following example retrieves the status of operations that apply an extension pack to the target database, identified by their request IDs.",
         "id": "describe-extension-pack-associations-1689718322580",
-        "title": "Describe Extension Pack Associations"
+        "title": "Retrieve the status of extension pack associations"
       }
     ],
     "DescribeInstanceProfiles": [
@@ -893,57 +952,25 @@
             {
               "Name": "instance-profile-identifier",
               "Values": [
-                "arn:aws:dms:us-east-1:012345678901:instance-profile:EXAMPLEABCDEFGHIJKLMNOPQRSTUVWXYZ012345"
+                "arn:aws:dms:us-east-1:111122223333:instance-profile:EXAMPLEABCDEFGHIJKLMNOPQRS"
               ]
             }
-          ],
-          "Marker": "0123456789abcdefghijklmnopqrs",
-          "MaxRecords": 20
+          ]
         },
         "output": {
           "InstanceProfiles": [
             {
-              "InstanceProfileArn": "arn:aws:dms:us-east-1:012345678901:instance-profile:my-instance-profile",
-              "InstanceProfileCreationTime": "2022-12-16T09:44:43.543246Z",
-              "InstanceProfileName": "my-instance-profile",
-              "KmsKeyArn": "arn:aws:kms:us-east-1:012345678901:key/01234567-89ab-cdef-0123-456789abcdef",
-              "PubliclyAccessible": true,
-              "SubnetGroupIdentifier": "public-subnets"
-            }
-          ],
-          "Marker": "0123456789abcdefghijklmnopqrs"
-        },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
-        "description": "Returns a paginated list of instance profiles for your account in the current region.",
-        "id": "describe-instance-profiles-1689718406840",
-        "title": "Describe Instance Profiles"
-      }
-    ],
-    "DescribeMetadataModelAssessments": [
-      {
-        "input": {
-          "Filters": [
-            {
-              "Name": "my-migration-project",
-              "Values": [
-                "arn:aws:dms:us-east-1:012345678901:migration-project:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012"
+              "Description": "Example instance profile for documentation",
+              "InstanceProfileArn": "arn:aws:dms:us-east-1:111122223333:instance-profile:EXAMPLEABCDEFGHIJKLMNOPQRS",
+              "InstanceProfileCreationTime": "2026-01-09T12:30:00.000000Z",
+              "InstanceProfileName": "example-instance-profile",
+              "KmsKeyArn": "arn:aws:kms:us-east-1:111122223333:key/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+              "NetworkType": "IPV4",
+              "PubliclyAccessible": false,
+              "SubnetGroupIdentifier": "example-replication-subnet-group",
+              "VpcSecurityGroups": [
+                "sg-0123456789abcdef0"
               ]
-            }
-          ],
-          "Marker": "0123456789abcdefghijklmnopqrs",
-          "MaxRecords": 20,
-          "MigrationProjectIdentifier": ""
-        },
-        "output": {
-          "Marker": "ASDLKJASDJKHDFHGDNBGDASKJHGFK",
-          "Requests": [
-            {
-              "MigrationProjectArn": "arn:aws:dms:us-east-1:012345678901:migration-project:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
-              "RequestIdentifier": "01234567-89ab-cdef-0123-456789abcdef",
-              "Status": "SUCCESS"
             }
           ]
         },
@@ -951,9 +978,130 @@
           "input": {},
           "output": {}
         },
-        "description": "Returns a paginated list of metadata model assessments for your account in the current region.",
+        "description": "The following example retrieves the details of an instance profile identified by its ARN.",
+        "id": "describe-instance-profiles-1689718406840",
+        "title": "Describe instance profiles with a filter"
+      }
+    ],
+    "DescribeMetadataModel": [
+      {
+        "input": {
+          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+          "Origin": "SOURCE",
+          "SelectionRules": "{\"rules\": [{\"rule-type\": \"selection\", \"rule-id\": \"1\", \"rule-name\": \"1\", \"object-locator\": {\"server-name\": \"example-source-server.us-east-1.rds.amazonaws.com\", \"schema-name\": \"ExampleSchema\", \"table-name\": \"ExampleTable\"}, \"rule-action\": \"explicit\"}]}"
+        },
+        "output": {
+          "Definition": "CREATE TABLE ExampleTable (ExampleColumn INTEGER NOT NULL);",
+          "MetadataModelName": "ExampleTable",
+          "MetadataModelType": "table",
+          "TargetMetadataModels": [
+            {
+              "MetadataModelName": "exampletable",
+              "SelectionRules": "{\"rules\": [{\"rule-type\": \"selection\", \"rule-id\": \"1\", \"rule-name\": \"1\", \"object-locator\": {\"server-name\": \"example-target-server.us-east-1.rds.amazonaws.com\", \"schema-name\": \"exampleschema\", \"table-name\": \"exampletable\"}, \"rule-action\": \"explicit\"}]}"
+            }
+          ]
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example retrieves detailed information about the ExampleTable table in the ExampleSchema schema from the source metadata tree, including its SQL definition and references to the corresponding converted metadata models in the target database.",
+        "id": "describe-metadata-model-1716000000000",
+        "title": "Retrieve a source table metadata model"
+      }
+    ],
+    "DescribeMetadataModelAssessments": [
+      {
+        "input": {
+          "Filters": [
+            {
+              "Name": "request-id",
+              "Values": [
+                "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+                "a1b2c3d4-5678-90ab-cdef-EXAMPLE22222",
+                "a1b2c3d4-5678-90ab-cdef-EXAMPLE33333"
+              ]
+            }
+          ],
+          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS"
+        },
+        "output": {
+          "Requests": [
+            {
+              "MigrationProjectArn": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+              "RequestIdentifier": "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+              "Status": "SUCCESS"
+            },
+            {
+              "MigrationProjectArn": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+              "Progress": {
+                "ProcessedObject": {
+                  "EndpointType": "SOURCE",
+                  "Name": "ExampleTable",
+                  "Type": "table"
+                },
+                "ProgressPercent": 50.0,
+                "ProgressStep": "ANALYZING",
+                "TotalObjects": 100
+              },
+              "RequestIdentifier": "a1b2c3d4-5678-90ab-cdef-EXAMPLE22222",
+              "Status": "IN_PROGRESS"
+            },
+            {
+              "Error": {
+                "defaultErrorDetails": {
+                  "Message": "No objects were found according to the specified selection rules. Please review your selection rules and try again."
+                }
+              },
+              "MigrationProjectArn": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+              "RequestIdentifier": "a1b2c3d4-5678-90ab-cdef-EXAMPLE33333",
+              "Status": "FAILED"
+            }
+          ]
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example retrieves the status of metadata model assessment operations identified by their request IDs.",
         "id": "describe-metadata-model-assessments-1689718702303",
-        "title": "Describe Metadata Model Assessments"
+        "title": "Retrieve the status of metadata model assessments"
+      }
+    ],
+    "DescribeMetadataModelChildren": [
+      {
+        "input": {
+          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+          "Origin": "SOURCE",
+          "SelectionRules": "{\"rules\": [{\"rule-type\": \"selection\", \"rule-id\": \"1\", \"rule-name\": \"1\", \"object-locator\": {\"server-name\": \"example-source-server.us-east-1.rds.amazonaws.com\", \"schema-name\": \"ExampleSchema\"}, \"rule-action\": \"explicit\"}]}"
+        },
+        "output": {
+          "MetadataModelChildren": [
+            {
+              "MetadataModelName": "Tables",
+              "SelectionRules": "{\"rules\": [{\"rule-type\": \"selection\", \"rule-id\": \"1\", \"rule-name\": \"1\", \"object-locator\": {\"server-name\": \"example-source-server.us-east-1.rds.amazonaws.com\", \"schema-name\": \"ExampleSchema\", \"category-name\": \"Tables\"}, \"rule-action\": \"explicit\"}]}"
+            },
+            {
+              "MetadataModelName": "Views",
+              "SelectionRules": "{\"rules\": [{\"rule-type\": \"selection\", \"rule-id\": \"2\", \"rule-name\": \"2\", \"object-locator\": {\"server-name\": \"example-source-server.us-east-1.rds.amazonaws.com\", \"schema-name\": \"ExampleSchema\", \"category-name\": \"Views\"}, \"rule-action\": \"explicit\"}]}"
+            },
+            {
+              "MetadataModelName": "Functions",
+              "SelectionRules": "{\"rules\": [{\"rule-type\": \"selection\", \"rule-id\": \"3\", \"rule-name\": \"3\", \"object-locator\": {\"server-name\": \"example-source-server.us-east-1.rds.amazonaws.com\", \"schema-name\": \"ExampleSchema\", \"category-name\": \"Functions\"}, \"rule-action\": \"explicit\"}]}"
+            },
+            {
+              "MetadataModelName": "Sequences",
+              "SelectionRules": "{\"rules\": [{\"rule-type\": \"selection\", \"rule-id\": \"4\", \"rule-name\": \"4\", \"object-locator\": {\"server-name\": \"example-source-server.us-east-1.rds.amazonaws.com\", \"schema-name\": \"ExampleSchema\", \"category-name\": \"Sequences\"}, \"rule-action\": \"explicit\"}]}"
+            }
+          ]
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example retrieves the child metadata models of the ExampleSchema schema from the source metadata tree.",
+        "id": "describe-metadata-model-children-1716000000000",
+        "title": "Retrieve children of a schema"
       }
     ],
     "DescribeMetadataModelConversions": [
@@ -963,21 +1111,45 @@
             {
               "Name": "request-id",
               "Values": [
-                "01234567-89ab-cdef-0123-456789abcdef"
+                "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+                "a1b2c3d4-5678-90ab-cdef-EXAMPLE22222",
+                "a1b2c3d4-5678-90ab-cdef-EXAMPLE33333"
               ]
             }
           ],
-          "Marker": "EXAMPLEABCDEFGHIJKLMNOPQRSTUVWXYZ123456",
-          "MaxRecords": 123,
-          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:012345678901:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRSTUVWXYZ012345"
+          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS"
         },
         "output": {
-          "Marker": "0123456789abcdefghijklmnopqrs",
           "Requests": [
             {
-              "MigrationProjectArn": "arn:aws:dms:us-east-1:012345678901:migration-project:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
-              "RequestIdentifier": "01234567-89ab-cdef-0123-456789abcdef",
+              "MigrationProjectArn": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+              "RequestIdentifier": "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
               "Status": "SUCCESS"
+            },
+            {
+              "MigrationProjectArn": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+              "Progress": {
+                "ProcessedObject": {
+                  "EndpointType": "SOURCE",
+                  "Name": "ExampleTable",
+                  "Type": "table"
+                },
+                "ProgressPercent": 50.0,
+                "ProgressStep": "CONVERTING",
+                "TotalObjects": 100
+              },
+              "RequestIdentifier": "a1b2c3d4-5678-90ab-cdef-EXAMPLE22222",
+              "Status": "IN_PROGRESS"
+            },
+            {
+              "Error": {
+                "defaultErrorDetails": {
+                  "Message": "No objects were found according to the specified selection rules. Please review your selection rules and try again."
+                }
+              },
+              "MigrationProjectArn": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+              "RequestIdentifier": "a1b2c3d4-5678-90ab-cdef-EXAMPLE33333",
+              "Status": "FAILED"
             }
           ]
         },
@@ -985,9 +1157,57 @@
           "input": {},
           "output": {}
         },
-        "description": "Returns a paginated list of metadata model conversions for a migration project.",
+        "description": "The following example retrieves the status of metadata model conversion operations identified by their request IDs.",
         "id": "describe-metadata-model-conversions-1689719021495",
-        "title": "Describe Metadata Model Conversions"
+        "title": "Retrieve the status of metadata model conversions"
+      }
+    ],
+    "DescribeMetadataModelCreations": [
+      {
+        "input": {
+          "Filters": [
+            {
+              "Name": "request-id",
+              "Values": [
+                "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+                "a1b2c3d4-5678-90ab-cdef-EXAMPLE22222",
+                "a1b2c3d4-5678-90ab-cdef-EXAMPLE33333"
+              ]
+            }
+          ],
+          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS"
+        },
+        "output": {
+          "Requests": [
+            {
+              "MigrationProjectArn": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+              "RequestIdentifier": "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+              "Status": "SUCCESS"
+            },
+            {
+              "MigrationProjectArn": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+              "RequestIdentifier": "a1b2c3d4-5678-90ab-cdef-EXAMPLE22222",
+              "Status": "IN_PROGRESS"
+            },
+            {
+              "Error": {
+                "defaultErrorDetails": {
+                  "Message": "No objects were found according to the specified selection rules. Please review your selection rules and try again."
+                }
+              },
+              "MigrationProjectArn": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+              "RequestIdentifier": "a1b2c3d4-5678-90ab-cdef-EXAMPLE33333",
+              "Status": "FAILED"
+            }
+          ]
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example retrieves the status of metadata model creation operations identified by their request IDs.",
+        "id": "describe-metadata-model-creations-1689719900000",
+        "title": "Retrieve the status of metadata model creations"
       }
     ],
     "DescribeMetadataModelExportsAsScript": [
@@ -997,21 +1217,47 @@
             {
               "Name": "request-id",
               "Values": [
-                "01234567-89ab-cdef-0123-456789abcdef"
+                "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+                "a1b2c3d4-5678-90ab-cdef-EXAMPLE22222",
+                "a1b2c3d4-5678-90ab-cdef-EXAMPLE33333"
               ]
             }
           ],
-          "Marker": "0123456789abcdefghijklmnopqrs",
-          "MaxRecords": 20,
-          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:012345678901:migration-project:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012"
+          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS"
         },
         "output": {
-          "Marker": "0123456789abcdefghijklmnopqrs",
           "Requests": [
             {
-              "MigrationProjectArn": "arn:aws:dms:us-east-1:012345678901:migration-project:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
-              "RequestIdentifier": "01234567-89ab-cdef-0123-456789abcdef",
+              "ExportSqlDetails": {
+                "ObjectURL": "https://amzn-s3-demo-bucket.s3.us-east-1.amazonaws.com/example-migration-project/ExampleScript.zip",
+                "S3ObjectKey": "s3://amzn-s3-demo-bucket/example-migration-project/ExampleScript.zip"
+              },
+              "MigrationProjectArn": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+              "RequestIdentifier": "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
               "Status": "SUCCESS"
+            },
+            {
+              "MigrationProjectArn": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+              "Progress": {
+                "ProcessedObject": {
+                  "EndpointType": "TARGET"
+                },
+                "ProgressPercent": 50.0,
+                "ProgressStep": "IN_PROGRESS",
+                "TotalObjects": 100
+              },
+              "RequestIdentifier": "a1b2c3d4-5678-90ab-cdef-EXAMPLE22222",
+              "Status": "IN_PROGRESS"
+            },
+            {
+              "Error": {
+                "defaultErrorDetails": {
+                  "Message": "No objects were found according to the specified selection rules. Please review your selection rules and try again."
+                }
+              },
+              "MigrationProjectArn": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+              "RequestIdentifier": "a1b2c3d4-5678-90ab-cdef-EXAMPLE33333",
+              "Status": "FAILED"
             }
           ]
         },
@@ -1019,9 +1265,9 @@
           "input": {},
           "output": {}
         },
-        "description": "Returns a paginated list of metadata model exports.",
+        "description": "The following example retrieves the status of operations that export metadata models as data definition language (DDL) scripts, identified by their request IDs.",
         "id": "describe-metadata-model-exports-as-script-1689719253938",
-        "title": "Describe Metadata Model Exports As Script"
+        "title": "Retrieve the status of metadata model exports as script"
       }
     ],
     "DescribeMetadataModelExportsToTarget": [
@@ -1031,21 +1277,43 @@
             {
               "Name": "request-id",
               "Values": [
-                "01234567-89ab-cdef-0123-456789abcdef"
+                "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+                "a1b2c3d4-5678-90ab-cdef-EXAMPLE22222",
+                "a1b2c3d4-5678-90ab-cdef-EXAMPLE33333"
               ]
             }
           ],
-          "Marker": "0123456789abcdefghijklmnopqrs",
-          "MaxRecords": 20,
-          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:012345678901:migration-project:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012"
+          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS"
         },
         "output": {
-          "Marker": "0123456789abcdefghijklmnopqrs",
           "Requests": [
             {
-              "MigrationProjectArn": "arn:aws:dms:us-east-1:012345678901:migration-project:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
-              "RequestIdentifier": "01234567-89ab-cdef-0123-456789abcdef",
+              "MigrationProjectArn": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+              "RequestIdentifier": "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
               "Status": "SUCCESS"
+            },
+            {
+              "MigrationProjectArn": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+              "Progress": {
+                "ProcessedObject": {
+                  "EndpointType": "TARGET"
+                },
+                "ProgressPercent": 50.0,
+                "ProgressStep": "APPLYING",
+                "TotalObjects": 100
+              },
+              "RequestIdentifier": "a1b2c3d4-5678-90ab-cdef-EXAMPLE22222",
+              "Status": "IN_PROGRESS"
+            },
+            {
+              "Error": {
+                "defaultErrorDetails": {
+                  "Message": "No objects were found according to the specified selection rules. Please review your selection rules and try again."
+                }
+              },
+              "MigrationProjectArn": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+              "RequestIdentifier": "a1b2c3d4-5678-90ab-cdef-EXAMPLE33333",
+              "Status": "FAILED"
             }
           ]
         },
@@ -1053,9 +1321,9 @@
           "input": {},
           "output": {}
         },
-        "description": "Returns a paginated list of metadata model exports.",
+        "description": "The following example retrieves the status of operations that export converted metadata models to the target database, identified by their request IDs.",
         "id": "describe-metadata-model-exports-to-target-1689719484750",
-        "title": "Describe Metadata Model Exports To Target"
+        "title": "Retrieve the status of metadata model exports to target"
       }
     ],
     "DescribeMetadataModelImports": [
@@ -1065,21 +1333,43 @@
             {
               "Name": "request-id",
               "Values": [
-                "01234567-89ab-cdef-0123-456789abcdef"
+                "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+                "a1b2c3d4-5678-90ab-cdef-EXAMPLE22222",
+                "a1b2c3d4-5678-90ab-cdef-EXAMPLE33333"
               ]
             }
           ],
-          "Marker": "0123456789abcdefghijklmnopqrs",
-          "MaxRecords": 20,
-          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:012345678901:migration-project:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012"
+          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS"
         },
         "output": {
-          "Marker": "0123456789abcdefghijklmnopqrs",
           "Requests": [
             {
-              "MigrationProjectArn": "arn:aws:dms:us-east-1:012345678901:migration-project:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
-              "RequestIdentifier": "01234567-89ab-cdef-0123-456789abcdef",
+              "MigrationProjectArn": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+              "RequestIdentifier": "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
               "Status": "SUCCESS"
+            },
+            {
+              "MigrationProjectArn": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+              "Progress": {
+                "ProcessedObject": {
+                  "EndpointType": "SOURCE"
+                },
+                "ProgressPercent": 50.0,
+                "ProgressStep": "IN_PROGRESS",
+                "TotalObjects": 100
+              },
+              "RequestIdentifier": "a1b2c3d4-5678-90ab-cdef-EXAMPLE22222",
+              "Status": "IN_PROGRESS"
+            },
+            {
+              "Error": {
+                "defaultErrorDetails": {
+                  "Message": "No objects were found according to the specified selection rules. Please review your selection rules and try again."
+                }
+              },
+              "MigrationProjectArn": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+              "RequestIdentifier": "a1b2c3d4-5678-90ab-cdef-EXAMPLE33333",
+              "Status": "FAILED"
             }
           ]
         },
@@ -1087,9 +1377,9 @@
           "input": {},
           "output": {}
         },
-        "description": "Returns a paginated list of metadata model imports.",
+        "description": "The following example retrieves the status of metadata import operations identified by their request IDs.",
         "id": "describe-metadata-model-imports-1689719771322",
-        "title": "Describe Metadata Model Imports"
+        "title": "Retrieve the status of metadata model imports"
       }
     ],
     "DescribeMigrationProjects": [
@@ -1099,42 +1389,41 @@
             {
               "Name": "migration-project-identifier",
               "Values": [
-                "arn:aws:dms:us-east-1:012345678901:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRSTUVWXYZ12345678901"
+                "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS"
               ]
             }
-          ],
-          "Marker": "EXAMPLEABCDEFGHIJKLMNOPQRSTUVWXYZ123456",
-          "MaxRecords": 20
+          ]
         },
         "output": {
-          "Marker": "0123456789abcdefghijklmnopqrs",
           "MigrationProjects": [
             {
-              "InstanceProfileArn": "arn:aws:dms:us-east-1:012345678901:instance-profile:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
-              "InstanceProfileName": "my-instance-profile",
-              "MigrationProjectArn": "arn:aws:dms:us-east-1:012345678901:migration-project:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
-              "MigrationProjectCreationTime": "2023-04-19T11:45:15.805253Z",
-              "MigrationProjectName": "my-migration-project",
+              "Description": "Example migration project for documentation",
+              "InstanceProfileArn": "arn:aws:dms:us-east-1:111122223333:instance-profile:EXAMPLEABCDEFGHIJKLMNOPQRS",
+              "InstanceProfileName": "example-instance-profile",
+              "MigrationProjectArn": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+              "MigrationProjectCreationTime": "2026-01-09T12:30:00.000000Z",
+              "MigrationProjectName": "example-migration-project",
               "SchemaConversionApplicationAttributes": {
-                "S3BucketPath": "my-s3-bucket/my_folder",
-                "S3BucketRoleArn": "arn:aws:iam::012345678901:role/my-s3role"
+                "S3BucketPath": "s3://amzn-s3-demo-bucket",
+                "S3BucketRoleArn": "arn:aws:iam::111122223333:role/example-s3-access-role"
               },
               "SourceDataProviderDescriptors": [
                 {
-                  "DataProviderArn": "arn:aws:dms:us-east-1:012345678901:data-provider:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
-                  "DataProviderName": "all-source-oracle-12",
-                  "SecretsManagerAccessRoleArn": "arn:aws:iam::012345678901:role/my-access-role",
-                  "SecretsManagerSecretId": "arn:aws:secretsmanager:us-east-1:012345678901:secret:mygroup/myalias/ALL.SOURCE.ORACLE_12-012345"
+                  "DataProviderArn": "arn:aws:dms:us-east-1:111122223333:data-provider:EXAMPLEABCDEFGHIJKLMNOPQRS",
+                  "DataProviderName": "example-data-provider",
+                  "SecretsManagerAccessRoleArn": "arn:aws:iam::111122223333:role/example-secrets-manager-role",
+                  "SecretsManagerSecretId": "arn:aws:secretsmanager:us-east-1:111122223333:secret:example-source-secret-A1B2C3"
                 }
               ],
               "TargetDataProviderDescriptors": [
                 {
-                  "DataProviderArn": "arn:aws:dms:us-east-1:012345678901:data-provider:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
-                  "DataProviderName": "my-data-provider",
-                  "SecretsManagerAccessRoleArn": "arn:aws:iam::012345678901:role/dmytbon-admin-access",
-                  "SecretsManagerSecretId": "arn:aws:secretsmanager:us-east-1:012345678901:secret:mygroup/myalias/TARGET.postgresql-012345"
+                  "DataProviderArn": "arn:aws:dms:us-east-1:111122223333:data-provider:EXAMPLEABCDEFGHIJKLMNOPQRS",
+                  "DataProviderName": "example-data-provider",
+                  "SecretsManagerAccessRoleArn": "arn:aws:iam::111122223333:role/example-secrets-manager-role",
+                  "SecretsManagerSecretId": "arn:aws:secretsmanager:us-east-1:111122223333:secret:example-target-secret-A1B2C3"
                 }
-              ]
+              ],
+              "TransformationRules": "{\"rules\":[{\"rule-type\":\"transformation\",\"rule-id\":\"1\",\"rule-name\":\"1\",\"rule-target\":\"schema\",\"rule-action\":\"rename\",\"object-locator\":{\"schema-name\":\"ExampleSchema\"},\"value\":\"TargetSchema\"}]}"
             }
           ]
         },
@@ -1142,9 +1431,9 @@
           "input": {},
           "output": {}
         },
-        "description": "Returns a paginated list of migration projects for your account in the current region.",
+        "description": "The following example retrieves the details of a migration project identified by its ARN.",
         "id": "describe-migration-projects-1689719912075",
-        "title": "Describe Migration Projects"
+        "title": "Describe migration projects with a filter"
       }
     ],
     "DescribeOrderableReplicationInstances": [
@@ -1312,29 +1601,48 @@
       {
         "input": {
           "AssessmentReportTypes": [
-            "pdf"
+            "pdf",
+            "csv"
           ],
-          "FileName": "file",
-          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:012345678901:migration-project:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
-          "SelectionRules": "{\"rules\": [{\"rule-type\": \"selection\",\"rule-id\": \"1\",\"rule-name\": \"1\",\"object-locator\": {\"server-name\": \"aurora-pg.cluster-a1b2c3d4e5f6.us-east-1.rds.amazonaws.com\", \"schema-name\": \"schema1\", \"table-name\": \"Cities\"},\"rule-action\": \"explicit\"} ]}"
+          "FileName": "example-assessment-report",
+          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+          "SelectionRules": "{\"rules\": [{\"rule-type\": \"selection\", \"rule-id\": \"1\", \"rule-name\": \"1\", \"object-locator\": {\"server-name\": \"example-source-server.us-east-1.rds.amazonaws.com\", \"schema-name\": \"ExampleSchema\"}, \"rule-action\": \"explicit\"}]}"
         },
         "output": {
           "CsvReport": {
-            "ObjectURL": "url",
-            "S3ObjectKey": "object-name"
+            "ObjectURL": "https://amzn-s3-demo-bucket.s3.amazonaws.com/example-migration-project/example-assessment-report.zip",
+            "S3ObjectKey": "example-migration-project/example-assessment-report.zip"
           },
           "PdfReport": {
-            "ObjectURL": "url",
-            "S3ObjectKey": "object-name"
+            "ObjectURL": "https://amzn-s3-demo-bucket.s3.amazonaws.com/example-migration-project/example-assessment-report.pdf",
+            "S3ObjectKey": "example-migration-project/example-assessment-report.pdf"
           }
         },
         "comments": {
           "input": {},
           "output": {}
         },
-        "description": "Saves a copy of a database migration assessment report to your S3 bucket. DMS can save your assessment report as a comma-separated value (CSV) or a PDF file.",
+        "description": "The following example exports a conversion assessment report for all objects in the ExampleSchema schema.",
         "id": "export-metadata-model-assessment-1689720309558",
-        "title": "Export Metadata Model Assessment"
+        "title": "Export a conversion assessment report"
+      }
+    ],
+    "GetTargetSelectionRules": [
+      {
+        "input": {
+          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+          "SelectionRules": "{\"rules\": [{\"rule-type\": \"selection\", \"rule-id\": \"1\", \"rule-name\": \"1\", \"object-locator\": {\"server-name\": \"example-source-server.us-east-1.rds.amazonaws.com\", \"database-name\": \"ExampleDatabase\", \"schema-name\": \"ExampleSchema\", \"table-name\": \"ExampleTable\"}, \"rule-action\": \"explicit\"}]}"
+        },
+        "output": {
+          "TargetSelectionRules": "{\"rules\": [{\"rule-type\": \"selection\", \"rule-id\": \"1\", \"rule-name\": \"1\", \"object-locator\": {\"server-name\": \"example-target-server.us-east-1.rds.amazonaws.com\", \"schema-name\": \"exampledatabase_exampleschema\", \"table-name\": \"exampletable\"}, \"rule-action\": \"explicit\"}]}"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example converts source selection rules that select the ExampleTable table in the ExampleSchema schema into target selection rules that reference its converted counterpart.",
+        "id": "get-target-selection-rules-1716000000000",
+        "title": "Convert source selection rules to target selection rules"
       }
     ],
     "ImportCertificate": [
@@ -1375,49 +1683,47 @@
     "ModifyConversionConfiguration": [
       {
         "input": {
-          "ConversionConfiguration": "{\"Common project settings\":{\"ShowSeverityLevelInSql\":\"CRITICAL\"},\"ORACLE_TO_POSTGRESQL\" : {\"ToTimeZone\":false,\"LastDayBuiltinFunctionOracle\":false,   \"NextDayBuiltinFunctionOracle\":false,\"ConvertProceduresToFunction\":false,\"NvlBuiltinFunctionOracle\":false,\"DbmsAssertBuiltinFunctionOracle\":false}}",
-          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:012345678901:migration-project:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012"
+          "ConversionConfiguration": "{\"Common project settings\":{\"EnableGenAiConversion\":true},\"MSSQL_TO_AURORA_POSTGRESQL\":{\"ConvertProceduresToFunction\":false}}",
+          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS"
         },
         "output": {
-          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:012345678901:migration-project:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012"
+          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS"
         },
         "comments": {
           "input": {},
           "output": {}
         },
-        "description": "Modifies the specified schema conversion configuration using the provided parameters.",
+        "description": "The following example enables generative AI assisted conversion and updates a conversion pair setting for a migration project.",
         "id": "modify-conversion-configuration-1689720529855",
-        "title": "Modify Conversion Configuration"
+        "title": "Modifying conversion configuration for a migration project"
       }
     ],
     "ModifyDataProvider": [
       {
         "input": {
-          "DataProviderIdentifier": "arn:aws:dms:us-east-1:012345678901:data-provider:EXAMPLEABCDEFGHIJKLMNOPQRSTUVWXYZ012345",
-          "DataProviderName": "new-name",
-          "Description": "description",
+          "DataProviderIdentifier": "arn:aws:dms:us-east-1:111122223333:data-provider:EXAMPLEABCDEFGHIJKLMNOPQRS",
+          "Description": "Updated data provider description",
           "Engine": "sqlserver",
           "Settings": {
             "MicrosoftSqlServerSettings": {
-              "DatabaseName": "DatabaseName",
-              "Port": 11112,
-              "ServerName": "ServerName2",
-              "SslMode": "none"
+              "ServerName": "new-source-server.us-east-1.rds.amazonaws.com"
             }
           }
         },
         "output": {
           "DataProvider": {
-            "DataProviderArn": "arn:aws:dms:us-east-1:012345678901:data-provider:my-target-data-provider",
-            "DataProviderCreationTime": "2023-05-12T10:50:41.988561Z",
-            "DataProviderName": "my-target-data-provider",
-            "Engine": "postgres",
+            "DataProviderArn": "arn:aws:dms:us-east-1:111122223333:data-provider:EXAMPLEABCDEFGHIJKLMNOPQRS",
+            "DataProviderCreationTime": "2026-01-09T12:30:00.000000Z",
+            "DataProviderName": "example-data-provider",
+            "Description": "Updated data provider description",
+            "Engine": "sqlserver",
             "Settings": {
-              "PostgreSqlSettings": {
-                "DatabaseName": "target",
-                "Port": 5432,
-                "ServerName": "postrgesql.0a1b2c3d4e5f.us-east-1.rds.amazonaws.com",
-                "SslMode": "none"
+              "MicrosoftSqlServerSettings": {
+                "CertificateArn": "arn:aws:dms:us-east-1:111122223333:cert:EXAMPLEABCDEFGHIJKLMNOPQRS",
+                "DatabaseName": "ExampleDatabase",
+                "Port": 1433,
+                "ServerName": "new-source-server.us-east-1.rds.amazonaws.com",
+                "SslMode": "verify-full"
               }
             }
           }
@@ -1426,9 +1732,9 @@
           "input": {},
           "output": {}
         },
-        "description": "Modifies the specified data provider using the provided settings.",
+        "description": "The following example updates the description and server name of a data provider.",
         "id": "modify-data-provider-1689720700567",
-        "title": "Modify Data Provider"
+        "title": "Modify a data provider"
       }
     ],
     "ModifyEndpoint": [
@@ -1462,26 +1768,22 @@
     "ModifyInstanceProfile": [
       {
         "input": {
-          "AvailabilityZone": "",
-          "Description": "",
-          "InstanceProfileIdentifier": "",
-          "InstanceProfileName": "",
-          "KmsKeyArn": "",
-          "NetworkType": "",
-          "PubliclyAccessible": true,
-          "SubnetGroupIdentifier": "",
-          "VpcSecurityGroups": []
+          "Description": "Updated instance profile description",
+          "InstanceProfileIdentifier": "arn:aws:dms:us-east-1:111122223333:instance-profile:EXAMPLEABCDEFGHIJKLMNOPQRS",
+          "NetworkType": "DUAL"
         },
         "output": {
           "InstanceProfile": {
-            "InstanceProfileArn": "arn:aws:dms:us-east-1:012345678901:instance-profile:my-instance-profile",
-            "InstanceProfileCreationTime": "2022-12-16T09:44:43.543246Z",
-            "InstanceProfileName": "my-instance-profile",
-            "KmsKeyArn": "arn:aws:kms:us-east-1:012345678901:key/01234567-89ab-cdef-0123-456789abcdef",
-            "PubliclyAccessible": true,
-            "SubnetGroupIdentifier": "public-subnets",
+            "Description": "Updated instance profile description",
+            "InstanceProfileArn": "arn:aws:dms:us-east-1:111122223333:instance-profile:EXAMPLEABCDEFGHIJKLMNOPQRS",
+            "InstanceProfileCreationTime": "2026-01-09T12:30:00.000000Z",
+            "InstanceProfileName": "example-instance-profile",
+            "KmsKeyArn": "arn:aws:kms:us-east-1:111122223333:key/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+            "NetworkType": "DUAL",
+            "PubliclyAccessible": false,
+            "SubnetGroupIdentifier": "example-replication-subnet-group",
             "VpcSecurityGroups": [
-              "sg-0123456"
+              "sg-0123456789abcdef0"
             ]
           }
         },
@@ -1489,73 +1791,60 @@
           "input": {},
           "output": {}
         },
-        "description": "Modifies the specified instance profile using the provided parameters.",
+        "description": "The following example updates the description and network type of an instance profile.",
         "id": "modify-instance-profile-1689724223329",
-        "title": "Modify Instance Profile"
+        "title": "Modify an instance profile"
       }
     ],
     "ModifyMigrationProject": [
       {
         "input": {
-          "Description": "description",
-          "InstanceProfileIdentifier": "my-instance-profile",
-          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:012345678901:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRSTUVWXYZ012345",
-          "MigrationProjectName": "new-name",
-          "SchemaConversionApplicationAttributes": {
-            "S3BucketPath": "arn:aws:s3:::myuser-bucket",
-            "S3BucketRoleArn": "arn:aws:iam::012345678901:role/Admin"
-          },
+          "Description": "Updated migration project description",
+          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
           "SourceDataProviderDescriptors": [
             {
-              "DataProviderIdentifier": "arn:aws:dms:us-east-1:012345678901:data-provider:EXAMPLEABCDEFGHIJKLMNOPQRSTUVWXYZ012345",
-              "SecretsManagerAccessRoleArn": "arn:aws:iam::012345678901:role/myuser-admin-access",
-              "SecretsManagerSecretId": "arn:aws:secretsmanager:us-east-1:012345678901:secret:myorg/myuser/ALL.SOURCE.ORACLE_12-A1B2C3"
-            }
-          ],
-          "TargetDataProviderDescriptors": [
-            {
-              "DataProviderIdentifier": "arn:aws:dms:us-east-1:012345678901:data-provider:EXAMPLEABCDEFGHIJKLMNOPQRSTUVWXYZ012345",
-              "SecretsManagerAccessRoleArn": "arn:aws:iam::012345678901:role/myuser-admin-access",
-              "SecretsManagerSecretId": "arn:aws:secretsmanager:us-east-1:012345678901:secret:myorg/myuser/TARGET.postgresql-A1B2C3"
+              "DataProviderIdentifier": "arn:aws:dms:us-east-1:111122223333:data-provider:EXAMPLEABCDEFGHIJKLMNOPQRS"
             }
           ]
         },
         "output": {
           "MigrationProject": {
-            "InstanceProfileArn": "arn:aws:dms:us-east-1:012345678901:instance-profile:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
-            "InstanceProfileName": "my-instance-profile",
-            "MigrationProjectArn": "arn:aws:dms:us-east-1:012345678901:migration-project:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
-            "MigrationProjectCreationTime": "2023-04-19T11:45:15.805253Z",
-            "MigrationProjectName": "my-migration-project",
+            "Description": "Updated migration project description",
+            "InstanceProfileArn": "arn:aws:dms:us-east-1:111122223333:instance-profile:EXAMPLEABCDEFGHIJKLMNOPQRS",
+            "InstanceProfileName": "example-instance-profile",
+            "MigrationProjectArn": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+            "MigrationProjectCreationTime": "2026-01-09T12:30:00.000000Z",
+            "MigrationProjectName": "example-migration-project",
             "SchemaConversionApplicationAttributes": {
-              "S3BucketPath": "my-s3-bucket/my_folder",
-              "S3BucketRoleArn": "arn:aws:iam::012345678901:role/my-s3role"
+              "S3BucketPath": "s3://amzn-s3-demo-bucket",
+              "S3BucketRoleArn": "arn:aws:iam::111122223333:role/example-s3-access-role"
             },
             "SourceDataProviderDescriptors": [
               {
-                "DataProviderArn": "arn:aws:dms:us-east-1:012345678901:data-provider:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
-                "DataProviderName": "all-source-oracle-12",
-                "SecretsManagerAccessRoleArn": "arn:aws:iam::012345678901:role/my-access-role",
-                "SecretsManagerSecretId": "arn:aws:secretsmanager:us-east-1:012345678901:secret:mygroup/myalias/ALL.SOURCE.ORACLE_12-TP5rA9"
+                "DataProviderArn": "arn:aws:dms:us-east-1:111122223333:data-provider:EXAMPLEABCDEFGHIJKLMNOPQRS",
+                "DataProviderName": "example-data-provider",
+                "SecretsManagerAccessRoleArn": "arn:aws:iam::111122223333:role/example-secrets-manager-role",
+                "SecretsManagerSecretId": "arn:aws:secretsmanager:us-east-1:111122223333:secret:example-source-secret-A1B2C3"
               }
             ],
             "TargetDataProviderDescriptors": [
               {
-                "DataProviderArn": "arn:aws:dms:us-east-1:012345678901:data-provider:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
-                "DataProviderName": "my-dataprovider",
-                "SecretsManagerAccessRoleArn": "arn:aws:iam::012345678901:role/my-access-role",
-                "SecretsManagerSecretId": "arn:aws:secretsmanager:us-east-1:012345678901:secret:mygroup/myalias/TARGET.postgresql-mysecret"
+                "DataProviderArn": "arn:aws:dms:us-east-1:111122223333:data-provider:EXAMPLEABCDEFGHIJKLMNOPQRS",
+                "DataProviderName": "example-data-provider",
+                "SecretsManagerAccessRoleArn": "arn:aws:iam::111122223333:role/example-secrets-manager-role",
+                "SecretsManagerSecretId": "arn:aws:secretsmanager:us-east-1:111122223333:secret:example-target-secret-A1B2C3"
               }
-            ]
+            ],
+            "TransformationRules": "{\"rules\":[{\"rule-type\":\"transformation\",\"rule-id\":\"1\",\"rule-name\":\"1\",\"rule-target\":\"schema\",\"rule-action\":\"rename\",\"object-locator\":{\"schema-name\":\"ExampleSchema\"},\"value\":\"TargetSchema\"}]}"
           }
         },
         "comments": {
           "input": {},
           "output": {}
         },
-        "description": "Modifies the specified migration project using the provided parameters.",
+        "description": "The following example updates the source data provider and description of a migration project.",
         "id": "modify-migration-project-1689721117475",
-        "title": "Modify Migration Project"
+        "title": "Modify a migration project"
       }
     ],
     "ModifyReplicationInstance": [
@@ -1688,113 +1977,137 @@
     "StartExtensionPackAssociation": [
       {
         "input": {
-          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:012345678901:migration-project:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012"
+          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS"
         },
         "output": {
-          "RequestIdentifier": "01234567-89ab-cdef-0123-456789abcdef"
+          "RequestIdentifier": "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111"
         },
         "comments": {
           "input": {},
           "output": {}
         },
-        "description": "Applies the extension pack to your target database.",
+        "description": "The following example queues the installation of the extension pack on the target database.",
         "id": "start-extension-pack-association-1689721897266",
-        "title": "Start Extension Pack Association"
+        "title": "Install the extension pack on the target database"
       }
     ],
     "StartMetadataModelAssessment": [
       {
         "input": {
-          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:012345678901:migration-project:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
-          "SelectionRules": "{\"rules\": [{\"rule-type\": \"selection\",\"rule-id\": \"1\",\"rule-name\": \"1\",\"object-locator\": {\"server-name\": \"aurora-pg.cluster-0a1b2c3d4e5f.us-east-1.rds.amazonaws.com\", \"schema-name\": \"schema1\", \"table-name\": \"Cities\"},\"rule-action\": \"explicit\"} ]}"
+          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+          "SelectionRules": "{\"rules\": [{\"rule-type\": \"selection\",\"rule-id\": \"1\",\"rule-name\": \"1\",\"object-locator\": {\"server-name\": \"example-source-server.us-east-1.rds.amazonaws.com\", \"schema-name\": \"ExampleSchema\"},\"rule-action\": \"explicit\"}]}"
         },
         "output": {
-          "RequestIdentifier": "01234567-89ab-cdef-0123-456789abcdef"
+          "RequestIdentifier": "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111"
         },
         "comments": {
           "input": {},
           "output": {}
         },
-        "description": "Creates a database migration assessment report by assessing the migration complexity for \n         your source database.",
+        "description": "The following example queues an assessment of the conversion complexity for all objects in the ExampleSchema schema.",
         "id": "start-metadata-model-assessment-1689722322596",
-        "title": "Start Metadata Model Assessment"
+        "title": "Assess all objects in a schema"
       }
     ],
     "StartMetadataModelConversion": [
       {
         "input": {
-          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:012345678901:migration-project:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
-          "SelectionRules": "{\"rules\": [{\"rule-type\": \"selection\",\"rule-id\": \"1\",\"rule-name\": \"1\",\"object-locator\": {\"server-name\": \"aurora-pg.cluster-0a1b2c3d4e5f.us-east-1.rds.amazonaws.com\", \"schema-name\": \"schema1\", \"table-name\": \"Cities\"},\"rule-action\": \"explicit\"} ]}"
+          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+          "SelectionRules": "{\"rules\": [{\"rule-type\": \"selection\",\"rule-id\": \"1\",\"rule-name\": \"1\",\"object-locator\": {\"server-name\": \"example-source-server.us-east-1.rds.amazonaws.com\", \"schema-name\": \"ExampleSchema\"},\"rule-action\": \"explicit\"}]}"
         },
         "output": {
-          "RequestIdentifier": "01234567-89ab-cdef-0123-456789abcdef"
+          "RequestIdentifier": "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111"
         },
         "comments": {
           "input": {},
           "output": {}
         },
-        "description": "Converts your source database objects to a format compatible with the target database. ",
+        "description": "The following example queues a conversion of all objects in the ExampleSchema schema to the target database format.",
         "id": "start-metadata-model-conversion-1689722427798",
-        "title": "Start Metadata Model Conversion"
+        "title": "Convert all objects in a schema"
+      }
+    ],
+    "StartMetadataModelCreation": [
+      {
+        "input": {
+          "MetadataModelName": "ExampleStatement",
+          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+          "Properties": {
+            "StatementProperties": {
+              "Definition": "SELECT * FROM ExampleTable;"
+            }
+          },
+          "SelectionRules": "{\"rules\": [{\"rule-type\": \"selection\", \"rule-id\": \"1\", \"rule-name\": \"1\", \"object-locator\": {\"server-name\": \"example-source-server.us-east-1.rds.amazonaws.com\", \"database-name\": \"ExampleDatabase\", \"schema-name\": \"ExampleSchema\"}, \"rule-action\": \"explicit\"}]}"
+        },
+        "output": {
+          "RequestIdentifier": "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example queues the creation of a metadata model for a SQL statement. The selection rule specifies the schema where the metadata model is placed, and MetadataModelName provides a unique identifier for use in subsequent operations.",
+        "id": "start-metadata-model-creation-1689722322596",
+        "title": "Create a metadata model for a SQL statement"
       }
     ],
     "StartMetadataModelExportAsScript": [
       {
         "input": {
-          "FileName": "FILE",
-          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:012345678901:migration-project:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
-          "Origin": "SOURCE",
-          "SelectionRules": "{\"rules\": [{\"rule-type\": \"selection\",\"rule-id\": \"1\",\"rule-name\": \"1\",\"object-locator\": {\"server-name\": \"aurora-pg.cluster-0a1b2c3d4e5f.us-east-1.rds.amazonaws.com\", \"schema-name\": \"schema1\", \"table-name\": \"Cities\"},\"rule-action\": \"explicit\"} ]}"
+          "FileName": "ExampleScript",
+          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
+          "Origin": "TARGET",
+          "SelectionRules": "{\"rules\": [{\"rule-type\": \"selection\",\"rule-id\": \"1\",\"rule-name\": \"1\",\"object-locator\": {\"server-name\": \"example-target-server.us-east-1.rds.amazonaws.com\", \"schema-name\": \"ExampleSchema\"},\"rule-action\": \"explicit\"}]}"
         },
         "output": {
-          "RequestIdentifier": "01234567-89ab-cdef-0123-456789abcdef"
+          "RequestIdentifier": "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111"
         },
         "comments": {
           "input": {},
           "output": {}
         },
-        "description": "Saves your converted code to a file as a SQL script, and stores this file on your S3 bucket.",
+        "description": "The following example queues an export of converted metadata models for all objects in the ExampleSchema schema as data definition language (DDL) scripts to the S3 bucket associated with the migration project.",
         "id": "start-metadata-model-export-as-script-1689722681469",
-        "title": "Start Metadata Model Export As Script"
+        "title": "Export converted metadata models as DDL scripts"
       }
     ],
     "StartMetadataModelExportToTarget": [
       {
         "input": {
-          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:012345678901:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRSTUVWXYZ012345",
+          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
           "OverwriteExtensionPack": true,
-          "SelectionRules": "{\"rules\": [{\"rule-type\": \"selection\",\"rule-id\": \"1\",\"rule-name\": \"1\",\"object-locator\": {\"server-name\": \"aurora-pg.cluster-a1b2c3d4e5f6.us-east-1.rds.amazonaws.com\", \"schema-name\": \"schema1\", \"table-name\": \"Cities\"},\"rule-action\": \"explicit\"} ]}"
+          "SelectionRules": "{\"rules\": [{\"rule-type\": \"selection\",\"rule-id\": \"1\",\"rule-name\": \"1\",\"object-locator\": {\"server-name\": \"example-target-server.us-east-1.rds.amazonaws.com\", \"schema-name\": \"ExampleSchema\"},\"rule-action\": \"explicit\"}]}"
         },
         "output": {
-          "RequestIdentifier": "01234567-89ab-cdef-0123-456789abcdef"
+          "RequestIdentifier": "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111"
         },
         "comments": {
           "input": {},
           "output": {}
         },
-        "description": "Applies converted database objects to your target database.",
+        "description": "The following example queues an export of converted metadata models for all objects in the ExampleSchema schema to the target database.",
         "id": "start-metadata-model-export-to-target-1689783666835",
-        "title": "Start Metadata Model Export To Target"
+        "title": "Export converted metadata models to the target database"
       }
     ],
     "StartMetadataModelImport": [
       {
         "input": {
-          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:012345678901:migration-project:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
+          "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:111122223333:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRS",
           "Origin": "SOURCE",
           "Refresh": false,
-          "SelectionRules": "{\"rules\": [{\"rule-type\": \"selection\",\"rule-id\": \"1\",\"rule-name\": \"1\",\"object-locator\": {\"server-name\": \"aurora-pg.cluster-0a1b2c3d4e5f.us-east-1.rds.amazonaws.com\", \"schema-name\": \"schema1\", \"table-name\": \"Cities\"},\"rule-action\": \"explicit\"} ]}"
+          "SelectionRules": "{\"rules\": [{\"rule-type\": \"selection\",\"rule-id\": \"1\",\"rule-name\": \"1\",\"object-locator\": {\"server-name\": \"example-source-server.us-east-1.rds.amazonaws.com\", \"schema-name\": \"ExampleSchema\"},\"rule-action\": \"explicit\"}]}"
         },
         "output": {
-          "RequestIdentifier": "01234567-89ab-cdef-0123-456789abcdef"
+          "RequestIdentifier": "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111"
         },
         "comments": {
           "input": {},
           "output": {}
         },
-        "description": "Loads the metadata for all the dependent database objects of the parent object.",
+        "description": "The following example queues a metadata import for all objects in the ExampleSchema schema from the source database.",
         "id": "start-metadata-model-import-1689723124259",
-        "title": "Start Metadata Model Import"
+        "title": "Import metadata from the source database"
       }
     ],
     "StartReplicationTask": [

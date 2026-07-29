@@ -149,6 +149,7 @@
     "CreateTransitGatewayMulticastDomain": "<p>Creates a multicast domain using the specified transit gateway.</p> <p>The transit gateway must be in the available state before you create a domain. Use <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeTransitGateways.html\">DescribeTransitGateways</a> to see the state of transit gateway.</p>",
     "CreateTransitGatewayPeeringAttachment": "<p>Requests a transit gateway peering attachment between the specified transit gateway (requester) and a peer transit gateway (accepter). The peer transit gateway can be in your account or a different Amazon Web Services account.</p> <p>After you create the peering attachment, the owner of the accepter transit gateway must accept the attachment request.</p>",
     "CreateTransitGatewayPolicyTable": "<p>Creates a transit gateway policy table.</p>",
+    "CreateTransitGatewayPolicyTableEntry": "<p>Creates an entry in a transit gateway policy table to route matching traffic to a specified route table.</p>",
     "CreateTransitGatewayPrefixListReference": "<p>Creates a reference (route) to a prefix list in a specified transit gateway route table.</p>",
     "CreateTransitGatewayRoute": "<p>Creates a static route for the specified transit gateway route table.</p>",
     "CreateTransitGatewayRouteTable": "<p>Creates a route table for the specified transit gateway.</p>",
@@ -242,6 +243,7 @@
     "DeleteTransitGatewayMulticastDomain": "<p>Deletes the specified transit gateway multicast domain.</p>",
     "DeleteTransitGatewayPeeringAttachment": "<p>Deletes a transit gateway peering attachment.</p>",
     "DeleteTransitGatewayPolicyTable": "<p>Deletes the specified transit gateway policy table.</p>",
+    "DeleteTransitGatewayPolicyTableEntry": "<p>Deletes the specified transit gateway policy table entry.</p>",
     "DeleteTransitGatewayPrefixListReference": "<p>Deletes a reference (route) to a prefix list in a specified transit gateway route table.</p>",
     "DeleteTransitGatewayRoute": "<p>Deletes the specified route from the specified transit gateway route table.</p>",
     "DeleteTransitGatewayRouteTable": "<p>Deletes the specified transit gateway route table. If there are any route tables associated with the transit gateway route table, you must first run <a>DisassociateRouteTable</a> before you can delete the transit gateway route table. This removes any route tables associated with the transit gateway route table.</p>",
@@ -667,6 +669,7 @@
     "ModifyTrafficMirrorSession": "<p>Modifies a Traffic Mirror session.</p>",
     "ModifyTransitGateway": "<p>Modifies the specified transit gateway. When you modify a transit gateway, the modified options are applied to new transit gateway attachments only. Your existing transit gateway attachments are not modified.</p>",
     "ModifyTransitGatewayMeteringPolicy": "<p>Modifies a transit gateway metering policy.</p>",
+    "ModifyTransitGatewayPolicyTableEntry": "<p>Modifies the specified transit gateway policy table entry.</p>",
     "ModifyTransitGatewayPrefixListReference": "<p>Modifies a reference (route) to a prefix list in a specified transit gateway route table.</p>",
     "ModifyTransitGatewayVpcAttachment": "<p>Modifies the specified VPC attachment.</p>",
     "ModifyVerifiedAccessEndpoint": "<p>Modifies the configuration of the specified Amazon Web Services Verified Access endpoint.</p>",
@@ -2645,6 +2648,7 @@
         "CreateTransitGatewayMeteringPolicyRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateTransitGatewayMulticastDomainRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateTransitGatewayPeeringAttachmentRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "CreateTransitGatewayPolicyTableEntryRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateTransitGatewayPolicyTableRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateTransitGatewayPrefixListReferenceRequest$Blackhole": "<p>Indicates whether to drop traffic that matches this route.</p>",
         "CreateTransitGatewayPrefixListReferenceRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2758,6 +2762,7 @@
         "DeleteTransitGatewayMeteringPolicyRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteTransitGatewayMulticastDomainRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteTransitGatewayPeeringAttachmentRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DeleteTransitGatewayPolicyTableEntryRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteTransitGatewayPolicyTableRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteTransitGatewayPrefixListReferenceRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteTransitGatewayRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -3354,6 +3359,7 @@
         "ModifyTrafficMirrorFilterRuleRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyTrafficMirrorSessionRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyTransitGatewayMeteringPolicyRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "ModifyTransitGatewayPolicyTableEntryRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyTransitGatewayPrefixListReferenceRequest$Blackhole": "<p>Indicates whether to drop traffic that matches this route.</p>",
         "ModifyTransitGatewayPrefixListReferenceRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyTransitGatewayRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -6109,6 +6115,16 @@
       "refs": {
       }
     },
+    "CreateTransitGatewayPolicyTableEntryRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateTransitGatewayPolicyTableEntryResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "CreateTransitGatewayPolicyTableRequest": {
       "base": null,
       "refs": {
@@ -7496,6 +7512,16 @@
       }
     },
     "DeleteTransitGatewayPeeringAttachmentResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteTransitGatewayPolicyTableEntryRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteTransitGatewayPolicyTableEntryResult": {
       "base": null,
       "refs": {
       }
@@ -12166,7 +12192,7 @@
         "GetTransitGatewayMeteringPolicyEntriesRequest$Filters": "<p>One or more filters to apply when retrieving metering policy entries.</p>",
         "GetTransitGatewayMulticastDomainAssociationsRequest$Filters": "<p>One or more filters. The possible values are:</p> <ul> <li> <p> <code>resource-id</code> - The ID of the resource.</p> </li> <li> <p> <code>resource-type</code> - The type of resource. The valid value is: <code>vpc</code>.</p> </li> <li> <p> <code>state</code> - The state of the subnet association. Valid values are <code>associated</code> | <code>associating</code> | <code>disassociated</code> | <code>disassociating</code>.</p> </li> <li> <p> <code>subnet-id</code> - The ID of the subnet.</p> </li> <li> <p> <code>transit-gateway-attachment-id</code> - The id of the transit gateway attachment.</p> </li> </ul>",
         "GetTransitGatewayPolicyTableAssociationsRequest$Filters": "<p>The filters associated with the transit gateway policy table.</p>",
-        "GetTransitGatewayPolicyTableEntriesRequest$Filters": "<p>The filters associated with the transit gateway policy table.</p>",
+        "GetTransitGatewayPolicyTableEntriesRequest$Filters": "<p>One or more filters. The possible values are:</p> <ul> <li> <p> <code>policy-rule-number</code> - The rule number for the transit gateway policy table entry.</p> </li> <li> <p> <code>target-route-table-id</code> - The ID of the target route table.</p> </li> <li> <p> <code>policy-rule.source-ip</code> - The source CIDR block for the policy rule.</p> </li> <li> <p> <code>policy-rule.destination-ip</code> - The destination CIDR block for the policy rule.</p> </li> <li> <p> <code>policy-rule.source-port</code> - The source port or port range for the policy rule.</p> </li> <li> <p> <code>policy-rule.destination-port</code> - The destination port or port range for the policy rule.</p> </li> <li> <p> <code>policy-rule.protocol</code> - The protocol for the policy rule.</p> </li> <li> <p> <code>policy-rule.meta-data.key</code> - The metadata key for the policy rule.</p> </li> <li> <p> <code>policy-rule.meta-data.value</code> - The metadata value for the policy rule.</p> </li> </ul>",
         "GetTransitGatewayPrefixListReferencesRequest$Filters": "<p>One or more filters. The possible values are:</p> <ul> <li> <p> <code>attachment.resource-id</code> - The ID of the resource for the attachment.</p> </li> <li> <p> <code>attachment.resource-type</code> - The type of resource for the attachment. Valid values are <code>vpc</code> | <code>vpn</code> | <code>direct-connect-gateway</code> | <code>peering</code>.</p> </li> <li> <p> <code>attachment.transit-gateway-attachment-id</code> - The ID of the attachment.</p> </li> <li> <p> <code>is-blackhole</code> - Whether traffic matching the route is blocked (<code>true</code> | <code>false</code>).</p> </li> <li> <p> <code>prefix-list-id</code> - The ID of the prefix list.</p> </li> <li> <p> <code>prefix-list-owner-id</code> - The ID of the owner of the prefix list.</p> </li> <li> <p> <code>state</code> - The state of the prefix list reference (<code>pending</code> | <code>available</code> | <code>modifying</code> | <code>deleting</code>).</p> </li> </ul>",
         "GetTransitGatewayRouteTableAssociationsRequest$Filters": "<p>One or more filters. The possible values are:</p> <ul> <li> <p> <code>resource-id</code> - The ID of the resource.</p> </li> <li> <p> <code>resource-type</code> - The resource type. Valid values are <code>vpc</code> | <code>vpn</code> | <code>direct-connect-gateway</code> | <code>peering</code> | <code>connect</code>.</p> </li> <li> <p> <code>transit-gateway-attachment-id</code> - The ID of the attachment.</p> </li> </ul>",
         "GetTransitGatewayRouteTablePropagationsRequest$Filters": "<p>One or more filters. The possible values are:</p> <ul> <li> <p> <code>resource-id</code> - The ID of the resource.</p> </li> <li> <p> <code>resource-type</code> - The resource type. Valid values are <code>vpc</code> | <code>vpn</code> | <code>direct-connect-gateway</code> | <code>peering</code> | <code>connect</code>.</p> </li> <li> <p> <code>transit-gateway-attachment-id</code> - The ID of the attachment.</p> </li> </ul>",
@@ -17272,8 +17298,8 @@
     "Ipv6SupportValue": {
       "base": null,
       "refs": {
-        "CreateTransitGatewayVpcAttachmentRequestOptions$Ipv6Support": "<p>Enable or disable IPv6 support. The default is <code>disable</code>.</p>",
-        "ModifyTransitGatewayVpcAttachmentRequestOptions$Ipv6Support": "<p>Enable or disable IPv6 support. The default is <code>enable</code>.</p>",
+        "CreateTransitGatewayVpcAttachmentRequestOptions$Ipv6Support": "<p>Specifies whether IPv6 support is enabled for the attachment. When enabled, the transit gateway network interface receives an IPv6 address. When you enable route propagation, IPv6 VPC CIDRs propagate to the transit gateway route tables. When disabled, the network interface does not receive an IPv6 address, and IPv6 routes do not propagate. The setting does not filter IPv6 traffic. The default is <code>disable</code>.</p>",
+        "ModifyTransitGatewayVpcAttachmentRequestOptions$Ipv6Support": "<p>Specifies whether IPv6 support is enabled for the attachment. When enabled, the transit gateway network interface receives an IPv6 address. When you enable route propagation, IPv6 VPC CIDRs propagate to the transit gateway route tables. When disabled, the network interface does not receive an IPv6 address, and IPv6 routes do not propagate. The setting does not filter IPv6 traffic.</p>",
         "TransitGatewayVpcAttachmentOptions$Ipv6Support": "<p>Indicates whether IPv6 support is disabled.</p>"
       }
     },
@@ -19517,6 +19543,16 @@
       "base": "<p>The transit gateway options.</p>",
       "refs": {
         "ModifyTransitGatewayRequest$Options": "<p>The options to modify.</p>"
+      }
+    },
+    "ModifyTransitGatewayPolicyTableEntryRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ModifyTransitGatewayPolicyTableEntryResult": {
+      "base": null,
+      "refs": {
       }
     },
     "ModifyTransitGatewayPrefixListReferenceRequest": {
@@ -25468,6 +25504,7 @@
         "CreateTransitGatewayMeteringPolicyEntryRequest$Protocol": "<p>The protocol for traffic matching (1, 6, 17, etc.).</p>",
         "CreateTransitGatewayPeeringAttachmentRequest$PeerAccountId": "<p>The ID of the Amazon Web Services account that owns the peer transit gateway.</p>",
         "CreateTransitGatewayPeeringAttachmentRequest$PeerRegion": "<p>The Region where the peer transit gateway is located.</p>",
+        "CreateTransitGatewayPolicyTableEntryRequest$PolicyRuleNumber": "<p>The rule number for the policy table entry. Lower rule numbers are evaluated first and take precedence.</p>",
         "CreateTransitGatewayRequest$Description": "<p>A description of the transit gateway.</p>",
         "CreateTransitGatewayRouteRequest$DestinationCidrBlock": "<p>The CIDR range used for destination matches. Routing decisions are based on the most specific match.</p>",
         "CreateVerifiedAccessEndpointCidrOptions$Cidr": "<p>The CIDR.</p>",
@@ -25567,6 +25604,7 @@
         "DeleteTrafficMirrorFilterRuleResult$TrafficMirrorFilterRuleId": "<p>The ID of the deleted Traffic Mirror rule.</p>",
         "DeleteTrafficMirrorSessionResult$TrafficMirrorSessionId": "<p>The ID of the deleted Traffic Mirror session.</p>",
         "DeleteTrafficMirrorTargetResult$TrafficMirrorTargetId": "<p>The ID of the deleted Traffic Mirror target.</p>",
+        "DeleteTransitGatewayPolicyTableEntryRequest$PolicyRuleNumber": "<p>The rule number of the policy table entry to delete.</p>",
         "DeleteTransitGatewayRouteRequest$DestinationCidrBlock": "<p>The CIDR range for the route. This must match the CIDR for the route exactly.</p>",
         "DeleteVerifiedAccessEndpointRequest$ClientToken": "<p>A unique, case-sensitive token that you provide to ensure idempotency of your modification request. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensuring idempotency</a>.</p>",
         "DeleteVerifiedAccessGroupRequest$ClientToken": "<p>A unique, case-sensitive token that you provide to ensure idempotency of your modification request. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensuring idempotency</a>.</p>",
@@ -26093,6 +26131,7 @@
         "GetTransitGatewayPolicyTableAssociationsRequest$NextToken": "<p>The token for the next page of results.</p>",
         "GetTransitGatewayPolicyTableAssociationsResult$NextToken": "<p>The token for the next page of results.</p>",
         "GetTransitGatewayPolicyTableEntriesRequest$NextToken": "<p>The token for the next page of results.</p>",
+        "GetTransitGatewayPolicyTableEntriesResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "GetTransitGatewayPrefixListReferencesRequest$NextToken": "<p>The token for the next page of results.</p>",
         "GetTransitGatewayPrefixListReferencesResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "GetTransitGatewayRouteTableAssociationsRequest$NextToken": "<p>The token for the next page of results.</p>",
@@ -26613,6 +26652,7 @@
         "ModifyTrafficMirrorFilterRuleRequest$SourceCidrBlock": "<p>The source CIDR block to assign to the Traffic Mirror rule.</p>",
         "ModifyTrafficMirrorFilterRuleRequest$Description": "<p>The description to assign to the Traffic Mirror rule.</p>",
         "ModifyTrafficMirrorSessionRequest$Description": "<p>The description to assign to the Traffic Mirror session.</p>",
+        "ModifyTransitGatewayPolicyTableEntryRequest$PolicyRuleNumber": "<p>The rule number of the policy table entry to modify.</p>",
         "ModifyTransitGatewayRequest$Description": "<p>The description for the transit gateway.</p>",
         "ModifyVerifiedAccessEndpointPolicyRequest$PolicyDocument": "<p>The Verified Access policy document.</p>",
         "ModifyVerifiedAccessEndpointPolicyRequest$ClientToken": "<p>A unique, case-sensitive token that you provide to ensure idempotency of your modification request. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensuring idempotency</a>.</p>",
@@ -27258,6 +27298,7 @@
         "TransitGatewayAttachment$ResourceOwnerId": "<p>The ID of the Amazon Web Services account that owns the resource.</p>",
         "TransitGatewayAttachment$ResourceId": "<p>The ID of the resource.</p>",
         "TransitGatewayAttachmentAssociation$TransitGatewayRouteTableId": "<p>The ID of the route table for the transit gateway.</p>",
+        "TransitGatewayAttachmentAssociation$TransitGatewayPolicyTableId": "<p>The ID of the transit gateway policy table associated with the attachment.</p>",
         "TransitGatewayAttachmentBgpConfiguration$TransitGatewayAddress": "<p>The interior BGP peer IP address for the transit gateway.</p>",
         "TransitGatewayAttachmentBgpConfiguration$PeerAddress": "<p>The interior BGP peer IP address for the appliance.</p>",
         "TransitGatewayAttachmentPropagation$TransitGatewayRouteTableId": "<p>The ID of the propagation route table.</p>",
@@ -27302,9 +27343,9 @@
         "TransitGatewayPeeringAttachment$TransitGatewayAttachmentId": "<p>The ID of the transit gateway peering attachment.</p>",
         "TransitGatewayPeeringAttachment$AccepterTransitGatewayAttachmentId": "<p>The ID of the accepter transit gateway attachment.</p>",
         "TransitGatewayPolicyRule$SourceCidrBlock": "<p>The source CIDR block for the transit gateway policy rule.</p>",
-        "TransitGatewayPolicyRule$SourcePortRange": "<p>The port range for the transit gateway policy rule. Currently this is set to * (all).</p>",
+        "TransitGatewayPolicyRule$SourcePortRange": "<p>The source port or port range for the transit gateway policy rule.</p>",
         "TransitGatewayPolicyRule$DestinationCidrBlock": "<p>The destination CIDR block for the transit gateway policy rule.</p>",
-        "TransitGatewayPolicyRule$DestinationPortRange": "<p>The port range for the transit gateway policy rule. Currently this is set to * (all).</p>",
+        "TransitGatewayPolicyRule$DestinationPortRange": "<p>The destination port or port range for the transit gateway policy rule.</p>",
         "TransitGatewayPolicyRule$Protocol": "<p>The protocol used by the transit gateway policy rule.</p>",
         "TransitGatewayPolicyRuleMetaData$MetaDataKey": "<p>The key name for the transit gateway policy rule meta data tag.</p>",
         "TransitGatewayPolicyRuleMetaData$MetaDataValue": "<p>The value of the key for the transit gateway policy rule meta data tag.</p>",
@@ -27314,6 +27355,13 @@
         "TransitGatewayPrefixListReference$PrefixListOwnerId": "<p>The ID of the prefix list owner.</p>",
         "TransitGatewayPropagation$ResourceId": "<p>The ID of the resource.</p>",
         "TransitGatewayPropagation$TransitGatewayRouteTableId": "<p>The ID of the transit gateway route table.</p>",
+        "TransitGatewayRequestPolicyRule$SourceCidrBlock": "<p>The source CIDR block for the policy rule.</p>",
+        "TransitGatewayRequestPolicyRule$SourcePortRange": "<p>The source port or port range for the policy rule. You can specify a port range only when <code>Protocol</code> is <code>6</code> (TCP) or <code>17</code> (UDP); for all other protocols, this value must be <code>*</code>.</p>",
+        "TransitGatewayRequestPolicyRule$DestinationCidrBlock": "<p>The destination CIDR block for the policy rule.</p>",
+        "TransitGatewayRequestPolicyRule$DestinationPortRange": "<p>The destination port or port range for the policy rule. You can specify a port range only when <code>Protocol</code> is <code>6</code> (TCP) or <code>17</code> (UDP); for all other protocols, this value must be <code>*</code>.</p>",
+        "TransitGatewayRequestPolicyRule$Protocol": "<p>The protocol for the policy rule. Valid values are <code>1</code> (ICMP), <code>6</code> (TCP), <code>17</code> (UDP), <code>47</code> (GRE), or <code>*</code> for all protocols.</p>",
+        "TransitGatewayRequestPolicyRuleMetaData$MetaDataKey": "<p>The key of the metadata pair for the policy rule.</p>",
+        "TransitGatewayRequestPolicyRuleMetaData$MetaDataValue": "<p>The value of the metadata pair for the policy rule.</p>",
         "TransitGatewayRoute$DestinationCidrBlock": "<p>The CIDR block used for destination matches.</p>",
         "TransitGatewayRouteAttachment$ResourceId": "<p>The ID of the resource.</p>",
         "TransitGatewayRouteAttachment$TransitGatewayAttachmentId": "<p>The ID of the attachment.</p>",
@@ -29195,6 +29243,9 @@
     "TransitGatewayPolicyTableEntry": {
       "base": "<p>Describes a transit gateway policy table entry</p>",
       "refs": {
+        "CreateTransitGatewayPolicyTableEntryResult$TransitGatewayPolicyTableEntry": null,
+        "DeleteTransitGatewayPolicyTableEntryResult$TransitGatewayPolicyTableEntry": null,
+        "ModifyTransitGatewayPolicyTableEntryResult$TransitGatewayPolicyTableEntry": null,
         "TransitGatewayPolicyTableEntryList$member": null
       }
     },
@@ -29204,14 +29255,23 @@
         "GetTransitGatewayPolicyTableEntriesResult$TransitGatewayPolicyTableEntries": "<p>The entries for the transit gateway policy table.</p>"
       }
     },
+    "TransitGatewayPolicyTableEntryState": {
+      "base": null,
+      "refs": {
+        "TransitGatewayPolicyTableEntry$State": "<p>The state of the transit gateway policy table entry.</p>"
+      }
+    },
     "TransitGatewayPolicyTableId": {
       "base": null,
       "refs": {
         "AssociateTransitGatewayPolicyTableRequest$TransitGatewayPolicyTableId": "<p>The ID of the transit gateway policy table to associate with the transit gateway attachment.</p>",
+        "CreateTransitGatewayPolicyTableEntryRequest$TransitGatewayPolicyTableId": "<p>The ID of the transit gateway policy table.</p>",
+        "DeleteTransitGatewayPolicyTableEntryRequest$TransitGatewayPolicyTableId": "<p>The ID of the transit gateway policy table.</p>",
         "DeleteTransitGatewayPolicyTableRequest$TransitGatewayPolicyTableId": "<p>The transit gateway policy table to delete.</p>",
         "DisassociateTransitGatewayPolicyTableRequest$TransitGatewayPolicyTableId": "<p>The ID of the disassociated policy table.</p>",
         "GetTransitGatewayPolicyTableAssociationsRequest$TransitGatewayPolicyTableId": "<p>The ID of the transit gateway policy table.</p>",
         "GetTransitGatewayPolicyTableEntriesRequest$TransitGatewayPolicyTableId": "<p>The ID of the transit gateway policy table.</p>",
+        "ModifyTransitGatewayPolicyTableEntryRequest$TransitGatewayPolicyTableId": "<p>The ID of the transit gateway policy table.</p>",
         "TransitGatewayPolicyTable$TransitGatewayPolicyTableId": "<p>The ID of the transit gateway policy table.</p>",
         "TransitGatewayPolicyTableAssociation$TransitGatewayPolicyTableId": "<p>The ID of the transit gateway policy table.</p>",
         "TransitGatewayPolicyTableIdStringList$member": null
@@ -29281,6 +29341,19 @@
       "base": "<p>Describes the options for a transit gateway.</p>",
       "refs": {
         "CreateTransitGatewayRequest$Options": "<p>The transit gateway options.</p>"
+      }
+    },
+    "TransitGatewayRequestPolicyRule": {
+      "base": "<p>The matching criteria for a transit gateway policy table entry.</p>",
+      "refs": {
+        "CreateTransitGatewayPolicyTableEntryRequest$PolicyRule": "<p>The matching criteria for the policy table entry.</p>",
+        "ModifyTransitGatewayPolicyTableEntryRequest$PolicyRule": "<p>The updated matching criteria for the policy table entry. Unspecified fields retain their current values.</p>"
+      }
+    },
+    "TransitGatewayRequestPolicyRuleMetaData": {
+      "base": "<p>A metadata key-value pair for a transit gateway policy rule.</p>",
+      "refs": {
+        "TransitGatewayRequestPolicyRule$MetaData": "<p>The metadata key-value pair for the policy rule.</p>"
       }
     },
     "TransitGatewayRoute": {
@@ -29385,6 +29458,7 @@
       "base": null,
       "refs": {
         "AssociateTransitGatewayRouteTableRequest$TransitGatewayRouteTableId": "<p>The ID of the transit gateway route table.</p>",
+        "CreateTransitGatewayPolicyTableEntryRequest$TargetRouteTableId": "<p>The ID of the transit gateway route table to use for traffic matching this rule.</p>",
         "CreateTransitGatewayPrefixListReferenceRequest$TransitGatewayRouteTableId": "<p>The ID of the transit gateway route table.</p>",
         "CreateTransitGatewayRouteRequest$TransitGatewayRouteTableId": "<p>The ID of the transit gateway route table.</p>",
         "CreateTransitGatewayRouteTableAnnouncementRequest$TransitGatewayRouteTableId": "<p>The ID of the transit gateway route table.</p>",
@@ -29400,6 +29474,7 @@
         "GetTransitGatewayRouteTablePropagationsRequest$TransitGatewayRouteTableId": "<p>The ID of the transit gateway route table.</p>",
         "ModifyTransitGatewayOptions$AssociationDefaultRouteTableId": "<p>The ID of the default association route table.</p>",
         "ModifyTransitGatewayOptions$PropagationDefaultRouteTableId": "<p>The ID of the default propagation route table.</p>",
+        "ModifyTransitGatewayPolicyTableEntryRequest$TargetRouteTableId": "<p>The ID of the transit gateway route table to use for traffic matching this rule.</p>",
         "ModifyTransitGatewayPrefixListReferenceRequest$TransitGatewayRouteTableId": "<p>The ID of the transit gateway route table.</p>",
         "ReplaceTransitGatewayRouteRequest$TransitGatewayRouteTableId": "<p>The ID of the route table.</p>",
         "SearchTransitGatewayRoutesRequest$TransitGatewayRouteTableId": "<p>The ID of the transit gateway route table.</p>",

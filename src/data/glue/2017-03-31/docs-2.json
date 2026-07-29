@@ -1107,6 +1107,13 @@
         "EventBatchingCondition$BatchWindow": "<p>Window of time in seconds after which EventBridge event trigger fires. Window starts when first event is received.</p>"
       }
     },
+    "BetweenConfiguration": {
+      "base": "<p>Configuration that defines how BETWEEN range filter operations are translated into REST API request parameters.</p>",
+      "refs": {
+        "FilterConfiguration$BetweenConfiguration": "<p>Configuration for handling BETWEEN range filter operations.</p>",
+        "FilterOverrides$BetweenConfiguration": "<p>Field-specific configuration for handling BETWEEN range filter operations.</p>"
+      }
+    },
     "BinEdges": {
       "base": null,
       "refs": {
@@ -1204,6 +1211,12 @@
         "Field$IsUpdateable": "<p>Indicates whether this field can be updated as part of a destination write.</p>",
         "Field$IsUpsertable": "<p>Indicates whether this field can be upserted as part of a destination write.</p>",
         "Field$IsDefaultOnCreate": "<p>Indicates whether this field is populated automatically when the object is created, such as a created at timestamp.</p>",
+        "FieldDefinition$IsPartitionable": "<p>Indicates whether this field can be used for partitioning queries to the data source.</p>",
+        "FieldDefinition$IsNullable": "<p>Indicates whether this field can contain null values.</p>",
+        "FieldDefinition$IsQueryable": "<p>Indicates whether this field can be used in filter predicates when querying data.</p>",
+        "FieldDefinition$IsOrderable": "<p>Indicates whether this field can be used for ordering results.</p>",
+        "FilterConfiguration$StripQuotes": "<p>Indicates whether surrounding double quotes should be stripped from filter values before processing.</p>",
+        "FilterStringConfiguration$QuoteStringValues": "<p>Indicates whether string and date values should be wrapped with a quote character in the filter expression.</p>",
         "Property$Required": "<p>Indicates whether the property is required.</p>"
       }
     },
@@ -2228,6 +2241,13 @@
       "base": null,
       "refs": {
         "ConnectionsList$Connections": "<p>A list of connections used by the job.</p>"
+      }
+    },
+    "ConnectionStringToStringMap": {
+      "base": null,
+      "refs": {
+        "FilterConfiguration$OperatorMappings": "<p>A map of logical filter operators to their API-specific string representations. Supported operator keys are: <code>EQUAL_TO</code>, <code>NOT_EQUAL_TO</code>, <code>LESS_THAN</code>, <code>GREATER_THAN</code>, <code>LESS_THAN_OR_EQUAL_TO</code>, <code>GREATER_THAN_OR_EQUAL_TO</code>, <code>CONTAINS</code>, <code>BETWEEN</code>, <code>AND</code>, and <code>OR</code>.</p>",
+        "FilterOverrides$OperatorMappings": "<p>A map of logical filter operators to their field-specific API representations, overriding the global operator mappings. Supported operator keys are: <code>EQUAL_TO</code>, <code>NOT_EQUAL_TO</code>, <code>LESS_THAN</code>, <code>GREATER_THAN</code>, <code>LESS_THAN_OR_EQUAL_TO</code>, <code>GREATER_THAN_OR_EQUAL_TO</code>, <code>CONTAINS</code>, <code>BETWEEN</code>, <code>AND</code>, and <code>OR</code>.</p>"
       }
     },
     "ConnectionType": {
@@ -4746,6 +4766,12 @@
         "CodeGenConfigurationNode$Filter": "<p>Specifies a transform that splits a dataset into two, based on a filter condition.</p>"
       }
     },
+    "FilterConfiguration": {
+      "base": "<p>Configuration that defines how filter predicates are applied to REST API requests, supporting both query parameter and filter string strategies.</p>",
+      "refs": {
+        "SourceConfiguration$FilterConfiguration": "<p>Configuration for applying filter pushdown to REST API requests, defining how filter predicates are translated into query parameters or filter strings.</p>"
+      }
+    },
     "FilterExpression": {
       "base": "<p>Specifies a filter expression.</p>",
       "refs": {
@@ -4766,6 +4792,12 @@
         "GroupFilters$LogicalOperator": "<p>The logical operator used to combine the filters in this group. Determines whether all filters must match (AND) or any filter can match (OR).</p>"
       }
     },
+    "FilterMode": {
+      "base": "<p>The strategy used to apply filter predicates to REST API requests.</p>",
+      "refs": {
+        "FilterConfiguration$FilterMode": "<p>The strategy for applying filters to requests. Use <code>QUERY_PARAMS</code> to pass filters as individual query parameters, or <code>FILTER_STRING</code> to construct a single filter expression string.</p>"
+      }
+    },
     "FilterOperation": {
       "base": null,
       "refs": {
@@ -4778,6 +4810,12 @@
         "CrawlsFilter$FilterOperator": "<p>A defined comparator that operates on the value. The available operators are:</p> <ul> <li> <p> <code>GT</code>: Greater than.</p> </li> <li> <p> <code>GE</code>: Greater than or equal to.</p> </li> <li> <p> <code>LT</code>: Less than.</p> </li> <li> <p> <code>LE</code>: Less than or equal to.</p> </li> <li> <p> <code>EQ</code>: Equal to.</p> </li> <li> <p> <code>NE</code>: Not equal to.</p> </li> </ul>"
       }
     },
+    "FilterOverrides": {
+      "base": "<p>Configuration that defines per-field overrides for filter behavior, allowing individual fields to customize how filter operations are applied.</p>",
+      "refs": {
+        "FieldDefinition$FilterOverrides": "<p>Per-field overrides for filter behavior, allowing customization of how filters are applied to this specific field.</p>"
+      }
+    },
     "FilterPredicate": {
       "base": null,
       "refs": {
@@ -4788,6 +4826,12 @@
       "base": null,
       "refs": {
         "GetTablesRequest$Expression": "<p>A regular expression pattern. If present, only those tables whose names match the pattern are returned.</p>"
+      }
+    },
+    "FilterStringConfiguration": {
+      "base": "<p>Configuration for constructing filter expression strings when using the <code>FILTER_STRING</code> filter mode.</p>",
+      "refs": {
+        "FilterConfiguration$FilterStringConfiguration": "<p>Configuration for constructing filter expressions when <code>FilterMode</code> is set to <code>FILTER_STRING</code>.</p>"
       }
     },
     "FilterValue": {
@@ -11447,12 +11491,24 @@
     "String": {
       "base": null,
       "refs": {
+        "BetweenConfiguration$LowBoundKey": "<p>The parameter name used for the lower bound value in a BETWEEN filter operation.</p>",
+        "BetweenConfiguration$HighBoundKey": "<p>The parameter name used for the upper bound value in a BETWEEN filter operation.</p>",
+        "BetweenConfiguration$Template": "<p>A template string for constructing the BETWEEN filter expression.</p>",
+        "ConnectionStringToStringMap$key": null,
+        "ConnectionStringToStringMap$value": null,
         "ConnectorProperty$DefaultValue": "<p>The default value for the property.</p>",
+        "ConnectorProperty$Format": "<p>A format template for the property value that defines how the value should be formatted before sending it in API requests. Use <code>{value}</code> as a placeholder for the actual property value (for example, <code>SSWS {value}</code>).</p>",
         "CustomProperties$key": null,
         "CustomProperties$value": null,
         "Field$ParentField": "<p>A parent field name for a nested field.</p>",
         "Field$NativeDataType": "<p>The data type returned by the SaaS API, such as “picklist” or “textarea” from Salesforce.</p>",
         "FieldDefinition$Name": "<p>The name of the field in the entity schema.</p>",
+        "FieldDefinition$ResponseDateFormat": "<p>The format pattern for parsing date values from API responses. Required when the API uses a non-ISO-8601 format. Accepts Java <code>DateTimeFormatter</code> patterns (for example, <code>EEE, d MMM yyyy HH:mm:ss Z</code>), <code>EPOCH_SECONDS</code> for Unix epoch seconds, or <code>EPOCH_MILLIS</code> for Unix epoch milliseconds.</p>",
+        "FilterConfiguration$DateTimeFormat": "<p>The global date and time format for filter expressions. Accepts Java <code>DateTimeFormatter</code> patterns (for example, <code>EEE, d MMM yyyy HH:mm:ss Z</code>), <code>EPOCH_SECONDS</code> for Unix epoch seconds, or <code>EPOCH_MILLIS</code> for Unix epoch milliseconds. If not specified, values are passed as-is in ISO-8601 format.</p>",
+        "FilterOverrides$FieldName": "<p>An override for the field name to use in filter expressions, if different from the schema field name.</p>",
+        "FilterOverrides$DateTimeFormat": "<p>The date and time format for filter expressions on this field, overriding the global <code>DateTimeFormat</code>. Accepts Java <code>DateTimeFormatter</code> patterns (for example, <code>EEE, d MMM yyyy HH:mm:ss Z</code>), <code>EPOCH_SECONDS</code> for Unix epoch seconds, or <code>EPOCH_MILLIS</code> for Unix epoch milliseconds.</p>",
+        "FilterStringConfiguration$QueryParameterName": "<p>The query parameter name used to send the constructed filter expression string in API requests.</p>",
+        "FilterStringConfiguration$QuoteCharacter": "<p>The character used to quote values when <code>QuoteStringValues</code> is true. Defaults to double quotes if not specified.</p>",
         "GetEntityRecordsRequest$OrderBy": "<p>A parameter that orders the response preview data.</p>",
         "ListOfString$member": null,
         "Property$DefaultValue": "<p>The default value for the property.</p>",

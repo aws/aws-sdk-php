@@ -1331,6 +1331,15 @@
       "input":{"shape":"CreateTransitGatewayPolicyTableRequest"},
       "output":{"shape":"CreateTransitGatewayPolicyTableResult"}
     },
+    "CreateTransitGatewayPolicyTableEntry":{
+      "name":"CreateTransitGatewayPolicyTableEntry",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateTransitGatewayPolicyTableEntryRequest"},
+      "output":{"shape":"CreateTransitGatewayPolicyTableEntryResult"}
+    },
     "CreateTransitGatewayPrefixListReference":{
       "name":"CreateTransitGatewayPrefixListReference",
       "http":{
@@ -2153,6 +2162,15 @@
       },
       "input":{"shape":"DeleteTransitGatewayPolicyTableRequest"},
       "output":{"shape":"DeleteTransitGatewayPolicyTableResult"}
+    },
+    "DeleteTransitGatewayPolicyTableEntry":{
+      "name":"DeleteTransitGatewayPolicyTableEntry",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteTransitGatewayPolicyTableEntryRequest"},
+      "output":{"shape":"DeleteTransitGatewayPolicyTableEntryResult"}
     },
     "DeleteTransitGatewayPrefixListReference":{
       "name":"DeleteTransitGatewayPrefixListReference",
@@ -5958,6 +5976,15 @@
       },
       "input":{"shape":"ModifyTransitGatewayMeteringPolicyRequest"},
       "output":{"shape":"ModifyTransitGatewayMeteringPolicyResult"}
+    },
+    "ModifyTransitGatewayPolicyTableEntry":{
+      "name":"ModifyTransitGatewayPolicyTableEntry",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyTransitGatewayPolicyTableEntryRequest"},
+      "output":{"shape":"ModifyTransitGatewayPolicyTableEntryResult"}
     },
     "ModifyTransitGatewayPrefixListReference":{
       "name":"ModifyTransitGatewayPrefixListReference",
@@ -15903,6 +15930,30 @@
         }
       }
     },
+    "CreateTransitGatewayPolicyTableEntryRequest":{
+      "type":"structure",
+      "required":[
+        "TransitGatewayPolicyTableId",
+        "PolicyRuleNumber",
+        "TargetRouteTableId"
+      ],
+      "members":{
+        "TransitGatewayPolicyTableId":{"shape":"TransitGatewayPolicyTableId"},
+        "PolicyRuleNumber":{"shape":"String"},
+        "PolicyRule":{"shape":"TransitGatewayRequestPolicyRule"},
+        "TargetRouteTableId":{"shape":"TransitGatewayRouteTableId"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "CreateTransitGatewayPolicyTableEntryResult":{
+      "type":"structure",
+      "members":{
+        "TransitGatewayPolicyTableEntry":{
+          "shape":"TransitGatewayPolicyTableEntry",
+          "locationName":"transitGatewayPolicyTableEntry"
+        }
+      }
+    },
     "CreateTransitGatewayPolicyTableRequest":{
       "type":"structure",
       "required":["TransitGatewayId"],
@@ -18404,6 +18455,27 @@
         "TransitGatewayPeeringAttachment":{
           "shape":"TransitGatewayPeeringAttachment",
           "locationName":"transitGatewayPeeringAttachment"
+        }
+      }
+    },
+    "DeleteTransitGatewayPolicyTableEntryRequest":{
+      "type":"structure",
+      "required":[
+        "TransitGatewayPolicyTableId",
+        "PolicyRuleNumber"
+      ],
+      "members":{
+        "TransitGatewayPolicyTableId":{"shape":"TransitGatewayPolicyTableId"},
+        "PolicyRuleNumber":{"shape":"String"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DeleteTransitGatewayPolicyTableEntryResult":{
+      "type":"structure",
+      "members":{
+        "TransitGatewayPolicyTableEntry":{
+          "shape":"TransitGatewayPolicyTableEntry",
+          "locationName":"transitGatewayPolicyTableEntry"
         }
       }
     },
@@ -31201,6 +31273,10 @@
         "TransitGatewayPolicyTableEntries":{
           "shape":"TransitGatewayPolicyTableEntryList",
           "locationName":"transitGatewayPolicyTableEntries"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
         }
       }
     },
@@ -43527,6 +43603,29 @@
         "EncryptionSupport":{"shape":"EncryptionSupportOptionValue"}
       }
     },
+    "ModifyTransitGatewayPolicyTableEntryRequest":{
+      "type":"structure",
+      "required":[
+        "TransitGatewayPolicyTableId",
+        "PolicyRuleNumber"
+      ],
+      "members":{
+        "TransitGatewayPolicyTableId":{"shape":"TransitGatewayPolicyTableId"},
+        "PolicyRuleNumber":{"shape":"String"},
+        "PolicyRule":{"shape":"TransitGatewayRequestPolicyRule"},
+        "TargetRouteTableId":{"shape":"TransitGatewayRouteTableId"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "ModifyTransitGatewayPolicyTableEntryResult":{
+      "type":"structure",
+      "members":{
+        "TransitGatewayPolicyTableEntry":{
+          "shape":"TransitGatewayPolicyTableEntry",
+          "locationName":"transitGatewayPolicyTableEntry"
+        }
+      }
+    },
     "ModifyTransitGatewayPrefixListReferenceRequest":{
       "type":"structure",
       "required":[
@@ -55742,6 +55841,10 @@
           "shape":"String",
           "locationName":"transitGatewayRouteTableId"
         },
+        "TransitGatewayPolicyTableId":{
+          "shape":"String",
+          "locationName":"transitGatewayPolicyTableId"
+        },
         "State":{
           "shape":"TransitGatewayAssociationState",
           "locationName":"state"
@@ -56730,6 +56833,10 @@
         "TargetRouteTableId":{
           "shape":"TransitGatewayRouteTableId",
           "locationName":"targetRouteTableId"
+        },
+        "State":{
+          "shape":"TransitGatewayPolicyTableEntryState",
+          "locationName":"state"
         }
       }
     },
@@ -56739,6 +56846,13 @@
         "shape":"TransitGatewayPolicyTableEntry",
         "locationName":"item"
       }
+    },
+    "TransitGatewayPolicyTableEntryState":{
+      "type":"string",
+      "enum":[
+        "active",
+        "deleted"
+      ]
     },
     "TransitGatewayPolicyTableId":{"type":"string"},
     "TransitGatewayPolicyTableIdStringList":{
@@ -56876,6 +56990,24 @@
         "SecurityGroupReferencingSupport":{"shape":"SecurityGroupReferencingSupportValue"},
         "MulticastSupport":{"shape":"MulticastSupportValue"},
         "TransitGatewayCidrBlocks":{"shape":"TransitGatewayCidrBlockStringList"}
+      }
+    },
+    "TransitGatewayRequestPolicyRule":{
+      "type":"structure",
+      "members":{
+        "SourceCidrBlock":{"shape":"String"},
+        "SourcePortRange":{"shape":"String"},
+        "DestinationCidrBlock":{"shape":"String"},
+        "DestinationPortRange":{"shape":"String"},
+        "Protocol":{"shape":"String"},
+        "MetaData":{"shape":"TransitGatewayRequestPolicyRuleMetaData"}
+      }
+    },
+    "TransitGatewayRequestPolicyRuleMetaData":{
+      "type":"structure",
+      "members":{
+        "MetaDataKey":{"shape":"String"},
+        "MetaDataValue":{"shape":"String"}
       }
     },
     "TransitGatewayRoute":{
