@@ -77,9 +77,8 @@ trait DecryptionTraitV2
             $options['@CipherOptions'] = $options['@CipherOptions'] ?? [];
             $options['@CipherOptions']['Iv'] = str_repeat("\1", 12);
             $options['@CipherOptions']['TagLength'] = $algorithmSuite->getCipherTagLengthInBytes();
-            $materialDescription = json_decode(
-                $envelope[MetadataEnvelope::ENCRYPTION_CONTEXT_V3],
-                true
+            $materialDescription = $this->decodeMaterialsDescription(
+                $envelope[MetadataEnvelope::ENCRYPTION_CONTEXT_V3]
             );
 
 
@@ -130,9 +129,8 @@ trait DecryptionTraitV2
                 base64_decode(
                     $envelope[MetadataEnvelope::CONTENT_KEY_V2_HEADER]
                 ),
-                json_decode(
-                    $envelope[MetadataEnvelope::MATERIALS_DESCRIPTION_HEADER],
-                    true
+                $this->decodeMaterialsDescription(
+                    $envelope[MetadataEnvelope::MATERIALS_DESCRIPTION_HEADER]
                 ),
                 $options
             );
@@ -152,6 +150,26 @@ trait DecryptionTraitV2
 
             return $decryptionStream;
         }
+    }
+
+    // Decodes the material description, rejecting a malformed value.
+    private function decodeMaterialsDescription($materialsDescription): array
+    {
+        if (!is_string($materialsDescription)) {
+            throw new CryptoException('Unable to decode the material description.');
+        }
+
+        $decoded = json_decode($materialsDescription, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new CryptoException(
+                'Unable to decode the material description: ' . json_last_error_msg()
+            );
+        }
+        if (!is_array($decoded)) {
+            throw new CryptoException('Unable to decode the material description.');
+        }
+
+        return $decoded;
     }
 
     private function buildMaterialDescription(
