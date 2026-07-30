@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.390.0 - 2026-07-30
 
 * `Aws\Crypto` - Fixes issue with client material description decode.
 * `Aws\BedrockAgentCoreControl` - Adds support for configuring models through the OpenResponses API for custom evaluators. CreateEvaluator and UpdateEvaluator now accept an OpenResponses model configuration for LLM-as-a-Judge evaluations.
