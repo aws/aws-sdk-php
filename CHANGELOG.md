@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Crypto` - Fixes issue with client material description decode.
+* `Aws\BedrockAgentCoreControl` - Adds support for configuring models through the OpenResponses API for custom evaluators. CreateEvaluator and UpdateEvaluator now accept an OpenResponses model configuration for LLM-as-a-Judge evaluations.
+* `Aws\SageMaker` - Adds support for g7 family instance types for SageMaker Studio JupyterLab and CodeEditor apps for IAD (us-east-1), PDX (us-west-2), CMH (us-east-2).
+* `Aws\Lambda` - Add Python3.15 (python3.15) and NodeJs 26 (nodejs26.x) support to AWS Lambda
+* `Aws\Kafka` - Amazon MSK Express brokers now support streaming tables for Apache Iceberg, continuously materializing Apache Kafka topics as Iceberg tables in Amazon S3 Tables. Express brokers also now support data delivery to Amazon S3 general purpose buckets.
+* `Aws\NetworkFirewall` - Adds UPDATING field to Container Association Status
+* `Aws\IAM` - Improved IAM Policy Simulator accuracy. Simulator now evaluates SCP conditions and resource scoping, returns explicitDeny for explicit SCP denials, and reports accurate cross-account decisions.
+* `Aws\SecurityAgent` - Adds support for providing a branch override when configured integrated repositories
+* `Aws\PricingPlanManager` - Adds support for Public PricingPlanManager SDK
+
 ## 3.389.3 - 2026-07-29
 
 * `Aws\EC2` - This release adds support for policy-based routing on AWS Transit Gateway, enabling you to route traffic based on 5-tuple matching (source IP, destination IP, source port, destination port, and protocol) using new policy table entry APIs that direct matching traffic to a target route table.

@@ -6550,7 +6550,8 @@
     "EvaluatorModelConfig":{
       "type":"structure",
       "members":{
-        "bedrockEvaluatorModelConfig":{"shape":"BedrockEvaluatorModelConfig"}
+        "bedrockEvaluatorModelConfig":{"shape":"BedrockEvaluatorModelConfig"},
+        "responsesEvaluatorModelConfig":{"shape":"OpenResponsesEvaluatorModelConfig"}
       },
       "union":true
     },
@@ -11211,6 +11212,34 @@
         "DISABLED"
       ]
     },
+    "OpenResponsesEvaluatorModelConfig":{
+      "type":"structure",
+      "required":["modelId"],
+      "members":{
+        "modelId":{"shape":"ModelId"},
+        "maxOutputTokens":{"shape":"OpenResponsesEvaluatorModelConfigMaxOutputTokensInteger"},
+        "temperature":{"shape":"OpenResponsesEvaluatorModelConfigTemperatureFloat"},
+        "topP":{"shape":"OpenResponsesEvaluatorModelConfigTopPFloat"},
+        "reasoning":{"shape":"ReasoningConfiguration"}
+      }
+    },
+    "OpenResponsesEvaluatorModelConfigMaxOutputTokensInteger":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
+    "OpenResponsesEvaluatorModelConfigTemperatureFloat":{
+      "type":"float",
+      "box":true,
+      "max":2,
+      "min":0
+    },
+    "OpenResponsesEvaluatorModelConfigTopPFloat":{
+      "type":"float",
+      "box":true,
+      "max":1,
+      "min":0
+    },
     "OutputConfig":{
       "type":"structure",
       "required":["cloudWatchConfig"],
@@ -11854,6 +11883,17 @@
       },
       "sensitive":true,
       "union":true
+    },
+    "ReasoningConfiguration":{
+      "type":"structure",
+      "members":{
+        "effort":{"shape":"ReasoningConfigurationEffortString"}
+      }
+    },
+    "ReasoningConfigurationEffortString":{
+      "type":"string",
+      "max":64,
+      "min":1
     },
     "RecordIdentifier":{
       "type":"string",

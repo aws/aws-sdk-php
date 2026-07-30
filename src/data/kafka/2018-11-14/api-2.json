@@ -163,6 +163,47 @@
         }
       ]
     },
+    "CreateChannel": {
+      "name": "CreateChannel",
+      "http": {
+        "method": "POST",
+        "requestUri": "/v1/clusters/{clusterArn}/channels",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "CreateChannelRequest"
+      },
+      "output": {
+        "shape": "CreateChannelResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "UnauthorizedException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "ServiceUnavailableException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ],
+      "idempotent": true
+    },
     "CreateReplicator": {
       "name": "CreateReplicator",
       "http": {
@@ -331,6 +372,44 @@
           "shape": "ForbiddenException"
         }
       ]
+    },
+    "DeleteChannel": {
+      "name": "DeleteChannel",
+      "http": {
+        "method": "DELETE",
+        "requestUri": "/v1/clusters/{clusterArn}/channels/{channelArn}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "DeleteChannelRequest"
+      },
+      "output": {
+        "shape": "DeleteChannelResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "UnauthorizedException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "ServiceUnavailableException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ],
+      "idempotent": true
     },
     "DeleteConfiguration": {
       "name": "DeleteConfiguration",
@@ -606,6 +685,44 @@
           "shape": "TooManyRequestsException"
         }
       ]
+    },
+    "DescribeChannel": {
+      "name": "DescribeChannel",
+      "http": {
+        "method": "GET",
+        "requestUri": "/v1/clusters/{clusterArn}/channels/{channelArn}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "DescribeChannelRequest"
+      },
+      "output": {
+        "shape": "DescribeChannelResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "UnauthorizedException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "ServiceUnavailableException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ],
+      "readonly": true
     },
     "DescribeConfiguration": {
       "name": "DescribeConfiguration",
@@ -912,6 +1029,44 @@
           "shape": "TooManyRequestsException"
         }
       ]
+    },
+    "ListChannels": {
+      "name": "ListChannels",
+      "http": {
+        "method": "GET",
+        "requestUri": "/v1/clusters/{clusterArn}/channels",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "ListChannelsRequest"
+      },
+      "output": {
+        "shape": "ListChannelsResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "UnauthorizedException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "ServiceUnavailableException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ],
+      "readonly": true
     },
     "ListClusterOperations": {
       "name": "ListClusterOperations",
@@ -1682,6 +1837,44 @@
         }
       ]
     },
+    "UpdateChannel": {
+      "name": "UpdateChannel",
+      "http": {
+        "method": "PUT",
+        "requestUri": "/v1/clusters/{clusterArn}/channels/{channelArn}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "UpdateChannelRequest"
+      },
+      "output": {
+        "shape": "UpdateChannelResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "UnauthorizedException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "ServiceUnavailableException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ],
+      "idempotent": true
+    },
     "UpdateClusterConfiguration": {
       "name": "UpdateClusterConfiguration",
       "http": {
@@ -2231,6 +2424,130 @@
           "locationName": "kafkaVersion"
         }
       }
+    },
+    "Catalog": {
+      "type": "structure",
+      "members": {
+        "CatalogArn": {
+          "shape": "__string",
+          "locationName": "catalogArn"
+        },
+        "WarehouseLocation": {
+          "shape": "__string",
+          "locationName": "warehouseLocation"
+        }
+      }
+    },
+    "ChannelInfo": {
+      "type": "structure",
+      "members": {
+        "ChannelArn": {
+          "shape": "__string",
+          "locationName": "channelArn"
+        },
+        "ChannelName": {
+          "shape": "__string",
+          "locationName": "channelName"
+        },
+        "Status": {
+          "shape": "ChannelStatus",
+          "locationName": "status"
+        },
+        "CreationTime": {
+          "shape": "__timestampIso8601",
+          "locationName": "creationTime"
+        },
+        "DestinationType": {
+          "shape": "ChannelDestinationType",
+          "locationName": "destinationType"
+        },
+        "ClusterOperationArn": {
+          "shape": "__string",
+          "locationName": "clusterOperationArn"
+        }
+      },
+      "required": [
+        "ChannelArn",
+        "ChannelName",
+        "Status",
+        "CreationTime",
+        "DestinationType"
+      ]
+    },
+    "ChannelStatus": {
+      "type": "string",
+      "enum": [
+        "CREATING",
+        "ACTIVE",
+        "UPDATING",
+        "DELETING",
+        "FAILED",
+        "SUSPENDING",
+        "SUSPENDED"
+      ]
+    },
+    "ChannelDestinationType": {
+      "type": "string",
+      "enum": [
+        "ICEBERG",
+        "S3"
+      ]
+    },
+    "ChannelStateInfo": {
+      "type": "structure",
+      "members": {
+        "Code": {
+          "shape": "__string",
+          "locationName": "code"
+        },
+        "Message": {
+          "shape": "__string",
+          "locationName": "message"
+        }
+      }
+    },
+    "CreateChannelRequest": {
+      "type": "structure",
+      "members": {
+        "ChannelName": {
+          "shape": "__string",
+          "locationName": "channelName"
+        },
+        "ClusterArn": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterArn"
+        },
+        "EncryptionConfiguration": {
+          "shape": "EncryptionConfiguration",
+          "locationName": "encryptionConfiguration"
+        },
+        "IcebergDestinationConfiguration": {
+          "shape": "IcebergDestinationConfiguration",
+          "locationName": "icebergDestinationConfiguration"
+        },
+        "LoggingInfo": {
+          "shape": "ChannelLoggingInfo",
+          "locationName": "loggingInfo"
+        },
+        "S3DestinationConfiguration": {
+          "shape": "S3DestinationConfiguration",
+          "locationName": "s3DestinationConfiguration"
+        },
+        "Tags": {
+          "shape": "__mapOf__string",
+          "locationName": "tags"
+        },
+        "TopicConfigurationList": {
+          "shape": "__listOfTopicConfiguration",
+          "locationName": "topicConfigurationList"
+        }
+      },
+      "required": [
+        "ClusterArn",
+        "ChannelName",
+        "TopicConfigurationList"
+      ]
     },
     "ClientAuthentication": {
       "type": "structure",
@@ -2846,6 +3163,22 @@
         "DetectAndCopyNewConsumerGroups"
       ]
     },
+    "CreateChannelResponse": {
+      "type": "structure",
+      "members": {
+        "ChannelArn": {
+          "shape": "__string",
+          "locationName": "channelArn"
+        },
+        "ClusterOperationArn": {
+          "shape": "__string",
+          "locationName": "clusterOperationArn"
+        }
+      },
+      "required": [
+        "ChannelArn"
+      ]
+    },
     "CreateClusterRequest": {
       "type": "structure",
       "members": {
@@ -3306,6 +3639,25 @@
         }
       }
     },
+    "DescribeChannelRequest": {
+      "type": "structure",
+      "members": {
+        "ChannelArn": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "channelArn"
+        },
+        "ClusterArn": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterArn"
+        }
+      },
+      "required": [
+        "ClusterArn",
+        "ChannelArn"
+      ]
+    },
     "DescribeClusterOperationRequest": {
       "type": "structure",
       "members": {
@@ -3330,6 +3682,71 @@
       },
       "required": [
         "ClusterOperationArn"
+      ]
+    },
+    "DescribeChannelResponse": {
+      "type": "structure",
+      "members": {
+        "ChannelArn": {
+          "shape": "__string",
+          "locationName": "channelArn"
+        },
+        "ChannelName": {
+          "shape": "__string",
+          "locationName": "channelName"
+        },
+        "EncryptionConfiguration": {
+          "shape": "EncryptionConfiguration",
+          "locationName": "encryptionConfiguration"
+        },
+        "IcebergDestinationConfiguration": {
+          "shape": "IcebergDestinationConfiguration",
+          "locationName": "icebergDestinationConfiguration"
+        },
+        "S3DestinationConfiguration": {
+          "shape": "S3DestinationConfiguration",
+          "locationName": "s3DestinationConfiguration"
+        },
+        "Status": {
+          "shape": "ChannelStatus",
+          "locationName": "status"
+        },
+        "DestinationType": {
+          "shape": "ChannelDestinationType",
+          "locationName": "destinationType"
+        },
+        "CreationTime": {
+          "shape": "__timestampIso8601",
+          "locationName": "creationTime"
+        },
+        "TopicConfigurationList": {
+          "shape": "__listOfTopicConfiguration",
+          "locationName": "topicConfigurationList"
+        },
+        "LoggingInfo": {
+          "shape": "ChannelLoggingInfo",
+          "locationName": "loggingInfo"
+        },
+        "StateInfo": {
+          "shape": "ChannelStateInfo",
+          "locationName": "stateInfo"
+        },
+        "ClusterOperationArn": {
+          "shape": "__string",
+          "locationName": "clusterOperationArn"
+        },
+        "Tags": {
+          "shape": "__mapOf__string",
+          "locationName": "tags"
+        }
+      },
+      "required": [
+        "ChannelArn",
+        "ChannelName",
+        "TopicConfigurationList",
+        "Status",
+        "DestinationType",
+        "CreationTime"
       ]
     },
     "DescribeClusterOperationResponse": {
@@ -3509,6 +3926,23 @@
         "ClusterArn",
         "TopicName"
       ]
+    },
+    "DestinationTable": {
+      "type": "structure",
+      "members": {
+        "DestinationDatabaseName": {
+          "shape": "__string",
+          "locationName": "destinationDatabaseName"
+        },
+        "DestinationTableName": {
+          "shape": "__string",
+          "locationName": "destinationTableName"
+        },
+        "PartitionSpec": {
+          "shape": "PartitionSpec",
+          "locationName": "partitionSpec"
+        }
+      }
     },
     "DescribeTopicResponse": {
       "type": "structure",
@@ -3747,6 +4181,18 @@
         }
       }
     },
+    "EncryptionConfiguration": {
+      "type": "structure",
+      "members": {
+        "KmsKeyArn": {
+          "shape": "__string",
+          "locationName": "kmsKeyArn"
+        }
+      },
+      "required": [
+        "KmsKeyArn"
+      ]
+    },
     "EncryptionAtRest": {
       "type": "structure",
       "members": {
@@ -3945,6 +4391,62 @@
           "locationName": "compatibleKafkaVersions"
         }
       }
+    },
+    "IcebergDestinationConfiguration": {
+      "type": "structure",
+      "members": {
+        "AppendOnly": {
+          "shape": "__boolean",
+          "locationName": "appendOnly"
+        },
+        "Catalog": {
+          "shape": "Catalog",
+          "locationName": "catalog"
+        },
+        "DataFreshnessInSeconds": {
+          "shape": "__integer",
+          "locationName": "dataFreshnessInSeconds"
+        },
+        "DeadLetterQueueS3": {
+          "shape": "DeadLetterQueueS3",
+          "locationName": "deadLetterQueueS3"
+        },
+        "DestinationTableList": {
+          "shape": "__listOfDestinationTable",
+          "locationName": "destinationTableList"
+        },
+        "SchemaEvolution": {
+          "shape": "SchemaEvolution",
+          "locationName": "schemaEvolution"
+        },
+        "ServiceExecutionRoleArn": {
+          "shape": "__string",
+          "locationName": "serviceExecutionRoleArn"
+        },
+        "TableCreation": {
+          "shape": "TableCreation",
+          "locationName": "tableCreation"
+        },
+        "CompressionType": {
+          "shape": "IcebergCompressionType",
+          "locationName": "compressionType"
+        }
+      },
+      "required": [
+        "DeadLetterQueueS3",
+        "DestinationTableList",
+        "ServiceExecutionRoleArn",
+        "SchemaEvolution",
+        "TableCreation",
+        "AppendOnly"
+      ]
+    },
+    "IcebergCompressionType": {
+      "type": "string",
+      "enum": [
+        "ZSTD",
+        "SNAPPY"
+      ]
     },
     "InternalServerErrorException": {
       "type": "structure",
@@ -4310,6 +4812,26 @@
         }
       }
     },
+    "DeadLetterQueueS3": {
+      "type": "structure",
+      "members": {
+        "BucketArn": {
+          "shape": "__string",
+          "locationName": "bucketArn"
+        },
+        "ErrorOutputPrefix": {
+          "shape": "__string",
+          "locationName": "errorOutputPrefix"
+        },
+        "ExpectedBucketOwner": {
+          "shape": "__string",
+          "locationName": "expectedBucketOwner"
+        }
+      },
+      "required": [
+        "BucketArn"
+      ]
+    },
     "CustomerActionStatus": {
       "type": "string",
       "enum": [
@@ -4341,6 +4863,41 @@
           "documentation": "\n            <p>The cluster information.</p>\n         "
         }
       }
+    },
+    "DeleteChannelRequest": {
+      "type": "structure",
+      "members": {
+        "ChannelArn": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "channelArn"
+        },
+        "ClusterArn": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterArn"
+        }
+      },
+      "required": [
+        "ClusterArn",
+        "ChannelArn"
+      ]
+    },
+    "DeleteChannelResponse": {
+      "type": "structure",
+      "members": {
+        "ChannelArn": {
+          "shape": "__string",
+          "locationName": "channelArn"
+        },
+        "ClusterOperationArn": {
+          "shape": "__string",
+          "locationName": "clusterOperationArn"
+        }
+      },
+      "required": [
+        "ChannelArn"
+      ]
     },
     "DeleteClusterPolicyRequest": {
       "type": "structure",
@@ -4384,6 +4941,30 @@
           "locationName": "policy"
         }
       }
+    },
+    "RecordConverter": {
+      "type": "structure",
+      "members": {
+        "ValueConverter": {
+          "shape": "ValueConverter",
+          "locationName": "valueConverter"
+        }
+      },
+      "required": [
+        "ValueConverter"
+      ]
+    },
+    "RecordSchema": {
+      "type": "structure",
+      "members": {
+        "GsrArn": {
+          "shape": "__string",
+          "locationName": "gsrArn"
+        }
+      },
+      "required": [
+        "GsrArn"
+      ]
     },
     "PutClusterPolicyRequest": {
       "type": "structure",
@@ -4648,6 +5229,15 @@
         "NumberOfBrokerNodes"
       ]
     },
+    "ValueConverter": {
+      "type": "string",
+      "enum": [
+        "BYTE_ARRAY",
+        "JSON",
+        "JSON_SCHEMA_GSR",
+        "STRING"
+      ]
+    },
     "VpcConfig": {
       "type": "structure",
       "documentation": "\n            <p>The configuration of the Amazon VPCs for the cluster.</p>\n         ",
@@ -4741,6 +5331,47 @@
       "required": [
         "VpcConfigs"
       ]
+    },
+    "ListChannelsRequest": {
+      "type": "structure",
+      "members": {
+        "ClusterArn": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterArn"
+        },
+        "MaxResults": {
+          "shape": "MaxResults",
+          "location": "querystring",
+          "locationName": "maxResults"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "nextToken"
+        },
+        "TopicNameFilter": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "topicNameFilter"
+        }
+      },
+      "required": [
+        "ClusterArn"
+      ]
+    },
+    "ListChannelsResponse": {
+      "type": "structure",
+      "members": {
+        "Channels": {
+          "shape": "__listOfChannelInfo",
+          "locationName": "channels"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
+        }
+      }
     },
     "ListClustersRequest": {
       "type": "structure",
@@ -4977,6 +5608,23 @@
       "required": [
         "BrokerLogs"
       ]
+    },
+    "ChannelLoggingInfo": {
+      "type": "structure",
+      "members": {
+        "CloudWatchLogs": {
+          "shape": "CloudWatchLogs",
+          "locationName": "cloudWatchLogs"
+        },
+        "Firehose": {
+          "shape": "Firehose",
+          "locationName": "firehose"
+        },
+        "S3": {
+          "shape": "S3",
+          "locationName": "s3"
+        }
+      }
     },
     "ListClientVpcConnectionsRequest": {
       "type": "structure",
@@ -5527,6 +6175,15 @@
         }
       }
     },
+    "SchemaEvolution": {
+      "type": "structure",
+      "members": {
+        "EnableSchemaEvolution": {
+          "shape": "__boolean",
+          "locationName": "enableSchemaEvolution"
+        }
+      }
+    },
     "Sasl": {
       "type": "structure",
       "members": {
@@ -5634,6 +6291,15 @@
         "LOCAL",
         "TIERED"
       ]
+    },
+    "TableCreation": {
+      "type": "structure",
+      "members": {
+        "EnableTableCreation": {
+          "shape": "__boolean",
+          "locationName": "enableTableCreation"
+        }
+      }
     },
     "TagResourceRequest": {
       "type": "structure",
@@ -5743,6 +6409,27 @@
           "locationName": "enabled"
         }
       }
+    },
+    "TopicConfiguration": {
+      "type": "structure",
+      "members": {
+        "RecordConverter": {
+          "shape": "RecordConverter",
+          "locationName": "recordConverter"
+        },
+        "RecordSchema": {
+          "shape": "RecordSchema",
+          "locationName": "recordSchema"
+        },
+        "TopicArn": {
+          "shape": "__string",
+          "locationName": "topicArn"
+        }
+      },
+      "required": [
+        "RecordConverter",
+        "TopicArn"
+      ]
     },
     "TopicInfo": {
       "type": "structure",
@@ -6153,6 +6840,149 @@
           "locationName": "clusterOperationArn"
         }
       }
+    },
+    "S3CompressionType": {
+      "type": "string",
+      "enum": [
+        "NONE",
+        "GZIP",
+        "ZSTD"
+      ]
+    },
+    "S3DestinationConfiguration": {
+      "type": "structure",
+      "members": {
+        "DataFreshnessInSeconds": {
+          "shape": "__integer",
+          "locationName": "dataFreshnessInSeconds"
+        },
+        "DeadLetterQueueS3": {
+          "shape": "DeadLetterQueueS3",
+          "locationName": "deadLetterQueueS3"
+        },
+        "ServiceExecutionRoleArn": {
+          "shape": "__string",
+          "locationName": "serviceExecutionRoleArn"
+        },
+        "Storage": {
+          "shape": "S3Storage",
+          "locationName": "storage"
+        }
+      },
+      "required": [
+        "Storage",
+        "ServiceExecutionRoleArn",
+        "DeadLetterQueueS3"
+      ]
+    },
+    "IcebergDestinationUpdate": {
+      "type": "structure",
+      "members": {
+        "DataFreshnessInSeconds": {
+          "shape": "__integer",
+          "locationName": "dataFreshnessInSeconds"
+        }
+      },
+      "required": [
+        "DataFreshnessInSeconds"
+      ]
+    },
+    "S3DestinationUpdate": {
+      "type": "structure",
+      "members": {
+        "DataFreshnessInSeconds": {
+          "shape": "__integer",
+          "locationName": "dataFreshnessInSeconds"
+        }
+      },
+      "required": [
+        "DataFreshnessInSeconds"
+      ]
+    },
+    "S3Storage": {
+      "type": "structure",
+      "members": {
+        "BucketArn": {
+          "shape": "__string",
+          "locationName": "bucketArn"
+        },
+        "CompressionType": {
+          "shape": "S3CompressionType",
+          "locationName": "compressionType"
+        },
+        "OutputPrefix": {
+          "shape": "__string",
+          "locationName": "outputPrefix"
+        },
+        "OutputKeyTemplate": {
+          "shape": "__string",
+          "locationName": "outputKeyTemplate"
+        },
+        "StorageClass": {
+          "shape": "S3StorageClass",
+          "locationName": "storageClass"
+        },
+        "ExpectedBucketOwner": {
+          "shape": "__string",
+          "locationName": "expectedBucketOwner"
+        }
+      },
+      "required": [
+        "BucketArn",
+        "StorageClass",
+        "CompressionType"
+      ]
+    },
+    "S3StorageClass": {
+      "type": "string",
+      "enum": [
+        "STANDARD",
+        "INTELLIGENT_TIERING",
+        "GLACIER_IR"
+      ]
+    },
+    "UpdateChannelRequest": {
+      "type": "structure",
+      "members": {
+        "ChannelArn": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "channelArn"
+        },
+        "ClusterArn": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterArn"
+        },
+        "IcebergDestinationUpdate": {
+          "shape": "IcebergDestinationUpdate",
+          "locationName": "icebergDestinationUpdate"
+        },
+        "S3DestinationUpdate": {
+          "shape": "S3DestinationUpdate",
+          "locationName": "s3DestinationUpdate"
+        }
+      },
+      "required": [
+        "ClusterArn",
+        "ChannelArn"
+      ]
+    },
+    "UpdateChannelResponse": {
+      "type": "structure",
+      "members": {
+        "ChannelArn": {
+          "shape": "__string",
+          "locationName": "channelArn"
+        },
+        "ClusterOperationArn": {
+          "shape": "__string",
+          "locationName": "clusterOperationArn"
+        }
+      },
+      "required": [
+        "ChannelArn"
+      ]
     },
     "UpdateClusterConfigurationRequest": {
       "type": "structure",
@@ -6610,6 +7440,37 @@
         "Prometheus"
       ]
     },
+    "PartitionSource": {
+      "type": "structure",
+      "members": {
+        "SourceName": {
+          "shape": "__string",
+          "locationName": "sourceName"
+        }
+      }
+    },
+    "PartitionSpec": {
+      "type": "structure",
+      "members": {
+        "PartitionStrategy": {
+          "shape": "PartitionStrategy",
+          "locationName": "partitionStrategy"
+        },
+        "SourceList": {
+          "shape": "__listOfPartitionSource",
+          "locationName": "sourceList"
+        }
+      },
+      "required": [
+        "PartitionStrategy"
+      ]
+    },
+    "PartitionStrategy": {
+      "type": "string",
+      "enum": [
+        "TIME_HOUR"
+      ]
+    },
     "Prometheus": {
       "type": "structure",
       "members": {
@@ -6856,6 +7717,12 @@
       "type": "integer",
       "min": 1
     },
+    "__listOfChannelInfo": {
+      "type": "list",
+      "member": {
+        "shape": "ChannelInfo"
+      }
+    },
     "__listOfBrokerEBSVolumeInfo": {
       "type": "list",
       "member": {
@@ -6910,6 +7777,12 @@
         "shape": "Configuration"
       }
     },
+    "__listOfDestinationTable": {
+      "type": "list",
+      "member": {
+        "shape": "DestinationTable"
+      }
+    },
     "__listOfConfigurationRevision": {
       "type": "list",
       "member": {
@@ -6952,6 +7825,12 @@
         "shape": "ClientVpcConnection"
       }
     },
+    "__listOfPartitionSource": {
+      "type": "list",
+      "member": {
+        "shape": "PartitionSource"
+      }
+    },
     "__listOfReplicationInfo": {
       "type": "list",
       "member": {
@@ -6974,6 +7853,12 @@
       "type": "list",
       "member": {
         "shape": "ReplicatorSummary"
+      }
+    },
+    "__listOfTopicConfiguration": {
+      "type": "list",
+      "member": {
+        "shape": "TopicConfiguration"
       }
     },
     "__listOfTopicInfo": {

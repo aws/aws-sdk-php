@@ -444,7 +444,7 @@
       "base": "<p>The source of LoRA adapters for an AI recommendation job. This is a union type — specify exactly one of the members.</p>",
       "refs": {
         "CreateAIRecommendationJobRequest$AdapterSource": "<p>The LoRA adapter source for the recommendation job. Specify either a list of model package ARNs or Amazon S3 URIs for your LoRA adapters. When this parameter is absent, the recommendation job runs without LoRA adapter support.</p>",
-        "DescribeAIRecommendationJobResponse$AdapterSource": "<p>The LoRA adapter source that was specified when the recommendation job was created. This field is absent when the job was created without LoRA adapters.</p>"
+        "DescribeAIRecommendationJobResponse$AdapterSource": "<p>The LoRA adapter source that you specified when you created the recommendation job. This field is absent when you created the job without LoRA adapters.</p>"
       }
     },
     "AIBenchmarkEndpoint": {
@@ -648,7 +648,7 @@
       }
     },
     "AIRecommendationAdapterDetails": {
-      "base": "<p>The per-recommendation LoRA adapter details. Contains both the model package ARNs and Amazon S3 URIs for each adapter, regardless of which form was originally supplied in the request. When the customer supplies only Amazon S3 URIs, Amazon SageMaker AI creates model packages on their behalf.</p>",
+      "base": "<p>The per-recommendation LoRA adapter details. Contains both the model package ARNs and Amazon S3 URIs for each adapter, regardless of which form was originally supplied in the request. When you supply only Amazon S3 URIs, Amazon SageMaker AI creates model packages on your behalf.</p>",
       "refs": {
         "AIRecommendation$AdapterDetails": "<p>The LoRA adapter details for this recommendation. This field contains both the model package ARNs and Amazon S3 URIs for each adapter, regardless of which form was originally supplied. This field is absent when the job was created without LoRA adapters.</p>"
       }
@@ -795,7 +795,7 @@
     "AIRecommendationMinCpuMemoryRequiredInMb": {
       "base": null,
       "refs": {
-        "AIRecommendationDeploymentConfiguration$MinCpuMemoryRequiredInMb": "<p>The minimum host (CPU) memory, in MiB, to reserve per model copy when deploying the recommendation as an Inference Component. This value maps to the base Inference Component's <code>ComputeResourceRequirements$MinMemoryRequiredInMb</code> and is sized so that <code>CopyCountPerInstance</code> copies co-place within the instance's allocatable host memory.</p>"
+        "AIRecommendationDeploymentConfiguration$MinCpuMemoryRequiredInMb": "<p>The minimum host (CPU) memory, in MiB, to reserve for each model copy when deploying the recommendation as an Inference Component. This value maps to the Inference Component's <code>ComputeResourceRequirements$MinMemoryRequiredInMb</code> field.</p>"
       }
     },
     "AIRecommendationModelDetails": {
@@ -14656,7 +14656,7 @@
     "OptimizationJobTrainingPlanArns": {
       "base": "<p>Amazon Resource Names (ARNs) of the training plans whose reserved capacity backs the optimization job. Bounded to a single plan for now; the list shape allows widening to multiple plans in the future without a breaking scalar-to-list change.</p>",
       "refs": {
-        "CreateOptimizationJobRequest$TrainingPlanArns": "<p>The Amazon Resource Name (ARN) of the training plan to use for this optimization job.</p> <p>When you use reserved capacity from a training plan, the optimization job runs on that reserved capacity instead of on-demand capacity. If you omit this field, the job uses on-demand capacity. Currently, you can specify at most one training plan.</p> <p>For more information about how to reserve GPU capacity for your optimization jobs using Amazon SageMaker Training Plans, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/reserve-capacity-with-training-plans.html\">Reserve capacity with training plans</a>.</p>",
+        "CreateOptimizationJobRequest$TrainingPlanArns": "<p>The Amazon Resource Name (ARN) of the training plan to use for this optimization job.</p> <p>When you use reserved capacity from a training plan, the optimization job runs on that reserved capacity instead of on-demand capacity. If you omit this field, the job uses on-demand capacity. You can specify at most one training plan.</p> <p>For more information about how to reserve GPU capacity for your optimization jobs using Amazon SageMaker Training Plans, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/reserve-capacity-with-training-plans.html\">Reserve capacity with training plans</a>.</p>",
         "DescribeOptimizationJobResponse$TrainingPlanArns": "<p>The Amazon Resource Name (ARN) of the training plan associated with this optimization job. This field appears only when you specified a training plan when you created the job. Optimization jobs that use on-demand capacity don't return this field.</p>"
       }
     },

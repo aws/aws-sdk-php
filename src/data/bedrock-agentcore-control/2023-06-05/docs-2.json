@@ -5268,7 +5268,8 @@
         "HarnessBedrockModelConfig$modelId": "<p>The Bedrock model ID.</p>",
         "HarnessGeminiModelConfig$modelId": "<p>The Gemini model ID.</p>",
         "HarnessLiteLlmModelConfig$modelId": "<p>The LiteLLM model identifier (e.g., \"anthropic/claude-3-sonnet\").</p>",
-        "HarnessOpenAiModelConfig$modelId": "<p>The OpenAI model ID.</p>"
+        "HarnessOpenAiModelConfig$modelId": "<p>The OpenAI model ID.</p>",
+        "OpenResponsesEvaluatorModelConfig$modelId": "<p> The identifier of the model to use for evaluation. </p>"
       }
     },
     "ModelMapping": {
@@ -5708,6 +5709,30 @@
         "OnlineEvaluationConfigSummary$executionStatus": "<p> The execution status indicating whether the online evaluation is currently running. </p>",
         "UpdateOnlineEvaluationConfigRequest$executionStatus": "<p> The updated execution status to enable or disable the online evaluation. </p>",
         "UpdateOnlineEvaluationConfigResponse$executionStatus": "<p> The execution status indicating whether the online evaluation is currently running. </p>"
+      }
+    },
+    "OpenResponsesEvaluatorModelConfig": {
+      "base": "<p> The configuration for using models served through the OpenResponses API in evaluator assessments, including model selection and inference parameters. </p>",
+      "refs": {
+        "EvaluatorModelConfig$responsesEvaluatorModelConfig": "<p> The OpenResponses model configuration for evaluation. </p>"
+      }
+    },
+    "OpenResponsesEvaluatorModelConfigMaxOutputTokensInteger": {
+      "base": null,
+      "refs": {
+        "OpenResponsesEvaluatorModelConfig$maxOutputTokens": "<p> The maximum number of tokens to generate in the model response, including visible output and reasoning tokens. </p>"
+      }
+    },
+    "OpenResponsesEvaluatorModelConfigTemperatureFloat": {
+      "base": null,
+      "refs": {
+        "OpenResponsesEvaluatorModelConfig$temperature": "<p> The temperature value that controls randomness in the model's responses. Lower values produce more deterministic outputs. </p>"
+      }
+    },
+    "OpenResponsesEvaluatorModelConfigTopPFloat": {
+      "base": null,
+      "refs": {
+        "OpenResponsesEvaluatorModelConfig$topP": "<p> The top-p sampling parameter that controls the diversity of the model's responses by limiting the cumulative probability of token choices. </p>"
       }
     },
     "OutputConfig": {
@@ -6297,6 +6322,18 @@
       "base": "<p> The rating scale that defines how evaluators should score agent performance, supporting both numerical and categorical scales. </p>",
       "refs": {
         "LlmAsAJudgeEvaluatorConfig$ratingScale": "<p> The rating scale that defines how the evaluator should score agent performance, either numerical or categorical. </p>"
+      }
+    },
+    "ReasoningConfiguration": {
+      "base": "<p> The reasoning configuration that controls how a reasoning model allocates effort during evaluation. </p>",
+      "refs": {
+        "OpenResponsesEvaluatorModelConfig$reasoning": "<p> The reasoning configuration for reasoning models. Non-reasoning models ignore this configuration. </p>"
+      }
+    },
+    "ReasoningConfigurationEffortString": {
+      "base": null,
+      "refs": {
+        "ReasoningConfiguration$effort": "<p> The level of reasoning effort the model applies when generating a response. For supported values, see the model provider's documentation. </p>"
       }
     },
     "RecordIdentifier": {

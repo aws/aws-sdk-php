@@ -1381,7 +1381,7 @@
       }
     },
     "FunctionCodeLocationError": {
-      "base": "<p>Details about an error related to retrieving a function's deployment package.</p>",
+      "base": "<p>Contains details about an error that occurred when Lambda attempted to retrieve a function's deployment package.</p>",
       "refs": {
         "FunctionCodeLocation$Error": "<p>An object that contains details about an error related to function deployment package retrieval.</p>"
       }
@@ -2884,7 +2884,7 @@
       "base": "<p>Details about the resolved Amazon S3 object that contains a function's deployment package.</p>",
       "refs": {
         "FunctionCodeLocation$ResolvedS3Object": "<p>The resolved Amazon S3 object that contains the deployment package.</p>",
-        "LayerVersionContentOutput$ResolvedS3Object": null
+        "LayerVersionContentOutput$ResolvedS3Object": "<p>The resolved Amazon S3 object that contains the layer archive.</p>"
       }
     },
     "ResourceArn": {
@@ -3007,11 +3007,11 @@
       }
     },
     "S3ObjectStorageMode": {
-      "base": "<p>The storage mode for a function's deployment package.</p>",
+      "base": "<p>The method Lambda uses to store a function's deployment package — either by copying the package into Lambda-managed storage (<code>COPY</code>) or by referencing it directly from the source Amazon S3 bucket (<code>REFERENCE</code>).</p>",
       "refs": {
-        "FunctionCode$S3ObjectStorageMode": "<p>Specifies how the deployment package is stored. Use <code>COPY</code> (default) to upload a copy of your deployment package to Lambda. Use <code>REFERENCE</code> to have Lambda reference the deployment package from the specified Amazon S3 bucket.</p>",
-        "LayerVersionContentInput$S3ObjectStorageMode": null,
-        "UpdateFunctionCodeRequest$S3ObjectStorageMode": "<p>Specifies how the deployment package is stored. Use <code>COPY</code> (default) to upload a copy of your deployment package to Lambda. Use <code>REFERENCE</code> to have Lambda reference the deployment package from the specified Amazon S3 bucket.</p>"
+        "FunctionCode$S3ObjectStorageMode": "<p>Specifies how the deployment package is stored. Valid values:</p> <ul> <li> <p> <code>COPY</code> (default) – Uploads a copy of your deployment package to Lambda.</p> </li> <li> <p> <code>REFERENCE</code> – Lambda references the deployment package from the specified Amazon S3 bucket.</p> </li> </ul>",
+        "LayerVersionContentInput$S3ObjectStorageMode": "<p>Specifies how the layer archive is stored. Valid values:</p> <ul> <li> <p> <code>COPY</code> (default) – Uploads a copy of your layer archive to Lambda.</p> </li> <li> <p> <code>REFERENCE</code> – Lambda references the layer archive from the specified Amazon S3 bucket.</p> </li> </ul>",
+        "UpdateFunctionCodeRequest$S3ObjectStorageMode": "<p>Specifies how the deployment package is stored. Valid values:</p> <ul> <li> <p> <code>COPY</code> (default) – Uploads a copy of your deployment package to Lambda.</p> </li> <li> <p> <code>REFERENCE</code> – Lambda references the deployment package from the specified Amazon S3 bucket.</p> </li> </ul>"
       }
     },
     "S3ObjectVersion": {
@@ -3100,7 +3100,7 @@
       "base": null,
       "refs": {
         "EnvironmentError$Message": "<p>The error message.</p>",
-        "FunctionCodeLocationError$Message": "<p>A description of the error.</p>",
+        "FunctionCodeLocationError$Message": "<p>The human-readable message that describes why Lambda failed to retrieve the deployment package.</p>",
         "ImageConfigError$Message": "<p>Error message.</p>",
         "RuntimeVersionError$Message": "<p>The error message.</p>"
       }
@@ -3339,7 +3339,7 @@
         "FunctionCodeLocation$RepositoryType": "<p>The service that's hosting the file.</p>",
         "FunctionCodeLocation$ImageUri": "<p>URI of a container image in the Amazon ECR registry.</p>",
         "FunctionCodeLocation$ResolvedImageUri": "<p>The resolved URI for the image.</p>",
-        "FunctionCodeLocationError$ErrorCode": "<p>The error code for the failed retrieval.</p>",
+        "FunctionCodeLocationError$ErrorCode": "<p>The error code that identifies why Lambda failed to retrieve the deployment package.</p>",
         "FunctionConfiguration$CodeSha256": "<p>The SHA256 hash of the function's deployment package.</p>",
         "FunctionConfiguration$RevisionId": "<p>The latest updated revision of the function or alias.</p>",
         "FunctionConfiguration$ConfigSha256": "<p>The SHA256 hash of the function configuration.</p>",

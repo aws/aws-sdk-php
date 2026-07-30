@@ -1,0 +1,273 @@
+{
+  "version": "1.0",
+  "examples": {
+    "ApprovePaidSubscription": [
+      {
+        "input": {
+          "arn": "arn:aws:pricingplanmanager::123456789012:subscription/sub-1234567890",
+          "ifMatch": "1"
+        },
+        "output": {
+          "eTag": "2",
+          "subscription": {
+            "arn": "arn:aws:pricingplanmanager::123456789012:subscription/sub-1234567890",
+            "createdAt": "2025-01-15T10:30:00Z",
+            "planFamily": "CloudFront",
+            "planTier": "PRO",
+            "resourceArns": [
+              "arn:aws:cloudfront::123456789012:distribution/EDFDVBD6EXAMPLE",
+              "arn:aws:wafv2:us-east-1:123456789012:global/webacl/ExampleWebACL/a1b2c3d4"
+            ],
+            "status": "SYNC_IN_PROGRESS",
+            "updatedAt": "2025-01-15T10:35:00Z"
+          }
+        },
+        "id": "example-1",
+        "title": "Approve a pending paid subscription"
+      }
+    ],
+    "AssociateResourcesToSubscription": [
+      {
+        "input": {
+          "arn": "arn:aws:pricingplanmanager::123456789012:subscription/sub-1234567890",
+          "ifMatch": "1",
+          "resourceArns": [
+            "arn:aws:route53:::hostedzone/Z0123456789EXAMPLE"
+          ]
+        },
+        "output": {
+          "eTag": "2",
+          "subscription": {
+            "arn": "arn:aws:pricingplanmanager::123456789012:subscription/sub-1234567890",
+            "createdAt": "2025-01-15T10:30:00Z",
+            "planFamily": "CloudFront",
+            "planTier": "PRO",
+            "resourceArns": [
+              "arn:aws:cloudfront::123456789012:distribution/EDFDVBD6EXAMPLE",
+              "arn:aws:wafv2:us-east-1:123456789012:global/webacl/ExampleWebACL/a1b2c3d4",
+              "arn:aws:route53:::hostedzone/Z0123456789EXAMPLE"
+            ],
+            "status": "SYNC_IN_PROGRESS",
+            "updatedAt": "2025-01-18T11:00:00Z"
+          }
+        },
+        "id": "example-1",
+        "title": "Associate additional resources to a subscription"
+      }
+    ],
+    "CancelSubscription": [
+      {
+        "input": {
+          "arn": "arn:aws:pricingplanmanager::123456789012:subscription/sub-1234567890",
+          "ifMatch": "2"
+        },
+        "output": {
+          "eTag": "3",
+          "subscription": {
+            "arn": "arn:aws:pricingplanmanager::123456789012:subscription/sub-1234567890",
+            "createdAt": "2025-01-15T10:30:00Z",
+            "planFamily": "CloudFront",
+            "planTier": "BUSINESS",
+            "resourceArns": [
+              "arn:aws:cloudfront::123456789012:distribution/EDFDVBD6EXAMPLE",
+              "arn:aws:wafv2:us-east-1:123456789012:global/webacl/ExampleWebACL/a1b2c3d4"
+            ],
+            "scheduledChange": {
+              "changeType": "CANCELLATION",
+              "effectiveDate": "2025-02-01T00:00:00Z"
+            },
+            "status": "ACTIVE",
+            "updatedAt": "2025-01-16T12:00:00Z"
+          }
+        },
+        "id": "example-1",
+        "title": "Cancel a subscription"
+      }
+    ],
+    "CancelSubscriptionChange": [
+      {
+        "input": {
+          "arn": "arn:aws:pricingplanmanager::123456789012:subscription/sub-1234567890",
+          "ifMatch": "3"
+        },
+        "output": {
+          "eTag": "4",
+          "subscription": {
+            "arn": "arn:aws:pricingplanmanager::123456789012:subscription/sub-1234567890",
+            "createdAt": "2025-01-15T10:30:00Z",
+            "planFamily": "CloudFront",
+            "planTier": "BUSINESS",
+            "resourceArns": [
+              "arn:aws:cloudfront::123456789012:distribution/EDFDVBD6EXAMPLE",
+              "arn:aws:wafv2:us-east-1:123456789012:global/webacl/ExampleWebACL/a1b2c3d4"
+            ],
+            "status": "ACTIVE",
+            "updatedAt": "2025-01-17T09:00:00Z"
+          }
+        },
+        "id": "example-1",
+        "title": "Cancel a pending subscription change"
+      }
+    ],
+    "CreateSubscription": [
+      {
+        "input": {
+          "approvalMode": "MANUAL",
+          "planFamily": "CloudFront",
+          "planTier": "PRO",
+          "resourceArns": [
+            "arn:aws:cloudfront::123456789012:distribution/EDFDVBD6EXAMPLE",
+            "arn:aws:wafv2:us-east-1:123456789012:global/webacl/ExampleWebACL/a1b2c3d4"
+          ]
+        },
+        "output": {
+          "eTag": "1",
+          "subscription": {
+            "arn": "arn:aws:pricingplanmanager::123456789012:subscription/sub-1234567890",
+            "createdAt": "2025-01-15T10:30:00Z",
+            "planFamily": "CloudFront",
+            "planTier": "PRO",
+            "resourceArns": [
+              "arn:aws:cloudfront::123456789012:distribution/EDFDVBD6EXAMPLE",
+              "arn:aws:wafv2:us-east-1:123456789012:global/webacl/ExampleWebACL/a1b2c3d4"
+            ],
+            "status": "PENDING_APPROVAL",
+            "updatedAt": "2025-01-15T10:30:00Z"
+          }
+        },
+        "id": "example-1",
+        "title": "Create a flat-rate pricing subscription (deferred approval)"
+      },
+      {
+        "input": {
+          "approvalMode": "IMMEDIATE",
+          "planFamily": "CloudFront",
+          "planTier": "PRO",
+          "resourceArns": [
+            "arn:aws:cloudfront::123456789012:distribution/EDFDVBD6EXAMPLE",
+            "arn:aws:wafv2:us-east-1:123456789012:global/webacl/ExampleWebACL/a1b2c3d4"
+          ]
+        },
+        "output": {
+          "eTag": "1",
+          "subscription": {
+            "arn": "arn:aws:pricingplanmanager::123456789012:subscription/sub-1234567890",
+            "createdAt": "2025-01-15T10:30:00Z",
+            "planFamily": "CloudFront",
+            "planTier": "PRO",
+            "resourceArns": [
+              "arn:aws:cloudfront::123456789012:distribution/EDFDVBD6EXAMPLE",
+              "arn:aws:wafv2:us-east-1:123456789012:global/webacl/ExampleWebACL/a1b2c3d4"
+            ],
+            "status": "SYNC_IN_PROGRESS",
+            "updatedAt": "2025-01-15T10:30:00Z"
+          }
+        },
+        "id": "example-2",
+        "title": "Create a subscription with approval mode"
+      }
+    ],
+    "DisassociateResourcesFromSubscription": [
+      {
+        "input": {
+          "arn": "arn:aws:pricingplanmanager::123456789012:subscription/sub-1234567890",
+          "ifMatch": "2",
+          "resourceArns": [
+            "arn:aws:route53:::hostedzone/Z0123456789EXAMPLE"
+          ]
+        },
+        "output": {
+          "eTag": "3",
+          "subscription": {
+            "arn": "arn:aws:pricingplanmanager::123456789012:subscription/sub-1234567890",
+            "createdAt": "2025-01-15T10:30:00Z",
+            "planFamily": "CloudFront",
+            "planTier": "PRO",
+            "resourceArns": [
+              "arn:aws:cloudfront::123456789012:distribution/EDFDVBD6EXAMPLE",
+              "arn:aws:wafv2:us-east-1:123456789012:global/webacl/ExampleWebACL/a1b2c3d4"
+            ],
+            "status": "SYNC_IN_PROGRESS",
+            "updatedAt": "2025-01-18T15:00:00Z"
+          }
+        },
+        "id": "example-1",
+        "title": "Remove a resource from a subscription"
+      }
+    ],
+    "GetSubscription": [
+      {
+        "input": {
+          "arn": "arn:aws:pricingplanmanager::123456789012:subscription/sub-1234567890"
+        },
+        "output": {
+          "eTag": "1",
+          "subscription": {
+            "arn": "arn:aws:pricingplanmanager::123456789012:subscription/sub-1234567890",
+            "createdAt": "2025-01-15T10:30:00Z",
+            "planFamily": "CloudFront",
+            "planTier": "PRO",
+            "resourceArns": [
+              "arn:aws:cloudfront::123456789012:distribution/EDFDVBD6EXAMPLE",
+              "arn:aws:wafv2:us-east-1:123456789012:global/webacl/ExampleWebACL/a1b2c3d4"
+            ],
+            "status": "ACTIVE",
+            "updatedAt": "2025-01-15T10:30:00Z"
+          }
+        },
+        "id": "example-1",
+        "title": "Get subscription details"
+      }
+    ],
+    "ListSubscriptions": [
+      {
+        "input": {},
+        "output": {
+          "subscriptionSummaries": [
+            {
+              "arn": "arn:aws:pricingplanmanager::123456789012:subscription/sub-1234567890",
+              "createdAt": "2025-01-15T10:30:00Z",
+              "eTag": "1",
+              "planFamily": "CloudFront",
+              "planTier": "PRO",
+              "resourceArns": [
+                "arn:aws:cloudfront::123456789012:distribution/EDFDVBD6EXAMPLE",
+                "arn:aws:wafv2:us-east-1:123456789012:global/webacl/ExampleWebACL/a1b2c3d4"
+              ],
+              "status": "ACTIVE",
+              "updatedAt": "2025-01-15T10:30:00Z"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "List all subscriptions"
+      }
+    ],
+    "UpdateSubscription": [
+      {
+        "input": {
+          "arn": "arn:aws:pricingplanmanager::123456789012:subscription/sub-1234567890",
+          "ifMatch": "1",
+          "planTier": "BUSINESS"
+        },
+        "output": {
+          "eTag": "2",
+          "subscription": {
+            "arn": "arn:aws:pricingplanmanager::123456789012:subscription/sub-1234567890",
+            "createdAt": "2025-01-15T10:30:00Z",
+            "planFamily": "CloudFront",
+            "planTier": "BUSINESS",
+            "resourceArns": [
+              "arn:aws:cloudfront::123456789012:distribution/EDFDVBD6EXAMPLE",
+              "arn:aws:wafv2:us-east-1:123456789012:global/webacl/ExampleWebACL/a1b2c3d4"
+            ],
+            "status": "SYNC_IN_PROGRESS",
+            "updatedAt": "2025-01-16T08:00:00Z"
+          }
+        },
+        "id": "example-1",
+        "title": "Update a subscription plan tier"
+      }
+    ]
+  }
+}

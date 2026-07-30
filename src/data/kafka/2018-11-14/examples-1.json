@@ -1,0 +1,224 @@
+{
+  "version": "1.0",
+  "examples": {
+    "CreateChannel": [
+      {
+        "input": {
+          "clusterArn": "arn:aws:kafka:us-east-1:111122223333:cluster/example-cluster/abcd1234-a123-4b56-c789-abc0def9012a-1",
+          "channelName": "example-s3-channel",
+          "topicConfigurationList": [
+            {
+              "topicArn": "arn:aws:kafka:us-east-1:111122223333:topic/example-cluster/abcd1234-a123-4b56-c789-abc0def9012a-1/example-topic",
+              "recordConverter": {
+                "valueConverter": "STRING"
+              }
+            }
+          ],
+          "s3DestinationConfiguration": {
+            "serviceExecutionRoleArn": "arn:aws:iam::111122223333:role/example-channel-execution-role",
+            "dataFreshnessInSeconds": 300,
+            "deadLetterQueueS3": {
+              "bucketArn": "arn:aws:s3:::example-dlq-bucket",
+              "errorOutputPrefix": "errorPrefix/",
+              "expectedBucketOwner": "111122223333"
+            },
+            "storage": {
+              "bucketArn": "arn:aws:s3:::example-destination-bucket",
+              "compressionType": "GZIP",
+              "storageClass": "STANDARD",
+              "outputPrefix": "channel-output/",
+              "outputKeyTemplate": "!{channel-id}/!{topic-name}/year=!{yyyy}/month=!{MM}/day=!{dd}/hour=!{HH}/minute=!{mm}/!{topic-name}+!{partition-id}+!{sequence-number}",
+              "expectedBucketOwner": "111122223333"
+            }
+          }
+        },
+        "output": {
+          "channelArn": "arn:aws:kafka:us-east-1:111122223333:channel/example-cluster/abcd1234-a123-4b56-c789-abc0def9012a-1/example-s3-channel",
+          "clusterOperationArn": "arn:aws:kafka:us-east-1:111122223333:cluster-operation/example-cluster/abcd1234-a123-4b56-c789-abc0def9012a-1/1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example creates a data channel that delivers records from a Kafka topic to an Amazon S3 destination.",
+        "id": "to-create-an-s3-data-channel-1700000000000",
+        "title": "To create a data channel with an Amazon S3 destination"
+      },
+      {
+        "input": {
+          "clusterArn": "arn:aws:kafka:us-east-1:111122223333:cluster/example-cluster/abcd1234-a123-4b56-c789-abc0def9012a-1",
+          "channelName": "example-iceberg-channel",
+          "topicConfigurationList": [
+            {
+              "topicArn": "arn:aws:kafka:us-east-1:111122223333:topic/example-cluster/abcd1234-a123-4b56-c789-abc0def9012a-1/example-topic",
+              "recordConverter": {
+                "valueConverter": "JSON"
+              },
+              "recordSchema": {
+                "gsrArn": "arn:aws:glue:us-east-1:111122223333:registry/example-registry"
+              }
+            }
+          ],
+          "icebergDestinationConfiguration": {
+            "appendOnly": true,
+            "catalog": {
+              "catalogArn": "arn:aws:glue:us-east-1:111122223333:catalog",
+              "warehouseLocation": "s3://example-warehouse-bucket/warehouse/"
+            },
+            "tableCreation": {
+              "enableTableCreation": true
+            },
+            "schemaEvolution": {
+              "enableSchemaEvolution": false
+            },
+            "destinationTableList": [
+              {
+                "destinationDatabaseName": "example_database",
+                "destinationTableName": "example_table",
+                "partitionSpec": {
+                  "partitionStrategy": "TIME_HOUR",
+                  "sourceList": [
+                    {
+                      "sourceName": "event_timestamp"
+                    }
+                  ]
+                }
+              }
+            ],
+            "dataFreshnessInSeconds": 300,
+            "deadLetterQueueS3": {
+              "bucketArn": "arn:aws:s3:::example-dlq-bucket",
+              "errorOutputPrefix": "errorPrefix/",
+              "expectedBucketOwner": "111122223333"
+            },
+            "serviceExecutionRoleArn": "arn:aws:iam::111122223333:role/example-channel-execution-role"
+          }
+        },
+        "output": {
+          "channelArn": "arn:aws:kafka:us-east-1:111122223333:channel/example-cluster/abcd1234-a123-4b56-c789-abc0def9012a-1/example-iceberg-channel",
+          "clusterOperationArn": "arn:aws:kafka:us-east-1:111122223333:cluster-operation/example-cluster/abcd1234-a123-4b56-c789-abc0def9012a-1/2b3c4d5e-6f7a-8b9c-0d1e-2f3a4b5c6d7e"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example creates a data channel that delivers records from a Kafka topic to an Apache Iceberg destination.",
+        "id": "to-create-an-iceberg-data-channel-1700000000001",
+        "title": "To create a data channel with an Apache Iceberg destination"
+      }
+    ],
+    "DescribeChannel": [
+      {
+        "input": {
+          "clusterArn": "arn:aws:kafka:us-east-1:111122223333:cluster/example-cluster/abcd1234-a123-4b56-c789-abc0def9012a-1",
+          "channelArn": "arn:aws:kafka:us-east-1:111122223333:channel/example-cluster/abcd1234-a123-4b56-c789-abc0def9012a-1/example-s3-channel"
+        },
+        "output": {
+          "channelArn": "arn:aws:kafka:us-east-1:111122223333:channel/example-cluster/abcd1234-a123-4b56-c789-abc0def9012a-1/example-s3-channel",
+          "channelName": "example-s3-channel",
+          "status": "ACTIVE",
+          "destinationType": "S3",
+          "creationTime": "2024-01-15T12:00:00.000Z",
+          "topicConfigurationList": [
+            {
+              "topicArn": "arn:aws:kafka:us-east-1:111122223333:topic/example-cluster/abcd1234-a123-4b56-c789-abc0def9012a-1/example-topic",
+              "recordConverter": {
+                "valueConverter": "STRING"
+              }
+            }
+          ],
+          "s3DestinationConfiguration": {
+            "serviceExecutionRoleArn": "arn:aws:iam::111122223333:role/example-channel-execution-role",
+            "dataFreshnessInSeconds": 300,
+            "deadLetterQueueS3": {
+              "bucketArn": "arn:aws:s3:::example-dlq-bucket",
+              "errorOutputPrefix": "errorPrefix/",
+              "expectedBucketOwner": "111122223333"
+            },
+            "storage": {
+              "bucketArn": "arn:aws:s3:::example-destination-bucket",
+              "compressionType": "GZIP",
+              "storageClass": "STANDARD",
+              "outputPrefix": "channel-output/",
+              "expectedBucketOwner": "111122223333"
+            }
+          }
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example returns the configuration and current state of a data channel.",
+        "id": "to-describe-a-data-channel-1700000000002",
+        "title": "To describe a data channel"
+      }
+    ],
+    "ListChannels": [
+      {
+        "input": {
+          "clusterArn": "arn:aws:kafka:us-east-1:111122223333:cluster/example-cluster/abcd1234-a123-4b56-c789-abc0def9012a-1",
+          "maxResults": 10
+        },
+        "output": {
+          "channels": [
+            {
+              "channelArn": "arn:aws:kafka:us-east-1:111122223333:channel/example-cluster/abcd1234-a123-4b56-c789-abc0def9012a-1/example-s3-channel",
+              "channelName": "example-s3-channel",
+              "status": "ACTIVE",
+              "destinationType": "S3",
+              "creationTime": "2024-01-15T12:00:00.000Z"
+            }
+          ]
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example lists the data channels in a cluster.",
+        "id": "to-list-data-channels-1700000000003",
+        "title": "To list the data channels in a cluster"
+      }
+    ],
+    "UpdateChannel": [
+      {
+        "input": {
+          "clusterArn": "arn:aws:kafka:us-east-1:111122223333:cluster/example-cluster/abcd1234-a123-4b56-c789-abc0def9012a-1",
+          "channelArn": "arn:aws:kafka:us-east-1:111122223333:channel/example-cluster/abcd1234-a123-4b56-c789-abc0def9012a-1/example-s3-channel",
+          "s3DestinationUpdate": {
+            "dataFreshnessInSeconds": 600
+          }
+        },
+        "output": {
+          "channelArn": "arn:aws:kafka:us-east-1:111122223333:channel/example-cluster/abcd1234-a123-4b56-c789-abc0def9012a-1/example-s3-channel",
+          "clusterOperationArn": "arn:aws:kafka:us-east-1:111122223333:cluster-operation/example-cluster/abcd1234-a123-4b56-c789-abc0def9012a-1/3c4d5e6f-7a8b-9c0d-1e2f-3a4b5c6d7e8f"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example updates the destination configuration of an existing data channel with an Amazon S3 destination.",
+        "id": "to-update-a-data-channel-1700000000004",
+        "title": "To update a data channel"
+      }
+    ],
+    "DeleteChannel": [
+      {
+        "input": {
+          "clusterArn": "arn:aws:kafka:us-east-1:111122223333:cluster/example-cluster/abcd1234-a123-4b56-c789-abc0def9012a-1",
+          "channelArn": "arn:aws:kafka:us-east-1:111122223333:channel/example-cluster/abcd1234-a123-4b56-c789-abc0def9012a-1/example-s3-channel"
+        },
+        "output": {
+          "channelArn": "arn:aws:kafka:us-east-1:111122223333:channel/example-cluster/abcd1234-a123-4b56-c789-abc0def9012a-1/example-s3-channel",
+          "clusterOperationArn": "arn:aws:kafka:us-east-1:111122223333:cluster-operation/example-cluster/abcd1234-a123-4b56-c789-abc0def9012a-1/4d5e6f7a-8b9c-0d1e-2f3a-4b5c6d7e8f9a"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example deletes a data channel from a cluster.",
+        "id": "to-delete-a-data-channel-1700000000005",
+        "title": "To delete a data channel"
+      }
+    ]
+  }
+}

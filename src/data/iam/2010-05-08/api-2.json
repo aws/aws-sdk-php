@@ -2911,6 +2911,20 @@
         "PolicyArn":{"shape":"arnType"}
       }
     },
+    "AttachmentName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[\\w+=,.@-]+"
+    },
+    "AttachmentType":{
+      "type":"string",
+      "enum":[
+        "user",
+        "group",
+        "role"
+      ]
+    },
     "BootstrapDatum":{
       "type":"blob",
       "sensitive":true
@@ -4360,6 +4374,19 @@
         "AttachedManagedPolicies":{"shape":"attachedPoliciesListType"}
       }
     },
+    "InlinePolicyIdentifierType":{
+      "type":"structure",
+      "required":[
+        "PolicyName",
+        "AttachmentType",
+        "AttachmentName"
+      ],
+      "members":{
+        "PolicyName":{"shape":"policyNameType"},
+        "AttachmentType":{"shape":"AttachmentType"},
+        "AttachmentName":{"shape":"AttachmentName"}
+      }
+    },
     "InstanceProfile":{
       "type":"structure",
       "required":[
@@ -5198,6 +5225,12 @@
       },
       "exception":true
     },
+    "OrderedOrganizationPolicyType":{
+      "type":"structure",
+      "members":{
+        "ServiceControlPolicyInputList":{"shape":"SimulationPolicyListType"}
+      }
+    },
     "OrganizationIdType":{
       "type":"string",
       "max":34,
@@ -5212,6 +5245,11 @@
       "type":"structure",
       "members":{},
       "exception":true
+    },
+    "OrganizationPolicyListType":{
+      "type":"list",
+      "member":{"shape":"OrderedOrganizationPolicyType"},
+      "max":7
     },
     "OrganizationsDecisionDetail":{
       "type":"structure",
@@ -5299,6 +5337,11 @@
       },
       "exception":true
     },
+    "PolicyExclusionsListType":{
+      "type":"list",
+      "member":{"shape":"PolicyIdentifier"},
+      "max":256
+    },
     "PolicyGrantingServiceAccess":{
       "type":"structure",
       "required":[
@@ -5323,6 +5366,26 @@
     "PolicyGroupListType":{
       "type":"list",
       "member":{"shape":"PolicyGroup"}
+    },
+    "PolicyIdentifier":{
+      "type":"structure",
+      "members":{
+        "PolicyType":{"shape":"PolicyIdentifierPolicyType"},
+        "PolicyArn":{"shape":"arnType"},
+        "InlinePolicyIdentifier":{"shape":"InlinePolicyIdentifierType"}
+      },
+      "union":true
+    },
+    "PolicyIdentifierPolicyType":{
+      "type":"string",
+      "enum":[
+        "inline",
+        "aws-managed",
+        "user-managed",
+        "permission-boundary",
+        "scp",
+        "rcp"
+      ]
     },
     "PolicyIdentifierType":{"type":"string"},
     "PolicyNotAttachableException":{
@@ -5907,6 +5970,7 @@
       "members":{
         "PolicyInputList":{"shape":"SimulationPolicyListType"},
         "PermissionsBoundaryPolicyInputList":{"shape":"SimulationPolicyListType"},
+        "OrderedOrganizationPolicyInputList":{"shape":"OrganizationPolicyListType"},
         "ActionNames":{"shape":"ActionNameListType"},
         "ResourceArns":{"shape":"ResourceNameListType"},
         "ResourcePolicy":{"shape":"policyDocumentType"},
@@ -5936,6 +6000,7 @@
         "PolicySourceArn":{"shape":"arnType"},
         "PolicyInputList":{"shape":"SimulationPolicyListType"},
         "PermissionsBoundaryPolicyInputList":{"shape":"SimulationPolicyListType"},
+        "PolicyExclusionList":{"shape":"PolicyExclusionsListType"},
         "ActionNames":{"shape":"ActionNameListType"},
         "ResourceArns":{"shape":"ResourceNameListType"},
         "ResourcePolicy":{"shape":"policyDocumentType"},
