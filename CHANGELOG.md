@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.390.2 - 2026-07-31
 
 * `Aws\Outposts` - Adds the "EKS" value to the AWSServiceName enum and marks the Address field as sensitive.
 * `Aws\MarketplaceCatalog` - This release enhances the ListEntities API to support TargetAgreementId, TargetAgreementIntent, and CreatedBySource filters for the Offer entity type.
