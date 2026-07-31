@@ -2245,14 +2245,12 @@
     },
     "CreateLookupTableRequest":{
       "type":"structure",
-      "required":[
-        "lookupTableName",
-        "tableBody"
-      ],
+      "required":["lookupTableName"],
       "members":{
         "lookupTableName":{"shape":"LookupTableName"},
         "description":{"shape":"LookupTableDescription"},
         "tableBody":{"shape":"TableBody"},
+        "queryId":{"shape":"QueryId"},
         "kmsKeyId":{"shape":"KmsKeyId"},
         "tags":{"shape":"Tags"}
       }
@@ -3103,9 +3101,9 @@
     },
     "DestinationConfiguration":{
       "type":"structure",
-      "required":["s3Configuration"],
       "members":{
-        "s3Configuration":{"shape":"S3Configuration"}
+        "s3Configuration":{"shape":"S3Configuration"},
+        "lookupTableConfiguration":{"shape":"LookupTableConfiguration"}
       }
     },
     "DestinationField":{
@@ -4564,6 +4562,20 @@
         "kmsKeyId":{"shape":"KmsKeyId"}
       }
     },
+    "LookupTableConfiguration":{
+      "type":"structure",
+      "required":[
+        "tableName",
+        "roleArn"
+      ],
+      "members":{
+        "tableName":{"shape":"LookupTableName"},
+        "roleArn":{"shape":"RoleArn"},
+        "description":{"shape":"LookupTableDescription"},
+        "kmsKeyId":{"shape":"KmsKeyId"},
+        "tags":{"shape":"Tags"}
+      }
+    },
     "LookupTableDescription":{
       "type":"string",
       "max":1024,
@@ -5789,7 +5801,10 @@
     },
     "ScheduledQueryDestinationType":{
       "type":"string",
-      "enum":["S3"]
+      "enum":[
+        "S3",
+        "LOOKUP_TABLE"
+      ]
     },
     "ScheduledQueryIdentifier":{
       "type":"string",
@@ -6477,14 +6492,12 @@
     },
     "UpdateLookupTableRequest":{
       "type":"structure",
-      "required":[
-        "lookupTableArn",
-        "tableBody"
-      ],
+      "required":["lookupTableArn"],
       "members":{
         "lookupTableArn":{"shape":"Arn"},
         "description":{"shape":"LookupTableDescription"},
         "tableBody":{"shape":"TableBody"},
+        "queryId":{"shape":"QueryId"},
         "kmsKeyId":{"shape":"KmsKeyId"}
       }
     },

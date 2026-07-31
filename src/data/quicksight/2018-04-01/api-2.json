@@ -644,6 +644,25 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "CreateTopicV2":{
+      "name":"CreateTopicV2",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/topicsV2"
+      },
+      "input":{"shape":"CreateTopicV2Request"},
+      "output":{"shape":"CreateTopicV2Response"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceExistsException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "CreateVPCConnection":{
       "name":"CreateVPCConnection",
       "http":{
@@ -1264,6 +1283,23 @@
         {"shape":"LimitExceededException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ResourceExistsException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "DeleteTopicV2":{
+      "name":"DeleteTopicV2",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/accounts/{AwsAccountId}/topicsV2/{TopicId}"
+      },
+      "input":{"shape":"DeleteTopicV2Request"},
+      "output":{"shape":"DeleteTopicV2Response"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalFailureException"}
       ]
@@ -2381,6 +2417,22 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "DescribeTopicPermissionsV2":{
+      "name":"DescribeTopicPermissionsV2",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/topicsV2/{TopicId}/permissions"
+      },
+      "input":{"shape":"DescribeTopicPermissionsV2Request"},
+      "output":{"shape":"DescribeTopicPermissionsV2Response"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "DescribeTopicRefresh":{
       "name":"DescribeTopicRefresh",
       "http":{
@@ -2415,6 +2467,23 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalFailureException"}
       ]
+    },
+    "DescribeTopicV2":{
+      "name":"DescribeTopicV2",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/topicsV2/{TopicId}"
+      },
+      "input":{"shape":"DescribeTopicV2Request"},
+      "output":{"shape":"DescribeTopicV2Response"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"}
+      ],
+      "readonly":true
     },
     "DescribeUser":{
       "name":"DescribeUser",
@@ -3286,6 +3355,22 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "ListTopicsV2":{
+      "name":"ListTopicsV2",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/topicsV2"
+      },
+      "input":{"shape":"ListTopicsV2Request"},
+      "output":{"shape":"ListTopicsV2Response"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidNextTokenException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "ListUserGroups":{
       "name":"ListUserGroups",
       "http":{
@@ -3641,6 +3726,24 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterValueException"},
         {"shape":"UnsupportedUserEditionException"},
+        {"shape":"InvalidNextTokenException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "SearchTopicsV2":{
+      "name":"SearchTopicsV2",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/search/topicsV2"
+      },
+      "input":{"shape":"SearchTopicsV2Request"},
+      "output":{"shape":"SearchTopicsV2Response"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidNextTokenException"},
         {"shape":"InternalFailureException"}
       ]
@@ -4779,6 +4882,25 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "UpdateTopicPermissionsV2":{
+      "name":"UpdateTopicPermissionsV2",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/accounts/{AwsAccountId}/topicsV2/{TopicId}/permissions"
+      },
+      "input":{"shape":"UpdateTopicPermissionsV2Request"},
+      "output":{"shape":"UpdateTopicPermissionsV2Response"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"UnsupportedUserEditionException"},
+        {"shape":"ConflictException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "UpdateTopicRefreshSchedule":{
       "name":"UpdateTopicRefreshSchedule",
       "http":{
@@ -4797,6 +4919,26 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalFailureException"}
       ]
+    },
+    "UpdateTopicV2":{
+      "name":"UpdateTopicV2",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/accounts/{AwsAccountId}/topicsV2/{TopicId}"
+      },
+      "input":{"shape":"UpdateTopicV2Request"},
+      "output":{"shape":"UpdateTopicV2Response"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceExistsException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"}
+      ],
+      "idempotent":true
     },
     "UpdateUser":{
       "name":"UpdateUser",
@@ -5453,6 +5595,7 @@
         "Status":{"shape":"ResourceStatus"},
         "Errors":{"shape":"AnalysisErrorList"},
         "DataSetArns":{"shape":"DataSetArnsList"},
+        "TopicArns":{"shape":"TopicArnsList"},
         "ThemeArn":{"shape":"Arn"},
         "CreatedTime":{"shape":"Timestamp"},
         "LastUpdatedTime":{"shape":"Timestamp"},
@@ -5471,6 +5614,7 @@
       "required":["DataSetIdentifierDeclarations"],
       "members":{
         "DataSetIdentifierDeclarations":{"shape":"DataSetIdentifierDeclarationList"},
+        "TopicIdentifierDeclarations":{"shape":"TopicIdentifierDeclarationList"},
         "Sheets":{"shape":"SheetDefinitionList"},
         "TooltipSheets":{"shape":"TooltipSheetDefinitionList"},
         "CalculatedFields":{"shape":"CalculatedFields"},
@@ -5556,6 +5700,7 @@
       ],
       "members":{
         "DataSetReferences":{"shape":"DataSetReferenceList"},
+        "TopicReferences":{"shape":"TopicReferenceList"},
         "Arn":{"shape":"Arn"}
       }
     },
@@ -6640,7 +6785,8 @@
         "WeekStart":{"shape":"DayOfTheWeek"},
         "QBusinessInsightsStatus":{"shape":"QBusinessInsightsStatus"},
         "ExcludedDataSetArns":{"shape":"DataSetArnsList"},
-        "CustomActionDefaults":{"shape":"VisualCustomActionDefaults"}
+        "CustomActionDefaults":{"shape":"VisualCustomActionDefaults"},
+        "VisualMessages":{"shape":"VisualMessages"}
       }
     },
     "AssignmentStatus":{
@@ -7582,12 +7728,12 @@
     "CalculatedField":{
       "type":"structure",
       "required":[
-        "DataSetIdentifier",
         "Name",
         "Expression"
       ],
       "members":{
         "DataSetIdentifier":{"shape":"DataSetIdentifier"},
+        "TopicIdentifier":{"shape":"TopicIdentifier"},
         "Name":{"shape":"ColumnName"},
         "Expression":{"shape":"CalculatedFieldExpression"}
       }
@@ -7697,6 +7843,48 @@
         "ApproveFlowShareRequests":{"shape":"CapabilityState"},
         "UseAgentWebSearch":{"shape":"CapabilityState"},
         "KnowledgeBase":{"shape":"CapabilityState"},
+        "CreateAndUpdateKnowledgeBases":{"shape":"CapabilityState"},
+        "ShareKnowledgeBases":{"shape":"CapabilityState"},
+        "SharePointKnowledgeBase":{"shape":"CapabilityState"},
+        "CreateAndUpdateSharePointKnowledgeBase":{"shape":"CapabilityState"},
+        "ShareSharePointKnowledgeBase":{"shape":"CapabilityState"},
+        "UseSharePointKnowledgeBase":{"shape":"CapabilityState"},
+        "GoogleDriveKnowledgeBase":{"shape":"CapabilityState"},
+        "CreateAndUpdateGoogleDriveKnowledgeBase":{"shape":"CapabilityState"},
+        "ShareGoogleDriveKnowledgeBase":{"shape":"CapabilityState"},
+        "UseGoogleDriveKnowledgeBase":{"shape":"CapabilityState"},
+        "WebCrawlerKnowledgeBase":{"shape":"CapabilityState"},
+        "CreateAndUpdateWebCrawlerKnowledgeBase":{"shape":"CapabilityState"},
+        "ShareWebCrawlerKnowledgeBase":{"shape":"CapabilityState"},
+        "UseWebCrawlerKnowledgeBase":{"shape":"CapabilityState"},
+        "S3KnowledgeBase":{"shape":"CapabilityState"},
+        "CreateAndUpdateS3KnowledgeBase":{"shape":"CapabilityState"},
+        "ShareS3KnowledgeBase":{"shape":"CapabilityState"},
+        "UseS3KnowledgeBase":{"shape":"CapabilityState"},
+        "ConfluenceKnowledgeBase":{"shape":"CapabilityState"},
+        "CreateAndUpdateConfluenceKnowledgeBase":{"shape":"CapabilityState"},
+        "ShareConfluenceKnowledgeBase":{"shape":"CapabilityState"},
+        "UseConfluenceKnowledgeBase":{"shape":"CapabilityState"},
+        "OneDriveKnowledgeBase":{"shape":"CapabilityState"},
+        "CreateAndUpdateOneDriveKnowledgeBase":{"shape":"CapabilityState"},
+        "ShareOneDriveKnowledgeBase":{"shape":"CapabilityState"},
+        "UseOneDriveKnowledgeBase":{"shape":"CapabilityState"},
+        "QBusinessKnowledgeBase":{"shape":"CapabilityState"},
+        "CreateAndUpdateQBusinessKnowledgeBase":{"shape":"CapabilityState"},
+        "ShareQBusinessKnowledgeBase":{"shape":"CapabilityState"},
+        "UseQBusinessKnowledgeBase":{"shape":"CapabilityState"},
+        "BedrockManagedKnowledgeBase":{"shape":"CapabilityState"},
+        "CreateAndUpdateBedrockManagedKnowledgeBase":{"shape":"CapabilityState"},
+        "ShareBedrockManagedKnowledgeBase":{"shape":"CapabilityState"},
+        "UseBedrockManagedKnowledgeBase":{"shape":"CapabilityState"},
+        "BoxKnowledgeBase":{"shape":"CapabilityState"},
+        "CreateAndUpdateBoxKnowledgeBase":{"shape":"CapabilityState"},
+        "ShareBoxKnowledgeBase":{"shape":"CapabilityState"},
+        "UseBoxKnowledgeBase":{"shape":"CapabilityState"},
+        "IDCKnowledgeBase":{"shape":"CapabilityState"},
+        "CreateAndUpdateIDCKnowledgeBase":{"shape":"CapabilityState"},
+        "ShareIDCKnowledgeBase":{"shape":"CapabilityState"},
+        "UseIDCKnowledgeBase":{"shape":"CapabilityState"},
         "Action":{"shape":"CapabilityState"},
         "GenericHTTPAction":{"shape":"CapabilityState"},
         "CreateAndUpdateGenericHTTPAction":{"shape":"CapabilityState"},
@@ -8101,8 +8289,8 @@
     "CellValueSynonym":{
       "type":"structure",
       "members":{
-        "CellValue":{"shape":"LimitedString"},
-        "Synonyms":{"shape":"StringList"}
+        "CellValue":{"shape":"SynonymString"},
+        "Synonyms":{"shape":"SensitiveStringList"}
       }
     },
     "CellValueSynonyms":{
@@ -8344,12 +8532,10 @@
     },
     "ColumnIdentifier":{
       "type":"structure",
-      "required":[
-        "DataSetIdentifier",
-        "ColumnName"
-      ],
+      "required":["ColumnName"],
       "members":{
         "DataSetIdentifier":{"shape":"DataSetIdentifier"},
+        "TopicIdentifier":{"shape":"TopicIdentifier"},
         "ColumnName":{"shape":"ColumnName"}
       }
     },
@@ -10108,7 +10294,7 @@
       "members":{
         "AnswerId":{"shape":"AnswerId"},
         "DatasetArn":{"shape":"Arn"},
-        "Question":{"shape":"LimitedString"},
+        "Question":{"shape":"LimitedSensitiveString"},
         "Mir":{"shape":"TopicIR"},
         "PrimaryVisual":{"shape":"TopicVisual"},
         "Template":{"shape":"TopicTemplate"}
@@ -10119,6 +10305,38 @@
       "member":{"shape":"CreateTopicReviewedAnswer"},
       "max":100,
       "min":0
+    },
+    "CreateTopicV2Request":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "TopicId",
+        "Topic"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "TopicId":{"shape":"TopicId"},
+        "Topic":{"shape":"TopicV2Details"},
+        "Tags":{"shape":"TagList"},
+        "FolderArns":{"shape":"FolderArnList"},
+        "CustomInstructions":{"shape":"CustomInstructions"}
+      }
+    },
+    "CreateTopicV2Response":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"Arn"},
+        "TopicId":{"shape":"TopicId"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
     },
     "CreateVPCConnectionRequest":{
       "type":"structure",
@@ -10290,10 +10508,7 @@
     },
     "CustomContentVisual":{
       "type":"structure",
-      "required":[
-        "VisualId",
-        "DataSetIdentifier"
-      ],
+      "required":["VisualId"],
       "members":{
         "VisualId":{"shape":"ShortRestrictiveResourceId"},
         "Title":{"shape":"VisualTitleLabelOptions"},
@@ -10301,6 +10516,7 @@
         "ChartConfiguration":{"shape":"CustomContentConfiguration"},
         "Actions":{"shape":"VisualCustomActionList"},
         "DataSetIdentifier":{"shape":"DataSetIdentifier"},
+        "TopicIdentifier":{"shape":"TopicIdentifier"},
         "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
@@ -10620,6 +10836,7 @@
       ],
       "members":{
         "DataSetReferences":{"shape":"DataSetReferenceList"},
+        "TopicReferences":{"shape":"TopicReferenceList"},
         "Arn":{"shape":"Arn"}
       }
     },
@@ -10657,6 +10874,7 @@
         "Arn":{"shape":"Arn"},
         "SourceEntityArn":{"shape":"Arn"},
         "DataSetArns":{"shape":"DataSetArnsList"},
+        "TopicArns":{"shape":"TopicArnsList"},
         "Description":{"shape":"VersionDescription"},
         "ThemeArn":{"shape":"Arn"},
         "Sheets":{"shape":"SheetList"}
@@ -10667,6 +10885,7 @@
       "required":["DataSetIdentifierDeclarations"],
       "members":{
         "DataSetIdentifierDeclarations":{"shape":"DataSetIdentifierDeclarationList"},
+        "TopicIdentifierDeclarations":{"shape":"TopicIdentifierDeclarationList"},
         "Sheets":{"shape":"SheetDefinitionList"},
         "TooltipSheets":{"shape":"TooltipSheetDefinitionList"},
         "CalculatedFields":{"shape":"CalculatedFields"},
@@ -11130,7 +11349,7 @@
     "DataSetIdentifier":{
       "type":"string",
       "max":2048,
-      "min":1
+      "min":0
     },
     "DataSetIdentifierDeclaration":{
       "type":"structure",
@@ -11147,7 +11366,7 @@
       "type":"list",
       "member":{"shape":"DataSetIdentifierDeclaration"},
       "max":50,
-      "min":1
+      "min":0
     },
     "DataSetImportMode":{
       "type":"string",
@@ -11226,7 +11445,7 @@
     "DataSetReferenceList":{
       "type":"list",
       "member":{"shape":"DataSetReference"},
-      "min":1
+      "min":0
     },
     "DataSetRefreshProperties":{
       "type":"structure",
@@ -13240,6 +13459,37 @@
       }
     },
     "DeleteTopicResponse":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"Arn"},
+        "TopicId":{"shape":"TopicId"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
+    "DeleteTopicV2Request":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "TopicId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "TopicId":{
+          "shape":"TopicId",
+          "location":"uri",
+          "locationName":"TopicId"
+        }
+      }
+    },
+    "DeleteTopicV2Response":{
       "type":"structure",
       "members":{
         "Arn":{"shape":"Arn"},
@@ -15367,6 +15617,38 @@
         "RequestId":{"shape":"String"}
       }
     },
+    "DescribeTopicPermissionsV2Request":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "TopicId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "TopicId":{
+          "shape":"TopicId",
+          "location":"uri",
+          "locationName":"TopicId"
+        }
+      }
+    },
+    "DescribeTopicPermissionsV2Response":{
+      "type":"structure",
+      "members":{
+        "TopicId":{"shape":"TopicId"},
+        "TopicArn":{"shape":"Arn"},
+        "Permissions":{"shape":"ResourcePermissionList"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        },
+        "RequestId":{"shape":"String"}
+      }
+    },
     "DescribeTopicRefreshRequest":{
       "type":"structure",
       "required":[
@@ -15475,6 +15757,39 @@
         "CustomInstructions":{"shape":"CustomInstructions"}
       }
     },
+    "DescribeTopicV2Request":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "TopicId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "TopicId":{
+          "shape":"TopicId",
+          "location":"uri",
+          "locationName":"TopicId"
+        }
+      }
+    },
+    "DescribeTopicV2Response":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"Arn"},
+        "TopicId":{"shape":"TopicId"},
+        "Topic":{"shape":"TopicV2Details"},
+        "CustomInstructions":{"shape":"CustomInstructions"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        },
+        "RequestId":{"shape":"String"}
+      }
+    },
     "DescribeUserRequest":{
       "type":"structure",
       "required":[
@@ -15543,6 +15858,12 @@
       "max":2048,
       "min":1,
       "pattern":"[ -ÿ]+"
+    },
+    "DescriptionSensitiveString":{
+      "type":"string",
+      "max":500,
+      "min":0,
+      "sensitive":true
     },
     "DestinationParameterValueConfiguration":{
       "type":"structure",
@@ -15726,13 +16047,11 @@
     },
     "EmptyVisual":{
       "type":"structure",
-      "required":[
-        "VisualId",
-        "DataSetIdentifier"
-      ],
+      "required":["VisualId"],
       "members":{
         "VisualId":{"shape":"ShortRestrictiveResourceId"},
         "DataSetIdentifier":{"shape":"DataSetIdentifier"},
+        "TopicIdentifier":{"shape":"TopicIdentifier"},
         "Actions":{"shape":"VisualCustomActionList"}
       }
     },
@@ -16191,7 +16510,8 @@
       "enum":[
         "ENFORCED_VALUE_FILTER",
         "CONDITIONAL_VALUE_FILTER",
-        "NAMED_VALUE_FILTER"
+        "NAMED_VALUE_FILTER",
+        "DASHBOARD_DEFAULT_FILTER"
       ]
     },
     "FilterControl":{
@@ -18737,10 +19057,7 @@
     },
     "InsightVisual":{
       "type":"structure",
-      "required":[
-        "VisualId",
-        "DataSetIdentifier"
-      ],
+      "required":["VisualId"],
       "members":{
         "VisualId":{"shape":"ShortRestrictiveResourceId"},
         "Title":{"shape":"VisualTitleLabelOptions"},
@@ -18748,6 +19065,7 @@
         "InsightConfiguration":{"shape":"InsightConfiguration"},
         "Actions":{"shape":"VisualCustomActionList"},
         "DataSetIdentifier":{"shape":"DataSetIdentifier"},
+        "TopicIdentifier":{"shape":"TopicIdentifier"},
         "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
@@ -19448,16 +19766,14 @@
     },
     "LayerMapVisual":{
       "type":"structure",
-      "required":[
-        "VisualId",
-        "DataSetIdentifier"
-      ],
+      "required":["VisualId"],
       "members":{
         "VisualId":{"shape":"ShortRestrictiveResourceId"},
         "Title":{"shape":"VisualTitleLabelOptions"},
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"GeospatialLayerMapConfiguration"},
         "DataSetIdentifier":{"shape":"DataSetIdentifier"},
+        "TopicIdentifier":{"shape":"TopicIdentifier"},
         "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
@@ -19522,6 +19838,11 @@
       },
       "error":{"httpStatusCode":409},
       "exception":true
+    },
+    "LimitedSensitiveString":{
+      "type":"string",
+      "max":256,
+      "sensitive":true
     },
     "LimitedString":{
       "type":"string",
@@ -21165,6 +21486,40 @@
         }
       }
     },
+    "ListTopicsV2Request":{
+      "type":"structure",
+      "required":["AwsAccountId"],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "NextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"next-token"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "box":true,
+          "location":"querystring",
+          "locationName":"max-results"
+        }
+      }
+    },
+    "ListTopicsV2Response":{
+      "type":"structure",
+      "members":{
+        "TopicSummaryList":{"shape":"TopicV2Summaries"},
+        "NextToken":{"shape":"String"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
     "ListUserGroupsRequest":{
       "type":"structure",
       "required":[
@@ -21687,7 +22042,10 @@
         "PropertyName":{"shape":"LimitedString"},
         "PropertyRole":{"shape":"PropertyRole"},
         "PropertyUsage":{"shape":"PropertyUsage"},
-        "Metric":{"shape":"NamedEntityDefinitionMetric"}
+        "Metric":{"shape":"NamedEntityDefinitionMetric"},
+        "RankOrder":{"shape":"NullableInteger"},
+        "PresentationOrder":{"shape":"NullableInteger"},
+        "IsHidden":{"shape":"NullableBoolean"}
       }
     },
     "NamedEntityDefinitionMetric":{
@@ -21706,6 +22064,22 @@
       "members":{
         "NamedEntityName":{"shape":"LimitedString"}
       }
+    },
+    "NamedEntitySort":{
+      "type":"structure",
+      "required":[
+        "FieldName",
+        "Direction"
+      ],
+      "members":{
+        "FieldName":{"shape":"LimitedString"},
+        "Direction":{"shape":"TopicSortDirection"}
+      }
+    },
+    "NamedEntitySortList":{
+      "type":"list",
+      "member":{"shape":"NamedEntitySort"},
+      "max":1
     },
     "NamedFilterAggType":{
       "type":"string",
@@ -21922,6 +22296,7 @@
       }
     },
     "NullableBoolean":{"type":"boolean"},
+    "NullableInteger":{"type":"integer"},
     "NumberDisplayFormatConfiguration":{
       "type":"structure",
       "members":{
@@ -23630,8 +24005,8 @@
     "RangeConstant":{
       "type":"structure",
       "members":{
-        "Minimum":{"shape":"LimitedString"},
-        "Maximum":{"shape":"LimitedString"}
+        "Minimum":{"shape":"LimitedSensitiveString"},
+        "Maximum":{"shape":"LimitedSensitiveString"}
       }
     },
     "RangeEndsLabelType":{
@@ -25151,6 +25526,38 @@
       "type":"structure",
       "members":{
         "TopicSummaryList":{"shape":"TopicSummaries"},
+        "NextToken":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        },
+        "RequestId":{"shape":"String"}
+      }
+    },
+    "SearchTopicsV2Request":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "Filters"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "Filters":{"shape":"TopicSearchFilterList"},
+        "NextToken":{"shape":"String"},
+        "MaxResults":{
+          "shape":"MaxResults",
+          "box":true
+        }
+      }
+    },
+    "SearchTopicsV2Response":{
+      "type":"structure",
+      "members":{
+        "TopicSummaryList":{"shape":"TopicV2Summaries"},
         "NextToken":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
@@ -27042,9 +27449,15 @@
       "min":1,
       "sensitive":true
     },
+    "SynonymString":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "sensitive":true
+    },
     "Synonyms":{
       "type":"list",
-      "member":{"shape":"LimitedString"}
+      "member":{"shape":"SynonymString"}
     },
     "TableAggregatedFieldWells":{
       "type":"structure",
@@ -27516,7 +27929,8 @@
       ],
       "members":{
         "Arn":{"shape":"Arn"},
-        "DataSetReferences":{"shape":"DataSetReferenceList"}
+        "DataSetReferences":{"shape":"DataSetReferenceList"},
+        "TopicReferences":{"shape":"TopicReferenceList"}
       }
     },
     "TemplateSourceEntity":{
@@ -27557,6 +27971,7 @@
         "VersionNumber":{"shape":"VersionNumber"},
         "Status":{"shape":"ResourceStatus"},
         "DataSetConfigurations":{"shape":"DataSetConfigurationList"},
+        "TopicConfigurations":{"shape":"TopicConfigurationList"},
         "Description":{"shape":"VersionDescription"},
         "SourceEntityArn":{"shape":"Arn"},
         "ThemeArn":{"shape":"Arn"},
@@ -27568,6 +27983,7 @@
       "required":["DataSetConfigurations"],
       "members":{
         "DataSetConfigurations":{"shape":"DataSetConfigurationList"},
+        "TopicConfigurations":{"shape":"TopicConfigurationList"},
         "Sheets":{"shape":"SheetDefinitionList"},
         "TooltipSheets":{"shape":"TooltipSheetDefinitionList"},
         "CalculatedFields":{"shape":"CalculatedFields"},
@@ -28089,6 +28505,11 @@
         "ABSOLUTE_DIFFERENCE"
       ]
     },
+    "TopicArnsList":{
+      "type":"list",
+      "member":{"shape":"Arn"},
+      "max":100
+    },
     "TopicCalculatedField":{
       "type":"structure",
       "required":[
@@ -28096,8 +28517,8 @@
         "Expression"
       ],
       "members":{
-        "CalculatedFieldName":{"shape":"LimitedString"},
-        "CalculatedFieldDescription":{"shape":"LimitedString"},
+        "CalculatedFieldName":{"shape":"LimitedSensitiveString"},
+        "CalculatedFieldDescription":{"shape":"DescriptionSensitiveString"},
         "Expression":{"shape":"Expression"},
         "CalculatedFieldSynonyms":{"shape":"Synonyms"},
         "IsIncludedInTopic":{"shape":"Boolean"},
@@ -28125,14 +28546,15 @@
         "CategoryFilterFunction":{"shape":"CategoryFilterFunction"},
         "CategoryFilterType":{"shape":"CategoryFilterType"},
         "Constant":{"shape":"TopicCategoryFilterConstant"},
-        "Inverse":{"shape":"Boolean"}
+        "Inverse":{"shape":"Boolean"},
+        "NullFilter":{"shape":"NullFilterType"}
       }
     },
     "TopicCategoryFilterConstant":{
       "type":"structure",
       "members":{
         "ConstantType":{"shape":"ConstantType"},
-        "SingularConstant":{"shape":"LimitedString"},
+        "SingularConstant":{"shape":"LimitedSensitiveString"},
         "CollectiveConstant":{"shape":"CollectiveConstant"}
       },
       "sensitive":true
@@ -28142,8 +28564,8 @@
       "required":["ColumnName"],
       "members":{
         "ColumnName":{"shape":"LimitedString"},
-        "ColumnFriendlyName":{"shape":"LimitedString"},
-        "ColumnDescription":{"shape":"LimitedString"},
+        "ColumnFriendlyName":{"shape":"LimitedSensitiveString"},
+        "ColumnDescription":{"shape":"DescriptionSensitiveString"},
         "ColumnSynonyms":{"shape":"Synonyms"},
         "ColumnDataRole":{"shape":"ColumnDataRole"},
         "Aggregation":{"shape":"DefaultAggregation"},
@@ -28170,6 +28592,19 @@
         "QBusinessInsightsEnabled":{"shape":"NullableBoolean"}
       }
     },
+    "TopicConfiguration":{
+      "type":"structure",
+      "members":{
+        "Placeholder":{"shape":"String"},
+        "DataSetSchema":{"shape":"DataSetSchema"},
+        "ColumnGroupSchemaList":{"shape":"ColumnGroupSchemaList"}
+      }
+    },
+    "TopicConfigurationList":{
+      "type":"list",
+      "member":{"shape":"TopicConfiguration"},
+      "max":30
+    },
     "TopicConstantValue":{
       "type":"structure",
       "members":{
@@ -28184,7 +28619,8 @@
       "type":"structure",
       "members":{
         "Inclusive":{"shape":"Boolean"},
-        "Constant":{"shape":"TopicRangeFilterConstant"}
+        "Constant":{"shape":"TopicRangeFilterConstant"},
+        "NullFilter":{"shape":"NullFilterType"}
       }
     },
     "TopicDetails":{
@@ -28204,7 +28640,7 @@
         "OperandFieldName"
       ],
       "members":{
-        "FilterDescription":{"shape":"LimitedString"},
+        "FilterDescription":{"shape":"DescriptionSensitiveString"},
         "FilterClass":{"shape":"FilterClass"},
         "FilterName":{"shape":"LimitedString"},
         "FilterSynonyms":{"shape":"Synonyms"},
@@ -28371,6 +28807,27 @@
       "max":256,
       "pattern":"^[A-Za-z0-9-_.\\\\+]*$"
     },
+    "TopicIdentifier":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "TopicIdentifierDeclaration":{
+      "type":"structure",
+      "required":[
+        "Identifier",
+        "TopicArn"
+      ],
+      "members":{
+        "Identifier":{"shape":"TopicIdentifier"},
+        "TopicArn":{"shape":"Arn"}
+      }
+    },
+    "TopicIdentifierDeclarationList":{
+      "type":"list",
+      "member":{"shape":"TopicIdentifierDeclaration"},
+      "max":50
+    },
     "TopicNamedEntities":{
       "type":"list",
       "member":{"shape":"TopicNamedEntity"}
@@ -28380,10 +28837,13 @@
       "required":["EntityName"],
       "members":{
         "EntityName":{"shape":"LimitedString"},
-        "EntityDescription":{"shape":"LimitedString"},
+        "EntityDescription":{"shape":"DescriptionSensitiveString"},
         "EntitySynonyms":{"shape":"Synonyms"},
         "SemanticEntityType":{"shape":"SemanticEntityType"},
-        "Definition":{"shape":"NamedEntityDefinitions"}
+        "Definition":{"shape":"NamedEntityDefinitions"},
+        "Sort":{"shape":"NamedEntitySortList"},
+        "RankOrder":{"shape":"NullableInteger"},
+        "PresentationOrder":{"shape":"NullableInteger"}
       }
     },
     "TopicNullFilter":{
@@ -28398,7 +28858,9 @@
       "type":"structure",
       "members":{
         "Constant":{"shape":"TopicSingularFilterConstant"},
-        "Aggregation":{"shape":"NamedFilterAggType"}
+        "Aggregation":{"shape":"NamedFilterAggType"},
+        "Inverse":{"shape":"Boolean"},
+        "NullFilter":{"shape":"NullFilterType"}
       }
     },
     "TopicNumericRangeFilter":{
@@ -28406,7 +28868,9 @@
       "members":{
         "Inclusive":{"shape":"Boolean"},
         "Constant":{"shape":"TopicRangeFilterConstant"},
-        "Aggregation":{"shape":"NamedFilterAggType"}
+        "Aggregation":{"shape":"NamedFilterAggType"},
+        "Inverse":{"shape":"Boolean"},
+        "NullFilter":{"shape":"NullFilterType"}
       }
     },
     "TopicNumericSeparatorSymbol":{
@@ -28423,6 +28887,22 @@
         "RangeConstant":{"shape":"RangeConstant"}
       },
       "sensitive":true
+    },
+    "TopicReference":{
+      "type":"structure",
+      "required":[
+        "TopicPlaceholder",
+        "TopicArn"
+      ],
+      "members":{
+        "TopicPlaceholder":{"shape":"TopicIdentifier"},
+        "TopicArn":{"shape":"Arn"}
+      }
+    },
+    "TopicReferenceList":{
+      "type":"list",
+      "member":{"shape":"TopicReference"},
+      "min":1
     },
     "TopicRefreshDetails":{
       "type":"structure",
@@ -28475,7 +28955,8 @@
       "members":{
         "TimeGranularity":{"shape":"TopicTimeGranularity"},
         "RelativeDateFilterFunction":{"shape":"TopicRelativeDateFilterFunction"},
-        "Constant":{"shape":"TopicSingularFilterConstant"}
+        "Constant":{"shape":"TopicSingularFilterConstant"},
+        "NullFilter":{"shape":"NullFilterType"}
       }
     },
     "TopicRelativeDateFilterFunction":{
@@ -28499,7 +28980,7 @@
         "Arn":{"shape":"Arn"},
         "AnswerId":{"shape":"AnswerId"},
         "DatasetArn":{"shape":"Arn"},
-        "Question":{"shape":"LimitedString"},
+        "Question":{"shape":"LimitedSensitiveString"},
         "Mir":{"shape":"TopicIR"},
         "PrimaryVisual":{"shape":"TopicVisual"},
         "Template":{"shape":"TopicTemplate"}
@@ -28528,7 +29009,7 @@
       "members":{
         "Operator":{"shape":"TopicFilterOperator"},
         "Name":{"shape":"TopicFilterAttribute"},
-        "Value":{"shape":"String"}
+        "Value":{"shape":"SensitiveString"}
       }
     },
     "TopicSearchFilterList":{
@@ -28541,7 +29022,7 @@
       "type":"structure",
       "members":{
         "ConstantType":{"shape":"ConstantType"},
-        "SingularConstant":{"shape":"LimitedString"}
+        "SingularConstant":{"shape":"LimitedSensitiveString"}
       },
       "sensitive":true
     },
@@ -28598,6 +29079,82 @@
         "LEGACY",
         "NEW_READER_EXPERIENCE"
       ]
+    },
+    "TopicV2DataSetReference":{
+      "type":"structure",
+      "required":["DataSetArn"],
+      "members":{
+        "DataSetArn":{"shape":"Arn"},
+        "DataSetName":{"shape":"LimitedString"}
+      }
+    },
+    "TopicV2DataSetReferences":{
+      "type":"list",
+      "member":{"shape":"TopicV2DataSetReference"},
+      "max":100,
+      "min":1
+    },
+    "TopicV2DataSetRelation":{
+      "type":"structure",
+      "required":[
+        "Left",
+        "Right"
+      ],
+      "members":{
+        "Left":{"shape":"TopicV2DataSetRelationEndpoint"},
+        "Right":{"shape":"TopicV2DataSetRelationEndpoint"}
+      }
+    },
+    "TopicV2DataSetRelationColumnNames":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":5,
+      "min":1
+    },
+    "TopicV2DataSetRelationEndpoint":{
+      "type":"structure",
+      "required":[
+        "DataSetArn",
+        "ColumnNames"
+      ],
+      "members":{
+        "DataSetArn":{"shape":"Arn"},
+        "ColumnNames":{"shape":"TopicV2DataSetRelationColumnNames"}
+      }
+    },
+    "TopicV2DataSetRelationList":{
+      "type":"list",
+      "member":{"shape":"TopicV2DataSetRelation"},
+      "max":100
+    },
+    "TopicV2Details":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"ResourceName"},
+        "Description":{"shape":"LimitedString"},
+        "DataSets":{"shape":"TopicV2DataSetReferences"},
+        "DataSetRelations":{"shape":"TopicV2DataSetRelationList"}
+      }
+    },
+    "TopicV2PublishOption":{
+      "type":"string",
+      "enum":[
+        "DRAFT",
+        "PUBLISH"
+      ]
+    },
+    "TopicV2Summaries":{
+      "type":"list",
+      "member":{"shape":"TopicV2Summary"}
+    },
+    "TopicV2Summary":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"Arn"},
+        "TopicId":{"shape":"TopicId"},
+        "Name":{"shape":"ResourceName"}
+      }
     },
     "TopicVisual":{
       "type":"structure",
@@ -30904,6 +31461,40 @@
         "RequestId":{"shape":"String"}
       }
     },
+    "UpdateTopicPermissionsV2Request":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "TopicId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "TopicId":{
+          "shape":"TopicId",
+          "location":"uri",
+          "locationName":"TopicId"
+        },
+        "GrantPermissions":{"shape":"UpdateResourcePermissionList"},
+        "RevokePermissions":{"shape":"UpdateResourcePermissionList"}
+      }
+    },
+    "UpdateTopicPermissionsV2Response":{
+      "type":"structure",
+      "members":{
+        "TopicId":{"shape":"TopicId"},
+        "TopicArn":{"shape":"Arn"},
+        "Permissions":{"shape":"ResourcePermissionList"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        },
+        "RequestId":{"shape":"String"}
+      }
+    },
     "UpdateTopicRefreshScheduleRequest":{
       "type":"structure",
       "required":[
@@ -30972,6 +31563,41 @@
         "TopicId":{"shape":"TopicId"},
         "Arn":{"shape":"Arn"},
         "RefreshArn":{"shape":"Arn"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
+    "UpdateTopicV2Request":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "TopicId",
+        "Topic"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "TopicId":{
+          "shape":"TopicId",
+          "location":"uri",
+          "locationName":"TopicId"
+        },
+        "Topic":{"shape":"TopicV2Details"},
+        "CustomInstructions":{"shape":"CustomInstructions"},
+        "PublishOption":{"shape":"TopicV2PublishOption"}
+      }
+    },
+    "UpdateTopicV2Response":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"Arn"},
+        "TopicId":{"shape":"TopicId"},
         "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
@@ -31520,6 +32146,35 @@
       "type":"structure",
       "members":{
         "AvailabilityStatus":{"shape":"DashboardBehavior"}
+      }
+    },
+    "VisualMessageConfiguration":{
+      "type":"structure",
+      "members":{
+        "Enabled":{"shape":"Boolean"},
+        "Title":{"shape":"VisualMessageText"},
+        "TitleVisibility":{"shape":"Visibility"},
+        "Description":{"shape":"VisualMessageText"},
+        "DescriptionVisibility":{"shape":"Visibility"},
+        "LinkText":{"shape":"VisualMessageText"},
+        "LinkUrl":{"shape":"VisualMessageLinkUrl"},
+        "LinkVisibility":{"shape":"Visibility"}
+      }
+    },
+    "VisualMessageLinkUrl":{
+      "type":"string",
+      "max":120,
+      "pattern":"(?i)\\A(?:(?:https?://|mailto:)\\S*<<\\$.+?>>\\S*|https?://[a-z\\d.-]+\\.[a-z]{2,63}(?::\\d+)?(?:[/?#][^\\s]*)?|mailto:[^\\s@]+@[a-z\\d.-]+\\.[a-z]{2,63})\\z"
+    },
+    "VisualMessageText":{
+      "type":"string",
+      "max":120,
+      "pattern":"\\A[\\p{L}\\p{M}\\p{N}\\s.,/\\\\:_()\\[\\]<>$!?'\"#@%+&|^\\-]*\\z"
+    },
+    "VisualMessages":{
+      "type":"structure",
+      "members":{
+        "NoDataMessage":{"shape":"VisualMessageConfiguration"}
       }
     },
     "VisualOptions":{

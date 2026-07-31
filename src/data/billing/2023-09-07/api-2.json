@@ -153,6 +153,40 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "GetEnterpriseSupportChargeSummary":{
+      "name":"GetEnterpriseSupportChargeSummary",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetEnterpriseSupportChargeSummaryRequest"},
+      "output":{"shape":"GetEnterpriseSupportChargeSummaryResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "GetEnterpriseSupportContractDetails":{
+      "name":"GetEnterpriseSupportContractDetails",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetEnterpriseSupportContractDetailsRequest"},
+      "output":{"shape":"GetEnterpriseSupportContractDetailsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
     "GetResourcePolicy":{
       "name":"GetResourcePolicy",
       "http":{
@@ -180,6 +214,23 @@
       "output":{"shape":"ListBillingViewsResponse"},
       "errors":[
         {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "ListEnterpriseSupportLinkedAccountCharges":{
+      "name":"ListEnterpriseSupportLinkedAccountCharges",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListEnterpriseSupportLinkedAccountChargesRequest"},
+      "output":{"shape":"ListEnterpriseSupportLinkedAccountChargesResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
@@ -331,6 +382,21 @@
         "activeAfterInclusive":{"shape":"Timestamp"},
         "activeBeforeInclusive":{"shape":"Timestamp"}
       }
+    },
+    "AdditionalCharge":{
+      "type":"structure",
+      "required":["description"],
+      "members":{
+        "description":{"shape":"String"},
+        "amount":{"shape":"String"},
+        "chargeType":{"shape":"String"}
+      }
+    },
+    "AdditionalChargeList":{
+      "type":"list",
+      "member":{"shape":"AdditionalCharge"},
+      "max":50,
+      "min":0
     },
     "Amount":{
       "type":"structure",
@@ -590,6 +656,23 @@
       "type":"boolean",
       "box":true
     },
+    "ChargeAccount":{
+      "type":"structure",
+      "required":[
+        "accountId",
+        "chargePercentage"
+      ],
+      "members":{
+        "accountId":{"shape":"AccountId"},
+        "chargePercentage":{"shape":"String"}
+      }
+    },
+    "ChargeAccountList":{
+      "type":"list",
+      "member":{"shape":"ChargeAccount"},
+      "max":1000,
+      "min":0
+    },
     "ClientToken":{
       "type":"string",
       "pattern":"[a-zA-Z0-9-]+"
@@ -607,6 +690,23 @@
         "resourceType":{"shape":"ResourceType"}
       },
       "exception":true
+    },
+    "ContractAccount":{
+      "type":"structure",
+      "required":[
+        "accountId",
+        "isGdn"
+      ],
+      "members":{
+        "accountId":{"shape":"AccountId"},
+        "isGdn":{"shape":"Boolean"}
+      }
+    },
+    "ContractAccountList":{
+      "type":"list",
+      "member":{"shape":"ContractAccount"},
+      "max":2000,
+      "min":0
     },
     "CostCategoryName":{
       "type":"string",
@@ -791,6 +891,18 @@
         "arn":{"shape":"BillingViewArn"}
       }
     },
+    "EnterpriseSupportBillingMonth":{
+      "type":"string",
+      "pattern":"\\d{4}-(0[1-9]|1[0-2])"
+    },
+    "EnterpriseSupportTimePeriod":{
+      "type":"structure",
+      "required":["beginDate"],
+      "members":{
+        "beginDate":{"shape":"Timestamp"},
+        "endDate":{"shape":"Timestamp"}
+      }
+    },
     "ErrorMessage":{
       "type":"string",
       "max":1024,
@@ -915,6 +1027,80 @@
         "credits":{"shape":"CreditDataList"}
       }
     },
+    "GetEnterpriseSupportChargeSummaryRequest":{
+      "type":"structure",
+      "required":["billingMonth"],
+      "members":{
+        "billingMonth":{"shape":"EnterpriseSupportBillingMonth"}
+      }
+    },
+    "GetEnterpriseSupportChargeSummaryResponse":{
+      "type":"structure",
+      "required":[
+        "payerAccountId",
+        "billingMonth",
+        "billingPeriodStartDate",
+        "billingPeriodEndDate",
+        "isEstimated",
+        "billDate",
+        "supportCharge",
+        "totalSupportCharge",
+        "supportDiscount",
+        "totalSupportEligibleSpend",
+        "totalSupportEligibleUsageSpend",
+        "totalSupportEligibleReservedInstanceSpend",
+        "totalSupportEligibleSavingsPlanSpend",
+        "supportChargePercentage",
+        "supportEffectivePricingPlan"
+      ],
+      "members":{
+        "payerAccountId":{"shape":"AccountId"},
+        "billingMonth":{"shape":"EnterpriseSupportBillingMonth"},
+        "billingPeriodStartDate":{"shape":"Timestamp"},
+        "billingPeriodEndDate":{"shape":"Timestamp"},
+        "isEstimated":{"shape":"Boolean"},
+        "billDate":{"shape":"Timestamp"},
+        "supportCharge":{"shape":"String"},
+        "totalSupportCharge":{"shape":"String"},
+        "supportDiscount":{"shape":"String"},
+        "totalSupportEligibleSpend":{"shape":"String"},
+        "totalSupportEligibleUsageSpend":{"shape":"String"},
+        "totalSupportEligibleReservedInstanceSpend":{"shape":"String"},
+        "totalSupportEligibleSavingsPlanSpend":{"shape":"String"},
+        "supportChargePercentage":{"shape":"String"},
+        "supportEffectivePricingPlan":{"shape":"PricingPlan"}
+      }
+    },
+    "GetEnterpriseSupportContractDetailsRequest":{
+      "type":"structure",
+      "required":["billingMonth"],
+      "members":{
+        "billingMonth":{"shape":"EnterpriseSupportBillingMonth"}
+      }
+    },
+    "GetEnterpriseSupportContractDetailsResponse":{
+      "type":"structure",
+      "required":[
+        "supportAllocationMethod",
+        "contractPayerAccountIds",
+        "chargedPayerAccountIds",
+        "pricingPlans"
+      ],
+      "members":{
+        "isContractActive":{"shape":"Boolean"},
+        "supportAllocationMethod":{"shape":"String"},
+        "supportReservedInstanceAmortizationStartDate":{"shape":"Timestamp"},
+        "supportReservedInstanceTreatmentMethod":{"shape":"String"},
+        "supportSavingsPlansAmortizationStartDate":{"shape":"Timestamp"},
+        "supportSavingsPlansTreatmentMethod":{"shape":"String"},
+        "supportProrateStartDate":{"shape":"Timestamp"},
+        "contractPayerAccountIds":{"shape":"ContractAccountList"},
+        "chargedPayerAccountIds":{"shape":"ChargeAccountList"},
+        "additionalSupportCharge":{"shape":"AdditionalChargeList"},
+        "additionalSupportEligibleUsageSpend":{"shape":"AdditionalChargeList"},
+        "pricingPlans":{"shape":"PricingPlanList"}
+      }
+    },
     "GetResourcePolicyRequest":{
       "type":"structure",
       "required":["resourceArn"],
@@ -943,6 +1129,37 @@
       "exception":true,
       "fault":true
     },
+    "LinkedAccountCharge":{
+      "type":"structure",
+      "required":[
+        "accountId",
+        "payerAccountId",
+        "billableSeconds",
+        "totalSeconds",
+        "totalSupportEligibleSpend",
+        "proratedTotalSupportEligibleSpend"
+      ],
+      "members":{
+        "accountId":{"shape":"AccountId"},
+        "payerAccountId":{"shape":"AccountId"},
+        "accountType":{"shape":"String"},
+        "billableSeconds":{"shape":"Long"},
+        "totalSeconds":{"shape":"Long"},
+        "totalSupportEligibleSpend":{"shape":"String"},
+        "proratedTotalSupportEligibleSpend":{"shape":"String"},
+        "linkedTimePeriods":{"shape":"TimePeriodList"},
+        "subscriptionTimePeriods":{"shape":"TimePeriodList"},
+        "totalSupportEligibleReservedInstanceSpend":{"shape":"String"},
+        "totalSupportEligibleSavingsPlanSpend":{"shape":"String"},
+        "supportEligibleSpendByService":{"shape":"ServiceLevelAccountUsageList"}
+      }
+    },
+    "LinkedAccountChargeList":{
+      "type":"list",
+      "member":{"shape":"LinkedAccountCharge"},
+      "max":100,
+      "min":0
+    },
     "ListBillingViewsRequest":{
       "type":"structure",
       "members":{
@@ -961,6 +1178,30 @@
       "required":["billingViews"],
       "members":{
         "billingViews":{"shape":"BillingViewList"},
+        "nextToken":{"shape":"PageToken"}
+      }
+    },
+    "ListEnterpriseSupportLinkedAccountChargesRequest":{
+      "type":"structure",
+      "required":["billingMonth"],
+      "members":{
+        "billingMonth":{"shape":"EnterpriseSupportBillingMonth"},
+        "accountId":{"shape":"AccountId"},
+        "maxResults":{"shape":"ListEnterpriseSupportLinkedAccountChargesRequestMaxResultsInteger"},
+        "nextToken":{"shape":"PageToken"}
+      }
+    },
+    "ListEnterpriseSupportLinkedAccountChargesRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListEnterpriseSupportLinkedAccountChargesResponse":{
+      "type":"structure",
+      "required":["linkedAccount"],
+      "members":{
+        "linkedAccount":{"shape":"LinkedAccountChargeList"},
         "nextToken":{"shape":"PageToken"}
       }
     },
@@ -1023,6 +1264,54 @@
         "ENABLED",
         "DISABLED"
       ]
+    },
+    "PricingPlan":{
+      "type":"structure",
+      "required":["tiers"],
+      "members":{
+        "pricingPlanId":{"shape":"String"},
+        "name":{"shape":"String"},
+        "description":{"shape":"String"},
+        "startDate":{"shape":"Timestamp"},
+        "endDate":{"shape":"Timestamp"},
+        "planDiscountPercent":{"shape":"String"},
+        "discountAppliesToMinimumCharge":{"shape":"Boolean"},
+        "minimumCharge":{"shape":"String"},
+        "tiered":{"shape":"String"},
+        "tiers":{"shape":"PricingPlanTierList"}
+      }
+    },
+    "PricingPlanList":{
+      "type":"list",
+      "member":{"shape":"PricingPlan"},
+      "max":10,
+      "min":0
+    },
+    "PricingPlanTier":{
+      "type":"structure",
+      "required":[
+        "tierMinimum",
+        "baseCharge",
+        "additionalPercentageOfAggregateCharges",
+        "aggregateChargesAdjustment",
+        "incremental"
+      ],
+      "members":{
+        "tierMinimum":{"shape":"String"},
+        "tierMaximum":{"shape":"String"},
+        "baseCharge":{"shape":"String"},
+        "additionalPercentageOfAggregateCharges":{"shape":"String"},
+        "aggregateChargesAdjustment":{"shape":"String"},
+        "incremental":{"shape":"Boolean"},
+        "increment":{"shape":"String"},
+        "incrementCharge":{"shape":"String"}
+      }
+    },
+    "PricingPlanTierList":{
+      "type":"list",
+      "member":{"shape":"PricingPlanTier"},
+      "max":20,
+      "min":0
     },
     "ProductName":{
       "type":"string",
@@ -1141,6 +1430,19 @@
       "max":1024,
       "min":1
     },
+    "ServiceLevelAccountUsage":{
+      "type":"structure",
+      "members":{
+        "serviceCode":{"shape":"String"},
+        "totalSupportEligibleSpend":{"shape":"String"}
+      }
+    },
+    "ServiceLevelAccountUsageList":{
+      "type":"list",
+      "member":{"shape":"ServiceLevelAccountUsage"},
+      "max":50,
+      "min":0
+    },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "required":[
@@ -1220,6 +1522,12 @@
         "message":{"shape":"ErrorMessage"}
       },
       "exception":true
+    },
+    "TimePeriodList":{
+      "type":"list",
+      "member":{"shape":"EnterpriseSupportTimePeriod"},
+      "max":500,
+      "min":0
     },
     "TimeRange":{
       "type":"structure",

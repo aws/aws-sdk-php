@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Outposts` - Adds the "EKS" value to the AWSServiceName enum and marks the Address field as sensitive.
+* `Aws\MarketplaceCatalog` - This release enhances the ListEntities API to support TargetAgreementId, TargetAgreementIntent, and CreatedBySource filters for the Offer entity type.
+* `Aws\CloudFormation` - Adding enum for sensitive property to DriftIgnoredReason
+* `Aws\BedrockRuntime` - Added support for mid-conversation tool changes in the Amazon Bedrock Converse and ConverseStream APIs
+* `Aws\DataZone` - Adding support for enhanced Git experience in Sagemaker Unified Studio.
+* `Aws\RDS` - Adds StorageOperationStatus and StorageOperationPercentProgress to DescribeDBInstances, letting you monitor RDS storage initialization and optimization progress.
+* `Aws\ElementalInference` - AWS Elemental Inference now supports graphic composition on cropped video outputs, enabling branded graphics and other visual elements to be overlaid as part of the inference workflow.
+* `Aws\PrometheusService` - Amazon Managed Service for Prometheus adds support for an Amazon OpenSearch Service exporter for managed collectors.
+* `Aws\ConnectCampaignsV2` - Launching feature for abandonment rate pacing control for outbound campaigns.
+* `Aws\QuickSight` - Adding TopicV2 management APIs, adding possibility to use Topics in Analysis
+* `Aws\Billing` - Adds GetEnterpriseSupportChargeSummary, GetEnterpriseSupportContractDetails, and ListEnterpriseSupportLinkedAccountCharges. These APIs provide first-time programmatic access to billing data for Enterprise Support usage previously only available upon request through AWS Concierge or Support.
+* `Aws\NetworkFirewall` - Doc Updates for Container Attributes
+* `Aws\CloudWatchLogs` - Amazon CloudWatch Logs now lets you create and update lookup tables directly from CloudWatch Logs query results by passing a queryId, and configure a lookup table as a scheduled query destination so it refreshes automatically with the latest query results on each run.
+* `Aws\Resiliencehubv2` - Adding support for new testing capability in AWS Resilience Hub.
+
 ## 3.390.1 - 2026-07-31
 
 * `Aws\BCMRecommendedActions` - Removing Smithy RPC v2 CBOR support that was added in previous SDK release.

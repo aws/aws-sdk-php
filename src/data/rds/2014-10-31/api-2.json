@@ -3093,6 +3093,8 @@
       "members":{
         "VolumeName":{"shape":"String"},
         "StorageVolumeStatus":{"shape":"String"},
+        "StorageOperationStatus":{"shape":"String"},
+        "StorageOperationPercentProgress":{"shape":"IntegerOptional"},
         "AllocatedStorage":{"shape":"Integer"},
         "IOPS":{"shape":"IntegerOptional"},
         "MaxAllocatedStorage":{"shape":"IntegerOptional"},
@@ -4997,7 +4999,9 @@
         "IsStorageConfigUpgradeAvailable":{"shape":"BooleanOptional"},
         "EngineLifecycleSupport":{"shape":"String"},
         "AdditionalStorageVolumes":{"shape":"AdditionalStorageVolumesOutputList"},
-        "StorageVolumeStatus":{"shape":"String"}
+        "StorageVolumeStatus":{"shape":"String"},
+        "StorageOperationStatus":{"shape":"String"},
+        "StorageOperationPercentProgress":{"shape":"IntegerOptional"}
       },
       "wrapper":true
     },

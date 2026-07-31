@@ -1903,6 +1903,12 @@
         "ConverseStreamRequest$outputConfig": "<p>Output configuration for a model response.</p>"
       }
     },
+    "OutputConfigEffortString": {
+      "base": null,
+      "refs": {
+        "OutputConfig$effort": "<p>The effort level for the model to use when generating a response. Higher effort levels allow the model to spend more time reasoning before responding. Supported values are <code>low</code>, <code>medium</code>, <code>high</code>, <code>xhigh</code>, and <code>max</code>.</p> <note> <p>When extended thinking is disabled, the effort level is capped at <code>high</code>. Use effort <code>high</code> or below, or enable thinking to use higher effort levels.</p> </note>"
+      }
+    },
     "OutputFormat": {
       "base": "<p> Structured output parameters to control the model's response. </p>",
       "refs": {
@@ -2335,6 +2341,12 @@
         "ToolConfigurationToolsList$member": null
       }
     },
+    "ToolAdditionBlock": {
+      "base": "<p>A content block for adding a tool to the available tool set mid-conversation. Each block references a single tool via its <code>tool</code> field. Use within a <code>system</code> role message to make a tool available without re-sending the full tool configuration.</p>",
+      "refs": {
+        "ContentBlock$toolAddition": null
+      }
+    },
     "ToolChoice": {
       "base": "<p>Determines which tools the model should request in a call to <code>Converse</code> or <code>ConverseStream</code>. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html\">Call a tool with the Converse API</a> in the Amazon Bedrock User Guide.</p>",
       "refs": {
@@ -2369,6 +2381,37 @@
         "ToolSpecification$name": "<p>The name for the tool.</p>",
         "ToolUseBlock$name": "<p>The name of the tool that the model wants to use.</p>",
         "ToolUseBlockStart$name": "<p>The name of the tool that the model is requesting to use.</p>"
+      }
+    },
+    "ToolReference": {
+      "base": "<p>A reference to a tool in the tool configuration. Used with <code>ToolAdditionBlock</code> and <code>ToolRemovalBlock</code> to identify which tool to add or remove mid-conversation.</p>",
+      "refs": {
+        "ToolAdditionBlock$tool": "<p>A reference to the tool to add to the available tool set.</p>",
+        "ToolRemovalBlock$tool": "<p>A reference to the tool to remove from the available tool set.</p>"
+      }
+    },
+    "ToolReferenceNameString": {
+      "base": null,
+      "refs": {
+        "ToolReference$name": "<p>The name of the tool. Must match the name of a tool declared in the top-level tool configuration.</p>"
+      }
+    },
+    "ToolReferenceServerNameString": {
+      "base": null,
+      "refs": {
+        "ToolReference$serverName": "<p>The name of the MCP server that provides the tool. Required when referencing an MCP tool.</p>"
+      }
+    },
+    "ToolReferenceTypeString": {
+      "base": null,
+      "refs": {
+        "ToolReference$type": "<p>The type of tool reference.</p>"
+      }
+    },
+    "ToolRemovalBlock": {
+      "base": "<p>A content block for removing a tool from the available tool set mid-conversation. Each block references a single tool via its <code>tool</code> field. Use within a <code>system</code> role message to remove a tool without re-sending the full tool configuration.</p>",
+      "refs": {
+        "ContentBlock$toolRemoval": null
       }
     },
     "ToolResultBlock": {

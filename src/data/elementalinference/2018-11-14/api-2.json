@@ -434,6 +434,7 @@
       ],
       "members":{
         "name":{"shape":"ResourceName"},
+        "accessRoleArn":{"shape":"IamRoleArn"},
         "outputs":{"shape":"CreateOutputList"},
         "tags":{"shape":"TagMap"}
       }
@@ -479,7 +480,9 @@
     },
     "CroppingConfig":{
       "type":"structure",
-      "members":{}
+      "members":{
+        "templateGroups":{"shape":"TemplateGroupList"}
+      }
     },
     "DeleteDictionaryRequest":{
       "type":"structure",
@@ -759,6 +762,12 @@
       "type":"list",
       "member":{"shape":"GetOutput"}
     },
+    "IamRoleArn":{
+      "type":"string",
+      "max":255,
+      "min":32,
+      "pattern":"arn:aws[a-z\\-]*:iam::[0-9]{12}:role/.+"
+    },
     "Integer":{
       "type":"integer",
       "box":true
@@ -899,6 +908,12 @@
       },
       "exception":true
     },
+    "S3Uri":{
+      "type":"string",
+      "max":255,
+      "min":10,
+      "pattern":"s3://[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]/.+"
+    },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "required":["message"],
@@ -959,6 +974,29 @@
       "type":"string",
       "max":256,
       "min":0
+    },
+    "TemplateGroup":{
+      "type":"structure",
+      "required":[
+        "name",
+        "templateUris"
+      ],
+      "members":{
+        "name":{"shape":"ResourceName"},
+        "templateUris":{"shape":"TemplateUriList"}
+      }
+    },
+    "TemplateGroupList":{
+      "type":"list",
+      "member":{"shape":"TemplateGroup"},
+      "max":4,
+      "min":1
+    },
+    "TemplateUriList":{
+      "type":"list",
+      "member":{"shape":"S3Uri"},
+      "max":2,
+      "min":1
     },
     "TooManyRequestException":{
       "type":"structure",
@@ -1048,6 +1086,7 @@
       ],
       "members":{
         "name":{"shape":"ResourceName"},
+        "accessRoleArn":{"shape":"IamRoleArn"},
         "id":{
           "shape":"FeedId",
           "location":"uri",

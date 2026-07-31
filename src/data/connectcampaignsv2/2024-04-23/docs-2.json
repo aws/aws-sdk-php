@@ -41,6 +41,18 @@
     "UpdateCampaignSource": "<p>Updates the campaign source with a campaign. This API is idempotent.</p>"
   },
   "shapes": {
+    "AbandonmentRatePacingConfig": {
+      "base": "<p>Configuration for abandonment-rate-based dialer throttling.</p>",
+      "refs": {
+        "PacingStrategy$abandonmentRate": null
+      }
+    },
+    "AbandonmentRatePacingConfigConnectionThresholdSecondsInteger": {
+      "base": null,
+      "refs": {
+        "AbandonmentRatePacingConfig$connectionThresholdSeconds": "<p>Seconds after connectionStartPoint before a contact counts as abandoned.</p>"
+      }
+    },
     "AccessDeniedException": {
       "base": "<p>You do not have sufficient access to perform this action.</p>",
       "refs": {}
@@ -354,6 +366,12 @@
       "base": "<p>The request could not be processed because of conflict in the current state of the resource.</p>",
       "refs": {}
     },
+    "ConnectionStartPoint": {
+      "base": "<p>Reference point against which the connection threshold is measured.</p>",
+      "refs": {
+        "AbandonmentRatePacingConfig$connectionStartPoint": "<p>Event from which connectionThresholdSeconds is measured.</p>"
+      }
+    },
     "ContactFlowId": {
       "base": "<p>The identifier of the contact flow for the outbound call.</p>",
       "refs": {
@@ -529,6 +547,12 @@
       "base": null,
       "refs": {
         "EntryLimitsConfig$maxEntryCount": "<p>Maximum number of times a participant can enter the campaign. A value of 0 indicates unlimited entries. Values of 1 or greater specify the exact number of entries allowed.</p>"
+      }
+    },
+    "EvaluationWindow": {
+      "base": "<p>Rolling window over which abandonmentRate is computed. Range PT1H to PT24H.</p>",
+      "refs": {
+        "AbandonmentRatePacingConfig$evaluationWindow": "<p>Rolling window over which abandonmentRate is computed.</p>"
       }
     },
     "EventTrigger": {
@@ -900,6 +924,18 @@
         "PutOutboundRequestBatchRequest$outboundRequests": null
       }
     },
+    "PacingStrategy": {
+      "base": "<p>Pacing constraint the dialer may enforce.</p>",
+      "refs": {
+        "PacingStrategyList$member": null
+      }
+    },
+    "PacingStrategyList": {
+      "base": "<p>List of pacing strategies the dialer enforces simultaneously.</p>",
+      "refs": {
+        "PredictiveConfig$pacingStrategies": "<p>Pacing strategies the dialer enforces simultaneously.</p>"
+      }
+    },
     "PauseCampaignRequest": {
       "base": "<p>The request for PauseCampaign API.</p>",
       "refs": {}
@@ -1207,6 +1243,12 @@
       "base": "<p>The value of tag.</p>",
       "refs": {
         "TagMap$value": null
+      }
+    },
+    "TargetRate": {
+      "base": "<p>Target abandonment rate.</p>",
+      "refs": {
+        "AbandonmentRatePacingConfig$targetRate": null
       }
     },
     "TelephonyChannelSubtypeConfig": {

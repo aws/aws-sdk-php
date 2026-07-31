@@ -156,6 +156,23 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "CreateTest":{
+      "name":"CreateTest",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/create-test",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateTestRequest"},
+      "output":{"shape":"CreateTestResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "CreateUserJourney":{
       "name":"CreateUserJourney",
       "http":{
@@ -291,6 +308,40 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "DeleteTest":{
+      "name":"DeleteTest",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/delete-test",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteTestRequest"},
+      "output":{"shape":"DeleteTestResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "DeleteTestSources":{
+      "name":"DeleteTestSources",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/delete-test-sources",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteTestSourcesRequest"},
+      "output":{"shape":"DeleteTestSourcesResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "DeleteUserJourney":{
       "name":"DeleteUserJourney",
       "http":{
@@ -368,6 +419,57 @@
       },
       "input":{"shape":"GetSystemRequest"},
       "output":{"shape":"GetSystemResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
+    "GetTest":{
+      "name":"GetTest",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/get-test",
+        "responseCode":200
+      },
+      "input":{"shape":"GetTestRequest"},
+      "output":{"shape":"GetTestResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
+    "GetTestRun":{
+      "name":"GetTestRun",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/get-test-run",
+        "responseCode":200
+      },
+      "input":{"shape":"GetTestRunRequest"},
+      "output":{"shape":"GetTestRunResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
+    "GetTestTemplate":{
+      "name":"GetTestTemplate",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/get-test-template",
+        "responseCode":200
+      },
+      "input":{"shape":"GetTestTemplateRequest"},
+      "output":{"shape":"GetTestTemplateResponse"},
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
@@ -546,6 +648,23 @@
       ],
       "readonly":true
     },
+    "ListResolvedTestRunTargetResources":{
+      "name":"ListResolvedTestRunTargetResources",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/test-runs/{testRunId}/resolved-target-resources",
+        "responseCode":200
+      },
+      "input":{"shape":"ListResolvedTestRunTargetResourcesRequest"},
+      "output":{"shape":"ListResolvedTestRunTargetResourcesResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
     "ListResources":{
       "name":"ListResources",
       "http":{
@@ -680,6 +799,107 @@
       ],
       "readonly":true
     },
+    "ListTestRunEvents":{
+      "name":"ListTestRunEvents",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/test-runs/{testRunId}/events",
+        "responseCode":200
+      },
+      "input":{"shape":"ListTestRunEventsRequest"},
+      "output":{"shape":"ListTestRunEventsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
+    "ListTestRunSources":{
+      "name":"ListTestRunSources",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/test-runs/{testRunId}/sources",
+        "responseCode":200
+      },
+      "input":{"shape":"ListTestRunSourcesRequest"},
+      "output":{"shape":"ListTestRunSourcesResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
+    "ListTestRuns":{
+      "name":"ListTestRuns",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/list-test-runs",
+        "responseCode":200
+      },
+      "input":{"shape":"ListTestRunsRequest"},
+      "output":{"shape":"ListTestRunsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
+    "ListTestSources":{
+      "name":"ListTestSources",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/tests/{testId}/sources",
+        "responseCode":200
+      },
+      "input":{"shape":"ListTestSourcesRequest"},
+      "output":{"shape":"ListTestSourcesResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
+    "ListTestTemplates":{
+      "name":"ListTestTemplates",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/list-test-templates",
+        "responseCode":200
+      },
+      "input":{"shape":"ListTestTemplatesRequest"},
+      "output":{"shape":"ListTestTemplatesResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
+    "ListTests":{
+      "name":"ListTests",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/list-tests",
+        "responseCode":200
+      },
+      "input":{"shape":"ListTestsRequest"},
+      "output":{"shape":"ListTestsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
     "ListUserJourneys":{
       "name":"ListUserJourneys",
       "http":{
@@ -697,6 +917,24 @@
       ],
       "readonly":true
     },
+    "PutTestSources":{
+      "name":"PutTestSources",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/put-test-sources",
+        "responseCode":200
+      },
+      "input":{"shape":"PutTestSourcesRequest"},
+      "output":{"shape":"PutTestSourcesResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "StartFailureModeAssessment":{
       "name":"StartFailureModeAssessment",
       "http":{
@@ -712,6 +950,40 @@
         {"shape":"ValidationException"},
         {"shape":"ConflictException"},
         {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "StartTestRun":{
+      "name":"StartTestRun",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/start-test-run",
+        "responseCode":200
+      },
+      "input":{"shape":"StartTestRunRequest"},
+      "output":{"shape":"StartTestRunResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "StopTestRun":{
+      "name":"StopTestRun",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/stop-test-run",
+        "responseCode":200
+      },
+      "input":{"shape":"StopTestRunRequest"},
+      "output":{"shape":"StopTestRunResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"}
       ]
     },
@@ -870,6 +1142,23 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "UpdateTest":{
+      "name":"UpdateTest",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/update-test",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateTestRequest"},
+      "output":{"shape":"UpdateTestResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "UpdateUserJourney":{
       "name":"UpdateUserJourney",
       "http":{
@@ -906,6 +1195,13 @@
       "max":12,
       "min":12,
       "pattern":"[0-9]{12}"
+    },
+    "AccountTargeting":{
+      "type":"string",
+      "enum":[
+        "SINGLE_ACCOUNT",
+        "MULTI_ACCOUNT"
+      ]
     },
     "Achievability":{
       "type":"structure",
@@ -1117,6 +1413,12 @@
       "min":1,
       "pattern":"[A-Za-z0-9_.-]{0,63}"
     },
+    "CloudWatchAlarmArn":{
+      "type":"string",
+      "max":1024,
+      "min":31,
+      "pattern":"arn:aws[a-zA-Z-]*:cloudwatch:[a-z]{2}(-[a-z]+)+-\\d{1}:\\d{12}:alarm:.+"
+    },
     "ConflictException":{
       "type":"structure",
       "required":["message"],
@@ -1327,6 +1629,28 @@
         "system":{"shape":"System"}
       }
     },
+    "CreateTestRequest":{
+      "type":"structure",
+      "required":[
+        "serviceArn",
+        "testTemplateArn"
+      ],
+      "members":{
+        "serviceArn":{"shape":"Arn"},
+        "testTemplateArn":{"shape":"ServiceOwnedArn"},
+        "loggingConfiguration":{"shape":"LoggingConfiguration"},
+        "stopConditions":{"shape":"StopConditionList"},
+        "roleName":{"shape":"EntityName"},
+        "parameters":{"shape":"TestParameters"}
+      }
+    },
+    "CreateTestResponse":{
+      "type":"structure",
+      "required":["test"],
+      "members":{
+        "test":{"shape":"Test"}
+      }
+    },
     "CreateUserJourneyRequest":{
       "type":"structure",
       "required":[
@@ -1499,6 +1823,41 @@
       "members":{
         "systemArn":{"shape":"Arn"}
       }
+    },
+    "DeleteTestRequest":{
+      "type":"structure",
+      "required":[
+        "testId",
+        "serviceArn"
+      ],
+      "members":{
+        "testId":{"shape":"TestId"},
+        "serviceArn":{"shape":"Arn"}
+      }
+    },
+    "DeleteTestResponse":{
+      "type":"structure",
+      "required":["testId"],
+      "members":{
+        "testId":{"shape":"TestId"}
+      }
+    },
+    "DeleteTestSourcesRequest":{
+      "type":"structure",
+      "required":[
+        "testId",
+        "serviceArn",
+        "testSources"
+      ],
+      "members":{
+        "testId":{"shape":"TestId"},
+        "serviceArn":{"shape":"Arn"},
+        "testSources":{"shape":"TestSourceInputList"}
+      }
+    },
+    "DeleteTestSourcesResponse":{
+      "type":"structure",
+      "members":{}
     },
     "DeleteUserJourneyRequest":{
       "type":"structure",
@@ -1689,6 +2048,22 @@
         "userName":{"shape":"String"}
       }
     },
+    "ExperimentArnList":{
+      "type":"list",
+      "member":{"shape":"Arn"}
+    },
+    "ExperimentDetails":{
+      "type":"structure",
+      "required":["experimentArn"],
+      "members":{
+        "experimentArn":{"shape":"Arn"},
+        "details":{"shape":"String"}
+      }
+    },
+    "ExperimentDetailsList":{
+      "type":"list",
+      "member":{"shape":"ExperimentDetails"}
+    },
     "FailedReportOutput":{
       "type":"structure",
       "required":["errorCode"],
@@ -1850,6 +2225,76 @@
         "system":{"shape":"System"}
       }
     },
+    "GetTestRequest":{
+      "type":"structure",
+      "required":[
+        "testId",
+        "serviceArn"
+      ],
+      "members":{
+        "testId":{
+          "shape":"TestId",
+          "location":"querystring",
+          "locationName":"testId"
+        },
+        "serviceArn":{
+          "shape":"Arn",
+          "location":"querystring",
+          "locationName":"serviceArn"
+        }
+      }
+    },
+    "GetTestResponse":{
+      "type":"structure",
+      "required":["test"],
+      "members":{
+        "test":{"shape":"Test"}
+      }
+    },
+    "GetTestRunRequest":{
+      "type":"structure",
+      "required":[
+        "testRunId",
+        "serviceArn"
+      ],
+      "members":{
+        "testRunId":{
+          "shape":"TestRunId",
+          "location":"querystring",
+          "locationName":"testRunId"
+        },
+        "serviceArn":{
+          "shape":"Arn",
+          "location":"querystring",
+          "locationName":"serviceArn"
+        }
+      }
+    },
+    "GetTestRunResponse":{
+      "type":"structure",
+      "required":["testRun"],
+      "members":{
+        "testRun":{"shape":"TestRun"}
+      }
+    },
+    "GetTestTemplateRequest":{
+      "type":"structure",
+      "required":["testTemplateArn"],
+      "members":{
+        "testTemplateArn":{
+          "shape":"ServiceOwnedArn",
+          "location":"querystring",
+          "locationName":"testTemplateArn"
+        }
+      }
+    },
+    "GetTestTemplateResponse":{
+      "type":"structure",
+      "required":["testTemplate"],
+      "members":{
+        "testTemplate":{"shape":"TestTemplate"}
+      }
+    },
     "GetUserJourneyRequest":{
       "type":"structure",
       "required":[
@@ -1883,9 +2328,9 @@
     },
     "IamRoleName":{
       "type":"string",
-      "max":64,
+      "max":576,
       "min":1,
-      "pattern":"[A-Za-z0-9_+=,.@\\-]{1,64}"
+      "pattern":"([A-Za-z0-9_+=,.@\\-]+/)*[A-Za-z0-9_+=,.@\\-]+"
     },
     "ImportAppRequest":{
       "type":"structure",
@@ -2255,6 +2700,11 @@
           "location":"querystring",
           "locationName":"reportType"
         },
+        "testRunId":{
+          "shape":"TestRunId",
+          "location":"querystring",
+          "locationName":"testRunId"
+        },
         "maxResults":{
           "shape":"MaxResults",
           "location":"querystring",
@@ -2272,6 +2722,43 @@
       "required":["reportGenerationResults"],
       "members":{
         "reportGenerationResults":{"shape":"ReportGenerationResultList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListResolvedTestRunTargetResourcesRequest":{
+      "type":"structure",
+      "required":[
+        "testRunId",
+        "serviceArn"
+      ],
+      "members":{
+        "testRunId":{
+          "shape":"TestRunId",
+          "location":"uri",
+          "locationName":"testRunId"
+        },
+        "serviceArn":{
+          "shape":"Arn",
+          "location":"querystring",
+          "locationName":"serviceArn"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListResolvedTestRunTargetResourcesResponse":{
+      "type":"structure",
+      "required":["resolvedTargetResources"],
+      "members":{
+        "resolvedTargetResources":{"shape":"ResolvedTargetResourceList"},
         "nextToken":{"shape":"NextToken"}
       }
     },
@@ -2567,6 +3054,211 @@
         "tags":{"shape":"TagMap"}
       }
     },
+    "ListTestRunEventsRequest":{
+      "type":"structure",
+      "required":[
+        "testRunId",
+        "serviceArn"
+      ],
+      "members":{
+        "testRunId":{
+          "shape":"TestRunId",
+          "location":"uri",
+          "locationName":"testRunId"
+        },
+        "serviceArn":{
+          "shape":"Arn",
+          "location":"querystring",
+          "locationName":"serviceArn"
+        },
+        "startedAt":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"startedAt"
+        },
+        "endedAt":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"endedAt"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListTestRunEventsResponse":{
+      "type":"structure",
+      "required":["events"],
+      "members":{
+        "events":{"shape":"TestRunEventList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListTestRunSourcesRequest":{
+      "type":"structure",
+      "required":[
+        "testRunId",
+        "serviceArn"
+      ],
+      "members":{
+        "testRunId":{
+          "shape":"TestRunId",
+          "location":"uri",
+          "locationName":"testRunId"
+        },
+        "serviceArn":{
+          "shape":"Arn",
+          "location":"querystring",
+          "locationName":"serviceArn"
+        },
+        "type":{
+          "shape":"TestRunSourceType",
+          "location":"querystring",
+          "locationName":"type"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListTestRunSourcesResponse":{
+      "type":"structure",
+      "required":["testRunSources"],
+      "members":{
+        "testRunSources":{"shape":"TestRunSourceSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListTestRunsRequest":{
+      "type":"structure",
+      "required":["serviceArn"],
+      "members":{
+        "serviceArn":{
+          "shape":"Arn",
+          "location":"querystring",
+          "locationName":"serviceArn"
+        },
+        "testId":{
+          "shape":"TestId",
+          "location":"querystring",
+          "locationName":"testId"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListTestRunsResponse":{
+      "type":"structure",
+      "required":["testRuns"],
+      "members":{
+        "testRuns":{"shape":"TestRunSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListTestSourcesRequest":{
+      "type":"structure",
+      "required":[
+        "testId",
+        "serviceArn"
+      ],
+      "members":{
+        "testId":{
+          "shape":"TestId",
+          "location":"uri",
+          "locationName":"testId"
+        },
+        "serviceArn":{
+          "shape":"Arn",
+          "location":"querystring",
+          "locationName":"serviceArn"
+        },
+        "type":{
+          "shape":"TestSourceType",
+          "location":"querystring",
+          "locationName":"type"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListTestSourcesResponse":{
+      "type":"structure",
+      "required":["testSources"],
+      "members":{
+        "testSources":{"shape":"TestSourceSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListTestTemplatesRequest":{
+      "type":"structure",
+      "members":{}
+    },
+    "ListTestTemplatesResponse":{
+      "type":"structure",
+      "required":["testTemplates"],
+      "members":{
+        "testTemplates":{"shape":"TestTemplateSummaryList"}
+      }
+    },
+    "ListTestsRequest":{
+      "type":"structure",
+      "required":["serviceArn"],
+      "members":{
+        "serviceArn":{
+          "shape":"Arn",
+          "location":"querystring",
+          "locationName":"serviceArn"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListTestsResponse":{
+      "type":"structure",
+      "required":["tests"],
+      "members":{
+        "tests":{"shape":"TestSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListUserJourneysRequest":{
       "type":"structure",
       "required":["systemArn"],
@@ -2594,6 +3286,14 @@
       "members":{
         "userJourneySummaries":{"shape":"UserJourneySummaryList"},
         "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "LoggingConfiguration":{
+      "type":"structure",
+      "members":{
+        "s3BucketName":{"shape":"String"},
+        "cloudWatchLogGroupArn":{"shape":"Arn"},
+        "logSchemaVersion":{"shape":"String"}
       }
     },
     "Long":{
@@ -2673,6 +3373,29 @@
       "min":1,
       "pattern":"\\S{1,2000}"
     },
+    "ObservabilityAlarmInput":{
+      "type":"structure",
+      "required":["alarmArn"],
+      "members":{
+        "alarmArn":{"shape":"CloudWatchAlarmArn"}
+      }
+    },
+    "ObservabilityAlarmSummary":{
+      "type":"structure",
+      "required":[
+        "alarmArn",
+        "alarmName",
+        "region",
+        "accountId"
+      ],
+      "members":{
+        "alarmArn":{"shape":"CloudWatchAlarmArn"},
+        "alarmName":{"shape":"String"},
+        "region":{"shape":"String"},
+        "accountId":{"shape":"String"},
+        "createdAt":{"shape":"Timestamp"}
+      }
+    },
     "ObservabilityRecommendation":{
       "type":"structure",
       "members":{
@@ -2696,6 +3419,25 @@
       "max":68,
       "min":16,
       "pattern":"ou-[a-z0-9]{4,32}-[a-z0-9]{8,32}"
+    },
+    "ParameterKey":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[\\w.-]+"
+    },
+    "ParameterType":{
+      "type":"string",
+      "enum":[
+        "STRING",
+        "STRING_LIST",
+        "INTEGER"
+      ]
+    },
+    "ParameterValue":{
+      "type":"string",
+      "max":1024,
+      "min":0
     },
     "PermissionModel":{
       "type":"structure",
@@ -2764,6 +3506,23 @@
         "CROSS_ACCOUNT"
       ]
     },
+    "PutTestSourcesRequest":{
+      "type":"structure",
+      "required":[
+        "testId",
+        "serviceArn",
+        "testSources"
+      ],
+      "members":{
+        "testId":{"shape":"TestId"},
+        "serviceArn":{"shape":"Arn"},
+        "testSources":{"shape":"TestSourceInputList"}
+      }
+    },
+    "PutTestSourcesResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "QueryDataPoint":{
       "type":"structure",
       "required":[
@@ -2809,6 +3568,12 @@
       "max":5,
       "min":1
     },
+    "RegionSwitchExecutionId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-z]{2}(-[a-z]+)+-[0-9]+/[0-9a-fA-F]{16}"
+    },
     "ReportGenerationErrorCode":{
       "type":"string",
       "enum":[
@@ -2828,6 +3593,8 @@
         "status":{"shape":"ReportGenerationStatus"},
         "serviceArn":{"shape":"Arn"},
         "assessmentId":{"shape":"Uuid"},
+        "testRunId":{"shape":"TestRunId"},
+        "testTemplateArn":{"shape":"ServiceOwnedArn"},
         "createdAt":{"shape":"Timestamp"},
         "reportOutput":{"shape":"ReportOutput"}
       }
@@ -2867,7 +3634,56 @@
     },
     "ReportType":{
       "type":"string",
-      "enum":["FAILURE_MODE"]
+      "enum":[
+        "FAILURE_MODE",
+        "TESTING"
+      ]
+    },
+    "ResolvedTargetInformation":{
+      "type":"map",
+      "key":{"shape":"ResolvedTargetInformationKey"},
+      "value":{"shape":"ResolvedTargetInformationValue"},
+      "max":50,
+      "min":0
+    },
+    "ResolvedTargetInformationKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "ResolvedTargetInformationValue":{
+      "type":"string",
+      "max":2048,
+      "min":0
+    },
+    "ResolvedTargetResource":{
+      "type":"structure",
+      "required":[
+        "resourceType",
+        "targetName",
+        "targetInformation"
+      ],
+      "members":{
+        "resourceType":{"shape":"ResolvedTargetResourceResourceTypeString"},
+        "targetName":{"shape":"ResolvedTargetResourceTargetNameString"},
+        "targetInformation":{"shape":"ResolvedTargetInformation"}
+      }
+    },
+    "ResolvedTargetResourceList":{
+      "type":"list",
+      "member":{"shape":"ResolvedTargetResource"},
+      "max":100,
+      "min":0
+    },
+    "ResolvedTargetResourceResourceTypeString":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "ResolvedTargetResourceTargetNameString":{
+      "type":"string",
+      "max":256,
+      "min":1
     },
     "Resource":{
       "type":"structure",
@@ -3228,6 +4044,11 @@
       "type":"structure",
       "members":{}
     },
+    "ServiceOwnedArn":{
+      "type":"string",
+      "min":31,
+      "pattern":"arn:(aws|aws-cn|aws-iso|aws-iso-[a-z]{1}|aws-us-gov):[A-Za-z0-9][A-Za-z0-9_/.-]{0,62}:([a-z]{2}-((iso[a-z]{0,1}-)|(gov-)){0,1}[a-z]+-[0-9]):([0-9]{12}|aws):[A-Za-z0-9/][A-Za-z0-9:_/+.-]{0,1023}"
+    },
     "ServicePolicyAssociatedMetadata":{
       "type":"structure",
       "members":{
@@ -3414,12 +4235,109 @@
         "startedAt":{"shape":"Timestamp"}
       }
     },
+    "StartTestRunRequest":{
+      "type":"structure",
+      "required":[
+        "testId",
+        "serviceArn"
+      ],
+      "members":{
+        "testId":{"shape":"TestId"},
+        "serviceArn":{"shape":"Arn"}
+      }
+    },
+    "StartTestRunResponse":{
+      "type":"structure",
+      "required":[
+        "testRunId",
+        "status",
+        "experimentArns"
+      ],
+      "members":{
+        "testRunId":{"shape":"TestRunId"},
+        "status":{"shape":"TestRunStatus"},
+        "experimentArns":{"shape":"ExperimentArnList"}
+      }
+    },
+    "StopCondition":{
+      "type":"structure",
+      "required":[
+        "source",
+        "value"
+      ],
+      "members":{
+        "source":{"shape":"StopConditionSource"},
+        "value":{"shape":"String"}
+      }
+    },
+    "StopConditionList":{
+      "type":"list",
+      "member":{"shape":"StopCondition"}
+    },
+    "StopConditionSource":{
+      "type":"string",
+      "enum":[
+        "aws:cloudwatch:alarm",
+        "none"
+      ]
+    },
+    "StopTestRunRequest":{
+      "type":"structure",
+      "required":[
+        "testRunId",
+        "serviceArn"
+      ],
+      "members":{
+        "testRunId":{"shape":"TestRunId"},
+        "serviceArn":{"shape":"Arn"}
+      }
+    },
+    "StopTestRunResponse":{
+      "type":"structure",
+      "required":[
+        "testRunId",
+        "status"
+      ],
+      "members":{
+        "testRunId":{"shape":"TestRunId"},
+        "status":{"shape":"TestRunStatus"}
+      }
+    },
     "String":{"type":"string"},
     "StringChange":{
       "type":"structure",
       "members":{
         "oldValue":{"shape":"String"},
         "newValue":{"shape":"String"}
+      }
+    },
+    "StringList":{
+      "type":"list",
+      "member":{"shape":"ParameterValue"},
+      "max":10,
+      "min":0
+    },
+    "SuccessCriteriaAlarmInput":{
+      "type":"structure",
+      "required":["alarmArn"],
+      "members":{
+        "alarmArn":{"shape":"CloudWatchAlarmArn"}
+      }
+    },
+    "SuccessCriteriaAlarmSummary":{
+      "type":"structure",
+      "required":[
+        "alarmArn",
+        "alarmName",
+        "region",
+        "accountId"
+      ],
+      "members":{
+        "alarmArn":{"shape":"CloudWatchAlarmArn"},
+        "alarmName":{"shape":"String"},
+        "region":{"shape":"String"},
+        "accountId":{"shape":"String"},
+        "createdAt":{"shape":"Timestamp"}
       }
     },
     "SuggestedChangesList":{
@@ -3659,6 +4577,368 @@
         "source":{"shape":"PolicyValueSource"}
       }
     },
+    "Test":{
+      "type":"structure",
+      "required":[
+        "testId",
+        "testTemplateArn",
+        "serviceArn",
+        "name",
+        "totalTestRuns",
+        "successfulTestRuns",
+        "creationTime"
+      ],
+      "members":{
+        "testId":{"shape":"TestId"},
+        "testTemplateArn":{"shape":"ServiceOwnedArn"},
+        "serviceArn":{"shape":"Arn"},
+        "name":{"shape":"String"},
+        "actions":{"shape":"TestActionList"},
+        "loggingConfiguration":{"shape":"LoggingConfiguration"},
+        "stopConditions":{"shape":"StopConditionList"},
+        "roleName":{"shape":"EntityName"},
+        "parameters":{"shape":"TestParameters"},
+        "totalTestRuns":{"shape":"Integer"},
+        "successfulTestRuns":{"shape":"Integer"},
+        "creationTime":{"shape":"Timestamp"}
+      }
+    },
+    "TestAction":{
+      "type":"structure",
+      "required":[
+        "actionId",
+        "resourceType"
+      ],
+      "members":{
+        "actionId":{"shape":"String"},
+        "description":{"shape":"String"},
+        "resourceType":{"shape":"String"}
+      }
+    },
+    "TestActionList":{
+      "type":"list",
+      "member":{"shape":"TestAction"}
+    },
+    "TestId":{"type":"string"},
+    "TestParameters":{
+      "type":"map",
+      "key":{"shape":"ParameterKey"},
+      "value":{"shape":"StringList"},
+      "max":20,
+      "min":0
+    },
+    "TestRun":{
+      "type":"structure",
+      "required":[
+        "testRunId",
+        "testId",
+        "status",
+        "startedAt",
+        "testTemplateArn"
+      ],
+      "members":{
+        "testRunId":{"shape":"TestRunId"},
+        "testId":{"shape":"TestId"},
+        "status":{"shape":"TestRunStatus"},
+        "serviceArn":{"shape":"Arn"},
+        "startedAt":{"shape":"Timestamp"},
+        "endedAt":{"shape":"Timestamp"},
+        "experiments":{"shape":"ExperimentDetailsList"},
+        "eventCount":{"shape":"Integer"},
+        "parameters":{"shape":"TestParameters"},
+        "errorMessage":{"shape":"String"},
+        "stopConditions":{"shape":"StopConditionList"},
+        "loggingConfiguration":{"shape":"LoggingConfiguration"},
+        "roleName":{"shape":"EntityName"},
+        "testTemplateArn":{"shape":"ServiceOwnedArn"},
+        "reportConfiguration":{"shape":"TestRunReportConfiguration"},
+        "policy":{"shape":"TestRunPolicySnapshot"},
+        "reportOutput":{"shape":"ReportGenerationResult"},
+        "regionSwitchPlanArn":{"shape":"Arn"},
+        "regionSwitchExecutionId":{"shape":"RegionSwitchExecutionId"},
+        "permissionModel":{"shape":"PermissionModel"},
+        "regions":{"shape":"RegionList"},
+        "accountTargeting":{"shape":"AccountTargeting"}
+      }
+    },
+    "TestRunEvent":{
+      "type":"structure",
+      "required":[
+        "eventId",
+        "eventType",
+        "message",
+        "timestamp"
+      ],
+      "members":{
+        "eventId":{"shape":"TestRunEventEventIdString"},
+        "eventType":{"shape":"TestRunEventEventTypeString"},
+        "message":{"shape":"TestRunEventMessageString"},
+        "timestamp":{"shape":"Timestamp"},
+        "attributes":{"shape":"TestRunEventAttributes"}
+      }
+    },
+    "TestRunEventAttributeKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "TestRunEventAttributeValue":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "TestRunEventAttributes":{
+      "type":"map",
+      "key":{"shape":"TestRunEventAttributeKey"},
+      "value":{"shape":"TestRunEventAttributeValue"},
+      "max":50,
+      "min":0
+    },
+    "TestRunEventEventIdString":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "TestRunEventEventTypeString":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "TestRunEventList":{
+      "type":"list",
+      "member":{"shape":"TestRunEvent"},
+      "max":100,
+      "min":0
+    },
+    "TestRunEventMessageString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "TestRunId":{"type":"string"},
+    "TestRunObservabilityAlarmSummary":{
+      "type":"structure",
+      "required":[
+        "alarmArn",
+        "alarmName",
+        "region",
+        "accountId"
+      ],
+      "members":{
+        "alarmArn":{"shape":"CloudWatchAlarmArn"},
+        "alarmName":{"shape":"String"},
+        "region":{"shape":"String"},
+        "accountId":{"shape":"String"}
+      }
+    },
+    "TestRunPolicySnapshot":{
+      "type":"structure",
+      "members":{
+        "policyArn":{"shape":"Arn"},
+        "name":{"shape":"EntityName"},
+        "availabilitySlo":{"shape":"AvailabilitySlo"},
+        "multiAz":{"shape":"MultiAzTargets"},
+        "multiRegion":{"shape":"MultiRegionTargets"},
+        "dataRecovery":{"shape":"DataRecoveryTargets"}
+      }
+    },
+    "TestRunReportConfiguration":{
+      "type":"structure",
+      "required":["reportOutput"],
+      "members":{
+        "reportOutput":{"shape":"ReportOutputConfigurationList"}
+      }
+    },
+    "TestRunSourceSummary":{
+      "type":"structure",
+      "members":{
+        "successCriteriaAlarm":{"shape":"TestRunSuccessCriteriaAlarmSummary"},
+        "observabilityAlarm":{"shape":"TestRunObservabilityAlarmSummary"}
+      },
+      "union":true
+    },
+    "TestRunSourceSummaryList":{
+      "type":"list",
+      "member":{"shape":"TestRunSourceSummary"},
+      "max":25,
+      "min":0
+    },
+    "TestRunSourceType":{
+      "type":"string",
+      "enum":[
+        "SUCCESS_CRITERIA",
+        "OBSERVABILITY"
+      ]
+    },
+    "TestRunStatus":{
+      "type":"string",
+      "enum":[
+        "INITIALIZING",
+        "RUNNING",
+        "STOPPING",
+        "PASSED",
+        "FAILED",
+        "STOPPED",
+        "ERROR"
+      ]
+    },
+    "TestRunSuccessCriteriaAlarmSummary":{
+      "type":"structure",
+      "required":[
+        "alarmArn",
+        "alarmName",
+        "region",
+        "accountId"
+      ],
+      "members":{
+        "alarmArn":{"shape":"CloudWatchAlarmArn"},
+        "alarmName":{"shape":"String"},
+        "region":{"shape":"String"},
+        "accountId":{"shape":"String"},
+        "outcome":{"shape":"TestSourceOutcome"},
+        "outcomeReason":{"shape":"String"}
+      }
+    },
+    "TestRunSummary":{
+      "type":"structure",
+      "required":[
+        "testRunId",
+        "status",
+        "startedAt",
+        "testTemplateArn"
+      ],
+      "members":{
+        "testRunId":{"shape":"TestRunId"},
+        "status":{"shape":"TestRunStatus"},
+        "startedAt":{"shape":"Timestamp"},
+        "endedAt":{"shape":"Timestamp"},
+        "testTemplateArn":{"shape":"ServiceOwnedArn"},
+        "serviceArn":{"shape":"Arn"},
+        "errorMessage":{"shape":"String"},
+        "accountTargeting":{"shape":"AccountTargeting"}
+      }
+    },
+    "TestRunSummaryList":{
+      "type":"list",
+      "member":{"shape":"TestRunSummary"}
+    },
+    "TestSourceInput":{
+      "type":"structure",
+      "members":{
+        "successCriteriaAlarm":{"shape":"SuccessCriteriaAlarmInput"},
+        "observabilityAlarm":{"shape":"ObservabilityAlarmInput"}
+      },
+      "union":true
+    },
+    "TestSourceInputList":{
+      "type":"list",
+      "member":{"shape":"TestSourceInput"},
+      "max":5,
+      "min":1
+    },
+    "TestSourceOutcome":{
+      "type":"string",
+      "enum":[
+        "PASSED",
+        "FAILED",
+        "ERROR"
+      ]
+    },
+    "TestSourceSummary":{
+      "type":"structure",
+      "members":{
+        "successCriteriaAlarm":{"shape":"SuccessCriteriaAlarmSummary"},
+        "observabilityAlarm":{"shape":"ObservabilityAlarmSummary"}
+      },
+      "union":true
+    },
+    "TestSourceSummaryList":{
+      "type":"list",
+      "member":{"shape":"TestSourceSummary"},
+      "max":25,
+      "min":0
+    },
+    "TestSourceType":{
+      "type":"string",
+      "enum":[
+        "SUCCESS_CRITERIA",
+        "OBSERVABILITY"
+      ]
+    },
+    "TestSummary":{
+      "type":"structure",
+      "required":[
+        "testId",
+        "testTemplateArn",
+        "serviceArn",
+        "totalTestRuns",
+        "successfulTestRuns",
+        "creationTime"
+      ],
+      "members":{
+        "testId":{"shape":"TestId"},
+        "testTemplateArn":{"shape":"ServiceOwnedArn"},
+        "serviceArn":{"shape":"Arn"},
+        "totalTestRuns":{"shape":"Integer"},
+        "successfulTestRuns":{"shape":"Integer"},
+        "creationTime":{"shape":"Timestamp"}
+      }
+    },
+    "TestSummaryList":{
+      "type":"list",
+      "member":{"shape":"TestSummary"}
+    },
+    "TestTemplate":{
+      "type":"structure",
+      "required":[
+        "testTemplateArn",
+        "name"
+      ],
+      "members":{
+        "testTemplateArn":{"shape":"ServiceOwnedArn"},
+        "name":{"shape":"String"},
+        "description":{"shape":"String"},
+        "parameters":{"shape":"TestTemplateParameterList"},
+        "actions":{"shape":"TestActionList"}
+      }
+    },
+    "TestTemplateParameter":{
+      "type":"structure",
+      "required":[
+        "name",
+        "type",
+        "required"
+      ],
+      "members":{
+        "name":{"shape":"String"},
+        "description":{"shape":"String"},
+        "type":{"shape":"ParameterType"},
+        "required":{"shape":"Boolean"},
+        "defaultValue":{"shape":"String"},
+        "maxValues":{"shape":"Integer"}
+      }
+    },
+    "TestTemplateParameterList":{
+      "type":"list",
+      "member":{"shape":"TestTemplateParameter"}
+    },
+    "TestTemplateSummary":{
+      "type":"structure",
+      "required":[
+        "testTemplateArn",
+        "name",
+        "description"
+      ],
+      "members":{
+        "testTemplateArn":{"shape":"ServiceOwnedArn"},
+        "name":{"shape":"String"},
+        "description":{"shape":"String"}
+      }
+    },
+    "TestTemplateSummaryList":{
+      "type":"list",
+      "member":{"shape":"TestTemplateSummary"}
+    },
     "TestingRecommendation":{
       "type":"structure",
       "members":{
@@ -3868,6 +5148,28 @@
       "required":["system"],
       "members":{
         "system":{"shape":"System"}
+      }
+    },
+    "UpdateTestRequest":{
+      "type":"structure",
+      "required":[
+        "testId",
+        "serviceArn"
+      ],
+      "members":{
+        "testId":{"shape":"TestId"},
+        "serviceArn":{"shape":"Arn"},
+        "loggingConfiguration":{"shape":"LoggingConfiguration"},
+        "stopConditions":{"shape":"StopConditionList"},
+        "roleName":{"shape":"EntityName"},
+        "parameters":{"shape":"TestParameters"}
+      }
+    },
+    "UpdateTestResponse":{
+      "type":"structure",
+      "required":["test"],
+      "members":{
+        "test":{"shape":"Test"}
       }
     },
     "UpdateUserJourneyRequest":{

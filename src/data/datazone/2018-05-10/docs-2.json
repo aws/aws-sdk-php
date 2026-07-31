@@ -1448,6 +1448,7 @@
     "ConnectionStatus": {
       "base": null,
       "refs": {
+        "GitPropertiesOutput$status": "<p>The status of the Git connection.</p>",
         "GlueConnection$status": "<p>The status of the Amazon Web Services Glue connection.</p>",
         "GluePropertiesOutput$status": "<p>The status of a connection.</p>",
         "RedshiftPropertiesOutput$status": "<p>The status in the Amazon Redshift properties.</p>",
@@ -4473,6 +4474,72 @@
         "StartNotebookSyncInput$gitMetadata": "<p>The Git metadata for the notebook sync, including repository, branch, and commit information.</p>",
         "StartNotebookSyncOutput$gitMetadata": "<p>The Git metadata associated with the synced notebook.</p>",
         "UpdateNotebookOutput$gitMetadata": "<p>The Git metadata associated with the notebook.</p>"
+      }
+    },
+    "GitPropertiesInput": {
+      "base": "<p>Contains the Git connection properties that you specify when creating a Git connection.</p>",
+      "refs": {
+        "ConnectionPropertiesInput$gitProperties": "<p>The Git properties of a connection.</p>"
+      }
+    },
+    "GitPropertiesInputCodeConnectionArnString": {
+      "base": null,
+      "refs": {
+        "GitPropertiesInput$codeConnectionArn": "<p>The ARN of the CodeConnections connection used to connect to the Git repository.</p>"
+      }
+    },
+    "GitPropertiesInputDefaultBranchString": {
+      "base": null,
+      "refs": {
+        "GitPropertiesInput$defaultBranch": "<p>The default branch of the Git repository.</p>"
+      }
+    },
+    "GitPropertiesInputRepositoryIdString": {
+      "base": null,
+      "refs": {
+        "GitPropertiesInput$repositoryId": "<p>The ID of the Git repository. This is the owner and repository name, for example, owner/repo-name.</p>"
+      }
+    },
+    "GitPropertiesOutput": {
+      "base": "<p>The properties of a Git connection returned by get and list operations, including connection status and any error details.</p>",
+      "refs": {
+        "ConnectionPropertiesOutput$gitProperties": "<p>The Git properties of a connection.</p>"
+      }
+    },
+    "GitPropertiesOutputCodeConnectionArnString": {
+      "base": null,
+      "refs": {
+        "GitPropertiesOutput$codeConnectionArn": "<p>The ARN of the CodeConnections connection used to connect to the Git repository.</p>"
+      }
+    },
+    "GitPropertiesOutputDefaultBranchString": {
+      "base": null,
+      "refs": {
+        "GitPropertiesOutput$defaultBranch": "<p>The default branch of the Git repository.</p>"
+      }
+    },
+    "GitPropertiesOutputRepositoryIdString": {
+      "base": null,
+      "refs": {
+        "GitPropertiesOutput$repositoryId": "<p>The ID of the Git repository. This is the owner and repository name, for example, owner/repo-name.</p>"
+      }
+    },
+    "GitPropertiesPatch": {
+      "base": "<p>The properties used to update an existing Git connection, such as the CodeConnections ARN or the default branch.</p>",
+      "refs": {
+        "ConnectionPropertiesPatch$gitProperties": "<p>The Git properties of a connection properties patch.</p>"
+      }
+    },
+    "GitPropertiesPatchCodeConnectionArnString": {
+      "base": null,
+      "refs": {
+        "GitPropertiesPatch$codeConnectionArn": "<p>The ARN of the CodeConnections connection used to connect to the Git repository.</p>"
+      }
+    },
+    "GitPropertiesPatchDefaultBranchString": {
+      "base": null,
+      "refs": {
+        "GitPropertiesPatch$defaultBranch": "<p>The default branch of the Git repository.</p>"
       }
     },
     "GitRepository": {
@@ -8643,6 +8710,7 @@
         "GetSubscriptionRequestDetailsOutput$reviewerId": "<p>The identifier of the Amazon DataZone user who reviewed the subscription request.</p>",
         "GetSubscriptionTargetOutput$type": "<p>The type of the subscription target.</p>",
         "GetSubscriptionTargetOutput$provider": "<p>The provider of the subscription target.</p>",
+        "GitPropertiesOutput$errorMessage": "<p>The error message that describes why the Git connection failed. This member is populated when the connection status is CREATE_FAILED or UPDATE_FAILED.</p>",
         "GlobalParameterMap$key": null,
         "GlobalParameterMap$value": null,
         "GlueConnection$name": "<p>The name of the Amazon Web Services Glue connection.</p>",

@@ -10,6 +10,7 @@
     "CreateServiceFunction": "<p>Creates a service function within a service.</p>",
     "CreateServiceFunctionResources": "<p>Associates resources with a service function.</p>",
     "CreateSystem": "<p>Creates a system that represents a logical grouping of services.</p>",
+    "CreateTest": "<p>Creates a test for a service by configuring a test template. Each service has one test per template.</p>",
     "CreateUserJourney": "<p>Creates a user journey within a system.</p>",
     "DeleteAssertion": "<p>Deletes a resilience assertion from a service.</p>",
     "DeleteInputSource": "<p>Deletes an input source.</p>",
@@ -18,11 +19,16 @@
     "DeleteServiceFunction": "<p>Deletes a service function.</p>",
     "DeleteServiceFunctionResources": "<p>Removes resources from a service function.</p>",
     "DeleteSystem": "<p>Deletes a system.</p>",
+    "DeleteTest": "<p>Deletes a test.</p>",
+    "DeleteTestSources": "<p>Removes monitoring sources from a test. The operation is transactional and idempotent — removing a source that is not attached is a no-op.</p>",
     "DeleteUserJourney": "<p>Deletes a user journey.</p>",
     "GetFailureModeFinding": "<p>Retrieves a finding by findingId.</p>",
     "GetPolicy": "<p>Retrieves a resilience policy by ARN.</p>",
     "GetService": "<p>Retrieves a service by ARN.</p>",
     "GetSystem": "<p>Retrieves a system by ARN.</p>",
+    "GetTest": "<p>Retrieves a test by ID.</p>",
+    "GetTestRun": "<p>Retrieves a test run by ID, including its status, results, and the configuration snapshotted when the run started.</p>",
+    "GetTestTemplate": "<p>Retrieves a resilience test template by ARN, including the parameters it accepts and the fault actions it runs.</p>",
     "GetUserJourney": "<p>Retrieves a user journey.</p>",
     "ImportApp": "<p>Imports a V1 app into the V2 resource model, creating a service with the same name.</p>",
     "ImportPolicy": "<p>Imports a V1 policy into V2, mapping RTO/RPO values from V1 scenarios.</p>",
@@ -33,6 +39,7 @@
     "ListInputSources": "<p>Lists input sources for a service.</p>",
     "ListPolicies": "<p>Lists resilience policies.</p>",
     "ListReports": "<p>List reports for a service, or all reports owned by the account if serviceArn is not provided.</p>",
+    "ListResolvedTestRunTargetResources": "<p>Lists the AWS resources that AWS Fault Injection Service (AWS FIS) resolved as targets for a test run.</p>",
     "ListResources": "<p>List resources.</p>",
     "ListServiceEvents": "<p>Lists events for a service.</p>",
     "ListServiceFunctions": "<p>Lists service functions for a service.</p>",
@@ -41,8 +48,17 @@
     "ListSystemEvents": "<p>Lists events for a system.</p>",
     "ListSystems": "<p>Lists systems.</p>",
     "ListTagsForResource": "<p>Lists the tags for a resource.</p>",
+    "ListTestRunEvents": "<p>Lists the events in a test run's timeline.</p>",
+    "ListTestRunSources": "<p>Lists the monitoring source snapshots captured for a test run, optionally filtered by type.</p>",
+    "ListTestRuns": "<p>Lists the runs of a test, or all test runs for a service.</p>",
+    "ListTestSources": "<p>Lists the monitoring sources attached to a test, optionally filtered by type.</p>",
+    "ListTestTemplates": "<p>Lists the available resilience test templates. A test template is a pre-configured, AWS recommended test that defines which resilience capability to validate.</p>",
+    "ListTests": "<p>Lists the tests configured for a service.</p>",
     "ListUserJourneys": "<p>Lists user journeys for a system.</p>",
+    "PutTestSources": "<p>Adds or updates the monitoring sources on a test. The operation is transactional — either every source is written or the call fails and nothing is written.</p>",
     "StartFailureModeAssessment": "<p>Starts a failure mode assessment.</p>",
+    "StartTestRun": "<p>Starts a run of a test. Each run scopes to the current resources in the service and produces a pass or fail outcome.</p>",
+    "StopTestRun": "<p>Stops an in-progress test run.</p>",
     "TagResource": "<p>Adds tags to a resource.</p>",
     "UntagResource": "<p>Removes tags from a resource.</p>",
     "UpdateAssertion": "<p>Updates a resilience assertion.</p>",
@@ -52,6 +68,7 @@
     "UpdateService": "<p>Updates an existing service.</p>",
     "UpdateServiceFunction": "<p>Updates a service function.</p>",
     "UpdateSystem": "<p>Updates an existing system.</p>",
+    "UpdateTest": "<p>Updates the configuration of an existing test.</p>",
     "UpdateUserJourney": "<p>Updates an existing user journey.</p>"
   },
   "shapes": {
@@ -65,6 +82,13 @@
         "ListServicesRequest$accountId": "<p>Filter services by AWS account ID.</p>",
         "Service$accountId": "<p>The AWS account ID that owns the service.</p>",
         "ServiceSummary$accountId": "<p>Displayed only if caller has access.</p>"
+      }
+    },
+    "AccountTargeting": {
+      "base": "<p>Whether a test run targets resources in a single AWS account or across multiple accounts.</p>",
+      "refs": {
+        "TestRun$accountTargeting": "<p>Indicates whether this test run targets a single account or multiple accounts.</p>",
+        "TestRunSummary$accountTargeting": "<p>Indicates whether this test run targets a single account or multiple accounts.</p>"
       }
     },
     "Achievability": {
@@ -105,6 +129,7 @@
         "CreateServiceFunctionResourcesRequest$serviceArn": null,
         "CreateServiceFunctionResourcesResponse$serviceArn": null,
         "CreateServiceRequest$policyArn": null,
+        "CreateTestRequest$serviceArn": "<p>The ARN of the service to create the test for.</p>",
         "CreateUserJourneyRequest$systemArn": null,
         "CreateUserJourneyRequest$policyArn": null,
         "DeleteAssertionRequest$serviceArn": null,
@@ -119,14 +144,20 @@
         "DeleteServiceResponse$serviceArn": null,
         "DeleteSystemRequest$systemArn": null,
         "DeleteSystemResponse$systemArn": null,
+        "DeleteTestRequest$serviceArn": "<p>The ARN of the service the test belongs to.</p>",
+        "DeleteTestSourcesRequest$serviceArn": "<p>The ARN of the service the test belongs to.</p>",
         "DeleteUserJourneyRequest$systemArn": null,
         "DependencySummary$serviceArn": null,
         "EksSource$clusterArn": null,
+        "ExperimentArnList$member": null,
+        "ExperimentDetails$experimentArn": "<p>The ARN of the AWS FIS experiment.</p>",
         "FindingSummary$serviceArn": null,
         "GetFailureModeFindingRequest$serviceArn": null,
         "GetPolicyRequest$policyArn": null,
         "GetServiceRequest$serviceArn": null,
         "GetSystemRequest$systemArn": null,
+        "GetTestRequest$serviceArn": "<p>The ARN of the service the test belongs to.</p>",
+        "GetTestRunRequest$serviceArn": "<p>The ARN of the service the test run belongs to.</p>",
         "GetUserJourneyRequest$systemArn": null,
         "ImportAppRequest$v1AppArn": null,
         "ImportAppRequest$policyArn": null,
@@ -138,6 +169,7 @@
         "ListFailureModeFindingsRequest$serviceArn": null,
         "ListInputSourcesRequest$serviceArn": null,
         "ListReportsRequest$serviceArn": "<p>Optional. If not provided, lists all reports owned by the account.</p>",
+        "ListResolvedTestRunTargetResourcesRequest$serviceArn": "<p>The ARN of the service the test run belongs to.</p>",
         "ListResourcesRequest$serviceArn": null,
         "ListServiceEventsRequest$serviceArn": null,
         "ListServiceFunctionsRequest$serviceArn": null,
@@ -146,9 +178,16 @@
         "ListServicesRequest$policyArn": null,
         "ListSystemEventsRequest$systemArn": null,
         "ListTagsForResourceRequest$resourceArn": null,
+        "ListTestRunEventsRequest$serviceArn": "<p>The ARN of the service the test run belongs to.</p>",
+        "ListTestRunSourcesRequest$serviceArn": "<p>The ARN of the service the test run belongs to.</p>",
+        "ListTestRunsRequest$serviceArn": "<p>The ARN of the service to list test runs for.</p>",
+        "ListTestSourcesRequest$serviceArn": "<p>The ARN of the service the test belongs to.</p>",
+        "ListTestsRequest$serviceArn": "<p>The ARN of the service to list tests for.</p>",
         "ListUserJourneysRequest$systemArn": null,
+        "LoggingConfiguration$cloudWatchLogGroupArn": "<p>The ARN of the CloudWatch Logs log group for log delivery.</p>",
         "Policy$policyArn": null,
         "PolicySummary$policyArn": null,
+        "PutTestSourcesRequest$serviceArn": "<p>The ARN of the service the test belongs to.</p>",
         "ReportGenerationResult$serviceArn": "<p>The service this report was generated for.</p>",
         "ResourceConfiguration$cfnStackArn": null,
         "Service$serviceArn": null,
@@ -163,6 +202,8 @@
         "ServiceSystemDisassociatedMetadata$systemArn": null,
         "StartFailureModeAssessmentRequest$serviceArn": null,
         "StartFailureModeAssessmentResponse$serviceArn": null,
+        "StartTestRunRequest$serviceArn": "<p>The ARN of the service the test belongs to.</p>",
+        "StopTestRunRequest$serviceArn": "<p>The ARN of the service the test run belongs to.</p>",
         "System$systemArn": null,
         "SystemEvent$systemArn": null,
         "SystemPolicyAssociatedMetadata$policyArn": null,
@@ -171,6 +212,12 @@
         "SystemServiceDisassociatedMetadata$serviceArn": null,
         "SystemSummary$systemArn": null,
         "TagResourceRequest$resourceArn": null,
+        "Test$serviceArn": "<p>The ARN of the service the test belongs to.</p>",
+        "TestRun$serviceArn": "<p>The ARN of the service the test run belongs to.</p>",
+        "TestRun$regionSwitchPlanArn": "<p>The ARN of the ARC Region switch plan associated with the test run.</p>",
+        "TestRunPolicySnapshot$policyArn": "<p>The ARN of the policy.</p>",
+        "TestRunSummary$serviceArn": "<p>The ARN of the service the test run belongs to.</p>",
+        "TestSummary$serviceArn": "<p>The ARN of the service the test belongs to.</p>",
         "UntagResourceRequest$resourceArn": null,
         "UpdateAssertionRequest$serviceArn": null,
         "UpdateDependencyRequest$serviceArn": null,
@@ -180,6 +227,7 @@
         "UpdateServiceRequest$serviceArn": null,
         "UpdateServiceRequest$policyArn": null,
         "UpdateSystemRequest$systemArn": null,
+        "UpdateTestRequest$serviceArn": "<p>The ARN of the service the test belongs to.</p>",
         "UpdateUserJourneyRequest$systemArn": null,
         "UpdateUserJourneyRequest$policyArn": null,
         "UserJourney$policyArn": null
@@ -318,6 +366,7 @@
         "ImportPolicyRequest$availabilitySlo": "<p>The availability SLO to set on the imported policy.</p>",
         "Policy$availabilitySlo": "<p>The availability SLO defined in the policy.</p>",
         "PolicySummary$availabilitySlo": "<p>The availability SLO defined in the policy.</p>",
+        "TestRunPolicySnapshot$availabilitySlo": "<p>The availability SLO targets.</p>",
         "UpdatePolicyRequest$availabilitySlo": "<p>The updated availability SLO for the policy.</p>"
       }
     },
@@ -354,6 +403,7 @@
         "ListResourcesRequest$billable": "<p>Specifies whether to filter non-billable resources. When true (the default), the operation returns only billable resources.</p>",
         "Service$rerunAssessment": "<p>Indicates whether the assessment should be rerun.</p>",
         "System$sharingEnabled": "<p>Indicates whether cross-account sharing is enabled.</p>",
+        "TestTemplateParameter$required": "<p>Indicates whether the parameter is required.</p>",
         "UpdateSystemRequest$sharingEnabled": "<p>Whether cross-account sharing is enabled for the system.</p>"
       }
     },
@@ -371,6 +421,17 @@
         "ImportAppRequest$clientToken": null,
         "ImportPolicyRequest$clientToken": null,
         "StartFailureModeAssessmentRequest$clientToken": null
+      }
+    },
+    "CloudWatchAlarmArn": {
+      "base": "<p>The ARN of a CloudWatch alarm.</p>",
+      "refs": {
+        "ObservabilityAlarmInput$alarmArn": "<p>The ARN of the CloudWatch alarm.</p>",
+        "ObservabilityAlarmSummary$alarmArn": "<p>The ARN of the CloudWatch alarm.</p>",
+        "SuccessCriteriaAlarmInput$alarmArn": "<p>The ARN of the CloudWatch alarm.</p>",
+        "SuccessCriteriaAlarmSummary$alarmArn": "<p>The ARN of the CloudWatch alarm.</p>",
+        "TestRunObservabilityAlarmSummary$alarmArn": "<p>The ARN of the CloudWatch alarm.</p>",
+        "TestRunSuccessCriteriaAlarmSummary$alarmArn": "<p>The ARN of the CloudWatch alarm.</p>"
       }
     },
     "ConflictException": {
@@ -447,6 +508,14 @@
       "base": null,
       "refs": {}
     },
+    "CreateTestRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateTestResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CreateUserJourneyRequest": {
       "base": null,
       "refs": {}
@@ -479,6 +548,7 @@
         "CreatePolicyRequest$dataRecovery": "<p>The data recovery targets for the resilience policy.</p>",
         "Policy$dataRecovery": "<p>The data recovery targets defined in the policy.</p>",
         "PolicySummary$dataRecovery": "<p>The data recovery targets defined in the policy.</p>",
+        "TestRunPolicySnapshot$dataRecovery": "<p>The data recovery targets.</p>",
         "UpdatePolicyRequest$dataRecovery": "<p>The updated data recovery targets for the policy.</p>"
       }
     },
@@ -541,6 +611,22 @@
       "refs": {}
     },
     "DeleteSystemResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteTestRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteTestResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteTestSourcesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteTestSourcesResponse": {
       "base": null,
       "refs": {}
     },
@@ -707,6 +793,7 @@
         "CreatePolicyRequest$name": null,
         "CreateServiceRequest$name": null,
         "CreateSystemRequest$name": null,
+        "CreateTestRequest$roleName": "<p>The name of the IAM execution role to use when running the test.</p>",
         "DisasterRecoverySource$policyName": null,
         "Policy$name": null,
         "PolicySummary$name": null,
@@ -715,7 +802,11 @@
         "SloSource$policyName": null,
         "System$name": null,
         "SystemSummary$name": null,
-        "TargetSource$policyName": null
+        "TargetSource$policyName": null,
+        "Test$roleName": "<p>The name of the IAM execution role used to run the test.</p>",
+        "TestRun$roleName": "<p>The IAM execution role name snapshotted from the test when the run was started.</p>",
+        "TestRunPolicySnapshot$name": "<p>The name of the policy.</p>",
+        "UpdateTestRequest$roleName": "<p>The updated IAM execution role name.</p>"
       }
     },
     "EventActor": {
@@ -723,6 +814,24 @@
       "refs": {
         "ServiceEvent$actor": "<p>The actor that triggered the event.</p>",
         "SystemEvent$actor": "<p>The actor that triggered the event.</p>"
+      }
+    },
+    "ExperimentArnList": {
+      "base": null,
+      "refs": {
+        "StartTestRunResponse$experimentArns": "<p>The ARNs of the AWS Fault Injection Service (AWS FIS) experiments started for the run.</p>"
+      }
+    },
+    "ExperimentDetails": {
+      "base": "<p>Details about an AWS Fault Injection Service (AWS FIS) experiment run as part of a test run.</p>",
+      "refs": {
+        "ExperimentDetailsList$member": null
+      }
+    },
+    "ExperimentDetailsList": {
+      "base": null,
+      "refs": {
+        "TestRun$experiments": "<p>The AWS Fault Injection Service (AWS FIS) experiments run as part of the test run.</p>"
       }
     },
     "FailedReportOutput": {
@@ -816,6 +925,30 @@
       "refs": {}
     },
     "GetSystemResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetTestRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetTestResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetTestRunRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetTestRunResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetTestTemplateRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetTestTemplateResponse": {
       "base": null,
       "refs": {}
     },
@@ -919,6 +1052,12 @@
         "SystemSummary$userJourneysCount": "<p>The number of user journeys in the system.</p>",
         "SystemSummary$servicesCount": "<p>The number of services in the system.</p>",
         "TargetSource$value": "<p>The RTO or RPO value in minutes.</p>",
+        "Test$totalTestRuns": "<p>The total number of runs of the test.</p>",
+        "Test$successfulTestRuns": "<p>The number of successful runs of the test.</p>",
+        "TestRun$eventCount": "<p>The number of events recorded for the test run. Use ListTestRunEvents to retrieve the details.</p>",
+        "TestSummary$totalTestRuns": "<p>The total number of runs of the test.</p>",
+        "TestSummary$successfulTestRuns": "<p>The number of successful runs of the test.</p>",
+        "TestTemplateParameter$maxValues": "<p>The maximum number of values the parameter accepts.</p>",
         "ThrottlingException$retryAfterSeconds": "<p>The number of seconds to wait before retrying the request.</p>"
       }
     },
@@ -995,6 +1134,14 @@
       "base": null,
       "refs": {}
     },
+    "ListResolvedTestRunTargetResourcesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListResolvedTestRunTargetResourcesResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListResourcesRequest": {
       "base": null,
       "refs": {}
@@ -1059,6 +1206,54 @@
       "base": null,
       "refs": {}
     },
+    "ListTestRunEventsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTestRunEventsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTestRunSourcesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTestRunSourcesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTestRunsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTestRunsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTestSourcesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTestSourcesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTestTemplatesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTestTemplatesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTestsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTestsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListUserJourneysRequest": {
       "base": null,
       "refs": {}
@@ -1066,6 +1261,15 @@
     "ListUserJourneysResponse": {
       "base": null,
       "refs": {}
+    },
+    "LoggingConfiguration": {
+      "base": "<p>Configuration for test execution logging destinations.</p>",
+      "refs": {
+        "CreateTestRequest$loggingConfiguration": "<p>The logging configuration for the test.</p>",
+        "Test$loggingConfiguration": "<p>The logging configuration for the test.</p>",
+        "TestRun$loggingConfiguration": "<p>The logging configuration snapshotted from the test when the run was started.</p>",
+        "UpdateTestRequest$loggingConfiguration": "<p>The updated logging configuration for the test.</p>"
+      }
     },
     "Long": {
       "base": null,
@@ -1094,6 +1298,7 @@
         "ListInputSourcesRequest$maxResults": null,
         "ListPoliciesRequest$maxResults": null,
         "ListReportsRequest$maxResults": null,
+        "ListResolvedTestRunTargetResourcesRequest$maxResults": null,
         "ListResourcesRequest$maxResults": null,
         "ListServiceEventsRequest$maxResults": null,
         "ListServiceFunctionsRequest$maxResults": null,
@@ -1101,6 +1306,11 @@
         "ListServicesRequest$maxResults": null,
         "ListSystemEventsRequest$maxResults": null,
         "ListSystemsRequest$maxResults": null,
+        "ListTestRunEventsRequest$maxResults": null,
+        "ListTestRunSourcesRequest$maxResults": null,
+        "ListTestRunsRequest$maxResults": null,
+        "ListTestSourcesRequest$maxResults": null,
+        "ListTestsRequest$maxResults": null,
         "ListUserJourneysRequest$maxResults": null
       }
     },
@@ -1117,6 +1327,7 @@
         "CreatePolicyRequest$multiAz": "<p>The multi-AZ disaster recovery targets for the resilience policy.</p>",
         "Policy$multiAz": "<p>The multi-AZ disaster recovery targets defined in the policy.</p>",
         "PolicySummary$multiAz": "<p>The multi-AZ disaster recovery targets defined in the policy.</p>",
+        "TestRunPolicySnapshot$multiAz": "<p>The multi-AZ resilience targets.</p>",
         "UpdatePolicyRequest$multiAz": "<p>The updated multi-AZ disaster recovery targets for the policy.</p>"
       }
     },
@@ -1145,6 +1356,7 @@
         "CreatePolicyRequest$multiRegion": "<p>The multi-Region disaster recovery targets for the resilience policy.</p>",
         "Policy$multiRegion": "<p>The multi-Region disaster recovery targets defined in the policy.</p>",
         "PolicySummary$multiRegion": "<p>The multi-Region disaster recovery targets defined in the policy.</p>",
+        "TestRunPolicySnapshot$multiRegion": "<p>The multi-Region resilience targets.</p>",
         "UpdatePolicyRequest$multiRegion": "<p>The updated multi-Region disaster recovery targets for the policy.</p>"
       }
     },
@@ -1177,6 +1389,8 @@
         "ListPoliciesResponse$nextToken": null,
         "ListReportsRequest$nextToken": null,
         "ListReportsResponse$nextToken": null,
+        "ListResolvedTestRunTargetResourcesRequest$nextToken": null,
+        "ListResolvedTestRunTargetResourcesResponse$nextToken": null,
         "ListResourcesRequest$nextToken": null,
         "ListResourcesResponse$nextToken": null,
         "ListServiceEventsRequest$nextToken": null,
@@ -1191,8 +1405,30 @@
         "ListSystemEventsResponse$nextToken": null,
         "ListSystemsRequest$nextToken": null,
         "ListSystemsResponse$nextToken": null,
+        "ListTestRunEventsRequest$nextToken": null,
+        "ListTestRunEventsResponse$nextToken": null,
+        "ListTestRunSourcesRequest$nextToken": null,
+        "ListTestRunSourcesResponse$nextToken": null,
+        "ListTestRunsRequest$nextToken": null,
+        "ListTestRunsResponse$nextToken": null,
+        "ListTestSourcesRequest$nextToken": null,
+        "ListTestSourcesResponse$nextToken": null,
+        "ListTestsRequest$nextToken": null,
+        "ListTestsResponse$nextToken": null,
         "ListUserJourneysRequest$nextToken": null,
         "ListUserJourneysResponse$nextToken": null
+      }
+    },
+    "ObservabilityAlarmInput": {
+      "base": "<p>Identifies an observability alarm by its ARN.</p>",
+      "refs": {
+        "TestSourceInput$observabilityAlarm": "<p>An observability alarm included for visibility only.</p>"
+      }
+    },
+    "ObservabilityAlarmSummary": {
+      "base": "<p>Summary information about a configured observability alarm.</p>",
+      "refs": {
+        "TestSourceSummary$observabilityAlarm": "<p>A configured observability alarm.</p>"
       }
     },
     "ObservabilityRecommendation": {
@@ -1227,11 +1463,30 @@
         "SystemSummary$ouId": "<p>Displayed only if caller has access.</p>"
       }
     },
+    "ParameterKey": {
+      "base": "<p>The key of a test parameter.</p>",
+      "refs": {
+        "TestParameters$key": null
+      }
+    },
+    "ParameterType": {
+      "base": "<p>The data type of a test template parameter.</p>",
+      "refs": {
+        "TestTemplateParameter$type": "<p>The data type of the parameter.</p>"
+      }
+    },
+    "ParameterValue": {
+      "base": "<p>A value of a test parameter.</p>",
+      "refs": {
+        "StringList$member": null
+      }
+    },
     "PermissionModel": {
       "base": "<p>Defines the permission model for a service.</p>",
       "refs": {
         "CreateServiceRequest$permissionModel": "<p>The permission model for the service.</p>",
         "Service$permissionModel": "<p>The permission model for the service.</p>",
+        "TestRun$permissionModel": "<p>The permission model snapshotted from the service when the run was started.</p>",
         "UpdateServiceRequest$permissionModel": "<p>The updated permission model for the service.</p>"
       }
     },
@@ -1271,6 +1526,14 @@
         "TargetSource$source": "<p>Indicates whether the value comes from the service's own account or a cross-account policy.</p>"
       }
     },
+    "PutTestSourcesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "PutTestSourcesResponse": {
+      "base": null,
+      "refs": {}
+    },
     "QueryDataPoint": {
       "base": "<p>A data point in a dependency query range.</p>",
       "refs": {
@@ -1299,11 +1562,18 @@
     "RegionList": {
       "base": null,
       "refs": {
-        "CreateServiceRequest$regions": "<p>The AWS Regions where the service operates.</p>",
+        "CreateServiceRequest$regions": "<p>The Regions where the service operates.</p>",
         "DependencySummary$sourceRegions": "<p>The source Regions from which the dependency was detected.</p>",
-        "Service$regions": "<p>The AWS Regions where the service operates.</p>",
-        "ServiceSummary$regions": "<p>The AWS Regions where the service operates.</p>",
+        "Service$regions": "<p>The Regions where the service operates.</p>",
+        "ServiceSummary$regions": "<p>The Regions where the service operates.</p>",
+        "TestRun$regions": "<p>The Regions snapshotted from the service when the run was started.</p>",
         "UpdateServiceRequest$regions": "<p>The updated AWS Regions where the service operates.</p>"
+      }
+    },
+    "RegionSwitchExecutionId": {
+      "base": "<p>The identifier of an ARC Region switch plan execution detected during a test run.</p>",
+      "refs": {
+        "TestRun$regionSwitchExecutionId": "<p>The identifier of the ARC Region switch execution detected during the test run.</p>"
       }
     },
     "ReportGenerationErrorCode": {
@@ -1316,7 +1586,8 @@
       "base": "<p>Result of a report generation attempt.</p>",
       "refs": {
         "CreateReportResponse$reportGenerationResult": "<p>The result of the report generation request.</p>",
-        "ReportGenerationResultList$member": null
+        "ReportGenerationResultList$member": null,
+        "TestRun$reportOutput": "<p>The report generation result for the test run. Present after report generation completes or fails.</p>"
       }
     },
     "ReportGenerationResultList": {
@@ -1346,7 +1617,8 @@
     "ReportOutputConfigurationList": {
       "base": "<p>List of report output configurations.</p>",
       "refs": {
-        "ServiceReportConfiguration$reportOutputs": "<p>Output destinations for generated reports.</p>"
+        "ServiceReportConfiguration$reportOutputs": "<p>Output destinations for generated reports.</p>",
+        "TestRunReportConfiguration$reportOutput": "<p>The output destinations for generated reports.</p>"
       }
     },
     "ReportType": {
@@ -1355,6 +1627,48 @@
         "CreateReportRequest$reportType": "<p>The type of report to generate.</p>",
         "ListReportsRequest$reportType": "<p>Filter reports by type.</p>",
         "ReportGenerationResult$reportType": "<p>The type of the generated report.</p>"
+      }
+    },
+    "ResolvedTargetInformation": {
+      "base": null,
+      "refs": {
+        "ResolvedTargetResource$targetInformation": "<p>The raw target information map as returned by AWS FIS.</p>"
+      }
+    },
+    "ResolvedTargetInformationKey": {
+      "base": "<p>The key of a resolved target information entry.</p>",
+      "refs": {
+        "ResolvedTargetInformation$key": null
+      }
+    },
+    "ResolvedTargetInformationValue": {
+      "base": "<p>The value of a resolved target information entry.</p>",
+      "refs": {
+        "ResolvedTargetInformation$value": null
+      }
+    },
+    "ResolvedTargetResource": {
+      "base": "<p>A single AWS resource that AWS Fault Injection Service (AWS FIS) resolved as a target during a test run.</p>",
+      "refs": {
+        "ResolvedTargetResourceList$member": null
+      }
+    },
+    "ResolvedTargetResourceList": {
+      "base": null,
+      "refs": {
+        "ListResolvedTestRunTargetResourcesResponse$resolvedTargetResources": "<p>The list of resolved target resources.</p>"
+      }
+    },
+    "ResolvedTargetResourceResourceTypeString": {
+      "base": null,
+      "refs": {
+        "ResolvedTargetResource$resourceType": "<p>The AWS FIS resource type the target belongs to, such as aws:ec2:instance, aws:ecs:task, or aws:eks:pod.</p>"
+      }
+    },
+    "ResolvedTargetResourceTargetNameString": {
+      "base": null,
+      "refs": {
+        "ResolvedTargetResource$targetName": "<p>The name of the target in the AWS FIS experiment template.</p>"
       }
     },
     "Resource": {
@@ -1593,6 +1907,20 @@
         "ServiceEventMetadata$serviceInputSourcesUpdated": "<p>Metadata for a service input sources updated event.</p>"
       }
     },
+    "ServiceOwnedArn": {
+      "base": "<p>An ARN owned by the service. Accepts either a standard 12-digit account ID or the literal \"aws\" for AWS-managed resources, such as AWS-managed test templates.</p>",
+      "refs": {
+        "CreateTestRequest$testTemplateArn": "<p>The ARN of the test template to configure.</p>",
+        "GetTestTemplateRequest$testTemplateArn": "<p>The ARN of the test template to retrieve.</p>",
+        "ReportGenerationResult$testTemplateArn": null,
+        "Test$testTemplateArn": "<p>The ARN of the test template the test was created from.</p>",
+        "TestRun$testTemplateArn": "<p>The ARN of the test template snapshotted from the test when the run was started.</p>",
+        "TestRunSummary$testTemplateArn": "<p>The ARN of the test template the test run was based on.</p>",
+        "TestSummary$testTemplateArn": "<p>The ARN of the test template the test was created from.</p>",
+        "TestTemplate$testTemplateArn": "<p>The ARN of the test template.</p>",
+        "TestTemplateSummary$testTemplateArn": "<p>The ARN of the test template.</p>"
+      }
+    },
     "ServicePolicyAssociatedMetadata": {
       "base": "<p>Metadata for a service policy associated event.</p>",
       "refs": {
@@ -1724,6 +2052,43 @@
       "base": null,
       "refs": {}
     },
+    "StartTestRunRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartTestRunResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "StopCondition": {
+      "base": "<p>A CloudWatch alarm that automatically stops a test run if it breaches its threshold.</p>",
+      "refs": {
+        "StopConditionList$member": null
+      }
+    },
+    "StopConditionList": {
+      "base": null,
+      "refs": {
+        "CreateTestRequest$stopConditions": "<p>The stop conditions for the test.</p>",
+        "Test$stopConditions": "<p>The stop conditions for the test.</p>",
+        "TestRun$stopConditions": "<p>The stop conditions snapshotted from the test when the run was started.</p>",
+        "UpdateTestRequest$stopConditions": "<p>The updated stop conditions for the test.</p>"
+      }
+    },
+    "StopConditionSource": {
+      "base": "<p>The source of a test stop condition, matching AWS Fault Injection Service (AWS FIS) stop condition sources.</p>",
+      "refs": {
+        "StopCondition$source": "<p>The source of the stop condition.</p>"
+      }
+    },
+    "StopTestRunRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StopTestRunResponse": {
+      "base": null,
+      "refs": {}
+    },
     "String": {
       "base": null,
       "refs": {
@@ -1746,12 +2111,18 @@
         "EventActor$principalId": "<p>The principal ID of the actor.</p>",
         "EventActor$accountId": "<p>The AWS account ID of the actor.</p>",
         "EventActor$userName": "<p>The user name of the actor.</p>",
+        "ExperimentDetails$details": "<p>Additional details about the experiment.</p>",
         "FailedReportOutput$errorMessage": "<p>The error message describing why the report generation failed.</p>",
         "Finding$name": "<p>The name of the finding.</p>",
         "Finding$reasoning": "<p>The reasoning behind the finding.</p>",
         "FindingSummary$name": "<p>The name of the finding.</p>",
         "InputSource$identifier": "<p>The identifier of the input source.</p>",
         "InternalServerException$message": null,
+        "LoggingConfiguration$s3BucketName": "<p>The name of the S3 bucket for log delivery.</p>",
+        "LoggingConfiguration$logSchemaVersion": "<p>The version of the log schema.</p>",
+        "ObservabilityAlarmSummary$alarmName": "<p>The name of the CloudWatch alarm.</p>",
+        "ObservabilityAlarmSummary$region": "<p>The Region of the CloudWatch alarm.</p>",
+        "ObservabilityAlarmSummary$accountId": "<p>The account ID that owns the CloudWatch alarm.</p>",
         "Resource$identifier": "<p>The identifier of the resource.</p>",
         "Resource$resourceType": "<p>The type of the resource.</p>",
         "ResourceDiscoveryStatus$errorMessage": "<p>A message describing the error if resource discovery failed.</p>",
@@ -1790,8 +2161,12 @@
         "ServiceTopologyEdgeSummary$destinationResourceIdentifier": "<p>The identifier of the destination resource.</p>",
         "ServiceWorkflowUpdatedMetadata$serviceFunctionId": "<p>The identifier of the service function.</p>",
         "ServiceWorkflowUpdatedMetadata$serviceFunctionName": "<p>The name of the service function.</p>",
+        "StopCondition$value": "<p>The value of the stop condition, such as the ARN of the CloudWatch alarm.</p>",
         "StringChange$oldValue": "<p>The old value.</p>",
         "StringChange$newValue": "<p>The new value.</p>",
+        "SuccessCriteriaAlarmSummary$alarmName": "<p>The name of the CloudWatch alarm.</p>",
+        "SuccessCriteriaAlarmSummary$region": "<p>The Region of the CloudWatch alarm.</p>",
+        "SuccessCriteriaAlarmSummary$accountId": "<p>The account ID that owns the CloudWatch alarm.</p>",
         "SystemEventDetails$title": "<p>The title of the event.</p>",
         "SystemEventDetails$description": "<p>The description of the event.</p>",
         "SystemPolicyAssociatedMetadata$policyName": "<p>The name of the associated policy.</p>",
@@ -1802,6 +2177,26 @@
         "SystemUserJourneyCreatedMetadata$userJourneyName": "<p>The name of the created user journey.</p>",
         "SystemUserJourneyDeletedMetadata$userJourneyName": "<p>The name of the deleted user journey.</p>",
         "SystemUserJourneyUpdatedMetadata$userJourneyName": "<p>The name of the updated user journey.</p>",
+        "Test$name": "<p>The name of the test.</p>",
+        "TestAction$actionId": "<p>The identifier of the fault action.</p>",
+        "TestAction$description": "<p>A description of the fault action.</p>",
+        "TestAction$resourceType": "<p>The resource type that the action targets.</p>",
+        "TestRun$errorMessage": "<p>A human-readable reason for test run failure. Only present when the status is FAILED or ERROR.</p>",
+        "TestRunObservabilityAlarmSummary$alarmName": "<p>The name of the CloudWatch alarm.</p>",
+        "TestRunObservabilityAlarmSummary$region": "<p>The Region of the CloudWatch alarm.</p>",
+        "TestRunObservabilityAlarmSummary$accountId": "<p>The account ID that owns the CloudWatch alarm.</p>",
+        "TestRunSuccessCriteriaAlarmSummary$alarmName": "<p>The name of the CloudWatch alarm.</p>",
+        "TestRunSuccessCriteriaAlarmSummary$region": "<p>The Region of the CloudWatch alarm.</p>",
+        "TestRunSuccessCriteriaAlarmSummary$accountId": "<p>The account ID that owns the CloudWatch alarm.</p>",
+        "TestRunSuccessCriteriaAlarmSummary$outcomeReason": "<p>A human-readable reason for the outcome.</p>",
+        "TestRunSummary$errorMessage": "<p>A human-readable reason for test run failure. Only present when the status is FAILED or ERROR.</p>",
+        "TestTemplate$name": "<p>The name of the test template.</p>",
+        "TestTemplate$description": "<p>A description of the test template.</p>",
+        "TestTemplateParameter$name": "<p>The name of the parameter.</p>",
+        "TestTemplateParameter$description": "<p>A description of the parameter.</p>",
+        "TestTemplateParameter$defaultValue": "<p>The default value of the parameter.</p>",
+        "TestTemplateSummary$name": "<p>The name of the test template.</p>",
+        "TestTemplateSummary$description": "<p>A description of the test template.</p>",
         "ThrottlingException$message": null,
         "UpdateDependencyRequest$comment": "<p>A comment about the dependency.</p>",
         "UpdateDependencyResponse$dependencyName": "<p>The name of the updated dependency.</p>",
@@ -1818,6 +2213,24 @@
       "base": "<p>Describes a change from one string value to another.</p>",
       "refs": {
         "UserJourneyChanges$journeyDescription": "<p>Changes to the user journey description.</p>"
+      }
+    },
+    "StringList": {
+      "base": null,
+      "refs": {
+        "TestParameters$value": null
+      }
+    },
+    "SuccessCriteriaAlarmInput": {
+      "base": "<p>Identifies a success criteria alarm by its ARN.</p>",
+      "refs": {
+        "TestSourceInput$successCriteriaAlarm": "<p>A success criteria alarm that determines whether the test passes or fails.</p>"
+      }
+    },
+    "SuccessCriteriaAlarmSummary": {
+      "base": "<p>Summary information about a configured success criteria alarm.</p>",
+      "refs": {
+        "TestSourceSummary$successCriteriaAlarm": "<p>A configured success criteria alarm.</p>"
       }
     },
     "SuggestedChangesList": {
@@ -2000,6 +2413,265 @@
         "EffectivePolicyValues$dataRecoveryTimeBetweenBackups": "<p>The effective data recovery time between backups value for the service.</p>"
       }
     },
+    "Test": {
+      "base": "<p>Represents a test created for a service by configuring a test template.</p>",
+      "refs": {
+        "CreateTestResponse$test": "<p>The created test.</p>",
+        "GetTestResponse$test": "<p>The requested test.</p>",
+        "UpdateTestResponse$test": "<p>The updated test.</p>"
+      }
+    },
+    "TestAction": {
+      "base": "<p>Represents a fault action that a test runs, along with the resource type it targets.</p>",
+      "refs": {
+        "TestActionList$member": null
+      }
+    },
+    "TestActionList": {
+      "base": null,
+      "refs": {
+        "Test$actions": "<p>The fault actions the test runs.</p>",
+        "TestTemplate$actions": "<p>The fault actions the test template runs.</p>"
+      }
+    },
+    "TestId": {
+      "base": "<p>The unique identifier of a test.</p>",
+      "refs": {
+        "DeleteTestRequest$testId": "<p>The identifier of the test to delete.</p>",
+        "DeleteTestResponse$testId": "<p>The identifier of the deleted test.</p>",
+        "DeleteTestSourcesRequest$testId": "<p>The identifier of the test to remove sources from.</p>",
+        "GetTestRequest$testId": "<p>The identifier of the test to retrieve.</p>",
+        "ListTestRunsRequest$testId": "<p>Filter test runs by test identifier.</p>",
+        "ListTestSourcesRequest$testId": "<p>The identifier of the test to list sources for.</p>",
+        "PutTestSourcesRequest$testId": "<p>The identifier of the test to add sources to.</p>",
+        "StartTestRunRequest$testId": "<p>The identifier of the test to run.</p>",
+        "Test$testId": "<p>The unique identifier of the test.</p>",
+        "TestRun$testId": "<p>The identifier of the test that was run.</p>",
+        "TestSummary$testId": "<p>The unique identifier of the test.</p>",
+        "UpdateTestRequest$testId": "<p>The identifier of the test to update.</p>"
+      }
+    },
+    "TestParameters": {
+      "base": null,
+      "refs": {
+        "CreateTestRequest$parameters": "<p>The parameter values for the test.</p>",
+        "Test$parameters": "<p>The parameter values configured for the test.</p>",
+        "TestRun$parameters": "<p>The parameter values used for the test run.</p>",
+        "UpdateTestRequest$parameters": "<p>The updated parameter values for the test.</p>"
+      }
+    },
+    "TestRun": {
+      "base": "<p>Represents a single run of a test. Configuration is snapshotted from the test and service at the time the run is started.</p>",
+      "refs": {
+        "GetTestRunResponse$testRun": "<p>The requested test run.</p>"
+      }
+    },
+    "TestRunEvent": {
+      "base": "<p>A single event in a test run's timeline.</p>",
+      "refs": {
+        "TestRunEventList$member": null
+      }
+    },
+    "TestRunEventAttributeKey": {
+      "base": "<p>The key of a test run event attribute.</p>",
+      "refs": {
+        "TestRunEventAttributes$key": null
+      }
+    },
+    "TestRunEventAttributeValue": {
+      "base": "<p>The value of a test run event attribute.</p>",
+      "refs": {
+        "TestRunEventAttributes$value": null
+      }
+    },
+    "TestRunEventAttributes": {
+      "base": null,
+      "refs": {
+        "TestRunEvent$attributes": "<p>Machine-parseable key-value attributes for the event.</p>"
+      }
+    },
+    "TestRunEventEventIdString": {
+      "base": null,
+      "refs": {
+        "TestRunEvent$eventId": "<p>The unique identifier of the event.</p>"
+      }
+    },
+    "TestRunEventEventTypeString": {
+      "base": null,
+      "refs": {
+        "TestRunEvent$eventType": "<p>The type of the event, such as action_started, action_completed, or rto_recovery_detected.</p>"
+      }
+    },
+    "TestRunEventList": {
+      "base": null,
+      "refs": {
+        "ListTestRunEventsResponse$events": "<p>The list of test run events.</p>"
+      }
+    },
+    "TestRunEventMessageString": {
+      "base": null,
+      "refs": {
+        "TestRunEvent$message": "<p>A human-readable description of what happened.</p>"
+      }
+    },
+    "TestRunId": {
+      "base": "<p>The unique identifier of a test run.</p>",
+      "refs": {
+        "GetTestRunRequest$testRunId": "<p>The identifier of the test run to retrieve.</p>",
+        "ListReportsRequest$testRunId": null,
+        "ListResolvedTestRunTargetResourcesRequest$testRunId": "<p>The identifier of the test run to list resolved target resources for.</p>",
+        "ListTestRunEventsRequest$testRunId": "<p>The identifier of the test run to list events for.</p>",
+        "ListTestRunSourcesRequest$testRunId": "<p>The identifier of the test run to list sources for.</p>",
+        "ReportGenerationResult$testRunId": null,
+        "StartTestRunResponse$testRunId": "<p>The identifier of the started test run.</p>",
+        "StopTestRunRequest$testRunId": "<p>The identifier of the test run to stop.</p>",
+        "StopTestRunResponse$testRunId": "<p>The identifier of the stopped test run.</p>",
+        "TestRun$testRunId": "<p>The unique identifier of the test run.</p>",
+        "TestRunSummary$testRunId": "<p>The unique identifier of the test run.</p>"
+      }
+    },
+    "TestRunObservabilityAlarmSummary": {
+      "base": "<p>Summary information about an observability alarm snapshot captured for a test run.</p>",
+      "refs": {
+        "TestRunSourceSummary$observabilityAlarm": "<p>An observability alarm snapshot captured for the test run.</p>"
+      }
+    },
+    "TestRunPolicySnapshot": {
+      "base": "<p>A snapshot of the resilience policy captured onto a test run from the service when the run was started.</p>",
+      "refs": {
+        "TestRun$policy": "<p>The resilience policy snapshotted from the service when the run was started.</p>"
+      }
+    },
+    "TestRunReportConfiguration": {
+      "base": "<p>A snapshot of the report configuration captured onto a test run from the service when the run was started.</p>",
+      "refs": {
+        "TestRun$reportConfiguration": "<p>The report configuration snapshotted from the service when the run was started.</p>"
+      }
+    },
+    "TestRunSourceSummary": {
+      "base": "<p>A monitoring-source snapshot captured for a test run. Exactly one member is set.</p>",
+      "refs": {
+        "TestRunSourceSummaryList$member": null
+      }
+    },
+    "TestRunSourceSummaryList": {
+      "base": null,
+      "refs": {
+        "ListTestRunSourcesResponse$testRunSources": "<p>The list of monitoring source snapshots.</p>"
+      }
+    },
+    "TestRunSourceType": {
+      "base": "<p>The type of a test run monitoring-source snapshot.</p>",
+      "refs": {
+        "ListTestRunSourcesRequest$type": "<p>Filter sources by type.</p>"
+      }
+    },
+    "TestRunStatus": {
+      "base": "<p>The status of a test run through its lifecycle.</p>",
+      "refs": {
+        "StartTestRunResponse$status": "<p>The status of the started test run.</p>",
+        "StopTestRunResponse$status": "<p>The status of the test run.</p>",
+        "TestRun$status": "<p>The current status of the test run.</p>",
+        "TestRunSummary$status": "<p>The current status of the test run.</p>"
+      }
+    },
+    "TestRunSuccessCriteriaAlarmSummary": {
+      "base": "<p>Summary information about a success criteria alarm snapshot captured for a test run.</p>",
+      "refs": {
+        "TestRunSourceSummary$successCriteriaAlarm": "<p>A success criteria alarm snapshot captured for the test run.</p>"
+      }
+    },
+    "TestRunSummary": {
+      "base": "<p>Contains summary information about a test run.</p>",
+      "refs": {
+        "TestRunSummaryList$member": null
+      }
+    },
+    "TestRunSummaryList": {
+      "base": null,
+      "refs": {
+        "ListTestRunsResponse$testRuns": "<p>The list of test run summaries.</p>"
+      }
+    },
+    "TestSourceInput": {
+      "base": "<p>Identifies a monitoring source to add to or remove from a test. Exactly one member is set.</p>",
+      "refs": {
+        "TestSourceInputList$member": null
+      }
+    },
+    "TestSourceInputList": {
+      "base": null,
+      "refs": {
+        "DeleteTestSourcesRequest$testSources": "<p>The monitoring sources to remove.</p>",
+        "PutTestSourcesRequest$testSources": "<p>The monitoring sources to add or update.</p>"
+      }
+    },
+    "TestSourceOutcome": {
+      "base": "<p>The evaluation outcome of a test run success criteria source.</p>",
+      "refs": {
+        "TestRunSuccessCriteriaAlarmSummary$outcome": "<p>The evaluation outcome of the source. Absent while the source has not yet been evaluated; set to the terminal outcome afterwards.</p>"
+      }
+    },
+    "TestSourceSummary": {
+      "base": "<p>A configured monitoring source returned by ListTestSources. Exactly one member is set.</p>",
+      "refs": {
+        "TestSourceSummaryList$member": null
+      }
+    },
+    "TestSourceSummaryList": {
+      "base": null,
+      "refs": {
+        "ListTestSourcesResponse$testSources": "<p>The list of configured monitoring sources.</p>"
+      }
+    },
+    "TestSourceType": {
+      "base": "<p>The purpose of a test monitoring source.</p>",
+      "refs": {
+        "ListTestSourcesRequest$type": "<p>Filter sources by type.</p>"
+      }
+    },
+    "TestSummary": {
+      "base": "<p>Contains summary information about a test.</p>",
+      "refs": {
+        "TestSummaryList$member": null
+      }
+    },
+    "TestSummaryList": {
+      "base": null,
+      "refs": {
+        "ListTestsResponse$tests": "<p>The list of test summaries.</p>"
+      }
+    },
+    "TestTemplate": {
+      "base": "<p>A pre-configured, AWS recommended test that defines which resilience capability to validate, the fault actions it runs, and the parameters it accepts.</p>",
+      "refs": {
+        "GetTestTemplateResponse$testTemplate": "<p>The requested test template.</p>"
+      }
+    },
+    "TestTemplateParameter": {
+      "base": "<p>Describes a parameter accepted by a test template.</p>",
+      "refs": {
+        "TestTemplateParameterList$member": null
+      }
+    },
+    "TestTemplateParameterList": {
+      "base": null,
+      "refs": {
+        "TestTemplate$parameters": "<p>The parameters the test template accepts.</p>"
+      }
+    },
+    "TestTemplateSummary": {
+      "base": "<p>Contains summary information about a test template.</p>",
+      "refs": {
+        "TestTemplateSummaryList$member": null
+      }
+    },
+    "TestTemplateSummaryList": {
+      "base": null,
+      "refs": {
+        "ListTestTemplatesResponse$testTemplates": "<p>The list of test template summaries.</p>"
+      }
+    },
     "TestingRecommendation": {
       "base": "<p>A testing recommendation to address a finding.</p>",
       "refs": {
@@ -2036,6 +2708,9 @@
         "ListServiceEventsRequest$endTime": "<p>The end time for filtering events.</p>",
         "ListSystemEventsRequest$startTime": "<p>The start time for filtering events.</p>",
         "ListSystemEventsRequest$endTime": "<p>The end time for filtering events.</p>",
+        "ListTestRunEventsRequest$startedAt": "<p>Return events at or after this timestamp.</p>",
+        "ListTestRunEventsRequest$endedAt": "<p>Return events at or before this timestamp.</p>",
+        "ObservabilityAlarmSummary$createdAt": "<p>The timestamp when the source was configured.</p>",
         "Policy$createdAt": "<p>The timestamp when the policy was created.</p>",
         "Policy$updatedAt": "<p>The timestamp when the policy was last updated.</p>",
         "PolicySummary$createdAt": "<p>The timestamp when the policy was created.</p>",
@@ -2053,11 +2728,19 @@
         "ServiceSummary$createdAt": "<p>The timestamp when the service was created.</p>",
         "ServiceSummary$updatedAt": "<p>The timestamp when the service was last updated.</p>",
         "StartFailureModeAssessmentResponse$startedAt": "<p>The timestamp when the assessment started.</p>",
+        "SuccessCriteriaAlarmSummary$createdAt": "<p>The timestamp when the source was configured.</p>",
         "System$createdAt": "<p>The timestamp when the system was created.</p>",
         "System$updatedAt": "<p>The timestamp when the system was last updated.</p>",
         "SystemEvent$timestamp": "<p>The timestamp of the event.</p>",
         "SystemSummary$createdAt": "<p>The timestamp when the system was created.</p>",
         "SystemSummary$updatedAt": "<p>The timestamp when the system was last updated.</p>",
+        "Test$creationTime": "<p>The timestamp when the test was created.</p>",
+        "TestRun$startedAt": "<p>The timestamp when the test run started.</p>",
+        "TestRun$endedAt": "<p>The timestamp when the test run ended.</p>",
+        "TestRunEvent$timestamp": "<p>The timestamp when the event occurred.</p>",
+        "TestRunSummary$startedAt": "<p>The timestamp when the test run started.</p>",
+        "TestRunSummary$endedAt": "<p>The timestamp when the test run ended.</p>",
+        "TestSummary$creationTime": "<p>The timestamp when the test was created.</p>",
         "UpdateDependencyResponse$updatedAt": "<p>The timestamp when the dependency was updated.</p>",
         "UserJourney$createdAt": "<p>The timestamp when the user journey was created.</p>",
         "UserJourney$updatedAt": "<p>The timestamp when the user journey was last updated.</p>",
@@ -2138,6 +2821,14 @@
       "refs": {}
     },
     "UpdateSystemResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateTestRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateTestResponse": {
       "base": null,
       "refs": {}
     },

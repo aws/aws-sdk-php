@@ -1218,6 +1218,25 @@
       "min":12,
       "pattern":"^\\d{12}$"
     },
+    "OfferCreatedBySourceFilter":{
+      "type":"structure",
+      "members":{
+        "ValueList":{"shape":"OfferCreatedBySourceFilterValueList"}
+      }
+    },
+    "OfferCreatedBySourceFilterValueList":{
+      "type":"list",
+      "member":{"shape":"OfferCreatedBySourceString"},
+      "max":2,
+      "min":1
+    },
+    "OfferCreatedBySourceString":{
+      "type":"string",
+      "enum":[
+        "Seller",
+        "AwsMarketplace"
+      ]
+    },
     "OfferEntityIdFilter":{
       "type":"structure",
       "members":{
@@ -1249,7 +1268,10 @@
         "State":{"shape":"OfferStateFilter"},
         "Targeting":{"shape":"OfferTargetingFilter"},
         "LastModifiedDate":{"shape":"OfferLastModifiedDateFilter"},
-        "OfferSetId":{"shape":"OfferSetIdFilter"}
+        "OfferSetId":{"shape":"OfferSetIdFilter"},
+        "TargetAgreementId":{"shape":"OfferTargetAgreementIdFilter"},
+        "TargetAgreementIntent":{"shape":"OfferTargetAgreementIntentFilter"},
+        "CreatedBySource":{"shape":"OfferCreatedBySourceFilter"}
       }
     },
     "OfferLastModifiedDateFilter":{
@@ -1534,7 +1556,10 @@
         "State",
         "Targeting",
         "LastModifiedDate",
-        "OfferSetId"
+        "OfferSetId",
+        "TargetAgreementId",
+        "TargetAgreementIntent",
+        "CreatedBySource"
       ]
     },
     "OfferStateFilter":{
@@ -1567,8 +1592,45 @@
         "BuyerAccounts":{"shape":"OfferBuyerAccountsList"},
         "State":{"shape":"OfferStateString"},
         "Targeting":{"shape":"OfferTargetingList"},
-        "OfferSetId":{"shape":"OfferSetIdString"}
+        "OfferSetId":{"shape":"OfferSetIdString"},
+        "TargetAgreementId":{"shape":"OfferTargetAgreementIdString"},
+        "TargetAgreementIntent":{"shape":"OfferTargetAgreementIntentString"},
+        "CreatedBySource":{"shape":"OfferCreatedBySourceString"}
       }
+    },
+    "OfferTargetAgreementIdFilter":{
+      "type":"structure",
+      "members":{
+        "ValueList":{"shape":"OfferTargetAgreementIdFilterValueList"}
+      }
+    },
+    "OfferTargetAgreementIdFilterValueList":{
+      "type":"list",
+      "member":{"shape":"OfferTargetAgreementIdString"},
+      "max":10,
+      "min":1
+    },
+    "OfferTargetAgreementIdString":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^(.)+$"
+    },
+    "OfferTargetAgreementIntentFilter":{
+      "type":"structure",
+      "members":{
+        "ValueList":{"shape":"OfferTargetAgreementIntentFilterValueList"}
+      }
+    },
+    "OfferTargetAgreementIntentFilterValueList":{
+      "type":"list",
+      "member":{"shape":"OfferTargetAgreementIntentString"},
+      "max":2,
+      "min":1
+    },
+    "OfferTargetAgreementIntentString":{
+      "type":"string",
+      "enum":["Renew"]
     },
     "OfferTargetingFilter":{
       "type":"structure",

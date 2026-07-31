@@ -297,6 +297,13 @@
         "UpdateFeedResponse$outputs": "<p>The array of outputs in the feed. You might have left this array unchanged, or you might have changed it. </p>"
       }
     },
+    "IamRoleArn": {
+      "base": null,
+      "refs": {
+        "CreateFeedRequest$accessRoleArn": "<p>The ARN of an IAM role that Elemental Inference assumes to access resources in your account on your behalf. For example, the smart crop feature uses this role to read graphics-compositing templates from your Amazon S3 bucket. You specify one access role for each feed. </p>",
+        "UpdateFeedRequest$accessRoleArn": "<p>The ARN of an IAM role that Elemental Inference assumes to access resources in your account on your behalf. You can specify the existing role (to leave it unchanged) or a new role. You specify one access role for each feed. </p>"
+      }
+    },
     "Integer": {
       "base": null,
       "refs": {
@@ -396,6 +403,7 @@
         "GetDictionaryResponse$name": "<p>The name of the dictionary.</p>",
         "GetFeedResponse$name": "<p>The name of the feed.</p>",
         "GetOutput$name": "<p>The name of the output.</p>",
+        "TemplateGroup$name": "<p>A name for the template group.</p>",
         "UpdateDictionaryRequest$name": "<p>A new name for the dictionary. If not specified, the name is not changed.</p>",
         "UpdateDictionaryResponse$name": "<p>The updated or original name of the dictionary.</p>",
         "UpdateFeedRequest$name": "<p>Required. You can specify the existing name (to leave it unchanged) or a new name. </p>",
@@ -406,6 +414,12 @@
     "ResourceNotFoundException": {
       "base": "<p>The resource specified in the action doesn't exist.</p>",
       "refs": {}
+    },
+    "S3Uri": {
+      "base": null,
+      "refs": {
+        "TemplateUriList$member": null
+      }
     },
     "ServiceQuotaExceededException": {
       "base": "<p>The request was rejected because it would exceed one or more service quotas for your account. Review your service quotas and either delete unused resources or request a quota increase. </p>",
@@ -478,6 +492,24 @@
       "base": null,
       "refs": {
         "TagMap$value": null
+      }
+    },
+    "TemplateGroup": {
+      "base": "<p>A named set of graphics-compositing templates used by the crop feature, specified in the templateGroups array of a CroppingConfig. </p>",
+      "refs": {
+        "TemplateGroupList$member": null
+      }
+    },
+    "TemplateGroupList": {
+      "base": null,
+      "refs": {
+        "CroppingConfig$templateGroups": "<p>An array of template groups for the crop output. Each template group provides the graphics-compositing templates that Elemental Inference applies to the cropped video. You can specify from 1 to 4 template groups. </p>"
+      }
+    },
+    "TemplateUriList": {
+      "base": null,
+      "refs": {
+        "TemplateGroup$templateUris": "<p>An array of Amazon S3 URIs that point to the graphics-compositing templates for this group. You can specify 1 or 2 URIs. Each URI must be in the form <code>s3://bucket-name/key</code>. Elemental Inference reads these templates using the IAM role that you specify in accessRoleArn. </p>"
       }
     },
     "TooManyRequestException": {

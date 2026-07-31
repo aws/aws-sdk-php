@@ -668,6 +668,26 @@
     }
   },
   "shapes":{
+    "AbandonmentRatePacingConfig":{
+      "type":"structure",
+      "required":[
+        "targetRate",
+        "connectionStartPoint",
+        "connectionThresholdSeconds",
+        "evaluationWindow"
+      ],
+      "members":{
+        "targetRate":{"shape":"TargetRate"},
+        "connectionStartPoint":{"shape":"ConnectionStartPoint"},
+        "connectionThresholdSeconds":{"shape":"AbandonmentRatePacingConfigConnectionThresholdSecondsInteger"},
+        "evaluationWindow":{"shape":"EvaluationWindow"}
+      }
+    },
+    "AbandonmentRatePacingConfigConnectionThresholdSecondsInteger":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
     "AccessDeniedException":{
       "type":"structure",
       "required":["message"],
@@ -732,7 +752,7 @@
     "BandwidthAllocation":{
       "type":"double",
       "box":true,
-      "max":1,
+      "max":2,
       "min":0
     },
     "Boolean":{
@@ -971,6 +991,14 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "ConnectionStartPoint":{
+      "type":"string",
+      "enum":[
+        "CONNECTED_TO_SYSTEM",
+        "GREETING_START",
+        "GREETING_END"
+      ]
     },
     "ContactFlowId":{
       "type":"string",
@@ -1293,6 +1321,12 @@
       "type":"integer",
       "box":true,
       "min":0
+    },
+    "EvaluationWindow":{
+      "type":"string",
+      "max":5,
+      "min":0,
+      "pattern":"PT([1-9]|1[0-9]|2[0-4])H"
     },
     "EventTrigger":{
       "type":"structure",
@@ -1807,6 +1841,19 @@
       "max":25,
       "min":1
     },
+    "PacingStrategy":{
+      "type":"structure",
+      "members":{
+        "abandonmentRate":{"shape":"AbandonmentRatePacingConfig"}
+      },
+      "union":true
+    },
+    "PacingStrategyList":{
+      "type":"list",
+      "member":{"shape":"PacingStrategy"},
+      "max":1,
+      "min":1
+    },
     "PauseCampaignRequest":{
       "type":"structure",
       "required":["id"],
@@ -1822,7 +1869,8 @@
       "type":"structure",
       "required":["bandwidthAllocation"],
       "members":{
-        "bandwidthAllocation":{"shape":"BandwidthAllocation"}
+        "bandwidthAllocation":{"shape":"BandwidthAllocation"},
+        "pacingStrategies":{"shape":"PacingStrategyList"}
       }
     },
     "PreviewConfig":{
@@ -2263,6 +2311,12 @@
       "type":"string",
       "max":256,
       "min":0
+    },
+    "TargetRate":{
+      "type":"double",
+      "box":true,
+      "max":1.0,
+      "min":0.0
     },
     "TelephonyChannelSubtypeConfig":{
       "type":"structure",

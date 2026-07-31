@@ -937,6 +937,12 @@
                 },
                 "searchResult": {
                     "shape": "SearchResultBlock"
+                },
+                "toolAddition": {
+                    "shape": "ToolAdditionBlock"
+                },
+                "toolRemoval": {
+                    "shape": "ToolRemovalBlock"
                 }
             },
             "union": true
@@ -3855,8 +3861,16 @@
             "members": {
                 "textFormat": {
                     "shape": "OutputFormat"
+                },
+                "effort": {
+                    "shape": "OutputConfigEffortString"
                 }
             }
+        },
+        "OutputConfigEffortString": {
+            "type": "string",
+            "max": 16,
+            "min": 0
         },
         "OutputFormat": {
             "type": "structure",
@@ -4445,6 +4459,17 @@
             },
             "union": true
         },
+        "ToolAdditionBlock": {
+            "type": "structure",
+            "required": [
+                "tool"
+            ],
+            "members": {
+                "tool": {
+                    "shape": "ToolReference"
+                }
+            }
+        },
         "ToolChoice": {
             "type": "structure",
             "members": {
@@ -4495,6 +4520,46 @@
             "max": 64,
             "min": 1,
             "pattern": "[a-zA-Z0-9_-]+"
+        },
+        "ToolReference": {
+            "type": "structure",
+            "members": {
+                "type": {
+                    "shape": "ToolReferenceTypeString"
+                },
+                "name": {
+                    "shape": "ToolReferenceNameString"
+                },
+                "serverName": {
+                    "shape": "ToolReferenceServerNameString"
+                }
+            }
+        },
+        "ToolReferenceNameString": {
+            "type": "string",
+            "max": 128,
+            "min": 1
+        },
+        "ToolReferenceServerNameString": {
+            "type": "string",
+            "max": 128,
+            "min": 1
+        },
+        "ToolReferenceTypeString": {
+            "type": "string",
+            "max": 64,
+            "min": 1
+        },
+        "ToolRemovalBlock": {
+            "type": "structure",
+            "required": [
+                "tool"
+            ],
+            "members": {
+                "tool": {
+                    "shape": "ToolReference"
+                }
+            }
         },
         "ToolResultBlock": {
             "type": "structure",

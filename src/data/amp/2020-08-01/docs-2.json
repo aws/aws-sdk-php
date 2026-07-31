@@ -419,6 +419,21 @@
         "Source$eksConfiguration": "<p>The Amazon EKS cluster from which a scraper collects metrics.</p>"
       }
     },
+    "ExporterConfiguration": {
+      "base": "<p>Contains the configuration for an exporter managed by the scraper.</p>",
+      "refs": {
+        "ExporterList$member": null
+      }
+    },
+    "ExporterList": {
+      "base": "<p>A list of exporter configurations for a scraper. You can configure at most one Amazon OpenSearch Service domain.</p>",
+      "refs": {
+        "CreateScraperRequest$exporters": "<p>The exporter configurations for the scraper. You can configure at most one Amazon OpenSearch Service domain. If you don't specify a value, the scraper is created without an exporter configuration.</p>",
+        "ScraperDescription$exporters": "<p>The exporter configurations for the scraper, if configured. The list contains at most one configuration for an Amazon OpenSearch Service domain.</p>",
+        "ScraperSummary$exporters": "<p>The exporter configurations for the scraper, if configured. The list contains at most one configuration for an Amazon OpenSearch Service domain.</p>",
+        "UpdateScraperRequest$exporters": "<p>The exporter configurations for the scraper. You can configure at most one Amazon OpenSearch Service domain. If you don't specify a value, the existing exporter configuration remains unchanged.</p>"
+      }
+    },
     "FilterKey": {
       "base": "<p>The name of the key by which to filter.</p>",
       "refs": {
@@ -683,6 +698,18 @@
       "base": null,
       "refs": {
         "LoggingFilter$qspThreshold": "<p>The Query Samples Processed (QSP) threshold above which queries will be logged. Queries processing more samples than this threshold will be captured in logs.</p>"
+      }
+    },
+    "OpenSearchDomainArn": {
+      "base": "<p>An Amazon Resource Name (ARN) that identifies an Amazon OpenSearch Service domain.</p>",
+      "refs": {
+        "OpenSearchExporterConfiguration$domainArn": "<p>The Amazon Resource Name (ARN) of the Amazon OpenSearch Service domain.</p>"
+      }
+    },
+    "OpenSearchExporterConfiguration": {
+      "base": "<p>The configuration for exporting metrics to an Amazon OpenSearch Service domain.</p>",
+      "refs": {
+        "ExporterConfiguration$openSearchConfiguration": "<p>The configuration that the scraper uses to export metrics to an Amazon OpenSearch Service domain.</p>"
       }
     },
     "PaginationToken": {

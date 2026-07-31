@@ -35,6 +35,7 @@
     "CreateThemeAlias": "<p>Creates a theme alias for a theme.</p>",
     "CreateTopic": "<p>Creates a new Q topic.</p>",
     "CreateTopicRefreshSchedule": "<p>Creates a topic refresh schedule.</p>",
+    "CreateTopicV2": "<p>Creates a new Q topic.</p>",
     "CreateVPCConnection": "<p>Creates a new VPC connection.</p>",
     "DeleteAccountCustomPermission": "<p>Unapplies a custom permissions profile from an account.</p>",
     "DeleteAccountCustomization": "<important> <p>This API permanently deletes all Quick Sight customizations for the specified Amazon Web Services account and namespace. When you delete account customizations:</p> <ul> <li> <p>All customizations are removed including themes, branding, and visual settings</p> </li> <li> <p>This action cannot be undone through the API</p> </li> <li> <p>Users will see default Quick Sight styling after customizations are deleted</p> </li> </ul> <p> <b>Before proceeding:</b> Ensure you have backups of any custom themes or branding elements you may want to recreate.</p> </important> <p>Deletes all Amazon Quick Sight customizations for the specified Amazon Web Services account and Quick Sight namespace.</p>",
@@ -70,6 +71,7 @@
     "DeleteThemeAlias": "<p>Deletes the version of the theme that the specified theme alias points to. If you provide a specific alias, you delete the version of the theme that the alias points to.</p>",
     "DeleteTopic": "<p>Deletes a topic.</p>",
     "DeleteTopicRefreshSchedule": "<p>Deletes a topic refresh schedule.</p>",
+    "DeleteTopicV2": "<p>Deletes a Q topic.</p>",
     "DeleteUser": "<p>Deletes the Amazon Quick Sight user that is associated with the identity of the IAM user or role that's making the call. The IAM user isn't deleted as a result of this call. </p>",
     "DeleteUserByPrincipalId": "<p>Deletes a user identified by its principal ID. </p>",
     "DeleteUserCustomPermission": "<p>Deletes a custom permissions profile from a user.</p>",
@@ -134,8 +136,10 @@
     "DescribeThemePermissions": "<p>Describes the read and write permissions for a theme.</p>",
     "DescribeTopic": "<p>Describes a topic.</p>",
     "DescribeTopicPermissions": "<p>Describes the permissions of a topic.</p>",
+    "DescribeTopicPermissionsV2": "<p>Describes the permissions of a topic.</p>",
     "DescribeTopicRefresh": "<p>Describes the status of a topic refresh.</p>",
     "DescribeTopicRefreshSchedule": "<p>Deletes a topic refresh schedule.</p>",
+    "DescribeTopicV2": "<p>Describes a Q topic.</p>",
     "DescribeUser": "<p>Returns information about a user, given the user name. </p>",
     "DescribeVPCConnection": "<p>Describes a VPC connection.</p>",
     "GenerateEmbedUrlForAnonymousUser": "<p>Generates an embed URL that you can use to embed an Amazon Quick dashboard or visual in your website, without having to register any reader users. Before you use this action, make sure that you have configured the dashboards and permissions.</p> <p>The following rules apply to the generated URL:</p> <ul> <li> <p>It contains a temporary bearer token. It is valid for 5 minutes after it is generated. Once redeemed within this period, it cannot be re-used again.</p> </li> <li> <p>The URL validity period should not be confused with the actual session lifetime that can be customized using the <code> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_GenerateEmbedUrlForAnonymousUser.html#QS-GenerateEmbedUrlForAnonymousUser-request-SessionLifetimeInMinutes\">SessionLifetimeInMinutes</a> </code> parameter. The resulting user session is valid for 15 minutes (minimum) to 10 hours (maximum). The default session duration is 10 hours.</p> </li> <li> <p>You are charged only when the URL is used or there is interaction with Amazon Quick.</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/embedded-analytics.html\">Embedded Analytics</a> in the <i>Amazon Quick User Guide</i>.</p> <p>For more information about the high-level steps for embedding and for an interactive demo of the ways you can customize embedding, visit the <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/quicksight-dev-portal.html\">Amazon Quick Developer Portal</a>.</p>",
@@ -185,6 +189,7 @@
     "ListTopicRefreshSchedules": "<p>Lists all of the refresh schedules for a topic.</p>",
     "ListTopicReviewedAnswers": "<p>Lists all reviewed answers for a Q Topic.</p>",
     "ListTopics": "<p>Lists all of the topics within an account.</p>",
+    "ListTopicsV2": "<p>Lists all of the Q topics in the specified Amazon Web Services account in an Amazon Web Services Region.</p>",
     "ListUserGroups": "<p>Lists the Amazon Quick Sight groups that an Amazon Quick Sight user is a member of.</p>",
     "ListUsers": "<p>Returns a list of all of the Amazon Quick Sight users belonging to this account. </p>",
     "ListUsersIndexCapacity": "<p>Lists per-user index capacity consumption for an account.</p>",
@@ -205,6 +210,7 @@
     "SearchKnowledgeBases": "<p>Searches for a subset of knowledge bases based on specified filters.</p>",
     "SearchSpaces": "<p>Searches for Amazon QuickSight spaces that match the specified filters.</p>",
     "SearchTopics": "<p>Searches for any Q topic that exists in an Quick account.</p>",
+    "SearchTopicsV2": "<p>Searches for any Q topic that exists in an Amazon Web Services account.</p>",
     "StartAssetBundleExportJob": "<p>Starts an Asset Bundle export job.</p> <p>An Asset Bundle export job exports specified Amazon Quick Sight assets. You can also choose to export any asset dependencies in the same job. Export jobs run asynchronously and can be polled with a <code>DescribeAssetBundleExportJob</code> API call. When a job is successfully completed, a download URL that contains the exported assets is returned. The URL is valid for 5 minutes and can be refreshed with a <code>DescribeAssetBundleExportJob</code> API call. Each Amazon Quick Sight account can run up to 5 export jobs concurrently.</p> <p>The API caller must have the necessary permissions in their IAM role to access each resource before the resources can be exported.</p>",
     "StartAssetBundleImportJob": "<p>Starts an Asset Bundle import job.</p> <p>An Asset Bundle import job imports specified Amazon Quick Sight assets into an Amazon Quick Sight account. You can also choose to import a naming prefix and specified configuration overrides. The assets that are contained in the bundle file that you provide are used to create or update a new or existing asset in your Amazon Quick Sight account. Each Amazon Quick Sight account can run up to 5 import jobs concurrently.</p> <p>The API caller must have the necessary <code>\"create\"</code>, <code>\"describe\"</code>, and <code>\"update\"</code> permissions in their IAM role to access each resource type that is contained in the bundle file before the resources can be imported.</p>",
     "StartAutomationJob": "<p>Starts a new job for a specified automation. The job runs the automation with the provided input payload.</p>",
@@ -267,7 +273,9 @@
     "UpdateThemePermissions": "<p>Updates the resource permissions for a theme. Permissions apply to the action to grant or revoke permissions on, for example <code>\"quicksight:DescribeTheme\"</code>.</p> <p>Theme permissions apply in groupings. Valid groupings include the following for the three levels of permissions, which are user, owner, or no permissions: </p> <ul> <li> <p>User</p> <ul> <li> <p> <code>\"quicksight:DescribeTheme\"</code> </p> </li> <li> <p> <code>\"quicksight:DescribeThemeAlias\"</code> </p> </li> <li> <p> <code>\"quicksight:ListThemeAliases\"</code> </p> </li> <li> <p> <code>\"quicksight:ListThemeVersions\"</code> </p> </li> </ul> </li> <li> <p>Owner</p> <ul> <li> <p> <code>\"quicksight:DescribeTheme\"</code> </p> </li> <li> <p> <code>\"quicksight:DescribeThemeAlias\"</code> </p> </li> <li> <p> <code>\"quicksight:ListThemeAliases\"</code> </p> </li> <li> <p> <code>\"quicksight:ListThemeVersions\"</code> </p> </li> <li> <p> <code>\"quicksight:DeleteTheme\"</code> </p> </li> <li> <p> <code>\"quicksight:UpdateTheme\"</code> </p> </li> <li> <p> <code>\"quicksight:CreateThemeAlias\"</code> </p> </li> <li> <p> <code>\"quicksight:DeleteThemeAlias\"</code> </p> </li> <li> <p> <code>\"quicksight:UpdateThemeAlias\"</code> </p> </li> <li> <p> <code>\"quicksight:UpdateThemePermissions\"</code> </p> </li> <li> <p> <code>\"quicksight:DescribeThemePermissions\"</code> </p> </li> </ul> </li> <li> <p>To specify no permissions, omit the permissions list.</p> </li> </ul>",
     "UpdateTopic": "<p>Updates a topic.</p>",
     "UpdateTopicPermissions": "<p>Updates the permissions of a topic.</p>",
+    "UpdateTopicPermissionsV2": "<p>Updates the permissions of a topic.</p>",
     "UpdateTopicRefreshSchedule": "<p>Updates a topic refresh schedule.</p>",
+    "UpdateTopicV2": "<p>Updates the definition of a Q topic.</p>",
     "UpdateUser": "<p>Updates an Amazon Quick Sight user.</p>",
     "UpdateUserCustomPermission": "<p>Updates a custom permissions profile for a user.</p>",
     "UpdateVPCConnection": "<p>Updates a VPC connection.</p>"
@@ -839,8 +847,8 @@
     "AnalysisSourceEntity": {
       "base": "<p>The source entity of an analysis.</p>",
       "refs": {
-        "CreateAnalysisRequest$SourceEntity": "<p>A source entity to use for the analysis that you're creating. This metadata structure contains details that describe a source template and one or more datasets.</p> <p>Either a <code>SourceEntity</code> or a <code>Definition</code> must be provided in order for the request to be valid.</p>",
-        "UpdateAnalysisRequest$SourceEntity": "<p>A source entity to use for the analysis that you're updating. This metadata structure contains details that describe a source template and one or more datasets.</p>"
+        "CreateAnalysisRequest$SourceEntity": "<p>A source entity to use for the analysis that you're creating. This metadata structure contains details that describe a source template and one or more datasets or topics.</p> <p>Either a <code>SourceEntity</code> or a <code>Definition</code> must be provided in order for the request to be valid.</p>",
+        "UpdateAnalysisRequest$SourceEntity": "<p>A source entity to use for the analysis that you're updating. This metadata structure contains details that describe a source template and one or more datasets or topics.</p>"
       }
     },
     "AnalysisSourceTemplate": {
@@ -1110,6 +1118,7 @@
         "CreateTopicResponse$Arn": "<p>The Amazon Resource Name (ARN) of the topic.</p>",
         "CreateTopicResponse$RefreshArn": "<p>The Amazon Resource Name (ARN) of the topic refresh.</p>",
         "CreateTopicReviewedAnswer$DatasetArn": "<p>The Dataset arn for the <code>CreateTopicReviewedAnswer</code>.</p>",
+        "CreateTopicV2Response$Arn": "<p>The Amazon Resource Name (ARN) of the topic.</p>",
         "CreateVPCConnectionResponse$Arn": "<p>The Amazon Resource Name (ARN) of the VPC connection.</p>",
         "CustomPermissions$Arn": "<p>The Amazon Resource Name (ARN) of the custom permissions profile.</p>",
         "CustomSql$DataSourceArn": "<p>The Amazon Resource Name (ARN) of the data source.</p>",
@@ -1145,6 +1154,7 @@
         "DeleteTopicRefreshScheduleResponse$TopicArn": "<p>The Amazon Resource Name (ARN) of the topic.</p>",
         "DeleteTopicRefreshScheduleResponse$DatasetArn": "<p>The Amazon Resource Name (ARN) of the dataset.</p>",
         "DeleteTopicResponse$Arn": "<p>The Amazon Resource Name (ARN) of the topic.</p>",
+        "DeleteTopicV2Response$Arn": "<p>The Amazon Resource Name (ARN) of the topic.</p>",
         "DeleteVPCConnectionResponse$Arn": "<p>The Amazon Resource Name (ARN) of the deleted VPC connection.</p>",
         "DescribeAccountCustomizationResponse$Arn": "<p>The Amazon Resource Name (ARN) of the customization that's associated with this Amazon Web Services account.</p>",
         "DescribeAnalysisDefinitionResponse$ThemeArn": "<p>The ARN of the theme of the analysis.</p>",
@@ -1166,9 +1176,11 @@
         "DescribeTemplatePermissionsResponse$TemplateArn": "<p>The Amazon Resource Name (ARN) of the template.</p>",
         "DescribeThemePermissionsResponse$ThemeArn": "<p>The Amazon Resource Name (ARN) of the theme.</p>",
         "DescribeTopicPermissionsResponse$TopicArn": "<p>The Amazon Resource Name (ARN) of the topic.</p>",
+        "DescribeTopicPermissionsV2Response$TopicArn": "<p>The Amazon Resource Name (ARN) of the topic.</p>",
         "DescribeTopicRefreshScheduleResponse$TopicArn": "<p>The Amazon Resource Name (ARN) of the topic.</p>",
         "DescribeTopicRefreshScheduleResponse$DatasetArn": "<p>The Amazon Resource Name (ARN) of the dataset.</p>",
         "DescribeTopicResponse$Arn": "<p>The Amazon Resource Name (ARN) of the topic.</p>",
+        "DescribeTopicV2Response$Arn": "<p>The Amazon Resource Name (ARN) of the topic.</p>",
         "FileSource$DataSourceArn": "<p>The Amazon Resource Name (ARN) for the data source.</p>",
         "Folder$Arn": "<p>The Amazon Resource Name (ARN) for the folder.</p>",
         "FolderArnList$member": null,
@@ -1220,11 +1232,17 @@
         "ThemeSummary$Arn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
         "ThemeVersion$Arn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
         "ThemeVersionSummary$Arn": "<p>The Amazon Resource Name (ARN) of the theme version.</p>",
+        "TopicArnsList$member": null,
+        "TopicIdentifierDeclaration$TopicArn": "<p>The Amazon Resource Name (ARN) of the topic.</p>",
+        "TopicReference$TopicArn": "<p>Topic Amazon Resource Name (ARN).</p>",
         "TopicRefreshDetails$RefreshArn": "<p>The Amazon Resource Name (ARN) of the topic refresh.</p>",
         "TopicRefreshScheduleSummary$DatasetArn": "<p>The Amazon Resource Name (ARN) of the dataset.</p>",
         "TopicReviewedAnswer$Arn": "<p>The Amazon Resource Name (ARN) of the reviewed answer.</p>",
         "TopicReviewedAnswer$DatasetArn": "<p>The Dataset ARN for the <code>TopicReviewedAnswer</code>.</p>",
         "TopicSummary$Arn": "<p>The Amazon Resource Name (ARN) of the topic.</p>",
+        "TopicV2DataSetReference$DataSetArn": "<p>The Amazon Resource Name (ARN) of the data set.</p>",
+        "TopicV2DataSetRelationEndpoint$DataSetArn": "<p>The Amazon Resource Name (ARN) of the data set at this endpoint of the relation.</p>",
+        "TopicV2Summary$Arn": "<p>The Amazon Resource Name (ARN) of the topic.</p>",
         "UntagResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource that you want to untag.</p>",
         "UpdateAccountCustomizationResponse$Arn": "<p>The Amazon Resource Name (ARN) for the updated customization for this Amazon Web Services account.</p>",
         "UpdateActionConnectorRequest$VpcConnectionArn": "<p>The updated ARN of the VPC connection to use for secure connectivity.</p>",
@@ -1263,10 +1281,12 @@
         "UpdateThemeResponse$Arn": "<p>The Amazon Resource Name (ARN) for the theme.</p>",
         "UpdateThemeResponse$VersionArn": "<p>The Amazon Resource Name (ARN) for the new version of the theme.</p>",
         "UpdateTopicPermissionsResponse$TopicArn": "<p>The Amazon Resource Name (ARN) of the topic.</p>",
+        "UpdateTopicPermissionsV2Response$TopicArn": "<p>The Amazon Resource Name (ARN) of the topic.</p>",
         "UpdateTopicRefreshScheduleResponse$TopicArn": "<p>The Amazon Resource Name (ARN) of the topic.</p>",
         "UpdateTopicRefreshScheduleResponse$DatasetArn": "<p>The Amazon Resource Name (ARN) of the dataset.</p>",
         "UpdateTopicResponse$Arn": "<p>The Amazon Resource Name (ARN) of the topic.</p>",
         "UpdateTopicResponse$RefreshArn": "<p>The Amazon Resource Name (ARN) of the topic refresh.</p>",
+        "UpdateTopicV2Response$Arn": "<p>The Amazon Resource Name (ARN) of the topic.</p>",
         "UpdateVPCConnectionResponse$Arn": "<p>The Amazon Resource Name (ARN) of the VPC connection.</p>",
         "User$Arn": "<p>The Amazon Resource Name (ARN) for the user.</p>",
         "UserIdentifier$UserArn": "<p>The Amazon Resource Name (ARN) of the user that you want to get identity context for.</p>",
@@ -2167,6 +2187,7 @@
         "CreateThemeRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account where you want to store the new theme. </p>",
         "CreateTopicRefreshScheduleRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the topic you're creating a refresh schedule for.</p>",
         "CreateTopicRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that you want to create a topic in.</p>",
+        "CreateTopicV2Request$AwsAccountId": "<p>The ID of the Amazon Web Services account that you want to create a topic in.</p>",
         "CreateVPCConnectionRequest$AwsAccountId": "<p>The Amazon Web Services account ID of the account where you want to create a new VPC connection.</p>",
         "DeleteAccountCustomPermissionRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account from which you want to unapply the custom permissions profile.</p>",
         "DeleteAccountCustomizationRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that you want to delete Quick Sight customizations from.</p>",
@@ -2199,6 +2220,7 @@
         "DeleteThemeRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the theme that you're deleting.</p>",
         "DeleteTopicRefreshScheduleRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "DeleteTopicRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the topic that you want to delete.</p>",
+        "DeleteTopicV2Request$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the topic that you want to delete.</p>",
         "DeleteUserByPrincipalIdRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that the user is in. Currently, you use the ID for the Amazon Web Services account that contains your Amazon Quick Sight account.</p>",
         "DeleteUserCustomPermissionRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the custom permission configuration that you want to delete.</p>",
         "DeleteUserRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that the user is in. Currently, you use the ID for the Amazon Web Services account that contains your Amazon Quick Sight account.</p>",
@@ -2264,9 +2286,11 @@
         "DescribeThemeAliasRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the theme alias that you're describing.</p>",
         "DescribeThemePermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the theme that you're describing.</p>",
         "DescribeTopicPermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the topic that you want described.</p>",
+        "DescribeTopicPermissionsV2Request$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the topic that you want described.</p>",
         "DescribeTopicRefreshRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the topic whose refresh you want to describe.</p>",
         "DescribeTopicRefreshScheduleRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "DescribeTopicRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
+        "DescribeTopicV2Request$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the topic that you want to describe.</p>",
         "DescribeUserRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that the user is in. Currently, you use the ID for the Amazon Web Services account that contains your Amazon Quick Sight account.</p>",
         "DescribeVPCConnectionRequest$AwsAccountId": "<p>The Amazon Web Services account ID of the account that contains the VPC connection that you want described.</p>",
         "GenerateEmbedUrlForAnonymousUserRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the dashboard that you're embedding.</p>",
@@ -2312,6 +2336,7 @@
         "ListTopicRefreshSchedulesRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the topic whose refresh schedule you want described.</p>",
         "ListTopicReviewedAnswersRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that containd the reviewed answers that you want listed.</p>",
         "ListTopicsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the topics that you want to list.</p>",
+        "ListTopicsV2Request$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the topics that you want to list.</p>",
         "ListUserGroupsRequest$AwsAccountId": "<p>The Amazon Web Services account ID that the user is in. Currently, you use the ID for the Amazon Web Services account that contains your Amazon Quick Sight account.</p>",
         "ListUsersIndexCapacityRequest$awsAccountId": "<p>The ID of the Amazon Web Services account that contains the index capacity data.</p>",
         "ListUsersRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that the user is in. Currently, you use the ID for the Amazon Web Services account that contains your Amazon Quick Sight account.</p>",
@@ -2330,6 +2355,7 @@
         "SearchGroupsRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that the group is in. Currently, you use the ID for the Amazon Web Services account that contains your Amazon Quick Sight account.</p>",
         "SearchSpacesRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the spaces.</p>",
         "SearchTopicsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the topic that you want to find.</p>",
+        "SearchTopicsV2Request$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the topic that you want to search.</p>",
         "StartAssetBundleExportJobRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account to export assets from.</p>",
         "StartAssetBundleImportJobRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account to import assets into. </p>",
         "StartAutomationJobRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the automation.</p>",
@@ -2387,8 +2413,10 @@
         "UpdateThemePermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the theme.</p>",
         "UpdateThemeRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the theme that you're updating.</p>",
         "UpdateTopicPermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the topic that you want to update the permissions for.</p>",
+        "UpdateTopicPermissionsV2Request$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the topic that you want to update the permissions for.</p>",
         "UpdateTopicRefreshScheduleRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the topic whose refresh schedule you want to update.</p>",
         "UpdateTopicRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the topic that you want to update.</p>",
+        "UpdateTopicV2Request$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the topic that you want to update.</p>",
         "UpdateUserCustomPermissionRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the custom permission configuration that you want to update.</p>",
         "UpdateUserRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that the user is in. Currently, you use the ID for the Amazon Web Services account that contains your Amazon Quick Sight account.</p>",
         "UpdateVPCConnectionRequest$AwsAccountId": "<p>The Amazon Web Services account ID of the account that contains the VPC connection that you want to update.</p>"
@@ -2826,14 +2854,17 @@
         "TopicIRFilterOption$Inverse": "<p>The inverse for the <code>TopicIRFilterOption</code>.</p>",
         "TopicIRFilterOption$Inclusive": "<p>The inclusive for the <code>TopicIRFilterOption</code>.</p>",
         "TopicNullFilter$Inverse": "<p>A Boolean value that indicates if the filter is inverse.</p>",
+        "TopicNumericEqualityFilter$Inverse": "<p>A Boolean value that indicates if the filter is inverse.</p>",
         "TopicNumericRangeFilter$Inclusive": "<p>A Boolean value that indicates whether the endpoints of the numeric range are included in the filter. If set to true, topics whose numeric field value is equal to the endpoint values will be included in the filter. If set to false, topics whose numeric field value is equal to the endpoint values will be excluded from the filter.</p>",
+        "TopicNumericRangeFilter$Inverse": "<p>A Boolean value that indicates if the filter is inverse.</p>",
         "TopicRefreshSchedule$BasedOnSpiceSchedule": "<p>A Boolean value that controls whether to schedule runs at the same schedule that is specified in SPICE dataset.</p>",
         "UpdateAccountSettingsRequest$TerminationProtectionEnabled": "<p>A boolean value that determines whether or not an Quick Sight account can be deleted. A <code>True</code> value doesn't allow the account to be deleted and results in an error message if a user tries to make a <code>DeleteAccountSubscription</code> request. A <code>False</code> value will allow the account to be deleted.</p>",
         "UpdateKnowledgeBaseRequest$IsEmailNotificationOptedForIngestionFailures": "<p>Specifies whether email notifications are enabled for ingestion failures.</p>",
         "UpdatePublicSharingSettingsRequest$PublicSharingEnabled": "<p>A Boolean value that indicates whether public sharing is turned on for an Quick account.</p>",
         "UpdateUserRequest$UnapplyCustomPermissions": "<p>A flag that you use to indicate that you want to remove all custom permissions from this user. Using this parameter resets the user to the state it was in before a custom permissions profile was applied. This parameter defaults to NULL and it doesn't accept any other value.</p>",
         "UploadSettings$ContainsHeader": "<p>Whether the file has a header row, or the files each have a header row.</p>",
-        "User$Active": "<p>The active status of user. When you create an Quick Sight user that's not an IAM user or an Active Directory user, that user is inactive until they sign in and provide a password.</p>"
+        "User$Active": "<p>The active status of user. When you create an Quick Sight user that's not an IAM user or an Active Directory user, that user is inactive until they sign in and provide a password.</p>",
+        "VisualMessageConfiguration$Enabled": "<p>Specifies whether the custom message is displayed on the visual. When set to <code>true</code>, the custom message appears in place of the default message. When set to <code>false</code> or omitted, the default message is displayed.</p>"
       }
     },
     "BooleanObject": {
@@ -3095,6 +3126,48 @@
         "Capabilities$ApproveFlowShareRequests": "<p>The ability to review and approve sharing requests of Flows.</p>",
         "Capabilities$UseAgentWebSearch": "<p>The ability to use internet to enhance results in Chat Agents, Flows, and Quick Research. Web search queries will be processed securely in an Amazon Web Services region <code>us-east-1</code>.</p>",
         "Capabilities$KnowledgeBase": "<p>The ability to use knowledge bases to specify content from external applications.</p>",
+        "Capabilities$CreateAndUpdateKnowledgeBases": null,
+        "Capabilities$ShareKnowledgeBases": null,
+        "Capabilities$SharePointKnowledgeBase": null,
+        "Capabilities$CreateAndUpdateSharePointKnowledgeBase": null,
+        "Capabilities$ShareSharePointKnowledgeBase": null,
+        "Capabilities$UseSharePointKnowledgeBase": null,
+        "Capabilities$GoogleDriveKnowledgeBase": null,
+        "Capabilities$CreateAndUpdateGoogleDriveKnowledgeBase": null,
+        "Capabilities$ShareGoogleDriveKnowledgeBase": null,
+        "Capabilities$UseGoogleDriveKnowledgeBase": null,
+        "Capabilities$WebCrawlerKnowledgeBase": null,
+        "Capabilities$CreateAndUpdateWebCrawlerKnowledgeBase": null,
+        "Capabilities$ShareWebCrawlerKnowledgeBase": null,
+        "Capabilities$UseWebCrawlerKnowledgeBase": null,
+        "Capabilities$S3KnowledgeBase": null,
+        "Capabilities$CreateAndUpdateS3KnowledgeBase": null,
+        "Capabilities$ShareS3KnowledgeBase": null,
+        "Capabilities$UseS3KnowledgeBase": null,
+        "Capabilities$ConfluenceKnowledgeBase": null,
+        "Capabilities$CreateAndUpdateConfluenceKnowledgeBase": null,
+        "Capabilities$ShareConfluenceKnowledgeBase": null,
+        "Capabilities$UseConfluenceKnowledgeBase": null,
+        "Capabilities$OneDriveKnowledgeBase": null,
+        "Capabilities$CreateAndUpdateOneDriveKnowledgeBase": null,
+        "Capabilities$ShareOneDriveKnowledgeBase": null,
+        "Capabilities$UseOneDriveKnowledgeBase": null,
+        "Capabilities$QBusinessKnowledgeBase": null,
+        "Capabilities$CreateAndUpdateQBusinessKnowledgeBase": null,
+        "Capabilities$ShareQBusinessKnowledgeBase": null,
+        "Capabilities$UseQBusinessKnowledgeBase": null,
+        "Capabilities$BedrockManagedKnowledgeBase": null,
+        "Capabilities$CreateAndUpdateBedrockManagedKnowledgeBase": null,
+        "Capabilities$ShareBedrockManagedKnowledgeBase": null,
+        "Capabilities$UseBedrockManagedKnowledgeBase": null,
+        "Capabilities$BoxKnowledgeBase": null,
+        "Capabilities$CreateAndUpdateBoxKnowledgeBase": null,
+        "Capabilities$ShareBoxKnowledgeBase": null,
+        "Capabilities$UseBoxKnowledgeBase": null,
+        "Capabilities$IDCKnowledgeBase": null,
+        "Capabilities$CreateAndUpdateIDCKnowledgeBase": null,
+        "Capabilities$ShareIDCKnowledgeBase": null,
+        "Capabilities$UseIDCKnowledgeBase": null,
         "Capabilities$Action": "<p>The ability to perform actions in external services through Action connectors. Actions allow users to interact with third-party systems.</p>",
         "Capabilities$GenericHTTPAction": "<p>The ability to perform actions using REST API connection connectors.</p>",
         "Capabilities$CreateAndUpdateGenericHTTPAction": "<p>The ability to create and update REST API connection actions.</p>",
@@ -3712,7 +3785,8 @@
     "ColumnGroupSchemaList": {
       "base": null,
       "refs": {
-        "DataSetConfiguration$ColumnGroupSchemaList": "<p>A structure containing the list of column group schemas.</p>"
+        "DataSetConfiguration$ColumnGroupSchemaList": "<p>A structure containing the list of column group schemas.</p>",
+        "TopicConfiguration$ColumnGroupSchemaList": "<p>The list of column group schemas in the topic configuration.</p>"
       }
     },
     "ColumnHierarchy": {
@@ -4603,6 +4677,14 @@
         "BatchCreateTopicReviewedAnswerRequest$Answers": "<p>The definition of the Answers to be created.</p>"
       }
     },
+    "CreateTopicV2Request": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateTopicV2Response": {
+      "base": null,
+      "refs": {}
+    },
     "CreateVPCConnectionRequest": {
       "base": null,
       "refs": {}
@@ -4748,8 +4830,11 @@
       "base": "<p>Instructions that provide additional guidance and context for response generation.</p>",
       "refs": {
         "CreateTopicRequest$CustomInstructions": "<p>Custom instructions for the topic.</p>",
+        "CreateTopicV2Request$CustomInstructions": null,
         "DescribeTopicResponse$CustomInstructions": "<p>Custom instructions for the topic.</p>",
-        "UpdateTopicRequest$CustomInstructions": "<p>Custom instructions for the topic.</p>"
+        "DescribeTopicV2Response$CustomInstructions": null,
+        "UpdateTopicRequest$CustomInstructions": "<p>Custom instructions for the topic.</p>",
+        "UpdateTopicV2Request$CustomInstructions": null
       }
     },
     "CustomInstructionsString": {
@@ -4957,8 +5042,8 @@
     "DashboardSourceEntity": {
       "base": "<p>Dashboard source entity.</p>",
       "refs": {
-        "CreateDashboardRequest$SourceEntity": "<p>The entity that you are using as a source when you create the dashboard. In <code>SourceEntity</code>, you specify the type of object you're using as source. You can only create a dashboard from a template, so you use a <code>SourceTemplate</code> entity. If you need to create a dashboard from an analysis, first convert the analysis to a template by using the <code> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_CreateTemplate.html\">CreateTemplate</a> </code> API operation. For <code>SourceTemplate</code>, specify the Amazon Resource Name (ARN) of the source template. The <code>SourceTemplate</code>ARN can contain any Amazon Web Services account and any Amazon Quick Sight-supported Amazon Web Services Region. </p> <p>Use the <code>DataSetReferences</code> entity within <code>SourceTemplate</code> to list the replacement datasets for the placeholders listed in the original. The schema in each dataset must match its placeholder. </p> <p>Either a <code>SourceEntity</code> or a <code>Definition</code> must be provided in order for the request to be valid.</p>",
-        "UpdateDashboardRequest$SourceEntity": "<p>The entity that you are using as a source when you update the dashboard. In <code>SourceEntity</code>, you specify the type of object you're using as source. You can only update a dashboard from a template, so you use a <code>SourceTemplate</code> entity. If you need to update a dashboard from an analysis, first convert the analysis to a template by using the <code> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_CreateTemplate.html\">CreateTemplate</a> </code> API operation. For <code>SourceTemplate</code>, specify the Amazon Resource Name (ARN) of the source template. The <code>SourceTemplate</code> ARN can contain any Amazon Web Services account and any Amazon Quick Sight-supported Amazon Web Services Region. </p> <p>Use the <code>DataSetReferences</code> entity within <code>SourceTemplate</code> to list the replacement datasets for the placeholders listed in the original. The schema in each dataset must match its placeholder. </p>"
+        "CreateDashboardRequest$SourceEntity": "<p>The entity that you are using as a source when you create the dashboard. In <code>SourceEntity</code>, you specify the type of object you're using as source. You can only create a dashboard from a template, so you use a <code>SourceTemplate</code> entity. If you need to create a dashboard from an analysis, first convert the analysis to a template by using the <code> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_CreateTemplate.html\">CreateTemplate</a> </code> API operation. For <code>SourceTemplate</code>, specify the Amazon Resource Name (ARN) of the source template. The <code>SourceTemplate</code>ARN can contain any Amazon Web Services account and any Amazon Quick Sight-supported Amazon Web Services Region. </p> <p>Use the <code>DataSetReferences</code> entity within <code>SourceTemplate</code> to list the replacement datasets for the placeholders listed in the original. The schema in each dataset must match its placeholder. Use the <code>TopicReferences</code> entity to list the replacement topics for the topic placeholders listed in the original. The schema in each topic must match its placeholder.</p> <p>Either a <code>SourceEntity</code> or a <code>Definition</code> must be provided in order for the request to be valid.</p>",
+        "UpdateDashboardRequest$SourceEntity": "<p>The entity that you are using as a source when you update the dashboard. In <code>SourceEntity</code>, you specify the type of object you're using as source. You can only update a dashboard from a template, so you use a <code>SourceTemplate</code> entity. If you need to update a dashboard from an analysis, first convert the analysis to a template by using the <code> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_CreateTemplate.html\">CreateTemplate</a> </code> API operation. For <code>SourceTemplate</code>, specify the Amazon Resource Name (ARN) of the source template. The <code>SourceTemplate</code> ARN can contain any Amazon Web Services account and any Amazon Quick Sight-supported Amazon Web Services Region. </p> <p>Use the <code>DataSetReferences</code> entity within <code>SourceTemplate</code> to list the replacement datasets for the placeholders listed in the original. The schema in each dataset must match its placeholder. Use the <code>TopicReferences</code> entity to list the replacement topics for the topic placeholders listed in the original. The schema in each topic must match its placeholder.</p>"
       }
     },
     "DashboardSourceTemplate": {
@@ -5249,7 +5334,7 @@
       "refs": {
         "Analysis$DataSetArns": "<p>The ARNs of the datasets of the analysis.</p>",
         "AssetOptions$ExcludedDataSetArns": "<p>A list of dataset ARNS to exclude from Dashboard Q&amp;A.</p>",
-        "DashboardVersion$DataSetArns": "<p>The Amazon Resource Numbers (ARNs) for the datasets that are associated with this version of the dashboard.</p>"
+        "DashboardVersion$DataSetArns": "<p>The Amazon Resource Names (ARNs) for the datasets that are associated with this version of the dashboard.</p>"
       }
     },
     "DataSetCalculatedFieldExpression": {
@@ -5348,11 +5433,11 @@
       "refs": {
         "CalculatedField$DataSetIdentifier": "<p>The data set that is used in this calculated field.</p>",
         "ColumnIdentifier$DataSetIdentifier": "<p>The data set that the column belongs to.</p>",
-        "CustomContentVisual$DataSetIdentifier": "<p>The dataset that is used to create the custom content visual. You can't create a visual without a dataset.</p>",
+        "CustomContentVisual$DataSetIdentifier": "<p>The dataset that is used to create the custom content visual. You can't create a visual without a dataset or a topic.</p>",
         "DataSetIdentifierDeclaration$Identifier": "<p>The identifier of the data set, typically the data set's name.</p>",
-        "EmptyVisual$DataSetIdentifier": "<p>The data set that is used in the empty visual. Every visual requires a dataset to render.</p>",
+        "EmptyVisual$DataSetIdentifier": "<p>The data set that is used in the empty visual. Every visual requires a dataset or a topic to render.</p>",
         "InsightVisual$DataSetIdentifier": "<p>The dataset that is used in the insight visual.</p>",
-        "LayerMapVisual$DataSetIdentifier": "<p>The dataset that is used to create the layer map visual. You can't create a visual without a dataset.</p>",
+        "LayerMapVisual$DataSetIdentifier": "<p>The dataset that is used to create the layer map visual. You can't create a visual without a dataset or a topic.</p>",
         "MappedDataSetParameter$DataSetIdentifier": "<p>A unique name that identifies a dataset within the analysis or dashboard.</p>",
         "RollingDateConfiguration$DataSetIdentifier": "<p>The data set that is used in the rolling date configuration.</p>"
       }
@@ -5448,7 +5533,8 @@
     "DataSetSchema": {
       "base": "<p>Dataset schema.</p>",
       "refs": {
-        "DataSetConfiguration$DataSetSchema": "<p>Dataset schema.</p>"
+        "DataSetConfiguration$DataSetSchema": "<p>Dataset schema.</p>",
+        "TopicConfiguration$DataSetSchema": "<p>Topic schema.</p>"
       }
     },
     "DataSetSearchFilter": {
@@ -6438,6 +6524,14 @@
       "base": null,
       "refs": {}
     },
+    "DeleteTopicV2Request": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteTopicV2Response": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteUserByPrincipalIdRequest": {
       "base": "<p/>",
       "refs": {}
@@ -6948,6 +7042,14 @@
       "base": null,
       "refs": {}
     },
+    "DescribeTopicPermissionsV2Request": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeTopicPermissionsV2Response": {
+      "base": null,
+      "refs": {}
+    },
     "DescribeTopicRefreshRequest": {
       "base": null,
       "refs": {}
@@ -6972,6 +7074,14 @@
       "base": null,
       "refs": {}
     },
+    "DescribeTopicV2Request": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeTopicV2Response": {
+      "base": null,
+      "refs": {}
+    },
     "DescribeUserRequest": {
       "base": null,
       "refs": {}
@@ -6993,6 +7103,15 @@
       "refs": {
         "BrandDefinition$Description": "<p>The description of the brand.</p>",
         "BrandSummary$Description": "<p>The description of the brand.</p>"
+      }
+    },
+    "DescriptionSensitiveString": {
+      "base": null,
+      "refs": {
+        "TopicCalculatedField$CalculatedFieldDescription": "<p>The calculated field description.</p>",
+        "TopicColumn$ColumnDescription": "<p>A description of the column and its contents.</p>",
+        "TopicFilter$FilterDescription": "<p>A description of the filter used to select items for a topic.</p>",
+        "TopicNamedEntity$EntityDescription": "<p>The description of the named entity.</p>"
       }
     },
     "DestinationParameterValueConfiguration": {
@@ -7962,6 +8081,7 @@
         "CreateDataSetRequest$FolderArns": "<p>When you create the dataset, Amazon Quick Sight adds the dataset to these folders.</p>",
         "CreateDataSourceRequest$FolderArns": "<p>When you create the data source, Amazon Quick Sight adds the data source to these folders.</p>",
         "CreateTopicRequest$FolderArns": "<p>The Folder ARN of the folder that you want the topic to reside in.</p>",
+        "CreateTopicV2Request$FolderArns": "<p>The Amazon Resource Names (ARNs) of the folders that you want the topic to reside in.</p>",
         "RestoreAnalysisResponse$RestorationFailedFolderArns": "<p>A list of folder arns thatthe analysis failed to be restored to.</p>"
       }
     },
@@ -10250,6 +10370,19 @@
       "base": "<p>A limit is exceeded.</p>",
       "refs": {}
     },
+    "LimitedSensitiveString": {
+      "base": null,
+      "refs": {
+        "CreateTopicReviewedAnswer$Question": "<p>The Question to be created.</p>",
+        "RangeConstant$Minimum": "<p>The minimum value for a range constant.</p>",
+        "RangeConstant$Maximum": "<p>The maximum value for a range constant.</p>",
+        "TopicCalculatedField$CalculatedFieldName": "<p>The calculated field name.</p>",
+        "TopicCategoryFilterConstant$SingularConstant": "<p>A singular constant used in a category filter. This element is used to specify a single value for the constant.</p>",
+        "TopicColumn$ColumnFriendlyName": "<p>A user-friendly name for the column.</p>",
+        "TopicReviewedAnswer$Question": "<p>The question for the <code>TopicReviewedAnswer</code>.</p>",
+        "TopicSingularFilterConstant$SingularConstant": "<p>The value of the singular filter constant.</p>"
+      }
+    },
     "LimitedString": {
       "base": null,
       "refs": {
@@ -10257,9 +10390,7 @@
         "AggregationFunctionParameters$key": null,
         "AggregationFunctionParameters$value": null,
         "AggregationPartitionBy$FieldName": "<p>The field Name for an <code>AggregationPartitionBy</code>.</p>",
-        "CellValueSynonym$CellValue": "<p>The cell value.</p>",
         "ContributionAnalysisFactor$FieldName": "<p>The field name of the <code>ContributionAnalysisFactor</code>.</p>",
-        "CreateTopicReviewedAnswer$Question": "<p>The Question to be created.</p>",
         "DataAggregation$DefaultDateColumnName": "<p>The column name for the default date.</p>",
         "DatasetMetadata$DatasetName": "<p>The name of the dataset.</p>",
         "DatasetMetadata$DatasetDescription": "<p>The description of the dataset.</p>",
@@ -10275,36 +10406,27 @@
         "NamedEntityDefinition$FieldName": "<p>The name of the entity.</p>",
         "NamedEntityDefinition$PropertyName": "<p>The property name to be used for the named entity.</p>",
         "NamedEntityRef$NamedEntityName": "<p>The <code>NamedEntityName</code> for the <code>NamedEntityRef</code>.</p>",
+        "NamedEntitySort$FieldName": "<p>The name of the field that is used for the sort.</p>",
         "NegativeFormat$Prefix": "<p>The prefix for a negative format.</p>",
         "NegativeFormat$Suffix": "<p>The suffix for a negative format.</p>",
-        "RangeConstant$Minimum": "<p>The minimum value for a range constant.</p>",
-        "RangeConstant$Maximum": "<p>The maximum value for a range constant.</p>",
         "SemanticEntityType$TypeName": "<p>The semantic entity type name.</p>",
         "SemanticEntityType$SubTypeName": "<p>The semantic entity sub type name.</p>",
         "SemanticType$TypeName": "<p>The semantic type name.</p>",
         "SemanticType$SubTypeName": "<p>The semantic type sub type name.</p>",
         "Slot$SlotId": "<p>The slot ID of the slot.</p>",
         "Slot$VisualId": "<p>The visual ID for the slot.</p>",
-        "Synonyms$member": null,
-        "TopicCalculatedField$CalculatedFieldName": "<p>The calculated field name.</p>",
-        "TopicCalculatedField$CalculatedFieldDescription": "<p>The calculated field description.</p>",
-        "TopicCategoryFilterConstant$SingularConstant": "<p>A singular constant used in a category filter. This element is used to specify a single value for the constant.</p>",
         "TopicColumn$ColumnName": "<p>The name of the column.</p>",
-        "TopicColumn$ColumnFriendlyName": "<p>A user-friendly name for the column.</p>",
-        "TopicColumn$ColumnDescription": "<p>A description of the column and its contents.</p>",
         "TopicDetails$Description": "<p>The description of the topic.</p>",
-        "TopicFilter$FilterDescription": "<p>A description of the filter used to select items for a topic.</p>",
         "TopicFilter$FilterName": "<p>The name of the filter.</p>",
         "TopicFilter$OperandFieldName": "<p>The name of the field that the filter operates on.</p>",
         "TopicNamedEntity$EntityName": "<p>The name of the named entity.</p>",
-        "TopicNamedEntity$EntityDescription": "<p>The description of the named entity.</p>",
         "TopicRefreshSchedule$Timezone": "<p>The timezone that you want the refresh schedule to use.</p>",
         "TopicRefreshSchedule$RepeatAt": "<p>The time of day when the refresh should run, for example, Monday-Sunday.</p>",
         "TopicRefreshScheduleSummary$DatasetId": "<p>The ID of the dataset.</p>",
         "TopicRefreshScheduleSummary$DatasetName": "<p>The name of the dataset.</p>",
-        "TopicReviewedAnswer$Question": "<p>The question for the <code>TopicReviewedAnswer</code>.</p>",
-        "TopicSingularFilterConstant$SingularConstant": "<p>The value of the singular filter constant.</p>",
         "TopicTemplate$TemplateType": "<p>The template type for the <code>TopicTemplate</code>.</p>",
+        "TopicV2DataSetReference$DataSetName": "<p>The name of the data set.</p>",
+        "TopicV2Details$Description": "<p>The description of the topic.</p>",
         "TopicVisual$VisualId": "<p>The visual ID for the <code>TopicVisual</code>.</p>",
         "TypeParameters$key": null,
         "TypeParameters$value": null,
@@ -10788,6 +10910,14 @@
       "base": null,
       "refs": {}
     },
+    "ListTopicsV2Request": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTopicsV2Response": {
+      "base": null,
+      "refs": {}
+    },
     "ListUserGroupsRequest": {
       "base": null,
       "refs": {}
@@ -11070,6 +11200,7 @@
         "ListThemeVersionsRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
         "ListThemesRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
         "ListTopicsRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
+        "ListTopicsV2Request$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
         "ListUserGroupsRequest$MaxResults": "<p>The maximum number of results to return from this request.</p>",
         "ListUsersRequest$MaxResults": "<p>The maximum number of results to return from this request.</p>",
         "ListVPCConnectionsRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
@@ -11080,7 +11211,8 @@
         "SearchFoldersRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
         "SearchGroupsRequest$MaxResults": "<p>The maximum number of results to return from this request.</p>",
         "SearchKnowledgeBasesRequest$MaxResults": "<p>The maximum number of results to return.</p>",
-        "SearchTopicsRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>"
+        "SearchTopicsRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
+        "SearchTopicsV2Request$MaxResults": "<p>The maximum number of results to be returned per request.</p>"
       }
     },
     "MaxTopicsToConsider": {
@@ -11263,6 +11395,18 @@
       "refs": {
         "TopicIRGroupBy$NamedEntity": "<p>The named entity for the <code>TopicIRGroupBy</code>.</p>",
         "TopicIRMetric$NamedEntity": "<p>The named entity for the <code>TopicIRMetric</code>.</p>"
+      }
+    },
+    "NamedEntitySort": {
+      "base": "<p>A structure that represents a sort for a named entity.</p>",
+      "refs": {
+        "NamedEntitySortList$member": null
+      }
+    },
+    "NamedEntitySortList": {
+      "base": null,
+      "refs": {
+        "TopicNamedEntity$Sort": "<p>The sort configuration of the named entity.</p>"
       }
     },
     "NamedFilterAggType": {
@@ -11516,7 +11660,12 @@
     "NullFilterType": {
       "base": null,
       "refs": {
-        "TopicNullFilter$NullFilterType": "<p>The type of the null filter. Valid values for this type are <code>NULLS_ONLY</code>, <code>NON_NULLS_ONLY</code>, and <code>ALL_VALUES</code>.</p>"
+        "TopicCategoryFilter$NullFilter": "<p>The <code>null</code> filter that is applied to the category filter.</p>",
+        "TopicDateRangeFilter$NullFilter": "<p>The <code>null</code> filter that is applied to the date range filter.</p>",
+        "TopicNullFilter$NullFilterType": "<p>The type of the null filter. Valid values for this type are <code>NULLS_ONLY</code>, <code>NON_NULLS_ONLY</code>, and <code>ALL_VALUES</code>.</p>",
+        "TopicNumericEqualityFilter$NullFilter": "<p>The <code>null</code> filter that is applied to the numeric equality filter.</p>",
+        "TopicNumericRangeFilter$NullFilter": "<p>The <code>null</code> filter that is applied to the numeric range filter.</p>",
+        "TopicRelativeDateFilter$NullFilter": "<p>The <code>null</code> filter that is applied to the relative date filter.</p>"
       }
     },
     "NullString": {
@@ -11539,6 +11688,7 @@
       "base": null,
       "refs": {
         "DescribeIpRestrictionResponse$Enabled": "<p>A value that specifies whether IP rules are turned on.</p>",
+        "NamedEntityDefinition$IsHidden": "<p>A Boolean value that indicates whether the named entity definition is hidden.</p>",
         "TopicCalculatedField$DisableIndexing": "<p>A Boolean value that indicates if a calculated field is visible in the autocomplete.</p>",
         "TopicCalculatedField$NonAdditive": "<p>The non additive for the table style target.</p>",
         "TopicColumn$DisableIndexing": "<p>A Boolean value that indicates whether the column shows in the autocomplete functionality.</p>",
@@ -11546,6 +11696,15 @@
         "TopicConfigOptions$QBusinessInsightsEnabled": "<p>Enables Amazon Q Business Insights for a <code>Topic</code>.</p>",
         "TopicRefreshSchedule$IsEnabled": "<p>A Boolean value that controls whether to schedule is enabled.</p>",
         "UpdateIpRestrictionRequest$Enabled": "<p>A value that specifies whether IP rules are turned on.</p>"
+      }
+    },
+    "NullableInteger": {
+      "base": null,
+      "refs": {
+        "NamedEntityDefinition$RankOrder": "<p>The rank order of the named entity definition.</p>",
+        "NamedEntityDefinition$PresentationOrder": "<p>The presentation order of the named entity definition.</p>",
+        "TopicNamedEntity$RankOrder": "<p>The rank order of the named entity.</p>",
+        "TopicNamedEntity$PresentationOrder": "<p>The presentation order of the named entity.</p>"
       }
     },
     "NumberDisplayFormatConfiguration": {
@@ -13454,6 +13613,8 @@
         "OAuthClientApplicationSummary$Name": "<p>The display name of the OAuthClientApplication.</p>",
         "TopicDetails$Name": "<p>The name of the topic.</p>",
         "TopicSummary$Name": "<p>The name of the topic.</p>",
+        "TopicV2Details$Name": "<p>The name of the topic.</p>",
+        "TopicV2Summary$Name": "<p>The name of the topic.</p>",
         "UpdateDataSetRequest$Name": "<p>The display name for the dataset.</p>",
         "UpdateDataSourceRequest$Name": "<p>A display name for the data source.</p>",
         "UpdateOAuthClientApplicationRequest$Name": "<p>The display name for the OAuthClientApplication.</p>",
@@ -13497,6 +13658,7 @@
         "DescribeKnowledgeBasePermissionsResponse$Permissions": "<p>The resource permissions for the knowledge base.</p>",
         "DescribeSpacePermissionsResponse$Permissions": "<p>A list of resource permissions for the space.</p>",
         "DescribeTopicPermissionsResponse$Permissions": "<p>A list of resource permissions that are configured to the topic.</p>",
+        "DescribeTopicPermissionsV2Response$Permissions": "<p>A list of resource permissions that are configured to the topic.</p>",
         "LinkSharingConfiguration$Permissions": "<p>A structure that contains the permissions of a shareable link.</p>",
         "UpdateActionConnectorPermissionsRequest$GrantPermissions": "<p>The permissions to grant to users and groups for this action connector.</p>",
         "UpdateActionConnectorPermissionsRequest$RevokePermissions": "<p>The permissions to revoke from users and groups for this action connector.</p>",
@@ -13515,7 +13677,8 @@
         "UpdateSpacePermissionsRequest$GrantPermissions": "<p>The permissions that you want to grant on the space.</p>",
         "UpdateSpacePermissionsRequest$RevokePermissions": "<p>The permissions that you want to revoke from the space.</p>",
         "UpdateSpacePermissionsResponse$permissions": "<p>The updated permissions for the space.</p>",
-        "UpdateTopicPermissionsResponse$Permissions": "<p>A list of resource permissions on the topic.</p>"
+        "UpdateTopicPermissionsResponse$Permissions": "<p>A list of resource permissions on the topic.</p>",
+        "UpdateTopicPermissionsV2Response$Permissions": "<p>A list of resource permissions on the topic.</p>"
       }
     },
     "ResourceStatus": {
@@ -14023,6 +14186,14 @@
       "base": null,
       "refs": {}
     },
+    "SearchTopicsV2Request": {
+      "base": null,
+      "refs": {}
+    },
+    "SearchTopicsV2Response": {
+      "base": null,
+      "refs": {}
+    },
     "Seasonality": {
       "base": null,
       "refs": {
@@ -14300,6 +14471,7 @@
         "SemanticType$FalseyCellValue": "<p>The semantic type falsey cell value.</p>",
         "SensitiveStringList$member": null,
         "StringValueWhenUnsetConfiguration$CustomValue": "<p>A custom value that's used when the value of a parameter isn't set.</p>",
+        "TopicSearchFilter$Value": "<p>The value of the topic search filter.</p>",
         "UserIdentifier$UserName": "<p>The name of the user that you want to get identity context for.</p>",
         "UserIdentifier$Email": "<p>The email address of the user that you want to get identity context for.</p>"
       }
@@ -14307,6 +14479,7 @@
     "SensitiveStringList": {
       "base": null,
       "refs": {
+        "CellValueSynonym$Synonyms": "<p>Other names or aliases for the cell value.</p>",
         "SemanticType$TruthyCellValueSynonyms": "<p>The other names or aliases for the true cell value.</p>",
         "SemanticType$FalseyCellValueSynonyms": "<p>The other names or aliases for the false cell value.</p>",
         "StringParameter$Values": "<p>The values of a string parameter.</p>"
@@ -15701,6 +15874,7 @@
         "CreateThemeResponse$Status": "<p>The HTTP status of the request.</p>",
         "CreateTopicRefreshScheduleResponse$Status": "<p>The HTTP status of the request.</p>",
         "CreateTopicResponse$Status": "<p>The HTTP status of the request.</p>",
+        "CreateTopicV2Response$Status": "<p>The HTTP status of the request.</p>",
         "CreateVPCConnectionResponse$Status": "<p>The HTTP status of the request.</p>",
         "DeleteAccountCustomPermissionResponse$Status": "<p>The HTTP status of the request.</p>",
         "DeleteAccountCustomizationResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -15732,6 +15906,7 @@
         "DeleteThemeResponse$Status": "<p>The HTTP status of the request.</p>",
         "DeleteTopicRefreshScheduleResponse$Status": "<p>The HTTP status of the request.</p>",
         "DeleteTopicResponse$Status": "<p>The HTTP status of the request.</p>",
+        "DeleteTopicV2Response$Status": "<p>The HTTP status of the request.</p>",
         "DeleteUserByPrincipalIdResponse$Status": "<p>The HTTP status of the request.</p>",
         "DeleteUserCustomPermissionResponse$Status": "<p>The HTTP status of the request.</p>",
         "DeleteUserResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -15787,9 +15962,11 @@
         "DescribeThemePermissionsResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeThemeResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeTopicPermissionsResponse$Status": "<p>The HTTP status of the request.</p>",
+        "DescribeTopicPermissionsV2Response$Status": "<p>The HTTP status of the request.</p>",
         "DescribeTopicRefreshResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeTopicRefreshScheduleResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeTopicResponse$Status": "<p>The HTTP status of the request.</p>",
+        "DescribeTopicV2Response$Status": "<p>The HTTP status of the request.</p>",
         "DescribeUserResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeVPCConnectionResponse$Status": "<p>The HTTP status of the request.</p>",
         "FailedKeyRegistrationEntry$StatusCode": "<p>The HTTP status of a <code>FailedKeyRegistrationEntry</code> error.</p>",
@@ -15835,6 +16012,7 @@
         "ListTopicRefreshSchedulesResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListTopicReviewedAnswersResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListTopicsResponse$Status": "<p>The HTTP status of the request.</p>",
+        "ListTopicsV2Response$Status": "<p>The HTTP status of the request.</p>",
         "ListUserGroupsResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListUsersResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListVPCConnectionsResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -15852,6 +16030,7 @@
         "SearchGroupsResponse$Status": "<p>The HTTP status of the request.</p>",
         "SearchKnowledgeBasesResponse$Status": "<p>The HTTP status of the request.</p>",
         "SearchTopicsResponse$Status": "<p>The HTTP status of the request.</p>",
+        "SearchTopicsV2Response$Status": "<p>The HTTP status of the request.</p>",
         "StartAssetBundleExportJobResponse$Status": "<p>The HTTP status of the response.</p>",
         "StartAssetBundleImportJobResponse$Status": "<p>The HTTP status of the response.</p>",
         "StartAutomationJobResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -15905,8 +16084,10 @@
         "UpdateThemePermissionsResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateThemeResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateTopicPermissionsResponse$Status": "<p>The HTTP status of the request.</p>",
+        "UpdateTopicPermissionsV2Response$Status": "<p>The HTTP status of the request.</p>",
         "UpdateTopicRefreshScheduleResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateTopicResponse$Status": "<p>The HTTP status of the request.</p>",
+        "UpdateTopicV2Response$Status": "<p>The HTTP status of the request.</p>",
         "UpdateUserCustomPermissionResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateUserResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateVPCConnectionResponse$Status": "<p>The HTTP status of the request.</p>"
@@ -16020,6 +16201,7 @@
         "CreateTopicRefreshScheduleRequest$DatasetName": "<p>The name of the dataset.</p>",
         "CreateTopicRefreshScheduleResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CreateTopicResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "CreateTopicV2Response$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CreateVPCConnectionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CustomConnectionParameters$ConnectionType": "<p>The type of custom connector.</p>",
         "CustomerManagedKeyUnavailableException$Message": null,
@@ -16068,6 +16250,7 @@
         "DeleteTopicRefreshScheduleRequest$DatasetId": "<p>The ID of the dataset.</p>",
         "DeleteTopicRefreshScheduleResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteTopicResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "DeleteTopicV2Response$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteUserByPrincipalIdRequest$PrincipalId": "<p>The principal ID of the user.</p>",
         "DeleteUserByPrincipalIdResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteUserCustomPermissionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -16135,10 +16318,12 @@
         "DescribeThemePermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeThemeResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeTopicPermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "DescribeTopicPermissionsV2Response$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeTopicRefreshResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeTopicRefreshScheduleRequest$DatasetId": "<p>The ID of the dataset.</p>",
         "DescribeTopicRefreshScheduleResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeTopicResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "DescribeTopicV2Response$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeUserResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeVPCConnectionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DestinationParameterValueConfiguration$SourceParameterName": "<p>The source parameter name of the destination parameter.</p>",
@@ -16308,6 +16493,9 @@
         "ListTopicsRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "ListTopicsResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "ListTopicsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "ListTopicsV2Request$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
+        "ListTopicsV2Response$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
+        "ListTopicsV2Response$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "ListUserGroupsRequest$NextToken": "<p>A pagination token that can be used in a subsequent request.</p>",
         "ListUserGroupsResponse$NextToken": "<p>A pagination token that can be used in a subsequent request.</p>",
         "ListUserGroupsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -16400,6 +16588,9 @@
         "SearchTopicsRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "SearchTopicsResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "SearchTopicsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "SearchTopicsV2Request$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
+        "SearchTopicsV2Response$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
+        "SearchTopicsV2Response$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "SelfUpgradeRequestDetail$UpgradeRequestId": "<p>The ID of the self-upgrade request.</p>",
         "SelfUpgradeRequestDetail$RequestNote": "<p>An optional note explaining the reason for the self-upgrade request.</p>",
         "SelfUpgradeRequestDetail$lastUpdateFailureReason": "<p>The reason for the last update failure, if applicable.</p>",
@@ -16435,7 +16626,8 @@
         "ThrottlingException$RequestId": "<p>The Amazon Web Services request ID for this request.</p>",
         "TopBottomMoversComputation$Name": "<p>The name of a computation.</p>",
         "TopBottomRankedComputation$Name": "<p>The name of a computation.</p>",
-        "TopicSearchFilter$Value": "<p>The value of the topic search filter.</p>",
+        "TopicConfiguration$Placeholder": "<p>The placeholder for the topic configuration.</p>",
+        "TopicV2DataSetRelationColumnNames$member": null,
         "TotalAggregationComputation$Name": "<p>The name of a computation.</p>",
         "TotalOptions$CustomLabel": "<p>The custom label string for the total cells.</p>",
         "UniqueValuesComputation$Name": "<p>The name of a computation.</p>",
@@ -16504,9 +16696,11 @@
         "UpdateThemePermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateThemeResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateTopicPermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "UpdateTopicPermissionsV2Response$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateTopicRefreshScheduleRequest$DatasetId": "<p>The ID of the dataset.</p>",
         "UpdateTopicRefreshScheduleResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateTopicResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "UpdateTopicV2Response$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateUserCustomPermissionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateUserRequest$Email": "<p>The email address of the user that you want to update.</p>",
         "UpdateUserRequest$ExternalLoginFederationProviderType": "<p>The type of supported external login provider that provides identity to let a user federate into Quick Sight with an associated Identity and Access Management(IAM) role. The type of supported external login provider can be one of the following.</p> <ul> <li> <p> <code>COGNITO</code>: Amazon Cognito. The provider URL is cognito-identity.amazonaws.com. When choosing the <code>COGNITO</code> provider type, don’t use the \"CustomFederationProviderUrl\" parameter which is only needed when the external provider is custom.</p> </li> <li> <p> <code>CUSTOM_OIDC</code>: Custom OpenID Connect (OIDC) provider. When choosing <code>CUSTOM_OIDC</code> type, use the <code>CustomFederationProviderUrl</code> parameter to provide the custom OIDC provider URL.</p> </li> <li> <p> <code>NONE</code>: This clears all the previously saved external login information for a user. Use the <code> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_DescribeUser.html\">DescribeUser</a> </code> API operation to check the external login information.</p> </li> </ul>",
@@ -16580,7 +16774,6 @@
     "StringList": {
       "base": null,
       "refs": {
-        "CellValueSynonym$Synonyms": "<p>Other names or aliases for the cell value.</p>",
         "CollectiveConstant$ValueList": "<p>A list of values for the collective constant.</p>",
         "ComparativeOrder$SpecifedOrder": "<p>The list of columns to be used in the ordering.</p>",
         "GenerateEmbedUrlForAnonymousUserRequest$AllowedDomains": "<p>The domains that you want to add to the allow list for access to the generated URL that is then embedded. This optional parameter overrides the static domains that are configured in the Manage Quick Sight menu in the Amazon Quick Sight console. Instead, it allows only the domains that you include in this parameter. You can list up to three domains or subdomains in each API call.</p> <p>To include all subdomains under a specific domain to the allow list, use <code>*</code>. For example, <code>https://*.sapp.amazon.com</code> includes all subdomains under <code>https://sapp.amazon.com</code>.</p>",
@@ -16695,6 +16888,13 @@
         "CurrencyDisplayFormatConfiguration$Suffix": "<p>Determines the suffix value of the currency format.</p>",
         "NumberDisplayFormatConfiguration$Suffix": "<p>Determines the suffix value of the number format.</p>",
         "PercentageDisplayFormatConfiguration$Suffix": "<p>Determines the suffix value of the percentage format.</p>"
+      }
+    },
+    "SynonymString": {
+      "base": null,
+      "refs": {
+        "CellValueSynonym$CellValue": "<p>The cell value.</p>",
+        "Synonyms$member": null
       }
     },
     "Synonyms": {
@@ -17052,6 +17252,7 @@
         "CreateTemplateRequest$Tags": "<p>Contains a map of the key-value pairs for the resource tag or tags assigned to the resource.</p>",
         "CreateThemeRequest$Tags": "<p>A map of the key-value pairs for the resource tag or tags that you want to add to the resource.</p>",
         "CreateTopicRequest$Tags": "<p>Contains a map of the key-value pairs for the resource tag or tags that are assigned to the dataset.</p>",
+        "CreateTopicV2Request$Tags": "<p>Contains a map of the key-value pairs for the resource tag or tags that are assigned to the topic.</p>",
         "CreateVPCConnectionRequest$Tags": "<p>A map of the key-value pairs for the resource tag or tags assigned to the VPC connection.</p>",
         "ListTagsForResourceResponse$Tags": "<p>Contains a map of the key-value pairs for the resource tag or tags assigned to the resource.</p>",
         "RegisterUserRequest$Tags": "<p>The tags to associate with the user.</p>",
@@ -17143,8 +17344,8 @@
     "TemplateSourceEntity": {
       "base": "<p>The source entity of the template.</p>",
       "refs": {
-        "CreateTemplateRequest$SourceEntity": "<p>The entity that you are using as a source when you create the template. In <code>SourceEntity</code>, you specify the type of object you're using as source: <code>SourceTemplate</code> for a template or <code>SourceAnalysis</code> for an analysis. Both of these require an Amazon Resource Name (ARN). For <code>SourceTemplate</code>, specify the ARN of the source template. For <code>SourceAnalysis</code>, specify the ARN of the source analysis. The <code>SourceTemplate</code> ARN can contain any Amazon Web Services account and any Quick Sight-supported Amazon Web Services Region. </p> <p>Use the <code>DataSetReferences</code> entity within <code>SourceTemplate</code> or <code>SourceAnalysis</code> to list the replacement datasets for the placeholders listed in the original. The schema in each dataset must match its placeholder. </p> <p>Either a <code>SourceEntity</code> or a <code>Definition</code> must be provided in order for the request to be valid.</p>",
-        "UpdateTemplateRequest$SourceEntity": "<p>The entity that you are using as a source when you update the template. In <code>SourceEntity</code>, you specify the type of object you're using as source: <code>SourceTemplate</code> for a template or <code>SourceAnalysis</code> for an analysis. Both of these require an Amazon Resource Name (ARN). For <code>SourceTemplate</code>, specify the ARN of the source template. For <code>SourceAnalysis</code>, specify the ARN of the source analysis. The <code>SourceTemplate</code> ARN can contain any Amazon Web Services account and any Quick Sight-supported Amazon Web Services Region;. </p> <p>Use the <code>DataSetReferences</code> entity within <code>SourceTemplate</code> or <code>SourceAnalysis</code> to list the replacement datasets for the placeholders listed in the original. The schema in each dataset must match its placeholder. </p>"
+        "CreateTemplateRequest$SourceEntity": "<p>The entity that you are using as a source when you create the template. In <code>SourceEntity</code>, you specify the type of object you're using as source: <code>SourceTemplate</code> for a template or <code>SourceAnalysis</code> for an analysis. Both of these require an Amazon Resource Name (ARN). For <code>SourceTemplate</code>, specify the ARN of the source template. For <code>SourceAnalysis</code>, specify the ARN of the source analysis. The <code>SourceTemplate</code> ARN can contain any Amazon Web Services account and any Quick Sight-supported Amazon Web Services Region. </p> <p>Use the <code>DataSetReferences</code> entity within <code>SourceTemplate</code> or <code>SourceAnalysis</code> to list the replacement datasets for the placeholders listed in the original. The schema in each dataset must match its placeholder. Use the <code>TopicReferences</code> entity to list the replacement topics for the topic placeholders listed in the original. The schema in each topic must match its placeholder.</p> <p>Either a <code>SourceEntity</code> or a <code>Definition</code> must be provided in order for the request to be valid.</p>",
+        "UpdateTemplateRequest$SourceEntity": "<p>The entity that you are using as a source when you update the template. In <code>SourceEntity</code>, you specify the type of object you're using as source: <code>SourceTemplate</code> for a template or <code>SourceAnalysis</code> for an analysis. Both of these require an Amazon Resource Name (ARN). For <code>SourceTemplate</code>, specify the ARN of the source template. For <code>SourceAnalysis</code>, specify the ARN of the source analysis. The <code>SourceTemplate</code> ARN can contain any Amazon Web Services account and any Quick Sight-supported Amazon Web Services Region;. </p> <p>Use the <code>DataSetReferences</code> entity within <code>SourceTemplate</code> or <code>SourceAnalysis</code> to list the replacement datasets for the placeholders listed in the original. The schema in each dataset must match its placeholder. Use the <code>TopicReferences</code> entity to list the replacement topics for the topic placeholders listed in the original. The schema in each topic must match its placeholder.</p>"
       }
     },
     "TemplateSourceTemplate": {
@@ -17685,6 +17886,13 @@
         "TopBottomMoversComputation$SortOrder": "<p>The sort order setup of the top and bottom movers computation.</p>"
       }
     },
+    "TopicArnsList": {
+      "base": null,
+      "refs": {
+        "Analysis$TopicArns": "<p>The ARNs of the topics associated with the analysis.</p>",
+        "DashboardVersion$TopicArns": "<p>The Amazon Resource Names (ARNs) for the topics that are associated with this version of the dashboard.</p>"
+      }
+    },
     "TopicCalculatedField": {
       "base": "<p>A structure that represents a calculated field.</p>",
       "refs": {
@@ -17725,6 +17933,19 @@
       "base": "<p>Configuration options for a <code>Topic</code>.</p>",
       "refs": {
         "TopicDetails$ConfigOptions": "<p>Configuration options for a <code>Topic</code>.</p>"
+      }
+    },
+    "TopicConfiguration": {
+      "base": "<p>The configuration of a topic.</p>",
+      "refs": {
+        "TopicConfigurationList$member": null
+      }
+    },
+    "TopicConfigurationList": {
+      "base": null,
+      "refs": {
+        "TemplateVersion$TopicConfigurations": "<p>Schema of the topic identified by the placeholder. Any dashboard created from this template should be bound to new topics matching the same schema described through this API operation.</p>",
+        "TemplateVersionDefinition$TopicConfigurations": "<p>An array of topic configurations. These configurations define the required columns for each topic used within a template.</p>"
       }
     },
     "TopicConstantValue": {
@@ -17861,29 +18082,68 @@
         "CreateTopicRefreshScheduleResponse$TopicId": "<p>The ID of the topic that you want to modify. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
         "CreateTopicRequest$TopicId": "<p>The ID for the topic that you want to create. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
         "CreateTopicResponse$TopicId": "<p>The ID for the topic that you want to create. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
+        "CreateTopicV2Request$TopicId": "<p>The ID for the topic that you want to create. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
+        "CreateTopicV2Response$TopicId": "<p>The ID for the topic that you want to create. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
         "DeleteTopicRefreshScheduleRequest$TopicId": "<p>The ID of the topic that you want to modify. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
         "DeleteTopicRefreshScheduleResponse$TopicId": "<p>The ID of the topic that you want to modify. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
         "DeleteTopicRequest$TopicId": "<p>The ID of the topic that you want to delete. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
         "DeleteTopicResponse$TopicId": "<p>The ID of the topic that you want to delete. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
+        "DeleteTopicV2Request$TopicId": "<p>The ID of the topic that you want to delete. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
+        "DeleteTopicV2Response$TopicId": "<p>The ID of the topic that you want to delete. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
         "DescribeTopicPermissionsRequest$TopicId": "<p>The ID of the topic that you want to describe. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
         "DescribeTopicPermissionsResponse$TopicId": "<p>The ID of the topic that you want to describe. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
+        "DescribeTopicPermissionsV2Request$TopicId": "<p>The ID of the topic that you want to describe. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
+        "DescribeTopicPermissionsV2Response$TopicId": "<p>The ID of the topic that you want to describe. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
         "DescribeTopicRefreshRequest$TopicId": "<p>The ID of the topic that you want to describe. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
         "DescribeTopicRefreshScheduleRequest$TopicId": "<p>The ID of the topic that contains the refresh schedule that you want to describe. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
         "DescribeTopicRefreshScheduleResponse$TopicId": "<p>The ID of the topic that contains the refresh schedule that you want to describe. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
         "DescribeTopicRequest$TopicId": "<p>The ID of the topic that you want to describe. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
         "DescribeTopicResponse$TopicId": "<p>The ID of the topic that you want to describe. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
+        "DescribeTopicV2Request$TopicId": "<p>The ID of the topic that you want to describe. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
+        "DescribeTopicV2Response$TopicId": "<p>The ID of the topic that you want to describe. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
         "GeneratedAnswerResult$TopicId": "<p>The ID of the topic.</p>",
         "ListTopicRefreshSchedulesRequest$TopicId": "<p>The ID for the topic that you want to describe. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
         "ListTopicRefreshSchedulesResponse$TopicId": "<p>The ID for the topic that you want to describe. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
         "ListTopicReviewedAnswersRequest$TopicId": "<p>The ID for the topic that contains the reviewed answer that you want to list. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
         "ListTopicReviewedAnswersResponse$TopicId": "<p>The ID for the topic that contains the reviewed answer that you want to list. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
         "TopicSummary$TopicId": "<p>The ID for the topic. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
+        "TopicV2Summary$TopicId": "<p>The ID of the topic. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
         "UpdateTopicPermissionsRequest$TopicId": "<p>The ID of the topic that you want to modify. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
         "UpdateTopicPermissionsResponse$TopicId": "<p>The ID of the topic that you want to modify. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
+        "UpdateTopicPermissionsV2Request$TopicId": "<p>The ID of the topic that you want to modify. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
+        "UpdateTopicPermissionsV2Response$TopicId": "<p>The ID of the topic that you want to modify. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
         "UpdateTopicRefreshScheduleRequest$TopicId": "<p>The ID of the topic that you want to modify. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
         "UpdateTopicRefreshScheduleResponse$TopicId": "<p>The ID of the topic that you want to modify. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
         "UpdateTopicRequest$TopicId": "<p>The ID of the topic that you want to modify. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
-        "UpdateTopicResponse$TopicId": "<p>The ID of the topic that you want to modify. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>"
+        "UpdateTopicResponse$TopicId": "<p>The ID of the topic that you want to modify. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
+        "UpdateTopicV2Request$TopicId": "<p>The ID of the topic that you want to modify. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
+        "UpdateTopicV2Response$TopicId": "<p>The ID of the topic that you want to modify. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>"
+      }
+    },
+    "TopicIdentifier": {
+      "base": null,
+      "refs": {
+        "CalculatedField$TopicIdentifier": "<p>The topic that is used in this calculated field.</p>",
+        "ColumnIdentifier$TopicIdentifier": "<p>The topic that the column belongs to.</p>",
+        "CustomContentVisual$TopicIdentifier": "<p>The topic that is used in the custom content visual. You can't create a visual without a dataset or a topic.</p>",
+        "EmptyVisual$TopicIdentifier": "<p>The topic that is used in the empty visual. Every visual requires a dataset or a topic to render.</p>",
+        "InsightVisual$TopicIdentifier": "<p>The topic that is used in the insight visual.</p>",
+        "LayerMapVisual$TopicIdentifier": "<p>The topic that is used in the layer map visual. You can't create a visual without a dataset or a topic.</p>",
+        "TopicIdentifierDeclaration$Identifier": "<p>The identifier of the topic, typically the topic's name.</p>",
+        "TopicReference$TopicPlaceholder": "<p>Topic placeholder.</p>"
+      }
+    },
+    "TopicIdentifierDeclaration": {
+      "base": "<p>A topic.</p>",
+      "refs": {
+        "TopicIdentifierDeclarationList$member": null
+      }
+    },
+    "TopicIdentifierDeclarationList": {
+      "base": null,
+      "refs": {
+        "AnalysisDefinition$TopicIdentifierDeclarations": "<p>An array of topic identifier declarations. This mapping allows the usage of topic identifiers instead of topic ARNs throughout analysis sub-structures.</p>",
+        "DashboardVersionDefinition$TopicIdentifierDeclarations": "<p>An array of topic identifier declarations. With this mapping, you can use topic identifiers instead of topic Amazon Resource Names (ARNs) throughout the dashboard's sub-structures.</p>"
       }
     },
     "TopicNamedEntities": {
@@ -17927,6 +18187,20 @@
       "refs": {
         "TopicDateRangeFilter$Constant": "<p>The constant used in a date range filter.</p>",
         "TopicNumericRangeFilter$Constant": "<p>The constant used in a numeric range filter.</p>"
+      }
+    },
+    "TopicReference": {
+      "base": "<p>Topic reference.</p>",
+      "refs": {
+        "TopicReferenceList$member": null
+      }
+    },
+    "TopicReferenceList": {
+      "base": null,
+      "refs": {
+        "AnalysisSourceTemplate$TopicReferences": "<p>The topic references of the source template of an analysis.</p>",
+        "DashboardSourceTemplate$TopicReferences": "<p>The topic references for the source template of a dashboard.</p>",
+        "TemplateSourceAnalysis$TopicReferences": "<p>A structure containing information about the topic references used as placeholders in the template.</p>"
       }
     },
     "TopicRefreshDetails": {
@@ -18001,7 +18275,8 @@
     "TopicSearchFilterList": {
       "base": null,
       "refs": {
-        "SearchTopicsRequest$Filters": "<p>The filters that you want to use to search for the topic.</p>"
+        "SearchTopicsRequest$Filters": "<p>The filters that you want to use to search for the topic.</p>",
+        "SearchTopicsV2Request$Filters": "<p>The filters that you want to use to search for the topic.</p>"
       }
     },
     "TopicSingularFilterConstant": {
@@ -18023,6 +18298,7 @@
       "base": null,
       "refs": {
         "FilterAggMetrics$SortDirection": "<p>The sort direction for <code>FilterAggMetrics</code>.</p>",
+        "NamedEntitySort$Direction": "<p>The direction of the sort. Valid values are <code>ASCENDING</code> and <code>DESCENDING</code>.</p>",
         "TopicIRFilterOption$SortDirection": "<p>The sort direction for the <code>TopicIRFilterOption</code>.</p>",
         "TopicSortClause$SortDirection": "<p>The sort direction for the <code>TopicSortClause</code>.</p>"
       }
@@ -18064,6 +18340,70 @@
       "refs": {
         "TopicDetails$UserExperienceVersion": "<p>The user experience version of a topic.</p>",
         "TopicSummary$UserExperienceVersion": "<p>The user experience version of the topic.</p>"
+      }
+    },
+    "TopicV2DataSetReference": {
+      "base": "<p>A structure that represents a data set reference of a topic.</p>",
+      "refs": {
+        "TopicV2DataSetReferences$member": null
+      }
+    },
+    "TopicV2DataSetReferences": {
+      "base": null,
+      "refs": {
+        "TopicV2Details$DataSets": "<p>The data sets that the topic is associated with.</p>"
+      }
+    },
+    "TopicV2DataSetRelation": {
+      "base": "<p>A structure that represents a relation between two data sets of a topic.</p>",
+      "refs": {
+        "TopicV2DataSetRelationList$member": null
+      }
+    },
+    "TopicV2DataSetRelationColumnNames": {
+      "base": null,
+      "refs": {
+        "TopicV2DataSetRelationEndpoint$ColumnNames": "<p>The names of the columns that are used in the data set relation.</p>"
+      }
+    },
+    "TopicV2DataSetRelationEndpoint": {
+      "base": "<p>A structure that represents an endpoint of a data set relation of a topic.</p>",
+      "refs": {
+        "TopicV2DataSetRelation$Left": "<p>The left endpoint of the data set relation.</p>",
+        "TopicV2DataSetRelation$Right": "<p>The right endpoint of the data set relation.</p>"
+      }
+    },
+    "TopicV2DataSetRelationList": {
+      "base": null,
+      "refs": {
+        "TopicV2Details$DataSetRelations": "<p>The relations between the data sets that the topic is associated with.</p>"
+      }
+    },
+    "TopicV2Details": {
+      "base": "<p>The definition of a topic.</p>",
+      "refs": {
+        "CreateTopicV2Request$Topic": "<p>The definition of a topic to create.</p>",
+        "DescribeTopicV2Response$Topic": "<p>The definition of a topic.</p>",
+        "UpdateTopicV2Request$Topic": "<p>The definition of the topic that you want to update.</p>"
+      }
+    },
+    "TopicV2PublishOption": {
+      "base": null,
+      "refs": {
+        "UpdateTopicV2Request$PublishOption": "<p>The publish option for the topic that you want to update.</p>"
+      }
+    },
+    "TopicV2Summaries": {
+      "base": null,
+      "refs": {
+        "ListTopicsV2Response$TopicSummaryList": "<p>A list of topic summaries.</p>",
+        "SearchTopicsV2Response$TopicSummaryList": "<p>A list of topic summaries that is returned by the search topic request.</p>"
+      }
+    },
+    "TopicV2Summary": {
+      "base": "<p>A summary of the topic.</p>",
+      "refs": {
+        "TopicV2Summaries$member": null
       }
     },
     "TopicVisual": {
@@ -18777,7 +19117,9 @@
         "UpdateThemePermissionsRequest$RevokePermissions": "<p>A list of resource permissions to be revoked from the theme.</p>",
         "UpdateThemePermissionsResponse$Permissions": "<p>The resulting list of resource permissions for the theme.</p>",
         "UpdateTopicPermissionsRequest$GrantPermissions": "<p>The resource permissions that you want to grant to the topic.</p>",
-        "UpdateTopicPermissionsRequest$RevokePermissions": "<p>The resource permissions that you want to revoke from the topic.</p>"
+        "UpdateTopicPermissionsRequest$RevokePermissions": "<p>The resource permissions that you want to revoke from the topic.</p>",
+        "UpdateTopicPermissionsV2Request$GrantPermissions": "<p>The resource permissions that you want to grant to the topic.</p>",
+        "UpdateTopicPermissionsV2Request$RevokePermissions": "<p>The resource permissions that you want to revoke from the topic.</p>"
       }
     },
     "UpdateRoleCustomPermissionRequest": {
@@ -18892,6 +19234,14 @@
       "base": null,
       "refs": {}
     },
+    "UpdateTopicPermissionsV2Request": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateTopicPermissionsV2Response": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateTopicRefreshScheduleRequest": {
       "base": null,
       "refs": {}
@@ -18905,6 +19255,14 @@
       "refs": {}
     },
     "UpdateTopicResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateTopicV2Request": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateTopicV2Response": {
       "base": null,
       "refs": {}
     },
@@ -19278,6 +19636,9 @@
         "TooltipOptions$TooltipVisibility": "<p>Determines whether or not the tooltip is visible.</p>",
         "TotalOptions$TotalsVisibility": "<p>The visibility configuration for the total cells.</p>",
         "TrendArrowOptions$Visibility": "<p>The visibility of the trend arrows.</p>",
+        "VisualMessageConfiguration$TitleVisibility": "<p>Specifies whether the title of the message is displayed.</p>",
+        "VisualMessageConfiguration$DescriptionVisibility": "<p>Specifies whether the description of the message is displayed.</p>",
+        "VisualMessageConfiguration$LinkVisibility": "<p>Specifies whether the hyperlink in the message is displayed.</p>",
         "VisualSubtitleLabelOptions$Visibility": "<p>The visibility of the subtitle label.</p>",
         "VisualTitleLabelOptions$Visibility": "<p>The visibility of the title label.</p>"
       }
@@ -19442,6 +19803,32 @@
       "refs": {
         "DashboardPublishOptions$VisualMenuOption": "<p>The menu options of a visual in a dashboard.</p>",
         "VisualInteractionOptions$VisualMenuOption": "<p>The on-visual menu options for a visual.</p>"
+      }
+    },
+    "VisualMessageConfiguration": {
+      "base": "<p>The configuration for a customizable message displayed on a visual. Supports parameter substitution in text fields.</p>",
+      "refs": {
+        "VisualMessages$NoDataMessage": "<p>The message that is displayed on a visual when there is no data to display.</p>"
+      }
+    },
+    "VisualMessageLinkUrl": {
+      "base": null,
+      "refs": {
+        "VisualMessageConfiguration$LinkUrl": "<p>The destination URL of the hyperlink that is shown in the message. Only valid <code>http</code>, <code>https</code>, and <code>mailto</code> URLs are supported.</p>"
+      }
+    },
+    "VisualMessageText": {
+      "base": null,
+      "refs": {
+        "VisualMessageConfiguration$Title": "<p>The title text of the message that is displayed on the visual.</p>",
+        "VisualMessageConfiguration$Description": "<p>The description text of the message that is displayed on the visual.</p>",
+        "VisualMessageConfiguration$LinkText": "<p>The display text of the hyperlink that is shown in the message.</p>"
+      }
+    },
+    "VisualMessages": {
+      "base": "<p>The messages that are displayed on a visual under specific conditions, such as when the visual returns no data.</p>",
+      "refs": {
+        "AssetOptions$VisualMessages": "<p>The configuration options for the messages that are displayed on visuals in the analysis.</p>"
       }
     },
     "VisualOptions": {

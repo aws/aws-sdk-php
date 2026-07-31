@@ -5080,7 +5080,8 @@
         "workflowsMwaaProperties":{"shape":"WorkflowsMwaaPropertiesInput"},
         "workflowsServerlessProperties":{"shape":"WorkflowsServerlessPropertiesInput"},
         "lakehouseProperties":{"shape":"LakehousePropertiesInput"},
-        "vpcProperties":{"shape":"VpcPropertiesInput"}
+        "vpcProperties":{"shape":"VpcPropertiesInput"},
+        "gitProperties":{"shape":"GitPropertiesInput"}
       },
       "union":true
     },
@@ -5101,7 +5102,8 @@
         "workflowsMwaaProperties":{"shape":"WorkflowsMwaaPropertiesOutput"},
         "workflowsServerlessProperties":{"shape":"WorkflowsServerlessPropertiesOutput"},
         "lakehouseProperties":{"shape":"LakehousePropertiesOutput"},
-        "vpcProperties":{"shape":"VpcPropertiesOutput"}
+        "vpcProperties":{"shape":"VpcPropertiesOutput"},
+        "gitProperties":{"shape":"GitPropertiesOutput"}
       },
       "union":true
     },
@@ -5118,7 +5120,8 @@
         "amazonQProperties":{"shape":"AmazonQPropertiesPatch"},
         "mlflowProperties":{"shape":"MlflowPropertiesPatch"},
         "lakehouseProperties":{"shape":"LakehousePropertiesPatch"},
-        "vpcProperties":{"shape":"VpcPropertiesPatch"}
+        "vpcProperties":{"shape":"VpcPropertiesPatch"},
+        "gitProperties":{"shape":"GitPropertiesPatch"}
       },
       "union":true
     },
@@ -5200,7 +5203,8 @@
         "WORKFLOWS_MWAA",
         "AMAZON_Q",
         "MLFLOW",
-        "VPC"
+        "VPC",
+        "GIT"
       ]
     },
     "ConnectivityProperties":{
@@ -10649,6 +10653,89 @@
         "committedAt":{"shape":"Timestamp"},
         "commitMessage":{"shape":"CommitMessage"}
       }
+    },
+    "GitPropertiesInput":{
+      "type":"structure",
+      "required":[
+        "codeConnectionArn",
+        "repositoryId",
+        "defaultBranch"
+      ],
+      "members":{
+        "codeConnectionArn":{"shape":"GitPropertiesInputCodeConnectionArnString"},
+        "repositoryId":{"shape":"GitPropertiesInputRepositoryIdString"},
+        "defaultBranch":{"shape":"GitPropertiesInputDefaultBranchString"}
+      }
+    },
+    "GitPropertiesInputCodeConnectionArnString":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"arn:aws[^:]*:(codeconnections|codestar-connections):[a-z0-9\\-]+:\\d{12}:connection/[a-f0-9\\-]+"
+    },
+    "GitPropertiesInputDefaultBranchString":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"[a-zA-Z0-9._\\-/]+"
+    },
+    "GitPropertiesInputRepositoryIdString":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"[a-zA-Z0-9._\\-]+(/[a-zA-Z0-9._\\-]+)+"
+    },
+    "GitPropertiesOutput":{
+      "type":"structure",
+      "required":[
+        "codeConnectionArn",
+        "repositoryId",
+        "defaultBranch"
+      ],
+      "members":{
+        "codeConnectionArn":{"shape":"GitPropertiesOutputCodeConnectionArnString"},
+        "repositoryId":{"shape":"GitPropertiesOutputRepositoryIdString"},
+        "defaultBranch":{"shape":"GitPropertiesOutputDefaultBranchString"},
+        "status":{"shape":"ConnectionStatus"},
+        "errorMessage":{"shape":"String"}
+      }
+    },
+    "GitPropertiesOutputCodeConnectionArnString":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"arn:aws[^:]*:(codeconnections|codestar-connections):[a-z0-9\\-]+:\\d{12}:connection/[a-f0-9\\-]+"
+    },
+    "GitPropertiesOutputDefaultBranchString":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"[a-zA-Z0-9._\\-/]+"
+    },
+    "GitPropertiesOutputRepositoryIdString":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"[a-zA-Z0-9._\\-]+(/[a-zA-Z0-9._\\-]+)+"
+    },
+    "GitPropertiesPatch":{
+      "type":"structure",
+      "members":{
+        "codeConnectionArn":{"shape":"GitPropertiesPatchCodeConnectionArnString"},
+        "defaultBranch":{"shape":"GitPropertiesPatchDefaultBranchString"}
+      }
+    },
+    "GitPropertiesPatchCodeConnectionArnString":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"arn:aws[^:]*:(codeconnections|codestar-connections):[a-z0-9\\-]+:\\d{12}:connection/[a-f0-9\\-]+"
+    },
+    "GitPropertiesPatchDefaultBranchString":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"[a-zA-Z0-9._\\-/]+"
     },
     "GitRepository":{
       "type":"string",

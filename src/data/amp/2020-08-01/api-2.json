@@ -1201,7 +1201,8 @@
           "shape":"IdempotencyToken",
           "idempotencyToken":true
         },
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "exporters":{"shape":"ExporterList"}
       }
     },
     "CreateScraperResponse":{
@@ -1662,6 +1663,19 @@
         "subnetIds":{"shape":"SubnetIds"}
       }
     },
+    "ExporterConfiguration":{
+      "type":"structure",
+      "members":{
+        "openSearchConfiguration":{"shape":"OpenSearchExporterConfiguration"}
+      },
+      "union":true
+    },
+    "ExporterList":{
+      "type":"list",
+      "member":{"shape":"ExporterConfiguration"},
+      "max":1,
+      "min":0
+    },
     "FilterKey":{
       "type":"string",
       "max":256,
@@ -2015,6 +2029,17 @@
       "type":"long",
       "box":true,
       "min":0
+    },
+    "OpenSearchDomainArn":{
+      "type":"string",
+      "pattern":"arn:aws[-a-z]*:es:[-a-z0-9]+:[0-9]{12}:domain\\/.+"
+    },
+    "OpenSearchExporterConfiguration":{
+      "type":"structure",
+      "required":["domainArn"],
+      "members":{
+        "domainArn":{"shape":"OpenSearchDomainArn"}
+      }
     },
     "PaginationToken":{
       "type":"string",
@@ -2394,7 +2419,8 @@
         "scrapeConfiguration":{"shape":"ScrapeConfiguration"},
         "source":{"shape":"Source"},
         "destination":{"shape":"Destination"},
-        "roleConfiguration":{"shape":"RoleConfiguration"}
+        "roleConfiguration":{"shape":"RoleConfiguration"},
+        "exporters":{"shape":"ExporterList"}
       }
     },
     "ScraperFilters":{
@@ -2479,7 +2505,8 @@
         "statusReason":{"shape":"StatusReason"},
         "source":{"shape":"Source"},
         "destination":{"shape":"Destination"},
-        "roleConfiguration":{"shape":"RoleConfiguration"}
+        "roleConfiguration":{"shape":"RoleConfiguration"},
+        "exporters":{"shape":"ExporterList"}
       }
     },
     "ScraperSummaryList":{
@@ -2728,7 +2755,8 @@
         "clientToken":{
           "shape":"IdempotencyToken",
           "idempotencyToken":true
-        }
+        },
+        "exporters":{"shape":"ExporterList"}
       }
     },
     "UpdateScraperResponse":{
