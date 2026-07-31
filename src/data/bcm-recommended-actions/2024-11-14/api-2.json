@@ -5,11 +5,8 @@
     "auth":["aws.auth#sigv4"],
     "endpointPrefix":"bcm-recommended-actions",
     "jsonVersion":"1.0",
-    "protocol":"smithy-rpc-v2-cbor",
-    "protocols":[
-      "smithy-rpc-v2-cbor",
-      "json"
-    ],
+    "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"AWS Billing and Cost Management Recommended Actions",
     "serviceId":"BCM Recommended Actions",
     "signatureVersion":"v4",
@@ -40,10 +37,6 @@
       "required":["message"],
       "members":{
         "message":{"shape":"String"}
-      },
-      "error":{
-        "httpStatusCode":403,
-        "senderFault":true
       },
       "exception":true
     },
@@ -140,7 +133,6 @@
       "members":{
         "message":{"shape":"String"}
       },
-      "error":{"httpStatusCode":500},
       "exception":true,
       "fault":true
     },
@@ -222,10 +214,6 @@
       "members":{
         "message":{"shape":"String"}
       },
-      "error":{
-        "httpStatusCode":429,
-        "senderFault":true
-      },
       "exception":true
     },
     "ValidationException":{
@@ -238,10 +226,6 @@
         "message":{"shape":"String"},
         "reason":{"shape":"ValidationExceptionReason"},
         "fieldList":{"shape":"ValidationExceptionFieldList"}
-      },
-      "error":{
-        "httpStatusCode":400,
-        "senderFault":true
       },
       "exception":true
     },

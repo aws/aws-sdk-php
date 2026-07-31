@@ -5,11 +5,8 @@
     "auth":["aws.auth#sigv4"],
     "endpointPrefix":"bcm-pricing-calculator",
     "jsonVersion":"1.0",
-    "protocol":"smithy-rpc-v2-cbor",
-    "protocols":[
-      "smithy-rpc-v2-cbor",
-      "json"
-    ],
+    "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"AWS Billing and Cost Management Pricing Calculator",
     "serviceId":"BCM Pricing Calculator",
     "signatureVersion":"v4",
@@ -683,10 +680,6 @@
       "required":["message"],
       "members":{
         "message":{"shape":"String"}
-      },
-      "error":{
-        "httpStatusCode":403,
-        "senderFault":true
       },
       "exception":true
     },
@@ -1490,10 +1483,6 @@
         "resourceId":{"shape":"String"},
         "resourceType":{"shape":"String"}
       },
-      "error":{
-        "httpStatusCode":409,
-        "senderFault":true
-      },
       "exception":true
     },
     "CostAmount":{
@@ -1616,10 +1605,6 @@
       "required":["message"],
       "members":{
         "message":{"shape":"String"}
-      },
-      "error":{
-        "httpStatusCode":400,
-        "senderFault":true
       },
       "exception":true
     },
@@ -1810,7 +1795,6 @@
         "message":{"shape":"String"},
         "retryAfterSeconds":{"shape":"Integer"}
       },
-      "error":{"httpStatusCode":500},
       "exception":true,
       "fault":true
     },
@@ -2232,10 +2216,6 @@
         "resourceId":{"shape":"String"},
         "resourceType":{"shape":"String"}
       },
-      "error":{
-        "httpStatusCode":404,
-        "senderFault":true
-      },
       "exception":true
     },
     "ResourceTagKey":{
@@ -2291,10 +2271,6 @@
         "serviceCode":{"shape":"String"},
         "quotaCode":{"shape":"String"}
       },
-      "error":{
-        "httpStatusCode":402,
-        "senderFault":true
-      },
       "exception":true
     },
     "String":{"type":"string"},
@@ -2332,10 +2308,6 @@
         "serviceCode":{"shape":"String"},
         "quotaCode":{"shape":"String"},
         "retryAfterSeconds":{"shape":"Integer"}
-      },
-      "error":{
-        "httpStatusCode":429,
-        "senderFault":true
       },
       "exception":true
     },
@@ -2507,10 +2479,6 @@
         "message":{"shape":"String"},
         "reason":{"shape":"ValidationExceptionReason"},
         "fieldList":{"shape":"ValidationExceptionFieldList"}
-      },
-      "error":{
-        "httpStatusCode":400,
-        "senderFault":true
       },
       "exception":true
     },
