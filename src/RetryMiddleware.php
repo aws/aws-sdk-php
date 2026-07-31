@@ -190,7 +190,11 @@ class RetryMiddleware
         $decider = $this->decider;
         $delay = $this->delay;
 
-        $request = $this->addRetryHeader($request, 0, 0);
+        $request = $this->addRetryHeader(
+            $request,
+            0,
+            $command['@retries'] !== null ? $command['@retries'] + 1 : null
+        );
 
         $g = function ($value) use (
             $handler,
@@ -234,7 +238,11 @@ class RetryMiddleware
             }
 
             // Update retry header with retry count and delayBy
-            $request = $this->addRetryHeader($request, $retries, $delayBy);
+            $request = $this->addRetryHeader(
+                $request,
+                $retries,
+                $command['@retries'] !== null ? $command['@retries'] + 1 : null
+            );
 
             return $handler($command, $request)->then($g, $g);
         };

@@ -12,6 +12,7 @@ use Aws\ResultInterface;
 use Aws\Retry\Configuration;
 use Aws\Retry\ConfigurationProvider;
 use Aws\Retry\V3\QuotaManager;
+use Aws\Retry\V3\OptIn;
 use Aws\Retry\V3\RetryMiddleware;
 use Aws\Retry\RateLimiter;
 use GuzzleHttp\Promise\RejectedPromise;
@@ -27,6 +28,23 @@ use PHPUnit\Framework\Attributes\CoversClass;
 class RetryMiddlewareTest extends TestCase
 {
     use UsesServiceTrait;
+
+    private string $previousOptIn;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->previousOptIn = getenv(OptIn::ENV) ?: '';
+        putenv(OptIn::ENV . '=');
+        OptIn::reset();
+    }
+
+    protected function tearDown(): void
+    {
+        putenv(OptIn::ENV . '=' . $this->previousOptIn);
+        OptIn::reset();
+        parent::tearDown();
+    }
 
     /**
      * @param CommandInterface $command
@@ -711,8 +729,10 @@ class RetryMiddlewareTest extends TestCase
 
     public function testAddRetryHeader()
     {
-        $nextHandler = function (CommandInterface $command, RequestInterface $request) {
-            $this->assertTrue($request->hasHeader('aws-sdk-retry'));
+        $observedHeaders = [];
+        $nextHandler = function (CommandInterface $command, RequestInterface $request) use (&$observedHeaders) {
+            $this->assertTrue($request->hasHeader('amz-sdk-request'));
+            $observedHeaders[] = $request->getHeaderLine('amz-sdk-request');
             return new RejectedPromise(
                 new AwsException('e', $command, ['connection_error' => true])
             );
@@ -729,6 +749,17 @@ class RetryMiddlewareTest extends TestCase
             $retryMW(new Command('SomeCommand'), new Request('GET', ''))->wait();
             $this->fail();
         } catch (AwsException $e) { }
+
+        $this->assertSame(
+            [
+                'attempt=1; max=5',
+                'attempt=2; max=5',
+                'attempt=3; max=5',
+                'attempt=4; max=5',
+                'attempt=5; max=5',
+            ],
+            $observedHeaders
+        );
     }
 
     public function testDeciderRetriesWhenStatusCodeMatches()
@@ -1534,6 +1565,48 @@ class RetryMiddlewareTest extends TestCase
         ];
     }
 
+    public function testWrapSharesQuotaManagerState()
+    {
+        $this->enableOptInFlag();
+        $factory = RetryMiddleware::wrap(
+            new Configuration('standard', 3),
+            []
+        );
+
+        $first = $factory(static fn ($cmd, $req) => null);
+        $second = $factory(static fn ($cmd, $req) => null);
+
+        $this->assertInstanceOf(
+            QuotaManager::class,
+            $this->getPrivateProperty($first, 'quotaManager')
+        );
+        $this->assertSame(
+            $this->getPrivateProperty($first, 'quotaManager'),
+            $this->getPrivateProperty($second, 'quotaManager')
+        );
+    }
+
+    public function testWrapSharesAdaptiveRateLimiterState()
+    {
+        $this->enableOptInFlag();
+        $factory = RetryMiddleware::wrap(
+            new Configuration('adaptive', 3),
+            []
+        );
+
+        $first = $factory(static fn ($cmd, $req) => null);
+        $second = $factory(static fn ($cmd, $req) => null);
+
+        $this->assertInstanceOf(
+            RateLimiter::class,
+            $this->getPrivateProperty($first, 'rateLimiter')
+        );
+        $this->assertSame(
+            $this->getPrivateProperty($first, 'rateLimiter'),
+            $this->getPrivateProperty($second, 'rateLimiter')
+        );
+    }
+
     public function testRetryAfterHeaderClamping()
     {
         $command = new Command('foo');
@@ -1639,5 +1712,20 @@ class RetryMiddlewareTest extends TestCase
         $wrapped($command, $request)->wait();
         // retry-after=0 clamped to [50, 5050] = 50ms (the computed delay minimum)
         $this->assertSame(50, $delays[0]);
+    }
+
+    private function enableOptInFlag(): void
+    {
+        putenv(OptIn::ENV . '=true');
+        OptIn::reset();
+    }
+
+    private function getPrivateProperty(object $object, string $property): mixed
+    {
+        $reflection = new \ReflectionClass($object);
+        $prop = $reflection->getProperty($property);
+        $prop->setAccessible(true);
+
+        return $prop->getValue($object);
     }
 }

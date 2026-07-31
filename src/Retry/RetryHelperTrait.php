@@ -6,9 +6,14 @@ use Aws\ResultInterface;
 
 trait RetryHelperTrait
 {
-    private function addRetryHeader($request, $retries, $delayBy)
+    private function addRetryHeader($request, $retries, $maxAttempts = null)
     {
-        return $request->withHeader('aws-sdk-retry', "{$retries}/{$delayBy}");
+        $header = ['attempt=' . ($retries + 1)];
+        if ($maxAttempts !== null) {
+            $header[] = 'max=' . $maxAttempts;
+        }
+
+        return $request->withHeader('amz-sdk-request', implode('; ', $header));
     }
 
 

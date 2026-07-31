@@ -168,7 +168,7 @@ class RetryMiddlewareV2
         $monitoringEvents = [];
         $requestStats = [];
 
-        $req = $this->addRetryHeader($req, 0, 0);
+        $req = $this->addRetryHeader($req, 0, $this->resolveMaxAttempts($cmd));
 
         $callback = function ($value) use (
             $handler,
@@ -215,7 +215,11 @@ class RetryMiddlewareV2
             }
 
             // Update retry header with retry count and delayBy
-            $req = $this->addRetryHeader($req, $attempts - 1, $delayBy);
+            $req = $this->addRetryHeader(
+                $req,
+                $attempts - 1,
+                $this->resolveMaxAttempts($cmd)
+            );
 
             // Get token from rate limiter, which will sleep if necessary
             if ($this->mode === 'adaptive') {
@@ -351,5 +355,12 @@ class RetryMiddlewareV2
         }
 
         return false;
+    }
+
+    private function resolveMaxAttempts(CommandInterface $cmd)
+    {
+        return $cmd['@retries'] !== null
+            ? $cmd['@retries'] + 1
+            : $this->maxAttempts;
     }
 }

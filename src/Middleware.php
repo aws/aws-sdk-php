@@ -265,7 +265,7 @@ final class Middleware
                 RequestInterface $request
             ) use ($handler){
                 return $handler($command, $request->withHeader(
-                    'aws-sdk-invocation-id',
+                    'amz-sdk-invocation-id',
                     md5(uniqid(gethostname(), true))
                 ));
             };

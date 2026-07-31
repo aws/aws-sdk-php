@@ -477,4 +477,5 @@ class StsClientTest extends TestCase
 
         return $tokenPath;
     }
+
 }

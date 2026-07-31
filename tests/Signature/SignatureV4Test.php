@@ -673,8 +673,8 @@ class SignatureV4Test extends TestCase
 
         static $headers = [
             'X-Amz-Content-Sha256' => 'blah',
-            'aws-sdk-invocation-id' => '1',
-            'aws-sdk-retry' => 'foo',
+            'amz-sdk-invocation-id' => '1',
+            'amz-sdk-request' => 'foo',
             'transfer-encoding' => 'chunked'
         ];
         $sig = new SignatureV4('foo', 'bar', ['use_v4a' => true]);
