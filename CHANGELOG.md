@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.390.1 - 2026-07-31
 
 * `Aws\BCMRecommendedActions` - Removing Smithy RPC v2 CBOR support that was added in previous SDK release.
 * `Aws\BCMPricingCalculator` - Removing Smithy RPC v2 CBOR support that was added in previous SDK release.
