@@ -1064,6 +1064,13 @@
         "SKIP"
       ]
     },
+    "EncryptionScope":{
+      "type":"string",
+      "enum":[
+        "ENCRYPTED_SOURCE_ONLY",
+        "NEW_DESTINATION_LOG_GROUPS"
+      ]
+    },
     "EncryptionStrategy":{
       "type":"string",
       "enum":[
@@ -1289,6 +1296,12 @@
     "IsReplicated":{
       "type":"boolean",
       "box":true
+    },
+    "KmsKeyArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"arn:aws[a-zA-Z-]*:kms:[a-z0-9-]+:\\d{12}:key/(mrk-)?[a-f0-9-]+"
     },
     "LabelNameCondition":{
       "type":"structure",
@@ -1534,7 +1547,8 @@
       "members":{
         "EncryptionStrategy":{"shape":"EncryptionStrategy"},
         "KmsKeyArn":{"shape":"ResourceArn"},
-        "EncryptionConflictResolutionStrategy":{"shape":"EncryptionConflictResolutionStrategy"}
+        "EncryptionConflictResolutionStrategy":{"shape":"EncryptionConflictResolutionStrategy"},
+        "EncryptionScope":{"shape":"EncryptionScope"}
       }
     },
     "LogsFilterString":{
@@ -1935,7 +1949,8 @@
         "ELBLoadBalancerLoggingParameters":{"shape":"ELBLoadBalancerLoggingParameters"},
         "WAFLoggingParameters":{"shape":"WAFLoggingParameters"},
         "LogDeliveryParameters":{"shape":"LogDeliveryParameters"},
-        "MskMonitoringParameters":{"shape":"MskMonitoringParameters"}
+        "MskMonitoringParameters":{"shape":"MskMonitoringParameters"},
+        "KmsKeyArn":{"shape":"KmsKeyArn"}
       }
     },
     "TelemetryEnrichmentStatus":{

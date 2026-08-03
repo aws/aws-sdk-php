@@ -3567,6 +3567,10 @@
           "shape": "ContentLightLevel",
           "locationName": "contentLightLevel"
         },
+        "FieldOrder": {
+          "shape": "__string",
+          "locationName": "fieldOrder"
+        },
         "Height": {
           "shape": "__integer",
           "locationName": "height"
@@ -3758,6 +3762,10 @@
     "Container": {
       "type": "structure",
       "members": {
+        "BitRate": {
+          "shape": "__long",
+          "locationName": "bitRate"
+        },
         "Duration": {
           "shape": "__double",
           "locationName": "duration"
@@ -8324,7 +8332,7 @@
           "locationName": "kantarLicenseId"
         },
         "KantarServerUrl": {
-          "shape": "__stringPatternHttpsKantarmedia",
+          "shape": "__stringPatternHttpsKantarmedia55Prod",
           "locationName": "kantarServerUrl"
         },
         "LogDestination": {
@@ -9431,6 +9439,10 @@
     "MovSettings": {
       "type": "structure",
       "members": {
+        "AudioDuration": {
+          "shape": "CmfcAudioDuration",
+          "locationName": "audioDuration"
+        },
         "ClapAtom": {
           "shape": "MovClapAtom",
           "locationName": "clapAtom"
@@ -11229,7 +11241,8 @@
         "ONEZONE_IA",
         "INTELLIGENT_TIERING",
         "GLACIER",
-        "DEEP_ARCHIVE"
+        "DEEP_ARCHIVE",
+        "GLACIER_IR"
       ]
     },
     "SampleRangeConversion": {
@@ -14530,9 +14543,9 @@
       "type": "string",
       "pattern": "^https:\\/\\/[^:@\\/]*(:\\d*)?(\\/.*)?$"
     },
-    "__stringPatternHttpsKantarmedia": {
+    "__stringPatternHttpsKantarmedia55Prod": {
       "type": "string",
-      "pattern": "^https:\\/\\/.*.kantarmedia.*$"
+      "pattern": "^https:\\/\\/.*.(kantarmedia|55-prod).*$"
     },
     "__stringPatternIdentityAZaZ26AZaZ09163": {
       "type": "string",

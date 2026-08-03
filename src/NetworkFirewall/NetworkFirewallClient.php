@@ -167,6 +167,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateProxyRuleGroupPrioritiesAsync(array $args = [])
  * @method \Aws\Result updateProxyRulePriorities(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateProxyRulePrioritiesAsync(array $args = [])
+ * @method \Aws\Result updateProxySettings(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateProxySettingsAsync(array $args = [])
  * @method \Aws\Result updateRuleGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateRuleGroupAsync(array $args = [])
  * @method \Aws\Result updateSubnetChangeProtection(array $args = [])

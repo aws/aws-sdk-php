@@ -1274,6 +1274,24 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "UpdateProxySettings":{
+      "name":"UpdateProxySettings",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateProxySettingsRequest"},
+      "output":{"shape":"UpdateProxySettingsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServerError"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceOwnerCheckException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidTokenException"},
+        {"shape":"InvalidOperationException"}
+      ]
+    },
     "UpdateRuleGroup":{
       "name":"UpdateRuleGroup",
       "http":{
@@ -1524,7 +1542,8 @@
         "SubnetId":{"shape":"AzSubnet"},
         "EndpointId":{"shape":"EndpointId"},
         "Status":{"shape":"AttachmentStatus"},
-        "StatusMessage":{"shape":"StatusMessage"}
+        "StatusMessage":{"shape":"StatusMessage"},
+        "DnsName":{"shape":"DnsName"}
       }
     },
     "AttachmentId":{"type":"string"},
@@ -1758,7 +1777,11 @@
         "EnabledAnalysisTypes":{"shape":"EnabledAnalysisTypes"},
         "TransitGatewayId":{"shape":"TransitGatewayId"},
         "AvailabilityZoneMappings":{"shape":"AvailabilityZoneMappings"},
-        "AvailabilityZoneChangeProtection":{"shape":"Boolean"}
+        "AvailabilityZoneChangeProtection":{"shape":"Boolean"},
+        "NatGatewayMappings":{"shape":"NatGatewayMappingsList"},
+        "ProxySettings":{"shape":"ProxySettings"},
+        "NoSourcePreservation":{"shape":"Boolean"},
+        "VpcEndpoint":{"shape":"VpcEndpoint"}
       }
     },
     "CreateFirewallResponse":{
@@ -2538,6 +2561,7 @@
         "UpdateToken":{"shape":"UpdateToken"}
       }
     },
+    "DnsName":{"type":"string"},
     "Domain":{"type":"string"},
     "EnableMonitoringDashboard":{"type":"boolean"},
     "EnableTLSSessionHolding":{"type":"boolean"},
@@ -2598,7 +2622,11 @@
         "TransitGatewayId":{"shape":"TransitGatewayId"},
         "TransitGatewayOwnerAccountId":{"shape":"AWSAccountId"},
         "AvailabilityZoneMappings":{"shape":"AvailabilityZoneMappings"},
-        "AvailabilityZoneChangeProtection":{"shape":"Boolean"}
+        "AvailabilityZoneChangeProtection":{"shape":"Boolean"},
+        "NatGatewayMappings":{"shape":"NatGatewayMappingsList"},
+        "ProxySettings":{"shape":"ProxySettings"},
+        "NoSourcePreservation":{"shape":"Boolean"},
+        "VpcEndpoint":{"shape":"VpcEndpoint"}
       }
     },
     "FirewallMetadata":{
@@ -3280,9 +3308,47 @@
         "TCPFlags":{"shape":"TCPFlags"}
       }
     },
+    "NatGatewayAttachment":{
+      "type":"structure",
+      "required":[
+        "NatGatewayId",
+        "Status"
+      ],
+      "members":{
+        "NatGatewayId":{"shape":"NatGatewayId"},
+        "Status":{"shape":"NatGatewayAttachmentStatus"},
+        "StatusMessage":{"shape":"StatusReason"},
+        "DnsName":{"shape":"DnsName"}
+      }
+    },
+    "NatGatewayAttachmentStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "READY",
+        "UPDATING",
+        "FAILED",
+        "DELETING"
+      ]
+    },
+    "NatGatewayAttachmentsList":{
+      "type":"list",
+      "member":{"shape":"NatGatewayAttachment"}
+    },
     "NatGatewayId":{
       "type":"string",
       "min":1
+    },
+    "NatGatewayMapping":{
+      "type":"structure",
+      "required":["NatGatewayId"],
+      "members":{
+        "NatGatewayId":{"shape":"NatGatewayId"}
+      }
+    },
+    "NatGatewayMappingsList":{
+      "type":"list",
+      "member":{"shape":"NatGatewayMapping"}
     },
     "NatGatewayPort":{"type":"integer"},
     "NumberOfAssociations":{"type":"integer"},
@@ -3592,6 +3658,13 @@
         "PreDNS":{"shape":"ProxyRuleList"},
         "PreREQUEST":{"shape":"ProxyRuleList"},
         "PostRESPONSE":{"shape":"ProxyRuleList"}
+      }
+    },
+    "ProxySettings":{
+      "type":"structure",
+      "required":["ListenerProperties"],
+      "members":{
+        "ListenerProperties":{"shape":"ListenerProperties"}
       }
     },
     "ProxyState":{
@@ -4212,7 +4285,8 @@
       "type":"structure",
       "members":{
         "Attachment":{"shape":"Attachment"},
-        "Config":{"shape":"SyncStateConfig"}
+        "Config":{"shape":"SyncStateConfig"},
+        "NatGatewayAttachments":{"shape":"NatGatewayAttachmentsList"}
       }
     },
     "SyncStateConfig":{
@@ -4754,6 +4828,24 @@
         "UpdateToken":{"shape":"UpdateToken"}
       }
     },
+    "UpdateProxySettingsRequest":{
+      "type":"structure",
+      "members":{
+        "FirewallArn":{"shape":"ResourceArn"},
+        "FirewallName":{"shape":"ResourceName"},
+        "UpdateToken":{"shape":"UpdateToken"},
+        "ProxySettings":{"shape":"ProxySettings"}
+      }
+    },
+    "UpdateProxySettingsResponse":{
+      "type":"structure",
+      "members":{
+        "FirewallArn":{"shape":"ResourceArn"},
+        "FirewallName":{"shape":"ResourceName"},
+        "UpdateToken":{"shape":"UpdateToken"},
+        "ProxySettings":{"shape":"ProxySettings"}
+      }
+    },
     "UpdateRuleGroupRequest":{
       "type":"structure",
       "required":["UpdateToken"],
@@ -4845,6 +4937,17 @@
       "member":{"shape":"VariableDefinition"}
     },
     "VendorName":{"type":"string"},
+    "VpcEndpoint":{
+      "type":"structure",
+      "required":[
+        "VpcId",
+        "SubnetMappings"
+      ],
+      "members":{
+        "VpcId":{"shape":"VpcId"},
+        "SubnetMappings":{"shape":"SubnetMappings"}
+      }
+    },
     "VpcEndpointAssociation":{
       "type":"structure",
       "required":[

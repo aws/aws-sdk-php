@@ -113,9 +113,9 @@
       "input":{"shape":"AssociateConnectionWithLagRequest"},
       "output":{"shape":"Connection"},
       "errors":[
+        {"shape":"LimitExceededException"},
         {"shape":"DirectConnectServerException"},
-        {"shape":"DirectConnectClientException"},
-        {"shape":"LimitExceededException"}
+        {"shape":"DirectConnectClientException"}
       ]
     },
     "AssociateHostedConnection":{
@@ -731,6 +731,19 @@
         {"shape":"DirectConnectClientException"}
       ]
     },
+    "ListVirtualInterfaceRoutes":{
+      "name":"ListVirtualInterfaceRoutes",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListVirtualInterfaceRoutesRequest"},
+      "output":{"shape":"ListVirtualInterfaceRoutesResponse"},
+      "errors":[
+        {"shape":"DirectConnectServerException"},
+        {"shape":"DirectConnectClientException"}
+      ]
+    },
     "ListVirtualInterfaceTestHistory":{
       "name":"ListVirtualInterfaceTestHistory",
       "http":{
@@ -982,6 +995,28 @@
       }
     },
     "AmazonAddress":{"type":"string"},
+    "AsPathList":{
+      "type":"list",
+      "member":{"shape":"LongAsn"}
+    },
+    "AsPathSegment":{
+      "type":"structure",
+      "members":{
+        "pathType":{"shape":"AsPathType"},
+        "path":{"shape":"AsPathList"}
+      }
+    },
+    "AsPathSegmentList":{
+      "type":"list",
+      "member":{"shape":"AsPathSegment"}
+    },
+    "AsPathType":{
+      "type":"string",
+      "enum":[
+        "seq",
+        "set"
+      ]
+    },
     "AssociateConnectionWithLagRequest":{
       "type":"structure",
       "required":[
@@ -1113,6 +1148,11 @@
     "CIDR":{"type":"string"},
     "Cak":{"type":"string"},
     "Ckn":{"type":"string"},
+    "CommunityEntry":{"type":"string"},
+    "CommunityList":{
+      "type":"list",
+      "member":{"shape":"CommunityEntry"}
+    },
     "ConfirmConnectionRequest":{
       "type":"structure",
       "required":["connectionId"],
@@ -1997,6 +2037,23 @@
       "members":{},
       "exception":true
     },
+    "ListVirtualInterfaceRoutesRequest":{
+      "type":"structure",
+      "members":{
+        "virtualInterfaceId":{"shape":"VirtualInterfaceId"},
+        "filters":{"shape":"RouteFilters"},
+        "maxResults":{"shape":"MaxResultSetSize"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListVirtualInterfaceRoutesResponse":{
+      "type":"structure",
+      "members":{
+        "virtualInterfaceId":{"shape":"VirtualInterfaceId"},
+        "routes":{"shape":"RouteList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
     "ListVirtualInterfaceTestHistoryRequest":{
       "type":"structure",
       "members":{
@@ -2247,6 +2304,33 @@
       "type":"list",
       "member":{"shape":"ResourceTag"}
     },
+    "Route":{
+      "type":"structure",
+      "members":{
+        "cidr":{"shape":"RouteCidr"},
+        "routeDirection":{"shape":"RouteDirection"},
+        "addressFamily":{"shape":"AddressFamily"},
+        "asPath":{"shape":"AsPathSegmentList"},
+        "communities":{"shape":"CommunityList"},
+        "awsLogicalDeviceId":{"shape":"AwsLogicalDeviceId"},
+        "routeInstalledAt":{"shape":"RouteInstalledAt"}
+      }
+    },
+    "RouteCidr":{"type":"string"},
+    "RouteDirection":{
+      "type":"string",
+      "enum":[
+        "accepted",
+        "advertised"
+      ]
+    },
+    "RouteFilterCidrString":{"type":"string"},
+    "RouteFilterCidrStringList":{
+      "type":"list",
+      "member":{"shape":"RouteFilterCidrString"},
+      "max":10,
+      "min":1
+    },
     "RouteFilterPrefix":{
       "type":"structure",
       "members":{
@@ -2256,6 +2340,21 @@
     "RouteFilterPrefixList":{
       "type":"list",
       "member":{"shape":"RouteFilterPrefix"}
+    },
+    "RouteFilters":{
+      "type":"structure",
+      "members":{
+        "routeDirection":{"shape":"RouteDirection"},
+        "addressFamily":{"shape":"AddressFamily"},
+        "cidrs":{"shape":"RouteFilterCidrStringList"},
+        "asPath":{"shape":"AsPathList"},
+        "communities":{"shape":"CommunityList"}
+      }
+    },
+    "RouteInstalledAt":{"type":"timestamp"},
+    "RouteList":{
+      "type":"list",
+      "member":{"shape":"Route"}
     },
     "RouterConfig":{"type":"string"},
     "RouterType":{

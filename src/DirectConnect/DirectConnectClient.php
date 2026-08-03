@@ -112,6 +112,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise disassociateConnectionFromLagAsync(array $args = [])
  * @method \Aws\Result disassociateMacSecKey(array $args = [])
  * @method \GuzzleHttp\Promise\Promise disassociateMacSecKeyAsync(array $args = [])
+ * @method \Aws\Result listVirtualInterfaceRoutes(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listVirtualInterfaceRoutesAsync(array $args = [])
  * @method \Aws\Result listVirtualInterfaceTestHistory(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listVirtualInterfaceTestHistoryAsync(array $args = [])
  * @method \Aws\Result startBgpFailoverTest(array $args = [])

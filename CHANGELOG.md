@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\WAFV2` - Updated descriptions for number of PreParseTextTransformations allowed per rule statement
+* `Aws\TimestreamInfluxDB` - This release adds support for customer-managed backup restore, and encryption of new DbInstances and DbClusters using customer-managed KMS keys.
+* `Aws\ObservabilityAdmin` - Launch CMK support for Telemetry Enablement Organization and Account Rules.
+* `Aws\EKSAuth` - Added eksNodeName, instanceId, and zone optional parameters to the AssumeRoleForPodIdentity API.
+* `Aws\NetworkFirewall` - This launch allows customers to use Network Firewall as an explicit Proxy and protect their workloads against threat of data exfiltration.
+* `Aws\MediaConvert` - Updates Kantar server URL validation to accept Fifty5Blue domain. Adds support for output to S3 Glacier Instant Retrieval.
+* `Aws\DirectConnect` - Added route visibility support for AWS Direct Connect, allowing customers to call ListVirtualInterfaceRoutes to view the BGP routes including AS path and BGP communities advertised over their virtual interfaces.
+
 ## 3.390.2 - 2026-07-31
 
 * `Aws\Outposts` - Adds the "EKS" value to the AWSServiceName enum and marks the Address field as sensitive.

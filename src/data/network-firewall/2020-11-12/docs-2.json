@@ -83,6 +83,7 @@
     "UpdateProxyRule": "<p>Updates the properties of the specified proxy rule.</p>",
     "UpdateProxyRuleGroupPriorities": "<p>Updates proxy rule group priorities within a proxy configuration.</p>",
     "UpdateProxyRulePriorities": "<p>Updates proxy rule priorities within a proxy rule group.</p>",
+    "UpdateProxySettings": "<p>Modifies the proxy listener configuration of a proxy mode firewall. Proxy mode firewalls are created with <code>NoSourcePreservation</code> set to <code>TRUE</code>. Use this operation to change the ports and protocols on which the firewall's proxy listens for traffic. </p>",
     "UpdateRuleGroup": "<p>Updates the rule settings for the specified rule group. You use a rule group by reference in one or more firewall policies. When you modify a rule group, you modify all firewall policies that use the rule group. </p> <p>To update a rule group, first call <a>DescribeRuleGroup</a> to retrieve the current <a>RuleGroup</a> object, update the object as needed, and then provide the updated object to this call. </p>",
     "UpdateSubnetChangeProtection": "<p/>",
     "UpdateTLSInspectionConfiguration": "<p>Updates the TLS inspection configuration settings for the specified TLS inspection configuration. You use a TLS inspection configuration by referencing it in one or more firewall policies. When you modify a TLS inspection configuration, you modify all firewall policies that use the TLS inspection configuration. </p> <p>To update a TLS inspection configuration, first call <a>DescribeTLSInspectionConfiguration</a> to retrieve the current <a>TLSInspectionConfiguration</a> object, update the object as needed, and then provide the updated object to this call. </p>"
@@ -327,6 +328,7 @@
         "CreateFirewallRequest$SubnetChangeProtection": "<p>A setting indicating whether the firewall is protected against changes to the subnet associations. Use this setting to protect against accidentally modifying the subnet associations for a firewall that is in use. When you create a firewall, the operation initializes this setting to <code>TRUE</code>.</p>",
         "CreateFirewallRequest$FirewallPolicyChangeProtection": "<p>A setting indicating whether the firewall is protected against a change to the firewall policy association. Use this setting to protect against accidentally modifying the firewall policy for a firewall that is in use. When you create a firewall, the operation initializes this setting to <code>TRUE</code>.</p>",
         "CreateFirewallRequest$AvailabilityZoneChangeProtection": "<p>Optional. A setting indicating whether the firewall is protected against changes to its Availability Zone configuration. When set to <code>TRUE</code>, you cannot add or remove Availability Zones without first disabling this protection using <a>UpdateAvailabilityZoneChangeProtection</a>.</p> <p>Default value: <code>FALSE</code> </p>",
+        "CreateFirewallRequest$NoSourcePreservation": "<p>Optional. Indicates whether the firewall operates in proxy mode, in which the source IP address of the traffic is not preserved. When set to <code>TRUE</code>, the firewall proxies traffic through a NAT gateway and the traffic reaching the destination uses the NAT gateway's IP address as the source. </p> <p>When you set this to <code>TRUE</code>, you must specify <code>NatGatewayMappings</code> and <code>VpcEndpoint</code> instead of a top-level <code>VpcId</code> and <code>SubnetMappings</code>. </p> <p>You can't change this setting after you create the firewall. </p> <p>Default value: <code>FALSE</code> </p>",
         "CreateRuleGroupRequest$DryRun": "<p>Indicates whether you want Network Firewall to just check the validity of the request, rather than run the request. </p> <p>If set to <code>TRUE</code>, Network Firewall checks whether the request can run successfully, but doesn't actually make the requested changes. The call returns the value that the request would return if you ran it with dry run set to <code>FALSE</code>, but doesn't make additions or changes to your resources. This option allows you to make sure that you have the required permissions to run the request and that your request parameters are valid. </p> <p>If set to <code>FALSE</code>, Network Firewall makes the requested changes to your resources. </p>",
         "CreateRuleGroupRequest$AnalyzeRuleGroup": "<p>Indicates whether you want Network Firewall to analyze the stateless rules in the rule group for rule behavior such as asymmetric routing. If set to <code>TRUE</code>, Network Firewall runs the analysis and then creates the rule group for you. To run the stateless rule group analyzer without creating the rule group, set <code>DryRun</code> to <code>TRUE</code>.</p>",
         "DescribeRuleGroupRequest$AnalyzeRuleGroup": "<p>Indicates whether you want Network Firewall to analyze the stateless rules in the rule group for rule behavior such as asymmetric routing. If set to <code>TRUE</code>, Network Firewall runs the analysis.</p>",
@@ -334,6 +336,7 @@
         "Firewall$SubnetChangeProtection": "<p>A setting indicating whether the firewall is protected against changes to the subnet associations. Use this setting to protect against accidentally modifying the subnet associations for a firewall that is in use. When you create a firewall, the operation initializes this setting to <code>TRUE</code>.</p>",
         "Firewall$FirewallPolicyChangeProtection": "<p>A setting indicating whether the firewall is protected against a change to the firewall policy association. Use this setting to protect against accidentally modifying the firewall policy for a firewall that is in use. When you create a firewall, the operation initializes this setting to <code>TRUE</code>.</p>",
         "Firewall$AvailabilityZoneChangeProtection": "<p>A setting indicating whether the firewall is protected against changes to its Availability Zone configuration. When set to <code>TRUE</code>, you must first disable this protection before adding or removing Availability Zones.</p>",
+        "Firewall$NoSourcePreservation": "<p>Indicates whether the firewall operates in proxy mode, in which the source IP address of the traffic is not preserved. When this value is <code>TRUE</code>, the firewall proxies traffic through a NAT gateway and uses the NAT gateway's IP address as the source for traffic reaching the destination. </p>",
         "UpdateAvailabilityZoneChangeProtectionRequest$AvailabilityZoneChangeProtection": "<p>A setting indicating whether the firewall is protected against changes to the subnet associations. Use this setting to protect against accidentally modifying the subnet associations for a firewall that is in use. When you create a firewall, the operation initializes this setting to <code>TRUE</code>.</p>",
         "UpdateAvailabilityZoneChangeProtectionResponse$AvailabilityZoneChangeProtection": "<p>A setting indicating whether the firewall is protected against changes to the subnet associations. Use this setting to protect against accidentally modifying the subnet associations for a firewall that is in use. When you create a firewall, the operation initializes this setting to <code>TRUE</code>.</p>",
         "UpdateFirewallDeleteProtectionRequest$DeleteProtection": "<p>A flag indicating whether it is possible to delete the firewall. A setting of <code>TRUE</code> indicates that the firewall is protected against deletion. Use this setting to protect against accidentally deleting a firewall that is in use. When you create a firewall, the operation initializes this flag to <code>TRUE</code>.</p>",
@@ -955,6 +958,13 @@
       "base": null,
       "refs": {}
     },
+    "DnsName": {
+      "base": null,
+      "refs": {
+        "Attachment$DnsName": "<p>The DNS name that resolves to the firewall endpoint in the subnet. This is populated for proxy mode firewalls, where clients direct traffic to the firewall's proxy using this name. </p>",
+        "NatGatewayAttachment$DnsName": "<p>The DNS name that resolves to the firewall's proxy for traffic sent through this NAT gateway attachment. </p>"
+      }
+    },
     "Domain": {
       "base": null,
       "refs": {
@@ -1498,7 +1508,8 @@
       "base": null,
       "refs": {
         "DescribeProxyResource$ListenerProperties": "<p>Listener properties for HTTP and HTTPS traffic. </p>",
-        "Proxy$ListenerProperties": "<p>Listener properties for HTTP and HTTPS traffic. </p>"
+        "Proxy$ListenerProperties": "<p>Listener properties for HTTP and HTTPS traffic. </p>",
+        "ProxySettings$ListenerProperties": "<p>Listener properties for HTTP and HTTPS traffic. </p>"
       }
     },
     "ListenerPropertiesRequest": {
@@ -1582,6 +1593,24 @@
         "RuleDefinition$MatchAttributes": "<p>Criteria for Network Firewall to use to inspect an individual packet in stateless rule inspection. Each match attributes set can include one or more items such as IP address, CIDR range, port number, protocol, and TCP flags. </p>"
       }
     },
+    "NatGatewayAttachment": {
+      "base": "<p>The definition and status of the attachment between a proxy mode firewall and a NAT gateway that proxies its traffic. </p>",
+      "refs": {
+        "NatGatewayAttachmentsList$member": null
+      }
+    },
+    "NatGatewayAttachmentStatus": {
+      "base": null,
+      "refs": {
+        "NatGatewayAttachment$Status": "<p>The current status of the NAT gateway attachment. </p> <p>When this value is <code>READY</code>, the attachment is available to proxy traffic. Otherwise, this value reflects its state, for example <code>CREATING</code> or <code>DELETING</code>.</p>"
+      }
+    },
+    "NatGatewayAttachmentsList": {
+      "base": null,
+      "refs": {
+        "SyncState$NatGatewayAttachments": "<p>The status of the NAT gateway attachments for a proxy mode firewall in the Availability Zone. This reflects the attachment of the firewall to each NAT gateway that proxies its traffic. </p>"
+      }
+    },
     "NatGatewayId": {
       "base": null,
       "refs": {
@@ -1589,8 +1618,23 @@
         "DeleteProxyRequest$NatGatewayId": "<p>The NAT Gateway the proxy is attached to. </p>",
         "DeleteProxyResponse$NatGatewayId": "<p>The NAT Gateway the Proxy was attached to. </p>",
         "DescribeProxyResource$NatGatewayId": "<p>The NAT Gateway for the proxy. </p>",
+        "NatGatewayAttachment$NatGatewayId": "<p>A unique identifier for the NAT gateway to use with proxy resources.</p>",
+        "NatGatewayMapping$NatGatewayId": "<p>A unique identifier for the NAT gateway to use with proxy resources.</p>",
         "Proxy$NatGatewayId": "<p>The NAT Gateway for the proxy. </p>",
         "UpdateProxyRequest$NatGatewayId": "<p>The NAT Gateway the proxy is attached to. </p>"
+      }
+    },
+    "NatGatewayMapping": {
+      "base": "<p>A NAT gateway that a proxy mode firewall uses to proxy traffic. This is used in <a>CreateFirewall</a> when <code>NoSourcePreservation</code> is <code>TRUE</code>. </p>",
+      "refs": {
+        "NatGatewayMappingsList$member": null
+      }
+    },
+    "NatGatewayMappingsList": {
+      "base": null,
+      "refs": {
+        "CreateFirewallRequest$NatGatewayMappings": "<p>The NAT gateways that the firewall uses to proxy traffic when <code>NoSourcePreservation</code> is <code>TRUE</code>. Network Firewall attaches the firewall to each NAT gateway that you specify, so that egress traffic is proxied through the NAT gateway. </p>",
+        "Firewall$NatGatewayMappings": "<p>The NAT gateways that the firewall uses to proxy traffic. This is set for proxy mode firewalls, where <code>NoSourcePreservation</code> is <code>TRUE</code>. </p>"
       }
     },
     "NatGatewayPort": {
@@ -2004,6 +2048,15 @@
         "ProxyRuleGroup$Rules": "<p>Individual rules that define match conditions and actions for application-layer traffic. Rules specify what to inspect (domains, headers, methods) and what action to take (allow, deny, alert). </p>"
       }
     },
+    "ProxySettings": {
+      "base": "<p>The listener configuration for a proxy mode firewall. This specifies the ports and protocols on which the firewall's proxy listens for traffic. </p>",
+      "refs": {
+        "CreateFirewallRequest$ProxySettings": "<p>The listener configuration for a proxy mode firewall, used when <code>NoSourcePreservation</code> is <code>TRUE</code>. This specifies the ports and protocols on which the firewall's proxy listens for traffic. </p>",
+        "Firewall$ProxySettings": "<p>The listener configuration for the firewall's proxy. This is set for proxy mode firewalls, where <code>NoSourcePreservation</code> is <code>TRUE</code>. </p>",
+        "UpdateProxySettingsRequest$ProxySettings": "<p>The proxy listener configuration to set on the firewall. This specifies the ports and protocols on which the firewall's proxy listens for traffic. </p>",
+        "UpdateProxySettingsResponse$ProxySettings": "<p>The updated proxy listener configuration on the firewall. </p>"
+      }
+    },
     "ProxyState": {
       "base": null,
       "refs": {
@@ -2183,6 +2236,8 @@
         "UpdateProxyRulePrioritiesRequest$ProxyRuleGroupArn": "<p>The Amazon Resource Name (ARN) of a proxy rule group.</p> <p>You must specify the ARN or the name, and you can specify both. </p>",
         "UpdateProxyRulePrioritiesResponse$ProxyRuleGroupArn": "<p>The Amazon Resource Name (ARN) of a proxy rule group.</p>",
         "UpdateProxyRuleRequest$ProxyRuleGroupArn": "<p>The Amazon Resource Name (ARN) of a proxy rule group.</p> <p>You must specify the ARN or the name, and you can specify both. </p>",
+        "UpdateProxySettingsRequest$FirewallArn": "<p>The Amazon Resource Name (ARN) of the firewall.</p> <p>You must specify the ARN or the name, and you can specify both. </p>",
+        "UpdateProxySettingsResponse$FirewallArn": "<p>The Amazon Resource Name (ARN) of the firewall.</p>",
         "UpdateRuleGroupRequest$RuleGroupArn": "<p>The Amazon Resource Name (ARN) of the rule group.</p> <p>You must specify the ARN or the name, and you can specify both. </p>",
         "UpdateSubnetChangeProtectionRequest$FirewallArn": "<p>The Amazon Resource Name (ARN) of the firewall.</p> <p>You must specify the ARN or the name, and you can specify both. </p>",
         "UpdateSubnetChangeProtectionResponse$FirewallArn": "<p>The Amazon Resource Name (ARN) of the firewall.</p>",
@@ -2330,6 +2385,8 @@
         "UpdateProxyRulePrioritiesResponse$ProxyRuleGroupName": "<p>The descriptive name of the proxy rule group. You can't change the name of a proxy rule group after you create it.</p>",
         "UpdateProxyRuleRequest$ProxyRuleGroupName": "<p>The descriptive name of the proxy rule group. You can't change the name of a proxy rule group after you create it.</p> <p>You must specify the ARN or the name, and you can specify both. </p>",
         "UpdateProxyRuleRequest$ProxyRuleName": "<p>The descriptive name of the proxy rule. You can't change the name of a proxy rule after you create it.</p>",
+        "UpdateProxySettingsRequest$FirewallName": "<p>The descriptive name of the firewall. You can't change the name of a firewall after you create it.</p> <p>You must specify the ARN or the name, and you can specify both. </p>",
+        "UpdateProxySettingsResponse$FirewallName": "<p>The descriptive name of the firewall. You can't change the name of a firewall after you create it.</p>",
         "UpdateRuleGroupRequest$RuleGroupName": "<p>The descriptive name of the rule group. You can't change the name of a rule group after you create it.</p> <p>You must specify the ARN or the name, and you can specify both. </p>",
         "UpdateSubnetChangeProtectionRequest$FirewallName": "<p>The descriptive name of the firewall. You can't change the name of a firewall after you create it.</p> <p>You must specify the ARN or the name, and you can specify both. </p>",
         "UpdateSubnetChangeProtectionResponse$FirewallName": "<p>The descriptive name of the firewall. You can't change the name of a firewall after you create it.</p>",
@@ -2726,6 +2783,7 @@
       "refs": {
         "DescribeFlowOperationResponse$StatusMessage": "<p>If the asynchronous operation fails, Network Firewall populates this with the reason for the error or failure. Options include <code>Flow operation error</code> and <code>Flow timeout</code>.</p>",
         "ListFlowOperationResultsResponse$StatusMessage": "<p>If the asynchronous operation fails, Network Firewall populates this with the reason for the error or failure. Options include <code>Flow operation error</code> and <code>Flow timeout</code>.</p>",
+        "NatGatewayAttachment$StatusMessage": "<p>If Network Firewall encounters an issue with the NAT gateway attachment, it populates this with an explanation of the problem. </p>",
         "TlsCertificateData$StatusMessage": "<p>Contains details about the certificate status, including information about certificate errors.</p>"
       }
     },
@@ -2750,7 +2808,8 @@
         "AssociateSubnetsResponse$SubnetMappings": "<p>The IDs of the subnets that are associated with the firewall. </p>",
         "CreateFirewallRequest$SubnetMappings": "<p>The public subnets to use for your Network Firewall firewalls. Each subnet must belong to a different Availability Zone in the VPC. Network Firewall creates a firewall endpoint in each subnet. </p>",
         "DisassociateSubnetsResponse$SubnetMappings": "<p>The IDs of the subnets that are associated with the firewall. </p>",
-        "Firewall$SubnetMappings": "<p>The primary public subnets that Network Firewall is using for the firewall. Network Firewall creates a firewall endpoint in each subnet. Create a subnet mapping for each Availability Zone where you want to use the firewall.</p> <p>These subnets are all defined for a single, primary VPC, and each must belong to a different Availability Zone. Each of these subnets establishes the availability of the firewall in its Availability Zone. </p> <p>In addition to these subnets, you can define other endpoints for the firewall in <code>VpcEndpointAssociation</code> resources. You can define these additional endpoints for any VPC, and for any of the Availability Zones where the firewall resource already has a subnet mapping. VPC endpoint associations give you the ability to protect multiple VPCs using a single firewall, and to define multiple firewall endpoints for a VPC in a single Availability Zone. </p>"
+        "Firewall$SubnetMappings": "<p>The primary public subnets that Network Firewall is using for the firewall. Network Firewall creates a firewall endpoint in each subnet. Create a subnet mapping for each Availability Zone where you want to use the firewall.</p> <p>These subnets are all defined for a single, primary VPC, and each must belong to a different Availability Zone. Each of these subnets establishes the availability of the firewall in its Availability Zone. </p> <p>In addition to these subnets, you can define other endpoints for the firewall in <code>VpcEndpointAssociation</code> resources. You can define these additional endpoints for any VPC, and for any of the Availability Zones where the firewall resource already has a subnet mapping. VPC endpoint associations give you the ability to protect multiple VPCs using a single firewall, and to define multiple firewall endpoints for a VPC in a single Availability Zone. </p>",
+        "VpcEndpoint$SubnetMappings": "<p>The subnets in which Network Firewall creates the firewall endpoint for a proxy mode firewall. Each subnet must belong to a different Availability Zone in the VPC. </p>"
       }
     },
     "SubscriptionStatus": {
@@ -3145,6 +3204,14 @@
       "base": null,
       "refs": {}
     },
+    "UpdateProxySettingsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateProxySettingsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateRuleGroupRequest": {
       "base": null,
       "refs": {}
@@ -3238,6 +3305,8 @@
         "UpdateProxyRulePrioritiesResponse$UpdateToken": "<p>A token used for optimistic locking. Network Firewall returns a token to your requests that access the proxy rule group. The token marks the state of the proxy rule group resource at the time of the request. </p> <p>To make changes to the proxy rule group, you provide the token in your request. Network Firewall uses the token to ensure that the proxy rule group hasn't changed since you last retrieved it. If it has changed, the operation fails with an <code>InvalidTokenException</code>. If this happens, retrieve the proxy rule group again to get a current copy of it with a current token. Reapply your changes as needed, then try the operation again using the new token. </p>",
         "UpdateProxyRuleRequest$UpdateToken": "<p>A token used for optimistic locking. Network Firewall returns a token to your requests that access the proxy rule. The token marks the state of the proxy rule resource at the time of the request. </p> <p>To make changes to the proxy rule, you provide the token in your request. Network Firewall uses the token to ensure that the proxy rule hasn't changed since you last retrieved it. If it has changed, the operation fails with an <code>InvalidTokenException</code>. If this happens, retrieve the proxy rule again to get a current copy of it with a current token. Reapply your changes as needed, then try the operation again using the new token. </p>",
         "UpdateProxyRuleResponse$UpdateToken": "<p>A token used for optimistic locking. Network Firewall returns a token to your requests that access the proxy rule. The token marks the state of the proxy rule resource at the time of the request. </p> <p>To make changes to the proxy rule, you provide the token in your request. Network Firewall uses the token to ensure that the proxy rule hasn't changed since you last retrieved it. If it has changed, the operation fails with an <code>InvalidTokenException</code>. If this happens, retrieve the proxy rule again to get a current copy of it with a current token. Reapply your changes as needed, then try the operation again using the new token. </p>",
+        "UpdateProxySettingsRequest$UpdateToken": "<p>An optional token that you can use for optimistic locking. Network Firewall returns a token to your requests that access the firewall. The token marks the state of the firewall resource at the time of the request. </p> <p>To make an unconditional change to the firewall, omit the token in your update request. Without the token, Network Firewall performs your updates regardless of whether the firewall has changed since you last retrieved it.</p> <p>To make a conditional change to the firewall, provide the token in your update request. Network Firewall uses the token to ensure that the firewall hasn't changed since you last retrieved it. If it has changed, the operation fails with an <code>InvalidTokenException</code>. If this happens, retrieve the firewall again to get a current copy of it with a new token. Reapply your changes as needed, then try the operation again using the new token. </p>",
+        "UpdateProxySettingsResponse$UpdateToken": "<p>An optional token that you can use for optimistic locking. Network Firewall returns a token to your requests that access the firewall. The token marks the state of the firewall resource at the time of the request. </p> <p>To make an unconditional change to the firewall, omit the token in your update request. Without the token, Network Firewall performs your updates regardless of whether the firewall has changed since you last retrieved it.</p> <p>To make a conditional change to the firewall, provide the token in your update request. Network Firewall uses the token to ensure that the firewall hasn't changed since you last retrieved it. If it has changed, the operation fails with an <code>InvalidTokenException</code>. If this happens, retrieve the firewall again to get a current copy of it with a new token. Reapply your changes as needed, then try the operation again using the new token. </p>",
         "UpdateRuleGroupRequest$UpdateToken": "<p>A token used for optimistic locking. Network Firewall returns a token to your requests that access the rule group. The token marks the state of the rule group resource at the time of the request. </p> <p>To make changes to the rule group, you provide the token in your request. Network Firewall uses the token to ensure that the rule group hasn't changed since you last retrieved it. If it has changed, the operation fails with an <code>InvalidTokenException</code>. If this happens, retrieve the rule group again to get a current copy of it with a current token. Reapply your changes as needed, then try the operation again using the new token. </p>",
         "UpdateRuleGroupResponse$UpdateToken": "<p>A token used for optimistic locking. Network Firewall returns a token to your requests that access the rule group. The token marks the state of the rule group resource at the time of the request. </p> <p>To make changes to the rule group, you provide the token in your request. Network Firewall uses the token to ensure that the rule group hasn't changed since you last retrieved it. If it has changed, the operation fails with an <code>InvalidTokenException</code>. If this happens, retrieve the rule group again to get a current copy of it with a current token. Reapply your changes as needed, then try the operation again using the new token. </p>",
         "UpdateSubnetChangeProtectionRequest$UpdateToken": "<p>An optional token that you can use for optimistic locking. Network Firewall returns a token to your requests that access the firewall. The token marks the state of the firewall resource at the time of the request. </p> <p>To make an unconditional change to the firewall, omit the token in your update request. Without the token, Network Firewall performs your updates regardless of whether the firewall has changed since you last retrieved it.</p> <p>To make a conditional change to the firewall, provide the token in your update request. Network Firewall uses the token to ensure that the firewall hasn't changed since you last retrieved it. If it has changed, the operation fails with an <code>InvalidTokenException</code>. If this happens, retrieve the firewall again to get a current copy of it with a new token. Reapply your changes as needed, then try the operation again using the new token. </p>",
@@ -3264,6 +3333,13 @@
       "refs": {
         "DescribeRuleGroupMetadataResponse$VendorName": "<p>The name of the Amazon Web Services Marketplace vendor that provides this rule group.</p>",
         "RuleGroupMetadata$VendorName": "<p>The name of the Amazon Web Services Marketplace seller that provides this rule group.</p>"
+      }
+    },
+    "VpcEndpoint": {
+      "base": "<p>The VPC and subnets for a proxy mode firewall endpoint. This is used in <a>CreateFirewall</a> when <code>NoSourcePreservation</code> is <code>TRUE</code>, to specify where Network Firewall creates the firewall endpoint. </p> <p>This differs from <a>VpcEndpointAssociation</a>, which defines additional secondary endpoints for a firewall in other VPCs. </p>",
+      "refs": {
+        "CreateFirewallRequest$VpcEndpoint": "<p>The VPC and subnets for the firewall endpoint, used when <code>NoSourcePreservation</code> is <code>TRUE</code>. Network Firewall creates the firewall endpoint in the subnets that you specify here. </p> <p>For proxy mode firewalls, provide the firewall's VPC and endpoint subnets through this parameter instead of the top-level <code>VpcId</code> and <code>SubnetMappings</code>. </p>",
+        "Firewall$VpcEndpoint": "<p>The VPC and subnets for the firewall endpoint. This is set for proxy mode firewalls, where <code>NoSourcePreservation</code> is <code>TRUE</code>. </p>"
       }
     },
     "VpcEndpointAssociation": {
@@ -3318,6 +3394,7 @@
         "CreateFirewallRequest$VpcId": "<p>The unique identifier of the VPC where Network Firewall should create the firewall. </p> <p>You can't change this setting after you create the firewall. </p>",
         "CreateVpcEndpointAssociationRequest$VpcId": "<p>The unique identifier of the VPC where you want to create a firewall endpoint. </p>",
         "Firewall$VpcId": "<p>The unique identifier of the VPC where the firewall is in use. </p>",
+        "VpcEndpoint$VpcId": "<p>The unique identifier of the VPC where Network Firewall creates the proxy mode firewall endpoint. </p>",
         "VpcEndpointAssociation$VpcId": "<p>The unique identifier of the VPC for the endpoint association. </p>",
         "VpcIds$member": null
       }

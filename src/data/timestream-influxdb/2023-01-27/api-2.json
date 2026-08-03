@@ -15,6 +15,25 @@
     "uid":"timestream-influxdb-2023-01-27"
   },
   "operations":{
+    "CreateDbBackup":{
+      "name":"CreateDbBackup",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateDbBackupInput"},
+      "output":{"shape":"CreateDbBackupOutput"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
     "CreateDbCluster":{
       "name":"CreateDbCluster",
       "http":{
@@ -72,6 +91,24 @@
       ],
       "idempotent":true
     },
+    "DeleteDbBackup":{
+      "name":"DeleteDbBackup",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteDbBackupInput"},
+      "output":{"shape":"DeleteDbBackupOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
     "DeleteDbCluster":{
       "name":"DeleteDbCluster",
       "http":{
@@ -107,6 +144,22 @@
         {"shape":"ThrottlingException"}
       ],
       "idempotent":true
+    },
+    "GetDbBackup":{
+      "name":"GetDbBackup",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetDbBackupInput"},
+      "output":{"shape":"GetDbBackupOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
     },
     "GetDbCluster":{
       "name":"GetDbCluster",
@@ -148,6 +201,22 @@
       },
       "input":{"shape":"GetDbParameterGroupInput"},
       "output":{"shape":"GetDbParameterGroupOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListDbBackups":{
+      "name":"ListDbBackups",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListDbBackupsInput"},
+      "output":{"shape":"ListDbBackupsOutput"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
@@ -268,6 +337,25 @@
       ],
       "idempotent":true
     },
+    "RestoreFromDbBackup":{
+      "name":"RestoreFromDbBackup",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RestoreFromDbBackupInput"},
+      "output":{"shape":"RestoreFromDbBackupOutput"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -349,7 +437,30 @@
       "type":"string",
       "max":1011,
       "min":1,
-      "pattern":"arn:aws[a-z\\-]*:timestream\\-influxdb:[a-z0-9\\-]+:[0-9]{12}:(db\\-instance|db\\-cluster|db\\-parameter\\-group)/[a-zA-Z0-9]{3,64}"
+      "pattern":"arn:aws[a-z\\-]*:timestream\\-influxdb:[a-z0-9\\-]+:[0-9]{12}:(db\\-instance|db\\-cluster|db\\-parameter\\-group|db\\-backup)/[a-zA-Z0-9]{3,64}"
+    },
+    "AutomatedBackupRetentionDays":{
+      "type":"integer",
+      "box":true,
+      "max":365,
+      "min":1
+    },
+    "AutomatedDbBackupType":{
+      "type":"string",
+      "enum":[
+        "HOURLY",
+        "DAILY",
+        "WEEKLY",
+        "MONTHLY",
+        "CUSTOM_SCHEDULE",
+        "CONTINUOUS"
+      ]
+    },
+    "AwsCronSchedule":{
+      "type":"string",
+      "max":256,
+      "min":9,
+      "pattern":"cron\\(\\S+ \\S+ \\S+ \\S+ \\S+ \\S+\\)"
     },
     "Boolean":{
       "type":"boolean",
@@ -386,7 +497,9 @@
         "UPDATING_INSTANCE_TYPE",
         "REBOOTING",
         "REBOOT_FAILED",
-        "PARTIALLY_AVAILABLE"
+        "PARTIALLY_AVAILABLE",
+        "RESTORING",
+        "RESTORE_FAILED"
       ]
     },
     "ConflictException":{
@@ -402,6 +515,53 @@
         "resourceType":{"shape":"String"}
       },
       "exception":true
+    },
+    "CreateDbBackupInput":{
+      "type":"structure",
+      "required":[
+        "name",
+        "dbResourceId"
+      ],
+      "members":{
+        "name":{"shape":"DbBackupName"},
+        "dbResourceId":{"shape":"DbResourceId"},
+        "retentionDays":{"shape":"RetentionDays"},
+        "tags":{"shape":"RequestTagMap"}
+      }
+    },
+    "CreateDbBackupOutput":{
+      "type":"structure",
+      "required":[
+        "id",
+        "arn"
+      ],
+      "members":{
+        "id":{"shape":"DbBackupId"},
+        "name":{"shape":"DbBackupName"},
+        "arn":{"shape":"Arn"},
+        "status":{"shape":"DbBackupStatus"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "expiresAfter":{"shape":"Date"},
+        "dbResourceId":{"shape":"DbResourceId"},
+        "type":{"shape":"DbBackupType"},
+        "engineType":{"shape":"EngineType"},
+        "deploymentType":{"shape":"ResourceDeploymentType"},
+        "kmsKeyId":{"shape":"KmsKeyId"},
+        "clusterConfiguration":{"shape":"ClusterConfiguration"},
+        "dbParameterGroupId":{"shape":"DbParameterGroupId"},
+        "dbInstanceType":{"shape":"DbInstanceType"},
+        "logDeliveryConfiguration":{"shape":"LogDeliveryConfiguration"},
+        "failoverMode":{"shape":"FailoverMode"},
+        "dbStorageType":{"shape":"DbStorageType"},
+        "allocatedStorage":{"shape":"AllocatedStorage"},
+        "vpcSubnetIds":{"shape":"VpcSubnetIdList"},
+        "vpcSecurityGroupIds":{"shape":"VpcSecurityGroupIdList"},
+        "publiclyAccessible":{"shape":"Boolean"},
+        "port":{"shape":"Integer"},
+        "networkType":{"shape":"NetworkType"},
+        "influxAuthParametersSecretArn":{"shape":"String"},
+        "maintenanceSchedule":{"shape":"MaintenanceSchedule"}
+      }
     },
     "CreateDbClusterInput":{
       "type":"structure",
@@ -430,6 +590,8 @@
         "failoverMode":{"shape":"FailoverMode"},
         "logDeliveryConfiguration":{"shape":"LogDeliveryConfiguration"},
         "maintenanceSchedule":{"shape":"MaintenanceSchedule"},
+        "dbBackupConfigurations":{"shape":"DbBackupConfigurationInputList"},
+        "kmsKeyId":{"shape":"KmsKeyId"},
         "tags":{"shape":"RequestTagMap"}
       }
     },
@@ -468,7 +630,9 @@
         "maintenanceSchedule":{"shape":"MaintenanceSchedule"},
         "tags":{"shape":"RequestTagMap"},
         "port":{"shape":"Port"},
-        "networkType":{"shape":"NetworkType"}
+        "networkType":{"shape":"NetworkType"},
+        "dbBackupConfigurations":{"shape":"DbBackupConfigurationInputList"},
+        "kmsKeyId":{"shape":"KmsKeyId"}
       }
     },
     "CreateDbInstanceOutput":{
@@ -504,7 +668,9 @@
         "instanceModes":{"shape":"InstanceModeList"},
         "maintenanceSchedule":{"shape":"MaintenanceSchedule"},
         "lastMaintenanceTime":{"shape":"SyntheticTimestamp_date_time"},
-        "nextMaintenanceTime":{"shape":"SyntheticTimestamp_date_time"}
+        "nextMaintenanceTime":{"shape":"SyntheticTimestamp_date_time"},
+        "dbBackupConfigurations":{"shape":"DbBackupConfigurationOutputList"},
+        "kmsKeyId":{"shape":"KmsKeyId"}
       }
     },
     "CreateDbParameterGroupInput":{
@@ -542,6 +708,107 @@
       "enum":[
         "multi-thread",
         "multi-thread-alt"
+      ]
+    },
+    "Date":{
+      "type":"string",
+      "pattern":"\\d{4}-\\d{2}-\\d{2}"
+    },
+    "DbBackupConfiguration":{
+      "type":"structure",
+      "required":[
+        "type",
+        "retentionDays",
+        "enabled"
+      ],
+      "members":{
+        "type":{"shape":"AutomatedDbBackupType"},
+        "retentionDays":{"shape":"AutomatedBackupRetentionDays"},
+        "enabled":{"shape":"Boolean"},
+        "customSchedule":{"shape":"AwsCronSchedule"}
+      }
+    },
+    "DbBackupConfigurationInputList":{
+      "type":"list",
+      "member":{"shape":"DbBackupConfiguration"},
+      "max":4,
+      "min":1
+    },
+    "DbBackupConfigurationOutput":{
+      "type":"structure",
+      "required":[
+        "type",
+        "retentionDays",
+        "enabled"
+      ],
+      "members":{
+        "type":{"shape":"AutomatedDbBackupType"},
+        "retentionDays":{"shape":"AutomatedBackupRetentionDays"},
+        "enabled":{"shape":"Boolean"},
+        "customSchedule":{"shape":"AwsCronSchedule"},
+        "nextAutomatedBackupTime":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "DbBackupConfigurationOutputList":{
+      "type":"list",
+      "member":{"shape":"DbBackupConfigurationOutput"}
+    },
+    "DbBackupId":{
+      "type":"string",
+      "max":64,
+      "min":3,
+      "pattern":"[a-zA-Z0-9]+"
+    },
+    "DbBackupName":{
+      "type":"string",
+      "max":40,
+      "min":3,
+      "pattern":"[a-zA-Z][a-zA-Z0-9]*(-[a-zA-Z0-9]+)*"
+    },
+    "DbBackupStatus":{
+      "type":"string",
+      "enum":[
+        "IN_PROGRESS",
+        "COMPLETED",
+        "FAILED",
+        "DELETING",
+        "DELETED"
+      ]
+    },
+    "DbBackupSummary":{
+      "type":"structure",
+      "required":[
+        "id",
+        "arn"
+      ],
+      "members":{
+        "id":{"shape":"DbBackupId"},
+        "name":{"shape":"DbBackupName"},
+        "arn":{"shape":"Arn"},
+        "status":{"shape":"DbBackupStatus"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "expiresAfter":{"shape":"Date"},
+        "dbResourceId":{"shape":"DbResourceId"},
+        "type":{"shape":"DbBackupType"},
+        "engineType":{"shape":"EngineType"},
+        "deploymentType":{"shape":"ResourceDeploymentType"},
+        "kmsKeyId":{"shape":"KmsKeyId"}
+      }
+    },
+    "DbBackupSummaryList":{
+      "type":"list",
+      "member":{"shape":"DbBackupSummary"}
+    },
+    "DbBackupType":{
+      "type":"string",
+      "enum":[
+        "HOURLY",
+        "DAILY",
+        "WEEKLY",
+        "MONTHLY",
+        "CUSTOM_SCHEDULE",
+        "ON_DEMAND",
+        "CONTINUOUS"
       ]
     },
     "DbClusterId":{
@@ -703,6 +970,18 @@
       "type":"list",
       "member":{"shape":"DbParameterGroupSummary"}
     },
+    "DbResourceId":{
+      "type":"string",
+      "max":64,
+      "min":3,
+      "pattern":"[a-zA-Z0-9]+"
+    },
+    "DbResourceName":{
+      "type":"string",
+      "max":40,
+      "min":3,
+      "pattern":"[a-zA-Z][a-zA-Z0-9]*(-[a-zA-Z0-9]+)*"
+    },
     "DbStorageType":{
       "type":"string",
       "enum":[
@@ -711,11 +990,53 @@
         "InfluxIOIncludedT3"
       ]
     },
+    "DeleteDbBackupInput":{
+      "type":"structure",
+      "required":["identifier"],
+      "members":{
+        "identifier":{"shape":"DbBackupId"}
+      }
+    },
+    "DeleteDbBackupOutput":{
+      "type":"structure",
+      "required":[
+        "id",
+        "arn"
+      ],
+      "members":{
+        "id":{"shape":"DbBackupId"},
+        "name":{"shape":"DbBackupName"},
+        "arn":{"shape":"Arn"},
+        "status":{"shape":"DbBackupStatus"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "expiresAfter":{"shape":"Date"},
+        "dbResourceId":{"shape":"DbResourceId"},
+        "type":{"shape":"DbBackupType"},
+        "engineType":{"shape":"EngineType"},
+        "deploymentType":{"shape":"ResourceDeploymentType"},
+        "kmsKeyId":{"shape":"KmsKeyId"},
+        "clusterConfiguration":{"shape":"ClusterConfiguration"},
+        "dbParameterGroupId":{"shape":"DbParameterGroupId"},
+        "dbInstanceType":{"shape":"DbInstanceType"},
+        "logDeliveryConfiguration":{"shape":"LogDeliveryConfiguration"},
+        "failoverMode":{"shape":"FailoverMode"},
+        "dbStorageType":{"shape":"DbStorageType"},
+        "allocatedStorage":{"shape":"AllocatedStorage"},
+        "vpcSubnetIds":{"shape":"VpcSubnetIdList"},
+        "vpcSecurityGroupIds":{"shape":"VpcSecurityGroupIdList"},
+        "publiclyAccessible":{"shape":"Boolean"},
+        "port":{"shape":"Integer"},
+        "networkType":{"shape":"NetworkType"},
+        "influxAuthParametersSecretArn":{"shape":"String"},
+        "maintenanceSchedule":{"shape":"MaintenanceSchedule"}
+      }
+    },
     "DeleteDbClusterInput":{
       "type":"structure",
       "required":["dbClusterId"],
       "members":{
-        "dbClusterId":{"shape":"DbClusterId"}
+        "dbClusterId":{"shape":"DbClusterId"},
+        "retainAutomatedBackups":{"shape":"Boolean"}
       }
     },
     "DeleteDbClusterOutput":{
@@ -728,7 +1049,8 @@
       "type":"structure",
       "required":["identifier"],
       "members":{
-        "identifier":{"shape":"DbInstanceIdentifier"}
+        "identifier":{"shape":"DbInstanceIdentifier"},
+        "retainAutomatedBackups":{"shape":"Boolean"}
       }
     },
     "DeleteDbInstanceOutput":{
@@ -764,7 +1086,9 @@
         "instanceModes":{"shape":"InstanceModeList"},
         "maintenanceSchedule":{"shape":"MaintenanceSchedule"},
         "lastMaintenanceTime":{"shape":"SyntheticTimestamp_date_time"},
-        "nextMaintenanceTime":{"shape":"SyntheticTimestamp_date_time"}
+        "nextMaintenanceTime":{"shape":"SyntheticTimestamp_date_time"},
+        "dbBackupConfigurations":{"shape":"DbBackupConfigurationOutputList"},
+        "kmsKeyId":{"shape":"KmsKeyId"}
       }
     },
     "DeploymentType":{
@@ -815,6 +1139,47 @@
         "NO_FAILOVER"
       ]
     },
+    "GetDbBackupInput":{
+      "type":"structure",
+      "required":["identifier"],
+      "members":{
+        "identifier":{"shape":"DbBackupId"}
+      }
+    },
+    "GetDbBackupOutput":{
+      "type":"structure",
+      "required":[
+        "id",
+        "arn"
+      ],
+      "members":{
+        "id":{"shape":"DbBackupId"},
+        "name":{"shape":"DbBackupName"},
+        "arn":{"shape":"Arn"},
+        "status":{"shape":"DbBackupStatus"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "expiresAfter":{"shape":"Date"},
+        "dbResourceId":{"shape":"DbResourceId"},
+        "type":{"shape":"DbBackupType"},
+        "engineType":{"shape":"EngineType"},
+        "deploymentType":{"shape":"ResourceDeploymentType"},
+        "kmsKeyId":{"shape":"KmsKeyId"},
+        "clusterConfiguration":{"shape":"ClusterConfiguration"},
+        "dbParameterGroupId":{"shape":"DbParameterGroupId"},
+        "dbInstanceType":{"shape":"DbInstanceType"},
+        "logDeliveryConfiguration":{"shape":"LogDeliveryConfiguration"},
+        "failoverMode":{"shape":"FailoverMode"},
+        "dbStorageType":{"shape":"DbStorageType"},
+        "allocatedStorage":{"shape":"AllocatedStorage"},
+        "vpcSubnetIds":{"shape":"VpcSubnetIdList"},
+        "vpcSecurityGroupIds":{"shape":"VpcSecurityGroupIdList"},
+        "publiclyAccessible":{"shape":"Boolean"},
+        "port":{"shape":"Integer"},
+        "networkType":{"shape":"NetworkType"},
+        "influxAuthParametersSecretArn":{"shape":"String"},
+        "maintenanceSchedule":{"shape":"MaintenanceSchedule"}
+      }
+    },
     "GetDbClusterInput":{
       "type":"structure",
       "required":["dbClusterId"],
@@ -853,7 +1218,9 @@
         "vpcSubnetIds":{"shape":"VpcSubnetIdList"},
         "vpcSecurityGroupIds":{"shape":"VpcSecurityGroupIdList"},
         "failoverMode":{"shape":"FailoverMode"},
-        "clusterConfiguration":{"shape":"ClusterConfiguration"}
+        "clusterConfiguration":{"shape":"ClusterConfiguration"},
+        "dbBackupConfigurations":{"shape":"DbBackupConfigurationOutputList"},
+        "kmsKeyId":{"shape":"KmsKeyId"}
       }
     },
     "GetDbInstanceInput":{
@@ -896,7 +1263,9 @@
         "instanceModes":{"shape":"InstanceModeList"},
         "maintenanceSchedule":{"shape":"MaintenanceSchedule"},
         "lastMaintenanceTime":{"shape":"SyntheticTimestamp_date_time"},
-        "nextMaintenanceTime":{"shape":"SyntheticTimestamp_date_time"}
+        "nextMaintenanceTime":{"shape":"SyntheticTimestamp_date_time"},
+        "dbBackupConfigurations":{"shape":"DbBackupConfigurationOutputList"},
+        "kmsKeyId":{"shape":"KmsKeyId"}
       }
     },
     "GetDbParameterGroupInput":{
@@ -1460,6 +1829,28 @@
       "fault":true,
       "retryable":{"throttling":false}
     },
+    "KmsKeyId":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"[a-zA-Z0-9:/_\\-]+"
+    },
+    "ListDbBackupsInput":{
+      "type":"structure",
+      "members":{
+        "dbResourceId":{"shape":"DbResourceId"},
+        "nextToken":{"shape":"NextToken"},
+        "maxResults":{"shape":"MaxResults"}
+      }
+    },
+    "ListDbBackupsOutput":{
+      "type":"structure",
+      "required":["items"],
+      "members":{
+        "items":{"shape":"DbBackupSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListDbClustersInput":{
       "type":"structure",
       "members":{
@@ -1701,7 +2092,9 @@
         "instanceModes":{"shape":"InstanceModeList"},
         "maintenanceSchedule":{"shape":"MaintenanceSchedule"},
         "lastMaintenanceTime":{"shape":"SyntheticTimestamp_date_time"},
-        "nextMaintenanceTime":{"shape":"SyntheticTimestamp_date_time"}
+        "nextMaintenanceTime":{"shape":"SyntheticTimestamp_date_time"},
+        "dbBackupConfigurations":{"shape":"DbBackupConfigurationOutputList"},
+        "kmsKeyId":{"shape":"KmsKeyId"}
       }
     },
     "RequestTagMap":{
@@ -1710,6 +2103,14 @@
       "value":{"shape":"TagValue"},
       "max":200,
       "min":1
+    },
+    "ResourceDeploymentType":{
+      "type":"string",
+      "enum":[
+        "SINGLE_AZ",
+        "WITH_MULTIAZ_STANDBY",
+        "MULTI_NODE_READ_REPLICAS"
+      ]
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -1725,12 +2126,70 @@
       },
       "exception":true
     },
+    "ResourceType":{
+      "type":"string",
+      "enum":[
+        "DB_INSTANCE",
+        "DB_CLUSTER"
+      ]
+    },
     "ResponseTagMap":{
       "type":"map",
       "key":{"shape":"TagKey"},
       "value":{"shape":"TagValue"},
       "max":200,
       "min":0
+    },
+    "RestoreFromDbBackupInput":{
+      "type":"structure",
+      "required":[
+        "name",
+        "dbBackupId"
+      ],
+      "members":{
+        "name":{"shape":"DbResourceName"},
+        "dbBackupId":{"shape":"DbBackupId"},
+        "restoreToTime":{"shape":"SyntheticTimestamp_date_time"},
+        "restoreMode":{"shape":"RestoreMode"},
+        "vpcSubnetIds":{"shape":"VpcSubnetIdList"},
+        "vpcSecurityGroupIds":{"shape":"VpcSecurityGroupIdList"},
+        "publiclyAccessible":{"shape":"Boolean"},
+        "logDeliveryConfiguration":{"shape":"LogDeliveryConfiguration"},
+        "maintenanceSchedule":{"shape":"MaintenanceSchedule"},
+        "tags":{"shape":"RequestTagMap"},
+        "port":{"shape":"Port"},
+        "networkType":{"shape":"NetworkType"},
+        "deploymentType":{"shape":"ResourceDeploymentType"},
+        "dbBackupConfigurations":{"shape":"DbBackupConfigurationInputList"},
+        "kmsKeyId":{"shape":"KmsKeyId"}
+      }
+    },
+    "RestoreFromDbBackupOutput":{
+      "type":"structure",
+      "members":{
+        "restoredDbResourceId":{"shape":"DbResourceId"},
+        "restoreStatus":{"shape":"RestoreStatus"},
+        "resourceType":{"shape":"ResourceType"},
+        "engineType":{"shape":"EngineType"},
+        "deploymentType":{"shape":"ResourceDeploymentType"}
+      }
+    },
+    "RestoreMode":{
+      "type":"string",
+      "enum":[
+        "NEW_RESOURCE",
+        "REPLACE_EXISTING"
+      ]
+    },
+    "RestoreStatus":{
+      "type":"string",
+      "enum":["RESTORING"]
+    },
+    "RetentionDays":{
+      "type":"integer",
+      "box":true,
+      "max":3650,
+      "min":1
     },
     "S3Configuration":{
       "type":"structure",
@@ -1771,7 +2230,9 @@
         "UPDATING_INSTANCE_TYPE",
         "MAINTENANCE",
         "REBOOTING",
-        "REBOOT_FAILED"
+        "REBOOT_FAILED",
+        "RESTORING",
+        "RESTORE_FAILED"
       ]
     },
     "String":{"type":"string"},
@@ -1845,7 +2306,8 @@
         "port":{"shape":"Port"},
         "dbInstanceType":{"shape":"DbInstanceType"},
         "failoverMode":{"shape":"FailoverMode"},
-        "maintenanceSchedule":{"shape":"MaintenanceSchedule"}
+        "maintenanceSchedule":{"shape":"MaintenanceSchedule"},
+        "dbBackupConfigurations":{"shape":"DbBackupConfigurationInputList"}
       }
     },
     "UpdateDbClusterOutput":{
@@ -1866,7 +2328,8 @@
         "deploymentType":{"shape":"DeploymentType"},
         "dbStorageType":{"shape":"DbStorageType"},
         "allocatedStorage":{"shape":"AllocatedStorage"},
-        "maintenanceSchedule":{"shape":"MaintenanceSchedule"}
+        "maintenanceSchedule":{"shape":"MaintenanceSchedule"},
+        "dbBackupConfigurations":{"shape":"DbBackupConfigurationInputList"}
       }
     },
     "UpdateDbInstanceOutput":{
@@ -1902,7 +2365,9 @@
         "instanceModes":{"shape":"InstanceModeList"},
         "maintenanceSchedule":{"shape":"MaintenanceSchedule"},
         "lastMaintenanceTime":{"shape":"SyntheticTimestamp_date_time"},
-        "nextMaintenanceTime":{"shape":"SyntheticTimestamp_date_time"}
+        "nextMaintenanceTime":{"shape":"SyntheticTimestamp_date_time"},
+        "dbBackupConfigurations":{"shape":"DbBackupConfigurationOutputList"},
+        "kmsKeyId":{"shape":"KmsKeyId"}
       }
     },
     "Username":{

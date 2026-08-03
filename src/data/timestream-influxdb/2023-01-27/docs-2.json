@@ -2,14 +2,18 @@
   "version": "2.0",
   "service": "<p>Amazon Timestream for InfluxDB is a managed time-series database engine that makes it easy for application developers and DevOps teams to run InfluxDB databases on Amazon Web Services for near real-time time-series applications using open-source APIs. With Amazon Timestream for InfluxDB, it is easy to set up, operate, and scale time-series workloads that can answer queries with single-digit millisecond query response time.</p>",
   "operations": {
+    "CreateDbBackup": "<p>Creates a new on-demand backup of a Timestream for InfluxDB resource.</p>",
     "CreateDbCluster": "<p>Creates a new Timestream for InfluxDB cluster.</p>",
     "CreateDbInstance": "<p>Creates a new Timestream for InfluxDB DB instance.</p>",
     "CreateDbParameterGroup": "<p>Creates a new Timestream for InfluxDB DB parameter group to associate with DB instances.</p>",
+    "DeleteDbBackup": "<p>Deletes a Timestream for InfluxDB backup.</p>",
     "DeleteDbCluster": "<p>Deletes a Timestream for InfluxDB cluster.</p>",
     "DeleteDbInstance": "<p>Deletes a Timestream for InfluxDB DB instance.</p>",
+    "GetDbBackup": "<p>Returns information about a specific Timestream for InfluxDB backup.</p>",
     "GetDbCluster": "<p>Retrieves information about a Timestream for InfluxDB cluster.</p>",
     "GetDbInstance": "<p>Returns a Timestream for InfluxDB DB instance.</p>",
     "GetDbParameterGroup": "<p>Returns a Timestream for InfluxDB DB parameter group.</p>",
+    "ListDbBackups": "<p>Returns a list of Timestream for InfluxDB backups.</p>",
     "ListDbClusters": "<p>Returns a list of Timestream for InfluxDB DB clusters.</p>",
     "ListDbInstances": "<p>Returns a list of Timestream for InfluxDB DB instances.</p>",
     "ListDbInstancesForCluster": "<p>Returns a list of Timestream for InfluxDB clusters.</p>",
@@ -17,6 +21,7 @@
     "ListTagsForResource": "<p>A list of tags applied to the resource.</p>",
     "RebootDbCluster": "<p>Reboots a Timestream for InfluxDB cluster.</p>",
     "RebootDbInstance": "<p>Reboots a Timestream for InfluxDB instance.</p>",
+    "RestoreFromDbBackup": "<p>Restores a Timestream for InfluxDB resource from a backup. By default, a new resource is created. You can optionally restore to the same resource using the REPLACE_EXISTING restore mode.</p>",
     "TagResource": "<p>Tags are composed of a Key/Value pairs. You can use tags to categorize and track your Timestream for InfluxDB resources.</p>",
     "UntagResource": "<p>Removes the tag from the specified resource.</p>",
     "UpdateDbCluster": "<p>Updates a Timestream for InfluxDB cluster.</p>",
@@ -31,13 +36,16 @@
     "AllocatedStorage": {
       "base": null,
       "refs": {
+        "CreateDbBackupOutput$allocatedStorage": "<p>The allocated storage of the resource at the time of backup, in GiB.</p>",
         "CreateDbClusterInput$allocatedStorage": "<p>The amount of storage to allocate for your DB storage type in GiB (gibibytes).</p>",
         "CreateDbInstanceInput$allocatedStorage": "<p>The amount of storage to allocate for your DB storage type in GiB (gibibytes).</p>",
         "CreateDbInstanceOutput$allocatedStorage": "<p>The amount of storage allocated for your DB storage type (in gibibytes).</p>",
         "DbClusterSummary$allocatedStorage": "<p>The amount of storage allocated for your DB storage type (in gibibytes).</p>",
         "DbInstanceForClusterSummary$allocatedStorage": "<p>The amount of storage allocated for your DB storage type in GiB (gibibytes).</p>",
         "DbInstanceSummary$allocatedStorage": "<p>The amount of storage to allocate for your DbStorageType in GiB (gibibytes).</p>",
+        "DeleteDbBackupOutput$allocatedStorage": "<p>The allocated storage of the resource at the time of backup, in GiB.</p>",
         "DeleteDbInstanceOutput$allocatedStorage": "<p>The amount of storage allocated for your DB storage type (in gibibytes).</p>",
+        "GetDbBackupOutput$allocatedStorage": "<p>The allocated storage of the resource at the time of backup, in GiB.</p>",
         "GetDbClusterOutput$allocatedStorage": "<p>The amount of storage allocated for your DB storage type (in gibibytes).</p>",
         "GetDbInstanceOutput$allocatedStorage": "<p>The amount of storage allocated for your DB storage type (in gibibytes).</p>",
         "RebootDbInstanceOutput$allocatedStorage": "<p>The amount of storage allocated for your DB storage type (in gibibytes).</p>",
@@ -48,13 +56,17 @@
     "Arn": {
       "base": null,
       "refs": {
+        "CreateDbBackupOutput$arn": "<p>The Amazon Resource Name (ARN) of the backup.</p>",
         "CreateDbInstanceOutput$arn": "<p>The Amazon Resource Name (ARN) of the DB instance.</p>",
         "CreateDbParameterGroupOutput$arn": "<p>The Amazon Resource Name (ARM) of the DB parameter group.</p>",
+        "DbBackupSummary$arn": "<p>The Amazon Resource Name (ARN) of the backup.</p>",
         "DbClusterSummary$arn": "<p>The Amazon Resource Name (ARN) of the DB cluster.</p>",
         "DbInstanceForClusterSummary$arn": "<p>The Amazon Resource Name (ARN) of the DB instance.</p>",
         "DbInstanceSummary$arn": "<p>The Amazon Resource Name (ARN) of the DB instance.</p>",
         "DbParameterGroupSummary$arn": "<p>The Amazon Resource Name (ARN) of the DB parameter group.</p>",
+        "DeleteDbBackupOutput$arn": "<p>The Amazon Resource Name (ARN) of the deleted backup.</p>",
         "DeleteDbInstanceOutput$arn": "<p>The Amazon Resource Name (ARN) of the DB instance.</p>",
+        "GetDbBackupOutput$arn": "<p>The Amazon Resource Name (ARN) of the backup.</p>",
         "GetDbClusterOutput$arn": "<p>The Amazon Resource Name (ARN) of the DB cluster.</p>",
         "GetDbInstanceOutput$arn": "<p>The Amazon Resource Name (ARN) of the DB instance.</p>",
         "GetDbParameterGroupOutput$arn": "<p>The Amazon Resource Name (ARN) of the DB parameter group.</p>",
@@ -65,14 +77,42 @@
         "UpdateDbInstanceOutput$arn": "<p>The Amazon Resource Name (ARN) of the DB instance.</p>"
       }
     },
+    "AutomatedBackupRetentionDays": {
+      "base": null,
+      "refs": {
+        "DbBackupConfiguration$retentionDays": "<p>The number of days to retain automated backups. Valid values are 1 to 365.</p>",
+        "DbBackupConfigurationOutput$retentionDays": "<p>The number of days automated backups are retained.</p>"
+      }
+    },
+    "AutomatedDbBackupType": {
+      "base": null,
+      "refs": {
+        "DbBackupConfiguration$type": "<p>The type of automated backup schedule. Valid values are HOURLY, DAILY, WEEKLY, MONTHLY, CUSTOM_SCHEDULE, and CONTINUOUS.</p>",
+        "DbBackupConfigurationOutput$type": "<p>The type of automated backup schedule.</p>"
+      }
+    },
+    "AwsCronSchedule": {
+      "base": null,
+      "refs": {
+        "DbBackupConfiguration$customSchedule": "<p>A custom cron schedule expression for the backup. Required when type is CUSTOM_SCHEDULE.</p>",
+        "DbBackupConfigurationOutput$customSchedule": "<p>The custom cron schedule expression for the backup, if applicable.</p>"
+      }
+    },
     "Boolean": {
       "base": null,
       "refs": {
         "ClusterConfiguration$dedicatedCompactor": "<p>Indicates if the compactor instance is a standalone instance or not.</p>",
+        "CreateDbBackupOutput$publiclyAccessible": "<p>Indicates whether the resource was publicly accessible at the time of backup.</p>",
         "CreateDbClusterInput$publiclyAccessible": "<p>Configures the Timestream for InfluxDB cluster with a public IP to facilitate access from outside the VPC.</p>",
         "CreateDbInstanceInput$publiclyAccessible": "<p>Configures the DB instance with a public IP to facilitate access.</p>",
         "CreateDbInstanceOutput$publiclyAccessible": "<p>Indicates if the DB instance has a public IP to facilitate access.</p>",
+        "DbBackupConfiguration$enabled": "<p>Specifies whether this backup configuration is enabled.</p>",
+        "DbBackupConfigurationOutput$enabled": "<p>Indicates whether this backup configuration is enabled.</p>",
+        "DeleteDbBackupOutput$publiclyAccessible": "<p>Indicates whether the resource was publicly accessible at the time of backup.</p>",
+        "DeleteDbClusterInput$retainAutomatedBackups": "<p>Specifies whether to retain automated backups after the DB cluster is deleted. If set to true, automated backups are not deleted and can be restored later.</p>",
+        "DeleteDbInstanceInput$retainAutomatedBackups": "<p>Specifies whether to retain automated backups after the DB instance is deleted. If set to true, automated backups are not deleted and can be restored later.</p>",
         "DeleteDbInstanceOutput$publiclyAccessible": "<p>Indicates if the DB instance has a public IP to facilitate access.</p>",
+        "GetDbBackupOutput$publiclyAccessible": "<p>Indicates whether the resource was publicly accessible at the time of backup.</p>",
         "GetDbClusterOutput$publiclyAccessible": "<p>Indicates if the DB cluster has a public IP to facilitate access from outside the VPC.</p>",
         "GetDbInstanceOutput$publiclyAccessible": "<p>Indicates if the DB instance has a public IP to facilitate access.</p>",
         "InfluxDBv2Parameters$fluxLogEnabled": "<p>Include option to show detailed logs for Flux queries.</p> <p>Default: false</p>",
@@ -94,6 +134,7 @@
         "InfluxDBv3EnterpriseParameters$lastValueCacheDisableFromHistory": "<p>Disables populating the last-N-value cache from historical data. If disabled, the cache is still populated with data from the write-ahead log (WAL).</p>",
         "InfluxDBv3EnterpriseParameters$distinctValueCacheDisableFromHistory": "<p>Disables populating the distinct value cache from historical data. If disabled, the cache is still populated with data from the write-ahead log (WAL).</p>",
         "RebootDbInstanceOutput$publiclyAccessible": "<p>Indicates if the DB instance has a public IP to facilitate access.</p>",
+        "RestoreFromDbBackupInput$publiclyAccessible": "<p>Specifies whether the restored resource is publicly accessible.</p>",
         "S3Configuration$enabled": "<p>Indicates whether log delivery to the S3 bucket is enabled.</p>",
         "UpdateDbInstanceOutput$publiclyAccessible": "<p>Indicates if the DB instance has a public IP to facilitate access.</p>"
       }
@@ -108,6 +149,9 @@
     "ClusterConfiguration": {
       "base": "<p>Configuration for node modes in the DbCluster.</p>",
       "refs": {
+        "CreateDbBackupOutput$clusterConfiguration": "<p>The cluster configuration of the resource at the time of backup.</p>",
+        "DeleteDbBackupOutput$clusterConfiguration": "<p>The cluster configuration of the resource at the time of backup.</p>",
+        "GetDbBackupOutput$clusterConfiguration": "<p>The cluster configuration of the resource at the time of backup.</p>",
         "GetDbClusterOutput$clusterConfiguration": "<p>Configuration for node modes in the DbCluster.</p>"
       }
     },
@@ -132,6 +176,16 @@
     },
     "ConflictException": {
       "base": "<p>The request conflicts with an existing resource in Timestream for InfluxDB.</p>",
+      "refs": {
+      }
+    },
+    "CreateDbBackupInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateDbBackupOutput": {
+      "base": null,
       "refs": {
       }
     },
@@ -176,6 +230,100 @@
       "refs": {
         "InfluxDBv3CoreParameters$dataFusionRuntimeType": "<p>Specifies the DataFusion tokio runtime type.</p> <p>Default: multi-thread</p>",
         "InfluxDBv3EnterpriseParameters$dataFusionRuntimeType": "<p>Specifies the DataFusion tokio runtime type.</p> <p>Default: multi-thread</p>"
+      }
+    },
+    "Date": {
+      "base": "<p>A calendar date in YYYY-MM-DD format.</p>",
+      "refs": {
+        "CreateDbBackupOutput$expiresAfter": "<p>The date after which the backup will be automatically deleted.</p>",
+        "DbBackupSummary$expiresAfter": "<p>The date after which the backup will be automatically deleted.</p>",
+        "DeleteDbBackupOutput$expiresAfter": "<p>The date after which the backup was set to be automatically deleted.</p>",
+        "GetDbBackupOutput$expiresAfter": "<p>The date after which the backup will be automatically deleted.</p>"
+      }
+    },
+    "DbBackupConfiguration": {
+      "base": "<p>Specifies the configuration for an automated backup schedule.</p>",
+      "refs": {
+        "DbBackupConfigurationInputList$member": null
+      }
+    },
+    "DbBackupConfigurationInputList": {
+      "base": null,
+      "refs": {
+        "CreateDbClusterInput$dbBackupConfigurations": "<p>A list of backup configurations to enable automated backups for the DB cluster.</p>",
+        "CreateDbInstanceInput$dbBackupConfigurations": "<p>A list of backup configurations to enable automated backups for the DB instance.</p>",
+        "RestoreFromDbBackupInput$dbBackupConfigurations": "<p>A list of backup configurations to apply to the restored resource.</p>",
+        "UpdateDbClusterInput$dbBackupConfigurations": "<p>A list of backup configurations to update for the DB cluster.</p>",
+        "UpdateDbInstanceInput$dbBackupConfigurations": "<p>A list of backup configurations to update for the DB instance.</p>"
+      }
+    },
+    "DbBackupConfigurationOutput": {
+      "base": "<p>Contains the configuration and status for an automated backup schedule.</p>",
+      "refs": {
+        "DbBackupConfigurationOutputList$member": null
+      }
+    },
+    "DbBackupConfigurationOutputList": {
+      "base": null,
+      "refs": {
+        "CreateDbInstanceOutput$dbBackupConfigurations": "<p>The backup configurations for the DB instance.</p>",
+        "DeleteDbInstanceOutput$dbBackupConfigurations": "<p>The backup configurations that were associated with the deleted DB instance.</p>",
+        "GetDbClusterOutput$dbBackupConfigurations": "<p>The backup configurations for the DB cluster.</p>",
+        "GetDbInstanceOutput$dbBackupConfigurations": "<p>The backup configurations for the DB instance.</p>",
+        "RebootDbInstanceOutput$dbBackupConfigurations": "<p>The backup configurations for the DB instance.</p>",
+        "UpdateDbInstanceOutput$dbBackupConfigurations": "<p>The backup configurations for the DB instance.</p>"
+      }
+    },
+    "DbBackupId": {
+      "base": null,
+      "refs": {
+        "CreateDbBackupOutput$id": "<p>Service-generated unique identifier of the backup.</p>",
+        "DbBackupSummary$id": "<p>Service-generated unique identifier of the backup.</p>",
+        "DeleteDbBackupInput$identifier": "<p>The identifier of the backup to delete.</p>",
+        "DeleteDbBackupOutput$id": "<p>Service-generated unique identifier of the deleted backup.</p>",
+        "GetDbBackupInput$identifier": "<p>The identifier of the backup to retrieve information for.</p>",
+        "GetDbBackupOutput$id": "<p>Service-generated unique identifier of the backup.</p>",
+        "RestoreFromDbBackupInput$dbBackupId": "<p>The identifier of the backup to restore from.</p>"
+      }
+    },
+    "DbBackupName": {
+      "base": null,
+      "refs": {
+        "CreateDbBackupInput$name": "<p>The name of the backup. Must be unique within the account and region.</p>",
+        "CreateDbBackupOutput$name": "<p>The customer-provided name of the backup.</p>",
+        "DbBackupSummary$name": "<p>The customer-provided name of the backup.</p>",
+        "DeleteDbBackupOutput$name": "<p>The customer-provided name of the deleted backup.</p>",
+        "GetDbBackupOutput$name": "<p>The customer-provided name of the backup.</p>"
+      }
+    },
+    "DbBackupStatus": {
+      "base": null,
+      "refs": {
+        "CreateDbBackupOutput$status": "<p>The current status of the backup.</p>",
+        "DbBackupSummary$status": "<p>The status of the backup. Valid values are IN_PROGRESS, COMPLETED, FAILED, DELETING, and DELETED.</p>",
+        "DeleteDbBackupOutput$status": "<p>The current status of the backup.</p>",
+        "GetDbBackupOutput$status": "<p>The current status of the backup.</p>"
+      }
+    },
+    "DbBackupSummary": {
+      "base": "<p>Contains a summary of a Timestream for InfluxDB backup.</p>",
+      "refs": {
+        "DbBackupSummaryList$member": null
+      }
+    },
+    "DbBackupSummaryList": {
+      "base": null,
+      "refs": {
+        "ListDbBackupsOutput$items": "<p>A list of Timestream for InfluxDB backup summaries.</p>"
+      }
+    },
+    "DbBackupType": {
+      "base": null,
+      "refs": {
+        "CreateDbBackupOutput$type": "<p>The type of backup.</p>",
+        "DbBackupSummary$type": "<p>The type of backup. Valid values are HOURLY, DAILY, WEEKLY, MONTHLY, CUSTOM_SCHEDULE, ON_DEMAND, and CONTINUOUS.</p>",
+        "DeleteDbBackupOutput$type": "<p>The type of backup.</p>",
+        "GetDbBackupOutput$type": "<p>The type of backup.</p>"
       }
     },
     "DbClusterId": {
@@ -278,13 +426,16 @@
     "DbInstanceType": {
       "base": null,
       "refs": {
+        "CreateDbBackupOutput$dbInstanceType": "<p>The DB instance type of the resource at the time of backup.</p>",
         "CreateDbClusterInput$dbInstanceType": "<p>The Timestream for InfluxDB DB instance type to run InfluxDB on.</p>",
         "CreateDbInstanceInput$dbInstanceType": "<p>The Timestream for InfluxDB DB instance type to run InfluxDB on.</p>",
         "CreateDbInstanceOutput$dbInstanceType": "<p>The Timestream for InfluxDB instance type that InfluxDB runs on.</p>",
         "DbClusterSummary$dbInstanceType": "<p>The Timestream for InfluxDB DB instance type that InfluxDB runs on.</p>",
         "DbInstanceForClusterSummary$dbInstanceType": "<p>The Timestream for InfluxDB instance type to run InfluxDB on.</p>",
         "DbInstanceSummary$dbInstanceType": "<p>The Timestream for InfluxDB instance type to run InfluxDB on.</p>",
+        "DeleteDbBackupOutput$dbInstanceType": "<p>The DB instance type of the resource at the time of backup.</p>",
         "DeleteDbInstanceOutput$dbInstanceType": "<p>The Timestream for InfluxDB instance type that InfluxDB runs on.</p>",
+        "GetDbBackupOutput$dbInstanceType": "<p>The DB instance type of the resource at the time of backup.</p>",
         "GetDbClusterOutput$dbInstanceType": "<p>The Timestream for InfluxDB instance type that InfluxDB runs on.</p>",
         "GetDbInstanceOutput$dbInstanceType": "<p>The Timestream for InfluxDB instance type that InfluxDB runs on.</p>",
         "RebootDbInstanceOutput$dbInstanceType": "<p>The Timestream for InfluxDB instance type that InfluxDB runs on.</p>",
@@ -296,8 +447,11 @@
     "DbParameterGroupId": {
       "base": null,
       "refs": {
+        "CreateDbBackupOutput$dbParameterGroupId": "<p>The identifier of the DB parameter group associated with the backup.</p>",
         "CreateDbParameterGroupOutput$id": "<p>A service-generated unique identifier.</p>",
         "DbParameterGroupSummary$id": "<p>A service-generated unique identifier.</p>",
+        "DeleteDbBackupOutput$dbParameterGroupId": "<p>The identifier of the DB parameter group associated with the backup.</p>",
+        "GetDbBackupOutput$dbParameterGroupId": "<p>The identifier of the DB parameter group associated with the backup.</p>",
         "GetDbParameterGroupOutput$id": "<p>A service-generated unique identifier.</p>"
       }
     },
@@ -338,21 +492,52 @@
         "ListDbParameterGroupsOutput$items": "<p>A list of Timestream for InfluxDB DB parameter group summaries.</p>"
       }
     },
+    "DbResourceId": {
+      "base": null,
+      "refs": {
+        "CreateDbBackupInput$dbResourceId": "<p>The id of the DB instance or DB cluster to back up.</p>",
+        "CreateDbBackupOutput$dbResourceId": "<p>The identifier of the DB resource that the backup was created from.</p>",
+        "DbBackupSummary$dbResourceId": "<p>The identifier of the DB resource that the backup was created from.</p>",
+        "DeleteDbBackupOutput$dbResourceId": "<p>The identifier of the DB resource that the backup was created from.</p>",
+        "GetDbBackupOutput$dbResourceId": "<p>The identifier of the DB resource that the backup was created from.</p>",
+        "ListDbBackupsInput$dbResourceId": "<p>The identifier of the DB instance or DB cluster to list backups for. If not specified, returns all backups in the account and region.</p>",
+        "RestoreFromDbBackupOutput$restoredDbResourceId": "<p>The identifier of the restored DB resource.</p>"
+      }
+    },
+    "DbResourceName": {
+      "base": null,
+      "refs": {
+        "RestoreFromDbBackupInput$name": "<p>The name of the new resource to create from the restore. If restoring to an existing resource, the name must match the existing resource name.</p>"
+      }
+    },
     "DbStorageType": {
       "base": null,
       "refs": {
+        "CreateDbBackupOutput$dbStorageType": "<p>The storage type of the resource at the time of backup.</p>",
         "CreateDbClusterInput$dbStorageType": "<p>The Timestream for InfluxDB DB storage type to read and write InfluxDB data.</p> <p>You can choose between three different types of provisioned Influx IOPS Included storage according to your workload requirements:</p> <ul> <li> <p>Influx I/O Included 3000 IOPS</p> </li> <li> <p>Influx I/O Included 12000 IOPS</p> </li> <li> <p>Influx I/O Included 16000 IOPS</p> </li> </ul>",
         "CreateDbInstanceInput$dbStorageType": "<p>The Timestream for InfluxDB DB storage type to read and write InfluxDB data.</p> <p>You can choose between 3 different types of provisioned Influx IOPS included storage according to your workloads requirements:</p> <ul> <li> <p>Influx IO Included 3000 IOPS</p> </li> <li> <p>Influx IO Included 12000 IOPS</p> </li> <li> <p>Influx IO Included 16000 IOPS</p> </li> </ul>",
         "CreateDbInstanceOutput$dbStorageType": "<p>The Timestream for InfluxDB DB storage type that InfluxDB stores data on.</p>",
         "DbClusterSummary$dbStorageType": "<p>The Timestream for InfluxDB DB storage type that InfluxDB stores data on.</p>",
         "DbInstanceForClusterSummary$dbStorageType": "<p>The storage type for your DB instance.</p>",
         "DbInstanceSummary$dbStorageType": "<p>The storage type for your DB instance.</p>",
+        "DeleteDbBackupOutput$dbStorageType": "<p>The storage type of the resource at the time of backup.</p>",
         "DeleteDbInstanceOutput$dbStorageType": "<p>The Timestream for InfluxDB DB storage type that InfluxDB stores data on.</p>",
+        "GetDbBackupOutput$dbStorageType": "<p>The storage type of the resource at the time of backup.</p>",
         "GetDbClusterOutput$dbStorageType": "<p>The Timestream for InfluxDB DB storage type that InfluxDB stores data on.</p>",
         "GetDbInstanceOutput$dbStorageType": "<p>The Timestream for InfluxDB DB storage type that InfluxDB stores data on.</p>",
         "RebootDbInstanceOutput$dbStorageType": "<p>The Timestream for InfluxDB DB storage type that InfluxDB stores data on.</p>",
         "UpdateDbInstanceInput$dbStorageType": "<p>The Timestream for InfluxDB DB storage type that InfluxDB stores data on.</p>",
         "UpdateDbInstanceOutput$dbStorageType": "<p>The Timestream for InfluxDB DB storage type that InfluxDB stores data on.</p>"
+      }
+    },
+    "DeleteDbBackupInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteDbBackupOutput": {
+      "base": null,
+      "refs": {
       }
     },
     "DeleteDbClusterInput": {
@@ -444,16 +629,34 @@
     "EngineType": {
       "base": null,
       "refs": {
+        "CreateDbBackupOutput$engineType": "<p>The engine type of the resource that the backup was created from.</p>",
+        "DbBackupSummary$engineType": "<p>The engine type of the resource that the backup was created from.</p>",
         "DbClusterSummary$engineType": "<p>The engine type of your DB cluster.</p>",
-        "GetDbClusterOutput$engineType": "<p>The engine type of your DB cluster.</p>"
+        "DeleteDbBackupOutput$engineType": "<p>The engine type of the resource that the backup was created from.</p>",
+        "GetDbBackupOutput$engineType": "<p>The engine type of the resource that the backup was created from.</p>",
+        "GetDbClusterOutput$engineType": "<p>The engine type of your DB cluster.</p>",
+        "RestoreFromDbBackupOutput$engineType": "<p>The engine type of the restored resource.</p>"
       }
     },
     "FailoverMode": {
       "base": null,
       "refs": {
+        "CreateDbBackupOutput$failoverMode": "<p>The failover mode of the resource at the time of backup.</p>",
         "CreateDbClusterInput$failoverMode": "<p>Specifies the behavior of failure recovery when the primary node of the cluster fails.</p>",
+        "DeleteDbBackupOutput$failoverMode": "<p>The failover mode of the resource at the time of backup.</p>",
+        "GetDbBackupOutput$failoverMode": "<p>The failover mode of the resource at the time of backup.</p>",
         "GetDbClusterOutput$failoverMode": "<p>The configured failover mode for the DB cluster.</p>",
         "UpdateDbClusterInput$failoverMode": "<p>Update the DB cluster's failover behavior.</p>"
+      }
+    },
+    "GetDbBackupInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetDbBackupOutput": {
+      "base": null,
+      "refs": {
       }
     },
     "GetDbClusterInput": {
@@ -531,7 +734,7 @@
     "InfluxDBv2ParametersQueryMaxMemoryBytesLong": {
       "base": null,
       "refs": {
-        "InfluxDBv2Parameters$queryMaxMemoryBytes": "<p>Maximum number of queries allowed in execution queue. When queue limit is reached, new queries are rejected. Setting to 0 allows an unlimited number of queries in the queue.</p> <p>Default: 0</p>"
+        "InfluxDBv2Parameters$queryMaxMemoryBytes": "<p>Maximum total bytes of memory allowed for all running queries. When this limit is reached, new queries are rejected. Setting to 0 allows unlimited memory usage.</p> <p>Default: 0</p>"
       }
     },
     "InfluxDBv2ParametersQueryMemoryBytesLong": {
@@ -898,11 +1101,42 @@
       "refs": {
         "ClusterConfiguration$ingestQueryInstances": "<p>The number of instances in the DbCluster which can both ingest and query.</p>",
         "ClusterConfiguration$queryOnlyInstances": "<p>The number of instances in the DbCluster which can only query.</p>",
+        "CreateDbBackupOutput$port": "<p>The port number of the resource at the time of backup.</p>",
+        "DeleteDbBackupOutput$port": "<p>The port number of the resource at the time of backup.</p>",
+        "GetDbBackupOutput$port": "<p>The port number of the resource at the time of backup.</p>",
         "ThrottlingException$retryAfterSeconds": "<p>The number of seconds the caller should wait before retrying.</p>"
       }
     },
     "InternalServerException": {
       "base": "<p>The request processing has failed because of an unknown error, exception or failure.</p>",
+      "refs": {
+      }
+    },
+    "KmsKeyId": {
+      "base": null,
+      "refs": {
+        "CreateDbBackupOutput$kmsKeyId": "<p>The Amazon Web Services KMS key ARN used for encryption of the resource at the time of backup.</p>",
+        "CreateDbClusterInput$kmsKeyId": "<p>The Amazon Web Services KMS key identifier to use for encryption of the DB cluster. Can be a key ID, key ARN, alias name, or alias ARN.</p>",
+        "CreateDbInstanceInput$kmsKeyId": "<p>The Amazon Web Services KMS key identifier to use for encryption of the DB instance. Can be a key ID, key ARN, alias name, or alias ARN.</p>",
+        "CreateDbInstanceOutput$kmsKeyId": "<p>The Amazon Web Services KMS key ARN used for encryption of the DB instance.</p>",
+        "DbBackupSummary$kmsKeyId": "<p>The Amazon Web Services KMS key ARN used for encryption of the resource at the time of backup.</p>",
+        "DeleteDbBackupOutput$kmsKeyId": "<p>The Amazon Web Services KMS key ARN used for encryption of the resource at the time of backup.</p>",
+        "DeleteDbInstanceOutput$kmsKeyId": "<p>The Amazon Web Services KMS key ARN that was used for encryption of the deleted DB instance.</p>",
+        "GetDbBackupOutput$kmsKeyId": "<p>The Amazon Web Services KMS key ARN used for encryption of the resource at the time of backup.</p>",
+        "GetDbClusterOutput$kmsKeyId": "<p>The Amazon Web Services KMS key ARN used for encryption of the DB cluster.</p>",
+        "GetDbInstanceOutput$kmsKeyId": "<p>The Amazon Web Services KMS key ARN used for encryption of the DB instance.</p>",
+        "RebootDbInstanceOutput$kmsKeyId": "<p>The Amazon Web Services KMS key ARN used for encryption of the DB instance.</p>",
+        "RestoreFromDbBackupInput$kmsKeyId": "<p>The Amazon Web Services KMS key identifier to use for encryption of the restored resource. Can be a key ID, key ARN, alias name, or alias ARN.</p>",
+        "UpdateDbInstanceOutput$kmsKeyId": "<p>The Amazon Web Services KMS key ARN used for encryption of the DB instance.</p>"
+      }
+    },
+    "ListDbBackupsInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListDbBackupsOutput": {
+      "base": null,
       "refs": {
       }
     },
@@ -959,13 +1193,17 @@
     "LogDeliveryConfiguration": {
       "base": "<p>Configuration for sending InfluxDB engine logs to send to specified S3 bucket.</p>",
       "refs": {
+        "CreateDbBackupOutput$logDeliveryConfiguration": "<p>The log delivery configuration of the resource at the time of backup.</p>",
         "CreateDbClusterInput$logDeliveryConfiguration": "<p>Configuration for sending InfluxDB engine logs to a specified S3 bucket.</p>",
         "CreateDbInstanceInput$logDeliveryConfiguration": "<p>Configuration for sending InfluxDB engine logs to a specified S3 bucket.</p>",
         "CreateDbInstanceOutput$logDeliveryConfiguration": "<p>Configuration for sending InfluxDB engine logs to send to specified S3 bucket.</p>",
+        "DeleteDbBackupOutput$logDeliveryConfiguration": "<p>The log delivery configuration of the resource at the time of backup.</p>",
         "DeleteDbInstanceOutput$logDeliveryConfiguration": "<p>Configuration for sending InfluxDB engine logs to send to specified S3 bucket.</p>",
+        "GetDbBackupOutput$logDeliveryConfiguration": "<p>The log delivery configuration of the resource at the time of backup.</p>",
         "GetDbClusterOutput$logDeliveryConfiguration": "<p>Configuration for sending InfluxDB engine logs to send to specified S3 bucket.</p>",
         "GetDbInstanceOutput$logDeliveryConfiguration": "<p>Configuration for sending InfluxDB engine logs to send to specified S3 bucket.</p>",
         "RebootDbInstanceOutput$logDeliveryConfiguration": "<p>Configuration for sending InfluxDB engine logs to send to specified S3 bucket.</p>",
+        "RestoreFromDbBackupInput$logDeliveryConfiguration": "<p>Configuration for sending InfluxDB engine logs to the specified S3 bucket for the restored resource.</p>",
         "UpdateDbClusterInput$logDeliveryConfiguration": "<p>The log delivery configuration to apply to the DB cluster.</p>",
         "UpdateDbInstanceInput$logDeliveryConfiguration": "<p>Configuration for sending InfluxDB engine logs to send to specified S3 bucket.</p>",
         "UpdateDbInstanceOutput$logDeliveryConfiguration": "<p>Configuration for sending InfluxDB engine logs to send to specified S3 bucket.</p>"
@@ -987,13 +1225,17 @@
     "MaintenanceSchedule": {
       "base": "<p>Specifies the maintenance schedule for a DB instance or cluster, defining when maintenance operations such as patching can be performed.</p>",
       "refs": {
+        "CreateDbBackupOutput$maintenanceSchedule": "<p>The maintenance schedule of the resource at the time of backup.</p>",
         "CreateDbClusterInput$maintenanceSchedule": "<p>Specifies the maintenance schedule for the DB cluster, including the preferred maintenance window and timezone.</p>",
         "CreateDbInstanceInput$maintenanceSchedule": "<p>Specifies the maintenance schedule for the DB instance, including the preferred maintenance window and timezone.</p>",
         "CreateDbInstanceOutput$maintenanceSchedule": "<p>The maintenance schedule for the DB instance.</p>",
+        "DeleteDbBackupOutput$maintenanceSchedule": "<p>The maintenance schedule of the resource at the time of backup.</p>",
         "DeleteDbInstanceOutput$maintenanceSchedule": "<p>The maintenance schedule for the DB instance.</p>",
+        "GetDbBackupOutput$maintenanceSchedule": "<p>The maintenance schedule of the resource at the time of backup.</p>",
         "GetDbClusterOutput$maintenanceSchedule": "<p>The maintenance schedule for the DB cluster.</p>",
         "GetDbInstanceOutput$maintenanceSchedule": "<p>The maintenance schedule for the DB instance.</p>",
         "RebootDbInstanceOutput$maintenanceSchedule": "<p>The maintenance schedule for the DB instance.</p>",
+        "RestoreFromDbBackupInput$maintenanceSchedule": "<p>The maintenance schedule for the restored resource.</p>",
         "UpdateDbClusterInput$maintenanceSchedule": "<p>Specifies the maintenance schedule for the DB cluster, including the preferred maintenance window and timezone.</p>",
         "UpdateDbInstanceInput$maintenanceSchedule": "<p>Specifies the maintenance schedule for the DB instance, including the preferred maintenance window and timezone.</p>",
         "UpdateDbInstanceOutput$maintenanceSchedule": "<p>The maintenance schedule for the DB instance.</p>"
@@ -1008,6 +1250,7 @@
     "MaxResults": {
       "base": null,
       "refs": {
+        "ListDbBackupsInput$maxResults": "<p>The maximum number of items to return in the output. If the total number of items available is more than the value specified, a nextToken is provided in the output. To resume pagination, provide the nextToken value as an argument of a subsequent API invocation.</p>",
         "ListDbClustersInput$maxResults": "<p>The maximum number of items to return in the output. If the total number of items available is more than the value specified, a nextToken is provided in the output. To resume pagination, provide the nextToken value as an argument of a subsequent API invocation.</p>",
         "ListDbInstancesForClusterInput$maxResults": "<p>The maximum number of items to return in the output. If the total number of items available is more than the value specified, a nextToken is provided in the output. To resume pagination, provide the nextToken value as an argument of a subsequent API invocation.</p>",
         "ListDbInstancesInput$maxResults": "<p>The maximum number of items to return in the output. If the total number of items available is more than the value specified, a NextToken is provided in the output. To resume pagination, provide the NextToken value as argument of a subsequent API invocation.</p>",
@@ -1017,22 +1260,28 @@
     "NetworkType": {
       "base": null,
       "refs": {
+        "CreateDbBackupOutput$networkType": "<p>The network type of the resource at the time of backup.</p>",
         "CreateDbClusterInput$networkType": "<p>Specifies whether the network type of the Timestream for InfluxDB cluster is IPv4, which can communicate over IPv4 protocol only, or DUAL, which can communicate over both IPv4 and IPv6 protocols.</p>",
         "CreateDbInstanceInput$networkType": "<p>Specifies whether the networkType of the Timestream for InfluxDB instance is IPV4, which can communicate over IPv4 protocol only, or DUAL, which can communicate over both IPv4 and IPv6 protocols.</p>",
         "CreateDbInstanceOutput$networkType": "<p>Specifies whether the networkType of the Timestream for InfluxDB instance is IPV4, which can communicate over IPv4 protocol only, or DUAL, which can communicate over both IPv4 and IPv6 protocols.</p>",
         "DbClusterSummary$networkType": "<p>Specifies whether the network type of the Timestream for InfluxDB Cluster is IPv4, which can communicate over IPv4 protocol only, or DUAL, which can communicate over both IPv4 and IPv6 protocols.</p>",
         "DbInstanceForClusterSummary$networkType": "<p>Specifies whether the network type of the Timestream for InfluxDB instance is IPv4, which can communicate over IPv4 protocol only, or DUAL, which can communicate over both IPv4 and IPv6 protocols.</p>",
         "DbInstanceSummary$networkType": "<p>Specifies whether the networkType of the Timestream for InfluxDB instance is IPV4, which can communicate over IPv4 protocol only, or DUAL, which can communicate over both IPv4 and IPv6 protocols.</p>",
+        "DeleteDbBackupOutput$networkType": "<p>The network type of the resource at the time of backup.</p>",
         "DeleteDbInstanceOutput$networkType": "<p>Specifies whether the networkType of the Timestream for InfluxDB instance is IPV4, which can communicate over IPv4 protocol only, or DUAL, which can communicate over both IPv4 and IPv6 protocols.</p>",
+        "GetDbBackupOutput$networkType": "<p>The network type of the resource at the time of backup.</p>",
         "GetDbClusterOutput$networkType": "<p>Specifies whether the network type of the Timestream for InfluxDB cluster is IPv4, which can communicate over IPv4 protocol only, or DUAL, which can communicate over both IPv4 and IPv6 protocols.</p>",
         "GetDbInstanceOutput$networkType": "<p>Specifies whether the networkType of the Timestream for InfluxDB instance is IPV4, which can communicate over IPv4 protocol only, or DUAL, which can communicate over both IPv4 and IPv6 protocols.</p>",
         "RebootDbInstanceOutput$networkType": "<p>Specifies whether the networkType of the Timestream for InfluxDB instance is IPV4, which can communicate over IPv4 protocol only, or DUAL, which can communicate over both IPv4 and IPv6 protocols.</p>",
+        "RestoreFromDbBackupInput$networkType": "<p>Specifies the network type of the restored resource. Valid values are IPV4 and DUAL.</p>",
         "UpdateDbInstanceOutput$networkType": "<p>Specifies whether the networkType of the Timestream for InfluxDB instance is IPV4, which can communicate over IPv4 protocol only, or DUAL, which can communicate over both IPv4 and IPv6 protocols.</p>"
       }
     },
     "NextToken": {
       "base": null,
       "refs": {
+        "ListDbBackupsInput$nextToken": "<p>The pagination token. To resume pagination, provide the nextToken value as an argument of a subsequent API invocation.</p>",
+        "ListDbBackupsOutput$nextToken": "<p>Token from a previous call of the operation. When this value is provided, the service returns results from where the previous response left off.</p>",
         "ListDbClustersInput$nextToken": "<p>The pagination token. To resume pagination, provide the nextToken value as an argument of a subsequent API invocation.</p>",
         "ListDbClustersOutput$nextToken": "<p>Token from a previous call of the operation. When this value is provided, the service returns results from where the previous response left off.</p>",
         "ListDbInstancesForClusterInput$nextToken": "<p>The pagination token. To resume pagination, provide the nextToken value as an argument of a subsequent API invocation.</p>",
@@ -1108,6 +1357,7 @@
         "GetDbClusterOutput$port": "<p>The port number on which InfluxDB accepts connections.</p>",
         "GetDbInstanceOutput$port": "<p>The port number on which InfluxDB accepts connections.</p>",
         "RebootDbInstanceOutput$port": "<p>The port number on which InfluxDB accepts connections.</p>",
+        "RestoreFromDbBackupInput$port": "<p>The port number on which the restored InfluxDB resource accepts connections.</p>",
         "UpdateDbClusterInput$port": "<p>Update the DB cluster to use the specified port.</p>",
         "UpdateDbInstanceInput$port": "<p>The port number on which InfluxDB accepts connections.</p> <p>If you change the Port value, your database restarts immediately.</p> <p>Valid Values: 1024-65535</p> <p>Default: 8086</p> <p>Constraints: The value can't be 2375-2376, 7788-7799, 8090, or 51678-51680</p>",
         "UpdateDbInstanceOutput$port": "<p>The port number on which InfluxDB accepts connections.</p>"
@@ -1142,10 +1392,23 @@
     "RequestTagMap": {
       "base": null,
       "refs": {
+        "CreateDbBackupInput$tags": "<p>A list of key-value pairs to associate with the backup.</p>",
         "CreateDbClusterInput$tags": "<p>A list of key-value pairs to associate with the DB instance.</p>",
         "CreateDbInstanceInput$tags": "<p>A list of key-value pairs to associate with the DB instance.</p>",
         "CreateDbParameterGroupInput$tags": "<p>A list of key-value pairs to associate with the DB parameter group.</p>",
+        "RestoreFromDbBackupInput$tags": "<p>A list of key-value pairs to associate with the restored resource.</p>",
         "TagResourceRequest$tags": "<p>A list of tags used to categorize and track resources.</p>"
+      }
+    },
+    "ResourceDeploymentType": {
+      "base": null,
+      "refs": {
+        "CreateDbBackupOutput$deploymentType": "<p>The deployment type of the resource that the backup was created from.</p>",
+        "DbBackupSummary$deploymentType": "<p>The deployment type of the resource that the backup was created from.</p>",
+        "DeleteDbBackupOutput$deploymentType": "<p>The deployment type of the resource that the backup was created from.</p>",
+        "GetDbBackupOutput$deploymentType": "<p>The deployment type of the resource that the backup was created from.</p>",
+        "RestoreFromDbBackupInput$deploymentType": "<p>Specifies the deployment type of the restored resource. Valid values are SINGLE_AZ, WITH_MULTIAZ_STANDBY, and MULTI_NODE_READ_REPLICAS.</p>",
+        "RestoreFromDbBackupOutput$deploymentType": "<p>The deployment type of the restored resource.</p>"
       }
     },
     "ResourceNotFoundException": {
@@ -1153,10 +1416,44 @@
       "refs": {
       }
     },
+    "ResourceType": {
+      "base": null,
+      "refs": {
+        "RestoreFromDbBackupOutput$resourceType": "<p>The type of the restored resource. Valid values are DB_INSTANCE and DB_CLUSTER.</p>"
+      }
+    },
     "ResponseTagMap": {
       "base": null,
       "refs": {
         "ListTagsForResourceResponse$tags": "<p>A list of tags used to categorize and track resources.</p>"
+      }
+    },
+    "RestoreFromDbBackupInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "RestoreFromDbBackupOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "RestoreMode": {
+      "base": null,
+      "refs": {
+        "RestoreFromDbBackupInput$restoreMode": "<p>Specifies whether to restore to a new resource or replace the existing resource. Valid values are NEW_RESOURCE (default) and REPLACE_EXISTING.</p>"
+      }
+    },
+    "RestoreStatus": {
+      "base": null,
+      "refs": {
+        "RestoreFromDbBackupOutput$restoreStatus": "<p>The status of the restore operation.</p>"
+      }
+    },
+    "RetentionDays": {
+      "base": null,
+      "refs": {
+        "CreateDbBackupInput$retentionDays": "<p>The number of days to retain the backup. Valid values are 1 to 3650.</p>"
       }
     },
     "S3Configuration": {
@@ -1195,6 +1492,7 @@
         "ConflictException$message": null,
         "ConflictException$resourceId": "<p>The identifier for the Timestream for InfluxDB resource associated with the request.</p>",
         "ConflictException$resourceType": "<p>The type of Timestream for InfluxDB resource associated with the request.</p>",
+        "CreateDbBackupOutput$influxAuthParametersSecretArn": "<p>The ARN of the Secrets Manager secret containing the InfluxDB auth parameters.</p>",
         "CreateDbInstanceOutput$endpoint": "<p>The endpoint used to connect to InfluxDB. The default InfluxDB port is 8086.</p>",
         "CreateDbInstanceOutput$availabilityZone": "<p>The Availability Zone in which the DB instance resides.</p>",
         "CreateDbInstanceOutput$secondaryAvailabilityZone": "<p>The Availability Zone in which the standby instance is located when deploying with a MultiAZ standby instance.</p>",
@@ -1205,10 +1503,12 @@
         "DbInstanceForClusterSummary$endpoint": "<p>The endpoint used to connect to InfluxDB. The default InfluxDB port is 8086.</p>",
         "DbInstanceSummary$endpoint": "<p>The endpoint used to connect to InfluxDB. The default InfluxDB port is 8086.</p>",
         "DbParameterGroupSummary$description": "<p>A description of the DB parameter group.</p>",
+        "DeleteDbBackupOutput$influxAuthParametersSecretArn": "<p>The ARN of the Secrets Manager secret containing the InfluxDB auth parameters.</p>",
         "DeleteDbInstanceOutput$endpoint": "<p>The endpoint used to connect to InfluxDB. The default InfluxDB port is 8086.</p>",
         "DeleteDbInstanceOutput$availabilityZone": "<p>The Availability Zone in which the DB instance resides.</p>",
         "DeleteDbInstanceOutput$secondaryAvailabilityZone": "<p>The Availability Zone in which the standby instance is located when deploying with a MultiAZ standby instance.</p>",
         "DeleteDbInstanceOutput$influxAuthParametersSecretArn": "<p>The Amazon Resource Name (ARN) of the Secrets Manager secret containing the initial InfluxDB authorization parameters. The secret value is a JSON formatted key-value pair holding InfluxDB authorization values: organization, bucket, username, and password.</p>",
+        "GetDbBackupOutput$influxAuthParametersSecretArn": "<p>The ARN of the Secrets Manager secret containing the InfluxDB auth parameters.</p>",
         "GetDbClusterOutput$endpoint": "<p>The endpoint used to connect to the Timestream for InfluxDB cluster for write and read operations.</p>",
         "GetDbClusterOutput$readerEndpoint": "<p>The endpoint used to connect to the Timestream for InfluxDB cluster for read-only operations.</p>",
         "GetDbClusterOutput$influxAuthParametersSecretArn": "<p>The Amazon Resource Name (ARN) of the Secrets Manager secret containing the initial InfluxDB authorization parameters. The secret value is a JSON formatted key-value pair holding InfluxDB authorization values: organization, bucket, username, and password.</p>",
@@ -1239,16 +1539,22 @@
     "SyntheticTimestamp_date_time": {
       "base": null,
       "refs": {
+        "CreateDbBackupOutput$createdAt": "<p>The time when the backup was created.</p>",
         "CreateDbInstanceOutput$lastMaintenanceTime": "<p>The timestamp of the last completed maintenance operation on the DB instance.</p>",
         "CreateDbInstanceOutput$nextMaintenanceTime": "<p>The timestamp of the next scheduled maintenance operation on the DB instance.</p>",
+        "DbBackupConfigurationOutput$nextAutomatedBackupTime": "<p>The next scheduled time for an automated backup to be taken.</p>",
+        "DbBackupSummary$createdAt": "<p>The time when the backup was created.</p>",
+        "DeleteDbBackupOutput$createdAt": "<p>The time when the backup was created.</p>",
         "DeleteDbInstanceOutput$lastMaintenanceTime": "<p>The timestamp of the last completed maintenance operation on the DB instance.</p>",
         "DeleteDbInstanceOutput$nextMaintenanceTime": "<p>The timestamp of the next scheduled maintenance operation on the DB instance.</p>",
+        "GetDbBackupOutput$createdAt": "<p>The time when the backup was created.</p>",
         "GetDbClusterOutput$lastMaintenanceTime": "<p>The timestamp of the last completed maintenance operation on the DB cluster.</p>",
         "GetDbClusterOutput$nextMaintenanceTime": "<p>The timestamp of the next scheduled maintenance operation on the DB cluster.</p>",
         "GetDbInstanceOutput$lastMaintenanceTime": "<p>The timestamp of the last completed maintenance operation on the DB instance.</p>",
         "GetDbInstanceOutput$nextMaintenanceTime": "<p>The timestamp of the next scheduled maintenance operation on the DB instance.</p>",
         "RebootDbInstanceOutput$lastMaintenanceTime": "<p>The timestamp of the last completed maintenance operation on the DB instance.</p>",
         "RebootDbInstanceOutput$nextMaintenanceTime": "<p>The timestamp of the next scheduled maintenance operation on the DB instance.</p>",
+        "RestoreFromDbBackupInput$restoreToTime": "<p>The point in time to restore to, for continuous backups. Must be within the backup's retention window.</p>",
         "UpdateDbInstanceOutput$lastMaintenanceTime": "<p>The timestamp of the last completed maintenance operation on the DB instance.</p>",
         "UpdateDbInstanceOutput$nextMaintenanceTime": "<p>The timestamp of the next scheduled maintenance operation on the DB instance.</p>"
       }
@@ -1342,13 +1648,17 @@
     "VpcSecurityGroupIdList": {
       "base": null,
       "refs": {
+        "CreateDbBackupOutput$vpcSecurityGroupIds": "<p>The VPC security group IDs associated with the resource at the time of backup.</p>",
         "CreateDbClusterInput$vpcSecurityGroupIds": "<p>A list of VPC security group IDs to associate with the Timestream for InfluxDB cluster.</p>",
         "CreateDbInstanceInput$vpcSecurityGroupIds": "<p>A list of VPC security group IDs to associate with the DB instance.</p>",
         "CreateDbInstanceOutput$vpcSecurityGroupIds": "<p>A list of VPC security group IDs associated with the DB instance.</p>",
+        "DeleteDbBackupOutput$vpcSecurityGroupIds": "<p>The VPC security group IDs associated with the resource at the time of backup.</p>",
         "DeleteDbInstanceOutput$vpcSecurityGroupIds": "<p>A list of VPC security group IDs associated with the DB instance.</p>",
+        "GetDbBackupOutput$vpcSecurityGroupIds": "<p>The VPC security group IDs associated with the resource at the time of backup.</p>",
         "GetDbClusterOutput$vpcSecurityGroupIds": "<p>A list of VPC security group IDs associated with the DB cluster.</p>",
         "GetDbInstanceOutput$vpcSecurityGroupIds": "<p>A list of VPC security group IDs associated with the DB instance.</p>",
         "RebootDbInstanceOutput$vpcSecurityGroupIds": "<p>A list of VPC security group IDs associated with the DB instance.</p>",
+        "RestoreFromDbBackupInput$vpcSecurityGroupIds": "<p>A list of VPC security group IDs for the restored resource. If not specified, the restored resource uses the same security groups as the backup.</p>",
         "UpdateDbInstanceOutput$vpcSecurityGroupIds": "<p>A list of VPC security group IDs associated with the DB instance.</p>"
       }
     },
@@ -1361,13 +1671,17 @@
     "VpcSubnetIdList": {
       "base": null,
       "refs": {
+        "CreateDbBackupOutput$vpcSubnetIds": "<p>The VPC subnet IDs associated with the resource at the time of backup.</p>",
         "CreateDbClusterInput$vpcSubnetIds": "<p>A list of VPC subnet IDs to associate with the DB cluster. Provide at least two VPC subnet IDs in different Availability Zones when deploying with a Multi-AZ standby.</p>",
         "CreateDbInstanceInput$vpcSubnetIds": "<p>A list of VPC subnet IDs to associate with the DB instance. Provide at least two VPC subnet IDs in different availability zones when deploying with a Multi-AZ standby.</p>",
         "CreateDbInstanceOutput$vpcSubnetIds": "<p>A list of VPC subnet IDs associated with the DB instance.</p>",
+        "DeleteDbBackupOutput$vpcSubnetIds": "<p>The VPC subnet IDs associated with the resource at the time of backup.</p>",
         "DeleteDbInstanceOutput$vpcSubnetIds": "<p>A list of VPC subnet IDs associated with the DB instance.</p>",
+        "GetDbBackupOutput$vpcSubnetIds": "<p>The VPC subnet IDs associated with the resource at the time of backup.</p>",
         "GetDbClusterOutput$vpcSubnetIds": "<p>A list of VPC subnet IDs associated with the DB cluster.</p>",
         "GetDbInstanceOutput$vpcSubnetIds": "<p>A list of VPC subnet IDs associated with the DB instance.</p>",
         "RebootDbInstanceOutput$vpcSubnetIds": "<p>A list of VPC subnet IDs associated with the DB instance.</p>",
+        "RestoreFromDbBackupInput$vpcSubnetIds": "<p>A list of VPC subnet IDs for the restored resource. If not specified, the restored resource uses the same subnets as the backup.</p>",
         "UpdateDbInstanceOutput$vpcSubnetIds": "<p>A list of VPC subnet IDs associated with the DB instance.</p>"
       }
     }
