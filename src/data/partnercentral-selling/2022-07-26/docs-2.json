@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<p><fullname>AWS Partner Central API for Selling</fullname> <p> <b>AWS Partner Central API for Selling Reference Guide</b> </p> <p>This Amazon Web Services (AWS) Partner Central API reference is designed to help <a href=\"http://aws.amazon.com/partners/programs/\">AWS Partners</a> integrate Customer Relationship Management (CRM) systems with AWS Partner Central. Partners can automate interactions with AWS Partner Central, which helps to ensure effective engagements in joint business activities.</p> <p>The API provides standard AWS API functionality. Access it by either using API <a href=\"https://docs.aws.amazon.com/partner-central/latest/selling-api/API_Operations.html\">Actions</a> or by using an AWS SDK that's tailored to your programming language or platform. For more information, see <a href=\"http://aws.amazon.com/getting-started\">Getting Started with AWS</a> and <a href=\"http://aws.amazon.com/developer/tools/\">Tools to Build on AWS</a>.</p> <p class=\"title\"> <b>Features offered by AWS Partner Central API</b> </p> <ol> <li> <p> <b>Opportunity management:</b> Manages coselling opportunities through API actions such as <code>CreateOpportunity</code>, <code>UpdateOpportunity</code>, <code>ListOpportunities</code>, <code>GetOpportunity</code>, and <code>AssignOpportunity</code>.</p> </li> <li> <p> <b>AWS referral management:</b> Manages referrals shared by AWS using actions such as <code>ListEngagementInvitations</code>, <code>GetEngagementInvitation</code>, <code>StartEngagementByAcceptingInvitation</code>, and <code>RejectEngagementInvitation</code>.</p> </li> <li> <p> <b>Entity association:</b> Associates related entities such as <i>AWS Products</i>, <i>Partner Solutions</i>, and <i>AWS Marketplace Private Offers</i> with opportunities using the actions <code>AssociateOpportunity</code>, and <code>DisassociateOpportunity</code>.</p> </li> <li> <p> <b>View AWS opportunity details:</b> Retrieves real-time summaries of AWS opportunities using the <code>GetAWSOpportunitySummary</code> action.</p> </li> <li> <p> <b>List solutions:</b> Provides list APIs for listing partner offers using <code>ListSolutions</code>.</p> </li> <li> <p> <b>Event subscription:</b> Subscribe to real-time opportunity updates through AWS EventBridge by using actions such as <i>Opportunity Created</i>, <i>Opportunity Updated</i>, <i>Engagement Invitation Accepted</i>, <i>Engagement Invitation Rejected</i>, and <i>Engagement Invitation Created</i>.</p> </li> </ol></p>",
+  "service": "<p><fullname>Partner Central</fullname> <p>This Amazon Web Services (AWS) Partner Central API reference is designed to help <a href=\"http://aws.amazon.com/partners/programs/\">AWS Partners</a> integrate Customer Relationship Management (CRM) systems with AWS Partner Central. Partners can automate interactions with AWS Partner Central, which helps to ensure effective engagements in joint business activities.</p> <p>The API provides standard AWS API functionality. Access it by either using API <a href=\"https://docs.aws.amazon.com/partner-central/latest/selling-api/API_Operations.html\">Actions</a> or by using an AWS SDK that's tailored to your programming language or platform. For more information, see <a href=\"http://aws.amazon.com/getting-started\">Getting Started with AWS</a> and <a href=\"http://aws.amazon.com/developer/tools/\">Tools to Build on AWS</a>.</p> <p class=\"title\"> <b>Features offered by AWS Partner Central API</b> </p> <ol> <li> <p> <b>Opportunity management:</b> Manages coselling opportunities through API actions such as <code>CreateOpportunity</code>, <code>UpdateOpportunity</code>, <code>ListOpportunities</code>, <code>GetOpportunity</code>, and <code>AssignOpportunity</code>.</p> </li> <li> <p> <b>AWS referral management:</b> Manages referrals shared by AWS using actions such as <code>ListEngagementInvitations</code>, <code>GetEngagementInvitation</code>, <code>StartEngagementByAcceptingInvitation</code>, and <code>RejectEngagementInvitation</code>.</p> </li> <li> <p> <b>Entity association:</b> Associates related entities such as <i>AWS Products</i>, <i>Partner Solutions</i>, and <i>AWS Marketplace Private Offers</i> with opportunities using the actions <code>AssociateOpportunity</code>, and <code>DisassociateOpportunity</code>.</p> </li> <li> <p> <b>View AWS opportunity details:</b> Retrieves real-time summaries of AWS opportunities using the <code>GetAWSOpportunitySummary</code> action.</p> </li> <li> <p> <b>List solutions:</b> Provides list APIs for listing partner offers using <code>ListSolutions</code>.</p> </li> <li> <p> <b>Event subscription:</b> Subscribe to real-time opportunity updates through AWS EventBridge by using actions such as <i>Opportunity Created</i>, <i>Opportunity Updated</i>, <i>Engagement Invitation Accepted</i>, <i>Engagement Invitation Rejected</i>, and <i>Engagement Invitation Created</i>.</p> </li> </ol></p>",
   "operations": {
     "AcceptEngagementInvitation": "<p>Use the <code>AcceptEngagementInvitation</code> action to accept an engagement invitation shared by AWS. Accepting the invitation indicates your willingness to participate in the engagement, granting you access to all engagement-related data.</p>",
     "AssignOpportunity": "<p>Enables you to reassign an existing <code>Opportunity</code> to another user within your Partner Central account. The specified user receives the opportunity, and it appears on their Partner Central dashboard, allowing them to take necessary actions or proceed with the opportunity.</p> <p>This is useful for distributing opportunities to the appropriate team members or departments within your organization, ensuring that each opportunity is handled by the right person. By default, the opportunity owner is the one who creates it. Currently, there's no API to enumerate the list of available users.</p>",
@@ -139,8 +139,7 @@
     "AddressSummary": {
       "base": "<p>An object that contains an <code>Address</code> object's subset of fields.</p>",
       "refs": {
-        "AccountSummary$Address": "<p>Specifies the end <code>Customer</code>'s address details associated with the <code>Opportunity</code>.</p>",
-        "LeadCustomer$Address": null
+        "AccountSummary$Address": "<p>Specifies the end <code>Customer</code>'s address details associated with the <code>Opportunity</code>.</p>"
       }
     },
     "AddressSummaryCityString": {
@@ -584,9 +583,7 @@
     "CompanyWebsiteUrl": {
       "base": null,
       "refs": {
-        "EngagementCustomer$WebsiteUrl": "<p>Provides the website URL of the customer’s company. This field helps partners verify the legitimacy and size of the customer organization.</p>",
-        "LeadCustomer$WebsiteUrl": "<p>The website URL of the lead customer's company. This provides additional context about the customer organization and helps verify company legitimacy and size.</p>",
-        "LeadInvitationCustomer$WebsiteUrl": "<p>The website URL of the customer company. This provides additional context about the customer organization and helps partners verify company details and assess business size and legitimacy.</p>"
+        "EngagementCustomer$WebsiteUrl": "<p>Provides the website URL of the customer’s company. This field helps partners verify the legitimacy and size of the customer organization.</p>"
       }
     },
     "CompetitorName": {
@@ -639,7 +636,6 @@
         "Address$CountryCode": "<p>Specifies the end <code>Customer</code>'s country associated with the <code>Opportunity</code>.</p>",
         "AddressSummary$CountryCode": "<p>Specifies the end <code>Customer</code>'s country associated with the <code>Opportunity</code>.</p>",
         "EngagementCustomer$CountryCode": "<p>Indicates the country in which the customer’s company operates. This field is useful for understanding regional requirements or compliance needs.</p>",
-        "LeadInvitationCustomer$CountryCode": "<p>The country code indicating the geographic location of the customer company. This information helps partners understand regional requirements and assess their ability to serve the customer effectively.</p>",
         "ProspectingResultCustomer$Country": "<p>The country code of the prospected customer account.</p>"
       }
     },
@@ -855,8 +851,7 @@
       "refs": {
         "AssigneeContact$Email": "<p>Provides the email address of the assignee. This email is used for communications and notifications related to the opportunity.</p>",
         "AwsTeamMember$Email": "<p>Provides the Amazon Web Services team member's email address.</p>",
-        "Contact$Email": "<p>The contact's email address associated with the <code>Opportunity</code>.</p>",
-        "LeadContact$Email": "<p>The lead contact's email address associated with the engagement.</p>"
+        "Contact$Email": "<p>The contact's email address associated with the <code>Opportunity</code>.</p>"
       }
     },
     "EngagementArn": {
@@ -937,7 +932,6 @@
       "base": null,
       "refs": {
         "EngagementCustomerProjectDetails$BusinessProblem": "<p>A description of the business problem the project aims to solve.</p>",
-        "LeadInteraction$BusinessProblem": "<p>Describes the business problem or challenge that the customer discussed during the interaction. This information helps qualify the lead and identify appropriate solutions.</p>",
         "ProjectDetails$BusinessProblem": "<p>Describes the business problem that the project aims to solve. This information is crucial for understanding the project’s goals and objectives.</p>"
       }
     },
@@ -1191,6 +1185,12 @@
         "LeadInvitationInteraction$Usecase": "<p>Describes the specific use case or business scenario associated with the lead interaction. This information helps partners understand the customer's interests and potential solution requirements.</p>"
       }
     },
+    "EnrichmentContext": {
+      "base": "<p>Contains enrichment data for engagement invitations. You can view propensity scores, program eligibility, and lead readiness insights directly in the invitation, before you take action on the invitation.</p>",
+      "refs": {
+        "GetEngagementInvitationResponse$EnrichmentContext": "<p>The enrichment data for the engagement associated with this invitation. You can view propensity scores, program eligibility, and lead readiness assessments before taking action on the invitation.</p>"
+      }
+    },
     "EstimationUrl": {
       "base": null,
       "refs": {
@@ -1315,8 +1315,6 @@
         "Account$Industry": "<p>Specifies the industry the end <code>Customer</code> belongs to that's associated with the <code>Opportunity</code>. It refers to the category or sector where the customer's business operates. This is a required field.</p>",
         "AccountSummary$Industry": "<p>Specifies which industry the end <code>Customer</code> belongs to associated with the <code>Opportunity</code>. It refers to the category or sector that the customer's business operates in.</p> <p>To submit a value outside the picklist, use <code>Other</code>.</p> <p>Conditionally mandatory if <code>Other</code> is selected for Industry Vertical in LOVs.</p>",
         "EngagementCustomer$Industry": "<p>Specifies the industry to which the customer’s company belongs. This field helps categorize the opportunity based on the customer’s business sector.</p>",
-        "LeadCustomer$Industry": "<p>Specifies the industry sector to which the lead customer's company belongs. This categorization helps in understanding the customer's business context and tailoring appropriate solutions.</p>",
-        "LeadInvitationCustomer$Industry": "<p>Specifies the industry sector of the customer company associated with the lead invitation. This categorization helps partners understand the customer's business context and assess solution fit.</p>",
         "ProspectingResultCustomer$Industry": "<p>The industry classification of the prospected customer account.</p>"
       }
     },
@@ -1347,6 +1345,12 @@
         "Invitation$Message": "<p> A message accompanying the invitation. </p>"
       }
     },
+    "InvitationProspectingResultAws": {
+      "base": "<p>A subset of prospecting result data visible to invitation receivers. It includes customer account details and AI-generated insights.</p>",
+      "refs": {
+        "EnrichmentContext$ProspectingResultAws": "<p>The customer account data and propensity insights for the prospected account. It includes geographic, industry, and segment classifications, along with engagement and solution scoring.</p>"
+      }
+    },
     "InvitationStatus": {
       "base": null,
       "refs": {
@@ -1373,7 +1377,6 @@
       "refs": {
         "AssigneeContact$BusinessTitle": "<p>Specifies the business title of the assignee managing the opportunity. This helps clarify the individual's role and responsibilities within the organization. Use the value <code>PartnerAccountManager</code> to update details of the opportunity owner.</p>",
         "Contact$BusinessTitle": "<p>The partner contact's title (job title or role) associated with the <code>Opportunity</code>. <code>BusinessTitle</code> supports either <code>PartnerAccountManager</code> or <code>OpportunityOwner</code>.</p>",
-        "LeadContact$BusinessTitle": "<p>The lead contact's business title or job role associated with the engagement.</p>",
         "LeadInvitationInteraction$ContactBusinessTitle": "<p>The business title or job role of the customer contact involved in the lead interaction. This helps partners identify the decision-making level and engagement approach for the lead.</p>",
         "SenderContact$BusinessTitle": "<p>The sender-provided contact's title (job title or role) associated with the <code>EngagementInvitation</code>.</p>"
       }
@@ -1382,6 +1385,36 @@
       "base": "<p>Defines a filter to retrieve opportunities based on the last modified date. This filter is useful for tracking changes or updates to opportunities over time.</p>",
       "refs": {
         "ListOpportunitiesRequest$LastModifiedDate": "<p>Filters the opportunities based on their last modified date. This filter helps retrieve opportunities that were updated after the specified date, allowing partners to track recent changes or updates.</p>"
+      }
+    },
+    "LeadAddress": {
+      "base": "<p>The address information for a lead customer, including city, state or region, postal code, and country code.</p>",
+      "refs": {
+        "LeadCustomer$Address": "<p>The address information for the lead customer.</p>"
+      }
+    },
+    "LeadAddressCityString": {
+      "base": null,
+      "refs": {
+        "LeadAddress$City": "<p>The city of the lead customer's address.</p>"
+      }
+    },
+    "LeadAddressPostalCodeString": {
+      "base": null,
+      "refs": {
+        "LeadAddress$PostalCode": "<p>The postal code of the lead customer's address.</p>"
+      }
+    },
+    "LeadAddressStateOrRegionString": {
+      "base": null,
+      "refs": {
+        "LeadAddress$StateOrRegion": "<p>The state or region of the lead customer's address.</p>"
+      }
+    },
+    "LeadBusinessProblem": {
+      "base": null,
+      "refs": {
+        "LeadInteraction$BusinessProblem": "<p>Describes the business problem or challenge that the customer discussed during the interaction. This information helps qualify the lead and identify appropriate solutions.</p>"
       }
     },
     "LeadContact": {
@@ -1396,6 +1429,13 @@
         "EngagementContextPayload$Lead": "<p>Contains detailed information about a lead when the context type is \"Lead\". This field is present only when the Type in EngagementContextDetails is set to \"Lead\".</p>"
       }
     },
+    "LeadCountryCode": {
+      "base": null,
+      "refs": {
+        "LeadAddress$CountryCode": "<p>The country code of the lead customer's address.</p>",
+        "LeadInvitationCustomer$CountryCode": "<p>The country code indicating the geographic location of the customer company. This information helps partners understand regional requirements and assess their ability to serve the customer effectively.</p>"
+      }
+    },
     "LeadCustomer": {
       "base": "<p>Contains detailed information about the customer associated with the lead, including company details, industry classification, and AWS maturity level. This information helps qualify and categorize the lead for appropriate engagement strategies.</p>",
       "refs": {
@@ -1403,9 +1443,23 @@
         "UpdateLeadContext$Customer": "<p>Updated customer information associated with the lead.</p>"
       }
     },
+    "LeadEmail": {
+      "base": null,
+      "refs": {
+        "LeadContact$Email": "<p>The lead contact's email address associated with the engagement.</p>"
+      }
+    },
+    "LeadIndustry": {
+      "base": null,
+      "refs": {
+        "LeadCustomer$Industry": "<p>Specifies the industry sector to which the lead customer's company belongs. This categorization helps in understanding the customer's business context and tailoring appropriate solutions.</p>",
+        "LeadInvitationCustomer$Industry": "<p>Specifies the industry sector of the customer company associated with the lead invitation. This categorization helps partners understand the customer's business context and assess solution fit.</p>"
+      }
+    },
     "LeadInsights": {
       "base": "<p>Contains insights that AI generates for a lead. These insights provide automated analysis to help partners evaluate the lead quality and prioritize engagement efforts.</p>",
       "refs": {
+        "EnrichmentContext$LeadInsights": "<p>The AI-generated lead readiness score for this lead. Use this score to assess lead quality and prioritize engagement efforts.</p>",
         "LeadContext$Insights": "<p>Insights that AI generates and associates with the lead. These insights provide automated analysis such as lead readiness scoring to help partners assess the lead quality.</p>",
         "UpdateLeadContext$Insights": "<p>Insights that AI generates and associates with the lead. These insights provide automated analysis to help partners assess the lead quality and readiness.</p>"
       }
@@ -1441,6 +1495,25 @@
         "Payload$LeadInvitation": "<p>Specifies the details of the lead invitation within the Engagement Invitation payload. This data helps partners understand the lead context, customer information, and interaction history for the lead opportunity from AWS.</p>"
       }
     },
+    "LeadJobTitle": {
+      "base": null,
+      "refs": {
+        "LeadContact$BusinessTitle": "<p>The lead contact's business title or job role associated with the engagement.</p>"
+      }
+    },
+    "LeadMarketSegment": {
+      "base": null,
+      "refs": {
+        "LeadCustomer$MarketSegment": "<p>Specifies the market segment classification of the lead customer, such as enterprise, mid-market, or small business. This segmentation helps in targeting appropriate solutions and engagement strategies.</p>",
+        "LeadInvitationCustomer$MarketSegment": "<p>Specifies the market segment classification of the customer, such as enterprise, mid-market, or small business. This segmentation helps partners determine the appropriate solution complexity and engagement strategy.</p>"
+      }
+    },
+    "LeadPhoneNumber": {
+      "base": null,
+      "refs": {
+        "LeadContact$Phone": "<p>The lead contact's phone number associated with the engagement.</p>"
+      }
+    },
     "LeadQualificationStatus": {
       "base": null,
       "refs": {
@@ -1467,6 +1540,13 @@
       "refs": {
         "LeadInteraction$SourceType": "<p>Specifies the type of source that generated the lead interaction, such as \"Event\", \"Website\", \"Referral\", or \"Campaign\". This categorization helps track lead generation effectiveness across different channels.</p>",
         "LeadInvitationInteraction$SourceType": "<p>Specifies the type of source that generated the lead interaction, such as \"Event\", \"Website\", or \"Campaign\". This helps partners understand the lead generation channel and assess lead quality based on the source type.</p>"
+      }
+    },
+    "LeadWebsiteUrl": {
+      "base": null,
+      "refs": {
+        "LeadCustomer$WebsiteUrl": "<p>The website URL of the lead customer's company. This provides additional context about the customer organization and helps verify company legitimacy and size.</p>",
+        "LeadInvitationCustomer$WebsiteUrl": "<p>The website URL of the customer company. This provides additional context about the customer organization and helps partners verify company details and assess business size and legitimacy.</p>"
       }
     },
     "LifeCycle": {
@@ -1775,13 +1855,6 @@
         "ListTasksSortBase$SortBy": "<p> Specifies the field by which the task list should be sorted. </p>"
       }
     },
-    "MarketSegment": {
-      "base": null,
-      "refs": {
-        "LeadCustomer$MarketSegment": "<p>Specifies the market segment classification of the lead customer, such as enterprise, mid-market, or small business. This segmentation helps in targeting appropriate solutions and engagement strategies.</p>",
-        "LeadInvitationCustomer$MarketSegment": "<p>Specifies the market segment classification of the customer, such as enterprise, mid-market, or small business. This segmentation helps partners determine the appropriate solution complexity and engagement strategy.</p>"
-      }
-    },
     "Marketing": {
       "base": "<p>An object that contains marketing details for the <code>Opportunity</code>.</p>",
       "refs": {
@@ -2021,7 +2094,6 @@
       "refs": {
         "AssigneeContact$Phone": "<p>Specifies the contact phone number of the assignee responsible for the opportunity or engagement. This field enables direct communication for time-sensitive matters and facilitates coordination between AWS and partner teams.</p>",
         "Contact$Phone": "<p>The contact's phone number associated with the <code>Opportunity</code>.</p>",
-        "LeadContact$Phone": "<p>The lead contact's phone number associated with the engagement.</p>",
         "SenderContact$Phone": "<p>The sender-provided contact's phone number associated with the <code>EngagementInvitation</code>.</p>"
       }
     },
@@ -2147,6 +2219,7 @@
     "ProspectingInsights": {
       "base": "<p>Contains insights that AI generates from the prospecting analysis. These insights include marketplace engagement scoring, solution fit assessments, and solution categorization for the prospected customer.</p>",
       "refs": {
+        "InvitationProspectingResultAws$Insights": "<p>The AI-generated insights from the prospecting analysis, including marketplace engagement scoring, solution fit assessments, and solution categorization.</p>",
         "ProspectingResultAws$Insights": "<p>Insights that AI generates from the prospecting analysis. These insights include engagement scores and solution fit assessments for the prospected customer.</p>"
       }
     },
@@ -2178,6 +2251,7 @@
     "ProspectingResultCustomer": {
       "base": "<p>Contains detailed information about the prospected customer account, including company identifiers, geographic classification, industry segmentation, and program eligibility.</p>",
       "refs": {
+        "InvitationProspectingResultAws$Customer": "<p>The prospected customer account details, including geographic classification, industry segmentation, company size, and program eligibility.</p>",
         "ProspectingResultAws$Customer": "<p>Contains details about the prospected customer account, including geographic, industry, and segment classifications.</p>"
       }
     },

@@ -700,6 +700,24 @@
       ],
       "endpointdiscovery":{}
     },
+    "SearchVectors":{
+      "name":"SearchVectors",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"SearchVectorsInput"},
+      "output":{"shape":"SearchVectorsOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"RequestLimitExceeded"},
+        {"shape":"InternalServerError"},
+        {"shape":"ThrottlingException"}
+      ],
+      "staticContextParams":{
+        "IsSearchOperation":{"value":true}
+      }
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -1426,7 +1444,8 @@
         "WriteCapacityUnits":{"shape":"ConsumedCapacityUnits"},
         "Table":{"shape":"Capacity"},
         "LocalSecondaryIndexes":{"shape":"SecondaryIndexesCapacityMap"},
-        "GlobalSecondaryIndexes":{"shape":"SecondaryIndexesCapacityMap"}
+        "GlobalSecondaryIndexes":{"shape":"SecondaryIndexesCapacityMap"},
+        "VectorIndexes":{"shape":"VectorIndexesCapacityMap"}
       }
     },
     "ConsumedCapacityMultiple":{
@@ -1606,13 +1625,32 @@
         "ResourcePolicy":{"shape":"ResourcePolicy"},
         "OnDemandThroughput":{"shape":"OnDemandThroughput"},
         "GlobalTableSourceArn":{"shape":"TableArn"},
-        "GlobalTableSettingsReplicationMode":{"shape":"GlobalTableSettingsReplicationMode"}
+        "GlobalTableSettingsReplicationMode":{"shape":"GlobalTableSettingsReplicationMode"},
+        "VectorIndexes":{"shape":"VectorIndexList"}
       }
     },
     "CreateTableOutput":{
       "type":"structure",
       "members":{
         "TableDescription":{"shape":"TableDescription"}
+      }
+    },
+    "CreateVectorIndexAction":{
+      "type":"structure",
+      "required":[
+        "IndexName",
+        "VectorAttribute",
+        "Projection",
+        "Dimensions",
+        "DistanceFunction"
+      ],
+      "members":{
+        "IndexName":{"shape":"IndexName"},
+        "VectorAttribute":{"shape":"VectorAttributeDefinition"},
+        "SearchSchema":{"shape":"SearchSchema"},
+        "Projection":{"shape":"Projection"},
+        "Dimensions":{"shape":"PositiveLongObject"},
+        "DistanceFunction":{"shape":"VectorDistanceFunction"}
       }
     },
     "CsvDelimiter":{
@@ -1769,6 +1807,13 @@
       "type":"structure",
       "members":{
         "TableDescription":{"shape":"TableDescription"}
+      }
+    },
+    "DeleteVectorIndexAction":{
+      "type":"structure",
+      "required":["IndexName"],
+      "members":{
+        "IndexName":{"shape":"IndexName"}
       }
     },
     "DeletionProtectionEnabled":{"type":"boolean"},
@@ -3624,7 +3669,8 @@
         "LocalSecondaryIndexOverride":{"shape":"LocalSecondaryIndexList"},
         "ProvisionedThroughputOverride":{"shape":"ProvisionedThroughput"},
         "OnDemandThroughputOverride":{"shape":"OnDemandThroughput"},
-        "SSESpecificationOverride":{"shape":"SSESpecification"}
+        "SSESpecificationOverride":{"shape":"SSESpecification"},
+        "VectorIndexOverride":{"shape":"VectorIndexList"}
       }
     },
     "RestoreTableFromBackupOutput":{
@@ -3650,7 +3696,8 @@
         "LocalSecondaryIndexOverride":{"shape":"LocalSecondaryIndexList"},
         "ProvisionedThroughputOverride":{"shape":"ProvisionedThroughput"},
         "OnDemandThroughputOverride":{"shape":"OnDemandThroughput"},
-        "SSESpecificationOverride":{"shape":"SSESpecification"}
+        "SSESpecificationOverride":{"shape":"SSESpecification"},
+        "VectorIndexOverride":{"shape":"VectorIndexList"}
       }
     },
     "RestoreTableToPointInTimeOutput":{
@@ -3813,6 +3860,77 @@
       "max":1000000,
       "min":1
     },
+    "ScoreNumber":{"type":"double"},
+    "SearchResultItem":{
+      "type":"structure",
+      "members":{
+        "Item":{"shape":"AttributeMap"},
+        "Score":{"shape":"ScoreNumber"}
+      }
+    },
+    "SearchResultList":{
+      "type":"list",
+      "member":{"shape":"SearchResultItem"}
+    },
+    "SearchSchema":{
+      "type":"list",
+      "member":{"shape":"SearchSchemaElement"},
+      "min":1
+    },
+    "SearchSchemaElement":{
+      "type":"structure",
+      "required":[
+        "AttributeName",
+        "SearchSchemaElementType"
+      ],
+      "members":{
+        "AttributeName":{"shape":"AttributeName"},
+        "SearchSchemaElementType":{"shape":"SearchSchemaElementType"}
+      }
+    },
+    "SearchSchemaElementType":{
+      "type":"string",
+      "enum":[
+        "HASH",
+        "INLINE_FILTER"
+      ]
+    },
+    "SearchVectorList":{
+      "type":"list",
+      "member":{"shape":"AttributeValue"},
+      "max":4096,
+      "min":1
+    },
+    "SearchVectorsInput":{
+      "type":"structure",
+      "required":[
+        "TableName",
+        "IndexName",
+        "SearchVector",
+        "TopK"
+      ],
+      "members":{
+        "TableName":{
+          "shape":"TableArn",
+          "contextParam":{"name":"ResourceArn"}
+        },
+        "IndexName":{"shape":"IndexName"},
+        "ReturnConsumedCapacity":{"shape":"ReturnConsumedCapacity"},
+        "ExpressionAttributeNames":{"shape":"ExpressionAttributeNameMap"},
+        "ExpressionAttributeValues":{"shape":"ExpressionAttributeValueMap"},
+        "ProjectionExpression":{"shape":"ProjectionExpression"},
+        "SearchVector":{"shape":"SearchVectorList"},
+        "SearchConditionExpression":{"shape":"String"},
+        "TopK":{"shape":"TopKInteger"}
+      }
+    },
+    "SearchVectorsOutput":{
+      "type":"structure",
+      "members":{
+        "ConsumedCapacity":{"shape":"VectorCapacity"},
+        "SearchResults":{"shape":"SearchResultList"}
+      }
+    },
     "SecondaryIndexesCapacityMap":{
       "type":"map",
       "key":{"shape":"IndexName"},
@@ -3856,7 +3974,8 @@
         "GlobalSecondaryIndexes":{"shape":"GlobalSecondaryIndexes"},
         "StreamDescription":{"shape":"StreamSpecification"},
         "TimeToLiveDescription":{"shape":"TimeToLiveDescription"},
-        "SSEDescription":{"shape":"SSEDescription"}
+        "SSEDescription":{"shape":"SSEDescription"},
+        "VectorIndexes":{"shape":"VectorIndexes"}
       }
     },
     "StreamArn":{
@@ -3938,7 +4057,8 @@
         "ProvisionedThroughput":{"shape":"ProvisionedThroughput"},
         "OnDemandThroughput":{"shape":"OnDemandThroughput"},
         "SSESpecification":{"shape":"SSESpecification"},
-        "GlobalSecondaryIndexes":{"shape":"GlobalSecondaryIndexList"}
+        "GlobalSecondaryIndexes":{"shape":"GlobalSecondaryIndexList"},
+        "VectorIndexes":{"shape":"VectorIndexList"}
       }
     },
     "TableDescription":{
@@ -3971,7 +4091,8 @@
         "DeletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"},
         "OnDemandThroughput":{"shape":"OnDemandThroughput"},
         "WarmThroughput":{"shape":"TableWarmThroughputDescription"},
-        "MultiRegionConsistency":{"shape":"MultiRegionConsistency"}
+        "MultiRegionConsistency":{"shape":"MultiRegionConsistency"},
+        "VectorIndexes":{"shape":"VectorIndexDescriptionList"}
       }
     },
     "TableId":{
@@ -4120,6 +4241,11 @@
         "ENABLED",
         "DISABLED"
       ]
+    },
+    "TopKInteger":{
+      "type":"integer",
+      "box":true,
+      "min":1
     },
     "TransactGetItem":{
       "type":"structure",
@@ -4431,7 +4557,8 @@
         "GlobalTableWitnessUpdates":{"shape":"GlobalTableWitnessGroupUpdateList"},
         "OnDemandThroughput":{"shape":"OnDemandThroughput"},
         "WarmThroughput":{"shape":"WarmThroughput"},
-        "GlobalTableSettingsReplicationMode":{"shape":"GlobalTableSettingsReplicationMode"}
+        "GlobalTableSettingsReplicationMode":{"shape":"GlobalTableSettingsReplicationMode"},
+        "VectorIndexUpdates":{"shape":"VectorIndexUpdateList"}
       }
     },
     "UpdateTableOutput":{
@@ -4478,6 +4605,106 @@
       "members":{
         "TimeToLiveSpecification":{"shape":"TimeToLiveSpecification"}
       }
+    },
+    "VectorAttributeDefinition":{
+      "type":"structure",
+      "required":["AttributeName"],
+      "members":{
+        "AttributeName":{"shape":"VectorAttributeName"}
+      }
+    },
+    "VectorAttributeName":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "VectorCapacity":{
+      "type":"structure",
+      "members":{
+        "VectorSearchRequestBytes":{"shape":"ConsumedCapacityUnits"},
+        "VectorWriteRequestBytes":{"shape":"ConsumedCapacityUnits"}
+      }
+    },
+    "VectorDistanceFunction":{
+      "type":"string",
+      "enum":[
+        "COSINE",
+        "DOT_PRODUCT",
+        "EUCLIDEAN"
+      ]
+    },
+    "VectorIndex":{
+      "type":"structure",
+      "required":[
+        "IndexName",
+        "VectorAttribute",
+        "Projection",
+        "Dimensions",
+        "DistanceFunction"
+      ],
+      "members":{
+        "IndexName":{"shape":"IndexName"},
+        "VectorAttribute":{"shape":"VectorAttributeDefinition"},
+        "SearchSchema":{"shape":"SearchSchema"},
+        "Projection":{"shape":"Projection"},
+        "Dimensions":{"shape":"PositiveLongObject"},
+        "DistanceFunction":{"shape":"VectorDistanceFunction"}
+      }
+    },
+    "VectorIndexDescription":{
+      "type":"structure",
+      "members":{
+        "IndexName":{"shape":"IndexName"},
+        "SearchSchema":{"shape":"SearchSchema"},
+        "Projection":{"shape":"Projection"},
+        "VectorAttribute":{"shape":"VectorAttributeDefinition"},
+        "Dimensions":{"shape":"PositiveLongObject"},
+        "DistanceFunction":{"shape":"VectorDistanceFunction"},
+        "IndexStatus":{"shape":"IndexStatus"},
+        "Backfilling":{"shape":"Backfilling"},
+        "IndexSizeBytes":{"shape":"LongObject"},
+        "ItemCount":{"shape":"LongObject"},
+        "IndexArn":{"shape":"String"}
+      }
+    },
+    "VectorIndexDescriptionList":{
+      "type":"list",
+      "member":{"shape":"VectorIndexDescription"}
+    },
+    "VectorIndexInfo":{
+      "type":"structure",
+      "members":{
+        "IndexName":{"shape":"IndexName"},
+        "VectorAttribute":{"shape":"VectorAttributeDefinition"},
+        "SearchSchema":{"shape":"SearchSchema"},
+        "Projection":{"shape":"Projection"},
+        "Dimensions":{"shape":"PositiveLongObject"},
+        "DistanceFunction":{"shape":"VectorDistanceFunction"}
+      }
+    },
+    "VectorIndexList":{
+      "type":"list",
+      "member":{"shape":"VectorIndex"}
+    },
+    "VectorIndexUpdate":{
+      "type":"structure",
+      "members":{
+        "Create":{"shape":"CreateVectorIndexAction"},
+        "Delete":{"shape":"DeleteVectorIndexAction"}
+      }
+    },
+    "VectorIndexUpdateList":{
+      "type":"list",
+      "member":{"shape":"VectorIndexUpdate"}
+    },
+    "VectorIndexes":{
+      "type":"list",
+      "member":{"shape":"VectorIndexInfo"}
+    },
+    "VectorIndexesCapacityMap":{
+      "type":"map",
+      "key":{"shape":"IndexName"},
+      "value":{"shape":"VectorCapacity"}
     },
     "WarmThroughput":{
       "type":"structure",

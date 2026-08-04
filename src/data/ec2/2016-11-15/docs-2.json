@@ -20,6 +20,7 @@
     "AssignPrivateIpAddresses": "<p>Assigns the specified secondary private IP addresses to the specified network interface.</p> <p>You can specify specific secondary IP addresses, or you can specify the number of secondary IP addresses to be automatically assigned from the subnet's CIDR block range. The number of secondary IP addresses that you can assign to an instance varies by instance type. For more information about Elastic IP addresses, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html\">Elastic IP Addresses</a> in the <i>Amazon EC2 User Guide</i>.</p> <p>When you move a secondary private IP address to another network interface, any Elastic IP address that is associated with the IP address is also moved.</p> <p>Remapping an IP address is an asynchronous operation. When you move an IP address from one network interface to another, check <code>network/interfaces/macs/mac/local-ipv4s</code> in the instance metadata to confirm that the remapping is complete.</p> <p>You must specify either the IP addresses or the IP address count in the request.</p> <p>You can optionally use Prefix Delegation on the network interface. You must specify either the IPv4 Prefix Delegation prefixes, or the IPv4 Prefix Delegation count. For information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-prefix-eni.html\"> Assigning prefixes to network interfaces</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "AssignPrivateNatGatewayAddress": "<p>Assigns private IPv4 addresses to a private NAT gateway. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-working-with.html\">Work with NAT gateways</a> in the <i>Amazon VPC User Guide</i>.</p>",
     "AssociateAddress": "<p>Associates an Elastic IP address, or carrier IP address (for instances that are in subnets in Wavelength Zones) with an instance or a network interface. Before you can use an Elastic IP address, you must allocate it to your account.</p> <p>If the Elastic IP address is already associated with a different instance, it is disassociated from that instance and associated with the specified instance. If you associate an Elastic IP address with an instance that has an existing Elastic IP address, the existing address is disassociated from the instance, but remains allocated to your account.</p> <p>[Subnets in Wavelength Zones] You can associate an IP address from the telecommunication carrier to the instance or network interface. </p> <p>You cannot associate an Elastic IP address with an interface in a different network border group.</p> <important> <p>This is an idempotent operation. If you perform the operation more than once, Amazon EC2 doesn't return an error, and you may be charged for each time the Elastic IP address is remapped to the same instance. For more information, see the <i>Elastic IP Addresses</i> section of <a href=\"http://aws.amazon.com/ec2/pricing/\">Amazon EC2 Pricing</a>.</p> </important>",
+    "AssociateApplicationStatusCheck": "<p>Associates an application status check with instances or <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html\">tags</a>. Once you create an association, health monitoring automatically begins for the specified instances or for instances that match the specified tags. The following rules apply:</p> <ul> <li> <p>You must specify either <code>TargetTagAssociations</code> or <code>InstanceIds</code>, but not both. Specifying both results in an <code>InvalidParameterCombination</code> error.</p> </li> <li> <p>The application status check must already exist and belong to your account.</p> </li> <li> <p>Tag keys must not be blank.</p> </li> <li> <p>Maximum 50 tag associations per application status check.</p> </li> <li> <p>Use <code>DisassociateApplicationStatusCheck</code> to remove associations.</p> </li> <li> <p>When you associate <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html\">tags</a>, the application status check automatically monitors all current and future instances that have the specified tags.</p> </li> </ul>",
     "AssociateCapacityReservationBillingOwner": "<p>Initiates a request to assign billing of the unused capacity of a shared Capacity Reservation to a consumer account that is consolidated under the same Amazon Web Services organizations payer account. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/assign-billing.html\">Billing assignment for shared Amazon EC2 Capacity Reservations</a>.</p>",
     "AssociateClientVpnTargetNetwork": "<p>Associates a target network with a Client VPN endpoint. A target network is a subnet in a VPC. You can associate multiple subnets from the same VPC with a Client VPN endpoint. You can associate only one subnet in each Availability Zone. We recommend that you associate at least two subnets to provide Availability Zone redundancy.</p> <p>If you specified a VPC when you created the Client VPN endpoint or if you have previous subnet associations, the specified subnet must be in the same VPC. To specify a subnet that's in a different VPC, you must first modify the Client VPN endpoint (<a>ModifyClientVpnEndpoint</a>) and change the VPC that's associated with it.</p>",
     "AssociateDhcpOptions": "<p>Associates a set of DHCP options (that you've previously created) with the specified VPC, or associates no DHCP options with the VPC.</p> <p>After you associate the options with the VPC, any existing instances and all new instances that you launch in that VPC use the options. You don't need to restart or relaunch the instances. They automatically pick up the changes within a few hours, depending on how frequently the instance renews its DHCP lease. You can explicitly renew the lease using the operating system on the instance.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/VPC_DHCP_Options.html\">DHCP option sets</a> in the <i>Amazon VPC User Guide</i>.</p>",
@@ -48,8 +49,8 @@
     "AuthorizeClientVpnIngress": "<p>Adds an ingress authorization rule to a Client VPN endpoint. Ingress authorization rules act as firewall rules that grant access to networks. You must configure ingress authorization rules to enable clients to access resources in Amazon Web Services or on-premises networks.</p>",
     "AuthorizeSecurityGroupEgress": "<p>Adds the specified outbound (egress) rules to a security group.</p> <p>An outbound rule permits instances to send traffic to the specified IPv4 or IPv6 address ranges, the IP address ranges specified by a prefix list, or the instances that are associated with a source security group. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/security-group-rules.html\">Security group rules</a>.</p> <p>You must specify exactly one of the following destinations: an IPv4 or IPv6 address range, a prefix list, or a security group. You must specify a protocol for each rule (for example, TCP). If the protocol is TCP or UDP, you must also specify a port or port range. If the protocol is ICMP or ICMPv6, you must also specify the ICMP type and code.</p> <p>Rule changes are propagated to instances associated with the security group as quickly as possible. However, a small delay might occur.</p> <p>For examples of rules that you can add to security groups for specific access scenarios, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-group-rules-reference.html\">Security group rules for different use cases</a> in the <i>Amazon EC2 User Guide</i>.</p> <p>For information about security group quotas, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html\">Amazon VPC quotas</a> in the <i>Amazon VPC User Guide</i>.</p>",
     "AuthorizeSecurityGroupIngress": "<p>Adds the specified inbound (ingress) rules to a security group.</p> <p>An inbound rule permits instances to receive traffic from the specified IPv4 or IPv6 address range, the IP address ranges that are specified by a prefix list, or the instances that are associated with a destination security group. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/security-group-rules.html\">Security group rules</a>.</p> <p>You must specify exactly one of the following sources: an IPv4 or IPv6 address range, a prefix list, or a security group. You must specify a protocol for each rule (for example, TCP). If the protocol is TCP or UDP, you must also specify a port or port range. If the protocol is ICMP or ICMPv6, you must also specify the ICMP/ICMPv6 type and code.</p> <p>Rule changes are propagated to instances associated with the security group as quickly as possible. However, a small delay might occur.</p> <p>For examples of rules that you can add to security groups for specific access scenarios, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-group-rules-reference.html\">Security group rules for different use cases</a> in the <i>Amazon EC2 User Guide</i>.</p> <p>For more information about security group quotas, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html\">Amazon VPC quotas</a> in the <i>Amazon VPC User Guide</i>.</p>",
-    "BundleInstance": "<p>Bundles an Amazon instance store-backed Windows instance.</p> <p>During bundling, only the root device volume (C:\\) is bundled. Data on other instance store volumes is not preserved.</p> <note> <p>This action is no longer supported. To create an AMI, use <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateImage.html\">CreateImage</a>. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/creating-an-ami-ebs.html\"> Create an Amazon EBS-backed AMI</a> in the <i>Amazon EC2 User Guide</i>.</p> </note>",
-    "CancelBundleTask": "<p>Cancels a bundling operation for an instance store-backed Windows instance.</p>",
+    "BundleInstance": "<p>Bundles an Amazon instance store-backed Windows instance.</p> <p>During bundling, only the root device volume (C:\\) is bundled. Data on other instance store volumes is not preserved.</p> <note> <p>BundleInstance is no longer supported. To create an AMI, use <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateImage.html\">CreateImage</a> instead. For more information about creating an Amazon EBS-backed AMI, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/creating-an-ami-ebs.html\"> Create an Amazon EBS-backed AMI</a> in the <i>Amazon EC2 User Guide</i>.</p> </note>",
+    "CancelBundleTask": "<p>Cancels a bundling operation for an instance store-backed Windows instance.</p> <note> <p>CancelBundleTask is no longer supported because <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_BundleInstance.html\">BundleInstance</a>, the operation it cancels, is no longer supported.</p> </note>",
     "CancelCapacityReservation": "<p>Cancels the specified Capacity Reservation, releases the reserved capacity, and changes the Capacity Reservation's state to <code>cancelled</code>.</p> <p>You can cancel a Capacity Reservation that is in the following states:</p> <ul> <li> <p> <code>assessing</code> </p> </li> <li> <p> <code>scheduled</code> — requires a cancellation quote. Use <code>CreateCapacityReservationCancellationQuote</code> to generate a quote, then pass the quote ID with <code>ApplyCancellationCharges</code> set to <code>commitment-wind-down</code>. The cancellation charge depends on how close the reservation is to its start date.</p> </li> <li> <p> <code>active</code> and there is no commitment duration or the commitment duration has elapsed.</p> </li> <li> <p> <code>active</code> during the commitment duration — requires a cancellation quote. Use <code>CreateCapacityReservationCancellationQuote</code> to generate a quote, then pass the quote ID with <code>ApplyCancellationCharges</code> set to <code>commitment-wind-down</code>. The Capacity Reservation transitions to <code>cancelling</code> while charges are applied.</p> </li> <li> <p> <code>delayed</code> — the commitment duration is waived, so no cancellation charge applies.</p> </li> </ul> <note> <p>You can't modify or cancel a Capacity Block. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-capacity-blocks.html\">Capacity Blocks for ML</a>.</p> </note> <p>Instances running in the reserved capacity continue running until you stop them. Stopped instances that target the Capacity Reservation can no longer launch. Modify these instances to either target a different Capacity Reservation, launch On-Demand Instance capacity, or run in any open Capacity Reservation that has matching attributes and sufficient capacity.</p>",
     "CancelCapacityReservationFleets": "<p>Cancels one or more Capacity Reservation Fleets. When you cancel a Capacity Reservation Fleet, the following happens:</p> <ul> <li> <p>The Capacity Reservation Fleet's status changes to <code>cancelled</code>.</p> </li> <li> <p>The individual Capacity Reservations in the Fleet are cancelled. Instances running in the Capacity Reservations at the time of cancelling the Fleet continue to run in shared capacity.</p> </li> <li> <p>The Fleet stops creating new Capacity Reservations.</p> </li> </ul>",
     "CancelConversionTask": "<p>Cancels an active conversion task. The task can be the import of an instance or volume. The action removes all artifacts of the conversion, including a partially uploaded volume or instance. If the conversion is complete or is in the process of transferring the final disk image, the command fails and returns an exception.</p>",
@@ -65,6 +66,7 @@
     "CopyImage": "<p>Initiates an AMI copy operation. You must specify the source AMI ID and both the source and destination locations. The copy operation must be initiated in the destination Region.</p> <p class=\"title\"> <b>CopyImage supports the following source to destination copies:</b> </p> <ul> <li> <p>Region to Region</p> </li> <li> <p>Region to Outpost</p> </li> <li> <p>Parent Region to Local Zone</p> </li> <li> <p>Local Zone to parent Region</p> </li> <li> <p>Between Local Zones with the same parent Region (only supported for certain Local Zones)</p> </li> </ul> <p class=\"title\"> <b>CopyImage does not support the following source to destination copies:</b> </p> <ul> <li> <p>Local Zone to non-parent Regions</p> </li> <li> <p>Between Local Zones with different parent Regions</p> </li> <li> <p>Local Zone to Outpost</p> </li> <li> <p>Outpost to Local Zone</p> </li> <li> <p>Outpost to Region</p> </li> <li> <p>Between Outposts</p> </li> <li> <p>Within same Outpost</p> </li> <li> <p>Cross-partition copies (use <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateStoreImageTask.html\">CreateStoreImageTask</a> instead)</p> </li> </ul> <p class=\"title\"> <b>Destination specification</b> </p> <ul> <li> <p>Region to Region: The destination Region is the Region in which you initiate the copy operation.</p> </li> <li> <p>Region to Outpost: Specify the destination using the <code>DestinationOutpostArn</code> parameter (the ARN of the Outpost)</p> </li> <li> <p>Region to Local Zone, and Local Zone to Local Zone copies: Specify the destination using the <code>DestinationAvailabilityZone</code> parameter (the name of the destination Local Zone) or <code>DestinationAvailabilityZoneId</code> parameter (the ID of the destination Local Zone).</p> </li> </ul> <p class=\"title\"> <b>Snapshot encryption</b> </p> <ul> <li> <p>Region to Outpost: Backing snapshots copied to an Outpost are encrypted by default using the default encryption key for the Region or the key that you specify. Outposts do not support unencrypted snapshots.</p> </li> <li> <p>Region to Local Zone, and Local Zone to Local Zone: Not all Local Zones require encrypted snapshots. In Local Zones that require encrypted snapshots, backing snapshots are automatically encrypted during copy. In Local Zones where encryption is not required, snapshots retain their original encryption state (encrypted or unencrypted) by default.</p> </li> </ul> <p>For more information, including the required permissions for copying an AMI, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/CopyingAMIs.html\">Copy an Amazon EC2 AMI</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "CopySnapshot": "<p>Creates an exact copy of an Amazon EBS snapshot.</p> <p>The location of the source snapshot determines whether you can copy it or not, and the allowed destinations for the snapshot copy.</p> <ul> <li> <p>If the source snapshot is in a Region, you can copy it within that Region, to another Region, to an Outpost associated with that Region, or to a Local Zone in that Region.</p> </li> <li> <p>If the source snapshot is in a Local Zone, you can copy it within that Local Zone, to another Local Zone in the same zone group, or to the parent Region of the Local Zone.</p> </li> <li> <p>If the source snapshot is on an Outpost, you can't copy it.</p> </li> </ul> <p>When copying snapshots to a Region, the encryption outcome for the snapshot copy depends on the Amazon EBS encryption by default setting for the destination Region, the encryption status of the source snapshot, and the encryption parameters you specify in the request. For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/ebs-copy-snapshot.html#creating-encrypted-snapshots\"> Encryption and snapshot copying</a>.</p> <p>Snapshots copied to an Outpost must be encrypted. Unencrypted snapshots are not supported on Outposts. For more information, <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/snapshots-outposts.html#considerations\"> Amazon EBS local snapshots on Outposts</a>.</p> <note> <p>Snapshots copies have an arbitrary source volume ID. Do not use this volume ID for any purpose.</p> </note> <p>For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/ebs-copy-snapshot.html\">Copy an Amazon EBS snapshot</a> in the <i>Amazon EBS User Guide</i>.</p>",
     "CopyVolumes": "<p>Creates a crash-consistent, point-in-time copy of an existing Amazon EBS volume within the same Availability Zone. The volume copy can be attached to an Amazon EC2 instance once it reaches the <code>available</code> state. For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/ebs-copying-volume.html\">Copy an Amazon EBS volume</a>.</p>",
+    "CreateApplicationStatusCheck": "<p>Creates an application status check for monitoring the health of applications running on your instances. You can configure the protocol, port, path, and thresholds for the health check. The following rules apply:</p> <ul> <li> <p>You can create a maximum of 50 application status checks per account.</p> </li> <li> <p>Health checks do not start until you associate the check with instances or tags using <code>AssociateApplicationStatusCheck</code>.</p> </li> <li> <p>The <code>Timeout</code> value must be less than the <code>Interval</code> value.</p> </li> <li> <p>The <code>Path</code> must start with a forward slash (<code>/</code>). Default: <code>/</code>.</p> </li> <li> <p>If you do not specify <code>Aggregation</code>, it defaults to <code>included</code>, which means the check contributes to the instance-level application status.</p> </li> <li> <p>Default values: <code>Interval</code> is 60 seconds, <code>Timeout</code> is 6 seconds, <code>FailureThreshold</code> is 2, <code>SuccessThreshold</code> is 5, <code>StatusCodeMatcher</code> is <code>200</code>, <code>InitializationGracePeriodSeconds</code> is 300 seconds.</p> </li> <li> <p>You can tag the application status check during creation. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html\">Tag your Amazon EC2 resources</a>.</p> </li> </ul>",
     "CreateCapacityManagerDataExport": "<p> Creates a new data export configuration for EC2 Capacity Manager. This allows you to automatically export capacity usage data to an S3 bucket on a scheduled basis. The exported data includes metrics for On-Demand, Spot, and Capacity Reservations usage across your organization. </p>",
     "CreateCapacityReservation": "<p>Creates a new Capacity Reservation with the specified attributes. Capacity Reservations enable you to reserve capacity for your Amazon EC2 instances in a specific Availability Zone for any duration.</p> <p>You can create a Capacity Reservation at any time, and you can choose when it starts. You can create a Capacity Reservation for immediate use or you can request a Capacity Reservation for a future date.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-capacity-reservations.html\"> Reserve compute capacity with On-Demand Capacity Reservations</a> in the <i>Amazon EC2 User Guide</i>.</p> <p>Your request to create a Capacity Reservation could fail if:</p> <ul> <li> <p>Amazon EC2 does not have sufficient capacity. In this case, try again at a later time, try in a different Availability Zone, or request a smaller Capacity Reservation. If your workload is flexible across instance types and sizes, try with different instance attributes.</p> </li> <li> <p>The requested quantity exceeds your On-Demand Instance quota. In this case, increase your On-Demand Instance quota for the requested instance type and try again. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-resource-limits.html\"> Amazon EC2 Service Quotas</a> in the <i>Amazon EC2 User Guide</i>.</p> </li> </ul>",
     "CreateCapacityReservationBySplitting": "<p> Create a new Capacity Reservation by splitting the capacity of the source Capacity Reservation. The new Capacity Reservation will have the same attributes as the source Capacity Reservation except for tags. The source Capacity Reservation must be <code>active</code> and owned by your Amazon Web Services account. </p>",
@@ -171,6 +173,7 @@
     "CreateVpnConnection": "<p>Creates a VPN connection between an existing virtual private gateway or transit gateway and a customer gateway. The supported connection type is <code>ipsec.1</code>.</p> <p>The response includes information that you need to give to your network administrator to configure your customer gateway.</p> <important> <p>We strongly recommend that you use HTTPS when calling this operation because the response contains sensitive cryptographic information for configuring your customer gateway device.</p> </important> <p>If you decide to shut down your VPN connection for any reason and later create a new VPN connection, you must reconfigure your customer gateway with the new information returned from this call.</p> <p>This is an idempotent operation. If you perform the operation more than once, Amazon EC2 doesn't return an error.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html\">Amazon Web Services Site-to-Site VPN</a> in the <i>Amazon Web Services Site-to-Site VPN User Guide</i>.</p>",
     "CreateVpnConnectionRoute": "<p>Creates a static route associated with a VPN connection between an existing virtual private gateway and a VPN customer gateway. The static route allows traffic to be routed from the virtual private gateway to the VPN customer gateway.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html\">Amazon Web Services Site-to-Site VPN</a> in the <i>Amazon Web Services Site-to-Site VPN User Guide</i>.</p>",
     "CreateVpnGateway": "<p>Creates a virtual private gateway. A virtual private gateway is the endpoint on the VPC side of your VPN connection. You can create a virtual private gateway before creating the VPC itself.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html\">Amazon Web Services Site-to-Site VPN</a> in the <i>Amazon Web Services Site-to-Site VPN User Guide</i>.</p>",
+    "DeleteApplicationStatusCheck": "<p>Deletes an application status check. The following rules apply:</p> <ul> <li> <p>Deleting a check automatically removes all of its associations.</p> </li> <li> <p>Use <code>DescribeApplicationStatusChecks</code> to view existing checks before deleting.</p> </li> </ul>",
     "DeleteCapacityManagerDataExport": "<p> Deletes an existing Capacity Manager data export configuration. This stops future scheduled exports but does not delete previously exported files from S3. </p>",
     "DeleteCarrierGateway": "<p>Deletes a carrier gateway.</p> <important> <p>If you do not delete the route that contains the carrier gateway as the Target, the route is a blackhole route. For information about how to delete a route, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DeleteRoute.html\">DeleteRoute</a>.</p> </important>",
     "DeleteClientVpnEndpoint": "<p>Deletes the specified Client VPN endpoint. You must disassociate all target networks before you can delete a Client VPN endpoint.</p>",
@@ -279,6 +282,9 @@
     "DescribeAddresses": "<p>Describes the specified Elastic IP addresses or all of your Elastic IP addresses.</p>",
     "DescribeAddressesAttribute": "<p>Describes the attributes of the specified Elastic IP addresses. For requirements, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html#Using_Elastic_Addressing_Reverse_DNS\">Using reverse DNS for email applications</a>.</p>",
     "DescribeAggregateIdFormat": "<p>Describes the longer ID format settings for all resource types in a specific Region. This request is useful for performing a quick audit to determine whether a specific Region is fully opted in for longer IDs (17-character IDs).</p> <p>This request only returns information about resource types that support longer IDs.</p> <p>The following resource types support longer IDs: <code>bundle</code> | <code>conversion-task</code> | <code>customer-gateway</code> | <code>dhcp-options</code> | <code>elastic-ip-allocation</code> | <code>elastic-ip-association</code> | <code>export-task</code> | <code>flow-log</code> | <code>image</code> | <code>import-task</code> | <code>instance</code> | <code>internet-gateway</code> | <code>network-acl</code> | <code>network-acl-association</code> | <code>network-interface</code> | <code>network-interface-attachment</code> | <code>prefix-list</code> | <code>reservation</code> | <code>route-table</code> | <code>route-table-association</code> | <code>security-group</code> | <code>snapshot</code> | <code>subnet</code> | <code>subnet-cidr-block-association</code> | <code>volume</code> | <code>vpc</code> | <code>vpc-cidr-block-association</code> | <code>vpc-endpoint</code> | <code>vpc-peering-connection</code> | <code>vpn-connection</code> | <code>vpn-gateway</code>.</p>",
+    "DescribeApplicationStatus": "<p>Describes the application status for the specified instances. Returns the aggregated application health status for each instance. The following rules apply:</p> <ul> <li> <p>The instance-level status is derived from all application status checks with the aggregation setting set to <code>included</code>.</p> </li> <li> <p>Use <code>DescribeApplicationStatusChecks</code> to view the configuration of individual checks.</p> </li> <li> <p>Use <code>EnableApplicationStatusCheckSuppression</code> to temporarily suppress health check results from affecting the instance-level status.</p> </li> </ul>",
+    "DescribeApplicationStatusCheckAssociations": "<p>Describes the associations for one or more application status checks. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitoring-application-status-checks.html\">Application status checks</a>. To avoid timeouts and retrieve complete results, use the pagination parameters.</p> <note> <p>The order of the elements in the response, including those within nested structures, might vary.</p> </note>",
+    "DescribeApplicationStatusChecks": "<p>Describes one or more application status checks. Returns configuration details for your application status checks, including protocol, port, path, thresholds, and associations. The following rules apply:</p> <ul> <li> <p>If you do not specify any application status check IDs, all checks in your account are returned.</p> </li> <li> <p>Use <code>DescribeApplicationStatus</code> to see the actual health status of instances.</p> </li> </ul>",
     "DescribeAvailabilityZones": "<p>Describes the Availability Zones, Local Zones, and Wavelength Zones that are available to you.</p> <p>For more information about Availability Zones, Local Zones, and Wavelength Zones, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html\">Regions and zones</a> in the <i>Amazon EC2 User Guide</i>.</p> <note> <p>The order of the elements in the response, including those within nested structures, might vary. Applications should not assume the elements appear in a particular order.</p> </note>",
     "DescribeAwsNetworkPerformanceMetricSubscriptions": "<p>Describes the current Infrastructure Performance metric subscriptions.</p>",
     "DescribeBundleTasks": "<p>Describes the specified bundle tasks or all of your bundle tasks.</p> <note> <p>Completed bundle tasks are listed for only a limited time. If your bundle task is no longer in the list, you can still register an AMI from it. Just use <code>RegisterImage</code> with the Amazon S3 bucket name and image manifest name you provided to the bundle task.</p> </note> <note> <p>The order of the elements in the response, including those within nested structures, might vary. Applications should not assume the elements appear in a particular order.</p> </note>",
@@ -339,7 +345,7 @@
     "DescribeInstanceImageMetadata": "<p>Describes the AMI that was used to launch an instance, even if the AMI is deprecated, deregistered, made private (no longer public or shared with your account), or not allowed.</p> <p>If you specify instance IDs, the output includes information for only the specified instances. If you specify filters, the output includes information for only those instances that meet the filter criteria. If you do not specify instance IDs or filters, the output includes information for all instances, which can affect performance.</p> <p>If you specify an instance ID that is not valid, an instance that doesn't exist, or an instance that you do not own, an error (<code>InvalidInstanceID.NotFound</code>) is returned.</p> <p>Recently terminated instances might appear in the returned results. This interval is usually less than one hour.</p> <p>In the rare case where an Availability Zone is experiencing a service disruption and you specify instance IDs that are in the affected Availability Zone, or do not specify any instance IDs at all, the call fails. If you specify only instance IDs that are in an unaffected Availability Zone, the call works normally.</p> <note> <p>The order of the elements in the response, including those within nested structures, might vary. Applications should not assume the elements appear in a particular order.</p> </note>",
     "DescribeInstanceSqlHaHistoryStates": "<p>Describes the historical SQL Server High Availability states for Amazon EC2 instances that are enabled for Amazon EC2 High Availability for SQL Server monitoring.</p>",
     "DescribeInstanceSqlHaStates": "<p>Describes the SQL Server High Availability states for Amazon EC2 instances that are enabled for Amazon EC2 High Availability for SQL Server monitoring.</p>",
-    "DescribeInstanceStatus": "<p>Describes the status of the specified instances or all of your instances. By default, only running instances are described, unless you specifically indicate to return the status of all instances.</p> <p>Instance status includes the following components:</p> <ul> <li> <p> <b>Status checks</b> - Amazon EC2 performs status checks on running EC2 instances to identify hardware and software issues. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitoring-system-instance-status-check.html\">Status checks for your instances</a> and <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstances.html\">Troubleshoot instances with failed status checks</a> in the <i>Amazon EC2 User Guide</i>.</p> </li> <li> <p> <b>Scheduled events</b> - Amazon EC2 can schedule events (such as reboot, stop, or terminate) for your instances related to hardware issues, software updates, or system maintenance. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitoring-instances-status-check_sched.html\">Scheduled events for your instances</a> in the <i>Amazon EC2 User Guide</i>.</p> </li> <li> <p> <b>Instance state</b> - You can manage your instances from the moment you launch them through their termination. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-lifecycle.html\">Instance lifecycle</a> in the <i>Amazon EC2 User Guide</i>.</p> </li> </ul> <p>The Amazon EC2 API follows an eventual consistency model. This means that the result of an API command you run that creates or modifies resources might not be immediately available to all subsequent commands you run. For guidance on how to manage eventual consistency, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/eventual-consistency.html\">Eventual consistency in the Amazon EC2 API</a> in the <i>Amazon EC2 Developer Guide</i>.</p> <note> <p>The order of the elements in the response, including those within nested structures, might vary. Applications should not assume the elements appear in a particular order.</p> </note>",
+    "DescribeInstanceStatus": "<p>Describes the status of the specified instances or all of your instances. By default, only running instances are described, unless you specifically indicate to return the status of all instances.</p> <p>Instance status includes the following components:</p> <ul> <li> <p> <b>Status checks</b> - Amazon EC2 performs status checks on running EC2 instances to identify hardware and software issues. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitoring-system-instance-status-check.html\">Status checks for your instances</a> and <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstances.html\">Troubleshoot instances with failed status checks</a> in the <i>Amazon EC2 User Guide</i>.</p> </li> <li> <p> <b>Application status checks</b> - Amazon EC2 reports application-level health status for instances, indicating whether applications running on the instance are functioning properly.</p> </li> <li> <p> <b>Scheduled events</b> - Amazon EC2 can schedule events (such as reboot, stop, or terminate) for your instances related to hardware issues, software updates, or system maintenance. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitoring-instances-status-check_sched.html\">Scheduled events for your instances</a> in the <i>Amazon EC2 User Guide</i>.</p> </li> <li> <p> <b>Instance state</b> - You can manage your instances from the moment you launch them through their termination. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-lifecycle.html\">Instance lifecycle</a> in the <i>Amazon EC2 User Guide</i>.</p> </li> </ul> <p>The Amazon EC2 API follows an eventual consistency model. This means that the result of an API command you run that creates or modifies resources might not be immediately available to all subsequent commands you run. For guidance on how to manage eventual consistency, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/eventual-consistency.html\">Eventual consistency in the Amazon EC2 API</a> in the <i>Amazon EC2 Developer Guide</i>.</p> <note> <p>The order of the elements in the response, including those within nested structures, might vary. Applications should not assume the elements appear in a particular order.</p> </note>",
     "DescribeInstanceTopology": "<p>Describes a tree-based hierarchy that represents the physical host placement of your EC2 instances within an Availability Zone or Local Zone. You can use this information to determine the relative proximity of your EC2 instances within the Amazon Web Services network to support your tightly coupled workloads.</p> <p>Instance topology is supported for specific instance types only. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-topology-prerequisites.html\">Prerequisites for Amazon EC2 instance topology</a> in the <i>Amazon EC2 User Guide</i>.</p> <note> <p>The Amazon EC2 API follows an eventual consistency model due to the distributed nature of the system supporting it. As a result, when you call the DescribeInstanceTopology API command immediately after launching instances, the response might return a <code>null</code> value for <code>capacityBlockId</code> because the data might not have fully propagated across all subsystems. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/eventual-consistency.html\">Eventual consistency in the Amazon EC2 API</a> in the <i>Amazon EC2 Developer Guide</i>.</p> </note> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-topology.html\">Amazon EC2 topology</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "DescribeInstanceTypeOfferings": "<p>Lists the instance types that are offered for the specified location. If no location is specified, the default is to list the instance types that are offered in the current Region.</p>",
     "DescribeInstanceTypes": "<p>Describes the specified instance types. By default, all instance types for the current Region are described. Alternatively, you can filter the results. To include instance types that are not supported in the current Region, set <code>IncludeUnsupportedInRegion</code> to <code>true</code>.</p>",
@@ -470,6 +476,7 @@
     "DetachVpnGateway": "<p>Detaches a virtual private gateway from a VPC. You do this if you're planning to turn off the VPC and not use it anymore. You can confirm a virtual private gateway has been completely detached from a VPC by describing the virtual private gateway (any attachments to the virtual private gateway are also described).</p> <p>You must wait for the attachment's state to switch to <code>detached</code> before you can delete the VPC or attach a different VPC to the virtual private gateway.</p>",
     "DisableAddressTransfer": "<p>Disables Elastic IP address transfer. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/vpc-eips.html#transfer-EIPs-intro\">Transfer Elastic IP addresses</a> in the <i>Amazon VPC User Guide</i>.</p>",
     "DisableAllowedImagesSettings": "<p>Disables Allowed AMIs for your account in the specified Amazon Web Services Region. When set to <code>disabled</code>, the image criteria in your Allowed AMIs settings do not apply, and no restrictions are placed on AMI discoverability or usage. Users in your account can launch instances using any public AMI or AMI shared with your account.</p> <note> <p>The Allowed AMIs feature does not restrict the AMIs owned by your account. Regardless of the criteria you set, the AMIs created by your account will always be discoverable and usable by users in your account.</p> </note> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-allowed-amis.html\">Control the discovery and use of AMIs in Amazon EC2 with Allowed AMIs</a> in <i>Amazon EC2 User Guide</i>.</p>",
+    "DisableApplicationStatusCheckSuppression": "<p>Disables suppression of application status checks for the specified instances. After suppression is disabled, health check results resume affecting the instance-level application status. You can specify a maximum of 100 instance IDs per request.</p>",
     "DisableAwsNetworkPerformanceMetricSubscription": "<p>Disables Infrastructure Performance metric subscriptions.</p>",
     "DisableCapacityManager": "<p> Disables EC2 Capacity Manager for your account. This stops data ingestion and removes access to capacity analytics and optimization recommendations. Previously collected data is retained but no new data will be processed. </p>",
     "DisableEbsEncryptionByDefault": "<p>Disables EBS encryption by default for your account in the current Region.</p> <p>After you disable encryption by default, you can still create encrypted volumes by enabling encryption when you create each volume.</p> <p>Disabling encryption by default does not change the encryption status of your existing volumes.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/ebs-encryption.html\">Amazon EBS encryption</a> in the <i>Amazon EBS User Guide</i>.</p>",
@@ -490,6 +497,7 @@
     "DisableVpcClassicLink": "<note> <p>This action is deprecated.</p> </note> <p>Disables ClassicLink for a VPC. You cannot disable ClassicLink for a VPC that has EC2-Classic instances linked to it.</p>",
     "DisableVpcClassicLinkDnsSupport": "<note> <p>This action is deprecated.</p> </note> <p>Disables ClassicLink DNS support for a VPC. If disabled, DNS hostnames resolve to public IP addresses when addressed between a linked EC2-Classic instance and instances in the VPC to which it's linked.</p> <p>You must specify a VPC ID in the request.</p>",
     "DisassociateAddress": "<p>Disassociates an Elastic IP address from the instance or network interface it's associated with.</p> <p>This is an idempotent operation. If you perform the operation more than once, Amazon EC2 doesn't return an error.</p> <p>An address cannot be disassociated if the all of the following conditions are met:</p> <ul> <li> <p>Network interface has a <code>publicDualStackDnsName</code> publicDnsName</p> </li> <li> <p>Public IPv4 address is the primary public IPv4 address</p> </li> <li> <p>Network interface only has one remaining public IPv4 address</p> </li> </ul>",
+    "DisassociateApplicationStatusCheck": "<p>Disassociates an application status check from instances or <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html\">tags</a>. After disassociation, health monitoring stops for the affected instances. The following rules apply:</p> <ul> <li> <p>You must specify either <code>TargetTagAssociations</code> or <code>InstanceIds</code>, but not both. Specifying both results in an <code>InvalidParameterCombination</code> error.</p> </li> <li> <p>The application status check must already exist and belong to your account.</p> </li> <li> <p>Tag keys must not be blank.</p> </li> </ul>",
     "DisassociateCapacityReservationBillingOwner": "<p>Cancels a pending request to assign billing of the unused capacity of a Capacity Reservation to a consumer account, or revokes a request that has already been accepted. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/assign-billing.html\">Billing assignment for shared Amazon EC2 Capacity Reservations</a>.</p>",
     "DisassociateClientVpnTargetNetwork": "<p>Disassociates a target network from the specified Client VPN endpoint. When you disassociate the last target network from a Client VPN, the following happens:</p> <ul> <li> <p>The route that was automatically added for the VPC is deleted</p> </li> <li> <p>All active client connections are terminated</p> </li> <li> <p>New client connections are disallowed</p> </li> <li> <p>The Client VPN endpoint's status changes to <code>pending-associate</code> </p> </li> </ul>",
     "DisassociateEnclaveCertificateIamRole": "<p>Disassociates an IAM role from an Certificate Manager (ACM) certificate. Disassociating an IAM role from an ACM certificate removes the Amazon S3 object that contains the certificate, certificate chain, and encrypted private key from the Amazon S3 bucket. It also revokes the IAM role's permission to use the KMS key used to encrypt the private key. This effectively revokes the role's permission to use the certificate.</p>",
@@ -509,6 +517,7 @@
     "DisassociateVpcCidrBlock": "<p>Disassociates a CIDR block from a VPC. To disassociate the CIDR block, you must specify its association ID. You can get the association ID by using <a>DescribeVpcs</a>. You must detach or delete all gateways and resources that are associated with the CIDR block before you can disassociate it. </p> <p>You cannot disassociate the CIDR block with which you originally created the VPC (the primary CIDR block).</p>",
     "EnableAddressTransfer": "<p>Enables Elastic IP address transfer. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/vpc-eips.html#transfer-EIPs-intro\">Transfer Elastic IP addresses</a> in the <i>Amazon VPC User Guide</i>.</p>",
     "EnableAllowedImagesSettings": "<p>Enables Allowed AMIs for your account in the specified Amazon Web Services Region. Two values are accepted:</p> <ul> <li> <p> <code>enabled</code>: The image criteria in your Allowed AMIs settings are applied. As a result, only AMIs matching these criteria are discoverable and can be used by your account to launch instances.</p> </li> <li> <p> <code>audit-mode</code>: The image criteria in your Allowed AMIs settings are not applied. No restrictions are placed on AMI discoverability or usage. Users in your account can launch instances using any public AMI or AMI shared with your account.</p> <p>The purpose of <code>audit-mode</code> is to indicate which AMIs will be affected when Allowed AMIs is <code>enabled</code>. In <code>audit-mode</code>, each AMI displays either <code>\"ImageAllowed\": true</code> or <code>\"ImageAllowed\": false</code> to indicate whether the AMI will be discoverable and available to users in the account when Allowed AMIs is enabled.</p> </li> </ul> <note> <p>The Allowed AMIs feature does not restrict the AMIs owned by your account. Regardless of the criteria you set, the AMIs created by your account will always be discoverable and usable by users in your account.</p> </note> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-allowed-amis.html\">Control the discovery and use of AMIs in Amazon EC2 with Allowed AMIs</a> in <i>Amazon EC2 User Guide</i>.</p>",
+    "EnableApplicationStatusCheckSuppression": "<p>Suppresses application status checks for the specified instances. While suppressed, health checks continue to run but do not affect the instance-level application status. The following rules apply:</p> <ul> <li> <p>Maximum 100 instance IDs per request.</p> </li> <li> <p>Use <code>DisableApplicationStatusCheckSuppression</code> to resume normal health check reporting.</p> </li> <li> <p>If you do not specify <code>DurationSeconds</code>, suppression continues indefinitely until you call <code>DisableApplicationStatusCheckSuppression</code>.</p> </li> </ul>",
     "EnableAwsNetworkPerformanceMetricSubscription": "<p>Enables Infrastructure Performance subscriptions.</p>",
     "EnableCapacityManager": "<p> Enables EC2 Capacity Manager for your account. This starts data ingestion for your EC2 capacity usage across On-Demand, Spot, and Capacity Reservations. Initial data processing may take several hours to complete. </p>",
     "EnableEbsEncryptionByDefault": "<p>Enables EBS encryption by default for your account in the current Region.</p> <p>After you enable encryption by default, the EBS volumes that you create are always encrypted, either using the default KMS key or the KMS key that you specified when you created each volume. For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/ebs-encryption.html\">Amazon EBS encryption</a> in the <i>Amazon EBS User Guide</i>.</p> <p>Enabling encryption by default has no effect on the encryption status of your existing volumes.</p> <p>After you enable encryption by default, you can no longer launch instances using instance types that do not support encryption. For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/ebs-encryption-requirements.html#ebs-encryption_supported_instances\">Supported instance types</a>.</p>",
@@ -617,6 +626,7 @@
     "LockSnapshot": "<p>Locks an Amazon EBS snapshot in either <i>governance</i> or <i>compliance</i> mode to protect it against accidental or malicious deletions for a specific duration. A locked snapshot can't be deleted.</p> <p>You can also use this action to modify the lock settings for a snapshot that is already locked. The allowed modifications depend on the lock mode and lock state:</p> <ul> <li> <p>If the snapshot is locked in governance mode, you can modify the lock mode and the lock duration or lock expiration date.</p> </li> <li> <p>If the snapshot is locked in compliance mode and it is in the cooling-off period, you can modify the lock mode and the lock duration or lock expiration date.</p> </li> <li> <p>If the snapshot is locked in compliance mode and the cooling-off period has lapsed, you can only increase the lock duration or extend the lock expiration date.</p> </li> </ul>",
     "ModifyAccountVpcEncryptionControl": "<p>Modifies the account-level VPC Encryption Control configuration. This sets the encryption control mode and resource exclusions that apply to the VPCs in your account. VPC Encryption Control enables you to enforce encryption for all data in transit within and between VPCs to meet compliance requirements.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/vpc-encryption-controls.html\">Enforce VPC encryption in transit</a> in the <i>Amazon VPC User Guide</i>.</p>",
     "ModifyAddressAttribute": "<p>Modifies an attribute of the specified Elastic IP address. For requirements, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html#Using_Elastic_Addressing_Reverse_DNS\">Using reverse DNS for email applications</a>.</p>",
+    "ModifyApplicationStatusCheck": "<p>Modifies an existing application status check. You can update the protocol, port, path, thresholds, and other configuration settings. The following rules apply:</p> <ul> <li> <p>The application status check must exist and belong to your account.</p> </li> <li> <p>Changes take effect on the next health check interval.</p> </li> </ul>",
     "ModifyAvailabilityZoneGroup": "<p>Changes the opt-in status of the specified zone group for your account.</p>",
     "ModifyCapacityReservation": "<p>Modifies a Capacity Reservation's capacity, instance eligibility, and the conditions under which it is to be released. You can't modify a Capacity Reservation's instance type, EBS optimization, platform, instance store settings, Availability Zone, or tenancy. If you need to modify any of these attributes, we recommend that you cancel the Capacity Reservation, and then create a new one with the required attributes. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/capacity-reservations-modify.html\"> Modify an active Capacity Reservation</a>.</p> <p>The allowed modifications depend on the state of the Capacity Reservation:</p> <ul> <li> <p> <code>assessing</code> or <code>scheduled</code> state - You can modify the tags only.</p> </li> <li> <p> <code>pending</code> state - You can't modify the Capacity Reservation in any way.</p> </li> <li> <p> <code>active</code> state but still within the commitment duration - You can't decrease the instance count or set an end date that is within the commitment duration. All other modifications are allowed.</p> </li> <li> <p> <code>active</code> state with no commitment duration or elapsed commitment duration - All modifications are allowed.</p> </li> <li> <p> <code>expired</code>, <code>cancelled</code>, <code>unsupported</code>, or <code>failed</code> state - You can't modify the Capacity Reservation in any way.</p> </li> </ul>",
     "ModifyCapacityReservationFleet": "<p>Modifies a Capacity Reservation Fleet.</p> <p>When you modify the total target capacity of a Capacity Reservation Fleet, the Fleet automatically creates new Capacity Reservations, or modifies or cancels existing Capacity Reservations in the Fleet to meet the new total target capacity. When you modify the end date for the Fleet, the end dates for all of the individual Capacity Reservations in the Fleet are updated accordingly.</p>",
@@ -701,7 +711,7 @@
     "MoveAddressToVpc": "<note> <p>This action is deprecated.</p> </note> <p>Moves an Elastic IP address from the EC2-Classic platform to the EC2-VPC platform. The Elastic IP address must be allocated to your account for more than 24 hours, and it must not be associated with an instance. After the Elastic IP address is moved, it is no longer available for use in the EC2-Classic platform. You cannot move an Elastic IP address that was originally allocated for use in the EC2-VPC platform to the EC2-Classic platform.</p>",
     "MoveByoipCidrToIpam": "<p>Move a BYOIPv4 CIDR to IPAM from a public IPv4 pool.</p> <p>If you already have a BYOIPv4 CIDR with Amazon Web Services, you can move the CIDR to IPAM from a public IPv4 pool. You cannot move an IPv6 CIDR to IPAM. If you are bringing a new IP address to Amazon Web Services for the first time, complete the steps in <a href=\"https://docs.aws.amazon.com/vpc/latest/ipam/tutorials-byoip-ipam.html\">Tutorial: BYOIP address CIDRs to IPAM</a>.</p>",
     "MoveCapacityReservationInstances": "<p>Move available capacity from a source Capacity Reservation to a destination Capacity Reservation. The source Capacity Reservation and the destination Capacity Reservation must be <code>active</code>, owned by your Amazon Web Services account, and share the following: </p> <ul> <li> <p>Instance type</p> </li> <li> <p>Platform</p> </li> <li> <p>Availability Zone</p> </li> <li> <p>Tenancy</p> </li> <li> <p>Placement group</p> </li> <li> <p>Capacity Reservation end time - <code>At specific time</code> or <code>Manually</code>.</p> </li> </ul>",
-    "ProvisionByoipCidr": "<p>Provisions an IPv4 or IPv6 address range for use with your Amazon Web Services resources through bring your own IP addresses (BYOIP) and creates a corresponding address pool. After the address range is provisioned, it is ready to be advertised.</p> <p>Amazon Web Services verifies that you own the address range and are authorized to advertise it. You must ensure that the address range is registered to you and that you created an RPKI ROA to authorize Amazon ASNs 16509 and 14618 to advertise the address range. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-byoip.html\">Bring your own IP addresses (BYOIP)</a> in the <i>Amazon EC2 User Guide</i>.</p> <p>Provisioning an address range is an asynchronous operation, so the call returns immediately, but the address range is not ready to use until its status changes from <code>pending-provision</code> to <code>provisioned</code>. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/byoip-onboard.html\">Onboard your address range</a>.</p>",
+    "ProvisionByoipCidr": "<p>Provisions an IPv4 or IPv6 address range for use with your Amazon Web Services resources through bring your own IP addresses (BYOIP) and creates a corresponding address pool. After the address range is provisioned, it is ready to be advertised.</p> <p>Amazon Web Services verifies that you own the address range and are authorized to advertise it. You must ensure that the address range is registered to you and that you created an RPKI ROA to authorize Amazon ASNs 16509 and 14618 to advertise the address range. For the Amazon Web Services GovCloud (US) Regions, authorize only ASN 8987. For the Amazon Web Services European Sovereign Cloud, authorize ASNs 16509 and 214101. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-byoip.html\">Bring your own IP addresses (BYOIP)</a> in the <i>Amazon EC2 User Guide</i>.</p> <p>Provisioning an address range is an asynchronous operation, so the call returns immediately, but the address range is not ready to use until its status changes from <code>pending-provision</code> to <code>provisioned</code>. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/byoip-onboard.html\">Onboard your address range</a>.</p>",
     "ProvisionIpamByoasn": "<p>Provisions your Autonomous System Number (ASN) for use in your Amazon Web Services account. This action requires authorization context for Amazon to bring the ASN to an Amazon Web Services account. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/ipam/tutorials-byoasn.html\">Tutorial: Bring your ASN to IPAM</a> in the <i>Amazon VPC IPAM guide</i>.</p>",
     "ProvisionIpamPoolCidr": "<p>Provision a CIDR to an IPAM pool. You can use this action to provision new CIDRs to a top-level pool or to transfer a CIDR from a top-level pool to a pool within it.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/ipam/prov-cidr-ipam.html\">Provision CIDRs to pools</a> in the <i>Amazon VPC IPAM User Guide</i>. </p>",
     "ProvisionPublicIpv4PoolCidr": "<p>Provision a CIDR to a public IPv4 pool.</p> <p>For more information about IPAM, see <a href=\"https://docs.aws.amazon.com/vpc/latest/ipam/what-is-it-ipam.html\">What is IPAM?</a> in the <i>Amazon VPC IPAM User Guide</i>.</p>",
@@ -1221,6 +1231,15 @@
         "ModifyInstancePlacementRequest$Affinity": "<p>The affinity setting for the instance. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/how-dedicated-hosts-work.html#dedicated-hosts-affinity\">Host affinity</a> in the <i>Amazon EC2 User Guide</i>.</p>"
       }
     },
+    "AggregationStatusEnum": {
+      "base": null,
+      "refs": {
+        "ApplicationStatusCheckResponseObject$Aggregation": "<p>The aggregation setting for the application status check. When set to <code>included</code>, the result of this check contributes to the instance-level application status. When set to <code>excluded</code>, the check runs independently and does not affect the instance-level status.</p>",
+        "ApplicationStatusDetail$Aggregation": "<p>The aggregation setting for the application status check. When set to <code>included</code>, the result of this check contributes to the instance-level application status. When set to <code>excluded</code>, the check runs independently and does not affect the instance-level status.</p>",
+        "CreateApplicationStatusCheckRequest$Aggregation": "<p>The aggregation setting for the application status check. When set to <code>included</code>, the result of this check contributes to the instance-level application status reported by <code>DescribeApplicationStatus</code>. When set to <code>excluded</code>, the check runs independently and does not affect the instance-level status. Valid values: <code>included</code> | <code>excluded</code>.</p>",
+        "ModifyApplicationStatusCheckRequest$Aggregation": "<p>The aggregation setting for the application status check. When set to <code>included</code>, the result of this check contributes to the instance-level application status reported by <code>DescribeApplicationStatus</code>. When set to <code>excluded</code>, the check runs independently and does not affect the instance-level status. Valid values: <code>included</code> | <code>excluded</code>.</p>"
+      }
+    },
     "AllocateAddressRequest": {
       "base": null,
       "refs": {
@@ -1479,6 +1498,103 @@
         "TransitGatewayVpcAttachmentOptions$ApplianceModeSupport": "<p>Indicates whether appliance mode support is enabled.</p>"
       }
     },
+    "ApplicationStatus": {
+      "base": "<p>Describes the application-level health status for an instance.</p>",
+      "refs": {
+        "InstanceApplicationStatus$ApplicationStatus": "<p>The application status for the instance.</p>"
+      }
+    },
+    "ApplicationStatusCheckAssociationObject": {
+      "base": "<p>Information about an application status check association. Each item in the <code>associationSet</code> of a <code>DescribeApplicationStatusCheckAssociations</code> response is of this type.</p>",
+      "refs": {
+        "ApplicationStatusCheckAssociationSet$member": null
+      }
+    },
+    "ApplicationStatusCheckAssociationSet": {
+      "base": null,
+      "refs": {
+        "DescribeApplicationStatusCheckAssociationsResult$Associations": "<p>The associations for the specified application status checks.</p>"
+      }
+    },
+    "ApplicationStatusCheckEnum": {
+      "base": null,
+      "refs": {
+        "ApplicationStatusDetail$Status": "<p>The status of the individual application status check. Possible values:</p> <ul> <li> <p> <code>passed</code> – The check reached its success threshold.</p> </li> <li> <p> <code>failed</code> – The check reached its failure threshold.</p> </li> <li> <p> <code>initializing</code> – The check is initializing or has not reached a success or failure threshold.</p> </li> <li> <p> <code>insufficient-data</code> – The check does not have enough data to determine a result.</p> </li> <li> <p> <code>not-applicable</code> – The check does not apply to the instance.</p> </li> </ul> <p>This value reflects the check result and is not affected by aggregation or suppression.</p>"
+      }
+    },
+    "ApplicationStatusCheckId": {
+      "base": null,
+      "refs": {
+        "ApplicationStatusCheckAssociationObject$ApplicationStatusCheckId": "<p>The ID of the application status check.</p>",
+        "ApplicationStatusCheckIdList$member": null,
+        "ApplicationStatusCheckResponseObject$ApplicationStatusCheckId": "<p>The ID of the application status check.</p>",
+        "ApplicationStatusDetail$ApplicationStatusCheckId": "<p>The ID of the application status check.</p>",
+        "AssociateApplicationStatusCheckRequest$ApplicationStatusCheckId": "<p>The ID of the application status check to associate.</p>",
+        "DeleteApplicationStatusCheckRequest$ApplicationStatusCheckId": "<p>The ID of the application status check to delete.</p>",
+        "DisassociateApplicationStatusCheckRequest$ApplicationStatusCheckId": "<p>The ID of the application status check to disassociate.</p>",
+        "ModifyApplicationStatusCheckRequest$ApplicationStatusCheckId": "<p>The ID of the application status check to modify.</p>",
+        "SuccessfulAssociationResponseObject$ApplicationStatusCheckId": "<p>The ID of the application status check.</p>",
+        "UnsuccessfulAssociationResponseObject$ApplicationStatusCheckId": "<p>The ID of the application status check.</p>"
+      }
+    },
+    "ApplicationStatusCheckIdList": {
+      "base": null,
+      "refs": {
+        "DescribeApplicationStatusCheckAssociationsRequest$ApplicationStatusCheckIds": "<p>The IDs of the application status checks for which to describe associations.</p>",
+        "DescribeApplicationStatusChecksRequest$ApplicationStatusCheckIds": "<p>The IDs of the application status checks to describe.</p>"
+      }
+    },
+    "ApplicationStatusCheckResponseObject": {
+      "base": "<p>Describes an application status check.</p>",
+      "refs": {
+        "ApplicationStatusCheckResponseSet$member": null,
+        "CreateApplicationStatusCheckResult$ApplicationStatusCheck": "<p>Information about the application status check.</p>",
+        "DeleteApplicationStatusCheckResult$ApplicationStatusCheck": "<p>Information about the deleted application status check.</p>",
+        "ModifyApplicationStatusCheckResult$ApplicationStatusCheck": "<p>Information about the modified application status check.</p>"
+      }
+    },
+    "ApplicationStatusCheckResponseSet": {
+      "base": null,
+      "refs": {
+        "DescribeApplicationStatusChecksResult$ApplicationStatusChecks": "<p>Information about the application status checks.</p>"
+      }
+    },
+    "ApplicationStatusDetail": {
+      "base": "<p>Describes the details of an application status check for an instance.</p>",
+      "refs": {
+        "ApplicationStatusDetailSet$member": null
+      }
+    },
+    "ApplicationStatusDetailSet": {
+      "base": null,
+      "refs": {
+        "ApplicationStatus$Details": "<p>Details about the application status checks for the instance.</p>"
+      }
+    },
+    "ApplicationStatusEnum": {
+      "base": null,
+      "refs": {
+        "ApplicationStatus$Status": "<p>The current instance-level application status. This status is derived from application status checks with <code>Aggregation</code> set to <code>included</code>. Possible values:</p> <ul> <li> <p> <code>ok</code> – All included checks passed.</p> </li> <li> <p> <code>impaired</code> – At least one included check failed.</p> </li> <li> <p> <code>initializing</code> – At least one included check is initializing, and no included check is impaired.</p> </li> <li> <p> <code>insufficient-data</code> – At least one included check has insufficient data, and no included check is impaired or initializing.</p> </li> <li> <p> <code>not-applicable</code> – No checks with <code>Aggregation</code> set to <code>included</code> apply to the instance.</p> </li> <li> <p> <code>suppressed</code> – Application status reporting is suppressed for the instance.</p> </li> </ul> <p>Checks with <code>Aggregation</code> set to <code>excluded</code> do not affect this value.</p>"
+      }
+    },
+    "ApplicationStatusReason": {
+      "base": "<p>Describes the reason for an application status check result.</p>",
+      "refs": {
+        "ApplicationStatusDetail$Reason": "<p>The reason for the current status.</p>"
+      }
+    },
+    "ApplicationStatusSummary": {
+      "base": "<p>Provides a summary of the application-level health status for an instance.</p>",
+      "refs": {
+        "InstanceStatus$ApplicationStatus": "<p>Reports impaired functionality that stems from issues with applications running on the instance.</p>"
+      }
+    },
+    "ApplicationStatusesResponseType": {
+      "base": "<p>Describes the application statuses for instances.</p>",
+      "refs": {
+        "DescribeApplicationStatusResult$ApplicationStatuses": "<p>The application statuses for the specified instances.</p>"
+      }
+    },
     "ApplyCancellationCharges": {
       "base": null,
       "refs": {
@@ -1633,6 +1749,16 @@
       }
     },
     "AssociateAddressResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "AssociateApplicationStatusCheckRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "AssociateApplicationStatusCheckResult": {
       "base": null,
       "refs": {
       }
@@ -1866,6 +1992,12 @@
       "base": null,
       "refs": {
         "AssociationStatus$Code": "<p>The state of the target network association.</p>"
+      }
+    },
+    "AssociationTypeEnum": {
+      "base": null,
+      "refs": {
+        "ApplicationStatusCheckAssociationObject$AssociationType": "<p>The type of target that the application status check is associated with. Possible values:</p> <ul> <li> <p> <code>tag</code> – The check applies to current and future instances with a matching tag key-value pair.</p> </li> <li> <p> <code>instance-id</code> – The check applies to a specific instance.</p> </li> </ul>"
       }
     },
     "AthenaIntegration": {
@@ -2471,6 +2603,7 @@
         "AssignPrivateNatGatewayAddressRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "AssociateAddressRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "AssociateAddressRequest$AllowReassociation": "<p>Reassociation is automatic, but you can specify false to ensure the operation fails if the Elastic IP address is already associated with another resource.</p>",
+        "AssociateApplicationStatusCheckRequest$DryRun": "<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "AssociateCapacityReservationBillingOwnerRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "AssociateCapacityReservationBillingOwnerResult$Return": "<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>",
         "AssociateClientVpnTargetNetworkRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2548,6 +2681,7 @@
         "CopySnapshotRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CopyVolumesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CopyVolumesRequest$MultiAttachEnabled": "<p>Indicates whether to enable Amazon EBS Multi-Attach for the volume copy. If you enable Multi-Attach, you can attach the volume to up to 16 Nitro instances in the same Availability Zone simultaneously. Supported with <code>io1</code> and <code>io2</code> volumes only. For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/ebs-volumes-multi.html\"> Amazon EBS Multi-Attach</a>.</p>",
+        "CreateApplicationStatusCheckRequest$DryRun": "<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateCapacityManagerDataExportRequest$DryRun": "<p> Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>. </p>",
         "CreateCapacityReservationBySplittingRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateCapacityReservationCancellationQuoteRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2679,6 +2813,7 @@
         "CreateVpnConcentratorRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateVpnConnectionRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateVpnGatewayRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DeleteApplicationStatusCheckRequest$DryRun": "<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteCapacityManagerDataExportRequest$DryRun": "<p> Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>. </p>",
         "DeleteCarrierGatewayRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteClientVpnEndpointRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2805,6 +2940,10 @@
         "DescribeAddressesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeAggregateIdFormatRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeAggregateIdFormatResult$UseLongIdsAggregated": "<p>Indicates whether all resource types in the Region are configured to use longer IDs. This value is only <code>true</code> if all users are configured to use longer IDs for all resources types in the Region.</p>",
+        "DescribeApplicationStatusCheckAssociationsRequest$DryRun": "<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DescribeApplicationStatusChecksRequest$IncludeAll": "<p>Specifies whether to include recently deleted application status checks that remain available during the deletion grace period. If you omit this parameter or set it to <code>false</code>, the response includes only active checks.</p>",
+        "DescribeApplicationStatusChecksRequest$DryRun": "<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DescribeApplicationStatusRequest$DryRun": "<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeAvailabilityZonesRequest$AllAvailabilityZones": "<p>Include all Availability Zones, Local Zones, and Wavelength Zones regardless of your opt-in status.</p> <p>If you do not use this parameter, the results include only the zones for the Regions where you have chosen the option to opt in.</p>",
         "DescribeAvailabilityZonesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeAwsNetworkPerformanceMetricSubscriptionsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -3010,6 +3149,7 @@
         "DetachVpnGatewayRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisableAddressTransferRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisableAllowedImagesSettingsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DisableApplicationStatusCheckSuppressionRequest$DryRun": "<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisableAwsNetworkPerformanceMetricSubscriptionRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisableAwsNetworkPerformanceMetricSubscriptionResult$Output": "<p>Indicates whether the unsubscribe action was successful.</p>",
         "DisableCapacityManagerRequest$DryRun": "<p> Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>. </p>",
@@ -3040,6 +3180,7 @@
         "DisableVpcClassicLinkRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisableVpcClassicLinkResult$Return": "<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>",
         "DisassociateAddressRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DisassociateApplicationStatusCheckRequest$DryRun": "<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisassociateCapacityReservationBillingOwnerRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisassociateCapacityReservationBillingOwnerResult$Return": "<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>",
         "DisassociateClientVpnTargetNetworkRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -3073,6 +3214,7 @@
         "EnaSrdUdpSpecificationRequest$EnaSrdUdpEnabled": "<p>Indicates whether UDP traffic uses ENA Express for your instance. To ensure that UDP traffic can use ENA Express when you launch an instance, you must also set <b>EnaSrdEnabled</b> in the <b>EnaSrdSpecificationRequest</b> to <code>true</code>.</p>",
         "EnableAddressTransferRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "EnableAllowedImagesSettingsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "EnableApplicationStatusCheckSuppressionRequest$DryRun": "<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "EnableAwsNetworkPerformanceMetricSubscriptionRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "EnableAwsNetworkPerformanceMetricSubscriptionResult$Output": "<p>Indicates whether the subscribe action was successful.</p>",
         "EnableCapacityManagerRequest$OrganizationsAccess": "<p> Specifies whether to enable cross-account access for Amazon Web Services Organizations. When enabled, Capacity Manager can aggregate data from all accounts in your organization. Default is false. </p>",
@@ -3285,6 +3427,7 @@
         "ManagedPrefixList$IpamPrefixListResolverSyncEnabled": "<p>Indicates whether synchronization with an IPAM prefix list resolver is enabled for this managed prefix list. When enabled, the prefix list CIDRs are automatically updated based on the resolver's CIDR selection rules.</p>",
         "ModifyAccountVpcEncryptionControlRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyAddressAttributeRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "ModifyApplicationStatusCheckRequest$DryRun": "<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyAvailabilityZoneGroupRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyAvailabilityZoneGroupResult$Return": "<p>Is <code>true</code> if the request succeeds, and an error otherwise.</p>",
         "ModifyCapacityReservationFleetRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -3682,6 +3825,7 @@
         "AttachVolumeRequest$EbsCardIndex": "<p>The index of the EBS card. Some instance types support multiple EBS cards. The default EBS card index is 0.</p>",
         "CancellationTerms$CommittedInstanceCount": "<p>The number of instances under commitment after cancellation.</p>",
         "CapacityBlockOffering$UltraserverCount": "<p>The number of EC2 UltraServers in the offering.</p>",
+        "EnableApplicationStatusCheckSuppressionRequest$DurationSeconds": "<p>The duration, in seconds, for which to suppress application status checks. If omitted, the application status check is suppressed indefinitely until you call <code>DisableApplicationStatusCheckSuppression</code>.</p>",
         "InstanceMetadataDefaultsResponse$HttpPutResponseHopLimit": "<p>The maximum number of hops that the metadata token can travel.</p>",
         "ModifyInstanceMetadataDefaultsRequest$HttpPutResponseHopLimit": "<p>The maximum number of hops that the metadata token can travel. To indicate no preference, specify <code>-1</code>.</p> <p>Possible values: Integers from <code>1</code> to <code>64</code>, and <code>-1</code> to indicate no preference</p>"
       }
@@ -4389,7 +4533,7 @@
         "CapacityBlock$CapacityReservationIds": "<p>The ID of the Capacity Reservation.</p>",
         "DescribeCapacityBlockExtensionHistoryRequest$CapacityReservationIds": "<p>The IDs of Capacity Block reservations that you want to display the history for.</p>",
         "DescribeCapacityReservationBillingRequestsRequest$CapacityReservationIds": "<p>The ID of the Capacity Reservation.</p>",
-        "DescribeCapacityReservationTopologyRequest$CapacityReservationIds": "<p>The Capacity Reservation IDs.</p> <p>Default: Describes all your Capacity Reservations.</p> <p>Constraints: Maximum 100 explicitly specified Capacity Reservation IDs.</p>",
+        "DescribeCapacityReservationTopologyRequest$CapacityReservationIds": "<p>The Capacity Reservation IDs.</p> <p>Default: Describes all your Capacity Reservations.</p> <p>Constraints: Maximum 10 explicitly specified Capacity Reservation IDs.</p>",
         "DescribeCapacityReservationsRequest$CapacityReservationIds": "<p>The ID of the Capacity Reservation.</p>"
       }
     },
@@ -5265,6 +5409,16 @@
       "base": "<p>The CPU performance to consider, using an instance family as the baseline reference.</p>",
       "refs": {
         "BaselinePerformanceFactorsRequest$Cpu": "<p>The CPU performance to consider, using an instance family as the baseline reference.</p>"
+      }
+    },
+    "CreateApplicationStatusCheckRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateApplicationStatusCheckResult": {
+      "base": null,
+      "refs": {
       }
     },
     "CreateCapacityManagerDataExportRequest": {
@@ -6482,6 +6636,31 @@
         "InstanceTypeInfo$CurrentGeneration": "<p>Indicates whether the instance type is current generation.</p>"
       }
     },
+    "CustomKeyValuePairRequestSet": {
+      "base": null,
+      "refs": {
+        "AssociateApplicationStatusCheckRequest$TargetTagAssociations": "<p>The <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html\">tags</a> to associate the application status check with. Each tag is a key-value pair. When you associate tags, the application status check automatically monitors all instances that have the specified tags.</p>",
+        "DisassociateApplicationStatusCheckRequest$TargetTagAssociations": "<p>The <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html\">tags</a> to disassociate from the application status check. Specify the same key-value pairs that were used during association.</p>"
+      }
+    },
+    "CustomKeyValuePairResponseSet": {
+      "base": null,
+      "refs": {
+        "ApplicationStatusCheckResponseObject$TargetTagAssociations": "<p>The <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html\">tags</a> associated with the application status check. Instances with these tags are automatically monitored by this check.</p>"
+      }
+    },
+    "CustomTagKeyValueRequestPair": {
+      "base": "<p>Describes a tag key-value pair for an application status check association request.</p>",
+      "refs": {
+        "CustomKeyValuePairRequestSet$member": null
+      }
+    },
+    "CustomTagKeyValueResponsePair": {
+      "base": "<p>Describes a tag key-value pair for an application status check association.</p>",
+      "refs": {
+        "CustomKeyValuePairResponseSet$member": null
+      }
+    },
     "CustomerGateway": {
       "base": "<p>Describes a customer gateway.</p>",
       "refs": {
@@ -6789,6 +6968,16 @@
       "base": null,
       "refs": {
         "AssociateDhcpOptionsRequest$DhcpOptionsId": "<p>The ID of the DHCP options set, or <code>default</code> to associate no DHCP options with the VPC.</p>"
+      }
+    },
+    "DeleteApplicationStatusCheckRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteApplicationStatusCheckResult": {
+      "base": null,
+      "refs": {
       }
     },
     "DeleteCapacityManagerDataExportRequest": {
@@ -7897,6 +8086,54 @@
       }
     },
     "DescribeAggregateIdFormatResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeApplicationStatusCheckAssociationsMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribeApplicationStatusCheckAssociationsRequest$MaxResults": "<p>The maximum number of items to return for this request. To get the next page of items, make another request with the token returned in the output. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Query-Requests.html#api-pagination\">Pagination</a>.</p>"
+      }
+    },
+    "DescribeApplicationStatusCheckAssociationsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeApplicationStatusCheckAssociationsResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeApplicationStatusChecksMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribeApplicationStatusChecksRequest$MaxResults": "<p>The maximum number of items to return for this request. To get the next page of items, make another request with the token returned in the output. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Query-Requests.html#api-pagination\">Pagination</a>.</p>"
+      }
+    },
+    "DescribeApplicationStatusChecksRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeApplicationStatusChecksResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeApplicationStatusMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribeApplicationStatusRequest$MaxResults": "<p>The maximum number of items to return for this request. To get the next page of items, make another request with the token returned in the output. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Query-Requests.html#api-pagination\">Pagination</a>.</p>"
+      }
+    },
+    "DescribeApplicationStatusRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeApplicationStatusResult": {
       "base": null,
       "refs": {
       }
@@ -10421,6 +10658,16 @@
       "refs": {
       }
     },
+    "DisableApplicationStatusCheckSuppressionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DisableApplicationStatusCheckSuppressionResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DisableAwsNetworkPerformanceMetricSubscriptionRequest": {
       "base": null,
       "refs": {
@@ -10649,6 +10896,16 @@
       }
     },
     "DisassociateAddressRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DisassociateApplicationStatusCheckRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DisassociateApplicationStatusCheckResult": {
       "base": null,
       "refs": {
       }
@@ -11386,6 +11643,16 @@
       "refs": {
       }
     },
+    "EnableApplicationStatusCheckSuppressionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "EnableApplicationStatusCheckSuppressionResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "EnableAwsNetworkPerformanceMetricSubscriptionRequest": {
       "base": null,
       "refs": {
@@ -12018,6 +12285,9 @@
       "base": null,
       "refs": {
         "DescribeAddressesRequest$Filters": "<p>One or more filters. Filter names and values are case-sensitive.</p> <ul> <li> <p> <code>allocation-id</code> - The allocation ID for the address.</p> </li> <li> <p> <code>association-id</code> - The association ID for the address.</p> </li> <li> <p> <code>instance-id</code> - The ID of the instance the address is associated with, if any.</p> </li> <li> <p> <code>network-border-group</code> - A unique set of Availability Zones, Local Zones, or Wavelength Zones from where Amazon Web Services advertises IP addresses. </p> </li> <li> <p> <code>network-interface-id</code> - The ID of the network interface that the address is associated with, if any.</p> </li> <li> <p> <code>network-interface-owner-id</code> - The Amazon Web Services account ID of the owner.</p> </li> <li> <p> <code>private-ip-address</code> - The private IP address associated with the Elastic IP address.</p> </li> <li> <p> <code>public-ip</code> - The Elastic IP address, or the carrier IP address.</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> </ul>",
+        "DescribeApplicationStatusCheckAssociationsRequest$Filters": "<p>The filters to use to limit the results.</p> <ul> <li> <p> <code>association-type</code> – The type of association. Valid values: <code>tag</code> and <code>instance-id</code>.</p> </li> </ul>",
+        "DescribeApplicationStatusChecksRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>aggregation</code> – The aggregation setting. Valid values: <code>included</code> and <code>excluded</code>.</p> </li> </ul>",
+        "DescribeApplicationStatusRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>availability-zone-id</code> – The ID of the Availability Zone.</p> </li> <li> <p> <code>status</code> – The instance-level application status. For valid values and their meanings, see <code>ApplicationStatus</code>.</p> </li> </ul>",
         "DescribeAvailabilityZonesRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>group-long-name</code> - The long name of the zone group for the Availability Zone (for example, <code>US West (Oregon) 1</code>), the Local Zone (for example, for Zone group <code>us-west-2-lax-1</code>, it is <code>US West (Los Angeles)</code>, or the Wavelength Zone (for example, for Zone group <code>us-east-1-wl1</code>, it is <code>US East (Verizon)</code>.</p> </li> <li> <p> <code>group-name</code> - The name of the zone group for the Availability Zone (for example, <code>us-east-1-zg-1</code>), the Local Zone (for example, <code>us-west-2-lax-1</code>), or the Wavelength Zone (for example, <code>us-east-1-wl1</code>).</p> </li> <li> <p> <code>message</code> - The Zone message.</p> </li> <li> <p> <code>opt-in-status</code> - The opt-in status (<code>opted-in</code> | <code>not-opted-in</code> | <code>opt-in-not-required</code>).</p> </li> <li> <p> <code>parent-zone-id</code> - The ID of the zone that handles some of the Local Zone and Wavelength Zone control plane operations, such as API calls.</p> </li> <li> <p> <code>parent-zone-name</code> - The ID of the zone that handles some of the Local Zone and Wavelength Zone control plane operations, such as API calls.</p> </li> <li> <p> <code>region-name</code> - The name of the Region for the Zone (for example, <code>us-east-1</code>).</p> </li> <li> <p> <code>state</code> - The state of the Availability Zone, the Local Zone, or the Wavelength Zone (<code>available</code> | <code>unavailable</code> | <code>constrained</code>).</p> </li> <li> <p> <code>zone-id</code> - The ID of the Availability Zone (for example, <code>use1-az1</code>), the Local Zone (for example, <code>usw2-lax1-az1</code>), or the Wavelength Zone (for example, <code>us-east-1-wl1-bos-wlz-1</code>).</p> </li> <li> <p> <code>zone-name</code> - The name of the Availability Zone (for example, <code>us-east-1a</code>), the Local Zone (for example, <code>us-west-2-lax-1a</code>), or the Wavelength Zone (for example, <code>us-east-1-wl1-bos-wlz-1</code>).</p> </li> <li> <p> <code>zone-type</code> - The type of zone (<code>availability-zone</code> | <code>local-zone</code> | <code>wavelength-zone</code>).</p> </li> </ul>",
         "DescribeAwsNetworkPerformanceMetricSubscriptionsRequest$Filters": "<p>One or more filters.</p>",
         "DescribeBundleTasksRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>bundle-id</code> - The ID of the bundle task.</p> </li> <li> <p> <code>error-code</code> - If the task failed, the error code returned.</p> </li> <li> <p> <code>error-message</code> - If the task failed, the error message returned.</p> </li> <li> <p> <code>instance-id</code> - The ID of the instance.</p> </li> <li> <p> <code>progress</code> - The level of task completion, as a percentage (for example, 20%).</p> </li> <li> <p> <code>s3-bucket</code> - The Amazon S3 bucket to store the AMI.</p> </li> <li> <p> <code>s3-prefix</code> - The beginning of the AMI name.</p> </li> <li> <p> <code>start-time</code> - The time the task started (for example, 2013-09-15T17:15:20.000Z).</p> </li> <li> <p> <code>state</code> - The state of the task (<code>pending</code> | <code>waiting-for-shutdown</code> | <code>bundling</code> | <code>storing</code> | <code>cancelling</code> | <code>complete</code> | <code>failed</code>).</p> </li> <li> <p> <code>update-time</code> - The time of the most recent update for the task.</p> </li> </ul>",
@@ -12065,7 +12335,7 @@
         "DescribeInstanceImageMetadataRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>availability-zone</code> - The name of the Availability Zone (for example, <code>us-west-2a</code>) or Local Zone (for example, <code>us-west-2-lax-1b</code>) of the instance.</p> </li> <li> <p> <code>instance-id</code> - The ID of the instance.</p> </li> <li> <p> <code>image-allowed</code> - A Boolean that indicates whether the image meets the criteria specified for Allowed AMIs.</p> </li> <li> <p> <code>instance-state-name</code> - The state of the instance (<code>pending</code> | <code>running</code> | <code>shutting-down</code> | <code>terminated</code> | <code>stopping</code> | <code>stopped</code>).</p> </li> <li> <p> <code>instance-type</code> - The type of instance (for example, <code>t3.micro</code>).</p> </li> <li> <p> <code>launch-time</code> - The time when the instance was launched, in the ISO 8601 format in the UTC time zone (YYYY-MM-DDThh:mm:ss.sssZ), for example, <code>2023-09-29T11:04:43.305Z</code>. You can use a wildcard (<code>*</code>), for example, <code>2023-09-29T*</code>, which matches an entire day.</p> </li> <li> <p> <code>owner-alias</code> - The owner alias (<code>amazon</code> | <code>aws-marketplace</code> | <code>aws-backup-vault</code>). The valid aliases are defined in an Amazon-maintained list. This is not the Amazon Web Services account alias that can be set using the IAM console. We recommend that you use the <code>Owner</code> request parameter instead of this filter.</p> </li> <li> <p> <code>owner-id</code> - The Amazon Web Services account ID of the owner. We recommend that you use the <code>Owner</code> request parameter instead of this filter.</p> </li> <li> <p> <code>tag:&lt;key&gt;</code> - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>zone-id</code> - The ID of the Availability Zone (for example, <code>usw2-az2</code>) or Local Zone (for example, <code>usw2-lax1-az1</code>) of the instance.</p> </li> </ul>",
         "DescribeInstanceSqlHaHistoryStatesRequest$Filters": "<p>One or more filters to apply to the results. Supported filters include:</p> <ul> <li> <p> <code>tag:&lt;key&gt;</code> - The tag key and value pair assigned to the instance. For example, to find all instances tagged with <code>Owner:TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The tag key assigned to the instance.</p> </li> <li> <p> <code>haStatus</code> - The SQL Server High Availability status of the SQL Server High Availability instance (<code>processing</code> | <code>active</code> | <code>standby</code> | <code>invalid</code>).</p> </li> <li> <p> <code>sqlServerLicenseUsage</code> - The license type for the SQL Server license (<code>full</code> | <code>waived</code>).</p> </li> </ul>",
         "DescribeInstanceSqlHaStatesRequest$Filters": "<p>One or more filters to apply to the results. Supported filters include:</p> <ul> <li> <p> <code>tag:&lt;key&gt;</code> - The tag key and value pair assigned to the instance. For example, to find all instances tagged with <code>Owner:TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The tag key assigned to the instance.</p> </li> <li> <p> <code>haStatus</code> - The SQL Server High Availability status of the SQL Server High Availability instance (<code>processing</code> | <code>active</code> | <code>standby</code> | <code>invalid</code>).</p> </li> <li> <p> <code>sqlServerLicenseUsage</code> - The license type for the SQL Server license (<code>full</code> | <code>waived</code>).</p> </li> </ul>",
-        "DescribeInstanceStatusRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>availability-zone</code> - The Availability Zone of the instance.</p> </li> <li> <p> <code>availability-zone-id</code> - The ID of the Availability Zone of the instance.</p> </li> <li> <p> <code>event.code</code> - The code for the scheduled event (<code>instance-reboot</code> | <code>system-reboot</code> | <code>system-maintenance</code> | <code>instance-retirement</code> | <code>instance-stop</code>).</p> </li> <li> <p> <code>event.description</code> - A description of the event.</p> </li> <li> <p> <code>event.instance-event-id</code> - The ID of the event whose date and time you are modifying.</p> </li> <li> <p> <code>event.not-after</code> - The latest end time for the scheduled event (for example, <code>2014-09-15T17:15:20.000Z</code>).</p> </li> <li> <p> <code>event.not-before</code> - The earliest start time for the scheduled event (for example, <code>2014-09-15T17:15:20.000Z</code>).</p> </li> <li> <p> <code>event.not-before-deadline</code> - The deadline for starting the event (for example, <code>2014-09-15T17:15:20.000Z</code>).</p> </li> <li> <p> <code>instance-state-code</code> - The code for the instance state, as a 16-bit unsigned integer. The high byte is used for internal purposes and should be ignored. The low byte is set based on the state represented. The valid values are 0 (pending), 16 (running), 32 (shutting-down), 48 (terminated), 64 (stopping), and 80 (stopped).</p> </li> <li> <p> <code>instance-state-name</code> - The state of the instance (<code>pending</code> | <code>running</code> | <code>shutting-down</code> | <code>terminated</code> | <code>stopping</code> | <code>stopped</code>).</p> </li> <li> <p> <code>instance-status.reachability</code> - Filters on instance status where the name is <code>reachability</code> (<code>passed</code> | <code>failed</code> | <code>initializing</code> | <code>insufficient-data</code>).</p> </li> <li> <p> <code>instance-status.status</code> - The status of the instance (<code>ok</code> | <code>impaired</code> | <code>initializing</code> | <code>insufficient-data</code> | <code>not-applicable</code>).</p> </li> <li> <p> <code>operator.managed</code> - A Boolean that indicates whether this is a managed instance.</p> </li> <li> <p> <code>operator.principal</code> - The principal that manages the instance. Only valid for managed instances, where <code>managed</code> is <code>true</code>.</p> </li> <li> <p> <code>system-status.reachability</code> - Filters on system status where the name is <code>reachability</code> (<code>passed</code> | <code>failed</code> | <code>initializing</code> | <code>insufficient-data</code>).</p> </li> <li> <p> <code>system-status.status</code> - The system status of the instance (<code>ok</code> | <code>impaired</code> | <code>initializing</code> | <code>insufficient-data</code> | <code>not-applicable</code>).</p> </li> <li> <p> <code>attached-ebs-status.status</code> - The status of the attached EBS volume for the instance (<code>ok</code> | <code>impaired</code> | <code>initializing</code> | <code>insufficient-data</code> | <code>not-applicable</code>).</p> </li> </ul>",
+        "DescribeInstanceStatusRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>availability-zone</code> - The Availability Zone of the instance.</p> </li> <li> <p> <code>availability-zone-id</code> - The ID of the Availability Zone of the instance.</p> </li> <li> <p> <code>event.code</code> - The code for the scheduled event (<code>instance-reboot</code> | <code>system-reboot</code> | <code>system-maintenance</code> | <code>instance-retirement</code> | <code>instance-stop</code>).</p> </li> <li> <p> <code>event.description</code> - A description of the event.</p> </li> <li> <p> <code>event.instance-event-id</code> - The ID of the event whose date and time you are modifying.</p> </li> <li> <p> <code>event.not-after</code> - The latest end time for the scheduled event (for example, <code>2014-09-15T17:15:20.000Z</code>).</p> </li> <li> <p> <code>event.not-before</code> - The earliest start time for the scheduled event (for example, <code>2014-09-15T17:15:20.000Z</code>).</p> </li> <li> <p> <code>event.not-before-deadline</code> - The deadline for starting the event (for example, <code>2014-09-15T17:15:20.000Z</code>).</p> </li> <li> <p> <code>instance-state-code</code> - The code for the instance state, as a 16-bit unsigned integer. The high byte is used for internal purposes and should be ignored. The low byte is set based on the state represented. The valid values are 0 (pending), 16 (running), 32 (shutting-down), 48 (terminated), 64 (stopping), and 80 (stopped).</p> </li> <li> <p> <code>instance-state-name</code> - The state of the instance (<code>pending</code> | <code>running</code> | <code>shutting-down</code> | <code>terminated</code> | <code>stopping</code> | <code>stopped</code>).</p> </li> <li> <p> <code>instance-status.reachability</code> - Filters on instance status where the name is <code>reachability</code> (<code>passed</code> | <code>failed</code> | <code>initializing</code> | <code>insufficient-data</code>).</p> </li> <li> <p> <code>instance-status.status</code> - The status of the instance (<code>ok</code> | <code>impaired</code> | <code>initializing</code> | <code>insufficient-data</code> | <code>not-applicable</code>).</p> </li> <li> <p> <code>operator.managed</code> - A Boolean that indicates whether this is a managed instance.</p> </li> <li> <p> <code>operator.principal</code> - The principal that manages the instance. Only valid for managed instances, where <code>managed</code> is <code>true</code>.</p> </li> <li> <p> <code>system-status.reachability</code> - Filters on system status where the name is <code>reachability</code> (<code>passed</code> | <code>failed</code> | <code>initializing</code> | <code>insufficient-data</code>).</p> </li> <li> <p> <code>system-status.status</code> - The system status of the instance (<code>ok</code> | <code>impaired</code> | <code>initializing</code> | <code>insufficient-data</code> | <code>not-applicable</code>).</p> </li> <li> <p> <code>attached-ebs-status.status</code> - The status of the attached EBS volume for the instance (<code>ok</code> | <code>impaired</code> | <code>initializing</code> | <code>insufficient-data</code> | <code>not-applicable</code>).</p> </li> <li> <p> <code>application-status.status</code> - The application status of the instance (<code>ok</code> | <code>impaired</code> | <code>initializing</code> | <code>insufficient-data</code> | <code>not-applicable</code>).</p> </li> </ul>",
         "DescribeInstanceTopologyRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>availability-zone</code> - The name of the Availability Zone (for example, <code>us-west-2a</code>) or Local Zone (for example, <code>us-west-2-lax-1b</code>) that the instance is in.</p> </li> <li> <p> <code>instance-type</code> - The instance type (for example, <code>p4d.24xlarge</code>) or instance family (for example, <code>p4d*</code>). You can use the <code>*</code> wildcard to match zero or more characters, or the <code>?</code> wildcard to match zero or one character.</p> </li> <li> <p> <code>zone-id</code> - The ID of the Availability Zone (for example, <code>usw2-az2</code>) or Local Zone (for example, <code>usw2-lax1-az1</code>) that the instance is in.</p> </li> </ul>",
         "DescribeInstanceTypeOfferingsRequest$Filters": "<p>One or more filters. Filter names and values are case-sensitive.</p> <ul> <li> <p> <code>instance-type</code> - The instance type. For a list of possible values, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_Instance.html\">Instance</a>.</p> </li> <li> <p> <code>location</code> - The location. For a list of possible identifiers, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html\">Regions and Zones</a>.</p> </li> </ul>",
         "DescribeInstanceTypesRequest$Filters": "<p>One or more filters. Filter names and values are case-sensitive.</p> <ul> <li> <p> <code>auto-recovery-supported</code> - Indicates whether Amazon CloudWatch action based recovery is supported (<code>true</code> | <code>false</code>).</p> </li> <li> <p> <code>bare-metal</code> - Indicates whether it is a bare metal instance type (<code>true</code> | <code>false</code>).</p> </li> <li> <p> <code>burstable-performance-supported</code> - Indicates whether the instance type is a burstable performance T instance type (<code>true</code> | <code>false</code>).</p> </li> <li> <p> <code>current-generation</code> - Indicates whether this instance type is the latest generation instance type of an instance family (<code>true</code> | <code>false</code>).</p> </li> <li> <p> <code>dedicated-hosts-supported</code> - Indicates whether the instance type supports Dedicated Hosts. (<code>true</code> | <code>false</code>)</p> </li> <li> <p> <code>ebs-info.attachment-limit-type</code> - The type of Amazon EBS volume attachment limit (<code>shared</code> | <code>dedicated</code>).</p> </li> <li> <p> <code>ebs-info.maximum-ebs-attachments</code> - The maximum number of Amazon EBS volumes that can be attached to the instance type.</p> </li> <li> <p> <code>ebs-info.ebs-optimized-info.baseline-bandwidth-in-mbps</code> - The baseline bandwidth performance for an EBS-optimized instance type, in Mbps.</p> </li> <li> <p> <code>ebs-info.ebs-optimized-info.baseline-iops</code> - The baseline input/output storage operations per second for an EBS-optimized instance type.</p> </li> <li> <p> <code>ebs-info.ebs-optimized-info.baseline-throughput-in-mbps</code> - The baseline throughput performance for an EBS-optimized instance type, in MB/s.</p> </li> <li> <p> <code>ebs-info.ebs-optimized-info.maximum-bandwidth-in-mbps</code> - The maximum bandwidth performance for an EBS-optimized instance type, in Mbps.</p> </li> <li> <p> <code>ebs-info.ebs-optimized-info.maximum-iops</code> - The maximum input/output storage operations per second for an EBS-optimized instance type.</p> </li> <li> <p> <code>ebs-info.ebs-optimized-info.maximum-throughput-in-mbps</code> - The maximum throughput performance for an EBS-optimized instance type, in MB/s.</p> </li> <li> <p> <code>ebs-info.ebs-optimized-support</code> - Indicates whether the instance type is EBS-optimized (<code>supported</code> | <code>unsupported</code> | <code>default</code>).</p> </li> <li> <p> <code>ebs-info.encryption-support</code> - Indicates whether EBS encryption is supported (<code>supported</code> | <code>unsupported</code>).</p> </li> <li> <p> <code>ebs-info.nvme-support</code> - Indicates whether non-volatile memory express (NVMe) is supported for EBS volumes (<code>required</code> | <code>supported</code> | <code>unsupported</code>).</p> </li> <li> <p> <code>free-tier-eligible</code> - A Boolean that indicates whether this instance type can be used under the Amazon Web Services Free Tier (<code>true</code> | <code>false</code>).</p> </li> <li> <p> <code>hibernation-supported</code> - Indicates whether On-Demand hibernation is supported (<code>true</code> | <code>false</code>).</p> </li> <li> <p> <code>hypervisor</code> - The hypervisor (<code>nitro</code> | <code>xen</code>).</p> </li> <li> <p> <code>instance-storage-info.disk.count</code> - The number of local disks.</p> </li> <li> <p> <code>instance-storage-info.disk.size-in-gb</code> - The storage size of each instance storage disk, in GB.</p> </li> <li> <p> <code>instance-storage-info.disk.type</code> - The storage technology for the local instance storage disks (<code>hdd</code> | <code>ssd</code>).</p> </li> <li> <p> <code>instance-storage-info.encryption-support</code> - Indicates whether data is encrypted at rest (<code>required</code> | <code>supported</code> | <code>unsupported</code>).</p> </li> <li> <p> <code>instance-storage-info.nvme-support</code> - Indicates whether non-volatile memory express (NVMe) is supported for instance store (<code>required</code> | <code>supported</code> | <code>unsupported</code>).</p> </li> <li> <p> <code>instance-storage-info.total-size-in-gb</code> - The total amount of storage available from all local instance storage, in GB.</p> </li> <li> <p> <code>instance-storage-supported</code> - Indicates whether the instance type has local instance storage (<code>true</code> | <code>false</code>).</p> </li> <li> <p> <code>instance-type</code> - The instance type (for example <code>c5.2xlarge</code> or c5*).</p> </li> <li> <p> <code>memory-info.size-in-mib</code> - The memory size.</p> </li> <li> <p> <code>network-info.bandwidth-weightings</code> - For instances that support bandwidth weighting to boost performance (<code>default</code>, <code>vpc-1</code>, <code>ebs-1</code>).</p> </li> <li> <p> <code>network-info.efa-info.maximum-efa-interfaces</code> - The maximum number of Elastic Fabric Adapters (EFAs) per instance.</p> </li> <li> <p> <code>network-info.efa-supported</code> - Indicates whether the instance type supports Elastic Fabric Adapter (EFA) (<code>true</code> | <code>false</code>).</p> </li> <li> <p> <code>network-info.ena-support</code> - Indicates whether Elastic Network Adapter (ENA) is supported or required (<code>required</code> | <code>supported</code> | <code>unsupported</code>).</p> </li> <li> <p> <code>network-info.flexible-ena-queues-support</code> - Indicates whether an instance supports flexible ENA queues (<code>supported</code> | <code>unsupported</code>).</p> </li> <li> <p> <code>network-info.encryption-in-transit-supported</code> - Indicates whether the instance type automatically encrypts in-transit traffic between instances (<code>true</code> | <code>false</code>).</p> </li> <li> <p> <code>network-info.ipv4-addresses-per-interface</code> - The maximum number of private IPv4 addresses per network interface.</p> </li> <li> <p> <code>network-info.ipv6-addresses-per-interface</code> - The maximum number of private IPv6 addresses per network interface.</p> </li> <li> <p> <code>network-info.ipv6-supported</code> - Indicates whether the instance type supports IPv6 (<code>true</code> | <code>false</code>).</p> </li> <li> <p> <code>network-info.maximum-network-cards</code> - The maximum number of network cards per instance.</p> </li> <li> <p> <code>network-info.maximum-network-interfaces</code> - The maximum number of network interfaces per instance.</p> </li> <li> <p> <code>network-info.network-performance</code> - The network performance (for example, \"25 Gigabit\").</p> </li> <li> <p> <code>nitro-enclaves-support</code> - Indicates whether Nitro Enclaves is supported (<code>supported</code> | <code>unsupported</code>).</p> </li> <li> <p> <code>nitro-tpm-support</code> - Indicates whether NitroTPM is supported (<code>supported</code> | <code>unsupported</code>).</p> </li> <li> <p> <code>nitro-tpm-info.supported-versions</code> - The supported NitroTPM version (<code>2.0</code>).</p> </li> <li> <p> <code>processor-info.supported-architecture</code> - The CPU architecture (<code>arm64</code> | <code>i386</code> | <code>x86_64</code>).</p> </li> <li> <p> <code>processor-info.sustained-clock-speed-in-ghz</code> - The CPU clock speed, in GHz.</p> </li> <li> <p> <code>processor-info.supported-features</code> - The supported CPU features (<code>amd-sev-snp</code>).</p> </li> <li> <p> <code>reboot-migration-support</code> - Indicates whether enabling reboot migration is supported (<code>supported</code> | <code>unsupported</code>).</p> </li> <li> <p> <code>supported-boot-mode</code> - The boot mode (<code>legacy-bios</code> | <code>uefi</code>).</p> </li> <li> <p> <code>supported-root-device-type</code> - The root device type (<code>ebs</code> | <code>instance-store</code>).</p> </li> <li> <p> <code>supported-usage-class</code> - The usage class (<code>on-demand</code> | <code>spot</code> | <code>capacity-block</code>).</p> </li> <li> <p> <code>supported-virtualization-type</code> - The virtualization type (<code>hvm</code> | <code>paravirtual</code>).</p> </li> <li> <p> <code>vcpu-info.default-cores</code> - The default number of cores for the instance type.</p> </li> <li> <p> <code>vcpu-info.default-threads-per-core</code> - The default number of threads per core for the instance type.</p> </li> <li> <p> <code>vcpu-info.default-vcpus</code> - The default number of vCPUs for the instance type.</p> </li> <li> <p> <code>vcpu-info.valid-cores</code> - The number of cores that can be configured for the instance type.</p> </li> <li> <p> <code>vcpu-info.valid-threads-per-core</code> - The number of threads per core that can be configured for the instance type. For example, \"1\" or \"1,2\".</p> </li> </ul>",
@@ -12524,7 +12794,7 @@
     "FlowLogResourceIds": {
       "base": null,
       "refs": {
-        "CreateFlowLogsRequest$ResourceIds": "<p>The IDs of the resources to monitor. For example, if the resource type is <code>VPC</code>, specify the IDs of the VPCs.</p> <p>Constraints: Maximum of 25 for transit gateway resource types. Maximum of 1000 for the other resource types.</p>"
+        "CreateFlowLogsRequest$ResourceIds": "<p>The IDs of the resources to monitor. For example, if the resource type is <code>VPC</code>, specify the IDs of the VPCs.</p> <p>Constraints: Maximum of 25 for transit gateway resource types. Maximum of 300 for the other resource types.</p>"
       }
     },
     "FlowLogSet": {
@@ -13550,6 +13820,67 @@
         "RegisteredInstance$HaStatus": "<p>The SQL Server High Availability status of the instance. Valid values are:</p> <ul> <li> <p> <code>processing</code> - The SQL Server High Availability status for the SQL Server High Availability instance is being updated.</p> </li> <li> <p> <code>active</code> - The SQL Server High Availability instance is an active node in an SQL Server High Availability cluster.</p> </li> <li> <p> <code>standby</code> - The SQL Server High Availability instance is a standby failover node in an SQL Server High Availability cluster.</p> </li> <li> <p> <code>invalid</code> - An error occurred due to misconfigured permissions, or unable to dertemine SQL Server High Availability status for the SQL Server High Availability instance.</p> </li> </ul>"
       }
     },
+    "HealthCheckPathDestinationRequestObject": {
+      "base": "<p>Describes a destination for a health check path in a request. Destinations can be in a different Availability Zone than the source (cross-AZ) or in a Local Zone (AZ to Local Zone), enabling remote health validation of your application.</p>",
+      "refs": {
+        "HealthCheckPathDestinationRequestSet$member": null
+      }
+    },
+    "HealthCheckPathDestinationRequestSet": {
+      "base": null,
+      "refs": {
+        "HealthCheckPathRequestObject$Destinations": "<p>The destinations for the health check path.</p>"
+      }
+    },
+    "HealthCheckPathDestinationResponseList": {
+      "base": null,
+      "refs": {
+        "HealthCheckPathResponseObject$Destinations": "<p>The destinations for the health check path.</p>"
+      }
+    },
+    "HealthCheckPathDestinationResponseObject": {
+      "base": "<p>Describes a destination for a health check path.</p>",
+      "refs": {
+        "HealthCheckPathDestinationResponseList$member": null
+      }
+    },
+    "HealthCheckPathRequestList": {
+      "base": null,
+      "refs": {
+        "CreateApplicationStatusCheckRequest$HealthCheckPaths": "<p>The health check paths to use for the application status check. Health check paths define the network path from a source subnet to one or more destination subnets for cross-Availability Zone or Availability Zone to Local Zone health checking. If omitted, health checks are performed in the same subnet as the instance.</p>",
+        "ModifyApplicationStatusCheckRequest$HealthCheckPaths": "<p>The health check paths to use for the application status check.</p>"
+      }
+    },
+    "HealthCheckPathRequestObject": {
+      "base": "<p>Describes a health check path for an application status check request.</p>",
+      "refs": {
+        "HealthCheckPathRequestList$member": null
+      }
+    },
+    "HealthCheckPathResponseList": {
+      "base": null,
+      "refs": {
+        "ApplicationStatusCheckResponseObject$HealthCheckPaths": "<p>The health check paths for the application status check.</p>"
+      }
+    },
+    "HealthCheckPathResponseObject": {
+      "base": "<p>Describes a health check path for an application status check.</p>",
+      "refs": {
+        "HealthCheckPathResponseList$member": null
+      }
+    },
+    "HealthCheckPathSourceRequestObject": {
+      "base": "<p>Describes the source for a health check path in a request. The source defines the subnet and security group where a health check elastic network interface (ENI) is created to originate health check traffic.</p>",
+      "refs": {
+        "HealthCheckPathRequestObject$Source": "<p>The source for the health check path.</p>"
+      }
+    },
+    "HealthCheckPathSourceResponseObject": {
+      "base": "<p>Describes the source for a health check path.</p>",
+      "refs": {
+        "HealthCheckPathResponseObject$Source": "<p>The source for the health check path.</p>"
+      }
+    },
     "HibernationFlag": {
       "base": null,
       "refs": {
@@ -14525,6 +14856,14 @@
         "GetCapacityManagerAttributesResult$IngestionStatus": "<p> The current data ingestion status. Initial ingestion may take several hours after enabling Capacity Manager. </p>"
       }
     },
+    "InitializationGracePeriodSeconds": {
+      "base": null,
+      "refs": {
+        "ApplicationStatusCheckResponseObject$InitializationGracePeriodSeconds": "<p>The number of seconds to wait before starting health checks after an instance is launched. Valid values: 1 to 600.</p>",
+        "CreateApplicationStatusCheckRequest$InitializationGracePeriodSeconds": "<p>The number of seconds to wait before starting health checks after an instance is launched. Valid values: 1 to 600.</p>",
+        "ModifyApplicationStatusCheckRequest$InitializationGracePeriodSeconds": "<p>The number of seconds to wait before starting health checks after an instance is launched. Valid values: 1 to 600.</p>"
+      }
+    },
     "InitializationStatusDetails": {
       "base": "<p>Information about the volume initialization. For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/initalize-volume.html\">Initialize Amazon EBS volumes</a>.</p>",
       "refs": {
@@ -14548,6 +14887,18 @@
       "base": "<p>Describes an instance.</p>",
       "refs": {
         "InstanceList$member": null
+      }
+    },
+    "InstanceApplicationStatus": {
+      "base": "<p>Describes the application status for an instance.</p>",
+      "refs": {
+        "InstanceApplicationStatusSet$member": null
+      }
+    },
+    "InstanceApplicationStatusSet": {
+      "base": null,
+      "refs": {
+        "ApplicationStatusesResponseType$Instances": "<p>The application status information for the instances.</p>"
       }
     },
     "InstanceAttachmentEnaSrdSpecification": {
@@ -14864,6 +15215,7 @@
         "GetInstanceUefiDataResult$InstanceId": "<p>The ID of the instance from which to retrieve the UEFI data.</p>",
         "GetLaunchTemplateDataRequest$InstanceId": "<p>The ID of the instance.</p>",
         "GetPasswordDataRequest$InstanceId": "<p>The ID of the Windows instance.</p>",
+        "InstanceApplicationStatus$InstanceId": "<p>The ID of the instance.</p>",
         "InstanceCreditSpecificationRequest$InstanceId": "<p>The ID of the instance.</p>",
         "InstanceIdList$member": null,
         "InstanceIdSet$member": null,
@@ -14887,7 +15239,9 @@
         "ReplaceRouteRequest$InstanceId": "<p>The ID of a NAT instance in your VPC.</p>",
         "ResetInstanceAttributeRequest$InstanceId": "<p>The ID of the instance.</p>",
         "SendDiagnosticInterruptRequest$InstanceId": "<p>The ID of the instance.</p>",
-        "SpotInstanceRequest$InstanceId": "<p>The instance ID, if an instance has been launched to fulfill the Spot Instance request.</p>"
+        "SpotInstanceRequest$InstanceId": "<p>The instance ID, if an instance has been launched to fulfill the Spot Instance request.</p>",
+        "SuccessfulSuppressionResponseObject$InstanceId": "<p>The ID of the instance.</p>",
+        "UnsuccessfulSuppressionResponseObject$InstanceId": "<p>The ID of the instance.</p>"
       }
     },
     "InstanceIdForResolver": {
@@ -14899,6 +15253,11 @@
     "InstanceIdList": {
       "base": null,
       "refs": {
+        "AssociateApplicationStatusCheckRequest$InstanceIds": "<p>The IDs of the instances to associate with the application status check.</p>",
+        "DescribeApplicationStatusRequest$InstanceIds": "<p>The IDs of the instances for which to describe application status.</p>",
+        "DisableApplicationStatusCheckSuppressionRequest$InstanceIds": "<p>The IDs of the instances for which to disable application status check suppression.</p>",
+        "DisassociateApplicationStatusCheckRequest$InstanceIds": "<p>The IDs of the instances to disassociate from the application status check.</p>",
+        "EnableApplicationStatusCheckSuppressionRequest$InstanceIds": "<p>The IDs of the instances for which to suppress application status checks.</p>",
         "InstanceEventWindowAssociationRequest$InstanceIds": "<p>The IDs of the instances to associate with the event window. If the instance is on a Dedicated Host, you can't specify the Instance ID parameter; you must use the Dedicated Host ID parameter.</p>",
         "InstanceEventWindowAssociationTarget$InstanceIds": "<p>The IDs of the instances associated with the event window.</p>",
         "InstanceEventWindowDisassociationRequest$InstanceIds": "<p>The IDs of the instances to disassociate from the event window.</p>"
@@ -15328,7 +15687,7 @@
       }
     },
     "InstanceStatus": {
-      "base": "<p>Describes the status of an instance.</p>",
+      "base": "<p>Describes the status of an instance, including system status, instance status, attached EBS status, and application status.</p>",
       "refs": {
         "InstanceStatusList$member": null
       }
@@ -15529,6 +15888,13 @@
         "AllocateHostsRequest$Quantity": "<p>The number of Dedicated Hosts to allocate to your account with these parameters. If you are allocating the Dedicated Hosts on an Outpost, and you specify <b>AssetIds</b>, you can omit this parameter. In this case, Amazon EC2 allocates a Dedicated Host on each specified hardware asset. If you specify both <b>AssetIds</b> and <b>Quantity</b>, then the value that you specify for <b>Quantity</b> must be equal to the number of asset IDs specified.</p>",
         "AllocateIpamPoolCidrRequest$NetmaskLength": "<p>The netmask length of the CIDR you would like to allocate from the IPAM pool. Note the following:</p> <ul> <li> <p>If there is no DefaultNetmaskLength allocation rule set on the pool, you must specify either the NetmaskLength or the CIDR.</p> </li> <li> <p>If the DefaultNetmaskLength allocation rule is set on the pool, you can specify either the NetmaskLength or the CIDR and the DefaultNetmaskLength allocation rule will be ignored.</p> </li> </ul> <p>Possible netmask lengths for IPv4 addresses are 0 - 32. Possible netmask lengths for IPv6 addresses are 0 - 128.</p>",
         "AnalysisAclRule$RuleNumber": "<p>The rule number.</p>",
+        "ApplicationStatusCheckResponseObject$Port": "<p>The port used for the health check.</p>",
+        "ApplicationStatusCheckResponseObject$DeviceIndex": "<p>The index of the network device used for the health check. The value is greater than or equal to 0.</p>",
+        "ApplicationStatusCheckResponseObject$Interval": "<p>The interval, in seconds, between health checks. Valid value: 60.</p>",
+        "ApplicationStatusCheckResponseObject$Timeout": "<p>The amount of time, in seconds, to wait for a health check response. Valid values: 1 to 30.</p>",
+        "ApplicationStatusCheckResponseObject$FailureThreshold": "<p>The number of consecutive failed health checks before the application status is considered impaired. The value must be greater than 0.</p>",
+        "ApplicationStatusCheckResponseObject$SuccessThreshold": "<p>The number of consecutive successful health checks before the application status is considered healthy. The value must be greater than 0.</p>",
+        "ApplicationStatusReason$StatusCode": "<p>The HTTP status code returned by the health check.</p>",
         "AssignIpv6AddressesRequest$Ipv6PrefixCount": "<p>The number of IPv6 prefixes that Amazon Web Services automatically assigns to the network interface. You cannot use this option if you use the <code>Ipv6Prefixes</code> option.</p>",
         "AssignIpv6AddressesRequest$Ipv6AddressCount": "<p>The number of additional IPv6 addresses to assign to the network interface. The specified number of IPv6 addresses are assigned in addition to the existing IPv6 addresses that are already assigned to the network interface. Amazon EC2 automatically selects the IPv6 addresses from the subnet range. You can't use this option if specifying specific IPv6 addresses.</p>",
         "AssignPrivateIpAddressesRequest$Ipv4PrefixCount": "<p>The number of IPv4 prefixes that Amazon Web Services automatically assigns to the network interface. You can't use this option if you use the <code>Ipv4 Prefixes</code> option.</p>",
@@ -15590,6 +15956,11 @@
         "CpuOptions$ThreadsPerCore": "<p>The number of threads per CPU core.</p>",
         "CpuOptionsRequest$CoreCount": "<p>The number of CPU cores for the instance.</p>",
         "CpuOptionsRequest$ThreadsPerCore": "<p>The number of threads per CPU core. To disable multithreading for the instance, specify a value of <code>1</code>. Otherwise, specify the default value of <code>2</code>.</p>",
+        "CreateApplicationStatusCheckRequest$DeviceIndex": "<p>The index of the network device to use for the health check. The value must be greater than or equal to 0.</p>",
+        "CreateApplicationStatusCheckRequest$Interval": "<p>The interval, in seconds, between health checks. Valid value: 60.</p>",
+        "CreateApplicationStatusCheckRequest$Timeout": "<p>The amount of time, in seconds, to wait for a health check response before considering it failed. Valid values: 1 to 30. The value must be less than <code>Interval</code>.</p>",
+        "CreateApplicationStatusCheckRequest$FailureThreshold": "<p>The number of consecutive failed health checks before the application status is considered impaired. The value must be greater than 0.</p>",
+        "CreateApplicationStatusCheckRequest$SuccessThreshold": "<p>The number of consecutive successful health checks before the application status is considered healthy. The value must be greater than 0.</p>",
         "CreateCapacityReservationBySplittingRequest$InstanceCount": "<p> The number of instances to split from the source Capacity Reservation. </p>",
         "CreateCapacityReservationBySplittingResult$InstanceCount": "<p> The number of instances in the new Capacity Reservation. The number of instances in the source Capacity Reservation was reduced by this amount. </p>",
         "CreateCapacityReservationFleetRequest$TotalTargetCapacity": "<p>The total number of capacity units to be reserved by the Capacity Reservation Fleet. This value, together with the instance type weights that you assign to each instance type used by the Fleet determine the number of instances for which the Fleet reserves capacity. Both values are based on units that make sense for your workload. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/crfleet-concepts.html#target-capacity\">Total target capacity</a> in the <i>Amazon EC2 User Guide</i>.</p>",
@@ -15794,6 +16165,11 @@
         "MemoryMiB$Max": "<p>The maximum amount of memory, in MiB. If this parameter is not specified, there is no maximum limit.</p>",
         "MemoryMiBRequest$Min": "<p>The minimum amount of memory, in MiB. To specify no minimum limit, specify <code>0</code>.</p>",
         "MemoryMiBRequest$Max": "<p>The maximum amount of memory, in MiB. To specify no maximum limit, omit this parameter.</p>",
+        "ModifyApplicationStatusCheckRequest$DeviceIndex": "<p>The index of the network device to use for the health check. The value must be greater than or equal to 0.</p>",
+        "ModifyApplicationStatusCheckRequest$Interval": "<p>The interval, in seconds, between health checks. Valid value: 60.</p>",
+        "ModifyApplicationStatusCheckRequest$Timeout": "<p>The amount of time, in seconds, to wait for a health check response before considering it failed. Valid values: 1 to 30. The value must be less than <code>Interval</code>.</p>",
+        "ModifyApplicationStatusCheckRequest$FailureThreshold": "<p>The number of consecutive failed health checks before the application status is considered impaired. The value must be greater than 0.</p>",
+        "ModifyApplicationStatusCheckRequest$SuccessThreshold": "<p>The number of consecutive successful health checks before the application status is considered healthy. The value must be greater than 0.</p>",
         "ModifyCapacityReservationFleetRequest$TotalTargetCapacity": "<p>The total number of capacity units to be reserved by the Capacity Reservation Fleet. This value, together with the instance type weights that you assign to each instance type used by the Fleet determine the number of instances for which the Fleet reserves capacity. Both values are based on units that make sense for your workload. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/crfleet-concepts.html#target-capacity\">Total target capacity</a> in the <i>Amazon EC2 User Guide</i>.</p>",
         "ModifyCapacityReservationRequest$InstanceCount": "<p>The number of instances for which to reserve capacity. The number of instances can't be increased or decreased by more than <code>1000</code> in a single request.</p>",
         "ModifyClientVpnEndpointRequest$VpnPort": "<p>The port number to assign to the Client VPN endpoint for TCP and UDP traffic.</p> <p>Valid Values: <code>443</code> | <code>1194</code> </p> <p>Default Value: <code>443</code> </p>",
@@ -16182,11 +16558,27 @@
         "StaleIpPermission$IpRanges": "<p>The IP ranges. Not applicable for stale security group rules.</p>"
       }
     },
+    "IpScopeEnum": {
+      "base": null,
+      "refs": {
+        "ApplicationStatusCheckResponseObject$IpScope": "<p>The IP scope used for the health check.</p>",
+        "CreateApplicationStatusCheckRequest$IpScope": "<p>The IP scope to use for the health check. Valid value: <code>private</code>.</p>",
+        "ModifyApplicationStatusCheckRequest$IpScope": "<p>The IP scope to use for the health check. Valid value: <code>private</code>.</p>"
+      }
+    },
     "IpSource": {
       "base": null,
       "refs": {
         "SubnetIpv6CidrBlockAssociation$IpSource": "<p>The source that allocated the IP address space. <code>byoip</code> or <code>amazon</code> indicates public IP address space allocated by Amazon or space that you have allocated with Bring your own IP (BYOIP). <code>none</code> indicates private space.</p>",
         "VpcIpv6CidrBlockAssociation$IpSource": "<p>The source that allocated the IP address space. <code>byoip</code> or <code>amazon</code> indicates public IP address space allocated by Amazon or space that you have allocated with Bring your own IP (BYOIP). <code>none</code> indicates private space.</p>"
+      }
+    },
+    "IpVersionEnum": {
+      "base": null,
+      "refs": {
+        "ApplicationStatusCheckResponseObject$IpVersion": "<p>The IP version used for the health check.</p>",
+        "CreateApplicationStatusCheckRequest$IpVersion": "<p>The IP version to use for the health check. Valid values: <code>ipv4</code> and <code>ipv6</code>.</p>",
+        "ModifyApplicationStatusCheckRequest$IpVersion": "<p>The IP version to use for the health check. Valid values: <code>ipv4</code> and <code>ipv6</code>.</p>"
       }
     },
     "Ipam": {
@@ -18878,6 +19270,17 @@
         "AccountVpcEncryptionControl$LastUpdateTimestamp": "<p>The date and time when the account-level VPC Encryption Control configuration was last updated.</p>",
         "AddressTransfer$TransferOfferExpirationTimestamp": "<p>The timestamp when the Elastic IP address transfer expired. When the source account starts the transfer, the transfer account has seven hours to allocate the Elastic IP address to complete the transfer, or the Elastic IP address will return to its original owner.</p>",
         "AddressTransfer$TransferOfferAcceptedTimestamp": "<p>The timestamp when the Elastic IP address transfer was accepted.</p>",
+        "ApplicationStatus$StatusTimeStamp": "<p>The date and time of the last status update.</p>",
+        "ApplicationStatus$StatusSince": "<p>The date and time when the current status started.</p>",
+        "ApplicationStatus$ResumeAt": "<p>The date and time when application status reporting resumes after suppression.</p>",
+        "ApplicationStatusCheckResponseObject$LastUpdatedAt": "<p>The date and time when the application status check was last updated.</p>",
+        "ApplicationStatusCheckResponseObject$CreationTime": "<p>The date and time when the application status check was created.</p>",
+        "ApplicationStatusCheckResponseObject$ModifyTime": "<p>The date and time when the application status check was last modified.</p>",
+        "ApplicationStatusCheckResponseObject$DeletionTime": "<p>The date and time when the application status check was deleted.</p>",
+        "ApplicationStatusDetail$CheckUpdateTime": "<p>The date and time when the check was last updated.</p>",
+        "ApplicationStatusDetail$StatusTimeStamp": "<p>The date and time of the last status update for this check.</p>",
+        "ApplicationStatusDetail$StatusSince": "<p>The date and time when the current status started for this check.</p>",
+        "ApplicationStatusSummary$ImpairedSince": "<p>The date and time when the application status became impaired.</p>",
         "AthenaIntegration$PartitionStartDate": "<p>The start date for the partition.</p>",
         "AthenaIntegration$PartitionEndDate": "<p>The end date for the partition.</p>",
         "CancellationTerms$ChargeEndDate": "<p>The date and time at which cancellation charges will stop.</p>",
@@ -19011,9 +19414,13 @@
         "SnapshotTierStatus$RestoreExpiryTime": "<p>Only for archived snapshots that are temporarily restored. Indicates the date and time when a temporarily restored snapshot will be automatically re-archived.</p>",
         "SpotFleetRequestConfig$CreateTime": "<p>The creation date and time of the request.</p>",
         "StoreImageTaskResult$TaskStartTime": "<p>The time the task started.</p>",
+        "SuccessfulSuppressionResponseObject$SuppressAt": "<p>The date and time when suppression started.</p>",
+        "SuccessfulSuppressionResponseObject$ResumeAt": "<p>The date and time when suppression ends and health checks resume.</p>",
         "TransitGatewayMeteringPolicy$UpdateEffectiveAt": "<p>The date and time when the metering policy update becomes effective.</p>",
         "TransitGatewayMeteringPolicyEntry$UpdatedAt": "<p>The date and time when the metering policy entry was last updated.</p>",
         "TransitGatewayMeteringPolicyEntry$UpdateEffectiveAt": "<p>The date and time when the metering policy entry update becomes effective.</p>",
+        "UnsuccessfulSuppressionResponseObject$SuppressAt": "<p>The date and time when suppression was attempted.</p>",
+        "UnsuccessfulSuppressionResponseObject$ResumeAt": "<p>The date and time when health checks would have resumed.</p>",
         "VolumeRecycleBinInfo$RecycleBinEnterTime": "<p>The date and time when the volume entered the Recycle Bin.</p>",
         "VolumeRecycleBinInfo$RecycleBinExitTime": "<p>The date and time when the volume is to be permanently deleted from the Recycle Bin.</p>",
         "VolumeStatusEvent$NotAfter": "<p>The latest end time of the event.</p>",
@@ -19042,6 +19449,16 @@
       }
     },
     "ModifyAddressAttributeResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ModifyApplicationStatusCheckRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ModifyApplicationStatusCheckResult": {
       "base": null,
       "refs": {
       }
@@ -20550,6 +20967,14 @@
         "NetworkInfo$NetworkPerformance": "<p>The network performance.</p>"
       }
     },
+    "NetworkProtocolEnum": {
+      "base": null,
+      "refs": {
+        "ApplicationStatusCheckResponseObject$Protocol": "<p>The protocol used for the health check.</p>",
+        "CreateApplicationStatusCheckRequest$Protocol": "<p>The protocol to use for the health check. Valid values: <code>http</code> | <code>https</code>.</p>",
+        "ModifyApplicationStatusCheckRequest$Protocol": "<p>The protocol to use for the health check. Valid values: <code>http</code> | <code>https</code>.</p>"
+      }
+    },
     "NeuronDeviceCoreCount": {
       "base": null,
       "refs": {
@@ -21462,6 +21887,13 @@
         "FilterPortRange$ToPort": "<p>The last port in the range.</p>",
         "RequestFilterPortRange$FromPort": "<p>The first port in the range.</p>",
         "RequestFilterPortRange$ToPort": "<p>The last port in the range.</p>"
+      }
+    },
+    "PortNumber": {
+      "base": null,
+      "refs": {
+        "CreateApplicationStatusCheckRequest$Port": "<p>The port to use for the health check. Valid values: 1 to 65535.</p>",
+        "ModifyApplicationStatusCheckRequest$Port": "<p>The port to use for the health check. Valid values: 1 to 65535.</p>"
       }
     },
     "PortRange": {
@@ -24089,6 +24521,8 @@
         "DeleteSecurityGroupResult$GroupId": "<p>The ID of the deleted security group.</p>",
         "GroupIdStringList$member": null,
         "GroupIds$member": null,
+        "HealthCheckPathDestinationRequestObject$SecurityGroupId": "<p>The ID of the security group for the destination.</p>",
+        "HealthCheckPathSourceRequestObject$SecurityGroupId": "<p>The ID of the security group for the source.</p>",
         "ModifySecurityGroupRulesRequest$GroupId": "<p>The ID of the security group.</p>",
         "RequestSpotLaunchSpecificationSecurityGroupIdList$member": null,
         "RevokeSecurityGroupEgressRequest$GroupId": "<p>The ID of the security group.</p>",
@@ -24293,6 +24727,12 @@
       "refs": {
         "CreateDelegateMacVolumeOwnershipTaskRequest$MacCredentials": "<p>Specifies the following credentials:</p> <ul> <li> <p> <b>Internal disk administrative user</b> </p> <ul> <li> <p> <b>Username</b> - Only the default administrative user (<code>aws-managed-user</code>) is supported and it is used by default. You can't specify a different administrative user.</p> </li> <li> <p> <b>Password</b> - If you did not change the default password for <code>aws-managed-user</code>, specify the default password, which is <i>blank</i>. Otherwise, specify your password.</p> </li> </ul> </li> <li> <p> <b>Amazon EBS root volume administrative user</b> </p> <ul> <li> <p> <b>Username</b> - If you did not change the default administrative user, specify <code>ec2-user</code>. Otherwise, specify the username for your administrative user.</p> </li> <li> <p> <b>Password</b> - Specify the password for the administrative user.</p> </li> </ul> </li> </ul> <p>The credentials must be specified in the following JSON format:</p> <p> <code>{ \"internalDiskPassword\":\"<i>internal-disk-admin_password</i>\", \"rootVolumeUsername\":\"<i>root-volume-admin_username</i>\", \"rootVolumepassword\":\"<i>root-volume-admin_password</i>\" }</code> </p>",
         "CreateMacSystemIntegrityProtectionModificationTaskRequest$MacCredentials": "<p> <b>[Apple silicon Mac instances only]</b> Specifies the following credentials:</p> <ul> <li> <p> <b>Internal disk administrative user</b> </p> <ul> <li> <p> <b>Username</b> - Only the default administrative user (<code>aws-managed-user</code>) is supported and it is used by default. You can't specify a different administrative user.</p> </li> <li> <p> <b>Password</b> - If you did not change the default password for <code>aws-managed-user</code>, specify the default password, which is <i>blank</i>. Otherwise, specify your password.</p> </li> </ul> </li> <li> <p> <b>Amazon EBS root volume administrative user</b> </p> <ul> <li> <p> <b>Username</b> - If you did not change the default administrative user, specify <code>ec2-user</code>. Otherwise, specify the username for your administrative user.</p> </li> <li> <p> <b>Password</b> - Specify the password for the administrative user.</p> </li> </ul> </li> </ul> <p>The credentials must be specified in the following JSON format:</p> <p> <code>{ \"internalDiskPassword\":\"<i>internal-disk-admin_password</i>\", \"rootVolumeUsername\":\"<i>root-volume-admin_username</i>\", \"rootVolumepassword\":\"<i>root-volume-admin_password</i>\" }</code> </p>"
+      }
+    },
+    "SensitiveString": {
+      "base": null,
+      "refs": {
+        "GetInstanceUefiDataResult$UefiData": "<p>Base64 representation of the non-volatile UEFI variable store.</p>"
       }
     },
     "SensitiveUrl": {
@@ -25089,6 +25529,12 @@
         "AnalysisSecurityGroupRule$SecurityGroupId": "<p>The security group ID.</p>",
         "AnalysisSecurityGroupRule$PrefixListId": "<p>The prefix list ID.</p>",
         "AnalysisSecurityGroupRule$Protocol": "<p>The protocol name.</p>",
+        "ApplicationStatusCheckAssociationObject$Key": "<p>The key for the association. This value is present only for tag-based associations, where it contains the tag key. For instance-based associations, this value is absent.</p>",
+        "ApplicationStatusCheckAssociationObject$Value": "<p>The value for the association target. For tag-based associations, this is the tag value. For instance-based associations, this is the instance ID (for example, <code>i-0123456789abcdef0</code>).</p>",
+        "ApplicationStatusCheckResponseObject$Path": "<p>The URL path used for the health check HTTP request.</p>",
+        "ApplicationStatusCheckResponseObject$StatusCodeMatcher": "<p>The comma-separated list of individual HTTP status codes or ranges that indicate a successful health check response.</p>",
+        "ApplicationStatusReason$Code": "<p>The reason code for the application status check result. Possible values:</p> <ul> <li> <p> <code>ResponseCodeMatched</code> – The HTTP status code returned by the health check matched the configured <code>StatusCodeMatcher</code>.</p> </li> <li> <p> <code>ResponseCodeMismatch</code> – The HTTP status code returned by the health check did not match the configured <code>StatusCodeMatcher</code>.</p> </li> <li> <p> <code>ConnectionTimeout</code> – The connection to the target timed out.</p> </li> <li> <p> <code>ResponseTimeout</code> – The health check timed out while waiting for a response from the target.</p> </li> <li> <p> <code>ConnectionRefused</code> – The target refused the health check connection.</p> </li> <li> <p> <code>ConnectionReset</code> – The target reset the health check connection before returning a response.</p> </li> </ul> <p>Current health check results use the values in the preceding list. Legacy results that do not contain structured reason metadata can instead contain a producer error type, such as <code>Http Status Code</code> or <code>HttpConnectTimeoutException</code>.</p> <p>For <code>ResponseCodeMatched</code> and <code>ResponseCodeMismatch</code>, the <code>statusCode</code> field contains the returned HTTP status code. The <code>protocol</code> field contains the protocol used for the health check.</p>",
+        "ApplicationStatusReason$Protocol": "<p>The protocol used for the health check. Possible values: <code>HTTP</code> and <code>HTTPS</code>.</p>",
         "AsPath$member": null,
         "AsnAssociation$Asn": "<p>The association's ASN.</p>",
         "AsnAssociation$Cidr": "<p>The association's CIDR.</p>",
@@ -25100,6 +25546,7 @@
         "AssignedPrivateIpAddress$PrivateIpAddress": "<p>The private IP address assigned to the network interface.</p>",
         "AssociateAddressRequest$PrivateIpAddress": "<p>The primary or secondary private IP address to associate with the Elastic IP address. If no private IP address is specified, the Elastic IP address is associated with the primary private IP address.</p>",
         "AssociateAddressResult$AssociationId": "<p>The ID that represents the association of the Elastic IP address with an instance.</p>",
+        "AssociateApplicationStatusCheckRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "AssociateClientVpnTargetNetworkRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensuring idempotency</a>.</p>",
         "AssociateClientVpnTargetNetworkResult$AssociationId": "<p>The unique ID of the target network association.</p>",
         "AssociateEnclaveCertificateIamRoleResult$CertificateS3BucketName": "<p>The name of the Amazon S3 bucket to which the certificate was uploaded.</p>",
@@ -25347,6 +25794,9 @@
         "CopySnapshotRequest$DestinationAvailabilityZone": "<p>The Local Zone, for example, <code>cn-north-1-pkx-1a</code> to which to copy the snapshot.</p> <note> <p>Only supported when copying a snapshot to a Local Zone.</p> </note>",
         "CopySnapshotResult$SnapshotId": "<p>The ID of the new snapshot.</p>",
         "CopyVolumesRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\"> Ensure Idempotency</a>.</p>",
+        "CreateApplicationStatusCheckRequest$Path": "<p>The URL path to use for the health check HTTP request (for example, <code>/health</code> or <code>/status</code>).</p>",
+        "CreateApplicationStatusCheckRequest$StatusCodeMatcher": "<p>The HTTP status codes that indicate a successful health check response. Specify a comma-separated list of individual status codes or ranges, for example, <code>200,202,300-399</code>. For a range, the first value must be less than the second value. Maximum length: 64 characters. Default: <code>200</code>.</p>",
+        "CreateApplicationStatusCheckRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateCapacityManagerDataExportRequest$S3BucketName": "<p> The name of the S3 bucket where the capacity data export files will be delivered. The bucket must exist and you must have write permissions to it. </p>",
         "CreateCapacityManagerDataExportRequest$S3BucketPrefix": "<p> The S3 key prefix for the exported data files. This allows you to organize exports in a specific folder structure within your bucket. If not specified, files are placed at the bucket root. </p>",
         "CreateCapacityManagerDataExportRequest$ClientToken": "<p> Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see Ensure Idempotency. </p>",
@@ -25564,6 +26014,10 @@
         "CreateVpnGatewayRequest$AvailabilityZone": "<p>The Availability Zone for the virtual private gateway.</p>",
         "CreditSpecification$CpuCredits": "<p>The credit option for CPU usage of a T instance.</p> <p>Valid values: <code>standard</code> | <code>unlimited</code> </p>",
         "CreditSpecificationRequest$CpuCredits": "<p>The credit option for CPU usage of a T instance.</p> <p>Valid values: <code>standard</code> | <code>unlimited</code> </p>",
+        "CustomTagKeyValueRequestPair$Key": "<p>The key of the tag.</p>",
+        "CustomTagKeyValueRequestPair$Value": "<p>The value of the tag.</p>",
+        "CustomTagKeyValueResponsePair$Key": "<p>The key of the tag.</p>",
+        "CustomTagKeyValueResponsePair$Value": "<p>The value of the tag.</p>",
         "CustomerGateway$CertificateArn": "<p>The Amazon Resource Name (ARN) for the customer gateway certificate.</p>",
         "CustomerGateway$DeviceName": "<p>The name of customer gateway device.</p>",
         "CustomerGateway$BgpAsnExtended": "<p>The customer gateway device's Border Gateway Protocol (BGP) Autonomous System Number (ASN).</p> <p>Valid values: <code>2,147,483,648</code> to <code>4,294,967,295</code> </p>",
@@ -25582,6 +26036,7 @@
         "DeclarativePoliciesReport$S3Bucket": "<p>The name of the Amazon S3 bucket where the report is located.</p>",
         "DeclarativePoliciesReport$S3Prefix": "<p>The prefix for your S3 object.</p>",
         "DeclarativePoliciesReport$TargetId": "<p>The root ID, organizational unit ID, or account ID.</p> <p>Format:</p> <ul> <li> <p>For root: <code>r-ab12</code> </p> </li> <li> <p>For OU: <code>ou-ab12-cdef1234</code> </p> </li> <li> <p>For account: <code>123456789012</code> </p> </li> </ul>",
+        "DeleteApplicationStatusCheckRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "DeleteClientVpnRouteRequest$DestinationCidrBlock": "<p>The IPv4 address range, in CIDR notation, of the route to be deleted.</p>",
         "DeleteCoipCidrRequest$Cidr": "<p> A customer-owned IP address range that you want to delete. </p>",
         "DeleteFleetError$Message": "<p>The description for the error code.</p>",
@@ -25620,6 +26075,12 @@
         "DeregisterTransitGatewayMulticastGroupSourcesRequest$GroupIpAddress": "<p>The IP address assigned to the transit gateway multicast group.</p>",
         "DescribeAddressTransfersRequest$NextToken": "<p>Specify the pagination token from a previous request to retrieve the next page of results.</p>",
         "DescribeAddressTransfersResult$NextToken": "<p>Specify the pagination token from a previous request to retrieve the next page of results.</p>",
+        "DescribeApplicationStatusCheckAssociationsRequest$NextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>",
+        "DescribeApplicationStatusCheckAssociationsResult$NextToken": "<p>The token to include in another request to get the next page of items. This value is &lt;code&gt;null&lt;/code&gt; when there are no more items to return.</p>",
+        "DescribeApplicationStatusChecksRequest$NextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>",
+        "DescribeApplicationStatusChecksResult$NextToken": "<p>The token to include in another request to get the next page of items. This value is &lt;code&gt;null&lt;/code&gt; when there are no more items to return.</p>",
+        "DescribeApplicationStatusRequest$NextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>",
+        "DescribeApplicationStatusResult$NextToken": "<p>The token to include in another request to get the next page of items. This value is &lt;code&gt;null&lt;/code&gt; when there are no more items to return.</p>",
         "DescribeAwsNetworkPerformanceMetricSubscriptionsRequest$NextToken": "<p>The token for the next page of results.</p>",
         "DescribeAwsNetworkPerformanceMetricSubscriptionsResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "DescribeByoipCidrsResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
@@ -25886,6 +26347,7 @@
         "DhcpOptions$DhcpOptionsId": "<p>The ID of the set of DHCP options.</p>",
         "DirectoryServiceAuthentication$DirectoryId": "<p>The ID of the Active Directory used for authentication.</p>",
         "DirectoryServiceAuthenticationRequest$DirectoryId": "<p>The ID of the Active Directory to be used for authentication.</p>",
+        "DisableApplicationStatusCheckSuppressionRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "DisableAwsNetworkPerformanceMetricSubscriptionRequest$Source": "<p>The source Region or Availability Zone that the metric subscription is disabled for. For example, <code>us-east-1</code>.</p>",
         "DisableAwsNetworkPerformanceMetricSubscriptionRequest$Destination": "<p>The target Region or Availability Zone that the metric subscription is disabled for. For example, <code>eu-north-1</code>.</p>",
         "DisableCapacityManagerRequest$ClientToken": "<p> Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. </p>",
@@ -25905,6 +26367,7 @@
         "DisableImageDeregistrationProtectionResult$Return": "<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>",
         "DisableIpamOrganizationAdminAccountRequest$DelegatedAdminAccountId": "<p>The Organizations member account ID that you want to disable as IPAM account.</p>",
         "DisableIpamPolicyRequest$OrganizationTargetId": "<p>The ID of the Amazon Web Services Organizations target for which to disable the IPAM policy. This parameter is required only when IPAM is integrated with Amazon Web Services Organizations. When IPAM is not integrated with Amazon Web Services Organizations, omit this parameter and the policy will be disabled for the current account.</p> <p>A target can be an individual Amazon Web Services account or an entity within an Amazon Web Services Organization to which an IPAM policy can be applied.</p>",
+        "DisassociateApplicationStatusCheckRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "DisassociateClientVpnTargetNetworkRequest$AssociationId": "<p>The ID of the target network association.</p>",
         "DisassociateClientVpnTargetNetworkResult$AssociationId": "<p>The ID of the target network association.</p>",
         "DisassociateIpamByoasnRequest$Asn": "<p>A public 2-byte or 4-byte ASN.</p>",
@@ -25947,6 +26410,7 @@
         "ElasticInferenceAcceleratorAssociation$ElasticInferenceAcceleratorAssociationId": "<p> The ID of the association. </p>",
         "ElasticInferenceAcceleratorAssociation$ElasticInferenceAcceleratorAssociationState": "<p> The state of the elastic inference accelerator. </p>",
         "EnableAddressTransferRequest$TransferAccountId": "<p>The ID of the account that you want to transfer the Elastic IP address to.</p>",
+        "EnableApplicationStatusCheckSuppressionRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "EnableAwsNetworkPerformanceMetricSubscriptionRequest$Source": "<p>The source Region (like <code>us-east-1</code>) or Availability Zone ID (like <code>use1-az1</code>) that the metric subscription is enabled for. If you use Availability Zone IDs, the Source and Destination Availability Zones must be in the same Region.</p>",
         "EnableAwsNetworkPerformanceMetricSubscriptionRequest$Destination": "<p>The target Region (like <code>us-east-2</code>) or Availability Zone ID (like <code>use2-az2</code>) that the metric subscription is enabled for. If you use Availability Zone IDs, the Source and Destination Availability Zones must be in the same Region.</p>",
         "EnableCapacityManagerRequest$ClientToken": "<p> Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. </p>",
@@ -26099,7 +26563,6 @@
         "GetInstanceTypesFromInstanceRequirementsRequest$NextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>",
         "GetInstanceTypesFromInstanceRequirementsRequest$Context": "<p>Reserved.</p>",
         "GetInstanceTypesFromInstanceRequirementsResult$NextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
-        "GetInstanceUefiDataResult$UefiData": "<p>Base64 representation of the non-volatile UEFI variable store.</p>",
         "GetIpamAddressHistoryRequest$Cidr": "<p>The CIDR you want the history of. The CIDR can be an IPv4 or IPv6 IP address range. If you enter a /16 IPv4 CIDR, you will get records that match it exactly. You will not get records for any subnets within the /16 CIDR.</p>",
         "GetIpamAddressHistoryRequest$VpcId": "<p>The ID of the VPC you want your history records filtered by.</p>",
         "GetIpamDiscoveredAccountsRequest$DiscoveryRegion": "<p>The Amazon Web Services Region that the account information is returned from.</p>",
@@ -26148,6 +26611,10 @@
         "GetVpnTunnelReplacementStatusResult$VpnTunnelOutsideIpAddress": "<p>The external IP address of the VPN tunnel.</p>",
         "GroupIdentifier$GroupId": "<p>The ID of the security group.</p>",
         "GroupIdentifier$GroupName": "<p>The name of the security group.</p>",
+        "HealthCheckPathDestinationResponseObject$SubnetId": "<p>The ID of the subnet for the destination.</p>",
+        "HealthCheckPathDestinationResponseObject$SecurityGroupId": "<p>The ID of the security group for the destination.</p>",
+        "HealthCheckPathSourceResponseObject$SubnetId": "<p>The ID of the subnet for the source.</p>",
+        "HealthCheckPathSourceResponseObject$SecurityGroupId": "<p>The ID of the security group for the source.</p>",
         "Host$AvailabilityZone": "<p>The Availability Zone of the Dedicated Host.</p>",
         "Host$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring Idempotency</a>.</p>",
         "Host$HostId": "<p>The ID of the Dedicated Host.</p>",
@@ -26304,6 +26771,8 @@
         "Instance$VpcId": "<p>The ID of the VPC in which the instance is running.</p>",
         "Instance$PrivateIpAddress": "<p>The private IPv4 address assigned to the instance.</p>",
         "Instance$PublicIpAddress": "<p>The public IPv4 address, or the Carrier IP address assigned to the instance, if applicable.</p> <p>A Carrier IP address only applies to an instance launched in a subnet associated with a Wavelength Zone.</p>",
+        "InstanceApplicationStatus$AvailabilityZone": "<p>The Availability Zone of the instance.</p>",
+        "InstanceApplicationStatus$AvailabilityZoneId": "<p>The ID of the Availability Zone of the instance.</p>",
         "InstanceAttribute$InstanceId": "<p>The ID of the instance.</p>",
         "InstanceBlockDeviceMapping$DeviceName": "<p>The device name.</p>",
         "InstanceBlockDeviceMappingSpecification$DeviceName": "<p>The device name. For available device names, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/device_naming.html\">Device names for volumes</a>.</p>",
@@ -26607,6 +27076,9 @@
         "ManagedPrefixList$IpamPrefixListResolverTargetId": "<p>The ID of the IPAM prefix list resolver target associated with this managed prefix list. When set, this prefix list becomes an IPAM managed prefix list.</p> <p>An IPAM-managed prefix list is a customer-managed prefix list that has been associated with an IPAM prefix list resolver target. When a prefix list becomes IPAM managed, its CIDRs are automatically synchronized based on the IPAM prefix list resolver's CIDR selection rules, and direct CIDR modifications are restricted.</p>",
         "MetricPoint$Status": "<p>The status of the metric point.</p>",
         "ModifyAddressAttributeRequest$DomainName": "<p>The domain name to modify for the IP address.</p>",
+        "ModifyApplicationStatusCheckRequest$Path": "<p>The URL path to use for the health check HTTP request (for example, <code>/health</code> or <code>/status</code>).</p>",
+        "ModifyApplicationStatusCheckRequest$StatusCodeMatcher": "<p>The HTTP status codes that indicate a successful health check response. Specify a comma-separated list of individual status codes or ranges, for example, <code>200,202,300-399</code>. For a range, the first value must be less than the second value. Maximum length: 64 characters.</p>",
+        "ModifyApplicationStatusCheckRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "ModifyAvailabilityZoneGroupRequest$GroupName": "<p>The name of the Availability Zone group, Local Zone group, or Wavelength Zone group.</p>",
         "ModifyCapacityReservationRequest$AdditionalInfo": "<p>Reserved for future use.</p>",
         "ModifyClientVpnEndpointRequest$ServerCertificateArn": "<p>The ARN of the server certificate to be used. The server certificate must be provisioned in Certificate Manager (ACM).</p>",
@@ -27248,6 +27720,8 @@
         "SubnetIpv6CidrBlockAssociation$Ipv6CidrBlock": "<p>The IPv6 CIDR block.</p>",
         "Subscription$Source": "<p>The Region or Availability Zone that's the source for the subscription. For example, <code>us-east-1</code>.</p>",
         "Subscription$Destination": "<p>The Region or Availability Zone that's the target for the subscription. For example, <code>eu-west-1</code>.</p>",
+        "SuccessfulAssociationResponseObject$AssociationType": "<p>The type of association. Valid values: <code>EC2TAG</code> and <code>INSTANCE_ID</code>.</p>",
+        "SuccessfulAssociationResponseObject$AssociationValue": "<p>The association value. For <code>EC2TAG</code>, the value is formatted as <code>key=value</code>. For <code>INSTANCE_ID</code>, the value is the instance ID.</p>",
         "SuccessfulInstanceCreditSpecificationItem$InstanceId": "<p>The ID of the instance.</p>",
         "SuccessfulQueuedPurchaseDeletion$ReservedInstancesId": "<p>The ID of the Reserved Instance.</p>",
         "SupportedRegionDetail$Region": "<p>The Region code.</p>",
@@ -27393,11 +27867,15 @@
         "TunnelOption$StartupAction": "<p>The action to take when the establishing the VPN tunnels for a VPN connection.</p>",
         "UnassignIpv6AddressesResult$NetworkInterfaceId": "<p>The ID of the network interface.</p>",
         "UnlockSnapshotResult$SnapshotId": "<p>The ID of the snapshot.</p>",
+        "UnsuccessfulAssociationResponseObject$AssociationType": "<p>The type of association. Valid values: <code>EC2TAG</code> and <code>INSTANCE_ID</code>.</p>",
+        "UnsuccessfulAssociationResponseObject$AssociationValue": "<p>The association value. For <code>EC2TAG</code>, the value is formatted as <code>key=value</code>. For <code>INSTANCE_ID</code>, the value is the instance ID.</p>",
+        "UnsuccessfulAssociationResponseObject$Reason": "<p>The reason the association failed.</p>",
         "UnsuccessfulInstanceCreditSpecificationItem$InstanceId": "<p>The ID of the instance.</p>",
         "UnsuccessfulInstanceCreditSpecificationItemError$Message": "<p>The applicable error message.</p>",
         "UnsuccessfulItem$ResourceId": "<p>The ID of the resource.</p>",
         "UnsuccessfulItemError$Code": "<p>The error code.</p>",
         "UnsuccessfulItemError$Message": "<p>The error message accompanying the error code.</p>",
+        "UnsuccessfulSuppressionResponseObject$Reason": "<p>The reason the suppression failed.</p>",
         "UpdateCapacityManagerMonitoredTagKeysRequest$ClientToken": "<p> Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. </p>",
         "UpdateCapacityManagerOrganizationsAccessRequest$ClientToken": "<p> Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. </p>",
         "UserBucket$S3Bucket": "<p>The name of the Amazon S3 bucket where the disk image is located.</p>",
@@ -27717,6 +28195,8 @@
         "Ec2InstanceConnectEndpoint$SubnetId": "<p>The ID of the subnet in which the EC2 Instance Connect Endpoint was created.</p>",
         "FleetLaunchTemplateOverridesRequest$SubnetId": "<p>The IDs of the subnets in which to launch the instances. Separate multiple subnet IDs using commas (for example, <code>subnet-1234abcdeexample1, subnet-0987cdef6example2</code>). A request of type <code>instant</code> can have only one subnet ID.</p>",
         "GetSubnetCidrReservationsRequest$SubnetId": "<p>The ID of the subnet.</p>",
+        "HealthCheckPathDestinationRequestObject$SubnetId": "<p>The ID of the subnet for the destination.</p>",
+        "HealthCheckPathSourceRequestObject$SubnetId": "<p>The ID of the subnet for the source.</p>",
         "ImportInstanceLaunchSpecification$SubnetId": "<p>[EC2-VPC] The ID of the subnet in which to launch the instance.</p>",
         "LaunchTemplateInstanceNetworkInterfaceSpecification$SubnetId": "<p>The ID of the subnet for the network interface.</p>",
         "LaunchTemplateInstanceNetworkInterfaceSpecificationRequest$SubnetId": "<p>The ID of the subnet for the network interface.</p>",
@@ -27803,6 +28283,19 @@
         "DescribeAwsNetworkPerformanceMetricSubscriptionsResult$Subscriptions": "<p>Describes the current Infrastructure Performance subscriptions.</p>"
       }
     },
+    "SuccessfulAssociationResponseObject": {
+      "base": "<p>Describes a successful application status check association.</p>",
+      "refs": {
+        "SuccessfulAssociationResponseSet$member": null
+      }
+    },
+    "SuccessfulAssociationResponseSet": {
+      "base": null,
+      "refs": {
+        "AssociateApplicationStatusCheckResult$SuccessfulResults": "<p>The associations that were successfully created.</p>",
+        "DisassociateApplicationStatusCheckResult$SuccessfulResults": "<p>The associations that were successfully removed.</p>"
+      }
+    },
     "SuccessfulInstanceCreditSpecificationItem": {
       "base": "<p>Describes the burstable performance instance whose credit option for CPU usage was successfully modified.</p>",
       "refs": {
@@ -27827,9 +28320,23 @@
         "DeleteQueuedReservedInstancesResult$SuccessfulQueuedPurchaseDeletions": "<p>Information about the queued purchases that were successfully deleted.</p>"
       }
     },
+    "SuccessfulSuppressionResponseObject": {
+      "base": "<p>Describes a successful application status check suppression.</p>",
+      "refs": {
+        "SuccessfulSuppressionResponseSet$member": null
+      }
+    },
+    "SuccessfulSuppressionResponseSet": {
+      "base": null,
+      "refs": {
+        "DisableApplicationStatusCheckSuppressionResult$SuccessfulResults": "<p>The instances for which suppression was successfully disabled.</p>",
+        "EnableApplicationStatusCheckSuppressionResult$SuccessfulResults": "<p>The instances for which suppression was successfully enabled.</p>"
+      }
+    },
     "SummaryStatus": {
       "base": null,
       "refs": {
+        "ApplicationStatusSummary$Status": "<p>The current status.</p>",
         "EbsStatusSummary$Status": "<p>The current status.</p>",
         "InstanceStatusSummary$Status": "<p>The status.</p>"
       }
@@ -27931,6 +28438,7 @@
       "refs": {
         "Address$Tags": "<p>Any tags assigned to the Elastic IP address.</p>",
         "AllowedPrincipal$Tags": "<p>The tags.</p>",
+        "ApplicationStatusCheckResponseObject$Tags": "<p>The tags assigned to the application status check.</p>",
         "CapacityBlock$Tags": "<p>The tags assigned to the Capacity Block.</p>",
         "CapacityManagerDataExportResponse$Tags": "<p> The tags associated with the data export configuration. </p>",
         "CapacityReservation$Tags": "<p>Any tags assigned to the Capacity Reservation.</p>",
@@ -27948,6 +28456,7 @@
         "CustomerGateway$Tags": "<p>Any tags assigned to the customer gateway.</p>",
         "DeclarativePoliciesReport$Tags": "<p>Any tags assigned to the report.</p>",
         "DeleteTagsRequest$Tags": "<p>The tags to delete. Specify a tag key and an optional tag value to delete specific tags. If you specify a tag key without a tag value, we delete any tag with this key regardless of its value. If you specify a tag key with an empty string as the tag value, we delete the tag only if its value is an empty string.</p> <p>If you omit this parameter, we delete all user-defined tags for the specified resources. We do not delete Amazon Web Services-generated tags (tags that have the <code>aws:</code> prefix).</p> <p>Constraints: Up to 1000 tags.</p>",
+        "DescribeApplicationStatusCheckAssociationsResult$Tags": "<p>The tags associated with the application status checks.</p>",
         "DhcpOptions$Tags": "<p>Any tags assigned to the DHCP options set.</p>",
         "Ec2InstanceConnectEndpoint$Tags": "<p>The tags assigned to the EC2 Instance Connect Endpoint.</p>",
         "EgressOnlyInternetGateway$Tags": "<p>The tags assigned to the egress-only internet gateway.</p>",
@@ -27968,6 +28477,7 @@
         "ImportSnapshotResult$Tags": "<p>Any tags assigned to the import snapshot task.</p>",
         "ImportSnapshotTask$Tags": "<p>The tags for the import snapshot task.</p>",
         "Instance$Tags": "<p>Any tags assigned to the instance.</p>",
+        "InstanceApplicationStatus$Tags": "<p>The tags assigned to the instance.</p>",
         "InstanceEventWindow$Tags": "<p>The instance tags associated with the event window.</p>",
         "InstanceEventWindowAssociationRequest$InstanceTags": "<p>The instance tags to associate with the event window. Any instances associated with the tags will be associated with the event window.</p> <p>Note that while you can't create tag keys beginning with <code>aws:</code>, you can specify existing Amazon Web Services managed tag keys (with the <code>aws:</code> prefix) when specifying them as targets to associate with the event window.</p>",
         "InstanceEventWindowAssociationTarget$Tags": "<p>The instance tags associated with the event window. Any instances associated with the tags will be associated with the event window.</p> <p>Note that while you can't create tag keys beginning with <code>aws:</code>, you can specify existing Amazon Web Services managed tag keys (with the <code>aws:</code> prefix) when specifying them as targets to associate with the event window.</p>",
@@ -28087,6 +28597,7 @@
         "CopyImageRequest$TagSpecifications": "<p>The tags to apply to the new AMI and new snapshots. You can tag the AMI, the snapshots, or both.</p> <ul> <li> <p>To tag the new AMI, the value for <code>ResourceType</code> must be <code>image</code>.</p> </li> <li> <p>To tag the new snapshots, the value for <code>ResourceType</code> must be <code>snapshot</code>. The same tag is applied to all the new snapshots.</p> </li> </ul> <p>If you specify other values for <code>ResourceType</code>, the request fails.</p> <p>To tag an AMI or snapshot after it has been created, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateTags.html\">CreateTags</a>.</p>",
         "CopySnapshotRequest$TagSpecifications": "<p>The tags to apply to the new snapshot.</p>",
         "CopyVolumesRequest$TagSpecifications": "<p>The tags to apply to the volume copy during creation.</p>",
+        "CreateApplicationStatusCheckRequest$TagSpecifications": "<p>The tags to apply to the application status check.</p>",
         "CreateCapacityManagerDataExportRequest$TagSpecifications": "<p> The tags to apply to the data export configuration. You can tag the export for organization and cost tracking purposes. </p>",
         "CreateCapacityReservationBySplittingRequest$TagSpecifications": "<p> The tags to apply to the new Capacity Reservation. </p>",
         "CreateCapacityReservationCancellationQuoteRequest$TagSpecifications": "<p>The tags to apply to the cancellation quote.</p>",
@@ -29681,6 +30192,19 @@
       "refs": {
       }
     },
+    "UnsuccessfulAssociationResponseObject": {
+      "base": "<p>Describes an unsuccessful application status check association.</p>",
+      "refs": {
+        "UnsuccessfulAssociationResponseSet$member": null
+      }
+    },
+    "UnsuccessfulAssociationResponseSet": {
+      "base": null,
+      "refs": {
+        "AssociateApplicationStatusCheckResult$UnsuccessfulResults": "<p>The associations that failed to be created.</p>",
+        "DisassociateApplicationStatusCheckResult$UnsuccessfulResults": "<p>The associations that failed to be removed.</p>"
+      }
+    },
     "UnsuccessfulInstanceCreditSpecificationErrorCode": {
       "base": null,
       "refs": {
@@ -29735,6 +30259,19 @@
         "DeleteVpcEndpointServiceConfigurationsResult$Unsuccessful": "<p>Information about the service configurations that were not deleted, if applicable.</p>",
         "DeleteVpcEndpointsResult$Unsuccessful": "<p>Information about the VPC endpoints that were not successfully deleted.</p>",
         "RejectVpcEndpointConnectionsResult$Unsuccessful": "<p>Information about the endpoints that were not rejected, if applicable.</p>"
+      }
+    },
+    "UnsuccessfulSuppressionResponseObject": {
+      "base": "<p>Describes an unsuccessful application status check suppression.</p>",
+      "refs": {
+        "UnsuccessfulSuppressionResponseSet$member": null
+      }
+    },
+    "UnsuccessfulSuppressionResponseSet": {
+      "base": null,
+      "refs": {
+        "DisableApplicationStatusCheckSuppressionResult$UnsuccessfulResults": "<p>The instances for which suppression failed to be disabled.</p>",
+        "EnableApplicationStatusCheckSuppressionResult$UnsuccessfulResults": "<p>The instances for which suppression failed to be enabled.</p>"
       }
     },
     "UpdateCapacityManagerMonitoredTagKeysRequest": {

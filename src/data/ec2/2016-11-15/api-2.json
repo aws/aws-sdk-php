@@ -176,6 +176,15 @@
       "input":{"shape":"AssociateAddressRequest"},
       "output":{"shape":"AssociateAddressResult"}
     },
+    "AssociateApplicationStatusCheck":{
+      "name":"AssociateApplicationStatusCheck",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AssociateApplicationStatusCheckRequest"},
+      "output":{"shape":"AssociateApplicationStatusCheckResult"}
+    },
     "AssociateCapacityReservationBillingOwner":{
       "name":"AssociateCapacityReservationBillingOwner",
       "http":{
@@ -576,6 +585,15 @@
       },
       "input":{"shape":"CopyVolumesRequest"},
       "output":{"shape":"CopyVolumesResult"}
+    },
+    "CreateApplicationStatusCheck":{
+      "name":"CreateApplicationStatusCheck",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateApplicationStatusCheckRequest"},
+      "output":{"shape":"CreateApplicationStatusCheckResult"}
     },
     "CreateCapacityManagerDataExport":{
       "name":"CreateCapacityManagerDataExport",
@@ -1527,6 +1545,15 @@
       },
       "input":{"shape":"CreateVpnGatewayRequest"},
       "output":{"shape":"CreateVpnGatewayResult"}
+    },
+    "DeleteApplicationStatusCheck":{
+      "name":"DeleteApplicationStatusCheck",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteApplicationStatusCheckRequest"},
+      "output":{"shape":"DeleteApplicationStatusCheckResult"}
     },
     "DeleteCapacityManagerDataExport":{
       "name":"DeleteCapacityManagerDataExport",
@@ -2481,6 +2508,33 @@
       },
       "input":{"shape":"DescribeAggregateIdFormatRequest"},
       "output":{"shape":"DescribeAggregateIdFormatResult"}
+    },
+    "DescribeApplicationStatus":{
+      "name":"DescribeApplicationStatus",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeApplicationStatusRequest"},
+      "output":{"shape":"DescribeApplicationStatusResult"}
+    },
+    "DescribeApplicationStatusCheckAssociations":{
+      "name":"DescribeApplicationStatusCheckAssociations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeApplicationStatusCheckAssociationsRequest"},
+      "output":{"shape":"DescribeApplicationStatusCheckAssociationsResult"}
+    },
+    "DescribeApplicationStatusChecks":{
+      "name":"DescribeApplicationStatusChecks",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeApplicationStatusChecksRequest"},
+      "output":{"shape":"DescribeApplicationStatusChecksResult"}
     },
     "DescribeAvailabilityZones":{
       "name":"DescribeAvailabilityZones",
@@ -4198,6 +4252,15 @@
       "input":{"shape":"DisableAllowedImagesSettingsRequest"},
       "output":{"shape":"DisableAllowedImagesSettingsResult"}
     },
+    "DisableApplicationStatusCheckSuppression":{
+      "name":"DisableApplicationStatusCheckSuppression",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisableApplicationStatusCheckSuppressionRequest"},
+      "output":{"shape":"DisableApplicationStatusCheckSuppressionResult"}
+    },
     "DisableAwsNetworkPerformanceMetricSubscription":{
       "name":"DisableAwsNetworkPerformanceMetricSubscription",
       "http":{
@@ -4376,6 +4439,15 @@
       },
       "input":{"shape":"DisassociateAddressRequest"}
     },
+    "DisassociateApplicationStatusCheck":{
+      "name":"DisassociateApplicationStatusCheck",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisassociateApplicationStatusCheckRequest"},
+      "output":{"shape":"DisassociateApplicationStatusCheckResult"}
+    },
     "DisassociateCapacityReservationBillingOwner":{
       "name":"DisassociateCapacityReservationBillingOwner",
       "http":{
@@ -4545,6 +4617,15 @@
       },
       "input":{"shape":"EnableAllowedImagesSettingsRequest"},
       "output":{"shape":"EnableAllowedImagesSettingsResult"}
+    },
+    "EnableApplicationStatusCheckSuppression":{
+      "name":"EnableApplicationStatusCheckSuppression",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"EnableApplicationStatusCheckSuppressionRequest"},
+      "output":{"shape":"EnableApplicationStatusCheckSuppressionResult"}
     },
     "EnableAwsNetworkPerformanceMetricSubscription":{
       "name":"EnableAwsNetworkPerformanceMetricSubscription",
@@ -5515,6 +5596,15 @@
       },
       "input":{"shape":"ModifyAddressAttributeRequest"},
       "output":{"shape":"ModifyAddressAttributeResult"}
+    },
+    "ModifyApplicationStatusCheck":{
+      "name":"ModifyApplicationStatusCheck",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyApplicationStatusCheckRequest"},
+      "output":{"shape":"ModifyApplicationStatusCheckResult"}
     },
     "ModifyAvailabilityZoneGroup":{
       "name":"ModifyAvailabilityZoneGroup",
@@ -7805,6 +7895,13 @@
         "host"
       ]
     },
+    "AggregationStatusEnum":{
+      "type":"string",
+      "enum":[
+        "included",
+        "excluded"
+      ]
+    },
     "AllocateAddressRequest":{
       "type":"structure",
       "members":{
@@ -8311,6 +8408,263 @@
         "disable"
       ]
     },
+    "ApplicationStatus":{
+      "type":"structure",
+      "members":{
+        "Status":{
+          "shape":"ApplicationStatusEnum",
+          "locationName":"status"
+        },
+        "StatusTimeStamp":{
+          "shape":"MillisecondDateTime",
+          "locationName":"statusTimeStamp"
+        },
+        "StatusSince":{
+          "shape":"MillisecondDateTime",
+          "locationName":"statusSince"
+        },
+        "ResumeAt":{
+          "shape":"MillisecondDateTime",
+          "locationName":"resumeAt"
+        },
+        "Details":{
+          "shape":"ApplicationStatusDetailSet",
+          "locationName":"detailSet"
+        }
+      }
+    },
+    "ApplicationStatusCheckAssociationObject":{
+      "type":"structure",
+      "members":{
+        "ApplicationStatusCheckId":{
+          "shape":"ApplicationStatusCheckId",
+          "locationName":"applicationStatusCheckId"
+        },
+        "AssociationType":{
+          "shape":"AssociationTypeEnum",
+          "locationName":"associationType"
+        },
+        "Key":{
+          "shape":"String",
+          "locationName":"key"
+        },
+        "Value":{
+          "shape":"String",
+          "locationName":"value"
+        }
+      }
+    },
+    "ApplicationStatusCheckAssociationSet":{
+      "type":"list",
+      "member":{
+        "shape":"ApplicationStatusCheckAssociationObject",
+        "locationName":"item"
+      }
+    },
+    "ApplicationStatusCheckEnum":{
+      "type":"string",
+      "enum":[
+        "passed",
+        "failed",
+        "initializing",
+        "insufficient-data",
+        "not-applicable"
+      ]
+    },
+    "ApplicationStatusCheckId":{"type":"string"},
+    "ApplicationStatusCheckIdList":{
+      "type":"list",
+      "member":{
+        "shape":"ApplicationStatusCheckId",
+        "locationName":"item"
+      }
+    },
+    "ApplicationStatusCheckResponseObject":{
+      "type":"structure",
+      "members":{
+        "ApplicationStatusCheckId":{
+          "shape":"ApplicationStatusCheckId",
+          "locationName":"applicationStatusCheckId"
+        },
+        "Aggregation":{
+          "shape":"AggregationStatusEnum",
+          "locationName":"aggregation"
+        },
+        "HealthCheckPaths":{
+          "shape":"HealthCheckPathResponseList",
+          "locationName":"healthCheckPathSet"
+        },
+        "Protocol":{
+          "shape":"NetworkProtocolEnum",
+          "locationName":"protocol"
+        },
+        "Port":{
+          "shape":"Integer",
+          "locationName":"port"
+        },
+        "Path":{
+          "shape":"String",
+          "locationName":"path"
+        },
+        "DeviceIndex":{
+          "shape":"Integer",
+          "locationName":"deviceIndex"
+        },
+        "IpVersion":{
+          "shape":"IpVersionEnum",
+          "locationName":"ipVersion"
+        },
+        "IpScope":{
+          "shape":"IpScopeEnum",
+          "locationName":"ipScope"
+        },
+        "Interval":{
+          "shape":"Integer",
+          "locationName":"interval"
+        },
+        "Timeout":{
+          "shape":"Integer",
+          "locationName":"timeout"
+        },
+        "FailureThreshold":{
+          "shape":"Integer",
+          "locationName":"failureThreshold"
+        },
+        "SuccessThreshold":{
+          "shape":"Integer",
+          "locationName":"successThreshold"
+        },
+        "StatusCodeMatcher":{
+          "shape":"String",
+          "locationName":"statusCodeMatcher"
+        },
+        "InitializationGracePeriodSeconds":{
+          "shape":"InitializationGracePeriodSeconds",
+          "locationName":"initializationGracePeriodSeconds"
+        },
+        "LastUpdatedAt":{
+          "shape":"MillisecondDateTime",
+          "locationName":"lastUpdatedAt"
+        },
+        "TargetTagAssociations":{
+          "shape":"CustomKeyValuePairResponseSet",
+          "locationName":"targetTagAssociationSet"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "locationName":"tagSet"
+        },
+        "CreationTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"creationTime"
+        },
+        "ModifyTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"modifyTime"
+        },
+        "DeletionTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"deletionTime"
+        }
+      }
+    },
+    "ApplicationStatusCheckResponseSet":{
+      "type":"list",
+      "member":{
+        "shape":"ApplicationStatusCheckResponseObject",
+        "locationName":"item"
+      }
+    },
+    "ApplicationStatusDetail":{
+      "type":"structure",
+      "members":{
+        "ApplicationStatusCheckId":{
+          "shape":"ApplicationStatusCheckId",
+          "locationName":"applicationStatusCheckId"
+        },
+        "CheckUpdateTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"checkUpdateTime"
+        },
+        "Aggregation":{
+          "shape":"AggregationStatusEnum",
+          "locationName":"aggregation"
+        },
+        "Status":{
+          "shape":"ApplicationStatusCheckEnum",
+          "locationName":"status"
+        },
+        "StatusTimeStamp":{
+          "shape":"MillisecondDateTime",
+          "locationName":"statusTimeStamp"
+        },
+        "StatusSince":{
+          "shape":"MillisecondDateTime",
+          "locationName":"statusSince"
+        },
+        "Reason":{
+          "shape":"ApplicationStatusReason",
+          "locationName":"reason"
+        }
+      }
+    },
+    "ApplicationStatusDetailSet":{
+      "type":"list",
+      "member":{
+        "shape":"ApplicationStatusDetail",
+        "locationName":"item"
+      }
+    },
+    "ApplicationStatusEnum":{
+      "type":"string",
+      "enum":[
+        "ok",
+        "impaired",
+        "initializing",
+        "insufficient-data",
+        "not-applicable",
+        "suppressed"
+      ]
+    },
+    "ApplicationStatusReason":{
+      "type":"structure",
+      "members":{
+        "Code":{
+          "shape":"String",
+          "locationName":"code"
+        },
+        "StatusCode":{
+          "shape":"Integer",
+          "locationName":"statusCode"
+        },
+        "Protocol":{
+          "shape":"String",
+          "locationName":"protocol"
+        }
+      }
+    },
+    "ApplicationStatusSummary":{
+      "type":"structure",
+      "members":{
+        "Status":{
+          "shape":"SummaryStatus",
+          "locationName":"status"
+        },
+        "ImpairedSince":{
+          "shape":"MillisecondDateTime",
+          "locationName":"impairedSince"
+        }
+      }
+    },
+    "ApplicationStatusesResponseType":{
+      "type":"structure",
+      "members":{
+        "Instances":{
+          "shape":"InstanceApplicationStatusSet",
+          "locationName":"instanceSet"
+        }
+      }
+    },
     "ApplyCancellationCharges":{
       "type":"string",
       "enum":["commitment-wind-down"]
@@ -8613,6 +8967,39 @@
         "AssociationId":{
           "shape":"String",
           "locationName":"associationId"
+        }
+      }
+    },
+    "AssociateApplicationStatusCheckRequest":{
+      "type":"structure",
+      "required":["ApplicationStatusCheckId"],
+      "members":{
+        "ApplicationStatusCheckId":{"shape":"ApplicationStatusCheckId"},
+        "TargetTagAssociations":{
+          "shape":"CustomKeyValuePairRequestSet",
+          "locationName":"TargetTagAssociation"
+        },
+        "InstanceIds":{
+          "shape":"InstanceIdList",
+          "locationName":"InstanceId"
+        },
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "AssociateApplicationStatusCheckResult":{
+      "type":"structure",
+      "members":{
+        "SuccessfulResults":{
+          "shape":"SuccessfulAssociationResponseSet",
+          "locationName":"successfulResultSet"
+        },
+        "UnsuccessfulResults":{
+          "shape":"UnsuccessfulAssociationResponseSet",
+          "locationName":"unsuccessfulResultSet"
         }
       }
     },
@@ -9160,6 +9547,13 @@
         "association-failed",
         "disassociating",
         "disassociated"
+      ]
+    },
+    "AssociationTypeEnum":{
+      "type":"string",
+      "enum":[
+        "tag",
+        "instance-id"
       ]
     },
     "AthenaIntegration":{
@@ -13187,6 +13581,50 @@
         }
       }
     },
+    "CreateApplicationStatusCheckRequest":{
+      "type":"structure",
+      "required":[
+        "Protocol",
+        "Port"
+      ],
+      "members":{
+        "HealthCheckPaths":{
+          "shape":"HealthCheckPathRequestList",
+          "locationName":"HealthCheckPath"
+        },
+        "Aggregation":{"shape":"AggregationStatusEnum"},
+        "Protocol":{"shape":"NetworkProtocolEnum"},
+        "Port":{"shape":"PortNumber"},
+        "Path":{"shape":"String"},
+        "DeviceIndex":{"shape":"Integer"},
+        "IpVersion":{"shape":"IpVersionEnum"},
+        "IpScope":{"shape":"IpScopeEnum"},
+        "Interval":{"shape":"Integer"},
+        "Timeout":{"shape":"Integer"},
+        "FailureThreshold":{"shape":"Integer"},
+        "SuccessThreshold":{"shape":"Integer"},
+        "StatusCodeMatcher":{"shape":"String"},
+        "InitializationGracePeriodSeconds":{"shape":"InitializationGracePeriodSeconds"},
+        "TagSpecifications":{
+          "shape":"TagSpecificationList",
+          "locationName":"TagSpecification"
+        },
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "CreateApplicationStatusCheckResult":{
+      "type":"structure",
+      "members":{
+        "ApplicationStatusCheck":{
+          "shape":"ApplicationStatusCheckResponseObject",
+          "locationName":"applicationStatusCheck"
+        }
+      }
+    },
     "CreateCapacityManagerDataExportRequest":{
       "type":"structure",
       "required":[
@@ -15321,10 +15759,7 @@
     },
     "CreateSecondaryNetworkRequest":{
       "type":"structure",
-      "required":[
-        "Ipv4CidrBlock",
-        "NetworkType"
-      ],
+      "required":["NetworkType"],
       "members":{
         "ClientToken":{
           "shape":"String",
@@ -16793,6 +17228,40 @@
       "enum":["USD"]
     },
     "CurrentGenerationFlag":{"type":"boolean"},
+    "CustomKeyValuePairRequestSet":{
+      "type":"list",
+      "member":{
+        "shape":"CustomTagKeyValueRequestPair",
+        "locationName":"item"
+      }
+    },
+    "CustomKeyValuePairResponseSet":{
+      "type":"list",
+      "member":{
+        "shape":"CustomTagKeyValueResponsePair",
+        "locationName":"item"
+      }
+    },
+    "CustomTagKeyValueRequestPair":{
+      "type":"structure",
+      "members":{
+        "Key":{"shape":"String"},
+        "Value":{"shape":"String"}
+      }
+    },
+    "CustomTagKeyValueResponsePair":{
+      "type":"structure",
+      "members":{
+        "Key":{
+          "shape":"String",
+          "locationName":"key"
+        },
+        "Value":{
+          "shape":"String",
+          "locationName":"value"
+        }
+      }
+    },
     "CustomerGateway":{
       "type":"structure",
       "members":{
@@ -17051,6 +17520,27 @@
     "DefaultUdpStreamTimeout":{"type":"integer"},
     "DefaultUdpTimeout":{"type":"integer"},
     "DefaultingDhcpOptionsId":{"type":"string"},
+    "DeleteApplicationStatusCheckRequest":{
+      "type":"structure",
+      "required":["ApplicationStatusCheckId"],
+      "members":{
+        "ApplicationStatusCheckId":{"shape":"ApplicationStatusCheckId"},
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DeleteApplicationStatusCheckResult":{
+      "type":"structure",
+      "members":{
+        "ApplicationStatusCheck":{
+          "shape":"ApplicationStatusCheckResponseObject",
+          "locationName":"applicationStatusCheck"
+        }
+      }
+    },
     "DeleteCapacityManagerDataExportRequest":{
       "type":"structure",
       "required":["CapacityManagerDataExportId"],
@@ -19209,6 +19699,113 @@
         "Statuses":{
           "shape":"IdFormatList",
           "locationName":"statusSet"
+        }
+      }
+    },
+    "DescribeApplicationStatusCheckAssociationsMaxResults":{
+      "type":"integer",
+      "max":1000,
+      "min":5
+    },
+    "DescribeApplicationStatusCheckAssociationsRequest":{
+      "type":"structure",
+      "members":{
+        "ApplicationStatusCheckIds":{
+          "shape":"ApplicationStatusCheckIdList",
+          "locationName":"ApplicationStatusCheckId"
+        },
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "MaxResults":{"shape":"DescribeApplicationStatusCheckAssociationsMaxResults"},
+        "NextToken":{"shape":"String"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DescribeApplicationStatusCheckAssociationsResult":{
+      "type":"structure",
+      "members":{
+        "Associations":{
+          "shape":"ApplicationStatusCheckAssociationSet",
+          "locationName":"associationSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "locationName":"tagSet"
+        }
+      }
+    },
+    "DescribeApplicationStatusChecksMaxResults":{
+      "type":"integer",
+      "max":100,
+      "min":5
+    },
+    "DescribeApplicationStatusChecksRequest":{
+      "type":"structure",
+      "members":{
+        "ApplicationStatusCheckIds":{
+          "shape":"ApplicationStatusCheckIdList",
+          "locationName":"ApplicationStatusCheckId"
+        },
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "MaxResults":{"shape":"DescribeApplicationStatusChecksMaxResults"},
+        "NextToken":{"shape":"String"},
+        "IncludeAll":{"shape":"Boolean"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DescribeApplicationStatusChecksResult":{
+      "type":"structure",
+      "members":{
+        "ApplicationStatusChecks":{
+          "shape":"ApplicationStatusCheckResponseSet",
+          "locationName":"applicationStatusCheckSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "DescribeApplicationStatusMaxResults":{
+      "type":"integer",
+      "max":100,
+      "min":1
+    },
+    "DescribeApplicationStatusRequest":{
+      "type":"structure",
+      "members":{
+        "InstanceIds":{
+          "shape":"InstanceIdList",
+          "locationName":"InstanceId"
+        },
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "MaxResults":{"shape":"DescribeApplicationStatusMaxResults"},
+        "NextToken":{"shape":"String"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DescribeApplicationStatusResult":{
+      "type":"structure",
+      "members":{
+        "ApplicationStatuses":{
+          "shape":"ApplicationStatusesResponseType",
+          "locationName":"applicationStatusesResponseType"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
         }
       }
     },
@@ -25460,6 +26057,33 @@
         }
       }
     },
+    "DisableApplicationStatusCheckSuppressionRequest":{
+      "type":"structure",
+      "members":{
+        "InstanceIds":{
+          "shape":"InstanceIdList",
+          "locationName":"InstanceId"
+        },
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DisableApplicationStatusCheckSuppressionResult":{
+      "type":"structure",
+      "members":{
+        "SuccessfulResults":{
+          "shape":"SuccessfulSuppressionResponseSet",
+          "locationName":"successfulResultSet"
+        },
+        "UnsuccessfulResults":{
+          "shape":"UnsuccessfulSuppressionResponseSet",
+          "locationName":"unsuccessfulResultSet"
+        }
+      }
+    },
     "DisableAwsNetworkPerformanceMetricSubscriptionRequest":{
       "type":"structure",
       "members":{
@@ -25965,6 +26589,39 @@
         "DryRun":{
           "shape":"Boolean",
           "locationName":"dryRun"
+        }
+      }
+    },
+    "DisassociateApplicationStatusCheckRequest":{
+      "type":"structure",
+      "required":["ApplicationStatusCheckId"],
+      "members":{
+        "ApplicationStatusCheckId":{"shape":"ApplicationStatusCheckId"},
+        "TargetTagAssociations":{
+          "shape":"CustomKeyValuePairRequestSet",
+          "locationName":"TargetTagAssociation"
+        },
+        "InstanceIds":{
+          "shape":"InstanceIdList",
+          "locationName":"InstanceId"
+        },
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DisassociateApplicationStatusCheckResult":{
+      "type":"structure",
+      "members":{
+        "SuccessfulResults":{
+          "shape":"SuccessfulAssociationResponseSet",
+          "locationName":"successfulResultSet"
+        },
+        "UnsuccessfulResults":{
+          "shape":"UnsuccessfulAssociationResponseSet",
+          "locationName":"unsuccessfulResultSet"
         }
       }
     },
@@ -27266,6 +27923,34 @@
         "AllowedImagesSettingsState":{
           "shape":"AllowedImagesSettingsEnabledState",
           "locationName":"allowedImagesSettingsState"
+        }
+      }
+    },
+    "EnableApplicationStatusCheckSuppressionRequest":{
+      "type":"structure",
+      "members":{
+        "InstanceIds":{
+          "shape":"InstanceIdList",
+          "locationName":"InstanceId"
+        },
+        "DurationSeconds":{"shape":"BoxedInteger"},
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "EnableApplicationStatusCheckSuppressionResult":{
+      "type":"structure",
+      "members":{
+        "SuccessfulResults":{
+          "shape":"SuccessfulSuppressionResponseSet",
+          "locationName":"successfulResultSet"
+        },
+        "UnsuccessfulResults":{
+          "shape":"UnsuccessfulSuppressionResponseSet",
+          "locationName":"unsuccessfulResultSet"
         }
       }
     },
@@ -30353,7 +31038,7 @@
           "locationName":"instanceId"
         },
         "UefiData":{
-          "shape":"String",
+          "shape":"SensitiveString",
           "locationName":"uefiData"
         }
       }
@@ -31701,6 +32386,97 @@
         "standby",
         "invalid"
       ]
+    },
+    "HealthCheckPathDestinationRequestObject":{
+      "type":"structure",
+      "members":{
+        "SubnetId":{"shape":"SubnetId"},
+        "SecurityGroupId":{"shape":"SecurityGroupId"}
+      }
+    },
+    "HealthCheckPathDestinationRequestSet":{
+      "type":"list",
+      "member":{
+        "shape":"HealthCheckPathDestinationRequestObject",
+        "locationName":"item"
+      }
+    },
+    "HealthCheckPathDestinationResponseList":{
+      "type":"list",
+      "member":{
+        "shape":"HealthCheckPathDestinationResponseObject",
+        "locationName":"item"
+      }
+    },
+    "HealthCheckPathDestinationResponseObject":{
+      "type":"structure",
+      "members":{
+        "SubnetId":{
+          "shape":"String",
+          "locationName":"subnetId"
+        },
+        "SecurityGroupId":{
+          "shape":"String",
+          "locationName":"securityGroupId"
+        }
+      }
+    },
+    "HealthCheckPathRequestList":{
+      "type":"list",
+      "member":{
+        "shape":"HealthCheckPathRequestObject",
+        "locationName":"item"
+      }
+    },
+    "HealthCheckPathRequestObject":{
+      "type":"structure",
+      "members":{
+        "Source":{"shape":"HealthCheckPathSourceRequestObject"},
+        "Destinations":{
+          "shape":"HealthCheckPathDestinationRequestSet",
+          "locationName":"Destination"
+        }
+      }
+    },
+    "HealthCheckPathResponseList":{
+      "type":"list",
+      "member":{
+        "shape":"HealthCheckPathResponseObject",
+        "locationName":"item"
+      }
+    },
+    "HealthCheckPathResponseObject":{
+      "type":"structure",
+      "members":{
+        "Source":{
+          "shape":"HealthCheckPathSourceResponseObject",
+          "locationName":"source"
+        },
+        "Destinations":{
+          "shape":"HealthCheckPathDestinationResponseList",
+          "locationName":"destinationSet"
+        }
+      }
+    },
+    "HealthCheckPathSourceRequestObject":{
+      "type":"structure",
+      "members":{
+        "SubnetId":{"shape":"SubnetId"},
+        "SecurityGroupId":{"shape":"SecurityGroupId"}
+      }
+    },
+    "HealthCheckPathSourceResponseObject":{
+      "type":"structure",
+      "members":{
+        "SubnetId":{
+          "shape":"String",
+          "locationName":"subnetId"
+        },
+        "SecurityGroupId":{
+          "shape":"String",
+          "locationName":"securityGroupId"
+        }
+      }
     },
     "HibernationFlag":{"type":"boolean"},
     "HibernationOptions":{
@@ -33715,6 +34491,11 @@
         "ingestion-failed"
       ]
     },
+    "InitializationGracePeriodSeconds":{
+      "type":"integer",
+      "max":600,
+      "min":-1
+    },
     "InitializationStatusDetails":{
       "type":"structure",
       "members":{
@@ -33994,6 +34775,38 @@
           "shape":"String",
           "locationName":"ipAddress"
         }
+      }
+    },
+    "InstanceApplicationStatus":{
+      "type":"structure",
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "locationName":"instanceId"
+        },
+        "AvailabilityZone":{
+          "shape":"String",
+          "locationName":"availabilityZone"
+        },
+        "AvailabilityZoneId":{
+          "shape":"String",
+          "locationName":"availabilityZoneId"
+        },
+        "ApplicationStatus":{
+          "shape":"ApplicationStatus",
+          "locationName":"applicationStatus"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "locationName":"tagSet"
+        }
+      }
+    },
+    "InstanceApplicationStatusSet":{
+      "type":"list",
+      "member":{
+        "shape":"InstanceApplicationStatus",
+        "locationName":"item"
       }
     },
     "InstanceAttachmentEnaSrdSpecification":{
@@ -35553,6 +36366,10 @@
         "AttachedEbsStatus":{
           "shape":"EbsStatusSummary",
           "locationName":"attachedEbsStatus"
+        },
+        "ApplicationStatus":{
+          "shape":"ApplicationStatusSummary",
+          "locationName":"applicationStatus"
         }
       }
     },
@@ -37606,12 +38423,23 @@
         "locationName":"item"
       }
     },
+    "IpScopeEnum":{
+      "type":"string",
+      "enum":["private"]
+    },
     "IpSource":{
       "type":"string",
       "enum":[
         "amazon",
         "byoip",
         "none"
+      ]
+    },
+    "IpVersionEnum":{
+      "type":"string",
+      "enum":[
+        "ipv4",
+        "ipv6"
       ]
     },
     "Ipam":{
@@ -42243,6 +43071,44 @@
         }
       }
     },
+    "ModifyApplicationStatusCheckRequest":{
+      "type":"structure",
+      "required":["ApplicationStatusCheckId"],
+      "members":{
+        "ApplicationStatusCheckId":{"shape":"ApplicationStatusCheckId"},
+        "Aggregation":{"shape":"AggregationStatusEnum"},
+        "HealthCheckPaths":{
+          "shape":"HealthCheckPathRequestList",
+          "locationName":"HealthCheckPath"
+        },
+        "Protocol":{"shape":"NetworkProtocolEnum"},
+        "Port":{"shape":"PortNumber"},
+        "Path":{"shape":"String"},
+        "DeviceIndex":{"shape":"Integer"},
+        "IpVersion":{"shape":"IpVersionEnum"},
+        "IpScope":{"shape":"IpScopeEnum"},
+        "Interval":{"shape":"Integer"},
+        "Timeout":{"shape":"Integer"},
+        "FailureThreshold":{"shape":"Integer"},
+        "SuccessThreshold":{"shape":"Integer"},
+        "StatusCodeMatcher":{"shape":"String"},
+        "InitializationGracePeriodSeconds":{"shape":"InitializationGracePeriodSeconds"},
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "ModifyApplicationStatusCheckResult":{
+      "type":"structure",
+      "members":{
+        "ApplicationStatusCheck":{
+          "shape":"ApplicationStatusCheckResponseObject",
+          "locationName":"applicationStatusCheck"
+        }
+      }
+    },
     "ModifyAvailabilityZoneGroupRequest":{
       "type":"structure",
       "required":[
@@ -45900,6 +46766,13 @@
       }
     },
     "NetworkPerformance":{"type":"string"},
+    "NetworkProtocolEnum":{
+      "type":"string",
+      "enum":[
+        "http",
+        "https"
+      ]
+    },
     "NeuronDeviceCoreCount":{"type":"integer"},
     "NeuronDeviceCoreInfo":{
       "type":"structure",
@@ -47007,6 +47880,11 @@
       "type":"integer",
       "max":65535,
       "min":0
+    },
+    "PortNumber":{
+      "type":"integer",
+      "max":65535,
+      "min":1
     },
     "PortRange":{
       "type":"structure",
@@ -50048,7 +50926,8 @@
         "capacity-manager-data-export",
         "vpn-concentrator",
         "ipam-pool-allocation",
-        "capacity-reservation-cancellation-quote"
+        "capacity-reservation-cancellation-quote",
+        "application-status-check"
       ]
     },
     "ResourceTypeOption":{
@@ -52739,6 +53618,7 @@
       "type":"string",
       "sensitive":true
     },
+    "SensitiveString":{"type":"string"},
     "SensitiveUrl":{
       "type":"string",
       "sensitive":true
@@ -54820,6 +55700,30 @@
         "locationName":"item"
       }
     },
+    "SuccessfulAssociationResponseObject":{
+      "type":"structure",
+      "members":{
+        "ApplicationStatusCheckId":{
+          "shape":"ApplicationStatusCheckId",
+          "locationName":"applicationStatusCheckId"
+        },
+        "AssociationType":{
+          "shape":"String",
+          "locationName":"associationType"
+        },
+        "AssociationValue":{
+          "shape":"String",
+          "locationName":"associationValue"
+        }
+      }
+    },
+    "SuccessfulAssociationResponseSet":{
+      "type":"list",
+      "member":{
+        "shape":"SuccessfulAssociationResponseObject",
+        "locationName":"item"
+      }
+    },
     "SuccessfulInstanceCreditSpecificationItem":{
       "type":"structure",
       "members":{
@@ -54849,6 +55753,30 @@
       "type":"list",
       "member":{
         "shape":"SuccessfulQueuedPurchaseDeletion",
+        "locationName":"item"
+      }
+    },
+    "SuccessfulSuppressionResponseObject":{
+      "type":"structure",
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "locationName":"instanceId"
+        },
+        "SuppressAt":{
+          "shape":"MillisecondDateTime",
+          "locationName":"suppressAt"
+        },
+        "ResumeAt":{
+          "shape":"MillisecondDateTime",
+          "locationName":"resumeAt"
+        }
+      }
+    },
+    "SuccessfulSuppressionResponseSet":{
+      "type":"list",
+      "member":{
+        "shape":"SuccessfulSuppressionResponseObject",
         "locationName":"item"
       }
     },
@@ -57701,6 +58629,34 @@
         }
       }
     },
+    "UnsuccessfulAssociationResponseObject":{
+      "type":"structure",
+      "members":{
+        "ApplicationStatusCheckId":{
+          "shape":"ApplicationStatusCheckId",
+          "locationName":"applicationStatusCheckId"
+        },
+        "AssociationType":{
+          "shape":"String",
+          "locationName":"associationType"
+        },
+        "AssociationValue":{
+          "shape":"String",
+          "locationName":"associationValue"
+        },
+        "Reason":{
+          "shape":"String",
+          "locationName":"reason"
+        }
+      }
+    },
+    "UnsuccessfulAssociationResponseSet":{
+      "type":"list",
+      "member":{
+        "shape":"UnsuccessfulAssociationResponseObject",
+        "locationName":"item"
+      }
+    },
     "UnsuccessfulInstanceCreditSpecificationErrorCode":{
       "type":"string",
       "enum":[
@@ -57780,6 +58736,34 @@
       "type":"list",
       "member":{
         "shape":"UnsuccessfulItem",
+        "locationName":"item"
+      }
+    },
+    "UnsuccessfulSuppressionResponseObject":{
+      "type":"structure",
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "locationName":"instanceId"
+        },
+        "SuppressAt":{
+          "shape":"MillisecondDateTime",
+          "locationName":"suppressAt"
+        },
+        "ResumeAt":{
+          "shape":"MillisecondDateTime",
+          "locationName":"resumeAt"
+        },
+        "Reason":{
+          "shape":"String",
+          "locationName":"reason"
+        }
+      }
+    },
+    "UnsuccessfulSuppressionResponseSet":{
+      "type":"list",
+      "member":{
+        "shape":"UnsuccessfulSuppressionResponseObject",
         "locationName":"item"
       }
     },

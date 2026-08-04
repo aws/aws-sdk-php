@@ -111,6 +111,8 @@ use GuzzleHttp\Promise\Create;
  * @method \GuzzleHttp\Promise\Promise restoreTableFromBackupAsync(array $args = []) (supported in versions 2012-08-10)
  * @method \Aws\Result restoreTableToPointInTime(array $args = []) (supported in versions 2012-08-10)
  * @method \GuzzleHttp\Promise\Promise restoreTableToPointInTimeAsync(array $args = []) (supported in versions 2012-08-10)
+ * @method \Aws\Result searchVectors(array $args = []) (supported in versions 2012-08-10)
+ * @method \GuzzleHttp\Promise\Promise searchVectorsAsync(array $args = []) (supported in versions 2012-08-10)
  * @method \Aws\Result tagResource(array $args = []) (supported in versions 2012-08-10)
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = []) (supported in versions 2012-08-10)
  * @method \Aws\Result transactGetItems(array $args = []) (supported in versions 2012-08-10)

@@ -489,6 +489,84 @@
         "title": "To scan a table"
       }
     ],
+    "SearchVectors": [
+      {
+        "input": {
+          "ExpressionAttributeValues": {
+            ":cat": {
+              "S": "Electronics"
+            }
+          },
+          "IndexName": "cosine-product-idx",
+          "ProjectionExpression": "ProductName, Price",
+          "ReturnConsumedCapacity": "INDEXES",
+          "SearchConditionExpression": "Category = :cat",
+          "SearchVector": [
+            {
+              "N": "0.12"
+            },
+            {
+              "N": "0.85"
+            },
+            {
+              "N": "0.44"
+            },
+            {
+              "N": "0.67"
+            }
+          ],
+          "TableName": "Products",
+          "TopK": 3
+        },
+        "output": {
+          "ConsumedCapacity": {
+            "VectorSearchRequestBytes": 1024
+          },
+          "SearchResults": [
+            {
+              "Item": {
+                "Price": {
+                  "N": "79.99"
+                },
+                "ProductName": {
+                  "S": "Wireless Headphones"
+                }
+              },
+              "Score": 0.95
+            },
+            {
+              "Item": {
+                "Price": {
+                  "N": "49.99"
+                },
+                "ProductName": {
+                  "S": "Bluetooth Speaker"
+                }
+              },
+              "Score": 0.87
+            },
+            {
+              "Item": {
+                "Price": {
+                  "N": "34.99"
+                },
+                "ProductName": {
+                  "S": "USB-C Hub"
+                }
+              },
+              "Score": 0.82
+            }
+          ]
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "This example searches the Products table for the top 3 items most similar to a provided vector, using the 'cosine-product-idx' vector index. The SearchConditionExpression filters results to the 'Electronics' category. The operation returns only the ProductName and Price attributes.",
+        "id": "to-search-vectors-1721700000000",
+        "title": "To search for similar vectors"
+      }
+    ],
     "UpdateItem": [
       {
         "input": {

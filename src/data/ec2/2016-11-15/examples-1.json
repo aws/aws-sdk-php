@@ -93,6 +93,38 @@
         "title": "To associate an Elastic IP address with a network interface"
       }
     ],
+    "AssociateApplicationStatusCheck": [
+      {
+        "input": {
+          "ApplicationStatusCheckId": "asc-0123456789abcdef0",
+          "TargetTagAssociations": [
+            {
+              "Key": "env",
+              "Value": "prod"
+            }
+          ]
+        },
+        "output": {
+          "SuccessfulResults": [
+            {
+              "ApplicationStatusCheckId": "asc-0123456789abcdef0",
+              "AssociationType": "EC2TAG",
+              "AssociationValue": "env=prod"
+            }
+          ],
+          "UnsuccessfulResults": [ ]
+        },
+        "comments": {
+          "input": {
+          },
+          "output": {
+          }
+        },
+        "description": "This example associates an application status check with instances matching the specified tag.",
+        "id": "ec2-associate-application-status-check-1",
+        "title": "To associate an application status check with tags"
+      }
+    ],
     "AssociateDhcpOptions": [
       {
         "input": {
@@ -527,6 +559,38 @@
         "description": "This example copies a snapshot with the snapshot ID of ``snap-066877671789bd71b`` from the ``us-west-2`` region to the ``us-east-1`` region and adds a short description to identify the snapshot.",
         "id": "to-copy-a-snapshot-1472502259774",
         "title": "To copy a snapshot"
+      }
+    ],
+    "CreateApplicationStatusCheck": [
+      {
+        "input": {
+          "Aggregation": "included",
+          "Path": "/health",
+          "Port": 80,
+          "Protocol": "http"
+        },
+        "output": {
+          "ApplicationStatusCheck": {
+            "Aggregation": "included",
+            "ApplicationStatusCheckId": "asc-0123456789abcdef0",
+            "FailureThreshold": 3,
+            "Interval": 10,
+            "Path": "/health",
+            "Port": 80,
+            "Protocol": "http",
+            "SuccessThreshold": 2,
+            "Timeout": 5
+          }
+        },
+        "comments": {
+          "input": {
+          },
+          "output": {
+          }
+        },
+        "description": "This example creates an application status check that monitors HTTP health on port 80.",
+        "id": "ec2-create-application-status-check-1",
+        "title": "To create an application status check"
       }
     ],
     "CreateCustomerGateway": [
@@ -1304,6 +1368,31 @@
         "title": "To create a VPC"
       }
     ],
+    "DeleteApplicationStatusCheck": [
+      {
+        "input": {
+          "ApplicationStatusCheckId": "asc-0123456789abcdef0"
+        },
+        "output": {
+          "ApplicationStatusCheck": {
+            "Aggregation": "included",
+            "ApplicationStatusCheckId": "asc-0123456789abcdef0",
+            "Path": "/health",
+            "Port": 80,
+            "Protocol": "http"
+          }
+        },
+        "comments": {
+          "input": {
+          },
+          "output": {
+          }
+        },
+        "description": "This example deletes the specified application status check.",
+        "id": "ec2-delete-application-status-check-1",
+        "title": "To delete an application status check"
+      }
+    ],
     "DeleteCustomerGateway": [
       {
         "input": {
@@ -1878,6 +1967,136 @@
         "description": "This example describes your Elastic IP addresses.",
         "id": "ec2-describe-addresses-1",
         "title": "To describe your Elastic IP addresses"
+      }
+    ],
+    "DescribeApplicationStatus": [
+      {
+        "input": {
+          "InstanceIds": [
+            "i-0123456789abcdef0"
+          ]
+        },
+        "output": {
+          "ApplicationStatuses": [
+            {
+              "ApplicationStatusCheckId": "asc-0123456789abcdef0",
+              "AvailabilityZone": "us-east-1a",
+              "InstanceId": "i-0123456789abcdef0",
+              "Status": "passed"
+            }
+          ]
+        },
+        "comments": {
+          "input": {
+          },
+          "output": {
+          }
+        },
+        "description": "This example describes the application status for the specified instances.",
+        "id": "ec2-describe-application-status-1",
+        "title": "To describe application status for instances"
+      },
+      {
+        "input": {
+          "Filters": [
+            {
+              "Name": "availability-zone",
+              "Values": [
+                "us-east-1a"
+              ]
+            }
+          ],
+          "MaxResults": 10
+        },
+        "output": {
+          "ApplicationStatuses": [
+            {
+              "ApplicationStatusCheckId": "asc-0123456789abcdef0",
+              "AvailabilityZone": "us-east-1a",
+              "InstanceId": "i-0123456789abcdef0",
+              "Status": "passed"
+            }
+          ]
+        },
+        "comments": {
+          "input": {
+          },
+          "output": {
+          }
+        },
+        "description": "This example uses filters to describe application status for instances in a specific Availability Zone.",
+        "id": "ec2-describe-application-status-2",
+        "title": "To describe application status using filters"
+      }
+    ],
+    "DescribeApplicationStatusChecks": [
+      {
+        "input": {
+          "ApplicationStatusCheckIds": [
+            "asc-0123456789abcdef0"
+          ]
+        },
+        "output": {
+          "ApplicationStatusChecks": [
+            {
+              "Aggregation": "included",
+              "ApplicationStatusCheckId": "asc-0123456789abcdef0",
+              "FailureThreshold": 3,
+              "Interval": 10,
+              "Path": "/health",
+              "Port": 80,
+              "Protocol": "http",
+              "SuccessThreshold": 2,
+              "Timeout": 5
+            }
+          ]
+        },
+        "comments": {
+          "input": {
+          },
+          "output": {
+          }
+        },
+        "description": "This example describes the specified application status checks.",
+        "id": "ec2-describe-application-status-checks-1",
+        "title": "To describe application status checks"
+      },
+      {
+        "input": {
+          "Filters": [
+            {
+              "Name": "tag:Environment",
+              "Values": [
+                "Production"
+              ]
+            }
+          ],
+          "MaxResults": 10
+        },
+        "output": {
+          "ApplicationStatusChecks": [
+            {
+              "Aggregation": "included",
+              "ApplicationStatusCheckId": "asc-0123456789abcdef0",
+              "FailureThreshold": 3,
+              "Interval": 10,
+              "Path": "/health",
+              "Port": 80,
+              "Protocol": "http",
+              "SuccessThreshold": 2,
+              "Timeout": 5
+            }
+          ]
+        },
+        "comments": {
+          "input": {
+          },
+          "output": {
+          }
+        },
+        "description": "This example uses filters to describe application status checks with a specific tag.",
+        "id": "ec2-describe-application-status-checks-2",
+        "title": "To describe application status checks using filters"
       }
     ],
     "DescribeAvailabilityZones": [
@@ -3947,6 +4166,32 @@
         "title": "To detach a volume from an instance"
       }
     ],
+    "DisableApplicationStatusCheckSuppression": [
+      {
+        "input": {
+          "InstanceIds": [
+            "i-0123456789abcdef0"
+          ]
+        },
+        "output": {
+          "SuccessfulResults": [
+            {
+              "InstanceId": "i-0123456789abcdef0"
+            }
+          ],
+          "UnsuccessfulResults": [ ]
+        },
+        "comments": {
+          "input": {
+          },
+          "output": {
+          }
+        },
+        "description": "This example disables application status check suppression for the specified instance, resuming normal status reporting.",
+        "id": "ec2-disable-application-status-check-suppression-1",
+        "title": "To disable application status check suppression"
+      }
+    ],
     "DisableVgwRoutePropagation": [
       {
         "input": {
@@ -3978,6 +4223,38 @@
         "description": "This example disassociates an Elastic IP address from an instance.",
         "id": "ec2-disassociate-address-1",
         "title": "To disassociate an Elastic IP address"
+      }
+    ],
+    "DisassociateApplicationStatusCheck": [
+      {
+        "input": {
+          "ApplicationStatusCheckId": "asc-0123456789abcdef0",
+          "TargetTagAssociations": [
+            {
+              "Key": "env",
+              "Value": "prod"
+            }
+          ]
+        },
+        "output": {
+          "SuccessfulResults": [
+            {
+              "ApplicationStatusCheckId": "asc-0123456789abcdef0",
+              "AssociationType": "EC2TAG",
+              "AssociationValue": "env=prod"
+            }
+          ],
+          "UnsuccessfulResults": [ ]
+        },
+        "comments": {
+          "input": {
+          },
+          "output": {
+          }
+        },
+        "description": "This example disassociates an application status check from instances matching the specified tag.",
+        "id": "ec2-disassociate-application-status-check-1",
+        "title": "To disassociate an application status check from tags"
       }
     ],
     "DisassociateIamInstanceProfile": [
@@ -4021,6 +4298,34 @@
         "description": "This example disassociates the specified route table from its associated subnet.",
         "id": "ec2-disassociate-route-table-1",
         "title": "To disassociate a route table"
+      }
+    ],
+    "EnableApplicationStatusCheckSuppression": [
+      {
+        "input": {
+          "DurationSeconds": 3600,
+          "InstanceIds": [
+            "i-0123456789abcdef0"
+          ]
+        },
+        "output": {
+          "SuccessfulResults": [
+            {
+              "InstanceId": "i-0123456789abcdef0",
+              "ResumeAt": "2026-05-14T19:30:00.000Z"
+            }
+          ],
+          "UnsuccessfulResults": [ ]
+        },
+        "comments": {
+          "input": {
+          },
+          "output": {
+          }
+        },
+        "description": "This example suppresses application status check reporting for the specified instance for one hour.",
+        "id": "ec2-enable-application-status-check-suppression-1",
+        "title": "To enable application status check suppression"
       }
     ],
     "EnableVgwRoutePropagation": [
@@ -4141,6 +4446,37 @@
         "description": "This example gets the launch template data for the specified instance.",
         "id": "to-get-the-launch-template-data-for-an-instance--1529356515702",
         "title": "To get the launch template data for an instance "
+      }
+    ],
+    "ModifyApplicationStatusCheck": [
+      {
+        "input": {
+          "ApplicationStatusCheckId": "asc-0123456789abcdef0",
+          "Path": "/healthv2",
+          "Port": 8080
+        },
+        "output": {
+          "ApplicationStatusCheck": {
+            "Aggregation": "included",
+            "ApplicationStatusCheckId": "asc-0123456789abcdef0",
+            "FailureThreshold": 3,
+            "Interval": 10,
+            "Path": "/healthv2",
+            "Port": 8080,
+            "Protocol": "http",
+            "SuccessThreshold": 2,
+            "Timeout": 5
+          }
+        },
+        "comments": {
+          "input": {
+          },
+          "output": {
+          }
+        },
+        "description": "This example modifies the port and path of an existing application status check.",
+        "id": "ec2-modify-application-status-check-1",
+        "title": "To modify an application status check"
       }
     ],
     "ModifyImageAttribute": [

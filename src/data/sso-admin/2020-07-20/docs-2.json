@@ -77,7 +77,7 @@
     "TagResource": "<p>Associates a set of tags with a specified resource.</p>",
     "UntagResource": "<p>Disassociates a set of tags from a specified resource.</p>",
     "UpdateApplication": "<p>Updates application properties. </p>",
-    "UpdateInstance": "<p>Update the details for the instance of IAM Identity Center that is owned by the Amazon Web Services account.</p>",
+    "UpdateInstance": "<p>Update the details for the instance of IAM Identity Center that is owned by the Amazon Web Services account.</p> <p>In a single <code>UpdateInstance</code> request, you can perform only one of the following operations:</p> <ul> <li> <p>Update the encryption configuration of the instance by specifying <code>EncryptionConfiguration</code>.</p> </li> <li> <p>Enable permission sets for the instance by specifying <code>PermissionSetsEnabled</code>.</p> </li> </ul> <p>A request that specifies both <code>EncryptionConfiguration</code> and <code>PermissionSetsEnabled</code> returns a <code>ValidationException</code>. To perform both operations, call <code>UpdateInstance</code> separately for each. The two calls can be made in parallel.</p>",
     "UpdateInstanceAccessControlAttributeConfiguration": "<p>Updates the IAM Identity Center identity store attributes that you can use with the IAM Identity Center instance for attributes-based access control (ABAC). When using an external identity provider as an identity source, you can pass attributes through the SAML assertion as an alternative to configuring attributes from the IAM Identity Center identity store. If a SAML assertion passes any of these attributes, IAM Identity Center replaces the attribute value with the value from the IAM Identity Center identity store. For more information about ABAC, see <a href=\"/singlesignon/latest/userguide/abac.html\">Attribute-Based Access Control</a> in the <i>IAM Identity Center User Guide</i>.</p>",
     "UpdatePermissionSet": "<p>Updates an existing permission set.</p>",
     "UpdateTrustedTokenIssuer": "<p>Updates the name of the trusted token issuer, or the path of a source attribute or destination attribute for a trusted token issuer configuration.</p> <note> <p>Updating this trusted token issuer configuration might cause users to lose access to any applications that are configured to use the trusted token issuer.</p> </note>"
@@ -422,6 +422,13 @@
       "base": null,
       "refs": {
         "JwtBearerGrant$AuthorizedTokenIssuers": "<p>A list of allowed token issuers trusted by the Identity Center instances for this application.</p> <note> <p> <code>AuthorizedTokenIssuers</code> is required when the grant type is <code>JwtBearerGrant</code>.</p> </note>"
+      }
+    },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "DescribeInstanceResponse$PermissionSetsEnabled": "<p>Indicates whether permission sets are enabled for this Identity Center instance.</p>",
+        "UpdateInstanceRequest$PermissionSetsEnabled": "<p>Enables permission sets for this Identity Center instance. The only accepted value is <code>true </code>. After permission sets are enabled, they cannot be disabled.</p> <note> <p>You can't set <code>EncryptionConfiguration</code> and <code>PermissionSetsEnabled</code> in the same request. To configure both, make two separate <code>UpdateInstance</code> calls. These calls can be made in parallel.</p> </note>"
       }
     },
     "ClaimAttributePath": {

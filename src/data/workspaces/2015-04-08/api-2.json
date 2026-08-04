@@ -1845,6 +1845,11 @@
       "min":6,
       "pattern":"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$"
     },
+    "ClientExperiencePolicy":{
+      "type":"string",
+      "max":64,
+      "pattern":"^[A-Z_0-9]+$"
+    },
     "ClientLocale":{
       "type":"string",
       "max":5,
@@ -1861,7 +1866,8 @@
       "type":"structure",
       "members":{
         "ReconnectEnabled":{"shape":"ReconnectEnum"},
-        "LogUploadEnabled":{"shape":"LogUploadEnum"}
+        "LogUploadEnabled":{"shape":"LogUploadEnum"},
+        "ClientExperiencePolicy":{"shape":"ClientExperiencePolicy"}
       }
     },
     "ClientPropertiesList":{

@@ -1668,6 +1668,10 @@
       "max":10,
       "min":1
     },
+    "Boolean":{
+      "type":"boolean",
+      "box":true
+    },
     "ClaimAttributePath":{
       "type":"string",
       "max":255,
@@ -2142,7 +2146,8 @@
         "CreatedDate":{"shape":"Date"},
         "Status":{"shape":"InstanceStatus"},
         "StatusReason":{"shape":"Reason"},
-        "EncryptionConfigurationDetails":{"shape":"EncryptionConfigurationDetails"}
+        "EncryptionConfigurationDetails":{"shape":"EncryptionConfigurationDetails"},
+        "PermissionSetsEnabled":{"shape":"Boolean"}
       }
     },
     "DescribePermissionSetProvisioningStatusRequest":{
@@ -3620,7 +3625,8 @@
       "members":{
         "Name":{"shape":"NameType"},
         "InstanceArn":{"shape":"InstanceArn"},
-        "EncryptionConfiguration":{"shape":"EncryptionConfiguration"}
+        "EncryptionConfiguration":{"shape":"EncryptionConfiguration"},
+        "PermissionSetsEnabled":{"shape":"Boolean"}
       }
     },
     "UpdateInstanceResponse":{

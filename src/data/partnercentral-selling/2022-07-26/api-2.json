@@ -1106,7 +1106,8 @@
     },
     "AwsMaturity":{
       "type":"string",
-      "pattern":"(?s).{1,20}"
+      "max":255,
+      "min":0
     },
     "AwsMemberBusinessTitle":{
       "type":"string",
@@ -1763,9 +1764,7 @@
       "type":"structure",
       "required":[
         "Catalog",
-        "ClientToken",
-        "Title",
-        "Description"
+        "ClientToken"
       ],
       "members":{
         "Catalog":{"shape":"CatalogIdentifier"},
@@ -2074,7 +2073,8 @@
     },
     "CustomerAction":{
       "type":"string",
-      "pattern":"(?s).{1,255}"
+      "max":255,
+      "min":0
     },
     "CustomerContactsList":{
       "type":"list",
@@ -2446,11 +2446,19 @@
     },
     "EngagementTitle":{
       "type":"string",
-      "pattern":"(?s).{1,40}"
+      "pattern":"(?s).{0,40}"
     },
     "EngagementUseCase":{
       "type":"string",
-      "pattern":"(?s).{1,255}"
+      "max":255,
+      "min":0
+    },
+    "EnrichmentContext":{
+      "type":"structure",
+      "members":{
+        "ProspectingResultAws":{"shape":"InvitationProspectingResultAws"},
+        "LeadInsights":{"shape":"LeadInsights"}
+      }
     },
     "EstimationUrl":{
       "type":"string",
@@ -2560,7 +2568,8 @@
         "Payload":{"shape":"Payload"},
         "InvitationMessage":{"shape":"InvitationMessage"},
         "EngagementDescription":{"shape":"EngagementDescription"},
-        "ExistingMembers":{"shape":"EngagementMemberSummaries"}
+        "ExistingMembers":{"shape":"EngagementMemberSummaries"},
+        "EnrichmentContext":{"shape":"EnrichmentContext"}
       }
     },
     "GetEngagementInvitationResponseSenderCompanyNameString":{
@@ -2807,6 +2816,13 @@
       "pattern":"(?s).{1,255}",
       "sensitive":true
     },
+    "InvitationProspectingResultAws":{
+      "type":"structure",
+      "members":{
+        "Customer":{"shape":"ProspectingResultCustomer"},
+        "Insights":{"shape":"ProspectingInsights"}
+      }
+    },
     "InvitationStatus":{
       "type":"string",
       "enum":[
@@ -2844,6 +2860,36 @@
         "BeforeLastModifiedDate":{"shape":"DateTime"}
       }
     },
+    "LeadAddress":{
+      "type":"structure",
+      "members":{
+        "City":{"shape":"LeadAddressCityString"},
+        "PostalCode":{"shape":"LeadAddressPostalCodeString"},
+        "StateOrRegion":{"shape":"LeadAddressStateOrRegionString"},
+        "CountryCode":{"shape":"LeadCountryCode"}
+      }
+    },
+    "LeadAddressCityString":{
+      "type":"string",
+      "max":255,
+      "min":0
+    },
+    "LeadAddressPostalCodeString":{
+      "type":"string",
+      "max":20,
+      "min":0
+    },
+    "LeadAddressStateOrRegionString":{
+      "type":"string",
+      "max":255,
+      "min":0
+    },
+    "LeadBusinessProblem":{
+      "type":"string",
+      "max":2000,
+      "min":0,
+      "sensitive":true
+    },
     "LeadContact":{
       "type":"structure",
       "required":[
@@ -2853,11 +2899,11 @@
         "LastName"
       ],
       "members":{
-        "BusinessTitle":{"shape":"JobTitle"},
-        "Email":{"shape":"Email"},
+        "BusinessTitle":{"shape":"LeadJobTitle"},
+        "Email":{"shape":"LeadEmail"},
         "FirstName":{"shape":"Name"},
         "LastName":{"shape":"Name"},
-        "Phone":{"shape":"PhoneNumber"}
+        "Phone":{"shape":"LeadPhoneNumber"}
       }
     },
     "LeadContext":{
@@ -2873,20 +2919,34 @@
         "Interactions":{"shape":"LeadInteractionList"}
       }
     },
+    "LeadCountryCode":{
+      "type":"string",
+      "max":10,
+      "min":0,
+      "sensitive":true
+    },
     "LeadCustomer":{
       "type":"structure",
-      "required":[
-        "CompanyName",
-        "Address"
-      ],
+      "required":["CompanyName"],
       "members":{
-        "Industry":{"shape":"Industry"},
+        "Industry":{"shape":"LeadIndustry"},
         "CompanyName":{"shape":"CompanyName"},
-        "WebsiteUrl":{"shape":"CompanyWebsiteUrl"},
-        "Address":{"shape":"AddressSummary"},
+        "WebsiteUrl":{"shape":"LeadWebsiteUrl"},
+        "Address":{"shape":"LeadAddress"},
         "AwsMaturity":{"shape":"AwsMaturity"},
-        "MarketSegment":{"shape":"MarketSegment"}
+        "MarketSegment":{"shape":"LeadMarketSegment"}
       }
+    },
+    "LeadEmail":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "sensitive":true
+    },
+    "LeadIndustry":{
+      "type":"string",
+      "max":255,
+      "min":0
     },
     "LeadInsights":{
       "type":"structure",
@@ -2896,13 +2956,7 @@
     },
     "LeadInteraction":{
       "type":"structure",
-      "required":[
-        "SourceType",
-        "SourceId",
-        "SourceName",
-        "CustomerAction",
-        "Contact"
-      ],
+      "required":["Contact"],
       "members":{
         "SourceType":{"shape":"LeadSourceType"},
         "SourceId":{"shape":"LeadSourceId"},
@@ -2910,7 +2964,7 @@
         "Usecase":{"shape":"EngagementUseCase"},
         "InteractionDate":{"shape":"DateTime"},
         "CustomerAction":{"shape":"CustomerAction"},
-        "BusinessProblem":{"shape":"EngagementCustomerBusinessProblem"},
+        "BusinessProblem":{"shape":"LeadBusinessProblem"},
         "Contact":{"shape":"LeadContact"}
       }
     },
@@ -2922,27 +2976,19 @@
     },
     "LeadInvitationCustomer":{
       "type":"structure",
-      "required":[
-        "CompanyName",
-        "CountryCode"
-      ],
+      "required":["CompanyName"],
       "members":{
-        "Industry":{"shape":"Industry"},
+        "Industry":{"shape":"LeadIndustry"},
         "CompanyName":{"shape":"CompanyName"},
-        "WebsiteUrl":{"shape":"CompanyWebsiteUrl"},
-        "CountryCode":{"shape":"CountryCode"},
+        "WebsiteUrl":{"shape":"LeadWebsiteUrl"},
+        "CountryCode":{"shape":"LeadCountryCode"},
         "AwsMaturity":{"shape":"AwsMaturity"},
-        "MarketSegment":{"shape":"MarketSegment"}
+        "MarketSegment":{"shape":"LeadMarketSegment"}
       }
     },
     "LeadInvitationInteraction":{
       "type":"structure",
-      "required":[
-        "SourceType",
-        "SourceId",
-        "SourceName",
-        "ContactBusinessTitle"
-      ],
+      "required":["ContactBusinessTitle"],
       "members":{
         "SourceType":{"shape":"LeadSourceType"},
         "SourceId":{"shape":"LeadSourceId"},
@@ -2962,21 +3008,44 @@
         "Interaction":{"shape":"LeadInvitationInteraction"}
       }
     },
+    "LeadJobTitle":{
+      "type":"string",
+      "max":255,
+      "min":0,
+      "sensitive":true
+    },
+    "LeadMarketSegment":{
+      "type":"string",
+      "max":255,
+      "min":0
+    },
+    "LeadPhoneNumber":{
+      "type":"string",
+      "max":255,
+      "min":0,
+      "sensitive":true
+    },
     "LeadQualificationStatus":{
       "type":"string",
       "pattern":"(?s).{1,255}"
     },
     "LeadSourceId":{
       "type":"string",
-      "pattern":"(?s).{1,255}"
+      "pattern":"(?s).{0,255}"
     },
     "LeadSourceName":{
       "type":"string",
-      "pattern":"(?s).{1,255}"
+      "pattern":"(?s).{0,255}"
     },
     "LeadSourceType":{
       "type":"string",
-      "pattern":"(?s).{1,255}"
+      "pattern":"(?s).{0,255}"
+    },
+    "LeadWebsiteUrl":{
+      "type":"string",
+      "max":255,
+      "min":0,
+      "sensitive":true
     },
     "LifeCycle":{
       "type":"structure",
@@ -3486,16 +3555,6 @@
       "type":"string",
       "enum":["StartTime"]
     },
-    "MarketSegment":{
-      "type":"string",
-      "enum":[
-        "Enterprise",
-        "Large",
-        "Medium",
-        "Small",
-        "Micro"
-      ]
-    },
     "Marketing":{
       "type":"structure",
       "members":{
@@ -3902,13 +3961,13 @@
     "ProspectingResultAws":{
       "type":"structure",
       "members":{
+        "Customer":{"shape":"ProspectingResultCustomer"},
+        "Insights":{"shape":"ProspectingInsights"},
         "StartTime":{"shape":"DateTime"},
         "EndTime":{"shape":"DateTime"},
         "TaskId":{"shape":"ProspectingTaskIdentifier"},
         "TaskArn":{"shape":"TaskArn"},
-        "TaskName":{"shape":"TaskName"},
-        "Customer":{"shape":"ProspectingResultCustomer"},
-        "Insights":{"shape":"ProspectingInsights"}
+        "TaskName":{"shape":"TaskName"}
       }
     },
     "ProspectingResultCustomer":{

@@ -48,6 +48,11 @@
             "required": false,
             "documentation": "ResourceArnList containing list of resource arns",
             "type": "stringArray"
+        },
+        "IsSearchOperation": {
+            "required": false,
+            "documentation": "Set to true for SearchVectors to route to the Search FQDN",
+            "type": "boolean"
         }
     },
     "conditions": [
@@ -72,6 +77,15 @@
             "argv": [
                 {
                     "ref": "UseFIPS"
+                },
+                true
+            ]
+        },
+        {
+            "fn": "booleanEquals",
+            "argv": [
+                {
+                    "ref": "UseDualStack"
                 },
                 true
             ]
@@ -110,12 +124,27 @@
             ]
         },
         {
-            "fn": "booleanEquals",
+            "fn": "parseURL",
             "argv": [
                 {
-                    "ref": "UseDualStack"
-                },
-                true
+                    "ref": "Endpoint"
+                }
+            ],
+            "assign": "parsedEndpoint"
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                "dynamodb.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                {
+                    "fn": "getAttr",
+                    "argv": [
+                        {
+                            "ref": "parsedEndpoint"
+                        },
+                        "authority"
+                    ]
+                }
             ]
         },
         {
@@ -136,9 +165,15 @@
         {
             "fn": "stringEquals",
             "argv": [
-                "https://dynamodb.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "search-dynamodb.{Region}.{PartitionResult#dualStackDnsSuffix}",
                 {
-                    "ref": "Endpoint"
+                    "fn": "getAttr",
+                    "argv": [
+                        {
+                            "ref": "parsedEndpoint"
+                        },
+                        "authority"
+                    ]
                 }
             ]
         },
@@ -232,7 +267,7 @@
                         {
                             "ref": "ParsedArn_ssa_2"
                         },
-                        "accountId"
+                        "region"
                     ]
                 },
                 false
@@ -247,7 +282,7 @@
                         {
                             "ref": "ParsedArn_ssa_2"
                         },
-                        "region"
+                        "accountId"
                     ]
                 },
                 false
@@ -382,6 +417,21 @@
                 },
                 "aws-us-gov"
             ]
+        },
+        {
+            "fn": "booleanEquals",
+            "argv": [
+                {
+                    "fn": "coalesce",
+                    "argv": [
+                        {
+                            "ref": "IsSearchOperation"
+                        },
+                        false
+                    ]
+                },
+                true
+            ]
         }
     ],
     "results": [
@@ -426,9 +476,9 @@
                 "properties": {
                     "authSchemes": [
                         {
+                            "signingRegion": "us-east-1",
                             "name": "sigv4",
-                            "signingName": "dynamodb",
-                            "signingRegion": "us-east-1"
+                            "signingName": "dynamodb"
                         }
                     ]
                 },
@@ -440,6 +490,15 @@
             "conditions": [],
             "error": "Invalid Configuration: AccountIdEndpointMode is required and FIPS is enabled, but FIPS account endpoints are not supported",
             "type": "error"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://search-dynamodb-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
         },
         {
             "conditions": [],
@@ -458,7 +517,25 @@
         {
             "conditions": [],
             "endpoint": {
+                "url": "https://search-dynamodb.{Region}.{PartitionResult#dnsSuffix}",
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
                 "url": "https://dynamodb.{Region}.{PartitionResult#dnsSuffix}",
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://search-dynamodb-fips.{Region}.{PartitionResult#dnsSuffix}",
                 "properties": {},
                 "headers": {}
             },
@@ -481,6 +558,19 @@
         {
             "conditions": [],
             "endpoint": {
+                "url": "https://{ParsedArn_ssa_2#accountId}.search-ddb.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {
+                    "metricValues": [
+                        "O"
+                    ]
+                },
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
                 "url": "https://{ParsedArn_ssa_2#accountId}.ddb.{Region}.{PartitionResult#dualStackDnsSuffix}",
                 "properties": {
                     "metricValues": [
@@ -494,7 +584,33 @@
         {
             "conditions": [],
             "endpoint": {
+                "url": "https://{ParsedArn_ssa_1#accountId}.search-ddb.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {
+                    "metricValues": [
+                        "O"
+                    ]
+                },
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
                 "url": "https://{ParsedArn_ssa_1#accountId}.ddb.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {
+                    "metricValues": [
+                        "O"
+                    ]
+                },
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://{AccountId}.search-ddb.{Region}.{PartitionResult#dualStackDnsSuffix}",
                 "properties": {
                     "metricValues": [
                         "O"
@@ -535,6 +651,15 @@
         {
             "conditions": [],
             "endpoint": {
+                "url": "https://search-dynamodb.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
                 "url": "https://dynamodb.{Region}.{PartitionResult#dualStackDnsSuffix}",
                 "properties": {},
                 "headers": {}
@@ -545,6 +670,19 @@
             "conditions": [],
             "error": "DualStack is enabled but this partition does not support DualStack",
             "type": "error"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://{ParsedArn_ssa_2#accountId}.search-ddb.{Region}.{PartitionResult#dnsSuffix}",
+                "properties": {
+                    "metricValues": [
+                        "O"
+                    ]
+                },
+                "headers": {}
+            },
+            "type": "endpoint"
         },
         {
             "conditions": [],
@@ -562,7 +700,33 @@
         {
             "conditions": [],
             "endpoint": {
+                "url": "https://{ParsedArn_ssa_1#accountId}.search-ddb.{Region}.{PartitionResult#dnsSuffix}",
+                "properties": {
+                    "metricValues": [
+                        "O"
+                    ]
+                },
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
                 "url": "https://{ParsedArn_ssa_1#accountId}.ddb.{Region}.{PartitionResult#dnsSuffix}",
+                "properties": {
+                    "metricValues": [
+                        "O"
+                    ]
+                },
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://{AccountId}.search-ddb.{Region}.{PartitionResult#dnsSuffix}",
                 "properties": {
                     "metricValues": [
                         "O"
@@ -592,6 +756,6 @@
         }
     ],
     "root": 2,
-    "nodeCount": 67,
-    "nodes": "/////wAAAAH/////AAAAAAAAAAUAAAADAAAAAQAAAAQF9eEZAAAAAgX14QEAAABBAAAAAQAAAD8AAAAGAAAAAgAAADQAAAAHAAAAAwAAAAgF9eEZAAAABAAAADMAAAAJAAAABgAAAB4AAAAKAAAACQAAAAsF9eELAAAACgAAAA0AAAAMAAAAGgX14RMF9eELAAAACwAAAB0AAAAOAAAADAAAAA8AAAAUAAAADQAAABAAAAAUAAAADgAAABEAAAAUAAAADwAAABIAAAAUAAAAEAAAABMAAAAUAAAAEQX14RYAAAAUAAAAEgAAABUAAAAbAAAAEwAAABYAAAAbAAAAFAAAABcAAAAbAAAAFQAAABgAAAAbAAAAFgAAABkAAAAbAAAAFwAAABoAAAAbAAAAGAX14RcAAAAbAAAAGQAAABwAAAAdAAAAGwX14RgF9eERAAAAGgX14RIF9eELAAAABwAAAB8F9eEVAAAACQAAACAF9eEUAAAACgAAACIAAAAhAAAAGgX14RMF9eEUAAAACwAAADIAAAAjAAAADAAAACQAAAApAAAADQAAACUAAAApAAAADgAAACYAAAApAAAADwAAACcAAAApAAAAEAAAACgAAAApAAAAEQX14Q4AAAApAAAAEgAAACoAAAAwAAAAEwAAACsAAAAwAAAAFAAAACwAAAAwAAAAFQAAAC0AAAAwAAAAFgAAAC4AAAAwAAAAFwAAAC8AAAAwAAAAGAX14Q8AAAAwAAAAGQAAADEAAAAyAAAAGwX14RAF9eERAAAAGgX14RIF9eEUAAAABgX14QYF9eEHAAAAAwAAADUF9eEZAAAABAX14QUAAAA2AAAABQAAADgAAAA3AAAABgX14QoF9eENAAAABgAAADwAAAA5AAAACQAAADoAAAA7AAAAGgX14QgAAAA7AAAAHAX14QsF9eEMAAAABwAAAD0F9eEKAAAACQAAAD4F9eEJAAAAGgX14QgF9eEJAAAAAgX14QEAAABAAAAAAwAAAEIAAABBAAAABgX14QIF9eEEAAAABgX14QIAAABDAAAACAX14QMF9eEE"
+    "nodeCount": 82,
+    "nodes": "/////wAAAAH/////AAAAAAAAAAYAAAADAAAAAQAAAAQF9eEjAAAAAgX14QEAAAAFAAAAAwX14QIF9eEEAAAAAQAAAE0AAAAHAAAAAgAAAD0AAAAIAAAAAwAAACIAAAAJAAAABAAAAAoF9eEjAAAABQX14QcAAAALAAAACwAAAAwAAABFAAAADAAAAA4AAAANAAAAHAX14RkAAABFAAAADQAAACEAAAAPAAAADgAAABAAAAAVAAAADwAAABEAAAAVAAAAEAAAABIAAAAVAAAAEQAAABMAAAAVAAAAEgAAABQAAAAVAAAAEwAAACAAAAAVAAAAFAAAABYAAAAcAAAAFQAAABcAAAAcAAAAFgAAABgAAAAcAAAAFwAAABkAAAAcAAAAGAAAABoAAAAcAAAAGQAAABsAAAAcAAAAGgAAAB8AAAAcAAAAGwAAAB0AAAAhAAAAHQAAAB4F9eEXAAAAHwX14SEF9eEiAAAAHwX14R8F9eEgAAAAHwX14R0F9eEeAAAAHAX14RgAAABFAAAABAAAACMF9eEjAAAABQX14QYAAAAkAAAACQAAACUF9eEcAAAACwAAACYAAAA8AAAADAAAACgAAAAnAAAAHAX14RkAAAA8AAAADQAAADsAAAApAAAADgAAACoAAAAvAAAADwAAACsAAAAvAAAAEAAAACwAAAAvAAAAEQAAAC0AAAAvAAAAEgAAAC4AAAAvAAAAEwAAADoAAAAvAAAAFAAAADAAAAA2AAAAFQAAADEAAAA2AAAAFgAAADIAAAA2AAAAFwAAADMAAAA2AAAAGAAAADQAAAA2AAAAGQAAADUAAAA2AAAAGgAAADkAAAA2AAAAGwAAADcAAAA7AAAAHQAAADgF9eEXAAAAHwX14RUF9eEWAAAAHwX14RMF9eEUAAAAHwX14REF9eESAAAAHAX14RgAAAA8AAAAHwX14RoF9eEbAAAAAwAAAEYAAAA+AAAABAAAAD8F9eEjAAAABQX14QUAAABAAAAABgAAAEEF9eEQAAAACwAAAEIAAABDAAAAHAX14QgAAABDAAAAHgAAAEUAAABEAAAAHwX14Q4F9eEPAAAAHwX14QwF9eENAAAABAAAAEcF9eEjAAAABQX14QUAAABIAAAABgAAAEkF9eELAAAACQAAAEoF9eELAAAACwAAAEsAAABMAAAAHAX14QgAAABMAAAAHwX14QkF9eEKAAAAAgX14QEAAABOAAAAAwX14QIAAABPAAAABAAAAFAF9eEEAAAABwAAAFEF9eEEAAAACAX14QMAAABSAAAACgX14QMF9eEE"
 }
