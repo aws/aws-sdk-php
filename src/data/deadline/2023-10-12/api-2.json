@@ -6618,7 +6618,7 @@
       ],
       "members":{
         "jobId":{"shape":"JobId"},
-        "jobAttachmentSettings":{"shape":"JobAttachmentSettings"},
+        "jobAttachmentSettings":{"shape":"JobDetailsJobAttachmentSettings"},
         "jobRunAsUser":{"shape":"JobRunAsUser"},
         "logGroupName":{"shape":"String"},
         "queueRoleArn":{"shape":"IamRoleArn"},
@@ -6645,6 +6645,17 @@
       "required":["jobId"],
       "members":{
         "jobId":{"shape":"JobId"}
+      }
+    },
+    "JobDetailsJobAttachmentSettings":{
+      "type":"structure",
+      "required":[
+        "s3BucketName",
+        "rootPrefix"
+      ],
+      "members":{
+        "s3BucketName":{"shape":"S3BucketName"},
+        "rootPrefix":{"shape":"S3Prefix"}
       }
     },
     "JobEntity":{
@@ -10727,7 +10738,8 @@
       "type":"string",
       "enum":[
         "COMPUTE",
-        "LICENSE"
+        "LICENSE",
+        "PERSISTENT_VOLUME"
       ]
     },
     "UserId":{"type":"string"},

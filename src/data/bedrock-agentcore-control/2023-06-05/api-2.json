@@ -4003,6 +4003,12 @@
       "max":256,
       "min":1
     },
+    "ConnectorParameterName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z][a-zA-Z0-9_-]*"
+    },
     "ConnectorParameterOverride":{
       "type":"structure",
       "required":["path"],
@@ -4015,6 +4021,11 @@
     "ConnectorParameterOverrides":{
       "type":"list",
       "member":{"shape":"ConnectorParameterOverride"}
+    },
+    "ConnectorParameterValue":{
+      "type":"string",
+      "max":1024,
+      "min":1
     },
     "ConnectorSource":{
       "type":"structure",
@@ -8858,6 +8869,28 @@
         "source":{"shape":"ApiSchemaConfiguration"}
       }
     },
+    "HttpConnectorParameters":{
+      "type":"map",
+      "key":{"shape":"ConnectorParameterName"},
+      "value":{"shape":"ConnectorParameterValue"},
+      "max":10,
+      "min":0
+    },
+    "HttpConnectorSource":{
+      "type":"structure",
+      "required":["connectorId"],
+      "members":{
+        "connectorId":{"shape":"ConnectorId"}
+      }
+    },
+    "HttpConnectorTargetConfiguration":{
+      "type":"structure",
+      "required":["source"],
+      "members":{
+        "source":{"shape":"HttpConnectorSource"},
+        "parameters":{"shape":"HttpConnectorParameters"}
+      }
+    },
     "HttpHeaderKey":{
       "type":"string",
       "max":16383,
@@ -8888,7 +8921,8 @@
       "type":"structure",
       "members":{
         "agentcoreRuntime":{"shape":"RuntimeTargetConfiguration"},
-        "passthrough":{"shape":"PassthroughTargetConfiguration"}
+        "passthrough":{"shape":"PassthroughTargetConfiguration"},
+        "connector":{"shape":"HttpConnectorTargetConfiguration"}
       },
       "union":true
     },
@@ -13313,7 +13347,8 @@
         "CONNECTOR",
         "AGENTCORE_RUNTIME",
         "PASSTHROUGH",
-        "PROVIDER"
+        "PROVIDER",
+        "HTTP_CONNECTOR"
       ]
     },
     "Temperature":{

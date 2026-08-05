@@ -2029,6 +2029,22 @@
         {"shape":"OperationTimeoutException"}
       ]
     },
+    "GetDataCatalogExportConfiguration":{
+      "name":"GetDataCatalogExportConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetDataCatalogExportConfigurationInput"},
+      "output":{"shape":"GetDataCatalogExportConfigurationOutput"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
+    },
     "GetDataQualityModel":{
       "name":"GetDataQualityModel",
       "http":{
@@ -3600,6 +3616,22 @@
         {"shape":"InternalServiceException"},
         {"shape":"InvalidInputException"},
         {"shape":"OperationTimeoutException"}
+      ]
+    },
+    "PutDataCatalogExportConfiguration":{
+      "name":"PutDataCatalogExportConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutDataCatalogExportConfigurationInput"},
+      "output":{"shape":"PutDataCatalogExportConfigurationOutput"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"}
       ]
     },
     "PutDataQualityProfileAnnotation":{
@@ -10185,11 +10217,35 @@
         "NONE"
       ]
     },
+    "ExportEncryptionConfiguration":{
+      "type":"structure",
+      "members":{
+        "SseAlgorithm":{"shape":"SseAlgorithm"},
+        "KmsKeyArn":{"shape":"KmsKeyArnString"}
+      }
+    },
     "ExportLabelsTaskRunProperties":{
       "type":"structure",
       "members":{
         "OutputS3Path":{"shape":"UriString"}
       }
+    },
+    "ExportSetting":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "ExportStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLING",
+        "ENABLED",
+        "DISABLING",
+        "DISABLED",
+        "FAILED"
+      ]
     },
     "ExtendedString":{
       "type":"string",
@@ -11002,6 +11058,21 @@
       "type":"structure",
       "members":{
         "DataCatalogEncryptionSettings":{"shape":"DataCatalogEncryptionSettings"}
+      }
+    },
+    "GetDataCatalogExportConfigurationInput":{
+      "type":"structure",
+      "members":{}
+    },
+    "GetDataCatalogExportConfigurationOutput":{
+      "type":"structure",
+      "members":{
+        "ExportSetting":{"shape":"ExportSetting"},
+        "Status":{"shape":"ExportStatus"},
+        "EncryptionConfiguration":{"shape":"ExportEncryptionConfiguration"},
+        "S3TableBucketArn":{"shape":"S3TableBucketArn"},
+        "CreatedAt":{"shape":"CreatedAt"},
+        "UpdatedAt":{"shape":"UpdatedAt"}
       }
     },
     "GetDataQualityModelRequest":{
@@ -13665,6 +13736,10 @@
       "type":"string",
       "pattern":"^$|arn:aws[a-z0-9-]*:kms:.*"
     },
+    "KmsKeyArnString":{
+      "type":"string",
+      "pattern":"arn:aws[-a-z0-9]*:kms:[-a-z0-9]*:[0-9]{12}:key/.+"
+    },
     "LabelCount":{"type":"integer"},
     "LabelingSetGenerationTaskRunProperties":{
       "type":"structure",
@@ -15671,6 +15746,25 @@
       "type":"structure",
       "members":{}
     },
+    "PutDataCatalogExportConfigurationInput":{
+      "type":"structure",
+      "required":["ExportSetting"],
+      "members":{
+        "ExportSetting":{"shape":"ExportSetting"},
+        "EncryptionConfiguration":{"shape":"ExportEncryptionConfiguration"},
+        "ClientToken":{
+          "shape":"HashString",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "PutDataCatalogExportConfigurationOutput":{
+      "type":"structure",
+      "members":{
+        "ExportSetting":{"shape":"ExportSetting"},
+        "EncryptionConfiguration":{"shape":"ExportEncryptionConfiguration"}
+      }
+    },
     "PutDataQualityProfileAnnotationRequest":{
       "type":"structure",
       "required":[
@@ -16715,6 +16809,7 @@
         "BoundedFiles":{"shape":"BoxedLong"}
       }
     },
+    "S3TableBucketArn":{"type":"string"},
     "S3Target":{
       "type":"structure",
       "members":{
@@ -17514,6 +17609,7 @@
       "type":"string",
       "pattern":"([\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\s])*"
     },
+    "SseAlgorithm":{"type":"string"},
     "StartBlueprintRunRequest":{
       "type":"structure",
       "required":[

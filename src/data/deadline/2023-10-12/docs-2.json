@@ -2370,7 +2370,6 @@
       "refs": {
         "CreateQueueRequest$jobAttachmentSettings": "<p>The job attachment settings for the queue. These are the Amazon S3 bucket name and the Amazon S3 prefix.</p>",
         "GetQueueResponse$jobAttachmentSettings": "<p>The job attachment settings for the queue.</p>",
-        "JobDetailsEntity$jobAttachmentSettings": "<p>The job attachment settings.</p>",
         "UpdateQueueRequest$jobAttachmentSettings": "<p>The job attachment settings to update for the queue.</p>"
       }
     },
@@ -2411,6 +2410,12 @@
       "base": "<p>The identifiers for a job.</p>",
       "refs": {
         "JobEntityIdentifiersUnion$jobDetails": "<p>The job details.</p>"
+      }
+    },
+    "JobDetailsJobAttachmentSettings": {
+      "base": "<p>The job attachment settings returned to workers for a job. These are the Amazon S3 bucket name and the Amazon S3 prefix.</p>",
+      "refs": {
+        "JobDetailsEntity$jobAttachmentSettings": "<p>The job attachment settings.</p>"
       }
     },
     "JobEntity": {
@@ -3800,6 +3805,7 @@
       "base": null,
       "refs": {
         "JobAttachmentSettings$s3BucketName": "<p>The Amazon S3 bucket name.</p>",
+        "JobDetailsJobAttachmentSettings$s3BucketName": "<p>The Amazon S3 bucket name.</p>",
         "S3Location$bucketName": "<p>The name of the Amazon S3 bucket.</p>"
       }
     },
@@ -3818,7 +3824,8 @@
     "S3Prefix": {
       "base": null,
       "refs": {
-        "JobAttachmentSettings$rootPrefix": "<p>The root prefix.</p>"
+        "JobAttachmentSettings$rootPrefix": "<p>The root prefix.</p>",
+        "JobDetailsJobAttachmentSettings$rootPrefix": "<p>The root prefix.</p>"
       }
     },
     "SchedulingConfiguration": {

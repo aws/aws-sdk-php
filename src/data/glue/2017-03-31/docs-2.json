@@ -127,6 +127,7 @@
     "GetCustomEntityType": "<p>Retrieves the details of a custom pattern by specifying its name.</p>",
     "GetDashboardUrl": "<p>Retrieves the URL for the Spark monitoring dashboard for a Glue resource.</p>",
     "GetDataCatalogEncryptionSettings": "<p>Retrieves the security configuration for a specified catalog.</p>",
+    "GetDataCatalogExportConfiguration": "<p>Retrieves the current export configuration for the Glue Data Catalog. The export configuration controls whether catalog metadata is exported to S3 Tables.</p>",
     "GetDataQualityModel": "<p>Retrieve the training status of the model along with more information (CompletedOn, StartedOn, FailureReason).</p>",
     "GetDataQualityModelResult": "<p>Retrieve a statistic's predictions for a given Profile ID.</p>",
     "GetDataQualityResult": "<p>Retrieves the result of a data quality rule evaluation.</p>",
@@ -228,6 +229,7 @@
     "PutAssetType": "<p>Creates or updates an asset type in Glue Data Catalog. An asset type defines the structure of assets by specifying which forms they include. If an asset type with the given name already exists, it is updated.</p>",
     "PutAttachment": "<p>Attaches a form to an asset or an iterable form item in Glue Data Catalog. If an attachment with the same name already exists, it is overwritten.</p>",
     "PutDataCatalogEncryptionSettings": "<p>Sets the security configuration for a specified catalog. After the configuration has been set, the specified encryption is applied to every catalog write thereafter.</p>",
+    "PutDataCatalogExportConfiguration": "<p>Creates or updates the export configuration for the Glue Data Catalog. Use this operation to enable or disable the export of catalog metadata to S3 Tables.</p>",
     "PutDataQualityProfileAnnotation": "<p>Annotate all datapoints for a Profile.</p>",
     "PutFormType": "<p>Creates or updates a form type in Glue Data Catalog. A form type defines the schema for structured metadata that can be attached to assets.</p>",
     "PutResourcePolicy": "<p>Sets the Data Catalog resource policy for access control.</p>",
@@ -2847,6 +2849,7 @@
       "base": null,
       "refs": {
         "GetAssetOutput$CreatedAt": "<p>The timestamp at which the asset was created.</p>",
+        "GetDataCatalogExportConfigurationOutput$CreatedAt": "<p>The timestamp at which the export configuration was created.</p>",
         "PutAssetResponse$CreatedAt": "<p>The timestamp at which the asset was created.</p>"
       }
     },
@@ -4612,10 +4615,32 @@
         "PutResourcePolicyRequest$PolicyExistsCondition": "<p>A value of <code>MUST_EXIST</code> is used to update a policy. A value of <code>NOT_EXIST</code> is used to create a new policy. If a value of <code>NONE</code> or a null value is used, the call does not depend on the existence of a policy.</p>"
       }
     },
+    "ExportEncryptionConfiguration": {
+      "base": "<p>The encryption configuration for exported data catalog metadata.</p>",
+      "refs": {
+        "GetDataCatalogExportConfigurationOutput$EncryptionConfiguration": "<p>The encryption configuration for the exported data.</p>",
+        "PutDataCatalogExportConfigurationInput$EncryptionConfiguration": "<p>The encryption configuration for the exported data. If not specified, the default encryption settings are used.</p>",
+        "PutDataCatalogExportConfigurationOutput$EncryptionConfiguration": "<p>The encryption configuration for the exported data.</p>"
+      }
+    },
     "ExportLabelsTaskRunProperties": {
       "base": "<p>Specifies configuration properties for an exporting labels task run.</p>",
       "refs": {
         "TaskRunProperties$ExportLabelsTaskRunProperties": "<p>The configuration properties for an exporting labels task run.</p>"
+      }
+    },
+    "ExportSetting": {
+      "base": "<p>The export setting for the data catalog.</p>",
+      "refs": {
+        "GetDataCatalogExportConfigurationOutput$ExportSetting": "<p>The export setting for the data catalog. Valid values are <code>ENABLED</code> and <code>DISABLED</code>.</p>",
+        "PutDataCatalogExportConfigurationInput$ExportSetting": "<p>The export setting for the data catalog. Specify <code>ENABLED</code> to start exporting catalog metadata to S3 Tables, or <code>DISABLED</code> to stop exporting. This field is required.</p>",
+        "PutDataCatalogExportConfigurationOutput$ExportSetting": "<p>The export setting for the data catalog.</p>"
+      }
+    },
+    "ExportStatus": {
+      "base": "<p>The current status of the data catalog export.</p>",
+      "refs": {
+        "GetDataCatalogExportConfigurationOutput$Status": "<p>The current status of the export. Valid values are <code>ENABLING</code>, <code>ENABLED</code>, <code>DISABLING</code>, <code>DISABLED</code>, and <code>FAILED</code>.</p>"
       }
     },
     "ExtendedString": {
@@ -5316,6 +5341,14 @@
       "refs": {}
     },
     "GetDataCatalogEncryptionSettingsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDataCatalogExportConfigurationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDataCatalogExportConfigurationOutput": {
       "base": null,
       "refs": {}
     },
@@ -6245,6 +6278,7 @@
         "PutAssetRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
         "PutAssetTypeRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
         "PutAttachmentRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
+        "PutDataCatalogExportConfigurationInput$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
         "PutDataQualityProfileAnnotationRequest$ProfileId": "<p>The ID of the data quality monitoring profile to annotate.</p>",
         "PutFormTypeRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
         "PutResourcePolicyRequest$PolicyHashCondition": "<p>The hash value returned when the previous policy was set using <code>PutResourcePolicy</code>. Its purpose is to prevent concurrent modifications of a policy. Do not use this parameter if no previous policy has been set.</p>",
@@ -7328,6 +7362,12 @@
         "DataQualityEncryption$KmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key to be used to encrypt the data.</p>",
         "JobBookmarksEncryption$KmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key to be used to encrypt the data.</p>",
         "S3Encryption$KmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key to be used to encrypt the data.</p>"
+      }
+    },
+    "KmsKeyArnString": {
+      "base": null,
+      "refs": {
+        "ExportEncryptionConfiguration$KmsKeyArn": "<p>The ARN of the KMS key used to encrypt the exported data.</p>"
       }
     },
     "LabelCount": {
@@ -9842,6 +9882,14 @@
       "base": null,
       "refs": {}
     },
+    "PutDataCatalogExportConfigurationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "PutDataCatalogExportConfigurationOutput": {
+      "base": null,
+      "refs": {}
+    },
     "PutDataQualityProfileAnnotationRequest": {
       "base": null,
       "refs": {}
@@ -10479,6 +10527,12 @@
       "refs": {
         "GovernedCatalogSource$AdditionalOptions": "<p>Specifies additional connection options.</p>",
         "S3CatalogSource$AdditionalOptions": "<p>Specifies additional connection options.</p>"
+      }
+    },
+    "S3TableBucketArn": {
+      "base": null,
+      "refs": {
+        "GetDataCatalogExportConfigurationOutput$S3TableBucketArn": "<p>The ARN of the S3 Tables bucket where catalog metadata is exported.</p>"
       }
     },
     "S3Target": {
@@ -11186,6 +11240,12 @@
       "refs": {
         "JDBCConnectorSource$Query": "<p>The table or SQL query to get the data from. You can specify either <code>ConnectionTable</code> or <code>query</code>, but not both.</p>",
         "SparkSQL$SqlQuery": "<p>A SQL query that must use Spark SQL syntax and return a single data set.</p>"
+      }
+    },
+    "SseAlgorithm": {
+      "base": null,
+      "refs": {
+        "ExportEncryptionConfiguration$SseAlgorithm": "<p>The server-side encryption algorithm used for the exported data. Valid values are <code>AES256</code> and <code>aws:kms</code>.</p>"
       }
     },
     "StartBlueprintRunRequest": {
@@ -12830,6 +12890,7 @@
       "base": null,
       "refs": {
         "GetAssetOutput$UpdatedAt": "<p>The timestamp at which the asset was last updated.</p>",
+        "GetDataCatalogExportConfigurationOutput$UpdatedAt": "<p>The timestamp at which the export configuration was last updated.</p>",
         "SearchResultItem$UpdatedAt": "<p>The timestamp at which the matched asset was last updated.</p>",
         "UpdateAssetResponse$UpdatedAt": "<p>The timestamp at which the asset was last updated.</p>"
       }

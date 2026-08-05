@@ -228,8 +228,8 @@
       "errors":[
         {"shape":"LimitExceededException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"InvalidArgsException"},
         {"shape":"InvalidArnException"},
+        {"shape":"InvalidArgsException"},
         {"shape":"InvalidStateException"},
         {"shape":"MalformedCSRException"}
       ],
@@ -692,7 +692,7 @@
       "type":"string",
       "max":253,
       "min":0,
-      "pattern":"[-a-zA-Z0-9;?:@&=+$,%_.!~*()']+(/[-a-zA-Z0-9;?:@&=+$,%_.!~*()']+)*"
+      "pattern":"(/|[-a-zA-Z0-9;?:@&=+$,%_.!~*()']+(/[-a-zA-Z0-9;?:@&=+$,%_.!~*()']+)*)"
     },
     "CrlType":{
       "type":"string",
@@ -1385,6 +1385,9 @@
         "SHA256WITHRSA",
         "SHA384WITHRSA",
         "SHA512WITHRSA",
+        "SHA256WITHRSA_PSS",
+        "SHA384WITHRSA_PSS",
+        "SHA512WITHRSA_PSS",
         "SM3WITHSM2",
         "ML_DSA_44",
         "ML_DSA_65",

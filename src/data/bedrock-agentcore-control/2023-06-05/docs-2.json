@@ -1335,7 +1335,14 @@
     "ConnectorId": {
       "base": null,
       "refs": {
-        "ConnectorSource$connectorId": "<p>The identifier for the connector integration (for example, <code>bedrock-knowledge-bases</code>).</p>"
+        "ConnectorSource$connectorId": "<p>The identifier for the connector integration (for example, <code>bedrock-knowledge-bases</code>).</p>",
+        "HttpConnectorSource$connectorId": "<p>The identifier for the HTTP connector integration.</p>"
+      }
+    },
+    "ConnectorParameterName": {
+      "base": "<p>The name of a connector parameter (for example, <code>memoryId</code>). The name must start with a letter and contain only letters, digits, underscores, and hyphens.</p>",
+      "refs": {
+        "HttpConnectorParameters$key": null
       }
     },
     "ConnectorParameterOverride": {
@@ -1348,6 +1355,12 @@
       "base": null,
       "refs": {
         "ConnectorConfiguration$parameterOverrides": "<p>Parameters to expose to the agent at runtime, with optional description overrides.</p>"
+      }
+    },
+    "ConnectorParameterValue": {
+      "base": "<p>The value of a connector parameter.</p>",
+      "refs": {
+        "HttpConnectorParameters$value": null
       }
     },
     "ConnectorSource": {
@@ -4009,6 +4022,24 @@
       "refs": {
         "PassthroughTargetConfiguration$schema": "<p>The API schema configuration that defines the structure of the passthrough target's API.</p>",
         "RuntimeTargetConfiguration$schema": "<p>The API schema configuration that defines the structure of the runtime target's API.</p>"
+      }
+    },
+    "HttpConnectorParameters": {
+      "base": "<p>A map of resource parameters for an HTTP connector target. Each entry maps a parameter name to its value.</p>",
+      "refs": {
+        "HttpConnectorTargetConfiguration$parameters": "<p>The resource parameters for this connector (for example, <code>memoryId</code>). The service validates these parameters against the request path at runtime.</p>"
+      }
+    },
+    "HttpConnectorSource": {
+      "base": "<p>The source identifying the HTTP connector integration.</p>",
+      "refs": {
+        "HttpConnectorTargetConfiguration$source": "<p>The source configuration identifying which HTTP connector to use.</p>"
+      }
+    },
+    "HttpConnectorTargetConfiguration": {
+      "base": "<p>The configuration for an HTTP connector target. Use this configuration when you want to route HTTP requests through a managed connector.</p>",
+      "refs": {
+        "HttpTargetConfiguration$connector": "<p>The connector-based configuration for the HTTP target. Use this configuration when you want to route HTTP requests through a managed connector.</p>"
       }
     },
     "HttpHeaderKey": {
