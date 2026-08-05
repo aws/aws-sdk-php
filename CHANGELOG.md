@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.390.5 - 2026-08-05
 
 * `Aws\ECS` - New enum values added for Agent Connectivity issues
 * `Aws\ACMPCA` - Private Certificate Authority service now supports RSASSA-PSS signing algorithm.
