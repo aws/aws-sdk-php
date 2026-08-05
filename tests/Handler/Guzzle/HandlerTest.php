@@ -14,6 +14,7 @@ use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\TransferStats;
+use GuzzleHttp\TransportSharing;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
@@ -203,5 +204,46 @@ class HandlerTest extends TestCase
         $handler($request, $options)->wait();
 
         $this->assertTrue($wasCalled);
+    }
+
+    public function testTransportSharingCannotRequireWithProvidedClient()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('cannot require sharing when a client is provided');
+
+        new GuzzleHandler(new Client(), 'handler_require');
+    }
+
+    public function testTransportSharingPreferIsIgnoredWithProvidedClient()
+    {
+        $mock = new MockHandler([new Response(200)]);
+        $client = new Client(['handler' => $mock]);
+        $handler = new GuzzleHandler($client, 'persistent_prefer');
+
+        $response = $handler(new Request('GET', 'http://example.com'))->wait();
+        $this->assertSame(200, $response->getStatusCode());
+    }
+
+    public function testCreatesClientWithTransportSharing()
+    {
+        $this->assertInstanceOf(
+            GuzzleHandler::class,
+            new GuzzleHandler(null, 'persistent_prefer')
+        );
+    }
+
+    public function testGuzzleEnforcesPersistentRequireEagerly()
+    {
+        if (!defined(TransportSharing::class . '::PERSISTENT_REQUIRE')) {
+            $this->markTestSkipped('Persistent transport sharing is only available in Guzzle 8.');
+        }
+        if (PHP_VERSION_ID >= 80500) {
+            $this->markTestSkipped('Persistent share handles may be supported on PHP 8.5+.');
+        }
+
+        // Proves the mode is forwarded to Guzzle: only Guzzle itself throws here.
+        $this->expectException(\RuntimeException::class);
+
+        new GuzzleHandler(null, 'persistent_require');
     }
 }

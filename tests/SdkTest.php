@@ -5,6 +5,7 @@ use Aws\AwsClientInterface;
 use Aws\MultiRegionClient;
 use Aws\S3\S3MultiRegionClient;
 use Aws\Sdk;
+use GuzzleHttp\TransportSharing;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
@@ -87,5 +88,35 @@ class SdkTest extends TestCase
             'https://foo',
             (string) $copy->createDynamoDb()->getEndpoint()
         );
+    }
+
+    public function testAppliesTransportSharingToSharedHttpHandler()
+    {
+        $sdk = new Sdk([
+            'region' => 'us-east-1',
+            'version' => 'latest',
+            'transport_sharing' => 'persistent_prefer',
+        ]);
+
+        $this->assertInstanceOf(
+            AwsClientInterface::class,
+            $sdk->createDynamoDb()
+        );
+    }
+
+    public function testSdkConsumesTransportSharingWhenCreatingSharedHandler()
+    {
+        if (!class_exists(TransportSharing::class)) {
+            $this->markTestSkipped('Transport sharing requires Guzzle 7.11+.');
+        }
+
+        $sdk = new Sdk([
+            'region' => 'us-east-1',
+            'version' => 'latest',
+            'transport_sharing' => 'handler_prefer',
+        ]);
+        $client = $sdk->createDynamoDb();
+
+        $this->assertNull($client->getConfig('transport_sharing'));
     }
 }

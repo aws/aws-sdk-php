@@ -20,6 +20,7 @@ use Aws\HandlerList;
 use Aws\Result;
 use Generator;
 use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\TransportSharing;
 use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
@@ -747,6 +748,93 @@ EOT;
             'http' => ['foo' => 'bar']
         ], new HandlerList());
         $this->assertSame('bar', $conf['http']['foo']);
+    }
+
+    public function testAppliesTransportSharingToDefaultHandler()
+    {
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $conf = $r->resolve([
+            'service' => 'sqs',
+            'region' => 'x',
+            'version' => 'latest',
+            'transport_sharing' => 'handler_prefer',
+        ], new HandlerList());
+
+        $expected = class_exists(TransportSharing::class) ? 'handler_prefer' : null;
+        $this->assertSame($expected, $conf['transport_sharing']);
+    }
+
+    public function testDegradesPersistentPreferTransportSharing()
+    {
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $conf = $r->resolve([
+            'service' => 'sqs',
+            'region' => 'x',
+            'version' => 'latest',
+            'transport_sharing' => 'persistent_prefer',
+        ], new HandlerList());
+
+        if (defined(TransportSharing::class . '::PERSISTENT_PREFER')) {
+            $expected = 'persistent_prefer';
+        } elseif (class_exists(TransportSharing::class)) {
+            $expected = 'handler_prefer';
+        } else {
+            $expected = null;
+        }
+        $this->assertSame($expected, $conf['transport_sharing']);
+    }
+
+    public function testTransportSharingCannotRequireWithCustomHandler()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('can only require transport sharing');
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $r->resolve([
+            'service' => 'sqs',
+            'region' => 'x',
+            'version' => 'latest',
+            'http_handler' => function () {},
+            'transport_sharing' => 'handler_require',
+        ], new HandlerList());
+    }
+
+    #[DoesNotPerformAssertions]
+    public function testTransportSharingPreferIsIgnoredWithCustomHandler()
+    {
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $r->resolve([
+            'service' => 'sqs',
+            'region' => 'x',
+            'version' => 'latest',
+            'http_handler' => function () {},
+            'transport_sharing' => 'persistent_prefer',
+        ], new HandlerList());
+    }
+
+    public function testTransportSharingRejectsInvalidMode()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The provided transport sharing mode "always" is invalid.');
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $r->resolve([
+            'service' => 'sqs',
+            'region' => 'x',
+            'version' => 'latest',
+            'transport_sharing' => 'always',
+        ], new HandlerList());
+    }
+
+    public function testTransportSharingRejectsNonStringValue()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid configuration value provided for "transport_sharing". Expected string, but got int(1)');
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $r->resolve([
+            'service' => 'sqs',
+            'region' => 'x',
+            'version' => 'latest',
+            'transport_sharing' => 1,
+        ], new HandlerList());
     }
 
     public function testCanAddConfigOptions()

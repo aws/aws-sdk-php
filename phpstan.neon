@@ -28,4 +28,7 @@ parameters:
     # These exception classes only exist in Guzzle 8, but instances cannot occur under Guzzle 7
     - '#Class GuzzleHttp\\Exception\\(NetworkException|ResponseException|ResponseTransferException) not found\.#'
 
+    # The transport sharing class only exists in Guzzle 7.11+ and 8; usage is guarded by feature detection
+    - '#Class GuzzleHttp\\TransportSharing not found\.#'
+
   reportUnmatchedIgnoredErrors: false
