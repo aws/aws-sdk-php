@@ -401,7 +401,7 @@ class StreamWrapper
      *
      * @param string $path    The path to the directory
      *                        (e.g. "s3://dir[</prefix>]")
-     * @param string $options Unused option variable
+     * @param int    $options Unused option variable
      *
      * @return bool true on success
      * @see http://www.php.net/manual/en/function.opendir.php
