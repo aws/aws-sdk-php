@@ -511,7 +511,8 @@
         "paymentScheduleTerm":{"shape":"PaymentScheduleTerm"},
         "freeTrialPricingTerm":{"shape":"FreeTrialPricingTerm"},
         "fixedUpfrontPricingTerm":{"shape":"FixedUpfrontPricingTerm"},
-        "variablePaymentTerm":{"shape":"VariablePaymentTerm"}
+        "variablePaymentTerm":{"shape":"VariablePaymentTerm"},
+        "netPaymentTerm":{"shape":"NetPaymentTerm"}
       },
       "union":true
     },
@@ -1585,6 +1586,14 @@
       "box":true,
       "max":50,
       "min":1
+    },
+    "NetPaymentTerm":{
+      "type":"structure",
+      "members":{
+        "type":{"shape":"UnversionedTermType"},
+        "id":{"shape":"TermId"},
+        "paymentDuePeriod":{"shape":"BoundedString"}
+      }
     },
     "NextToken":{
       "type":"string",

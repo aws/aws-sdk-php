@@ -1963,17 +1963,17 @@
     },
     "AliasArn":{
       "type":"string",
-      "pattern":"^arn:.*:alias\\/alias-\\S+"
+      "pattern":"^arn:.*:alias\\/alias-\\S+$"
     },
     "AliasId":{
       "type":"string",
-      "pattern":"^alias-\\S+"
+      "pattern":"^alias-\\S+$"
     },
     "AliasIdOrArn":{
       "type":"string",
       "max":512,
       "min":1,
-      "pattern":"^alias-\\S+|^arn:.*:alias\\/alias-\\S+"
+      "pattern":"^(alias-\\S+|arn:.*:alias\\/alias-\\S+)$"
     },
     "AliasList":{
       "type":"list",
@@ -1995,7 +1995,7 @@
       "type":"string",
       "max":512,
       "min":1,
-      "pattern":"[a-zA-Z0-9:/-]+"
+      "pattern":"^[a-zA-Z0-9:/-]+$"
     },
     "AttributeValue":{
       "type":"structure",
@@ -2010,7 +2010,7 @@
       "type":"string",
       "max":256,
       "min":0,
-      "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
+      "pattern":"^[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*$"
     },
     "AwsCredentials":{
       "type":"structure",
@@ -2053,17 +2053,17 @@
     },
     "BuildArn":{
       "type":"string",
-      "pattern":"^arn:.*:build\\/build-\\S+"
+      "pattern":"^arn:.*:build\\/build-\\S+$"
     },
     "BuildId":{
       "type":"string",
-      "pattern":"^build-\\S+"
+      "pattern":"^build-\\S+$"
     },
     "BuildIdOrArn":{
       "type":"string",
       "max":512,
       "min":1,
-      "pattern":"^build-\\S+|^arn:.*:build\\/build-\\S+"
+      "pattern":"^(build-\\S+|arn:.*:build\\/build-\\S+)$"
     },
     "BuildList":{
       "type":"list",
@@ -2146,13 +2146,13 @@
     "ComputeArn":{
       "type":"string",
       "max":1024,
-      "pattern":"^arn:.*:compute\\/[a-zA-Z0-9\\-]+(\\/[a-zA-Z0-9\\-]+)?"
+      "pattern":"^arn:.*:compute\\/[a-zA-Z0-9\\-]+(\\/[a-zA-Z0-9\\-]+)?$"
     },
     "ComputeAuthToken":{
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^[a-zA-Z0-9\\-]+"
+      "pattern":"^[a-zA-Z0-9\\-]+$"
     },
     "ComputeList":{
       "type":"list",
@@ -2162,12 +2162,12 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^[a-zA-Z0-9\\-]+(\\/[a-zA-Z0-9\\-]+)?"
+      "pattern":"^[a-zA-Z0-9\\-]+(\\/[a-zA-Z0-9\\-]+)?$"
     },
     "ComputeNameOrArn":{
       "type":"string",
       "max":1024,
-      "pattern":"^[a-zA-Z0-9\\-]+(\\/[a-zA-Z0-9\\-]+)?$|^arn:.*:compute\\/[a-zA-Z0-9\\-]+(\\/[a-zA-Z0-9\\-]+)?"
+      "pattern":"^([a-zA-Z0-9\\-]+(\\/[a-zA-Z0-9\\-]+)?|arn:.*:compute\\/[a-zA-Z0-9\\-]+(\\/[a-zA-Z0-9\\-]+)?)$"
     },
     "ComputeStatus":{
       "type":"string",
@@ -2938,19 +2938,20 @@
     "CustomEventData":{
       "type":"string",
       "max":256,
-      "min":0
+      "min":0,
+      "sensitive":true
     },
     "CustomInputLocationStringModel":{
       "type":"string",
       "max":64,
       "min":8,
-      "pattern":"^custom-[A-Za-z0-9\\-]+"
+      "pattern":"^custom-[A-Za-z0-9\\-]+$"
     },
     "CustomLocationNameOrArnModel":{
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^custom-[A-Za-z0-9\\-]+|^arn:.*:location\\/custom-\\S+"
+      "pattern":"^(custom-[A-Za-z0-9\\-]+|arn:.*:location\\/custom-\\S+)$"
     },
     "DeleteAliasInput":{
       "type":"structure",
@@ -3729,7 +3730,7 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"^[0-9a-zA-Z_\\-\\.]+"
+      "pattern":"^[0-9a-zA-Z_\\-\\.]+$"
     },
     "Double":{"type":"double"},
     "DoubleObject":{"type":"double"},
@@ -4265,7 +4266,28 @@
         "m7i.48xlarge",
         "r7a.24xlarge",
         "r7a.32xlarge",
-        "r7a.48xlarge"
+        "r7a.48xlarge",
+        "c8a.medium",
+        "c8a.large",
+        "c8a.xlarge",
+        "c8a.2xlarge",
+        "c8i.large",
+        "c8i.xlarge",
+        "c8i.2xlarge",
+        "c9g.medium",
+        "c9g.large",
+        "c9g.xlarge",
+        "c9g.2xlarge",
+        "m8a.medium",
+        "m8a.large",
+        "m8a.xlarge",
+        "m8a.2xlarge",
+        "m8i.large",
+        "m8i.xlarge",
+        "m8i.2xlarge",
+        "m9g.large",
+        "m9g.xlarge",
+        "m9g.2xlarge"
       ]
     },
     "Event":{
@@ -4426,7 +4448,7 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"[a-zA-Z0-9:/-]+"
+      "pattern":"^[a-zA-Z0-9:/-]+$"
     },
     "FleetCapacity":{
       "type":"structure",
@@ -4473,7 +4495,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^[a-z]*fleet-[a-zA-Z0-9\\-]+"
+      "pattern":"^[a-z]*fleet-[a-zA-Z0-9\\-]+$"
     },
     "FleetIdList":{
       "type":"list",
@@ -4571,7 +4593,8 @@
     },
     "GamePropertyValue":{
       "type":"string",
-      "max":96
+      "max":96,
+      "sensitive":true
     },
     "GameServer":{
       "type":"structure",
@@ -4597,7 +4620,7 @@
       "type":"string",
       "max":512,
       "min":1,
-      "pattern":".*\\S.*"
+      "pattern":"^.*\\S.*$"
     },
     "GameServerContainerDefinition":{
       "type":"structure",
@@ -4650,7 +4673,8 @@
       "type":"string",
       "max":1024,
       "min":1,
-      "pattern":".*\\S.*"
+      "pattern":"^.*\\S.*$",
+      "sensitive":true
     },
     "GameServerGroup":{
       "type":"structure",
@@ -4683,7 +4707,7 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"^arn:.*:gameservergroup\\/[a-zA-Z0-9-\\.]*"
+      "pattern":"^arn:.*:gameservergroup\\/[a-zA-Z0-9-\\.]*$"
     },
     "GameServerGroupAutoScalingPolicy":{
       "type":"structure",
@@ -4798,13 +4822,13 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"[a-zA-Z0-9-\\.]+"
+      "pattern":"^[a-zA-Z0-9-\\.]+$"
     },
     "GameServerGroupNameOrArn":{
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"[a-zA-Z0-9-\\.]+|^arn:.*:gameservergroup\\/[a-zA-Z0-9-\\.]+"
+      "pattern":"^([a-zA-Z0-9-\\.]+|arn:.*:gameservergroup\\/[a-zA-Z0-9-\\.]+)$"
     },
     "GameServerGroupStatus":{
       "type":"string",
@@ -4830,7 +4854,7 @@
       "type":"string",
       "max":128,
       "min":3,
-      "pattern":"[a-zA-Z0-9-\\.]+"
+      "pattern":"^[a-zA-Z0-9-\\.]+$"
     },
     "GameServerInstance":{
       "type":"structure",
@@ -4942,7 +4966,8 @@
     "GameSessionData":{
       "type":"string",
       "max":4096,
-      "min":1
+      "min":1,
+      "sensitive":true
     },
     "GameSessionDetail":{
       "type":"structure",
@@ -5019,7 +5044,7 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"^arn:.*:gamesessionqueue\\/[a-zA-Z0-9-]+"
+      "pattern":"^arn:.*:gamesessionqueue\\/[a-zA-Z0-9-]+$"
     },
     "GameSessionQueueDestination":{
       "type":"structure",
@@ -5039,13 +5064,13 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"[a-zA-Z0-9-]+"
+      "pattern":"^[a-zA-Z0-9-]+$"
     },
     "GameSessionQueueNameOrArn":{
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"[a-zA-Z0-9-]+|^arn:.*:gamesessionqueue\\/[a-zA-Z0-9-]+"
+      "pattern":"^([a-zA-Z0-9-]+|arn:.*:gamesessionqueue\\/[a-zA-Z0-9-]+)$"
     },
     "GameSessionQueueNameOrArnList":{
       "type":"list",
@@ -5173,7 +5198,7 @@
       "type":"string",
       "max":48,
       "min":1,
-      "pattern":"[a-zA-Z0-9-]+"
+      "pattern":"^[a-zA-Z0-9-]+$"
     },
     "IdempotentParameterMismatchException":{
       "type":"structure",
@@ -5239,7 +5264,7 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"[a-zA-Z0-9\\.-]+"
+      "pattern":"^[a-zA-Z0-9\\.-]+$"
     },
     "InstanceList":{
       "type":"list",
@@ -5297,7 +5322,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^[0-9A-Fa-f\\:\\.]+",
+      "pattern":"^[0-9A-Fa-f\\:\\.]+$",
       "sensitive":true
     },
     "IpPermission":{
@@ -5329,13 +5354,14 @@
     },
     "IpRange":{
       "type":"string",
-      "pattern":"[^\\s]+",
+      "pattern":"^[^\\s]+$",
       "sensitive":true
     },
     "LargeGameSessionData":{
       "type":"string",
       "max":262144,
-      "min":1
+      "min":1,
+      "sensitive":true
     },
     "LatencyMap":{
       "type":"map",
@@ -5346,25 +5372,25 @@
       "type":"string",
       "max":1024,
       "min":1,
-      "pattern":"[A-Za-z0-9_:.+\\/\\\\\\- =@;{},?'\\[\\]\"]+"
+      "pattern":"^[A-Za-z0-9_:.+\\/\\\\\\- =@;{},?'\\[\\]\"]+$"
     },
     "LaunchPathStringModel":{
       "type":"string",
       "max":1024,
       "min":1,
-      "pattern":"[A-Za-z0-9_:.+\\/\\\\\\- ]+"
+      "pattern":"^[A-Za-z0-9_:.+\\/\\\\\\- ]+$"
     },
     "LaunchTemplateId":{
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]+"
+      "pattern":"^[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]+$"
     },
     "LaunchTemplateName":{
       "type":"string",
       "max":128,
       "min":3,
-      "pattern":"[a-zA-Z0-9\\(\\)\\.\\-/_]+"
+      "pattern":"^[a-zA-Z0-9\\(\\)\\.\\-/_]+$"
     },
     "LaunchTemplateSpecification":{
       "type":"structure",
@@ -5378,7 +5404,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]+"
+      "pattern":"^[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]+$"
     },
     "LimitExceededException":{
       "type":"structure",
@@ -5667,7 +5693,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^arn:.*:location\\/custom-\\S+"
+      "pattern":"^arn:.*:location\\/custom-\\S+$"
     },
     "LocationAttributes":{
       "type":"structure",
@@ -5747,7 +5773,7 @@
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^[A-Za-z0-9\\-]+"
+      "pattern":"^[A-Za-z0-9\\-]+$"
     },
     "LocationUpdateStatus":{
       "type":"string",
@@ -5784,7 +5810,7 @@
       "type":"string",
       "max":512,
       "min":1,
-      "pattern":"[a-zA-Z0-9:/\\-\\*]+"
+      "pattern":"^[a-zA-Z0-9:/\\-\\*]+$"
     },
     "ManagedCapacityConfiguration":{
       "type":"structure",
@@ -5807,7 +5833,8 @@
     "MatchmakerData":{
       "type":"string",
       "max":390000,
-      "min":1
+      "min":1,
+      "sensitive":true
     },
     "MatchmakingAcceptanceTimeoutInteger":{
       "type":"integer",
@@ -5838,7 +5865,7 @@
     },
     "MatchmakingConfigurationArn":{
       "type":"string",
-      "pattern":"^arn:.*:matchmakingconfiguration\\/[a-zA-Z0-9-\\.]*"
+      "pattern":"^arn:.*:matchmakingconfiguration\\/[a-zA-Z0-9-\\.]*$"
     },
     "MatchmakingConfigurationList":{
       "type":"list",
@@ -5848,7 +5875,7 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"[a-zA-Z0-9-\\.]*|^arn:.*:matchmakingconfiguration\\/[a-zA-Z0-9-\\.]*"
+      "pattern":"^([a-zA-Z0-9-\\.]*|arn:.*:matchmakingconfiguration\\/[a-zA-Z0-9-\\.]*)$"
     },
     "MatchmakingConfigurationNameList":{
       "type":"list",
@@ -5874,7 +5901,7 @@
     "MatchmakingIdStringModel":{
       "type":"string",
       "max":128,
-      "pattern":"[a-zA-Z0-9-\\.]*"
+      "pattern":"^[a-zA-Z0-9-\\.]*$"
     },
     "MatchmakingRequestTimeoutInteger":{
       "type":"integer",
@@ -5893,7 +5920,7 @@
     },
     "MatchmakingRuleSetArn":{
       "type":"string",
-      "pattern":"^arn:.*:matchmakingruleset\\/[a-zA-Z0-9-\\.]*"
+      "pattern":"^arn:.*:matchmakingruleset\\/[a-zA-Z0-9-\\.]*$"
     },
     "MatchmakingRuleSetList":{
       "type":"list",
@@ -5903,7 +5930,7 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"[a-zA-Z0-9-\\.]*|^arn:.*:matchmakingruleset\\/[a-zA-Z0-9-\\.]*"
+      "pattern":"^([a-zA-Z0-9-\\.]*|arn:.*:matchmakingruleset\\/[a-zA-Z0-9-\\.]*)$"
     },
     "MatchmakingRuleSetNameList":{
       "type":"list",
@@ -5987,7 +6014,7 @@
       "type":"string",
       "max":1024,
       "min":1,
-      "pattern":".*\\S.*"
+      "pattern":"^.*\\S.*$"
     },
     "NonEmptyString":{
       "type":"string",
@@ -6131,7 +6158,8 @@
     "PlayerData":{
       "type":"string",
       "max":2048,
-      "min":1
+      "min":1,
+      "sensitive":true
     },
     "PlayerDataMap":{
       "type":"map",
@@ -6232,7 +6260,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^psess-\\S+"
+      "pattern":"^psess-\\S+$"
     },
     "PlayerSessionList":{
       "type":"list",
@@ -6335,13 +6363,14 @@
       "type":"string",
       "max":256,
       "min":0,
-      "pattern":"[\\s\\S]*"
+      "pattern":"^[\\s\\S]*$",
+      "sensitive":true
     },
     "QueueSnsArnStringModel":{
       "type":"string",
       "max":300,
       "min":0,
-      "pattern":"[a-zA-Z0-9:_-]*(\\.fifo)?"
+      "pattern":"^[a-zA-Z0-9:_-]*(\\.fifo)?$"
     },
     "RegisterComputeInput":{
       "type":"structure",
@@ -6542,17 +6571,17 @@
     },
     "ScriptArn":{
       "type":"string",
-      "pattern":"^arn:.*:script\\/script-\\S+"
+      "pattern":"^arn:.*:script\\/script-\\S+$"
     },
     "ScriptId":{
       "type":"string",
-      "pattern":"^script-\\S+"
+      "pattern":"^script-\\S+$"
     },
     "ScriptIdOrArn":{
       "type":"string",
       "max":512,
       "min":1,
-      "pattern":"^script-\\S+|^arn:.*:script\\/script-\\S+"
+      "pattern":"^(script-\\S+|arn:.*:script\\/script-\\S+)$"
     },
     "ScriptList":{
       "type":"list",
@@ -6613,7 +6642,7 @@
       "type":"string",
       "max":300,
       "min":0,
-      "pattern":"[a-zA-Z0-9:_/-]*(.fifo)?"
+      "pattern":"^[a-zA-Z0-9:_/-]*(\\.fifo)?$"
     },
     "SortOrder":{
       "type":"string",

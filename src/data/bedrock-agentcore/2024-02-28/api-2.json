@@ -204,6 +204,24 @@
       ],
       "idempotent":true
     },
+    "DeleteCapacityProviderSession":{
+      "name":"DeleteCapacityProviderSession",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/capacity-providers/{capacityProviderId}/sessions/{sessionId}",
+        "responseCode":202
+      },
+      "input":{"shape":"DeleteCapacityProviderSessionRequest"},
+      "output":{"shape":"DeleteCapacityProviderSessionResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "DeleteEvent":{
       "name":"DeleteEvent",
       "http":{
@@ -1814,6 +1832,27 @@
       "max":512,
       "min":10
     },
+    "CapacityProviderArn":{
+      "type":"string",
+      "pattern":"arn:aws(-[^:]+)?:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:capacity-provider/[a-zA-Z][a-zA-Z0-9_]{0,47}-[a-zA-Z0-9]{10}"
+    },
+    "CapacityProviderId":{
+      "type":"string",
+      "max":59,
+      "min":12,
+      "pattern":"[a-zA-Z][a-zA-Z0-9_]{0,47}-[a-zA-Z0-9]{10}"
+    },
+    "CapacityProviderSessionStatus":{
+      "type":"string",
+      "enum":[
+        "Provisioning",
+        "Deprovisioning",
+        "Active",
+        "Deleting",
+        "Deleted",
+        "Stopped"
+      ]
+    },
     "Certificate":{
       "type":"structure",
       "required":["location"],
@@ -2489,6 +2528,38 @@
         "batchEvaluationId":{"shape":"BatchEvaluationId"},
         "batchEvaluationArn":{"shape":"BatchEvaluationArn"},
         "status":{"shape":"BatchEvaluationStatus"}
+      }
+    },
+    "DeleteCapacityProviderSessionRequest":{
+      "type":"structure",
+      "required":[
+        "capacityProviderId",
+        "sessionId"
+      ],
+      "members":{
+        "capacityProviderId":{
+          "shape":"CapacityProviderId",
+          "location":"uri",
+          "locationName":"capacityProviderId"
+        },
+        "sessionId":{
+          "shape":"SessionId",
+          "location":"uri",
+          "locationName":"sessionId"
+        }
+      }
+    },
+    "DeleteCapacityProviderSessionResponse":{
+      "type":"structure",
+      "required":[
+        "capacityProviderArn",
+        "sessionId",
+        "status"
+      ],
+      "members":{
+        "capacityProviderArn":{"shape":"CapacityProviderArn"},
+        "sessionId":{"shape":"SessionId"},
+        "status":{"shape":"CapacityProviderSessionStatus"}
       }
     },
     "DeleteEventInput":{

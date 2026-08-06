@@ -94,6 +94,7 @@
     "ListConnectorsV2": "<p>Grants permission to retrieve a list of connectorsV2 and their metadata for the calling account.</p>",
     "ListEnabledProductsForImport": "<p>Lists all findings-generating solutions (products) that you are subscribed to receive findings from in Security Hub CSPM.</p>",
     "ListFindingAggregators": "<p>If cross-Region aggregation is enabled, then <code>ListFindingAggregators</code> returns the Amazon Resource Name (ARN) of the finding aggregator. You can run this operation from any Amazon Web Services Region.</p>",
+    "ListFreeTrialStatusesV2": "<p>Lists the free trial status of Security Hub features. A delegated Security Hub administrator can list the status for accounts in its organization. Any other account can list the status only for itself. Free trial status remains available after a feature is disabled.</p>",
     "ListInvitations": "<note> <p>We recommend using Organizations instead of Security Hub CSPM invitations to manage your member accounts. For information, see <a href=\"https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-accounts-orgs.html\">Managing Security Hub CSPM administrator and member accounts with Organizations</a> in the <i>Security Hub CSPM User Guide</i>.</p> </note> <p>Lists all Security Hub CSPM membership invitations that were sent to the calling account.</p> <p>Only accounts that are managed by invitation can use this operation. Accounts that are managed using the integration with Organizations don't receive invitations.</p>",
     "ListMembers": "<p>Lists details about all member accounts for the current Security Hub CSPM administrator account.</p> <p>The results include both member accounts that belong to an organization and member accounts that were invited manually.</p>",
     "ListOrganizationAdminAccounts": "<p>Lists the Security Hub CSPM administrator accounts. Can only be called by the organization management account.</p>",
@@ -156,6 +157,18 @@
       "base": null,
       "refs": {
         "CreateMembersRequest$AccountDetails": "<p>The list of accounts to associate with the Security Hub CSPM administrator account. For each account, the list includes the account ID and optionally the email address.</p>"
+      }
+    },
+    "AccountFreeTrialStatus": {
+      "base": "<p>The free trial status of each Security Hub feature for an account.</p>",
+      "refs": {
+        "AccountFreeTrialStatusList$member": null
+      }
+    },
+    "AccountFreeTrialStatusList": {
+      "base": null,
+      "refs": {
+        "ListFreeTrialStatusesV2Response$AccountFreeTrialStatuses": "<p>An array of free trial statuses, one for each account in scope.</p>"
       }
     },
     "AccountId": {
@@ -5982,6 +5995,50 @@
         "FirewallPolicyDetails$StatelessRuleGroupReferences": "<p>The stateless rule groups that are used in the firewall policy.</p>"
       }
     },
+    "FreeTrialAccountId": {
+      "base": null,
+      "refs": {
+        "AccountFreeTrialStatus$AccountId": "<p>The Amazon Web Services account identifier that the free trial statuses apply to.</p>",
+        "FreeTrialAccountIdList$member": null
+      }
+    },
+    "FreeTrialAccountIdList": {
+      "base": null,
+      "refs": {
+        "ListFreeTrialStatusesV2Request$AccountIds": "<p>The Amazon Web Services account identifiers to list free trial status for. You can specify accounts other than your own only if you are a delegated Security Hub administrator.</p>"
+      }
+    },
+    "FreeTrialStatus": {
+      "base": "<p>The free trial period for a Security Hub feature, and whether the trial is currently active.</p>",
+      "refs": {
+        "FreeTrialStatusList$member": null
+      }
+    },
+    "FreeTrialStatusList": {
+      "base": null,
+      "refs": {
+        "AccountFreeTrialStatus$FreeTrialStatuses": "<p>An array of free trial statuses, one for each feature that has a free trial period for the account. The array is empty if the account has no free trial to report.</p>"
+      }
+    },
+    "FreeTrialStatusValue": {
+      "base": null,
+      "refs": {
+        "FreeTrialStatus$Status": "<p>Whether the free trial period is currently active. Valid values:</p> <ul> <li> <p> <code>ACTIVE</code> specifies that the free trial period is ongoing.</p> </li> <li> <p> <code>INACTIVE</code> specifies that the free trial period has ended, or that it never started.</p> </li> </ul> <p>To determine whether a trial has expired, compare <code>ExpiresAt</code> to the current time.</p>",
+        "FreeTrialStatusValueList$member": null
+      }
+    },
+    "FreeTrialStatusValueList": {
+      "base": null,
+      "refs": {
+        "ListFreeTrialStatusesV2Request$Statuses": "<p>The free trial statuses to filter the results by. Valid values:</p> <ul> <li> <p> <code>ACTIVE</code> returns only features with an ongoing free trial period.</p> </li> <li> <p> <code>INACTIVE</code> returns only features whose free trial period has ended, or that never started.</p> </li> </ul>"
+      }
+    },
+    "FreeTrialType": {
+      "base": null,
+      "refs": {
+        "FreeTrialStatus$FeatureType": "<p>The feature that the free trial period applies to. Valid values:</p> <ul> <li> <p> <code>SECURITY_HUB_V2</code> specifies Security Hub.</p> </li> <li> <p> <code>SECURITY_HUB_V2_MULTI_CLOUD_AZURE</code> specifies Security Hub coverage for Microsoft Azure resources.</p> </li> </ul>"
+      }
+    },
     "GenerateRecommendedPolicyV2Request": {
       "base": null,
       "refs": {}
@@ -6838,6 +6895,14 @@
       "base": null,
       "refs": {}
     },
+    "ListFreeTrialStatusesV2Request": {
+      "base": null,
+      "refs": {}
+    },
+    "ListFreeTrialStatusesV2Response": {
+      "base": null,
+      "refs": {}
+    },
     "ListInvitationsRequest": {
       "base": null,
       "refs": {}
@@ -7011,6 +7076,7 @@
         "ListConnectorsV2Request$MaxResults": "<p>The maximum number of results to be returned.</p>",
         "ListEnabledProductsForImportRequest$MaxResults": "<p>The maximum number of items to return in the response.</p>",
         "ListFindingAggregatorsRequest$MaxResults": "<p>The maximum number of results to return. This operation currently only returns a single result.</p>",
+        "ListFreeTrialStatusesV2Request$MaxResults": "<p>The maximum number of results to return. If you don't specify a value, Security Hub returns up to 100 results.</p>",
         "ListSecurityControlDefinitionsRequest$MaxResults": "<p> An optional parameter that limits the total results of the API response to the specified number. If this parameter isn't provided in the request, the results include the first 25 security controls that apply to the specified standard. The results also include a <code>NextToken</code> parameter that you can use in a subsequent API call to get the next 25 controls. This repeats until all controls for the standard are returned. </p>",
         "ListStandardsControlAssociationsRequest$MaxResults": "<p> An optional parameter that limits the total results of the API response to the specified number. If this parameter isn't provided in the request, the results include the first 25 standard and control associations. The results also include a <code>NextToken</code> parameter that you can use in a subsequent API call to get the next 25 associations. This repeats until all associations for the specified control are returned. The number of results is limited by the number of supported Security Hub CSPM standards that you've enabled in the calling account. </p>"
       }
@@ -7165,6 +7231,8 @@
         "ListEnabledProductsForImportResponse$NextToken": "<p>The pagination token to use to request the next page of results.</p>",
         "ListFindingAggregatorsRequest$NextToken": "<p>The token returned with the previous set of results. Identifies the next set of results to return.</p>",
         "ListFindingAggregatorsResponse$NextToken": "<p>If there are more results, this is the token to provide in the next call to <code>ListFindingAggregators</code>.</p> <p>This operation currently only returns a single result. </p>",
+        "ListFreeTrialStatusesV2Request$NextToken": "<p>The pagination token to request the next page of results.</p>",
+        "ListFreeTrialStatusesV2Response$NextToken": "<p>The pagination token to use to request the next page of results. If there are no additional results, this value is null.</p>",
         "ListInvitationsRequest$NextToken": "<p>The token that is required for pagination. On your first call to the <code>ListInvitations</code> operation, set the value of this parameter to <code>NULL</code>.</p> <p>For subsequent calls to the operation, to continue listing data, set the value of this parameter to the value returned from the previous response.</p>",
         "ListMembersRequest$NextToken": "<p>The token that is required for pagination. On your first call to the <code>ListMembers</code> operation, set the value of this parameter to <code>NULL</code>.</p> <p>For subsequent calls to the operation, to continue listing data, set the value of this parameter to the value returned from the previous response.</p>",
         "ListOrganizationAdminAccountsRequest$NextToken": "<p>The token that is required for pagination. On your first call to the <code>ListOrganizationAdminAccounts</code> operation, set the value of this parameter to <code>NULL</code>. For subsequent calls to the operation, to continue listing data, set the value of this parameter to the value returned from the previous response. </p>",
@@ -11010,6 +11078,7 @@
     "Timestamp": {
       "base": null,
       "refs": {
+        "AccountFreeTrialStatus$EvaluatedAt": "<p>The date and time at which Security Hub evaluated the free trial statuses for this account. Every status in <code>FreeTrialStatuses</code> reflects this point in time.</p>",
         "AutomationRulesConfig$CreatedAt": "<p> A timestamp that indicates when the rule was created. </p> <p>For more information about the validation and formatting of timestamp fields in Security Hub CSPM, see <a href=\"https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps\">Timestamps</a>.</p>",
         "AutomationRulesConfig$UpdatedAt": "<p> A timestamp that indicates when the rule was most recently updated. </p> <p>For more information about the validation and formatting of timestamp fields in Security Hub CSPM, see <a href=\"https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps\">Timestamps</a>.</p>",
         "AutomationRulesMetadata$CreatedAt": "<p> A timestamp that indicates when the rule was created. </p> <p>For more information about the validation and formatting of timestamp fields in Security Hub CSPM, see <a href=\"https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps\">Timestamps</a>.</p>",
@@ -11025,6 +11094,8 @@
         "CspmHealthCheck$LastCheckedAt": "<p>The ISO 8601 UTC timestamp indicating when the health status was last checked.</p>",
         "FeatureDetail$UpdatedAt": "<p>The date and time when the feature status was last updated.</p>",
         "FindingHistoryRecord$UpdateTime": "<p> A timestamp that indicates when Security Hub CSPM processed the updated finding record.</p> <p>For more information about the validation and formatting of timestamp fields in Security Hub CSPM, see <a href=\"https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps\">Timestamps</a>.</p>",
+        "FreeTrialStatus$StartedAt": "<p>The date and time at which the free trial period began.</p>",
+        "FreeTrialStatus$ExpiresAt": "<p>The date and time at which the free trial period ends.</p>",
         "GetAutomationRuleV2Response$CreatedAt": "<p>The timestamp when the V2 automation rule was created.</p>",
         "GetAutomationRuleV2Response$UpdatedAt": "<p>The timestamp when the V2 automation rule was updated.</p>",
         "GetConfigurationPolicyAssociationResponse$UpdatedAt": "<p> The date and time, in UTC and ISO 8601 format, that the configuration policy association was last updated. </p>",

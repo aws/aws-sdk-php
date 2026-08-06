@@ -1271,7 +1271,8 @@
         "AvailabilityZoneDistribution":{"shape":"AvailabilityZoneDistribution"},
         "AvailabilityZoneImpairmentPolicy":{"shape":"AvailabilityZoneImpairmentPolicy"},
         "CapacityReservationSpecification":{"shape":"CapacityReservationSpecification"},
-        "InstanceLifecyclePolicy":{"shape":"InstanceLifecyclePolicy"}
+        "InstanceLifecyclePolicy":{"shape":"InstanceLifecyclePolicy"},
+        "Operator":{"shape":"Operator"}
       }
     },
     "AutoScalingGroupDesiredCapacity":{"type":"integer"},
@@ -1654,7 +1655,8 @@
         "AvailabilityZoneImpairmentPolicy":{"shape":"AvailabilityZoneImpairmentPolicy"},
         "SkipZonalShiftValidation":{"shape":"SkipZonalShiftValidation"},
         "CapacityReservationSpecification":{"shape":"CapacityReservationSpecification"},
-        "InstanceLifecyclePolicy":{"shape":"InstanceLifecyclePolicy"}
+        "InstanceLifecyclePolicy":{"shape":"InstanceLifecyclePolicy"},
+        "Operator":{"shape":"Operator"}
       }
     },
     "CreateLaunchConfigurationType":{
@@ -2811,6 +2813,11 @@
       "type":"list",
       "member":{"shape":"LocalStorageType"}
     },
+    "ManagerIdentifier":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
     "MaxGroupPreparedCapacity":{
       "type":"integer",
       "min":-1
@@ -3010,6 +3017,13 @@
     "NumberOfLaunchConfigurations":{"type":"integer"},
     "OnDemandBaseCapacity":{"type":"integer"},
     "OnDemandPercentageAboveBaseCapacity":{"type":"integer"},
+    "Operator":{
+      "type":"structure",
+      "required":["Principal"],
+      "members":{
+        "Principal":{"shape":"ManagerIdentifier"}
+      }
+    },
     "Overrides":{
       "type":"list",
       "member":{"shape":"LaunchTemplateOverrides"}

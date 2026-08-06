@@ -844,6 +844,23 @@
         "GZIP"
       ]
     },
+    "ConcurrentExecutorConfiguration":{
+      "type":"structure",
+      "required":[
+        "Runtime",
+        "Output",
+        "FunctionList",
+        "TimeoutMilliseconds",
+        "MaxConcurrency"
+      ],
+      "members":{
+        "Runtime":{"shape":"RuntimeType"},
+        "Output":{"shape":"__mapOf__string"},
+        "FunctionList":{"shape":"__listOfFunctionsRef"},
+        "TimeoutMilliseconds":{"shape":"__integer"},
+        "MaxConcurrency":{"shape":"__integer"}
+      }
+    },
     "ConfigurationAliasesRequest":{
       "type":"map",
       "key":{"shape":"__string"},
@@ -1560,6 +1577,7 @@
         "Description":{"shape":"__string"},
         "HttpRequestConfiguration":{"shape":"HttpRequestConfiguration"},
         "CustomOutputConfiguration":{"shape":"CustomOutputConfiguration"},
+        "ConcurrentExecutorConfiguration":{"shape":"ConcurrentExecutorConfiguration"},
         "SequentialExecutorConfiguration":{"shape":"SequentialExecutorConfiguration"},
         "Tags":{
           "shape":"__mapOf__string",
@@ -1577,7 +1595,8 @@
       "type":"structure",
       "members":{
         "RunCondition":{"shape":"__string"},
-        "FunctionId":{"shape":"__string"}
+        "FunctionId":{"shape":"__string"},
+        "Alias":{"shape":"__string"}
       }
     },
     "FunctionType":{
@@ -1585,6 +1604,7 @@
       "enum":[
         "HTTP_REQUEST",
         "CUSTOM_OUTPUT",
+        "CONCURRENT_EXECUTOR",
         "SEQUENTIAL_EXECUTOR"
       ]
     },
@@ -1666,6 +1686,7 @@
         "Description":{"shape":"__string"},
         "HttpRequestConfiguration":{"shape":"HttpRequestConfiguration"},
         "CustomOutputConfiguration":{"shape":"CustomOutputConfiguration"},
+        "ConcurrentExecutorConfiguration":{"shape":"ConcurrentExecutorConfiguration"},
         "SequentialExecutorConfiguration":{"shape":"SequentialExecutorConfiguration"},
         "Tags":{
           "shape":"__mapOf__string",
@@ -2363,6 +2384,7 @@
         "Description":{"shape":"__string"},
         "HttpRequestConfiguration":{"shape":"HttpRequestConfiguration"},
         "CustomOutputConfiguration":{"shape":"CustomOutputConfiguration"},
+        "ConcurrentExecutorConfiguration":{"shape":"ConcurrentExecutorConfiguration"},
         "SequentialExecutorConfiguration":{"shape":"SequentialExecutorConfiguration"},
         "Tags":{
           "shape":"__mapOf__string",
@@ -2382,6 +2404,7 @@
         "Description":{"shape":"__string"},
         "HttpRequestConfiguration":{"shape":"HttpRequestConfiguration"},
         "CustomOutputConfiguration":{"shape":"CustomOutputConfiguration"},
+        "ConcurrentExecutorConfiguration":{"shape":"ConcurrentExecutorConfiguration"},
         "SequentialExecutorConfiguration":{"shape":"SequentialExecutorConfiguration"},
         "Tags":{
           "shape":"__mapOf__string",

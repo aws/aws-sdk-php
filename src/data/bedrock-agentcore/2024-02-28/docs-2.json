@@ -12,6 +12,7 @@
     "CreatePaymentSession": "<p>Create a new payment session.</p>",
     "DeleteABTest": "<p>Deletes an A/B test and its associated gateway rules.</p>",
     "DeleteBatchEvaluation": "<p>Deletes a batch evaluation and its associated results.</p>",
+    "DeleteCapacityProviderSession": "<p>Deletes a session associated with a capacity provider in Amazon Bedrock AgentCore and makes the session unavailable for further use. To delete a capacity provider session, specify both the capacity provider identifier and the session ID. After you delete a session, you cannot restart it.</p>",
     "DeleteEvent": "<p>Deletes an event from an AgentCore Memory resource. When you delete an event, it is permanently removed.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:DeleteEvent</code> permission.</p>",
     "DeleteMemoryRecord": "<p>Deletes a memory record from an AgentCore Memory resource. When you delete a memory record, it is permanently removed.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:DeleteMemoryRecord</code> permission.</p>",
     "DeletePaymentInstrument": "<p>Deletes a payment instrument. This is a soft delete operation that preserves the record for audit and compliance purposes.</p>",
@@ -594,6 +595,24 @@
         "LiveViewStream$streamEndpoint": "<p>The endpoint URL for the live view stream. This URL is used to establish a connection to receive visual updates from the browser session.</p>"
       }
     },
+    "CapacityProviderArn": {
+      "base": null,
+      "refs": {
+        "DeleteCapacityProviderSessionResponse$capacityProviderArn": "<p>The Amazon Resource Name (ARN) of the capacity provider associated with the deleted session.</p>"
+      }
+    },
+    "CapacityProviderId": {
+      "base": "<p>Capacity provider identifier. Pattern matches MiskiModel definition.</p>",
+      "refs": {
+        "DeleteCapacityProviderSessionRequest$capacityProviderId": "<p>The unique identifier of the capacity provider associated with the session.</p>"
+      }
+    },
+    "CapacityProviderSessionStatus": {
+      "base": null,
+      "refs": {
+        "DeleteCapacityProviderSessionResponse$status": "<p>The current status of the capacity provider session. When the status is <code>Deleting</code>, the session is being deleted and is not available. When the status is <code>Deleted</code>, the session is no longer available.</p>"
+      }
+    },
     "Certificate": {
       "base": "<p>A certificate to install in the browser or code interpreter session.</p>",
       "refs": {
@@ -1069,6 +1088,14 @@
       "refs": {}
     },
     "DeleteBatchEvaluationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteCapacityProviderSessionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteCapacityProviderSessionResponse": {
       "base": null,
       "refs": {}
     },
@@ -4247,6 +4274,8 @@
       "base": null,
       "refs": {
         "CreateEventInput$sessionId": "<p>The identifier of the session in which this event occurs. A session represents a sequence of related events.</p>",
+        "DeleteCapacityProviderSessionRequest$sessionId": "<p>The unique identifier of the capacity provider session to delete.</p>",
+        "DeleteCapacityProviderSessionResponse$sessionId": "<p>The unique identifier of the deleted capacity provider session.</p>",
         "DeleteEventInput$sessionId": "<p>The identifier of the session containing the event to delete.</p>",
         "Event$sessionId": "<p>The identifier of the session containing the event.</p>",
         "GetAgentCardResponse$runtimeSessionId": "<p>The ID of the session associated with the AgentCore Runtime agent.</p>",

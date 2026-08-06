@@ -31,6 +31,27 @@
         {"shape":"DependencyException"}
       ]
     },
+    "CreateWhatsAppDataset":{
+      "name":"CreateWhatsAppDataset",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/whatsapp/waba/dataset",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateWhatsAppDatasetInput"},
+      "output":{"shape":"CreateWhatsAppDatasetOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParametersException"},
+        {"shape":"AccessDeniedByMetaException"},
+        {"shape":"ThrottledRequestException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"DependencyException"}
+      ],
+      "idempotent":true
+    },
     "CreateWhatsAppFlow":{
       "name":"CreateWhatsAppFlow",
       "http":{
@@ -515,6 +536,26 @@
       ],
       "idempotent":true
     },
+    "SendWhatsAppConversionEvent":{
+      "name":"SendWhatsAppConversionEvent",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/whatsapp/waba/dataset/events",
+        "responseCode":200
+      },
+      "input":{"shape":"SendWhatsAppConversionEventInput"},
+      "output":{"shape":"SendWhatsAppConversionEventOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParametersException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottledRequestException"},
+        {"shape":"AccessDeniedByMetaException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"DependencyException"}
+      ]
+    },
     "SendWhatsAppMessage":{
       "name":"SendWhatsAppMessage",
       "http":{
@@ -707,6 +748,20 @@
     "CodeExpirationMinutes":{
       "type":"integer",
       "box":true
+    },
+    "CreateWhatsAppDatasetInput":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{"shape":"LinkedWhatsAppBusinessAccountId"}
+      }
+    },
+    "CreateWhatsAppDatasetOutput":{
+      "type":"structure",
+      "required":["datasetId"],
+      "members":{
+        "datasetId":{"shape":"WhatsAppDatasetId"}
+      }
     },
     "CreateWhatsAppFlowInput":{
       "type":"structure",
@@ -1200,6 +1255,7 @@
         "wabaName":{"shape":"WhatsAppBusinessAccountName"},
         "eventDestinations":{"shape":"WhatsAppBusinessAccountEventDestinations"},
         "marketingMessagesOnboardingStatus":{"shape":"WhatsAppBusinessAccountMarketingMessagesOnboardingStatus"},
+        "datasetId":{"shape":"WhatsAppDatasetId"},
         "phoneNumbers":{"shape":"WhatsAppPhoneNumberSummaryList"}
       }
     },
@@ -1243,7 +1299,8 @@
         "linkDate":{"shape":"WhatsAppBusinessAccountLinkDate"},
         "wabaName":{"shape":"WhatsAppBusinessAccountName"},
         "eventDestinations":{"shape":"WhatsAppBusinessAccountEventDestinations"},
-        "marketingMessagesOnboardingStatus":{"shape":"WhatsAppBusinessAccountMarketingMessagesOnboardingStatus"}
+        "marketingMessagesOnboardingStatus":{"shape":"WhatsAppBusinessAccountMarketingMessagesOnboardingStatus"},
+        "datasetId":{"shape":"WhatsAppDatasetId"}
       }
     },
     "LinkedWhatsAppBusinessAccountSummaryList":{
@@ -1930,6 +1987,26 @@
       "min":1,
       "pattern":"https://(.*)s3(.*).amazonaws.com/(.*)"
     },
+    "SendWhatsAppConversionEventInput":{
+      "type":"structure",
+      "required":[
+        "id",
+        "datasetId",
+        "eventData"
+      ],
+      "members":{
+        "id":{"shape":"LinkedWhatsAppBusinessAccountId"},
+        "datasetId":{"shape":"WhatsAppDatasetId"},
+        "eventData":{"shape":"WhatsAppConversionEventBlob"}
+      }
+    },
+    "SendWhatsAppConversionEventOutput":{
+      "type":"structure",
+      "required":["requestId"],
+      "members":{
+        "requestId":{"shape":"String"}
+      }
+    },
     "SendWhatsAppMessageInput":{
       "type":"structure",
       "required":[
@@ -2187,6 +2264,18 @@
       "type":"string",
       "max":200,
       "min":0
+    },
+    "WhatsAppConversionEventBlob":{
+      "type":"blob",
+      "max":1024000,
+      "min":1,
+      "sensitive":true
+    },
+    "WhatsAppDatasetId":{
+      "type":"string",
+      "max":20,
+      "min":10,
+      "pattern":"[0-9]+"
     },
     "WhatsAppDisplayPhoneNumber":{
       "type":"string",

@@ -1,0 +1,407 @@
+{
+  "version": "2.0",
+  "service": "<p>Agent Registry lets callers discover, list, and retrieve approved records published to a registry.</p>",
+  "operations": {
+    "BatchGetDiscoverableRegistryRecord": "<p> Retrieves multiple discoverable registry records by ID from a single registry. Records that cannot be retrieved are reported individually in the <code>errors</code> list rather than failing the entire request.</p>",
+    "ListDiscoverableRegistryRecords": "<p> Lists the discoverable registry records in a registry. You can optionally filter and paginate the results.</p>",
+    "SearchDiscoverableRegistryRecords": "<p> Searches the discoverable registry records in a registry using a natural language query. Returns metadata for the matching records ordered by relevance.</p>"
+  },
+  "shapes": {
+    "A2aAgentCardDescriptor": {
+      "base": "<p>Base mixin for A2A agent card descriptor content</p>",
+      "refs": {
+        "Descriptors$a2aAgentCard": null
+      }
+    },
+    "AccessDeniedException": {
+      "base": "<p>The caller is not authorized to perform the requested action.</p>",
+      "refs": {}
+    },
+    "AgentSkillsAdditionalData": {
+      "base": "<p> Additional data for an agent skills definition descriptor.</p>",
+      "refs": {
+        "AgentSkillsDefinitionDescriptor$additionalData": "<p> Additional data for the agent skills definition, such as the skills markdown descriptor.</p>"
+      }
+    },
+    "AgentSkillsDefinitionDescriptor": {
+      "base": "<p>Base mixin for agent skills definition descriptor content</p>",
+      "refs": {
+        "Descriptors$agentSkillsDefinition": null
+      }
+    },
+    "AgentSkillsMdDescriptor": {
+      "base": "<p>Base mixin for agent skills markdown descriptor content</p>",
+      "refs": {
+        "AgentSkillsAdditionalData$skillMd": null
+      }
+    },
+    "BatchGetDiscoverableRegistryRecordError": {
+      "base": "<p> Describes why a requested record could not be retrieved.</p>",
+      "refs": {
+        "BatchGetDiscoverableRegistryRecordErrorList$member": null
+      }
+    },
+    "BatchGetDiscoverableRegistryRecordErrorCode": {
+      "base": null,
+      "refs": {
+        "BatchGetDiscoverableRegistryRecordError$errorCode": "<p> The machine-readable reason that the record could not be retrieved.</p>"
+      }
+    },
+    "BatchGetDiscoverableRegistryRecordErrorList": {
+      "base": null,
+      "refs": {
+        "BatchGetDiscoverableRegistryRecordResponse$errors": "<p> The per-record errors for records that could not be retrieved. This list is empty when all requested records were returned.</p>"
+      }
+    },
+    "BatchGetDiscoverableRegistryRecordRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchGetDiscoverableRegistryRecordRequestEntriesList": {
+      "base": null,
+      "refs": {
+        "BatchGetDiscoverableRegistryRecordRequest$entries": "<p> The registry-scoped groups of record IDs to retrieve. Currently, you can specify exactly one entry.</p>"
+      }
+    },
+    "BatchGetDiscoverableRegistryRecordResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CustomDescriptor": {
+      "base": "<p>Custom descriptor for user-defined content</p>",
+      "refs": {
+        "Descriptors$custom": null
+      }
+    },
+    "DataSchemaVersion": {
+      "base": "<p>Version of the descriptor type schema</p>",
+      "refs": {
+        "A2aAgentCardDescriptor$dataSchemaVersion": null,
+        "AgentSkillsDefinitionDescriptor$dataSchemaVersion": null,
+        "AgentSkillsMdDescriptor$dataSchemaVersion": null,
+        "McpServerDescriptor$dataSchemaVersion": null,
+        "McpToolsDescriptor$dataSchemaVersion": null
+      }
+    },
+    "DateTimestamp": {
+      "base": "<p>Timestamp in ISO 8601 date-time format</p>",
+      "refs": {
+        "DiscoverableRegistryRecordSummary$createdAt": null,
+        "DiscoverableRegistryRecordSummary$updatedAt": null,
+        "RegistryRecordSummary$createdAt": null,
+        "RegistryRecordSummary$updatedAt": null
+      }
+    },
+    "Description": {
+      "base": "<p>Description of the Resource</p>",
+      "refs": {
+        "DiscoverableRegistryRecordSummary$description": null,
+        "RegistryRecordSummary$description": null
+      }
+    },
+    "DescriptorData": {
+      "base": "<p>Descriptor payload data</p>",
+      "refs": {
+        "A2aAgentCardDescriptor$data": null,
+        "AgentSkillsDefinitionDescriptor$data": null,
+        "AgentSkillsMdDescriptor$data": null,
+        "CustomDescriptor$data": null,
+        "McpServerDescriptor$data": null,
+        "McpToolsDescriptor$data": null
+      }
+    },
+    "DescriptorSource": {
+      "base": "<p> The source location from which a descriptor's content was retrieved.</p>",
+      "refs": {
+        "A2aAgentCardDescriptor$source": "<p> The source location from which the A2A (Agent-to-Agent) agent card descriptor content was retrieved.</p>",
+        "AgentSkillsMdDescriptor$source": "<p> The source location from which the agent skills markdown content was retrieved.</p>",
+        "McpServerDescriptor$source": "<p> The source location from which the MCP (Model Context Protocol) server descriptor content was retrieved.</p>"
+      }
+    },
+    "DescriptorSourceFromUrl": {
+      "base": "<p>Base mixin for descriptor source from URL</p>",
+      "refs": {
+        "DescriptorSource$fromUrl": null
+      }
+    },
+    "DescriptorSourceUrl": {
+      "base": "<p>URL source for descriptor content</p>",
+      "refs": {
+        "DescriptorSourceFromUrl$url": null
+      }
+    },
+    "Descriptors": {
+      "base": "<p> The protocol-specific descriptors that describe how to connect to and use the registry record.</p>",
+      "refs": {
+        "RegistryRecordSummary$descriptors": "<p> The protocol-specific descriptors that describe how to connect to and use the record.</p>"
+      }
+    },
+    "DiscoverableFilterValues": {
+      "base": null,
+      "refs": {
+        "RegistryRecordFilter$values": "<p> The values to match for the attribute.</p>"
+      }
+    },
+    "DiscoverableRegistryRecordSummary": {
+      "base": "<p> Summary information about a discoverable registry record returned by <code> ListDiscoverableRegistryRecords</code>. This summary does not include descriptors.</p>",
+      "refs": {
+        "DiscoverableRegistryRecordSummaryList$member": null
+      }
+    },
+    "DiscoverableRegistryRecordSummaryList": {
+      "base": null,
+      "refs": {
+        "ListDiscoverableRegistryRecordsResponse$registryRecords": "<p> The page of discoverable registry record summaries.</p>"
+      }
+    },
+    "FilterValue": {
+      "base": "<p>A single filter value. Constrained by length only; the accepted set of values is filter-specific and validated server-side so enum-style values such as READY or AWS_IAM are accepted.</p>",
+      "refs": {
+        "DiscoverableFilterValues$member": null
+      }
+    },
+    "InternalServerException": {
+      "base": "<p>The request failed due to an unexpected internal error; the caller may retry.</p>",
+      "refs": {}
+    },
+    "ListDiscoverableRegistryRecordsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDiscoverableRegistryRecordsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListDiscoverableRegistryRecordsRequest$maxResults": "<p> The maximum number of records to return in a single page. Valid values are 1 through 100.</p>"
+      }
+    },
+    "ListDiscoverableRegistryRecordsRequestNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListDiscoverableRegistryRecordsRequest$nextToken": "<p> The pagination token returned by a previous request. Use this value to retrieve the next page of results.</p>"
+      }
+    },
+    "ListDiscoverableRegistryRecordsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "McpServerAdditionalData": {
+      "base": "<p>Additional data for an MCP server descriptor</p>",
+      "refs": {
+        "McpServerDescriptor$additionalData": null
+      }
+    },
+    "McpServerDescriptor": {
+      "base": "<p>Base mixin for MCP server descriptor content</p>",
+      "refs": {
+        "Descriptors$mcpServer": null
+      }
+    },
+    "McpToolsDescriptor": {
+      "base": "<p>MCP tools descriptor containing tool definitions</p>",
+      "refs": {
+        "McpServerAdditionalData$tools": null
+      }
+    },
+    "MetadataFilterExpression": {
+      "base": null,
+      "refs": {
+        "SearchDiscoverableRegistryRecordsRequest$filters": "<p> An optional structured JSON metadata filter that narrows the search results. Supports the field-level operators <code>$eq</code>, <code>$ne</code>, and <code>$in</code>, and the logical operators <code>$and</code> and <code>$or</code> on filterable fields.</p>"
+      }
+    },
+    "NonBlankString": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$message": null,
+        "InternalServerException$message": null,
+        "ResourceNotFoundException$message": null,
+        "ThrottlingException$message": null,
+        "UnauthorizedException$message": null
+      }
+    },
+    "RecordIdentifier": {
+      "base": "<p>Record identifier that accepts either ARN or ID format</p>",
+      "refs": {
+        "BatchGetDiscoverableRegistryRecordError$recordId": null,
+        "RegistryRecordsEntryRecordIdsList$member": null
+      }
+    },
+    "RecordType": {
+      "base": "<p>Record type enum for registry record classification</p>",
+      "refs": {
+        "DiscoverableRegistryRecordSummary$recordType": null,
+        "RegistryRecordSummary$recordType": null
+      }
+    },
+    "RegistryArn": {
+      "base": "<p>Registry Amazon Resource Name</p>",
+      "refs": {
+        "DiscoverableRegistryRecordSummary$registryArn": null,
+        "RegistryRecordSummary$registryArn": null
+      }
+    },
+    "RegistryIdentifier": {
+      "base": "<p>Registry identifier that accepts either ARN or ID format</p>",
+      "refs": {
+        "BatchGetDiscoverableRegistryRecordError$registryId": null,
+        "ListDiscoverableRegistryRecordsRequest$registryId": null,
+        "RegistryRecordsEntry$registryId": null,
+        "SearchDiscoverableRegistryRecordsRequestRegistryIdsList$member": null
+      }
+    },
+    "RegistryRecordArn": {
+      "base": "<p>Registry Record Amazon Resource Name</p>",
+      "refs": {
+        "DiscoverableRegistryRecordSummary$recordArn": null,
+        "RegistryRecordSummary$recordArn": null
+      }
+    },
+    "RegistryRecordDisplayName": {
+      "base": "<p>Display name for a registry record</p>",
+      "refs": {
+        "DiscoverableRegistryRecordSummary$displayName": null,
+        "RegistryRecordSummary$displayName": null
+      }
+    },
+    "RegistryRecordFilter": {
+      "base": "<p> A single filter applied to a <code>ListDiscoverableRegistryRecords</code> request.</p>",
+      "refs": {
+        "RegistryRecordFilterList$member": null
+      }
+    },
+    "RegistryRecordFilterList": {
+      "base": "<p> The list of filters applied to a <code>ListDiscoverableRegistryRecords</code> request.</p>",
+      "refs": {
+        "ListDiscoverableRegistryRecordsRequest$filters": "<p> The filters to apply to the discoverable registry record list.</p>"
+      }
+    },
+    "RegistryRecordFilterName": {
+      "base": "<p> The attribute to filter registry records on.</p>",
+      "refs": {
+        "RegistryRecordFilter$name": "<p> The attribute to filter on.</p>"
+      }
+    },
+    "RegistryRecordId": {
+      "base": "<p>Registry Record unique identifier - 12-character alphanumeric string</p>",
+      "refs": {
+        "DiscoverableRegistryRecordSummary$recordId": null,
+        "RegistryRecordSummary$recordId": null
+      }
+    },
+    "RegistryRecordName": {
+      "base": "<p>Registry Record name</p>",
+      "refs": {
+        "DiscoverableRegistryRecordSummary$name": null,
+        "RegistryRecordSummary$name": null
+      }
+    },
+    "RegistryRecordStatus": {
+      "base": "<p>Registry record status</p>",
+      "refs": {
+        "DiscoverableRegistryRecordSummary$status": null,
+        "RegistryRecordSummary$status": null
+      }
+    },
+    "RegistryRecordSummary": {
+      "base": "<p> Summary information about a registry record, including its descriptors.</p>",
+      "refs": {
+        "RegistryRecordSummaryList$member": null
+      }
+    },
+    "RegistryRecordSummaryList": {
+      "base": null,
+      "refs": {
+        "BatchGetDiscoverableRegistryRecordResponse$registryRecords": "<p> The records that were successfully retrieved. Each record correlates to the request by its <code>recordId</code>.</p>",
+        "SearchDiscoverableRegistryRecordsResponse$registryRecords": "<p> The registry records that match the search query, ordered by relevance.</p>"
+      }
+    },
+    "RegistryRecordVersion": {
+      "base": "<p>Version of the registry record</p>",
+      "refs": {
+        "DiscoverableRegistryRecordSummary$recordVersion": null,
+        "RegistryRecordSummary$recordVersion": null
+      }
+    },
+    "RegistryRecordsEntry": {
+      "base": "<p> Binds one registry to the record IDs requested from it.</p>",
+      "refs": {
+        "BatchGetDiscoverableRegistryRecordRequestEntriesList$member": null
+      }
+    },
+    "RegistryRecordsEntryRecordIdsList": {
+      "base": null,
+      "refs": {
+        "RegistryRecordsEntry$recordIds": "<p> The record IDs to retrieve from the registry. You can specify 1 through 100 record IDs.</p>"
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p>The requested resource was not found.</p>",
+      "refs": {}
+    },
+    "SearchDiscoverableRegistryRecordsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SearchDiscoverableRegistryRecordsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "SearchDiscoverableRegistryRecordsRequest$maxResults": "<p> The maximum number of results to return. Valid values are 1 through 20. The default value is 10.</p>"
+      }
+    },
+    "SearchDiscoverableRegistryRecordsRequestRegistryIdsList": {
+      "base": null,
+      "refs": {
+        "SearchDiscoverableRegistryRecordsRequest$registryIds": "<p> The registry identifiers to search within. Currently, you must specify exactly one registry identifier. You can provide either the full Amazon Web Services Resource Name (ARN) or the registry ID.</p>"
+      }
+    },
+    "SearchDiscoverableRegistryRecordsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "SearchQuery": {
+      "base": null,
+      "refs": {
+        "SearchDiscoverableRegistryRecordsRequest$searchQuery": "<p> The natural language query to search for matching registry records.</p>"
+      }
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "BatchGetDiscoverableRegistryRecordError$message": "<p> An optional human-readable detail about the error. Do not parse this value programmatically.</p>",
+        "ListDiscoverableRegistryRecordsResponse$nextToken": "<p> The pagination token to pass to a subsequent request to retrieve the next page of results. This field is absent when there are no more results.</p>",
+        "ValidationException$message": null,
+        "ValidationExceptionField$name": "<p>The name of the field that failed validation.</p>",
+        "ValidationExceptionField$message": "<p>A description of why the field failed validation.</p>"
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>The request was denied due to request throttling; the caller may retry after a delay.</p>",
+      "refs": {}
+    },
+    "UnauthorizedException": {
+      "base": "<p>The request could not be authenticated.</p>",
+      "refs": {}
+    },
+    "ValidationException": {
+      "base": "<p>The request failed validation of one or more input fields.</p>",
+      "refs": {}
+    },
+    "ValidationExceptionField": {
+      "base": "<p>Describes a single input field that failed validation.</p>",
+      "refs": {
+        "ValidationExceptionFieldList$member": null
+      }
+    },
+    "ValidationExceptionFieldList": {
+      "base": null,
+      "refs": {
+        "ValidationException$fieldList": "<p>The list of input fields that failed validation.</p>"
+      }
+    },
+    "ValidationExceptionReason": {
+      "base": null,
+      "refs": {
+        "ValidationException$reason": "<p>The reason the request failed validation.</p>"
+      }
+    }
+  }
+}

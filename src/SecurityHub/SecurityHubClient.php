@@ -189,6 +189,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listEnabledProductsForImportAsync(array $args = [])
  * @method \Aws\Result listFindingAggregators(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listFindingAggregatorsAsync(array $args = [])
+ * @method \Aws\Result listFreeTrialStatusesV2(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listFreeTrialStatusesV2Async(array $args = [])
  * @method \Aws\Result listInvitations(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listInvitationsAsync(array $args = [])
  * @method \Aws\Result listMembers(array $args = [])

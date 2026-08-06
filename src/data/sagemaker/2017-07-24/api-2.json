@@ -25529,7 +25529,13 @@
         "ml.g7e.8xlarge",
         "ml.g7e.12xlarge",
         "ml.g7e.24xlarge",
-        "ml.g7e.48xlarge"
+        "ml.g7e.48xlarge",
+        "ml.g7.2xlarge",
+        "ml.g7.4xlarge",
+        "ml.g7.8xlarge",
+        "ml.g7.12xlarge",
+        "ml.g7.24xlarge",
+        "ml.g7.48xlarge"
       ]
     },
     "ProcessingJob":{
@@ -28031,6 +28037,12 @@
         "PipelineExecutionArn":{"shape":"PipelineExecutionArn"}
       }
     },
+    "SequenceLength":{
+      "type":"string",
+      "max":50,
+      "min":1,
+      "pattern":"\\d+K"
+    },
     "ServerlessJobBaseModelArn":{
       "type":"string",
       "max":2048,
@@ -28053,7 +28065,8 @@
         "CustomizationTechnique":{"shape":"CustomizationTechnique"},
         "Peft":{"shape":"Peft"},
         "EvaluationType":{"shape":"EvaluationType"},
-        "EvaluatorArn":{"shape":"EvaluatorArn"}
+        "EvaluatorArn":{"shape":"EvaluatorArn"},
+        "SequenceLength":{"shape":"SequenceLength"}
       }
     },
     "ServerlessJobType":{
@@ -29867,7 +29880,13 @@
         "ml.g7e.8xlarge",
         "ml.g7e.12xlarge",
         "ml.g7e.24xlarge",
-        "ml.g7e.48xlarge"
+        "ml.g7e.48xlarge",
+        "ml.g7.2xlarge",
+        "ml.g7.4xlarge",
+        "ml.g7.8xlarge",
+        "ml.g7.12xlarge",
+        "ml.g7.24xlarge",
+        "ml.g7.48xlarge"
       ]
     },
     "TrainingInstanceTypes":{

@@ -428,6 +428,7 @@
         "InvoicingEntity$branchName": "<p>The branch where the issuing entity is operating from.</p>",
         "ItemizedCharge$dimensionKey": "<p>The dimension key as specified in the accepted term.</p>",
         "ItemizedCharge$incrementalChargeAmount": "<p>The total incremental charge amount for this dimension.</p>",
+        "NetPaymentTerm$paymentDuePeriod": "<p>The duration after an invoice is issued within which the payment is due. The duration is represented in the ISO 8601 format (for example, <code>P30D</code> for 30 days or <code>P60D</code> for 60 days).</p>",
         "PricingCurrencyAmount$amount": "<p>The monetary amount before tax.</p>",
         "PricingCurrencyAmount$maxAdjustmentAmount": "<p>The maximum refundable amount as a string representation of a decimal number.</p>",
         "RateCardItem$dimensionKey": "<p>Dimension for which the given entitlement applies. Dimensions represent categories of capacity in a product and are specified when the product is listed in AWS Marketplace.</p>",
@@ -925,6 +926,12 @@
         "SearchAgreementsInput$maxResults": "<p>The maximum number of agreements to return in the response.</p>"
       }
     },
+    "NetPaymentTerm": {
+      "base": "<p>Defines the net payment due period for the agreement, specifying when payment is due after an invoice is issued.</p>",
+      "refs": {
+        "AcceptedTerm$netPaymentTerm": "<p>Defines the net payment due period for the agreement, specifying when payment is due after an invoice is issued.</p>"
+      }
+    },
     "NextToken": {
       "base": null,
       "refs": {
@@ -1360,6 +1367,7 @@
         "FixedUpfrontPricingTerm$id": "<p>The unique identifier for the term.</p>",
         "FreeTrialPricingTerm$id": "<p>The unique identifier for the terms.</p>",
         "LegalTerm$id": "<p>The unique identifer for the term.</p>",
+        "NetPaymentTerm$id": "<p>The unique identifier for the term.</p>",
         "PaymentScheduleTerm$id": "<p>The unique identifier for the term.</p>",
         "RecurringPaymentTerm$id": "<p>The unique identifier for the term.</p>",
         "RenewalTerm$id": "<p>The unique identifier for the term.</p>",
@@ -1437,6 +1445,7 @@
         "FixedUpfrontPricingTerm$type": "<p>Category of the term being updated.</p>",
         "FreeTrialPricingTerm$type": "<p>Category of the term.</p>",
         "LegalTerm$type": "<p>Category of the term being updated.</p>",
+        "NetPaymentTerm$type": "<p>Type of the term being updated.</p>",
         "PaymentScheduleTerm$type": "<p>Type of the term.</p>",
         "RecurringPaymentTerm$type": "<p>Type of the term being updated.</p>",
         "RenewalTerm$type": "<p>Category of the term being updated. </p>",

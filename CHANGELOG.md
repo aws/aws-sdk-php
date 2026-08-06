@@ -1,5 +1,26 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3` - AWS Backup now lets you create read-only access points for Amazon S3 recovery points, enabling you to access backup data using S3 APIs without initiating a restore.
+* `Aws\MarketplaceDiscovery` - GetOfferTerms now returns netPaymentTerm in offerTerms, specifying payment due period after invoice date. The paymentDuePeriod field uses ISO 8601 duration format (e.g., "P30D" for net 30 days). This is a backward-compatible addition. See API documentation for full structure and examples.
+* `Aws\EC2` - Adds a new optional IncludeLocalZones parameter to the Spot Placement Score API that defaults to false. When set to true, the Spot Placement Score API will consider the relevant Local Zones with Spot capacity when computing the Spot Placement Score.
+* `Aws\AutoScaling` - EC2 Auto Scaling now supports being managed by other AWS services via the operator field.
+* `Aws\BedrockAgentCore` - Add support for capacity provider sessions in Amazon Bedrock AgentCore. Customers can now delete an active session running on a runtime instance launched through their capacity provider.
+* `Aws\Kafka` - MSK Clusters can now deliver authorizer logs alongside broker logs to the destinations defined by you
+* `Aws\AgentRegistry` - Agent Registry's Public Preview release
+* `Aws\MarketplaceAgreement` - GetAgreementTerms now returns a new term variant in AcceptedTerm, netPaymentTerm, with a paymentDuePeriod field (example "P30D").
+* `Aws\MediaTailor` - AWS Elemental MediaTailor now supports concurrent function execution. The new Concurrent Executor function type runs multiple independent child functions in parallel within a single lifecycle hook, reducing pipeline latency to the duration of the slowest call instead of the sum of all calls.
+* `Aws\Backup` - AWS Backup now lets you create read-only access points for Amazon S3 recovery points, enabling you to access backup data using S3 APIs without initiating a restore.
+* `Aws\AgentRegistryControl` - Agent Registry's Public Preview release
+* `Aws\SageMaker` - Releases new Model Customization SequenceLength parameter for Training and g7 instance types for Training and Processing.
+* `Aws\DeviceFarm` - Adds support for service generated insights across runs, jobs, and tests.
+* `Aws\BedrockAgentCoreControl` - Add support for Gateway rate limits and Runtime instances in Amazon Bedrock AgentCore. Customers can now configure rate limits scoped to control request rates, token consumption rates, and active connection rates. Customers can now create capacity providers to launch runtimes on their EC2 instances.
+* `Aws\SecurityHub` - Security Hub is adding a new public API, ListFreeTrialStatusesV2 to describe the free trial statuses of the Security Hub service and its opt-in features.
+* `Aws\GameLift` - Adds support for C8a, C8i, C9g, M8a, M8i, and M9g EC2 instance type families for managed EC2 and container fleets. Also adds explicit anchors on most string regexes.
+* `Aws\SocialMessaging` - Add support for WhatsApp Conversions APIs.
+* `Aws\CloudWatchLogs` - This release adds index category support to the CloudWatch Logs DescribeFieldIndexes API. Customers can filter and identify DEFAULT, CUSTOM, AUTO, and INACTIVE field indexes.
+
 ## 3.390.5 - 2026-08-05
 
 * `Aws\ECS` - New enum values added for Agent Connectivity issues

@@ -15759,7 +15759,10 @@
     },
     "CreateSecondaryNetworkRequest":{
       "type":"structure",
-      "required":["NetworkType"],
+      "required":[
+        "Ipv4CidrBlock",
+        "NetworkType"
+      ],
       "members":{
         "ClientToken":{
           "shape":"String",
@@ -31778,7 +31781,8 @@
         "InstanceRequirementsWithMetadata":{"shape":"InstanceRequirementsWithMetadataRequest"},
         "DryRun":{"shape":"Boolean"},
         "MaxResults":{"shape":"SpotPlacementScoresMaxResults"},
-        "NextToken":{"shape":"String"}
+        "NextToken":{"shape":"String"},
+        "IncludeLocalZones":{"shape":"Boolean"}
       }
     },
     "GetSpotPlacementScoresResult":{

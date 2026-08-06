@@ -3,17 +3,20 @@
   "service": "<p>Welcome to the Amazon Bedrock AgentCore Control plane API reference. Control plane actions configure, create, modify, and monitor Amazon Web Services resources.</p>",
   "operations": {
     "AddDatasetExamples": "<p> Adds examples to the dataset's DRAFT. All examples are validated against the dataset's schema type before any writes occur. If any example fails validation, the entire batch is rejected (all-or-nothing semantics). </p>",
+    "BatchPutGatewayRateLimits": "<p>Atomically creates or updates multiple rate limits for a gateway. The operation updates existing limits with matching keys and creates new limits for new keys. If the operation fails, the service applies no changes. Retry the request after resolving the issue.</p>",
     "CreateAgentRuntime": "<p>Creates an Amazon Bedrock AgentCore Runtime.</p>",
     "CreateAgentRuntimeEndpoint": "<p>Creates an AgentCore Runtime endpoint.</p>",
     "CreateApiKeyCredentialProvider": "<p>Creates a new API key credential provider.</p>",
     "CreateBrowser": "<p>Creates a custom browser.</p>",
     "CreateBrowserProfile": "<p>Creates a browser profile in Amazon Bedrock AgentCore. A browser profile stores persistent browser data such as cookies, local storage, session storage, and browsing history that can be saved from browser sessions and reused in subsequent sessions.</p>",
+    "CreateCapacityProvider": "<p>Creates a capacity provider. A capacity provider defines the Amazon EC2 infrastructure for AgentCore Runtime, including the operating system, allowed instance types, networking, and storage. It also specifies the IAM permissions that AgentCore uses to manage those instances.</p> <p>The capacity provider name must be unique within your account. After you create the capacity provider, it enters a <code>CREATING</code> state and transitions to <code>READY</code> when it is available for use.</p>",
     "CreateCodeInterpreter": "<p>Creates a custom code interpreter.</p>",
     "CreateConfigurationBundle": "<p>Creates a new configuration bundle resource. A configuration bundle stores versioned component configurations for agent evaluation workflows.</p>",
     "CreateDataset": "<p> Creates a new dataset resource asynchronously. Returns immediately with status CREATING. Poll <code>GetDataset</code> until status transitions to ACTIVE or CREATE_FAILED. </p>",
     "CreateDatasetVersion": "<p> Publishes the current DRAFT as a new numbered version. The DRAFT is preserved and remains editable after publishing. Returns immediately with status UPDATING. Poll <code>GetDataset</code> until status transitions to ACTIVE or UPDATE_FAILED. </p>",
     "CreateEvaluator": "<p> Creates a custom evaluator for agent quality assessment. Custom evaluators can use either LLM-as-a-Judge configurations with user-defined prompts, rating scales, and model settings, or code-based configurations with customer-managed Lambda functions to evaluate agent performance at tool call, trace, or session levels. </p>",
     "CreateGateway": "<p>Creates a gateway for Amazon Bedrock Agent. A gateway serves as an integration point between your agent and external services.</p> <p>If you specify <code>CUSTOM_JWT</code> as the <code>authorizerType</code>, you must provide an <code>authorizerConfiguration</code>.</p>",
+    "CreateGatewayRateLimit": "<p>Creates a rate limit for a gateway. Rate limits define throttling rules for each dimension that control request rates, token consumption rates, and concurrent connections through the gateway.</p>",
     "CreateGatewayRule": "<p>Creates a rule for a gateway. Rules define conditions and actions that control how requests are routed and processed through the gateway, including principal-based access control and path-based routing.</p>",
     "CreateGatewayTarget": "<p>Creates a target for a gateway. A target defines an endpoint that the gateway can connect to.</p>",
     "CreateHarness": "<p>Operation to create a harness.</p>",
@@ -29,17 +32,19 @@
     "CreateRegistry": "<p>Creates a new registry in your Amazon Web Services account. A registry serves as a centralized catalog for organizing and managing registry records, including MCP servers, A2A agents, agent skills, and custom resource types.</p> <p>If you specify <code>CUSTOM_JWT</code> as the <code>authorizerType</code>, you must provide an <code>authorizerConfiguration</code>.</p>",
     "CreateRegistryRecord": "<p>Creates a new registry record within the specified registry. A registry record represents an individual AI resource's metadata in the registry. This could be an MCP server (and associated tools), A2A agent, agent skill, or a custom resource with a custom schema.</p> <p>The record is processed asynchronously and returns HTTP 202 Accepted.</p>",
     "CreateWorkloadIdentity": "<p>Creates a new workload identity.</p>",
-    "DeleteAgentRuntime": "<p>Deletes an Amazon Bedrock AgentCore Runtime.</p>",
-    "DeleteAgentRuntimeEndpoint": "<p>Deletes an AAgentCore Runtime endpoint.</p>",
+    "DeleteAgentRuntime": "<p>Deletes an Amazon Bedrock AgentCore Runtime, or a single version of an AgentCore Runtime when you provide the version qualifier.</p>",
+    "DeleteAgentRuntimeEndpoint": "<p>Deletes an AgentCore Runtime endpoint.</p>",
     "DeleteApiKeyCredentialProvider": "<p>Deletes an API key credential provider.</p>",
     "DeleteBrowser": "<p>Deletes a custom browser.</p>",
     "DeleteBrowserProfile": "<p>Deletes a browser profile.</p>",
+    "DeleteCapacityProvider": "<p>Deletes a capacity provider. Before you delete a capacity provider, disassociate all agent runtimes and runtime versions that reference it. If any references remain, the operation fails.</p>",
     "DeleteCodeInterpreter": "<p>Deletes a custom code interpreter.</p>",
     "DeleteConfigurationBundle": "<p>Deletes a configuration bundle and all of its versions.</p>",
     "DeleteDataset": "<p> Deletes a dataset version or an entire dataset asynchronously. If <code>datasetVersion</code> is absent, deletes all versions and the dataset record itself. If provided, deletes only that specific version. </p>",
     "DeleteDatasetExamples": "<p> Deletes specific examples by ID from DRAFT. All example IDs are validated before any deletes occur. If any ID does not exist in DRAFT, the entire batch is rejected (all-or-nothing semantics). </p>",
     "DeleteEvaluator": "<p> Deletes a custom evaluator. Builtin evaluators cannot be deleted. The evaluator must not be referenced by any active online evaluation configurations. </p>",
     "DeleteGateway": "<p>Deletes a gateway.</p>",
+    "DeleteGatewayRateLimit": "<p>Deletes a gateway rate limit.</p>",
     "DeleteGatewayRule": "<p>Deletes a gateway rule.</p>",
     "DeleteGatewayTarget": "<p>Deletes a gateway target.</p> <p>You cannot delete a target that is in a pending authorization state (<code>CREATE_PENDING_AUTH</code>, <code>UPDATE_PENDING_AUTH</code>, or <code>SYNCHRONIZE_PENDING_AUTH</code>). Wait for the authorization to complete or fail before deleting the target.</p>",
     "DeleteHarness": "<p>Operation to delete a Harness.</p>",
@@ -61,12 +66,14 @@
     "GetApiKeyCredentialProvider": "<p>Retrieves information about an API key credential provider.</p>",
     "GetBrowser": "<p>Gets information about a custom browser.</p>",
     "GetBrowserProfile": "<p>Gets information about a browser profile.</p>",
+    "GetCapacityProvider": "<p>Retrieves information about a capacity provider, including its status, permissions configuration, and compute configuration.</p>",
     "GetCodeInterpreter": "<p>Gets information about a custom code interpreter.</p>",
     "GetConfigurationBundle": "<p>Gets the latest version of a configuration bundle. By default, returns the latest version on the mainline branch. Use <code>GetConfigurationBundleVersion</code> to retrieve a specific historical version.</p>",
     "GetConfigurationBundleVersion": "<p>Gets a specific version of a configuration bundle by its version identifier.</p>",
     "GetDataset": "<p> Retrieves dataset metadata. Use the <code>datasetVersion</code> query parameter to retrieve a specific version's metadata. If absent, defaults to DRAFT. For paginated example content, use <code>ListDatasetExamples</code>. </p>",
     "GetEvaluator": "<p> Retrieves detailed information about an evaluator, including its configuration, status, and metadata. Works with both built-in and custom evaluators. </p>",
     "GetGateway": "<p>Retrieves information about a specific Gateway.</p>",
+    "GetGatewayRateLimit": "<p>Retrieves information about a gateway rate limit.</p>",
     "GetGatewayRule": "<p>Retrieves detailed information about a specific gateway rule.</p>",
     "GetGatewayTarget": "<p>Retrieves information about a specific gateway target.</p>",
     "GetHarness": "<p>Operation to get a single harness.</p>",
@@ -90,10 +97,12 @@
     "GetWorkloadIdentity": "<p>Retrieves information about a workload identity.</p>",
     "ListAgentRuntimeEndpoints": "<p>Lists all endpoints for a specific Amazon Secure Agent.</p>",
     "ListAgentRuntimeVersions": "<p>Lists all versions of a specific Amazon Secure Agent.</p>",
+    "ListAgentRuntimeVersionsByCapacityProvider": "<p>Lists the agent runtime versions that are associated with a capacity provider. Use this operation to identify the runtimes you must disassociate before you can delete the capacity provider. Results are paginated; use the <code>nextToken</code> parameter to retrieve additional results.</p>",
     "ListAgentRuntimes": "<p>Lists all Amazon Secure Agents in your account.</p>",
     "ListApiKeyCredentialProviders": "<p>Lists all API key credential providers in your account.</p>",
     "ListBrowserProfiles": "<p>Lists all browser profiles in your account.</p>",
     "ListBrowsers": "<p>Lists all custom browsers in your account.</p>",
+    "ListCapacityProviders": "<p>Lists the capacity providers in your account and returns summary information for each one. To retrieve the full configuration for a specific capacity provider, use <code>GetCapacityProvider</code>. Results are paginated; use the <code>nextToken</code> parameter to retrieve additional results.</p>",
     "ListCodeInterpreters": "<p>Lists all custom code interpreters in your account.</p>",
     "ListConfigurationBundleVersions": "<p>Lists all versions of a configuration bundle, with optional filtering by branch name or creation source.</p>",
     "ListConfigurationBundles": "<p>Lists all configuration bundles in the account.</p>",
@@ -101,6 +110,7 @@
     "ListDatasetVersions": "<p> Lists all published versions of a dataset, sorted by version number descending (newest first). Does not include the DRAFT working copy. </p>",
     "ListDatasets": "<p> Lists all datasets in the caller's account, paginated. </p>",
     "ListEvaluators": "<p> Lists all available evaluators, including both builtin evaluators provided by the service and custom evaluators created by the user. </p>",
+    "ListGatewayRateLimits": "<p>Lists all rate limits for a gateway. Results are paginated. Use the <code>nextToken</code> parameter to retrieve additional results.</p>",
     "ListGatewayRules": "<p>Lists all rules for a gateway.</p>",
     "ListGatewayTargets": "<p>Lists all targets for a specific gateway.</p>",
     "ListGateways": "<p>Lists all gateways in the account.</p>",
@@ -134,11 +144,13 @@
     "UpdateAgentRuntime": "<p>Updates an existing Amazon Secure Agent.</p>",
     "UpdateAgentRuntimeEndpoint": "<p>Updates an existing Amazon Bedrock AgentCore Runtime endpoint.</p>",
     "UpdateApiKeyCredentialProvider": "<p>Updates an existing API key credential provider.</p>",
+    "UpdateCapacityProvider": "<p>Updates a capacity provider. Only the description can be changed. To change other configuration, such as instance types, networking, or storage, create a new capacity provider.</p>",
     "UpdateConfigurationBundle": "<p>Updates a configuration bundle by creating a new version with the specified changes. Each update creates a new version in the version history.</p>",
     "UpdateDataset": "<p> Updates a dataset's metadata. Synchronous operation. Only provided fields are updated; omitted fields remain unchanged. To modify dataset content, use <code>AddDatasetExamples</code>, <code>UpdateDatasetExamples</code>, or <code>DeleteDatasetExamples</code>. </p>",
     "UpdateDatasetExamples": "<p> Updates multiple existing examples in-place on DRAFT. All examples are validated against the dataset's schema type before any writes occur. If any example fails validation, the entire batch is rejected (all-or-nothing semantics). </p>",
     "UpdateEvaluator": "<p> Updates a custom evaluator's configuration, description, or evaluation level. Built-in evaluators cannot be updated. The evaluator must not be locked for modification. </p>",
     "UpdateGateway": "<p>Updates an existing gateway.</p>",
+    "UpdateGatewayRateLimit": "<p>Updates the entries of a gateway rate limit. The dimension keys are immutable after creation.</p>",
     "UpdateGatewayRule": "<p>Updates a gateway rule's priority, conditions, actions, or description.</p>",
     "UpdateGatewayTarget": "<p>Updates an existing gateway target.</p> <p>You cannot update a target that is in a pending authorization state (<code>CREATE_PENDING_AUTH</code>, <code>UPDATE_PENDING_AUTH</code>, or <code>SYNCHRONIZE_PENDING_AUTH</code>). Wait for the authorization to complete or fail before updating the target.</p>",
     "UpdateHarness": "<p>Operation to update a harness.</p>",
@@ -262,6 +274,7 @@
       "refs": {
         "AgentRuntime$agentRuntimeArn": "<p>The Amazon Resource Name (ARN) of the agent runtime.</p>",
         "AgentRuntimeEndpoint$agentRuntimeArn": "<p>The Amazon Resource Name (ARN) of the agent runtime associated with the endpoint.</p>",
+        "AgentRuntimeVersionSummary$agentRuntimeArn": "<p>The Amazon Resource Name (ARN) of the agent runtime.</p>",
         "CreateAgentRuntimeEndpointResponse$agentRuntimeArn": "<p>The Amazon Resource Name (ARN) of the AgentCore Runtime.</p>",
         "CreateAgentRuntimeResponse$agentRuntimeArn": "<p>The Amazon Resource Name (ARN) of the AgentCore Runtime.</p>",
         "GetAgentRuntimeEndpointResponse$agentRuntimeArn": "<p>The Amazon Resource Name (ARN) of the AgentCore Runtime.</p>",
@@ -349,6 +362,7 @@
       "base": null,
       "refs": {
         "AgentRuntime$status": "<p>The current status of the agent runtime.</p>",
+        "AgentRuntimeVersionSummary$status": "<p>The current status of the agent runtime version.</p>",
         "CreateAgentRuntimeResponse$status": "<p>The current status of the AgentCore Runtime.</p>",
         "DeleteAgentRuntimeResponse$status": "<p>The current status of the AgentCore Runtime deletion.</p>",
         "GetAgentRuntimeResponse$status": "<p>The current status of the AgentCore Runtime.</p>",
@@ -361,9 +375,12 @@
         "AgentRuntime$agentRuntimeVersion": "<p>The version of the agent runtime.</p>",
         "AgentRuntimeEndpoint$liveVersion": "<p>The live version of the agent runtime endpoint. This is the version that is currently serving requests.</p>",
         "AgentRuntimeEndpoint$targetVersion": "<p>The target version of the agent runtime endpoint. This is the version that the endpoint is being updated to.</p>",
+        "AgentRuntimeVersionSummary$agentRuntimeVersion": "<p>The version of the agent runtime.</p>",
         "CreateAgentRuntimeEndpointRequest$agentRuntimeVersion": "<p>The version of the AgentCore Runtime to use for the endpoint.</p>",
         "CreateAgentRuntimeEndpointResponse$targetVersion": "<p>The target version of the AgentCore Runtime for the endpoint.</p>",
         "CreateAgentRuntimeResponse$agentRuntimeVersion": "<p>The version of the AgentCore Runtime.</p>",
+        "DeleteAgentRuntimeRequest$agentRuntimeVersion": "<p>The version of the AgentCore Runtime to delete. When you provide this value, only that version is deleted. When you omit it, the entire AgentCore Runtime and all of its versions are deleted.</p>",
+        "DeleteAgentRuntimeResponse$agentRuntimeVersion": "<p>The version of the AgentCore Runtime that was deleted. This value is present only when you delete a single version.</p>",
         "GetAgentRuntimeEndpointResponse$liveVersion": "<p>The currently deployed version of the AgentCore Runtime on the endpoint.</p>",
         "GetAgentRuntimeEndpointResponse$targetVersion": "<p>The target version of the AgentCore Runtime for the endpoint.</p>",
         "GetAgentRuntimeRequest$agentRuntimeVersion": "<p>The version of the AgentCore Runtime to retrieve.</p>",
@@ -372,6 +389,18 @@
         "UpdateAgentRuntimeEndpointResponse$liveVersion": "<p>The currently deployed version of the AgentCore Runtime on the endpoint.</p>",
         "UpdateAgentRuntimeEndpointResponse$targetVersion": "<p>The target version of the AgentCore Runtime for the endpoint.</p>",
         "UpdateAgentRuntimeResponse$agentRuntimeVersion": "<p>The version of the updated AgentCore Runtime.</p>"
+      }
+    },
+    "AgentRuntimeVersionSummary": {
+      "base": "<p>Summary information about an agent runtime version associated with a capacity provider. This is returned by <code>ListAgentRuntimeVersionsByCapacityProvider</code>.</p>",
+      "refs": {
+        "AgentRuntimeVersionSummaryList$member": null
+      }
+    },
+    "AgentRuntimeVersionSummaryList": {
+      "base": null,
+      "refs": {
+        "ListAgentRuntimeVersionsByCapacityProviderOutput$agentRuntimes": "<p>The list of agent runtime versions that are associated with the capacity provider.</p>"
       }
     },
     "AgentRuntimes": {
@@ -677,6 +706,26 @@
         "S3Configuration$bucketOwnerAccountId": "<p>The account ID of the Amazon S3 bucket owner. This ID is used for cross-account access to the bucket.</p>"
       }
     },
+    "BatchPutGatewayRateLimitsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchPutGatewayRateLimitsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchPutLimitEntries": {
+      "base": null,
+      "refs": {
+        "BatchPutGatewayRateLimitsRequest$rateLimits": "<p>Complete set of rate limits for this gateway. Replaces all existing limits atomically.</p>"
+      }
+    },
+    "BatchPutLimitEntry": {
+      "base": "<p>A limit definition within a BatchPut request (rateLimitId used for upsert matching)</p>",
+      "refs": {
+        "BatchPutLimitEntries$member": null
+      }
+    },
     "BedrockAgentcoreResourceArn": {
       "base": null,
       "refs": {
@@ -705,12 +754,15 @@
         "ConnectorParameterOverride$visible": "<p>Whether this parameter is visible to the agent. If not specified, uses the service default.</p>",
         "CreateOnlineEvaluationConfigRequest$enableOnCreate": "<p> Whether to enable the online evaluation configuration immediately upon creation. If true, evaluation begins automatically. </p>",
         "DeleteHarnessRequest$deleteManagedMemory": "<p>Whether to delete the managed memory on harness deletion. Default: true. If false, the memory is disassociated and becomes a regular customer-owned resource.</p>",
+        "EbsVolumeConfiguration$encrypted": "<p>Specifies whether to encrypt the volume. If <code>true</code>, the service encrypts the volume with the KMS key that you specify in <code>kmsKeyId</code>, or the default KMS key for Amazon EBS if you do not specify one. The default is <code>true</code>.</p>",
+        "EphemeralEBSVolumeConfiguration$encrypted": "<p>Specifies whether to encrypt the volume. Encrypted volumes can be attached only to instances that support Amazon EBS encryption. If you create a volume from a snapshot, you cannot specify an encryption value.</p>",
         "EvaluatorSummary$lockedForModification": "<p> Whether the evaluator is locked for modification due to being referenced by active online evaluation configurations. </p>",
         "FilterValue$booleanValue": "<p> The boolean value for true/false filtering conditions. </p>",
         "GetEvaluatorResponse$lockedForModification": "<p> Whether the evaluator is locked for modification due to being referenced by active online evaluation configurations. </p>",
         "InterceptorInputConfiguration$passRequestHeaders": "<p>Indicates whether to pass request headers as input into the interceptor. When set to true, request headers will be passed.</p>",
         "ProviderPrefix$strip": "<p>Whether clients can omit the provider prefix from model IDs. If <code>true</code>, the gateway accepts model IDs without the prefix and restores the full prefixed form before forwarding to the provider. The default is <code>false</code>.</p>",
         "RecordingConfig$enabled": "<p>Indicates whether recording is enabled for the browser. When set to true, browser sessions are recorded.</p>",
+        "RootVolumeConfiguration$encrypted": "<p>Specifies whether to encrypt the volume. Encrypted volumes can be attached only to instances that support Amazon EBS encryption. If you create a volume from a snapshot, you cannot specify an encryption value.</p>",
         "RuntimeMetadataConfiguration$requireMMDSV2": "<p>Enables MMDSv2 (microVM Metadata Service Version 2) requirement for the agent runtime. When set to <code>true</code>, the runtime microVM will only accept MMDSv2 requests.</p>",
         "StreamingConfiguration$enableResponseStreaming": "<p>Indicates whether response streaming is enabled for the gateway. When set to <code>true</code>, the gateway streams responses from targets back to the client.</p>",
         "UpdateRegistryRecordRequest$triggerSynchronization": "<p>Whether to trigger synchronization using the stored or provided configuration. When set to <code>true</code>, the service will synchronize the record metadata from the configured external source.</p>",
@@ -871,6 +923,118 @@
         "BrowserSummaries$member": null
       }
     },
+    "CapacityProviderArn": {
+      "base": null,
+      "refs": {
+        "CapacityProviderConfiguration$capacityProviderArn": "<p>The Amazon Resource Name (ARN) of the capacity provider to use for the AgentCore Runtime.</p>",
+        "CapacityProviderSummary$capacityProviderArn": "<p>The Amazon Resource Name (ARN) of the capacity provider.</p>",
+        "CreateCapacityProviderOutput$capacityProviderArn": "<p>The Amazon Resource Name (ARN) of the capacity provider.</p>",
+        "GetCapacityProviderOutput$capacityProviderArn": "<p>The Amazon Resource Name (ARN) of the capacity provider.</p>",
+        "UpdateCapacityProviderOutput$capacityProviderArn": "<p>The Amazon Resource Name (ARN) of the capacity provider.</p>"
+      }
+    },
+    "CapacityProviderConfiguration": {
+      "base": "<p>Configuration for customer-managed compute capacity for the AgentCore Runtime. A capacity provider runs the AgentCore Runtime on the Instances compute type, using Amazon Web Services managed compute in your account.</p>",
+      "refs": {
+        "CreateAgentRuntimeRequest$capacityProviderConfiguration": "<p>The capacity provider configuration for the AgentCore Runtime. Use a capacity provider to run the AgentCore Runtime on the Instances compute type, which provisions Amazon Web Services managed compute in your account.</p>",
+        "GetAgentRuntimeResponse$capacityProviderConfiguration": "<p>The capacity provider configuration for the AgentCore Runtime.</p>",
+        "UpdateAgentRuntimeRequest$capacityProviderConfiguration": "<p>The updated capacity provider configuration for the AgentCore Runtime.</p>"
+      }
+    },
+    "CapacityProviderId": {
+      "base": null,
+      "refs": {
+        "CapacityProviderSummary$capacityProviderId": "<p>The unique identifier of the capacity provider.</p>",
+        "CreateCapacityProviderOutput$capacityProviderId": "<p>The unique identifier of the created capacity provider.</p>",
+        "DeleteCapacityProviderInput$capacityProviderId": "<p>The unique identifier of the capacity provider to delete.</p>",
+        "DeleteCapacityProviderOutput$capacityProviderId": "<p>The unique identifier of the deleted capacity provider.</p>",
+        "GetCapacityProviderInput$capacityProviderId": "<p>The unique identifier of the capacity provider.</p>",
+        "GetCapacityProviderOutput$capacityProviderId": "<p>The unique identifier of the capacity provider.</p>",
+        "ListAgentRuntimeVersionsByCapacityProviderInput$capacityProviderId": "<p>The unique identifier of the capacity provider.</p>",
+        "UpdateCapacityProviderInput$capacityProviderId": "<p>The unique identifier of the capacity provider to update.</p>",
+        "UpdateCapacityProviderOutput$capacityProviderId": "<p>The unique identifier of the capacity provider.</p>"
+      }
+    },
+    "CapacityProviderList": {
+      "base": null,
+      "refs": {
+        "ListCapacityProvidersOutput$capacityProviders": "<p>The list of capacity provider summaries.</p>"
+      }
+    },
+    "CapacityProviderName": {
+      "base": null,
+      "refs": {
+        "CapacityProviderSummary$name": "<p>The name of the capacity provider.</p>",
+        "CreateCapacityProviderInput$name": "<p>The name of the capacity provider. The name must be unique within your account.</p>",
+        "CreateCapacityProviderOutput$name": "<p>The name of the capacity provider.</p>",
+        "GetCapacityProviderOutput$name": "<p>The name of the capacity provider.</p>",
+        "UpdateCapacityProviderOutput$name": "<p>The name of the capacity provider.</p>"
+      }
+    },
+    "CapacityProviderStatus": {
+      "base": "<p>The status of a capacity provider. Possible values:</p> <ul> <li> <p> <code>CREATING</code> – The service is creating the capacity provider and validating its configuration.</p> </li> <li> <p> <code>CREATE_FAILED</code> – The service could not create the capacity provider. For details, see <code>statusCode</code> and <code>statusReason</code>.</p> </li> <li> <p> <code>UPDATING</code> – The service is updating the capacity provider.</p> </li> <li> <p> <code>UPDATE_FAILED</code> – The service could not update the capacity provider. For details, see <code>statusCode</code> and <code>statusReason</code>.</p> </li> <li> <p> <code>READY</code> – The capacity provider is available for use.</p> </li> <li> <p> <code>DELETING</code> – The service is deleting the capacity provider.</p> </li> <li> <p> <code>DELETE_FAILED</code> – The service could not delete the capacity provider. You can retry the deletion.</p> </li> </ul>",
+      "refs": {
+        "CapacityProviderSummary$status": "<p>The current status of the capacity provider. For possible values, see <code>CapacityProviderStatus</code>.</p>",
+        "CreateCapacityProviderOutput$status": "<p>The current status of the capacity provider. For possible values, see <code>CapacityProviderStatus</code>.</p>",
+        "DeleteCapacityProviderOutput$status": "<p>The current status of the capacity provider. For possible values, see <code>CapacityProviderStatus</code>.</p>",
+        "GetCapacityProviderOutput$status": "<p>The current status of the capacity provider. For possible values, see <code>CapacityProviderStatus</code>.</p>",
+        "UpdateCapacityProviderOutput$status": "<p>The current status of the capacity provider. For possible values, see <code>CapacityProviderStatus</code>.</p>"
+      }
+    },
+    "CapacityProviderStatusCode": {
+      "base": "<p>A reason code for a capacity provider that is not in the <code>READY</code> state. Possible values:</p> <ul> <li> <p> <code>VALIDATION_ERROR</code> – A configuration error prevented the operation. For example, missing permissions, invalid parameters, or a naming conflict.</p> </li> <li> <p> <code>QUOTA_EXCEEDED</code> – An Amazon EC2 resource quota was exceeded. Request a limit increase or remove unused resources.</p> </li> <li> <p> <code>THROTTLED</code> – The request was throttled. Retry after a short delay.</p> </li> <li> <p> <code>INTERNAL_SERVER_EXCEPTION</code> – An internal error occurred.</p> </li> </ul>",
+      "refs": {
+        "GetCapacityProviderOutput$statusCode": "<p>A reason code for a capacity provider that is not in the <code>READY</code> state. Use this code for programmatic error handling.</p>"
+      }
+    },
+    "CapacityProviderSummary": {
+      "base": "<p>A summary of a capacity provider, as returned by <code>ListCapacityProviders</code>. Each summary includes the capacity provider identifier, Amazon Resource Name (ARN), name, status, and last-updated timestamp.</p>",
+      "refs": {
+        "CapacityProviderList$member": null
+      }
+    },
+    "CapacityProviderVolumeConfiguration": {
+      "base": "<p>Configuration for a capacity provider volume mounted into the AgentCore Runtime. This references a persistent volume by its logical name, as defined in the capacity provider's list of volumes.</p>",
+      "refs": {
+        "FilesystemConfiguration$capacityProviderVolume": "<p>Configuration for a capacity provider volume to mount into the AgentCore Runtime. This mounts a persistent volume that is defined on the capacity provider, referenced by its logical name.</p>"
+      }
+    },
+    "CapacityProviderVolumeName": {
+      "base": "<p>The logical name of a capacity provider volume. This name must match a volume that is defined in the capacity provider's list of volumes.</p>",
+      "refs": {
+        "CapacityProviderVolumeConfiguration$volumeName": "<p>The logical name of the capacity provider volume to mount. This name must match a volume that is defined in the capacity provider's list of volumes.</p>"
+      }
+    },
+    "CapacityReservationId": {
+      "base": null,
+      "refs": {
+        "CapacityReservationTarget$capacityReservationId": "<p>The ID of the Capacity Reservation in which to run the instances.</p>"
+      }
+    },
+    "CapacityReservationPreference": {
+      "base": null,
+      "refs": {
+        "CapacityReservationSpecification$capacityReservationPreference": "<p>The Capacity Reservation preference for the instances.</p>"
+      }
+    },
+    "CapacityReservationResourceGroupArn": {
+      "base": null,
+      "refs": {
+        "CapacityReservationTarget$capacityReservationResourceGroupArn": "<p>The Amazon Resource Name (ARN) of the Capacity Reservation resource group in which to run the instances.</p>"
+      }
+    },
+    "CapacityReservationSpecification": {
+      "base": "<p>The Capacity Reservation targeting option for the instances.</p>",
+      "refs": {
+        "LaunchParameters$capacityReservationSpecification": "<p>The Capacity Reservation targeting option for the instances.</p>"
+      }
+    },
+    "CapacityReservationTarget": {
+      "base": "<p>Information about the target Capacity Reservation or Capacity Reservation group for the instances.</p>",
+      "refs": {
+        "CapacityReservationSpecification$capacityReservationTarget": "<p>The target Capacity Reservation or Capacity Reservation group for the instances.</p>"
+      }
+    },
     "CategoricalScaleDefinition": {
       "base": "<p> The definition of a categorical rating scale option that provides a named category with its description for evaluation scoring. </p>",
       "refs": {
@@ -961,15 +1125,18 @@
       "base": null,
       "refs": {
         "AddDatasetExamplesRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
+        "BatchPutGatewayRateLimitsRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateAgentRuntimeEndpointRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "CreateAgentRuntimeRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "CreateBrowserProfileRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock AgentCore ignores the request but does not return an error.</p>",
         "CreateBrowserRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock AgentCore ignores the request but does not return an error.</p>",
+        "CreateCapacityProviderInput$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateCodeInterpreterRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock AgentCore ignores the request but does not return an error.</p>",
         "CreateConfigurationBundleRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateDatasetRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateDatasetVersionRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateEvaluatorRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
+        "CreateGatewayRateLimitRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateGatewayRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateGatewayRuleRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateGatewayTargetRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
@@ -986,6 +1153,7 @@
         "DeleteAgentRuntimeRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, the service ignores the request but does not return an error.</p>",
         "DeleteBrowserProfileRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "DeleteBrowserRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
+        "DeleteCapacityProviderInput$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "DeleteCodeInterpreterRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "DeleteDatasetExamplesRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "DeleteHarnessEndpointRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
@@ -995,6 +1163,7 @@
         "StartPolicyGenerationRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure the idempotency of the request. The AWS SDK automatically generates this token, so you don't need to provide it in most cases. If you retry a request with the same client token, the service returns the same response without starting a duplicate generation.</p>",
         "UpdateAgentRuntimeEndpointRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "UpdateAgentRuntimeRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
+        "UpdateCapacityProviderInput$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "UpdateConfigurationBundleRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "UpdateDatasetExamplesRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "UpdateDatasetRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
@@ -1166,6 +1335,13 @@
       "base": null,
       "refs": {
         "ComponentConfigurationMap$key": null
+      }
+    },
+    "ComputeConfiguration": {
+      "base": "<p>The compute configuration for a capacity provider. This structure defines the type and settings of the compute resources used to launch instances.</p>",
+      "refs": {
+        "CreateCapacityProviderInput$computeConfiguration": "<p>The compute configuration for the capacity provider. This defines the Amazon EC2 compute resources used to launch instances: the operating system, allowed instance types, networking, and storage.</p>",
+        "GetCapacityProviderOutput$computeConfiguration": "<p>The compute configuration for the capacity provider.</p>"
       }
     },
     "ConcurrentModificationException": {
@@ -1358,7 +1534,7 @@
       }
     },
     "ConnectorParameterValue": {
-      "base": "<p>The value of a connector parameter.</p>",
+      "base": "<p>The value of a connector parameter. Length: 1–1,024 characters.</p>",
       "refs": {
         "HttpConnectorParameters$value": null
       }
@@ -1458,6 +1634,14 @@
       "base": null,
       "refs": {}
     },
+    "CreateCapacityProviderInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateCapacityProviderOutput": {
+      "base": null,
+      "refs": {}
+    },
     "CreateCodeInterpreterRequest": {
       "base": null,
       "refs": {}
@@ -1508,6 +1692,14 @@
     },
     "CreateEvaluatorResponse": {
       "base": null,
+      "refs": {}
+    },
+    "CreateGatewayRateLimitRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateGatewayRateLimitResponse": {
+      "base": "<p>Shared fields for GatewayRateLimit responses</p>",
       "refs": {}
     },
     "CreateGatewayRequest": {
@@ -2005,6 +2197,8 @@
         "CreateBrowserProfileResponse$createdAt": "<p>The timestamp when the browser profile was created.</p>",
         "CreateBrowserResponse$createdAt": "<p>The timestamp when the browser was created.</p>",
         "CreateCodeInterpreterResponse$createdAt": "<p>The timestamp when the code interpreter was created.</p>",
+        "CreateGatewayRateLimitResponse$createdAt": "<p>The timestamp when the rate limit was created.</p>",
+        "CreateGatewayRateLimitResponse$updatedAt": "<p>The timestamp when the rate limit was last updated.</p>",
         "CreateGatewayResponse$createdAt": "<p>The timestamp when the gateway was created.</p>",
         "CreateGatewayResponse$updatedAt": "<p>The timestamp when the gateway was last updated.</p>",
         "CreateGatewayRuleResponse$createdAt": "<p>The timestamp when the rule was created.</p>",
@@ -2025,6 +2219,8 @@
         "DeletePolicyEngineResponse$updatedAt": "<p>The timestamp when the deleted policy engine was last modified before deletion. This tracks the final state of the policy engine before it was removed from the system.</p>",
         "DeletePolicyResponse$createdAt": "<p>The timestamp when the deleted policy was originally created.</p>",
         "DeletePolicyResponse$updatedAt": "<p>The timestamp when the deleted policy was last modified before deletion. This tracks the final state of the policy before it was removed from the system.</p>",
+        "GatewayRateLimitDetail$createdAt": "<p>The timestamp when the rate limit was created.</p>",
+        "GatewayRateLimitDetail$updatedAt": "<p>The timestamp when the rate limit was last updated.</p>",
         "GatewayRuleDetail$createdAt": "<p>The timestamp when the rule was created.</p>",
         "GatewayRuleDetail$updatedAt": "<p>The timestamp when the rule was last updated.</p>",
         "GatewaySummary$createdAt": "<p>The timestamp when the gateway was created.</p>",
@@ -2041,8 +2237,12 @@
         "GetBrowserProfileResponse$lastSavedAt": "<p>The timestamp when browser session data was last saved to this profile.</p>",
         "GetBrowserResponse$createdAt": "<p>The timestamp when the browser was created.</p>",
         "GetBrowserResponse$lastUpdatedAt": "<p>The timestamp when the browser was last updated.</p>",
+        "GetCapacityProviderOutput$createdAt": "<p>The timestamp when the capacity provider was created.</p>",
+        "GetCapacityProviderOutput$lastUpdatedAt": "<p>The timestamp when the capacity provider was last updated.</p>",
         "GetCodeInterpreterResponse$createdAt": "<p>The timestamp when the code interpreter was created.</p>",
         "GetCodeInterpreterResponse$lastUpdatedAt": "<p>The timestamp when the code interpreter was last updated.</p>",
+        "GetGatewayRateLimitResponse$createdAt": "<p>The timestamp when the rate limit was created.</p>",
+        "GetGatewayRateLimitResponse$updatedAt": "<p>The timestamp when the rate limit was last updated.</p>",
         "GetGatewayResponse$createdAt": "<p>The timestamp when the gateway was created.</p>",
         "GetGatewayResponse$updatedAt": "<p>The timestamp when the gateway was last updated.</p>",
         "GetGatewayRuleResponse$createdAt": "<p>The timestamp when the rule was created.</p>",
@@ -2107,6 +2307,10 @@
         "UpdateAgentRuntimeEndpointResponse$lastUpdatedAt": "<p>The timestamp when the AgentCore Runtime endpoint was last updated.</p>",
         "UpdateAgentRuntimeResponse$createdAt": "<p>The timestamp when the AgentCore Runtime was created.</p>",
         "UpdateAgentRuntimeResponse$lastUpdatedAt": "<p>The timestamp when the AgentCore Runtime was last updated.</p>",
+        "UpdateCapacityProviderOutput$createdAt": "<p>The timestamp when the capacity provider was created.</p>",
+        "UpdateCapacityProviderOutput$lastUpdatedAt": "<p>The timestamp when the capacity provider was last updated.</p>",
+        "UpdateGatewayRateLimitResponse$createdAt": "<p>The timestamp when the rate limit was created.</p>",
+        "UpdateGatewayRateLimitResponse$updatedAt": "<p>The timestamp when the rate limit was last updated.</p>",
         "UpdateGatewayResponse$createdAt": "<p>The timestamp when the gateway was created.</p>",
         "UpdateGatewayResponse$updatedAt": "<p>The timestamp when the gateway was last updated.</p>",
         "UpdateGatewayRuleResponse$createdAt": "<p>The timestamp when the rule was created.</p>",
@@ -2228,6 +2432,14 @@
       "base": null,
       "refs": {}
     },
+    "DeleteCapacityProviderInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteCapacityProviderOutput": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteCodeInterpreterRequest": {
       "base": null,
       "refs": {}
@@ -2271,6 +2483,14 @@
       "refs": {}
     },
     "DeleteEvaluatorResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteGatewayRateLimitRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteGatewayRateLimitResponse": {
       "base": null,
       "refs": {}
     },
@@ -2438,6 +2658,7 @@
         "CreateAgentRuntimeRequest$description": "<p>The description of the AgentCore Runtime.</p>",
         "CreateBrowserProfileRequest$description": "<p>A description of the browser profile. Use this field to describe the purpose or contents of the profile.</p>",
         "CreateBrowserRequest$description": "<p>The description of the browser.</p>",
+        "CreateCapacityProviderInput$description": "<p>An optional description of the capacity provider. If you don't specify a description, the service creates the capacity provider without one.</p>",
         "CreateCodeInterpreterRequest$description": "<p>The description of the code interpreter.</p>",
         "CreateMemoryInput$description": "<p>The description of the memory.</p>",
         "CreatePolicyEngineRequest$description": "<p>A human-readable description of the policy engine's purpose and scope (1-4,096 characters). This helps administrators understand the policy engine's role in the overall governance strategy. Document which Gateway this engine will be associated with, what types of tools or workflows it governs, and the team or service responsible for maintaining it. Clear descriptions are essential when managing multiple policy engines across different services or environments.</p>",
@@ -2453,6 +2674,7 @@
         "GetAgentRuntimeResponse$description": "<p>The description of the AgentCore Runtime.</p>",
         "GetBrowserProfileResponse$description": "<p>The description of the browser profile.</p>",
         "GetBrowserResponse$description": "<p>The description of the browser.</p>",
+        "GetCapacityProviderOutput$description": "<p>The description of the capacity provider, if one was provided.</p>",
         "GetCodeInterpreterResponse$description": "<p>The description of the code interpreter.</p>",
         "GetPolicyEngineResponse$description": "<p>The human-readable description of the policy engine's purpose and scope. This helps administrators understand the policy engine's role in governance.</p>",
         "GetPolicyResponse$description": "<p>The human-readable description of the policy's purpose and functionality. This helps administrators understand and manage the policy.</p>",
@@ -2494,6 +2716,36 @@
         "CreateRegistryRecordRequest$descriptors": "<p>The descriptor-type-specific configuration containing the resource schema and metadata. The structure of this field depends on the <code>descriptorType</code> you specify.</p>",
         "GetRegistryRecordResponse$descriptors": "<p>The descriptor-type-specific configuration containing the resource schema and metadata. For details, see the <code>Descriptors</code> data type.</p>",
         "UpdateRegistryRecordResponse$descriptors": "<p>The descriptor-type-specific configuration of the updated registry record. For details, see the <code>Descriptors</code> data type.</p>"
+      }
+    },
+    "DeviceName": {
+      "base": null,
+      "refs": {
+        "EphemeralBlockDeviceMapping$deviceName": "<p>The device name, for example <code>/dev/sdh</code> or <code>xvdh</code>.</p>"
+      }
+    },
+    "DimensionKey": {
+      "base": "<p>A dimension key specifying the scope dimension for rate limiting. Allowed values: &quot;targetName&quot;, &quot;toolName&quot;, &quot;qualifiedModelId&quot;, or context-path expressions: &quot;$.context.iam.principal&quot;, &quot;$.context.iam.sourceIdentity&quot;, &quot;$.context.jwt.<claim>&quot; where <claim> is a JWT claim name (e.g., &quot;$.context.jwt.sub&quot;). Validated server-side to enforce allowed prefixes and patterns.</p>",
+      "refs": {
+        "DimensionKeys$member": null,
+        "LimitEntryDimensionsMap$key": null
+      }
+    },
+    "DimensionKeys": {
+      "base": "<p>Ordered list of dimension key names defining the scope of a limit</p>",
+      "refs": {
+        "BatchPutLimitEntry$dimensionKeys": null,
+        "CreateGatewayRateLimitRequest$dimensionKeys": "<p>Ordered list of dimension names defining the scope of this limit. Unique per gateway — no two limits can share the same dimensionKeys.</p>",
+        "CreateGatewayRateLimitResponse$dimensionKeys": null,
+        "GatewayRateLimitDetail$dimensionKeys": null,
+        "GetGatewayRateLimitResponse$dimensionKeys": null,
+        "UpdateGatewayRateLimitResponse$dimensionKeys": null
+      }
+    },
+    "DimensionValue": {
+      "base": "<p>A dimension value in a rule entry (exact value or &quot;*&quot; wildcard)</p>",
+      "refs": {
+        "LimitEntryDimensionsMap$value": null
       }
     },
     "DiscoveryUrl": {
@@ -2544,6 +2796,51 @@
       "refs": {
         "DatasetSummary$draftStatus": "<p> Publish synchronization state. Only authoritative when status is ACTIVE. </p>",
         "GetDatasetResponse$draftStatus": "<p> Publish synchronization state. Only authoritative when status is ACTIVE. MODIFIED indicates DRAFT has unpublished changes. UNMODIFIED indicates DRAFT matches the latest published version. </p>"
+      }
+    },
+    "EC2InstanceType": {
+      "base": null,
+      "refs": {
+        "InstanceRequirementsAllowedInstanceTypesList$member": null
+      }
+    },
+    "EbsCardIndex": {
+      "base": null,
+      "refs": {
+        "EphemeralEBSVolumeConfiguration$ebsCardIndex": "<p>The index of the Amazon EBS card. Applies to instances with multiple Amazon EBS cards.</p>"
+      }
+    },
+    "EbsSnapshotId": {
+      "base": null,
+      "refs": {
+        "EbsVolumeConfiguration$snapshotId": "<p>An optional Amazon EBS snapshot ID. If provided, the volume is initialized from this snapshot the first time it is created. On subsequent restarts, the existing volume is used and the snapshot is ignored.</p>",
+        "EphemeralEBSVolumeConfiguration$snapshotId": "<p>The ID of the snapshot.</p>"
+      }
+    },
+    "EbsVolumeConfiguration": {
+      "base": "<p>The configuration for an Amazon EBS-backed persistent volume. The service creates persistent volumes when a session first launches, and the volumes survive instance termination. The volumes persist until you delete the session.</p>",
+      "refs": {
+        "VolumeConfiguration$ebsConfiguration": "<p>The configuration for an Amazon EBS-backed persistent volume.</p>"
+      }
+    },
+    "EbsVolumeInitializationRate": {
+      "base": null,
+      "refs": {
+        "EphemeralEBSVolumeConfiguration$volumeInitializationRate": "<p>The rate at which the volume is initialized after creation, in MiB/s. Supported only for volumes created from snapshots. Valid range: 100–300 MiB/s.</p>"
+      }
+    },
+    "EbsVolumeType": {
+      "base": "<p>The type of Amazon EBS volume.</p>",
+      "refs": {
+        "EbsVolumeConfiguration$volumeType": "<p>The Amazon EBS volume type. If you do not specify a type, the default is <code>gp3</code>.</p>",
+        "EphemeralEBSVolumeConfiguration$volumeType": "<p>The Amazon EBS volume type. If you do not specify a type, the default is <code>gp3</code>.</p>",
+        "RootVolumeConfiguration$volumeType": "<p>The Amazon EBS volume type. If you do not specify a type, the default is <code>gp3</code>.</p>"
+      }
+    },
+    "Ec2Configuration": {
+      "base": "<p>The configuration for Amazon EC2-based compute, including the launch template source, networking, storage volumes, and instance lifecycle settings.</p>",
+      "refs": {
+        "ComputeConfiguration$ec2Configuration": "<p>The Amazon EC2 compute configuration for the capacity provider.</p>"
       }
     },
     "EfsAccessPointArn": {
@@ -2635,6 +2932,30 @@
         "Harness$environmentVariables": "<p>Environment variables exposed in the environment in which the harness operates.</p>",
         "UpdateAgentRuntimeRequest$environmentVariables": "<p>Updated environment variables to set in the AgentCore Runtime environment.</p>",
         "UpdateHarnessRequest$environmentVariables": "<p>Environment variables to set in the harness runtime environment. If specified, this replaces all existing environment variables. If not specified, the existing value is retained.</p>"
+      }
+    },
+    "EphemeralBlockDeviceMapping": {
+      "base": "<p>A block device mapping for an instance store (ephemeral) volume.</p>",
+      "refs": {
+        "LaunchParametersEphemeralVolumesList$member": null
+      }
+    },
+    "EphemeralEBSVolumeConfiguration": {
+      "base": "<p>The shared Amazon EBS performance and encryption properties for a volume. These properties are common across the different volume configurations for a capacity provider.</p>",
+      "refs": {
+        "EphemeralBlockDeviceMapping$ebs": null
+      }
+    },
+    "EphemeralEBSVolumeConfigurationThroughputInteger": {
+      "base": null,
+      "refs": {
+        "EphemeralEBSVolumeConfiguration$throughput": "<p>The throughput to provision, in MiB/s. Valid only for <code>gp3</code> volumes. Valid range: 125–2,000 MiB/s.</p>"
+      }
+    },
+    "EphemeralEBSVolumeConfigurationVolumeSizeInteger": {
+      "base": null,
+      "refs": {
+        "EphemeralEBSVolumeConfiguration$volumeSize": "<p>The size of the volume, in GiB. You must specify either a snapshot ID or a volume size. Supported sizes: <code>gp2</code>, 1–16,384; <code>gp3</code>, 1–65,536; <code>io1</code>, 4–16,384; <code>io2</code>, 4–65,536.</p>"
       }
     },
     "EpisodicConsolidationOverride": {
@@ -3001,17 +3322,27 @@
     "GatewayIdentifier": {
       "base": null,
       "refs": {
+        "BatchPutGatewayRateLimitsRequest$gatewayIdentifier": "<p>The unique identifier of the gateway.</p>",
+        "CreateGatewayRateLimitRequest$gatewayIdentifier": "<p>The unique identifier of the gateway to create the rate limit for.</p>",
+        "CreateGatewayRateLimitResponse$gatewayIdentifier": "<p>The unique identifier of the gateway.</p>",
         "CreateGatewayRuleRequest$gatewayIdentifier": "<p>The identifier of the gateway to create a rule for.</p>",
         "CreateGatewayTargetRequest$gatewayIdentifier": "<p>The identifier of the gateway to create a target for.</p>",
+        "DeleteGatewayRateLimitRequest$gatewayIdentifier": "<p>The unique identifier of the gateway.</p>",
         "DeleteGatewayRequest$gatewayIdentifier": "<p>The identifier of the gateway to delete.</p>",
         "DeleteGatewayRuleRequest$gatewayIdentifier": "<p>The identifier of the gateway containing the rule.</p>",
         "DeleteGatewayTargetRequest$gatewayIdentifier": "<p>The unique identifier of the gateway associated with the target.</p>",
+        "GatewayRateLimitDetail$gatewayIdentifier": "<p>The unique identifier of the gateway.</p>",
+        "GetGatewayRateLimitRequest$gatewayIdentifier": "<p>The unique identifier of the gateway.</p>",
+        "GetGatewayRateLimitResponse$gatewayIdentifier": "<p>The unique identifier of the gateway.</p>",
         "GetGatewayRequest$gatewayIdentifier": "<p>The identifier of the gateway to retrieve.</p>",
         "GetGatewayRuleRequest$gatewayIdentifier": "<p>The identifier of the gateway containing the rule.</p>",
         "GetGatewayTargetRequest$gatewayIdentifier": "<p>The identifier of the gateway that contains the target.</p>",
+        "ListGatewayRateLimitsRequest$gatewayIdentifier": "<p>The unique identifier of the gateway.</p>",
         "ListGatewayRulesRequest$gatewayIdentifier": "<p>The identifier of the gateway to list rules for.</p>",
         "ListGatewayTargetsRequest$gatewayIdentifier": "<p>The identifier of the gateway to list targets for.</p>",
         "SynchronizeGatewayTargetsRequest$gatewayIdentifier": "<p>The gateway Identifier.</p>",
+        "UpdateGatewayRateLimitRequest$gatewayIdentifier": "<p>The unique identifier of the gateway.</p>",
+        "UpdateGatewayRateLimitResponse$gatewayIdentifier": "<p>The unique identifier of the gateway.</p>",
         "UpdateGatewayRequest$gatewayIdentifier": "<p>The identifier of the gateway to update.</p>",
         "UpdateGatewayRuleRequest$gatewayIdentifier": "<p>The identifier of the gateway containing the rule.</p>",
         "UpdateGatewayTargetRequest$gatewayIdentifier": "<p>The unique identifier of the gateway associated with the target.</p>"
@@ -3110,6 +3441,69 @@
         "GetGatewayResponse$protocolType": "<p>Protocol applied to a gateway.</p>",
         "UpdateGatewayRequest$protocolType": "<p>The updated protocol type for the gateway.</p>",
         "UpdateGatewayResponse$protocolType": "<p>The updated protocol type for the gateway.</p>"
+      }
+    },
+    "GatewayRateLimitDescription": {
+      "base": "<p>Optional human-readable description for a gateway limit.</p>",
+      "refs": {
+        "BatchPutLimitEntry$description": "<p>Optional human-readable description for this limit.</p>",
+        "CreateGatewayRateLimitRequest$description": "<p>Optional human-readable description for this limit.</p>",
+        "CreateGatewayRateLimitResponse$description": "<p>Optional human-readable description for this limit.</p>",
+        "GatewayRateLimitDetail$description": "<p>Optional human-readable description for this limit.</p>",
+        "GetGatewayRateLimitResponse$description": "<p>Optional human-readable description for this limit.</p>",
+        "UpdateGatewayRateLimitRequest$description": "<p>Optional human-readable description for this limit.</p>",
+        "UpdateGatewayRateLimitResponse$description": "<p>Optional human-readable description for this limit.</p>"
+      }
+    },
+    "GatewayRateLimitDetail": {
+      "base": "<p>Shared fields for GatewayRateLimit responses</p>",
+      "refs": {
+        "GatewayRateLimits$member": null
+      }
+    },
+    "GatewayRateLimitId": {
+      "base": "<p>Limit identifier. Optional on Create (system-generates if not provided by customer). Always present in responses.</p>",
+      "refs": {
+        "BatchPutLimitEntry$rateLimitId": "<p>Optional — if provided, used for upsert matching against existing limits.</p>",
+        "CreateGatewayRateLimitRequest$rateLimitId": "<p>Optional customer-defined limit ID. If not provided, system generates one.</p>",
+        "CreateGatewayRateLimitResponse$rateLimitId": null,
+        "DeleteGatewayRateLimitRequest$rateLimitId": "<p>The unique identifier of the rate limit to delete.</p>",
+        "DeleteGatewayRateLimitResponse$rateLimitId": null,
+        "GatewayRateLimitDetail$rateLimitId": null,
+        "GetGatewayRateLimitRequest$rateLimitId": "<p>The unique identifier of the rate limit to retrieve.</p>",
+        "GetGatewayRateLimitResponse$rateLimitId": null,
+        "UpdateGatewayRateLimitRequest$rateLimitId": "<p>The unique identifier of the rate limit to update.</p>",
+        "UpdateGatewayRateLimitResponse$rateLimitId": null
+      }
+    },
+    "GatewayRateLimitMaxResults": {
+      "base": null,
+      "refs": {
+        "ListGatewayRateLimitsRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>"
+      }
+    },
+    "GatewayRateLimitNextToken": {
+      "base": null,
+      "refs": {
+        "ListGatewayRateLimitsRequest$nextToken": "<p>The token to use to retrieve the next page of results. Use the value returned in a previous <code>ListGatewayRateLimits</code> response.</p>",
+        "ListGatewayRateLimitsResponse$nextToken": "<p>The token for the next page of results. If this value is absent, there are no more results to retrieve.</p>"
+      }
+    },
+    "GatewayRateLimitStatus": {
+      "base": "<p>Status of a gateway limit</p>",
+      "refs": {
+        "CreateGatewayRateLimitResponse$status": null,
+        "DeleteGatewayRateLimitResponse$status": null,
+        "GatewayRateLimitDetail$status": null,
+        "GetGatewayRateLimitResponse$status": null,
+        "UpdateGatewayRateLimitResponse$status": null
+      }
+    },
+    "GatewayRateLimits": {
+      "base": null,
+      "refs": {
+        "BatchPutGatewayRateLimitsResponse$rateLimits": "<p>The resulting set of rate limits after the batch operation.</p>",
+        "ListGatewayRateLimitsResponse$rateLimits": "<p>The list of rate limits for the gateway.</p>"
       }
     },
     "GatewayRuleDescription": {
@@ -3264,6 +3658,14 @@
       "base": null,
       "refs": {}
     },
+    "GetCapacityProviderInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetCapacityProviderOutput": {
+      "base": null,
+      "refs": {}
+    },
     "GetCodeInterpreterRequest": {
       "base": null,
       "refs": {}
@@ -3302,6 +3704,14 @@
     },
     "GetEvaluatorResponse": {
       "base": null,
+      "refs": {}
+    },
+    "GetGatewayRateLimitRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetGatewayRateLimitResponse": {
+      "base": "<p>Shared fields for GatewayRateLimit responses</p>",
       "refs": {}
     },
     "GetGatewayRequest": {
@@ -4301,6 +4711,42 @@
         "UpdateOnlineEvaluationConfigRequest$insights": "<p>The updated list of insight types to run against agent sessions.</p>"
       }
     },
+    "InstanceLifecycleConfiguration": {
+      "base": "<p>The configuration that manages the lifecycle of instances in a capacity provider, including idle timeout and maximum lifetime.</p>",
+      "refs": {
+        "Ec2Configuration$lifecycleConfiguration": "<p>The lifecycle configuration for instances in the capacity provider.</p>"
+      }
+    },
+    "InstanceLifecycleConfigurationIdleInstanceTimeoutInteger": {
+      "base": null,
+      "refs": {
+        "InstanceLifecycleConfiguration$idleInstanceTimeout": "<p>The number of seconds an instance can remain idle before it is stopped. An instance is considered idle when all of its agents are idle. The default is 900 seconds (15 minutes).</p>"
+      }
+    },
+    "InstanceLifecycleConfigurationMaxLifetimeInteger": {
+      "base": null,
+      "refs": {
+        "InstanceLifecycleConfiguration$maxLifetime": "<p>The maximum lifetime of an instance, in seconds. When an instance reaches this limit, the service terminates it regardless of activity. The default is 28800 seconds (8 hours). The maximum is 1209600 seconds (14 days).</p>"
+      }
+    },
+    "InstanceProfileArn": {
+      "base": null,
+      "refs": {
+        "LaunchParameters$instanceProfileArn": "<p>The Amazon Resource Name (ARN) of the IAM instance profile to associate with launched instances. If provided, this overrides the default instance profile.</p>"
+      }
+    },
+    "InstanceRequirements": {
+      "base": "<p>The requirements for Amazon EC2 instance types in a capacity provider.</p>",
+      "refs": {
+        "LaunchParameters$instanceRequirements": "<p>The requirements that determine which instance types can be launched.</p>"
+      }
+    },
+    "InstanceRequirementsAllowedInstanceTypesList": {
+      "base": null,
+      "refs": {
+        "InstanceRequirements$allowedInstanceTypes": "<p>The list of allowed instance types. You can specify up to 30 instance types.</p>"
+      }
+    },
     "Integer": {
       "base": null,
       "refs": {
@@ -4445,6 +4891,14 @@
         "UpdatePolicyEngineResponse$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the policy engine data.</p>"
       }
     },
+    "KmsKeyId": {
+      "base": null,
+      "refs": {
+        "EbsVolumeConfiguration$kmsKeyId": "<p>The identifier of the KMS key to use for encryption.</p>",
+        "EphemeralEBSVolumeConfiguration$kmsKeyId": "<p>The identifier (key ID, key alias, key ARN, or alias ARN) of the customer managed KMS key to use for Amazon EBS encryption.</p>",
+        "RootVolumeConfiguration$kmsKeyId": "<p>The identifier (key ID, key alias, key ARN, or alias ARN) of the customer managed KMS key to use for Amazon EBS encryption.</p>"
+      }
+    },
     "KmsKeySourceType": {
       "base": "<p>Contains the KMS key configuration for a JWT client assertion.</p>",
       "refs": {
@@ -4489,6 +4943,42 @@
         "CustomTransformConfiguration$lambda": "<p>The Lambda configuration for custom transformations. This configuration defines how the gateway uses a Lambda function to transform data.</p>"
       }
     },
+    "LaunchParameters": {
+      "base": "<p>The parameters for launching Amazon EC2 instances in a capacity provider.</p>",
+      "refs": {
+        "LaunchTemplateSource$launchParameters": "<p>The parameters that AgentCore uses to create the launch template.</p>"
+      }
+    },
+    "LaunchParametersEphemeralVolumesList": {
+      "base": null,
+      "refs": {
+        "LaunchParameters$ephemeralVolumes": "<p>The block device mappings for instance store (ephemeral) volumes. You can specify up to five mappings.</p>"
+      }
+    },
+    "LaunchParametersLicenseSpecificationsList": {
+      "base": null,
+      "refs": {
+        "LaunchParameters$licenseSpecifications": "<p>The license configurations to associate with the instances. You can specify up to five configurations.</p>"
+      }
+    },
+    "LaunchTemplateSource": {
+      "base": "<p>The source of the launch template configuration for a capacity provider. The <code>launchParameters</code> member specifies the operating system, instance requirements, and other settings used to launch instances.</p>",
+      "refs": {
+        "Ec2Configuration$launchTemplateSource": "<p>The source of the launch template configuration that defines how instances are launched.</p>"
+      }
+    },
+    "LicenseConfigurationArn": {
+      "base": null,
+      "refs": {
+        "LicenseSpecification$licenseConfigurationArn": "<p>The Amazon Resource Name (ARN) of the license configuration.</p>"
+      }
+    },
+    "LicenseSpecification": {
+      "base": "<p>A license configuration to associate with the instances.</p>",
+      "refs": {
+        "LaunchParametersLicenseSpecificationsList$member": null
+      }
+    },
     "LifecycleConfiguration": {
       "base": "<p>LifecycleConfiguration lets you manage the lifecycle of runtime sessions and resources in AgentCore Runtime. This configuration helps optimize resource utilization by automatically cleaning up idle sessions and preventing long-running instances from consuming resources indefinitely.</p>",
       "refs": {
@@ -4511,6 +5001,30 @@
         "LifecycleConfiguration$maxLifetime": "<p>Maximum lifetime for the instance in seconds. Once reached, instances will be automatically terminated and replaced. Default: 28800 seconds (8 hours).</p>"
       }
     },
+    "LimitEntries": {
+      "base": "<p>List of rule entries within a limit</p>",
+      "refs": {
+        "BatchPutLimitEntry$entries": null,
+        "CreateGatewayRateLimitRequest$entries": "<p>Rule entries mapping dimension values to rate configurations.</p>",
+        "CreateGatewayRateLimitResponse$entries": null,
+        "GatewayRateLimitDetail$entries": null,
+        "GetGatewayRateLimitResponse$entries": null,
+        "UpdateGatewayRateLimitRequest$entries": "<p>Updated rule entries. key and dimensionKeys are immutable and cannot be changed.</p>",
+        "UpdateGatewayRateLimitResponse$entries": null
+      }
+    },
+    "LimitEntry": {
+      "base": "<p>A single rule entry within a limit, mapping dimension values to rate configurations</p>",
+      "refs": {
+        "LimitEntries$member": null
+      }
+    },
+    "LimitEntryDimensionsMap": {
+      "base": "<p>Map of dimension name to dimension value for a rule entry</p>",
+      "refs": {
+        "LimitEntry$dimensions": "<p>Map of dimension name to dimension value, matching the parent limit's dimensionKeys. Keys must exactly match the dimensionKeys. Values may be &quot;<em>&quot; as a wildcard. &quot;</em>&quot; may only appear at trailing positions (based on dimensionKeys ordering).</p>"
+      }
+    },
     "LinkedinOauth2ProviderConfigInput": {
       "base": "<p>Configuration settings for connecting to LinkedIn services using OAuth2 authentication. This includes the client credentials required to authenticate with LinkedIn's OAuth2 authorization server.</p>",
       "refs": {
@@ -4528,6 +5042,14 @@
       "refs": {}
     },
     "ListAgentRuntimeEndpointsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAgentRuntimeVersionsByCapacityProviderInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAgentRuntimeVersionsByCapacityProviderOutput": {
       "base": null,
       "refs": {}
     },
@@ -4568,6 +5090,14 @@
       "refs": {}
     },
     "ListBrowsersResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListCapacityProvidersInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListCapacityProvidersOutput": {
       "base": null,
       "refs": {}
     },
@@ -4672,6 +5202,14 @@
       }
     },
     "ListEvaluatorsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListGatewayRateLimitsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListGatewayRateLimitsResponse": {
       "base": null,
       "refs": {}
     },
@@ -5003,11 +5541,13 @@
       "base": null,
       "refs": {
         "ListAgentRuntimeEndpointsRequest$maxResults": "<p>The maximum number of results to return in the response.</p>",
+        "ListAgentRuntimeVersionsByCapacityProviderInput$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>",
         "ListAgentRuntimeVersionsRequest$maxResults": "<p>The maximum number of results to return in the response.</p>",
         "ListAgentRuntimesRequest$maxResults": "<p>The maximum number of results to return in the response.</p>",
         "ListApiKeyCredentialProvidersRequest$maxResults": "<p>Maximum number of results to return.</p>",
         "ListBrowserProfilesRequest$maxResults": "<p>The maximum number of results to return in the response.</p>",
         "ListBrowsersRequest$maxResults": "<p>The maximum number of results to return in a single call. The default value is 10. The maximum value is 50.</p>",
+        "ListCapacityProvidersInput$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>",
         "ListCodeInterpretersRequest$maxResults": "<p>The maximum number of results to return in the response.</p>",
         "ListHarnessEndpointsRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>",
         "ListHarnessVersionsRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>",
@@ -5381,9 +5921,16 @@
         "ModifyMemoryStrategyInput$configuration": "<p>The updated configuration for the memory strategy.</p>"
       }
     },
+    "Monitoring": {
+      "base": null,
+      "refs": {
+        "LaunchParameters$monitoring": "<p>The monitoring level for the instances.</p>"
+      }
+    },
     "MountPath": {
       "base": null,
       "refs": {
+        "CapacityProviderVolumeConfiguration$mountPath": "<p>The mount path for the capacity provider volume inside the AgentCore Runtime. The path must be under <code>/mnt</code> with exactly one subdirectory level (for example, <code>/mnt/data</code>).</p>",
         "EfsAccessPointConfiguration$mountPath": "<p>The mount path for the EFS access point inside the AgentCore Runtime. The path must be under <code>/mnt</code> with exactly one subdirectory level (for example, <code>/mnt/data</code>).</p>",
         "EfsConfiguration$mountPath": "<p>The absolute path within the session at which the access point is mounted, for example <code>/mnt/efs</code>. Each mount path must be unique across all file system configurations in the session.</p>",
         "S3FilesAccessPointConfiguration$mountPath": "<p>The mount path for the S3 Files access point inside the AgentCore Runtime. The path must be under <code>/mnt</code> with exactly one subdirectory level (for example, <code>/mnt/data</code>).</p>",
@@ -5465,6 +6012,7 @@
       "refs": {
         "ListAgentRuntimeEndpointsRequest$nextToken": "<p>A token to retrieve the next page of results.</p>",
         "ListAgentRuntimeEndpointsResponse$nextToken": "<p>A token to retrieve the next page of results.</p>",
+        "ListAgentRuntimeVersionsByCapacityProviderInput$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results.</p>",
         "ListAgentRuntimeVersionsRequest$nextToken": "<p>A token to retrieve the next page of results.</p>",
         "ListAgentRuntimeVersionsResponse$nextToken": "<p>A token to retrieve the next page of results.</p>",
         "ListAgentRuntimesRequest$nextToken": "<p>A token to retrieve the next page of results.</p>",
@@ -5473,6 +6021,8 @@
         "ListBrowserProfilesResponse$nextToken": "<p>A token to retrieve the next page of results.</p>",
         "ListBrowsersRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListBrowsersResponse$nextToken": "<p>A token to retrieve the next page of results.</p>",
+        "ListCapacityProvidersInput$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results.</p>",
+        "ListCapacityProvidersOutput$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
         "ListCodeInterpretersRequest$nextToken": "<p>A token to retrieve the next page of results.</p>",
         "ListCodeInterpretersResponse$nextToken": "<p>A token to retrieve the next page of results.</p>",
         "ListHarnessEndpointsRequest$nextToken": "<p>The token for the next set of results.</p>",
@@ -5766,6 +6316,12 @@
         "OpenResponsesEvaluatorModelConfig$topP": "<p> The top-p sampling parameter that controls the diversity of the model's responses by limiting the cumulative probability of token choices. </p>"
       }
     },
+    "OperatingSystem": {
+      "base": "<p>The operating system and CPU architecture for capacity provider instances.</p>",
+      "refs": {
+        "LaunchParameters$operatingSystem": "<p>The operating system and CPU architecture for the instances.</p>"
+      }
+    },
     "OutputConfig": {
       "base": "<p> The configuration that specifies where evaluation results should be written for monitoring and analysis. </p>",
       "refs": {
@@ -5996,6 +6552,19 @@
         "PaymentManagerSummary$description": "<p>The description of the payment manager.</p>",
         "UpdatePaymentConnectorRequest$description": "<p>The updated description of the payment connector.</p>",
         "UpdatePaymentManagerRequest$description": "<p>The updated description of the payment manager.</p>"
+      }
+    },
+    "Period": {
+      "base": "<p>Time period for rate limiting</p>",
+      "refs": {
+        "RateConfig$period": null
+      }
+    },
+    "PermissionsConfiguration": {
+      "base": "<p>The permissions configuration for a capacity provider. This specifies the IAM role that AgentCore uses to manage the Amazon EC2 instances for the capacity provider on your behalf.</p>",
+      "refs": {
+        "CreateCapacityProviderInput$permissionsConfiguration": "<p>The permissions configuration for the capacity provider. This specifies the IAM role that AgentCore uses to manage the Amazon EC2 instances on your behalf.</p>",
+        "GetCapacityProviderOutput$permissionsConfiguration": "<p>The permissions configuration for the capacity provider.</p>"
       }
     },
     "Policies": {
@@ -6348,6 +6917,26 @@
     "PutResourcePolicyResponse": {
       "base": null,
       "refs": {}
+    },
+    "RateConfig": {
+      "base": "<p>Rate configuration for a metric (requests or tokens)</p>",
+      "refs": {
+        "RateConfigs$member": null
+      }
+    },
+    "RateConfigRateDouble": {
+      "base": null,
+      "refs": {
+        "RateConfig$rate": "<p>The rate value for the limit. For request limits, this is the number of requests allowed per period. For token limits, this is the number of tokens allowed per period. For connection limits, this is the number of concurrent connections allowed.</p>"
+      }
+    },
+    "RateConfigs": {
+      "base": "<p>List of rate configs (limited to 1 for now, array for future multi-period support)</p>",
+      "refs": {
+        "LimitEntry$requests": "<p>Request rate limits (RPS or RPM). Limited to 1 entry for now.</p>",
+        "LimitEntry$tokens": "<p>Token rate limits (TPM). Limited to 1 entry for now. — P1</p>",
+        "LimitEntry$connections": "<p>Connection rate limits (per second only). Limited to 1 entry for now. — P2</p>"
+      }
     },
     "RatingScale": {
       "base": "<p> The rating scale that defines how evaluators should score agent performance, supporting both numerical and categorical scales. </p>",
@@ -6760,6 +7349,10 @@
         "ApiGatewayToolFilter$methods": "<p>The methods to filter for.</p>"
       }
     },
+    "RetryableConflictException": {
+      "base": "<p>The operation failed because of a conflicting request. Retry the request.</p>",
+      "refs": {}
+    },
     "RoleArn": {
       "base": null,
       "refs": {
@@ -6780,6 +7373,7 @@
         "GetPaymentManagerResponse$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role associated with the payment manager.</p>",
         "Harness$executionRoleArn": "<p>IAM role the harness assumes when running.</p>",
         "PaymentManagerSummary$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role associated with the payment manager.</p>",
+        "PermissionsConfiguration$capacityProviderOperatorRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that AgentCore assumes to manage the capacity provider, including launching, tagging, and terminating instances and their network interfaces. We recommend scoping this role to the minimum permissions that your workloads require.</p>",
         "UpdateAgentRuntimeRequest$roleArn": "<p>The updated IAM role ARN that provides permissions for the AgentCore Runtime.</p>",
         "UpdateGatewayRequest$roleArn": "<p>The updated IAM role ARN that provides permissions for the gateway.</p>",
         "UpdateGatewayResponse$roleArn": "<p>The updated IAM role ARN that provides permissions for the gateway.</p>",
@@ -6787,6 +7381,24 @@
         "UpdateOnlineEvaluationConfigRequest$evaluationExecutionRoleArn": "<p> The updated Amazon Resource Name (ARN) of the IAM role used for evaluation execution. </p>",
         "UpdatePaymentManagerRequest$roleArn": "<p>The updated Amazon Resource Name (ARN) of the IAM role for the payment manager.</p>",
         "UpdatePaymentManagerResponse$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role associated with the updated payment manager.</p>"
+      }
+    },
+    "RootVolumeConfiguration": {
+      "base": "<p>The configuration for the root volume of a capacity provider instance. Specify the amount of free space to guarantee on the root volume. The device name and delete-on-termination settings are fixed and cannot be changed.</p>",
+      "refs": {
+        "Ec2Configuration$rootVolume": "<p>The configuration for the instance root volume. Specify the amount of free space to guarantee and, optionally, the Amazon EBS performance and encryption settings. The device name and delete-on-termination behavior are not configurable.</p>"
+      }
+    },
+    "RootVolumeConfigurationFreeSpaceGiBInteger": {
+      "base": null,
+      "refs": {
+        "RootVolumeConfiguration$freeSpaceGiB": "<p>The free space guaranteed on the root volume, in GiB. AgentCore adds the operating system overhead on top of this value. The default is 8 GiB.</p>"
+      }
+    },
+    "RootVolumeConfigurationThroughputInteger": {
+      "base": null,
+      "refs": {
+        "RootVolumeConfiguration$throughput": "<p>The throughput to provision, in MiB/s. Valid only for <code>gp3</code> volumes. Valid range: 125–2,000 MiB/s.</p>"
       }
     },
     "RouteToTargetAction": {
@@ -6915,6 +7527,12 @@
       "base": "<p> Amazon S3 URI string in the format <code>s3://bucket/key</code>. </p>",
       "refs": {
         "S3Source$s3Uri": "<p> Amazon S3 URI of the JSONL file (for example, <code>s3://my-bucket/path/to/examples.jsonl</code>). </p>"
+      }
+    },
+    "SSHKeyName": {
+      "base": null,
+      "refs": {
+        "LaunchParameters$sshKeyName": "<p>The name of the SSH key pair to configure on the instances for SSH connectivity.</p>"
       }
     },
     "SalesforceOauth2ProviderConfigInput": {
@@ -7108,7 +7726,8 @@
     "SecurityGroupId": {
       "base": null,
       "refs": {
-        "SecurityGroups$member": null
+        "SecurityGroups$member": null,
+        "VpcConfigurationSecurityGroupsList$member": null
       }
     },
     "SecurityGroupIdentifier": {
@@ -7446,6 +8065,7 @@
         "GetAgentRuntimeEndpointResponse$failureReason": "<p>The reason for failure if the AgentCore Runtime endpoint is in a failed state.</p>",
         "GetAgentRuntimeResponse$failureReason": "<p>The reason for failure if the AgentCore Runtime is in a failed state.</p>",
         "GetBrowserResponse$failureReason": "<p>The reason for failure if the browser is in a failed state.</p>",
+        "GetCapacityProviderOutput$statusReason": "<p>A human-readable message that describes why the capacity provider is not in the <code>READY</code> state. Because these messages can change, use <code>statusCode</code> for programmatic error handling.</p>",
         "GetCodeInterpreterResponse$failureReason": "<p>The reason for failure if the code interpreter is in a failed state.</p>",
         "GetDatasetResponse$description": "<p> The description of the dataset. </p>",
         "GetDatasetResponse$failureReason": "<p> Populated when status is CREATE_FAILED, UPDATE_FAILED, or DELETE_FAILED. Describes the reason for the failure. </p>",
@@ -7468,6 +8088,7 @@
         "HarnessSummarizationConfiguration$summarizationSystemPrompt": "<p>The system prompt used for generating summaries.</p>",
         "HarnessVersionSummary$failureReason": "<p>Reason why the create or update operation for this harness version failed.</p>",
         "InvocationConfiguration$payloadDeliveryBucketName": "<p>The S3 bucket name for event payload delivery.</p>",
+        "ListAgentRuntimeVersionsByCapacityProviderOutput$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
         "ListApiKeyCredentialProvidersRequest$nextToken": "<p>Pagination token.</p>",
         "ListApiKeyCredentialProvidersResponse$nextToken": "<p>Pagination token for the next page of results.</p>",
         "ListConfigurationBundleVersionsRequest$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results.</p>",
@@ -7500,6 +8121,7 @@
         "RegistrySummary$statusReason": "<p>The reason for the current status, typically set when the status is a failure state.</p>",
         "RequiredProperties$member": null,
         "ResourceLimitExceededException$message": null,
+        "RetryableConflictException$message": null,
         "SchemaDefinition$description": "<p>The description of the schema definition. This description provides information about the purpose and usage of the schema.</p>",
         "SchemaProperties$key": null,
         "ScopeList$member": null,
@@ -7588,7 +8210,8 @@
       "base": null,
       "refs": {
         "SubnetIds$member": null,
-        "Subnets$member": null
+        "Subnets$member": null,
+        "VpcConfigurationSubnetsList$member": null
       }
     },
     "SubnetIds": {
@@ -7706,6 +8329,7 @@
         "CreateApiKeyCredentialProviderRequest$tags": "<p>A map of tag keys and values to assign to the API key credential provider. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
         "CreateBrowserProfileRequest$tags": "<p>A map of tag keys and values to assign to the browser profile. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
         "CreateBrowserRequest$tags": "<p>A map of tag keys and values to assign to the browser. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
+        "CreateCapacityProviderInput$tags": "<p>A map of tag keys and values to associate with the capacity provider. If you don't specify tags, the capacity provider is created with no tags.</p>",
         "CreateCodeInterpreterRequest$tags": "<p>A map of tag keys and values to assign to the code interpreter. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
         "CreateConfigurationBundleRequest$tags": "<p>A map of tag keys and values to assign to the configuration bundle. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
         "CreateDatasetRequest$tags": "<p> A map of tag keys and values to assign to the dataset. </p>",
@@ -7724,6 +8348,7 @@
         "GetDatasetResponse$tags": "<p> The tags associated with the dataset. </p>",
         "GetPaymentCredentialProviderResponse$tags": "<p>The tags associated with the payment credential provider.</p>",
         "GetPaymentManagerResponse$tags": "<p>The tags associated with the payment manager.</p>",
+        "LaunchParameters$propagatedTags": "<p>The tags to propagate to all Amazon EC2 resources (instances, volumes, and network interfaces) that the capacity provider creates.</p>",
         "ListTagsForResourceResponse$tags": "<p>The tags associated with the resource.</p>",
         "ManagedVpcResource$tags": "<p>Tags to apply to the managed VPC Lattice resource gateway.</p>",
         "TagResourceRequest$tags": "<p>The tags to add to the resource. A tag is a key-value pair.</p>"
@@ -7922,6 +8547,7 @@
         "AddDatasetExamplesResponse$updatedAt": "<p> The timestamp when the examples were added. </p>",
         "ApiKeyCredentialProviderItem$createdTime": "<p>The timestamp when the API key credential provider was created.</p>",
         "ApiKeyCredentialProviderItem$lastUpdatedTime": "<p>The timestamp when the API key credential provider was last updated.</p>",
+        "CapacityProviderSummary$lastUpdatedAt": "<p>The timestamp when the capacity provider was last updated.</p>",
         "ConfigurationBundleSummary$createdAt": "<p>The timestamp when the configuration bundle was created.</p>",
         "ConfigurationBundleVersionSummary$versionCreatedAt": "<p>The timestamp when this version was created.</p>",
         "CreateConfigurationBundleResponse$createdAt": "<p>The timestamp when the configuration bundle was created.</p>",
@@ -8214,6 +8840,14 @@
       "base": null,
       "refs": {}
     },
+    "UpdateCapacityProviderInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateCapacityProviderOutput": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateConfigurationBundleRequest": {
       "base": null,
       "refs": {}
@@ -8262,6 +8896,14 @@
     },
     "UpdateEvaluatorResponse": {
       "base": null,
+      "refs": {}
+    },
+    "UpdateGatewayRateLimitRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateGatewayRateLimitResponse": {
+      "base": "<p>Shared fields for GatewayRateLimit responses</p>",
       "refs": {}
     },
     "UpdateGatewayRequest": {
@@ -8458,6 +9100,7 @@
     "UpdatedDescription": {
       "base": "<p>Wrapper for updating an optional Description field with PATCH semantics. When present in an update request, the description is replaced with optionalValue. When absent, the description is left unchanged. To unset the description, include the wrapper with optionalValue not specified.</p>",
       "refs": {
+        "UpdateCapacityProviderInput$description": "<p>The updated description of the capacity provider.</p>",
         "UpdatePolicyEngineRequest$description": "<p>The new description for the policy engine.</p>",
         "UpdatePolicyRequest$description": "<p>The new human-readable description for the policy. This optional field allows updating the policy's documentation while keeping the same policy logic.</p>",
         "UpdateRegistryRecordRequest$description": "<p>The updated description for the registry record. To clear the description, include the <code>UpdatedDescription</code> wrapper with <code>optionalValue</code> not specified.</p>",
@@ -8630,12 +9273,74 @@
         "VersionLineageMetadata$commitMessage": "<p>A commit message describing the changes in this version.</p>"
       }
     },
+    "VirtualDeviceName": {
+      "base": null,
+      "refs": {
+        "EphemeralBlockDeviceMapping$virtualName": "<p>The virtual device name (<code>ephemeralN</code>). Instance store volumes are numbered starting from 0. The number of available instance store volumes depends on the instance type. After you connect to the instance, you must mount the volume.</p>"
+      }
+    },
+    "VolumeConfiguration": {
+      "base": "<p>The configuration for a persistent volume attached to a capacity provider. This structure defines the storage backing for the persistent volumes used by agents that run on capacity provider instances.</p>",
+      "refs": {
+        "VolumeConfigurationList$member": null
+      }
+    },
+    "VolumeConfigurationList": {
+      "base": null,
+      "refs": {
+        "Ec2Configuration$volumes": "<p>The named persistent Amazon EBS volumes for the capacity provider. A capacity provider can define up to five volumes.</p>"
+      }
+    },
+    "VolumeIops": {
+      "base": null,
+      "refs": {
+        "EbsVolumeConfiguration$iops": "<p>The number of IOPS to provision. Valid only for <code>gp3</code>, <code>io1</code>, and <code>io2</code> volumes.</p>",
+        "EphemeralEBSVolumeConfiguration$iops": "<p>The number of IOPS to provision. For <code>gp3</code>, <code>io1</code>, and <code>io2</code> volumes, this is the number of IOPS provisioned for the volume. For <code>gp2</code> volumes, this sets the baseline IOPS performance. It also controls the rate at which the volume accumulates I/O credits for bursting. Supported values: <code>gp3</code>, 3,000–80,000; <code>io1</code>, 100–64,000; <code>io2</code>, 100–256,000.</p>",
+        "RootVolumeConfiguration$iops": "<p>The number of IOPS to provision. For <code>gp3</code>, <code>io1</code>, and <code>io2</code> volumes, this is the number of IOPS provisioned for the volume. For <code>gp2</code> volumes, this sets the baseline IOPS performance. It also controls the rate at which the volume accumulates I/O credits for bursting. Supported values: <code>gp3</code>, 3,000–80,000; <code>io1</code>, 100–64,000; <code>io2</code>, 100–256,000.</p>"
+      }
+    },
+    "VolumeName": {
+      "base": null,
+      "refs": {
+        "EbsVolumeConfiguration$name": "<p>The logical name of the volume. Use this name to reference the volume when you mount it into an agent runtime.</p>"
+      }
+    },
+    "VolumeSizeGiB": {
+      "base": null,
+      "refs": {
+        "EbsVolumeConfiguration$sizeGiB": "<p>The size of the volume, in GiB.</p>"
+      }
+    },
+    "VolumeThroughput": {
+      "base": null,
+      "refs": {
+        "EbsVolumeConfiguration$throughput": "<p>The throughput, in MiB/s. Valid only for <code>gp3</code> volumes.</p>"
+      }
+    },
     "VpcConfig": {
       "base": "<p>VpcConfig for the Agent.</p>",
       "refs": {
         "BrowserNetworkConfiguration$vpcConfig": "<p>The VPC configuration for the browser. This configuration is required when the network mode is set to <code>VPC</code>.</p>",
         "CodeInterpreterNetworkConfiguration$vpcConfig": "<p>The VPC configuration for the code interpreter. This configuration is required when the network mode is set to <code>VPC</code>.</p>",
         "NetworkConfiguration$networkModeConfig": "<p>The network mode configuration for the AgentCore Runtime.</p>"
+      }
+    },
+    "VpcConfiguration": {
+      "base": "<p>The VPC configuration for launching Amazon EC2 instances.</p>",
+      "refs": {
+        "Ec2Configuration$vpcConfiguration": "<p>The VPC configuration for launching instances, including subnets and security groups.</p>"
+      }
+    },
+    "VpcConfigurationSecurityGroupsList": {
+      "base": null,
+      "refs": {
+        "VpcConfiguration$securityGroups": "<p>The IDs of the security groups to associate with the instances. You must specify at least one security group.</p>"
+      }
+    },
+    "VpcConfigurationSubnetsList": {
+      "base": null,
+      "refs": {
+        "VpcConfiguration$subnets": "<p>The IDs of the subnets in which to launch instances. You must specify at least one subnet.</p>"
       }
     },
     "VpcIdentifier": {

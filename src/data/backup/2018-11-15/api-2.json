@@ -47,6 +47,27 @@
       ],
       "idempotent":true
     },
+    "CreateBackupAccessPoint":{
+      "name":"CreateBackupAccessPoint",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/backup-access-point/create",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateBackupAccessPointRequest"},
+      "output":{"shape":"CreateBackupAccessPointResponse"},
+      "errors":[
+        {"shape":"AlreadyExistsException"},
+        {"shape":"ConflictException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"MissingParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "idempotent":true
+    },
     "CreateBackupPlan":{
       "name":"CreateBackupPlan",
       "http":{
@@ -241,6 +262,23 @@
       ],
       "idempotent":true
     },
+    "DeleteBackupAccessPoint":{
+      "name":"DeleteBackupAccessPoint",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/backup-access-point/delete/{AccessPointArn}",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteBackupAccessPointInput"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"MissingParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "idempotent":true
+    },
     "DeleteBackupPlan":{
       "name":"DeleteBackupPlan",
       "http":{
@@ -424,6 +462,24 @@
         {"shape":"ServiceUnavailableException"}
       ],
       "idempotent":true
+    },
+    "DescribeBackupAccessPoint":{
+      "name":"DescribeBackupAccessPoint",
+      "http":{
+        "method":"GET",
+        "requestUri":"/backup-access-point/{AccessPointArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeBackupAccessPointInput"},
+      "output":{"shape":"DescribeBackupAccessPointResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"MissingParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "readonly":true
     },
     "DescribeBackupJob":{
       "name":"DescribeBackupJob",
@@ -917,6 +973,51 @@
         {"shape":"ServiceUnavailableException"}
       ],
       "idempotent":true
+    },
+    "ListBackupAccessPoints":{
+      "name":"ListBackupAccessPoints",
+      "http":{
+        "method":"GET",
+        "requestUri":"/backup-access-point",
+        "responseCode":200
+      },
+      "input":{"shape":"ListBackupAccessPointsRequest"},
+      "output":{"shape":"ListBackupAccessPointsResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "readonly":true
+    },
+    "ListBackupAccessPointsByRecoveryPoint":{
+      "name":"ListBackupAccessPointsByRecoveryPoint",
+      "http":{
+        "method":"POST",
+        "requestUri":"/backup-access-point/recovery-point/{RecoveryPointArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"ListBackupAccessPointsByRecoveryPointRequest"},
+      "output":{"shape":"ListBackupAccessPointsByRecoveryPointResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "readonly":true
+    },
+    "ListBackupAccessPointsByResource":{
+      "name":"ListBackupAccessPointsByResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/backup-access-point/resource/{ResourceArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"ListBackupAccessPointsByResourceRequest"},
+      "output":{"shape":"ListBackupAccessPointsByResourceResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "readonly":true
     },
     "ListBackupJobSummaries":{
       "name":"ListBackupJobSummaries",
@@ -1723,6 +1824,47 @@
   },
   "shapes":{
     "ARN":{"type":"string"},
+    "AccessPointArn":{
+      "type":"string",
+      "pattern":"(arn:aws[a-z-]*:backup:[a-z-\\d]+:\\d{12}:accesspoint/)[\\da-z]{1}[\\da-z-]{1,48}[\\da-z]{1}(?<!-s3alias)(?<!-ext-s3alias)"
+    },
+    "AccessPointMetadataMap":{
+      "type":"map",
+      "key":{"shape":"AccessPointMetadataMapKeyString"},
+      "value":{"shape":"AccessPointMetadataMapValueString"},
+      "sensitive":true
+    },
+    "AccessPointMetadataMapKeyString":{
+      "type":"string",
+      "min":1
+    },
+    "AccessPointMetadataMapValueString":{
+      "type":"string",
+      "min":1
+    },
+    "AccessPointName":{
+      "type":"string",
+      "max":50,
+      "min":3,
+      "pattern":"[\\da-z]{1}[\\da-z-]{1,48}[\\da-z]{1}(?<!-s3alias)(?<!-ext-s3alias)"
+    },
+    "AccessPointPolicy":{
+      "type":"string",
+      "max":200000,
+      "min":1
+    },
+    "AccessPointStatus":{
+      "type":"string",
+      "enum":[
+        "AVAILABLE",
+        "CREATING",
+        "DELETING",
+        "DISASSOCIATED",
+        "DISASSOCIATING",
+        "EXPIRED",
+        "FAILED"
+      ]
+    },
     "AccountId":{
       "type":"string",
       "pattern":"^[0-9]{12}$"
@@ -1781,6 +1923,10 @@
         "MpaApprovalTeamArn":{"shape":"ARN"},
         "RequesterComment":{"shape":"RequesterComment"}
       }
+    },
+    "BackupAccessPoints":{
+      "type":"list",
+      "member":{"shape":"ListAccessPointsMember"}
     },
     "BackupJob":{
       "type":"structure",
@@ -2037,6 +2183,7 @@
         "IamRoleArn":{"shape":"IAMRoleArn"}
       }
     },
+    "BackupVaultArn":{"type":"string"},
     "BackupVaultEvent":{
       "type":"string",
       "enum":[
@@ -2063,7 +2210,13 @@
         "RECOVERY_POINT_INDEXING_FAILED",
         "EKS_RESTORE_OBJECT_FAILED",
         "EKS_RESTORE_OBJECT_SKIPPED",
-        "EKS_BACKUP_OBJECT_FAILED"
+        "EKS_BACKUP_OBJECT_FAILED",
+        "ACCESS_POINT_AVAILABLE",
+        "ACCESS_POINT_CREATION_FAILED",
+        "ACCESS_POINT_DELETED",
+        "ACCESS_POINT_DELETION_FAILED",
+        "ACCESS_POINT_EXPIRED",
+        "ACCESS_POINT_DISASSOCIATED"
       ]
     },
     "BackupVaultEvents":{
@@ -2306,6 +2459,31 @@
     "CopyJobsList":{
       "type":"list",
       "member":{"shape":"CopyJob"}
+    },
+    "CreateBackupAccessPointRequest":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "RecoveryPointArn"
+      ],
+      "members":{
+        "AccessPointMetadata":{"shape":"AccessPointMetadataMap"},
+        "AccessPointPolicy":{"shape":"AccessPointPolicy"},
+        "Name":{"shape":"AccessPointName"},
+        "RecoveryPointArn":{"shape":"RecoveryPointArn"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateBackupAccessPointResponse":{
+      "type":"structure",
+      "required":[
+        "AccessPointArn",
+        "Status"
+      ],
+      "members":{
+        "AccessPointArn":{"shape":"AccessPointArn"},
+        "Status":{"shape":"AccessPointStatus"}
+      }
     },
     "CreateBackupPlanInput":{
       "type":"structure",
@@ -2602,6 +2780,17 @@
         "ToDate":{"shape":"timestamp"}
       }
     },
+    "DeleteBackupAccessPointInput":{
+      "type":"structure",
+      "required":["AccessPointArn"],
+      "members":{
+        "AccessPointArn":{
+          "shape":"AccessPointArn",
+          "location":"uri",
+          "locationName":"AccessPointArn"
+        }
+      }
+    },
     "DeleteBackupPlanInput":{
       "type":"structure",
       "required":["BackupPlanId"],
@@ -2781,6 +2970,43 @@
       },
       "exception":true,
       "fault":true
+    },
+    "DescribeBackupAccessPointInput":{
+      "type":"structure",
+      "required":["AccessPointArn"],
+      "members":{
+        "AccessPointArn":{
+          "shape":"AccessPointArn",
+          "location":"uri",
+          "locationName":"AccessPointArn"
+        }
+      }
+    },
+    "DescribeBackupAccessPointResponse":{
+      "type":"structure",
+      "required":[
+        "AccessPointArn",
+        "BackupVaultName",
+        "CreationTime",
+        "Name",
+        "RecoveryPointArn",
+        "ResourceArn",
+        "ResourceType",
+        "Status"
+      ],
+      "members":{
+        "AccessPointArn":{"shape":"AccessPointArn"},
+        "AccessPointMetadata":{"shape":"AccessPointMetadataMap"},
+        "BackupVaultArn":{"shape":"BackupVaultArn"},
+        "BackupVaultName":{"shape":"BackupVaultName"},
+        "CreationTime":{"shape":"Timestamp"},
+        "Name":{"shape":"AccessPointName"},
+        "RecoveryPointArn":{"shape":"RecoveryPointArn"},
+        "ResourceArn":{"shape":"ResourceArn"},
+        "ResourceType":{"shape":"String"},
+        "Status":{"shape":"AccessPointStatus"},
+        "StatusMessage":{"shape":"String"}
+      }
     },
     "DescribeBackupJobInput":{
       "type":"structure",
@@ -3813,6 +4039,132 @@
         "Context":{"shape":"string"}
       },
       "exception":true
+    },
+    "ListAccessPointsMember":{
+      "type":"structure",
+      "required":[
+        "AccessPointArn",
+        "AccessPointMetadata",
+        "BackupVaultName",
+        "CreationTime",
+        "Name",
+        "RecoveryPointArn",
+        "ResourceArn",
+        "ResourceType",
+        "Status"
+      ],
+      "members":{
+        "AccessPointArn":{"shape":"AccessPointArn"},
+        "AccessPointMetadata":{"shape":"AccessPointMetadataMap"},
+        "BackupVaultArn":{"shape":"BackupVaultArn"},
+        "BackupVaultName":{"shape":"BackupVaultName"},
+        "CreationTime":{"shape":"Timestamp"},
+        "Name":{"shape":"AccessPointName"},
+        "RecoveryPointArn":{"shape":"RecoveryPointArn"},
+        "ResourceArn":{"shape":"ResourceArn"},
+        "ResourceType":{"shape":"String"},
+        "Status":{"shape":"AccessPointStatus"},
+        "StatusMessage":{"shape":"String"}
+      }
+    },
+    "ListBackupAccessPointsByRecoveryPointRequest":{
+      "type":"structure",
+      "required":["RecoveryPointArn"],
+      "members":{
+        "MaxResults":{
+          "shape":"ListBackupAccessPointsByRecoveryPointRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"MaxResults"
+        },
+        "NextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"NextToken"
+        },
+        "RecoveryPointArn":{
+          "shape":"RecoveryPointArn",
+          "location":"uri",
+          "locationName":"RecoveryPointArn"
+        }
+      }
+    },
+    "ListBackupAccessPointsByRecoveryPointRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListBackupAccessPointsByRecoveryPointResponse":{
+      "type":"structure",
+      "required":["BackupAccessPoints"],
+      "members":{
+        "BackupAccessPoints":{"shape":"BackupAccessPoints"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "ListBackupAccessPointsByResourceRequest":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "MaxResults":{
+          "shape":"ListBackupAccessPointsByResourceRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"MaxResults"
+        },
+        "NextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"NextToken"
+        },
+        "ResourceArn":{
+          "shape":"ResourceArn",
+          "location":"uri",
+          "locationName":"ResourceArn"
+        }
+      }
+    },
+    "ListBackupAccessPointsByResourceRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListBackupAccessPointsByResourceResponse":{
+      "type":"structure",
+      "required":["BackupAccessPoints"],
+      "members":{
+        "BackupAccessPoints":{"shape":"BackupAccessPoints"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "ListBackupAccessPointsRequest":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{
+          "shape":"ListBackupAccessPointsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"MaxResults"
+        },
+        "NextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"NextToken"
+        }
+      }
+    },
+    "ListBackupAccessPointsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListBackupAccessPointsResponse":{
+      "type":"structure",
+      "required":["BackupAccessPoints"],
+      "members":{
+        "BackupAccessPoints":{"shape":"BackupAccessPoints"},
+        "NextToken":{"shape":"String"}
+      }
     },
     "ListBackupJobSummariesInput":{
       "type":"structure",
@@ -5108,6 +5460,10 @@
         "ValidationStatusMessage":{"shape":"string"}
       }
     },
+    "RecoveryPointArn":{
+      "type":"string",
+      "pattern":"(arn:aws[a-z-]*:[a-z-\\d]+:[a-z-\\d]+:).+"
+    },
     "RecoveryPointByBackupVault":{
       "type":"structure",
       "members":{
@@ -5295,6 +5651,10 @@
     "RequesterComment":{
       "type":"string",
       "sensitive":true
+    },
+    "ResourceArn":{
+      "type":"string",
+      "pattern":"(arn:aws[a-z-]*:[a-z-\\d]+:).+"
     },
     "ResourceArns":{
       "type":"list",
@@ -6044,6 +6404,24 @@
       "type":"list",
       "member":{"shape":"string"},
       "sensitive":true
+    },
+    "TagMap":{
+      "type":"map",
+      "key":{"shape":"TagMapKeyString"},
+      "value":{"shape":"TagMapValueString"},
+      "max":200,
+      "min":0,
+      "sensitive":true
+    },
+    "TagMapKeyString":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "TagMapValueString":{
+      "type":"string",
+      "max":256,
+      "min":0
     },
     "TagResourceInput":{
       "type":"structure",

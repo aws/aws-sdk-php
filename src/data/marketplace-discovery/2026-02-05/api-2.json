@@ -712,24 +712,24 @@
       "required":[
         "offerId",
         "catalog",
-        "agreementProposalId",
         "sellerOfRecord",
+        "associatedEntities",
+        "agreementProposalId",
         "pricingModel",
-        "badges",
-        "associatedEntities"
+        "badges"
       ],
       "members":{
         "offerId":{"shape":"OfferId"},
         "catalog":{"shape":"Catalog"},
         "offerName":{"shape":"NullableString"},
-        "agreementProposalId":{"shape":"AgreementResourceId"},
         "expirationTime":{"shape":"Timestamp"},
         "availableFromTime":{"shape":"Timestamp"},
         "sellerOfRecord":{"shape":"SellerInformation"},
+        "associatedEntities":{"shape":"OfferAssociatedEntityList"},
+        "agreementProposalId":{"shape":"AgreementResourceId"},
         "replacementAgreementId":{"shape":"AgreementResourceId"},
         "pricingModel":{"shape":"PricingModel"},
-        "badges":{"shape":"PurchaseOptionBadgeList"},
-        "associatedEntities":{"shape":"OfferAssociatedEntityList"}
+        "badges":{"shape":"PurchaseOptionBadgeList"}
       }
     },
     "GetOfferSetInput":{
@@ -796,10 +796,10 @@
         "productId",
         "catalog",
         "productName",
+        "manufacturer",
         "deployedOnAws",
         "shortDescription",
         "longDescription",
-        "manufacturer",
         "logoThumbnailUrl",
         "fulfillmentOptionSummaries",
         "categories",
@@ -812,10 +812,10 @@
         "productId":{"shape":"ProductId"},
         "catalog":{"shape":"Catalog"},
         "productName":{"shape":"NonEmptyString"},
+        "manufacturer":{"shape":"SellerInformation"},
         "deployedOnAws":{"shape":"DeployedOnAwsStatus"},
         "shortDescription":{"shape":"NonEmptyString"},
         "longDescription":{"shape":"GetProductOutputLongDescriptionString"},
-        "manufacturer":{"shape":"SellerInformation"},
         "logoThumbnailUrl":{"shape":"URL"},
         "fulfillmentOptionSummaries":{"shape":"FulfillmentOptionSummaryList"},
         "categories":{"shape":"CategoryList"},
@@ -1044,11 +1044,11 @@
         "listingId",
         "listingName",
         "publisher",
+        "fulfillmentOptionSummaries",
         "catalog",
         "shortDescription",
         "logoThumbnailUrl",
         "categories",
-        "fulfillmentOptionSummaries",
         "badges",
         "reviewSummary",
         "pricingModels",
@@ -1059,11 +1059,11 @@
         "listingId":{"shape":"ListingId"},
         "listingName":{"shape":"NonEmptyString"},
         "publisher":{"shape":"SellerInformation"},
+        "fulfillmentOptionSummaries":{"shape":"FulfillmentOptionSummaryList"},
         "catalog":{"shape":"Catalog"},
         "shortDescription":{"shape":"NonEmptyString"},
         "logoThumbnailUrl":{"shape":"URL"},
         "categories":{"shape":"CategoryList"},
-        "fulfillmentOptionSummaries":{"shape":"FulfillmentOptionSummaryList"},
         "badges":{"shape":"ListingBadgeList"},
         "reviewSummary":{"shape":"ReviewSummary"},
         "pricingModels":{"shape":"PricingModelList"},
@@ -1092,6 +1092,19 @@
       "box":true,
       "max":100,
       "min":1
+    },
+    "NetPaymentTerm":{
+      "type":"structure",
+      "required":[
+        "id",
+        "type",
+        "paymentDuePeriod"
+      ],
+      "members":{
+        "id":{"shape":"TermId"},
+        "type":{"shape":"TermType"},
+        "paymentDuePeriod":{"shape":"BoundedString"}
+      }
     },
     "NextToken":{
       "type":"string",
@@ -1195,7 +1208,8 @@
         "supportTerm":{"shape":"SupportTerm"},
         "usageBasedPricingTerm":{"shape":"UsageBasedPricingTerm"},
         "validityTerm":{"shape":"ValidityTerm"},
-        "variablePaymentTerm":{"shape":"VariablePaymentTerm"}
+        "variablePaymentTerm":{"shape":"VariablePaymentTerm"},
+        "netPaymentTerm":{"shape":"NetPaymentTerm"}
       },
       "union":true
     },
@@ -1899,7 +1913,8 @@
         "RenewalTerm",
         "SupportTerm",
         "ValidityTerm",
-        "VariablePaymentTerm"
+        "VariablePaymentTerm",
+        "NetPaymentTerm"
       ]
     },
     "ThrottlingException":{

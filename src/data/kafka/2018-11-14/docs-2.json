@@ -84,6 +84,12 @@
         "KafkaClusterSummary$ApacheKafkaCluster" : "<p>Details of an Apache Kafka Cluster.</p>"
       }
     },
+    "AuthorizerLogs" : {
+      "base" : "<p>The authorizer logs configuration for this MSK cluster.</p>",
+      "refs" : {
+        "LoggingInfo$AuthorizerLogs" : "<p>You can configure your MSK cluster to send authorizer logs to different destination types.</p>"
+      }
+    },
     "BatchAssociateScramSecretRequest" : {
       "base" : "<p>Request body for BatchAssociateScramSecret.</p>",
       "refs" : { }
@@ -265,7 +271,8 @@
       "base" : "<p>Details of the CloudWatch Logs destination for broker logs.</p>",
       "refs" : {
         "BrokerLogs$CloudWatchLogs" : "<p>Details of the CloudWatch Logs destination for broker logs.</p>",
-        "ChannelLoggingInfo$CloudWatchLogs": "<p>Details of the CloudWatch Logs destination for Channel logs.</p>"
+        "ChannelLoggingInfo$CloudWatchLogs": "<p>Details of the CloudWatch Logs destination for Channel logs.</p>",
+        "AuthorizerLogs$CloudWatchLogs" : "<p>Details of the CloudWatch Logs destination for authorizer logs.</p>"
       }
     },
     "ClusterInfo" : {
@@ -661,7 +668,8 @@
       "base" : "<p>Firehose details for logs.</p>",
       "refs" : {
         "BrokerLogs$Firehose" : "<p>Details of the Kinesis Data Firehose delivery stream that is the destination for broker logs.</p>",
-        "ChannelLoggingInfo$Firehose": "<p>Details of the Kinesis Data Firehose delivery stream that is the destination for Channel logs.</p>"
+        "ChannelLoggingInfo$Firehose": "<p>Details of the Kinesis Data Firehose delivery stream that is the destination for Channel logs.</p>",
+        "AuthorizerLogs$Firehose" : "<p>Details of the Kinesis Data Firehose delivery stream that is the destination for authorizer logs.</p>"
       }
     },
     "ForbiddenException" : {
@@ -1116,7 +1124,8 @@
       "base" : "<p>The details of the Amazon S3 destination for logs.</p>",
       "refs" : {
         "BrokerLogs$S3" : "<p>Details of the Amazon S3 destination for broker logs.</p>",
-        "ChannelLoggingInfo$S3": "<p>Details of the Amazon S3 destination for Channel logs.</p>"
+        "ChannelLoggingInfo$S3": "<p>Details of the Amazon S3 destination for Channel logs.</p>",
+        "AuthorizerLogs$S3" : "<p>Details of the Amazon S3 destination for authorizer logs.</p>"
       }
     },
     "ServiceUnavailableException" : {

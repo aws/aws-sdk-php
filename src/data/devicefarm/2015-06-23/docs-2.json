@@ -709,10 +709,17 @@
         "DeviceMinutes$total": "<p>When specified, represents the total minutes used by the resource to run tests.</p>",
         "DeviceMinutes$metered": "<p>When specified, represents only the sum of metered minutes used by the resource to run tests.</p>",
         "DeviceMinutes$unmetered": "<p>When specified, represents only the sum of unmetered minutes used by the resource to run tests.</p>",
+        "JobReportMetrics$jobsPassedPercentage": "<p>The percentage of jobs that passed.</p>",
+        "JobReportMetrics$totalJobExecutionDurationSeconds": "<p>The total execution duration of all jobs in the run, in seconds.</p>",
+        "JobReportMetrics$averageJobExecutionDurationSeconds": "<p>The average execution duration of jobs in the run, in seconds.</p>",
+        "JobReportMetrics$medianJobExecutionDurationSeconds": "<p>The median execution duration of jobs in the run, in seconds.</p>",
         "Location$latitude": "<p>The latitude.</p>",
         "Location$longitude": "<p>The longitude.</p>",
         "MonetaryAmount$amount": "<p>The numerical amount of an offering or transaction.</p>",
         "TestGridSession$billingMinutes": "<p>The number of billed minutes that were used for this session. </p>",
+        "TestReportMetrics$testsPassedPercentage": "<p>The percentage of tests that passed.</p>",
+        "TestReportMetrics$totalTestExecutionDurationSeconds": "<p>The total execution duration of all tests in the job, in seconds.</p>",
+        "TestReportMetrics$medianTestExecutionDurationSeconds": "<p>The median execution duration of tests in the job, in seconds.</p>",
         "TrialMinutes$total": "<p>The total number of free trial minutes that the account started with.</p>",
         "TrialMinutes$remaining": "<p>The number of free trial minutes remaining in the account.</p>"
       }
@@ -953,6 +960,19 @@
         "DevicePoolCompatibilityResult$incompatibilityMessages": "<p>Information about the compatibility.</p>"
       }
     },
+    "InsightsType": {
+      "base": "<p>The type of insights to generate.</p>",
+      "refs": {
+        "InsightsTypes$member": null
+      }
+    },
+    "InsightsTypes": {
+      "base": null,
+      "refs": {
+        "Run$insightsTypes": "<p>The types of insights requested for the run.</p>",
+        "ScheduleRunConfiguration$insightsTypes": "<p>The types of insights to generate for a run. Specify one or more values to opt in to insights generation when scheduling a run.</p> <p>Insights are currently supported for custom mode runs with Instrumentation, Appium Java TestNG, and XCTest UI test types.</p>"
+      }
+    },
     "InstallToRemoteAccessSessionRequest": {
       "base": "<p>Represents the request to install an Android application (in .apk format) or an iOS application (in .ipa format) as part of a remote access session.</p>",
       "refs": {}
@@ -1005,6 +1025,12 @@
         "DeviceSelectionConfiguration$maxDevices": "<p>The maximum number of devices to be included in a test run.</p>",
         "DeviceSelectionResult$matchedDevicesCount": "<p>The number of devices that matched the device filter selection criteria.</p>",
         "DeviceSelectionResult$maxDevices": "<p>The maximum number of devices to be selected by a device filter and included in a test run.</p>",
+        "JobReportMetrics$jobsTotal": "<p>The total number of jobs in the run.</p>",
+        "JobReportMetrics$jobsPassed": "<p>The number of jobs that passed.</p>",
+        "JobReportMetrics$jobsFailed": "<p>The number of jobs that failed.</p>",
+        "JobReportMetrics$jobsSkipped": "<p>The number of jobs that were skipped.</p>",
+        "JobReportMetrics$jobsErrored": "<p>The number of jobs that errored.</p>",
+        "JobReportMetrics$jobsStopped": "<p>The number of jobs that were stopped.</p>",
         "ListDeviceInstancesRequest$maxResults": "<p>An integer that specifies the maximum number of items you want to return in the API response.</p>",
         "ListInstanceProfilesRequest$maxResults": "<p>An integer that specifies the maximum number of items you want to return in the API response.</p>",
         "ListVPCEConfigurationsRequest$maxResults": "<p>An integer that specifies the maximum number of items you want to return in the API response.</p>",
@@ -1019,6 +1045,12 @@
         "Run$completedJobs": "<p>The total number of completed jobs.</p>",
         "Run$seed": "<p>For fuzz tests, this is a seed to use for randomizing the UI fuzz test. Using the same seed value between tests ensures identical event sequences.</p>",
         "Run$eventCount": "<p>For fuzz tests, this is the number of events, between 1 and 10000, that the UI fuzz test should perform.</p>",
+        "TestReportMetrics$testsTotal": "<p>The total number of tests in the job.</p>",
+        "TestReportMetrics$testsPassed": "<p>The number of tests that passed.</p>",
+        "TestReportMetrics$testsFailed": "<p>The number of tests that failed.</p>",
+        "TestReportMetrics$testsSkipped": "<p>The number of tests that were skipped.</p>",
+        "TestReportMetrics$testsErrored": "<p>The number of tests that errored.</p>",
+        "TestReportMetrics$testsOther": "<p>The number of tests with other result types.</p>",
         "UpdateDevicePoolRequest$maxDevices": "<p>The number of devices that Device Farm can add to your device pool. Device Farm adds devices that are available and that meet the criteria that you assign for the <code>rules</code> parameter. Depending on how many devices meet these constraints, your device pool might contain fewer devices than the value for this parameter.</p> <p>By specifying the maximum number of devices, you can control the costs that you incur by running tests.</p> <p>If you use this parameter in your request, you cannot use the <code>clearMaxDevices</code> parameter in the same request.</p>"
       }
     },
@@ -1049,6 +1081,24 @@
         "GetJobResult$job": "<p>An object that contains information about the requested job.</p>",
         "Jobs$member": null,
         "StopJobResult$job": "<p>The job that was stopped.</p>"
+      }
+    },
+    "JobInsights": {
+      "base": "<p>Contains insights for a job, including report status, and test-level aggregated metrics such as per test execution time and median test execution time.</p>",
+      "refs": {
+        "Job$insights": "<p>The insights for the job, including the report status and test-level metrics. This field contains data only if you specified <code>insightsTypes</code> when you scheduled the run.</p>"
+      }
+    },
+    "JobReport": {
+      "base": "<p>Contains aggregated job-level metrics for a run.</p>",
+      "refs": {
+        "RunInsights$jobReport": "<p>The job-level aggregated report for the run.</p>"
+      }
+    },
+    "JobReportMetrics": {
+      "base": "<p>Contains aggregated metrics across all jobs in a run.</p>",
+      "refs": {
+        "JobReport$metrics": "<p>The aggregated job-level metrics for the run.</p>"
       }
     },
     "JobTimeoutMinutes": {
@@ -1691,6 +1741,20 @@
       "base": "<p>The result of a renewal offering.</p>",
       "refs": {}
     },
+    "ReportMessage": {
+      "base": null,
+      "refs": {
+        "JobReport$message": "<p>A message associated with the job report.</p>",
+        "TestReport$message": "<p>A message associated with the test report.</p>"
+      }
+    },
+    "ReportStatus": {
+      "base": "<p>The status of an insights report. Possible values are:</p> <ul> <li> <p>PENDING: The service has queued the report and generation has not started.</p> </li> <li> <p>RUNNING: The service is generating the report.</p> </li> <li> <p>COMPLETED: The service successfully generated the report.</p> </li> <li> <p>SKIPPED: The service did not generate the report because the necessary conditions were not met. For more information about why the service could not generate the report, view the <code>message</code> field in <code>TestReport</code> or <code>JobReport</code>.</p> </li> <li> <p>ERRORED: An error occurred while generating the report. For more information about why the service could not generate the report, view the <code>message</code> field in <code>TestReport</code> or <code>JobReport</code>.</p> </li> </ul>",
+      "refs": {
+        "JobInsights$status": "<p>The status of the insights report for the job.</p>",
+        "RunInsights$status": "<p>The status of the insights report for the run.</p>"
+      }
+    },
     "Resolution": {
       "base": "<p>Represents the screen resolution of a device in height and width, expressed in pixels.</p>",
       "refs": {
@@ -1745,6 +1809,12 @@
         "Runs$member": null,
         "ScheduleRunResult$run": "<p>Information about the scheduled run.</p>",
         "StopRunResult$run": "<p>The run that was stopped.</p>"
+      }
+    },
+    "RunInsights": {
+      "base": "<p>Contains insights for a run, including report status, and job-level aggregated metrics such as per job execution time and median job execution time.</p>",
+      "refs": {
+        "Run$insights": "<p>The insights for the run, including the report status and job-level metrics. This field contains data only if you specified <code>insightsTypes</code> when you scheduled the run.</p>"
       }
     },
     "Runs": {
@@ -1815,8 +1885,10 @@
     "SensitiveURL": {
       "base": null,
       "refs": {
+        "JobReport$jobDetailsUrl": "<p>A URL to the detailed job results.</p>",
         "RemoteAccessEndpoints$remoteDriverEndpoint": "<p>URL for controlling the device using WebDriver-compliant clients, like Appium, during the remote access session.</p>",
         "RemoteAccessEndpoints$interactiveEndpoint": "<p>URL for viewing and interacting with the device during the remote access session.</p>",
+        "TestReport$testDetailsUrl": "<p>A URL to the detailed test results.</p>",
         "Upload$url": "<p>The presigned Amazon S3 URL that was used to store a file using a PUT request.</p>"
       }
     },
@@ -2076,6 +2148,18 @@
       "base": null,
       "refs": {
         "ScheduleRunTest$parameters": "<p>The test's parameters, such as test framework parameters and fixture settings. Parameters are represented by name-value pairs of strings.</p> <p>For all tests:</p> <ul> <li> <p> <code>app_performance_monitoring</code>: Performance monitoring is enabled by default. Set this parameter to false to disable it.</p> </li> </ul> <p>For Appium tests (all types):</p> <ul> <li> <p>appium_version: The Appium version. Currently supported values are 1.6.5 (and later), latest, and default.</p> <ul> <li> <p>latest runs the latest Appium version supported by Device Farm (1.9.1).</p> </li> <li> <p>For default, Device Farm selects a compatible version of Appium for the device. The current behavior is to run 1.7.2 on Android devices and iOS 9 and earlier and 1.7.2 for iOS 10 and later.</p> </li> <li> <p>This behavior is subject to change.</p> </li> </ul> </li> </ul> <p>For fuzz tests (Android only):</p> <ul> <li> <p>event_count: The number of events, between 1 and 10000, that the UI fuzz test should perform.</p> </li> <li> <p>throttle: The time, in ms, between 0 and 1000, that the UI fuzz test should wait between events.</p> </li> <li> <p>seed: A seed to use for randomizing the UI fuzz test. Using the same seed value between tests ensures identical event sequences.</p> </li> </ul> <p>For Instrumentation:</p> <ul> <li> <p>filter: A test filter string. Examples:</p> <ul> <li> <p>Running a single test case: <code>com.android.abc.Test1</code> </p> </li> <li> <p>Running a single test: <code>com.android.abc.Test1#smoke</code> </p> </li> <li> <p>Running multiple tests: <code>com.android.abc.Test1,com.android.abc.Test2</code> </p> </li> </ul> </li> </ul> <p>For XCTest and XCTestUI:</p> <ul> <li> <p>filter: A test filter string. Examples:</p> <ul> <li> <p>Running a single test class: <code>LoginTests</code> </p> </li> <li> <p>Running a multiple test classes: <code>LoginTests,SmokeTests</code> </p> </li> <li> <p>Running a single test: <code>LoginTests/testValid</code> </p> </li> <li> <p>Running multiple tests: <code>LoginTests/testValid,LoginTests/testInvalid</code> </p> </li> </ul> </li> </ul>"
+      }
+    },
+    "TestReport": {
+      "base": "<p>Contains aggregated test-level metrics for a job.</p>",
+      "refs": {
+        "JobInsights$testReport": "<p>The test-level aggregated report for the job.</p>"
+      }
+    },
+    "TestReportMetrics": {
+      "base": "<p>Contains aggregated metrics across all tests in a job.</p>",
+      "refs": {
+        "TestReport$metrics": "<p>The aggregated test-level metrics for the job.</p>"
       }
     },
     "TestType": {

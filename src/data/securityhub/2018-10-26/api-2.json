@@ -1516,6 +1516,22 @@
         {"shape":"InvalidInputException"}
       ]
     },
+    "ListFreeTrialStatusesV2":{
+      "name":"ListFreeTrialStatusesV2",
+      "http":{
+        "method":"POST",
+        "requestUri":"/freetrial/statusv2/list"
+      },
+      "input":{"shape":"ListFreeTrialStatusesV2Request"},
+      "output":{"shape":"ListFreeTrialStatusesV2Response"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "ListInvitations":{
       "name":"ListInvitations",
       "http":{
@@ -1977,6 +1993,24 @@
       "member":{"shape":"AccountDetails"},
       "max":50,
       "min":1
+    },
+    "AccountFreeTrialStatus":{
+      "type":"structure",
+      "required":[
+        "AccountId",
+        "EvaluatedAt",
+        "FreeTrialStatuses"
+      ],
+      "members":{
+        "AccountId":{"shape":"FreeTrialAccountId"},
+        "EvaluatedAt":{"shape":"Timestamp"},
+        "FreeTrialStatuses":{"shape":"FreeTrialStatusList"}
+      }
+    },
+    "AccountFreeTrialStatusList":{
+      "type":"list",
+      "member":{"shape":"AccountFreeTrialStatus"},
+      "max":100
     },
     "AccountId":{"type":"string"},
     "AccountIdList":{
@@ -9771,6 +9805,56 @@
       "type":"list",
       "member":{"shape":"FirewallPolicyStatelessRuleGroupReferencesDetails"}
     },
+    "FreeTrialAccountId":{
+      "type":"string",
+      "pattern":"^[0-9]{12}$"
+    },
+    "FreeTrialAccountIdList":{
+      "type":"list",
+      "member":{"shape":"FreeTrialAccountId"},
+      "max":50,
+      "min":1
+    },
+    "FreeTrialStatus":{
+      "type":"structure",
+      "required":[
+        "FeatureType",
+        "Status",
+        "StartedAt",
+        "ExpiresAt"
+      ],
+      "members":{
+        "FeatureType":{"shape":"FreeTrialType"},
+        "Status":{"shape":"FreeTrialStatusValue"},
+        "StartedAt":{"shape":"Timestamp"},
+        "ExpiresAt":{"shape":"Timestamp"}
+      }
+    },
+    "FreeTrialStatusList":{
+      "type":"list",
+      "member":{"shape":"FreeTrialStatus"},
+      "max":50
+    },
+    "FreeTrialStatusValue":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "INACTIVE"
+      ]
+    },
+    "FreeTrialStatusValueList":{
+      "type":"list",
+      "member":{"shape":"FreeTrialStatusValue"},
+      "max":10,
+      "min":1
+    },
+    "FreeTrialType":{
+      "type":"string",
+      "enum":[
+        "SECURITY_HUB_V2",
+        "SECURITY_HUB_V2_MULTI_CLOUD_AZURE"
+      ]
+    },
     "GenerateRecommendedPolicyV2Request":{
       "type":"structure",
       "required":["MetadataUid"],
@@ -10883,6 +10967,23 @@
       "type":"structure",
       "members":{
         "FindingAggregators":{"shape":"FindingAggregatorList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListFreeTrialStatusesV2Request":{
+      "type":"structure",
+      "members":{
+        "AccountIds":{"shape":"FreeTrialAccountIdList"},
+        "Statuses":{"shape":"FreeTrialStatusValueList"},
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListFreeTrialStatusesV2Response":{
+      "type":"structure",
+      "required":["AccountFreeTrialStatuses"],
+      "members":{
+        "AccountFreeTrialStatuses":{"shape":"AccountFreeTrialStatusList"},
         "NextToken":{"shape":"NextToken"}
       }
     },

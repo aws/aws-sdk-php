@@ -7,6 +7,8 @@ use Aws\AwsClient;
  * This client is used to interact with the **AWS End User Messaging Social** service.
  * @method \Aws\Result associateWhatsAppBusinessAccount(array $args = [])
  * @method \GuzzleHttp\Promise\Promise associateWhatsAppBusinessAccountAsync(array $args = [])
+ * @method \Aws\Result createWhatsAppDataset(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createWhatsAppDatasetAsync(array $args = [])
  * @method \Aws\Result createWhatsAppFlow(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createWhatsAppFlowAsync(array $args = [])
  * @method \Aws\Result createWhatsAppMessageTemplate(array $args = [])
@@ -55,6 +57,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise publishWhatsAppFlowAsync(array $args = [])
  * @method \Aws\Result putWhatsAppBusinessAccountEventDestinations(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putWhatsAppBusinessAccountEventDestinationsAsync(array $args = [])
+ * @method \Aws\Result sendWhatsAppConversionEvent(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise sendWhatsAppConversionEventAsync(array $args = [])
  * @method \Aws\Result sendWhatsAppMessage(array $args = [])
  * @method \GuzzleHttp\Promise\Promise sendWhatsAppMessageAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])

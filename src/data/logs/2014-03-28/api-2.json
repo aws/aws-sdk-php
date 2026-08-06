@@ -2855,6 +2855,7 @@
       "required":["logGroupIdentifiers"],
       "members":{
         "logGroupIdentifiers":{"shape":"DescribeFieldIndexesLogGroupIdentifiers"},
+        "indexCategories":{"shape":"IndexCategories"},
         "nextToken":{"shape":"NextToken"}
       }
     },
@@ -3382,7 +3383,8 @@
         "lastScanTime":{"shape":"Timestamp"},
         "firstEventTime":{"shape":"Timestamp"},
         "lastEventTime":{"shape":"Timestamp"},
-        "type":{"shape":"IndexType"}
+        "type":{"shape":"IndexType"},
+        "indexCategory":{"shape":"IndexCategory"}
       }
     },
     "FieldIndexName":{
@@ -3912,6 +3914,20 @@
       "member":{"shape":"ImportStatus"}
     },
     "IncludeLinkedAccounts":{"type":"boolean"},
+    "IndexCategories":{
+      "type":"list",
+      "member":{"shape":"IndexCategory"},
+      "max":4
+    },
+    "IndexCategory":{
+      "type":"string",
+      "enum":[
+        "DEFAULT",
+        "CUSTOM",
+        "AUTO",
+        "INACTIVE"
+      ]
+    },
     "IndexPolicies":{
       "type":"list",
       "member":{"shape":"IndexPolicy"}

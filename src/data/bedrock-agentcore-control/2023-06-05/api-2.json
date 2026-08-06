@@ -32,6 +32,26 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "BatchPutGatewayRateLimits":{
+      "name":"BatchPutGatewayRateLimits",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/gateways/{gatewayIdentifier}/rate-limits/batch",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchPutGatewayRateLimitsRequest"},
+      "output":{"shape":"BatchPutGatewayRateLimitsResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "CreateAgentRuntime":{
       "name":"CreateAgentRuntime",
       "http":{
@@ -129,6 +149,27 @@
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "CreateCapacityProvider":{
+      "name":"CreateCapacityProvider",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/capacity-providers",
+        "responseCode":202
+      },
+      "input":{"shape":"CreateCapacityProviderInput"},
+      "output":{"shape":"CreateCapacityProviderOutput"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"RetryableConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"}
       ],
       "idempotent":true
@@ -239,6 +280,26 @@
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "CreateGatewayRateLimit":{
+      "name":"CreateGatewayRateLimit",
+      "http":{
+        "method":"POST",
+        "requestUri":"/gateways/{gatewayIdentifier}/rate-limits",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateGatewayRateLimitRequest"},
+      "output":{"shape":"CreateGatewayRateLimitResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ],
@@ -637,6 +698,26 @@
       ],
       "idempotent":true
     },
+    "DeleteCapacityProvider":{
+      "name":"DeleteCapacityProvider",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/capacity-providers/{capacityProviderId}",
+        "responseCode":202
+      },
+      "input":{"shape":"DeleteCapacityProviderInput"},
+      "output":{"shape":"DeleteCapacityProviderOutput"},
+      "errors":[
+        {"shape":"RetryableConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "DeleteCodeInterpreter":{
       "name":"DeleteCodeInterpreter",
       "http":{
@@ -745,6 +826,25 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteGatewayRateLimit":{
+      "name":"DeleteGatewayRateLimit",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/gateways/{gatewayIdentifier}/rate-limits/{rateLimitId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteGatewayRateLimitRequest"},
+      "output":{"shape":"DeleteGatewayRateLimitResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
@@ -1145,6 +1245,24 @@
       ],
       "readonly":true
     },
+    "GetCapacityProvider":{
+      "name":"GetCapacityProvider",
+      "http":{
+        "method":"GET",
+        "requestUri":"/capacity-providers/{capacityProviderId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetCapacityProviderInput"},
+      "output":{"shape":"GetCapacityProviderOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
     "GetCodeInterpreter":{
       "name":"GetCodeInterpreter",
       "http":{
@@ -1245,6 +1363,24 @@
       },
       "input":{"shape":"GetGatewayRequest"},
       "output":{"shape":"GetGatewayResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "GetGatewayRateLimit":{
+      "name":"GetGatewayRateLimit",
+      "http":{
+        "method":"GET",
+        "requestUri":"/gateways/{gatewayIdentifier}/rate-limits/{rateLimitId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetGatewayRateLimitRequest"},
+      "output":{"shape":"GetGatewayRateLimitResponse"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
@@ -1674,6 +1810,23 @@
       ],
       "readonly":true
     },
+    "ListAgentRuntimeVersionsByCapacityProvider":{
+      "name":"ListAgentRuntimeVersionsByCapacityProvider",
+      "http":{
+        "method":"POST",
+        "requestUri":"/capacity-providers/{capacityProviderId}/runtime-versions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListAgentRuntimeVersionsByCapacityProviderInput"},
+      "output":{"shape":"ListAgentRuntimeVersionsByCapacityProviderOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
     "ListAgentRuntimes":{
       "name":"ListAgentRuntimes",
       "http":{
@@ -1739,6 +1892,23 @@
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "ListCapacityProviders":{
+      "name":"ListCapacityProviders",
+      "http":{
+        "method":"POST",
+        "requestUri":"/capacity-providers",
+        "responseCode":200
+      },
+      "input":{"shape":"ListCapacityProvidersInput"},
+      "output":{"shape":"ListCapacityProvidersOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ],
@@ -1862,6 +2032,24 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "ListGatewayRateLimits":{
+      "name":"ListGatewayRateLimits",
+      "http":{
+        "method":"GET",
+        "requestUri":"/gateways/{gatewayIdentifier}/rate-limits",
+        "responseCode":200
+      },
+      "input":{"shape":"ListGatewayRateLimitsRequest"},
+      "output":{"shape":"ListGatewayRateLimitsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ],
@@ -2470,6 +2658,26 @@
       ],
       "idempotent":true
     },
+    "UpdateCapacityProvider":{
+      "name":"UpdateCapacityProvider",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/capacity-providers/{capacityProviderId}",
+        "responseCode":202
+      },
+      "input":{"shape":"UpdateCapacityProviderInput"},
+      "output":{"shape":"UpdateCapacityProviderOutput"},
+      "errors":[
+        {"shape":"RetryableConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "UpdateConfigurationBundle":{
       "name":"UpdateConfigurationBundle",
       "http":{
@@ -2565,6 +2773,24 @@
         {"shape":"InternalServerException"}
       ],
       "idempotent":true
+    },
+    "UpdateGatewayRateLimit":{
+      "name":"UpdateGatewayRateLimit",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/gateways/{gatewayIdentifier}/rate-limits/{rateLimitId}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateGatewayRateLimitRequest"},
+      "output":{"shape":"UpdateGatewayRateLimitResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
     },
     "UpdateGatewayRule":{
       "name":"UpdateGatewayRule",
@@ -3119,6 +3345,23 @@
       "min":1,
       "pattern":"([1-9][0-9]{0,4})"
     },
+    "AgentRuntimeVersionSummary":{
+      "type":"structure",
+      "required":[
+        "agentRuntimeArn",
+        "agentRuntimeVersion",
+        "status"
+      ],
+      "members":{
+        "agentRuntimeArn":{"shape":"AgentRuntimeArn"},
+        "agentRuntimeVersion":{"shape":"AgentRuntimeVersion"},
+        "status":{"shape":"AgentRuntimeStatus"}
+      }
+    },
+    "AgentRuntimeVersionSummaryList":{
+      "type":"list",
+      "member":{"shape":"AgentRuntimeVersionSummary"}
+    },
     "AgentRuntimes":{
       "type":"list",
       "member":{"shape":"AgentRuntime"}
@@ -3389,6 +3632,51 @@
       "type":"string",
       "pattern":"[0-9]{12}"
     },
+    "BatchPutGatewayRateLimitsRequest":{
+      "type":"structure",
+      "required":[
+        "gatewayIdentifier",
+        "rateLimits"
+      ],
+      "members":{
+        "gatewayIdentifier":{
+          "shape":"GatewayIdentifier",
+          "location":"uri",
+          "locationName":"gatewayIdentifier"
+        },
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "rateLimits":{"shape":"BatchPutLimitEntries"}
+      }
+    },
+    "BatchPutGatewayRateLimitsResponse":{
+      "type":"structure",
+      "required":["rateLimits"],
+      "members":{
+        "rateLimits":{"shape":"GatewayRateLimits"}
+      }
+    },
+    "BatchPutLimitEntries":{
+      "type":"list",
+      "member":{"shape":"BatchPutLimitEntry"},
+      "max":50,
+      "min":1
+    },
+    "BatchPutLimitEntry":{
+      "type":"structure",
+      "required":[
+        "dimensionKeys",
+        "entries"
+      ],
+      "members":{
+        "rateLimitId":{"shape":"GatewayRateLimitId"},
+        "description":{"shape":"GatewayRateLimitDescription"},
+        "dimensionKeys":{"shape":"DimensionKeys"},
+        "entries":{"shape":"LimitEntries"}
+      }
+    },
     "BedrockAgentcoreResourceArn":{
       "type":"string",
       "max":1011,
@@ -3554,6 +3842,121 @@
         "status":{"shape":"BrowserStatus"},
         "createdAt":{"shape":"DateTimestamp"},
         "lastUpdatedAt":{"shape":"DateTimestamp"}
+      }
+    },
+    "CapacityProviderArn":{
+      "type":"string",
+      "pattern":"arn:aws(-[^:]+)?:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:capacity-provider/[a-zA-Z][a-zA-Z0-9_]{0,47}-[a-zA-Z0-9]{10}"
+    },
+    "CapacityProviderConfiguration":{
+      "type":"structure",
+      "members":{
+        "capacityProviderArn":{"shape":"CapacityProviderArn"}
+      }
+    },
+    "CapacityProviderId":{
+      "type":"string",
+      "max":59,
+      "min":12,
+      "pattern":"[a-zA-Z][a-zA-Z0-9_]{0,47}-[a-zA-Z0-9]{10}"
+    },
+    "CapacityProviderList":{
+      "type":"list",
+      "member":{"shape":"CapacityProviderSummary"}
+    },
+    "CapacityProviderName":{
+      "type":"string",
+      "max":48,
+      "min":1,
+      "pattern":"[a-zA-Z][a-zA-Z0-9_]{0,47}"
+    },
+    "CapacityProviderStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "CREATE_FAILED",
+        "UPDATING",
+        "UPDATE_FAILED",
+        "READY",
+        "DELETING",
+        "DELETE_FAILED"
+      ]
+    },
+    "CapacityProviderStatusCode":{
+      "type":"string",
+      "enum":[
+        "VALIDATION_ERROR",
+        "QUOTA_EXCEEDED",
+        "THROTTLED",
+        "INTERNAL_SERVER_EXCEPTION"
+      ]
+    },
+    "CapacityProviderSummary":{
+      "type":"structure",
+      "required":[
+        "capacityProviderId",
+        "capacityProviderArn",
+        "name",
+        "status",
+        "lastUpdatedAt"
+      ],
+      "members":{
+        "capacityProviderId":{"shape":"CapacityProviderId"},
+        "capacityProviderArn":{"shape":"CapacityProviderArn"},
+        "name":{"shape":"CapacityProviderName"},
+        "status":{"shape":"CapacityProviderStatus"},
+        "lastUpdatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "CapacityProviderVolumeConfiguration":{
+      "type":"structure",
+      "required":[
+        "volumeName",
+        "mountPath"
+      ],
+      "members":{
+        "volumeName":{"shape":"CapacityProviderVolumeName"},
+        "mountPath":{"shape":"MountPath"}
+      }
+    },
+    "CapacityProviderVolumeName":{
+      "type":"string",
+      "max":48,
+      "min":1,
+      "pattern":"[a-zA-Z][a-zA-Z0-9_-]{0,47}"
+    },
+    "CapacityReservationId":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"cr-[0-9a-z]+"
+    },
+    "CapacityReservationPreference":{
+      "type":"string",
+      "enum":[
+        "capacity-reservations-only",
+        "open",
+        "none"
+      ]
+    },
+    "CapacityReservationResourceGroupArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"arn:aws(-[^:]+)?:resource-groups:[a-z0-9-]+:[0-9]{12}:group/[a-zA-Z0-9_-]+"
+    },
+    "CapacityReservationSpecification":{
+      "type":"structure",
+      "members":{
+        "capacityReservationPreference":{"shape":"CapacityReservationPreference"},
+        "capacityReservationTarget":{"shape":"CapacityReservationTarget"}
+      }
+    },
+    "CapacityReservationTarget":{
+      "type":"structure",
+      "members":{
+        "capacityReservationId":{"shape":"CapacityReservationId"},
+        "capacityReservationResourceGroupArn":{"shape":"CapacityReservationResourceGroupArn"}
       }
     },
     "CategoricalScaleDefinition":{
@@ -3834,6 +4237,13 @@
       "max":2048,
       "min":1,
       "pattern":"[a-zA-Z][a-zA-Z0-9_:/.\\-]{0,2047}"
+    },
+    "ComputeConfiguration":{
+      "type":"structure",
+      "members":{
+        "ec2Configuration":{"shape":"Ec2Configuration"}
+      },
+      "union":true
     },
     "ConcurrentModificationException":{
       "type":"structure",
@@ -4136,8 +4546,7 @@
       "required":[
         "agentRuntimeName",
         "agentRuntimeArtifact",
-        "roleArn",
-        "networkConfiguration"
+        "roleArn"
       ],
       "members":{
         "agentRuntimeName":{"shape":"AgentRuntimeName"},
@@ -4155,6 +4564,7 @@
         "lifecycleConfiguration":{"shape":"LifecycleConfiguration"},
         "environmentVariables":{"shape":"EnvironmentVariablesMap"},
         "filesystemConfigurations":{"shape":"FilesystemConfigurations"},
+        "capacityProviderConfiguration":{"shape":"CapacityProviderConfiguration"},
         "tags":{"shape":"TagsMap"}
       }
     },
@@ -4266,6 +4676,40 @@
         "browserArn":{"shape":"BrowserArn"},
         "createdAt":{"shape":"DateTimestamp"},
         "status":{"shape":"BrowserStatus"}
+      }
+    },
+    "CreateCapacityProviderInput":{
+      "type":"structure",
+      "required":[
+        "name",
+        "permissionsConfiguration",
+        "computeConfiguration"
+      ],
+      "members":{
+        "name":{"shape":"CapacityProviderName"},
+        "description":{"shape":"Description"},
+        "permissionsConfiguration":{"shape":"PermissionsConfiguration"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "tags":{"shape":"TagsMap"},
+        "computeConfiguration":{"shape":"ComputeConfiguration"}
+      }
+    },
+    "CreateCapacityProviderOutput":{
+      "type":"structure",
+      "required":[
+        "capacityProviderId",
+        "capacityProviderArn",
+        "name",
+        "status"
+      ],
+      "members":{
+        "capacityProviderId":{"shape":"CapacityProviderId"},
+        "capacityProviderArn":{"shape":"CapacityProviderArn"},
+        "name":{"shape":"CapacityProviderName"},
+        "status":{"shape":"CapacityProviderStatus"}
       }
     },
     "CreateCodeInterpreterRequest":{
@@ -4449,6 +4893,51 @@
         "evaluatorId":{"shape":"EvaluatorId"},
         "createdAt":{"shape":"Timestamp"},
         "status":{"shape":"EvaluatorStatus"}
+      }
+    },
+    "CreateGatewayRateLimitRequest":{
+      "type":"structure",
+      "required":[
+        "gatewayIdentifier",
+        "dimensionKeys",
+        "entries"
+      ],
+      "members":{
+        "gatewayIdentifier":{
+          "shape":"GatewayIdentifier",
+          "location":"uri",
+          "locationName":"gatewayIdentifier"
+        },
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "rateLimitId":{"shape":"GatewayRateLimitId"},
+        "description":{"shape":"GatewayRateLimitDescription"},
+        "dimensionKeys":{"shape":"DimensionKeys"},
+        "entries":{"shape":"LimitEntries"}
+      }
+    },
+    "CreateGatewayRateLimitResponse":{
+      "type":"structure",
+      "required":[
+        "rateLimitId",
+        "gatewayIdentifier",
+        "dimensionKeys",
+        "entries",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "rateLimitId":{"shape":"GatewayRateLimitId"},
+        "gatewayIdentifier":{"shape":"GatewayIdentifier"},
+        "description":{"shape":"GatewayRateLimitDescription"},
+        "dimensionKeys":{"shape":"DimensionKeys"},
+        "entries":{"shape":"LimitEntries"},
+        "status":{"shape":"GatewayRateLimitStatus"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"}
       }
     },
     "CreateGatewayRequest":{
@@ -5551,6 +6040,11 @@
           "location":"uri",
           "locationName":"agentRuntimeId"
         },
+        "agentRuntimeVersion":{
+          "shape":"AgentRuntimeVersion",
+          "location":"querystring",
+          "locationName":"version"
+        },
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true,
@@ -5564,7 +6058,8 @@
       "required":["status"],
       "members":{
         "status":{"shape":"AgentRuntimeStatus"},
-        "agentRuntimeId":{"shape":"AgentRuntimeId"}
+        "agentRuntimeId":{"shape":"AgentRuntimeId"},
+        "agentRuntimeVersion":{"shape":"AgentRuntimeVersion"}
       }
     },
     "DeleteApiKeyCredentialProviderRequest":{
@@ -5639,6 +6134,34 @@
         "browserId":{"shape":"BrowserId"},
         "status":{"shape":"BrowserStatus"},
         "lastUpdatedAt":{"shape":"DateTimestamp"}
+      }
+    },
+    "DeleteCapacityProviderInput":{
+      "type":"structure",
+      "required":["capacityProviderId"],
+      "members":{
+        "capacityProviderId":{
+          "shape":"CapacityProviderId",
+          "location":"uri",
+          "locationName":"capacityProviderId"
+        },
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
+        }
+      }
+    },
+    "DeleteCapacityProviderOutput":{
+      "type":"structure",
+      "required":[
+        "capacityProviderId",
+        "status"
+      ],
+      "members":{
+        "capacityProviderId":{"shape":"CapacityProviderId"},
+        "status":{"shape":"CapacityProviderStatus"}
       }
     },
     "DeleteCodeInterpreterRequest":{
@@ -5790,6 +6313,36 @@
         "evaluatorArn":{"shape":"EvaluatorArn"},
         "evaluatorId":{"shape":"EvaluatorId"},
         "status":{"shape":"EvaluatorStatus"}
+      }
+    },
+    "DeleteGatewayRateLimitRequest":{
+      "type":"structure",
+      "required":[
+        "gatewayIdentifier",
+        "rateLimitId"
+      ],
+      "members":{
+        "gatewayIdentifier":{
+          "shape":"GatewayIdentifier",
+          "location":"uri",
+          "locationName":"gatewayIdentifier"
+        },
+        "rateLimitId":{
+          "shape":"GatewayRateLimitId",
+          "location":"uri",
+          "locationName":"rateLimitId"
+        }
+      }
+    },
+    "DeleteGatewayRateLimitResponse":{
+      "type":"structure",
+      "required":[
+        "rateLimitId",
+        "status"
+      ],
+      "members":{
+        "rateLimitId":{"shape":"GatewayRateLimitId"},
+        "status":{"shape":"GatewayRateLimitStatus"}
       }
     },
     "DeleteGatewayRequest":{
@@ -6254,6 +6807,29 @@
         "agentSkills":{"shape":"AgentSkillsDescriptor"}
       }
     },
+    "DeviceName":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[a-zA-Z0-9/._-]+"
+    },
+    "DimensionKey":{
+      "type":"string",
+      "max":80,
+      "min":1,
+      "pattern":"(targetName|toolName|qualifiedModelId|\\$\\.context\\.iam\\.principal|\\$\\.context\\.iam\\.sourceIdentity|\\$\\.context\\.jwt\\.[a-zA-Z_][a-zA-Z0-9_\\-\\.]{0,61}[a-zA-Z0-9_])"
+    },
+    "DimensionKeys":{
+      "type":"list",
+      "member":{"shape":"DimensionKey"},
+      "max":10,
+      "min":1
+    },
+    "DimensionValue":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
     "DiscoveryUrl":{
       "type":"string",
       "pattern":".+/\\.well-known/openid-configuration"
@@ -6282,6 +6858,71 @@
         "MODIFIED",
         "UNMODIFIED"
       ]
+    },
+    "EC2InstanceType":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "EbsCardIndex":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "EbsSnapshotId":{
+      "type":"string",
+      "max":64,
+      "min":13,
+      "pattern":"snap-[a-f0-9]{8,17}"
+    },
+    "EbsVolumeConfiguration":{
+      "type":"structure",
+      "required":[
+        "name",
+        "sizeGiB"
+      ],
+      "members":{
+        "name":{"shape":"VolumeName"},
+        "sizeGiB":{"shape":"VolumeSizeGiB"},
+        "volumeType":{"shape":"EbsVolumeType"},
+        "iops":{"shape":"VolumeIops"},
+        "throughput":{"shape":"VolumeThroughput"},
+        "encrypted":{"shape":"Boolean"},
+        "kmsKeyId":{"shape":"KmsKeyId"},
+        "snapshotId":{"shape":"EbsSnapshotId"}
+      }
+    },
+    "EbsVolumeInitializationRate":{
+      "type":"integer",
+      "box":true,
+      "max":300,
+      "min":100
+    },
+    "EbsVolumeType":{
+      "type":"string",
+      "enum":[
+        "standard",
+        "io1",
+        "io2",
+        "gp2",
+        "sc1",
+        "st1",
+        "gp3"
+      ]
+    },
+    "Ec2Configuration":{
+      "type":"structure",
+      "required":[
+        "launchTemplateSource",
+        "vpcConfiguration"
+      ],
+      "members":{
+        "launchTemplateSource":{"shape":"LaunchTemplateSource"},
+        "vpcConfiguration":{"shape":"VpcConfiguration"},
+        "volumes":{"shape":"VolumeConfigurationList"},
+        "lifecycleConfiguration":{"shape":"InstanceLifecycleConfiguration"},
+        "rootVolume":{"shape":"RootVolumeConfiguration"}
+      }
     },
     "EfsAccessPointArn":{
       "type":"string",
@@ -6373,6 +7014,40 @@
       "max":50,
       "min":0,
       "sensitive":true
+    },
+    "EphemeralBlockDeviceMapping":{
+      "type":"structure",
+      "members":{
+        "deviceName":{"shape":"DeviceName"},
+        "virtualName":{"shape":"VirtualDeviceName"},
+        "ebs":{"shape":"EphemeralEBSVolumeConfiguration"}
+      }
+    },
+    "EphemeralEBSVolumeConfiguration":{
+      "type":"structure",
+      "members":{
+        "volumeType":{"shape":"EbsVolumeType"},
+        "iops":{"shape":"VolumeIops"},
+        "throughput":{"shape":"EphemeralEBSVolumeConfigurationThroughputInteger"},
+        "encrypted":{"shape":"Boolean"},
+        "kmsKeyId":{"shape":"KmsKeyId"},
+        "snapshotId":{"shape":"EbsSnapshotId"},
+        "volumeSize":{"shape":"EphemeralEBSVolumeConfigurationVolumeSizeInteger"},
+        "volumeInitializationRate":{"shape":"EbsVolumeInitializationRate"},
+        "ebsCardIndex":{"shape":"EbsCardIndex"}
+      }
+    },
+    "EphemeralEBSVolumeConfigurationThroughputInteger":{
+      "type":"integer",
+      "box":true,
+      "max":2000,
+      "min":125
+    },
+    "EphemeralEBSVolumeConfigurationVolumeSizeInteger":{
+      "type":"integer",
+      "box":true,
+      "max":65536,
+      "min":1
     },
     "EpisodicConsolidationOverride":{
       "type":"structure",
@@ -6665,7 +7340,8 @@
       "members":{
         "sessionStorage":{"shape":"SessionStorageConfiguration"},
         "s3FilesAccessPoint":{"shape":"S3FilesAccessPointConfiguration"},
-        "efsAccessPoint":{"shape":"EfsAccessPointConfiguration"}
+        "efsAccessPoint":{"shape":"EfsAccessPointConfiguration"},
+        "capacityProviderVolume":{"shape":"CapacityProviderVolumeConfiguration"}
       },
       "union":true
     },
@@ -6865,6 +7541,64 @@
     "GatewayProtocolType":{
       "type":"string",
       "enum":["MCP"]
+    },
+    "GatewayRateLimitDescription":{
+      "type":"string",
+      "max":512,
+      "min":0
+    },
+    "GatewayRateLimitDetail":{
+      "type":"structure",
+      "required":[
+        "rateLimitId",
+        "gatewayIdentifier",
+        "dimensionKeys",
+        "entries",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "rateLimitId":{"shape":"GatewayRateLimitId"},
+        "gatewayIdentifier":{"shape":"GatewayIdentifier"},
+        "description":{"shape":"GatewayRateLimitDescription"},
+        "dimensionKeys":{"shape":"DimensionKeys"},
+        "entries":{"shape":"LimitEntries"},
+        "status":{"shape":"GatewayRateLimitStatus"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"}
+      }
+    },
+    "GatewayRateLimitId":{
+      "type":"string",
+      "max":64,
+      "min":2,
+      "pattern":"[a-zA-Z0-9][a-zA-Z0-9\\-_\\.]{0,62}[a-zA-Z0-9]"
+    },
+    "GatewayRateLimitMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "GatewayRateLimitNextToken":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"\\S*"
+    },
+    "GatewayRateLimitStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "ACTIVE",
+        "UPDATING",
+        "DELETING"
+      ]
+    },
+    "GatewayRateLimits":{
+      "type":"list",
+      "member":{"shape":"GatewayRateLimitDetail"}
     },
     "GatewayRuleDescription":{
       "type":"string",
@@ -7101,7 +7835,8 @@
         "authorizerConfiguration":{"shape":"AuthorizerConfiguration"},
         "requestHeaderConfiguration":{"shape":"RequestHeaderConfiguration"},
         "metadataConfiguration":{"shape":"RuntimeMetadataConfiguration"},
-        "filesystemConfigurations":{"shape":"FilesystemConfigurations"}
+        "filesystemConfigurations":{"shape":"FilesystemConfigurations"},
+        "capacityProviderConfiguration":{"shape":"CapacityProviderConfiguration"}
       }
     },
     "GetApiKeyCredentialProviderRequest":{
@@ -7200,6 +7935,43 @@
         "filesystemConfigurations":{"shape":"ToolsFileSystemConfigurations"},
         "status":{"shape":"BrowserStatus"},
         "failureReason":{"shape":"String"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "lastUpdatedAt":{"shape":"DateTimestamp"}
+      }
+    },
+    "GetCapacityProviderInput":{
+      "type":"structure",
+      "required":["capacityProviderId"],
+      "members":{
+        "capacityProviderId":{
+          "shape":"CapacityProviderId",
+          "location":"uri",
+          "locationName":"capacityProviderId"
+        }
+      }
+    },
+    "GetCapacityProviderOutput":{
+      "type":"structure",
+      "required":[
+        "capacityProviderId",
+        "capacityProviderArn",
+        "name",
+        "status",
+        "permissionsConfiguration",
+        "computeConfiguration",
+        "createdAt",
+        "lastUpdatedAt"
+      ],
+      "members":{
+        "capacityProviderId":{"shape":"CapacityProviderId"},
+        "capacityProviderArn":{"shape":"CapacityProviderArn"},
+        "name":{"shape":"CapacityProviderName"},
+        "status":{"shape":"CapacityProviderStatus"},
+        "description":{"shape":"Description"},
+        "statusCode":{"shape":"CapacityProviderStatusCode"},
+        "statusReason":{"shape":"String"},
+        "permissionsConfiguration":{"shape":"PermissionsConfiguration"},
+        "computeConfiguration":{"shape":"ComputeConfiguration"},
         "createdAt":{"shape":"DateTimestamp"},
         "lastUpdatedAt":{"shape":"DateTimestamp"}
       }
@@ -7412,6 +8184,47 @@
         "updatedAt":{"shape":"Timestamp"},
         "lockedForModification":{"shape":"Boolean"},
         "kmsKeyArn":{"shape":"KmsKeyArn"}
+      }
+    },
+    "GetGatewayRateLimitRequest":{
+      "type":"structure",
+      "required":[
+        "gatewayIdentifier",
+        "rateLimitId"
+      ],
+      "members":{
+        "gatewayIdentifier":{
+          "shape":"GatewayIdentifier",
+          "location":"uri",
+          "locationName":"gatewayIdentifier"
+        },
+        "rateLimitId":{
+          "shape":"GatewayRateLimitId",
+          "location":"uri",
+          "locationName":"rateLimitId"
+        }
+      }
+    },
+    "GetGatewayRateLimitResponse":{
+      "type":"structure",
+      "required":[
+        "rateLimitId",
+        "gatewayIdentifier",
+        "dimensionKeys",
+        "entries",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "rateLimitId":{"shape":"GatewayRateLimitId"},
+        "gatewayIdentifier":{"shape":"GatewayIdentifier"},
+        "description":{"shape":"GatewayRateLimitDescription"},
+        "dimensionKeys":{"shape":"DimensionKeys"},
+        "entries":{"shape":"LimitEntries"},
+        "status":{"shape":"GatewayRateLimitStatus"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"}
       }
     },
     "GetGatewayRequest":{
@@ -9164,6 +9977,44 @@
       "max":10,
       "min":0
     },
+    "InstanceLifecycleConfiguration":{
+      "type":"structure",
+      "members":{
+        "idleInstanceTimeout":{"shape":"InstanceLifecycleConfigurationIdleInstanceTimeoutInteger"},
+        "maxLifetime":{"shape":"InstanceLifecycleConfigurationMaxLifetimeInteger"}
+      }
+    },
+    "InstanceLifecycleConfigurationIdleInstanceTimeoutInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1209600,
+      "min":60
+    },
+    "InstanceLifecycleConfigurationMaxLifetimeInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1209600,
+      "min":60
+    },
+    "InstanceProfileArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"arn:aws(-[^:]+)?:iam::[0-9]{12}:instance-profile/([!-~]{1,510}/)?([\\w+=,.@-]{1,128})"
+    },
+    "InstanceRequirements":{
+      "type":"structure",
+      "required":["allowedInstanceTypes"],
+      "members":{
+        "allowedInstanceTypes":{"shape":"InstanceRequirementsAllowedInstanceTypesList"}
+      }
+    },
+    "InstanceRequirementsAllowedInstanceTypesList":{
+      "type":"list",
+      "member":{"shape":"EC2InstanceType"},
+      "max":30,
+      "min":1
+    },
     "Integer":{
       "type":"integer",
       "box":true
@@ -9281,6 +10132,12 @@
       "min":1,
       "pattern":"arn:aws(|-cn|-us-gov):kms:[a-zA-Z0-9-]*:[0-9]{12}:key/[a-zA-Z0-9-]{36}"
     },
+    "KmsKeyId":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws(-[^:]+)?:kms:[a-z0-9-]+:[0-9]{12}:key/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
+    },
     "KmsKeySourceType":{
       "type":"structure",
       "required":["kmsKeyArn"],
@@ -9325,6 +10182,56 @@
         "arn":{"shape":"LambdaFunctionArn"}
       }
     },
+    "LaunchParameters":{
+      "type":"structure",
+      "required":[
+        "operatingSystem",
+        "instanceRequirements"
+      ],
+      "members":{
+        "operatingSystem":{"shape":"OperatingSystem"},
+        "instanceRequirements":{"shape":"InstanceRequirements"},
+        "ephemeralVolumes":{"shape":"LaunchParametersEphemeralVolumesList"},
+        "monitoring":{"shape":"Monitoring"},
+        "licenseSpecifications":{"shape":"LaunchParametersLicenseSpecificationsList"},
+        "capacityReservationSpecification":{"shape":"CapacityReservationSpecification"},
+        "sshKeyName":{"shape":"SSHKeyName"},
+        "instanceProfileArn":{"shape":"InstanceProfileArn"},
+        "propagatedTags":{"shape":"TagsMap"}
+      }
+    },
+    "LaunchParametersEphemeralVolumesList":{
+      "type":"list",
+      "member":{"shape":"EphemeralBlockDeviceMapping"},
+      "max":5,
+      "min":0
+    },
+    "LaunchParametersLicenseSpecificationsList":{
+      "type":"list",
+      "member":{"shape":"LicenseSpecification"},
+      "max":5,
+      "min":0
+    },
+    "LaunchTemplateSource":{
+      "type":"structure",
+      "members":{
+        "launchParameters":{"shape":"LaunchParameters"}
+      },
+      "union":true
+    },
+    "LicenseConfigurationArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"arn:aws(-[^:]+)?:license-manager:[a-z0-9-]+:[0-9]{12}:license-configuration:[a-zA-Z0-9_-]+"
+    },
+    "LicenseSpecification":{
+      "type":"structure",
+      "required":["licenseConfigurationArn"],
+      "members":{
+        "licenseConfigurationArn":{"shape":"LicenseConfigurationArn"}
+      }
+    },
     "LifecycleConfiguration":{
       "type":"structure",
       "members":{
@@ -9335,14 +10242,37 @@
     "LifecycleConfigurationIdleRuntimeSessionTimeoutInteger":{
       "type":"integer",
       "box":true,
-      "max":28800,
+      "max":1209600,
       "min":60
     },
     "LifecycleConfigurationMaxLifetimeInteger":{
       "type":"integer",
       "box":true,
-      "max":28800,
+      "max":1209600,
       "min":60
+    },
+    "LimitEntries":{
+      "type":"list",
+      "member":{"shape":"LimitEntry"},
+      "max":1000,
+      "min":1
+    },
+    "LimitEntry":{
+      "type":"structure",
+      "required":["dimensions"],
+      "members":{
+        "dimensions":{"shape":"LimitEntryDimensionsMap"},
+        "requests":{"shape":"RateConfigs"},
+        "tokens":{"shape":"RateConfigs"},
+        "connections":{"shape":"RateConfigs"}
+      }
+    },
+    "LimitEntryDimensionsMap":{
+      "type":"map",
+      "key":{"shape":"DimensionKey"},
+      "value":{"shape":"DimensionValue"},
+      "max":10,
+      "min":1
     },
     "LinkedinOauth2ProviderConfigInput":{
       "type":"structure",
@@ -9389,6 +10319,35 @@
       "members":{
         "runtimeEndpoints":{"shape":"AgentRuntimeEndpoints"},
         "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListAgentRuntimeVersionsByCapacityProviderInput":{
+      "type":"structure",
+      "required":["capacityProviderId"],
+      "members":{
+        "capacityProviderId":{
+          "shape":"CapacityProviderId",
+          "location":"uri",
+          "locationName":"capacityProviderId"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListAgentRuntimeVersionsByCapacityProviderOutput":{
+      "type":"structure",
+      "required":["agentRuntimes"],
+      "members":{
+        "agentRuntimes":{"shape":"AgentRuntimeVersionSummaryList"},
+        "nextToken":{"shape":"String"}
       }
     },
     "ListAgentRuntimeVersionsRequest":{
@@ -9507,6 +10466,29 @@
       "required":["browserSummaries"],
       "members":{
         "browserSummaries":{"shape":"BrowserSummaries"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListCapacityProvidersInput":{
+      "type":"structure",
+      "members":{
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListCapacityProvidersOutput":{
+      "type":"structure",
+      "required":["capacityProviders"],
+      "members":{
+        "capacityProviders":{"shape":"CapacityProviderList"},
         "nextToken":{"shape":"NextToken"}
       }
     },
@@ -9752,6 +10734,35 @@
       "members":{
         "evaluators":{"shape":"EvaluatorSummaryList"},
         "nextToken":{"shape":"String"}
+      }
+    },
+    "ListGatewayRateLimitsRequest":{
+      "type":"structure",
+      "required":["gatewayIdentifier"],
+      "members":{
+        "gatewayIdentifier":{
+          "shape":"GatewayIdentifier",
+          "location":"uri",
+          "locationName":"gatewayIdentifier"
+        },
+        "maxResults":{
+          "shape":"GatewayRateLimitMaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"GatewayRateLimitNextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListGatewayRateLimitsResponse":{
+      "type":"structure",
+      "required":["rateLimits"],
+      "members":{
+        "rateLimits":{"shape":"GatewayRateLimits"},
+        "nextToken":{"shape":"GatewayRateLimitNextToken"}
       }
     },
     "ListGatewayRulesRequest":{
@@ -10933,6 +11944,13 @@
         "selfManagedConfiguration":{"shape":"ModifySelfManagedConfiguration"}
       }
     },
+    "Monitoring":{
+      "type":"string",
+      "enum":[
+        "BASIC",
+        "DETAILED"
+      ]
+    },
     "MountPath":{
       "type":"string",
       "max":200,
@@ -11274,6 +12292,13 @@
       "max":1,
       "min":0
     },
+    "OperatingSystem":{
+      "type":"string",
+      "enum":[
+        "LINUX_X86_64",
+        "LINUX_ARM64"
+      ]
+    },
     "OutputConfig":{
       "type":"structure",
       "required":["cloudWatchConfig"],
@@ -11501,6 +12526,20 @@
       "max":4096,
       "min":1,
       "pattern":"[a-zA-Z0-9\\s]+"
+    },
+    "Period":{
+      "type":"string",
+      "enum":[
+        "second",
+        "minute"
+      ]
+    },
+    "PermissionsConfiguration":{
+      "type":"structure",
+      "required":["capacityProviderOperatorRoleArn"],
+      "members":{
+        "capacityProviderOperatorRoleArn":{"shape":"RoleArn"}
+      }
     },
     "Policies":{
       "type":"list",
@@ -11909,6 +12948,29 @@
         "policy":{"shape":"ResourcePolicyBody"}
       }
     },
+    "RateConfig":{
+      "type":"structure",
+      "required":[
+        "rate",
+        "period"
+      ],
+      "members":{
+        "rate":{"shape":"RateConfigRateDouble"},
+        "period":{"shape":"Period"}
+      }
+    },
+    "RateConfigRateDouble":{
+      "type":"double",
+      "box":true,
+      "max":10000000,
+      "min":0
+    },
+    "RateConfigs":{
+      "type":"list",
+      "member":{"shape":"RateConfig"},
+      "max":1,
+      "min":1
+    },
     "RatingScale":{
       "type":"structure",
       "members":{
@@ -12255,11 +13317,47 @@
       "type":"list",
       "member":{"shape":"RestApiMethod"}
     },
+    "RetryableConflictException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
+      "exception":true,
+      "retryable":{"throttling":false}
+    },
     "RoleArn":{
       "type":"string",
       "max":2048,
       "min":1,
       "pattern":"arn:aws(-[^:]+)?:iam::([0-9]{12})?:role/.+"
+    },
+    "RootVolumeConfiguration":{
+      "type":"structure",
+      "members":{
+        "volumeType":{"shape":"EbsVolumeType"},
+        "iops":{"shape":"VolumeIops"},
+        "throughput":{"shape":"RootVolumeConfigurationThroughputInteger"},
+        "encrypted":{"shape":"Boolean"},
+        "kmsKeyId":{"shape":"KmsKeyId"},
+        "freeSpaceGiB":{"shape":"RootVolumeConfigurationFreeSpaceGiBInteger"}
+      }
+    },
+    "RootVolumeConfigurationFreeSpaceGiBInteger":{
+      "type":"integer",
+      "box":true,
+      "max":65000,
+      "min":2
+    },
+    "RootVolumeConfigurationThroughputInteger":{
+      "type":"integer",
+      "box":true,
+      "max":2000,
+      "min":125
     },
     "RouteToTargetAction":{
       "type":"structure",
@@ -12396,6 +13494,12 @@
     "S3Uri":{
       "type":"string",
       "pattern":"s3://[a-z0-9][a-z0-9.\\-]{1,61}[a-z0-9]/.{1,1024}"
+    },
+    "SSHKeyName":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[!-~][ -~]*[!-~]$|^[!-~]"
     },
     "SalesforceOauth2ProviderConfigInput":{
       "type":"structure",
@@ -13681,8 +14785,7 @@
       "required":[
         "agentRuntimeId",
         "agentRuntimeArtifact",
-        "roleArn",
-        "networkConfiguration"
+        "roleArn"
       ],
       "members":{
         "agentRuntimeId":{
@@ -13701,6 +14804,7 @@
         "metadataConfiguration":{"shape":"RuntimeMetadataConfiguration"},
         "environmentVariables":{"shape":"EnvironmentVariablesMap"},
         "filesystemConfigurations":{"shape":"FilesystemConfigurations"},
+        "capacityProviderConfiguration":{"shape":"CapacityProviderConfiguration"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -13754,6 +14858,41 @@
         "credentialProviderArn":{"shape":"ApiKeyCredentialProviderArnType"},
         "createdTime":{"shape":"Timestamp"},
         "lastUpdatedTime":{"shape":"Timestamp"}
+      }
+    },
+    "UpdateCapacityProviderInput":{
+      "type":"structure",
+      "required":["capacityProviderId"],
+      "members":{
+        "capacityProviderId":{
+          "shape":"CapacityProviderId",
+          "location":"uri",
+          "locationName":"capacityProviderId"
+        },
+        "description":{"shape":"UpdatedDescription"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "UpdateCapacityProviderOutput":{
+      "type":"structure",
+      "required":[
+        "capacityProviderId",
+        "capacityProviderArn",
+        "name",
+        "status",
+        "createdAt",
+        "lastUpdatedAt"
+      ],
+      "members":{
+        "capacityProviderId":{"shape":"CapacityProviderId"},
+        "capacityProviderArn":{"shape":"CapacityProviderArn"},
+        "name":{"shape":"CapacityProviderName"},
+        "status":{"shape":"CapacityProviderStatus"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "lastUpdatedAt":{"shape":"DateTimestamp"}
       }
     },
     "UpdateConfigurationBundleRequest":{
@@ -13907,6 +15046,50 @@
         "evaluatorId":{"shape":"EvaluatorId"},
         "updatedAt":{"shape":"Timestamp"},
         "status":{"shape":"EvaluatorStatus"}
+      }
+    },
+    "UpdateGatewayRateLimitRequest":{
+      "type":"structure",
+      "required":[
+        "gatewayIdentifier",
+        "rateLimitId",
+        "entries"
+      ],
+      "members":{
+        "gatewayIdentifier":{
+          "shape":"GatewayIdentifier",
+          "location":"uri",
+          "locationName":"gatewayIdentifier"
+        },
+        "rateLimitId":{
+          "shape":"GatewayRateLimitId",
+          "location":"uri",
+          "locationName":"rateLimitId"
+        },
+        "description":{"shape":"GatewayRateLimitDescription"},
+        "entries":{"shape":"LimitEntries"}
+      }
+    },
+    "UpdateGatewayRateLimitResponse":{
+      "type":"structure",
+      "required":[
+        "rateLimitId",
+        "gatewayIdentifier",
+        "dimensionKeys",
+        "entries",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "rateLimitId":{"shape":"GatewayRateLimitId"},
+        "gatewayIdentifier":{"shape":"GatewayIdentifier"},
+        "description":{"shape":"GatewayRateLimitDescription"},
+        "dimensionKeys":{"shape":"DimensionKeys"},
+        "entries":{"shape":"LimitEntries"},
+        "status":{"shape":"GatewayRateLimitStatus"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"}
       }
     },
     "UpdateGatewayRequest":{
@@ -14902,6 +16085,49 @@
       "max":500,
       "min":1
     },
+    "VirtualDeviceName":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"ephemeral[0-9]+"
+    },
+    "VolumeConfiguration":{
+      "type":"structure",
+      "members":{
+        "ebsConfiguration":{"shape":"EbsVolumeConfiguration"}
+      },
+      "union":true
+    },
+    "VolumeConfigurationList":{
+      "type":"list",
+      "member":{"shape":"VolumeConfiguration"},
+      "max":5,
+      "min":0
+    },
+    "VolumeIops":{
+      "type":"integer",
+      "box":true,
+      "max":256000,
+      "min":100
+    },
+    "VolumeName":{
+      "type":"string",
+      "max":48,
+      "min":1,
+      "pattern":"[a-zA-Z][a-zA-Z0-9_-]{0,47}"
+    },
+    "VolumeSizeGiB":{
+      "type":"integer",
+      "box":true,
+      "max":65536,
+      "min":1
+    },
+    "VolumeThroughput":{
+      "type":"integer",
+      "box":true,
+      "max":2000,
+      "min":125
+    },
     "VpcConfig":{
       "type":"structure",
       "required":[
@@ -14913,6 +16139,29 @@
         "subnets":{"shape":"Subnets"},
         "requireServiceS3Endpoint":{"shape":"Boolean"}
       }
+    },
+    "VpcConfiguration":{
+      "type":"structure",
+      "required":[
+        "subnets",
+        "securityGroups"
+      ],
+      "members":{
+        "subnets":{"shape":"VpcConfigurationSubnetsList"},
+        "securityGroups":{"shape":"VpcConfigurationSecurityGroupsList"}
+      }
+    },
+    "VpcConfigurationSecurityGroupsList":{
+      "type":"list",
+      "member":{"shape":"SecurityGroupId"},
+      "max":16,
+      "min":1
+    },
+    "VpcConfigurationSubnetsList":{
+      "type":"list",
+      "member":{"shape":"SubnetId"},
+      "max":16,
+      "min":1
     },
     "VpcIdentifier":{
       "type":"string",

@@ -1,0 +1,1118 @@
+{
+  "version": "2.0",
+  "service": "<p>AWS Agent Registry is a managed catalog for publishing and discovering resources such as MCP servers, agents, and agent skills. Agent Registry Control is its control-plane API: use it to create and manage registries and the records they contain, configure discovery and authorization, govern record approval and curation workflows, and manage automatic detection of resources. Data-plane search and MCP invocation operations are provided by the companion Agent Registry API.</p>",
+  "operations": {
+    "CreateRegistry": "<p>Creates a new registry, a catalog that organizes registry records and defines their discovery authorization and record approval behavior. Creation is asynchronous: the registry begins in the CREATING status and becomes usable once it reaches READY.</p>",
+    "CreateRegistryRecord": "<p>Creates a registry record within a registry. A registry record describes a discoverable resource, such as an MCP server, an agent, an agent skill, or a custom resource. Creation is asynchronous: the record is returned with the CREATING status while it is processed.</p>",
+    "DeleteRegistry": "<p>Deletes a registry. Deletion is asynchronous: the registry transitions to the DELETING status and is removed along with its registry records.</p>",
+    "DeleteRegistryRecord": "<p>Deletes a registry record</p>",
+    "GetRegistry": "<p>Gets a registry by identifier (ARN or ID)</p>",
+    "GetRegistryRecord": "<p>Retrieves the details of a registry record</p>",
+    "ListRegistries": "<p>Lists the registries in the caller's account and Region, with optional filtering by status and discovery authorizer type</p>",
+    "ListRegistryRecords": "<p>Lists the registry records within a registry, with optional filtering by name, status, and record type</p>",
+    "ListTagsForResource": "<p>List the tags on a resource</p>",
+    "SubmitRegistryRecordForApproval": "<p>Submits a DRAFT registry record for approval, moving it into the registry's approval workflow. Depending on the registry's approval configuration, the record is either auto-approved or set to PENDING_APPROVAL for a curator to approve or reject.</p>",
+    "TagResource": "<p>Tag a resource with key-value pairs</p>",
+    "UntagResource": "<p>Remove tags from a resource by key</p>",
+    "UpdateRegistry": "<p>Updates an existing registry. This operation uses PATCH semantics: specify only the fields you want to change, and omit the rest to leave them unchanged. Updates are applied asynchronously and the registry transitions to the UPDATING status while they are processed.</p>",
+    "UpdateRegistryRecord": "<p>Updates a registry record. The update is asynchronous: the record is returned with the UPDATING status while it is processed. Fields that use update wrappers follow PATCH semantics: omit the field to leave it unchanged.</p>",
+    "UpdateRegistryRecordStatus": "<p>Updates the status of a registry record as part of the registry's curation workflow, for example to approve or reject a record that is pending approval, or to deprecate an approved record so that it is no longer discoverable</p>"
+  },
+  "shapes": {
+    "A2aAgentCardDescriptor": {
+      "base": "<p>Descriptor that defines the content of an A2A (Agent-to-Agent) agent card registry record. The content is validated against the A2A protocol schema.</p>",
+      "refs": {
+        "Descriptors$a2aAgentCard": "<p>The A2A agent card descriptor, populated when the record type is AGENT.</p>"
+      }
+    },
+    "AccessDeniedException": {
+      "base": "<p>The caller is not authorized to perform the requested action.</p>",
+      "refs": {}
+    },
+    "AgentSkillsAdditionalData": {
+      "base": "<p>Additional data associated with an agent skills definition descriptor.</p>",
+      "refs": {
+        "AgentSkillsDefinitionDescriptor$additionalData": "<p>Additional data associated with the agent skills definition descriptor.</p>"
+      }
+    },
+    "AgentSkillsDefinitionDescriptor": {
+      "base": "<p>Descriptor that defines an agent skills registry record and its associated content.</p>",
+      "refs": {
+        "Descriptors$agentSkillsDefinition": "<p>The agent skills definition descriptor, populated when the record type is SKILL.</p>"
+      }
+    },
+    "AgentSkillsMdDescriptor": {
+      "base": "<p>Markdown-format descriptor containing an agent skills document.</p>",
+      "refs": {
+        "AgentSkillsAdditionalData$skillMd": "<p>The markdown skill content associated with an agent skills definition.</p>"
+      }
+    },
+    "AllowedAudience": {
+      "base": "<p>An audience value that an inbound JWT must contain to be authorized.</p>",
+      "refs": {
+        "AllowedAudienceList$member": null
+      }
+    },
+    "AllowedAudienceList": {
+      "base": "<p>The list of audience values accepted during JWT validation.</p>",
+      "refs": {
+        "CustomJWTAuthorizerConfiguration$allowedAudience": "<p>The audience values accepted during JWT validation. A token is rejected if none of its audience claims match.</p>"
+      }
+    },
+    "AllowedClient": {
+      "base": "<p>A client identifier that an inbound JWT must be issued to in order to be authorized.</p>",
+      "refs": {
+        "AllowedClientsList$member": null
+      }
+    },
+    "AllowedClientsList": {
+      "base": "<p>The list of client identifiers accepted during JWT validation.</p>",
+      "refs": {
+        "CustomJWTAuthorizerConfiguration$allowedClients": "<p>The client identifiers accepted during JWT validation. A token is rejected if it was not issued to one of these clients.</p>"
+      }
+    },
+    "AllowedScopeType": {
+      "base": "<p>A scope value that an inbound JWT must carry to be authorized.</p>",
+      "refs": {
+        "AllowedScopesType$member": null
+      }
+    },
+    "AllowedScopesType": {
+      "base": "<p>The list of scopes accepted during JWT validation.</p>",
+      "refs": {
+        "CustomJWTAuthorizerConfiguration$allowedScopes": "<p>The scopes accepted during JWT validation. A token is rejected if it does not carry one of these scopes.</p>"
+      }
+    },
+    "ApprovalConfiguration": {
+      "base": "<p>Configuration for the registry's record approval workflow. Controls whether records submitted for approval require manual review before they become approved and discoverable, or are auto-approved. When no auto-approval rules are configured, submitted records require manual review.</p>",
+      "refs": {
+        "CreateRegistryRequest$approvalConfiguration": "<p>Approval configuration for registry records</p>",
+        "GetRegistryResponse$approvalConfiguration": "<p>Approval configuration for registry records</p>",
+        "UpdateRegistryResponse$approvalConfiguration": "<p>Approval configuration for registry records</p>",
+        "UpdatedApprovalConfiguration$optionalValue": "<p>The value to set for this field. Omit the wrapper to leave the field unchanged.</p>"
+      }
+    },
+    "AuthorizerConfiguration": {
+      "base": "<p>The authorizer configuration for a registry. Exactly one member is set.</p>",
+      "refs": {
+        "DiscoveryConfiguration$authorizerConfiguration": "<p>The authorizer configuration for the registry. Required when authorizerType is CUSTOM_JWT.</p>",
+        "UpdatedAuthorizerConfiguration$optionalValue": "<p>The new authorizer configuration to set. Omit to leave the existing configuration unchanged.</p>"
+      }
+    },
+    "AuthorizingClaimMatchValueType": {
+      "base": "<p>The value and match operator used to authorize a claim during JWT validation.</p>",
+      "refs": {
+        "CustomClaimValidationType$authorizingClaimMatchValue": "<p>The value and match operator used to authorize the claim.</p>"
+      }
+    },
+    "AutoApprovalRule": {
+      "base": null,
+      "refs": {
+        "AutoApprovalRuleList$member": null
+      }
+    },
+    "AutoApprovalRuleList": {
+      "base": null,
+      "refs": {
+        "ApprovalConfiguration$autoApprovalRules": "<p>The rules that determine which registry records are automatically approved on submission. When omitted or empty, submitted records require manual review.</p>"
+      }
+    },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "UpdateRegistryRecordRequest$triggerSynchronization": "<p>Whether to trigger synchronization of the record's descriptor content from its source</p>"
+      }
+    },
+    "ClaimMatchOperatorType": {
+      "base": "<p>The operator used to compare a claim value against the expected value during JWT validation.</p>",
+      "refs": {
+        "AuthorizingClaimMatchValueType$claimMatchOperator": "<p>The operator used to compare the claim value against the expected value.</p>"
+      }
+    },
+    "ClaimMatchValueType": {
+      "base": "<p>The expected value used to match a claim. Exactly one member is set.</p>",
+      "refs": {
+        "AuthorizingClaimMatchValueType$claimMatchValue": "<p>The expected value or values that the claim is compared against.</p>"
+      }
+    },
+    "ClientToken": {
+      "base": "<p>Client specified token used for idempotency checks</p>",
+      "refs": {
+        "CreateRegistryRecordRequest$clientToken": "<p>Client token for idempotency</p>",
+        "CreateRegistryRequest$clientToken": "<p>Client token for idempotency</p>"
+      }
+    },
+    "ConflictException": {
+      "base": "<p>The request conflicts with the current state of the resource.</p>",
+      "refs": {}
+    },
+    "CreateRegistryRecordRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRegistryRecordResponse": {
+      "base": "<p>Response structure for creating a registry record</p>",
+      "refs": {}
+    },
+    "CreateRegistryRequest": {
+      "base": "<p>Request structure for creating a registry</p>",
+      "refs": {}
+    },
+    "CreateRegistryResponse": {
+      "base": "<p>Response structure for creating a registry</p>",
+      "refs": {}
+    },
+    "CredentialProviderArn": {
+      "base": null,
+      "refs": {
+        "RegistryRecordOAuthCredentialProvider$providerArn": "<p>The &amp;ARN; of the OAuth 2.0 credential provider resource in Amazon Bedrock AgentCore Identity.</p>"
+      }
+    },
+    "CustomClaimValidationType": {
+      "base": "<p>A validation rule applied to a single claim of an inbound JWT.</p>",
+      "refs": {
+        "CustomClaimValidationsType$member": null
+      }
+    },
+    "CustomClaimValidationsType": {
+      "base": "<p>The list of custom claim validations applied to an inbound JWT.</p>",
+      "refs": {
+        "CustomJWTAuthorizerConfiguration$customClaims": "<p>Additional custom claim validations applied to the inbound JWT.</p>"
+      }
+    },
+    "CustomDescriptor": {
+      "base": "<p>Custom descriptor for user-defined content</p>",
+      "refs": {
+        "Descriptors$custom": "<p>The custom descriptor, populated when the record type is CUSTOM.</p>"
+      }
+    },
+    "CustomJWTAuthorizerConfiguration": {
+      "base": "<p>Configuration for a custom JWT authorizer that validates inbound bearer tokens against an OpenID Connect identity provider.</p>",
+      "refs": {
+        "AuthorizerConfiguration$customJWTAuthorizer": "<p>Configuration for a custom JWT authorizer.</p>"
+      }
+    },
+    "CustomParameterMap": {
+      "base": null,
+      "refs": {
+        "RegistryRecordOAuthCredentialProvider$customParameters": "<p>Additional parameters to include in the OAuth 2.0 token request.</p>"
+      }
+    },
+    "DataSchemaVersion": {
+      "base": "<p>Version of the descriptor type schema</p>",
+      "refs": {
+        "A2aAgentCardDescriptor$dataSchemaVersion": "<p>The schema version of the descriptor payload.</p>",
+        "AgentSkillsDefinitionDescriptor$dataSchemaVersion": "<p>The schema version of the descriptor payload.</p>",
+        "AgentSkillsMdDescriptor$dataSchemaVersion": "<p>The schema version of the descriptor payload.</p>",
+        "McpServerDescriptor$dataSchemaVersion": "<p>The schema version of the descriptor payload.</p>",
+        "McpToolsDescriptor$dataSchemaVersion": null,
+        "UpdatedDataSchemaVersion$optionalValue": "<p>The value to set for this field. Omit the wrapper to leave the field unchanged.</p>"
+      }
+    },
+    "DateTimestamp": {
+      "base": "<p>Timestamp in ISO 8601 date-time format</p>",
+      "refs": {
+        "GetRegistryRecordResponse$createdAt": "<p>The timestamp when the registry record was created.</p>",
+        "GetRegistryRecordResponse$updatedAt": "<p>The timestamp when the registry record was last updated.</p>",
+        "GetRegistryResponse$createdAt": "<p>The timestamp when the registry was created</p>",
+        "GetRegistryResponse$updatedAt": "<p>The timestamp when the registry was last updated</p>",
+        "RegistryRecordSummary$createdAt": "<p>The timestamp when the registry record was created.</p>",
+        "RegistryRecordSummary$updatedAt": "<p>The timestamp when the registry record was last updated.</p>",
+        "RegistrySummary$createdAt": "<p>The timestamp when the registry was created</p>",
+        "RegistrySummary$updatedAt": "<p>The timestamp when the registry was last updated</p>",
+        "SubmitRegistryRecordForApprovalResponse$updatedAt": "<p>The timestamp when the record was last updated</p>",
+        "UpdateRegistryRecordResponse$createdAt": "<p>The timestamp when the registry record was created.</p>",
+        "UpdateRegistryRecordResponse$updatedAt": "<p>The timestamp when the registry record was last updated.</p>",
+        "UpdateRegistryRecordStatusResponse$updatedAt": "<p>The timestamp when the record was last updated</p>",
+        "UpdateRegistryResponse$createdAt": "<p>The timestamp when the registry was created</p>",
+        "UpdateRegistryResponse$updatedAt": "<p>The timestamp when the registry was last updated</p>"
+      }
+    },
+    "DeleteRegistryRecordRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRegistryRecordResponse": {
+      "base": "<p>Response structure for deleting a registry record</p>",
+      "refs": {}
+    },
+    "DeleteRegistryRequest": {
+      "base": "<p>Request structure for deleting a registry</p>",
+      "refs": {}
+    },
+    "DeleteRegistryResponse": {
+      "base": "<p>Response structure for deleting a registry</p>",
+      "refs": {}
+    },
+    "Description": {
+      "base": "<p>Description of the Resource</p>",
+      "refs": {
+        "CreateRegistryRecordRequest$description": "<p>The description of the registry record</p>",
+        "CreateRegistryRequest$description": "<p>The description of the registry</p>",
+        "GetRegistryRecordResponse$description": "<p>A description of the registry record.</p>",
+        "GetRegistryResponse$description": "<p>The description of the registry</p>",
+        "RegistryRecordSummary$description": "<p>A description of the registry record.</p>",
+        "RegistrySummary$description": "<p>Registry description</p>",
+        "UpdateRegistryRecordResponse$description": "<p>A description of the registry record.</p>",
+        "UpdateRegistryResponse$description": "<p>The description of the registry</p>",
+        "UpdatedDescription$optionalValue": null
+      }
+    },
+    "DescriptorData": {
+      "base": "<p>Descriptor payload data</p>",
+      "refs": {
+        "A2aAgentCardDescriptor$data": "<p>The A2A agent card content, serialized as descriptor payload data.</p>",
+        "AgentSkillsDefinitionDescriptor$data": "<p>The agent skills definition content, serialized as descriptor payload data.</p>",
+        "AgentSkillsMdDescriptor$data": "<p>The agent skills markdown content, serialized as descriptor payload data.</p>",
+        "CustomDescriptor$data": null,
+        "McpServerDescriptor$data": "<p>The MCP server descriptor content, serialized as descriptor payload data.</p>",
+        "McpToolsDescriptor$data": null,
+        "UpdatedDescriptorData$optionalValue": "<p>The value to set for this field. Omit the wrapper to leave the field unchanged.</p>"
+      }
+    },
+    "DescriptorSource": {
+      "base": "<p>The source configuration that defines where descriptor content is retrieved from.</p>",
+      "refs": {
+        "A2aAgentCardDescriptor$source": "<p>The optional source configuration used to synchronize the A2A agent card descriptor content.</p>",
+        "AgentSkillsMdDescriptor$source": "<p>The optional source configuration used to synchronize the agent skills markdown content.</p>",
+        "McpServerDescriptor$source": "<p>The optional source configuration used to synchronize the MCP server descriptor content.</p>",
+        "UpdatedDescriptorSource$optionalValue": "<p>The value to set for this field. Omit the wrapper to leave the field unchanged.</p>"
+      }
+    },
+    "DescriptorSourceFromUrl": {
+      "base": "<p>URL-based descriptor source configuration, with credential provider configurations for authenticated URL retrieval.</p>",
+      "refs": {
+        "DescriptorSource$fromUrl": "<p>URL-based descriptor source, populated when descriptor content is synchronized from a URL.</p>"
+      }
+    },
+    "DescriptorSourceUrl": {
+      "base": "<p>URL source for descriptor content</p>",
+      "refs": {
+        "DescriptorSourceFromUrl$url": "<p>The URL from which the descriptor content is retrieved.</p>"
+      }
+    },
+    "Descriptors": {
+      "base": "<p>The typed set of descriptors for a registry record. Exactly one descriptor field is populated based on the record type.</p>",
+      "refs": {
+        "CreateRegistryRecordRequest$descriptors": "<p>The typed descriptor content for the registry record</p>",
+        "GetRegistryRecordResponse$descriptors": "<p>The typed descriptors that define the content of the registry record.</p>",
+        "UpdateRegistryRecordResponse$descriptors": "<p>The typed descriptors that define the content of the registry record.</p>"
+      }
+    },
+    "DiscoveryConfiguration": {
+      "base": "<p>Discovery configuration for the registry. Controls how consumers are authorized to search the registry and invoke its MCP endpoint.</p>",
+      "refs": {
+        "CreateRegistryRequest$discoveryConfiguration": "<p>Discovery configuration for the registry</p>",
+        "GetRegistryResponse$discoveryConfiguration": "<p>Discovery configuration for the registry</p>",
+        "RegistrySummary$discoveryConfiguration": "<p>Discovery configuration for the registry</p>",
+        "UpdateRegistryResponse$discoveryConfiguration": "<p>Discovery configuration for the registry</p>"
+      }
+    },
+    "DiscoveryUrl": {
+      "base": "<p>The OpenID Connect discovery URL, ending in /.well-known/openid-configuration, used to retrieve the identity provider's metadata and signing keys.</p>",
+      "refs": {
+        "CustomJWTAuthorizerConfiguration$discoveryUrl": "<p>The OpenID Connect discovery URL used to retrieve the identity provider's metadata and signing keys.</p>"
+      }
+    },
+    "EndpointIpAddressType": {
+      "base": "<p>The IP address type used by a private endpoint.</p>",
+      "refs": {
+        "ManagedVpcResource$endpointIpAddressType": "<p>The IP address type used by the private endpoint, either IPV4 or IPV6.</p>"
+      }
+    },
+    "FilterValue": {
+      "base": "<p>A single filter value. Constrained by length only; the accepted set of values is filter-specific and validated server-side so enum-style values such as READY or AWS_IAM are accepted.</p>",
+      "refs": {
+        "FilterValues$member": null
+      }
+    },
+    "FilterValues": {
+      "base": "<p>The values supplied for a single filter.</p>",
+      "refs": {
+        "RegistryFilter$values": "<p>The values to match for the attribute</p>",
+        "RegistryRecordFilter$values": "<p>The values to match for the attribute</p>"
+      }
+    },
+    "GetRegistryRecordRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRegistryRecordResponse": {
+      "base": "<p>Response structure for retrieving a registry record</p>",
+      "refs": {}
+    },
+    "GetRegistryRequest": {
+      "base": "<p>Request structure for getting a registry</p>",
+      "refs": {}
+    },
+    "GetRegistryResponse": {
+      "base": "<p>Response structure for getting a registry</p>",
+      "refs": {}
+    },
+    "IamRoleArn": {
+      "base": null,
+      "refs": {
+        "RegistryRecordIamCredentialProvider$roleArn": "<p>The &amp;ARN; of the IAM role to assume for request signing.</p>"
+      }
+    },
+    "IamSigningRegion": {
+      "base": null,
+      "refs": {
+        "RegistryRecordIamCredentialProvider$region": "<p>The AWS Region to use for request signing. If not specified, the Region is derived from the source URL hostname, falling back to the Region of the registry.</p>"
+      }
+    },
+    "IamSigningServiceName": {
+      "base": null,
+      "refs": {
+        "RegistryRecordIamCredentialProvider$service": "<p>The service name to use for request signing, such as execute-api.</p>"
+      }
+    },
+    "InboundTokenClaimNameType": {
+      "base": "<p>The name of a claim in an inbound JWT.</p>",
+      "refs": {
+        "CustomClaimValidationType$inboundTokenClaimName": "<p>The name of the claim in the inbound token to validate.</p>"
+      }
+    },
+    "InboundTokenClaimValueType": {
+      "base": "<p>The value type of a claim in an inbound JWT.</p>",
+      "refs": {
+        "CustomClaimValidationType$inboundTokenClaimValueType": "<p>The value type of the claim in the inbound token, either a string or an array of strings.</p>"
+      }
+    },
+    "InternalServerException": {
+      "base": "<p>The request failed due to an unexpected internal error; the caller may retry.</p>",
+      "refs": {}
+    },
+    "ListRegistriesRequest": {
+      "base": "<p>Request structure for listing registries</p>",
+      "refs": {}
+    },
+    "ListRegistriesResponse": {
+      "base": "<p>Response structure for listing registries</p>",
+      "refs": {}
+    },
+    "ListRegistryRecordsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRegistryRecordsResponse": {
+      "base": "<p>Response structure for listing registry records</p>",
+      "refs": {}
+    },
+    "ListTagsForResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ManagedVpcResource": {
+      "base": "<p>A service-managed private endpoint provisioned within a customer VPC.</p>",
+      "refs": {
+        "PrivateEndpoint$managedVpcResource": "<p>A private endpoint backed by a service-managed VPC resource.</p>"
+      }
+    },
+    "MatchValueString": {
+      "base": "<p>A single value used to match a claim during JWT validation.</p>",
+      "refs": {
+        "ClaimMatchValueType$matchValueString": "<p>A single string value to match the claim against.</p>",
+        "MatchValueStringList$member": null
+      }
+    },
+    "MatchValueStringList": {
+      "base": "<p>A list of values used to match a claim during JWT validation.</p>",
+      "refs": {
+        "ClaimMatchValueType$matchValueStringList": "<p>A list of string values to match the claim against.</p>"
+      }
+    },
+    "MaxResults": {
+      "base": "<p>Maximum number of items to be listed</p>",
+      "refs": {
+        "ListRegistriesRequest$maxResults": "<p>Maximum number of results to return</p>",
+        "ListRegistryRecordsRequest$maxResults": "<p>Maximum number of records to return</p>"
+      }
+    },
+    "McpServerAdditionalData": {
+      "base": "<p>Additional data for an MCP server descriptor</p>",
+      "refs": {
+        "McpServerDescriptor$additionalData": "<p>Additional data associated with the MCP server descriptor, such as tool definitions.</p>"
+      }
+    },
+    "McpServerDescriptor": {
+      "base": "<p>Descriptor that defines the content of an MCP (Model Context Protocol) server registry record, including the server definition and its tool definitions. The content is validated against the MCP protocol schema.</p>",
+      "refs": {
+        "Descriptors$mcpServer": "<p>The MCP server descriptor, populated when the record type is MCP.</p>"
+      }
+    },
+    "McpToolsDescriptor": {
+      "base": "<p>MCP tools descriptor containing tool definitions</p>",
+      "refs": {
+        "McpServerAdditionalData$tools": null
+      }
+    },
+    "NextToken": {
+      "base": "<p>Opaque continuation token of previous paginated response</p>",
+      "refs": {
+        "ListRegistriesRequest$nextToken": "<p>Token for pagination</p>",
+        "ListRegistriesResponse$nextToken": "<p>Token for next page of results</p>",
+        "ListRegistryRecordsRequest$nextToken": "<p>Token for pagination</p>",
+        "ListRegistryRecordsResponse$nextToken": "<p>Token for next page of results</p>"
+      }
+    },
+    "NonBlankString": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$message": null,
+        "ConflictException$message": null,
+        "InternalServerException$message": null,
+        "ResourceNotFoundException$message": null,
+        "ServiceQuotaExceededException$message": null,
+        "ThrottlingException$message": null
+      }
+    },
+    "PrivateEndpoint": {
+      "base": "<p>A private network endpoint used to reach a resource over a private path. Exactly one member is set.</p>",
+      "refs": {
+        "CustomJWTAuthorizerConfiguration$privateEndpoint": "<p>The private endpoint used to reach the identity provider's discovery URL over a private network path.</p>",
+        "PrivateEndpointOverride$privateEndpoint": "<p>The private endpoint used to reach the specified domain.</p>"
+      }
+    },
+    "PrivateEndpointOverride": {
+      "base": "<p>A mapping of a domain to the private endpoint used to reach it.</p>",
+      "refs": {
+        "PrivateEndpointOverrides$member": null
+      }
+    },
+    "PrivateEndpointOverrideDomain": {
+      "base": "<p>A domain name for which a specific private endpoint override applies.</p>",
+      "refs": {
+        "PrivateEndpointOverride$domain": "<p>The domain name to which this private endpoint override applies.</p>"
+      }
+    },
+    "PrivateEndpointOverrides": {
+      "base": "<p>The list of per-domain private endpoint overrides.</p>",
+      "refs": {
+        "CustomJWTAuthorizerConfiguration$privateEndpointOverrides": "<p>Per-domain private endpoint overrides that route specific identity provider domains through distinct private endpoints.</p>"
+      }
+    },
+    "RecordIdentifier": {
+      "base": "<p>Record identifier that accepts either ARN or ID format</p>",
+      "refs": {
+        "DeleteRegistryRecordRequest$recordId": "<p>The identifier of the registry record to delete (ARN or ID)</p>",
+        "GetRegistryRecordRequest$recordId": "<p>The identifier of the registry record to retrieve (ARN or ID)</p>",
+        "SubmitRegistryRecordForApprovalRequest$recordId": "<p>The identifier of the registry record to submit for approval (ARN or ID)</p>",
+        "UpdateRegistryRecordRequest$recordId": "<p>The identifier of the registry record to update (ARN or ID)</p>",
+        "UpdateRegistryRecordStatusRequest$recordId": "<p>The identifier of the registry record to update the status of (ARN or ID)</p>"
+      }
+    },
+    "RecordType": {
+      "base": "<p>Record type enum for registry record classification</p>",
+      "refs": {
+        "CreateRegistryRecordRequest$recordType": "<p>The type of the registry record, which determines the descriptor format</p>",
+        "GetRegistryRecordResponse$recordType": "<p>The type of the registry record, such as MCP, AGENT, SKILL, or CUSTOM.</p>",
+        "RegistryRecordSummary$recordType": "<p>The type of the registry record, such as MCP, AGENT, SKILL, or CUSTOM.</p>",
+        "UpdateRegistryRecordRequest$recordType": "<p>The updated type of the registry record. Omit to leave the record type unchanged.</p>",
+        "UpdateRegistryRecordResponse$recordType": "<p>The type of the registry record, such as MCP, AGENT, SKILL, or CUSTOM.</p>"
+      }
+    },
+    "RegistryArn": {
+      "base": "<p>Registry Amazon Resource Name</p>",
+      "refs": {
+        "CreateRegistryResponse$registryArn": "<p>The ARN of the created registry</p>",
+        "GetRegistryRecordResponse$registryArn": "<p>The &amp;ARN; of the parent registry that owns the record.</p>",
+        "GetRegistryResponse$registryArn": "<p>The ARN of the registry</p>",
+        "RegistryRecordSummary$registryArn": "<p>The &amp;ARN; of the parent registry that owns the record.</p>",
+        "RegistrySummary$registryArn": "<p>Registry Amazon Resource Name</p>",
+        "SubmitRegistryRecordForApprovalResponse$registryArn": "<p>The ARN of the registry</p>",
+        "UpdateRegistryRecordResponse$registryArn": "<p>The &amp;ARN; of the parent registry that owns the record.</p>",
+        "UpdateRegistryRecordStatusResponse$registryArn": "<p>The ARN of the registry</p>",
+        "UpdateRegistryResponse$registryArn": "<p>The ARN of the registry</p>"
+      }
+    },
+    "RegistryAuthorizerType": {
+      "base": null,
+      "refs": {
+        "DiscoveryConfiguration$authorizerType": "<p>The type of authorizer that controls how consumers access the registry's search and MCP invoke operations.</p>"
+      }
+    },
+    "RegistryFilter": {
+      "base": "<p>A single filter applied to a ListRegistries request.</p>",
+      "refs": {
+        "RegistryFilterList$member": null
+      }
+    },
+    "RegistryFilterList": {
+      "base": null,
+      "refs": {
+        "ListRegistriesRequest$filters": "<p>Filters to apply to the registry list</p>"
+      }
+    },
+    "RegistryFilterName": {
+      "base": null,
+      "refs": {
+        "RegistryFilter$name": "<p>The attribute to filter on</p>"
+      }
+    },
+    "RegistryId": {
+      "base": "<p>Registry unique identifier - 12-character alphanumeric string</p>",
+      "refs": {
+        "GetRegistryResponse$registryId": "<p>The unique identifier of the registry</p>",
+        "RegistrySummary$registryId": "<p>Unique registry identifier</p>",
+        "UpdateRegistryResponse$registryId": "<p>The unique identifier of the registry</p>"
+      }
+    },
+    "RegistryIdentifier": {
+      "base": "<p>Registry identifier that accepts either ARN or ID format</p>",
+      "refs": {
+        "CreateRegistryRecordRequest$registryId": "<p>The identifier of the registry in which to create the record (ARN or ID)</p>",
+        "DeleteRegistryRecordRequest$registryId": "<p>The identifier of the registry containing the record (ARN or ID)</p>",
+        "DeleteRegistryRequest$registryId": "<p>The identifier of the registry to delete (ARN or ID)</p>",
+        "GetRegistryRecordRequest$registryId": "<p>The identifier of the registry containing the record (ARN or ID)</p>",
+        "GetRegistryRequest$registryId": "<p>The identifier of the registry to retrieve (ARN or ID)</p>",
+        "ListRegistryRecordsRequest$registryId": "<p>The identifier of the registry to list records from (ARN or ID)</p>",
+        "SubmitRegistryRecordForApprovalRequest$registryId": "<p>The identifier of the registry containing the record (ARN or ID)</p>",
+        "UpdateRegistryRecordRequest$registryId": "<p>The identifier of the registry containing the record (ARN or ID)</p>",
+        "UpdateRegistryRecordStatusRequest$registryId": "<p>The identifier of the registry containing the record (ARN or ID)</p>",
+        "UpdateRegistryRequest$registryId": "<p>The identifier of the registry to update (ARN or ID)</p>"
+      }
+    },
+    "RegistryName": {
+      "base": "<p>Registry name with validation pattern</p>",
+      "refs": {
+        "CreateRegistryRequest$name": "<p>The name of the registry</p>",
+        "GetRegistryResponse$name": "<p>The name of the registry</p>",
+        "RegistrySummary$name": "<p>Registry name</p>",
+        "UpdateRegistryRequest$name": "<p>The updated name of the registry</p>",
+        "UpdateRegistryResponse$name": "<p>The name of the registry</p>"
+      }
+    },
+    "RegistryRecordArn": {
+      "base": "<p>Registry Record Amazon Resource Name</p>",
+      "refs": {
+        "CreateRegistryRecordResponse$recordArn": "<p>The ARN of the created registry record</p>",
+        "GetRegistryRecordResponse$recordArn": "<p>The &amp;ARN; of the registry record.</p>",
+        "RegistryRecordSummary$recordArn": "<p>The &amp;ARN; of the registry record.</p>",
+        "SubmitRegistryRecordForApprovalResponse$recordArn": "<p>The ARN of the registry record</p>",
+        "UpdateRegistryRecordResponse$recordArn": "<p>The &amp;ARN; of the registry record.</p>",
+        "UpdateRegistryRecordStatusResponse$recordArn": "<p>The ARN of the registry record</p>"
+      }
+    },
+    "RegistryRecordCredentialProviderConfiguration": {
+      "base": "<p>A credential provider configuration that specifies how to authenticate when fetching descriptor content from a registry record's source URL.</p>",
+      "refs": {
+        "RegistryRecordCredentialProviderConfigurationList$member": null
+      }
+    },
+    "RegistryRecordCredentialProviderConfigurationList": {
+      "base": null,
+      "refs": {
+        "DescriptorSourceFromUrl$credentialProviderConfigurations": "<p>The credential providers used to authenticate when fetching descriptor content from the source URL.</p>"
+      }
+    },
+    "RegistryRecordCredentialProviderType": {
+      "base": null,
+      "refs": {
+        "RegistryRecordCredentialProviderConfiguration$credentialProviderType": "<p>The type of credential provider.</p>"
+      }
+    },
+    "RegistryRecordCredentialProviderUnion": {
+      "base": "<p>The credential provider details for a registry record. Exactly one member is populated, matching the configured credential provider type.</p>",
+      "refs": {
+        "RegistryRecordCredentialProviderConfiguration$credentialProvider": "<p>The credential provider details corresponding to the specified credential provider type.</p>"
+      }
+    },
+    "RegistryRecordDisplayName": {
+      "base": "<p>Display name for a registry record</p>",
+      "refs": {
+        "CreateRegistryRecordRequest$displayName": "<p>The human-readable display name of the registry record</p>",
+        "GetRegistryRecordResponse$displayName": "<p>The human-readable display name of the registry record.</p>",
+        "RegistryRecordSummary$displayName": "<p>The human-readable display name of the registry record.</p>",
+        "UpdateRegistryRecordResponse$displayName": "<p>The human-readable display name of the registry record.</p>",
+        "UpdatedDisplayName$optionalValue": "<p>The value to set for this field. Omit the wrapper to leave the field unchanged.</p>"
+      }
+    },
+    "RegistryRecordFilter": {
+      "base": "<p>A single filter applied to a ListRegistryRecords request.</p>",
+      "refs": {
+        "RegistryRecordFilterList$member": null
+      }
+    },
+    "RegistryRecordFilterList": {
+      "base": null,
+      "refs": {
+        "ListRegistryRecordsRequest$filters": "<p>Filters to apply to the registry record list</p>"
+      }
+    },
+    "RegistryRecordFilterName": {
+      "base": null,
+      "refs": {
+        "RegistryRecordFilter$name": "<p>The attribute to filter on</p>"
+      }
+    },
+    "RegistryRecordIamCredentialProvider": {
+      "base": "<p>The configuration for an IAM role credential provider that signs requests to a registry record's source with AWS Signature Version 4 (SigV4).</p>",
+      "refs": {
+        "RegistryRecordCredentialProviderUnion$iamCredentialProvider": "<p>The IAM role credential provider details.</p>"
+      }
+    },
+    "RegistryRecordId": {
+      "base": "<p>Registry Record unique identifier - 12-character alphanumeric string</p>",
+      "refs": {
+        "GetRegistryRecordResponse$recordId": "<p>The unique identifier of the registry record.</p>",
+        "RegistryRecordSummary$recordId": "<p>The unique identifier of the registry record.</p>",
+        "SubmitRegistryRecordForApprovalResponse$recordId": "<p>The ID of the registry record</p>",
+        "UpdateRegistryRecordResponse$recordId": "<p>The unique identifier of the registry record.</p>",
+        "UpdateRegistryRecordStatusResponse$recordId": "<p>The ID of the registry record</p>"
+      }
+    },
+    "RegistryRecordName": {
+      "base": "<p>Registry Record name</p>",
+      "refs": {
+        "CreateRegistryRecordRequest$name": "<p>The name of the registry record</p>",
+        "GetRegistryRecordResponse$name": "<p>The name of the registry record. Names are unique within a registry.</p>",
+        "RegistryRecordSummary$name": "<p>The name of the registry record. Names are unique within a registry.</p>",
+        "UpdateRegistryRecordRequest$name": "<p>The updated name of the registry record. Omit to leave the name unchanged.</p>",
+        "UpdateRegistryRecordResponse$name": "<p>The name of the registry record. Names are unique within a registry.</p>"
+      }
+    },
+    "RegistryRecordOAuthCredentialProvider": {
+      "base": "<p>The configuration for an OAuth 2.0 credential provider that authenticates requests to a registry record's source.</p>",
+      "refs": {
+        "RegistryRecordCredentialProviderUnion$oauthCredentialProvider": "<p>The OAuth 2.0 credential provider details.</p>"
+      }
+    },
+    "RegistryRecordOAuthGrantType": {
+      "base": null,
+      "refs": {
+        "RegistryRecordOAuthCredentialProvider$grantType": "<p>The OAuth 2.0 grant type used to obtain access tokens.</p>"
+      }
+    },
+    "RegistryRecordStatus": {
+      "base": "<p>Registry record status</p>",
+      "refs": {
+        "CreateRegistryRecordResponse$status": "<p>The status of the registry record, set to CREATING while the asynchronous workflow is in progress</p>",
+        "GetRegistryRecordResponse$status": "<p>The lifecycle status of the registry record.</p>",
+        "RegistryRecordSummary$status": "<p>The lifecycle status of the registry record.</p>",
+        "SubmitRegistryRecordForApprovalResponse$status": "<p>The resulting status of the registry record</p>",
+        "UpdateRegistryRecordResponse$status": "<p>The lifecycle status of the registry record.</p>",
+        "UpdateRegistryRecordStatusRequest$status": "<p>The target status for the registry record</p>",
+        "UpdateRegistryRecordStatusResponse$status": "<p>The resulting status of the registry record</p>"
+      }
+    },
+    "RegistryRecordSummary": {
+      "base": "<p>A summary of a registry record returned by list operations. Contains identifying and lifecycle fields but omits descriptor content.</p>",
+      "refs": {
+        "RegistryRecordSummaryList$member": null
+      }
+    },
+    "RegistryRecordSummaryList": {
+      "base": null,
+      "refs": {
+        "ListRegistryRecordsResponse$registryRecords": "<p>List of registry record summaries</p>"
+      }
+    },
+    "RegistryRecordVersion": {
+      "base": "<p>Version of the registry record</p>",
+      "refs": {
+        "CreateRegistryRecordRequest$recordVersion": "<p>The version of the registry record</p>",
+        "GetRegistryRecordResponse$recordVersion": "<p>The version identifier of the registry record.</p>",
+        "RegistryRecordSummary$recordVersion": "<p>The version identifier of the registry record.</p>",
+        "UpdateRegistryRecordRequest$recordVersion": "<p>The updated version of the registry record. Omit to leave the version unchanged.</p>",
+        "UpdateRegistryRecordResponse$recordVersion": "<p>The version identifier of the registry record.</p>"
+      }
+    },
+    "RegistryStatus": {
+      "base": null,
+      "refs": {
+        "DeleteRegistryResponse$status": "<p>Current status of the registry, set to DELETING when deletion is initiated</p>",
+        "GetRegistryResponse$status": "<p>Current status of the registry</p>",
+        "RegistrySummary$status": "<p>Current status of the registry</p>",
+        "UpdateRegistryResponse$status": "<p>Current status of the registry</p>"
+      }
+    },
+    "RegistrySummary": {
+      "base": "<p>Registry summary for list operations</p>",
+      "refs": {
+        "RegistrySummaryList$member": null
+      }
+    },
+    "RegistrySummaryList": {
+      "base": null,
+      "refs": {
+        "ListRegistriesResponse$registries": "<p>List of registry summaries</p>"
+      }
+    },
+    "ResourceArn": {
+      "base": "<p>ARN of a taggable Agent Registry resource.</p>",
+      "refs": {
+        "ListTagsForResourceRequest$resourceArn": null,
+        "TagResourceRequest$resourceArn": null,
+        "UntagResourceRequest$resourceArn": null
+      }
+    },
+    "ResourceConfigurationIdentifier": {
+      "base": "<p>The identifier of a VPC Lattice resource configuration, specified as a resource configuration ID or ARN.</p>",
+      "refs": {
+        "SelfManagedLatticeResource$resourceConfigurationIdentifier": "<p>The identifier of the VPC Lattice resource configuration, specified as a resource configuration ID or ARN.</p>"
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p>The requested resource was not found.</p>",
+      "refs": {}
+    },
+    "ResourceTagsMap": {
+      "base": "<p>A map of tag keys to tag values returned by read operations (may be empty).</p>",
+      "refs": {
+        "ListTagsForResourceResponse$tags": null
+      }
+    },
+    "RoutingDomain": {
+      "base": "<p>The routing domain used to resolve traffic through a private endpoint.</p>",
+      "refs": {
+        "ManagedVpcResource$routingDomain": "<p>The routing domain used to resolve traffic through the private endpoint.</p>"
+      }
+    },
+    "ScopeList": {
+      "base": null,
+      "refs": {
+        "RegistryRecordOAuthCredentialProvider$scopes": "<p>The OAuth 2.0 scopes to request when obtaining access tokens.</p>"
+      }
+    },
+    "SecurityGroupIdentifier": {
+      "base": "<p>The identifier of a security group.</p>",
+      "refs": {
+        "SecurityGroupIds$member": null
+      }
+    },
+    "SecurityGroupIds": {
+      "base": "<p>The list of security group identifiers associated with a private endpoint.</p>",
+      "refs": {
+        "ManagedVpcResource$securityGroupIds": "<p>The identifiers of the security groups associated with the private endpoint network interfaces.</p>"
+      }
+    },
+    "SelfManagedLatticeResource": {
+      "base": "<p>A self-managed private endpoint backed by a VPC Lattice resource configuration. Exactly one member is set.</p>",
+      "refs": {
+        "PrivateEndpoint$selfManagedLatticeResource": "<p>A private endpoint backed by a self-managed VPC Lattice resource configuration.</p>"
+      }
+    },
+    "ServiceQuotaExceededException": {
+      "base": "<p>The request would exceed a service quota.</p>",
+      "refs": {}
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "CustomParameterMap$key": null,
+        "CustomParameterMap$value": null,
+        "GetRegistryRecordResponse$statusReason": "<p>The reason for the current status. Typically populated when the status indicates a failure state.</p>",
+        "GetRegistryResponse$statusReason": "<p>The reason for the current status. Typically populated when the status indicates a failure state.</p>",
+        "RegistrySummary$statusReason": "<p>The reason for the current status. Typically populated when the status indicates a failure state.</p>",
+        "ScopeList$member": null,
+        "UpdateRegistryRecordResponse$statusReason": "<p>The reason for the current status. Typically populated when the status indicates a failure state.</p>",
+        "UpdateRegistryRecordStatusResponse$statusReason": "<p>The reason for the status change</p>",
+        "UpdateRegistryResponse$statusReason": "<p>The reason for the current status. Typically populated when the status indicates a failure state.</p>",
+        "ValidationException$message": null,
+        "ValidationExceptionField$name": "<p>The name of the field that failed validation.</p>",
+        "ValidationExceptionField$message": "<p>A description of why the field failed validation.</p>"
+      }
+    },
+    "SubmitRegistryRecordForApprovalRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SubmitRegistryRecordForApprovalResponse": {
+      "base": "<p>Response structure for submitting a registry record for approval</p>",
+      "refs": {}
+    },
+    "SubnetId": {
+      "base": "<p>Subnet identifier</p>",
+      "refs": {
+        "SubnetIds$member": null
+      }
+    },
+    "SubnetIds": {
+      "base": "<p>The list of subnet identifiers in which the private endpoint network interfaces are placed.</p>",
+      "refs": {
+        "ManagedVpcResource$subnetIds": "<p>The identifiers of the subnets in which the private endpoint network interfaces are placed.</p>"
+      }
+    },
+    "TagKey": {
+      "base": "<p>Key of a tag.</p>",
+      "refs": {
+        "ResourceTagsMap$key": null,
+        "TagKeyList$member": null,
+        "TagsMap$key": null
+      }
+    },
+    "TagKeyList": {
+      "base": "<p>A list of tag keys.</p>",
+      "refs": {
+        "UntagResourceRequest$tagKeys": null
+      }
+    },
+    "TagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "TagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "TagValue": {
+      "base": "<p>Value of a tag.</p>",
+      "refs": {
+        "ResourceTagsMap$value": null,
+        "TagsMap$value": null
+      }
+    },
+    "TagsMap": {
+      "base": "<p>A map of tag keys to tag values.</p>",
+      "refs": {
+        "CreateRegistryRecordRequest$tags": "<p>Tags to associate with the registry record</p>",
+        "CreateRegistryRequest$tags": "<p>Tags to associate with the registry</p>",
+        "ManagedVpcResource$tags": null,
+        "TagResourceRequest$tags": null
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>The request was denied due to request throttling; the caller may retry after a delay.</p>",
+      "refs": {}
+    },
+    "UntagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UntagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRegistryRecordRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRegistryRecordResponse": {
+      "base": "<p>Response structure for updating a registry record</p>",
+      "refs": {}
+    },
+    "UpdateRegistryRecordStatusRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRegistryRecordStatusRequestStatusReasonString": {
+      "base": null,
+      "refs": {
+        "UpdateRegistryRecordStatusRequest$statusReason": "<p>The reason for the status change, for example why the record was approved, rejected, or deprecated</p>"
+      }
+    },
+    "UpdateRegistryRecordStatusResponse": {
+      "base": "<p>Response structure for updating a registry record status</p>",
+      "refs": {}
+    },
+    "UpdateRegistryRequest": {
+      "base": "<p>Request structure for updating a registry</p>",
+      "refs": {}
+    },
+    "UpdateRegistryResponse": {
+      "base": "<p>Response structure for updating a registry</p>",
+      "refs": {}
+    },
+    "UpdatedA2aAgentCardDescriptor": {
+      "base": "<p>The A2A agent card descriptor patch wrapper. Omit to leave the descriptor unchanged; supply an empty object to remove it; supply optionalValue to patch its fields.</p>",
+      "refs": {
+        "UpdatedDescriptorsFields$a2aAgentCard": "<p>The patch for the A2A agent card descriptor.</p>"
+      }
+    },
+    "UpdatedA2aAgentCardDescriptorFields": {
+      "base": "<p>The set of A2A agent card descriptor fields that can be individually updated.</p>",
+      "refs": {
+        "UpdatedA2aAgentCardDescriptor$optionalValue": "<p>The value to set for this field. Omit the wrapper to leave the field unchanged.</p>"
+      }
+    },
+    "UpdatedAgentSkillsAdditionalData": {
+      "base": "<p>The agent skills additional-data patch wrapper. Omit to leave the additional data unchanged; supply an empty object to remove it; supply optionalValue to patch its fields.</p>",
+      "refs": {
+        "UpdatedAgentSkillsDefinitionDescriptorFields$additionalData": "<p>The patch for the descriptor's additional data field.</p>"
+      }
+    },
+    "UpdatedAgentSkillsAdditionalDataFields": {
+      "base": "<p>The set of agent skills additional-data fields that can be individually updated.</p>",
+      "refs": {
+        "UpdatedAgentSkillsAdditionalData$optionalValue": "<p>The value to set for this field. Omit the wrapper to leave the field unchanged.</p>"
+      }
+    },
+    "UpdatedAgentSkillsDefinitionDescriptor": {
+      "base": "<p>The agent skills definition descriptor patch wrapper. Omit to leave the descriptor unchanged; supply an empty object to remove it; supply optionalValue to patch its fields.</p>",
+      "refs": {
+        "UpdatedDescriptorsFields$agentSkillsDefinition": "<p>The patch for the agent skills definition descriptor.</p>"
+      }
+    },
+    "UpdatedAgentSkillsDefinitionDescriptorFields": {
+      "base": "<p>The set of agent skills definition descriptor fields that can be individually updated.</p>",
+      "refs": {
+        "UpdatedAgentSkillsDefinitionDescriptor$optionalValue": "<p>The value to set for this field. Omit the wrapper to leave the field unchanged.</p>"
+      }
+    },
+    "UpdatedAgentSkillsMdDescriptor": {
+      "base": "<p>The agent skills markdown descriptor patch wrapper. Omit to leave the descriptor unchanged; supply an empty object to remove it; supply optionalValue to patch its fields.</p>",
+      "refs": {
+        "UpdatedAgentSkillsAdditionalDataFields$skillMd": "<p>The patch for the agent skills markdown descriptor field.</p>"
+      }
+    },
+    "UpdatedAgentSkillsMdDescriptorFields": {
+      "base": "<p>The set of agent skills markdown descriptor fields that can be individually updated.</p>",
+      "refs": {
+        "UpdatedAgentSkillsMdDescriptor$optionalValue": "<p>The value to set for this field. Omit the wrapper to leave the field unchanged.</p>"
+      }
+    },
+    "UpdatedApprovalConfiguration": {
+      "base": "<p>A wrapper for updating the approval configuration of a registry. Include this wrapper to replace the approval configuration with the specified value; omit it to leave the approval configuration unchanged.</p>",
+      "refs": {
+        "UpdateRegistryRequest$approvalConfiguration": "<p>The updated approval configuration. The change applies only to records that move to PENDING_APPROVAL after the update; records already in PENDING_APPROVAL are unaffected.</p>"
+      }
+    },
+    "UpdatedAuthorizerConfiguration": {
+      "base": "<p>Wrapper for updating an optional authorizer configuration with PATCH semantics.</p>",
+      "refs": {
+        "UpdatedDiscoveryConfiguration$authorizerConfiguration": "<p>Authorization configuration for the registry, with PATCH semantics</p>"
+      }
+    },
+    "UpdatedCustomDescriptor": {
+      "base": "<p>The custom descriptor patch wrapper. Omit to leave the descriptor unchanged; supply an empty object to remove it; supply optionalValue to patch its fields.</p>",
+      "refs": {
+        "UpdatedDescriptorsFields$custom": "<p>The patch for the custom descriptor.</p>"
+      }
+    },
+    "UpdatedCustomDescriptorFields": {
+      "base": "<p>The set of custom descriptor fields that can be individually updated.</p>",
+      "refs": {
+        "UpdatedCustomDescriptor$optionalValue": "<p>The value to set for this field. Omit the wrapper to leave the field unchanged.</p>"
+      }
+    },
+    "UpdatedDataSchemaVersion": {
+      "base": "<p>Leaf patch wrapper for a descriptor's data schema version. Omit to leave unchanged; supply an empty object to unset; supply optionalValue to set.</p>",
+      "refs": {
+        "UpdatedA2aAgentCardDescriptorFields$dataSchemaVersion": "<p>The patch for the descriptor's data schema version field.</p>",
+        "UpdatedAgentSkillsDefinitionDescriptorFields$dataSchemaVersion": "<p>The patch for the descriptor's data schema version field.</p>",
+        "UpdatedAgentSkillsMdDescriptorFields$dataSchemaVersion": "<p>The patch for the descriptor's data schema version field.</p>",
+        "UpdatedMcpServerDescriptorFields$dataSchemaVersion": "<p>The patch for the descriptor's data schema version field.</p>",
+        "UpdatedMcpToolsDescriptorFields$dataSchemaVersion": "<p>The patch for the descriptor's data schema version field.</p>"
+      }
+    },
+    "UpdatedDescription": {
+      "base": "<p>Wrapper for updating an optional Description field with PATCH semantics</p>",
+      "refs": {
+        "UpdateRegistryRecordRequest$description": "<p>The updated description of the registry record. Omit to leave the description unchanged; provide an empty wrapper to unset it.</p>",
+        "UpdateRegistryRequest$description": "<p>The updated description of the registry</p>"
+      }
+    },
+    "UpdatedDescriptorData": {
+      "base": "<p>Leaf patch wrapper for descriptor data. Omit to leave unchanged; supply an empty object to unset; supply optionalValue to set.</p>",
+      "refs": {
+        "UpdatedA2aAgentCardDescriptorFields$data": "<p>The patch for the descriptor's data field.</p>",
+        "UpdatedAgentSkillsDefinitionDescriptorFields$data": "<p>The patch for the descriptor's data field.</p>",
+        "UpdatedAgentSkillsMdDescriptorFields$data": "<p>The patch for the descriptor's data field.</p>",
+        "UpdatedCustomDescriptorFields$data": "<p>The patch for the descriptor's data field.</p>",
+        "UpdatedMcpServerDescriptorFields$data": "<p>The patch for the descriptor's data field.</p>",
+        "UpdatedMcpToolsDescriptorFields$data": "<p>The patch for the descriptor's data field.</p>"
+      }
+    },
+    "UpdatedDescriptorSource": {
+      "base": "<p>Leaf patch wrapper for a descriptor's source configuration. Omit to leave unchanged; supply an empty object to unset; supply optionalValue to set.</p>",
+      "refs": {
+        "UpdatedA2aAgentCardDescriptorFields$source": "<p>The patch for the descriptor's source field.</p>",
+        "UpdatedAgentSkillsMdDescriptorFields$source": "<p>The patch for the descriptor's source field.</p>",
+        "UpdatedMcpServerDescriptorFields$source": "<p>The patch for the descriptor's source field.</p>"
+      }
+    },
+    "UpdatedDescriptors": {
+      "base": "<p>The top-level descriptors patch wrapper used in UpdateRegistryRecord. Omit to leave the current descriptors unchanged; supply an empty object to clear them; supply optionalValue to apply a per-field patch.</p>",
+      "refs": {
+        "UpdateRegistryRecordRequest$descriptors": "<p>The updated typed descriptor content for the registry record. Omit to leave the descriptors unchanged.</p>"
+      }
+    },
+    "UpdatedDescriptorsFields": {
+      "base": "<p>The patchable descriptor fields applied during an UpdateRegistryRecord call. Each field is independently patchable.</p>",
+      "refs": {
+        "UpdatedDescriptors$optionalValue": "<p>The value to set for this field. Omit the wrapper to leave the field unchanged.</p>"
+      }
+    },
+    "UpdatedDiscoveryConfiguration": {
+      "base": "<p>The discovery configuration fields to update on a registry. Omit this structure to leave the discovery configuration unchanged.</p>",
+      "refs": {
+        "UpdateRegistryRequest$discoveryConfiguration": "<p>The updated discovery configuration. Changing the discovery authorization can break existing consumers that rely on the previous authorization type.</p>"
+      }
+    },
+    "UpdatedDisplayName": {
+      "base": "<p>Leaf patch wrapper for a registry record's display name. Omit to leave unchanged; supply an empty object to unset; supply optionalValue to set.</p>",
+      "refs": {
+        "UpdateRegistryRecordRequest$displayName": "<p>The updated display name of the registry record. Omit to leave the display name unchanged; provide an empty wrapper to unset it.</p>"
+      }
+    },
+    "UpdatedMcpServerAdditionalData": {
+      "base": "<p>The MCP server additional-data patch wrapper. Omit to leave the additional data unchanged; supply an empty object to remove it; supply optionalValue to patch its fields.</p>",
+      "refs": {
+        "UpdatedMcpServerDescriptorFields$additionalData": "<p>The patch for the descriptor's additional data field.</p>"
+      }
+    },
+    "UpdatedMcpServerAdditionalDataFields": {
+      "base": "<p>The set of MCP server additional-data fields that can be individually updated.</p>",
+      "refs": {
+        "UpdatedMcpServerAdditionalData$optionalValue": "<p>The value to set for this field. Omit the wrapper to leave the field unchanged.</p>"
+      }
+    },
+    "UpdatedMcpServerDescriptor": {
+      "base": "<p>The MCP server descriptor patch wrapper. Omit to leave the descriptor unchanged; supply an empty object to remove it; supply optionalValue to patch its fields.</p>",
+      "refs": {
+        "UpdatedDescriptorsFields$mcpServer": "<p>The patch for the MCP server descriptor.</p>"
+      }
+    },
+    "UpdatedMcpServerDescriptorFields": {
+      "base": "<p>The set of MCP server descriptor fields that can be individually updated.</p>",
+      "refs": {
+        "UpdatedMcpServerDescriptor$optionalValue": "<p>The value to set for this field. Omit the wrapper to leave the field unchanged.</p>"
+      }
+    },
+    "UpdatedMcpToolsDescriptor": {
+      "base": "<p>The MCP tools descriptor patch wrapper. Omit to leave the tools descriptor unchanged; supply an empty object to remove it; supply optionalValue to patch its fields.</p>",
+      "refs": {
+        "UpdatedMcpServerAdditionalDataFields$tools": "<p>The patch for the MCP tools descriptor field.</p>"
+      }
+    },
+    "UpdatedMcpToolsDescriptorFields": {
+      "base": "<p>The set of MCP tools descriptor fields that can be individually updated.</p>",
+      "refs": {
+        "UpdatedMcpToolsDescriptor$optionalValue": "<p>The value to set for this field. Omit the wrapper to leave the field unchanged.</p>"
+      }
+    },
+    "ValidationException": {
+      "base": "<p>The request failed validation of one or more input fields.</p>",
+      "refs": {}
+    },
+    "ValidationExceptionField": {
+      "base": "<p>Describes a single input field that failed validation.</p>",
+      "refs": {
+        "ValidationExceptionFieldList$member": null
+      }
+    },
+    "ValidationExceptionFieldList": {
+      "base": null,
+      "refs": {
+        "ValidationException$fieldList": "<p>The list of input fields that failed validation.</p>"
+      }
+    },
+    "ValidationExceptionReason": {
+      "base": null,
+      "refs": {
+        "ValidationException$reason": "<p>The reason the request failed validation.</p>"
+      }
+    },
+    "VpcIdentifier": {
+      "base": "<p>The identifier of a VPC.</p>",
+      "refs": {
+        "ManagedVpcResource$vpcIdentifier": "<p>The identifier of the VPC in which the private endpoint is provisioned.</p>"
+      }
+    }
+  }
+}

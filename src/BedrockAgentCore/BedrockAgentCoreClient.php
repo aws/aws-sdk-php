@@ -25,6 +25,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteABTestAsync(array $args = [])
  * @method \Aws\Result deleteBatchEvaluation(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteBatchEvaluationAsync(array $args = [])
+ * @method \Aws\Result deleteCapacityProviderSession(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteCapacityProviderSessionAsync(array $args = [])
  * @method \Aws\Result deleteEvent(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteEventAsync(array $args = [])
  * @method \Aws\Result deleteMemoryRecord(array $args = [])

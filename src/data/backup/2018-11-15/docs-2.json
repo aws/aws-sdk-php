@@ -4,6 +4,7 @@
   "operations": {
     "AssociateBackupVaultMpaApprovalTeam": "<p>Associates an MPA approval team with a backup vault.</p>",
     "CancelLegalHold": "<p>Removes the specified legal hold on a recovery point. This action can only be performed by a user with sufficient permissions.</p>",
+    "CreateBackupAccessPoint": "<p>Creates a backup access point for an Amazon S3 recovery point. A backup access point provides on-demand, read-only access to the backup data in a recovery point through an Amazon S3 access point, without initiating a restore.</p> <p>While a backup access point is active for a recovery point, Backup pauses lifecycle transitions and blocks deletion of that recovery point.</p>",
     "CreateBackupPlan": "<p>Creates a backup plan using a backup plan name and backup rules. A backup plan is a document that contains information that Backup uses to schedule tasks that create recovery points for resources.</p> <p>If you call <code>CreateBackupPlan</code> with a plan that already exists, you receive an <code>AlreadyExistsException</code> exception.</p>",
     "CreateBackupSelection": "<p>Creates a JSON document that specifies a set of resources to assign to a backup plan. For examples, see <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/assigning-resources.html#assigning-resources-json\">Assigning resources programmatically</a>. </p>",
     "CreateBackupVault": "<p>Creates a logical container where backups are stored. A <code>CreateBackupVault</code> request includes a name, optionally one or more resource tags, an encryption key, and a request ID.</p> <note> <p>Do not include sensitive data, such as passport numbers, in the name of a backup vault.</p> </note>",
@@ -15,6 +16,7 @@
     "CreateRestoreTestingPlan": "<p>Creates a restore testing plan.</p> <p>The first of two steps to create a restore testing plan. After this request is successful, finish the procedure using CreateRestoreTestingSelection.</p>",
     "CreateRestoreTestingSelection": "<p>This request can be sent after CreateRestoreTestingPlan request returns successfully. This is the second part of creating a resource testing plan, and it must be completed sequentially.</p> <p>This consists of <code>RestoreTestingSelectionName</code>, <code>ProtectedResourceType</code>, and one of the following:</p> <ul> <li> <p> <code>ProtectedResourceArns</code> </p> </li> <li> <p> <code>ProtectedResourceConditions</code> </p> </li> </ul> <p>Each protected resource type can have one single value.</p> <p>A restore testing selection can include a wildcard value (\"*\") for <code>ProtectedResourceArns</code> along with <code>ProtectedResourceConditions</code>. Alternatively, you can include up to 30 specific protected resource ARNs in <code>ProtectedResourceArns</code>.</p> <p>Cannot select by both protected resource types AND specific ARNs. Request will fail if both are included.</p>",
     "CreateTieringConfiguration": "<p>Creates a tiering configuration.</p> <p>A tiering configuration enables automatic movement of backup data to a lower-cost storage tier based on the age of backed-up objects in the backup vault.</p> <p>Each vault can only have one vault-specific tiering configuration, in addition to any global configuration that applies to all vaults.</p>",
+    "DeleteBackupAccessPoint": "<p>Deletes a backup access point. This deletes the underlying Amazon S3 access point and, if no other backup access points remain for the recovery point, resumes lifecycle transitions for that recovery point.</p> <p>Always delete backup access points using this operation rather than deleting the underlying Amazon S3 access point directly.</p>",
     "DeleteBackupPlan": "<p>Deletes a backup plan. A backup plan can only be deleted after all associated selections of resources have been deleted. Deleting a backup plan deletes the current version of a backup plan. Previous versions, if any, will still exist.</p>",
     "DeleteBackupSelection": "<p>Deletes the resource selection associated with a backup plan that is specified by the <code>SelectionId</code>.</p>",
     "DeleteBackupVault": "<p>Deletes the backup vault identified by its name. A vault can be deleted only if it is empty.</p>",
@@ -27,6 +29,7 @@
     "DeleteRestoreTestingPlan": "<p>This request deletes the specified restore testing plan.</p> <p>Deletion can only successfully occur if all associated restore testing selections are deleted first.</p>",
     "DeleteRestoreTestingSelection": "<p>Input the Restore Testing Plan name and Restore Testing Selection name.</p> <p>All testing selections associated with a restore testing plan must be deleted before the restore testing plan can be deleted.</p>",
     "DeleteTieringConfiguration": "<p>Deletes the tiering configuration specified by a tiering configuration name.</p>",
+    "DescribeBackupAccessPoint": "<p>Returns metadata about a backup access point, including its status and the details of the underlying Amazon S3 access point.</p> <p>After a backup access point reaches the <code>AVAILABLE</code> status, use this operation to retrieve the Amazon S3 access point ARN and alias that you need to read the backup data.</p>",
     "DescribeBackupJob": "<p>Returns backup job details for the specified <code>BackupJobId</code>.</p>",
     "DescribeBackupVault": "<p>Returns metadata about a backup vault specified by its name.</p>",
     "DescribeCopyJob": "<p>Returns metadata associated with creating a copy of a resource.</p>",
@@ -59,6 +62,9 @@
     "GetRestoreTestingSelection": "<p>Returns RestoreTestingSelection, which displays resources and elements of the restore testing plan.</p>",
     "GetSupportedResourceTypes": "<p>Returns the Amazon Web Services resource types supported by Backup.</p>",
     "GetTieringConfiguration": "<p>Returns <code>TieringConfiguration</code> details for the specified <code>TieringConfigurationName</code>. The details are the body of a tiering configuration in JSON format, in addition to configuration metadata.</p>",
+    "ListBackupAccessPoints": "<p>Returns a list of the backup access points in your account and Region.</p>",
+    "ListBackupAccessPointsByRecoveryPoint": "<p>Returns the backup access points associated with the specified recovery point.</p> <p>If you own the recovery point and have shared it with other accounts, the response includes backup access points created by those accounts.</p>",
+    "ListBackupAccessPointsByResource": "<p>Returns the backup access points associated with the specified resource, such as an Amazon S3 bucket.</p>",
     "ListBackupJobSummaries": "<p>This is a request for a summary of backup jobs created or running within the most recent 30 days. You can include parameters AccountID, State, ResourceType, MessageCategory, AggregationPeriod, MaxResults, or NextToken to filter results.</p> <p>This request returns a summary that contains Region, Account, State, ResourceType, MessageCategory, StartTime, EndTime, and Count of included jobs.</p>",
     "ListBackupJobs": "<p>Returns a list of existing backup jobs for an authenticated account for the last 30 days. For a longer period of time, consider using these <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/monitoring.html\">monitoring tools</a>.</p>",
     "ListBackupPlanTemplates": "<p>Lists the backup plan templates.</p>",
@@ -71,7 +77,7 @@
     "ListFrameworks": "<p>Returns a list of all frameworks for an Amazon Web Services account and Amazon Web Services Region.</p>",
     "ListIndexedRecoveryPoints": "<p>This operation returns a list of recovery points that have an associated index, belonging to the specified account.</p> <p>Optional parameters you can include are: MaxResults; NextToken; SourceResourceArns; CreatedBefore; CreatedAfter; and ResourceType.</p>",
     "ListLegalHolds": "<p>This action returns metadata about active and previous legal holds.</p>",
-    "ListProtectedResources": "<p>Returns an array of resources successfully backed up by Backup, including the time the resource was saved, an Amazon Resource Name (ARN) of the resource, and a resource type.</p>",
+    "ListProtectedResources": "<p>Returns an array of resources with recovery points created by Backup (regardless of the recovery point's <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/API_DescribeRecoveryPoint.html#Backup-DescribeRecoveryPoint-response-Status\">status</a>), including the time the resource was saved, an Amazon Resource Name (ARN) of the resource, and a resource type.</p>",
     "ListProtectedResourcesByBackupVault": "<p>This request lists the protected resources corresponding to each backup vault.</p>",
     "ListRecoveryPointsByBackupVault": "<p>Returns detailed information about the recovery points stored in a backup vault.</p>",
     "ListRecoveryPointsByLegalHold": "<p>This action returns recovery point ARNs (Amazon Resource Names) of the specified legal hold.</p>",
@@ -249,6 +255,58 @@
         "UpdateTieringConfigurationOutput$TieringConfigurationArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies the updated tiering configuration.</p>"
       }
     },
+    "AccessPointArn": {
+      "base": null,
+      "refs": {
+        "CreateBackupAccessPointResponse$AccessPointArn": "<p>The Amazon Resource Name (ARN) that uniquely identifies the created backup access point.</p>",
+        "DeleteBackupAccessPointInput$AccessPointArn": "<p>The Amazon Resource Name (ARN) of the backup access point to delete.</p>",
+        "DescribeBackupAccessPointInput$AccessPointArn": "<p>The Amazon Resource Name (ARN) of the backup access point to describe.</p>",
+        "DescribeBackupAccessPointResponse$AccessPointArn": "<p>The Amazon Resource Name (ARN) that uniquely identifies the backup access point.</p>",
+        "ListAccessPointsMember$AccessPointArn": "<p>The Amazon Resource Name (ARN) that uniquely identifies the backup access point.</p>"
+      }
+    },
+    "AccessPointMetadataMap": {
+      "base": null,
+      "refs": {
+        "CreateBackupAccessPointRequest$AccessPointMetadata": "<p>Metadata for the backup access point. For continuous (point-in-time) recovery points, you must include an <code>AccessPointInTime</code> timestamp (in format <code>2021-11-27T03:30:27Z</code>). The access point provides access to the content present in the backup at that specific time. You can specify any time within the continuous backup's retention period, up to the latest restorable time. For snapshot recovery points, do not include <code>AccessPointInTime</code>.</p>",
+        "DescribeBackupAccessPointResponse$AccessPointMetadata": "<p>Metadata for the backup access point. After the backup access point reaches the <code>AVAILABLE</code> status, this map contains <code>S3AccessPointArn</code> and <code>S3AccessPointAlias</code>, which you use with standard Amazon S3 read APIs to access the backup data. For continuous recovery points, this map also contains <code>AccessPointInTime</code> (in format <code>2021-11-27T03:30:27Z</code>). The access point provides access to the content present in the backup at that specific time.</p>",
+        "ListAccessPointsMember$AccessPointMetadata": "<p>Metadata for the backup access point. After the backup access point reaches the <code>AVAILABLE</code> status, this map contains <code>S3AccessPointArn</code> and <code>S3AccessPointAlias</code>, which you use with standard Amazon S3 read APIs to access the backup data. For continuous recovery points, this map also contains <code>AccessPointInTime</code> (in format <code>2021-11-27T03:30:27Z</code>). The access point provides access to the content present in the backup at that specific time.</p>"
+      }
+    },
+    "AccessPointMetadataMapKeyString": {
+      "base": null,
+      "refs": {
+        "AccessPointMetadataMap$key": null
+      }
+    },
+    "AccessPointMetadataMapValueString": {
+      "base": null,
+      "refs": {
+        "AccessPointMetadataMap$value": null
+      }
+    },
+    "AccessPointName": {
+      "base": null,
+      "refs": {
+        "CreateBackupAccessPointRequest$Name": "<p>The name of the backup access point. This name is shared with the Amazon S3 access point namespace. It must be unique within your account and Region and cannot conflict with an existing Amazon S3 access point. For more information about access point naming, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points-restrictions-limitations-naming-rules.html\">Access points naming rules, restrictions, and limitations</a> in the <i>Amazon S3 User Guide</i>.</p>",
+        "DescribeBackupAccessPointResponse$Name": "<p>The name of the backup access point.</p>",
+        "ListAccessPointsMember$Name": "<p>The name of the backup access point.</p>"
+      }
+    },
+    "AccessPointPolicy": {
+      "base": null,
+      "refs": {
+        "CreateBackupAccessPointRequest$AccessPointPolicy": "<p>An optional resource-based policy, in JSON format, to apply to the underlying Amazon S3 access point. The policy controls how backup data can be accessed through the access point. If you do not specify a policy, access is governed by the caller's IAM permissions. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points-policies.html\">Configuring IAM policies for using access points</a> in the <i>Amazon S3 User Guide</i>.</p>"
+      }
+    },
+    "AccessPointStatus": {
+      "base": null,
+      "refs": {
+        "CreateBackupAccessPointResponse$Status": "<p>The current status of the backup access point. A newly created backup access point begins in the <code>CREATING</code> state and becomes usable when it reaches <code>AVAILABLE</code>.</p>",
+        "DescribeBackupAccessPointResponse$Status": "<p>The current status of the backup access point.</p>",
+        "ListAccessPointsMember$Status": "<p>The current status of the backup access point.</p>"
+      }
+    },
     "AccountId": {
       "base": null,
       "refs": {
@@ -314,6 +372,14 @@
     "AssociateBackupVaultMpaApprovalTeamInput": {
       "base": null,
       "refs": {}
+    },
+    "BackupAccessPoints": {
+      "base": null,
+      "refs": {
+        "ListBackupAccessPointsByRecoveryPointResponse$BackupAccessPoints": "<p>A list of backup access points, each containing metadata such as its name, ARN, status, and associated recovery point.</p>",
+        "ListBackupAccessPointsByResourceResponse$BackupAccessPoints": "<p>A list of backup access points, each containing metadata such as its name, ARN, status, and associated recovery point.</p>",
+        "ListBackupAccessPointsResponse$BackupAccessPoints": "<p>A list of backup access points, each containing metadata such as its name, ARN, status, and associated recovery point.</p>"
+      }
     },
     "BackupJob": {
       "base": "<p>Contains detailed information about a backup job.</p>",
@@ -493,6 +559,13 @@
         "BackupSelectionsList$member": null
       }
     },
+    "BackupVaultArn": {
+      "base": null,
+      "refs": {
+        "DescribeBackupAccessPointResponse$BackupVaultArn": "<p>The Amazon Resource Name (ARN) of the backup vault that contains the recovery point.</p>",
+        "ListAccessPointsMember$BackupVaultArn": "<p>The Amazon Resource Name (ARN) of the backup vault that contains the recovery point.</p>"
+      }
+    },
     "BackupVaultEvent": {
       "base": null,
       "refs": {
@@ -536,6 +609,7 @@
         "DeleteBackupVaultLockConfigurationInput$BackupVaultName": "<p>The name of the backup vault from which to delete Backup Vault Lock.</p>",
         "DeleteBackupVaultNotificationsInput$BackupVaultName": "<p>The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Region where they are created.</p>",
         "DeleteRecoveryPointInput$BackupVaultName": "<p>The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.</p>",
+        "DescribeBackupAccessPointResponse$BackupVaultName": "<p>The name of the backup vault that contains the recovery point.</p>",
         "DescribeBackupJobOutput$BackupVaultName": "<p>The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.</p>",
         "DescribeRecoveryPointInput$BackupVaultName": "<p>The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.</p>",
         "DescribeRecoveryPointOutput$BackupVaultName": "<p>The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Region where they are created.</p>",
@@ -548,6 +622,7 @@
         "GetBackupVaultNotificationsOutput$BackupVaultName": "<p>The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Region where they are created.</p>",
         "GetRecoveryPointIndexDetailsInput$BackupVaultName": "<p>The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Region where they are created.</p> <p>Accepted characters include lowercase letters, numbers, and hyphens.</p>",
         "GetRecoveryPointRestoreMetadataInput$BackupVaultName": "<p>The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.</p>",
+        "ListAccessPointsMember$BackupVaultName": "<p>The name of the backup vault that contains the recovery point.</p>",
         "ListBackupJobsInput$ByBackupVaultName": "<p>Returns only backup jobs that will be stored in the specified backup vault. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.</p>",
         "ListProtectedResourcesByBackupVaultInput$BackupVaultName": "<p>The list of protected resources by backup vault within the vault(s) you specify by name.</p>",
         "ListRecoveryPointsByBackupVaultInput$BackupVaultName": "<p>The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.</p> <note> <p>Backup vault name might not be available when a supported service creates the backup.</p> </note>",
@@ -743,6 +818,14 @@
         "ListCopyJobsOutput$CopyJobs": "<p>An array of structures containing metadata about your copy jobs returned in JSON format. </p>"
       }
     },
+    "CreateBackupAccessPointRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateBackupAccessPointResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CreateBackupPlanInput": {
       "base": null,
       "refs": {}
@@ -851,6 +934,10 @@
         "RecoveryPointSelection$DateRange": null
       }
     },
+    "DeleteBackupAccessPointInput": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteBackupPlanInput": {
       "base": null,
       "refs": {}
@@ -909,6 +996,14 @@
     },
     "DependencyFailureException": {
       "base": "<p>A dependent Amazon Web Services service or resource returned an error to the Backup service, and the action cannot be completed.</p>",
+      "refs": {}
+    },
+    "DescribeBackupAccessPointInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeBackupAccessPointResponse": {
+      "base": null,
       "refs": {}
     },
     "DescribeBackupJobInput": {
@@ -1396,6 +1491,54 @@
       "base": "<p>A limit in the request has been exceeded; for example, a maximum number of items allowed in a request.</p>",
       "refs": {}
     },
+    "ListAccessPointsMember": {
+      "base": "<p>Contains metadata about a backup access point.</p>",
+      "refs": {
+        "BackupAccessPoints$member": null
+      }
+    },
+    "ListBackupAccessPointsByRecoveryPointRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListBackupAccessPointsByRecoveryPointRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListBackupAccessPointsByRecoveryPointRequest$MaxResults": "<p>The maximum number of items to be returned.</p>"
+      }
+    },
+    "ListBackupAccessPointsByRecoveryPointResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListBackupAccessPointsByResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListBackupAccessPointsByResourceRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListBackupAccessPointsByResourceRequest$MaxResults": "<p>The maximum number of items to be returned.</p>"
+      }
+    },
+    "ListBackupAccessPointsByResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListBackupAccessPointsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListBackupAccessPointsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListBackupAccessPointsRequest$MaxResults": "<p>The maximum number of items to be returned.</p>"
+      }
+    },
+    "ListBackupAccessPointsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListBackupJobSummariesInput": {
       "base": null,
       "refs": {}
@@ -1838,6 +1981,15 @@
       "base": null,
       "refs": {}
     },
+    "RecoveryPointArn": {
+      "base": null,
+      "refs": {
+        "CreateBackupAccessPointRequest$RecoveryPointArn": "<p>The Amazon Resource Name (ARN) of the recovery point for which to create the backup access point. The recovery point must be an Amazon S3 recovery point in the <code>AVAILABLE</code>, <code>STOPPED</code>, or <code>COMPLETED</code> state.</p>",
+        "DescribeBackupAccessPointResponse$RecoveryPointArn": "<p>The Amazon Resource Name (ARN) of the recovery point that the backup access point provides access to.</p>",
+        "ListAccessPointsMember$RecoveryPointArn": "<p>The Amazon Resource Name (ARN) of the recovery point that the backup access point provides access to.</p>",
+        "ListBackupAccessPointsByRecoveryPointRequest$RecoveryPointArn": "<p>The Amazon Resource Name (ARN) of the recovery point whose backup access points you want to list.</p>"
+      }
+    },
     "RecoveryPointByBackupVault": {
       "base": "<p>Contains detailed information about the recovery points stored in a backup vault.</p>",
       "refs": {
@@ -1994,6 +2146,14 @@
         "CreateRestoreAccessBackupVaultInput$RequesterComment": "<p>A comment explaining the reason for requesting restore access to the backup vault.</p>",
         "DisassociateBackupVaultMpaApprovalTeamInput$RequesterComment": "<p>An optional comment explaining the reason for disassociating the MPA approval team from the backup vault.</p>",
         "RevokeRestoreAccessBackupVaultInput$RequesterComment": "<p>A comment explaining the reason for revoking access to the restore access backup vault.</p>"
+      }
+    },
+    "ResourceArn": {
+      "base": null,
+      "refs": {
+        "DescribeBackupAccessPointResponse$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource that was backed up, such as an Amazon S3 bucket.</p>",
+        "ListAccessPointsMember$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource that was backed up, such as an Amazon S3 bucket.</p>",
+        "ListBackupAccessPointsByResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource whose backup access points you want to list.</p>"
       }
     },
     "ResourceArns": {
@@ -2501,6 +2661,8 @@
         "DeleteRestoreTestingPlanInput$RestoreTestingPlanName": "<p>Required unique name of the restore testing plan you wish to delete.</p>",
         "DeleteRestoreTestingSelectionInput$RestoreTestingPlanName": "<p>Required unique name of the restore testing plan that contains the restore testing selection you wish to delete.</p>",
         "DeleteRestoreTestingSelectionInput$RestoreTestingSelectionName": "<p>Required unique name of the restore testing selection you wish to delete.</p>",
+        "DescribeBackupAccessPointResponse$ResourceType": "<p>The type of Amazon Web Services resource associated with the recovery point. For example, <code>S3</code> for Amazon Simple Storage Service.</p>",
+        "DescribeBackupAccessPointResponse$StatusMessage": "<p>A message that provides additional detail about the status of the backup access point, such as the reason a creation or deletion attempt failed.</p>",
         "DescribeScanJobInput$ScanJobId": "<p>Uniquely identifies a request to Backup to scan a resource.</p>",
         "DescribeScanJobOutput$AccountId": "<p>Returns the account ID that owns the scan job.</p> <p>Pattern: <code>^[0-9]{12}$</code> </p>",
         "DescribeScanJobOutput$BackupVaultArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a backup vault; for example, <code>arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault</code> </p>",
@@ -2525,6 +2687,14 @@
         "GetRestoreTestingSelectionInput$RestoreTestingSelectionName": "<p>Required unique name of the restore testing selection.</p>",
         "KeyValue$Key": "<p>The tag key (String). The key can't start with <code>aws:</code>.</p> <p>Length Constraints: Minimum length of 1. Maximum length of 128.</p> <p>Pattern: <code>^(?![aA]{1}[wW]{1}[sS]{1}:)([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]+)$</code> </p>",
         "KeyValue$Value": "<p>The value of the key.</p> <p>Length Constraints: Maximum length of 256.</p> <p>Pattern: <code>^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$</code> </p>",
+        "ListAccessPointsMember$ResourceType": "<p>The type of Amazon Web Services resource associated with the recovery point. For example, <code>S3</code> for Amazon Simple Storage Service.</p>",
+        "ListAccessPointsMember$StatusMessage": "<p>A message that provides additional detail about the status of the backup access point, such as the reason a creation or deletion attempt failed.</p>",
+        "ListBackupAccessPointsByRecoveryPointRequest$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
+        "ListBackupAccessPointsByRecoveryPointResponse$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
+        "ListBackupAccessPointsByResourceRequest$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
+        "ListBackupAccessPointsByResourceResponse$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
+        "ListBackupAccessPointsRequest$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
+        "ListBackupAccessPointsResponse$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
         "ListRestoreTestingPlansInput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the nexttoken.</p>",
         "ListRestoreTestingPlansOutput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the nexttoken.</p>",
         "ListRestoreTestingSelectionsInput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the nexttoken.</p>",
@@ -2610,6 +2780,24 @@
         "UntagResourceInput$TagKeyList": "<p>The keys to identify which key-value tags to remove from a resource.</p>"
       }
     },
+    "TagMap": {
+      "base": null,
+      "refs": {
+        "CreateBackupAccessPointRequest$Tags": "<p>The tags to assign to the backup access point.</p>"
+      }
+    },
+    "TagMapKeyString": {
+      "base": null,
+      "refs": {
+        "TagMap$key": null
+      }
+    },
+    "TagMapValueString": {
+      "base": null,
+      "refs": {
+        "TagMap$value": null
+      }
+    },
     "TagResourceInput": {
       "base": null,
       "refs": {}
@@ -2689,6 +2877,7 @@
       "refs": {
         "CreateRestoreTestingPlanOutput$CreationTime": "<p>The date and time a restore testing plan was created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087AM.</p>",
         "CreateRestoreTestingSelectionOutput$CreationTime": "<p>The time that the resource testing selection was created.</p>",
+        "DescribeBackupAccessPointResponse$CreationTime": "<p>The date and time that the backup access point was created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
         "DescribeScanJobOutput$CompletionDate": "<p>The date and time that a backup index finished creation, in Unix format and Coordinated Universal Time (UTC). The value of <code>CompletionDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
         "DescribeScanJobOutput$ContinuousScanEndTime": "<p>The point in time the scan job scanned up to for a continuous backup.</p>",
         "DescribeScanJobOutput$ContinuousScanStartTime": "<p>The point in time the scan job started scan from for a continuous backup.</p>",
@@ -2696,6 +2885,7 @@
         "GetPITRMalwareScanResultsInput$ScanEndTime": "<p>The point in time within the continuous backup to examine for malware scan results.</p>",
         "GetPITRMalwareScanResultsOutput$ScanEndTime": "<p>The point in time that was queried. This echoes back the time specified in the request.</p>",
         "GetPITRMalwareScanResultsOutput$LastScanJobTime": "<p>The completion time of the most recent scan job that covered the specified point in time.</p>",
+        "ListAccessPointsMember$CreationTime": "<p>The date and time that the backup access point was created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
         "ListScanJobsInput$ByCompleteAfter": "<p>Returns only scan jobs completed after a date expressed in Unix format and Coordinated Universal Time (UTC).</p>",
         "ListScanJobsInput$ByCompleteBefore": "<p>Returns only backup jobs completed before a date expressed in Unix format and Coordinated Universal Time (UTC).</p>",
         "RestoreTestingPlanForGet$CreationTime": "<p>The date and time that a restore testing plan was created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
@@ -2851,7 +3041,7 @@
         "DescribeRecoveryPointOutput$IsParent": "<p>This returns the boolean value that a recovery point is a parent (composite) job.</p>",
         "DescribeRestoreJobOutput$IsParent": "<p>This is a boolean value indicating whether the restore job is a parent (composite) restore job.</p>",
         "ListBackupVaultsInput$ByShared": "<p>This parameter will sort the list of vaults by shared vaults.</p>",
-        "ListRecoveryPointsByResourceInput$ManagedByAWSBackupOnly": "<p>This attribute filters recovery points based on ownership.</p> <p>If this is set to <code>TRUE</code>, the response will contain recovery points associated with the selected resources that are managed by Backup.</p> <p>If this is set to <code>FALSE</code>, the response will contain all recovery points associated with the selected resource.</p> <p>Type: Boolean</p>",
+        "ListRecoveryPointsByResourceInput$ManagedByAWSBackupOnly": "<p>This attribute filters recovery points based on ownership.</p> <p>If this is set to <code>TRUE</code>, the response will contain recovery points associated with the selected resources that are managed by Backup.</p> <p>If this is set to <code>FALSE</code>, the response will contain all recovery points associated with the selected resource, except for EBS snapshots copied within the same Region and account.</p> <p>Type: Boolean</p>",
         "RecoveryPointByBackupVault$IsEncrypted": "<p>A Boolean value that is returned as <code>TRUE</code> if the specified recovery point is encrypted, or <code>FALSE</code> if the recovery point is not encrypted.</p>",
         "RecoveryPointByBackupVault$IsParent": "<p>This is a boolean value indicating this is a parent (composite) recovery point.</p>",
         "RecoveryPointByResource$IsParent": "<p>This is a boolean value indicating this is a parent (composite) recovery point.</p>",
@@ -2884,7 +3074,7 @@
     "long": {
       "base": null,
       "refs": {
-        "BackupVaultListMember$NumberOfRecoveryPoints": "<p>The number of recovery points that are stored in a backup vault.</p>",
+        "BackupVaultListMember$NumberOfRecoveryPoints": "<p>The number of recovery points that are stored in a backup vault. Recovery point count value displayed in the console can be an approximation.</p>",
         "DescribeBackupVaultOutput$NumberOfRecoveryPoints": "<p>The number of recovery points that are stored in a backup vault.</p> <p>Recovery point count value displayed in the console can be an approximation. Use <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/API_ListRecoveryPointsByBackupVault.html\"> <code>ListRecoveryPointsByBackupVault</code> </a> API to obtain the exact count.</p>"
       }
     },

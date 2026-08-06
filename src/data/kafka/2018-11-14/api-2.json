@@ -2251,6 +2251,23 @@
         "BootstrapBrokerString"
       ]
     },
+    "AuthorizerLogs": {
+      "type": "structure",
+      "members": {
+        "CloudWatchLogs": {
+          "shape": "CloudWatchLogs",
+          "locationName": "cloudWatchLogs"
+        },
+        "Firehose": {
+          "shape": "Firehose",
+          "locationName": "firehose"
+        },
+        "S3": {
+          "shape": "S3",
+          "locationName": "s3"
+        }
+      }
+    },
     "BatchAssociateScramSecretRequest": {
       "type": "structure",
       "members": {
@@ -5600,6 +5617,10 @@
     "LoggingInfo": {
       "type": "structure",
       "members": {
+        "AuthorizerLogs": {
+          "shape": "AuthorizerLogs",
+          "locationName": "authorizerLogs"
+        },
         "BrokerLogs": {
           "shape": "BrokerLogs",
           "locationName": "brokerLogs"

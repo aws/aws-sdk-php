@@ -3,6 +3,7 @@
   "service": "<p> <i>Amazon Web Services End User Messaging Social</i>, also referred to as Social messaging, is a messaging service that enables application developers to incorporate WhatsApp into their existing workflows. The <i>Amazon Web Services End User Messaging Social API</i> provides information about the <i>Amazon Web Services End User Messaging Social API</i> resources, including supported HTTP methods, parameters, and schemas.</p> <p>The <i>Amazon Web Services End User Messaging Social API</i> provides programmatic access to options that are unique to the WhatsApp Business Platform.</p> <p>If you're new to the <i>Amazon Web Services End User Messaging Social API</i>, it's also helpful to review <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/what-is-service.html\">What is Amazon Web Services End User Messaging Social</a> in the <i>Amazon Web Services End User Messaging Social User Guide</i>. The <i>Amazon Web Services End User Messaging Social User Guide</i> provides tutorials, code samples, and procedures that demonstrate how to use <i>Amazon Web Services End User Messaging Social API</i> features programmatically and how to integrate functionality into applications. The guide also provides key information, such as integration with other Amazon Web Services services, and the quotas that apply to use of the service.</p> <p> <b>Regional availability</b> </p> <p>The <i>Amazon Web Services End User Messaging Social API</i> is available across several Amazon Web Services Regions and it provides a dedicated endpoint for each of these Regions. For a list of all the Regions and endpoints where the API is currently available, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/rande.html#pinpoint_region\">Amazon Web Services Service Endpoints</a> and <a href=\"https://docs.aws.amazon.com/general/latest/gr/end-user-messaging.html\">Amazon Web Services End User Messaging endpoints and quotas</a> in the Amazon Web Services General Reference. To learn more about Amazon Web Services Regions, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/rande-manage.html\">Managing Amazon Web Services Regions</a> in the Amazon Web Services General Reference.</p> <p>In each Region, Amazon Web Services maintains multiple Availability Zones. These Availability Zones are physically isolated from each other, but are united by private, low-latency, high-throughput, and highly redundant network connections. These Availability Zones enable us to provide very high levels of availability and redundancy, while also minimizing latency. To learn more about the number of Availability Zones that are available in each Region, see <a href=\"https://aws.amazon.com/about-aws/global-infrastructure/\">Amazon Web Services Global Infrastructure.</a> </p>",
   "operations": {
     "AssociateWhatsAppBusinessAccount": "<p>This is only used through the Amazon Web Services console during sign-up to associate your WhatsApp Business Account to your Amazon Web Services account.</p>",
+    "CreateWhatsAppDataset": "<p>Creates a Meta Conversions API dataset for a WhatsApp Business Account.</p>",
     "CreateWhatsAppFlow": "<p>Creates a new WhatsApp Flow. Flows enable businesses to create rich, interactive forms and experiences that users can complete without leaving WhatsApp. The Flow is created in DRAFT status. If <code>publish</code> is set to <code>true</code> and a valid <code>flowJson</code> is provided, the Flow is published immediately.</p>",
     "CreateWhatsAppMessageTemplate": "<p>Creates a new WhatsApp message template from a custom definition.</p> <note> <p>Amazon Web Services End User Messaging Social does not store any WhatsApp message template content.</p> </note>",
     "CreateWhatsAppMessageTemplateFromLibrary": "<p>Creates a new WhatsApp message template using a template from Meta's template library.</p>",
@@ -27,6 +28,7 @@
     "PostWhatsAppMessageMedia": "<p>Upload a media file to the WhatsApp service. Only the specified <code>originationPhoneNumberId</code> has the permissions to send the media file when using <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_SendWhatsAppMessage.html\">SendWhatsAppMessage</a>. You must use either <code>sourceS3File</code> or <code>sourceS3PresignedUrl</code> for the source. If both or neither are specified then an <code>InvalidParameterException</code> is returned.</p>",
     "PublishWhatsAppFlow": "<p>Publishes a WhatsApp Flow, making it available for use in template messages. The Flow must be in DRAFT status with valid Flow JSON that passes Meta's validation. This is an irreversible operation.</p>",
     "PutWhatsAppBusinessAccountEventDestinations": "<p>Add an event destination to log event data from WhatsApp for a WhatsApp Business Account (WABA). A WABA can only have one event destination at a time. All resources associated with the WABA use the same event destination.</p>",
+    "SendWhatsAppConversionEvent": "<p>Sends a conversion event to Meta's Conversions API for the specified WhatsApp Business Account dataset.</p>",
     "SendWhatsAppMessage": "<p>Send a WhatsApp message. For examples of sending a message using the Amazon Web Services CLI, see <a href=\"https://docs.aws.amazon.com/social-messaging/latest/userguide/send-message.html\">Sending messages</a> in the <i> <i>Amazon Web Services End User Messaging Social User Guide</i> </i>.</p>",
     "TagResource": "<p>Adds or overwrites only the specified tags for the specified resource. When you specify an existing tag key, the value is overwritten with the new value.</p>",
     "UntagResource": "<p>Removes the specified tags from a resource. </p>",
@@ -111,6 +113,14 @@
       "refs": {
         "LibraryTemplateBodyInputs$codeExpirationMinutes": "<p>The number of minutes until a verification code or OTP expires.</p>"
       }
+    },
+    "CreateWhatsAppDatasetInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateWhatsAppDatasetOutput": {
+      "base": null,
+      "refs": {}
     },
     "CreateWhatsAppFlowInput": {
       "base": null,
@@ -356,6 +366,7 @@
       "base": null,
       "refs": {
         "AssociateWhatsAppBusinessAccountOutput$linkedWhatsAppBusinessAccountId": "<p>The ID of the WhatsApp Business Account that was linked to your Amazon Web Services account.</p>",
+        "CreateWhatsAppDatasetInput$id": "<p>The ID of the WhatsApp Business Account to create a dataset for, formatted as <code>waba-01234567890123456789012345678901</code>.</p>",
         "CreateWhatsAppFlowInput$id": "<p>The ID of the WhatsApp Business Account to associate with this Flow.</p>",
         "CreateWhatsAppMessageTemplateFromLibraryInput$id": "<p>The ID of the WhatsApp Business Account to associate with this template.</p>",
         "CreateWhatsAppMessageTemplateInput$id": "<p>The ID of the WhatsApp Business Account to associate with this template.</p>",
@@ -378,6 +389,7 @@
         "ListWhatsAppTemplateLibraryInput$id": "<p>The ID of the WhatsApp Business Account to list library templates for.</p>",
         "PublishWhatsAppFlowInput$id": "<p>The ID of the WhatsApp Business Account associated with this Flow.</p>",
         "PutWhatsAppBusinessAccountEventDestinationsInput$id": "<p>The unique identifier of your WhatsApp Business Account. WABA identifiers are formatted as <code>waba-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_ListLinkedWhatsAppBusinessAccounts.html\">ListLinkedWhatsAppBusinessAccounts</a> to list all WABAs and their details.</p>",
+        "SendWhatsAppConversionEventInput$id": "<p>The ID of the WhatsApp Business Account associated with the dataset, formatted as <code>waba-01234567890123456789012345678901</code>.</p>",
         "UpdateWhatsAppFlowAssetsInput$id": "<p>The ID of the WhatsApp Business Account associated with this Flow.</p>",
         "UpdateWhatsAppFlowInput$id": "<p>The ID of the WhatsApp Business Account associated with this Flow.</p>",
         "UpdateWhatsAppMessageTemplateInput$id": "<p>The ID of the WhatsApp Business Account associated with this template.</p>",
@@ -988,6 +1000,14 @@
         "S3PresignedUrl$url": "<p>The presign url to the object.</p>"
       }
     },
+    "SendWhatsAppConversionEventInput": {
+      "base": null,
+      "refs": {}
+    },
+    "SendWhatsAppConversionEventOutput": {
+      "base": null,
+      "refs": {}
+    },
     "SendWhatsAppMessageInput": {
       "base": null,
       "refs": {}
@@ -1007,6 +1027,7 @@
         "Headers$value": null,
         "MetaFlowHealthEntity$id": "<p>The unique identifier of the entity.</p>",
         "MetaTemplateBodyExampleParams$member": null,
+        "SendWhatsAppConversionEventOutput$requestId": "<p>The unique identifier for the conversion event request.</p>",
         "SendWhatsAppMessageInput$metaApiVersion": "<p>The API version for the request formatted as <code>v{VersionNumber}</code>. For a list of supported API versions and Amazon Web Services Regions, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/end-user-messaging.html\"> <i>Amazon Web Services End User Messaging Social API</i> Service Endpoints</a> in the <i>Amazon Web Services General Reference</i>.</p>",
         "SendWhatsAppMessageOutput$messageId": "<p>The unique identifier of the message.</p>",
         "StringList$member": null
@@ -1209,6 +1230,21 @@
         "LinkedWhatsAppBusinessAccountIdMetaData$accountName": "<p>The name of your account.</p>",
         "LinkedWhatsAppBusinessAccountSummary$wabaName": "<p>The name of the linked WhatsApp Business Account.</p>",
         "MetaFlowWhatsAppBusinessAccountInfo$name": "<p>The name of the WhatsApp Business Account.</p>"
+      }
+    },
+    "WhatsAppConversionEventBlob": {
+      "base": null,
+      "refs": {
+        "SendWhatsAppConversionEventInput$eventData": "<p>The raw Meta Conversions API event payload as a JSON blob. See <a href=\"https://developers.facebook.com/docs/marketing-api/conversions-api/parameters/server-event\">Meta's server event parameters</a> for the supported format.</p>"
+      }
+    },
+    "WhatsAppDatasetId": {
+      "base": null,
+      "refs": {
+        "CreateWhatsAppDatasetOutput$datasetId": "<p>The Meta-generated dataset ID, a numeric string of 10 to 20 digits.</p>",
+        "LinkedWhatsAppBusinessAccount$datasetId": "<p>The Meta Conversions API dataset ID associated with this WhatsApp Business Account. This value is a numeric string of 10 to 20 digits. This field is not present when no dataset has been created for this account.</p>",
+        "LinkedWhatsAppBusinessAccountSummary$datasetId": "<p>The Meta Conversions API dataset ID associated with this WhatsApp Business Account. This value is a numeric string of 10 to 20 digits. This field is not present when no dataset has been created for this account.</p>",
+        "SendWhatsAppConversionEventInput$datasetId": "<p>The Meta-generated dataset ID to send the event to.</p>"
       }
     },
     "WhatsAppDisplayPhoneNumber": {

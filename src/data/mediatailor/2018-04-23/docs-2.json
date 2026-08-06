@@ -265,6 +265,15 @@
         "HttpRequest$CompressRequest": "<p>The compression method to apply to requests sent to the ad decision server. Supported values are <code>NONE</code> and <code>GZIP</code>. This value is only eligible for <code>POST</code> requests.</p>"
       }
     },
+    "ConcurrentExecutorConfiguration": {
+      "base": "<p>The configuration for a <code>CONCURRENT_EXECUTOR</code> function. A <code>CONCURRENT_EXECUTOR</code> runs a set of child functions in parallel, up to a maximum concurrency, and combines their output when all functions complete. For more information about functions, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/monetization-functions.html\">Working with functions</a> in the <i>MediaTailor User Guide</i>.</p>",
+      "refs": {
+        "Function$ConcurrentExecutorConfiguration": "<p>The configuration for a <code>CONCURRENT_EXECUTOR</code> function.</p>",
+        "GetFunctionResponse$ConcurrentExecutorConfiguration": "<p>The configuration for a <code>CONCURRENT_EXECUTOR</code> function.</p>",
+        "PutFunctionRequest$ConcurrentExecutorConfiguration": "<p>The configuration for a <code>CONCURRENT_EXECUTOR</code> function. Specifies the list of child functions to run in parallel, the maximum concurrency, an optional output block, and a timeout. Required when <code>FunctionType</code> is <code>CONCURRENT_EXECUTOR</code>.</p>",
+        "PutFunctionResponse$ConcurrentExecutorConfiguration": "<p>The configuration for a <code>CONCURRENT_EXECUTOR</code> function.</p>"
+      }
+    },
     "ConfigurationAliasesRequest": {
       "base": "<p>The predefined aliases for dynamic variables.</p>",
       "refs": {
@@ -1009,6 +1018,7 @@
     "RuntimeType": {
       "base": null,
       "refs": {
+        "ConcurrentExecutorConfiguration$Runtime": "<p>The expression language used to evaluate expressions in the function configuration. Set this to <code>JSONata</code>.</p>",
         "CustomOutputConfiguration$Runtime": "<p>The expression language used to evaluate expressions in the function configuration. Set this to <code>JSONata</code>.</p>",
         "HttpRequestConfiguration$Runtime": "<p>The expression language used to evaluate expressions in the function configuration. Set this to <code>JSONata</code>.</p>",
         "SequentialExecutorConfiguration$Runtime": "<p>The expression language used to evaluate expressions in the function configuration. Set this to <code>JSONata</code>.</p>"
@@ -1281,6 +1291,8 @@
         "AdsPersonalizationTimeouts$VodMaximumAdsPersonalizationTimeMilliseconds": "<p>The maximum total time, in milliseconds, that MediaTailor spends on ad decision server activity for VOD manifests, including making requests, waiting for responses, and following VAST wrapper redirects. The default is 10000.</p>",
         "AdsPersonalizationTimeouts$PrefetchAdsRequestTimeoutMilliseconds": "<p>The maximum time, in milliseconds, that MediaTailor waits for a single ad decision server response during prefetch retrieval. If not set, the value of AdsRequestTimeoutMilliseconds is used.</p>",
         "AdsPersonalizationTimeouts$PrefetchMaximumAdsPersonalizationTimeMilliseconds": "<p>The maximum total time, in milliseconds, that MediaTailor spends on ad decision server activity during prefetch retrieval, including making requests, waiting for responses, and following VAST wrapper redirects.</p>",
+        "ConcurrentExecutorConfiguration$TimeoutMilliseconds": "<p>The maximum time, in milliseconds, for all child functions to complete. This timeout covers every function in the list, including any HTTP calls the child functions make. If the executor exceeds this timeout, MediaTailor discards all output from the executor and proceeds with default behavior.</p>",
+        "ConcurrentExecutorConfiguration$MaxConcurrency": "<p>The maximum number of child functions that MediaTailor runs simultaneously. When the list contains more functions than <code>MaxConcurrency</code>, MediaTailor starts additional functions as running ones complete, so that no more than <code>MaxConcurrency</code> functions run at the same time.</p>",
         "ConfigureLogsForPlaybackConfigurationRequest$PercentEnabled": "<p>The percentage of session logs that MediaTailor sends to your CloudWatch Logs account. For example, if your playback configuration has 1000 sessions and percentEnabled is set to <code>60</code>, MediaTailor sends logs for 600 of the sessions to CloudWatch Logs. MediaTailor decides at random which of the playback configuration sessions to send logs for. If you want to view logs for a specific session, you can use the <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/debug-log-mode.html\">debug log mode</a>.</p> <p>Valid values: <code>0</code> - <code>100</code> </p>",
         "ConfigureLogsForPlaybackConfigurationResponse$PercentEnabled": "<p>The percentage of session logs that MediaTailor sends to your Cloudwatch Logs account.</p>",
         "DashPlaylistSettings$ManifestWindowSeconds": "<p>The total duration (in seconds) of each manifest. Minimum value: <code>30</code> seconds. Maximum value: <code>3600</code> seconds.</p>",
@@ -1368,6 +1380,7 @@
     "__listOfFunctionsRef": {
       "base": null,
       "refs": {
+        "ConcurrentExecutorConfiguration$FunctionList": "<p>The list of child functions that MediaTailor runs in parallel. Each entry specifies a child function to execute and an optional run condition expression that controls whether the function runs.</p>",
         "SequentialExecutorConfiguration$FunctionList": "<p>An ordered list of 1 to 10 steps. Each step specifies a child function to execute and an optional run condition expression that controls whether the step runs. MediaTailor executes steps in order, passing data between steps through temporary data.</p>"
       }
     },
@@ -1480,6 +1493,7 @@
       "base": null,
       "refs": {
         "Channel$Tags": "<p>The tags to assign to the channel. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
+        "ConcurrentExecutorConfiguration$Output": "<p>A map of output bindings that controls which bindings the executor commits to the session state after all child functions complete. Each key is a namespaced output path, and each value is an expression that MediaTailor evaluates against the combined results of the child functions.</p>",
         "ConfigurationAliasesRequest$value": "<p>Map of aliases to the value to be used at request time.</p>",
         "ConfigurationAliasesResponse$value": "<p>Map of aliases to the value to be used at request time.</p>",
         "CreateChannelRequest$Tags": "<p>The tags to assign to the channel. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
@@ -1641,6 +1655,7 @@
         "FunctionMapping$value": null,
         "FunctionRef$RunCondition": "<p>An optional expression that evaluates to a boolean. MediaTailor evaluates this expression immediately before running the step, using the accumulated state at that point in the sequence. If the expression evaluates to <code>false</code>, MediaTailor skips the step and moves to the next one. If omitted, the step always runs.</p>",
         "FunctionRef$FunctionId": "<p>The identifier of the child function to execute in this step.</p>",
+        "FunctionRef$Alias": "<p>An optional alternate name for the function within the executor. If omitted, MediaTailor uses the function identifier.</p>",
         "GetChannelPolicyRequest$ChannelName": "<p>The name of the channel associated with this Channel Policy.</p>",
         "GetChannelPolicyResponse$Policy": "<p>The IAM policy for the channel. IAM policies are used to control access to your channel.</p>",
         "GetChannelScheduleRequest$ChannelName": "<p>The name of the channel associated with this Channel Schedule.</p>",
