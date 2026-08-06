@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.391.0 - 2026-08-06
 
 * `Aws\S3` - AWS Backup now lets you create read-only access points for Amazon S3 recovery points, enabling you to access backup data using S3 APIs without initiating a restore.
 * `Aws\MarketplaceDiscovery` - GetOfferTerms now returns netPaymentTerm in offerTerms, specifying payment due period after invoice date. The paymentDuePeriod field uses ISO 8601 duration format (e.g., "P30D" for net 30 days). This is a backward-compatible addition. See API documentation for full structure and examples.
