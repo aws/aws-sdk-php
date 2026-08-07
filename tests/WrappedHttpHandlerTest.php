@@ -93,6 +93,29 @@ class WrappedHttpHandlerTest extends TestCase
         }
     }
 
+    public function testDoesNotParseErrorWhenRejectedWithSuccessResponse()
+    {
+        $e = new \Exception('cURL error 18: transfer closed with outstanding read data remaining');
+        $cmd = new Command('foo');
+        $req = new Request('GET', 'http://foo.com');
+        $res = new Response(200, [], 'partial body');
+        $handler = function () use ($e, $res) {
+            return new RejectedPromise(['exception' => $e, 'response' => $res]);
+        };
+        $parser = $errorParser = [$this, 'fail'];
+        $wrapped = new WrappedHttpHandler($handler, $parser, $errorParser);
+        try {
+            $wrapped($cmd, $req)->wait();
+            $this->fail();
+        } catch (AwsException $e) {
+            $this->assertSame($cmd, $e->getCommand());
+            $this->assertSame($req, $e->getRequest());
+            $this->assertSame($res, $e->getResponse());
+            $this->assertNull($e->getResult());
+            $this->assertStringContainsString('cURL error 18', $e->getMessage());
+        }
+    }
+
     #[DataProvider('responseAndParserProvider')]
     public function testCanRejectWithAndParseResponse(
         Response $res,
