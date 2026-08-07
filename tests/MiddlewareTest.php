@@ -79,7 +79,7 @@ class MiddlewareTest extends TestCase
     {
         $list = new HandlerList();
         $mock = function ($command, $request) {
-            $this->assertTrue($request->hasHeader('aws-sdk-invocation-id'));
+            $this->assertTrue($request->hasHeader('amz-sdk-invocation-id'));
             return Promise\Create::promiseFor(
                 new Result(['@metadata' => ['statusCode' => 200]])
             );

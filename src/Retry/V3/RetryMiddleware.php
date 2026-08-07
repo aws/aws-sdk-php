@@ -75,6 +75,16 @@ class RetryMiddleware
 
     public static function wrap(ConfigurationInterface $config, array $options): \Closure
     {
+        if (!isset($options['quota_manager'])) {
+            $options['quota_manager'] = new QuotaManager();
+        }
+
+        if ($config->getMode() === 'adaptive'
+            && !isset($options['rate_limiter'])
+        ) {
+            $options['rate_limiter'] = new RateLimiter();
+        }
+
         return function (callable $handler) use ($config, $options) {
             return new static($config, $handler, $options);
         };
@@ -134,7 +144,7 @@ class RetryMiddleware
         $requestStats = [];
         $capacityUsed = null;
 
-        $req = $this->addRetryHeader($req, 0, 0);
+        $req = $this->addRetryHeader($req, 0, $this->resolveMaxAttempts($cmd));
 
         $callback = function ($value) use (
             $handler,
@@ -200,9 +210,7 @@ class RetryMiddleware
             }
 
             // Max attempts is checked before retry quota.
-            $maxAttempts = ($cmd['@retries'] !== null)
-                ? $cmd['@retries'] + 1
-                : $this->maxAttempts;
+            $maxAttempts = $this->resolveMaxAttempts($cmd);
 
             if ($attempts >= $maxAttempts) {
                 if ($value instanceof AwsException) {
@@ -256,7 +264,11 @@ class RetryMiddleware
                 $this->updateStats($attempts - 1, $delayByMs, $requestStats);
             }
 
-            $req = $this->addRetryHeader($req, $attempts - 1, $delayByMs);
+            $req = $this->addRetryHeader(
+                $req,
+                $attempts - 1,
+                $maxAttempts
+            );
 
             if ($this->mode === 'adaptive') {
                 $this->rateLimiter->getSendToken();
@@ -414,5 +426,12 @@ class RetryMiddleware
         }
 
         return false;
+    }
+
+    private function resolveMaxAttempts(CommandInterface $cmd): int
+    {
+        return ($cmd['@retries'] !== null)
+            ? $cmd['@retries'] + 1
+            : $this->maxAttempts;
     }
 }

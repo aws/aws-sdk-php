@@ -108,17 +108,21 @@ class ConfigurationProvider extends AbstractConfigurationProvider
         return function () {
             // Use config from environment variables, if available
             $mode = getenv(self::ENV_MODE);
-            $maxAttempts = getenv(self::ENV_MAX_ATTEMPTS)
-                ? getenv(self::ENV_MAX_ATTEMPTS)
-                : self::DEFAULT_MAX_ATTEMPTS;
-            if (!empty($mode)) {
+            $maxAttempts = getenv(self::ENV_MAX_ATTEMPTS);
+            $hasMode = $mode !== false && $mode !== '';
+            $hasMaxAttempts = $maxAttempts !== false && $maxAttempts !== '';
+
+            if ($hasMode || $hasMaxAttempts) {
                 return Promise\Create::promiseFor(
-                    new Configuration($mode, $maxAttempts)
-                );
+                    new Configuration(
+                        $hasMode ? $mode : self::getDefaultMode(),
+                        $hasMaxAttempts ? $maxAttempts : self::DEFAULT_MAX_ATTEMPTS
+                    ));
             }
 
             return self::reject('Could not find environment variable config'
-                . ' in ' . self::ENV_MODE);
+                . ' in ' . self::ENV_MODE
+                . ' or ' . self::ENV_MAX_ATTEMPTS);
         };
     }
 
@@ -175,18 +179,27 @@ class ConfigurationProvider extends AbstractConfigurationProvider
             if (!isset($data[$profile])) {
                 return self::reject("'$profile' not found in config file");
             }
-            if (!isset($data[$profile][self::INI_MODE])) {
+            $hasMode = isset($data[$profile][self::INI_MODE])
+                && $data[$profile][self::INI_MODE] !== '';
+            $hasMaxAttempts = array_key_exists(
+                self::INI_MAX_ATTEMPTS,
+                $data[$profile]
+            ) && $data[$profile][self::INI_MAX_ATTEMPTS] !== '';
+
+            if (!$hasMode && !$hasMaxAttempts) {
                 return self::reject("Required retry config values
                     not present in INI profile '{$profile}' ({$filename})");
             }
 
-            $maxAttempts = isset($data[$profile][self::INI_MAX_ATTEMPTS])
+            $maxAttempts = $hasMaxAttempts
                 ? $data[$profile][self::INI_MAX_ATTEMPTS]
                 : self::DEFAULT_MAX_ATTEMPTS;
 
             return Promise\Create::promiseFor(
                 new Configuration(
-                    $data[$profile][self::INI_MODE],
+                    $hasMode
+                        ? $data[$profile][self::INI_MODE]
+                        : self::getDefaultMode(),
                     $maxAttempts
                 )
             );

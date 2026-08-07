@@ -66,8 +66,8 @@ class SignatureV4 implements SignatureInterface
             'referer'               => true,
             'user-agent'            => true,
             'x-amzn-trace-id'       => true,
-            'aws-sdk-invocation-id' => true,
-            'aws-sdk-retry'         => true,
+            'amz-sdk-invocation-id' => true,
+            'amz-sdk-request'       => true,
         ];
     }
 
@@ -498,8 +498,8 @@ class SignatureV4 implements SignatureInterface
     {
         static $illegalV4aHeaders = [
             self::AMZ_CONTENT_SHA256_HEADER,
-            'aws-sdk-invocation-id',
-            'aws-sdk-retry',
+            'amz-sdk-invocation-id',
+            'amz-sdk-request',
             'x-amz-region-set',
             'transfer-encoding',
         ];

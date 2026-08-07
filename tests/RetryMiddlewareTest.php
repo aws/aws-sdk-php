@@ -22,8 +22,10 @@ class RetryMiddlewareTest extends TestCase
 {
     public function testAddRetryHeader()
     {
-        $nextHandler = function (CommandInterface $command, RequestInterface $request) {
-            $this->assertTrue($request->hasHeader('aws-sdk-retry'));
+        $observedHeaders = [];
+        $nextHandler = function (CommandInterface $command, RequestInterface $request) use (&$observedHeaders) {
+            $this->assertTrue($request->hasHeader('amz-sdk-request'));
+            $observedHeaders[] = $request->getHeaderLine('amz-sdk-request');
             return new RejectedPromise(
                 new AwsException('e', $command, ['connection_error' => true])
             );
@@ -39,6 +41,11 @@ class RetryMiddlewareTest extends TestCase
             $retryMW(new Command('SomeCommand'), new Request('GET', ''))->wait();
             $this->fail();
         } catch (AwsException $e) { }
+
+        $this->assertSame(
+            ['attempt=1', 'attempt=2', 'attempt=3', 'attempt=4'],
+            $observedHeaders
+        );
     }
 
     public function testDeciderRetriesWhenStatusCodeMatches()

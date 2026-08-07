@@ -92,6 +92,17 @@ EOT;
         $this->assertSame($expected->toArray(), $result->toArray());
     }
 
+    public function testCreatesFromEnvironmentMaxAttemptsUsingDefaultMode()
+    {
+        $this->clearEnv();
+        putenv(OptIn::ENV . '=true');
+        OptIn::reset();
+        $expected = new Configuration('standard', 17);
+        putenv(ConfigurationProvider::ENV_MAX_ATTEMPTS . '=17');
+        $result = call_user_func(ConfigurationProvider::env())->wait();
+        $this->assertSame($expected->toArray(), $result->toArray());
+    }
+
     public function testRejectsOnNoEnvironmentVars()
     {
         $this->clearEnv();
@@ -199,6 +210,19 @@ EOT;
         /** @var ConfigurationInterface $result */
         $result = call_user_func(ConfigurationProvider::ini())->wait();
         $this->assertEquals($expected->toArray(), $result->toArray());
+        unlink($dir . '/config');
+    }
+
+    public function testCreatesFromIniFileWithMaxAttemptsOnlyUsingDefaultMode()
+    {
+        $dir = $this->clearEnv();
+        putenv(OptIn::ENV . '=true');
+        OptIn::reset();
+        $expected = new Configuration('standard', 7);
+        file_put_contents($dir . '/config', "[default]\nmax_attempts = 7\n");
+        putenv('HOME=' . dirname($dir));
+        $result = call_user_func(ConfigurationProvider::ini(null, null))->wait();
+        $this->assertSame($expected->toArray(), $result->toArray());
         unlink($dir . '/config');
     }
 
