@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.391.1 - 2026-08-07
 
 * `Aws\Retries` - Updated the opt-in retry path (AWS_NEW_RETRIES_2026) to emit SEP-compliant retry headers, honor AWS_MAX_ATTEMPTS and shared-config max_attempts, and align long-polling retry behavior with the new retry spec.
 * `Aws\Connect` - Supports updating the task template associated with in-progress task contacts using the new UpdateContactTaskTemplate API. This enables supervisors and developers to dynamically reassign task templates without creating a new task.
