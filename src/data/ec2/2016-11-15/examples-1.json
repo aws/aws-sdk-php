@@ -573,13 +573,13 @@
           "ApplicationStatusCheck": {
             "Aggregation": "included",
             "ApplicationStatusCheckId": "asc-0123456789abcdef0",
-            "FailureThreshold": 3,
-            "Interval": 10,
+            "FailureThreshold": 2,
+            "Interval": 60,
             "Path": "/health",
             "Port": 80,
             "Protocol": "http",
             "SuccessThreshold": 2,
-            "Timeout": 5
+            "Timeout": 6
           }
         },
         "comments": {
@@ -1977,14 +1977,28 @@
           ]
         },
         "output": {
-          "ApplicationStatuses": [
-            {
-              "ApplicationStatusCheckId": "asc-0123456789abcdef0",
-              "AvailabilityZone": "us-east-1a",
-              "InstanceId": "i-0123456789abcdef0",
-              "Status": "passed"
-            }
-          ]
+          "ApplicationStatuses": {
+            "Instances": [
+              {
+                "ApplicationStatus": {
+                  "Details": [
+                    {
+                      "Aggregation": "included",
+                      "ApplicationStatusCheckId": "asc-0123456789abcdef0",
+                      "Reason": {
+                        "Code": "ResponseCodeMatched",
+                        "Protocol": "HTTP",
+                        "StatusCode": 200
+                      },
+                      "Status": "passed"
+                    }
+                  ],
+                  "Status": "ok"
+                },
+                "InstanceId": "i-0123456789abcdef0"
+              }
+            ]
+          }
         },
         "comments": {
           "input": {
@@ -1992,7 +2006,7 @@
           "output": {
           }
         },
-        "description": "This example describes the application status for the specified instances.",
+        "description": "This example describes the application status for the specified instance.",
         "id": "ec2-describe-application-status-1",
         "title": "To describe application status for instances"
       },
@@ -2000,21 +2014,74 @@
         "input": {
           "Filters": [
             {
-              "Name": "availability-zone",
+              "Name": "availability-zone-id",
               "Values": [
-                "us-east-1a"
+                "use1-az1"
+              ]
+            },
+            {
+              "Name": "status",
+              "Values": [
+                "impaired"
               ]
             }
           ],
           "MaxResults": 10
         },
         "output": {
-          "ApplicationStatuses": [
+          "ApplicationStatuses": {
+            "Instances": [
+              {
+                "ApplicationStatus": {
+                  "Details": [
+                    {
+                      "Aggregation": "included",
+                      "ApplicationStatusCheckId": "asc-0123456789abcdef0",
+                      "Reason": {
+                        "Code": "ConnectionTimeout"
+                      },
+                      "Status": "failed"
+                    }
+                  ],
+                  "Status": "impaired"
+                },
+                "InstanceId": "i-0123456789abcdef0"
+              }
+            ]
+          }
+        },
+        "comments": {
+          "input": {
+          },
+          "output": {
+          }
+        },
+        "description": "This example uses a filter to describe impaired application status in a specific Availability Zone.",
+        "id": "ec2-describe-application-status-2",
+        "title": "To describe application status using filters"
+      }
+    ],
+    "DescribeApplicationStatusCheckAssociations": [
+      {
+        "input": {
+          "ApplicationStatusCheckIds": [
+            "asc-0123456789abcdef0"
+          ],
+          "Filters": [
+            {
+              "Name": "association-type",
+              "Values": [
+                "instance-id"
+              ]
+            }
+          ]
+        },
+        "output": {
+          "Associations": [
             {
               "ApplicationStatusCheckId": "asc-0123456789abcdef0",
-              "AvailabilityZone": "us-east-1a",
-              "InstanceId": "i-0123456789abcdef0",
-              "Status": "passed"
+              "AssociationType": "instance-id",
+              "Value": "i-0123456789abcdef0"
             }
           ]
         },
@@ -2024,9 +2091,9 @@
           "output": {
           }
         },
-        "description": "This example uses filters to describe application status for instances in a specific Availability Zone.",
-        "id": "ec2-describe-application-status-2",
-        "title": "To describe application status using filters"
+        "description": "This example describes instance ID associations for the specified application status check.",
+        "id": "ec2-describe-application-status-check-associations-1",
+        "title": "To describe application status check associations"
       }
     ],
     "DescribeApplicationStatusChecks": [
@@ -2041,13 +2108,13 @@
             {
               "Aggregation": "included",
               "ApplicationStatusCheckId": "asc-0123456789abcdef0",
-              "FailureThreshold": 3,
-              "Interval": 10,
+              "FailureThreshold": 2,
+              "Interval": 60,
               "Path": "/health",
               "Port": 80,
               "Protocol": "http",
               "SuccessThreshold": 2,
-              "Timeout": 5
+              "Timeout": 6
             }
           ]
         },
@@ -2065,9 +2132,9 @@
         "input": {
           "Filters": [
             {
-              "Name": "tag:Environment",
+              "Name": "aggregation",
               "Values": [
-                "Production"
+                "included"
               ]
             }
           ],
@@ -2078,13 +2145,13 @@
             {
               "Aggregation": "included",
               "ApplicationStatusCheckId": "asc-0123456789abcdef0",
-              "FailureThreshold": 3,
-              "Interval": 10,
+              "FailureThreshold": 2,
+              "Interval": 60,
               "Path": "/health",
               "Port": 80,
               "Protocol": "http",
               "SuccessThreshold": 2,
-              "Timeout": 5
+              "Timeout": 6
             }
           ]
         },
@@ -2094,7 +2161,7 @@
           "output": {
           }
         },
-        "description": "This example uses filters to describe application status checks with a specific tag.",
+        "description": "This example uses a filter to describe application status checks included in aggregation.",
         "id": "ec2-describe-application-status-checks-2",
         "title": "To describe application status checks using filters"
       }
@@ -4459,13 +4526,13 @@
           "ApplicationStatusCheck": {
             "Aggregation": "included",
             "ApplicationStatusCheckId": "asc-0123456789abcdef0",
-            "FailureThreshold": 3,
-            "Interval": 10,
+            "FailureThreshold": 2,
+            "Interval": 60,
             "Path": "/healthv2",
             "Port": 8080,
             "Protocol": "http",
             "SuccessThreshold": 2,
-            "Timeout": 5
+            "Timeout": 6
           }
         },
         "comments": {

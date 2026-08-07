@@ -1065,6 +1065,7 @@
         "MssManifests":{"shape":"CreateMssManifests"},
         "ForceEndpointErrorConfiguration":{"shape":"ForceEndpointErrorConfiguration"},
         "UriSeparator":{"shape":"UriSeparator"},
+        "StreamNameOutputMode":{"shape":"StreamNameOutputMode"},
         "Tags":{"shape":"TagMap"}
       }
     },
@@ -1103,6 +1104,7 @@
         "MssManifests":{"shape":"GetMssManifests"},
         "ForceEndpointErrorConfiguration":{"shape":"ForceEndpointErrorConfiguration"},
         "UriSeparator":{"shape":"UriSeparator"},
+        "StreamNameOutputMode":{"shape":"StreamNameOutputMode"},
         "ETag":{"shape":"EntityTag"},
         "Tags":{"shape":"TagMap"}
       }
@@ -1958,6 +1960,7 @@
         "MssManifests":{"shape":"GetMssManifests"},
         "ForceEndpointErrorConfiguration":{"shape":"ForceEndpointErrorConfiguration"},
         "UriSeparator":{"shape":"UriSeparator"},
+        "StreamNameOutputMode":{"shape":"StreamNameOutputMode"},
         "ETag":{"shape":"EntityTag"},
         "Tags":{"shape":"TagMap"}
       }
@@ -2373,7 +2376,8 @@
         "DashManifests":{"shape":"ListDashManifests"},
         "MssManifests":{"shape":"ListMssManifests"},
         "ForceEndpointErrorConfiguration":{"shape":"ForceEndpointErrorConfiguration"},
-        "UriSeparator":{"shape":"UriSeparator"}
+        "UriSeparator":{"shape":"UriSeparator"},
+        "StreamNameOutputMode":{"shape":"StreamNameOutputMode"}
       }
     },
     "OriginEndpointsList":{
@@ -2774,6 +2778,13 @@
         "Precise":{"shape":"Boolean"}
       }
     },
+    "StreamNameOutputMode":{
+      "type":"string",
+      "enum":[
+        "INDEX",
+        "PASSTHROUGH_NAME"
+      ]
+    },
     "String":{"type":"string"},
     "SyntheticTimestamp_date_time":{
       "type":"timestamp",
@@ -2976,6 +2987,7 @@
         "MssManifests":{"shape":"CreateMssManifests"},
         "ForceEndpointErrorConfiguration":{"shape":"ForceEndpointErrorConfiguration"},
         "UriSeparator":{"shape":"UriSeparator"},
+        "StreamNameOutputMode":{"shape":"StreamNameOutputMode"},
         "ETag":{
           "shape":"EntityTag",
           "location":"header",
@@ -3017,6 +3029,7 @@
         "MssManifests":{"shape":"GetMssManifests"},
         "ForceEndpointErrorConfiguration":{"shape":"ForceEndpointErrorConfiguration"},
         "UriSeparator":{"shape":"UriSeparator"},
+        "StreamNameOutputMode":{"shape":"StreamNameOutputMode"},
         "ETag":{"shape":"EntityTag"},
         "Tags":{
           "shape":"TagMap",
@@ -3153,7 +3166,9 @@
         "ONLY_CMAF_INPUT_TYPE_ALLOW_OUTPUT_LOCKING_MODE",
         "ONLY_NON_EPOCH_LOCKED_ALLOW_OUTPUT_TIMESTAMP_MODE",
         "OUTPUT_TIMESTAMP_MODE_IMMUTABLE",
-        "NON_EPOCH_LOCKED_WITH_FORCE_ENDPOINT_ERROR_CONFIGURATION"
+        "NON_EPOCH_LOCKED_WITH_FORCE_ENDPOINT_ERROR_CONFIGURATION",
+        "ONLY_HLS_INPUT_TYPE_ALLOW_STREAM_NAME_OUTPUT_MODE",
+        "STREAM_NAME_OUTPUT_MODE_IMMUTABLE"
       ]
     }
   }

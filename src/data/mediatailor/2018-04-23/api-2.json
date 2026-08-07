@@ -601,7 +601,8 @@
     "AdDecisionServerConfiguration":{
       "type":"structure",
       "members":{
-        "HttpRequest":{"shape":"HttpRequest"}
+        "HttpRequest":{"shape":"HttpRequest"},
+        "VastResponse":{"shape":"VastResponse"}
       }
     },
     "AdMarkerPassthrough":{
@@ -615,6 +616,15 @@
       "enum":[
         "DATERANGE",
         "SCTE35_ENHANCED"
+      ]
+    },
+    "AdSequencingMode":{
+      "type":"string",
+      "enum":[
+        "FOLLOW_AD_SEQUENCE",
+        "IGNORE_AD_SEQUENCE",
+        "FOLLOW_AD_SEQUENCE_ONLY_LIVE",
+        "FOLLOW_AD_SEQUENCE_ONLY_VOD"
       ]
     },
     "AdsInteractionExcludeEventType":{
@@ -2090,7 +2100,8 @@
       "type":"structure",
       "members":{
         "AdDecisionServerUrl":{"shape":"__string"},
-        "MaxDurationSeconds":{"shape":"__integer"}
+        "MaxDurationSeconds":{"shape":"__integer"},
+        "AdDecisionServerConfiguration":{"shape":"PreRollAdDecisionServerConfiguration"}
       }
     },
     "LiveSource":{
@@ -2298,6 +2309,25 @@
         "LOOP",
         "LINEAR"
       ]
+    },
+    "PreRollAdDecisionServerConfiguration":{
+      "type":"structure",
+      "members":{
+        "VastResponse":{"shape":"PreRollVastResponse"}
+      }
+    },
+    "PreRollAdSequencingMode":{
+      "type":"string",
+      "enum":[
+        "FOLLOW_AD_SEQUENCE",
+        "IGNORE_AD_SEQUENCE"
+      ]
+    },
+    "PreRollVastResponse":{
+      "type":"structure",
+      "members":{
+        "AdSequencingMode":{"shape":"PreRollAdSequencingMode"}
+      }
     },
     "PrefetchConsumption":{
       "type":"structure",
@@ -3029,6 +3059,12 @@
           "locationName":"tags"
         },
         "VodSourceName":{"shape":"__string"}
+      }
+    },
+    "VastResponse":{
+      "type":"structure",
+      "members":{
+        "AdSequencingMode":{"shape":"AdSequencingMode"}
       }
     },
     "VodSource":{

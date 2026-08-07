@@ -1213,7 +1213,9 @@
         "identifier":{"shape":"String"},
         "uris":{"shape":"UriList"},
         "authentication":{"shape":"Authentication"},
-        "description":{"shape":"String"}
+        "description":{"shape":"String"},
+        "enableEmailMfa":{"shape":"Boolean"},
+        "mfaForwardingAddress":{"shape":"SensitiveEmailAddress"}
       }
     },
     "ActorList":{
@@ -4330,6 +4332,10 @@
       }
     },
     "SensitiveEmail":{"type":"string"},
+    "SensitiveEmailAddress":{
+      "type":"string",
+      "sensitive":true
+    },
     "ServiceManagedInput":{
       "type":"structure",
       "required":[

@@ -123,6 +123,12 @@
         "adMarkupTypes$member": null
       }
     },
+    "AdSequencingMode": {
+      "base": null,
+      "refs": {
+        "VastResponse$AdSequencingMode": "<p>The ad sequencing mode that controls how MediaTailor handles sequenced and standalone ads in VAST responses. <code>FOLLOW_AD_SEQUENCE</code> inserts sequenced ads in increasing order for both live and VOD workflows, using standalone ads only as replacements when a sequenced ad fails. <code>FOLLOW_AD_SEQUENCE_ONLY_LIVE</code> enables ad sequencing for live workflows only. <code>FOLLOW_AD_SEQUENCE_ONLY_VOD</code> enables ad sequencing for VOD workflows only. <code>IGNORE_AD_SEQUENCE</code> inserts ads in the order they appear in the VAST response, regardless of sequence attributes. The default behavior is <code>IGNORE_AD_SEQUENCE</code>.</p>"
+      }
+    },
     "AdsInteractionExcludeEventType": {
       "base": null,
       "refs": {
@@ -903,6 +909,24 @@
         "CreateChannelRequest$PlaybackMode": "<p>The type of playback mode to use for this channel.</p> <p> <code>LINEAR</code> - The programs in the schedule play once back-to-back in the schedule.</p> <p> <code>LOOP</code> - The programs in the schedule play back-to-back in an endless loop. When the last program in the schedule stops playing, playback loops back to the first program in the schedule.</p>"
       }
     },
+    "PreRollAdDecisionServerConfiguration": {
+      "base": "<p>The ad decision server configuration for live pre-roll ads. It contains settings that control how MediaTailor processes VAST responses for pre-roll ad breaks.</p>",
+      "refs": {
+        "LivePreRollConfiguration$AdDecisionServerConfiguration": "<p>The configuration for the ad decision server (ADS) for live pre-roll ads. The configuration contains settings that control how MediaTailor processes VAST responses for pre-roll ad breaks.</p>"
+      }
+    },
+    "PreRollAdSequencingMode": {
+      "base": null,
+      "refs": {
+        "PreRollVastResponse$AdSequencingMode": "<p>The ad sequencing mode for live pre-roll ads. <code>FOLLOW_AD_SEQUENCE</code> inserts sequenced ads in increasing order and uses standalone ads only as replacements when a sequenced ad fails. <code>IGNORE_AD_SEQUENCE</code> inserts ads in the order they appear in the VAST response, regardless of sequence attributes. The default behavior is <code>IGNORE_AD_SEQUENCE</code>.</p>"
+      }
+    },
+    "PreRollVastResponse": {
+      "base": "<p>The settings that control how MediaTailor processes VAST responses from the ad decision server for live pre-roll ad breaks.</p>",
+      "refs": {
+        "PreRollAdDecisionServerConfiguration$VastResponse": "<p>The settings that control how MediaTailor processes VAST responses for live pre-roll ad breaks.</p>"
+      }
+    },
     "PrefetchConsumption": {
       "base": "<p>For single prefetch, describes how and when that MediaTailor places prefetched ads into upcoming ad breaks.</p>",
       "refs": {
@@ -1256,6 +1280,12 @@
     "UpdateVodSourceResponse": {
       "base": null,
       "refs": {}
+    },
+    "VastResponse": {
+      "base": "<p>The settings that control how MediaTailor processes VAST responses from the ad decision server.</p>",
+      "refs": {
+        "AdDecisionServerConfiguration$VastResponse": "<p>The settings that control how MediaTailor processes VAST responses from the ad decision server.</p>"
+      }
     },
     "VodSource": {
       "base": "<p>VOD source configuration parameters.</p>",

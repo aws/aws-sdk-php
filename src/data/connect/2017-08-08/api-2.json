@@ -5487,6 +5487,24 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "UpdateContactTaskTemplate":{
+      "name":"UpdateContactTaskTemplate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/contact/task-template"
+      },
+      "input":{"shape":"UpdateContactTaskTemplateRequest"},
+      "output":{"shape":"UpdateContactTaskTemplateResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"PropertyValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"LimitExceededException"}
+      ]
+    },
     "UpdateDataTableAttribute":{
       "name":"UpdateDataTableAttribute",
       "http":{
@@ -20816,7 +20834,8 @@
         "REFERENCED_RESOURCE_NOT_FOUND",
         "RESOURCE_NAME_ALREADY_EXISTS",
         "REQUIRED_PROPERTY_MISSING",
-        "NOT_SUPPORTED"
+        "NOT_SUPPORTED",
+        "TYPE_MISMATCH"
       ]
     },
     "PutUserStatusRequest":{
@@ -25454,6 +25473,23 @@
       }
     },
     "UpdateContactScheduleResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "UpdateContactTaskTemplateRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "TaskTemplateId",
+        "ContactId"
+      ],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "TaskTemplateId":{"shape":"TaskTemplateId"},
+        "ContactId":{"shape":"ContactId"}
+      }
+    },
+    "UpdateContactTaskTemplateResponse":{
       "type":"structure",
       "members":{}
     },

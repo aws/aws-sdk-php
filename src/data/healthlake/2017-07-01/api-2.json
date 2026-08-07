@@ -841,6 +841,10 @@
       ]
     },
     "DateTime":{"type":"timestamp"},
+    "DefaultEnabledBoolean":{
+      "type":"boolean",
+      "box":true
+    },
     "DefaultProfiles":{
       "type":"list",
       "member":{"shape":"HealthLakeString"}
@@ -1618,7 +1622,8 @@
         "ValidationLevel":{"shape":"ValidationLevel"},
         "ProfileId":{"shape":"BoundedLengthString"},
         "InputFormat":{"shape":"BoundedLengthString"},
-        "DriftDetectionEnabled":{"shape":"HealthLakeBoolean"}
+        "DriftDetectionEnabled":{"shape":"HealthLakeBoolean"},
+        "ProvenanceEnabled":{"shape":"DefaultEnabledBoolean"}
       }
     },
     "StartFHIRImportJobResponse":{

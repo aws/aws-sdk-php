@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Retries` - Updated the opt-in retry path (AWS_NEW_RETRIES_2026) to emit SEP-compliant retry headers, honor AWS_MAX_ATTEMPTS and shared-config max_attempts, and align long-polling retry behavior with the new retry spec.
+* `Aws\Connect` - Supports updating the task template associated with in-progress task contacts using the new UpdateContactTaskTemplate API. This enables supervisors and developers to dynamically reassign task templates without creating a new task.
+* `Aws\MediaTailor` - Added support for inserting ads via the VAST Ad Buffet standard. You can now configure MediaTailor to insert ads in sequence order using the AdSequencingMode setting in your playback configuration. Standalone ads are used as fallbacks when a sequenced ad is unavailable.
+* `Aws\EC2` - This release adds support for BGP route protection in Amazon VPC IP Address Manager (IPAM), including route discovery, RPKI route protection findings, and delegated RPKI (Internet Registry Associations, routing policy registrations, and ROA management) for BYOIP prefixes.
+* `Aws\SageMaker` - Amazon SageMaker adds maintenance lifecycle statuses for Notebook Instances
+* `Aws\MediaPackageV2` - StreamNameOutputMode - a new optional field on MediaPackageV2 OriginEndpoints that lets customers choose whether egress manifests use numeric stream indices (default) or encoder-assigned stream names from the input
+* `Aws\SecurityAgent` - Added enableEmailMfa input field on Actor to enable email-based MFA during penetration tests. When enabled, a server-generated mfaForwardingAddress is returned. Set up a forwarding rule in your email provider to forward MFA emails to this address so the agent can complete email-based MFA login flows
+* `Aws\HealthLake` - Adds provenanceEnabled to StartFHIRImportJob
+* `Aws\Amplify` - Increased the maximum allowed length of the oauthToken parameter in the CreateApp and UpdateApp APIs to support longer OAuth tokens issued by third-party Git providers.
+
 ## 3.391.0 - 2026-08-06
 
 * `Aws\S3` - AWS Backup now lets you create read-only access points for Amazon S3 recovery points, enabling you to access backup data using S3 APIs without initiating a restore.

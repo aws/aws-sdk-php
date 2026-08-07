@@ -663,6 +663,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateContactRoutingDataAsync(array $args = [])
  * @method \Aws\Result updateContactSchedule(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateContactScheduleAsync(array $args = [])
+ * @method \Aws\Result updateContactTaskTemplate(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateContactTaskTemplateAsync(array $args = [])
  * @method \Aws\Result updateDataTableAttribute(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateDataTableAttributeAsync(array $args = [])
  * @method \Aws\Result updateDataTableMetadata(array $args = [])

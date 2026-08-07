@@ -435,6 +435,15 @@
       "input":{"shape":"AuthorizeSecurityGroupIngressRequest"},
       "output":{"shape":"AuthorizeSecurityGroupIngressResult"}
     },
+    "BatchModifyIpamRoutingPolicyRegistrations":{
+      "name":"BatchModifyIpamRoutingPolicyRegistrations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"BatchModifyIpamRoutingPolicyRegistrationsRequest"},
+      "output":{"shape":"BatchModifyIpamRoutingPolicyRegistrationsResult"}
+    },
     "BundleInstance":{
       "name":"BundleInstance",
       "http":{
@@ -847,6 +856,15 @@
       "input":{"shape":"CreateIpamExternalResourceVerificationTokenRequest"},
       "output":{"shape":"CreateIpamExternalResourceVerificationTokenResult"}
     },
+    "CreateIpamInternetRegistryAssociation":{
+      "name":"CreateIpamInternetRegistryAssociation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateIpamInternetRegistryAssociationRequest"},
+      "output":{"shape":"CreateIpamInternetRegistryAssociationResult"}
+    },
     "CreateIpamPolicy":{
       "name":"CreateIpamPolicy",
       "http":{
@@ -891,6 +909,15 @@
       },
       "input":{"shape":"CreateIpamResourceDiscoveryRequest"},
       "output":{"shape":"CreateIpamResourceDiscoveryResult"}
+    },
+    "CreateIpamRoutingPolicyRegistration":{
+      "name":"CreateIpamRoutingPolicyRegistration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateIpamRoutingPolicyRegistrationRequest"},
+      "output":{"shape":"CreateIpamRoutingPolicyRegistrationResult"}
     },
     "CreateIpamScope":{
       "name":"CreateIpamScope",
@@ -1714,6 +1741,15 @@
       "input":{"shape":"DeleteIpamExternalResourceVerificationTokenRequest"},
       "output":{"shape":"DeleteIpamExternalResourceVerificationTokenResult"}
     },
+    "DeleteIpamInternetRegistryAssociation":{
+      "name":"DeleteIpamInternetRegistryAssociation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteIpamInternetRegistryAssociationRequest"},
+      "output":{"shape":"DeleteIpamInternetRegistryAssociationResult"}
+    },
     "DeleteIpamPolicy":{
       "name":"DeleteIpamPolicy",
       "http":{
@@ -1758,6 +1794,15 @@
       },
       "input":{"shape":"DeleteIpamResourceDiscoveryRequest"},
       "output":{"shape":"DeleteIpamResourceDiscoveryResult"}
+    },
+    "DeleteIpamRoutingPolicyRegistration":{
+      "name":"DeleteIpamRoutingPolicyRegistration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteIpamRoutingPolicyRegistrationRequest"},
+      "output":{"shape":"DeleteIpamRoutingPolicyRegistrationResult"}
     },
     "DeleteIpamScope":{
       "name":"DeleteIpamScope",
@@ -3147,6 +3192,15 @@
       },
       "input":{"shape":"DescribeIpamExternalResourceVerificationTokensRequest"},
       "output":{"shape":"DescribeIpamExternalResourceVerificationTokensResult"}
+    },
+    "DescribeIpamInternetRegistryAssociations":{
+      "name":"DescribeIpamInternetRegistryAssociations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeIpamInternetRegistryAssociationsRequest"},
+      "output":{"shape":"DescribeIpamInternetRegistryAssociationsResult"}
     },
     "DescribeIpamPolicies":{
       "name":"DescribeIpamPolicies",
@@ -4717,6 +4771,15 @@
       "input":{"shape":"EnableInstanceSqlHaStandbyDetectionsRequest"},
       "output":{"shape":"EnableInstanceSqlHaStandbyDetectionsResult"}
     },
+    "EnableIpamInternetRegistryAssociation":{
+      "name":"EnableIpamInternetRegistryAssociation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"EnableIpamInternetRegistryAssociationRequest"},
+      "output":{"shape":"EnableIpamInternetRegistryAssociationResult"}
+    },
     "EnableIpamOrganizationAdminAccount":{
       "name":"EnableIpamOrganizationAdminAccount",
       "http":{
@@ -5138,6 +5201,33 @@
       "input":{"shape":"GetIpamDiscoveredResourceCidrsRequest"},
       "output":{"shape":"GetIpamDiscoveredResourceCidrsResult"}
     },
+    "GetIpamDiscoveredRoutes":{
+      "name":"GetIpamDiscoveredRoutes",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetIpamDiscoveredRoutesRequest"},
+      "output":{"shape":"GetIpamDiscoveredRoutesResult"}
+    },
+    "GetIpamInternetRegistryAssociationAsns":{
+      "name":"GetIpamInternetRegistryAssociationAsns",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetIpamInternetRegistryAssociationAsnsRequest"},
+      "output":{"shape":"GetIpamInternetRegistryAssociationAsnsResult"}
+    },
+    "GetIpamInternetRegistryAssociationCidrs":{
+      "name":"GetIpamInternetRegistryAssociationCidrs",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetIpamInternetRegistryAssociationCidrsRequest"},
+      "output":{"shape":"GetIpamInternetRegistryAssociationCidrsResult"}
+    },
     "GetIpamPolicyAllocationRules":{
       "name":"GetIpamPolicyAllocationRules",
       "http":{
@@ -5209,6 +5299,42 @@
       },
       "input":{"shape":"GetIpamResourceCidrsRequest"},
       "output":{"shape":"GetIpamResourceCidrsResult"}
+    },
+    "GetIpamRouteOriginAuthorizations":{
+      "name":"GetIpamRouteOriginAuthorizations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetIpamRouteOriginAuthorizationsRequest"},
+      "output":{"shape":"GetIpamRouteOriginAuthorizationsResult"}
+    },
+    "GetIpamRouteProtectionFindings":{
+      "name":"GetIpamRouteProtectionFindings",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetIpamRouteProtectionFindingsRequest"},
+      "output":{"shape":"GetIpamRouteProtectionFindingsResult"}
+    },
+    "GetIpamRoutingPolicyRegistrationDeltas":{
+      "name":"GetIpamRoutingPolicyRegistrationDeltas",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetIpamRoutingPolicyRegistrationDeltasRequest"},
+      "output":{"shape":"GetIpamRoutingPolicyRegistrationDeltasResult"}
+    },
+    "GetIpamRoutingPolicyRegistrations":{
+      "name":"GetIpamRoutingPolicyRegistrations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetIpamRoutingPolicyRegistrationsRequest"},
+      "output":{"shape":"GetIpamRoutingPolicyRegistrationsResult"}
     },
     "GetLaunchTemplateData":{
       "name":"GetLaunchTemplateData",
@@ -5889,6 +6015,15 @@
       },
       "input":{"shape":"ModifyIpamResourceDiscoveryRequest"},
       "output":{"shape":"ModifyIpamResourceDiscoveryResult"}
+    },
+    "ModifyIpamRoutingPolicyRegistration":{
+      "name":"ModifyIpamRoutingPolicyRegistration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyIpamRoutingPolicyRegistrationRequest"},
+      "output":{"shape":"ModifyIpamRoutingPolicyRegistrationResult"}
     },
     "ModifyIpamScope":{
       "name":"ModifyIpamScope",
@@ -8795,6 +8930,13 @@
         "Signature":{"shape":"String"}
       }
     },
+    "AsnList":{
+      "type":"list",
+      "member":{
+        "shape":"String",
+        "locationName":"item"
+      }
+    },
     "AsnState":{
       "type":"string",
       "enum":[
@@ -10308,6 +10450,32 @@
       }
     },
     "BaselineThroughputInMBps":{"type":"double"},
+    "BatchModifyIpamRoutingPolicyRegistrationsRequest":{
+      "type":"structure",
+      "required":[
+        "IpamInternetRegistryAssociationId",
+        "DeltaJson"
+      ],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamInternetRegistryAssociationId":{"shape":"IpamInternetRegistryAssociationId"},
+        "DeltaJson":{"shape":"String"},
+        "Force":{"shape":"BoxedBoolean"},
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "BatchModifyIpamRoutingPolicyRegistrationsResult":{
+      "type":"structure",
+      "members":{
+        "IpamRoutingPolicyRegistrationDelta":{
+          "shape":"IpamRoutingPolicyRegistrationDelta",
+          "locationName":"ipamRoutingPolicyRegistrationDelta"
+        }
+      }
+    },
     "BatchState":{
       "type":"string",
       "enum":[
@@ -10619,6 +10787,14 @@
         "AdvertisementType":{
           "shape":"String",
           "locationName":"advertisementType"
+        },
+        "PoolId":{
+          "shape":"String",
+          "locationName":"poolId"
+        },
+        "IpamPoolId":{
+          "shape":"IpamPoolId",
+          "locationName":"ipamPoolId"
         }
       }
     },
@@ -12331,6 +12507,13 @@
       }
     },
     "CertificateId":{"type":"string"},
+    "ChronologicalOrder":{
+      "type":"string",
+      "enum":[
+        "forward",
+        "reverse"
+      ]
+    },
     "CidrAuthorizationContext":{
       "type":"structure",
       "required":[
@@ -14604,6 +14787,38 @@
         }
       }
     },
+    "CreateIpamInternetRegistryAssociationRequest":{
+      "type":"structure",
+      "required":[
+        "IpamId",
+        "Rir",
+        "OrganizationHandle"
+      ],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamId":{"shape":"IpamId"},
+        "Rir":{"shape":"Rir"},
+        "OrganizationHandle":{"shape":"String"},
+        "Description":{"shape":"String"},
+        "TagSpecifications":{
+          "shape":"TagSpecificationList",
+          "locationName":"TagSpecification"
+        },
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateIpamInternetRegistryAssociationResult":{
+      "type":"structure",
+      "members":{
+        "IpamInternetRegistryAssociation":{
+          "shape":"IpamInternetRegistryAssociation",
+          "locationName":"ipamInternetRegistryAssociation"
+        }
+      }
+    },
     "CreateIpamPolicyRequest":{
       "type":"structure",
       "required":["IpamId"],
@@ -14797,6 +15012,40 @@
         "Ipam":{
           "shape":"Ipam",
           "locationName":"ipam"
+        }
+      }
+    },
+    "CreateIpamRoutingPolicyRegistrationRequest":{
+      "type":"structure",
+      "required":[
+        "IpamInternetRegistryAssociationId",
+        "Cidr",
+        "Asns"
+      ],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamInternetRegistryAssociationId":{"shape":"IpamInternetRegistryAssociationId"},
+        "Cidr":{"shape":"String"},
+        "Asns":{
+          "shape":"AsnList",
+          "locationName":"Asn"
+        },
+        "PermitMoreSpecificAnnouncements":{"shape":"BoxedBoolean"},
+        "MaxLength":{"shape":"IpamRoutingPolicyRegistrationMaxLength"},
+        "Description":{"shape":"String"},
+        "Force":{"shape":"BoxedBoolean"},
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateIpamRoutingPolicyRegistrationResult":{
+      "type":"structure",
+      "members":{
+        "IpamRoutingPolicyRegistrationDelta":{
+          "shape":"IpamRoutingPolicyRegistrationDelta",
+          "locationName":"ipamRoutingPolicyRegistrationDelta"
         }
       }
     },
@@ -17908,6 +18157,23 @@
         }
       }
     },
+    "DeleteIpamInternetRegistryAssociationRequest":{
+      "type":"structure",
+      "required":["IpamInternetRegistryAssociationId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamInternetRegistryAssociationId":{"shape":"IpamInternetRegistryAssociationId"}
+      }
+    },
+    "DeleteIpamInternetRegistryAssociationResult":{
+      "type":"structure",
+      "members":{
+        "IpamInternetRegistryAssociation":{
+          "shape":"IpamInternetRegistryAssociation",
+          "locationName":"ipamInternetRegistryAssociation"
+        }
+      }
+    },
     "DeleteIpamPolicyRequest":{
       "type":"structure",
       "required":["IpamPolicyId"],
@@ -18009,6 +18275,32 @@
         "Ipam":{
           "shape":"Ipam",
           "locationName":"ipam"
+        }
+      }
+    },
+    "DeleteIpamRoutingPolicyRegistrationRequest":{
+      "type":"structure",
+      "required":[
+        "IpamInternetRegistryAssociationId",
+        "Cidr"
+      ],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamInternetRegistryAssociationId":{"shape":"IpamInternetRegistryAssociationId"},
+        "Cidr":{"shape":"String"},
+        "Force":{"shape":"BoxedBoolean"},
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "DeleteIpamRoutingPolicyRegistrationResult":{
+      "type":"structure",
+      "members":{
+        "IpamRoutingPolicyRegistrationDelta":{
+          "shape":"IpamRoutingPolicyRegistrationDelta",
+          "locationName":"ipamRoutingPolicyRegistrationDelta"
         }
       }
     },
@@ -22102,6 +22394,35 @@
         "IpamExternalResourceVerificationTokens":{
           "shape":"IpamExternalResourceVerificationTokenSet",
           "locationName":"ipamExternalResourceVerificationTokenSet"
+        }
+      }
+    },
+    "DescribeIpamInternetRegistryAssociationsRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamInternetRegistryAssociationIds":{
+          "shape":"ValueStringList",
+          "locationName":"IpamInternetRegistryAssociationId"
+        },
+        "MaxResults":{"shape":"IpamMaxResults"},
+        "NextToken":{"shape":"NextToken"},
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        }
+      }
+    },
+    "DescribeIpamInternetRegistryAssociationsResult":{
+      "type":"structure",
+      "members":{
+        "NextToken":{
+          "shape":"NextToken",
+          "locationName":"nextToken"
+        },
+        "IpamInternetRegistryAssociations":{
+          "shape":"IpamInternetRegistryAssociationSet",
+          "locationName":"ipamInternetRegistryAssociationSet"
         }
       }
     },
@@ -28311,6 +28632,39 @@
         }
       }
     },
+    "EnableIpamInternetRegistryAssociationRequest":{
+      "type":"structure",
+      "required":[
+        "IpamInternetRegistryAssociationId",
+        "RpkiVersion",
+        "ServiceUri",
+        "ChildHandle",
+        "ParentHandle",
+        "ParentBpkiTa"
+      ],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamInternetRegistryAssociationId":{"shape":"IpamInternetRegistryAssociationId"},
+        "RpkiVersion":{"shape":"String"},
+        "ServiceUri":{"shape":"String"},
+        "ChildHandle":{"shape":"String"},
+        "ParentHandle":{"shape":"String"},
+        "ParentBpkiTa":{"shape":"String"},
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "EnableIpamInternetRegistryAssociationResult":{
+      "type":"structure",
+      "members":{
+        "IpamInternetRegistryAssociation":{
+          "shape":"IpamInternetRegistryAssociation",
+          "locationName":"ipamInternetRegistryAssociation"
+        }
+      }
+    },
     "EnableIpamOrganizationAdminAccountRequest":{
       "type":"structure",
       "required":["DelegatedAdminAccountId"],
@@ -31173,6 +31527,91 @@
         }
       }
     },
+    "GetIpamDiscoveredRoutesRequest":{
+      "type":"structure",
+      "required":[
+        "IpamResourceDiscoveryId",
+        "ResourceRegion"
+      ],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamResourceDiscoveryId":{"shape":"IpamResourceDiscoveryId"},
+        "ResourceRegion":{"shape":"String"},
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"IpamMaxResults"}
+      }
+    },
+    "GetIpamDiscoveredRoutesResult":{
+      "type":"structure",
+      "members":{
+        "IpamDiscoveredRoutes":{
+          "shape":"IpamDiscoveredRouteSet",
+          "locationName":"ipamDiscoveredRouteSet"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "GetIpamInternetRegistryAssociationAsnsRequest":{
+      "type":"structure",
+      "required":["IpamInternetRegistryAssociationId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamInternetRegistryAssociationId":{"shape":"IpamInternetRegistryAssociationId"},
+        "MaxResults":{"shape":"IpamMaxResults"},
+        "NextToken":{"shape":"NextToken"},
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        }
+      }
+    },
+    "GetIpamInternetRegistryAssociationAsnsResult":{
+      "type":"structure",
+      "members":{
+        "NextToken":{
+          "shape":"NextToken",
+          "locationName":"nextToken"
+        },
+        "IpamInternetRegistryAssociationAsns":{
+          "shape":"IpamInternetRegistryAssociationAsnSet",
+          "locationName":"ipamInternetRegistryAssociationAsnSet"
+        }
+      }
+    },
+    "GetIpamInternetRegistryAssociationCidrsRequest":{
+      "type":"structure",
+      "required":["IpamInternetRegistryAssociationId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamInternetRegistryAssociationId":{"shape":"IpamInternetRegistryAssociationId"},
+        "MaxResults":{"shape":"IpamMaxResults"},
+        "NextToken":{"shape":"NextToken"},
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        }
+      }
+    },
+    "GetIpamInternetRegistryAssociationCidrsResult":{
+      "type":"structure",
+      "members":{
+        "NextToken":{
+          "shape":"NextToken",
+          "locationName":"nextToken"
+        },
+        "IpamInternetRegistryAssociationCidrs":{
+          "shape":"IpamInternetRegistryAssociationCidrSet",
+          "locationName":"ipamInternetRegistryAssociationCidrSet"
+        }
+      }
+    },
     "GetIpamPolicyAllocationRulesRequest":{
       "type":"structure",
       "required":["IpamPolicyId"],
@@ -31403,6 +31842,112 @@
         "IpamResourceCidrs":{
           "shape":"IpamResourceCidrSet",
           "locationName":"ipamResourceCidrSet"
+        }
+      }
+    },
+    "GetIpamRouteOriginAuthorizationsRequest":{
+      "type":"structure",
+      "required":["IpamInternetRegistryAssociationId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamInternetRegistryAssociationId":{"shape":"IpamInternetRegistryAssociationId"},
+        "Cidr":{"shape":"String"},
+        "MaxResults":{"shape":"IpamMaxResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "GetIpamRouteOriginAuthorizationsResult":{
+      "type":"structure",
+      "members":{
+        "IpamRouteOriginAuthorizations":{
+          "shape":"IpamRouteOriginAuthorizationInfoSet",
+          "locationName":"ipamRouteOriginAuthorizationSet"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "GetIpamRouteProtectionFindingsRequest":{
+      "type":"structure",
+      "required":["IpamId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamId":{"shape":"IpamId"},
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"IpamMaxResults"}
+      }
+    },
+    "GetIpamRouteProtectionFindingsResult":{
+      "type":"structure",
+      "members":{
+        "IpamId":{
+          "shape":"IpamId",
+          "locationName":"ipamId"
+        },
+        "RouteProtectionFindings":{
+          "shape":"IpamRouteProtectionFindingSet",
+          "locationName":"routeProtectionFindingSet"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "GetIpamRoutingPolicyRegistrationDeltasRequest":{
+      "type":"structure",
+      "required":["IpamInternetRegistryAssociationId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamInternetRegistryAssociationId":{"shape":"IpamInternetRegistryAssociationId"},
+        "DeltaId":{"shape":"String"},
+        "StartTime":{"shape":"MillisecondDateTime"},
+        "EndTime":{"shape":"MillisecondDateTime"},
+        "ChronologicalOrder":{"shape":"ChronologicalOrder"},
+        "MaxResults":{"shape":"IpamMaxResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "GetIpamRoutingPolicyRegistrationDeltasResult":{
+      "type":"structure",
+      "members":{
+        "IpamRoutingPolicyRegistrationDeltas":{
+          "shape":"IpamRoutingPolicyRegistrationDeltaSet",
+          "locationName":"ipamRoutingPolicyRegistrationDeltaSet"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "GetIpamRoutingPolicyRegistrationsRequest":{
+      "type":"structure",
+      "required":["IpamInternetRegistryAssociationId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamInternetRegistryAssociationId":{"shape":"IpamInternetRegistryAssociationId"},
+        "Cidr":{"shape":"String"},
+        "MaxResults":{"shape":"IpamMaxResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "GetIpamRoutingPolicyRegistrationsResult":{
+      "type":"structure",
+      "members":{
+        "IpamRoutingPolicyRegistrations":{
+          "shape":"IpamRoutingPolicyRegistrationSet",
+          "locationName":"ipamRoutingPolicyRegistrationSet"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "locationName":"nextToken"
         }
       }
     },
@@ -38601,6 +39146,28 @@
         "not-found"
       ]
     },
+    "IpamByoipAdvertisementType":{
+      "type":"string",
+      "enum":[
+        "regional",
+        "global"
+      ]
+    },
+    "IpamByoipCidrState":{
+      "type":"string",
+      "enum":[
+        "advertised",
+        "deprovisioned",
+        "failed-deprovision",
+        "failed-provision",
+        "pending-advertising",
+        "pending-deprovision",
+        "pending-provision",
+        "pending-withdrawal",
+        "provisioned",
+        "provisioned-not-publicly-advertisable"
+      ]
+    },
     "IpamCidrAuthorizationContext":{
       "type":"structure",
       "members":{
@@ -38809,6 +39376,62 @@
         "locationName":"item"
       }
     },
+    "IpamDiscoveredRoute":{
+      "type":"structure",
+      "members":{
+        "IpamResourceDiscoveryId":{
+          "shape":"IpamResourceDiscoveryId",
+          "locationName":"ipamResourceDiscoveryId"
+        },
+        "ResourceRegion":{
+          "shape":"String",
+          "locationName":"resourceRegion"
+        },
+        "ResourceOwnerId":{
+          "shape":"String",
+          "locationName":"resourceOwnerId"
+        },
+        "Cidr":{
+          "shape":"String",
+          "locationName":"cidr"
+        },
+        "Asn":{
+          "shape":"String",
+          "locationName":"asn"
+        },
+        "State":{
+          "shape":"IpamByoipCidrState",
+          "locationName":"state"
+        },
+        "AdvertisementType":{
+          "shape":"IpamByoipAdvertisementType",
+          "locationName":"advertisementType"
+        },
+        "NetworkBorderGroup":{
+          "shape":"String",
+          "locationName":"networkBorderGroup"
+        },
+        "PoolId":{
+          "shape":"String",
+          "locationName":"poolId"
+        },
+        "IpamPoolId":{
+          "shape":"String",
+          "locationName":"ipamPoolId"
+        },
+        "SampleTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"sampleTime"
+        }
+      }
+    },
+    "IpamDiscoveredRouteSet":{
+      "type":"list",
+      "member":{
+        "shape":"IpamDiscoveredRoute",
+        "locationName":"item"
+      }
+    },
     "IpamDiscoveryFailureCode":{
       "type":"string",
       "enum":[
@@ -38899,6 +39522,117 @@
       ]
     },
     "IpamId":{"type":"string"},
+    "IpamInternetRegistryAssociation":{
+      "type":"structure",
+      "members":{
+        "OwnerId":{
+          "shape":"String",
+          "locationName":"ownerId"
+        },
+        "IpamInternetRegistryAssociationId":{
+          "shape":"IpamInternetRegistryAssociationId",
+          "locationName":"ipamInternetRegistryAssociationId"
+        },
+        "IpamInternetRegistryAssociationArn":{
+          "shape":"ResourceArn",
+          "locationName":"ipamInternetRegistryAssociationArn"
+        },
+        "IpamId":{
+          "shape":"IpamId",
+          "locationName":"ipamId"
+        },
+        "IpamRegion":{
+          "shape":"String",
+          "locationName":"ipamRegion"
+        },
+        "Rir":{
+          "shape":"Rir",
+          "locationName":"rir"
+        },
+        "OrganizationHandle":{
+          "shape":"String",
+          "locationName":"organizationHandle"
+        },
+        "Description":{
+          "shape":"String",
+          "locationName":"description"
+        },
+        "State":{
+          "shape":"IpamInternetRegistryAssociationState",
+          "locationName":"state"
+        },
+        "ChildRequestXml":{
+          "shape":"String",
+          "locationName":"childRequestXml"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "locationName":"tagSet"
+        }
+      }
+    },
+    "IpamInternetRegistryAssociationAsn":{
+      "type":"structure",
+      "members":{
+        "Asn":{
+          "shape":"String",
+          "locationName":"asn"
+        },
+        "LastObservedAt":{
+          "shape":"MillisecondDateTime",
+          "locationName":"lastObservedAt"
+        }
+      }
+    },
+    "IpamInternetRegistryAssociationAsnSet":{
+      "type":"list",
+      "member":{
+        "shape":"IpamInternetRegistryAssociationAsn",
+        "locationName":"item"
+      }
+    },
+    "IpamInternetRegistryAssociationCidr":{
+      "type":"structure",
+      "members":{
+        "Cidr":{
+          "shape":"String",
+          "locationName":"cidr"
+        },
+        "LastObservedAt":{
+          "shape":"MillisecondDateTime",
+          "locationName":"lastObservedAt"
+        }
+      }
+    },
+    "IpamInternetRegistryAssociationCidrSet":{
+      "type":"list",
+      "member":{
+        "shape":"IpamInternetRegistryAssociationCidr",
+        "locationName":"item"
+      }
+    },
+    "IpamInternetRegistryAssociationId":{"type":"string"},
+    "IpamInternetRegistryAssociationSet":{
+      "type":"list",
+      "member":{
+        "shape":"IpamInternetRegistryAssociation",
+        "locationName":"item"
+      }
+    },
+    "IpamInternetRegistryAssociationState":{
+      "type":"string",
+      "enum":[
+        "pending-enable",
+        "create-in-progress",
+        "create-failed",
+        "enable-in-progress",
+        "enable-complete",
+        "enable-failed",
+        "delete-in-progress",
+        "delete-complete",
+        "delete-failed"
+      ]
+    },
     "IpamManagementState":{
       "type":"string",
       "enum":[
@@ -40102,6 +40836,269 @@
         "ipv6-pool",
         "eni",
         "anycast-ip-list"
+      ]
+    },
+    "IpamRouteOriginAuthorization":{
+      "type":"structure",
+      "members":{
+        "Asn":{
+          "shape":"String",
+          "locationName":"asn"
+        },
+        "Prefix":{
+          "shape":"String",
+          "locationName":"prefix"
+        },
+        "MaxLength":{
+          "shape":"Integer",
+          "locationName":"maxLength"
+        },
+        "Match":{
+          "shape":"Boolean",
+          "locationName":"match"
+        },
+        "Expiration":{
+          "shape":"MillisecondDateTime",
+          "locationName":"expiration"
+        }
+      }
+    },
+    "IpamRouteOriginAuthorizationInfo":{
+      "type":"structure",
+      "members":{
+        "Cidr":{
+          "shape":"String",
+          "locationName":"cidr"
+        },
+        "Asn":{
+          "shape":"String",
+          "locationName":"asn"
+        },
+        "MaxLength":{
+          "shape":"Integer",
+          "locationName":"maxLength"
+        }
+      }
+    },
+    "IpamRouteOriginAuthorizationInfoSet":{
+      "type":"list",
+      "member":{
+        "shape":"IpamRouteOriginAuthorizationInfo",
+        "locationName":"item"
+      }
+    },
+    "IpamRouteOriginAuthorizationSet":{
+      "type":"list",
+      "member":{
+        "shape":"IpamRouteOriginAuthorization",
+        "locationName":"item"
+      }
+    },
+    "IpamRouteOverlap":{
+      "type":"structure",
+      "members":{
+        "Prefix":{
+          "shape":"String",
+          "locationName":"prefix"
+        },
+        "Asn":{
+          "shape":"String",
+          "locationName":"asn"
+        },
+        "DetectedAt":{
+          "shape":"MillisecondDateTime",
+          "locationName":"detectedAt"
+        }
+      }
+    },
+    "IpamRouteOverlapSet":{
+      "type":"list",
+      "member":{
+        "shape":"IpamRouteOverlap",
+        "locationName":"item"
+      },
+      "max":100,
+      "min":0
+    },
+    "IpamRouteProtectionFinding":{
+      "type":"structure",
+      "members":{
+        "ResourceOwnerId":{
+          "shape":"String",
+          "locationName":"resourceOwnerId"
+        },
+        "ResourceRegion":{
+          "shape":"String",
+          "locationName":"resourceRegion"
+        },
+        "IpamPoolId":{
+          "shape":"IpamPoolId",
+          "locationName":"ipamPoolId"
+        },
+        "Cidr":{
+          "shape":"String",
+          "locationName":"cidr"
+        },
+        "State":{
+          "shape":"IpamByoipCidrState",
+          "locationName":"state"
+        },
+        "AdvertisementType":{
+          "shape":"IpamByoipAdvertisementType",
+          "locationName":"advertisementType"
+        },
+        "NetworkBorderGroup":{
+          "shape":"String",
+          "locationName":"networkBorderGroup"
+        },
+        "PoolId":{
+          "shape":"String",
+          "locationName":"poolId"
+        },
+        "Asn":{
+          "shape":"String",
+          "locationName":"asn"
+        },
+        "RpkiStatus":{
+          "shape":"IpamRpkiStatus",
+          "locationName":"rpkiStatus"
+        },
+        "RpkiStrength":{
+          "shape":"IpamRpkiStrength",
+          "locationName":"rpkiStrength"
+        },
+        "Roas":{
+          "shape":"IpamRouteOriginAuthorizationSet",
+          "locationName":"roaSet"
+        },
+        "RouteOverlaps":{
+          "shape":"IpamRouteOverlapSet",
+          "locationName":"routeOverlapSet"
+        },
+        "SampleTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"sampleTime"
+        },
+        "RoaSampleTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"roaSampleTime"
+        }
+      }
+    },
+    "IpamRouteProtectionFindingSet":{
+      "type":"list",
+      "member":{
+        "shape":"IpamRouteProtectionFinding",
+        "locationName":"item"
+      }
+    },
+    "IpamRoutingPolicyRegistration":{
+      "type":"structure",
+      "members":{
+        "Cidr":{
+          "shape":"String",
+          "locationName":"cidr"
+        },
+        "Asns":{
+          "shape":"AsnList",
+          "locationName":"asnSet"
+        },
+        "PermitMoreSpecificAnnouncements":{
+          "shape":"BoxedBoolean",
+          "locationName":"permitMoreSpecificAnnouncements"
+        },
+        "MaxLength":{
+          "shape":"IpamRoutingPolicyRegistrationMaxLength",
+          "locationName":"maxLength"
+        },
+        "Description":{
+          "shape":"String",
+          "locationName":"description"
+        },
+        "LatestDeltaId":{
+          "shape":"String",
+          "locationName":"latestDeltaId"
+        },
+        "State":{
+          "shape":"IpamRoutingPolicyRegistrationState",
+          "locationName":"state"
+        }
+      }
+    },
+    "IpamRoutingPolicyRegistrationDelta":{
+      "type":"structure",
+      "members":{
+        "DeltaId":{
+          "shape":"String",
+          "locationName":"deltaId"
+        },
+        "DeltaJson":{
+          "shape":"String",
+          "locationName":"deltaJson"
+        },
+        "State":{
+          "shape":"IpamRoutingPolicyRegistrationDeltaState",
+          "locationName":"state"
+        },
+        "StateMessage":{
+          "shape":"String",
+          "locationName":"stateMessage"
+        }
+      }
+    },
+    "IpamRoutingPolicyRegistrationDeltaSet":{
+      "type":"list",
+      "member":{
+        "shape":"IpamRoutingPolicyRegistrationDelta",
+        "locationName":"item"
+      }
+    },
+    "IpamRoutingPolicyRegistrationDeltaState":{
+      "type":"string",
+      "enum":[
+        "pending",
+        "published",
+        "failed"
+      ]
+    },
+    "IpamRoutingPolicyRegistrationMaxLength":{
+      "type":"integer",
+      "max":48,
+      "min":0
+    },
+    "IpamRoutingPolicyRegistrationSet":{
+      "type":"list",
+      "member":{
+        "shape":"IpamRoutingPolicyRegistration",
+        "locationName":"item"
+      }
+    },
+    "IpamRoutingPolicyRegistrationState":{
+      "type":"string",
+      "enum":[
+        "pending-activate",
+        "activate-failed",
+        "create-in-progress",
+        "create-complete",
+        "update-in-progress",
+        "update-complete",
+        "delete-in-progress",
+        "delete-complete"
+      ]
+    },
+    "IpamRpkiStatus":{
+      "type":"string",
+      "enum":[
+        "valid",
+        "invalid",
+        "unknown"
+      ]
+    },
+    "IpamRpkiStrength":{
+      "type":"string",
+      "enum":[
+        "strict",
+        "permissive"
       ]
     },
     "IpamScope":{
@@ -43984,6 +44981,40 @@
         "Ipam":{
           "shape":"Ipam",
           "locationName":"ipam"
+        }
+      }
+    },
+    "ModifyIpamRoutingPolicyRegistrationRequest":{
+      "type":"structure",
+      "required":[
+        "IpamInternetRegistryAssociationId",
+        "Cidr",
+        "Asns"
+      ],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamInternetRegistryAssociationId":{"shape":"IpamInternetRegistryAssociationId"},
+        "Cidr":{"shape":"String"},
+        "Asns":{
+          "shape":"AsnList",
+          "locationName":"Asn"
+        },
+        "PermitMoreSpecificAnnouncements":{"shape":"BoxedBoolean"},
+        "MaxLength":{"shape":"IpamRoutingPolicyRegistrationMaxLength"},
+        "Description":{"shape":"String"},
+        "Force":{"shape":"BoxedBoolean"},
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "ModifyIpamRoutingPolicyRegistrationResult":{
+      "type":"structure",
+      "members":{
+        "IpamRoutingPolicyRegistrationDelta":{
+          "shape":"IpamRoutingPolicyRegistrationDelta",
+          "locationName":"ipamRoutingPolicyRegistrationDelta"
         }
       }
     },
@@ -50924,6 +51955,7 @@
         "ipam-prefix-list-resolver",
         "ipam-policy",
         "ipam-prefix-list-resolver-target",
+        "ipam-internet-registry-association",
         "secondary-interface",
         "secondary-network",
         "secondary-subnet",
@@ -51503,6 +52535,15 @@
         "shape":"RevokedSecurityGroupRule",
         "locationName":"item"
       }
+    },
+    "Rir":{
+      "type":"string",
+      "enum":[
+        "ripe",
+        "apnic",
+        "arin",
+        "lacnic"
+      ]
     },
     "RoleId":{"type":"string"},
     "RootDeviceType":{
