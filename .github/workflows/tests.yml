@@ -35,8 +35,11 @@ jobs:
             composer-options: '--prefer-lowest'
           - php-versions: '8.5'
             composer-options: ''
+          - php-versions: '8.4'
+            composer-options: ''
+            guzzle-version: '>=7.11 <8'
     # set the name for each job
-    name: PHP ${{ matrix.php-versions }} ${{ matrix.composer-options }}
+    name: PHP ${{ matrix.php-versions }} ${{ matrix.composer-options }} ${{ matrix.guzzle-version }}
     # set up environment variables used by unit tests
     env:
       AWS_ACCESS_KEY_ID: foo
@@ -79,6 +82,9 @@ jobs:
             fi
           else
             composer update ${{ matrix.composer-options }} --no-interaction --prefer-dist
+          fi
+          if [[ -n "${{ matrix.guzzle-version }}" ]]; then
+            composer require "guzzlehttp/guzzle:${{ matrix.guzzle-version }}" --no-interaction --with-all-dependencies
           fi
 
       # run tests

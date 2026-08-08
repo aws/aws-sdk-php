@@ -201,6 +201,21 @@ class FunctionsTest extends TestCase
         );
     }
 
+    public function testGuzzleHttpHandlerWithTransportSharing()
+    {
+        if (!class_exists('GuzzleHttp\Handler\StreamHandler')) {
+            $this->markTestSkipped();
+        }
+        $this->assertInstanceOf(
+            Aws\Handler\Guzzle\GuzzleHandler::class,
+            Aws\default_http_handler('none')
+        );
+        $this->assertInstanceOf(
+            Aws\Handler\Guzzle\GuzzleHandler::class,
+            Aws\default_http_handler('persistent_prefer')
+        );
+    }
+
     public function testSerializesHttpRequests()
     {
         $mock = new MockHandler([new Result([])]);
