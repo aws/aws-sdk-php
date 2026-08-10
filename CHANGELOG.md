@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.391.2 - 2026-08-10
 
 * `Aws\SageMakerRuntime` - Added the PrefixAwareId header to InvokeEndpoint and InvokeEndpointWithResponseStream. This optional parameter serves as a routing hint for endpoints configured with prefix-aware routing, differentiating routing decisions for requests that share the same prompt prefix.
 * `Aws\ElementalInference` - Added support for the SearchFixtures API and DataSourceConfiguration, enabling customers to map fixture event data onto clipping outputs for improved feature accuracy.
