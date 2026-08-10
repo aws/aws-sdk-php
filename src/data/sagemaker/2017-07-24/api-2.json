@@ -25291,6 +25291,25 @@
         "LowerPriority"
       ]
     },
+    "PrefixAwareRoutingConcurrencyThreshold":{
+      "type":"integer",
+      "box":true,
+      "max":1024,
+      "min":1
+    },
+    "PrefixAwareRoutingConfig":{
+      "type":"structure",
+      "members":{
+        "PrefixLength":{"shape":"PrefixAwareRoutingPrefixLength"},
+        "ConcurrencyThreshold":{"shape":"PrefixAwareRoutingConcurrencyThreshold"}
+      }
+    },
+    "PrefixAwareRoutingPrefixLength":{
+      "type":"integer",
+      "box":true,
+      "max":65536,
+      "min":1024
+    },
     "PresignedDomainUrl":{"type":"string"},
     "PresignedUrlAccessConfig":{
       "type":"structure",
@@ -26151,7 +26170,8 @@
       "type":"structure",
       "required":["RoutingStrategy"],
       "members":{
-        "RoutingStrategy":{"shape":"RoutingStrategy"}
+        "RoutingStrategy":{"shape":"RoutingStrategy"},
+        "PrefixAwareRoutingConfig":{"shape":"PrefixAwareRoutingConfig"}
       }
     },
     "ProductionVariantSSMAccess":{
@@ -27525,7 +27545,8 @@
       "type":"string",
       "enum":[
         "LEAST_OUTSTANDING_REQUESTS",
-        "RANDOM"
+        "RANDOM",
+        "PREFIX_AWARE"
       ]
     },
     "RuleConfigurationName":{

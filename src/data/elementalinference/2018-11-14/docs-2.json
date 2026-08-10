@@ -14,6 +14,7 @@
     "ListDictionaries": "<p>Lists the dictionaries in your account.</p>",
     "ListFeeds": "<p>Displays a list of feeds that belong to this AWS account.</p>",
     "ListTagsForResource": "<p>List all tags that are on an Elemental Inference resource in the current region.</p>",
+    "SearchFixtures": "<p>Searches for the fixtures (sports events, such as a specific basketball game) that are available for a sport in a date window. Each fixture in the response includes a fixtureId that you specify in the clipping output of a feed, so that Elemental Inference maps the event data for that fixture onto the clipping metadata. This operation is paginated: if there are more fixtures than fit in one page, the response includes a nextToken that you pass in a subsequent request. </p>",
     "TagResource": "<p>Associates the specified tags to the resource identified by the specified resourceArn in the current region. If existing tags on a resource are not specified in the request parameters, they are not changed. When a resource is deleted, the tags associated with that resource are also deleted. </p>",
     "UntagResource": "<p>Deletes specified tags from the specified resource in the current region.</p>",
     "UpdateDictionary": "<p>Updates the specified dictionary.</p>",
@@ -50,6 +51,7 @@
       "base": null,
       "refs": {
         "AssociateFeedRequest$dryRun": "<p>Set to true if you want to do a dry run of the associate action.</p> <p>Elemental Inference will validate that the real request would succeed without actually making any changes. A dry run catches errors such as missing IAM permissions, quota limits exceeded, conflicting outputs, and so on. If the dry run fails, the action returns a 4xx error code. After you've fixed the errors, resubmit the request. </p>",
+        "Competitor$isHome": "<p>Specifies whether this competitor is the home side in the fixture. If true, this competitor is the home side. If false, this competitor is the away side. </p>",
         "DisassociateFeedRequest$dryRun": "<p>Set to true if you want to do a dry run of the disassociate action.</p> <p>Elemental Inference will validate that the real request would succeed without actually making any changes. A dry run catches errors such as missing IAM permissions. If the dry run fails, the action returns a 4xx error code. </p>",
         "GetOutput$fromAssociation": "<p>True means that the output was originally created in the feed using AssociateFeed. False means it was created using CreateFeed or UpdateFeed. </p> <p>You will need this value if you use UpdateFeed to modify the list of outputs in the feed.</p>",
         "UpdateOutput$fromAssociation": "<p>Elemental Inference originally sets this parameter to True if this output was created by AssociateFeed or to False if this output was created by CreateFeed or UpdateFeed. </p> <p>You must not change this value. Therefore, use GetFeed to determine the current value. Then in the UpdateFeed request, if the current value is True, include this parameter with a value of True. If it's False, omit the parameter. </p>"
@@ -59,6 +61,18 @@
       "base": "<p>A type of OutputConfig, used when the output in a feed is for the clip feature.</p>",
       "refs": {
         "OutputConfig$clipping": "<p>The output config type that applies to the clipping feature.</p>"
+      }
+    },
+    "Competitor": {
+      "base": "<p>Contains information about one competitor in a fixture. It is used in the FixtureSummary that is in the SearchFixtures response. </p>",
+      "refs": {
+        "CompetitorList$member": null
+      }
+    },
+    "CompetitorList": {
+      "base": null,
+      "refs": {
+        "FixtureSummary$competitors": "<p>An array of the competitors (the teams or individuals) in the fixture.</p>"
       }
     },
     "ConflictException": {
@@ -98,6 +112,18 @@
       "base": "<p>A type of OutputConfig, used when the output in a feed is for the crop feature.</p>",
       "refs": {
         "OutputConfig$cropping": "<p>The output config type that applies to the cropping feature.</p>"
+      }
+    },
+    "DataSourceConfiguration": {
+      "base": "<p>Contains the data source configuration for a clipping output. It identifies the fixture whose event data Elemental Inference maps onto the clipping metadata. It is used in the dataSourceConfiguration property of a ClippingConfig. </p>",
+      "refs": {
+        "ClippingConfig$dataSourceConfiguration": "<p>The data source to map onto this clipping output. This parameter is optional. When you include this parameter, Elemental Inference reads the event data for the fixture that you specify, and includes that data in the event clipping metadata for this output. </p> <p>If you omit this parameter, Elemental Inference doesn't map a data source onto this output. </p>"
+      }
+    },
+    "DataSourceSport": {
+      "base": null,
+      "refs": {
+        "SearchFixturesRequest$sport": "<p>The sport to search for fixtures. Valid values: basketball (search for basketball fixtures), american-football (search for american-football fixtures). </p>"
       }
     },
     "DeleteDictionaryRequest": {
@@ -267,6 +293,54 @@
         "ListFeedsResponse$feeds": "<p>A list of FeedSummary objects.</p>"
       }
     },
+    "FilterName": {
+      "base": null,
+      "refs": {
+        "SearchFilter$name": "<p>The dimension of the fixture to filter on. Valid values: COMPETITOR.</p>"
+      }
+    },
+    "FilterValue": {
+      "base": null,
+      "refs": {
+        "FilterValueList$member": null
+      }
+    },
+    "FilterValueList": {
+      "base": null,
+      "refs": {
+        "SearchFilter$values": "<p>An array of values to match in the dimension that you specified in name. You can specify up to 10 values. A fixture appears in the results if it matches at least one of these values. </p>"
+      }
+    },
+    "FixtureDate": {
+      "base": null,
+      "refs": {
+        "SearchFixturesRequest$startDate": "<p>The first day of the search window, in UTC. The search includes fixtures that are scheduled on this day. </p> <p>Specify the date in ISO 8601 format, as <code>YYYY-MM-DD</code>. For example, 2026-03-14. </p>",
+        "SearchFixturesRequest$endDate": "<p>The last day of the search window, in UTC. The search includes fixtures that are scheduled on this day. Specify the date in ISO 8601 format, as <code>YYYY-MM-DD</code>. </p> <p>If you omit this parameter, Elemental Inference searches only the day that you specified in startDate. The window from startDate through endDate must not exceed seven days. </p>"
+      }
+    },
+    "FixtureId": {
+      "base": null,
+      "refs": {
+        "DataSourceConfiguration$fixtureId": "<p>The ID of the fixture whose event data you want Elemental Inference to map onto this clipping output. The fixture should be the sports event in the source media that the feed is processing. </p> <p>To obtain this ID, use the SearchFixtures operation to find the fixture, then use the fixtureId from the matching FixtureSummary. </p>",
+        "FixtureSummary$fixtureId": "<p>The ID of the fixture. Specify this ID in the clipping output of a feed, to identify the fixture whose event data you want Elemental Inference to map onto the clipping metadata. </p>"
+      }
+    },
+    "FixtureSummary": {
+      "base": "<p>Contains information about one fixture. It is used in the SearchFixtures response.</p> <p>Elemental Inference relays the information in this structure from the data source, so that you can identify the fixture that matches your source media. </p>",
+      "refs": {
+        "FixtureSummaryList$member": null
+      }
+    },
+    "FixtureSummaryList": {
+      "base": null,
+      "refs": {
+        "SearchFixturesResponse$fixtures": "<p>An array of FixtureSummary objects, one for each fixture that matches the search. The array is empty if no fixtures match. </p>"
+      }
+    },
+    "GatewayTimedOutException": {
+      "base": "<p>The request timed out before the service returned a response. This is a temporary condition. Retry the request. If the problem persists, contact AWS Support. </p>",
+      "refs": {}
+    },
     "GetDictionaryRequest": {
       "base": null,
       "refs": {}
@@ -421,22 +495,60 @@
         "TemplateUriList$member": null
       }
     },
+    "SearchFilter": {
+      "base": "<p>A filter for a fixture search. It is used in the filters array of a SearchFixtures request. </p>",
+      "refs": {
+        "SearchFilterList$member": null
+      }
+    },
+    "SearchFilterList": {
+      "base": null,
+      "refs": {
+        "SearchFixturesRequest$filters": "<p>An array of filters that narrow the results. Each filter applies to one dimension of a fixture, such as the competitor. You can specify up to 10 filters. </p> <p>A fixture must satisfy every filter in the array in order to appear in the results. Within one filter, a fixture must match at least one of the values. </p>"
+      }
+    },
+    "SearchFixturesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SearchFixturesRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "SearchFixturesRequest$maxResults": "<p>The maximum number of fixtures to return for each API request.</p> <p>The service might return fewer fixtures than the maxResults value. When more fixtures match the search, the response also includes a nextToken value that you can use to fetch the next batch of results. </p>"
+      }
+    },
+    "SearchFixturesResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ServiceQuotaExceededException": {
       "base": "<p>The request was rejected because it would exceed one or more service quotas for your account. Review your service quotas and either delete unused resources or request a quota increase. </p>",
+      "refs": {}
+    },
+    "ServiceUnavailableException": {
+      "base": "<p>The service is temporarily unable to handle the request. Retry the request. If the problem persists, contact AWS Support. </p>",
       "refs": {}
     },
     "String": {
       "base": null,
       "refs": {
         "AccessDeniedException$message": null,
+        "Competitor$name": "<p>The name of the competitor, as provided by the data source.</p>",
         "ConflictException$message": null,
+        "FixtureSummary$name": "<p>The name of the fixture, as provided by the data source. For example, the names of the two competing teams. </p>",
+        "FixtureSummary$fixtureGroup": "<p>The group that the fixture belongs to, such as the competition, league, or tournament. The data source doesn't provide this information for every fixture. </p>",
+        "FixtureSummary$status": "<p>The status of the fixture in its lifecycle, as provided by the data source. For example, Scheduled or Completed. </p>",
+        "GatewayTimedOutException$message": null,
         "InternalServerErrorException$message": null,
         "ListDictionariesRequest$nextToken": "<p>The token that identifies the next batch of results to return.</p>",
         "ListDictionariesResponse$nextToken": "<p>The token to use to retrieve the next batch of results.</p>",
         "ListFeedsRequest$nextToken": "<p>The token that identifies the batch of results that you want to see.</p> <p>For example, you submit a ListFeeds request with MaxResults set at 5. The service returns the first batch of results (up to 5) and a NextToken value. To see the next batch of results, you can submit the ListFeeds request a second time and specify the NextToken value. </p>",
         "ListFeedsResponse$nextToken": "<p>The token that identifies the batch of results that you want to see. For example, you submit a list request with MaxResults set at 5. The service returns the first batch of results (up to 5) and a NextToken value. To see the next batch of results, you can submit the list request a second time and specify the NextToken value. </p>",
         "ResourceNotFoundException$message": null,
+        "SearchFixturesRequest$nextToken": "<p>The token that identifies the batch of results that you want to see.</p> <p>For example, you submit a SearchFixtures request with maxResults set at 5. The service returns the first batch of results (up to 5) and a nextToken value. To see the next batch of results, you submit the SearchFixtures request a second time, with the same search criteria, and specify the nextToken value. </p>",
+        "SearchFixturesResponse$nextToken": "<p>The token that identifies the next batch of results. To see the next batch, submit the SearchFixtures request again, with the same search criteria, and specify this value in nextToken. </p> <p>This parameter is absent when there are no more results to return.</p>",
         "ServiceQuotaExceededException$message": null,
+        "ServiceUnavailableException$message": null,
         "StringList$member": null,
         "TooManyRequestException$message": null,
         "ValidationException$message": null
@@ -454,6 +566,12 @@
       "base": "<p>A type of OutputConfig, used when the output in a feed is for the smart subtitling feature. smart subtitling uses automatic speech recognition (ASR) to generate live TTML subtitles from the audio in your source media. </p>",
       "refs": {
         "OutputConfig$subtitling": "<p>The output config type that applies to the smart subtitling feature.</p>"
+      }
+    },
+    "SyntheticTimestamp_date_time": {
+      "base": null,
+      "refs": {
+        "FixtureSummary$scheduledStart": "<p>The scheduled start time of the fixture, as provided by the data source. The actual start time might differ. </p>"
       }
     },
     "TagKey": {

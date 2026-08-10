@@ -291,6 +291,11 @@
           "shape":"SessionIdOrNewSessionConstantHeader",
           "location":"header",
           "locationName":"X-Amzn-SageMaker-Session-Id"
+        },
+        "PrefixAwareId":{
+          "shape":"PrefixAwareIdHeader",
+          "location":"header",
+          "locationName":"X-Amzn-SageMaker-Prefix-Aware-Id"
         }
       },
       "payload":"Body"
@@ -380,6 +385,11 @@
           "shape":"SessionIdHeader",
           "location":"header",
           "locationName":"X-Amzn-SageMaker-Session-Id"
+        },
+        "PrefixAwareId":{
+          "shape":"PrefixAwareIdHeader",
+          "location":"header",
+          "locationName":"X-Amzn-SageMaker-Prefix-Aware-Id"
         }
       },
       "payload":"Body"
@@ -459,6 +469,12 @@
         }
       },
       "event":true
+    },
+    "PrefixAwareIdHeader":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"\\A\\S[\\p{Print}]*\\z"
     },
     "RequestTTLSecondsHeader":{
       "type":"integer",

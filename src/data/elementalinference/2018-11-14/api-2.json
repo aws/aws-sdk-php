@@ -234,6 +234,25 @@
       ],
       "readonly":true
     },
+    "SearchFixtures":{
+      "name":"SearchFixtures",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/fixtures",
+        "responseCode":200
+      },
+      "input":{"shape":"SearchFixturesRequest"},
+      "output":{"shape":"SearchFixturesResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"TooManyRequestException"},
+        {"shape":"GatewayTimedOutException"}
+      ],
+      "readonly":true
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -378,8 +397,22 @@
     "ClippingConfig":{
       "type":"structure",
       "members":{
-        "callbackMetadata":{"shape":"ResourceDescription"}
+        "callbackMetadata":{"shape":"ResourceDescription"},
+        "dataSourceConfiguration":{"shape":"DataSourceConfiguration"}
       }
+    },
+    "Competitor":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"String"},
+        "isHome":{"shape":"Boolean"}
+      }
+    },
+    "CompetitorList":{
+      "type":"list",
+      "member":{"shape":"Competitor"},
+      "max":30,
+      "min":0
     },
     "ConflictException":{
       "type":"structure",
@@ -483,6 +516,20 @@
       "members":{
         "templateGroups":{"shape":"TemplateGroupList"}
       }
+    },
+    "DataSourceConfiguration":{
+      "type":"structure",
+      "required":["fixtureId"],
+      "members":{
+        "fixtureId":{"shape":"FixtureId"}
+      }
+    },
+    "DataSourceSport":{
+      "type":"string",
+      "enum":[
+        "basketball",
+        "american-football"
+      ]
     },
     "DeleteDictionaryRequest":{
       "type":"structure",
@@ -680,6 +727,62 @@
     "FeedSummaryList":{
       "type":"list",
       "member":{"shape":"FeedSummary"}
+    },
+    "FilterName":{
+      "type":"string",
+      "enum":["COMPETITOR"]
+    },
+    "FilterValue":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "FilterValueList":{
+      "type":"list",
+      "member":{"shape":"FilterValue"},
+      "max":10,
+      "min":0
+    },
+    "FixtureDate":{
+      "type":"string",
+      "pattern":"\\d{4}-\\d{2}-\\d{2}"
+    },
+    "FixtureId":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "FixtureSummary":{
+      "type":"structure",
+      "required":[
+        "fixtureId",
+        "name",
+        "status",
+        "competitors"
+      ],
+      "members":{
+        "fixtureId":{"shape":"FixtureId"},
+        "name":{"shape":"String"},
+        "fixtureGroup":{"shape":"String"},
+        "scheduledStart":{"shape":"SyntheticTimestamp_date_time"},
+        "status":{"shape":"String"},
+        "competitors":{"shape":"CompetitorList"}
+      }
+    },
+    "FixtureSummaryList":{
+      "type":"list",
+      "member":{"shape":"FixtureSummary"}
+    },
+    "GatewayTimedOutException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "error":{"httpStatusCode":504},
+      "exception":true,
+      "fault":true,
+      "retryable":{"throttling":false}
     },
     "GetDictionaryRequest":{
       "type":"structure",
@@ -914,6 +1017,52 @@
       "min":10,
       "pattern":"s3://[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]/.+"
     },
+    "SearchFilter":{
+      "type":"structure",
+      "required":[
+        "name",
+        "values"
+      ],
+      "members":{
+        "name":{"shape":"FilterName"},
+        "values":{"shape":"FilterValueList"}
+      }
+    },
+    "SearchFilterList":{
+      "type":"list",
+      "member":{"shape":"SearchFilter"},
+      "max":10,
+      "min":0
+    },
+    "SearchFixturesRequest":{
+      "type":"structure",
+      "required":[
+        "sport",
+        "startDate"
+      ],
+      "members":{
+        "sport":{"shape":"DataSourceSport"},
+        "startDate":{"shape":"FixtureDate"},
+        "endDate":{"shape":"FixtureDate"},
+        "filters":{"shape":"SearchFilterList"},
+        "maxResults":{"shape":"SearchFixturesRequestMaxResultsInteger"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "SearchFixturesRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "SearchFixturesResponse":{
+      "type":"structure",
+      "required":["fixtures"],
+      "members":{
+        "fixtures":{"shape":"FixtureSummaryList"},
+        "nextToken":{"shape":"String"}
+      }
+    },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "required":["message"],
@@ -925,6 +1074,17 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "ServiceUnavailableException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "error":{"httpStatusCode":503},
+      "exception":true,
+      "fault":true,
+      "retryable":{"throttling":false}
     },
     "String":{"type":"string"},
     "StringList":{
@@ -940,6 +1100,10 @@
         "dictionary":{"shape":"DictionaryId"},
         "profanityFilter":{"shape":"ProfanityFilterMode"}
       }
+    },
+    "SyntheticTimestamp_date_time":{
+      "type":"timestamp",
+      "timestampFormat":"iso8601"
     },
     "TagKey":{
       "type":"string",

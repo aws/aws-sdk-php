@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SageMakerRuntime` - Added the PrefixAwareId header to InvokeEndpoint and InvokeEndpointWithResponseStream. This optional parameter serves as a routing hint for endpoints configured with prefix-aware routing, differentiating routing decisions for requests that share the same prompt prefix.
+* `Aws\ElementalInference` - Added support for the SearchFixtures API and DataSourceConfiguration, enabling customers to map fixture event data onto clipping outputs for improved feature accuracy.
+* `Aws\MediaLive` - Added VirtualSourceAddress to multicast output destinations for MediaLive Anywhere channels. Specifies the source IP address for outbound multicast packets when downstream networks enforce source-IP filtering.
+* `Aws\SageMaker` - Added PREFIX AWARE routing strategy and PrefixAwareRoutingConfig to CreateEndpointConfig. Configure PrefixLength and ConcurrencyThreshold to route requests that share the same prompt prefix to the same instance.
+* `Aws\Connect` - Added Malay language option to use AI to automatically fill evaluation forms in Malay
+
 ## 3.391.1 - 2026-08-07
 
 * `Aws\Retries` - Updated the opt-in retry path (AWS_NEW_RETRIES_2026) to emit SEP-compliant retry headers, honor AWS_MAX_ATTEMPTS and shared-config max_attempts, and align long-polling retry behavior with the new retry spec.
