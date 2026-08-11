@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.392.0 - 2026-08-11
 
 * `Aws\DataZone` - GetSubscriptionGrant now returns materialized asset scope name for mapping Lake Formation data cell filters or Redshift views to subscription grants.
 * `Aws\CloudDirectory` - Added an end-of-support notice to Amazon Cloud Directory public CLI reference documentation.
