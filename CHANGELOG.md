@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DataZone` - GetSubscriptionGrant now returns materialized asset scope name for mapping Lake Formation data cell filters or Redshift views to subscription grants.
+* `Aws\CloudDirectory` - Added an end-of-support notice to Amazon Cloud Directory public CLI reference documentation.
+* `Aws\Organizations` - Documentation update for AWS Organizations that clarifies valid input values for the HandshakePartyType parameter in the InviteAccountToOrganization. API ORGANIZATION is valid in responses only. valid input values are ACCOUNT and EMAIL
+* `Aws\Textract` - Amazon A2I entered maintenance mode in July 2026 and now rejects StartHumanLoop requests from accounts that it does not recognize as existing customers. This update adds a corresponding note to the HumanLoopConfig parameter documentation so that the API Reference and SDK docs explain this behavior.
+* `Aws\EKS` - This feature would give customers the ability to selectively tune certain configurations of Kubernetes control plane components in an Amazon EKS cluster.
+* `Aws\BedrockAgentCore` - Adding online eval arn as input for recommendation API
+* `Aws\Connect` - Seven new APIs for managing custom metrics, including create, describe, update, and delete. Using Custom Metrics, customers of Amazon Connect Customer can tailor analytics dashboards to their needs by applying custom thresholds, filters, and calculations to one or more out of the box measurements.
+* `Aws\AccountAccess` - Adds SDK support for AWS IAM account access manager, a feature that enables mapping of IAM roles to the users and groups in AWS IAM Identity Center.
+* `Aws\CleanRooms` - Adds support for exporting redacted query execution logs in AWS Clean Rooms
+
 ## 3.391.2 - 2026-08-10
 
 * `Aws\SageMakerRuntime` - Added the PrefixAwareId header to InvokeEndpoint and InvokeEndpointWithResponseStream. This optional parameter serves as a routing hint for endpoints configured with prefix-aware routing, differentiating routing decisions for requests that share the same prompt prefix.

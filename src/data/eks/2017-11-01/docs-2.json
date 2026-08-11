@@ -236,6 +236,19 @@
         "DescribeAddonVersionsResponse$addons": "<p>The list of available versions with Kubernetes version compatibility and other properties.</p>"
       }
     },
+    "AllowedValuesConstraint": {
+      "base": "<p>A constraint specifying the allowed values for a parameter.</p>",
+      "refs": {
+        "ResourceConstraints$name": "<p>The allowed values for resource names.</p>",
+        "ScoringStrategyConstraints$scoringStrategy": "<p>The allowed values for the scoring strategy type.</p>"
+      }
+    },
+    "AllowedValuesList": {
+      "base": "<p>A list of allowed string values for a parameter constraint.</p>",
+      "refs": {
+        "AllowedValuesConstraint$allowedValues": "<p>The list of allowed values.</p>"
+      }
+    },
     "ArgoCdAwsIdcConfigRequest": {
       "base": "<p>Configuration for integrating Argo CD with IAM Identity CenterIAM; Identity Center. This allows you to use your organization's identity provider for authentication to Argo CD.</p>",
       "refs": {
@@ -410,7 +423,12 @@
     "BoxedInteger": {
       "base": null,
       "refs": {
+        "ControlPlaneScalingTierInfo$apiRequestConcurrency": "<p>The maximum API request concurrency supported by this tier.</p>",
+        "ControlPlaneScalingTierInfo$podSchedulingRatePerSecond": "<p>The maximum pod scheduling rate per second supported by this tier.</p>",
+        "ControlPlaneScalingTierInfo$clusterDatabaseSizeGb": "<p>The maximum cluster database size in GB supported by this tier.</p>",
         "CreateNodegroupRequest$diskSize": "<p>The root device disk size (in GiB) for your node group instances. The default disk size is 20 GiB for Linux and Bottlerocket. The default disk size is 50 GiB for Windows. If you specify <code>launchTemplate</code>, then don't specify <code>diskSize</code>, or the node group deployment will fail. For more information about using launch templates with Amazon EKS, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html\">Customizing managed nodes with launch templates</a> in the <i>Amazon EKS User Guide</i>.</p>",
+        "IntegerRangeConstraint$min": "<p>The minimum allowed value.</p>",
+        "IntegerRangeConstraint$max": "<p>The maximum allowed value.</p>",
         "Nodegroup$diskSize": "<p>If the node group wasn't deployed with a launch template, then this is the disk size in the node group configuration. If the node group was deployed with a launch template, then this is <code>null</code>.</p>",
         "RollbackConfig$timeoutMinutes": "<p>The length of time in minutes to wait before cancelling the update. Timeout is a minimum-bound property, meaning the timeout occurs no sooner than the time you specify, but can occur shortly thereafter. This value can be between 120 (2 hours) and 10080 (7 days). Default: <code>720</code> (12 hours) if not specified.</p>",
         "WarmPoolConfig$maxGroupPreparedCapacity": "<p>The maximum total number of instances across the warm pool and Auto Scaling group combined. This value controls the total prepared capacity available for your node group.</p>"
@@ -679,6 +697,13 @@
         "Cluster$connectorConfig": "<p>The configuration used to connect to a cluster for registration.</p>"
       }
     },
+    "ControlPlaneConfigInfo": {
+      "base": "<p>The control plane component configuration defaults and constraints.</p>",
+      "refs": {
+        "ClusterVersionInformation$controlPlaneComponentConfig": "<p>The default control plane component configuration and constraints for this Kubernetes version.</p>",
+        "ControlPlaneScalingTierInfo$controlPlaneComponentConfigOverrides": "<p>The control plane component configuration overrides specific to this scaling tier.</p>"
+      }
+    },
     "ControlPlaneEgressModeType": {
       "base": null,
       "refs": {
@@ -704,6 +729,18 @@
         "Cluster$controlPlaneScalingConfig": "<p>The control plane scaling tier configuration. For more information, see EKS Provisioned Control Plane in the Amazon EKS User Guide.</p>",
         "CreateClusterRequest$controlPlaneScalingConfig": "<p>The control plane scaling tier configuration. For more information, see EKS Provisioned Control Plane in the Amazon EKS User Guide.</p>",
         "UpdateClusterConfigRequest$controlPlaneScalingConfig": "<p>The control plane scaling tier configuration. For more information, see EKS Provisioned Control Plane in the Amazon EKS User Guide.</p>"
+      }
+    },
+    "ControlPlaneScalingTierInfo": {
+      "base": "<p>Information about a provisioned control plane scaling tier.</p>",
+      "refs": {
+        "ControlPlaneScalingTierList$member": null
+      }
+    },
+    "ControlPlaneScalingTierList": {
+      "base": "<p>A list of available provisioned control plane scaling tiers.</p>",
+      "refs": {
+        "ClusterVersionInformation$controlPlaneScalingTiers": "<p>The available provisioned control plane scaling tiers and their capabilities for this Kubernetes version.</p>"
       }
     },
     "CreateAccessConfigRequest": {
@@ -1008,6 +1045,19 @@
       "base": null,
       "refs": {}
     },
+    "DurationConstraints": {
+      "base": "<p>Constraints for a duration parameter.</p>",
+      "refs": {
+        "DurationParameterConfig$constraints": "<p>The constraints for the duration parameter.</p>"
+      }
+    },
+    "DurationParameterConfig": {
+      "base": "<p>A duration parameter configuration with default value and constraints.</p>",
+      "refs": {
+        "HorizontalPodAutoscalerControllerVersionConfig$horizontalPodAutoscalerSyncPeriod": "<p>The HPA sync period configuration with default value and constraints.</p>",
+        "KubeApiServerVersionConfig$eventTtl": "<p>The event TTL configuration with default value and constraints.</p>"
+      }
+    },
     "EksAnywhereSubscription": {
       "base": "<p>An EKS Anywhere subscription authorizing the customer to support for licensed clusters and access to EKS Anywhere Curated Packages.</p>",
       "refs": {
@@ -1176,6 +1226,24 @@
         "ListFargateProfilesRequest$maxResults": "<p>The maximum number of results, returned in paginated output. You receive <code>maxResults</code> in a single page, along with a <code>nextToken</code> response element. You can see the remaining results of the initial request by sending another request with the returned <code>nextToken</code> value. This value can be between 1 and 100. If you don't use this parameter, 100 results and a <code>nextToken</code> value, if applicable, are returned.</p>"
       }
     },
+    "HorizontalPodAutoscalerControllerConfigRequest": {
+      "base": "<p>The horizontal pod autoscaler controller configuration for the Kubernetes controller manager.</p>",
+      "refs": {
+        "KubeControllerManagerConfigRequest$horizontalPodAutoscalerControllerConfig": "<p>The horizontal pod autoscaler controller configuration.</p>"
+      }
+    },
+    "HorizontalPodAutoscalerControllerConfigResponse": {
+      "base": "<p>The horizontal pod autoscaler controller configuration for the Kubernetes controller manager.</p>",
+      "refs": {
+        "KubeControllerManagerConfigResponse$horizontalPodAutoscalerControllerConfig": "<p>The horizontal pod autoscaler controller configuration.</p>"
+      }
+    },
+    "HorizontalPodAutoscalerControllerVersionConfig": {
+      "base": "<p>The horizontal pod autoscaler controller version configuration.</p>",
+      "refs": {
+        "KubeControllerManagerVersionConfig$horizontalPodAutoscalerControllerConfig": "<p>The horizontal pod autoscaler controller configuration with default value and constraints.</p>"
+      }
+    },
     "Identity": {
       "base": "<p>An object representing an identity provider.</p>",
       "refs": {
@@ -1284,7 +1352,17 @@
         "ClientStat$numberOfRequestsLast30Days": "<p>The number of requests from the Kubernetes client seen over the last 30 days.</p>",
         "CreateEksAnywhereSubscriptionRequest$licenseQuantity": "<p>The number of licenses to purchase with the subscription. Valid values are between 1 and 100. This value can't be changed after creating the subscription.</p>",
         "EksAnywhereSubscription$licenseQuantity": "<p>The number of licenses included in a subscription. Valid values are between 1 and 100.</p>",
-        "EksAnywhereSubscriptionTerm$duration": "<p>The duration of the subscription term. Valid values are 12 and 36, indicating a 12 month or 36 month subscription.</p>"
+        "EksAnywhereSubscriptionTerm$duration": "<p>The duration of the subscription term. Valid values are 12 and 36, indicating a 12 month or 36 month subscription.</p>",
+        "ServiceNodePortRange$minPort": "<p>The minimum port number in the range.</p>",
+        "ServiceNodePortRange$maxPort": "<p>The maximum port number in the range.</p>"
+      }
+    },
+    "IntegerRangeConstraint": {
+      "base": "<p>An integer range constraint specifying minimum and maximum allowed values.</p>",
+      "refs": {
+        "PortRangeConstraints$minPort": "<p>The constraints for the minimum port value.</p>",
+        "PortRangeConstraints$maxPort": "<p>The constraints for the maximum port value.</p>",
+        "ResourceConstraints$weight": "<p>The allowed range for resource weight values.</p>"
       }
     },
     "InvalidParameterException": {
@@ -1316,6 +1394,63 @@
       "base": null,
       "refs": {
         "NodegroupHealth$issues": "<p>Any issues that are associated with the node group. </p>"
+      }
+    },
+    "KubeApiServerConfigRequest": {
+      "base": "<p>The configuration for the Kubernetes API server on an Amazon EKS cluster.</p>",
+      "refs": {
+        "CreateClusterRequest$kubeApiServerConfig": "<p>The Kubernetes API server configuration for the new cluster.</p>",
+        "UpdateClusterConfigRequest$kubeApiServerConfig": "<p>The Kubernetes API server configuration for the updated cluster.</p>"
+      }
+    },
+    "KubeApiServerConfigResponse": {
+      "base": "<p>The Kubernetes API server configuration for an Amazon EKS cluster.</p>",
+      "refs": {
+        "Cluster$kubeApiServerConfig": "<p>The Kubernetes API server configuration for the cluster.</p>"
+      }
+    },
+    "KubeApiServerVersionConfig": {
+      "base": "<p>The Kubernetes API server version-specific configuration defaults and constraints.</p>",
+      "refs": {
+        "ControlPlaneConfigInfo$kubeApiServerConfig": "<p>The Kubernetes API server configuration defaults and constraints.</p>"
+      }
+    },
+    "KubeControllerManagerConfigRequest": {
+      "base": "<p>The configuration for the Kubernetes controller manager on an Amazon EKS cluster.</p>",
+      "refs": {
+        "CreateClusterRequest$kubeControllerManagerConfig": "<p>The Kubernetes controller manager configuration for the new cluster.</p>",
+        "UpdateClusterConfigRequest$kubeControllerManagerConfig": "<p>The Kubernetes controller manager configuration for the updated cluster.</p>"
+      }
+    },
+    "KubeControllerManagerConfigResponse": {
+      "base": "<p>The Kubernetes controller manager configuration for an Amazon EKS cluster.</p>",
+      "refs": {
+        "Cluster$kubeControllerManagerConfig": "<p>The Kubernetes controller manager configuration for the cluster.</p>"
+      }
+    },
+    "KubeControllerManagerVersionConfig": {
+      "base": "<p>The Kubernetes controller manager version-specific configuration defaults and constraints.</p>",
+      "refs": {
+        "ControlPlaneConfigInfo$kubeControllerManagerConfig": "<p>The Kubernetes controller manager configuration defaults and constraints.</p>"
+      }
+    },
+    "KubeSchedulerConfigRequest": {
+      "base": "<p>The configuration for the Kubernetes scheduler on an Amazon EKS cluster.</p>",
+      "refs": {
+        "CreateClusterRequest$kubeSchedulerConfig": "<p>The Kubernetes scheduler configuration for the new cluster.</p>",
+        "UpdateClusterConfigRequest$kubeSchedulerConfig": "<p>The Kubernetes scheduler configuration for the updated cluster.</p>"
+      }
+    },
+    "KubeSchedulerConfigResponse": {
+      "base": "<p>The Kubernetes scheduler configuration for an Amazon EKS cluster.</p>",
+      "refs": {
+        "Cluster$kubeSchedulerConfig": "<p>The Kubernetes scheduler configuration for the cluster.</p>"
+      }
+    },
+    "KubeSchedulerVersionConfig": {
+      "base": "<p>The Kubernetes scheduler version-specific configuration defaults and constraints.</p>",
+      "refs": {
+        "ControlPlaneConfigInfo$kubeSchedulerConfig": "<p>The Kubernetes scheduler configuration defaults and constraints.</p>"
       }
     },
     "KubernetesNetworkConfigRequest": {
@@ -1594,6 +1729,19 @@
         "NodeRepairConfig$nodeRepairConfigOverrides": "<p>Specify granular overrides for specific repair actions. These overrides control the repair action and the repair delay time before a node is considered eligible for repair. If you use this, you must specify all the values.</p>"
       }
     },
+    "NodeResourcesFitConfig": {
+      "base": "<p>The NodeResourcesFit plugin configuration for the Kubernetes scheduler.</p>",
+      "refs": {
+        "KubeSchedulerConfigRequest$nodeResourcesFit": "<p>The node resource fit scoring configuration for the scheduler.</p>",
+        "KubeSchedulerConfigResponse$nodeResourcesFit": "<p>The node resource fit scoring configuration for the scheduler.</p>"
+      }
+    },
+    "NodeResourcesFitVersionConfig": {
+      "base": "<p>The NodeResourcesFit version configuration with default value and constraints.</p>",
+      "refs": {
+        "KubeSchedulerVersionConfig$nodeResourcesFit": "<p>The NodeResourcesFit configuration with default value and constraints.</p>"
+      }
+    },
     "Nodegroup": {
       "base": "<p>An object representing an Amazon EKS managed node group.</p>",
       "refs": {
@@ -1720,6 +1868,18 @@
         "PodIdentityAssociationSummaries$member": null
       }
     },
+    "PortRangeConstraints": {
+      "base": "<p>Constraints for a port range parameter.</p>",
+      "refs": {
+        "PortRangeParameterConfig$constraints": "<p>The constraints for the port range parameter.</p>"
+      }
+    },
+    "PortRangeParameterConfig": {
+      "base": "<p>A port range parameter configuration with default value and constraints.</p>",
+      "refs": {
+        "KubeApiServerVersionConfig$serviceNodePortRange": "<p>The service node port range configuration with default value and constraints.</p>"
+      }
+    },
     "Provider": {
       "base": "<p>Identifies the Key Management Service (KMS) key used to encrypt the secrets.</p>",
       "refs": {
@@ -1799,6 +1959,12 @@
         "UpdateAddonRequest$resolveConflicts": "<p>How to resolve field value conflicts for an Amazon EKS add-on if you've changed a value from the Amazon EKS default value. Conflicts are handled based on the option you choose:</p> <ul> <li> <p> <b>None</b> – Amazon EKS doesn't change the value. The update might fail.</p> </li> <li> <p> <b>Overwrite</b> – Amazon EKS overwrites the changed value back to the Amazon EKS default value.</p> </li> <li> <p> <b>Preserve</b> – Amazon EKS preserves the value. If you choose this option, we recommend that you test any field and value changes on a non-production cluster before updating the add-on on your production cluster.</p> </li> </ul>"
       }
     },
+    "ResourceConstraints": {
+      "base": "<p>Constraints for resource weight entries.</p>",
+      "refs": {
+        "ScoringStrategyConstraints$resources": "<p>The constraints for resource weights.</p>"
+      }
+    },
     "ResourceInUseException": {
       "base": "<p>The specified resource is in use.</p>",
       "refs": {}
@@ -1815,6 +1981,30 @@
       "base": "<p>Required resources (such as service-linked roles) were created and are still propagating. Retry later.</p>",
       "refs": {}
     },
+    "ResourceWeight": {
+      "base": "<p>A resource weight entry for the scheduler scoring strategy.</p>",
+      "refs": {
+        "ResourceWeightList$member": null
+      }
+    },
+    "ResourceWeightList": {
+      "base": "<p>A list of resource weights for the scoring strategy.</p>",
+      "refs": {
+        "ScoringStrategy$resources": "<p>The resource weights used for scoring nodes.</p>"
+      }
+    },
+    "ResourceWeightName": {
+      "base": "<p>The name of a resource used in the scheduler scoring strategy.</p>",
+      "refs": {
+        "ResourceWeight$name": "<p>The name of the resource (for example, <code>cpu</code> or <code>memory</code>).</p>"
+      }
+    },
+    "ResourceWeightValue": {
+      "base": "<p>The weight value for a resource in the scheduler scoring strategy. Must be between 1 and 100.</p>",
+      "refs": {
+        "ResourceWeight$weight": "<p>The weight assigned to the resource for scoring. Must be between 1 and 100.</p>"
+      }
+    },
     "RoleArn": {
       "base": null,
       "refs": {
@@ -1828,9 +2018,42 @@
         "UpdateClusterVersionRequest$rollbackConfig": "<p>The rollback configuration for the cluster version rollback.</p>"
       }
     },
+    "ScoringStrategy": {
+      "base": "<p>The scoring strategy configuration for the NodeResourcesFit scheduler plugin.</p>",
+      "refs": {
+        "NodeResourcesFitConfig$scoringStrategy": "<p>The scoring strategy used to rank nodes during scheduling.</p>",
+        "ScoringStrategyConfig$defaultValue": "<p>The default scoring strategy.</p>"
+      }
+    },
+    "ScoringStrategyConfig": {
+      "base": "<p>The scoring strategy configuration with default value and constraints.</p>",
+      "refs": {
+        "NodeResourcesFitVersionConfig$scoringStrategy": "<p>The scoring strategy configuration with default value and constraints.</p>"
+      }
+    },
+    "ScoringStrategyConstraints": {
+      "base": "<p>Constraints for the scoring strategy configuration.</p>",
+      "refs": {
+        "ScoringStrategyConfig$constraints": "<p>The constraints for the scoring strategy.</p>"
+      }
+    },
+    "ScoringStrategyType": {
+      "base": "<p>The scoring strategy type for the NodeResourcesFit scheduler plugin.</p>",
+      "refs": {
+        "ScoringStrategy$type": "<p>The scoring strategy type. Valid values are <code>LeastAllocated</code> or <code>MostAllocated</code>.</p>"
+      }
+    },
     "ServerException": {
       "base": "<p>These errors are usually caused by a server-side issue.</p>",
       "refs": {}
+    },
+    "ServiceNodePortRange": {
+      "base": "<p>The port range for Kubernetes NodePort services.</p>",
+      "refs": {
+        "KubeApiServerConfigRequest$serviceNodePortRange": "<p>The port range for NodePort services.</p>",
+        "KubeApiServerConfigResponse$serviceNodePortRange": "<p>The port range for NodePort services.</p>",
+        "PortRangeParameterConfig$defaultValue": "<p>The default port range value.</p>"
+      }
     },
     "ServiceUnavailableException": {
       "base": "<p>The service is unavailable. Back off and retry the operation.</p>",
@@ -1915,6 +2138,7 @@
         "AddonPodIdentityAssociations$roleArn": "<p>The ARN of an IAM Role.</p>",
         "AddonPodIdentityConfiguration$serviceAccount": "<p>The Kubernetes Service Account name used by the add-on.</p>",
         "AddonVersionInfo$addonVersion": "<p>The version of the add-on.</p>",
+        "AllowedValuesList$member": null,
         "ArgoCdAwsIdcConfigRequest$idcInstanceArn": "<p>The Amazon Resource Name (ARN) of the IAM Identity CenterIAM; Identity Center instance to use for authentication.</p>",
         "ArgoCdAwsIdcConfigRequest$idcRegion": "<p>The Region where your IAM Identity CenterIAM; Identity Center instance is located.</p>",
         "ArgoCdAwsIdcConfigResponse$idcInstanceArn": "<p>The Amazon Resource Name (ARN) of the IAM Identity CenterIAM; Identity Center instance used for authentication.</p>",
@@ -1978,6 +2202,7 @@
         "ConnectorConfigResponse$roleArn": "<p>The Amazon Resource Name (ARN) of the role to communicate with services from the connected Kubernetes cluster.</p>",
         "ControlPlanePlacementRequest$groupName": "<p>The name of the placement group for the Kubernetes control plane instances. This setting can't be changed after cluster creation. </p>",
         "ControlPlanePlacementResponse$groupName": "<p>The name of the placement group for the Kubernetes control plane instances.</p>",
+        "ControlPlaneScalingTierInfo$tierName": "<p>The name of the scaling tier.</p>",
         "CreateAccessEntryRequest$clusterName": "<p>The name of your cluster.</p>",
         "CreateAccessEntryRequest$principalArn": "<p>The ARN of the IAM principal for the <code>AccessEntry</code>. You can specify one ARN for each access entry. You can't specify the same ARN in more than one access entry. This value can't be changed after access entry creation.</p> <p>The valid principals differ depending on the type of the access entry in the <code>type</code> field. For <code>STANDARD</code> access entries, you can use every IAM principal type. For nodes (<code>EC2</code> (for EKS Auto Mode), <code>EC2_LINUX</code>, <code>EC2_WINDOWS</code>, <code>FARGATE_LINUX</code>, and <code>HYBRID_LINUX</code>), the only valid ARN is IAM roles. You can't use the STS session principal type with access entries because this is a temporary principal for each session and not a permanent identity that can be assigned permissions.</p> <p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#bp-users-federation-idp\">IAM best practices</a> recommend using IAM roles with temporary credentials, rather than IAM users with long-term credentials. </p>",
         "CreateAccessEntryRequest$clientRequestToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
@@ -2070,6 +2295,9 @@
         "DisassociateAccessPolicyRequest$policyArn": "<p>The ARN of the policy to disassociate from the access entry. For a list of associated policies ARNs, use <code>ListAssociatedAccessPolicies</code>.</p>",
         "DisassociateIdentityProviderConfigRequest$clusterName": "<p>The name of your cluster.</p>",
         "DisassociateIdentityProviderConfigRequest$clientRequestToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
+        "DurationConstraints$min": "<p>The minimum allowed duration value.</p>",
+        "DurationConstraints$max": "<p>The maximum allowed duration value.</p>",
+        "DurationParameterConfig$defaultValue": "<p>The default value for the duration parameter.</p>",
         "EksAnywhereSubscription$id": "<p>UUID identifying a subscription.</p>",
         "EksAnywhereSubscription$arn": "<p>The Amazon Resource Name (ARN) for the subscription.</p>",
         "EksAnywhereSubscription$status": "<p>The status of a subscription.</p>",
@@ -2082,6 +2310,8 @@
         "FargateProfileLabel$key": null,
         "FargateProfileLabel$value": null,
         "FargateProfileSelector$namespace": "<p>The Kubernetes <code>namespace</code> that the selector should match.</p>",
+        "HorizontalPodAutoscalerControllerConfigRequest$horizontalPodAutoscalerSyncPeriod": "<p>The interval between each sync of the horizontal pod autoscaler. Valid values are single-unit durations such as <code>15s</code> or <code>1m</code>.</p>",
+        "HorizontalPodAutoscalerControllerConfigResponse$horizontalPodAutoscalerSyncPeriod": "<p>The interval between each sync of the horizontal pod autoscaler.</p>",
         "IdentityProviderConfig$type": "<p>The type of the identity provider configuration. The only type available is <code>oidc</code>.</p>",
         "IdentityProviderConfig$name": "<p>The name of the identity provider configuration.</p>",
         "IncludeClustersList$member": null,
@@ -2111,6 +2341,8 @@
         "InvalidStateException$clusterName": "<p>The Amazon EKS cluster associated with the exception.</p>",
         "InvalidStateException$message": null,
         "Issue$message": "<p>The error message associated with the issue.</p>",
+        "KubeApiServerConfigRequest$eventTtl": "<p>The duration that Kubernetes events are retained. Valid values are single-unit durations such as <code>30m</code> or <code>1h</code>.</p>",
+        "KubeApiServerConfigResponse$eventTtl": "<p>The duration that Kubernetes events are retained.</p>",
         "KubernetesNetworkConfigRequest$serviceIpv4Cidr": "<p>Don't specify a value if you select <code>ipv6</code> for <b>ipFamily</b>. The CIDR block to assign Kubernetes service IP addresses from. If you don't specify a block, Kubernetes assigns addresses from either the <code>10.100.0.0/16</code> or <code>172.20.0.0/16</code> CIDR blocks. We recommend that you specify a block that does not overlap with resources in other networks that are peered or connected to your VPC. The block must meet the following requirements:</p> <ul> <li> <p>Within one of the following private IP address blocks: <code>10.0.0.0/8</code>, <code>172.16.0.0/12</code>, or <code>192.168.0.0/16</code>.</p> </li> <li> <p>Doesn't overlap with any CIDR block assigned to the VPC that you selected for VPC.</p> </li> <li> <p>Between <code>/24</code> and <code>/12</code>.</p> </li> </ul> <important> <p>You can only specify a custom CIDR block when you create a cluster. You can't change this value after the cluster is created.</p> </important>",
         "KubernetesNetworkConfigResponse$serviceIpv4Cidr": "<p>The CIDR block that Kubernetes <code>Pod</code> and <code>Service</code> object IP addresses are assigned from. Kubernetes assigns addresses from an <code>IPv4</code> CIDR block assigned to a subnet that the node is in. If you didn't specify a CIDR block when you created the cluster, then Kubernetes assigns addresses from either the <code>10.100.0.0/16</code> or <code>172.20.0.0/16</code> CIDR blocks. If this was specified, then it was specified when the cluster was created and it can't be changed.</p>",
         "KubernetesNetworkConfigResponse$serviceIpv6Cidr": "<p>The CIDR block that Kubernetes pod and service IP addresses are assigned from if you created a 1.21 or later cluster with version 1.10.1 or later of the Amazon VPC CNI add-on and specified <code>ipv6</code> for <b>ipFamily</b> when you created the cluster. Kubernetes assigns service addresses from the unique local address range (<code>fc00::/7</code>) because you can't specify a custom IPv6 CIDR block when you create the cluster.</p>",

@@ -51,6 +51,7 @@
     "CreateHoursOfOperationOverride": "<p>Creates an hours of operation override in an Connect Customer hours of operation resource.</p>",
     "CreateInstance": "<p>This API is in preview release for Connect Customer and is subject to change.</p> <p>Initiates an Connect Customer instance with all the supported channels enabled. It does not attach any storage, such as Amazon Simple Storage Service (Amazon S3) or Amazon Kinesis. It also does not allow for any configurations on features, such as Contact Lens for Connect Customer. </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-instances.html\">Create an Connect Customer instance</a> in the <i>Connect Customer Administrator Guide</i>.</p> <p>Connect Customer enforces a limit on the total number of instances that you can create or delete in 30 days. If you exceed this limit, you will get an error message indicating there has been an excessive number of attempts at creating or deleting instances. You must wait 30 days before you can restart creating and deleting instances in your account.</p>",
     "CreateIntegrationAssociation": "<p>Creates an Amazon Web Services resource association with an Connect Customer instance.</p>",
+    "CreateMetric": "<p>Creates a new metric definition for the specified Connect Customer instance. You can create custom metrics that use formulas referencing existing Amazon Web Services-managed metrics, optionally with filters applied.</p>",
     "CreateNotification": "<p>Creates a new notification to be delivered to specified recipients. Notifications can include localized content with links, and an optional expiration time. Recipients can be specified as individual user ARNs or instance ARNs to target all users in an instance.</p>",
     "CreateParticipant": "<p>Adds a new participant into an on-going chat contact or webRTC call. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/chat-customize-flow.html\">Customize chat flow experiences by integrating custom participants</a> or <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/enable-multiuser-inapp.html\">Enable multi-user web, in-app, and video calling</a>.</p>",
     "CreatePersistentContactAssociation": "<p>Enables rehydration of chats for the lifespan of a contact. For more information about chat rehydration, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/chat-persistence.html\">Enable persistent chat</a> in the <i>Connect Customer Administrator Guide</i>. </p>",
@@ -90,6 +91,7 @@
     "DeleteHoursOfOperationOverride": "<p>Deletes an hours of operation override in an Connect Customer hours of operation resource.</p>",
     "DeleteInstance": "<p>This API is in preview release for Connect Customer and is subject to change.</p> <p>Deletes the Connect Customer instance. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/delete-connect-instance.html\">Delete your Connect Customer instance</a> in the <i>Connect Customer Administrator Guide</i>.</p> <p>Connect Customer enforces a limit on the total number of instances that you can create or delete in 30 days. If you exceed this limit, you will get an error message indicating there has been an excessive number of attempts at creating or deleting instances. You must wait 30 days before you can restart creating and deleting instances in your account.</p>",
     "DeleteIntegrationAssociation": "<p>Deletes an Amazon Web Services resource association from an Connect Customer instance. The association must not have any use cases associated with it.</p>",
+    "DeleteMetric": "<p>Deletes an existing metric from the specified Connect Customer instance. This operation fails with <code>ResourceConflictException</code> if the metric is currently in use in a dashboard.</p>",
     "DeleteNotification": "<p>Deletes a notification. Once deleted, the notification is no longer visible to all users and cannot be managed through the Admin Website or APIs.</p>",
     "DeletePredefinedAttribute": "<p>Deletes a predefined attribute from the specified Connect Customer instance.</p>",
     "DeletePrompt": "<p>Deletes a prompt.</p>",
@@ -129,6 +131,7 @@
     "DescribeInstance": "<p>This API is in preview release for Connect Customer and is subject to change.</p> <p>Returns the current state of the specified instance identifier. It tracks the instance while it is being created and returns an error status, if applicable. </p> <p>If an instance is not created successfully, the instance status reason field returns details relevant to the reason. The instance in a failed state is returned only for 24 hours after the CreateInstance API was invoked.</p>",
     "DescribeInstanceAttribute": "<p>This API is in preview release for Connect Customer and is subject to change.</p> <p>Describes the specified instance attribute.</p>",
     "DescribeInstanceStorageConfig": "<p>This API is in preview release for Connect Customer and is subject to change.</p> <p>Retrieves the current storage configurations for the specified resource type, association ID, and instance ID.</p>",
+    "DescribeMetric": "<p>Retrieves the full definition of an existing metric from the specified Connect Customer instance.</p>",
     "DescribeNotification": "<p>Retrieves detailed information about a specific notification, including its content, priority, recipients, and metadata.</p>",
     "DescribePhoneNumber": "<p>Gets details and status of a phone number that’s claimed to your Connect Customer instance or traffic distribution group.</p> <important> <p>If the number is claimed to a traffic distribution group, and you are calling in the Amazon Web Services Region where the traffic distribution group was created, you can use either a phone number ARN or UUID value for the <code>PhoneNumberId</code> URI request parameter. However, if the number is claimed to a traffic distribution group and you are calling this API in the alternate Amazon Web Services Region associated with the traffic distribution group, you must provide a full phone number ARN. If a UUID is provided in this scenario, you receive a <code>ResourceNotFoundException</code>.</p> </important>",
     "DescribePredefinedAttribute": "<p>Describes a predefined attribute for the specified Connect Customer instance. A <i>predefined attribute</i> is made up of a name and a value. You can use predefined attributes for:</p> <ul> <li> <p>Routing proficiency (for example, agent certification) that has predefined values (for example, a list of possible certifications). For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/predefined-attributes.html\">Create predefined attributes for routing contacts to agents</a>.</p> </li> <li> <p>Contact information that varies between transfers or conferences, such as the name of the business unit handling the contact. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/use-contact-segment-attributes.html\">Use contact segment attributes</a>.</p> </li> </ul> <p>For the predefined attributes per instance quota, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html#connect-quotas\">Connect Customer quotas</a>.</p> <p> <b>Endpoints</b>: See <a href=\"https://docs.aws.amazon.com/general/latest/gr/connect_region.html\">Connect Customer endpoints and quotas</a>.</p>",
@@ -216,6 +219,7 @@
     "ListIntegrationAssociations": "<p>Provides summary information about the Amazon Web Services resource associations for the specified Connect Customer instance.</p>",
     "ListLambdaFunctions": "<p>This API is in preview release for Connect Customer and is subject to change.</p> <p>Returns a paginated list of all Lambda functions that display in the dropdown options in the relevant flow blocks.</p>",
     "ListLexBots": "<p>This API is in preview release for Connect Customer and is subject to change.</p> <p>Returns a paginated list of all the Amazon Lex V1 bots currently associated with the instance. To return both Amazon Lex V1 and V2 bots, use the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_ListBots.html\">ListBots</a> API. </p>",
+    "ListMetrics": "<p>Retrieves a paginated list of metric summaries for the specified Connect Customer instance. Use pagination to ensure that the operation returns quickly and successfully.</p>",
     "ListNotifications": "<p>Retrieves a paginated list of all notifications in the Amazon Connect instance.</p>",
     "ListPhoneNumbers": "<p>Provides information about the phone numbers for the specified Connect Customer instance. </p> <p>For more information about phone numbers, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/contact-center-phone-number.html\">Set Up Phone Numbers for Your Contact Center</a> in the <i>Connect Customer Administrator Guide</i>.</p> <important> <ul> <li> <p>We recommend using <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_ListPhoneNumbersV2.html\">ListPhoneNumbersV2</a> to return phone number types. ListPhoneNumbers doesn't support number types <code>UIFN</code>, <code>SHARED</code>, <code>THIRD_PARTY_TF</code>, and <code>THIRD_PARTY_DID</code>. While it returns numbers of those types, it incorrectly lists them as <code>TOLL_FREE</code> or <code>DID</code>. </p> </li> <li> <p>The phone number <code>Arn</code> value that is returned from each of the items in the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_ListPhoneNumbers.html#connect-ListPhoneNumbers-response-PhoneNumberSummaryList\">PhoneNumberSummaryList</a> cannot be used to tag phone number resources. It will fail with a <code>ResourceNotFoundException</code>. Instead, use the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_ListPhoneNumbersV2.html\">ListPhoneNumbersV2</a> API. It returns the new phone number ARN that can be used to tag phone number resources.</p> </li> </ul> </important>",
     "ListPhoneNumbersV2": "<p>Lists phone numbers claimed to your Connect Customer instance or traffic distribution group. If the provided <code>TargetArn</code> is a traffic distribution group, you can call this API in both Amazon Web Services Regions associated with traffic distribution group.</p> <p>For more information about phone numbers, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/contact-center-phone-number.html\">Set Up Phone Numbers for Your Contact Center</a> in the <i>Connect Customer Administrator Guide</i>.</p> <note> <ul> <li> <p>When given an instance ARN, <code>ListPhoneNumbersV2</code> returns only the phone numbers claimed to the instance.</p> </li> <li> <p>When given a traffic distribution group ARN <code>ListPhoneNumbersV2</code> returns only the phone numbers claimed to the traffic distribution group.</p> </li> </ul> </note>",
@@ -270,6 +274,7 @@
     "SearchEvaluationForms": "<p>Searches evaluation forms in an Connect Customer instance, with optional filtering.</p> <p> <b>Use cases</b> </p> <p>Following are common uses cases for this API:</p> <ul> <li> <p>List all evaluation forms in an instance.</p> </li> <li> <p>Find all evaluation forms that meet specific criteria, such as Title, Description, Status, and more.</p> </li> <li> <p>Find all evaluation forms that are tagged with a specific set of tags.</p> </li> </ul> <p> <b>Important things to know</b> </p> <ul> <li> <p>A Search operation, unlike a List operation, takes time to index changes to resource (create, update or delete). If you don't see updated information for recently changed contact evaluations, try calling the API again in a few seconds.</p> </li> </ul> <p> <b>Endpoints</b>: See <a href=\"https://docs.aws.amazon.com/general/latest/gr/connect_region.html\">Connect Customer endpoints and quotas</a>.</p>",
     "SearchHoursOfOperationOverrides": "<p>Searches the hours of operation overrides.</p>",
     "SearchHoursOfOperations": "<p>Searches the hours of operation in an Connect Customer instance, with optional filtering.</p>",
+    "SearchMetrics": "<p>Searches for metrics in the specified Connect Customer instance using search criteria and optional tag-based filters. Use pagination to ensure that the operation returns quickly and successfully.</p>",
     "SearchNotifications": "<p>Searches for notifications based on specified criteria and filters. Returns a paginated list of notifications matching the search parameters, ordered by descending creation time. Supports filtering by content and tags.</p>",
     "SearchPredefinedAttributes": "<p>Searches predefined attributes that meet certain criteria. A <i>predefined attribute</i> is made up of a name and a value. You can use predefined attributes for:</p> <ul> <li> <p>Routing proficiency (for example, agent certification) that has predefined values (for example, a list of possible certifications). For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/predefined-attributes.html\">Create predefined attributes for routing contacts to agents</a>.</p> </li> <li> <p>Contact information that varies between transfers or conferences, such as the name of the business unit handling the contact. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/use-contact-segment-attributes.html\">Use contact segment attributes</a>.</p> </li> </ul> <p>For the predefined attributes per instance quota, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html#connect-quotas\">Connect Customer quotas</a>.</p> <p> <b>Endpoints</b>: See <a href=\"https://docs.aws.amazon.com/general/latest/gr/connect_region.html\">Connect Customer endpoints and quotas</a>.</p>",
     "SearchPrompts": "<p>Searches prompts in an Connect Customer instance, with optional filtering.</p>",
@@ -313,7 +318,7 @@
     "SubmitContactEvaluation": "<p>Submits a contact evaluation in the specified Connect Customer instance. Answers included in the request are merged with existing answers for the given evaluation. If no answers or notes are passed, the evaluation is submitted with the existing answers and notes. You can delete an answer or note by passing an empty object (<code>{}</code>) to the question identifier. </p> <p>If a contact evaluation is already in submitted state, this operation will trigger a resubmission.</p>",
     "SuspendContactRecording": "<p>When a contact is being recorded, this API suspends recording whatever is selected in the flow configuration: call (IVR or agent), screen, or both. If only call recording or only screen recording is enabled, then it would be suspended. For example, you might suspend the screen recording while collecting sensitive information, such as a credit card number. Then use <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_ResumeContactRecording.html\">ResumeContactRecording</a> to restart recording the screen.</p> <p>The period of time that the recording is suspended is filled with silence in the final recording. </p> <p> Voice (IVR, agent) and screen recordings are supported.</p>",
     "TagContact": "<p>Adds the specified tags to the contact resource. For more information about this API is used, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/granular-billing.html\">Set up granular billing for a detailed view of your Connect Customer usage</a>. </p>",
-    "TagResource": "<p>Adds the specified tags to the specified resource.</p> <p>Some of the supported resource types are agents, routing profiles, queues, quick connects, flows, agent statuses, hours of operation, phone numbers, security profiles, and task templates. For a complete list, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/tagging.html\">Tagging resources in Connect Customer</a>.</p> <p>For sample policies that use tags, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/security_iam_id-based-policy-examples.html\">Connect Customer Identity-Based Policy Examples</a> in the <i>Connect Customer Administrator Guide</i>.</p>",
+    "TagResource": "<p>Adds the specified tags to the specified resource.</p> <p>Some of the supported resource types are agents, routing profiles, queues, quick connects, flows, agent statuses, hours of operation, phone numbers, security profiles, task templates, and custom metrics. For a complete list, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/tagging.html\">Tagging resources in Connect Customer</a>.</p> <p>For sample policies that use tags, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/security_iam_id-based-policy-examples.html\">Connect Customer Identity-Based Policy Examples</a> in the <i>Connect Customer Administrator Guide</i>.</p>",
     "TransferContact": "<p>Transfers <code>TASK</code> or <code>EMAIL</code> contacts from one agent or queue to another agent or queue at any point after a contact is created. You can transfer a contact to another queue by providing the flow which orchestrates the contact to the destination queue. This gives you more control over contact handling and helps you adhere to the service level agreement (SLA) guaranteed to your customers.</p> <p>Note the following requirements:</p> <ul> <li> <p>Transfer is only supported for <code>TASK</code> and <code>EMAIL</code> contacts.</p> </li> <li> <p>Do not use both <code>QueueId</code> and <code>UserId</code> in the same call.</p> </li> <li> <p>The following flow types are supported: Inbound flow, Transfer to agent flow, and Transfer to queue flow.</p> </li> <li> <p>The <code>TransferContact</code> API can be called only on active contacts.</p> </li> <li> <p>A contact cannot be transferred more than 11 times.</p> </li> </ul>",
     "UntagContact": "<p>Removes the specified tags from the contact resource. For more information about this API is used, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/granular-billing.html\">Set up granular billing for a detailed view of your Connect Customer usage</a>.</p>",
     "UntagResource": "<p>Removes the specified tags from the specified resource.</p>",
@@ -341,6 +346,8 @@
     "UpdateHoursOfOperationOverride": "<p>Update the hours of operation override.</p>",
     "UpdateInstanceAttribute": "<p>This API is in preview release for Connect Customer and is subject to change.</p> <p>Updates the value for the specified attribute type.</p>",
     "UpdateInstanceStorageConfig": "<p>This API is in preview release for Connect Customer and is subject to change.</p> <p>Updates an existing configuration for a resource type. This API is idempotent.</p>",
+    "UpdateMetricContent": "<p>Updates the calculation, unit, and/or trend indicator of an existing metric in the specified Connect Customer instance.</p>",
+    "UpdateMetricMetadata": "<p>Updates the name and/or description of an existing metric in the specified Connect Customer instance.</p>",
     "UpdateNotificationContent": "<p>Updates the localized content of an existing notification. This operation applies to all users for whom the notification was sent.</p>",
     "UpdateParticipantAuthentication": "<p>Instructs Connect Customer to resume the authentication process. The subsequent actions depend on the request body contents:</p> <ul> <li> <p> <b>If a code is provided</b>: Connect retrieves the identity information from Amazon Cognito and imports it into Connect Customer Profiles.</p> </li> <li> <p> <b>If an error is provided</b>: The error branch of the Authenticate Customer block is executed.</p> </li> </ul> <note> <p>The API returns a success response to acknowledge the request. However, the interaction and exchange of identity information occur asynchronously after the response is returned.</p> </note>",
     "UpdateParticipantRoleConfig": "<p>Updates timeouts for when human chat participants are to be considered idle, and when agents are automatically disconnected from a chat due to idleness. You can set four timers:</p> <ul> <li> <p>Customer idle timeout</p> </li> <li> <p>Customer auto-disconnect timeout</p> </li> <li> <p>Agent idle timeout</p> </li> <li> <p>Agent auto-disconnect timeout</p> </li> </ul> <p>For more information about how chat timeouts work, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/setup-chat-timeouts.html\">Set up chat timeouts for human participants</a>. </p>",
@@ -436,6 +443,7 @@
         "CreateInstanceResponse$Arn": "<p>The Amazon Resource Name (ARN) of the instance.</p>",
         "CreateIntegrationAssociationRequest$IntegrationArn": "<p>The Amazon Resource Name (ARN) of the integration.</p> <note> <p>When integrating with Amazon Web Services End User Messaging, the Connect Customer and Amazon Web Services End User Messaging instances must be in the same account.</p> </note>",
         "CreateIntegrationAssociationResponse$IntegrationAssociationArn": "<p>The Amazon Resource Name (ARN) for the association.</p>",
+        "CreateMetricResponse$MetricArn": "<p>The Amazon Resource Name (ARN) of the metric.</p>",
         "CreateNotificationResponse$NotificationArn": "<p>The Amazon Resource Name (ARN) of the created notification.</p>",
         "CreatePromptResponse$PromptARN": "<p>The Amazon Resource Name (ARN) of the prompt.</p>",
         "CreatePushNotificationRegistrationRequest$PinpointAppArn": "<p>The Amazon Resource Name (ARN) of the Pinpoint application.</p>",
@@ -529,6 +537,8 @@
         "ListPhoneNumbersSummary$SourcePhoneNumberArn": "<p>The claimed phone number ARN that was previously imported from the external service, such as Amazon Web Services End User Messaging. If it is from Amazon Web Services End User Messaging, it looks like the ARN of the phone number that was imported from Amazon Web Services End User Messaging.</p>",
         "ListPhoneNumbersV2Request$TargetArn": "<p>The Amazon Resource Name (ARN) for Connect Customer instances or traffic distribution groups that phone number inbound traffic is routed through. If both <code>TargetArn</code> and <code>InstanceId</code> input are not provided, this API lists numbers claimed to all the Connect Customer instances belonging to your account in the same Amazon Web Services Region as the request.</p>",
         "ListTagsForResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource. All Connect Customer resources (instances, queues, flows, routing profiles, etc) have an ARN. To locate the ARN for an instance, for example, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">Find your Connect Customer instance ID/ARN</a>. </p>",
+        "MetricDefinition$Arn": "<p>The Amazon Resource Name (ARN) of the metric. May be qualified with <code>$SAVED</code> or <code>$LATEST</code>.</p>",
+        "MetricSummary$Arn": "<p>The Amazon Resource Name (ARN) of the metric.</p>",
         "MonitorContactResponse$ContactArn": "<p>The ARN of the contact.</p>",
         "Notification$Arn": "<p>The Amazon Resource Name (ARN) of the notification.</p>",
         "NotificationSearchSummary$Arn": "<p>The Amazon Resource Name (ARN) of the notification.</p>",
@@ -1190,6 +1200,7 @@
         "SearchEvaluationFormsResponse$ApproximateTotalCount": "<p>The total number of evaluation forms that matched your search query.</p>",
         "SearchHoursOfOperationOverridesResponse$ApproximateTotalCount": "<p>The total number of hours of operations which matched your search query.</p>",
         "SearchHoursOfOperationsResponse$ApproximateTotalCount": "<p>The total number of hours of operations which matched your search query.</p>",
+        "SearchMetricsResponse$ApproximateTotalCount": "<p>The approximate total number of metrics that matched your search criteria.</p>",
         "SearchNotificationsResponse$ApproximateTotalCount": "<p>The approximate total number of notifications matching the search criteria.</p>",
         "SearchPredefinedAttributesResponse$ApproximateTotalCount": "<p>The approximate number of predefined attributes which matched your search query.</p>",
         "SearchPromptsResponse$ApproximateTotalCount": "<p>The total number of quick connects which matched your search query.</p>",
@@ -1695,6 +1706,24 @@
         "EvaluationFormSingleSelectQuestionOption$AutomaticFailConfiguration": "<p>Whether automatic fail is configured on a single select question. </p>"
       }
     },
+    "AvailableFilter": {
+      "base": "<p>A filter that is available for use with the metric. Part of an AvailableFilterList that describes the filters that are available for use with the metric.</p>",
+      "refs": {
+        "AvailableFilterList$member": null
+      }
+    },
+    "AvailableFilterList": {
+      "base": null,
+      "refs": {
+        "MetricDefinition$Filters": "<p>The filters applied to the metric.</p>"
+      }
+    },
+    "AvailableFilterType": {
+      "base": "<p>The type of an available metric filter. Valid values: <code>METRIC_LEVEL</code> | <code>RESOURCE_LEVEL</code>.</p>",
+      "refs": {
+        "AvailableFilter$Type": "<p>The type of the filter. Valid values: <code>METRIC_LEVEL</code> | <code>RESOURCE_LEVEL</code>.</p>"
+      }
+    },
     "AvailableNumberSummary": {
       "base": "<p>Information about available phone numbers.</p>",
       "refs": {
@@ -1941,6 +1970,7 @@
         "EvaluationSummary$AutoEvaluationEnabled": "<p>Whether automated evaluation is enabled.</p>",
         "ExternalInvocationConfiguration$Enabled": "<p>Enable external invocation.</p>",
         "FieldValueUnion$BooleanValue": "<p>A Boolean number value type.</p>",
+        "MetricFilter$Negate": "<p>Specifies whether the filter condition is negated. When set to <code>true</code>, the filter excludes matching data instead of including it.</p>",
         "MetricFilterV2$Negate": "<p>If set to <code>true</code>, the API response contains results that filter out the results matched by the metric-level filters condition. By default, <code>Negate</code> is set to <code>false</code>. </p>",
         "PaletteHeader$InvertActionsColors": "<p>Whether to invert the colors of action buttons in the header.</p>",
         "PaletteNavigation$InvertActionsColors": "<p>Whether to invert the colors of action buttons in the navigation area.</p>",
@@ -1967,7 +1997,8 @@
       "base": "<p>A boolean search condition for Search APIs.</p>",
       "refs": {
         "EvaluationFormSearchCriteria$BooleanCondition": "<p>Boolean search condition.</p>",
-        "EvaluationSearchCriteria$BooleanCondition": "<p>The boolean condition search criteria for searching evaluations.</p>"
+        "EvaluationSearchCriteria$BooleanCondition": "<p>The boolean condition search criteria for searching evaluations.</p>",
+        "MetricSearchCriteria$BooleanCondition": null
       }
     },
     "BotName": {
@@ -1989,6 +2020,24 @@
       "base": null,
       "refs": {
         "S3Config$BucketName": "<p>The S3 bucket name.</p>"
+      }
+    },
+    "CalculationComponent": {
+      "base": "<p>Represents a component metric referenced in a custom metric calculation formula.</p>",
+      "refs": {
+        "CalculationComponentList$member": null
+      }
+    },
+    "CalculationComponentList": {
+      "base": null,
+      "refs": {
+        "MetricCalculation$CalculationComponents": "<p>The list of component metrics referenced in the calculation formula. Each component has an alias used in the formula expression.</p>"
+      }
+    },
+    "CalculationExpression": {
+      "base": null,
+      "refs": {
+        "MetricCalculation$Calculation": "<p>The formula expression that defines how the metric is calculated. Uses component aliases (for example, <code>100 * SUM(M1) / SUM(M2)</code>).</p>"
       }
     },
     "Campaign": {
@@ -2171,6 +2220,7 @@
         "CreateEmailAddressRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "CreateEvaluationFormRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "CreateInstanceRequest$ClientToken": "<p>The idempotency token.</p>",
+        "CreateMetricRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "CreateNotificationRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "CreateParticipantRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "CreatePersistentContactAssociationRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
@@ -2281,6 +2331,12 @@
     "CompleteAttachedFileUploadResponse": {
       "base": "Response from CompleteAttachedFileUpload API",
       "refs": {}
+    },
+    "ComponentAlias": {
+      "base": null,
+      "refs": {
+        "CalculationComponent$Alias": "<p>The alias used to reference this component in the calculation expression.</p>"
+      }
     },
     "Concurrency": {
       "base": null,
@@ -3101,6 +3157,7 @@
         "ContactFlowSearchFilter$TagFilter": null,
         "EmailAddressSearchFilter$TagFilter": null,
         "HoursOfOperationSearchFilter$TagFilter": null,
+        "MetricSearchFilter$TagFilter": "<p>An object that can be used to specify tag conditions inside the <code>SearchFilter</code>. This accepts an OR of AND (List of List) input where:</p> <ul> <li> <p>The top level list specifies conditions that need to be applied with OR operator.</p> </li> <li> <p>The inner list specifies conditions that need to be applied with AND operator.</p> </li> </ul>",
         "PromptSearchFilter$TagFilter": null,
         "QueueSearchFilter$TagFilter": null,
         "QuickConnectSearchFilter$TagFilter": null,
@@ -3271,6 +3328,14 @@
       "refs": {}
     },
     "CreateIntegrationAssociationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateMetricRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateMetricResponse": {
       "base": null,
       "refs": {}
     },
@@ -3457,6 +3522,8 @@
       "refs": {
         "AttachedFile$CreatedBy": "<p>Represents the identity that created the file.</p>",
         "GetAttachedFileResponse$CreatedBy": "<p>Represents the identity that created the file.</p>",
+        "MetricDefinition$CreatedUser": "<p>The user that created the metric. The creator for metrics created through the CreateMetric API will be <code>Amazon Connect API</code>.</p>",
+        "MetricDefinition$LastModifiedUser": "<p>The user that last modified the metric. For modifications made through the API, this will be <code>Amazon Connect API</code>.</p>",
         "StartAttachedFileUploadRequest$CreatedBy": "<p>Represents the identity that created the file.</p>",
         "StartAttachedFileUploadResponse$CreatedBy": "<p>Represents the identity that created the file.</p>"
       }
@@ -3934,6 +4001,12 @@
         "EvaluationSearchCriteria$DecimalCondition": "<p>The decimal condition search criteria for searching evaluations.</p>"
       }
     },
+    "DefaultStat": {
+      "base": null,
+      "refs": {
+        "MetricDefinition$DefaultStat": "<p>The default stat aggregation for the metric.</p>"
+      }
+    },
     "DefaultVocabulary": {
       "base": "<p>Contains information about a default vocabulary.</p>",
       "refs": {
@@ -4054,6 +4127,14 @@
       "refs": {}
     },
     "DeleteIntegrationAssociationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteMetricRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteMetricResponse": {
       "base": null,
       "refs": {}
     },
@@ -4326,6 +4407,14 @@
       "refs": {}
     },
     "DescribeInstanceStorageConfigResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeMetricRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeMetricResponse": {
       "base": null,
       "refs": {}
     },
@@ -4727,7 +4816,8 @@
       "refs": {
         "ContactMetricValue$Number": "<p>The numeric value of the metric result. For POSITION_IN_QUEUE, this represents the contact's current position in the queue (e.g., 3.00 means third in line). For ESTIMATED_WAIT_TIME, this represents the predicted wait time in seconds (e.g., 120.00 means approximately 2 minutes).</p>",
         "EvaluationScore$AppliedWeight": "<p>Weight applied to this evaluation score.</p>",
-        "FieldValueUnion$DoubleValue": "<p>A Double number value type.</p>"
+        "FieldValueUnion$DoubleValue": "<p>A Double number value type.</p>",
+        "NumberValueList$member": null
       }
     },
     "DownloadUrlMetadata": {
@@ -6297,6 +6387,12 @@
         "StartAttachedFileUploadRequest$FileUseCaseType": "<p>The use case for the file.</p> <important> <p> Only <code>ATTACHMENTS</code> are supported.</p> </important>"
       }
     },
+    "FilterId": {
+      "base": null,
+      "refs": {
+        "AvailableFilter$Id": "<p>The identifier of the filter.</p>"
+      }
+    },
     "FilterV2": {
       "base": "<p>Contains the filter to apply when retrieving metrics with the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_GetMetricDataV2.html\">GetMetricDataV2</a> API.</p>",
       "refs": {
@@ -7225,6 +7321,7 @@
         "CreateHoursOfOperationRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "CreateInstanceResponse$Id": "<p>The identifier for the instance.</p>",
         "CreateIntegrationAssociationRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "CreateMetricRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "CreateNotificationRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "CreateParticipantRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance. </p>",
         "CreatePersistentContactAssociationRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -7260,6 +7357,7 @@
         "DeleteHoursOfOperationRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeleteInstanceRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeleteIntegrationAssociationRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "DeleteMetricRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeleteNotificationRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeletePredefinedAttributeRequest$InstanceId": "<p> The identifier of the Connect Customer instance. You can find the instance ID in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeletePromptRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -7294,6 +7392,7 @@
         "DescribeInstanceAttributeRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DescribeInstanceRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DescribeInstanceStorageConfigRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "DescribeMetricRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DescribeNotificationRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DescribePredefinedAttributeRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can find the instance ID in the Amazon Resource Name (ARN) of the instance.</p>",
         "DescribePromptRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -7376,6 +7475,7 @@
         "ListIntegrationAssociationsRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListLambdaFunctionsRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListLexBotsRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "ListMetricsRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListNotificationsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListPhoneNumbersRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListPhoneNumbersSummary$InstanceId": "<p>The identifier of the Connect Customer instance that phone numbers are claimed to. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -7427,6 +7527,7 @@
         "SearchEvaluationFormsRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "SearchHoursOfOperationOverridesRequest$InstanceId": "<p>The identifier of the Connect Customer instance.</p>",
         "SearchHoursOfOperationsRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "SearchMetricsRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "SearchNotificationsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "SearchPredefinedAttributesRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can find the instance ID in the Amazon Resource Name (ARN) of the instance.</p>",
         "SearchPromptsRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -7495,6 +7596,8 @@
         "UpdateHoursOfOperationRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdateInstanceAttributeRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdateInstanceStorageConfigRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "UpdateMetricContentRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "UpdateMetricMetadataRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdateNotificationContentRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdateParticipantAuthenticationRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdateParticipantRoleConfigRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -8157,6 +8260,14 @@
       "base": null,
       "refs": {}
     },
+    "ListMetricsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListMetricsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListNotificationsRequest": {
       "base": null,
       "refs": {}
@@ -8515,6 +8626,7 @@
         "ListEvaluationFormsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListHoursOfOperationOverridesRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListIntegrationAssociationsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
+        "ListMetricsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListNotificationsRequest$MaxResults": "<p>The maximum number of results to return per page. Valid range is 1-100.</p>",
         "ListPredefinedAttributesRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListQueueEmailAddressesRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
@@ -8538,6 +8650,7 @@
         "SearchEvaluationFormsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "SearchHoursOfOperationOverridesRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "SearchHoursOfOperationsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
+        "SearchMetricsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "SearchNotificationsRequest$MaxResults": "<p>The maximum number of results to return per page. Valid range is 1-100.</p>",
         "SearchPredefinedAttributesRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "SearchPromptsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
@@ -8783,6 +8896,26 @@
         "UploadUrlMetadata$Url": "<p>A pre-signed S3 URL that should be used for uploading the attached file. </p>"
       }
     },
+    "MetricCalculation": {
+      "base": "<p>Contains the formula and component metrics that define a custom metric calculation.</p>",
+      "refs": {
+        "CreateMetricRequest$MetricCalculation": "<p>The calculation definition for the metric, including the formula expression and the component metrics it references.</p>",
+        "MetricDefinition$MetricCalculation": "<p>The calculation definition for the metric.</p>",
+        "UpdateMetricContentRequest$MetricCalculation": "<p>The updated calculation definition for the metric.</p>"
+      }
+    },
+    "MetricCategory": {
+      "base": null,
+      "refs": {
+        "MetricDefinition$Category": "<p>The category of the metric.</p>"
+      }
+    },
+    "MetricCreationMethod": {
+      "base": "<p>The method used to create a custom metric. Valid values: <code>SERVICE_LEVEL_BUILDER</code> | <code>METRIC_BUILDER</code>.</p>",
+      "refs": {
+        "MetricDefinition$CreationMethod": "<p>The method used to create the metric. Valid values: <code>SERVICE_LEVEL_BUILDER</code> (created with the guided service-level experience) | <code>METRIC_BUILDER</code> (created with the free-form metric builder).</p>"
+      }
+    },
     "MetricDataCollectionsV2": {
       "base": null,
       "refs": {
@@ -8793,6 +8926,75 @@
       "base": "<p>Contains the name, thresholds, and metric filters.</p>",
       "refs": {
         "MetricDataCollectionsV2$member": null
+      }
+    },
+    "MetricDefinition": {
+      "base": "<p>Contains the full definition of a metric, including its calculation, unit, status, and trend indicator.</p>",
+      "refs": {
+        "DescribeMetricResponse$Metric": "<p>The metric definition.</p>",
+        "MetricSearchSummaryList$member": null
+      }
+    },
+    "MetricDescription": {
+      "base": null,
+      "refs": {
+        "CreateMetricRequest$Description": "<p>The description of the metric.</p>",
+        "MetricDefinition$Description": "<p>The description of the metric.</p>",
+        "UpdateMetricMetadataRequest$Description": "<p>The updated description of the metric.</p>"
+      }
+    },
+    "MetricFilter": {
+      "base": "<p>A filter condition applied to a metric component in a calculation. Filters restrict the data included in the metric computation.</p>",
+      "refs": {
+        "MetricFilterList$member": null
+      }
+    },
+    "MetricFilterBooleanCondition": {
+      "base": "<p>A boolean comparison condition for metric filters.</p>",
+      "refs": {
+        "MetricFilter$BooleanCondition": "<p>A boolean comparison condition.</p>"
+      }
+    },
+    "MetricFilterBooleanConditionComparison": {
+      "base": "<p>The boolean comparison operator for metric filters. Valid values: <code>IS_TRUE</code> | <code>IS_FALSE</code>.</p>",
+      "refs": {
+        "MetricFilterBooleanCondition$Comparison": "<p>The comparison operator. Valid values: <code>IS_TRUE</code> (matches when the field is true) | <code>IS_FALSE</code> (matches when the field is false).</p>"
+      }
+    },
+    "MetricFilterKey": {
+      "base": null,
+      "refs": {
+        "MetricFilter$MetricFilterKey": "<p>The key identifying the field to filter on.</p>"
+      }
+    },
+    "MetricFilterList": {
+      "base": null,
+      "refs": {
+        "CalculationComponent$MetricFilters": "<p>The filters applied to the calculation component.</p>"
+      }
+    },
+    "MetricFilterNumberCondition": {
+      "base": "<p>A numeric comparison condition for metric filters.</p>",
+      "refs": {
+        "MetricFilter$NumberCondition": "<p>A numeric comparison condition.</p>"
+      }
+    },
+    "MetricFilterNumberConditionComparison": {
+      "base": "<p>The numeric comparison operator for metric filters. Valid values: <code>LESSER</code> | <code>LESSER_OR_EQUAL</code> | <code>GREATER</code> | <code>GREATER_OR_EQUAL</code>.</p>",
+      "refs": {
+        "MetricFilterNumberCondition$Comparison": "<p>The comparison operator. Valid values: <code>LESSER</code> (less than) | <code>LESSER_OR_EQUAL</code> (less than or equal to) | <code>GREATER</code> (greater than) | <code>GREATER_OR_EQUAL</code> (greater than or equal to).</p>"
+      }
+    },
+    "MetricFilterStringCondition": {
+      "base": "<p>A string comparison condition for metric filters.</p>",
+      "refs": {
+        "MetricFilter$StringCondition": "<p>A string comparison condition.</p>"
+      }
+    },
+    "MetricFilterStringConditionComparison": {
+      "base": "<p>The string comparison operator for metric filters. Valid values: <code>MATCHES_ANY</code> | <code>MATCHES_NONE</code>.</p>",
+      "refs": {
+        "MetricFilterStringCondition$Comparison": "<p>The comparison operator. Valid values: <code>MATCHES_ANY</code> (matches any of the specified values) | <code>MATCHES_NONE</code> (matches none of the specified values).</p>"
       }
     },
     "MetricFilterV2": {
@@ -8813,16 +9015,40 @@
         "MetricV2$MetricFilters": "<p>Contains the filters to be used when returning data.</p>"
       }
     },
+    "MetricGroupingList": {
+      "base": null,
+      "refs": {
+        "MetricDefinition$Groupings": "<p>The groupings available for this metric.</p>"
+      }
+    },
     "MetricId": {
       "base": null,
       "refs": {
-        "MetricV2$MetricId": "<p>Historical metrics or custom metrics can be referenced via this field. This field is a valid Connect Customer Arn or a UUID</p>"
+        "CalculationComponent$MetricId": "<p>The ARN of an AWS-managed metric used in this calculation component. Mutually exclusive with <code>MetricName</code>.</p>",
+        "CreateMetricResponse$MetricId": "<p>The identifier of the metric.</p>",
+        "DeleteMetricRequest$MetricId": "<p>The identifier of the metric to delete.</p>",
+        "DescribeMetricRequest$MetricId": "<p>The identifier of the metric to describe. Adding the <code>$SAVED</code> qualifier will describe the saved version of the metric. Adding <code>$LATEST</code> or omitting a qualifier will describe the published version.</p>",
+        "MetricDefinition$Id": "<p>The identifier of the metric.</p>",
+        "MetricSummary$Id": "<p>The identifier of the metric.</p>",
+        "MetricV2$MetricId": "<p>Historical metrics or custom metrics can be referenced via this field. This field is a valid Connect Customer Arn or a UUID</p>",
+        "UpdateMetricContentRequest$MetricId": "<p>The identifier of the metric to update. Adding the <code>$SAVED</code> qualifier will update the saved version of the metric. Adding <code>$LATEST</code> or omitting a qualifier will update the published version.</p>",
+        "UpdateMetricMetadataRequest$MetricId": "<p>The identifier of the metric to update. Adding the <code>$SAVED</code> qualifier will update the saved version of the metric. Adding <code>$LATEST</code> or omitting a qualifier will update the published version.</p>"
       }
     },
     "MetricInterval": {
       "base": "<p>The interval period with the start and end time for the metrics.</p>",
       "refs": {
         "MetricResultV2$MetricInterval": "<p>The interval period with the start and end time for the metrics.</p>"
+      }
+    },
+    "MetricName": {
+      "base": null,
+      "refs": {
+        "CalculationComponent$MetricName": "<p>The name of an AWS-managed metric used in this calculation component (for example, <code>CONTACTS_HANDLED</code>). Mutually exclusive with <code>MetricId</code>.</p>",
+        "CreateMetricRequest$Name": "<p>The name of the metric.</p>",
+        "MetricDefinition$Name": "<p>The name of the metric.</p>",
+        "MetricSummary$Name": "<p>The name of the metric.</p>",
+        "UpdateMetricMetadataRequest$Name": "<p>The updated name of the metric.</p>"
       }
     },
     "MetricNameV2": {
@@ -8841,6 +9067,68 @@
       "base": null,
       "refs": {
         "GetMetricDataV2Response$MetricResults": "<p>Information about the metrics requested in the API request If no grouping is specified, a summary of metric data is returned. </p>"
+      }
+    },
+    "MetricSearchConditionList": {
+      "base": null,
+      "refs": {
+        "MetricSearchCriteria$OrConditions": "<p>A list of conditions to be met, where at least one condition must be satisfied.</p>",
+        "MetricSearchCriteria$AndConditions": "<p>A list of conditions that must all be satisfied.</p>"
+      }
+    },
+    "MetricSearchCriteria": {
+      "base": "<p>Defines the search criteria for filtering metrics.</p>",
+      "refs": {
+        "MetricSearchConditionList$member": null,
+        "SearchMetricsRequest$SearchCriteria": "<p>The search criteria to filter the metrics.</p>"
+      }
+    },
+    "MetricSearchFilter": {
+      "base": "<p>Filters to apply when searching for metrics.</p>",
+      "refs": {
+        "SearchMetricsRequest$SearchFilter": "<p>Filters to be applied to search results.</p>"
+      }
+    },
+    "MetricSearchSummaryList": {
+      "base": null,
+      "refs": {
+        "SearchMetricsResponse$Metrics": "<p>The metrics that matched the search criteria.</p>"
+      }
+    },
+    "MetricStatus": {
+      "base": "<p>The publish status of a metric. Valid values: <code>PUBLISHED</code> | <code>SAVED</code>.</p>",
+      "refs": {
+        "CreateMetricRequest$Status": "<p>The publish status of the metric. Set to <code>PUBLISHED</code> to make the metric available for use in dashboards and reports, or <code>SAVED</code> to keep it in draft state.</p>",
+        "MetricDefinition$Status": "<p>The publish status of the metric. Valid values: <code>PUBLISHED</code> | <code>SAVED</code>.</p>",
+        "MetricSummary$Status": "<p>The publish status of the metric.</p>"
+      }
+    },
+    "MetricSummary": {
+      "base": "<p>Contains summary information about a metric.</p>",
+      "refs": {
+        "MetricSummaryList$member": null
+      }
+    },
+    "MetricSummaryList": {
+      "base": null,
+      "refs": {
+        "ListMetricsResponse$MetricSummaryList": "<p>The list of metric summaries.</p>"
+      }
+    },
+    "MetricType": {
+      "base": "<p>The type of the metric. Valid values: <code>AWS_MANAGED</code> | <code>CUSTOMER_MANAGED</code>.</p>",
+      "refs": {
+        "ListMetricsRequest$Type": "<p>The type of metrics to list. Valid values: <code>AWS_MANAGED</code> | <code>CUSTOMER_MANAGED</code>.</p>",
+        "MetricDefinition$Type": "<p>The type of the metric. Valid values: <code>AWS_MANAGED</code> | <code>CUSTOMER_MANAGED</code>.</p>",
+        "MetricSummary$Type": "<p>The type of the metric.</p>"
+      }
+    },
+    "MetricUnit": {
+      "base": "<p>The display unit for metric data. Valid values: <code>INTEGER</code> | <code>DOUBLE</code> | <code>PERCENT</code> | <code>SECONDS</code>.</p>",
+      "refs": {
+        "CreateMetricRequest$Unit": "<p>The display unit for the metric's data.</p>",
+        "MetricDefinition$Unit": "<p>The display unit for the metric's data.</p>",
+        "UpdateMetricContentRequest$Unit": "<p>The updated display unit for the metric.</p>"
       }
     },
     "MetricV2": {
@@ -9060,6 +9348,8 @@
         "ListLambdaFunctionsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListLexBotsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListLexBotsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
+        "ListMetricsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
+        "ListMetricsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListNotificationsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response to retrieve the next page of results.</p>",
         "ListNotificationsResponse$NextToken": "<p>The token for the next set of results. If present, there are more results available.</p>",
         "ListPhoneNumbersRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
@@ -9126,6 +9416,8 @@
         "SearchEmailAddressesResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "SearchEvaluationFormsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "SearchEvaluationFormsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
+        "SearchMetricsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
+        "SearchMetricsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "SearchNotificationsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response to retrieve the next page of results.</p>",
         "SearchNotificationsResponse$NextToken": "<p>The token for the next set of results. If present, there are more results available.</p>",
         "SearchWorkspaceAssociationsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
@@ -9340,6 +9632,12 @@
       "base": "<p>Information about a reference when the <code>referenceType</code> is <code>NUMBER</code>. Otherwise, null.</p>",
       "refs": {
         "ReferenceSummary$Number": "<p>Information about a reference when the <code>referenceType</code> is <code>NUMBER</code>. Otherwise, null.</p>"
+      }
+    },
+    "NumberValueList": {
+      "base": null,
+      "refs": {
+        "MetricFilterNumberCondition$Values": "<p>The numeric values to compare against.</p>"
       }
     },
     "NumericQuestionPropertyAutomationLabel": {
@@ -10170,6 +10468,18 @@
       "base": null,
       "refs": {
         "PrimaryAttributeAccessControlConfigurationItem$PrimaryAttributeValues": "<p>The item's primary attribute values.</p>"
+      }
+    },
+    "PrimaryEventSource": {
+      "base": null,
+      "refs": {
+        "MetricDefinition$PrimaryEventSource": "<p>The primary event source for the metric data.</p>"
+      }
+    },
+    "PrimaryEventSourceEffectiveTimestampType": {
+      "base": null,
+      "refs": {
+        "MetricDefinition$PrimaryEventSourceEffectiveTimestampType": "<p>The timestamp type that determines where the metric appears on a time series.</p>"
       }
     },
     "PrimaryValue": {
@@ -11172,6 +11482,12 @@
         "UrlReference$Value": "<p>A valid URL.</p>"
       }
     },
+    "RefreshRate": {
+      "base": null,
+      "refs": {
+        "MetricDefinition$RefreshRate": "<p>The minimum interval, in seconds, between data refreshes for this metric.</p>"
+      }
+    },
     "RefreshTokenDuration": {
       "base": null,
       "refs": {
@@ -11212,6 +11528,8 @@
         "ListSecurityProfileFlowModulesResponse$LastModifiedRegion": "<p> The Region that flow module was last modified in. </p>",
         "ListSecurityProfilePermissionsResponse$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
         "ListUserProficienciesResponse$LastModifiedRegion": "<p>The region in which a user's proficiencies were last modified.</p>",
+        "MetricDefinition$LastModifiedRegion": "<p>The region where the metric was last modified.</p>",
+        "MetricSummary$LastModifiedRegion": "<p>The region where the metric was last modified.</p>",
         "Notification$LastModifiedRegion": "<p>The AWS Region where the notification was last modified.</p>",
         "NotificationSearchSummary$LastModifiedRegion": "<p>The AWS Region where the notification was last modified.</p>",
         "PredefinedAttribute$LastModifiedRegion": "<p>Last modified region.</p>",
@@ -11406,7 +11724,7 @@
     "ResourceTypeList": {
       "base": null,
       "refs": {
-        "SearchResourceTagsRequest$ResourceTypes": "<p>The list of resource types to be used to search tags from. If not provided or if any empty list is provided, this API will search from all supported resource types. Note that lowercase and - are required.</p> <p class=\"title\"> <b>Supported resource types</b> </p> <ul> <li> <p>agent</p> </li> <li> <p>agent-state</p> </li> <li> <p>routing-profile</p> </li> <li> <p>standard-queue</p> </li> <li> <p>security-profile</p> </li> <li> <p>operating-hours</p> </li> <li> <p>prompt</p> </li> <li> <p>contact-flow</p> </li> <li> <p>flow- module</p> </li> <li> <p>transfer-destination (also known as quick connect)</p> </li> </ul>"
+        "SearchResourceTagsRequest$ResourceTypes": "<p>The list of resource types to be used to search tags from. If not provided or if any empty list is provided, this API will search from all supported resource types. Note that lowercase and - are required.</p> <p class=\"title\"> <b>Supported resource types</b> </p> <ul> <li> <p>agent</p> </li> <li> <p>agent-state</p> </li> <li> <p>routing-profile</p> </li> <li> <p>standard-queue</p> </li> <li> <p>security-profile</p> </li> <li> <p>operating-hours</p> </li> <li> <p>prompt</p> </li> <li> <p>contact-flow</p> </li> <li> <p>flow- module</p> </li> <li> <p>transfer-destination (also known as quick connect)</p> </li> <li> <p>metric</p> </li> </ul>"
       }
     },
     "ResourceVersion": {
@@ -11990,6 +12308,14 @@
       "refs": {}
     },
     "SearchHoursOfOperationsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "SearchMetricsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SearchMetricsResponse": {
       "base": null,
       "refs": {}
     },
@@ -12886,6 +13212,7 @@
         "IntervalDetails$TimeZone": "<p>The timezone applied to requested metrics.</p>",
         "MetricFilterV2$MetricFilterKey": "<p>The key to use for filtering data. </p> <p>Valid metric filter keys: </p> <ul> <li> <p>ANSWERING_MACHINE_DETECTION_STATUS</p> </li> <li> <p>CASE_STATUS</p> </li> <li> <p>DISCONNECT_REASON</p> </li> <li> <p>FLOWS_ACTION_IDENTIFIER</p> </li> <li> <p>FLOWS_NEXT_ACTION_IDENTIFIER</p> </li> <li> <p>FLOWS_OUTCOME_TYPE</p> </li> <li> <p>FLOWS_RESOURCE_TYPE</p> </li> <li> <p>INITIATION_METHOD</p> </li> </ul>",
         "MetricFilterValueList$member": null,
+        "MetricGroupingList$member": null,
         "NumberCondition$FieldName": "<p>The name of the field in the number condition.</p>",
         "PrimaryValue$Value": "<p>The actual value for the primary attribute. Must be provided as a string regardless of the attribute's value type. Primary values cannot be expressions and must be explicitly specified.</p>",
         "PrimaryValueResponse$Value": "<p>The value's value.</p>",
@@ -12893,6 +13220,8 @@
         "ResourceTypeList$member": null,
         "StringCondition$FieldName": "<p>The name of the field in the string condition.</p>",
         "StringCondition$Value": "<p>The value of the string.</p>",
+        "StringValueList$member": null,
+        "SupportedStatsList$member": null,
         "TagCondition$TagKey": "<p>The tag key in the tag condition.</p>",
         "TagCondition$TagValue": "<p>The tag value in the tag condition.</p>",
         "UserTagMap$key": null,
@@ -12922,6 +13251,7 @@
         "EvaluationSearchCriteria$StringCondition": null,
         "HoursOfOperationOverrideSearchCriteria$StringCondition": null,
         "HoursOfOperationSearchCriteria$StringCondition": "<p>A leaf node condition which can be used to specify a string condition.</p> <note> <p>The currently supported values for <code>FieldName</code> are <code>name</code>, <code>description</code>, <code>timezone</code>, and <code>resourceID</code>.</p> </note>",
+        "MetricSearchCriteria$StringCondition": null,
         "NotificationSearchCriteria$StringCondition": null,
         "PredefinedAttributeSearchCriteria$StringCondition": null,
         "PromptSearchCriteria$StringCondition": "<p>A leaf node condition which can be used to specify a string condition.</p> <note> <p>The currently supported values for <code>FieldName</code> are <code>name</code>, <code>description</code>, and <code>resourceID</code>.</p> </note>",
@@ -12942,6 +13272,12 @@
       "base": "<p>Information about a reference when the <code>referenceType</code> is <code>STRING</code>. Otherwise, null.</p>",
       "refs": {
         "ReferenceSummary$String": "<p>Information about a reference when the <code>referenceType</code> is <code>STRING</code>. Otherwise, null.</p>"
+      }
+    },
+    "StringValueList": {
+      "base": null,
+      "refs": {
+        "MetricFilterStringCondition$Values": "<p>The string values to compare against.</p>"
       }
     },
     "Subject": {
@@ -13035,6 +13371,24 @@
         "StartOutboundChatContactRequest$SupportedMessagingContentTypes": "<p>The supported chat message content types. Supported types are:</p> <ul> <li> <p> <code>text/plain</code> </p> </li> <li> <p> <code>text/markdown</code> </p> </li> <li> <p> <code>application/json, application/vnd.amazonaws.connect.message.interactive</code> </p> </li> <li> <p> <code>application/vnd.amazonaws.connect.message.interactive.response</code> </p> </li> </ul> <p>Content types must always contain <code>text/plain</code>. You can then put any other supported type in the list. For example, all the following lists are valid because they contain <code>text/plain</code>:</p> <ul> <li> <p> <code>[text/plain, text/markdown, application/json]</code> </p> </li> <li> <p> <code>[text/markdown, text/plain]</code> </p> </li> <li> <p> <code>[text/plain, application/json, application/vnd.amazonaws.connect.message.interactive.response]</code> </p> </li> </ul>"
       }
     },
+    "SupportedStatsList": {
+      "base": null,
+      "refs": {
+        "MetricDefinition$SupportedStats": "<p>The stat aggregations available for this metric.</p>"
+      }
+    },
+    "SupportsCustomCalculation": {
+      "base": null,
+      "refs": {
+        "MetricDefinition$SupportsCustomCalculation": "<p>Specifies whether the metric can be used as a component of custom metrics.</p>"
+      }
+    },
+    "SupportsPreaggregateCalculation": {
+      "base": null,
+      "refs": {
+        "MetricDefinition$SupportsPreaggregateCalculation": "<p>Specifies whether the metric can be used inside aggregating statistical functions (SUM, AVG, etc.) in custom metric calculations.</p>"
+      }
+    },
     "SuspendContactRecordingRequest": {
       "base": null,
       "refs": {}
@@ -13114,6 +13468,7 @@
         "CreateHoursOfOperationRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "CreateInstanceRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, <code>{ \"tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }</code>.</p>",
         "CreateIntegrationAssociationRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
+        "CreateMetricRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "CreateNotificationRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, <code>{ \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }</code>.</p>",
         "CreatePromptRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "CreateQueueRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
@@ -13141,6 +13496,7 @@
         "ImportPhoneNumberRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "Instance$Tags": "<p>The tags of an instance.</p>",
         "ListTagsForResourceResponse$tags": "<p>Information about the tags.</p>",
+        "MetricDefinition$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "Notification$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, <code>{ \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }</code>.</p>",
         "NotificationSearchSummary$Tags": "<p>The tags associated with the notification.</p>",
         "Prompt$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
@@ -13763,8 +14119,12 @@
         "ListSecurityProfileFlowModulesResponse$LastModifiedTime": "<p> The time the flow module was last modified. </p>",
         "ListSecurityProfilePermissionsResponse$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
         "ListUserProficienciesResponse$LastModifiedTime": "<p>The last time that the user's proficiencies are were modified.</p>",
+        "MetricDefinition$EffectiveTime": "<p>The earliest time that can be queried for this metric.</p>",
+        "MetricDefinition$CreatedTime": "<p>The timestamp of when the metric was created.</p>",
+        "MetricDefinition$LastModifiedTime": "<p>The timestamp of when the metric was last modified.</p>",
         "MetricInterval$StartTime": "<p>The timestamp, in UNIX Epoch time format. Start time is based on the interval period selected. </p>",
         "MetricInterval$EndTime": "<p>The timestamp, in UNIX Epoch time format. End time is based on the interval period selected. For example, If <code>IntervalPeriod</code> is selected <code>THIRTY_MIN</code>, <code>StartTime</code> and <code>EndTime</code> in the API request differs by 1 day, then 48 results are returned in the response. Each result is aggregated by the 30 minutes period, with each <code>StartTime</code> and <code>EndTime</code> differing by 30 minutes. </p>",
+        "MetricSummary$LastModifiedTime": "<p>The timestamp of when the metric was last modified.</p>",
         "Notification$LastModifiedTime": "<p>The timestamp when the notification was last modified.</p>",
         "Notification$CreatedAt": "<p>The timestamp when the notification was created.</p>",
         "Notification$ExpiresAt": "<p>The timestamp when the notification expires and is no longer displayed to users.</p>",
@@ -13934,6 +14294,14 @@
     "TransferContactResponse": {
       "base": null,
       "refs": {}
+    },
+    "TrendIndicator": {
+      "base": "<p>Specifies how to interpret a positive trend in metric data. Valid values: <code>POSITIVE</code> | <code>NEGATIVE</code> | <code>NEUTRAL</code>.</p>",
+      "refs": {
+        "CreateMetricRequest$PositiveTrendIndicator": "<p>How an increase in the metric value should be interpreted. Valid values: <code>POSITIVE</code>, <code>NEUTRAL</code>, <code>NEGATIVE</code>.</p>",
+        "MetricDefinition$PositiveTrendIndicator": "<p>How an increase in the metric value should be interpreted. Valid values: <code>POSITIVE</code>, <code>NEUTRAL</code>, <code>NEGATIVE</code>.</p>",
+        "UpdateMetricContentRequest$PositiveTrendIndicator": "<p>How an increase in the metric value should be interpreted. Valid values: <code>POSITIVE</code>, <code>NEUTRAL</code>, <code>NEGATIVE</code>.</p>"
+      }
     },
     "URI": {
       "base": null,
@@ -14162,6 +14530,22 @@
       "refs": {}
     },
     "UpdateInstanceStorageConfigRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateMetricContentRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateMetricContentResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateMetricMetadataRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateMetricMetadataResponse": {
       "base": null,
       "refs": {}
     },

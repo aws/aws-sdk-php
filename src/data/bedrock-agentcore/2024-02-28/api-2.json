@@ -1437,7 +1437,8 @@
       "members":{
         "sessionSpans":{"shape":"Spans"},
         "cloudwatchLogs":{"shape":"CloudWatchLogsTraceConfig"},
-        "batchEvaluation":{"shape":"BatchEvaluationTraceConfig"}
+        "batchEvaluation":{"shape":"BatchEvaluationTraceConfig"},
+        "onlineEvaluation":{"shape":"OnlineEvaluationTraceConfig"}
       },
       "union":true
     },
@@ -6186,6 +6187,19 @@
       "members":{
         "onlineEvaluationConfigArn":{"shape":"OnlineEvaluationConfigArn"},
         "timeRange":{"shape":"SessionFilterConfig"}
+      }
+    },
+    "OnlineEvaluationTraceConfig":{
+      "type":"structure",
+      "required":[
+        "onlineEvaluationConfigArn",
+        "startTime",
+        "endTime"
+      ],
+      "members":{
+        "onlineEvaluationConfigArn":{"shape":"OnlineEvaluationConfigArn"},
+        "startTime":{"shape":"SyntheticTimestamp_date_time"},
+        "endTime":{"shape":"SyntheticTimestamp_date_time"}
       }
     },
     "OperatorType":{

@@ -3412,6 +3412,7 @@
       "refs": {
         "ABTestEvaluationConfig$onlineEvaluationConfigArn": "<p>The Amazon Resource Name (ARN) of a single online evaluation configuration to use for both variants.</p>",
         "OnlineEvaluationConfigSource$onlineEvaluationConfigArn": "<p>The Amazon Resource Name (ARN) of the online evaluation configuration to use as the session source.</p>",
+        "OnlineEvaluationTraceConfig$onlineEvaluationConfigArn": "<p>The ARN of the online evaluation configuration to reuse sessions from.</p>",
         "PerVariantOnlineEvaluationConfig$onlineEvaluationConfigArn": "<p>The Amazon Resource Name (ARN) of the online evaluation configuration for this variant.</p>"
       }
     },
@@ -3419,6 +3420,12 @@
       "base": "<p>A reference to an existing online evaluation configuration to use as the data source for batch evaluation.</p>",
       "refs": {
         "DataSourceConfig$onlineEvaluationConfigSource": "<p>Reference an existing OnlineEvaluationConfig as session source</p>"
+      }
+    },
+    "OnlineEvaluationTraceConfig": {
+      "base": "<p>Contains the configuration for reusing agent traces from an online evaluation configuration for recommendation analysis. Because online evaluation is a continuous stream, a time range specifies which evaluated sessions the recommendation includes.</p>",
+      "refs": {
+        "AgentTracesConfig$onlineEvaluation": "<p>Agent traces from an online evaluation configuration over a specified time range.</p>"
       }
     },
     "OperatorType": {
@@ -4776,6 +4783,8 @@
         "GetBatchEvaluationResponse$updatedAt": "<p>The timestamp when the batch evaluation was last updated.</p>",
         "GetRecommendationResponse$createdAt": "<p>The timestamp when the recommendation was created.</p>",
         "GetRecommendationResponse$updatedAt": "<p>The timestamp when the recommendation was last updated.</p>",
+        "OnlineEvaluationTraceConfig$startTime": "<p>The start time of the time range. Only sessions evaluated at or after this timestamp are included.</p>",
+        "OnlineEvaluationTraceConfig$endTime": "<p>The end time of the time range. Only sessions evaluated before this timestamp are included.</p>",
         "RecommendationSummary$createdAt": "<p>The timestamp when the recommendation was created.</p>",
         "RecommendationSummary$updatedAt": "<p>The timestamp when the recommendation was last updated.</p>",
         "SessionFilterConfig$startTime": "<p>The start time of the time range. Only sessions with activity at or after this timestamp are included.</p>",

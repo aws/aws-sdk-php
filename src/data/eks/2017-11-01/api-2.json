@@ -1272,6 +1272,17 @@
       "type":"list",
       "member":{"shape":"AddonInfo"}
     },
+    "AllowedValuesConstraint":{
+      "type":"structure",
+      "members":{
+        "allowedValues":{"shape":"AllowedValuesList"}
+      }
+    },
+    "AllowedValuesList":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":20
+    },
     "ArgoCdAwsIdcConfigRequest":{
       "type":"structure",
       "required":["idcInstanceArn"],
@@ -1703,7 +1714,10 @@
         "computeConfig":{"shape":"ComputeConfigResponse"},
         "storageConfig":{"shape":"StorageConfigResponse"},
         "deletionProtection":{"shape":"BoxedBoolean"},
-        "controlPlaneScalingConfig":{"shape":"ControlPlaneScalingConfig"}
+        "controlPlaneScalingConfig":{"shape":"ControlPlaneScalingConfig"},
+        "kubeApiServerConfig":{"shape":"KubeApiServerConfigResponse"},
+        "kubeSchedulerConfig":{"shape":"KubeSchedulerConfigResponse"},
+        "kubeControllerManagerConfig":{"shape":"KubeControllerManagerConfigResponse"}
       }
     },
     "ClusterHealth":{
@@ -1777,7 +1791,9 @@
         "endOfExtendedSupportDate":{"shape":"Timestamp"},
         "status":{"shape":"ClusterVersionStatus"},
         "versionStatus":{"shape":"VersionStatus"},
-        "kubernetesPatchVersion":{"shape":"String"}
+        "kubernetesPatchVersion":{"shape":"String"},
+        "controlPlaneScalingTiers":{"shape":"ControlPlaneScalingTierList"},
+        "controlPlaneComponentConfig":{"shape":"ControlPlaneConfigInfo"}
       }
     },
     "ClusterVersionList":{
@@ -1855,6 +1871,14 @@
         "roleArn":{"shape":"String"}
       }
     },
+    "ControlPlaneConfigInfo":{
+      "type":"structure",
+      "members":{
+        "kubeApiServerConfig":{"shape":"KubeApiServerVersionConfig"},
+        "kubeSchedulerConfig":{"shape":"KubeSchedulerVersionConfig"},
+        "kubeControllerManagerConfig":{"shape":"KubeControllerManagerVersionConfig"}
+      }
+    },
     "ControlPlaneEgressModeType":{
       "type":"string",
       "enum":[
@@ -1882,6 +1906,21 @@
       "members":{
         "tier":{"shape":"ProvisionedControlPlaneTier"}
       }
+    },
+    "ControlPlaneScalingTierInfo":{
+      "type":"structure",
+      "members":{
+        "tierName":{"shape":"String"},
+        "apiRequestConcurrency":{"shape":"BoxedInteger"},
+        "podSchedulingRatePerSecond":{"shape":"BoxedInteger"},
+        "clusterDatabaseSizeGb":{"shape":"BoxedInteger"},
+        "controlPlaneComponentConfigOverrides":{"shape":"ControlPlaneConfigInfo"}
+      }
+    },
+    "ControlPlaneScalingTierList":{
+      "type":"list",
+      "member":{"shape":"ControlPlaneScalingTierInfo"},
+      "max":10
     },
     "CreateAccessConfigRequest":{
       "type":"structure",
@@ -2013,7 +2052,10 @@
         "computeConfig":{"shape":"ComputeConfigRequest"},
         "storageConfig":{"shape":"StorageConfigRequest"},
         "deletionProtection":{"shape":"BoxedBoolean"},
-        "controlPlaneScalingConfig":{"shape":"ControlPlaneScalingConfig"}
+        "controlPlaneScalingConfig":{"shape":"ControlPlaneScalingConfig"},
+        "kubeApiServerConfig":{"shape":"KubeApiServerConfigRequest"},
+        "kubeSchedulerConfig":{"shape":"KubeSchedulerConfigRequest"},
+        "kubeControllerManagerConfig":{"shape":"KubeControllerManagerConfigRequest"}
       }
     },
     "CreateClusterResponse":{
@@ -2858,6 +2900,20 @@
         "update":{"shape":"Update"}
       }
     },
+    "DurationConstraints":{
+      "type":"structure",
+      "members":{
+        "min":{"shape":"String"},
+        "max":{"shape":"String"}
+      }
+    },
+    "DurationParameterConfig":{
+      "type":"structure",
+      "members":{
+        "defaultValue":{"shape":"String"},
+        "constraints":{"shape":"DurationConstraints"}
+      }
+    },
     "EksAnywhereSubscription":{
       "type":"structure",
       "members":{
@@ -3054,6 +3110,24 @@
       "max":100,
       "min":1
     },
+    "HorizontalPodAutoscalerControllerConfigRequest":{
+      "type":"structure",
+      "members":{
+        "horizontalPodAutoscalerSyncPeriod":{"shape":"String"}
+      }
+    },
+    "HorizontalPodAutoscalerControllerConfigResponse":{
+      "type":"structure",
+      "members":{
+        "horizontalPodAutoscalerSyncPeriod":{"shape":"String"}
+      }
+    },
+    "HorizontalPodAutoscalerControllerVersionConfig":{
+      "type":"structure",
+      "members":{
+        "horizontalPodAutoscalerSyncPeriod":{"shape":"DurationParameterConfig"}
+      }
+    },
     "Identity":{
       "type":"structure",
       "members":{
@@ -3175,6 +3249,13 @@
       ]
     },
     "Integer":{"type":"integer"},
+    "IntegerRangeConstraint":{
+      "type":"structure",
+      "members":{
+        "min":{"shape":"BoxedInteger"},
+        "max":{"shape":"BoxedInteger"}
+      }
+    },
     "InvalidParameterException":{
       "type":"structure",
       "members":{
@@ -3227,6 +3308,63 @@
     "IssueList":{
       "type":"list",
       "member":{"shape":"Issue"}
+    },
+    "KubeApiServerConfigRequest":{
+      "type":"structure",
+      "members":{
+        "eventTtl":{"shape":"String"},
+        "serviceNodePortRange":{"shape":"ServiceNodePortRange"}
+      }
+    },
+    "KubeApiServerConfigResponse":{
+      "type":"structure",
+      "members":{
+        "eventTtl":{"shape":"String"},
+        "serviceNodePortRange":{"shape":"ServiceNodePortRange"}
+      }
+    },
+    "KubeApiServerVersionConfig":{
+      "type":"structure",
+      "members":{
+        "eventTtl":{"shape":"DurationParameterConfig"},
+        "serviceNodePortRange":{"shape":"PortRangeParameterConfig"}
+      }
+    },
+    "KubeControllerManagerConfigRequest":{
+      "type":"structure",
+      "members":{
+        "horizontalPodAutoscalerControllerConfig":{"shape":"HorizontalPodAutoscalerControllerConfigRequest"}
+      }
+    },
+    "KubeControllerManagerConfigResponse":{
+      "type":"structure",
+      "members":{
+        "horizontalPodAutoscalerControllerConfig":{"shape":"HorizontalPodAutoscalerControllerConfigResponse"}
+      }
+    },
+    "KubeControllerManagerVersionConfig":{
+      "type":"structure",
+      "members":{
+        "horizontalPodAutoscalerControllerConfig":{"shape":"HorizontalPodAutoscalerControllerVersionConfig"}
+      }
+    },
+    "KubeSchedulerConfigRequest":{
+      "type":"structure",
+      "members":{
+        "nodeResourcesFit":{"shape":"NodeResourcesFitConfig"}
+      }
+    },
+    "KubeSchedulerConfigResponse":{
+      "type":"structure",
+      "members":{
+        "nodeResourcesFit":{"shape":"NodeResourcesFitConfig"}
+      }
+    },
+    "KubeSchedulerVersionConfig":{
+      "type":"structure",
+      "members":{
+        "nodeResourcesFit":{"shape":"NodeResourcesFitVersionConfig"}
+      }
     },
     "KubernetesNetworkConfigRequest":{
       "type":"structure",
@@ -3804,6 +3942,18 @@
       "type":"list",
       "member":{"shape":"NodeRepairConfigOverrides"}
     },
+    "NodeResourcesFitConfig":{
+      "type":"structure",
+      "members":{
+        "scoringStrategy":{"shape":"ScoringStrategy"}
+      }
+    },
+    "NodeResourcesFitVersionConfig":{
+      "type":"structure",
+      "members":{
+        "scoringStrategy":{"shape":"ScoringStrategyConfig"}
+      }
+    },
     "Nodegroup":{
       "type":"structure",
       "members":{
@@ -4045,6 +4195,20 @@
         "ownerArn":{"shape":"String"}
       }
     },
+    "PortRangeConstraints":{
+      "type":"structure",
+      "members":{
+        "minPort":{"shape":"IntegerRangeConstraint"},
+        "maxPort":{"shape":"IntegerRangeConstraint"}
+      }
+    },
+    "PortRangeParameterConfig":{
+      "type":"structure",
+      "members":{
+        "defaultValue":{"shape":"ServiceNodePortRange"},
+        "constraints":{"shape":"PortRangeConstraints"}
+      }
+    },
     "Provider":{
       "type":"structure",
       "members":{
@@ -4142,6 +4306,13 @@
         "PRESERVE"
       ]
     },
+    "ResourceConstraints":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"AllowedValuesConstraint"},
+        "weight":{"shape":"IntegerRangeConstraint"}
+      }
+    },
     "ResourceInUseException":{
       "type":"structure",
       "members":{
@@ -4185,6 +4356,29 @@
       "error":{"httpStatusCode":428},
       "exception":true
     },
+    "ResourceWeight":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"ResourceWeightName"},
+        "weight":{"shape":"ResourceWeightValue"}
+      }
+    },
+    "ResourceWeightList":{
+      "type":"list",
+      "member":{"shape":"ResourceWeight"},
+      "max":100
+    },
+    "ResourceWeightName":{
+      "type":"string",
+      "max":253,
+      "min":1
+    },
+    "ResourceWeightValue":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
     "RoleArn":{
       "type":"string",
       "max":255,
@@ -4195,6 +4389,34 @@
       "members":{
         "timeoutMinutes":{"shape":"BoxedInteger"}
       }
+    },
+    "ScoringStrategy":{
+      "type":"structure",
+      "members":{
+        "type":{"shape":"ScoringStrategyType"},
+        "resources":{"shape":"ResourceWeightList"}
+      }
+    },
+    "ScoringStrategyConfig":{
+      "type":"structure",
+      "members":{
+        "defaultValue":{"shape":"ScoringStrategy"},
+        "constraints":{"shape":"ScoringStrategyConstraints"}
+      }
+    },
+    "ScoringStrategyConstraints":{
+      "type":"structure",
+      "members":{
+        "scoringStrategy":{"shape":"AllowedValuesConstraint"},
+        "resources":{"shape":"ResourceConstraints"}
+      }
+    },
+    "ScoringStrategyType":{
+      "type":"string",
+      "enum":[
+        "LeastAllocated",
+        "MostAllocated"
+      ]
     },
     "ServerException":{
       "type":"structure",
@@ -4208,6 +4430,13 @@
       "error":{"httpStatusCode":500},
       "exception":true,
       "fault":true
+    },
+    "ServiceNodePortRange":{
+      "type":"structure",
+      "members":{
+        "minPort":{"shape":"Integer"},
+        "maxPort":{"shape":"Integer"}
+      }
     },
     "ServiceUnavailableException":{
       "type":"structure",
@@ -4541,7 +4770,10 @@
         "storageConfig":{"shape":"StorageConfigRequest"},
         "remoteNetworkConfig":{"shape":"RemoteNetworkConfigRequest"},
         "deletionProtection":{"shape":"BoxedBoolean"},
-        "controlPlaneScalingConfig":{"shape":"ControlPlaneScalingConfig"}
+        "controlPlaneScalingConfig":{"shape":"ControlPlaneScalingConfig"},
+        "kubeApiServerConfig":{"shape":"KubeApiServerConfigRequest"},
+        "kubeSchedulerConfig":{"shape":"KubeSchedulerConfigRequest"},
+        "kubeControllerManagerConfig":{"shape":"KubeControllerManagerConfigRequest"}
       }
     },
     "UpdateClusterConfigResponse":{
@@ -4737,7 +4969,10 @@
         "WarmPoolMinSize",
         "WarmPoolState",
         "WarmPoolReuseOnScaleIn",
-        "ControlPlaneEgressMode"
+        "ControlPlaneEgressMode",
+        "KubeApiServerConfig",
+        "KubeSchedulerConfig",
+        "KubeControllerManagerConfig"
       ]
     },
     "UpdateParams":{
@@ -4822,7 +5057,8 @@
         "ControlPlaneScalingConfigUpdate",
         "VendedLogsUpdate",
         "ControlPlaneEgressUpdate",
-        "VersionRollback"
+        "VersionRollback",
+        "ControlPlaneComponentConfigUpdate"
       ]
     },
     "UpgradePolicyRequest":{

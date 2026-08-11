@@ -871,6 +871,26 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "CreateMetric":{
+      "name":"CreateMetric",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/metrics/definitions/{InstanceId}"
+      },
+      "input":{"shape":"CreateMetricRequest"},
+      "output":{"shape":"CreateMetricResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"DuplicateResourceException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ],
+      "idempotent":true
+    },
     "CreateNotification":{
       "name":"CreateNotification",
       "http":{
@@ -1551,6 +1571,24 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "DeleteMetric":{
+      "name":"DeleteMetric",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/metrics/definitions/{InstanceId}/{MetricId}"
+      },
+      "input":{"shape":"DeleteMetricRequest"},
+      "output":{"shape":"DeleteMetricResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceInUseException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "DeleteNotification":{
       "name":"DeleteNotification",
       "http":{
@@ -2183,6 +2221,24 @@
         {"shape":"InvalidParameterException"},
         {"shape":"ThrottlingException"}
       ]
+    },
+    "DescribeMetric":{
+      "name":"DescribeMetric",
+      "http":{
+        "method":"GET",
+        "requestUri":"/metrics/definitions/{InstanceId}/{MetricId}"
+      },
+      "input":{"shape":"DescribeMetricRequest"},
+      "output":{"shape":"DescribeMetricResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ],
+      "readonly":true
     },
     "DescribeNotification":{
       "name":"DescribeNotification",
@@ -3580,6 +3636,24 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "ListMetrics":{
+      "name":"ListMetrics",
+      "http":{
+        "method":"GET",
+        "requestUri":"/metrics/definitions/{InstanceId}"
+      },
+      "input":{"shape":"ListMetricsRequest"},
+      "output":{"shape":"ListMetricsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ],
+      "readonly":true
+    },
     "ListNotifications":{
       "name":"ListNotifications",
       "http":{
@@ -4463,6 +4537,23 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"}
+      ]
+    },
+    "SearchMetrics":{
+      "name":"SearchMetrics",
+      "http":{
+        "method":"POST",
+        "requestUri":"/search-metrics"
+      },
+      "input":{"shape":"SearchMetricsRequest"},
+      "output":{"shape":"SearchMetricsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "SearchNotifications":{
@@ -5660,6 +5751,43 @@
         {"shape":"InvalidParameterException"},
         {"shape":"ThrottlingException"}
       ]
+    },
+    "UpdateMetricContent":{
+      "name":"UpdateMetricContent",
+      "http":{
+        "method":"POST",
+        "requestUri":"/metrics/definitions/{InstanceId}/{MetricId}/content"
+      },
+      "input":{"shape":"UpdateMetricContentRequest"},
+      "output":{"shape":"UpdateMetricContentResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ],
+      "idempotent":true
+    },
+    "UpdateMetricMetadata":{
+      "name":"UpdateMetricMetadata",
+      "http":{
+        "method":"POST",
+        "requestUri":"/metrics/definitions/{InstanceId}/{MetricId}/metadata"
+      },
+      "input":{"shape":"UpdateMetricMetadataRequest"},
+      "output":{"shape":"UpdateMetricMetadataResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"DuplicateResourceException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ],
+      "idempotent":true
     },
     "UpdateNotificationContent":{
       "name":"UpdateNotificationContent",
@@ -7747,6 +7875,24 @@
         "TargetSection":{"shape":"ReferenceId"}
       }
     },
+    "AvailableFilter":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"FilterId"},
+        "Type":{"shape":"AvailableFilterType"}
+      }
+    },
+    "AvailableFilterList":{
+      "type":"list",
+      "member":{"shape":"AvailableFilter"}
+    },
+    "AvailableFilterType":{
+      "type":"string",
+      "enum":[
+        "METRIC_LEVEL",
+        "RESOURCE_LEVEL"
+      ]
+    },
     "AvailableNumberSummary":{
       "type":"structure",
       "members":{
@@ -8205,6 +8351,27 @@
       "max":128,
       "min":1
     },
+    "CalculationComponent":{
+      "type":"structure",
+      "required":["Alias"],
+      "members":{
+        "Alias":{"shape":"ComponentAlias"},
+        "MetricName":{"shape":"MetricName"},
+        "MetricId":{"shape":"MetricId"},
+        "MetricFilters":{"shape":"MetricFilterList"}
+      }
+    },
+    "CalculationComponentList":{
+      "type":"list",
+      "member":{"shape":"CalculationComponent"},
+      "max":5,
+      "min":1
+    },
+    "CalculationExpression":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
     "Campaign":{
       "type":"structure",
       "members":{
@@ -8449,6 +8616,11 @@
     "CompleteAttachedFileUploadResponse":{
       "type":"structure",
       "members":{}
+    },
+    "ComponentAlias":{
+      "type":"string",
+      "max":128,
+      "min":1
     },
     "Concurrency":{
       "type":"integer",
@@ -9789,6 +9961,44 @@
         "IntegrationAssociationArn":{"shape":"ARN"}
       }
     },
+    "CreateMetricRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "Name",
+        "MetricCalculation",
+        "Unit"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "Name":{"shape":"MetricName"},
+        "MetricCalculation":{"shape":"MetricCalculation"},
+        "Unit":{"shape":"MetricUnit"},
+        "Status":{"shape":"MetricStatus"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "Description":{"shape":"MetricDescription"},
+        "PositiveTrendIndicator":{"shape":"TrendIndicator"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateMetricResponse":{
+      "type":"structure",
+      "required":[
+        "MetricArn",
+        "MetricId"
+      ],
+      "members":{
+        "MetricArn":{"shape":"ARN"},
+        "MetricId":{"shape":"MetricId"}
+      }
+    },
     "CreateNotificationRequest":{
       "type":"structure",
       "required":[
@@ -10986,6 +11196,11 @@
         "ComparisonType":{"shape":"DecimalComparisonType"}
       }
     },
+    "DefaultStat":{
+      "type":"string",
+      "max":50,
+      "min":1
+    },
     "DefaultVocabulary":{
       "type":"structure",
       "required":[
@@ -11398,6 +11613,29 @@
           "locationName":"IntegrationAssociationId"
         }
       }
+    },
+    "DeleteMetricRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "MetricId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "MetricId":{
+          "shape":"MetricId",
+          "location":"uri",
+          "locationName":"MetricId"
+        }
+      }
+    },
+    "DeleteMetricResponse":{
+      "type":"structure",
+      "members":{}
     },
     "DeleteNotificationRequest":{
       "type":"structure",
@@ -12360,6 +12598,32 @@
       "type":"structure",
       "members":{
         "StorageConfig":{"shape":"InstanceStorageConfig"}
+      }
+    },
+    "DescribeMetricRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "MetricId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "MetricId":{
+          "shape":"MetricId",
+          "location":"uri",
+          "locationName":"MetricId"
+        }
+      }
+    },
+    "DescribeMetricResponse":{
+      "type":"structure",
+      "required":["Metric"],
+      "members":{
+        "Metric":{"shape":"MetricDefinition"}
       }
     },
     "DescribeNotificationRequest":{
@@ -15118,6 +15382,11 @@
         "VOICE_RECORDING"
       ]
     },
+    "FilterId":{
+      "type":"string",
+      "max":100,
+      "min":1
+    },
     "FilterV2":{
       "type":"structure",
       "members":{
@@ -17807,6 +18076,40 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListMetricsRequest":{
+      "type":"structure",
+      "required":["InstanceId"],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "Type":{
+          "shape":"MetricType",
+          "location":"querystring",
+          "locationName":"type"
+        },
+        "MaxResults":{
+          "shape":"MaxResult100",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListMetricsResponse":{
+      "type":"structure",
+      "required":["MetricSummaryList"],
+      "members":{
+        "MetricSummaryList":{"shape":"MetricSummaryList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "ListNotificationsRequest":{
       "type":"structure",
       "required":["InstanceId"],
@@ -19254,6 +19557,29 @@
       "max":2000,
       "min":1
     },
+    "MetricCalculation":{
+      "type":"structure",
+      "required":[
+        "CalculationComponents",
+        "Calculation"
+      ],
+      "members":{
+        "CalculationComponents":{"shape":"CalculationComponentList"},
+        "Calculation":{"shape":"CalculationExpression"}
+      }
+    },
+    "MetricCategory":{
+      "type":"string",
+      "max":100,
+      "min":1
+    },
+    "MetricCreationMethod":{
+      "type":"string",
+      "enum":[
+        "SERVICE_LEVEL_BUILDER",
+        "METRIC_BUILDER"
+      ]
+    },
     "MetricDataCollectionsV2":{
       "type":"list",
       "member":{"shape":"MetricDataV2"}
@@ -19267,6 +19593,129 @@
           "box":true
         }
       }
+    },
+    "MetricDefinition":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "Id",
+        "Name",
+        "Type",
+        "Unit",
+        "Groupings",
+        "Filters",
+        "Category",
+        "SupportsPreaggregateCalculation",
+        "SupportsCustomCalculation"
+      ],
+      "members":{
+        "Arn":{"shape":"ARN"},
+        "Id":{"shape":"MetricId"},
+        "Name":{"shape":"MetricName"},
+        "Description":{"shape":"MetricDescription"},
+        "MetricCalculation":{"shape":"MetricCalculation"},
+        "CreationMethod":{"shape":"MetricCreationMethod"},
+        "Status":{"shape":"MetricStatus"},
+        "Type":{"shape":"MetricType"},
+        "Unit":{"shape":"MetricUnit"},
+        "PositiveTrendIndicator":{"shape":"TrendIndicator"},
+        "Groupings":{"shape":"MetricGroupingList"},
+        "Filters":{"shape":"AvailableFilterList"},
+        "EffectiveTime":{"shape":"Timestamp"},
+        "RefreshRate":{"shape":"RefreshRate"},
+        "Category":{"shape":"MetricCategory"},
+        "SupportedStats":{"shape":"SupportedStatsList"},
+        "DefaultStat":{"shape":"DefaultStat"},
+        "SupportsPreaggregateCalculation":{"shape":"SupportsPreaggregateCalculation"},
+        "SupportsCustomCalculation":{"shape":"SupportsCustomCalculation"},
+        "PrimaryEventSource":{"shape":"PrimaryEventSource"},
+        "PrimaryEventSourceEffectiveTimestampType":{"shape":"PrimaryEventSourceEffectiveTimestampType"},
+        "CreatedTime":{"shape":"Timestamp"},
+        "CreatedUser":{"shape":"CreatedByInfo"},
+        "LastModifiedRegion":{"shape":"RegionName"},
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "LastModifiedUser":{"shape":"CreatedByInfo"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
+    "MetricDescription":{
+      "type":"string",
+      "max":500,
+      "min":0
+    },
+    "MetricFilter":{
+      "type":"structure",
+      "required":["MetricFilterKey"],
+      "members":{
+        "MetricFilterKey":{"shape":"MetricFilterKey"},
+        "Negate":{"shape":"Boolean"},
+        "NumberCondition":{"shape":"MetricFilterNumberCondition"},
+        "StringCondition":{"shape":"MetricFilterStringCondition"},
+        "BooleanCondition":{"shape":"MetricFilterBooleanCondition"}
+      }
+    },
+    "MetricFilterBooleanCondition":{
+      "type":"structure",
+      "required":["Comparison"],
+      "members":{
+        "Comparison":{"shape":"MetricFilterBooleanConditionComparison"}
+      }
+    },
+    "MetricFilterBooleanConditionComparison":{
+      "type":"string",
+      "enum":[
+        "IS_TRUE",
+        "IS_FALSE"
+      ]
+    },
+    "MetricFilterKey":{
+      "type":"string",
+      "max":100,
+      "min":1
+    },
+    "MetricFilterList":{
+      "type":"list",
+      "member":{"shape":"MetricFilter"},
+      "max":5,
+      "min":0
+    },
+    "MetricFilterNumberCondition":{
+      "type":"structure",
+      "required":[
+        "Comparison",
+        "Values"
+      ],
+      "members":{
+        "Comparison":{"shape":"MetricFilterNumberConditionComparison"},
+        "Values":{"shape":"NumberValueList"}
+      }
+    },
+    "MetricFilterNumberConditionComparison":{
+      "type":"string",
+      "enum":[
+        "LESSER",
+        "LESSER_OR_EQUAL",
+        "GREATER",
+        "GREATER_OR_EQUAL"
+      ]
+    },
+    "MetricFilterStringCondition":{
+      "type":"structure",
+      "required":[
+        "Comparison",
+        "Values"
+      ],
+      "members":{
+        "Comparison":{"shape":"MetricFilterStringConditionComparison"},
+        "Values":{"shape":"StringValueList"}
+      }
+    },
+    "MetricFilterStringConditionComparison":{
+      "type":"string",
+      "enum":[
+        "MATCHES_ANY",
+        "MATCHES_NONE"
+      ]
     },
     "MetricFilterV2":{
       "type":"structure",
@@ -19287,6 +19736,10 @@
       "member":{"shape":"MetricFilterV2"},
       "max":2
     },
+    "MetricGroupingList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
     "MetricId":{
       "type":"string",
       "max":150,
@@ -19300,6 +19753,11 @@
         "EndTime":{"shape":"Timestamp"}
       }
     },
+    "MetricName":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
     "MetricNameV2":{"type":"string"},
     "MetricResultV2":{
       "type":"structure",
@@ -19312,6 +19770,75 @@
     "MetricResultsV2":{
       "type":"list",
       "member":{"shape":"MetricResultV2"}
+    },
+    "MetricSearchConditionList":{
+      "type":"list",
+      "member":{"shape":"MetricSearchCriteria"}
+    },
+    "MetricSearchCriteria":{
+      "type":"structure",
+      "members":{
+        "OrConditions":{"shape":"MetricSearchConditionList"},
+        "AndConditions":{"shape":"MetricSearchConditionList"},
+        "StringCondition":{"shape":"StringCondition"},
+        "BooleanCondition":{"shape":"BooleanCondition"}
+      }
+    },
+    "MetricSearchFilter":{
+      "type":"structure",
+      "members":{
+        "TagFilter":{"shape":"ControlPlaneTagFilter"}
+      }
+    },
+    "MetricSearchSummaryList":{
+      "type":"list",
+      "member":{"shape":"MetricDefinition"}
+    },
+    "MetricStatus":{
+      "type":"string",
+      "enum":[
+        "PUBLISHED",
+        "SAVED"
+      ]
+    },
+    "MetricSummary":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "Id",
+        "Name",
+        "Status",
+        "Type"
+      ],
+      "members":{
+        "Arn":{"shape":"ARN"},
+        "Id":{"shape":"MetricId"},
+        "Name":{"shape":"MetricName"},
+        "Status":{"shape":"MetricStatus"},
+        "Type":{"shape":"MetricType"},
+        "LastModifiedRegion":{"shape":"RegionName"},
+        "LastModifiedTime":{"shape":"Timestamp"}
+      }
+    },
+    "MetricSummaryList":{
+      "type":"list",
+      "member":{"shape":"MetricSummary"}
+    },
+    "MetricType":{
+      "type":"string",
+      "enum":[
+        "AWS_MANAGED",
+        "CUSTOMER_MANAGED"
+      ]
+    },
+    "MetricUnit":{
+      "type":"string",
+      "enum":[
+        "INTEGER",
+        "DOUBLE",
+        "PERCENT",
+        "SECONDS"
+      ]
     },
     "MetricV2":{
       "type":"structure",
@@ -19628,6 +20155,12 @@
         "Name":{"shape":"ReferenceKey"},
         "Value":{"shape":"ReferenceValue"}
       }
+    },
+    "NumberValueList":{
+      "type":"list",
+      "member":{"shape":"Double"},
+      "max":10,
+      "min":1
     },
     "NumericQuestionPropertyAutomationLabel":{
       "type":"string",
@@ -20663,6 +21196,16 @@
       "member":{"shape":"PrimaryAttributeValue"},
       "max":5
     },
+    "PrimaryEventSource":{
+      "type":"string",
+      "max":100,
+      "min":1
+    },
+    "PrimaryEventSourceEffectiveTimestampType":{
+      "type":"string",
+      "max":100,
+      "min":1
+    },
     "PrimaryValue":{
       "type":"structure",
       "required":[
@@ -21683,6 +22226,7 @@
       "max":4096,
       "min":0
     },
+    "RefreshRate":{"type":"long"},
     "RefreshTokenDuration":{
       "type":"integer",
       "box":true,
@@ -22675,6 +23219,28 @@
       "members":{
         "HoursOfOperations":{"shape":"HoursOfOperationList"},
         "NextToken":{"shape":"NextToken2500"},
+        "ApproximateTotalCount":{"shape":"ApproximateTotalCount"}
+      }
+    },
+    "SearchMetricsRequest":{
+      "type":"structure",
+      "required":["InstanceId"],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{
+          "shape":"MaxResult100",
+          "box":true
+        },
+        "SearchFilter":{"shape":"MetricSearchFilter"},
+        "SearchCriteria":{"shape":"MetricSearchCriteria"}
+      }
+    },
+    "SearchMetricsResponse":{
+      "type":"structure",
+      "members":{
+        "Metrics":{"shape":"MetricSearchSummaryList"},
+        "NextToken":{"shape":"NextToken"},
         "ApproximateTotalCount":{"shape":"ApproximateTotalCount"}
       }
     },
@@ -24237,6 +24803,12 @@
         "Value":{"shape":"ReferenceValue"}
       }
     },
+    "StringValueList":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":10,
+      "min":1
+    },
     "Subject":{
       "type":"string",
       "max":200,
@@ -24343,6 +24915,12 @@
       "type":"list",
       "member":{"shape":"SupportedMessagingContentType"}
     },
+    "SupportedStatsList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
+    "SupportsCustomCalculation":{"type":"boolean"},
+    "SupportsPreaggregateCalculation":{"type":"boolean"},
     "SuspendContactRecordingRequest":{
       "type":"structure",
       "required":[
@@ -25010,6 +25588,14 @@
         "ContactId":{"shape":"ContactId"},
         "ContactArn":{"shape":"ARN"}
       }
+    },
+    "TrendIndicator":{
+      "type":"string",
+      "enum":[
+        "POSITIVE",
+        "NEGATIVE",
+        "NEUTRAL"
+      ]
     },
     "URI":{
       "type":"string",
@@ -25799,6 +26385,57 @@
           "idempotencyToken":true
         }
       }
+    },
+    "UpdateMetricContentRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "MetricId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "MetricId":{
+          "shape":"MetricId",
+          "location":"uri",
+          "locationName":"MetricId"
+        },
+        "MetricCalculation":{"shape":"MetricCalculation"},
+        "Unit":{"shape":"MetricUnit"},
+        "PositiveTrendIndicator":{"shape":"TrendIndicator"}
+      }
+    },
+    "UpdateMetricContentResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "UpdateMetricMetadataRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "MetricId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "MetricId":{
+          "shape":"MetricId",
+          "location":"uri",
+          "locationName":"MetricId"
+        },
+        "Name":{"shape":"MetricName"},
+        "Description":{"shape":"MetricDescription"}
+      }
+    },
+    "UpdateMetricMetadataResponse":{
+      "type":"structure",
+      "members":{}
     },
     "UpdateNotificationContentRequest":{
       "type":"structure",

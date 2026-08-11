@@ -612,6 +612,24 @@
       ],
       "idempotent":true
     },
+    "GetAnalysisLogExport":{
+      "name":"GetAnalysisLogExport",
+      "http":{
+        "method":"GET",
+        "requestUri":"/memberships/{membershipIdentifier}/analysislogexports/{analysisLogExportIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetAnalysisLogExportInput"},
+      "output":{"shape":"GetAnalysisLogExportOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
     "GetAnalysisTemplate":{
       "name":"GetAnalysisTemplate",
       "http":{
@@ -998,6 +1016,24 @@
       },
       "input":{"shape":"GetSchemaAnalysisRuleInput"},
       "output":{"shape":"GetSchemaAnalysisRuleOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
+    "ListAnalysisLogExports":{
+      "name":"ListAnalysisLogExports",
+      "http":{
+        "method":"GET",
+        "requestUri":"/memberships/{membershipIdentifier}/analysislogexports",
+        "responseCode":200
+      },
+      "input":{"shape":"ListAnalysisLogExportsInput"},
+      "output":{"shape":"ListAnalysisLogExportsOutput"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
@@ -1470,6 +1506,24 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "StartAnalysisLogExport":{
+      "name":"StartAnalysisLogExport",
+      "http":{
+        "method":"POST",
+        "requestUri":"/memberships/{membershipIdentifier}/analysislogexports",
+        "responseCode":200
+      },
+      "input":{"shape":"StartAnalysisLogExportInput"},
+      "output":{"shape":"StartAnalysisLogExportOutput"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "StartProtectedJob":{
       "name":"StartProtectedJob",
       "http":{
@@ -1632,6 +1686,7 @@
       "output":{"shape":"UpdateConfiguredTableAnalysisRuleOutput"},
       "errors":[
         {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
@@ -2027,6 +2082,104 @@
       "max":36,
       "min":36,
       "pattern":"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+    },
+    "AnalysisLogExport":{
+      "type":"structure",
+      "required":[
+        "analysisLogExportId",
+        "analysisId",
+        "analysisType",
+        "membershipId",
+        "status",
+        "resultConfiguration",
+        "createTime",
+        "updateTime"
+      ],
+      "members":{
+        "analysisLogExportId":{"shape":"AnalysisLogExportIdentifier"},
+        "analysisId":{"shape":"UUID"},
+        "analysisType":{"shape":"LogExportAnalysisType"},
+        "membershipId":{"shape":"UUID"},
+        "status":{"shape":"AnalysisLogExportStatus"},
+        "resultConfiguration":{"shape":"AnalysisLogExportResultConfiguration"},
+        "createTime":{"shape":"Timestamp"},
+        "updateTime":{"shape":"Timestamp"},
+        "error":{"shape":"AnalysisLogExportError"}
+      }
+    },
+    "AnalysisLogExportError":{
+      "type":"structure",
+      "required":[
+        "code",
+        "message"
+      ],
+      "members":{
+        "code":{"shape":"String"},
+        "message":{"shape":"String"}
+      }
+    },
+    "AnalysisLogExportIdentifier":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+    },
+    "AnalysisLogExportOutputConfiguration":{
+      "type":"structure",
+      "required":["s3"],
+      "members":{
+        "s3":{"shape":"AnalysisLogExportS3OutputConfiguration"}
+      }
+    },
+    "AnalysisLogExportResultConfiguration":{
+      "type":"structure",
+      "required":["outputConfiguration"],
+      "members":{
+        "outputConfiguration":{"shape":"AnalysisLogExportOutputConfiguration"}
+      }
+    },
+    "AnalysisLogExportS3OutputConfiguration":{
+      "type":"structure",
+      "required":["bucket"],
+      "members":{
+        "bucket":{"shape":"AnalysisLogExportS3OutputConfigurationBucketString"},
+        "keyPrefix":{"shape":"KeyPrefix"}
+      }
+    },
+    "AnalysisLogExportS3OutputConfigurationBucketString":{
+      "type":"string",
+      "max":63,
+      "min":3,
+      "pattern":".*(?!^(\\d+\\.)+\\d+$)(^(([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])$).*"
+    },
+    "AnalysisLogExportStatus":{
+      "type":"string",
+      "enum":[
+        "IN_PROGRESS",
+        "SUCCESS",
+        "FAILED"
+      ]
+    },
+    "AnalysisLogExportSummary":{
+      "type":"structure",
+      "required":[
+        "analysisLogExportId",
+        "analysisId",
+        "analysisType",
+        "status",
+        "createTime"
+      ],
+      "members":{
+        "analysisLogExportId":{"shape":"AnalysisLogExportIdentifier"},
+        "analysisId":{"shape":"UUID"},
+        "analysisType":{"shape":"LogExportAnalysisType"},
+        "status":{"shape":"AnalysisLogExportStatus"},
+        "createTime":{"shape":"Timestamp"}
+      }
+    },
+    "AnalysisLogExportSummaryList":{
+      "type":"list",
+      "member":{"shape":"AnalysisLogExportSummary"}
     },
     "AnalysisMethod":{
       "type":"string",
@@ -2482,7 +2635,9 @@
       "enum":[
         "ADD_MEMBER",
         "GRANT_RECEIVE_RESULTS_ABILITY",
-        "REVOKE_RECEIVE_RESULTS_ABILITY"
+        "REVOKE_RECEIVE_RESULTS_ABILITY",
+        "GRANT_EXPORT_QUERY_ANALYSIS_LOG_ABILITY",
+        "REVOKE_EXPORT_QUERY_ANALYSIS_LOG_ABILITY"
       ]
     },
     "AutoApprovedChangeTypeList":{
@@ -2778,7 +2933,9 @@
         "GRANT_CAN_RECEIVE_MODEL_OUTPUT",
         "GRANT_CAN_RECEIVE_INFERENCE_OUTPUT",
         "REVOKE_CAN_RECEIVE_MODEL_OUTPUT",
-        "REVOKE_CAN_RECEIVE_INFERENCE_OUTPUT"
+        "REVOKE_CAN_RECEIVE_INFERENCE_OUTPUT",
+        "GRANT_EXPORT_QUERY_ANALYSIS_LOG_ABILITY",
+        "REVOKE_EXPORT_QUERY_ANALYSIS_LOG_ABILITY"
       ]
     },
     "ChangeTypeList":{
@@ -4790,6 +4947,32 @@
       "min":1,
       "pattern":"(?!\\s*$)[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDBFF-\\uDC00\\uDFFF\\t]*"
     },
+    "GetAnalysisLogExportInput":{
+      "type":"structure",
+      "required":[
+        "membershipIdentifier",
+        "analysisLogExportIdentifier"
+      ],
+      "members":{
+        "membershipIdentifier":{
+          "shape":"MembershipIdentifier",
+          "location":"uri",
+          "locationName":"membershipIdentifier"
+        },
+        "analysisLogExportIdentifier":{
+          "shape":"AnalysisLogExportIdentifier",
+          "location":"uri",
+          "locationName":"analysisLogExportIdentifier"
+        }
+      }
+    },
+    "GetAnalysisLogExportOutput":{
+      "type":"structure",
+      "required":["analysisLogExport"],
+      "members":{
+        "analysisLogExport":{"shape":"AnalysisLogExport"}
+      }
+    },
     "GetAnalysisTemplateInput":{
       "type":"structure",
       "required":[
@@ -6102,6 +6285,45 @@
       "min":0,
       "pattern":"[\\w!.=*/-]*"
     },
+    "ListAnalysisLogExportsInput":{
+      "type":"structure",
+      "required":["membershipIdentifier"],
+      "members":{
+        "membershipIdentifier":{
+          "shape":"MembershipIdentifier",
+          "location":"uri",
+          "locationName":"membershipIdentifier"
+        },
+        "analysisIdentifier":{
+          "shape":"UUID",
+          "location":"querystring",
+          "locationName":"analysisIdentifier"
+        },
+        "status":{
+          "shape":"AnalysisLogExportStatus",
+          "location":"querystring",
+          "locationName":"status"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListAnalysisLogExportsOutput":{
+      "type":"structure",
+      "required":["analysisLogExports"],
+      "members":{
+        "nextToken":{"shape":"PaginationToken"},
+        "analysisLogExports":{"shape":"AnalysisLogExportSummaryList"}
+      }
+    },
     "ListAnalysisTemplatesInput":{
       "type":"structure",
       "required":["membershipIdentifier"],
@@ -6804,6 +7026,10 @@
         "tags":{"shape":"TagMap"}
       }
     },
+    "LogExportAnalysisType":{
+      "type":"string",
+      "enum":["PROTECTED_QUERY"]
+    },
     "Long":{
       "type":"long",
       "box":true
@@ -6863,7 +7089,8 @@
       "enum":[
         "CAN_QUERY",
         "CAN_RECEIVE_RESULTS",
-        "CAN_RUN_JOB"
+        "CAN_RUN_JOB",
+        "CAN_EXPORT_QUERY_ANALYSIS_LOG"
       ]
     },
     "MemberChangeSpecification":{
@@ -8427,6 +8654,32 @@
       "type":"string",
       "max":500,
       "min":0
+    },
+    "StartAnalysisLogExportInput":{
+      "type":"structure",
+      "required":[
+        "membershipIdentifier",
+        "analysisId",
+        "analysisType",
+        "resultConfiguration"
+      ],
+      "members":{
+        "membershipIdentifier":{
+          "shape":"MembershipIdentifier",
+          "location":"uri",
+          "locationName":"membershipIdentifier"
+        },
+        "analysisId":{"shape":"UUID"},
+        "analysisType":{"shape":"LogExportAnalysisType"},
+        "resultConfiguration":{"shape":"AnalysisLogExportResultConfiguration"}
+      }
+    },
+    "StartAnalysisLogExportOutput":{
+      "type":"structure",
+      "required":["analysisLogExport"],
+      "members":{
+        "analysisLogExport":{"shape":"AnalysisLogExport"}
+      }
     },
     "StartProtectedJobInput":{
       "type":"structure",

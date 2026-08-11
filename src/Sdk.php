@@ -16,6 +16,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionAccessAnalyzer(array $args = [])
  * @method \Aws\Account\AccountClient createAccount(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAccount(array $args = [])
+ * @method \Aws\AccountAccess\AccountAccessClient createAccountAccess(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionAccountAccess(array $args = [])
  * @method \Aws\Acm\AcmClient createAcm(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAcm(array $args = [])
  * @method \Aws\AgentRegistry\AgentRegistryClient createAgentRegistry(array $args = [])

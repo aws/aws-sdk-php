@@ -1,0 +1,408 @@
+{
+  "version": "2.0",
+  "service": "<p>Account access manager enables you to manage applications and entitlements that grant IAM Identity Center principals access to IAM roles across accounts.</p>",
+  "operations": {
+    "CreateApplication": "<p>Creates an account access manager instance and its Amazon Web Services account access application in the associated IAM Identity Center instance. This operation is idempotent; calling it multiple times with the same parameters returns the existing application.</p>",
+    "CreateEntitlement": "<p>Creates an entitlement (assignment) in account access manager. An entitlement (assignment) grants a principal (IAM Identity Center user or group) permission to assume a specified IAM role in an Amazon Web Services account. This operation is idempotent.</p>",
+    "DeleteApplication": "<p>Deletes an account access manager application. This operation is idempotent; deleting an application that has already been deleted does not return an error.</p>",
+    "DeleteEntitlement": "<p>Deletes an entitlement from an account access manager application. This operation is idempotent; deleting an entitlement that has already been deleted does not return an error.</p>",
+    "GetApplication": "<p>Retrieves details about an account access manager application, including its status, identity source, and tags.</p>",
+    "GetEntitlement": "<p>Retrieves details about a specific entitlement for an account access manager application, including the principal, IAM role, and target account.</p>",
+    "ListApplications": "<p>Lists the account access manager applications in your account. Use pagination to ensure that the operation returns quickly and successfully.</p>",
+    "ListEntitlements": "<p>Lists the entitlements for a specified account access manager application. You can filter results by principal, IAM role, or account. Use pagination to ensure that the operation returns quickly and successfully.</p>",
+    "ListTagsForResource": "<p>Lists the tags associated with an account access manager resource.</p>",
+    "TagResource": "<p>Adds tags to an account access manager resource.</p>",
+    "UntagResource": "<p>Removes tags from an account access manager resource.</p>"
+  },
+  "shapes": {
+    "AccessDeniedException": {
+      "base": "<p>You do not have sufficient access to perform this operation.</p>",
+      "refs": {}
+    },
+    "Account": {
+      "base": null,
+      "refs": {
+        "PrincipalRoleEntitlementDetails$account": "<p>The 12-digit Amazon Web Services account ID where the IAM role resides.</p>",
+        "PrincipalRoleEntitlementFilter$account": "<p>The 12-digit Amazon Web Services account ID to filter entitlements by.</p>",
+        "PrincipalRoleEntitlementSummary$account": "<p>The 12-digit Amazon Web Services account ID where the IAM role resides.</p>"
+      }
+    },
+    "AlreadyCreatedException": {
+      "base": "<p>The resource you are trying to create already exists. To retrieve the existing resource, use the corresponding Get operation.</p>",
+      "refs": {}
+    },
+    "ApplicationArn": {
+      "base": null,
+      "refs": {
+        "ApplicationSummary$applicationArn": "<p>The ARN of the application.</p>",
+        "CreateApplicationResponse$applicationArn": "<p>The Amazon Resource Name (ARN) of the created application.</p>",
+        "CreateEntitlementRequest$applicationArn": "<p>Specifies the ARN of the application to create the entitlement for.</p>",
+        "DeleteApplicationRequest$applicationArn": "<p>Specifies the ARN of the application to delete.</p>",
+        "DeleteEntitlementRequest$applicationArn": "<p>Specifies the ARN of the application that the entitlement belongs to.</p>",
+        "GetApplicationRequest$applicationArn": "<p>Specifies the ARN of the application to retrieve.</p>",
+        "GetEntitlementRequest$applicationArn": "<p>Specifies the ARN of the application that the entitlement belongs to.</p>",
+        "GetEntitlementResponse$applicationArn": "<p>The ARN of the application that the entitlement belongs to.</p>",
+        "ListEntitlementsRequest$applicationArn": "<p>Specifies the ARN of the application to list entitlements for.</p>",
+        "ListTagsForResourceRequest$resourceArn": "<p>Specifies the ARN of the resource to list tags for.</p>",
+        "TagResourceRequest$resourceArn": "<p>Specifies the ARN of the resource to add tags to.</p>",
+        "UntagResourceRequest$resourceArn": "<p>Specifies the ARN of the resource to remove tags from.</p>"
+      }
+    },
+    "ApplicationList": {
+      "base": null,
+      "refs": {
+        "ListApplicationsResponse$applications": "<p>The list of applications.</p>"
+      }
+    },
+    "ApplicationSummary": {
+      "base": "<p>Contains summary information about an account access manager application.</p>",
+      "refs": {
+        "ApplicationList$member": null
+      }
+    },
+    "ConflictException": {
+      "base": "<p>The request conflicts with the current state of the resource.</p>",
+      "refs": {}
+    },
+    "CreateApplicationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateApplicationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateEntitlementRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateEntitlementResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DateTime": {
+      "base": null,
+      "refs": {
+        "ApplicationSummary$createdAt": "<p>The date and time when the application was created.</p>",
+        "ApplicationSummary$updatedAt": "<p>The date and time when the application was last updated.</p>",
+        "EntitlementsListMember$createdAt": "<p>The date and time when the entitlement was created.</p>",
+        "GetApplicationResponse$createdAt": "<p>The date and time when the application was created.</p>",
+        "GetApplicationResponse$updatedAt": "<p>The date and time when the application was last updated.</p>",
+        "GetEntitlementResponse$createdAt": "<p>The date and time when the entitlement was created.</p>"
+      }
+    },
+    "DeleteApplicationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteApplicationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteEntitlementRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteEntitlementResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "Entitlement": {
+      "base": "<p>Specifies the entitlement configuration for an account access manager application, defining which principal can assume which IAM role.</p>",
+      "refs": {
+        "CreateEntitlementRequest$entitlement": "<p>Specifies the entitlement configuration, including the principal and the IAM role to grant access to.</p>"
+      }
+    },
+    "EntitlementDetails": {
+      "base": "<p>Contains detailed information about an entitlement, including the principal, IAM role, and target account.</p>",
+      "refs": {
+        "GetEntitlementResponse$entitlement": "<p>The entitlement details, including the principal, IAM role, and target account.</p>"
+      }
+    },
+    "EntitlementFilter": {
+      "base": "<p>Specifies filter criteria for listing entitlements.</p>",
+      "refs": {
+        "ListEntitlementsRequest$filter": "<p>Specifies filter criteria to narrow the entitlements returned. You can filter by principal, IAM role, or account.</p>"
+      }
+    },
+    "EntitlementSummary": {
+      "base": "<p>Contains summary information about an entitlement.</p>",
+      "refs": {
+        "EntitlementsListMember$entitlement": "<p>The summary information for the entitlement.</p>"
+      }
+    },
+    "EntitlementsList": {
+      "base": null,
+      "refs": {
+        "ListEntitlementsResponse$entitlements": "<p>The list of entitlements for the specified application.</p>"
+      }
+    },
+    "EntitlementsListMember": {
+      "base": "<p>Contains information about an entitlement in a list result.</p>",
+      "refs": {
+        "EntitlementsList$member": null
+      }
+    },
+    "ErrorCode": {
+      "base": null,
+      "refs": {
+        "ErrorDetails$code": "<p>The error code that identifies the type of error.</p>"
+      }
+    },
+    "ErrorDetails": {
+      "base": "<p>Contains information about an error that occurred during application processing.</p>",
+      "refs": {
+        "GetApplicationResponse$error": "<p>The error details if the application is in a failed state.</p>"
+      }
+    },
+    "GetApplicationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetApplicationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetEntitlementRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetEntitlementResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GroupId": {
+      "base": null,
+      "refs": {
+        "IdentityCenterPrincipal$groupId": "<p>The unique identifier of a group in IAM Identity Center.</p>",
+        "IdentityCenterPrincipalFilter$groupId": "<p>The unique identifier of a group in IAM Identity Center to filter by.</p>"
+      }
+    },
+    "IdentityCenter": {
+      "base": "<p>Specifies the IAM Identity Center instance to use as the identity source for an application.</p>",
+      "refs": {
+        "IdentitySource$identityCenter": "<p>The IAM Identity Center instance to use as the identity source.</p>"
+      }
+    },
+    "IdentityCenterApplicationArn": {
+      "base": null,
+      "refs": {
+        "IdentityCenterDetails$applicationArn": "<p>The ARN of the IAM Identity Center application created for this account access manager application.</p>"
+      }
+    },
+    "IdentityCenterDetails": {
+      "base": "<p>Contains detailed information about the IAM Identity Center configuration for an application.</p>",
+      "refs": {
+        "IdentitySourceDetails$identityCenter": "<p>The IAM Identity Center configuration details for the identity source.</p>"
+      }
+    },
+    "IdentityCenterInstanceArn": {
+      "base": null,
+      "refs": {
+        "IdentityCenter$instanceArn": "<p>The ARN of the IAM Identity Center instance.</p>",
+        "IdentityCenterDetails$instanceArn": "<p>The ARN of the IAM Identity Center instance.</p>"
+      }
+    },
+    "IdentityCenterPrincipal": {
+      "base": "<p>Identifies a user or group from IAM Identity Center.</p>",
+      "refs": {
+        "Principal$identityCenter": "<p>The IAM Identity Center principal (user or group).</p>"
+      }
+    },
+    "IdentityCenterPrincipalFilter": {
+      "base": "<p>Specifies filter criteria for an IAM Identity Center principal.</p>",
+      "refs": {
+        "PrincipalFilter$identityCenter": "<p>The IAM Identity Center principal filter criteria.</p>"
+      }
+    },
+    "IdentitySource": {
+      "base": "<p>Specifies the identity source for an account access manager application.</p>",
+      "refs": {
+        "CreateApplicationRequest$identitySource": "<p>Specifies the identity source for the application. The identity source defines the IAM Identity Center instance that provides principals for entitlements.</p>"
+      }
+    },
+    "IdentitySourceDetails": {
+      "base": "<p>Contains detailed information about the identity source for an application.</p>",
+      "refs": {
+        "GetApplicationResponse$identitySource": "<p>The identity source details for the application, including the IAM Identity Center instance configuration.</p>"
+      }
+    },
+    "InternalServerException": {
+      "base": "<p>An internal service error occurred. Try your request again later.</p>",
+      "refs": {}
+    },
+    "ListApplicationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListApplicationsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListApplicationsRequest$maxResults": "<p>Specifies the maximum number of results to return in a single call.</p>"
+      }
+    },
+    "ListApplicationsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListEntitlementsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListEntitlementsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListEntitlementsRequest$maxResults": "<p>Specifies the maximum number of results to return in a single call.</p>"
+      }
+    },
+    "ListEntitlementsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "Principal": {
+      "base": "<p>Identifies a principal (user or group) that can be granted entitlements.</p>",
+      "refs": {
+        "PrincipalRoleEntitlement$principal": "<p>The principal (user or group) that is granted access to assume the IAM role.</p>",
+        "PrincipalRoleEntitlementDetails$principal": "<p>The principal (user or group) that is granted access to assume the IAM role.</p>",
+        "PrincipalRoleEntitlementSummary$principal": "<p>The principal (user or group) that is granted access to assume the IAM role.</p>"
+      }
+    },
+    "PrincipalFilter": {
+      "base": "<p>Specifies filter criteria for a principal.</p>",
+      "refs": {
+        "PrincipalRoleEntitlementFilter$principal": "<p>The principal to filter entitlements by.</p>"
+      }
+    },
+    "PrincipalRoleEntitlement": {
+      "base": "<p>Specifies a principal-to-role entitlement that grants an IAM Identity Center principal permission to assume an IAM role.</p>",
+      "refs": {
+        "Entitlement$principalRole": "<p>The principal-to-role mapping for the entitlement.</p>"
+      }
+    },
+    "PrincipalRoleEntitlementDetails": {
+      "base": "<p>Contains detailed information about a principal-to-role entitlement, including the target account.</p>",
+      "refs": {
+        "EntitlementDetails$principalRole": "<p>The principal-to-role mapping details for the entitlement, including the target account.</p>"
+      }
+    },
+    "PrincipalRoleEntitlementFilter": {
+      "base": "<p>Specifies filter criteria for principal-to-role entitlements. All specified criteria must match for an entitlement to be returned.</p>",
+      "refs": {
+        "EntitlementFilter$principalRole": "<p>The principal-to-role filter criteria for narrowing entitlement results.</p>"
+      }
+    },
+    "PrincipalRoleEntitlementSummary": {
+      "base": "<p>Contains summary information about a principal-to-role entitlement.</p>",
+      "refs": {
+        "EntitlementSummary$principalRole": "<p>The principal-to-role mapping summary for the entitlement.</p>"
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p>The specified resource does not exist. Verify that the resource identifier is correct and that the resource exists in the current Region.</p>",
+      "refs": {}
+    },
+    "RoleArn": {
+      "base": null,
+      "refs": {
+        "PrincipalRoleEntitlement$roleArn": "<p>The ARN of the IAM role that the principal can assume.</p>",
+        "PrincipalRoleEntitlementDetails$roleArn": "<p>The ARN of the IAM role that the principal can assume.</p>",
+        "PrincipalRoleEntitlementFilter$roleArn": "<p>The IAM role ARN to filter entitlements by.</p>",
+        "PrincipalRoleEntitlementSummary$roleArn": "<p>The ARN of the IAM role that the principal can assume.</p>"
+      }
+    },
+    "ServiceQuotaExceededException": {
+      "base": "<p>The request exceeds a service quota for your account.</p>",
+      "refs": {}
+    },
+    "Status": {
+      "base": null,
+      "refs": {
+        "GetApplicationResponse$status": "<p>The current status of the application.</p>"
+      }
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$message": null,
+        "AlreadyCreatedException$message": null,
+        "ApplicationSummary$tenantId": "<p>The tenant identifier associated with the application.</p>",
+        "ConflictException$message": null,
+        "CreateEntitlementResponse$entitlementId": "<p>The unique identifier of the created entitlement.</p>",
+        "DeleteEntitlementRequest$entitlementId": "<p>Specifies the unique identifier of the entitlement to delete.</p>",
+        "EntitlementsListMember$entitlementId": "<p>The unique identifier of the entitlement.</p>",
+        "ErrorDetails$message": "<p>A human-readable message that describes the error.</p>",
+        "GetApplicationResponse$tenantId": "<p>The tenant identifier associated with the application.</p>",
+        "GetEntitlementRequest$entitlementId": "<p>Specifies the unique identifier of the entitlement to retrieve.</p>",
+        "GetEntitlementResponse$entitlementId": "<p>The unique identifier of the entitlement.</p>",
+        "InternalServerException$message": null,
+        "ListApplicationsRequest$nextToken": "<p>Specifies the pagination token from a previous call to retrieve the next set of results.</p>",
+        "ListApplicationsResponse$nextToken": "<p>The pagination token to use in a subsequent request to retrieve the next set of results. This value is null when there are no more results to return.</p>",
+        "ListEntitlementsRequest$nextToken": "<p>Specifies the pagination token from a previous call to retrieve the next set of results.</p>",
+        "ListEntitlementsResponse$nextToken": "<p>The pagination token to use in a subsequent request to retrieve the next set of results. This value is null when there are no more results to return.</p>",
+        "PrincipalRoleEntitlementDetails$accountName": "<p>The friendly name of the Amazon Web Services account where the IAM role resides.</p>",
+        "PrincipalRoleEntitlementSummary$accountName": "<p>The friendly name of the Amazon Web Services account where the IAM role resides.</p>",
+        "ResourceNotFoundException$message": null,
+        "ServiceQuotaExceededException$message": null,
+        "TagKeys$member": null,
+        "TagsMap$key": null,
+        "TagsMap$value": null,
+        "ThrottlingException$message": null,
+        "ValidationException$message": null
+      }
+    },
+    "TagKeys": {
+      "base": null,
+      "refs": {
+        "UntagResourceRequest$tagKeys": "<p>Specifies the tag keys to remove from the resource.</p>"
+      }
+    },
+    "TagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "TagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "TagsMap": {
+      "base": null,
+      "refs": {
+        "CreateApplicationRequest$tags": "<p>Specifies the tags to assign to the application.</p>",
+        "GetApplicationResponse$tags": "<p>The tags associated with the application.</p>",
+        "ListTagsForResourceResponse$tags": "<p>The tags associated with the resource.</p>",
+        "TagResourceRequest$tags": "<p>Specifies the tags to add to the resource.</p>"
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>The request was denied due to request throttling. Try your request again later.</p>",
+      "refs": {}
+    },
+    "UntagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UntagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UserId": {
+      "base": null,
+      "refs": {
+        "IdentityCenterPrincipal$userId": "<p>The unique identifier of a user in IAM Identity Center.</p>",
+        "IdentityCenterPrincipalFilter$userId": "<p>The unique identifier of a user in IAM Identity Center to filter by.</p>"
+      }
+    },
+    "ValidationException": {
+      "base": "<p>The input does not satisfy the constraints specified by the service. Check your request parameters and retry the request.</p>",
+      "refs": {}
+    }
+  }
+}
