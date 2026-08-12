@@ -2969,6 +2969,10 @@
           "shape":"__mapOfString",
           "locationName":"tags"
         },
+        "FabricConfiguration":{
+          "shape":"FabricConfiguration",
+          "locationName":"fabricConfiguration"
+        },
         "ClientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true,
@@ -3645,6 +3649,23 @@
       "enum":[
         "ENABLED",
         "DISABLED"
+      ]
+    },
+    "FabricConfiguration":{
+      "type":"structure",
+      "required":["RecoveryLatencyMode"],
+      "members":{
+        "RecoveryLatencyMode":{
+          "shape":"FabricLatencyMode",
+          "locationName":"recoveryLatencyMode"
+        }
+      }
+    },
+    "FabricLatencyMode":{
+      "type":"string",
+      "enum":[
+        "BALANCED",
+        "LOW_LATENCY"
       ]
     },
     "FailoverConfig":{
@@ -7300,7 +7321,8 @@
         "Tags",
         "StreamDetails",
         "MaintenanceType",
-        "MaintenanceConfiguration"
+        "MaintenanceConfiguration",
+        "FabricConfiguration"
       ],
       "members":{
         "Name":{
@@ -7394,6 +7416,10 @@
         "MaintenanceSchedule":{
           "shape":"MaintenanceSchedule",
           "locationName":"maintenanceSchedule"
+        },
+        "FabricConfiguration":{
+          "shape":"FabricConfiguration",
+          "locationName":"fabricConfiguration"
         }
       }
     },
@@ -9652,6 +9678,10 @@
         "MaintenanceConfiguration":{
           "shape":"MaintenanceConfiguration",
           "locationName":"maintenanceConfiguration"
+        },
+        "FabricConfiguration":{
+          "shape":"FabricConfiguration",
+          "locationName":"fabricConfiguration"
         }
       }
     },

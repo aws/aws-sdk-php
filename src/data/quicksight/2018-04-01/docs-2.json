@@ -5,17 +5,20 @@
     "BatchCreateTopicReviewedAnswer": "<p>Creates new reviewed answers for a Q Topic.</p>",
     "BatchDeleteKnowledgeBase": "<p>Deletes one or more knowledge bases.</p>",
     "BatchDeleteTopicReviewedAnswer": "<p>Deletes reviewed answers for Q Topic.</p>",
+    "BatchDescribeUserLimits": "<p>Describes the effective resource limits for one or more Amazon Quick Sight users, including the limits that apply to each user based on their profile assignments.</p>",
     "CancelIngestion": "<p>Cancels an ongoing ingestion of data into SPICE.</p>",
     "CreateAccountCustomization": "<p>Creates Amazon Quick Sight customizations. Currently, you can add a custom default theme by using the <code>CreateAccountCustomization</code> or <code>UpdateAccountCustomization</code> API operation. To further customize Amazon Quick Sight by removing Amazon Quick Sight sample assets and videos for all new users, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/customizing-quicksight.html\">Customizing Quick Sight</a> in the <i>Amazon Quick Sight User Guide.</i> </p> <p>You can create customizations for your Amazon Web Services account or, if you specify a namespace, for a Quick Sight namespace instead. Customizations that apply to a namespace always override customizations that apply to an Amazon Web Services account. To find out which customizations apply, use the <code>DescribeAccountCustomization</code> API operation.</p> <p>Before you use the <code>CreateAccountCustomization</code> API operation to add a theme as the namespace default, make sure that you first share the theme with the namespace. If you don't share it with the namespace, the theme isn't visible to your users even if you make it the default theme. To check if the theme is shared, view the current permissions by using the <code> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_DescribeThemePermissions.html\">DescribeThemePermissions</a> </code> API operation. To share the theme, grant permissions by using the <code> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_UpdateThemePermissions.html\">UpdateThemePermissions</a> </code> API operation. </p>",
     "CreateAccountSubscription": "<p>Creates an Amazon Quick Sight account, or subscribes to Amazon Quick Sight Q.</p> <p>The Amazon Web Services Region for the account is derived from what is configured in the CLI or SDK.</p> <p>Before you use this operation, make sure that you can connect to an existing Amazon Web Services account. If you don't have an Amazon Web Services account, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/setting-up-aws-sign-up.html\">Sign up for Amazon Web Services</a> in the <i>Amazon Quick Sight User Guide</i>. The person who signs up for Amazon Quick Sight needs to have the correct Identity and Access Management (IAM) permissions. For more information, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/iam-policy-examples.html\">IAM Policy Examples for Amazon Quick Sight</a> in the <i>Amazon Quick Sight User Guide</i>.</p> <p>If your IAM policy includes both the <code>Subscribe</code> and <code>CreateAccountSubscription</code> actions, make sure that both actions are set to <code>Allow</code>. If either action is set to <code>Deny</code>, the <code>Deny</code> action prevails and your API call fails.</p> <p>You can't pass an existing IAM role to access other Amazon Web Services services using this API operation. To pass your existing IAM role to Amazon Quick Sight, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/security_iam_service-with-iam.html#security-create-iam-role\">Passing IAM roles to Amazon Quick Sight</a> in the <i>Amazon Quick Sight User Guide</i>.</p> <p>You can't set default resource access on the new account from the Amazon Quick Sight API. Instead, add default resource access from the Amazon Quick Sight console. For more information about setting default resource access to Amazon Web Services services, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/scoping-policies-defaults.html\">Setting default resource access to Amazon Web Services services</a> in the <i>Amazon Quick Sight User Guide</i>.</p>",
     "CreateActionConnector": "<p>Creates an action connector that enables Amazon Quick Sight to connect to external services and perform actions. Action connectors support various authentication methods and can be configured with specific actions from supported connector types like Amazon S3, Salesforce, JIRA.</p>",
     "CreateAgent": "<p>Creates an agent in Amazon QuickSight.</p>",
     "CreateAnalysis": "<p>Creates an analysis in Amazon Quick Sight. Analyses can be created either from a template or from an <code>AnalysisDefinition</code>.</p>",
+    "CreateApprovalPolicy": "<p>Creates an approval policy in Quick Sight.</p>",
     "CreateBrand": "<p>Creates an Quick Sight brand.</p>",
     "CreateCustomPermissions": "<p>Creates a custom permissions profile.</p>",
     "CreateDashboard": "<p>Creates a dashboard from either a template or directly with a <code>DashboardDefinition</code>. To first create a template, see the <code> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_CreateTemplate.html\">CreateTemplate</a> </code> API operation.</p> <p>A dashboard is an entity in Amazon Quick Sight that identifies Amazon Quick Sight reports, created from analyses. You can share Amazon Quick Sight dashboards. With the right permissions, you can create scheduled email reports from them. If you have the correct permissions, you can create a dashboard from a template that exists in a different Amazon Web Services account.</p>",
     "CreateDataSet": "<p>Creates a dataset. This operation doesn't support datasets that include uploaded files as a source.</p>",
     "CreateDataSource": "<p>Creates a data source.</p>",
+    "CreateDlpSetting": "<p>Creates a data loss prevention (DLP) setting configuration for an Amazon Web Services account. A DLP setting defines the DLP provider, the enforcement behavior, and the Quick capabilities that the setting applies to.</p>",
     "CreateFlow": "<p>Creates a new flow in the specified Amazon Web Services account. Creates both a DRAFT and PUBLISHED (auto-published) version.</p> <p>This operation is idempotent. Supply a <code>ClientToken</code> to safely retry without creating duplicate resources.</p>",
     "CreateFolder": "<p>Creates an empty shared folder.</p>",
     "CreateFolderMembership": "<p>Adds an asset, such as a dashboard, analysis, or dataset into a folder.</p>",
@@ -24,6 +27,7 @@
     "CreateIAMPolicyAssignment": "<p>Creates an assignment with one specified IAM policy, identified by its Amazon Resource Name (ARN). This policy assignment is attached to the specified groups or users of Amazon Quick Sight. Assignment names are unique per Amazon Web Services account. To avoid overwriting rules in other namespaces, use assignment names that are unique.</p>",
     "CreateIngestion": "<p>Creates and starts a new SPICE ingestion for a dataset. You can manually refresh datasets in an Enterprise edition account 32 times in a 24-hour period. You can manually refresh datasets in a Standard edition account 8 times in a 24-hour period. Each 24-hour period is measured starting 24 hours before the current date and time.</p> <p>Any ingestions operating on tagged datasets inherit the same tags automatically for use in access control. For an example, see <a href=\"http://aws.amazon.com/premiumsupport/knowledge-center/iam-ec2-resource-tags/\">How do I create an IAM policy to control access to Amazon EC2 resources using tags?</a> in the Amazon Web Services Knowledge Center. Tags are visible on the tagged dataset, but not on the ingestion resource.</p>",
     "CreateKnowledgeBase": "<p>Creates a knowledge base from a specified data source. Supported data source connector types include:</p> <ul> <li> <p> <code>S3_KNOWLEDGE_BASE</code> – Uses an Amazon S3 bucket as the data source.</p> </li> <li> <p> <code>WEB_CRAWLER</code> – Uses web pages indexed by the built-in web crawler as the data source.</p> </li> <li> <p> <code>GOOGLE_DRIVE</code> – Uses Google Drive as the data source. Supports service account authentication only.</p> </li> <li> <p> <code>SHAREPOINT</code> – Uses SharePoint as the data source. Supports two-legged OAuth only.</p> </li> <li> <p> <code>ONE_DRIVE</code> – Uses OneDrive as the data source. Supports two-legged OAuth only.</p> </li> </ul>",
+    "CreateLimitsProfile": "<p>Creates a limits profile that defines resource usage limits for Amazon Quick Sight users.</p>",
     "CreateNamespace": "<p>(Enterprise edition only) Creates a new namespace for you to use with Amazon Quick Sight.</p> <p>A namespace allows you to isolate the Quick Sight users and groups that are registered for that namespace. Users that access the namespace can share assets only with other users or groups in the same namespace. They can't see users and groups in other namespaces. You can create a namespace after your Amazon Web Services account is subscribed to Quick Sight. The namespace must be unique within the Amazon Web Services account. By default, there is a limit of 100 namespaces per Amazon Web Services account. To increase your limit, create a ticket with Amazon Web Services Support. </p>",
     "CreateOAuthClientApplication": "<p>Creates an OAuthClientApplication.</p>",
     "CreateRefreshSchedule": "<p>Creates a refresh schedule for a dataset. You can create up to 5 different schedules for a single dataset.</p>",
@@ -43,6 +47,7 @@
     "DeleteActionConnector": "<p>Hard deletes an action connector, making it unrecoverable. This operation removes the connector and all its associated configurations. Any resources currently using this action connector will no longer be able to perform actions through it.</p>",
     "DeleteAgent": "<p>Deletes an agent.</p>",
     "DeleteAnalysis": "<p>Deletes an analysis from Amazon Quick Sight. You can optionally include a recovery window during which you can restore the analysis. If you don't specify a recovery window value, the operation defaults to 30 days. Amazon Quick Sight attaches a <code>DeletionTime</code> stamp to the response that specifies the end of the recovery window. At the end of the recovery window, Amazon Quick Sight deletes the analysis permanently.</p> <p>At any time before recovery window ends, you can use the <code>RestoreAnalysis</code> API operation to remove the <code>DeletionTime</code> stamp and cancel the deletion of the analysis. The analysis remains visible in the API until it's deleted, so you can describe it but you can't make a template from it.</p> <p>An analysis that's scheduled for deletion isn't accessible in the Amazon Quick Sight console. To access it in the console, restore it. Deleting an analysis doesn't delete the dashboards that you publish from it.</p>",
+    "DeleteApprovalPolicy": "<p>Deletes an approval policy in Quick Sight.</p>",
     "DeleteBrand": "<important> <p>This API permanently deletes the specified Quick Sight brand. When you delete a brand:</p> <ul> <li> <p>The brand and all its associated branding elements are permanently removed</p> </li> <li> <p>Any applications or dashboards using this brand will revert to default styling</p> </li> <li> <p>This action cannot be undone through the API</p> </li> </ul> <p> <b>Before proceeding:</b> Verify that the brand is no longer needed and consider the impact on any applications currently using this brand.</p> </important> <p>Deletes an Quick Sight brand.</p>",
     "DeleteBrandAssignment": "<p>Deletes a brand assignment.</p>",
     "DeleteCustomPermissions": "<p>Deletes a custom permissions profile.</p>",
@@ -51,6 +56,7 @@
     "DeleteDataSetRefreshProperties": "<p>Deletes the dataset refresh properties of the dataset.</p>",
     "DeleteDataSource": "<p>Deletes the data source permanently. This operation breaks all the datasets that reference the deleted data source.</p>",
     "DeleteDefaultQBusinessApplication": "<p>Deletes a linked Amazon Q Business application from an Quick Sight account</p>",
+    "DeleteDlpSetting": "<p>Deletes a DLP setting configuration from an Amazon Web Services account.</p>",
     "DeleteFlow": "<p>Permanently deletes a flow from the specified Amazon Web Services account. This operation cannot be undone.</p>",
     "DeleteFolder": "<p>Deletes an empty folder.</p>",
     "DeleteFolderMembership": "<p>Removes an asset, such as a dashboard, analysis, or dataset, from a folder.</p>",
@@ -59,6 +65,7 @@
     "DeleteIAMPolicyAssignment": "<p>Deletes an existing IAM policy assignment.</p>",
     "DeleteIdentityPropagationConfig": "<p>Deletes all access scopes and authorized targets that are associated with a service from the Quick Sight IAM Identity Center application.</p> <p>This operation is only supported for Quick Sight accounts that use IAM Identity Center.</p>",
     "DeleteKnowledgeBase": "<p>Deletes a knowledge base.</p>",
+    "DeleteLimitsProfile": "<p>Deletes a limits profile.</p>",
     "DeleteNamespace": "<p>Deletes a namespace and the users and groups that are associated with the namespace. This is an asynchronous process. Assets including dashboards, analyses, datasets and data sources are not deleted. To delete these assets, you use the API operations for the relevant asset. </p>",
     "DeleteOAuthClientApplication": "<p>Deletes an OAuthClientApplication.</p>",
     "DeleteRefreshSchedule": "<p>Deletes a refresh schedule from a dataset.</p>",
@@ -87,6 +94,7 @@
     "DescribeAnalysis": "<p>Provides a summary of the metadata for an analysis.</p>",
     "DescribeAnalysisDefinition": "<p>Provides a detailed description of the definition of an analysis.</p> <note> <p>If you do not need to know details about the content of an Analysis, for instance if you are trying to check the status of a recently created or updated Analysis, use the <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_DescribeAnalysis.html\"> <code>DescribeAnalysis</code> </a> instead. </p> </note>",
     "DescribeAnalysisPermissions": "<p>Provides the read and write permissions for an analysis.</p>",
+    "DescribeApprovalPolicy": "<p>Describes an approval policy in Quick Sight.</p>",
     "DescribeAssetBundleExportJob": "<p>Describes an existing export job.</p> <p>Poll job descriptions after a job starts to know the status of the job. When a job succeeds, a URL is provided to download the exported assets' data from. Download URLs are valid for five minutes after they are generated. You can call the <code>DescribeAssetBundleExportJob</code> API for a new download URL as needed.</p> <p>Job descriptions are available for 14 days after the job starts.</p>",
     "DescribeAssetBundleImportJob": "<p>Describes an existing import job.</p> <p>Poll job descriptions after starting a job to know when it has succeeded or failed. Job descriptions are available for 14 days after job starts.</p>",
     "DescribeAutomationJob": "<p>Retrieves the status and details of a specified automation job, including its status and outputs.</p>",
@@ -106,6 +114,7 @@
     "DescribeDataSource": "<p>Describes a data source.</p>",
     "DescribeDataSourcePermissions": "<p>Describes the resource permissions for a data source.</p>",
     "DescribeDefaultQBusinessApplication": "<p>Describes a Amazon Q Business application that is linked to an Quick Sight account.</p>",
+    "DescribeDlpSetting": "<p>Describes the full configuration of a DLP setting in an Amazon Web Services account.</p>",
     "DescribeFlow": "<p>Returns the full details of a flow for the latest version of the requested publish state.</p>",
     "DescribeFolder": "<p>Describes a folder.</p>",
     "DescribeFolderPermissions": "<p>Describes permissions for a folder.</p>",
@@ -118,6 +127,7 @@
     "DescribeKeyRegistration": "<p>Describes all customer managed key registrations in a Quick Sight account.</p>",
     "DescribeKnowledgeBase": "<p>Describes a knowledge base.</p>",
     "DescribeKnowledgeBasePermissions": "<p>Describes the resource permissions for a knowledge base.</p>",
+    "DescribeLimitsProfile": "<p>Describes the properties of an existing limits profile.</p>",
     "DescribeNamespace": "<p>Describes the current namespace.</p>",
     "DescribeOAuthClientApplication": "<p>Describes an OAuthClientApplication.</p>",
     "DescribeQPersonalizationConfiguration": "<p>Describes a personalization configuration.</p>",
@@ -153,6 +163,7 @@
     "ListActionConnectors": "<p>Lists all action connectors in the specified Amazon Web Services account. Returns summary information for each connector including its name, type, creation time, and status.</p>",
     "ListAgents": "<p>Lists all agents in an Amazon QuickSight account.</p>",
     "ListAnalyses": "<p>Lists Amazon Quick Sight analyses that exist in the specified Amazon Web Services account.</p>",
+    "ListApprovalPolicies": "<p>Lists all approval policies in the specified Quick Sight account. The results are paginated. If the response includes a <code>NextToken</code> value, pass it in a subsequent call to retrieve the next set of results.</p>",
     "ListAssetBundleExportJobs": "<p>Lists all asset bundle export jobs that have been taken place in the last 14 days. Jobs created more than 14 days ago are deleted forever and are not returned. If you are using the same job ID for multiple jobs, <code>ListAssetBundleExportJobs</code> only returns the most recent job that uses the repeated job ID.</p>",
     "ListAssetBundleImportJobs": "<p>Lists all asset bundle import jobs that have taken place in the last 14 days. Jobs created more than 14 days ago are deleted forever and are not returned. If you are using the same job ID for multiple jobs, <code>ListAssetBundleImportJobs</code> only returns the most recent job that uses the repeated job ID.</p>",
     "ListBrands": "<p>Lists all brands in an Quick Sight account.</p>",
@@ -161,6 +172,7 @@
     "ListDashboards": "<p>Lists dashboards in an Amazon Web Services account.</p>",
     "ListDataSets": "<p>Lists all of the datasets belonging to the current Amazon Web Services account in an Amazon Web Services Region.</p> <p>The permissions resource is <code>arn:aws:quicksight:region:aws-account-id:dataset/*</code>.</p>",
     "ListDataSources": "<p>Lists data sources in current Amazon Web Services Region that belong to this Amazon Web Services account.</p>",
+    "ListDlpSettings": "<p>Lists all DLP settings in an Amazon Web Services account.</p>",
     "ListFlows": "<p>Lists flows in an Amazon Web Services account.</p>",
     "ListFolderMembers": "<p>List all assets (<code>DASHBOARD</code>, <code>ANALYSIS</code>, and <code>DATASET</code>) in a folder. </p>",
     "ListFolders": "<p>Lists all folders in an account.</p>",
@@ -172,6 +184,7 @@
     "ListIdentityPropagationConfigs": "<p>Lists all services and authorized targets that the Quick Sight IAM Identity Center application can access.</p> <p>This operation is only supported for Quick Sight accounts that use IAM Identity Center.</p>",
     "ListIngestions": "<p>Lists the history of SPICE ingestions for a dataset. Limited to 5 TPS per user and 25 TPS per account.</p>",
     "ListKnowledgeBases": "<p>Lists all knowledge bases in an Amazon QuickSight account.</p>",
+    "ListLimitsProfiles": "<p>Lists all limits profiles in an Amazon Quick Sight account. Results are paginated. Use the <code>maxResults</code> parameter to limit the number of results returned in a single call, and use the <code>nextToken</code> parameter to retrieve the next page of results.</p>",
     "ListNamespaces": "<p>Lists the namespaces for the specified Amazon Web Services account. This operation doesn't list deleted namespaces.</p>",
     "ListOAuthClientApplications": "<p>Lists all OAuthClientApplications in the current Amazon Web Services Region that belong to this Amazon Web Services account.</p>",
     "ListRefreshSchedules": "<p>Lists the refresh schedules of a dataset. Each dataset can have up to 5 schedules. </p>",
@@ -228,6 +241,7 @@
     "UpdateAnalysis": "<p>Updates an analysis in Amazon Quick Sight</p>",
     "UpdateAnalysisPermissions": "<p>Updates the read and write permissions for an analysis.</p>",
     "UpdateApplicationWithTokenExchangeGrant": "<p>Updates an Quick application with a token exchange grant. This operation only supports Quick applications that are registered with IAM Identity Center.</p>",
+    "UpdateApprovalPolicy": "<p>Updates an approval policy in Quick Sight.</p>",
     "UpdateBrand": "<p>Updates a brand.</p>",
     "UpdateBrandAssignment": "<p>Updates a brand assignment.</p>",
     "UpdateBrandPublishedVersion": "<p>Updates the published version of a brand.</p>",
@@ -242,6 +256,7 @@
     "UpdateDataSource": "<p>Updates a data source.</p>",
     "UpdateDataSourcePermissions": "<p>Updates the permissions to a data source.</p>",
     "UpdateDefaultQBusinessApplication": "<p>Updates a Amazon Q Business application that is linked to a Quick Sight account.</p>",
+    "UpdateDlpSetting": "<p>Updates an existing DLP setting configuration in an Amazon Web Services account. Fields that are omitted from the request retain their current values.</p>",
     "UpdateFlow": "<p>Updates an existing flow. Supply only the fields you want to change. Updates both DRAFT and PUBLISHED versions. When <code>FlowDefinition</code> is provided, all existing steps are replaced with the new definition.</p>",
     "UpdateFlowPermissions": "<p>Updates permissions against principals on a flow.</p>",
     "UpdateFolder": "<p>Updates the name of a folder.</p>",
@@ -253,6 +268,7 @@
     "UpdateKeyRegistration": "<p>Updates a customer managed key in a Quick Sight account.</p>",
     "UpdateKnowledgeBase": "<p>Updates the properties of an existing knowledge base.</p>",
     "UpdateKnowledgeBasePermissions": "<p>Updates the resource permissions for a knowledge base.</p>",
+    "UpdateLimitsProfile": "<p>Updates the properties of an existing limits profile.</p>",
     "UpdateOAuthClientApplication": "<p>Updates an OAuthClientApplication.</p>",
     "UpdatePublicSharingSettings": "<important> <p>This API controls public sharing settings for your entire Quick Sight account, affecting data security and access. When you enable public sharing:</p> <ul> <li> <p>Dashboards can be shared publicly</p> </li> <li> <p>This setting affects your entire Amazon Web Services account and all Quick Sight users</p> </li> </ul> <p> <b>Before proceeding:</b> Ensure you understand the security implications and have proper IAM permissions configured.</p> </important> <p>Use the <code>UpdatePublicSharingSettings</code> operation to turn on or turn off the public sharing settings of an Amazon Quick Sight dashboard.</p> <p>To use this operation, turn on session capacity pricing for your Amazon Quick Sight account.</p> <p>Before you can turn on public sharing on your account, make sure to give public sharing permissions to an administrative user in the Identity and Access Management (IAM) console. For more information on using IAM with Amazon Quick Sight, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/security_iam_service-with-iam.html\">Using Quick with IAM</a> in the <i>Amazon Quick Sight User Guide</i>.</p>",
     "UpdateQPersonalizationConfiguration": "<p>Updates a personalization configuration.</p>",
@@ -1001,6 +1017,20 @@
         "AppendOperation$AppendedColumns": "<p>The list of columns to include in the appended result, mapping columns from both sources.</p>"
       }
     },
+    "ApplicableTo": {
+      "base": "<p>The scoping configuration that determines which principals an approval policy applies to.</p>",
+      "refs": {
+        "ApprovalPolicy$ApplicableTo": "<p>The scoping configuration that determines who the approval policy applies to.</p>",
+        "CreateApprovalPolicyRequest$ApplicableTo": "<p>The scoping configuration that determines who the approval policy applies to.</p>",
+        "UpdateApprovalPolicyRequest$ApplicableTo": "<p>The scoping configuration that determines who the approval policy applies to.</p>"
+      }
+    },
+    "ApplicableToType": {
+      "base": null,
+      "refs": {
+        "ApplicableTo$Type": "<p>The type of scoping that determines which principals the approval policy applies to. Valid values are defined as follows:</p> <ul> <li> <p> <code>GROUP</code>: The policy applies only to principals in the groups specified by <code>GroupArns</code>. When you use <code>GROUP</code>, you must also provide a value for <code>GroupArns</code>.</p> </li> </ul>"
+      }
+    },
     "ApplicationArn": {
       "base": null,
       "refs": {
@@ -1011,6 +1041,29 @@
       "base": "<p>The application theme.</p>",
       "refs": {
         "BrandDefinition$ApplicationTheme": "<p>The application theme of the brand.</p>"
+      }
+    },
+    "ApprovalGroupList": {
+      "base": null,
+      "refs": {
+        "ApprovalPolicy$ApprovalGroups": "<p>The list of group ARNs whose members can approve requests.</p>",
+        "CreateApprovalPolicyRequest$ApprovalGroups": "<p>The list of group ARNs whose members can approve requests.</p>",
+        "UpdateApprovalPolicyRequest$ApprovalGroups": "<p>The list of group ARNs whose members can approve requests.</p>"
+      }
+    },
+    "ApprovalPolicy": {
+      "base": "<p>A governance approval policy that specifies which principals and governed actions require approval, and which assets the policy applies to.</p>",
+      "refs": {
+        "ApprovalPolicyList$member": null,
+        "CreateApprovalPolicyResponse$Policy": "<p>The approval policy that was created.</p>",
+        "DescribeApprovalPolicyResponse$Policy": "<p>The approval policy.</p>",
+        "UpdateApprovalPolicyResponse$Policy": "<p>The updated approval policy.</p>"
+      }
+    },
+    "ApprovalPolicyList": {
+      "base": null,
+      "refs": {
+        "ListApprovalPoliciesResponse$Policies": "<p>The list of approval policies.</p>"
       }
     },
     "ArcAxisConfiguration": {
@@ -1064,6 +1117,8 @@
         "Analysis$ThemeArn": "<p>The ARN of the theme of the analysis.</p>",
         "AnalysisSourceTemplate$Arn": "<p>The Amazon Resource Name (ARN) of the source template of an analysis.</p>",
         "AnalysisSummary$Arn": "<p>The Amazon Resource Name (ARN) for the analysis.</p>",
+        "ApprovalGroupList$member": null,
+        "ApprovalPolicy$PolicyArn": "<p>The Amazon Resource Name (ARN) of the approval policy.</p>",
         "ArnList$member": null,
         "AssetBundleExportJobAnalysisOverrideProperties$Arn": "<p>The ARN of the specific <code>Analysis</code> resource whose override properties are configured in this structure.</p>",
         "AssetBundleExportJobDashboardOverrideProperties$Arn": "<p>The ARN of the specific <code>Dashboard</code> resource whose override properties are configured in this structure.</p>",
@@ -1074,6 +1129,7 @@
         "AssetBundleExportJobRefreshScheduleOverrideProperties$Arn": "<p>The ARN of the specific <code>RefreshSchedule</code> resource whose override properties are configured in this structure.</p>",
         "AssetBundleExportJobSummary$Arn": "<p>The ARN of the export job.</p>",
         "AssetBundleExportJobThemeOverrideProperties$Arn": "<p>The ARN of the specific <code>Theme</code> resource whose override properties are configured in this structure.</p>",
+        "AssetBundleExportJobTopicV2OverrideProperties$Arn": "<p>The ARN of the specific <code>Topic</code> resource whose override properties are configured in this structure.</p>",
         "AssetBundleExportJobVPCConnectionOverrideProperties$Arn": "<p>The ARN of the specific <code>VPCConnection</code> resource whose override properties are configured in this structure.</p>",
         "AssetBundleExportJobWarning$Arn": "<p>The ARN of the resource whose processing caused a warning.</p>",
         "AssetBundleImportJobError$Arn": "<p>The ARN of the resource whose processing caused an error.</p>",
@@ -1100,6 +1156,7 @@
         "CreateDataSetResponse$Arn": "<p>The Amazon Resource Name (ARN) of the dataset.</p>",
         "CreateDataSetResponse$IngestionArn": "<p>The ARN for the ingestion, which is triggered as a result of dataset creation if the import mode is SPICE.</p>",
         "CreateDataSourceResponse$Arn": "<p>The Amazon Resource Name (ARN) of the data source.</p>",
+        "CreateDlpSettingResponse$Arn": "<p>The Amazon Resource Name (ARN) of the created DLP setting.</p>",
         "CreateFolderRequest$ParentFolderArn": "<p>The Amazon Resource Name (ARN) for the parent folder.</p> <p> <code>ParentFolderArn</code> can be null. An empty <code>parentFolderArn</code> creates a root-level folder.</p>",
         "CreateFolderResponse$Arn": "<p>The Amazon Resource Name (ARN) for the newly created folder.</p>",
         "CreateIAMPolicyAssignmentRequest$PolicyArn": "<p>The ARN for the IAM policy to apply to the Amazon Quick Sight users and groups specified in this assignment.</p>",
@@ -1144,6 +1201,7 @@
         "DeleteDashboardResponse$Arn": "<p>The Secure Socket Layer (SSL) properties that apply for the resource.</p>",
         "DeleteDataSetResponse$Arn": "<p>The Amazon Resource Name (ARN) of the dataset.</p>",
         "DeleteDataSourceResponse$Arn": "<p>The Amazon Resource Name (ARN) of the data source that you deleted.</p>",
+        "DeleteDlpSettingResponse$Arn": "<p>The Amazon Resource Name (ARN) of the deleted DLP setting.</p>",
         "DeleteFolderResponse$Arn": "<p>The Amazon Resource Name of the deleted folder.</p>",
         "DeleteOAuthClientApplicationResponse$Arn": "<p>The Amazon Resource Name (ARN) of the OAuthClientApplication that you deleted.</p>",
         "DeleteRefreshScheduleResponse$Arn": "<p>The Amazon Resource Name (ARN) for the refresh schedule.</p>",
@@ -1181,6 +1239,8 @@
         "DescribeTopicRefreshScheduleResponse$DatasetArn": "<p>The Amazon Resource Name (ARN) of the dataset.</p>",
         "DescribeTopicResponse$Arn": "<p>The Amazon Resource Name (ARN) of the topic.</p>",
         "DescribeTopicV2Response$Arn": "<p>The Amazon Resource Name (ARN) of the topic.</p>",
+        "DlpSettingDetails$Arn": "<p>The Amazon Resource Name (ARN) of the DLP setting.</p>",
+        "DlpSettingSummary$Arn": "<p>The Amazon Resource Name (ARN) of the DLP setting.</p>",
         "FileSource$DataSourceArn": "<p>The Amazon Resource Name (ARN) for the data source.</p>",
         "Folder$Arn": "<p>The Amazon Resource Name (ARN) for the folder.</p>",
         "FolderArnList$member": null,
@@ -1192,6 +1252,7 @@
         "GetFlowPermissionsOutput$Arn": "<p>The Amazon Resource Name (ARN) of the flow you are getting permissions against.</p>",
         "GetSessionEmbedUrlRequest$UserArn": "<p>The Amazon Quick user's Amazon Resource Name (ARN), for use with <code>QUICKSIGHT</code> identity type. You can use this for any type of Amazon Quick users in your account (readers, authors, or admins). They need to be authenticated as one of the following:</p> <ol> <li> <p>Active Directory (AD) users or group members</p> </li> <li> <p>Invited nonfederated users</p> </li> <li> <p>IAM users and IAM role-based sessions authenticated through Federated Single Sign-On using SAML, OpenID Connect, or IAM federation</p> </li> </ol> <p>Omit this parameter for users in the third group, IAM users and IAM role-based sessions.</p>",
         "Group$Arn": "<p>The Amazon Resource Name (ARN) for the group.</p>",
+        "GroupArnList$member": null,
         "GroupMember$Arn": "<p>The Amazon Resource Name (ARN) for the group member (user).</p>",
         "IAMPolicyAssignment$PolicyArn": "<p>The Amazon Resource Name (ARN) for the IAM policy.</p>",
         "Ingestion$Arn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
@@ -1268,6 +1329,7 @@
         "UpdateDataSetResponse$IngestionArn": "<p>The ARN for the ingestion, which is triggered as a result of dataset creation if the import mode is SPICE.</p>",
         "UpdateDataSourcePermissionsResponse$DataSourceArn": "<p>The Amazon Resource Name (ARN) of the data source.</p>",
         "UpdateDataSourceResponse$Arn": "<p>The Amazon Resource Name (ARN) of the data source.</p>",
+        "UpdateDlpSettingResponse$Arn": "<p>The Amazon Resource Name (ARN) of the updated DLP setting.</p>",
         "UpdateFolderPermissionsResponse$Arn": "<p>The Amazon Resource Name (ARN) of the folder.</p>",
         "UpdateFolderResponse$Arn": "<p>The Amazon Resource Name (ARN) of the folder.</p>",
         "UpdateIAMPolicyAssignmentRequest$PolicyArn": "<p>The ARN for the IAM policy to apply to the Amazon Quick Sight users and groups specified in this assignment.</p>",
@@ -1519,6 +1581,30 @@
       "base": null,
       "refs": {
         "AssetBundleExportJobThemeOverrideProperties$Properties": "<p>A list of <code>Theme</code> resource properties to generate variables for in the returned CloudFormation template.</p>"
+      }
+    },
+    "AssetBundleExportJobTopicV2OverrideProperties": {
+      "base": "<p>Controls how a specific <code>Topic</code> resource is parameterized in the returned CloudFormation template.</p>",
+      "refs": {
+        "AssetBundleExportJobTopicV2OverridePropertiesList$member": null
+      }
+    },
+    "AssetBundleExportJobTopicV2OverridePropertiesList": {
+      "base": null,
+      "refs": {
+        "AssetBundleCloudFormationOverridePropertyConfiguration$TopicsV2": "<p>An optional list of structures that controls how <code>Topic</code> resources are parameterized in the returned CloudFormation template.</p>"
+      }
+    },
+    "AssetBundleExportJobTopicV2PropertyToOverride": {
+      "base": null,
+      "refs": {
+        "AssetBundleExportJobTopicV2PropertyToOverrideList$member": null
+      }
+    },
+    "AssetBundleExportJobTopicV2PropertyToOverrideList": {
+      "base": null,
+      "refs": {
+        "AssetBundleExportJobTopicV2OverrideProperties$Properties": "<p>A list of <code>Topic</code> resource properties to generate variables for in the returned CloudFormation template.</p>"
       }
     },
     "AssetBundleExportJobVPCConnectionOverrideProperties": {
@@ -1884,6 +1970,42 @@
         "AssetBundleImportJobOverrideTags$Themes": "<p>A list of tag overrides for any <code>Theme</code> resources that are present in the asset bundle that is imported.</p>"
       }
     },
+    "AssetBundleImportJobTopicV2OverrideParameters": {
+      "base": "<p>The override parameters for a single topic that is being imported.</p>",
+      "refs": {
+        "AssetBundleImportJobTopicV2OverrideParametersList$member": null
+      }
+    },
+    "AssetBundleImportJobTopicV2OverrideParametersList": {
+      "base": null,
+      "refs": {
+        "AssetBundleImportJobOverrideParameters$TopicsV2": "<p>A list of overrides for any <code>Topic</code> resources that are present in the asset bundle that is imported.</p>"
+      }
+    },
+    "AssetBundleImportJobTopicV2OverridePermissions": {
+      "base": "<p>An object that contains a list of permissions to be applied to a list of topic IDs.</p>",
+      "refs": {
+        "AssetBundleImportJobTopicV2OverridePermissionsList$member": null
+      }
+    },
+    "AssetBundleImportJobTopicV2OverridePermissionsList": {
+      "base": null,
+      "refs": {
+        "AssetBundleImportJobOverridePermissions$TopicsV2": "<p>A list of permissions for the topics that you want to apply overrides to.</p>"
+      }
+    },
+    "AssetBundleImportJobTopicV2OverrideTags": {
+      "base": "<p>An object that contains a list of tags to be assigned to a list of topic IDs.</p>",
+      "refs": {
+        "AssetBundleImportJobTopicV2OverrideTagsList$member": null
+      }
+    },
+    "AssetBundleImportJobTopicV2OverrideTagsList": {
+      "base": null,
+      "refs": {
+        "AssetBundleImportJobOverrideTags$TopicsV2": "<p>A list of tag overrides for any <code>Topic</code> resources that are present in the asset bundle that is imported.</p>"
+      }
+    },
     "AssetBundleImportJobVPCConnectionOverrideParameters": {
       "base": "<p>The override parameters for a single VPC connection that is imported.</p>",
       "refs": {
@@ -1960,6 +2082,7 @@
         "AssetBundleImportJobDataSourceOverridePermissions$Permissions": "<p>A list of permissions for the data source that you want to apply overrides to.</p>",
         "AssetBundleImportJobFolderOverridePermissions$Permissions": null,
         "AssetBundleImportJobThemeOverridePermissions$Permissions": "<p>A list of permissions for the themes that you want to apply overrides to.</p>",
+        "AssetBundleImportJobTopicV2OverridePermissions$Permissions": "<p>A list of permissions for the topics that you want to apply overrides to.</p>",
         "AssetBundleResourceLinkSharingConfiguration$Permissions": "<p>A list of link sharing permissions for the dashboards that you want to apply overrides to.</p>"
       }
     },
@@ -1984,6 +2107,8 @@
         "AssetBundleImportJobFolderOverrideTags$FolderIds": "<p>A list of folder IDs that you want to apply overrides to. You can use <code>*</code> to override all folders in this asset bundle.</p>",
         "AssetBundleImportJobThemeOverridePermissions$ThemeIds": "<p>A list of theme IDs that you want to apply overrides to. You can use <code>*</code> to override all themes in this asset bundle.</p>",
         "AssetBundleImportJobThemeOverrideTags$ThemeIds": "<p>A list of theme IDs that you want to apply overrides to. You can use <code>*</code> to override all themes in this asset bundle.</p>",
+        "AssetBundleImportJobTopicV2OverridePermissions$TopicIds": "<p>A list of topic IDs that you want to apply overrides to. You can use <code>*</code> to override all topics in this asset bundle.</p>",
+        "AssetBundleImportJobTopicV2OverrideTags$TopicIds": "<p>A list of topic IDs that you want to apply overrides to. You can use <code>*</code> to override all topics in this asset bundle.</p>",
         "AssetBundleImportJobVPCConnectionOverrideTags$VPCConnectionIds": "<p>A list of VPC connection IDs that you want to apply overrides to. You can use <code>*</code> to override all VPC connections in this asset bundle.</p>"
       }
     },
@@ -1993,6 +2118,20 @@
         "AnalysisDefinition$Options": "<p>An array of option definitions for an analysis.</p>",
         "DashboardVersionDefinition$Options": "<p>An array of option definitions for a dashboard.</p>",
         "TemplateVersionDefinition$Options": "<p>An array of option definitions for a template.</p>"
+      }
+    },
+    "AssetType": {
+      "base": null,
+      "refs": {
+        "AssetTypeList$member": null
+      }
+    },
+    "AssetTypeList": {
+      "base": null,
+      "refs": {
+        "ApprovalPolicy$AssetTypes": "<p>The list of asset types that the approval policy applies to.</p>",
+        "CreateApprovalPolicyRequest$AssetTypes": "<p>The list of asset types that the approval policy applies to.</p>",
+        "UpdateApprovalPolicyRequest$AssetTypes": "<p>The list of asset types that the approval policy applies to.</p>"
       }
     },
     "AssignmentStatus": {
@@ -2158,6 +2297,7 @@
       "refs": {
         "BatchCreateTopicReviewedAnswerRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that you want to create a reviewed answer in.</p>",
         "BatchDeleteTopicReviewedAnswerRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that you want to delete a reviewed answers in.</p>",
+        "BatchDescribeUserLimitsRequest$accountId": "<p>The ID of the Amazon Web Services account that contains the users.</p>",
         "CancelIngestionRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "CreateAccountCustomizationRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that you want to customize Quick Sight for.</p>",
         "CreateAccountCustomizationResponse$AwsAccountId": "<p>The ID for the Amazon Web Services account that you want to customize Quick Sight for.</p>",
@@ -2170,12 +2310,14 @@
         "CreateDashboardRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account where you want to create the dashboard.</p>",
         "CreateDataSetRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "CreateDataSourceRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
+        "CreateDlpSettingRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account in which to create the DLP setting.</p>",
         "CreateFolderMembershipRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the folder.</p>",
         "CreateFolderRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account where you want to create the folder.</p>",
         "CreateGroupMembershipRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that the group is in. Currently, you use the ID for the Amazon Web Services account that contains your Amazon Quick Sight account.</p>",
         "CreateGroupRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that the group is in. Currently, you use the ID for the Amazon Web Services account that contains your Amazon Quick Sight account.</p>",
         "CreateIAMPolicyAssignmentRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account where you want to assign an IAM policy to Amazon Quick Sight users or groups.</p>",
         "CreateIngestionRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
+        "CreateLimitsProfileRequest$accountId": "<p>The ID of the Amazon Web Services account that contains the limits profile.</p>",
         "CreateNamespaceRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that you want to create the Quick Sight namespace in.</p>",
         "CreateOAuthClientApplicationRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "CreateRefreshScheduleRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
@@ -2202,12 +2344,14 @@
         "DeleteDataSetRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "DeleteDataSourceRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "DeleteDefaultQBusinessApplicationRequest$AwsAccountId": "<p>The ID of the Quick Sight account that you want to disconnect from a Amazon Q Business application.</p>",
+        "DeleteDlpSettingRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the DLP setting that you want to delete.</p>",
         "DeleteFolderMembershipRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the folder.</p>",
         "DeleteFolderRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the folder.</p>",
         "DeleteGroupMembershipRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that the group is in. Currently, you use the ID for the Amazon Web Services account that contains your Amazon Quick Sight account.</p>",
         "DeleteGroupRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that the group is in. Currently, you use the ID for the Amazon Web Services account that contains your Amazon Quick Sight account.</p>",
         "DeleteIAMPolicyAssignmentRequest$AwsAccountId": "<p>The Amazon Web Services account ID where you want to delete the IAM policy assignment.</p>",
         "DeleteIdentityPropagationConfigRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that you want to delete an identity propagation configuration from.</p>",
+        "DeleteLimitsProfileRequest$accountId": "<p>The ID of the Amazon Web Services account that contains the limits profile.</p>",
         "DeleteNamespaceRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that you want to delete the Quick Sight namespace from.</p>",
         "DeleteOAuthClientApplicationRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "DeleteRefreshScheduleRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
@@ -2259,6 +2403,7 @@
         "DescribeDataSourcePermissionsRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "DescribeDataSourceRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "DescribeDefaultQBusinessApplicationRequest$AwsAccountId": "<p>The ID of the Quick Sight account that is linked to the Amazon Q Business application that you want described.</p>",
+        "DescribeDlpSettingRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the DLP setting that you want to describe.</p>",
         "DescribeFolderPermissionsRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the folder.</p>",
         "DescribeFolderRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the folder.</p>",
         "DescribeFolderResolvedPermissionsRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the folder.</p>",
@@ -2270,6 +2415,7 @@
         "DescribeIpRestrictionResponse$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the IP rules.</p>",
         "DescribeKeyRegistrationRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the customer managed key registration that you want to describe.</p>",
         "DescribeKeyRegistrationResponse$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the customer managed key registration specified in the request.</p>",
+        "DescribeLimitsProfileRequest$accountId": "<p>The ID of the Amazon Web Services account that contains the limits profile.</p>",
         "DescribeNamespaceRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the Quick Sight namespace that you want to describe.</p>",
         "DescribeOAuthClientApplicationRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "DescribeQPersonalizationConfigurationRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the personalization configuration that the user wants described.</p>",
@@ -2300,6 +2446,7 @@
         "GetIdentityContextRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that the user whose identity context you want to retrieve is in. Currently, you use the ID for the Amazon Web Services account that contains your Quick Sight account.</p>",
         "GetSessionEmbedUrlRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account associated with your Amazon Quick Sight subscription.</p>",
         "IAMPolicyAssignment$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
+        "LimitsProfile$accountId": "<p>The ID of the Amazon Web Services account that contains the limits profile.</p>",
         "ListActionConnectorsRequest$AwsAccountId": "<p>The Amazon Web Services account ID for which to list action connectors.</p>",
         "ListAgentsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the agents.</p>",
         "ListAnalysesRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the analyses.</p>",
@@ -2311,6 +2458,7 @@
         "ListDashboardsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the dashboards that you're listing.</p>",
         "ListDataSetsRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "ListDataSourcesRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
+        "ListDlpSettingsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the DLP settings that you want to list.</p>",
         "ListFolderMembersRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the folder.</p>",
         "ListFoldersForResourceRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the resource.</p>",
         "ListFoldersRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the folder.</p>",
@@ -2320,6 +2468,7 @@
         "ListIAMPolicyAssignmentsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains these IAM policy assignments.</p>",
         "ListIdentityPropagationConfigsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contain the identity propagation configurations of.</p>",
         "ListIngestionsRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
+        "ListLimitsProfilesRequest$accountId": "<p>The ID of the Amazon Web Services account that contains the limits profiles.</p>",
         "ListNamespacesRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the Quick Sight namespaces that you want to list.</p>",
         "ListOAuthClientApplicationsRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "ListRefreshSchedulesRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
@@ -2386,6 +2535,7 @@
         "UpdateDataSourcePermissionsRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "UpdateDataSourceRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "UpdateDefaultQBusinessApplicationRequest$AwsAccountId": "<p>The ID of the Quick Sight account that is connected to the Amazon Q Business application that you want to update.</p>",
+        "UpdateDlpSettingRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the DLP setting that you want to update.</p>",
         "UpdateFolderPermissionsRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the folder to update.</p>",
         "UpdateFolderRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the folder to update.</p>",
         "UpdateGroupRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that the group is in. Currently, you use the ID for the Amazon Web Services account that contains your Amazon Quick Sight account.</p>",
@@ -2394,6 +2544,7 @@
         "UpdateIpRestrictionRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the IP rules.</p>",
         "UpdateIpRestrictionResponse$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the IP rules.</p>",
         "UpdateKeyRegistrationRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the customer managed key registration that you want to update.</p>",
+        "UpdateLimitsProfileRequest$accountId": "<p>The ID of the Amazon Web Services account that contains the limits profile.</p>",
         "UpdateOAuthClientApplicationRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "UpdatePublicSharingSettingsRequest$AwsAccountId": "<p>The Amazon Web Services account ID associated with your Amazon Quick Sight subscription.</p>",
         "UpdateQPersonalizationConfigurationRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account account that contains the personalization configuration that the user wants to update.</p>",
@@ -2668,6 +2819,32 @@
       "base": null,
       "refs": {}
     },
+    "BatchDescribeUserLimitsError": {
+      "base": "<p>Information about a user whose limits could not be described in a batch operation.</p>",
+      "refs": {
+        "BatchDescribeUserLimitsErrorList$member": null
+      }
+    },
+    "BatchDescribeUserLimitsErrorList": {
+      "base": null,
+      "refs": {
+        "BatchDescribeUserLimitsResponse$errors": "<p>A list of errors for users whose limits could not be described.</p>"
+      }
+    },
+    "BatchDescribeUserLimitsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchDescribeUserLimitsRequestUsersList": {
+      "base": null,
+      "refs": {
+        "BatchDescribeUserLimitsRequest$users": "<p>A list of users to describe limits for. Each entry contains a user name and namespace.</p>"
+      }
+    },
+    "BatchDescribeUserLimitsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "BigQueryParameters": {
       "base": "<p>The parameters that are required to connect to a Google BigQuery data source.</p>",
       "refs": {
@@ -2792,6 +2969,7 @@
         "AssetBundleImportJobOverrideValidationStrategy$StrictModeForAllResources": "<p>A Boolean value that indicates whether to import all analyses and dashboards under strict or lenient mode.</p>",
         "BookmarksConfigurations$Enabled": "<p>A Boolean value that determines whether a user can bookmark an embedded dashboard.</p>",
         "BorderStyle$Show": "<p>The option to enable display of borders for visuals.</p>",
+        "CreateDlpSettingRequest$Enabled": "<p>Specifies whether DLP enforcement is active for this setting. Set to <code>true</code> to enable enforcement, or <code>false</code> to disable it at time of setting creation.</p>",
         "DashboardCustomizationSummaryConfigurations$Enabled": "<p>The enabled status of the dashboard customization summary configuration for an embedded Quick Sight dashboard.</p>",
         "DataPrepListAggregationFunction$Distinct": "<p>Whether to include only distinct values in the concatenated result, removing duplicates.</p>",
         "DataQnAConfigurations$Enabled": "<p>The generative Q&amp;A settings of an embedded Quick Sight console.</p>",
@@ -2859,6 +3037,7 @@
         "TopicNumericRangeFilter$Inverse": "<p>A Boolean value that indicates if the filter is inverse.</p>",
         "TopicRefreshSchedule$BasedOnSpiceSchedule": "<p>A Boolean value that controls whether to schedule runs at the same schedule that is specified in SPICE dataset.</p>",
         "UpdateAccountSettingsRequest$TerminationProtectionEnabled": "<p>A boolean value that determines whether or not an Quick Sight account can be deleted. A <code>True</code> value doesn't allow the account to be deleted and results in an error message if a user tries to make a <code>DeleteAccountSubscription</code> request. A <code>False</code> value will allow the account to be deleted.</p>",
+        "UpdateDlpSettingRequest$Enabled": "<p>Specifies whether DLP enforcement is active for this setting. Set to <code>true</code> to enable enforcement, or <code>false</code> to disable it.</p>",
         "UpdateKnowledgeBaseRequest$IsEmailNotificationOptedForIngestionFailures": "<p>Specifies whether email notifications are enabled for ingestion failures.</p>",
         "UpdatePublicSharingSettingsRequest$PublicSharingEnabled": "<p>A Boolean value that indicates whether public sharing is turned on for an Quick account.</p>",
         "UpdateUserRequest$UnapplyCustomPermissions": "<p>A flag that you use to indicate that you want to remove all custom permissions from this user. Using this parameter resets the user to the state it was in before a custom permissions profile was applied. This parameter defaults to NULL and it doesn't accept any other value.</p>",
@@ -4460,6 +4639,14 @@
       "base": null,
       "refs": {}
     },
+    "CreateApprovalPolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateApprovalPolicyResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CreateBrandRequest": {
       "base": null,
       "refs": {}
@@ -4504,6 +4691,14 @@
       "refs": {}
     },
     "CreateDataSourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateDlpSettingRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateDlpSettingResponse": {
       "base": null,
       "refs": {}
     },
@@ -4574,6 +4769,26 @@
       "refs": {}
     },
     "CreateKnowledgeBaseResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateLimitsProfileRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateLimitsProfileRequestClientTokenString": {
+      "base": null,
+      "refs": {
+        "CreateLimitsProfileRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, the service ignores the request, but does not return an error.</p>"
+      }
+    },
+    "CreateLimitsProfileRequestResourceLimitsMap": {
+      "base": null,
+      "refs": {
+        "CreateLimitsProfileRequest$resourceLimits": "<p>A map of resource types to their limit values for this profile.</p>"
+      }
+    },
+    "CreateLimitsProfileResponse": {
       "base": null,
       "refs": {}
     },
@@ -6300,6 +6515,14 @@
       "base": null,
       "refs": {}
     },
+    "DeleteApprovalPolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteApprovalPolicyResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteBrandAssignmentRequest": {
       "base": null,
       "refs": {}
@@ -6364,6 +6587,14 @@
       "base": null,
       "refs": {}
     },
+    "DeleteDlpSettingRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteDlpSettingResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteFlowRequest": {
       "base": null,
       "refs": {}
@@ -6425,6 +6656,14 @@
       "refs": {}
     },
     "DeleteKnowledgeBaseResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteLimitsProfileRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteLimitsProfileResponse": {
       "base": null,
       "refs": {}
     },
@@ -6658,6 +6897,14 @@
       "base": null,
       "refs": {}
     },
+    "DescribeApprovalPolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeApprovalPolicyResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DescribeAssetBundleExportJobRequest": {
       "base": null,
       "refs": {}
@@ -6810,6 +7057,14 @@
       "base": null,
       "refs": {}
     },
+    "DescribeDlpSettingRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeDlpSettingResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DescribeFlowRequest": {
       "base": null,
       "refs": {}
@@ -6903,6 +7158,14 @@
       "refs": {}
     },
     "DescribeKnowledgeBaseResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeLimitsProfileRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeLimitsProfileResponse": {
       "base": null,
       "refs": {}
     },
@@ -7221,6 +7484,73 @@
         "TopicIRMetric$DisplayFormatOptions": null
       }
     },
+    "DlpAction": {
+      "base": null,
+      "refs": {
+        "CreateDlpSettingRequest$ProviderOutageAction": "<p>The behavior to apply when the DLP provider is unreachable. Valid values are <code>ALLOW</code>, <code>WARN</code>, and <code>BLOCK</code>.</p>",
+        "DlpSettingDetails$ProviderOutageAction": "<p>The behavior applied when the DLP provider is unreachable. Valid values are <code>ALLOW</code>, <code>WARN</code>, and <code>BLOCK</code>.</p>",
+        "LabelActionMapping$Action": "<p>The enforcement action to apply when content with this sensitivity label is detected. Valid values are <code>ALLOW</code>, <code>BLOCK</code>, and <code>WARN</code>.</p>",
+        "MicrosoftPurviewProviderConfig$UnmappedAction": "<p>The default action to apply to content that has no sensitivity label or whose label is not mapped. Valid values are <code>ALLOW</code>, <code>BLOCK</code>, and <code>WARN</code>.</p>",
+        "UpdateDlpSettingRequest$ProviderOutageAction": "<p>An updated behavior to apply when the DLP provider is unreachable. Valid values are <code>ALLOW</code>, <code>WARN</code>, and <code>BLOCK</code>.</p>"
+      }
+    },
+    "DlpProviderType": {
+      "base": null,
+      "refs": {
+        "CreateDlpSettingRequest$ProviderType": "<p>The type of external DLP provider to use for sensitivity label classification. Currently, the only supported value is <code>MICROSOFT_PURVIEW</code>.</p>",
+        "DlpSettingDetails$ProviderType": "<p>The type of external DLP provider used for sensitivity label classification.</p>",
+        "DlpSettingSummary$ProviderType": "<p>The type of external DLP provider used for sensitivity label classification.</p>",
+        "UpdateDlpSettingRequest$ProviderType": "<p>An updated DLP provider type. Currently, the only supported value is <code>MICROSOFT_PURVIEW</code>.</p>"
+      }
+    },
+    "DlpSettingDetails": {
+      "base": "<p>The full configuration details of a DLP setting.</p>",
+      "refs": {
+        "DescribeDlpSettingResponse$DlpSetting": "<p>The full configuration of the requested DLP setting, returned as a <code>DlpSettingDetails</code> object.</p>"
+      }
+    },
+    "DlpSettingId": {
+      "base": null,
+      "refs": {
+        "CreateDlpSettingRequest$DlpSettingId": "<p>A unique identifier for the DLP setting.</p>",
+        "CreateDlpSettingResponse$DlpSettingId": "<p>The ID of the created DLP setting.</p>",
+        "DeleteDlpSettingRequest$DlpSettingId": "<p>The ID of the DLP setting that you want to delete.</p>",
+        "DeleteDlpSettingResponse$DlpSettingId": "<p>The ID of the deleted DLP setting.</p>",
+        "DescribeDlpSettingRequest$DlpSettingId": "<p>The ID of the DLP setting that you want to describe.</p>",
+        "DlpSettingDetails$DlpSettingId": "<p>The ID of the DLP setting.</p>",
+        "DlpSettingSummary$DlpSettingId": "<p>The ID of the DLP setting.</p>",
+        "UpdateDlpSettingRequest$DlpSettingId": "<p>The ID of the DLP setting that you want to update.</p>",
+        "UpdateDlpSettingResponse$DlpSettingId": "<p>The ID of the updated DLP setting.</p>"
+      }
+    },
+    "DlpSettingName": {
+      "base": null,
+      "refs": {
+        "CreateDlpSettingRequest$Name": "<p>A human-readable display name for the DLP setting.</p>",
+        "DlpSettingDetails$Name": "<p>The display name of the DLP setting.</p>",
+        "DlpSettingSummary$Name": "<p>The display name of the DLP setting.</p>",
+        "UpdateDlpSettingRequest$Name": "<p>An updated display name for the DLP setting.</p>"
+      }
+    },
+    "DlpSettingStatus": {
+      "base": null,
+      "refs": {
+        "DlpSettingDetails$Status": "<p>The status of the DLP setting. Valid values are <code>ACTIVE</code> and <code>INACTIVE</code>.</p>",
+        "DlpSettingSummary$Status": "<p>The status of the DLP setting. Valid values are <code>ACTIVE</code> and <code>INACTIVE</code>.</p>"
+      }
+    },
+    "DlpSettingSummary": {
+      "base": "<p>A summary of a DLP setting returned by list operations.</p>",
+      "refs": {
+        "DlpSettingSummaryList$member": null
+      }
+    },
+    "DlpSettingSummaryList": {
+      "base": null,
+      "refs": {
+        "ListDlpSettingsResponse$DlpSettingSummaries": "<p>A list of <code>DlpSettingSummary</code> objects for the DLP settings in the account. The list is empty if no DLP settings have been configured.</p>"
+      }
+    },
     "DnsResolverList": {
       "base": null,
       "refs": {
@@ -7326,6 +7656,24 @@
         "AccountInfo$Edition": "<p>The edition of your Quick Sight account.</p>",
         "AccountSettings$Edition": "<p>The edition of Quick Sight that you're currently subscribed to: Enterprise edition or Standard edition.</p>",
         "CreateAccountSubscriptionRequest$Edition": "<p>The edition of Amazon Quick Sight that you want your account to have. Currently, you can choose from <code>ENTERPRISE</code> or <code>ENTERPRISE_AND_Q</code>.</p> <p>If you choose <code>ENTERPRISE_AND_Q</code>, the following parameters are required:</p> <ul> <li> <p> <code>FirstName</code> </p> </li> <li> <p> <code>LastName</code> </p> </li> <li> <p> <code>EmailAddress</code> </p> </li> <li> <p> <code>ContactNumber</code> </p> </li> </ul>"
+      }
+    },
+    "EffectiveLimit": {
+      "base": "<p>The effective limit for a resource type that applies to a user, considering all applicable profile assignments and inheritance rules.</p>",
+      "refs": {
+        "EffectiveLimitList$member": null
+      }
+    },
+    "EffectiveLimitLimitValueLong": {
+      "base": null,
+      "refs": {
+        "EffectiveLimit$limitValue": "<p>The maximum allowed value for the resource.</p>"
+      }
+    },
+    "EffectiveLimitList": {
+      "base": null,
+      "refs": {
+        "UserLimits$effectiveLimits": "<p>A list of effective limits for the user.</p>"
       }
     },
     "ElementValue": {
@@ -8932,6 +9280,20 @@
         "DefaultCategoryEffectsMap$key": null
       }
     },
+    "GovernedAction": {
+      "base": null,
+      "refs": {
+        "GovernedActionList$member": null
+      }
+    },
+    "GovernedActionList": {
+      "base": null,
+      "refs": {
+        "ApprovalPolicy$Actions": "<p>The list of governed actions that trigger the approval workflow.</p>",
+        "CreateApprovalPolicyRequest$Actions": "<p>The list of governed actions that trigger the approval workflow.</p>",
+        "UpdateApprovalPolicyRequest$Actions": "<p>The list of governed actions that trigger the approval workflow.</p>"
+      }
+    },
     "GradientColor": {
       "base": "<p>Determines the gradient color settings.</p>",
       "refs": {
@@ -9026,6 +9388,12 @@
         "DescribeGroupResponse$Group": "<p>The name of the group.</p>",
         "GroupList$member": null,
         "UpdateGroupResponse$Group": "<p>The name of the group.</p>"
+      }
+    },
+    "GroupArnList": {
+      "base": null,
+      "refs": {
+        "ApplicableTo$GroupArns": "<p>The list of group ARNs that the policy applies to. Required when type is GROUP.</p>"
       }
     },
     "GroupByColumnNameList": {
@@ -10100,13 +10468,13 @@
     "KbTemplate": {
       "base": null,
       "refs": {
-        "KbTemplateConfiguration$template": "<p>The template document that defines the knowledge base behavior.</p>"
+        "KbTemplateConfiguration$template": "<p>The connector configuration for the knowledge base data source. The structure depends on the connector type of the data source referenced by <code>DataSourceArn</code>.</p> <p>The template must be a JSON object. The required fields vary by connector type:</p> <ul> <li> <p> <b>Amazon S3</b> (<code>S3V2</code>) – Requires <code>connectionConfiguration</code> with <code>bucketName</code>. Supports <code>filterConfiguration</code> for inclusion and exclusion prefixes and patterns. Supports <code>accessControlConfiguration</code> and <code>deletionProtectionConfiguration</code>.</p> </li> <li> <p> <b>Google Drive</b> (<code>GOOGLEDRIVEV3</code>) – Requires <code>connectionConfiguration</code> with <code>authType</code> set to <code>SERVICE_ACCOUNT</code>. Supports <code>dataEntityConfiguration</code> with <code>crawlMyDrive</code>, <code>crawlSharedWithMe</code>, and <code>crawlSharedDrives</code>.</p> </li> <li> <p> <b>OneDrive</b> (<code>ONEDRIVEV3</code>) – Requires <code>authType</code> at the template root level set to <code>TWO_LEGGED_OAUTH</code>. Requires <code>connectionConfiguration</code> with <code>tenantId</code> in UUID format. Supports <code>dataEntityConfiguration</code> with <code>crawlPersonalDrives</code> and <code>crawlSharedWithMe</code>.</p> </li> <li> <p> <b>SharePoint</b> (<code>SHAREPOINTV3</code>) – Requires <code>connectionConfiguration</code> with <code>tenantId</code> in UUID format. Supports <code>dataEntityConfiguration</code> with <code>siteUrls</code>, <code>crawlFiles</code>, and <code>crawlPages</code>.</p> </li> <li> <p> <b>Web Crawler</b> (<code>WEBCRAWLERV3</code>) – Requires <code>connectionConfiguration</code> with <code>seedUrls</code> or <code>siteMapUrls</code> (mutually exclusive) and <code>authType</code>. Supports <code>crawlConfiguration</code> for crawl depth, rate limits, and scope. Supports <code>filterConfiguration</code> for file size limits and URL patterns. Valid values for <code>authType</code>: <code>NO_AUTH</code>, <code>BASIC_AUTH</code>, <code>FORM</code>, <code>SAML</code>.</p> </li> </ul> <p>The optional <code>deletionProtectionConfiguration</code> object is supported by all connector types. It contains <code>enableDeletionProtection</code> and <code>deletionProtectionThreshold</code>.</p>"
       }
     },
     "KbTemplateConfiguration": {
-      "base": "<p>The template configuration for a knowledge base.</p>",
+      "base": "<p>The template configuration for a knowledge base. This object contains connector-specific configuration that defines how data is crawled and indexed.</p>",
       "refs": {
-        "KnowledgeBaseConfiguration$templateConfiguration": "<p>The template configuration for the knowledge base.</p>"
+        "KnowledgeBaseConfiguration$templateConfiguration": "<p>The template configuration that defines how the data source connector crawls and indexes data for the knowledge base. The template structure varies by connector type. See <code>KbTemplateConfiguration</code> for connector-specific details.</p>"
       }
     },
     "KeyPairCredentials": {
@@ -10244,6 +10612,30 @@
         "KnowledgeBaseSummaries$member": null
       }
     },
+    "LabelActionMapping": {
+      "base": "<p>Maps a sensitivity label from Microsoft Purview to an enforcement action.</p>",
+      "refs": {
+        "LabelActionMappingList$member": null
+      }
+    },
+    "LabelActionMappingList": {
+      "base": null,
+      "refs": {
+        "MicrosoftPurviewProviderConfig$LabelActionMappings": "<p>The mappings from Microsoft Purview sensitivity labels to enforcement actions.</p>"
+      }
+    },
+    "LabelId": {
+      "base": null,
+      "refs": {
+        "LabelActionMapping$LabelId": "<p>The identifier of the sensitivity label from the DLP provider.</p>"
+      }
+    },
+    "LabelName": {
+      "base": null,
+      "refs": {
+        "LabelActionMapping$LabelName": "<p>The display name of the sensitivity label from the DLP provider.</p>"
+      }
+    },
     "LabelOptions": {
       "base": "<p>The share label options for the labels.</p>",
       "refs": {
@@ -10370,6 +10762,19 @@
       "base": "<p>A limit is exceeded.</p>",
       "refs": {}
     },
+    "LimitSource": {
+      "base": "<p>The source from which an effective limit was inherited.</p>",
+      "refs": {
+        "EffectiveLimit$source": "<p>The source from which this limit was inherited. Possible values:</p> <ul> <li> <p> <code>DIRECT_USER</code> – The limit comes from a profile directly assigned to the user.</p> </li> <li> <p> <code>GROUP</code> – The limit comes from a profile assigned to a group the user belongs to.</p> </li> <li> <p> <code>ROLE</code> – The limit comes from a profile assigned to a role the user has.</p> </li> <li> <p> <code>ACCOUNT</code> – The limit comes from the account-level default profile.</p> </li> <li> <p> <code>SYSTEM_DEFAULT</code> – The limit comes from the built-in system default.</p> </li> </ul>"
+      }
+    },
+    "LimitUnit": {
+      "base": "<p>The unit of measurement for a resource limit value.</p>",
+      "refs": {
+        "EffectiveLimit$limitUnit": "<p>The unit of measurement for the limit.</p>",
+        "ProfileLimitValue$unit": "<p>The unit of measurement for the limit value.</p>"
+      }
+    },
     "LimitedSensitiveString": {
       "base": null,
       "refs": {
@@ -10432,6 +10837,19 @@
         "TypeParameters$value": null,
         "UpdateDefaultQBusinessApplicationRequest$ApplicationId": "<p>The ID of the Amazon Q Business application that you want to update.</p>",
         "VisualOptions$type": "<p>The type for a <code>VisualOptions</code>.</p>"
+      }
+    },
+    "LimitsProfile": {
+      "base": "<p>A limits profile that defines resource usage limits for Amazon Quick Sight users. Limits profiles can be assigned to users, groups, or roles to control resource consumption.</p>",
+      "refs": {
+        "DescribeLimitsProfileResponse$profile": "<p>The details of the requested limits profile, including its name, description, resource limits, and metadata.</p>",
+        "LimitsProfileList$member": null
+      }
+    },
+    "LimitsProfileList": {
+      "base": null,
+      "refs": {
+        "ListLimitsProfilesResponse$profiles": "<p>A list of limits profiles.</p>"
       }
     },
     "LineChartAggregatedFieldWells": {
@@ -10595,6 +11013,14 @@
       "base": null,
       "refs": {}
     },
+    "ListApprovalPoliciesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListApprovalPoliciesResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListAssetBundleExportJobsRequest": {
       "base": null,
       "refs": {}
@@ -10677,6 +11103,14 @@
       "refs": {}
     },
     "ListDataSourcesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDlpSettingsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDlpSettingsResponse": {
       "base": null,
       "refs": {}
     },
@@ -10771,6 +11205,20 @@
       "refs": {}
     },
     "ListKnowledgeBasesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListLimitsProfilesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListLimitsProfilesRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListLimitsProfilesRequest$maxResults": "<p>The maximum number of results to return in a single call. If you don't specify a value, the service uses the default maximum.</p>"
+      }
+    },
+    "ListLimitsProfilesResponse": {
       "base": null,
       "refs": {}
     },
@@ -11173,6 +11621,7 @@
         "DescribeFolderResolvedPermissionsRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
         "ListActionConnectorsRequest$MaxResults": "<p>The maximum number of action connectors to return in a single response. Valid range is 1 to 100.</p>",
         "ListAnalysesRequest$MaxResults": "<p>The maximum number of results to return.</p>",
+        "ListApprovalPoliciesRequest$MaxResults": "<p>The maximum number of results to return in a single call. If you don't specify a value, the service returns a default number of results. Use the <code>NextToken</code> value in the response to retrieve additional results.</p>",
         "ListAssetBundleExportJobsRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
         "ListAssetBundleImportJobsRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
         "ListBrandsRequest$MaxResults": "<p>The maximum number of results to be returned in a single request.</p>",
@@ -11181,6 +11630,7 @@
         "ListDashboardsRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
         "ListDataSetsRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
         "ListDataSourcesRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
+        "ListDlpSettingsRequest$MaxResults": "<p>The maximum number of results to return per request.</p>",
         "ListFolderMembersRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
         "ListFoldersForResourceRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
         "ListFoldersRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
@@ -11320,6 +11770,18 @@
       "base": "<p>The metric comparison computation configuration.</p>",
       "refs": {
         "Computation$MetricComparison": "<p>The metric comparison computation configuration.</p>"
+      }
+    },
+    "MicrosoftPurviewCredentials": {
+      "base": "<p>The credentials for Microsoft Purview DLP integration. The credentials are stored in Amazon Web Services Secrets Manager and referenced by ARN.</p>",
+      "refs": {
+        "MicrosoftPurviewProviderConfig$Credentials": "<p>The credentials used to authenticate with Microsoft Purview.</p>"
+      }
+    },
+    "MicrosoftPurviewProviderConfig": {
+      "base": "<p>The full configuration for Microsoft Purview DLP integration, including the provider credentials and the label-action mappings that define the enforcement policy.</p>",
+      "refs": {
+        "ProviderConfig$MicrosoftPurview": "<p>The configuration for a Microsoft Purview DLP integration.</p>"
       }
     },
     "MinimumLabelType": {
@@ -12030,6 +12492,15 @@
         "TableSortConfiguration$PaginationConfiguration": "<p>The pagination configuration (page size, page number) for the table.</p>"
       }
     },
+    "PaginationToken": {
+      "base": null,
+      "refs": {
+        "ListApprovalPoliciesRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
+        "ListApprovalPoliciesResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
+        "ListDlpSettingsRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
+        "ListDlpSettingsResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>"
+      }
+    },
     "Palette": {
       "base": "<p>The color palette.</p>",
       "refs": {
@@ -12717,6 +13188,32 @@
         "PluginVisualSortConfiguration$PluginVisualTableQuerySort": "<p>The table query sorting options for the plugin visual.</p>"
       }
     },
+    "PolicyDescription": {
+      "base": null,
+      "refs": {
+        "ApprovalPolicy$Description": "<p>A description of the approval policy.</p>",
+        "CreateApprovalPolicyRequest$Description": "<p>A description of the approval policy.</p>",
+        "UpdateApprovalPolicyRequest$Description": "<p>A description of the approval policy.</p>"
+      }
+    },
+    "PolicyId": {
+      "base": null,
+      "refs": {
+        "ApprovalPolicy$PolicyId": "<p>The unique identifier of the approval policy.</p>",
+        "CreateApprovalPolicyRequest$PolicyId": "<p>The unique identifier to assign to the approval policy. You cannot change this value after you create the policy.</p>",
+        "DeleteApprovalPolicyRequest$PolicyId": "<p>The unique identifier of the approval policy to delete.</p>",
+        "DescribeApprovalPolicyRequest$PolicyId": "<p>The unique identifier of the approval policy to describe.</p>",
+        "UpdateApprovalPolicyRequest$PolicyId": "<p>The unique identifier of the approval policy to update.</p>"
+      }
+    },
+    "PolicyName": {
+      "base": null,
+      "refs": {
+        "ApprovalPolicy$Name": "<p>The name of the approval policy.</p>",
+        "CreateApprovalPolicyRequest$Name": "<p>The name of the approval policy.</p>",
+        "UpdateApprovalPolicyRequest$Name": "<p>The name of the approval policy.</p>"
+      }
+    },
     "Port": {
       "base": null,
       "refs": {
@@ -12833,6 +13330,46 @@
         "KeyPairCredentials$PrivateKeyPassphrase": "<p>PrivateKeyPassphrase</p>"
       }
     },
+    "ProfileDescription": {
+      "base": null,
+      "refs": {
+        "CreateLimitsProfileRequest$description": "<p>A description for the limits profile.</p>",
+        "LimitsProfile$description": "<p>The description of the limits profile.</p>",
+        "UpdateLimitsProfileRequest$description": "<p>A new description for the limits profile.</p>"
+      }
+    },
+    "ProfileId": {
+      "base": null,
+      "refs": {
+        "CreateLimitsProfileResponse$profileId": "<p>The unique identifier for the created limits profile.</p>",
+        "DeleteLimitsProfileRequest$profileId": "<p>The unique identifier for the limits profile to delete.</p>",
+        "DescribeLimitsProfileRequest$profileId": "<p>The unique identifier for the limits profile.</p>",
+        "EffectiveLimit$profileId": "<p>The identifier of the limits profile that defines this limit.</p>",
+        "LimitsProfile$profileId": "<p>The unique identifier for the limits profile.</p>",
+        "UpdateLimitsProfileRequest$profileId": "<p>The unique identifier for the limits profile to update.</p>"
+      }
+    },
+    "ProfileLimitValue": {
+      "base": "<p>A value that defines a resource usage limit, consisting of a maximum value and a unit of measurement.</p>",
+      "refs": {
+        "CreateLimitsProfileRequestResourceLimitsMap$value": null,
+        "ResourceLimitsMap$value": null
+      }
+    },
+    "ProfileLimitValueMaxValueLong": {
+      "base": null,
+      "refs": {
+        "ProfileLimitValue$maxValue": "<p>The maximum allowed value for the resource.</p>"
+      }
+    },
+    "ProfileName": {
+      "base": null,
+      "refs": {
+        "CreateLimitsProfileRequest$profileName": "<p>A display name for the limits profile.</p>",
+        "LimitsProfile$profileName": "<p>The display name of the limits profile.</p>",
+        "UpdateLimitsProfileRequest$profileName": "<p>A new display name for the limits profile.</p>"
+      }
+    },
     "ProgressBarOptions": {
       "base": "<p>The options that determine the presentation of the progress bar of a KPI visual.</p>",
       "refs": {
@@ -12868,6 +13405,14 @@
       "base": null,
       "refs": {
         "NamedEntityDefinition$PropertyUsage": "<p>The property usage. Valid values for this structure are <code>INHERIT</code>, <code>DIMENSION</code>, and <code>MEASURE</code>.</p>"
+      }
+    },
+    "ProviderConfig": {
+      "base": "<p>The provider-specific configuration for a DLP integration. This is a union type structure. For this structure to be valid, only one of the attributes can be defined.</p>",
+      "refs": {
+        "CreateDlpSettingRequest$ProviderConfig": "<p>The provider-specific configuration for the DLP integration. This is a union type structure. For this structure to be valid, only one of the attributes can be defined.</p>",
+        "DlpSettingDetails$ProviderConfig": "<p>The provider-specific configuration for the DLP integration.</p>",
+        "UpdateDlpSettingRequest$ProviderConfig": "<p>An updated provider-specific configuration for the DLP integration. This is a union type structure. For this structure to be valid, only one of the attributes can be defined.</p>"
       }
     },
     "PublicSpaceArn": {
@@ -13533,7 +14078,11 @@
     "ResourceArn": {
       "base": null,
       "refs": {
-        "ReadIamConnectionMetadata$SourceArn": "<p>The Amazon Resource Name (ARN) of the source resource for IAM authentication.</p>"
+        "CreateLimitsProfileResponse$arn": "<p>The Amazon Resource Name (ARN) of the created limits profile.</p>",
+        "DeleteLimitsProfileResponse$arn": "<p>The Amazon Resource Name (ARN) of the deleted limits profile.</p>",
+        "LimitsProfile$arn": "<p>The Amazon Resource Name (ARN) of the limits profile.</p>",
+        "ReadIamConnectionMetadata$SourceArn": "<p>The Amazon Resource Name (ARN) of the source resource for IAM authentication.</p>",
+        "UpdateLimitsProfileResponse$arn": "<p>The Amazon Resource Name (ARN) of the updated limits profile.</p>"
       }
     },
     "ResourceExistsException": {
@@ -13550,6 +14099,7 @@
         "AssetBundleImportJobFolderOverrideParameters$FolderId": "<p>The ID of the folder that you want to apply overrides to.</p>",
         "AssetBundleImportJobRefreshScheduleOverrideParameters$DataSetId": "<p>A partial identifier for the specific <code>RefreshSchedule</code> resource that is being overridden. This structure is used together with the <code>ScheduleID</code> structure.</p>",
         "AssetBundleImportJobThemeOverrideParameters$ThemeId": "<p>The ID of the theme to apply overrides to.</p>",
+        "AssetBundleImportJobTopicV2OverrideParameters$TopicId": "<p>The ID of the topic that you want to apply overrides to.</p>",
         "CreateDataSetRequest$DataSetId": "<p>An ID for the dataset that you want to create. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
         "CreateDataSetResponse$DataSetId": "<p>The ID for the dataset that you want to create. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
         "CreateDataSetResponse$IngestionId": "<p>The ID of the ingestion, which is triggered as a result of dataset creation if the import mode is SPICE.</p>",
@@ -13590,6 +14140,13 @@
         "UpdateRefreshScheduleRequest$DataSetId": "<p>The ID of the dataset.</p>"
       }
     },
+    "ResourceLimitsMap": {
+      "base": null,
+      "refs": {
+        "LimitsProfile$resourceLimits": "<p>A map of resource types to their limit values.</p>",
+        "UpdateLimitsProfileRequest$resourceLimits": "<p>A map of resource types to their updated limit values.</p>"
+      }
+    },
     "ResourceName": {
       "base": null,
       "refs": {
@@ -13599,6 +14156,7 @@
         "AssetBundleImportJobDataSourceOverrideParameters$Name": "<p>A new name for the data source.</p>",
         "AssetBundleImportJobFolderOverrideParameters$Name": "<p>A new name for the folder.</p>",
         "AssetBundleImportJobThemeOverrideParameters$Name": "<p>A new name for the theme.</p>",
+        "AssetBundleImportJobTopicV2OverrideParameters$Name": "<p>A new name for the topic.</p>",
         "AssetBundleImportJobVPCConnectionOverrideParameters$Name": "<p>A new name for the VPC connection.</p>",
         "CreateDataSetRequest$Name": "<p>The display name for the dataset.</p>",
         "CreateDataSourceRequest$Name": "<p>A display name for the data source.</p>",
@@ -13712,6 +14270,22 @@
         "UpdateOAuthClientApplicationResponse$UpdateStatus": "<p>The status of updating the OAuthClientApplication.</p>",
         "UpdateTemplateResponse$CreationStatus": "<p>The creation status of the template.</p>",
         "UpdateThemeResponse$CreationStatus": "<p>The creation status of the theme.</p>"
+      }
+    },
+    "ResourceType": {
+      "base": "<p>The type of resource that a limit applies to.</p>",
+      "refs": {
+        "CreateLimitsProfileRequestResourceLimitsMap$key": null,
+        "EffectiveLimit$resourceType": "<p>The type of resource that the limit applies to.</p>",
+        "ListLimitsProfilesRequest$resourceType": "<p>An optional filter that limits the results to profiles that contain the specified resource type. If you don't specify a value, the operation returns all profiles.</p>",
+        "ResourceLimitsMap$key": null,
+        "ResourceTypeList$member": null
+      }
+    },
+    "ResourceTypeList": {
+      "base": null,
+      "refs": {
+        "BatchDescribeUserLimitsRequest$resourceTypes": "<p>An optional filter that limits the results to specific resource types. If you don't specify a value, the operation returns limits for all resource types.</p>"
       }
     },
     "ResourceUnavailableException": {
@@ -14212,6 +14786,12 @@
         "AssetBundleImportJobDataSourceCredentials$SecretArn": "<p>The ARN of the Secrets Manager secret that's used to create the imported data source. Keep this field blank, unless you are using a secret in place of a credential pair.</p>",
         "DataSource$SecretArn": "<p>The Amazon Resource Name (ARN) of the secret associated with the data source in Amazon Secrets Manager.</p>",
         "DataSourceCredentials$SecretArn": "<p>The Amazon Resource Name (ARN) of the secret associated with the data source in Amazon Secrets Manager.</p>"
+      }
+    },
+    "SecretManagerArn": {
+      "base": null,
+      "refs": {
+        "MicrosoftPurviewCredentials$SecretArn": "<p>The ARN of the Amazon Web Services Secrets Manager secret that contains the Microsoft Purview OAuth credentials. The secret includes the Azure tenant ID, client ID, and client secret or certificate.</p>"
       }
     },
     "SectionAfterPageBreak": {
@@ -16141,6 +16721,11 @@
         "BatchDeleteKnowledgeBaseFailure$ErrorMessage": "<p>The error message for the deletion failure.</p>",
         "BatchDeleteKnowledgeBaseResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "BatchDeleteTopicReviewedAnswerResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "BatchDescribeUserLimitsError$userName": "<p>The name of the user that failed.</p>",
+        "BatchDescribeUserLimitsError$namespace": "<p>The namespace of the user that failed.</p>",
+        "BatchDescribeUserLimitsError$userArn": "<p>The ARN of the user that failed.</p>",
+        "BatchDescribeUserLimitsError$errorCode": "<p>The error code for the failure.</p>",
+        "BatchDescribeUserLimitsError$message": "<p>The error message for the failure.</p>",
         "CancelIngestionRequest$DataSetId": "<p>The ID of the dataset used in the ingestion.</p>",
         "CancelIngestionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CascadingControlSource$SourceSheetControlId": "<p>The source sheet control ID of a <code>CascadingControlSource</code>.</p>",
@@ -16175,6 +16760,7 @@
         "CreateDashboardResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CreateDataSetResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CreateDataSourceResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "CreateDlpSettingResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CreateFlowResponse$Arn": "<p>The Amazon Resource Name (ARN) of the flow.</p>",
         "CreateFlowResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CreateFolderMembershipResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -16227,6 +16813,7 @@
         "DeleteDataSetResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteDataSourceResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteDefaultQBusinessApplicationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "DeleteDlpSettingResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteFlowResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteFolderMembershipResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteFolderResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -16284,6 +16871,7 @@
         "DescribeDataSourceResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeDefaultQBusinessApplicationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeDefaultQBusinessApplicationResponse$ApplicationId": "<p>The ID of the Amazon Q Business application that is linked to the Quick Sight account.</p>",
+        "DescribeDlpSettingResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeFlowResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeFolderPermissionsRequest$NextToken": "<p>A pagination token for the next set of results.</p>",
         "DescribeFolderPermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -16422,6 +17010,7 @@
         "ListDataSourcesRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "ListDataSourcesResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "ListDataSourcesResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "ListDlpSettingsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "ListFlowsInput$NextToken": "<p>The token to request the next set of results, or null if you want to retrieve the first set.</p>",
         "ListFlowsOutput$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "ListFlowsOutput$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -16454,6 +17043,8 @@
         "ListIngestionsResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "ListIngestionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "ListKnowledgeBasesResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "ListLimitsProfilesRequest$nextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
+        "ListLimitsProfilesResponse$nextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "ListNamespacesRequest$NextToken": "<p>A unique pagination token that can be used in a subsequent request. You will receive a pagination token in the response body of a previous <code>ListNameSpaces</code> API call if there is more data that can be returned. To receive the data, make another <code>ListNamespaces</code> API call with the returned token to retrieve the next page of data. Each token is valid for 24 hours. If you try to make a <code>ListNamespaces</code> API call with an expired token, you will receive a <code>HTTP 400 InvalidNextTokenException</code> error.</p>",
         "ListNamespacesResponse$NextToken": "<p>A unique pagination token that can be used in a subsequent request. Receiving <code>NextToken</code> in your response inticates that there is more data that can be returned. To receive the data, make another <code>ListNamespaces</code> API call with the returned token to retrieve the next page of data. Each token is valid for 24 hours. If you try to make a <code>ListNamespaces</code> API call with an expired token, you will receive a <code>HTTP 400 InvalidNextTokenException</code> error.</p>",
         "ListNamespacesResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -16662,6 +17253,7 @@
         "UpdateDataSourcePermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateDataSourceResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateDefaultQBusinessApplicationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "UpdateDlpSettingResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateFlowPermissionsOutput$Arn": "<p>The Amazon Resource Name (ARN) of the flow you are updating permissions against.</p>",
         "UpdateFlowPermissionsOutput$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateFlowResponse$Arn": "<p>The Amazon Resource Name (ARN) of the flow.</p>",
@@ -16718,6 +17310,10 @@
         "UserIndexCapacity$userName": "<p>The username of the user.</p>",
         "UserIndexCapacity$email": "<p>The email address of the user.</p>",
         "UserIndexCapacity$role": "<p>The role of the user.</p>",
+        "UserLimits$userName": "<p>The name of the user.</p>",
+        "UserLimits$namespace": "<p>The namespace of the user.</p>",
+        "UserLimitsEntry$userName": "<p>The name of the user.</p>",
+        "UserLimitsEntry$namespace": "<p>The namespace of the user.</p>",
         "VPCConnection$VPCId": "<p>The Amazon EC2 VPC ID associated with the VPC connection.</p>",
         "VPCConnection$RoleArn": "<p>The ARN of the IAM role associated with the VPC connection.</p>",
         "VPCConnectionSummary$VPCId": "<p>The Amazon EC2 VPC ID associated with the VPC connection.</p>",
@@ -17236,6 +17832,7 @@
         "AssetBundleImportJobDataSourceOverrideTags$Tags": "<p>A list of tags for the data source that you want to apply overrides to.</p>",
         "AssetBundleImportJobFolderOverrideTags$Tags": "<p>A list of tags for the folders that you want to apply overrides to.</p>",
         "AssetBundleImportJobThemeOverrideTags$Tags": "<p>A list of tags for the themes that you want to apply overrides to.</p>",
+        "AssetBundleImportJobTopicV2OverrideTags$Tags": "<p>A list of tags for the topics that you want to apply overrides to.</p>",
         "AssetBundleImportJobVPCConnectionOverrideTags$Tags": "<p>A list of tags for the VPC connections that you want to apply overrides to.</p>",
         "CreateAccountCustomizationRequest$Tags": "<p>A list of the tags that you want to attach to this resource.</p>",
         "CreateActionConnectorRequest$Tags": "<p>A list of tags to apply to the action connector for resource management and organization.</p>",
@@ -17245,6 +17842,7 @@
         "CreateDashboardRequest$Tags": "<p>Contains a map of the key-value pairs for the resource tag or tags assigned to the dashboard.</p>",
         "CreateDataSetRequest$Tags": "<p>Contains a map of the key-value pairs for the resource tag or tags assigned to the dataset.</p>",
         "CreateDataSourceRequest$Tags": "<p>Contains a map of the key-value pairs for the resource tag or tags assigned to the data source.</p>",
+        "CreateDlpSettingRequest$Tags": "<p>A list of resource tags to apply to the DLP setting. You can use tags to manage access to your Amazon Web Services resources.</p>",
         "CreateFolderRequest$Tags": "<p>Tags for the folder.</p>",
         "CreateKnowledgeBaseRequest$Tags": "<p>The tags to assign to the knowledge base. If you don't specify tags, the knowledge base is created without tags.</p>",
         "CreateNamespaceRequest$Tags": "<p>The tags that you want to associate with the namespace that you're creating.</p>",
@@ -17655,6 +18253,8 @@
         "Analysis$LastUpdatedTime": "<p>The time that the analysis was last updated.</p>",
         "AnalysisSummary$CreatedTime": "<p>The time that the analysis was created.</p>",
         "AnalysisSummary$LastUpdatedTime": "<p>The time that the analysis was last updated.</p>",
+        "ApprovalPolicy$CreatedAt": "<p>The date and time that the approval policy was created.</p>",
+        "ApprovalPolicy$UpdatedAt": "<p>The date and time that the approval policy was last updated.</p>",
         "AssetBundleExportJobSummary$CreatedTime": "<p>The time that the export job was created.</p>",
         "AssetBundleImportJobRefreshScheduleOverrideParameters$StartAfterDateTime": "<p>An override for the <code>StartAfterDateTime</code> of a <code>RefreshSchedule</code>. Make sure that the <code>StartAfterDateTime</code> is set to a time that takes place in the future.</p>",
         "AssetBundleImportJobSummary$CreatedTime": "<p>The time that the import job was created.</p>",
@@ -17689,6 +18289,10 @@
         "DescribeDashboardSnapshotJobResponse$LastUpdatedTime": "<p> The time that the snapshot job status was last updated. </p>",
         "DescribeDashboardSnapshotJobResultResponse$CreatedTime": "<p>The time that a snapshot job was created.</p>",
         "DescribeDashboardSnapshotJobResultResponse$LastUpdatedTime": "<p>The time that a snapshot job status was last updated.</p>",
+        "DlpSettingDetails$CreatedAt": "<p>The date and time that the DLP setting was created, in ISO 8601 format.</p>",
+        "DlpSettingDetails$UpdatedAt": "<p>The date and time that the DLP setting was most recently updated, in ISO 8601 format.</p>",
+        "DlpSettingSummary$CreatedAt": "<p>The date and time that the DLP setting was created, in ISO 8601 format.</p>",
+        "DlpSettingSummary$UpdatedAt": "<p>The date and time that the DLP setting was most recently updated, in ISO 8601 format.</p>",
         "FlowDetail$CreatedTime": "<p>The time this flow was created.</p>",
         "FlowDetail$LastUpdatedTime": "<p>The last time this flow was modified.</p>",
         "FlowSummary$CreatedTime": "<p>The time this flow was created.</p>",
@@ -17708,6 +18312,8 @@
         "KnowledgeBaseIngestionSummary$EndTime": "<p>The end time of the ingestion job.</p>",
         "KnowledgeBaseSummary$CreatedAt": "<p>The date and time that the knowledge base was created.</p>",
         "KnowledgeBaseSummary$UpdatedAt": "<p>The date and time that the knowledge base was last updated.</p>",
+        "LimitsProfile$createdAt": "<p>The date and time that the limits profile was created.</p>",
+        "LimitsProfile$updatedAt": "<p>The date and time that the limits profile was last updated.</p>",
         "OAuthClientApplication$CreatedTime": "<p>The time that the OAuthClientApplication was created.</p>",
         "OAuthClientApplication$LastUpdatedTime": "<p>The time that the OAuthClientApplication was last updated.</p>",
         "OAuthClientApplicationSummary$CreatedTime": "<p>The time that the OAuthClientApplication was created.</p>",
@@ -17961,6 +18567,12 @@
       "base": "<p>A filter used to restrict data based on a range of dates or times.</p>",
       "refs": {
         "TopicFilter$DateRangeFilter": "<p>The date range filter.</p>"
+      }
+    },
+    "TopicDescription": {
+      "base": null,
+      "refs": {
+        "AssetBundleImportJobTopicV2OverrideParameters$Description": "<p>A new description for the topic.</p>"
       }
     },
     "TopicDetails": {
@@ -18832,6 +19444,14 @@
       "base": null,
       "refs": {}
     },
+    "UpdateApprovalPolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateApprovalPolicyResponse": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateBrandAssignmentRequest": {
       "base": null,
       "refs": {}
@@ -18944,6 +19564,14 @@
       "base": null,
       "refs": {}
     },
+    "UpdateDlpSettingRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateDlpSettingResponse": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateFlowPermissionsInput": {
       "base": null,
       "refs": {}
@@ -19047,6 +19675,14 @@
       "refs": {}
     },
     "UpdateKnowledgeBaseResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateLimitsProfileRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateLimitsProfileResponse": {
       "base": null,
       "refs": {}
     },
@@ -19358,6 +19994,24 @@
       "base": "<p>The sort order for user index capacity results.</p>",
       "refs": {
         "ListUsersIndexCapacityRequest$sortOrder": "<p>The sort order for results. Defaults to DESC if not specified.</p>"
+      }
+    },
+    "UserLimits": {
+      "base": "<p>The effective limits for an Amazon Quick Sight user.</p>",
+      "refs": {
+        "UserLimitsList$member": null
+      }
+    },
+    "UserLimitsEntry": {
+      "base": "<p>Identifies a user for the <code>BatchDescribeUserLimits</code> operation.</p>",
+      "refs": {
+        "BatchDescribeUserLimitsRequestUsersList$member": null
+      }
+    },
+    "UserLimitsList": {
+      "base": null,
+      "refs": {
+        "BatchDescribeUserLimitsResponse$userLimits": "<p>A list of user limits results. Each entry contains the effective limits for a user.</p>"
       }
     },
     "UserList": {

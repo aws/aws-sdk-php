@@ -3,6 +3,7 @@
   "service": "<fullname>Identity and Access Management</fullname> <p>Identity and Access Management (IAM) is a web service for securely controlling access to Amazon Web Services services. With IAM, you can centrally manage users, security credentials such as access keys, and permissions that control which Amazon Web Services resources users and applications can access. For more information about IAM, see <a href=\"http://aws.amazon.com/iam/\">Identity and Access Management (IAM)</a> and the <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/\">Identity and Access Management User Guide</a>.</p> <p> <b>Programmatic access to IAM</b> </p> <p>We recommend that you use the Amazon Web Services SDKs to make programmatic API calls to IAM. The Amazon Web Services SDKs consist of libraries and sample code for various programming languages and platforms (for example, Java, Ruby, .NET, iOS, and Android). The SDKs provide a convenient way to create programmatic access to IAM and Amazon Web Services. For example, the SDKs take care of tasks such as cryptographically signing requests, managing errors, and retrying requests automatically. For more information, see <a href=\"http://aws.amazon.com/tools/\">Tools to build on Amazon Web Services</a>.</p> <p>Alternatively, you can also use the IAM Query API to make direct calls to the IAM service. For more information about calling the IAM Query API, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/IAM_UsingQueryAPI.html\">Making query requests</a> in the <i>Identity and Access Management User Guide</i>. IAM supports GET and POST requests for all actions. That is, the API does not require you to use GET for some actions and POST for others. However, GET requests are subject to the limitation size of a URL. Therefore, for operations that require larger sizes, use a POST request.</p> <p> <b>Signing requests</b> </p> <p>Requests must be signed using an access key ID and a secret access key. We strongly recommend that you do not use your Amazon Web Services account access key ID and secret access key for everyday work with IAM. You can use the access key ID and secret access key for an IAM user or you can use the Security Token Service to generate temporary security credentials and use those to sign requests.</p> <p>To sign requests, we recommend that you use <a href=\"https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\">Signature Version 4</a>. If you have an existing application that uses Signature Version 2, you do not have to update it to use Signature Version 4. However, some operations now require Signature Version 4. The documentation for operations that require version 4 indicate this requirement.</p> <p> <b>Additional resources</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-security-credentials.html\">Amazon Web Services security credentials</a>. This topic provides general information about the types of credentials used for accessing Amazon Web Services.</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/IAMBestPractices.html\">IAM best practices</a>. This topic presents a list of suggestions for using the IAM service to help secure your Amazon Web Services resources.</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/general/latest/gr/signing_aws_api_requests.html\">Signing Amazon Web Services API requests</a>. This set of topics walk you through the process of signing a request using an access key ID and secret access key.</p> </li> </ul>",
   "operations": {
     "AcceptDelegationRequest": "<p>Accepts a delegation request, granting the requested temporary access.</p> <p>Once the delegation request is accepted, it is eligible to send the exchange token to the partner. The <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_SendDelegationToken.html\">SendDelegationToken</a> API has to be explicitly called to send the delegation token. </p> <p>At the time of acceptance, IAM records the details and the state of the identity that called this API. This is the identity that gets mapped to the delegated credential. </p> <p>An accepted request may be rejected before the exchange token is sent to the partner.</p>",
+    "AcquireRole": "<p>Creates an IAM role from the specified role template. The new role takes its configuration—including its name, path, trust policy, inline and managed policies, permissions boundary, tags, and maximum session duration—from the role template version that you specify. For more information about roles, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html\">IAM roles</a> in the <i>IAM User Guide</i>.</p> <p>If the template version defines parameters, use the <code>ReplacementValues</code> parameter to supply the values that the service substitutes into the role during creation.</p>",
     "AddClientIDToOpenIDConnectProvider": "<p>Adds a new client ID (also known as audience) to the list of client IDs already registered for the specified IAM OpenID Connect (OIDC) provider resource.</p> <p>This operation is idempotent; it does not fail or return an error if you add an existing client ID to the provider.</p>",
     "AddRoleToInstanceProfile": "<p>Adds the specified IAM role to the specified instance profile. An instance profile can contain only one role, and this quota cannot be increased. You can remove the existing role and then add a different role to an instance profile. You must then wait for the change to appear across all of Amazon Web Services because of <a href=\"https://en.wikipedia.org/wiki/Eventual_consistency\">eventual consistency</a>. To force the change, you must <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DisassociateIamInstanceProfile.html\">disassociate the instance profile</a> and then <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_AssociateIamInstanceProfile.html\">associate the instance profile</a>, or you can stop your instance and then restart it.</p> <note> <p>The caller of this operation must be granted the <code>PassRole</code> permission on the IAM role by a permissions policy.</p> </note> <important> <p>When using the <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_iam-condition-keys.html#available-keys-for-iam\">iam:AssociatedResourceArn</a> condition in a policy to restrict the <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_passrole.html\">PassRole</a> IAM action, special considerations apply if the policy is intended to define access for the <code>AddRoleToInstanceProfile</code> action. In this case, you cannot specify a Region or instance ID in the EC2 instance ARN. The ARN value must be <code>arn:aws:ec2:*:CallerAccountId:instance/*</code>. Using any other ARN value may lead to unexpected evaluation results.</p> </important> <p> For more information about roles, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html\">IAM roles</a> in the <i>IAM User Guide</i>. For more information about instance profiles, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2_instance-profiles.html\">Using instance profiles</a> in the <i>IAM User Guide</i>.</p>",
     "AddUserToGroup": "<p>Adds the specified user to the specified group.</p>",
@@ -66,6 +67,7 @@
     "GetAccessKeyLastUsed": "<p>Retrieves information about when the specified access key was last used. The information includes the date and time of last use, along with the Amazon Web Services service and Region that were specified in the last request made with that key.</p>",
     "GetAccountAuthorizationDetails": "<p>Retrieves information about all IAM users, groups, roles, and policies in your Amazon Web Services account, including their relationships to one another. Use this operation to obtain a snapshot of the configuration of IAM permissions (users, groups, roles, and policies) in your account.</p> <note> <p>Policies returned by this operation are URL-encoded compliant with <a href=\"https://tools.ietf.org/html/rfc3986\">RFC 3986</a>. You can use a URL decoding method to convert the policy back to plain JSON text. For example, if you use Java, you can use the <code>decode</code> method of the <code>java.net.URLDecoder</code> utility class in the Java SDK. Other languages and SDKs provide similar functionality, and some SDKs do this decoding automatically.</p> </note> <p>You can optionally filter the results using the <code>Filter</code> parameter. You can paginate the results using the <code>MaxItems</code> and <code>Marker</code> parameters.</p>",
     "GetAccountPasswordPolicy": "<p>Retrieves the password policy for the Amazon Web Services account. This tells you the complexity requirements and mandatory rotation periods for the IAM user passwords in your account. For more information about using a password policy, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/Using_ManagingPasswordPolicies.html\">Managing an IAM password policy</a>.</p>",
+    "GetAccountProperties": "<p>Retrieves the account-level properties for the caller's Amazon Web Services account. Account properties are configuration settings that control account-wide IAM features such as Role Manager.</p> <p>The service returns properties as key-value pairs in <code>Namespace/PropertyName</code> format. Each namespace groups related configuration settings. Use <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_PutAccountProperties.html\">PutAccountProperties</a> to modify these properties.</p>",
     "GetAccountSummary": "<p>Retrieves information about IAM entity usage and IAM quotas in the Amazon Web Services account.</p> <p> For information about IAM quotas, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_iam-quotas.html\">IAM and STS quotas</a> in the <i>IAM User Guide</i>.</p>",
     "GetContextKeysForCustomPolicy": "<p>Gets a list of all of the context keys referenced in the input policies. The policies are supplied as a list of one or more strings. To get the context keys from policies associated with an IAM user, group, or role, use <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetContextKeysForPrincipalPolicy.html\">GetContextKeysForPrincipalPolicy</a>.</p> <p>Context keys are variables maintained by Amazon Web Services and its services that provide details about the context of an API query request. Context keys can be evaluated by testing against a value specified in an IAM policy. Use <code>GetContextKeysForCustomPolicy</code> to understand what key names and values you must supply when you call <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_SimulateCustomPolicy.html\">SimulateCustomPolicy</a>. Note that all parameters are shown in unencoded form here for clarity but must be URL encoded to be included as a part of a real HTML request.</p>",
     "GetContextKeysForPrincipalPolicy": "<p>Gets a list of all of the context keys referenced in all the IAM policies that are attached to the specified IAM entity. The entity can be an IAM user, group, or role. If you specify a user, then the request also includes all of the policies attached to groups that the user is a member of.</p> <p>You can optionally include a list of one or more additional policies, specified as strings. If you want to include <i>only</i> a list of policies by string, use <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetContextKeysForCustomPolicy.html\">GetContextKeysForCustomPolicy</a> instead.</p> <p> <b>Note:</b> This operation discloses information about the permissions granted to other users. If you do not want users to see other user's permissions, then consider allowing them to use <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetContextKeysForCustomPolicy.html\">GetContextKeysForCustomPolicy</a> instead.</p> <p>Context keys are variables maintained by Amazon Web Services and its services that provide details about the context of an API query request. Context keys can be evaluated by testing against a value in an IAM policy. Use <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetContextKeysForPrincipalPolicy.html\">GetContextKeysForPrincipalPolicy</a> to understand what key names and values you must supply when you call <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_SimulatePrincipalPolicy.html\">SimulatePrincipalPolicy</a>. This operation doesn't return context keys referenced by service control policies (SCPs). Only context keys referenced by the identity-based policies attached to the specified entity, and any additional policies that you provide, are included.</p>",
@@ -84,6 +86,7 @@
     "GetPolicyVersion": "<p>Retrieves information about the specified version of the specified managed policy, including the policy document.</p> <note> <p>Policies returned by this operation are URL-encoded compliant with <a href=\"https://tools.ietf.org/html/rfc3986\">RFC 3986</a>. You can use a URL decoding method to convert the policy back to plain JSON text. For example, if you use Java, you can use the <code>decode</code> method of the <code>java.net.URLDecoder</code> utility class in the Java SDK. Other languages and SDKs provide similar functionality, and some SDKs do this decoding automatically.</p> </note> <p>To list the available versions for a policy, use <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListPolicyVersions.html\">ListPolicyVersions</a>.</p> <p>This operation retrieves information about managed policies. To retrieve information about an inline policy that is embedded in a user, group, or role, use <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetUserPolicy.html\">GetUserPolicy</a>, <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetGroupPolicy.html\">GetGroupPolicy</a>, or <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetRolePolicy.html\">GetRolePolicy</a>.</p> <p>For more information about the types of policies, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/policies-managed-vs-inline.html\">Managed policies and inline policies</a> in the <i>IAM User Guide</i>.</p> <p>For more information about managed policy versions, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/policies-managed-versions.html\">Versioning for managed policies</a> in the <i>IAM User Guide</i>.</p>",
     "GetRole": "<p>Retrieves information about the specified role, including the role's path, GUID, ARN, and the role's trust policy that grants permission to assume the role. For more information about roles, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html\">IAM roles</a> in the <i>IAM User Guide</i>.</p> <note> <p>Policies returned by this operation are URL-encoded compliant with <a href=\"https://tools.ietf.org/html/rfc3986\">RFC 3986</a>. You can use a URL decoding method to convert the policy back to plain JSON text. For example, if you use Java, you can use the <code>decode</code> method of the <code>java.net.URLDecoder</code> utility class in the Java SDK. Other languages and SDKs provide similar functionality, and some SDKs do this decoding automatically.</p> </note>",
     "GetRolePolicy": "<p>Retrieves the specified inline policy document that is embedded with the specified IAM role.</p> <note> <p>Policies returned by this operation are URL-encoded compliant with <a href=\"https://tools.ietf.org/html/rfc3986\">RFC 3986</a>. You can use a URL decoding method to convert the policy back to plain JSON text. For example, if you use Java, you can use the <code>decode</code> method of the <code>java.net.URLDecoder</code> utility class in the Java SDK. Other languages and SDKs provide similar functionality, and some SDKs do this decoding automatically.</p> </note> <p>An IAM role can also have managed policies attached to it. To retrieve a managed policy document that is attached to a role, use <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetPolicy.html\">GetPolicy</a> to determine the policy's default version, then use <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetPolicyVersion.html\">GetPolicyVersion</a> to retrieve the policy document.</p> <p>For more information about policies, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/policies-managed-vs-inline.html\">Managed policies and inline policies</a> in the <i>IAM User Guide</i>.</p> <p> For more information about roles, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html\">IAM roles</a> in the <i>IAM User Guide</i>.</p>",
+    "GetRoleTemplateVersion": "<p>Retrieves information about a version of the specified role template. Role templates define a reusable configuration—including role name and path patterns, trust policy, inline and managed policies, permissions boundary, tags, and maximum session duration—that you use to create IAM roles with <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_AcquireRole.html\">AcquireRole</a>.</p> <p>If you do not specify a minor version, the service returns the template's default minor version.</p>",
     "GetSAMLProvider": "<p>Returns the SAML provider metadocument that was uploaded when the IAM SAML provider resource object was created or updated.</p> <note> <p>This operation requires <a href=\"https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\">Signature Version 4</a>.</p> </note>",
     "GetSSHPublicKey": "<p>Retrieves the specified SSH public key, including metadata about the key.</p> <p>The SSH public key retrieved by this operation is used only for authenticating the associated IAM user to an CodeCommit repository. For more information about using SSH keys to authenticate to an CodeCommit repository, see <a href=\"https://docs.aws.amazon.com/codecommit/latest/userguide/setting-up-credentials-ssh.html\">Set up CodeCommit for SSH connections</a> in the <i>CodeCommit User Guide</i>.</p>",
     "GetServerCertificate": "<p>Retrieves information about the specified server certificate stored in IAM.</p> <p>For more information about working with server certificates, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_server-certs.html\">Working with server certificates</a> in the <i>IAM User Guide</i>. This topic includes a list of Amazon Web Services services that can use the server certificates that you manage with IAM.</p>",
@@ -128,6 +131,7 @@
     "ListUserTags": "<p>Lists the tags that are attached to the specified IAM user. The returned list of tags is sorted by tag key. For more information about tagging, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/id_tags.html\">Tagging IAM resources</a> in the <i>IAM User Guide</i>.</p>",
     "ListUsers": "<p>Lists the IAM users that have the specified path prefix. If no path prefix is specified, the operation returns all users in the Amazon Web Services account. If there are none, the operation returns an empty list.</p> <note> <p>IAM resource-listing operations return a subset of the available attributes for the resource. This operation does not return the following attributes, even though they are an attribute of the returned object:</p> <ul> <li> <p>PermissionsBoundary</p> </li> <li> <p>Tags</p> </li> </ul> <p>To view all of the information for a user, see <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetUser.html\">GetUser</a>.</p> </note> <p>You can paginate the results using the <code>MaxItems</code> and <code>Marker</code> parameters.</p>",
     "ListVirtualMFADevices": "<p>Lists the virtual MFA devices defined in the Amazon Web Services account by assignment status. If you do not specify an assignment status, the operation returns a list of all virtual MFA devices. Assignment status can be <code>Assigned</code>, <code>Unassigned</code>, or <code>Any</code>.</p> <note> <p>IAM resource-listing operations return a subset of the available attributes for the resource. For example, this operation does not return tags, even though they are an attribute of the returned object. To view tag information for a virtual MFA device, see <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListMFADeviceTags.html\">ListMFADeviceTags</a>.</p> </note> <p>You can paginate the results using the <code>MaxItems</code> and <code>Marker</code> parameters.</p>",
+    "PutAccountProperties": "<p>Sets account-level properties for the caller's Amazon Web Services account. Account properties are configuration settings that control account-wide IAM features such as Role Manager.</p> <p>Specify properties as key-value pairs in <code>Namespace/PropertyName</code> format. All properties in a single request must belong to the same namespace. Use <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetAccountProperties.html\">GetAccountProperties</a> to view the current properties.</p>",
     "PutGroupPolicy": "<p>Adds or updates an inline policy document that is embedded in the specified IAM group.</p> <p>A user can also have managed policies attached to it. To attach a managed policy to a group, use <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_AttachGroupPolicy.html\"> <code>AttachGroupPolicy</code> </a>. To create a new managed policy, use <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreatePolicy.html\"> <code>CreatePolicy</code> </a>. For information about policies, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/policies-managed-vs-inline.html\">Managed policies and inline policies</a> in the <i>IAM User Guide</i>.</p> <p>For information about the maximum number of inline policies that you can embed in a group, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_iam-quotas.html\">IAM and STS quotas</a> in the <i>IAM User Guide</i>.</p> <note> <p>Because policy documents can be large, you should use POST rather than GET when calling <code>PutGroupPolicy</code>. For general information about using the Query API with IAM, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/IAM_UsingQueryAPI.html\">Making query requests</a> in the <i>IAM User Guide</i>.</p> </note>",
     "PutRolePermissionsBoundary": "<p>Adds or updates the policy that is specified as the IAM role's permissions boundary. You can use an Amazon Web Services managed policy or a customer managed policy to set the boundary for a role. Use the boundary to control the maximum permissions that the role can have. Setting a permissions boundary is an advanced feature that can affect the permissions for the role.</p> <p>You cannot set the boundary for a service-linked role.</p> <important> <p>Policies used as permissions boundaries do not provide permissions. You must also attach a permissions policy to the role. To learn how the effective permissions for a role are evaluated, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic.html\">IAM JSON policy evaluation logic</a> in the IAM User Guide. </p> </important>",
     "PutRolePolicy": "<p>Adds or updates an inline policy document that is embedded in the specified IAM role.</p> <p>When you embed an inline policy in a role, the inline policy is used as part of the role's access (permissions) policy. The role's trust policy is created at the same time as the role, using <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateRole.html\"> <code>CreateRole</code> </a>. You can update a role's trust policy using <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_UpdateAssumeRolePolicy.html\"> <code>UpdateAssumeRolePolicy</code> </a>. For more information about roles, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/roles-toplevel.html\">IAM roles</a> in the <i>IAM User Guide</i>.</p> <p>A role can also have a managed policy attached to it. To attach a managed policy to a role, use <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_AttachRolePolicy.html\"> <code>AttachRolePolicy</code> </a>. To create a new managed policy, use <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreatePolicy.html\"> <code>CreatePolicy</code> </a>. For information about policies, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/policies-managed-vs-inline.html\">Managed policies and inline policies</a> in the <i>IAM User Guide</i>.</p> <p>For information about the maximum number of inline policies that you can embed with a role, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_iam-quotas.html\">IAM and STS quotas</a> in the <i>IAM User Guide</i>.</p> <note> <p>Because policy documents can be large, you should use POST rather than GET when calling <code>PutRolePolicy</code>. For general information about using the Query API with IAM, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/IAM_UsingQueryAPI.html\">Making query requests</a> in the <i>IAM User Guide</i>.</p> </note>",
@@ -223,6 +227,14 @@
     },
     "AccountNotManagementOrDelegatedAdministratorException": {
       "base": "<p>The request was rejected because the account making the request is not the management account or delegated administrator account for <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/id_root-user.html#id_root-user-access-management\">centralized root access</a>.</p>",
+      "refs": {}
+    },
+    "AcquireRoleRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "AcquireRoleResponse": {
+      "base": null,
       "refs": {}
     },
     "ActionNameListType": {
@@ -852,6 +864,14 @@
       "base": "<p>Contains the response to a successful <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetAccountPasswordPolicy.html\">GetAccountPasswordPolicy</a> request. </p>",
       "refs": {}
     },
+    "GetAccountPropertiesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAccountPropertiesResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetAccountSummaryResponse": {
       "base": "<p>Contains the response to a successful <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetAccountSummary.html\">GetAccountSummary</a> request. </p>",
       "refs": {}
@@ -980,6 +1000,14 @@
       "base": "<p>Contains the response to a successful <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetRole.html\">GetRole</a> request. </p>",
       "refs": {}
     },
+    "GetRoleTemplateVersionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRoleTemplateVersionResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetSAMLProviderRequest": {
       "base": null,
       "refs": {}
@@ -1056,6 +1084,12 @@
       "base": "<p>Contains information about an IAM group, including all of the group's policies.</p> <p>This data type is used as a response element in the <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetAccountAuthorizationDetails.html\">GetAccountAuthorizationDetails</a> operation.</p>",
       "refs": {
         "groupDetailListType$member": null
+      }
+    },
+    "InlinePolicy": {
+      "base": "<p>Contains an inline policy template that the service embeds in roles that you create from a role template.</p>",
+      "refs": {
+        "inlinePolicyTemplateListType$member": null
       }
     },
     "InlinePolicyIdentifierType": {
@@ -1433,6 +1467,10 @@
         "GetAccountAuthorizationDetailsResponse$Policies": "<p>A list containing information about managed policies.</p>"
       }
     },
+    "NameConflictException": {
+      "base": "<p>The request was rejected because the resulting role name conflicts with an existing role in the account.</p>",
+      "refs": {}
+    },
     "NoSuchEntityException": {
       "base": "<p>The request was rejected because it referenced a resource entity that does not exist. The error message describes the resource.</p>",
       "refs": {}
@@ -1494,6 +1532,12 @@
       "base": "<p>Contains information about the effect that Organizations has on a policy simulation.</p>",
       "refs": {
         "EvaluationResult$OrganizationsDecisionDetail": "<p>A structure that details how Organizations and its service control policies affect the results of the simulation. Only applies if the simulated user's account is part of an organization.</p> <p>For resources that don't support organization-level evaluation, this field is omitted from the top-level result. For per-resource details, see <code>ResourceSpecificResults</code>.</p>"
+      }
+    },
+    "ParameterDefinition": {
+      "base": "<p>Defines a parameter that a role template accepts. You supply values for these parameters when you create a role with <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_AcquireRole.html\">AcquireRole</a>.</p>",
+      "refs": {
+        "parametersDefinitionListType$member": null
       }
     },
     "PasswordPolicy": {
@@ -1655,6 +1699,14 @@
         "Statement$EndPosition": "<p>The row and column of the end of a <code>Statement</code> in an IAM policy.</p>"
       }
     },
+    "PutAccountPropertiesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "PutAccountPropertiesResponse": {
+      "base": null,
+      "refs": {}
+    },
     "PutGroupPolicyRequest": {
       "base": null,
       "refs": {}
@@ -1702,6 +1754,12 @@
     "RemoveUserFromGroupRequest": {
       "base": null,
       "refs": {}
+    },
+    "ReplacementValueEntry": {
+      "base": "<p>Contains the list of replacement values for a single template parameter used when creating a role from a role template.</p>",
+      "refs": {
+        "mapStringReplacementValueEntry$value": null
+      }
     },
     "ReportContentType": {
       "base": null,
@@ -1784,6 +1842,7 @@
     "Role": {
       "base": "<p>Contains information about an IAM role. This structure is returned as a response element in several API operations that interact with roles.</p>",
       "refs": {
+        "AcquireRoleResponse$Role": "<p>A structure that contains details about the IAM role that was created.</p>",
         "CreateRoleResponse$Role": "<p>A structure containing details about the new role.</p>",
         "CreateServiceLinkedRoleResponse$Role": "<p>A <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_Role.html\">Role</a> object that contains details about the newly created role.</p>",
         "GetRoleResponse$Role": "<p>A structure containing details about the IAM role.</p>",
@@ -1802,6 +1861,20 @@
       "refs": {
         "Role$RoleLastUsed": "<p>Contains information about the last time that an IAM role was used. This includes the date and time and the Region in which the role was last used. Activity is only reported for the trailing 400 days. This period can be shorter if your Region began supporting these features within the last year. The role might have been used more than 400 days ago. For more information, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_access-advisor.html#access-advisor_tracking-period\">Regions where data is tracked</a> in the <i>IAM user Guide</i>.</p>",
         "RoleDetail$RoleLastUsed": "<p>Contains information about the last time that an IAM role was used. This includes the date and time and the Region in which the role was last used. Activity is only reported for the trailing 400 days. This period can be shorter if your Region began supporting these features within the last year. The role might have been used more than 400 days ago. For more information, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_access-advisor.html#access-advisor_tracking-period\">Regions where data is tracked</a> in the <i>IAM User Guide</i>.</p>"
+      }
+    },
+    "RoleModifiedException": {
+      "base": "<p>The request was rejected because someone modified the role template while the service was creating the role. Wait a few minutes and try the request again.</p>",
+      "refs": {}
+    },
+    "RoleTemplateDisabledException": {
+      "base": "<p>The request was rejected because the specified role template is disabled. A disabled role template cannot be used to create new roles. Contact your administrator to enable the role template, or use a different role template.</p>",
+      "refs": {}
+    },
+    "RoleTemplateVersion": {
+      "base": "<p>Contains information about a version of an IAM role template, including the configuration that is used to create roles with <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_AcquireRole.html\">AcquireRole</a>. This structure is returned as a response element by the <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetRoleTemplateVersion.html\">GetRoleTemplateVersion</a> operation.</p>",
+      "refs": {
+        "GetRoleTemplateVersionResponse$RoleTemplateVersion": "<p>A structure that contains details about the requested role template version.</p>"
       }
     },
     "RoleUsageListType": {
@@ -1967,6 +2040,12 @@
         "SimulatePrincipalPolicyRequest$PermissionsBoundaryPolicyInputList": "<p>The IAM permissions boundary policy to simulate. The permissions boundary sets the maximum permissions that the entity can have. You can input only one permissions boundary when you pass a policy to this operation. An IAM entity can only have one permissions boundary in effect at a time. For example, if a permissions boundary is attached to an entity and you pass in a different permissions boundary policy using this parameter, then the new permissions boundary policy is used for the simulation. For more information about permissions boundaries, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html\">Permissions boundaries for IAM entities</a> in the <i>IAM User Guide</i>. The policy input is specified as a string containing the complete, valid JSON text of a permissions boundary policy.</p> <p>The maximum length of the policy document that you can pass in this operation, including whitespace, is listed below. To view the maximum character counts of a managed policy with no whitespaces, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_iam-quotas.html#reference_iam-quotas-entity-length\">IAM and STS character quotas</a>.</p> <p>The <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a> used to validate this parameter is a string of characters consisting of the following:</p> <ul> <li> <p>Any printable ASCII character ranging from the space character (<code>\\u0020</code>) through the end of the ASCII character range</p> </li> <li> <p>The printable characters in the Basic Latin and Latin-1 Supplement character set (through <code>\\u00FF</code>)</p> </li> <li> <p>The special characters tab (<code>\\u0009</code>), line feed (<code>\\u000A</code>), and carriage return (<code>\\u000D</code>)</p> </li> </ul>"
       }
     },
+    "SourceRoleTemplate": {
+      "base": "<p>Contains information about the role template that a role was created from.</p>",
+      "refs": {
+        "Role$SourceRoleTemplate": "<p>Contains information about the role template that this role was created from. This member is present only for roles created with <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_AcquireRole.html\">AcquireRole</a>.</p>"
+      }
+    },
     "Statement": {
       "base": "<p>Contains a reference to a <code>Statement</code> element in a policy document that determines the result of the simulation.</p> <p>This data type is used by the <code>MatchedStatements</code> member of the <code> <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_EvaluationResult.html\">EvaluationResult</a> </code> type.</p>",
       "refs": {
@@ -2013,6 +2092,12 @@
     "TagServerCertificateRequest": {
       "base": null,
       "refs": {}
+    },
+    "TagTemplate": {
+      "base": "<p>Represents a tag that is applied to roles that are created from a role template. The key and value can include <code>@{parameter}</code> placeholders that are replaced with template parameter values when the role is created.</p>",
+      "refs": {
+        "tagTemplateListType$member": null
+      }
     },
     "TagUserRequest": {
       "base": null,
@@ -2232,6 +2317,25 @@
         "DelegationRequest$RequestorId": "<p>Identity of the requestor of this delegation request. This will be an Amazon Web Services account ID.</p>"
       }
     },
+    "accountPropertiesMapType": {
+      "base": null,
+      "refs": {
+        "GetAccountPropertiesResponse$Properties": "<p>A map of account property key-value pairs. Keys are in the format <code>Namespace/PropertyName</code>.</p>",
+        "PutAccountPropertiesRequest$Properties": "<p>A map of property key-value pairs to set. All keys must belong to the same namespace.</p> <p>Each key uses the format <code>Namespace/PropertyName</code>. The key must contain exactly one <code>/</code> separating the namespace from the property name, and cannot start or end with <code>/</code>.</p> <p>The service validates each value based on the property key's expected type. For example, boolean properties expect <code>true</code> or <code>false</code>.</p>"
+      }
+    },
+    "accountPropertyKeyType": {
+      "base": null,
+      "refs": {
+        "accountPropertiesMapType$key": null
+      }
+    },
+    "accountPropertyValueType": {
+      "base": "String representation of the property value. The service will validate and coerce the value based on the property key's expected type. For example, integer properties expect numeric strings, and boolean properties expect \"true\" or \"false\".",
+      "refs": {
+        "accountPropertiesMapType$value": null
+      }
+    },
     "allUsers": {
       "base": null,
       "refs": {
@@ -2241,6 +2345,7 @@
     "arnType": {
       "base": "<p>The Amazon Resource Name (ARN). ARNs are unique identifiers for Amazon Web Services resources.</p> <p>For more information about ARNs, go to <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i>. </p>",
       "refs": {
+        "AcquireRoleRequest$TemplateArn": "<p>The Amazon Resource Name (ARN) of the role template to create the role from.</p> <p>For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i>.</p>",
         "AddClientIDToOpenIDConnectProviderRequest$OpenIDConnectProviderArn": "<p>The Amazon Resource Name (ARN) of the IAM OpenID Connect (OIDC) provider resource to add the client ID to. You can get a list of OIDC provider ARNs by using the <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListOpenIDConnectProviders.html\">ListOpenIDConnectProviders</a> operation.</p>",
         "ArnListType$member": null,
         "AttachGroupPolicyRequest$PolicyArn": "<p>The Amazon Resource Name (ARN) of the IAM policy you want to attach.</p> <p>For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i>.</p>",
@@ -2269,6 +2374,7 @@
         "GetOpenIDConnectProviderRequest$OpenIDConnectProviderArn": "<p>The Amazon Resource Name (ARN) of the OIDC provider resource object in IAM to get information for. You can get a list of OIDC provider resource ARNs by using the <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListOpenIDConnectProviders.html\">ListOpenIDConnectProviders</a> operation.</p> <p>For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i>.</p>",
         "GetPolicyRequest$PolicyArn": "<p>The Amazon Resource Name (ARN) of the managed policy that you want information about.</p> <p>For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i>.</p>",
         "GetPolicyVersionRequest$PolicyArn": "<p>The Amazon Resource Name (ARN) of the managed policy that you want information about.</p> <p>For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i>.</p>",
+        "GetRoleTemplateVersionRequest$TemplateArn": "<p>The Amazon Resource Name (ARN) of the role template whose version you want to retrieve.</p> <p>For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i>.</p>",
         "GetSAMLProviderRequest$SAMLProviderArn": "<p>The Amazon Resource Name (ARN) of the SAML provider resource object in IAM to get information about.</p> <p>For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i>.</p>",
         "Group$Arn": "<p> The Amazon Resource Name (ARN) specifying the group. For more information about ARNs and how to use them in policies, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html\">IAM identifiers</a> in the <i>IAM User Guide</i>. </p>",
         "GroupDetail$Arn": null,
@@ -2289,11 +2395,14 @@
         "RemoveClientIDFromOpenIDConnectProviderRequest$OpenIDConnectProviderArn": "<p>The Amazon Resource Name (ARN) of the IAM OIDC provider resource to remove the client ID from. You can get a list of OIDC provider ARNs by using the <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListOpenIDConnectProviders.html\">ListOpenIDConnectProviders</a> operation.</p> <p>For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i>.</p>",
         "Role$Arn": "<p> The Amazon Resource Name (ARN) specifying the role. For more information about ARNs and how to use them in policies, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html\">IAM identifiers</a> in the <i>IAM User Guide</i> guide. </p>",
         "RoleDetail$Arn": null,
+        "RoleTemplateVersion$TemplateArn": "<p>The Amazon Resource Name (ARN) that identifies the role template.</p> <p>For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i>.</p>",
+        "RoleTemplateVersion$PermissionBoundaryArn": "<p>The ARN of the policy that sets the permissions boundary for roles that you create from this template.</p> <p>For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i>.</p>",
         "SAMLProviderListEntry$Arn": "<p>The Amazon Resource Name (ARN) of the SAML provider.</p>",
         "ServerCertificateMetadata$Arn": "<p> The Amazon Resource Name (ARN) specifying the server certificate. For more information about ARNs and how to use them in policies, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html\">IAM identifiers</a> in the <i>IAM User Guide</i>. </p>",
         "ServiceLastAccessed$LastAuthenticatedEntity": "<p>The ARN of the authenticated entity (user or role) that last attempted to access the service. Amazon Web Services does not report unauthenticated requests.</p> <p>This field is null if no IAM entities attempted to access the service within the <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_access-advisor.html#service-last-accessed-reporting-period\">tracking period</a>.</p>",
         "SetDefaultPolicyVersionRequest$PolicyArn": "<p>The Amazon Resource Name (ARN) of the IAM policy whose default version you want to set.</p> <p>For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i>.</p>",
         "SimulatePrincipalPolicyRequest$PolicySourceArn": "<p>The Amazon Resource Name (ARN) of a user, group, or role whose policies you want to include in the simulation. If you specify a user, group, or role, the simulation includes all policies that are associated with that entity. If you specify a user, the simulation also includes all policies that are attached to any groups the user belongs to.</p> <p>The maximum length of the policy document that you can pass in this operation, including whitespace, is listed below. To view the maximum character counts of a managed policy with no whitespaces, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_iam-quotas.html#reference_iam-quotas-entity-length\">IAM and STS character quotas</a>.</p> <p>For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i>.</p>",
+        "SourceRoleTemplate$TemplateArn": "<p>The Amazon Resource Name (ARN) of the role template that the role was created from.</p>",
         "TagOpenIDConnectProviderRequest$OpenIDConnectProviderArn": "<p>The ARN of the OIDC identity provider in IAM to which you want to add tags.</p> <p>This parameter allows (through its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: _+=,.@-</p>",
         "TagPolicyRequest$PolicyArn": "<p>The ARN of the IAM customer managed policy to which you want to add tags.</p> <p>This parameter allows (through its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: _+=,.@-</p>",
         "TagSAMLProviderRequest$SAMLProviderArn": "<p>The ARN of the SAML identity provider in IAM to which you want to add tags.</p> <p>This parameter allows (through its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: _+=,.@-</p>",
@@ -2306,6 +2415,7 @@
         "UpdateSAMLProviderResponse$SAMLProviderArn": "<p>The Amazon Resource Name (ARN) of the SAML provider that was updated.</p>",
         "User$Arn": "<p>The Amazon Resource Name (ARN) that identifies the user. For more information about ARNs and how to use ARNs in policies, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html\">IAM Identifiers</a> in the <i>IAM User Guide</i>. </p>",
         "UserDetail$Arn": null,
+        "managedPolicyArnListType$member": null,
         "rolePermissionRestrictionArnListType$member": null
       }
     },
@@ -2411,6 +2521,8 @@
         "LoginProfile$PasswordResetRequired": "<p>Specifies whether the user is required to set a new password on next sign-in.</p>",
         "ManagedPolicyDetail$IsAttachable": "<p>Specifies whether the policy can be attached to an IAM user, group, or role.</p>",
         "OrganizationsDecisionDetail$AllowedByOrganizations": "<p>Specifies whether the simulated operation is allowed by the Organizations service control policies that impact the simulated user's account.</p>",
+        "ParameterDefinition$IsRequired": "<p>Specifies whether you must supply a value for the parameter when you create a role from the template.</p>",
+        "ParameterDefinition$Immutable": "<p>Specifies whether you can change the parameter value after you create the role.</p>",
         "PasswordPolicy$RequireSymbols": "<p>Specifies whether IAM user passwords must contain at least one of the following symbols:</p> <p>! @ # $ % ^ &amp; * ( ) _ + - = [ ] { } | '</p>",
         "PasswordPolicy$RequireNumbers": "<p>Specifies whether IAM user passwords must contain at least one numeric character (0 to 9).</p>",
         "PasswordPolicy$RequireUppercaseCharacters": "<p>Specifies whether IAM user passwords must contain at least one uppercase character (A to Z).</p>",
@@ -2420,6 +2532,8 @@
         "PermissionsBoundaryDecisionDetail$AllowedByPermissionsBoundary": "<p>Specifies whether an action is allowed by a permissions boundary that is applied to an IAM entity (user or role). A value of <code>true</code> means that the permissions boundary does not deny the action. This means that the policy includes an <code>Allow</code> statement that matches the request. In this case, if an identity-based policy also allows the action, the request is allowed. A value of <code>false</code> means that either the requested action is not allowed (implicitly denied) or that the action is explicitly denied by the permissions boundary. In both of these cases, the action is not allowed, regardless of the identity-based policy.</p>",
         "Policy$IsAttachable": "<p>Specifies whether the policy can be attached to an IAM user, group, or role.</p>",
         "PolicyVersion$IsDefaultVersion": "<p>Specifies whether the policy version is set as the policy's default version.</p>",
+        "RoleTemplateVersion$Enabled": "<p>Specifies whether the role template is enabled. When a template is disabled, you cannot create roles from it.</p>",
+        "RoleTemplateVersion$VersionEnabled": "<p>Specifies whether this specific minor version of the role template is enabled.</p>",
         "SimulatePolicyResponse$IsTruncated": "<p>A flag that indicates whether there are more items to return. If your results were truncated, you can make a subsequent pagination request using the <code>Marker</code> request parameter to retrieve more items. Note that IAM might return fewer than the <code>MaxItems</code> number of results even when there are more results available. We recommend that you check <code>IsTruncated</code> after every call to ensure that you receive all your results.</p>",
         "UpdateAccountPasswordPolicyRequest$RequireSymbols": "<p>Specifies whether IAM user passwords must contain at least one of the following non-alphanumeric characters:</p> <p>! @ # $ % ^ &amp; * ( ) _ + - = [ ] { } | '</p> <p>If you do not specify a value for this parameter, then the operation uses the default value of <code>false</code>. The result is that passwords do not require at least one symbol character.</p>",
         "UpdateAccountPasswordPolicyRequest$RequireNumbers": "<p>Specifies whether IAM user passwords must contain at least one numeric character (0 to 9).</p> <p>If you do not specify a value for this parameter, then the operation uses the default value of <code>false</code>. The result is that passwords do not require at least one numeric character.</p>",
@@ -2544,6 +2658,8 @@
         "Role$CreateDate": "<p>The date and time, in <a href=\"http://www.iso.org/iso/iso8601\">ISO 8601 date-time format</a>, when the role was created.</p>",
         "RoleDetail$CreateDate": "<p>The date and time, in <a href=\"http://www.iso.org/iso/iso8601\">ISO 8601 date-time format</a>, when the role was created.</p>",
         "RoleLastUsed$LastUsedDate": "<p>The date and time, in <a href=\"http://www.iso.org/iso/iso8601\">ISO 8601 date-time format</a> that the role was last used.</p> <p>This field is null if the role has not been used within the IAM tracking period. For more information about the tracking period, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_access-advisor.html#access-advisor_tracking-period\">Regions where data is tracked</a> in the <i>IAM User Guide</i>. </p>",
+        "RoleTemplateVersion$CreateTimestamp": "<p>The date and time, in <a href=\"http://www.iso.org/iso/iso8601\">ISO 8601 date-time format</a>, when the role template version was created.</p>",
+        "RoleTemplateVersion$UpdateTimestamp": "<p>The date and time, in <a href=\"http://www.iso.org/iso/iso8601\">ISO 8601 date-time format</a>, when the role template version was last updated.</p>",
         "SAMLPrivateKey$Timestamp": "<p>The date and time, in <a href=\"http://www.iso.org/iso/iso8601\">ISO 8601 date-time </a> format, when the private key was uploaded.</p>",
         "SAMLProviderListEntry$ValidUntil": "<p>The expiration date and time for the SAML provider.</p>",
         "SAMLProviderListEntry$CreateDate": "<p>The date and time when the SAML provider was created.</p>",
@@ -2740,9 +2856,16 @@
         "PolicyUser$UserId": "<p>The stable and unique string identifying the user. For more information about IDs, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html\">IAM identifiers</a> in the <i>IAM User Guide</i>.</p>",
         "Role$RoleId": "<p> The stable and unique string identifying the role. For more information about IDs, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html\">IAM identifiers</a> in the <i>IAM User Guide</i>. </p>",
         "RoleDetail$RoleId": "<p>The stable and unique string identifying the role. For more information about IDs, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html\">IAM identifiers</a> in the <i>IAM User Guide</i>.</p>",
+        "RoleTemplateVersion$TemplateVersionId": "<p>The identifier of the role template version.</p>",
         "ServerCertificateMetadata$ServerCertificateId": "<p> The stable and unique string identifying the server certificate. For more information about IDs, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html\">IAM identifiers</a> in the <i>IAM User Guide</i>. </p>",
         "User$UserId": "<p>The stable and unique string identifying the user. For more information about IDs, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html\">IAM identifiers</a> in the <i>IAM User Guide</i>.</p>",
         "UserDetail$UserId": "<p>The stable and unique string identifying the user. For more information about IDs, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html\">IAM identifiers</a> in the <i>IAM User Guide</i>.</p>"
+      }
+    },
+    "inlinePolicyTemplateListType": {
+      "base": null,
+      "refs": {
+        "RoleTemplateVersion$InlinePolicyTemplates": "<p>A list of inline policy templates that the service embeds in roles that you create from this template.</p>"
       }
     },
     "instanceProfileListType": {
@@ -2771,9 +2894,12 @@
       "base": null,
       "refs": {
         "AccessDetail$TotalAuthenticatedEntities": "<p>The number of accounts with authenticated principals (root user, IAM users, and IAM roles) that attempted to access the service in the tracking period.</p>",
+        "AcquireRoleRequest$TemplateMinorVersion": "<p>The minor version of the role template to use. If you do not specify a minor version, the service uses the template's default minor version.</p>",
         "GetOrganizationsAccessReportResponse$NumberOfServicesAccessible": "<p>The number of services that the applicable SCPs allow account principals to access.</p>",
         "GetOrganizationsAccessReportResponse$NumberOfServicesNotAccessed": "<p>The number of services that account principals are allowed but did not attempt to access.</p>",
-        "ServiceLastAccessed$TotalAuthenticatedEntities": "<p>The total number of authenticated principals (root user, IAM users, or IAM roles) that have attempted to access the service.</p> <p>This field is null if no principals attempted to access the service within the <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_access-advisor.html#service-last-accessed-reporting-period\">tracking period</a>.</p>"
+        "RoleTemplateVersion$MajorVersion": "<p>The major version number of the role template.</p>",
+        "ServiceLastAccessed$TotalAuthenticatedEntities": "<p>The total number of authenticated principals (root user, IAM users, or IAM roles) that have attempted to access the service.</p> <p>This field is null if no principals attempted to access the service within the <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_access-advisor.html#service-last-accessed-reporting-period\">tracking period</a>.</p>",
+        "SourceRoleTemplate$TemplateMinorVersion": "<p>The minor version of the role template that was used to create the role.</p>"
       }
     },
     "invalidAuthenticationCodeMessage": {
@@ -2859,6 +2985,30 @@
       "base": null,
       "refs": {
         "MalformedPolicyDocumentException$message": null
+      }
+    },
+    "managedByTypeType": {
+      "base": null,
+      "refs": {
+        "RoleTemplateVersion$ManagedByType": "<p>Indicates that the role template is managed by an Amazon Web Services service.</p>"
+      }
+    },
+    "managedByValueType": {
+      "base": null,
+      "refs": {
+        "RoleTemplateVersion$ManagedByValue": "<p>The identifier of the Amazon Web Services service that manages the role template.</p>"
+      }
+    },
+    "managedPolicyArnListType": {
+      "base": null,
+      "refs": {
+        "RoleTemplateVersion$ManagedPolicyArns": "<p>A list of the ARNs of the managed policies that the service attaches to roles that you create from this template.</p>"
+      }
+    },
+    "mapStringReplacementValueEntry": {
+      "base": null,
+      "refs": {
+        "AcquireRoleRequest$ReplacementValues": "<p>A map of values to substitute for the parameters that are defined in the role template version. Each key is a parameter name from the template, and each value is a structure that contains the replacement values for that parameter.</p>"
       }
     },
     "markerType": {
@@ -2972,6 +3122,20 @@
         "UpdateAccountPasswordPolicyRequest$MinimumPasswordLength": "<p>The minimum number of characters allowed in an IAM user password.</p> <p>If you do not specify a value for this parameter, then the operation uses the default value of <code>6</code>.</p>"
       }
     },
+    "minorVersionType": {
+      "base": null,
+      "refs": {
+        "GetRoleTemplateVersionRequest$MinorVersion": "<p>The minor version of the role template to retrieve. If you do not specify a minor version, the service returns the template's default minor version.</p>",
+        "RoleTemplateVersion$DefaultMinorVersion": "<p>The minor version that the service uses by default when you create a role from this template without specifying a minor version.</p>",
+        "RoleTemplateVersion$MinorVersion": "<p>The minor version number of this role template version.</p>"
+      }
+    },
+    "nameConflictMessage": {
+      "base": null,
+      "refs": {
+        "NameConflictException$message": null
+      }
+    },
     "noSuchEntityMessage": {
       "base": null,
       "refs": {
@@ -3017,6 +3181,42 @@
       "refs": {
         "DelegationRequest$OwnerId": "<p>ARN of the owner of this delegation request.</p>",
         "ListDelegationRequestsRequest$OwnerId": "<p>The owner ID to filter delegation requests by.</p>"
+      }
+    },
+    "parameterDefaultValueType": {
+      "base": null,
+      "refs": {
+        "ParameterDefinition$DefaultValue": "<p>The value that the service uses for the parameter when you do not supply one.</p>"
+      }
+    },
+    "parameterDescriptionType": {
+      "base": null,
+      "refs": {
+        "ParameterDefinition$Description": "<p>A description of the parameter.</p>"
+      }
+    },
+    "parameterNameType": {
+      "base": null,
+      "refs": {
+        "ParameterDefinition$Name": "<p>The name of the parameter.</p>"
+      }
+    },
+    "parameterSubTypeType": {
+      "base": null,
+      "refs": {
+        "ParameterDefinition$SubType": "<p>An optional subtype that further constrains the values that are allowed for the parameter.</p>"
+      }
+    },
+    "parameterTypeType": {
+      "base": null,
+      "refs": {
+        "ParameterDefinition$Type": "<p>The data type of the parameter. Valid values are <code>String</code>, <code>StringList</code>, <code>Number</code>, <code>NumberList</code>, <code>Arn</code>, and <code>ArnList</code>.</p>"
+      }
+    },
+    "parametersDefinitionListType": {
+      "base": null,
+      "refs": {
+        "RoleTemplateVersion$ParametersDefinition": "<p>A list of the parameters that are defined for this role template version. You supply values for these parameters when you create a role with <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_AcquireRole.html\">AcquireRole</a>.</p>"
       }
     },
     "passwordPolicyViolationMessage": {
@@ -3118,6 +3318,7 @@
         "GetGroupPolicyResponse$PolicyDocument": "<p>The policy document.</p> <p>IAM stores policies in JSON format. However, resources that were created using CloudFormation templates can be formatted in YAML. CloudFormation always converts a YAML policy to JSON format before submitting it to IAM.</p>",
         "GetRolePolicyResponse$PolicyDocument": "<p>The policy document.</p> <p>IAM stores policies in JSON format. However, resources that were created using CloudFormation templates can be formatted in YAML. CloudFormation always converts a YAML policy to JSON format before submitting it to IAM.</p>",
         "GetUserPolicyResponse$PolicyDocument": "<p>The policy document.</p> <p>IAM stores policies in JSON format. However, resources that were created using CloudFormation templates can be formatted in YAML. CloudFormation always converts a YAML policy to JSON format before submitting it to IAM.</p>",
+        "InlinePolicy$PolicyDocument": "<p>The inline policy document.</p>",
         "PolicyDetail$PolicyDocument": "<p>The policy document.</p>",
         "PolicyVersion$Document": "<p>The policy document.</p> <p>The policy document is returned in the response to the <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetPolicyVersion.html\">GetPolicyVersion</a> and <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetAccountAuthorizationDetails.html\">GetAccountAuthorizationDetails</a> operations. It is not returned in the response to the <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreatePolicyVersion.html\">CreatePolicyVersion</a> or <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListPolicyVersions.html\">ListPolicyVersions</a> operations. </p> <p>The policy document returned in this structure is URL-encoded compliant with <a href=\"https://tools.ietf.org/html/rfc3986\">RFC 3986</a>. You can use a URL decoding method to convert the policy back to plain JSON text. For example, if you use Java, you can use the <code>decode</code> method of the <code>java.net.URLDecoder</code> utility class in the Java SDK. Other languages and SDKs provide similar functionality.</p>",
         "PutGroupPolicyRequest$PolicyDocument": "<p>The policy document.</p> <p>You must provide policies in JSON format in IAM. However, for CloudFormation templates formatted in YAML, you can provide the policy in JSON or YAML format. CloudFormation always converts a YAML policy to JSON format before submitting it to IAM.</p> <p>The <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a> used to validate this parameter is a string of characters consisting of the following:</p> <ul> <li> <p>Any printable ASCII character ranging from the space character (<code>\\u0020</code>) through the end of the ASCII character range</p> </li> <li> <p>The printable characters in the Basic Latin and Latin-1 Supplement character set (through <code>\\u00FF</code>)</p> </li> <li> <p>The special characters tab (<code>\\u0009</code>), line feed (<code>\\u000A</code>), and carriage return (<code>\\u000D</code>)</p> </li> </ul>",
@@ -3125,6 +3326,7 @@
         "PutUserPolicyRequest$PolicyDocument": "<p>The policy document.</p> <p>You must provide policies in JSON format in IAM. However, for CloudFormation templates formatted in YAML, you can provide the policy in JSON or YAML format. CloudFormation always converts a YAML policy to JSON format before submitting it to IAM.</p> <p>The <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a> used to validate this parameter is a string of characters consisting of the following:</p> <ul> <li> <p>Any printable ASCII character ranging from the space character (<code>\\u0020</code>) through the end of the ASCII character range</p> </li> <li> <p>The printable characters in the Basic Latin and Latin-1 Supplement character set (through <code>\\u00FF</code>)</p> </li> <li> <p>The special characters tab (<code>\\u0009</code>), line feed (<code>\\u000A</code>), and carriage return (<code>\\u000D</code>)</p> </li> </ul>",
         "Role$AssumeRolePolicyDocument": "<p>The policy that grants an entity permission to assume the role.</p>",
         "RoleDetail$AssumeRolePolicyDocument": "<p>The trust policy that grants permission to assume the role.</p>",
+        "RoleTemplateVersion$AssumeRolePolicyDocumentTemplate": "<p>The trust policy template that grants an entity permission to assume roles that you create from this template.</p>",
         "SimulateCustomPolicyRequest$ResourcePolicy": "<p>A resource-based policy to include in the simulation provided as a string. Each resource in the simulation is treated as if it had this policy attached. You can include only one resource-based policy in a simulation.</p> <p>The maximum length of the policy document that you can pass in this operation, including whitespace, is listed below. To view the maximum character counts of a managed policy with no whitespaces, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_iam-quotas.html#reference_iam-quotas-entity-length\">IAM and STS character quotas</a>.</p> <p>The <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a> used to validate this parameter is a string of characters consisting of the following:</p> <ul> <li> <p>Any printable ASCII character ranging from the space character (<code>\\u0020</code>) through the end of the ASCII character range</p> </li> <li> <p>The printable characters in the Basic Latin and Latin-1 Supplement character set (through <code>\\u00FF</code>)</p> </li> <li> <p>The special characters tab (<code>\\u0009</code>), line feed (<code>\\u000A</code>), and carriage return (<code>\\u000D</code>)</p> </li> </ul> <note> <p>Simulation of resource-based policies isn't supported for IAM roles.</p> </note>",
         "SimulatePrincipalPolicyRequest$ResourcePolicy": "<p>A resource-based policy to include in the simulation provided as a string. Each resource in the simulation is treated as if it had this policy attached. You can include only one resource-based policy in a simulation.</p> <p>The maximum length of the policy document that you can pass in this operation, including whitespace, is listed below. To view the maximum character counts of a managed policy with no whitespaces, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_iam-quotas.html#reference_iam-quotas-entity-length\">IAM and STS character quotas</a>.</p> <p>The <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a> used to validate this parameter is a string of characters consisting of the following:</p> <ul> <li> <p>Any printable ASCII character ranging from the space character (<code>\\u0020</code>) through the end of the ASCII character range</p> </li> <li> <p>The printable characters in the Basic Latin and Latin-1 Supplement character set (through <code>\\u00FF</code>)</p> </li> <li> <p>The special characters tab (<code>\\u0009</code>), line feed (<code>\\u000A</code>), and carriage return (<code>\\u000D</code>)</p> </li> </ul> <note> <p>Simulation of resource-based policies isn't supported for IAM roles.</p> </note>",
         "SimulationPolicyListType$member": null,
@@ -3178,6 +3380,7 @@
         "GetRolePolicyResponse$PolicyName": "<p>The name of the policy.</p>",
         "GetUserPolicyRequest$PolicyName": "<p>The name of the policy document to get.</p> <p>This parameter allows (through its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: _+=,.@-</p>",
         "GetUserPolicyResponse$PolicyName": "<p>The name of the policy.</p>",
+        "InlinePolicy$PolicyName": "<p>The name of the inline policy.</p>",
         "InlinePolicyIdentifierType$PolicyName": "<p>The name of the inline policy.</p>",
         "ManagedPolicyDetail$PolicyName": "<p>The friendly name (not ARN) identifying the policy.</p>",
         "Policy$PolicyName": "<p>The friendly name (not ARN) identifying the policy.</p>",
@@ -3313,6 +3516,12 @@
         "DelegationRequest$RedirectUrl": "<p>A URL to be redirected to once the delegation request is approved. Partners provide this URL when creating the delegation request.</p>"
       }
     },
+    "replacementValueListType": {
+      "base": null,
+      "refs": {
+        "ReplacementValueEntry$Values": "<p>The list of replacement values for the template parameter.</p>"
+      }
+    },
     "reportGenerationLimitExceededMessage": {
       "base": null,
       "refs": {
@@ -3380,6 +3589,12 @@
         "SimulatePolicyResponse$Marker": "<p>When <code>IsTruncated</code> is <code>true</code>, this element is present and contains the value to use for the <code>Marker</code> parameter in a subsequent pagination request.</p>"
       }
     },
+    "roleDescriptionPatternType": {
+      "base": null,
+      "refs": {
+        "RoleTemplateVersion$RoleDescriptionPattern": "<p>The pattern that is used to generate the description of a role that is created from this template.</p>"
+      }
+    },
     "roleDescriptionType": {
       "base": null,
       "refs": {
@@ -3408,7 +3623,20 @@
       "refs": {
         "CreateRoleRequest$MaxSessionDuration": "<p>The maximum session duration (in seconds) that you want to set for the specified role. If you do not specify a value for this setting, the default value of one hour is applied. This setting can have a value from 1 hour to 12 hours.</p> <p>Anyone who assumes the role from the CLI or API can use the <code>DurationSeconds</code> API parameter or the <code>duration-seconds</code> CLI parameter to request a longer session. The <code>MaxSessionDuration</code> setting determines the maximum duration that can be requested using the <code>DurationSeconds</code> parameter. If users don't specify a value for the <code>DurationSeconds</code> parameter, their security credentials are valid for one hour by default. This applies when you use the <code>AssumeRole*</code> API operations or the <code>assume-role*</code> CLI operations but does not apply when you use those operations to create a console URL. For more information, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use.html\">Using IAM roles</a> in the <i>IAM User Guide</i>.</p>",
         "Role$MaxSessionDuration": "<p>The maximum session duration (in seconds) for the specified role. Anyone who uses the CLI, or API to assume the role can specify the duration using the optional <code>DurationSeconds</code> API parameter or <code>duration-seconds</code> CLI parameter.</p>",
+        "RoleTemplateVersion$MaxSessionDuration": "<p>The maximum session duration (in seconds) for roles that are created from this template.</p>",
         "UpdateRoleRequest$MaxSessionDuration": "<p>The maximum session duration (in seconds) that you want to set for the specified role. If you do not specify a value for this setting, the default value of one hour is applied. This setting can have a value from 1 hour to 12 hours.</p> <p>Anyone who assumes the role from the CLI or API can use the <code>DurationSeconds</code> API parameter or the <code>duration-seconds</code> CLI parameter to request a longer session. The <code>MaxSessionDuration</code> setting determines the maximum duration that can be requested using the <code>DurationSeconds</code> parameter. If users don't specify a value for the <code>DurationSeconds</code> parameter, their security credentials are valid for one hour by default. This applies when you use the <code>AssumeRole*</code> API operations or the <code>assume-role*</code> CLI operations but does not apply when you use those operations to create a console URL. For more information, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use.html\">Using IAM roles</a> in the <i>IAM User Guide</i>.</p> <note> <p>IAM role credentials provided by Amazon EC2 instances assigned to the role are not subject to the specified maximum session duration.</p> </note>"
+      }
+    },
+    "roleModifiedMessage": {
+      "base": null,
+      "refs": {
+        "RoleModifiedException$message": null
+      }
+    },
+    "roleNamePatternType": {
+      "base": null,
+      "refs": {
+        "RoleTemplateVersion$RoleNamePattern": "<p>The pattern that is used to generate the name of a role that is created from this template. The pattern can include <code>@{parameter}</code> placeholders that are replaced with the values you supply in the <code>ReplacementValues</code> parameter of <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_AcquireRole.html\">AcquireRole</a>.</p>"
       }
     },
     "roleNameType": {
@@ -3442,10 +3670,34 @@
         "UpdateRoleRequest$RoleName": "<p>The name of the role that you want to modify.</p>"
       }
     },
+    "rolePathPatternType": {
+      "base": null,
+      "refs": {
+        "RoleTemplateVersion$RolePathPattern": "<p>The pattern that is used to generate the path of a role that is created from this template.</p>"
+      }
+    },
     "rolePermissionRestrictionArnListType": {
       "base": null,
       "refs": {
         "DelegationRequest$RolePermissionRestrictionArns": "<p>If the <code>PermissionPolicy</code> includes role creation permissions, this element will include the list of permissions boundary policies associated with the role creation. See <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html\">Permissions boundaries for IAM entities</a> for more details about IAM permission boundaries. </p>"
+      }
+    },
+    "roleTemplateDescriptionType": {
+      "base": null,
+      "refs": {
+        "RoleTemplateVersion$Description": "<p>The description of the role template.</p>"
+      }
+    },
+    "roleTemplateDisabledMessage": {
+      "base": null,
+      "refs": {
+        "RoleTemplateDisabledException$message": null
+      }
+    },
+    "roleTemplateNameType": {
+      "base": null,
+      "refs": {
+        "RoleTemplateVersion$TemplateName": "<p>The friendly name that identifies the role template.</p>"
       }
     },
     "serialNumberType": {
@@ -3612,7 +3864,9 @@
         "RoleLastUsed$Region": "<p>The name of the Amazon Web Services Region in which the role was last used.</p>",
         "ServiceLastAccessed$LastAuthenticatedRegion": "<p>The Region from which the authenticated entity (user or role) last attempted to access the service. Amazon Web Services does not report unauthenticated requests.</p> <p>This field is null if no IAM entities attempted to access the service within the <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_access-advisor.html#service-last-accessed-reporting-period\">tracking period</a>.</p>",
         "TrackedActionLastAccessed$ActionName": "<p>The name of the tracked action to which access was attempted. Tracked actions are actions that report activity to IAM.</p>",
-        "TrackedActionLastAccessed$LastAccessedRegion": "<p>The Region from which the authenticated entity (user or role) last attempted to access the tracked action. Amazon Web Services does not report unauthenticated requests.</p> <p>This field is null if no IAM entities attempted to access the service within the <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_access-advisor.html#service-last-accessed-reporting-period\">tracking period</a>.</p>"
+        "TrackedActionLastAccessed$LastAccessedRegion": "<p>The Region from which the authenticated entity (user or role) last attempted to access the tracked action. Amazon Web Services does not report unauthenticated requests.</p> <p>This field is null if no IAM entities attempted to access the service within the <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_access-advisor.html#service-last-accessed-reporting-period\">tracking period</a>.</p>",
+        "mapStringReplacementValueEntry$key": null,
+        "replacementValueListType$member": null
       }
     },
     "summaryContentType": {
@@ -3705,6 +3959,24 @@
         "User$Tags": "<p>A list of tags that are associated with the user. For more information about tagging, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/id_tags.html\">Tagging IAM resources</a> in the <i>IAM User Guide</i>.</p>",
         "UserDetail$Tags": "<p>A list of tags that are associated with the user. For more information about tagging, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/id_tags.html\">Tagging IAM resources</a> in the <i>IAM User Guide</i>.</p>",
         "VirtualMFADevice$Tags": "<p>A list of tags that are attached to the virtual MFA device. For more information about tagging, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/id_tags.html\">Tagging IAM resources</a> in the <i>IAM User Guide</i>.</p>"
+      }
+    },
+    "tagTemplateKeyType": {
+      "base": null,
+      "refs": {
+        "TagTemplate$Key": "<p>The key name of the tag.</p>"
+      }
+    },
+    "tagTemplateListType": {
+      "base": null,
+      "refs": {
+        "RoleTemplateVersion$RoleTagsTemplate": "<p>A list of tag templates that are applied to roles that are created from this template.</p>"
+      }
+    },
+    "tagTemplateValueType": {
+      "base": null,
+      "refs": {
+        "TagTemplate$Value": "<p>The value associated with the tag key.</p>"
       }
     },
     "tagValueType": {

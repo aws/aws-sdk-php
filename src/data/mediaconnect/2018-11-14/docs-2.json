@@ -833,6 +833,20 @@
         "UpdateFlowEntitlementRequest$EntitlementStatus": "<p> An indication of whether you want to enable the entitlement to allow access, or disable it to stop streaming content to the subscriber’s flow temporarily. If you don’t specify the <code>entitlementStatus</code> field in your request, MediaConnect leaves the value unchanged.</p>"
       }
     },
+    "FabricConfiguration": {
+      "base": "<p>The fabric configuration settings for the router output.</p>",
+      "refs": {
+        "CreateRouterOutputRequest$FabricConfiguration": "<p>The fabric configuration settings for the router output.</p>",
+        "RouterOutput$FabricConfiguration": "<p>The fabric configuration settings for the router output.</p>",
+        "UpdateRouterOutputRequest$FabricConfiguration": "<p>The updated fabric configuration settings for the router output. You cannot update the fabric configuration while the output has an active route. You must unroute the output before updating the fabric configuration.</p>"
+      }
+    },
+    "FabricLatencyMode": {
+      "base": null,
+      "refs": {
+        "FabricConfiguration$RecoveryLatencyMode": "<p>The recovery latency mode for the router fabric connection. Valid values include the following:</p> <ul> <li> <p> <code>BALANCED</code> (default) – Optimizes for stream quality.</p> </li> <li> <p> <code>LOW_LATENCY</code> – Reduces latency at the potential cost of stream quality under adverse network conditions.</p> </li> </ul>"
+      }
+    },
     "FailoverConfig": {
       "base": "<p> The settings for source failover.</p>",
       "refs": {

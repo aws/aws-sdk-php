@@ -1,9 +1,12 @@
 {
   "version": "2.0",
-  "service": "<fullname>Well-Architected Tool</fullname> <p>This is the <i>Well-Architected Tool API Reference</i>. The WA Tool API provides programmatic access to the <a href=\"http://aws.amazon.com/well-architected-tool\">Well-Architected Tool</a> in the <a href=\"https://console.aws.amazon.com/wellarchitected\">Amazon Web Services Management Console</a>. For information about the Well-Architected Tool, see the <a href=\"https://docs.aws.amazon.com/wellarchitected/latest/userguide/intro.html\">Well-Architected Tool User Guide</a>.</p>",
+  "service": "<p><fullname>Amazon Web Services Well-Architected</fullname> <p>Amazon Web Services Well-Architected helps you evaluate your architectures against Amazon Web Services best practices across operational excellence, security, reliability, performance efficiency, cost optimization, and sustainability. The service includes the Amazon Web Services Well-Architected Agent for AI-powered recommendations tailored to your specific environment, and the <a href=\"http://aws.amazon.com/well-architected-tool\">Well-Architected Tool</a> for conducting reviews and tracking improvements.</p> <p>This is the <i>Amazon Web Services Well-Architected API Reference</i>. Through this API, you can programmatically access personalized recommendations and automation scripts from the Amazon Web Services Well-Architected Agent, and create and manage workloads, conduct lens reviews, track milestones, manage custom lenses, share workloads across accounts, and manage profiles with the Well-Architected Tool.</p> <p>For more information about the service, see the <a href=\"https://docs.aws.amazon.com/wellarchitected/latest/userguide/intro.html\">Amazon Web Services Well-Architected User Guide</a>.</p></p>",
   "operations": {
     "AssociateLenses": "<p>Associate a lens to a workload.</p> <p>Up to 10 lenses can be associated with a workload in a single API operation. A maximum of 20 lenses can be associated with a workload.</p> <note> <p> <b>Disclaimer</b> </p> <p>By accessing and/or applying custom lenses created by another Amazon Web Services user or account, you acknowledge that custom lenses created by other users and shared with you are Third Party Content as defined in the Amazon Web Services Customer Agreement. </p> </note>",
     "AssociateProfiles": "<p>Associate a profile with a workload.</p>",
+    "CreateAgentContext": "<p>Creates a context associated with an optimization profile. Contexts provide application and environment information used during recommendation generation.</p>",
+    "CreateAgentGoal": "<p>Creates an optimization goal associated with a profile. Goals define specific targets and objectives for the optimization process.</p>",
+    "CreateAgentProfile": "<p>Creates an optimization profile that defines the scope and configuration for generating recommendations. A profile specifies the execution role, target pillars, and aggregation settings for analyzing your Amazon Web Services resources.</p>",
     "CreateLensShare": "<p>Create a lens share.</p> <p>The owner of a lens can share it with other Amazon Web Services accounts, users, an organization, and organizational units (OUs) in the same Amazon Web Services Region. Lenses provided by Amazon Web Services (Amazon Web Services Official Content) cannot be shared.</p> <p> Shared access to a lens is not removed until the lens invitation is deleted.</p> <p>If you share a lens with an organization or OU, all accounts in the organization or OU are granted access to the lens.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/wellarchitected/latest/userguide/lenses-sharing.html\">Sharing a custom lens</a> in the <i>Well-Architected Tool User Guide</i>.</p> <note> <p> <b>Disclaimer</b> </p> <p>By sharing your custom lenses with other Amazon Web Services accounts, you acknowledge that Amazon Web Services will make your custom lenses available to those other accounts. Those other accounts may continue to access and use your shared custom lenses even if you delete the custom lenses from your own Amazon Web Services account or terminate your Amazon Web Services account.</p> </note>",
     "CreateLensVersion": "<p>Create a new lens version.</p> <p>A lens can have up to 100 versions.</p> <p>Use this operation to publish a new lens version after you have imported a lens. The <code>LensAlias</code> is used to identify the lens to be published. The owner of a lens can share the lens with other Amazon Web Services accounts and users in the same Amazon Web Services Region. Only the owner of a lens can delete it. </p>",
     "CreateMilestone": "<p>Create a milestone for an existing workload.</p>",
@@ -13,6 +16,9 @@
     "CreateTemplateShare": "<p>Create a review template share.</p> <p>The owner of a review template can share it with other Amazon Web Services accounts, users, an organization, and organizational units (OUs) in the same Amazon Web Services Region. </p> <p> Shared access to a review template is not removed until the review template share invitation is deleted.</p> <p>If you share a review template with an organization or OU, all accounts in the organization or OU are granted access to the review template.</p> <note> <p> <b>Disclaimer</b> </p> <p>By sharing your review template with other Amazon Web Services accounts, you acknowledge that Amazon Web Services will make your review template available to those other accounts.</p> </note>",
     "CreateWorkload": "<p>Create a new workload.</p> <p>The owner of a workload can share the workload with other Amazon Web Services accounts, users, an organization, and organizational units (OUs) in the same Amazon Web Services Region. Only the owner of a workload can delete it.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/wellarchitected/latest/userguide/define-workload.html\">Defining a Workload</a> in the <i>Well-Architected Tool User Guide</i>.</p> <important> <p>Either <code>AwsRegions</code>, <code>NonAwsRegions</code>, or both must be specified when creating a workload.</p> <p>You also must specify <code>ReviewOwner</code>, even though the parameter is listed as not being required in the following section. </p> </important> <p>When creating a workload using a review template, you must have the following IAM permissions:</p> <ul> <li> <p> <code>wellarchitected:GetReviewTemplate</code> </p> </li> <li> <p> <code>wellarchitected:GetReviewTemplateAnswer</code> </p> </li> <li> <p> <code>wellarchitected:ListReviewTemplateAnswers</code> </p> </li> <li> <p> <code>wellarchitected:GetReviewTemplateLensReview</code> </p> </li> </ul>",
     "CreateWorkloadShare": "<p>Create a workload share.</p> <p>The owner of a workload can share it with other Amazon Web Services accounts and users in the same Amazon Web Services Region. Shared access to a workload is not removed until the workload invitation is deleted.</p> <p>If you share a workload with an organization or OU, all accounts in the organization or OU are granted access to the workload.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/wellarchitected/latest/userguide/workloads-sharing.html\">Sharing a workload</a> in the <i>Well-Architected Tool User Guide</i>.</p>",
+    "DeleteAgentContext": "<p>Deletes a context associated with a profile.</p>",
+    "DeleteAgentGoal": "<p>Deletes an optimization goal from a profile.</p>",
+    "DeleteAgentProfile": "<p>Deletes an optimization profile and its associated configuration. This action cannot be undone.</p>",
     "DeleteLens": "<p>Delete an existing lens.</p> <p>Only the owner of a lens can delete it. After the lens is deleted, Amazon Web Services accounts and users that you shared the lens with can continue to use it, but they will no longer be able to apply it to new workloads. </p> <note> <p> <b>Disclaimer</b> </p> <p>By sharing your custom lenses with other Amazon Web Services accounts, you acknowledge that Amazon Web Services will make your custom lenses available to those other accounts. Those other accounts may continue to access and use your shared custom lenses even if you delete the custom lenses from your own Amazon Web Services account or terminate your Amazon Web Services account.</p> </note>",
     "DeleteLensShare": "<p>Delete a lens share.</p> <p>After the lens share is deleted, Amazon Web Services accounts, users, organizations, and organizational units (OUs) that you shared the lens with can continue to use it, but they will no longer be able to apply it to new workloads.</p> <note> <p> <b>Disclaimer</b> </p> <p>By sharing your custom lenses with other Amazon Web Services accounts, you acknowledge that Amazon Web Services will make your custom lenses available to those other accounts. Those other accounts may continue to access and use your shared custom lenses even if you delete the custom lenses from your own Amazon Web Services account or terminate your Amazon Web Services account.</p> </note>",
     "DeleteProfile": "<p>Delete a profile.</p> <note> <p> <b>Disclaimer</b> </p> <p>By sharing your profile with other Amazon Web Services accounts, you acknowledge that Amazon Web Services will make your profile available to those other accounts. Those other accounts may continue to access and use your shared profile even if you delete the profile from your own Amazon Web Services account or terminate your Amazon Web Services account.</p> </note>",
@@ -24,6 +30,11 @@
     "DisassociateLenses": "<p>Disassociate a lens from a workload.</p> <p>Up to 10 lenses can be disassociated from a workload in a single API operation.</p> <note> <p>The Amazon Web Services Well-Architected Framework lens (<code>wellarchitected</code>) cannot be removed from a workload.</p> </note>",
     "DisassociateProfiles": "<p>Disassociate a profile from a workload.</p>",
     "ExportLens": "<p>Export an existing lens.</p> <p>Only the owner of a lens can export it. Lenses provided by Amazon Web Services (Amazon Web Services Official Content) cannot be exported.</p> <p>Lenses are defined in JSON. For more information, see <a href=\"https://docs.aws.amazon.com/wellarchitected/latest/userguide/lenses-format-specification.html\">JSON format specification</a> in the <i>Well-Architected Tool User Guide</i>.</p> <note> <p> <b>Disclaimer</b> </p> <p>Do not include or gather personal identifiable information (PII) of end users or other identifiable individuals in or via your custom lenses. If your custom lens or those shared with you and used in your account do include or collect PII you are responsible for: ensuring that the included PII is processed in accordance with applicable law, providing adequate privacy notices, and obtaining necessary consents for processing such data.</p> </note>",
+    "GetAgentContext": "<p>Retrieves detailed information about a specific context associated with a profile.</p>",
+    "GetAgentGoal": "<p>Retrieves detailed information about a specific optimization goal.</p>",
+    "GetAgentProfile": "<p>Retrieves detailed information about an optimization profile, including its configuration and metadata.</p>",
+    "GetAgentRecommendation": "<p>Retrieves detailed information about a specific optimization recommendation, including its impact analysis, content, and implementation guidance.</p>",
+    "GetAgentRecommendationGeneration": "<p>Retrieves information about a recommendation generation process, including its status, progress, and results. Recommendation generation is asynchronous: poll this operation until status reaches a terminal value of COMPLETED (results are ready) or ERROR (see errorDetails). Intermediate values are QUEUED and IN_PROGRESS.</p>",
     "GetAnswer": "<p>Get the answer to a specific question in a workload review.</p>",
     "GetConsolidatedReport": "<p>Get a consolidated report of your workloads.</p> <p>You can optionally choose to include workloads that have been shared with you.</p>",
     "GetGlobalSettings": "<p>Global settings for all workloads.</p>",
@@ -39,6 +50,12 @@
     "GetReviewTemplateLensReview": "<p>Get a lens review associated with a review template.</p>",
     "GetWorkload": "<p>Get an existing workload.</p>",
     "ImportLens": "<p>Import a new custom lens or update an existing custom lens.</p> <p>To update an existing custom lens, specify its ARN as the <code>LensAlias</code>. If no ARN is specified, a new custom lens is created.</p> <p>The new or updated lens will have a status of <code>DRAFT</code>. The lens cannot be applied to workloads or shared with other Amazon Web Services accounts until it's published with <a>CreateLensVersion</a>.</p> <p>Lenses are defined in JSON. For more information, see <a href=\"https://docs.aws.amazon.com/wellarchitected/latest/userguide/lenses-format-specification.html\">JSON format specification</a> in the <i>Well-Architected Tool User Guide</i>.</p> <p>A custom lens cannot exceed 500 KB in size.</p> <note> <p> <b>Disclaimer</b> </p> <p>Do not include or gather personal identifiable information (PII) of end users or other identifiable individuals in or via your custom lenses. If your custom lens or those shared with you and used in your account do include or collect PII you are responsible for: ensuring that the included PII is processed in accordance with applicable law, providing adequate privacy notices, and obtaining necessary consents for processing such data.</p> </note>",
+    "ListAgentContexts": "<p>Lists contexts associated with a profile.</p>",
+    "ListAgentGoals": "<p>Lists optimization goals associated with a specified profile. Goals define specific targets and objectives for the optimization process.</p>",
+    "ListAgentProfiles": "<p>Lists optimization profiles in your account. Profiles define the scope and configuration for generating optimization recommendations.</p>",
+    "ListAgentRecommendationGenerations": "<p>Lists recommendation generation processes for a specified profile.</p>",
+    "ListAgentRecommendationItems": "<p>Lists recommendation items for a specific recommendation. Recommendation items provide detailed information about individual optimization opportunities.</p>",
+    "ListAgentRecommendations": "<p>Lists active optimization recommendations for a specified profile with optional filtering by state.</p>",
     "ListAnswers": "<p>List of answers for a particular workload and lens.</p>",
     "ListCheckDetails": "<p>List of Trusted Advisor check details by account related to the workload.</p>",
     "ListCheckSummaries": "<p>List of Trusted Advisor checks summarized for all accounts related to the workload.</p>",
@@ -58,8 +75,14 @@
     "ListTemplateShares": "<p>List review template shares.</p>",
     "ListWorkloadShares": "<p>List the workload shares associated with the workload.</p>",
     "ListWorkloads": "<p>Paginated list of workloads.</p>",
+    "PutAgentRecommendationFeedback": "<p>Submits user feedback on a recommendation to help improve future optimization suggestions and track implementation outcomes.</p>",
+    "StartAgentRecommendationGeneration": "<p>Initiates a new recommendation generation process for the specified optimization profile. This asynchronous operation analyzes your Amazon Web Services resources and generates optimization recommendations based on the configured pillars and scope. Use GetAgentRecommendationGeneration to check status.</p>",
     "TagResource": "<p>Adds one or more tags to the specified resource.</p> <note> <p>The WorkloadArn parameter can be a workload ARN, a custom lens ARN, a profile ARN, or review template ARN.</p> </note>",
     "UntagResource": "<p>Deletes specified tags from a resource.</p> <note> <p>The WorkloadArn parameter can be a workload ARN, a custom lens ARN, a profile ARN, or review template ARN.</p> </note> <p>To specify multiple tags, use separate <b>tagKeys</b> parameters, for example:</p> <p> <code>DELETE /tags/WorkloadArn?tagKeys=key1&amp;tagKeys=key2</code> </p>",
+    "UpdateAgentContext": "<p>Updates an existing context associated with a profile.</p>",
+    "UpdateAgentGoal": "<p>Updates the pillars and title of an existing goal associated with a profile.</p>",
+    "UpdateAgentProfile": "<p>Updates an existing optimization profile's configuration, including its pillars, execution role, and aggregation settings.</p>",
+    "UpdateAgentRecommendationStatus": "<p>Updates the status of a recommendation to track its progress through the implementation lifecycle.</p>",
     "UpdateAnswer": "<p>Update the answer to a specific question in a workload review.</p>",
     "UpdateGlobalSettings": "<p>Update whether the Amazon Web Services account is opted into organization sharing and discovery integration features.</p>",
     "UpdateIntegration": "<p>Update integration features.</p>",
@@ -79,6 +102,12 @@
     "AccessDeniedException": {
       "base": "<p>User does not have sufficient access to perform this action.</p>",
       "refs": {}
+    },
+    "AccountId": {
+      "base": null,
+      "refs": {
+        "AggregationConfiguration$accountId": "<p>The Amazon Web Services account ID to analyze.</p>"
+      }
     },
     "AccountJiraConfigurationInput": {
       "base": "<p>Account-level: Input for the Jira configuration.</p>",
@@ -123,6 +152,227 @@
         "Choice$AdditionalResources": "<p>The additional resources for a choice in a custom lens.</p> <p>A choice can have up to two additional resources: one of type <code>HELPFUL_RESOURCE</code>, one of type <code>IMPROVEMENT_PLAN</code>, or both.</p>"
       }
     },
+    "AgentProfileArn": {
+      "base": null,
+      "refs": {
+        "AgentProfileSummary$arn": "<p>The Amazon Resource Name (ARN) of the optimization profile.</p>",
+        "AgentRecommendationGenerationSummary$profileArn": "<p>The Amazon Resource Name (ARN) of the profile used for this generation.</p>",
+        "AgentRecommendationSummary$profileArn": "<p>The Amazon Resource Name (ARN) of the associated profile.</p>",
+        "ContextSummary$profileArn": "<p>The Amazon Resource Name (ARN) of the associated profile.</p>",
+        "CreateAgentContextRequest$profileArn": "<p>The Amazon Resource Name (ARN) of the profile to associate the context with.</p>",
+        "CreateAgentGoalRequest$profileArn": "<p>The Amazon Resource Name (ARN) of the profile to associate the goal with.</p>",
+        "CreateAgentProfileResponse$arn": "<p>The Amazon Resource Name (ARN) of the created profile.</p>",
+        "DeleteAgentContextRequest$profileArn": "<p>The Amazon Resource Name (ARN) of the profile containing the context.</p>",
+        "DeleteAgentGoalRequest$profileArn": "<p>The Amazon Resource Name (ARN) of the profile containing the goal.</p>",
+        "DeleteAgentProfileRequest$profileArn": "<p>The Amazon Resource Name (ARN) of the profile to delete.</p>",
+        "GetAgentContextRequest$profileArn": "<p>The Amazon Resource Name (ARN) of the profile containing the context.</p>",
+        "GetAgentGoalRequest$profileArn": "<p>The Amazon Resource Name (ARN) of the profile containing the goal.</p>",
+        "GetAgentProfileRequest$profileArn": "<p>The Amazon Resource Name (ARN) of the optimization profile to retrieve.</p>",
+        "GetAgentProfileResponse$arn": "<p>The Amazon Resource Name (ARN) of the profile.</p>",
+        "GetAgentRecommendationGenerationRequest$profileArn": "<p>The ARN of the optimization profile associated with this generation.</p>",
+        "GetAgentRecommendationGenerationResponse$profileArn": "<p>The Amazon Resource Name (ARN) of the profile used for this generation.</p>",
+        "GetAgentRecommendationResponse$profileArn": "<p>The Amazon Resource Name (ARN) of the associated profile.</p>",
+        "GoalSummary$profileArn": "<p>The Amazon Resource Name (ARN) of the associated profile.</p>",
+        "ListAgentContextsRequest$profileArn": "<p>The Amazon Resource Name (ARN) of the profile to list contexts for.</p>",
+        "ListAgentGoalsRequest$profileArn": "<p>The Amazon Resource Name (ARN) of the optimization profile to list goals for.</p>",
+        "ListAgentRecommendationGenerationsRequest$profileArn": "<p>The Amazon Resource Name (ARN) of the optimization profile to list generation processes for.</p>",
+        "ListAgentRecommendationsRequest$profileArn": "<p>The Amazon Resource Name (ARN) of the optimization profile to list recommendations for.</p>",
+        "StartAgentRecommendationGenerationRequest$profileArn": "<p>The Amazon Resource Name (ARN) of the optimization profile to use for generating recommendations.</p>",
+        "StartAgentRecommendationGenerationResponse$profileArn": "<p>The Amazon Resource Name (ARN) of the profile used for this generation.</p>",
+        "UpdateAgentContextRequest$profileArn": "<p>The Amazon Resource Name (ARN) of the profile containing the context.</p>",
+        "UpdateAgentGoalRequest$profileArn": "<p>The Amazon Resource Name (ARN) of the profile containing the goal to update.</p>",
+        "UpdateAgentProfileRequest$profileArn": "<p>The Amazon Resource Name (ARN) of the profile to update.</p>",
+        "UpdateAgentProfileResponse$arn": "<p>The Amazon Resource Name (ARN) of the updated profile.</p>"
+      }
+    },
+    "AgentProfileSummaries": {
+      "base": null,
+      "refs": {
+        "ListAgentProfilesResponse$items": "<p>A list of profile summaries.</p>"
+      }
+    },
+    "AgentProfileSummary": {
+      "base": "<p>Summary of an optimization profile, including its configuration, metadata, and audit information.</p>",
+      "refs": {
+        "AgentProfileSummaries$member": null
+      }
+    },
+    "AgentProfileSummaryBusinessOverviewString": {
+      "base": null,
+      "refs": {
+        "AgentProfileSummary$businessOverview": "<p>The business overview for this profile.</p>"
+      }
+    },
+    "AgentProfileSummaryCreatedByString": {
+      "base": null,
+      "refs": {
+        "AgentProfileSummary$createdBy": "<p>The identifier of the user or system that created this profile.</p>"
+      }
+    },
+    "AgentProfileSummaryDescriptionString": {
+      "base": null,
+      "refs": {
+        "AgentProfileSummary$description": "<p>A description of the profile.</p>"
+      }
+    },
+    "AgentProfileSummaryDisplayNameString": {
+      "base": null,
+      "refs": {
+        "AgentProfileSummary$displayName": "<p>The display name of the profile shown to users.</p>"
+      }
+    },
+    "AgentProfileSummaryLastModifiedByString": {
+      "base": null,
+      "refs": {
+        "AgentProfileSummary$lastModifiedBy": "<p>The identifier of the user or system that last modified this profile.</p>"
+      }
+    },
+    "AgentProfileSummaryNameString": {
+      "base": null,
+      "refs": {
+        "AgentProfileSummary$name": "<p>The system name of the profile.</p>"
+      }
+    },
+    "AgentRecommendationArn": {
+      "base": null,
+      "refs": {
+        "GetAgentRecommendationRequest$recommendationArn": "<p>The Amazon Resource Name (ARN) of the recommendation to retrieve.</p>",
+        "ListAgentRecommendationItemsRequest$recommendationArn": "<p>The Amazon Resource Name (ARN) of the recommendation to list items for.</p>",
+        "PutAgentRecommendationFeedbackRequest$recommendationArn": "<p>The Amazon Resource Name (ARN) of the recommendation to provide feedback for.</p>",
+        "UpdateAgentRecommendationStatusRequest$recommendationArn": "<p>The Amazon Resource Name (ARN) of the recommendation to update.</p>"
+      }
+    },
+    "AgentRecommendationGenerationSummaries": {
+      "base": null,
+      "refs": {
+        "ListAgentRecommendationGenerationsResponse$items": "<p>A list of recommendation generation summaries.</p>"
+      }
+    },
+    "AgentRecommendationGenerationSummary": {
+      "base": "<p>Summary of a recommendation generation process initiated through the agent API.</p>",
+      "refs": {
+        "AgentRecommendationGenerationSummaries$member": null
+      }
+    },
+    "AgentRecommendationGenerationSummaryCreatedByString": {
+      "base": null,
+      "refs": {
+        "AgentRecommendationGenerationSummary$createdBy": "<p>The identifier of the user or system that started this generation.</p>"
+      }
+    },
+    "AgentRecommendationGenerationSummaryLastModifiedByString": {
+      "base": null,
+      "refs": {
+        "AgentRecommendationGenerationSummary$lastModifiedBy": "<p>The identifier of the user or system that last modified this generation.</p>"
+      }
+    },
+    "AgentRecommendationItemSummaries": {
+      "base": null,
+      "refs": {
+        "ListAgentRecommendationItemsResponse$items": "<p>A list of recommendation items with their detailed metadata and configuration information.</p>"
+      }
+    },
+    "AgentRecommendationItemSummary": {
+      "base": "<p>Summary of an agent recommendation item, representing an Amazon Web Services resource or recommendation affected by the optimization recommendation.</p>",
+      "refs": {
+        "AgentRecommendationItemSummaries$member": null
+      }
+    },
+    "AgentRecommendationItemSummaryCreatedByString": {
+      "base": null,
+      "refs": {
+        "AgentRecommendationItemSummary$createdBy": "<p>The identifier of the user or system that created this recommendation item.</p>"
+      }
+    },
+    "AgentRecommendationItemSummaryLastModifiedByString": {
+      "base": null,
+      "refs": {
+        "AgentRecommendationItemSummary$lastModifiedBy": "<p>The identifier of the user or system that last modified this recommendation item.</p>"
+      }
+    },
+    "AgentRecommendationRemediation": {
+      "base": "<p>The core fields for a remediation.</p>",
+      "refs": {
+        "AgentRecommendationRemediations$member": null
+      }
+    },
+    "AgentRecommendationRemediationCreatedByString": {
+      "base": null,
+      "refs": {
+        "AgentRecommendationRemediation$createdBy": "<p>The identifier of the user or system that created this remediation.</p>"
+      }
+    },
+    "AgentRecommendationRemediationLastModifiedByString": {
+      "base": null,
+      "refs": {
+        "AgentRecommendationRemediation$lastModifiedBy": "<p>The identifier of the user or system that last modified this remediation.</p>"
+      }
+    },
+    "AgentRecommendationRemediations": {
+      "base": null,
+      "refs": {
+        "GetAgentRecommendationResponse$remediations": "<p>A list of remediations for the recommendation.</p>"
+      }
+    },
+    "AgentRecommendationSummaries": {
+      "base": null,
+      "refs": {
+        "ListAgentRecommendationsResponse$items": "<p>A list of recommendation summaries.</p>"
+      }
+    },
+    "AgentRecommendationSummary": {
+      "base": "<p>Summary of an agent optimization recommendation returned by list operations.</p>",
+      "refs": {
+        "AgentRecommendationSummaries$member": null
+      }
+    },
+    "AgentRecommendationSummaryCreatedByString": {
+      "base": null,
+      "refs": {
+        "AgentRecommendationSummary$createdBy": "<p>The identifier of the user or system that created this recommendation.</p>"
+      }
+    },
+    "AgentRecommendationSummaryDescriptionString": {
+      "base": null,
+      "refs": {
+        "AgentRecommendationSummary$description": "<p>A description of the recommendation.</p>"
+      }
+    },
+    "AgentRecommendationSummaryLastModifiedByString": {
+      "base": null,
+      "refs": {
+        "AgentRecommendationSummary$lastModifiedBy": "<p>The identifier of the user or system that last modified this recommendation.</p>"
+      }
+    },
+    "AgentRecommendationSummaryTitleString": {
+      "base": null,
+      "refs": {
+        "AgentRecommendationSummary$title": "<p>The title of the recommendation.</p>"
+      }
+    },
+    "AgentRecommendationSummaryUpdateReasonString": {
+      "base": null,
+      "refs": {
+        "AgentRecommendationSummary$updateReason": "<p>The free-text reason associated with the recommendation's most recent status update.</p>"
+      }
+    },
+    "AggregationConfiguration": {
+      "base": "<p>Configuration settings that define the scope of Amazon Web Services resources to analyze for optimization recommendations.</p>",
+      "refs": {
+        "AggregationConfigurations$member": null
+      }
+    },
+    "AggregationConfigurations": {
+      "base": null,
+      "refs": {
+        "AgentProfileSummary$aggregationConfiguration": "<p>The aggregation configuration that defines which Amazon Web Services accounts and Regions to analyze.</p>",
+        "CreateAgentProfileRequest$aggregationConfiguration": "<p>The aggregation configuration that defines which Amazon Web Services accounts and Regions to analyze.</p>",
+        "CreateAgentProfileResponse$aggregationConfiguration": "<p>The aggregation configuration.</p>",
+        "GetAgentProfileResponse$aggregationConfiguration": "<p>The aggregation configuration.</p>",
+        "UpdateAgentProfileRequest$aggregationConfiguration": "<p>The updated aggregation configuration.</p>",
+        "UpdateAgentProfileResponse$aggregationConfiguration": "<p>The aggregation configuration.</p>"
+      }
+    },
     "Answer": {
       "base": "<p>An answer of the question.</p>",
       "refs": {
@@ -157,6 +407,13 @@
       "base": null,
       "refs": {
         "WorkloadApplications$member": null
+      }
+    },
+    "ApplicationType": {
+      "base": null,
+      "refs": {
+        "ContextContent$applicationType": "<p>The type of the application.</p>",
+        "ContextSummary$applicationType": "<p>The type of application described by this context.</p>"
       }
     },
     "AssociateLensesInput": {
@@ -206,6 +463,25 @@
       "base": null,
       "refs": {
         "QuestionMetric$BestPractices": "<p>The best practices, or choices, that have been identified as contributing to risk in a question.</p>"
+      }
+    },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "AgentProfileSummary$deletionProtection": "<p>Indicates whether deletion protection is enabled for the profile.</p>",
+        "AgentProfileSummary$eligibleForScheduledGeneration": "<p>Indicates whether the profile is valid for scheduled recommendation generation.</p>",
+        "AgentProfileSummary$eligibleForArchitectureGeneration": "<p>Indicates whether the profile is valid for manual architecture generation.</p>",
+        "CreateAgentProfileRequest$deletionProtection": "<p>Indicates whether deletion protection is enabled for the profile.</p>",
+        "CreateAgentProfileResponse$deletionProtection": "<p>Indicates whether deletion protection is enabled.</p>",
+        "CreateAgentProfileResponse$eligibleForScheduledGeneration": "<p>Indicates whether the profile is valid for scheduled recommendation generation.</p>",
+        "CreateAgentProfileResponse$eligibleForArchitectureGeneration": "<p>Indicates whether the profile is valid for manual architecture generation.</p>",
+        "GetAgentProfileResponse$deletionProtection": "<p>Indicates whether deletion protection is enabled.</p>",
+        "GetAgentProfileResponse$eligibleForScheduledGeneration": "<p>Indicates whether the profile is valid for scheduled recommendation generation.</p>",
+        "GetAgentProfileResponse$eligibleForArchitectureGeneration": "<p>Indicates whether the profile is valid for manual architecture generation.</p>",
+        "UpdateAgentProfileRequest$deletionProtection": "<p>Indicates whether deletion protection is enabled for the profile.</p>",
+        "UpdateAgentProfileResponse$deletionProtection": "<p>Indicates whether deletion protection is enabled.</p>",
+        "UpdateAgentProfileResponse$eligibleForScheduledGeneration": "<p>Indicates whether the profile is valid for scheduled recommendation generation.</p>",
+        "UpdateAgentProfileResponse$eligibleForArchitectureGeneration": "<p>Indicates whether the profile is valid for manual architecture generation.</p>"
       }
     },
     "CheckDescription": {
@@ -361,7 +637,7 @@
       }
     },
     "ChoiceImprovementPlan": {
-      "base": "<p>The choice level improvement plan.</p>",
+      "base": "<p>The choice level improvement plan.</p> <p>This value is only applicable to custom lenses.</p>",
       "refs": {
         "ChoiceImprovementPlans$member": null
       }
@@ -369,7 +645,7 @@
     "ChoiceImprovementPlans": {
       "base": null,
       "refs": {
-        "ImprovementSummary$ImprovementPlans": "<p>The improvement plan details.</p>"
+        "ImprovementSummary$ImprovementPlans": "<p>The improvement plan details.</p> <p>This value is only applicable to custom lenses.</p>"
       }
     },
     "ChoiceNotes": {
@@ -469,11 +745,275 @@
         "GetConsolidatedReportOutput$Metrics": "<p>The metrics that make up the consolidated report.</p> <p>Only returned when <code>JSON</code> format is requested.</p>"
       }
     },
+    "ContextContent": {
+      "base": "<p>Typed content structure for a context. Contains application-specific fields that describe the environment used during recommendation generation.</p>",
+      "refs": {
+        "ContextSummary$content": "<p>The typed content of the context, containing application-specific fields such as account IDs, Regions, services, and resource types.</p>",
+        "CreateAgentContextRequest$content": "<p>The typed content of the context. The structure contains application-specific fields such as account IDs, Regions, services, and resource types.</p>",
+        "UpdateAgentContextRequest$content": "<p>The updated typed content of the context. The structure contains application-specific fields such as account IDs, Regions, services, and resource types.</p>"
+      }
+    },
+    "ContextContentAccountIdsList": {
+      "base": null,
+      "refs": {
+        "ContextContent$accountIds": "<p>The Amazon Web Services account IDs associated with this application context.</p>"
+      }
+    },
+    "ContextContentAccountIdsListMemberString": {
+      "base": null,
+      "refs": {
+        "ContextContentAccountIdsList$member": null
+      }
+    },
+    "ContextContentAdditionalContextString": {
+      "base": null,
+      "refs": {
+        "ContextContent$additionalContext": "<p>Additional context not captured by other fields.</p>"
+      }
+    },
+    "ContextContentApplicationOverviewString": {
+      "base": null,
+      "refs": {
+        "ContextContent$applicationOverview": "<p>A free-form overview of the application.</p>"
+      }
+    },
+    "ContextContentArchitectureOverviewString": {
+      "base": null,
+      "refs": {
+        "ContextContent$architectureOverview": "<p>A free-form description of the application architecture.</p>"
+      }
+    },
+    "ContextContentAwsServicesList": {
+      "base": null,
+      "refs": {
+        "ContextContent$awsServices": "<p>The Amazon Web Services services used by this application.</p>"
+      }
+    },
+    "ContextContentAwsServicesListMemberString": {
+      "base": null,
+      "refs": {
+        "ContextContentAwsServicesList$member": null
+      }
+    },
+    "ContextContentIndustryString": {
+      "base": null,
+      "refs": {
+        "ContextContent$industry": "<p>The industry vertical for this application.</p>"
+      }
+    },
+    "ContextContentRegionsList": {
+      "base": null,
+      "refs": {
+        "ContextContent$regions": "<p>The Amazon Web Services Regions where this application operates.</p>"
+      }
+    },
+    "ContextContentRegionsListMemberString": {
+      "base": null,
+      "refs": {
+        "ContextContentRegionsList$member": null
+      }
+    },
+    "ContextContentResourceTagsList": {
+      "base": null,
+      "refs": {
+        "ContextContent$resourceTags": "<p>Resource tags used to scope this application context.</p>"
+      }
+    },
+    "ContextContentResourceTypesList": {
+      "base": null,
+      "refs": {
+        "ContextContent$resourceTypes": "<p>The Amazon Web Services resource types relevant to this application.</p>"
+      }
+    },
+    "ContextContentResourceTypesListMemberString": {
+      "base": null,
+      "refs": {
+        "ContextContentResourceTypesList$member": null
+      }
+    },
+    "ContextResourceTag": {
+      "base": "<p>A key-value pair representing a resource tag used to scope context content.</p>",
+      "refs": {
+        "ContextContentResourceTagsList$member": null
+      }
+    },
+    "ContextResourceTagKeyString": {
+      "base": null,
+      "refs": {
+        "ContextResourceTag$key": "<p>The tag key.</p>"
+      }
+    },
+    "ContextResourceTagValueString": {
+      "base": null,
+      "refs": {
+        "ContextResourceTag$value": "<p>The tag value.</p>"
+      }
+    },
+    "ContextSummaries": {
+      "base": null,
+      "refs": {
+        "ListAgentContextsResponse$items": "<p>A list of context summaries associated with the profile.</p>"
+      }
+    },
+    "ContextSummary": {
+      "base": "<p>Summary of a context associated with a profile, representing application or environment information used during recommendation generation.</p>",
+      "refs": {
+        "ContextSummaries$member": null,
+        "CreateAgentContextResponse$context": "<p>The created context summary.</p>",
+        "GetAgentContextResponse$context": "<p>The retrieved context summary.</p>",
+        "UpdateAgentContextResponse$context": "<p>The updated context summary.</p>"
+      }
+    },
+    "ContextSummaryCreatedByString": {
+      "base": null,
+      "refs": {
+        "ContextSummary$createdBy": "<p>The identifier of the user or system that created this context.</p>"
+      }
+    },
+    "ContextSummaryLastModifiedByString": {
+      "base": null,
+      "refs": {
+        "ContextSummary$lastModifiedBy": "<p>The identifier of the user or system that last modified this context.</p>"
+      }
+    },
+    "ContextSummaryTitleString": {
+      "base": null,
+      "refs": {
+        "ContextSummary$title": "<p>The title of the context.</p>"
+      }
+    },
+    "ContextType": {
+      "base": null,
+      "refs": {
+        "ContextSummary$contextType": "<p>The type of the context.</p>",
+        "CreateAgentContextRequest$contextType": "<p>The type of the context.</p>"
+      }
+    },
     "Count": {
       "base": "<p>A non-negative integer that denotes how many.</p>",
       "refs": {
         "QuestionCounts$value": null,
         "RiskCounts$value": null
+      }
+    },
+    "CreateAgentContextRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAgentContextRequestClientTokenString": {
+      "base": null,
+      "refs": {
+        "CreateAgentContextRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>"
+      }
+    },
+    "CreateAgentContextRequestTitleString": {
+      "base": null,
+      "refs": {
+        "CreateAgentContextRequest$title": "<p>The title of the context.</p>"
+      }
+    },
+    "CreateAgentContextResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAgentGoalRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAgentGoalRequestClientTokenString": {
+      "base": null,
+      "refs": {
+        "CreateAgentGoalRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>"
+      }
+    },
+    "CreateAgentGoalRequestDescriptionString": {
+      "base": null,
+      "refs": {
+        "CreateAgentGoalRequest$description": "<p>A description of the goal.</p>"
+      }
+    },
+    "CreateAgentGoalRequestTitleString": {
+      "base": null,
+      "refs": {
+        "CreateAgentGoalRequest$title": "<p>The title of the goal.</p>"
+      }
+    },
+    "CreateAgentGoalResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAgentProfileRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAgentProfileRequestBusinessOverviewString": {
+      "base": null,
+      "refs": {
+        "CreateAgentProfileRequest$businessOverview": "<p>The business overview for this profile.</p>"
+      }
+    },
+    "CreateAgentProfileRequestClientTokenString": {
+      "base": null,
+      "refs": {
+        "CreateAgentProfileRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>"
+      }
+    },
+    "CreateAgentProfileRequestDescriptionString": {
+      "base": null,
+      "refs": {
+        "CreateAgentProfileRequest$description": "<p>A description of the profile.</p>"
+      }
+    },
+    "CreateAgentProfileRequestDisplayNameString": {
+      "base": null,
+      "refs": {
+        "CreateAgentProfileRequest$displayName": "<p>The display name of the profile shown to users.</p>"
+      }
+    },
+    "CreateAgentProfileRequestNameString": {
+      "base": null,
+      "refs": {
+        "CreateAgentProfileRequest$name": "<p>The system name of the profile.</p>"
+      }
+    },
+    "CreateAgentProfileResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAgentProfileResponseBusinessOverviewString": {
+      "base": null,
+      "refs": {
+        "CreateAgentProfileResponse$businessOverview": "<p>The business overview of the created profile.</p>"
+      }
+    },
+    "CreateAgentProfileResponseCreatedByString": {
+      "base": null,
+      "refs": {
+        "CreateAgentProfileResponse$createdBy": "<p>The identifier of the user or system that created this profile.</p>"
+      }
+    },
+    "CreateAgentProfileResponseDescriptionString": {
+      "base": null,
+      "refs": {
+        "CreateAgentProfileResponse$description": "<p>A description of the created profile.</p>"
+      }
+    },
+    "CreateAgentProfileResponseDisplayNameString": {
+      "base": null,
+      "refs": {
+        "CreateAgentProfileResponse$displayName": "<p>The display name of the created profile.</p>"
+      }
+    },
+    "CreateAgentProfileResponseLastModifiedByString": {
+      "base": null,
+      "refs": {
+        "CreateAgentProfileResponse$lastModifiedBy": "<p>The identifier of the user or system that last modified this profile.</p>"
+      }
+    },
+    "CreateAgentProfileResponseNameString": {
+      "base": null,
+      "refs": {
+        "CreateAgentProfileResponse$name": "<p>The system name of the created profile.</p>"
       }
     },
     "CreateLensShareInput": {
@@ -548,11 +1088,66 @@
       "base": "<p>Input for Create Workload Share</p>",
       "refs": {}
     },
+    "Criticality": {
+      "base": null,
+      "refs": {
+        "ContextContent$criticality": "<p>The business criticality of the application.</p>",
+        "ContextSummary$criticality": "<p>The business criticality of the application described by this context.</p>"
+      }
+    },
+    "CrossPillarBenefit": {
+      "base": "<p>A benefit on a different pillar from acting on the recommendation.</p>",
+      "refs": {
+        "CrossPillarBenefits$member": null
+      }
+    },
+    "CrossPillarBenefitDescriptionString": {
+      "base": null,
+      "refs": {
+        "CrossPillarBenefit$description": "<p>A description of what changes and why it matters.</p>"
+      }
+    },
+    "CrossPillarBenefitTitleString": {
+      "base": null,
+      "refs": {
+        "CrossPillarBenefit$title": "<p>A short phrase describing the outcome.</p>"
+      }
+    },
+    "CrossPillarBenefits": {
+      "base": null,
+      "refs": {
+        "GetAgentRecommendationResponse$crossPillarBenefits": "<p>Cross-pillar benefits of acting on the recommendation.</p>"
+      }
+    },
     "DefinitionType": {
       "base": null,
       "refs": {
         "WorkloadResourceDefinition$member": null
       }
+    },
+    "DeleteAgentContextRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteAgentContextResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteAgentGoalRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteAgentGoalResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteAgentProfileRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteAgentProfileResponse": {
+      "base": null,
+      "refs": {}
     },
     "DeleteLensInput": {
       "base": null,
@@ -616,6 +1211,33 @@
         "ReviewTemplateAnswer$HelpfulResourceDisplayText": "<p>The helpful resource text to be displayed for a custom lens.</p> <note> <p>This field does not apply to Amazon Web Services official lenses.</p> </note>"
       }
     },
+    "Document": {
+      "base": null,
+      "refs": {
+        "AgentRecommendationItemSummary$metadata": "<p>Metadata containing a snapshot of the resource or recommendation at the time of generation.</p>",
+        "GetAgentRecommendationGenerationResponse$additionalContext": "<p>Additional context information provided to guide the recommendation generation process.</p>",
+        "StartAgentRecommendationGenerationRequest$additionalContext": "<p>Optional additional context to guide the recommendation generation, such as specific business requirements or constraints.</p>"
+      }
+    },
+    "Double": {
+      "base": null,
+      "refs": {
+        "Progress$completionPercentage": "<p>The completion percentage of the generation process (0-100).</p>"
+      }
+    },
+    "Effort": {
+      "base": null,
+      "refs": {
+        "AgentRecommendationSummary$effort": "<p>The effort required to implement the recommendation.</p>",
+        "GetAgentRecommendationResponse$effort": "<p>The effort required to implement the recommendation.</p>"
+      }
+    },
+    "ErrorDetails": {
+      "base": "<p>Details about an error that occurred during recommendation generation.</p>",
+      "refs": {
+        "GetAgentRecommendationGenerationResponse$errorDetails": "<p>Details about the error if the generation status is ERROR.</p>"
+      }
+    },
     "ExceptionMessage": {
       "base": "<p>Description of the error.</p>",
       "refs": {
@@ -653,10 +1275,163 @@
       "base": null,
       "refs": {}
     },
+    "FeedbackCategory": {
+      "base": null,
+      "refs": {
+        "PutAgentRecommendationFeedbackRequest$feedbackCategory": "<p>Optional category classifying the nature of the feedback.</p>"
+      }
+    },
+    "FieldErrorMessage": {
+      "base": null,
+      "refs": {
+        "FieldErrors$value": null
+      }
+    },
+    "FieldErrorPath": {
+      "base": null,
+      "refs": {
+        "FieldErrors$key": null
+      }
+    },
+    "FieldErrors": {
+      "base": null,
+      "refs": {
+        "AgentProfileSummary$fieldErrors": "<p>A map of field paths to error messages for invalid or missing input fields.</p>",
+        "CreateAgentProfileResponse$fieldErrors": "<p>A map of field paths to error messages for invalid or missing input fields.</p>",
+        "GetAgentProfileResponse$fieldErrors": "<p>A map of field paths to error messages for invalid or missing input fields.</p>",
+        "UpdateAgentProfileResponse$fieldErrors": "<p>A map of field paths to error messages for invalid or missing input fields.</p>"
+      }
+    },
     "FlaggedResources": {
       "base": null,
       "refs": {
         "CheckDetail$FlaggedResources": "<p>Count of flagged resources associated to the check.</p>"
+      }
+    },
+    "GenerationStatus": {
+      "base": null,
+      "refs": {
+        "AgentRecommendationGenerationSummary$status": "<p>The current status of the recommendation generation.</p>",
+        "GetAgentRecommendationGenerationResponse$status": "<p>The current status of the recommendation generation.</p>",
+        "StartAgentRecommendationGenerationResponse$status": "<p>The current status of the recommendation generation.</p>"
+      }
+    },
+    "GetAgentContextRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAgentContextResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAgentGoalRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAgentGoalResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAgentProfileRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAgentProfileResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAgentProfileResponseBusinessOverviewString": {
+      "base": null,
+      "refs": {
+        "GetAgentProfileResponse$businessOverview": "<p>The business overview of the profile.</p>"
+      }
+    },
+    "GetAgentProfileResponseCreatedByString": {
+      "base": null,
+      "refs": {
+        "GetAgentProfileResponse$createdBy": "<p>The identifier of the user or system that created this profile.</p>"
+      }
+    },
+    "GetAgentProfileResponseDescriptionString": {
+      "base": null,
+      "refs": {
+        "GetAgentProfileResponse$description": "<p>A description of the profile.</p>"
+      }
+    },
+    "GetAgentProfileResponseDisplayNameString": {
+      "base": null,
+      "refs": {
+        "GetAgentProfileResponse$displayName": "<p>The display name of the profile.</p>"
+      }
+    },
+    "GetAgentProfileResponseLastModifiedByString": {
+      "base": null,
+      "refs": {
+        "GetAgentProfileResponse$lastModifiedBy": "<p>The identifier of the user or system that last modified this profile.</p>"
+      }
+    },
+    "GetAgentProfileResponseNameString": {
+      "base": null,
+      "refs": {
+        "GetAgentProfileResponse$name": "<p>The system name of the profile.</p>"
+      }
+    },
+    "GetAgentRecommendationGenerationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAgentRecommendationGenerationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAgentRecommendationGenerationResponseCreatedByString": {
+      "base": null,
+      "refs": {
+        "GetAgentRecommendationGenerationResponse$createdBy": "<p>The identifier of the user or system that started this generation.</p>"
+      }
+    },
+    "GetAgentRecommendationGenerationResponseLastModifiedByString": {
+      "base": null,
+      "refs": {
+        "GetAgentRecommendationGenerationResponse$lastModifiedBy": "<p>The identifier of the user or system that last modified this generation.</p>"
+      }
+    },
+    "GetAgentRecommendationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAgentRecommendationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAgentRecommendationResponseCreatedByString": {
+      "base": null,
+      "refs": {
+        "GetAgentRecommendationResponse$createdBy": "<p>The identifier of the user or system that created this recommendation.</p>"
+      }
+    },
+    "GetAgentRecommendationResponseDescriptionString": {
+      "base": null,
+      "refs": {
+        "GetAgentRecommendationResponse$description": "<p>A description of the recommendation.</p>"
+      }
+    },
+    "GetAgentRecommendationResponseLastModifiedByString": {
+      "base": null,
+      "refs": {
+        "GetAgentRecommendationResponse$lastModifiedBy": "<p>The identifier of the user or system that last modified this recommendation.</p>"
+      }
+    },
+    "GetAgentRecommendationResponseTitleString": {
+      "base": null,
+      "refs": {
+        "GetAgentRecommendationResponse$title": "<p>The title of the recommendation.</p>"
+      }
+    },
+    "GetAgentRecommendationResponseUpdateReasonString": {
+      "base": null,
+      "refs": {
+        "GetAgentRecommendationResponse$updateReason": "<p>The free-text reason associated with the recommendation's most recent status update.</p>"
       }
     },
     "GetAnswerInput": {
@@ -671,8 +1446,8 @@
       "base": null,
       "refs": {}
     },
-    "GetConsolidatedReportMaxResults": {
-      "base": null,
+    "GetConsolidatedReportInputMaxResultsInteger": {
+      "base": "<p>The maximum number of results to return for this request.</p>",
       "refs": {
         "GetConsolidatedReportInput$MaxResults": "<p>The maximum number of results to return for this request.</p>"
       }
@@ -773,11 +1548,88 @@
       "base": "<p>Output of a get workload call.</p>",
       "refs": {}
     },
+    "GoalIdList": {
+      "base": null,
+      "refs": {
+        "Scope$goalIds": "<p>Specific goal IDs to focus on during recommendation generation.</p>"
+      }
+    },
+    "GoalSummaries": {
+      "base": null,
+      "refs": {
+        "ListAgentGoalsResponse$items": "<p>A list of goal summaries associated with the profile.</p>"
+      }
+    },
+    "GoalSummary": {
+      "base": "<p>Summary of an optimization goal associated with a profile.</p>",
+      "refs": {
+        "CreateAgentGoalResponse$goal": "<p>The created goal summary.</p>",
+        "GetAgentGoalResponse$goal": "<p>The retrieved goal summary.</p>",
+        "GoalSummaries$member": null,
+        "UpdateAgentGoalResponse$goal": "<p>The updated goal summary.</p>"
+      }
+    },
+    "GoalSummaryCreatedByString": {
+      "base": null,
+      "refs": {
+        "GoalSummary$createdBy": "<p>The identifier of the user or system that created this goal.</p>"
+      }
+    },
+    "GoalSummaryDescriptionString": {
+      "base": null,
+      "refs": {
+        "GoalSummary$description": "<p>A description of the goal.</p>"
+      }
+    },
+    "GoalSummaryLastModifiedByString": {
+      "base": null,
+      "refs": {
+        "GoalSummary$lastModifiedBy": "<p>The identifier of the user or system that last modified this goal.</p>"
+      }
+    },
+    "GoalSummaryTitleString": {
+      "base": null,
+      "refs": {
+        "GoalSummary$title": "<p>The title of the goal.</p>"
+      }
+    },
     "HelpfulResourceUrl": {
       "base": "<p>The helpful resource URL.</p> <p>For Amazon Web Services official lenses, this is the helpful resource URL for a question or choice.</p> <p>For custom lenses, this is the helpful resource URL for a question and is only provided if <code>HelpfulResourceDisplayText</code> was specified for the question.</p>",
       "refs": {
         "Answer$HelpfulResourceUrl": null,
         "ReviewTemplateAnswer$HelpfulResourceUrl": null
+      }
+    },
+    "Highlight": {
+      "base": null,
+      "refs": {
+        "Highlights$member": null
+      }
+    },
+    "Highlights": {
+      "base": null,
+      "refs": {
+        "GetAgentRecommendationResponse$highlights": "<p>Highlights describing what was detected.</p>"
+      }
+    },
+    "ImpactCategory": {
+      "base": null,
+      "refs": {
+        "AgentRecommendationSummary$impact": "<p>The severity of the recommendation's impact.</p>",
+        "CrossPillarBenefit$impact": "<p>The severity of the benefit.</p>",
+        "GetAgentRecommendationResponse$impact": "<p>The severity of the recommendation's impact.</p>"
+      }
+    },
+    "ImpactDetail": {
+      "base": null,
+      "refs": {
+        "ImpactDetails$member": null
+      }
+    },
+    "ImpactDetails": {
+      "base": null,
+      "refs": {
+        "GetAgentRecommendationResponse$impactDetails": "<p>Detailed impact information for the recommendation.</p>"
       }
     },
     "ImportLensInput": {
@@ -795,7 +1647,7 @@
       }
     },
     "ImprovementPlanUrl": {
-      "base": "<p>The improvement plan URL for a question in an Amazon Web Services official lenses.</p> <p>This value is only available if the question has been answered.</p> <p>This value does not apply to custom lenses.</p>",
+      "base": "<p>The improvement plan URL for a question in an Amazon Web Services official lenses.</p> <p>This value is only available if the question has been answered.</p>",
       "refs": {
         "Answer$ImprovementPlanUrl": null,
         "ChoiceImprovementPlan$ImprovementPlanUrl": null,
@@ -819,6 +1671,39 @@
       "base": null,
       "refs": {
         "GetConsolidatedReportInput$IncludeSharedResources": "<p>Set to <code>true</code> to have shared resources included in the report.</p>"
+      }
+    },
+    "Insight": {
+      "base": "<p>An insight describing a usage pattern and the signals detected.</p>",
+      "refs": {
+        "InsightList$member": null
+      }
+    },
+    "InsightList": {
+      "base": null,
+      "refs": {
+        "GetAgentRecommendationResponse$insights": "<p>A list of insights about the recommendation.</p>"
+      }
+    },
+    "InsightSignalsDetectedString": {
+      "base": null,
+      "refs": {
+        "Insight$signalsDetected": "<p>A description of the signals detected.</p>"
+      }
+    },
+    "InsightUsagePatternString": {
+      "base": null,
+      "refs": {
+        "Insight$usagePattern": "<p>A description of the usage pattern.</p>"
+      }
+    },
+    "Integer": {
+      "base": null,
+      "refs": {
+        "AgentRecommendationSummary$numberOfResources": "<p>The number of Amazon Web Services resources this recommendation affects.</p>",
+        "GetAgentRecommendationResponse$numberOfResources": "<p>The number of Amazon Web Services resources this recommendation affects.</p>",
+        "Progress$stepsCompleted": "<p>The number of generation steps that have been completed.</p>",
+        "Progress$totalSteps": "<p>The total number of steps in the generation process.</p>"
       }
     },
     "IntegratingService": {
@@ -874,6 +1759,18 @@
         "AccountJiraConfigurationOutput$IssueManagementType": "<p>Account-level: Jira issue management type.</p>",
         "WorkloadJiraConfigurationInput$IssueManagementType": "<p>Workload-level: Jira issue management type.</p>",
         "WorkloadJiraConfigurationOutput$IssueManagementType": "<p>Workload-level: Jira issue management type.</p>"
+      }
+    },
+    "ItemId": {
+      "base": null,
+      "refs": {
+        "ItemIds$member": null
+      }
+    },
+    "ItemIds": {
+      "base": null,
+      "refs": {
+        "PillarItem$ids": "<p>A list of item IDs to process for this pillar, such as best practice IDs, Amazon Web Services service names, or resource ARNs.</p>"
       }
     },
     "JiraConfiguration": {
@@ -1147,12 +2044,168 @@
         "ConsolidatedReportMetric$LensesAppliedCount": "<p>The total number of lenses applied to the workload.</p>"
       }
     },
+    "ListAgentContextsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAgentContextsRequestMaxResultsInteger": {
+      "base": "<p>The maximum number of results to return for this request.</p>",
+      "refs": {
+        "ListAgentContextsRequest$maxResults": null
+      }
+    },
+    "ListAgentContextsRequestNextTokenString": {
+      "base": "<p>The token to use to retrieve the next set of results.</p>",
+      "refs": {
+        "ListAgentContextsRequest$nextToken": null
+      }
+    },
+    "ListAgentContextsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAgentContextsResponseNextTokenString": {
+      "base": "<p>The token to use to retrieve the next set of results.</p>",
+      "refs": {
+        "ListAgentContextsResponse$nextToken": null
+      }
+    },
+    "ListAgentGoalsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAgentGoalsRequestMaxResultsInteger": {
+      "base": "<p>The maximum number of results to return for this request.</p>",
+      "refs": {
+        "ListAgentGoalsRequest$maxResults": "<p>The maximum number of goals to return in a single response.</p>"
+      }
+    },
+    "ListAgentGoalsRequestNextTokenString": {
+      "base": "<p>The token to use to retrieve the next set of results.</p>",
+      "refs": {
+        "ListAgentGoalsRequest$nextToken": "<p>A pagination token returned from a previous call to continue retrieving results.</p>"
+      }
+    },
+    "ListAgentGoalsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAgentGoalsResponseNextTokenString": {
+      "base": "<p>The token to use to retrieve the next set of results.</p>",
+      "refs": {
+        "ListAgentGoalsResponse$nextToken": "<p>A pagination token to retrieve the next set of results, if available.</p>"
+      }
+    },
+    "ListAgentProfilesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAgentProfilesRequestMaxResultsInteger": {
+      "base": "<p>The maximum number of results to return for this request.</p>",
+      "refs": {
+        "ListAgentProfilesRequest$maxResults": "<p>The maximum number of profiles to return in a single call. Default is 100.</p>"
+      }
+    },
+    "ListAgentProfilesRequestNextTokenString": {
+      "base": "<p>The token to use to retrieve the next set of results.</p>",
+      "refs": {
+        "ListAgentProfilesRequest$nextToken": "<p>A pagination token returned from a previous call to continue retrieving results.</p>"
+      }
+    },
+    "ListAgentProfilesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAgentProfilesResponseNextTokenString": {
+      "base": "<p>The token to use to retrieve the next set of results.</p>",
+      "refs": {
+        "ListAgentProfilesResponse$nextToken": "<p>A pagination token to retrieve the next set of results, if available.</p>"
+      }
+    },
+    "ListAgentRecommendationGenerationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAgentRecommendationGenerationsRequestMaxResultsInteger": {
+      "base": "<p>The maximum number of results to return for this request.</p>",
+      "refs": {
+        "ListAgentRecommendationGenerationsRequest$maxResults": "<p>The maximum number of generation processes to return in a single response.</p>"
+      }
+    },
+    "ListAgentRecommendationGenerationsRequestNextTokenString": {
+      "base": "<p>The token to use to retrieve the next set of results.</p>",
+      "refs": {
+        "ListAgentRecommendationGenerationsRequest$nextToken": "<p>A pagination token returned from a previous call to continue retrieving results.</p>"
+      }
+    },
+    "ListAgentRecommendationGenerationsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAgentRecommendationGenerationsResponseNextTokenString": {
+      "base": "<p>The token to use to retrieve the next set of results.</p>",
+      "refs": {
+        "ListAgentRecommendationGenerationsResponse$nextToken": "<p>A pagination token to retrieve the next set of results, if available.</p>"
+      }
+    },
+    "ListAgentRecommendationItemsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAgentRecommendationItemsRequestMaxResultsInteger": {
+      "base": "<p>The maximum number of results to return for this request.</p>",
+      "refs": {
+        "ListAgentRecommendationItemsRequest$maxResults": "<p>The maximum number of recommendation items to return in a single response.</p>"
+      }
+    },
+    "ListAgentRecommendationItemsRequestNextTokenString": {
+      "base": "<p>The token to use to retrieve the next set of results.</p>",
+      "refs": {
+        "ListAgentRecommendationItemsRequest$nextToken": "<p>A pagination token returned from a previous call to continue retrieving results.</p>"
+      }
+    },
+    "ListAgentRecommendationItemsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAgentRecommendationItemsResponseNextTokenString": {
+      "base": "<p>The token to use to retrieve the next set of results.</p>",
+      "refs": {
+        "ListAgentRecommendationItemsResponse$nextToken": "<p>A pagination token to retrieve the next set of results, if available.</p>"
+      }
+    },
+    "ListAgentRecommendationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAgentRecommendationsRequestMaxResultsInteger": {
+      "base": "<p>The maximum number of results to return for this request.</p>",
+      "refs": {
+        "ListAgentRecommendationsRequest$maxResults": "<p>The maximum number of recommendations to return in a single response.</p>"
+      }
+    },
+    "ListAgentRecommendationsRequestNextTokenString": {
+      "base": "<p>The token to use to retrieve the next set of results.</p>",
+      "refs": {
+        "ListAgentRecommendationsRequest$nextToken": "<p>A pagination token returned from a previous call to continue retrieving results.</p>"
+      }
+    },
+    "ListAgentRecommendationsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAgentRecommendationsResponseNextTokenString": {
+      "base": "<p>The token to use to retrieve the next set of results.</p>",
+      "refs": {
+        "ListAgentRecommendationsResponse$nextToken": "<p>A pagination token to retrieve the next set of results, if available.</p>"
+      }
+    },
     "ListAnswersInput": {
       "base": "<p>Input to list answers.</p>",
       "refs": {}
     },
-    "ListAnswersMaxResults": {
-      "base": null,
+    "ListAnswersInputMaxResultsInteger": {
+      "base": "<p>The maximum number of results to return for this request.</p>",
       "refs": {
         "ListAnswersInput$MaxResults": "<p>The maximum number of results to return for this request.</p>"
       }
@@ -1165,6 +2218,12 @@
       "base": null,
       "refs": {}
     },
+    "ListCheckDetailsInputMaxResultsInteger": {
+      "base": "<p>The maximum number of results to return for this request.</p>",
+      "refs": {
+        "ListCheckDetailsInput$MaxResults": null
+      }
+    },
     "ListCheckDetailsOutput": {
       "base": null,
       "refs": {}
@@ -1172,6 +2231,12 @@
     "ListCheckSummariesInput": {
       "base": null,
       "refs": {}
+    },
+    "ListCheckSummariesInputMaxResultsInteger": {
+      "base": "<p>The maximum number of results to return for this request.</p>",
+      "refs": {
+        "ListCheckSummariesInput$MaxResults": null
+      }
     },
     "ListCheckSummariesOutput": {
       "base": null,
@@ -1181,8 +2246,8 @@
       "base": "<p>Input to list lens review improvements.</p>",
       "refs": {}
     },
-    "ListLensReviewImprovementsMaxResults": {
-      "base": null,
+    "ListLensReviewImprovementsInputMaxResultsInteger": {
+      "base": "<p>The maximum number of results to return for this request.</p>",
       "refs": {
         "ListLensReviewImprovementsInput$MaxResults": "<p>The maximum number of results to return for this request.</p>"
       }
@@ -1195,6 +2260,12 @@
       "base": "<p>Input to list lens reviews.</p>",
       "refs": {}
     },
+    "ListLensReviewsInputMaxResultsInteger": {
+      "base": "<p>The maximum number of results to return for this request.</p>",
+      "refs": {
+        "ListLensReviewsInput$MaxResults": null
+      }
+    },
     "ListLensReviewsOutput": {
       "base": "<p>Output of a list lens reviews call.</p>",
       "refs": {}
@@ -1202,6 +2273,12 @@
     "ListLensSharesInput": {
       "base": null,
       "refs": {}
+    },
+    "ListLensSharesInputMaxResultsInteger": {
+      "base": "<p>The maximum number of results to return for this request.</p>",
+      "refs": {
+        "ListLensSharesInput$MaxResults": "<p>The maximum number of results to return for this request.</p>"
+      }
     },
     "ListLensSharesOutput": {
       "base": null,
@@ -1211,6 +2288,12 @@
       "base": "<p>Input to list lenses.</p>",
       "refs": {}
     },
+    "ListLensesInputMaxResultsInteger": {
+      "base": "<p>The maximum number of results to return for this request.</p>",
+      "refs": {
+        "ListLensesInput$MaxResults": null
+      }
+    },
     "ListLensesOutput": {
       "base": "<p>Output of a list lenses call.</p>",
       "refs": {}
@@ -1218,6 +2301,12 @@
     "ListMilestonesInput": {
       "base": "<p>Input to list all milestones for a workload.</p>",
       "refs": {}
+    },
+    "ListMilestonesInputMaxResultsInteger": {
+      "base": "<p>The maximum number of results to return for this request.</p>",
+      "refs": {
+        "ListMilestonesInput$MaxResults": null
+      }
     },
     "ListMilestonesOutput": {
       "base": "<p>Output of a list milestones call.</p>",
@@ -1227,8 +2316,8 @@
       "base": null,
       "refs": {}
     },
-    "ListNotificationsMaxResults": {
-      "base": null,
+    "ListNotificationsInputMaxResultsInteger": {
+      "base": "<p>The maximum number of results to return for this request.</p>",
       "refs": {
         "ListNotificationsInput$MaxResults": "<p>The maximum number of results to return for this request.</p>"
       }
@@ -1241,6 +2330,12 @@
       "base": null,
       "refs": {}
     },
+    "ListProfileNotificationsInputMaxResultsInteger": {
+      "base": "<p>The maximum number of results to return for this request.</p>",
+      "refs": {
+        "ListProfileNotificationsInput$MaxResults": null
+      }
+    },
     "ListProfileNotificationsOutput": {
       "base": null,
       "refs": {}
@@ -1249,8 +2344,8 @@
       "base": null,
       "refs": {}
     },
-    "ListProfileSharesMaxResults": {
-      "base": null,
+    "ListProfileSharesInputMaxResultsInteger": {
+      "base": "<p>The maximum number of results to return for this request.</p>",
       "refs": {
         "ListProfileSharesInput$MaxResults": "<p>The maximum number of results to return for this request.</p>"
       }
@@ -1263,6 +2358,12 @@
       "base": null,
       "refs": {}
     },
+    "ListProfilesInputMaxResultsInteger": {
+      "base": "<p>The maximum number of results to return for this request.</p>",
+      "refs": {
+        "ListProfilesInput$MaxResults": null
+      }
+    },
     "ListProfilesOutput": {
       "base": null,
       "refs": {}
@@ -1271,8 +2372,8 @@
       "base": null,
       "refs": {}
     },
-    "ListReviewTemplateAnswersMaxResults": {
-      "base": null,
+    "ListReviewTemplateAnswersInputMaxResultsInteger": {
+      "base": "<p>The maximum number of results to return for this request.</p>",
       "refs": {
         "ListReviewTemplateAnswersInput$MaxResults": "<p>The maximum number of results to return for this request.</p>"
       }
@@ -1285,6 +2386,12 @@
       "base": null,
       "refs": {}
     },
+    "ListReviewTemplatesInputMaxResultsInteger": {
+      "base": "<p>The maximum number of results to return for this request.</p>",
+      "refs": {
+        "ListReviewTemplatesInput$MaxResults": null
+      }
+    },
     "ListReviewTemplatesOutput": {
       "base": null,
       "refs": {}
@@ -1293,8 +2400,8 @@
       "base": "<p>Input for List Share Invitations</p>",
       "refs": {}
     },
-    "ListShareInvitationsMaxResults": {
-      "base": null,
+    "ListShareInvitationsInputMaxResultsInteger": {
+      "base": "<p>The maximum number of results to return for this request.</p>",
       "refs": {
         "ListShareInvitationsInput$MaxResults": "<p>The maximum number of results to return for this request.</p>"
       }
@@ -1315,8 +2422,8 @@
       "base": null,
       "refs": {}
     },
-    "ListTemplateSharesMaxResults": {
-      "base": null,
+    "ListTemplateSharesInputMaxResultsInteger": {
+      "base": "<p>The maximum number of results to return for this request.</p>",
       "refs": {
         "ListTemplateSharesInput$MaxResults": "<p>The maximum number of results to return for this request.</p>"
       }
@@ -1329,10 +2436,9 @@
       "base": "<p>Input for List Workload Share</p>",
       "refs": {}
     },
-    "ListWorkloadSharesMaxResults": {
-      "base": null,
+    "ListWorkloadSharesInputMaxResultsInteger": {
+      "base": "<p>The maximum number of results to return for this request.</p>",
       "refs": {
-        "ListLensSharesInput$MaxResults": "<p>The maximum number of results to return for this request.</p>",
         "ListWorkloadSharesInput$MaxResults": "<p>The maximum number of results to return for this request.</p>"
       }
     },
@@ -1344,8 +2450,8 @@
       "base": "<p>Input to list all workloads.</p>",
       "refs": {}
     },
-    "ListWorkloadsMaxResults": {
-      "base": null,
+    "ListWorkloadsInputMaxResultsInteger": {
+      "base": "<p>The maximum number of results to return for this request.</p>",
       "refs": {
         "ListWorkloadsInput$MaxResults": "<p>The maximum number of results to return for this request.</p>"
       }
@@ -1353,19 +2459,6 @@
     "ListWorkloadsOutput": {
       "base": "<p>Output of a list workloads call.</p>",
       "refs": {}
-    },
-    "MaxResults": {
-      "base": "<p>The maximum number of results to return for this request.</p>",
-      "refs": {
-        "ListCheckDetailsInput$MaxResults": null,
-        "ListCheckSummariesInput$MaxResults": null,
-        "ListLensReviewsInput$MaxResults": null,
-        "ListLensesInput$MaxResults": null,
-        "ListMilestonesInput$MaxResults": null,
-        "ListProfileNotificationsInput$MaxResults": null,
-        "ListProfilesInput$MaxResults": null,
-        "ListReviewTemplatesInput$MaxResults": null
-      }
     },
     "MaxSelectedProfileChoices": {
       "base": null,
@@ -1538,6 +2631,18 @@
         "WorkloadShareSummary$PermissionType": null
       }
     },
+    "Pillar": {
+      "base": null,
+      "refs": {
+        "AgentRecommendationSummary$pillar": "<p>The Well-Architected Tool Framework pillar that the recommendation addresses.</p>",
+        "CrossPillarBenefit$pillar": "<p>The pillar that would be positively impacted.</p>",
+        "GetAgentRecommendationResponse$pillar": "<p>The Well-Architected Tool Framework pillar that the recommendation addresses.</p>",
+        "ListAgentRecommendationsRequest$pillar": "<p>Optional filter to return only recommendations for the specified pillar.</p>",
+        "PillarItem$pillar": "<p>The pillar this item configuration applies to.</p>",
+        "Pillars$member": null,
+        "TradeOff$pillar": "<p>The pillar that could be negatively impacted.</p>"
+      }
+    },
     "PillarDifference": {
       "base": "<p>A pillar difference return object.</p>",
       "refs": {
@@ -1572,6 +2677,18 @@
         "ReviewTemplatePillarReviewSummary$PillarId": null,
         "SelectedPillar$PillarId": null,
         "WorkloadPillarPriorities$member": null
+      }
+    },
+    "PillarItem": {
+      "base": "<p>Item configuration for a specific Well-Architected Tool Framework pillar.</p>",
+      "refs": {
+        "PillarItems$member": null
+      }
+    },
+    "PillarItems": {
+      "base": null,
+      "refs": {
+        "Scope$items": "<p>Optional per-pillar item filtering configuration.</p>"
       }
     },
     "PillarMetric": {
@@ -1611,6 +2728,28 @@
       "base": "<p>A pillar review summary of a lens review.</p>",
       "refs": {
         "PillarReviewSummaries$member": null
+      }
+    },
+    "Pillars": {
+      "base": null,
+      "refs": {
+        "AgentProfileSummary$pillars": "<p>The Well-Architected Tool Framework pillars associated with this profile.</p>",
+        "CreateAgentGoalRequest$pillars": "<p>The Well-Architected Tool Framework pillars to associate with this goal.</p>",
+        "CreateAgentProfileRequest$pillars": "<p>The Well-Architected Tool Framework pillars to associate with this profile.</p>",
+        "CreateAgentProfileResponse$pillars": "<p>The Well-Architected Tool Framework pillars associated with the created profile.</p>",
+        "GetAgentProfileResponse$pillars": "<p>The Well-Architected Tool Framework pillars associated with the profile.</p>",
+        "GoalSummary$pillars": "<p>The Well-Architected Tool Framework pillars associated with this goal.</p>",
+        "Scope$pillars": "<p>The Well-Architected Tool Framework pillars to include in the generation scope.</p>",
+        "UpdateAgentGoalRequest$pillars": "<p>The updated pillars for the goal. Pillars define the optimization focus areas such as cost, performance, resilience, and operational excellence.</p>",
+        "UpdateAgentProfileRequest$pillars": "<p>The updated Well-Architected Tool Framework pillars for the profile.</p>",
+        "UpdateAgentProfileResponse$pillars": "<p>The Well-Architected Tool Framework pillars associated with the updated profile.</p>"
+      }
+    },
+    "Priority": {
+      "base": null,
+      "refs": {
+        "AgentRecommendationSummary$priority": "<p>The priority of the recommendation.</p>",
+        "GetAgentRecommendationResponse$priority": "<p>The priority of the recommendation.</p>"
       }
     },
     "Profile": {
@@ -1797,6 +2936,26 @@
         "WorkloadProfile$ProfileVersion": "<p>The profile version.</p>"
       }
     },
+    "Progress": {
+      "base": "<p>Progress information for a recommendation generation process.</p>",
+      "refs": {
+        "GetAgentRecommendationGenerationResponse$progress": "<p>Current progress information including steps completed and completion percentage.</p>"
+      }
+    },
+    "PutAgentRecommendationFeedbackRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "PutAgentRecommendationFeedbackRequestCommentsString": {
+      "base": null,
+      "refs": {
+        "PutAgentRecommendationFeedbackRequest$comments": "<p>Optional comments providing additional context about the feedback.</p>"
+      }
+    },
+    "PutAgentRecommendationFeedbackResponse": {
+      "base": null,
+      "refs": {}
+    },
     "Question": {
       "base": null,
       "refs": {
@@ -1901,6 +3060,150 @@
         "ThrottlingException$QuotaCode": null
       }
     },
+    "RecommendationArn": {
+      "base": null,
+      "refs": {
+        "AgentRecommendationItemSummary$recommendationArn": "<p>The Amazon Resource Name (ARN) of the associated recommendation.</p>",
+        "AgentRecommendationRemediation$recommendationArn": "<p>The ARN of the recommendation that this remediation belongs to.</p>",
+        "AgentRecommendationSummary$recommendationArn": "<p>The Amazon Resource Name (ARN) of the recommendation.</p>",
+        "GetAgentRecommendationResponse$recommendationArn": "<p>The Amazon Resource Name (ARN) of the recommendation.</p>"
+      }
+    },
+    "RecommendationFeedbackType": {
+      "base": null,
+      "refs": {
+        "PutAgentRecommendationFeedbackRequest$type": "<p>The type of feedback being provided.</p>"
+      }
+    },
+    "RecommendationGoal": {
+      "base": "<p>Contains information about a goal associated with a recommendation.</p>",
+      "refs": {
+        "RecommendationGoals$member": null
+      }
+    },
+    "RecommendationGoals": {
+      "base": null,
+      "refs": {
+        "GetAgentRecommendationResponse$goals": "<p>Goals that this recommendation targets.</p>"
+      }
+    },
+    "RecommendationItemType": {
+      "base": null,
+      "refs": {
+        "AgentRecommendationItemSummary$type": "<p>The type of the recommendation item.</p>",
+        "ListAgentRecommendationItemsRequest$type": "<p>Optional filter to return only recommendation items of the specified type.</p>"
+      }
+    },
+    "RecommendationSource": {
+      "base": null,
+      "refs": {
+        "RecommendationSourceList$member": null
+      }
+    },
+    "RecommendationSourceList": {
+      "base": null,
+      "refs": {
+        "GetAgentRecommendationResponse$sources": "<p>Sources that generated this recommendation.</p>"
+      }
+    },
+    "RecommendationState": {
+      "base": null,
+      "refs": {
+        "AgentRecommendationSummary$state": "<p>The current state of the recommendation.</p>",
+        "GetAgentRecommendationResponse$state": "<p>The current state of the recommendation.</p>",
+        "ListAgentRecommendationsRequest$state": "<p>Optional filter to return only recommendations with the specified state (OPEN or CLOSED).</p>"
+      }
+    },
+    "RecommendationStatus": {
+      "base": null,
+      "refs": {
+        "AgentRecommendationSummary$status": "<p>The current status of the recommendation.</p>",
+        "GetAgentRecommendationResponse$status": "<p>The current status of the recommendation.</p>",
+        "UpdateAgentRecommendationStatusRequest$status": "<p>The new status to assign to the recommendation.</p>"
+      }
+    },
+    "RecommendationType": {
+      "base": null,
+      "refs": {
+        "AgentRecommendationSummary$type": "<p>The type of the recommendation.</p>",
+        "GetAgentRecommendationResponse$type": "<p>The type of the recommendation.</p>",
+        "ListAgentRecommendationGenerationsRequest$recommendationType": "<p>Optional filter by recommendation type.</p>",
+        "RecommendationTypes$member": null
+      }
+    },
+    "RecommendationTypes": {
+      "base": null,
+      "refs": {
+        "StartAgentRecommendationGenerationRequest$types": "<p>The types of recommendations to generate.</p>"
+      }
+    },
+    "RecommendedFixStep": {
+      "base": null,
+      "refs": {
+        "RecommendedFixSteps$member": null
+      }
+    },
+    "RecommendedFixSteps": {
+      "base": null,
+      "refs": {
+        "RemediationSummary$steps": "<p>High-level steps to implement the fix.</p>"
+      }
+    },
+    "Region": {
+      "base": null,
+      "refs": {
+        "Regions$member": null
+      }
+    },
+    "Regions": {
+      "base": null,
+      "refs": {
+        "AggregationConfiguration$regions": "<p>A list of Amazon Web Services Regions to include in the analysis.</p>"
+      }
+    },
+    "RemediationStep": {
+      "base": "<p>One step within a remediation procedure.</p>",
+      "refs": {
+        "RemediationSteps$member": null
+      }
+    },
+    "RemediationStepContentString": {
+      "base": null,
+      "refs": {
+        "RemediationStep$content": "<p>The content describing the step, which can include code examples and verification checklists.</p>"
+      }
+    },
+    "RemediationStepTitleString": {
+      "base": null,
+      "refs": {
+        "RemediationStep$title": "<p>An optional short label for the step.</p>"
+      }
+    },
+    "RemediationSteps": {
+      "base": null,
+      "refs": {
+        "AgentRecommendationRemediation$steps": "<p>The procedural steps to perform the remediation.</p>"
+      }
+    },
+    "RemediationSummary": {
+      "base": "<p>A high-level remediation summary returned in the detail response.</p>",
+      "refs": {
+        "GetAgentRecommendationResponse$remediationSummary": "<p>A high-level summary of the recommended remediation.</p>"
+      }
+    },
+    "RemediationSummaryRecommendationString": {
+      "base": null,
+      "refs": {
+        "RemediationSummary$recommendation": "<p>A short imperative statement of the recommended action.</p>"
+      }
+    },
+    "RemediationType": {
+      "base": null,
+      "refs": {
+        "AgentRecommendationRemediation$type": "<p>The remediation method.</p>",
+        "GetAgentRecommendationRequest$remediationType": "<p>Optional filter on remediation type.</p>"
+      }
+    },
     "ReportFormat": {
       "base": null,
       "refs": {
@@ -1912,6 +3215,30 @@
       "refs": {
         "LensUpgradeSummary$ResourceArn": "<p> <code>ResourceArn</code> of the lens being upgraded</p>",
         "ListNotificationsInput$ResourceArn": "<p>The ARN for the related resource for the notification.</p> <note> <p>Only one of <code>WorkloadID</code> or <code>ResourceARN</code> should be specified.</p> </note>"
+      }
+    },
+    "ResourceLink": {
+      "base": "<p>An external reference associated with remediation steps.</p>",
+      "refs": {
+        "ResourceLinks$member": null
+      }
+    },
+    "ResourceLinkTitleString": {
+      "base": null,
+      "refs": {
+        "ResourceLink$title": "<p>An optional human-readable title for the link.</p>"
+      }
+    },
+    "ResourceLinkUrlString": {
+      "base": null,
+      "refs": {
+        "ResourceLink$url": "<p>The URL of the external reference.</p>"
+      }
+    },
+    "ResourceLinks": {
+      "base": null,
+      "refs": {
+        "AgentRecommendationRemediation$resourceLinks": "<p>External references associated with the steps.</p>"
       }
     },
     "ResourceNotFoundException": {
@@ -2036,6 +3363,50 @@
         "Workload$PrioritizedRiskCounts": null,
         "WorkloadSummary$RiskCounts": null,
         "WorkloadSummary$PrioritizedRiskCounts": null
+      }
+    },
+    "RiskRating": {
+      "base": null,
+      "refs": {
+        "TradeOff$risk": "<p>The risk rating for the trade-off.</p>"
+      }
+    },
+    "Roi": {
+      "base": "<p>A return-on-investment estimate with context.</p>",
+      "refs": {
+        "AgentRecommendationSummary$roi": "<p>The return on investment estimate for the recommendation.</p>",
+        "GetAgentRecommendationResponse$roi": "<p>The return on investment estimate for the recommendation.</p>"
+      }
+    },
+    "RoiDetailString": {
+      "base": null,
+      "refs": {
+        "Roi$detail": "<p>A sentence providing context for the estimate.</p>"
+      }
+    },
+    "RoiEstimateString": {
+      "base": null,
+      "refs": {
+        "Roi$estimate": "<p>A short statistic or key metric. Optional when there is no quantifiable figure.</p>"
+      }
+    },
+    "RoleArn": {
+      "base": null,
+      "refs": {
+        "AgentProfileSummary$executionRoleArn": "<p>The ARN of the IAM execution role used for recommendation actions.</p>",
+        "AggregationConfiguration$accessRoleArn": "<p>The ARN of an IAM role to assume for resource analysis in this account.</p>",
+        "CreateAgentProfileRequest$executionRoleArn": "<p>The ARN of the IAM execution role used for recommendation actions.</p>",
+        "CreateAgentProfileResponse$executionRoleArn": "<p>The ARN of the IAM execution role.</p>",
+        "GetAgentProfileResponse$executionRoleArn": "<p>The ARN of the IAM execution role.</p>",
+        "UpdateAgentProfileRequest$executionRoleArn": "<p>The updated ARN of the IAM execution role.</p>",
+        "UpdateAgentProfileResponse$executionRoleArn": "<p>The ARN of the IAM execution role.</p>"
+      }
+    },
+    "Scope": {
+      "base": "<p>Defines the scope for recommendation generation, specifying which pillars and goals to focus on.</p>",
+      "refs": {
+        "GetAgentRecommendationGenerationResponse$scope": "<p>The scope configuration that defines which pillars and goals to focus on during generation.</p>",
+        "StartAgentRecommendationGenerationRequest$scope": "<p>Scope configuration to focus the generation on specific pillars or goals.</p>"
       }
     },
     "SelectedChoiceIds": {
@@ -2197,6 +3568,32 @@
         "ListWorkloadSharesInput$SharedWithPrefix": "<p>The Amazon Web Services account ID, organization ID, or organizational unit (OU) ID with which the workload is shared.</p>"
       }
     },
+    "StartAgentRecommendationGenerationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartAgentRecommendationGenerationRequestNameString": {
+      "base": null,
+      "refs": {
+        "StartAgentRecommendationGenerationRequest$name": "<p>An optional name for this generation process to help identify it in lists and logs.</p>"
+      }
+    },
+    "StartAgentRecommendationGenerationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "StartAgentRecommendationGenerationResponseCreatedByString": {
+      "base": null,
+      "refs": {
+        "StartAgentRecommendationGenerationResponse$createdBy": "<p>The identifier of the user or system that started this generation.</p>"
+      }
+    },
+    "StartAgentRecommendationGenerationResponseLastModifiedByString": {
+      "base": null,
+      "refs": {
+        "StartAgentRecommendationGenerationResponse$lastModifiedBy": "<p>The identifier of the user or system that last modified this generation.</p>"
+      }
+    },
     "StatusMessage": {
       "base": null,
       "refs": {
@@ -2208,10 +3605,76 @@
         "WorkloadShareSummary$StatusMessage": "<p>Optional message to compliment the Status field.</p>"
       }
     },
+    "String": {
+      "base": null,
+      "refs": {
+        "AgentRecommendationGenerationSummary$name": "<p>The name of the recommendation generation.</p>",
+        "AgentRecommendationItemSummary$id": "<p>The unique identifier of the recommendation item.</p>",
+        "ErrorDetails$code": "<p>The status code identifying the type of error.</p>",
+        "ErrorDetails$message": "<p>A human-readable description of the error.</p>",
+        "GetAgentRecommendationGenerationResponse$name": "<p>The name of the recommendation generation.</p>",
+        "RecommendationGoal$title": "<p>The title of the goal associated with the recommendation.</p>",
+        "StartAgentRecommendationGenerationResponse$name": "<p>The name of the recommendation generation.</p>",
+        "StringList$member": null
+      }
+    },
+    "StringList": {
+      "base": null,
+      "refs": {
+        "AgentRecommendationSummary$awsServices": "<p>The Amazon Web Services services that the recommendation applies to.</p>",
+        "AgentRecommendationSummary$businessUnits": "<p>The business units that own the affected resources.</p>",
+        "AgentRecommendationSummary$applications": "<p>The applications that the recommendation targets.</p>",
+        "GetAgentRecommendationResponse$awsServices": "<p>The Amazon Web Services services that the recommendation applies to.</p>",
+        "GetAgentRecommendationResponse$businessUnits": "<p>The business units that own the affected resources.</p>",
+        "GetAgentRecommendationResponse$applications": "<p>The applications that the recommendation targets.</p>"
+      }
+    },
     "Subdomain": {
       "base": null,
       "refs": {
         "AccountJiraConfigurationOutput$Subdomain": "<p>Account-level: Jira subdomain URL.</p>"
+      }
+    },
+    "SyntheticTimestamp_date_time": {
+      "base": null,
+      "refs": {
+        "AgentProfileSummary$createdAt": "<p>The timestamp when the profile was created.</p>",
+        "AgentProfileSummary$lastModifiedAt": "<p>The timestamp when the profile was last modified.</p>",
+        "AgentRecommendationGenerationSummary$estimatedCompletionTime": "<p>The estimated time for the generation to complete.</p>",
+        "AgentRecommendationGenerationSummary$createdAt": "<p>The timestamp when the generation was started.</p>",
+        "AgentRecommendationGenerationSummary$lastModifiedAt": "<p>The timestamp when the generation was last modified.</p>",
+        "AgentRecommendationItemSummary$createdAt": "<p>The timestamp when the recommendation item was created.</p>",
+        "AgentRecommendationItemSummary$lastModifiedAt": "<p>The timestamp when the recommendation item was last modified.</p>",
+        "AgentRecommendationRemediation$createdAt": "<p>The timestamp when the remediation was created.</p>",
+        "AgentRecommendationRemediation$lastModifiedAt": "<p>The timestamp when the remediation was last modified.</p>",
+        "AgentRecommendationSummary$createdAt": "<p>The timestamp when the recommendation was created.</p>",
+        "AgentRecommendationSummary$lastModifiedAt": "<p>The timestamp when the recommendation was last modified.</p>",
+        "ContextSummary$createdAt": "<p>The timestamp when the context was created.</p>",
+        "ContextSummary$lastModifiedAt": "<p>The timestamp when the context was last modified.</p>",
+        "CreateAgentProfileResponse$createdAt": "<p>The timestamp when the profile was created.</p>",
+        "CreateAgentProfileResponse$lastModifiedAt": "<p>The timestamp when the profile was last modified.</p>",
+        "GetAgentProfileResponse$createdAt": "<p>The timestamp when the profile was created.</p>",
+        "GetAgentProfileResponse$lastModifiedAt": "<p>The timestamp when the profile was last modified.</p>",
+        "GetAgentRecommendationGenerationResponse$estimatedCompletionTime": "<p>The estimated time for the generation to complete.</p>",
+        "GetAgentRecommendationGenerationResponse$createdAt": "<p>The timestamp when the generation was started.</p>",
+        "GetAgentRecommendationGenerationResponse$lastModifiedAt": "<p>The timestamp when the generation was last modified.</p>",
+        "GetAgentRecommendationGenerationResponse$startedAt": "<p>The timestamp when the recommendation generation process started.</p>",
+        "GetAgentRecommendationGenerationResponse$endedAt": "<p>The timestamp when the recommendation generation process completed.</p>",
+        "GetAgentRecommendationResponse$createdAt": "<p>The timestamp when the recommendation was created.</p>",
+        "GetAgentRecommendationResponse$lastModifiedAt": "<p>The timestamp when the recommendation was last modified.</p>",
+        "GoalSummary$createdAt": "<p>The timestamp when the goal was created.</p>",
+        "GoalSummary$lastModifiedAt": "<p>The timestamp when the goal was last modified.</p>",
+        "StartAgentRecommendationGenerationResponse$estimatedCompletionTime": "<p>The estimated time for the generation to complete.</p>",
+        "StartAgentRecommendationGenerationResponse$createdAt": "<p>The timestamp when the generation was started.</p>",
+        "StartAgentRecommendationGenerationResponse$lastModifiedAt": "<p>The timestamp when the generation was last modified.</p>",
+        "UpdateAgentProfileResponse$createdAt": "<p>The timestamp when the profile was created.</p>",
+        "UpdateAgentProfileResponse$lastModifiedAt": "<p>The timestamp when the profile was last modified.</p>"
+      }
+    },
+    "Tag": {
+      "base": "<p>A key-value pair associated with a resource for cost allocation and access control.</p>",
+      "refs": {
+        "Tags$member": null
       }
     },
     "TagKey": {
@@ -2225,6 +3688,12 @@
       "base": null,
       "refs": {
         "UntagResourceInput$TagKeys": "<p>A list of tag keys. Existing tags of the resource whose keys are members of this list are removed from the resource.</p>"
+      }
+    },
+    "TagKeyString": {
+      "base": null,
+      "refs": {
+        "Tag$key": "<p>The key of the tag.</p>"
       }
     },
     "TagMap": {
@@ -2254,6 +3723,23 @@
       "base": null,
       "refs": {
         "TagMap$value": null
+      }
+    },
+    "TagValueString": {
+      "base": null,
+      "refs": {
+        "Tag$value": "<p>The value of the tag.</p>"
+      }
+    },
+    "Tags": {
+      "base": null,
+      "refs": {
+        "AgentProfileSummary$tags": "<p>The tags associated with the profile.</p>",
+        "CreateAgentProfileRequest$tags": "<p>The tags to associate with the profile.</p>",
+        "CreateAgentProfileResponse$tags": "<p>The tags associated with the created profile.</p>",
+        "GetAgentProfileResponse$tags": "<p>The tags associated with the profile.</p>",
+        "GetAgentRecommendationResponse$tags": "<p>A set of key-value pairs associated with the recommendation, used for cost allocation and access control.</p>",
+        "UpdateAgentProfileResponse$tags": "<p>The tags associated with the updated profile.</p>"
       }
     },
     "TemplateArn": {
@@ -2334,30 +3820,66 @@
       "refs": {}
     },
     "Timestamp": {
-      "base": "<p>The date and time recorded.</p>",
+      "base": null,
       "refs": {
-        "CheckDetail$UpdatedAt": null,
-        "CheckSummary$UpdatedAt": null,
-        "ConsolidatedReportMetric$UpdatedAt": null,
-        "JiraConfiguration$LastSyncedTime": null,
-        "LensReview$UpdatedAt": null,
-        "LensReviewSummary$UpdatedAt": null,
-        "LensSummary$CreatedAt": null,
-        "LensSummary$UpdatedAt": null,
-        "Milestone$RecordedAt": null,
-        "MilestoneSummary$RecordedAt": null,
-        "Profile$CreatedAt": null,
-        "Profile$UpdatedAt": null,
-        "ProfileSummary$CreatedAt": null,
-        "ProfileSummary$UpdatedAt": null,
-        "ProfileTemplate$CreatedAt": null,
-        "ProfileTemplate$UpdatedAt": null,
-        "ReviewTemplate$UpdatedAt": null,
-        "ReviewTemplateLensReview$UpdatedAt": null,
-        "ReviewTemplateSummary$UpdatedAt": null,
-        "Workload$UpdatedAt": null,
-        "Workload$ReviewRestrictionDate": null,
-        "WorkloadSummary$UpdatedAt": null
+        "CheckDetail$UpdatedAt": "<p>The date and time when the check was last updated.</p>",
+        "CheckSummary$UpdatedAt": "<p>The date and time when the check summary was last updated.</p>",
+        "ConsolidatedReportMetric$UpdatedAt": "<p>The date and time when the consolidated report metric was last updated.</p>",
+        "JiraConfiguration$LastSyncedTime": "<p>The date and time when the Jira configuration was last synced.</p>",
+        "LensReview$UpdatedAt": "<p>The date and time when the lens review was last updated.</p>",
+        "LensReviewSummary$UpdatedAt": "<p>The date and time when the lens review was last updated.</p>",
+        "LensSummary$CreatedAt": "<p>The date and time when the lens was created.</p>",
+        "LensSummary$UpdatedAt": "<p>The date and time when the lens was last updated.</p>",
+        "Milestone$RecordedAt": "<p>The date and time when the milestone was recorded.</p>",
+        "MilestoneSummary$RecordedAt": "<p>The date and time when the milestone was recorded.</p>",
+        "Profile$CreatedAt": "<p>The date and time when the profile was created.</p>",
+        "Profile$UpdatedAt": "<p>The date and time when the profile was last updated.</p>",
+        "ProfileSummary$CreatedAt": "<p>The date and time when the profile was created.</p>",
+        "ProfileSummary$UpdatedAt": "<p>The date and time when the profile was last updated.</p>",
+        "ProfileTemplate$CreatedAt": "<p>The date and time when the profile template was created.</p>",
+        "ProfileTemplate$UpdatedAt": "<p>The date and time when the profile template was last updated.</p>",
+        "ReviewTemplate$UpdatedAt": "<p>The date and time when the review template was last updated.</p>",
+        "ReviewTemplateLensReview$UpdatedAt": "<p>The date and time when the review template lens review was last updated.</p>",
+        "ReviewTemplateSummary$UpdatedAt": "<p>The date and time when the review template was last updated.</p>",
+        "Workload$UpdatedAt": "<p>The date and time when the workload was last updated.</p>",
+        "Workload$ReviewRestrictionDate": "<p>The review restriction date for the workload.</p>",
+        "WorkloadSummary$UpdatedAt": "<p>The date and time when the workload was last updated.</p>"
+      }
+    },
+    "TradeOff": {
+      "base": "<p>A negative trade-off from acting on the recommendation.</p>",
+      "refs": {
+        "TradeOffs$member": null
+      }
+    },
+    "TradeOffDescriptionString": {
+      "base": null,
+      "refs": {
+        "TradeOff$description": "<p>A description of the specific risk and the condition that triggers it.</p>"
+      }
+    },
+    "TradeOffMitigationString": {
+      "base": null,
+      "refs": {
+        "TradeOff$mitigation": "<p>A specific action to mitigate the trade-off and when to take it.</p>"
+      }
+    },
+    "TradeOffRiskExplanationString": {
+      "base": null,
+      "refs": {
+        "TradeOff$riskExplanation": "<p>An optional explanation providing additional context for the risk rating.</p>"
+      }
+    },
+    "TradeOffTitleString": {
+      "base": null,
+      "refs": {
+        "TradeOff$title": "<p>A short phrase describing what is lost or degraded.</p>"
+      }
+    },
+    "TradeOffs": {
+      "base": null,
+      "refs": {
+        "GetAgentRecommendationResponse$tradeOffs": "<p>Trade-offs of acting on the recommendation.</p>"
       }
     },
     "TrustedAdvisorIntegrationStatus": {
@@ -2366,11 +3888,157 @@
         "WorkloadDiscoveryConfig$TrustedAdvisorIntegrationStatus": "<p>Discovery integration status in respect to Trusted Advisor for the workload.</p>"
       }
     },
+    "UUID": {
+      "base": null,
+      "refs": {
+        "AgentRecommendationGenerationSummary$id": "<p>The unique identifier of the recommendation generation.</p>",
+        "ContextSummary$id": "<p>The unique identifier of the context.</p>",
+        "DeleteAgentContextRequest$id": "<p>The unique identifier of the context to delete.</p>",
+        "DeleteAgentGoalRequest$id": "<p>The unique identifier of the goal to delete.</p>",
+        "GetAgentContextRequest$id": "<p>The unique identifier of the context to retrieve.</p>",
+        "GetAgentGoalRequest$id": "<p>The unique identifier of the goal to retrieve.</p>",
+        "GetAgentRecommendationGenerationRequest$generationId": "<p>The unique identifier of the recommendation generation to retrieve.</p>",
+        "GetAgentRecommendationGenerationResponse$id": "<p>The unique identifier of the recommendation generation.</p>",
+        "GoalIdList$member": null,
+        "GoalSummary$id": "<p>The unique identifier of the goal.</p>",
+        "StartAgentRecommendationGenerationResponse$id": "<p>The unique identifier of the recommendation generation.</p>",
+        "UpdateAgentContextRequest$id": "<p>The unique identifier of the context to update.</p>",
+        "UpdateAgentGoalRequest$id": "<p>The unique identifier of the goal to update.</p>"
+      }
+    },
     "UntagResourceInput": {
       "base": null,
       "refs": {}
     },
     "UntagResourceOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAgentContextRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAgentContextRequestClientTokenString": {
+      "base": null,
+      "refs": {
+        "UpdateAgentContextRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>"
+      }
+    },
+    "UpdateAgentContextRequestTitleString": {
+      "base": null,
+      "refs": {
+        "UpdateAgentContextRequest$title": "<p>The updated title of the context.</p>"
+      }
+    },
+    "UpdateAgentContextResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAgentGoalRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAgentGoalRequestClientTokenString": {
+      "base": null,
+      "refs": {
+        "UpdateAgentGoalRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>"
+      }
+    },
+    "UpdateAgentGoalRequestDescriptionString": {
+      "base": null,
+      "refs": {
+        "UpdateAgentGoalRequest$description": "<p>A description of the goal.</p>"
+      }
+    },
+    "UpdateAgentGoalRequestTitleString": {
+      "base": null,
+      "refs": {
+        "UpdateAgentGoalRequest$title": "<p>The updated title for the goal. Maximum length of 1000 characters.</p>"
+      }
+    },
+    "UpdateAgentGoalResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAgentProfileRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAgentProfileRequestBusinessOverviewString": {
+      "base": null,
+      "refs": {
+        "UpdateAgentProfileRequest$businessOverview": "<p>The updated business overview for the profile.</p>"
+      }
+    },
+    "UpdateAgentProfileRequestClientTokenString": {
+      "base": null,
+      "refs": {
+        "UpdateAgentProfileRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>"
+      }
+    },
+    "UpdateAgentProfileRequestDescriptionString": {
+      "base": null,
+      "refs": {
+        "UpdateAgentProfileRequest$description": "<p>The updated description of the profile.</p>"
+      }
+    },
+    "UpdateAgentProfileRequestDisplayNameString": {
+      "base": null,
+      "refs": {
+        "UpdateAgentProfileRequest$displayName": "<p>The updated display name of the profile.</p>"
+      }
+    },
+    "UpdateAgentProfileResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAgentProfileResponseBusinessOverviewString": {
+      "base": null,
+      "refs": {
+        "UpdateAgentProfileResponse$businessOverview": "<p>The business overview of the updated profile.</p>"
+      }
+    },
+    "UpdateAgentProfileResponseCreatedByString": {
+      "base": null,
+      "refs": {
+        "UpdateAgentProfileResponse$createdBy": "<p>The identifier of the user or system that created this profile.</p>"
+      }
+    },
+    "UpdateAgentProfileResponseDescriptionString": {
+      "base": null,
+      "refs": {
+        "UpdateAgentProfileResponse$description": "<p>A description of the updated profile.</p>"
+      }
+    },
+    "UpdateAgentProfileResponseDisplayNameString": {
+      "base": null,
+      "refs": {
+        "UpdateAgentProfileResponse$displayName": "<p>The display name of the updated profile.</p>"
+      }
+    },
+    "UpdateAgentProfileResponseLastModifiedByString": {
+      "base": null,
+      "refs": {
+        "UpdateAgentProfileResponse$lastModifiedBy": "<p>The identifier of the user or system that last modified this profile.</p>"
+      }
+    },
+    "UpdateAgentProfileResponseNameString": {
+      "base": null,
+      "refs": {
+        "UpdateAgentProfileResponse$name": "<p>The system name of the updated profile.</p>"
+      }
+    },
+    "UpdateAgentRecommendationStatusRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAgentRecommendationStatusRequestUpdateReasonString": {
+      "base": null,
+      "refs": {
+        "UpdateAgentRecommendationStatusRequest$updateReason": "<p>A free-text reason explaining this status update.</p>"
+      }
+    },
+    "UpdateAgentRecommendationStatusResponse": {
       "base": null,
       "refs": {}
     },

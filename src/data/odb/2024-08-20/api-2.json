@@ -49,6 +49,24 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "AssociateVirtualMachinesToExadbVmCluster":{
+      "name":"AssociateVirtualMachinesToExadbVmCluster",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AssociateVirtualMachinesToExadbVmClusterInput"},
+      "output":{"shape":"AssociateVirtualMachinesToExadbVmClusterOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "CreateAutonomousDatabase":{
       "name":"CreateAutonomousDatabase",
       "http":{
@@ -157,6 +175,43 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
+    "CreateExadbVmCluster":{
+      "name":"CreateExadbVmCluster",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateExadbVmClusterInput"},
+      "output":{"shape":"CreateExadbVmClusterOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
+    "CreateExascaleDbStorageVault":{
+      "name":"CreateExascaleDbStorageVault",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateExascaleDbStorageVaultInput"},
+      "output":{"shape":"CreateExascaleDbStorageVaultOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
       ],
       "idempotent":true
     },
@@ -284,6 +339,42 @@
       ],
       "idempotent":true
     },
+    "DeleteExadbVmCluster":{
+      "name":"DeleteExadbVmCluster",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteExadbVmClusterInput"},
+      "output":{"shape":"DeleteExadbVmClusterOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteExascaleDbStorageVault":{
+      "name":"DeleteExascaleDbStorageVault",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteExascaleDbStorageVaultInput"},
+      "output":{"shape":"DeleteExascaleDbStorageVaultOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
     "DeleteOdbNetwork":{
       "name":"DeleteOdbNetwork",
       "http":{
@@ -326,6 +417,23 @@
       },
       "input":{"shape":"DisassociateIamRoleFromResourceInput"},
       "output":{"shape":"DisassociateIamRoleFromResourceOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "DisassociateVirtualMachinesFromExadbVmCluster":{
+      "name":"DisassociateVirtualMachinesFromExadbVmCluster",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisassociateVirtualMachinesFromExadbVmClusterInput"},
+      "output":{"shape":"DisassociateVirtualMachinesFromExadbVmClusterOutput"},
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
@@ -496,6 +604,40 @@
       },
       "input":{"shape":"GetDbServerInput"},
       "output":{"shape":"GetDbServerOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
+    "GetExadbVmCluster":{
+      "name":"GetExadbVmCluster",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetExadbVmClusterInput"},
+      "output":{"shape":"GetExadbVmClusterOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
+    "GetExascaleDbStorageVault":{
+      "name":"GetExascaleDbStorageVault",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetExascaleDbStorageVaultInput"},
+      "output":{"shape":"GetExascaleDbStorageVaultOutput"},
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
@@ -779,6 +921,55 @@
       },
       "input":{"shape":"ListDbSystemShapesInput"},
       "output":{"shape":"ListDbSystemShapesOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "ListExadbVmClusters":{
+      "name":"ListExadbVmClusters",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListExadbVmClustersInput"},
+      "output":{"shape":"ListExadbVmClustersOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
+    "ListExascaleDbStorageVaults":{
+      "name":"ListExascaleDbStorageVaults",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListExascaleDbStorageVaultsInput"},
+      "output":{"shape":"ListExascaleDbStorageVaultsOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "ListGiMinorVersions":{
+      "name":"ListGiMinorVersions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListGiMinorVersionsInput"},
+      "output":{"shape":"ListGiMinorVersionsOutput"},
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
@@ -1094,6 +1285,40 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "UpdateExadbVmCluster":{
+      "name":"UpdateExadbVmCluster",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateExadbVmClusterInput"},
+      "output":{"shape":"UpdateExadbVmClusterOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "UpdateExascaleDbStorageVault":{
+      "name":"UpdateExascaleDbStorageVault",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateExascaleDbStorageVaultInput"},
+      "output":{"shape":"UpdateExascaleDbStorageVaultOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "UpdateOdbNetwork":{
       "name":"UpdateOdbNetwork",
       "http":{
@@ -1211,6 +1436,32 @@
     "AssociateIamRoleToResourceOutput":{
       "type":"structure",
       "members":{}
+    },
+    "AssociateVirtualMachinesToExadbVmClusterInput":{
+      "type":"structure",
+      "required":[
+        "exadbVmClusterId",
+        "desiredNodeCount"
+      ],
+      "members":{
+        "exadbVmClusterId":{"shape":"ResourceIdOrArn"},
+        "desiredNodeCount":{"shape":"AssociateVirtualMachinesToExadbVmClusterInputDesiredNodeCountInteger"}
+      }
+    },
+    "AssociateVirtualMachinesToExadbVmClusterInputDesiredNodeCountInteger":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
+    "AssociateVirtualMachinesToExadbVmClusterOutput":{
+      "type":"structure",
+      "required":["exadbVmClusterId"],
+      "members":{
+        "displayName":{"shape":"String"},
+        "status":{"shape":"ResourceStatus"},
+        "statusReason":{"shape":"String"},
+        "exadbVmClusterId":{"shape":"String"}
+      }
     },
     "AutonomousDatabase":{
       "type":"structure",
@@ -2490,6 +2741,190 @@
         "cloudVmClusterId":{"shape":"String"}
       }
     },
+    "CreateExadbVmClusterInput":{
+      "type":"structure",
+      "required":[
+        "displayName",
+        "enabledEcpuCount",
+        "exascaleDbStorageVaultId",
+        "gridImageId",
+        "hostname",
+        "nodeCount",
+        "odbNetworkId",
+        "shape",
+        "sshPublicKeys",
+        "totalEcpuCount",
+        "vmFileSystemStorageTotalSizeInGBs"
+      ],
+      "members":{
+        "displayName":{"shape":"ResourceDisplayName"},
+        "enabledEcpuCount":{"shape":"CreateExadbVmClusterInputEnabledEcpuCountInteger"},
+        "exascaleDbStorageVaultId":{"shape":"ResourceIdOrArn"},
+        "gridImageId":{"shape":"CreateExadbVmClusterInputGridImageIdString"},
+        "hostname":{"shape":"Hostname"},
+        "nodeCount":{"shape":"CreateExadbVmClusterInputNodeCountInteger"},
+        "odbNetworkId":{"shape":"ResourceIdOrArn"},
+        "shape":{"shape":"CreateExadbVmClusterInputShapeString"},
+        "sshPublicKeys":{"shape":"StringList"},
+        "totalEcpuCount":{"shape":"CreateExadbVmClusterInputTotalEcpuCountInteger"},
+        "vmFileSystemStorageTotalSizeInGBs":{"shape":"CreateExadbVmClusterInputVmFileSystemStorageTotalSizeInGBsInteger"},
+        "clusterName":{"shape":"ClusterName"},
+        "dataCollectionOptions":{"shape":"DataCollectionOptions"},
+        "licenseModel":{"shape":"LicenseModel"},
+        "scanListenerPortTcp":{"shape":"CreateExadbVmClusterInputScanListenerPortTcpInteger"},
+        "scanListenerPortTcpSsl":{"shape":"CreateExadbVmClusterInputScanListenerPortTcpSslInteger"},
+        "shapeAttribute":{"shape":"ShapeAttribute"},
+        "systemVersion":{"shape":"CreateExadbVmClusterInputSystemVersionString"},
+        "tags":{"shape":"RequestTagMap"},
+        "timeZone":{"shape":"CreateExadbVmClusterInputTimeZoneString"},
+        "clientToken":{
+          "shape":"CreateExadbVmClusterInputClientTokenString",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateExadbVmClusterInputClientTokenString":{
+      "type":"string",
+      "max":64,
+      "min":8,
+      "pattern":"[a-zA-Z0-9_\\/.=-]+"
+    },
+    "CreateExadbVmClusterInputEnabledEcpuCountInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "CreateExadbVmClusterInputGridImageIdString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "CreateExadbVmClusterInputNodeCountInteger":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
+    "CreateExadbVmClusterInputScanListenerPortTcpInteger":{
+      "type":"integer",
+      "box":true,
+      "max":8999,
+      "min":1024
+    },
+    "CreateExadbVmClusterInputScanListenerPortTcpSslInteger":{
+      "type":"integer",
+      "box":true,
+      "max":8999,
+      "min":1024
+    },
+    "CreateExadbVmClusterInputShapeString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "CreateExadbVmClusterInputSystemVersionString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "CreateExadbVmClusterInputTimeZoneString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "CreateExadbVmClusterInputTotalEcpuCountInteger":{
+      "type":"integer",
+      "box":true,
+      "min":2
+    },
+    "CreateExadbVmClusterInputVmFileSystemStorageTotalSizeInGBsInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "CreateExadbVmClusterOutput":{
+      "type":"structure",
+      "required":["exadbVmClusterId"],
+      "members":{
+        "displayName":{"shape":"String"},
+        "status":{"shape":"ResourceStatus"},
+        "statusReason":{"shape":"String"},
+        "exadbVmClusterId":{"shape":"String"}
+      }
+    },
+    "CreateExascaleDbStorageVaultInput":{
+      "type":"structure",
+      "required":[
+        "displayName",
+        "highCapacityDatabaseStorageTotalSizeInGBs"
+      ],
+      "members":{
+        "displayName":{"shape":"ResourceDisplayName"},
+        "highCapacityDatabaseStorageTotalSizeInGBs":{"shape":"CreateExascaleDbStorageVaultInputHighCapacityDatabaseStorageTotalSizeInGBsInteger"},
+        "additionalFlashCacheInPercent":{"shape":"CreateExascaleDbStorageVaultInputAdditionalFlashCacheInPercentInteger"},
+        "autoscaleLimitInGBs":{"shape":"CreateExascaleDbStorageVaultInputAutoscaleLimitInGBsInteger"},
+        "availabilityZoneId":{"shape":"CreateExascaleDbStorageVaultInputAvailabilityZoneIdString"},
+        "availabilityZone":{"shape":"CreateExascaleDbStorageVaultInputAvailabilityZoneString"},
+        "description":{"shape":"CreateExascaleDbStorageVaultInputDescriptionString"},
+        "isAutoscaleEnabled":{"shape":"Boolean"},
+        "tags":{"shape":"RequestTagMap"},
+        "timeZone":{"shape":"CreateExascaleDbStorageVaultInputTimeZoneString"},
+        "clientToken":{
+          "shape":"CreateExascaleDbStorageVaultInputClientTokenString",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateExascaleDbStorageVaultInputAdditionalFlashCacheInPercentInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "CreateExascaleDbStorageVaultInputAutoscaleLimitInGBsInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "CreateExascaleDbStorageVaultInputAvailabilityZoneIdString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "CreateExascaleDbStorageVaultInputAvailabilityZoneString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "CreateExascaleDbStorageVaultInputClientTokenString":{
+      "type":"string",
+      "max":64,
+      "min":8,
+      "pattern":"[a-zA-Z0-9_\\/.=-]+"
+    },
+    "CreateExascaleDbStorageVaultInputDescriptionString":{
+      "type":"string",
+      "max":400,
+      "min":1
+    },
+    "CreateExascaleDbStorageVaultInputHighCapacityDatabaseStorageTotalSizeInGBsInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "CreateExascaleDbStorageVaultInputTimeZoneString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "CreateExascaleDbStorageVaultOutput":{
+      "type":"structure",
+      "required":["exascaleDbStorageVaultId"],
+      "members":{
+        "displayName":{"shape":"String"},
+        "status":{"shape":"ResourceStatus"},
+        "statusReason":{"shape":"String"},
+        "exascaleDbStorageVaultId":{"shape":"String"}
+      }
+    },
     "CreateOdbNetworkInput":{
       "type":"structure",
       "required":[
@@ -2998,6 +3433,7 @@
         "runtimeMinimumCoreCount":{"shape":"Integer"},
         "shapeFamily":{"shape":"String"},
         "shapeType":{"shape":"ShapeType"},
+        "shapeAttributes":{"shape":"ShapeAttributeList"},
         "name":{"shape":"String"},
         "computeModel":{"shape":"ComputeModel"},
         "areServerTypesSupported":{"shape":"Boolean"}
@@ -3067,6 +3503,28 @@
       "type":"structure",
       "members":{}
     },
+    "DeleteExadbVmClusterInput":{
+      "type":"structure",
+      "required":["exadbVmClusterId"],
+      "members":{
+        "exadbVmClusterId":{"shape":"ResourceIdOrArn"}
+      }
+    },
+    "DeleteExadbVmClusterOutput":{
+      "type":"structure",
+      "members":{}
+    },
+    "DeleteExascaleDbStorageVaultInput":{
+      "type":"structure",
+      "required":["exascaleDbStorageVaultId"],
+      "members":{
+        "exascaleDbStorageVaultId":{"shape":"ResourceIdOrArn"}
+      }
+    },
+    "DeleteExascaleDbStorageVaultOutput":{
+      "type":"structure",
+      "members":{}
+    },
     "DeleteOdbNetworkInput":{
       "type":"structure",
       "required":[
@@ -3115,6 +3573,27 @@
     "DisassociateIamRoleFromResourceOutput":{
       "type":"structure",
       "members":{}
+    },
+    "DisassociateVirtualMachinesFromExadbVmClusterInput":{
+      "type":"structure",
+      "required":[
+        "exadbVmClusterId",
+        "dbNodeIds"
+      ],
+      "members":{
+        "exadbVmClusterId":{"shape":"ResourceIdOrArn"},
+        "dbNodeIds":{"shape":"ResourceIdList"}
+      }
+    },
+    "DisassociateVirtualMachinesFromExadbVmClusterOutput":{
+      "type":"structure",
+      "required":["exadbVmClusterId"],
+      "members":{
+        "displayName":{"shape":"String"},
+        "status":{"shape":"ResourceStatus"},
+        "statusReason":{"shape":"String"},
+        "exadbVmClusterId":{"shape":"String"}
+      }
     },
     "DisasterRecoveryConfiguration":{
       "type":"structure",
@@ -3189,6 +3668,183 @@
         "lifecycleDetails":{"shape":"String"},
         "lifecycleState":{"shape":"IormLifecycleState"},
         "objective":{"shape":"Objective"}
+      }
+    },
+    "ExadbVmCluster":{
+      "type":"structure",
+      "required":["exadbVmClusterId"],
+      "members":{
+        "exadbVmClusterId":{"shape":"ResourceIdOrArn"},
+        "clusterName":{"shape":"ClusterName"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "dataCollectionOptions":{"shape":"DataCollectionOptions"},
+        "displayName":{"shape":"ResourceDisplayName"},
+        "domain":{"shape":"String"},
+        "enabledEcpuCount":{"shape":"Integer"},
+        "exadbVmClusterArn":{"shape":"ResourceArn"},
+        "exascaleDbStorageVaultArn":{"shape":"ResourceArn"},
+        "exascaleDbStorageVaultId":{"shape":"ResourceIdOrArn"},
+        "giVersion":{"shape":"String"},
+        "gridImageId":{"shape":"String"},
+        "gridImageType":{"shape":"GridImageType"},
+        "hostname":{"shape":"Hostname"},
+        "iamRoles":{"shape":"IamRoleList"},
+        "iormConfigCache":{"shape":"ExadataIormConfig"},
+        "lastUpdateHistoryEntryId":{"shape":"String"},
+        "licenseModel":{"shape":"LicenseModel"},
+        "listenerPort":{"shape":"Integer"},
+        "memorySizeInGBs":{"shape":"Integer"},
+        "nodeCount":{"shape":"Integer"},
+        "ocid":{"shape":"String"},
+        "ociResourceAnchorName":{"shape":"String"},
+        "ociUrl":{"shape":"String"},
+        "odbNetworkArn":{"shape":"ResourceArn"},
+        "odbNetworkId":{"shape":"ResourceIdOrArn"},
+        "percentProgress":{"shape":"Float"},
+        "scanDnsName":{"shape":"String"},
+        "scanDnsRecordId":{"shape":"String"},
+        "scanIpIds":{"shape":"StringList"},
+        "scanListenerPortTcp":{"shape":"Integer"},
+        "scanListenerPortTcpSsl":{"shape":"Integer"},
+        "shape":{"shape":"String"},
+        "shapeAttribute":{"shape":"ShapeAttribute"},
+        "snapshotFileSystemStorage":{"shape":"ExadbVmClusterStorageDetails"},
+        "sshPublicKeys":{"shape":"StringList"},
+        "status":{"shape":"ResourceStatus"},
+        "statusReason":{"shape":"String"},
+        "systemVersion":{"shape":"String"},
+        "timeZone":{"shape":"String"},
+        "totalEcpuCount":{"shape":"Integer"},
+        "totalFileSystemStorage":{"shape":"ExadbVmClusterStorageDetails"},
+        "vipIds":{"shape":"StringList"},
+        "vmFileSystemStorage":{"shape":"ExadbVmClusterStorageDetails"}
+      }
+    },
+    "ExadbVmClusterList":{
+      "type":"list",
+      "member":{"shape":"ExadbVmClusterSummary"}
+    },
+    "ExadbVmClusterStorageDetails":{
+      "type":"structure",
+      "members":{
+        "totalSizeInGBs":{"shape":"Integer"}
+      }
+    },
+    "ExadbVmClusterSummary":{
+      "type":"structure",
+      "required":["exadbVmClusterId"],
+      "members":{
+        "exadbVmClusterId":{"shape":"ResourceIdOrArn"},
+        "clusterName":{"shape":"ClusterName"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "dataCollectionOptions":{"shape":"DataCollectionOptions"},
+        "displayName":{"shape":"ResourceDisplayName"},
+        "domain":{"shape":"String"},
+        "enabledEcpuCount":{"shape":"Integer"},
+        "exadbVmClusterArn":{"shape":"ResourceArn"},
+        "exascaleDbStorageVaultArn":{"shape":"ResourceArn"},
+        "exascaleDbStorageVaultId":{"shape":"ResourceIdOrArn"},
+        "giVersion":{"shape":"String"},
+        "gridImageId":{"shape":"String"},
+        "gridImageType":{"shape":"GridImageType"},
+        "hostname":{"shape":"Hostname"},
+        "iamRoles":{"shape":"IamRoleList"},
+        "iormConfigCache":{"shape":"ExadataIormConfig"},
+        "lastUpdateHistoryEntryId":{"shape":"String"},
+        "licenseModel":{"shape":"LicenseModel"},
+        "listenerPort":{"shape":"Integer"},
+        "memorySizeInGBs":{"shape":"Integer"},
+        "nodeCount":{"shape":"Integer"},
+        "ocid":{"shape":"String"},
+        "ociResourceAnchorName":{"shape":"String"},
+        "ociUrl":{"shape":"String"},
+        "odbNetworkArn":{"shape":"ResourceArn"},
+        "odbNetworkId":{"shape":"ResourceIdOrArn"},
+        "percentProgress":{"shape":"Float"},
+        "scanDnsName":{"shape":"String"},
+        "scanDnsRecordId":{"shape":"String"},
+        "scanIpIds":{"shape":"StringList"},
+        "scanListenerPortTcp":{"shape":"Integer"},
+        "scanListenerPortTcpSsl":{"shape":"Integer"},
+        "shape":{"shape":"String"},
+        "shapeAttribute":{"shape":"ShapeAttribute"},
+        "snapshotFileSystemStorage":{"shape":"ExadbVmClusterStorageDetails"},
+        "sshPublicKeys":{"shape":"StringList"},
+        "status":{"shape":"ResourceStatus"},
+        "statusReason":{"shape":"String"},
+        "systemVersion":{"shape":"String"},
+        "timeZone":{"shape":"String"},
+        "totalEcpuCount":{"shape":"Integer"},
+        "totalFileSystemStorage":{"shape":"ExadbVmClusterStorageDetails"},
+        "vipIds":{"shape":"StringList"},
+        "vmFileSystemStorage":{"shape":"ExadbVmClusterStorageDetails"}
+      }
+    },
+    "ExascaleDbStorageDetails":{
+      "type":"structure",
+      "members":{
+        "availableSizeInGBs":{"shape":"Integer"},
+        "totalSizeInGBs":{"shape":"Integer"}
+      }
+    },
+    "ExascaleDbStorageVault":{
+      "type":"structure",
+      "required":["exascaleDbStorageVaultId"],
+      "members":{
+        "exascaleDbStorageVaultId":{"shape":"ResourceIdOrArn"},
+        "additionalFlashCacheInPercent":{"shape":"Integer"},
+        "attachedShapeAttributes":{"shape":"ShapeAttributeList"},
+        "autoscaleLimitInGBs":{"shape":"Integer"},
+        "availabilityZone":{"shape":"String"},
+        "availabilityZoneId":{"shape":"String"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "description":{"shape":"String"},
+        "displayName":{"shape":"String"},
+        "vmClusterArns":{"shape":"ResourceArnList"},
+        "vmClusterCount":{"shape":"Integer"},
+        "vmClusterIds":{"shape":"ResourceIdList"},
+        "exascaleDbStorageVaultArn":{"shape":"ResourceArn"},
+        "highCapacityDatabaseStorage":{"shape":"ExascaleDbStorageDetails"},
+        "isAutoscaleEnabled":{"shape":"Boolean"},
+        "ocid":{"shape":"String"},
+        "ociResourceAnchorName":{"shape":"String"},
+        "ociUrl":{"shape":"String"},
+        "percentProgress":{"shape":"Float"},
+        "status":{"shape":"ResourceStatus"},
+        "statusReason":{"shape":"String"},
+        "timeZone":{"shape":"String"}
+      }
+    },
+    "ExascaleDbStorageVaultList":{
+      "type":"list",
+      "member":{"shape":"ExascaleDbStorageVaultSummary"}
+    },
+    "ExascaleDbStorageVaultSummary":{
+      "type":"structure",
+      "required":["exascaleDbStorageVaultId"],
+      "members":{
+        "exascaleDbStorageVaultId":{"shape":"ResourceIdOrArn"},
+        "additionalFlashCacheInPercent":{"shape":"Integer"},
+        "attachedShapeAttributes":{"shape":"ShapeAttributeList"},
+        "autoscaleLimitInGBs":{"shape":"Integer"},
+        "availabilityZone":{"shape":"String"},
+        "availabilityZoneId":{"shape":"String"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "description":{"shape":"String"},
+        "displayName":{"shape":"String"},
+        "vmClusterArns":{"shape":"ResourceArnList"},
+        "vmClusterCount":{"shape":"Integer"},
+        "vmClusterIds":{"shape":"ResourceIdList"},
+        "exascaleDbStorageVaultArn":{"shape":"ResourceArn"},
+        "highCapacityDatabaseStorage":{"shape":"ExascaleDbStorageDetails"},
+        "isAutoscaleEnabled":{"shape":"Boolean"},
+        "ocid":{"shape":"String"},
+        "ociResourceAnchorName":{"shape":"String"},
+        "ociUrl":{"shape":"String"},
+        "percentProgress":{"shape":"Float"},
+        "status":{"shape":"ResourceStatus"},
+        "statusReason":{"shape":"String"},
+        "timeZone":{"shape":"String"}
       }
     },
     "ExternalIdType":{
@@ -3317,12 +3973,10 @@
     },
     "GetDbNodeInput":{
       "type":"structure",
-      "required":[
-        "cloudVmClusterId",
-        "dbNodeId"
-      ],
+      "required":["dbNodeId"],
       "members":{
         "cloudVmClusterId":{"shape":"ResourceId"},
+        "exadbVmClusterId":{"shape":"ResourceId"},
         "dbNodeId":{"shape":"ResourceId"}
       }
     },
@@ -3347,6 +4001,34 @@
       "type":"structure",
       "members":{
         "dbServer":{"shape":"DbServer"}
+      }
+    },
+    "GetExadbVmClusterInput":{
+      "type":"structure",
+      "required":["exadbVmClusterId"],
+      "members":{
+        "exadbVmClusterId":{"shape":"ResourceIdOrArn"}
+      }
+    },
+    "GetExadbVmClusterOutput":{
+      "type":"structure",
+      "required":["exadbVmCluster"],
+      "members":{
+        "exadbVmCluster":{"shape":"ExadbVmCluster"}
+      }
+    },
+    "GetExascaleDbStorageVaultInput":{
+      "type":"structure",
+      "required":["exascaleDbStorageVaultId"],
+      "members":{
+        "exascaleDbStorageVaultId":{"shape":"ResourceIdOrArn"}
+      }
+    },
+    "GetExascaleDbStorageVaultOutput":{
+      "type":"structure",
+      "required":["exascaleDbStorageVault"],
+      "members":{
+        "exascaleDbStorageVault":{"shape":"ExascaleDbStorageVault"}
       }
     },
     "GetOciOnboardingStatusInput":{
@@ -3392,6 +4074,18 @@
         "odbPeeringConnection":{"shape":"OdbPeeringConnection"}
       }
     },
+    "GiMinorVersionList":{
+      "type":"list",
+      "member":{"shape":"GiMinorVersionSummary"}
+    },
+    "GiMinorVersionSummary":{
+      "type":"structure",
+      "required":["version"],
+      "members":{
+        "version":{"shape":"String"},
+        "gridImageId":{"shape":"String"}
+      }
+    },
     "GiVersionList":{
       "type":"list",
       "member":{"shape":"GiVersionSummary"}
@@ -3401,6 +4095,13 @@
       "members":{
         "version":{"shape":"String"}
       }
+    },
+    "GridImageType":{
+      "type":"string",
+      "enum":[
+        "RELEASE_UPDATE",
+        "CUSTOM_IMAGE"
+      ]
     },
     "Hostname":{
       "type":"string",
@@ -3775,11 +4476,11 @@
     },
     "ListDbNodesInput":{
       "type":"structure",
-      "required":["cloudVmClusterId"],
       "members":{
         "maxResults":{"shape":"ListDbNodesInputMaxResultsInteger"},
         "nextToken":{"shape":"ListDbNodesInputNextTokenString"},
-        "cloudVmClusterId":{"shape":"ResourceId"}
+        "cloudVmClusterId":{"shape":"ResourceId"},
+        "exadbVmClusterId":{"shape":"ResourceId"}
       }
     },
     "ListDbNodesInputMaxResultsInteger":{
@@ -3835,7 +4536,8 @@
         "maxResults":{"shape":"ListDbSystemShapesInputMaxResultsInteger"},
         "nextToken":{"shape":"ListDbSystemShapesInputNextTokenString"},
         "availabilityZone":{"shape":"ListDbSystemShapesInputAvailabilityZoneString"},
-        "availabilityZoneId":{"shape":"ListDbSystemShapesInputAvailabilityZoneIdString"}
+        "availabilityZoneId":{"shape":"ListDbSystemShapesInputAvailabilityZoneIdString"},
+        "shapeFamily":{"shape":"ListDbSystemShapesInputShapeFamilyString"}
       }
     },
     "ListDbSystemShapesInputAvailabilityZoneIdString":{
@@ -3859,12 +4561,121 @@
       "max":8192,
       "min":1
     },
+    "ListDbSystemShapesInputShapeFamilyString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
     "ListDbSystemShapesOutput":{
       "type":"structure",
       "required":["dbSystemShapes"],
       "members":{
         "nextToken":{"shape":"String"},
         "dbSystemShapes":{"shape":"DbSystemShapeList"}
+      }
+    },
+    "ListExadbVmClustersInput":{
+      "type":"structure",
+      "members":{
+        "exascaleDbStorageVaultId":{"shape":"ResourceIdOrArn"},
+        "maxResults":{"shape":"ListExadbVmClustersInputMaxResultsInteger"},
+        "nextToken":{"shape":"ListExadbVmClustersInputNextTokenString"}
+      }
+    },
+    "ListExadbVmClustersInputMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
+    "ListExadbVmClustersInputNextTokenString":{
+      "type":"string",
+      "max":8192,
+      "min":1
+    },
+    "ListExadbVmClustersOutput":{
+      "type":"structure",
+      "required":["exadbVmClusters"],
+      "members":{
+        "nextToken":{"shape":"String"},
+        "exadbVmClusters":{"shape":"ExadbVmClusterList"}
+      }
+    },
+    "ListExascaleDbStorageVaultsInput":{
+      "type":"structure",
+      "members":{
+        "maxResults":{"shape":"ListExascaleDbStorageVaultsInputMaxResultsInteger"},
+        "nextToken":{"shape":"ListExascaleDbStorageVaultsInputNextTokenString"}
+      }
+    },
+    "ListExascaleDbStorageVaultsInputMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
+    "ListExascaleDbStorageVaultsInputNextTokenString":{
+      "type":"string",
+      "max":8192,
+      "min":1
+    },
+    "ListExascaleDbStorageVaultsOutput":{
+      "type":"structure",
+      "required":["exascaleDbStorageVaults"],
+      "members":{
+        "nextToken":{"shape":"String"},
+        "exascaleDbStorageVaults":{"shape":"ExascaleDbStorageVaultList"}
+      }
+    },
+    "ListGiMinorVersionsInput":{
+      "type":"structure",
+      "required":["giVersion"],
+      "members":{
+        "giVersion":{"shape":"ListGiMinorVersionsInputGiVersionString"},
+        "maxResults":{"shape":"ListGiMinorVersionsInputMaxResultsInteger"},
+        "nextToken":{"shape":"ListGiMinorVersionsInputNextTokenString"},
+        "shapeFamily":{"shape":"ListGiMinorVersionsInputShapeFamilyString"},
+        "availabilityZone":{"shape":"ListGiMinorVersionsInputAvailabilityZoneString"},
+        "availabilityZoneId":{"shape":"ListGiMinorVersionsInputAvailabilityZoneIdString"}
+      }
+    },
+    "ListGiMinorVersionsInputAvailabilityZoneIdString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "ListGiMinorVersionsInputAvailabilityZoneString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "ListGiMinorVersionsInputGiVersionString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "ListGiMinorVersionsInputMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
+    "ListGiMinorVersionsInputNextTokenString":{
+      "type":"string",
+      "max":8192,
+      "min":1
+    },
+    "ListGiMinorVersionsInputShapeFamilyString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "ListGiMinorVersionsOutput":{
+      "type":"structure",
+      "required":["giMinorVersions"],
+      "members":{
+        "nextToken":{"shape":"String"},
+        "giMinorVersions":{"shape":"GiMinorVersionList"}
       }
     },
     "ListGiVersionsInput":{
@@ -4513,12 +5324,10 @@
     },
     "RebootDbNodeInput":{
       "type":"structure",
-      "required":[
-        "cloudVmClusterId",
-        "dbNodeId"
-      ],
+      "required":["dbNodeId"],
       "members":{
         "cloudVmClusterId":{"shape":"ResourceId"},
+        "exadbVmClusterId":{"shape":"ResourceId"},
         "dbNodeId":{"shape":"ResourceId"}
       }
     },
@@ -4566,6 +5375,10 @@
       "max":2048,
       "min":20,
       "pattern":"arn:(?:aws|aws-cn|aws-us-gov|aws-iso-{0,1}[a-z]{0,1}):[a-z0-9-]+:[a-z0-9-]*:[0-9]+:[a-z0-9-]+/[a-z0-9-_]{6,64}"
+    },
+    "ResourceArnList":{
+      "type":"list",
+      "member":{"shape":"ResourceArn"}
     },
     "ResourceDisplayName":{
       "type":"string",
@@ -4730,6 +5543,17 @@
       },
       "exception":true
     },
+    "ShapeAttribute":{
+      "type":"string",
+      "enum":[
+        "SMART_STORAGE",
+        "BLOCK_STORAGE"
+      ]
+    },
+    "ShapeAttributeList":{
+      "type":"list",
+      "member":{"shape":"ShapeAttribute"}
+    },
     "ShapeType":{
       "type":"string",
       "enum":[
@@ -4807,12 +5631,10 @@
     },
     "StartDbNodeInput":{
       "type":"structure",
-      "required":[
-        "cloudVmClusterId",
-        "dbNodeId"
-      ],
+      "required":["dbNodeId"],
       "members":{
         "cloudVmClusterId":{"shape":"ResourceId"},
+        "exadbVmClusterId":{"shape":"ResourceId"},
         "dbNodeId":{"shape":"ResourceId"}
       }
     },
@@ -4844,12 +5666,10 @@
     },
     "StopDbNodeInput":{
       "type":"structure",
-      "required":[
-        "cloudVmClusterId",
-        "dbNodeId"
-      ],
+      "required":["dbNodeId"],
       "members":{
         "cloudVmClusterId":{"shape":"ResourceId"},
+        "exadbVmClusterId":{"shape":"ResourceId"},
         "dbNodeId":{"shape":"ResourceId"}
       }
     },
@@ -4986,6 +5806,15 @@
     "UntagResourceResponse":{
       "type":"structure",
       "members":{}
+    },
+    "UpdateAction":{
+      "type":"string",
+      "enum":[
+        "ROLLING_APPLY",
+        "NON_ROLLING_APPLY",
+        "PRECHECK",
+        "ROLLBACK"
+      ]
     },
     "UpdateAutonomousDatabaseBackupInput":{
       "type":"structure",
@@ -5157,6 +5986,101 @@
         "status":{"shape":"ResourceStatus"},
         "statusReason":{"shape":"String"},
         "cloudExadataInfrastructureId":{"shape":"String"}
+      }
+    },
+    "UpdateExadbVmClusterInput":{
+      "type":"structure",
+      "required":["exadbVmClusterId"],
+      "members":{
+        "exadbVmClusterId":{"shape":"ResourceIdOrArn"},
+        "dataCollectionOptions":{"shape":"DataCollectionOptions"},
+        "displayName":{"shape":"ResourceDisplayName"},
+        "enabledEcpuCount":{"shape":"UpdateExadbVmClusterInputEnabledEcpuCountInteger"},
+        "gridImageId":{"shape":"UpdateExadbVmClusterInputGridImageIdString"},
+        "licenseModel":{"shape":"LicenseModel"},
+        "sshPublicKeys":{"shape":"StringList"},
+        "systemVersion":{"shape":"UpdateExadbVmClusterInputSystemVersionString"},
+        "totalEcpuCount":{"shape":"UpdateExadbVmClusterInputTotalEcpuCountInteger"},
+        "updateAction":{"shape":"UpdateAction"},
+        "vmFileSystemStorageTotalSizeInGBs":{"shape":"UpdateExadbVmClusterInputVmFileSystemStorageTotalSizeInGBsInteger"}
+      }
+    },
+    "UpdateExadbVmClusterInputEnabledEcpuCountInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "UpdateExadbVmClusterInputGridImageIdString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "UpdateExadbVmClusterInputSystemVersionString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "UpdateExadbVmClusterInputTotalEcpuCountInteger":{
+      "type":"integer",
+      "box":true,
+      "min":2
+    },
+    "UpdateExadbVmClusterInputVmFileSystemStorageTotalSizeInGBsInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "UpdateExadbVmClusterOutput":{
+      "type":"structure",
+      "required":["exadbVmClusterId"],
+      "members":{
+        "displayName":{"shape":"String"},
+        "status":{"shape":"ResourceStatus"},
+        "statusReason":{"shape":"String"},
+        "exadbVmClusterId":{"shape":"String"}
+      }
+    },
+    "UpdateExascaleDbStorageVaultInput":{
+      "type":"structure",
+      "required":["exascaleDbStorageVaultId"],
+      "members":{
+        "exascaleDbStorageVaultId":{"shape":"ResourceIdOrArn"},
+        "additionalFlashCacheInPercent":{"shape":"UpdateExascaleDbStorageVaultInputAdditionalFlashCacheInPercentInteger"},
+        "autoscaleLimitInGBs":{"shape":"UpdateExascaleDbStorageVaultInputAutoscaleLimitInGBsInteger"},
+        "description":{"shape":"UpdateExascaleDbStorageVaultInputDescriptionString"},
+        "displayName":{"shape":"ResourceDisplayName"},
+        "highCapacityDatabaseStorageTotalSizeInGBs":{"shape":"UpdateExascaleDbStorageVaultInputHighCapacityDatabaseStorageTotalSizeInGBsInteger"},
+        "isAutoscaleEnabled":{"shape":"Boolean"}
+      }
+    },
+    "UpdateExascaleDbStorageVaultInputAdditionalFlashCacheInPercentInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "UpdateExascaleDbStorageVaultInputAutoscaleLimitInGBsInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "UpdateExascaleDbStorageVaultInputDescriptionString":{
+      "type":"string",
+      "max":400,
+      "min":1
+    },
+    "UpdateExascaleDbStorageVaultInputHighCapacityDatabaseStorageTotalSizeInGBsInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "UpdateExascaleDbStorageVaultOutput":{
+      "type":"structure",
+      "required":["exascaleDbStorageVaultId"],
+      "members":{
+        "displayName":{"shape":"String"},
+        "status":{"shape":"ResourceStatus"},
+        "statusReason":{"shape":"String"},
+        "exascaleDbStorageVaultId":{"shape":"String"}
       }
     },
     "UpdateOdbNetworkInput":{

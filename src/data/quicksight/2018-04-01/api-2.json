@@ -65,6 +65,22 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "BatchDescribeUserLimits":{
+      "name":"BatchDescribeUserLimits",
+      "http":{
+        "method":"POST",
+        "requestUri":"/governance/limits/accounts/{accountId}/user-limits",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchDescribeUserLimitsRequest"},
+      "output":{"shape":"BatchDescribeUserLimitsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "CancelIngestion":{
       "name":"CancelIngestion",
       "http":{
@@ -179,6 +195,25 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "CreateApprovalPolicy":{
+      "name":"CreateApprovalPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/governance/approvalworkflows/policies",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateApprovalPolicyRequest"},
+      "output":{"shape":"CreateApprovalPolicyResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "CreateBrand":{
       "name":"CreateBrand",
       "http":{
@@ -276,6 +311,25 @@
         {"shape":"ThrottlingException"},
         {"shape":"CustomerManagedKeyUnavailableException"},
         {"shape":"InternalFailureException"}
+      ]
+    },
+    "CreateDlpSetting":{
+      "name":"CreateDlpSetting",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/data-loss-prevention/settings/{DlpSettingId}",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateDlpSettingRequest"},
+      "output":{"shape":"CreateDlpSettingResponse"},
+      "errors":[
+        {"shape":"ResourceExistsException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
       ]
     },
     "CreateFlow":{
@@ -430,6 +484,24 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"LimitExceededException"},
         {"shape":"AccessDeniedException"}
+      ]
+    },
+    "CreateLimitsProfile":{
+      "name":"CreateLimitsProfile",
+      "http":{
+        "method":"POST",
+        "requestUri":"/governance/limits/accounts/{accountId}/profiles",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateLimitsProfileRequest"},
+      "output":{"shape":"CreateLimitsProfileResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
       ]
     },
     "CreateNamespace":{
@@ -789,6 +861,24 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "DeleteApprovalPolicy":{
+      "name":"DeleteApprovalPolicy",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/governance/approvalworkflows/policies/{PolicyId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteApprovalPolicyRequest"},
+      "output":{"shape":"DeleteApprovalPolicyResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
     "DeleteBrand":{
       "name":"DeleteBrand",
       "http":{
@@ -929,6 +1019,24 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalFailureException"}
       ]
+    },
+    "DeleteDlpSetting":{
+      "name":"DeleteDlpSetting",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/accounts/{AwsAccountId}/data-loss-prevention/settings/{DlpSettingId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteDlpSettingRequest"},
+      "output":{"shape":"DeleteDlpSettingResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
     },
     "DeleteFlow":{
       "name":"DeleteFlow",
@@ -1075,6 +1183,25 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"}
       ]
+    },
+    "DeleteLimitsProfile":{
+      "name":"DeleteLimitsProfile",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/governance/limits/accounts/{accountId}/profiles/{profileId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteLimitsProfileRequest"},
+      "output":{"shape":"DeleteLimitsProfileResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
     },
     "DeleteNamespace":{
       "name":"DeleteNamespace",
@@ -1570,6 +1697,24 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "DescribeApprovalPolicy":{
+      "name":"DescribeApprovalPolicy",
+      "http":{
+        "method":"GET",
+        "requestUri":"/governance/approvalworkflows/policies/{PolicyId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeApprovalPolicyRequest"},
+      "output":{"shape":"DescribeApprovalPolicyResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
     "DescribeAssetBundleExportJob":{
       "name":"DescribeAssetBundleExportJob",
       "http":{
@@ -1892,6 +2037,24 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "DescribeDlpSetting":{
+      "name":"DescribeDlpSetting",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/data-loss-prevention/settings/{DlpSettingId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeDlpSettingRequest"},
+      "output":{"shape":"DescribeDlpSettingResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
     "DescribeFlow":{
       "name":"DescribeFlow",
       "http":{
@@ -2102,6 +2265,24 @@
         {"shape":"PreconditionNotMetException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"LimitExceededException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
+    "DescribeLimitsProfile":{
+      "name":"DescribeLimitsProfile",
+      "http":{
+        "method":"GET",
+        "requestUri":"/governance/limits/accounts/{accountId}/profiles/{profileId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeLimitsProfileRequest"},
+      "output":{"shape":"DescribeLimitsProfileResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
       ],
       "readonly":true
@@ -2727,6 +2908,24 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "ListApprovalPolicies":{
+      "name":"ListApprovalPolicies",
+      "http":{
+        "method":"GET",
+        "requestUri":"/governance/approvalworkflows/policies",
+        "responseCode":200
+      },
+      "input":{"shape":"ListApprovalPoliciesRequest"},
+      "output":{"shape":"ListApprovalPoliciesResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
     "ListAssetBundleExportJobs":{
       "name":"ListAssetBundleExportJobs",
       "http":{
@@ -2857,6 +3056,23 @@
         {"shape":"InvalidNextTokenException"},
         {"shape":"InternalFailureException"}
       ]
+    },
+    "ListDlpSettings":{
+      "name":"ListDlpSettings",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/data-loss-prevention/settings",
+        "responseCode":200
+      },
+      "input":{"shape":"ListDlpSettingsRequest"},
+      "output":{"shape":"ListDlpSettingsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
     },
     "ListFlows":{
       "name":"ListFlows",
@@ -3051,6 +3267,23 @@
         {"shape":"InvalidParameterValueException"},
         {"shape":"InternalFailureException"},
         {"shape":"PreconditionNotMetException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
+    "ListLimitsProfiles":{
+      "name":"ListLimitsProfiles",
+      "http":{
+        "method":"GET",
+        "requestUri":"/governance/limits/accounts/{accountId}/profiles",
+        "responseCode":200
+      },
+      "input":{"shape":"ListLimitsProfilesRequest"},
+      "output":{"shape":"ListLimitsProfilesResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
         {"shape":"AccessDeniedException"}
       ],
       "readonly":true
@@ -4059,6 +4292,24 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "UpdateApprovalPolicy":{
+      "name":"UpdateApprovalPolicy",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/governance/approvalworkflows/policies/{PolicyId}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateApprovalPolicyRequest"},
+      "output":{"shape":"UpdateApprovalPolicyResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "UpdateBrand":{
       "name":"UpdateBrand",
       "http":{
@@ -4312,6 +4563,25 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "UpdateDlpSetting":{
+      "name":"UpdateDlpSetting",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/accounts/{AwsAccountId}/data-loss-prevention/settings/{DlpSettingId}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateDlpSettingRequest"},
+      "output":{"shape":"UpdateDlpSettingResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
     "UpdateFlow":{
       "name":"UpdateFlow",
       "http":{
@@ -4513,6 +4783,24 @@
         {"shape":"ConflictException"}
       ],
       "idempotent":true
+    },
+    "UpdateLimitsProfile":{
+      "name":"UpdateLimitsProfile",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/governance/limits/accounts/{accountId}/profiles/{profileId}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateLimitsProfileRequest"},
+      "output":{"shape":"UpdateLimitsProfileResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
+      ]
     },
     "UpdateOAuthClientApplication":{
       "name":"UpdateOAuthClientApplication",
@@ -5854,6 +6142,18 @@
       "max":2048,
       "min":0
     },
+    "ApplicableTo":{
+      "type":"structure",
+      "required":["Type"],
+      "members":{
+        "Type":{"shape":"ApplicableToType"},
+        "GroupArns":{"shape":"GroupArnList"}
+      }
+    },
+    "ApplicableToType":{
+      "type":"string",
+      "enum":["GROUP"]
+    },
     "ApplicationArn":{
       "type":"string",
       "max":1284,
@@ -5867,6 +6167,41 @@
         "ContextualAccentPalette":{"shape":"ContextualAccentPalette"},
         "BrandElementStyle":{"shape":"BrandElementStyle"}
       }
+    },
+    "ApprovalGroupList":{
+      "type":"list",
+      "member":{"shape":"Arn"},
+      "min":1
+    },
+    "ApprovalPolicy":{
+      "type":"structure",
+      "required":[
+        "PolicyId",
+        "PolicyArn",
+        "Name",
+        "Actions",
+        "AssetTypes",
+        "ApplicableTo",
+        "ApprovalGroups",
+        "CreatedAt",
+        "UpdatedAt"
+      ],
+      "members":{
+        "PolicyId":{"shape":"PolicyId"},
+        "PolicyArn":{"shape":"Arn"},
+        "Name":{"shape":"PolicyName"},
+        "Description":{"shape":"PolicyDescription"},
+        "Actions":{"shape":"GovernedActionList"},
+        "AssetTypes":{"shape":"AssetTypeList"},
+        "ApplicableTo":{"shape":"ApplicableTo"},
+        "ApprovalGroups":{"shape":"ApprovalGroupList"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "UpdatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "ApprovalPolicyList":{
+      "type":"list",
+      "member":{"shape":"ApprovalPolicy"}
     },
     "ArcAxisConfiguration":{
       "type":"structure",
@@ -5937,7 +6272,8 @@
         "Themes":{"shape":"AssetBundleExportJobThemeOverridePropertiesList"},
         "Analyses":{"shape":"AssetBundleExportJobAnalysisOverridePropertiesList"},
         "Dashboards":{"shape":"AssetBundleExportJobDashboardOverridePropertiesList"},
-        "Folders":{"shape":"AssetBundleExportJobFolderOverridePropertiesList"}
+        "Folders":{"shape":"AssetBundleExportJobFolderOverridePropertiesList"},
+        "TopicsV2":{"shape":"AssetBundleExportJobTopicV2OverridePropertiesList"}
       }
     },
     "AssetBundleExportFormat":{
@@ -6202,6 +6538,36 @@
     "AssetBundleExportJobThemePropertyToOverrideList":{
       "type":"list",
       "member":{"shape":"AssetBundleExportJobThemePropertyToOverride"},
+      "max":10,
+      "min":1
+    },
+    "AssetBundleExportJobTopicV2OverrideProperties":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "Properties"
+      ],
+      "members":{
+        "Arn":{"shape":"Arn"},
+        "Properties":{"shape":"AssetBundleExportJobTopicV2PropertyToOverrideList"}
+      }
+    },
+    "AssetBundleExportJobTopicV2OverridePropertiesList":{
+      "type":"list",
+      "member":{"shape":"AssetBundleExportJobTopicV2OverrideProperties"},
+      "max":50,
+      "min":1
+    },
+    "AssetBundleExportJobTopicV2PropertyToOverride":{
+      "type":"string",
+      "enum":[
+        "Name",
+        "Description"
+      ]
+    },
+    "AssetBundleExportJobTopicV2PropertyToOverrideList":{
+      "type":"list",
+      "member":{"shape":"AssetBundleExportJobTopicV2PropertyToOverride"},
       "max":10,
       "min":1
     },
@@ -6549,7 +6915,8 @@
         "Themes":{"shape":"AssetBundleImportJobThemeOverrideParametersList"},
         "Analyses":{"shape":"AssetBundleImportJobAnalysisOverrideParametersList"},
         "Dashboards":{"shape":"AssetBundleImportJobDashboardOverrideParametersList"},
-        "Folders":{"shape":"AssetBundleImportJobFolderOverrideParametersList"}
+        "Folders":{"shape":"AssetBundleImportJobFolderOverrideParametersList"},
+        "TopicsV2":{"shape":"AssetBundleImportJobTopicV2OverrideParametersList"}
       }
     },
     "AssetBundleImportJobOverridePermissions":{
@@ -6560,7 +6927,8 @@
         "Themes":{"shape":"AssetBundleImportJobThemeOverridePermissionsList"},
         "Analyses":{"shape":"AssetBundleImportJobAnalysisOverridePermissionsList"},
         "Dashboards":{"shape":"AssetBundleImportJobDashboardOverridePermissionsList"},
-        "Folders":{"shape":"AssetBundleImportJobFolderOverridePermissionsList"}
+        "Folders":{"shape":"AssetBundleImportJobFolderOverridePermissionsList"},
+        "TopicsV2":{"shape":"AssetBundleImportJobTopicV2OverridePermissionsList"}
       }
     },
     "AssetBundleImportJobOverrideTags":{
@@ -6572,7 +6940,8 @@
         "Themes":{"shape":"AssetBundleImportJobThemeOverrideTagsList"},
         "Analyses":{"shape":"AssetBundleImportJobAnalysisOverrideTagsList"},
         "Dashboards":{"shape":"AssetBundleImportJobDashboardOverrideTagsList"},
-        "Folders":{"shape":"AssetBundleImportJobFolderOverrideTagsList"}
+        "Folders":{"shape":"AssetBundleImportJobFolderOverrideTagsList"},
+        "TopicsV2":{"shape":"AssetBundleImportJobTopicV2OverrideTagsList"}
       }
     },
     "AssetBundleImportJobOverrideValidationStrategy":{
@@ -6676,6 +7045,55 @@
     "AssetBundleImportJobThemeOverrideTagsList":{
       "type":"list",
       "member":{"shape":"AssetBundleImportJobThemeOverrideTags"},
+      "max":5,
+      "min":1
+    },
+    "AssetBundleImportJobTopicV2OverrideParameters":{
+      "type":"structure",
+      "required":["TopicId"],
+      "members":{
+        "TopicId":{"shape":"ResourceId"},
+        "Name":{"shape":"ResourceName"},
+        "Description":{"shape":"TopicDescription"}
+      }
+    },
+    "AssetBundleImportJobTopicV2OverrideParametersList":{
+      "type":"list",
+      "member":{"shape":"AssetBundleImportJobTopicV2OverrideParameters"},
+      "max":50,
+      "min":1
+    },
+    "AssetBundleImportJobTopicV2OverridePermissions":{
+      "type":"structure",
+      "required":[
+        "TopicIds",
+        "Permissions"
+      ],
+      "members":{
+        "TopicIds":{"shape":"AssetBundleRestrictiveResourceIdList"},
+        "Permissions":{"shape":"AssetBundleResourcePermissions"}
+      }
+    },
+    "AssetBundleImportJobTopicV2OverridePermissionsList":{
+      "type":"list",
+      "member":{"shape":"AssetBundleImportJobTopicV2OverridePermissions"},
+      "max":2,
+      "min":1
+    },
+    "AssetBundleImportJobTopicV2OverrideTags":{
+      "type":"structure",
+      "required":[
+        "TopicIds",
+        "Tags"
+      ],
+      "members":{
+        "TopicIds":{"shape":"AssetBundleRestrictiveResourceIdList"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "AssetBundleImportJobTopicV2OverrideTagsList":{
+      "type":"list",
+      "member":{"shape":"AssetBundleImportJobTopicV2OverrideTags"},
       "max":5,
       "min":1
     },
@@ -6788,6 +7206,19 @@
         "CustomActionDefaults":{"shape":"VisualCustomActionDefaults"},
         "VisualMessages":{"shape":"VisualMessages"}
       }
+    },
+    "AssetType":{
+      "type":"string",
+      "enum":[
+        "AGENT",
+        "SPACE",
+        "KNOWLEDGE_BASE"
+      ]
+    },
+    "AssetTypeList":{
+      "type":"list",
+      "member":{"shape":"AssetType"},
+      "min":1
     },
     "AssignmentStatus":{
       "type":"string",
@@ -7383,6 +7814,54 @@
           "shape":"StatusCode",
           "location":"statusCode"
         }
+      }
+    },
+    "BatchDescribeUserLimitsError":{
+      "type":"structure",
+      "required":[
+        "errorCode",
+        "message"
+      ],
+      "members":{
+        "userName":{"shape":"String"},
+        "namespace":{"shape":"String"},
+        "userArn":{"shape":"String"},
+        "errorCode":{"shape":"String"},
+        "message":{"shape":"String"}
+      }
+    },
+    "BatchDescribeUserLimitsErrorList":{
+      "type":"list",
+      "member":{"shape":"BatchDescribeUserLimitsError"}
+    },
+    "BatchDescribeUserLimitsRequest":{
+      "type":"structure",
+      "required":["accountId"],
+      "members":{
+        "accountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"accountId"
+        },
+        "users":{"shape":"BatchDescribeUserLimitsRequestUsersList"},
+        "resourceTypes":{"shape":"ResourceTypeList"}
+      }
+    },
+    "BatchDescribeUserLimitsRequestUsersList":{
+      "type":"list",
+      "member":{"shape":"UserLimitsEntry"},
+      "max":100,
+      "min":1
+    },
+    "BatchDescribeUserLimitsResponse":{
+      "type":"structure",
+      "required":[
+        "userLimits",
+        "errors"
+      ],
+      "members":{
+        "userLimits":{"shape":"UserLimitsList"},
+        "errors":{"shape":"BatchDescribeUserLimitsErrorList"}
       }
     },
     "BigQueryParameters":{
@@ -9344,6 +9823,33 @@
         "RequestId":{"shape":"String"}
       }
     },
+    "CreateApprovalPolicyRequest":{
+      "type":"structure",
+      "required":[
+        "PolicyId",
+        "Name",
+        "Actions",
+        "AssetTypes",
+        "ApplicableTo",
+        "ApprovalGroups"
+      ],
+      "members":{
+        "PolicyId":{"shape":"PolicyId"},
+        "Name":{"shape":"PolicyName"},
+        "Description":{"shape":"PolicyDescription"},
+        "Actions":{"shape":"GovernedActionList"},
+        "AssetTypes":{"shape":"AssetTypeList"},
+        "ApplicableTo":{"shape":"ApplicableTo"},
+        "ApprovalGroups":{"shape":"ApprovalGroupList"}
+      }
+    },
+    "CreateApprovalPolicyResponse":{
+      "type":"structure",
+      "required":["Policy"],
+      "members":{
+        "Policy":{"shape":"ApprovalPolicy"}
+      }
+    },
     "CreateBrandRequest":{
       "type":"structure",
       "required":[
@@ -9557,6 +10063,48 @@
           "shape":"StatusCode",
           "location":"statusCode"
         }
+      }
+    },
+    "CreateDlpSettingRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "DlpSettingId",
+        "Name",
+        "ProviderType",
+        "ProviderConfig",
+        "ProviderOutageAction",
+        "Enabled"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "DlpSettingId":{
+          "shape":"DlpSettingId",
+          "location":"uri",
+          "locationName":"DlpSettingId"
+        },
+        "Name":{"shape":"DlpSettingName"},
+        "ProviderType":{"shape":"DlpProviderType"},
+        "ProviderConfig":{"shape":"ProviderConfig"},
+        "ProviderOutageAction":{"shape":"DlpAction"},
+        "Enabled":{"shape":"Boolean"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateDlpSettingResponse":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "DlpSettingId"
+      ],
+      "members":{
+        "Arn":{"shape":"Arn"},
+        "DlpSettingId":{"shape":"DlpSettingId"},
+        "RequestId":{"shape":"String"}
       }
     },
     "CreateFlowRequest":{
@@ -9877,6 +10425,48 @@
           "box":true,
           "location":"statusCode"
         }
+      }
+    },
+    "CreateLimitsProfileRequest":{
+      "type":"structure",
+      "required":[
+        "accountId",
+        "profileName",
+        "resourceLimits",
+        "clientToken"
+      ],
+      "members":{
+        "accountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"accountId"
+        },
+        "profileName":{"shape":"ProfileName"},
+        "description":{"shape":"ProfileDescription"},
+        "resourceLimits":{"shape":"CreateLimitsProfileRequestResourceLimitsMap"},
+        "clientToken":{"shape":"CreateLimitsProfileRequestClientTokenString"}
+      }
+    },
+    "CreateLimitsProfileRequestClientTokenString":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "CreateLimitsProfileRequestResourceLimitsMap":{
+      "type":"map",
+      "key":{"shape":"ResourceType"},
+      "value":{"shape":"ProfileLimitValue"},
+      "min":1
+    },
+    "CreateLimitsProfileResponse":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "profileId"
+      ],
+      "members":{
+        "arn":{"shape":"ResourceArn"},
+        "profileId":{"shape":"ProfileId"}
       }
     },
     "CreateNamespaceRequest":{
@@ -12558,6 +13148,21 @@
         "RequestId":{"shape":"String"}
       }
     },
+    "DeleteApprovalPolicyRequest":{
+      "type":"structure",
+      "required":["PolicyId"],
+      "members":{
+        "PolicyId":{
+          "shape":"PolicyId",
+          "location":"uri",
+          "locationName":"PolicyId"
+        }
+      }
+    },
+    "DeleteApprovalPolicyResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "DeleteBrandAssignmentRequest":{
       "type":"structure",
       "required":["AwsAccountId"],
@@ -12778,6 +13383,37 @@
           "shape":"StatusCode",
           "location":"statusCode"
         }
+      }
+    },
+    "DeleteDlpSettingRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "DlpSettingId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "DlpSettingId":{
+          "shape":"DlpSettingId",
+          "location":"uri",
+          "locationName":"DlpSettingId"
+        }
+      }
+    },
+    "DeleteDlpSettingResponse":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "DlpSettingId"
+      ],
+      "members":{
+        "Arn":{"shape":"Arn"},
+        "DlpSettingId":{"shape":"DlpSettingId"},
+        "RequestId":{"shape":"String"}
       }
     },
     "DeleteFlowRequest":{
@@ -13053,6 +13689,32 @@
           "box":true,
           "location":"statusCode"
         }
+      }
+    },
+    "DeleteLimitsProfileRequest":{
+      "type":"structure",
+      "required":[
+        "profileId",
+        "accountId"
+      ],
+      "members":{
+        "profileId":{
+          "shape":"ProfileId",
+          "location":"uri",
+          "locationName":"profileId"
+        },
+        "accountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"accountId"
+        }
+      }
+    },
+    "DeleteLimitsProfileResponse":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"ResourceArn"}
       }
     },
     "DeleteNamespaceRequest":{
@@ -13962,6 +14624,24 @@
         "RequestId":{"shape":"String"}
       }
     },
+    "DescribeApprovalPolicyRequest":{
+      "type":"structure",
+      "required":["PolicyId"],
+      "members":{
+        "PolicyId":{
+          "shape":"PolicyId",
+          "location":"uri",
+          "locationName":"PolicyId"
+        }
+      }
+    },
+    "DescribeApprovalPolicyResponse":{
+      "type":"structure",
+      "required":["Policy"],
+      "members":{
+        "Policy":{"shape":"ApprovalPolicy"}
+      }
+    },
     "DescribeAssetBundleExportJobRequest":{
       "type":"structure",
       "required":[
@@ -14617,6 +15297,33 @@
         "ApplicationId":{"shape":"String"}
       }
     },
+    "DescribeDlpSettingRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "DlpSettingId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "DlpSettingId":{
+          "shape":"DlpSettingId",
+          "location":"uri",
+          "locationName":"DlpSettingId"
+        }
+      }
+    },
+    "DescribeDlpSettingResponse":{
+      "type":"structure",
+      "required":["DlpSetting"],
+      "members":{
+        "DlpSetting":{"shape":"DlpSettingDetails"},
+        "RequestId":{"shape":"String"}
+      }
+    },
     "DescribeFlowRequest":{
       "type":"structure",
       "required":[
@@ -15051,6 +15758,32 @@
           "box":true,
           "location":"statusCode"
         }
+      }
+    },
+    "DescribeLimitsProfileRequest":{
+      "type":"structure",
+      "required":[
+        "profileId",
+        "accountId"
+      ],
+      "members":{
+        "profileId":{
+          "shape":"ProfileId",
+          "location":"uri",
+          "locationName":"profileId"
+        },
+        "accountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"accountId"
+        }
+      }
+    },
+    "DescribeLimitsProfileResponse":{
+      "type":"structure",
+      "required":["profile"],
+      "members":{
+        "profile":{"shape":"LimitsProfile"}
       }
     },
     "DescribeNamespaceRequest":{
@@ -15953,6 +16686,89 @@
         "CurrencySymbol":{"shape":"LimitedString"}
       }
     },
+    "DlpAction":{
+      "type":"string",
+      "enum":[
+        "ALLOW",
+        "WARN",
+        "BLOCK"
+      ]
+    },
+    "DlpProviderType":{
+      "type":"string",
+      "enum":["MICROSOFT_PURVIEW"]
+    },
+    "DlpSettingDetails":{
+      "type":"structure",
+      "required":[
+        "DlpSettingId",
+        "Name",
+        "Arn",
+        "Status",
+        "ProviderType",
+        "ProviderConfig",
+        "ProviderOutageAction",
+        "CreatedAt",
+        "UpdatedAt"
+      ],
+      "members":{
+        "DlpSettingId":{"shape":"DlpSettingId"},
+        "Name":{"shape":"DlpSettingName"},
+        "Arn":{"shape":"Arn"},
+        "Status":{"shape":"DlpSettingStatus"},
+        "ProviderType":{"shape":"DlpProviderType"},
+        "ProviderConfig":{"shape":"ProviderConfig"},
+        "ProviderOutageAction":{"shape":"DlpAction"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "UpdatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "DlpSettingId":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-zA-Z0-9\\-_]+"
+    },
+    "DlpSettingName":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[A-Za-z0-9](?:[\\w- &]*[A-Za-z0-9])?"
+    },
+    "DlpSettingStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "INACTIVE"
+      ]
+    },
+    "DlpSettingSummary":{
+      "type":"structure",
+      "required":[
+        "DlpSettingId",
+        "Name",
+        "Arn",
+        "Status",
+        "ProviderType",
+        "CreatedAt",
+        "UpdatedAt"
+      ],
+      "members":{
+        "DlpSettingId":{"shape":"DlpSettingId"},
+        "Name":{"shape":"DlpSettingName"},
+        "Arn":{"shape":"Arn"},
+        "Status":{"shape":"DlpSettingStatus"},
+        "ProviderType":{"shape":"DlpProviderType"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "UpdatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "DlpSettingSummaryList":{
+      "type":"list",
+      "member":{"shape":"DlpSettingSummary"},
+      "max":10,
+      "min":0
+    },
     "DnsResolverList":{
       "type":"list",
       "member":{"shape":"IPv4Address"},
@@ -16023,6 +16839,32 @@
         "ENTERPRISE",
         "ENTERPRISE_AND_Q"
       ]
+    },
+    "EffectiveLimit":{
+      "type":"structure",
+      "required":[
+        "resourceType",
+        "limitValue",
+        "limitUnit",
+        "source",
+        "profileId"
+      ],
+      "members":{
+        "resourceType":{"shape":"ResourceType"},
+        "limitValue":{"shape":"EffectiveLimitLimitValueLong"},
+        "limitUnit":{"shape":"LimitUnit"},
+        "source":{"shape":"LimitSource"},
+        "profileId":{"shape":"ProfileId"}
+      }
+    },
+    "EffectiveLimitLimitValueLong":{
+      "type":"long",
+      "box":true,
+      "min":0
+    },
+    "EffectiveLimitList":{
+      "type":"list",
+      "member":{"shape":"EffectiveLimit"}
     },
     "ElementValue":{
       "type":"string",
@@ -18176,6 +19018,16 @@
       "max":128,
       "min":1
     },
+    "GovernedAction":{
+      "type":"string",
+      "enum":["SHARE"]
+    },
+    "GovernedActionList":{
+      "type":"list",
+      "member":{"shape":"GovernedAction"},
+      "max":10,
+      "min":1
+    },
     "GradientColor":{
       "type":"structure",
       "members":{
@@ -18295,6 +19147,11 @@
         "Description":{"shape":"GroupDescription"},
         "PrincipalId":{"shape":"String"}
       }
+    },
+    "GroupArnList":{
+      "type":"list",
+      "member":{"shape":"Arn"},
+      "min":1
     },
     "GroupByColumnNameList":{
       "type":"list",
@@ -19703,6 +20560,35 @@
         "PrimaryOwnerUsername":{"shape":"SensitiveString"}
       }
     },
+    "LabelActionMapping":{
+      "type":"structure",
+      "required":[
+        "LabelId",
+        "LabelName",
+        "Action"
+      ],
+      "members":{
+        "LabelId":{"shape":"LabelId"},
+        "LabelName":{"shape":"LabelName"},
+        "Action":{"shape":"DlpAction"}
+      }
+    },
+    "LabelActionMappingList":{
+      "type":"list",
+      "member":{"shape":"LabelActionMapping"},
+      "max":100,
+      "min":0
+    },
+    "LabelId":{
+      "type":"string",
+      "max":512,
+      "min":1
+    },
+    "LabelName":{
+      "type":"string",
+      "max":512,
+      "min":1
+    },
     "LabelOptions":{
       "type":"structure",
       "members":{
@@ -19839,6 +20725,25 @@
       "error":{"httpStatusCode":409},
       "exception":true
     },
+    "LimitSource":{
+      "type":"string",
+      "enum":[
+        "DIRECT_USER",
+        "GROUP",
+        "ROLE",
+        "ACCOUNT",
+        "SYSTEM_DEFAULT"
+      ]
+    },
+    "LimitUnit":{
+      "type":"string",
+      "enum":[
+        "MB",
+        "GB",
+        "HOURS",
+        "DAYS"
+      ]
+    },
     "LimitedSensitiveString":{
       "type":"string",
       "max":256,
@@ -19847,6 +20752,32 @@
     "LimitedString":{
       "type":"string",
       "max":256
+    },
+    "LimitsProfile":{
+      "type":"structure",
+      "required":[
+        "profileId",
+        "arn",
+        "accountId",
+        "profileName",
+        "resourceLimits",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "profileId":{"shape":"ProfileId"},
+        "arn":{"shape":"ResourceArn"},
+        "accountId":{"shape":"AwsAccountId"},
+        "profileName":{"shape":"ProfileName"},
+        "description":{"shape":"ProfileDescription"},
+        "resourceLimits":{"shape":"ResourceLimitsMap"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "LimitsProfileList":{
+      "type":"list",
+      "member":{"shape":"LimitsProfile"}
     },
     "LineChartAggregatedFieldWells":{
       "type":"structure",
@@ -20119,6 +21050,30 @@
           "location":"statusCode"
         },
         "RequestId":{"shape":"String"}
+      }
+    },
+    "ListApprovalPoliciesRequest":{
+      "type":"structure",
+      "members":{
+        "NextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"next-token"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "box":true,
+          "location":"querystring",
+          "locationName":"max-results"
+        }
+      }
+    },
+    "ListApprovalPoliciesResponse":{
+      "type":"structure",
+      "required":["Policies"],
+      "members":{
+        "Policies":{"shape":"ApprovalPolicyList"},
+        "NextToken":{"shape":"PaginationToken"}
       }
     },
     "ListAssetBundleExportJobsRequest":{
@@ -20415,6 +21370,37 @@
           "shape":"StatusCode",
           "location":"statusCode"
         }
+      }
+    },
+    "ListDlpSettingsRequest":{
+      "type":"structure",
+      "required":["AwsAccountId"],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "NextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"next-token"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "box":true,
+          "location":"querystring",
+          "locationName":"max-results"
+        }
+      }
+    },
+    "ListDlpSettingsResponse":{
+      "type":"structure",
+      "required":["DlpSettingSummaries"],
+      "members":{
+        "DlpSettingSummaries":{"shape":"DlpSettingSummaryList"},
+        "NextToken":{"shape":"PaginationToken"},
+        "RequestId":{"shape":"String"}
       }
     },
     "ListFlowsInput":{
@@ -20868,6 +21854,46 @@
           "box":true,
           "location":"statusCode"
         }
+      }
+    },
+    "ListLimitsProfilesRequest":{
+      "type":"structure",
+      "required":["accountId"],
+      "members":{
+        "accountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"accountId"
+        },
+        "resourceType":{
+          "shape":"ResourceType",
+          "location":"querystring",
+          "locationName":"resourceType"
+        },
+        "maxResults":{
+          "shape":"ListLimitsProfilesRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListLimitsProfilesRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListLimitsProfilesResponse":{
+      "type":"structure",
+      "required":["profiles"],
+      "members":{
+        "profiles":{"shape":"LimitsProfileList"},
+        "nextToken":{"shape":"String"}
       }
     },
     "ListNamespacesRequest":{
@@ -21967,6 +22993,26 @@
         "TargetValue":{"shape":"MeasureField"}
       }
     },
+    "MicrosoftPurviewCredentials":{
+      "type":"structure",
+      "required":["SecretArn"],
+      "members":{
+        "SecretArn":{"shape":"SecretManagerArn"}
+      }
+    },
+    "MicrosoftPurviewProviderConfig":{
+      "type":"structure",
+      "required":[
+        "Credentials",
+        "LabelActionMappings",
+        "UnmappedAction"
+      ],
+      "members":{
+        "Credentials":{"shape":"MicrosoftPurviewCredentials"},
+        "LabelActionMappings":{"shape":"LabelActionMappingList"},
+        "UnmappedAction":{"shape":"DlpAction"}
+      }
+    },
     "MinimumLabelType":{
       "type":"structure",
       "members":{
@@ -22702,6 +23748,11 @@
         },
         "PageNumber":{"shape":"PageNumber"}
       }
+    },
+    "PaginationToken":{
+      "type":"string",
+      "max":4096,
+      "min":1
     },
     "Palette":{
       "type":"structure",
@@ -23552,6 +24603,22 @@
         "ItemsLimitConfiguration":{"shape":"PluginVisualItemsLimitConfiguration"}
       }
     },
+    "PolicyDescription":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "PolicyId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9\\-_]+"
+    },
+    "PolicyName":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
     "Port":{
       "type":"integer",
       "max":65535,
@@ -23690,6 +24757,38 @@
       "max":256,
       "sensitive":true
     },
+    "ProfileDescription":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "ProfileId":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"lp-[a-f0-9-]+"
+    },
+    "ProfileLimitValue":{
+      "type":"structure",
+      "required":[
+        "maxValue",
+        "unit"
+      ],
+      "members":{
+        "maxValue":{"shape":"ProfileLimitValueMaxValueLong"},
+        "unit":{"shape":"LimitUnit"}
+      }
+    },
+    "ProfileLimitValueMaxValueLong":{
+      "type":"long",
+      "box":true,
+      "min":0
+    },
+    "ProfileName":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
     "ProgressBarOptions":{
       "type":"structure",
       "members":{
@@ -23730,6 +24829,13 @@
         "DIMENSION",
         "MEASURE"
       ]
+    },
+    "ProviderConfig":{
+      "type":"structure",
+      "members":{
+        "MicrosoftPurview":{"shape":"MicrosoftPurviewProviderConfig"}
+      },
+      "union":true
     },
     "PublicSpaceArn":{
       "type":"string",
@@ -24630,6 +25736,11 @@
       "exception":true
     },
     "ResourceId":{"type":"string"},
+    "ResourceLimitsMap":{
+      "type":"map",
+      "key":{"shape":"ResourceType"},
+      "value":{"shape":"ProfileLimitValue"}
+    },
     "ResourceName":{
       "type":"string",
       "max":128,
@@ -24673,6 +25784,17 @@
         "UPDATE_FAILED",
         "DELETED"
       ]
+    },
+    "ResourceType":{
+      "type":"string",
+      "enum":[
+        "INDEX_STORAGE",
+        "AGENT_HOURS"
+      ]
+    },
+    "ResourceTypeList":{
+      "type":"list",
+      "member":{"shape":"ResourceType"}
     },
     "ResourceUnavailableException":{
       "type":"structure",
@@ -25582,6 +26704,12 @@
       "max":2048,
       "min":1,
       "pattern":"^arn:[-a-z0-9]*:secretsmanager:[-a-z0-9]*:[0-9]{12}:secret:.+"
+    },
+    "SecretManagerArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"arn:aws(-[\\w]+)*:secretsmanager:[a-z0-9\\-]+:\\d{12}:secret:.+"
     },
     "SectionAfterPageBreak":{
       "type":"structure",
@@ -28623,6 +29751,12 @@
         "NullFilter":{"shape":"NullFilterType"}
       }
     },
+    "TopicDescription":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":".*\\S.*"
+    },
     "TopicDetails":{
       "type":"structure",
       "members":{
@@ -29949,6 +31083,30 @@
         "RequestId":{"shape":"String"}
       }
     },
+    "UpdateApprovalPolicyRequest":{
+      "type":"structure",
+      "required":["PolicyId"],
+      "members":{
+        "PolicyId":{
+          "shape":"PolicyId",
+          "location":"uri",
+          "locationName":"PolicyId"
+        },
+        "Name":{"shape":"PolicyName"},
+        "Description":{"shape":"PolicyDescription"},
+        "Actions":{"shape":"GovernedActionList"},
+        "AssetTypes":{"shape":"AssetTypeList"},
+        "ApplicableTo":{"shape":"ApplicableTo"},
+        "ApprovalGroups":{"shape":"ApprovalGroupList"}
+      }
+    },
+    "UpdateApprovalPolicyResponse":{
+      "type":"structure",
+      "required":["Policy"],
+      "members":{
+        "Policy":{"shape":"ApprovalPolicy"}
+      }
+    },
     "UpdateBrandAssignmentRequest":{
       "type":"structure",
       "required":[
@@ -30427,6 +31585,45 @@
         }
       }
     },
+    "UpdateDlpSettingRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "DlpSettingId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "DlpSettingId":{
+          "shape":"DlpSettingId",
+          "location":"uri",
+          "locationName":"DlpSettingId"
+        },
+        "Name":{"shape":"DlpSettingName"},
+        "ProviderType":{"shape":"DlpProviderType"},
+        "ProviderConfig":{"shape":"ProviderConfig"},
+        "ProviderOutageAction":{"shape":"DlpAction"},
+        "Enabled":{
+          "shape":"Boolean",
+          "box":true
+        }
+      }
+    },
+    "UpdateDlpSettingResponse":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "DlpSettingId"
+      ],
+      "members":{
+        "Arn":{"shape":"Arn"},
+        "DlpSettingId":{"shape":"DlpSettingId"},
+        "RequestId":{"shape":"String"}
+      }
+    },
     "UpdateFlowPermissionsInput":{
       "type":"structure",
       "required":[
@@ -30831,6 +32028,35 @@
           "box":true,
           "location":"statusCode"
         }
+      }
+    },
+    "UpdateLimitsProfileRequest":{
+      "type":"structure",
+      "required":[
+        "profileId",
+        "accountId"
+      ],
+      "members":{
+        "profileId":{
+          "shape":"ProfileId",
+          "location":"uri",
+          "locationName":"profileId"
+        },
+        "accountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"accountId"
+        },
+        "profileName":{"shape":"ProfileName"},
+        "description":{"shape":"ProfileDescription"},
+        "resourceLimits":{"shape":"ResourceLimitsMap"}
+      }
+    },
+    "UpdateLimitsProfileResponse":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"ResourceArn"}
       }
     },
     "UpdateLinkPermissionList":{
@@ -31822,6 +33048,34 @@
         "ASC",
         "DESC"
       ]
+    },
+    "UserLimits":{
+      "type":"structure",
+      "required":[
+        "userName",
+        "namespace",
+        "effectiveLimits"
+      ],
+      "members":{
+        "userName":{"shape":"String"},
+        "namespace":{"shape":"String"},
+        "effectiveLimits":{"shape":"EffectiveLimitList"}
+      }
+    },
+    "UserLimitsEntry":{
+      "type":"structure",
+      "required":[
+        "userName",
+        "namespace"
+      ],
+      "members":{
+        "userName":{"shape":"String"},
+        "namespace":{"shape":"String"}
+      }
+    },
+    "UserLimitsList":{
+      "type":"list",
+      "member":{"shape":"UserLimits"}
     },
     "UserList":{
       "type":"list",

@@ -28,6 +28,30 @@
         {"shape":"ConcurrentModificationException"}
       ]
     },
+    "AcquireRole":{
+      "name":"AcquireRole",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AcquireRoleRequest"},
+      "output":{
+        "shape":"AcquireRoleResponse",
+        "resultWrapper":"AcquireRoleResult"
+      },
+      "errors":[
+        {"shape":"LimitExceededException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"EntityAlreadyExistsException"},
+        {"shape":"RoleModifiedException"},
+        {"shape":"NameConflictException"},
+        {"shape":"MalformedPolicyDocumentException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"ServiceFailureException"},
+        {"shape":"NoSuchEntityException"},
+        {"shape":"RoleTemplateDisabledException"}
+      ]
+    },
     "AddClientIDToOpenIDConnectProvider":{
       "name":"AddClientIDToOpenIDConnectProvider",
       "http":{
@@ -1002,6 +1026,22 @@
         {"shape":"ServiceFailureException"}
       ]
     },
+    "GetAccountProperties":{
+      "name":"GetAccountProperties",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetAccountPropertiesRequest"},
+      "output":{
+        "shape":"GetAccountPropertiesResponse",
+        "resultWrapper":"GetAccountPropertiesResult"
+      },
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
     "GetAccountSummary":{
       "name":"GetAccountSummary",
       "http":{
@@ -1286,6 +1326,23 @@
       },
       "errors":[
         {"shape":"NoSuchEntityException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
+    "GetRoleTemplateVersion":{
+      "name":"GetRoleTemplateVersion",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetRoleTemplateVersionRequest"},
+      "output":{
+        "shape":"GetRoleTemplateVersionResponse",
+        "resultWrapper":"GetRoleTemplateVersionResult"
+      },
+      "errors":[
+        {"shape":"NoSuchEntityException"},
+        {"shape":"InvalidInputException"},
         {"shape":"ServiceFailureException"}
       ]
     },
@@ -1992,6 +2049,23 @@
         "shape":"ListVirtualMFADevicesResponse",
         "resultWrapper":"ListVirtualMFADevicesResult"
       }
+    },
+    "PutAccountProperties":{
+      "name":"PutAccountProperties",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutAccountPropertiesRequest"},
+      "output":{
+        "shape":"PutAccountPropertiesResponse",
+        "resultWrapper":"PutAccountPropertiesResult"
+      },
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"ServiceFailureException"}
+      ]
     },
     "PutGroupPolicy":{
       "name":"PutGroupPolicy",
@@ -2810,6 +2884,22 @@
       "type":"structure",
       "members":{},
       "exception":true
+    },
+    "AcquireRoleRequest":{
+      "type":"structure",
+      "required":["TemplateArn"],
+      "members":{
+        "TemplateArn":{"shape":"arnType"},
+        "TemplateMinorVersion":{"shape":"integerType"},
+        "ReplacementValues":{"shape":"mapStringReplacementValueEntry"}
+      }
+    },
+    "AcquireRoleResponse":{
+      "type":"structure",
+      "required":["Role"],
+      "members":{
+        "Role":{"shape":"Role"}
+      }
     },
     "ActionNameListType":{
       "type":"list",
@@ -3904,6 +3994,16 @@
         "PasswordPolicy":{"shape":"PasswordPolicy"}
       }
     },
+    "GetAccountPropertiesRequest":{
+      "type":"structure",
+      "members":{}
+    },
+    "GetAccountPropertiesResponse":{
+      "type":"structure",
+      "members":{
+        "Properties":{"shape":"accountPropertiesMapType"}
+      }
+    },
     "GetAccountSummaryResponse":{
       "type":"structure",
       "members":{
@@ -4182,6 +4282,21 @@
         "Role":{"shape":"Role"}
       }
     },
+    "GetRoleTemplateVersionRequest":{
+      "type":"structure",
+      "required":["TemplateArn"],
+      "members":{
+        "TemplateArn":{"shape":"arnType"},
+        "MinorVersion":{"shape":"minorVersionType"}
+      }
+    },
+    "GetRoleTemplateVersionResponse":{
+      "type":"structure",
+      "required":["RoleTemplateVersion"],
+      "members":{
+        "RoleTemplateVersion":{"shape":"RoleTemplateVersion"}
+      }
+    },
     "GetSAMLProviderRequest":{
       "type":"structure",
       "required":["SAMLProviderArn"],
@@ -4372,6 +4487,17 @@
         "CreateDate":{"shape":"dateType"},
         "GroupPolicyList":{"shape":"policyDetailListType"},
         "AttachedManagedPolicies":{"shape":"attachedPoliciesListType"}
+      }
+    },
+    "InlinePolicy":{
+      "type":"structure",
+      "required":[
+        "PolicyName",
+        "PolicyDocument"
+      ],
+      "members":{
+        "PolicyName":{"shape":"policyNameType"},
+        "PolicyDocument":{"shape":"policyDocumentType"}
       }
     },
     "InlinePolicyIdentifierType":{
@@ -5186,6 +5312,18 @@
       "type":"list",
       "member":{"shape":"ManagedPolicyDetail"}
     },
+    "NameConflictException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"nameConflictMessage"}
+      },
+      "error":{
+        "code":"NameConflict",
+        "httpStatusCode":409,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "NoSuchEntityException":{
       "type":"structure",
       "members":{
@@ -5255,6 +5393,22 @@
       "type":"structure",
       "members":{
         "AllowedByOrganizations":{"shape":"booleanType"}
+      }
+    },
+    "ParameterDefinition":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Type"
+      ],
+      "members":{
+        "Name":{"shape":"parameterNameType"},
+        "Type":{"shape":"parameterTypeType"},
+        "SubType":{"shape":"parameterSubTypeType"},
+        "Description":{"shape":"parameterDescriptionType"},
+        "IsRequired":{"shape":"booleanType"},
+        "DefaultValue":{"shape":"parameterDefaultValueType"},
+        "Immutable":{"shape":"booleanType"}
       }
     },
     "PasswordPolicy":{
@@ -5472,6 +5626,17 @@
         "Column":{"shape":"ColumnNumber"}
       }
     },
+    "PutAccountPropertiesRequest":{
+      "type":"structure",
+      "required":["Properties"],
+      "members":{
+        "Properties":{"shape":"accountPropertiesMapType"}
+      }
+    },
+    "PutAccountPropertiesResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "PutGroupPolicyRequest":{
       "type":"structure",
       "required":[
@@ -5583,6 +5748,13 @@
         "UserName":{"shape":"existingUserNameType"}
       }
     },
+    "ReplacementValueEntry":{
+      "type":"structure",
+      "required":["Values"],
+      "members":{
+        "Values":{"shape":"replacementValueListType"}
+      }
+    },
     "ReportContentType":{"type":"blob"},
     "ReportFormatType":{
       "type":"string",
@@ -5691,7 +5863,8 @@
         "MaxSessionDuration":{"shape":"roleMaxSessionDurationType"},
         "PermissionsBoundary":{"shape":"AttachedPermissionsBoundary"},
         "Tags":{"shape":"tagListType"},
-        "RoleLastUsed":{"shape":"RoleLastUsed"}
+        "RoleLastUsed":{"shape":"RoleLastUsed"},
+        "SourceRoleTemplate":{"shape":"SourceRoleTemplate"}
       }
     },
     "RoleDetail":{
@@ -5716,6 +5889,58 @@
       "members":{
         "LastUsedDate":{"shape":"dateType"},
         "Region":{"shape":"stringType"}
+      }
+    },
+    "RoleModifiedException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"roleModifiedMessage"}
+      },
+      "error":{
+        "code":"RoleModified",
+        "httpStatusCode":409,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "RoleTemplateDisabledException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"roleTemplateDisabledMessage"}
+      },
+      "error":{
+        "code":"RoleTemplateDisabled",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "RoleTemplateVersion":{
+      "type":"structure",
+      "members":{
+        "TemplateArn":{"shape":"arnType"},
+        "TemplateName":{"shape":"roleTemplateNameType"},
+        "TemplateVersionId":{"shape":"idType"},
+        "Description":{"shape":"roleTemplateDescriptionType"},
+        "MajorVersion":{"shape":"integerType"},
+        "DefaultMinorVersion":{"shape":"minorVersionType"},
+        "ManagedByType":{"shape":"managedByTypeType"},
+        "ManagedByValue":{"shape":"managedByValueType"},
+        "Enabled":{"shape":"booleanType"},
+        "MinorVersion":{"shape":"minorVersionType"},
+        "RoleNamePattern":{"shape":"roleNamePatternType"},
+        "RolePathPattern":{"shape":"rolePathPatternType"},
+        "RoleDescriptionPattern":{"shape":"roleDescriptionPatternType"},
+        "AssumeRolePolicyDocumentTemplate":{"shape":"policyDocumentType"},
+        "InlinePolicyTemplates":{"shape":"inlinePolicyTemplateListType"},
+        "ManagedPolicyArns":{"shape":"managedPolicyArnListType"},
+        "PermissionBoundaryArn":{"shape":"arnType"},
+        "ParametersDefinition":{"shape":"parametersDefinitionListType"},
+        "RoleTagsTemplate":{"shape":"tagTemplateListType"},
+        "MaxSessionDuration":{"shape":"roleMaxSessionDurationType"},
+        "VersionEnabled":{"shape":"booleanType"},
+        "CreateTimestamp":{"shape":"dateType"},
+        "UpdateTimestamp":{"shape":"dateType"}
       }
     },
     "RoleUsageListType":{
@@ -6016,6 +6241,17 @@
       "type":"list",
       "member":{"shape":"policyDocumentType"}
     },
+    "SourceRoleTemplate":{
+      "type":"structure",
+      "required":[
+        "TemplateArn",
+        "TemplateMinorVersion"
+      ],
+      "members":{
+        "TemplateArn":{"shape":"arnType"},
+        "TemplateMinorVersion":{"shape":"integerType"}
+      }
+    },
     "Statement":{
       "type":"structure",
       "members":{
@@ -6115,6 +6351,17 @@
       "members":{
         "ServerCertificateName":{"shape":"serverCertificateNameType"},
         "Tags":{"shape":"tagListType"}
+      }
+    },
+    "TagTemplate":{
+      "type":"structure",
+      "required":[
+        "Key",
+        "Value"
+      ],
+      "members":{
+        "Key":{"shape":"tagTemplateKeyType"},
+        "Value":{"shape":"tagTemplateValueType"}
       }
     },
     "TagUserRequest":{
@@ -6559,6 +6806,22 @@
       "type":"string",
       "pattern":"\\d{12}"
     },
+    "accountPropertiesMapType":{
+      "type":"map",
+      "key":{"shape":"accountPropertyKeyType"},
+      "value":{"shape":"accountPropertyValueType"}
+    },
+    "accountPropertyKeyType":{
+      "type":"string",
+      "max":50,
+      "min":1,
+      "pattern":"^[A-Za-z][A-Za-z0-9/_-]*$"
+    },
+    "accountPropertyValueType":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
     "allUsers":{
       "type":"boolean",
       "box":true
@@ -6728,6 +6991,10 @@
       "min":16,
       "pattern":"[\\w]+"
     },
+    "inlinePolicyTemplateListType":{
+      "type":"list",
+      "member":{"shape":"InlinePolicy"}
+    },
     "instanceProfileListType":{
       "type":"list",
       "member":{"shape":"InstanceProfile"}
@@ -6770,6 +7037,25 @@
     },
     "malformedCertificateMessage":{"type":"string"},
     "malformedPolicyDocumentMessage":{"type":"string"},
+    "managedByTypeType":{
+      "type":"string",
+      "enum":["Service"]
+    },
+    "managedByValueType":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "managedPolicyArnListType":{
+      "type":"list",
+      "member":{"shape":"arnType"}
+    },
+    "mapStringReplacementValueEntry":{
+      "type":"map",
+      "key":{"shape":"stringType"},
+      "value":{"shape":"ReplacementValueEntry"},
+      "max":30
+    },
     "markerType":{
       "type":"string",
       "max":320,
@@ -6796,6 +7082,8 @@
       "max":128,
       "min":6
     },
+    "minorVersionType":{"type":"integer"},
+    "nameConflictMessage":{"type":"string"},
     "noSuchEntityMessage":{"type":"string"},
     "notesType":{
       "type":"string",
@@ -6824,6 +7112,38 @@
       "max":2048,
       "min":20,
       "pattern":"^[a-zA-Z0-9:/+=,.@_-]+$"
+    },
+    "parameterDefaultValueType":{
+      "type":"string",
+      "max":1024
+    },
+    "parameterDescriptionType":{
+      "type":"string",
+      "max":1000
+    },
+    "parameterNameType":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "parameterSubTypeType":{
+      "type":"string",
+      "max":256
+    },
+    "parameterTypeType":{
+      "type":"string",
+      "enum":[
+        "String",
+        "StringList",
+        "Number",
+        "NumberList",
+        "Arn",
+        "ArnList"
+      ]
+    },
+    "parametersDefinitionListType":{
+      "type":"list",
+      "member":{"shape":"ParameterDefinition"}
     },
     "passwordPolicyViolationMessage":{"type":"string"},
     "passwordReusePreventionType":{
@@ -7000,6 +7320,12 @@
       "min":1,
       "pattern":"^http(s?)://[a-zA-Z0-9._/-]*(\\?[a-zA-Z0-9._=&-]*)?(#[a-zA-Z0-9._/-]*)?$"
     },
+    "replacementValueListType":{
+      "type":"list",
+      "member":{"shape":"stringType"},
+      "max":20,
+      "min":1
+    },
     "reportGenerationLimitExceededMessage":{"type":"string"},
     "requestMessageType":{
       "type":"string",
@@ -7018,6 +7344,11 @@
       "pattern":"[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]+"
     },
     "responseMarkerType":{"type":"string"},
+    "roleDescriptionPatternType":{
+      "type":"string",
+      "max":512,
+      "min":1
+    },
     "roleDescriptionType":{
       "type":"string",
       "max":1000,
@@ -7036,15 +7367,39 @@
       "max":43200,
       "min":3600
     },
+    "roleModifiedMessage":{"type":"string"},
+    "roleNamePatternType":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
     "roleNameType":{
       "type":"string",
       "max":64,
       "min":1,
       "pattern":"[\\w+=,.@-]+"
     },
+    "rolePathPatternType":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"/[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]*/"
+    },
     "rolePermissionRestrictionArnListType":{
       "type":"list",
       "member":{"shape":"arnType"}
+    },
+    "roleTemplateDescriptionType":{
+      "type":"string",
+      "max":512,
+      "pattern":"[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]*"
+    },
+    "roleTemplateDisabledMessage":{"type":"string"},
+    "roleTemplateNameType":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[\\w+=,.\\-]+"
     },
     "serialNumberType":{
       "type":"string",
@@ -7213,6 +7568,23 @@
       "type":"list",
       "member":{"shape":"Tag"},
       "max":50
+    },
+    "tagTemplateKeyType":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[\\p{L}\\p{Z}\\p{N}_.:/=+\\-@{}]+"
+    },
+    "tagTemplateListType":{
+      "type":"list",
+      "member":{"shape":"TagTemplate"},
+      "max":50
+    },
+    "tagTemplateValueType":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"[\\p{L}\\p{Z}\\p{N}_.:/=+\\-@{}]*"
     },
     "tagValueType":{
       "type":"string",
