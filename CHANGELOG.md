@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.392.1 - 2026-08-12
 
 * `Aws\WellArchitected` - This change releases the Well-Architected Agent, a generative AI service that analyzes a customer's AWS environment and delivers personalized, prioritized recommendations across cost, security, performance, and resilience.
 * `Aws\Glue` - Documentation updates for materialized views APIs.
