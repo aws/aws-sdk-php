@@ -760,7 +760,8 @@
       },
       "errors":[
         {"shape":"ResourceContentionFault"},
-        {"shape":"IdempotentParameterMismatchError"}
+        {"shape":"IdempotentParameterMismatchError"},
+        {"shape":"IdempotentCallInProgressFault"}
       ]
     },
     "PutLifecycleHook":{
@@ -1093,7 +1094,8 @@
     "ActivityType":{
       "type":"structure",
       "members":{
-        "Activity":{"shape":"Activity"}
+        "Activity":{"shape":"Activity"},
+        "Activities":{"shape":"Activities"}
       }
     },
     "AdjustmentType":{
@@ -2212,6 +2214,18 @@
     "HealthCheckGracePeriod":{"type":"integer"},
     "HeartbeatTimeout":{"type":"integer"},
     "HonorCooldown":{"type":"boolean"},
+    "IdempotentCallInProgressFault":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"XmlStringMaxLen255"}
+      },
+      "error":{
+        "code":"IdempotentCallInProgress",
+        "httpStatusCode":500,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "IdempotentParameterMismatchError":{
       "type":"structure",
       "members":{
@@ -3779,14 +3793,19 @@
     },
     "TerminateInstanceInAutoScalingGroupType":{
       "type":"structure",
-      "required":[
-        "InstanceId",
-        "ShouldDecrementDesiredCapacity"
-      ],
+      "required":["ShouldDecrementDesiredCapacity"],
       "members":{
         "InstanceId":{"shape":"XmlStringMaxLen19"},
+        "InstanceIds":{"shape":"TerminationInstanceIds"},
+        "AutoScalingGroupName":{"shape":"XmlStringMaxLen255"},
         "ShouldDecrementDesiredCapacity":{"shape":"ShouldDecrementDesiredCapacity"}
       }
+    },
+    "TerminationInstanceIds":{
+      "type":"list",
+      "member":{"shape":"XmlStringMaxLen19"},
+      "max":100,
+      "min":1
     },
     "TerminationPolicies":{
       "type":"list",

@@ -2007,6 +2007,7 @@
         "logConfig":{"shape":"CloudWatchLog"},
         "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"},
         "validationMode":{"shape":"ValidationMode"},
+        "maxTaskHours":{"shape":"Double"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
@@ -2032,6 +2033,7 @@
         "errorInformation":{"shape":"ErrorInformation"},
         "integratedRepositories":{"shape":"IntegratedRepositoryList"},
         "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"},
+        "maxTaskHours":{"shape":"Double"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
@@ -2287,7 +2289,8 @@
         "serviceRole":{"shape":"ServiceRole"},
         "logConfig":{"shape":"CloudWatchLog"},
         "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"},
-        "validationMode":{"shape":"ValidationMode"}
+        "validationMode":{"shape":"ValidationMode"},
+        "maxTaskHours":{"shape":"Double"}
       }
     },
     "CreateCodeReviewOutput":{
@@ -2303,7 +2306,8 @@
         "logConfig":{"shape":"CloudWatchLog"},
         "agentSpaceId":{"shape":"String"},
         "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"},
-        "validationMode":{"shape":"ValidationMode"}
+        "validationMode":{"shape":"ValidationMode"},
+        "maxTaskHours":{"shape":"Double"}
       }
     },
     "CreateIntegrationInput":{
@@ -2365,7 +2369,8 @@
         "vpcConfig":{"shape":"VpcConfig"},
         "networkTrafficConfig":{"shape":"NetworkTrafficConfig"},
         "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"},
-        "disableManagedSkills":{"shape":"SkillTypeList"}
+        "disableManagedSkills":{"shape":"SkillTypeList"},
+        "maxTaskHours":{"shape":"Double"}
       }
     },
     "CreatePentestOutput":{
@@ -2898,6 +2903,8 @@
         "codeLocations":{"shape":"CodeLocationList"},
         "verificationScript":{"shape":"VerificationScript"},
         "alignmentRationale":{"shape":"String"},
+        "revalidationJobIds":{"shape":"StringList"},
+        "originalFindingId":{"shape":"String"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
@@ -3357,6 +3364,13 @@
         "STOPPED",
         "FAILED",
         "COMPLETED"
+      ]
+    },
+    "JobType":{
+      "type":"string",
+      "enum":[
+        "FULL",
+        "REVALIDATION"
       ]
     },
     "KmsKeyId":{"type":"string"},
@@ -3923,6 +3937,7 @@
         "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"},
         "cleanUpStrategy":{"shape":"CleanUpStrategy"},
         "disableManagedSkills":{"shape":"SkillTypeList"},
+        "maxTaskHours":{"shape":"Double"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
@@ -3957,6 +3972,9 @@
         "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"},
         "cleanUpStrategy":{"shape":"CleanUpStrategy"},
         "disableManagedSkills":{"shape":"SkillTypeList"},
+        "maxTaskHours":{"shape":"Double"},
+        "jobType":{"shape":"JobType"},
+        "selectedFindingIds":{"shape":"StringList"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
@@ -4442,7 +4460,9 @@
       ],
       "members":{
         "agentSpaceId":{"shape":"String"},
-        "pentestId":{"shape":"String"}
+        "pentestId":{"shape":"String"},
+        "jobType":{"shape":"JobType"},
+        "selectedFindingIds":{"shape":"StringList"}
       }
     },
     "StartPentestJobOutput":{
@@ -5055,7 +5075,8 @@
         "serviceRole":{"shape":"ServiceRole"},
         "logConfig":{"shape":"CloudWatchLog"},
         "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"},
-        "validationMode":{"shape":"ValidationMode"}
+        "validationMode":{"shape":"ValidationMode"},
+        "maxTaskHours":{"shape":"Double"}
       }
     },
     "UpdateCodeReviewOutput":{
@@ -5071,7 +5092,8 @@
         "logConfig":{"shape":"CloudWatchLog"},
         "agentSpaceId":{"shape":"String"},
         "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"},
-        "validationMode":{"shape":"ValidationMode"}
+        "validationMode":{"shape":"ValidationMode"},
+        "maxTaskHours":{"shape":"Double"}
       }
     },
     "UpdateFindingInput":{
@@ -5132,7 +5154,8 @@
         "vpcConfig":{"shape":"VpcConfig"},
         "networkTrafficConfig":{"shape":"NetworkTrafficConfig"},
         "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"},
-        "disableManagedSkills":{"shape":"SkillTypeList"}
+        "disableManagedSkills":{"shape":"SkillTypeList"},
+        "maxTaskHours":{"shape":"Double"}
       }
     },
     "UpdatePentestOutput":{

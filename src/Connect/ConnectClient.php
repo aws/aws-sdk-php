@@ -589,6 +589,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise sendOutboundEmailAsync(array $args = [])
  * @method \Aws\Result sendOutboundWebNotification(array $args = [])
  * @method \GuzzleHttp\Promise\Promise sendOutboundWebNotificationAsync(array $args = [])
+ * @method \Aws\Result startAssistantContact(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise startAssistantContactAsync(array $args = [])
  * @method \Aws\Result startAttachedFileUpload(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startAttachedFileUploadAsync(array $args = [])
  * @method \Aws\Result startChatContact(array $args = [])

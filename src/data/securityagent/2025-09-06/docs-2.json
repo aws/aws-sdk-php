@@ -1161,8 +1161,18 @@
     "Double": {
       "base": null,
       "refs": {
+        "CodeReview$maxTaskHours": "<p>The maximum number of billable task hours allowed for jobs started from this code review. If a job reaches the configured limit, it is gracefully stopped. If not set, jobs run to completion with no budget cap.</p>",
+        "CodeReviewJob$maxTaskHours": "<p>The maximum number of billable task hours allowed for this code review job. If the cumulative task hours reach this limit, the job is gracefully stopped.</p>",
+        "CreateCodeReviewInput$maxTaskHours": "<p>The maximum number of billable task hours allowed for jobs started from this code review. Must be a positive number. If not set, jobs run to completion with no budget cap.</p>",
+        "CreateCodeReviewOutput$maxTaskHours": "<p>The maximum number of billable task hours configured for jobs started from this code review. Null if no budget cap is set.</p>",
+        "CreatePentestInput$maxTaskHours": "<p>The maximum number of billable task hours allowed for jobs started from this pentest. Must be a positive number. If not set, jobs run to completion with no budget cap.</p>",
+        "Pentest$maxTaskHours": "<p>The maximum number of billable task hours allowed for jobs started from this pentest. If a job reaches the configured limit, it is gracefully stopped. If not set, jobs run to completion with no budget cap.</p>",
+        "PentestJob$maxTaskHours": "<p>The maximum number of billable task hours allowed for this pentest job. If the cumulative task hours reach this limit, the job is gracefully stopped.</p>",
         "Task$taskHours": "<p>The number of active work hours consumed by the task during execution.</p>",
-        "TaskSummary$taskHours": "<p>The number of active work hours consumed by the task during execution.</p>"
+        "TaskSummary$taskHours": "<p>The number of active work hours consumed by the task during execution.</p>",
+        "UpdateCodeReviewInput$maxTaskHours": "<p>The updated maximum number of billable task hours allowed for jobs started from this code review.</p>",
+        "UpdateCodeReviewOutput$maxTaskHours": "<p>The maximum number of billable task hours configured for jobs started from this code review. Null if no budget cap is set.</p>",
+        "UpdatePentestInput$maxTaskHours": "<p>The updated maximum number of billable task hours allowed for jobs started from this pentest.</p>"
       }
     },
     "Endpoint": {
@@ -1529,6 +1539,13 @@
         "StartThreatModelJobOutput$status": "<p>The current status of the threat model job.</p>",
         "ThreatModelJob$status": "<p>The current status of the threat model job.</p>",
         "ThreatModelJobSummary$status": "<p>The current status of the threat model job.</p>"
+      }
+    },
+    "JobType": {
+      "base": "<p>The type of pentest job execution.</p>",
+      "refs": {
+        "PentestJob$jobType": "<p>The type of the pentest job. Valid values are FULL and REVALIDATION.</p>",
+        "StartPentestJobInput$jobType": "<p>The type of pentest job to start. Valid values are FULL and REVALIDATION. When set to REVALIDATION, the selectedFindingIds parameter is required.</p>"
       }
     },
     "KmsKeyId": {
@@ -2776,6 +2793,7 @@
         "Finding$lastUpdatedBy": "<p>The identifier of the entity that last updated the finding.</p>",
         "Finding$customerNote": "<p>A customer-provided note on the finding.</p>",
         "Finding$alignmentRationale": "<p>The rationale provided by the alignment agent explaining how the finding was adjusted based on customer preferences.</p>",
+        "Finding$originalFindingId": "<p>The identifier of the original finding that this revalidation finding was produced from.</p>",
         "FindingIdList$member": null,
         "FindingSummary$findingId": "<p>The unique identifier of the finding.</p>",
         "FindingSummary$agentSpaceId": "<p>The unique identifier of the agent space associated with the finding.</p>",
@@ -3038,6 +3056,9 @@
         "CreateThreatInput$impactedAssets": "<p>The specific assets affected by the threat.</p>",
         "CreateThreatOutput$impactedGoal": "<p>The security goals affected by the threat.</p>",
         "CreateThreatOutput$impactedAssets": "<p>The specific assets affected by the threat.</p>",
+        "Finding$revalidationJobIds": "<p>The list of pentest job identifiers for revalidation jobs that retested this finding.</p>",
+        "PentestJob$selectedFindingIds": "<p>The list of finding identifiers selected for revalidation. Present only when jobType is REVALIDATION.</p>",
+        "StartPentestJobInput$selectedFindingIds": "<p>The list of finding identifiers to revalidate. Required when jobType is REVALIDATION. Each finding must belong to the same agent space and pentest.</p>",
         "Threat$impactedGoal": "<p>The security goals affected by the threat.</p>",
         "Threat$impactedAssets": "<p>The specific assets affected by the threat.</p>",
         "UpdateThreatInput$impactedGoal": "<p>The updated security goals affected by the threat.</p>",

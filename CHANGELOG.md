@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ACM` - This change allows customers to update their existing email-validated certificates to use the DNS validation method.
+* `Aws\Connect` - Adds the StartAssistantContact API to start chat contacts handled by an AI agent. Adds SegmentAttributes to StartWebRTCContact, and corrects its error response to now receive AccessDeniedException (previously returned as an internal server error due to a missing error declaration).
+* `Aws\SecurityAgent` - Add support for setting a maximum task-hour budget cap on penetration tests and code reviews, and for revalidating previously reported findings via a new REVALIDATION job type.
+* `Aws\CodeCommit` - Added the GetBlobDifferences API operation, which returns line-level diffs between two blob versions without requiring a local clone. Returns structured hunks with context, additions, and deletions. Supports pagination for large diffs.
+* `Aws\CleanRooms` - This release adds support for minimum aggregation thresholds and comparison controls to the Custom analysis rule type.
+* `Aws\AutoScaling` - Amazon EC2 Auto Scaling now supports terminating multiple instances in a single TerminateInstanceInAutoScalingGroup call via the new InstanceIds parameter, returning an Activities list. LaunchInstances now returns IdempotentCallInProgressFault for duplicate client tokens.
+
 ## 3.392.1 - 2026-08-12
 
 * `Aws\WellArchitected` - This change releases the Well-Architected Agent, a generative AI service that analyzes a customer's AWS environment and delivers personalized, prioritized recommendations across cost, security, performance, and resilience.

@@ -4868,6 +4868,23 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "StartAssistantContact":{
+      "name":"StartAssistantContact",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/contact/assistant"
+      },
+      "input":{"shape":"StartAssistantContactRequest"},
+      "output":{"shape":"StartAssistantContactResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"LimitExceededException"}
+      ]
+    },
     "StartAttachedFileUpload":{
       "name":"StartAttachedFileUpload",
       "http":{
@@ -5140,7 +5157,8 @@
         {"shape":"InvalidRequestException"},
         {"shape":"InvalidParameterException"},
         {"shape":"LimitExceededException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "StopContact":{
@@ -6824,6 +6842,13 @@
         "AiUseCase":{"shape":"AiUseCase"},
         "AiAgentVersionId":{"shape":"AiAgentVersionId"},
         "AiAgentEscalated":{"shape":"Boolean"}
+      }
+    },
+    "AiAgentInput":{
+      "type":"structure",
+      "required":["AiAgentId"],
+      "members":{
+        "AiAgentId":{"shape":"AiAgentId"}
       }
     },
     "AiAgentSearchCriteria":{
@@ -24149,6 +24174,36 @@
         "CASES"
       ]
     },
+    "StartAssistantContactRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "AiAgent",
+        "ParticipantDetails"
+      ],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "AiAgent":{"shape":"AiAgentInput"},
+        "ParticipantDetails":{"shape":"ParticipantDetails"},
+        "InitialMessage":{"shape":"ChatMessage"},
+        "Attributes":{"shape":"Attributes"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "PersistentChat":{"shape":"PersistentChat"},
+        "RelatedContactId":{"shape":"ContactId"}
+      }
+    },
+    "StartAssistantContactResponse":{
+      "type":"structure",
+      "members":{
+        "ContactId":{"shape":"ContactId"},
+        "ParticipantId":{"shape":"ParticipantId"},
+        "ParticipantToken":{"shape":"ParticipantToken"},
+        "ContinuedFromContactId":{"shape":"ContactId"}
+      }
+    },
     "StartAttachedFileUploadRequest":{
       "type":"structure",
       "required":[
@@ -24618,7 +24673,8 @@
         "ParticipantDetails":{"shape":"ParticipantDetails"},
         "RelatedContactId":{"shape":"ContactId"},
         "References":{"shape":"ContactReferences"},
-        "Description":{"shape":"Description"}
+        "Description":{"shape":"Description"},
+        "SegmentAttributes":{"shape":"SegmentAttributes"}
       }
     },
     "StartWebRTCContactResponse":{

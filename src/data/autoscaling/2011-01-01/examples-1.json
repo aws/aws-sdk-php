@@ -1532,6 +1532,45 @@
         "description": "This example terminates the specified instance from the specified Auto Scaling group without updating the size of the group. Auto Scaling launches a replacement instance after the specified instance terminates.",
         "id": "autoscaling-terminate-instance-in-auto-scaling-group-1",
         "title": "To terminate an instance in an Auto Scaling group"
+      },
+      {
+        "input": {
+          "AutoScalingGroupName": "my-asg",
+          "InstanceIds": [
+            "i-93633f9b",
+            "i-ab4d5e6f7"
+          ],
+          "ShouldDecrementDesiredCapacity": false
+        },
+        "output": {
+          "Activities": [
+            {
+              "ActivityId": "12345678-1234-1234-1234-123456789012",
+              "AutoScalingGroupName": "my-asg",
+              "Cause": "At 2024-03-14T00:07:30Z instance i-93633f9b was taken out of service in response to a user request.",
+              "Description": "Terminating EC2 instance: i-93633f9b",
+              "Progress": 0,
+              "StartTime": "2024-03-14T00:07:30.280Z",
+              "StatusCode": "InProgress"
+            },
+            {
+              "ActivityId": "12345678-1234-1234-1234-123456789013",
+              "AutoScalingGroupName": "my-asg",
+              "Cause": "At 2024-03-14T00:07:30Z instance i-ab4d5e6f7 was taken out of service in response to a user request.",
+              "Description": "Terminating EC2 instance: i-ab4d5e6f7",
+              "Progress": 0,
+              "StartTime": "2024-03-14T00:07:30.280Z",
+              "StatusCode": "InProgress"
+            }
+          ]
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "This example terminates multiple instances from the specified Auto Scaling group without updating the size of the group. Auto Scaling launches replacement instances after the specified instances terminate.",
+        "id": "autoscaling-terminate-instance-in-auto-scaling-group-2",
+        "title": "To terminate multiple instances in an Auto Scaling group"
       }
     ],
     "UpdateAutoScalingGroup": [

@@ -275,6 +275,38 @@
         "ConsolidatedPolicyAggregation$outputConstraints": "<p> The output constraints of the consolidated policy aggregation.</p>"
       }
     },
+    "AggregationThreshold": {
+      "base": "<p>Specifies the minimum number of distinct identities that each query output group must represent.</p>",
+      "refs": {
+        "AggregationThresholdList$member": null
+      }
+    },
+    "AggregationThresholdIdentityColumnsList": {
+      "base": null,
+      "refs": {
+        "AggregationThreshold$identityColumns": "<p>The identity column, such as <code>user_id</code>, whose distinct values Clean Rooms counts to enforce minimum aggregation thresholds. Currently, you can specify only one column, and its data type must be string, varchar, or char.</p>"
+      }
+    },
+    "AggregationThresholdList": {
+      "base": null,
+      "refs": {
+        "AnalysisRuleCustom$aggregationThresholds": "<p>The aggregation thresholds that each query output group must satisfy. Clean Rooms filters out any group that represents fewer than the specified number of distinct identities. You can specify at most one threshold. You can't use aggregation thresholds with differential privacy, or when <code>allowedAnalyses</code> allows only jobs.</p>",
+        "ConsolidatedPolicyCustom$aggregationThresholds": "<p> The aggregation thresholds for the consolidated policy.</p>",
+        "IntermediateTableAnalysisRuleCustom$aggregationThresholds": "<p>The aggregation thresholds that each query output group must satisfy. Clean Rooms filters out any group that represents fewer than the specified number of distinct identities. You can specify at most one threshold. You can't use aggregation thresholds with differential privacy, or when <code>allowedAnalyses</code> allows only jobs.</p>"
+      }
+    },
+    "AggregationThresholdMinimumIdentityCountInteger": {
+      "base": null,
+      "refs": {
+        "AggregationThreshold$minimumIdentityCount": "<p>The minimum number of distinct identities that each query output group must represent. This threshold applies to all output columns in the table. To override this threshold for a specific column, use <code>outputColumnThresholds</code>.</p>"
+      }
+    },
+    "AggregationThresholdType": {
+      "base": null,
+      "refs": {
+        "AggregationThreshold$type": "<p>The type of aggregation that the threshold enforces. Currently, the only supported value is <code>COUNT_DISTINCT</code>, which counts the distinct values in the identity column.</p>"
+      }
+    },
     "AggregationType": {
       "base": null,
       "refs": {
@@ -294,6 +326,12 @@
         "InheritedAllowedAdditionalAnalyses$value": "<p>The effective list of allowed additional analyses inherited from parent tables.</p>",
         "InheritedAllowedAdditionalAnalysesSource$value": "<p>The allowed additional analyses defined on the parent table.</p>",
         "IntermediateTableAnalysisRuleCustom$allowedAdditionalAnalyses": "<p>The list of allowed additional analyses for the intermediate table.</p>"
+      }
+    },
+    "AllowedAggregateExpressionType": {
+      "base": null,
+      "refs": {
+        "AggregationThreshold$allowedAggregateExpressionType": "<p>Specifies whether a query can aggregate a transformed column. This applies to the arguments of both aggregate and window functions. Valid values are:</p> <p> <code>COLUMNS_ONLY</code> – A query can aggregate only a direct column reference, such as <code>SUM(amount)</code>, or a constant. Clean Rooms rejects a query that transforms a column and then aggregates it, such as <code>SUM(amount * 2)</code> or <code>SUM(ROUND(amount))</code>.</p> <p> <code>ANY_EXPRESSION</code> – A query can aggregate any expression. This includes arithmetic, such as <code>SUM(price * quantity)</code>; a cast, such as <code>SUM(CAST(amount AS DECIMAL))</code>; a nested function call, such as <code>SUM(COALESCE(amount, 0))</code>; and a conditional, such as <code>SUM(CASE WHEN region = 'EU' THEN amount ELSE 0 END)</code>.</p>"
       }
     },
     "AllowedAnalysesList": {
@@ -471,6 +509,8 @@
         "AnalysisRuleCustom$disallowedOutputColumns": "<p> A list of columns that aren't allowed to be shown in the query output.</p>",
         "AnalysisRuleIdMappingTable$dimensionColumns": "<p>The columns that query runners are allowed to select, group by, or filter by.</p>",
         "AnalysisRuleList$listColumns": "<p>Columns that can be listed in the output.</p>",
+        "ComparisonControls$allowedLiteralComparisonColumns": "<p>The columns that a query can compare to literal values, for example, in a WHERE clause. Clean Rooms rejects a query that compares any other column to a literal value. Specify an empty list to block literal comparison on every column. You can't specify a column that you also use as an identity column in an aggregation threshold.</p>",
+        "ComparisonControls$allowedColumnComparisonColumns": "<p>The columns that a query can compare to another column, for example, in a join, a WHERE clause, a GROUP BY clause, or a window function. Clean Rooms rejects a query that uses any other column in a column-to-column comparison. Specify an empty list to block column-to-column comparison on every column.</p>",
         "ConsolidatedPolicyAggregation$joinColumns": "<p> The columns to join on.</p>",
         "ConsolidatedPolicyAggregation$dimensionColumns": "<p> The dimension columns of the consolidated policy aggregation.</p>",
         "ConsolidatedPolicyCustom$disallowedOutputColumns": "<p> Disallowed output columns</p>",
@@ -484,13 +524,15 @@
       "refs": {
         "AggregateColumnColumnNamesList$member": null,
         "AggregationConstraint$columnName": "<p>Column in aggregation constraint for which there must be a minimum number of distinct values in an output row for it to be in the query output.</p>",
+        "AggregationThresholdIdentityColumnsList$member": null,
         "AnalysisRuleColumnList$member": null,
         "AnalysisRuleColumnNameList$member": null,
         "AnalysisRuleIdMappingTableJoinColumnsList$member": null,
         "AnalysisRuleListJoinColumnsList$member": null,
         "ColumnLineageEntry$column": "<p>The name of the column in the intermediate table.</p>",
         "ColumnLineageEntry$sourceColumn": "<p>The name of the column in the source table.</p>",
-        "ConsolidatedPolicyListJoinColumnsList$member": null
+        "ConsolidatedPolicyListJoinColumnsList$member": null,
+        "OutputColumnThreshold$outputColumnName": "<p>The name of the output column that the override applies to. You can specify each column only once.</p>"
       }
     },
     "AnalysisRuleColumnNameList": {
@@ -500,7 +542,7 @@
       }
     },
     "AnalysisRuleCustom": {
-      "base": "<p>A type of analysis rule that enables the table owner to approve custom SQL queries on their configured tables. It supports differential privacy.</p>",
+      "base": "<p>A type of analysis rule that enables the table owner to approve custom SQL queries on their configured tables. It supports differential privacy, minimum aggregation thresholds, and comparison controls.</p>",
       "refs": {
         "AnalysisRulePolicyV1$custom": "<p>Analysis rule type that enables custom SQL queries on a configured table.</p>",
         "ConfiguredTableAnalysisRulePolicyV1$custom": null
@@ -1366,6 +1408,14 @@
       "refs": {
         "AthenaTableReference$region": "<p>The Amazon Web Services Region where the Athena table is located. This parameter is required to uniquely identify and access tables across different Regions.</p>",
         "GlueTableReference$region": "<p>The Amazon Web Services Region where the Glue table is located. This parameter is required to uniquely identify and access tables across different Regions.</p>"
+      }
+    },
+    "ComparisonControls": {
+      "base": "<p>Specifies how a query can compare the columns in a table, including literal comparisons and column-to-column comparisons.</p>",
+      "refs": {
+        "AnalysisRuleCustom$comparisonControls": "<p>The controls that restrict how a query can compare the columns in the configured table. You can't use comparison controls with differential privacy, or when <code>allowedAnalyses</code> allows only jobs.</p>",
+        "ConsolidatedPolicyCustom$comparisonControls": "<p> The comparison controls for the consolidated policy.</p>",
+        "IntermediateTableAnalysisRuleCustom$comparisonControls": "<p>The controls that restrict how a query can compare the columns in the intermediate table. You can't use comparison controls with differential privacy, or when <code>allowedAnalyses</code> allows only jobs.</p>"
       }
     },
     "ComputeConfiguration": {
@@ -3445,6 +3495,24 @@
       "base": "<p>An object representing the collaboration member's model training payment responsibilities set by the collaboration creator.</p>",
       "refs": {
         "MLPaymentConfig$modelTraining": "<p>The payment responsibilities accepted by the member for model training.</p>"
+      }
+    },
+    "OutputColumnThreshold": {
+      "base": "<p>Specifies the minimum number of distinct identities for an individual output column. This value overrides the table-wide <code>minimumIdentityCount</code> that you set in <code>AggregationThreshold</code>.</p>",
+      "refs": {
+        "OutputColumnThresholdList$member": null
+      }
+    },
+    "OutputColumnThresholdList": {
+      "base": null,
+      "refs": {
+        "AggregationThreshold$outputColumnThresholds": "<p>The per-column overrides of <code>minimumIdentityCount</code>. An output column without an override uses <code>minimumIdentityCount</code>.</p>"
+      }
+    },
+    "OutputColumnThresholdMinimumIdentityCountInteger": {
+      "base": null,
+      "refs": {
+        "OutputColumnThreshold$minimumIdentityCount": "<p>The minimum number of distinct identities that each query output group must represent for this column. Specify 0 to exempt the column from the threshold, or a value of 2 or greater to enforce a threshold.</p>"
       }
     },
     "PaginationToken": {

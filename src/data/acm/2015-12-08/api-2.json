@@ -448,6 +448,25 @@
         "ServiceType":{"value":"ACM-ACME"}
       }
     },
+    "ListCertificateDomainValidations":{
+      "name":"ListCertificateDomainValidations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListCertificateDomainValidationsRequest"},
+      "output":{"shape":"ListCertificateDomainValidationsResponse"},
+      "errors":[
+        {"shape":"InvalidArgsException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true,
+      "staticContextParams":{
+        "ServiceType":{"value":"ACM"}
+      }
+    },
     "ListCertificates":{
       "name":"ListCertificates",
       "http":{
@@ -749,6 +768,7 @@
       "input":{"shape":"UpdateCertificateOptionsRequest"},
       "errors":[
         {"shape":"InvalidArnException"},
+        {"shape":"ConflictException"},
         {"shape":"LimitExceededException"},
         {"shape":"ValidationException"},
         {"shape":"InvalidStateException"},
@@ -1019,6 +1039,12 @@
       "pattern":"arn:[\\w+=/,.@-]+:acm:[\\w+=/,.@-]*:[0-9]+:[\\w+=,.@-]+(/[\\w+=,.@-]+)*"
     },
     "AvailabilityErrorMessage":{"type":"string"},
+    "CertificateArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:[\\w+=/,.@-]+:acm:[\\w+=/,.@-]*:[0-9]+:certificate/[\\w+=,.@-]+.*"
+    },
     "CertificateAuthority":{
       "type":"structure",
       "members":{
@@ -1078,6 +1104,7 @@
         "CertificateAuthorityArn":{"shape":"Arn"},
         "RenewalEligibility":{"shape":"RenewalEligibility"},
         "Options":{"shape":"CertificateOptions"},
+        "UpdateSummary":{"shape":"UpdateSummary"},
         "CertificateKeyPairOrigin":{"shape":"CertificateKeyPairOrigin"},
         "AcmeEndpointArn":{"shape":"Arn"},
         "AcmeAccountId":{"shape":"AcmeAccountId"}
@@ -1149,7 +1176,8 @@
           "deprecatedMessage":"Certificate transparency logging opt-out is no longer available.",
           "deprecatedSince":"12th June 2026"
         },
-        "Export":{"shape":"CertificateExport"}
+        "Export":{"shape":"CertificateExport"},
+        "ValidationMethod":{"shape":"ValidationMethod"}
       }
     },
     "CertificateSearchResult":{
@@ -1487,6 +1515,12 @@
         "HostedZoneId":{"shape":"HostedZoneId"}
       }
     },
+    "DnsValidationChallenge":{
+      "type":"structure",
+      "members":{
+        "ResourceRecord":{"shape":"ResourceRecord"}
+      }
+    },
     "DomainComponentList":{
       "type":"list",
       "member":{"shape":"String"}
@@ -1551,6 +1585,13 @@
       "max":1000,
       "min":1
     },
+    "DomainValidationMethodUpdateSummary":{
+      "type":"structure",
+      "members":{
+        "From":{"shape":"ValidationMethod"},
+        "To":{"shape":"ValidationMethod"}
+      }
+    },
     "DomainValidationOption":{
       "type":"structure",
       "required":[
@@ -1567,6 +1608,26 @@
       "member":{"shape":"DomainValidationOption"},
       "max":100,
       "min":1
+    },
+    "DomainValidationSummary":{
+      "type":"structure",
+      "required":["DomainName"],
+      "members":{
+        "DomainName":{"shape":"DomainNameString"},
+        "ActiveValidationConfiguration":{"shape":"ValidationConfiguration"},
+        "RequestedValidationConfiguration":{"shape":"ValidationConfiguration"}
+      }
+    },
+    "DomainValidationSummaryList":{
+      "type":"list",
+      "member":{"shape":"DomainValidationSummary"}
+    },
+    "EmailValidationChallenge":{
+      "type":"structure",
+      "members":{
+        "ValidationEmails":{"shape":"ValidationEmailList"},
+        "ValidationDomain":{"shape":"DomainNameString"}
+      }
     },
     "Expiration":{
       "type":"structure",
@@ -1975,6 +2036,22 @@
       "members":{
         "ExternalAccountBindings":{"shape":"AcmeExternalAccountBindingList"},
         "NextToken":{"shape":"String"}
+      }
+    },
+    "ListCertificateDomainValidationsRequest":{
+      "type":"structure",
+      "required":["CertificateArn"],
+      "members":{
+        "CertificateArn":{"shape":"CertificateArn"},
+        "NextToken":{"shape":"NextToken"},
+        "MaxItems":{"shape":"MaxItems"}
+      }
+    },
+    "ListCertificateDomainValidationsResponse":{
+      "type":"structure",
+      "members":{
+        "DomainValidationSummaryList":{"shape":"DomainValidationSummaryList"},
+        "NextToken":{"shape":"NextToken"}
       }
     },
     "ListCertificatesRequest":{
@@ -2528,6 +2605,44 @@
       "members":{
         "CertificateArn":{"shape":"Arn"},
         "Options":{"shape":"CertificateOptions"}
+      }
+    },
+    "UpdateStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING_DOMAIN_VALIDATION",
+        "SUCCESS",
+        "FAILED"
+      ]
+    },
+    "UpdateSummary":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"UpdateStatus"},
+        "Type":{"shape":"UpdateType"},
+        "DomainValidationMethodUpdateSummary":{"shape":"DomainValidationMethodUpdateSummary"},
+        "RequestedAt":{"shape":"TStamp"},
+        "UpdatedAt":{"shape":"TStamp"}
+      }
+    },
+    "UpdateType":{
+      "type":"string",
+      "enum":["DOMAIN_VALIDATION_METHOD"]
+    },
+    "ValidationChallenge":{
+      "type":"structure",
+      "members":{
+        "EmailValidationChallenge":{"shape":"EmailValidationChallenge"},
+        "DnsValidationChallenge":{"shape":"DnsValidationChallenge"}
+      },
+      "union":true
+    },
+    "ValidationConfiguration":{
+      "type":"structure",
+      "members":{
+        "ValidationMethod":{"shape":"ValidationMethod"},
+        "ValidationChallenge":{"shape":"ValidationChallenge"},
+        "ValidationStatus":{"shape":"DomainStatus"}
       }
     },
     "ValidationEmailList":{

@@ -2039,6 +2039,44 @@
       "member":{"shape":"AggregationConstraint"},
       "min":1
     },
+    "AggregationThreshold":{
+      "type":"structure",
+      "required":[
+        "identityColumns",
+        "minimumIdentityCount",
+        "type",
+        "allowedAggregateExpressionType"
+      ],
+      "members":{
+        "identityColumns":{"shape":"AggregationThresholdIdentityColumnsList"},
+        "minimumIdentityCount":{"shape":"AggregationThresholdMinimumIdentityCountInteger"},
+        "type":{"shape":"AggregationThresholdType"},
+        "outputColumnThresholds":{"shape":"OutputColumnThresholdList"},
+        "allowedAggregateExpressionType":{"shape":"AllowedAggregateExpressionType"}
+      }
+    },
+    "AggregationThresholdIdentityColumnsList":{
+      "type":"list",
+      "member":{"shape":"AnalysisRuleColumnName"},
+      "max":1,
+      "min":1
+    },
+    "AggregationThresholdList":{
+      "type":"list",
+      "member":{"shape":"AggregationThreshold"},
+      "max":1,
+      "min":1
+    },
+    "AggregationThresholdMinimumIdentityCountInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100000,
+      "min":2
+    },
+    "AggregationThresholdType":{
+      "type":"string",
+      "enum":["COUNT_DISTINCT"]
+    },
     "AggregationType":{
       "type":"string",
       "enum":["COUNT_DISTINCT"]
@@ -2048,6 +2086,13 @@
       "member":{"shape":"AdditionalAnalysesResourceArn"},
       "max":25,
       "min":0
+    },
+    "AllowedAggregateExpressionType":{
+      "type":"string",
+      "enum":[
+        "COLUMNS_ONLY",
+        "ANY_EXPRESSION"
+      ]
     },
     "AllowedAnalysesList":{
       "type":"list",
@@ -2277,6 +2322,8 @@
         "additionalAnalyses":{"shape":"AdditionalAnalyses"},
         "disallowedOutputColumns":{"shape":"AnalysisRuleColumnList"},
         "differentialPrivacy":{"shape":"DifferentialPrivacyConfiguration"},
+        "aggregationThresholds":{"shape":"AggregationThresholdList"},
+        "comparisonControls":{"shape":"ComparisonControls"},
         "allowedResultReceivers":{"shape":"AllowedResultReceivers"},
         "allowedAdditionalAnalyses":{"shape":"AllowedAdditionalAnalyses"}
       }
@@ -3504,6 +3551,17 @@
         "ap-east-2"
       ]
     },
+    "ComparisonControls":{
+      "type":"structure",
+      "required":[
+        "allowedLiteralComparisonColumns",
+        "allowedColumnComparisonColumns"
+      ],
+      "members":{
+        "allowedLiteralComparisonColumns":{"shape":"AnalysisRuleColumnList"},
+        "allowedColumnComparisonColumns":{"shape":"AnalysisRuleColumnList"}
+      }
+    },
     "ComputeConfiguration":{
       "type":"structure",
       "members":{
@@ -3928,6 +3986,8 @@
         "additionalAnalyses":{"shape":"AdditionalAnalyses"},
         "disallowedOutputColumns":{"shape":"AnalysisRuleColumnList"},
         "differentialPrivacy":{"shape":"DifferentialPrivacyConfiguration"},
+        "aggregationThresholds":{"shape":"AggregationThresholdList"},
+        "comparisonControls":{"shape":"ComparisonControls"},
         "allowedResultReceivers":{"shape":"AllowedResultReceivers"},
         "allowedAdditionalAnalyses":{"shape":"AllowedAdditionalAnalyses"}
       }
@@ -6017,7 +6077,9 @@
         "allowedAnalysisProviders":{"shape":"AllowedAnalysisProviderList"},
         "allowedResultReceivers":{"shape":"AllowedResultReceivers"},
         "differentialPrivacy":{"shape":"DifferentialPrivacyConfiguration"},
-        "disallowedOutputColumns":{"shape":"AnalysisRuleColumnList"}
+        "disallowedOutputColumns":{"shape":"AnalysisRuleColumnList"},
+        "aggregationThresholds":{"shape":"AggregationThresholdList"},
+        "comparisonControls":{"shape":"ComparisonControls"}
       }
     },
     "IntermediateTableAnalysisRulePolicy":{
@@ -7370,6 +7432,27 @@
       "members":{
         "isResponsible":{"shape":"Boolean"}
       }
+    },
+    "OutputColumnThreshold":{
+      "type":"structure",
+      "required":[
+        "outputColumnName",
+        "minimumIdentityCount"
+      ],
+      "members":{
+        "outputColumnName":{"shape":"AnalysisRuleColumnName"},
+        "minimumIdentityCount":{"shape":"OutputColumnThresholdMinimumIdentityCountInteger"}
+      }
+    },
+    "OutputColumnThresholdList":{
+      "type":"list",
+      "member":{"shape":"OutputColumnThreshold"}
+    },
+    "OutputColumnThresholdMinimumIdentityCountInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100000,
+      "min":0
     },
     "PaginationToken":{
       "type":"string",

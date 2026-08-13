@@ -642,6 +642,32 @@
         {"shape":"FileTooLargeException"}
       ]
     },
+    "GetBlobDifferences":{
+      "name":"GetBlobDifferences",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetBlobDifferencesInput"},
+      "output":{"shape":"GetBlobDifferencesOutput"},
+      "errors":[
+        {"shape":"RepositoryNameRequiredException"},
+        {"shape":"InvalidRepositoryNameException"},
+        {"shape":"RepositoryDoesNotExistException"},
+        {"shape":"BlobIdRequiredException"},
+        {"shape":"InvalidBlobIdException"},
+        {"shape":"BlobIdDoesNotExistException"},
+        {"shape":"FileTooLargeException"},
+        {"shape":"ValidationException"},
+        {"shape":"InvalidContinuationTokenException"},
+        {"shape":"InvalidMaxResultsException"},
+        {"shape":"EncryptionIntegrityChecksFailedException"},
+        {"shape":"EncryptionKeyAccessDeniedException"},
+        {"shape":"EncryptionKeyDisabledException"},
+        {"shape":"EncryptionKeyNotFoundException"},
+        {"shape":"EncryptionKeyUnavailableException"}
+      ]
+    },
     "GetBranch":{
       "name":"GetBranch",
       "http":{
@@ -2981,6 +3007,44 @@
       "type":"string",
       "max":10240
     },
+    "DiffChange":{
+      "type":"structure",
+      "members":{
+        "type":{"shape":"DiffChangeType"},
+        "beforeLineNumber":{"shape":"LineNumber"},
+        "afterLineNumber":{"shape":"LineNumber"},
+        "content":{"shape":"LineContent"}
+      }
+    },
+    "DiffChangeList":{
+      "type":"list",
+      "member":{"shape":"DiffChange"},
+      "max":25000
+    },
+    "DiffChangeType":{
+      "type":"string",
+      "enum":[
+        "CONTEXT",
+        "ADD",
+        "DELETE"
+      ]
+    },
+    "DiffContext":{"type":"integer"},
+    "DiffHunk":{
+      "type":"structure",
+      "members":{
+        "beforeStartLine":{"shape":"LineNumber"},
+        "beforeLineCount":{"shape":"Count"},
+        "afterStartLine":{"shape":"LineNumber"},
+        "afterLineCount":{"shape":"Count"},
+        "changes":{"shape":"DiffChangeList"}
+      }
+    },
+    "DiffHunkList":{
+      "type":"list",
+      "member":{"shape":"DiffHunk"},
+      "max":1000
+    },
     "Difference":{
       "type":"structure",
       "members":{
@@ -3228,6 +3292,37 @@
       "required":["approvalRuleTemplate"],
       "members":{
         "approvalRuleTemplate":{"shape":"ApprovalRuleTemplate"}
+      }
+    },
+    "GetBlobDifferencesInput":{
+      "type":"structure",
+      "required":[
+        "repositoryName",
+        "afterBlobId"
+      ],
+      "members":{
+        "repositoryName":{"shape":"RepositoryName"},
+        "afterBlobId":{"shape":"ObjectId"},
+        "beforeBlobId":{"shape":"ObjectId"},
+        "contextLines":{"shape":"DiffContext"},
+        "ignoreWhitespace":{"shape":"IgnoreWhiteSpaces"},
+        "MaxResults":{"shape":"Limit"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "GetBlobDifferencesOutput":{
+      "type":"structure",
+      "required":[
+        "hunks",
+        "isBinary",
+        "afterBlobSize"
+      ],
+      "members":{
+        "hunks":{"shape":"DiffHunkList"},
+        "isBinary":{"shape":"CapitalBoolean"},
+        "beforeBlobSize":{"shape":"ObjectSize"},
+        "afterBlobSize":{"shape":"ObjectSize"},
+        "NextToken":{"shape":"NextToken"}
       }
     },
     "GetBlobInput":{
@@ -3604,6 +3699,7 @@
       "members":{},
       "exception":true
     },
+    "IgnoreWhiteSpaces":{"type":"boolean"},
     "InvalidActorArnException":{
       "type":"structure",
       "members":{},
@@ -3945,6 +4041,7 @@
       "type":"integer",
       "box":true
     },
+    "LineContent":{"type":"string"},
     "LineNumber":{"type":"integer"},
     "ListApprovalRuleTemplatesInput":{
       "type":"structure",
@@ -5487,6 +5584,11 @@
         "email":{"shape":"Email"},
         "date":{"shape":"Date"}
       }
+    },
+    "ValidationException":{
+      "type":"structure",
+      "members":{},
+      "exception":true
     },
     "blob":{"type":"blob"}
   }

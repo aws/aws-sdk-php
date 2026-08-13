@@ -50,6 +50,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listAcmeEndpointsAsync(array $args = [])
  * @method \Aws\Result listAcmeExternalAccountBindings(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listAcmeExternalAccountBindingsAsync(array $args = [])
+ * @method \Aws\Result listCertificateDomainValidations(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listCertificateDomainValidationsAsync(array $args = [])
  * @method \Aws\Result listCertificates(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listCertificatesAsync(array $args = [])
  * @method \Aws\Result listTagsForCertificate(array $args = [])
