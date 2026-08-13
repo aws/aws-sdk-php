@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.392.2 - 2026-08-13
 
 * `Aws\ACM` - This change allows customers to update their existing email-validated certificates to use the DNS validation method.
 * `Aws\Connect` - Adds the StartAssistantContact API to start chat contacts handled by an AI agent. Adds SegmentAttributes to StartWebRTCContact, and corrects its error response to now receive AccessDeniedException (previously returned as an internal server error due to a missing error declaration).
