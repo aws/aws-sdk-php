@@ -3583,6 +3583,7 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServiceException"},
         {"shape":"InvalidInputException"},
+        {"shape":"EntityNotFoundException"},
         {"shape":"ConcurrentModificationException"},
         {"shape":"ThrottlingException"}
       ]
@@ -5132,6 +5133,8 @@
       ],
       "members":{
         "AssetIdentifier":{"shape":"AssetId"},
+        "IterableFormName":{"shape":"IterableFormName"},
+        "ItemIdentifier":{"shape":"ItemIdentifier"},
         "GlossaryTermIdentifiers":{"shape":"GlossaryTermIdList"},
         "ClientToken":{
           "shape":"HashString",
@@ -5143,6 +5146,8 @@
       "type":"structure",
       "members":{
         "AssetIdentifier":{"shape":"AssetId"},
+        "IterableFormName":{"shape":"IterableFormName"},
+        "ItemIdentifier":{"shape":"ItemIdentifier"},
         "GlossaryTerms":{"shape":"GlossaryTermIdList"}
       }
     },
@@ -9068,7 +9073,9 @@
     "DeleteAttachmentResponse":{
       "type":"structure",
       "members":{
-        "AssetIdentifier":{"shape":"AssetId"}
+        "AssetIdentifier":{"shape":"AssetId"},
+        "IterableFormName":{"shape":"IterableFormName"},
+        "ItemIdentifier":{"shape":"ItemIdentifier"}
       }
     },
     "DeleteBehavior":{
@@ -9840,6 +9847,8 @@
       ],
       "members":{
         "AssetIdentifier":{"shape":"AssetId"},
+        "IterableFormName":{"shape":"IterableFormName"},
+        "ItemIdentifier":{"shape":"ItemIdentifier"},
         "GlossaryTermIdentifiers":{"shape":"GlossaryTermIdList"},
         "ClientToken":{
           "shape":"HashString",
@@ -9851,6 +9860,8 @@
       "type":"structure",
       "members":{
         "AssetIdentifier":{"shape":"AssetId"},
+        "IterableFormName":{"shape":"IterableFormName"},
+        "ItemIdentifier":{"shape":"ItemIdentifier"},
         "GlossaryTerms":{"shape":"GlossaryTermIdList"}
       }
     },

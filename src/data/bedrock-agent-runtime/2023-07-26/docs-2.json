@@ -1,8 +1,9 @@
 {
   "version": "2.0",
-  "service": "<p>Contains APIs related to model invocation and querying of knowledge bases.</p>",
+  "service": "<p><note> <p>Amazon Bedrock Agents (now Amazon Bedrock Agents Classic) is no longer open to new customers. For capabilities similar to Bedrock Agents Classic, explore Amazon Bedrock AgentCore. Existing customers can continue to use the service as normal. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-classic-maintenance-mode.html\">Amazon Bedrock Agents Classic availability change</a>.</p> </note> <p>Contains APIs related to model invocation and querying of knowledge bases.</p></p>",
   "operations": {
     "AgenticRetrieveStream": "<p>Retrieves information from one or more knowledge bases using an agentic approach. Agentic retrieval uses a foundation model to intelligently decompose complex queries into sub-queries and iteratively retrieve relevant information from your knowledge bases. This approach improves retrieval accuracy for complex, multi-step questions that a single retrieval pass might not fully address.</p> <p>The operation returns results through a stream that includes retrieval results, trace events for visibility into the process, and a generated response synthesized from the results by default, which can be turned off.</p>",
+    "CheckIngestedDocumentAcl": "<p>Checks whether a user has access to a specific document by verifying against the ingested access control list (ACL) in a knowledge base. Use this operation to validate that document-level access control is working as expected after ingestion. To use this operation, you must have the <code>bedrock:CheckIngestedDocumentAcl</code> permission.</p>",
     "CreateInvocation": "<p>Creates a new invocation within a session. An invocation groups the related invocation steps that store the content from a conversation. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p> <p>Related APIs</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_ListInvocations.html\">ListInvocations</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_ListSessions.html\">ListSessions</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_GetSession.html\">GetSession</a> </p> </li> </ul>",
     "CreateSession": "<p>Creates a session to temporarily store conversations for generative AI (GenAI) applications built with open-source frameworks such as LangGraph and LlamaIndex. Sessions enable you to save the state of conversations at checkpoints, with the added security and infrastructure of Amazon Web Services. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p> <p>By default, Amazon Bedrock uses Amazon Web Services-managed keys for session encryption, including session metadata, or you can use your own KMS key. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/session-encryption.html\">Amazon Bedrock session encryption</a>.</p> <note> <p> You use a session to store state and conversation history for generative AI applications built with open-source frameworks. For Amazon Bedrock Agents, the service automatically manages conversation context and associates them with the agent-specific sessionId you specify in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html\">InvokeAgent</a> API operation. </p> </note> <p>Related APIs:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_ListSessions.html\">ListSessions</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_GetSession.html\">GetSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_EndSession.html\">EndSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_DeleteSession.html\">DeleteSession</a> </p> </li> </ul>",
     "DeleteAgentMemory": "<p>Deletes memory from the specified memory identifier.</p>",
@@ -13,9 +14,10 @@
     "GetDocumentContent": "<p>Retrieves the content of an ingested document from a knowledge base. Returns a pre-signed URL for secure document access.</p>",
     "GetExecutionFlowSnapshot": "<p>Retrieves the flow definition snapshot used for a flow execution. The snapshot represents the flow metadata and definition as it existed at the time the execution was started. Note that even if the flow is edited after an execution starts, the snapshot connected to the execution remains unchanged.</p> <note> <p>Flow executions is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
     "GetFlowExecution": "<p>Retrieves details about a specific flow execution, including its status, start and end times, and any errors that occurred during execution.</p>",
+    "GetIngestedDocumentAcl": "<p>Retrieves the ingested access control list (ACL) for a specific document in a knowledge base. Use this operation to inspect the allow and deny lists that were ingested for a document to troubleshoot access control issues. To use this operation, you must have the <code>bedrock:GetIngestedDocumentAcl</code> permission.</p>",
     "GetInvocationStep": "<p>Retrieves the details of a specific invocation step within an invocation in a session. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>",
     "GetSession": "<p>Retrieves details about a specific session. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>",
-    "InvokeAgent": "<p><note> </note> <p>Sends a prompt for the agent to process and respond to. Note the following fields for the request:</p> <ul> <li> <p>To continue the same conversation with an agent, use the same <code>sessionId</code> value in the request.</p> </li> <li> <p>To activate trace enablement, turn <code>enableTrace</code> to <code>true</code>. Trace enablement helps you follow the agent's reasoning process that led it to the information it processed, the actions it took, and the final result it yielded. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-test.html#trace-events\">Trace enablement</a>.</p> </li> <li> <p>End a conversation by setting <code>endSession</code> to <code>true</code>.</p> </li> <li> <p>In the <code>sessionState</code> object, you can include attributes for the session or prompt or, if you configured an action group to return control, results from invocation of the action group.</p> </li> </ul> <p>The response contains both <b>chunk</b> and <b>trace</b> attributes.</p> <p>The final response is returned in the <code>bytes</code> field of the <code>chunk</code> object. The <code>InvokeAgent</code> returns one chunk for the entire interaction.</p> <ul> <li> <p>The <code>attribution</code> object contains citations for parts of the response.</p> </li> <li> <p>If you set <code>enableTrace</code> to <code>true</code> in the request, you can trace the agent's steps and reasoning process that led it to the response.</p> </li> <li> <p>If the action predicted was configured to return control, the response returns parameters for the action, elicited from the user, in the <code>returnControl</code> field.</p> </li> <li> <p>Errors are also surfaced in the response.</p> </li> </ul></p>",
+    "InvokeAgent": "<p><note> <p>Amazon Bedrock Agents (now Amazon Bedrock Agents Classic) is no longer open to new customers. For capabilities similar to Bedrock Agents Classic, explore Amazon Bedrock AgentCore. Existing customers can continue to use the service as normal. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-classic-maintenance-mode.html\">Amazon Bedrock Agents Classic availability change</a>.</p> </note> <note> </note> <p>Sends a prompt for the agent to process and respond to. Note the following fields for the request:</p> <ul> <li> <p>To continue the same conversation with an agent, use the same <code>sessionId</code> value in the request.</p> </li> <li> <p>To activate trace enablement, turn <code>enableTrace</code> to <code>true</code>. Trace enablement helps you follow the agent's reasoning process that led it to the information it processed, the actions it took, and the final result it yielded. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-test.html#trace-events\">Trace enablement</a>.</p> </li> <li> <p>End a conversation by setting <code>endSession</code> to <code>true</code>.</p> </li> <li> <p>In the <code>sessionState</code> object, you can include attributes for the session or prompt or, if you configured an action group to return control, results from invocation of the action group.</p> </li> </ul> <p>The response contains both <b>chunk</b> and <b>trace</b> attributes.</p> <p>The final response is returned in the <code>bytes</code> field of the <code>chunk</code> object. The <code>InvokeAgent</code> returns one chunk for the entire interaction.</p> <ul> <li> <p>The <code>attribution</code> object contains citations for parts of the response.</p> </li> <li> <p>If you set <code>enableTrace</code> to <code>true</code> in the request, you can trace the agent's steps and reasoning process that led it to the response.</p> </li> <li> <p>If the action predicted was configured to return control, the response returns parameters for the action, elicited from the user, in the <code>returnControl</code> field.</p> </li> <li> <p>Errors are also surfaced in the response.</p> </li> </ul></p>",
     "InvokeFlow": "<p>Invokes an alias of a flow to run the inputs that you specify and return the output of each node as a stream. If there's an error, the error is returned. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-test.html\">Test a flow in Amazon Bedrock</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p> <note> <p>The CLI doesn't support streaming operations in Amazon Bedrock, including <code>InvokeFlow</code>.</p> </note>",
     "InvokeInlineAgent": "<p> Invokes an inline Amazon Bedrock agent using the configurations you provide with the request. </p> <ul> <li> <p>Specify the following fields for security purposes.</p> <ul> <li> <p>(Optional) <code>customerEncryptionKeyArn</code> – The Amazon Resource Name (ARN) of a KMS key to encrypt the creation of the agent.</p> </li> <li> <p>(Optional) <code>idleSessionTTLinSeconds</code> – Specify the number of seconds for which the agent should maintain session information. After this time expires, the subsequent <code>InvokeInlineAgent</code> request begins a new session.</p> </li> </ul> </li> <li> <p>To override the default prompt behavior for agent orchestration and to use advanced prompts, include a <code>promptOverrideConfiguration</code> object. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/advanced-prompts.html\">Advanced prompts</a>.</p> </li> <li> <p>The agent instructions will not be honored if your agent has only one knowledge base, uses default prompts, has no action group, and user input is disabled.</p> </li> </ul> <note> </note>",
     "ListFlowExecutionEvents": "<p>Lists events that occurred during a flow execution. Events provide detailed information about the execution progress, including node inputs and outputs, flow inputs and outputs, condition results, and failure events.</p> <note> <p>Flow executions is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
@@ -711,6 +713,7 @@
       "base": null,
       "refs": {
         "AgenticRetrieveStreamRequest$generateResponse": "<p>Whether to generate a response based on the retrieved results.</p>",
+        "CheckIngestedDocumentAclResponse$hasAccess": "<p>Specifies whether the user has access to the document based on the ingested access control list (ACL). Returns <code>true</code> if the user is allowed access, and <code>false</code> otherwise.</p>",
         "CodeInterpreterInvocationOutput$executionTimeout": "<p>Indicates if the execution of the code timed out.</p>",
         "InvokeAgentRequest$enableTrace": "<p>Specifies whether to turn on the trace or not to track the agent's reasoning process. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-test.html#trace-events\">Trace enablement</a>.</p>",
         "InvokeAgentRequest$endSession": "<p>Specifies whether to end the session with the agent or not.</p>",
@@ -754,6 +757,14 @@
         "InlineAgentTracePart$callerChain": "<p>The caller chain for the trace part.</p>",
         "TracePart$callerChain": "<p>The part's caller chain.</p>"
       }
+    },
+    "CheckIngestedDocumentAclRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CheckIngestedDocumentAclResponse": {
+      "base": null,
+      "refs": {}
     },
     "Citation": {
       "base": "<p>An object containing a segment of the generated response that is based on a source in the knowledge base, alongside information about the source.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html#API_agent-runtime_InvokeAgent_ResponseSyntax\">InvokeAgent response</a> – in the <code>citations</code> field</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_ResponseSyntax\">RetrieveAndGenerate response</a> – in the <code>citations</code> field</p> </li> </ul>",
@@ -937,7 +948,9 @@
     "DataSourceId": {
       "base": null,
       "refs": {
-        "GetDocumentContentRequest$dataSourceId": "<p>The unique identifier of the data source that contains the document.</p>"
+        "CheckIngestedDocumentAclRequest$dataSourceId": "<p>The unique identifier of the data source that contains the document.</p>",
+        "GetDocumentContentRequest$dataSourceId": "<p>The unique identifier of the data source that contains the document.</p>",
+        "GetIngestedDocumentAclRequest$dataSourceId": "<p>The unique identifier of the data source that contains the document.</p>"
       }
     },
     "DateTimestamp": {
@@ -1023,10 +1036,87 @@
         "RerankDocument$jsonDocument": "<p>Contains a JSON document to rerank.</p>"
       }
     },
+    "DocumentAcl": {
+      "base": "<p>The access control list for a document, containing allow and deny membership lists. Each list specifies conditions that determine which users and groups are granted or denied access.</p>",
+      "refs": {
+        "GetIngestedDocumentAclResponse$documentAcl": "<p>The ingested document access control list (ACL) containing allow and deny membership information.</p>"
+      }
+    },
+    "DocumentAclCondition": {
+      "base": "<p>A condition within a document access control list (ACL) membership, specifying users and groups that are evaluated together.</p>",
+      "refs": {
+        "DocumentAclMembershipConditionsList$member": null
+      }
+    },
+    "DocumentAclConditionGroupsList": {
+      "base": null,
+      "refs": {
+        "DocumentAclCondition$groups": "<p>The list of group entries in this condition.</p>"
+      }
+    },
+    "DocumentAclConditionUsersList": {
+      "base": null,
+      "refs": {
+        "DocumentAclCondition$users": "<p>The list of user entries in this condition.</p>"
+      }
+    },
+    "DocumentAclGroup": {
+      "base": "<p>A group entry within a document access control list (ACL) condition.</p>",
+      "refs": {
+        "DocumentAclConditionGroupsList$member": null
+      }
+    },
+    "DocumentAclGroupIdString": {
+      "base": null,
+      "refs": {
+        "DocumentAclGroup$id": "<p>The identifier of the group.</p>"
+      }
+    },
+    "DocumentAclMemberRelation": {
+      "base": "<p>The logical relation for combining access control list (ACL) membership conditions.</p>",
+      "refs": {
+        "DocumentAclCondition$conditionOperator": "<p>The logical operator for combining users and groups within this condition. Valid values: <code>AND</code> – Both a user match and a group match are required. <code>OR</code> – Either a user match or a group match is sufficient.</p>",
+        "DocumentAclMembership$memberRelation": "<p>The logical relation between conditions. Valid values: <code>AND</code> – All conditions must match. <code>OR</code> – At least one condition must match.</p>"
+      }
+    },
+    "DocumentAclMembership": {
+      "base": "<p>The membership entry for a document access control list (ACL), containing conditions and their logical relation.</p>",
+      "refs": {
+        "DocumentAcl$allowList": "<p>The list of principals allowed access to the document.</p>",
+        "DocumentAcl$denyList": "<p>The list of principals denied access to the document.</p>"
+      }
+    },
+    "DocumentAclMembershipConditionsList": {
+      "base": null,
+      "refs": {
+        "DocumentAclMembership$conditions": "<p>The list of conditions that determine membership.</p>"
+      }
+    },
+    "DocumentAclMembershipType": {
+      "base": "<p>The scope type for a document access control list (ACL) membership condition. Valid values: <code>KNOWLEDGE_BASE</code> – The entry applies at the knowledge base level. <code>DATA_SOURCE</code> – The entry applies at the data source level.</p>",
+      "refs": {
+        "DocumentAclGroup$type": "<p>The membership type indicating the scope of the group entry.</p>",
+        "DocumentAclUser$type": "<p>The membership type indicating the scope of the user entry.</p>"
+      }
+    },
+    "DocumentAclUser": {
+      "base": "<p>A user entry within a document access control list (ACL) condition.</p>",
+      "refs": {
+        "DocumentAclConditionUsersList$member": null
+      }
+    },
+    "DocumentAclUserIdString": {
+      "base": null,
+      "refs": {
+        "DocumentAclUser$id": "<p>The identifier of the user.</p>"
+      }
+    },
     "DocumentId": {
       "base": null,
       "refs": {
+        "CheckIngestedDocumentAclRequest$documentId": "<p>The unique identifier of the document to check access for.</p>",
         "GetDocumentContentRequest$documentId": "<p>The unique identifier of the document to retrieve content for.</p>",
+        "GetIngestedDocumentAclRequest$documentId": "<p>The unique identifier of the document to retrieve the ingested access control list (ACL) for.</p>",
         "KnowledgeBaseRetrievalResult$documentId": "<p>The unique identifier of the document. Use with <code>GetDocumentContent</code> to retrieve the full document.</p>"
       }
     },
@@ -1741,6 +1831,14 @@
       "base": null,
       "refs": {}
     },
+    "GetIngestedDocumentAclRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetIngestedDocumentAclResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetInvocationStepRequest": {
       "base": null,
       "refs": {}
@@ -2347,7 +2445,9 @@
     "KnowledgeBaseIdentifier": {
       "base": null,
       "refs": {
+        "CheckIngestedDocumentAclRequest$knowledgeBaseId": "<p>The unique identifier of the knowledge base that contains the document.</p>",
         "GetDocumentContentRequest$knowledgeBaseId": "<p>The unique identifier of the knowledge base that contains the document.</p>",
+        "GetIngestedDocumentAclRequest$knowledgeBaseId": "<p>The unique identifier of the knowledge base that contains the document.</p>",
         "RetrieveRequest$knowledgeBaseId": "<p>The unique identifier of the knowledge base to query.</p>"
       }
     },
@@ -3495,7 +3595,7 @@
       "base": "<p>Specifies the filters to use on the metadata attributes in the knowledge base data sources before returning results. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-config.html\">Query configurations</a>. See the examples below to see how to use these filters.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Retrieve.html#API_agent-runtime_Retrieve_RequestSyntax\">Retrieve request</a> – in the <code>filter</code> field</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_RequestSyntax\">RetrieveAndGenerate request</a> – in the <code>filter</code> field</p> </li> </ul>",
       "refs": {
         "KnowledgeBaseVectorSearchConfiguration$filter": "<p>Specifies the filters to use on the metadata in the knowledge base data sources before returning results. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-config.html\">Query configurations</a>.</p>",
-        "ManagedSearchConfiguration$filter": null,
+        "ManagedSearchConfiguration$filter": "<p>Filters the metadata of the retrieved results so that Amazon Bedrock returns only results that match the filter.</p>",
         "RetrievalFilterList$member": null,
         "RetrievalOverrides$filter": "<p>A filter to apply to the retrieval results.</p>"
       }
@@ -4337,10 +4437,11 @@
       "base": "<p>Contains information about the user making the request. Use this to pass user identity information for access control filtering, so that retrieval results only include documents the user is authorized to access.</p>",
       "refs": {
         "AgenticRetrieveStreamRequest$userContext": "<p>Contains information about the user making the request. This is used for access control filtering to ensure that retrieval results only include documents the user is authorized to access.</p>",
-        "GetDocumentContentRequest$userContext": null,
-        "RetrieveAndGenerateRequest$userContext": null,
-        "RetrieveAndGenerateStreamRequest$userContext": null,
-        "RetrieveRequest$userContext": null
+        "CheckIngestedDocumentAclRequest$userContext": "<p>The context object containing identity information for access control filtering, including user ID and optional group memberships used to evaluate the document access control list (ACL).</p>",
+        "GetDocumentContentRequest$userContext": "<p>Contains information about the user making the request. This is used for access control filtering to ensure that results only include documents the user is authorized to access.</p>",
+        "RetrieveAndGenerateRequest$userContext": "<p>Contains information about the user making the request. This is used for access control filtering to ensure that retrieval results only include documents the user is authorized to access.</p>",
+        "RetrieveAndGenerateStreamRequest$userContext": "<p>Contains information about the user making the request. This is used for access control filtering to ensure that retrieval results only include documents the user is authorized to access.</p>",
+        "RetrieveRequest$userContext": "<p>Contains information about the user making the request. This is used for access control filtering to ensure that retrieval results only include documents the user is authorized to access.</p>"
       }
     },
     "Uuid": {

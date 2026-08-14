@@ -4868,6 +4868,8 @@
         "CreateEvaluatorRequest$kmsKeyArn": "<p> The Amazon Resource Name (ARN) of a customer managed KMS key to use for encrypting sensitive evaluator data, including instructions and rating scale. If you don't specify a KMS key, the evaluator data is encrypted with an Amazon Web Services owned key. Only symmetric encryption KMS keys are supported. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/evaluations-encryption.html\">Encryption at rest for AgentCore Evaluations</a>. </p>",
         "CreateGatewayRequest$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt data associated with the gateway.</p>",
         "CreateGatewayResponse$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt data associated with the gateway.</p>",
+        "CreatePaymentManagerRequest$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the customer managed KMS key to use for encrypting sensitive payment manager data at rest. If you don't specify a key, the data is encrypted with an Amazon Web Services owned key.</p>",
+        "CreatePaymentManagerResponse$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt sensitive payment manager data at rest, if configured.</p>",
         "CreatePolicyEngineRequest$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the policy engine data.</p>",
         "CreatePolicyEngineResponse$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the policy engine data.</p>",
         "DeletePolicyEngineResponse$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the policy engine data.</p>",
@@ -4877,17 +4879,21 @@
         "GetDatasetResponse$kmsKeyArn": "<p> KMS key ARN used for server-side encryption on service Amazon S3 writes, if configured. </p>",
         "GetEvaluatorResponse$kmsKeyArn": "<p> The Amazon Resource Name (ARN) of the customer managed KMS key used to encrypt the evaluator's sensitive data. This field is only present for evaluators encrypted with a customer managed key. </p>",
         "GetGatewayResponse$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the gateway.</p>",
+        "GetPaymentManagerResponse$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt sensitive payment manager data at rest, if configured.</p>",
         "GetPolicyEngineResponse$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the policy engine data.</p>",
         "GetPolicyEngineSummaryResponse$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the policy engine data.</p>",
         "HarnessManagedMemoryConfiguration$encryptionKeyArn": "<p>Customer-managed KMS key. Defaults to AWS-owned key. Not updatable after creation.</p>",
         "KmsConfiguration$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key.</p>",
         "KmsKeySourceType$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to sign the JWT client assertion. The key must be an asymmetric key with key usage SIGN_VERIFY and a key spec compatible with the configured signing algorithm.</p>",
+        "PaymentManagerSummary$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt sensitive payment manager data at rest, if configured.</p>",
         "PolicyEngine$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the policy engine data.</p>",
         "PolicyEngineSummary$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the policy engine data.</p>",
         "UpdateConfigurationBundleRequest$kmsKeyArn": "<p>Optional KMS key ARN for encrypting component configurations. If provided, components will be encrypted with this key. If the bundle already has a KMS key, this rotates to the new key.</p>",
         "UpdateEvaluatorRequest$kmsKeyArn": "<p> The Amazon Resource Name (ARN) of a customer managed KMS key to use for encrypting sensitive evaluator data. Specify a new key ARN to rotate the encryption key, or specify a key ARN to add encryption to an evaluator that was previously created without one. When you rotate to a new key, the service decrypts the existing data with the old key and re-encrypts it with the new key. Only symmetric encryption KMS keys are supported. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/evaluations-encryption.html\">Encryption at rest for AgentCore Evaluations</a>. </p>",
         "UpdateGatewayRequest$kmsKeyArn": "<p>The updated ARN of the KMS key used to encrypt the gateway.</p>",
         "UpdateGatewayResponse$kmsKeyArn": "<p>The updated ARN of the KMS key used to encrypt the gateway.</p>",
+        "UpdatePaymentManagerRequest$kmsKeyArn": "<p>The updated Amazon Resource Name (ARN) of the customer managed KMS key used to encrypt sensitive payment manager data at rest.</p>",
+        "UpdatePaymentManagerResponse$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt sensitive payment manager data at rest, if configured.</p>",
         "UpdatePolicyEngineResponse$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the policy engine data.</p>"
       }
     },
@@ -6354,6 +6360,14 @@
         "HttpTargetConfiguration$passthrough": "<p>The passthrough configuration for the HTTP target. A passthrough target forwards requests directly to an external HTTP endpoint.</p>"
       }
     },
+    "PaymentConnectorAuthorizationUrl": {
+      "base": null,
+      "refs": {
+        "CreatePaymentConnectorResponse$authorizationUrl": "<p>The URL that the user must open to complete OAuth consent. This field is only present when the payment connector status is <code>PENDING_AUTHENTICATION</code>.</p>",
+        "GetPaymentConnectorResponse$authorizationUrl": "<p>The URL that the user must open to complete OAuth consent. This field is only present when the payment connector status is <code>PENDING_AUTHENTICATION</code>.</p>",
+        "UpdatePaymentConnectorResponse$authorizationUrl": "<p>The URL that the user must open to complete OAuth consent. This field is only present when the payment connector status is <code>PENDING_AUTHENTICATION</code>.</p>"
+      }
+    },
     "PaymentConnectorId": {
       "base": null,
       "refs": {
@@ -6375,6 +6389,12 @@
         "GetPaymentConnectorResponse$name": "<p>The name of the payment connector.</p>",
         "PaymentConnectorSummary$name": "<p>The name of the payment connector.</p>",
         "UpdatePaymentConnectorResponse$name": "<p>The name of the updated payment connector.</p>"
+      }
+    },
+    "PaymentConnectorProvisionMode": {
+      "base": null,
+      "refs": {
+        "CreatePaymentConnectorRequest$provisionMode": "<p>The provision mode for creating the payment connector. If you don't specify a value, the default is <code>MANUAL</code>.</p> <ul> <li> <p> <code>MANUAL</code> - You provide the credential provider configurations directly.</p> </li> <li> <p> <code>QUICK_CREATE</code> - The service orchestrates OAuth consent and provisions the credential provider for you.</p> </li> </ul>"
       }
     },
     "PaymentConnectorStatus": {
@@ -8131,6 +8151,9 @@
         "SemanticOverrideExtractionConfigurationInput$modelId": "<p>The model ID to use for semantic extraction.</p>",
         "ServiceException$message": null,
         "StartPolicyGenerationResponse$findings": "<p>Initial findings from the policy generation process.</p>",
+        "SubscriptionRequiredException$message": null,
+        "SubscriptionRequiredException$subscriptionUrl": "<p>URL to the Marketplace listing for subscription</p>",
+        "SubscriptionRequiredException$productName": "<p>The product requiring subscription</p>",
         "SummaryConsolidationOverride$modelId": "<p>The model ID to use for summary consolidation.</p>",
         "SummaryOverrideConsolidationConfigurationInput$modelId": "<p>The model ID to use for summary consolidation.</p>",
         "SystemManagedBlock$managedBy": "<p>The identifier of the system or process that manages this rule.</p>",
@@ -8225,6 +8248,10 @@
       "refs": {
         "VpcConfig$subnets": "<p>The subnets associated with the VPC configuration.</p>"
       }
+    },
+    "SubscriptionRequiredException": {
+      "base": "<p>The request failed because it requires an active Amazon Web Services Marketplace subscription that is not present. Subscribe to the required product in Amazon Web Services Marketplace and try again.</p>",
+      "refs": {}
     },
     "SummaryConsolidationOverride": {
       "base": "<p>Contains summary consolidation override configuration.</p>",

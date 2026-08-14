@@ -23,6 +23,14 @@
       "base": "<p>You do not have sufficient permission to perform this action.</p>",
       "refs": {}
     },
+    "Code": {
+      "base": "<p>Specifies the Amazon S3 location of code artifacts that workflows use during execution.</p>",
+      "refs": {
+        "CreateWorkflowRequest$Code": "<p>The location of code artifacts in Amazon S3 for the workflow. The service copies the code from this location at the time of the request.</p>",
+        "GetWorkflowResponse$Code": "<p>The Amazon S3 location of the code artifacts provided during workflow creation or update.</p>",
+        "UpdateWorkflowRequest$Code": "<p>The location of code artifacts in Amazon S3 for the updated workflow. The service copies the code from this location at the time of the request.</p>"
+      }
+    },
     "ConflictException": {
       "base": "<p>You cannot create a resource that already exists, or the resource is in a state that prevents the requested operation.</p>",
       "refs": {}
@@ -325,6 +333,30 @@
         "WorkflowRunSummary$RunType": "<p>The type of workflow run.</p>"
       }
     },
+    "S3Location": {
+      "base": "<p>Specifies the Amazon S3 location of code artifacts that workflows use during execution.</p>",
+      "refs": {
+        "Code$S3Location": "<p>The Amazon S3 location of the code artifacts that your workflow tasks use during execution.</p>"
+      }
+    },
+    "S3LocationBucketString": {
+      "base": null,
+      "refs": {
+        "S3Location$Bucket": "<p>The name of the Amazon S3 bucket.</p>"
+      }
+    },
+    "S3LocationObjectKeyString": {
+      "base": null,
+      "refs": {
+        "S3Location$ObjectKey": "<p>The key of the code artifact within the Amazon S3 bucket.</p>"
+      }
+    },
+    "S3LocationVersionIdString": {
+      "base": null,
+      "refs": {
+        "S3Location$VersionId": "<p>The version ID of the object in Amazon S3. If not specified, the latest version is used.</p>"
+      }
+    },
     "ScheduleConfiguration": {
       "base": "<p>The configuration to use to schedule automated workflow execution using cron expressions. Amazon Managed Workflows for Apache Airflow Serverless integrates with EventBridge Scheduler to provide cost-effective, timezone-aware scheduling capabilities. The service supports both time-based and event-based scheduling (event-based scheduling available post-GA). When a workflow definition includes scheduling information, Amazon Managed Workflows for Apache Airflow Serverless automatically configures the appropriate triggers and ensures only one version of a workflow has an active schedule at any time.</p>",
       "refs": {
@@ -490,6 +522,7 @@
         "GetTaskInstanceResponse$StartedAt": "<p>The timestamp when the task instance started execution, in ISO 8601 date-time format. This value is null if the task has not started.</p>",
         "GetWorkflowResponse$CreatedAt": "<p>The timestamp when the workflow was created, in ISO 8601 date-time format.</p>",
         "GetWorkflowResponse$ModifiedAt": "<p>The timestamp when the workflow was last modified, in ISO 8601 date-time format.</p>",
+        "GetWorkflowResponse$CodeSnapshottedAt": "<p>The time at which the code artifacts were copied for this workflow, in ISO 8601 date-time format.</p>",
         "RunDetailSummary$CreatedOn": "<p>The timestamp when the workflow run was created, in ISO 8601 date-time format.</p>",
         "RunDetailSummary$StartedAt": "<p>The timestamp when the workflow run started execution, in ISO 8601 date-time format.</p>",
         "RunDetailSummary$EndedAt": "<p>The timestamp when the workflow run completed execution, in ISO 8601 date-time format. This value is null if the run is not complete.</p>",

@@ -294,6 +294,13 @@
       },
       "exception":true
     },
+    "Code":{
+      "type":"structure",
+      "members":{
+        "S3Location":{"shape":"S3Location"}
+      },
+      "union":true
+    },
     "ConflictException":{
       "type":"structure",
       "required":[
@@ -322,6 +329,7 @@
           "idempotencyToken":true
         },
         "DefinitionS3Location":{"shape":"DefinitionS3Location"},
+        "Code":{"shape":"Code"},
         "RoleArn":{"shape":"RoleARN"},
         "Description":{"shape":"DescriptionString"},
         "EncryptionConfiguration":{"shape":"EncryptionConfiguration"},
@@ -481,6 +489,8 @@
         "EngineVersion":{"shape":"EngineVersion"},
         "WorkflowStatus":{"shape":"WorkflowStatus"},
         "DefinitionS3Location":{"shape":"DefinitionS3Location"},
+        "Code":{"shape":"Code"},
+        "CodeSnapshottedAt":{"shape":"TimestampValue"},
         "ScheduleConfiguration":{"shape":"ScheduleConfiguration"},
         "RoleArn":{"shape":"RoleARN"},
         "NetworkConfiguration":{"shape":"NetworkConfiguration"},
@@ -716,6 +726,33 @@
         "SCHEDULED"
       ]
     },
+    "S3Location":{
+      "type":"structure",
+      "required":[
+        "Bucket",
+        "ObjectKey"
+      ],
+      "members":{
+        "Bucket":{"shape":"S3LocationBucketString"},
+        "ObjectKey":{"shape":"S3LocationObjectKeyString"},
+        "VersionId":{"shape":"S3LocationVersionIdString"}
+      }
+    },
+    "S3LocationBucketString":{
+      "type":"string",
+      "max":63,
+      "min":3
+    },
+    "S3LocationObjectKeyString":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "S3LocationVersionIdString":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
     "ScheduleConfiguration":{
       "type":"structure",
       "members":{
@@ -932,6 +969,7 @@
       "members":{
         "WorkflowArn":{"shape":"WorkflowArn"},
         "DefinitionS3Location":{"shape":"DefinitionS3Location"},
+        "Code":{"shape":"Code"},
         "RoleArn":{"shape":"RoleARN"},
         "Description":{"shape":"DescriptionString"},
         "LoggingConfiguration":{"shape":"LoggingConfiguration"},

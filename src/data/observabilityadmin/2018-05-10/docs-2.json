@@ -421,6 +421,12 @@
       "base": null,
       "refs": {}
     },
+    "IamRoleArn": {
+      "base": null,
+      "refs": {
+        "TagPropagationConfiguration$DestinationRoleArn": "<p>The ARN of a customer-managed IAM role in the destination account. The service assumes this role to propagate tags to destination log groups. You must have <code>iam:PassRole</code> permission on this role.</p>"
+      }
+    },
     "Integer": {
       "base": null,
       "refs": {
@@ -1081,6 +1087,12 @@
         "AdvancedFieldSelector$NotEndsWith": "<p> Matches if the field value does not end with the specified value. </p>"
       }
     },
+    "TagConflictResolutionStrategy": {
+      "base": "<p>The strategy for resolving tag conflicts between source and destination log groups.</p> <ul> <li> <p> <code>ADD_ONLY</code> – Only adds new tags from the source without modifying existing destination tags.</p> </li> <li> <p> <code>UPDATE_SYNC</code> – Adds new tags and updates existing tags from the source. Does not remove destination tags that are absent from the source.</p> </li> <li> <p> <code>IN_SYNC</code> – Keeps destination tags fully synchronized with source tags, including removing destination tags that do not exist on the source.</p> </li> </ul>",
+      "refs": {
+        "TagPropagationConfiguration$TagConflictResolutionStrategy": "<p>The strategy for resolving conflicts when a tag key exists on both the source and destination log groups. If not specified, defaults to <code>UPDATE_SYNC</code>.</p> <ul> <li> <p> <code>ADD_ONLY</code> – Only adds new tags from the source without modifying existing destination tags.</p> </li> <li> <p> <code>UPDATE_SYNC</code> – Adds new tags and updates existing tags from the source. Does not remove destination tags that are absent from the source.</p> </li> <li> <p> <code>IN_SYNC</code> – Keeps destination tags fully synchronized with source tags, including removing destination tags that do not exist on the source.</p> </li> </ul>"
+      }
+    },
     "TagKey": {
       "base": null,
       "refs": {
@@ -1114,6 +1126,26 @@
         "TelemetryConfiguration$ResourceTags": "<p> Tags associated with the resource, for example <code>{ Name: \"ExampleInstance\", Environment: \"Development\" }</code>. </p>",
         "TelemetryPipeline$Tags": "<p>The key-value pairs associated with the telemetry pipeline resource.</p>",
         "TelemetryPipelineSummary$Tags": "<p>The key-value pairs associated with the telemetry pipeline resource.</p>"
+      }
+    },
+    "TagPropagationConfiguration": {
+      "base": "<p>Specifies configuration for propagating resource tags from source log groups to centralized destination log groups. The service uses a customer-managed IAM role in the destination account to add, update, and remove tags on destination log groups.</p>",
+      "refs": {
+        "DestinationLogsConfiguration$TagPropagationConfiguration": "<p>Specifies the tag propagation configuration for this centralization rule. When present, <code>LogGroupNameConfiguration</code> must use a <code>LogGroupNamePattern</code> that contains <code>${source.logGroup}</code>, <code>${source.accountId}</code>, and <code>${source.region}</code>.</p>"
+      }
+    },
+    "TagPropagationFailureReason": {
+      "base": "<p>The reason tag propagation is unhealthy for a centralization rule.</p> <ul> <li> <p> <code>RoleNotAssumable</code> – The service cannot assume the destination role due to a trust policy or external ID misconfiguration.</p> </li> <li> <p> <code>RoleLacksPermissions</code> – The role was assumed successfully but the tag API call was denied by the role's permissions policy.</p> </li> </ul>",
+      "refs": {
+        "CentralizationRuleSummary$TagPropagationFailureReason": "<p>The reason tag propagation is unhealthy for this rule. Only present when <code>TagPropagationStatus</code> is <code>Unhealthy</code>.</p>",
+        "GetCentralizationRuleForOrganizationOutput$TagPropagationFailureReason": "<p>The reason tag propagation is unhealthy for this rule. Only present when <code>TagPropagationStatus</code> is <code>Unhealthy</code>.</p>"
+      }
+    },
+    "TagPropagationStatus": {
+      "base": "<p>The health status of tag propagation for a centralization rule. This status is independent of the overall <code>RuleHealth</code> for log delivery.</p>",
+      "refs": {
+        "CentralizationRuleSummary$TagPropagationStatus": "<p>The health status of tag propagation for this rule. This status is independent of the overall <code>RuleHealth</code> for log delivery. Returns <code>Healthy</code> when the most recent tag-propagation attempt succeeded, or <code>Unhealthy</code> when the most recent attempt failed.</p>",
+        "GetCentralizationRuleForOrganizationOutput$TagPropagationStatus": "<p>The health status of tag propagation for this rule. This status is independent of the overall <code>RuleHealth</code> for log delivery. Returns <code>Healthy</code> when the most recent tag-propagation attempt succeeded, or <code>Unhealthy</code> when the most recent attempt failed.</p>"
       }
     },
     "TagResourceInput": {

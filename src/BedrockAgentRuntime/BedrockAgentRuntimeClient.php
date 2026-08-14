@@ -7,6 +7,8 @@ use Aws\AwsClient;
  * This client is used to interact with the **Agents for Amazon Bedrock Runtime** service.
  * @method \Aws\Result agenticRetrieveStream(array $args = [])
  * @method \GuzzleHttp\Promise\Promise agenticRetrieveStreamAsync(array $args = [])
+ * @method \Aws\Result checkIngestedDocumentAcl(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise checkIngestedDocumentAclAsync(array $args = [])
  * @method \Aws\Result createInvocation(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createInvocationAsync(array $args = [])
  * @method \Aws\Result createSession(array $args = [])
@@ -27,6 +29,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getExecutionFlowSnapshotAsync(array $args = [])
  * @method \Aws\Result getFlowExecution(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getFlowExecutionAsync(array $args = [])
+ * @method \Aws\Result getIngestedDocumentAcl(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getIngestedDocumentAclAsync(array $args = [])
  * @method \Aws\Result getInvocationStep(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getInvocationStepAsync(array $args = [])
  * @method \Aws\Result getSession(array $args = [])

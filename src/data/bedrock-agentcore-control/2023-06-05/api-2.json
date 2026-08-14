@@ -457,6 +457,7 @@
       "output":{"shape":"CreatePaymentConnectorResponse"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"SubscriptionRequiredException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
@@ -2943,6 +2944,7 @@
       "output":{"shape":"UpdatePaymentConnectorResponse"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"SubscriptionRequiredException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
@@ -3850,6 +3852,7 @@
     },
     "CapacityProviderConfiguration":{
       "type":"structure",
+      "required":["capacityProviderArn"],
       "members":{
         "capacityProviderArn":{"shape":"CapacityProviderArn"}
       }
@@ -5302,6 +5305,7 @@
         "description":{"shape":"PaymentsDescription"},
         "type":{"shape":"PaymentConnectorType"},
         "credentialProviderConfigurations":{"shape":"CredentialsProviderConfigurations"},
+        "provisionMode":{"shape":"PaymentConnectorProvisionMode"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -5326,7 +5330,8 @@
         "type":{"shape":"PaymentConnectorType"},
         "credentialProviderConfigurations":{"shape":"CredentialsProviderConfigurations"},
         "createdAt":{"shape":"DateTimestamp"},
-        "status":{"shape":"PaymentConnectorStatus"}
+        "status":{"shape":"PaymentConnectorStatus"},
+        "authorizationUrl":{"shape":"PaymentConnectorAuthorizationUrl"}
       }
     },
     "CreatePaymentCredentialProviderRequest":{
@@ -5375,7 +5380,8 @@
           "shape":"ClientToken",
           "idempotencyToken":true
         },
-        "tags":{"shape":"TagsMap"}
+        "tags":{"shape":"TagsMap"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"}
       }
     },
     "CreatePaymentManagerResponse":{
@@ -5399,7 +5405,8 @@
         "workloadIdentityDetails":{"shape":"WorkloadIdentityDetails"},
         "createdAt":{"shape":"DateTimestamp"},
         "status":{"shape":"PaymentManagerStatus"},
-        "tags":{"shape":"TagsMap"}
+        "tags":{"shape":"TagsMap"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"}
       }
     },
     "CreatePolicyEngineRequest":{
@@ -5661,7 +5668,7 @@
       "type":"list",
       "member":{"shape":"CredentialsProviderConfiguration"},
       "max":1,
-      "min":1
+      "min":0
     },
     "CustomClaimValidationType":{
       "type":"structure",
@@ -7811,7 +7818,6 @@
         "createdAt",
         "lastUpdatedAt",
         "roleArn",
-        "networkConfiguration",
         "status",
         "lifecycleConfiguration"
       ],
@@ -8552,7 +8558,8 @@
         "credentialProviderConfigurations":{"shape":"CredentialsProviderConfigurations"},
         "createdAt":{"shape":"DateTimestamp"},
         "lastUpdatedAt":{"shape":"DateTimestamp"},
-        "status":{"shape":"PaymentConnectorStatus"}
+        "status":{"shape":"PaymentConnectorStatus"},
+        "authorizationUrl":{"shape":"PaymentConnectorAuthorizationUrl"}
       }
     },
     "GetPaymentCredentialProviderRequest":{
@@ -8617,7 +8624,8 @@
         "createdAt":{"shape":"DateTimestamp"},
         "lastUpdatedAt":{"shape":"DateTimestamp"},
         "status":{"shape":"PaymentManagerStatus"},
-        "tags":{"shape":"TagsMap"}
+        "tags":{"shape":"TagsMap"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"}
       }
     },
     "GetPolicyEngineRequest":{
@@ -12344,17 +12352,30 @@
         "stickinessConfiguration":{"shape":"StickinessConfiguration"}
       }
     },
+    "PaymentConnectorAuthorizationUrl":{
+      "type":"string",
+      "max":4096,
+      "min":1,
+      "pattern":"https://[^\\p{C}]*"
+    },
     "PaymentConnectorId":{
       "type":"string",
       "max":211,
       "min":12,
-      "pattern":"([0-9a-z][-]?){1,100}-[0-9a-z]{10}"
+      "pattern":"([0-9a-z_][-]?){1,100}-[0-9a-z]{10}"
     },
     "PaymentConnectorName":{
       "type":"string",
       "max":48,
       "min":1,
       "pattern":"[a-zA-Z][a-zA-Z0-9_]{0,47}"
+    },
+    "PaymentConnectorProvisionMode":{
+      "type":"string",
+      "enum":[
+        "MANUAL",
+        "QUICK_CREATE"
+      ]
     },
     "PaymentConnectorStatus":{
       "type":"string",
@@ -12365,7 +12386,12 @@
         "READY",
         "CREATE_FAILED",
         "UPDATE_FAILED",
-        "DELETE_FAILED"
+        "DELETE_FAILED",
+        "AWS_MARKETPLACE_SUBSCRIPTION_REQUIRED",
+        "PENDING_AUTHENTICATION",
+        "PROVISIONING",
+        "AUTHENTICATION_EXPIRED",
+        "AUTHENTICATION_FAILED"
       ]
     },
     "PaymentConnectorSummaries":{
@@ -12495,7 +12521,8 @@
         "roleArn":{"shape":"RoleArn"},
         "status":{"shape":"PaymentManagerStatus"},
         "createdAt":{"shape":"DateTimestamp"},
-        "lastUpdatedAt":{"shape":"DateTimestamp"}
+        "lastUpdatedAt":{"shape":"DateTimestamp"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"}
       }
     },
     "PaymentProviderConfigurationInput":{
@@ -12525,7 +12552,7 @@
       "type":"string",
       "max":4096,
       "min":1,
-      "pattern":"[a-zA-Z0-9\\s]+"
+      "pattern":"[^\\p{C}]*"
     },
     "Period":{
       "type":"string",
@@ -14172,6 +14199,20 @@
       "max":16,
       "min":1
     },
+    "SubscriptionRequiredException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"String"},
+        "subscriptionUrl":{"shape":"String"},
+        "productName":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":403,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "SummaryConsolidationOverride":{
       "type":"structure",
       "required":[
@@ -15490,7 +15531,8 @@
         "type":{"shape":"PaymentConnectorType"},
         "credentialProviderConfigurations":{"shape":"CredentialsProviderConfigurations"},
         "lastUpdatedAt":{"shape":"DateTimestamp"},
-        "status":{"shape":"PaymentConnectorStatus"}
+        "status":{"shape":"PaymentConnectorStatus"},
+        "authorizationUrl":{"shape":"PaymentConnectorAuthorizationUrl"}
       }
     },
     "UpdatePaymentCredentialProviderRequest":{
@@ -15541,7 +15583,8 @@
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        }
+        },
+        "kmsKeyArn":{"shape":"KmsKeyArn"}
       }
     },
     "UpdatePaymentManagerResponse":{
@@ -15563,7 +15606,8 @@
         "roleArn":{"shape":"RoleArn"},
         "workloadIdentityDetails":{"shape":"WorkloadIdentityDetails"},
         "lastUpdatedAt":{"shape":"DateTimestamp"},
-        "status":{"shape":"PaymentManagerStatus"}
+        "status":{"shape":"PaymentManagerStatus"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"}
       }
     },
     "UpdatePolicyEngineRequest":{

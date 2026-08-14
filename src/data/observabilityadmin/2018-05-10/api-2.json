@@ -826,6 +826,8 @@
         "LastUpdateTimeStamp":{"shape":"Long"},
         "RuleHealth":{"shape":"RuleHealth"},
         "FailureReason":{"shape":"CentralizationFailureReason"},
+        "TagPropagationStatus":{"shape":"TagPropagationStatus"},
+        "TagPropagationFailureReason":{"shape":"TagPropagationFailureReason"},
         "DestinationAccountId":{"shape":"String"},
         "DestinationRegion":{"shape":"Region"}
       }
@@ -1022,7 +1024,8 @@
       "members":{
         "LogsEncryptionConfiguration":{"shape":"LogsEncryptionConfiguration"},
         "BackupConfiguration":{"shape":"LogsBackupConfiguration"},
-        "LogGroupNameConfiguration":{"shape":"LogGroupNameConfiguration"}
+        "LogGroupNameConfiguration":{"shape":"LogGroupNameConfiguration"},
+        "TagPropagationConfiguration":{"shape":"TagPropagationConfiguration"}
       }
     },
     "DestinationMetricsConfiguration":{
@@ -1142,6 +1145,8 @@
         "LastUpdateTimeStamp":{"shape":"Long"},
         "RuleHealth":{"shape":"RuleHealth"},
         "FailureReason":{"shape":"CentralizationFailureReason"},
+        "TagPropagationStatus":{"shape":"TagPropagationStatus"},
+        "TagPropagationFailureReason":{"shape":"TagPropagationFailureReason"},
         "CentralizationRule":{"shape":"CentralizationRule"}
       }
     },
@@ -1240,6 +1245,12 @@
         "IsReplicated":{"shape":"IsReplicated"},
         "RegionStatuses":{"shape":"RegionStatuses"}
       }
+    },
+    "IamRoleArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws[a-zA-Z-]*:iam::\\d{12}:role/[\\w+=,.@/-]+"
     },
     "Integer":{
       "type":"integer",
@@ -1876,6 +1887,14 @@
       "type":"list",
       "member":{"shape":"String"}
     },
+    "TagConflictResolutionStrategy":{
+      "type":"string",
+      "enum":[
+        "IN_SYNC",
+        "ADD_ONLY",
+        "UPDATE_SYNC"
+      ]
+    },
     "TagKey":{
       "type":"string",
       "max":128,
@@ -1899,6 +1918,28 @@
       "type":"map",
       "key":{"shape":"String"},
       "value":{"shape":"String"}
+    },
+    "TagPropagationConfiguration":{
+      "type":"structure",
+      "required":["DestinationRoleArn"],
+      "members":{
+        "DestinationRoleArn":{"shape":"IamRoleArn"},
+        "TagConflictResolutionStrategy":{"shape":"TagConflictResolutionStrategy"}
+      }
+    },
+    "TagPropagationFailureReason":{
+      "type":"string",
+      "enum":[
+        "RoleNotAssumable",
+        "RoleLacksPermissions"
+      ]
+    },
+    "TagPropagationStatus":{
+      "type":"string",
+      "enum":[
+        "Healthy",
+        "Unhealthy"
+      ]
     },
     "TagResourceInput":{
       "type":"structure",

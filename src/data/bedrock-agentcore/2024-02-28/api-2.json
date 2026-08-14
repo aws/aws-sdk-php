@@ -141,7 +141,9 @@
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
-        {"shape":"InternalServerException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"SubscriptionRequiredException"}
       ],
       "idempotent":true
     },
@@ -160,7 +162,8 @@
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
-        {"shape":"InternalServerException"}
+        {"shape":"InternalServerException"},
+        {"shape":"SubscriptionRequiredException"}
       ],
       "idempotent":true
     },
@@ -984,8 +987,10 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
-        {"shape":"InternalServerException"}
+        {"shape":"InternalServerException"},
+        {"shape":"SubscriptionRequiredException"}
       ],
       "idempotent":true
     },
@@ -2430,7 +2435,8 @@
       ],
       "members":{
         "version":{"shape":"String"},
-        "payload":{"shape":"PaymentDocument"}
+        "payload":{"shape":"PaymentDocument"},
+        "permit2AllowanceLimit":{"shape":"Permit2AllowanceLimit"}
       }
     },
     "CryptoX402PaymentOutput":{
@@ -6055,6 +6061,42 @@
         "error":{"shape":"String"}
       }
     },
+    "MppPaymentCredential":{
+      "type":"string",
+      "max":32768,
+      "min":1,
+      "sensitive":true
+    },
+    "MppPaymentInput":{
+      "type":"structure",
+      "required":[
+        "version",
+        "wwwAuthenticateHeaders"
+      ],
+      "members":{
+        "version":{"shape":"Version"},
+        "wwwAuthenticateHeaders":{"shape":"WwwAuthenticateHeaderList"},
+        "buyerPaysGasFees":{"shape":"Boolean"}
+      }
+    },
+    "MppPaymentOutput":{
+      "type":"structure",
+      "required":[
+        "version",
+        "selectedPaymentId",
+        "paymentCredential"
+      ],
+      "members":{
+        "version":{"shape":"Version"},
+        "selectedPaymentId":{"shape":"MppPaymentOutputSelectedPaymentIdString"},
+        "paymentCredential":{"shape":"MppPaymentCredential"}
+      }
+    },
+    "MppPaymentOutputSelectedPaymentIdString":{
+      "type":"string",
+      "max":512,
+      "min":1
+    },
     "Name":{
       "type":"string",
       "max":100,
@@ -6267,7 +6309,8 @@
     "PaymentInput":{
       "type":"structure",
       "members":{
-        "cryptoX402":{"shape":"CryptoX402PaymentInput"}
+        "cryptoX402":{"shape":"CryptoX402PaymentInput"},
+        "mpp":{"shape":"MppPaymentInput"}
       },
       "union":true
     },
@@ -6315,7 +6358,8 @@
         "INITIATED",
         "ACTIVE",
         "FAILED",
-        "DELETED"
+        "DELETED",
+        "BLOCKED"
       ]
     },
     "PaymentInstrumentSummary":{
@@ -6358,7 +6402,8 @@
     "PaymentOutput":{
       "type":"structure",
       "members":{
-        "cryptoX402":{"shape":"CryptoX402PaymentOutput"}
+        "cryptoX402":{"shape":"CryptoX402PaymentOutput"},
+        "mpp":{"shape":"MppPaymentOutput"}
       },
       "union":true
     },
@@ -6454,7 +6499,10 @@
     },
     "PaymentType":{
       "type":"string",
-      "enum":["CRYPTO_X402"]
+      "enum":[
+        "CRYPTO_X402",
+        "MPP"
+      ]
     },
     "PerVariantOnlineEvaluationConfig":{
       "type":"structure",
@@ -6472,6 +6520,12 @@
       "member":{"shape":"PerVariantOnlineEvaluationConfig"},
       "max":2,
       "min":2
+    },
+    "Permit2AllowanceLimit":{
+      "type":"string",
+      "max":78,
+      "min":1,
+      "pattern":"[0-9]+"
     },
     "PhoneNumber":{
       "type":"string",
@@ -7869,6 +7923,30 @@
         "basicAuthToken":{"shape":"StripePrivyBasicAuthTokenType"}
       }
     },
+    "SubscriptionRequiredException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"String"},
+        "subscriptionUrl":{"shape":"SubscriptionRequiredExceptionSubscriptionUrlString"},
+        "productName":{"shape":"SubscriptionRequiredExceptionProductNameString"}
+      },
+      "error":{
+        "httpStatusCode":403,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "SubscriptionRequiredExceptionProductNameString":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "SubscriptionRequiredExceptionSubscriptionUrlString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
     "SyntheticTimestamp_date_time":{
       "type":"timestamp",
       "timestampFormat":"iso8601"
@@ -8468,6 +8546,12 @@
       "max":100,
       "min":1
     },
+    "Version":{
+      "type":"string",
+      "max":10,
+      "min":1,
+      "pattern":"[0-9]+"
+    },
     "ViewPort":{
       "type":"structure",
       "required":[
@@ -8502,6 +8586,17 @@
       "max":131072,
       "min":1,
       "sensitive":true
+    },
+    "WwwAuthenticateHeader":{
+      "type":"string",
+      "max":16384,
+      "min":1
+    },
+    "WwwAuthenticateHeaderList":{
+      "type":"list",
+      "member":{"shape":"WwwAuthenticateHeader"},
+      "max":1,
+      "min":1
     }
   }
 }

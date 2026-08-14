@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\RedshiftServerless` - Amazon Redshift now unlocks a locked admin user account and resets the failed-login counter when you update the admin password using the UpdateNamespace API. This option is available only when account lockout security is enabled.
+* `Aws\Glue` - Added support for associating glossary terms with iterable form items, such as table columns.
+* `Aws\BedrockAgentCore` - Add support for the Machine Payments Protocol (MPP) and x402 upto scheme payments protocol in Amazon Bedrock AgentCore Payments. Customers can now pay for MPP-gated resources and also pay services which requires upto scheme in x402
+* `Aws\ObservabilityAdmin` - CloudWatch Logs centralization rules now support tag propagation. You can configure a TagPropagationConfiguration on your centralization rule to automatically sync resource tags from source to destination log groups, with configurable conflict resolution strategies.
+* `Aws\Redshift` - Amazon Redshift now unlocks a locked admin user account and resets the failed-login counter when you update the admin password using the ModifyCluster API. This option is available only when account lockout security is enabled.
+* `Aws\BedrockAgentRuntime` - Adds CheckIngestedDocumentAcl and GetIngestedDocumentAcl APIs to Amazon Bedrock Knowledge Bases. Customers can verify user access to documents based on ingested ACLs and retrieve full ACL details including allow and deny entries, enabling validation of ACL ingestion without test retrievals.
+* `Aws\MWAAServerless` - Adds support for Consuming code for MWAA Serverless
+* `Aws\SageMaker` - Release support for g7.2xlarge, g7.4xlarge, g7.8xlarge, g7.12xlarge, g7.24xlarge, and g7.48xlarge instance types for SageMaker HyperPod
+* `Aws\BedrockAgentCoreControl` - Adds AgentCore Payments support for CMK, Marketplace Subscriptions and QuickCreate
+
 ## 3.392.2 - 2026-08-13
 
 * `Aws\ACM` - This change allows customers to update their existing email-validated certificates to use the DNS validation method.

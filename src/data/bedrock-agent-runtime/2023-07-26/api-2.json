@@ -35,6 +35,23 @@
         {"shape":"ServiceQuotaExceededException"}
       ]
     },
+    "CheckIngestedDocumentAcl":{
+      "name":"CheckIngestedDocumentAcl",
+      "http":{
+        "method":"POST",
+        "requestUri":"/knowledgebases/{knowledgeBaseId}/datasources/{dataSourceId}/check-ingested-document-acl",
+        "responseCode":200
+      },
+      "input":{"shape":"CheckIngestedDocumentAclRequest"},
+      "output":{"shape":"CheckIngestedDocumentAclResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "CreateInvocation":{
       "name":"CreateInvocation",
       "http":{
@@ -219,6 +236,23 @@
       },
       "input":{"shape":"GetFlowExecutionRequest"},
       "output":{"shape":"GetFlowExecutionResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "GetIngestedDocumentAcl":{
+      "name":"GetIngestedDocumentAcl",
+      "http":{
+        "method":"POST",
+        "requestUri":"/knowledgebases/{knowledgeBaseId}/datasources/{dataSourceId}/get-ingested-document-acl",
+        "responseCode":200
+      },
+      "input":{"shape":"GetIngestedDocumentAclRequest"},
+      "output":{"shape":"GetIngestedDocumentAclResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
@@ -1463,6 +1497,36 @@
       "type":"list",
       "member":{"shape":"Caller"}
     },
+    "CheckIngestedDocumentAclRequest":{
+      "type":"structure",
+      "required":[
+        "dataSourceId",
+        "documentId",
+        "knowledgeBaseId",
+        "userContext"
+      ],
+      "members":{
+        "dataSourceId":{
+          "shape":"DataSourceId",
+          "location":"uri",
+          "locationName":"dataSourceId"
+        },
+        "documentId":{"shape":"DocumentId"},
+        "knowledgeBaseId":{
+          "shape":"KnowledgeBaseIdentifier",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
+        "userContext":{"shape":"UserContext"}
+      }
+    },
+    "CheckIngestedDocumentAclResponse":{
+      "type":"structure",
+      "required":["hasAccess"],
+      "members":{
+        "hasAccess":{"shape":"Boolean"}
+      }
+    },
     "Citation":{
       "type":"structure",
       "members":{
@@ -1779,6 +1843,95 @@
       "type":"structure",
       "members":{},
       "document":true
+    },
+    "DocumentAcl":{
+      "type":"structure",
+      "members":{
+        "allowList":{"shape":"DocumentAclMembership"},
+        "denyList":{"shape":"DocumentAclMembership"}
+      },
+      "sensitive":true
+    },
+    "DocumentAclCondition":{
+      "type":"structure",
+      "members":{
+        "conditionOperator":{"shape":"DocumentAclMemberRelation"},
+        "groups":{"shape":"DocumentAclConditionGroupsList"},
+        "users":{"shape":"DocumentAclConditionUsersList"}
+      }
+    },
+    "DocumentAclConditionGroupsList":{
+      "type":"list",
+      "member":{"shape":"DocumentAclGroup"},
+      "max":3000,
+      "min":0
+    },
+    "DocumentAclConditionUsersList":{
+      "type":"list",
+      "member":{"shape":"DocumentAclUser"},
+      "max":3000,
+      "min":0
+    },
+    "DocumentAclGroup":{
+      "type":"structure",
+      "required":[
+        "id",
+        "type"
+      ],
+      "members":{
+        "id":{"shape":"DocumentAclGroupIdString"},
+        "type":{"shape":"DocumentAclMembershipType"}
+      }
+    },
+    "DocumentAclGroupIdString":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"^\\P{C}*$"
+    },
+    "DocumentAclMemberRelation":{
+      "type":"string",
+      "enum":[
+        "AND",
+        "OR"
+      ]
+    },
+    "DocumentAclMembership":{
+      "type":"structure",
+      "members":{
+        "conditions":{"shape":"DocumentAclMembershipConditionsList"},
+        "memberRelation":{"shape":"DocumentAclMemberRelation"}
+      }
+    },
+    "DocumentAclMembershipConditionsList":{
+      "type":"list",
+      "member":{"shape":"DocumentAclCondition"},
+      "max":100,
+      "min":0
+    },
+    "DocumentAclMembershipType":{
+      "type":"string",
+      "enum":[
+        "KNOWLEDGE_BASE",
+        "DATA_SOURCE"
+      ]
+    },
+    "DocumentAclUser":{
+      "type":"structure",
+      "required":[
+        "id",
+        "type"
+      ],
+      "members":{
+        "id":{"shape":"DocumentAclUserIdString"},
+        "type":{"shape":"DocumentAclMembershipType"}
+      }
+    },
+    "DocumentAclUserIdString":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"^\\P{C}*$"
     },
     "DocumentId":{
       "type":"string",
@@ -2860,6 +3013,34 @@
         "flowVersion":{"shape":"Version"},
         "startedAt":{"shape":"DateTimestamp"},
         "status":{"shape":"FlowExecutionStatus"}
+      }
+    },
+    "GetIngestedDocumentAclRequest":{
+      "type":"structure",
+      "required":[
+        "dataSourceId",
+        "documentId",
+        "knowledgeBaseId"
+      ],
+      "members":{
+        "dataSourceId":{
+          "shape":"DataSourceId",
+          "location":"uri",
+          "locationName":"dataSourceId"
+        },
+        "documentId":{"shape":"DocumentId"},
+        "knowledgeBaseId":{
+          "shape":"KnowledgeBaseIdentifier",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        }
+      }
+    },
+    "GetIngestedDocumentAclResponse":{
+      "type":"structure",
+      "required":["documentAcl"],
+      "members":{
+        "documentAcl":{"shape":"DocumentAcl"}
       }
     },
     "GetInvocationStepRequest":{
