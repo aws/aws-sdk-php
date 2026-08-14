@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.392.3 - 2026-08-14
 
 * `Aws\RedshiftServerless` - Amazon Redshift now unlocks a locked admin user account and resets the failed-login counter when you update the admin password using the UpdateNamespace API. This option is available only when account lockout security is enabled.
 * `Aws\Glue` - Added support for associating glossary terms with iterable form items, such as table columns.
