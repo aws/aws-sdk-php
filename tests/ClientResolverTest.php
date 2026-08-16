@@ -749,6 +749,85 @@ EOT;
         $this->assertSame('bar', $conf['http']['foo']);
     }
 
+    public function testAppliesTransportSharingToDefaultHandler()
+    {
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $conf = $r->resolve([
+            'service' => 'sqs',
+            'region' => 'x',
+            'version' => 'latest',
+            'transport_sharing' => 'handler_prefer',
+        ], new HandlerList());
+
+        $this->assertSame('handler_prefer', $conf['transport_sharing']);
+    }
+
+    public function testPreservesRequestedTransportSharingMode()
+    {
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $conf = $r->resolve([
+            'service' => 'sqs',
+            'region' => 'x',
+            'version' => 'latest',
+            'transport_sharing' => 'persistent_prefer',
+        ], new HandlerList());
+
+        $this->assertSame('persistent_prefer', $conf['transport_sharing']);
+    }
+
+    public function testTransportSharingCannotRequireWithCustomHandler()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('can only require transport sharing');
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $r->resolve([
+            'service' => 'sqs',
+            'region' => 'x',
+            'version' => 'latest',
+            'http_handler' => function () {},
+            'transport_sharing' => 'handler_require',
+        ], new HandlerList());
+    }
+
+    #[DoesNotPerformAssertions]
+    public function testTransportSharingPreferIsIgnoredWithCustomHandler()
+    {
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $r->resolve([
+            'service' => 'sqs',
+            'region' => 'x',
+            'version' => 'latest',
+            'http_handler' => function () {},
+            'transport_sharing' => 'persistent_prefer',
+        ], new HandlerList());
+    }
+
+    public function testTransportSharingRejectsInvalidMode()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The provided transport sharing mode "always" is invalid.');
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $r->resolve([
+            'service' => 'sqs',
+            'region' => 'x',
+            'version' => 'latest',
+            'transport_sharing' => 'always',
+        ], new HandlerList());
+    }
+
+    public function testTransportSharingRejectsNonStringValue()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid configuration value provided for "transport_sharing". Expected string, but got int(1)');
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $r->resolve([
+            'service' => 'sqs',
+            'region' => 'x',
+            'version' => 'latest',
+            'transport_sharing' => 1,
+        ], new HandlerList());
+    }
+
     public function testCanAddConfigOptions()
     {
         $c = new S3Client([

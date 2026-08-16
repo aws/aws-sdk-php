@@ -2,6 +2,7 @@
 namespace Aws\Handler\Guzzle;
 
 use Aws\Handler\HttpHandlerError;
+use Aws\Handler\HttpTransportSharing;
 use GuzzleHttp\Utils;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Client;
@@ -18,11 +19,23 @@ class GuzzleHandler
     private $client;
 
     /**
-     * @param ClientInterface $client
+     * @param ClientInterface|null $client
+     * @param string|null          $transportSharing
      */
-    public function __construct(?ClientInterface $client = null)
-    {
-        $this->client = $client ?: new Client();
+    public function __construct(
+        ?ClientInterface $client = null,
+        ?string $transportSharing = null
+    ) {
+        if ($client !== null && HttpTransportSharing::isRequired($transportSharing)) {
+            throw new \InvalidArgumentException('The provided transport'
+                . ' sharing mode cannot require sharing when a client is'
+                . ' provided. Configure the "transport_sharing" option on'
+                . ' the provided client instead.');
+        }
+
+        $this->client = $client ?: new Client(
+            HttpTransportSharing::toClientConfig($transportSharing)
+        );
     }
 
     /**
