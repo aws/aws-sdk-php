@@ -215,6 +215,24 @@
         "AgentCollaboratorOutputPayload$text": "<p>Text output.</p>"
       }
     },
+    "AgentCoreMemoryActorId": {
+      "base": "<p>The identifier of an end user or agent that a session belongs to. This value scopes session history so that one actor's history is never returned for another.</p>",
+      "refs": {
+        "AgenticRetrieveMemorySessionBinding$actorId": "<p>The identifier of the end user or agent that the session belongs to. This identifier scopes session history so that one actor's history is never returned for another. You are responsible for sending the correct actor value.</p>"
+      }
+    },
+    "AgentCoreMemoryId": {
+      "base": "<p>The identifier of an AgentCore Memory resource used with this retrieval.</p>",
+      "refs": {
+        "AgenticRetrieveMemoryConfiguration$memoryId": "<p>The identifier of the AgentCore Memory resource to use. The resource must exist in your account and be in the ACTIVE state.</p>"
+      }
+    },
+    "AgentCoreMemorySessionId": {
+      "base": "<p>The identifier of a session in an AgentCore Memory resource.</p>",
+      "refs": {
+        "AgenticRetrieveMemorySessionBinding$sessionId": "<p>The identifier of the session to restore and continue. You are responsible for sending the correct session value.</p>"
+      }
+    },
     "AgentId": {
       "base": null,
       "refs": {
@@ -351,6 +369,102 @@
         "AgenticRetrieveWarning$guardrail": "<p>A warning from a guardrail evaluation.</p>"
       }
     },
+    "AgenticRetrieveMemoryConfiguration": {
+      "base": "<p>Specifies an AgentCore Memory resource and how this retrieval uses it. Set sessionBinding to restore and continue a session. Set retrievalConfigs to let the agent retrieve from long-term memory. You must specify at least one of the two.</p>",
+      "refs": {
+        "AgenticRetrieveStreamRequest$memoryConfiguration": "<p>The configuration for using an Amazon Bedrock AgentCore Memory resource with this retrieval.</p>"
+      }
+    },
+    "AgenticRetrieveMemoryMetadataFilter": {
+      "base": "<p>A metadata filter expression, in the form accepted by the AgentCore Memory RetrieveMemoryRecords operation. The expression has a left operand that names the metadata key, an operator, and a right operand. For the EXISTS and NOT_EXISTS operators, omit the right operand.</p>",
+      "refs": {
+        "AgenticRetrieveMemoryMetadataFilterList$member": "<p>A metadata filter expression.</p>"
+      }
+    },
+    "AgenticRetrieveMemoryMetadataFilterLeft": {
+      "base": "<p>The left operand of a metadata filter expression. Set exactly one member.</p>",
+      "refs": {
+        "AgenticRetrieveMemoryMetadataFilter$left": "<p>The metadata key that the expression evaluates.</p>"
+      }
+    },
+    "AgenticRetrieveMemoryMetadataFilterList": {
+      "base": "<p>The metadata filter expressions applied to long-term memory retrieval.</p>",
+      "refs": {
+        "AgenticRetrieveMemoryRetrievalConfig$metadataFilters": "<p>The metadata filter expressions that restrict retrieval to matching memory records. You can specify a maximum of 5 expressions.</p>"
+      }
+    },
+    "AgenticRetrieveMemoryMetadataFilterOperator": {
+      "base": "<p>Specifies the relationship that a metadata key and value must have for a memory record to match a filter expression.</p>",
+      "refs": {
+        "AgenticRetrieveMemoryMetadataFilter$operator": "<p>The relationship that the metadata key and value must have for a memory record to match.</p>"
+      }
+    },
+    "AgenticRetrieveMemoryMetadataFilterRight": {
+      "base": "<p>The right operand of a metadata filter expression. Set exactly one member.</p>",
+      "refs": {
+        "AgenticRetrieveMemoryMetadataFilter$right": "<p>The value that the expression compares the metadata key against. Supply this value for every operator except EXISTS and NOT_EXISTS.</p>"
+      }
+    },
+    "AgenticRetrieveMemoryMetadataKey": {
+      "base": "<p>The metadata key that a filter expression evaluates.</p>",
+      "refs": {
+        "AgenticRetrieveMemoryMetadataFilterLeft$metadataKey": "<p>The metadata key to filter on.</p>"
+      }
+    },
+    "AgenticRetrieveMemoryMetadataStringList": {
+      "base": "<p>The string values that a filter expression compares against.</p>",
+      "refs": {
+        "AgenticRetrieveMemoryMetadataValue$stringListValue": "<p>A list of string values.</p>"
+      }
+    },
+    "AgenticRetrieveMemoryMetadataStringListItem": {
+      "base": "<p>A single string value within a metadata string list.</p>",
+      "refs": {
+        "AgenticRetrieveMemoryMetadataStringList$member": "<p>A string value within the list.</p>"
+      }
+    },
+    "AgenticRetrieveMemoryMetadataStringValue": {
+      "base": "<p>A single string metadata value that a filter expression compares against.</p>",
+      "refs": {
+        "AgenticRetrieveMemoryMetadataValue$stringValue": "<p>A string value.</p>"
+      }
+    },
+    "AgenticRetrieveMemoryMetadataValue": {
+      "base": "<p>A metadata value that a filter expression compares against. Set exactly one member.</p>",
+      "refs": {
+        "AgenticRetrieveMemoryMetadataFilterRight$metadataValue": "<p>The value to compare the metadata key against.</p>"
+      }
+    },
+    "AgenticRetrieveMemoryPersistenceMode": {
+      "base": "<p>Specifies whether the agent-generated answer is written back to a short-term memory session.</p>",
+      "refs": {
+        "AgenticRetrieveMemoryConfiguration$persistenceMode": "<p>Specifies whether the agent-generated answer is written back to the given short-term memory session, and applies only when sessionBinding is set. Valid values:</p> <ul> <li> <p> <code>DEFAULT</code> (default) – Specifies that the question and the agent-generated answer are persisted to the session as a single event. This value requires generateResponse to be true.</p> </li> <li> <p> <code>NONE</code> – Specifies that the session is left unchanged.</p> </li> </ul>"
+      }
+    },
+    "AgenticRetrieveMemoryRetrievalConfig": {
+      "base": "<p>The long-term memory namespace that the agent might retrieve memory records from, and the filters applied to that retrieval. You must specify either namespace or namespacePath.</p>",
+      "refs": {
+        "AgenticRetrieveMemoryRetrievalConfigList$member": "<p>A long-term memory namespace that the agent might retrieve memory records from.</p>"
+      }
+    },
+    "AgenticRetrieveMemoryRetrievalConfigList": {
+      "base": "<p>The long-term memory namespaces that the agent might retrieve memory records from.</p>",
+      "refs": {
+        "AgenticRetrieveMemoryConfiguration$retrievalConfigs": "<p>Specifies the long-term memory configuration the agent can retrieve from. The agent decides whether to retrieve and composes its own query. This field currently accepts at most one entry.</p>"
+      }
+    },
+    "AgenticRetrieveMemoryRetrieveDetails": {
+      "base": "<p>A long-term memory retrieval that the agent chose to perform. The record reports the query and the namespace. The corresponding Retrieval step reports the results.</p>",
+      "refs": {
+        "AgenticRetrieveAction$memoryRetrieve": "<p>The details of a long-term memory retrieval that the agent chose to perform.</p>"
+      }
+    },
+    "AgenticRetrieveMemorySessionBinding": {
+      "base": "<p>The short-term memory session that this retrieval reads from and writes to.</p>",
+      "refs": {
+        "AgenticRetrieveMemoryConfiguration$sessionBinding": "<p>The short-term memory session whose history is restored for this retrieval. To persist the agent-generated answer to the session, omit persistenceMode or set it to DEFAULT. To leave the session unchanged, set persistenceMode to NONE. Supply session history through the existing messages parameter or through short-term memory, but not both.</p>"
+      }
+    },
     "AgenticRetrieveMessage": {
       "base": "<p>A message in the agentic retrieval conversation.</p>",
       "refs": {
@@ -361,6 +475,7 @@
       "base": "<p>The content of an agentic retrieval message.</p>",
       "refs": {
         "AgenticRetrieveActionDetails$inputQuery": "<p>The input query used for retrieval.</p>",
+        "AgenticRetrieveMemoryRetrieveDetails$inputQuery": "<p>The query that the agent composed.</p>",
         "AgenticRetrieveMessage$content": "<p>The content of the message.</p>"
       }
     },
@@ -1129,6 +1244,7 @@
     "Double": {
       "base": null,
       "refs": {
+        "AgenticRetrieveMemoryMetadataValue$numberValue": "<p>A numeric value.</p>",
         "KnowledgeBaseRetrievalResult$score": "<p>The level of relevance of the result to the query.</p>"
       }
     },
@@ -2697,10 +2813,23 @@
         "MemorySessionSummary$memoryId": "<p>The unique identifier of the memory where the session summary is stored.</p>"
       }
     },
+    "MemoryNamespace": {
+      "base": "<p>A namespace in an AgentCore Memory resource, supplied exactly as configured on the memory strategy. The service does not accept placeholder templates such as {actorId}. Supply the resolved value.</p>",
+      "refs": {
+        "AgenticRetrieveMemoryRetrievalConfig$namespace": "<p>The namespace prefix to filter memory records by. The agent retrieves memory records in namespaces that start with the provided prefix. You must specify either namespace or namespacePath.</p>",
+        "AgenticRetrieveMemoryRetrievalConfig$namespacePath": "<p>The parent namespace to use for hierarchical retrievals. The agent retrieves all memory records whose namespace falls under the same parent hierarchy. You must specify either namespace or namespacePath.</p>"
+      }
+    },
     "MemorySessionSummary": {
       "base": "<p>Contains details of a session summary.</p>",
       "refs": {
         "Memory$sessionSummary": "<p>Contains summary of a session.</p>"
+      }
+    },
+    "MemoryStrategyId": {
+      "base": "<p>The identifier of an extraction strategy configured on the memory resource. Omit this value to retrieve records from every strategy on the memory resource.</p>",
+      "refs": {
+        "AgenticRetrieveMemoryRetrievalConfig$strategyId": "<p>The extraction strategy ID that restricts retrieval to memory records produced by a single strategy. Omit this parameter to retrieve records from every strategy on the memory resource.</p>"
       }
     },
     "MemoryType": {
@@ -4116,6 +4245,10 @@
         "AgenticRetrieveGuardrailWarning$id": "<p>The unique identifier of the guardrail.</p>",
         "AgenticRetrieveGuardrailWarning$message": "<p>A message describing the guardrail evaluation result.</p>",
         "AgenticRetrieveGuardrailWarning$version": "<p>The version of the guardrail.</p>",
+        "AgenticRetrieveMemoryRetrieveDetails$memoryId": "<p>The identifier of the AgentCore Memory resource retrieved from.</p>",
+        "AgenticRetrieveMemoryRetrieveDetails$namespace": "<p>The namespace prefix retrieved from, as supplied in the request. This field is present when the request specified namespace.</p>",
+        "AgenticRetrieveMemoryRetrieveDetails$namespacePath": "<p>The parent namespace retrieved from hierarchically, as supplied in the request. This field is present when the request specified namespacePath.</p>",
+        "AgenticRetrieveMemoryRetrieveDetails$strategyId": "<p>The extraction strategy that restricted retrieval, if the request specified one.</p>",
         "AgenticRetrieveMessageContent$text": "<p>The text content of the message.</p>",
         "AgenticRetrieveMetadata$key": "<p>The metadata key.</p>",
         "AgenticRetrieveResponseEvent$text": "<p>The generated text chunk.</p>",
@@ -4342,6 +4475,12 @@
         "OptimizedPromptStream$throttlingException": "<p>Your request was throttled because of service-wide limitations. Resubmit your request later or in a different region. You can also purchase <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> to increase the rate or number of tokens you can process.</p>",
         "ResponseStream$throttlingException": "<p>The number of requests exceeds the limit. Resubmit your request later.</p>",
         "RetrieveAndGenerateStreamResponseOutput$throttlingException": "<p>Your request was denied due to exceeding the account quotas for <i>Amazon Bedrock</i>. For troubleshooting this error, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html#ts-throttling-exception\">ThrottlingException</a> in the Amazon Bedrock User Guide.</p>"
+      }
+    },
+    "Timestamp": {
+      "base": null,
+      "refs": {
+        "AgenticRetrieveMemoryMetadataValue$dateTimeValue": "<p>A timestamp value in ISO 8601 UTC format.</p>"
       }
     },
     "TopK": {

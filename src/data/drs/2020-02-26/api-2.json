@@ -33,6 +33,25 @@
         {"shape":"UninitializedAccountException"}
       ]
     },
+    "CancelRecoveryPlanExecution":{
+      "name":"CancelRecoveryPlanExecution",
+      "http":{
+        "method":"POST",
+        "requestUri":"/CancelRecoveryPlanExecution",
+        "responseCode":200
+      },
+      "input":{"shape":"CancelRecoveryPlanExecutionRequest"},
+      "output":{"shape":"CancelRecoveryPlanExecutionResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"UninitializedAccountException"}
+      ]
+    },
     "CreateExtendedSourceServer":{
       "name":"CreateExtendedSourceServer",
       "http":{
@@ -63,6 +82,45 @@
       "output":{"shape":"CreateLaunchConfigurationTemplateResponse"},
       "errors":[
         {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"UninitializedAccountException"}
+      ]
+    },
+    "CreateRecoveryPlan":{
+      "name":"CreateRecoveryPlan",
+      "http":{
+        "method":"POST",
+        "requestUri":"/CreateRecoveryPlan",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateRecoveryPlanRequest"},
+      "output":{"shape":"CreateRecoveryPlanResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"UninitializedAccountException"}
+      ]
+    },
+    "CreateRecoveryPlanStep":{
+      "name":"CreateRecoveryPlanStep",
+      "http":{
+        "method":"POST",
+        "requestUri":"/CreateRecoveryPlanStep",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateRecoveryPlanStepRequest"},
+      "output":{"shape":"CreateRecoveryPlanStepResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
@@ -173,6 +231,63 @@
         {"shape":"ConflictException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"UninitializedAccountException"}
+      ]
+    },
+    "DeleteRecoveryPlan":{
+      "name":"DeleteRecoveryPlan",
+      "http":{
+        "method":"POST",
+        "requestUri":"/DeleteRecoveryPlan",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteRecoveryPlanRequest"},
+      "output":{"shape":"DeleteRecoveryPlanResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"UninitializedAccountException"}
+      ]
+    },
+    "DeleteRecoveryPlanExecution":{
+      "name":"DeleteRecoveryPlanExecution",
+      "http":{
+        "method":"POST",
+        "requestUri":"/DeleteRecoveryPlanExecution",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteRecoveryPlanExecutionRequest"},
+      "output":{"shape":"DeleteRecoveryPlanExecutionResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"UninitializedAccountException"}
+      ]
+    },
+    "DeleteRecoveryPlanStep":{
+      "name":"DeleteRecoveryPlanStep",
+      "http":{
+        "method":"POST",
+        "requestUri":"/DeleteRecoveryPlanStep",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteRecoveryPlanStepRequest"},
+      "output":{"shape":"DeleteRecoveryPlanStepResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
         {"shape":"UninitializedAccountException"}
       ]
     },
@@ -455,6 +570,82 @@
       ],
       "readonly":true
     },
+    "GetRecoveryPlan":{
+      "name":"GetRecoveryPlan",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetRecoveryPlan",
+        "responseCode":200
+      },
+      "input":{"shape":"GetRecoveryPlanRequest"},
+      "output":{"shape":"GetRecoveryPlanResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"UninitializedAccountException"}
+      ],
+      "readonly":true
+    },
+    "GetRecoveryPlanExecution":{
+      "name":"GetRecoveryPlanExecution",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetRecoveryPlanExecution",
+        "responseCode":200
+      },
+      "input":{"shape":"GetRecoveryPlanExecutionRequest"},
+      "output":{"shape":"GetRecoveryPlanExecutionResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"UninitializedAccountException"}
+      ],
+      "readonly":true
+    },
+    "GetRecoveryPlanExecutionStep":{
+      "name":"GetRecoveryPlanExecutionStep",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetRecoveryPlanExecutionStep",
+        "responseCode":200
+      },
+      "input":{"shape":"GetRecoveryPlanExecutionStepRequest"},
+      "output":{"shape":"GetRecoveryPlanExecutionStepResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"UninitializedAccountException"}
+      ],
+      "readonly":true
+    },
+    "GetRecoveryPlanStep":{
+      "name":"GetRecoveryPlanStep",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetRecoveryPlanStep",
+        "responseCode":200
+      },
+      "input":{"shape":"GetRecoveryPlanStepRequest"},
+      "output":{"shape":"GetRecoveryPlanStepResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"UninitializedAccountException"}
+      ],
+      "readonly":true
+    },
     "GetReplicationConfiguration":{
       "name":"GetReplicationConfiguration",
       "http":{
@@ -525,6 +716,80 @@
       ],
       "readonly":true
     },
+    "ListRecoveryPlanExecutionSteps":{
+      "name":"ListRecoveryPlanExecutionSteps",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListRecoveryPlanExecutionSteps",
+        "responseCode":200
+      },
+      "input":{"shape":"ListRecoveryPlanExecutionStepsRequest"},
+      "output":{"shape":"ListRecoveryPlanExecutionStepsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"UninitializedAccountException"}
+      ],
+      "readonly":true
+    },
+    "ListRecoveryPlanExecutions":{
+      "name":"ListRecoveryPlanExecutions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListRecoveryPlanExecutions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListRecoveryPlanExecutionsRequest"},
+      "output":{"shape":"ListRecoveryPlanExecutionsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"UninitializedAccountException"}
+      ],
+      "readonly":true
+    },
+    "ListRecoveryPlanSteps":{
+      "name":"ListRecoveryPlanSteps",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListRecoveryPlanSteps",
+        "responseCode":200
+      },
+      "input":{"shape":"ListRecoveryPlanStepsRequest"},
+      "output":{"shape":"ListRecoveryPlanStepsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"UninitializedAccountException"}
+      ],
+      "readonly":true
+    },
+    "ListRecoveryPlans":{
+      "name":"ListRecoveryPlans",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListRecoveryPlans",
+        "responseCode":200
+      },
+      "input":{"shape":"ListRecoveryPlansRequest"},
+      "output":{"shape":"ListRecoveryPlansResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"UninitializedAccountException"}
+      ],
+      "readonly":true
+    },
     "ListStagingAccounts":{
       "name":"ListStagingAccounts",
       "http":{
@@ -579,6 +844,25 @@
         {"shape":"UninitializedAccountException"}
       ]
     },
+    "ReorderRecoveryPlanSteps":{
+      "name":"ReorderRecoveryPlanSteps",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ReorderRecoveryPlanSteps",
+        "responseCode":200
+      },
+      "input":{"shape":"ReorderRecoveryPlanStepsRequest"},
+      "output":{"shape":"ReorderRecoveryPlanStepsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"UninitializedAccountException"}
+      ]
+    },
     "RetryDataReplication":{
       "name":"RetryDataReplication",
       "http":{
@@ -597,6 +881,25 @@
       ],
       "deprecated":true,
       "deprecatedMessage":"WARNING: RetryDataReplication is deprecated"
+    },
+    "RetryRecoveryPlanExecutionStep":{
+      "name":"RetryRecoveryPlanExecutionStep",
+      "http":{
+        "method":"POST",
+        "requestUri":"/RetryRecoveryPlanExecutionStep",
+        "responseCode":200
+      },
+      "input":{"shape":"RetryRecoveryPlanExecutionStepRequest"},
+      "output":{"shape":"RetryRecoveryPlanExecutionStepResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"UninitializedAccountException"}
+      ]
     },
     "ReverseReplication":{
       "name":"ReverseReplication",
@@ -649,6 +952,26 @@
         {"shape":"ConflictException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"},
+        {"shape":"UninitializedAccountException"}
+      ]
+    },
+    "StartRecoveryPlanExecution":{
+      "name":"StartRecoveryPlanExecution",
+      "http":{
+        "method":"POST",
+        "requestUri":"/StartRecoveryPlanExecution",
+        "responseCode":201
+      },
+      "input":{"shape":"StartRecoveryPlanExecutionRequest"},
+      "output":{"shape":"StartRecoveryPlanExecutionResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
         {"shape":"UninitializedAccountException"}
       ]
     },
@@ -858,6 +1181,63 @@
         {"shape":"UninitializedAccountException"}
       ]
     },
+    "UpdateRecoveryPlan":{
+      "name":"UpdateRecoveryPlan",
+      "http":{
+        "method":"POST",
+        "requestUri":"/UpdateRecoveryPlan",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateRecoveryPlanRequest"},
+      "output":{"shape":"UpdateRecoveryPlanResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"UninitializedAccountException"}
+      ]
+    },
+    "UpdateRecoveryPlanExecutionStep":{
+      "name":"UpdateRecoveryPlanExecutionStep",
+      "http":{
+        "method":"POST",
+        "requestUri":"/UpdateRecoveryPlanExecutionStep",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateRecoveryPlanExecutionStepRequest"},
+      "output":{"shape":"UpdateRecoveryPlanExecutionStepResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"UninitializedAccountException"}
+      ]
+    },
+    "UpdateRecoveryPlanStep":{
+      "name":"UpdateRecoveryPlanStep",
+      "http":{
+        "method":"POST",
+        "requestUri":"/UpdateRecoveryPlanStep",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateRecoveryPlanStepRequest"},
+      "output":{"shape":"UpdateRecoveryPlanStepResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"UninitializedAccountException"}
+      ]
+    },
     "UpdateReplicationConfiguration":{
       "name":"UpdateReplicationConfiguration",
       "http":{
@@ -989,12 +1369,31 @@
         "modelName":{"shape":"BoundedString"}
       }
     },
+    "CancelRecoveryPlanExecutionRequest":{
+      "type":"structure",
+      "required":["recoveryPlanExecutionArn"],
+      "members":{
+        "recoveryPlanExecutionArn":{"shape":"StrictDRSARN"}
+      }
+    },
+    "CancelRecoveryPlanExecutionResponse":{
+      "type":"structure",
+      "required":["recoveryPlanExecution"],
+      "members":{
+        "recoveryPlanExecution":{"shape":"RecoveryPlanExecution"}
+      }
+    },
     "CfnStackName":{
       "type":"string",
       "max":128,
       "min":1,
       "pattern":"[a-zA-Z][-a-zA-Z0-9]*",
       "sensitive":true
+    },
+    "ClientIdempotencyToken":{
+      "type":"string",
+      "max":64,
+      "min":0
     },
     "ConflictException":{
       "type":"structure",
@@ -1065,6 +1464,51 @@
       "type":"structure",
       "members":{
         "launchConfigurationTemplate":{"shape":"LaunchConfigurationTemplate"}
+      }
+    },
+    "CreateRecoveryPlanRequest":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{"shape":"RecoveryPlanName"},
+        "description":{"shape":"RecoveryPlanDescription"},
+        "clientToken":{
+          "shape":"ClientIdempotencyToken",
+          "idempotencyToken":true
+        },
+        "tags":{"shape":"TagsMap"}
+      }
+    },
+    "CreateRecoveryPlanResponse":{
+      "type":"structure",
+      "required":["recoveryPlan"],
+      "members":{
+        "recoveryPlan":{"shape":"RecoveryPlan"}
+      }
+    },
+    "CreateRecoveryPlanStepRequest":{
+      "type":"structure",
+      "required":[
+        "recoveryPlanArn",
+        "stepName",
+        "configuration"
+      ],
+      "members":{
+        "recoveryPlanArn":{"shape":"StrictDRSARN"},
+        "stepName":{"shape":"RecoveryPlanStepName"},
+        "stepOrder":{"shape":"RecoveryPlanStepOrder"},
+        "configuration":{"shape":"RecoveryPlanStepConfiguration"},
+        "clientToken":{
+          "shape":"ClientIdempotencyToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateRecoveryPlanStepResponse":{
+      "type":"structure",
+      "required":["recoveryPlanStep"],
+      "members":{
+        "recoveryPlanStep":{"shape":"RecoveryPlanStep"}
       }
     },
     "CreateReplicationConfigurationTemplateRequest":{
@@ -1274,6 +1718,48 @@
       "required":["recoveryInstanceID"],
       "members":{
         "recoveryInstanceID":{"shape":"RecoveryInstanceID"}
+      }
+    },
+    "DeleteRecoveryPlanExecutionRequest":{
+      "type":"structure",
+      "required":["recoveryPlanExecutionArn"],
+      "members":{
+        "recoveryPlanExecutionArn":{"shape":"StrictDRSARN"}
+      }
+    },
+    "DeleteRecoveryPlanExecutionResponse":{
+      "type":"structure",
+      "required":["recoveryPlanExecutionArn"],
+      "members":{
+        "recoveryPlanExecutionArn":{"shape":"StrictDRSARN"}
+      }
+    },
+    "DeleteRecoveryPlanRequest":{
+      "type":"structure",
+      "required":["recoveryPlanArn"],
+      "members":{
+        "recoveryPlanArn":{"shape":"StrictDRSARN"}
+      }
+    },
+    "DeleteRecoveryPlanResponse":{
+      "type":"structure",
+      "required":["recoveryPlanArn"],
+      "members":{
+        "recoveryPlanArn":{"shape":"StrictDRSARN"}
+      }
+    },
+    "DeleteRecoveryPlanStepRequest":{
+      "type":"structure",
+      "required":["recoveryPlanStepArn"],
+      "members":{
+        "recoveryPlanStepArn":{"shape":"StrictDRSARN"}
+      }
+    },
+    "DeleteRecoveryPlanStepResponse":{
+      "type":"structure",
+      "required":["recoveryPlanStepArn"],
+      "members":{
+        "recoveryPlanStepArn":{"shape":"StrictDRSARN"}
       }
     },
     "DeleteReplicationConfigurationTemplateRequest":{
@@ -1557,12 +2043,30 @@
       "min":10,
       "pattern":"vol-([0-9a-fA-F]{8}|[0-9a-fA-F]{17})"
     },
+    "ErrorDetail":{
+      "type":"structure",
+      "required":[
+        "message",
+        "code"
+      ],
+      "members":{
+        "message":{"shape":"String"},
+        "code":{"shape":"String"}
+      }
+    },
     "EventResourceData":{
       "type":"structure",
       "members":{
         "sourceNetworkData":{"shape":"SourceNetworkData"}
       },
       "union":true
+    },
+    "ExecutionServerStepConfiguration":{
+      "type":"structure",
+      "required":["servers"],
+      "members":{
+        "servers":{"shape":"RecoveryPlanExecutionServers"}
+      }
     },
     "ExportSourceNetworkCfnTemplateRequest":{
       "type":"structure",
@@ -1659,6 +2163,62 @@
       "required":["sourceServerID"],
       "members":{
         "sourceServerID":{"shape":"SourceServerID"}
+      }
+    },
+    "GetRecoveryPlanExecutionRequest":{
+      "type":"structure",
+      "required":["recoveryPlanExecutionArn"],
+      "members":{
+        "recoveryPlanExecutionArn":{"shape":"StrictDRSARN"}
+      }
+    },
+    "GetRecoveryPlanExecutionResponse":{
+      "type":"structure",
+      "required":["recoveryPlanExecution"],
+      "members":{
+        "recoveryPlanExecution":{"shape":"RecoveryPlanExecution"}
+      }
+    },
+    "GetRecoveryPlanExecutionStepRequest":{
+      "type":"structure",
+      "required":["recoveryPlanExecutionStepArn"],
+      "members":{
+        "recoveryPlanExecutionStepArn":{"shape":"StrictDRSARN"}
+      }
+    },
+    "GetRecoveryPlanExecutionStepResponse":{
+      "type":"structure",
+      "required":["recoveryPlanExecutionStep"],
+      "members":{
+        "recoveryPlanExecutionStep":{"shape":"RecoveryPlanExecutionStep"}
+      }
+    },
+    "GetRecoveryPlanRequest":{
+      "type":"structure",
+      "required":["recoveryPlanArn"],
+      "members":{
+        "recoveryPlanArn":{"shape":"StrictDRSARN"}
+      }
+    },
+    "GetRecoveryPlanResponse":{
+      "type":"structure",
+      "required":["recoveryPlan"],
+      "members":{
+        "recoveryPlan":{"shape":"RecoveryPlan"}
+      }
+    },
+    "GetRecoveryPlanStepRequest":{
+      "type":"structure",
+      "required":["recoveryPlanStepArn"],
+      "members":{
+        "recoveryPlanStepArn":{"shape":"StrictDRSARN"}
+      }
+    },
+    "GetRecoveryPlanStepResponse":{
+      "type":"structure",
+      "required":["recoveryPlanStep"],
+      "members":{
+        "recoveryPlanStep":{"shape":"RecoveryPlanStep"}
       }
     },
     "GetReplicationConfigurationRequest":{
@@ -2151,6 +2711,79 @@
         "nextToken":{"shape":"PaginationToken"}
       }
     },
+    "ListRecoveryPlanExecutionStepsFilter":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"RecoveryPlanExecutionStepStatus"}
+      }
+    },
+    "ListRecoveryPlanExecutionStepsRequest":{
+      "type":"structure",
+      "required":["recoveryPlanExecutionArn"],
+      "members":{
+        "recoveryPlanExecutionArn":{"shape":"StrictDRSARN"},
+        "filter":{"shape":"ListRecoveryPlanExecutionStepsFilter"},
+        "maxResults":{"shape":"MaxResultsType"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListRecoveryPlanExecutionStepsResponse":{
+      "type":"structure",
+      "required":["recoveryPlanExecutionSteps"],
+      "members":{
+        "recoveryPlanExecutionSteps":{"shape":"RecoveryPlanExecutionStepSummaryList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListRecoveryPlanExecutionsRequest":{
+      "type":"structure",
+      "members":{
+        "recoveryPlanArn":{"shape":"StrictDRSARN"},
+        "status":{"shape":"RecoveryPlanExecutionStatus"},
+        "maxResults":{"shape":"MaxResultsType"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListRecoveryPlanExecutionsResponse":{
+      "type":"structure",
+      "required":["recoveryPlanExecutions"],
+      "members":{
+        "recoveryPlanExecutions":{"shape":"RecoveryPlanExecutionSummaryList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListRecoveryPlanStepsRequest":{
+      "type":"structure",
+      "required":["recoveryPlanArn"],
+      "members":{
+        "recoveryPlanArn":{"shape":"StrictDRSARN"},
+        "maxResults":{"shape":"MaxResultsType"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListRecoveryPlanStepsResponse":{
+      "type":"structure",
+      "required":["recoveryPlanSteps"],
+      "members":{
+        "recoveryPlanSteps":{"shape":"RecoveryPlanStepList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListRecoveryPlansRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{"shape":"MaxResultsType"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListRecoveryPlansResponse":{
+      "type":"structure",
+      "required":["recoveryPlans"],
+      "members":{
+        "recoveryPlans":{"shape":"RecoveryPlanSummaryList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
     "ListStagingAccountsRequest":{
       "type":"structure",
       "members":{
@@ -2578,6 +3211,292 @@
         "OPTIMAL"
       ]
     },
+    "RecoveryPlan":{
+      "type":"structure",
+      "required":[
+        "recoveryPlanArn",
+        "name",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "recoveryPlanArn":{"shape":"StrictDRSARN"},
+        "name":{"shape":"RecoveryPlanName"},
+        "description":{"shape":"RecoveryPlanDescription"},
+        "status":{"shape":"RecoveryPlanStatus"},
+        "createdAt":{"shape":"ISO8601DatetimeString"},
+        "updatedAt":{"shape":"ISO8601DatetimeString"},
+        "tags":{"shape":"TagsMap"}
+      }
+    },
+    "RecoveryPlanDescription":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "RecoveryPlanExecution":{
+      "type":"structure",
+      "required":[
+        "recoveryPlanExecutionArn",
+        "recoveryPlanArn",
+        "mode",
+        "status",
+        "startedAt"
+      ],
+      "members":{
+        "recoveryPlanExecutionArn":{"shape":"StrictDRSARN"},
+        "recoveryPlanArn":{"shape":"StrictDRSARN"},
+        "mode":{"shape":"RecoveryPlanExecutionMode"},
+        "status":{"shape":"RecoveryPlanExecutionStatus"},
+        "startedAt":{"shape":"ISO8601DatetimeString"},
+        "completedAt":{"shape":"ISO8601DatetimeString"},
+        "errorDetail":{"shape":"ErrorDetail"},
+        "tags":{"shape":"TagsMap"}
+      }
+    },
+    "RecoveryPlanExecutionMode":{
+      "type":"string",
+      "enum":[
+        "DRILL",
+        "RECOVERY"
+      ]
+    },
+    "RecoveryPlanExecutionServer":{
+      "type":"structure",
+      "required":["serverArn"],
+      "members":{
+        "serverArn":{"shape":"SourceServerARN"},
+        "impactLevel":{"shape":"RecoveryPlanServerImpactLevel"},
+        "jobID":{"shape":"JobID"}
+      }
+    },
+    "RecoveryPlanExecutionServers":{
+      "type":"list",
+      "member":{"shape":"RecoveryPlanExecutionServer"},
+      "max":100,
+      "min":1
+    },
+    "RecoveryPlanExecutionSourceServer":{
+      "type":"structure",
+      "required":[
+        "sourceServerID",
+        "recoverySnapshotID"
+      ],
+      "members":{
+        "sourceServerID":{"shape":"SourceServerID"},
+        "recoverySnapshotID":{"shape":"RecoverySnapshotID"}
+      }
+    },
+    "RecoveryPlanExecutionSourceServerList":{
+      "type":"list",
+      "member":{"shape":"RecoveryPlanExecutionSourceServer"},
+      "max":200,
+      "min":0
+    },
+    "RecoveryPlanExecutionStatus":{
+      "type":"string",
+      "enum":[
+        "CREATED",
+        "IN_PROGRESS",
+        "COMPLETED",
+        "FAILED",
+        "CANCELLING",
+        "CANCELLED"
+      ]
+    },
+    "RecoveryPlanExecutionStep":{
+      "type":"structure",
+      "required":[
+        "recoveryPlanExecutionStepArn",
+        "stepIndex",
+        "status",
+        "stepName",
+        "configuration",
+        "attempt",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "recoveryPlanExecutionStepArn":{"shape":"StrictDRSARN"},
+        "stepIndex":{"shape":"RecoveryPlanStepOrder"},
+        "status":{"shape":"RecoveryPlanExecutionStepStatus"},
+        "stepName":{"shape":"RecoveryPlanStepName"},
+        "configuration":{"shape":"RecoveryPlanExecutionStepConfiguration"},
+        "errorDetail":{"shape":"ErrorDetail"},
+        "attempt":{"shape":"StrictlyPositiveInteger"},
+        "createdAt":{"shape":"ISO8601DatetimeString"},
+        "updatedAt":{"shape":"ISO8601DatetimeString"}
+      }
+    },
+    "RecoveryPlanExecutionStepConfiguration":{
+      "type":"structure",
+      "members":{
+        "executionServerStepConfiguration":{"shape":"ExecutionServerStepConfiguration"},
+        "waitStepConfiguration":{"shape":"WaitStepConfiguration"}
+      },
+      "union":true
+    },
+    "RecoveryPlanExecutionStepStatus":{
+      "type":"string",
+      "enum":[
+        "NOT_STARTED",
+        "EXECUTING",
+        "WAITING",
+        "COMPLETED",
+        "FAILED",
+        "TIMED_OUT",
+        "SKIPPED"
+      ]
+    },
+    "RecoveryPlanExecutionStepSummary":{
+      "type":"structure",
+      "required":[
+        "recoveryPlanExecutionStepArn",
+        "stepName",
+        "stepIndex",
+        "status",
+        "configuration"
+      ],
+      "members":{
+        "recoveryPlanExecutionStepArn":{"shape":"StrictDRSARN"},
+        "stepName":{"shape":"RecoveryPlanStepName"},
+        "stepIndex":{"shape":"RecoveryPlanStepOrder"},
+        "status":{"shape":"RecoveryPlanExecutionStepStatus"},
+        "configuration":{"shape":"RecoveryPlanExecutionStepConfiguration"},
+        "errorDetail":{"shape":"ErrorDetail"}
+      }
+    },
+    "RecoveryPlanExecutionStepSummaryList":{
+      "type":"list",
+      "member":{"shape":"RecoveryPlanExecutionStepSummary"}
+    },
+    "RecoveryPlanExecutionSummary":{
+      "type":"structure",
+      "required":[
+        "recoveryPlanExecutionArn",
+        "recoveryPlanArn",
+        "mode",
+        "status",
+        "startedAt"
+      ],
+      "members":{
+        "recoveryPlanExecutionArn":{"shape":"StrictDRSARN"},
+        "recoveryPlanArn":{"shape":"StrictDRSARN"},
+        "mode":{"shape":"RecoveryPlanExecutionMode"},
+        "status":{"shape":"RecoveryPlanExecutionStatus"},
+        "startedAt":{"shape":"ISO8601DatetimeString"},
+        "errorDetail":{"shape":"ErrorDetail"}
+      }
+    },
+    "RecoveryPlanExecutionSummaryList":{
+      "type":"list",
+      "member":{"shape":"RecoveryPlanExecutionSummary"}
+    },
+    "RecoveryPlanName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-zA-Z0-9][a-zA-Z0-9 _-]*"
+    },
+    "RecoveryPlanServer":{
+      "type":"structure",
+      "required":["serverArn"],
+      "members":{
+        "serverArn":{"shape":"SourceServerARN"},
+        "impactLevel":{"shape":"RecoveryPlanServerImpactLevel"}
+      }
+    },
+    "RecoveryPlanServerImpactLevel":{
+      "type":"string",
+      "enum":[
+        "CRITICAL",
+        "OPTIONAL"
+      ]
+    },
+    "RecoveryPlanServers":{
+      "type":"list",
+      "member":{"shape":"RecoveryPlanServer"},
+      "max":100,
+      "min":1
+    },
+    "RecoveryPlanStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "INVALID"
+      ]
+    },
+    "RecoveryPlanStep":{
+      "type":"structure",
+      "required":[
+        "recoveryPlanStepArn",
+        "stepOrder",
+        "stepName",
+        "configuration",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "recoveryPlanStepArn":{"shape":"StrictDRSARN"},
+        "stepOrder":{"shape":"RecoveryPlanStepOrder"},
+        "stepName":{"shape":"RecoveryPlanStepName"},
+        "configuration":{"shape":"RecoveryPlanStepConfiguration"},
+        "createdAt":{"shape":"ISO8601DatetimeString"},
+        "updatedAt":{"shape":"ISO8601DatetimeString"}
+      }
+    },
+    "RecoveryPlanStepArnList":{
+      "type":"list",
+      "member":{"shape":"StrictDRSARN"},
+      "max":20,
+      "min":1
+    },
+    "RecoveryPlanStepConfiguration":{
+      "type":"structure",
+      "members":{
+        "serverStepConfiguration":{"shape":"ServerStepConfiguration"},
+        "waitStepConfiguration":{"shape":"WaitStepConfiguration"}
+      },
+      "union":true
+    },
+    "RecoveryPlanStepList":{
+      "type":"list",
+      "member":{"shape":"RecoveryPlanStep"}
+    },
+    "RecoveryPlanStepName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-zA-Z0-9][a-zA-Z0-9 _-]*"
+    },
+    "RecoveryPlanStepOrder":{
+      "type":"integer",
+      "box":true,
+      "max":20,
+      "min":1
+    },
+    "RecoveryPlanSummary":{
+      "type":"structure",
+      "required":[
+        "recoveryPlanArn",
+        "name",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "recoveryPlanArn":{"shape":"StrictDRSARN"},
+        "name":{"shape":"RecoveryPlanName"},
+        "status":{"shape":"RecoveryPlanStatus"},
+        "createdAt":{"shape":"ISO8601DatetimeString"},
+        "updatedAt":{"shape":"ISO8601DatetimeString"}
+      }
+    },
+    "RecoveryPlanSummaryList":{
+      "type":"list",
+      "member":{"shape":"RecoveryPlanSummary"}
+    },
     "RecoveryResult":{
       "type":"string",
       "enum":[
@@ -2621,6 +3540,24 @@
         "ASC",
         "DESC"
       ]
+    },
+    "ReorderRecoveryPlanStepsRequest":{
+      "type":"structure",
+      "required":[
+        "recoveryPlanArn",
+        "orderedStepArns"
+      ],
+      "members":{
+        "recoveryPlanArn":{"shape":"StrictDRSARN"},
+        "orderedStepArns":{"shape":"RecoveryPlanStepArnList"}
+      }
+    },
+    "ReorderRecoveryPlanStepsResponse":{
+      "type":"structure",
+      "required":["recoveryPlanSteps"],
+      "members":{
+        "recoveryPlanSteps":{"shape":"RecoveryPlanStepList"}
+      }
     },
     "ReplicationConfiguration":{
       "type":"structure",
@@ -2783,6 +3720,20 @@
       "deprecated":true,
       "deprecatedMessage":"WARNING: RetryDataReplication is deprecated"
     },
+    "RetryRecoveryPlanExecutionStepRequest":{
+      "type":"structure",
+      "required":["recoveryPlanExecutionStepArn"],
+      "members":{
+        "recoveryPlanExecutionStepArn":{"shape":"StrictDRSARN"}
+      }
+    },
+    "RetryRecoveryPlanExecutionStepResponse":{
+      "type":"structure",
+      "required":["recoveryPlanExecutionStep"],
+      "members":{
+        "recoveryPlanExecutionStep":{"shape":"RecoveryPlanExecutionStep"}
+      }
+    },
     "ReverseReplicationRequest":{
       "type":"structure",
       "required":["recoveryInstanceID"],
@@ -2807,6 +3758,13 @@
       "max":256,
       "min":0,
       "sensitive":true
+    },
+    "ServerStepConfiguration":{
+      "type":"structure",
+      "required":["servers"],
+      "members":{
+        "servers":{"shape":"RecoveryPlanServers"}
+      }
     },
     "ServiceQuotaExceededException":{
       "type":"structure",
@@ -2973,6 +3931,30 @@
       "max":200,
       "min":1
     },
+    "StartRecoveryPlanExecutionRequest":{
+      "type":"structure",
+      "required":[
+        "recoveryPlanArn",
+        "mode"
+      ],
+      "members":{
+        "recoveryPlanArn":{"shape":"StrictDRSARN"},
+        "mode":{"shape":"RecoveryPlanExecutionMode"},
+        "clientToken":{
+          "shape":"ClientIdempotencyToken",
+          "idempotencyToken":true
+        },
+        "sourceServers":{"shape":"RecoveryPlanExecutionSourceServerList"},
+        "tags":{"shape":"TagsMap"}
+      }
+    },
+    "StartRecoveryPlanExecutionResponse":{
+      "type":"structure",
+      "required":["recoveryPlanExecution"],
+      "members":{
+        "recoveryPlanExecution":{"shape":"RecoveryPlanExecution"}
+      }
+    },
     "StartRecoveryRequest":{
       "type":"structure",
       "required":["sourceServers"],
@@ -3090,11 +4072,18 @@
         "sourceNetwork":{"shape":"SourceNetwork"}
       }
     },
+    "StrictDRSARN":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws(-[a-z0-9]+)*:drs:[a-z0-9-]+:[0-9]{12}:[a-zA-Z0-9_/.-]+"
+    },
     "StrictlyPositiveInteger":{
       "type":"integer",
       "box":true,
       "min":1
     },
+    "String":{"type":"string"},
     "SubnetID":{
       "type":"string",
       "max":255,
@@ -3261,6 +4250,55 @@
         "launchConfigurationTemplate":{"shape":"LaunchConfigurationTemplate"}
       }
     },
+    "UpdateRecoveryPlanExecutionStepRequest":{
+      "type":"structure",
+      "required":["recoveryPlanExecutionStepArn"],
+      "members":{
+        "recoveryPlanExecutionStepArn":{"shape":"StrictDRSARN"},
+        "status":{"shape":"RecoveryPlanExecutionStepStatus"},
+        "servers":{"shape":"RecoveryPlanServers"},
+        "waitDurationMinutes":{"shape":"WaitDurationMinutes"}
+      }
+    },
+    "UpdateRecoveryPlanExecutionStepResponse":{
+      "type":"structure",
+      "required":["recoveryPlanExecutionStep"],
+      "members":{
+        "recoveryPlanExecutionStep":{"shape":"RecoveryPlanExecutionStep"}
+      }
+    },
+    "UpdateRecoveryPlanRequest":{
+      "type":"structure",
+      "required":["recoveryPlanArn"],
+      "members":{
+        "recoveryPlanArn":{"shape":"StrictDRSARN"},
+        "name":{"shape":"RecoveryPlanName"},
+        "description":{"shape":"RecoveryPlanDescription"}
+      }
+    },
+    "UpdateRecoveryPlanResponse":{
+      "type":"structure",
+      "required":["recoveryPlan"],
+      "members":{
+        "recoveryPlan":{"shape":"RecoveryPlan"}
+      }
+    },
+    "UpdateRecoveryPlanStepRequest":{
+      "type":"structure",
+      "required":["recoveryPlanStepArn"],
+      "members":{
+        "recoveryPlanStepArn":{"shape":"StrictDRSARN"},
+        "stepName":{"shape":"RecoveryPlanStepName"},
+        "configuration":{"shape":"RecoveryPlanStepConfiguration"}
+      }
+    },
+    "UpdateRecoveryPlanStepResponse":{
+      "type":"structure",
+      "required":["recoveryPlanStep"],
+      "members":{
+        "recoveryPlanStep":{"shape":"RecoveryPlanStep"}
+      }
+    },
     "UpdateReplicationConfigurationRequest":{
       "type":"structure",
       "required":["sourceServerID"],
@@ -3372,6 +4410,19 @@
       "max":21,
       "min":12,
       "pattern":"vpc-[0-9a-fA-F]{8,}"
+    },
+    "WaitDurationMinutes":{
+      "type":"integer",
+      "box":true,
+      "max":120,
+      "min":1
+    },
+    "WaitStepConfiguration":{
+      "type":"structure",
+      "required":["waitDurationMinutes"],
+      "members":{
+        "waitDurationMinutes":{"shape":"WaitDurationMinutes"}
+      }
     }
   }
 }

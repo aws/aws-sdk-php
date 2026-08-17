@@ -863,6 +863,24 @@
       "type":"string",
       "sensitive":true
     },
+    "AgentCoreMemoryActorId":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9][a-zA-Z0-9\\-_/]*(?::[a-zA-Z0-9\\-_/]+)*[a-zA-Z0-9\\-_/]*$"
+    },
+    "AgentCoreMemoryId":{
+      "type":"string",
+      "max":111,
+      "min":12,
+      "pattern":"^[a-zA-Z][a-zA-Z0-9\\-_]{0,99}-[a-zA-Z0-9]{10}$"
+    },
+    "AgentCoreMemorySessionId":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9][a-zA-Z0-9\\-_]*$"
+    },
     "AgentId":{
       "type":"string",
       "max":10,
@@ -883,6 +901,7 @@
       "type":"structure",
       "members":{
         "fullDocumentExpansion":{"shape":"AgenticRetrieveFullDocExpansionDetails"},
+        "memoryRetrieve":{"shape":"AgenticRetrieveMemoryRetrieveDetails"},
         "retrieve":{"shape":"AgenticRetrieveActionDetails"}
       }
     },
@@ -1022,6 +1041,138 @@
         "version":{"shape":"String"}
       }
     },
+    "AgenticRetrieveMemoryConfiguration":{
+      "type":"structure",
+      "required":["memoryId"],
+      "members":{
+        "memoryId":{"shape":"AgentCoreMemoryId"},
+        "persistenceMode":{"shape":"AgenticRetrieveMemoryPersistenceMode"},
+        "retrievalConfigs":{"shape":"AgenticRetrieveMemoryRetrievalConfigList"},
+        "sessionBinding":{"shape":"AgenticRetrieveMemorySessionBinding"}
+      }
+    },
+    "AgenticRetrieveMemoryMetadataFilter":{
+      "type":"structure",
+      "required":[
+        "left",
+        "operator"
+      ],
+      "members":{
+        "left":{"shape":"AgenticRetrieveMemoryMetadataFilterLeft"},
+        "operator":{"shape":"AgenticRetrieveMemoryMetadataFilterOperator"},
+        "right":{"shape":"AgenticRetrieveMemoryMetadataFilterRight"}
+      }
+    },
+    "AgenticRetrieveMemoryMetadataFilterLeft":{
+      "type":"structure",
+      "members":{
+        "metadataKey":{"shape":"AgenticRetrieveMemoryMetadataKey"}
+      },
+      "union":true
+    },
+    "AgenticRetrieveMemoryMetadataFilterList":{
+      "type":"list",
+      "member":{"shape":"AgenticRetrieveMemoryMetadataFilter"}
+    },
+    "AgenticRetrieveMemoryMetadataFilterOperator":{
+      "type":"string",
+      "enum":[
+        "EQUALS_TO",
+        "EXISTS",
+        "NOT_EXISTS",
+        "BEFORE",
+        "AFTER",
+        "CONTAINS",
+        "GREATER_THAN",
+        "GREATER_THAN_OR_EQUALS",
+        "LESS_THAN",
+        "LESS_THAN_OR_EQUALS"
+      ]
+    },
+    "AgenticRetrieveMemoryMetadataFilterRight":{
+      "type":"structure",
+      "members":{
+        "metadataValue":{"shape":"AgenticRetrieveMemoryMetadataValue"}
+      },
+      "union":true
+    },
+    "AgenticRetrieveMemoryMetadataKey":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9\\s._:/=+@-]*$"
+    },
+    "AgenticRetrieveMemoryMetadataStringList":{
+      "type":"list",
+      "member":{"shape":"AgenticRetrieveMemoryMetadataStringListItem"}
+    },
+    "AgenticRetrieveMemoryMetadataStringListItem":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9\\s._:/=+@-]*$"
+    },
+    "AgenticRetrieveMemoryMetadataStringValue":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9\\s._:/=+@-]*$"
+    },
+    "AgenticRetrieveMemoryMetadataValue":{
+      "type":"structure",
+      "members":{
+        "dateTimeValue":{"shape":"Timestamp"},
+        "numberValue":{"shape":"Double"},
+        "stringListValue":{"shape":"AgenticRetrieveMemoryMetadataStringList"},
+        "stringValue":{"shape":"AgenticRetrieveMemoryMetadataStringValue"}
+      },
+      "union":true
+    },
+    "AgenticRetrieveMemoryPersistenceMode":{
+      "type":"string",
+      "enum":[
+        "DEFAULT",
+        "NONE"
+      ]
+    },
+    "AgenticRetrieveMemoryRetrievalConfig":{
+      "type":"structure",
+      "members":{
+        "metadataFilters":{"shape":"AgenticRetrieveMemoryMetadataFilterList"},
+        "namespace":{"shape":"MemoryNamespace"},
+        "namespacePath":{"shape":"MemoryNamespace"},
+        "strategyId":{"shape":"MemoryStrategyId"}
+      }
+    },
+    "AgenticRetrieveMemoryRetrievalConfigList":{
+      "type":"list",
+      "member":{"shape":"AgenticRetrieveMemoryRetrievalConfig"}
+    },
+    "AgenticRetrieveMemoryRetrieveDetails":{
+      "type":"structure",
+      "required":[
+        "inputQuery",
+        "memoryId"
+      ],
+      "members":{
+        "inputQuery":{"shape":"AgenticRetrieveMessageContent"},
+        "memoryId":{"shape":"String"},
+        "namespace":{"shape":"String"},
+        "namespacePath":{"shape":"String"},
+        "strategyId":{"shape":"String"}
+      }
+    },
+    "AgenticRetrieveMemorySessionBinding":{
+      "type":"structure",
+      "required":[
+        "actorId",
+        "sessionId"
+      ],
+      "members":{
+        "actorId":{"shape":"AgentCoreMemoryActorId"},
+        "sessionId":{"shape":"AgentCoreMemorySessionId"}
+      }
+    },
     "AgenticRetrieveMessage":{
       "type":"structure",
       "required":[
@@ -1141,7 +1292,8 @@
         "Planning",
         "Retrieval",
         "SpeculativeRetrieval",
-        "FullDocumentExpansion"
+        "FullDocumentExpansion",
+        "SessionHistoryLoad"
       ]
     },
     "AgenticRetrieveStreamRequest":{
@@ -1154,6 +1306,7 @@
       "members":{
         "agenticRetrieveConfiguration":{"shape":"AgenticRetrieveConfiguration"},
         "generateResponse":{"shape":"Boolean"},
+        "memoryConfiguration":{"shape":"AgenticRetrieveMemoryConfiguration"},
         "messages":{"shape":"AgenticRetrieveStreamRequestMessagesList"},
         "nextToken":{"shape":"NextToken"},
         "policyConfiguration":{"shape":"AgenticRetrievePolicyConfiguration"},
@@ -1243,7 +1396,10 @@
     },
     "AgenticRetrieveType":{
       "type":"string",
-      "enum":["BedrockKnowledgeBase"]
+      "enum":[
+        "BedrockKnowledgeBase",
+        "BedrockAgentCoreMemory"
+      ]
     },
     "AgenticRetrieveWarning":{
       "type":"structure",
@@ -4352,6 +4508,12 @@
       "min":2,
       "pattern":"^[0-9a-zA-Z._:-]+$"
     },
+    "MemoryNamespace":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9/*][a-zA-Z0-9\\-_/*]*(?::[a-zA-Z0-9\\-_/*]+)*[a-zA-Z0-9\\-_/*]*$"
+    },
     "MemorySessionSummary":{
       "type":"structure",
       "members":{
@@ -4361,6 +4523,12 @@
         "sessionStartTime":{"shape":"DateTimestamp"},
         "summaryText":{"shape":"SummaryText"}
       }
+    },
+    "MemoryStrategyId":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9][a-zA-Z0-9\\-_]*$"
     },
     "MemoryType":{
       "type":"string",
@@ -6218,6 +6386,7 @@
       },
       "exception":true
     },
+    "Timestamp":{"type":"timestamp"},
     "TopK":{
       "type":"integer",
       "box":true,

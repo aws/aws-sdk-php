@@ -47,6 +47,7 @@
     "CreateDataTableAttribute": "<p>Adds an attribute to an existing data table. Creating a new primary attribute uses the empty value for the specified value type for all existing records. This should not affect uniqueness of published data tables since the existing primary values will already be unique. Creating attributes does not create any values. System managed tables may not allow customers to create new attributes.</p>",
     "CreateEmailAddress": "<p>Create new email address in the specified Connect Customer instance. For more information about email addresses, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/create-email-address1.html\">Create email addresses</a> in the Connect Customer Administrator Guide.</p>",
     "CreateEvaluationForm": "<p>Creates an evaluation form in the specified Connect Customer instance. The form can be used to define questions related to agent performance, and create sections to organize such questions. Question and section identifiers cannot be duplicated within the same evaluation form.</p>",
+    "CreateExtractionDefinition": "<p>Creates an extraction definition in the specified Connect Customer instance. An extraction definition specifies how structured data is extracted from customer interactions using generative AI, including the prompt hint that guides extraction and the behavior when a value cannot be found.</p>",
     "CreateHoursOfOperation": "<p>Creates hours of operation. </p>",
     "CreateHoursOfOperationOverride": "<p>Creates an hours of operation override in an Connect Customer hours of operation resource.</p>",
     "CreateInstance": "<p>This API is in preview release for Connect Customer and is subject to change.</p> <p>Initiates an Connect Customer instance with all the supported channels enabled. It does not attach any storage, such as Amazon Simple Storage Service (Amazon S3) or Amazon Kinesis. It also does not allow for any configurations on features, such as Contact Lens for Connect Customer. </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-instances.html\">Create an Connect Customer instance</a> in the <i>Connect Customer Administrator Guide</i>.</p> <p>Connect Customer enforces a limit on the total number of instances that you can create or delete in 30 days. If you exceed this limit, you will get an error message indicating there has been an excessive number of attempts at creating or deleting instances. You must wait 30 days before you can restart creating and deleting instances in your account.</p>",
@@ -87,6 +88,7 @@
     "DeleteDataTableAttribute": "<p>Deletes an attribute and all its values from a data table.</p>",
     "DeleteEmailAddress": "<p>Deletes email address from the specified Connect Customer instance.</p>",
     "DeleteEvaluationForm": "<p>Deletes an evaluation form in the specified Connect Customer instance. </p> <ul> <li> <p>If the version property is provided, only the specified version of the evaluation form is deleted.</p> </li> <li> <p>If no version is provided, then the full form (all versions) is deleted.</p> </li> </ul>",
+    "DeleteExtractionDefinition": "<p>Deletes an extraction definition from the specified Connect Customer instance.</p>",
     "DeleteHoursOfOperation": "<p>Deletes an hours of operation.</p>",
     "DeleteHoursOfOperationOverride": "<p>Deletes an hours of operation override in an Connect Customer hours of operation resource.</p>",
     "DeleteInstance": "<p>This API is in preview release for Connect Customer and is subject to change.</p> <p>Deletes the Connect Customer instance. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/delete-connect-instance.html\">Delete your Connect Customer instance</a> in the <i>Connect Customer Administrator Guide</i>.</p> <p>Connect Customer enforces a limit on the total number of instances that you can create or delete in 30 days. If you exceed this limit, you will get an error message indicating there has been an excessive number of attempts at creating or deleting instances. You must wait 30 days before you can restart creating and deleting instances in your account.</p>",
@@ -126,6 +128,7 @@
     "DescribeDataTableAttribute": "<p>Returns detailed information for a specific data table attribute including its configuration, validation rules, and metadata. \"Describe\" is a deprecated term but is allowed to maintain consistency with existing operations.</p>",
     "DescribeEmailAddress": "<p>Describe email address form the specified Connect Customer instance.</p>",
     "DescribeEvaluationForm": "<p>Describes an evaluation form in the specified Connect Customer instance. If the version property is not provided, the latest version of the evaluation form is described.</p>",
+    "DescribeExtractionDefinition": "<p>Describes an extraction definition in the specified Connect Customer instance.</p>",
     "DescribeHoursOfOperation": "<p>Describes the hours of operation.</p>",
     "DescribeHoursOfOperationOverride": "<p>Describes the hours of operation override.</p>",
     "DescribeInstance": "<p>This API is in preview release for Connect Customer and is subject to change.</p> <p>Returns the current state of the specified instance identifier. It tracks the instance while it is being created and returns an error status, if applicable. </p> <p>If an instance is not created successfully, the instance status reason field returns details relevant to the reason. The instance in a failed state is returned only for 24 hours after the CreateInstance API was invoked.</p>",
@@ -210,6 +213,7 @@
     "ListEntitySecurityProfiles": "<p> Lists all security profiles attached to a Q in Connect AIAgent Entity in an Amazon Connect instance. </p>",
     "ListEvaluationFormVersions": "<p>Lists versions of an evaluation form in the specified Connect Customer instance.</p>",
     "ListEvaluationForms": "<p>Lists evaluation forms in the specified Connect Customer instance.</p>",
+    "ListExtractionDefinitions": "<p>Lists extraction definitions in the specified Connect Customer instance.</p>",
     "ListFlowAssociations": "<p>List the flow association based on the filters.</p>",
     "ListHoursOfOperationOverrides": "<p>List the hours of operation overrides.</p>",
     "ListHoursOfOperations": "<p>Provides information about the hours of operation for the specified Connect Customer instance.</p> <p>For more information about hours of operation, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/set-hours-operation.html\">Set the Hours of Operation for a Queue</a> in the <i>Connect Customer Administrator Guide</i>.</p>",
@@ -294,7 +298,7 @@
     "SendChatIntegrationEvent": "<p>Processes chat integration events from Amazon Web Services or external integrations to Connect Customer. A chat integration event includes:</p> <ul> <li> <p>SourceId, DestinationId, and Subtype: a set of identifiers, uniquely representing a chat</p> </li> <li> <p> ChatEvent: details of the chat action to perform such as sending a message, event, or disconnecting from a chat</p> </li> </ul> <p>When a chat integration event is sent with chat identifiers that do not map to an active chat contact, a new chat contact is also created before handling chat action. </p> <p>Access to this API is currently restricted to Amazon Web Services End User Messaging for supporting SMS integration. </p>",
     "SendOutboundEmail": "<p>Send outbound email for outbound campaigns. For more information about outbound campaigns, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/enable-outbound-campaigns.html\">Set up Connect Customer outbound campaigns</a>.</p> <note> <p>Only the Connect Customer outbound campaigns service principal is allowed to assume a role in your account and call this API.</p> </note>",
     "SendOutboundWebNotification": "<p>Sends an outbound web notification to a customer's web browser for outbound campaigns. For more information about outbound campaigns, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/enable-outbound-campaigns.html\">Set up Connect Customer outbound campaigns</a>.</p> <note> <p>Only the Connect Customer outbound campaigns service principal is allowed to assume a role in your account and call this API.</p> </note>",
-    "StartAssistantContact": "<p>Starts a chat contact with an AI agent.</p> <p>Use the returned <code>ParticipantToken</code> to call the <a href=\"https://docs.aws.amazon.com/connect-participant/latest/APIReference/API_CreateParticipantConnection.html\">CreateParticipantConnection</a> API.</p> <p>For more information about chat, see the following topics in the <i>Connect Customer Administrator Guide</i>: </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/web-and-mobile-chat.html\">Concepts: Web and mobile messaging capabilities in Connect Customer</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/security-best-practices.html#bp-security-chat\">Connect Customer Chat security best practices</a> </p> </li> </ul>",
+    "StartAssistantContact": "<p>Starts a chat contact with an AI agent.</p> <p>Use the returned <code>ParticipantToken</code> with the <a href=\"https://docs.aws.amazon.com/connect-participant/latest/APIReference/API_CreateParticipantConnection.html\">CreateParticipantConnection</a> operation.</p> <p>For more information about chat, see the following topics in the <i>Connect Customer Administrator Guide</i>: </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/web-and-mobile-chat.html\">Concepts: Web and mobile messaging capabilities in Connect Customer</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/security-best-practices.html#bp-security-chat\">Connect Customer Chat security best practices</a> </p> </li> </ul>",
     "StartAttachedFileUpload": "<p>Provides a pre-signed Amazon S3 URL in response for uploading your content.</p> <important> <p>You may only use this API to upload attachments to a <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_CreateCase.html\">Connect Customer Case</a>, <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/setup-email-channel.html\">Connect Customer Email</a>, or <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/concepts-getting-started-tasks.html\">Connect Customer Task</a>. </p> </important>",
     "StartChatContact": "<p>Initiates a flow to start a new chat for the customer. Response of this API provides a token required to obtain credentials from the <a href=\"https://docs.aws.amazon.com/connect-participant/latest/APIReference/API_CreateParticipantConnection.html\">CreateParticipantConnection</a> API in the Connect Customer Participant Service.</p> <p>When a new chat contact is successfully created, clients must subscribe to the participant’s connection for the created chat within 5 minutes. This is achieved by invoking <a href=\"https://docs.aws.amazon.com/connect-participant/latest/APIReference/API_CreateParticipantConnection.html\">CreateParticipantConnection</a> with WEBSOCKET and CONNECTION_CREDENTIALS. </p> <p>A 429 error occurs in the following situations:</p> <ul> <li> <p>API rate limit is exceeded. API TPS throttling returns a <code>TooManyRequests</code> exception.</p> </li> <li> <p>The <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html\">quota for concurrent active chats</a> is exceeded. Active chat throttling returns a <code>LimitExceededException</code>.</p> </li> </ul> <p>If you use the <code>ChatDurationInMinutes</code> parameter and receive a 400 error, your account may not support the ability to configure custom chat durations. For more information, contact Amazon Web Services Support. </p> <p>For more information about chat, see the following topics in the <i>Connect Customer Administrator Guide</i>: </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/web-and-mobile-chat.html\">Concepts: Web and mobile messaging capabilities in Connect Customer</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/security-best-practices.html#bp-security-chat\">Connect Customer Chat security best practices</a> </p> </li> </ul>",
     "StartContactConversationalAnalyticsJob": "<p>Starts a Contact Lens post-call analytics job for the specified contact. This API runs Conversational Analytics post-contact analysis on a voice recording that is already attached to the contact, generating transcription, sentiment analysis, redaction, and summarization results based on the provided configuration.</p> <important> <p>A voice recording must already be attached to the contact before calling this API. Use <code>CreateAttachedFile</code> to attach a recording from an S3 source URI.</p> </important> <note> <p>For example, you can call <code>CreateContact</code>, then <code>CreateAttachedFile</code>, then <code>StartContactConversationalAnalyticsJob</code> to create a contact, attach a recording, and run post-call analytics.</p> </note>",
@@ -343,6 +347,7 @@
     "UpdateDataTablePrimaryValues": "<p>Updates the primary values for a record. This operation affects all existing values that are currently associated to the record and its primary values. Users that have restrictions on attributes and/or primary values are not authorized to use this endpoint. The combination of new primary values must be unique within the table.</p>",
     "UpdateEmailAddressMetadata": "<p>Updates an email address metadata. For more information about email addresses, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/create-email-address1.html\">Create email addresses</a> in the Connect Customer Administrator Guide.</p>",
     "UpdateEvaluationForm": "<p>Updates details about a specific evaluation form version in the specified Connect Customer instance. Question and section identifiers cannot be duplicated within the same evaluation form.</p> <p>This operation does not support partial updates. Instead it does a full update of evaluation form content.</p>",
+    "UpdateExtractionDefinition": "<p>Updates an extraction definition in the specified Connect Customer instance.</p>",
     "UpdateHoursOfOperation": "<p>Updates the hours of operation.</p>",
     "UpdateHoursOfOperationOverride": "<p>Update the hours of operation override.</p>",
     "UpdateInstanceAttribute": "<p>This API is in preview release for Connect Customer and is subject to change.</p> <p>Updates the value for the specified attribute type.</p>",
@@ -440,6 +445,7 @@
         "CreateContactResponse$ContactArn": "<p>The Amazon Resource Name (ARN) of the created contact.</p>",
         "CreateDataTableResponse$Arn": "<p>The Amazon Resource Name (ARN) for the created data table. Does not include the version alias.</p>",
         "CreateEvaluationFormResponse$EvaluationFormArn": "<p>The Amazon Resource Name (ARN) for the evaluation form resource.</p>",
+        "CreateExtractionDefinitionResponse$ExtractionDefinitionArn": "<p>The Amazon Resource Name (ARN) of the extraction definition.</p>",
         "CreateHoursOfOperationResponse$HoursOfOperationArn": "<p>The Amazon Resource Name (ARN) for the hours of operation.</p>",
         "CreateInstanceResponse$Arn": "<p>The Amazon Resource Name (ARN) of the instance.</p>",
         "CreateIntegrationAssociationRequest$IntegrationArn": "<p>The Amazon Resource Name (ARN) of the integration.</p> <note> <p>When integrating with Amazon Web Services End User Messaging, the Connect Customer and Amazon Web Services End User Messaging instances must be in the same account.</p> </note>",
@@ -499,6 +505,10 @@
         "EvaluationSummary$EvaluationArn": "<p>The Amazon Resource Name (ARN) for the contact evaluation resource.</p>",
         "EvaluationSummary$EvaluatorArn": "<p>The Amazon Resource Name (ARN) of the user who last updated the evaluation.</p>",
         "EvaluatorUserUnion$ConnectUserArn": "<p>Represents the Connect Customer ARN of the user.</p>",
+        "ExtractionDefinition$ExtractionDefinitionArn": "<p>The Amazon Resource Name (ARN) of the extraction definition.</p>",
+        "ExtractionDefinition$LastUpdatedBy": "<p>The Amazon Resource Name (ARN) of the user who last updated the extraction definition.</p>",
+        "ExtractionDefinitionSummary$ExtractionDefinitionArn": "<p>The Amazon Resource Name (ARN) of the extraction definition.</p>",
+        "ExtractionDefinitionSummary$LastUpdatedBy": "<p>The Amazon Resource Name (ARN) of the user who last updated the extraction definition.</p>",
         "FailedBatchAssociationSummary$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource that failed to be associated.</p>",
         "FlowAssociationSummary$ResourceId": "<p>The identifier of the resource.</p>",
         "FlowAssociationSummary$FlowId": "<p>The identifier of the flow.</p>",
@@ -992,7 +1002,7 @@
     "AiAgentInput": {
       "base": "<p>The AI agent that participates in the contact, including its identifier.</p>",
       "refs": {
-        "StartAssistantContactRequest$AiAgent": "<p>The AI agent that participates in the contact.</p>"
+        "StartAssistantContactRequest$AiAgent": "<p>The AI agent configuration for this contact.</p>"
       }
     },
     "AiAgentSearchCriteria": {
@@ -1550,7 +1560,7 @@
         "CreateContactRequest$Attributes": "<p>A custom key-value pair using an attribute map. The attributes are standard Connect Customer attributes, and can be accessed in flows just like any other contact attributes.</p> <p>There can be up to 32,768 UTF-8 bytes across all key-value pairs per contact. Attribute keys can include only alphanumeric, dash, and underscore characters.</p>",
         "GetContactAttributesResponse$Attributes": "<p>Information about the attributes.</p>",
         "NewSessionDetails$Attributes": "<p> A custom key-value pair using an attribute map. The attributes are standard Connect Customer attributes. They can be accessed in flows just like any other contact attributes. </p> <p> There can be up to 32,768 UTF-8 bytes across all key-value pairs per contact. Attribute keys can include only alphanumeric, dash, and underscore characters. </p>",
-        "StartAssistantContactRequest$Attributes": "<p>A map of key-value pairs to associate with the contact. Amazon Connect makes these attributes available to flows as standard contact attributes.</p> <p>You can provide up to 32,768 UTF-8 bytes across all key-value pairs per contact. Attribute keys can contain only alphanumeric characters, dashes, and underscores.</p>",
+        "StartAssistantContactRequest$Attributes": "<p>A map of key-value pairs to associate with the contact. We make these attributes available to flows as standard contact attributes.</p> <p>You can provide up to 32,768 UTF-8 bytes across all key-value pairs for each contact.</p>",
         "StartChatContactRequest$Attributes": "<p>A custom key-value pair using an attribute map. The attributes are standard Connect Customer attributes. They can be accessed in flows just like any other contact attributes. </p> <p>There can be up to 32,768 UTF-8 bytes across all key-value pairs per contact. Attribute keys can include only alphanumeric, dash, and underscore characters.</p>",
         "StartEmailContactRequest$Attributes": "<p>A custom key-value pair using an attribute map. The attributes are standard Connect Customer attributes, and can be accessed in flows just like any other contact attributes.</p> <p>There can be up to 32,768 UTF-8 bytes across all key-value pairs per contact. Attribute keys can include only alphanumeric, dash, and underscore characters.</p>",
         "StartOutboundChatContactRequest$Attributes": "<p>A custom key-value pair using an attribute map. The attributes are standard Connect Customer attributes, and can be accessed in flows just like any other contact attributes.</p>",
@@ -2229,6 +2239,7 @@
         "CreateContactRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "CreateEmailAddressRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "CreateEvaluationFormRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
+        "CreateExtractionDefinitionRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field.</p>",
         "CreateInstanceRequest$ClientToken": "<p>The idempotency token.</p>",
         "CreateMetricRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "CreateNotificationRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
@@ -2272,6 +2283,7 @@
         "TransferContactRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "UpdateEmailAddressMetadataRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "UpdateEvaluationFormRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
+        "UpdateExtractionDefinitionRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field.</p>",
         "UpdateInstanceAttributeRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "UpdateInstanceStorageConfigRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "UpdatePhoneNumberMetadataRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
@@ -2903,7 +2915,7 @@
         "SendChatIntegrationEventResponse$InitialContactId": "<p>Identifier of chat contact used to handle integration event. This may be null if the integration event is not valid without an already existing chat contact.</p>",
         "StartAssistantContactRequest$RelatedContactId": "<p>The identifier of an Connect Customer contact related to the new assistant contact.</p> <note> <p>You cannot provide both <code>RelatedContactId</code> and <code>PersistentChat</code>.</p> </note>",
         "StartAssistantContactResponse$ContactId": "<p>The identifier of the contact within the Connect Customer instance.</p>",
-        "StartAssistantContactResponse$ContinuedFromContactId": "<p>For a persistent chat, the identifier of the contact from which the chat continues. Amazon Connect returns this field only for persistent chats.</p>",
+        "StartAssistantContactResponse$ContinuedFromContactId": "<p>The identifier of the contact from which the chat continues, returned only for persistent chats.</p>",
         "StartChatContactRequest$RelatedContactId": "<p>The unique identifier for an Connect Customer contact. This identifier is related to the chat starting.</p> <note> <p>You cannot provide data for both RelatedContactId and PersistentChat. </p> </note>",
         "StartChatContactResponse$ContactId": "<p>The identifier of this contact within the Connect Customer instance. </p>",
         "StartChatContactResponse$ContinuedFromContactId": "<p>The contactId from which a persistent chat session is started. This field is populated only for persistent chats.</p>",
@@ -3310,6 +3322,14 @@
       "refs": {}
     },
     "CreateEvaluationFormResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateExtractionDefinitionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateExtractionDefinitionResponse": {
       "base": null,
       "refs": {}
     },
@@ -4128,6 +4148,14 @@
       "base": null,
       "refs": {}
     },
+    "DeleteExtractionDefinitionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteExtractionDefinitionResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteHoursOfOperationOverrideRequest": {
       "base": null,
       "refs": {}
@@ -4381,6 +4409,14 @@
       "refs": {}
     },
     "DescribeEvaluationFormResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeExtractionDefinitionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeExtractionDefinitionResponse": {
       "base": null,
       "refs": {}
     },
@@ -6269,6 +6305,84 @@
         "CreateContactFlowModuleRequest$ExternalInvocationConfiguration": "<p>The external invocation configuration for the flow module.</p>"
       }
     },
+    "ExtractInformationActionDefinition": {
+      "base": "<p>Information about the extract information action, which references extraction definitions to use when extracting structured data from customer interactions.</p>",
+      "refs": {
+        "RuleAction$ExtractInformationAction": "<p>Information about the extract information action.</p>"
+      }
+    },
+    "ExtractionConfiguration": {
+      "base": "<p>The extraction configuration that defines how data is extracted from customer interactions.</p>",
+      "refs": {
+        "CreateExtractionDefinitionRequest$ExtractionConfiguration": "<p>The configuration that defines how data is extracted, including the prompt hint and not-found behavior.</p>",
+        "ExtractionDefinition$ExtractionConfiguration": "<p>The configuration that defines how data is extracted.</p>",
+        "UpdateExtractionDefinitionRequest$ExtractionConfiguration": "<p>The configuration that defines how data is extracted, including the prompt hint and not-found behavior.</p>"
+      }
+    },
+    "ExtractionDefinition": {
+      "base": "<p>Information about an extraction definition.</p>",
+      "refs": {
+        "DescribeExtractionDefinitionResponse$ExtractionDefinition": "<p>The extraction definition.</p>"
+      }
+    },
+    "ExtractionDefinitionDisplay": {
+      "base": "<p>The display configuration for an extraction definition.</p>",
+      "refs": {
+        "CreateExtractionDefinitionRequest$Display": "<p>The display settings for the extraction definition, including the label shown in the agent workspace.</p>",
+        "ExtractionDefinition$Display": "<p>The display settings for the extraction definition.</p>",
+        "UpdateExtractionDefinitionRequest$Display": "<p>The display settings for the extraction definition.</p>"
+      }
+    },
+    "ExtractionDefinitionDisplayLabel": {
+      "base": null,
+      "refs": {
+        "ExtractionDefinitionDisplay$Label": "<p>The label displayed in the agent workspace for this extraction definition.</p>"
+      }
+    },
+    "ExtractionDefinitionId": {
+      "base": null,
+      "refs": {
+        "CreateExtractionDefinitionResponse$ExtractionDefinitionId": "<p>The identifier of the extraction definition.</p>",
+        "DeleteExtractionDefinitionRequest$ExtractionDefinitionId": "<p>The identifier of the extraction definition to delete.</p>",
+        "DescribeExtractionDefinitionRequest$ExtractionDefinitionId": "<p>The identifier of the extraction definition to describe.</p>",
+        "ExtractionDefinition$ExtractionDefinitionId": "<p>The identifier of the extraction definition.</p>",
+        "ExtractionDefinitionSummary$ExtractionDefinitionId": "<p>The identifier of the extraction definition.</p>",
+        "UpdateExtractionDefinitionRequest$ExtractionDefinitionId": "<p>The identifier of the extraction definition to update.</p>"
+      }
+    },
+    "ExtractionDefinitionName": {
+      "base": null,
+      "refs": {
+        "CreateExtractionDefinitionRequest$Name": "<p>A unique name of the extraction definition.</p>",
+        "ExtractionDefinition$Name": "<p>The name of the extraction definition.</p>",
+        "ExtractionDefinitionSummary$Name": "<p>The name of the extraction definition.</p>",
+        "UpdateExtractionDefinitionRequest$Name": "<p>The name of the extraction definition.</p>"
+      }
+    },
+    "ExtractionDefinitionNotFoundBehavior": {
+      "base": "<p>The behavior configuration when an extraction definition cannot find the target value.</p>",
+      "refs": {
+        "ExtractionConfiguration$NotFoundBehavior": "<p>The behavior when the extraction cannot find the specified data in the interaction.</p>"
+      }
+    },
+    "ExtractionDefinitionPromptHint": {
+      "base": null,
+      "refs": {
+        "ExtractionConfiguration$PromptHint": "<p>The prompt hint that guides the extraction. This text tells the generative AI model what data to look for in the customer interaction.</p>"
+      }
+    },
+    "ExtractionDefinitionSummary": {
+      "base": "<p>Summary information about an extraction definition.</p>",
+      "refs": {
+        "ExtractionDefinitionSummaryList$member": null
+      }
+    },
+    "ExtractionDefinitionSummaryList": {
+      "base": null,
+      "refs": {
+        "ListExtractionDefinitionsResponse$ExtractionDefinitionSummaryList": "<p>Information about the extraction definitions.</p>"
+      }
+    },
     "FailedBatchAssociationSummary": {
       "base": "<p>Contains information about a resource that failed to be associated with a workspace in a batch operation.</p>",
       "refs": {
@@ -7331,6 +7445,7 @@
         "CreateDataTableRequest$InstanceId": "<p>The unique identifier for the Amazon Connect instance where the data table will be created.</p>",
         "CreateEmailAddressRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "CreateEvaluationFormRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "CreateExtractionDefinitionRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "CreateHoursOfOperationOverrideRequest$InstanceId": "<p>The identifier of the Connect Customer instance.</p>",
         "CreateHoursOfOperationRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "CreateInstanceResponse$Id": "<p>The identifier for the instance.</p>",
@@ -7367,6 +7482,7 @@
         "DeleteDataTableRequest$InstanceId": "<p>The unique identifier for the Amazon Connect instance.</p>",
         "DeleteEmailAddressRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeleteEvaluationFormRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "DeleteExtractionDefinitionRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeleteHoursOfOperationOverrideRequest$InstanceId": "<p>The identifier of the Connect Customer instance.</p>",
         "DeleteHoursOfOperationRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeleteInstanceRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -7401,6 +7517,7 @@
         "DescribeDataTableRequest$InstanceId": "<p>The unique identifier for the Amazon Connect instance.</p>",
         "DescribeEmailAddressRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DescribeEvaluationFormRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "DescribeExtractionDefinitionRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DescribeHoursOfOperationOverrideRequest$InstanceId": "<p>The identifier of the Connect Customer instance.</p>",
         "DescribeHoursOfOperationRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DescribeInstanceAttributeRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -7481,6 +7598,7 @@
         "ListEntitySecurityProfilesRequest$InstanceId": "<p> The identifier of the Amazon Connect instance. You can find the instance ID in the Amazon Resource Name (ARN) of the instance. </p>",
         "ListEvaluationFormVersionsRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListEvaluationFormsRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "ListExtractionDefinitionsRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListFlowAssociationsRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListHoursOfOperationOverridesRequest$InstanceId": "<p>The identifier of the Connect Customer instance.</p>",
         "ListHoursOfOperationsRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -7607,6 +7725,7 @@
         "UpdateDataTablePrimaryValuesRequest$InstanceId": "<p>The unique identifier for the Amazon Connect instance.</p>",
         "UpdateEmailAddressMetadataRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdateEvaluationFormRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "UpdateExtractionDefinitionRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdateHoursOfOperationOverrideRequest$InstanceId": "<p>The identifier of the Connect Customer instance.</p>",
         "UpdateHoursOfOperationRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdateInstanceAttributeRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -8195,6 +8314,14 @@
       "base": null,
       "refs": {}
     },
+    "ListExtractionDefinitionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListExtractionDefinitionsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListFlowAssociationResourceType": {
       "base": null,
       "refs": {
@@ -8639,6 +8766,7 @@
         "ListEntitySecurityProfilesRequest$MaxResults": "<p> The maximum number of results to return per page. The default MaxResult size is 100. </p>",
         "ListEvaluationFormVersionsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListEvaluationFormsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
+        "ListExtractionDefinitionsRequest$MaxResults": "<p>The maximum number of results to return per page. The default MaxResult size is 100.</p>",
         "ListHoursOfOperationOverridesRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListIntegrationAssociationsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListMetricsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
@@ -9345,6 +9473,8 @@
         "ListEvaluationFormVersionsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListEvaluationFormsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListEvaluationFormsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
+        "ListExtractionDefinitionsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
+        "ListExtractionDefinitionsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListFlowAssociationsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListFlowAssociationsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListHoursOfOperationOverridesRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
@@ -9483,6 +9613,18 @@
         "SearchViewsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "SearchWorkspaceAssociationsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "SearchWorkspacesRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>"
+      }
+    },
+    "NotFoundBehaviorType": {
+      "base": null,
+      "refs": {
+        "ExtractionDefinitionNotFoundBehavior$Behavior": "<p>The behavior type. <code>USE_DEFAULT_VALUE</code> returns the specified default value. <code>OMIT</code> excludes the field from the output.</p>"
+      }
+    },
+    "NotFoundDefaultValue": {
+      "base": null,
+      "refs": {
+        "ExtractionDefinitionNotFoundBehavior$DefaultValue": "<p>The default value to use when the behavior is <code>USE_DEFAULT_VALUE</code>.</p>"
       }
     },
     "Notification": {
@@ -10025,7 +10167,7 @@
       "base": null,
       "refs": {
         "ParticipantTokenCredentials$ParticipantToken": "<p>The token used by the chat participant to call <a href=\"https://docs.aws.amazon.com/connect-participant/latest/APIReference/API_CreateParticipantConnection.html\">CreateParticipantConnection</a>. The participant token is valid for the lifetime of a chat participant. </p>",
-        "StartAssistantContactResponse$ParticipantToken": "<p>The token that the chat participant uses to call the <a href=\"https://docs.aws.amazon.com/connect-participant/latest/APIReference/API_CreateParticipantConnection.html\">CreateParticipantConnection</a> API. The token remains valid for the lifetime of the chat participant.</p>",
+        "StartAssistantContactResponse$ParticipantToken": "<p>The token that the chat participant uses with the <a href=\"https://docs.aws.amazon.com/connect-participant/latest/APIReference/API_CreateParticipantConnection.html\">CreateParticipantConnection</a> operation. The token remains valid for the lifetime of the chat participant.</p>",
         "StartChatContactResponse$ParticipantToken": "<p>The token used by the chat participant to call <a href=\"https://docs.aws.amazon.com/connect-participant/latest/APIReference/API_CreateParticipantConnection.html\">CreateParticipantConnection</a>. The participant token is valid for the lifetime of a chat participant.</p>",
         "StartWebRTCContactResponse$ParticipantToken": "<p>The token used by the contact participant to call the <a href=\"https://docs.aws.amazon.com/connect-participant/latest/APIReference/API_CreateParticipantConnection.html\">CreateParticipantConnection</a> API. The participant token is valid for the lifetime of a contact participant.</p>",
         "UpdateParticipantAuthenticationRequest$State": "<p>The <code>state</code> query parameter that was provided by Cognito in the <code>redirectUri</code>. This will also match the <code>state</code> parameter provided in the <code>AuthenticationUrl</code> from the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_GetAuthenticationUrl.html\">GetAuthenticationUrl</a> response.</p>"
@@ -12141,6 +12283,24 @@
         "AnalyticsConfiguration$RulesConfiguration": "<p>The rules configuration for conversational analytics.</p>"
       }
     },
+    "RulesExtractionDefinitionId": {
+      "base": null,
+      "refs": {
+        "RulesExtractionDefinitionIdentifier$Identifier": "<p>The identifier of the extraction definition.</p>"
+      }
+    },
+    "RulesExtractionDefinitionIdentifier": {
+      "base": "<p>An identifier that references an extraction definition resource.</p>",
+      "refs": {
+        "RulesExtractionDefinitionIdentifierList$member": null
+      }
+    },
+    "RulesExtractionDefinitionIdentifierList": {
+      "base": null,
+      "refs": {
+        "ExtractInformationActionDefinition$RulesExtractionDefinitions": "<p>The list of extraction definition identifiers that specify what data to extract.</p>"
+      }
+    },
     "RulesSearchConditionList": {
       "base": null,
       "refs": {
@@ -12784,7 +12944,7 @@
         "StartEmailContactRequest$SegmentAttributes": "<p>A set of system defined key-value pairs stored on individual contact segments using an attribute map. The attributes are standard Connect Customer attributes. They can be accessed in flows.</p> <p>Attribute keys can include only alphanumeric, -, and _.</p> <p>This field can be used to show channel subtype, such as <code>connect:Guide</code>.</p> <note> <p>To set contact expiry, a <code>ValueMap</code> must be specified containing the integer number of minutes the contact will be active for before expiring, with <code>SegmentAttributes</code> like { <code> \"connect:ContactExpiry\": {\"ValueMap\" : { \"ExpiryDuration\": { \"ValueInteger\":135}}}}</code>.</p> </note>",
         "StartOutboundChatContactRequest$SegmentAttributes": "<p>A set of system defined key-value pairs stored on individual contact segments using an attribute map. The attributes are standard Connect Customer attributes. They can be accessed in flows.</p> <ul> <li> <p>Attribute keys can include only alphanumeric, <code>-</code>, and <code>_</code>.</p> </li> <li> <p>This field can be used to show channel subtype, such as <code>connect:SMS</code> and <code>connect:WhatsApp</code>.</p> </li> </ul>",
         "StartTaskContactRequest$SegmentAttributes": "<p>A set of system defined key-value pairs stored on individual contact segments (unique contact ID) using an attribute map. The attributes are standard Connect Customer attributes. They can be accessed in flows.</p> <p>Attribute keys can include only alphanumeric, -, and _.</p> <p>This field can be used to set Contact Expiry as a duration in minutes and set a UserId for the User who created a task.</p> <note> <p>To set contact expiry, a ValueMap must be specified containing the integer number of minutes the contact will be active for before expiring, with <code>SegmentAttributes</code> like { <code> \"connect:ContactExpiry\": {\"ValueMap\" : { \"ExpiryDuration\": { \"ValueInteger\": 135}}}}</code>. </p> <p>To set the created by user, a valid AgentResourceId must be supplied, with <code>SegmentAttributes</code> like { <code>\"connect:CreatedByUser\" { \"ValueString\": \"arn:aws:connect:us-west-2:xxxxxxxxxxxx:instance/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/agent/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"}}}</code>. </p> </note>",
-        "StartWebRTCContactRequest$SegmentAttributes": "<p>Use this map to specify system-defined attributes for the WebRTC contact segment. Use the <code>connect:Subtype</code> attribute to specify the channel subtype, such as <code>connect:WebRTC</code>.</p> <p>Attribute keys can contain only alphanumeric characters, hyphens, and underscores.</p>",
+        "StartWebRTCContactRequest$SegmentAttributes": "<p>A map of system-defined attributes for the WebRTC contact segment. Use the <code>connect:Subtype</code> attribute to specify the channel subtype, such as <code>connect:WebRTC</code>.</p>",
         "UpdateContactRequest$SegmentAttributes": "<p>A set of system defined key-value pairs stored on individual contact segments (unique contact ID) using an attribute map. The attributes are standard Connect Customer attributes. They can be accessed in flows.</p> <p>Attribute keys can include only alphanumeric, -, and _.</p> <p>This field can be used to show channel subtype, such as <code>connect:Guide</code>.</p> <p>Contact Expiry, and user-defined attributes (String - String) that are defined in predefined attributes, can be updated by using the UpdateContact API.</p>"
       }
     },
@@ -13493,6 +13653,7 @@
         "CreateDataTableRequest$Tags": "<p>Key value pairs for attribute based access control (TBAC or ABAC). Optional tags to apply to the data table for organization and access control purposes.</p>",
         "CreateEmailAddressRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "CreateEvaluationFormRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
+        "CreateExtractionDefinitionRequest$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "CreateHoursOfOperationRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "CreateInstanceRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, <code>{ \"tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }</code>.</p>",
         "CreateIntegrationAssociationRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
@@ -13517,6 +13678,7 @@
         "EvaluationForm$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "EvaluationFormSearchSummary$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "EvaluationSearchSummary$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
+        "ExtractionDefinition$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "GetAttachedFileResponse$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, <code>{ \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }</code>.</p>",
         "GetTaskTemplateResponse$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "HierarchyGroup$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
@@ -14124,6 +14286,10 @@
         "EvaluationSummary$CreatedTime": "<p>The timestamp for when the evaluation was created.</p>",
         "EvaluationSummary$LastModifiedTime": "<p>The timestamp for when the evaluation was last updated.</p>",
         "ExecutionRecord$Timestamp": "<p>The timestamp when the action was executed.</p>",
+        "ExtractionDefinition$CreatedTime": "<p>The timestamp when the extraction definition was created.</p>",
+        "ExtractionDefinition$LastUpdatedTime": "<p>The timestamp when the extraction definition was last updated.</p>",
+        "ExtractionDefinitionSummary$CreatedTime": "<p>The timestamp when the extraction definition was created.</p>",
+        "ExtractionDefinitionSummary$LastUpdatedTime": "<p>The timestamp when the extraction definition was last updated.</p>",
         "GetEvaluationFormValidationResponse$StartedTime": "<p>The timestamp when the validation process was started.</p>",
         "GetMetricDataV2Request$StartTime": "<p>The timestamp, in UNIX Epoch time format, at which to start the reporting interval for the retrieval of historical metrics data. The time must be before the end time timestamp. The start and end time depends on the <code>IntervalPeriod</code> selected. By default the time range between start and end time is 35 days. Historical metrics are available for 3 months.</p>",
         "GetMetricDataV2Request$EndTime": "<p>The timestamp, in UNIX Epoch time format, at which to end the reporting interval for the retrieval of historical metrics data. The time must be later than the start time timestamp. It cannot be later than the current timestamp.</p>",
@@ -14536,6 +14702,14 @@
       "refs": {}
     },
     "UpdateEvaluationFormResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateExtractionDefinitionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateExtractionDefinitionResponse": {
       "base": null,
       "refs": {}
     },

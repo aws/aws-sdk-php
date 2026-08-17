@@ -27,7 +27,7 @@
     "CreatePaymentConnector": "<p>Creates a new payment connector for a payment manager. A payment connector integrates with a supported payment provider to enable payment processing capabilities.</p>",
     "CreatePaymentCredentialProvider": "<p>Creates a new payment credential provider for storing authentication credentials used by payment connectors to communicate with external payment providers.</p>",
     "CreatePaymentManager": "<p>Creates a new payment manager in your Amazon Web Services account. A payment manager serves as the top-level resource for managing payment processing capabilities, including payment connectors that integrate with supported payment providers.</p> <p>If you specify <code>CUSTOM_JWT</code> as the <code>authorizerType</code>, you must provide an <code>authorizerConfiguration</code>.</p>",
-    "CreatePolicy": "<p>Creates a policy within the AgentCore Policy system. Policies provide real-time, deterministic control over agentic interactions with AgentCore Gateway. Using the Cedar policy language, you can define fine-grained policies that specify which interactions with Gateway tools are permitted based on input parameters and OAuth claims, ensuring agents operate within defined boundaries and business rules. The policy is validated during creation against the Cedar schema generated from the Gateway's tools' input schemas, which defines the available tools, their parameters, and expected data types. This is an asynchronous operation. Use the <a href=\"https://docs.aws.amazon.com/bedrock-agentcore-control/latest/APIReference/API_GetPolicy.html\">GetPolicy</a> operation to poll the <code>status</code> field to track completion.</p>",
+    "CreatePolicy": "<p>Creates a policy within the AgentCore Policy system. Policies provide real-time, deterministic control over agentic interactions with AgentCore Gateway. Using the Cedar policy language, you can define fine-grained policies that specify which interactions with Gateway tools are permitted based on input parameters and OAuth claims, ensuring agents operate within defined boundaries and business rules. The policy is validated during creation against the Cedar schema generated from the Gateway's tools' input schemas, which defines the available tools, their parameters, and expected data types. This is an asynchronous operation. Use the <a href=\"https://docs.aws.amazon.com/bedrock-agentcore-control/latest/APIReference/API_GetPolicy.html\">GetPolicy</a> operation to poll the <code>status</code> field to track completion.</p> <p>If the new policy is a temporal policy, creating it invalidates the policy engine's active temporal sessions. For more information about temporal policy sessions, see <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy-session-based-temporal.html\">session-based temporal policies</a>. The policy engine returns an HTTP 409 <code>ConflictException</code> to in-flight sessions. To resume, you must start a new session with a new session ID.</p>",
     "CreatePolicyEngine": "<p>Creates a new policy engine within the AgentCore Policy system. A policy engine is a collection of policies that evaluates and authorizes agent tool calls. When associated with Gateways (each Gateway can be associated with at most one policy engine, but multiple Gateways can be associated with the same engine), the policy engine intercepts all agent requests and determines whether to allow or deny each action based on the defined policies. This is an asynchronous operation. Use the <a href=\"https://docs.aws.amazon.com/bedrock-agentcore-control/latest/APIReference/API_GetPolicyEngine.html\">GetPolicyEngine</a> operation to poll the <code>status</code> field to track completion.</p>",
     "CreateRegistry": "<p>Creates a new registry in your Amazon Web Services account. A registry serves as a centralized catalog for organizing and managing registry records, including MCP servers, A2A agents, agent skills, and custom resource types.</p> <p>If you specify <code>CUSTOM_JWT</code> as the <code>authorizerType</code>, you must provide an <code>authorizerConfiguration</code>.</p>",
     "CreateRegistryRecord": "<p>Creates a new registry record within the specified registry. A registry record represents an individual AI resource's metadata in the registry. This could be an MCP server (and associated tools), A2A agent, agent skill, or a custom resource with a custom schema.</p> <p>The record is processed asynchronously and returns HTTP 202 Accepted.</p>",
@@ -161,7 +161,7 @@
     "UpdatePaymentConnector": "<p>Updates an existing payment connector. This operation uses PATCH semantics, so you only need to specify the fields you want to change.</p>",
     "UpdatePaymentCredentialProvider": "<p>Updates an existing payment credential provider with new authentication credentials.</p>",
     "UpdatePaymentManager": "<p>Updates an existing payment manager. This operation uses PATCH semantics, so you only need to specify the fields you want to change.</p>",
-    "UpdatePolicy": "<p>Updates an existing policy within the AgentCore Policy system. This operation allows modification of the policy description and definition while maintaining the policy's identity. The updated policy is validated against the Cedar schema before being applied. This is an asynchronous operation. Use the <code>GetPolicy</code> operation to poll the <code>status</code> field to track completion.</p>",
+    "UpdatePolicy": "<p>Updates an existing policy within the AgentCore Policy system. This operation allows modification of the policy description and definition while maintaining the policy's identity. The updated policy is validated against the Cedar schema before being applied. This is an asynchronous operation. Use the <code>GetPolicy</code> operation to poll the <code>status</code> field to track completion.</p> <p>If the updated policy is a temporal policy, the policy engine invalidates all active temporal sessions. If the update adds or removes temporal operators, the policy engine also invalidates active temporal sessions. For more information about temporal policy sessions, see <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy-session-based-temporal.html\">session-based temporal policies</a>. The policy engine returns an HTTP 409 <code>ConflictException</code> to in-flight sessions. To resume, you must start a new session with a new session ID.</p>",
     "UpdatePolicyEngine": "<p>Updates an existing policy engine within the AgentCore Policy system. This operation allows modification of the policy engine description while maintaining its identity. This is an asynchronous operation. Use the <code>GetPolicyEngine</code> operation to poll the <code>status</code> field to track completion.</p>",
     "UpdateRegistry": "<p>Updates an existing registry. This operation uses PATCH semantics, so you only need to specify the fields you want to change.</p>",
     "UpdateRegistryRecord": "<p>Updates an existing registry record. This operation uses PATCH semantics, so you only need to specify the fields you want to change. The update is processed asynchronously and returns HTTP 202 Accepted.</p>",
@@ -2648,6 +2648,12 @@
       "base": null,
       "refs": {}
     },
+    "DerivedEvaluatorConfig": {
+      "base": "<p> The configuration for a derived evaluator. It reuses an existing evaluator's logic on your own model. </p>",
+      "refs": {
+        "EvaluatorConfig$derived": "<p> The configuration for an evaluator derived from an existing base evaluator (a built-in or third-party evaluator), run on your own model. The base evaluator supplies the prompt and scoring. </p>"
+      }
+    },
     "Description": {
       "base": null,
       "refs": {
@@ -3071,6 +3077,7 @@
         "CreateEvaluatorResponse$evaluatorId": "<p> The unique identifier of the created evaluator. </p>",
         "DeleteEvaluatorRequest$evaluatorId": "<p> The unique identifier of the evaluator to delete. </p>",
         "DeleteEvaluatorResponse$evaluatorId": "<p> The unique identifier of the deleted evaluator. </p>",
+        "DerivedEvaluatorConfig$baseEvaluatorId": "<p> The identifier of the base evaluator whose logic to run (a <code>Builtin.*</code> or <code>ThirdParty.*</code> evaluator). </p>",
         "EvaluatorReference$evaluatorId": "<p> The unique identifier of the evaluator. Can reference builtin evaluators (e.g., Builtin.Helpfulness) or custom evaluators. </p>",
         "EvaluatorSummary$evaluatorId": "<p> The unique identifier of the evaluator. </p>",
         "GetEvaluatorRequest$evaluatorId": "<p> The unique identifier of the evaluator to retrieve. Can be a built-in evaluator ID (e.g., Builtin.Helpfulness) or a custom evaluator ID. </p>",
@@ -3105,6 +3112,7 @@
     "EvaluatorModelConfig": {
       "base": "<p> The model configuration that specifies which foundation model to use for evaluation and how to configure it. </p>",
       "refs": {
+        "DerivedEvaluatorConfig$modelConfig": "<p> The configuration of the evaluator model that you supply. </p>",
         "LlmAsAJudgeEvaluatorConfig$modelConfig": "<p> The model configuration that specifies which foundation model to use and how to configure it for evaluation. </p>"
       }
     },
@@ -3146,7 +3154,8 @@
     "EvaluatorType": {
       "base": null,
       "refs": {
-        "EvaluatorSummary$evaluatorType": "<p> The type of evaluator, indicating whether it is a built-in evaluator provided by the service or a custom evaluator created by the user. </p>"
+        "EvaluatorSummary$evaluatorType": "<p> The type of evaluator, indicating whether it is a built-in evaluator provided by the service or a custom evaluator created by the user. </p>",
+        "GetEvaluatorResponse$evaluatorType": "<p> The kind of evaluator resource. Valid values: </p> <ul> <li> <p> <code>Builtin</code> – An Amazon Web Services-managed global evaluator.</p> </li> <li> <p> <code>ThirdParty</code> – An Amazon Web Services-managed global evaluator from a third-party provider.</p> </li> <li> <p> <code>Custom</code> – A customer-created evaluator.</p> </li> <li> <p> <code>CustomCode</code> – A customer-created code-based evaluator.</p> </li> <li> <p> <code>CustomDerived</code> – A customer-created evaluator derived from an existing base evaluator.</p> </li> </ul>"
       }
     },
     "ExampleId": {
@@ -6916,6 +6925,13 @@
         "CreateAgentRuntimeRequest$protocolConfiguration": null,
         "GetAgentRuntimeResponse$protocolConfiguration": null,
         "UpdateAgentRuntimeRequest$protocolConfiguration": null
+      }
+    },
+    "Provider": {
+      "base": null,
+      "refs": {
+        "EvaluatorSummary$provider": "<p> The source of the evaluator's logic: Amazon Web Services, a third-party library, or you. </p>",
+        "GetEvaluatorResponse$provider": "<p> The source of the evaluator's logic: Amazon Web Services, a third-party library, or you. </p>"
       }
     },
     "ProviderPrefix": {

@@ -5872,7 +5872,8 @@
       "type":"string",
       "enum":[
         "AGENTCORE_EVALUATION_PREDEFINED_V1",
-        "AGENTCORE_EVALUATION_SIMULATED_V1"
+        "AGENTCORE_EVALUATION_SIMULATED_V1",
+        "GENERIC_EVALUATION_PREDEFINED_V1"
       ]
     },
     "DatasetStatus":{
@@ -6790,6 +6791,17 @@
       "type":"structure",
       "members":{}
     },
+    "DerivedEvaluatorConfig":{
+      "type":"structure",
+      "required":[
+        "baseEvaluatorId",
+        "modelConfig"
+      ],
+      "members":{
+        "baseEvaluatorId":{"shape":"EvaluatorId"},
+        "modelConfig":{"shape":"EvaluatorModelConfig"}
+      }
+    },
     "Description":{
       "type":"string",
       "max":4096,
@@ -7202,13 +7214,14 @@
     },
     "EvaluatorArn":{
       "type":"string",
-      "pattern":"arn:aws[a-zA-Z-]*:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:evaluator\\/[a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9]{10}$|^arn:aws[a-zA-Z-]*:bedrock-agentcore:::evaluator/Builtin.[a-zA-Z0-9_-]+"
+      "pattern":"arn:aws[a-zA-Z-]*:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:evaluator\\/[a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9]{10}$|^arn:aws[a-zA-Z-]*:bedrock-agentcore:::evaluator/(Builtin|ThirdParty)\\.[a-zA-Z0-9._-]+"
     },
     "EvaluatorConfig":{
       "type":"structure",
       "members":{
         "llmAsAJudge":{"shape":"LlmAsAJudgeEvaluatorConfig"},
-        "codeBased":{"shape":"CodeBasedEvaluatorConfig"}
+        "codeBased":{"shape":"CodeBasedEvaluatorConfig"},
+        "derived":{"shape":"DerivedEvaluatorConfig"}
       },
       "union":true
     },
@@ -7220,7 +7233,9 @@
     },
     "EvaluatorId":{
       "type":"string",
-      "pattern":"(Builtin.[a-zA-Z0-9_-]+|[a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9]{10})"
+      "max":111,
+      "min":1,
+      "pattern":"(Builtin\\.[a-zA-Z0-9._-]+|ThirdParty\\.[a-zA-Z0-9_-]+\\.[a-zA-Z0-9_-]+|[a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9]{10})"
     },
     "EvaluatorInstructions":{
       "type":"string",
@@ -7250,7 +7265,9 @@
     },
     "EvaluatorName":{
       "type":"string",
-      "pattern":"(Builtin.[a-zA-Z0-9_-]+|[a-zA-Z][a-zA-Z0-9_]{0,47})"
+      "max":48,
+      "min":1,
+      "pattern":"(Builtin\\.[a-zA-Z0-9._-]+|ThirdParty\\.[a-zA-Z0-9_-]+\\.[a-zA-Z0-9_-]+|[a-zA-Z][a-zA-Z0-9_]{0,47})"
     },
     "EvaluatorReference":{
       "type":"structure",
@@ -7287,6 +7304,7 @@
         "evaluatorName":{"shape":"EvaluatorName"},
         "description":{"shape":"EvaluatorDescription"},
         "evaluatorType":{"shape":"EvaluatorType"},
+        "provider":{"shape":"Provider"},
         "level":{"shape":"EvaluatorLevel"},
         "status":{"shape":"EvaluatorStatus"},
         "createdAt":{"shape":"Timestamp"},
@@ -7303,8 +7321,10 @@
       "type":"string",
       "enum":[
         "Builtin",
+        "ThirdParty",
         "Custom",
-        "CustomCode"
+        "CustomCode",
+        "CustomDerived"
       ]
     },
     "ExampleId":{
@@ -8184,6 +8204,8 @@
         "evaluatorName":{"shape":"EvaluatorName"},
         "description":{"shape":"EvaluatorDescription"},
         "evaluatorConfig":{"shape":"EvaluatorConfig"},
+        "evaluatorType":{"shape":"EvaluatorType"},
+        "provider":{"shape":"Provider"},
         "level":{"shape":"EvaluatorLevel"},
         "status":{"shape":"EvaluatorStatus"},
         "createdAt":{"shape":"Timestamp"},
@@ -12940,6 +12962,15 @@
       "members":{
         "serverProtocol":{"shape":"ServerProtocol"}
       }
+    },
+    "Provider":{
+      "type":"string",
+      "enum":[
+        "AWS",
+        "DeepEval",
+        "AutoEval",
+        "Custom"
+      ]
     },
     "ProviderPrefix":{
       "type":"structure",

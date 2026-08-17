@@ -802,6 +802,24 @@
       ],
       "idempotent":true
     },
+    "CreateExtractionDefinition":{
+      "name":"CreateExtractionDefinition",
+      "http":{
+        "method":"POST",
+        "requestUri":"/extraction-definitions/{InstanceId}"
+      },
+      "input":{"shape":"CreateExtractionDefinitionRequest"},
+      "output":{"shape":"CreateExtractionDefinitionResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceConflictException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ]
+    },
     "CreateHoursOfOperation":{
       "name":"CreateHoursOfOperation",
       "http":{
@@ -1514,6 +1532,22 @@
       ],
       "idempotent":true
     },
+    "DeleteExtractionDefinition":{
+      "name":"DeleteExtractionDefinition",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/extraction-definitions/{InstanceId}/{ExtractionDefinitionId}"
+      },
+      "input":{"shape":"DeleteExtractionDefinitionRequest"},
+      "output":{"shape":"DeleteExtractionDefinitionResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "DeleteHoursOfOperation":{
       "name":"DeleteHoursOfOperation",
       "http":{
@@ -2142,6 +2176,22 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"}
+      ]
+    },
+    "DescribeExtractionDefinition":{
+      "name":"DescribeExtractionDefinition",
+      "http":{
+        "method":"GET",
+        "requestUri":"/extraction-definitions/{InstanceId}/{ExtractionDefinitionId}"
+      },
+      "input":{"shape":"DescribeExtractionDefinitionRequest"},
+      "output":{"shape":"DescribeExtractionDefinitionResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "DescribeHoursOfOperation":{
@@ -3493,6 +3543,22 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"}
+      ]
+    },
+    "ListExtractionDefinitions":{
+      "name":"ListExtractionDefinitions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/extraction-definitions/{InstanceId}"
+      },
+      "input":{"shape":"ListExtractionDefinitionsRequest"},
+      "output":{"shape":"ListExtractionDefinitionsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "ListFlowAssociations":{
@@ -4881,6 +4947,7 @@
         {"shape":"InvalidParameterException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"},
         {"shape":"LimitExceededException"}
       ]
@@ -5707,6 +5774,23 @@
       ],
       "idempotent":true
     },
+    "UpdateExtractionDefinition":{
+      "name":"UpdateExtractionDefinition",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/extraction-definitions/{InstanceId}/{ExtractionDefinitionId}"
+      },
+      "input":{"shape":"UpdateExtractionDefinitionRequest"},
+      "output":{"shape":"UpdateExtractionDefinitionResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceConflictException"}
+      ]
+    },
     "UpdateHoursOfOperation":{
       "name":"UpdateHoursOfOperation",
       "http":{
@@ -6515,7 +6599,8 @@
         "UPDATE_CASE",
         "ASSIGN_SLA",
         "END_ASSOCIATED_TASKS",
-        "SUBMIT_AUTO_EVALUATION"
+        "SUBMIT_AUTO_EVALUATION",
+        "EXTRACT_INFORMATION"
       ]
     },
     "ActivateEvaluationFormRequest":{
@@ -6834,7 +6919,8 @@
     "AiAgentId":{
       "type":"string",
       "max":128,
-      "min":0
+      "min":0,
+      "pattern":"[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}(:[A-Z0-9_$]+){0,1}$|^arn:[a-z-]*?:wisdom:[a-z0-9-]*?:[0-9]{12}:[a-z-]*?/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}(?:/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}){0,2}(:[A-Z0-9_$]+){0,1}"
     },
     "AiAgentInfo":{
       "type":"structure",
@@ -9866,6 +9952,40 @@
         "EvaluationFormArn":{"shape":"ARN"}
       }
     },
+    "CreateExtractionDefinitionRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "Name",
+        "ExtractionConfiguration"
+      ],
+      "members":{
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "Name":{"shape":"ExtractionDefinitionName"},
+        "ExtractionConfiguration":{"shape":"ExtractionConfiguration"},
+        "Display":{"shape":"ExtractionDefinitionDisplay"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateExtractionDefinitionResponse":{
+      "type":"structure",
+      "required":[
+        "ExtractionDefinitionArn",
+        "ExtractionDefinitionId"
+      ],
+      "members":{
+        "ExtractionDefinitionArn":{"shape":"ARN"},
+        "ExtractionDefinitionId":{"shape":"ExtractionDefinitionId"}
+      }
+    },
     "CreateHoursOfOperationOverrideRequest":{
       "type":"structure",
       "required":[
@@ -11559,6 +11679,29 @@
         }
       }
     },
+    "DeleteExtractionDefinitionRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ExtractionDefinitionId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "ExtractionDefinitionId":{
+          "shape":"ExtractionDefinitionId",
+          "location":"uri",
+          "locationName":"ExtractionDefinitionId"
+        }
+      }
+    },
+    "DeleteExtractionDefinitionResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "DeleteHoursOfOperationOverrideRequest":{
       "type":"structure",
       "required":[
@@ -12493,6 +12636,32 @@
       "required":["EvaluationForm"],
       "members":{
         "EvaluationForm":{"shape":"EvaluationForm"}
+      }
+    },
+    "DescribeExtractionDefinitionRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ExtractionDefinitionId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "ExtractionDefinitionId":{
+          "shape":"ExtractionDefinitionId",
+          "location":"uri",
+          "locationName":"ExtractionDefinitionId"
+        }
+      }
+    },
+    "DescribeExtractionDefinitionResponse":{
+      "type":"structure",
+      "required":["ExtractionDefinition"],
+      "members":{
+        "ExtractionDefinition":{"shape":"ExtractionDefinition"}
       }
     },
     "DescribeHoursOfOperationOverrideRequest":{
@@ -15206,6 +15375,8 @@
         "OnRealTimeCallAnalysisAvailable",
         "OnRealTimeChatAnalysisAvailable",
         "OnPostChatAnalysisAvailable",
+        "OnAfterCallWorkAvailable",
+        "OnAfterChatWorkAvailable",
         "OnEmailAnalysisAvailable",
         "OnZendeskTicketCreate",
         "OnZendeskTicketStatusUpdate",
@@ -15278,6 +15449,100 @@
       "members":{
         "Enabled":{"shape":"Boolean"}
       }
+    },
+    "ExtractInformationActionDefinition":{
+      "type":"structure",
+      "required":["RulesExtractionDefinitions"],
+      "members":{
+        "RulesExtractionDefinitions":{"shape":"RulesExtractionDefinitionIdentifierList"}
+      }
+    },
+    "ExtractionConfiguration":{
+      "type":"structure",
+      "required":["PromptHint"],
+      "members":{
+        "PromptHint":{"shape":"ExtractionDefinitionPromptHint"},
+        "NotFoundBehavior":{"shape":"ExtractionDefinitionNotFoundBehavior"}
+      }
+    },
+    "ExtractionDefinition":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "ExtractionDefinitionId",
+        "ExtractionDefinitionArn",
+        "ExtractionConfiguration",
+        "CreatedTime",
+        "LastUpdatedTime",
+        "LastUpdatedBy"
+      ],
+      "members":{
+        "Name":{"shape":"ExtractionDefinitionName"},
+        "ExtractionDefinitionId":{"shape":"ExtractionDefinitionId"},
+        "ExtractionDefinitionArn":{"shape":"ARN"},
+        "ExtractionConfiguration":{"shape":"ExtractionConfiguration"},
+        "Display":{"shape":"ExtractionDefinitionDisplay"},
+        "CreatedTime":{"shape":"Timestamp"},
+        "LastUpdatedTime":{"shape":"Timestamp"},
+        "LastUpdatedBy":{"shape":"ARN"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
+    "ExtractionDefinitionDisplay":{
+      "type":"structure",
+      "members":{
+        "Label":{"shape":"ExtractionDefinitionDisplayLabel"}
+      }
+    },
+    "ExtractionDefinitionDisplayLabel":{
+      "type":"string",
+      "max":25
+    },
+    "ExtractionDefinitionId":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "ExtractionDefinitionName":{
+      "type":"string",
+      "max":200,
+      "min":1
+    },
+    "ExtractionDefinitionNotFoundBehavior":{
+      "type":"structure",
+      "required":["Behavior"],
+      "members":{
+        "Behavior":{"shape":"NotFoundBehaviorType"},
+        "DefaultValue":{"shape":"NotFoundDefaultValue"}
+      }
+    },
+    "ExtractionDefinitionPromptHint":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "ExtractionDefinitionSummary":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "ExtractionDefinitionId",
+        "ExtractionDefinitionArn",
+        "CreatedTime",
+        "LastUpdatedTime",
+        "LastUpdatedBy"
+      ],
+      "members":{
+        "Name":{"shape":"ExtractionDefinitionName"},
+        "ExtractionDefinitionId":{"shape":"ExtractionDefinitionId"},
+        "ExtractionDefinitionArn":{"shape":"ARN"},
+        "CreatedTime":{"shape":"Timestamp"},
+        "LastUpdatedTime":{"shape":"Timestamp"},
+        "LastUpdatedBy":{"shape":"ARN"}
+      }
+    },
+    "ExtractionDefinitionSummaryList":{
+      "type":"list",
+      "member":{"shape":"ExtractionDefinitionSummary"}
     },
     "FailedBatchAssociationSummary":{
       "type":"structure",
@@ -17804,6 +18069,36 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListExtractionDefinitionsRequest":{
+      "type":"structure",
+      "required":["InstanceId"],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "MaxResults":{
+          "shape":"MaxResult100",
+          "box":true,
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListExtractionDefinitionsResponse":{
+      "type":"structure",
+      "required":["ExtractionDefinitionSummaryList"],
+      "members":{
+        "ExtractionDefinitionSummaryList":{"shape":"ExtractionDefinitionSummaryList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "ListFlowAssociationResourceType":{
       "type":"string",
       "enum":[
@@ -20026,6 +20321,17 @@
       "type":"string",
       "max":2500,
       "min":1
+    },
+    "NotFoundBehaviorType":{
+      "type":"string",
+      "enum":[
+        "USE_DEFAULT_VALUE",
+        "OMIT"
+      ]
+    },
+    "NotFoundDefaultValue":{
+      "type":"string",
+      "max":1024
     },
     "Notification":{
       "type":"structure",
@@ -22746,7 +23052,8 @@
         "UpdateCaseAction":{"shape":"UpdateCaseActionDefinition"},
         "AssignSlaAction":{"shape":"AssignSlaActionDefinition"},
         "EndAssociatedTasksAction":{"shape":"EndAssociatedTasksActionDefinition"},
-        "SubmitAutoEvaluationAction":{"shape":"SubmitAutoEvaluationActionDefinition"}
+        "SubmitAutoEvaluationAction":{"shape":"SubmitAutoEvaluationActionDefinition"},
+        "ExtractInformationAction":{"shape":"ExtractInformationActionDefinition"}
       }
     },
     "RuleActions":{
@@ -22870,6 +23177,22 @@
       "members":{
         "Behavior":{"shape":"Behavior"}
       }
+    },
+    "RulesExtractionDefinitionId":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "RulesExtractionDefinitionIdentifier":{
+      "type":"structure",
+      "required":["Identifier"],
+      "members":{
+        "Identifier":{"shape":"RulesExtractionDefinitionId"}
+      }
+    },
+    "RulesExtractionDefinitionIdentifierList":{
+      "type":"list",
+      "member":{"shape":"RulesExtractionDefinitionIdentifier"}
     },
     "RulesSearchConditionList":{
       "type":"list",
@@ -26325,6 +26648,38 @@
         "EvaluationFormArn":{"shape":"ARN"},
         "EvaluationFormVersion":{"shape":"VersionNumber"}
       }
+    },
+    "UpdateExtractionDefinitionRequest":{
+      "type":"structure",
+      "required":[
+        "ExtractionDefinitionId",
+        "InstanceId",
+        "Name",
+        "ExtractionConfiguration"
+      ],
+      "members":{
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "ExtractionDefinitionId":{
+          "shape":"ExtractionDefinitionId",
+          "location":"uri",
+          "locationName":"ExtractionDefinitionId"
+        },
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "Name":{"shape":"ExtractionDefinitionName"},
+        "ExtractionConfiguration":{"shape":"ExtractionConfiguration"},
+        "Display":{"shape":"ExtractionDefinitionDisplay"}
+      }
+    },
+    "UpdateExtractionDefinitionResponse":{
+      "type":"structure",
+      "members":{}
     },
     "UpdateHoursOfOperationDescription":{
       "type":"string",

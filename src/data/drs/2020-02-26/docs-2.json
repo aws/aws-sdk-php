@@ -3,14 +3,20 @@
   "service": "<p>AWS Elastic Disaster Recovery Service.</p>",
   "operations": {
     "AssociateSourceNetworkStack": "<p>Associate a Source Network to an existing CloudFormation Stack and modify launch templates to use this network. Can be used for reverting to previously deployed CloudFormation stacks.</p>",
+    "CancelRecoveryPlanExecution": "<p>Cancels an in-progress Recovery Plan execution. Remaining steps are skipped.</p>",
     "CreateExtendedSourceServer": "<p>Create an extended source server in the target Account based on the source server in staging account.</p>",
     "CreateLaunchConfigurationTemplate": "<p>Creates a new Launch Configuration Template.</p>",
+    "CreateRecoveryPlan": "<p>Creates a Recovery Plan to orchestrate multi-server disaster recovery.</p>",
+    "CreateRecoveryPlanStep": "<p>Creates a step in a Recovery Plan. A step is either <code>SERVER</code> type (servers to recover in parallel) or <code>WAIT</code> type (timed pause between steps).</p>",
     "CreateReplicationConfigurationTemplate": "<p>Creates a new ReplicationConfigurationTemplate.</p>",
     "CreateSourceNetwork": "<p>Create a new Source Network resource for a provided VPC ID.</p>",
     "DeleteJob": "<p>Deletes a single Job by ID.</p>",
     "DeleteLaunchAction": "<p>Deletes a resource launch action.</p>",
     "DeleteLaunchConfigurationTemplate": "<p>Deletes a single Launch Configuration Template by ID.</p>",
     "DeleteRecoveryInstance": "<p>Deletes a single Recovery Instance by ID. This deletes the Recovery Instance resource from Elastic Disaster Recovery. The Recovery Instance must be disconnected first in order to delete it.</p>",
+    "DeleteRecoveryPlan": "<p>Deletes a Recovery Plan. Cannot delete a plan that has an execution in a non-terminal status (<code>CREATED</code>, <code>IN_PROGRESS</code>).</p>",
+    "DeleteRecoveryPlanExecution": "<p>Deletes a Recovery Plan execution record. Must be in a terminal status.</p>",
+    "DeleteRecoveryPlanStep": "<p>Deletes a step from a Recovery Plan.</p>",
     "DeleteReplicationConfigurationTemplate": "<p>Deletes a single Replication Configuration Template by ID</p>",
     "DeleteSourceNetwork": "<p>Delete Source Network resource.</p>",
     "DeleteSourceServer": "<p>Deletes a single Source Server by ID. The Source Server must be disconnected first.</p>",
@@ -27,17 +33,28 @@
     "ExportSourceNetworkCfnTemplate": "<p>Export the Source Network CloudFormation template to an S3 bucket.</p>",
     "GetFailbackReplicationConfiguration": "<p>Lists all Failback ReplicationConfigurations, filtered by Recovery Instance ID.</p>",
     "GetLaunchConfiguration": "<p>Gets a LaunchConfiguration, filtered by Source Server IDs.</p>",
+    "GetRecoveryPlan": "<p>Gets a Recovery Plan by ARN.</p>",
+    "GetRecoveryPlanExecution": "<p>Gets the details of a Recovery Plan execution.</p>",
+    "GetRecoveryPlanExecutionStep": "<p>Gets the details of a step within a Recovery Plan execution.</p>",
+    "GetRecoveryPlanStep": "<p>Gets a Recovery Plan step by ARN.</p>",
     "GetReplicationConfiguration": "<p>Gets a ReplicationConfiguration, filtered by Source Server ID.</p>",
     "InitializeService": "<p>Initialize Elastic Disaster Recovery.</p>",
     "ListExtensibleSourceServers": "<p>Returns a list of source servers on a staging account that are extensible, which means that: a. The source server is not already extended into this Account. b. The source server on the Account we’re reading from is not an extension of another source server. </p>",
     "ListLaunchActions": "<p>Lists resource launch actions.</p>",
+    "ListRecoveryPlanExecutionSteps": "<p>Lists all steps within a Recovery Plan execution.</p>",
+    "ListRecoveryPlanExecutions": "<p>Lists executions of Recovery Plans, optionally filtered by plan or status.</p>",
+    "ListRecoveryPlanSteps": "<p>Lists all steps in a Recovery Plan.</p>",
+    "ListRecoveryPlans": "<p>Lists all Recovery Plans in the account.</p>",
     "ListStagingAccounts": "<p>Returns an array of staging accounts for existing extended source servers.</p>",
     "ListTagsForResource": "<p>List all tags for your Elastic Disaster Recovery resources.</p>",
     "PutLaunchAction": "<p>Puts a resource launch action.</p>",
+    "ReorderRecoveryPlanSteps": "<p>Reorders steps in a Recovery Plan. Accepts a complete ordered list of step ARNs.</p>",
     "RetryDataReplication": "<p>WARNING: RetryDataReplication is deprecated. Causes the data replication initiation sequence to begin immediately upon next Handshake for the specified Source Server ID, regardless of when the previous initiation started. This command will work only if the Source Server is stalled or is in a DISCONNECTED or STOPPED state. </p>",
+    "RetryRecoveryPlanExecutionStep": "<p>Retries a failed <code>SERVER</code> type execution step.</p>",
     "ReverseReplication": "<p>Start replication to origin / target region - applies only to protected instances that originated in EC2. For recovery instances on target region - starts replication back to origin region. For failback instances on origin region - starts replication to target region to re-protect them. </p>",
     "StartFailbackLaunch": "<p>Initiates a Job for launching the machine that is being failed back to from the specified Recovery Instance. This will run conversion on the failback client and will reboot your machine, thus completing the failback process.</p>",
     "StartRecovery": "<p>Launches Recovery Instances for the specified Source Servers. For each Source Server you may choose a point in time snapshot to launch from, or use an on demand snapshot.</p>",
+    "StartRecoveryPlanExecution": "<p>Starts executing a Recovery Plan in <code>DRILL</code> or <code>RECOVERY</code> mode. A plan cannot have more than one execution in a non-terminal status at a time.</p>",
     "StartReplication": "<p>Starts replication for a stopped Source Server. This action would make the Source Server protected again and restart billing for it.</p>",
     "StartSourceNetworkRecovery": "<p>Deploy VPC for the specified Source Network and modify launch templates to use this network. The VPC will be deployed using a dedicated CloudFormation stack.</p>",
     "StartSourceNetworkReplication": "<p>Starts replication for a Source Network. This action would make the Source Network protected.</p>",
@@ -50,6 +67,9 @@
     "UpdateFailbackReplicationConfiguration": "<p>Allows you to update the failback replication configuration of a Recovery Instance by ID.</p>",
     "UpdateLaunchConfiguration": "<p>Updates a LaunchConfiguration by Source Server ID.</p>",
     "UpdateLaunchConfigurationTemplate": "<p>Updates an existing Launch Configuration Template by ID.</p>",
+    "UpdateRecoveryPlan": "<p>Updates a Recovery Plan's name or description.</p>",
+    "UpdateRecoveryPlanExecutionStep": "<p>Updates an execution step. Supports two actions: (1) skip a step that is in <code>NOT_STARTED</code> or <code>FAILED</code> status; (2) update the wait duration of a <code>WAIT</code> type step that is in <code>NOT_STARTED</code> status.</p>",
+    "UpdateRecoveryPlanStep": "<p>Updates a Recovery Plan step's name or configuration. Step type is immutable.</p>",
     "UpdateReplicationConfiguration": "<p>Allows you to update a ReplicationConfiguration by Source Server ID.</p>",
     "UpdateReplicationConfigurationTemplate": "<p>Updates a ReplicationConfigurationTemplate by ID.</p>"
   },
@@ -236,12 +256,28 @@
         "Cpus$member": null
       }
     },
+    "CancelRecoveryPlanExecutionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CancelRecoveryPlanExecutionResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CfnStackName": {
       "base": null,
       "refs": {
         "AssociateSourceNetworkStackRequest$cfnStackName": "<p>CloudFormation template to associate with a Source Network.</p>",
         "SourceNetwork$cfnStackName": "<p>CloudFormation stack name that was deployed for recovering the Source Network.</p>",
         "StartSourceNetworkRecoveryRequestNetworkEntry$cfnStackName": "<p>CloudFormation stack name to be used for recovering the network.</p>"
+      }
+    },
+    "ClientIdempotencyToken": {
+      "base": null,
+      "refs": {
+        "CreateRecoveryPlanRequest$clientToken": "<p>A unique string provided to ensure request idempotency.</p>",
+        "CreateRecoveryPlanStepRequest$clientToken": "<p>A unique string provided to ensure request idempotency.</p>",
+        "StartRecoveryPlanExecutionRequest$clientToken": "<p>A unique string provided to ensure request idempotency.</p>"
       }
     },
     "ConflictException": {
@@ -280,6 +316,22 @@
       "refs": {}
     },
     "CreateLaunchConfigurationTemplateResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRecoveryPlanRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRecoveryPlanResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRecoveryPlanStepRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRecoveryPlanStepResponse": {
       "base": null,
       "refs": {}
     },
@@ -386,6 +438,30 @@
       "refs": {}
     },
     "DeleteRecoveryInstanceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRecoveryPlanExecutionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRecoveryPlanExecutionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRecoveryPlanRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRecoveryPlanResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRecoveryPlanStepRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRecoveryPlanStepResponse": {
       "base": null,
       "refs": {}
     },
@@ -598,10 +674,25 @@
         "RecoveryInstanceDisk$ebsVolumeID": "<p>The EBS Volume ID of this disk.</p>"
       }
     },
+    "ErrorDetail": {
+      "base": "<p>Error details for a failed operation.</p>",
+      "refs": {
+        "RecoveryPlanExecution$errorDetail": "<p>Error details if the execution failed.</p>",
+        "RecoveryPlanExecutionStep$errorDetail": "<p>Error details if the step failed.</p>",
+        "RecoveryPlanExecutionStepSummary$errorDetail": "<p>Error details if the step failed.</p>",
+        "RecoveryPlanExecutionSummary$errorDetail": "<p>Error details if the execution failed.</p>"
+      }
+    },
     "EventResourceData": {
       "base": "<p>Properties of resource related to a job event.</p>",
       "refs": {
         "JobLogEventData$eventResourceData": "<p>Properties of resource related to a job event.</p>"
+      }
+    },
+    "ExecutionServerStepConfiguration": {
+      "base": "<p>Configuration for a <code>SERVER</code> type execution step.</p>",
+      "refs": {
+        "RecoveryPlanExecutionStepConfiguration$executionServerStepConfiguration": "<p>Configuration for a SERVER type step (with execution state like jobID).</p>"
       }
     },
     "ExportSourceNetworkCfnTemplateRequest": {
@@ -654,6 +745,38 @@
       "base": null,
       "refs": {}
     },
+    "GetRecoveryPlanExecutionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRecoveryPlanExecutionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRecoveryPlanExecutionStepRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRecoveryPlanExecutionStepResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRecoveryPlanRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRecoveryPlanResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRecoveryPlanStepRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRecoveryPlanStepResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetReplicationConfigurationRequest": {
       "base": null,
       "refs": {}
@@ -692,6 +815,17 @@
         "RecoveryInstanceFailback$firstByteDateTime": "<p>The date and time of the first byte that was replicated from the Recovery Instance.</p>",
         "RecoveryInstanceFailback$elapsedReplicationDuration": "<p>The amount of time that the Recovery Instance has been replicating for.</p>",
         "RecoveryInstanceProperties$lastUpdatedDateTime": "<p>The date and time the Recovery Instance properties were last updated on.</p>",
+        "RecoveryPlan$createdAt": "<p>The timestamp when the Recovery Plan was created.</p>",
+        "RecoveryPlan$updatedAt": "<p>The timestamp when the Recovery Plan was last updated.</p>",
+        "RecoveryPlanExecution$startedAt": "<p>The timestamp when the execution started.</p>",
+        "RecoveryPlanExecution$completedAt": "<p>The timestamp when the execution completed.</p>",
+        "RecoveryPlanExecutionStep$createdAt": "<p>The timestamp when the execution step was created.</p>",
+        "RecoveryPlanExecutionStep$updatedAt": "<p>The timestamp when the execution step was last updated.</p>",
+        "RecoveryPlanExecutionSummary$startedAt": "<p>The timestamp when the execution started.</p>",
+        "RecoveryPlanStep$createdAt": "<p>The timestamp when the step was created.</p>",
+        "RecoveryPlanStep$updatedAt": "<p>The timestamp when the step was last updated.</p>",
+        "RecoveryPlanSummary$createdAt": "<p>The timestamp when the Recovery Plan was created.</p>",
+        "RecoveryPlanSummary$updatedAt": "<p>The timestamp when the Recovery Plan was last updated.</p>",
         "RecoverySnapshot$expectedTimestamp": "<p>The timestamp of when we expect the snapshot to be taken.</p>",
         "RecoverySnapshot$timestamp": "<p>The actual timestamp that the snapshot was taken.</p>",
         "SourceProperties$lastUpdatedDateTime": "<p>The date and time the Source Properties were last updated on.</p>"
@@ -769,7 +903,8 @@
         "LifeCycleLastLaunchInitiated$jobID": "<p>The ID of the Job that was used to last launch the Source Server.</p>",
         "RecoveryInstance$jobID": "<p>The ID of the Job that created the Recovery Instance.</p>",
         "RecoveryInstanceFailback$failbackJobID": "<p>The Job ID of the last failback log for this Recovery Instance.</p>",
-        "RecoveryLifeCycle$jobID": "<p>The ID of the Job that was used to last recover the Source Network.</p>"
+        "RecoveryLifeCycle$jobID": "<p>The ID of the Job that was used to last recover the Source Network.</p>",
+        "RecoveryPlanExecutionServer$jobID": "<p>The DRS recovery job ID. Populated when recovery is initiated for this server.</p>"
       }
     },
     "JobLog": {
@@ -1124,6 +1259,44 @@
       "base": null,
       "refs": {}
     },
+    "ListRecoveryPlanExecutionStepsFilter": {
+      "base": "<p>Filters for listing Recovery Plan execution steps.</p>",
+      "refs": {
+        "ListRecoveryPlanExecutionStepsRequest$filter": "<p>Filters for listing execution steps.</p>"
+      }
+    },
+    "ListRecoveryPlanExecutionStepsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRecoveryPlanExecutionStepsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRecoveryPlanExecutionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRecoveryPlanExecutionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRecoveryPlanStepsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRecoveryPlanStepsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRecoveryPlansRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRecoveryPlansResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListStagingAccountsRequest": {
       "base": null,
       "refs": {}
@@ -1156,7 +1329,11 @@
       "base": null,
       "refs": {
         "DescribeLaunchConfigurationTemplatesRequest$maxResults": "<p>Maximum results to be returned in DescribeLaunchConfigurationTemplates.</p>",
-        "ListLaunchActionsRequest$maxResults": "<p>Maximum amount of items to return when listing resource launch actions.</p>"
+        "ListLaunchActionsRequest$maxResults": "<p>Maximum amount of items to return when listing resource launch actions.</p>",
+        "ListRecoveryPlanExecutionStepsRequest$maxResults": "<p>Maximum number of results to return.</p>",
+        "ListRecoveryPlanExecutionsRequest$maxResults": "<p>Maximum number of results to return.</p>",
+        "ListRecoveryPlanStepsRequest$maxResults": "<p>Maximum number of results to return.</p>",
+        "ListRecoveryPlansRequest$maxResults": "<p>Maximum number of results to return.</p>"
       }
     },
     "NetworkInterface": {
@@ -1239,6 +1416,14 @@
         "ListExtensibleSourceServersResponse$nextToken": "<p>The token of the next extensible source server to retrieve.</p>",
         "ListLaunchActionsRequest$nextToken": "<p>Next token to use when listing resource launch actions.</p>",
         "ListLaunchActionsResponse$nextToken": "<p>Next token returned when listing resource launch actions.</p>",
+        "ListRecoveryPlanExecutionStepsRequest$nextToken": "<p>The token for the next page of results.</p>",
+        "ListRecoveryPlanExecutionStepsResponse$nextToken": "<p>The token for the next page of results.</p>",
+        "ListRecoveryPlanExecutionsRequest$nextToken": "<p>The token for the next page of results.</p>",
+        "ListRecoveryPlanExecutionsResponse$nextToken": "<p>The token for the next page of results.</p>",
+        "ListRecoveryPlanStepsRequest$nextToken": "<p>The token for the next page of results.</p>",
+        "ListRecoveryPlanStepsResponse$nextToken": "<p>The token for the next page of results.</p>",
+        "ListRecoveryPlansRequest$nextToken": "<p>The token for the next page of results.</p>",
+        "ListRecoveryPlansResponse$nextToken": "<p>The token for the next page of results.</p>",
         "ListStagingAccountsRequest$nextToken": "<p>The token of the next staging Account to retrieve.</p>",
         "ListStagingAccountsResponse$nextToken": "<p>The token of the next staging Account to retrieve.</p>"
       }
@@ -1471,6 +1656,215 @@
         "UpdateLaunchConfigurationTemplateRequest$recoveryMode": "<p>Recovery mode.</p>"
       }
     },
+    "RecoveryPlan": {
+      "base": "<p>A Recovery Plan resource.</p>",
+      "refs": {
+        "CreateRecoveryPlanResponse$recoveryPlan": null,
+        "GetRecoveryPlanResponse$recoveryPlan": null,
+        "UpdateRecoveryPlanResponse$recoveryPlan": null
+      }
+    },
+    "RecoveryPlanDescription": {
+      "base": "<p>The description of a Recovery Plan.</p>",
+      "refs": {
+        "CreateRecoveryPlanRequest$description": null,
+        "RecoveryPlan$description": null,
+        "UpdateRecoveryPlanRequest$description": null
+      }
+    },
+    "RecoveryPlanExecution": {
+      "base": "<p>A Recovery Plan execution.</p>",
+      "refs": {
+        "CancelRecoveryPlanExecutionResponse$recoveryPlanExecution": "<p>The cancelled Recovery Plan execution.</p>",
+        "GetRecoveryPlanExecutionResponse$recoveryPlanExecution": "<p>The Recovery Plan execution details.</p>",
+        "StartRecoveryPlanExecutionResponse$recoveryPlanExecution": "<p>The started Recovery Plan execution.</p>"
+      }
+    },
+    "RecoveryPlanExecutionMode": {
+      "base": "<p>Execution mode. <code>DRILL</code> for testing, <code>RECOVERY</code> for actual disaster recovery.</p>",
+      "refs": {
+        "RecoveryPlanExecution$mode": "<p>The execution mode.</p>",
+        "RecoveryPlanExecutionSummary$mode": "<p>The execution mode.</p>",
+        "StartRecoveryPlanExecutionRequest$mode": "<p>The execution mode (<code>DRILL</code> or <code>RECOVERY</code>).</p>"
+      }
+    },
+    "RecoveryPlanExecutionServer": {
+      "base": "<p>A server within a recovery plan execution step, enriched with execution state.</p>",
+      "refs": {
+        "RecoveryPlanExecutionServers$member": null
+      }
+    },
+    "RecoveryPlanExecutionServers": {
+      "base": null,
+      "refs": {
+        "ExecutionServerStepConfiguration$servers": "<p>The list of servers in this execution step.</p>"
+      }
+    },
+    "RecoveryPlanExecutionSourceServer": {
+      "base": "<p>A source server with a specific recovery snapshot for plan execution.</p>",
+      "refs": {
+        "RecoveryPlanExecutionSourceServerList$member": null
+      }
+    },
+    "RecoveryPlanExecutionSourceServerList": {
+      "base": null,
+      "refs": {
+        "StartRecoveryPlanExecutionRequest$sourceServers": "<p>Optional list of source servers with specific recovery snapshots. If not provided, the latest snapshot is used for each server.</p>"
+      }
+    },
+    "RecoveryPlanExecutionStatus": {
+      "base": "<p>The status of a Recovery Plan execution.</p>",
+      "refs": {
+        "ListRecoveryPlanExecutionsRequest$status": "<p>Filter executions by status.</p>",
+        "RecoveryPlanExecution$status": "<p>The execution status.</p>",
+        "RecoveryPlanExecutionSummary$status": "<p>The execution status.</p>"
+      }
+    },
+    "RecoveryPlanExecutionStep": {
+      "base": "<p>A Recovery Plan Execution Step resource.</p>",
+      "refs": {
+        "GetRecoveryPlanExecutionStepResponse$recoveryPlanExecutionStep": null,
+        "RetryRecoveryPlanExecutionStepResponse$recoveryPlanExecutionStep": null,
+        "UpdateRecoveryPlanExecutionStepResponse$recoveryPlanExecutionStep": null
+      }
+    },
+    "RecoveryPlanExecutionStepConfiguration": {
+      "base": "<p>Type-specific configuration for an execution step response. Mirrors RecoveryPlanStepConfiguration but uses execution-enriched server shapes.</p>",
+      "refs": {
+        "RecoveryPlanExecutionStep$configuration": null,
+        "RecoveryPlanExecutionStepSummary$configuration": null
+      }
+    },
+    "RecoveryPlanExecutionStepStatus": {
+      "base": "<p>The status of a step within a Recovery Plan execution.</p>",
+      "refs": {
+        "ListRecoveryPlanExecutionStepsFilter$status": "<p>Filter by execution step status.</p>",
+        "RecoveryPlanExecutionStep$status": "<p>The status of the execution step.</p>",
+        "RecoveryPlanExecutionStepSummary$status": "<p>The status of the execution step.</p>",
+        "UpdateRecoveryPlanExecutionStepRequest$status": "<p>Only SKIPPED is accepted. Step must be in NOT_STARTED or FAILED status.</p>"
+      }
+    },
+    "RecoveryPlanExecutionStepSummary": {
+      "base": "<p>Summary information about a Recovery Plan execution step.</p>",
+      "refs": {
+        "RecoveryPlanExecutionStepSummaryList$member": null
+      }
+    },
+    "RecoveryPlanExecutionStepSummaryList": {
+      "base": null,
+      "refs": {
+        "ListRecoveryPlanExecutionStepsResponse$recoveryPlanExecutionSteps": "<p>The list of execution steps.</p>"
+      }
+    },
+    "RecoveryPlanExecutionSummary": {
+      "base": "<p>Summary information about a Recovery Plan execution.</p>",
+      "refs": {
+        "RecoveryPlanExecutionSummaryList$member": null
+      }
+    },
+    "RecoveryPlanExecutionSummaryList": {
+      "base": null,
+      "refs": {
+        "ListRecoveryPlanExecutionsResponse$recoveryPlanExecutions": "<p>The list of Recovery Plan executions.</p>"
+      }
+    },
+    "RecoveryPlanName": {
+      "base": "<p>The name of a Recovery Plan.</p>",
+      "refs": {
+        "CreateRecoveryPlanRequest$name": null,
+        "RecoveryPlan$name": null,
+        "RecoveryPlanSummary$name": null,
+        "UpdateRecoveryPlanRequest$name": null
+      }
+    },
+    "RecoveryPlanServer": {
+      "base": "<p>A server associated with a Recovery Plan Step.</p>",
+      "refs": {
+        "RecoveryPlanServers$member": null
+      }
+    },
+    "RecoveryPlanServerImpactLevel": {
+      "base": "<p>The impact level of a server within a Recovery Plan step. <code>CRITICAL</code> means the step fails if this server fails. <code>OPTIONAL</code> means the step continues even if this server fails.</p>",
+      "refs": {
+        "RecoveryPlanExecutionServer$impactLevel": "<p>Defaults to CRITICAL if not specified.</p>",
+        "RecoveryPlanServer$impactLevel": "<p>Defaults to CRITICAL if not specified.</p>"
+      }
+    },
+    "RecoveryPlanServers": {
+      "base": null,
+      "refs": {
+        "ServerStepConfiguration$servers": "<p>The list of servers to recover in this step.</p>",
+        "UpdateRecoveryPlanExecutionStepRequest$servers": "<p>Full replacement of the server list. Only allowed when the step is in NOT_STARTED status (Server type steps only).</p>"
+      }
+    },
+    "RecoveryPlanStatus": {
+      "base": "<p>Recovery Plan status. <code>ACTIVE</code> means executable. <code>INVALID</code> means the plan has no <code>SERVER</code> type steps and cannot be executed.</p>",
+      "refs": {
+        "RecoveryPlan$status": "<p>The status of the Recovery Plan.</p>",
+        "RecoveryPlanSummary$status": "<p>The status of the Recovery Plan.</p>"
+      }
+    },
+    "RecoveryPlanStep": {
+      "base": "<p>A Recovery Plan Step resource.</p>",
+      "refs": {
+        "CreateRecoveryPlanStepResponse$recoveryPlanStep": null,
+        "GetRecoveryPlanStepResponse$recoveryPlanStep": null,
+        "RecoveryPlanStepList$member": null,
+        "UpdateRecoveryPlanStepResponse$recoveryPlanStep": null
+      }
+    },
+    "RecoveryPlanStepArnList": {
+      "base": null,
+      "refs": {
+        "ReorderRecoveryPlanStepsRequest$orderedStepArns": "<p>Ordered list of all step ARNs representing the desired sequence.</p>"
+      }
+    },
+    "RecoveryPlanStepConfiguration": {
+      "base": "<p>Type-specific configuration for a recovery plan step. Exactly one member must be set.</p>",
+      "refs": {
+        "CreateRecoveryPlanStepRequest$configuration": null,
+        "RecoveryPlanStep$configuration": null,
+        "UpdateRecoveryPlanStepRequest$configuration": null
+      }
+    },
+    "RecoveryPlanStepList": {
+      "base": null,
+      "refs": {
+        "ListRecoveryPlanStepsResponse$recoveryPlanSteps": "<p>The list of Recovery Plan steps.</p>",
+        "ReorderRecoveryPlanStepsResponse$recoveryPlanSteps": "<p>The steps with updated order.</p>"
+      }
+    },
+    "RecoveryPlanStepName": {
+      "base": "<p>The name of a Recovery Plan Step.</p>",
+      "refs": {
+        "CreateRecoveryPlanStepRequest$stepName": null,
+        "RecoveryPlanExecutionStep$stepName": null,
+        "RecoveryPlanExecutionStepSummary$stepName": null,
+        "RecoveryPlanStep$stepName": null,
+        "UpdateRecoveryPlanStepRequest$stepName": null
+      }
+    },
+    "RecoveryPlanStepOrder": {
+      "base": "<p>The order of a step within a Recovery Plan (1-based).</p>",
+      "refs": {
+        "CreateRecoveryPlanStepRequest$stepOrder": null,
+        "RecoveryPlanExecutionStep$stepIndex": null,
+        "RecoveryPlanExecutionStepSummary$stepIndex": null,
+        "RecoveryPlanStep$stepOrder": null
+      }
+    },
+    "RecoveryPlanSummary": {
+      "base": "<p>Summary information about a Recovery Plan.</p>",
+      "refs": {
+        "RecoveryPlanSummaryList$member": null
+      }
+    },
+    "RecoveryPlanSummaryList": {
+      "base": null,
+      "refs": {
+        "ListRecoveryPlansResponse$recoveryPlans": "<p>The list of Recovery Plans.</p>"
+      }
+    },
     "RecoveryResult": {
       "base": null,
       "refs": {
@@ -1486,6 +1880,7 @@
     "RecoverySnapshotID": {
       "base": null,
       "refs": {
+        "RecoveryPlanExecutionSourceServer$recoverySnapshotID": "<p>The ID of the recovery snapshot to use.</p>",
         "RecoverySnapshot$snapshotID": "<p>The ID of the Recovery Snapshot.</p>",
         "StartRecoveryRequestSourceServer$recoverySnapshotID": "<p>The ID of a Recovery Snapshot we want to recover from. Omit this field to launch from the latest data by taking an on-demand snapshot.</p>"
       }
@@ -1501,6 +1896,14 @@
       "refs": {
         "DescribeRecoverySnapshotsRequest$order": "<p>The sorted ordering by which to return Recovery Snapshots.</p>"
       }
+    },
+    "ReorderRecoveryPlanStepsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ReorderRecoveryPlanStepsResponse": {
+      "base": null,
+      "refs": {}
     },
     "ReplicationConfiguration": {
       "base": null,
@@ -1613,6 +2016,14 @@
       "base": null,
       "refs": {}
     },
+    "RetryRecoveryPlanExecutionStepRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "RetryRecoveryPlanExecutionStepResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ReverseReplicationRequest": {
       "base": null,
       "refs": {}
@@ -1631,6 +2042,12 @@
       "base": null,
       "refs": {
         "SourceNetwork$replicationStatusDetails": "<p>Error details in case Source Network replication status is ERROR.</p>"
+      }
+    },
+    "ServerStepConfiguration": {
+      "base": "<p>Configuration for a <code>SERVER</code> type step.</p>",
+      "refs": {
+        "RecoveryPlanStepConfiguration$serverStepConfiguration": "<p>Configuration for a SERVER type step.</p>"
       }
     },
     "ServiceQuotaExceededException": {
@@ -1708,6 +2125,8 @@
       "base": null,
       "refs": {
         "CreateExtendedSourceServerRequest$sourceServerArn": "<p>This defines the ARN of the source server in staging Account based on which you want to create an extended source server.</p>",
+        "RecoveryPlanExecutionServer$serverArn": "<p>The ARN of the source server.</p>",
+        "RecoveryPlanServer$serverArn": "<p>The ARN of the source server.</p>",
         "ReverseReplicationResponse$reversedDirectionSourceServerArn": "<p>ARN of created SourceServer.</p>",
         "SourceServer$reversedDirectionSourceServerArn": "<p>For EC2-originated Source Servers which have been failed over and then failed back, this value will mean the ARN of the Source Server on the opposite replication direction.</p>",
         "StagingSourceServer$arn": "<p>The ARN of the source server.</p>"
@@ -1726,6 +2145,7 @@
         "LaunchConfiguration$sourceServerID": "<p>The ID of the Source Server for this launch configuration.</p>",
         "ParticipatingServer$sourceServerID": "<p>The Source Server ID of a participating server.</p>",
         "RecoveryInstance$sourceServerID": "<p>The Source Server ID that this Recovery Instance is associated with.</p>",
+        "RecoveryPlanExecutionSourceServer$sourceServerID": "<p>The ID of the source server.</p>",
         "RecoverySnapshot$sourceServerID": "<p>The ID of the Source Server that the snapshot was taken for.</p>",
         "ReplicationConfiguration$sourceServerID": "<p>The ID of the Source Server for this Replication Configuration.</p>",
         "RetryDataReplicationRequest$sourceServerID": "<p>The ID of the Source Server whose data replication should be retried.</p>",
@@ -1789,6 +2209,14 @@
       "refs": {
         "StartFailbackLaunchRequest$recoveryInstanceIDs": "<p>The IDs of the Recovery Instance whose failback launch we want to request.</p>"
       }
+    },
+    "StartRecoveryPlanExecutionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartRecoveryPlanExecutionResponse": {
+      "base": null,
+      "refs": {}
     },
     "StartRecoveryRequest": {
       "base": null,
@@ -1866,6 +2294,42 @@
       "base": null,
       "refs": {}
     },
+    "StrictDRSARN": {
+      "base": "<p>Strict ARN type for Recovery Plan resources. Only allows safe characters in the resource portion — rejects HTML/script injection characters (&lt;, &gt;, &quot;, ', etc.) per AWS API input validation standards. Resource portion allows: [A-Za-z0-9_/.-] which covers all DRS recovery plan resource identifiers (plan-xxx, st-xxx, exec-xxx, step-xxx).</p>",
+      "refs": {
+        "CancelRecoveryPlanExecutionRequest$recoveryPlanExecutionArn": "<p>The ARN of the Recovery Plan execution to cancel.</p>",
+        "CreateRecoveryPlanStepRequest$recoveryPlanArn": "<p>The ARN of the Recovery Plan to add the step to.</p>",
+        "DeleteRecoveryPlanExecutionRequest$recoveryPlanExecutionArn": "<p>The ARN of the Recovery Plan execution to delete.</p>",
+        "DeleteRecoveryPlanExecutionResponse$recoveryPlanExecutionArn": "<p>The ARN of the deleted Recovery Plan execution.</p>",
+        "DeleteRecoveryPlanRequest$recoveryPlanArn": "<p>The ARN of the Recovery Plan to delete.</p>",
+        "DeleteRecoveryPlanResponse$recoveryPlanArn": "<p>The ARN of the deleted Recovery Plan.</p>",
+        "DeleteRecoveryPlanStepRequest$recoveryPlanStepArn": "<p>The ARN of the Recovery Plan step to delete.</p>",
+        "DeleteRecoveryPlanStepResponse$recoveryPlanStepArn": "<p>The ARN of the deleted Recovery Plan step.</p>",
+        "GetRecoveryPlanExecutionRequest$recoveryPlanExecutionArn": "<p>The ARN of the Recovery Plan execution.</p>",
+        "GetRecoveryPlanExecutionStepRequest$recoveryPlanExecutionStepArn": "<p>The ARN of the execution step.</p>",
+        "GetRecoveryPlanRequest$recoveryPlanArn": "<p>The ARN of the Recovery Plan to retrieve.</p>",
+        "GetRecoveryPlanStepRequest$recoveryPlanStepArn": "<p>The ARN of the Recovery Plan step to retrieve.</p>",
+        "ListRecoveryPlanExecutionStepsRequest$recoveryPlanExecutionArn": "<p>The ARN of the Recovery Plan execution.</p>",
+        "ListRecoveryPlanExecutionsRequest$recoveryPlanArn": "<p>Filter executions by Recovery Plan ARN.</p>",
+        "ListRecoveryPlanStepsRequest$recoveryPlanArn": "<p>The ARN of the Recovery Plan.</p>",
+        "RecoveryPlan$recoveryPlanArn": "<p>The ARN of the Recovery Plan.</p>",
+        "RecoveryPlanExecution$recoveryPlanExecutionArn": "<p>The ARN of the Recovery Plan execution.</p>",
+        "RecoveryPlanExecution$recoveryPlanArn": "<p>The ARN of the Recovery Plan being executed.</p>",
+        "RecoveryPlanExecutionStep$recoveryPlanExecutionStepArn": "<p>The ARN of the execution step.</p>",
+        "RecoveryPlanExecutionStepSummary$recoveryPlanExecutionStepArn": "<p>The ARN of the execution step.</p>",
+        "RecoveryPlanExecutionSummary$recoveryPlanExecutionArn": "<p>The ARN of the Recovery Plan execution.</p>",
+        "RecoveryPlanExecutionSummary$recoveryPlanArn": "<p>The ARN of the Recovery Plan.</p>",
+        "RecoveryPlanStep$recoveryPlanStepArn": "<p>The ARN of the Recovery Plan step.</p>",
+        "RecoveryPlanStepArnList$member": null,
+        "RecoveryPlanSummary$recoveryPlanArn": "<p>The ARN of the Recovery Plan.</p>",
+        "ReorderRecoveryPlanStepsRequest$recoveryPlanArn": "<p>The ARN of the Recovery Plan.</p>",
+        "RetryRecoveryPlanExecutionStepRequest$recoveryPlanExecutionStepArn": "<p>The ARN of the execution step to retry.</p>",
+        "StartRecoveryPlanExecutionRequest$recoveryPlanArn": "<p>The ARN of the Recovery Plan to execute.</p>",
+        "UpdateRecoveryPlanExecutionStepRequest$recoveryPlanExecutionStepArn": "<p>The ARN of the execution step to update.</p>",
+        "UpdateRecoveryPlanRequest$recoveryPlanArn": "<p>The ARN of the Recovery Plan to update.</p>",
+        "UpdateRecoveryPlanStepRequest$recoveryPlanStepArn": "<p>The ARN of the Recovery Plan step to update.</p>"
+      }
+    },
     "StrictlyPositiveInteger": {
       "base": null,
       "refs": {
@@ -1877,7 +2341,15 @@
         "DescribeSourceNetworksRequest$maxResults": "<p>Maximum number of Source Networks to retrieve.</p>",
         "DescribeSourceServersRequest$maxResults": "<p>Maximum number of Source Servers to retrieve.</p>",
         "PITPolicyRule$interval": "<p>How often, in the chosen units, a snapshot should be taken.</p>",
-        "PITPolicyRule$retentionDuration": "<p>The duration to retain a snapshot for, in the chosen units.</p>"
+        "PITPolicyRule$retentionDuration": "<p>The duration to retain a snapshot for, in the chosen units.</p>",
+        "RecoveryPlanExecutionStep$attempt": "<p>The number of times this step has been attempted.</p>"
+      }
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "ErrorDetail$message": "<p>The error message.</p>",
+        "ErrorDetail$code": "<p>The error code.</p>"
       }
     },
     "SubnetID": {
@@ -1924,6 +2396,7 @@
       "refs": {
         "CreateExtendedSourceServerRequest$tags": "<p>A list of tags associated with the extended source server.</p>",
         "CreateLaunchConfigurationTemplateRequest$tags": "<p>Request to associate tags during creation of a Launch Configuration Template.</p>",
+        "CreateRecoveryPlanRequest$tags": "<p>The tags to apply to the Recovery Plan.</p>",
         "CreateReplicationConfigurationTemplateRequest$stagingAreaTags": "<p>A set of tags to be associated with all resources created in the replication staging area: EC2 replication server, EBS volumes, EBS snapshots, etc.</p>",
         "CreateReplicationConfigurationTemplateRequest$tags": "<p>A set of tags to be associated with the Replication Configuration Template resource.</p>",
         "CreateSourceNetworkRequest$tags": "<p>A set of tags to be associated with the Source Network resource.</p>",
@@ -1931,6 +2404,8 @@
         "LaunchConfigurationTemplate$tags": "<p>Tags of the Launch Configuration Template.</p>",
         "ListTagsForResourceResponse$tags": "<p>The tags of the requested resource.</p>",
         "RecoveryInstance$tags": "<p>An array of tags that are associated with the Recovery Instance.</p>",
+        "RecoveryPlan$tags": "<p>The tags associated with the Recovery Plan.</p>",
+        "RecoveryPlanExecution$tags": "<p>The tags associated with the Recovery Plan execution.</p>",
         "ReplicationConfiguration$stagingAreaTags": "<p>A set of tags to be associated with all resources created in the replication staging area: EC2 replication server, EBS volumes, EBS snapshots, etc.</p>",
         "ReplicationConfigurationTemplate$stagingAreaTags": "<p>A set of tags to be associated with all resources created in the replication staging area: EC2 replication server, EBS volumes, EBS snapshots, etc.</p>",
         "ReplicationConfigurationTemplate$tags": "<p>A set of tags to be associated with the Replication Configuration Template resource.</p>",
@@ -1938,6 +2413,7 @@
         "SourceServer$tags": "<p>The tags associated with the Source Server.</p>",
         "StagingSourceServer$tags": "<p>A list of tags associated with the staging source server.</p>",
         "StartFailbackLaunchRequest$tags": "<p>The tags to be associated with the failback launch Job.</p>",
+        "StartRecoveryPlanExecutionRequest$tags": "<p>The tags to apply to the Recovery Plan execution.</p>",
         "StartRecoveryRequest$tags": "<p>The tags to be associated with the Recovery Job.</p>",
         "StartSourceNetworkRecoveryRequest$tags": "<p>The tags to be associated with the Source Network recovery Job.</p>",
         "TagResourceRequest$tags": "<p>Array of tags to be added or updated.</p>",
@@ -1988,6 +2464,30 @@
       "refs": {}
     },
     "UpdateLaunchConfigurationTemplateResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRecoveryPlanExecutionStepRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRecoveryPlanExecutionStepResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRecoveryPlanRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRecoveryPlanResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRecoveryPlanStepRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRecoveryPlanStepResponse": {
       "base": null,
       "refs": {}
     },
@@ -2053,6 +2553,20 @@
         "SourceNetwork$launchedVpcID": "<p>ID of the recovered VPC following Source Network recovery.</p>",
         "SourceNetworkData$sourceVpc": "<p>VPC ID protected by the Source Network.</p>",
         "SourceNetworkData$targetVpc": "<p>ID of the recovered VPC following Source Network recovery.</p>"
+      }
+    },
+    "WaitDurationMinutes": {
+      "base": "<p>The wait duration in minutes for a Wait type step.</p>",
+      "refs": {
+        "UpdateRecoveryPlanExecutionStepRequest$waitDurationMinutes": "<p>Updated wait duration. Only allowed when the step is in NOT_STARTED status (Wait type steps only).</p>",
+        "WaitStepConfiguration$waitDurationMinutes": null
+      }
+    },
+    "WaitStepConfiguration": {
+      "base": "<p>Configuration for a <code>WAIT</code> type step.</p>",
+      "refs": {
+        "RecoveryPlanExecutionStepConfiguration$waitStepConfiguration": "<p>Configuration for a WAIT type step.</p>",
+        "RecoveryPlanStepConfiguration$waitStepConfiguration": "<p>Configuration for a WAIT type step.</p>"
       }
     }
   }

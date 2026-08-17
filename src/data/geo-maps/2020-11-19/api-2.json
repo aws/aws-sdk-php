@@ -17,7 +17,7 @@
       "name":"GetGlyphs",
       "http":{
         "method":"GET",
-        "requestUri":"/glyphs/{FontStack}/{FontUnicodeRange}",
+        "requestUri":"/v2/glyphs/{FontStack}/{FontUnicodeRange}",
         "responseCode":200
       },
       "input":{"shape":"GetGlyphsRequest"},
@@ -28,7 +28,7 @@
       "name":"GetSprites",
       "http":{
         "method":"GET",
-        "requestUri":"/styles/{Style}/{ColorScheme}/{Variant}/sprites/{FileName}",
+        "requestUri":"/v2/styles/{Style}/{ColorScheme}/{Variant}/sprites/{FileName}",
         "responseCode":200
       },
       "input":{"shape":"GetSpritesRequest"},
@@ -39,7 +39,7 @@
       "name":"GetStaticMap",
       "http":{
         "method":"GET",
-        "requestUri":"/static/{FileName}",
+        "requestUri":"/v2/static/{FileName}",
         "responseCode":200
       },
       "input":{"shape":"GetStaticMapRequest"},
@@ -56,7 +56,7 @@
       "name":"GetStyleDescriptor",
       "http":{
         "method":"GET",
-        "requestUri":"/styles/{Style}/descriptor",
+        "requestUri":"/v2/styles/{Style}/descriptor",
         "responseCode":200
       },
       "input":{"shape":"GetStyleDescriptorRequest"},
@@ -67,7 +67,7 @@
       "name":"GetTile",
       "http":{
         "method":"GET",
-        "requestUri":"/tiles/{Tileset}/{Z}/{X}/{Y}",
+        "requestUri":"/v2/tiles/{Tileset}/{Z}/{X}/{Y}",
         "responseCode":200
       },
       "input":{"shape":"GetTileRequest"},
@@ -491,6 +491,16 @@
           "location":"querystring",
           "locationName":"buildings"
         },
+        "PoiDensity":{
+          "shape":"PoiDensity",
+          "location":"querystring",
+          "locationName":"poi-density"
+        },
+        "PoiCategories":{
+          "shape":"PoiCategoryList",
+          "location":"querystring",
+          "locationName":"poi-categories"
+        },
         "Key":{
           "shape":"ApiKey",
           "location":"querystring",
@@ -650,6 +660,37 @@
         "Monochrome",
         "Hybrid",
         "Satellite"
+      ]
+    },
+    "PoiCategory":{
+      "type":"string",
+      "enum":[
+        "FoodAndDrink",
+        "Entertainment",
+        "SightsAndMuseums",
+        "Transportation",
+        "Accommodations",
+        "LeisureAndOutdoor",
+        "Shopping",
+        "BusinessAndServices",
+        "FacilitiesAndBuildings"
+      ]
+    },
+    "PoiCategoryList":{
+      "type":"list",
+      "member":{"shape":"PoiCategory"},
+      "max":9,
+      "min":0
+    },
+    "PoiDensity":{
+      "type":"string",
+      "enum":[
+        "Off",
+        "VerySparse",
+        "Sparse",
+        "Default",
+        "Dense",
+        "VeryDense"
       ]
     },
     "PositionString":{
