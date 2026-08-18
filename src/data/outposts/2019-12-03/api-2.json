@@ -81,6 +81,22 @@
         {"shape":"ServiceQuotaExceededException"}
       ]
     },
+    "CreatePrivateConnectivityConfig":{
+      "name":"CreatePrivateConnectivityConfig",
+      "http":{
+        "method":"POST",
+        "requestUri":"/outposts/{OutpostId}/privateConnectivity"
+      },
+      "input":{"shape":"CreatePrivateConnectivityConfigInput"},
+      "output":{"shape":"CreatePrivateConnectivityConfigOutput"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"NotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "CreateQuote":{
       "name":"CreateQuote",
       "http":{
@@ -289,6 +305,21 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"NotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "GetPrivateConnectivityConfig":{
+      "name":"GetPrivateConnectivityConfig",
+      "http":{
+        "method":"GET",
+        "requestUri":"/outposts/{OutpostId}/privateConnectivity"
+      },
+      "input":{"shape":"GetPrivateConnectivityConfigInput"},
+      "output":{"shape":"GetPrivateConnectivityConfigOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"NotFoundException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -1192,6 +1223,28 @@
         "Outpost":{"shape":"Outpost"}
       }
     },
+    "CreatePrivateConnectivityConfigInput":{
+      "type":"structure",
+      "required":[
+        "OutpostId",
+        "VpcInformationList"
+      ],
+      "members":{
+        "OutpostId":{
+          "shape":"OutpostId",
+          "location":"uri",
+          "locationName":"OutpostId"
+        },
+        "VpcInformationList":{"shape":"VpcInformationList"}
+      }
+    },
+    "CreatePrivateConnectivityConfigOutput":{
+      "type":"structure",
+      "members":{
+        "PrivateConnectivityConfig":{"shape":"PrivateConnectivityConfig"},
+        "OutpostId":{"shape":"OutpostId"}
+      }
+    },
     "CreateQuoteInput":{
       "type":"structure",
       "required":[
@@ -1601,6 +1654,23 @@
       "members":{
         "InstanceTypes":{"shape":"InstanceTypeListDefinition"},
         "NextToken":{"shape":"Token"}
+      }
+    },
+    "GetPrivateConnectivityConfigInput":{
+      "type":"structure",
+      "required":["OutpostId"],
+      "members":{
+        "OutpostId":{
+          "shape":"OutpostId",
+          "location":"uri",
+          "locationName":"OutpostId"
+        }
+      }
+    },
+    "GetPrivateConnectivityConfigOutput":{
+      "type":"structure",
+      "members":{
+        "PrivateConnectivityConfig":{"shape":"PrivateConnectivityConfig"}
       }
     },
     "GetQuoteInput":{
@@ -2557,6 +2627,22 @@
         "UNABLE_TO_PRICE"
       ]
     },
+    "PrivateConnectivityConfig":{
+      "type":"structure",
+      "members":{
+        "RoleArn":{"shape":"RoleArn"},
+        "PrivateConnectivityStatus":{"shape":"PrivateConnectivityStatus"},
+        "VpcInformationList":{"shape":"VpcInformationList"},
+        "ProvisioningRoleArn":{"shape":"RoleArn"}
+      }
+    },
+    "PrivateConnectivityStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "Quantity":{"type":"string"},
     "Quote":{
       "type":"structure",
@@ -2786,6 +2872,12 @@
         "ORDER"
       ]
     },
+    "RoleArn":{
+      "type":"string",
+      "max":150,
+      "min":1,
+      "pattern":"^arn:aws([a-z-]+)?:iam::\\d{12}:role\\/[a-zA-Z_0-9+=,.@\\-_\\/]+"
+    },
     "ServerEndpoint":{
       "type":"string",
       "max":21,
@@ -2986,6 +3078,18 @@
       "max":1000,
       "min":1,
       "pattern":"^[\\S \\n]+$"
+    },
+    "SubnetId":{
+      "type":"string",
+      "max":25,
+      "min":1,
+      "pattern":"[a-z0-9-]+"
+    },
+    "SubnetIds":{
+      "type":"list",
+      "member":{"shape":"SubnetId"},
+      "max":10,
+      "min":1
     },
     "Subscription":{
       "type":"structure",
@@ -3296,6 +3400,32 @@
       },
       "error":{"httpStatusCode":400},
       "exception":true
+    },
+    "VpcEndpointId":{
+      "type":"string",
+      "max":25,
+      "min":1,
+      "pattern":"^vpce-[a-f0-9]+$"
+    },
+    "VpcId":{
+      "type":"string",
+      "max":25,
+      "min":1,
+      "pattern":"[a-z0-9-]+"
+    },
+    "VpcInformation":{
+      "type":"structure",
+      "members":{
+        "VpcId":{"shape":"VpcId"},
+        "SubnetIds":{"shape":"SubnetIds"},
+        "VpcEndpointId":{"shape":"VpcEndpointId"}
+      }
+    },
+    "VpcInformationList":{
+      "type":"list",
+      "member":{"shape":"VpcInformation"},
+      "max":1,
+      "min":1
     },
     "WireGuardPublicKey":{
       "type":"string",

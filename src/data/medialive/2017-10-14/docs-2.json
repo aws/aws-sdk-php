@@ -2378,8 +2378,8 @@
     "M2tsScte35Control": {
       "base": "M2ts Scte35 Control",
       "refs": {
-        "M2tsSettings$Scte35Control": "Optionally pass SCTE-35 signals from the input source to this output.",
-        "MultiplexM2tsSettings$Scte35Control": "Optionally pass SCTE-35 signals from the input source to this output."
+        "M2tsSettings$Scte35Control": "SCTE-35 control. Option \"none\" indicates that a SCTE-35 marker will not be inserted, nor will an IDR be inserted at the SCTE-35 cue point, nor will the segment be segmented. Option \"scte35WithoutIdr\" indicates that a SCTE-35 marker will be inserted to indicate the cue point, but MediaLive will not insert an IDR on that frame nor will it introduce a new segment boundary there if it wasn't already going to be one (this option is required for use with downstream multiview bitstream stitching workflows). Option \"passthrough\" indicates that a SCTE-35 marker will be inserted to indicate the cue point, and an IDR will be inserted on that frame, and MediaLive itself will introduce a new segment boundary there.",
+        "MultiplexM2tsSettings$Scte35Control": "SCTE-35 control. Option \"none\" indicates that a SCTE-35 marker will not be inserted, nor will an IDR be inserted at the SCTE-35 cue point, nor will the segment be segmented. Option \"scte35WithoutIdr\" indicates that a SCTE-35 marker will be inserted to indicate the cue point, but MediaLive will not insert an IDR on that frame nor will it introduce a new segment boundary there if it wasn't already going to be one (this option is required for use with downstream multiview bitstream stitching workflows). Option \"passthrough\" indicates that a SCTE-35 marker will be inserted to indicate the cue point, and an IDR will be inserted on that frame, and MediaLive itself will introduce a new segment boundary there."
       }
     },
     "M2tsSegmentationMarkers": {
@@ -2781,7 +2781,8 @@
     "NielsenWatermarkTimezones": {
       "base": "Nielsen Watermark Timezones",
       "refs": {
-        "NielsenNaesIiNw$Timezone": "Choose the timezone for the time stamps in the watermark. If not provided,\nthe timestamps will be in Coordinated Universal Time (UTC)"
+        "NielsenNaesIiNw$Timezone": "Choose the timezone for the time stamps in the watermark. If not provided,\nthe timestamps will be in Coordinated Universal Time (UTC)",
+        "NielsenNwOnly$Timezone": "Choose the timezone for the time stamps in the watermark. If not provided,\nthe timestamps will be in Coordinated Universal Time (UTC)"
       }
     },
     "NielsenWatermarksCbetStepaside": {
@@ -3882,7 +3883,8 @@
     "__doubleMin1Max65535": {
       "base": null,
       "refs": {
-        "NielsenNaesIiNw$Sid": "Enter the Nielsen Source ID (SID) to include in the watermark"
+        "NielsenNaesIiNw$Sid": "Enter the Nielsen Source ID (SID) to include in the watermark",
+        "NielsenNwOnly$Sid": "Enter the Nielsen Source ID (SID) to include in the watermark"
       }
     },
     "__doubleMin250Max5000": {
@@ -5412,7 +5414,8 @@
       "base": null,
       "refs": {
         "NielsenCBET$CbetCheckDigitString": "Enter the CBET check digits to use in the watermark.",
-        "NielsenNaesIiNw$CheckDigitString": "Enter the check digit string for the watermark"
+        "NielsenNaesIiNw$CheckDigitString": "Enter the check digit string for the watermark",
+        "NielsenNwOnly$CheckDigitString": "Enter the check digit string for the watermark"
       }
     },
     "__stringMin32Max32": {
@@ -5597,8 +5600,8 @@
     "Scte35Type": {
       "base": "Scte35 Type",
       "refs": {
-        "CmafIngestGroupSettings$Scte35Type": "Type of scte35 track to add. none or scte35WithoutSegmentation",
-        "MediaPackageV2GroupSettings$Scte35Type": "Type of scte35 track to add. none or scte35WithoutSegmentation"
+        "CmafIngestGroupSettings$Scte35Type": "SCTE-35 insertion type. Option \"none\" indicates that a SCTE-35 marker will not be inserted, nor will an IDR be inserted at the SCTE-35 cue point, nor will the segment be segmented. Option \"scte35WithoutIdr\" indicates that a SCTE-35 marker will be inserted to indicate the cue point, but MediaLive will not insert an IDR on that frame nor will it introduce a new segment boundary there if it wasn't already going to be one (this option is required for use with downstream multiview bitstream stitching workflows). Option \"scte35WithoutSegmentation\" indicates that a SCTE-35 marker will be inserted to indicate the cue point, and an IDR will be inserted on that frame so that a downstream re-packager might split the segment there, but MediaLive itself will not introduce a new segment boundary there.",
+        "MediaPackageV2GroupSettings$Scte35Type": "SCTE-35 insertion type. Option \"none\" indicates that a SCTE-35 marker will not be inserted, nor will an IDR be inserted at the SCTE-35 cue point, nor will the segment be segmented. Option \"scte35WithoutIdr\" indicates that a SCTE-35 marker will be inserted to indicate the cue point, but MediaLive will not insert an IDR on that frame nor will it introduce a new segment boundary there if it wasn't already going to be one (this option is required for use with downstream multiview bitstream stitching workflows). Option \"scte35WithoutSegmentation\" indicates that a SCTE-35 marker will be inserted to indicate the cue point, and an IDR will be inserted on that frame so that a downstream re-packager might split the segment there, but MediaLive itself will not introduce a new segment boundary there."
       }
     },
     "BadRequestExceptionResponseContent": {
@@ -7720,6 +7723,12 @@
       "base": null,
       "refs": {
         "AudioPidSelection$Pids": "Selects one or more unique PIDs from within a source.\nWhen using 'pids', you can specify per-PID audio pre-mixer settings."
+      }
+    },
+    "NielsenNwOnly": {
+      "base": "Nielsen Nw Only",
+      "refs": {
+        "NielsenWatermarksSettings$NielsenNwOnlySettings": "Complete these fields only if you want to insert watermarks of type Nielsen NAES VI (NW) only,\nwithout inserting NAES II (N2) watermarks."
       }
     }
   },

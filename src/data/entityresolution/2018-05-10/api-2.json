@@ -133,6 +133,7 @@
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"},
         {"shape":"ValidationException"}
@@ -151,6 +152,7 @@
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
       ],
@@ -168,6 +170,7 @@
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"},
         {"shape":"ValidationException"}
@@ -205,6 +208,7 @@
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"},
         {"shape":"ValidationException"}
@@ -2626,7 +2630,7 @@
     "SchemaInputAttributes":{
       "type":"list",
       "member":{"shape":"SchemaInputAttribute"},
-      "max":35,
+      "max":60,
       "min":2
     },
     "SchemaList":{
@@ -2742,7 +2746,7 @@
       "type":"string",
       "max":64,
       "min":12,
-      "pattern":"(\\d{12})|([a-z0-9\\.]+)"
+      "pattern":"((\\d{12})|([a-z0-9\\.]+))"
     },
     "StatementPrincipalList":{
       "type":"list",

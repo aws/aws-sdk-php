@@ -63,6 +63,22 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "DescribeAssessment":{
+      "name":"DescribeAssessment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/DescribeAssessment"
+      },
+      "input":{"shape":"DescribeAssessmentRequest"},
+      "output":{"shape":"DescribeAssessmentResponse"},
+      "errors":[
+        {"shape":"InternalServiceException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "DescribeChangeSet":{
       "name":"DescribeChangeSet",
       "http":{
@@ -109,6 +125,21 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListAssessments":{
+      "name":"ListAssessments",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListAssessments"
+      },
+      "input":{"shape":"ListAssessmentsRequest"},
+      "output":{"shape":"ListAssessmentsResponse"},
+      "errors":[
+        {"shape":"InternalServiceException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
       ]
     },
@@ -227,6 +258,18 @@
     }
   },
   "shapes":{
+    "AMISecurityFilters":{
+      "type":"structure",
+      "members":{
+        "DeliveryOptionId":{"shape":"ResourceId"}
+      }
+    },
+    "AMISecuritySummary":{
+      "type":"structure",
+      "members":{
+        "DeliveryOptionId":{"shape":"ResourceId"}
+      }
+    },
     "ARN":{
       "type":"string",
       "max":2048,
@@ -344,6 +387,50 @@
         "Restricted",
         "Draft"
       ]
+    },
+    "AssessmentIdentifier":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"^(assessment-[a-zA-Z0-9]+|arn:[a-zA-Z0-9-]+:[a-zA-Z0-9-]+:[a-zA-Z0-9-]*:[0-9]*:[a-zA-Z0-9-]+/Assessment/assessment-[a-zA-Z0-9]+)$"
+    },
+    "AssessmentResult":{
+      "type":"string",
+      "enum":[
+        "PASS",
+        "FAIL"
+      ]
+    },
+    "AssessmentSummary":{
+      "type":"structure",
+      "members":{
+        "AssessmentArn":{"shape":"ARN"},
+        "AssessmentId":{"shape":"ResourceId"},
+        "FrameworkId":{"shape":"VersionedFrameworkId"},
+        "AssessmentTargetSummary":{"shape":"AssessmentTargetSummary"},
+        "FrameworkSummary":{"shape":"FrameworkSummary"},
+        "AssessmentResult":{"shape":"AssessmentResult"},
+        "CreatedAt":{"shape":"DateTimeISO8601"},
+        "ExpiresAt":{"shape":"DateTimeISO8601"}
+      }
+    },
+    "AssessmentSummaryList":{
+      "type":"list",
+      "member":{"shape":"AssessmentSummary"}
+    },
+    "AssessmentTargetFilter":{
+      "type":"structure",
+      "members":{
+        "EntityId":{"shape":"ResourceId"},
+        "ChangeSetId":{"shape":"ResourceId"}
+      }
+    },
+    "AssessmentTargetSummary":{
+      "type":"structure",
+      "members":{
+        "EntityId":{"shape":"ResourceId"},
+        "ChangeSetId":{"shape":"ResourceId"}
+      }
     },
     "BatchDescribeEntitiesRequest":{
       "type":"structure",
@@ -595,6 +682,51 @@
         "Draft"
       ]
     },
+    "ContainerSecurityFilters":{
+      "type":"structure",
+      "members":{
+        "DeliveryOptionId":{"shape":"ResourceId"}
+      }
+    },
+    "ContainerSecuritySummary":{
+      "type":"structure",
+      "members":{
+        "DeliveryOptionId":{"shape":"ResourceId"}
+      }
+    },
+    "ControlAssessment":{
+      "type":"structure",
+      "members":{
+        "ControlId":{"shape":"ResourceId"},
+        "ControlAssessmentResult":{"shape":"ControlAssessmentResult"},
+        "Errors":{"shape":"ControlErrorList"}
+      }
+    },
+    "ControlAssessmentList":{
+      "type":"list",
+      "member":{"shape":"ControlAssessment"}
+    },
+    "ControlAssessmentResult":{
+      "type":"string",
+      "enum":[
+        "PASS",
+        "FAIL",
+        "NOT_EXECUTED",
+        "EXEMPTION_PASS"
+      ]
+    },
+    "ControlError":{
+      "type":"structure",
+      "members":{
+        "Code":{"shape":"ErrorCode"},
+        "Message":{"shape":"ErrorMessage"},
+        "Scope":{"shape":"ErrorScopeList"}
+      }
+    },
+    "ControlErrorList":{
+      "type":"list",
+      "member":{"shape":"ControlError"}
+    },
     "DataProductEntityIdFilter":{
       "type":"structure",
       "members":{
@@ -719,6 +851,40 @@
     "DeleteResourcePolicyResponse":{
       "type":"structure",
       "members":{}
+    },
+    "DescribeAssessmentMaxResultInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "DescribeAssessmentRequest":{
+      "type":"structure",
+      "required":[
+        "Catalog",
+        "AssessmentIdentifier"
+      ],
+      "members":{
+        "Catalog":{"shape":"Catalog"},
+        "AssessmentIdentifier":{"shape":"AssessmentIdentifier"},
+        "MaxResults":{"shape":"DescribeAssessmentMaxResultInteger"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribeAssessmentResponse":{
+      "type":"structure",
+      "members":{
+        "AssessmentArn":{"shape":"ARN"},
+        "AssessmentId":{"shape":"ResourceId"},
+        "FrameworkId":{"shape":"VersionedFrameworkId"},
+        "AssessmentTargetSummary":{"shape":"AssessmentTargetSummary"},
+        "FrameworkSummary":{"shape":"FrameworkSummary"},
+        "AssessmentResult":{"shape":"AssessmentResult"},
+        "CreatedAt":{"shape":"DateTimeISO8601"},
+        "ExpiresAt":{"shape":"DateTimeISO8601"},
+        "ControlAssessments":{"shape":"ControlAssessmentList"},
+        "NextToken":{"shape":"NextToken"}
+      }
     },
     "DescribeChangeSetRequest":{
       "type":"structure",
@@ -893,6 +1059,12 @@
       },
       "union":true
     },
+    "ErrorCode":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^[A-Z_]+$"
+    },
     "ErrorCodeString":{
       "type":"string",
       "max":72,
@@ -909,6 +1081,22 @@
     "ErrorDetailList":{
       "type":"list",
       "member":{"shape":"ErrorDetail"}
+    },
+    "ErrorMessage":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "ErrorScope":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"ScopeName"},
+        "Value":{"shape":"ScopeValue"}
+      }
+    },
+    "ErrorScopeList":{
+      "type":"list",
+      "member":{"shape":"ErrorScope"}
     },
     "Errors":{
       "type":"map",
@@ -927,6 +1115,12 @@
         "CLIENT_ERROR",
         "SERVER_FAULT"
       ]
+    },
+    "FieldName":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9\\-_\\.\\/]+$"
     },
     "Filter":{
       "type":"structure",
@@ -952,6 +1146,28 @@
       "max":255,
       "min":1,
       "pattern":"^(.)+$"
+    },
+    "FrameworkFilters":{
+      "type":"structure",
+      "members":{
+        "AMISecurityFilters":{"shape":"AMISecurityFilters"},
+        "ContainerSecurityFilters":{"shape":"ContainerSecurityFilters"}
+      },
+      "union":true
+    },
+    "FrameworkId":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^[\\w\\-@]+$"
+    },
+    "FrameworkSummary":{
+      "type":"structure",
+      "members":{
+        "AMISecuritySummary":{"shape":"AMISecuritySummary"},
+        "ContainerSecuritySummary":{"shape":"ContainerSecuritySummary"}
+      },
+      "union":true
     },
     "GetResourcePolicyRequest":{
       "type":"structure",
@@ -1002,6 +1218,31 @@
       "type":"structure",
       "members":{},
       "document":true
+    },
+    "ListAssessmentsMaxResultInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListAssessmentsRequest":{
+      "type":"structure",
+      "required":["Catalog"],
+      "members":{
+        "Catalog":{"shape":"Catalog"},
+        "FrameworkId":{"shape":"FrameworkId"},
+        "AssessmentTargetFilter":{"shape":"AssessmentTargetFilter"},
+        "FrameworkFilters":{"shape":"FrameworkFilters"},
+        "MaxResults":{"shape":"ListAssessmentsMaxResultInteger"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListAssessmentsResponse":{
+      "type":"structure",
+      "members":{
+        "AssessmentSummaryList":{"shape":"AssessmentSummaryList"},
+        "NextToken":{"shape":"NextToken"}
+      }
     },
     "ListChangeSetsMaxResultInteger":{
       "type":"integer",
@@ -1177,9 +1418,9 @@
     },
     "NextToken":{
       "type":"string",
-      "max":2048,
+      "max":4096,
       "min":1,
-      "pattern":"^[\\w+=.:@\\-\\/]$"
+      "pattern":"^[\\w+=.:@\\-\\/]+$"
     },
     "OfferAvailabilityEndDateFilter":{
       "type":"structure",
@@ -2204,6 +2445,16 @@
         "Draft"
       ]
     },
+    "ScopeName":{
+      "type":"string",
+      "max":50,
+      "min":1
+    },
+    "ScopeValue":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "members":{
@@ -2335,17 +2586,48 @@
     "ValidationException":{
       "type":"structure",
       "members":{
-        "Message":{"shape":"ExceptionMessageContent"}
+        "Message":{"shape":"ExceptionMessageContent"},
+        "ValidationExceptionFieldList":{"shape":"ValidationExceptionFieldList"}
       },
       "error":{"httpStatusCode":422},
       "exception":true,
       "synthetic":true
+    },
+    "ValidationExceptionField":{
+      "type":"structure",
+      "members":{
+        "Reason":{"shape":"ValidationExceptionReason"},
+        "EntityType":{"shape":"EntityType"},
+        "EntityId":{"shape":"EntityId"},
+        "ChangeType":{"shape":"ChangeType"},
+        "Field":{"shape":"FieldName"},
+        "Message":{"shape":"ExceptionMessageContent"}
+      }
+    },
+    "ValidationExceptionFieldList":{
+      "type":"list",
+      "member":{"shape":"ValidationExceptionField"}
+    },
+    "ValidationExceptionReason":{
+      "type":"string",
+      "enum":[
+        "UnknownOperation",
+        "CannotParse",
+        "FieldValidationFailed",
+        "Other"
+      ]
     },
     "ValueList":{
       "type":"list",
       "member":{"shape":"FilterValueContent"},
       "max":10,
       "min":1
+    },
+    "VersionedFrameworkId":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^[\\w\\-@.]+$"
     },
     "VisibilityValue":{
       "type":"string",

@@ -12225,7 +12225,8 @@
       "type": "string",
       "enum": [
         "NONE",
-        "PASSTHROUGH"
+        "PASSTHROUGH",
+        "SCTE_35_WITHOUT_IDR"
       ]
     },
     "M2tsSegmentationMarkers": {
@@ -13553,6 +13554,10 @@
         "NielsenNaesIiNwSettings": {
           "shape": "NielsenNaesIiNw",
           "locationName": "nielsenNaesIiNwSettings"
+        },
+        "NielsenNwOnlySettings": {
+          "shape": "NielsenNwOnly",
+          "locationName": "nielsenNwOnlySettings"
         }
       }
     },
@@ -17895,7 +17900,8 @@
       "type": "string",
       "enum": [
         "NONE",
-        "SCTE_35_WITHOUT_SEGMENTATION"
+        "SCTE_35_WITHOUT_SEGMENTATION",
+        "SCTE_35_WITHOUT_IDR"
       ]
     },
     "BadRequestExceptionResponseContent": {
@@ -25844,6 +25850,27 @@
       "member": {
         "shape": "AudioPid"
       }
+    },
+    "NielsenNwOnly": {
+      "type": "structure",
+      "members": {
+        "CheckDigitString": {
+          "shape": "__stringMin2Max2",
+          "locationName": "checkDigitString"
+        },
+        "Sid": {
+          "shape": "__doubleMin1Max65535",
+          "locationName": "sid"
+        },
+        "Timezone": {
+          "shape": "NielsenWatermarkTimezones",
+          "locationName": "timezone"
+        }
+      },
+      "required": [
+        "CheckDigitString",
+        "Sid"
+      ]
     }
   }
 }

@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\MediaLive` - AWS Elemental MediaLive now supports SCTE-35 marker passthrough without IDR frame insertion for CMAF Ingest, MediaPackage V2, and transport stream outputs.
+* `Aws\MarketplaceCatalog` - Introducing two new APIs, DescribeAssessment and ListAssessments. These APIs expose validation issues on Marketplace resources. The validation issues are exposed via a newly created resource called Assessment.
+* `Aws\Batch` - Update AWS Batch documentation with newer Fargate Supported configurations, notes, and fix broken Docker link re-directs.
+* `Aws\WorkSpaces` - Amazon WorkSpaces now supports nested virtualization, allowing you to run hypervisors and virtualization-based workloads within your WorkSpaces. You can enable or disable nested virtualization when creating a WorkSpace or by modifying an existing WorkSpace's properties.
+* `Aws\Outposts` - AWS Outposts now supports VPC Endpoint configuration in CreatePrivateConnectivityConfig, enabling scoped private connectivity with provisioning role creation for secure outpost installations
+* `Aws\EC2` - Doc release for CreateImage support for instances with local snapshots in Outpost
+* `Aws\EntityResolution` - Added ResourceNotFoundException to DeleteSchemaMapping, DeleteMatchingWorkflow, DeleteIdMappingWorkflow, and DeleteIdNamespace. These operations now return a 404 ResourceNotFoundException (previously a 200 Success) when the target resource does not exist.
+
 ## 3.393.0 - 2026-08-17
 
 * `Aws\Handler` - Adds support for Guzzle transport sharing (persistent connections) via the new transport_sharing client option.

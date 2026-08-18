@@ -5,9 +5,11 @@
     "BatchDescribeEntities": "<p>Returns metadata and content for multiple entities. This is the Batch version of the <code>DescribeEntity</code> API and uses the same IAM permission action as <code>DescribeEntity</code> API.</p>",
     "CancelChangeSet": "<p>Used to cancel an open change request. Must be sent before the status of the request changes to <code>APPLYING</code>, the final stage of completing your change request. You can describe a change during the 60-day request history retention period for API calls.</p>",
     "DeleteResourcePolicy": "<p>Deletes a resource-based policy on an entity that is identified by its resource ARN.</p>",
+    "DescribeAssessment": "<p>Returns the metadata and detailed results of a single assessment, including the framework that was evaluated, the overall assessment result, and a paginated list of individual control evaluation results.</p> <p>To list available assessments before describing one, use the <code>ListAssessments</code> action.</p>",
     "DescribeChangeSet": "<p>Provides information about a given change set.</p>",
     "DescribeEntity": "<p>Returns the metadata and content of the entity.</p>",
     "GetResourcePolicy": "<p>Gets a resource-based policy of an entity that is identified by its resource ARN.</p>",
+    "ListAssessments": "<p>Returns a paginated list of assessments associated with an entity or change set in AWS Marketplace. An <i>assessment</i> is the result of evaluating a product or change set against a framework, such as AMI Security or Container Security.</p> <p>Use the <code>AssessmentTargetFilter</code> to scope results to a specific entity or change set, and use <code>FrameworkFilters</code> to scope results to a single framework. To retrieve detailed control-level results for an individual assessment, use the <code>DescribeAssessment</code> action.</p> <p>Results are sorted by assessment creation time in descending order.</p>",
     "ListChangeSets": "<p>Returns the list of change sets owned by the account being used to make the call. You can filter this list by providing any combination of <code>entityId</code>, <code>ChangeSetName</code>, and status. If you provide more than one filter, the API operation applies a logical AND between the filters.</p> <p>You can describe a change during the 60-day request history retention period for API calls.</p>",
     "ListEntities": "<p>Provides the list of entities of a given type.</p>",
     "ListTagsForResource": "<p>Lists all tags that have been added to a resource (either an <a href=\"https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/welcome.html#catalog-api-entities\">entity</a> or <a href=\"https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/welcome.html#working-with-change-sets\">change set</a>).</p>",
@@ -17,11 +19,25 @@
     "UntagResource": "<p>Removes a tag or list of tags from a resource (either an <a href=\"https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/welcome.html#catalog-api-entities\">entity</a> or <a href=\"https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/welcome.html#working-with-change-sets\">change set</a>).</p>"
   },
   "shapes": {
+    "AMISecurityFilters": {
+      "base": "<p>Filters that apply to assessments performed against the AMI Security framework.</p>",
+      "refs": {
+        "FrameworkFilters$AMISecurityFilters": "<p>Filters that apply to assessments performed against the AMI Security framework.</p>"
+      }
+    },
+    "AMISecuritySummary": {
+      "base": "<p>The details of the resource assessed under the AMI Security framework.</p>",
+      "refs": {
+        "FrameworkSummary$AMISecuritySummary": "<p>The details of the resource assessed under the AMI Security framework.</p>"
+      }
+    },
     "ARN": {
       "base": null,
       "refs": {
+        "AssessmentSummary$AssessmentArn": "<p>The ARN associated with the assessment.</p>",
         "CancelChangeSetResponse$ChangeSetArn": "<p>The ARN associated with the change set referenced in this request.</p>",
         "ChangeSetSummaryListItem$ChangeSetArn": "<p>The ARN associated with the unique identifier for the change set referenced in this request.</p>",
+        "DescribeAssessmentResponse$AssessmentArn": "<p>The ARN associated with the assessment.</p>",
         "DescribeChangeSetResponse$ChangeSetArn": "<p>The ARN associated with the unique identifier for the change set referenced in this request.</p>",
         "DescribeEntityResponse$EntityArn": "<p>The ARN associated to the unique identifier for the entity referenced in this request.</p>",
         "EntityDetail$EntityArn": "<p>The Amazon Resource Name (ARN) of the entity.</p>",
@@ -126,6 +142,44 @@
         "AmiProductVisibilityFilterValueList$member": null
       }
     },
+    "AssessmentIdentifier": {
+      "base": null,
+      "refs": {
+        "DescribeAssessmentRequest$AssessmentIdentifier": "<p>The unique identifier of the assessment to describe. You can provide either the assessment ID (for example, <code>assessment-12345</code>) or the full assessment ARN (for example, <code>arn:aws:aws-marketplace:us-east-1::AWSMarketplace/Assessment/assessment-12345</code>).</p>"
+      }
+    },
+    "AssessmentResult": {
+      "base": null,
+      "refs": {
+        "AssessmentSummary$AssessmentResult": "<p>The overall result of the assessment.</p>",
+        "DescribeAssessmentResponse$AssessmentResult": "<p>The overall result of the assessment.</p>"
+      }
+    },
+    "AssessmentSummary": {
+      "base": "<p>Summarized information about an assessment.</p>",
+      "refs": {
+        "AssessmentSummaryList$member": null
+      }
+    },
+    "AssessmentSummaryList": {
+      "base": null,
+      "refs": {
+        "ListAssessmentsResponse$AssessmentSummaryList": "<p>An array of <code>AssessmentSummary</code> objects.</p>"
+      }
+    },
+    "AssessmentTargetFilter": {
+      "base": "<p>Filters assessment list results by the resource that was assessed. Provide an entity identifier, a change set identifier, or both.</p>",
+      "refs": {
+        "ListAssessmentsRequest$AssessmentTargetFilter": "<p>Filters the list of assessments to those performed against a specific entity or change set.</p>"
+      }
+    },
+    "AssessmentTargetSummary": {
+      "base": "<p>Identifies the entity or change set that was assessed.</p>",
+      "refs": {
+        "AssessmentSummary$AssessmentTargetSummary": "<p>Identifies the entity or change set that was assessed.</p>",
+        "DescribeAssessmentResponse$AssessmentTargetSummary": "<p>Identifies the entity or change set that was assessed.</p>"
+      }
+    },
     "BatchDescribeEntitiesRequest": {
       "base": null,
       "refs": {}
@@ -164,9 +218,11 @@
       "base": null,
       "refs": {
         "CancelChangeSetRequest$Catalog": "<p>Required. The catalog related to the request. Fixed value: <code>AWSMarketplace</code>.</p>",
+        "DescribeAssessmentRequest$Catalog": "<p>The catalog related to the request. Fixed value: <code>AWSMarketplace</code> </p>",
         "DescribeChangeSetRequest$Catalog": "<p>Required. The catalog related to the request. Fixed value: <code>AWSMarketplace</code> </p>",
         "DescribeEntityRequest$Catalog": "<p>Required. The catalog related to the request. Fixed value: <code>AWSMarketplace</code> </p>",
         "EntityRequest$Catalog": "<p>The name of the catalog the entity is present in. The only value at this time is <code>AWSMarketplace</code>.</p>",
+        "ListAssessmentsRequest$Catalog": "<p>The catalog related to the request. Fixed value: <code>AWSMarketplace</code> </p>",
         "ListChangeSetsRequest$Catalog": "<p>The catalog related to the request. Fixed value: <code>AWSMarketplace</code> </p>",
         "ListEntitiesRequest$Catalog": "<p>The catalog related to the request. Fixed value: <code>AWSMarketplace</code> </p>",
         "StartChangeSetRequest$Catalog": "<p>The catalog related to the request. Fixed value: <code>AWSMarketplace</code> </p>"
@@ -228,7 +284,8 @@
       "base": null,
       "refs": {
         "Change$ChangeType": "<p>Change types are single string values that describe your intention for the change. Each change type is unique for each <code>EntityType</code> provided in the change's scope. For more information about change types available for single-AMI products, see <a href=\"https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/ami-products.html#working-with-single-AMI-products\">Working with single-AMI products</a>. Also, for more information about change types available for container-based products, see <a href=\"https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/container-products.html#working-with-container-products\">Working with container products</a>.</p>",
-        "ChangeSummary$ChangeType": "<p>The type of the change.</p>"
+        "ChangeSummary$ChangeType": "<p>The type of the change.</p>",
+        "ValidationExceptionField$ChangeType": "<p>The change type the failing field applies to, if the field is part of a change request. For example, <code>AddDeliveryOptions</code>.</p>"
       }
     },
     "ClientRequestToken": {
@@ -330,6 +387,48 @@
         "ContainerProductVisibilityFilterValueList$member": null
       }
     },
+    "ContainerSecurityFilters": {
+      "base": "<p>Filters that apply to assessments performed against the Container Security framework.</p>",
+      "refs": {
+        "FrameworkFilters$ContainerSecurityFilters": "<p>Filters that apply to assessments performed against the Container Security framework.</p>"
+      }
+    },
+    "ContainerSecuritySummary": {
+      "base": "<p>The details of the resource assessed under the Container Security framework.</p>",
+      "refs": {
+        "FrameworkSummary$ContainerSecuritySummary": "<p>The details of the resource assessed under the Container Security framework.</p>"
+      }
+    },
+    "ControlAssessment": {
+      "base": "<p>The result of evaluating a single control as part of an assessment.</p>",
+      "refs": {
+        "ControlAssessmentList$member": null
+      }
+    },
+    "ControlAssessmentList": {
+      "base": null,
+      "refs": {
+        "DescribeAssessmentResponse$ControlAssessments": "<p>An array of <code>ControlAssessment</code> objects, each containing the result of an individual control evaluated as part of the assessment.</p>"
+      }
+    },
+    "ControlAssessmentResult": {
+      "base": null,
+      "refs": {
+        "ControlAssessment$ControlAssessmentResult": "<p>The result of the control evaluation.</p>"
+      }
+    },
+    "ControlError": {
+      "base": "<p>An error reported during the evaluation of a single control.</p>",
+      "refs": {
+        "ControlErrorList$member": null
+      }
+    },
+    "ControlErrorList": {
+      "base": null,
+      "refs": {
+        "ControlAssessment$Errors": "<p>An array of <code>ControlError</code> objects associated with the control evaluation.</p>"
+      }
+    },
     "DataProductEntityIdFilter": {
       "base": "<p>Object that allows filtering on entity id of a data product.</p>",
       "refs": {
@@ -428,12 +527,16 @@
       "refs": {
         "AmiProductLastModifiedDateFilterDateRange$AfterValue": "<p>Date after which the AMI product was last modified.</p>",
         "AmiProductLastModifiedDateFilterDateRange$BeforeValue": "<p>Date before which the AMI product was last modified.</p>",
+        "AssessmentSummary$CreatedAt": "<p>The date and time the assessment was created, in ISO 8601 format (<code>2018-02-27T13:45:22Z</code>).</p>",
+        "AssessmentSummary$ExpiresAt": "<p>The date and time the assessment expires, in ISO 8601 format (<code>2018-02-27T13:45:22Z</code>).</p>",
         "ChangeSetSummaryListItem$StartTime": "<p>The time, in ISO 8601 format (2018-02-27T13:45:22Z), when the change set was started.</p>",
         "ChangeSetSummaryListItem$EndTime": "<p>The time, in ISO 8601 format (2018-02-27T13:45:22Z), when the change set was finished.</p>",
         "ContainerProductLastModifiedDateFilterDateRange$AfterValue": "<p>Date after which the container product was last modified.</p>",
         "ContainerProductLastModifiedDateFilterDateRange$BeforeValue": "<p>Date before which the container product was last modified.</p>",
         "DataProductLastModifiedDateFilterDateRange$AfterValue": "<p>Date after which the data product was last modified.</p>",
         "DataProductLastModifiedDateFilterDateRange$BeforeValue": "<p>Date before which the data product was last modified.</p>",
+        "DescribeAssessmentResponse$CreatedAt": "<p>The date and time the assessment was created, in ISO 8601 format (<code>2018-02-27T13:45:22Z</code>).</p>",
+        "DescribeAssessmentResponse$ExpiresAt": "<p>The date and time the assessment expires, in ISO 8601 format (<code>2018-02-27T13:45:22Z</code>).</p>",
         "DescribeChangeSetResponse$StartTime": "<p>The date and time, in ISO 8601 format (2018-02-27T13:45:22Z), the request started. </p>",
         "DescribeChangeSetResponse$EndTime": "<p>The date and time, in ISO 8601 format (2018-02-27T13:45:22Z), the request transitioned to a terminal state. The change cannot transition to a different state. Null if the request is not in a terminal state. </p>",
         "DescribeEntityResponse$LastModifiedDate": "<p>The last modified date of the entity, in ISO 8601 format (2018-02-27T13:45:22Z).</p>",
@@ -473,6 +576,20 @@
       "refs": {}
     },
     "DeleteResourcePolicyResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeAssessmentMaxResultInteger": {
+      "base": null,
+      "refs": {
+        "DescribeAssessmentRequest$MaxResults": "<p>Specifies the upper limit of <code>ControlAssessment</code> elements returned on a single page. If a value isn't provided, the default value is 50. Valid values range from 1 to 100.</p>"
+      }
+    },
+    "DescribeAssessmentRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeAssessmentResponse": {
       "base": null,
       "refs": {}
     },
@@ -516,7 +633,8 @@
       "refs": {
         "EntityDetails$key": null,
         "EntityRequest$EntityId": "<p>The ID of the entity.</p>",
-        "Errors$key": null
+        "Errors$key": null,
+        "ValidationExceptionField$EntityId": "<p>The entity identifier the failing field applies to, if the field is on a specific entity.</p>"
       }
     },
     "EntityNameString": {
@@ -556,7 +674,8 @@
         "Entity$Type": "<p>The type of entity.</p>",
         "EntityDetail$EntityType": "<p>The entity type of the entity, in the format of <code>EntityType@Version</code>.</p>",
         "EntitySummary$EntityType": "<p>The type of the entity.</p>",
-        "ListEntitiesRequest$EntityType": "<p>The type of entities to retrieve. Valid values are: <code>AmiProduct</code>, <code>ContainerProduct</code>, <code>DataProduct</code>, <code>SaaSProduct</code>, <code>ProcurementPolicy</code>, <code>Experience</code>, <code>Audience</code>, <code>BrandingSettings</code>, <code>Offer</code>, <code>OfferSet</code>, <code>Seller</code>, <code>ResaleAuthorization</code>, <code>Solution</code>.</p>"
+        "ListEntitiesRequest$EntityType": "<p>The type of entities to retrieve. Valid values are: <code>AmiProduct</code>, <code>ContainerProduct</code>, <code>DataProduct</code>, <code>SaaSProduct</code>, <code>ProcurementPolicy</code>, <code>Experience</code>, <code>Audience</code>, <code>BrandingSettings</code>, <code>Offer</code>, <code>OfferSet</code>, <code>Seller</code>, <code>ResaleAuthorization</code>, <code>Solution</code>.</p>",
+        "ValidationExceptionField$EntityType": "<p>The entity type the failing field applies to, if the field is on a specific entity. For example, <code>AmiProduct@1.0</code>.</p>"
       }
     },
     "EntityTypeFilters": {
@@ -569,6 +688,12 @@
       "base": "<p>Object containing all the sort fields per entity type.</p>",
       "refs": {
         "ListEntitiesRequest$EntityTypeSort": "<p>A Union object containing <code>Sort</code> shapes for all <code>EntityType</code>s. Each <code>EntityTypeSort</code> shape will have <code>SortBy</code> and <code>SortOrder</code> applicable for fields on that <code>EntityType</code>. This can be used to sort the results of the filter query.</p>"
+      }
+    },
+    "ErrorCode": {
+      "base": null,
+      "refs": {
+        "ControlError$Code": "<p>The error code that identifies the type of error.</p>"
       }
     },
     "ErrorCodeString": {
@@ -589,6 +714,24 @@
         "ChangeSummary$ErrorDetailList": "<p>An array of <code>ErrorDetail</code> objects associated with the change.</p>"
       }
     },
+    "ErrorMessage": {
+      "base": null,
+      "refs": {
+        "ControlError$Message": "<p>The message for the error.</p>"
+      }
+    },
+    "ErrorScope": {
+      "base": "<p>A name-value pair that identifies the resource or attribute that a <code>ControlError</code> applies to.</p>",
+      "refs": {
+        "ErrorScopeList$member": null
+      }
+    },
+    "ErrorScopeList": {
+      "base": null,
+      "refs": {
+        "ControlError$Scope": "<p>The list of name-value pairs that identify the resource or attribute that the error applies to.</p>"
+      }
+    },
     "Errors": {
       "base": null,
       "refs": {
@@ -607,7 +750,8 @@
         "ResourceNotSupportedException$Message": null,
         "ServiceQuotaExceededException$Message": null,
         "ThrottlingException$Message": null,
-        "ValidationException$Message": null
+        "ValidationException$Message": null,
+        "ValidationExceptionField$Message": "<p>A human-readable message describing why the field failed validation.</p>"
       }
     },
     "FailureCode": {
@@ -615,6 +759,12 @@
       "refs": {
         "ChangeSetSummaryListItem$FailureCode": "<p>Returned if the change set is in <code>FAILED</code> status. Can be either <code>CLIENT_ERROR</code>, which means that there are issues with the request (see the <code>ErrorDetailList</code> of <code>DescribeChangeSet</code>), or <code>SERVER_FAULT</code>, which means that there is a problem in the system, and you should retry your request.</p>",
         "DescribeChangeSetResponse$FailureCode": "<p>Returned if the change set is in <code>FAILED</code> status. Can be either <code>CLIENT_ERROR</code>, which means that there are issues with the request (see the <code>ErrorDetailList</code>), or <code>SERVER_FAULT</code>, which means that there is a problem in the system, and you should retry your request.</p>"
+      }
+    },
+    "FieldName": {
+      "base": null,
+      "refs": {
+        "ValidationExceptionField$Field": "<p>The name of the request field that failed validation, expressed as a JSON path (for example, <code>Details.DeliveryOptions[0].Type</code>).</p>"
       }
     },
     "Filter": {
@@ -640,6 +790,25 @@
       "base": null,
       "refs": {
         "ValueList$member": null
+      }
+    },
+    "FrameworkFilters": {
+      "base": "<p>Framework-specific filters used to scope <code>ListAssessments</code> results. Set exactly one member, corresponding to the framework you want to filter by.</p>",
+      "refs": {
+        "ListAssessmentsRequest$FrameworkFilters": "<p>Framework-specific filters. Set exactly one member to filter results to assessments performed against that framework.</p>"
+      }
+    },
+    "FrameworkId": {
+      "base": null,
+      "refs": {
+        "ListAssessmentsRequest$FrameworkId": "<p>The unique identifier of a framework. When specified, only assessments performed against this framework are returned. For example, <code>AMISecurity</code>.</p>"
+      }
+    },
+    "FrameworkSummary": {
+      "base": "<p>The framework-specific details of the assessed resource. Exactly one member is set, corresponding to the framework that was assessed.</p>",
+      "refs": {
+        "AssessmentSummary$FrameworkSummary": "<p>The framework-specific details of the assessed resource. The set member corresponds to the framework identified by <code>FrameworkId</code>.</p>",
+        "DescribeAssessmentResponse$FrameworkSummary": "<p>The framework-specific details of the assessed resource. The set member corresponds to the framework identified by <code>FrameworkId</code>.</p>"
       }
     },
     "GetResourcePolicyRequest": {
@@ -685,6 +854,20 @@
         "DescribeEntityResponse$DetailsDocument": "<p>The JSON value of the details specific to the entity.</p> <p>To download \"DetailsDocument\" shapes, see the <a href=\"https://github.com/awslabs/aws-marketplace-catalog-api-shapes-for-python\">Python</a> and <a href=\"https://github.com/awslabs/aws-marketplace-catalog-api-shapes-for-java/tree/main\">Java</a> shapes on GitHub.</p>",
         "EntityDetail$DetailsDocument": "<p>An object that contains all the details of the entity.</p>"
       }
+    },
+    "ListAssessmentsMaxResultInteger": {
+      "base": null,
+      "refs": {
+        "ListAssessmentsRequest$MaxResults": "<p>Specifies the upper limit of the elements on a single page. If a value isn't provided, the default value is 20. Valid values range from 1 to 100.</p>"
+      }
+    },
+    "ListAssessmentsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAssessmentsResponse": {
+      "base": null,
+      "refs": {}
     },
     "ListChangeSetsMaxResultInteger": {
       "base": null,
@@ -818,6 +1001,10 @@
     "NextToken": {
       "base": null,
       "refs": {
+        "DescribeAssessmentRequest$NextToken": "<p>The value of the next token, if it exists. <code>null</code> if there are no more results.</p>",
+        "DescribeAssessmentResponse$NextToken": "<p>The value of the next token, if it exists. <code>null</code> if there are no more results.</p>",
+        "ListAssessmentsRequest$NextToken": "<p>The value of the next token, if it exists. <code>null</code> if there are no more results.</p>",
+        "ListAssessmentsResponse$NextToken": "<p>The value of the next token, if it exists. <code>null</code> if there are no more results.</p>",
         "ListChangeSetsRequest$NextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
         "ListChangeSetsResponse$NextToken": "<p>The value of the next token, if it exists. Null if there are no more results.</p>",
         "ListEntitiesRequest$NextToken": "<p>The value of the next token, if it exists. Null if there are no more results.</p>",
@@ -1609,9 +1796,20 @@
     "ResourceId": {
       "base": null,
       "refs": {
+        "AMISecurityFilters$DeliveryOptionId": "<p>The unique ID of the delivery option whose AMI Security assessments you want to list.</p>",
+        "AMISecuritySummary$DeliveryOptionId": "<p>The unique ID of the delivery option that was evaluated.</p>",
+        "AssessmentSummary$AssessmentId": "<p>The unique ID of the assessment.</p>",
+        "AssessmentTargetFilter$EntityId": "<p>The unique ID of the entity whose assessments you want to list.</p>",
+        "AssessmentTargetFilter$ChangeSetId": "<p>The unique ID of the change set that triggered the assessments you want to list.</p>",
+        "AssessmentTargetSummary$EntityId": "<p>The unique ID of the entity that was assessed.</p>",
+        "AssessmentTargetSummary$ChangeSetId": "<p>The unique ID of the change set that was assessed.</p>",
         "CancelChangeSetRequest$ChangeSetId": "<p>Required. The unique identifier of the <code>StartChangeSet</code> request that you want to cancel.</p>",
         "CancelChangeSetResponse$ChangeSetId": "<p>The unique identifier for the change set referenced in this request.</p>",
         "ChangeSetSummaryListItem$ChangeSetId": "<p>The unique identifier for a change set.</p>",
+        "ContainerSecurityFilters$DeliveryOptionId": "<p>The unique ID of the delivery option whose Container Security assessments you want to list.</p>",
+        "ContainerSecuritySummary$DeliveryOptionId": "<p>The unique ID of the delivery option that was evaluated.</p>",
+        "ControlAssessment$ControlId": "<p>The unique ID of the control that was evaluated.</p>",
+        "DescribeAssessmentResponse$AssessmentId": "<p>The unique ID of the assessment.</p>",
         "DescribeChangeSetRequest$ChangeSetId": "<p>Required. The unique identifier for the <code>StartChangeSet</code> request that you want to describe the details for.</p>",
         "DescribeChangeSetResponse$ChangeSetId": "<p>Required. The unique identifier for the change set referenced in this request.</p>",
         "DescribeEntityRequest$EntityId": "<p>Required. The unique ID of the entity to describe.</p>",
@@ -1738,6 +1936,18 @@
         "SaaSProductVisibilityFilterValueList$member": null
       }
     },
+    "ScopeName": {
+      "base": null,
+      "refs": {
+        "ErrorScope$Name": "<p>The name of the resource field the error applies to (for example, <code>AMI_ID</code>, <code>FILE_PATH</code>, or <code>PACKAGE_NAME</code>).</p>"
+      }
+    },
+    "ScopeValue": {
+      "base": null,
+      "refs": {
+        "ErrorScope$Value": "<p>The value of the resource field the error applies to.</p>"
+      }
+    },
     "ServiceQuotaExceededException": {
       "base": "<p>The maximum number of open requests per account has been exceeded.</p>",
       "refs": {}
@@ -1835,10 +2045,35 @@
       "base": "<p>An error occurred during validation.</p> <p>HTTP status code: 422</p>",
       "refs": {}
     },
+    "ValidationExceptionField": {
+      "base": "<p>Detailed information about a single request field that failed validation, including the field's location, the reason it failed, and a human-readable message.</p>",
+      "refs": {
+        "ValidationExceptionFieldList$member": null
+      }
+    },
+    "ValidationExceptionFieldList": {
+      "base": null,
+      "refs": {
+        "ValidationException$ValidationExceptionFieldList": "<p>A list of detailed entries describing the request fields that failed validation. Present when the failure can be attributed to one or more specific fields.</p>"
+      }
+    },
+    "ValidationExceptionReason": {
+      "base": null,
+      "refs": {
+        "ValidationExceptionField$Reason": "<p>The reason the field failed validation.</p>"
+      }
+    },
     "ValueList": {
       "base": null,
       "refs": {
         "Filter$ValueList": "<p> <code>ListEntities</code> - This is a list of unique <code>EntityId</code>s.</p> <p> <code>ListChangeSets</code> - The supported filter names and associated <code>ValueList</code>s is as follows:</p> <ul> <li> <p> <code>ChangeSetName</code> - The supported <code>ValueList</code> is a list of non-unique <code>ChangeSetName</code>s. These are defined when you call the <code>StartChangeSet</code> action.</p> </li> <li> <p> <code>Status</code> - The supported <code>ValueList</code> is a list of statuses for all change set requests.</p> </li> <li> <p> <code>EntityId</code> - The supported <code>ValueList</code> is a list of unique <code>EntityId</code>s.</p> </li> <li> <p> <code>BeforeStartTime</code> - The supported <code>ValueList</code> is a list of all change sets that started before the filter value.</p> </li> <li> <p> <code>AfterStartTime</code> - The supported <code>ValueList</code> is a list of all change sets that started after the filter value.</p> </li> <li> <p> <code>BeforeEndTime</code> - The supported <code>ValueList</code> is a list of all change sets that ended before the filter value.</p> </li> <li> <p> <code>AfterEndTime</code> - The supported <code>ValueList</code> is a list of all change sets that ended after the filter value.</p> </li> </ul>"
+      }
+    },
+    "VersionedFrameworkId": {
+      "base": null,
+      "refs": {
+        "AssessmentSummary$FrameworkId": "<p>The identifier of the framework that was evaluated by this assessment, in the format <code>frameworkId@version</code> (for example, <code>AMISecurity@1.0</code>).</p>",
+        "DescribeAssessmentResponse$FrameworkId": "<p>The identifier of the framework that was evaluated by this assessment, in the format <code>frameworkId@version</code> (for example, <code>AMISecurity@1.0</code>).</p>"
       }
     },
     "VisibilityValue": {
