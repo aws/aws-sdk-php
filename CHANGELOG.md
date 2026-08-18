@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.393.1 - 2026-08-18
 
 * `Aws\MediaLive` - AWS Elemental MediaLive now supports SCTE-35 marker passthrough without IDR frame insertion for CMAF Ingest, MediaPackage V2, and transport stream outputs.
 * `Aws\MarketplaceCatalog` - Introducing two new APIs, DescribeAssessment and ListAssessments. These APIs expose validation issues on Marketplace resources. The validation issues are exposed via a newly created resource called Assessment.
