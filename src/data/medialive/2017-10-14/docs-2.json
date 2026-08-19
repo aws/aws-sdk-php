@@ -7730,6 +7730,27 @@
       "refs": {
         "NielsenWatermarksSettings$NielsenNwOnlySettings": "Complete these fields only if you want to insert watermarks of type Nielsen NAES VI (NW) only,\nwithout inserting NAES II (N2) watermarks."
       }
+    },
+    "VideoPositionRectangle": {
+      "base": "A rectangle defined by position (x, y) and dimensions (width, height) in pixels.\nUsed for output positioning and input cropping.",
+      "refs": {
+        "VideoDescription$CropRectangle": "Region of the input video to crop before scaling. If not specified, the entire input\nframe is used.\n\nNote: Unlike {@link outputPositionRectangle}, the bounds of cropRectangle are validated\nat ingest time by the encoder/scaler rather than at the API level, because the input\nresolution is not known until the source is probed. Field-level constraints on (x, y,\nwidth, height) defined on {@link VideoPositionRectangle} still apply.",
+        "VideoDescription$OutputPositionRectangle": "Position of the encoded video within the output frame. The area outside the rectangle\nis filled with black. If not specified, the video fills the entire output frame.\nWhen used, both {@link width} and {@link height} of the VideoDescription must be\nexplicitly specified so that the rectangle can be validated against the output frame."
+      }
+    },
+    "__integerMin0Max8190": {
+      "base": null,
+      "refs": {
+        "VideoPositionRectangle$X": "Left offset in pixels. Must be an even number.",
+        "VideoPositionRectangle$Y": "Top offset in pixels. Must be an even number."
+      }
+    },
+    "__integerMin2Max8192": {
+      "base": null,
+      "refs": {
+        "VideoPositionRectangle$Height": "Height in pixels. Must be an even number.",
+        "VideoPositionRectangle$Width": "Width in pixels. Must be an even number."
+      }
     }
   },
   "documentation": "API for AWS Elemental MediaLive"

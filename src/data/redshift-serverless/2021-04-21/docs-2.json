@@ -61,7 +61,7 @@
     "UpdateCustomDomainAssociation": "<p>Updates an Amazon Redshift Serverless certificate associated with a custom domain.</p>",
     "UpdateEndpointAccess": "<p>Updates an Amazon Redshift Serverless managed endpoint.</p>",
     "UpdateLakehouseConfiguration": "<p>Modifies the lakehouse configuration for a namespace. This operation allows you to manage Amazon Redshift federated permissions and Amazon Web Services IAM Identity Center trusted identity propagation.</p>",
-    "UpdateNamespace": "<p>Updates a namespace with the specified settings. Unless required, you can't update multiple parameters in one request. For example, you must specify both <code>adminUsername</code> and <code>adminUserPassword</code> to update either field, but you can't update both <code>kmsKeyId</code> and <code>logExports</code> in a single request.</p>",
+    "UpdateNamespace": "<p>Updates a namespace with the specified settings. Unless required, you can't update multiple parameters in one request. For example, you must specify both <code>adminUsername</code> and <code>adminUserPassword</code> to update either field, but you can't update both <code>kmsKeyId</code> and <code>logExports</code> in a single request.</p> <p>Similarly, an S3 Tables log-publishing update (a request where <code>logDestinationType</code> is <code>s3table</code>) cannot be combined with any other namespace configuration change and must be submitted as its own request.</p>",
     "UpdateScheduledAction": "<p>Updates a scheduled action.</p>",
     "UpdateSnapshot": "<p>Updates a snapshot.</p>",
     "UpdateSnapshotCopyConfiguration": "<p>Updates a snapshot copy configuration.</p>",
@@ -115,6 +115,7 @@
         "RestoreFromSnapshotRequest$manageAdminPassword": "<p>If <code>true</code>, Amazon Redshift uses Secrets Manager to manage the restored snapshot's admin credentials. If <code>MmanageAdminPassword</code> is false or not set, Amazon Redshift uses the admin credentials that the namespace or cluster had at the time the snapshot was taken.</p>",
         "RestoreTableFromRecoveryPointRequest$activateCaseSensitiveIdentifier": "<p>Indicates whether name identifiers for database, schema, and table are case sensitive. If true, the names are case sensitive. If false, the names are not case sensitive. The default is false.</p>",
         "RestoreTableFromSnapshotRequest$activateCaseSensitiveIdentifier": "<p>Indicates whether name identifiers for database, schema, and table are case sensitive. If true, the names are case sensitive. If false, the names are not case sensitive. The default is false.</p>",
+        "S3TablePublishStatus$enabledAll": "<p> <code>true</code> when the namespace is enrolled in every current and future system table rather than an explicit list of tables.</p>",
         "UpdateLakehouseConfigurationRequest$dryRun": "<p>A boolean value that, if <code>true</code>, validates the request without actually updating the lakehouse configuration. Use this to check for errors before making changes.</p>",
         "UpdateNamespaceRequest$manageAdminPassword": "<p>If <code>true</code>, Amazon Redshift uses Secrets Manager to manage the namespace's admin credentials. You can't use <code>adminUserPassword</code> if <code>manageAdminPassword</code> is true. If <code>manageAdminPassword</code> is false or not set, Amazon Redshift uses <code>adminUserPassword</code> for the admin user account's password. </p>",
         "UpdateScheduledActionRequest$enabled": "<p>Specifies whether to enable the scheduled action.</p>",
@@ -638,7 +639,8 @@
         "Snapshot$adminPasswordSecretKmsKeyId": "<p>The ID of the Key Management Service (KMS) key used to encrypt and store the namespace's admin credentials secret.</p>",
         "Snapshot$kmsKeyId": "<p>The unique identifier of the KMS key used to encrypt the snapshot.</p>",
         "SnapshotCopyConfiguration$destinationKmsKeyId": "<p>The ID of the KMS key to use to encrypt your snapshots in the destination Amazon Web Services Region.</p>",
-        "UpdateNamespaceRequest$adminPasswordSecretKmsKeyId": "<p>The ID of the Key Management Service (KMS) key used to encrypt and store the namespace's admin credentials secret. You can only use this parameter if <code>manageAdminPassword</code> is true.</p>"
+        "UpdateNamespaceRequest$adminPasswordSecretKmsKeyId": "<p>The ID of the Key Management Service (KMS) key used to encrypt and store the namespace's admin credentials secret. You can only use this parameter if <code>manageAdminPassword</code> is true.</p>",
+        "UpdateNamespaceRequest$s3TableKmsKeyId": "<p>The identifier of the Key Management Service key used to encrypt the published Amazon S3 Tables data. When omitted, the data is encrypted with SSE-S3 (Amazon S3 managed keys).</p> <p>Valid only when <code>logDestinationType</code> is <code>s3table</code>.</p>"
       }
     },
     "LakehouseIdcRegistration": {
@@ -856,6 +858,12 @@
     "ListWorkgroupsResponse": {
       "base": null,
       "refs": {}
+    },
+    "LogDestinationType": {
+      "base": "<p>Destination type for log publishing.</p>",
+      "refs": {
+        "UpdateNamespaceRequest$logDestinationType": "<p>The destination for the log data. Valid values are <code>s3table</code> and <code>cloudwatch</code>.</p> <p>Set this to <code>s3table</code> to manage Amazon S3 Tables system-table publishing for the namespace.</p>"
+      }
     },
     "LogExport": {
       "base": null,
@@ -1159,6 +1167,44 @@
       "base": null,
       "refs": {}
     },
+    "S3TableAction": {
+      "base": "<p>Action to perform for S3 Table log publishing.</p>",
+      "refs": {
+        "UpdateNamespaceRequest$s3TableAction": "<p>Whether to enable or disable Amazon S3 Tables publishing. Valid values are <code>Enable</code> and <code>Disable</code>, matched case-insensitively.</p> <p>When omitted, defaults to <code>Enable</code>. Valid only when <code>logDestinationType</code> is <code>s3table</code>.</p>"
+      }
+    },
+    "S3TableGranularity": {
+      "base": "<p>Granularity for S3 Table scoping in serverless.</p>",
+      "refs": {
+        "S3TablePublishStatus$s3TableGranularity": "<p>The scope currently in effect. Values are <code>namespace</code> or <code>account</code>.</p>",
+        "UpdateNamespaceRequest$s3TableGranularity": "<p>The scope of the Amazon S3 Tables destination. Valid values are <code>namespace</code> and <code>account</code>, matched case-insensitively. <code>namespace</code> scopes the published tables to this namespace; <code>account</code> scopes them to the Amazon Web Services account.</p> <p>Required when enabling. Omitting this parameter or passing a blank value fails with <code>ValidationException</code>. Valid only when <code>logDestinationType</code> is <code>s3table</code>.</p>"
+      }
+    },
+    "S3TableLastIngestionTimeMap": {
+      "base": "<p>Map of system table name to the last ingestion time (ISO-8601) for that table.</p>",
+      "refs": {
+        "S3TablePublishStatus$lastIngestionTimes": "<p>A map of system table name to the time that table last received data, as an ISO-8601 timestamp. A table that has not yet been ingested is absent from the map. Use it to judge data freshness.</p>"
+      }
+    },
+    "S3TableName": {
+      "base": "<p>A system-table view name to publish to S3 Tables (e.g. &quot;sys_query_history&quot;), or the keyword &quot;all&quot; to publish every current and future system table.</p>",
+      "refs": {
+        "S3TableNameList$member": null
+      }
+    },
+    "S3TableNameList": {
+      "base": "<p>List of system table names (or &quot;all&quot;) to publish to S3 Tables. Sized to hold the full SYS_* universe (28+ today, grows as new views are onboarded) plus headroom.</p>",
+      "refs": {
+        "S3TablePublishStatus$s3Tables": "<p>The system tables currently being published.</p>",
+        "UpdateNamespaceRequest$s3TableNames": "<p>The system tables to publish (on enable) or to stop publishing (on disable). Each value is either a system table view name that begins with <code>sys_</code> or the keyword <code>all</code>.</p> <p>Omitting this parameter, passing an empty list, or including <code>all</code> each select every current and future system table. Each name must be 1-128 characters, and the list can contain up to 256 names.</p> <p>Valid only when <code>logDestinationType</code> is <code>s3table</code>.</p>"
+      }
+    },
+    "S3TablePublishStatus": {
+      "base": "<p>Describes the state of Amazon S3 Tables system-table log publishing for a namespace.</p>",
+      "refs": {
+        "Namespace$s3TablePublishStatus": "<p>The current Amazon S3 Tables log-publishing status for the namespace. Not returned when S3 Tables publishing has never been configured for the namespace.</p>"
+      }
+    },
     "Schedule": {
       "base": "<p>The schedule of when Amazon Redshift Serverless should run the scheduled action.</p>",
       "refs": {
@@ -1398,6 +1444,9 @@
         "RestoreTableFromSnapshotRequest$targetDatabaseName": "<p>The name of the database to restore the table to.</p>",
         "RestoreTableFromSnapshotRequest$targetSchemaName": "<p>The name of the schema to restore the table to.</p>",
         "RestoreTableFromSnapshotRequest$workgroupName": "<p>The workgroup to restore the table to.</p>",
+        "S3TableLastIngestionTimeMap$key": null,
+        "S3TableLastIngestionTimeMap$value": null,
+        "S3TablePublishStatus$s3TableNamespace": "<p>The identifier of the namespace in the S3 table bucket that holds the published tables.</p>",
         "Schedule$cron": "<p>The cron expression to use to schedule a recurring scheduled action. Schedule invocations must be separated by at least one hour. Times are in UTC.</p> <p>Format of cron expressions is <code>(Minutes Hours Day-of-month Month Day-of-week Year)</code>. For example, <code>\"(0 10 ? * MON *)\"</code>. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#CronExpressions\">Cron Expressions</a> in the <i>Amazon CloudWatch Events User Guide</i>.</p>",
         "ScheduledActionResponse$scheduledActionDescription": "<p>The description of the scheduled action.</p>",
         "ScheduledActionResponse$scheduledActionUuid": "<p>The uuid of the scheduled action.</p>",

@@ -804,7 +804,8 @@
         "eksConfiguration":{"shape":"EksConfiguration"},
         "containerOrchestrationType":{"shape":"OrchestrationType"},
         "uuid":{"shape":"String"},
-        "context":{"shape":"String"}
+        "context":{"shape":"String"},
+        "ecsSettings":{"shape":"EcsSettings"}
       }
     },
     "ComputeEnvironmentDetailList":{
@@ -956,6 +957,14 @@
         "enableExecuteCommand":{"shape":"Boolean"}
       }
     },
+    "ContainerInsights":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "ENHANCED",
+        "DISABLED"
+      ]
+    },
     "ContainerOverrides":{
       "type":"structure",
       "members":{
@@ -1034,7 +1043,8 @@
         "serviceRole":{"shape":"String"},
         "tags":{"shape":"TagrisTagsMap"},
         "eksConfiguration":{"shape":"EksConfiguration"},
-        "context":{"shape":"String"}
+        "context":{"shape":"String"},
+        "ecsSettings":{"shape":"EcsSettings"}
       }
     },
     "CreateComputeEnvironmentResponse":{
@@ -1510,6 +1520,12 @@
       "type":"structure",
       "members":{
         "taskProperties":{"shape":"ListTaskPropertiesOverride"}
+      }
+    },
+    "EcsSettings":{
+      "type":"structure",
+      "members":{
+        "containerInsights":{"shape":"ContainerInsights"}
       }
     },
     "EcsTaskDetails":{
@@ -3452,7 +3468,8 @@
         "computeResources":{"shape":"ComputeResourceUpdate"},
         "serviceRole":{"shape":"String"},
         "updatePolicy":{"shape":"UpdatePolicy"},
-        "context":{"shape":"String"}
+        "context":{"shape":"String"},
+        "ecsSettings":{"shape":"EcsSettings"}
       }
     },
     "UpdateComputeEnvironmentResponse":{

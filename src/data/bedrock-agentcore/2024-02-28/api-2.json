@@ -2329,7 +2329,8 @@
           "idempotencyToken":true
         },
         "metadata":{"shape":"MetadataMap"},
-        "extractionMode":{"shape":"ExtractionMode"}
+        "extractionMode":{"shape":"ExtractionMode"},
+        "extractionConfig":{"shape":"ExtractionConfig"}
       }
     },
     "CreateEventOutput":{
@@ -2623,6 +2624,11 @@
           "shape":"MemoryRecordId",
           "location":"uri",
           "locationName":"memoryRecordId"
+        },
+        "namespace":{
+          "shape":"Namespace",
+          "location":"querystring",
+          "locationName":"namespace"
         }
       }
     },
@@ -3147,6 +3153,12 @@
       "max":65535,
       "min":1
     },
+    "ExtractionConfig":{
+      "type":"structure",
+      "members":{
+        "namespaceVariables":{"shape":"NamespaceVariablesMap"}
+      }
+    },
     "ExtractionJob":{
       "type":"structure",
       "required":["jobId"],
@@ -3560,6 +3572,11 @@
           "shape":"MemoryRecordId",
           "location":"uri",
           "locationName":"memoryRecordId"
+        },
+        "namespace":{
+          "shape":"Namespace",
+          "location":"querystring",
+          "locationName":"namespace"
         }
       }
     },
@@ -5693,6 +5710,20 @@
       "min":12,
       "pattern":"(arn:(aws|aws-cn|aws-us-gov):bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:memory/)?[a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9]{10}"
     },
+    "MemoryJsonData":{
+      "type":"structure",
+      "required":["content"],
+      "members":{
+        "content":{"shape":"MemoryJsonDataContent"}
+      },
+      "sensitive":true
+    },
+    "MemoryJsonDataContent":{
+      "type":"structure",
+      "members":{},
+      "document":true,
+      "sensitive":true
+    },
     "MemoryMetadataFilterExpression":{
       "type":"structure",
       "required":[
@@ -5750,7 +5781,8 @@
       "type":"structure",
       "required":["memoryRecordId"],
       "members":{
-        "memoryRecordId":{"shape":"MemoryRecordId"}
+        "memoryRecordId":{"shape":"MemoryRecordId"},
+        "namespace":{"shape":"Namespace"}
       }
     },
     "MemoryRecordId":{
@@ -5860,6 +5892,7 @@
         "timestamp":{"shape":"Timestamp"},
         "content":{"shape":"MemoryContent"},
         "namespaces":{"shape":"NamespacesList"},
+        "sourceNamespaces":{"shape":"NamespacesList"},
         "memoryStrategyId":{"shape":"MemoryStrategyId"},
         "metadata":{"shape":"MemoryRecordMetadataMap"}
       }
@@ -6108,6 +6141,25 @@
       "min":1,
       "pattern":"[a-zA-Z0-9/*][a-zA-Z0-9-_/*]*(?::[a-zA-Z0-9-_/*]+)*[a-zA-Z0-9-_/*]*"
     },
+    "NamespaceVariableName":{
+      "type":"string",
+      "max":32,
+      "min":1,
+      "pattern":"(?!memoryStrategyId$|actorId$|sessionId$)[a-z][a-z0-9]*"
+    },
+    "NamespaceVariableValue":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-z0-9][a-z0-9-_]*"
+    },
+    "NamespaceVariablesMap":{
+      "type":"map",
+      "key":{"shape":"NamespaceVariableName"},
+      "value":{"shape":"NamespaceVariableValue"},
+      "max":5,
+      "min":1
+    },
     "NamespacesList":{
       "type":"list",
       "member":{"shape":"Namespace"},
@@ -6269,7 +6321,8 @@
       "type":"structure",
       "members":{
         "conversational":{"shape":"Conversational"},
-        "blob":{"shape":"MemoryDocument"}
+        "blob":{"shape":"MemoryDocument"},
+        "json":{"shape":"MemoryJsonData"}
       },
       "union":true
     },

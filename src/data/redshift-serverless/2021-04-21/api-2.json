@@ -2124,6 +2124,13 @@
         "workgroups":{"shape":"WorkgroupList"}
       }
     },
+    "LogDestinationType":{
+      "type":"string",
+      "enum":[
+        "s3table",
+        "cloudwatch"
+      ]
+    },
     "LogExport":{
       "type":"string",
       "enum":[
@@ -2189,6 +2196,7 @@
         "namespaceArn":{"shape":"String"},
         "namespaceId":{"shape":"String"},
         "namespaceName":{"shape":"NamespaceName"},
+        "s3TablePublishStatus":{"shape":"S3TablePublishStatus"},
         "status":{"shape":"NamespaceStatus"}
       }
     },
@@ -2469,6 +2477,47 @@
       "type":"structure",
       "members":{
         "tableRestoreStatus":{"shape":"TableRestoreStatus"}
+      }
+    },
+    "S3TableAction":{
+      "type":"string",
+      "enum":[
+        "Enable",
+        "Disable"
+      ]
+    },
+    "S3TableGranularity":{
+      "type":"string",
+      "enum":[
+        "namespace",
+        "account"
+      ]
+    },
+    "S3TableLastIngestionTimeMap":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"String"}
+    },
+    "S3TableName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^(all|sys_[a-z0-9_]+)$"
+    },
+    "S3TableNameList":{
+      "type":"list",
+      "member":{"shape":"S3TableName"},
+      "max":256,
+      "min":0
+    },
+    "S3TablePublishStatus":{
+      "type":"structure",
+      "members":{
+        "enabledAll":{"shape":"Boolean"},
+        "lastIngestionTimes":{"shape":"S3TableLastIngestionTimeMap"},
+        "s3TableGranularity":{"shape":"S3TableGranularity"},
+        "s3TableNamespace":{"shape":"String"},
+        "s3Tables":{"shape":"S3TableNameList"}
       }
     },
     "Schedule":{
@@ -2813,9 +2862,14 @@
         "defaultIamRoleArn":{"shape":"String"},
         "iamRoles":{"shape":"IamRoleArnList"},
         "kmsKeyId":{"shape":"String"},
+        "logDestinationType":{"shape":"LogDestinationType"},
         "logExports":{"shape":"LogExportList"},
         "manageAdminPassword":{"shape":"Boolean"},
-        "namespaceName":{"shape":"NamespaceName"}
+        "namespaceName":{"shape":"NamespaceName"},
+        "s3TableAction":{"shape":"S3TableAction"},
+        "s3TableGranularity":{"shape":"S3TableGranularity"},
+        "s3TableKmsKeyId":{"shape":"KmsKeyId"},
+        "s3TableNames":{"shape":"S3TableNameList"}
       }
     },
     "UpdateNamespaceResponse":{

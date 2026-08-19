@@ -16725,6 +16725,14 @@
         "Width": {
           "shape": "__integer",
           "locationName": "width"
+        },
+        "CropRectangle": {
+          "shape": "VideoPositionRectangle",
+          "locationName": "cropRectangle"
+        },
+        "OutputPositionRectangle": {
+          "shape": "VideoPositionRectangle",
+          "locationName": "outputPositionRectangle"
         }
       },
       "required": [
@@ -25871,6 +25879,39 @@
         "CheckDigitString",
         "Sid"
       ]
+    },
+    "VideoPositionRectangle": {
+      "type": "structure",
+      "members": {
+        "Height": {
+          "shape": "__integerMin2Max8192",
+          "locationName": "height"
+        },
+        "Width": {
+          "shape": "__integerMin2Max8192",
+          "locationName": "width"
+        },
+        "X": {
+          "shape": "__integerMin0Max8190",
+          "locationName": "x"
+        },
+        "Y": {
+          "shape": "__integerMin0Max8190",
+          "locationName": "y"
+        }
+      },
+      "required": [
+        "X",
+        "Y",
+        "Height",
+        "Width"
+      ]
+    },
+    "__integerMin0Max8190": {
+      "type": "integer"
+    },
+    "__integerMin2Max8192": {
+      "type": "integer"
     }
   }
 }

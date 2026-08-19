@@ -717,11 +717,11 @@
     "BatchPutLimitEntries": {
       "base": null,
       "refs": {
-        "BatchPutGatewayRateLimitsRequest$rateLimits": "<p>Complete set of rate limits for this gateway. Replaces all existing limits atomically.</p>"
+        "BatchPutGatewayRateLimitsRequest$rateLimits": "<p>The complete set of rate limits for this gateway. This operation replaces all existing rate limits in a single request. If the operation fails, no rate limits are changed.</p>"
       }
     },
     "BatchPutLimitEntry": {
-      "base": "<p>A limit definition within a BatchPut request (rateLimitId used for upsert matching)</p>",
+      "base": "<p>A rate limit definition within a batch put request. If you provide a <code>rateLimitId</code>, the service uses it for upsert matching against existing rate limits.</p>",
       "refs": {
         "BatchPutLimitEntries$member": null
       }
@@ -1699,7 +1699,7 @@
       "refs": {}
     },
     "CreateGatewayRateLimitResponse": {
-      "base": "<p>Shared fields for GatewayRateLimit responses</p>",
+      "base": "<p>Shared fields for <code>GatewayRateLimit</code> responses.</p>",
       "refs": {}
     },
     "CreateGatewayRequest": {
@@ -2731,25 +2731,25 @@
       }
     },
     "DimensionKey": {
-      "base": "<p>A dimension key specifying the scope dimension for rate limiting. Allowed values: &quot;targetName&quot;, &quot;toolName&quot;, &quot;qualifiedModelId&quot;, or context-path expressions: &quot;$.context.iam.principal&quot;, &quot;$.context.iam.sourceIdentity&quot;, &quot;$.context.jwt.<claim>&quot; where <claim> is a JWT claim name (e.g., &quot;$.context.jwt.sub&quot;). Validated server-side to enforce allowed prefixes and patterns.</p>",
+      "base": "<p>A dimension key specifying the scope dimension for rate limiting.</p> <p>Allowed values: <code>targetName</code>, <code>toolName</code>, <code>qualifiedModelId</code>, or context-path expressions: <code>$.context.iam.principal</code>, <code>$.context.iam.sourceIdentity</code>, <code>$.context.jwt.&lt;claim&gt;</code> where <code>&lt;claim&gt;</code> is a JWT claim name (for example, <code>$.context.jwt.sub</code>). Validated server-side to enforce allowed prefixes and patterns.</p>",
       "refs": {
         "DimensionKeys$member": null,
         "LimitEntryDimensionsMap$key": null
       }
     },
     "DimensionKeys": {
-      "base": "<p>Ordered list of dimension key names defining the scope of a limit</p>",
+      "base": "<p>An ordered list of dimension key names defining the scope of a limit.</p>",
       "refs": {
-        "BatchPutLimitEntry$dimensionKeys": null,
-        "CreateGatewayRateLimitRequest$dimensionKeys": "<p>Ordered list of dimension names defining the scope of this limit. Unique per gateway — no two limits can share the same dimensionKeys.</p>",
-        "CreateGatewayRateLimitResponse$dimensionKeys": null,
-        "GatewayRateLimitDetail$dimensionKeys": null,
-        "GetGatewayRateLimitResponse$dimensionKeys": null,
-        "UpdateGatewayRateLimitResponse$dimensionKeys": null
+        "BatchPutLimitEntry$dimensionKeys": "<p>The ordered list of dimension key names that define the scope of this rate limit.</p>",
+        "CreateGatewayRateLimitRequest$dimensionKeys": "<p>The ordered list of dimension key names that define the scope of this rate limit. Must be unique per gateway—no two rate limits can share the same dimension keys.</p>",
+        "CreateGatewayRateLimitResponse$dimensionKeys": "<p>The ordered list of dimension key names that define the scope of this rate limit.</p>",
+        "GatewayRateLimitDetail$dimensionKeys": "<p>The ordered list of dimension key names that define the scope of this rate limit.</p>",
+        "GetGatewayRateLimitResponse$dimensionKeys": "<p>The ordered list of dimension key names that define the scope of this rate limit.</p>",
+        "UpdateGatewayRateLimitResponse$dimensionKeys": "<p>The ordered list of dimension key names that define the scope of this rate limit.</p>"
       }
     },
     "DimensionValue": {
-      "base": "<p>A dimension value in a rule entry (exact value or &quot;*&quot; wildcard)</p>",
+      "base": "<p>A dimension value in a rule entry (exact value or <code>*</code> wildcard).</p>",
       "refs": {
         "LimitEntryDimensionsMap$value": null
       }
@@ -3453,36 +3453,36 @@
       }
     },
     "GatewayRateLimitDescription": {
-      "base": "<p>Optional human-readable description for a gateway limit.</p>",
+      "base": "<p>An optional human-readable description for a gateway limit.</p>",
       "refs": {
-        "BatchPutLimitEntry$description": "<p>Optional human-readable description for this limit.</p>",
-        "CreateGatewayRateLimitRequest$description": "<p>Optional human-readable description for this limit.</p>",
-        "CreateGatewayRateLimitResponse$description": "<p>Optional human-readable description for this limit.</p>",
-        "GatewayRateLimitDetail$description": "<p>Optional human-readable description for this limit.</p>",
-        "GetGatewayRateLimitResponse$description": "<p>Optional human-readable description for this limit.</p>",
-        "UpdateGatewayRateLimitRequest$description": "<p>Optional human-readable description for this limit.</p>",
-        "UpdateGatewayRateLimitResponse$description": "<p>Optional human-readable description for this limit.</p>"
+        "BatchPutLimitEntry$description": "<p>An optional human-readable description for this rate limit. If not provided, the rate limit is created without a description.</p>",
+        "CreateGatewayRateLimitRequest$description": "<p>An optional human-readable description for this rate limit. If not provided, the rate limit is created without a description.</p>",
+        "CreateGatewayRateLimitResponse$description": "<p>The human-readable description of the rate limit.</p>",
+        "GatewayRateLimitDetail$description": "<p>The human-readable description of the rate limit.</p>",
+        "GetGatewayRateLimitResponse$description": "<p>The human-readable description of the rate limit.</p>",
+        "UpdateGatewayRateLimitRequest$description": "<p>The updated human-readable description for this rate limit.</p>",
+        "UpdateGatewayRateLimitResponse$description": "<p>The human-readable description of the rate limit.</p>"
       }
     },
     "GatewayRateLimitDetail": {
-      "base": "<p>Shared fields for GatewayRateLimit responses</p>",
+      "base": "<p>Contains detailed information about a gateway rate limit, including its configuration and current status.</p>",
       "refs": {
         "GatewayRateLimits$member": null
       }
     },
     "GatewayRateLimitId": {
-      "base": "<p>Limit identifier. Optional on Create (system-generates if not provided by customer). Always present in responses.</p>",
+      "base": "<p>The limit identifier. Optional on create (the system generates it if not provided by the customer). Always present in responses.</p>",
       "refs": {
-        "BatchPutLimitEntry$rateLimitId": "<p>Optional — if provided, used for upsert matching against existing limits.</p>",
-        "CreateGatewayRateLimitRequest$rateLimitId": "<p>Optional customer-defined limit ID. If not provided, system generates one.</p>",
-        "CreateGatewayRateLimitResponse$rateLimitId": null,
+        "BatchPutLimitEntry$rateLimitId": "<p>The unique identifier of the rate limit. If provided, the service uses it for upsert matching against existing rate limits.</p>",
+        "CreateGatewayRateLimitRequest$rateLimitId": "<p>An optional customer-defined identifier for the rate limit. If not provided, the system generates one.</p>",
+        "CreateGatewayRateLimitResponse$rateLimitId": "<p>The unique identifier of the created rate limit.</p>",
         "DeleteGatewayRateLimitRequest$rateLimitId": "<p>The unique identifier of the rate limit to delete.</p>",
-        "DeleteGatewayRateLimitResponse$rateLimitId": null,
-        "GatewayRateLimitDetail$rateLimitId": null,
+        "DeleteGatewayRateLimitResponse$rateLimitId": "<p>The unique identifier of the deleted rate limit.</p>",
+        "GatewayRateLimitDetail$rateLimitId": "<p>The unique identifier of the rate limit.</p>",
         "GetGatewayRateLimitRequest$rateLimitId": "<p>The unique identifier of the rate limit to retrieve.</p>",
-        "GetGatewayRateLimitResponse$rateLimitId": null,
+        "GetGatewayRateLimitResponse$rateLimitId": "<p>The unique identifier of the rate limit.</p>",
         "UpdateGatewayRateLimitRequest$rateLimitId": "<p>The unique identifier of the rate limit to update.</p>",
-        "UpdateGatewayRateLimitResponse$rateLimitId": null
+        "UpdateGatewayRateLimitResponse$rateLimitId": "<p>The unique identifier of the rate limit.</p>"
       }
     },
     "GatewayRateLimitMaxResults": {
@@ -3499,13 +3499,13 @@
       }
     },
     "GatewayRateLimitStatus": {
-      "base": "<p>Status of a gateway limit</p>",
+      "base": "<p>The status of a gateway limit.</p>",
       "refs": {
-        "CreateGatewayRateLimitResponse$status": null,
-        "DeleteGatewayRateLimitResponse$status": null,
-        "GatewayRateLimitDetail$status": null,
-        "GetGatewayRateLimitResponse$status": null,
-        "UpdateGatewayRateLimitResponse$status": null
+        "CreateGatewayRateLimitResponse$status": "<p>The current status of the rate limit.</p>",
+        "DeleteGatewayRateLimitResponse$status": "<p>The current status of the rate limit deletion.</p>",
+        "GatewayRateLimitDetail$status": "<p>The current status of the rate limit.</p>",
+        "GetGatewayRateLimitResponse$status": "<p>The current status of the rate limit.</p>",
+        "UpdateGatewayRateLimitResponse$status": "<p>The current status of the rate limit.</p>"
       }
     },
     "GatewayRateLimits": {
@@ -3720,7 +3720,7 @@
       "refs": {}
     },
     "GetGatewayRateLimitResponse": {
-      "base": "<p>Shared fields for GatewayRateLimit responses</p>",
+      "base": "<p>Shared fields for <code>GatewayRateLimit</code> responses.</p>",
       "refs": {}
     },
     "GetGatewayRequest": {
@@ -5017,27 +5017,27 @@
       }
     },
     "LimitEntries": {
-      "base": "<p>List of rule entries within a limit</p>",
+      "base": "<p>A list of rule entries within a limit.</p>",
       "refs": {
-        "BatchPutLimitEntry$entries": null,
-        "CreateGatewayRateLimitRequest$entries": "<p>Rule entries mapping dimension values to rate configurations.</p>",
-        "CreateGatewayRateLimitResponse$entries": null,
-        "GatewayRateLimitDetail$entries": null,
-        "GetGatewayRateLimitResponse$entries": null,
-        "UpdateGatewayRateLimitRequest$entries": "<p>Updated rule entries. key and dimensionKeys are immutable and cannot be changed.</p>",
-        "UpdateGatewayRateLimitResponse$entries": null
+        "BatchPutLimitEntry$entries": "<p>The list of rule entries that map dimension values to rate configurations.</p>",
+        "CreateGatewayRateLimitRequest$entries": "<p>The rule entries that map dimension values to rate configurations.</p>",
+        "CreateGatewayRateLimitResponse$entries": "<p>The list of rule entries that map dimension values to rate configurations.</p>",
+        "GatewayRateLimitDetail$entries": "<p>The list of rule entries that map dimension values to rate configurations.</p>",
+        "GetGatewayRateLimitResponse$entries": "<p>The list of rule entries that map dimension values to rate configurations.</p>",
+        "UpdateGatewayRateLimitRequest$entries": "<p>The updated rule entries. The dimension keys are immutable after creation and cannot be changed.</p>",
+        "UpdateGatewayRateLimitResponse$entries": "<p>The list of rule entries that map dimension values to rate configurations.</p>"
       }
     },
     "LimitEntry": {
-      "base": "<p>A single rule entry within a limit, mapping dimension values to rate configurations</p>",
+      "base": "<p>A single rule entry within a rate limit that maps dimension values to rate configurations. Each entry defines the rate limits for a specific combination of dimension values.</p>",
       "refs": {
         "LimitEntries$member": null
       }
     },
     "LimitEntryDimensionsMap": {
-      "base": "<p>Map of dimension name to dimension value for a rule entry</p>",
+      "base": "<p>A map of dimension name to dimension value for a rule entry.</p>",
       "refs": {
-        "LimitEntry$dimensions": "<p>Map of dimension name to dimension value, matching the parent limit's dimensionKeys. Keys must exactly match the dimensionKeys. Values may be &quot;<em>&quot; as a wildcard. &quot;</em>&quot; may only appear at trailing positions (based on dimensionKeys ordering).</p>"
+        "LimitEntry$dimensions": "<p>A map of dimension names to dimension values for this rule entry. Keys must match the parent rate limit's dimension keys. Values may use <code>*</code> as a wildcard, but only in trailing positions based on the dimension keys ordering.</p>"
       }
     },
     "LinkedinOauth2ProviderConfigInput": {
@@ -5972,6 +5972,50 @@
         "NamespacesList$member": null
       }
     },
+    "NamespaceAllowedValue": {
+      "base": null,
+      "refs": {
+        "NamespaceAllowedValuesList$member": null
+      }
+    },
+    "NamespaceAllowedValuesList": {
+      "base": null,
+      "refs": {
+        "NamespaceKeyValidation$allowedValues": "<p>The allowed values for this namespace variable key.</p>"
+      }
+    },
+    "NamespaceKeyEntry": {
+      "base": "<p>A namespace variable key definition with optional <code>NamespaceKeyValidation</code> rules.</p>",
+      "refs": {
+        "NamespaceKeysList$member": null
+      }
+    },
+    "NamespaceKeyValidation": {
+      "base": "<p>The validation rules for namespace variable values. When you specify multiple rules, the service enforces a logical <code>AND</code> across all provided key-value pairs.</p>",
+      "refs": {
+        "NamespaceKeyEntry$validation": "<p>The validation rules that constrain values for this namespace variable at runtime (<code>CreateEvent</code> API).</p>"
+      }
+    },
+    "NamespaceKeysList": {
+      "base": null,
+      "refs": {
+        "CreateMemoryInput$namespaceKeys": "<p>The namespace variable key definitions with optional validation rules. Use these <code>namespaceKeys</code> in <code>namespaceTemplates</code> to control namespace hierarchy.</p>",
+        "Memory$namespaceKeys": "<p>The namespace variable key definitions for this memory. Namespace keys define custom variables used in <code>namespaceTemplates</code> with optional validation rules.</p>",
+        "UpdateMemoryInput$namespaceKeys": "<p>The namespace variable key definitions with validation rules for this memory. Use this parameter to update existing <code>namespaceKey</code> validation rules or add new keys when namespace templates change.</p>"
+      }
+    },
+    "NamespaceRegexPattern": {
+      "base": null,
+      "refs": {
+        "NamespaceKeyValidation$regexPattern": "<p>A regex pattern that the namespace variable key-value must match.</p>"
+      }
+    },
+    "NamespaceVariableKey": {
+      "base": null,
+      "refs": {
+        "NamespaceKeyEntry$key": "<p>The namespace variable key name.</p>"
+      }
+    },
     "NamespacesList": {
       "base": null,
       "refs": {
@@ -6584,9 +6628,9 @@
       }
     },
     "Period": {
-      "base": "<p>Time period for rate limiting</p>",
+      "base": "<p>The time period for rate limiting.</p>",
       "refs": {
-        "RateConfig$period": null
+        "RateConfig$period": "<p>The time period for the rate limit. Valid values:</p> <ul> <li> <p> <code>second</code>—Measures the rate limit over a one-second window.</p> </li> <li> <p> <code>minute</code>—Measures the rate limit over a one-minute window.</p> </li> </ul>"
       }
     },
     "PermissionsConfiguration": {
@@ -6886,10 +6930,10 @@
       }
     },
     "PrivateKeyJwtConfig": {
-      "base": "<p>Configuration for private_key_jwt client authentication (RFC 7523). On Create: privateKeySource and signingAlgorithm are required (enforced server-side). On Update: all fields are optional — only provided fields are updated.</p>",
+      "base": "<p>The private key configuration for private_key_jwt client authentication.</p>",
       "refs": {
-        "CustomOauth2ProviderConfigInput$privateKeyJwtConfig": null,
-        "CustomOauth2ProviderConfigOutput$privateKeyJwtConfig": null
+        "CustomOauth2ProviderConfigInput$privateKeyJwtConfig": "<p>The private_key_jwt client authentication configuration for this credential provider. When specified, the credential provider uses JWT client assertions to authenticate with the token endpoint.</p>",
+        "CustomOauth2ProviderConfigOutput$privateKeyJwtConfig": "<p>The configuration for private_key_jwt client authentication used by this OAuth2 credential provider.</p>"
       }
     },
     "PrivateKeySource": {
@@ -6955,7 +6999,7 @@
       "refs": {}
     },
     "RateConfig": {
-      "base": "<p>Rate configuration for a metric (requests or tokens)</p>",
+      "base": "<p>Contains the rate configuration for a rate limit metric, specifying the allowed rate and time period.</p>",
       "refs": {
         "RateConfigs$member": null
       }
@@ -6967,11 +7011,11 @@
       }
     },
     "RateConfigs": {
-      "base": "<p>List of rate configs (limited to 1 for now, array for future multi-period support)</p>",
+      "base": "<p>A list of rate configurations for the limit. Currently supports one entry per limit.</p>",
       "refs": {
-        "LimitEntry$requests": "<p>Request rate limits (RPS or RPM). Limited to 1 entry for now.</p>",
-        "LimitEntry$tokens": "<p>Token rate limits (TPM). Limited to 1 entry for now. — P1</p>",
-        "LimitEntry$connections": "<p>Connection rate limits (per second only). Limited to 1 entry for now. — P2</p>"
+        "LimitEntry$requests": "<p>The request rate limit configuration. Specifies the maximum number of requests allowed per time period.</p>",
+        "LimitEntry$tokens": "<p>The token rate limit configuration. Specifies the maximum number of tokens allowed per time period.</p>",
+        "LimitEntry$connections": "<p>The connection rate limit configuration. Specifies the maximum number of concurrent connections allowed.</p>"
       }
     },
     "RatingScale": {
@@ -8946,7 +8990,7 @@
       "refs": {}
     },
     "UpdateGatewayRateLimitResponse": {
-      "base": "<p>Shared fields for GatewayRateLimit responses</p>",
+      "base": "<p>Shared fields for <code>GatewayRateLimit</code> responses.</p>",
       "refs": {}
     },
     "UpdateGatewayRequest": {

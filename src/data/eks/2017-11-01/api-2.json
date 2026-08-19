@@ -15,6 +15,21 @@
     "auth":["aws.auth#sigv4"]
   },
   "operations":{
+    "ActivateCertificateAuthority":{
+      "name":"ActivateCertificateAuthority",
+      "http":{
+        "method":"POST",
+        "requestUri":"/clusters/{name}/certificate-authorities/{certificateAuthorityId}/activate"
+      },
+      "input":{"shape":"ActivateCertificateAuthorityRequest"},
+      "output":{"shape":"ActivateCertificateAuthorityResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ServerException"},
+        {"shape":"ServiceUnavailableException"}
+      ]
+    },
     "AssociateAccessPolicy":{
       "name":"AssociateAccessPolicy",
       "http":{
@@ -135,6 +150,23 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"ServerException"}
+      ]
+    },
+    "CreateCertificateAuthority":{
+      "name":"CreateCertificateAuthority",
+      "http":{
+        "method":"POST",
+        "requestUri":"/clusters/{name}/certificate-authorities"
+      },
+      "input":{"shape":"CreateCertificateAuthorityRequest"},
+      "output":{"shape":"CreateCertificateAuthorityResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceLimitExceededException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceInUseException"},
+        {"shape":"ServerException"},
+        {"shape":"ServiceUnavailableException"}
       ]
     },
     "CreateCluster":{
@@ -267,6 +299,22 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ResourceInUseException"},
         {"shape":"ServerException"}
+      ]
+    },
+    "DeleteCertificateAuthority":{
+      "name":"DeleteCertificateAuthority",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/clusters/{name}/certificate-authorities/{certificateAuthorityId}"
+      },
+      "input":{"shape":"DeleteCertificateAuthorityRequest"},
+      "output":{"shape":"DeleteCertificateAuthorityResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceInUseException"},
+        {"shape":"ServerException"},
+        {"shape":"ServiceUnavailableException"}
       ]
     },
     "DeleteCluster":{
@@ -436,6 +484,20 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ServerException"}
+      ]
+    },
+    "DescribeCertificateAuthority":{
+      "name":"DescribeCertificateAuthority",
+      "http":{
+        "method":"GET",
+        "requestUri":"/clusters/{name}/certificate-authorities/{certificateAuthorityId}"
+      },
+      "input":{"shape":"DescribeCertificateAuthorityRequest"},
+      "output":{"shape":"DescribeCertificateAuthorityResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServerException"},
+        {"shape":"ServiceUnavailableException"}
       ]
     },
     "DescribeCluster":{
@@ -689,6 +751,21 @@
       "errors":[
         {"shape":"InvalidParameterException"},
         {"shape":"ServerException"}
+      ]
+    },
+    "ListCertificateAuthorities":{
+      "name":"ListCertificateAuthorities",
+      "http":{
+        "method":"GET",
+        "requestUri":"/clusters/{name}/certificate-authorities"
+      },
+      "input":{"shape":"ListCertificateAuthoritiesRequest"},
+      "output":{"shape":"ListCertificateAuthoritiesResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ServerException"},
+        {"shape":"ServiceUnavailableException"}
       ]
     },
     "ListClusters":{
@@ -1119,6 +1196,43 @@
         "cluster",
         "namespace"
       ]
+    },
+    "ActivateCertificateAuthorityRequest":{
+      "type":"structure",
+      "required":[
+        "clusterName",
+        "certificateAuthorityId"
+      ],
+      "members":{
+        "clusterName":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"name"
+        },
+        "certificateAuthorityId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"certificateAuthorityId"
+        },
+        "clientRequestToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "ActivateCertificateAuthorityResponse":{
+      "type":"structure",
+      "members":{
+        "update":{"shape":"Update"},
+        "certificateAuthority":{"shape":"CertificateAuthoritySummary"}
+      }
+    },
+    "ActiveCertificateAuthority":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"String"},
+        "activatedBy":{"shape":"CertificateAuthorityActivatedBy"}
+      }
     },
     "AdditionalInfoMap":{
       "type":"map",
@@ -1657,7 +1771,91 @@
     "Certificate":{
       "type":"structure",
       "members":{
+        "data":{"shape":"String"},
+        "active":{"shape":"ActiveCertificateAuthority"}
+      }
+    },
+    "CertificateAuthority":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"String"},
+        "createdAt":{"shape":"Timestamp"},
+        "createdBy":{"shape":"CertificateAuthorityCreatedBy"},
+        "activatedAt":{"shape":"Timestamp"},
+        "activatedBy":{"shape":"CertificateAuthorityActivatedBy"},
+        "signingStatus":{"shape":"CertificateAuthoritySigningStatus"},
+        "distributionStatus":{"shape":"CertificateAuthorityDistributionStatus"},
+        "validity":{"shape":"CertificateAuthorityValidity"},
+        "scheduledEvents":{"shape":"CertificateAuthorityScheduledEvents"},
+        "rollbackAvailable":{"shape":"BoxedBoolean"},
         "data":{"shape":"String"}
+      }
+    },
+    "CertificateAuthorityActivatedBy":{
+      "type":"string",
+      "enum":[
+        "EKS",
+        "CUSTOMER"
+      ]
+    },
+    "CertificateAuthorityCreatedBy":{
+      "type":"string",
+      "enum":[
+        "EKS",
+        "CUSTOMER"
+      ]
+    },
+    "CertificateAuthorityDistributionStatus":{
+      "type":"string",
+      "enum":[
+        "IN_PROGRESS",
+        "COMPLETE",
+        "FAILED",
+        "DELETING"
+      ]
+    },
+    "CertificateAuthorityMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "CertificateAuthorityScheduledEvents":{
+      "type":"structure",
+      "members":{
+        "firstAutoActivation":{"shape":"Timestamp"},
+        "finalAutoActivation":{"shape":"Timestamp"}
+      }
+    },
+    "CertificateAuthoritySigningStatus":{
+      "type":"string",
+      "enum":[
+        "NOT_USED",
+        "ACTIVATING",
+        "IN_USE"
+      ]
+    },
+    "CertificateAuthoritySummary":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"String"},
+        "createdAt":{"shape":"Timestamp"},
+        "createdBy":{"shape":"CertificateAuthorityCreatedBy"},
+        "activatedAt":{"shape":"Timestamp"},
+        "activatedBy":{"shape":"CertificateAuthorityActivatedBy"},
+        "signingStatus":{"shape":"CertificateAuthoritySigningStatus"},
+        "distributionStatus":{"shape":"CertificateAuthorityDistributionStatus"}
+      }
+    },
+    "CertificateAuthoritySummaryList":{
+      "type":"list",
+      "member":{"shape":"CertificateAuthoritySummary"}
+    },
+    "CertificateAuthorityValidity":{
+      "type":"structure",
+      "members":{
+        "notBefore":{"shape":"Timestamp"},
+        "notAfter":{"shape":"Timestamp"}
       }
     },
     "ClientException":{
@@ -2023,6 +2221,28 @@
         "capability":{"shape":"Capability"}
       }
     },
+    "CreateCertificateAuthorityRequest":{
+      "type":"structure",
+      "required":["clusterName"],
+      "members":{
+        "clusterName":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"name"
+        },
+        "clientRequestToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateCertificateAuthorityResponse":{
+      "type":"structure",
+      "members":{
+        "update":{"shape":"Update"},
+        "certificateAuthority":{"shape":"CertificateAuthoritySummary"}
+      }
+    },
     "CreateClusterRequest":{
       "type":"structure",
       "required":[
@@ -2272,6 +2492,38 @@
       "type":"structure",
       "members":{
         "capability":{"shape":"Capability"}
+      }
+    },
+    "DeleteCertificateAuthorityRequest":{
+      "type":"structure",
+      "required":[
+        "clusterName",
+        "certificateAuthorityId"
+      ],
+      "members":{
+        "clusterName":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"name"
+        },
+        "certificateAuthorityId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"certificateAuthorityId"
+        },
+        "clientRequestToken":{
+          "shape":"String",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientRequestToken"
+        }
+      }
+    },
+    "DeleteCertificateAuthorityResponse":{
+      "type":"structure",
+      "members":{
+        "update":{"shape":"Update"},
+        "certificateAuthority":{"shape":"CertificateAuthoritySummary"}
       }
     },
     "DeleteClusterRequest":{
@@ -2568,6 +2820,31 @@
       "type":"structure",
       "members":{
         "capability":{"shape":"Capability"}
+      }
+    },
+    "DescribeCertificateAuthorityRequest":{
+      "type":"structure",
+      "required":[
+        "clusterName",
+        "certificateAuthorityId"
+      ],
+      "members":{
+        "clusterName":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"name"
+        },
+        "certificateAuthorityId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"certificateAuthorityId"
+        }
+      }
+    },
+    "DescribeCertificateAuthorityResponse":{
+      "type":"structure",
+      "members":{
+        "certificateAuthority":{"shape":"CertificateAuthority"}
       }
     },
     "DescribeClusterRequest":{
@@ -3578,6 +3855,34 @@
       "type":"structure",
       "members":{
         "capabilities":{"shape":"CapabilitySummaryList"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListCertificateAuthoritiesRequest":{
+      "type":"structure",
+      "required":["clusterName"],
+      "members":{
+        "clusterName":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"name"
+        },
+        "maxResults":{
+          "shape":"CertificateAuthorityMaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListCertificateAuthoritiesResponse":{
+      "type":"structure",
+      "members":{
+        "certificateAuthorities":{"shape":"CertificateAuthoritySummaryList"},
         "nextToken":{"shape":"String"}
       }
     },
@@ -4972,7 +5277,11 @@
         "ControlPlaneEgressMode",
         "KubeApiServerConfig",
         "KubeSchedulerConfig",
-        "KubeControllerManagerConfig"
+        "KubeControllerManagerConfig",
+        "ActiveCertificateAuthority",
+        "TrustedCertificateAuthorities",
+        "CertificateAuthorityId",
+        "SigningStatus"
       ]
     },
     "UpdateParams":{
@@ -5058,7 +5367,8 @@
         "VendedLogsUpdate",
         "ControlPlaneEgressUpdate",
         "VersionRollback",
-        "ControlPlaneComponentConfigUpdate"
+        "ControlPlaneComponentConfigUpdate",
+        "CertificateAuthorityUpdate"
       ]
     },
     "UpgradePolicyRequest":{

@@ -1810,7 +1810,7 @@
           "shape":"ClientToken",
           "idempotencyToken":true
         },
-        "serviceNetworkIdentifier":{"shape":"ServiceNetworkIdentifier"},
+        "serviceNetworkIdentifier":{"shape":"ServiceNetworkIdentifierWithoutRegex"},
         "vpcIdentifier":{"shape":"VpcId"},
         "privateDnsEnabled":{"shape":"Boolean"},
         "securityGroupIds":{"shape":"CreateServiceNetworkVpcAssociationRequestSecurityGroupIdsList"},
@@ -4729,17 +4729,16 @@
     },
     "UpdateServiceNetworkVpcAssociationRequest":{
       "type":"structure",
-      "required":[
-        "serviceNetworkVpcAssociationIdentifier",
-        "securityGroupIds"
-      ],
+      "required":["serviceNetworkVpcAssociationIdentifier"],
       "members":{
         "serviceNetworkVpcAssociationIdentifier":{
           "shape":"ServiceNetworkVpcAssociationIdentifier",
           "location":"uri",
           "locationName":"serviceNetworkVpcAssociationIdentifier"
         },
-        "securityGroupIds":{"shape":"UpdateServiceNetworkVpcAssociationRequestSecurityGroupIdsList"}
+        "securityGroupIds":{"shape":"UpdateServiceNetworkVpcAssociationRequestSecurityGroupIdsList"},
+        "privateDnsEnabled":{"shape":"Boolean"},
+        "dnsOptions":{"shape":"DnsOptions"}
       }
     },
     "UpdateServiceNetworkVpcAssociationRequestSecurityGroupIdsList":{
@@ -4755,7 +4754,9 @@
         "arn":{"shape":"ServiceNetworkVpcAssociationArn"},
         "status":{"shape":"ServiceNetworkVpcAssociationStatus"},
         "createdBy":{"shape":"AccountId"},
-        "securityGroupIds":{"shape":"SecurityGroupList"}
+        "securityGroupIds":{"shape":"SecurityGroupList"},
+        "privateDnsEnabled":{"shape":"Boolean"},
+        "dnsOptions":{"shape":"DnsOptions"}
       }
     },
     "UpdateServiceRequest":{

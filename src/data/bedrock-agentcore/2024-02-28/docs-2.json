@@ -1519,6 +1519,12 @@
         "ExternalProxy$port": "<p>The port number of the proxy server. Valid range: 1-65535.</p>"
       }
     },
+    "ExtractionConfig": {
+      "base": "<p>The configuration for extraction behavior. Use this structure to specify namespace variable keys and their values for namespace substitution during long-term memory extraction.</p>",
+      "refs": {
+        "CreateEventInput$extractionConfig": "<p>The extraction configuration for long-term memory records. Use this parameter to specify namespace variable keys and their values for namespace substitution during extraction.</p>"
+      }
+    },
     "ExtractionJob": {
       "base": "<p>Represents the metadata of a memory extraction job such as the message identifiers that compose this job.</p>",
       "refs": {
@@ -2968,6 +2974,18 @@
         "StartMemoryExtractionJobInput$memoryId": "<p>The unique identifier of the memory for which to start extraction jobs.</p>"
       }
     },
+    "MemoryJsonData": {
+      "base": "<p>Contains non-conversational, JSON-formatted content for an event payload. JSON payloads are extracted into long-term memory.</p>",
+      "refs": {
+        "PayloadType$json": "<p>The JSON content of the payload. Use this type to store non-conversational, JSON-formatted data, such as behavioral events, activity logs, or system events.</p>"
+      }
+    },
+    "MemoryJsonDataContent": {
+      "base": null,
+      "refs": {
+        "MemoryJsonData$content": "<p>The JSON content of the payload. Accepts any JSON value, including objects, arrays, strings, numbers, booleans, and null. The maximum size is 100 KB.</p>"
+      }
+    },
     "MemoryMetadataFilterExpression": {
       "base": "<p>Filters to apply to metadata associated with a memory. Specify the metadata key and value in the <code>left</code> and <code>right</code> fields and use the <code>operator</code> field to define the relationship to match.</p>",
       "refs": {
@@ -3300,11 +3318,32 @@
     "Namespace": {
       "base": null,
       "refs": {
+        "DeleteMemoryRecordInput$namespace": "<p>The namespace of the memory record to delete. This value is used for IAM condition key authorization.</p>",
+        "GetMemoryRecordInput$namespace": "<p>The namespace of the memory record to retrieve. This value is used for IAM condition key authorization.</p>",
         "ListMemoryRecordsInput$namespace": "<p>The namespace prefix to filter memory records by. Returns all memory records in namespaces that start with the provided prefix. Either <code>namespace</code> or <code>namespacePath</code> is required.</p>",
         "ListMemoryRecordsInput$namespacePath": "<p>Use namespacePath for hierarchical retrievals. Return all memory records where namespace falls under the same parent hierarchy. Either <code>namespace</code> or <code>namespacePath</code> is required.</p>",
+        "MemoryRecordDeleteInput$namespace": "<p>The namespace of the memory record being deleted. This value is used for IAM condition key authorization.</p>",
         "NamespacesList$member": null,
         "RetrieveMemoryRecordsInput$namespace": "<p>The namespace prefix to filter memory records by. Searches for memory records in namespaces that start with the provided prefix. Either <code>namespace</code> or <code>namespacePath</code> is required.</p>",
         "RetrieveMemoryRecordsInput$namespacePath": "<p>Use namespacePath for hierarchical retrievals. Return all memory records where namespace falls under the same parent hierarchy. Either <code>namespace</code> or <code>namespacePath</code> is required.</p>"
+      }
+    },
+    "NamespaceVariableName": {
+      "base": "<p>The name of the namespace variable key. The name cannot be a built-in variable name (<code>actorId</code>, <code>sessionId</code>, or <code>memoryStrategyId</code>).</p>",
+      "refs": {
+        "NamespaceVariablesMap$key": null
+      }
+    },
+    "NamespaceVariableValue": {
+      "base": "<p>The value of a namespace variable key.</p>",
+      "refs": {
+        "NamespaceVariablesMap$value": null
+      }
+    },
+    "NamespaceVariablesMap": {
+      "base": "<p>A map of <code>namespaceKeys</code> to their values for namespace substitution.</p>",
+      "refs": {
+        "ExtractionConfig$namespaceVariables": "<p>A map of <code>namespaceKeys</code> to their values. The service substitutes these values into <code>namespaceTemplates</code> during long-term memory extraction to control namespace hierarchy.</p>"
       }
     },
     "NamespacesList": {
@@ -3313,7 +3352,8 @@
         "MemoryRecord$namespaces": "<p>The namespaces associated with this memory record. Namespaces help organize and categorize memory records.</p>",
         "MemoryRecordCreateInput$namespaces": "<p>A list of namespace identifiers that categorize or group the memory record.</p>",
         "MemoryRecordSummary$namespaces": "<p>The namespaces associated with this memory record.</p>",
-        "MemoryRecordUpdateInput$namespaces": "<p>The updated list of namespace identifiers for categorizing the memory record.</p>"
+        "MemoryRecordUpdateInput$namespaces": "<p>The updated list of namespace identifiers for categorizing the memory record.</p>",
+        "MemoryRecordUpdateInput$sourceNamespaces": "<p>The namespaces of the source memory record being updated. This value is used for IAM condition key authorization.</p>"
       }
     },
     "NextToken": {
@@ -3498,7 +3538,7 @@
     "PayloadTypeList": {
       "base": null,
       "refs": {
-        "CreateEventInput$payload": "<p>The content payload of the event. This can include conversational data or binary content.</p>",
+        "CreateEventInput$payload": "<p>The content payload of the event. This can include conversational data, JSON data, or binary content.</p>",
         "Event$payload": "<p>The content payload of the event.</p>"
       }
     },

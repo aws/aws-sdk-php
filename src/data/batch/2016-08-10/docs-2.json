@@ -320,6 +320,12 @@
         "JobDetail$container": "<p>An object that represents the details for the container that's associated with the job. If the details are for a multiple-container job, this object will be empty. </p>"
       }
     },
+    "ContainerInsights": {
+      "base": "<p>Specifies the CloudWatch Container Insights mode for the compute environment.</p>",
+      "refs": {
+        "EcsSettings$containerInsights": "<p>Specifies the CloudWatch Container Insights mode for the compute environment. Valid values are:</p> <dl> <dt>ENABLED</dt> <dd> <p>Turns on standard Container Insights, which collects CPU, memory, disk, and network utilization metrics for the compute environment.</p> </dd> <dt>ENHANCED</dt> <dd> <p>Turns on enhanced Container Insights, which collects the standard metrics along with additional per-task observability metrics.</p> </dd> <dt>DISABLED</dt> <dd> <p>Turns off Container Insights for the compute environment.</p> </dd> </dl> <p>If you don't specify a value, the default is <code>DISABLED</code>. For more information, see <a href=\"https://docs.aws.amazon.com/batch/latest/userguide/cloudwatch-container-insights.html\">Container Insights</a> in the <i>Batch User Guide</i>.</p>"
+      }
+    },
     "ContainerOverrides": {
       "base": "<p>The overrides that should be sent to a container.</p> <p>For information about using Batch overrides when you connect event sources to targets, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/pipes-reference/API_BatchContainerOverrides.html\">BatchContainerOverrides</a>.</p>",
       "refs": {
@@ -608,6 +614,14 @@
       "refs": {
         "NodePropertyOverride$ecsPropertiesOverride": "<p>An object that contains the properties that you want to replace for the existing Amazon ECS resources of a job.</p>",
         "SubmitJobRequest$ecsPropertiesOverride": "<p>An object, with properties that override defaults for the job definition, can only be specified for jobs that are run on Amazon ECS resources.</p>"
+      }
+    },
+    "EcsSettings": {
+      "base": "<p>The Amazon ECS settings for a compute environment, including the CloudWatch Container Insights mode. Use this structure with <code>CreateComputeEnvironment</code> and <code>UpdateComputeEnvironment</code>.</p>",
+      "refs": {
+        "ComputeEnvironmentDetail$ecsSettings": "<p>The Amazon ECS settings for the compute environment. These settings control CloudWatch Container Insights collection.</p>",
+        "CreateComputeEnvironmentRequest$ecsSettings": "<p>The Amazon ECS settings for the compute environment. These settings control CloudWatch Container Insights collection for the compute environment.</p>",
+        "UpdateComputeEnvironmentRequest$ecsSettings": "<p>The Amazon ECS settings for the compute environment. These settings control CloudWatch Container Insights collection for the compute environment.</p>"
       }
     },
     "EcsTaskDetails": {

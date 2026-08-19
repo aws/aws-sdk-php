@@ -227,7 +227,9 @@
         "SharingConfig$enabled": "<p>Specifies if the service network is enabled for sharing.</p>",
         "UpdateResourceConfigurationRequest$allowAssociationToShareableServiceNetwork": "<p>Indicates whether to add the resource configuration to service networks that are shared with other accounts.</p>",
         "UpdateResourceConfigurationResponse$allowAssociationToShareableServiceNetwork": "<p>Indicates whether to add the resource configuration to service networks that are shared with other accounts.</p>",
-        "UpdateRuleResponse$isDefault": "<p>Indicates whether this is the default rule.</p>"
+        "UpdateRuleResponse$isDefault": "<p>Indicates whether this is the default rule.</p>",
+        "UpdateServiceNetworkVpcAssociationRequest$privateDnsEnabled": "<p> Indicates if private DNS is enabled for the VPC association. </p>",
+        "UpdateServiceNetworkVpcAssociationResponse$privateDnsEnabled": "<p> Indicates if private DNS is enabled for the VPC association. </p>"
       }
     },
     "CertificateArn": {
@@ -516,7 +518,9 @@
         "CreateServiceNetworkVpcAssociationRequest$dnsOptions": "<p> DNS options for the service network VPC association. </p>",
         "CreateServiceNetworkVpcAssociationResponse$dnsOptions": null,
         "GetServiceNetworkVpcAssociationResponse$dnsOptions": "<p> DNS options for the service network VPC association. </p>",
-        "ServiceNetworkVpcAssociationSummary$dnsOptions": "<p> The DNS options for the service network VPC association. </p>"
+        "ServiceNetworkVpcAssociationSummary$dnsOptions": "<p> The DNS options for the service network VPC association. </p>",
+        "UpdateServiceNetworkVpcAssociationRequest$dnsOptions": "<p> DNS options for the service network VPC association. </p>",
+        "UpdateServiceNetworkVpcAssociationResponse$dnsOptions": "<p> DNS options for the service network VPC association. </p>"
       }
     },
     "DnsResource": {
@@ -1820,7 +1824,6 @@
       "base": null,
       "refs": {
         "CreateServiceNetworkServiceAssociationRequest$serviceNetworkIdentifier": "<p>The ID or ARN of the service network. You must use an ARN if the resources are in different accounts.</p>",
-        "CreateServiceNetworkVpcAssociationRequest$serviceNetworkIdentifier": "<p>The ID or ARN of the service network. You must use an ARN if the resources are in different accounts.</p>",
         "DeleteServiceNetworkRequest$serviceNetworkIdentifier": "<p>The ID or ARN of the service network.</p>",
         "GetServiceNetworkRequest$serviceNetworkIdentifier": "<p>The ID or ARN of the service network.</p>",
         "ListServiceNetworkResourceAssociationsRequest$serviceNetworkIdentifier": "<p>The ID of the service network.</p>",
@@ -1834,6 +1837,7 @@
       "base": null,
       "refs": {
         "CreateServiceNetworkResourceAssociationRequest$serviceNetworkIdentifier": "<p>The ID of the service network to associate with the resource configuration.</p>",
+        "CreateServiceNetworkVpcAssociationRequest$serviceNetworkIdentifier": "<p>The ID or ARN of the service network. You must use an ARN if the resources are in different accounts.</p>",
         "GetServiceNetworkResourceAssociationResponse$serviceNetworkId": "<p>The ID of the service network that is associated with the resource configuration.</p>",
         "GetServiceNetworkResourceAssociationResponse$serviceNetworkArn": "<p>The Amazon Resource Name (ARN) of the service network that is associated with the resource configuration.</p>",
         "ServiceNetworkResourceAssociationSummary$serviceNetworkId": "<p>The ID of the service network associated with the resource configuration.</p>"

@@ -3047,7 +3047,8 @@
         "MultiAZSecondary":{"shape":"SecondaryClusterInfo"},
         "LakehouseRegistrationStatus":{"shape":"String"},
         "CatalogArn":{"shape":"String"},
-        "ExtraComputeForAutomaticOptimization":{"shape":"String"}
+        "ExtraComputeForAutomaticOptimization":{"shape":"String"},
+        "LoggingPublishStatus":{"shape":"LoggingPublishStatus"}
       },
       "wrapper":true
     },
@@ -4811,7 +4812,9 @@
       "type":"structure",
       "required":["ClusterIdentifier"],
       "members":{
-        "ClusterIdentifier":{"shape":"String"}
+        "ClusterIdentifier":{"shape":"String"},
+        "LogDestinationType":{"shape":"LogDestinationType"},
+        "LogExports":{"shape":"LogTypeList"}
       }
     },
     "DisableSnapshotCopyMessage":{
@@ -4877,7 +4880,9 @@
         "BucketName":{"shape":"String"},
         "S3KeyPrefix":{"shape":"S3KeyPrefixValue"},
         "LogDestinationType":{"shape":"LogDestinationType"},
-        "LogExports":{"shape":"LogTypeList"}
+        "LogExports":{"shape":"LogTypeList"},
+        "S3TableKmsKeyId":{"shape":"String"},
+        "S3TableGranularity":{"shape":"String"}
       }
     },
     "EnableSnapshotCopyMessage":{
@@ -6009,12 +6014,19 @@
       "type":"string",
       "enum":[
         "s3",
-        "cloudwatch"
+        "cloudwatch",
+        "s3table"
       ]
     },
     "LogTypeList":{
       "type":"list",
       "member":{"shape":"String"}
+    },
+    "LoggingPublishStatus":{
+      "type":"structure",
+      "members":{
+        "S3Tables":{"shape":"S3TablePublishStatus"}
+      }
     },
     "LoggingStatus":{
       "type":"structure",
@@ -6026,7 +6038,8 @@
         "LastFailureTime":{"shape":"TStamp"},
         "LastFailureMessage":{"shape":"String"},
         "LogDestinationType":{"shape":"LogDestinationType"},
-        "LogExports":{"shape":"LogTypeList"}
+        "LogExports":{"shape":"LogTypeList"},
+        "S3Tables":{"shape":"S3TablePublishStatus"}
       }
     },
     "Long":{"type":"long"},
@@ -7411,6 +7424,21 @@
       "type":"string",
       "max":256,
       "pattern":"[\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*"
+    },
+    "S3TableLastIngestionTimeMap":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"String"}
+    },
+    "S3TablePublishStatus":{
+      "type":"structure",
+      "members":{
+        "S3Tables":{"shape":"LogTypeList"},
+        "S3TableNamespace":{"shape":"String"},
+        "S3TableGranularity":{"shape":"String"},
+        "EnabledAll":{"shape":"BooleanOptional"},
+        "LastIngestionTimes":{"shape":"S3TableLastIngestionTimeMap"}
+      }
     },
     "SNSInvalidTopicFault":{
       "type":"structure",

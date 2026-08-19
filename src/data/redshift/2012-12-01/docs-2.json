@@ -487,7 +487,8 @@
         "RestoreFromClusterSnapshotMessage$Encrypted": "<p>Enables support for restoring an unencrypted snapshot to a cluster encrypted with Key Management Service (KMS) and a customer managed key.</p>",
         "RestoreFromClusterSnapshotMessage$ManageMasterPassword": "<p>If <code>true</code>, Amazon Redshift uses Secrets Manager to manage the restored cluster's admin credentials. If <code>ManageMasterPassword</code> is false or not set, Amazon Redshift uses the admin credentials the cluster had at the time the snapshot was taken.</p>",
         "RestoreFromClusterSnapshotMessage$MultiAZ": "<p>If true, the snapshot will be restored to a cluster deployed in two Availability Zones.</p>",
-        "RestoreTableFromClusterSnapshotMessage$EnableCaseSensitiveIdentifier": "<p>Indicates whether name identifiers for database, schema, and table are case sensitive. If <code>true</code>, the names are case sensitive. If <code>false</code> (default), the names are not case sensitive.</p>"
+        "RestoreTableFromClusterSnapshotMessage$EnableCaseSensitiveIdentifier": "<p>Indicates whether name identifiers for database, schema, and table are case sensitive. If <code>true</code>, the names are case sensitive. If <code>false</code> (default), the names are not case sensitive.</p>",
+        "S3TablePublishStatus$EnabledAll": "<p> <code>true</code> if the cluster is enrolled in all current and future system tables rather than an explicit subset.</p>"
       }
     },
     "BucketNotFoundFault": {
@@ -2230,15 +2231,24 @@
     "LogDestinationType": {
       "base": null,
       "refs": {
-        "EnableLoggingMessage$LogDestinationType": "<p>The log destination type. An enum with possible values of <code>s3</code> and <code>cloudwatch</code>.</p>",
-        "LoggingStatus$LogDestinationType": "<p>The log destination type. An enum with possible values of <code>s3</code> and <code>cloudwatch</code>.</p>"
+        "DisableLoggingMessage$LogDestinationType": "<p>The log destination type. An enum with possible values of <code>s3</code>, <code>cloudwatch</code>, and <code>s3table</code>. When set to <code>s3table</code>, stops system table publishing. When omitted, the operation disables audit logging.</p>",
+        "EnableLoggingMessage$LogDestinationType": "<p>The log destination type. An enum with possible values of <code>s3</code>, <code>cloudwatch</code>, and <code>s3table</code>.</p>",
+        "LoggingStatus$LogDestinationType": "<p>The log destination type. An enum with possible values of <code>s3</code>, <code>cloudwatch</code>, and <code>s3table</code>.</p>"
       }
     },
     "LogTypeList": {
       "base": null,
       "refs": {
-        "EnableLoggingMessage$LogExports": "<p>The collection of exported log types. Possible values are <code>connectionlog</code>, <code>useractivitylog</code>, and <code>userlog</code>.</p>",
-        "LoggingStatus$LogExports": "<p>The collection of exported log types. Possible values are <code>connectionlog</code>, <code>useractivitylog</code>, and <code>userlog</code>.</p>"
+        "DisableLoggingMessage$LogExports": "<p>The collection of log types to stop exporting. When <code>LogDestinationType</code> is <code>s3table</code>, the values are the names of the system tables to stop publishing. Omitting this parameter or passing <code>all</code> stops publishing all system tables.</p>",
+        "EnableLoggingMessage$LogExports": "<p>The collection of exported log types. When <code>LogDestinationType</code> is <code>s3</code> or <code>cloudwatch</code>, possible values are <code>connectionlog</code>, <code>useractivitylog</code>, and <code>userlog</code>. When <code>LogDestinationType</code> is <code>s3table</code>, the values are the names of the system tables to publish. Omitting this parameter, passing an empty list, or including the value <code>all</code> publishes all current and future system tables.</p>",
+        "LoggingStatus$LogExports": "<p>The collection of exported log types. When <code>LogDestinationType</code> is <code>s3</code> or <code>cloudwatch</code>, possible values are <code>connectionlog</code>, <code>useractivitylog</code>, and <code>userlog</code>. When <code>LogDestinationType</code> is <code>s3table</code>, the values are the names of the system tables being published.</p>",
+        "S3TablePublishStatus$S3Tables": "<p>The system tables currently being published.</p>"
+      }
+    },
+    "LoggingPublishStatus": {
+      "base": "<p>Describes the system table publishing status for a cluster.</p>",
+      "refs": {
+        "Cluster$LoggingPublishStatus": "<p>The status of system table publishing for the cluster. This field is present only when system table publishing is configured.</p>"
       }
     },
     "LoggingStatus": {
@@ -3059,6 +3069,19 @@
         "LoggingStatus$S3KeyPrefix": "<p>The prefix applied to the log file names.</p>"
       }
     },
+    "S3TableLastIngestionTimeMap": {
+      "base": null,
+      "refs": {
+        "S3TablePublishStatus$LastIngestionTimes": "<p>A map whose keys are the names of the published system tables and whose values are the time each table last received data. Use this to judge data freshness.</p>"
+      }
+    },
+    "S3TablePublishStatus": {
+      "base": "<p>Describes the status of system table publishing to S3 Tables for a cluster.</p>",
+      "refs": {
+        "LoggingPublishStatus$S3Tables": "<p>The status of system table publishing to S3 Tables.</p>",
+        "LoggingStatus$S3Tables": "<p>The status of system table publishing to S3 Tables. This field is populated only when system table publishing is active.</p>"
+      }
+    },
     "SNSInvalidTopicFault": {
       "base": "<p>Amazon SNS has responded that there is a problem with the specified Amazon SNS topic.</p>",
       "refs": {}
@@ -3185,7 +3208,7 @@
         "ClusterExtendedCredentials$DbPassword": "<p>A temporary password that you provide when you connect to a database.</p>",
         "CreateClusterMessage$MasterUserPassword": "<p>The password associated with the admin user account for the cluster that is being created.</p> <p>You can't use <code>MasterUserPassword</code> if <code>ManageMasterPassword</code> is <code>true</code>.</p> <p>Constraints:</p> <ul> <li> <p>Must be between 8 and 64 characters in length.</p> </li> <li> <p>Must contain at least one uppercase letter.</p> </li> <li> <p>Must contain at least one lowercase letter.</p> </li> <li> <p>Must contain one number.</p> </li> <li> <p>Can be any printable ASCII character (ASCII code 33-126) except <code>'</code> (single quote), <code>\"</code> (double quote), <code>\\</code>, <code>/</code>, or <code>@</code>.</p> </li> </ul>",
         "GetIdentityCenterAuthTokenResponse$Token": "<p>The encrypted authentication token containing the caller's Amazon Web Services IAM Identity Center identity information. This token is encrypted using Key Management Service and can only be decrypted by the specified Amazon Redshift clusters. Use this token with Amazon Redshift drivers to authenticate using your Amazon Web Services IAM Identity Center identity.</p>",
-        "ModifyClusterMessage$MasterUserPassword": "<p>The new password for the cluster admin user. This change is asynchronously applied as soon as possible. Between the time of the request and the completion of the request, the <code>MasterUserPassword</code> element exists in the <code>PendingModifiedValues</code> element of the operation response. </p> <p>You can't use <code>MasterUserPassword</code> if <code>ManageMasterPassword</code> is <code>true</code>.</p> <p>If your admin user account is locked, this operation also unlocks your account and resets the failed-login counter. This option is available only when account lockout security is enabled for the cluster.</p> <note> <p>Operations never return the password, so this operation provides a way to regain access to the admin user account for a cluster if the password is lost.</p> </note> <p>Default: Uses existing setting.</p> <p>Constraints:</p> <ul> <li> <p>Must be between 8 and 64 characters in length.</p> </li> <li> <p>Must contain at least one uppercase letter.</p> </li> <li> <p>Must contain at least one lowercase letter.</p> </li> <li> <p>Must contain one number.</p> </li> <li> <p>Can be any printable ASCII character (ASCII code 33-126) except <code>'</code> (single quote), <code>\"</code> (double quote), <code>\\</code>, <code>/</code>, or <code>@</code>.</p> </li> </ul>",
+        "ModifyClusterMessage$MasterUserPassword": "<p>The new password for the cluster admin user. This change is asynchronously applied as soon as possible. Between the time of the request and the completion of the request, the <code>MasterUserPassword</code> element exists in the <code>PendingModifiedValues</code> element of the operation response. </p> <p>You can't use <code>MasterUserPassword</code> if <code>ManageMasterPassword</code> is <code>true</code>.</p> <note> <p>Operations never return the password, so this operation provides a way to regain access to the admin user account for a cluster if the password is lost.</p> </note> <p>Default: Uses existing setting.</p> <p>Constraints:</p> <ul> <li> <p>Must be between 8 and 64 characters in length.</p> </li> <li> <p>Must contain at least one uppercase letter.</p> </li> <li> <p>Must contain at least one lowercase letter.</p> </li> <li> <p>Must contain one number.</p> </li> <li> <p>Can be any printable ASCII character (ASCII code 33-126) except <code>'</code> (single quote), <code>\"</code> (double quote), <code>\\</code>, <code>/</code>, or <code>@</code>.</p> </li> </ul>",
         "PendingModifiedValues$MasterUserPassword": "<p>The pending or in-progress change of the admin user password for the cluster.</p>"
       }
     },
@@ -3690,6 +3713,8 @@
         "ElasticIpStatus$Status": "<p>The status of the elastic IP (EIP) address.</p>",
         "EnableLoggingMessage$ClusterIdentifier": "<p>The identifier of the cluster on which logging is to be started.</p> <p>Example: <code>examplecluster</code> </p>",
         "EnableLoggingMessage$BucketName": "<p>The name of an existing S3 bucket where the log files are to be stored.</p> <p>Constraints:</p> <ul> <li> <p>Must be in the same region as the cluster</p> </li> <li> <p>The cluster must have read bucket and put object permissions</p> </li> </ul>",
+        "EnableLoggingMessage$S3TableKmsKeyId": "<p>The identifier of a customer managed KMS key used to encrypt the S3 tables. This parameter is valid only when <code>LogDestinationType</code> is <code>s3table</code>.</p>",
+        "EnableLoggingMessage$S3TableGranularity": "<p>The scope of system table publishing. Valid values are <code>cluster</code> and <code>account</code>. A value of <code>cluster</code> scopes publishing to the individual cluster. A value of <code>account</code> scopes publishing to the Amazon Web Services account. This parameter is valid only when <code>LogDestinationType</code> is <code>s3table</code>.</p>",
         "EnableSnapshotCopyMessage$ClusterIdentifier": "<p>The unique identifier of the source cluster to copy snapshots from.</p> <p>Constraints: Must be the valid name of an existing cluster that does not already have cross-region snapshot copy enabled.</p>",
         "EnableSnapshotCopyMessage$DestinationRegion": "<p>The destination Amazon Web Services Region that you want to copy snapshots to.</p> <p>Constraints: Must be the name of a valid Amazon Web Services Region. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/rande.html#redshift_region\">Regions and Endpoints</a> in the Amazon Web Services General Reference. </p>",
         "EnableSnapshotCopyMessage$SnapshotCopyGrantName": "<p>The name of the snapshot copy grant to use when snapshots of an Amazon Web Services KMS-encrypted cluster are copied to the destination region.</p>",
@@ -3961,6 +3986,10 @@
         "RevokeSnapshotAccessMessage$SnapshotClusterIdentifier": "<p>The identifier of the cluster the snapshot was created from. This parameter is required if your IAM user has a policy containing a snapshot resource element that specifies anything other than * for the cluster name.</p>",
         "RevokeSnapshotAccessMessage$AccountWithRestoreAccess": "<p>The identifier of the Amazon Web Services account that can no longer restore the specified snapshot.</p>",
         "RotateEncryptionKeyMessage$ClusterIdentifier": "<p>The unique identifier of the cluster that you want to rotate the encryption keys for.</p> <p>Constraints: Must be the name of valid cluster that has encryption enabled.</p>",
+        "S3TableLastIngestionTimeMap$key": null,
+        "S3TableLastIngestionTimeMap$value": null,
+        "S3TablePublishStatus$S3TableNamespace": "<p>The namespace in the S3 table bucket that holds the published tables.</p>",
+        "S3TablePublishStatus$S3TableGranularity": "<p>The scope of system table publishing in effect. Possible values are <code>cluster</code> and <code>account</code>.</p>",
         "ScheduleDefinitionList$member": null,
         "ScheduledAction$ScheduledActionName": "<p>The name of the scheduled action. </p>",
         "ScheduledAction$Schedule": "<p>The schedule for a one-time (at format) or recurring (cron format) scheduled action. Schedule invocations must be separated by at least one hour.</p> <p>Format of at expressions is \"<code>at(yyyy-mm-ddThh:mm:ss)</code>\". For example, \"<code>at(2016-03-04T17:27:00)</code>\".</p> <p>Format of cron expressions is \"<code>cron(Minutes Hours Day-of-month Month Day-of-week Year)</code>\". For example, \"<code>cron(0 10 ? * MON *)</code>\". For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#CronExpressions\">Cron Expressions</a> in the <i>Amazon CloudWatch Events User Guide</i>.</p>",

@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\RedshiftServerless` - Amazon Redshift Enhanced System Table Retention that allows customers to store their system table data directly in S3 Tables in customer's account instead of Redshift Managed Storage
+* `Aws\VPCLattice` - Amazon VPC Lattice now supports modification of private DNS options on Service Network VPC Associations
+* `Aws\AccountAccess` - Adds throttling exceptions to operation outputs that were previously inconsistent with other operations.
+* `Aws\MediaLive` - AWS Elemental MediaLive now supports video cropping and output positioning. Use cropRectangle and outputPositionRectangle to position the encoded video within the output frame, with the surrounding area filled with black.
+* `Aws\BedrockAgentCore` - AgentCore Memory now supports Flexible Namespaces and Non-Conversational Payloads in CreateEvent API
+* `Aws\Redshift` - Amazon Redshift enhanced System Table retention that allows customers to store their system table data directly in S3 Tables in customer's account instead of Redshift Managed Storage
+* `Aws\Batch` - AWS Batch now supports managing CloudWatch Container Insights on compute environments via CreateComputeEnvironment and UpdateComputeEnvironment.
+* `Aws\BedrockAgentCoreControl` - AgentCore Memory now supports Flexible Namespaces
+* `Aws\EKS` - Adds support for EKS cluster certificate authorities (CA)
+
 ## 3.393.1 - 2026-08-18
 
 * `Aws\MediaLive` - AWS Elemental MediaLive now supports SCTE-35 marker passthrough without IDR frame insertion for CMAF Ingest, MediaPackage V2, and transport stream outputs.
