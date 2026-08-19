@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.393.2 - 2026-08-19
 
 * `Aws\RedshiftServerless` - Amazon Redshift Enhanced System Table Retention that allows customers to store their system table data directly in S3 Tables in customer's account instead of Redshift Managed Storage
 * `Aws\VPCLattice` - Amazon VPC Lattice now supports modification of private DNS options on Service Network VPC Associations
