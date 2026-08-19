@@ -27,7 +27,7 @@ jobs:
         with:
           role-to-assume: ${{secrets.PR_WORKFLOW_IAM_ROLE_ARN}}
           role-session-name: PullRequestBuildGitHubAction
-          role-duration-seconds: 7200
+          role-duration-seconds: 720
           aws-region: us-west-2
       - name: Download Build Script
         run: |
