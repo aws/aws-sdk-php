@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.393.3 - 2026-08-20
 
 * `Aws\CloudFront` - Added SigV4a as a supported signing protocol for Origin Access Control (OAC), enabling CloudFront to sign requests to Amazon S3 Multi-Region Access Point (S3-MRAP) origins.
 * `Aws\Lambda` - Adds support for full JSON resource-based policies, enabling customers to create, retrieve, update, and delete function resource policies as complete JSON documents.
