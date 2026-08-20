@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFront` - Added SigV4a as a supported signing protocol for Origin Access Control (OAC), enabling CloudFront to sign requests to Amazon S3 Multi-Region Access Point (S3-MRAP) origins.
+* `Aws\Lambda` - Adds support for full JSON resource-based policies, enabling customers to create, retrieve, update, and delete function resource policies as complete JSON documents.
+* `Aws\SageMaker` - Added IAM Identity Center (IdC) support to CreatePartnerApp and UpdatePartnerApp APIs. Added Customer Managed Key (CMK) support to CreateMlflowApp and DescribeMlflowApp.
+* `Aws\Batch` - AWS Batch now supports a new compute environment type that provides fully managed EC2 capacity with broader compute flexibility than Fargate, including GPU instances, bare metal, and specific instance type selection, without infrastructure management overhead.
+* `Aws\Amplify` - Increased the maximum allowed length from 255 to 4,096 characters to support longer access tokens.
+* `Aws\DirectConnect` - This release adds custom route prefix pool allocations for Direct Connect. You can set IPv4 and IPv6 route prefix counts on private and transit virtual interfaces, and view pool size and unallocated counts on connections and LAGs, plus direct connect gateway attachment prefix allocation totals.
+* `Aws\EC2` - EC2 marks UEFI instance metadata field as sensitive.
+* `Aws\ARCRegionSwitch` - Adds support for Rds switchover read replica for Oracle databases in Region switch plans
+* `Aws\SESv2` - Amazon SES now supports per-message tracking overrides. You can use the new ConfigurationOverrides parameter in SendEmail and SendBulkEmail to enable or disable open and click tracking for individual messages without changing your account-level or configuration set settings.
+* `Aws\PricingPlanManager` - Documentation update for the CreateSubscription API to correct the default value of the approval mode parameter. The default value for paid subscriptions is MANUAL, not IMMEDIATE as previously documented. The default value remains IMMEDIATE for FREE tier subscriptions.
+
 ## 3.393.2 - 2026-08-19
 
 * `Aws\RedshiftServerless` - Amazon Redshift Enhanced System Table Retention that allows customers to store their system table data directly in S3 Tables in customer's account instead of Redshift Managed Storage

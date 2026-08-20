@@ -655,6 +655,7 @@
         "Plan$executionRole": "<p>The execution role for a plan.</p>",
         "RdsCreateCrossRegionReplicaConfiguration$crossAccountRole": "<p>The cross-account role for the configuration.</p>",
         "RdsPromoteReadReplicaConfiguration$crossAccountRole": "<p>The cross-account role for the configuration.</p>",
+        "RdsSwitchoverReadReplicaConfiguration$crossAccountRole": "<p>The cross-account role for the configuration.</p>",
         "RegionSwitchPlanConfiguration$crossAccountRole": "<p>The cross account role for the configuration.</p>",
         "Route53HealthCheckConfiguration$crossAccountRole": "<p>The cross account role for the configuration.</p>",
         "Service$crossAccountRole": "<p>The cross account role for a service.</p>",
@@ -1012,7 +1013,8 @@
       "base": null,
       "refs": {
         "RdsCreateCrossRegionReplicaConfiguration$dbInstanceArnMap": "<p>A map of database instance ARNs for each Region in the plan.</p>",
-        "RdsPromoteReadReplicaConfiguration$dbInstanceArnMap": "<p>A map of database instance ARNs for each Region in the plan.</p>"
+        "RdsPromoteReadReplicaConfiguration$dbInstanceArnMap": "<p>A map of database instance ARNs for each Region in the plan.</p>",
+        "RdsSwitchoverReadReplicaConfiguration$dbInstanceArnMap": "<p>A map of database instance ARNs for each Region in the plan.</p>"
       }
     },
     "RdsPromoteReadReplicaConfiguration": {
@@ -1025,6 +1027,30 @@
       "base": null,
       "refs": {
         "RdsPromoteReadReplicaConfiguration$timeoutMinutes": "<p>The timeout value specified for the configuration.</p>"
+      }
+    },
+    "RdsSwitchoverReadReplicaConfiguration": {
+      "base": "<p>Configuration for switching over an Amazon RDS read replica to become the new primary database instance during a Region switch.</p>",
+      "refs": {
+        "ExecutionBlockConfiguration$rdsSwitchoverReadReplicaConfig": "<p>An Amazon RDS switchover read replica execution block.</p>"
+      }
+    },
+    "RdsSwitchoverReadReplicaConfigurationTimeoutMinutesInteger": {
+      "base": null,
+      "refs": {
+        "RdsSwitchoverReadReplicaConfiguration$timeoutMinutes": "<p>The timeout value specified for the configuration.</p>"
+      }
+    },
+    "RdsUngraceful": {
+      "base": "<p>The ungraceful execution settings for an Amazon RDS switchover read replica execution block.</p>",
+      "refs": {
+        "RdsSwitchoverReadReplicaConfiguration$ungraceful": "<p>The ungraceful execution settings for the configuration.</p>"
+      }
+    },
+    "RdsUngracefulBehavior": {
+      "base": "<p>The ungraceful behavior for an Amazon RDS switchover read replica, that is, promote the read replica to a standalone primary.</p>",
+      "refs": {
+        "RdsUngraceful$ungraceful": "<p>The ungraceful behavior to perform if switching to ungraceful execution.</p>"
       }
     },
     "RecoveryApproach": {
@@ -1406,6 +1432,7 @@
         "Plan$version": "<p>The version for the plan.</p>",
         "RdsCreateCrossRegionReplicaConfiguration$externalId": "<p>The external ID (secret key) for the configuration.</p>",
         "RdsPromoteReadReplicaConfiguration$externalId": "<p>The external ID (secret key) for the configuration.</p>",
+        "RdsSwitchoverReadReplicaConfiguration$externalId": "<p>The external ID (secret key) for the configuration.</p>",
         "RegionAndRoutingControls$key": null,
         "RegionSwitchPlanConfiguration$externalId": "<p>The external ID (secret key) for the configuration.</p>",
         "ResourceNotFoundException$message": null,

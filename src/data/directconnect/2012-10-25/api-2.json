@@ -1249,7 +1249,11 @@
         "encryptionMode":{"shape":"EncryptionMode"},
         "macSecKeys":{"shape":"MacSecKeyList"},
         "rateLimiterStatus":{"shape":"RateLimiterStatus"},
-        "partnerInterconnectMacSecCapable":{"shape":"PartnerInterconnectMacSecCapable"}
+        "partnerInterconnectMacSecCapable":{"shape":"PartnerInterconnectMacSecCapable"},
+        "prefixPoolSizeIpv4":{"shape":"PrefixPoolSize"},
+        "prefixPoolSizeIpv6":{"shape":"PrefixPoolSize"},
+        "prefixPoolUnallocatedCountIpv4":{"shape":"PrefixPoolUnallocatedCount"},
+        "prefixPoolUnallocatedCountIpv6":{"shape":"PrefixPoolUnallocatedCount"}
       }
     },
     "ConnectionId":{"type":"string"},
@@ -1761,6 +1765,7 @@
         "ownerAccount":{"shape":"OwnerAccount"},
         "directConnectGatewayState":{"shape":"DirectConnectGatewayState"},
         "stateChangeError":{"shape":"StateChangeError"},
+        "totalPrefixPoolAllocations":{"shape":"PrefixPoolAllocatedCount"},
         "tags":{"shape":"TagList"}
       }
     },
@@ -2004,6 +2009,10 @@
         "macSecCapable":{"shape":"MacSecCapable"},
         "encryptionMode":{"shape":"EncryptionMode"},
         "macSecKeys":{"shape":"MacSecKeyList"},
+        "prefixPoolSizeIpv4":{"shape":"PrefixPoolSize"},
+        "prefixPoolSizeIpv6":{"shape":"PrefixPoolSize"},
+        "prefixPoolUnallocatedCountIpv4":{"shape":"PrefixPoolUnallocatedCount"},
+        "prefixPoolUnallocatedCountIpv6":{"shape":"PrefixPoolUnallocatedCount"},
         "rateLimiterStatus":{"shape":"RateLimiterStatus"}
       }
     },
@@ -2159,6 +2168,8 @@
         "directConnectGatewayId":{"shape":"DirectConnectGatewayId"},
         "tags":{"shape":"TagList"},
         "enableSiteLink":{"shape":"EnableSiteLink"},
+        "prefixPoolAllocatedCountIpv4":{"shape":"PrefixPoolAllocatedCount"},
+        "prefixPoolAllocatedCountIpv6":{"shape":"PrefixPoolAllocatedCount"},
         "rateLimit":{"shape":"RateLimit"}
       }
     },
@@ -2237,6 +2248,8 @@
         "directConnectGatewayId":{"shape":"DirectConnectGatewayId"},
         "tags":{"shape":"TagList"},
         "enableSiteLink":{"shape":"EnableSiteLink"},
+        "prefixPoolAllocatedCountIpv4":{"shape":"PrefixPoolAllocatedCount"},
+        "prefixPoolAllocatedCountIpv6":{"shape":"PrefixPoolAllocatedCount"},
         "rateLimit":{"shape":"RateLimit"}
       }
     },
@@ -2271,6 +2284,18 @@
     "Platform":{"type":"string"},
     "PortEncryptionStatus":{"type":"string"},
     "PortSpeed":{"type":"string"},
+    "PrefixPoolAllocatedCount":{
+      "type":"integer",
+      "min":0
+    },
+    "PrefixPoolSize":{
+      "type":"integer",
+      "min":0
+    },
+    "PrefixPoolUnallocatedCount":{
+      "type":"integer",
+      "min":0
+    },
     "ProviderList":{
       "type":"list",
       "member":{"shape":"ProviderName"}
@@ -2535,6 +2560,8 @@
         "mtu":{"shape":"MTU"},
         "enableSiteLink":{"shape":"EnableSiteLink"},
         "virtualInterfaceName":{"shape":"VirtualInterfaceName"},
+        "prefixPoolAllocatedCountIpv4":{"shape":"PrefixPoolAllocatedCount"},
+        "prefixPoolAllocatedCountIpv6":{"shape":"PrefixPoolAllocatedCount"},
         "rateLimit":{"shape":"RateLimit"}
       }
     },
@@ -2593,6 +2620,8 @@
         "awsLogicalDeviceId":{"shape":"AwsLogicalDeviceId"},
         "tags":{"shape":"TagList"},
         "siteLinkEnabled":{"shape":"SiteLinkEnabled"},
+        "prefixPoolAllocatedCountIpv4":{"shape":"PrefixPoolAllocatedCount"},
+        "prefixPoolAllocatedCountIpv6":{"shape":"PrefixPoolAllocatedCount"},
         "rateLimit":{"shape":"RateLimit"}
       }
     },

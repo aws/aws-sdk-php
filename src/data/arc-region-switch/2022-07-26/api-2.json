@@ -925,7 +925,8 @@
         "lambdaEventSourceMappingConfig":{"shape":"LambdaEventSourceMappingConfiguration"},
         "auroraServerlessScalingConfig":{"shape":"AuroraServerlessScalingConfiguration"},
         "auroraProvisionedScalingConfig":{"shape":"AuroraProvisionedScalingConfiguration"},
-        "neptuneGlobalDatabaseConfig":{"shape":"NeptuneGlobalDatabaseConfiguration"}
+        "neptuneGlobalDatabaseConfig":{"shape":"NeptuneGlobalDatabaseConfiguration"},
+        "rdsSwitchoverReadReplicaConfig":{"shape":"RdsSwitchoverReadReplicaConfiguration"}
       },
       "union":true
     },
@@ -948,7 +949,8 @@
         "LambdaEventSourceMapping",
         "AuroraServerlessScaling",
         "AuroraProvisionedScaling",
-        "NeptuneGlobalDatabase"
+        "NeptuneGlobalDatabase",
+        "RdsSwitchoverReadReplica"
       ]
     },
     "ExecutionComment":{
@@ -1641,6 +1643,32 @@
       "type":"integer",
       "box":true,
       "min":1
+    },
+    "RdsSwitchoverReadReplicaConfiguration":{
+      "type":"structure",
+      "required":["dbInstanceArnMap"],
+      "members":{
+        "timeoutMinutes":{"shape":"RdsSwitchoverReadReplicaConfigurationTimeoutMinutesInteger"},
+        "crossAccountRole":{"shape":"IamRoleArn"},
+        "externalId":{"shape":"String"},
+        "dbInstanceArnMap":{"shape":"RdsDbInstanceArnMap"},
+        "ungraceful":{"shape":"RdsUngraceful"}
+      }
+    },
+    "RdsSwitchoverReadReplicaConfigurationTimeoutMinutesInteger":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
+    "RdsUngraceful":{
+      "type":"structure",
+      "members":{
+        "ungraceful":{"shape":"RdsUngracefulBehavior"}
+      }
+    },
+    "RdsUngracefulBehavior":{
+      "type":"string",
+      "enum":["promoteReadReplica"]
     },
     "RecoveryApproach":{
       "type":"string",

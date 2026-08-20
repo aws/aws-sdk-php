@@ -367,6 +367,24 @@
       ],
       "idempotent":true
     },
+    "DeleteResourcePolicy":{
+      "name":"DeleteResourcePolicy",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/2026-07-09/resource-policy/{ResourceArn}",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteResourcePolicyRequest"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceConflictException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"PreconditionFailedException"}
+      ],
+      "idempotent":true
+    },
     "GetAccountSettings":{
       "name":"GetAccountSettings",
       "http":{
@@ -728,6 +746,23 @@
       "errors":[
         {"shape":"InvalidParameterValueException"},
         {"shape":"ProvisionedConcurrencyConfigNotFoundException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
+    "GetResourcePolicy":{
+      "name":"GetResourcePolicy",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2026-07-09/resource-policy/{ResourceArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetResourcePolicyRequest"},
+      "output":{"shape":"GetResourcePolicyResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
         {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"ResourceNotFoundException"}
@@ -1284,6 +1319,27 @@
         {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
+    "PutResourcePolicy":{
+      "name":"PutResourcePolicy",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/2026-07-09/resource-policy/{ResourceArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"PutResourcePolicyRequest"},
+      "output":{"shape":"PutResourcePolicyResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceConflictException"},
+        {"shape":"PublicPolicyException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"PolicyLengthExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"PreconditionFailedException"}
       ],
       "idempotent":true
     },
@@ -2699,6 +2755,22 @@
         }
       }
     },
+    "DeleteResourcePolicyRequest":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{
+          "shape":"PolicyResourceArn",
+          "location":"uri",
+          "locationName":"ResourceArn"
+        },
+        "RevisionId":{
+          "shape":"RevisionId",
+          "location":"querystring",
+          "locationName":"RevisionId"
+        }
+      }
+    },
     "Description":{
       "type":"string",
       "max":256,
@@ -2937,7 +3009,7 @@
     "EphemeralStorageSize":{
       "type":"integer",
       "box":true,
-      "max":10240,
+      "max":32768,
       "min":512
     },
     "ErrorData":{
@@ -4021,6 +4093,24 @@
         "Status":{"shape":"ProvisionedConcurrencyStatusEnum"},
         "StatusReason":{"shape":"String"},
         "LastModified":{"shape":"Timestamp"}
+      }
+    },
+    "GetResourcePolicyRequest":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{
+          "shape":"PolicyResourceArn",
+          "location":"uri",
+          "locationName":"ResourceArn"
+        }
+      }
+    },
+    "GetResourcePolicyResponse":{
+      "type":"structure",
+      "members":{
+        "Policy":{"shape":"ResourcePolicy"},
+        "RevisionId":{"shape":"RevisionId"}
       }
     },
     "GetRuntimeManagementConfigRequest":{
@@ -5533,6 +5623,12 @@
       },
       "exception":true
     },
+    "PolicyResourceArn":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"arn:(aws[a-zA-Z-]*)?:lambda:(eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:function:[a-zA-Z0-9-_]+(:(\\$LATEST(\\.PUBLISHED)?|[a-zA-Z0-9-_])+)?"
+    },
     "PositiveInteger":{
       "type":"integer",
       "box":true,
@@ -5838,6 +5934,29 @@
         "LastModified":{"shape":"Timestamp"}
       }
     },
+    "PutResourcePolicyRequest":{
+      "type":"structure",
+      "required":[
+        "ResourceArn",
+        "Policy"
+      ],
+      "members":{
+        "ResourceArn":{
+          "shape":"PolicyResourceArn",
+          "location":"uri",
+          "locationName":"ResourceArn"
+        },
+        "Policy":{"shape":"ResourcePolicy"},
+        "RevisionId":{"shape":"RevisionId"}
+      }
+    },
+    "PutResourcePolicyResponse":{
+      "type":"structure",
+      "members":{
+        "Policy":{"shape":"ResourcePolicy"},
+        "RevisionId":{"shape":"RevisionId"}
+      }
+    },
     "PutRuntimeManagementConfigRequest":{
       "type":"structure",
       "required":[
@@ -6048,6 +6167,12 @@
       "exception":true,
       "fault":true
     },
+    "ResourcePolicy":{
+      "type":"string",
+      "max":20480,
+      "min":1,
+      "pattern":"[\\s\\S]+"
+    },
     "ResponseStreamingInvocationType":{
       "type":"string",
       "enum":[
@@ -6071,6 +6196,12 @@
     "ReverseOrder":{
       "type":"boolean",
       "box":true
+    },
+    "RevisionId":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
     },
     "RoleArn":{
       "type":"string",

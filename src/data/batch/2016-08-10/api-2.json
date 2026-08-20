@@ -730,7 +730,8 @@
         "EC2",
         "SPOT",
         "FARGATE",
-        "FARGATE_SPOT"
+        "FARGATE_SPOT",
+        "ECS_MANAGED_INSTANCES"
       ]
     },
     "CRUpdateAllocationStrategy":{
@@ -768,6 +769,13 @@
     "CapacityLimits":{
       "type":"list",
       "member":{"shape":"CapacityLimit"}
+    },
+    "CapacityReservationRequest":{
+      "type":"structure",
+      "members":{
+        "reservationGroupArn":{"shape":"String"},
+        "reservationPreference":{"shape":"String"}
+      }
     },
     "ClientException":{
       "type":"structure",
@@ -855,7 +863,9 @@
         "spotIamFleetRole":{"shape":"String"},
         "launchTemplate":{"shape":"LaunchTemplateSpecification"},
         "ec2Configuration":{"shape":"Ec2ConfigurationList"},
-        "scalingPolicy":{"shape":"ComputeScalingPolicy"}
+        "scalingPolicy":{"shape":"ComputeScalingPolicy"},
+        "managedInstancesProvider":{"shape":"ManagedInstancesProvider"},
+        "capacityTags":{"shape":"TagrisTagsMap"}
       }
     },
     "ComputeResourceUpdate":{
@@ -878,7 +888,9 @@
         "updateToLatestImageVersion":{"shape":"Boolean"},
         "type":{"shape":"CRType"},
         "imageId":{"shape":"String"},
-        "scalingPolicy":{"shape":"ComputeScalingPolicy"}
+        "scalingPolicy":{"shape":"ComputeScalingPolicy"},
+        "managedInstancesProvider":{"shape":"UpdateManagedInstancesProviderConfiguration"},
+        "capacityTags":{"shape":"TagrisTagsMap"}
       }
     },
     "ComputeScalingPolicy":{
@@ -1543,7 +1555,8 @@
         "networkConfiguration":{"shape":"NetworkConfiguration"},
         "runtimePlatform":{"shape":"RuntimePlatform"},
         "volumes":{"shape":"Volumes"},
-        "enableExecuteCommand":{"shape":"Boolean"}
+        "enableExecuteCommand":{"shape":"Boolean"},
+        "networkMode":{"shape":"String"}
       }
     },
     "EcsTaskProperties":{
@@ -1560,7 +1573,8 @@
         "networkConfiguration":{"shape":"NetworkConfiguration"},
         "runtimePlatform":{"shape":"RuntimePlatform"},
         "volumes":{"shape":"Volumes"},
-        "enableExecuteCommand":{"shape":"Boolean"}
+        "enableExecuteCommand":{"shape":"Boolean"},
+        "networkMode":{"shape":"String"}
       }
     },
     "EksAnnotationsMap":{
@@ -2002,6 +2016,50 @@
       "max":256,
       "min":1
     },
+    "InfrastructureOptimization":{
+      "type":"structure",
+      "members":{
+        "scaleInAfter":{"shape":"Integer"}
+      }
+    },
+    "InstanceLaunchTemplate":{
+      "type":"structure",
+      "required":[
+        "ec2InstanceProfileArn",
+        "networkConfiguration"
+      ],
+      "members":{
+        "ec2InstanceProfileArn":{"shape":"String"},
+        "networkConfiguration":{"shape":"ManagedInstancesNetworkConfiguration"},
+        "instanceRequirements":{"shape":"InstanceRequirementsRequest"},
+        "capacityOptionType":{"shape":"String"},
+        "storageConfiguration":{"shape":"ManagedInstancesStorageConfiguration"},
+        "monitoring":{"shape":"String"},
+        "fipsEnabled":{"shape":"Boolean"},
+        "capacityReservations":{"shape":"CapacityReservationRequest"},
+        "instanceMetadataTagsPropagation":{"shape":"Boolean"},
+        "localStorageConfiguration":{"shape":"ManagedInstancesLocalStorageConfiguration"}
+      }
+    },
+    "InstanceLaunchTemplateUpdate":{
+      "type":"structure",
+      "members":{
+        "ec2InstanceProfileArn":{"shape":"String"},
+        "networkConfiguration":{"shape":"ManagedInstancesNetworkConfiguration"},
+        "instanceRequirements":{"shape":"InstanceRequirementsRequest"},
+        "storageConfiguration":{"shape":"ManagedInstancesStorageConfiguration"},
+        "monitoring":{"shape":"String"},
+        "capacityReservations":{"shape":"CapacityReservationRequest"},
+        "instanceMetadataTagsPropagation":{"shape":"Boolean"},
+        "localStorageConfiguration":{"shape":"ManagedInstancesLocalStorageConfiguration"}
+      }
+    },
+    "InstanceRequirementsRequest":{
+      "type":"structure",
+      "members":{
+        "allowedInstanceTypes":{"shape":"StringList"}
+      }
+    },
     "Integer":{"type":"integer"},
     "JQState":{
       "type":"string",
@@ -2169,7 +2227,8 @@
         "EKS",
         "ECS",
         "ECS_FARGATE",
-        "SAGEMAKER_TRAINING"
+        "SAGEMAKER_TRAINING",
+        "ECS_MANAGED_INSTANCES"
       ]
     },
     "JobStateTimeLimitAction":{
@@ -2528,6 +2587,42 @@
       ]
     },
     "Long":{"type":"long"},
+    "ManagedInstancesLocalStorageConfiguration":{
+      "type":"structure",
+      "members":{
+        "useLocalStorage":{"shape":"Boolean"}
+      }
+    },
+    "ManagedInstancesNetworkConfiguration":{
+      "type":"structure",
+      "required":[
+        "subnets",
+        "securityGroups"
+      ],
+      "members":{
+        "subnets":{"shape":"StringList"},
+        "securityGroups":{"shape":"StringList"}
+      }
+    },
+    "ManagedInstancesProvider":{
+      "type":"structure",
+      "required":[
+        "infrastructureRoleArn",
+        "instanceLaunchTemplate"
+      ],
+      "members":{
+        "propagateTags":{"shape":"String"},
+        "infrastructureRoleArn":{"shape":"String"},
+        "instanceLaunchTemplate":{"shape":"InstanceLaunchTemplate"},
+        "infrastructureOptimization":{"shape":"InfrastructureOptimization"}
+      }
+    },
+    "ManagedInstancesStorageConfiguration":{
+      "type":"structure",
+      "members":{
+        "storageSizeGiB":{"shape":"Integer"}
+      }
+    },
     "MountPoint":{
       "type":"structure",
       "members":{
@@ -2641,7 +2736,8 @@
       "type":"string",
       "enum":[
         "EC2",
-        "FARGATE"
+        "FARGATE",
+        "MANAGED_INSTANCES"
       ]
     },
     "PlatformCapabilityList":{
@@ -3522,6 +3618,15 @@
       "members":{
         "jobQueueName":{"shape":"String"},
         "jobQueueArn":{"shape":"String"}
+      }
+    },
+    "UpdateManagedInstancesProviderConfiguration":{
+      "type":"structure",
+      "members":{
+        "propagateTags":{"shape":"String"},
+        "infrastructureRoleArn":{"shape":"String"},
+        "instanceLaunchTemplate":{"shape":"InstanceLaunchTemplateUpdate"},
+        "infrastructureOptimization":{"shape":"InfrastructureOptimization"}
       }
     },
     "UpdatePolicy":{

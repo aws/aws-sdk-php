@@ -1940,6 +1940,12 @@
       "exception":true,
       "fault":true
     },
+    "ConfigurationOverrides":{
+      "type":"structure",
+      "members":{
+        "Tracking":{"shape":"TrackingConfigurationOverrides"}
+      }
+    },
     "ConfigurationSetName":{"type":"string"},
     "ConfigurationSetNameList":{
       "type":"list",
@@ -5228,7 +5234,8 @@
           "shape":"EndpointId",
           "contextParam":{"name":"EndpointId"}
         },
-        "TenantName":{"shape":"TenantName"}
+        "TenantName":{"shape":"TenantName"},
+        "ConfigurationOverrides":{"shape":"ConfigurationOverrides"}
       }
     },
     "SendBulkEmailResponse":{
@@ -5274,7 +5281,8 @@
           "contextParam":{"name":"EndpointId"}
         },
         "TenantName":{"shape":"TenantName"},
-        "ListManagementOptions":{"shape":"ListManagementOptions"}
+        "ListManagementOptions":{"shape":"ListManagementOptions"},
+        "ConfigurationOverrides":{"shape":"ConfigurationOverrides"}
       }
     },
     "SendEmailResponse":{
@@ -5651,6 +5659,13 @@
     "Topics":{
       "type":"list",
       "member":{"shape":"Topic"}
+    },
+    "TrackingConfigurationOverrides":{
+      "type":"structure",
+      "members":{
+        "OpenTrackingEnabled":{"shape":"FeatureStatus"},
+        "ClickTrackingEnabled":{"shape":"FeatureStatus"}
+      }
     },
     "TrackingOptions":{
       "type":"structure",

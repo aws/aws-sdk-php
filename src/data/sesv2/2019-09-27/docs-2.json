@@ -78,7 +78,7 @@
     "ListTenants": "<p>List all tenants associated with your account in the current Amazon Web Services Region.</p> <p>This operation returns basic information about each tenant, such as tenant name, ID, ARN, and creation timestamp.</p>",
     "PutAccountDedicatedIpWarmupAttributes": "<p>Enable or disable the automatic warm-up feature for dedicated IP addresses.</p>",
     "PutAccountDetails": "<p>Update your Amazon SES account details.</p>",
-    "PutAccountPricingAttributes": "<p>Set the pricing plan for your Amazon SES account. Use this operation to choose a billing plan that packages multiple Amazon SES features at a single rate.</p>",
+    "PutAccountPricingAttributes": "<p>Set the pricing plan for your Amazon SES account.</p>",
     "PutAccountSendingAttributes": "<p>Enable or disable the ability of your account to send email.</p>",
     "PutAccountSuppressionAttributes": "<p>Change the settings for the account-level suppression list.</p>",
     "PutAccountVdmAttributes": "<p>Update your Amazon SES account VDM attributes.</p> <p>You can execute this operation no more than once per second.</p>",
@@ -444,6 +444,13 @@
     "ConcurrentModificationException": {
       "base": "<p>The resource is being modified by another operation or thread.</p>",
       "refs": {}
+    },
+    "ConfigurationOverrides": {
+      "base": "<p>An object that overrides settings for a single email sending request. An override applies only to the message or messages in the request that contains it. It doesn't change your account-level settings, and it doesn't change the configuration set that the request uses.</p> <p>A setting that you don't override keeps the value that would otherwise apply to the message. Depending on the setting, that value comes from the configuration set that the message uses, from your account-level settings, or from the Amazon SES default.</p>",
+      "refs": {
+        "SendBulkEmailRequest$ConfigurationOverrides": "<p>An object that overrides, for the messages in this request only, settings that would otherwise apply to them. The overrides apply to every message in the request. Each setting that you don't override keeps the value that already applies.</p>",
+        "SendEmailRequest$ConfigurationOverrides": "<p>An object that overrides, for this message only, settings that would otherwise apply to it. Each setting that you don't override keeps the value that already applies.</p>"
+      }
     },
     "ConfigurationSetName": {
       "base": "<p>The name of a configuration set.</p> <p> <i>Configuration sets</i> are groups of rules that you can apply to the emails you send. You apply a configuration set to an email by including a reference to the configuration set in the headers of the email. When you apply a configuration set to an email, all of the rules in that configuration set are applied to the email.</p>",
@@ -1451,6 +1458,8 @@
         "GuardianAttributes$OptimizedSharedDelivery": "<p>Specifies the status of your VDM optimized shared delivery. Can be one of the following:</p> <ul> <li> <p> <code>ENABLED</code> – Amazon SES enables optimized shared delivery for your account.</p> </li> <li> <p> <code>DISABLED</code> – Amazon SES disables optimized shared delivery for your account.</p> </li> </ul>",
         "GuardianOptions$OptimizedSharedDelivery": "<p>Specifies the status of your VDM optimized shared delivery. Can be one of the following:</p> <ul> <li> <p> <code>ENABLED</code> – Amazon SES enables optimized shared delivery for the configuration set.</p> </li> <li> <p> <code>DISABLED</code> – Amazon SES disables optimized shared delivery for the configuration set.</p> </li> </ul>",
         "SuppressionConditionThreshold$ConditionThresholdEnabled": "<p>Indicates whether Auto Validation is enabled for suppression. Set to <code>ENABLED</code> to enable the Auto Validation feature, or set to <code>DISABLED</code> to disable it.</p>",
+        "TrackingConfigurationOverrides$OpenTrackingEnabled": "<p>Specifies whether Amazon SES tracks when the recipient opens this message. Can be one of the following:</p> <ul> <li> <p> <code>ENABLED</code> – Amazon SES tracks opens for this message, even when your account-level and configuration set settings don't enable open tracking.</p> </li> <li> <p> <code>DISABLED</code> – Amazon SES doesn't track opens for this message, even when your account-level or configuration set settings enable open tracking. Amazon SES doesn't add the tracking image to the message.</p> </li> </ul> <p>If you don't specify this value, Amazon SES uses the open tracking setting that would otherwise apply to the message.</p>",
+        "TrackingConfigurationOverrides$ClickTrackingEnabled": "<p>Specifies whether Amazon SES tracks when the recipient clicks a link in this message. Can be one of the following:</p> <ul> <li> <p> <code>ENABLED</code> – Amazon SES tracks clicks for this message, even when your account-level and configuration set settings don't enable click tracking.</p> </li> <li> <p> <code>DISABLED</code> – Amazon SES doesn't track clicks for this message, even when your account-level or configuration set settings enable click tracking. Amazon SES doesn't rewrite the links in the message.</p> </li> </ul> <p>If you don't specify this value, Amazon SES uses the click tracking setting that would otherwise apply to the message.</p> <note> <p>Enabling open or click tracking with an override doesn't create an event destination. Amazon SES records the resulting open and click events in VDM, where you can review them using VDM metrics and Message Insights. To also receive these events at a destination that you own, the configuration set that the message uses must have an event destination that publishes open and click events.</p> </note>",
         "VdmAttributes$VdmEnabled": "<p>Specifies the status of your VDM configuration. Can be one of the following:</p> <ul> <li> <p> <code>ENABLED</code> – Amazon SES enables VDM for your account.</p> </li> <li> <p> <code>DISABLED</code> – Amazon SES disables VDM for your account.</p> </li> </ul>"
       }
     },
@@ -2537,7 +2546,7 @@
       }
     },
     "PricingAttributes": {
-      "base": "<p>The pricing attributes that apply to your Amazon SES account, including the currently active pricing plan and any scheduled change for the next billing cycle.</p>",
+      "base": "<p>The pricing attributes that apply to your Amazon SES account, including the currently active pricing plan and any scheduled change.</p>",
       "refs": {
         "GetAccountResponse$PricingAttributes": "<p>The pricing attributes that apply to your Amazon SES account, including the currently active pricing plan and any scheduled change.</p>"
       }
@@ -2546,8 +2555,8 @@
       "base": "<p>Identifies an Amazon SES pricing plan. See <code>PutAccountPricingAttributesRequest$Plan</code> for the list of supported values and their meanings.</p>",
       "refs": {
         "PricingAttributes$CurrentPlan": "<p>The pricing plan that is currently active on your Amazon SES account.</p>",
-        "PricingAttributes$NextPlan": "<p>The pricing plan that will become active at the start of the next billing cycle, if a scheduled change has been requested. This field is empty when no scheduled change is pending.</p>",
-        "PutAccountPricingAttributesRequest$Plan": "<p>The pricing plan to apply to your Amazon SES account. Can be one of the following:</p> <ul> <li> <p> <code>NONE</code> – No pricing plan is applied; billing follows per-feature pricing.</p> </li> <li> <p> <code>ESSENTIALS</code> – Baseline Amazon SES capabilities and select premium features.</p> </li> <li> <p> <code>PRO</code> – Includes everything in <code>ESSENTIALS</code>, plus additional premium features for growing senders.</p> </li> <li> <p> <code>ENTERPRISE</code> – Includes everything in <code>PRO</code>, plus features intended for large-scale senders.</p> </li> </ul>"
+        "PricingAttributes$NextPlan": "<p>The pricing plan that will become active at the start of the next monthly cycle, if a scheduled change has been requested. This field is empty when no scheduled change is pending.</p>",
+        "PutAccountPricingAttributesRequest$Plan": "<p>The pricing plan to apply to your Amazon SES account. For details about each plan, see <a href=\"http://aws.amazon.com/ses/pricing/\">Amazon SES Pricing</a>. Can be one of the following:</p> <ul> <li> <p> <code>NONE</code> </p> </li> <li> <p> <code>ESSENTIALS</code> </p> </li> <li> <p> <code>PRO</code> </p> </li> <li> <p> <code>ENTERPRISE</code> </p> </li> </ul>"
       }
     },
     "PrimaryNameServer": {
@@ -3527,6 +3536,12 @@
         "CreateContactListRequest$Topics": "<p>An interest group, theme, or label within a list. A contact list can have multiple topics.</p>",
         "GetContactListResponse$Topics": "<p>An interest group, theme, or label within a list. A contact list can have multiple topics.</p>",
         "UpdateContactListRequest$Topics": "<p>An interest group, theme, or label within a list. A contact list can have multiple topics.</p>"
+      }
+    },
+    "TrackingConfigurationOverrides": {
+      "base": "<p>An object that overrides, for a single email sending request, the engagement tracking settings that would otherwise apply. Use these overrides to turn open tracking or click tracking on or off for an individual message, for example to suppress tracking in a transactional message that you send from an account or a configuration set that has tracking enabled.</p> <p>Without an override, engagement tracking is determined by your account-level <code>EngagementMetrics</code> setting, which you configure using the <code>PutAccountVdmAttributes</code> operation, by the <code>EngagementMetrics</code> setting of the configuration set that the message uses, which you configure using the <code>PutConfigurationSetVdmOptions</code> operation, and by whether that configuration set has an event destination whose <code>MatchingEventTypes</code> include the <code>OPEN</code> or <code>CLICK</code> event types.</p> <p>For more information about tracking open and click events, see the <a href=\"https://docs.aws.amazon.com/ses/latest/DeveloperGuide/event-publishing.html\">Amazon SES Developer Guide</a>.</p>",
+      "refs": {
+        "ConfigurationOverrides$Tracking": "<p>An object that overrides the open and click tracking settings that would otherwise apply to the message.</p>"
       }
     },
     "TrackingOptions": {

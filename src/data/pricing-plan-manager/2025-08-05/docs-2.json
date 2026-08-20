@@ -1,13 +1,13 @@
 {
   "version": "2.0",
-  "service": "<p>Manages flat-rate pricing subscriptions for supported AWS services. Use this API to create, approve, update, and cancel subscriptions; associate and disassociate resources; and retrieve subscription details. With a flat-rate pricing subscription, you pay a fixed recurring fee for eligible resources instead of usage-based pricing.</p>",
+  "service": "<p>Manages flat-rate pricing subscriptions for supported services. Use this API to create, approve, update, and cancel subscriptions; associate and disassociate resources; and retrieve subscription details. With a flat-rate pricing subscription, you pay a fixed recurring fee for eligible resources instead of usage-based pricing.</p>",
   "operations": {
     "ApprovePaidSubscription": "<p>Approves a subscription that is in <code>PENDING_APPROVAL</code> status, activating it and starting billing.</p> <note> <p>This operation requires the current <code>ETag</code> value for concurrency control. Retrieve it from a previous <code>GetSubscription</code> or <code>ListSubscriptions</code> response.</p> </note>",
-    "AssociateResourcesToSubscription": "<p>Adds one or more resources to an existing subscription. The subscription must be in an active state that is not pending other changes.</p> <note> <p>For subscriptions in the CloudFront plan family, the associated resources must include exactly one Amazon CloudFront distribution and one AWS WAF web ACL. You can also include other supported resources, such as Amazon Route 53 hosted zones, and CloudFront KeyValueStores.</p> </note>",
+    "AssociateResourcesToSubscription": "<p>Adds one or more resources to an existing subscription. The subscription must be in an active state that is not pending other changes.</p> <note> <p>For subscriptions in the CloudFront plan family, the associated resources must include exactly one Amazon CloudFront distribution and one WAF web ACL. You can also include other supported resources, such as Amazon Route 53 hosted zones, and CloudFront KeyValueStores.</p> </note>",
     "CancelSubscription": "<p>Cancels a flat-rate pricing subscription.</p> <note> <p>For active subscriptions, the cancellation is scheduled to take effect at the end of the current billing period. The subscription remains active until that date. To revert a pending cancellation, use <code>CancelSubscriptionChange</code>.</p> <p>For subscriptions in <code>PENDING_APPROVAL</code> status, the subscription is deleted immediately without scheduling.</p> </note>",
     "CancelSubscriptionChange": "<p>Cancels a pending scheduled change on a subscription, such as a pending downgrade or cancellation. The subscription returns to its state before the change was scheduled.</p> <note> <p>You cannot cancel a scheduled change close to its effective date. If the change is within the processing window, this operation returns an error.</p> </note>",
     "CreateSubscription": "<p>Creates a flat-rate pricing subscription for the specified resources.</p> <note> <p>When <code>approvalMode</code> is set to <code>MANUAL</code>, paid-tier subscriptions are created in <code>PENDING_APPROVAL</code> status and require a separate <code>ApprovePaidSubscription</code> call before billing starts. Free-tier subscriptions are always activated immediately regardless of approval mode.</p> <p>When <code>approvalMode</code> is set to <code>IMMEDIATE</code> or is not specified, the subscription is activated immediately.</p> </note>",
-    "DisassociateResourcesFromSubscription": "<p>Removes one or more resources from an existing subscription.</p> <note> <p>For subscriptions in the CloudFront plan family, the associated resources must always include exactly one Amazon CloudFront distribution and exactly one AWS WAF web ACL. You cannot remove these required resources.</p> </note>",
+    "DisassociateResourcesFromSubscription": "<p>Removes one or more resources from an existing subscription.</p> <note> <p>For subscriptions in the CloudFront plan family, the associated resources must always include exactly one Amazon CloudFront distribution and exactly one WAF web ACL. You cannot remove these required resources.</p> </note>",
     "GetSubscription": "<p>Returns the details of a flat-rate pricing subscription, including its current status, associated resources, and any pending scheduled changes.</p>",
     "ListSubscriptions": "<p>Returns a summary of all flat-rate pricing subscriptions in the calling account.</p>",
     "UpdateSubscription": "<p>Changes the plan tier of an existing subscription.</p> <note> <p>Upgrades take effect immediately. Downgrades are scheduled and the current tier remains unchanged until the end of the billing cycle (calendar month). You cannot update a subscription while a scheduled change is pending. To make a new change, first cancel the pending change using <code>CancelSubscriptionChange</code>.</p> <p>This operation replaces the plan tier value. If you omit the optional <code>usageLevel</code> field, it is reset to the default.</p> </note>"
@@ -20,7 +20,7 @@
     "ApprovalMode": {
       "base": "<p>Determines whether a subscription requires explicit approval before billing starts.</p>",
       "refs": {
-        "CreateSubscriptionInput$approvalMode": "<p>Determines whether the subscription requires explicit approval before billing starts. Set to <code>MANUAL</code> to require a separate <code>ApprovePaidSubscription</code> call, or <code>IMMEDIATE</code> to activate the subscription right away. Defaults to <code>IMMEDIATE</code> if not specified.</p>"
+        "CreateSubscriptionInput$approvalMode": "<p>Determines whether the subscription requires explicit approval before billing starts. Set to <code>MANUAL</code> to require a separate <code>ApprovePaidSubscription</code> call, or <code>IMMEDIATE</code> to activate the subscription right away. For paid tier plans, this defaults to <code>MANUAL</code> if not specified. For the <code>FREE</code> plan tier, only <code>IMMEDIATE</code> is supported, and it is the default.</p>"
       }
     },
     "ApprovePaidSubscriptionInput": {
@@ -108,13 +108,13 @@
       "refs": {}
     },
     "ResourceArns": {
-      "base": "<p>A list of 1 to 10 AWS resource ARNs to include in the subscription.</p>",
+      "base": "<p>A list of 1 to 10 resource ARNs to include in the subscription.</p>",
       "refs": {
         "AssociateResourcesToSubscriptionInput$resourceArns": "<p>The ARNs of the resources to add to the subscription.</p>",
-        "CreateSubscriptionInput$resourceArns": "<p>The ARNs of the AWS resources to include in the subscription. Specify one or more supported resources.</p> <note> <p>For subscriptions in the CloudFront plan family, the resources must include exactly one Amazon CloudFront distribution and exactly one AWS WAF web ACL. You can also include other supported resources, such as Amazon Route 53 hosted zones and CloudFront KeyValueStores.</p> </note>",
+        "CreateSubscriptionInput$resourceArns": "<p>The ARNs of the resources to include in the subscription. Specify one or more supported resources.</p> <note> <p>For subscriptions in the CloudFront plan family, the resources must include exactly one Amazon CloudFront distribution and exactly one WAF web ACL. You can also include other supported resources, such as Amazon Route 53 hosted zones and CloudFront KeyValueStores.</p> </note>",
         "DisassociateResourcesFromSubscriptionInput$resourceArns": "<p>The ARNs of the resources to remove from the subscription. For subscriptions in the CloudFront plan family, you cannot remove the required CloudFront distribution or WAF web ACL.</p>",
-        "Subscription$resourceArns": "<p>The ARNs of the AWS resources covered by this subscription.</p>",
-        "SubscriptionSummary$resourceArns": "<p>The ARNs of the AWS resources covered by this subscription.</p>"
+        "Subscription$resourceArns": "<p>The ARNs of the resources covered by this subscription.</p>",
+        "SubscriptionSummary$resourceArns": "<p>The ARNs of the resources covered by this subscription.</p>"
       }
     },
     "ResourceNotFoundException": {

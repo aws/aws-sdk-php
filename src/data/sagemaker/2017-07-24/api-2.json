@@ -5924,6 +5924,12 @@
         "Canvas"
       ]
     },
+    "ApplicationArn":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"arn:aws[a-z\\-]*:sso::[0-9]{12}:application/(sso)?ins-[a-zA-Z0-9.-]{16}/apl-[a-zA-Z0-9.-]{16}"
+    },
     "ApprovalDescription":{
       "type":"string",
       "max":1024,
@@ -10723,6 +10729,7 @@
         "Name":{"shape":"MlflowAppName"},
         "ArtifactStoreUri":{"shape":"S3Uri"},
         "RoleArn":{"shape":"RoleArn"},
+        "KmsKeyId":{"shape":"KmsKeyId"},
         "ModelRegistrationMode":{"shape":"ModelRegistrationMode"},
         "WeeklyMaintenanceWindowStart":{"shape":"WeeklyMaintenanceWindowStart"},
         "AccountDefaultStatus":{"shape":"AccountDefaultStatus"},
@@ -11121,6 +11128,7 @@
         "MaintenanceConfig":{"shape":"PartnerAppMaintenanceConfig"},
         "Tier":{"shape":"NonEmptyString64"},
         "ApplicationConfig":{"shape":"PartnerAppConfig"},
+        "IdcConfig":{"shape":"IdcConfigInput"},
         "AuthType":{"shape":"PartnerAppAuthType"},
         "EnableIamSessionBasedIdentity":{
           "shape":"Boolean",
@@ -11907,7 +11915,7 @@
     "DeepHealthChecks":{
       "type":"list",
       "member":{"shape":"DeepHealthCheckType"},
-      "max":2,
+      "max":3,
       "min":1
     },
     "DefaultDomainIdList":{
@@ -14102,6 +14110,7 @@
         "ArtifactStoreUri":{"shape":"S3Uri"},
         "MlflowVersion":{"shape":"MlflowVersion"},
         "RoleArn":{"shape":"RoleArn"},
+        "KmsKeyId":{"shape":"KmsKeyId"},
         "Status":{"shape":"MlflowAppStatus"},
         "ModelRegistrationMode":{"shape":"ModelRegistrationMode"},
         "AccountDefaultStatus":{"shape":"AccountDefaultStatus"},
@@ -14600,7 +14609,8 @@
           "box":true
         },
         "CurrentVersionEolDate":{"shape":"Timestamp"},
-        "AvailableUpgrade":{"shape":"AvailableUpgrade"}
+        "AvailableUpgrade":{"shape":"AvailableUpgrade"},
+        "IdcConfig":{"shape":"IdcConfigOutput"}
       }
     },
     "DescribePipelineDefinitionForExecutionRequest":{
@@ -18012,6 +18022,21 @@
         "VpcSourceIp":{"shape":"EnabledOrDisabled"}
       }
     },
+    "IdcConfigInput":{
+      "type":"structure",
+      "required":["InstanceArn"],
+      "members":{
+        "InstanceArn":{"shape":"InstanceArn"}
+      }
+    },
+    "IdcConfigOutput":{
+      "type":"structure",
+      "required":["InstanceArn"],
+      "members":{
+        "InstanceArn":{"shape":"InstanceArn"},
+        "ApplicationArn":{"shape":"ApplicationArn"}
+      }
+    },
     "IdempotencyToken":{
       "type":"string",
       "max":128,
@@ -18847,6 +18872,12 @@
       "type":"list",
       "member":{"shape":"TrainingInputMode"},
       "min":1
+    },
+    "InstanceArn":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"arn:aws[a-z\\-]*:sso:::instance/(sso)?ins-[a-zA-Z0-9.-]{16}"
     },
     "InstanceCount":{
       "type":"integer",
@@ -24400,7 +24431,7 @@
     "OnStartDeepHealthChecks":{
       "type":"list",
       "member":{"shape":"DeepHealthCheckType"},
-      "max":2,
+      "max":3,
       "min":1
     },
     "OnlineStoreConfig":{
@@ -24873,7 +24904,10 @@
     },
     "PartnerAppAuthType":{
       "type":"string",
-      "enum":["IAM"]
+      "enum":[
+        "IAM",
+        "IDC"
+      ]
     },
     "PartnerAppConfig":{
       "type":"structure",
@@ -31763,6 +31797,8 @@
         "MaintenanceConfig":{"shape":"PartnerAppMaintenanceConfig"},
         "Tier":{"shape":"NonEmptyString64"},
         "ApplicationConfig":{"shape":"PartnerAppConfig"},
+        "IdcConfig":{"shape":"IdcConfigInput"},
+        "AuthType":{"shape":"PartnerAppAuthType"},
         "EnableIamSessionBasedIdentity":{
           "shape":"Boolean",
           "box":true

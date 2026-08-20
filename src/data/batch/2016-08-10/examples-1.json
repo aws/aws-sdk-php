@@ -105,6 +105,136 @@
         "description": "This example creates a managed compute environment with the M4 instance type that is launched when the Spot bid price is at or below 20% of the On-Demand price for the instance type. The compute environment is called M4Spot.",
         "id": "to-create-a-managed-ec2-spot-compute-environment-1481152844190",
         "title": "To create a managed EC2 Spot compute environment"
+      },
+      {
+        "input": {
+          "type": "MANAGED",
+          "computeEnvironmentName": "my-managed-instances-ce",
+          "computeResources": {
+            "type": "ECS_MANAGED_INSTANCES",
+            "managedInstancesProvider": {
+              "infrastructureRoleArn": "arn:aws:iam::123456789012:role/ecsInfrastructureRole",
+              "instanceLaunchTemplate": {
+                "ec2InstanceProfileArn": "arn:aws:iam::123456789012:instance-profile/ecsInstanceProfile",
+                "networkConfiguration": {
+                  "securityGroups": [
+                    "sg-abcde012"
+                  ],
+                  "subnets": [
+                    "subnet-abcde012",
+                    "subnet-bcde012a"
+                  ]
+                }
+              }
+            },
+            "maxvCpus": 256
+          },
+          "state": "ENABLED"
+        },
+        "output": {
+          "computeEnvironmentArn": "arn:aws:batch:us-east-1:123456789012:compute-environment/my-managed-instances-ce",
+          "computeEnvironmentName": "my-managed-instances-ce"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "This example creates a managed compute environment that uses ECS Managed Instances.",
+        "id": "to-create-an-ecs-managed-instances-compute-environment-1722800000000",
+        "title": "To create an ECS Managed Instances compute environment"
+      },
+      {
+        "input": {
+          "type": "MANAGED",
+          "computeEnvironmentName": "my-spot-managed-instances-ce",
+          "computeResources": {
+            "type": "ECS_MANAGED_INSTANCES",
+            "managedInstancesProvider": {
+              "infrastructureRoleArn": "arn:aws:iam::123456789012:role/ecsInfrastructureRole",
+              "instanceLaunchTemplate": {
+                "capacityOptionType": "SPOT",
+                "ec2InstanceProfileArn": "arn:aws:iam::123456789012:instance-profile/ecsInstanceProfile",
+                "instanceRequirements": {
+                  "allowedInstanceTypes": [
+                    "m5.large",
+                    "m5.xlarge",
+                    "m6i.large",
+                    "m6i.xlarge"
+                  ]
+                },
+                "networkConfiguration": {
+                  "securityGroups": [
+                    "sg-abcde012"
+                  ],
+                  "subnets": [
+                    "subnet-abcde012",
+                    "subnet-bcde012a"
+                  ]
+                }
+              }
+            },
+            "maxvCpus": 1000
+          },
+          "state": "ENABLED"
+        },
+        "output": {
+          "computeEnvironmentArn": "arn:aws:batch:us-east-1:123456789012:compute-environment/my-spot-managed-instances-ce",
+          "computeEnvironmentName": "my-spot-managed-instances-ce"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "This example creates a Spot-backed ECS Managed Instances compute environment constrained to specific instance types.",
+        "id": "to-create-an-ecs-managed-instances-spot-compute-environment-1722800000001",
+        "title": "To create an ECS Managed Instances Spot compute environment"
+      },
+      {
+        "input": {
+          "type": "MANAGED",
+          "computeEnvironmentName": "my-reserved-managed-instances-ce",
+          "computeResources": {
+            "type": "ECS_MANAGED_INSTANCES",
+            "managedInstancesProvider": {
+              "infrastructureRoleArn": "arn:aws:iam::123456789012:role/ecsInfrastructureRole",
+              "instanceLaunchTemplate": {
+                "capacityReservations": {
+                  "reservationGroupArn": "arn:aws:ec2:us-east-1:123456789012:capacity-reservation-group/my-reservation-group",
+                  "reservationPreference": "RESERVATIONS_FIRST"
+                },
+                "ec2InstanceProfileArn": "arn:aws:iam::123456789012:instance-profile/ecsInstanceProfile",
+                "instanceRequirements": {
+                  "allowedInstanceTypes": [
+                    "m5.xlarge",
+                    "m5.2xlarge"
+                  ]
+                },
+                "networkConfiguration": {
+                  "securityGroups": [
+                    "sg-abcde012"
+                  ],
+                  "subnets": [
+                    "subnet-abcde012",
+                    "subnet-bcde012a"
+                  ]
+                }
+              }
+            },
+            "maxvCpus": 512
+          },
+          "state": "ENABLED"
+        },
+        "output": {
+          "computeEnvironmentArn": "arn:aws:batch:us-east-1:123456789012:compute-environment/my-reserved-managed-instances-ce",
+          "computeEnvironmentName": "my-reserved-managed-instances-ce"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "This example creates an ECS Managed Instances compute environment that targets On-Demand Capacity Reservations for predictable capacity.",
+        "id": "to-create-an-ecs-managed-instances-ce-with-capacity-reservations-1722800000002",
+        "title": "To create an ECS Managed Instances compute environment with capacity reservations"
       }
     ],
     "CreateConsumableResource": [
@@ -183,6 +313,58 @@
         "description": "This example creates a job queue called HighPriority that uses the C4OnDemand compute environment with an order of 1 and the M4Spot compute environment with an order of 2.",
         "id": "to-create-a-job-queue-with-multiple-compute-environments-1481153027051",
         "title": "To create a job queue with multiple compute environments"
+      },
+      {
+        "input": {
+          "computeEnvironmentOrder": [
+            {
+              "computeEnvironment": "my-managed-instances-ce",
+              "order": 1
+            }
+          ],
+          "jobQueueName": "ManagedInstancesQueue",
+          "priority": 10,
+          "state": "ENABLED"
+        },
+        "output": {
+          "jobQueueArn": "arn:aws:batch:us-east-1:123456789012:job-queue/ManagedInstancesQueue",
+          "jobQueueName": "ManagedInstancesQueue"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "This example creates a job queue called ManagedInstancesQueue that uses an ECS Managed Instances compute environment.",
+        "id": "to-create-a-job-queue-with-ecs-managed-instances-1722800000003",
+        "title": "To create a job queue with an ECS Managed Instances compute environment"
+      },
+      {
+        "input": {
+          "computeEnvironmentOrder": [
+            {
+              "computeEnvironment": "my-managed-instances-ce",
+              "order": 1
+            },
+            {
+              "computeEnvironment": "my-spot-managed-instances-ce",
+              "order": 2
+            }
+          ],
+          "jobQueueName": "ManagedInstancesMixedQueue",
+          "priority": 5,
+          "state": "ENABLED"
+        },
+        "output": {
+          "jobQueueArn": "arn:aws:batch:us-east-1:123456789012:job-queue/ManagedInstancesMixedQueue",
+          "jobQueueName": "ManagedInstancesMixedQueue"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "This example creates a job queue that uses both On-Demand and Spot ECS Managed Instances compute environments. On-Demand environments must be ordered before Spot environments.",
+        "id": "to-create-a-job-queue-with-on-demand-and-spot-ecs-managed-instances-1722800000004",
+        "title": "To create a job queue with On-Demand and Spot ECS Managed Instances compute environments"
       }
     ],
     "DeleteComputeEnvironment": [
@@ -666,6 +848,173 @@
         "description": "This demonstrates calling the RegisterJobDefinition action, including tags.",
         "id": "registerjobdefinition-with-tags-1591290509028",
         "title": "RegisterJobDefinition with tags"
+      },
+      {
+        "input": {
+          "type": "container",
+          "ecsProperties": {
+            "taskProperties": [
+              {
+                "containers": [
+                  {
+                    "name": "main",
+                    "command": [
+                      "echo",
+                      "hello managed instances"
+                    ],
+                    "image": "public.ecr.aws/amazonlinux/amazonlinux:2023",
+                    "resourceRequirements": [
+                      {
+                        "type": "VCPU",
+                        "value": "1"
+                      },
+                      {
+                        "type": "MEMORY",
+                        "value": "1024"
+                      }
+                    ]
+                  }
+                ],
+                "executionRoleArn": "arn:aws:iam::123456789012:role/ecsTaskExecutionRole"
+              }
+            ]
+          },
+          "jobDefinitionName": "my-managed-instances-job-def",
+          "platformCapabilities": [
+            "MANAGED_INSTANCES"
+          ]
+        },
+        "output": {
+          "jobDefinitionArn": "arn:aws:batch:us-east-1:123456789012:job-definition/my-managed-instances-job-def:1",
+          "jobDefinitionName": "my-managed-instances-job-def",
+          "revision": 1
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "This example registers a job definition that runs on ECS Managed Instances using ecsProperties with the MANAGED_INSTANCES platform capability.",
+        "id": "to-register-a-job-definition-on-ecs-managed-instances-1722800000005",
+        "title": "To register a job definition on ECS Managed Instances"
+      },
+      {
+        "input": {
+          "type": "container",
+          "ecsProperties": {
+            "taskProperties": [
+              {
+                "containers": [
+                  {
+                    "name": "main",
+                    "command": [
+                      "nvidia-smi"
+                    ],
+                    "image": "123456789012.dkr.ecr.us-east-1.amazonaws.com/my-gpu-image:latest",
+                    "resourceRequirements": [
+                      {
+                        "type": "VCPU",
+                        "value": "4"
+                      },
+                      {
+                        "type": "MEMORY",
+                        "value": "16384"
+                      },
+                      {
+                        "type": "GPU",
+                        "value": "1"
+                      }
+                    ]
+                  }
+                ],
+                "executionRoleArn": "arn:aws:iam::123456789012:role/ecsTaskExecutionRole"
+              }
+            ]
+          },
+          "jobDefinitionName": "my-gpu-managed-instances-job-def",
+          "platformCapabilities": [
+            "MANAGED_INSTANCES"
+          ]
+        },
+        "output": {
+          "jobDefinitionArn": "arn:aws:batch:us-east-1:123456789012:job-definition/my-gpu-managed-instances-job-def:1",
+          "jobDefinitionName": "my-gpu-managed-instances-job-def",
+          "revision": 1
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "This example registers a job definition that requests GPU resources on ECS Managed Instances.",
+        "id": "to-register-a-gpu-job-definition-on-ecs-managed-instances-1722800000006",
+        "title": "To register a GPU job definition on ECS Managed Instances"
+      },
+      {
+        "input": {
+          "type": "container",
+          "ecsProperties": {
+            "taskProperties": [
+              {
+                "containers": [
+                  {
+                    "name": "main",
+                    "command": [
+                      "echo",
+                      "processing data"
+                    ],
+                    "essential": true,
+                    "image": "public.ecr.aws/amazonlinux/amazonlinux:2023",
+                    "resourceRequirements": [
+                      {
+                        "type": "VCPU",
+                        "value": "2"
+                      },
+                      {
+                        "type": "MEMORY",
+                        "value": "4096"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "sidecar",
+                    "command": [
+                      "echo",
+                      "logging sidecar"
+                    ],
+                    "essential": false,
+                    "image": "public.ecr.aws/amazonlinux/amazonlinux:2023",
+                    "resourceRequirements": [
+                      {
+                        "type": "VCPU",
+                        "value": "1"
+                      },
+                      {
+                        "type": "MEMORY",
+                        "value": "512"
+                      }
+                    ]
+                  }
+                ],
+                "executionRoleArn": "arn:aws:iam::123456789012:role/ecsTaskExecutionRole"
+              }
+            ]
+          },
+          "jobDefinitionName": "my-sidecar-managed-instances-job-def",
+          "platformCapabilities": [
+            "MANAGED_INSTANCES"
+          ]
+        },
+        "output": {
+          "jobDefinitionArn": "arn:aws:batch:us-east-1:123456789012:job-definition/my-sidecar-managed-instances-job-def:1",
+          "jobDefinitionName": "my-sidecar-managed-instances-job-def",
+          "revision": 1
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "This example registers a job definition with a main container and a sidecar logging container on ECS Managed Instances.",
+        "id": "to-register-a-multi-container-job-definition-on-ecs-managed-instances-1722800000007",
+        "title": "To register a multi-container job definition on ECS Managed Instances"
       }
     ],
     "SubmitJob": [
