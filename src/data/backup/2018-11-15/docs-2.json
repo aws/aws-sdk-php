@@ -65,14 +65,14 @@
     "ListBackupAccessPoints": "<p>Returns a list of the backup access points in your account and Region.</p>",
     "ListBackupAccessPointsByRecoveryPoint": "<p>Returns the backup access points associated with the specified recovery point.</p> <p>If you own the recovery point and have shared it with other accounts, the response includes backup access points created by those accounts.</p>",
     "ListBackupAccessPointsByResource": "<p>Returns the backup access points associated with the specified resource, such as an Amazon S3 bucket.</p>",
-    "ListBackupJobSummaries": "<p>This is a request for a summary of backup jobs created or running within the most recent 30 days. You can include parameters AccountID, State, ResourceType, MessageCategory, AggregationPeriod, MaxResults, or NextToken to filter results.</p> <p>This request returns a summary that contains Region, Account, State, ResourceType, MessageCategory, StartTime, EndTime, and Count of included jobs.</p>",
+    "ListBackupJobSummaries": "<p>This is a request for a summary of backup jobs created or running within the most recent 14 days. You can include parameters AccountID, State, ResourceType, MessageCategory, AggregationPeriod, MaxResults, or NextToken to filter results.</p> <p>This request returns a summary that contains Region, Account, State, ResourceType, MessageCategory, StartTime, EndTime, and Count of included jobs.</p>",
     "ListBackupJobs": "<p>Returns a list of existing backup jobs for an authenticated account for the last 30 days. For a longer period of time, consider using these <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/monitoring.html\">monitoring tools</a>.</p>",
     "ListBackupPlanTemplates": "<p>Lists the backup plan templates.</p>",
     "ListBackupPlanVersions": "<p>Returns version metadata of your backup plans, including Amazon Resource Names (ARNs), backup plan IDs, creation and deletion dates, plan names, and version IDs.</p>",
     "ListBackupPlans": "<p>Lists the active backup plans for the account.</p>",
     "ListBackupSelections": "<p>Returns an array containing metadata of the resources associated with the target backup plan.</p>",
     "ListBackupVaults": "<p>Returns a list of recovery point storage containers along with information about them.</p>",
-    "ListCopyJobSummaries": "<p>This request obtains a list of copy jobs created or running within the the most recent 30 days. You can include parameters AccountID, State, ResourceType, MessageCategory, AggregationPeriod, MaxResults, or NextToken to filter results.</p> <p>This request returns a summary that contains Region, Account, State, RestourceType, MessageCategory, StartTime, EndTime, and Count of included jobs.</p>",
+    "ListCopyJobSummaries": "<p>This request obtains a list of copy jobs created or running within the the most recent 14 days. You can include parameters AccountID, State, ResourceType, MessageCategory, AggregationPeriod, MaxResults, or NextToken to filter results.</p> <p>This request returns a summary that contains Region, Account, State, RestourceType, MessageCategory, StartTime, EndTime, and Count of included jobs.</p>",
     "ListCopyJobs": "<p>Returns metadata about your copy jobs.</p>",
     "ListFrameworks": "<p>Returns a list of all frameworks for an Amazon Web Services account and Amazon Web Services Region.</p>",
     "ListIndexedRecoveryPoints": "<p>This operation returns a list of recovery points that have an associated index, belonging to the specified account.</p> <p>Optional parameters you can include are: MaxResults; NextToken; SourceResourceArns; CreatedBefore; CreatedAfter; and ResourceType.</p>",
@@ -85,12 +85,12 @@
     "ListReportJobs": "<p>Returns details about your report jobs.</p>",
     "ListReportPlans": "<p>Returns a list of your report plans. For detailed information about a single report plan, use <code>DescribeReportPlan</code>.</p>",
     "ListRestoreAccessBackupVaults": "<p>Returns a list of restore access backup vaults associated with a specified backup vault.</p>",
-    "ListRestoreJobSummaries": "<p>This request obtains a summary of restore jobs created or running within the the most recent 30 days. You can include parameters AccountID, State, ResourceType, AggregationPeriod, MaxResults, or NextToken to filter results.</p> <p>This request returns a summary that contains Region, Account, State, RestourceType, MessageCategory, StartTime, EndTime, and Count of included jobs.</p>",
+    "ListRestoreJobSummaries": "<p>This request obtains a summary of restore jobs created or running within the the most recent 14 days. You can include parameters AccountID, State, ResourceType, AggregationPeriod, MaxResults, or NextToken to filter results.</p> <p>This request returns a summary that contains Region, Account, State, RestourceType, MessageCategory, StartTime, EndTime, and Count of included jobs.</p>",
     "ListRestoreJobs": "<p>Returns a list of jobs that Backup initiated to restore a saved resource, including details about the recovery process.</p>",
     "ListRestoreJobsByProtectedResource": "<p>This returns restore jobs that contain the specified protected resource.</p> <p>You must include <code>ResourceArn</code>. You can optionally include <code>NextToken</code>, <code>ByStatus</code>, <code>MaxResults</code>, <code>ByRecoveryPointCreationDateAfter</code> , and <code>ByRecoveryPointCreationDateBefore</code>.</p>",
     "ListRestoreTestingPlans": "<p>Returns a list of restore testing plans.</p>",
     "ListRestoreTestingSelections": "<p>Returns a list of restore testing selections. Can be filtered by <code>MaxResults</code> and <code>RestoreTestingPlanName</code>.</p>",
-    "ListScanJobSummaries": "<p>This is a request for a summary of scan jobs created or running within the most recent 30 days.</p>",
+    "ListScanJobSummaries": "<p>This is a request for a summary of scan jobs created or running within the most recent 14 days.</p>",
     "ListScanJobs": "<p>Returns a list of existing scan jobs for an authenticated account for the last 30 days.</p>",
     "ListTags": "<p>Returns the tags assigned to the resource, such as a target recovery point, backup plan, or backup vault.</p> <p>This operation returns results depending on the resource type used in the value for <code>resourceArn</code>. For example, recovery points of Amazon DynamoDB with Advanced Settings have an ARN (Amazon Resource Name) that begins with <code>arn:aws:backup</code>. Recovery points (backups) of DynamoDB without Advanced Settings enabled have an ARN that begins with <code>arn:aws:dynamodb</code>.</p> <p>When this operation is called and when you include values of <code>resourceArn</code> that have an ARN other than <code>arn:aws:backup</code>, it may return one of the exceptions listed below. To prevent this exception, include only values representing resource types that are fully managed by Backup. These have an ARN that begins <code>arn:aws:backup</code> and they are noted in the <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-feature-availability.html#features-by-resource\">Feature availability by resource</a> table.</p>",
     "ListTieringConfigurations": "<p>Returns a list of tiering configurations.</p>",
@@ -410,7 +410,7 @@
       }
     },
     "BackupJobSummary": {
-      "base": "<p>This is a summary of jobs created or running within the most recent 30 days.</p> <p>The returned summary may contain the following: Region, Account, State, RestourceType, MessageCategory, StartTime, EndTime, and Count of included jobs.</p>",
+      "base": "<p>This is a summary of jobs created or running within the most recent 14 days.</p> <p>The returned summary may contain the following: Region, Account, State, RestourceType, MessageCategory, StartTime, EndTime, and Count of included jobs.</p>",
       "refs": {
         "BackupJobSummaryList$member": null
       }
@@ -801,7 +801,7 @@
       }
     },
     "CopyJobSummary": {
-      "base": "<p>This is a summary of copy jobs created or running within the most recent 30 days.</p> <p>The returned summary may contain the following: Region, Account, State, RestourceType, MessageCategory, StartTime, EndTime, and Count of included jobs.</p>",
+      "base": "<p>This is a summary of copy jobs created or running within the most recent 14 days.</p> <p>The returned summary may contain the following: Region, Account, State, RestourceType, MessageCategory, StartTime, EndTime, and Count of included jobs.</p>",
       "refs": {
         "CopyJobSummaryList$member": null
       }
@@ -2305,7 +2305,7 @@
       }
     },
     "RestoreJobSummary": {
-      "base": "<p>This is a summary of restore jobs created or running within the most recent 30 days.</p> <p>The returned summary may contain the following: Region, Account, State, ResourceType, MessageCategory, StartTime, EndTime, and Count of included jobs.</p>",
+      "base": "<p>This is a summary of restore jobs created or running within the most recent 14 days.</p> <p>The returned summary may contain the following: Region, Account, State, ResourceType, MessageCategory, StartTime, EndTime, and Count of included jobs.</p>",
       "refs": {
         "RestoreJobSummaryList$member": null
       }
@@ -3063,7 +3063,7 @@
         "RestoreTestingPlanForGet$StartWindowHours": "<p>Defaults to 24 hours.</p> <p>A value in hours after a restore test is scheduled before a job will be canceled if it doesn't start successfully. This value is optional. If this value is included, this parameter has a maximum value of 168 hours (one week).</p>",
         "RestoreTestingPlanForList$StartWindowHours": "<p>Defaults to 24 hours.</p> <p>A value in hours after a restore test is scheduled before a job will be canceled if it doesn't start successfully. This value is optional. If this value is included, this parameter has a maximum value of 168 hours (one week).</p>",
         "RestoreTestingPlanForUpdate$StartWindowHours": "<p>Defaults to 24 hours.</p> <p>A value in hours after a restore test is scheduled before a job will be canceled if it doesn't start successfully. This value is optional. If this value is included, this parameter has a maximum value of 168 hours (one week).</p>",
-        "RestoreTestingRecoveryPointSelection$SelectionWindowDays": "<p>Accepted values are integers from 1 to 365.</p>",
+        "RestoreTestingRecoveryPointSelection$SelectionWindowDays": "<p>Accepted values are integers from 1 to 365. If not included, the value defaults to 30. The selection window is calculated from the actual job execution time, not the plan's scheduled start time.</p>",
         "RestoreTestingSelectionForCreate$ValidationWindowHours": "<p>This is amount of hours (0 to 168) available to run a validation script on the data. The data will be deleted upon the completion of the validation script or the end of the specified retention period, whichever comes first.</p>",
         "RestoreTestingSelectionForGet$ValidationWindowHours": "<p>This is amount of hours (1 to 168) available to run a validation script on the data. The data will be deleted upon the completion of the validation script or the end of the specified retention period, whichever comes first.</p>",
         "RestoreTestingSelectionForList$ValidationWindowHours": "<p>This value represents the time, in hours, data is retained after a restore test so that optional validation can be completed.</p> <p>Accepted value is an integer between 0 and 168 (the hourly equivalent of seven days).</p>",

@@ -4241,6 +4241,17 @@
       "min":1,
       "pattern":"[a-zA-Z][a-zA-Z0-9_:/.\\-]{0,2047}"
     },
+    "CompositeIdentifierEntry":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "CompositeIdentifierList":{
+      "type":"list",
+      "member":{"shape":"CompositeIdentifierEntry"},
+      "max":5,
+      "min":1
+    },
     "ComputeConfiguration":{
       "type":"structure",
       "members":{
@@ -5874,7 +5885,7 @@
       "enum":[
         "AGENTCORE_EVALUATION_PREDEFINED_V1",
         "AGENTCORE_EVALUATION_SIMULATED_V1",
-        "GENERIC_EVALUATION_PREDEFINED_V1"
+        "THIRD_PARTY_EVALUATION_V1"
       ]
     },
     "DatasetStatus":{
@@ -12417,7 +12428,9 @@
         "endpoint":{"shape":"PassthroughEndpoint"},
         "protocolType":{"shape":"PassthroughProtocolType"},
         "schema":{"shape":"HttpApiSchemaConfiguration"},
-        "stickinessConfiguration":{"shape":"StickinessConfiguration"}
+        "stickinessConfiguration":{"shape":"StickinessConfiguration"},
+        "staticQueryParameters":{"shape":"StaticQueryParameters"},
+        "staticQueryParameterConflictResolution":{"shape":"StaticQueryParameterConflictResolution"}
       }
     },
     "PaymentConnectorAuthorizationUrl":{
@@ -14072,6 +14085,29 @@
       "type":"string",
       "pattern":"[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
     },
+    "StaticQueryParameterConflictResolution":{
+      "type":"string",
+      "enum":[
+        "CLIENT_OVERRIDE",
+        "STATIC_OVERRIDE"
+      ]
+    },
+    "StaticQueryParameterName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_.-]+"
+    },
+    "StaticQueryParameterValue":{
+      "type":"string",
+      "pattern":"[^\\x00-\\x1F\\x7F]*",
+      "sensitive":true
+    },
+    "StaticQueryParameters":{
+      "type":"map",
+      "key":{"shape":"StaticQueryParameterName"},
+      "value":{"shape":"StaticQueryParameterValue"}
+    },
     "StaticRoute":{
       "type":"structure",
       "required":["targetName"],
@@ -14107,7 +14143,8 @@
       "required":["identifier"],
       "members":{
         "identifier":{"shape":"StickinessConfigurationIdentifierString"},
-        "timeout":{"shape":"StickinessTimeout"}
+        "timeout":{"shape":"StickinessTimeout"},
+        "compositeIdentifier":{"shape":"CompositeIdentifierList"}
       }
     },
     "StickinessConfigurationIdentifierString":{

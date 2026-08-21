@@ -1401,7 +1401,8 @@
         "auxiliaryApps":{"shape":"AuxiliaryAppArnList"},
         "billingMethod":{"shape":"BillingMethod"},
         "vpceConfigurationArns":{"shape":"AmazonResourceNames"},
-        "deviceProxy":{"shape":"DeviceProxy"}
+        "deviceProxy":{"shape":"DeviceProxy"},
+        "parameters":{"shape":"RemoteAccessParameters"}
       }
     },
     "CreateRemoteAccessSessionRequest":{
@@ -2957,6 +2958,25 @@
         "remoteDriverEndpoint":{"shape":"SensitiveURL"},
         "interactiveEndpoint":{"shape":"SensitiveURL"}
       }
+    },
+    "RemoteAccessParameterKey":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z0-9:_]+"
+    },
+    "RemoteAccessParameterValue":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_.]+"
+    },
+    "RemoteAccessParameters":{
+      "type":"map",
+      "key":{"shape":"RemoteAccessParameterKey"},
+      "value":{"shape":"RemoteAccessParameterValue"},
+      "max":3,
+      "min":1
     },
     "RemoteAccessSession":{
       "type":"structure",

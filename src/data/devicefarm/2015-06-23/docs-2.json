@@ -35,7 +35,7 @@
     "GetSuite": "<p>Gets information about a suite.</p>",
     "GetTest": "<p>Gets information about a test.</p>",
     "GetTestGridProject": "<p>Retrieves information about a Selenium testing project.</p>",
-    "GetTestGridSession": "<p>A session is an instance of a browser created through a <code>RemoteWebDriver</code> with the URL from <a>CreateTestGridUrlResult$url</a>. You can use the following to look up sessions:</p> <ul> <li> <p>The session ARN (<a>GetTestGridSessionRequest$sessionArn</a>).</p> </li> <li> <p>The project ARN and a session ID (<a>GetTestGridSessionRequest$projectArn</a> and <a>GetTestGridSessionRequest$sessionId</a>).</p> </li> </ul> <p/>",
+    "GetTestGridSession": "<p>A session is an instance of a browser created through a <code>RemoteWebDriver</code> with the URL from <code> CreateTestGridUrlResult</code>. You can use the following to look up sessions:</p> <ul> <li> <p>The session ARN.</p> </li> <li> <p>The project ARN and a session ID.</p> </li> </ul> <p/>",
     "GetUpload": "<p>Gets information about an upload.</p>",
     "GetVPCEConfiguration": "<p>Returns information about the configuration settings for your Amazon Virtual Private Cloud (VPC) endpoint.</p>",
     "InstallToRemoteAccessSession": "<p>Installs an application to the device in a remote access session. For Android applications, the file must be in .apk format. For iOS applications, the file must be in .ipa format.</p>",
@@ -52,7 +52,7 @@
     "ListProjects": "<p>Gets information about projects.</p>",
     "ListRemoteAccessSessions": "<p>Returns a list of all currently running remote access sessions.</p>",
     "ListRuns": "<p>Gets information about runs, given an AWS Device Farm project ARN.</p>",
-    "ListSamples": "<p>Gets information about samples, given an AWS Device Farm job ARN.</p>",
+    "ListSamples": "<p>Gets information about samples, given an AWS Device Farm job ARN.</p> <important> <p>Device Farm does not support performance data samples during test executions.</p> </important>",
     "ListSuites": "<p>Gets information about test suites for a given job.</p>",
     "ListTagsForResource": "<p>List the tags for an AWS Device Farm resource.</p>",
     "ListTestGridProjects": "<p>Gets a list of all Selenium testing projects in your account.</p>",
@@ -411,7 +411,7 @@
     "DateTime": {
       "base": null,
       "refs": {
-        "CreateTestGridUrlResult$expires": "<p>The number of seconds the URL from <a>CreateTestGridUrlResult$url</a> stays active.</p>",
+        "CreateTestGridUrlResult$expires": "<p>The number of seconds the URL stays active from creation.</p>",
         "Job$created": "<p>When the job was created.</p>",
         "Job$started": "<p>The job's start time.</p>",
         "Job$stopped": "<p>The job's stop time.</p>",
@@ -1718,6 +1718,24 @@
         "RemoteAccessSession$endpoints": null
       }
     },
+    "RemoteAccessParameterKey": {
+      "base": null,
+      "refs": {
+        "RemoteAccessParameters$key": null
+      }
+    },
+    "RemoteAccessParameterValue": {
+      "base": null,
+      "refs": {
+        "RemoteAccessParameters$value": null
+      }
+    },
+    "RemoteAccessParameters": {
+      "base": null,
+      "refs": {
+        "CreateRemoteAccessSessionConfiguration$parameters": "<p>The name-value string pairs that specify additional settings for the remote access session.</p> <ul> <li> <p> <code>appium:version</code>: The major version of the Appium server to use for the session (for example, 2 or 3). The service may reject the selected version if it is not available for the selected device.</p> </li> </ul>"
+      }
+    },
     "RemoteAccessSession": {
       "base": "<p>Represents information about the remote access session.</p>",
       "refs": {
@@ -1824,7 +1842,7 @@
       }
     },
     "Sample": {
-      "base": "<p>Represents a sample of performance data.</p>",
+      "base": "<p>Represents a sample of performance data.</p> <important> <p>Device Farm does not support performance data samples during test executions.</p> </important>",
       "refs": {
         "Samples$member": null
       }
@@ -1878,7 +1896,7 @@
     "SensitiveString": {
       "base": null,
       "refs": {
-        "CreateTestGridUrlResult$url": "<p>A signed URL, expiring in <a>CreateTestGridUrlRequest$expiresInSeconds</a> seconds, to be passed to a <code>RemoteWebDriver</code>. </p>",
+        "CreateTestGridUrlResult$url": "<p>A signed URL, expiring in the time specified by the <code>CreateTestGridUrlRequest</code>, to be passed to a <code>RemoteWebDriver</code>. </p>",
         "TestGridSessionArtifact$url": "<p>A semi-stable URL to the content of the object.</p>"
       }
     },
@@ -2147,7 +2165,7 @@
     "TestParameters": {
       "base": null,
       "refs": {
-        "ScheduleRunTest$parameters": "<p>The test's parameters, such as test framework parameters and fixture settings. Parameters are represented by name-value pairs of strings.</p> <p>For all tests:</p> <ul> <li> <p> <code>app_performance_monitoring</code>: Performance monitoring is enabled by default. Set this parameter to false to disable it.</p> </li> </ul> <p>For Appium tests (all types):</p> <ul> <li> <p>appium_version: The Appium version. Currently supported values are 1.6.5 (and later), latest, and default.</p> <ul> <li> <p>latest runs the latest Appium version supported by Device Farm (1.9.1).</p> </li> <li> <p>For default, Device Farm selects a compatible version of Appium for the device. The current behavior is to run 1.7.2 on Android devices and iOS 9 and earlier and 1.7.2 for iOS 10 and later.</p> </li> <li> <p>This behavior is subject to change.</p> </li> </ul> </li> </ul> <p>For fuzz tests (Android only):</p> <ul> <li> <p>event_count: The number of events, between 1 and 10000, that the UI fuzz test should perform.</p> </li> <li> <p>throttle: The time, in ms, between 0 and 1000, that the UI fuzz test should wait between events.</p> </li> <li> <p>seed: A seed to use for randomizing the UI fuzz test. Using the same seed value between tests ensures identical event sequences.</p> </li> </ul> <p>For Instrumentation:</p> <ul> <li> <p>filter: A test filter string. Examples:</p> <ul> <li> <p>Running a single test case: <code>com.android.abc.Test1</code> </p> </li> <li> <p>Running a single test: <code>com.android.abc.Test1#smoke</code> </p> </li> <li> <p>Running multiple tests: <code>com.android.abc.Test1,com.android.abc.Test2</code> </p> </li> </ul> </li> </ul> <p>For XCTest and XCTestUI:</p> <ul> <li> <p>filter: A test filter string. Examples:</p> <ul> <li> <p>Running a single test class: <code>LoginTests</code> </p> </li> <li> <p>Running a multiple test classes: <code>LoginTests,SmokeTests</code> </p> </li> <li> <p>Running a single test: <code>LoginTests/testValid</code> </p> </li> <li> <p>Running multiple tests: <code>LoginTests/testValid,LoginTests/testInvalid</code> </p> </li> </ul> </li> </ul>"
+        "ScheduleRunTest$parameters": "<p>The test's parameters, such as test framework parameters and fixture settings. Parameters are represented by name-value pairs of strings.</p> <p>For fuzz tests (Android only):</p> <ul> <li> <p>event_count: The number of events, between 1 and 10000, that the UI fuzz test should perform.</p> </li> <li> <p>throttle: The time, in ms, between 0 and 1000, that the UI fuzz test should wait between events.</p> </li> <li> <p>seed: A seed to use for randomizing the UI fuzz test. Using the same seed value between tests ensures identical event sequences.</p> </li> </ul> <p>For Instrumentation:</p> <ul> <li> <p>filter: A test filter string. Examples:</p> <ul> <li> <p>Running a single test case: <code>com.android.abc.Test1</code> </p> </li> <li> <p>Running a single test: <code>com.android.abc.Test1#smoke</code> </p> </li> <li> <p>Running multiple tests: <code>com.android.abc.Test1,com.android.abc.Test2</code> </p> </li> </ul> </li> </ul> <p>For XCTest and XCTestUI:</p> <ul> <li> <p>filter: A test filter string. Examples:</p> <ul> <li> <p>Running a single test class: <code>LoginTests</code> </p> </li> <li> <p>Running a multiple test classes: <code>LoginTests,SmokeTests</code> </p> </li> <li> <p>Running a single test: <code>LoginTests/testValid</code> </p> </li> <li> <p>Running multiple tests: <code>LoginTests/testValid,LoginTests/testInvalid</code> </p> </li> </ul> </li> </ul>"
       }
     },
     "TestReport": {

@@ -2275,7 +2275,8 @@
         "StateTransitionedTimestamp":{"shape":"Timestamp"},
         "EvaluationState":{"shape":"EvaluationState"},
         "ActionLogLineCount":{"shape":"ActionLogLineCount"},
-        "ActionLogLineRoleArn":{"shape":"ActionLogLineRoleArn"}
+        "ActionLogLineRoleArn":{"shape":"ActionLogLineRoleArn"},
+        "WarmUpConfiguration":{"shape":"WarmUpConfiguration"}
       },
       "xmlOrder":[
         "AlarmName",
@@ -2299,7 +2300,8 @@
         "TreatMissingData",
         "EvaluationState",
         "ActionLogLineCount",
-        "ActionLogLineRoleArn"
+        "ActionLogLineRoleArn",
+        "WarmUpConfiguration"
       ]
     },
     "LogAlarms":{
@@ -2416,6 +2418,7 @@
         "EvaluationState":{"shape":"EvaluationState"},
         "StateTransitionedTimestamp":{"shape":"Timestamp"},
         "EvaluationWindow":{"shape":"EvaluationWindow"},
+        "WarmUpConfiguration":{"shape":"WarmUpConfiguration"},
         "EvaluationCriteria":{"shape":"EvaluationCriteria"},
         "EvaluationInterval":{"shape":"EvaluationInterval"}
       },
@@ -2450,6 +2453,7 @@
         "EvaluationState",
         "StateTransitionedTimestamp",
         "EvaluationWindow",
+        "WarmUpConfiguration",
         "EvaluationCriteria",
         "EvaluationInterval"
       ]
@@ -2692,6 +2696,7 @@
         "Stopped"
       ]
     },
+    "OnlyStartEvaluatingAfterWarmUpPeriodEnds":{"type":"boolean"},
     "OutputFormat":{"type":"string"},
     "OwningAccounts":{
       "type":"list",
@@ -2848,7 +2853,8 @@
         "Threshold":{"shape":"Threshold"},
         "ComparisonOperator":{"shape":"ComparisonOperator"},
         "TreatMissingData":{"shape":"TreatMissingData"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "WarmUpConfiguration":{"shape":"WarmUpConfiguration"}
       }
     },
     "PutManagedInsightRulesInput":{
@@ -2891,6 +2897,7 @@
         "Tags":{"shape":"TagList"},
         "ThresholdMetricId":{"shape":"MetricId"},
         "EvaluationWindow":{"shape":"EvaluationWindow"},
+        "WarmUpConfiguration":{"shape":"WarmUpConfiguration"},
         "EvaluationCriteria":{"shape":"EvaluationCriteria"},
         "EvaluationInterval":{"shape":"EvaluationInterval"}
       }
@@ -3347,6 +3354,19 @@
       "members":{
         "Timezone":{"shape":"Timezone"}
       }
+    },
+    "WarmUpConfiguration":{
+      "type":"structure",
+      "required":["WarmUpPeriodDurationInMinutes"],
+      "members":{
+        "WarmUpPeriodDurationInMinutes":{"shape":"WarmUpPeriodDurationInMinutes"},
+        "OnlyStartEvaluatingAfterWarmUpPeriodEnds":{"shape":"OnlyStartEvaluatingAfterWarmUpPeriodEnds"}
+      }
+    },
+    "WarmUpPeriodDurationInMinutes":{
+      "type":"integer",
+      "max":2880,
+      "min":1
     }
   }
 }

@@ -27,6 +27,11 @@
             "documentation": "Override the endpoint used to send this request",
             "type": "string"
         },
+        "OperationType": {
+            "required": false,
+            "documentation": "Internal parameter to distinguish between Control/Data plane API and accordingly generate control/data plane endpoint",
+            "type": "string"
+        },
         "StreamId": {
             "required": false,
             "documentation": "The unique identifier of the Kinesis stream",
@@ -37,11 +42,6 @@
             "documentation": "The ARN of the Kinesis stream",
             "type": "string"
         },
-        "OperationType": {
-            "required": false,
-            "documentation": "Internal parameter to distinguish between Control/Data plane API and accordingly generate control/data plane endpoint",
-            "type": "string"
-        },
         "ConsumerARN": {
             "required": false,
             "documentation": "The ARN of the Kinesis consumer",
@@ -50,6 +50,18 @@
         "ResourceARN": {
             "required": false,
             "documentation": "The ARN of the Kinesis resource",
+            "type": "string"
+        },
+        "AccountId": {
+            "builtIn": "AWS::Auth::AccountId",
+            "required": false,
+            "documentation": "The AWS AccountId used for the request.",
+            "type": "string"
+        },
+        "AccountIdEndpointMode": {
+            "builtIn": "AWS::Auth::AccountIdEndpointMode",
+            "required": false,
+            "documentation": "The AccountId Endpoint Mode.",
             "type": "string"
         }
     },
@@ -188,6 +200,76 @@
             ]
         },
         {
+            "fn": "substring",
+            "argv": [
+                {
+                    "ref": "Endpoint"
+                },
+                15,
+                20,
+                false
+            ],
+            "assign": "HttpsCustomEndpointSuffixValue"
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "fn": "coalesce",
+                    "argv": [
+                        {
+                            "fn": "substring",
+                            "argv": [
+                                {
+                                    "ref": "Endpoint"
+                                },
+                                15,
+                                16,
+                                false
+                            ]
+                        },
+                        ""
+                    ]
+                },
+                "-"
+            ]
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "fn": "coalesce",
+                    "argv": [
+                        {
+                            "fn": "substring",
+                            "argv": [
+                                {
+                                    "ref": "Endpoint"
+                                },
+                                20,
+                                21,
+                                false
+                            ]
+                        },
+                        ""
+                    ]
+                },
+                "."
+            ]
+        },
+        {
+            "fn": "substring",
+            "argv": [
+                {
+                    "ref": "Endpoint"
+                },
+                7,
+                12,
+                false
+            ],
+            "assign": "PlainCustomEndpointSuffixValue"
+        },
+        {
             "fn": "isSet",
             "argv": [
                 {
@@ -235,76 +317,6 @@
             ]
         },
         {
-            "fn": "substring",
-            "argv": [
-                {
-                    "ref": "Endpoint"
-                },
-                15,
-                20,
-                false
-            ],
-            "assign": "HttpsCustomEndpointSuffixValue"
-        },
-        {
-            "fn": "stringEquals",
-            "argv": [
-                {
-                    "fn": "coalesce",
-                    "argv": [
-                        {
-                            "fn": "substring",
-                            "argv": [
-                                {
-                                    "ref": "Endpoint"
-                                },
-                                20,
-                                21,
-                                false
-                            ]
-                        },
-                        ""
-                    ]
-                },
-                "."
-            ]
-        },
-        {
-            "fn": "stringEquals",
-            "argv": [
-                {
-                    "fn": "coalesce",
-                    "argv": [
-                        {
-                            "fn": "substring",
-                            "argv": [
-                                {
-                                    "ref": "Endpoint"
-                                },
-                                15,
-                                16,
-                                false
-                            ]
-                        },
-                        ""
-                    ]
-                },
-                "-"
-            ]
-        },
-        {
-            "fn": "substring",
-            "argv": [
-                {
-                    "ref": "Endpoint"
-                },
-                7,
-                12,
-                false
-            ],
-            "assign": "PlainCustomEndpointSuffixValue"
-        },
-        {
             "fn": "stringEquals",
             "argv": [
                 {
@@ -320,34 +332,6 @@
             ]
         },
         {
-            "fn": "getAttr",
-            "argv": [
-                {
-                    "ref": "arn_ssa_3"
-                },
-                "resourceId[0]"
-            ],
-            "assign": "arnType_ssa_1"
-        },
-        {
-            "fn": "stringEquals",
-            "argv": [
-                {
-                    "ref": "arnType_ssa_1"
-                },
-                ""
-            ]
-        },
-        {
-            "fn": "stringEquals",
-            "argv": [
-                {
-                    "ref": "arnType_ssa_1"
-                },
-                "stream"
-            ]
-        },
-        {
             "fn": "isSet",
             "argv": [
                 {
@@ -356,117 +340,14 @@
             ]
         },
         {
-            "fn": "isSet",
-            "argv": [
-                {
-                    "ref": "ResourceARN"
-                }
-            ]
-        },
-        {
-            "fn": "aws.parseArn",
-            "argv": [
-                {
-                    "ref": "ResourceARN"
-                }
-            ],
-            "assign": "arn_ssa_2"
-        },
-        {
-            "fn": "isValidHostLabel",
-            "argv": [
-                {
-                    "fn": "getAttr",
-                    "argv": [
-                        {
-                            "ref": "arn_ssa_2"
-                        },
-                        "accountId"
-                    ]
-                },
-                false
-            ]
-        },
-        {
-            "fn": "isValidHostLabel",
-            "argv": [
-                {
-                    "fn": "getAttr",
-                    "argv": [
-                        {
-                            "ref": "arn_ssa_2"
-                        },
-                        "region"
-                    ]
-                },
-                false
-            ]
-        },
-        {
-            "fn": "stringEquals",
-            "argv": [
-                {
-                    "fn": "getAttr",
-                    "argv": [
-                        {
-                            "ref": "arn_ssa_2"
-                        },
-                        "service"
-                    ]
-                },
-                "kinesis"
-            ]
-        },
-        {
             "fn": "getAttr",
             "argv": [
                 {
-                    "ref": "arn_ssa_2"
+                    "ref": "arn_ssa_3"
                 },
                 "resourceId[0]"
             ],
-            "assign": "arnType_ssa_3"
-        },
-        {
-            "fn": "stringEquals",
-            "argv": [
-                {
-                    "ref": "arnType_ssa_3"
-                },
-                ""
-            ]
-        },
-        {
-            "fn": "stringEquals",
-            "argv": [
-                {
-                    "ref": "arnType_ssa_3"
-                },
-                "stream"
-            ]
-        },
-        {
-            "fn": "stringEquals",
-            "argv": [
-                {
-                    "fn": "getAttr",
-                    "argv": [
-                        {
-                            "ref": "PartitionResult"
-                        },
-                        "name"
-                    ]
-                },
-                {
-                    "fn": "getAttr",
-                    "argv": [
-                        {
-                            "ref": "arn_ssa_2"
-                        },
-                        "partition"
-                    ]
-                }
-            ]
+            "assign": "arnType_ssa_1"
         },
         {
             "fn": "aws.parseArn",
@@ -571,6 +452,180 @@
                         "partition"
                     ]
                 }
+            ]
+        },
+        {
+            "fn": "isSet",
+            "argv": [
+                {
+                    "ref": "ResourceARN"
+                }
+            ]
+        },
+        {
+            "fn": "aws.parseArn",
+            "argv": [
+                {
+                    "ref": "ResourceARN"
+                }
+            ],
+            "assign": "arn_ssa_2"
+        },
+        {
+            "fn": "isSet",
+            "argv": [
+                {
+                    "ref": "AccountIdEndpointMode"
+                }
+            ]
+        },
+        {
+            "fn": "isValidHostLabel",
+            "argv": [
+                {
+                    "fn": "getAttr",
+                    "argv": [
+                        {
+                            "ref": "arn_ssa_2"
+                        },
+                        "accountId"
+                    ]
+                },
+                false
+            ]
+        },
+        {
+            "fn": "isValidHostLabel",
+            "argv": [
+                {
+                    "fn": "getAttr",
+                    "argv": [
+                        {
+                            "ref": "arn_ssa_2"
+                        },
+                        "region"
+                    ]
+                },
+                false
+            ]
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "fn": "getAttr",
+                    "argv": [
+                        {
+                            "ref": "arn_ssa_2"
+                        },
+                        "service"
+                    ]
+                },
+                "kinesis"
+            ]
+        },
+        {
+            "fn": "getAttr",
+            "argv": [
+                {
+                    "ref": "arn_ssa_2"
+                },
+                "resourceId[0]"
+            ],
+            "assign": "arnType_ssa_3"
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "ref": "arnType_ssa_3"
+                },
+                ""
+            ]
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "ref": "arnType_ssa_3"
+                },
+                "stream"
+            ]
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "fn": "getAttr",
+                    "argv": [
+                        {
+                            "ref": "PartitionResult"
+                        },
+                        "name"
+                    ]
+                },
+                {
+                    "fn": "getAttr",
+                    "argv": [
+                        {
+                            "ref": "arn_ssa_2"
+                        },
+                        "partition"
+                    ]
+                }
+            ]
+        },
+        {
+            "fn": "isSet",
+            "argv": [
+                {
+                    "ref": "AccountId"
+                }
+            ]
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "ref": "AccountIdEndpointMode"
+                },
+                "disabled"
+            ]
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "ref": "AccountIdEndpointMode"
+                },
+                "required"
+            ]
+        },
+        {
+            "fn": "isValidHostLabel",
+            "argv": [
+                {
+                    "ref": "AccountId"
+                },
+                false
+            ]
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "ref": "arnType_ssa_1"
+                },
+                ""
+            ]
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "ref": "arnType_ssa_1"
+                },
+                "stream"
             ]
         },
         {
@@ -679,15 +734,15 @@
                                 {
                                     "ref": "Endpoint"
                                 },
-                                7,
-                                8,
+                                12,
+                                13,
                                 false
                             ]
                         },
                         ""
                     ]
                 },
-                "-"
+                "."
             ]
         },
         {
@@ -702,15 +757,15 @@
                                 {
                                     "ref": "Endpoint"
                                 },
-                                12,
-                                13,
+                                7,
+                                8,
                                 false
                             ]
                         },
                         ""
                     ]
                 },
-                "."
+                "-"
             ]
         }
     ],
@@ -1023,6 +1078,73 @@
         },
         {
             "conditions": [],
+            "endpoint": {
+                "url": "https://{AccountId}.{OperationType}-kinesis-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {
+                    "metricValues": [
+                        "O"
+                    ]
+                },
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://{AccountId}.{OperationType}-kinesis-fips.{Region}.{PartitionResult#dnsSuffix}",
+                "properties": {
+                    "metricValues": [
+                        "O"
+                    ]
+                },
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://{AccountId}.{OperationType}-kinesis.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {
+                    "metricValues": [
+                        "O"
+                    ]
+                },
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://{AccountId}.{OperationType}-kinesis.{Region}.{PartitionResult#dnsSuffix}",
+                "properties": {
+                    "metricValues": [
+                        "O"
+                    ]
+                },
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "error": "Invalid account id.",
+            "type": "error"
+        },
+        {
+            "conditions": [],
+            "error": "AccountIdEndpointMode is required but no AccountID was provided or able to be loaded",
+            "type": "error"
+        },
+        {
+            "conditions": [],
+            "error": "Invalid Configuration: AccountIdEndpointMode is required but account endpoints are not supported in this partition",
+            "type": "error"
+        },
+        {
+            "conditions": [],
             "error": "Invalid Configuration: FIPS and custom endpoint are not supported",
             "type": "error"
         },
@@ -1099,6 +1221,6 @@
         }
     ],
     "root": 2,
-    "nodeCount": 106,
-    "nodes": "/////wAAAAH/////AAAAAAAAAAMAAAAEAAAAAQAAAAUAAAAEAAAACQAAAGkF9eE0AAAAAgAAAGAAAAAGAAAAAwAAAGAAAAAHAAAABAAAAAgAAAAMAAAABQAAAAkAAAAMAAAABgAAAAoAAAAMAAAABwAAAAsAAAAMAAAACAAAAD0AAAAMAAAACQAAAGkAAAANAAAACgAAAC4AAAAOAAAAFgAAAB8AAAAPAAAAFwAAABAAAABhAAAAGAAAABEF9eEcAAAAGQAAABIF9eEbAAAAGgAAABMF9eEaAAAAGwAAABQF9eEqAAAAHAAAABUF9eEYAAAAHQX14RgAAAAWAAAAHgAAABcF9eEpAAAAHwAAABgF9eEoAAAAKQAAABkF9eERAAAAKgAAABwAAAAaAAAALAAAABsF9eEnAAAALQX14SYF9eEHAAAAKwAAAB0AAABdAAAALAAAAB4F9eElAAAALQX14SQF9eECAAAAIAAAACAF9eEcAAAAIQAAACEF9eEbAAAAIgAAACIF9eEaAAAAIwAAACMF9eEjAAAAJAAAACQF9eEYAAAAJQX14RgAAAAlAAAAJgAAACYF9eEiAAAAJwAAACcF9eEhAAAAKQAAACgF9eERAAAAKgAAACsAAAApAAAALAAAACoF9eEgAAAALQX14R8F9eEHAAAAKwAAACwAAABdAAAALAAAAC0F9eEeAAAALQX14R0F9eECAAAACwAAAC8F9eEcAAAADAAAADAF9eEbAAAADQAAADEF9eEaAAAAEgAAADIF9eEZAAAAEwAAADMF9eEYAAAAFAX14RgAAAA0AAAAFQAAADUF9eEXAAAAKAAAADYF9eEWAAAAKQAAADcF9eERAAAAKgAAADoAAAA4AAAALAAAADkF9eEVAAAALQX14RQF9eEHAAAAKwAAADsAAABdAAAALAAAADwF9eETAAAALQX14RIF9eECAAAACQAAAD4AAABCAAAADgAAAD8AAABBAAAADwAAAEAAAABBAAAAEAAAAFgAAABBAAAAEQAAAEkAAABCAAAAKQAAAEMF9eERAAAAKgAAAEYAAABEAAAALAAAAEUF9eEQAAAALQX14Q8F9eEHAAAAKwAAAEcAAABdAAAALAAAAEgF9eEOAAAALQX14Q0F9eECAAAAKQAAAEoF9eERAAAAKgAAAFEAAABLAAAALAAAAE4AAABMAAAALwAAAE0F9eEQAAAAMAX14QwF9eEQAAAALQAAAE8F9eEHAAAALwAAAFAF9eEPAAAAMAX14QsF9eEPAAAAKwAAAFIAAABdAAAALAAAAFUAAABTAAAALwAAAFQF9eEOAAAAMAX14QoF9eEOAAAALQAAAFYF9eECAAAALwAAAFcF9eENAAAAMAX14QkF9eENAAAAKQAAAFkF9eERAAAAKgAAAFwAAABaAAAALAAAAFsF9eEIAAAALQX14QYF9eEHAAAAKwAAAF4AAABdAAAALAX14QMF9eEFAAAALAAAAF8F9eEEAAAALQX14QEF9eECAAAACQAAAGkAAABhAAAAKgAAAGQAAABiAAAALAAAAGMF9eEzAAAALQX14TIF9eEHAAAAKwAAAGYAAABlAAAALAX14S8F9eEFAAAALAAAAGgAAABnAAAALgX14TAF9eExAAAALQX14S4F9eEvAAAAKgX14SsAAABqAAAALAX14SwF9eEt"
+    "nodeCount": 120,
+    "nodes": "/////wAAAAH/////AAAAAAAAAAMAAAAEAAAAAQAAAAUAAAAEAAAACQAAAHcF9eE7AAAAAgAAAGwAAAAGAAAAAwAAAGwAAAAHAAAABAAAAAgAAAAMAAAABQAAAAkAAAAMAAAABgAAAAoAAAAMAAAABwAAAAsAAAAMAAAACAAAAEkAAAAMAAAACQAAAHcAAAANAAAADgAAADoAAAAOAAAAEwAAACsAAAAPAAAAHQAAABwAAAAQAAAAHwAAABEAAABvAAAAJwAAABIAAAAbAAAAKAAAABsAAAATAAAAKgAAABQF9eEvAAAALgAAABUF9eERAAAALwAAABgAAAAWAAAAMQAAABcF9eEuAAAAMgX14S0F9eEHAAAAMAAAABkAAABpAAAAMQAAABoF9eEsAAAAMgX14SsF9eECAAAAKQX14TAAAABvAAAAHgAAAB0F9eEcAAAAIAAAAB4F9eEbAAAAIQAAAB8F9eEaAAAAIgAAACAF9eEqAAAAIwAAACEF9eEYAAAAJAX14RgAAAAiAAAAJQAAACMF9eEpAAAAJgAAACQF9eEoAAAALgAAACUF9eERAAAALwAAACgAAAAmAAAAMQAAACcF9eEnAAAAMgX14SYF9eEHAAAAMAAAACkAAABpAAAAMQAAACoF9eElAAAAMgX14SQF9eECAAAAFQAAACwF9eEcAAAAFgAAAC0F9eEbAAAAFwAAAC4F9eEaAAAAGAAAAC8F9eEjAAAAGQAAADAF9eEYAAAAGgX14RgAAAAxAAAAGwAAADIF9eEiAAAAHAAAADMF9eEhAAAALgAAADQF9eERAAAALwAAADcAAAA1AAAAMQAAADYF9eEgAAAAMgX14R8F9eEHAAAAMAAAADgAAABpAAAAMQAAADkF9eEeAAAAMgX14R0F9eECAAAADwAAADsF9eEcAAAAEAAAADwF9eEbAAAAEQAAAD0F9eEaAAAAEgAAAD4F9eEZAAAAFAAAAD8F9eEYAAAAKwX14RgAAABAAAAALAAAAEEF9eEXAAAALQAAAEIF9eEWAAAALgAAAEMF9eERAAAALwAAAEYAAABEAAAAMQAAAEUF9eEVAAAAMgX14RQF9eEHAAAAMAAAAEcAAABpAAAAMQAAAEgF9eETAAAAMgX14RIF9eECAAAACQAAAEoAAABOAAAACgAAAEsAAABNAAAACwAAAEwAAABNAAAADAAAAGQAAABNAAAADQAAAFUAAABOAAAALgAAAE8F9eERAAAALwAAAFIAAABQAAAAMQAAAFEF9eEQAAAAMgX14Q8F9eEHAAAAMAAAAFMAAABpAAAAMQAAAFQF9eEOAAAAMgX14Q0F9eECAAAALgAAAFYF9eERAAAALwAAAF0AAABXAAAAMQAAAFoAAABYAAAANAAAAFkF9eEQAAAANQX14QwF9eEQAAAAMgAAAFsF9eEHAAAANAAAAFwF9eEPAAAANQX14QsF9eEPAAAAMAAAAF4AAABpAAAAMQAAAGEAAABfAAAANAAAAGAF9eEOAAAANQX14QoF9eEOAAAAMgAAAGIF9eECAAAANAAAAGMF9eENAAAANQX14QkF9eENAAAALgAAAGUF9eERAAAALwAAAGgAAABmAAAAMQAAAGcF9eEIAAAAMgX14QYF9eEHAAAAMAAAAGoAAABpAAAAMQX14QMF9eEFAAAAMQAAAGsF9eEEAAAAMgX14QEF9eECAAAACQAAAHcAAABtAAAAHwAAAG4AAABvAAAAKQX14TEAAABvAAAALwAAAHIAAABwAAAAMQAAAHEF9eE6AAAAMgX14TkF9eEHAAAAMAAAAHQAAABzAAAAMQX14TYF9eEFAAAAMQAAAHYAAAB1AAAAMwX14TcF9eE4AAAAMgX14TUF9eE2AAAALwX14TIAAAB4AAAAMQX14TMF9eE0"
 }

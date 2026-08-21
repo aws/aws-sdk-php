@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\WAFV2` - DataProtectionConfig field Key Documentation Update
+* `Aws\BedrockAgentCoreControl` - Update Dataset schema to THIRDPARTYEVALUATIONV1
+* `Aws\Kinesis` - Generate account endpoint for Kinesis Data Streams requests when the account ID is available
+* `Aws\BedrockAgentCore` - Increase spans count from 1k to 20k
+* `Aws\DeviceFarm` - Added support to CreateRemoveAccessSession for selecting a server version on the mobile WebDriver endpoint.
+* `Aws\Backup` - Updating CLI Docs for Backup Audit Manager List Job Summaries APIs.
+* `Aws\CloudWatch` - Allows customers to specify an initial warm up period to wait for metrics to arrive when creating metric or log alarms
+
 ## 3.393.3 - 2026-08-20
 
 * `Aws\CloudFront` - Added SigV4a as a supported signing protocol for Origin Access Control (OAC), enabling CloudFront to sign requests to Amazon S3 Multi-Region Access Point (S3-MRAP) origins.
