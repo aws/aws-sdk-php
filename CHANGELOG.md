@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.393.4 - 2026-08-21
 
 * `Aws\WAFV2` - DataProtectionConfig field Key Documentation Update
 * `Aws\BedrockAgentCoreControl` - Update Dataset schema to THIRDPARTYEVALUATIONV1
