@@ -6336,7 +6336,8 @@
     "ExtractionDefinitionDisplayLabel": {
       "base": null,
       "refs": {
-        "ExtractionDefinitionDisplay$Label": "<p>The label displayed in the agent workspace for this extraction definition.</p>"
+        "ExtractionDefinitionDisplay$Label": "<p>The label displayed in the agent workspace for this extraction definition.</p>",
+        "RealTimeContactAnalysisSegmentExtractedInformation$ExtractionDefinitionDisplayLabel": "<p>The display label of the extraction definition that produced this result.</p>"
       }
     },
     "ExtractionDefinitionId": {
@@ -6347,6 +6348,7 @@
         "DescribeExtractionDefinitionRequest$ExtractionDefinitionId": "<p>The identifier of the extraction definition to describe.</p>",
         "ExtractionDefinition$ExtractionDefinitionId": "<p>The identifier of the extraction definition.</p>",
         "ExtractionDefinitionSummary$ExtractionDefinitionId": "<p>The identifier of the extraction definition.</p>",
+        "RealTimeContactAnalysisSegmentExtractedInformation$ExtractionDefinitionId": "<p>The identifier of the extraction definition that produced this result.</p>",
         "UpdateExtractionDefinitionRequest$ExtractionDefinitionId": "<p>The identifier of the extraction definition to update.</p>"
       }
     },
@@ -6356,6 +6358,7 @@
         "CreateExtractionDefinitionRequest$Name": "<p>A unique name of the extraction definition.</p>",
         "ExtractionDefinition$Name": "<p>The name of the extraction definition.</p>",
         "ExtractionDefinitionSummary$Name": "<p>The name of the extraction definition.</p>",
+        "RealTimeContactAnalysisSegmentExtractedInformation$ExtractionDefinitionName": "<p>The name of the extraction definition that produced this result.</p>",
         "UpdateExtractionDefinitionRequest$Name": "<p>The name of the extraction definition.</p>"
       }
     },
@@ -11236,6 +11239,30 @@
         "RealTimeContactAnalysisSegmentEvent$EventType": "<p>Type of the event. For example, <code>application/vnd.amazonaws.connect.event.participant.left</code>.</p>"
       }
     },
+    "RealTimeContactAnalysisExtractedInformationContent": {
+      "base": null,
+      "refs": {
+        "RealTimeContactAnalysisExtractedInformationValue$Content": "<p>The text content of the extracted value.</p>"
+      }
+    },
+    "RealTimeContactAnalysisExtractedInformationFailureCode": {
+      "base": null,
+      "refs": {
+        "RealTimeContactAnalysisSegmentExtractedInformation$FailureCode": "<p>If the information failed to be extracted, one of the following failure codes occurs:</p> <ul> <li> <p> <code>QUOTA_EXCEEDED</code>: The number of concurrent analytics jobs reached your service quota.</p> </li> <li> <p> <code>INSUFFICIENT_CONVERSATION_CONTENT</code>: Information extraction requires a conversation with at least one turn from each participant.</p> </li> <li> <p> <code>FAILED_SAFETY_GUIDELINES</code>: The extracted information cannot be provided because it failed to meet system safety guidelines.</p> </li> <li> <p> <code>INTERNAL_ERROR</code>: Internal system error.</p> </li> <li> <p> <code>MAX_PACKAGE_FEATURE_ONLY</code>: Information extraction is only available in Amazon Connect Customer instances.</p> </li> </ul>"
+      }
+    },
+    "RealTimeContactAnalysisExtractedInformationValue": {
+      "base": "<p>An individual value extracted from the conversation, including its content and the locations where it was found.</p>",
+      "refs": {
+        "RealTimeContactAnalysisExtractedInformationValues$member": null
+      }
+    },
+    "RealTimeContactAnalysisExtractedInformationValues": {
+      "base": null,
+      "refs": {
+        "RealTimeContactAnalysisSegmentExtractedInformation$ExtractedValues": "<p>The list of values extracted from the conversation for this extraction definition. This field is empty when a <code>FailureCode</code> is present.</p>"
+      }
+    },
     "RealTimeContactAnalysisId256": {
       "base": null,
       "refs": {
@@ -11323,6 +11350,12 @@
       "base": "<p>Segment type describing a contact event.</p>",
       "refs": {
         "RealtimeContactAnalysisSegment$Event": null
+      }
+    },
+    "RealTimeContactAnalysisSegmentExtractedInformation": {
+      "base": "<p>Segment containing information extracted from the conversation. Each segment represents the results for a single extraction definition.</p>",
+      "refs": {
+        "RealtimeContactAnalysisSegment$ExtractedInformation": "<p>The extracted information from the conversation.</p>"
       }
     },
     "RealTimeContactAnalysisSegmentIssues": {
@@ -11415,6 +11448,7 @@
     "RealTimeContactAnalysisTranscriptItemsWithCharacterOffsets": {
       "base": null,
       "refs": {
+        "RealTimeContactAnalysisExtractedInformationValue$PointsOfInterest": "<p>The sections in the conversation that indicate where the extracted value was found.</p>",
         "RealTimeContactAnalysisPointOfInterest$TranscriptItems": "<p>List of the transcript items (segments) that are associated with a given point of interest. </p>"
       }
     },

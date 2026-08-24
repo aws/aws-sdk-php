@@ -253,6 +253,20 @@
     }
   },
   "shapes":{
+    "AccountConstraint":{
+      "type":"structure",
+      "members":{
+        "managementAccount":{"shape":"ManagementAccountConstraint"},
+        "delegatedAdmin":{"shape":"DelegatedAdminConstraint"}
+      },
+      "union":true
+    },
+    "AccountConstraintsList":{
+      "type":"list",
+      "member":{"shape":"AccountConstraint"},
+      "max":10,
+      "min":0
+    },
     "AllowedValues":{
       "type":"list",
       "member":{"shape":"ValueString"}
@@ -282,6 +296,13 @@
       "type":"structure",
       "members":{
         "deploymentId":{"shape":"DeploymentId"}
+      }
+    },
+    "DelegatedAdminConstraint":{
+      "type":"structure",
+      "required":["servicePrincipal"],
+      "members":{
+        "servicePrincipal":{"shape":"ServicePrincipalType"}
       }
     },
     "DeleteDeploymentInput":{
@@ -346,12 +367,31 @@
         "description":{"shape":"String"},
         "status":{"shape":"EventStatus"},
         "statusReason":{"shape":"String"},
-        "timestamp":{"shape":"Timestamp"}
+        "timestamp":{"shape":"Timestamp"},
+        "metadata":{"shape":"DeploymentEventMetadata"}
       }
     },
     "DeploymentEventDataSummaryList":{
       "type":"list",
       "member":{"shape":"DeploymentEventDataSummary"}
+    },
+    "DeploymentEventMetadata":{
+      "type":"map",
+      "key":{"shape":"DeploymentEventMetadataKey"},
+      "value":{"shape":"DeploymentEventMetadataValue"},
+      "max":25,
+      "min":0
+    },
+    "DeploymentEventMetadataKey":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_.-]+"
+    },
+    "DeploymentEventMetadataValue":{
+      "type":"string",
+      "max":4096,
+      "min":0
     },
     "DeploymentFilter":{
       "type":"structure",
@@ -681,6 +721,10 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ManagementAccountConstraint":{
+      "type":"structure",
+      "members":{}
+    },
     "MaxDeploymentEventResults":{
       "type":"integer",
       "box":true,
@@ -732,6 +776,12 @@
       },
       "exception":true
     },
+    "ServicePrincipalType":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-z0-9.-]+\\.amazonaws\\.com(\\.cn)?"
+    },
     "SpecificationsConditionalData":{
       "type":"list",
       "member":{"shape":"DeploymentConditionalField"},
@@ -743,7 +793,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"(?!aws:)[a-zA-Z+-=._:/]+"
+      "pattern":"[a-zA-Z0-9 _.:/=+@-]+"
     },
     "TagKeyList":{
       "type":"list",
@@ -774,7 +824,7 @@
       "type":"string",
       "max":256,
       "min":0,
-      "pattern":"[a-zA-Z+-=._:/]*"
+      "pattern":"[a-zA-Z0-9 _.:/=+@-]*"
     },
     "Tags":{
       "type":"map",
@@ -850,6 +900,7 @@
         "workloadName":{"shape":"WorkloadName"},
         "displayName":{"shape":"String"},
         "status":{"shape":"WorkloadStatus"},
+        "accountConstraints":{"shape":"AccountConstraintsList"},
         "description":{"shape":"String"},
         "documentationUrl":{"shape":"String"},
         "iconUrl":{"shape":"String"},
@@ -861,7 +912,8 @@
       "members":{
         "workloadName":{"shape":"WorkloadName"},
         "displayName":{"shape":"String"},
-        "status":{"shape":"WorkloadStatus"}
+        "status":{"shape":"WorkloadStatus"},
+        "accountConstraints":{"shape":"AccountConstraintsList"}
       }
     },
     "WorkloadDataSummaryList":{
@@ -879,6 +931,7 @@
         "description":{"shape":"String"},
         "status":{"shape":"WorkloadDeploymentPatternStatus"},
         "statusMessage":{"shape":"String"},
+        "accountConstraints":{"shape":"AccountConstraintsList"},
         "specifications":{"shape":"DeploymentSpecificationsData"}
       }
     },
@@ -892,7 +945,8 @@
         "displayName":{"shape":"String"},
         "description":{"shape":"String"},
         "status":{"shape":"WorkloadDeploymentPatternStatus"},
-        "statusMessage":{"shape":"String"}
+        "statusMessage":{"shape":"String"},
+        "accountConstraints":{"shape":"AccountConstraintsList"}
       }
     },
     "WorkloadDeploymentPatternDataSummaryList":{

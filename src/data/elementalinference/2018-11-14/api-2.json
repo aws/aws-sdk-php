@@ -181,6 +181,26 @@
       ],
       "readonly":true
     },
+    "GetFixture":{
+      "name":"GetFixture",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/fixtures/{fixtureId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetFixtureRequest"},
+      "output":{"shape":"GetFixtureResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"TooManyRequestException"},
+        {"shape":"GatewayTimedOutException"}
+      ],
+      "readonly":true
+    },
     "ListDictionaries":{
       "name":"ListDictionaries",
       "http":{
@@ -488,6 +508,7 @@
         "id":{"shape":"FeedId"},
         "dataEndpoints":{"shape":"StringList"},
         "outputs":{"shape":"GetOutputList"},
+        "accessRoleArn":{"shape":"IamRoleArn"},
         "status":{"shape":"FeedStatus"},
         "association":{"shape":"FeedAssociation"},
         "tags":{"shape":"TagMap"}
@@ -841,9 +862,38 @@
         "id":{"shape":"FeedId"},
         "dataEndpoints":{"shape":"StringList"},
         "outputs":{"shape":"GetOutputList"},
+        "accessRoleArn":{"shape":"IamRoleArn"},
         "status":{"shape":"FeedStatus"},
         "association":{"shape":"FeedAssociation"},
         "tags":{"shape":"TagMap"}
+      }
+    },
+    "GetFixtureRequest":{
+      "type":"structure",
+      "required":["fixtureId"],
+      "members":{
+        "fixtureId":{
+          "shape":"FixtureId",
+          "location":"uri",
+          "locationName":"fixtureId"
+        }
+      }
+    },
+    "GetFixtureResponse":{
+      "type":"structure",
+      "required":[
+        "fixtureId",
+        "name",
+        "status",
+        "competitors"
+      ],
+      "members":{
+        "fixtureId":{"shape":"FixtureId"},
+        "name":{"shape":"String"},
+        "fixtureGroup":{"shape":"String"},
+        "scheduledStart":{"shape":"SyntheticTimestamp_date_time"},
+        "status":{"shape":"String"},
+        "competitors":{"shape":"CompetitorList"}
       }
     },
     "GetOutput":{
@@ -1275,6 +1325,7 @@
         "id":{"shape":"FeedId"},
         "dataEndpoints":{"shape":"StringList"},
         "outputs":{"shape":"GetOutputList"},
+        "accessRoleArn":{"shape":"IamRoleArn"},
         "status":{"shape":"FeedStatus"},
         "association":{"shape":"FeedAssociation"},
         "tags":{"shape":"TagMap"}

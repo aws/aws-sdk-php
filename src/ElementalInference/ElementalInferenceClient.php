@@ -23,6 +23,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getDictionaryAsync(array $args = [])
  * @method \Aws\Result getFeed(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getFeedAsync(array $args = [])
+ * @method \Aws\Result getFixture(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getFixtureAsync(array $args = [])
  * @method \Aws\Result listDictionaries(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listDictionariesAsync(array $args = [])
  * @method \Aws\Result listFeeds(array $args = [])

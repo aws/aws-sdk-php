@@ -2,7 +2,7 @@
   "version": "2.0",
   "service": "<ul> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_Operations_Amazon_Connect_Contact_Lens.html\">Contact Lens actions</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_Types_Amazon_Connect_Contact_Lens.html\">Contact Lens data types</a> </p> </li> </ul> <p>Amazon Connect Contact Lens enables you to analyze conversations between customer and agents, by using speech transcription, natural language processing, and intelligent search capabilities. It performs sentiment analysis, detects issues, and enables you to automatically categorize contacts.</p> <p>Amazon Connect Contact Lens provides both real-time and post-call analytics of customer-agent conversations. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/analyze-conversations.html\">Analyze conversations using speech analytics</a> in the <i>Amazon Connect Administrator Guide</i>. </p>",
   "operations": {
-    "ListRealtimeContactAnalysisSegments": "<p>Provides a list of analysis segments for a real-time analysis session.</p>"
+    "ListRealtimeContactAnalysisSegments": "<p>Provides a list of analysis segments for a real-time analysis session for voice.</p> <note> <p>Voice data is retained for 24 hours. You must invoke this API during that time.</p> </note>"
   },
   "shapes": {
     "AccessDeniedException": {
@@ -45,6 +45,54 @@
       "base": null,
       "refs": {
         "ListRealtimeContactAnalysisSegmentsRequest$ContactId": "<p>The identifier of the contact.</p>"
+      }
+    },
+    "ExtractedInformation": {
+      "base": "<p>Segment containing information extracted from the conversation. Each segment represents the results for a single extraction definition.</p>",
+      "refs": {
+        "RealtimeContactAnalysisSegment$ExtractedInformation": "<p>The extracted information from the conversation.</p>"
+      }
+    },
+    "ExtractedInformationContent": {
+      "base": null,
+      "refs": {
+        "ExtractedInformationValue$Content": "<p>The text content of the extracted value.</p>"
+      }
+    },
+    "ExtractedInformationFailureCode": {
+      "base": null,
+      "refs": {
+        "ExtractedInformation$FailureCode": "<p>If the information failed to be extracted, one of the following failure codes occurs:</p> <ul> <li> <p> <code>QUOTA_EXCEEDED</code>: The number of concurrent analytics jobs reached your service quota.</p> </li> <li> <p> <code>INSUFFICIENT_CONVERSATION_CONTENT</code>: Information extraction requires a conversation with at least one turn from each participant.</p> </li> <li> <p> <code>FAILED_SAFETY_GUIDELINES</code>: The extracted information cannot be provided because it failed to meet system safety guidelines.</p> </li> <li> <p> <code>INTERNAL_ERROR</code>: Internal system error.</p> </li> <li> <p> <code>MAX_PACKAGE_FEATURE_ONLY</code>: Information extraction is only available in Amazon Connect Customer instances.</p> </li> </ul>"
+      }
+    },
+    "ExtractedInformationValue": {
+      "base": "<p>An individual value extracted from the conversation, including its content and the locations where it was found.</p>",
+      "refs": {
+        "ExtractedInformationValues$member": null
+      }
+    },
+    "ExtractedInformationValues": {
+      "base": null,
+      "refs": {
+        "ExtractedInformation$ExtractedValues": "<p>The list of values extracted from the conversation for this extraction definition. This field is empty when a <code>FailureCode</code> is present.</p>"
+      }
+    },
+    "ExtractionDefinitionDisplayLabel": {
+      "base": null,
+      "refs": {
+        "ExtractedInformation$ExtractionDefinitionDisplayLabel": "<p>The display label of the extraction definition that produced this result.</p>"
+      }
+    },
+    "ExtractionDefinitionId": {
+      "base": null,
+      "refs": {
+        "ExtractedInformation$ExtractionDefinitionId": "<p>The identifier of the extraction definition that produced this result.</p>"
+      }
+    },
+    "ExtractionDefinitionName": {
+      "base": null,
+      "refs": {
+        "ExtractedInformation$ExtractionDefinitionName": "<p>The name of the extraction definition that produced this result.</p>"
       }
     },
     "InstanceId": {
@@ -119,8 +167,8 @@
     "OffsetMillis": {
       "base": null,
       "refs": {
-        "PointOfInterest$BeginOffsetMillis": "<p>The beginning offset in milliseconds where the category rule was detected.</p>",
-        "PointOfInterest$EndOffsetMillis": "<p>The ending offset in milliseconds where the category rule was detected.</p>",
+        "PointOfInterest$BeginOffsetMillis": "<p>The beginning offset (in milliseconds) where the match was detected.</p>",
+        "PointOfInterest$EndOffsetMillis": "<p>The ending offset (in milliseconds) where the match was detected.</p>",
         "Transcript$BeginOffsetMillis": "<p>The beginning offset in the contact for this transcript.</p>",
         "Transcript$EndOffsetMillis": "<p>The end offset in the contact for this transcript.</p>"
       }
@@ -138,7 +186,7 @@
       }
     },
     "PointOfInterest": {
-      "base": "<p>The section of the contact audio where that category rule was detected.</p>",
+      "base": "<p>The section of the contact audio where a match was detected.</p>",
       "refs": {
         "PointsOfInterest$member": null
       }
@@ -146,7 +194,8 @@
     "PointsOfInterest": {
       "base": null,
       "refs": {
-        "CategoryDetails$PointsOfInterest": "<p>The section of audio where the category rule was detected.</p>"
+        "CategoryDetails$PointsOfInterest": "<p>The section of audio where the category rule was detected.</p>",
+        "ExtractedInformationValue$PointsOfInterest": "<p>The sections in the conversation that indicate where the extracted value was found.</p>"
       }
     },
     "PostContactSummary": {

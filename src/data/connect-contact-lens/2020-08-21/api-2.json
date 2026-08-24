@@ -87,6 +87,67 @@
       "min":1,
       "pattern":".*\\S.*"
     },
+    "ExtractedInformation":{
+      "type":"structure",
+      "required":[
+        "ExtractionDefinitionId",
+        "ExtractionDefinitionName"
+      ],
+      "members":{
+        "ExtractionDefinitionId":{"shape":"ExtractionDefinitionId"},
+        "ExtractionDefinitionName":{"shape":"ExtractionDefinitionName"},
+        "ExtractionDefinitionDisplayLabel":{"shape":"ExtractionDefinitionDisplayLabel"},
+        "ExtractedValues":{"shape":"ExtractedInformationValues"},
+        "FailureCode":{"shape":"ExtractedInformationFailureCode"}
+      }
+    },
+    "ExtractedInformationContent":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "ExtractedInformationFailureCode":{
+      "type":"string",
+      "enum":[
+        "QUOTA_EXCEEDED",
+        "INSUFFICIENT_CONVERSATION_CONTENT",
+        "FAILED_SAFETY_GUIDELINES",
+        "INTERNAL_ERROR",
+        "MAX_PACKAGE_FEATURE_ONLY"
+      ]
+    },
+    "ExtractedInformationValue":{
+      "type":"structure",
+      "required":[
+        "Content",
+        "PointsOfInterest"
+      ],
+      "members":{
+        "Content":{"shape":"ExtractedInformationContent"},
+        "PointsOfInterest":{"shape":"PointsOfInterest"}
+      }
+    },
+    "ExtractedInformationValues":{
+      "type":"list",
+      "member":{"shape":"ExtractedInformationValue"}
+    },
+    "ExtractionDefinitionDisplayLabel":{
+      "type":"string",
+      "max":25,
+      "min":0
+    },
+    "ExtractionDefinitionId":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":".*\\S.*"
+    },
+    "ExtractionDefinitionName":{
+      "type":"string",
+      "max":200,
+      "min":1,
+      "pattern":".*\\S.*"
+    },
     "InstanceId":{
       "type":"string",
       "max":256,
@@ -238,7 +299,8 @@
       "members":{
         "Transcript":{"shape":"Transcript"},
         "Categories":{"shape":"Categories"},
-        "PostContactSummary":{"shape":"PostContactSummary"}
+        "PostContactSummary":{"shape":"PostContactSummary"},
+        "ExtractedInformation":{"shape":"ExtractedInformation"}
       }
     },
     "RealtimeContactAnalysisSegments":{

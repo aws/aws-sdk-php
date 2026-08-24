@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\TimestreamInfluxDB` - Service-managed parameter groups now only apply optimized defaults to DB Clusters automatically. New field effectiveDbParameterGroupIdentifier surfaces the parameter group actually applied.
+* `Aws\Kafka` - Amazon MSK Replicator now supports OAuth authentication when connecting to external Apache Kafka clusters, enabling customers to replicate data from clusters that require OAuth for client authentication. This new capability is supported in all AWS Regions where MSK Express brokers are available.
+* `Aws\Batch` - Doc Update, Add note that UpdatePolicy applies only to EC2 managed compute environments
+* `Aws\ElementalInference` - Added support for the GetFixture API, enabling customers to retrieve the details of a fixture from its fixture ID, and added the access role ARN to the CreateFeed, GetFeed, and UpdateFeed responses.
+* `Aws\LaunchWizard` - Added accountConstraints and patternType to GetWorkload, ListWorkloads, GetWorkloadDeploymentPattern and ListWorkloadDeploymentPatterns for Launch Wizard
+* `Aws\Connect` - This release adds the ExtractedInformation segment to the ListRealtimeContactAnalysisSegmentsV2 API, enabling customers to retrieve information extracted from real-time contact analysis.
+* `Aws\DSQL` - Corrected the validation pattern on the ServiceName response field in the GetVpcEndpointServiceName API to match the values Amazon Aurora DSQL actually returns.
+* `Aws\ConnectContactLens` - This release adds the ExtractedInformation segment to the ListRealtimeContactAnalysisSegments API, enabling customers to retrieve information extracted from real-time contact analysis.
+* `Aws\Bedrock` - Adds support for specifying an inference profile ID or ARN, or an application inference profile ARN as the target model in CreateAdvancedPromptOptimizationJob.
+* `Aws\SecurityAgent` - Adding private and self-signed certificate configuration support for penetration tests
+
 ## 3.393.4 - 2026-08-21
 
 * `Aws\WAFV2` - DataProtectionConfig field Key Documentation Update

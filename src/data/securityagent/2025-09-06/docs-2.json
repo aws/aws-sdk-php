@@ -611,6 +611,18 @@
         "GitLabResourceCapabilities$remediateCode": "<p>Whether to create merge requests with automated fixes.</p>"
       }
     },
+    "CaCertificatePem": {
+      "base": "<p>A PEM-encoded X.509 certificate.</p>",
+      "refs": {
+        "CaCertificateSource$inlinePem": "<p>A PEM-encoded X.509 certificate supplied inline.</p>"
+      }
+    },
+    "CaCertificateSource": {
+      "base": "<p>The source of a trusted CA certificate. Exactly one member must be set.</p>",
+      "refs": {
+        "TrustedCaCertificate$source": "<p>The source that AWS Security Agent reads the certificate from.</p>"
+      }
+    },
     "Category": {
       "base": "<p>Represents a category assigned to a security testing task.</p>",
       "refs": {
@@ -2659,6 +2671,8 @@
         "BatchGetThreatsInput$agentSpaceId": "<p>The unique identifier of the agent space.</p>",
         "BatchSecurityRequirementError$code": "<p>The error code.</p>",
         "BatchSecurityRequirementError$message": "<p>The error message.</p>",
+        "CaCertificateSource$artifactId": "<p>The artifact ID of an uploaded certificate file.</p>",
+        "CaCertificateSource$s3Location": "<p>The Amazon S3 location URI of a customer-staged certificate.</p>",
         "Category$name": "<p>The name of the category.</p>",
         "CloudWatchLog$logGroup": "<p>The name of the CloudWatch log group.</p>",
         "CloudWatchLog$logStream": "<p>The name of the CloudWatch log stream.</p>",
@@ -3533,6 +3547,19 @@
     "ThrottlingException": {
       "base": "<p>The request was denied due to request throttling.</p>",
       "refs": {}
+    },
+    "TrustedCaCertificate": {
+      "base": "<p>A trust anchor used when validating a target endpoint's TLS certificate.</p>",
+      "refs": {
+        "TrustedCaCertificateList$member": null
+      }
+    },
+    "TrustedCaCertificateList": {
+      "base": null,
+      "refs": {
+        "Assets$trustedCaCertificates": "<p>The trust anchors used to validate target endpoint TLS certificates. Provide these for endpoints served by a private or internal certificate authority (CA), an intermediate CA, or a self-signed certificate.</p>",
+        "PentestJob$trustedCaCertificates": "<p>The trust anchors used to validate target endpoint TLS certificates during the pentest job.</p>"
+      }
     },
     "UntagResourceInput": {
       "base": "<p>Input for UntagResource operation.</p>",

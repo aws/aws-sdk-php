@@ -2147,6 +2147,12 @@
         "lastModifiedTime":{"shape":"Timestamp"}
       }
     },
+    "AdvancedPromptOptimizationModelIdentifier":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "pattern":"(([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([a-z0-9-]{1,63}[.]){0,2}[a-z0-9-]{1,63}([:][a-z0-9-]{1,63}){0,2}(/[a-z0-9]{12}|))|(arn:aws(|-us-gov|-cn|-iso|-iso-b|-iso-f):bedrock:[a-z0-9-]{1,20}:[0-9]{12}:application-inference-profile/[a-zA-Z0-9-:.]+)|(arn:aws(|-us-gov|-cn|-iso|-iso-b|-iso-f):bedrock:[a-z0-9-]{1,20}:([0-9]{12})?:inference-profile/[a-zA-Z0-9-:.]+)|(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}::foundation-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63})))"
+    },
     "AdvancedPromptOptimizationOutputConfig":{
       "type":"structure",
       "required":["s3Uri"],
@@ -8546,7 +8552,7 @@
       "type":"structure",
       "required":["modelId"],
       "members":{
-        "modelId":{"shape":"BedrockModelId"},
+        "modelId":{"shape":"AdvancedPromptOptimizationModelIdentifier"},
         "inferenceConfig":{"shape":"InferenceConfiguration"},
         "additionalModelRequestFields":{"shape":"AdditionalModelRequestFields"}
       }

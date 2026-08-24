@@ -19,6 +19,21 @@
     "UpdateDeployment": "<p>Updates a deployment.</p>"
   },
   "shapes": {
+    "AccountConstraint": {
+      "base": "<p>A constraint on which AWS account a deployment can be initiated from. Specify one of the supported constraint types.</p>",
+      "refs": {
+        "AccountConstraintsList$member": null
+      }
+    },
+    "AccountConstraintsList": {
+      "base": null,
+      "refs": {
+        "WorkloadData$accountConstraints": "<p>Optional list of constraints describing what kind of AWS account is allowed to deploy this workload or deployment pattern. Within a single list the semantics are OR: an account satisfies the list if it satisfies any entry. Workload-level and pattern-level lists combine with AND at deployment time. An absent or empty list at this level means no constraint at this level.</p>",
+        "WorkloadDataSummary$accountConstraints": "<p>Optional list of constraints describing what kind of AWS account is allowed to deploy this workload or deployment pattern. Within a single list the semantics are OR: an account satisfies the list if it satisfies any entry. Workload-level and pattern-level lists combine with AND at deployment time. An absent or empty list at this level means no constraint at this level.</p>",
+        "WorkloadDeploymentPatternData$accountConstraints": "<p>Optional list of constraints describing what kind of AWS account is allowed to deploy this workload or deployment pattern. Within a single list the semantics are OR: an account satisfies the list if it satisfies any entry. Workload-level and pattern-level lists combine with AND at deployment time. An absent or empty list at this level means no constraint at this level.</p>",
+        "WorkloadDeploymentPatternDataSummary$accountConstraints": "<p>Optional list of constraints describing what kind of AWS account is allowed to deploy this workload or deployment pattern. Within a single list the semantics are OR: an account satisfies the list if it satisfies any entry. Workload-level and pattern-level lists combine with AND at deployment time. An absent or empty list at this level means no constraint at this level.</p>"
+      }
+    },
     "AllowedValues": {
       "base": null,
       "refs": {
@@ -40,6 +55,12 @@
     "CreateDeploymentOutput": {
       "base": null,
       "refs": {}
+    },
+    "DelegatedAdminConstraint": {
+      "base": "<p>The deployment must be initiated from a delegated administrator account for the specified service principal.</p>",
+      "refs": {
+        "AccountConstraint$delegatedAdmin": null
+      }
     },
     "DeleteDeploymentInput": {
       "base": null,
@@ -84,6 +105,24 @@
       "base": null,
       "refs": {
         "ListDeploymentEventsOutput$deploymentEvents": "<p>Lists the deployment events.</p>"
+      }
+    },
+    "DeploymentEventMetadata": {
+      "base": "<p>A map of metadata key-value pairs associated with a deployment event. For error detection events, contains workload context and log excerpts used for troubleshooting.</p>",
+      "refs": {
+        "DeploymentEventDataSummary$metadata": null
+      }
+    },
+    "DeploymentEventMetadataKey": {
+      "base": null,
+      "refs": {
+        "DeploymentEventMetadata$key": null
+      }
+    },
+    "DeploymentEventMetadataValue": {
+      "base": null,
+      "refs": {
+        "DeploymentEventMetadata$value": null
       }
     },
     "DeploymentFilter": {
@@ -323,6 +362,12 @@
       "base": null,
       "refs": {}
     },
+    "ManagementAccountConstraint": {
+      "base": "<p>The deployment must be initiated from the AWS Organizations management account.</p>",
+      "refs": {
+        "AccountConstraint$managementAccount": null
+      }
+    },
     "MaxDeploymentEventResults": {
       "base": null,
       "refs": {
@@ -370,6 +415,12 @@
     "ResourceNotFoundException": {
       "base": "<p>The specified workload or deployment resource can't be found.</p>",
       "refs": {}
+    },
+    "ServicePrincipalType": {
+      "base": null,
+      "refs": {
+        "DelegatedAdminConstraint$servicePrincipal": "<p>The service principal for which the account must be a delegated administrator. For example, <code>stacksets.cloudformation.amazonaws.com</code>.</p>"
+      }
     },
     "SpecificationsConditionalData": {
       "base": null,

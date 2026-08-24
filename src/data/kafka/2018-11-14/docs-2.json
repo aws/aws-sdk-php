@@ -747,6 +747,43 @@
         "KafkaClusterClientAuthentication$MTLS" : "<p>Details for mTLS client authentication.</p>"
       }
     },
+    "KafkaClusterSaslOAuthBearerAuthentication" : {
+      "base" : "<p>Details for SASL/OAUTHBEARER client authentication.</p>",
+      "refs" : {
+        "KafkaClusterClientAuthentication$SaslOAuthBearer" : "<p>Details for SASL/OAUTHBEARER client authentication.</p>"
+      }
+    },
+    "KafkaClusterOAuthClientCredentials" : {
+      "base" : "<p>Details for SASL/OAUTHBEARER using standard client_credentials grant (RFC 6749).</p>",
+      "refs" : {
+        "KafkaClusterSaslOAuthBearerAuthentication$ClientCredentials" : "<p>Details for SASL/OAUTHBEARER using standard client_credentials grant.</p>"
+      }
+    },
+    "KafkaClusterOAuthIamJwtBearer" : {
+      "base" : "<p>Details for SASL/OAUTHBEARER using JWT Bearer assertion grant (RFC 7523).</p>",
+      "refs" : {
+        "KafkaClusterSaslOAuthBearerAuthentication$IamJwtBearer" : "<p>Details for SASL/OAUTHBEARER using JWT Bearer assertion grant.</p>"
+      }
+    },
+    "KafkaClusterOAuthClientCredentialsAssertion" : {
+      "base" : "<p>Details for SASL/OAUTHBEARER using client credentials grant with JWT client assertion (RFC 7521/7523).</p>",
+      "refs" : {
+        "KafkaClusterSaslOAuthBearerAuthentication$ClientCredentialsAssertion" : "<p>Details for SASL/OAUTHBEARER using client credentials grant with JWT client assertion.</p>"
+      }
+    },
+    "TokenEndpointAuthenticationMethod" : {
+      "base" : "<p>How client credentials are sent to the identity provider's token endpoint.</p>",
+      "refs" : {
+        "KafkaClusterSaslOAuthBearerAuthentication$TokenEndpointAuthenticationMethod" : "<p>How client credentials are sent to the identity provider. Valid values are POST, BASIC, or NONE.</p>"
+      }
+    },
+    "JwtSigningAlgorithm" : {
+      "base" : "<p>The algorithm used to sign the STS JWT assertion.</p>",
+      "refs" : {
+        "KafkaClusterOAuthIamJwtBearer$SigningAlgorithm" : "<p>The signing algorithm for the JWT Bearer assertion.</p>",
+        "KafkaClusterOAuthClientCredentialsAssertion$SigningAlgorithm" : "<p>The signing algorithm for the JWT client assertion.</p>"
+      }
+    },
     "KafkaClusterSaslScramMechanism" : {
       "base" : "<p>The SASL/SCRAM authentication mechanism.</p>",
       "refs" : {
@@ -1903,6 +1940,14 @@
         "KafkaClusterEncryptionInTransit$RootCaCertificate" : "<p>The root CA certificate.</p>",
         "KafkaClusterSaslScramAuthentication$SecretArn" : "<p>The Amazon Resource Name (ARN) of the Secrets Manager secret.</p>",
         "KafkaClusterMTLSAuthentication$SecretArn" : "<p>The Amazon Resource Name (ARN) of the Secrets Manager secret.</p>",
+        "KafkaClusterSaslOAuthBearerAuthentication$TokenEndpointUrl" : "<p>The HTTPS URL of the OAuth token endpoint that vends OAuth Bearer tokens per RFC 6749.</p>",
+        "KafkaClusterSaslOAuthBearerAuthentication$Scope" : "<p>OAuth scope to request. Included in the token request if provided.</p>",
+        "KafkaClusterSaslOAuthBearerAuthentication$TokenEndpointTlsCertificateArn" : "<p>Secrets Manager ARN containing a custom CA certificate for the identity provider. Required only if the identity provider uses a private CA.</p>",
+        "KafkaClusterOAuthClientCredentials$TokenRequestSecretArn" : "<p>The Amazon Resource Name (ARN) of the Secrets Manager secret containing the OAuth client credentials.</p>",
+        "KafkaClusterOAuthIamJwtBearer$Audience" : "<p>The audience for the JWT Bearer assertion.</p>",
+        "KafkaClusterOAuthIamJwtBearer$TokenRequestSecretArn" : "<p>The Amazon Resource Name (ARN) of the Secrets Manager secret containing the signing key.</p>",
+        "KafkaClusterOAuthClientCredentialsAssertion$Audience" : "<p>The audience for the JWT client assertion.</p>",
+        "KafkaClusterOAuthClientCredentialsAssertion$TokenRequestSecretArn" : "<p>The Amazon Resource Name (ARN) of the Secrets Manager secret containing the signing key.</p>",
         "KafkaClusterSummary$KafkaClusterAlias" : "<p>The alias of the Kafka cluster. Used to prefix names of replicated topics.</p> ",
         "ListClientVpcConnectionsResponse$NextToken" : "<p>If the response of ListClientVpcConnections is truncated, it returns a NextToken in the response. This Nexttoken should be sent in the subsequent request to ListClientVpcConnections.</p>",
         "ListClusterOperationsResponse$NextToken" : "<p>If the response of ListClusterOperations is truncated, it returns a NextToken in the response. This Nexttoken should be sent in the subsequent request to ListClusterOperations.</p>",

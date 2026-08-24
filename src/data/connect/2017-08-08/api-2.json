@@ -22084,6 +22084,36 @@
       "max":128,
       "min":1
     },
+    "RealTimeContactAnalysisExtractedInformationContent":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "RealTimeContactAnalysisExtractedInformationFailureCode":{
+      "type":"string",
+      "enum":[
+        "QUOTA_EXCEEDED",
+        "INSUFFICIENT_CONVERSATION_CONTENT",
+        "FAILED_SAFETY_GUIDELINES",
+        "INTERNAL_ERROR",
+        "MAX_PACKAGE_FEATURE_ONLY"
+      ]
+    },
+    "RealTimeContactAnalysisExtractedInformationValue":{
+      "type":"structure",
+      "required":[
+        "Content",
+        "PointsOfInterest"
+      ],
+      "members":{
+        "Content":{"shape":"RealTimeContactAnalysisExtractedInformationContent"},
+        "PointsOfInterest":{"shape":"RealTimeContactAnalysisTranscriptItemsWithCharacterOffsets"}
+      }
+    },
+    "RealTimeContactAnalysisExtractedInformationValues":{
+      "type":"list",
+      "member":{"shape":"RealTimeContactAnalysisExtractedInformationValue"}
+    },
     "RealTimeContactAnalysisId256":{
       "type":"string",
       "max":256,
@@ -22193,6 +22223,20 @@
         "Time":{"shape":"RealTimeContactAnalysisTimeData"}
       }
     },
+    "RealTimeContactAnalysisSegmentExtractedInformation":{
+      "type":"structure",
+      "required":[
+        "ExtractionDefinitionId",
+        "ExtractionDefinitionName"
+      ],
+      "members":{
+        "ExtractionDefinitionId":{"shape":"ExtractionDefinitionId"},
+        "ExtractionDefinitionName":{"shape":"ExtractionDefinitionName"},
+        "ExtractionDefinitionDisplayLabel":{"shape":"ExtractionDefinitionDisplayLabel"},
+        "ExtractedValues":{"shape":"RealTimeContactAnalysisExtractedInformationValues"},
+        "FailureCode":{"shape":"RealTimeContactAnalysisExtractedInformationFailureCode"}
+      }
+    },
     "RealTimeContactAnalysisSegmentIssues":{
       "type":"structure",
       "required":["IssuesDetected"],
@@ -22238,13 +22282,14 @@
         "Issues",
         "Event",
         "Attachments",
-        "PostContactSummary"
+        "PostContactSummary",
+        "ExtractedInformation"
       ]
     },
     "RealTimeContactAnalysisSegmentTypes":{
       "type":"list",
       "member":{"shape":"RealTimeContactAnalysisSegmentType"},
-      "max":6
+      "max":7
     },
     "RealTimeContactAnalysisSentimentLabel":{
       "type":"string",
@@ -22326,7 +22371,8 @@
         "Issues":{"shape":"RealTimeContactAnalysisSegmentIssues"},
         "Event":{"shape":"RealTimeContactAnalysisSegmentEvent"},
         "Attachments":{"shape":"RealTimeContactAnalysisSegmentAttachments"},
-        "PostContactSummary":{"shape":"RealTimeContactAnalysisSegmentPostContactSummary"}
+        "PostContactSummary":{"shape":"RealTimeContactAnalysisSegmentPostContactSummary"},
+        "ExtractedInformation":{"shape":"RealTimeContactAnalysisSegmentExtractedInformation"}
       },
       "union":true
     },

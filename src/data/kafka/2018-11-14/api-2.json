@@ -4533,8 +4533,103 @@
         "MTLS": {
           "shape": "KafkaClusterMTLSAuthentication",
           "locationName": "mTLS"
+        },
+        "SaslOAuthBearer": {
+          "shape": "KafkaClusterSaslOAuthBearerAuthentication",
+          "locationName": "saslOAuthBearer"
         }
       }
+    },
+    "KafkaClusterSaslOAuthBearerAuthentication": {
+      "type": "structure",
+      "members": {
+        "TokenEndpointUrl": {
+          "shape": "__string",
+          "locationName": "tokenEndpointUrl"
+        },
+        "ClientCredentials": {
+          "shape": "KafkaClusterOAuthClientCredentials",
+          "locationName": "clientCredentials"
+        },
+        "IamJwtBearer": {
+          "shape": "KafkaClusterOAuthIamJwtBearer",
+          "locationName": "iamJwtBearer"
+        },
+        "ClientCredentialsAssertion": {
+          "shape": "KafkaClusterOAuthClientCredentialsAssertion",
+          "locationName": "clientCredentialsAssertion"
+        },
+        "TokenEndpointAuthenticationMethod": {
+          "shape": "TokenEndpointAuthenticationMethod",
+          "locationName": "tokenEndpointAuthenticationMethod"
+        },
+        "Scope": {
+          "shape": "__string",
+          "locationName": "scope"
+        },
+        "TokenEndpointTlsCertificateArn": {
+          "shape": "__string",
+          "locationName": "tokenEndpointTlsCertificateArn"
+        }
+      },
+      "required": [
+        "TokenEndpointUrl",
+        "TokenEndpointAuthenticationMethod"
+      ]
+    },
+    "KafkaClusterOAuthClientCredentials": {
+      "type": "structure",
+      "members": {
+        "TokenRequestSecretArn": {
+          "shape": "__string",
+          "locationName": "tokenRequestSecretArn"
+        }
+      },
+      "required": [
+        "TokenRequestSecretArn"
+      ]
+    },
+    "KafkaClusterOAuthIamJwtBearer": {
+      "type": "structure",
+      "members": {
+        "Audience": {
+          "shape": "__string",
+          "locationName": "audience"
+        },
+        "SigningAlgorithm": {
+          "shape": "JwtSigningAlgorithm",
+          "locationName": "signingAlgorithm"
+        },
+        "TokenRequestSecretArn": {
+          "shape": "__string",
+          "locationName": "tokenRequestSecretArn"
+        }
+      },
+      "required": [
+        "Audience",
+        "SigningAlgorithm"
+      ]
+    },
+    "KafkaClusterOAuthClientCredentialsAssertion": {
+      "type": "structure",
+      "members": {
+        "Audience": {
+          "shape": "__string",
+          "locationName": "audience"
+        },
+        "SigningAlgorithm": {
+          "shape": "JwtSigningAlgorithm",
+          "locationName": "signingAlgorithm"
+        },
+        "TokenRequestSecretArn": {
+          "shape": "__string",
+          "locationName": "tokenRequestSecretArn"
+        }
+      },
+      "required": [
+        "Audience",
+        "SigningAlgorithm"
+      ]
     },
     "KafkaClusterSaslScramAuthentication": {
       "type": "structure",
@@ -4563,6 +4658,21 @@
       },
       "required": [
         "SecretArn"
+      ]
+    },
+    "TokenEndpointAuthenticationMethod": {
+      "type": "string",
+      "enum": [
+        "POST",
+        "BASIC",
+        "NONE"
+      ]
+    },
+    "JwtSigningAlgorithm": {
+      "type": "string",
+      "enum": [
+        "RS256",
+        "ES384"
       ]
     },
     "KafkaClusterSaslScramMechanism": {

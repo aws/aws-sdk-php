@@ -11,6 +11,7 @@
     "ExportDictionaryEntries": "<p>Exports the entries from the specified dictionary.</p>",
     "GetDictionary": "<p>Retrieves information about the specified dictionary.</p>",
     "GetFeed": "<p>Retrieves information about the specified feed.</p>",
+    "GetFixture": "<p>Retrieves information about the specified fixture (a sports event, such as a specific basketball game). You obtain a fixtureId from SearchFixtures, or from the clipping output of a feed. </p>",
     "ListDictionaries": "<p>Lists the dictionaries in your account.</p>",
     "ListFeeds": "<p>Displays a list of feeds that belong to this AWS account.</p>",
     "ListTagsForResource": "<p>List all tags that are on an Elemental Inference resource in the current region.</p>",
@@ -72,7 +73,8 @@
     "CompetitorList": {
       "base": null,
       "refs": {
-        "FixtureSummary$competitors": "<p>An array of the competitors (the teams or individuals) in the fixture.</p>"
+        "FixtureSummary$competitors": "<p>An array of the competitors (the teams or individuals) in the fixture.</p>",
+        "GetFixtureResponse$competitors": "<p>An array of the competitors (the teams or individuals) in the fixture.</p>"
       }
     },
     "ConflictException": {
@@ -322,7 +324,9 @@
       "base": null,
       "refs": {
         "DataSourceConfiguration$fixtureId": "<p>The ID of the fixture whose event data you want Elemental Inference to map onto this clipping output. The fixture should be the sports event in the source media that the feed is processing. </p> <p>To obtain this ID, use the SearchFixtures operation to find the fixture, then use the fixtureId from the matching FixtureSummary. </p>",
-        "FixtureSummary$fixtureId": "<p>The ID of the fixture. Specify this ID in the clipping output of a feed, to identify the fixture whose event data you want Elemental Inference to map onto the clipping metadata. </p>"
+        "FixtureSummary$fixtureId": "<p>The ID of the fixture. Specify this ID in the clipping output of a feed, to identify the fixture whose event data you want Elemental Inference to map onto the clipping metadata. </p>",
+        "GetFixtureRequest$fixtureId": "<p>The ID of the fixture to retrieve, as returned by SearchFixtures.</p>",
+        "GetFixtureResponse$fixtureId": "<p>The ID that you specified in the request.</p>"
       }
     },
     "FixtureSummary": {
@@ -357,6 +361,14 @@
       "base": null,
       "refs": {}
     },
+    "GetFixtureRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetFixtureResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetOutput": {
       "base": "<p>Contains configuration information about one output in a feed. It is used in the GetFeed response. </p>",
       "refs": {
@@ -375,7 +387,10 @@
       "base": null,
       "refs": {
         "CreateFeedRequest$accessRoleArn": "<p>The ARN of an IAM role that Elemental Inference assumes to access resources in your account on your behalf. For example, the smart crop feature uses this role to read graphics-compositing templates from your Amazon S3 bucket. You specify one access role for each feed. </p>",
-        "UpdateFeedRequest$accessRoleArn": "<p>The ARN of an IAM role that Elemental Inference assumes to access resources in your account on your behalf. You can specify the existing role (to leave it unchanged) or a new role. You specify one access role for each feed. </p>"
+        "CreateFeedResponse$accessRoleArn": "<p>The Amazon Resource Name (ARN) of the AWS Identity and Access Management (IAM) role that you specified in the request. This property is absent if you didn't specify an IAM role. </p>",
+        "GetFeedResponse$accessRoleArn": "<p>The Amazon Resource Name (ARN) of an AWS Identity and Access Management (IAM) role that Elemental Inference assumes. Elemental Inference uses this role to access resources in your account on your behalf. This property is absent if the feed doesn't have an IAM role. </p>",
+        "UpdateFeedRequest$accessRoleArn": "<p>The ARN of an IAM role that Elemental Inference assumes to access resources in your account on your behalf. You can specify the existing role (to leave it unchanged) or a new role. You specify one access role for each feed. </p>",
+        "UpdateFeedResponse$accessRoleArn": "<p>The Amazon Resource Name (ARN) of the AWS Identity and Access Management (IAM) role for the feed, after the update. This property is absent if the feed doesn't have an IAM role. </p>"
       }
     },
     "Integer": {
@@ -539,6 +554,9 @@
         "FixtureSummary$fixtureGroup": "<p>The group that the fixture belongs to, such as the competition, league, or tournament. The data source doesn't provide this information for every fixture. </p>",
         "FixtureSummary$status": "<p>The status of the fixture in its lifecycle, as provided by the data source. For example, Scheduled or Completed. </p>",
         "GatewayTimedOutException$message": null,
+        "GetFixtureResponse$name": "<p>The name of the fixture, as provided by the data source. For example, the names of the two competing teams. </p>",
+        "GetFixtureResponse$fixtureGroup": "<p>The group that the fixture belongs to, such as the competition, league, or tournament. The data source doesn't provide this information for every fixture. </p>",
+        "GetFixtureResponse$status": "<p>The status of the fixture in its lifecycle, as provided by the data source. For example, Scheduled or Completed. </p>",
         "InternalServerErrorException$message": null,
         "ListDictionariesRequest$nextToken": "<p>The token that identifies the next batch of results to return.</p>",
         "ListDictionariesResponse$nextToken": "<p>The token to use to retrieve the next batch of results.</p>",
@@ -571,7 +589,8 @@
     "SyntheticTimestamp_date_time": {
       "base": null,
       "refs": {
-        "FixtureSummary$scheduledStart": "<p>The scheduled start time of the fixture, as provided by the data source. The actual start time might differ. </p>"
+        "FixtureSummary$scheduledStart": "<p>The scheduled start time of the fixture, as provided by the data source. The actual start time might differ. </p>",
+        "GetFixtureResponse$scheduledStart": "<p>The scheduled start time of the fixture, as provided by the data source. The actual start time might differ. </p>"
       }
     },
     "TagKey": {

@@ -254,6 +254,12 @@
         "AdvancedPromptOptimizationJobSummaries$member": null
       }
     },
+    "AdvancedPromptOptimizationModelIdentifier": {
+      "base": null,
+      "refs": {
+        "ModelConfiguration$modelId": "<p>The model to use for optimization. The value depends on the resource that you use:</p> <ul> <li> <p>If you use a base model, specify the model ID or its ARN. For a list of model IDs, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards.html\">Models at a glance</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use a cross-Region (system-defined) inference profile, specify the inference profile ID or its ARN. For a list of inference profile IDs, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference-support.html\">Supported Regions and models for inference profiles</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use an application inference profile, specify its full ARN, including the account ID and Region.</p> </li> </ul>"
+      }
+    },
     "AdvancedPromptOptimizationOutputConfig": {
       "base": "<p>Contains the output data configuration for an advanced prompt optimization job.</p>",
       "refs": {
@@ -1732,8 +1738,7 @@
         "GetFoundationModelAvailabilityRequest$modelId": "<p>The model Id of the foundation model.</p>",
         "GetFoundationModelAvailabilityResponse$modelId": "<p>The model Id of the foundation model.</p>",
         "ListFoundationModelAgreementOffersRequest$modelId": "<p>Model Id of the foundation model.</p>",
-        "ListFoundationModelAgreementOffersResponse$modelId": "<p>Model Id of the foundation model.</p>",
-        "ModelConfiguration$modelId": "<p>The ID of the model to use for optimization.</p>"
+        "ListFoundationModelAgreementOffersResponse$modelId": "<p>Model Id of the foundation model.</p>"
       }
     },
     "BedrockRerankingModelArn": {
@@ -2732,7 +2737,7 @@
         "RetrievalFilter$in": "<p>Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is in the list specified in the value in this object.</p> <p>The following example would return data sources with an animal attribute that is either 'cat' or 'dog': <code>\"in\": { \"key\": \"animal\", \"value\": [\"cat\", \"dog\"] }</code> </p>",
         "RetrievalFilter$notIn": "<p>Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value isn't in the list specified in the value in this object.</p> <p>The following example would return data sources whose animal attribute is neither 'cat' nor 'dog': <code>\"notIn\": { \"key\": \"animal\", \"value\": [\"cat\", \"dog\"] }</code> </p>",
         "RetrievalFilter$startsWith": "<p>Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value starts with the value in this object. This filter is currently only supported for Amazon OpenSearch Serverless vector stores.</p> <p>The following example would return data sources with an animal attribute starts with 'ca' (for example, 'cat' or 'camel'). <code>\"startsWith\": { \"key\": \"animal\", \"value\": \"ca\" }</code> </p>",
-        "RetrievalFilter$listContains": "<p>Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is a list that contains the value as one of its members.</p> <p>The following example would return data sources with an animals attribute that is a list containing a cat member (for example, <code>[\"dog\", \"cat\"]</code>): <code>\"listContains\": { \"key\": \"animals\", \"value\": \"cat\" }</code> </p>",
+        "RetrievalFilter$listContains": "<p>Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is a list that contains the value as one of its members.</p> <p>The following example would return data sources with an animals attribute that is a list containing a cat member (for example, <code>[\"dog\", \"cat\"] </code>): <code>\"listContains\": { \"key\": \"animals\", \"value\": \"cat\" }</code> </p>",
         "RetrievalFilter$stringContains": "<p>Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is one of the following:</p> <p>A string that contains the value as a substring. The following example would return data sources with an animal attribute that contains the substring at (for example, 'cat'): <code>\"stringContains\": { \"key\": \"animal\", \"value\": \"at\" }</code> </p> <p>A list with a member that contains the value as a substring. The following example would return data sources with an animals attribute that is a list containing a member that contains the substring at (for example, <code>[\"dog\", \"cat\"]</code>): <code>\"stringContains\": { \"key\": \"animals\", \"value\": \"at\" }</code> </p>"
       }
     },
