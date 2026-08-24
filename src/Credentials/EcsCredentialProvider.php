@@ -41,11 +41,22 @@ class EcsCredentialProvider
     /** @var int */
     private $attempts;
 
+    /** @var string[] */
+    private $retryableExceptions;
+
+    /** @var int[] */
+    private $retryableErrorCodes;
+
     /**
      *  The constructor accepts following options:
      *  - timeout: (optional) Connection timeout, in seconds, default 1.0
      *  - retries: Optional number of retries to be attempted, default 3.
      *  - client: An EcsClient to make request from
+     *  - retryable_exceptions: Optional array of additional exception class
+     *    names that should be retried. Connection errors are always retried,
+     *    regardless of this option.
+     *  - retryable_error_codes: Optional array of HTTP status codes that
+     *    should be retried. Defaults to an empty array.
      *
      * @param array $config Configuration options
      */
@@ -58,6 +69,8 @@ class EcsCredentialProvider
             : ((int) getenv(self::ENV_RETRIES) ?: self::DEFAULT_ENV_RETRIES);
 
         $this->client = $config['client'] ?? \Aws\default_http_handler();
+        $this->retryableExceptions = $config['retryable_exceptions'] ?? [];
+        $this->retryableErrorCodes = $config['retryable_error_codes'] ?? [];
     }
 
     /**
@@ -106,7 +119,8 @@ class EcsCredentialProvider
                     })->otherwise(function ($reason) {
                         $connectionError = is_array($reason) && !empty($reason['connection_error']);
                         $exception = is_array($reason) ? ($reason['exception'] ?? null) : $reason;
-                        $isRetryable = $connectionError || ($exception instanceof \Throwable && HttpHandlerError::isConnectionError($exception));
+                        $isRetryable = $connectionError
+                            || ($exception instanceof \Throwable && $this->isRetryable($exception));
 
                         if ($isRetryable && ($this->attempts < $this->retries)) {
                             sleep((int)pow(1.2, $this->attempts));
@@ -219,6 +233,33 @@ class EcsCredentialProvider
         }
 
         return self::SERVER_URI . $credsUri;
+    }
+
+    /**
+     * Determines whether a failed request should be retried. Connection
+     * errors are always retried; the configured retryable_exceptions and
+     * retryable_error_codes are checked in addition to them.
+     */
+    private function isRetryable(\Throwable $exception): bool
+    {
+        if (HttpHandlerError::isConnectionError($exception)) {
+            return true;
+        }
+
+        foreach ($this->retryableExceptions as $exceptionClass) {
+            if ($exception instanceof $exceptionClass) {
+                return true;
+            }
+        }
+
+        $response = HttpHandlerError::getResponse($exception);
+
+        return $response !== null
+            && in_array(
+                $response->getStatusCode(),
+                $this->retryableErrorCodes,
+                true
+            );
     }
 
     private function decodeResult($response)
