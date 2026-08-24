@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.393.5 - 2026-08-24
 
 * `Aws\TimestreamInfluxDB` - Service-managed parameter groups now only apply optimized defaults to DB Clusters automatically. New field effectiveDbParameterGroupIdentifier surfaces the parameter group actually applied.
 * `Aws\Kafka` - Amazon MSK Replicator now supports OAuth authentication when connecting to external Apache Kafka clusters, enabling customers to replicate data from clusters that require OAuth for client authentication. This new capability is supported in all AWS Regions where MSK Express brokers are available.
