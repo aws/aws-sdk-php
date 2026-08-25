@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.394.0 - 2026-08-25
 
 * `Aws\DevOpsAgent` - Adds the UpdateApprovalAction API for resolving agent action approvals in AWS DevOps Agent agent spaces.
 * `Aws\MarketplaceMetering` - Updated documentation to clarify duplicate-billing prevention and BatchMeterUsage retry guidance
