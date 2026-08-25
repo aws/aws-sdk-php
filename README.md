@@ -87,7 +87,6 @@ try {
 Please use these community resources for getting help. We use the GitHub issues for tracking bugs and feature requests and have limited bandwidth to address them.
 
 * Ask a question on [StackOverflow](https://stackoverflow.com/) and tag it with [`aws-php-sdk`](http://stackoverflow.com/questions/tagged/aws-php-sdk)
-* Come join the AWS SDK for PHP [gitter](https://gitter.im/aws/aws-sdk-php)
 * Open a support ticket with [AWS Support](https://console.aws.amazon.com/support/home/)
 * If it turns out that you may have found a bug, please [open an issue](https://github.com/aws/aws-sdk-php/issues/new/choose)
 
