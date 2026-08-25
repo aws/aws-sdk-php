@@ -447,6 +447,9 @@
         "ControlPlaneScalingTierInfo$podSchedulingRatePerSecond": "<p>The maximum pod scheduling rate per second supported by this tier.</p>",
         "ControlPlaneScalingTierInfo$clusterDatabaseSizeGb": "<p>The maximum cluster database size in GB supported by this tier.</p>",
         "CreateNodegroupRequest$diskSize": "<p>The root device disk size (in GiB) for your node group instances. The default disk size is 20 GiB for Linux and Bottlerocket. The default disk size is 50 GiB for Windows. If you specify <code>launchTemplate</code>, then don't specify <code>diskSize</code>, or the node group deployment will fail. For more information about using launch templates with Amazon EKS, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html\">Customizing managed nodes with launch templates</a> in the <i>Amazon EKS User Guide</i>.</p>",
+        "IntegerConstraints$min": "<p>The minimum allowed value.</p>",
+        "IntegerConstraints$max": "<p>The maximum allowed value.</p>",
+        "IntegerParameterConfig$defaultValue": "<p>The default value for the integer parameter.</p>",
         "IntegerRangeConstraint$min": "<p>The minimum allowed value.</p>",
         "IntegerRangeConstraint$max": "<p>The maximum allowed value.</p>",
         "Nodegroup$diskSize": "<p>If the node group wasn't deployed with a launch template, then this is the disk size in the node group configuration. If the node group was deployed with a launch template, then this is <code>null</code>.</p>",
@@ -1469,6 +1472,18 @@
         "ServiceNodePortRange$maxPort": "<p>The maximum port number in the range.</p>"
       }
     },
+    "IntegerConstraints": {
+      "base": "<p>Constraints for an integer parameter specifying allowed range.</p>",
+      "refs": {
+        "IntegerParameterConfig$constraints": "<p>The constraints for the integer parameter.</p>"
+      }
+    },
+    "IntegerParameterConfig": {
+      "base": "<p>An integer parameter configuration with default value and constraints.</p>",
+      "refs": {
+        "PodGcControllerVersionConfig$terminatedPodGcThreshold": "<p>The terminated pod garbage collection threshold configuration with default value and constraints.</p>"
+      }
+    },
     "IntegerRangeConstraint": {
       "base": "<p>An integer range constraint specifying minimum and maximum allowed values.</p>",
       "refs": {
@@ -1965,6 +1980,24 @@
         "NodeRepairConfig$maxUnhealthyNodeThresholdPercentage": "<p>Specify a percentage threshold of unhealthy nodes, above which node auto repair actions will stop. When using this, you cannot also set <code>maxUnhealthyNodeThresholdCount</code> at the same time.</p>",
         "NodeRepairConfig$maxParallelNodesRepairedPercentage": "<p>Specify the maximum number of nodes that can be repaired concurrently or in parallel, expressed as a percentage of unhealthy nodes. This gives you finer-grained control over the pace of node replacements. When using this, you cannot also set <code>maxParallelNodesRepairedCount</code> at the same time.</p>",
         "NodegroupUpdateConfig$maxUnavailablePercentage": "<p>The maximum percentage of nodes unavailable during a version update. This percentage of nodes are updated in parallel, up to 100 nodes at once. This value or <code>maxUnavailable</code> is required to have a value.</p>"
+      }
+    },
+    "PodGcControllerConfigRequest": {
+      "base": "<p>The pod garbage collection controller configuration for the Kubernetes controller manager.</p>",
+      "refs": {
+        "KubeControllerManagerConfigRequest$podGcControllerConfig": "<p>The pod garbage collection controller configuration.</p>"
+      }
+    },
+    "PodGcControllerConfigResponse": {
+      "base": "<p>The pod garbage collection controller configuration for the Kubernetes controller manager.</p>",
+      "refs": {
+        "KubeControllerManagerConfigResponse$podGcControllerConfig": "<p>The pod garbage collection controller configuration.</p>"
+      }
+    },
+    "PodGcControllerVersionConfig": {
+      "base": "<p>The pod garbage collection controller version configuration.</p>",
+      "refs": {
+        "KubeControllerManagerVersionConfig$podGcControllerConfig": "<p>The pod garbage collection controller configuration with default value and constraints.</p>"
       }
     },
     "PodIdentityAssociation": {
@@ -2783,6 +2816,13 @@
       "base": null,
       "refs": {
         "Taint$effect": "<p>The effect of the taint.</p>"
+      }
+    },
+    "TerminatedPodGcThresholdValue": {
+      "base": "<p>The threshold for the number of terminated pods before garbage collection starts.</p>",
+      "refs": {
+        "PodGcControllerConfigRequest$terminatedPodGcThreshold": "<p>The number of terminated pods that can exist before the garbage collector starts deleting them.</p>",
+        "PodGcControllerConfigResponse$terminatedPodGcThreshold": "<p>The number of terminated pods that can exist before the garbage collector starts deleting them.</p>"
       }
     },
     "ThrottlingException": {

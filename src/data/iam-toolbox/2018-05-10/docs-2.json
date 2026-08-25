@@ -1,0 +1,159 @@
+{
+  "version": "2.0",
+  "service": "<p>Contains APIs to work with AWS Identity and Access Management (IAM).</p>",
+  "operations": {
+    "GetRequestAuthorizationDetails": "<p>Retrieves the authorization details for a specific access denied request. The details include the request context, the evaluations performed, and the policies that were evaluated.</p> <p>Use this operation to understand why a request was denied. Supported services include an authorization ID in the access denied error message. Pass that ID to this operation to retrieve the details.</p> <p>Authorization details are available for at least 24 hours after the denial.</p> <p>To use this operation, you must have the <code>iam:GetRequestAuthorizationDetails</code> permission.</p>"
+  },
+  "shapes": {
+    "AccessDeniedException": {
+      "base": "<p>The caller does not have sufficient access to perform this action.</p>",
+      "refs": {}
+    },
+    "AttachedTo": {
+      "base": "<p>An entity that a policy is attached to, identified by its ARN.</p>",
+      "refs": {
+        "AttachedToList$member": null
+      }
+    },
+    "AttachedToArnString": {
+      "base": null,
+      "refs": {
+        "AttachedTo$arn": "<p>The ARN of the entity that the policy is attached to. The ARN format depends on the policy type:</p> <ul> <li> <p>For identity, session, and permissions boundary policies, this is the principal ARN (for example, an IAM role or user ARN).</p> </li> <li> <p>For resource-based policies, this is the resource ARN.</p> </li> <li> <p>For organization control policies (SCPs and RCPs), this is the AWS Organizations ARN of the account, organizational unit, or root.</p> </li> </ul>"
+      }
+    },
+    "AttachedToList": {
+      "base": "<p>A list of entities that a policy is attached to.</p>",
+      "refs": {
+        "PolicyInfo$attachedTo": "<p>The entities that the policy is attached to. For identity, session, and resource-based policies, this is typically a single entity. For organization control policies (SCPs and RCPs), it can be multiple entities at different levels of the organization hierarchy.</p>"
+      }
+    },
+    "AuthorizationContext": {
+      "base": "<p>The map of context keys and their values in the request context. Context keys vary by service and request type.</p>",
+      "refs": {
+        "Evaluation$context": "<p>The context keys and values specific to this evaluation. These are applied on top of the request context.</p>",
+        "GetRequestAuthorizationDetailsOutput$requestContext": "<p>The request context is the set of context keys and values that apply to the entire request and are shared by all evaluations.</p>"
+      }
+    },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "PolicyInfo$inline": "<p>Specifies whether this is an inline policy (<code>true</code>) or a managed policy (<code>false</code>).</p>"
+      }
+    },
+    "Document": {
+      "base": null,
+      "refs": {
+        "AuthorizationContext$value": null
+      }
+    },
+    "EvaluatedEffect": {
+      "base": "<p>The result of a policy evaluation.</p>",
+      "refs": {
+        "Evaluation$evaluatedEffect": "<p>The result of the evaluation. Valid values:</p> <ul> <li> <p> <code>ALLOW</code> - The action was allowed.</p> </li> <li> <p> <code>EXPLICIT_DENY</code> - The action was explicitly denied by a policy.</p> </li> <li> <p> <code>IMPLICIT_DENY</code> - The action was denied because no policy allowed it.</p> </li> </ul>"
+      }
+    },
+    "Evaluation": {
+      "base": "<p>Represents an individual evaluation for a single action and resource pair. This includes the context, the resulting effect, and any policies that matched.</p>",
+      "refs": {
+        "Evaluations$member": null
+      }
+    },
+    "Evaluations": {
+      "base": "<p>A list of evaluations.</p>",
+      "refs": {
+        "GetRequestAuthorizationDetailsOutput$evaluations": "<p>The list of evaluations for this request. Each evaluation shows how a single action and resource pair was evaluated. This includes the context, the effect, and any policies that matched.</p>"
+      }
+    },
+    "GetRequestAuthorizationDetailsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRequestAuthorizationDetailsInputAuthorizationIdString": {
+      "base": null,
+      "refs": {
+        "GetRequestAuthorizationDetailsInput$authorizationId": "<p>The authorization ID received in the access denied error message. This ID identifies the specific request to retrieve details for.</p>"
+      }
+    },
+    "GetRequestAuthorizationDetailsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "InternalServerException": {
+      "base": "<p>An unexpected error occurred while processing the request. Try again.</p>",
+      "refs": {}
+    },
+    "MatchedPolicy": {
+      "base": "<p>A policy that matched during evaluation, referenced by URI. The URI corresponds to a policy in the top-level policies list.</p>",
+      "refs": {
+        "MatchedPolicyList$member": null
+      }
+    },
+    "MatchedPolicyList": {
+      "base": "<p>A list of policies that matched during an evaluation.</p>",
+      "refs": {
+        "Evaluation$matchedPolicies": "<p>The policies that matched during evaluation of this action and resource. An implicit denial produces no matched policies.</p>"
+      }
+    },
+    "MatchedStatement": {
+      "base": "<p>A statement that matched during evaluation.</p>",
+      "refs": {
+        "MatchedStatementList$member": null
+      }
+    },
+    "MatchedStatementList": {
+      "base": "<p>A list of statements that matched within a policy.</p>",
+      "refs": {
+        "MatchedPolicy$matchedStatements": "<p>The statements within the policy that matched during the evaluation.</p>"
+      }
+    },
+    "PolicyInfo": {
+      "base": "<p>Contains details about a policy evaluated during authorization. Details include the policy type, whether it is inline or managed, a URI that identifies it, and the entities it is attached to.</p>",
+      "refs": {
+        "PolicyInfoList$member": null
+      }
+    },
+    "PolicyInfoList": {
+      "base": "<p>A list of policy details.</p>",
+      "refs": {
+        "GetRequestAuthorizationDetailsOutput$policies": "<p>The list of policies that were evaluated.</p>"
+      }
+    },
+    "PolicyType": {
+      "base": "<p>The policy type.</p>",
+      "refs": {
+        "PolicyInfo$type": "<p>The type of policy. Valid values:</p> <ul> <li> <p> <code>IDENTITY_BASED_POLICY</code> - An identity-based policy attached to an IAM user, group, or role.</p> </li> <li> <p> <code>PERMISSIONS_BOUNDARY</code> - A permissions boundary for an IAM entity.</p> </li> <li> <p> <code>RESOURCE_BASED_POLICY</code> - A resource-based policy attached to a resource.</p> </li> <li> <p> <code>RESOURCE_CONTROL_POLICY</code> - A resource control policy (RCP) in AWS Organizations.</p> </li> <li> <p> <code>SERVICE_CONTROL_POLICY</code> - A service control policy (SCP) in AWS Organizations.</p> </li> <li> <p> <code>SESSION_POLICY</code> - A session policy passed during role assumption or federation.</p> </li> <li> <p> <code>VPC_ENDPOINT_POLICY</code> - A VPC endpoint policy.</p> </li> </ul>"
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p>The requested authorization details do not exist in this region or have expired. Verify that the authorization ID from the access denied error message is correct and the call is made in the region where the denial occurred. Ensure that the calling principal belongs to the same account or organization as the original denied request.</p>",
+      "refs": {}
+    },
+    "StatementEffect": {
+      "base": "<p>The effect of a matched statement.</p>",
+      "refs": {
+        "MatchedStatement$evaluatedEffect": "<p>The evaluated effect of this statement. Valid values:</p> <ul> <li> <p> <code>ALLOW</code> - The statement allows the action.</p> </li> <li> <p> <code>DENY</code> - The statement denies the action.</p> </li> </ul>"
+      }
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$message": null,
+        "AuthorizationContext$key": null,
+        "Evaluation$action": "<p>The action evaluated for this request (for example, <code>iam:PassRole</code>).</p>",
+        "Evaluation$resource": "<p>The resource that the action targeted. This is typically a resource ARN, but can be a wildcard ARN that matches multiple resources, or empty for actions that are not resource-specific.</p>",
+        "GetRequestAuthorizationDetailsInput$nextToken": "<p>The pagination token from a previous call, used to retrieve the next page of evaluations. Omit this value on the first call.</p>",
+        "GetRequestAuthorizationDetailsOutput$nextToken": "<p>The pagination token for retrieving the next page of evaluations. This value is absent when there are no more results.</p>",
+        "InternalServerException$message": null,
+        "MatchedPolicy$uri": "<p>The URI of the policy. This cross-references an entry in the top-level policies list. The value depends on the policy type:</p> <ul> <li> <p>For managed policies, this is the policy ARN.</p> </li> <li> <p>For inline policies, this is an opaque identifier.</p> </li> </ul>",
+        "MatchedStatement$sid": "<p>The statement ID (Sid). If the statement has no Sid, one is generated for reference.</p>",
+        "PolicyInfo$uri": "<p>A URI that identifies the policy. Use this URI to cross-reference the policy with the matching policies in each evaluation. The value depends on the policy type:</p> <ul> <li> <p>For managed policies, this is the policy ARN.</p> </li> <li> <p>For inline policies, which have no ARN, this is an opaque identifier.</p> </li> </ul>",
+        "ResourceNotFoundException$message": null,
+        "ValidationException$message": null
+      }
+    },
+    "ValidationException": {
+      "base": "<p>The request is malformed or is missing one or more required parameters. Check the request parameters and try again.</p>",
+      "refs": {}
+    }
+  }
+}

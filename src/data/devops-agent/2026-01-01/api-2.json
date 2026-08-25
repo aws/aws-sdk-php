@@ -163,8 +163,8 @@
         {"shape":"ConflictException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ThrottlingException"},
         {"shape":"InvalidParameterException"},
+        {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"}
       ],
       "endpoint":{"hostPrefix":"cp."},
@@ -1193,6 +1193,28 @@
       ],
       "endpoint":{"hostPrefix":"cp."}
     },
+    "UpdateApprovalAction":{
+      "name":"UpdateApprovalAction",
+      "http":{
+        "method":"POST",
+        "requestUri":"/agents/agent-space/{agentSpaceId}/approvals/{approvalId}/update-action",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateApprovalActionRequest"},
+      "output":{"shape":"UpdateApprovalActionResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ContentSizeExceededException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterException"}
+      ],
+      "endpoint":{"hostPrefix":"dp."}
+    },
     "UpdateAsset":{
       "name":"UpdateAsset",
       "http":{
@@ -1428,7 +1450,9 @@
       "members":{
         "assumableRoleArn":{"shape":"RoleArn"},
         "accountId":{"shape":"AWSConfigurationAccountIdString"},
-        "accountType":{"shape":"MonitorAccountType"}
+        "accountType":{"shape":"MonitorAccountType"},
+        "agentElevatedRoleArn":{"shape":"RoleArn"},
+        "agentElevatedRoleArnStatus":{"shape":"ValidationStatus"}
       }
     },
     "AWSConfigurationAccountIdString":{
@@ -1490,12 +1514,18 @@
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"},
         "kmsKeyArn":{"shape":"KmsKeyArn"},
-        "agentSpaceId":{"shape":"AgentSpaceId"}
+        "agentSpaceId":{"shape":"AgentSpaceId"},
+        "preferences":{"shape":"AgentSpacePreferences"}
       }
     },
     "AgentSpaceId":{
       "type":"string",
       "pattern":"[a-zA-Z0-9-]{1,64}"
+    },
+    "AgentSpaceIdentifier":{
+      "type":"string",
+      "max":2048,
+      "min":1
     },
     "AgentSpaceList":{
       "type":"list",
@@ -1507,10 +1537,85 @@
       "min":1,
       "pattern":"[\\p{L}\\p{N}\\p{P}\\p{S}\\p{Z}]+"
     },
+    "AgentSpacePreferenceKey":{
+      "type":"string",
+      "enum":["elevatedActionsEnabled"]
+    },
+    "AgentSpacePreferences":{
+      "type":"map",
+      "key":{"shape":"AgentSpacePreferenceKey"},
+      "value":{"shape":"Boolean"},
+      "max":25,
+      "min":0
+    },
     "ApiKeyValue":{
       "type":"string",
       "min":1,
       "sensitive":true
+    },
+    "ApprovalAction":{
+      "type":"structure",
+      "members":{
+        "toolUseId":{"shape":"ToolUseId"},
+        "interruptId":{"shape":"InterruptId"},
+        "approvalId":{"shape":"ApprovalId"},
+        "buttonText":{"shape":"ButtonText"},
+        "action":{"shape":"ApprovalActionType"}
+      }
+    },
+    "ApprovalActionType":{
+      "type":"string",
+      "enum":[
+        "APPROVED",
+        "REJECTED"
+      ]
+    },
+    "ApprovalArgumentPins":{
+      "type":"map",
+      "key":{"shape":"ApprovalPinKey"},
+      "value":{"shape":"ApprovalPinValue"},
+      "max":20,
+      "min":0
+    },
+    "ApprovalId":{
+      "type":"string",
+      "pattern":"[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}"
+    },
+    "ApprovalPattern":{
+      "type":"structure",
+      "required":[
+        "tool",
+        "argumentPins"
+      ],
+      "members":{
+        "tool":{"shape":"ToolIdentifier"},
+        "argumentPins":{"shape":"ApprovalArgumentPins"}
+      }
+    },
+    "ApprovalPinKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "ApprovalPinValue":{
+      "type":"string",
+      "max":131072,
+      "min":1
+    },
+    "ApprovalReason":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "ApprovalStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "APPROVED",
+        "REJECTED",
+        "REVOKED",
+        "REDEEMED"
+      ]
     },
     "Asset":{
       "type":"structure",
@@ -1617,7 +1722,7 @@
     },
     "AssetFileText":{
       "type":"string",
-      "max":1572864,
+      "max":6291456,
       "min":0
     },
     "AssetIdList":{
@@ -1811,6 +1916,11 @@
       "type":"boolean",
       "box":true
     },
+    "ButtonText":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
     "CapabilityConfiguration":{
       "type":"structure",
       "members":{
@@ -1900,7 +2010,8 @@
           "shape":"CreateAgentSpaceInputClientTokenString",
           "idempotencyToken":true
         },
-        "tags":{"shape":"Tags"}
+        "tags":{"shape":"Tags"},
+        "preferences":{"shape":"AgentSpacePreferences"}
       }
     },
     "CreateAgentSpaceInputClientTokenString":{
@@ -1927,7 +2038,7 @@
       ],
       "members":{
         "agentSpaceId":{
-          "shape":"AgentSpaceId",
+          "shape":"AgentSpaceIdentifier",
           "location":"uri",
           "locationName":"agentSpaceId"
         },
@@ -1970,7 +2081,7 @@
       ],
       "members":{
         "agentSpaceId":{
-          "shape":"AgentSpaceId",
+          "shape":"AgentSpaceIdentifier",
           "location":"uri",
           "locationName":"agentSpaceId"
         },
@@ -2005,7 +2116,7 @@
       ],
       "members":{
         "agentSpaceId":{
-          "shape":"AgentSpaceId",
+          "shape":"AgentSpaceIdentifier",
           "location":"uri",
           "locationName":"agentSpaceId"
         },
@@ -2015,10 +2126,16 @@
         "description":{"shape":"BacklogTaskDescription"},
         "priority":{"shape":"Priority"},
         "clientToken":{
-          "shape":"String",
+          "shape":"CreateBacklogTaskRequestClientTokenString",
           "idempotencyToken":true
         }
       }
+    },
+    "CreateBacklogTaskRequestClientTokenString":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[\\x21-\\x7E]+"
     },
     "CreateBacklogTaskResponse":{
       "type":"structure",
@@ -2032,7 +2149,7 @@
       "required":["agentSpaceId"],
       "members":{
         "agentSpaceId":{
-          "shape":"AgentSpaceId",
+          "shape":"AgentSpaceIdentifier",
           "location":"uri",
           "locationName":"agentSpaceId"
         },
@@ -2105,7 +2222,7 @@
       ],
       "members":{
         "agentSpaceId":{
-          "shape":"AgentSpaceId",
+          "shape":"AgentSpaceIdentifier",
           "location":"uri",
           "locationName":"agentSpaceId"
         },
@@ -2121,8 +2238,9 @@
     },
     "CreateTriggerRequestClientTokenString":{
       "type":"string",
-      "max":128,
-      "min":1
+      "max":64,
+      "min":1,
+      "pattern":"[\\x21-\\x7E]+"
     },
     "CreateTriggerResponse":{
       "type":"structure",
@@ -2207,7 +2325,7 @@
       ],
       "members":{
         "agentSpaceId":{
-          "shape":"AgentSpaceId",
+          "shape":"AgentSpaceIdentifier",
           "location":"uri",
           "locationName":"agentSpaceId"
         },
@@ -2235,7 +2353,7 @@
       ],
       "members":{
         "agentSpaceId":{
-          "shape":"AgentSpaceId",
+          "shape":"AgentSpaceIdentifier",
           "location":"uri",
           "locationName":"agentSpaceId"
         },
@@ -2280,7 +2398,7 @@
       ],
       "members":{
         "agentSpaceId":{
-          "shape":"AgentSpaceId",
+          "shape":"AgentSpaceIdentifier",
           "location":"uri",
           "locationName":"agentSpaceId"
         },
@@ -2548,7 +2666,8 @@
         "RUNNING",
         "STOPPED",
         "CANCELED",
-        "TIMED_OUT"
+        "TIMED_OUT",
+        "WAITING"
       ]
     },
     "FailureMessage":{
@@ -2612,7 +2731,7 @@
       ],
       "members":{
         "agentSpaceId":{
-          "shape":"AgentSpaceId",
+          "shape":"AgentSpaceIdentifier",
           "location":"uri",
           "locationName":"agentSpaceId"
         },
@@ -2653,7 +2772,7 @@
       ],
       "members":{
         "agentSpaceId":{
-          "shape":"AgentSpaceId",
+          "shape":"AgentSpaceIdentifier",
           "location":"uri",
           "locationName":"agentSpaceId"
         },
@@ -2694,7 +2813,7 @@
       ],
       "members":{
         "agentSpaceId":{
-          "shape":"AgentSpaceId",
+          "shape":"AgentSpaceIdentifier",
           "location":"uri",
           "locationName":"agentSpaceId"
         },
@@ -2756,7 +2875,7 @@
       ],
       "members":{
         "agentSpaceId":{
-          "shape":"AgentSpaceId",
+          "shape":"AgentSpaceIdentifier",
           "location":"uri",
           "locationName":"agentSpaceId"
         },
@@ -2802,7 +2921,7 @@
       ],
       "members":{
         "agentSpaceId":{
-          "shape":"AgentSpaceId",
+          "shape":"AgentSpaceIdentifier",
           "location":"uri",
           "locationName":"agentSpaceId"
         },
@@ -2852,7 +2971,7 @@
       ],
       "members":{
         "agentSpaceId":{
-          "shape":"AgentSpaceId",
+          "shape":"AgentSpaceIdentifier",
           "location":"uri",
           "locationName":"agentSpaceId"
         },
@@ -2884,7 +3003,12 @@
         "owner":{"shape":"String"},
         "ownerType":{"shape":"GithubRepoOwnerType"},
         "instanceIdentifier":{"shape":"String"},
-        "runtimeRoleArn":{"shape":"RoleArn"}
+        "runtimeRoleArn":{
+          "shape":"RoleArn",
+          "deprecated":true,
+          "deprecatedMessage":"Superseded by the ReleaseManagement association. Configure the runtime role on the ReleaseManagement association and reference it via releaseManagementAssociationId.",
+          "deprecatedSince":"2026-08-04"
+        }
       }
     },
     "GitLabConfiguration":{
@@ -2897,7 +3021,12 @@
         "projectId":{"shape":"String"},
         "projectPath":{"shape":"String"},
         "instanceIdentifier":{"shape":"String"},
-        "runtimeRoleArn":{"shape":"RoleArn"}
+        "runtimeRoleArn":{
+          "shape":"RoleArn",
+          "deprecated":true,
+          "deprecatedMessage":"Superseded by the ReleaseManagement association. Configure the runtime role on the ReleaseManagement association and reference it via releaseManagementAssociationId.",
+          "deprecatedSince":"2026-08-04"
+        }
       }
     },
     "GitLabDetails":{
@@ -2910,7 +3039,7 @@
       "members":{
         "targetUrl":{"shape":"GitLabDetailsTargetUrlString"},
         "tokenType":{"shape":"GitLabTokenType"},
-        "tokenValue":{"shape":"GitLabDetailsTokenValueString"},
+        "tokenValue":{"shape":"GitLabTokenValue"},
         "groupId":{"shape":"String"}
       }
     },
@@ -2918,17 +3047,17 @@
       "type":"string",
       "pattern":"https://[a-zA-Z0-9]([a-zA-Z0-9.-]*[a-zA-Z0-9])?(?::[0-9]{1,5})?/?"
     },
-    "GitLabDetailsTokenValueString":{
-      "type":"string",
-      "pattern":"[a-zA-Z0-9._-]+",
-      "sensitive":true
-    },
     "GitLabTokenType":{
       "type":"string",
       "enum":[
         "personal",
         "group"
       ]
+    },
+    "GitLabTokenValue":{
+      "type":"string",
+      "pattern":"[a-zA-Z0-9._-]+",
+      "sensitive":true
     },
     "GithubRepoOwnerType":{
       "type":"string",
@@ -3122,6 +3251,11 @@
       "fault":true,
       "retryable":{"throttling":false}
     },
+    "InterruptId":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
     "InvalidParameterException":{
       "type":"structure",
       "required":["message"],
@@ -3215,7 +3349,7 @@
       ],
       "members":{
         "agentSpaceId":{
-          "shape":"AgentSpaceId",
+          "shape":"AgentSpaceIdentifier",
           "location":"uri",
           "locationName":"agentSpaceId"
         },
@@ -3297,7 +3431,7 @@
       ],
       "members":{
         "agentSpaceId":{
-          "shape":"AgentSpaceId",
+          "shape":"AgentSpaceIdentifier",
           "location":"uri",
           "locationName":"agentSpaceId"
         },
@@ -3337,7 +3471,7 @@
       "required":["agentSpaceId"],
       "members":{
         "agentSpaceId":{
-          "shape":"AgentSpaceId",
+          "shape":"AgentSpaceIdentifier",
           "location":"uri",
           "locationName":"agentSpaceId"
         },
@@ -3431,7 +3565,7 @@
       "required":["agentSpaceId"],
       "members":{
         "agentSpaceId":{
-          "shape":"AgentSpaceId",
+          "shape":"AgentSpaceIdentifier",
           "location":"uri",
           "locationName":"agentSpaceId"
         },
@@ -3461,7 +3595,7 @@
       "required":["agentSpaceId"],
       "members":{
         "agentSpaceId":{
-          "shape":"AgentSpaceId",
+          "shape":"AgentSpaceIdentifier",
           "location":"uri",
           "locationName":"agentSpaceId"
         },
@@ -3507,7 +3641,7 @@
       ],
       "members":{
         "agentSpaceId":{
-          "shape":"AgentSpaceId",
+          "shape":"AgentSpaceIdentifier",
           "location":"uri",
           "locationName":"agentSpaceId"
         },
@@ -3529,7 +3663,7 @@
       "required":["agentSpaceId"],
       "members":{
         "agentSpaceId":{
-          "shape":"AgentSpaceId",
+          "shape":"AgentSpaceIdentifier",
           "location":"uri",
           "locationName":"agentSpaceId"
         },
@@ -3561,7 +3695,7 @@
       ],
       "members":{
         "agentSpaceId":{
-          "shape":"AgentSpaceId",
+          "shape":"AgentSpaceIdentifier",
           "location":"uri",
           "locationName":"agentSpaceId"
         },
@@ -3644,7 +3778,7 @@
       "required":["agentSpaceId"],
       "members":{
         "agentSpaceId":{
-          "shape":"AgentSpaceId",
+          "shape":"AgentSpaceIdentifier",
           "location":"uri",
           "locationName":"agentSpaceId"
         },
@@ -3717,7 +3851,7 @@
     },
     "ListTagsForResourceRequestResourceArnString":{
       "type":"string",
-      "pattern":"arn:aws:aidevops:[a-z0-9-]+:\\d{12}:(agentspace|service)/[a-zA-Z0-9-]+"
+      "pattern":"arn:aws:aidevops:[a-z0-9-]+:\\d{12}:(agentspace|service|private-connection)/[a-zA-Z0-9_-]+"
     },
     "ListTagsForResourceResponse":{
       "type":"structure",
@@ -3731,7 +3865,7 @@
       "required":["agentSpaceId"],
       "members":{
         "agentSpaceId":{
-          "shape":"AgentSpaceId",
+          "shape":"AgentSpaceIdentifier",
           "location":"uri",
           "locationName":"agentSpaceId"
         },
@@ -3889,12 +4023,15 @@
       "type":"structure",
       "required":["tools"],
       "members":{
-        "tools":{"shape":"MCPToolsList"}
+        "tools":{"shape":"MCPToolsList"},
+        "toolDetails":{"shape":"MCPToolDetailsList"}
       }
     },
     "MCPServerDatadogConfiguration":{
       "type":"structure",
-      "members":{}
+      "members":{
+        "enabledElevatedTools":{"shape":"MCPToolDetailsList"}
+      }
     },
     "MCPServerDetails":{
       "type":"structure",
@@ -3929,7 +4066,8 @@
       "members":{
         "endpoint":{"shape":"MCPServerGrafanaConfigurationEndpointString"},
         "organizationId":{"shape":"MCPServerGrafanaConfigurationOrganizationIdString"},
-        "tools":{"shape":"MCPToolsList"}
+        "tools":{"shape":"MCPToolsList"},
+        "enabledElevatedTools":{"shape":"MCPToolDetailsList"}
       }
     },
     "MCPServerGrafanaConfigurationEndpointString":{
@@ -4071,7 +4209,8 @@
       "type":"structure",
       "required":["tools"],
       "members":{
-        "tools":{"shape":"MCPToolsList"}
+        "tools":{"shape":"MCPToolsList"},
+        "toolDetails":{"shape":"MCPToolDetailsList"}
       }
     },
     "MCPServerSigV4ServiceDetails":{
@@ -4098,6 +4237,26 @@
     "MCPServerSplunkConfiguration":{
       "type":"structure",
       "members":{}
+    },
+    "MCPToolDetail":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{"shape":"MCPToolDetailNameString"},
+        "toolClassification":{"shape":"ToolClassification"}
+      }
+    },
+    "MCPToolDetailNameString":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_-]+"
+    },
+    "MCPToolDetailsList":{
+      "type":"list",
+      "member":{"shape":"MCPToolDetail"},
+      "max":500,
+      "min":0
     },
     "MCPToolsList":{
       "type":"list",
@@ -4138,6 +4297,11 @@
       "type":"string",
       "pattern":"[0-9]+"
     },
+    "NewRelicApiKey":{
+      "type":"string",
+      "pattern":"NRAK-[A-Z0-9]+",
+      "sensitive":true
+    },
     "NewRelicApiKeyConfig":{
       "type":"structure",
       "required":[
@@ -4146,7 +4310,7 @@
         "region"
       ],
       "members":{
-        "apiKey":{"shape":"NewRelicApiKeyConfigApiKeyString"},
+        "apiKey":{"shape":"NewRelicApiKey"},
         "accountId":{"shape":"NewRelicApiKeyConfigAccountIdString"},
         "region":{"shape":"NewRelicRegion"},
         "applicationIds":{"shape":"NewRelicApplicationIds"},
@@ -4159,12 +4323,6 @@
       "max":7,
       "min":3,
       "pattern":"[0-9]+"
-    },
-    "NewRelicApiKeyConfigApiKeyString":{
-      "type":"string",
-      "min":1,
-      "pattern":"NRAK-[A-Z0-9]+",
-      "sensitive":true
     },
     "NewRelicApplicationIds":{
       "type":"list",
@@ -4186,7 +4344,8 @@
       "type":"string",
       "enum":[
         "US",
-        "EU"
+        "EU",
+        "JP"
       ]
     },
     "NewRelicServiceAuthorizationConfig":{
@@ -4742,7 +4901,9 @@
       "type":"structure",
       "required":[
         "serviceId",
-        "serviceType"
+        "serviceType",
+        "createdAt",
+        "updatedAt"
       ],
       "members":{
         "serviceId":{"shape":"ServiceId"},
@@ -4751,7 +4912,9 @@
         "accessibleResources":{"shape":"DocumentList"},
         "additionalServiceDetails":{"shape":"AdditionalServiceDetails"},
         "kmsKeyArn":{"shape":"KmsKeyArn"},
-        "privateConnectionName":{"shape":"PrivateConnectionName"}
+        "privateConnectionName":{"shape":"PrivateConnectionName"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
     },
     "RegisteredServiceNowDetails":{
@@ -5075,7 +5238,8 @@
       "members":{
         "currentPage":{"shape":"String"},
         "lastMessage":{"shape":"String"},
-        "userActionResponse":{"shape":"String"}
+        "userActionResponse":{"shape":"String"},
+        "approvalAction":{"shape":"ApprovalAction"}
       }
     },
     "SendMessageEvents":{
@@ -5113,7 +5277,7 @@
       ],
       "members":{
         "agentSpaceId":{
-          "shape":"AgentSpaceId",
+          "shape":"AgentSpaceIdentifier",
           "location":"uri",
           "locationName":"agentSpaceId"
         },
@@ -5126,7 +5290,8 @@
           "deprecatedMessage":"userId is managed by the service and should not be provided by the caller",
           "deprecatedSince":"2026-04-15"
         },
-        "assetIds":{"shape":"AssetIdList"}
+        "assetIds":{"shape":"AssetIdList"},
+        "modelTier":{"shape":"String"}
       }
     },
     "SendMessageResponse":{
@@ -5416,7 +5581,9 @@
         "accountId":{"shape":"SourceAwsConfigurationAccountIdString"},
         "accountType":{"shape":"SourceAccountType"},
         "assumableRoleArn":{"shape":"RoleArn"},
-        "externalId":{"shape":"String"}
+        "externalId":{"shape":"String"},
+        "agentElevatedRoleArn":{"shape":"RoleArn"},
+        "agentElevatedRoleArnStatus":{"shape":"ValidationStatus"}
       }
     },
     "SourceAwsConfigurationAccountIdString":{
@@ -5461,7 +5628,7 @@
     },
     "TagResourceRequestResourceArnString":{
       "type":"string",
-      "pattern":"arn:aws:aidevops:[a-z0-9-]+:\\d{12}:(agentspace|service)/[a-zA-Z0-9-]+"
+      "pattern":"arn:aws:aidevops:[a-z0-9-]+:\\d{12}:(agentspace|service|private-connection)/[a-zA-Z0-9_-]+"
     },
     "TagResourceResponse":{
       "type":"structure",
@@ -5570,7 +5737,8 @@
         "FAILED",
         "TIMED_OUT",
         "CANCELED",
-        "SKIPPED"
+        "SKIPPED",
+        "WAITING"
       ]
     },
     "TaskType":{
@@ -5596,6 +5764,24 @@
       "retryable":{"throttling":false}
     },
     "Timestamp":{"type":"timestamp"},
+    "ToolClassification":{
+      "type":"string",
+      "enum":[
+        "READ_ONLY",
+        "MUTATIVE",
+        "DESTRUCTIVE"
+      ]
+    },
+    "ToolIdentifier":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "ToolUseId":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
     "Trigger":{
       "type":"structure",
       "required":[
@@ -5666,7 +5852,7 @@
     },
     "UntagResourceRequestResourceArnString":{
       "type":"string",
-      "pattern":"arn:aws:aidevops:[a-z0-9-]+:\\d{12}:(agentspace|service)/[a-zA-Z0-9-]+"
+      "pattern":"arn:aws:aidevops:[a-z0-9-]+:\\d{12}:(agentspace|service|private-connection)/[a-zA-Z0-9_-]+"
     },
     "UntagResourceResponse":{
       "type":"structure",
@@ -5683,7 +5869,8 @@
         },
         "name":{"shape":"AgentSpaceName"},
         "description":{"shape":"Description"},
-        "locale":{"shape":"Locale"}
+        "locale":{"shape":"Locale"},
+        "preferences":{"shape":"AgentSpacePreferences"}
       }
     },
     "UpdateAgentSpaceOutput":{
@@ -5691,6 +5878,49 @@
       "required":["agentSpace"],
       "members":{
         "agentSpace":{"shape":"AgentSpace"}
+      }
+    },
+    "UpdateApprovalActionRequest":{
+      "type":"structure",
+      "required":[
+        "agentSpaceId",
+        "approvalId",
+        "action"
+      ],
+      "members":{
+        "agentSpaceId":{
+          "shape":"AgentSpaceIdentifier",
+          "location":"uri",
+          "locationName":"agentSpaceId"
+        },
+        "approvalId":{
+          "shape":"ApprovalId",
+          "location":"uri",
+          "locationName":"approvalId"
+        },
+        "action":{"shape":"ApprovalActionType"},
+        "finalPattern":{"shape":"ApprovalPattern"},
+        "reason":{"shape":"ApprovalReason"},
+        "ttlSeconds":{"shape":"UpdateApprovalActionRequestTtlSecondsInteger"},
+        "singleUse":{"shape":"Boolean"}
+      }
+    },
+    "UpdateApprovalActionRequestTtlSecondsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":14400,
+      "min":1
+    },
+    "UpdateApprovalActionResponse":{
+      "type":"structure",
+      "required":[
+        "approvalId",
+        "status"
+      ],
+      "members":{
+        "approvalId":{"shape":"ApprovalId"},
+        "status":{"shape":"ApprovalStatus"},
+        "expiresAt":{"shape":"Timestamp"}
       }
     },
     "UpdateAssetFileRequest":{
@@ -5702,7 +5932,7 @@
       ],
       "members":{
         "agentSpaceId":{
-          "shape":"AgentSpaceId",
+          "shape":"AgentSpaceIdentifier",
           "location":"uri",
           "locationName":"agentSpaceId"
         },
@@ -5744,7 +5974,7 @@
       ],
       "members":{
         "agentSpaceId":{
-          "shape":"AgentSpaceId",
+          "shape":"AgentSpaceIdentifier",
           "location":"uri",
           "locationName":"agentSpaceId"
         },
@@ -5811,7 +6041,7 @@
       ],
       "members":{
         "agentSpaceId":{
-          "shape":"AgentSpaceId",
+          "shape":"AgentSpaceIdentifier",
           "location":"uri",
           "locationName":"agentSpaceId"
         },
@@ -5822,10 +6052,16 @@
         },
         "taskStatus":{"shape":"TaskStatus"},
         "clientToken":{
-          "shape":"String",
+          "shape":"UpdateBacklogTaskRequestClientTokenString",
           "idempotencyToken":true
         }
       }
+    },
+    "UpdateBacklogTaskRequestClientTokenString":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[\\x21-\\x7E]+"
     },
     "UpdateBacklogTaskResponse":{
       "type":"structure",
@@ -5842,7 +6078,7 @@
       ],
       "members":{
         "agentSpaceId":{
-          "shape":"AgentSpaceId",
+          "shape":"AgentSpaceIdentifier",
           "location":"uri",
           "locationName":"agentSpaceId"
         },
@@ -5853,10 +6089,16 @@
         },
         "evaluationSchedule":{"shape":"GoalScheduleInput"},
         "clientToken":{
-          "shape":"String",
+          "shape":"UpdateGoalRequestClientTokenString",
           "idempotencyToken":true
         }
       }
+    },
+    "UpdateGoalRequestClientTokenString":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[\\x21-\\x7E]+"
     },
     "UpdateGoalResponse":{
       "type":"structure",
@@ -5931,7 +6173,7 @@
       ],
       "members":{
         "agentSpaceId":{
-          "shape":"AgentSpaceId",
+          "shape":"AgentSpaceIdentifier",
           "location":"uri",
           "locationName":"agentSpaceId"
         },
@@ -5943,10 +6185,16 @@
         "status":{"shape":"RecommendationStatus"},
         "additionalContext":{"shape":"String"},
         "clientToken":{
-          "shape":"String",
+          "shape":"UpdateRecommendationRequestClientTokenString",
           "idempotencyToken":true
         }
       }
+    },
+    "UpdateRecommendationRequestClientTokenString":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[\\x21-\\x7E]+"
     },
     "UpdateRecommendationResponse":{
       "type":"structure",
@@ -5963,7 +6211,7 @@
       ],
       "members":{
         "agentSpaceId":{
-          "shape":"AgentSpaceId",
+          "shape":"AgentSpaceIdentifier",
           "location":"uri",
           "locationName":"agentSpaceId"
         },
@@ -5981,8 +6229,9 @@
     },
     "UpdateTriggerRequestClientTokenString":{
       "type":"string",
-      "max":128,
-      "min":1
+      "max":64,
+      "min":1,
+      "pattern":"[\\x21-\\x7E]+"
     },
     "UpdateTriggerResponse":{
       "type":"structure",

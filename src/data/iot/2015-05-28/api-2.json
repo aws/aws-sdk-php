@@ -4479,7 +4479,8 @@
         "http":{"shape":"HttpAction"},
         "kafka":{"shape":"KafkaAction"},
         "openSearch":{"shape":"OpenSearchAction"},
-        "location":{"shape":"LocationAction"}
+        "location":{"shape":"LocationAction"},
+        "influxDB":{"shape":"InfluxDBAction"}
       }
     },
     "ActionList":{
@@ -9938,6 +9939,153 @@
         "connectivity":{"shape":"ConnectivityFilter"}
       }
     },
+    "InfluxDBAction":{
+      "type":"structure",
+      "required":[
+        "destinationArn",
+        "roleArn",
+        "databaseName",
+        "tableName"
+      ],
+      "members":{
+        "destinationArn":{"shape":"AwsArn"},
+        "roleArn":{"shape":"AwsArn"},
+        "databaseName":{"shape":"InfluxDBDatabaseName"},
+        "tableName":{"shape":"InfluxDBTableName"},
+        "organization":{"shape":"InfluxDBOrganization"},
+        "tags":{"shape":"InfluxDBTagMap"},
+        "timestampUnit":{"shape":"InfluxDBTimestampUnit"},
+        "batchConfig":{"shape":"InfluxDBBatchConfig"}
+      }
+    },
+    "InfluxDBBatchAcrossTopics":{"type":"boolean"},
+    "InfluxDBBatchConfig":{
+      "type":"structure",
+      "members":{
+        "maxBatchSize":{"shape":"InfluxDBMaxBatchSize"},
+        "maxBatchOpenMs":{"shape":"InfluxDBMaxBatchOpenMs"},
+        "maxBatchSizeBytes":{"shape":"InfluxDBMaxBatchSizeBytes"},
+        "batchAcrossTopics":{"shape":"InfluxDBBatchAcrossTopics"}
+      }
+    },
+    "InfluxDBDatabaseName":{
+      "type":"string",
+      "max":64,
+      "min":2,
+      "pattern":"^[^_\\\"][^\\\"]+$"
+    },
+    "InfluxDBDestinationConfiguration":{
+      "type":"structure",
+      "required":[
+        "endpoint",
+        "influxDBVersion",
+        "secretId"
+      ],
+      "members":{
+        "endpoint":{"shape":"Url"},
+        "influxDBVersion":{"shape":"InfluxDBVersion"},
+        "secretId":{"shape":"InfluxDBSecretId"},
+        "secretType":{"shape":"InfluxDBSecretType"},
+        "secretKey":{"shape":"InfluxDBSecretKey"}
+      }
+    },
+    "InfluxDBDestinationProperties":{
+      "type":"structure",
+      "members":{
+        "endpoint":{"shape":"Url"},
+        "influxDBVersion":{"shape":"InfluxDBVersion"},
+        "secretId":{"shape":"InfluxDBSecretId"},
+        "secretType":{"shape":"InfluxDBSecretType"},
+        "secretKey":{"shape":"InfluxDBSecretKey"}
+      }
+    },
+    "InfluxDBDestinationSummary":{
+      "type":"structure",
+      "members":{
+        "endpoint":{"shape":"Url"},
+        "influxDBVersion":{"shape":"InfluxDBVersion"},
+        "secretId":{"shape":"InfluxDBSecretId"},
+        "secretType":{"shape":"InfluxDBSecretType"},
+        "secretKey":{"shape":"InfluxDBSecretKey"}
+      }
+    },
+    "InfluxDBMaxBatchOpenMs":{
+      "type":"integer",
+      "max":1000,
+      "min":5
+    },
+    "InfluxDBMaxBatchSize":{
+      "type":"integer",
+      "max":500,
+      "min":1
+    },
+    "InfluxDBMaxBatchSizeBytes":{
+      "type":"integer",
+      "max":131072,
+      "min":100
+    },
+    "InfluxDBOrganization":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "InfluxDBSecretId":{
+      "type":"string",
+      "max":512,
+      "min":1
+    },
+    "InfluxDBSecretKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "InfluxDBSecretType":{
+      "type":"string",
+      "enum":[
+        "SecretString",
+        "SecretBinary"
+      ]
+    },
+    "InfluxDBTableName":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"^[^_].*$"
+    },
+    "InfluxDBTagMap":{
+      "type":"map",
+      "key":{"shape":"InfluxDBTagName"},
+      "value":{"shape":"InfluxDBTagValue"},
+      "max":498,
+      "min":0
+    },
+    "InfluxDBTagName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^[^_].*$"
+    },
+    "InfluxDBTagValue":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "InfluxDBTimestampUnit":{
+      "type":"string",
+      "enum":[
+        "s",
+        "ms",
+        "us",
+        "ns"
+      ]
+    },
+    "InfluxDBVersion":{
+      "type":"string",
+      "enum":[
+        "V2",
+        "V3"
+      ]
+    },
     "InlineDocument":{"type":"string"},
     "InputName":{
       "type":"string",
@@ -15153,14 +15301,16 @@
         "lastUpdatedAt":{"shape":"LastUpdatedAtDate"},
         "statusReason":{"shape":"String"},
         "httpUrlProperties":{"shape":"HttpUrlDestinationProperties"},
-        "vpcProperties":{"shape":"VpcDestinationProperties"}
+        "vpcProperties":{"shape":"VpcDestinationProperties"},
+        "influxDBProperties":{"shape":"InfluxDBDestinationProperties"}
       }
     },
     "TopicRuleDestinationConfiguration":{
       "type":"structure",
       "members":{
         "httpUrlConfiguration":{"shape":"HttpUrlDestinationConfiguration"},
-        "vpcConfiguration":{"shape":"VpcDestinationConfiguration"}
+        "vpcConfiguration":{"shape":"VpcDestinationConfiguration"},
+        "influxDBConfiguration":{"shape":"InfluxDBDestinationConfiguration"}
       }
     },
     "TopicRuleDestinationMaxResults":{
@@ -15191,7 +15341,8 @@
         "lastUpdatedAt":{"shape":"LastUpdatedAtDate"},
         "statusReason":{"shape":"String"},
         "httpUrlSummary":{"shape":"HttpUrlDestinationSummary"},
-        "vpcDestinationSummary":{"shape":"VpcDestinationSummary"}
+        "vpcDestinationSummary":{"shape":"VpcDestinationSummary"},
+        "influxDBSummary":{"shape":"InfluxDBDestinationSummary"}
       }
     },
     "TopicRuleList":{

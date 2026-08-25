@@ -12281,6 +12281,13 @@
         "none"
       ]
     },
+    "CapacityReservationResourceGroupArnSet":{
+      "type":"list",
+      "member":{
+        "shape":"ResourceGroupName",
+        "locationName":"item"
+      }
+    },
     "CapacityReservationSet":{
       "type":"list",
       "member":{
@@ -29934,6 +29941,19 @@
         "locationName":"item"
       }
     },
+    "FleetCapacityReservationTargetRequest":{
+      "type":"structure",
+      "members":{
+        "CapacityReservationIds":{
+          "shape":"CapacityReservationIdSet",
+          "locationName":"CapacityReservationId"
+        },
+        "CapacityReservationResourceGroupArns":{
+          "shape":"CapacityReservationResourceGroupArnSet",
+          "locationName":"CapacityReservationResourceGroupArn"
+        }
+      }
+    },
     "FleetCapacityReservationTenancy":{
       "type":"string",
       "enum":["default"]
@@ -30264,7 +30284,11 @@
     },
     "FleetReservationType":{
       "type":"string",
-      "enum":["interruptible-capacity-reservation"]
+      "enum":[
+        "on-demand-capacity-reservation",
+        "capacity-block",
+        "interruptible-capacity-reservation"
+      ]
     },
     "FleetSet":{
       "type":"list",
@@ -43716,7 +43740,8 @@
       "enum":[
         "spot",
         "capacity-block",
-        "interruptible-capacity-reservation"
+        "interruptible-capacity-reservation",
+        "on-demand"
       ]
     },
     "MarketplaceProductCode":{"type":"string"},
@@ -51251,22 +51276,66 @@
         }
       }
     },
+    "ReservedCapacityAllocationStrategy":{
+      "type":"string",
+      "enum":["prioritized"]
+    },
+    "ReservedCapacityFallbackMarketType":{
+      "type":"string",
+      "enum":["on-demand"]
+    },
+    "ReservedCapacityFallbackMarketTypeList":{
+      "type":"list",
+      "member":{
+        "shape":"ReservedCapacityFallbackMarketType",
+        "locationName":"item"
+      }
+    },
+    "ReservedCapacityFallbackOptions":{
+      "type":"structure",
+      "members":{
+        "MarketTypes":{
+          "shape":"ReservedCapacityFallbackMarketTypeList",
+          "locationName":"marketTypeSet"
+        }
+      }
+    },
+    "ReservedCapacityFallbackOptionsRequest":{
+      "type":"structure",
+      "members":{
+        "MarketTypes":{
+          "shape":"ReservedCapacityFallbackMarketTypeList",
+          "locationName":"MarketType"
+        }
+      }
+    },
     "ReservedCapacityOptions":{
       "type":"structure",
       "members":{
+        "AllocationStrategy":{
+          "shape":"ReservedCapacityAllocationStrategy",
+          "locationName":"allocationStrategy"
+        },
         "ReservationTypes":{
           "shape":"ReservationTypeList",
           "locationName":"reservationTypeSet"
+        },
+        "ReservedCapacityFallbackOptions":{
+          "shape":"ReservedCapacityFallbackOptions",
+          "locationName":"reservedCapacityFallbackOptions"
         }
       }
     },
     "ReservedCapacityOptionsRequest":{
       "type":"structure",
       "members":{
+        "AllocationStrategy":{"shape":"ReservedCapacityAllocationStrategy"},
         "ReservationTypes":{
           "shape":"ReservationTypeListRequest",
           "locationName":"ReservationType"
-        }
+        },
+        "CapacityReservationTarget":{"shape":"FleetCapacityReservationTargetRequest"},
+        "ReservedCapacityFallbackOptions":{"shape":"ReservedCapacityFallbackOptionsRequest"}
       }
     },
     "ReservedInstanceIdSet":{
@@ -51814,6 +51883,7 @@
       "min":1
     },
     "ResourceConfigurationArn":{"type":"string"},
+    "ResourceGroupName":{"type":"string"},
     "ResourceIdList":{
       "type":"list",
       "member":{"shape":"TaggableResourceId"}

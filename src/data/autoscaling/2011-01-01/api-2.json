@@ -2066,6 +2066,16 @@
       }
     },
     "DisableScaleIn":{"type":"boolean"},
+    "DistributionSegment":{
+      "type":"structure",
+      "members":{
+        "TargetCapacityTypes":{"shape":"TargetCapacityTypes"}
+      }
+    },
+    "DistributionSegments":{
+      "type":"list",
+      "member":{"shape":"DistributionSegment"}
+    },
     "Ebs":{
       "type":"structure",
       "members":{
@@ -2479,7 +2489,8 @@
         "OnDemandPercentageAboveBaseCapacity":{"shape":"OnDemandPercentageAboveBaseCapacity"},
         "SpotAllocationStrategy":{"shape":"XmlString"},
         "SpotInstancePools":{"shape":"SpotInstancePools"},
-        "SpotMaxPrice":{"shape":"MixedInstanceSpotPrice"}
+        "SpotMaxPrice":{"shape":"MixedInstanceSpotPrice"},
+        "DistributionSegments":{"shape":"DistributionSegments"}
       }
     },
     "InstancesToUpdate":{
@@ -3747,6 +3758,19 @@
         "Tags":{"shape":"TagDescriptionList"},
         "NextToken":{"shape":"XmlString"}
       }
+    },
+    "TargetCapacityType":{
+      "type":"string",
+      "enum":[
+        "on-demand-capacity-reservation",
+        "capacity-block",
+        "interruptible-capacity-reservation",
+        "on-demand"
+      ]
+    },
+    "TargetCapacityTypes":{
+      "type":"list",
+      "member":{"shape":"TargetCapacityType"}
     },
     "TargetGroupARNs":{
       "type":"list",

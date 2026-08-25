@@ -4591,7 +4591,8 @@
         "DescribeCapacityBlockExtensionHistoryRequest$CapacityReservationIds": "<p>The IDs of Capacity Block reservations that you want to display the history for.</p>",
         "DescribeCapacityReservationBillingRequestsRequest$CapacityReservationIds": "<p>The ID of the Capacity Reservation.</p>",
         "DescribeCapacityReservationTopologyRequest$CapacityReservationIds": "<p>The Capacity Reservation IDs.</p> <p>Default: Describes all your Capacity Reservations.</p> <p>Constraints: Maximum 10 explicitly specified Capacity Reservation IDs.</p>",
-        "DescribeCapacityReservationsRequest$CapacityReservationIds": "<p>The ID of the Capacity Reservation.</p>"
+        "DescribeCapacityReservationsRequest$CapacityReservationIds": "<p>The ID of the Capacity Reservation.</p>",
+        "FleetCapacityReservationTargetRequest$CapacityReservationIds": "<p>The IDs of the Capacity Reservations in which to launch the instances.</p>"
       }
     },
     "CapacityReservationInfo": {
@@ -4629,6 +4630,12 @@
         "CapacityReservationSpecificationResponse$CapacityReservationPreference": "<p>Describes the instance's Capacity Reservation preferences. Possible preferences include:</p> <ul> <li> <p> <code>open</code> - The instance can run in any <code>open</code> Capacity Reservation that has matching attributes (instance type, platform, Availability Zone).</p> </li> <li> <p> <code>none</code> - The instance avoids running in a Capacity Reservation even if one is available. The instance runs in On-Demand capacity.</p> </li> </ul>",
         "LaunchTemplateCapacityReservationSpecificationRequest$CapacityReservationPreference": "<p>Indicates the instance's Capacity Reservation preferences. Possible preferences include:</p> <ul> <li> <p> <code>capacity-reservations-only</code> - The instance will only run in a Capacity Reservation or Capacity Reservation group. If capacity isn't available, the instance will fail to launch.</p> </li> <li> <p> <code>open</code> - The instance can run in any <code>open</code> Capacity Reservation that has matching attributes (instance type, platform, Availability Zone, tenancy).</p> </li> <li> <p> <code>none</code> - The instance avoids running in a Capacity Reservation even if one is available. The instance runs in On-Demand capacity.</p> </li> </ul>",
         "LaunchTemplateCapacityReservationSpecificationResponse$CapacityReservationPreference": "<p>Indicates the instance's Capacity Reservation preferences. Possible preferences include:</p> <ul> <li> <p> <code>open</code> - The instance can run in any <code>open</code> Capacity Reservation that has matching attributes (instance type, platform, Availability Zone).</p> </li> <li> <p> <code>none</code> - The instance avoids running in a Capacity Reservation even if one is available. The instance runs in On-Demand capacity.</p> </li> </ul>"
+      }
+    },
+    "CapacityReservationResourceGroupArnSet": {
+      "base": null,
+      "refs": {
+        "FleetCapacityReservationTargetRequest$CapacityReservationResourceGroupArns": "<p>The ARNs of the Capacity Reservation Resource Groups in which to launch the instances.</p>"
       }
     },
     "CapacityReservationSet": {
@@ -12657,6 +12664,12 @@
         "CreateCapacityReservationFleetResult$FleetCapacityReservations": "<p>Information about the individual Capacity Reservations in the Capacity Reservation Fleet.</p>"
       }
     },
+    "FleetCapacityReservationTargetRequest": {
+      "base": "<p>Describes the target Capacity Reservations or Capacity Reservation Resource Groups for an EC2 Fleet that launches into reserved capacity. You can specify Capacity Reservation IDs or a Capacity Reservation Resource Group ARN, but not both.</p>",
+      "refs": {
+        "ReservedCapacityOptionsRequest$CapacityReservationTarget": "<p>The Capacity Reservations or Capacity Reservation Resource Groups to use for fulfilling the EC2 Fleet request. You can specify Capacity Reservation IDs or a Capacity Reservation Resource Group ARN, but not both.</p>"
+      }
+    },
     "FleetCapacityReservationTenancy": {
       "base": null,
       "refs": {
@@ -15584,10 +15597,10 @@
     "InstanceLifecycle": {
       "base": null,
       "refs": {
-        "CreateFleetError$Lifecycle": "<p>Indicates if the instance that could not be launched was a Spot, On-Demand, Capacity Block, or Interruptible Capacity Reservation instance.</p>",
-        "CreateFleetInstance$Lifecycle": "<p>Indicates if the instance that was launched is a Spot, On-Demand, Capacity Block, or Interruptible Capacity Reservation instance.</p>",
-        "DescribeFleetError$Lifecycle": "<p>Indicates if the instance that could not be launched was a Spot, On-Demand, Capacity Block, or Interruptible Capacity Reservation instance.</p>",
-        "DescribeFleetsInstances$Lifecycle": "<p>Indicates if the instance that was launched is a Spot, On-Demand, Capacity Block, or Interruptible Capacity Reservation instance.</p>"
+        "CreateFleetError$Lifecycle": "<p>Indicates if the instance that could not be launched was a Spot, On-Demand, Capacity Block for ML, or interruptible Capacity Reservation instance. If you are using <code>ReservedCapacityOptions</code> with <code>on-demand-capacity-reservation</code> in the <code>ReservationTypes</code> list, the value can also be <code>on-demand-capacity-reservation</code>.</p>",
+        "CreateFleetInstance$Lifecycle": "<p>Indicates if the instance that was launched is a Spot, On-Demand, Capacity Block for ML, or interruptible Capacity Reservation instance.</p>",
+        "DescribeFleetError$Lifecycle": "<p>Indicates if the instance that could not be launched was a Spot, On-Demand, Capacity Block for ML, or interruptible Capacity Reservation instance. If you are using <code>ReservedCapacityOptions</code> with <code>on-demand-capacity-reservation</code> in the <code>ReservationTypes</code> list, the value can also be <code>on-demand-capacity-reservation</code>.</p>",
+        "DescribeFleetsInstances$Lifecycle": "<p>Indicates if the instance that was launched is a Spot, On-Demand, Capacity Block for ML, or interruptible Capacity Reservation instance.</p>"
       }
     },
     "InstanceLifecycleType": {
@@ -23502,7 +23515,7 @@
     "ReservationTypeListRequest": {
       "base": null,
       "refs": {
-        "ReservedCapacityOptionsRequest$ReservationTypes": "<p>The types of Capacity Reservations to use for fulfilling the EC2 Fleet request.</p>"
+        "ReservedCapacityOptionsRequest$ReservationTypes": "<p>The types of Capacity Reservations to use for fulfilling the EC2 Fleet request. This is an ordered list: EC2 Fleet attempts to launch instances into each Capacity Reservation type in the order that you specify them before moving on to the next type.</p>"
       }
     },
     "ReservationValue": {
@@ -23514,14 +23527,46 @@
         "TargetReservationValue$ReservationValue": "<p>The total value of the Convertible Reserved Instances that make up the exchange. This is the sum of the list value, remaining upfront price, and additional upfront cost of the exchange.</p>"
       }
     },
+    "ReservedCapacityAllocationStrategy": {
+      "base": null,
+      "refs": {
+        "ReservedCapacityOptions$AllocationStrategy": "<p>The strategy that determines the order in which EC2 Fleet launches instances across the reservation types that you specify. The only supported value is <code>prioritized</code>, which launches instances in the priority order that you specify in your launch template overrides. If you don't specify an allocation strategy, instances are launched in a random order.</p>",
+        "ReservedCapacityOptionsRequest$AllocationStrategy": "<p>The strategy that determines the order in which EC2 Fleet launches instances across the reservation types that you specify. The only supported value is <code>prioritized</code>, which launches instances in the priority order that you specify in your launch template overrides. If you don't specify an allocation strategy, instances are launched in a random order.</p>"
+      }
+    },
+    "ReservedCapacityFallbackMarketType": {
+      "base": null,
+      "refs": {
+        "ReservedCapacityFallbackMarketTypeList$member": null
+      }
+    },
+    "ReservedCapacityFallbackMarketTypeList": {
+      "base": null,
+      "refs": {
+        "ReservedCapacityFallbackOptions$MarketTypes": "<p>The instance purchasing options to fall back to when the reserved capacity is not enough to meet the target capacity. The only supported value is <code>on-demand</code>, which launches On-Demand Instances to fulfill the remaining target capacity.</p>",
+        "ReservedCapacityFallbackOptionsRequest$MarketTypes": "<p>The instance purchasing options to fall back to when the reserved capacity is not enough to meet the target capacity. The only supported value is <code>on-demand</code>, which launches On-Demand Instances to fulfill the remaining target capacity.</p>"
+      }
+    },
+    "ReservedCapacityFallbackOptions": {
+      "base": "<p>Describes the fallback behavior for an EC2 Fleet that uses reserved capacity when the reserved capacity is not enough to meet the target capacity. If you don't specify fallback options, EC2 Fleet does not fall back to any other market type after the specified reservation types are exhausted.</p>",
+      "refs": {
+        "ReservedCapacityOptions$ReservedCapacityFallbackOptions": "<p>The fallback behavior for the EC2 Fleet when there is not enough reserved capacity available to meet the target capacity.</p>"
+      }
+    },
+    "ReservedCapacityFallbackOptionsRequest": {
+      "base": "<p>Describes the fallback behavior for an EC2 Fleet that uses reserved capacity when the reserved capacity is not enough to meet the target capacity. If you don't specify fallback options, EC2 Fleet does not fall back to any other market type after the specified reservation types are exhausted.</p>",
+      "refs": {
+        "ReservedCapacityOptionsRequest$ReservedCapacityFallbackOptions": "<p>The fallback behavior for the EC2 Fleet when there is not enough reserved capacity available to meet the target capacity. This member takes a <code>ReservedCapacityFallbackOptionsRequest</code> structure, in which you set <code>MarketTypes</code> to the instance purchasing options to fall back to.</p>"
+      }
+    },
     "ReservedCapacityOptions": {
-      "base": "<p>Defines EC2 Fleet preferences for utilizing reserved capacity when DefaultTargetCapacityType is set to <code>reserved-capacity</code>.</p>",
+      "base": "<p>Defines EC2 Fleet preferences for utilizing reserved capacity when <code>DefaultTargetCapacityType</code> is set to <code>reserved-capacity</code>. EC2 Fleet can fulfill reserved capacity using On-Demand Capacity Reservations, Capacity Blocks for ML, and interruptible Capacity Reservations.</p>",
       "refs": {
         "FleetData$ReservedCapacityOptions": "<p>Defines EC2 Fleet preferences for utilizing reserved capacity when DefaultTargetCapacityType is set to <code>reserved-capacity</code>.</p>"
       }
     },
     "ReservedCapacityOptionsRequest": {
-      "base": "<p>Defines EC2 Fleet preferences for utilizing reserved capacity when DefaultTargetCapacityType is set to <code>reserved-capacity</code>.</p> <note> <p>This configuration can only be used if the EC2 Fleet is of type <code>instant</code>.</p> </note> <p>When you specify <code>ReservedCapacityOptions</code>, you must also set <code>DefaultTargetCapacityType</code> to <code>reserved-capacity</code> in the <code>TargetCapacitySpecification</code>.</p> <p>For more information about Interruptible Capacity Reservations, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-fleet-launch-instances-interruptible-cr-walkthrough.html\">Launch instances into an Interruptible Capacity Reservation</a> in the <i>Amazon EC2 User Guide</i>.</p>",
+      "base": "<p>Defines EC2 Fleet preferences for utilizing reserved capacity when <code>DefaultTargetCapacityType</code> is set to <code>reserved-capacity</code>. EC2 Fleet can fulfill reserved capacity using On-Demand Capacity Reservations, Capacity Blocks for ML, and interruptible Capacity Reservations.</p> <note> <p>This configuration can only be used if the EC2 Fleet is of type <code>instant</code>.</p> </note> <p>When you specify <code>ReservedCapacityOptions</code>, you must also set <code>DefaultTargetCapacityType</code> to <code>reserved-capacity</code> in the <code>TargetCapacitySpecification</code>.</p> <p>For more information about interruptible Capacity Reservations, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-fleet-launch-instances-interruptible-cr-walkthrough.html\">Launch instances into an interruptible Capacity Reservation</a> in the <i>Amazon EC2 User Guide</i>.</p>",
       "refs": {
         "CreateFleetRequest$ReservedCapacityOptions": "<p>Defines EC2 Fleet preferences for utilizing reserved capacity when DefaultTargetCapacityType is set to <code>reserved-capacity</code>.</p> <p>Supported only for fleets of type <code>instant</code>.</p>"
       }
@@ -23795,6 +23840,12 @@
       "refs": {
         "CreateVpcEndpointRequest$ResourceConfigurationArn": "<p>The Amazon Resource Name (ARN) of a resource configuration that will be associated with the VPC endpoint of type resource.</p>",
         "VpcEndpoint$ResourceConfigurationArn": "<p>The Amazon Resource Name (ARN) of the resource configuration.</p>"
+      }
+    },
+    "ResourceGroupName": {
+      "base": null,
+      "refs": {
+        "CapacityReservationResourceGroupArnSet$member": null
       }
     },
     "ResourceIdList": {

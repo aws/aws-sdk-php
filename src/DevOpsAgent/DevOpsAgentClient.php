@@ -109,6 +109,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  * @method \Aws\Result updateAgentSpace(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateAgentSpaceAsync(array $args = [])
+ * @method \Aws\Result updateApprovalAction(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateApprovalActionAsync(array $args = [])
  * @method \Aws\Result updateAsset(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateAssetAsync(array $args = [])
  * @method \Aws\Result updateAssetFile(array $args = [])

@@ -3526,6 +3526,20 @@
       ]
     },
     "Integer":{"type":"integer"},
+    "IntegerConstraints":{
+      "type":"structure",
+      "members":{
+        "min":{"shape":"BoxedInteger"},
+        "max":{"shape":"BoxedInteger"}
+      }
+    },
+    "IntegerParameterConfig":{
+      "type":"structure",
+      "members":{
+        "defaultValue":{"shape":"BoxedInteger"},
+        "constraints":{"shape":"IntegerConstraints"}
+      }
+    },
     "IntegerRangeConstraint":{
       "type":"structure",
       "members":{
@@ -3610,18 +3624,21 @@
     "KubeControllerManagerConfigRequest":{
       "type":"structure",
       "members":{
+        "podGcControllerConfig":{"shape":"PodGcControllerConfigRequest"},
         "horizontalPodAutoscalerControllerConfig":{"shape":"HorizontalPodAutoscalerControllerConfigRequest"}
       }
     },
     "KubeControllerManagerConfigResponse":{
       "type":"structure",
       "members":{
+        "podGcControllerConfig":{"shape":"PodGcControllerConfigResponse"},
         "horizontalPodAutoscalerControllerConfig":{"shape":"HorizontalPodAutoscalerControllerConfigResponse"}
       }
     },
     "KubeControllerManagerVersionConfig":{
       "type":"structure",
       "members":{
+        "podGcControllerConfig":{"shape":"PodGcControllerVersionConfig"},
         "horizontalPodAutoscalerControllerConfig":{"shape":"HorizontalPodAutoscalerControllerVersionConfig"}
       }
     },
@@ -4466,6 +4483,24 @@
       "max":100,
       "min":1
     },
+    "PodGcControllerConfigRequest":{
+      "type":"structure",
+      "members":{
+        "terminatedPodGcThreshold":{"shape":"TerminatedPodGcThresholdValue"}
+      }
+    },
+    "PodGcControllerConfigResponse":{
+      "type":"structure",
+      "members":{
+        "terminatedPodGcThreshold":{"shape":"TerminatedPodGcThresholdValue"}
+      }
+    },
+    "PodGcControllerVersionConfig":{
+      "type":"structure",
+      "members":{
+        "terminatedPodGcThreshold":{"shape":"IntegerParameterConfig"}
+      }
+    },
     "PodIdentityAssociation":{
       "type":"structure",
       "members":{
@@ -4879,6 +4914,12 @@
         "NO_EXECUTE",
         "PREFER_NO_SCHEDULE"
       ]
+    },
+    "TerminatedPodGcThresholdValue":{
+      "type":"integer",
+      "box":true,
+      "max":1000000,
+      "min":1
     },
     "ThrottlingException":{
       "type":"structure",
