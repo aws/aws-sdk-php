@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.394.1 - 2026-08-26
 
 * `Aws\NetworkFirewall` - Adding new status enum for Firewalls.
 * `Aws\EC2` - Adds deleting state to possible VPC States.
