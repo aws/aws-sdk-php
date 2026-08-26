@@ -2049,6 +2049,12 @@
         "PagerDutyConfiguration$services": "<p>List of Pagerduty service available for the association.</p>"
       }
     },
+    "PatternFilter": {
+      "base": "<p>A regex-based match condition. Passes when the value matches any pattern.</p>",
+      "refs": {
+        "TriggerFilterGroup$targetBranches": "<p>Passes when the change request target branch matches. Applicable to RELEASE_READINESS_REVIEW only.</p>"
+      }
+    },
     "PendingMessage": {
       "base": "<p>Represents a pending message in an agent execution.</p>",
       "refs": {
@@ -3225,10 +3231,46 @@
         "Trigger$condition": "<p>The condition that fires this Trigger</p>"
       }
     },
+    "TriggerEvent": {
+      "base": "<p>Webhook events that can auto-trigger a capability. PULL_REQUEST_* events apply to RELEASE_READINESS_REVIEW; WORKFLOW_* events apply to RELEASE_SHEPHERDING.</p>",
+      "refs": {
+        "TriggerEventList$member": null
+      }
+    },
+    "TriggerEventList": {
+      "base": "<p>Webhook events that activate a trigger filter group.</p>",
+      "refs": {
+        "TriggerFilterGroup$events": "<p>Passes when the webhook event is one of the listed events.</p>"
+      }
+    },
+    "TriggerFilterGroup": {
+      "base": "<p>A group of trigger conditions. The group matches when ALL present conditions pass. A group cannot be empty: at least one condition must be present.</p>",
+      "refs": {
+        "TriggerFilterGroups$member": null
+      }
+    },
+    "TriggerFilterGroups": {
+      "base": "<p>Filter groups controlling when a capability auto-triggers. The capability triggers when ANY group matches. Absent = default trigger behavior (all applicable events trigger).</p>",
+      "refs": {
+        "CapabilityConfiguration$triggerFilterGroups": "<p>Optional trigger filter groups. Evaluated only when enabled=true; retained while the capability is disabled, so re-enabling restores the prior trigger behavior.</p>"
+      }
+    },
     "TriggerList": {
       "base": "<p>List of Triggers</p>",
       "refs": {
         "ListTriggersResponse$items": "<p>The list of Triggers</p>"
+      }
+    },
+    "TriggerRegexPattern": {
+      "base": "<p>A regex pattern matched against the entire value. Example: 'main' or 'release/.*'.</p>",
+      "refs": {
+        "TriggerRegexPatternList$member": null
+      }
+    },
+    "TriggerRegexPatternList": {
+      "base": "<p>A list of anchored full-match regex patterns.</p>",
+      "refs": {
+        "PatternFilter$patterns": "<p>Anchored full-match regex patterns. The condition passes when the value matches at least one pattern.</p>"
       }
     },
     "TriggerStatus": {

@@ -1924,7 +1924,8 @@
     "CapabilityConfiguration":{
       "type":"structure",
       "members":{
-        "enabled":{"shape":"Boolean"}
+        "enabled":{"shape":"Boolean"},
+        "triggerFilterGroups":{"shape":"TriggerFilterGroups"}
       }
     },
     "CapabilityType":{
@@ -1954,7 +1955,9 @@
     },
     "ChatExecutionId":{
       "type":"string",
-      "pattern":"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+      "max":50,
+      "min":32,
+      "pattern":"[A-Za-z0-9_-]+"
     },
     "ChatExecutionList":{
       "type":"list",
@@ -4453,6 +4456,13 @@
       "type":"list",
       "member":{"shape":"String"}
     },
+    "PatternFilter":{
+      "type":"structure",
+      "required":["patterns"],
+      "members":{
+        "patterns":{"shape":"TriggerRegexPatternList"}
+      }
+    },
     "PendingMessage":{
       "type":"structure",
       "required":[
@@ -5817,9 +5827,47 @@
       },
       "union":true
     },
+    "TriggerEvent":{
+      "type":"string",
+      "enum":[
+        "PULL_REQUEST_READY_FOR_REVIEW",
+        "PULL_REQUEST_DRAFT"
+      ]
+    },
+    "TriggerEventList":{
+      "type":"list",
+      "member":{"shape":"TriggerEvent"},
+      "max":10,
+      "min":1
+    },
+    "TriggerFilterGroup":{
+      "type":"structure",
+      "members":{
+        "events":{"shape":"TriggerEventList"},
+        "targetBranches":{"shape":"PatternFilter"}
+      }
+    },
+    "TriggerFilterGroups":{
+      "type":"list",
+      "member":{"shape":"TriggerFilterGroup"},
+      "max":5,
+      "min":1
+    },
     "TriggerList":{
       "type":"list",
       "member":{"shape":"Trigger"}
+    },
+    "TriggerRegexPattern":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[^\\x00-\\x1F\\x7F-\\x9F]+"
+    },
+    "TriggerRegexPatternList":{
+      "type":"list",
+      "member":{"shape":"TriggerRegexPattern"},
+      "max":20,
+      "min":1
     },
     "TriggerStatus":{
       "type":"string",
