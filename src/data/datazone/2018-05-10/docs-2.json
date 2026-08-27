@@ -1102,7 +1102,8 @@
         "DeleteDataSourceInput$retainPermissionsOnRevokeFailure": "<p>Specifies that the granted permissions are retained in case of a self-subscribe functionality failure for a data source.</p>",
         "DeleteDataSourceOutput$publishOnImport": "<p>Specifies whether the assets that this data source creates in the inventory are to be also automatically published to the catalog.</p>",
         "DeleteDataSourceOutput$retainPermissionsOnRevokeFailure": "<p>Specifies that the granted permissions are retained in case of a self-subscribe functionality failure for a data source.</p>",
-        "DeleteDomainInput$skipDeletionCheck": "<p>Specifies the optional flag to delete all child entities within the domain.</p>",
+        "DeleteDomainInput$skipDeletionCheck": "<p>Specifies whether to skip the check that prevents deletion of a domain that still contains resources. When you use this parameter, Amazon DataZone deletes the domain but might not remove its associated resources, which can leave orphaned resources behind. To delete a domain and fully clean up its associated resources, use <code>cascadeDelete</code> instead. You can't use this parameter together with <code>cascadeDelete</code>.</p>",
+        "DeleteDomainInput$cascadeDelete": "<p>Specifies whether to delete the domain along with all of its associated resources. When you use this parameter, Amazon DataZone deletes the domain and cleanly removes its associated resources without leaving orphaned resources behind. Amazon DataZone reports deletion progress in the <code>deleteProgress</code> field. Amazon DataZone reports any resources that it can't delete in the <code>failureReasons</code> field of the <code>GetDomain</code> response. You can't use this parameter together with <code>skipDeletionCheck</code>. If you don't specify a value, the default is <code>false</code>.</p>",
         "DeleteProjectInput$skipDeletionCheck": "<p>Specifies the optional flag to delete all child entities within the project.</p>",
         "Deployment$isDeploymentComplete": "<p>Specifies whether the last deployment of the environment is complete.</p>",
         "DomainUnitFilterForProject$includeChildDomainUnits": "<p>Specifies whether to include child domain units.</p>",
@@ -2569,6 +2570,12 @@
       "base": null,
       "refs": {}
     },
+    "DeleteProgress": {
+      "base": "<p>The progress of a domain deletion, including the number of projects that Amazon DataZone successfully deleted. Amazon DataZone returns this structure in the response to a <code>GetDomain</code> request while a cascade deletion is in progress.</p>",
+      "refs": {
+        "GetDomainOutput$deleteProgress": "<p>The progress of the current domain deletion, including the number of projects that Amazon DataZone successfully deleted.</p>"
+      }
+    },
     "DeleteProjectInput": {
       "base": null,
       "refs": {}
@@ -3833,6 +3840,12 @@
         "UpdateSubscriptionGrantStatusInput$failureCause": "<p>Specifies the error message that is returned if the operation cannot be successfully completed.</p>"
       }
     },
+    "FailureReason": {
+      "base": "<p>The details of a resource deletion failure during a cascade deletion of the domain.</p>",
+      "refs": {
+        "FailureReasonsList$member": null
+      }
+    },
     "FailureReasons": {
       "base": null,
       "refs": {
@@ -3840,6 +3853,12 @@
         "GetProjectOutput$failureReasons": "<p>Specifies the error message that is returned if the operation cannot be successfully completed.</p>",
         "ProjectSummary$failureReasons": "<p>Specifies the error message that is returned if the operation cannot be successfully completed.</p>",
         "UpdateProjectOutput$failureReasons": "<p>Specifies the error message that is returned if the operation cannot be successfully completed.</p>"
+      }
+    },
+    "FailureReasonsList": {
+      "base": "<p>A list of <code>FailureReason</code> objects that describe the resources that Amazon DataZone could not delete during a cascade deletion. Amazon DataZone returns this list in the <code>failureReasons</code> field of the <code>GetDomain</code> response.</p>",
+      "refs": {
+        "GetDomainOutput$failureReasons": "<p>The list of failure reasons for resources that Amazon DataZone could not delete during a cascade deletion of the domain.</p>"
       }
     },
     "FileFormat": {
@@ -5151,6 +5170,7 @@
         "AggregationOutputItem$count": "<p>The count of the aggregation output item.</p>",
         "CreateEnvironmentInput$deploymentOrder": "<p>The deployment order of the environment.</p>",
         "DataSourceSummary$lastRunAssetCount": "<p>The count of the assets created during the last data source run.</p>",
+        "DeleteProgress$successfullyDeletedProjectCount": "<p>The number of projects that Amazon DataZone successfully deleted during the domain deletion.</p>",
         "GetDataSourceOutput$lastRunAssetCount": "<p>The number of assets created by the data source during its last run.</p>",
         "LineageSqlQueryRunDetails$totalQueriesProcessed": "<p>The total queries processed in the SQL query run details of a data lineage run.</p>",
         "LineageSqlQueryRunDetails$numQueriesFailed": "<p>The number of queries that failed in the SQL query run details of a data lineage run.</p>",
@@ -8674,6 +8694,8 @@
         "EqualToExpression$value": "<p>The value that might be equal to an expression.</p>",
         "FailedQueryProcessingErrorMessages$member": null,
         "FailureCause$message": "<p>The description of the error message.</p>",
+        "FailureReason$id": "<p>The identifier of the resource that failed to delete.</p>",
+        "FailureReason$message": "<p>The error message associated with the resource that failed to delete.</p>",
         "FormOutput$content": "<p>The content of the metadata form.</p>",
         "GetAssetFilterOutput$errorMessage": "<p>The error message that is displayed if the action does not complete successfully.</p>",
         "GetAssetFilterOutput$effectiveRowFilter": "<p>The row filter of the asset filter.</p>",

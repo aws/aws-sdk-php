@@ -6720,6 +6720,15 @@
       "input":{"shape":"ReplaceImageCriteriaInAllowedImagesSettingsRequest"},
       "output":{"shape":"ReplaceImageCriteriaInAllowedImagesSettingsResult"}
     },
+    "ReplaceImageInstanceTypeSpecification":{
+      "name":"ReplaceImageInstanceTypeSpecification",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ReplaceImageInstanceTypeSpecificationRequest"},
+      "output":{"shape":"ReplaceImageInstanceTypeSpecificationResult"}
+    },
     "ReplaceNetworkAclAssociation":{
       "name":"ReplaceNetworkAclAssociation",
       "http":{
@@ -33698,6 +33707,10 @@
           "shape":"ImageWatermarkList",
           "locationName":"imageWatermarkSet"
         },
+        "InstanceTypeSpecification":{
+          "shape":"InstanceTypeSpecification",
+          "locationName":"instanceTypeSpecification"
+        },
         "ImageId":{
           "shape":"String",
           "locationName":"imageId"
@@ -38683,6 +38696,20 @@
         "locationName":"item"
       }
     },
+    "InstanceTypeItem":{
+      "type":"structure",
+      "members":{
+        "InstanceType":{
+          "shape":"String",
+          "locationName":"instanceType"
+        }
+      }
+    },
+    "InstanceTypeItemRequest":{
+      "type":"string",
+      "max":24,
+      "min":0
+    },
     "InstanceTypeList":{
       "type":"list",
       "member":{"shape":"InstanceType"}
@@ -38709,6 +38736,32 @@
       "member":{
         "shape":"InstanceTypeOffering",
         "locationName":"item"
+      }
+    },
+    "InstanceTypeSpecification":{
+      "type":"structure",
+      "members":{
+        "SupportedInstanceTypes":{
+          "shape":"SupportedInstanceTypeSet",
+          "locationName":"supportedInstanceTypeSet"
+        },
+        "UnsupportedInstanceTypes":{
+          "shape":"UnsupportedInstanceTypeSet",
+          "locationName":"unsupportedInstanceTypeSet"
+        }
+      }
+    },
+    "InstanceTypeSpecificationRequest":{
+      "type":"structure",
+      "members":{
+        "SupportedInstanceTypes":{
+          "shape":"SupportedInstanceTypeRequestSet",
+          "locationName":"SupportedInstanceType"
+        },
+        "UnsupportedInstanceTypes":{
+          "shape":"UnsupportedInstanceTypeRequestSet",
+          "locationName":"UnsupportedInstanceType"
+        }
       }
     },
     "InstanceTypes":{
@@ -50524,6 +50577,24 @@
         }
       }
     },
+    "ReplaceImageInstanceTypeSpecificationRequest":{
+      "type":"structure",
+      "required":["ImageId"],
+      "members":{
+        "ImageId":{"shape":"ImageId"},
+        "InstanceTypeSpecification":{"shape":"InstanceTypeSpecificationRequest"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "ReplaceImageInstanceTypeSpecificationResult":{
+      "type":"structure",
+      "members":{
+        "ReturnValue":{
+          "shape":"Boolean",
+          "locationName":"returnValue"
+        }
+      }
+    },
     "ReplaceNetworkAclAssociationRequest":{
       "type":"structure",
       "required":[
@@ -56925,6 +56996,22 @@
       }
     },
     "SupportedInRegion":{"type":"boolean"},
+    "SupportedInstanceTypeRequestSet":{
+      "type":"list",
+      "member":{
+        "shape":"InstanceTypeItemRequest",
+        "locationName":"Item"
+      },
+      "max":100,
+      "min":0
+    },
+    "SupportedInstanceTypeSet":{
+      "type":"list",
+      "member":{
+        "shape":"InstanceTypeItem",
+        "locationName":"item"
+      }
+    },
     "SupportedIpAddressTypes":{
       "type":"list",
       "member":{
@@ -59884,6 +59971,22 @@
       "type":"list",
       "member":{
         "shape":"UnsuccessfulSuppressionResponseObject",
+        "locationName":"item"
+      }
+    },
+    "UnsupportedInstanceTypeRequestSet":{
+      "type":"list",
+      "member":{
+        "shape":"InstanceTypeItemRequest",
+        "locationName":"Item"
+      },
+      "max":100,
+      "min":0
+    },
+    "UnsupportedInstanceTypeSet":{
+      "type":"list",
+      "member":{
+        "shape":"InstanceTypeItem",
         "locationName":"item"
       }
     },

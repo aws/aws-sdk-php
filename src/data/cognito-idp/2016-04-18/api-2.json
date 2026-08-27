@@ -117,6 +117,25 @@
         {"shape":"InternalErrorException"}
       ]
     },
+    "AdminDeleteSoftwareToken":{
+      "name":"AdminDeleteSoftwareToken",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AdminDeleteSoftwareTokenRequest"},
+      "output":{"shape":"AdminDeleteSoftwareTokenResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"NotAuthorizedException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"UserNotFoundException"},
+        {"shape":"UserNotConfirmedException"},
+        {"shape":"OperationNotEnabledException"},
+        {"shape":"InternalErrorException"}
+      ]
+    },
     "AdminDeleteUser":{
       "name":"AdminDeleteUser",
       "http":{
@@ -2774,6 +2793,21 @@
       "type":"integer",
       "max":365,
       "min":0
+    },
+    "AdminDeleteSoftwareTokenRequest":{
+      "type":"structure",
+      "required":[
+        "UserPoolId",
+        "Username"
+      ],
+      "members":{
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "Username":{"shape":"UsernameType"}
+      }
+    },
+    "AdminDeleteSoftwareTokenResponse":{
+      "type":"structure",
+      "members":{}
     },
     "AdminDeleteUserAttributesRequest":{
       "type":"structure",

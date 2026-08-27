@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CognitoIdentityProvider` - Adds the AdminDeleteSoftwareToken API operation, enabling administrators to remove a user's registered TOTP (software token) MFA configuration from a user pool.
+* `Aws\EC2` - EC2 allows AMI owners to define compatible instance types on their AMIs, blocking RunInstances calls automatically for launches on non-permitted instance types.
+* `Aws\RDS` - Adding support for the full snapshot size, in bytes, of DB instance snapshots.
+* `Aws\OpenSearchService` - Updating SDK and CLI documentation for AttachDataSource API.
+* `Aws\DataZone` - Add cascadeDelete to DeleteDomain. When specified, DataZone recursively deletes all projects, environments, subscriptions, and their underlying AWS resources before removing the domain. Deletion progress is reported via deleteProgress and resource failures via failureReasons on GetDomain.
+* `Aws\CloudWatchLogs` - Added resultCount to QueryStatistics in GetQueryResults. This field returns the total number of output rows in the final result set, helping customers programmatically determine whether a query produced results after all operations including post-aggregation filters.
+* `Aws\CodeDeploy` - Added a deploymentMode parameter to CreateDeployment. Set it to RESTART to restart an EC2 and on-premises fleet, using the last successful revision, honoring Deployment Configuration.
+* `Aws\LambdaMicrovms` - Added InsufficientCapacityException to RunMicrovm for capacity-related failures. Added lifecycle status field (AVAILABLE, DEPRECATED) to ListManagedMicrovmImageVersions. Added ConflictException to CreateMicrovmAuthToken and CreateMicrovmShellAuthToken for unregistered MicroVMs.
+
 ## 3.394.1 - 2026-08-26
 
 * `Aws\NetworkFirewall` - Adding new status enum for Firewalls.

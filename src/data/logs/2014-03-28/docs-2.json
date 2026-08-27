@@ -4001,7 +4001,8 @@
         "QueryStatistics$estimatedRecordsSkipped": "<p>An estimate of the number of log events that were skipped when processing this query, because the query contained an indexed field. Skipping these entries lowers query costs and improves the query performance time. For more information about field indexes, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutIndexPolicy.html\">PutIndexPolicy</a>.</p>",
         "QueryStatistics$bytesScanned": "<p>The total number of bytes in the log events scanned during the query.</p>",
         "QueryStatistics$estimatedBytesSkipped": "<p>An estimate of the number of bytes in the log events that were skipped when processing this query, because the query contained an indexed field. Skipping these entries lowers query costs and improves the query performance time. For more information about field indexes, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutIndexPolicy.html\">PutIndexPolicy</a>.</p>",
-        "QueryStatistics$logGroupsScanned": "<p>The number of log groups that were scanned by this query.</p>"
+        "QueryStatistics$logGroupsScanned": "<p>The number of log groups that were scanned by this query.</p>",
+        "QueryStatistics$resultCount": "<p>The number of rows in the final query result set. This value represents the total number of output rows across all pages. For queries that include post-aggregation filters (such as <code>stats count(*) by field | filter count &gt; threshold</code>), this value might be less than <code>recordsMatched</code>. It reflects only the rows that survived all operations in the query.</p>"
       }
     },
     "StopQueryRequest": {

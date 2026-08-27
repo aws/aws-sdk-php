@@ -1552,6 +1552,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise replaceIamInstanceProfileAssociationAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result replaceImageCriteriaInAllowedImagesSettings(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise replaceImageCriteriaInAllowedImagesSettingsAsync(array $args = []) (supported in versions 2016-11-15)
+ * @method \Aws\Result replaceImageInstanceTypeSpecification(array $args = []) (supported in versions 2016-11-15)
+ * @method \GuzzleHttp\Promise\Promise replaceImageInstanceTypeSpecificationAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result replaceTransitGatewayRoute(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise replaceTransitGatewayRouteAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result replaceVpnTunnel(array $args = []) (supported in versions 2016-11-15)

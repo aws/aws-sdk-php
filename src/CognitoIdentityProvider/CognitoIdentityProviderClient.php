@@ -16,6 +16,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise adminConfirmSignUpAsync(array $args = [])
  * @method \Aws\Result adminCreateUser(array $args = [])
  * @method \GuzzleHttp\Promise\Promise adminCreateUserAsync(array $args = [])
+ * @method \Aws\Result adminDeleteSoftwareToken(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise adminDeleteSoftwareTokenAsync(array $args = [])
  * @method \Aws\Result adminDeleteUser(array $args = [])
  * @method \GuzzleHttp\Promise\Promise adminDeleteUserAsync(array $args = [])
  * @method \Aws\Result adminDeleteUserAttributes(array $args = [])

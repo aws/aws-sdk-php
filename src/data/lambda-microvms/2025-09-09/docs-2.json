@@ -329,6 +329,10 @@
         "UpdateMicrovmImageResponse$name": "<p>The name of the MicroVM image.</p>"
       }
     },
+    "InsufficientCapacityException": {
+      "base": "<p>There is insufficient capacity to fulfill the request. Retry the request later.</p>",
+      "refs": {}
+    },
     "Integer": {
       "base": null,
       "refs": {
@@ -494,6 +498,12 @@
       "base": null,
       "refs": {
         "ListManagedMicrovmImageVersionsOutput$items": "<p>The list of managed MicroVM image versions.</p>"
+      }
+    },
+    "ManagedMicrovmImageVersionStatus": {
+      "base": "<p>The lifecycle status of a managed MicroVM image version.</p>",
+      "refs": {
+        "ManagedMicrovmImageVersion$status": "<p>The lifecycle status of the managed MicroVM image version. Valid values: AVAILABLE (the version is available for use) or DEPRECATED (the version is deprecated; do not use it for new MicroVM images).</p>"
       }
     },
     "MicrovmHooks": {
@@ -702,7 +712,7 @@
     "NonBlankString": {
       "base": "<p>A string which is not empty or blank (only whitespace).</p>",
       "refs": {
-        "CodeArtifact$uri": "<p>The URI of the code artifact, such as an Amazon S3 path or Amazon ECR image URI.</p>",
+        "CodeArtifact$uri": "<p>The URI of the code artifact in Amazon S3.</p>",
         "CreateMicrovmImageRequest$baseImageArn": "<p>The ARN of the Lambda-managed base MicroVM image to build upon. Use ListManagedMicrovmImages to discover available base images.</p>",
         "CreateMicrovmImageResponse$imageArn": "<p>The ARN of the created MicroVM image.</p>",
         "CreateMicrovmImageResponse$latestActiveImageVersion": "<p>The latest active version of the MicroVM image.</p>",
@@ -830,6 +840,12 @@
         "UpdateMicrovmImageVersionResponse$buildRoleArn": "<p>The ARN of the IAM build role.</p>"
       }
     },
+    "RunHookPayload": {
+      "base": null,
+      "refs": {
+        "RunMicrovmRequest$runHookPayload": "<p>Per-MicroVM initialization data delivered as the request body of the /run lifecycle hook. Use to pass tenant-specific configuration such as session IDs or secret references. Maximum: 16,384 bytes.</p>"
+      }
+    },
     "RunMicrovmRequest": {
       "base": null,
       "refs": {}
@@ -844,12 +860,6 @@
       "base": null,
       "refs": {
         "RunMicrovmRequest$maximumDurationInSeconds": "<p>The maximum duration in seconds that the MicroVM can exist before being terminated by the platform. Valid range: 1–28,800 (8 hours).</p>"
-      }
-    },
-    "RunMicrovmRequestRunHookPayloadString": {
-      "base": null,
-      "refs": {
-        "RunMicrovmRequest$runHookPayload": "<p>Per-MicroVM initialization data delivered as the request body of the /run lifecycle hook. Use to pass tenant-specific configuration such as session IDs or secret references. Maximum: 16,384 bytes.</p>"
       }
     },
     "RunMicrovmResponse": {
@@ -888,6 +898,7 @@
         "GetMicrovmImageBuildOutput$stateReason": "<p>The reason for the build state, if applicable.</p>",
         "GetMicrovmImageVersionOutput$description": "<p>The description of the version.</p>",
         "GetMicrovmImageVersionOutput$stateReason": "<p>The reason for the current state. For example, one or more builds failed.</p>",
+        "InsufficientCapacityException$message": null,
         "InternalServerException$message": null,
         "InvalidParameterValueException$Type": "<p>The exception type.</p>",
         "InvalidParameterValueException$message": null,

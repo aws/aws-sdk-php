@@ -182,7 +182,8 @@
         {"shape":"ApplicationAlreadyExistsException"},
         {"shape":"ApplicationLimitExceededException"},
         {"shape":"InvalidComputePlatformException"},
-        {"shape":"InvalidTagsToAddException"}
+        {"shape":"InvalidTagsToAddException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "CreateDeployment":{
@@ -213,13 +214,16 @@
         {"shape":"InvalidAutoRollbackConfigException"},
         {"shape":"InvalidLoadBalancerInfoException"},
         {"shape":"InvalidFileExistsBehaviorException"},
+        {"shape":"InvalidComputePlatformException"},
         {"shape":"InvalidRoleException"},
         {"shape":"InvalidAutoScalingGroupException"},
         {"shape":"ThrottlingException"},
         {"shape":"InvalidUpdateOutdatedInstancesOnlyValueException"},
         {"shape":"InvalidIgnoreApplicationStopFailuresValueException"},
         {"shape":"InvalidGitHubAccountTokenException"},
-        {"shape":"InvalidTrafficRoutingConfigurationException"}
+        {"shape":"InvalidTrafficRoutingConfigurationException"},
+        {"shape":"InvalidECSServiceException"},
+        {"shape":"InvalidInputException"}
       ]
     },
     "CreateDeploymentConfig":{
@@ -575,7 +579,9 @@
         {"shape":"InvalidInstanceTypeException"},
         {"shape":"InvalidDeploymentInstanceTypeException"},
         {"shape":"InvalidTargetFilterNameException"},
-        {"shape":"InvalidComputePlatformException"}
+        {"shape":"InvalidComputePlatformException"},
+        {"shape":"ApplicationDoesNotExistException"},
+        {"shape":"DeploymentGroupDoesNotExistException"}
       ],
       "deprecated":true,
       "deprecatedMessage":"This operation is deprecated, use ListDeploymentTargets instead."
@@ -597,7 +603,9 @@
         {"shape":"InvalidInstanceStatusException"},
         {"shape":"InvalidInstanceTypeException"},
         {"shape":"InvalidDeploymentInstanceTypeException"},
-        {"shape":"InvalidTargetFilterNameException"}
+        {"shape":"InvalidTargetFilterNameException"},
+        {"shape":"ApplicationDoesNotExistException"},
+        {"shape":"DeploymentGroupDoesNotExistException"}
       ]
     },
     "ListDeployments":{
@@ -943,7 +951,8 @@
     "ApplicationName":{
       "type":"string",
       "max":100,
-      "min":1
+      "min":1,
+      "pattern":"[A-Za-z0-9+=,.@_-]*"
     },
     "ApplicationNameRequiredException":{
       "type":"structure",
@@ -1270,6 +1279,7 @@
         "autoRollbackConfiguration":{"shape":"AutoRollbackConfiguration"},
         "updateOutdatedInstancesOnly":{"shape":"Boolean"},
         "fileExistsBehavior":{"shape":"FileExistsBehavior"},
+        "deploymentMode":{"shape":"DeploymentMode"},
         "overrideAlarmConfiguration":{"shape":"AlarmConfiguration"}
       }
     },
@@ -1378,7 +1388,8 @@
     "DeploymentConfigName":{
       "type":"string",
       "max":100,
-      "min":1
+      "min":1,
+      "pattern":"[A-Za-z0-9+=,.@_-]*"
     },
     "DeploymentConfigNameRequiredException":{
       "type":"structure",
@@ -1458,7 +1469,8 @@
     "DeploymentGroupName":{
       "type":"string",
       "max":100,
-      "min":1
+      "min":1,
+      "pattern":"[A-Za-z0-9+=,.@_-]*"
     },
     "DeploymentGroupNameRequiredException":{
       "type":"structure",
@@ -1519,6 +1531,13 @@
       "type":"structure",
       "members":{},
       "exception":true
+    },
+    "DeploymentMode":{
+      "type":"string",
+      "enum":[
+        "STANDARD",
+        "RESTART"
+      ]
     },
     "DeploymentNotStartedException":{
       "type":"structure",

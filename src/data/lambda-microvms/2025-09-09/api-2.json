@@ -27,6 +27,7 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"}
       ]
     },
@@ -63,6 +64,7 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"}
       ]
     },
@@ -293,8 +295,12 @@
       "output":{"shape":"ListTagsResponse"},
       "errors":[
         {"shape":"TooManyRequestsException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
         {"shape":"ServiceException"},
+        {"shape":"ValidationException"},
         {"shape":"InvalidParameterValueException"}
       ],
       "readonly":true
@@ -330,6 +336,7 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"InsufficientCapacityException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
@@ -366,8 +373,12 @@
       "input":{"shape":"TagResourceRequest"},
       "errors":[
         {"shape":"TooManyRequestsException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
         {"shape":"ServiceException"},
+        {"shape":"ValidationException"},
         {"shape":"InvalidParameterValueException"},
         {"shape":"ResourceConflictException"}
       ],
@@ -402,8 +413,12 @@
       "input":{"shape":"UntagResourceRequest"},
       "errors":[
         {"shape":"TooManyRequestsException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
         {"shape":"ServiceException"},
+        {"shape":"ValidationException"},
         {"shape":"InvalidParameterValueException"},
         {"shape":"ResourceConflictException"}
       ],
@@ -749,7 +764,8 @@
     "EnvironmentVariableValue":{
       "type":"string",
       "max":4096,
-      "min":0
+      "min":0,
+      "sensitive":true
     },
     "GetMicrovmImageBuildInput":{
       "type":"structure",
@@ -983,6 +999,16 @@
       "max":64,
       "min":1,
       "pattern":"[a-zA-Z0-9-_]+"
+    },
+    "InsufficientCapacityException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "error":{"httpStatusCode":500},
+      "exception":true,
+      "fault":true
     },
     "Integer":{
       "type":"integer",
@@ -1309,6 +1335,7 @@
       "members":{
         "imageArn":{"shape":"NonBlankString"},
         "imageVersion":{"shape":"NonBlankString"},
+        "status":{"shape":"ManagedMicrovmImageVersionStatus"},
         "createdAt":{"shape":"Timestamp"},
         "updatedAt":{"shape":"Timestamp"}
       }
@@ -1316,6 +1343,13 @@
     "ManagedMicrovmImageVersionList":{
       "type":"list",
       "member":{"shape":"ManagedMicrovmImageVersion"}
+    },
+    "ManagedMicrovmImageVersionStatus":{
+      "type":"string",
+      "enum":[
+        "AVAILABLE",
+        "DEPRECATED"
+      ]
     },
     "MicrovmHooks":{
       "type":"structure",
@@ -1362,7 +1396,8 @@
     "MicrovmImageArn":{
       "type":"string",
       "max":2048,
-      "min":20
+      "min":20,
+      "pattern":"arn:[a-z0-9-]+:lambda:[a-z0-9-]*:[a-z0-9]*:microvm-image:.+"
     },
     "MicrovmImageBuildSummaries":{
       "type":"list",
@@ -1657,6 +1692,12 @@
       "min":20,
       "pattern":"arn:aws[a-z\\-]*:iam::[0-9]{12}:role/?[a-zA-Z_0-9+=,.@\\-_/]+"
     },
+    "RunHookPayload":{
+      "type":"string",
+      "max":4096,
+      "min":0,
+      "sensitive":true
+    },
     "RunMicrovmRequest":{
       "type":"structure",
       "required":["imageIdentifier"],
@@ -1668,7 +1709,7 @@
         "executionRoleArn":{"shape":"RoleArn"},
         "idlePolicy":{"shape":"IdlePolicy"},
         "logging":{"shape":"Logging"},
-        "runHookPayload":{"shape":"RunMicrovmRequestRunHookPayloadString"},
+        "runHookPayload":{"shape":"RunHookPayload"},
         "maximumDurationInSeconds":{"shape":"RunMicrovmRequestMaximumDurationInSecondsInteger"},
         "clientToken":{
           "shape":"RunMicrovmRequestClientTokenString",
@@ -1686,11 +1727,6 @@
       "box":true,
       "max":28800,
       "min":1
-    },
-    "RunMicrovmRequestRunHookPayloadString":{
-      "type":"string",
-      "max":4096,
-      "min":0
     },
     "RunMicrovmResponse":{
       "type":"structure",
