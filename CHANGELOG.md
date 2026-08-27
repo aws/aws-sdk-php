@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.394.2 - 2026-08-27
 
 * `Aws\CognitoIdentityProvider` - Adds the AdminDeleteSoftwareToken API operation, enabling administrators to remove a user's registered TOTP (software token) MFA configuration from a user pool.
 * `Aws\EC2` - EC2 allows AMI owners to define compatible instance types on their AMIs, blocking RunInstances calls automatically for launches on non-permitted instance types.
