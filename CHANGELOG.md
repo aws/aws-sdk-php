@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.394.3 - 2026-08-28
 
 * `Aws\BedrockAgent` - Adds an optional syncSchedule field to CreateDataSource and UpdateDataSource for Managed Knowledge Bases data source connectors, so a data source can sync automatically on a daily, weekly, or monthly schedule.
 * `Aws\CognitoIdentityProvider` - Adds two new operations - GetClientToken which allows M2M auth through the SDK, and DescribeTermsByClient to find which Terms are associated with a user-pool client without knowing the Terms resource id.
