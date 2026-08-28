@@ -295,6 +295,23 @@
       ],
       "endpoint":{"hostPrefix":"datatransformation."}
     },
+    "RestoreFHIRDatastore":{
+      "name":"RestoreFHIRDatastore",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RestoreFHIRDatastoreRequest"},
+      "output":{"shape":"RestoreFHIRDatastoreResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "StartDataTransformationJob":{
       "name":"StartDataTransformationJob",
       "http":{
@@ -526,6 +543,32 @@
         "AWS_AUTH"
       ]
     },
+    "BackupConfiguration":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"BackupStatus"},
+        "BackupType":{"shape":"BackupType"},
+        "RetentionPeriodInDays":{"shape":"BackupRetentionPeriodInDays"},
+        "BackupTagsEnabled":{"shape":"HealthLakeBoolean"}
+      }
+    },
+    "BackupRetentionPeriodInDays":{
+      "type":"integer",
+      "box":true,
+      "max":30,
+      "min":1
+    },
+    "BackupStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "BackupType":{
+      "type":"string",
+      "enum":["CONTINUOUS"]
+    },
     "Boolean":{
       "type":"boolean",
       "box":true
@@ -572,6 +615,12 @@
         "Message":{"shape":"HealthLakeString"}
       },
       "exception":true
+    },
+    "ContinuousBackupRestoreConfiguration":{
+      "type":"structure",
+      "members":{
+        "RestorePointTime":{"shape":"HealthLakeTimestamp"}
+      }
     },
     "ConversationIdString":{
       "type":"string",
@@ -651,7 +700,8 @@
         "IdentityProviderConfiguration":{"shape":"IdentityProviderConfiguration"},
         "AnalyticsConfiguration":{"shape":"AnalyticsConfiguration"},
         "NlpConfiguration":{"shape":"NlpConfiguration"},
-        "ProfileConfiguration":{"shape":"ProfileConfiguration"}
+        "ProfileConfiguration":{"shape":"ProfileConfiguration"},
+        "BackupConfiguration":{"shape":"BackupConfiguration"}
       }
     },
     "CreateFHIRDatastoreResponse":{
@@ -777,6 +827,16 @@
       "type":"string",
       "pattern":"arn:aws((-us-gov)|(-iso)|(-iso-b)|(-cn))?:healthlake:[a-zA-Z0-9-]+:[0-9]{12}:datastore/.+?"
     },
+    "DatastoreBackupStatus":{
+      "type":"structure",
+      "members":{
+        "Configuration":{"shape":"BackupConfiguration"},
+        "BackupEnabledAt":{"shape":"HealthLakeTimestamp"},
+        "EarliestRestorePoint":{"shape":"HealthLakeTimestamp"},
+        "LatestRestorePoint":{"shape":"HealthLakeTimestamp"},
+        "ScheduledPermanentDeletionTime":{"shape":"HealthLakeTimestamp"}
+      }
+    },
     "DatastoreFilter":{
       "type":"structure",
       "members":{
@@ -821,7 +881,8 @@
         "ErrorCause":{"shape":"ErrorCause"},
         "NlpConfiguration":{"shape":"NlpConfiguration"},
         "AnalyticsConfiguration":{"shape":"AnalyticsConfiguration"},
-        "ProfileConfiguration":{"shape":"ProfileConfiguration"}
+        "ProfileConfiguration":{"shape":"ProfileConfiguration"},
+        "BackupStatusInfo":{"shape":"DatastoreBackupStatus"}
       }
     },
     "DatastorePropertiesList":{
@@ -1489,6 +1550,50 @@
       },
       "exception":true
     },
+    "RestoreConfiguration":{
+      "type":"structure",
+      "members":{
+        "ContinuousBackupRestoreConfiguration":{"shape":"ContinuousBackupRestoreConfiguration"}
+      },
+      "union":true
+    },
+    "RestoreFHIRDatastoreRequest":{
+      "type":"structure",
+      "required":[
+        "SourceDatastoreId",
+        "RestoreConfiguration"
+      ],
+      "members":{
+        "SourceDatastoreId":{"shape":"DatastoreId"},
+        "RestoreConfiguration":{"shape":"RestoreConfiguration"},
+        "DatastoreName":{"shape":"DatastoreName"},
+        "SseConfiguration":{"shape":"SseConfiguration"},
+        "ClientToken":{
+          "shape":"ClientTokenString",
+          "idempotencyToken":true
+        },
+        "Tags":{"shape":"TagList"},
+        "IdentityProviderConfiguration":{"shape":"IdentityProviderConfiguration"},
+        "AnalyticsConfiguration":{"shape":"AnalyticsConfiguration"},
+        "NlpConfiguration":{"shape":"NlpConfiguration"},
+        "ProfileConfiguration":{"shape":"ProfileConfiguration"}
+      }
+    },
+    "RestoreFHIRDatastoreResponse":{
+      "type":"structure",
+      "required":[
+        "DatastoreId",
+        "DatastoreArn",
+        "DatastoreStatus",
+        "DatastoreEndpoint"
+      ],
+      "members":{
+        "DatastoreId":{"shape":"DatastoreId"},
+        "DatastoreArn":{"shape":"DatastoreArn"},
+        "DatastoreStatus":{"shape":"DatastoreStatus"},
+        "DatastoreEndpoint":{"shape":"BoundedLengthString"}
+      }
+    },
     "S3Configuration":{
       "type":"structure",
       "required":[
@@ -1876,7 +1981,8 @@
         "AnalyticsConfiguration":{"shape":"AnalyticsConfiguration"},
         "NlpConfiguration":{"shape":"NlpConfiguration"},
         "ProfileConfiguration":{"shape":"ProfileConfiguration"},
-        "IdentityProviderConfiguration":{"shape":"IdentityProviderConfiguration"}
+        "IdentityProviderConfiguration":{"shape":"IdentityProviderConfiguration"},
+        "BackupConfiguration":{"shape":"BackupConfiguration"}
       }
     },
     "UpdateFHIRDatastoreResponse":{

@@ -456,6 +456,13 @@
         "AwsOpportunityInsights$AwsProductsSpendInsightsBySource": "<p>Source-separated spend insights that provide independent analysis for AWS recommendations and partner estimates.</p>"
       }
     },
+    "AwsSoftwareRevenue": {
+      "base": "<p>Seller-provided PARC deal terms for the opportunity, including commitment value, discount percentage, and contract dates.</p>",
+      "refs": {
+        "AwsOpportunitySummaryFullView$SoftwareRevenue": "<p>Seller-provided PARC deal terms: commitment value, discount, and contract dates.</p>",
+        "GetAwsOpportunitySummaryResponse$SoftwareRevenue": "<p>Seller-provided PARC deal terms: commitment value, discount, and contract dates.</p>"
+      }
+    },
     "AwsSubmission": {
       "base": "<p>Indicates the level of AWS involvement in the opportunity. This field helps track AWS participation throughout the engagement, such as providing technical support, deal assistance, and sales support.</p>",
       "refs": {
@@ -481,7 +488,7 @@
       }
     },
     "CatalogIdentifier": {
-      "base": null,
+      "base": "<p>Value space is validated at runtime against an allowlist, so the model keeps only a coarse character-class pattern.</p>",
       "refs": {
         "AcceptEngagementInvitationRequest$Catalog": "<p>The <code>CatalogType</code> parameter specifies the catalog associated with the engagement invitation. Accepted values are <code>AWS</code> and <code>Sandbox</code>, which determine the environment in which the engagement invitation is managed.</p>",
         "AssignOpportunityRequest$Catalog": "<p>Specifies the catalog associated with the request. This field takes a string value from a predefined list: <code>AWS</code> or <code>Sandbox</code>. The catalog determines which environment the opportunity is assigned in. Use <code>AWS</code> to assign real opportunities in the Amazon Web Services catalog, and <code>Sandbox</code> for testing in secure, isolated environments.</p>",
@@ -1898,6 +1905,7 @@
     "MonetaryValue": {
       "base": "<p>Specifies payments details.</p>",
       "refs": {
+        "AwsSoftwareRevenue$Value": null,
         "SoftwareRevenue$Value": "<p>Specifies the payment value (amount and currency).</p>"
       }
     },
@@ -2741,6 +2749,9 @@
         "AwsProductDetails$ServiceCode": "<p>Pricing Calculator service code.</p>",
         "AwsProductDetailsCategoriesList$member": null,
         "AwsProductOptimization$Description": "<p>Human-readable explanation of the optimization strategy.</p>",
+        "AwsSoftwareRevenue$Discount": "<p>Discount percentage offered on the software revenue. Percent convention: 15.00 means 15%.</p>",
+        "AwsSoftwareRevenue$EffectiveDate": "<p>Contract effective (start) date in YYYY-MM-DD format.</p>",
+        "AwsSoftwareRevenue$ExpirationDate": "<p>Contract expiration (end) date in YYYY-MM-DD format.</p>",
         "ConflictException$Message": null,
         "CreateOpportunityResponse$PartnerOpportunityIdentifier": "<p>Specifies the opportunity's unique identifier in the partner's CRM system. This value is essential to track and reconcile because it's included in the outbound payload sent back to the partner.</p>",
         "EligibleProgramsList$member": null,

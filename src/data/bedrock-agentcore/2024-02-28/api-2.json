@@ -656,6 +656,25 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "IngestData":{
+      "name":"IngestData",
+      "http":{
+        "method":"POST",
+        "requestUri":"/memories/{memoryId}/ingest",
+        "responseCode":202
+      },
+      "input":{"shape":"IngestDataInput"},
+      "output":{"shape":"IngestDataOutput"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottledException"},
+        {"shape":"ServiceException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
     "InvokeAgentRuntime":{
       "name":"InvokeAgentRuntime",
       "http":{
@@ -2209,6 +2228,13 @@
         "stdout":{"shape":"String"},
         "stderr":{"shape":"String"}
       }
+    },
+    "ContentSource":{
+      "type":"structure",
+      "members":{
+        "inline":{"shape":"InlineMemoryContent"}
+      },
+      "union":true
     },
     "ContentStartEvent":{
       "type":"structure",
@@ -4518,6 +4544,53 @@
       "max":100,
       "min":0
     },
+    "IngestDataInput":{
+      "type":"structure",
+      "required":[
+        "memoryId",
+        "source",
+        "contentTimestamp",
+        "actorId"
+      ],
+      "members":{
+        "memoryId":{
+          "shape":"MemoryId",
+          "location":"uri",
+          "locationName":"memoryId"
+        },
+        "source":{"shape":"ContentSource"},
+        "contentTimestamp":{"shape":"Timestamp"},
+        "actorId":{"shape":"ActorId"},
+        "sessionId":{"shape":"SessionId"},
+        "extractionConfig":{"shape":"ExtractionConfig"},
+        "metadata":{"shape":"MetadataMap"},
+        "clientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "IngestDataOutput":{
+      "type":"structure",
+      "required":["sessionId"],
+      "members":{
+        "sessionId":{"shape":"SessionId"}
+      }
+    },
+    "IngestPayloadList":{
+      "type":"list",
+      "member":{"shape":"IngestPayloadType"},
+      "max":100,
+      "min":1
+    },
+    "IngestPayloadType":{
+      "type":"structure",
+      "members":{
+        "conversational":{"shape":"Conversational"},
+        "json":{"shape":"MemoryJsonData"}
+      },
+      "union":true
+    },
     "InlineContent":{
       "type":"string",
       "max":409600,
@@ -4535,6 +4608,13 @@
       "type":"list",
       "member":{"shape":"GroundTruthTurn"},
       "min":1
+    },
+    "InlineMemoryContent":{
+      "type":"structure",
+      "required":["payload"],
+      "members":{
+        "payload":{"shape":"IngestPayloadList"}
+      }
     },
     "InputContentBlock":{
       "type":"structure",

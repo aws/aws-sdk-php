@@ -893,6 +893,12 @@
         "FlowValidationDetails$cyclicConnection": "<p>Details about a cyclic connection in the flow.</p>"
       }
     },
+    "DailySchedule": {
+      "base": "<p>A daily sync. The run time is system-chosen (off-peak) and not configurable.</p>",
+      "refs": {
+        "SyncSchedule$daily": "<p>A daily sync that runs once a day at a system-chosen off-peak time. The run time is not configurable.</p>"
+      }
+    },
     "Data": {
       "base": null,
       "refs": {
@@ -1017,6 +1023,24 @@
         "UpdateFlowResponse$updatedAt": "<p>The time at which the flow was last updated.</p>",
         "UpdatePromptResponse$createdAt": "<p>The time at which the prompt was created.</p>",
         "UpdatePromptResponse$updatedAt": "<p>The time at which the prompt was last updated.</p>"
+      }
+    },
+    "DayOfMonth": {
+      "base": "<p>The day of the month on which a monthly sync runs. Specify exactly one of <code>dayNumber</code> or <code>lastDayOfMonth</code>.</p>",
+      "refs": {
+        "MonthlySchedule$dayOfMonth": "<p>The day of the month on which the monthly sync runs.</p>"
+      }
+    },
+    "DayOfMonthNumber": {
+      "base": "<p>A specific day of the month, from 1 to 28.</p>",
+      "refs": {
+        "DayOfMonth$dayNumber": "<p>A specific day of the month, from 1 to 28. Values are capped at 28, so a monthly sync runs in every month, including February.</p>"
+      }
+    },
+    "DayOfWeek": {
+      "base": "<p>The day of the week on which a weekly sync runs. Valid values are the standard English day names, for example, MONDAY or TUESDAY.</p>",
+      "refs": {
+        "WeeklySchedule$dayOfWeek": "<p>The day of the week on which the weekly sync runs.</p>"
       }
     },
     "DeleteAgentActionGroupRequest": {
@@ -2653,6 +2677,12 @@
         "FlowNodeConfiguration$lambdaFunction": "<p>Contains configurations for a Lambda function node in your flow. Invokes an Lambda function.</p>"
       }
     },
+    "LastDayOfMonth": {
+      "base": "<p>The option to run the monthly sync on the last calendar day of each month.</p>",
+      "refs": {
+        "DayOfMonth$lastDayOfMonth": "<p>Set this option to run the monthly sync on the last calendar day of each month.</p>"
+      }
+    },
     "LexFlowNodeConfiguration": {
       "base": "<p>Contains configurations for a Lex node in the flow. You specify a Amazon Lex bot to invoke. This node takes an utterance as the input and returns as the output the intent identified by the Amazon Lex bot. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-nodes.html\">Node types in a flow</a> in the Amazon Bedrock User Guide.</p>",
       "refs": {
@@ -3057,6 +3087,12 @@
       "refs": {
         "MongoDbAtlasConfiguration$vectorIndexName": "<p>The name of the MongoDB Atlas vector search index.</p>",
         "MongoDbAtlasConfiguration$textIndexName": "<p>The name of the text search index in the MongoDB collection. This is required for using the hybrid search feature.</p>"
+      }
+    },
+    "MonthlySchedule": {
+      "base": "<p>A monthly sync on a specified day of the month.</p>",
+      "refs": {
+        "SyncSchedule$monthly": "<p>A monthly sync that runs once a month on the specified day of the month.</p>"
       }
     },
     "MultipleLoopControllerNodesFlowValidationDetails": {
@@ -4332,6 +4368,12 @@
         "InlineCodeFlowNodeConfiguration$language": "<p>The programming language used by your inline code node.</p> <p>The code must be valid in the programming <code>language</code> that you specify. Currently, only Python 3 (<code>Python_3</code>) is supported.</p>"
       }
     },
+    "SyncSchedule": {
+      "base": "<p>The recurring schedule on which a managed knowledge base connector automatically syncs its data source. Specify exactly one of <code>daily</code>, <code>weekly</code>, or <code>monthly</code>.</p>",
+      "refs": {
+        "ManagedKnowledgeBaseConnectorConfiguration$syncSchedule": "<p>The recurring schedule on which the connector automatically syncs this data source. If not specified, the data source is not synced automatically and you start each sync yourself. Not supported for the Custom connector.</p>"
+      }
+    },
     "SystemContentBlock": {
       "base": "<p>Contains a system prompt to provide context to the model or to describe how it should behave. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-create.html\">Create a prompt using Prompt management</a>.</p>",
       "refs": {
@@ -4856,6 +4898,12 @@
       "base": "<p>The configuration of the URL/URLs for the web content that you want to crawl. You should be authorized to crawl the URLs.</p>",
       "refs": {
         "WebDataSourceConfiguration$sourceConfiguration": "<p>The source configuration details for the web data source.</p>"
+      }
+    },
+    "WeeklySchedule": {
+      "base": "<p>A weekly sync on a specified day of the week.</p>",
+      "refs": {
+        "SyncSchedule$weekly": "<p>A weekly sync that runs once a week on the specified day of the week.</p>"
       }
     },
     "WorkgroupArn": {

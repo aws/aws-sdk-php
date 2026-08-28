@@ -303,6 +303,7 @@
         "DeploymentAlarms$enable": "<p>Determines whether to use the CloudWatch alarm option in the service deployment process.</p>",
         "DeploymentCircuitBreaker$enable": "<p>Determines whether to use the deployment circuit breaker logic for the service.</p>",
         "DeploymentCircuitBreaker$rollback": "<p>Determines whether to configure Amazon ECS to roll back the service if a service deployment fails. If rollback is on, when a service deployment fails, the service is rolled back to the last deployment that completed successfully.</p>",
+        "DeploymentEarlySuccessCriteria$enable": "<p>Specifies whether to use the early success criteria for the service deployment. When set to <code>false</code>, the deployment uses the default behavior, where Amazon ECS considers the deployment successful when the target service revision fully stabilizes and the previous tasks are removed. The default value is <code>false</code>.</p> <p>When set to <code>true</code>, Amazon ECS monitors the deployment to meet early success criteria. You must also specify <code>healthyPercent</code> and <code>sourceServiceRevisionCleanup</code>.</p>",
         "ExecuteCommandLogConfiguration$cloudWatchEncryptionEnabled": "<p>Determines whether to use encryption on the CloudWatch logs. If not specified, encryption will be off.</p>",
         "ExecuteCommandLogConfiguration$s3EncryptionEnabled": "<p>Determines whether to use encryption on the S3 logs. If not specified, encryption is not used.</p>",
         "ExecuteCommandRequest$interactive": "<p>Use this flag to run your command in interactive mode.</p>",
@@ -1316,6 +1317,12 @@
         "DeploymentController$type": "<p>The deployment controller type to use.</p> <p>The deployment controller is the mechanism that determines how tasks are deployed for your service. The valid options are:</p> <ul> <li> <p>ECS</p> <p>When you create a service which uses the <code>ECS</code> deployment controller, you can choose between the following deployment strategies:</p> <ul> <li> <p> <code>ROLLING</code>: When you create a service which uses the <i>rolling update</i> (<code>ROLLING</code>) deployment strategy, the Amazon ECS service scheduler replaces the currently running tasks with new tasks. The number of tasks that Amazon ECS adds or removes from the service during a rolling update is controlled by the service deployment configuration. </p> <p>Rolling update deployments are best suited for the following scenarios:</p> <ul> <li> <p>Gradual service updates: You need to update your service incrementally without taking the entire service offline at once.</p> </li> <li> <p>Limited resource requirements: You want to avoid the additional resource costs of running two complete environments simultaneously (as required by blue/green deployments).</p> </li> <li> <p>Acceptable deployment time: Your application can tolerate a longer deployment process, as rolling updates replace tasks one by one.</p> </li> <li> <p>No need for instant roll back: Your service can tolerate a rollback process that takes minutes rather than seconds.</p> </li> <li> <p>Simple deployment process: You prefer a straightforward deployment approach without the complexity of managing multiple environments, target groups, and listeners.</p> </li> <li> <p>No load balancer requirement: Your service doesn't use or require a load balancer, Application Load Balancer, Network Load Balancer, or Service Connect (which are required for blue/green deployments).</p> </li> <li> <p>Stateful applications: Your application maintains state that makes it difficult to run two parallel environments.</p> </li> <li> <p>Cost sensitivity: You want to minimize deployment costs by not running duplicate environments during deployment.</p> </li> </ul> <p>Rolling updates are the default deployment strategy for services and provide a balance between deployment safety and resource efficiency for many common application scenarios.</p> </li> <li> <p> <code>BLUE_GREEN</code>: A <i>blue/green</i> deployment strategy (<code>BLUE_GREEN</code>) is a release methodology that reduces downtime and risk by running two identical production environments called blue and green. With Amazon ECS blue/green deployments, you can validate new service revisions before directing production traffic to them. This approach provides a safer way to deploy changes with the ability to quickly roll back if needed.</p> <p>Amazon ECS blue/green deployments are best suited for the following scenarios:</p> <ul> <li> <p>Service validation: When you need to validate new service revisions before directing production traffic to them</p> </li> <li> <p>Zero downtime: When your service requires zero-downtime deployments</p> </li> <li> <p>Instant roll back: When you need the ability to quickly roll back if issues are detected</p> </li> <li> <p>Load balancer requirement: When your service uses Application Load Balancer, Network Load Balancer, or Service Connect</p> </li> </ul> </li> </ul> </li> <li> <p>External</p> <p>Use a third-party deployment controller.</p> </li> <li> <p>Blue/green deployment (powered by CodeDeploy)</p> <p>CodeDeploy installs an updated version of the application as a new replacement task set and reroutes production traffic from the original application task set to the replacement task set. The original task set is terminated after a successful deployment. Use this deployment controller to verify a new deployment of a service before sending production traffic to it.</p> </li> </ul>"
       }
     },
+    "DeploymentEarlySuccessCriteria": {
+      "base": "<p><note> <p>You can use early success criteria only with rolling deployment strategy.</p> </note> <p>The configuration that determines when a rolling update deployment is considered successful. Early success criteria defines the percentage of tasks that must be healthy before a deployment completes. It also controls whether Amazon ECS must remove the previous tasks before a deployment completes.</p></p>",
+      "refs": {
+        "DeploymentConfiguration$earlySuccessCriteria": "<p>The early success criteria configuration for a rolling deployment. With early success criteria, you can configure an Amazon ECS deployment to complete faster. Amazon ECS declares a deployment successful once a target percentage of tasks are healthy, instead of waiting for the service to fully stabilize.</p>"
+      }
+    },
     "DeploymentEphemeralStorage": {
       "base": "<p>The amount of ephemeral storage to allocate for the deployment.</p>",
       "refs": {
@@ -1934,6 +1941,12 @@
       "refs": {
         "Container$healthStatus": "<p>The health status of the container. If health checks aren't configured for this container in its task definition, then it reports the health status as <code>UNKNOWN</code>.</p>",
         "Task$healthStatus": "<p>The health status for the task. It's determined by the health of the essential containers in the task. If all essential containers in the task are reporting as <code>HEALTHY</code>, the task status also reports as <code>HEALTHY</code>. If any essential containers in the task are reporting as <code>UNHEALTHY</code> or <code>UNKNOWN</code>, the task status also reports as <code>UNHEALTHY</code> or <code>UNKNOWN</code>.</p> <note> <p>The Amazon ECS container agent doesn't monitor or report on Docker health checks that are embedded in a container image and not specified in the container definition. For example, this includes those specified in a parent image or from the image's Dockerfile. Health check parameters that are specified in a container definition override any Docker health checks that are found in the container image.</p> </note>"
+      }
+    },
+    "HealthyPercentInteger": {
+      "base": null,
+      "refs": {
+        "DeploymentEarlySuccessCriteria$healthyPercent": "<p>The percentage of healthy tasks that the target service revision must reach before Amazon ECS considers the deployment successful. This percentage is relative to the service's <code>desiredCount</code> and must be an integer between <code>0</code> and <code>100</code>. This value must be greater than or equal to the <code>minimumHealthyPercent</code> value.</p> <p>After this percentage of tasks is healthy and the bake time elapses, Amazon ECS completes the deployment. Amazon ECS continues to scale the target service revision to 100 percent in the background.</p>"
       }
     },
     "HookDetails": {
@@ -3353,6 +3366,12 @@
         "ServiceRevisions$member": null
       }
     },
+    "ServiceRevisionCleanup": {
+      "base": "<p>The time when Amazon ECS removes the source revisions' tasks relative to deployment completion. When set to <code>BLOCKING</code>, Amazon ECS removes the previous tasks before completing the deployment. When set to <code>DEFERRED</code>, Amazon ECS completes the deployment first and removes the previous tasks in the background.</p>",
+      "refs": {
+        "DeploymentEarlySuccessCriteria$sourceServiceRevisionCleanup": "<p>The time when Amazon ECS removes the source revisions' tasks relative to deployment completion. The valid values are:</p> <ul> <li> <p> <code>BLOCKING</code>—Amazon ECS removes the previous tasks before it marks the deployment as successful.</p> </li> <li> <p> <code>DEFERRED</code>—Amazon ECS marks the deployment successful, and then removes the previous tasks in the background.</p> </li> </ul>"
+      }
+    },
     "ServiceRevisionLoadBalancer": {
       "base": "<p>The resolved load balancer configuration for a service revision. This includes information about which target groups serve traffic and which listener rules direct traffic to them.</p>",
       "refs": {
@@ -4558,7 +4577,7 @@
       "base": null,
       "refs": {
         "NetworkBinding$protocol": "<p>The protocol used for the network binding.</p>",
-        "PortMapping$protocol": "<p>The protocol used for the port mapping. Valid values are <code>tcp</code> and <code>udp</code>. The default is <code>tcp</code>. <code>protocol</code> is immutable in a Service Connect service. Updating this field requires a service deletion and redeployment. </p>"
+        "PortMapping$protocol": "<p>The protocol that's used for the port mapping. Valid values are <code>tcp</code> and <code>udp</code> (case-sensitive). The default is <code>tcp</code>. Amazon ECS treats any other specified value as <code>tcp</code>. <code>protocol</code> is immutable in a Service Connect service. To update this field, you must delete and redeploy the service. </p>"
       }
     },
     "Ulimit": {

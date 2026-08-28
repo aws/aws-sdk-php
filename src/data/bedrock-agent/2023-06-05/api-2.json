@@ -2783,6 +2783,10 @@
         "connection":{"shape":"FlowConnectionName"}
       }
     },
+    "DailySchedule":{
+      "type":"structure",
+      "members":{}
+    },
     "Data":{
       "type":"string",
       "max":5242880,
@@ -2884,6 +2888,32 @@
     "DateTimestamp":{
       "type":"timestamp",
       "timestampFormat":"iso8601"
+    },
+    "DayOfMonth":{
+      "type":"structure",
+      "members":{
+        "dayNumber":{"shape":"DayOfMonthNumber"},
+        "lastDayOfMonth":{"shape":"LastDayOfMonth"}
+      },
+      "union":true
+    },
+    "DayOfMonthNumber":{
+      "type":"integer",
+      "box":true,
+      "max":28,
+      "min":1
+    },
+    "DayOfWeek":{
+      "type":"string",
+      "enum":[
+        "SUNDAY",
+        "MONDAY",
+        "TUESDAY",
+        "WEDNESDAY",
+        "THURSDAY",
+        "FRIDAY",
+        "SATURDAY"
+      ]
     },
     "DeleteAgentActionGroupRequest":{
       "type":"structure",
@@ -5180,6 +5210,10 @@
         "lambdaArn":{"shape":"FlowLambdaArn"}
       }
     },
+    "LastDayOfMonth":{
+      "type":"structure",
+      "members":{}
+    },
     "LexFlowNodeConfiguration":{
       "type":"structure",
       "required":[
@@ -5635,7 +5669,8 @@
       "members":{
         "deletionProtectionConfiguration":{"shape":"DeletionProtectionConfiguration"},
         "mediaExtractionConfiguration":{"shape":"MediaExtractionConfiguration"},
-        "connectorParameters":{"shape":"Document"}
+        "connectorParameters":{"shape":"Document"},
+        "syncSchedule":{"shape":"SyncSchedule"}
       }
     },
     "MaxRecentSessions":{
@@ -5908,6 +5943,13 @@
       "max":2048,
       "min":0,
       "pattern":".*"
+    },
+    "MonthlySchedule":{
+      "type":"structure",
+      "required":["dayOfMonth"],
+      "members":{
+        "dayOfMonth":{"shape":"DayOfMonth"}
+      }
     },
     "MultipleLoopControllerNodesFlowValidationDetails":{
       "type":"structure",
@@ -7355,6 +7397,15 @@
       "type":"string",
       "enum":["Python_3"]
     },
+    "SyncSchedule":{
+      "type":"structure",
+      "members":{
+        "daily":{"shape":"DailySchedule"},
+        "weekly":{"shape":"WeeklySchedule"},
+        "monthly":{"shape":"MonthlySchedule"}
+      },
+      "union":true
+    },
     "SystemContentBlock":{
       "type":"structure",
       "members":{
@@ -8262,6 +8313,13 @@
       "required":["urlConfiguration"],
       "members":{
         "urlConfiguration":{"shape":"UrlConfiguration"}
+      }
+    },
+    "WeeklySchedule":{
+      "type":"structure",
+      "required":["dayOfWeek"],
+      "members":{
+        "dayOfWeek":{"shape":"DayOfWeek"}
       }
     },
     "WorkgroupArn":{

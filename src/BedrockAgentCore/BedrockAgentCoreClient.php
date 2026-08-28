@@ -73,6 +73,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getWorkloadAccessTokenForJWTAsync(array $args = [])
  * @method \Aws\Result getWorkloadAccessTokenForUserId(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getWorkloadAccessTokenForUserIdAsync(array $args = [])
+ * @method \Aws\Result ingestData(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise ingestDataAsync(array $args = [])
  * @method \Aws\Result invokeAgentRuntime(array $args = [])
  * @method \GuzzleHttp\Promise\Promise invokeAgentRuntimeAsync(array $args = [])
  * @method \Aws\Result invokeAgentRuntimeCommand(array $args = [])

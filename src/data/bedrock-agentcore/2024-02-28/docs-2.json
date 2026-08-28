@@ -36,6 +36,7 @@
     "GetWorkloadAccessToken": "<p>Obtains a workload access token for agentic workloads not acting on behalf of a user.</p>",
     "GetWorkloadAccessTokenForJWT": "<p>Obtains a workload access token for agentic workloads acting on behalf of a user, using a JWT token.</p>",
     "GetWorkloadAccessTokenForUserId": "<p>Obtains a workload access token for agentic workloads acting on behalf of a user, using the user's ID.</p>",
+    "IngestData": "<p>Submits content directly for ingestion to generate long-term memory records in a AgentCore Memory resource.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:IngestData</code> permission.</p>",
     "InvokeAgentRuntime": "<p>Sends a request to an agent or tool hosted in an Amazon Bedrock AgentCore Runtime and receives responses in real-time. </p> <p>To invoke an agent, you can specify either the AgentCore Runtime ARN or the agent ID with an account ID, and provide a payload containing your request. When you use the agent ID instead of the full ARN, you don't need to URL-encode the identifier. You can optionally specify a qualifier to target a specific endpoint of the agent.</p> <p>This operation supports streaming responses, allowing you to receive partial responses as they become available. We recommend using pagination to ensure that the operation returns quickly and successfully when processing large responses.</p> <p>For example code, see <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-invoke-agent.html\">Invoke an AgentCore Runtime agent</a>. </p> <p>If you're integrating your agent with OAuth, you can't use the Amazon Web Services SDK to call <code>InvokeAgentRuntime</code>. Instead, make a HTTPS request to <code>InvokeAgentRuntime</code>. For an example, see <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-oauth.html\">Authenticate and authorize with Inbound Auth and Outbound Auth</a>.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:InvokeAgentRuntime</code> permission. If you are making a call to <code>InvokeAgentRuntime</code> on behalf of a user ID with the <code>X-Amzn-Bedrock-AgentCore-Runtime-User-Id</code> header, You require permissions to both actions (<code>bedrock-agentcore:InvokeAgentRuntime</code> and <code>bedrock-agentcore:InvokeAgentRuntimeForUser</code>). </p>",
     "InvokeAgentRuntimeCommand": "<p>Executes a command in a runtime session container and streams the output back to the caller. This operation allows you to run shell commands within the agent runtime environment and receive real-time streaming responses including standard output and standard error.</p> <p>To invoke a command, you must specify the agent runtime ARN and a runtime session ID. The command execution supports streaming responses, allowing you to receive output as it becomes available through <code>contentStart</code>, <code>contentDelta</code>, and <code>contentStop</code> events.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:InvokeAgentRuntimeCommand</code> permission.</p>",
     "InvokeBrowser": "<p>Invokes an operating system-level action on a browser session in Amazon Bedrock AgentCore. This operation provides direct OS-level control over browser sessions, enabling mouse actions, keyboard input, and screenshots that the WebSocket-based Chrome DevTools Protocol (CDP) cannot handle — such as interacting with print dialogs, context menus, and JavaScript alerts.</p> <p>You send a request with exactly one action in the <code>BrowserAction</code> union, and receive a corresponding result in the <code>BrowserActionResult</code> union.</p> <p>The following operations are related to <code>InvokeBrowser</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartBrowserSession.html\">StartBrowserSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetBrowserSession.html\">GetBrowserSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StopBrowserSession.html\">StopBrowserSession</a> </p> </li> </ul>",
@@ -185,6 +186,7 @@
         "DeleteEventInput$actorId": "<p>The identifier of the actor associated with the event to delete.</p>",
         "Event$actorId": "<p>The identifier of the actor associated with the event.</p>",
         "GetEventInput$actorId": "<p>The identifier of the actor associated with the event.</p>",
+        "IngestDataInput$actorId": "<p>The identifier of the actor associated with this content. An actor represents an entity that participates in sessions and generates content.</p>",
         "ListEventsInput$actorId": "<p>The identifier of the actor for which to list events.</p>",
         "ListSessionsInput$actorId": "<p>The identifier of the actor for which to list sessions. </p>",
         "SessionSummary$actorId": "<p>The identifier of the actor associated with the session.</p>"
@@ -906,6 +908,12 @@
         "ResponseChunk$contentDelta": "<p>An event containing incremental output (stdout or stderr) from the command execution. These are the middle chunks.</p>"
       }
     },
+    "ContentSource": {
+      "base": "<p>The source of the content to ingest. Only inline content is supported.</p>",
+      "refs": {
+        "IngestDataInput$source": "<p>The content to ingest. Only inline content is supported.</p>"
+      }
+    },
     "ContentStartEvent": {
       "base": "<p>An event that signals the start of content streaming from a command execution. This event is sent when the command begins producing output.</p>",
       "refs": {
@@ -940,6 +948,7 @@
     "Conversational": {
       "base": "<p>Contains conversational content for an event payload.</p>",
       "refs": {
+        "IngestPayloadType$conversational": "<p>The conversational content for this payload item.</p>",
         "PayloadType$conversational": "<p>The conversational content of the payload.</p>"
       }
     },
@@ -1522,7 +1531,8 @@
     "ExtractionConfig": {
       "base": "<p>The configuration for extraction behavior. Use this structure to specify namespace variable keys and their values for namespace substitution during long-term memory extraction.</p>",
       "refs": {
-        "CreateEventInput$extractionConfig": "<p>The extraction configuration for long-term memory records. Use this parameter to specify namespace variable keys and their values for namespace substitution during extraction.</p>"
+        "CreateEventInput$extractionConfig": "<p>The extraction configuration for long-term memory records. Use this parameter to specify namespace variable keys and their values for namespace substitution during extraction.</p>",
+        "IngestDataInput$extractionConfig": "<p>The extraction configuration for long-term memory records. Use this parameter to specify namespace variable keys and their values for namespace substitution during extraction.</p>"
       }
     },
     "ExtractionJob": {
@@ -2321,6 +2331,26 @@
         "EvaluationResultContent$ignoredReferenceInputFields": "<p> The list of reference input field names that were provided but not used by the evaluator. Helps identify which ground truth data was not consumed during evaluation. </p>"
       }
     },
+    "IngestDataInput": {
+      "base": null,
+      "refs": {}
+    },
+    "IngestDataOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "IngestPayloadList": {
+      "base": null,
+      "refs": {
+        "InlineMemoryContent$payload": "<p>The list of content payload items to ingest.</p>"
+      }
+    },
+    "IngestPayloadType": {
+      "base": "<p>A single content payload item to ingest. A payload item contains either conversational or JSON content.</p>",
+      "refs": {
+        "IngestPayloadList$member": null
+      }
+    },
     "InlineContent": {
       "base": null,
       "refs": {
@@ -2342,6 +2372,12 @@
       "base": null,
       "refs": {
         "InlineGroundTruth$turns": "<p>A list of per-turn ground truth data, each containing an input prompt and expected response.</p>"
+      }
+    },
+    "InlineMemoryContent": {
+      "base": "<p>The content included directly in the request as one or more payload items.</p>",
+      "refs": {
+        "ContentSource$inline": "<p>The content included directly in the request.</p>"
       }
     },
     "InputContentBlock": {
@@ -2965,6 +3001,7 @@
         "Event$memoryId": "<p>The identifier of the AgentCore Memory resource containing the event.</p>",
         "GetEventInput$memoryId": "<p>The identifier of the AgentCore Memory resource containing the event.</p>",
         "GetMemoryRecordInput$memoryId": "<p>The identifier of the AgentCore Memory resource containing the memory record.</p>",
+        "IngestDataInput$memoryId": "<p>The identifier of the AgentCore Memory resource to ingest content into.</p>",
         "ListActorsInput$memoryId": "<p>The identifier of the AgentCore Memory resource for which to list actors.</p>",
         "ListEventsInput$memoryId": "<p>The identifier of the AgentCore Memory resource for which to list events.</p>",
         "ListMemoryExtractionJobsInput$memoryId": "<p>The unique identifier of the memory to list extraction jobs for.</p>",
@@ -2977,6 +3014,7 @@
     "MemoryJsonData": {
       "base": "<p>Contains non-conversational, JSON-formatted content for an event payload. JSON payloads are extracted into long-term memory.</p>",
       "refs": {
+        "IngestPayloadType$json": "<p>The JSON content for this payload item.</p>",
         "PayloadType$json": "<p>The JSON content of the payload. Use this type to store non-conversational, JSON-formatted data, such as behavioral events, activity logs, or system events.</p>"
       }
     },
@@ -3166,7 +3204,8 @@
       "base": null,
       "refs": {
         "CreateEventInput$metadata": "<p>The key-value metadata to attach to the event.</p>",
-        "Event$metadata": "<p>Metadata associated with an event.</p>"
+        "Event$metadata": "<p>Metadata associated with an event.</p>",
+        "IngestDataInput$metadata": "<p>The key-value metadata to attach to the content.</p>"
       }
     },
     "MetadataValue": {
@@ -4358,6 +4397,8 @@
         "Event$sessionId": "<p>The identifier of the session containing the event.</p>",
         "GetAgentCardResponse$runtimeSessionId": "<p>The ID of the session associated with the AgentCore Runtime agent.</p>",
         "GetEventInput$sessionId": "<p>The identifier of the session containing the event.</p>",
+        "IngestDataInput$sessionId": "<p>The identifier of the session that the content belongs to. If not provided, a session identifier is generated and returned in the response.</p>",
+        "IngestDataOutput$sessionId": "<p>The identifier of the session that the service ingested the content into. This value echoes the session identifier from the request, or the identifier that the service generated when you did not provide one.</p>",
         "InvokeAgentRuntimeCommandResponse$runtimeSessionId": "<p>The unique identifier of the runtime session in which the command was executed.</p>",
         "InvokeAgentRuntimeResponse$runtimeSessionId": "<p>The identifier of the runtime session.</p>",
         "InvokeAgentRuntimeResponse$mcpSessionId": "<p>The identifier of the MCP session.</p>",
@@ -4668,6 +4709,7 @@
         "HarnessSkillGitSource$path": "<p>Subdirectory within the repository containing the skill.</p>",
         "HarnessToolUseBlock$serverName": "<p>The name of the MCP server providing this tool.</p>",
         "HarnessToolUseBlockStart$serverName": "<p>The name of the MCP server providing this tool.</p>",
+        "IngestDataInput$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, AgentCore ignores the request, but does not return an error.</p>",
         "InsightsFailureSignal$evidence": "<p>The evidence supporting the failure detection.</p>",
         "InvalidInputException$message": null,
         "InvokeAgentRuntimeCommandRequest$agentRuntimeArn": "<p>The Amazon Resource Name (ARN) of the agent runtime on which to execute the command. This identifies the specific agent runtime environment where the command will run.</p>",
@@ -4992,6 +5034,7 @@
         "GetABTestResponse$maxDurationExpiresAt": "<p>The timestamp when the A/B test will automatically expire.</p>",
         "GetABTestResponse$createdAt": "<p>The timestamp when the A/B test was created.</p>",
         "GetABTestResponse$updatedAt": "<p>The timestamp when the A/B test was last updated.</p>",
+        "IngestDataInput$contentTimestamp": "<p>The timestamp of when the content occurred.</p>",
         "MemoryRecord$createdAt": "<p>The timestamp when the memory record was created.</p>",
         "MemoryRecordCreateInput$timestamp": "<p>Time at which the memory record was created.</p>",
         "MemoryRecordMetadataValue$dateTimeValue": "<p>A timestamp value in ISO 8601 UTC format.</p>",

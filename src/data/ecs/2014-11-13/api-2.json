@@ -2913,7 +2913,8 @@
         "bakeTimeInMinutes":{"shape":"BoxedInteger"},
         "lifecycleHooks":{"shape":"DeploymentLifecycleHookList"},
         "linearConfiguration":{"shape":"LinearConfiguration"},
-        "canaryConfiguration":{"shape":"CanaryConfiguration"}
+        "canaryConfiguration":{"shape":"CanaryConfiguration"},
+        "earlySuccessCriteria":{"shape":"DeploymentEarlySuccessCriteria"}
       }
     },
     "DeploymentController":{
@@ -2930,6 +2931,15 @@
         "CODE_DEPLOY",
         "EXTERNAL"
       ]
+    },
+    "DeploymentEarlySuccessCriteria":{
+      "type":"structure",
+      "required":["enable"],
+      "members":{
+        "enable":{"shape":"Boolean"},
+        "healthyPercent":{"shape":"HealthyPercentInteger"},
+        "sourceServiceRevisionCleanup":{"shape":"ServiceRevisionCleanup"}
+      }
     },
     "DeploymentEphemeralStorage":{
       "type":"structure",
@@ -3715,6 +3725,12 @@
         "UNHEALTHY",
         "UNKNOWN"
       ]
+    },
+    "HealthyPercentInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":0
     },
     "HookDetails":{
       "type":"structure",
@@ -5649,6 +5665,13 @@
         "overrides":{"shape":"ServiceRevisionOverrides"},
         "monitoring":{"shape":"MonitoringConfiguration"}
       }
+    },
+    "ServiceRevisionCleanup":{
+      "type":"string",
+      "enum":[
+        "BLOCKING",
+        "DEFERRED"
+      ]
     },
     "ServiceRevisionLoadBalancer":{
       "type":"structure",

@@ -1,4 +1,78 @@
 {
   "version": "1.0",
-  "examples": {}
+  "examples": {
+    "RestoreFHIRDatastore": [
+      {
+        "input": {
+          "DatastoreName": "RestoredFhirDatastore",
+          "RestoreConfiguration": {
+            "ContinuousBackupRestoreConfiguration": {
+              "RestorePointTime": "2026-08-01T00:00:00Z"
+            }
+          },
+          "SourceDatastoreId": "source-datastore-id"
+        },
+        "output": {
+          "DatastoreArn": "arn:aws:healthlake:us-east-1:123456789012:datastore/fhir/restored-datastore-id",
+          "DatastoreEndpoint": "https://healthlake.us-east-1.amazonaws.com/datastore/restored-datastore-id/r4/",
+          "DatastoreId": "restored-datastore-id",
+          "DatastoreStatus": "CREATING"
+        },
+        "id": "example-1",
+        "title": "Restore a data store to a point in time"
+      }
+    ],
+    "UpdateFHIRDatastore": [
+      {
+        "input": {
+          "AnalyticsConfiguration": {
+            "Status": "DISABLED"
+          },
+          "DatastoreId": "datastore-id",
+          "DatastoreName": "RenamedFhirDatastore",
+          "IdentityProviderConfiguration": {
+            "AuthorizationStrategy": "SMART_ON_FHIR_V1",
+            "FineGrainedAuthorizationEnabled": true
+          },
+          "NlpConfiguration": {
+            "Status": "ENABLED"
+          },
+          "ProfileConfiguration": {
+            "DefaultProfiles": [
+              "us-core-3.1.1",
+              "carin-bb-2.0.0"
+            ]
+          }
+        },
+        "output": {
+          "DatastoreProperties": {
+            "AnalyticsConfiguration": {
+              "Status": "PAUSING"
+            },
+            "DatastoreArn": "arn:aws:healthlake:us-east-1:123456789012:datastore/datastore-id",
+            "DatastoreEndpoint": "https://healthlake.us-east-1.amazonaws.com/datastore/datastore-id/r4/",
+            "DatastoreId": "datastore-id",
+            "DatastoreName": "RenamedFhirDatastore",
+            "DatastoreStatus": "UPDATING",
+            "DatastoreTypeVersion": "R4",
+            "IdentityProviderConfiguration": {
+              "AuthorizationStrategy": "SMART_ON_FHIR_V1",
+              "FineGrainedAuthorizationEnabled": true
+            },
+            "NlpConfiguration": {
+              "Status": "ENABLING"
+            },
+            "ProfileConfiguration": {
+              "DefaultProfiles": [
+                "us-core-3.1.1",
+                "carin-bb-2.0.0"
+              ]
+            }
+          }
+        },
+        "id": "example-1",
+        "title": "Update a data store's name and configuration"
+      }
+    ]
+  }
 }

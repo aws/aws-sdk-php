@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<p>This is the <i>AWS HealthLake API Reference</i>. For an introduction to the service, see <a href=\"https://docs.aws.amazon.com/healthlake/latest/devguide/what-is.html\">What is AWS HealthLake?</a> in the <i>AWS HealthLake Developer Guide</i>.</p>",
+  "service": "<p>This is the <i>HealthLake API Reference</i>. For an introduction to the service, see <a href=\"https://docs.aws.amazon.com/healthlake/latest/devguide/what-is.html\">What is HealthLake?</a> in the <i>HealthLake Developer Guide</i>.</p>",
   "operations": {
     "CreateDataTransformationProfile": "<p>Creates a data transformation profile in DRAFT state. Specify a built-in starter profile, an existing profile version, raw profile content, or a sample data file as the source.</p>",
     "CreateFHIRDatastore": "<p>Create a FHIR-enabled data store.</p>",
@@ -11,7 +11,7 @@
     "DescribeFHIRExportJob": "<p>Get FHIR export job properties.</p>",
     "DescribeFHIRImportJob": "<p>Get the import job properties to learn more about the job or job progress.</p>",
     "GetDataTransformationProfile": "<p>Retrieves a data transformation profile's metadata and profile content at a specific version. Specify version 0 to retrieve the DRAFT, a version number between 1 and 99 to retrieve a specific published version, or omit the version to retrieve the latest published version.</p>",
-    "ListDataTransformationJobs": "<p>Lists data transformation jobs for your AWS account. Results can be filtered by status, job name, and submit time window. Results are paginated. Use the <code>NextToken</code> parameter to retrieve additional results.</p>",
+    "ListDataTransformationJobs": "<p>Lists data transformation jobs for your Amazon Web Services account. Results can be filtered by status, job name, and submit time window. Results are paginated. Use the <code>NextToken</code> parameter to retrieve additional results.</p>",
     "ListDataTransformationProfileVersions": "<p>Lists all versions of a specific data transformation profile (DRAFT and published), in reverse chronological order (newest first). Use <code>GetDataTransformationProfile</code> to retrieve profile content. Results are paginated. Use the <code>NextToken</code> parameter to retrieve additional results.</p>",
     "ListDataTransformationProfiles": "<p>Lists all data transformation profiles in your account, returning the latest version summary for each. Use <code>GetDataTransformationProfile</code> to retrieve profile content. Results are paginated. Use the <code>NextToken</code> parameter to retrieve additional results.</p>",
     "ListFHIRDatastores": "<p>List all FHIR-enabled data stores in a user’s account, regardless of data store status.</p>",
@@ -19,7 +19,8 @@
     "ListFHIRImportJobs": "<p>List all FHIR import jobs associated with an account and their statuses.</p>",
     "ListTagsForResource": "<p>Returns a list of all existing tags associated with a data store.</p>",
     "PublishDataTransformationProfile": "<p>Promotes the current DRAFT version of a data transformation profile to a new immutable published version. Also supports rollback by publishing from a previously published version.</p>",
-    "StartDataTransformationJob": "<p>Starts an asynchronous data transformation job that converts source files from Amazon Simple Storage Service (Amazon S3) and writes the output to Amazon S3 or AWS HealthLake.</p>",
+    "RestoreFHIRDatastore": "<p>Restore a backup-enabled data store to a point in time. Creates a new data store from the backup.</p>",
+    "StartDataTransformationJob": "<p>Starts an asynchronous data transformation job that converts source files from Amazon Simple Storage Service (Amazon S3) and writes the output to Amazon S3 or HealthLake.</p>",
     "StartFHIRExportJob": "<p>Start a FHIR export job.</p>",
     "StartFHIRImportJob": "<p>Start importing bulk FHIR data into an ACTIVE data store. The import job imports FHIR data found in the <code>InputDataConfig</code> object and stores processing results in the <code>JobOutputDataConfig</code> object.</p>",
     "TagResource": "<p>Add a user-specifed key and value tag to a data store.</p>",
@@ -81,6 +82,7 @@
       "refs": {
         "CreateFHIRDatastoreRequest$AnalyticsConfiguration": "<p>The analytics configuration for the data store.</p>",
         "DatastoreProperties$AnalyticsConfiguration": "<p>The analytics configuration for the data store.</p>",
+        "RestoreFHIRDatastoreRequest$AnalyticsConfiguration": "<p>The analytics configuration for the restored data store.</p>",
         "UpdateFHIRDatastoreRequest$AnalyticsConfiguration": "<p>The analytics configuration for the data store.</p>"
       }
     },
@@ -93,25 +95,52 @@
     "AuthorizationStrategy": {
       "base": null,
       "refs": {
-        "IdentityProviderConfiguration$AuthorizationStrategy": "<p>The authorization strategy selected when the HealthLake data store is created.</p> <note> <p>HealthLake provides support for both SMART on FHIR V1 and V2 as described below.</p> <ul> <li> <p> <code>SMART_ON_FHIR_V1</code> – Support for only SMART on FHIR V1, which includes <code>read</code> (read/search) and <code>write</code> (create/update/delete) permissions.</p> </li> <li> <p> <code>SMART_ON_FHIR</code> – Support for both SMART on FHIR V1 and V2, which includes <code>create</code>, <code>read</code>, <code>update</code>, <code>delete</code>, and <code>search</code> permissions.</p> </li> <li> <p> <code>AWS_AUTH</code> – The default HealthLake authorization strategy; not affiliated with SMART on FHIR.</p> </li> </ul> </note>"
+        "IdentityProviderConfiguration$AuthorizationStrategy": "<p>The authorization strategy selected when the HealthLake data store is created.</p> <note> <p>HealthLake provides support for both SMART on FHIR V1 and V2 as described below.</p> <ul> <li> <p> <code>SMART_ON_FHIR_V1</code> – Support for only SMART on FHIR V1, which includes <code>read</code> (read/search) and <code>write</code> (create/update/delete) permissions.</p> </li> <li> <p> <code>SMART_ON_FHIR</code> – Support for both SMART on FHIR V1 and V2, which includes <code>create</code>, <code>read</code>, <code>update</code>, <code>delete</code>, and <code>search</code> permissions.</p> </li> <li> <p> <code>Amazon Web Services_AUTH</code> – The default HealthLake authorization strategy; not affiliated with SMART on FHIR.</p> </li> </ul> </note>"
+      }
+    },
+    "BackupConfiguration": {
+      "base": "<p>The backup configuration for the data store.</p>",
+      "refs": {
+        "CreateFHIRDatastoreRequest$BackupConfiguration": "<p>The backup configuration for the data store.</p>",
+        "DatastoreBackupStatus$Configuration": "<p>The backup configuration for the data store.</p>",
+        "UpdateFHIRDatastoreRequest$BackupConfiguration": "<p>The backup configuration for the data store.</p>"
+      }
+    },
+    "BackupRetentionPeriodInDays": {
+      "base": null,
+      "refs": {
+        "BackupConfiguration$RetentionPeriodInDays": "<p>The number of days backup data is retained.</p>"
+      }
+    },
+    "BackupStatus": {
+      "base": null,
+      "refs": {
+        "BackupConfiguration$Status": "<p>The backup status of the data store.</p>"
+      }
+    },
+    "BackupType": {
+      "base": null,
+      "refs": {
+        "BackupConfiguration$BackupType": "<p>The type of backup.</p>"
       }
     },
     "Boolean": {
       "base": null,
       "refs": {
-        "StartDataTransformationJobRequest$DriftDetectionEnabled": "<p>Specifies whether drift detection is enabled for this job. When enabled, AWS HealthLake writes a drift report to the output Amazon S3 location alongside the converted files.</p>",
+        "StartDataTransformationJobRequest$DriftDetectionEnabled": "<p>Specifies whether drift detection is enabled for this job. When enabled, HealthLake writes a drift report to the output Amazon S3 location alongside the converted files.</p>",
         "StartDataTransformationJobRequest$ProvenanceEnabled": "<p>Specifies whether FHIR R4 Provenance resource generation is enabled for this transformation job. When provenance is enabled, the service also generates related DocumentReference and Device resources. If you don't specify a value, the default is <code>true</code>. To disable provenance output, set this parameter to <code>false</code>.</p>",
-        "TransformationJobProperties$DriftDetectionEnabled": "<p>Specifies whether drift detection is enabled for this job. When enabled, AWS HealthLake writes a drift report to the output Amazon S3 location alongside the converted files.</p>",
+        "TransformationJobProperties$DriftDetectionEnabled": "<p>Specifies whether drift detection is enabled for this job. When enabled, HealthLake writes a drift report to the output Amazon S3 location alongside the converted files.</p>",
         "TransformationJobProperties$ProvenanceEnabled": "<p>Specifies whether FHIR R4 Provenance resource generation is enabled for this transformation job. When provenance is enabled, the service also generates related DocumentReference and Device resources.</p>"
       }
     },
     "BoundedLengthString": {
       "base": "<p>A bounded-length string value.</p>",
       "refs": {
-        "CreateFHIRDatastoreResponse$DatastoreEndpoint": "<p>The AWS endpoint created for the data store.</p>",
-        "DeleteFHIRDatastoreResponse$DatastoreEndpoint": "<p>The AWS endpoint of the data store to be deleted.</p>",
-        "StartFHIRImportJobRequest$ProfileId": null,
-        "StartFHIRImportJobRequest$InputFormat": null
+        "CreateFHIRDatastoreResponse$DatastoreEndpoint": "<p>The Amazon Web Services endpoint created for the data store.</p>",
+        "DeleteFHIRDatastoreResponse$DatastoreEndpoint": "<p>The Amazon Web Services endpoint of the data store to be deleted.</p>",
+        "RestoreFHIRDatastoreResponse$DatastoreEndpoint": "<p>The AWS endpoint for the restored data store.</p>",
+        "StartFHIRImportJobRequest$ProfileId": "<p>The data transformation profile identifier to use for the import job.</p>",
+        "StartFHIRImportJobRequest$InputFormat": "<p>The input format of the data to be imported.</p>"
       }
     },
     "BoundedString": {
@@ -140,6 +169,7 @@
       "base": "<p>A client-provided idempotency token.</p>",
       "refs": {
         "CreateFHIRDatastoreRequest$ClientToken": "<p>An optional user-provided token to ensure API idempotency.</p>",
+        "RestoreFHIRDatastoreRequest$ClientToken": "<p>An optional user-provided token to ensure API idempotency of the restore.</p>",
         "StartFHIRExportJobRequest$ClientToken": "<p>An optional user provided token used for ensuring API idempotency.</p>",
         "StartFHIRImportJobRequest$ClientToken": "<p>The optional user-provided token used for ensuring API idempotency.</p>"
       }
@@ -159,6 +189,12 @@
     "ConflictException": {
       "base": "<p>The data store is in a transition state and the user requested action cannot be performed.</p>",
       "refs": {}
+    },
+    "ContinuousBackupRestoreConfiguration": {
+      "base": "<p>Configuration for continuous backup (point-in-time) restore.</p>",
+      "refs": {
+        "RestoreConfiguration$ContinuousBackupRestoreConfiguration": "<p>Configuration for restoring from continuous backup to a specific point in time.</p>"
+      }
     },
     "ConversationIdString": {
       "base": null,
@@ -208,8 +244,8 @@
     "DataTransformationIamRoleArn": {
       "base": null,
       "refs": {
-        "StartDataTransformationJobRequest$DataAccessRoleArn": "<p>The Amazon Resource Name (ARN) of the AWS Identity and Access Management (IAM) role that AWS HealthLake assumes to read from and write to the specified Amazon S3 locations.</p>",
-        "TransformationJobProperties$DataAccessRoleArn": "<p>The Amazon Resource Name (ARN) of the AWS Identity and Access Management (IAM) role that grants AWS HealthLake access to the specified Amazon S3 locations. AWS HealthLake assumes this role to read input files and write output files.</p>"
+        "StartDataTransformationJobRequest$DataAccessRoleArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Identity and Access Management (IAM) role that HealthLake assumes to read from and write to the specified Amazon S3 locations.</p>",
+        "TransformationJobProperties$DataAccessRoleArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Identity and Access Management (IAM) role that grants HealthLake access to the specified Amazon S3 locations. HealthLake assumes this role to read input files and write output files.</p>"
       }
     },
     "DataTransformationJobId": {
@@ -268,13 +304,13 @@
     "DataTransformationS3Configuration": {
       "base": "<p>The Amazon S3 output configuration for a data transformation job, including the output location and encryption settings.</p>",
       "refs": {
-        "TransformationOutputDataConfig$S3Configuration": "<p>The Amazon S3 output location and AWS Key Management Service (AWS KMS) encryption configuration.</p>"
+        "TransformationOutputDataConfig$S3Configuration": "<p>The Amazon S3 output location and Amazon Web Services Key Management Service (Amazon Web Services KMS) encryption configuration.</p>"
       }
     },
     "DataTransformationS3Uri": {
       "base": null,
       "refs": {
-        "DataTransformationS3Configuration$S3Uri": "<p>The Amazon S3 URI where AWS HealthLake writes the converted output files.</p>",
+        "DataTransformationS3Configuration$S3Uri": "<p>The Amazon S3 URI where HealthLake writes the converted output files.</p>",
         "TransformationInputDataConfig$S3Uri": "<p>The Amazon S3 URI of the input data to transform.</p>"
       }
     },
@@ -295,7 +331,14 @@
       "refs": {
         "CreateFHIRDatastoreResponse$DatastoreArn": "<p>The Amazon Resource Name (ARN) for the data store.</p>",
         "DatastoreProperties$DatastoreArn": "<p>The Amazon Resource Name (ARN) used in the creation of the data store.</p>",
-        "DeleteFHIRDatastoreResponse$DatastoreArn": "<p>The Amazon Resource Name (ARN) that grants access permission to AWS HealthLake.</p>"
+        "DeleteFHIRDatastoreResponse$DatastoreArn": "<p>The Amazon Resource Name (ARN) that grants access permission to HealthLake.</p>",
+        "RestoreFHIRDatastoreResponse$DatastoreArn": "<p>The Amazon Resource Name (ARN) for the restored data store.</p>"
+      }
+    },
+    "DatastoreBackupStatus": {
+      "base": "<p>The backup status information for the data store.</p>",
+      "refs": {
+        "DatastoreProperties$BackupStatusInfo": "<p>The backup status information for the data store.</p>"
       }
     },
     "DatastoreFilter": {
@@ -309,8 +352,8 @@
       "refs": {
         "CreateFHIRDatastoreResponse$DatastoreId": "<p>The data store identifier.</p>",
         "DatastoreProperties$DatastoreId": "<p>The data store identifier.</p>",
-        "DeleteFHIRDatastoreRequest$DatastoreId": "<p> The AWS-generated identifier for the data store to be deleted.</p>",
-        "DeleteFHIRDatastoreResponse$DatastoreId": "<p>The AWS-generated ID for the deleted data store.</p>",
+        "DeleteFHIRDatastoreRequest$DatastoreId": "<p> The Amazon Web Services-generated identifier for the data store to be deleted.</p>",
+        "DeleteFHIRDatastoreResponse$DatastoreId": "<p>The Amazon Web Services-generated ID for the deleted data store.</p>",
         "DescribeFHIRDatastoreRequest$DatastoreId": "<p>The data store identifier.</p>",
         "DescribeFHIRExportJobRequest$DatastoreId": "<p>The data store identifier from which FHIR data is being exported from.</p>",
         "DescribeFHIRImportJobRequest$DatastoreId": "<p>The data store identifier.</p>",
@@ -318,6 +361,8 @@
         "ImportJobProperties$DatastoreId": "<p>The data store identifier. </p>",
         "ListFHIRExportJobsRequest$DatastoreId": "<p>Limits the response to the export job with the specified data store ID. </p>",
         "ListFHIRImportJobsRequest$DatastoreId": "<p>Limits the response to the import job with the specified data store ID. </p>",
+        "RestoreFHIRDatastoreRequest$SourceDatastoreId": "<p>The identifier of the source data store to restore from.</p>",
+        "RestoreFHIRDatastoreResponse$DatastoreId": "<p>The restored data store identifier.</p>",
         "StartFHIRExportJobRequest$DatastoreId": "<p>The data store identifier from which files are being exported.</p>",
         "StartFHIRExportJobResponse$DatastoreId": "<p>The data store identifier from which files are being exported.</p>",
         "StartFHIRImportJobRequest$DatastoreId": "<p>The data store identifier.</p>",
@@ -331,6 +376,7 @@
         "CreateFHIRDatastoreRequest$DatastoreName": "<p>The data store name (user-generated).</p>",
         "DatastoreFilter$DatastoreName": "<p>Filter data store results by name.</p>",
         "DatastoreProperties$DatastoreName": "<p>The data store name.</p>",
+        "RestoreFHIRDatastoreRequest$DatastoreName": "<p>The name for the restored data store.</p>",
         "UpdateFHIRDatastoreRequest$DatastoreName": "<p>The data store name.</p>"
       }
     },
@@ -354,7 +400,8 @@
         "CreateFHIRDatastoreResponse$DatastoreStatus": "<p>The data store status.</p>",
         "DatastoreFilter$DatastoreStatus": "<p>Filter data store results by status.</p>",
         "DatastoreProperties$DatastoreStatus": "<p>The data store status.</p>",
-        "DeleteFHIRDatastoreResponse$DatastoreStatus": "<p>The data store status.</p>"
+        "DeleteFHIRDatastoreResponse$DatastoreStatus": "<p>The data store status.</p>",
+        "RestoreFHIRDatastoreResponse$DatastoreStatus": "<p>The restored data store status.</p>"
       }
     },
     "DateTime": {
@@ -439,7 +486,7 @@
       "base": "<p>The identifier of an encryption key.</p>",
       "refs": {
         "KmsEncryptionConfig$KmsKeyId": "<p>The Key Management Service (KMS) encryption key id/alias used to encrypt the data store contents at rest.</p>",
-        "S3Configuration$KmsKeyId": "<p>The Key Management Service (KMS) key ID used to access the S3 bucket. </p>"
+        "S3Configuration$KmsKeyId": "<p>The Key Management Service (KMS) key ID used to access the Amazon S3 bucket. </p>"
       }
     },
     "ErrorCategory": {
@@ -493,26 +540,26 @@
     "GenericDouble": {
       "base": "<p>A double-precision floating-point number.</p>",
       "refs": {
-        "JobProgressReport$TotalSizeOfScannedFilesInMB": "<p>The size (in MB) of files scanned from the S3 input bucket.</p>",
-        "JobProgressReport$TotalSizeOfScannedNonFhirFilesInMB": "<p>The size (in MB) of non-FHIR files scanned from the S3 input bucket.</p>",
+        "JobProgressReport$TotalSizeOfScannedFilesInMB": "<p>The size (in MB) of files scanned from the Amazon S3 input bucket.</p>",
+        "JobProgressReport$TotalSizeOfScannedNonFhirFilesInMB": "<p>The size (in MB) of non-FHIR files scanned from the Amazon S3 input bucket.</p>",
         "JobProgressReport$Throughput": "<p>The transaction rate the import job is processed at.</p>"
       }
     },
     "GenericLong": {
       "base": "<p>A long integer value.</p>",
       "refs": {
-        "JobProgressReport$TotalNumberOfScannedFiles": "<p>The number of files scanned from the S3 input bucket.</p>",
+        "JobProgressReport$TotalNumberOfScannedFiles": "<p>The number of files scanned from the Amazon S3 input bucket.</p>",
         "JobProgressReport$TotalNumberOfImportedFiles": "<p>The number of files imported.</p>",
-        "JobProgressReport$TotalNumberOfResourcesScanned": "<p>The number of resources scanned from the S3 input bucket.</p>",
+        "JobProgressReport$TotalNumberOfResourcesScanned": "<p>The number of resources scanned from the Amazon S3 input bucket.</p>",
         "JobProgressReport$TotalNumberOfResourcesImported": "<p>The number of resources imported.</p>",
         "JobProgressReport$TotalNumberOfResourcesWithCustomerError": "<p>The number of resources that failed due to customer error.</p>",
-        "JobProgressReport$TotalNumberOfFilesReadWithCustomerError": "<p>The number of files that failed to be read from the S3 input bucket due to customer error.</p>",
-        "JobProgressReport$TotalNumberOfScannedNonFhirFiles": "<p>The number of non-FHIR files scanned from the S3 input bucket.</p>",
+        "JobProgressReport$TotalNumberOfFilesReadWithCustomerError": "<p>The number of files that failed to be read from the Amazon S3 input bucket due to customer error.</p>",
+        "JobProgressReport$TotalNumberOfScannedNonFhirFiles": "<p>The number of non-FHIR files scanned from the Amazon S3 input bucket.</p>",
         "JobProgressReport$TotalNumberOfImportedNonFhirFiles": "<p>The number of non-FHIR files imported.</p>",
-        "JobProgressReport$TotalNumberOfNonFhirResourcesScanned": "<p>The number of non-FHIR resources scanned from the S3 input bucket.</p>",
+        "JobProgressReport$TotalNumberOfNonFhirResourcesScanned": "<p>The number of non-FHIR resources scanned from the Amazon S3 input bucket.</p>",
         "JobProgressReport$TotalNumberOfNonFhirResourcesImported": "<p>The number of non-FHIR resources imported.</p>",
         "JobProgressReport$TotalNumberOfNonFhirResourcesWithCustomerError": "<p>The number of non-FHIR resources that failed due to customer error.</p>",
-        "JobProgressReport$TotalNumberOfNonFhirFilesReadWithCustomerError": "<p>The number of non-FHIR files that failed to be read from the S3 input bucket due to customer error.</p>",
+        "JobProgressReport$TotalNumberOfNonFhirFilesReadWithCustomerError": "<p>The number of non-FHIR files that failed to be read from the Amazon S3 input bucket due to customer error.</p>",
         "JobProgressReport$TotalFilesConverted": "<p>Number of CCDA files successfully transformed during the import's transformation phase. Populated only for import jobs that use the two-Step-Function (transformation + ingestion) flow; null for legacy single-SF imports and for pure FHIR imports that skip transformation.</p>",
         "JobProgressReport$TotalResourcesGenerated": "<p>Number of FHIR resources produced by the transformation phase. Populated only for import jobs that use the two-Step-Function flow; null for legacy single-SF imports and for pure FHIR imports.</p>"
       }
@@ -528,8 +575,9 @@
     "HealthLakeBoolean": {
       "base": "<p>A boolean value.</p>",
       "refs": {
+        "BackupConfiguration$BackupTagsEnabled": "<p>Specifies whether tags are included in backups.</p>",
         "IdentityProviderConfiguration$FineGrainedAuthorizationEnabled": "<p>The parameter to enable SMART on FHIR fine-grained authorization for the data store.</p>",
-        "StartFHIRImportJobRequest$DriftDetectionEnabled": null
+        "StartFHIRImportJobRequest$DriftDetectionEnabled": "<p>Specifies whether to enable drift detection for the import job.</p>"
       }
     },
     "HealthLakeString": {
@@ -537,7 +585,7 @@
       "refs": {
         "AccessDeniedException$Message": null,
         "ConflictException$Message": null,
-        "DatastoreProperties$DatastoreEndpoint": "<p>The AWS endpoint for the data store.</p>",
+        "DatastoreProperties$DatastoreEndpoint": "<p>The Amazon Web Services endpoint for the data store.</p>",
         "DefaultProfiles$member": null,
         "FailedDependencyException$Message": "<p>A message describing the error.</p>",
         "InternalServerException$Message": null,
@@ -550,6 +598,11 @@
     "HealthLakeTimestamp": {
       "base": "<p>A timestamp value.</p>",
       "refs": {
+        "ContinuousBackupRestoreConfiguration$RestorePointTime": "<p>The point in time to restore the data store to, specified as a UTC timestamp.</p>",
+        "DatastoreBackupStatus$BackupEnabledAt": "<p>The time backup was enabled on the data store.</p>",
+        "DatastoreBackupStatus$EarliestRestorePoint": "<p>The earliest point in time the data store can be restored to.</p>",
+        "DatastoreBackupStatus$LatestRestorePoint": "<p>The latest point in time the data store can be restored to.</p>",
+        "DatastoreBackupStatus$ScheduledPermanentDeletionTime": "<p>The time the retained backup data is scheduled for permanent deletion.</p>",
         "DatastoreFilter$CreatedBefore": "<p>Filter to set cutoff dates for records. All data stores created before the specified date are included in the results. </p>",
         "DatastoreFilter$CreatedAfter": "<p>Filter to set cutoff dates for records. All data stores created after the specified date are included in the results.</p>",
         "DatastoreProperties$CreatedAt": "<p>The time the data store was created. </p>",
@@ -567,9 +620,9 @@
       "base": "<p>The IAM role ARN for data access.</p>",
       "refs": {
         "ExportJobProperties$DataAccessRoleArn": "<p>The Amazon Resource Name (ARN) used during the initiation of the export job.</p>",
-        "ImportJobProperties$DataAccessRoleArn": "<p>The Amazon Resource Name (ARN) that grants AWS HealthLake access to the input data.</p>",
+        "ImportJobProperties$DataAccessRoleArn": "<p>The Amazon Resource Name (ARN) that grants HealthLake access to the input data.</p>",
         "StartFHIRExportJobRequest$DataAccessRoleArn": "<p>The Amazon Resource Name (ARN) used during initiation of the export job.</p>",
-        "StartFHIRImportJobRequest$DataAccessRoleArn": "<p>The Amazon Resource Name (ARN) that grants access permission to AWS HealthLake.</p>"
+        "StartFHIRImportJobRequest$DataAccessRoleArn": "<p>The Amazon Resource Name (ARN) that grants access permission to HealthLake.</p>"
       }
     },
     "IdentityProviderConfiguration": {
@@ -577,6 +630,7 @@
       "refs": {
         "CreateFHIRDatastoreRequest$IdentityProviderConfiguration": "<p>The identity provider configuration to use for the data store.</p>",
         "DatastoreProperties$IdentityProviderConfiguration": "<p>The identity provider selected during data store creation.</p>",
+        "RestoreFHIRDatastoreRequest$IdentityProviderConfiguration": "<p>The identity provider configuration for the restored data store.</p>",
         "UpdateFHIRDatastoreRequest$IdentityProviderConfiguration": "<p>The identity provider configuration for the data store.</p>"
       }
     },
@@ -651,7 +705,7 @@
       }
     },
     "KmsEncryptionConfig": {
-      "base": "<p>The customer-managed-key (CMK) used when creating a data store. If a customer-owned key is not specified, an AWS-owned key is used for encryption. </p>",
+      "base": "<p>The customer-managed-key (CMK) used when creating a data store. If a customer-owned key is not specified, an Amazon Web Services-owned key is used for encryption. </p>",
       "refs": {
         "SseConfiguration$KmsEncryptionConfig": "<p>The Key Management Service (KMS) encryption configuration used to provide details for data encryption.</p>"
       }
@@ -659,8 +713,8 @@
     "KmsKeyId": {
       "base": null,
       "refs": {
-        "CreateDataTransformationProfileRequest$KmsKeyId": "<p>The AWS Key Management Service (AWS KMS) key identifier used to encrypt the profile content at rest.</p>",
-        "DataTransformationS3Configuration$KmsKeyId": "<p>The AWS Key Management Service (AWS KMS) key identifier used to encrypt the transformation job output written to Amazon S3.</p>"
+        "CreateDataTransformationProfileRequest$KmsKeyId": "<p>The Amazon Web Services Key Management Service (Amazon Web Services KMS) key identifier used to encrypt the profile content at rest.</p>",
+        "DataTransformationS3Configuration$KmsKeyId": "<p>The Amazon Web Services Key Management Service (Amazon Web Services KMS) key identifier used to encrypt the transformation job output written to Amazon S3.</p>"
       }
     },
     "LambdaArn": {
@@ -773,6 +827,7 @@
       "refs": {
         "CreateFHIRDatastoreRequest$NlpConfiguration": "<p>The natural language processing (NLP) configuration for the data store.</p>",
         "DatastoreProperties$NlpConfiguration": "<p>The natural language processing (NLP) configuration for the data store.</p>",
+        "RestoreFHIRDatastoreRequest$NlpConfiguration": "<p>The NLP configuration for the restored data store.</p>",
         "UpdateFHIRDatastoreRequest$NlpConfiguration": "<p>The natural language processing (NLP) configuration for the data store.</p>"
       }
     },
@@ -813,6 +868,7 @@
       "refs": {
         "CreateFHIRDatastoreRequest$ProfileConfiguration": "<p>The profile configuration for the data store.</p>",
         "DatastoreProperties$ProfileConfiguration": "<p>The profile configuration for the data store.</p>",
+        "RestoreFHIRDatastoreRequest$ProfileConfiguration": "<p>The profile configuration for the restored data store.</p>",
         "UpdateFHIRDatastoreRequest$ProfileConfiguration": "<p>The profile configuration for the data store.</p>"
       }
     },
@@ -907,8 +963,22 @@
       "base": "<p>The requested data store was not found.</p>",
       "refs": {}
     },
+    "RestoreConfiguration": {
+      "base": "<p>Specifies the type and parameters for the restore operation.</p>",
+      "refs": {
+        "RestoreFHIRDatastoreRequest$RestoreConfiguration": "<p>The restore configuration specifying the type and parameters for the restore.</p>"
+      }
+    },
+    "RestoreFHIRDatastoreRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "RestoreFHIRDatastoreResponse": {
+      "base": null,
+      "refs": {}
+    },
     "S3Configuration": {
-      "base": "<p>The configuration of the S3 bucket for either an import or export job. This includes assigning access permissions.</p>",
+      "base": "<p>The configuration of the Amazon S3 bucket for either an import or export job. This includes assigning access permissions.</p>",
       "refs": {
         "OutputDataConfig$S3Configuration": "<p>The output data configuration supplied when the export job was created. </p>"
       }
@@ -916,8 +986,8 @@
     "S3Uri": {
       "base": "<p>The S3 URI for data import or export.</p>",
       "refs": {
-        "InputDataConfig$S3Uri": "<p>The <code>S3Uri</code> is the user-specified S3 location of the FHIR data to be imported into AWS HealthLake.</p>",
-        "S3Configuration$S3Uri": "<p>The <code>S3Uri</code> is the user-specified S3 location of the FHIR data to be imported into AWS HealthLake.</p>"
+        "InputDataConfig$S3Uri": "<p>The <code>S3Uri</code> is the user-specified Amazon S3 location of the FHIR data to be imported into HealthLake.</p>",
+        "S3Configuration$S3Uri": "<p>The <code>S3Uri</code> is the user-specified Amazon S3 location of the FHIR data to be imported into HealthLake.</p>"
       }
     },
     "SampleDataS3Uri": {
@@ -957,7 +1027,8 @@
       "base": "<p>The server-side encryption key configuration for a customer-provided encryption key.</p>",
       "refs": {
         "CreateFHIRDatastoreRequest$SseConfiguration": "<p>The server-side encryption key configuration for a customer-provided encryption key specified for creating a data store. </p>",
-        "DatastoreProperties$SseConfiguration": "<p> The server-side encryption key configuration for a customer provided encryption key.</p>"
+        "DatastoreProperties$SseConfiguration": "<p> The server-side encryption key configuration for a customer provided encryption key.</p>",
+        "RestoreFHIRDatastoreRequest$SseConfiguration": "<p>The server-side encryption key configuration for the restored data store.</p>"
       }
     },
     "StartDataTransformationJobRequest": {
@@ -1034,6 +1105,7 @@
       "refs": {
         "CreateFHIRDatastoreRequest$Tags": "<p>The resource tags applied to a data store when it is created.</p>",
         "ListTagsForResourceResponse$Tags": "<p>Returns a list of tags associated with a data store. </p>",
+        "RestoreFHIRDatastoreRequest$Tags": "<p>The resource tags applied to the restored data store.</p>",
         "TagResourceRequest$Tags": "<p>The user-specified key and value pair tags being added to a data store.</p>"
       }
     },
@@ -1115,12 +1187,12 @@
     "TransformationOutputDataConfig": {
       "base": "<p>The Amazon S3 output location and encryption configuration for a transformation job.</p>",
       "refs": {
-        "StartDataTransformationJobRequest$OutputDataConfig": "<p>The Amazon S3 output location and AWS Key Management Service (AWS KMS) encryption configuration.</p>",
+        "StartDataTransformationJobRequest$OutputDataConfig": "<p>The Amazon S3 output location and Amazon Web Services Key Management Service (Amazon Web Services KMS) encryption configuration.</p>",
         "TransformationJobProperties$OutputDataConfig": "<p>The Amazon S3 location and encryption configuration for the converted output.</p>"
       }
     },
     "UnauthorizedException": {
-      "base": "<p>You are not authorized to make this request. Verify that your AWS credentials are valid and that you have the required permissions.</p>",
+      "base": "<p>You are not authorized to make this request. Verify that your Amazon Web Services credentials are valid and that you have the required permissions.</p>",
       "refs": {}
     },
     "UnsupportedMIMETypeException": {

@@ -1117,7 +1117,8 @@
         "WWPSPDM",
         "PDM",
         "PSM",
-        "ISVSM"
+        "ISVSM",
+        "Signatory"
       ]
     },
     "AwsOpportunityCustomer":{
@@ -1216,7 +1217,8 @@
         "RelatedEntityIds":{"shape":"AwsOpportunityRelatedEntities"},
         "Customer":{"shape":"AwsOpportunityCustomer"},
         "Project":{"shape":"AwsOpportunityProject"},
-        "CosellMotion":{"shape":"String"}
+        "CosellMotion":{"shape":"String"},
+        "SoftwareRevenue":{"shape":"AwsSoftwareRevenue"}
       }
     },
     "AwsOpportunityTeamMembersList":{
@@ -1301,6 +1303,15 @@
       "members":{
         "Partner":{"shape":"AwsProductInsights"},
         "AWS":{"shape":"AwsProductInsights"}
+      }
+    },
+    "AwsSoftwareRevenue":{
+      "type":"structure",
+      "members":{
+        "Value":{"shape":"MonetaryValue"},
+        "Discount":{"shape":"String"},
+        "EffectiveDate":{"shape":"String"},
+        "ExpirationDate":{"shape":"String"}
       }
     },
     "AwsSubmission":{
@@ -2531,6 +2542,7 @@
         "Customer":{"shape":"AwsOpportunityCustomer"},
         "Project":{"shape":"AwsOpportunityProject"},
         "CosellMotion":{"shape":"String"},
+        "SoftwareRevenue":{"shape":"AwsSoftwareRevenue"},
         "Catalog":{"shape":"CatalogIdentifier"}
       }
     },
@@ -3011,7 +3023,7 @@
     "LeadJobTitle":{
       "type":"string",
       "max":255,
-      "min":0,
+      "min":1,
       "sensitive":true
     },
     "LeadMarketSegment":{

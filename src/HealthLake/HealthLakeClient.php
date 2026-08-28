@@ -39,6 +39,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result publishDataTransformationProfile(array $args = [])
  * @method \GuzzleHttp\Promise\Promise publishDataTransformationProfileAsync(array $args = [])
+ * @method \Aws\Result restoreFHIRDatastore(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise restoreFHIRDatastoreAsync(array $args = [])
  * @method \Aws\Result startDataTransformationJob(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startDataTransformationJobAsync(array $args = [])
  * @method \Aws\Result startFHIRExportJob(array $args = [])
