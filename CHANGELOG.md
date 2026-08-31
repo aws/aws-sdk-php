@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AgentRegistry` - Release HTTP and AGUI descriptors to the dataplane model
+
 ## 3.394.4 - 2026-08-31
 
 * `Aws\` - Fixed WrappedHttpHandler buffering the entire partial response body into memory when a 2xx response was attached to a rejected promise, which could exhaust memory on a transport failure during a large streamed download.

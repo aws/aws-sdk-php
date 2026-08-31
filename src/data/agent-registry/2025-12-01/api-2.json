@@ -89,6 +89,12 @@
       },
       "exception":true
     },
+    "AgUiDescriptor":{
+      "type":"structure",
+      "members":{
+        "source":{"shape":"DescriptorSource"}
+      }
+    },
     "AgentSkillsAdditionalData":{
       "type":"structure",
       "members":{
@@ -219,7 +225,9 @@
         "mcpServer":{"shape":"McpServerDescriptor"},
         "a2aAgentCard":{"shape":"A2aAgentCardDescriptor"},
         "agentSkillsDefinition":{"shape":"AgentSkillsDefinitionDescriptor"},
-        "custom":{"shape":"CustomDescriptor"}
+        "custom":{"shape":"CustomDescriptor"},
+        "http":{"shape":"HttpDescriptor"},
+        "agui":{"shape":"AgUiDescriptor"}
       }
     },
     "DiscoverableFilterValues":{
@@ -264,6 +272,12 @@
       "type":"string",
       "max":255,
       "min":1
+    },
+    "HttpDescriptor":{
+      "type":"structure",
+      "members":{
+        "source":{"shape":"DescriptorSource"}
+      }
     },
     "InternalServerException":{
       "type":"structure",

@@ -17,6 +17,12 @@
       "base": "<p>The caller is not authorized to perform the requested action.</p>",
       "refs": {}
     },
+    "AgUiDescriptor": {
+      "base": "<p> A descriptor for a registry record that exposes an AG-UI protocol endpoint. This descriptor is source-only: it identifies where the endpoint is located and carries no descriptor payload data or schema version.</p>",
+      "refs": {
+        "Descriptors$agui": "<p> The AG-UI descriptor, populated when the record exposes an AG-UI protocol endpoint.</p>"
+      }
+    },
     "AgentSkillsAdditionalData": {
       "base": "<p> Additional data for an agent skills definition descriptor.</p>",
       "refs": {
@@ -114,7 +120,9 @@
       "base": "<p> The source location from which a descriptor's content was retrieved.</p>",
       "refs": {
         "A2aAgentCardDescriptor$source": "<p> The source location from which the A2A (Agent-to-Agent) agent card descriptor content was retrieved.</p>",
+        "AgUiDescriptor$source": "<p> The source location of the AG-UI protocol endpoint.</p>",
         "AgentSkillsMdDescriptor$source": "<p> The source location from which the agent skills markdown content was retrieved.</p>",
+        "HttpDescriptor$source": "<p> The source location of the HTTP endpoint.</p>",
         "McpServerDescriptor$source": "<p> The source location from which the MCP (Model Context Protocol) server descriptor content was retrieved.</p>"
       }
     },
@@ -164,6 +172,12 @@
       "base": "<p>A single filter value. Constrained by length only; the accepted set of values is filter-specific and validated server-side so enum-style values such as READY or AWS_IAM are accepted.</p>",
       "refs": {
         "DiscoverableFilterValues$member": null
+      }
+    },
+    "HttpDescriptor": {
+      "base": "<p> A descriptor for a registry record that exposes an HTTP endpoint. This descriptor is source-only: it identifies where the endpoint is located and carries no descriptor payload data or schema version.</p>",
+      "refs": {
+        "Descriptors$http": "<p> The HTTP descriptor, populated when the record exposes an HTTP endpoint.</p>"
       }
     },
     "InternalServerException": {
