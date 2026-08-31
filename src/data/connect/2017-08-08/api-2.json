@@ -2930,6 +2930,22 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "GetCrossRegionRouting":{
+      "name":"GetCrossRegionRouting",
+      "http":{
+        "method":"GET",
+        "requestUri":"/cross-region-routing/{InstanceId}"
+      },
+      "input":{"shape":"GetCrossRegionRoutingRequest"},
+      "output":{"shape":"GetCrossRegionRoutingResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "GetCurrentMetricData":{
       "name":"GetCurrentMetricData",
       "http":{
@@ -5681,6 +5697,23 @@
         {"shape":"LimitExceededException"}
       ]
     },
+    "UpdateCrossRegionRouting":{
+      "name":"UpdateCrossRegionRouting",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/cross-region-routing/{InstanceId}"
+      },
+      "input":{"shape":"UpdateCrossRegionRoutingRequest"},
+      "output":{"shape":"UpdateCrossRegionRoutingResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "UpdateDataTableAttribute":{
       "name":"UpdateDataTableAttribute",
       "http":{
@@ -6557,6 +6590,24 @@
     }
   },
   "shapes":{
+    "ACGRInstanceArn":{
+      "type":"string",
+      "pattern":"^arn:([a-zA-Z0-9-]+):connect:[a-z]+-[a-z-]+-[0-9]+:[0-9]+:instance/[a-zA-Z0-9_-]+$"
+    },
+    "ACGRInstanceIdOrArn":{
+      "type":"string",
+      "max":250,
+      "min":1,
+      "pattern":"^(arn:([a-zA-Z0-9-]+):connect:[a-z]+-[a-z-]+-[0-9]+:[0-9]+:instance/)?[a-zA-Z0-9_-]+$"
+    },
+    "ACGRTrafficDistributionGroupArn":{
+      "type":"string",
+      "pattern":"^arn:([a-zA-Z0-9-]+):connect:[a-z]+-[a-z-]+-[0-9]+:[0-9]+:traffic-distribution-group/[a-zA-Z0-9_-]+$"
+    },
+    "ACGRTrafficDistributionGroupId":{
+      "type":"string",
+      "pattern":"^[a-zA-Z0-9_-]+$"
+    },
     "ARN":{"type":"string"},
     "AWSAccountId":{"type":"string"},
     "AccessDeniedException":{
@@ -6762,7 +6813,8 @@
         "AfterContactWorkEndTimestamp":{"shape":"timestamp"},
         "AgentInitiatedHoldDuration":{"shape":"Duration"},
         "StateTransitions":{"shape":"StateTransitions"},
-        "VoiceEnhancementMode":{"shape":"VoiceEnhancementMode"}
+        "VoiceEnhancementMode":{"shape":"VoiceEnhancementMode"},
+        "ActiveRegion":{"shape":"ActiveRegion"}
       }
     },
     "AgentLastName":{
@@ -10574,7 +10626,7 @@
       "members":{
         "Name":{"shape":"Name128"},
         "Description":{"shape":"Description250"},
-        "InstanceId":{"shape":"InstanceIdOrArn"},
+        "InstanceId":{"shape":"ACGRInstanceIdOrArn"},
         "ClientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -10585,8 +10637,8 @@
     "CreateTrafficDistributionGroupResponse":{
       "type":"structure",
       "members":{
-        "Id":{"shape":"TrafficDistributionGroupId"},
-        "Arn":{"shape":"TrafficDistributionGroupArn"}
+        "Id":{"shape":"ACGRTrafficDistributionGroupId"},
+        "Arn":{"shape":"ACGRTrafficDistributionGroupArn"}
       }
     },
     "CreateUseCaseRequest":{
@@ -15894,6 +15946,23 @@
         "Arn":{"shape":"ARN"}
       }
     },
+    "GetCrossRegionRoutingRequest":{
+      "type":"structure",
+      "required":["InstanceId"],
+      "members":{
+        "InstanceId":{
+          "shape":"ACGRInstanceIdOrArn",
+          "location":"uri",
+          "locationName":"InstanceId"
+        }
+      }
+    },
+    "GetCrossRegionRoutingResponse":{
+      "type":"structure",
+      "members":{
+        "IsolatedRegions":{"shape":"IsolatedRegionsList"}
+      }
+    },
     "GetCurrentMetricDataRequest":{
       "type":"structure",
       "required":[
@@ -16278,8 +16347,8 @@
       "type":"structure",
       "members":{
         "TelephonyConfig":{"shape":"TelephonyConfig"},
-        "Id":{"shape":"TrafficDistributionGroupId"},
-        "Arn":{"shape":"TrafficDistributionGroupArn"},
+        "Id":{"shape":"ACGRTrafficDistributionGroupId"},
+        "Arn":{"shape":"ACGRTrafficDistributionGroupArn"},
         "SignInConfig":{"shape":"SignInConfig"},
         "AgentConfig":{"shape":"AgentConfig"}
       }
@@ -16872,10 +16941,6 @@
         "Tags":{"shape":"TagMap"}
       }
     },
-    "InstanceArn":{
-      "type":"string",
-      "pattern":"arn:(aws|aws-us-gov):connect:[a-z]{2}-[a-z]+-[0-9-]{1}:[0-9]{1,20}:instance/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
-    },
     "InstanceAttributeType":{
       "type":"string",
       "enum":[
@@ -17144,6 +17209,10 @@
       "member":{"shape":"IpCidr"}
     },
     "IsReadOnly":{"type":"boolean"},
+    "IsolatedRegionsList":{
+      "type":"list",
+      "member":{"shape":"AwsRegion"}
+    },
     "IvrRecordingTrack":{
       "type":"string",
       "enum":["ALL"]
@@ -19297,7 +19366,7 @@
           "locationName":"TrafficDistributionGroupId"
         },
         "MaxResults":{
-          "shape":"MaxResult10",
+          "shape":"MaxResult1000",
           "box":true,
           "location":"querystring",
           "locationName":"maxResults"
@@ -19330,7 +19399,7 @@
           "locationName":"nextToken"
         },
         "InstanceId":{
-          "shape":"InstanceIdOrArn",
+          "shape":"ACGRInstanceIdOrArn",
           "location":"querystring",
           "locationName":"instanceId"
         }
@@ -22652,7 +22721,7 @@
       ],
       "members":{
         "InstanceId":{
-          "shape":"InstanceIdOrArn",
+          "shape":"ACGRInstanceIdOrArn",
           "location":"uri",
           "locationName":"InstanceId"
         },
@@ -25892,19 +25961,15 @@
     "TrafficDistributionGroup":{
       "type":"structure",
       "members":{
-        "Id":{"shape":"TrafficDistributionGroupId"},
-        "Arn":{"shape":"TrafficDistributionGroupArn"},
+        "Id":{"shape":"ACGRTrafficDistributionGroupId"},
+        "Arn":{"shape":"ACGRTrafficDistributionGroupArn"},
         "Name":{"shape":"Name128"},
         "Description":{"shape":"Description250"},
-        "InstanceArn":{"shape":"InstanceArn"},
+        "InstanceArn":{"shape":"ACGRInstanceArn"},
         "Status":{"shape":"TrafficDistributionGroupStatus"},
         "Tags":{"shape":"TagMap"},
         "IsDefault":{"shape":"Boolean"}
       }
-    },
-    "TrafficDistributionGroupArn":{
-      "type":"string",
-      "pattern":"^arn:(aws|aws-us-gov):connect:[a-z]{2}-[a-z]+-[0-9]{1}:[0-9]{1,20}:traffic-distribution-group/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
     },
     "TrafficDistributionGroupId":{
       "type":"string",
@@ -25928,10 +25993,10 @@
     "TrafficDistributionGroupSummary":{
       "type":"structure",
       "members":{
-        "Id":{"shape":"TrafficDistributionGroupId"},
-        "Arn":{"shape":"TrafficDistributionGroupArn"},
+        "Id":{"shape":"ACGRTrafficDistributionGroupId"},
+        "Arn":{"shape":"ACGRTrafficDistributionGroupArn"},
         "Name":{"shape":"Name128"},
-        "InstanceArn":{"shape":"InstanceArn"},
+        "InstanceArn":{"shape":"ACGRInstanceArn"},
         "Status":{"shape":"TrafficDistributionGroupStatus"},
         "IsDefault":{"shape":"Boolean"}
       }
@@ -26502,6 +26567,25 @@
       }
     },
     "UpdateContactTaskTemplateResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "UpdateCrossRegionRoutingRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "IsolatedAll"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"ACGRInstanceIdOrArn",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "IsolatedAll":{"shape":"Boolean"}
+      }
+    },
+    "UpdateCrossRegionRoutingResponse":{
       "type":"structure",
       "members":{}
     },

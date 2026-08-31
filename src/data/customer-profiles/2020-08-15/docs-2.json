@@ -3,6 +3,7 @@
   "service": "<fullname>Connect Customer Customer Profiles</fullname> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_Operations_Amazon_Connect_Customer_Profiles.html\">Customer Profiles actions</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_Types_Amazon_Connect_Customer_Profiles.html\">Customer Profiles data types</a> </p> </li> </ul> <p>Connect Customer Customer Profiles is a unified customer profile for your contact center that has pre-built connectors powered by AppFlow that make it easy to combine customer information from third party applications, such as Salesforce (CRM), ServiceNow (ITSM), and your enterprise resource planning (ERP), with contact history from your Connect Customer contact center. </p> <p>For more information about the Connect Customer Customer Profiles feature, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/customer-profiles.html\">Use Customer Profiles</a> in the <i>Connect Customer Administrator's Guide</i>. </p>",
   "operations": {
     "AddProfileKey": "<p>Associates a new key value with a specific profile, such as a Contact Record ContactId.</p> <p>A profile object can have a single unique key and any number of additional keys that can be used to identify the profile that it belongs to.</p>",
+    "AssociateStreamForSegments": "<p>Associates an Amazon Kinesis data stream to receive segment membership events for a given domain. This is a domain-level configuration that applies to all segment subscriptions within the domain. A domain can have only one associated stream at a time. </p>",
     "BatchGetCalculatedAttributeForProfile": "<p>Fetch the possible attribute values given the attribute name.</p>",
     "BatchGetProfile": "<p>Get a batch of profiles.</p>",
     "BatchPutProfileObject": "<p>Adds multiple profile objects to a domain of a given ObjectType in a single API call.</p> <p>When adding a specific profile object, like a Contact Record, an inferred profile can get created if it is not mapped to an existing profile. The resulting profile will only have a phone number populated in the standard ProfileObject. Any additional Contact Records with the same phone number will be mapped to the same inferred profile.</p> <p>When a ProfileObject is created and if a ProfileObjectType already exists for the ProfileObject, it will provide data to a standard profile depending on the ProfileObjectType definition.</p> <p>BatchPutProfileObject needs an ObjectType, which can be created using PutProfileObjectType.</p>",
@@ -35,8 +36,10 @@
     "DeleteRecommenderFilter": "<p>Deletes a recommender filter from a domain.</p>",
     "DeleteRecommenderSchema": "<p>Deletes a recommender schema from a domain.</p>",
     "DeleteSegmentDefinition": "<p>Deletes a segment definition from the domain.</p>",
+    "DeleteSegmentSubscription": "<p>Deletes a segment subscription for membership events. All active event notifications for this segment are stopped. </p>",
     "DeleteWorkflow": "<p>Deletes the specified workflow and all its corresponding resources. This is an async process.</p>",
     "DetectProfileObjectType": "<p>The process of detecting profile object type mapping by using given objects.</p>",
+    "DisassociateStreamForSegments": "<p>Disassociates the Amazon Kinesis data stream configured for segment membership events. All active segment subscriptions delivering events to this stream are eventually stopped. </p>",
     "GetAutoMergingPreview": "<p>Tests the auto-merging settings of your Identity Resolution Job without merging your data. It randomly selects a sample of matching groups from the existing matching results, and applies the automerging settings that you provided. You can then view the number of profiles in the sample, the number of matches, and the number of profiles identified to be merged. This enables you to evaluate the accuracy of the attributes in your matching list. </p> <p>You can't view which profiles are matched and would be merged.</p> <important> <p>We strongly recommend you use this API to do a dry run of the automerging process before running the Identity Resolution Job. Include <b>at least</b> two matching attributes. If your matching list includes too few attributes (such as only <code>FirstName</code> or only <code>LastName</code>), there may be a large number of matches. This increases the chances of erroneous merges.</p> </important>",
     "GetCalculatedAttributeDefinition": "<p>Provides more information on a calculated attribute definition for Customer Profiles.</p>",
     "GetCalculatedAttributeForProfile": "<p>Retrieve a calculated attribute for a customer profile.</p>",
@@ -60,7 +63,9 @@
     "GetSegmentEstimate": "<p>Gets the result of a segment estimate query.</p>",
     "GetSegmentMembership": "<p>Determines if the given profiles are within a segment.</p>",
     "GetSegmentSnapshot": "<p>Retrieve the latest status of a segment snapshot.</p>",
+    "GetSegmentSubscription": "<p>Returns the current subscription configuration, execution schedule, and status for segment membership events. </p>",
     "GetSimilarProfiles": "<p>Returns a set of profiles that belong to the same matching group using the <code>matchId</code> or <code>profileId</code>. You can also specify the type of matching that you want for finding similar profiles using either <code>RULE_BASED_MATCHING</code> or <code>ML_BASED_MATCHING</code>.</p>",
+    "GetStreamForSegments": "<p>Returns information about the segment membership event stream configured for a specific domain, including the stream state and associated segments. </p>",
     "GetUploadJob": "<p>This API retrieves the details of a specific upload job. </p>",
     "GetUploadJobPath": "<p>This API retrieves the pre-signed URL and client token for uploading the file associated with the upload job. </p>",
     "GetWorkflow": "<p>Get details of specified workflow.</p>",
@@ -88,6 +93,7 @@
     "ListRecommenders": "<p>Returns a list of recommenders in the specified domain.</p>",
     "ListRuleBasedMatches": "<p>Returns a set of <code>MatchIds</code> that belong to the given domain.</p>",
     "ListSegmentDefinitions": "<p>Lists all segment definitions under a domain.</p>",
+    "ListSegmentSubscriptionEvents": "<p>Returns the most recent membership events for a segment. Each event represents a profile that entered or exited the segment. </p> <p>This operation is paginated. </p>",
     "ListTagsForResource": "<p>Displays the tags associated with an Amazon Connect Customer Profiles resource. In Connect Customer Profiles, domains, profile object types, and integrations can be tagged.</p>",
     "ListUploadJobs": "<p>This API retrieves a list of upload jobs for the specified domain. </p>",
     "ListWorkflows": "<p>Query to list all workflows.</p>",
@@ -96,6 +102,7 @@
     "PutIntegration": "<p>Adds an integration between the service and a third-party service, which includes Amazon AppFlow and Amazon Connect.</p> <p>An integration can belong to only one domain.</p> <p>To add or remove tags on an existing Integration, see <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_TagResource.html\"> TagResource </a>/<a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_UntagResource.html\"> UntagResource</a>.</p>",
     "PutProfileObject": "<p>Adds additional objects to customer profiles of a given ObjectType.</p> <p>When adding a specific profile object, like a Contact Record, an inferred profile can get created if it is not mapped to an existing profile. The resulting profile will only have a phone number populated in the standard ProfileObject. Any additional Contact Records with the same phone number will be mapped to the same inferred profile.</p> <p>When a ProfileObject is created and if a ProfileObjectType already exists for the ProfileObject, it will provide data to a standard profile depending on the ProfileObjectType definition.</p> <p>PutProfileObject needs an ObjectType, which can be created using PutProfileObjectType.</p>",
     "PutProfileObjectType": "<p>Defines a ProfileObjectType.</p> <p>To add or remove tags on an existing ObjectType, see <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_TagResource.html\"> TagResource</a>/<a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_UntagResource.html\">UntagResource</a>.</p>",
+    "PutSegmentSubscription": "<p>Creates or updates a segment subscription for membership events. When a subscription is created, an initial snapshot is taken and the system begins monitoring for membership changes. </p> <p>You can optionally set a schedule configuration interval to control how often membership snapshots are run. The interval can be from 1 to 24 hours. If not set, the interval defaults to 24 hours. Scheduled snapshots run on a best-effort basis. If a scheduled snapshot takes longer than the configured interval, the next scheduled run does not start until the in-progress snapshot completes, so a run might be delayed or skipped and is not guaranteed to occur at exactly the requested time. </p> <p>For Classic segments, membership events are generated from these scheduled snapshots and also in near real-time as profile attribute changes occur. For SQL segments, membership events are generated only from the scheduled snapshots. </p>",
     "SearchProfiles": "<p>Searches for profiles within a specific domain using one or more predefined search keys (e.g., _fullName, _phone, _email, _account, etc.) and/or custom-defined search keys. A search key is a data type pair that consists of a <code>KeyName</code> and <code>Values</code> list.</p> <p>This operation supports searching for profiles with a minimum of 1 key-value(s) pair and up to 5 key-value(s) pairs using either <code>AND</code> or <code>OR</code> logic.</p>",
     "StartRecommender": "<p>Starts a recommender that was previously stopped. Starting a recommender resumes its ability to generate recommendations.</p>",
     "StartUploadJob": "<p>This API starts the processing of an upload job to ingest profile data. </p>",
@@ -118,6 +125,8 @@
         "AddProfileKeyRequest$DomainName": "<p>The unique name of the domain.</p>",
         "AddProfileKeyResponse$KeyName": "<p>A searchable identifier of a customer profile.</p>",
         "AdditionalSearchKey$KeyName": "<p>A searchable identifier of a customer profile.</p>",
+        "AssociateStreamForSegmentsRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "AssociatedSegment$SegmentName": "<p>The unique name of the segment definition. </p>",
         "BatchGetCalculatedAttributeForProfileRequest$DomainName": "<p>The unique name of the domain.</p>",
         "BatchGetProfileRequest$DomainName": "<p>The unique name of the domain.</p>",
         "BatchPutProfileObjectErrorItem$Id": "<p>The unique identifier of the item in the batch request that failed.</p>",
@@ -178,8 +187,11 @@
         "DeleteRecommenderSchemaRequest$RecommenderSchemaName": "<p>The name of the recommender schema to delete.</p>",
         "DeleteSegmentDefinitionRequest$DomainName": "<p>The unique name of the domain.</p>",
         "DeleteSegmentDefinitionRequest$SegmentDefinitionName": "<p>The unique name of the segment definition.</p>",
+        "DeleteSegmentSubscriptionRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "DeleteSegmentSubscriptionRequest$SegmentDefinitionName": "<p>The unique name of the segment definition. </p>",
         "DeleteWorkflowRequest$DomainName": "<p>The unique name of the domain.</p>",
         "DetectProfileObjectTypeRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "DisassociateStreamForSegmentsRequest$DomainName": "<p>The unique name of the domain.</p>",
         "EventStreamSummary$DomainName": "<p>The unique name of the domain.</p>",
         "EventStreamSummary$EventStreamName": "<p>The name of the event stream.</p>",
         "EventTriggerNames$member": null,
@@ -237,7 +249,11 @@
         "GetSegmentMembershipResponse$SegmentDefinitionName": "<p>The unique name of the segment definition.</p>",
         "GetSegmentSnapshotRequest$DomainName": "<p>The unique identifier of the domain.</p>",
         "GetSegmentSnapshotRequest$SegmentDefinitionName": "<p>The unique name of the segment definition.</p>",
+        "GetSegmentSubscriptionRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "GetSegmentSubscriptionRequest$SegmentDefinitionName": "<p>The unique name of the segment definition. </p>",
         "GetSimilarProfilesRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "GetStreamForSegmentsRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "GetStreamForSegmentsResponse$DomainName": "<p>The unique name of the domain.</p>",
         "GetUploadJobPathRequest$DomainName": "<p>The unique name of the domain containing the upload job. </p>",
         "GetUploadJobPathRequest$JobId": "<p>The unique identifier of the upload job to retrieve the upload path for. This is generated from the CreateUploadJob API. </p>",
         "GetUploadJobRequest$DomainName": "<p>The unique name of the domain containing the upload job. </p>",
@@ -270,6 +286,8 @@
         "ListRecommendersRequest$DomainName": "<p>The unique name of the domain.</p>",
         "ListRuleBasedMatchesRequest$DomainName": "<p>The unique name of the domain.</p>",
         "ListSegmentDefinitionsRequest$DomainName": "<p>The unique identifier of the domain.</p>",
+        "ListSegmentSubscriptionEventsRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "ListSegmentSubscriptionEventsRequest$SegmentDefinitionName": "<p>The unique name of the segment definition. </p>",
         "ListUploadJobsRequest$DomainName": "<p>The unique name of the domain to list upload jobs for. </p>",
         "ListWorkflowsRequest$DomainName": "<p>The unique name of the domain.</p>",
         "MergeProfilesRequest$DomainName": "<p>The unique name of the domain.</p>",
@@ -283,6 +301,8 @@
         "PutProfileObjectTypeRequest$DomainName": "<p>The unique name of the domain.</p>",
         "PutProfileObjectTypeRequest$TemplateId": "<p>A unique identifier for the object template. For some attributes in the request, the service will use the default value from the object template when TemplateId is present. If these attributes are present in the request, the service may return a <code>BadRequestException</code>. These attributes include: AllowProfileCreation, SourceLastUpdatedTimestampFormat, Fields, and Keys. For example, if AllowProfileCreation is set to true when TemplateId is set, the service may return a <code>BadRequestException</code>.</p>",
         "PutProfileObjectTypeResponse$TemplateId": "<p>A unique identifier for the object template.</p>",
+        "PutSegmentSubscriptionRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "PutSegmentSubscriptionRequest$SegmentDefinitionName": "<p>The unique name of the segment definition. </p>",
         "RecommenderFilter$Name": "<p>The name of the recommender filter to apply.</p>",
         "RecommenderFilterSummary$RecommenderSchemaName": "<p>The name of the recommender schema associated with this recommender filter.</p>",
         "RecommenderPromotionalFilter$Name": "<p>The name of the recommender filter to use for the promotion.</p>",
@@ -409,6 +429,26 @@
         "CreateRecommenderFilterResponse$RecommenderFilterArn": "<p>The Amazon Resource Name (ARN) of the recommender filter.</p>",
         "CreateRecommenderResponse$RecommenderArn": "<p>The ARN of the recommender</p>",
         "CreateRecommenderSchemaResponse$RecommenderSchemaArn": "<p>The Amazon Resource Name (ARN) of the recommender schema.</p>"
+      }
+    },
+    "AssociateStreamForSegmentsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "AssociateStreamForSegmentsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "AssociatedSegment": {
+      "base": "<p>Represents a segment associated with a membership event stream. </p>",
+      "refs": {
+        "AssociatedSegmentsList$member": null
+      }
+    },
+    "AssociatedSegmentsList": {
+      "base": null,
+      "refs": {
+        "GetStreamForSegmentsResponse$AssociatedSegments": "<p>A list of segments currently associated with the stream and their subscription status. </p>"
       }
     },
     "AttributeDetails": {
@@ -930,7 +970,7 @@
     "DateValues": {
       "base": null,
       "refs": {
-        "DateDimension$Values": "<p>The values to apply the DimensionType on.</p>"
+        "DateDimension$Values": "<p>The values to apply the DimensionType on. To reference a calculated attribute or profile attribute as a dynamic value, use handlebar notation: <code>{{_profile.ProfileAttributeName}}</code> or <code>{{_calculated_attribute.CalculatedAttributeName}}</code>.</p>"
       }
     },
     "DatetimeTypeFieldName": {
@@ -1059,6 +1099,14 @@
       "base": null,
       "refs": {}
     },
+    "DeleteSegmentSubscriptionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteSegmentSubscriptionResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteWorkflowRequest": {
       "base": null,
       "refs": {}
@@ -1067,10 +1115,24 @@
       "base": null,
       "refs": {}
     },
+    "DestinationArnString": {
+      "base": null,
+      "refs": {
+        "AssociateStreamForSegmentsRequest$DestinationArn": "<p>The Amazon Resource Name (ARN) of the Amazon Kinesis data stream to deliver segment membership events to. For example, <code>arn:aws:kinesis:region:account-id:stream/stream-name</code>. </p>",
+        "GetStreamForSegmentsResponse$DestinationArn": "<p>The Amazon Resource Name (ARN) of the Amazon Kinesis data stream receiving segment membership events. </p>"
+      }
+    },
     "DestinationField": {
       "base": null,
       "refs": {
         "Task$DestinationField": "<p>A field in a destination connector, or a field value against which Amazon AppFlow validates a source field.</p>"
+      }
+    },
+    "DestinationRoleArn": {
+      "base": null,
+      "refs": {
+        "AssociateStreamForSegmentsRequest$DestinationRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that allows Customer Profiles service principal to assume the role for conducting AWS Key Management Service (KMS) and Amazon Kinesis operations. The role must grant the following Amazon Kinesis permissions to deliver segment membership events to the stream: </p> <ul> <li> <p> <code>kinesis:PutRecord</code> </p> </li> <li> <p> <code>kinesis:PutRecords</code> </p> </li> <li> <p> <code>kinesis:DescribeStream</code> </p> </li> </ul>",
+        "GetStreamForSegmentsResponse$DestinationRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role used for Amazon Kinesis and AWS Key Management Service (KMS) operations. </p>"
       }
     },
     "DestinationSummary": {
@@ -1110,6 +1172,14 @@
       "refs": {
         "Group$Dimensions": "<p>Defines the attributes to segment on.</p>"
       }
+    },
+    "DisassociateStreamForSegmentsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DisassociateStreamForSegmentsResponse": {
+      "base": null,
+      "refs": {}
     },
     "DiversityCapType": {
       "base": null,
@@ -1317,6 +1387,18 @@
         "ListEventStreamsResponse$Items": "<p>Contains summary information about an EventStream.</p>"
       }
     },
+    "EventSubscriptionSegmentStatus": {
+      "base": null,
+      "refs": {
+        "AssociatedSegment$Status": "<p>The subscription status of the segment. The following are valid values: </p> <ul> <li> <p> <b>STARTING</b>: The segment is being prepared to publish membership events. </p> </li> <li> <p> <b>RUNNING</b>: The segment is actively publishing membership events to the stream. </p> </li> <li> <p> <b>STOPPED</b>: The segment has stopped publishing membership events. </p> </li> <li> <p> <b>FAILED</b>: The segment failed to publish membership events. </p> </li> </ul>"
+      }
+    },
+    "EventSubscriptionState": {
+      "base": null,
+      "refs": {
+        "GetStreamForSegmentsResponse$State": "<p>The operational state of the destination stream. The following are valid values: </p> <ul> <li> <p> <b>RUNNING</b>: The stream is associated and healthy. Segment membership events are being published. </p> </li> <li> <p> <b>UNHEALTHY</b>: The stream is associated but events cannot currently be published. See <code>FailureReason</code> for details. </p> </li> <li> <p> <b>STOPPED</b>: The stream is no longer publishing segment membership events. </p> </li> </ul>"
+      }
+    },
     "EventTriggerCondition": {
       "base": "<p>Specifies the circumstances under which the event should trigger the destination.</p>",
       "refs": {
@@ -1419,7 +1501,7 @@
     "ExtraLengthValues": {
       "base": null,
       "refs": {
-        "ExtraLengthValueProfileDimension$Values": "<p>The values to apply the DimensionType on.</p>"
+        "ExtraLengthValueProfileDimension$Values": "<p>The values to apply the DimensionType on. To reference a calculated attribute or profile attribute as a dynamic value, use handlebar notation: <code>{{_profile.ProfileAttributeName}}</code> or <code>{{_calculated_attribute.CalculatedAttributeName}}</code>.</p>"
       }
     },
     "Failures": {
@@ -1751,11 +1833,27 @@
       "base": null,
       "refs": {}
     },
+    "GetSegmentSubscriptionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetSegmentSubscriptionResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetSimilarProfilesRequest": {
       "base": null,
       "refs": {}
     },
     "GetSimilarProfilesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetStreamForSegmentsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetStreamForSegmentsResponse": {
       "base": null,
       "refs": {}
     },
@@ -1878,6 +1976,12 @@
     "InternalServerException": {
       "base": "<p>An internal service error occurred.</p>",
       "refs": {}
+    },
+    "IntervalValue": {
+      "base": null,
+      "refs": {
+        "ScheduleConfiguration$Interval": "<p>The interval between scheduled executions. </p>"
+      }
     },
     "JobSchedule": {
       "base": "<p>The day and time when do you want to start the Identity Resolution Job every week.</p>",
@@ -2195,6 +2299,14 @@
       "refs": {}
     },
     "ListSegmentDefinitionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSegmentSubscriptionEventsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSegmentSubscriptionEventsResponse": {
       "base": null,
       "refs": {}
     },
@@ -2678,6 +2790,14 @@
       "base": null,
       "refs": {}
     },
+    "PutSegmentSubscriptionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "PutSegmentSubscriptionResponse": {
+      "base": null,
+      "refs": {}
+    },
     "QueryResult": {
       "base": null,
       "refs": {
@@ -3023,6 +3143,20 @@
         "SourceConnectorProperties$Salesforce": "<p>The properties that are applied when Salesforce is being used as a source.</p>"
       }
     },
+    "ScheduleConfiguration": {
+      "base": "<p>Configuration for scheduled segment membership event notifications. </p>",
+      "refs": {
+        "GetSegmentSubscriptionResponse$ScheduleConfiguration": "<p>The schedule configuration for periodic membership event notifications. </p>",
+        "PutSegmentSubscriptionRequest$ScheduleConfiguration": "<p>The optional schedule configuration that controls how often membership snapshots are run. If not provided, the subscription defaults to a 24-hour interval. </p>",
+        "PutSegmentSubscriptionResponse$ScheduleConfiguration": "<p>The schedule configuration for the subscription, if configured. </p>"
+      }
+    },
+    "ScheduleConfigurationUnit": {
+      "base": null,
+      "refs": {
+        "ScheduleConfiguration$Unit": "<p>The unit for the interval. The following are valid values: </p> <ul> <li> <p> <b>HOURLY</b>: The interval is measured in hours. </p> </li> </ul>"
+      }
+    },
     "ScheduleExpression": {
       "base": null,
       "refs": {
@@ -3033,6 +3167,12 @@
       "base": null,
       "refs": {
         "ScheduledTriggerProperties$ScheduleOffset": "<p>Specifies the optional offset that is added to the time interval for a schedule-triggered flow.</p>"
+      }
+    },
+    "ScheduledExecutions": {
+      "base": "<p>Information about scheduled execution timestamps. </p>",
+      "refs": {
+        "GetSegmentSubscriptionResponse$ScheduledExecutions": "<p>Information about scheduled execution timestamps. </p>"
       }
     },
     "ScheduledTriggerProperties": {
@@ -3121,6 +3261,13 @@
       "base": null,
       "refs": {
         "SortAttribute$Order": "<p>The sort order for the attribute (ascending or descending).</p>"
+      }
+    },
+    "SegmentSubscriptionStatus": {
+      "base": null,
+      "refs": {
+        "GetSegmentSubscriptionResponse$Status": "<p>The current lifecycle status of the subscription. The following are valid values: </p> <ul> <li> <p> <b>STARTING</b>: Initial snapshot is in progress. </p> </li> <li> <p> <b>RUNNING</b>: Notifications are active and running. </p> </li> <li> <p> <b>STOPPED</b>: Notifications have been stopped. </p> </li> <li> <p> <b>FAILED</b>: Notifications failed (for example, the Amazon Kinesis data stream became inaccessible). </p> </li> </ul>",
+        "PutSegmentSubscriptionResponse$Status": "<p>The current lifecycle status of the subscription. The following are valid values: </p> <ul> <li> <p> <b>STARTING</b>: Initial snapshot is in progress. </p> </li> <li> <p> <b>RUNNING</b>: Notifications are active and running. </p> </li> <li> <p> <b>STOPPED</b>: Notifications have been stopped. </p> </li> <li> <p> <b>FAILED</b>: Notifications failed (for example, the Amazon Kinesis data stream became inaccessible). </p> </li> </ul>"
       }
     },
     "SegmentType": {
@@ -3300,6 +3447,30 @@
       "refs": {
         "ExtraLengthValueProfileDimension$DimensionType": "<p>The action to segment with.</p>",
         "ProfileDimension$DimensionType": "<p>The action to segment on.</p>"
+      }
+    },
+    "SubscriptionEvent": {
+      "base": null,
+      "refs": {
+        "SubscriptionEventItem$Event": "<p>Whether the profile joined or left the segment. The following are valid values: </p> <ul> <li> <p> <b>JOINED</b>: The profile joined the segment. </p> </li> <li> <p> <b>LEFT</b>: The profile left the segment. </p> </li> </ul>"
+      }
+    },
+    "SubscriptionEventItem": {
+      "base": "<p>Represents a single segment membership event. </p>",
+      "refs": {
+        "SubscriptionEventsList$member": null
+      }
+    },
+    "SubscriptionEventType": {
+      "base": null,
+      "refs": {
+        "SubscriptionEventItem$EventType": "<p>The type of event that triggered the membership change. The following are valid values: </p> <ul> <li> <p> <b>LIVE</b>: Real-time event triggered by a profile or calculated attribute change (Classic segments only). </p> </li> <li> <p> <b>SCHEDULE</b>: Event generated during a scheduled execution. </p> </li> </ul>"
+      }
+    },
+    "SubscriptionEventsList": {
+      "base": null,
+      "refs": {
+        "ListSegmentSubscriptionEventsResponse$Events": "<p>A list of segment membership events. </p>"
       }
     },
     "TagArn": {
@@ -3607,9 +3778,9 @@
     "Values": {
       "base": null,
       "refs": {
-        "AttributeDimension$Values": "<p>The values to apply the DimensionType on.</p>",
-        "CalculatedAttributeDimension$Values": "<p>The values to apply the DimensionType with.</p>",
-        "ProfileDimension$Values": "<p>The values to apply the DimensionType on.</p>"
+        "AttributeDimension$Values": "<p>The values to apply the DimensionType on. To reference a calculated attribute or profile attribute as a dynamic value, use handlebar notation: <code>{{_profile.ProfileAttributeName}}</code> or <code>{{_calculated_attribute.CalculatedAttributeName}}</code>.</p>",
+        "CalculatedAttributeDimension$Values": "<p>The values to apply the DimensionType with. To reference a calculated attribute or profile attribute as a dynamic value, use handlebar notation: <code>{{_profile.ProfileAttributeName}}</code> or <code>{{_calculated_attribute.CalculatedAttributeName}}</code>.</p>",
+        "ProfileDimension$Values": "<p>The values to apply the DimensionType on. To reference a calculated attribute or profile attribute as a dynamic value, use handlebar notation: <code>{{_profile.ProfileAttributeName}}</code> or <code>{{_calculated_attribute.CalculatedAttributeName}}</code>.</p>"
       }
     },
     "WorkflowAttributes": {
@@ -3819,6 +3990,7 @@
         "ListRecommenderFiltersRequest$MaxResults": "<p>The maximum number of recommender filters to return in the response. The default value is 100.</p>",
         "ListRecommenderSchemasRequest$MaxResults": "<p>The maximum number of recommender schemas to return in the response. The default value is 100.</p>",
         "ListRuleBasedMatchesRequest$MaxResults": "<p>The maximum number of <code>MatchIds</code> returned per page.</p>",
+        "ListSegmentSubscriptionEventsRequest$MaxResults": "<p>The maximum number of events to return per page. </p>",
         "ListWorkflowsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "SearchProfilesRequest$MaxResults": "<p>The maximum number of objects returned per page.</p> <p>The default is 20 if this parameter is not included in the request.</p>"
       }
@@ -4126,13 +4298,17 @@
     "string1To1000": {
       "base": null,
       "refs": {
+        "AssociatedSegment$Message": "<p>An optional message providing context, such as a failure reason. </p>",
         "BatchGetCalculatedAttributeForProfileError$Message": "<p>Message describing why a specific profile and calculated attribute failed.</p>",
         "BatchGetProfileError$Message": "<p>Message describing why a specific profile failed.</p>",
         "DeleteSegmentDefinitionResponse$Message": "<p>A message that indicates the delete request is done.</p>",
+        "DeleteSegmentSubscriptionResponse$Message": "<p>A confirmation message indicating the subscription was deleted successfully. </p>",
+        "DisassociateStreamForSegmentsResponse$Message": "<p>A confirmation message indicating the stream was disassociated successfully. </p>",
         "EventStreamDestinationDetails$Message": "<p>The human-readable string that corresponds to the error or success while enabling the streaming destination.</p>",
         "ExtraLengthValues$member": null,
         "GetObjectTypeAttributeStatisticsRequest$AttributeName": "<p>The attribute name.</p>",
         "GetSegmentSnapshotResponse$StatusMessage": "<p>The status message of the asynchronous job for exporting the segment snapshot.</p>",
+        "GetSegmentSubscriptionResponse$Message": "<p>A status message providing additional context, such as a failure reason. </p>",
         "ListObjectTypeAttributeValuesRequest$AttributeName": "<p>The attribute name.</p>"
       }
     },
@@ -4206,6 +4382,7 @@
         "GetSimilarProfilesRequest$SearchKey": "<p>The string indicating the search key to be used.</p>",
         "GetSimilarProfilesRequest$SearchValue": "<p>The string based on <code>SearchKey</code> to be searched for similar profiles.</p>",
         "GetSimilarProfilesResponse$MatchId": "<p>The string <code>matchId</code> that the similar profiles belong to.</p>",
+        "GetStreamForSegmentsResponse$FailureReason": "<p>The reason why the stream is in an unhealthy state, if applicable. </p>",
         "GetUploadJobResponse$DisplayName": "<p>The unique name of the upload job. Could be a file name to identify the upload job. </p>",
         "GetWorkflowResponse$ErrorDescription": "<p>Workflow error messages during execution (if any).</p>",
         "ListAccountIntegrationsRequest$Uri": "<p>The URI of the S3 bucket or any other type of data source.</p>",
@@ -4343,6 +4520,10 @@
         "GetRecommenderSchemaResponse$CreatedAt": "<p>The timestamp of when the recommender schema was created.</p>",
         "GetSegmentDefinitionResponse$CreatedAt": "<p>The timestamp of when the segment definition was created.</p>",
         "GetSegmentMembershipResponse$LastComputedAt": "<p>The timestamp indicating when the segment membership was last computed or updated.</p>",
+        "GetSegmentSubscriptionResponse$StartedAt": "<p>The timestamp of when the subscription was first started. </p>",
+        "GetSegmentSubscriptionResponse$LastUpdatedAt": "<p>The timestamp of the most recent configuration change. </p>",
+        "GetStreamForSegmentsResponse$AssociatedAt": "<p>The timestamp of when the stream was associated. </p>",
+        "GetStreamForSegmentsResponse$DisassociatedAt": "<p>The timestamp of when the stream was disassociated. </p>",
         "GetUploadJobPathResponse$ValidUntil": "<p>The expiry timestamp for the pre-signed URL, after which the URL will no longer be valid. </p>",
         "GetUploadJobResponse$CreatedAt": "<p>The timestamp when the upload job was created. </p>",
         "GetUploadJobResponse$CompletedAt": "<p>The timestamp when the upload job was completed. </p>",
@@ -4375,13 +4556,17 @@
         "PutIntegrationResponse$LastUpdatedAt": "<p>The timestamp of when the domain was most recently edited.</p>",
         "PutProfileObjectTypeResponse$CreatedAt": "<p>The timestamp of when the domain was created.</p>",
         "PutProfileObjectTypeResponse$LastUpdatedAt": "<p>The timestamp of when the domain was most recently edited.</p>",
+        "PutSegmentSubscriptionResponse$StartedAt": "<p>The timestamp of when the subscription was started. </p>",
         "RecommenderFilterSummary$CreatedAt": "<p>The timestamp when the recommender filter was created.</p>",
         "RecommenderSchemaSummary$CreatedAt": "<p>The timestamp when the recommender schema was created.</p>",
         "RecommenderSummary$CreatedAt": "<p>The timestamp when the recommender was created.</p>",
         "RecommenderSummary$LastUpdatedAt": "<p>The timestamp of when the recommender was edited.</p>",
         "RecommenderUpdate$CreatedAt": "<p>The timestamp when this recommender update was initiated.</p>",
         "RecommenderUpdate$LastUpdatedAt": "<p>The timestamp of when the recommender was edited.</p>",
+        "ScheduledExecutions$NextExecutedAt": "<p>The timestamp of the next scheduled execution. </p>",
+        "ScheduledExecutions$LastExecutedAt": "<p>The timestamp of the last successful scheduled execution. </p>",
         "SegmentDefinitionItem$CreatedAt": "<p>When the segment definition was created.</p>",
+        "SubscriptionEventItem$UpdatedAt": "<p>The timestamp of when the membership change was detected. </p>",
         "TrainingMetrics$Time": "<p>The timestamp when these training metrics were recorded.</p>",
         "UpdateCalculatedAttributeDefinitionResponse$CreatedAt": "<p>The timestamp of when the calculated attribute definition was created.</p>",
         "UpdateCalculatedAttributeDefinitionResponse$LastUpdatedAt": "<p>The timestamp of when the calculated attribute definition was most recently edited.</p>",
@@ -4448,6 +4633,8 @@
         "ListRuleBasedMatchesResponse$NextToken": "<p>The pagination token from the previous <code>ListRuleBasedMatches</code> API call.</p>",
         "ListSegmentDefinitionsRequest$NextToken": "<p>The pagination token from the previous call. </p>",
         "ListSegmentDefinitionsResponse$NextToken": "<p>The pagination token from the previous call.</p>",
+        "ListSegmentSubscriptionEventsRequest$NextToken": "<p>The pagination token from the previous call to retrieve the next page of results. </p>",
+        "ListSegmentSubscriptionEventsResponse$NextToken": "<p>The pagination token to use to retrieve the next page of results. </p>",
         "ListUploadJobsRequest$NextToken": "<p>The pagination token from the previous call to retrieve the next page of results. </p>",
         "ListUploadJobsResponse$NextToken": "<p>The pagination token to use to retrieve the next page of results. </p>",
         "ListWorkflowsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
@@ -4575,6 +4762,7 @@
         "ProfileIdList$member": null,
         "ProfileIdToBeMergedList$member": null,
         "ProfileIds$member": null,
+        "SubscriptionEventItem$ProfileId": "<p>The unique identifier of a customer profile.</p>",
         "UpdateProfileRequest$ProfileId": "<p>The unique identifier of a customer profile.</p>",
         "UpdateProfileResponse$ProfileId": "<p>The unique identifier of a customer profile.</p>",
         "UploadJobItem$JobId": "<p>The unique identifier of the upload job. </p>"

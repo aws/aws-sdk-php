@@ -515,6 +515,7 @@
         "CapabilityConfiguration$enabled": "<p>Whether the capability is enabled.</p>",
         "MCPServerOAuth3LOConfig$supportCodeChallenge": "<p>Whether the service supports PKCE (Proof Key for Code Exchange) for enhanced security during the OAuth flow.</p>",
         "SendMessageContentBlockStopEvent$last": "<p>Whether this is the final content block in the response</p>",
+        "SlackBidirectionalConfiguration$enabled": "<p>Whether bidirectional communication is enabled for this association. When you set this value to true, you can mention the agent in a configured Slack channel and it responds in that channel. When you omit this value or set it to false, the agent ignores mentions and only sends notifications.</p>",
         "Task$hasLinkedTasks": "<p>Indicates if this task has other tasks linked to it</p>",
         "UpdateApprovalActionRequest$singleUse": "<p>Whether the approved action backs a single executed tool call (true) or is reusable within ttlSeconds (false). Required when `action` is APPROVED; must be absent when `action` is REJECTED. When true, ttlSeconds must be absent (the redemption window collapses to the single use). When false, ttlSeconds is required and bounds the reuse window. Cross-field invariants are enforced by service-side validation.</p>"
       }
@@ -2590,6 +2591,7 @@
         "RegisteredMCPServerSigV4Details$mcpRoleArn": null,
         "RegisteredRemoteAgentSigV4Details$roleArn": null,
         "RemoteAgentSigV4AuthorizationConfig$roleArn": null,
+        "SlackBidirectionalConfiguration$roleArn": "<p>IAM role ARN that AWS DevOps Agent assumes to exchange messages with your Slack workspace on behalf of this association.</p>",
         "SourceAwsConfiguration$assumableRoleArn": "<p>Role ARN to be assumed by AIDevOps to operate on behalf of customer. To set this role ARN on AssociateService or UpdateAssociation, the caller must have at least the iam:PassRole permission on arn:aws:iam::&lt;account-id&gt;:role/* in the caller's own account, with the condition iam:PassedToService set to aidevops.amazonaws.com. A broader iam:PassRole grant also satisfies this requirement.</p>",
         "SourceAwsConfiguration$agentElevatedRoleArn": "<p>Optional IAM role ARN to be assumed by AIDevOps for elevated directed actions on behalf of the customer. Used for mutating operations gated by elevatedActionsEnabled on the AgentSpace. When not provided, only non-elevated directed actions are available for this AWS account. Setting this role is subject to the same minimum iam:PassRole requirement described on assumableRoleArn.</p>"
       }
@@ -2830,6 +2832,12 @@
         "RegisteredMCPServerSigV4Details$region": "<p>AWS region for SigV4 signing. Use '*' for SigV4a multi-region signing.</p>",
         "RegisteredRemoteAgentSigV4Details$region": null,
         "RemoteAgentSigV4AuthorizationConfig$region": null
+      }
+    },
+    "SlackBidirectionalConfiguration": {
+      "base": "<p>Configuration for bidirectional Slack communication.</p>",
+      "refs": {
+        "SlackConfiguration$bidirectional": "<p>Optional bidirectional communication configuration. Supply this configuration and set enabled to true so you can interact with the agent directly from Slack.</p>"
       }
     },
     "SlackChannel": {

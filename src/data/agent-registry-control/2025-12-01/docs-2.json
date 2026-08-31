@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<p>AWS Agent Registry is a managed catalog for publishing and discovering resources such as MCP servers, agents, and agent skills. Agent Registry Control is its control-plane API: use it to create and manage registries and the records they contain, configure discovery and authorization, govern record approval and curation workflows, and manage automatic detection of resources. Data-plane search and MCP invocation operations are provided by the companion Agent Registry API.</p>",
+  "service": "<p>Amazon Web Services Agent Registry is a managed catalog for publishing and discovering resources such as MCP servers, agents, and agent skills. Agent Registry Control is its control-plane API: use it to create and manage registries and the records they contain, configure discovery and authorization, govern record approval and curation workflows, and manage automatic detection of resources. Data-plane search and MCP invocation operations are provided by the companion Agent Registry API.</p>",
   "operations": {
     "CreateRegistry": "<p>Creates a new registry, a catalog that organizes registry records and defines their discovery authorization and record approval behavior. Creation is asynchronous: the registry begins in the CREATING status and becomes usable once it reaches READY.</p>",
     "CreateRegistryRecord": "<p>Creates a registry record within a registry. A registry record describes a discoverable resource, such as an MCP server, an agent, an agent skill, or a custom resource. Creation is asynchronous: the record is returned with the CREATING status while it is processed.</p>",
@@ -10,10 +10,10 @@
     "GetRegistryRecord": "<p>Retrieves the details of a registry record</p>",
     "ListRegistries": "<p>Lists the registries in the caller's account and Region, with optional filtering by status and discovery authorizer type</p>",
     "ListRegistryRecords": "<p>Lists the registry records within a registry, with optional filtering by name, status, and record type</p>",
-    "ListTagsForResource": "<p>List the tags on a resource</p>",
+    "ListTagsForResource": "<p>Lists the tags associated with the specified Amazon Web Services Agent Registry resource. Returns the current tag key-value pairs on the resource.</p>",
     "SubmitRegistryRecordForApproval": "<p>Submits a DRAFT registry record for approval, moving it into the registry's approval workflow. Depending on the registry's approval configuration, the record is either auto-approved or set to PENDING_APPROVAL for a curator to approve or reject.</p>",
-    "TagResource": "<p>Tag a resource with key-value pairs</p>",
-    "UntagResource": "<p>Remove tags from a resource by key</p>",
+    "TagResource": "<p>Adds or overwrites one or more tags for the specified Amazon Web Services Agent Registry resource. Tags are key-value pairs that you can use to categorize and manage Amazon Web Services resources. If a tag with the same key already exists on the resource, the service replaces its value with the value you specify.</p>",
+    "UntagResource": "<p>Removes one or more tags from the specified Amazon Web Services Agent Registry resource. The operation removes only the tags whose keys you supply; other tags on the resource remain unchanged.</p>",
     "UpdateRegistry": "<p>Updates an existing registry. This operation uses PATCH semantics: specify only the fields you want to change, and omit the rest to leave them unchanged. Updates are applied asynchronously and the registry transitions to the UPDATING status while they are processed.</p>",
     "UpdateRegistryRecord": "<p>Updates a registry record. The update is asynchronous: the record is returned with the UPDATING status while it is processed. Fields that use update wrappers follow PATCH semantics: omit the field to leave it unchanged.</p>",
     "UpdateRegistryRecordStatus": "<p>Updates the status of a registry record as part of the registry's curation workflow, for example to approve or reject a record that is pending approval, or to deprecate an approved record so that it is no longer discoverable</p>"
@@ -28,6 +28,42 @@
     "AccessDeniedException": {
       "base": "<p>The caller is not authorized to perform the requested action.</p>",
       "refs": {}
+    },
+    "AgUiDescriptor": {
+      "base": "<p>A registry record descriptor for the AG-UI (Agent-User Interaction) protocol.</p>",
+      "refs": {
+        "Descriptors$agui": "<p>The AG-UI descriptor, populated for records detected from an AG-UI protocol source.</p>"
+      }
+    },
+    "AgentCoreGatewayProtocolType": {
+      "base": "<p>The protocol type of an AgentCore Gateway.</p>",
+      "refs": {
+        "AgentCoreGatewaySourceDetails$protocolType": null
+      }
+    },
+    "AgentCoreGatewaySourceDetails": {
+      "base": "<p>Source details for a record auto-detected from an AgentCore Gateway resource.</p>",
+      "refs": {
+        "SourceDetails$agentcoreGateway": null
+      }
+    },
+    "AgentCoreRuntimeProtocolConfiguration": {
+      "base": "<p>Protocol configuration for an AgentCore Runtime.</p>",
+      "refs": {
+        "AgentCoreRuntimeSourceDetails$protocolConfiguration": null
+      }
+    },
+    "AgentCoreRuntimeServerProtocol": {
+      "base": "<p>The server protocol used by an AgentCore Runtime.</p>",
+      "refs": {
+        "AgentCoreRuntimeProtocolConfiguration$serverProtocol": null
+      }
+    },
+    "AgentCoreRuntimeSourceDetails": {
+      "base": "<p>Source details for a record auto-detected from an AgentCore Runtime resource.</p>",
+      "refs": {
+        "SourceDetails$agentcoreRuntime": null
+      }
     },
     "AgentSkillsAdditionalData": {
       "base": "<p>Additional data associated with an agent skills definition descriptor.</p>",
@@ -95,6 +131,8 @@
     "AuthorizerConfiguration": {
       "base": "<p>The authorizer configuration for a registry. Exactly one member is set.</p>",
       "refs": {
+        "AgentCoreGatewaySourceDetails$authorizerConfiguration": null,
+        "AgentCoreRuntimeSourceDetails$authorizerConfiguration": null,
         "DiscoveryConfiguration$authorizerConfiguration": "<p>The authorizer configuration for the registry. Required when authorizerType is CUSTOM_JWT.</p>",
         "UpdatedAuthorizerConfiguration$optionalValue": "<p>The new authorizer configuration to set. Omit to leave the existing configuration unchanged.</p>"
       }
@@ -117,10 +155,42 @@
         "ApprovalConfiguration$autoApprovalRules": "<p>The rules that determine which registry records are automatically approved on submission. When omitted or empty, submitted records require manual review.</p>"
       }
     },
+    "AutoDetection": {
+      "base": "<p>The auto-detection properties for a registry, including the requested configuration and the current detection status. When auto-detection is enabled and the scope preconditions are met, the registry is automatically populated with discovered resources.</p>",
+      "refs": {
+        "GetRegistryResponse$autoDetection": "<p>The registry's auto-detection properties, including the requested configuration and the current detection status. Present only when auto-detection was configured for the registry.</p>",
+        "RegistrySummary$autoDetection": "<p>The registry's auto-detection properties, including the requested configuration and the current detection status. Present only when auto-detection was configured for the registry.</p>",
+        "UpdateRegistryResponse$autoDetection": "<p>The registry's auto-detection properties, including the requested configuration and the current detection status. Present only when auto-detection was configured for the registry.</p>"
+      }
+    },
+    "AutoDetectionConfiguration": {
+      "base": "<p>The customer-defined auto-detection settings for a registry.</p>",
+      "refs": {
+        "AutoDetection$configuration": "<p>The auto-detection settings that control how resources are discovered for the registry.</p>",
+        "CreateRegistryRequest$autoDetectionConfiguration": "<p>The optional auto-detection configuration for the registry. When provided, the registry is automatically populated with resources discovered according to the configuration. Omit this field for registries whose records are managed exclusively through the Agent Registry Control API.</p>",
+        "UpdatedAutoDetectionConfiguration$optionalValue": "<p>The value to set for this field. Omit the wrapper to leave the field unchanged.</p>"
+      }
+    },
+    "AutoDetectionScope": {
+      "base": null,
+      "refs": {
+        "AutoDetectionConfiguration$scope": "<p>The source from which resources are detected. For example, <code>ORGANIZATION</code> sources resources from all member accounts of an Amazon Web Services organization.</p>"
+      }
+    },
+    "AutoDetectionStatus": {
+      "base": null,
+      "refs": {
+        "AutoDetection$status": "<p>The current auto-detection status. <code>ACTIVE</code> indicates that the registry is actively being populated with detected resources. <code>INACTIVE</code> indicates that the preconditions required at the configured scope are not currently met.</p>"
+      }
+    },
     "Boolean": {
       "base": null,
       "refs": {
-        "UpdateRegistryRecordRequest$triggerSynchronization": "<p>Whether to trigger synchronization of the record's descriptor content from its source</p>"
+        "AutoDetectionConfiguration$enabled": "<p>Specifies whether auto-detection is requested for the registry. Setting this to <code>true</code> is necessary but not sufficient for auto-detection to become active; the preconditions of the configured scope must also be met.</p>",
+        "GetRegistryRecordResponse$createdByAutoDetection": "<p>Specifies whether the registry record was created by auto-detection. <code>true</code> indicates the record was automatically created by the service based on the registry's auto-detection configuration; <code>false</code> indicates the record was created through a control-plane API call.</p>",
+        "RegistryRecordSummary$createdByAutoDetection": "<p>Specifies whether the registry record was created by auto-detection. <code>true</code> indicates the record was automatically created by the service based on the registry's auto-detection configuration; <code>false</code> indicates the record was created through a control-plane API call.</p>",
+        "UpdateRegistryRecordRequest$triggerSynchronization": "<p>Whether to trigger synchronization of the record's descriptor content from its source</p>",
+        "UpdateRegistryRecordResponse$createdByAutoDetection": "<p>Specifies whether the registry record was created by auto-detection. <code>true</code> indicates the record was automatically created by the service based on the registry's auto-detection configuration; <code>false</code> indicates the record was created through a control-plane API call.</p>"
       }
     },
     "ClaimMatchOperatorType": {
@@ -139,7 +209,7 @@
       "base": "<p>Client specified token used for idempotency checks</p>",
       "refs": {
         "CreateRegistryRecordRequest$clientToken": "<p>Client token for idempotency</p>",
-        "CreateRegistryRequest$clientToken": "<p>Client token for idempotency</p>"
+        "CreateRegistryRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, the service ignores the request, but does not return an error.</p>"
       }
     },
     "ConflictException": {
@@ -162,10 +232,18 @@
       "base": "<p>Response structure for creating a registry</p>",
       "refs": {}
     },
+    "CreatorAccountId": {
+      "base": null,
+      "refs": {
+        "GetRegistryRecordResponse$createdBy": "<p>The ID of the Amazon Web Services account that created the registry record.</p>",
+        "RegistryRecordSummary$createdBy": "<p>The ID of the Amazon Web Services account that created the registry record.</p>",
+        "UpdateRegistryRecordResponse$createdBy": "<p>The ID of the Amazon Web Services account that created the registry record.</p>"
+      }
+    },
     "CredentialProviderArn": {
       "base": null,
       "refs": {
-        "RegistryRecordOAuthCredentialProvider$providerArn": "<p>The &amp;ARN; of the OAuth 2.0 credential provider resource in Amazon Bedrock AgentCore Identity.</p>"
+        "RegistryRecordOAuthCredentialProvider$providerArn": "<p>The Amazon Resource Name (ARN) of the OAuth 2.0 credential provider resource in Amazon Bedrock AgentCore Identity.</p>"
       }
     },
     "CustomClaimValidationType": {
@@ -205,7 +283,7 @@
         "AgentSkillsDefinitionDescriptor$dataSchemaVersion": "<p>The schema version of the descriptor payload.</p>",
         "AgentSkillsMdDescriptor$dataSchemaVersion": "<p>The schema version of the descriptor payload.</p>",
         "McpServerDescriptor$dataSchemaVersion": "<p>The schema version of the descriptor payload.</p>",
-        "McpToolsDescriptor$dataSchemaVersion": null,
+        "McpToolsDescriptor$dataSchemaVersion": "<p>The schema version of the descriptor payload.</p>",
         "UpdatedDataSchemaVersion$optionalValue": "<p>The value to set for this field. Omit the wrapper to leave the field unchanged.</p>"
       }
     },
@@ -255,7 +333,7 @@
         "RegistrySummary$description": "<p>Registry description</p>",
         "UpdateRegistryRecordResponse$description": "<p>A description of the registry record.</p>",
         "UpdateRegistryResponse$description": "<p>The description of the registry</p>",
-        "UpdatedDescription$optionalValue": null
+        "UpdatedDescription$optionalValue": "<p>The value to set for this field. Omit the wrapper to leave the field unchanged.</p>"
       }
     },
     "DescriptorData": {
@@ -264,9 +342,9 @@
         "A2aAgentCardDescriptor$data": "<p>The A2A agent card content, serialized as descriptor payload data.</p>",
         "AgentSkillsDefinitionDescriptor$data": "<p>The agent skills definition content, serialized as descriptor payload data.</p>",
         "AgentSkillsMdDescriptor$data": "<p>The agent skills markdown content, serialized as descriptor payload data.</p>",
-        "CustomDescriptor$data": null,
+        "CustomDescriptor$data": "<p>The custom descriptor content, serialized as descriptor payload data.</p>",
         "McpServerDescriptor$data": "<p>The MCP server descriptor content, serialized as descriptor payload data.</p>",
-        "McpToolsDescriptor$data": null,
+        "McpToolsDescriptor$data": "<p>The MCP tools descriptor content, serialized as descriptor payload data.</p>",
         "UpdatedDescriptorData$optionalValue": "<p>The value to set for this field. Omit the wrapper to leave the field unchanged.</p>"
       }
     },
@@ -274,7 +352,9 @@
       "base": "<p>The source configuration that defines where descriptor content is retrieved from.</p>",
       "refs": {
         "A2aAgentCardDescriptor$source": "<p>The optional source configuration used to synchronize the A2A agent card descriptor content.</p>",
+        "AgUiDescriptor$source": null,
         "AgentSkillsMdDescriptor$source": "<p>The optional source configuration used to synchronize the agent skills markdown content.</p>",
+        "HttpDescriptor$source": null,
         "McpServerDescriptor$source": "<p>The optional source configuration used to synchronize the MCP server descriptor content.</p>",
         "UpdatedDescriptorSource$optionalValue": "<p>The value to set for this field. Omit the wrapper to leave the field unchanged.</p>"
       }
@@ -314,6 +394,14 @@
         "CustomJWTAuthorizerConfiguration$discoveryUrl": "<p>The OpenID Connect discovery URL used to retrieve the identity provider's metadata and signing keys.</p>"
       }
     },
+    "EncryptionConfiguration": {
+      "base": "<p>The server-side encryption configuration for a registry. Specifies a customer-managed Amazon Web Services KMS key used to encrypt the registry's content.</p>",
+      "refs": {
+        "CreateRegistryRequest$encryptionConfiguration": "<p>The optional server-side encryption configuration for the registry. When you provide this field, the specified customer-managed Amazon Web Services KMS key encrypts the registry's content. Omit this field to use an Amazon Web Services-owned encryption key. You cannot change the encryption configuration after registry creation.</p>",
+        "GetRegistryResponse$encryptionConfiguration": "<p>The server-side encryption configuration for the registry. Appears only when a customer-managed Amazon Web Services KMS key encrypts the registry.</p>",
+        "UpdateRegistryResponse$encryptionConfiguration": "<p>The server-side encryption configuration for the registry. Appears only when a customer-managed Amazon Web Services KMS key encrypts the registry.</p>"
+      }
+    },
     "EndpointIpAddressType": {
       "base": "<p>The IP address type used by a private endpoint.</p>",
       "refs": {
@@ -349,16 +437,22 @@
       "base": "<p>Response structure for getting a registry</p>",
       "refs": {}
     },
+    "HttpDescriptor": {
+      "base": "<p>A registry record descriptor for the HTTP protocol. This descriptor is source-only: its content is synchronized from the configured source URL rather than supplied inline.</p>",
+      "refs": {
+        "Descriptors$http": "<p>The HTTP descriptor, populated for records detected from an HTTP protocol source.</p>"
+      }
+    },
     "IamRoleArn": {
       "base": null,
       "refs": {
-        "RegistryRecordIamCredentialProvider$roleArn": "<p>The &amp;ARN; of the IAM role to assume for request signing.</p>"
+        "RegistryRecordIamCredentialProvider$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role to assume for request signing.</p>"
       }
     },
     "IamSigningRegion": {
       "base": null,
       "refs": {
-        "RegistryRecordIamCredentialProvider$region": "<p>The AWS Region to use for request signing. If not specified, the Region is derived from the source URL hostname, falling back to the Region of the registry.</p>"
+        "RegistryRecordIamCredentialProvider$region": "<p>The Amazon Web Services Region to use for request signing. If not specified, the Region is derived from the source URL hostname, falling back to the Region of the registry.</p>"
       }
     },
     "IamSigningServiceName": {
@@ -382,6 +476,12 @@
     "InternalServerException": {
       "base": "<p>The request failed due to an unexpected internal error; the caller may retry.</p>",
       "refs": {}
+    },
+    "KmsKeyArn": {
+      "base": "<p>A KMS key ARN</p>",
+      "refs": {
+        "EncryptionConfiguration$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the customer-managed Amazon Web Services KMS key used to encrypt the registry's content. The key must be a symmetric encryption key in the same Amazon Web Services account and Region as the registry.</p>"
+      }
     },
     "ListRegistriesRequest": {
       "base": "<p>Request structure for listing registries</p>",
@@ -448,7 +548,7 @@
     "McpToolsDescriptor": {
       "base": "<p>MCP tools descriptor containing tool definitions</p>",
       "refs": {
-        "McpServerAdditionalData$tools": null
+        "McpServerAdditionalData$tools": "<p>The MCP tools descriptor that defines the tools exposed by the MCP server.</p>"
       }
     },
     "NextToken": {
@@ -496,6 +596,40 @@
         "CustomJWTAuthorizerConfiguration$privateEndpointOverrides": "<p>Per-domain private endpoint overrides that route specific identity provider domains through distinct private endpoints.</p>"
       }
     },
+    "Provenance": {
+      "base": "<p>One provenance entry describing the lineage of a registry record.</p>",
+      "refs": {
+        "ProvenanceList$member": null
+      }
+    },
+    "ProvenanceList": {
+      "base": "<p>List of provenance entries on a registry record. Capped at one entry today: a record carries a single DETECTED_FROM lineage. Modeled as a list so additional relations can be unlocked post-GA by raising this bound without a breaking shape change.</p>",
+      "refs": {
+        "CreateRegistryRecordRequest$provenance": null,
+        "GetRegistryRecordResponse$provenance": null,
+        "UpdateRegistryRecordRequest$provenance": null,
+        "UpdateRegistryRecordResponse$provenance": null
+      }
+    },
+    "ProvenanceRelation": {
+      "base": "<p>The relationship between the registry record and its provenance source.</p>",
+      "refs": {
+        "Provenance$relation": null,
+        "ProvenanceSummary$relation": null
+      }
+    },
+    "ProvenanceSummary": {
+      "base": "<p>Condensed provenance entry for list results — the key triple only (no sourceDetails union). Enough to display and client-side-filter lineage without the full-read config payload.</p>",
+      "refs": {
+        "ProvenanceSummaryList$member": null
+      }
+    },
+    "ProvenanceSummaryList": {
+      "base": "<p>List of condensed provenance entries surfaced on RegistryRecordSummary. Mirrors ProvenanceList's cardinality (one entry today); modeled as a list for forward-compatibility.</p>",
+      "refs": {
+        "RegistryRecordSummary$provenanceSummaryList": null
+      }
+    },
     "RecordIdentifier": {
       "base": "<p>Record identifier that accepts either ARN or ID format</p>",
       "refs": {
@@ -520,12 +654,12 @@
       "base": "<p>Registry Amazon Resource Name</p>",
       "refs": {
         "CreateRegistryResponse$registryArn": "<p>The ARN of the created registry</p>",
-        "GetRegistryRecordResponse$registryArn": "<p>The &amp;ARN; of the parent registry that owns the record.</p>",
+        "GetRegistryRecordResponse$registryArn": "<p>The Amazon Resource Name (ARN) of the parent registry that owns the record.</p>",
         "GetRegistryResponse$registryArn": "<p>The ARN of the registry</p>",
-        "RegistryRecordSummary$registryArn": "<p>The &amp;ARN; of the parent registry that owns the record.</p>",
+        "RegistryRecordSummary$registryArn": "<p>The Amazon Resource Name (ARN) of the parent registry that owns the record.</p>",
         "RegistrySummary$registryArn": "<p>Registry Amazon Resource Name</p>",
         "SubmitRegistryRecordForApprovalResponse$registryArn": "<p>The ARN of the registry</p>",
-        "UpdateRegistryRecordResponse$registryArn": "<p>The &amp;ARN; of the parent registry that owns the record.</p>",
+        "UpdateRegistryRecordResponse$registryArn": "<p>The Amazon Resource Name (ARN) of the parent registry that owns the record.</p>",
         "UpdateRegistryRecordStatusResponse$registryArn": "<p>The ARN of the registry</p>",
         "UpdateRegistryResponse$registryArn": "<p>The ARN of the registry</p>"
       }
@@ -591,10 +725,10 @@
       "base": "<p>Registry Record Amazon Resource Name</p>",
       "refs": {
         "CreateRegistryRecordResponse$recordArn": "<p>The ARN of the created registry record</p>",
-        "GetRegistryRecordResponse$recordArn": "<p>The &amp;ARN; of the registry record.</p>",
-        "RegistryRecordSummary$recordArn": "<p>The &amp;ARN; of the registry record.</p>",
+        "GetRegistryRecordResponse$recordArn": "<p>The Amazon Resource Name (ARN) of the registry record.</p>",
+        "RegistryRecordSummary$recordArn": "<p>The Amazon Resource Name (ARN) of the registry record.</p>",
         "SubmitRegistryRecordForApprovalResponse$recordArn": "<p>The ARN of the registry record</p>",
-        "UpdateRegistryRecordResponse$recordArn": "<p>The &amp;ARN; of the registry record.</p>",
+        "UpdateRegistryRecordResponse$recordArn": "<p>The Amazon Resource Name (ARN) of the registry record.</p>",
         "UpdateRegistryRecordStatusResponse$recordArn": "<p>The ARN of the registry record</p>"
       }
     },
@@ -651,7 +785,7 @@
       }
     },
     "RegistryRecordIamCredentialProvider": {
-      "base": "<p>The configuration for an IAM role credential provider that signs requests to a registry record's source with AWS Signature Version 4 (SigV4).</p>",
+      "base": "<p>The configuration for an IAM role credential provider that signs requests to a registry record's source with Amazon Web Services Signature Version 4 (SigV4).</p>",
       "refs": {
         "RegistryRecordCredentialProviderUnion$iamCredentialProvider": "<p>The IAM role credential provider details.</p>"
       }
@@ -746,9 +880,9 @@
     "ResourceArn": {
       "base": "<p>ARN of a taggable Agent Registry resource.</p>",
       "refs": {
-        "ListTagsForResourceRequest$resourceArn": null,
-        "TagResourceRequest$resourceArn": null,
-        "UntagResourceRequest$resourceArn": null
+        "ListTagsForResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource to list tags for. Supported resources include registries and registry records.</p>",
+        "TagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource to tag. Supported resources include registries and registry records.</p>",
+        "UntagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource to remove tags from. Supported resources include registries and registry records.</p>"
       }
     },
     "ResourceConfigurationIdentifier": {
@@ -764,7 +898,7 @@
     "ResourceTagsMap": {
       "base": "<p>A map of tag keys to tag values returned by read operations (may be empty).</p>",
       "refs": {
-        "ListTagsForResourceResponse$tags": null
+        "ListTagsForResourceResponse$tags": "<p>The tags currently associated with the resource, as a map of tag keys to tag values.</p>"
       }
     },
     "RoutingDomain": {
@@ -801,9 +935,31 @@
       "base": "<p>The request would exceed a service quota.</p>",
       "refs": {}
     },
+    "SourceDetails": {
+      "base": "<p>The details about the upstream source from which a registry record was detected. Exactly one member is populated, corresponding to the source type.</p>",
+      "refs": {
+        "Provenance$sourceDetails": "<p>Additional details about the upstream source that the registry record was detected from, such as the AgentCore Gateway or Runtime configuration. The populated member corresponds to the source type.</p>"
+      }
+    },
+    "SourceId": {
+      "base": null,
+      "refs": {
+        "Provenance$sourceId": "<p>The identifier of the upstream source that the registry record was detected from.</p>",
+        "ProvenanceSummary$sourceId": "<p>The identifier of the upstream source that the registry record was detected from.</p>"
+      }
+    },
+    "SourceType": {
+      "base": null,
+      "refs": {
+        "Provenance$sourceType": "<p>The type of the upstream source that the registry record was detected from.</p>",
+        "ProvenanceSummary$sourceType": "<p>The type of the upstream source that the registry record was detected from.</p>"
+      }
+    },
     "String": {
       "base": null,
       "refs": {
+        "AgentCoreGatewaySourceDetails$authorizerType": "<p>The type of authorizer configured on the AgentCore Gateway resource that the registry record was detected from.</p>",
+        "AutoDetection$statusReason": "<p>A human-readable explanation of the current auto-detection status. Typically populated when the status requires additional context.</p>",
         "CustomParameterMap$key": null,
         "CustomParameterMap$value": null,
         "GetRegistryRecordResponse$statusReason": "<p>The reason for the current status. Typically populated when the status indicates a failure state.</p>",
@@ -849,7 +1005,7 @@
     "TagKeyList": {
       "base": "<p>A list of tag keys.</p>",
       "refs": {
-        "UntagResourceRequest$tagKeys": null
+        "UntagResourceRequest$tagKeys": "<p>The keys of the tags to remove from the resource. Tags with keys not included in this list remain on the resource.</p>"
       }
     },
     "TagResourceRequest": {
@@ -872,8 +1028,8 @@
       "refs": {
         "CreateRegistryRecordRequest$tags": "<p>Tags to associate with the registry record</p>",
         "CreateRegistryRequest$tags": "<p>Tags to associate with the registry</p>",
-        "ManagedVpcResource$tags": null,
-        "TagResourceRequest$tags": null
+        "ManagedVpcResource$tags": "<p>The tags applied to the service-managed VPC resource.</p>",
+        "TagResourceRequest$tags": "<p>The tags to apply to the resource, as a map of tag keys to tag values. Tag keys must be unique within the request.</p>"
       }
     },
     "ThrottlingException": {
@@ -930,6 +1086,18 @@
         "UpdatedA2aAgentCardDescriptor$optionalValue": "<p>The value to set for this field. Omit the wrapper to leave the field unchanged.</p>"
       }
     },
+    "UpdatedAgUiDescriptor": {
+      "base": "<p>The AG-UI descriptor patch wrapper. Omit to leave the descriptor unchanged; supply an empty object to remove it; supply optionalValue to patch its fields.</p>",
+      "refs": {
+        "UpdatedDescriptorsFields$agui": "<p>The patch for the AG-UI descriptor.</p>"
+      }
+    },
+    "UpdatedAgUiDescriptorFields": {
+      "base": "<p>The set of AG-UI descriptor fields that can be individually updated.</p>",
+      "refs": {
+        "UpdatedAgUiDescriptor$optionalValue": "<p>The value to set for this field. Omit the wrapper to leave the field unchanged.</p>"
+      }
+    },
     "UpdatedAgentSkillsAdditionalData": {
       "base": "<p>The agent skills additional-data patch wrapper. Omit to leave the additional data unchanged; supply an empty object to remove it; supply optionalValue to patch its fields.</p>",
       "refs": {
@@ -978,6 +1146,12 @@
         "UpdatedDiscoveryConfiguration$authorizerConfiguration": "<p>Authorization configuration for the registry, with PATCH semantics</p>"
       }
     },
+    "UpdatedAutoDetectionConfiguration": {
+      "base": "<p>A wrapper for updating the auto-detection configuration of a registry with PATCH semantics. Include this wrapper to replace the auto-detection configuration with the specified value. Omit it to leave the auto-detection configuration unchanged. To clear the configuration, include the wrapper with a null <code>optionalValue</code>.</p>",
+      "refs": {
+        "UpdateRegistryRequest$autoDetectionConfiguration": "<p>The updated auto-detection configuration for the registry, with PATCH semantics. Omit this field to leave the current configuration unchanged. Supply an empty wrapper to unset it. Supply <code>optionalValue</code> to replace it.</p>"
+      }
+    },
     "UpdatedCustomDescriptor": {
       "base": "<p>The custom descriptor patch wrapper. Omit to leave the descriptor unchanged; supply an empty object to remove it; supply optionalValue to patch its fields.</p>",
       "refs": {
@@ -1022,7 +1196,9 @@
       "base": "<p>Leaf patch wrapper for a descriptor's source configuration. Omit to leave unchanged; supply an empty object to unset; supply optionalValue to set.</p>",
       "refs": {
         "UpdatedA2aAgentCardDescriptorFields$source": "<p>The patch for the descriptor's source field.</p>",
+        "UpdatedAgUiDescriptorFields$source": "<p>The patch for the descriptor's source field.</p>",
         "UpdatedAgentSkillsMdDescriptorFields$source": "<p>The patch for the descriptor's source field.</p>",
+        "UpdatedHttpDescriptorFields$source": "<p>The patch for the descriptor's source field.</p>",
         "UpdatedMcpServerDescriptorFields$source": "<p>The patch for the descriptor's source field.</p>"
       }
     },
@@ -1048,6 +1224,18 @@
       "base": "<p>Leaf patch wrapper for a registry record's display name. Omit to leave unchanged; supply an empty object to unset; supply optionalValue to set.</p>",
       "refs": {
         "UpdateRegistryRecordRequest$displayName": "<p>The updated display name of the registry record. Omit to leave the display name unchanged; provide an empty wrapper to unset it.</p>"
+      }
+    },
+    "UpdatedHttpDescriptor": {
+      "base": "<p>The HTTP descriptor patch wrapper. Omit to leave the descriptor unchanged; supply an empty object to remove it; supply optionalValue to patch its fields.</p>",
+      "refs": {
+        "UpdatedDescriptorsFields$http": "<p>The patch for the HTTP descriptor.</p>"
+      }
+    },
+    "UpdatedHttpDescriptorFields": {
+      "base": "<p>The set of HTTP descriptor fields that can be individually updated.</p>",
+      "refs": {
+        "UpdatedHttpDescriptor$optionalValue": "<p>The value to set for this field. Omit the wrapper to leave the field unchanged.</p>"
       }
     },
     "UpdatedMcpServerAdditionalData": {
@@ -1112,6 +1300,19 @@
       "base": "<p>The identifier of a VPC.</p>",
       "refs": {
         "ManagedVpcResource$vpcIdentifier": "<p>The identifier of the VPC in which the private endpoint is provisioned.</p>"
+      }
+    },
+    "WorkloadIdentityDetails": {
+      "base": "<p>Workload identity details associated with a source resource.</p>",
+      "refs": {
+        "AgentCoreGatewaySourceDetails$workloadIdentityDetails": null,
+        "AgentCoreRuntimeSourceDetails$workloadIdentityDetails": null
+      }
+    },
+    "WorkloadIdentityDetailsWorkloadIdentityArnString": {
+      "base": null,
+      "refs": {
+        "WorkloadIdentityDetails$workloadIdentityArn": "<p>The Amazon Resource Name (ARN) of the workload identity associated with the source resource.</p>"
       }
     }
   }

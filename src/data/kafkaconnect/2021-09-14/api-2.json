@@ -314,6 +314,25 @@
       ],
       "readonly":true
     },
+    "RestartConnector":{
+      "name":"RestartConnector",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/connectors/{connectorArn}/restart",
+        "responseCode":200
+      },
+      "input":{"shape":"RestartConnectorRequest"},
+      "output":{"shape":"RestartConnectorResponse"},
+      "errors":[
+        {"shape":"NotFoundException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"InternalServerErrorException"}
+      ]
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -519,7 +538,10 @@
         "UPDATE_FAILED",
         "ROLLBACK_IN_PROGRESS",
         "ROLLBACK_FAILED",
-        "ROLLBACK_COMPLETE"
+        "ROLLBACK_COMPLETE",
+        "RESTART_IN_PROGRESS",
+        "RESTART_COMPLETE",
+        "RESTART_FAILED"
       ]
     },
     "ConnectorOperationStep":{
@@ -565,7 +587,8 @@
         "UPDATE_WORKER_SETTING",
         "UPDATE_CONNECTOR_CONFIGURATION",
         "ISOLATE_CONNECTOR",
-        "RESTORE_CONNECTOR"
+        "RESTORE_CONNECTOR",
+        "RESTART_CONNECTOR"
       ]
     },
     "ConnectorState":{
@@ -575,7 +598,8 @@
         "CREATING",
         "UPDATING",
         "DELETING",
-        "FAILED"
+        "FAILED",
+        "RESTARTING"
       ]
     },
     "ConnectorSummary":{
@@ -1219,6 +1243,29 @@
       "members":{
         "mcuCount":{"shape":"__integerMin1Max8"},
         "workerCount":{"shape":"__integer"}
+      }
+    },
+    "RestartConnectorRequest":{
+      "type":"structure",
+      "required":["connectorArn"],
+      "members":{
+        "connectorArn":{
+          "shape":"__string",
+          "location":"uri",
+          "locationName":"connectorArn"
+        },
+        "onlyFailedTasks":{
+          "shape":"__boolean",
+          "location":"querystring",
+          "locationName":"onlyFailedTasks"
+        }
+      }
+    },
+    "RestartConnectorResponse":{
+      "type":"structure",
+      "members":{
+        "connectorArn":{"shape":"__string"},
+        "connectorOperationArn":{"shape":"__string"}
       }
     },
     "S3Location":{

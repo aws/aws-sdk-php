@@ -14,7 +14,7 @@
     "CreateRcsAgent": "<p>Creates a new RCS agent for sending rich messages through the RCS channel. The RCS agent serves as an origination identity for sending RCS messages to your recipients.</p>",
     "CreateRegistration": "<p>Creates a new registration based on the <b>RegistrationType</b> field. </p>",
     "CreateRegistrationAssociation": "<p>Associate the registration with an origination identity such as a phone number or sender ID.</p>",
-    "CreateRegistrationAttachment": "<p>Create a new registration attachment to use for uploading a file or a URL to a file. The maximum file size is 500KB and valid file extensions are PDF, JPEG and PNG. For example, many sender ID registrations require a signed “letter of authorization” (LOA) to be submitted.</p> <p>Use either <code>AttachmentUrl</code> or <code>AttachmentBody</code> to upload your attachment. If both are specified then an exception is returned.</p>",
+    "CreateRegistrationAttachment": "<p>Create a new registration attachment to use for uploading a file or a URL to a file. The maximum file size is 5MB and valid file extensions are PDF, JPEG and PNG. For example, many sender ID registrations require a signed “letter of authorization” (LOA) to be submitted.</p> <p>Use either <code>AttachmentUrl</code> or <code>AttachmentBody</code> to upload your attachment. If both are specified then an exception is returned.</p>",
     "CreateRegistrationVersion": "<p>Create a new version of the registration and increase the <b>VersionNumber</b>. The previous version of the registration becomes read-only.</p>",
     "CreateVerifiedDestinationNumber": "<p>You can only send messages to verified destination numbers when your account is in the sandbox. You can add up to 10 verified destination numbers.</p>",
     "DeleteAccountDefaultProtectConfiguration": "<p>Removes the current account default protect configuration.</p>",
@@ -193,7 +193,7 @@
     "AttachmentBody": {
       "base": null,
       "refs": {
-        "CreateRegistrationAttachmentRequest$AttachmentBody": "<p>The registration file to upload. The maximum file size is 500KB and valid file extensions are PDF, JPEG and PNG.</p>"
+        "CreateRegistrationAttachmentRequest$AttachmentBody": "<p>The registration file to upload. The maximum file size is 5MB and valid file extensions are PDF, JPEG and PNG.</p>"
       }
     },
     "AttachmentStatus": {
@@ -313,6 +313,73 @@
         "CreateEventDestinationRequest$CloudWatchLogsDestination": "<p>An object that contains information about an event destination for logging to Amazon CloudWatch Logs.</p>",
         "EventDestination$CloudWatchLogsDestination": "<p>An object that contains information about an event destination that sends logging events to Amazon CloudWatch logs.</p>",
         "UpdateEventDestinationRequest$CloudWatchLogsDestination": "<p>An object that contains information about an event destination that sends data to CloudWatch Logs.</p>"
+      }
+    },
+    "ConditionOperator": {
+      "base": "<p>The operator used to compare a dependency field's value in a <b>FieldCondition</b>. Valid values are <b>EQUALS</b>, <b>NOT_EQUALS</b>, <b>IN</b>, <b>NOT_IN</b>, <b>HAS_VALUE</b>, and <b>NO_VALUE</b>. Unknown operators evaluate to false, which causes the containing rule to be skipped.</p>",
+      "refs": {
+        "FieldCondition$Operator": "<p>The comparison operator to apply between the dependency field's value and <b>Values</b>. Valid values are <b>EQUALS</b>, <b>NOT_EQUALS</b>, <b>IN</b>, <b>NOT_IN</b>, <b>HAS_VALUE</b>, and <b>NO_VALUE</b>. Operators not in this list are treated as evaluating to false, which causes the containing rule to be skipped. This allows forward-compatible additions of new operators without breaking older SDK clients.</p>"
+      }
+    },
+    "ConditionValue": {
+      "base": null,
+      "refs": {
+        "ConditionValueList$member": null
+      }
+    },
+    "ConditionValueList": {
+      "base": null,
+      "refs": {
+        "FieldCondition$Values": "<p>The values to compare the dependency field's value against. Required for the <b>EQUALS</b>, <b>NOT_EQUALS</b>, <b>IN</b>, and <b>NOT_IN</b> operators. Omitted for <b>HAS_VALUE</b> and <b>NO_VALUE</b>, which test only presence.</p>"
+      }
+    },
+    "ConditionalBehavior": {
+      "base": "<p>The set of conditional rules that determine a field's resolved requirement based on the values of other fields in the same registration form. Attached to fields whose <b>FieldRequirement</b> is <b>CONDITIONAL</b>.</p> <p>Evaluation proceeds top-to-bottom through <b>Rules</b>. The first rule whose conditions all evaluate to true wins and its behavior is returned. If no rule matches, the <b>DefaultBehavior</b> is returned.</p>",
+      "refs": {
+        "RegistrationFieldDefinition$ConditionalBehavior": "<p>The conditional behavior rules for this field. Only present when <b>FieldRequirement</b> is <b>CONDITIONAL</b>. Rules are evaluated in order and the first matching rule determines the field's resolved requirement. If no rule matches, the <b>DefaultBehavior</b> applies.</p>"
+      }
+    },
+    "ConditionalFieldBehavior": {
+      "base": "<p>The resolved requirement for a field when a conditional rule matches. Valid values are:</p> <p> <b>REQUIRED</b> — the field must be present; absence causes a validation error at submission time.</p> <p> <b>OPTIONAL</b> — the field may be present.</p> <p> <b>DISALLOWED</b> — the field must not be present; a submitted value is rejected with a validation error.</p>",
+      "refs": {
+        "ConditionalBehavior$DefaultBehavior": "<p>The field behavior that applies when no conditional rule in <b>Rules</b> matches. Valid values are <b>REQUIRED</b>, <b>OPTIONAL</b>, and <b>DISALLOWED</b>.</p>",
+        "ConditionalRule$RuleBehavior": "<p>The field behavior that applies when all conditions in this rule match. Valid values are <b>REQUIRED</b>, <b>OPTIONAL</b>, and <b>DISALLOWED</b>.</p>"
+      }
+    },
+    "ConditionalRule": {
+      "base": "<p>A single conditional rule that resolves to a field behavior when all of its conditions evaluate to true. Conditions within a rule are combined with logical AND: all conditions must match for the rule to fire.</p>",
+      "refs": {
+        "ConditionalRuleList$member": null
+      }
+    },
+    "ConditionalRuleList": {
+      "base": null,
+      "refs": {
+        "ConditionalBehavior$Rules": "<p>An ordered list of conditional rules. Rules are evaluated top-to-bottom and the first rule whose conditions all evaluate to true determines the field's behavior. Rules whose conditions do not all match are skipped and evaluation continues to the next rule.</p>"
+      }
+    },
+    "ConditionalValidation": {
+      "base": "<p>Per-rule validation constraints that override the field's default validation when the containing rule matches. All fields are optional; only the constraints that need to differ from the field's default validation are provided.</p>",
+      "refs": {
+        "ConditionalRule$ConditionalValidation": "<p>Optional per-rule validation constraints (minimum length, maximum length, regex pattern, allowed select values) that override the field's default validation when this rule matches.</p>"
+      }
+    },
+    "ConditionalValidationMaxLengthInteger": {
+      "base": null,
+      "refs": {
+        "ConditionalValidation$MaxLength": "<p>The maximum length for the field value when this rule applies.</p>"
+      }
+    },
+    "ConditionalValidationMinLengthInteger": {
+      "base": null,
+      "refs": {
+        "ConditionalValidation$MinLength": "<p>The minimum length for the field value when this rule applies.</p>"
+      }
+    },
+    "ConditionalValidationPatternString": {
+      "base": null,
+      "refs": {
+        "ConditionalValidation$Pattern": "<p>A regular expression that the field value must match when this rule applies.</p>"
       }
     },
     "ConfigurationSetFilter": {
@@ -1034,11 +1101,24 @@
         "UpdateEventDestinationRequest$MatchingEventTypes": "<p>An array of event types that determine which events to log.</p> <note> <p>The <code>TEXT_SENT</code> event type is not supported.</p> </note>"
       }
     },
+    "FieldCondition": {
+      "base": "<p>A single condition on a dependency field's value. Conditions are combined into a <b>ConditionalRule</b> and evaluated together with logical AND.</p>",
+      "refs": {
+        "FieldConditionList$member": null
+      }
+    },
+    "FieldConditionList": {
+      "base": null,
+      "refs": {
+        "ConditionalRule$Conditions": "<p>The conditions that must all evaluate to true for this rule to match. Conditions are combined with logical AND. Use multiple rules with the same <b>RuleBehavior</b> to express logical OR.</p>"
+      }
+    },
     "FieldPath": {
       "base": null,
       "refs": {
         "DeleteRegistrationFieldValueRequest$FieldPath": "<p>The path to the registration form field. You can use <a>DescribeRegistrationFieldDefinitions</a> for a list of <b>FieldPaths</b>.</p>",
         "DeleteRegistrationFieldValueResult$FieldPath": "<p>The path to the registration form field.</p>",
+        "FieldCondition$DependsOnFieldPath": "<p>The path of the field whose value determines this condition, for example <b>companyInfo.businessType</b>.</p>",
         "FieldPathList$member": null,
         "PutRegistrationFieldValueRequest$FieldPath": "<p>The path to the registration form field. You can use <a>DescribeRegistrationFieldDefinitions</a> for a list of <b>FieldPaths</b>.</p>",
         "PutRegistrationFieldValueResult$FieldPath": "<p>The path to the registration form field. You can use <a>DescribeRegistrationFieldDefinitions</a> for a list of <b>FieldPaths</b>.</p>",
@@ -3187,6 +3267,7 @@
     "SelectChoiceList": {
       "base": null,
       "refs": {
+        "ConditionalValidation$AllowedValues": "<p>The allowed values for a select field when this rule applies. A subset of the field's full option list.</p>",
         "DeleteRegistrationFieldValueResult$SelectChoices": "<p>An array of values for the form field.</p>",
         "PutRegistrationFieldValueRequest$SelectChoices": "<p>An array of values for the form field.</p>",
         "PutRegistrationFieldValueResult$SelectChoices": "<p>An array of values for the form field.</p>",

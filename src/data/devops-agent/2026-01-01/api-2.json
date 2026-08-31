@@ -5537,6 +5537,14 @@
       "min":1,
       "pattern":"(\\*|[a-z]{2,4}(-[a-z]+)+-\\d+)"
     },
+    "SlackBidirectionalConfiguration":{
+      "type":"structure",
+      "required":["roleArn"],
+      "members":{
+        "roleArn":{"shape":"RoleArn"},
+        "enabled":{"shape":"Boolean"}
+      }
+    },
     "SlackChannel":{
       "type":"structure",
       "required":["channelId"],
@@ -5561,7 +5569,8 @@
       "members":{
         "workspaceId":{"shape":"SlackConfigurationWorkspaceIdString"},
         "workspaceName":{"shape":"String"},
-        "transmissionTarget":{"shape":"SlackTransmissionTarget"}
+        "transmissionTarget":{"shape":"SlackTransmissionTarget"},
+        "bidirectional":{"shape":"SlackBidirectionalConfiguration"}
       }
     },
     "SlackConfigurationWorkspaceIdString":{

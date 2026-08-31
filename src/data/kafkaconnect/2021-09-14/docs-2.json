@@ -17,6 +17,7 @@
     "ListCustomPlugins": "<p>Returns a list of all of the custom plugins in this account and Region.</p>",
     "ListTagsForResource": "<p>Lists all the tags attached to the specified resource.</p>",
     "ListWorkerConfigurations": "<p>Returns a list of all of the worker configurations in this account and Region.</p>",
+    "RestartConnector": "<p>Restarts the specified connector. By default, this operation restarts the connector and all of its tasks. This operation is asynchronous and returns a connector operation ARN that you can pass to <code>DescribeConnectorOperation</code> to track the state of the restart.</p>",
     "TagResource": "<p>Attaches tags to the specified resource.</p>",
     "UntagResource": "<p>Removes tags from the specified resource.</p>",
     "UpdateConnector": "<p>Updates the specified connector. For request body, specify only one parameter: either <code>capacity</code> or <code>connectorConfiguration</code>.</p>"
@@ -477,6 +478,14 @@
         "CapacityUpdate$provisionedCapacity": "<p>The target settings for provisioned capacity.</p>"
       }
     },
+    "RestartConnectorRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "RestartConnectorResponse": {
+      "base": null,
+      "refs": {}
+    },
     "S3Location": {
       "base": "<p>The location of an object in Amazon S3.</p>",
       "refs": {
@@ -689,6 +698,7 @@
         "CloudWatchLogsLogDeliveryDescription$enabled": "<p>Whether log delivery to Amazon CloudWatch Logs is enabled.</p>",
         "FirehoseLogDelivery$enabled": "<p>Specifies whether connector logs get delivered to Amazon Kinesis Data Firehose.</p>",
         "FirehoseLogDeliveryDescription$enabled": "<p>Specifies whether connector logs get delivered to Amazon Kinesis Data Firehose.</p>",
+        "RestartConnectorRequest$onlyFailedTasks": "<p>Specifies whether to restart only the connector's failed tasks. If <code>true</code>, the operation restarts only the tasks that are currently in a failed state, and healthy tasks continue running. If <code>false</code> or not specified, the operation restarts the connector and all of its tasks.</p>",
         "S3LogDelivery$enabled": "<p>Specifies whether connector logs get sent to the specified Amazon S3 destination.</p>",
         "S3LogDeliveryDescription$enabled": "<p>Specifies whether connector logs get sent to the specified Amazon S3 destination.</p>"
       }
@@ -888,6 +898,9 @@
         "ListWorkerConfigurationsRequest$namePrefix": "<p>Lists worker configuration names that start with the specified text string.</p>",
         "ListWorkerConfigurationsResponse$nextToken": "<p>If the response of a ListWorkerConfigurations operation is truncated, it will include a NextToken. Send this NextToken in a subsequent request to continue listing from where the previous operation left off.</p>",
         "NotFoundException$message": null,
+        "RestartConnectorRequest$connectorArn": "<p>The Amazon Resource Name (ARN) of the connector that you want to restart.</p>",
+        "RestartConnectorResponse$connectorArn": "<p>The Amazon Resource Name (ARN) of the connector.</p>",
+        "RestartConnectorResponse$connectorOperationArn": "<p>The Amazon Resource Name (ARN) of the connector operation created to perform the restart.</p>",
         "S3Location$bucketArn": "<p>The Amazon Resource Name (ARN) of an S3 bucket.</p>",
         "S3Location$fileKey": "<p>The file key for an object in an S3 bucket.</p>",
         "S3Location$objectVersion": "<p>The version of an object in an S3 bucket.</p>",

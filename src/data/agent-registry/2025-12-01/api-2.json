@@ -207,6 +207,12 @@
       "min":1,
       "pattern":"https://.*"
     },
+    "DescriptorTypeList":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":10,
+      "min":0
+    },
     "Descriptors":{
       "type":"structure",
       "members":{
@@ -246,7 +252,8 @@
         "recordVersion":{"shape":"RegistryRecordVersion"},
         "status":{"shape":"RegistryRecordStatus"},
         "createdAt":{"shape":"DateTimestamp"},
-        "updatedAt":{"shape":"DateTimestamp"}
+        "updatedAt":{"shape":"DateTimestamp"},
+        "descriptorTypes":{"shape":"DescriptorTypeList"}
       }
     },
     "DiscoverableRegistryRecordSummaryList":{
@@ -346,7 +353,8 @@
         "MCP",
         "AGENT",
         "CUSTOM",
-        "SKILL"
+        "SKILL",
+        "GATEWAY"
       ]
     },
     "RegistryArn":{

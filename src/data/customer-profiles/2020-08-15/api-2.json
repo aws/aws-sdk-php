@@ -31,6 +31,23 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "AssociateStreamForSegments":{
+      "name":"AssociateStreamForSegments",
+      "http":{
+        "method":"POST",
+        "requestUri":"/domains/{DomainName}/segment-streams",
+        "responseCode":200
+      },
+      "input":{"shape":"AssociateStreamForSegmentsRequest"},
+      "output":{"shape":"AssociateStreamForSegmentsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "BatchGetCalculatedAttributeForProfile":{
       "name":"BatchGetCalculatedAttributeForProfile",
       "http":{
@@ -555,6 +572,24 @@
       ],
       "idempotent":true
     },
+    "DeleteSegmentSubscription":{
+      "name":"DeleteSegmentSubscription",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/domains/{DomainName}/segment-definitions/{SegmentDefinitionName}/subscriptions",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteSegmentSubscriptionRequest"},
+      "output":{"shape":"DeleteSegmentSubscriptionResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
     "DeleteWorkflow":{
       "name":"DeleteWorkflow",
       "http":{
@@ -586,6 +621,24 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ]
+    },
+    "DisassociateStreamForSegments":{
+      "name":"DisassociateStreamForSegments",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/domains/{DomainName}/segment-streams",
+        "responseCode":200
+      },
+      "input":{"shape":"DisassociateStreamForSegmentsRequest"},
+      "output":{"shape":"DisassociateStreamForSegmentsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
     },
     "GetAutoMergingPreview":{
       "name":"GetAutoMergingPreview",
@@ -965,6 +1018,24 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "GetSegmentSubscription":{
+      "name":"GetSegmentSubscription",
+      "http":{
+        "method":"GET",
+        "requestUri":"/domains/{DomainName}/segment-definitions/{SegmentDefinitionName}/subscriptions",
+        "responseCode":200
+      },
+      "input":{"shape":"GetSegmentSubscriptionRequest"},
+      "output":{"shape":"GetSegmentSubscriptionResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
     "GetSimilarProfiles":{
       "name":"GetSimilarProfiles",
       "http":{
@@ -980,6 +1051,24 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ]
+    },
+    "GetStreamForSegments":{
+      "name":"GetStreamForSegments",
+      "http":{
+        "method":"GET",
+        "requestUri":"/domains/{DomainName}/segment-streams",
+        "responseCode":200
+      },
+      "input":{"shape":"GetStreamForSegmentsRequest"},
+      "output":{"shape":"GetStreamForSegmentsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
     },
     "GetUploadJob":{
       "name":"GetUploadJob",
@@ -1426,6 +1515,24 @@
       ],
       "readonly":true
     },
+    "ListSegmentSubscriptionEvents":{
+      "name":"ListSegmentSubscriptionEvents",
+      "http":{
+        "method":"GET",
+        "requestUri":"/domains/{DomainName}/segment-definitions/{SegmentDefinitionName}/subscription-events",
+        "responseCode":200
+      },
+      "input":{"shape":"ListSegmentSubscriptionEventsRequest"},
+      "output":{"shape":"ListSegmentSubscriptionEventsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
       "http":{
@@ -1552,6 +1659,24 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ]
+    },
+    "PutSegmentSubscription":{
+      "name":"PutSegmentSubscription",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/domains/{DomainName}/segment-definitions/{SegmentDefinitionName}/subscriptions",
+        "responseCode":200
+      },
+      "input":{"shape":"PutSegmentSubscriptionRequest"},
+      "output":{"shape":"PutSegmentSubscriptionResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
     },
     "SearchProfiles":{
       "name":"SearchProfiles",
@@ -1945,6 +2070,48 @@
       "type":"string",
       "pattern":"arn:([a-z\\d-]+):profile:.*:.*:.+"
     },
+    "AssociateStreamForSegmentsRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "DestinationArn",
+        "DestinationRoleArn"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "DestinationArn":{"shape":"DestinationArnString"},
+        "DestinationRoleArn":{"shape":"DestinationRoleArn"}
+      }
+    },
+    "AssociateStreamForSegmentsResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "AssociatedSegment":{
+      "type":"structure",
+      "members":{
+        "SegmentName":{
+          "shape":"name",
+          "locationName":"SegmentName"
+        },
+        "Status":{
+          "shape":"EventSubscriptionSegmentStatus",
+          "locationName":"Status"
+        },
+        "Message":{
+          "shape":"string1To1000",
+          "locationName":"Message"
+        }
+      }
+    },
+    "AssociatedSegmentsList":{
+      "type":"list",
+      "member":{"shape":"AssociatedSegment"}
+    },
     "AttributeDetails":{
       "type":"structure",
       "required":[
@@ -1991,7 +2158,9 @@
         "LESS_THAN",
         "GREATER_THAN_OR_EQUAL",
         "LESS_THAN_OR_EQUAL",
-        "EQUAL"
+        "EQUAL",
+        "LIST_CONTAINS",
+        "LIST_CONTAINS_ALL"
       ]
     },
     "AttributeItem":{
@@ -3415,6 +3584,34 @@
         }
       }
     },
+    "DeleteSegmentSubscriptionRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "SegmentDefinitionName"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "SegmentDefinitionName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"SegmentDefinitionName"
+        }
+      }
+    },
+    "DeleteSegmentSubscriptionResponse":{
+      "type":"structure",
+      "members":{
+        "Message":{
+          "shape":"string1To1000",
+          "locationName":"Message"
+        }
+      }
+    },
     "DeleteWorkflowRequest":{
       "type":"structure",
       "required":[
@@ -3438,10 +3635,21 @@
       "type":"structure",
       "members":{}
     },
+    "DestinationArnString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
     "DestinationField":{
       "type":"string",
       "max":256,
       "pattern":".*"
+    },
+    "DestinationRoleArn":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":".*arn:aws:iam:.*:[0-9]+:.*"
     },
     "DestinationSummary":{
       "type":"structure",
@@ -3505,6 +3713,26 @@
     "DimensionList":{
       "type":"list",
       "member":{"shape":"Dimension"}
+    },
+    "DisassociateStreamForSegmentsRequest":{
+      "type":"structure",
+      "required":["DomainName"],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        }
+      }
+    },
+    "DisassociateStreamForSegmentsResponse":{
+      "type":"structure",
+      "members":{
+        "Message":{
+          "shape":"string1To1000",
+          "locationName":"Message"
+        }
+      }
     },
     "DiversityCapType":{
       "type":"string",
@@ -3721,6 +3949,23 @@
     "EventStreamSummaryList":{
       "type":"list",
       "member":{"shape":"EventStreamSummary"}
+    },
+    "EventSubscriptionSegmentStatus":{
+      "type":"string",
+      "enum":[
+        "STARTING",
+        "RUNNING",
+        "STOPPED",
+        "FAILED"
+      ]
+    },
+    "EventSubscriptionState":{
+      "type":"string",
+      "enum":[
+        "RUNNING",
+        "UNHEALTHY",
+        "STOPPED"
+      ]
     },
     "EventTriggerCondition":{
       "type":"structure",
@@ -4920,6 +5165,54 @@
         "DestinationUri":{"shape":"string1To255"}
       }
     },
+    "GetSegmentSubscriptionRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "SegmentDefinitionName"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "SegmentDefinitionName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"SegmentDefinitionName"
+        }
+      }
+    },
+    "GetSegmentSubscriptionResponse":{
+      "type":"structure",
+      "members":{
+        "Status":{
+          "shape":"SegmentSubscriptionStatus",
+          "locationName":"Status"
+        },
+        "Message":{
+          "shape":"string1To1000",
+          "locationName":"Message"
+        },
+        "ScheduleConfiguration":{
+          "shape":"ScheduleConfiguration",
+          "locationName":"ScheduleConfiguration"
+        },
+        "ScheduledExecutions":{
+          "shape":"ScheduledExecutions",
+          "locationName":"ScheduledExecutions"
+        },
+        "StartedAt":{
+          "shape":"timestamp",
+          "locationName":"StartedAt"
+        },
+        "LastUpdatedAt":{
+          "shape":"timestamp",
+          "locationName":"LastUpdatedAt"
+        }
+      }
+    },
     "GetSimilarProfilesRequest":{
       "type":"structure",
       "required":[
@@ -4958,6 +5251,54 @@
         "RuleLevel":{"shape":"RuleLevel"},
         "ConfidenceScore":{"shape":"Double"},
         "NextToken":{"shape":"token"}
+      }
+    },
+    "GetStreamForSegmentsRequest":{
+      "type":"structure",
+      "required":["DomainName"],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        }
+      }
+    },
+    "GetStreamForSegmentsResponse":{
+      "type":"structure",
+      "members":{
+        "AssociatedAt":{
+          "shape":"timestamp",
+          "locationName":"AssociatedAt"
+        },
+        "AssociatedSegments":{
+          "shape":"AssociatedSegmentsList",
+          "locationName":"AssociatedSegments"
+        },
+        "DomainName":{
+          "shape":"name",
+          "locationName":"DomainName"
+        },
+        "DestinationArn":{
+          "shape":"DestinationArnString",
+          "locationName":"DestinationArn"
+        },
+        "DestinationRoleArn":{
+          "shape":"DestinationRoleArn",
+          "locationName":"DestinationRoleArn"
+        },
+        "State":{
+          "shape":"EventSubscriptionState",
+          "locationName":"State"
+        },
+        "DisassociatedAt":{
+          "shape":"timestamp",
+          "locationName":"DisassociatedAt"
+        },
+        "FailureReason":{
+          "shape":"string1To255",
+          "locationName":"FailureReason"
+        }
       }
     },
     "GetUploadJobPathRequest":{
@@ -5246,6 +5587,12 @@
       "error":{"httpStatusCode":500},
       "exception":true,
       "fault":true
+    },
+    "IntervalValue":{
+      "type":"integer",
+      "box":true,
+      "max":24,
+      "min":1
     },
     "JobSchedule":{
       "type":"structure",
@@ -6111,6 +6458,48 @@
         "Items":{
           "shape":"SegmentDefinitionsList",
           "locationName":"Items"
+        }
+      }
+    },
+    "ListSegmentSubscriptionEventsRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "SegmentDefinitionName"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "SegmentDefinitionName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"SegmentDefinitionName"
+        },
+        "MaxResults":{
+          "shape":"maxSize100",
+          "location":"querystring",
+          "locationName":"max-results"
+        },
+        "NextToken":{
+          "shape":"token",
+          "location":"querystring",
+          "locationName":"next-token"
+        }
+      }
+    },
+    "ListSegmentSubscriptionEventsResponse":{
+      "type":"structure",
+      "members":{
+        "Events":{
+          "shape":"SubscriptionEventsList",
+          "locationName":"Events"
+        },
+        "NextToken":{
+          "shape":"token",
+          "locationName":"NextToken"
         }
       }
     },
@@ -7006,6 +7395,43 @@
         "Tags":{"shape":"TagMap"}
       }
     },
+    "PutSegmentSubscriptionRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "SegmentDefinitionName"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "SegmentDefinitionName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"SegmentDefinitionName"
+        },
+        "ScheduleConfiguration":{"shape":"ScheduleConfiguration"}
+      }
+    },
+    "PutSegmentSubscriptionResponse":{
+      "type":"structure",
+      "members":{
+        "Status":{
+          "shape":"SegmentSubscriptionStatus",
+          "locationName":"Status"
+        },
+        "ScheduleConfiguration":{
+          "shape":"ScheduleConfiguration",
+          "locationName":"ScheduleConfiguration"
+        },
+        "StartedAt":{
+          "shape":"timestamp",
+          "locationName":"StartedAt"
+        }
+      }
+    },
     "QueryResult":{
       "type":"string",
       "enum":[
@@ -7451,6 +7877,24 @@
         "IncludeDeletedRecords":{"shape":"boolean"}
       }
     },
+    "ScheduleConfiguration":{
+      "type":"structure",
+      "required":["Interval"],
+      "members":{
+        "Interval":{
+          "shape":"IntervalValue",
+          "locationName":"Interval"
+        },
+        "Unit":{
+          "shape":"ScheduleConfigurationUnit",
+          "locationName":"Unit"
+        }
+      }
+    },
+    "ScheduleConfigurationUnit":{
+      "type":"string",
+      "enum":["HOURLY"]
+    },
     "ScheduleExpression":{
       "type":"string",
       "max":256,
@@ -7460,6 +7904,19 @@
       "type":"long",
       "max":36000,
       "min":0
+    },
+    "ScheduledExecutions":{
+      "type":"structure",
+      "members":{
+        "NextExecutedAt":{
+          "shape":"timestamp",
+          "locationName":"NextExecutedAt"
+        },
+        "LastExecutedAt":{
+          "shape":"timestamp",
+          "locationName":"LastExecutedAt"
+        }
+      }
     },
     "ScheduledTriggerProperties":{
       "type":"structure",
@@ -7619,6 +8076,15 @@
       "enum":[
         "ASC",
         "DESC"
+      ]
+    },
+    "SegmentSubscriptionStatus":{
+      "type":"string",
+      "enum":[
+        "STARTING",
+        "RUNNING",
+        "STOPPED",
+        "FAILED"
       ]
     },
     "SegmentType":{
@@ -7835,7 +8301,8 @@
         "MINIMUM",
         "MAXIMUM",
         "AVERAGE",
-        "MAX_OCCURRENCE"
+        "MAX_OCCURRENCE",
+        "RECENT_OCCURRENCES"
       ],
       "sensitive":true
     },
@@ -7915,6 +8382,45 @@
         "BEGINS_WITH",
         "ENDS_WITH"
       ]
+    },
+    "SubscriptionEvent":{
+      "type":"string",
+      "enum":[
+        "JOINED",
+        "LEFT"
+      ]
+    },
+    "SubscriptionEventItem":{
+      "type":"structure",
+      "members":{
+        "ProfileId":{
+          "shape":"uuid",
+          "locationName":"ProfileId"
+        },
+        "UpdatedAt":{
+          "shape":"timestamp",
+          "locationName":"UpdatedAt"
+        },
+        "EventType":{
+          "shape":"SubscriptionEventType",
+          "locationName":"EventType"
+        },
+        "Event":{
+          "shape":"SubscriptionEvent",
+          "locationName":"Event"
+        }
+      }
+    },
+    "SubscriptionEventType":{
+      "type":"string",
+      "enum":[
+        "LIVE",
+        "SCHEDULE"
+      ]
+    },
+    "SubscriptionEventsList":{
+      "type":"list",
+      "member":{"shape":"SubscriptionEventItem"}
     },
     "TagArn":{
       "type":"string",

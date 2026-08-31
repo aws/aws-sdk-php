@@ -1,4 +1,379 @@
 {
   "version": "1.0",
-  "examples": {}
+  "examples": {
+    "CreateChannel": [
+      {
+        "input": {
+          "ChannelName": "my-channel-name",
+          "EncryptionConfiguration": {
+            "EncryptionType": "KMS",
+            "KeyId": "arn:aws:kms:us-east-1:123456789012:key/1234abcd-12ab-34cd-56ef-1234567890ab"
+          },
+          "LoggingConfiguration": {
+            "CloudWatchLogs": {
+              "Enabled": true,
+              "LogGroupName": "/aws/kinesis/my-channel",
+              "LogStreamName": "my-channel-log-stream"
+            }
+          },
+          "S3DestinationConfiguration": {
+            "DeadLetterQueueS3Configuration": {
+              "BucketARN": "arn:aws:s3:::my-channel-dlq-bucket",
+              "ExpectedBucketOwner": "123456789012"
+            },
+            "StorageConfiguration": {
+              "BucketARN": "arn:aws:s3:::my-channel-bucket",
+              "CompressionType": "ZSTD",
+              "ExpectedBucketOwner": "123456789012"
+            }
+          },
+          "ServiceExecutionRoleARN": "arn:aws:iam::123456789012:role/my-channel-role",
+          "StreamConfigurationList": [
+            {
+              "RecordConfiguration": {
+                "RecordFormatType": "JSON"
+              },
+              "StreamARN": "arn:aws:kinesis:us-east-1:123456789012:stream/my-stream-name"
+            }
+          ]
+        },
+        "output": {
+          "ChannelDescription": {
+            "ChannelARN": "arn:aws:kinesis:us-east-1:123456789012:channel/my-channel-id",
+            "ChannelCreationTimestamp": "2024-07-02T00:00:00Z",
+            "ChannelId": "my-channel-id",
+            "ChannelName": "my-channel-name",
+            "ChannelStatus": "CREATING",
+            "EncryptionConfiguration": {
+              "EncryptionType": "KMS",
+              "KeyId": "arn:aws:kms:us-east-1:123456789012:key/1234abcd-12ab-34cd-56ef-1234567890ab"
+            },
+            "LoggingConfiguration": {
+              "CloudWatchLogs": {
+                "Enabled": true,
+                "LogGroupName": "/aws/kinesis/my-channel",
+                "LogStreamName": "my-channel-log-stream"
+              }
+            },
+            "S3DestinationConfiguration": {
+              "DataFreshnessInSeconds": 300,
+              "DeadLetterQueueS3Configuration": {
+                "BucketARN": "arn:aws:s3:::my-channel-dlq-bucket",
+                "ErrorOutputPrefix": "kinesis-channel/errors/my-channel/my-channel-id/",
+                "ExpectedBucketOwner": "123456789012"
+              },
+              "StorageConfiguration": {
+                "BucketARN": "arn:aws:s3:::my-channel-bucket",
+                "CompressionType": "ZSTD",
+                "ExpectedBucketOwner": "123456789012",
+                "OutputKeyTemplate": "kinesis-channel/!{channel-name}/!{channel-id}/!{yyyy}/!{MM}/!{dd}/!{HH}/!{channel-name}-!{channel-id}-!{yyyy}-!{MM}-!{dd}-!{HH}-!{mm}!{extension}",
+                "StorageClass": "STANDARD"
+              }
+            },
+            "ServiceExecutionRoleARN": "arn:aws:iam::123456789012:role/my-channel-role",
+            "StreamConfigurationList": [
+              {
+                "RecordConfiguration": {
+                  "RecordFormatType": "JSON"
+                },
+                "StreamARN": "arn:aws:kinesis:us-east-1:123456789012:stream/my-stream-name",
+                "StreamCreationTimestamp": "2024-07-01T00:00:00Z"
+              }
+            ]
+          }
+        },
+        "id": "create-channel-example-1",
+        "title": "To create an S3 channel"
+      },
+      {
+        "input": {
+          "ChannelName": "my-channel-name",
+          "EncryptionConfiguration": {
+            "EncryptionType": "KMS",
+            "KeyId": "arn:aws:kms:us-east-1:123456789012:key/1234abcd-12ab-34cd-56ef-1234567890ab"
+          },
+          "LoggingConfiguration": {
+            "CloudWatchLogs": {
+              "Enabled": true,
+              "LogGroupName": "/aws/kinesis/my-channel",
+              "LogStreamName": "my-channel-log-stream"
+            }
+          },
+          "S3TablesDestinationConfiguration": {
+            "DeadLetterQueueS3Configuration": {
+              "BucketARN": "arn:aws:s3:::my-channel-dlq-bucket",
+              "ExpectedBucketOwner": "123456789012"
+            },
+            "S3TablesConfigurationList": [
+              {
+                "CompressionType": "ZSTD",
+                "Namespace": "my_namespace",
+                "PartitionSpec": {
+                  "PartitionFields": [
+                    {
+                      "SourceName": "creation_ts",
+                      "Transform": "TIME_HOUR"
+                    }
+                  ]
+                },
+                "TableBucketARN": "arn:aws:s3tables:us-east-1:123456789012:bucket/my-table-bucket",
+                "TableName": "my_table"
+              }
+            ]
+          },
+          "ServiceExecutionRoleARN": "arn:aws:iam::123456789012:role/my-channel-role",
+          "StreamConfigurationList": [
+            {
+              "RecordConfiguration": {
+                "GSRSchemaARN": "arn:aws:glue:us-east-1:123456789012:schema/my-registry/my-schema",
+                "RecordFormatType": "JSON"
+              },
+              "StreamARN": "arn:aws:kinesis:us-east-1:123456789012:stream/my-stream-name"
+            }
+          ]
+        },
+        "output": {
+          "ChannelDescription": {
+            "ChannelARN": "arn:aws:kinesis:us-east-1:123456789012:channel/my-channel-id",
+            "ChannelCreationTimestamp": "2024-07-02T00:00:00Z",
+            "ChannelId": "my-channel-id",
+            "ChannelName": "my-channel-name",
+            "ChannelStatus": "CREATING",
+            "EncryptionConfiguration": {
+              "EncryptionType": "KMS",
+              "KeyId": "arn:aws:kms:us-east-1:123456789012:key/1234abcd-12ab-34cd-56ef-1234567890ab"
+            },
+            "LoggingConfiguration": {
+              "CloudWatchLogs": {
+                "Enabled": true,
+                "LogGroupName": "/aws/kinesis/my-channel",
+                "LogStreamName": "my-channel-log-stream"
+              }
+            },
+            "S3TablesDestinationConfiguration": {
+              "DataFreshnessInSeconds": 300,
+              "DeadLetterQueueS3Configuration": {
+                "BucketARN": "arn:aws:s3:::my-channel-dlq-bucket",
+                "ErrorOutputPrefix": "kinesis-channel/errors/my-channel/my-channel-id/",
+                "ExpectedBucketOwner": "123456789012"
+              },
+              "S3TablesConfigurationList": [
+                {
+                  "CompressionType": "ZSTD",
+                  "Namespace": "my_namespace",
+                  "PartitionSpec": {
+                    "PartitionFields": [
+                      {
+                        "SourceName": "creation_ts",
+                        "Transform": "TIME_HOUR"
+                      }
+                    ]
+                  },
+                  "TableBucketARN": "arn:aws:s3tables:us-east-1:123456789012:bucket/my-table-bucket",
+                  "TableName": "my_table"
+                }
+              ]
+            },
+            "ServiceExecutionRoleARN": "arn:aws:iam::123456789012:role/my-channel-role",
+            "StreamConfigurationList": [
+              {
+                "RecordConfiguration": {
+                  "GSRSchemaARN": "arn:aws:glue:us-east-1:123456789012:schema/my-registry/my-schema",
+                  "RecordFormatType": "JSON"
+                },
+                "StreamARN": "arn:aws:kinesis:us-east-1:123456789012:stream/my-stream-name",
+                "StreamCreationTimestamp": "2024-07-01T00:00:00Z"
+              }
+            ]
+          }
+        },
+        "id": "create-channel-example-2",
+        "title": "To create an S3 Tables channel"
+      }
+    ],
+    "DeleteChannel": [
+      {
+        "input": {
+          "ChannelARN": "arn:aws:kinesis:us-east-1:123456789012:channel/my-channel-id"
+        },
+        "output": {},
+        "id": "delete-channel-example-1",
+        "title": "To delete a channel"
+      }
+    ],
+    "DescribeChannel": [
+      {
+        "input": {
+          "ChannelARN": "arn:aws:kinesis:us-east-1:123456789012:channel/my-channel-id"
+        },
+        "output": {
+          "ChannelDescription": {
+            "ChannelARN": "arn:aws:kinesis:us-east-1:123456789012:channel/my-channel-id",
+            "ChannelCreationTimestamp": "2024-07-02T00:00:00Z",
+            "ChannelId": "my-channel-id",
+            "ChannelName": "my-channel-name",
+            "ChannelStatus": "ACTIVE",
+            "EncryptionConfiguration": {
+              "EncryptionType": "KMS",
+              "KeyId": "arn:aws:kms:us-east-1:123456789012:key/1234abcd-12ab-34cd-56ef-1234567890ab"
+            },
+            "LoggingConfiguration": {
+              "CloudWatchLogs": {
+                "Enabled": true,
+                "LogGroupName": "/aws/kinesis/my-channel",
+                "LogStreamName": "my-channel-log-stream"
+              }
+            },
+            "S3DestinationConfiguration": {
+              "DataFreshnessInSeconds": 300,
+              "DeadLetterQueueS3Configuration": {
+                "BucketARN": "arn:aws:s3:::my-channel-dlq-bucket",
+                "ErrorOutputPrefix": "kinesis-channel/errors/my-channel/my-channel-id/",
+                "ExpectedBucketOwner": "123456789012"
+              },
+              "StorageConfiguration": {
+                "BucketARN": "arn:aws:s3:::my-channel-bucket",
+                "CompressionType": "ZSTD",
+                "ExpectedBucketOwner": "123456789012",
+                "OutputKeyTemplate": "kinesis-channel/!{channel-name}/!{channel-id}/!{yyyy}/!{MM}/!{dd}/!{HH}/!{channel-name}-!{channel-id}-!{yyyy}-!{MM}-!{dd}-!{HH}-!{mm}!{extension}",
+                "StorageClass": "STANDARD"
+              }
+            },
+            "ServiceExecutionRoleARN": "arn:aws:iam::123456789012:role/my-channel-role",
+            "StreamConfigurationList": [
+              {
+                "RecordConfiguration": {
+                  "RecordFormatType": "JSON"
+                },
+                "StreamARN": "arn:aws:kinesis:us-east-1:123456789012:stream/my-stream-name",
+                "StreamCreationTimestamp": "2024-07-01T00:00:00Z"
+              }
+            ]
+          }
+        },
+        "id": "describe-channel-example-1",
+        "title": "To describe a channel"
+      }
+    ],
+    "ListChannels": [
+      {
+        "input": {},
+        "output": {
+          "ChannelSummaries": [
+            {
+              "ChannelARN": "arn:aws:kinesis:us-east-1:123456789012:channel/my-channel-id",
+              "ChannelCreationTimestamp": "2024-07-02T00:00:00Z",
+              "ChannelDestinationType": "S3",
+              "ChannelId": "my-channel-id",
+              "ChannelName": "my-channel-name",
+              "ChannelStatus": "ACTIVE",
+              "Streams": [
+                {
+                  "StreamARN": "arn:aws:kinesis:us-east-1:123456789012:stream/my-stream-name",
+                  "StreamCreationTimestamp": "2024-07-01T00:00:00Z"
+                }
+              ]
+            }
+          ]
+        },
+        "id": "list-channels-example-1",
+        "title": "To list channels"
+      },
+      {
+        "input": {
+          "MaxResults": 10,
+          "StreamFilter": [
+            {
+              "StreamARN": "arn:aws:kinesis:us-east-1:123456789012:stream/my-stream-name"
+            }
+          ]
+        },
+        "output": {
+          "ChannelSummaries": [
+            {
+              "ChannelARN": "arn:aws:kinesis:us-east-1:123456789012:channel/my-channel-id",
+              "ChannelCreationTimestamp": "2024-07-02T00:00:00Z",
+              "ChannelDestinationType": "S3",
+              "ChannelId": "my-channel-id",
+              "ChannelName": "my-channel-name",
+              "ChannelStatus": "ACTIVE",
+              "Streams": [
+                {
+                  "StreamARN": "arn:aws:kinesis:us-east-1:123456789012:stream/my-stream-name",
+                  "StreamCreationTimestamp": "2024-07-01T00:00:00Z"
+                }
+              ]
+            }
+          ],
+          "NextToken": "AAAAAgAAAAEAAAABbXktbmV4dC1wYWdlLXRva2Vu"
+        },
+        "id": "list-channels-example-2",
+        "title": "To list channels filtered by stream"
+      }
+    ],
+    "UpdateChannel": [
+      {
+        "input": {
+          "ChannelARN": "arn:aws:kinesis:us-east-1:123456789012:channel/my-channel-id",
+          "LoggingConfiguration": {
+            "CloudWatchLogs": {
+              "Enabled": true,
+              "LogGroupName": "/aws/kinesis/my-channel",
+              "LogStreamName": "my-channel-log-stream"
+            }
+          },
+          "S3DestinationConfiguration": {
+            "DataFreshnessInSeconds": 600
+          }
+        },
+        "output": {
+          "ChannelDescription": {
+            "ChannelARN": "arn:aws:kinesis:us-east-1:123456789012:channel/my-channel-id",
+            "ChannelCreationTimestamp": "2024-07-02T00:00:00Z",
+            "ChannelId": "my-channel-id",
+            "ChannelName": "my-channel-name",
+            "ChannelStatus": "UPDATING",
+            "EncryptionConfiguration": {
+              "EncryptionType": "KMS",
+              "KeyId": "arn:aws:kms:us-east-1:123456789012:key/1234abcd-12ab-34cd-56ef-1234567890ab"
+            },
+            "LoggingConfiguration": {
+              "CloudWatchLogs": {
+                "Enabled": true,
+                "LogGroupName": "/aws/kinesis/my-channel",
+                "LogStreamName": "my-channel-log-stream"
+              }
+            },
+            "S3DestinationConfiguration": {
+              "DataFreshnessInSeconds": 600,
+              "DeadLetterQueueS3Configuration": {
+                "BucketARN": "arn:aws:s3:::my-channel-dlq-bucket",
+                "ErrorOutputPrefix": "kinesis-channel/errors/my-channel/my-channel-id/",
+                "ExpectedBucketOwner": "123456789012"
+              },
+              "StorageConfiguration": {
+                "BucketARN": "arn:aws:s3:::my-channel-bucket",
+                "CompressionType": "ZSTD",
+                "ExpectedBucketOwner": "123456789012",
+                "OutputKeyTemplate": "kinesis-channel/!{channel-name}/!{channel-id}/!{yyyy}/!{MM}/!{dd}/!{HH}/!{channel-name}-!{channel-id}-!{yyyy}-!{MM}-!{dd}-!{HH}-!{mm}!{extension}",
+                "StorageClass": "STANDARD"
+              }
+            },
+            "ServiceExecutionRoleARN": "arn:aws:iam::123456789012:role/my-channel-role",
+            "StreamConfigurationList": [
+              {
+                "RecordConfiguration": {
+                  "RecordFormatType": "JSON"
+                },
+                "StreamARN": "arn:aws:kinesis:us-east-1:123456789012:stream/my-stream-name",
+                "StreamCreationTimestamp": "2024-07-01T00:00:00Z"
+              }
+            ]
+          }
+        },
+        "id": "update-channel-example-1",
+        "title": "To update a channel"
+      }
+    ]
+  }
 }

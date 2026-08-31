@@ -27,7 +27,8 @@
         {"shape":"AttachmentSetIdNotFound"},
         {"shape":"AttachmentSetExpired"},
         {"shape":"AttachmentSetSizeLimitExceeded"},
-        {"shape":"AttachmentLimitExceeded"}
+        {"shape":"AttachmentLimitExceeded"},
+        {"shape":"DryRunOperationException"}
       ]
     },
     "AddCommunicationToCase":{
@@ -42,7 +43,22 @@
         {"shape":"InternalServerError"},
         {"shape":"CaseIdNotFound"},
         {"shape":"AttachmentSetIdNotFound"},
-        {"shape":"AttachmentSetExpired"}
+        {"shape":"AttachmentSetExpired"},
+        {"shape":"DryRunOperationException"}
+      ]
+    },
+    "CompleteAttachmentUpload":{
+      "name":"CompleteAttachmentUpload",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CompleteAttachmentUploadRequest"},
+      "output":{"shape":"CompleteAttachmentUploadResponse"},
+      "errors":[
+        {"shape":"InternalServerError"},
+        {"shape":"DryRunOperationException"},
+        {"shape":"UploadIdNotFound"}
       ]
     },
     "CreateCase":{
@@ -57,7 +73,8 @@
         {"shape":"InternalServerError"},
         {"shape":"CaseCreationLimitExceeded"},
         {"shape":"AttachmentSetIdNotFound"},
-        {"shape":"AttachmentSetExpired"}
+        {"shape":"AttachmentSetExpired"},
+        {"shape":"DryRunOperationException"}
       ]
     },
     "DescribeAttachment":{
@@ -71,7 +88,22 @@
       "errors":[
         {"shape":"InternalServerError"},
         {"shape":"DescribeAttachmentLimitExceeded"},
-        {"shape":"AttachmentIdNotFound"}
+        {"shape":"AttachmentIdNotFound"},
+        {"shape":"DryRunOperationException"}
+      ]
+    },
+    "DescribeAttachmentUploadStatus":{
+      "name":"DescribeAttachmentUploadStatus",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeAttachmentUploadStatusRequest"},
+      "output":{"shape":"DescribeAttachmentUploadStatusResponse"},
+      "errors":[
+        {"shape":"InternalServerError"},
+        {"shape":"DryRunOperationException"},
+        {"shape":"UploadIdNotFound"}
       ]
     },
     "DescribeCases":{
@@ -84,7 +116,8 @@
       "output":{"shape":"DescribeCasesResponse"},
       "errors":[
         {"shape":"InternalServerError"},
-        {"shape":"CaseIdNotFound"}
+        {"shape":"CaseIdNotFound"},
+        {"shape":"DryRunOperationException"}
       ]
     },
     "DescribeCommunications":{
@@ -97,7 +130,8 @@
       "output":{"shape":"DescribeCommunicationsResponse"},
       "errors":[
         {"shape":"InternalServerError"},
-        {"shape":"CaseIdNotFound"}
+        {"shape":"CaseIdNotFound"},
+        {"shape":"DryRunOperationException"}
       ]
     },
     "DescribeCreateCaseOptions":{
@@ -110,7 +144,8 @@
       "output":{"shape":"DescribeCreateCaseOptionsResponse"},
       "errors":[
         {"shape":"InternalServerError"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"DryRunOperationException"}
       ]
     },
     "DescribeServices":{
@@ -122,7 +157,8 @@
       "input":{"shape":"DescribeServicesRequest"},
       "output":{"shape":"DescribeServicesResponse"},
       "errors":[
-        {"shape":"InternalServerError"}
+        {"shape":"InternalServerError"},
+        {"shape":"DryRunOperationException"}
       ]
     },
     "DescribeSeverityLevels":{
@@ -134,7 +170,8 @@
       "input":{"shape":"DescribeSeverityLevelsRequest"},
       "output":{"shape":"DescribeSeverityLevelsResponse"},
       "errors":[
-        {"shape":"InternalServerError"}
+        {"shape":"InternalServerError"},
+        {"shape":"DryRunOperationException"}
       ]
     },
     "DescribeSupportedLanguages":{
@@ -147,7 +184,8 @@
       "output":{"shape":"DescribeSupportedLanguagesResponse"},
       "errors":[
         {"shape":"InternalServerError"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"DryRunOperationException"}
       ]
     },
     "DescribeTrustedAdvisorCheckRefreshStatuses":{
@@ -202,6 +240,34 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "GetAttachmentDownloadLink":{
+      "name":"GetAttachmentDownloadLink",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetAttachmentDownloadLinkRequest"},
+      "output":{"shape":"GetAttachmentDownloadLinkResponse"},
+      "errors":[
+        {"shape":"AttachmentIdNotFound"},
+        {"shape":"InternalServerError"},
+        {"shape":"DryRunOperationException"}
+      ]
+    },
+    "GetAttachmentUploadLinks":{
+      "name":"GetAttachmentUploadLinks",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetAttachmentUploadLinksRequest"},
+      "output":{"shape":"GetAttachmentUploadLinksResponse"},
+      "errors":[
+        {"shape":"InternalServerError"},
+        {"shape":"DryRunOperationException"},
+        {"shape":"UploadIdNotFound"}
+      ]
+    },
     "RefreshTrustedAdvisorCheck":{
       "name":"RefreshTrustedAdvisorCheck",
       "http":{
@@ -224,7 +290,8 @@
       "output":{"shape":"ResolveCaseResponse"},
       "errors":[
         {"shape":"InternalServerError"},
-        {"shape":"CaseIdNotFound"}
+        {"shape":"CaseIdNotFound"},
+        {"shape":"DryRunOperationException"}
       ]
     }
   },
@@ -234,7 +301,8 @@
       "required":["attachments"],
       "members":{
         "attachmentSetId":{"shape":"AttachmentSetId"},
-        "attachments":{"shape":"Attachments"}
+        "attachments":{"shape":"Attachments"},
+        "dryRun":{"shape":"NullableBooleanType"}
       }
     },
     "AddAttachmentsToSetResponse":{
@@ -251,7 +319,9 @@
         "caseId":{"shape":"CaseId"},
         "communicationBody":{"shape":"CommunicationBody"},
         "ccEmailAddresses":{"shape":"CcEmailAddressList"},
-        "attachmentSetId":{"shape":"AttachmentSetId"}
+        "attachmentSetId":{"shape":"AttachmentSetId"},
+        "uploadIds":{"shape":"UploadIds"},
+        "dryRun":{"shape":"NullableBooleanType"}
       }
     },
     "AddCommunicationToCaseResponse":{
@@ -394,6 +464,7 @@
         "body":{"shape":"ValidatedCommunicationBody"},
         "submittedBy":{"shape":"SubmittedBy"},
         "timeCreated":{"shape":"TimeCreated"},
+        "attachments":{"shape":"AttachmentSet"},
         "attachmentSet":{"shape":"AttachmentSet"}
       }
     },
@@ -420,6 +491,42 @@
       "max":100,
       "min":1
     },
+    "CompleteAttachmentUploadRequest":{
+      "type":"structure",
+      "required":[
+        "uploadId",
+        "completedUploads"
+      ],
+      "members":{
+        "uploadId":{"shape":"UploadId"},
+        "completedUploads":{"shape":"CompletedUploadList"},
+        "dryRun":{"shape":"NullableBooleanType"}
+      }
+    },
+    "CompleteAttachmentUploadResponse":{
+      "type":"structure",
+      "required":["uploadStatus"],
+      "members":{
+        "uploadStatus":{"shape":"UploadStatus"}
+      }
+    },
+    "CompletedUpload":{
+      "type":"structure",
+      "required":[
+        "partIndex",
+        "eTag"
+      ],
+      "members":{
+        "partIndex":{"shape":"FieldIntegerValue"},
+        "eTag":{"shape":"ETag"}
+      }
+    },
+    "CompletedUploadList":{
+      "type":"list",
+      "member":{"shape":"CompletedUpload"}
+    },
+    "CoralAvailabilityThrottledResource":{"type":"string"},
+    "CoralAvailabilityThrottlingReason":{"type":"string"},
     "CreateCaseRequest":{
       "type":"structure",
       "required":[
@@ -435,7 +542,9 @@
         "ccEmailAddresses":{"shape":"CcEmailAddressList"},
         "language":{"shape":"Language"},
         "issueType":{"shape":"IssueType"},
-        "attachmentSetId":{"shape":"AttachmentSetId"}
+        "attachmentSetId":{"shape":"AttachmentSetId"},
+        "uploadIds":{"shape":"UploadIds"},
+        "dryRun":{"shape":"NullableBooleanType"}
       }
     },
     "CreateCaseResponse":{
@@ -467,13 +576,34 @@
       "type":"structure",
       "required":["attachmentId"],
       "members":{
-        "attachmentId":{"shape":"AttachmentId"}
+        "attachmentId":{"shape":"AttachmentId"},
+        "dryRun":{"shape":"NullableBooleanType"}
       }
     },
     "DescribeAttachmentResponse":{
       "type":"structure",
       "members":{
         "attachment":{"shape":"Attachment"}
+      }
+    },
+    "DescribeAttachmentUploadStatusRequest":{
+      "type":"structure",
+      "required":["uploadId"],
+      "members":{
+        "uploadId":{"shape":"UploadId"},
+        "dryRun":{"shape":"NullableBooleanType"}
+      }
+    },
+    "DescribeAttachmentUploadStatusResponse":{
+      "type":"structure",
+      "required":[
+        "uploadStatus",
+        "fileName"
+      ],
+      "members":{
+        "uploadStatus":{"shape":"UploadStatus"},
+        "fileName":{"shape":"FileName"},
+        "uploadProgress":{"shape":"UploadProgress"}
       }
     },
     "DescribeCasesRequest":{
@@ -487,7 +617,8 @@
         "nextToken":{"shape":"NextToken"},
         "maxResults":{"shape":"MaxResults"},
         "language":{"shape":"Language"},
-        "includeCommunications":{"shape":"IncludeCommunications"}
+        "includeCommunications":{"shape":"IncludeCommunications"},
+        "dryRun":{"shape":"NullableBooleanType"}
       }
     },
     "DescribeCasesResponse":{
@@ -505,7 +636,8 @@
         "beforeTime":{"shape":"BeforeTime"},
         "afterTime":{"shape":"AfterTime"},
         "nextToken":{"shape":"NextToken"},
-        "maxResults":{"shape":"MaxResults"}
+        "maxResults":{"shape":"MaxResults"},
+        "dryRun":{"shape":"NullableBooleanType"}
       }
     },
     "DescribeCommunicationsResponse":{
@@ -527,7 +659,8 @@
         "issueType":{"shape":"IssueType"},
         "serviceCode":{"shape":"ServiceCode"},
         "language":{"shape":"Language"},
-        "categoryCode":{"shape":"CategoryCode"}
+        "categoryCode":{"shape":"CategoryCode"},
+        "dryRun":{"shape":"NullableBooleanType"}
       }
     },
     "DescribeCreateCaseOptionsResponse":{
@@ -541,7 +674,8 @@
       "type":"structure",
       "members":{
         "serviceCodeList":{"shape":"ServiceCodeList"},
-        "language":{"shape":"Language"}
+        "language":{"shape":"Language"},
+        "dryRun":{"shape":"NullableBooleanType"}
       }
     },
     "DescribeServicesResponse":{
@@ -553,7 +687,8 @@
     "DescribeSeverityLevelsRequest":{
       "type":"structure",
       "members":{
-        "language":{"shape":"Language"}
+        "language":{"shape":"Language"},
+        "dryRun":{"shape":"NullableBooleanType"}
       }
     },
     "DescribeSeverityLevelsResponse":{
@@ -572,7 +707,8 @@
       "members":{
         "issueType":{"shape":"ValidatedIssueTypeString"},
         "serviceCode":{"shape":"ValidatedServiceCode"},
-        "categoryCode":{"shape":"ValidatedCategoryCode"}
+        "categoryCode":{"shape":"ValidatedCategoryCode"},
+        "dryRun":{"shape":"NullableBooleanType"}
       }
     },
     "DescribeSupportedLanguagesResponse":{
@@ -640,12 +776,97 @@
     "Display":{"type":"string"},
     "DisplayId":{"type":"string"},
     "Double":{"type":"double"},
+    "DownloadUrl":{
+      "type":"structure",
+      "required":[
+        "url",
+        "expiryDate"
+      ],
+      "members":{
+        "url":{"shape":"HttpsUrl"},
+        "expiryDate":{"shape":"ValidatedDateTime"}
+      }
+    },
+    "DryRunOperationException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ErrorMessage"}
+      },
+      "exception":true
+    },
+    "ETag":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "EndIndex":{
+      "type":"integer",
+      "min":2
+    },
     "EndTime":{"type":"string"},
     "ErrorMessage":{"type":"string"},
     "ExpiryTime":{"type":"string"},
+    "FieldIntegerValue":{"type":"integer"},
     "FileName":{"type":"string"},
+    "FileSize":{
+      "type":"long",
+      "max":157286400,
+      "min":1
+    },
+    "GetAttachmentDownloadLinkRequest":{
+      "type":"structure",
+      "required":["attachmentId"],
+      "members":{
+        "attachmentId":{"shape":"AttachmentId"},
+        "dryRun":{"shape":"NullableBooleanType"}
+      }
+    },
+    "GetAttachmentDownloadLinkResponse":{
+      "type":"structure",
+      "required":[
+        "fileName",
+        "downloadUrl"
+      ],
+      "members":{
+        "fileName":{"shape":"FileName"},
+        "downloadUrl":{"shape":"DownloadUrl"}
+      }
+    },
+    "GetAttachmentUploadLinksRequest":{
+      "type":"structure",
+      "required":["fileName"],
+      "members":{
+        "fileName":{"shape":"FileName"},
+        "fileSizeBytes":{"shape":"FileSize"},
+        "uploadId":{"shape":"UploadId"},
+        "uploadRange":{"shape":"UploadRange"},
+        "dryRun":{"shape":"NullableBooleanType"}
+      }
+    },
+    "GetAttachmentUploadLinksResponse":{
+      "type":"structure",
+      "required":[
+        "uploadId",
+        "partSizeBytes",
+        "totalParts",
+        "uploadUrls"
+      ],
+      "members":{
+        "uploadId":{"shape":"UploadId"},
+        "partSizeBytes":{"shape":"PartSizeBytes"},
+        "totalParts":{"shape":"Integer"},
+        "nextIndex":{"shape":"Integer"},
+        "uploadUrls":{"shape":"UploadUrlList"}
+      }
+    },
+    "HttpsUrl":{
+      "type":"string",
+      "min":8,
+      "pattern":"^https://[a-zA-Z0-9][a-zA-Z0-9.-]*[a-zA-Z0-9]\\.[a-zA-Z]{2,}(/.*)?$"
+    },
     "IncludeCommunications":{"type":"boolean"},
     "IncludeResolvedCases":{"type":"boolean"},
+    "Integer":{"type":"integer"},
     "InternalServerError":{
       "type":"structure",
       "members":{
@@ -663,6 +884,12 @@
       "min":10
     },
     "NextToken":{"type":"string"},
+    "NullableBooleanType":{"type":"boolean"},
+    "PartSizeBytes":{
+      "type":"long",
+      "max":104857600,
+      "min":1
+    },
     "RecentCaseCommunications":{
       "type":"structure",
       "members":{
@@ -687,7 +914,8 @@
     "ResolveCaseRequest":{
       "type":"structure",
       "members":{
-        "caseId":{"shape":"CaseId"}
+        "caseId":{"shape":"CaseId"},
+        "dryRun":{"shape":"NullableBooleanType"}
       }
     },
     "ResolveCaseResponse":{
@@ -732,6 +960,10 @@
       "type":"list",
       "member":{"shape":"SeverityLevel"}
     },
+    "StartIndex":{
+      "type":"integer",
+      "min":1
+    },
     "StartTime":{"type":"string"},
     "Status":{"type":"string"},
     "String":{"type":"string"},
@@ -769,10 +1001,22 @@
     "ThrottlingException":{
       "type":"structure",
       "members":{
-        "message":{"shape":"AvailabilityErrorMessage"}
+        "message":{"shape":"AvailabilityErrorMessage"},
+        "throttlingReasons":{"shape":"ThrottlingReasonList"}
       },
       "exception":true,
       "synthetic":true
+    },
+    "ThrottlingReason":{
+      "type":"structure",
+      "members":{
+        "reason":{"shape":"CoralAvailabilityThrottlingReason"},
+        "resource":{"shape":"CoralAvailabilityThrottledResource"}
+      }
+    },
+    "ThrottlingReasonList":{
+      "type":"list",
+      "member":{"shape":"ThrottlingReason"}
     },
     "TimeCreated":{"type":"string"},
     "TrustedAdvisorCategorySpecificSummary":{
@@ -906,6 +1150,64 @@
       }
     },
     "Type":{"type":"string"},
+    "UploadId":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "UploadIdNotFound":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ErrorMessage"}
+      },
+      "exception":true
+    },
+    "UploadIds":{
+      "type":"list",
+      "member":{"shape":"UploadId"},
+      "max":10,
+      "min":0
+    },
+    "UploadProgress":{
+      "type":"structure",
+      "members":{
+        "totalParts":{"shape":"FieldIntegerValue"},
+        "completedPartsCount":{"shape":"FieldIntegerValue"}
+      }
+    },
+    "UploadRange":{
+      "type":"structure",
+      "required":["startIndex"],
+      "members":{
+        "startIndex":{"shape":"StartIndex"},
+        "endIndex":{"shape":"EndIndex"}
+      }
+    },
+    "UploadStatus":{
+      "type":"string",
+      "enum":[
+        "attachment-ready",
+        "attachment-not-ready",
+        "failed"
+      ]
+    },
+    "UploadUrl":{
+      "type":"structure",
+      "required":[
+        "url",
+        "partIndex",
+        "expiryDate"
+      ],
+      "members":{
+        "url":{"shape":"HttpsUrl"},
+        "partIndex":{"shape":"Integer"},
+        "expiryDate":{"shape":"ValidatedDateTime"}
+      }
+    },
+    "UploadUrlList":{
+      "type":"list",
+      "member":{"shape":"UploadUrl"}
+    },
     "ValidatedCategoryCode":{
       "type":"string",
       "max":100,

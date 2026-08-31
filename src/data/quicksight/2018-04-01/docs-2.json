@@ -16,7 +16,7 @@
     "CreateBrand": "<p>Creates an Quick Sight brand.</p>",
     "CreateCustomPermissions": "<p>Creates a custom permissions profile.</p>",
     "CreateDashboard": "<p>Creates a dashboard from either a template or directly with a <code>DashboardDefinition</code>. To first create a template, see the <code> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_CreateTemplate.html\">CreateTemplate</a> </code> API operation.</p> <p>A dashboard is an entity in Amazon Quick Sight that identifies Amazon Quick Sight reports, created from analyses. You can share Amazon Quick Sight dashboards. With the right permissions, you can create scheduled email reports from them. If you have the correct permissions, you can create a dashboard from a template that exists in a different Amazon Web Services account.</p>",
-    "CreateDataSet": "<p>Creates a dataset. This operation doesn't support datasets that include uploaded files as a source.</p>",
+    "CreateDataSet": "<p>Creates a dataset.</p>",
     "CreateDataSource": "<p>Creates a data source.</p>",
     "CreateDlpSetting": "<p>Creates a data loss prevention (DLP) setting configuration for an Amazon Web Services account. A DLP setting defines the DLP provider, the enforcement behavior, and the Quick capabilities that the setting applies to.</p>",
     "CreateFlow": "<p>Creates a new flow in the specified Amazon Web Services account. Creates both a DRAFT and PUBLISHED (auto-published) version.</p> <p>This operation is idempotent. Supply a <code>ClientToken</code> to safely retry without creating duplicate resources.</p>",
@@ -47,6 +47,7 @@
     "DeleteActionConnector": "<p>Hard deletes an action connector, making it unrecoverable. This operation removes the connector and all its associated configurations. Any resources currently using this action connector will no longer be able to perform actions through it.</p>",
     "DeleteAgent": "<p>Deletes an agent.</p>",
     "DeleteAnalysis": "<p>Deletes an analysis from Amazon Quick Sight. You can optionally include a recovery window during which you can restore the analysis. If you don't specify a recovery window value, the operation defaults to 30 days. Amazon Quick Sight attaches a <code>DeletionTime</code> stamp to the response that specifies the end of the recovery window. At the end of the recovery window, Amazon Quick Sight deletes the analysis permanently.</p> <p>At any time before recovery window ends, you can use the <code>RestoreAnalysis</code> API operation to remove the <code>DeletionTime</code> stamp and cancel the deletion of the analysis. The analysis remains visible in the API until it's deleted, so you can describe it but you can't make a template from it.</p> <p>An analysis that's scheduled for deletion isn't accessible in the Amazon Quick Sight console. To access it in the console, restore it. Deleting an analysis doesn't delete the dashboards that you publish from it.</p>",
+    "DeleteApp": "<p>Deletes an app.</p>",
     "DeleteApprovalPolicy": "<p>Deletes an approval policy in Quick Sight.</p>",
     "DeleteBrand": "<important> <p>This API permanently deletes the specified Quick Sight brand. When you delete a brand:</p> <ul> <li> <p>The brand and all its associated branding elements are permanently removed</p> </li> <li> <p>Any applications or dashboards using this brand will revert to default styling</p> </li> <li> <p>This action cannot be undone through the API</p> </li> </ul> <p> <b>Before proceeding:</b> Verify that the brand is no longer needed and consider the impact on any applications currently using this brand.</p> </important> <p>Deletes an Quick Sight brand.</p>",
     "DeleteBrandAssignment": "<p>Deletes a brand assignment.</p>",
@@ -94,6 +95,8 @@
     "DescribeAnalysis": "<p>Provides a summary of the metadata for an analysis.</p>",
     "DescribeAnalysisDefinition": "<p>Provides a detailed description of the definition of an analysis.</p> <note> <p>If you do not need to know details about the content of an Analysis, for instance if you are trying to check the status of a recently created or updated Analysis, use the <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_DescribeAnalysis.html\"> <code>DescribeAnalysis</code> </a> instead. </p> </note>",
     "DescribeAnalysisPermissions": "<p>Provides the read and write permissions for an analysis.</p>",
+    "DescribeApp": "<p>Describes an app.</p>",
+    "DescribeAppPermissions": "<p>Describes the resource permissions for an app.</p>",
     "DescribeApprovalPolicy": "<p>Describes an approval policy in Quick Sight.</p>",
     "DescribeAssetBundleExportJob": "<p>Describes an existing export job.</p> <p>Poll job descriptions after a job starts to know the status of the job. When a job succeeds, a URL is provided to download the exported assets' data from. Download URLs are valid for five minutes after they are generated. You can call the <code>DescribeAssetBundleExportJob</code> API for a new download URL as needed.</p> <p>Job descriptions are available for 14 days after the job starts.</p>",
     "DescribeAssetBundleImportJob": "<p>Describes an existing import job.</p> <p>Poll job descriptions after starting a job to know when it has succeeded or failed. Job descriptions are available for 14 days after job starts.</p>",
@@ -108,7 +111,7 @@
     "DescribeDashboardSnapshotJob": "<p>Describes an existing snapshot job.</p> <p>Poll job descriptions after a job starts to know the status of the job. For information on available status codes, see <code>JobStatus</code>.</p> <p> <b>Registered user support</b> </p> <p>This API can be called as before to get status of a job started by the same Quick Sight user.</p> <p> <b>Possible error scenarios</b> </p> <p>Request will fail with an Access Denied error in the following scenarios:</p> <ul> <li> <p>The credentials have expired.</p> </li> <li> <p>Job has been started by a different user.</p> </li> <li> <p>Impersonated Quick Sight user doesn't have access to the specified dashboard in the job.</p> </li> </ul>",
     "DescribeDashboardSnapshotJobResult": "<p>Describes the result of an existing snapshot job that has finished running.</p> <p>A finished snapshot job will return a <code>COMPLETED</code> or <code>FAILED</code> status when you poll the job with a <code>DescribeDashboardSnapshotJob</code> API call.</p> <p>If the job has not finished running, this operation returns a message that says <code>Dashboard Snapshot Job with id &lt;SnapshotjobId&gt; has not reached a terminal state.</code>.</p> <p> <b>Registered user support</b> </p> <p>This API can be called as before to get the result of a job started by the same Quick Sight user. The result for the user will be returned in <code>RegisteredUsers</code> response attribute. The attribute will contain a list with at most one object in it.</p> <p> <b>Possible error scenarios</b> </p> <p>The request fails with an Access Denied error in the following scenarios:</p> <ul> <li> <p>The credentials have expired.</p> </li> <li> <p>The job was started by a different user.</p> </li> <li> <p>The registered user doesn't have access to the specified dashboard.</p> </li> </ul> <p>The request succeeds but the job fails in the following scenarios:</p> <ul> <li> <p> <code>DASHBOARD_ACCESS_DENIED</code> - The registered user lost access to the dashboard.</p> </li> <li> <p> <code>CAPABILITY_RESTRICTED</code> - The registered user is restricted from exporting data in <b>all</b> selected formats.</p> </li> </ul> <p>The request succeeds but the response contains an error code in the following scenarios:</p> <ul> <li> <p> <code>CAPABILITY_RESTRICTED</code> - The registered user is restricted from exporting data in <b>some</b> selected formats.</p> </li> <li> <p> <code>RLS_CHANGED</code> - Row-level security settings have changed. Re-run the job with current settings.</p> </li> <li> <p> <code>CLS_CHANGED</code> - Column-level security settings have changed. Re-run the job with current settings.</p> </li> <li> <p> <code>DATASET_DELETED</code> - The dataset has been deleted. Verify the dataset exists before re-running the job.</p> </li> </ul>",
     "DescribeDashboardsQAConfiguration": "<p>Describes an existing dashboard QA configuration.</p>",
-    "DescribeDataSet": "<p>Describes a dataset. This operation doesn't support datasets that include uploaded files as a source.</p>",
+    "DescribeDataSet": "<p>Describes a dataset.</p>",
     "DescribeDataSetPermissions": "<p>Describes the permissions on a dataset.</p> <p>The permissions resource is <code>arn:aws:quicksight:region:aws-account-id:dataset/data-set-id</code>.</p>",
     "DescribeDataSetRefreshProperties": "<p>Describes the refresh properties of a dataset.</p>",
     "DescribeDataSource": "<p>Describes a data source.</p>",
@@ -164,6 +167,7 @@
     "ListAgents": "<p>Lists all agents in an Amazon QuickSight account.</p>",
     "ListAnalyses": "<p>Lists Amazon Quick Sight analyses that exist in the specified Amazon Web Services account.</p>",
     "ListApprovalPolicies": "<p>Lists all approval policies in the specified Quick Sight account. The results are paginated. If the response includes a <code>NextToken</code> value, pass it in a subsequent call to retrieve the next set of results.</p>",
+    "ListApps": "<p>Lists the apps in an Amazon Web Services account. Results are paginated; use the <code>NextToken</code> parameter to retrieve additional results.</p>",
     "ListAssetBundleExportJobs": "<p>Lists all asset bundle export jobs that have been taken place in the last 14 days. Jobs created more than 14 days ago are deleted forever and are not returned. If you are using the same job ID for multiple jobs, <code>ListAssetBundleExportJobs</code> only returns the most recent job that uses the repeated job ID.</p>",
     "ListAssetBundleImportJobs": "<p>Lists all asset bundle import jobs that have taken place in the last 14 days. Jobs created more than 14 days ago are deleted forever and are not returned. If you are using the same job ID for multiple jobs, <code>ListAssetBundleImportJobs</code> only returns the most recent job that uses the repeated job ID.</p>",
     "ListBrands": "<p>Lists all brands in an Quick Sight account.</p>",
@@ -214,6 +218,7 @@
     "SearchActionConnectors": "<p>Searches for action connectors in the specified Amazon Web Services account using filters. You can search by connector name, type, or user permissions.</p>",
     "SearchAgents": "<p>Searches for agents based on specified filters.</p>",
     "SearchAnalyses": "<p>Searches for analyses that belong to the user specified in the filter.</p> <note> <p>This operation is eventually consistent. The results are best effort and may not reflect very recent updates and changes.</p> </note>",
+    "SearchApps": "<p>Searches for apps in an Amazon Web Services account using the specified filters. This operation is eventually consistent; the results might not reflect very recent updates. Results are paginated; use the <code>NextToken</code> parameter to retrieve additional results.</p>",
     "SearchDashboards": "<p>Searches for dashboards that belong to a user. </p> <note> <p>This operation is eventually consistent. The results are best effort and may not reflect very recent updates and changes.</p> </note>",
     "SearchDataSets": "<p>Use the <code>SearchDataSets</code> operation to search for datasets that belong to an account.</p>",
     "SearchDataSources": "<p>Use the <code>SearchDataSources</code> operation to search for data sources that belong to an account.</p>",
@@ -240,6 +245,7 @@
     "UpdateAgentPermissions": "<p>Updates the resource permissions for an agent.</p>",
     "UpdateAnalysis": "<p>Updates an analysis in Amazon Quick Sight</p>",
     "UpdateAnalysisPermissions": "<p>Updates the read and write permissions for an analysis.</p>",
+    "UpdateAppPermissions": "<p>Updates the resource permissions for an app. You can grant or revoke permissions and, optionally, change the app's visibility.</p>",
     "UpdateApplicationWithTokenExchangeGrant": "<p>Updates an Quick application with a token exchange grant. This operation only supports Quick applications that are registered with IAM Identity Center.</p>",
     "UpdateApprovalPolicy": "<p>Updates an approval policy in Quick Sight.</p>",
     "UpdateBrand": "<p>Updates a brand.</p>",
@@ -251,7 +257,7 @@
     "UpdateDashboardPermissions": "<p>Updates read and write permissions on a dashboard.</p>",
     "UpdateDashboardPublishedVersion": "<p>Updates the published version of a dashboard.</p>",
     "UpdateDashboardsQAConfiguration": "<p>Updates a Dashboard QA configuration.</p>",
-    "UpdateDataSet": "<p>Updates a dataset. This operation doesn't support datasets that include uploaded files as a source. Partial updates are not supported by this operation.</p>",
+    "UpdateDataSet": "<p>Updates a dataset. Partial updates are not supported by this operation.</p>",
     "UpdateDataSetPermissions": "<p>Updates the permissions on a dataset.</p> <p>The permissions resource is <code>arn:aws:quicksight:region:aws-account-id:dataset/data-set-id</code>.</p>",
     "UpdateDataSource": "<p>Updates a data source.</p>",
     "UpdateDataSourcePermissions": "<p>Updates the permissions to a data source.</p>",
@@ -997,6 +1003,46 @@
       "base": null,
       "refs": {
         "BatchDeleteTopicReviewedAnswerRequest$AnswerIds": "<p>The Answer IDs of the Answers to be deleted.</p>"
+      }
+    },
+    "AppId": {
+      "base": null,
+      "refs": {
+        "AppSummary$AppId": "<p>The ID of the app.</p>",
+        "DeleteAppRequest$AppId": "<p>The ID of the app that you want to delete.</p>",
+        "DescribeAppPermissionsRequest$AppId": "<p>The ID of the app.</p>",
+        "DescribeAppPermissionsResponse$AppId": "<p>The ID of the app.</p>",
+        "DescribeAppRequest$AppId": "<p>The ID of the app that you want to describe.</p>",
+        "UpdateAppPermissionsRequest$AppId": "<p>The ID of the app.</p>",
+        "UpdateAppPermissionsResponse$AppId": "<p>The ID of the app.</p>"
+      }
+    },
+    "AppName": {
+      "base": null,
+      "refs": {
+        "AppSummary$Name": "<p>The display name of the app.</p>"
+      }
+    },
+    "AppSummary": {
+      "base": "<p>A summary of an app, including its identifier, name, and metadata.</p>",
+      "refs": {
+        "AppSummaryList$member": null,
+        "DescribeAppResponse$App": "<p>The information about the app.</p>"
+      }
+    },
+    "AppSummaryList": {
+      "base": null,
+      "refs": {
+        "ListAppsResponse$AppSummaryList": "<p>A list of app summaries.</p>",
+        "SearchAppsResponse$AppSummaryList": "<p>A list of app summaries that match the search criteria.</p>"
+      }
+    },
+    "AppVisibility": {
+      "base": "<p>The visibility of an app. Valid values are:</p> <ul> <li> <p> <code>PRIVATE</code> – The app is reachable only by authorized Amazon QuickSight principals.</p> </li> <li> <p> <code>PUBLIC</code> – The published app is reachable by anyone on the internet without signing in.</p> </li> </ul>",
+      "refs": {
+        "AppSummary$Visibility": "<p>The sharing status of the app: <code>PUBLIC</code> if the app is shared publicly, or <code>PRIVATE</code> if it is private.</p>",
+        "UpdateAppPermissionsRequest$Visibility": "<p>The visibility to set for the app. Currently, only <code>PRIVATE</code> is accepted, which removes public (anonymous) access from the app. If you don't specify a value, the app's visibility is unchanged. Setting an app to <code>PUBLIC</code> through this operation is not supported.</p>",
+        "UpdateAppPermissionsResponse$Visibility": "<p>The visibility of the app after the update (<code>PRIVATE</code> or <code>PUBLIC</code>).</p>"
       }
     },
     "AppendOperation": {
@@ -2336,6 +2382,7 @@
         "DeleteAccountSubscriptionRequest$AwsAccountId": "<p>The Amazon Web Services account ID of the account that you want to delete.</p>",
         "DeleteActionConnectorRequest$AwsAccountId": "<p>The Amazon Web Services account ID that contains the action connector to delete.</p>",
         "DeleteAnalysisRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account where you want to delete an analysis.</p>",
+        "DeleteAppRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the app.</p>",
         "DeleteBrandAssignmentRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that owns the brand assignment.</p>",
         "DeleteBrandRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that owns the brand.</p>",
         "DeleteCustomPermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the custom permissions profile that you want to delete.</p>",
@@ -2381,6 +2428,8 @@
         "DescribeAnalysisDefinitionRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the analysis. You must be using the Amazon Web Services account that the analysis is in.</p>",
         "DescribeAnalysisPermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the analysis whose permissions you're describing. You must be using the Amazon Web Services account that the analysis is in.</p>",
         "DescribeAnalysisRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the analysis. You must be using the Amazon Web Services account that the analysis is in.</p>",
+        "DescribeAppPermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the app.</p>",
+        "DescribeAppRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the app.</p>",
         "DescribeAssetBundleExportJobRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account the export job is executed in. </p>",
         "DescribeAssetBundleExportJobResponse$AwsAccountId": "<p>The ID of the Amazon Web Services account that the export job was executed in. </p>",
         "DescribeAssetBundleImportJobRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account the import job was executed in. </p>",
@@ -2450,6 +2499,7 @@
         "ListActionConnectorsRequest$AwsAccountId": "<p>The Amazon Web Services account ID for which to list action connectors.</p>",
         "ListAgentsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the agents.</p>",
         "ListAnalysesRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the analyses.</p>",
+        "ListAppsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the apps.</p>",
         "ListAssetBundleExportJobsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that the export jobs were executed in. </p>",
         "ListAssetBundleImportJobsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that the import jobs were executed in.</p>",
         "ListBrandsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that owns the brands that you want to list.</p>",
@@ -2497,6 +2547,7 @@
         "SearchActionConnectorsRequest$AwsAccountId": "<p>The Amazon Web Services account ID in which to search for action connectors.</p>",
         "SearchAgentsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the agents.</p>",
         "SearchAnalysesRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the analyses that you're searching for.</p>",
+        "SearchAppsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the apps to search.</p>",
         "SearchDashboardsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the user whose dashboards you're searching for. </p>",
         "SearchDataSetsRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "SearchDataSourcesRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
@@ -2520,6 +2571,7 @@
         "UpdateAgentRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the agent.</p>",
         "UpdateAnalysisPermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the analysis whose permissions you're updating. You must be using the Amazon Web Services account that the analysis is in.</p>",
         "UpdateAnalysisRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the analysis that you're updating.</p>",
+        "UpdateAppPermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the app.</p>",
         "UpdateApplicationWithTokenExchangeGrantRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account to be updated with a token exchange grant.</p>",
         "UpdateBrandAssignmentRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that owns the brand assignment.</p>",
         "UpdateBrandPublishedVersionRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that owns the brand.</p>",
@@ -2958,7 +3010,7 @@
     "Boolean": {
       "base": null,
       "refs": {
-        "AccessControlConfiguration$isACLEnabled": "<p>Specifies whether ACLs are enabled for the knowledge base.</p>",
+        "AccessControlConfiguration$isACLEnabled": "<p>Specifies whether ACLs are enabled for the knowledge base.</p> <p>This setting works together with the data source connector's ACL crawling. To enforce document-level access control end to end, set <code>isACLEnabled</code> to <code>true</code> and enable ACL crawling on the connector. For example, for an Amazon S3 data source, set <code>accessControlConfiguration.crawlAcl</code> to <code>true</code> in the connector template. For more information, see <code>KbTemplateConfiguration</code>. Enabling only one of the two settings does not produce a fully ACL-enforced knowledge base.</p>",
         "AccountSettings$PublicSharingEnabled": "<p>A Boolean value that indicates whether public sharing is turned on for an Quick account. For more information about turning on public sharing, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_UpdatePublicSharingSettings.html\">UpdatePublicSharingSettings</a>.</p>",
         "AccountSettings$TerminationProtectionEnabled": "<p>A boolean value that determines whether or not an Quick Sight account can be deleted. A <code>True</code> value doesn't allow the account to be deleted and results in an error message if a user tries to make a <code>DeleteAccountSubsctiption</code> request. A <code>False</code> value will allow the ccount to be deleted. </p>",
         "AssetBundleExportJobResourceIdOverrideConfiguration$PrefixForAllResources": "<p>An option to request a CloudFormation variable for a prefix to be prepended to each resource's ID before import. The prefix is only added to the asset IDs and does not change the name of the asset.</p>",
@@ -6515,6 +6567,14 @@
       "base": null,
       "refs": {}
     },
+    "DeleteAppRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteAppResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteApprovalPolicyRequest": {
       "base": null,
       "refs": {}
@@ -6894,6 +6954,22 @@
       "refs": {}
     },
     "DescribeAnalysisResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeAppPermissionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeAppPermissionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeAppRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeAppResponse": {
       "base": null,
       "refs": {}
     },
@@ -8281,7 +8357,8 @@
         "DashboardSearchFilter$Operator": "<p>The comparison operator that you want to use as a filter, for example <code>\"Operator\": \"StringEquals\"</code>. Valid values are <code>\"StringEquals\"</code> and <code>\"StringLike\"</code>.</p> <p>If you set the operator value to <code>\"StringEquals\"</code>, you need to provide an ownership related filter in the <code>\"NAME\"</code> field and the arn of the user or group whose folders you want to search in the <code>\"Value\"</code> field. For example, <code>\"Name\":\"DIRECT_QUICKSIGHT_OWNER\", \"Operator\": \"StringEquals\", \"Value\": \"arn:aws:quicksight:us-east-1:1:user/default/UserName1\"</code>.</p> <p>If you set the value to <code>\"StringLike\"</code>, you need to provide the name of the folders you are searching for. For example, <code>\"Name\":\"DASHBOARD_NAME\", \"Operator\": \"StringLike\", \"Value\": \"Test\"</code>. The <code>\"StringLike\"</code> operator only supports the <code>NAME</code> value <code>DASHBOARD_NAME</code>.</p>",
         "DataSetSearchFilter$Operator": "<p>The comparison operator that you want to use as a filter, for example <code>\"Operator\": \"StringEquals\"</code>. Valid values are <code>\"StringEquals\"</code> and <code>\"StringLike\"</code>.</p> <p>If you set the operator value to <code>\"StringEquals\"</code>, you need to provide an ownership related filter in the <code>\"NAME\"</code> field and the arn of the user or group whose datasets you want to search in the <code>\"Value\"</code> field. For example, <code>\"Name\":\"QUICKSIGHT_OWNER\", \"Operator\": \"StringEquals\", \"Value\": \"arn:aws:quicksight:us-east- 1:1:user/default/UserName1\"</code>.</p> <p>If you set the value to <code>\"StringLike\"</code>, you need to provide the name of the datasets you are searching for. For example, <code>\"Name\":\"DATASET_NAME\", \"Operator\": \"StringLike\", \"Value\": \"Test\"</code>. The <code>\"StringLike\"</code> operator only supports the <code>NAME</code> value <code>DATASET_NAME</code>.</p>",
         "DataSourceSearchFilter$Operator": "<p>The comparison operator that you want to use as a filter, for example <code>\"Operator\": \"StringEquals\"</code>. Valid values are <code>\"StringEquals\"</code> and <code>\"StringLike\"</code>.</p> <p>If you set the operator value to <code>\"StringEquals\"</code>, you need to provide an ownership related filter in the <code>\"NAME\"</code> field and the arn of the user or group whose data sources you want to search in the <code>\"Value\"</code> field. For example, <code>\"Name\":\"DIRECT_QUICKSIGHT_OWNER\", \"Operator\": \"StringEquals\", \"Value\": \"arn:aws:quicksight:us-east-1:1:user/default/UserName1\"</code>.</p> <p>If you set the value to <code>\"StringLike\"</code>, you need to provide the name of the data sources you are searching for. For example, <code>\"Name\":\"DATASOURCE_NAME\", \"Operator\": \"StringLike\", \"Value\": \"Test\"</code>. The <code>\"StringLike\"</code> operator only supports the <code>NAME</code> value <code>DATASOURCE_NAME</code>.</p>",
-        "FolderSearchFilter$Operator": "<p>The comparison operator that you want to use as a filter, for example <code>\"Operator\": \"StringEquals\"</code>. Valid values are <code>\"StringEquals\"</code> and <code>\"StringLike\"</code>.</p> <p>If you set the operator value to <code>\"StringEquals\"</code>, you need to provide an ownership related filter in the <code>\"NAME\"</code> field and the arn of the user or group whose folders you want to search in the <code>\"Value\"</code> field. For example, <code>\"Name\":\"DIRECT_QUICKSIGHT_OWNER\", \"Operator\": \"StringEquals\", \"Value\": \"arn:aws:quicksight:us-east-1:1:user/default/UserName1\"</code>.</p> <p>If you set the value to <code>\"StringLike\"</code>, you need to provide the name of the folders you are searching for. For example, <code>\"Name\":\"FOLDER_NAME\", \"Operator\": \"StringLike\", \"Value\": \"Test\"</code>. The <code>\"StringLike\"</code> operator only supports the <code>NAME</code> value <code>FOLDER_NAME</code>.</p>"
+        "FolderSearchFilter$Operator": "<p>The comparison operator that you want to use as a filter, for example <code>\"Operator\": \"StringEquals\"</code>. Valid values are <code>\"StringEquals\"</code> and <code>\"StringLike\"</code>.</p> <p>If you set the operator value to <code>\"StringEquals\"</code>, you need to provide an ownership related filter in the <code>\"NAME\"</code> field and the arn of the user or group whose folders you want to search in the <code>\"Value\"</code> field. For example, <code>\"Name\":\"DIRECT_QUICKSIGHT_OWNER\", \"Operator\": \"StringEquals\", \"Value\": \"arn:aws:quicksight:us-east-1:1:user/default/UserName1\"</code>.</p> <p>If you set the value to <code>\"StringLike\"</code>, you need to provide the name of the folders you are searching for. For example, <code>\"Name\":\"FOLDER_NAME\", \"Operator\": \"StringLike\", \"Value\": \"Test\"</code>. The <code>\"StringLike\"</code> operator only supports the <code>NAME</code> value <code>FOLDER_NAME</code>.</p>",
+        "SearchAppsFilter$Operator": "<p>The comparison operator for the filter.</p>"
       }
     },
     "FilterRelativeDateTimeControl": {
@@ -10468,7 +10545,7 @@
     "KbTemplate": {
       "base": null,
       "refs": {
-        "KbTemplateConfiguration$template": "<p>The connector configuration for the knowledge base data source. The structure depends on the connector type of the data source referenced by <code>DataSourceArn</code>.</p> <p>The template must be a JSON object. The required fields vary by connector type:</p> <ul> <li> <p> <b>Amazon S3</b> (<code>S3V2</code>) – Requires <code>connectionConfiguration</code> with <code>bucketName</code>. Supports <code>filterConfiguration</code> for inclusion and exclusion prefixes and patterns. Supports <code>accessControlConfiguration</code> and <code>deletionProtectionConfiguration</code>.</p> </li> <li> <p> <b>Google Drive</b> (<code>GOOGLEDRIVEV3</code>) – Requires <code>connectionConfiguration</code> with <code>authType</code> set to <code>SERVICE_ACCOUNT</code>. Supports <code>dataEntityConfiguration</code> with <code>crawlMyDrive</code>, <code>crawlSharedWithMe</code>, and <code>crawlSharedDrives</code>.</p> </li> <li> <p> <b>OneDrive</b> (<code>ONEDRIVEV3</code>) – Requires <code>authType</code> at the template root level set to <code>TWO_LEGGED_OAUTH</code>. Requires <code>connectionConfiguration</code> with <code>tenantId</code> in UUID format. Supports <code>dataEntityConfiguration</code> with <code>crawlPersonalDrives</code> and <code>crawlSharedWithMe</code>.</p> </li> <li> <p> <b>SharePoint</b> (<code>SHAREPOINTV3</code>) – Requires <code>connectionConfiguration</code> with <code>tenantId</code> in UUID format. Supports <code>dataEntityConfiguration</code> with <code>siteUrls</code>, <code>crawlFiles</code>, and <code>crawlPages</code>.</p> </li> <li> <p> <b>Web Crawler</b> (<code>WEBCRAWLERV3</code>) – Requires <code>connectionConfiguration</code> with <code>seedUrls</code> or <code>siteMapUrls</code> (mutually exclusive) and <code>authType</code>. Supports <code>crawlConfiguration</code> for crawl depth, rate limits, and scope. Supports <code>filterConfiguration</code> for file size limits and URL patterns. Valid values for <code>authType</code>: <code>NO_AUTH</code>, <code>BASIC_AUTH</code>, <code>FORM</code>, <code>SAML</code>.</p> </li> </ul> <p>The optional <code>deletionProtectionConfiguration</code> object is supported by all connector types. It contains <code>enableDeletionProtection</code> and <code>deletionProtectionThreshold</code>.</p>"
+        "KbTemplateConfiguration$template": "<p>The connector configuration for the knowledge base data source. The structure depends on the connector type of the data source referenced by <code>DataSourceArn</code>.</p> <p>The template must be a JSON object. All connector types share the following top-level keys. The value of <code>type</code> and the contents of <code>connectionConfiguration</code> vary by connector type.</p> <ul> <li> <p> <code>type</code> – (Required) The connector type of the data source. This value identifies the connector. Valid values: <code>S3V2</code>, <code>WEBCRAWLERV3</code>, <code>GOOGLEDRIVEV3</code>, <code>ONEDRIVEV3</code>, <code>SHAREPOINTV3</code>. For the fields required by each connector, see the connector-specific list that follows.</p> </li> <li> <p> <code>connectionConfiguration</code> – (Required) The connection details for the data source. The keys in this object vary by connector type; see the connector-specific list that follows.</p> </li> <li> <p> <code>filterConfiguration</code> – (Optional) Rules that determine which content is crawled, such as inclusion and exclusion prefixes, patterns, or file-size limits.</p> </li> <li> <p> <code>accessControlConfiguration</code> – (Optional) Document-level access control (ACL) settings. Supported by all connector types except Web Crawler (<code>WEBCRAWLERV3</code>). The available fields depend on the connector type.</p> </li> <li> <p> <code>deletionProtectionConfiguration</code> – (Optional) Deletion-protection settings, supported by all connector types. Contains <code>enableDeletionProtection</code> (Boolean) and <code>deletionProtectionThreshold</code> (String; a value from 1 to 100).</p> </li> </ul> <p>The following list describes the valid <code>type</code> value, the <code>connectionConfiguration</code> contents, and any connector-specific fields for each connector type:</p> <ul> <li> <p> <b>Amazon S3</b> (<code>type</code>: <code>S3V2</code>) – The <code>type</code> value must be <code>S3V2</code>. <code>connectionConfiguration</code> is required and contains:</p> <ul> <li> <p> <code>bucketName</code> – (Required) The name of the Amazon S3 bucket to crawl. Type: String. Length: 3–63 characters. Pattern: <code>^[a-z0-9][.\\-a-z0-9]{1,61}[a-z0-9]$</code>.</p> </li> <li> <p> <code>bucketOwnerAccountId</code> – (Required) The ID of the AWS account that owns the bucket. Type: String. Pattern: <code>^\\d{12}$</code>.</p> </li> </ul> <p>Amazon S3 supports the following optional <code>filterConfiguration</code> fields:</p> <ul> <li> <p> <code>inclusionPrefixes</code> or <code>exclusionPrefixes</code> – Amazon S3 key prefixes to include or exclude. Type: Array of String. Up to 350 items, each 1–1,024 characters.</p> </li> <li> <p> <code>inclusionPatterns</code> or <code>exclusionPatterns</code> – Patterns to include or exclude objects. Type: Array of String. Up to 350 items, each 1–1,024 characters.</p> </li> <li> <p> <code>maxFileSizeInMegaBytes</code> – The maximum size, in MB, of a file to ingest. Type: String. Pattern: <code>^\\d+$</code>.</p> </li> </ul> <p>For Amazon S3, <code>accessControlConfiguration</code> supports the following fields:</p> <ul> <li> <p> <code>crawlAcl</code> – Specifies whether the connector crawls and enforces document access control lists (ACLs). Type: Boolean. When set to <code>true</code>, provide ACLs either in a global ACL configuration file (<code>aclConfigurationFilePath</code>) or in per-document metadata files.</p> </li> <li> <p> <code>aclConfigurationFilePath</code> – The Amazon S3 URI of the global ACL configuration file. Type: String. Length: 1–1,024 characters. Optional. If you don't provide a global ACL configuration file, define ACLs in per-document metadata files.</p> </li> <li> <p> <code>defaultAccessType</code> – The access behavior applied to Amazon S3 prefixes that are not listed in the ACL configuration. Type: String. The only supported value is <code>ALLOW</code>.</p> </li> </ul> <p> <code>metadataFilesPrefix</code> – (Optional) The Amazon S3 prefix under which per-document metadata files are stored. Each metadata file describes a single source document and its indexable attributes. This is not the global ACL configuration file. For a single global ACL file, use <code>accessControlConfiguration.aclConfigurationFilePath</code>. Type: String. Length: 1–1,024 characters.</p> </li> <li> <p> <b>Google Drive</b> (<code>type</code>: <code>GOOGLEDRIVEV3</code>) – Requires <code>connectionConfiguration</code> with <code>authType</code> set to <code>SERVICE_ACCOUNT</code>. Supports <code>dataEntityConfiguration</code> with <code>crawlMyDrive</code>, <code>crawlSharedWithMe</code>, and <code>crawlSharedDrives</code>.</p> </li> <li> <p> <b>OneDrive</b> (<code>type</code>: <code>ONEDRIVEV3</code>) – Requires <code>authType</code> at the template root level set to <code>TWO_LEGGED_OAUTH</code>. Requires <code>connectionConfiguration</code> with <code>tenantId</code> in UUID format. Supports <code>dataEntityConfiguration</code> with <code>crawlPersonalDrives</code> and <code>crawlSharedWithMe</code>.</p> </li> <li> <p> <b>SharePoint</b> (<code>type</code>: <code>SHAREPOINTV3</code>) – Requires <code>connectionConfiguration</code> with <code>tenantId</code> in UUID format. Supports <code>dataEntityConfiguration</code> with <code>siteUrls</code>, <code>crawlFiles</code>, and <code>crawlPages</code>.</p> </li> <li> <p> <b>Web Crawler</b> (<code>type</code>: <code>WEBCRAWLERV3</code>) – Requires <code>connectionConfiguration</code> with <code>seedUrls</code> or <code>siteMapUrls</code> (mutually exclusive) and <code>authType</code>. Supports <code>crawlConfiguration</code> for crawl depth, rate limits, and scope. Supports <code>filterConfiguration</code> for file size limits and URL patterns. Valid values for <code>authType</code>: <code>NO_AUTH</code>, <code>BASIC_AUTH</code>, <code>FORM</code>, <code>SAML</code>.</p> </li> </ul> <p> <b>Enabling document-level access control for Amazon S3</b> </p> <p>For an Amazon S3 (<code>S3V2</code>) knowledge base, document-level access control is governed by two settings that must both be enabled:</p> <ol> <li> <p>In this template, set <code>accessControlConfiguration.crawlAcl</code> to <code>true</code>. Define ACLs either in a global ACL configuration file, referenced by <code>accessControlConfiguration.aclConfigurationFilePath</code>, or in per-document metadata files. To control access for prefixes that are not listed in the ACL file, you can also set <code>accessControlConfiguration.defaultAccessType</code>.</p> </li> <li> <p>In the <code>CreateKnowledgeBase</code> or <code>UpdateKnowledgeBase</code> request, set the top-level <code>AccessControlConfiguration.isACLEnabled</code> to <code>true</code>.</p> </li> </ol>"
       }
     },
     "KbTemplateConfiguration": {
@@ -11018,6 +11095,14 @@
       "refs": {}
     },
     "ListApprovalPoliciesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAppsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAppsResponse": {
       "base": null,
       "refs": {}
     },
@@ -11622,6 +11707,7 @@
         "ListActionConnectorsRequest$MaxResults": "<p>The maximum number of action connectors to return in a single response. Valid range is 1 to 100.</p>",
         "ListAnalysesRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListApprovalPoliciesRequest$MaxResults": "<p>The maximum number of results to return in a single call. If you don't specify a value, the service returns a default number of results. Use the <code>NextToken</code> value in the response to retrieve additional results.</p>",
+        "ListAppsRequest$MaxResults": "<p>The maximum number of results to return in a single request. Valid range is 1 to 100. If you don't specify a value, the default is 20.</p>",
         "ListAssetBundleExportJobsRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
         "ListAssetBundleImportJobsRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
         "ListBrandsRequest$MaxResults": "<p>The maximum number of results to be returned in a single request.</p>",
@@ -11655,6 +11741,7 @@
         "ListUsersRequest$MaxResults": "<p>The maximum number of results to return from this request.</p>",
         "ListVPCConnectionsRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
         "SearchAnalysesRequest$MaxResults": "<p>The maximum number of results to return.</p>",
+        "SearchAppsRequest$MaxResults": "<p>The maximum number of results to return in a single request. Valid range is 1 to 100. If you don't specify a value, the default is 20.</p>",
         "SearchDashboardsRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
         "SearchDataSetsRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
         "SearchDataSourcesRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
@@ -11763,7 +11850,7 @@
     "MetadataFilesLocation": {
       "base": null,
       "refs": {
-        "S3KnowledgeBaseParameters$MetadataFilesLocation": "<p>The location of metadata files within the S3 bucket that describe the structure and content of the knowledge base.</p>"
+        "S3KnowledgeBaseParameters$MetadataFilesLocation": "<p>The Amazon S3 location (prefix) of per-document metadata files. Each metadata file describes a single source document and its indexable attributes, such as title, category, and version. This is not the global ACL configuration file. To apply a single global ACL file to the entire knowledge base, use the access control configuration instead.</p>"
       }
     },
     "MetricComparisonComputation": {
@@ -12053,10 +12140,14 @@
     "NextToken": {
       "base": null,
       "refs": {
+        "ListAppsRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
+        "ListAppsResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "ListKnowledgeBasesRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "ListKnowledgeBasesResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "ListSpacesRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "ListSpacesResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
+        "SearchAppsRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
+        "SearchAppsResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "SearchKnowledgeBasesRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "SearchKnowledgeBasesResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "SearchSpacesRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
@@ -14209,6 +14300,7 @@
         "CreateThemeRequest$Permissions": "<p>A valid grouping of resource permissions to apply to the new theme. </p>",
         "DescribeActionConnectorPermissionsResponse$Permissions": "<p>The list of permissions associated with the action connector, including the principals and their allowed actions.</p>",
         "DescribeAgentPermissionsResponse$Permissions": "<p>The resource permissions for the agent.</p>",
+        "DescribeAppPermissionsResponse$Permissions": "<p>The resource permissions for the app.</p>",
         "DescribeDataSetPermissionsResponse$Permissions": "<p>A list of resource permissions on the dataset.</p>",
         "DescribeDataSourcePermissionsResponse$Permissions": "<p>A list of resource permissions on the data source.</p>",
         "DescribeFolderPermissionsResponse$Permissions": "<p>Information about the permissions on the folder.</p>",
@@ -14222,6 +14314,9 @@
         "UpdateActionConnectorPermissionsRequest$RevokePermissions": "<p>The permissions to revoke from users and groups for this action connector.</p>",
         "UpdateActionConnectorPermissionsResponse$Permissions": "<p>The updated permissions configuration for the action connector.</p>",
         "UpdateAgentPermissionsResponse$Permissions": "<p>The resource permissions for the agent.</p>",
+        "UpdateAppPermissionsRequest$GrantPermissions": "<p>The permissions that you want to grant on the app.</p>",
+        "UpdateAppPermissionsRequest$RevokePermissions": "<p>The permissions that you want to revoke from the app.</p>",
+        "UpdateAppPermissionsResponse$Permissions": "<p>The updated resource permissions for the app.</p>",
         "UpdateDataSetPermissionsRequest$GrantPermissions": "<p>The resource permissions that you want to grant to the dataset.</p>",
         "UpdateDataSetPermissionsRequest$RevokePermissions": "<p>The resource permissions that you want to revoke from the dataset.</p>",
         "UpdateDataSourcePermissionsRequest$GrantPermissions": "<p>A list of resource permissions that you want to grant on the data source.</p>",
@@ -14507,7 +14602,7 @@
       }
     },
     "S3KnowledgeBaseParameters": {
-      "base": "<p>The parameters that are required to connect to a S3 Knowledge Base data source.</p>",
+      "base": "<p>The parameters that are required to connect to an S3 knowledge base data source.</p> <p> <b>Prerequisites: Amazon S3 bucket access</b> </p> <p>Before you call <code>CreateKnowledgeBase</code> for an Amazon S3 knowledge base, an administrator must grant Amazon QuickSight access to the source S3 bucket. If access has not been granted for the bucket, knowledge base creation fails.</p> <p>To grant access, an administrator adds the bucket in the Amazon QuickSight admin console, under Permissions, Amazon Web Services resources, Amazon S3, Select S3 buckets. This authorizes the Amazon QuickSight service role to read the bucket. The bucket can be in the same Amazon Web Services account or, when the bucket owner has authorized your account, in a different account.</p> <p>The service role requires at least the following permissions on the bucket:</p> <ul> <li> <p> <code>s3:GetObject</code> </p> </li> <li> <p> <code>s3:ListBucket</code> </p> </li> <li> <p> <code>s3:GetBucketLocation</code> </p> </li> <li> <p> <code>s3:GetObjectVersion</code> </p> </li> <li> <p> <code>s3:ListBucketVersions</code> </p> </li> </ul> <p>For the full procedure, including cross-account buckets and KMS-encrypted buckets, see the Amazon S3 knowledge base administrator setup guide.</p> <note> <p>To grant access for a specific S3 knowledge base data source without granting account-wide S3 access, provide a custom IAM role on the data source by using <code>RoleArn</code>.</p> </note>",
       "refs": {
         "DataSourceParameters$S3KnowledgeBaseParameters": "<p>The parameters for S3 Knowledge Base.</p>"
       }
@@ -14667,6 +14762,32 @@
       "refs": {}
     },
     "SearchAnalysesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "SearchAppsFilter": {
+      "base": "<p>A filter to apply when searching for apps.</p>",
+      "refs": {
+        "SearchAppsFilterList$member": null
+      }
+    },
+    "SearchAppsFilterList": {
+      "base": null,
+      "refs": {
+        "SearchAppsRequest$Filters": "<p>The filters to apply to the search.</p>"
+      }
+    },
+    "SearchAppsFilterName": {
+      "base": "<p>The name of a field that you can use to filter app search results. Valid values are:</p> <ul> <li> <p> <code>APP_ID</code> – The unique identifier of the app.</p> </li> <li> <p> <code>APP_NAME</code> – The display name of the app.</p> </li> <li> <p> <code>DIRECT_QUICKSIGHT_SOLE_OWNER</code> – An Amazon QuickSight user or group that is the sole direct owner.</p> </li> <li> <p> <code>DIRECT_QUICKSIGHT_OWNER</code> – An Amazon QuickSight user or group with direct owner permissions.</p> </li> <li> <p> <code>DIRECT_QUICKSIGHT_VIEWER_OR_OWNER</code> – An Amazon QuickSight user or group with direct viewer or owner permissions.</p> </li> </ul>",
+      "refs": {
+        "SearchAppsFilter$Name": "<p>The name of the filter attribute.</p>"
+      }
+    },
+    "SearchAppsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SearchAppsResponse": {
       "base": null,
       "refs": {}
     },
@@ -16710,6 +16831,7 @@
         "Agent$ErrorMessage": "<p>An error message associated with the agent, if applicable.</p>",
         "AgentSearchFilter$Value": "<p>The value to filter on.</p>",
         "AnalysisSearchFilter$Value": "<p>The value of the named item, in this case <code>QUICKSIGHT_USER</code>, that you want to use as a filter, for example <code>\"Value\"</code>. An example is <code>\"arn:aws:quicksight:us-east-1:1:user/default/UserName1\"</code>.</p>",
+        "AppSummary$Arn": "<p>The Amazon Resource Name (ARN) of the app.</p>",
         "AssetBundleImportJobRefreshScheduleOverrideParameters$ScheduleId": "<p>A partial identifier for the specific <code>RefreshSchedule</code> resource being overridden. This structure is used together with the <code>DataSetId</code> structure.</p>",
         "AssetBundleImportJobResourceIdOverrideConfiguration$PrefixForAllResources": "<p>An option to request a CloudFormation variable for a prefix to be prepended to each resource's ID before import. The prefix is only added to the asset IDs and does not change the name of the asset.</p>",
         "AssetOptions$Timezone": "<p>Determines the timezone for the analysis.</p>",
@@ -16771,7 +16893,7 @@
         "CreateIAMPolicyAssignmentResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CreateIngestionRequest$DataSetId": "<p>The ID of the dataset used in the ingestion.</p>",
         "CreateIngestionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
-        "CreateKnowledgeBaseRequest$PrimaryOwnerArn": "<p>The Amazon Resource Name (ARN) of the primary owner for the knowledge base. The specified user is always granted owner access, regardless of what is specified in the <code>Permissions</code> field. If you don't specify a primary owner, the knowledge base is created without one.</p>",
+        "CreateKnowledgeBaseRequest$PrimaryOwnerArn": "<p>The Amazon Resource Name (ARN) of the Amazon QuickSight user or group to set as the primary owner of the knowledge base. The specified principal is always granted owner access, regardless of what is specified in the <code>Permissions</code> field.</p> <p>This must be an Amazon QuickSight principal ARN, not an IAM user or role ARN. The API caller is never assigned as the owner automatically. If you don't specify a primary owner and don't grant owner access in <code>Permissions</code>, the knowledge base is created without an owner, even when you call the operation as an Amazon QuickSight user.</p> <p>When you call <code>CreateKnowledgeBase</code> as an IAM user or an assumed IAM role, specify <code>PrimaryOwnerArn</code> (as an Amazon QuickSight principal ARN) or an owner entry in <code>Permissions</code> so that the knowledge base has an owner. Although optional, specifying a primary owner is recommended.</p>",
         "CreateKnowledgeBaseResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CreateNamespaceResponse$CapacityRegion": "<p>The Amazon Web Services Region; that you want to use for the free SPICE capacity for the new namespace. This is set to the region that you run CreateNamespace in. </p>",
         "CreateNamespaceResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -16805,6 +16927,7 @@
         "DeleteAgentRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the agent.</p>",
         "DeleteAgentResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteAnalysisResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "DeleteAppResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteBrandAssignmentResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteBrandResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteCustomPermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -16855,6 +16978,9 @@
         "DescribeAnalysisDefinitionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeAnalysisPermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeAnalysisResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "DescribeAppPermissionsResponse$Arn": "<p>The Amazon Resource Name (ARN) of the app.</p>",
+        "DescribeAppPermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "DescribeAppResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeAutomationJobResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeBrandAssignmentResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeBrandPublishedVersionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -16989,6 +17115,7 @@
         "ListAnalysesRequest$NextToken": "<p>A pagination token that can be used in a subsequent request.</p>",
         "ListAnalysesResponse$NextToken": "<p>A pagination token that can be used in a subsequent request.</p>",
         "ListAnalysesResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "ListAppsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "ListAssetBundleExportJobsRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "ListAssetBundleExportJobsResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "ListAssetBundleImportJobsRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
@@ -17155,6 +17282,8 @@
         "SearchAnalysesRequest$NextToken": "<p>A pagination token that can be used in a subsequent request.</p>",
         "SearchAnalysesResponse$NextToken": "<p>A pagination token that can be used in a subsequent request. </p>",
         "SearchAnalysesResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "SearchAppsFilter$Value": "<p>The value to filter on.</p>",
+        "SearchAppsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "SearchDashboardsRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "SearchDashboardsResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "SearchDashboardsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -17238,6 +17367,8 @@
         "UpdateAgentResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateAnalysisPermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateAnalysisResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "UpdateAppPermissionsResponse$Arn": "<p>The Amazon Resource Name (ARN) of the app.</p>",
+        "UpdateAppPermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateApplicationWithTokenExchangeGrantResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateBrandAssignmentResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateBrandPublishedVersionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -18253,6 +18384,8 @@
         "Analysis$LastUpdatedTime": "<p>The time that the analysis was last updated.</p>",
         "AnalysisSummary$CreatedTime": "<p>The time that the analysis was created.</p>",
         "AnalysisSummary$LastUpdatedTime": "<p>The time that the analysis was last updated.</p>",
+        "AppSummary$CreatedTime": "<p>The time that the app was created.</p>",
+        "AppSummary$LastUpdatedTime": "<p>The time that the app was last updated.</p>",
         "ApprovalPolicy$CreatedAt": "<p>The date and time that the approval policy was created.</p>",
         "ApprovalPolicy$UpdatedAt": "<p>The date and time that the approval policy was last updated.</p>",
         "AssetBundleExportJobSummary$CreatedTime": "<p>The time that the export job was created.</p>",
@@ -19433,6 +19566,14 @@
       "refs": {}
     },
     "UpdateAnalysisResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAppPermissionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAppPermissionsResponse": {
       "base": null,
       "refs": {}
     },

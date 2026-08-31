@@ -54,6 +54,62 @@
                 }
             }
         },
+        "CreateChannel": {
+            "name": "CreateChannel",
+            "http": {
+                "method": "POST",
+                "requestUri": "\/"
+            },
+            "input": {
+                "shape": "CreateChannelInput"
+            },
+            "output": {
+                "shape": "CreateChannelOutput"
+            },
+            "errors": [
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "ResourceInUseException"
+                },
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "LimitExceededException"
+                },
+                {
+                    "shape": "InvalidArgumentException"
+                },
+                {
+                    "shape": "KMSDisabledException"
+                },
+                {
+                    "shape": "KMSInvalidStateException"
+                },
+                {
+                    "shape": "KMSAccessDeniedException"
+                },
+                {
+                    "shape": "KMSNotFoundException"
+                },
+                {
+                    "shape": "KMSOptInRequired"
+                },
+                {
+                    "shape": "KMSThrottlingException"
+                },
+                {
+                    "shape": "AccessDeniedException"
+                }
+            ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "control"
+                }
+            }
+        },
         "CreateStream": {
             "name": "CreateStream",
             "http": {
@@ -95,6 +151,38 @@
             "errors": [
                 {
                     "shape": "ResourceInUseException"
+                },
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "LimitExceededException"
+                },
+                {
+                    "shape": "InvalidArgumentException"
+                },
+                {
+                    "shape": "AccessDeniedException"
+                }
+            ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "control"
+                }
+            }
+        },
+        "DeleteChannel": {
+            "name": "DeleteChannel",
+            "http": {
+                "method": "POST",
+                "requestUri": "\/"
+            },
+            "input": {
+                "shape": "DeleteChannelInput"
+            },
+            "errors": [
+                {
+                    "shape": "ValidationException"
                 },
                 {
                     "shape": "ResourceNotFoundException"
@@ -222,6 +310,42 @@
                     "shape": "LimitExceededException"
                 }
             ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "control"
+                }
+            }
+        },
+        "DescribeChannel": {
+            "name": "DescribeChannel",
+            "http": {
+                "method": "POST",
+                "requestUri": "\/"
+            },
+            "input": {
+                "shape": "DescribeChannelInput"
+            },
+            "output": {
+                "shape": "DescribeChannelOutput"
+            },
+            "errors": [
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "LimitExceededException"
+                },
+                {
+                    "shape": "InvalidArgumentException"
+                },
+                {
+                    "shape": "AccessDeniedException"
+                }
+            ],
+            "readonly": true,
             "staticContextParams": {
                 "OperationType": {
                     "value": "control"
@@ -566,6 +690,42 @@
                     "shape": "AccessDeniedException"
                 }
             ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "control"
+                }
+            }
+        },
+        "ListChannels": {
+            "name": "ListChannels",
+            "http": {
+                "method": "POST",
+                "requestUri": "\/"
+            },
+            "input": {
+                "shape": "ListChannelsInput"
+            },
+            "output": {
+                "shape": "ListChannelsOutput"
+            },
+            "errors": [
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "ExpiredNextTokenException"
+                },
+                {
+                    "shape": "LimitExceededException"
+                },
+                {
+                    "shape": "InvalidArgumentException"
+                },
+                {
+                    "shape": "AccessDeniedException"
+                }
+            ],
+            "readonly": true,
             "staticContextParams": {
                 "OperationType": {
                     "value": "control"
@@ -1188,6 +1348,44 @@
                 }
             }
         },
+        "UpdateChannel": {
+            "name": "UpdateChannel",
+            "http": {
+                "method": "POST",
+                "requestUri": "\/"
+            },
+            "input": {
+                "shape": "UpdateChannelInput"
+            },
+            "output": {
+                "shape": "UpdateChannelOutput"
+            },
+            "errors": [
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "ResourceInUseException"
+                },
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "LimitExceededException"
+                },
+                {
+                    "shape": "InvalidArgumentException"
+                },
+                {
+                    "shape": "AccessDeniedException"
+                }
+            ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "control"
+                }
+            }
+        },
         "UpdateMaxRecordSize": {
             "name": "UpdateMaxRecordSize",
             "http": {
@@ -1371,6 +1569,267 @@
         "BooleanObject": {
             "type": "boolean"
         },
+        "BucketARN": {
+            "type": "string",
+            "max": 2048,
+            "min": 1,
+            "pattern": "arn:aws[-a-z0-9]*:s3:::[a-z0-9._-]{3,63}"
+        },
+        "ChannelARN": {
+            "type": "string",
+            "max": 2048,
+            "min": 1,
+            "pattern": "arn:aws.*:kinesis:.*:\\d{12}:channel\/\\S+"
+        },
+        "ChannelCountObject": {
+            "type": "integer",
+            "max": 1000000,
+            "min": 0
+        },
+        "ChannelDescription": {
+            "type": "structure",
+            "required": [
+                "ChannelName",
+                "ChannelARN",
+                "ChannelId",
+                "ChannelStatus",
+                "ChannelCreationTimestamp",
+                "ServiceExecutionRoleARN",
+                "StreamConfigurationList",
+                "LoggingConfiguration"
+            ],
+            "members": {
+                "ChannelName": {
+                    "shape": "ChannelName"
+                },
+                "ChannelARN": {
+                    "shape": "ChannelARN"
+                },
+                "ChannelId": {
+                    "shape": "ChannelId"
+                },
+                "ChannelStatus": {
+                    "shape": "ChannelStatus"
+                },
+                "ChannelStatusReason": {
+                    "shape": "ChannelStatusReason"
+                },
+                "ChannelCreationTimestamp": {
+                    "shape": "Timestamp"
+                },
+                "ServiceExecutionRoleARN": {
+                    "shape": "RoleARN"
+                },
+                "StreamConfigurationList": {
+                    "shape": "ChannelStreamDescriptionList"
+                },
+                "S3DestinationConfiguration": {
+                    "shape": "S3DestinationDescription"
+                },
+                "S3TablesDestinationConfiguration": {
+                    "shape": "S3TablesDestinationDescription"
+                },
+                "EncryptionConfiguration": {
+                    "shape": "ChannelEncryptionConfiguration"
+                },
+                "LoggingConfiguration": {
+                    "shape": "ChannelLoggingConfiguration"
+                }
+            }
+        },
+        "ChannelDestinationType": {
+            "type": "string",
+            "enum": [
+                "S3",
+                "S3_TABLES"
+            ]
+        },
+        "ChannelEncryptionConfiguration": {
+            "type": "structure",
+            "required": [
+                "EncryptionType",
+                "KeyId"
+            ],
+            "members": {
+                "EncryptionType": {
+                    "shape": "ChannelEncryptionType"
+                },
+                "KeyId": {
+                    "shape": "KeyId"
+                }
+            }
+        },
+        "ChannelEncryptionType": {
+            "type": "string",
+            "enum": [
+                "KMS"
+            ]
+        },
+        "ChannelId": {
+            "type": "string",
+            "max": 64,
+            "min": 1
+        },
+        "ChannelLoggingConfiguration": {
+            "type": "structure",
+            "required": [
+                "CloudWatchLogs"
+            ],
+            "members": {
+                "CloudWatchLogs": {
+                    "shape": "CloudWatchLogs"
+                }
+            }
+        },
+        "ChannelLoggingUpdateInput": {
+            "type": "structure",
+            "required": [
+                "CloudWatchLogs"
+            ],
+            "members": {
+                "CloudWatchLogs": {
+                    "shape": "CloudWatchLogsUpdateInput"
+                }
+            }
+        },
+        "ChannelName": {
+            "type": "string",
+            "max": 128,
+            "min": 1,
+            "pattern": "[a-zA-Z0-9_.-]+"
+        },
+        "ChannelStatus": {
+            "type": "string",
+            "enum": [
+                "CREATING",
+                "ACTIVE",
+                "UPDATING",
+                "DELETING",
+                "FAILED"
+            ]
+        },
+        "ChannelStatusReason": {
+            "type": "string",
+            "max": 2048,
+            "min": 1
+        },
+        "ChannelStreamConfiguration": {
+            "type": "structure",
+            "required": [
+                "StreamARN",
+                "RecordConfiguration"
+            ],
+            "members": {
+                "StreamARN": {
+                    "shape": "StreamARN"
+                },
+                "RecordConfiguration": {
+                    "shape": "RecordConfiguration"
+                }
+            }
+        },
+        "ChannelStreamConfigurationList": {
+            "type": "list",
+            "member": {
+                "shape": "ChannelStreamConfiguration"
+            },
+            "max": 10000,
+            "min": 1
+        },
+        "ChannelStreamDescription": {
+            "type": "structure",
+            "required": [
+                "StreamARN",
+                "StreamCreationTimestamp",
+                "RecordConfiguration"
+            ],
+            "members": {
+                "StreamARN": {
+                    "shape": "StreamARN"
+                },
+                "StreamCreationTimestamp": {
+                    "shape": "Timestamp"
+                },
+                "RecordConfiguration": {
+                    "shape": "RecordConfiguration"
+                }
+            }
+        },
+        "ChannelStreamDescriptionList": {
+            "type": "list",
+            "member": {
+                "shape": "ChannelStreamDescription"
+            },
+            "max": 10000,
+            "min": 1
+        },
+        "ChannelStreamIdentifier": {
+            "type": "structure",
+            "required": [
+                "StreamARN",
+                "StreamCreationTimestamp"
+            ],
+            "members": {
+                "StreamARN": {
+                    "shape": "StreamARN"
+                },
+                "StreamCreationTimestamp": {
+                    "shape": "Timestamp"
+                }
+            }
+        },
+        "ChannelStreamIdentifierList": {
+            "type": "list",
+            "member": {
+                "shape": "ChannelStreamIdentifier"
+            },
+            "max": 10000,
+            "min": 1
+        },
+        "ChannelSummary": {
+            "type": "structure",
+            "required": [
+                "ChannelName",
+                "ChannelARN",
+                "ChannelId",
+                "ChannelStatus",
+                "ChannelCreationTimestamp",
+                "ChannelDestinationType",
+                "Streams"
+            ],
+            "members": {
+                "ChannelName": {
+                    "shape": "ChannelName"
+                },
+                "ChannelARN": {
+                    "shape": "ChannelARN"
+                },
+                "ChannelId": {
+                    "shape": "ChannelId"
+                },
+                "ChannelStatus": {
+                    "shape": "ChannelStatus"
+                },
+                "ChannelStatusReason": {
+                    "shape": "ChannelStatusReason"
+                },
+                "ChannelCreationTimestamp": {
+                    "shape": "Timestamp"
+                },
+                "ChannelDestinationType": {
+                    "shape": "ChannelDestinationType"
+                },
+                "Streams": {
+                    "shape": "ChannelStreamIdentifierList"
+                }
+            }
+        },
+        "ChannelSummaryList": {
+            "type": "list",
+            "member": {
+                "shape": "ChannelSummary"
+            }
+        },
         "ChildShard": {
             "type": "structure",
             "required": [
@@ -1394,6 +1853,52 @@
             "type": "list",
             "member": {
                 "shape": "ChildShard"
+            }
+        },
+        "CloudWatchLogGroupName": {
+            "type": "string",
+            "max": 512,
+            "min": 1,
+            "pattern": "[\\.\\-_\/#A-Za-z0-9]+"
+        },
+        "CloudWatchLogStreamName": {
+            "type": "string",
+            "max": 512,
+            "min": 1,
+            "pattern": "[^:*]*"
+        },
+        "CloudWatchLogs": {
+            "type": "structure",
+            "required": [
+                "Enabled"
+            ],
+            "members": {
+                "Enabled": {
+                    "shape": "BooleanObject"
+                },
+                "LogGroupName": {
+                    "shape": "CloudWatchLogGroupName"
+                },
+                "LogStreamName": {
+                    "shape": "CloudWatchLogStreamName"
+                }
+            }
+        },
+        "CloudWatchLogsUpdateInput": {
+            "type": "structure",
+            "required": [
+                "Enabled"
+            ],
+            "members": {
+                "Enabled": {
+                    "shape": "BooleanObject"
+                },
+                "LogGroupName": {
+                    "shape": "CloudWatchLogGroupName"
+                },
+                "LogStreamName": {
+                    "shape": "CloudWatchLogStreamName"
+                }
             }
         },
         "Consumer": {
@@ -1477,6 +1982,51 @@
                 "ACTIVE"
             ]
         },
+        "CreateChannelInput": {
+            "type": "structure",
+            "required": [
+                "ChannelName",
+                "ServiceExecutionRoleARN",
+                "StreamConfigurationList"
+            ],
+            "members": {
+                "ChannelName": {
+                    "shape": "ChannelName"
+                },
+                "ServiceExecutionRoleARN": {
+                    "shape": "RoleARN"
+                },
+                "StreamConfigurationList": {
+                    "shape": "ChannelStreamConfigurationList"
+                },
+                "S3DestinationConfiguration": {
+                    "shape": "S3DestinationConfiguration"
+                },
+                "S3TablesDestinationConfiguration": {
+                    "shape": "S3TablesDestinationConfiguration"
+                },
+                "EncryptionConfiguration": {
+                    "shape": "ChannelEncryptionConfiguration"
+                },
+                "Tags": {
+                    "shape": "TagMap"
+                },
+                "LoggingConfiguration": {
+                    "shape": "ChannelLoggingConfiguration"
+                }
+            }
+        },
+        "CreateChannelOutput": {
+            "type": "structure",
+            "required": [
+                "ChannelDescription"
+            ],
+            "members": {
+                "ChannelDescription": {
+                    "shape": "ChannelDescription"
+                }
+            }
+        },
         "CreateStreamInput": {
             "type": "structure",
             "required": [
@@ -1508,6 +2058,27 @@
             "max": 10485760,
             "min": 0
         },
+        "DataFreshnessInSeconds": {
+            "type": "integer"
+        },
+        "DeadLetterQueueS3Configuration": {
+            "type": "structure",
+            "required": [
+                "BucketARN",
+                "ExpectedBucketOwner"
+            ],
+            "members": {
+                "BucketARN": {
+                    "shape": "BucketARN"
+                },
+                "ExpectedBucketOwner": {
+                    "shape": "ExpectedBucketOwner"
+                },
+                "ErrorOutputPrefix": {
+                    "shape": "S3ErrorOutputPrefix"
+                }
+            }
+        },
         "DecreaseStreamRetentionPeriodInput": {
             "type": "structure",
             "required": [
@@ -1530,6 +2101,20 @@
                     "shape": "StreamId",
                     "contextParam": {
                         "name": "StreamId"
+                    }
+                }
+            }
+        },
+        "DeleteChannelInput": {
+            "type": "structure",
+            "required": [
+                "ChannelARN"
+            ],
+            "members": {
+                "ChannelARN": {
+                    "shape": "ChannelARN",
+                    "contextParam": {
+                        "name": "ChannelARN"
                     }
                 }
             }
@@ -1615,6 +2200,31 @@
                 }
             }
         },
+        "DescribeChannelInput": {
+            "type": "structure",
+            "required": [
+                "ChannelARN"
+            ],
+            "members": {
+                "ChannelARN": {
+                    "shape": "ChannelARN",
+                    "contextParam": {
+                        "name": "ChannelARN"
+                    }
+                }
+            }
+        },
+        "DescribeChannelOutput": {
+            "type": "structure",
+            "required": [
+                "ChannelDescription"
+            ],
+            "members": {
+                "ChannelDescription": {
+                    "shape": "ChannelDescription"
+                }
+            }
+        },
         "DescribeLimitsInput": {
             "type": "structure",
             "members": []
@@ -1639,6 +2249,12 @@
                 },
                 "OnDemandStreamCountLimit": {
                     "shape": "OnDemandStreamCountLimitObject"
+                },
+                "ChannelCount": {
+                    "shape": "ChannelCountObject"
+                },
+                "ChannelCountLimit": {
+                    "shape": "ChannelCountObject"
                 }
             }
         },
@@ -1848,6 +2464,12 @@
         "ErrorMessage": {
             "type": "string"
         },
+        "ExpectedBucketOwner": {
+            "type": "string",
+            "max": 12,
+            "min": 12,
+            "pattern": "\\d{12}"
+        },
         "ExpiredIteratorException": {
             "type": "structure",
             "members": {
@@ -1865,6 +2487,12 @@
                 }
             },
             "exception": true
+        },
+        "GSRSchemaARN": {
+            "type": "string",
+            "max": 512,
+            "min": 1,
+            "pattern": "arn:aws[-a-z0-9]*:glue:[-a-z0-9]+:\\d{12}:schema\/[-a-zA-Z0-9_$#.]+\/[-a-zA-Z0-9_$#.]+"
         },
         "GetRecordsInput": {
             "type": "structure",
@@ -1994,7 +2622,7 @@
         },
         "HashKey": {
             "type": "string",
-            "pattern": "0|([1-9]\\d{0,38})"
+            "pattern": "^(0|([1-9]\\d{0,38}))$"
         },
         "HashKeyRange": {
             "type": "structure",
@@ -2123,6 +2751,39 @@
                 }
             },
             "exception": true
+        },
+        "ListChannelsInput": {
+            "type": "structure",
+            "members": {
+                "StreamFilter": {
+                    "shape": "StreamFilterList"
+                },
+                "MaxResults": {
+                    "shape": "ListChannelsInputLimit"
+                },
+                "NextToken": {
+                    "shape": "NextToken"
+                }
+            }
+        },
+        "ListChannelsInputLimit": {
+            "type": "integer",
+            "max": 10000,
+            "min": 1
+        },
+        "ListChannelsOutput": {
+            "type": "structure",
+            "required": [
+                "ChannelSummaries"
+            ],
+            "members": {
+                "ChannelSummaries": {
+                    "shape": "ChannelSummaryList"
+                },
+                "NextToken": {
+                    "shape": "NextToken"
+                }
+            }
         },
         "ListShardsInput": {
             "type": "structure",
@@ -2459,10 +3120,56 @@
             "max": 1000000,
             "min": 0
         },
+        "PartitionField": {
+            "type": "structure",
+            "required": [
+                "Transform",
+                "SourceName"
+            ],
+            "members": {
+                "Transform": {
+                    "shape": "PartitionTransform"
+                },
+                "SourceName": {
+                    "shape": "PartitionSourceName"
+                }
+            }
+        },
+        "PartitionFieldList": {
+            "type": "list",
+            "member": {
+                "shape": "PartitionField"
+            },
+            "max": 10,
+            "min": 1
+        },
         "PartitionKey": {
             "type": "string",
             "max": 256,
             "min": 1
+        },
+        "PartitionSourceName": {
+            "type": "string",
+            "max": 255,
+            "min": 1,
+            "pattern": "[a-zA-Z0-9\\.\\_]+"
+        },
+        "PartitionSpec": {
+            "type": "structure",
+            "required": [
+                "PartitionFields"
+            ],
+            "members": {
+                "PartitionFields": {
+                    "shape": "PartitionFieldList"
+                }
+            }
+        },
+        "PartitionTransform": {
+            "type": "string",
+            "enum": [
+                "TIME_HOUR"
+            ]
         },
         "Policy": {
             "type": "string"
@@ -2677,6 +3384,29 @@
                 }
             }
         },
+        "RecordConfiguration": {
+            "type": "structure",
+            "required": [
+                "RecordFormatType"
+            ],
+            "members": {
+                "RecordFormatType": {
+                    "shape": "RecordFormatType"
+                },
+                "GSRSchemaARN": {
+                    "shape": "GSRSchemaARN"
+                }
+            }
+        },
+        "RecordFormatType": {
+            "type": "string",
+            "enum": [
+                "GSR_JSON",
+                "JSON",
+                "STRING",
+                "BYTE_ARRAY"
+            ]
+        },
         "RecordList": {
             "type": "list",
             "member": {
@@ -2751,7 +3481,7 @@
             "type": "string",
             "max": 2048,
             "min": 1,
-            "pattern": "arn:aws.*:kinesis:.*:\\d{12}:.*stream\/\\S+"
+            "pattern": "arn:aws.*:kinesis:.*:\\d{12}:.*(stream|channel)\/\\S+"
         },
         "ResourceInUseException": {
             "type": "structure",
@@ -2774,6 +3504,214 @@
         "RetentionPeriodHours": {
             "type": "integer"
         },
+        "RoleARN": {
+            "type": "string",
+            "max": 512,
+            "min": 1,
+            "pattern": "arn:aws[-a-z0-9]*:iam::\\d{12}:role\/[a-zA-Z_0-9+=,.@\\-_\/]+"
+        },
+        "S3CompressionType": {
+            "type": "string",
+            "enum": [
+                "NONE",
+                "GZIP",
+                "ZSTD"
+            ]
+        },
+        "S3DestinationConfiguration": {
+            "type": "structure",
+            "required": [
+                "StorageConfiguration"
+            ],
+            "members": {
+                "DataFreshnessInSeconds": {
+                    "shape": "DataFreshnessInSeconds"
+                },
+                "DeadLetterQueueS3Configuration": {
+                    "shape": "DeadLetterQueueS3Configuration"
+                },
+                "StorageConfiguration": {
+                    "shape": "S3StorageConfiguration"
+                }
+            }
+        },
+        "S3DestinationDescription": {
+            "type": "structure",
+            "required": [
+                "DataFreshnessInSeconds",
+                "DeadLetterQueueS3Configuration",
+                "StorageConfiguration"
+            ],
+            "members": {
+                "DataFreshnessInSeconds": {
+                    "shape": "DataFreshnessInSeconds"
+                },
+                "DeadLetterQueueS3Configuration": {
+                    "shape": "DeadLetterQueueS3Configuration"
+                },
+                "StorageConfiguration": {
+                    "shape": "S3StorageConfiguration"
+                }
+            }
+        },
+        "S3DestinationUpdateInput": {
+            "type": "structure",
+            "required": [
+                "DataFreshnessInSeconds"
+            ],
+            "members": {
+                "DataFreshnessInSeconds": {
+                    "shape": "DataFreshnessInSeconds"
+                }
+            }
+        },
+        "S3ErrorOutputPrefix": {
+            "type": "string",
+            "max": 512,
+            "min": 1,
+            "pattern": "[0-9A-Za-z!\\-_'.*()\\\/]+"
+        },
+        "S3OutputKeyTemplate": {
+            "type": "string",
+            "max": 1024,
+            "min": 1,
+            "pattern": "[0-9A-Za-z!\\-_'.*()\\\/=:{}]+"
+        },
+        "S3StorageClass": {
+            "type": "string",
+            "enum": [
+                "STANDARD",
+                "INTELLIGENT_TIERING",
+                "GLACIER_IR"
+            ]
+        },
+        "S3StorageConfiguration": {
+            "type": "structure",
+            "required": [
+                "BucketARN",
+                "ExpectedBucketOwner",
+                "CompressionType"
+            ],
+            "members": {
+                "BucketARN": {
+                    "shape": "BucketARN"
+                },
+                "ExpectedBucketOwner": {
+                    "shape": "ExpectedBucketOwner"
+                },
+                "OutputKeyTemplate": {
+                    "shape": "S3OutputKeyTemplate"
+                },
+                "StorageClass": {
+                    "shape": "S3StorageClass"
+                },
+                "CompressionType": {
+                    "shape": "S3CompressionType"
+                }
+            }
+        },
+        "S3TablesCompressionType": {
+            "type": "string",
+            "enum": [
+                "NONE",
+                "ZSTD",
+                "SNAPPY"
+            ]
+        },
+        "S3TablesConfiguration": {
+            "type": "structure",
+            "required": [
+                "TableBucketARN",
+                "Namespace",
+                "TableName",
+                "CompressionType"
+            ],
+            "members": {
+                "TableBucketARN": {
+                    "shape": "TableBucketARN"
+                },
+                "Namespace": {
+                    "shape": "S3TablesNamespace"
+                },
+                "TableName": {
+                    "shape": "S3TablesTableName"
+                },
+                "CompressionType": {
+                    "shape": "S3TablesCompressionType"
+                },
+                "PartitionSpec": {
+                    "shape": "PartitionSpec"
+                }
+            }
+        },
+        "S3TablesConfigurationList": {
+            "type": "list",
+            "member": {
+                "shape": "S3TablesConfiguration"
+            },
+            "max": 10000,
+            "min": 1
+        },
+        "S3TablesDestinationConfiguration": {
+            "type": "structure",
+            "required": [
+                "DeadLetterQueueS3Configuration",
+                "S3TablesConfigurationList"
+            ],
+            "members": {
+                "DataFreshnessInSeconds": {
+                    "shape": "DataFreshnessInSeconds"
+                },
+                "DeadLetterQueueS3Configuration": {
+                    "shape": "DeadLetterQueueS3Configuration"
+                },
+                "S3TablesConfigurationList": {
+                    "shape": "S3TablesConfigurationList"
+                }
+            }
+        },
+        "S3TablesDestinationDescription": {
+            "type": "structure",
+            "required": [
+                "DataFreshnessInSeconds",
+                "DeadLetterQueueS3Configuration",
+                "S3TablesConfigurationList"
+            ],
+            "members": {
+                "DataFreshnessInSeconds": {
+                    "shape": "DataFreshnessInSeconds"
+                },
+                "DeadLetterQueueS3Configuration": {
+                    "shape": "DeadLetterQueueS3Configuration"
+                },
+                "S3TablesConfigurationList": {
+                    "shape": "S3TablesConfigurationList"
+                }
+            }
+        },
+        "S3TablesDestinationUpdateInput": {
+            "type": "structure",
+            "required": [
+                "DataFreshnessInSeconds"
+            ],
+            "members": {
+                "DataFreshnessInSeconds": {
+                    "shape": "DataFreshnessInSeconds"
+                }
+            }
+        },
+        "S3TablesNamespace": {
+            "type": "string",
+            "max": 255,
+            "min": 1,
+            "pattern": "[0-9a-z_]+"
+        },
+        "S3TablesTableName": {
+            "type": "string",
+            "max": 255,
+            "min": 1,
+            "pattern": "[0-9a-z_]+"
+        },
         "ScalingType": {
             "type": "string",
             "enum": [
@@ -2782,7 +3720,7 @@
         },
         "SequenceNumber": {
             "type": "string",
-            "pattern": "0|([1-9]\\d{0,128})"
+            "pattern": "^(0|([1-9]\\d{0,128}))$"
         },
         "SequenceNumberRange": {
             "type": "structure",
@@ -3103,8 +4041,33 @@
                 },
                 "MaxRecordSizeInKiB": {
                     "shape": "MaxRecordSizeInKiB"
+                },
+                "ChannelCount": {
+                    "shape": "ChannelCountObject"
                 }
             }
+        },
+        "StreamFilter": {
+            "type": "structure",
+            "required": [
+                "StreamARN"
+            ],
+            "members": {
+                "StreamARN": {
+                    "shape": "StreamARN"
+                },
+                "StreamCreationTimestamp": {
+                    "shape": "Timestamp"
+                }
+            }
+        },
+        "StreamFilterList": {
+            "type": "list",
+            "member": {
+                "shape": "StreamFilter"
+            },
+            "max": 10000,
+            "min": 1
         },
         "StreamId": {
             "type": "string",
@@ -3283,6 +4246,12 @@
                 }
             }
         },
+        "TableBucketARN": {
+            "type": "string",
+            "max": 2048,
+            "min": 1,
+            "pattern": "arn:aws[-a-z0-9]*:s3tables:[-a-z0-9]+:\\d{12}:bucket\/[a-z0-9_-]{3,63}"
+        },
         "Tag": {
             "type": "structure",
             "required": [
@@ -3401,6 +4370,40 @@
             "members": {
                 "MinimumThroughputBillingCommitment": {
                     "shape": "MinimumThroughputBillingCommitmentOutput"
+                }
+            }
+        },
+        "UpdateChannelInput": {
+            "type": "structure",
+            "required": [
+                "ChannelARN"
+            ],
+            "members": {
+                "ChannelARN": {
+                    "shape": "ChannelARN",
+                    "contextParam": {
+                        "name": "ChannelARN"
+                    }
+                },
+                "S3DestinationConfiguration": {
+                    "shape": "S3DestinationUpdateInput"
+                },
+                "S3TablesDestinationConfiguration": {
+                    "shape": "S3TablesDestinationUpdateInput"
+                },
+                "LoggingConfiguration": {
+                    "shape": "ChannelLoggingUpdateInput"
+                }
+            }
+        },
+        "UpdateChannelOutput": {
+            "type": "structure",
+            "required": [
+                "ChannelDescription"
+            ],
+            "members": {
+                "ChannelDescription": {
+                    "shape": "ChannelDescription"
                 }
             }
         },

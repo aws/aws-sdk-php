@@ -1939,7 +1939,7 @@
     },
     "AttachmentBody":{
       "type":"blob",
-      "max":1572864,
+      "max":6990508,
       "min":1
     },
     "AttachmentStatus":{
@@ -2034,6 +2034,82 @@
         "IamRoleArn":{"shape":"IamRoleArn"},
         "LogGroupArn":{"shape":"LogGroupArn"}
       }
+    },
+    "ConditionOperator":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[A-Za-z0-9_]+"
+    },
+    "ConditionValue":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "ConditionValueList":{
+      "type":"list",
+      "member":{"shape":"ConditionValue"},
+      "max":20,
+      "min":0
+    },
+    "ConditionalBehavior":{
+      "type":"structure",
+      "required":[
+        "Rules",
+        "DefaultBehavior"
+      ],
+      "members":{
+        "Rules":{"shape":"ConditionalRuleList"},
+        "DefaultBehavior":{"shape":"ConditionalFieldBehavior"}
+      }
+    },
+    "ConditionalFieldBehavior":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[A-Za-z0-9_]+"
+    },
+    "ConditionalRule":{
+      "type":"structure",
+      "required":[
+        "Conditions",
+        "RuleBehavior"
+      ],
+      "members":{
+        "Conditions":{"shape":"FieldConditionList"},
+        "RuleBehavior":{"shape":"ConditionalFieldBehavior"},
+        "ConditionalValidation":{"shape":"ConditionalValidation"}
+      }
+    },
+    "ConditionalRuleList":{
+      "type":"list",
+      "member":{"shape":"ConditionalRule"},
+      "max":20,
+      "min":1
+    },
+    "ConditionalValidation":{
+      "type":"structure",
+      "members":{
+        "MinLength":{"shape":"ConditionalValidationMinLengthInteger"},
+        "MaxLength":{"shape":"ConditionalValidationMaxLengthInteger"},
+        "Pattern":{"shape":"ConditionalValidationPatternString"},
+        "AllowedValues":{"shape":"SelectChoiceList"}
+      }
+    },
+    "ConditionalValidationMaxLengthInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "ConditionalValidationMinLengthInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "ConditionalValidationPatternString":{
+      "type":"string",
+      "max":2048,
+      "min":1
     },
     "ConfigurationSetFilter":{
       "type":"structure",
@@ -3692,6 +3768,24 @@
       "type":"list",
       "member":{"shape":"EventType"},
       "max":52,
+      "min":1
+    },
+    "FieldCondition":{
+      "type":"structure",
+      "required":[
+        "DependsOnFieldPath",
+        "Operator"
+      ],
+      "members":{
+        "DependsOnFieldPath":{"shape":"FieldPath"},
+        "Operator":{"shape":"ConditionOperator"},
+        "Values":{"shape":"ConditionValueList"}
+      }
+    },
+    "FieldConditionList":{
+      "type":"list",
+      "member":{"shape":"FieldCondition"},
+      "max":5,
       "min":1
     },
     "FieldPath":{
@@ -5634,7 +5728,8 @@
         "FieldRequirement":{"shape":"FieldRequirement"},
         "SelectValidation":{"shape":"SelectValidation"},
         "TextValidation":{"shape":"TextValidation"},
-        "DisplayHints":{"shape":"RegistrationFieldDisplayHints"}
+        "DisplayHints":{"shape":"RegistrationFieldDisplayHints"},
+        "ConditionalBehavior":{"shape":"ConditionalBehavior"}
       }
     },
     "RegistrationFieldDefinitionList":{

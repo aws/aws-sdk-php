@@ -397,7 +397,8 @@
       "members":{
         "AmdSevSnp":{"shape":"AmdSevSnpEnum"},
         "CoreCount":{"shape":"NonNegativeInteger"},
-        "ThreadsPerCore":{"shape":"NonNegativeInteger"}
+        "ThreadsPerCore":{"shape":"NonNegativeInteger"},
+        "NestedVirtualization":{"shape":"NestedVirtualizationEnum"}
       }
     },
     "CreateVolumeRequest":{
@@ -939,6 +940,13 @@
       "box":true,
       "max":25,
       "min":1
+    },
+    "NestedVirtualizationEnum":{
+      "type":"string",
+      "enum":[
+        "enabled",
+        "disabled"
+      ]
     },
     "NetworkInterfaceId":{
       "type":"string",

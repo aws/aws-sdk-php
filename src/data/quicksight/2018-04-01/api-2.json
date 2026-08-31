@@ -861,6 +861,24 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "DeleteApp":{
+      "name":"DeleteApp",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/accounts/{AwsAccountId}/apps/{AppId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteAppRequest"},
+      "output":{"shape":"DeleteAppResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
     "DeleteApprovalPolicy":{
       "name":"DeleteApprovalPolicy",
       "http":{
@@ -1696,6 +1714,42 @@
         {"shape":"UnsupportedUserEditionException"},
         {"shape":"InternalFailureException"}
       ]
+    },
+    "DescribeApp":{
+      "name":"DescribeApp",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/apps/{AppId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeAppRequest"},
+      "output":{"shape":"DescribeAppResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
+    "DescribeAppPermissions":{
+      "name":"DescribeAppPermissions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/apps/{AppId}/permissions",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeAppPermissionsRequest"},
+      "output":{"shape":"DescribeAppPermissionsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
     },
     "DescribeApprovalPolicy":{
       "name":"DescribeApprovalPolicy",
@@ -2926,6 +2980,23 @@
       ],
       "readonly":true
     },
+    "ListApps":{
+      "name":"ListApps",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/apps",
+        "responseCode":200
+      },
+      "input":{"shape":"ListAppsRequest"},
+      "output":{"shape":"ListAppsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
     "ListAssetBundleExportJobs":{
       "name":"ListAssetBundleExportJobs",
       "http":{
@@ -3802,6 +3873,22 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "SearchApps":{
+      "name":"SearchApps",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/search/apps",
+        "responseCode":200
+      },
+      "input":{"shape":"SearchAppsRequest"},
+      "output":{"shape":"SearchAppsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "SearchDashboards":{
       "name":"SearchDashboards",
       "http":{
@@ -4273,6 +4360,25 @@
         {"shape":"LimitExceededException"},
         {"shape":"InternalFailureException"}
       ]
+    },
+    "UpdateAppPermissions":{
+      "name":"UpdateAppPermissions",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/accounts/{AwsAccountId}/apps/{AppId}/permissions",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateAppPermissionsRequest"},
+      "output":{"shape":"UpdateAppPermissionsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
     },
     "UpdateApplicationWithTokenExchangeGrant":{
       "name":"UpdateApplicationWithTokenExchangeGrant",
@@ -6111,6 +6217,38 @@
     "AnswerIds":{
       "type":"list",
       "member":{"shape":"AnswerId"}
+    },
+    "AppId":{
+      "type":"string",
+      "pattern":"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+    },
+    "AppName":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[\\S\\s]+"
+    },
+    "AppSummary":{
+      "type":"structure",
+      "members":{
+        "AppId":{"shape":"AppId"},
+        "Arn":{"shape":"String"},
+        "Name":{"shape":"AppName"},
+        "CreatedTime":{"shape":"Timestamp"},
+        "LastUpdatedTime":{"shape":"Timestamp"},
+        "Visibility":{"shape":"AppVisibility"}
+      }
+    },
+    "AppSummaryList":{
+      "type":"list",
+      "member":{"shape":"AppSummary"}
+    },
+    "AppVisibility":{
+      "type":"string",
+      "enum":[
+        "PRIVATE",
+        "PUBLIC"
+      ]
     },
     "AppendOperation":{
       "type":"structure",
@@ -13148,6 +13286,31 @@
         "RequestId":{"shape":"String"}
       }
     },
+    "DeleteAppRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "AppId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "AppId":{
+          "shape":"AppId",
+          "location":"uri",
+          "locationName":"AppId"
+        }
+      }
+    },
+    "DeleteAppResponse":{
+      "type":"structure",
+      "members":{
+        "RequestId":{"shape":"String"}
+      }
+    },
     "DeleteApprovalPolicyRequest":{
       "type":"structure",
       "required":["PolicyId"],
@@ -14621,6 +14784,61 @@
           "shape":"StatusCode",
           "location":"statusCode"
         },
+        "RequestId":{"shape":"String"}
+      }
+    },
+    "DescribeAppPermissionsRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "AppId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "AppId":{
+          "shape":"AppId",
+          "location":"uri",
+          "locationName":"AppId"
+        }
+      }
+    },
+    "DescribeAppPermissionsResponse":{
+      "type":"structure",
+      "members":{
+        "AppId":{"shape":"AppId"},
+        "Arn":{"shape":"String"},
+        "Permissions":{"shape":"ResourcePermissionList"},
+        "RequestId":{"shape":"String"}
+      }
+    },
+    "DescribeAppRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "AppId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "AppId":{
+          "shape":"AppId",
+          "location":"uri",
+          "locationName":"AppId"
+        }
+      }
+    },
+    "DescribeAppResponse":{
+      "type":"structure",
+      "required":["App"],
+      "members":{
+        "App":{"shape":"AppSummary"},
         "RequestId":{"shape":"String"}
       }
     },
@@ -21076,6 +21294,37 @@
         "NextToken":{"shape":"PaginationToken"}
       }
     },
+    "ListAppsRequest":{
+      "type":"structure",
+      "required":["AwsAccountId"],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "box":true,
+          "location":"querystring",
+          "locationName":"max-results"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"next-token"
+        }
+      }
+    },
+    "ListAppsResponse":{
+      "type":"structure",
+      "required":["AppSummaryList"],
+      "members":{
+        "AppSummaryList":{"shape":"AppSummaryList"},
+        "NextToken":{"shape":"NextToken"},
+        "RequestId":{"shape":"String"}
+      }
+    },
     "ListAssetBundleExportJobsRequest":{
       "type":"structure",
       "required":["AwsAccountId"],
@@ -26335,6 +26584,62 @@
         "RequestId":{"shape":"String"}
       }
     },
+    "SearchAppsFilter":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Operator",
+        "Value"
+      ],
+      "members":{
+        "Name":{"shape":"SearchAppsFilterName"},
+        "Operator":{"shape":"FilterOperator"},
+        "Value":{"shape":"String"}
+      }
+    },
+    "SearchAppsFilterList":{
+      "type":"list",
+      "member":{"shape":"SearchAppsFilter"}
+    },
+    "SearchAppsFilterName":{
+      "type":"string",
+      "enum":[
+        "APP_ID",
+        "APP_NAME",
+        "DIRECT_QUICKSIGHT_SOLE_OWNER",
+        "DIRECT_QUICKSIGHT_OWNER",
+        "DIRECT_QUICKSIGHT_VIEWER_OR_OWNER"
+      ]
+    },
+    "SearchAppsRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "Filters"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "Filters":{"shape":"SearchAppsFilterList"},
+        "MaxResults":{
+          "shape":"MaxResults",
+          "box":true
+        },
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "SearchAppsResponse":{
+      "type":"structure",
+      "required":["AppSummaryList"],
+      "members":{
+        "AppSummaryList":{"shape":"AppSummaryList"},
+        "NextToken":{"shape":"NextToken"},
+        "RequestId":{"shape":"String"}
+      }
+    },
     "SearchDashboardsRequest":{
       "type":"structure",
       "required":[
@@ -31051,6 +31356,38 @@
           "shape":"StatusCode",
           "location":"statusCode"
         },
+        "RequestId":{"shape":"String"}
+      }
+    },
+    "UpdateAppPermissionsRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "AppId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "AppId":{
+          "shape":"AppId",
+          "location":"uri",
+          "locationName":"AppId"
+        },
+        "GrantPermissions":{"shape":"ResourcePermissionList"},
+        "RevokePermissions":{"shape":"ResourcePermissionList"},
+        "Visibility":{"shape":"AppVisibility"}
+      }
+    },
+    "UpdateAppPermissionsResponse":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"String"},
+        "AppId":{"shape":"AppId"},
+        "Permissions":{"shape":"ResourcePermissionList"},
+        "Visibility":{"shape":"AppVisibility"},
         "RequestId":{"shape":"String"}
       }
     },
