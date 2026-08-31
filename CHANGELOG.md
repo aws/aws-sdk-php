@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.394.4 - 2026-08-31
 
 * `Aws\` - Fixed WrappedHttpHandler buffering the entire partial response body into memory when a 2xx response was attached to a rejected promise, which could exhaust memory on a transport failure during a large streamed download.
 * `Aws\WorkspacesInstances` - Amazon WorkSpaces Core managed instances now support nested virtualization. Customers can enable nested virtualization with supported instance types at launch via CpuOptions.NestedVirtualization in CreateWorkspaceInstance to run hypervisors and virtual machines inside their WorkSpaces Instance.
