@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.394.5 - 2026-08-31
 
 * `Aws\AgentRegistry` - Release HTTP and AGUI descriptors to the dataplane model
 
