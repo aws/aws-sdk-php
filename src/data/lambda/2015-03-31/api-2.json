@@ -2789,6 +2789,14 @@
         "OnFailure":{"shape":"OnFailure"}
       }
     },
+    "DirectS3Read":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED",
+        "AUTO"
+      ]
+    },
     "DocumentDBEventSourceConfig":{
       "type":"structure",
       "members":{
@@ -3334,7 +3342,8 @@
       ],
       "members":{
         "Arn":{"shape":"FileSystemArn"},
-        "LocalMountPath":{"shape":"LocalMountPath"}
+        "LocalMountPath":{"shape":"LocalMountPath"},
+        "S3FilesConfig":{"shape":"S3FilesConfig"}
       }
     },
     "FileSystemConfigList":{
@@ -5407,7 +5416,7 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"(arn:(aws[a-zA-Z-]*)?:lambda:(eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:|(((eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:)?(\\d{12}:)?))(function:)?([a-zA-Z0-9-_\\.]+)(:(\\$LATEST(\\.PUBLISHED)?|[a-zA-Z0-9-_]+))?"
+      "pattern":"(arn:(aws[a-zA-Z-]*)?:lambda:)?((eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:)?(\\d{12}:)?(function:)?([a-zA-Z0-9-_\\.]+)(:(\\$LATEST(\\.PUBLISHED)?|[a-zA-Z0-9-_]+))?"
     },
     "NamespacedStatementId":{
       "type":"string",
@@ -6290,6 +6299,12 @@
       "max":63,
       "min":3,
       "pattern":"[0-9A-Za-z\\.\\-_]*(?<!\\.)"
+    },
+    "S3FilesConfig":{
+      "type":"structure",
+      "members":{
+        "DirectS3Read":{"shape":"DirectS3Read"}
+      }
     },
     "S3FilesMountConnectivityException":{
       "type":"structure",

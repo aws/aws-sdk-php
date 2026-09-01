@@ -720,12 +720,16 @@
         "acceptanceTime":{"shape":"Timestamp"},
         "startTime":{"shape":"Timestamp"},
         "endTime":{"shape":"Timestamp"},
+        "lastUpdateTime":{"shape":"Timestamp"},
         "agreementType":{"shape":"AgreementType"},
         "acceptor":{"shape":"Acceptor"},
         "proposer":{"shape":"Proposer"},
         "proposalSummary":{"shape":"ProposalSummary"},
         "status":{"shape":"AgreementStatus"},
-        "entitlements":{"shape":"EntitlementList"}
+        "entitlements":{"shape":"EntitlementList"},
+        "initialAgreementId":{"shape":"ResourceId"},
+        "endTimeBehaviorType":{"shape":"EndTimeBehaviorType"},
+        "endTimeBehaviorReasonCode":{"shape":"EndTimeBehaviorReasonCode"}
       }
     },
     "AgreementViewSummaryList":{
@@ -993,6 +997,12 @@
       "min":1,
       "pattern":"ch-[a-zA-Z0-9]+"
     },
+    "ChargePercentage":{
+      "type":"string",
+      "max":6,
+      "min":1,
+      "pattern":"(100(\\.0{1,2})?|[1-9]\\d?(\\.\\d{1,2})?|0\\.(0[1-9]|[1-9]\\d?))"
+    },
     "ChargeRevision":{
       "type":"long",
       "box":true,
@@ -1101,6 +1111,12 @@
       "min":3,
       "pattern":"[A-Z]+"
     },
+    "DayDuration":{
+      "type":"string",
+      "max":9,
+      "min":3,
+      "pattern":"P([1-9]\\d{0,6}D)"
+    },
     "DescribeAgreementInput":{
       "type":"structure",
       "required":["agreementId"],
@@ -1120,7 +1136,9 @@
         "agreementType":{"shape":"AgreementType"},
         "estimatedCharges":{"shape":"EstimatedCharges"},
         "proposalSummary":{"shape":"ProposalSummary"},
-        "status":{"shape":"AgreementStatus"}
+        "status":{"shape":"AgreementStatus"},
+        "initialAgreementId":{"shape":"ResourceId"},
+        "endTimeBehavior":{"shape":"EndTimeBehavior"}
       }
     },
     "Dimension":{
@@ -1150,6 +1168,32 @@
     "DocumentList":{
       "type":"list",
       "member":{"shape":"DocumentItem"}
+    },
+    "EndTimeBehavior":{
+      "type":"structure",
+      "required":["type"],
+      "members":{
+        "type":{"shape":"EndTimeBehaviorType"},
+        "reasonCode":{"shape":"EndTimeBehaviorReasonCode"},
+        "renewalSummary":{"shape":"RenewalSummary"}
+      }
+    },
+    "EndTimeBehaviorReasonCode":{
+      "type":"string",
+      "enum":[
+        "PROPOSER_RENEW_OPTED_OUT",
+        "ACCEPTOR_RENEW_OPTED_OUT",
+        "NO_RENEWAL_TERM",
+        "RENEWAL_LIMIT_EXHAUSTED"
+      ]
+    },
+    "EndTimeBehaviorType":{
+      "type":"string",
+      "enum":[
+        "RENEW",
+        "REPLACE",
+        "EXPIRE"
+      ]
     },
     "Entitlement":{
       "type":"structure",
@@ -1222,15 +1266,21 @@
     },
     "FilterValue":{
       "type":"string",
-      "max":64,
+      "max":256,
       "min":1,
-      "pattern":"[A-Za-z0-9+:_-]+"
+      "pattern":"[A-Za-z0-9.,+:/_-]+"
     },
     "FilterValueList":{
       "type":"list",
       "member":{"shape":"FilterValue"},
       "max":1,
       "min":1
+    },
+    "FixedPercentage":{
+      "type":"structure",
+      "members":{
+        "value":{"shape":"PriceIncreasePercentage"}
+      }
     },
     "FixedUpfrontPricingTerm":{
       "type":"structure",
@@ -1611,6 +1661,12 @@
       "type":"string",
       "pattern":"\\S{1,50}"
     },
+    "OffsetDuration":{
+      "type":"string",
+      "max":6,
+      "min":3,
+      "pattern":"P(\\d{1,4}M|\\d{1,4}D)"
+    },
     "PartyType":{
       "type":"string",
       "max":32,
@@ -1677,6 +1733,20 @@
       "type":"list",
       "member":{"shape":"PaymentRequestSummary"}
     },
+    "PaymentScheduleEntry":{
+      "type":"structure",
+      "members":{
+        "chargeDateOffset":{"shape":"OffsetDuration"},
+        "chargePercentage":{"shape":"ChargePercentage"},
+        "dayOfMonth":{"shape":"PaymentScheduleEntryDayOfMonthInteger"}
+      }
+    },
+    "PaymentScheduleEntryDayOfMonthInteger":{
+      "type":"integer",
+      "box":true,
+      "max":31,
+      "min":1
+    },
     "PaymentScheduleTerm":{
       "type":"structure",
       "members":{
@@ -1684,6 +1754,26 @@
         "id":{"shape":"TermId"},
         "currencyCode":{"shape":"CurrencyCode"},
         "schedule":{"shape":"ScheduleList"}
+      }
+    },
+    "PaymentScheduleTermTemplate":{
+      "type":"structure",
+      "members":{
+        "schedule":{"shape":"PaymentScheduleTermTemplateScheduleList"}
+      }
+    },
+    "PaymentScheduleTermTemplateScheduleList":{
+      "type":"list",
+      "member":{"shape":"PaymentScheduleEntry"},
+      "max":200,
+      "min":1
+    },
+    "PercentageRange":{
+      "type":"structure",
+      "members":{
+        "minValue":{"shape":"PriceIncreasePercentage"},
+        "maxValue":{"shape":"PriceIncreasePercentage"},
+        "defaultValue":{"shape":"PriceIncreasePercentage"}
       }
     },
     "PositiveAmountUpto8Decimals":{
@@ -1694,6 +1784,20 @@
       "type":"integer",
       "box":true,
       "min":1
+    },
+    "PriceIncrease":{
+      "type":"structure",
+      "members":{
+        "fixedPercentage":{"shape":"FixedPercentage"},
+        "percentageRange":{"shape":"PercentageRange"}
+      },
+      "union":true
+    },
+    "PriceIncreasePercentage":{
+      "type":"string",
+      "max":6,
+      "min":1,
+      "pattern":"(100(\\.0{1,2})?|[1-9]\\d?(\\.\\d{1,2})?|0(\\.\\d{1,2})?)"
     },
     "PricingCurrencyAmount":{
       "type":"structure",
@@ -1817,12 +1921,23 @@
         "updatedAt":{"shape":"Timestamp"}
       }
     },
+    "RenewalSummary":{
+      "type":"structure",
+      "members":{
+        "offerId":{"shape":"OfferId"}
+      }
+    },
     "RenewalTerm":{
       "type":"structure",
       "members":{
         "type":{"shape":"UnversionedTermType"},
         "id":{"shape":"TermId"},
-        "configuration":{"shape":"RenewalTermConfiguration"}
+        "configuration":{"shape":"RenewalTermConfiguration"},
+        "lockoutPeriod":{"shape":"DayDuration"},
+        "maxRenewals":{"shape":"RenewalTermMaxRenewalsInteger"},
+        "adjustmentDeadline":{"shape":"DayDuration"},
+        "priceIncrease":{"shape":"PriceIncrease"},
+        "termTemplates":{"shape":"RenewalTermTermTemplatesList"}
       }
     },
     "RenewalTermConfiguration":{
@@ -1831,6 +1946,17 @@
       "members":{
         "enableAutoRenew":{"shape":"Boolean"}
       }
+    },
+    "RenewalTermMaxRenewalsInteger":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
+    "RenewalTermTermTemplatesList":{
+      "type":"list",
+      "member":{"shape":"TermTemplate"},
+      "max":10,
+      "min":1
     },
     "RequestId":{
       "type":"string",
@@ -2068,6 +2194,13 @@
       "max":256,
       "min":1,
       "pattern":"[A-Za-z0-9+=;,.@\\-_]+"
+    },
+    "TermTemplate":{
+      "type":"structure",
+      "members":{
+        "paymentScheduleTermTemplate":{"shape":"PaymentScheduleTermTemplate"}
+      },
+      "union":true
     },
     "ThrottlingException":{
       "type":"structure",

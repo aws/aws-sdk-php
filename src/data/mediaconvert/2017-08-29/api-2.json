@@ -1311,6 +1311,13 @@
         "ANCHOR"
       ]
     },
+    "AacPassthroughControl": {
+      "type": "string",
+      "enum": [
+        "WHEN_POSSIBLE",
+        "NO_PASSTHROUGH"
+      ]
+    },
     "AacRateControlMode": {
       "type": "string",
       "enum": [
@@ -1347,6 +1354,10 @@
         "LoudnessMeasurementMode": {
           "shape": "AacLoudnessMeasurementMode",
           "locationName": "loudnessMeasurementMode"
+        },
+        "PassthroughControl": {
+          "shape": "AacPassthroughControl",
+          "locationName": "passthroughControl"
         },
         "RapInterval": {
           "shape": "__integerMin2000Max30000",
@@ -1748,6 +1759,19 @@
         "ENABLED"
       ]
     },
+    "AspectRatio": {
+      "type": "structure",
+      "members": {
+        "Denominator": {
+          "shape": "__integer",
+          "locationName": "denominator"
+        },
+        "Numerator": {
+          "shape": "__integer",
+          "locationName": "numerator"
+        }
+      }
+    },
     "AssociateCertificateRequest": {
       "type": "structure",
       "members": {
@@ -2044,6 +2068,10 @@
         "BitRate": {
           "shape": "__long",
           "locationName": "bitRate"
+        },
+        "ChannelLayout": {
+          "shape": "__string",
+          "locationName": "channelLayout"
         },
         "Channels": {
           "shape": "__integer",
@@ -3421,7 +3449,8 @@
       "type": "string",
       "enum": [
         "PASSTHROUGH",
-        "NONE"
+        "NONE",
+        "MANIFEST_CUES"
       ]
     },
     "CmfcSettings": {
@@ -3517,6 +3546,7 @@
         "UNKNOWN",
         "AAC",
         "AC3",
+        "AMR",
         "EAC3",
         "FLAC",
         "MP2",
@@ -3524,8 +3554,13 @@
         "OPUS",
         "PCM",
         "VORBIS",
+        "WMA",
+        "WMA2",
+        "WMAPRO",
         "AV1",
         "AVC",
+        "DV",
+        "H263",
         "HEVC",
         "JPEG2000",
         "MJPEG",
@@ -3536,6 +3571,8 @@
         "QTRLE",
         "THEORA",
         "UNCOMPRESSED",
+        "VC1",
+        "VC3",
         "VFW",
         "VP8",
         "VP9",
@@ -3570,6 +3607,10 @@
         "FieldOrder": {
           "shape": "__string",
           "locationName": "fieldOrder"
+        },
+        "Hdr10PlusPresence": {
+          "shape": "Hdr10PlusPresence",
+          "locationName": "hdr10PlusPresence"
         },
         "Height": {
           "shape": "__integer",
@@ -4336,7 +4377,8 @@
       "type": "string",
       "enum": [
         "CENC_V1",
-        "UNENCRYPTED_SEI"
+        "UNENCRYPTED_SEI",
+        "CENC_V1_UNENCRYPTED_HEADERS"
       ]
     },
     "DashIsoPtsOffsetHandlingForBFrames": {
@@ -5658,7 +5700,10 @@
         "avi",
         "mpegts",
         "mpegps",
-        "mp3"
+        "mp3",
+        "flac",
+        "asf",
+        "ogg"
       ]
     },
     "FrameCaptureSettings": {
@@ -6870,6 +6915,12 @@
           "locationName": "targetMonitorNits"
         }
       }
+    },
+    "Hdr10PlusPresence": {
+      "type": "string",
+      "enum": [
+        "PRESENT"
+      ]
     },
     "HdrMetadata": {
       "type": "structure",
@@ -8296,7 +8347,8 @@
         "jobEngineVersionRequested",
         "jobEngineVersionUsed",
         "audioCodec",
-        "videoCodec"
+        "videoCodec",
+        "errorCode"
       ]
     },
     "JobsQueryStatus": {
@@ -8891,7 +8943,8 @@
       "type": "string",
       "enum": [
         "PASSTHROUGH",
-        "NONE"
+        "NONE",
+        "MANIFEST_CUES"
       ]
     },
     "M2tsSegmentationMarkers": {
@@ -9121,7 +9174,8 @@
       "type": "string",
       "enum": [
         "PASSTHROUGH",
-        "NONE"
+        "NONE",
+        "MANIFEST_CUES"
       ]
     },
     "M3u8Settings": {
@@ -9647,7 +9701,8 @@
       "type": "string",
       "enum": [
         "PASSTHROUGH",
-        "NONE"
+        "NONE",
+        "MANIFEST_CUES"
       ]
     },
     "MpdSettings": {
@@ -11805,20 +11860,94 @@
         "MILLISECONDS"
       ]
     },
+    "TtmlBackgroundColor": {
+      "type": "string",
+      "enum": [
+        "NONE",
+        "BLACK",
+        "WHITE",
+        "AUTO"
+      ]
+    },
     "TtmlDestinationSettings": {
       "type": "structure",
       "members": {
+        "BackgroundColor": {
+          "shape": "TtmlBackgroundColor",
+          "locationName": "backgroundColor"
+        },
+        "BackgroundOpacity": {
+          "shape": "__integerMin0Max255",
+          "locationName": "backgroundOpacity"
+        },
+        "FontColor": {
+          "shape": "TtmlFontColor",
+          "locationName": "fontColor"
+        },
+        "FontOpacity": {
+          "shape": "__integerMin0Max255",
+          "locationName": "fontOpacity"
+        },
+        "FontSize": {
+          "shape": "__integerMin0Max96",
+          "locationName": "fontSize"
+        },
+        "FontStyle": {
+          "shape": "TtmlFontStyle",
+          "locationName": "fontStyle"
+        },
+        "FontWeight": {
+          "shape": "TtmlFontWeight",
+          "locationName": "fontWeight"
+        },
         "StylePassthrough": {
           "shape": "TtmlStylePassthrough",
           "locationName": "stylePassthrough"
+        },
+        "TextDecoration": {
+          "shape": "TtmlTextDecoration",
+          "locationName": "textDecoration"
         }
       }
+    },
+    "TtmlFontColor": {
+      "type": "string",
+      "enum": [
+        "WHITE",
+        "BLACK",
+        "YELLOW",
+        "RED",
+        "GREEN",
+        "BLUE",
+        "AUTO"
+      ]
+    },
+    "TtmlFontStyle": {
+      "type": "string",
+      "enum": [
+        "NORMAL",
+        "ITALIC"
+      ]
+    },
+    "TtmlFontWeight": {
+      "type": "string",
+      "enum": [
+        "NORMAL",
+        "BOLD"
+      ]
     },
     "TtmlStylePassthrough": {
       "type": "string",
       "enum": [
         "ENABLED",
         "DISABLED"
+      ]
+    },
+    "TtmlTextDecoration": {
+      "type": "string",
+      "enum": [
+        "NONE",
+        "UNDERLINE"
       ]
     },
     "Type": {
@@ -12558,6 +12687,10 @@
           "shape": "ColorPrimaries",
           "locationName": "colorPrimaries"
         },
+        "DisplayAspectRatio": {
+          "shape": "AspectRatio",
+          "locationName": "displayAspectRatio"
+        },
         "FrameRate": {
           "shape": "FrameRate",
           "locationName": "frameRate"
@@ -12577,6 +12710,10 @@
         "Rotation": {
           "shape": "__integer",
           "locationName": "rotation"
+        },
+        "SampleAspectRatio": {
+          "shape": "AspectRatio",
+          "locationName": "sampleAspectRatio"
         },
         "TransferCharacteristics": {
           "shape": "TransferCharacteristics",
@@ -13126,6 +13263,10 @@
     "XavcHdIntraCbgProfileSettings": {
       "type": "structure",
       "members": {
+        "InterlaceMode": {
+          "shape": "XavcInterlaceMode",
+          "locationName": "interlaceMode"
+        },
         "XavcClass": {
           "shape": "XavcHdIntraCbgProfileClass",
           "locationName": "xavcClass"

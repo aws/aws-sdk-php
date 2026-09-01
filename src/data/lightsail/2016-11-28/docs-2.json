@@ -112,6 +112,7 @@
     "GetOperation": "<p>Returns information about a specific operation. Operations include events such as when you create an instance, allocate a static IP, attach a static IP, and so on.</p>",
     "GetOperations": "<p>Returns information about all operations.</p> <p>Results are returned from oldest to newest, up to a maximum of 200. Results can be paged by making each subsequent call to <code>GetOperations</code> use the maximum (last) <code>statusChangedAt</code> value from the previous request.</p>",
     "GetOperationsForResource": "<p>Gets operations for a specific resource (an instance or a static IP).</p>",
+    "GetProfile": "<p>Returns information about the profile of the Amazon Lightsail account that makes the request. The response includes the profile type and, for accounts enrolled in the Lightsail partner program, the partner membership details.</p>",
     "GetRegions": "<p>Returns a list of all valid regions for Amazon Lightsail. Use the <code>include availability zones</code> parameter to also return the Availability Zones in a region.</p>",
     "GetRelationalDatabase": "<p>Returns information about a specific database in Amazon Lightsail.</p>",
     "GetRelationalDatabaseBlueprints": "<p>Returns a list of available database blueprints in Amazon Lightsail. A blueprint describes the major engine version of a database.</p> <p>You can use a blueprint ID to create a new database that runs a specific database engine.</p>",
@@ -2108,6 +2109,14 @@
       "base": null,
       "refs": {}
     },
+    "GetProfileRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetProfileResult": {
+      "base": null,
+      "refs": {}
+    },
     "GetRegionsRequest": {
       "base": null,
       "refs": {}
@@ -2588,6 +2597,7 @@
         "LogEvent$createdAt": "<p>The timestamp when the database log event was created.</p>",
         "Operation$createdAt": "<p>The timestamp when the operation was initialized (<code>1479816991.349</code>).</p>",
         "Operation$statusChangedAt": "<p>The timestamp when the status was changed (<code>1479816991.349</code>).</p>",
+        "PartnerInfo$enrolledAt": "<p>The timestamp when the account was enrolled in the Lightsail partner program.</p>",
         "PendingMaintenanceAction$currentApplyDate": "<p>The effective date of the pending database maintenance action.</p>",
         "RelationalDatabase$createdAt": "<p>The timestamp when the database was created. Formatted in Unix time.</p>",
         "RelationalDatabase$latestRestorableTime": "<p>The latest point in time to which the database can be restored. Formatted in Unix time.</p>",
@@ -3173,6 +3183,18 @@
         "UpdateBucketRequest$readonlyAccessAccounts": "<p>An array of strings to specify the Amazon Web Services account IDs that can access the bucket.</p> <p>You can give a maximum of 10 Amazon Web Services accounts access to a bucket.</p>"
       }
     },
+    "PartnerInfo": {
+      "base": "<p>An object that contains information about the Lightsail partner program membership of an Amazon Lightsail account.</p>",
+      "refs": {
+        "GetProfileResult$partner": "<p>An object that describes the partner membership of the account, such as the tier of the membership, its status, and when the account was enrolled.</p> <p>This parameter is returned only for accounts that have a <code>profileType</code> of <code>LightsailPartner</code>.</p>"
+      }
+    },
+    "PartnerStatus": {
+      "base": null,
+      "refs": {
+        "PartnerInfo$status": "<p>The status of the partner membership.</p> <p>The following statuses are possible:</p> <ul> <li> <p> <code>Active</code> – The membership is active, and the benefits of the current tier are available to the account.</p> </li> <li> <p> <code>Suspended</code> – The membership is suspended, and the benefits of the tier are not available to the account.</p> </li> </ul>"
+      }
+    },
     "PasswordData": {
       "base": "<p>The password data for the Windows Server-based instance, including the ciphertext and the key pair name.</p>",
       "refs": {
@@ -3279,6 +3301,12 @@
       "refs": {
         "CreateContainerServiceRequest$privateRegistryAccess": "<p>An object to describe the configuration for the container service to access private container image repositories, such as Amazon Elastic Container Registry (Amazon ECR) private repositories.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-container-service-ecr-private-repo-access\">Configuring access to an Amazon ECR private repository for an Amazon Lightsail container service</a> in the <i>Amazon Lightsail Developer Guide</i>.</p>",
         "UpdateContainerServiceRequest$privateRegistryAccess": "<p>An object to describe the configuration for the container service to access private container image repositories, such as Amazon Elastic Container Registry (Amazon ECR) private repositories.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-container-service-ecr-private-repo-access\">Configuring access to an Amazon ECR private repository for an Amazon Lightsail container service</a> in the <i>Amazon Lightsail Developer Guide</i>.</p>"
+      }
+    },
+    "ProfileType": {
+      "base": null,
+      "refs": {
+        "GetProfileResult$profileType": "<p>The type of the profile.</p> <p>The following profile types are possible:</p> <ul> <li> <p> <code>Lightsailor</code> – The account is not enrolled in the Lightsail partner program.</p> </li> <li> <p> <code>LightsailPartner</code> – The account is enrolled in the Lightsail partner program.</p> </li> </ul>"
       }
     },
     "PutAlarmRequest": {
@@ -4125,6 +4153,12 @@
     "TestAlarmResult": {
       "base": null,
       "refs": {}
+    },
+    "TierName": {
+      "base": null,
+      "refs": {
+        "PartnerInfo$tierName": "<p>The tier of the partner membership.</p>"
+      }
     },
     "TimeOfDay": {
       "base": null,

@@ -81,6 +81,7 @@
       "refs": {
         "DimensionLabel$labelValue": "<p>The value used to group dimensions together.</p>",
         "DimensionLabel$displayName": "<p>The human-readable display name of the label.</p>",
+        "FixedPercentage$percentageValue": "<p>The percentage value applied at each renewal cycle.</p>",
         "FixedUpfrontPricingTerm$duration": "<p>The duration of the fixed pricing term, in ISO 8601 format.</p>",
         "FixedUpfrontPricingTerm$price": "<p>The price charged upfront for this term.</p>",
         "FreeTrialPricingTerm$duration": "<p>The duration of the free trial period.</p>",
@@ -89,12 +90,19 @@
         "GrantItem$description": "<p>A description of the entitlement.</p>",
         "GrantItem$unit": "<p>The unit of measurement for the entitlement.</p>",
         "NetPaymentTerm$paymentDuePeriod": "<p>The duration after invoice date by which payment is due.</p>",
+        "PaymentScheduleEntry$chargeDateOffset": "<p>The relative offset from the renewal agreement start date when this installment is due, in ISO 8601 duration format. The offset uses months only or days only (for example, P1M or P30D); mixed units are not supported, and every offset in a schedule uses the same unit.</p>",
+        "PaymentScheduleEntry$chargePercentage": "<p>The percentage of the increased TCV to charge in this installment. All entries in a schedule sum to 100.00.</p>",
+        "PercentageRange$minimumValue": "<p>The minimum percentage by which the price can increase at each renewal cycle.</p>",
+        "PercentageRange$maximumValue": "<p>The maximum percentage by which the price can increase at each renewal cycle.</p>",
+        "PercentageRange$defaultValue": "<p>The percentage increase applied by default when no other value is finalized before the adjustment deadline. Falls between <code>minimumValue</code> and <code>maximumValue</code>.</p>",
         "RateCardItem$dimensionKey": "<p>The machine-readable key identifying the dimension being priced.</p>",
         "RateCardItem$displayName": "<p>The human-readable name of the dimension.</p>",
         "RateCardItem$description": "<p>A description of the dimension being priced.</p>",
         "RateCardItem$unit": "<p>The unit of measurement for the dimension.</p>",
         "RateCardItem$price": "<p>The price per unit for the dimension.</p>",
         "RecurringPaymentTerm$price": "<p>The amount charged each billing period.</p>",
+        "RenewalTerm$lockoutPeriod": "<p>The duration before the agreement end date when the lockout window begins, in ISO 8601 format (for example, P30D). Absent means no lockout.</p>",
+        "RenewalTerm$adjustmentDeadline": "<p>The duration before the agreement end date by which the renewal price is finalized, represented in ISO 8601 format (for example, P30D). Only applicable with <code>PercentageRange</code>.</p>",
         "ScheduleItem$chargeAmount": "<p>The amount to be charged on the charge date.</p>",
         "Selector$value": "<p>The value of the selector.</p>",
         "SupportTerm$refundPolicy": "<p>The refund policy description for the offer.</p>",
@@ -286,6 +294,12 @@
       "base": null,
       "refs": {
         "SearchFacetsInput$facetTypes": "<p>A list of specific facet types to retrieve. If empty or null, all available facets are returned.</p>"
+      }
+    },
+    "FixedPercentage": {
+      "base": "<p>A single fixed price increase percentage applied at each renewal cycle.</p>",
+      "refs": {
+        "PriceIncrease$fixedPercentage": "<p>A single fixed percentage applied uniformly at every renewal cycle.</p>"
       }
     },
     "FixedUpfrontPricingTerm": {
@@ -717,10 +731,46 @@
         "GetOfferTermsOutput$offerTerms": "<p>The terms attached to the offer. Each element contains exactly one term type.</p>"
       }
     },
+    "PaymentScheduleEntry": {
+      "base": "<p>A single installment entry in the renewal payment schedule.</p>",
+      "refs": {
+        "PaymentScheduleEntryList$member": null
+      }
+    },
+    "PaymentScheduleEntryDayOfMonthInteger": {
+      "base": null,
+      "refs": {
+        "PaymentScheduleEntry$dayOfMonth": "<p>The optional calendar day of month on which the charge occurs. When absent, the charge day is derived from <code>chargeDateOffset</code>, and this field does not apply when <code>chargeDateOffset</code> is expressed in days. For months with fewer days than the specified day, the charge occurs on the last day of the month. For example, if <code>dayOfMonth</code> is 31, the charge in April occurs on April 30.</p>"
+      }
+    },
+    "PaymentScheduleEntryList": {
+      "base": null,
+      "refs": {
+        "PaymentScheduleTermTemplate$schedule": "<p>An ordered list of installment entries for the renewal payment schedule.</p>"
+      }
+    },
     "PaymentScheduleTerm": {
       "base": "<p>Defines a payment schedule term with installment payments at specified dates.</p>",
       "refs": {
         "OfferTerm$paymentScheduleTerm": null
+      }
+    },
+    "PaymentScheduleTermTemplate": {
+      "base": "<p>A template for the payment schedule term on the renewal offer.</p>",
+      "refs": {
+        "TermTemplate$paymentScheduleTermTemplate": "<p>The installment schedule used to structure payments on the renewal offer.</p>"
+      }
+    },
+    "PercentageRange": {
+      "base": "<p>A price increase percentage range with minimum, maximum, and default values.</p>",
+      "refs": {
+        "PriceIncrease$percentageRange": "<p>A percentage band with minimum, maximum, and default values that bound the price increase at each renewal cycle.</p>"
+      }
+    },
+    "PriceIncrease": {
+      "base": "<p>The pricing adjustment that applies at each renewal cycle, expressed as either a fixed percentage or a percentage range. Exactly one variant is present.</p>",
+      "refs": {
+        "RenewalTerm$priceIncrease": "<p>The price increase applied at each renewal cycle. Absent means identical pricing on renewal.</p>"
       }
     },
     "PricingModel": {
@@ -922,6 +972,12 @@
       "base": "<p>Defines a renewal term that enables automatic agreement renewal.</p>",
       "refs": {
         "OfferTerm$renewalTerm": null
+      }
+    },
+    "RenewalTermMaxRenewalsInteger": {
+      "base": null,
+      "refs": {
+        "RenewalTerm$maxRenewals": "<p>The maximum number of renewals allowed on this offer. Absent means unlimited renewals.</p>"
       }
     },
     "Resource": {
@@ -1257,6 +1313,18 @@
         "UsageBasedPricingTerm$id": "<p>The unique identifier of the term.</p>",
         "ValidityTerm$id": "<p>The unique identifier of the term.</p>",
         "VariablePaymentTerm$id": "<p>The unique identifier of the term.</p>"
+      }
+    },
+    "TermTemplate": {
+      "base": "<p>A structural template defining how a specific term type is reshaped on each renewal cycle. Exactly one variant is present.</p>",
+      "refs": {
+        "TermTemplateList$member": null
+      }
+    },
+    "TermTemplateList": {
+      "base": null,
+      "refs": {
+        "RenewalTerm$termTemplates": "<p>Structural templates defining how specific terms are reshaped on each renewal cycle. Absent for upfront-only offers.</p>"
       }
     },
     "TermType": {

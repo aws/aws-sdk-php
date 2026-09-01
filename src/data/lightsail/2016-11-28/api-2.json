@@ -2023,6 +2023,22 @@
         {"shape":"UnauthenticatedException"}
       ]
     },
+    "GetProfile":{
+      "name":"GetProfile",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetProfileRequest"},
+      "output":{"shape":"GetProfileResult"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"AccountSetupInProgressException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"ServiceException"},
+        {"shape":"UnauthenticatedException"}
+      ]
+    },
     "GetRegions":{
       "name":"GetRegions",
       "http":{
@@ -5918,6 +5934,18 @@
         "nextPageToken":{"shape":"string"}
       }
     },
+    "GetProfileRequest":{
+      "type":"structure",
+      "members":{}
+    },
+    "GetProfileResult":{
+      "type":"structure",
+      "required":["profileType"],
+      "members":{
+        "profileType":{"shape":"ProfileType"},
+        "partner":{"shape":"PartnerInfo"}
+      }
+    },
     "GetRegionsRequest":{
       "type":"structure",
       "members":{
@@ -6896,6 +6924,8 @@
         "FreeStorageSpace",
         "NetworkReceiveThroughput",
         "NetworkTransmitThroughput",
+        "FreeableMemory",
+        "SwapUsage",
         "BurstCapacityTime",
         "BurstCapacityPercentage"
       ]
@@ -7152,7 +7182,8 @@
         "UpdateInstanceMetadataOptions",
         "StartGUISession",
         "StopGUISession",
-        "SetupInstanceHttps"
+        "SetupInstanceHttps",
+        "GetProfile"
       ]
     },
     "Origin":{
@@ -7185,6 +7216,25 @@
       "type":"list",
       "member":{"shape":"NonEmptyString"},
       "max":10
+    },
+    "PartnerInfo":{
+      "type":"structure",
+      "required":[
+        "enrolledAt",
+        "status"
+      ],
+      "members":{
+        "enrolledAt":{"shape":"IsoDate"},
+        "tierName":{"shape":"TierName"},
+        "status":{"shape":"PartnerStatus"}
+      }
+    },
+    "PartnerStatus":{
+      "type":"string",
+      "enum":[
+        "Active",
+        "Suspended"
+      ]
     },
     "PasswordData":{
       "type":"structure",
@@ -7296,6 +7346,13 @@
       "members":{
         "ecrImagePullerRole":{"shape":"ContainerServiceECRImagePullerRoleRequest"}
       }
+    },
+    "ProfileType":{
+      "type":"string",
+      "enum":[
+        "Lightsailor",
+        "LightsailPartner"
+      ]
     },
     "PutAlarmRequest":{
       "type":"structure",
@@ -7586,7 +7643,9 @@
         "DiskQueueDepth",
         "FreeStorageSpace",
         "NetworkReceiveThroughput",
-        "NetworkTransmitThroughput"
+        "NetworkTransmitThroughput",
+        "FreeableMemory",
+        "SwapUsage"
       ]
     },
     "RelationalDatabaseParameter":{
@@ -8133,6 +8192,15 @@
       "members":{
         "operations":{"shape":"OperationList"}
       }
+    },
+    "TierName":{
+      "type":"string",
+      "enum":[
+        "Essential",
+        "Growth",
+        "Accelerate",
+        "Premier"
+      ]
     },
     "TimeOfDay":{
       "type":"string",

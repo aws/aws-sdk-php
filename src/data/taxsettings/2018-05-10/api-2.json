@@ -344,7 +344,8 @@
         "philippinesAdditionalInfo":{"shape":"PhilippinesAdditionalInfo"},
         "belgiumAdditionalInfo":{"shape":"BelgiumAdditionalInfo"},
         "chileAdditionalInfo":{"shape":"ChileAdditionalInfo"},
-        "franceAdditionalInfo":{"shape":"FranceAdditionalInfo"}
+        "franceAdditionalInfo":{"shape":"FranceAdditionalInfo"},
+        "monacoAdditionalInfo":{"shape":"MonacoAdditionalInfo"}
       }
     },
     "AdditionalInfoResponse":{
@@ -374,7 +375,8 @@
         "philippinesAdditionalInfo":{"shape":"PhilippinesAdditionalInfo"},
         "belgiumAdditionalInfo":{"shape":"BelgiumAdditionalInfo"},
         "chileAdditionalInfo":{"shape":"ChileAdditionalInfo"},
-        "franceAdditionalInfo":{"shape":"FranceAdditionalInfo"}
+        "franceAdditionalInfo":{"shape":"FranceAdditionalInfo"},
+        "monacoAdditionalInfo":{"shape":"MonacoAdditionalInfo"}
       }
     },
     "Address":{
@@ -563,6 +565,10 @@
         "ccmCode":{"shape":"CcmCode"},
         "legalNatureCode":{"shape":"LegalNatureCode"}
       }
+    },
+    "BusinessNumber":{
+      "type":"string",
+      "pattern":"[a-zA-Z0-9]{1,12}"
     },
     "BusinessRegistrationNumber":{
       "type":"string",
@@ -818,7 +824,8 @@
       "type":"structure",
       "required":["sirenNumber"],
       "members":{
-        "sirenNumber":{"shape":"SirenNumber"}
+        "sirenNumber":{"shape":"SirenNumber"},
+        "eInvoiceRoutingCode":{"shape":"String"}
       }
     },
     "GenericString":{
@@ -1101,6 +1108,13 @@
       "max":1000,
       "min":1
     },
+    "MonacoAdditionalInfo":{
+      "type":"structure",
+      "required":["businessNumber"],
+      "members":{
+        "businessNumber":{"shape":"BusinessNumber"}
+      }
+    },
     "PaginationTokenString":{
       "type":"string",
       "max":2000,
@@ -1363,6 +1377,7 @@
       "min":1,
       "pattern":"(?!\\s*$)[\\s\\S]+"
     },
+    "String":{"type":"string"},
     "SupplementalTaxRegistration":{
       "type":"structure",
       "required":[

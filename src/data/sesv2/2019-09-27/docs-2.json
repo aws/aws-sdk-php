@@ -2,6 +2,7 @@
   "version": "2.0",
   "service": "<fullname>Amazon SES API v2</fullname> <p> <a href=\"http://aws.amazon.com/ses\">Amazon SES</a> is an Amazon Web Services service that you can use to send email messages to your customers.</p> <p>If you're new to Amazon SES API v2, you might find it helpful to review the <a href=\"https://docs.aws.amazon.com/ses/latest/DeveloperGuide/\">Amazon Simple Email Service Developer Guide</a>. The <i>Amazon SES Developer Guide</i> provides information and code samples that demonstrate how to use Amazon SES API v2 features programmatically.</p>",
   "operations": {
+    "AssociateEmailIdentityCertificate": "<p>Associates an S/MIME certificate with an email identity. After the certificate is active, Amazon SES API v2 can add an S/MIME signature to messages that you send from the associated address when signing is enabled on the configuration set used to send the message.</p> <p>The certificate is an X.509 certificate that you manage in Certificate Manager (ACM). You identify it by its Amazon Resource Name (ARN).</p> <ul> <li> <p>If the email identity is a domain, you must specify a <code>FromAddress</code> that belongs to that domain or one of its subdomains. The certificate applies to messages sent from that address.</p> </li> <li> <p>If the email identity is an email address, <code>FromAddress</code> is optional. If you specify it, it must exactly match the email identity.</p> </li> </ul> <p>When the association is created, the certificate begins provisioning and its status is <code>PROVISIONING</code>. The status changes to <code>ACTIVE</code> when the certificate is ready to use for signing. Each email address can have only one certificate association. If an association already exists for the address, this operation returns an error, unless the existing association is in the <code>DEPROVISIONING</code> state.</p>",
     "BatchGetMetricData": "<p>Retrieves batches of metric data collected based on your sending activity.</p> <p>You can execute this operation no more than 16 times per second, and with at most 160 queries from the batches per second (cumulative).</p>",
     "CancelExportJob": "<p>Cancels an export job.</p>",
     "CreateConfigurationSet": "<p>Create a configuration set. <i>Configuration sets</i> are groups of rules that you can apply to the emails that you send. You apply a configuration set to an email by specifying the name of the configuration set when you call the Amazon SES API v2. When you apply a configuration set to an email, all of the rules in that configuration set are applied to the email. </p>",
@@ -32,6 +33,7 @@
     "DeleteSuppressedDestination": "<p>Removes an email address from the suppression list for your account or for a specific tenant. To target a tenant's suppression list, specify the <code>TenantName</code> parameter. If you omit <code>TenantName</code>, the address is removed from the account-level suppression list.</p>",
     "DeleteTenant": "<p>Delete an existing tenant.</p> <p>When you delete a tenant, its associations with resources are removed, but the resources themselves are not deleted.</p>",
     "DeleteTenantResourceAssociation": "<p>Delete an association between a tenant and a resource.</p> <p>When you delete a tenant-resource association, the resource itself is not deleted, only its association with the specific tenant is removed. After removal, the resource will no longer be available for use with that tenant's email sending operations.</p>",
+    "DisassociateEmailIdentityCertificate": "<p>Removes the association between an S/MIME certificate and an email identity. After the association is removed, Amazon SES API v2 stops adding an S/MIME signature to messages sent from that address.</p> <p>If the email identity is a domain, specify the <code>FromAddress</code> whose certificate association you want to remove.</p> <p>This operation is idempotent. If the specified email identity exists but there's no matching certificate association, the operation succeeds without making any changes. Amazon SES API v2 returns a <code>NotFoundException</code> only when the specified email identity doesn't exist.</p>",
     "GetAccount": "<p>Obtain information about the email-sending status and capabilities of your Amazon SES account in the current Amazon Web Services Region.</p>",
     "GetBlacklistReports": "<p>Retrieve a list of the blacklists that your dedicated IP addresses appear on.</p>",
     "GetConfigurationSet": "<p>Get information about an existing configuration set, including the dedicated IP pool that it's associated with, whether or not it's enabled for sending email, and more.</p> <p> <i>Configuration sets</i> are groups of rules that you can apply to the emails you send. You apply a configuration set to an email by including a reference to the configuration set in the headers of the email. When you apply a configuration set to an email, all of the rules in that configuration set are applied to the email.</p>",
@@ -65,6 +67,7 @@
     "ListDeliverabilityTestReports": "<p>Show a list of the predictive inbox placement tests that you've performed, regardless of their statuses. For predictive inbox placement tests that are complete, you can use the <code>GetDeliverabilityTestReport</code> operation to view the results.</p>",
     "ListDomainDeliverabilityCampaigns": "<p>Retrieve deliverability data for all the campaigns that used a specific domain to send email during a specified time range. This data is available for a domain only if you enabled the Deliverability dashboard for the domain.</p>",
     "ListEmailIdentities": "<p>Returns a list of all of the email identities that are associated with your Amazon Web Services account. An identity can be either an email address or a domain. This operation returns identities that are verified as well as those that aren't. This operation returns identities that are associated with Amazon SES and Amazon Pinpoint.</p>",
+    "ListEmailIdentityCertificates": "<p>Lists the S/MIME certificates that are associated with the specified email identity. The results include certificates in all states, such as <code>PROVISIONING</code>, <code>ACTIVE</code>, <code>INACTIVE</code>, <code>DEPROVISIONING</code>, and <code>FAILED</code>.</p> <p>If a certificate has passed its expiration time, it's returned with a status of <code>FAILED</code>.</p> <p>We recommend using pagination to ensure that the operation returns quickly and successfully. When there are more results than fit in a single response, the response includes a <code>NextToken</code> value that you use in a subsequent call to retrieve the next set of results.</p>",
     "ListEmailTemplates": "<p>Lists the email templates present in your Amazon SES account in the current Amazon Web Services Region.</p> <p>You can execute this operation no more than once per second.</p>",
     "ListExportJobs": "<p>Lists all of the export jobs.</p>",
     "ListImportJobs": "<p>Lists all of the import jobs.</p>",
@@ -106,6 +109,7 @@
     "TagResource": "<p>Add one or more tags (keys and values) to a specified resource. A <i>tag</i> is a label that you optionally define and associate with a resource. Tags can help you categorize and manage resources in different ways, such as by purpose, owner, environment, or other criteria. A resource can have as many as 50 tags.</p> <p>Each tag consists of a required <i>tag key</i> and an associated <i>tag value</i>, both of which you define. A tag key is a general label that acts as a category for more specific tag values. A tag value acts as a descriptor within a tag key.</p>",
     "TestRenderEmailTemplate": "<p>Creates a preview of the MIME content of an email when provided with a template and a set of replacement data.</p> <p>You can execute this operation no more than once per second.</p>",
     "UntagResource": "<p>Remove one or more tags (keys and values) from a specified resource.</p>",
+    "UpdateConfigurationSet": "<p>Updates an existing configuration set.</p> <p>This operation performs a partial update. Only the attributes that you include in the request are updated; any omitted attribute is left unchanged.</p>",
     "UpdateConfigurationSetEventDestination": "<p>Update the configuration of an event destination for a configuration set.</p> <p> <i>Events</i> include message sends, deliveries, opens, clicks, bounces, and complaints. <i>Event destinations</i> are places that you can send information about these events to. For example, you can send event data to Amazon EventBridge and associate a rule to send the event to the specified target.</p>",
     "UpdateContact": "<p>Updates a contact's preferences for a list.</p> <note> <p>You must specify all existing topic preferences in the <code>TopicPreferences</code> object, not just the ones that need updating; otherwise, all your existing preferences will be removed.</p> </note>",
     "UpdateContactList": "<p>Updates contact list metadata. This operation does a complete replacement.</p>",
@@ -191,6 +195,14 @@
         "CreateConfigurationSetRequest$ArchivingOptions": "<p>An object that defines the MailManager archiving options for emails that you send using the configuration set.</p>",
         "GetConfigurationSetResponse$ArchivingOptions": "<p>An object that defines the MailManager archive where sent emails are archived that you send using the configuration set.</p>"
       }
+    },
+    "AssociateEmailIdentityCertificateRequest": {
+      "base": "<p>A request to associate an S/MIME certificate with an email identity.</p>",
+      "refs": {}
+    },
+    "AssociateEmailIdentityCertificateResponse": {
+      "base": "<p>An HTTP 200 response if the request succeeds, or an error message if the request fails.</p>",
+      "refs": {}
     },
     "Attachment": {
       "base": "<p> Contains metadata and attachment raw content.</p>",
@@ -398,6 +410,13 @@
         "ReviewDetails$CaseId": "<p>The associated support center case ID (if any).</p>"
       }
     },
+    "CertificateArn": {
+      "base": null,
+      "refs": {
+        "AssociateEmailIdentityCertificateRequest$CertificateArn": "<p>The Amazon Resource Name (ARN) of the Certificate Manager (ACM) certificate to associate with the email identity.</p>",
+        "IdentityCertificate$CertificateArn": "<p>The Amazon Resource Name (ARN) of the Certificate Manager (ACM) certificate that's associated with the email identity.</p>"
+      }
+    },
     "Charset": {
       "base": null,
       "refs": {
@@ -476,7 +495,8 @@
         "SendBulkEmailRequest$ConfigurationSetName": "<p>The name of the configuration set to use when sending the email.</p>",
         "SendCustomVerificationEmailRequest$ConfigurationSetName": "<p>Name of a configuration set to use when sending the verification email.</p>",
         "SendEmailRequest$ConfigurationSetName": "<p>The name of the configuration set to use when sending the email.</p>",
-        "UpdateConfigurationSetEventDestinationRequest$ConfigurationSetName": "<p>The name of the configuration set that contains the event destination to modify.</p>"
+        "UpdateConfigurationSetEventDestinationRequest$ConfigurationSetName": "<p>The name of the configuration set that contains the event destination to modify.</p>",
+        "UpdateConfigurationSetRequest$ConfigurationSetName": "<p>The name of the configuration set to update.</p>"
       }
     },
     "ConfigurationSetNameList": {
@@ -748,6 +768,12 @@
         "CloudWatchDimensionConfiguration$DefaultDimensionValue": "<p>The default value of the dimension that is published to Amazon CloudWatch if you don't provide the value of the dimension when you send an email. This value has to meet the following criteria:</p> <ul> <li> <p>Can only contain ASCII letters (a–z, A–Z), numbers (0–9), underscores (_), or dashes (-), at signs (@), and periods (.).</p> </li> <li> <p>It can contain no more than 255 characters.</p> </li> </ul>"
       }
     },
+    "DefaultSigningScheme": {
+      "base": "<p>Specifies the default signing scheme, in which Amazon SES API v2 doesn't apply S/MIME signing to messages sent with the configuration set.</p>",
+      "refs": {
+        "SigningScheme$DefaultScheme": "<p>Use the default signing behavior. When you select this option, Amazon SES API v2 doesn't add an S/MIME signature to messages sent with the configuration set.</p>"
+      }
+    },
     "DeleteConfigurationSetEventDestinationRequest": {
       "base": "<p>A request to delete an event destination from a configuration set.</p>",
       "refs": {}
@@ -943,6 +969,14 @@
         "BatchGetMetricDataQuery$Dimensions": "<p>An object that contains mapping between <code>MetricDimensionName</code> and <code>MetricDimensionValue</code> to filter metrics by.</p>"
       }
     },
+    "DisassociateEmailIdentityCertificateRequest": {
+      "base": "<p>A request to remove the association between an S/MIME certificate and an email identity.</p>",
+      "refs": {}
+    },
+    "DisassociateEmailIdentityCertificateResponse": {
+      "base": "<p>An HTTP 200 response if the request succeeds, or an error message if the request fails.</p>",
+      "refs": {}
+    },
     "DisplayName": {
       "base": null,
       "refs": {
@@ -1049,6 +1083,7 @@
     "EmailAddress": {
       "base": null,
       "refs": {
+        "AssociateEmailIdentityCertificateRequest$FromAddress": "<p>The email address that the certificate applies to. This value is required when the email identity is a domain, and the address must belong to that domain or one of its subdomains. When the email identity is an email address, this value is optional. If you specify it, it must exactly match the email identity.</p>",
         "Contact$EmailAddress": "<p>The contact's email address.</p>",
         "CreateContactRequest$EmailAddress": "<p>The contact's email address.</p>",
         "CreateCustomVerificationEmailTemplateRequest$FromEmailAddress": "<p>The email address that the custom verification email is sent from.</p>",
@@ -1057,12 +1092,14 @@
         "DeleteContactRequest$EmailAddress": "<p>The contact's email address.</p>",
         "DeleteSuppressedDestinationRequest$EmailAddress": "<p>The suppressed email destination to remove from the suppression list for your account or for the specified tenant.</p>",
         "DeliverabilityTestReport$FromEmailAddress": "<p>The sender address that you specified for the predictive inbox placement test.</p>",
+        "DisassociateEmailIdentityCertificateRequest$FromAddress": "<p>The email address whose certificate association you want to remove. This value is required when the email identity is a domain. When the email identity is an email address, this value is optional.</p>",
         "EmailAddressList$member": null,
         "GetContactRequest$EmailAddress": "<p>The contact's email address.</p>",
         "GetContactResponse$EmailAddress": "<p>The contact's email address.</p>",
         "GetCustomVerificationEmailTemplateResponse$FromEmailAddress": "<p>The email address that the custom verification email is sent from.</p>",
         "GetEmailAddressInsightsRequest$EmailAddress": "<p>The email address to analyze for validation insights.</p>",
         "GetSuppressedDestinationRequest$EmailAddress": "<p>The email address that's on the suppression list for your account or for the specified tenant.</p>",
+        "IdentityCertificate$FromAddress": "<p>The email address that the certificate applies to.</p>",
         "PutSuppressedDestinationRequest$EmailAddress": "<p>The email address that should be added to the suppression list for your account or for the specified tenant.</p>",
         "SendBulkEmailRequest$FromEmailAddress": "<p>The email address to use as the \"From\" address for the email. The address that you specify has to be verified.</p>",
         "SendBulkEmailRequest$FeedbackForwardingEmailAddress": "<p>The address that you want bounce and complaint notifications to be sent to.</p>",
@@ -1704,21 +1741,42 @@
     "Identity": {
       "base": null,
       "refs": {
+        "AssociateEmailIdentityCertificateRequest$EmailIdentity": "<p>The email identity, either an email address or a domain, to associate the certificate with.</p>",
         "CreateEmailIdentityPolicyRequest$EmailIdentity": "<p>The email identity.</p>",
         "CreateEmailIdentityRequest$EmailIdentity": "<p>The email address or domain to verify.</p>",
         "DeleteEmailIdentityPolicyRequest$EmailIdentity": "<p>The email identity.</p>",
         "DeleteEmailIdentityRequest$EmailIdentity": "<p>The identity (that is, the email address or domain) to delete.</p>",
+        "DisassociateEmailIdentityCertificateRequest$EmailIdentity": "<p>The email identity whose certificate association you want to remove.</p>",
         "DomainDeliverabilityCampaign$FromAddress": "<p>The verified email address that the email message was sent from.</p>",
         "GetDomainStatisticsReportRequest$Domain": "<p>The domain that you want to obtain deliverability metrics for.</p>",
         "GetEmailIdentityPoliciesRequest$EmailIdentity": "<p>The email identity.</p>",
         "GetEmailIdentityRequest$EmailIdentity": "<p>The email identity.</p>",
         "IdentityInfo$IdentityName": "<p>The address or domain of the identity.</p>",
+        "ListEmailIdentityCertificatesRequest$EmailIdentity": "<p>The email identity whose certificate associations you want to list.</p>",
         "PutEmailIdentityConfigurationSetAttributesRequest$EmailIdentity": "<p>The email address or domain to associate with a configuration set.</p>",
         "PutEmailIdentityDkimAttributesRequest$EmailIdentity": "<p>The email identity.</p>",
         "PutEmailIdentityDkimSigningAttributesRequest$EmailIdentity": "<p>The email identity.</p>",
         "PutEmailIdentityFeedbackAttributesRequest$EmailIdentity": "<p>The email identity.</p>",
         "PutEmailIdentityMailFromAttributesRequest$EmailIdentity": "<p>The verified email identity.</p>",
         "UpdateEmailIdentityPolicyRequest$EmailIdentity": "<p>The email identity.</p>"
+      }
+    },
+    "IdentityCertificate": {
+      "base": "<p>An object that contains information about an S/MIME certificate that's associated with an email identity.</p>",
+      "refs": {
+        "IdentityCertificateList$member": null
+      }
+    },
+    "IdentityCertificateList": {
+      "base": null,
+      "refs": {
+        "ListEmailIdentityCertificatesResponse$Certificates": "<p>An array that contains the certificate associations for the email identity. Each entry includes the from address, the certificate's status, its Amazon Resource Name (ARN), and its expiry time.</p>"
+      }
+    },
+    "IdentityCertificateStatus": {
+      "base": "<p>The status of an S/MIME certificate that's associated with an email identity. The status can be one of the following values:</p> <ul> <li> <p> <code>PROVISIONING</code> – The certificate association was created and the certificate is being prepared for use.</p> </li> <li> <p> <code>ACTIVE</code> – The certificate is ready to use for signing.</p> </li> <li> <p> <code>INACTIVE</code> – The certificate is no longer used for signing.</p> </li> <li> <p> <code>DEPROVISIONING</code> – The certificate association is being cleaned up.</p> </li> <li> <p> <code>FAILED</code> – The certificate couldn't be prepared for use, or the certificate has expired.</p> </li> </ul>",
+      "refs": {
+        "IdentityCertificate$Status": "<p>The status of the certificate association. A status of <code>ACTIVE</code> indicates that the certificate is ready to use for signing.</p>"
       }
     },
     "IdentityInfo": {
@@ -1992,6 +2050,14 @@
       "base": "<p>A list of all of the identities that you've attempted to verify, regardless of whether or not those identities were successfully verified.</p>",
       "refs": {}
     },
+    "ListEmailIdentityCertificatesRequest": {
+      "base": "<p>A request to list the S/MIME certificates that are associated with an email identity.</p>",
+      "refs": {}
+    },
+    "ListEmailIdentityCertificatesResponse": {
+      "base": "<p>Information about the S/MIME certificates that are associated with an email identity.</p>",
+      "refs": {}
+    },
     "ListEmailTemplatesRequest": {
       "base": "<p>Represents a request to list the email templates present in your Amazon SES account in the current Amazon Web Services Region. For more information, see the <a href=\"https://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-personalized-email-api.html\">Amazon SES Developer Guide</a>.</p>",
       "refs": {}
@@ -2201,6 +2267,7 @@
         "ListDeliverabilityTestReportsRequest$PageSize": "<p>The number of results to show in a single call to <code>ListDeliverabilityTestReports</code>. If the number of results is larger than the number you specified in this parameter, then the response includes a <code>NextToken</code> element, which you can use to obtain additional results.</p> <p>The value you specify has to be at least 0, and can be no more than 1000.</p>",
         "ListDomainDeliverabilityCampaignsRequest$PageSize": "<p>The maximum number of results to include in response to a single call to the <code>ListDomainDeliverabilityCampaigns</code> operation. If the number of results is larger than the number that you specify in this parameter, the response includes a <code>NextToken</code> element, which you can use to obtain additional results.</p>",
         "ListEmailIdentitiesRequest$PageSize": "<p>The number of results to show in a single call to <code>ListEmailIdentities</code>. If the number of results is larger than the number you specified in this parameter, then the response includes a <code>NextToken</code> element, which you can use to obtain additional results.</p> <p>The value you specify has to be at least 0, and can be no more than 1000.</p>",
+        "ListEmailIdentityCertificatesRequest$PageSize": "<p>The number of results to show in a single call to <code>ListEmailIdentityCertificates</code>. If the number of results is larger than the number you specified in this parameter, then the response includes a <code>NextToken</code> element, which you can use to obtain additional results.</p>",
         "ListEmailTemplatesRequest$PageSize": "<p>The number of results to show in a single call to <code>ListEmailTemplates</code>. If the number of results is larger than the number you specified in this parameter, then the response includes a <code>NextToken</code> element, which you can use to obtain additional results.</p> <p>The value you specify has to be at least 1, and can be no more than 100.</p>",
         "ListExportJobsRequest$PageSize": "<p>Maximum number of export jobs to return at once. Use this parameter to paginate results. If additional export jobs exist beyond the specified limit, the <code>NextToken</code> element is sent in the response. Use the <code>NextToken</code> value in subsequent calls to <code>ListExportJobs</code> to retrieve additional export jobs.</p>",
         "ListImportJobsRequest$PageSize": "<p>Maximum number of import jobs to return at once. Use this parameter to paginate results. If additional import jobs exist beyond the specified limit, the <code>NextToken</code> element is sent in the response. Use the <code>NextToken</code> value in subsequent requests to retrieve additional addresses.</p>",
@@ -2271,7 +2338,7 @@
     "MessageInsightsExportMaxResults": {
       "base": null,
       "refs": {
-        "MessageInsightsDataSource$MaxResults": "<p>The maximum number of results.</p>"
+        "MessageInsightsDataSource$MaxResults": "<p>The maximum number of results.</p> <note> <p>If you don't specify <code>MaxResults</code>, the export returns a maximum of 1,000 results.</p> </note>"
       }
     },
     "MessageInsightsFilters": {
@@ -2284,6 +2351,14 @@
     "MessageRejected": {
       "base": "<p>The message can't be sent because it contains invalid content.</p>",
       "refs": {}
+    },
+    "MessageSecurityOptions": {
+      "base": "<p>An object that defines the message-level security options that apply to messages that you send using the configuration set. Currently, these options determine whether Amazon SES API v2 adds an S/MIME signature to your messages and, if so, the format of that signature.</p>",
+      "refs": {
+        "CreateConfigurationSetRequest$MessageSecurityOptions": "<p>The message security options to apply to the configuration set, such as the signing scheme used for messages that you send with the configuration set.</p>",
+        "GetConfigurationSetResponse$MessageSecurityOptions": "<p>The message security options that are applied to the configuration set, such as the signing scheme used for messages that you send with the configuration set.</p>",
+        "UpdateConfigurationSetRequest$MessageSecurityOptions": "<p>The security options that apply to the MIME message itself for messages sent with the configuration set.</p>"
+      }
     },
     "MessageTag": {
       "base": "<p>Contains the name and value of a tag that you apply to an email. You can use message tags when you publish email sending events. </p>",
@@ -2415,6 +2490,8 @@
         "ListDomainDeliverabilityCampaignsResponse$NextToken": "<p>A token that’s returned from a previous call to the <code>ListDomainDeliverabilityCampaigns</code> operation. This token indicates the position of the campaign in the list of campaigns.</p>",
         "ListEmailIdentitiesRequest$NextToken": "<p>A token returned from a previous call to <code>ListEmailIdentities</code> to indicate the position in the list of identities.</p>",
         "ListEmailIdentitiesResponse$NextToken": "<p>A token that indicates that there are additional configuration sets to list. To view additional configuration sets, issue another request to <code>ListEmailIdentities</code>, and pass this token in the <code>NextToken</code> parameter.</p>",
+        "ListEmailIdentityCertificatesRequest$NextToken": "<p>A token returned from a previous call to <code>ListEmailIdentityCertificates</code> to indicate the position in the list of certificates.</p>",
+        "ListEmailIdentityCertificatesResponse$NextToken": "<p>A token that indicates that there are additional certificates to list. To view additional certificates, issue another request to <code>ListEmailIdentityCertificates</code>, and pass this token in the <code>NextToken</code> parameter.</p>",
         "ListEmailTemplatesRequest$NextToken": "<p>A token returned from a previous call to <code>ListEmailTemplates</code> to indicate the position in the list of email templates.</p>",
         "ListEmailTemplatesResponse$NextToken": "<p>A token indicating that there are additional email templates available to be listed. Pass this token to a subsequent <code>ListEmailTemplates</code> call to retrieve the next 10 email templates.</p>",
         "ListExportJobsRequest$NextToken": "<p>The pagination token returned from a previous call to <code>ListExportJobs</code> to indicate the position in the list of export jobs.</p>",
@@ -3105,6 +3182,24 @@
         "SOARecord$SerialNumber": "<p>Serial number from the SOA record.</p>"
       }
     },
+    "SignatureFormat": {
+      "base": "<p>The format of the S/MIME signature that's applied to a message. The following value is supported:</p> <ul> <li> <p> <code>DETACHED</code> – The signature is carried in a separate MIME part alongside the signed content.</p> </li> </ul>",
+      "refs": {
+        "SmimeSigningScheme$SignatureFormat": "<p>The format of the S/MIME signature that Amazon SES API v2 applies to messages.</p>"
+      }
+    },
+    "SigningScheme": {
+      "base": "<p>Specifies the signing scheme to apply to messages sent with a configuration set. This is a union type, so you specify exactly one of its members.</p>",
+      "refs": {
+        "MessageSecurityOptions$SigningScheme": "<p>The signing scheme that Amazon SES API v2 applies to messages sent with the configuration set.</p>"
+      }
+    },
+    "SmimeSigningScheme": {
+      "base": "<p>Specifies that Amazon SES API v2 signs messages sent with the configuration set using S/MIME.</p>",
+      "refs": {
+        "SigningScheme$SmimeScheme": "<p>Sign messages sent with the configuration set using S/MIME. For signing to apply, the email identity used to send a message must have an active S/MIME certificate association.</p>"
+      }
+    },
     "SnsDestination": {
       "base": "<p>An object that defines an Amazon SNS destination for email events. You can use Amazon SNS to send notifications when certain email events occur.</p>",
       "refs": {
@@ -3450,6 +3545,7 @@
         "GetImportJobResponse$CompletedTimestamp": "<p>The time stamp of when the import job was completed.</p>",
         "GetMultiRegionEndpointResponse$CreatedTimestamp": "<p>The time stamp of when the multi-region endpoint (global-endpoint) was created.</p>",
         "GetMultiRegionEndpointResponse$LastUpdatedTimestamp": "<p>The time stamp of when the multi-region endpoint (global-endpoint) was last updated.</p>",
+        "IdentityCertificate$CertificateExpiryTime": "<p>The timestamp after which the certificate is no longer valid.</p>",
         "ImportJobSummary$CreatedTimestamp": "<p>The date and time when the import job was created.</p>",
         "InsightsEvent$Timestamp": "<p>The timestamp of the event.</p>",
         "ListDomainDeliverabilityCampaignsRequest$StartDate": "<p>The first day that you want to obtain deliverability data for.</p>",
@@ -3573,6 +3669,14 @@
       "refs": {}
     },
     "UpdateConfigurationSetEventDestinationResponse": {
+      "base": "<p>An HTTP 200 response if the request succeeds, or an error message if the request fails.</p>",
+      "refs": {}
+    },
+    "UpdateConfigurationSetRequest": {
+      "base": "<p>A request to update the configuration of an existing configuration set.</p>",
+      "refs": {}
+    },
+    "UpdateConfigurationSetResponse": {
       "base": "<p>An HTTP 200 response if the request succeeds, or an error message if the request fails.</p>",
       "refs": {}
     },

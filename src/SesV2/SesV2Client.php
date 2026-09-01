@@ -5,6 +5,8 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon Simple Email Service** service.
+ * @method \Aws\Result associateEmailIdentityCertificate(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise associateEmailIdentityCertificateAsync(array $args = [])
  * @method \Aws\Result batchGetMetricData(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchGetMetricDataAsync(array $args = [])
  * @method \Aws\Result cancelExportJob(array $args = [])
@@ -65,6 +67,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteTenantAsync(array $args = [])
  * @method \Aws\Result deleteTenantResourceAssociation(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteTenantResourceAssociationAsync(array $args = [])
+ * @method \Aws\Result disassociateEmailIdentityCertificate(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise disassociateEmailIdentityCertificateAsync(array $args = [])
  * @method \Aws\Result getAccount(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getAccountAsync(array $args = [])
  * @method \Aws\Result getBlacklistReports(array $args = [])
@@ -131,6 +135,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listDomainDeliverabilityCampaignsAsync(array $args = [])
  * @method \Aws\Result listEmailIdentities(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listEmailIdentitiesAsync(array $args = [])
+ * @method \Aws\Result listEmailIdentityCertificates(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listEmailIdentityCertificatesAsync(array $args = [])
  * @method \Aws\Result listEmailTemplates(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listEmailTemplatesAsync(array $args = [])
  * @method \Aws\Result listExportJobs(array $args = [])
@@ -213,6 +219,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise testRenderEmailTemplateAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
+ * @method \Aws\Result updateConfigurationSet(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateConfigurationSetAsync(array $args = [])
  * @method \Aws\Result updateConfigurationSetEventDestination(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateConfigurationSetEventDestinationAsync(array $args = [])
  * @method \Aws\Result updateContact(array $args = [])

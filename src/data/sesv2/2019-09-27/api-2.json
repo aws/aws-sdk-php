@@ -15,6 +15,21 @@
     "auth":["aws.auth#sigv4"]
   },
   "operations":{
+    "AssociateEmailIdentityCertificate":{
+      "name":"AssociateEmailIdentityCertificate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/email/identity/certificates"
+      },
+      "input":{"shape":"AssociateEmailIdentityCertificateRequest"},
+      "output":{"shape":"AssociateEmailIdentityCertificateResponse"},
+      "errors":[
+        {"shape":"NotFoundException"},
+        {"shape":"AlreadyExistsException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"}
+      ]
+    },
     "BatchGetMetricData":{
       "name":"BatchGetMetricData",
       "http":{
@@ -462,6 +477,20 @@
       },
       "input":{"shape":"DeleteTenantResourceAssociationRequest"},
       "output":{"shape":"DeleteTenantResourceAssociationResponse"},
+      "errors":[
+        {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"}
+      ]
+    },
+    "DisassociateEmailIdentityCertificate":{
+      "name":"DisassociateEmailIdentityCertificate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/email/identity/certificates/delete"
+      },
+      "input":{"shape":"DisassociateEmailIdentityCertificateRequest"},
+      "output":{"shape":"DisassociateEmailIdentityCertificateResponse"},
       "errors":[
         {"shape":"NotFoundException"},
         {"shape":"TooManyRequestsException"},
@@ -919,6 +948,20 @@
       "input":{"shape":"ListEmailIdentitiesRequest"},
       "output":{"shape":"ListEmailIdentitiesResponse"},
       "errors":[
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"}
+      ]
+    },
+    "ListEmailIdentityCertificates":{
+      "name":"ListEmailIdentityCertificates",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/email/identity/certificates/list"
+      },
+      "input":{"shape":"ListEmailIdentityCertificatesRequest"},
+      "output":{"shape":"ListEmailIdentityCertificatesResponse"},
+      "errors":[
+        {"shape":"NotFoundException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"BadRequestException"}
       ]
@@ -1509,6 +1552,20 @@
         {"shape":"TooManyRequestsException"}
       ]
     },
+    "UpdateConfigurationSet":{
+      "name":"UpdateConfigurationSet",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/email/update-configuration-sets"
+      },
+      "input":{"shape":"UpdateConfigurationSetRequest"},
+      "output":{"shape":"UpdateConfigurationSetResponse"},
+      "errors":[
+        {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"}
+      ]
+    },
     "UpdateConfigurationSetEventDestination":{
       "name":"UpdateConfigurationSetEventDestination",
       "http":{
@@ -1678,6 +1735,22 @@
       "members":{
         "ArchiveArn":{"shape":"ArchiveArn"}
       }
+    },
+    "AssociateEmailIdentityCertificateRequest":{
+      "type":"structure",
+      "required":[
+        "EmailIdentity",
+        "CertificateArn"
+      ],
+      "members":{
+        "EmailIdentity":{"shape":"Identity"},
+        "FromAddress":{"shape":"EmailAddress"},
+        "CertificateArn":{"shape":"CertificateArn"}
+      }
+    },
+    "AssociateEmailIdentityCertificateResponse":{
+      "type":"structure",
+      "members":{}
     },
     "Attachment":{
       "type":"structure",
@@ -1899,6 +1972,12 @@
       "members":{}
     },
     "CaseId":{"type":"string"},
+    "CertificateArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:[\\w+=/,.@-]+:[\\w+=/,.@-]+:[\\w+=/,.@-]*:[0-9]+:certificate/[\\w+=,.@-]+"
+    },
     "Charset":{"type":"string"},
     "CloudWatchDestination":{
       "type":"structure",
@@ -2042,7 +2121,8 @@
         "Tags":{"shape":"TagList"},
         "SuppressionOptions":{"shape":"SuppressionOptions"},
         "VdmOptions":{"shape":"VdmOptions"},
-        "ArchivingOptions":{"shape":"ArchivingOptions"}
+        "ArchivingOptions":{"shape":"ArchivingOptions"},
+        "MessageSecurityOptions":{"shape":"MessageSecurityOptions"}
       }
     },
     "CreateConfigurationSetResponse":{
@@ -2370,6 +2450,10 @@
       }
     },
     "DefaultDimensionValue":{"type":"string"},
+    "DefaultSigningScheme":{
+      "type":"structure",
+      "members":{}
+    },
     "DeleteConfigurationSetEventDestinationRequest":{
       "type":"structure",
       "required":[
@@ -2674,6 +2758,18 @@
       "value":{"shape":"MetricDimensionValue"},
       "max":3,
       "min":1
+    },
+    "DisassociateEmailIdentityCertificateRequest":{
+      "type":"structure",
+      "required":["EmailIdentity"],
+      "members":{
+        "EmailIdentity":{"shape":"Identity"},
+        "FromAddress":{"shape":"EmailAddress"}
+      }
+    },
+    "DisassociateEmailIdentityCertificateResponse":{
+      "type":"structure",
+      "members":{}
     },
     "DisplayName":{"type":"string"},
     "DkimAttributes":{
@@ -3155,7 +3251,8 @@
         "Tags":{"shape":"TagList"},
         "SuppressionOptions":{"shape":"SuppressionOptions"},
         "VdmOptions":{"shape":"VdmOptions"},
-        "ArchivingOptions":{"shape":"ArchivingOptions"}
+        "ArchivingOptions":{"shape":"ArchivingOptions"},
+        "MessageSecurityOptions":{"shape":"MessageSecurityOptions"}
       }
     },
     "GetContactListRequest":{
@@ -3649,6 +3746,29 @@
       "type":"string",
       "min":1
     },
+    "IdentityCertificate":{
+      "type":"structure",
+      "members":{
+        "FromAddress":{"shape":"EmailAddress"},
+        "Status":{"shape":"IdentityCertificateStatus"},
+        "CertificateArn":{"shape":"CertificateArn"},
+        "CertificateExpiryTime":{"shape":"Timestamp"}
+      }
+    },
+    "IdentityCertificateList":{
+      "type":"list",
+      "member":{"shape":"IdentityCertificate"}
+    },
+    "IdentityCertificateStatus":{
+      "type":"string",
+      "enum":[
+        "PROVISIONING",
+        "INACTIVE",
+        "DEPROVISIONING",
+        "ACTIVE",
+        "FAILED"
+      ]
+    },
     "IdentityInfo":{
       "type":"structure",
       "members":{
@@ -4019,6 +4139,22 @@
       "type":"structure",
       "members":{
         "EmailIdentities":{"shape":"IdentityInfoList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListEmailIdentityCertificatesRequest":{
+      "type":"structure",
+      "required":["EmailIdentity"],
+      "members":{
+        "EmailIdentity":{"shape":"Identity"},
+        "NextToken":{"shape":"NextToken"},
+        "PageSize":{"shape":"MaxItems"}
+      }
+    },
+    "ListEmailIdentityCertificatesResponse":{
+      "type":"structure",
+      "members":{
+        "Certificates":{"shape":"IdentityCertificateList"},
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -4419,6 +4555,12 @@
       "members":{},
       "error":{"httpStatusCode":400},
       "exception":true
+    },
+    "MessageSecurityOptions":{
+      "type":"structure",
+      "members":{
+        "SigningScheme":{"shape":"SigningScheme"}
+      }
     },
     "MessageTag":{
       "type":"structure",
@@ -5322,6 +5464,24 @@
     },
     "SentLast24Hours":{"type":"double"},
     "SerialNumber":{"type":"long"},
+    "SignatureFormat":{
+      "type":"string",
+      "enum":["DETACHED"]
+    },
+    "SigningScheme":{
+      "type":"structure",
+      "members":{
+        "DefaultScheme":{"shape":"DefaultSigningScheme"},
+        "SmimeScheme":{"shape":"SmimeSigningScheme"}
+      },
+      "union":true
+    },
+    "SmimeSigningScheme":{
+      "type":"structure",
+      "members":{
+        "SignatureFormat":{"shape":"SignatureFormat"}
+      }
+    },
     "SnsDestination":{
       "type":"structure",
       "required":["TopicArn"],
@@ -5721,6 +5881,18 @@
       }
     },
     "UpdateConfigurationSetEventDestinationResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "UpdateConfigurationSetRequest":{
+      "type":"structure",
+      "required":["ConfigurationSetName"],
+      "members":{
+        "ConfigurationSetName":{"shape":"ConfigurationSetName"},
+        "MessageSecurityOptions":{"shape":"MessageSecurityOptions"}
+      }
+    },
+    "UpdateConfigurationSetResponse":{
       "type":"structure",
       "members":{}
     },

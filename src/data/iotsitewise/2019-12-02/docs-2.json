@@ -1641,6 +1641,12 @@
         "UpdatePipelineRequest$computations": "<p>Updated list of compute nodes forming the pipeline DAG.</p>"
       }
     },
+    "ComputeNodeMountsMap": {
+      "base": "<p>A map of compute node names to their mount overrides. Applies to a single pipeline execution.</p>",
+      "refs": {
+        "MountOverrides$computeNodes": "<p>The mount overrides for each compute node, keyed by compute node name.</p>"
+      }
+    },
     "ComputeNodeNameList": {
       "base": "<p>A list of compute node names for declaring dependencies.</p>",
       "refs": {
@@ -2805,6 +2811,18 @@
         "DescribePipelineResponse$environmentVariables": "<p>The environment variables shared across all compute nodes in the pipeline.</p>",
         "ExecutionEnvironmentVariables$global": "<p>Global environment variables that apply to all compute nodes in the pipeline execution.</p>",
         "UpdatePipelineRequest$environmentVariables": "<p>Updated environment variables shared across all compute nodes.</p>"
+      }
+    },
+    "EphemeralStorageConfiguration": {
+      "base": "<p>Configuration for ephemeral storage attached to the container task.</p>",
+      "refs": {
+        "ContainerTaskConfiguration$ephemeralStorageConfiguration": "<p>Ephemeral storage configuration for the container task.</p>"
+      }
+    },
+    "EphemeralStorageConfigurationStorageSizeInGiBInteger": {
+      "base": null,
+      "refs": {
+        "EphemeralStorageConfiguration$storageSizeInGiB": "<p>Storage volume size in GiB.</p>"
       }
     },
     "ErrorCode": {
@@ -4337,6 +4355,57 @@
         "MonitorErrorDetails$message": "<p>The error message.</p>"
       }
     },
+    "Mount": {
+      "base": "<p>Attaches a data source to the container filesystem for a task at a customer-supplied relative path under the service-owned mount root.</p>",
+      "refs": {
+        "MountList$member": null
+      }
+    },
+    "MountList": {
+      "base": "<p>A list of mounts for a task. Each mount attaches an external data source to the container filesystem at a customer-supplied relative path under the service-owned mount root.</p>",
+      "refs": {
+        "ComputeNodeExecutionDetails$executionMounts": "<p>The fully resolved mounts used for this compute node execution, after merging task-defined mounts with any execution-level mount overrides. Each mount attaches an external data source to the container filesystem at a relative path under the service-owned mount root.</p>",
+        "ComputeNodeMountsMap$value": "<p>The mount overrides applied to this compute node for this execution. Each entry is merged into the compute node's task-defined mounts by mount name: a matching name replaces the task-defined mount, a new name adds a mount, and task-defined mounts not referenced remain unchanged.</p>",
+        "ContainerTaskConfiguration$mounts": "<p>Mounts attached to the container filesystem. Each mount exposes an external data source as a local directory inside the container. The service assigns each mount a container path based on the mount name. The container reads files through that path as if the data were on the local filesystem.</p>"
+      }
+    },
+    "MountOverrides": {
+      "base": "<p>Runtime mount overrides applied to a single pipeline execution. Overrides are transient — they do not modify the stored task configuration.</p>",
+      "refs": {
+        "DescribePipelineExecutionResponse$requestMountOverrides": "<p>The mount overrides provided as input for the pipeline execution. Present when mount overrides were supplied at execution time.</p>",
+        "StartPipelineExecutionRequest$executionMountOverrides": "<p>Runtime mount overrides for the execution. Overrides are merged by mount name into each listed compute node's task-defined mounts: a matching name replaces the task-defined mount, a new name adds a mount, and task-defined mounts not referenced remain unchanged. Compute nodes not listed use their task-defined mounts as-is.</p>"
+      }
+    },
+    "MountRelativePath": {
+      "base": "<p>A relative path under the service-owned mount root where this mount is attached inside the container.</p>",
+      "refs": {
+        "Mount$relativePath": "<p>The relative path under the service-owned mount root where this mount is attached inside the container.</p>"
+      }
+    },
+    "MountS3AccessPointArn": {
+      "base": "<p>The Amazon Resource Name (ARN) of the Amazon S3 access point. The mount reads objects from the bucket associated with this access point. Access is governed by the access point policy and the task execution role's IAM permissions.</p>",
+      "refs": {
+        "S3AccessPointSource$accessPointArn": "<p>The Amazon Resource Name (ARN) of the S3 access point.</p>"
+      }
+    },
+    "MountS3KeyPrefix": {
+      "base": "<p>An object key name prefix. If specified, the mount includes only objects whose keys begin with this prefix. The maximum prefix length is 1,024 characters. To include all objects at the access point, omit this field.</p>",
+      "refs": {
+        "S3AccessPointSource$prefix": "<p>An optional key prefix to scope the mount to a subset of objects at the access point.</p>"
+      }
+    },
+    "MountSource": {
+      "base": "<p>The data source configuration for a mount. Specify exactly one of the following.</p>",
+      "refs": {
+        "Mount$source": "<p>The data source for the mount.</p>"
+      }
+    },
+    "MountStorageType": {
+      "base": "<p>The type of storage used for a mount inside the container.</p>",
+      "refs": {
+        "Mount$storageType": "<p>The type of storage used for the mount.</p>"
+      }
+    },
     "Mp4": {
       "base": "<p>The MP4 video format configuration for bulk import files.</p>",
       "refs": {
@@ -5104,6 +5173,7 @@
         "ComputeNodeEnvironmentVariablesMap$key": "<p>The compute node name from the pipeline definition.</p>",
         "ComputeNodeExecutionDetails$computeNodeName": "<p>The name of the compute node.</p>",
         "ComputeNodeExecutionDetails$taskName": "<p>The name of the task executed for this compute node.</p>",
+        "ComputeNodeMountsMap$key": "<p>The compute node name from the pipeline definition.</p>",
         "ComputeNodeNameList$member": null,
         "CreatePipelineRequest$pipelineName": "<p>The name of the pipeline to create. Must be unique within the workspace.</p>",
         "CreatePipelineResponse$pipelineName": "<p>The name of the created pipeline.</p>",
@@ -5118,6 +5188,7 @@
         "DescribeTaskRequest$taskName": "<p>The name of the task.</p>",
         "DescribeTaskResponse$taskName": "<p>The name of the task.</p>",
         "ListPipelineExecutionsRequest$pipelineName": "<p>The name of the pipeline.</p>",
+        "Mount$name": "<p>A unique name for the mount within the task.</p>",
         "PipelineSummary$pipelineName": "<p>The name of the pipeline.</p>",
         "StartPipelineExecutionRequest$pipelineName": "<p>The name of the pipeline to execute.</p>",
         "TaskSummary$taskName": "<p>The name of the task.</p>",
@@ -5223,6 +5294,12 @@
       "base": null,
       "refs": {
         "ExecuteQueryResponse$rows": "<p>Represents a single row in the query results.</p>"
+      }
+    },
+    "S3AccessPointSource": {
+      "base": "<p>Configures a mount that reads from an Amazon S3 access point.</p>",
+      "refs": {
+        "MountSource$s3AccessPoint": "<p>Configuration for a mount that reads from an Amazon S3 access point.</p>"
       }
     },
     "S3Uri": {
@@ -5392,6 +5469,12 @@
     "StartSearchResponse": {
       "base": "<p>Output of the StartSearch operation.</p>",
       "refs": {}
+    },
+    "StorageClass": {
+      "base": "<p>The storage type that determines I/O performance characteristics. Family name indicates workload pattern, level number indicates performance within that family.</p>",
+      "refs": {
+        "EphemeralStorageConfiguration$storageClass": "<p>Storage type that determines I/O performance family and level.</p>"
+      }
     },
     "StorageType": {
       "base": null,

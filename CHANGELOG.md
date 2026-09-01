@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\MarketplaceAgreement` - This release adds renewal support for AWS Marketplace private offers. Agreements report whether they renew and, if not, why. Renewal terms add price increases, renewal limits, renewal decision deadlines, and payment schedule templates. SearchAgreements adds filters.
+* `Aws\SESv2` - Added support for managing SMIME signing certificates for email identities, including associating, listing, and disassociating certificates. Added the UpdateConfigurationSet operation to configure message security options such as signing scheme.
+* `Aws\GuardDuty` - Amazon GuardDuty now supports custom detection rules, including APIs to manage rule associations and organization-level configurations.
+* `Aws\BedrockAgentCoreControl` - Online evaluation configurations now support up to 25 evaluators. CloudWatch Logs data sources for online evaluation now support up to 10 log groups.
+* `Aws\EC2` - Update UserData and UploadPolicy shapes to use SecureBlob
+* `Aws\MediaConvert` - Adds support for AAC passthrough. Adds ManifestCues option to support HLS manifest Cue marker passthrough. Adds playback device compatibility mode for DASH H.265 outputs. Adds TTML caption styling options. Adds interlace mode support for XAVC HD Intra CBG profile.
+* `Aws\TaxSettings` - France and Monaco Additional Info changes
+* `Aws\Kinesis` - Amazon Kinesis Data Streams now supports a dry run feature for data-plane APIs to validate the permissions and request parameters. If all checks complete successfully, the API returns a 'DryRunOperationException', confirming the request would have succeeded without the 'DryRun' parameter.
+* `Aws\Lightsail` - This release adds support for the Amazon Lightsail GetProfile API, which returns the profile for the specified account.
+* `Aws\IoTSiteWise` - AWS IoT SiteWise Scenario Discovery now supports mounting Amazon S3 data directly into pipeline task containers via S3 Access Points, and configuring additional ephemeral storage per task. Mount configurations can be overridden at execution time. See the API guide for details.
+* `Aws\MarketplaceDiscovery` - GetOfferTerms now returns renewalTerm for offers with pre-authorized renewals, exposing maxRenewals, lockoutPeriod, adjustmentDeadline, priceIncrease (fixed percentage or percentage range), and termTemplates (renewal payment schedules). Enables buyers to view renewal pricing and terms.
+* `Aws\Lambda` - AWS Lambda now provides configurable control over S3 direct access, allowing you to explicitly enable or disable how functions stream file reads directly from S3 buckets. This gives you flexibility to tune data access behavior based on your workload requirements, independent of memory size.
+
 ## 3.394.5 - 2026-08-31
 
 * `Aws\AgentRegistry` - Release HTTP and AGUI descriptors to the dataplane model

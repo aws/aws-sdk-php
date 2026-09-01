@@ -859,6 +859,12 @@
         "UpdateFunctionEventInvokeConfigRequest$DestinationConfig": "<p>A destination for events after they have been sent to a function for processing.</p> <p class=\"title\"> <b>Destinations</b> </p> <ul> <li> <p> <b>Function</b> - The Amazon Resource Name (ARN) of a Lambda function.</p> </li> <li> <p> <b>Queue</b> - The ARN of a standard SQS queue.</p> </li> <li> <p> <b>Bucket</b> - The ARN of an Amazon S3 bucket.</p> </li> <li> <p> <b>Topic</b> - The ARN of a standard SNS topic.</p> </li> <li> <p> <b>Event Bus</b> - The ARN of an Amazon EventBridge event bus.</p> </li> </ul> <note> <p>S3 buckets are supported only for on-failure destinations. To retain records of successful invocations, use another destination type.</p> </note>"
       }
     },
+    "DirectS3Read": {
+      "base": null,
+      "refs": {
+        "S3FilesConfig$DirectS3Read": "<p>Specifies if a function reads from the file system for the lowest latency, or through Amazon S3 Files feature \"direct Amazon S3 bucket reads\" for the highest throughput. Valid values:</p> <ul> <li> <p> <code>AUTO</code> (default) – Direct reads are active for functions you configure with 512 MB or more of memory.</p> </li> <li> <p> <code>ENABLED</code> – Enforces all reads are directly from the Amazon S3 bucket, regardless of available memory (less than 512 MB).</p> </li> <li> <p> <code>DISABLED</code> – Routes all reads through the file system, regardless of memory configuration.</p> </li> </ul> <p>To use direct reads, you must grant the execution role the <code>s3:GetObject</code> and <code>s3:GetObjectVersion</code> permissions. If a direct read fails, Lambda automatically falls back to reading through the file system.</p>"
+      }
+    },
     "DocumentDBEventSourceConfig": {
       "base": "<p> Specific configuration settings for a DocumentDB event source. </p>",
       "refs": {
@@ -1295,7 +1301,7 @@
       }
     },
     "FileSystemConfig": {
-      "base": "<p>Details about the connection between a Lambda function and an <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-filesystem.html\">Amazon EFS file system</a> or an <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-filesystem.html\">Amazon S3 Files file system</a>.</p>",
+      "base": "<p>Details about the connection between a Lambda function and an <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-filesystem.html\">Amazon EFS file system</a> or an <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-filesystem.html\">Amazon S3 file system</a>.</p>",
       "refs": {
         "FileSystemConfigList$member": null
       }
@@ -1304,7 +1310,7 @@
       "base": null,
       "refs": {
         "CreateFunctionRequest$FileSystemConfigs": "<p>Connection settings for an Amazon EFS file system or an Amazon S3 Files file system.</p>",
-        "FunctionConfiguration$FileSystemConfigs": "<p>Connection settings for an <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-filesystem.html\">Amazon EFS file system</a> or an <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-filesystem.html\">Amazon S3 Files file system</a>.</p>",
+        "FunctionConfiguration$FileSystemConfigs": "<p>Connection settings for an <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-filesystem.html\">Amazon EFS file system</a> or an <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-filesystem.html\">Amazon S3 file system</a>.</p>",
         "UpdateFunctionConfigurationRequest$FileSystemConfigs": "<p>Connection settings for an Amazon EFS file system or an Amazon S3 Files file system.</p>"
       }
     },
@@ -3031,6 +3037,12 @@
         "LayerVersionContentInput$S3Bucket": "<p>The Amazon S3 bucket of the layer archive.</p>",
         "ResolvedS3Object$S3Bucket": "<p>The Amazon S3 bucket that contains the deployment package.</p>",
         "UpdateFunctionCodeRequest$S3Bucket": "<p>An Amazon S3 bucket in the same Amazon Web Services Region as your function. The bucket can be in a different Amazon Web Services account. Use only with a function defined with a .zip file archive deployment package.</p>"
+      }
+    },
+    "S3FilesConfig": {
+      "base": "<p>Setting controls how your function accesses data from an Amazon S3 file system.</p>",
+      "refs": {
+        "FileSystemConfig$S3FilesConfig": "<p>The configuration for how your function accesses data on an Amazon S3 file system. Valid only when the file system access point ARN is an Amazon S3 Files access point. If you specify a different access point type (for example, Amazon Elastic File System), the operation returns an <code>InvalidParameterException</code>.</p>"
       }
     },
     "S3FilesMountConnectivityException": {

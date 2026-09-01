@@ -586,6 +586,9 @@
                 },
                 {
                     "shape": "InternalFailureException"
+                },
+                {
+                    "shape": "DryRunOperationException"
                 }
             ],
             "staticContextParams": {
@@ -656,6 +659,9 @@
                 },
                 {
                     "shape": "InternalFailureException"
+                },
+                {
+                    "shape": "DryRunOperationException"
                 }
             ],
             "staticContextParams": {
@@ -981,6 +987,9 @@
                 },
                 {
                     "shape": "InternalFailureException"
+                },
+                {
+                    "shape": "DryRunOperationException"
                 }
             ],
             "staticContextParams": {
@@ -1034,6 +1043,9 @@
                 },
                 {
                     "shape": "InternalFailureException"
+                },
+                {
+                    "shape": "DryRunOperationException"
                 }
             ],
             "staticContextParams": {
@@ -2394,6 +2406,15 @@
                 }
             }
         },
+        "DryRunOperationException": {
+            "type": "structure",
+            "members": {
+                "message": {
+                    "shape": "ErrorMessage"
+                }
+            },
+            "exception": true
+        },
         "EnableEnhancedMonitoringInput": {
             "type": "structure",
             "required": [
@@ -2517,6 +2538,9 @@
                     "contextParam": {
                         "name": "StreamId"
                     }
+                },
+                "DryRun": {
+                    "shape": "BooleanObject"
                 }
             }
         },
@@ -2609,6 +2633,9 @@
                     "contextParam": {
                         "name": "StreamId"
                     }
+                },
+                "DryRun": {
+                    "shape": "BooleanObject"
                 }
             }
         },
@@ -3220,6 +3247,9 @@
                     "contextParam": {
                         "name": "StreamId"
                     }
+                },
+                "DryRun": {
+                    "shape": "BooleanObject"
                 }
             }
         },
@@ -3264,6 +3294,9 @@
                     "contextParam": {
                         "name": "StreamId"
                     }
+                },
+                "DryRun": {
+                    "shape": "BooleanObject"
                 }
             }
         },
@@ -4232,6 +4265,9 @@
                 },
                 "StartingPosition": {
                     "shape": "StartingPosition"
+                },
+                "DryRun": {
+                    "shape": "BooleanObject"
                 }
             }
         },

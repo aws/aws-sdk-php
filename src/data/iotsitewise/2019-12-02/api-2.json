@@ -4532,7 +4532,8 @@
         "status":{"shape":"ComputeNodeExecutionStatus"},
         "startTime":{"shape":"Timestamp"},
         "endTime":{"shape":"Timestamp"},
-        "executionEnvironmentVariables":{"shape":"ExecutionEnvironmentVariablesMap"}
+        "executionEnvironmentVariables":{"shape":"ExecutionEnvironmentVariablesMap"},
+        "executionMounts":{"shape":"MountList"}
       }
     },
     "ComputeNodeExecutionDetailsList":{
@@ -4572,6 +4573,13 @@
     "ComputeNodeList":{
       "type":"list",
       "member":{"shape":"ComputeNode"},
+      "max":50,
+      "min":0
+    },
+    "ComputeNodeMountsMap":{
+      "type":"map",
+      "key":{"shape":"ResourceName"},
+      "value":{"shape":"MountList"},
       "max":50,
       "min":0
     },
@@ -4636,9 +4644,11 @@
         "taskExecutionRole":{"shape":"IamRoleArn"},
         "processingType":{"shape":"ProcessingType"},
         "processingUnit":{"shape":"ProcessingUnit"},
+        "ephemeralStorageConfiguration":{"shape":"EphemeralStorageConfiguration"},
         "command":{"shape":"CommandList"},
         "timeoutSeconds":{"shape":"TimeoutSeconds"},
-        "environmentVariables":{"shape":"EnvironmentVariablesMap"}
+        "environmentVariables":{"shape":"EnvironmentVariablesMap"},
+        "mounts":{"shape":"MountList"}
       }
     },
     "Content":{
@@ -6866,6 +6876,7 @@
         "startTime":{"shape":"Timestamp"},
         "endTime":{"shape":"Timestamp"},
         "requestEnvironmentVariables":{"shape":"ExecutionEnvironmentVariables"},
+        "requestMountOverrides":{"shape":"MountOverrides"},
         "executionPriority":{"shape":"ExecutionPriority"},
         "computeNodeExecutionDetails":{"shape":"ComputeNodeExecutionDetailsList"},
         "nextToken":{"shape":"PaginationToken"}
@@ -7463,6 +7474,23 @@
       "max":20,
       "min":0,
       "sensitive":true
+    },
+    "EphemeralStorageConfiguration":{
+      "type":"structure",
+      "required":[
+        "storageClass",
+        "storageSizeInGiB"
+      ],
+      "members":{
+        "storageClass":{"shape":"StorageClass"},
+        "storageSizeInGiB":{"shape":"EphemeralStorageConfigurationStorageSizeInGiBInteger"}
+      }
+    },
+    "EphemeralStorageConfigurationStorageSizeInGiBInteger":{
+      "type":"integer",
+      "box":true,
+      "max":16384,
+      "min":1
     },
     "ErrorCode":{
       "type":"string",
@@ -10032,6 +10060,62 @@
       }
     },
     "MonitorErrorMessage":{"type":"string"},
+    "Mount":{
+      "type":"structure",
+      "required":[
+        "name",
+        "relativePath",
+        "source",
+        "storageType"
+      ],
+      "members":{
+        "name":{"shape":"ResourceName"},
+        "relativePath":{"shape":"MountRelativePath"},
+        "source":{"shape":"MountSource"},
+        "storageType":{"shape":"MountStorageType"}
+      }
+    },
+    "MountList":{
+      "type":"list",
+      "member":{"shape":"Mount"},
+      "max":5,
+      "min":0
+    },
+    "MountOverrides":{
+      "type":"structure",
+      "required":["computeNodes"],
+      "members":{
+        "computeNodes":{"shape":"ComputeNodeMountsMap"}
+      }
+    },
+    "MountRelativePath":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"((?!.*(^|/)\\.\\.?(/|$))(?!.*//)[a-zA-Z0-9._-][a-zA-Z0-9._/-]*[a-zA-Z0-9._-]|[a-zA-Z0-9_-])"
+    },
+    "MountS3AccessPointArn":{
+      "type":"string",
+      "max":128,
+      "min":4,
+      "pattern":"arn:aws(-cn|-us-gov)?:s3:[a-z0-9-]*:\\d{12}:accesspoint[/:][a-zA-Z0-9._-]+"
+    },
+    "MountS3KeyPrefix":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "MountSource":{
+      "type":"structure",
+      "members":{
+        "s3AccessPoint":{"shape":"S3AccessPointSource"}
+      },
+      "union":true
+    },
+    "MountStorageType":{
+      "type":"string",
+      "enum":["SHARED_STORAGE"]
+    },
     "Mp4":{
       "type":"structure",
       "members":{}
@@ -10834,6 +10918,14 @@
       "type":"list",
       "member":{"shape":"Row"}
     },
+    "S3AccessPointSource":{
+      "type":"structure",
+      "required":["accessPointArn"],
+      "members":{
+        "accessPointArn":{"shape":"MountS3AccessPointArn"},
+        "prefix":{"shape":"MountS3KeyPrefix"}
+      }
+    },
     "S3Uri":{
       "type":"string",
       "max":1024,
@@ -11019,6 +11111,7 @@
           "locationName":"pipelineName"
         },
         "executionEnvironmentVariableOverrides":{"shape":"ExecutionEnvironmentVariables"},
+        "executionMountOverrides":{"shape":"MountOverrides"},
         "executionPriority":{"shape":"ExecutionPriority"},
         "clientToken":{
           "shape":"ClientToken",
@@ -11098,6 +11191,15 @@
         "status":{"shape":"SearchStatus"},
         "groupId":{"shape":"GroupId"}
       }
+    },
+    "StorageClass":{
+      "type":"string",
+      "enum":[
+        "STANDARD_1",
+        "STANDARD_2",
+        "THROUGHPUT_1",
+        "THROUGHPUT_2"
+      ]
     },
     "StorageType":{
       "type":"string",

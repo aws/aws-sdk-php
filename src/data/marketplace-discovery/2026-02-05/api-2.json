@@ -554,6 +554,13 @@
       "max":30,
       "min":0
     },
+    "FixedPercentage":{
+      "type":"structure",
+      "required":["percentageValue"],
+      "members":{
+        "percentageValue":{"shape":"BoundedString"}
+      }
+    },
     "FixedUpfrontPricingTerm":{
       "type":"structure",
       "required":[
@@ -1217,6 +1224,30 @@
       "type":"list",
       "member":{"shape":"OfferTerm"}
     },
+    "PaymentScheduleEntry":{
+      "type":"structure",
+      "required":[
+        "chargeDateOffset",
+        "chargePercentage"
+      ],
+      "members":{
+        "chargeDateOffset":{"shape":"BoundedString"},
+        "chargePercentage":{"shape":"BoundedString"},
+        "dayOfMonth":{"shape":"PaymentScheduleEntryDayOfMonthInteger"}
+      }
+    },
+    "PaymentScheduleEntryDayOfMonthInteger":{
+      "type":"integer",
+      "box":true,
+      "max":31,
+      "min":1
+    },
+    "PaymentScheduleEntryList":{
+      "type":"list",
+      "member":{"shape":"PaymentScheduleEntry"},
+      "max":200,
+      "min":1
+    },
     "PaymentScheduleTerm":{
       "type":"structure",
       "required":[
@@ -1231,6 +1262,34 @@
         "currencyCode":{"shape":"CurrencyCode"},
         "schedule":{"shape":"ScheduleList"}
       }
+    },
+    "PaymentScheduleTermTemplate":{
+      "type":"structure",
+      "required":["schedule"],
+      "members":{
+        "schedule":{"shape":"PaymentScheduleEntryList"}
+      }
+    },
+    "PercentageRange":{
+      "type":"structure",
+      "required":[
+        "minimumValue",
+        "maximumValue",
+        "defaultValue"
+      ],
+      "members":{
+        "minimumValue":{"shape":"BoundedString"},
+        "maximumValue":{"shape":"BoundedString"},
+        "defaultValue":{"shape":"BoundedString"}
+      }
+    },
+    "PriceIncrease":{
+      "type":"structure",
+      "members":{
+        "fixedPercentage":{"shape":"FixedPercentage"},
+        "percentageRange":{"shape":"PercentageRange"}
+      },
+      "union":true
     },
     "PricingModel":{
       "type":"structure",
@@ -1401,7 +1460,8 @@
       "enum":[
         "PRIVATE_PRICING",
         "FUTURE_DATED",
-        "REPLACEMENT_OFFER"
+        "REPLACEMENT_OFFER",
+        "AUTO_RENEW"
       ]
     },
     "PurchaseOptionFilter":{
@@ -1530,8 +1590,18 @@
       ],
       "members":{
         "id":{"shape":"TermId"},
-        "type":{"shape":"TermType"}
+        "type":{"shape":"TermType"},
+        "maxRenewals":{"shape":"RenewalTermMaxRenewalsInteger"},
+        "lockoutPeriod":{"shape":"BoundedString"},
+        "adjustmentDeadline":{"shape":"BoundedString"},
+        "priceIncrease":{"shape":"PriceIncrease"},
+        "termTemplates":{"shape":"TermTemplateList"}
       }
+    },
+    "RenewalTermMaxRenewalsInteger":{
+      "type":"integer",
+      "box":true,
+      "min":1
     },
     "Resource":{
       "type":"structure",
@@ -1898,6 +1968,19 @@
       "max":256,
       "min":1,
       "pattern":"[A-Za-z0-9+=;,.@\\-_]+"
+    },
+    "TermTemplate":{
+      "type":"structure",
+      "members":{
+        "paymentScheduleTermTemplate":{"shape":"PaymentScheduleTermTemplate"}
+      },
+      "union":true
+    },
+    "TermTemplateList":{
+      "type":"list",
+      "member":{"shape":"TermTemplate"},
+      "max":10,
+      "min":0
     },
     "TermType":{
       "type":"string",

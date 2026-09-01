@@ -225,6 +225,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getOperationsAsync(array $args = [])
  * @method \Aws\Result getOperationsForResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getOperationsForResourceAsync(array $args = [])
+ * @method \Aws\Result getProfile(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getProfileAsync(array $args = [])
  * @method \Aws\Result getRegions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getRegionsAsync(array $args = [])
  * @method \Aws\Result getRelationalDatabase(array $args = [])

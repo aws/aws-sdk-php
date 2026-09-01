@@ -4059,7 +4059,7 @@
     "CloudWatchLogsInputConfigLogGroupNamesList":{
       "type":"list",
       "member":{"shape":"LogGroupName"},
-      "max":5,
+      "max":10,
       "min":1
     },
     "CloudWatchLogsInputConfigServiceNamesList":{
@@ -7264,7 +7264,7 @@
     "EvaluatorList":{
       "type":"list",
       "member":{"shape":"EvaluatorReference"},
-      "max":10,
+      "max":25,
       "min":0
     },
     "EvaluatorModelConfig":{
@@ -15052,7 +15052,10 @@
     },
     "UpdateConfigurationBundleRequest":{
       "type":"structure",
-      "required":["bundleId"],
+      "required":[
+        "bundleId",
+        "parentVersionIds"
+      ],
       "members":{
         "clientToken":{
           "shape":"ClientToken",

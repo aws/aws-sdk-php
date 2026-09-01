@@ -5,6 +5,8 @@
     "AcceptAdministratorInvitation": "<p>Accepts the invitation to be a member account and get monitored by a GuardDuty administrator account that sent the invitation.</p>",
     "AcceptInvitation": "<p>Accepts the invitation to be monitored by a GuardDuty administrator account.</p>",
     "ArchiveFindings": "<p>Archives GuardDuty findings that are specified by the list of finding IDs.</p> <note> <p>Only the administrator account can archive findings. Member accounts don't have permission to archive findings from their accounts.</p> </note>",
+    "CreateCustomDetectionRuleAssociation": "<p>Enables a custom detection rule for your account by creating an association. You specify the rule and the mode in which it operates.</p>",
+    "CreateCustomDetectionRuleOrgConfiguration": "<p>Creates an organization-level configuration that enables a custom detection rule across your organization. This operation is available only to the delegated administrator account.</p>",
     "CreateDetector": "<p>Creates a single GuardDuty detector. A detector is a resource that represents the GuardDuty service. To start using GuardDuty, you must create a detector in each Region where you enable the service. You can have only one detector per account per Region. All data sources are enabled in a new detector by default.</p> <ul> <li> <p>When you don't specify any <code>features</code>, with an exception to <code>RUNTIME_MONITORING</code>, all the optional features are enabled by default.</p> </li> <li> <p>When you specify some of the <code>features</code>, any feature that is not specified in the API call gets enabled by default, with an exception to <code>RUNTIME_MONITORING</code>. </p> </li> </ul> <p>Specifying both EKS Runtime Monitoring (<code>EKS_RUNTIME_MONITORING</code>) and Runtime Monitoring (<code>RUNTIME_MONITORING</code>) will cause an error. You can add only one of these two features because Runtime Monitoring already includes the threat detection for Amazon EKS resources. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/runtime-monitoring.html\">Runtime Monitoring</a>.</p> <p>There might be regional differences because some data sources might not be available in all the Amazon Web Services Regions where GuardDuty is presently supported. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_regions.html\">Regions and endpoints</a>.</p>",
     "CreateFilter": "<p>Creates a filter using the specified finding criteria. The maximum number of saved filters per Amazon Web Services account per Region is 100. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_limits.html\">Quotas for GuardDuty</a>.</p>",
     "CreateIPSet": "<p>Creates a new IPSet, which is called a trusted IP list in the console user interface. An IPSet is a list of IP addresses that are trusted for secure communication with Amazon Web Services infrastructure and applications. GuardDuty doesn't generate findings for IP addresses that are included in IPSets. Only users from the administrator account can use this operation.</p>",
@@ -17,6 +19,8 @@
     "CreateThreatIntelSet": "<p>Creates a new ThreatIntelSet. ThreatIntelSets consist of known malicious IP addresses. GuardDuty generates findings based on ThreatIntelSets. Only users of the administrator account can use this operation.</p>",
     "CreateTrustedEntitySet": "<p>Creates a new trusted entity set. In the trusted entity set, you can provide IP addresses and domains that you believe are secure for communication in your Amazon Web Services environment. GuardDuty will not generate findings for the entries that are specified in a trusted entity set. At any given time, you can have only one trusted entity set. </p> <p>Only users of the administrator account can manage the entity sets, which automatically apply to member accounts.</p>",
     "DeclineInvitations": "<p>Declines invitations sent to the current member account by Amazon Web Services accounts specified by their account IDs.</p>",
+    "DeleteCustomDetectionRuleAssociation": "<p>Disables a custom detection rule by deleting its association. This operation is idempotent.</p>",
+    "DeleteCustomDetectionRuleOrgConfiguration": "<p>Deletes the organization-level configuration for a custom detection rule. This operation is available only to the delegated administrator account.</p>",
     "DeleteDetector": "<p>Deletes an Amazon GuardDuty detector that is specified by the detector ID.</p>",
     "DeleteFilter": "<p>Deletes the filter specified by the filter name.</p>",
     "DeleteIPSet": "<p>Deletes the IPSet specified by the <code>ipSetId</code>. IPSets are called trusted IP lists in the console user interface.</p>",
@@ -37,6 +41,9 @@
     "EnableOrganizationAdminAccount": "<p>Designates an Amazon Web Services account within the organization as your GuardDuty delegated administrator. Only the organization's management account can run this API operation.</p>",
     "GetAdministratorAccount": "<p>Provides the details of the GuardDuty administrator account associated with the current GuardDuty member account.</p> <p>Based on the type of account that runs this API, the following list shows how the API behavior varies:</p> <ul> <li> <p>When the GuardDuty administrator account runs this API, it will return success (<code>HTTP 200</code>) but no content.</p> </li> <li> <p>When a member account runs this API, it will return the details of the GuardDuty administrator account that is associated with this calling member account.</p> </li> <li> <p>When an individual account (not associated with an organization) runs this API, it will return success (<code>HTTP 200</code>) but no content.</p> </li> </ul>",
     "GetCoverageStatistics": "<p>Retrieves aggregated statistics for your account. If you are a GuardDuty administrator, you can retrieve the statistics for all the resources associated with the active member accounts in your organization who have enabled Runtime Monitoring and have the GuardDuty security agent running on their resources.</p>",
+    "GetCustomDetectionRule": "<p>Returns details for a custom detection rule in GuardDuty, including its detection logic.</p>",
+    "GetCustomDetectionRuleAssociation": "<p>Returns details for a custom detection rule association.</p>",
+    "GetCustomDetectionRuleOrgConfiguration": "<p>Returns the organization-level configuration for a custom detection rule.</p>",
     "GetDetector": "<p>Retrieves a GuardDuty detector specified by the detectorId.</p> <p>There might be regional differences because some data sources might not be available in all the Amazon Web Services Regions where GuardDuty is presently supported. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_regions.html\">Regions and endpoints</a>.</p>",
     "GetFilter": "<p>Returns the details of the filter specified by the filter name.</p>",
     "GetFindings": "<p>Describes Amazon GuardDuty findings specified by finding IDs.</p>",
@@ -58,6 +65,9 @@
     "GetUsageStatistics": "<p>Lists Amazon GuardDuty usage statistics over the last 30 days for the specified detector ID. For newly enabled detectors or data sources, the cost returned will include only the usage so far under 30 days. This may differ from the cost metrics in the console, which project usage over 30 days to provide a monthly cost estimate. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/monitoring_costs.html#usage-calculations\">Understanding How Usage Costs are Calculated</a>.</p>",
     "InviteMembers": "<p>Invites Amazon Web Services accounts to become members of an organization administered by the Amazon Web Services account that invokes this API. If you are using Amazon Web Services Organizations to manage your GuardDuty environment, this step is not needed. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_organizations.html\">Managing accounts with organizations</a>.</p> <p>To invite Amazon Web Services accounts, the first step is to ensure that GuardDuty has been enabled in the potential member accounts. You can now invoke this API to add accounts by invitation. The invited accounts can either accept or decline the invitation from their GuardDuty accounts. Each invited Amazon Web Services account can choose to accept the invitation from only one Amazon Web Services account. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_invitations.html\">Managing GuardDuty accounts by invitation</a>.</p> <p>After the invite has been accepted and you choose to disassociate a member account (by using <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_DisassociateMembers.html\">DisassociateMembers</a>) from your account, the details of the member account obtained by invoking <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_CreateMembers.html\">CreateMembers</a>, including the associated email addresses, will be retained. This is done so that you can invoke InviteMembers without the need to invoke <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_CreateMembers.html\">CreateMembers</a> again. To remove the details associated with a member account, you must also invoke <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_DeleteMembers.html\">DeleteMembers</a>. </p> <p>If you disassociate a member account that was added by invitation, the member account details obtained from this API, including the associated email addresses, will be retained. This is done so that the delegated administrator can invoke the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_InviteMembers.html\">InviteMembers</a> API without the need to invoke the CreateMembers API again. To remove the details associated with a member account, the delegated administrator must invoke the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_DeleteMembers.html\">DeleteMembers</a> API. </p> <p>When the member accounts added through Organizations are later disassociated, you (administrator) can't invite them by calling the InviteMembers API. You can create an association with these member accounts again only by calling the CreateMembers API.</p>",
     "ListCoverage": "<p>Lists coverage details for your GuardDuty account. If you're a GuardDuty administrator, you can retrieve all resources associated with the active member accounts in your organization.</p> <p>Make sure the accounts have Runtime Monitoring enabled and GuardDuty agent running on their resources.</p>",
+    "ListCustomDetectionRuleAssociations": "<p>Returns all custom detection rule associations for your account. You can filter by rule ID and mode.</p>",
+    "ListCustomDetectionRuleOrgConfigurations": "<p>Returns all organization-level configurations for custom detection rules. You can filter the results by status.</p>",
+    "ListCustomDetectionRules": "<p>Returns all available custom detection rules in GuardDuty. You can filter the results by data source, severity, tactic, technique, and service.</p>",
     "ListDetectors": "<p>Lists detectorIds of all the existing Amazon GuardDuty detector resources.</p>",
     "ListFilters": "<p>Returns a paginated list of the current filters.</p>",
     "ListFindings": "<p>Lists GuardDuty findings for the specified detector ID.</p> <p>There might be regional differences because some flags might not be available in all the Regions where GuardDuty is currently supported. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_regions.html\">Regions and endpoints</a>.</p>",
@@ -80,6 +90,8 @@
     "TagResource": "<p>Adds tags to a resource.</p>",
     "UnarchiveFindings": "<p>Unarchives GuardDuty findings specified by the <code>findingIds</code>.</p>",
     "UntagResource": "<p>Removes tags from a resource.</p>",
+    "UpdateCustomDetectionRuleAssociation": "<p>Updates the mode of an existing custom detection rule association.</p>",
+    "UpdateCustomDetectionRuleOrgConfiguration": "<p>Updates the organization-level configuration for a custom detection rule, including the mode and include/exclude account lists.</p>",
     "UpdateDetector": "<p>Updates the GuardDuty detector specified by the detector ID.</p> <p>Specifying both EKS Runtime Monitoring (<code>EKS_RUNTIME_MONITORING</code>) and Runtime Monitoring (<code>RUNTIME_MONITORING</code>) will cause an error. You can add only one of these two features because Runtime Monitoring already includes the threat detection for Amazon EKS resources. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/runtime-monitoring.html\">Runtime Monitoring</a>.</p> <p>There might be regional differences because some data sources might not be available in all the Amazon Web Services Regions where GuardDuty is presently supported. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_regions.html\">Regions and endpoints</a>.</p>",
     "UpdateFilter": "<p>Updates the filter specified by the filter name.</p>",
     "UpdateFindingsFeedback": "<p>Marks the specified GuardDuty findings as useful or not useful.</p>",
@@ -168,9 +180,11 @@
         "AccountDetail$AccountId": "<p>The member account ID.</p>",
         "AccountIds$member": null,
         "Administrator$AccountId": "<p>The ID of the account used as the administrator account.</p>",
+        "AssociationDetail$AccountId": "<p>The Amazon Web Services account ID associated with this rule association.</p>",
         "CoverageResource$AccountId": "<p>The unique ID of the Amazon Web Services account.</p>",
         "CreateIPSetRequest$ExpectedBucketOwner": "<p>The Amazon Web Services account ID that owns the Amazon S3 bucket specified in the <b>location</b> parameter.</p>",
         "CreateThreatIntelSetRequest$ExpectedBucketOwner": "<p>The Amazon Web Services account ID that owns the Amazon S3 bucket specified in the <b>location</b> parameter.</p>",
+        "DetectionRuleAccountIds$member": null,
         "DnsRequestAction$VpcOwnerAccountId": "<p>The Amazon Web Services account ID that owns the VPC through which the DNS request was made.</p>",
         "GetIPSetResponse$ExpectedBucketOwner": "<p>The Amazon Web Services account ID that owns the Amazon S3 bucket specified in the <b>location</b> parameter. This field appears in the response only if it was provided during IPSet creation or update.</p>",
         "GetThreatIntelSetResponse$ExpectedBucketOwner": "<p>The Amazon Web Services account ID that owns the Amazon S3 bucket specified in the <b>location</b> parameter. This field appears in the response only if it was provided during ThreatIntelSet creation or update.</p>",
@@ -350,6 +364,51 @@
       "base": null,
       "refs": {}
     },
+    "AssociationDetail": {
+      "base": "<p>Contains the full details of a custom detection rule association.</p>",
+      "refs": {
+        "CreateCustomDetectionRuleAssociationResponse$RuleAssociation": "<p>The details of the newly created custom detection rule association.</p>",
+        "GetCustomDetectionRuleAssociationResponse$RuleAssociation": "<p>The details of the custom detection rule association.</p>"
+      }
+    },
+    "AssociationId": {
+      "base": null,
+      "refs": {
+        "AssociationDetail$AssociationId": "<p>The unique identifier for the association.</p>",
+        "AssociationSummary$AssociationId": "<p>The unique identifier for the association.</p>",
+        "DeleteCustomDetectionRuleAssociationRequest$AssociationId": "<p>The unique identifier for the association to delete.</p>",
+        "GetCustomDetectionRuleAssociationRequest$AssociationId": "<p>The unique identifier for the association.</p>",
+        "UpdateCustomDetectionRuleAssociationRequest$AssociationId": "<p>The unique identifier for the association to update.</p>"
+      }
+    },
+    "AssociationMode": {
+      "base": null,
+      "refs": {
+        "AssociationDetail$Mode": "<p>The rule execution mode. Valid values: <code>LIVE</code> | <code>DRY_RUN</code>.</p>",
+        "AssociationSummary$Mode": "<p>The rule execution mode. Valid values: <code>LIVE</code> | <code>DRY_RUN</code>.</p>",
+        "CreateCustomDetectionRuleAssociationRequest$Mode": "<p>The rule execution mode. Valid values: <code>LIVE</code> | <code>DRY_RUN</code>.</p>",
+        "CreateCustomDetectionRuleOrgConfigurationRequest$Mode": "<p>The execution mode of the organization configuration. Valid values: <code>LIVE</code> | <code>DRY_RUN</code>.</p>",
+        "DeleteCustomDetectionRuleOrgConfigurationRequest$Mode": "<p>The execution mode of the organization configuration to delete. Valid values: <code>LIVE</code> | <code>DRY_RUN</code>.</p>",
+        "DetectionRuleOrgConfiguration$Mode": "<p>The execution mode of the organization configuration. Valid values: <code>LIVE</code> | <code>DRY_RUN</code>.</p>",
+        "DetectionRuleOrgConfigurationSummary$Mode": "<p>The rule execution mode.</p>",
+        "GetCustomDetectionRuleOrgConfigurationRequest$Mode": "<p>The execution mode of the organization configuration to retrieve. Valid values: <code>LIVE</code> | <code>DRY_RUN</code>.</p>",
+        "ListCustomDetectionRuleAssociationsRequest$Mode": "<p>The rule execution mode to filter associations by.</p>",
+        "UpdateCustomDetectionRuleAssociationRequest$Mode": "<p>The rule execution mode. Valid values: <code>LIVE</code> | <code>DRY_RUN</code>.</p>",
+        "UpdateCustomDetectionRuleOrgConfigurationRequest$Mode": "<p>The execution mode of the organization configuration. Valid values: <code>LIVE</code> | <code>DRY_RUN</code>.</p>"
+      }
+    },
+    "AssociationSummary": {
+      "base": "<p>Contains summary information about a custom detection rule association.</p>",
+      "refs": {
+        "AssociationSummaryList$member": null
+      }
+    },
+    "AssociationSummaryList": {
+      "base": null,
+      "refs": {
+        "ListCustomDetectionRuleAssociationsResponse$RuleAssociations": "<p>A list of custom detection rule association summaries.</p>"
+      }
+    },
     "AutoEnableMembers": {
       "base": null,
       "refs": {
@@ -503,6 +562,8 @@
     "ClientToken": {
       "base": null,
       "refs": {
+        "CreateCustomDetectionRuleAssociationRequest$ClientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. Maximum 64 characters.</p>",
+        "CreateCustomDetectionRuleOrgConfigurationRequest$ClientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time.</p>",
         "CreateDetectorRequest$ClientToken": "<p>The idempotency token for the create request.</p>",
         "CreateFilterRequest$ClientToken": "<p>The idempotency token for the create request.</p>",
         "CreateIPSetRequest$ClientToken": "<p>The idempotency token for the create request.</p>",
@@ -771,6 +832,22 @@
         "CoverageResource$CoverageStatus": "<p>Represents the status of the EKS cluster coverage.</p>"
       }
     },
+    "CreateCustomDetectionRuleAssociationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateCustomDetectionRuleAssociationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateCustomDetectionRuleOrgConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateCustomDetectionRuleOrgConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CreateDetectorRequest": {
       "base": null,
       "refs": {}
@@ -966,6 +1043,22 @@
         "S3BucketDetail$DefaultServerSideEncryption": "<p>Describes the server side encryption method used in the S3 bucket.</p>"
       }
     },
+    "DeleteCustomDetectionRuleAssociationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteCustomDetectionRuleAssociationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteCustomDetectionRuleOrgConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteCustomDetectionRuleOrgConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteDetectorRequest": {
       "base": null,
       "refs": {}
@@ -1098,6 +1191,118 @@
       "base": "<p>Contains information about the detected behavior.</p>",
       "refs": {
         "Service$Detection": "<p>Contains information about the detected unusual behavior.</p>"
+      }
+    },
+    "DetectionRuleAccountIds": {
+      "base": null,
+      "refs": {
+        "CreateCustomDetectionRuleOrgConfigurationRequest$IncludeAccountIds": "<p>The account IDs to include in the organization configuration. Mutually exclusive with <code>ExcludeAccountIds</code>.</p>",
+        "CreateCustomDetectionRuleOrgConfigurationRequest$ExcludeAccountIds": "<p>The account IDs to exclude from the organization configuration. Mutually exclusive with <code>IncludeAccountIds</code>.</p>",
+        "DetectionRuleOrgConfiguration$IncludeAccountIds": "<p>A list of member account IDs included in the organization configuration. Mutually exclusive with <code>ExcludeAccountIds</code>.</p>",
+        "DetectionRuleOrgConfiguration$ExcludeAccountIds": "<p>A list of member account IDs excluded from the organization configuration. Mutually exclusive with <code>IncludeAccountIds</code>.</p>",
+        "UpdateCustomDetectionRuleOrgConfigurationRequest$IncludeAccountIds": "<p>The account IDs to include in the organization configuration. Mutually exclusive with <code>ExcludeAccountIds</code>.</p>",
+        "UpdateCustomDetectionRuleOrgConfigurationRequest$ExcludeAccountIds": "<p>The account IDs to exclude from the organization configuration. Mutually exclusive with <code>IncludeAccountIds</code>.</p>"
+      }
+    },
+    "DetectionRuleArn": {
+      "base": null,
+      "refs": {
+        "AssociationDetail$Arn": "<p>The Amazon Resource Name (ARN) of the association.</p>",
+        "AssociationSummary$Arn": "<p>The Amazon Resource Name (ARN) of the association.</p>",
+        "RuleDetail$Arn": "<p>The Amazon Resource Name (ARN) of the rule.</p>",
+        "RuleSummary$Arn": "<p>The Amazon Resource Name (ARN) of the rule.</p>"
+      }
+    },
+    "DetectionRuleConfigurationStatus": {
+      "base": null,
+      "refs": {
+        "DetectionRuleOrgConfiguration$Status": "<p>The configuration status. Valid values: <code>ACTIVE</code> | <code>PROCESSING</code> | <code>FAILED</code>.</p>",
+        "DetectionRuleOrgConfigurationSummary$Status": "<p>The configuration status.</p>",
+        "ListCustomDetectionRuleOrgConfigurationsRequest$Status": "<p>The configuration status to filter by.</p>"
+      }
+    },
+    "DetectionRuleDataSource": {
+      "base": null,
+      "refs": {
+        "RuleDetail$DataSource": "<p>The data source that the rule analyzes.</p>",
+        "RuleSummary$DataSource": "<p>The data source that the rule analyzes.</p>"
+      }
+    },
+    "DetectionRuleDescription": {
+      "base": null,
+      "refs": {
+        "RuleDetail$Description": "<p>A description of what the rule detects.</p>",
+        "RuleSummary$Description": "<p>A description of what the rule detects.</p>"
+      }
+    },
+    "DetectionRuleFilter": {
+      "base": "<p>Contains filter criteria for listing custom detection rules or associations.</p>",
+      "refs": {
+        "DetectionRuleFilterList$member": null
+      }
+    },
+    "DetectionRuleFilterCondition": {
+      "base": null,
+      "refs": {
+        "DetectionRuleFilter$Condition": "<p>The condition to apply to the filter. For example, <code>EQUALS</code> or <code>CONTAINS</code>.</p>"
+      }
+    },
+    "DetectionRuleFilterList": {
+      "base": null,
+      "refs": {
+        "ListCustomDetectionRulesRequest$Filters": "<p>A list of filter criteria to apply when listing custom detection rules.</p>"
+      }
+    },
+    "DetectionRuleFilterValue": {
+      "base": null,
+      "refs": {
+        "DetectionRuleFilterValues$member": null
+      }
+    },
+    "DetectionRuleFilterValues": {
+      "base": null,
+      "refs": {
+        "DetectionRuleFilter$Values": "<p>The values to match against the specified filter name.</p>"
+      }
+    },
+    "DetectionRuleMaxResults": {
+      "base": null,
+      "refs": {
+        "ListCustomDetectionRuleAssociationsRequest$MaxResults": "<p>The maximum number of results to return in a single page. Minimum value of 1, maximum value of 100.</p>",
+        "ListCustomDetectionRuleOrgConfigurationsRequest$MaxResults": "<p>The maximum number of results to return in a single page. Minimum value of 1, maximum value of 100.</p>",
+        "ListCustomDetectionRulesRequest$MaxResults": "<p>The maximum number of results to return in a single page. Minimum value of 1, maximum value of 100.</p>"
+      }
+    },
+    "DetectionRuleOrgConfiguration": {
+      "base": "<p>Contains the organization-level configuration for a custom detection rule.</p>",
+      "refs": {
+        "GetCustomDetectionRuleOrgConfigurationResponse$Configuration": "<p>The details of the organization configuration.</p>"
+      }
+    },
+    "DetectionRuleOrgConfigurationSummary": {
+      "base": "<p>Contains summary information about an organization-level configuration for a custom detection rule.</p>",
+      "refs": {
+        "DetectionRuleOrgConfigurationSummaryList$member": null
+      }
+    },
+    "DetectionRuleOrgConfigurationSummaryList": {
+      "base": null,
+      "refs": {
+        "ListCustomDetectionRuleOrgConfigurationsResponse$Configurations": "<p>A list of organization configurations for custom detection rules.</p>"
+      }
+    },
+    "DetectionRuleServiceName": {
+      "base": null,
+      "refs": {
+        "RuleDetail$Service": "<p>The Amazon Web Services service associated with the rule.</p>",
+        "RuleSummary$Service": "<p>The Amazon Web Services service associated with the rule.</p>"
+      }
+    },
+    "DetectionRuleSeverity": {
+      "base": null,
+      "refs": {
+        "RuleDetail$Severity": "<p>The severity level assigned to findings generated by this rule.</p>",
+        "RuleSummary$Severity": "<p>The severity level assigned to findings generated by this rule.</p>"
       }
     },
     "DetectionSource": {
@@ -1595,6 +1800,12 @@
         "UpdateFilterRequest$Description": "<p>The description of the filter. Valid characters include alphanumeric characters, and special characters such as hyphen, period, colon, underscore, parentheses (<code>{ }</code>, <code>[ ]</code>, and <code>( )</code>), forward slash, horizontal tab, vertical tab, newline, form feed, return, and whitespace.</p>"
       }
     },
+    "FilterFieldName": {
+      "base": null,
+      "refs": {
+        "DetectionRuleFilter$Name": "<p>The name of the field to filter by.</p>"
+      }
+    },
     "FilterName": {
       "base": null,
       "refs": {
@@ -1764,6 +1975,30 @@
       "refs": {}
     },
     "GetCoverageStatisticsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetCustomDetectionRuleAssociationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetCustomDetectionRuleAssociationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetCustomDetectionRuleOrgConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetCustomDetectionRuleOrgConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetCustomDetectionRuleRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetCustomDetectionRuleResponse": {
       "base": null,
       "refs": {}
     },
@@ -2394,6 +2629,30 @@
       "base": null,
       "refs": {}
     },
+    "ListCustomDetectionRuleAssociationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListCustomDetectionRuleAssociationsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListCustomDetectionRuleOrgConfigurationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListCustomDetectionRuleOrgConfigurationsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListCustomDetectionRulesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListCustomDetectionRulesResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListDetectorsRequest": {
       "base": null,
       "refs": {}
@@ -2872,6 +3131,20 @@
       "base": null,
       "refs": {
         "Session$MfaStatus": "<p>Indicates whether or not multi-factor authencation (MFA) was used during authentication.</p> <p>In Amazon Web Services CloudTrail, you can find this value as <code>userIdentity.sessionContext.attributes.mfaAuthenticated</code>.</p>"
+      }
+    },
+    "MitreTactic": {
+      "base": null,
+      "refs": {
+        "RuleDetail$Tactic": "<p>The MITRE ATT&amp;CK tactic associated with the rule.</p>",
+        "RuleSummary$Tactic": "<p>The MITRE ATT&amp;CK tactic associated with the rule.</p>"
+      }
+    },
+    "MitreTechnique": {
+      "base": null,
+      "refs": {
+        "RuleDetail$Technique": "<p>The MITRE ATT&amp;CK technique associated with the rule.</p>",
+        "RuleSummary$Technique": "<p>The MITRE ATT&amp;CK technique associated with the rule.</p>"
       }
     },
     "ModelDetail": {
@@ -3551,6 +3824,78 @@
         "InvestigationSummary$RiskLevel": "<p>The assessed risk level of the investigated threat.</p>"
       }
     },
+    "RuleDefinition": {
+      "base": "<p>Contains the detection logic for a custom detection rule.</p>",
+      "refs": {
+        "RuleDetail$Definition": "<p>The detection logic definition for the rule.</p>"
+      }
+    },
+    "RuleDetail": {
+      "base": "<p>Contains the full details of a custom detection rule, including its detection logic.</p>",
+      "refs": {
+        "GetCustomDetectionRuleResponse$Rule": "<p>The details of the custom detection rule.</p>"
+      }
+    },
+    "RuleExpression": {
+      "base": null,
+      "refs": {
+        "RuleDefinition$Expression": "<p>The detection logic expression for the rule.</p>"
+      }
+    },
+    "RuleId": {
+      "base": null,
+      "refs": {
+        "AssociationDetail$RuleId": "<p>The unique identifier for the custom detection rule.</p>",
+        "AssociationSummary$RuleId": "<p>The unique identifier for the custom detection rule.</p>",
+        "CreateCustomDetectionRuleAssociationRequest$RuleId": "<p>The unique identifier for the custom detection rule.</p>",
+        "CreateCustomDetectionRuleOrgConfigurationRequest$RuleId": "<p>The unique identifier for the custom detection rule.</p>",
+        "DeleteCustomDetectionRuleAssociationRequest$RuleId": "<p>The unique identifier for the custom detection rule.</p>",
+        "DeleteCustomDetectionRuleOrgConfigurationRequest$RuleId": "<p>The unique identifier for the custom detection rule.</p>",
+        "DetectionRuleOrgConfiguration$RuleId": "<p>The unique identifier for the custom detection rule.</p>",
+        "DetectionRuleOrgConfigurationSummary$RuleId": "<p>The unique identifier for the custom detection rule.</p>",
+        "GetCustomDetectionRuleAssociationRequest$RuleId": "<p>The unique identifier for the custom detection rule.</p>",
+        "GetCustomDetectionRuleOrgConfigurationRequest$RuleId": "<p>The unique identifier for the custom detection rule.</p>",
+        "GetCustomDetectionRuleRequest$RuleId": "<p>The unique identifier for the custom detection rule.</p>",
+        "ListCustomDetectionRuleAssociationsRequest$RuleId": "<p>The unique identifier for the custom detection rule to filter associations by.</p>",
+        "RuleDetail$RuleId": "<p>The unique identifier for the rule.</p>",
+        "RuleSummary$RuleId": "<p>The unique identifier for the rule.</p>",
+        "UpdateCustomDetectionRuleAssociationRequest$RuleId": "<p>The unique identifier for the custom detection rule.</p>",
+        "UpdateCustomDetectionRuleOrgConfigurationRequest$RuleId": "<p>The unique identifier for the custom detection rule.</p>"
+      }
+    },
+    "RuleLanguage": {
+      "base": null,
+      "refs": {
+        "RuleDetail$Language": "<p>The language used for the detection logic expression.</p>",
+        "RuleSummary$Language": "<p>The language used for the detection logic expression.</p>"
+      }
+    },
+    "RuleName": {
+      "base": null,
+      "refs": {
+        "RuleDetail$Name": "<p>The display name of the rule.</p>",
+        "RuleSummary$Name": "<p>The display name of the rule.</p>"
+      }
+    },
+    "RuleSchema": {
+      "base": null,
+      "refs": {
+        "RuleDetail$Schema": "<p>The schema version used by the rule definition.</p>",
+        "RuleSummary$Schema": "<p>The schema version used by the rule definition.</p>"
+      }
+    },
+    "RuleSummary": {
+      "base": "<p>Contains summary information about a custom detection rule.</p>",
+      "refs": {
+        "RuleSummaryList$member": null
+      }
+    },
+    "RuleSummaryList": {
+      "base": null,
+      "refs": {
+        "ListCustomDetectionRulesResponse$Rules": "<p>A list of custom detection rule summaries.</p>"
+      }
+    },
     "RuntimeContext": {
       "base": "<p>Additional information about the suspicious activity.</p>",
       "refs": {
@@ -4053,6 +4398,8 @@
         "Destination$DestinationId": "<p>The unique ID of the publishing destination.</p>",
         "DestinationProperties$DestinationArn": "<p>The ARN of the resource to publish to.</p> <p>To specify an S3 bucket folder use the following format: <code>arn:aws:s3:::DOC-EXAMPLE-BUCKET/myFolder/</code> </p>",
         "DestinationProperties$KmsKeyArn": "<p>The ARN of the KMS key to use for encryption.</p>",
+        "DetectionRuleOrgConfiguration$StatusReason": "<p>The reason for the current configuration status.</p>",
+        "DetectionRuleOrgConfigurationSummary$StatusReason": "<p>The reason for the current configuration status.</p>",
         "DisableOrganizationAdminAccountRequest$AdminAccountId": "<p>The Amazon Web Services Account ID for the organizations account to be disabled as a GuardDuty delegated administrator.</p>",
         "DnsRequestAction$Domain": "<p>The domain information for the DNS query.</p>",
         "DnsRequestAction$Protocol": "<p>The network connection protocol observed in the activity that prompted GuardDuty to generate the finding.</p>",
@@ -4194,6 +4541,12 @@
         "LineageObject$ParentUuid": "<p>The unique ID of the parent process. This ID is assigned to the parent process by GuardDuty.</p>",
         "ListCoverageRequest$NextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request to a list action. For subsequent calls, use the NextToken value returned from the previous request to continue listing results after the first page.</p>",
         "ListCoverageResponse$NextToken": "<p>The pagination parameter to be used on the next list operation to retrieve more items.</p>",
+        "ListCustomDetectionRuleAssociationsRequest$NextToken": "<p>A pagination token from a previous response. Use this token to retrieve the next page of results.</p>",
+        "ListCustomDetectionRuleAssociationsResponse$NextToken": "<p>A pagination token to retrieve the next page of results. If this field is empty, there are no additional results.</p>",
+        "ListCustomDetectionRuleOrgConfigurationsRequest$NextToken": "<p>A pagination token from a previous response. Use this token to retrieve the next page of results.</p>",
+        "ListCustomDetectionRuleOrgConfigurationsResponse$NextToken": "<p>A pagination token to retrieve the next page of results. If this field is empty, there are no additional results.</p>",
+        "ListCustomDetectionRulesRequest$NextToken": "<p>A pagination token from a previous response. Use this token to retrieve the next page of results.</p>",
+        "ListCustomDetectionRulesResponse$NextToken": "<p>A pagination token to retrieve the next page of results. If this field is empty, there are no additional results.</p>",
         "ListDetectorsRequest$NextToken": "<p>You can use this parameter when paginating results. Set the value of this parameter to null on your first call to the list action. For subsequent calls to the action, fill nextToken in the request with the value of NextToken from the previous response to continue listing data.</p>",
         "ListDetectorsResponse$NextToken": "<p>The pagination parameter to be used on the next list operation to retrieve more items.</p>",
         "ListFiltersRequest$NextToken": "<p>You can use this parameter when paginating results. Set the value of this parameter to null on your first call to the list action. For subsequent calls to the action, fill nextToken in the request with the value of NextToken from the previous response to continue listing data.</p>",
@@ -4445,6 +4798,7 @@
     "TagMap": {
       "base": null,
       "refs": {
+        "CreateCustomDetectionRuleAssociationRequest$Tags": "<p>The tags to be added to the new custom detection rule association resource.</p>",
         "CreateDetectorRequest$Tags": "<p>The tags to be added to a new detector resource.</p>",
         "CreateFilterRequest$Tags": "<p>The tags to be added to a new filter resource.</p>",
         "CreateIPSetRequest$Tags": "<p>The tags to be added to a new IP set resource.</p>",
@@ -4454,6 +4808,7 @@
         "CreateThreatIntelSetRequest$Tags": "<p>The tags to be added to a new threat list resource.</p>",
         "CreateTrustedEntitySetRequest$Tags": "<p>The tags to be added to a new trusted entity set resource.</p>",
         "DescribePublishingDestinationResponse$Tags": "<p>The tags of the publishing destination resource.</p>",
+        "GetCustomDetectionRuleAssociationResponse$Tags": "<p>The tags associated with the custom detection rule association resource.</p>",
         "GetDetectorResponse$Tags": "<p>The tags of the detector resource.</p>",
         "GetFilterResponse$Tags": "<p>The tags of the filter resource.</p>",
         "GetIPSetResponse$Tags": "<p>The tags of the IPSet resource.</p>",
@@ -4578,11 +4933,23 @@
       "base": null,
       "refs": {
         "AccountStatistics$LastGeneratedAt": "<p>The timestamp at which the finding for this account was last generated.</p>",
+        "AssociationDetail$CreatedAt": "<p>The timestamp when the association was created.</p>",
+        "AssociationDetail$UpdatedAt": "<p>The timestamp when the association was last updated.</p>",
+        "AssociationDetail$ExpiresAt": "<p>The timestamp when the association expires.</p>",
+        "AssociationSummary$CreatedAt": "<p>The timestamp when the association was created.</p>",
+        "AssociationSummary$UpdatedAt": "<p>The timestamp when the association was last updated.</p>",
+        "AssociationSummary$ExpiresAt": "<p>The timestamp when the association expires.</p>",
         "ContinuousScanDetails$StartTime": "<p>The timestamp representing the start of the time range to scan. Reserved for internal use.</p>",
         "ContinuousScanDetails$EndTime": "<p>The timestamp representing the end of the time range to scan.</p>",
         "CoverageResource$UpdatedAt": "<p>The timestamp at which the coverage details for the resource were last updated. This is in UTC format.</p>",
         "DateStatistics$Date": "<p>The timestamp when the total findings count is observed.</p> <p>For example, <code>Date</code> would look like <code>\"2024-09-05T17:00:00-07:00\"</code> whereas <code>LastGeneratedAt</code> would look like 2024-09-05T17:12:29-07:00\".</p>",
         "DateStatistics$LastGeneratedAt": "<p>The timestamp at which the last finding in the findings count, was generated.</p>",
+        "DetectionRuleOrgConfiguration$CreatedAt": "<p>The timestamp when the organization configuration was created.</p>",
+        "DetectionRuleOrgConfiguration$UpdatedAt": "<p>The timestamp when the organization configuration was last updated.</p>",
+        "DetectionRuleOrgConfiguration$ExpiresAt": "<p>The timestamp when the organization configuration expires.</p>",
+        "DetectionRuleOrgConfigurationSummary$CreatedAt": "<p>The timestamp when the organization configuration was created.</p>",
+        "DetectionRuleOrgConfigurationSummary$UpdatedAt": "<p>The timestamp when the organization configuration was last updated.</p>",
+        "DetectionRuleOrgConfigurationSummary$ExpiresAt": "<p>The timestamp when the organization configuration expires.</p>",
         "DetectorAdditionalConfigurationResult$UpdatedAt": "<p>The timestamp at which the additional configuration was last updated. This is in UTC format.</p>",
         "DetectorFeatureConfigurationResult$UpdatedAt": "<p>The timestamp at which the feature object was updated.</p>",
         "EbsVolumeScanDetails$ScanStartedAt": "<p>Returns the start date and time of the malware scan.</p>",
@@ -4615,6 +4982,10 @@
         "OrganizationDetails$UpdatedAt": "<p>The timestamp at which the organization statistics was last updated. This is in UTC format.</p>",
         "ProcessDetails$StartTime": "<p>The time when the process started. This is in UTC format.</p>",
         "ResourceStatistics$LastGeneratedAt": "<p>The timestamp at which the statistics for this resource was last generated.</p>",
+        "RuleDetail$CreatedAt": "<p>The timestamp when the rule was created.</p>",
+        "RuleDetail$UpdatedAt": "<p>The timestamp when the rule was last updated.</p>",
+        "RuleSummary$CreatedAt": "<p>The timestamp when the rule was created.</p>",
+        "RuleSummary$UpdatedAt": "<p>The timestamp when the rule was last updated.</p>",
         "RuntimeContext$ModifiedAt": "<p>The timestamp at which the process modified the current process. The timestamp is in UTC date string format.</p>",
         "S3Bucket$CreatedAt": "<p>The timestamp at which the Amazon S3 bucket was created.</p>",
         "S3BucketDetail$CreatedAt": "<p>The date and time the bucket was created at.</p>",
@@ -4729,6 +5100,22 @@
       "refs": {}
     },
     "UntagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateCustomDetectionRuleAssociationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateCustomDetectionRuleAssociationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateCustomDetectionRuleOrgConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateCustomDetectionRuleOrgConfigurationResponse": {
       "base": null,
       "refs": {}
     },
