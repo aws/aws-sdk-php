@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.394.6 - 2026-09-01
 
 * `Aws\MarketplaceAgreement` - This release adds renewal support for AWS Marketplace private offers. Agreements report whether they renew and, if not, why. Renewal terms add price increases, renewal limits, renewal decision deadlines, and payment schedule templates. SearchAgreements adds filters.
 * `Aws\SESv2` - Added support for managing SMIME signing certificates for email identities, including associating, listing, and disassociating certificates. Added the UpdateConfigurationSet operation to configure message security options such as signing scheme.
