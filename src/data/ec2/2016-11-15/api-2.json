@@ -11937,6 +11937,10 @@
         "InterruptionInfo":{
           "shape":"InterruptionInfo",
           "locationName":"interruptionInfo"
+        },
+        "ZeroSizePreference":{
+          "shape":"ZeroSizePreference",
+          "locationName":"zeroSizePreference"
         }
       }
     },
@@ -14754,7 +14758,8 @@
         "TagSpecifications":{
           "shape":"TagSpecificationList",
           "locationName":"TagSpecification"
-        }
+        },
+        "ZeroSizePreference":{"shape":"ZeroSizePreference"}
       }
     },
     "CreateInterruptibleCapacityReservationAllocationResult":{
@@ -38918,6 +38923,10 @@
         "InterruptionType":{
           "shape":"InterruptionType",
           "locationName":"interruptionType"
+        },
+        "ZeroSizePreference":{
+          "shape":"ZeroSizePreference",
+          "locationName":"zeroSizePreference"
         }
       }
     },
@@ -39639,6 +39648,10 @@
         "State":{
           "shape":"IpamInternetRegistryAssociationState",
           "locationName":"state"
+        },
+        "StateMessage":{
+          "shape":"String",
+          "locationName":"stateMessage"
         },
         "ChildRequestXml":{
           "shape":"String",
@@ -60044,14 +60057,12 @@
     },
     "UpdateInterruptibleCapacityReservationAllocationRequest":{
       "type":"structure",
-      "required":[
-        "CapacityReservationId",
-        "TargetInstanceCount"
-      ],
+      "required":["CapacityReservationId"],
       "members":{
         "CapacityReservationId":{"shape":"CapacityReservationId"},
         "TargetInstanceCount":{"shape":"Integer"},
-        "DryRun":{"shape":"Boolean"}
+        "DryRun":{"shape":"Boolean"},
+        "ZeroSizePreference":{"shape":"ZeroSizePreference"}
       }
     },
     "UpdateInterruptibleCapacityReservationAllocationResult":{
@@ -63133,6 +63144,13 @@
         "shape":"Workload",
         "locationName":"item"
       }
+    },
+    "ZeroSizePreference":{
+      "type":"string",
+      "enum":[
+        "retain",
+        "default"
+      ]
     },
     "ZoneIdStringList":{
       "type":"list",

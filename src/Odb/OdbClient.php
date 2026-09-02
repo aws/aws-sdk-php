@@ -115,6 +115,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listExadbVmClustersAsync(array $args = [])
  * @method \Aws\Result listExascaleDbStorageVaults(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listExascaleDbStorageVaultsAsync(array $args = [])
+ * @method \Aws\Result listFlexComponents(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listFlexComponentsAsync(array $args = [])
  * @method \Aws\Result listGiMinorVersions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listGiMinorVersionsAsync(array $args = [])
  * @method \Aws\Result listGiVersions(array $args = [])

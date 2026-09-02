@@ -1602,7 +1602,7 @@
     "ApplicationStatusSummary": {
       "base": "<p>Provides a summary of the application-level health status for an instance.</p>",
       "refs": {
-        "InstanceStatus$ApplicationStatus": "<p>Reports impaired functionality that stems from issues with applications running on the instance.</p>"
+        "InstanceStatus$ApplicationStatus": "<p>Reports the application-level health status for the instance.</p>"
       }
     },
     "ApplicationStatusesResponseType": {
@@ -25029,11 +25029,11 @@
       "base": null,
       "refs": {
         "S3Storage$UploadPolicy": "<p>An Amazon S3 upload policy that gives Amazon EC2 permission to upload items into Amazon S3 on your behalf.</p>",
-        "SecureBlobAttributeValue$Value": null
+        "SecureBlobAttributeValue$Value": "<p>The attribute value.</p>"
       }
     },
     "SecureBlobAttributeValue": {
-      "base": null,
+      "base": "<p>Describes a value for a resource attribute that is a Base64-encoded binary data object.</p>",
       "refs": {
         "ModifyInstanceAttributeRequest$UserData": "<p>Changes the instance's user data to the specified value. User data must be base64-encoded. Depending on the tool or SDK that you're using, the base64-encoding might be performed for you. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-add-user-data.html\">Work with instance user data</a>.</p>"
       }
@@ -26688,8 +26688,8 @@
         "DescribeFastSnapshotRestoreSuccessItem$StateTransitionReason": "<p>The reason for the state transition. The possible values are as follows:</p> <ul> <li> <p> <code>Client.UserInitiated</code> - The state successfully transitioned to <code>enabling</code> or <code>disabling</code>.</p> </li> <li> <p> <code>Client.UserInitiated - Lifecycle state transition</code> - The state successfully transitioned to <code>optimizing</code>, <code>enabled</code>, or <code>disabled</code>.</p> </li> </ul>",
         "DescribeFastSnapshotRestoreSuccessItem$OwnerId": "<p>The ID of the Amazon Web Services account that enabled fast snapshot restores on the snapshot.</p>",
         "DescribeFastSnapshotRestoreSuccessItem$OwnerAlias": "<p>The Amazon Web Services owner alias that enabled fast snapshot restores on the snapshot. This is intended for future use.</p>",
-        "DescribeFleetError$ErrorCode": "<p>The error code that indicates why the instance could not be launched. For more information about error codes, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/errors-overview.html.html\">Error codes</a>.</p>",
-        "DescribeFleetError$ErrorMessage": "<p>The error message that describes why the instance could not be launched. For more information about error messages, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/errors-overview.html.html\">Error codes</a>.</p>",
+        "DescribeFleetError$ErrorCode": "<p>The error code that indicates why the instance could not be launched. For more information about error codes, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/errors-overview.html\">Error codes</a>.</p>",
+        "DescribeFleetError$ErrorMessage": "<p>The error message that describes why the instance could not be launched. For more information about error messages, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/errors-overview.html\">Error codes</a>.</p>",
         "DescribeFleetHistoryRequest$NextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>",
         "DescribeFleetHistoryResult$NextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
         "DescribeFleetInstancesRequest$NextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>",
@@ -27467,6 +27467,7 @@
         "IpamInternetRegistryAssociation$IpamRegion": "<p>The Amazon Web Services Region of the IPAM.</p>",
         "IpamInternetRegistryAssociation$OrganizationHandle": "<p>The organization handle at the internet registry.</p>",
         "IpamInternetRegistryAssociation$Description": "<p>The description of the internet registry association.</p>",
+        "IpamInternetRegistryAssociation$StateMessage": "<p>A message describing the current state of the internet registry association, including additional details such as the reason for a failure.</p>",
         "IpamInternetRegistryAssociation$ChildRequestXml": "<p>The XML content for the child request to be submitted to the internet registry to complete the BPKI setup.</p>",
         "IpamInternetRegistryAssociationAsn$Asn": "<p>The Autonomous System Number.</p>",
         "IpamInternetRegistryAssociationCidr$Cidr": "<p>The IP address prefix in CIDR notation.</p>",
@@ -32631,6 +32632,15 @@
       "base": null,
       "refs": {
         "GpuDeviceInfo$Workloads": "<p>A list of workload types this GPU supports.</p>"
+      }
+    },
+    "ZeroSizePreference": {
+      "base": null,
+      "refs": {
+        "CapacityReservation$ZeroSizePreference": "<p> The zero-size preference configured for the interruptible Capacity Reservation. A value of <code>retain</code> keeps the interruptible Capacity Reservation active at zero capacity when you reduce its allocation to zero. A value of <code>default</code> cancels the interruptible Capacity Reservation when you reduce its allocation to zero. </p>",
+        "CreateInterruptibleCapacityReservationAllocationRequest$ZeroSizePreference": "<p> Specifies the behavior for the interruptible Capacity Reservation when you reduce its allocation to zero instances. Specify <code>retain</code> to keep the interruptible Capacity Reservation active at zero capacity so that you can allocate instances to it again later. Specify <code>default</code> to cancel the interruptible Capacity Reservation and return the capacity to your source Capacity Reservation. The default value is <code>default</code>. </p>",
+        "InterruptibleCapacityAllocation$ZeroSizePreference": "<p> Specifies how Amazon EC2 handles the interruptible Capacity Reservation when you reduce its allocation to zero instances. A value of <code>retain</code> keeps the interruptible Capacity Reservation active at zero capacity so that you can allocate instances to it again later. A value of <code>default</code> cancels the interruptible Capacity Reservation and returns the capacity to your source Capacity Reservation. </p>",
+        "UpdateInterruptibleCapacityReservationAllocationRequest$ZeroSizePreference": "<p> Specifies the updated behavior for the interruptible Capacity Reservation when you reduce its allocation to zero instances. Specify <code>retain</code> to keep the interruptible Capacity Reservation active at zero capacity so that you can allocate instances to it again later. Specify <code>default</code> to cancel the interruptible Capacity Reservation and return the capacity to your source Capacity Reservation. </p>"
       }
     },
     "ZoneIdStringList": {

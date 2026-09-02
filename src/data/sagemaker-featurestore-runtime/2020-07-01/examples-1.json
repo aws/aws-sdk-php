@@ -44,6 +44,54 @@
         "id": "list-records-example-1",
         "title": "List record identifiers from a feature group"
       }
+    ],
+    "UpdateRecord": [
+      {
+        "input": {
+          "FeatureGroupName": "my-feature-group",
+          "Features": [
+            {
+              "FeatureName": "age",
+              "ValueAsString": "26"
+            },
+            {
+              "FeatureName": "membership_tier",
+              "ValueAsString": "gold"
+            },
+            {
+              "FeatureName": "event_time",
+              "ValueAsString": "2026-07-26T12:00:00Z"
+            }
+          ],
+          "RecordIdentifierValueAsString": "cust-001"
+        },
+        "output": {},
+        "id": "update-record-example-1",
+        "title": "Update specific features in a record"
+      },
+      {
+        "input": {
+          "FeatureGroupName": "my-feature-group",
+          "Features": [
+            {
+              "FeatureName": "age",
+              "ValueAsString": "26"
+            },
+            {
+              "FeatureName": "event_time",
+              "ValueAsString": "2026-07-26T12:00:00Z"
+            }
+          ],
+          "RecordIdentifierValueAsString": "cust-001",
+          "TtlDuration": {
+            "Unit": "Weeks",
+            "Value": 4
+          }
+        },
+        "output": {},
+        "id": "update-record-example-2",
+        "title": "Update features and set a time-to-live (TTL) duration"
+      }
     ]
   }
 }

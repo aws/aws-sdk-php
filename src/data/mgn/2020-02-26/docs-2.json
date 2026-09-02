@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<p>The Application Migration Service service.</p>",
+  "service": "<p>Application Migration Service.</p>",
   "operations": {
     "ArchiveApplication": "<p>Archive application.</p>",
     "ArchiveWave": "<p>Archive wave.</p>",
@@ -23,15 +23,15 @@
     "DeleteVcenterClient": "<p>Deletes a given vCenter client by ID.</p>",
     "DeleteWave": "<p>Delete wave.</p>",
     "DescribeJobLogItems": "<p>Retrieves detailed job log items with paging.</p>",
-    "DescribeJobs": "<p>Returns a list of Jobs. Use the JobsID and fromDate and toData filters to limit which jobs are returned. The response is sorted by creationDataTime - latest date first. Jobs are normally created by the StartTest, StartCutover, and TerminateTargetInstances APIs. Jobs are also created by DiagnosticLaunch and TerminateDiagnosticInstances, which are APIs available only to *Support* and only used in response to relevant support tickets.</p>",
+    "DescribeJobs": "<p>Returns a list of Jobs. Use the jobIDs and fromDate and toDate filters to limit which jobs are returned. The response is sorted by creationDateTime - latest date first. Jobs are normally created by the StartTest, StartCutover, and TerminateTargetInstances APIs. Jobs are also created by DiagnosticLaunch and TerminateDiagnosticInstances, which are APIs available only to *Support* and only used in response to relevant support tickets.</p>",
     "DescribeLaunchConfigurationTemplates": "<p>Lists all Launch Configuration Templates, filtered by Launch Configuration Template IDs</p>",
-    "DescribeReplicationConfigurationTemplates": "<p>Lists all ReplicationConfigurationTemplates, filtered by Source Server IDs.</p>",
+    "DescribeReplicationConfigurationTemplates": "<p>Lists all ReplicationConfigurationTemplates, filtered by replication configuration template IDs.</p>",
     "DescribeSourceServers": "<p>Retrieves all SourceServers or multiple SourceServers by ID.</p>",
     "DescribeVcenterClients": "<p>Returns a list of the installed vCenter clients.</p>",
     "DisassociateApplications": "<p>Disassociate applications from wave.</p>",
     "DisassociateSourceServers": "<p>Disassociate source servers from application.</p>",
-    "DisconnectFromService": "<p>Disconnects specific Source Servers from Application Migration Service. Data replication is stopped immediately. All AWS resources created by Application Migration Service for enabling the replication of these source servers will be terminated / deleted within 90 minutes. Launched Test or Cutover instances will NOT be terminated. If the agent on the source server has not been prevented from communicating with the Application Migration Service service, then it will receive a command to uninstall itself (within approximately 10 minutes). The following properties of the SourceServer will be changed immediately: dataReplicationInfo.dataReplicationState will be set to DISCONNECTED; The totalStorageBytes property for each of dataReplicationInfo.replicatedDisks will be set to zero; dataReplicationInfo.lagDuration and dataReplicationInfo.lagDuration will be nullified.</p>",
-    "FinalizeCutover": "<p>Finalizes the cutover immediately for specific Source Servers. All AWS resources created by Application Migration Service for enabling the replication of these source servers will be terminated / deleted within 90 minutes. Launched Test or Cutover instances will NOT be terminated. The AWS Replication Agent will receive a command to uninstall itself (within 10 minutes). The following properties of the SourceServer will be changed immediately: dataReplicationInfo.dataReplicationState will be changed to DISCONNECTED; The SourceServer.lifeCycle.state will be changed to CUTOVER; The totalStorageBytes property fo each of dataReplicationInfo.replicatedDisks will be set to zero; dataReplicationInfo.lagDuration and dataReplicationInfo.lagDuration will be nullified.</p>",
+    "DisconnectFromService": "<p>Disconnects specific Source Servers from Application Migration Service. Data replication is stopped immediately. All AWS resources created by Application Migration Service for enabling the replication of these source servers will be terminated / deleted within 90 minutes. Launched Test or Cutover instances will NOT be terminated. If the agent on the source server has not been prevented from communicating with Application Migration Service, then it will receive a command to uninstall itself (within approximately 10 minutes). The following properties of the SourceServer will be changed immediately: dataReplicationInfo.dataReplicationState will be set to DISCONNECTED; The totalStorageBytes property for each of dataReplicationInfo.replicatedDisks will be set to zero; dataReplicationInfo.lagDuration and dataReplicationInfo.lagDuration will be nullified.</p>",
+    "FinalizeCutover": "<p>Finalizes the cutover immediately for specific Source Servers. All AWS resources created by Application Migration Service for enabling the replication of these source servers will be terminated / deleted within 90 minutes. Launched Test or Cutover instances will NOT be terminated. The AWS Replication Agent will receive a command to uninstall itself (within 10 minutes). The following properties of the SourceServer will be changed immediately: dataReplicationInfo.dataReplicationState will be changed to DISCONNECTED; The SourceServer.lifeCycle.state will be changed to CUTOVER; The totalStorageBytes property for each of dataReplicationInfo.replicatedDisks will be set to zero; dataReplicationInfo.lagDuration and dataReplicationInfo.lagDuration will be nullified.</p>",
     "GetLaunchConfiguration": "<p>Lists all LaunchConfigurations available, filtered by Source Server IDs.</p>",
     "GetNetworkMigrationDefinition": "<p>Retrieves the details of a network migration definition including source and target configurations.</p>",
     "GetNetworkMigrationMapperSegmentConstruct": "<p>Retrieves detailed information about a specific construct within a mapper segment, including its properties and configuration data.</p>",
@@ -61,7 +61,7 @@
     "ListTagsForResource": "<p>List all tags for your Application Migration Service resources.</p>",
     "ListTemplateActions": "<p>List template post migration custom actions.</p>",
     "ListWaves": "<p>Retrieves all waves or multiple waves by ID.</p>",
-    "MarkAsArchived": "<p>Archives specific Source Servers by setting the SourceServer.isArchived property to true for specified SourceServers by ID. This command only works for SourceServers with a lifecycle. state which equals DISCONNECTED or CUTOVER.</p>",
+    "MarkAsArchived": "<p>Archives specific Source Servers by setting the SourceServer.isArchived property to true for specified SourceServers by ID. This command only works for SourceServers with a lifecycle state that equals DISCONNECTED or CUTOVER.</p>",
     "PauseReplication": "<p>Pause Replication.</p>",
     "PutSourceServerAction": "<p>Put source server post migration custom action.</p>",
     "PutTemplateAction": "<p>Put template post migration custom action.</p>",
@@ -88,12 +88,12 @@
     "UntagResource": "<p>Deletes the specified set of tags from the specified set of Application Migration Service resources.</p>",
     "UpdateApplication": "<p>Update application.</p>",
     "UpdateConnector": "<p>Update Connector.</p>",
-    "UpdateLaunchConfiguration": "<p>Updates multiple LaunchConfigurations by Source Server ID.</p> <note> <p>bootMode valid values are <code>LEGACY_BIOS | UEFI</code> </p> </note>",
+    "UpdateLaunchConfiguration": "<p>Updates multiple LaunchConfigurations by Source Server ID.</p> <note> <p>bootMode valid values are <code>LEGACY_BIOS | UEFI | USE_SOURCE</code> </p> </note>",
     "UpdateLaunchConfigurationTemplate": "<p>Updates an existing Launch Configuration Template by ID.</p>",
     "UpdateNetworkMigrationDefinition": "<p>Updates an existing network migration definition with new source or target configurations.</p>",
     "UpdateNetworkMigrationMapperSegment": "<p>Updates a mapper segment's configuration, such as changing its scope tags.</p>",
     "UpdateReplicationConfiguration": "<p>Allows you to update multiple ReplicationConfigurations by Source Server ID.</p>",
-    "UpdateReplicationConfigurationTemplate": "<p>Updates multiple ReplicationConfigurationTemplates by ID.</p>",
+    "UpdateReplicationConfigurationTemplate": "<p>Updates a ReplicationConfigurationTemplate by ID.</p>",
     "UpdateSourceServer": "<p>Update Source Server.</p>",
     "UpdateSourceServerReplicationType": "<p>Allows you to change between the AGENT_BASED replication type and the SNAPSHOT_SHIPPING replication type. </p> <p>SNAPSHOT_SHIPPING should be used for agentless replication.</p>",
     "UpdateWave": "<p>Update wave.</p>"
@@ -128,7 +128,7 @@
       }
     },
     "AccessDeniedException": {
-      "base": "<p>Operating denied due to a file permission or access check error.</p>",
+      "base": "<p>Operation denied due to a file permission or access check error.</p>",
       "refs": {}
     },
     "AccountID": {
@@ -147,7 +147,7 @@
         "DeleteWaveRequest$accountID": "<p>Account ID.</p>",
         "DescribeJobLogItemsRequest$accountID": "<p>Request to describe Job log Account ID.</p>",
         "DescribeJobsRequest$accountID": "<p>Request to describe job log items by Account ID.</p>",
-        "DescribeSourceServersRequest$accountID": "<p>Request to filter Source Servers list by Accoun ID.</p>",
+        "DescribeSourceServersRequest$accountID": "<p>Request to filter Source Servers list by Account ID.</p>",
         "DisassociateApplicationsRequest$accountID": "<p>Account ID.</p>",
         "DisassociateSourceServersRequest$accountID": "<p>Account ID.</p>",
         "DisconnectFromServiceRequest$accountID": "<p>Request to disconnect Source Server from service by Account ID.</p>",
@@ -454,7 +454,7 @@
         "IdentificationHints$vmWareUuid": "<p>vmWare UUID identification hint.</p>",
         "IdentificationHints$vmPath": "<p>vCenter VM path identification hint.</p>",
         "ImportErrorData$ec2LaunchTemplateID": "<p>Import error data ec2 LaunchTemplate ID.</p>",
-        "JobPostLaunchActionsLaunchStatus$executionID": "<p>AWS Systems Manager Document's execution ID of the of the Job Post Launch Actions.</p>",
+        "JobPostLaunchActionsLaunchStatus$executionID": "<p>AWS Systems Manager Document's execution ID of the Job Post Launch Actions.</p>",
         "JobPostLaunchActionsLaunchStatus$failureReason": "<p>AWS Systems Manager Document's failure reason.</p>",
         "LastKnownCheck$name": "<p>Last known check name.</p>",
         "LastKnownCheck$error": "<p>Last known check error.</p>",
@@ -509,6 +509,8 @@
     "Cidr": {
       "base": null,
       "refs": {
+        "CidrMapping$originalCidr": "<p>The original CIDR range in the source network.</p>",
+        "CidrMapping$updatedCidr": "<p>The updated CIDR range to use in the target network.</p>",
         "TargetNetwork$inboundCidr": "<p>The CIDR block for inbound traffic in the target network.</p>",
         "TargetNetwork$outboundCidr": "<p>The CIDR block for outbound traffic in the target network.</p>",
         "TargetNetwork$inspectionCidr": "<p>The CIDR block for inspection traffic in the target network.</p>",
@@ -521,6 +523,20 @@
       "base": null,
       "refs": {
         "SplitConstruct$cidrBlock": "<p>The CIDR block for the split construct.</p>"
+      }
+    },
+    "CidrMapping": {
+      "base": "<p>Maps a source CIDR range to the corresponding target CIDR range to use in the target network.</p>",
+      "refs": {
+        "CidrMappingsList$member": null
+      }
+    },
+    "CidrMappingsList": {
+      "base": null,
+      "refs": {
+        "CreateNetworkMigrationDefinitionRequest$cidrMappings": "<p>A list of CIDR mappings that map original source CIDR ranges to updated target CIDR ranges. CIDR mappings can be provided only when <code>vpcProvisioningStrategy</code> is set to <code>USE_EXISTING</code>.</p>",
+        "NetworkMigrationDefinition$cidrMappings": "<p>A list of CIDR mappings that map original source CIDR ranges to updated target CIDR ranges. CIDR mappings apply only when <code>vpcProvisioningStrategy</code> is set to <code>USE_EXISTING</code>.</p>",
+        "UpdateNetworkMigrationDefinitionRequest$cidrMappings": "<p>The updated list of CIDR mappings that map original source CIDR ranges to updated target CIDR ranges. CIDR mappings can be provided only when <code>vpcProvisioningStrategy</code> is set to <code>USE_EXISTING</code>.</p>"
       }
     },
     "ClientIdempotencyToken": {
@@ -1145,13 +1161,13 @@
         "Job$creationDateTime": "<p>Job creation time.</p>",
         "Job$endDateTime": "<p>Job end time.</p>",
         "JobLog$logDateTime": "<p>Job log event date and time.</p>",
-        "LifeCycle$addedToServiceDateTime": "<p>Lifecycle added to service data and time.</p>",
+        "LifeCycle$addedToServiceDateTime": "<p>Lifecycle added to service date and time.</p>",
         "LifeCycle$firstByteDateTime": "<p>Lifecycle replication initiation date and time.</p>",
         "LifeCycle$lastSeenByServiceDateTime": "<p>Lifecycle last seen date and time.</p>",
         "LifeCycleLastCutoverFinalized$apiCallDateTime": "<p>Lifecycle Cutover finalized date and time.</p>",
         "LifeCycleLastCutoverInitiated$apiCallDateTime": "<p/>",
         "LifeCycleLastCutoverReverted$apiCallDateTime": "<p>Lifecycle last Cutover reverted API call date time.</p>",
-        "LifeCycleLastTestFinalized$apiCallDateTime": "<p>Lifecycle Test failed API call date and time.</p>",
+        "LifeCycleLastTestFinalized$apiCallDateTime": "<p>Lifecycle Test finalized API call date and time.</p>",
         "LifeCycleLastTestInitiated$apiCallDateTime": "<p>Lifecycle last Test initiated API call date and time.</p>",
         "LifeCycleLastTestReverted$apiCallDateTime": "<p>Lifecycle last Test reverted API call date and time.</p>",
         "PostLaunchActionsStatus$ssmAgentDiscoveryDatetime": "<p>Time where the AWS Systems Manager was detected as running on the Test or Cutover instance.</p>",
@@ -1284,7 +1300,7 @@
       }
     },
     "ImportTaskSummaryWaves": {
-      "base": "<p>Import task summery waves.</p>",
+      "base": "<p>Import task summary waves.</p>",
       "refs": {
         "ImportTaskSummary$waves": "<p>Import task summary waves.</p>"
       }
@@ -2140,7 +2156,7 @@
     "NetworkMigrationCodeGenerationArtifactType": {
       "base": null,
       "refs": {
-        "NetworkMigrationCodeGenerationArtifact$artifactType": "<p>The type of the artifact, such as CLOUDFORMATION_TEMPLATE or TERRAFORM_MODULE.</p>"
+        "NetworkMigrationCodeGenerationArtifact$artifactType": "<p>The type of the generated artifact.</p>"
       }
     },
     "NetworkMigrationCodeGenerationArtifacts": {
@@ -2423,7 +2439,7 @@
     "NetworkMigrationMapperSegmentType": {
       "base": null,
       "refs": {
-        "NetworkMigrationMapperSegment$segmentType": "<p>The type of the segment, such as VPC, subnet, or security group.</p>"
+        "NetworkMigrationMapperSegment$segmentType": "<p>The category of the network migration segment. A segment groups the network constructs (such as VPCs, subnets, and security groups) that are migrated together. Valid values: <code>WORKLOAD</code>, <code>APPLIANCE</code>.</p>"
       }
     },
     "NetworkMigrationMapperSegmentsList": {
@@ -2497,7 +2513,7 @@
         "DescribeReplicationConfigurationTemplatesRequest$nextToken": "<p>Request to describe Replication Configuration template by next token.</p>",
         "DescribeReplicationConfigurationTemplatesResponse$nextToken": "<p>Request to describe Replication Configuration template by next token.</p>",
         "DescribeSourceServersRequest$nextToken": "<p>Request to filter Source Servers list by next token.</p>",
-        "DescribeSourceServersResponse$nextToken": "<p>Request to filter Source Servers next token.</p>",
+        "DescribeSourceServersResponse$nextToken": "<p>The token of the next Source Server to retrieve.</p>",
         "DescribeVcenterClientsRequest$nextToken": "<p>Next pagination token to be provided for DescribeVcenterClients.</p>",
         "DescribeVcenterClientsResponse$nextToken": "<p>Next pagination token returned from DescribeVcenterClients.</p>",
         "ListApplicationsRequest$nextToken": "<p>Request next token.</p>",
@@ -2589,8 +2605,8 @@
         "ImportTaskSummaryApplications$modifiedCount": "<p>Import task summary applications modified count.</p>",
         "ImportTaskSummaryServers$createdCount": "<p>Import task summary servers created count.</p>",
         "ImportTaskSummaryServers$modifiedCount": "<p>Import task summary servers modified count.</p>",
-        "ImportTaskSummaryWaves$createdCount": "<p>Import task summery waves created count.</p>",
-        "ImportTaskSummaryWaves$modifiedCount": "<p>Import task summery waves modified count.</p>",
+        "ImportTaskSummaryWaves$createdCount": "<p>Import task summary waves created count.</p>",
+        "ImportTaskSummaryWaves$modifiedCount": "<p>Import task summary waves modified count.</p>",
         "InternalServerException$retryAfterSeconds": "<p>The server encountered an unexpected condition that prevented it from fulfilling the request. The request will be retried again after x seconds.</p>",
         "LaunchConfigurationTemplate$smallVolumeMaxSize": "<p>Small volume maximum size.</p>",
         "ReplicationConfigurationReplicatedDisk$iops": "<p>Replication Configuration replicated disk IOPs.</p>",
@@ -2607,7 +2623,7 @@
       }
     },
     "PostLaunchActions": {
-      "base": "<p>Post Launch Actions to executed on the Test or Cutover instance.</p>",
+      "base": "<p>Post Launch Actions to be executed on the Test or Cutover instance.</p>",
       "refs": {
         "CreateLaunchConfigurationTemplateRequest$postLaunchActions": "<p>Launch configuration template post launch actions.</p>",
         "LaunchConfiguration$postLaunchActions": null,
@@ -2919,7 +2935,7 @@
       }
     },
     "ServiceQuotaExceededException": {
-      "base": "<p>The request could not be completed because its exceeded the service quota.</p>",
+      "base": "<p>The request could not be completed because it exceeded the service quota.</p>",
       "refs": {}
     },
     "SmallBoundedString": {
@@ -3034,7 +3050,7 @@
     "SourceServersList": {
       "base": null,
       "refs": {
-        "DescribeSourceServersResponse$items": "<p>Request to filter Source Servers list by item.</p>"
+        "DescribeSourceServersResponse$items": "<p>The list of returned Source Servers.</p>"
       }
     },
     "SplitConstruct": {
@@ -3058,7 +3074,7 @@
     "SsmDocument": {
       "base": "<p>AWS Systems Manager Document.</p>",
       "refs": {
-        "JobPostLaunchActionsLaunchStatus$ssmDocument": "<p>AWS Systems Manager's Document of the of the Job Post Launch Actions.</p>",
+        "JobPostLaunchActionsLaunchStatus$ssmDocument": "<p>AWS Systems Manager's Document of the Job Post Launch Actions.</p>",
         "SsmDocuments$member": null
       }
     },
@@ -3374,7 +3390,7 @@
         "ReplicationConfigurationTemplate$tags": "<p>Replication Configuration template Tags.</p>",
         "SourceServer$tags": "<p>Source server Tags.</p>",
         "StartCutoverRequest$tags": "<p>Start Cutover by Tags.</p>",
-        "StartExportRequest$tags": "<p>Start import request tags.</p>",
+        "StartExportRequest$tags": "<p>Start export request tags.</p>",
         "StartImportRequest$tags": "<p>Start import request tags.</p>",
         "StartTestRequest$tags": "<p>Start Test by Tags.</p>",
         "TagResourceRequest$tags": "<p>Tag resource by Tags.</p>",
@@ -3640,6 +3656,14 @@
       "base": null,
       "refs": {
         "ListNetworkMigrationAnalysisResultsFilters$vpcIDs": "<p>A list of VPC IDs to filter results by.</p>"
+      }
+    },
+    "VpcProvisioningStrategy": {
+      "base": null,
+      "refs": {
+        "CreateNetworkMigrationDefinitionRequest$vpcProvisioningStrategy": "<p>Specifies whether to create new target VPCs or use existing ones. Set to <code>CREATE_NEW</code> to provision new target VPCs as part of the migration, or <code>USE_EXISTING</code> to migrate into existing VPCs in the target account.</p>",
+        "NetworkMigrationDefinition$vpcProvisioningStrategy": "<p>Indicates whether the migration creates new target VPCs or uses existing ones. <code>CREATE_NEW</code> provisions new target VPCs; <code>USE_EXISTING</code> migrates into existing VPCs in the target account.</p>",
+        "UpdateNetworkMigrationDefinitionRequest$vpcProvisioningStrategy": "<p>Updates whether the migration creates new target VPCs or uses existing ones. Set to <code>USE_EXISTING</code> to migrate into existing VPCs in the target account, or to <code>CREATE_NEW</code> to provision new target VPCs.</p>"
       }
     },
     "Wave": {

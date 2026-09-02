@@ -6,7 +6,7 @@
     "CreateDataIntegration": "<p>Creates and persists a DataIntegration resource.</p> <note> <p>You cannot create a DataIntegration association for a DataIntegration that has been previously associated. Use a different DataIntegration, or recreate the DataIntegration using the <code>CreateDataIntegration</code> API.</p> </note>",
     "CreateDataIntegrationAssociation": "<p>Creates and persists a DataIntegrationAssociation resource.</p>",
     "CreateEventIntegration": "<p>Creates an EventIntegration, given a specified name, description, and a reference to an Amazon EventBridge bus in your account and a partner event source that pushes events to that bus. No objects are created in the your account, only metadata that is persisted on the EventIntegration control plane.</p>",
-    "DeleteApplication": "<p>Deletes the Application. Only Applications that don't have any Application Associations can be deleted.</p>",
+    "DeleteApplication": "<p>Deletes an application. If the application has associations, you must delete them first. Alternatively, use the <code>force</code> option to delete the application and remove its associations.</p>",
     "DeleteDataIntegration": "<p>Deletes the DataIntegration. Only DataIntegrations that don't have any DataIntegrationAssociations can be deleted. Deleting a DataIntegration also deletes the underlying Amazon AppFlow flow and service linked role. </p> <note> <p>You cannot create a DataIntegration association for a DataIntegration that has been previously associated. Use a different DataIntegration, or recreate the DataIntegration using the <a href=\"https://docs.aws.amazon.com/appintegrations/latest/APIReference/API_CreateDataIntegration.html\">CreateDataIntegration</a> API.</p> </note>",
     "DeleteEventIntegration": "<p>Deletes the specified existing event integration. If the event integration is associated with clients, the request is rejected.</p>",
     "GetApplication": "<p>Get an Application resource.</p>",
@@ -147,6 +147,7 @@
       "refs": {
         "ApplicationSummary$IsService": "<p>Indicates whether the application is a service.</p>",
         "CreateApplicationRequest$IsService": "<p>Indicates whether the application is a service.</p>",
+        "DeleteApplicationRequest$Force": "<p>Specifies whether to delete the application even if it still has application associations. If <code>true</code>, the operation removes the application and its associations. If <code>false</code> or absent, the delete fails when associations exist.</p> <important> <p>Setting this parameter to <code>true</code> permanently removes all of the application's associations. Doing so might impact other resources that rely on and reference the application. This action can't be undone.</p> </important>",
         "GetApplicationResponse$IsService": "<p>Indicates whether the application is a service.</p>",
         "UpdateApplicationRequest$IsService": "<p>Indicates whether the application is a service.</p>"
       }
@@ -166,6 +167,10 @@
         "DataIntegrationAssociationSummary$ClientId": "<p>The identifier for the client that is associated with the DataIntegration association.</p>",
         "EventIntegrationAssociation$ClientId": "<p>The identifier for the client that is associated with the event integration.</p>"
       }
+    },
+    "ConflictException": {
+      "base": "<p>The request conflicts with the current state of the resource. Verify the application's current state and retry the request.</p>",
+      "refs": {}
     },
     "ContactHandling": {
       "base": "<p>The contact handling configuration for the application.</p>",
@@ -566,6 +571,7 @@
       "base": null,
       "refs": {
         "AccessDeniedException$Message": null,
+        "ConflictException$Message": null,
         "DuplicateResourceException$Message": null,
         "InternalServiceError$Message": null,
         "InvalidRequestException$Message": null,

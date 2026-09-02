@@ -1802,6 +1802,23 @@
       "type":"string",
       "pattern":"([0-9]{1,3}\\.){3}[0-9]{1,3}/[0-9]{1,2}"
     },
+    "CidrMapping":{
+      "type":"structure",
+      "required":[
+        "originalCidr",
+        "updatedCidr"
+      ],
+      "members":{
+        "originalCidr":{"shape":"Cidr"},
+        "updatedCidr":{"shape":"Cidr"}
+      }
+    },
+    "CidrMappingsList":{
+      "type":"list",
+      "member":{"shape":"CidrMapping"},
+      "max":50,
+      "min":0
+    },
     "ClientIdempotencyToken":{
       "type":"string",
       "max":64,
@@ -2002,6 +2019,8 @@
         "targetS3Configuration":{"shape":"TargetS3Configuration"},
         "targetNetwork":{"shape":"TargetNetwork"},
         "targetDeployment":{"shape":"TargetDeployment"},
+        "vpcProvisioningStrategy":{"shape":"VpcProvisioningStrategy"},
+        "cidrMappings":{"shape":"CidrMappingsList"},
         "tags":{"shape":"TagsMap"},
         "scopeTags":{"shape":"ScopeTagsMap"}
       }
@@ -4080,6 +4099,8 @@
         "targetS3Configuration":{"shape":"TargetS3Configuration"},
         "targetNetwork":{"shape":"TargetNetwork"},
         "targetDeployment":{"shape":"TargetDeployment"},
+        "vpcProvisioningStrategy":{"shape":"VpcProvisioningStrategy"},
+        "cidrMappings":{"shape":"CidrMappingsList"},
         "createdAt":{"shape":"Timestamp"},
         "updatedAt":{"shape":"Timestamp"},
         "tags":{"shape":"TagsMap"},
@@ -5621,6 +5642,8 @@
         "targetS3Configuration":{"shape":"TargetS3ConfigurationUpdate"},
         "targetNetwork":{"shape":"TargetNetworkUpdate"},
         "targetDeployment":{"shape":"TargetDeployment"},
+        "vpcProvisioningStrategy":{"shape":"VpcProvisioningStrategy"},
+        "cidrMappings":{"shape":"CidrMappingsList"},
         "scopeTags":{"shape":"ScopeTagsMap"}
       }
     },
@@ -5814,6 +5837,13 @@
       "member":{"shape":"VpcID"},
       "max":10,
       "min":0
+    },
+    "VpcProvisioningStrategy":{
+      "type":"string",
+      "enum":[
+        "CREATE_NEW",
+        "USE_EXISTING"
+      ]
     },
     "Wave":{
       "type":"structure",

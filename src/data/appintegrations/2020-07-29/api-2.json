@@ -331,7 +331,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidRequestException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"UnsupportedOperationException"}
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"ConflictException"}
       ]
     },
     "UpdateDataIntegration":{
@@ -497,6 +498,14 @@
       "max":255,
       "min":1,
       "pattern":".*"
+    },
+    "ConflictException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"Message"}
+      },
+      "error":{"httpStatusCode":409},
+      "exception":true
     },
     "ContactHandling":{
       "type":"structure",
@@ -686,6 +695,11 @@
           "shape":"ArnOrUUID",
           "location":"uri",
           "locationName":"ApplicationIdentifier"
+        },
+        "Force":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"force"
         }
       }
     },

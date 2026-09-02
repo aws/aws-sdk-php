@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppIntegrationsService` - This release adds a force parameter to DeleteApplication and a ConflictException to UpdateApplication, letting customers delete applications with existing associations in one call and get a clear error when an update conflicts with the application's current state.
+* `Aws\MediaLive` - AWS Elemental MediaLive now supports AB forensic video watermarking
+* `Aws\BedrockAgentCore` - Batch evaluation now supports up to 10 CloudWatch log groups per CloudWatchLogsSource
+* `Aws\MWAA` - Enabled customers to clear optional S3 paths (plugins, requirements, and startup script) for their Amazon MWAA environments by accepting empty strings for the associated fields in UpdateEnvironment requests.
+* `Aws\mgn` - AWS Transform for migrations adds a second network migration option - apply your source security posture to existing VPCs. Upload a source network file with firewall rules, tag the in-scope VPCs, and AWS Transform matches source subnets to them by CIDR and generates the security groups.
+* `Aws\Odb` - Adds the ListFlexComponents API for listing the flex components available for a given DB system shape.
+* `Aws\SageMaker` - Amazon SageMaker Feature Store now supports the Standard V2 online store type, which enables feature-level writes to feature groups. You can select Standard V2 when creating a feature group, and update the storage type of an existing feature group via UpdateFeatureGroup.
+* `Aws\SageMakerFeatureStoreRuntime` - Amazon SageMaker Feature Store now supports the UpdateRecord API, enabling partial updates to individual feature values in an existing Online Store record without rewriting the entire record. This reduces write payloads and latency for high-frequency feature-level writes .
+* `Aws\EC2` - This release adds support to retain interruptible Capacity Reservations in an active state when all capacity is reclaimed.
+
 ## 3.394.6 - 2026-09-01
 
 * `Aws\MarketplaceAgreement` - This release adds renewal support for AWS Marketplace private offers. Agreements report whether they renew and, if not, why. Renewal terms add price increases, renewal limits, renewal decision deadlines, and payment schedule templates. SearchAgreements adds filters.

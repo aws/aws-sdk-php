@@ -57,6 +57,7 @@
     "ListDbSystemShapes": "<p>Returns information about the shapes that are available for an Exadata infrastructure.</p>",
     "ListExadbVmClusters": "<p>Returns information about the Exascale VM clusters owned by your Amazon Web Services account.</p>",
     "ListExascaleDbStorageVaults": "<p>Returns information about the Exascale storage vaults owned by your Amazon Web Services account.</p>",
+    "ListFlexComponents": "<p>Returns information about the flex components that are available for an Exadata infrastructure.</p>",
     "ListGiMinorVersions": "<p>Returns a list of the Oracle Grid Infrastructure (GI) minor versions for the specified major version.</p>",
     "ListGiVersions": "<p>Returns information about Oracle Grid Infrastructure (GI) software versions that are available for a VM cluster for the specified shape.</p>",
     "ListOdbNetworks": "<p>Returns information about the ODB networks owned by your Amazon Web Services account.</p>",
@@ -536,7 +537,8 @@
         "CloudVmClusterSummary$computeModel": "<p>The OCI model compute model used when you create or clone an instance: ECPU or OCPU. An ECPU is an abstracted measure of compute resources. ECPUs are based on the number of cores elastically allocated from a pool of compute and storage servers. An OCPU is a legacy physical measure of compute resources. OCPUs are based on the physical core of a processor with hyper-threading enabled. </p>",
         "DbServer$computeModel": "<p>The compute model of the database server (ECPU or OCPU).</p>",
         "DbServerSummary$computeModel": "<p>The OCI model compute model used when you create or clone an instance: ECPU or OCPU. An ECPU is an abstracted measure of compute resources. ECPUs are based on the number of cores elastically allocated from a pool of compute and storage servers. An OCPU is a legacy physical measure of compute resources. OCPUs are based on the physical core of a processor with hyper-threading enabled.</p>",
-        "DbSystemShapeSummary$computeModel": "<p>The OCI model compute model used when you create or clone an instance: ECPU or OCPU. An ECPU is an abstracted measure of compute resources. ECPUs are based on the number of cores elastically allocated from a pool of compute and storage servers. An OCPU is a legacy physical measure of compute resources. OCPUs are based on the physical core of a processor with hyper-threading enabled. </p>"
+        "DbSystemShapeSummary$computeModel": "<p>The OCI model compute model used when you create or clone an instance: ECPU or OCPU. An ECPU is an abstracted measure of compute resources. ECPUs are based on the number of cores elastically allocated from a pool of compute and storage servers. An OCPU is a legacy physical measure of compute resources. OCPUs are based on the physical core of a processor with hyper-threading enabled. </p>",
+        "FlexComponentSummary$computeModel": "<p>The OCI model compute model used when you create or clone an instance: ECPU or OCPU. An ECPU is an abstracted measure of compute resources. ECPUs are based on the number of cores elastically allocated from a pool of compute and storage servers. An OCPU is a legacy physical measure of compute resources. OCPUs are based on the physical core of a processor with hyper-threading enabled. </p>"
       }
     },
     "ConflictException": {
@@ -814,7 +816,7 @@
     "CreateExadbVmClusterInputClientTokenString": {
       "base": null,
       "refs": {
-        "CreateExadbVmClusterInput$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you don't specify a client token, the Amazon Web Services SDK automatically generates one and uses it for the request to ensure idempotency. The client token is valid for up to 24 hours after it's first used.</p>"
+        "CreateExadbVmClusterInput$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure that the operation completes no more than one time. If you submit the same request twice with the same client token, the service ignores the second request and returns the result of the first. If you don't specify a client token, the AWS SDK automatically generates one. The client token is valid for up to 24 hours after it's first used.</p>"
       }
     },
     "CreateExadbVmClusterInputEnabledEcpuCountInteger": {
@@ -838,13 +840,13 @@
     "CreateExadbVmClusterInputScanListenerPortTcpInteger": {
       "base": null,
       "refs": {
-        "CreateExadbVmClusterInput$scanListenerPortTcp": "<p>The port number for TCP connections to the single client access name (SCAN) listener.</p>"
+        "CreateExadbVmClusterInput$scanListenerPortTcp": "<p>The port number for TCP connections to the Single Client Access Name (SCAN) listener.</p>"
       }
     },
     "CreateExadbVmClusterInputScanListenerPortTcpSslInteger": {
       "base": null,
       "refs": {
-        "CreateExadbVmClusterInput$scanListenerPortTcpSsl": "<p>The port number for TCP connections with SSL to the single client access name (SCAN) listener.</p>"
+        "CreateExadbVmClusterInput$scanListenerPortTcpSsl": "<p>The port number for TCP connections with SSL to the Single Client Access Name (SCAN) listener.</p>"
       }
     },
     "CreateExadbVmClusterInputShapeString": {
@@ -912,7 +914,7 @@
     "CreateExascaleDbStorageVaultInputClientTokenString": {
       "base": null,
       "refs": {
-        "CreateExascaleDbStorageVaultInput$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you don't specify a client token, the Amazon Web Services SDK automatically generates one and uses it for the request to ensure idempotency. The client token is valid for up to 24 hours after it's first used.</p>"
+        "CreateExascaleDbStorageVaultInput$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure that the operation completes no more than one time. If you submit the same request twice with the same client token, the service ignores the second request and returns the result of the first. If you don't specify a client token, the AWS SDK automatically generates one. The client token is valid for up to 24 hours after it's first used.</p>"
       }
     },
     "CreateExascaleDbStorageVaultInputDescriptionString": {
@@ -1548,6 +1550,18 @@
       "base": null,
       "refs": {}
     },
+    "FlexComponentList": {
+      "base": null,
+      "refs": {
+        "ListFlexComponentsOutput$flexComponents": "<p>The list of flex components along with their properties.</p>"
+      }
+    },
+    "FlexComponentSummary": {
+      "base": "<p>Information about a flex component that's available for an Exadata infrastructure. A flex component defines the hardware resources, such as CPU cores, memory, and storage, that can be allocated to a shape.</p>",
+      "refs": {
+        "FlexComponentList$member": null
+      }
+    },
     "Float": {
       "base": null,
       "refs": {
@@ -1724,6 +1738,12 @@
       "refs": {
         "ExadbVmCluster$gridImageType": "<p>The type of Grid Infrastructure image for the Exascale VM cluster.</p>",
         "ExadbVmClusterSummary$gridImageType": "<p>The type of Grid Infrastructure image for the Exascale VM cluster.</p>"
+      }
+    },
+    "HardwareType": {
+      "base": null,
+      "refs": {
+        "FlexComponentSummary$hardwareType": "<p>The type of hardware for the flex component. Valid values are <code>COMPUTE</code> for compute servers and <code>CELL</code> for storage servers.</p>"
       }
     },
     "Hostname": {
@@ -1923,16 +1943,16 @@
         "ExadbVmCluster$listenerPort": "<p>The port number configured for the listener on the Exascale VM cluster.</p>",
         "ExadbVmCluster$memorySizeInGBs": "<p>The amount of memory, in gigabytes (GB), that's allocated for the Exascale VM cluster.</p>",
         "ExadbVmCluster$nodeCount": "<p>The number of nodes in the Exascale VM cluster.</p>",
-        "ExadbVmCluster$scanListenerPortTcp": "<p>The port number for TCP connections to the single client access name (SCAN) listener for the Exascale VM cluster.</p>",
-        "ExadbVmCluster$scanListenerPortTcpSsl": "<p>The port number for TCP connections with SSL to the single client access name (SCAN) listener for the Exascale VM cluster.</p>",
+        "ExadbVmCluster$scanListenerPortTcp": "<p>The port number for TCP connections to the Single Client Access Name (SCAN) listener for the Exascale VM cluster.</p>",
+        "ExadbVmCluster$scanListenerPortTcpSsl": "<p>The port number for TCP connections with SSL to the Single Client Access Name (SCAN) listener for the Exascale VM cluster.</p>",
         "ExadbVmCluster$totalEcpuCount": "<p>The total number of ECPUs for the Exascale VM cluster.</p>",
         "ExadbVmClusterStorageDetails$totalSizeInGBs": "<p>The total storage size, in gigabytes (GB).</p>",
         "ExadbVmClusterSummary$enabledEcpuCount": "<p>The number of elastic compute processing units (ECPUs) enabled on the Exascale VM cluster.</p>",
         "ExadbVmClusterSummary$listenerPort": "<p>The port number configured for the listener on the Exascale VM cluster.</p>",
         "ExadbVmClusterSummary$memorySizeInGBs": "<p>The amount of memory, in gigabytes (GB), that's allocated for the Exascale VM cluster.</p>",
         "ExadbVmClusterSummary$nodeCount": "<p>The number of nodes in the Exascale VM cluster.</p>",
-        "ExadbVmClusterSummary$scanListenerPortTcp": "<p>The port number for TCP connections to the single client access name (SCAN) listener for the Exascale VM cluster.</p>",
-        "ExadbVmClusterSummary$scanListenerPortTcpSsl": "<p>The port number for TCP connections with SSL to the single client access name (SCAN) listener for the Exascale VM cluster.</p>",
+        "ExadbVmClusterSummary$scanListenerPortTcp": "<p>The port number for TCP connections to the Single Client Access Name (SCAN) listener for the Exascale VM cluster.</p>",
+        "ExadbVmClusterSummary$scanListenerPortTcpSsl": "<p>The port number for TCP connections with SSL to the Single Client Access Name (SCAN) listener for the Exascale VM cluster.</p>",
         "ExadbVmClusterSummary$totalEcpuCount": "<p>The total number of ECPUs for the Exascale VM cluster.</p>",
         "ExascaleDbStorageDetails$availableSizeInGBs": "<p>The available storage size, in gigabytes (GB).</p>",
         "ExascaleDbStorageDetails$totalSizeInGBs": "<p>The total storage size, in gigabytes (GB).</p>",
@@ -1942,6 +1962,12 @@
         "ExascaleDbStorageVaultSummary$additionalFlashCacheInPercent": "<p>The additional flash cache percentage for the Exascale storage vault.</p>",
         "ExascaleDbStorageVaultSummary$autoscaleLimitInGBs": "<p>The autoscale limit in gigabytes (GB) for the Exascale storage vault.</p>",
         "ExascaleDbStorageVaultSummary$vmClusterCount": "<p>The number of VM clusters associated with this Exascale storage vault.</p>",
+        "FlexComponentSummary$availableCoreCount": "<p>The maximum number of CPU cores that can be enabled for the flex component.</p>",
+        "FlexComponentSummary$availableDbStorageInGBs": "<p>The maximum amount of database storage, in gigabytes (GB), that can be enabled for the flex component.</p>",
+        "FlexComponentSummary$availableLocalStorageInGBs": "<p>The maximum amount of local storage, in gigabytes (GB), that can be enabled for the flex component.</p>",
+        "FlexComponentSummary$availableMemoryInGBs": "<p>The maximum amount of memory, in gigabytes (GB), that can be enabled for the flex component.</p>",
+        "FlexComponentSummary$minimumCoreCount": "<p>The minimum number of CPU cores that can be enabled for the flex component.</p>",
+        "FlexComponentSummary$runtimeMinimumCoreCount": "<p>The runtime minimum number of CPU cores that can be enabled for the flex component.</p>",
         "HoursOfDay$member": null,
         "IntegerList$member": null,
         "InternalServerException$retryAfterSeconds": "<p>The number of seconds to wait before retrying the request after an internal server error.</p>",
@@ -2321,6 +2347,32 @@
       }
     },
     "ListExascaleDbStorageVaultsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListFlexComponentsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListFlexComponentsInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListFlexComponentsInput$maxResults": "<p>The maximum number of items to return for this request. To get the next page of items, make another request with the token returned in the output.</p>"
+      }
+    },
+    "ListFlexComponentsInputNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListFlexComponentsInput$nextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>"
+      }
+    },
+    "ListFlexComponentsInputShapeString": {
+      "base": null,
+      "refs": {
+        "ListFlexComponentsInput$shape": "<p>The shape to return flex components for. For a list of valid shapes, use the <code>ListDbSystemShapes</code> operation.</p>"
+      }
+    },
+    "ListFlexComponentsOutput": {
       "base": null,
       "refs": {}
     },
@@ -3661,6 +3713,9 @@
         "FailoverAutonomousDatabaseOutput$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database that was failed over.</p>",
         "FailoverAutonomousDatabaseOutput$displayName": "<p>The user-friendly name of the Autonomous Database.</p>",
         "FailoverAutonomousDatabaseOutput$statusReason": "<p>Additional information about the status of the Autonomous Database after the failover operation.</p>",
+        "FlexComponentSummary$descriptionSummary": "<p>A summary description of the flex component.</p>",
+        "FlexComponentSummary$name": "<p>The name of the flex component.</p>",
+        "FlexComponentSummary$shape": "<p>The shape that uses the flex component.</p>",
         "GetOciOnboardingStatusOutput$existingTenancyActivationLink": "<p>The existing OCI tenancy activation link for your Amazon Web Services account.</p>",
         "GetOciOnboardingStatusOutput$newTenancyActivationLink": "<p>A new OCI tenancy activation link for your Amazon Web Services account.</p>",
         "GetOciOnboardingStatusOutput$linkedOciTenancyId": "<p>The unique identifier of the Oracle Cloud Infrastructure (OCI) tenancy that is linked to your Amazon Web Services account.</p>",
@@ -3687,6 +3742,7 @@
         "ListDbSystemShapesOutput$nextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
         "ListExadbVmClustersOutput$nextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
         "ListExascaleDbStorageVaultsOutput$nextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
+        "ListFlexComponentsOutput$nextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
         "ListGiMinorVersionsOutput$nextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
         "ListGiVersionsOutput$nextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
         "ListOdbNetworksOutput$nextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",

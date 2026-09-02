@@ -962,6 +962,22 @@
       ],
       "readonly":true
     },
+    "ListFlexComponents":{
+      "name":"ListFlexComponents",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListFlexComponentsInput"},
+      "output":{"shape":"ListFlexComponentsOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
     "ListGiMinorVersions":{
       "name":"ListGiMinorVersions",
       "http":{
@@ -3873,6 +3889,26 @@
         "statusReason":{"shape":"String"}
       }
     },
+    "FlexComponentList":{
+      "type":"list",
+      "member":{"shape":"FlexComponentSummary"}
+    },
+    "FlexComponentSummary":{
+      "type":"structure",
+      "members":{
+        "availableCoreCount":{"shape":"Integer"},
+        "availableDbStorageInGBs":{"shape":"Integer"},
+        "availableLocalStorageInGBs":{"shape":"Integer"},
+        "availableMemoryInGBs":{"shape":"Integer"},
+        "computeModel":{"shape":"ComputeModel"},
+        "descriptionSummary":{"shape":"String"},
+        "hardwareType":{"shape":"HardwareType"},
+        "minimumCoreCount":{"shape":"Integer"},
+        "name":{"shape":"String"},
+        "runtimeMinimumCoreCount":{"shape":"Integer"},
+        "shape":{"shape":"String"}
+      }
+    },
     "Float":{
       "type":"float",
       "box":true
@@ -4101,6 +4137,13 @@
       "enum":[
         "RELEASE_UPDATE",
         "CUSTOM_IMAGE"
+      ]
+    },
+    "HardwareType":{
+      "type":"string",
+      "enum":[
+        "COMPUTE",
+        "CELL"
       ]
     },
     "Hostname":{
@@ -4625,6 +4668,38 @@
       "members":{
         "nextToken":{"shape":"String"},
         "exascaleDbStorageVaults":{"shape":"ExascaleDbStorageVaultList"}
+      }
+    },
+    "ListFlexComponentsInput":{
+      "type":"structure",
+      "members":{
+        "maxResults":{"shape":"ListFlexComponentsInputMaxResultsInteger"},
+        "nextToken":{"shape":"ListFlexComponentsInputNextTokenString"},
+        "shape":{"shape":"ListFlexComponentsInputShapeString"}
+      }
+    },
+    "ListFlexComponentsInputMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
+    "ListFlexComponentsInputNextTokenString":{
+      "type":"string",
+      "max":8192,
+      "min":1
+    },
+    "ListFlexComponentsInputShapeString":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "ListFlexComponentsOutput":{
+      "type":"structure",
+      "required":["flexComponents"],
+      "members":{
+        "nextToken":{"shape":"String"},
+        "flexComponents":{"shape":"FlexComponentList"}
       }
     },
     "ListGiMinorVersionsInput":{

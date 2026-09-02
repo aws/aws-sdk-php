@@ -105,6 +105,22 @@
         {"shape":"ServiceUnavailable"},
         {"shape":"AccessForbidden"}
       ]
+    },
+    "UpdateRecord":{
+      "name":"UpdateRecord",
+      "http":{
+        "method":"POST",
+        "requestUri":"/FeatureGroup/{FeatureGroupName}/Record"
+      },
+      "input":{"shape":"UpdateRecordRequest"},
+      "errors":[
+        {"shape":"ValidationError"},
+        {"shape":"InternalFailure"},
+        {"shape":"ServiceUnavailable"},
+        {"shape":"AccessForbidden"},
+        {"shape":"ResourceNotFound"},
+        {"shape":"ConflictException"}
+      ]
     }
   },
   "shapes":{
@@ -252,6 +268,15 @@
       }
     },
     "Boolean":{"type":"boolean"},
+    "ConflictException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"Message"}
+      },
+      "error":{"httpStatusCode":409},
+      "exception":true,
+      "synthetic":true
+    },
     "DeleteRecordRequest":{
       "type":"structure",
       "required":[
@@ -507,6 +532,25 @@
       "type":"list",
       "member":{"shape":"BatchGetRecordIdentifier"},
       "min":0
+    },
+    "UpdateRecordRequest":{
+      "type":"structure",
+      "required":[
+        "FeatureGroupName",
+        "RecordIdentifierValueAsString",
+        "Features"
+      ],
+      "members":{
+        "FeatureGroupName":{
+          "shape":"FeatureGroupNameOrArn",
+          "location":"uri",
+          "locationName":"FeatureGroupName"
+        },
+        "RecordIdentifierValueAsString":{"shape":"ValueAsString"},
+        "Features":{"shape":"Record"},
+        "TargetStores":{"shape":"TargetStores"},
+        "TtlDuration":{"shape":"TtlDuration"}
+      }
     },
     "ValidationError":{
       "type":"structure",

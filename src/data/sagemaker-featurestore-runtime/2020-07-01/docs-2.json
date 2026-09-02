@@ -7,7 +7,8 @@
     "DeleteRecord": "<p>Deletes a <code>Record</code> from a <code>FeatureGroup</code> in the <code>OnlineStore</code>. Feature Store supports both <code>SoftDelete</code> and <code>HardDelete</code>. For <code>SoftDelete</code> (default), feature columns are set to <code>null</code> and the record is no longer retrievable by <code>GetRecord</code> or <code>BatchGetRecord</code>. For <code>HardDelete</code>, the complete <code>Record</code> is removed from the <code>OnlineStore</code>. In both cases, Feature Store appends the deleted record marker to the <code>OfflineStore</code>. The deleted record marker is a record with the same <code>RecordIdentifer</code> as the original, but with <code>is_deleted</code> value set to <code>True</code>, <code>EventTime</code> set to the delete input <code>EventTime</code>, and other feature values set to <code>null</code>.</p> <p>Note that the <code>EventTime</code> specified in <code>DeleteRecord</code> should be set later than the <code>EventTime</code> of the existing record in the <code>OnlineStore</code> for that <code>RecordIdentifer</code>. If it is not, the deletion does not occur:</p> <ul> <li> <p>For <code>SoftDelete</code>, the existing (not deleted) record remains in the <code>OnlineStore</code>, though the delete record marker is still written to the <code>OfflineStore</code>.</p> </li> <li> <p> <code>HardDelete</code> returns <code>EventTime</code>: <code>400 ValidationException</code> to indicate that the delete operation failed. No delete record marker is written to the <code>OfflineStore</code>.</p> </li> </ul> <p>When a record is deleted from the <code>OnlineStore</code>, the deleted record marker is appended to the <code>OfflineStore</code>. If you have the Iceberg table format enabled for your <code>OfflineStore</code>, you can remove all history of a record from the <code>OfflineStore</code> using Amazon Athena or Apache Spark. For information on how to hard delete a record from the <code>OfflineStore</code> with the Iceberg table format enabled, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/feature-store-delete-records.html#feature-store-delete-records-offline-store\">Delete records from the offline store</a>.</p>",
     "GetRecord": "<p>Use for <code>OnlineStore</code> serving from a <code>FeatureStore</code>. Only the latest records stored in the <code>OnlineStore</code> can be retrieved. If no Record with <code>RecordIdentifierValue</code> is found, then an empty result is returned. </p>",
     "ListRecords": "<p>Lists the <code>RecordIdentifier</code> values of all records stored in a <code>FeatureGroup</code>'s <code>OnlineStore</code>. This enables you to discover which records exist without retrieving the full record data.</p>",
-    "PutRecord": "<p>The <code>PutRecord</code> API is used to ingest a list of <code>Records</code> into your feature group. </p> <p>If a new record’s <code>EventTime</code> is greater, the new record is written to both the <code>OnlineStore</code> and <code>OfflineStore</code>. Otherwise, the record is a historic record and it is written only to the <code>OfflineStore</code>. </p> <p>You can specify the ingestion to be applied to the <code>OnlineStore</code>, <code>OfflineStore</code>, or both by using the <code>TargetStores</code> request parameter. </p> <p>You can set the ingested record to expire at a given time to live (TTL) duration after the record’s event time, <code>ExpiresAt</code> = <code>EventTime</code> + <code>TtlDuration</code>, by specifying the <code>TtlDuration</code> parameter. A record level <code>TtlDuration</code> is set when specifying the <code>TtlDuration</code> parameter using the <code>PutRecord</code> API call. If the input <code>TtlDuration</code> is <code>null</code> or unspecified, <code>TtlDuration</code> is set to the default feature group level <code>TtlDuration</code>. A record level <code>TtlDuration</code> supersedes the group level <code>TtlDuration</code>.</p>"
+    "PutRecord": "<p>The <code>PutRecord</code> API is used to ingest a list of <code>Records</code> into your feature group. </p> <p>If a new record’s <code>EventTime</code> is greater, the new record is written to both the <code>OnlineStore</code> and <code>OfflineStore</code>. Otherwise, the record is a historic record and it is written only to the <code>OfflineStore</code>. </p> <p>You can specify the ingestion to be applied to the <code>OnlineStore</code>, <code>OfflineStore</code>, or both by using the <code>TargetStores</code> request parameter. </p> <p>You can set the ingested record to expire at a given time to live (TTL) duration after the record’s event time, <code>ExpiresAt</code> = <code>EventTime</code> + <code>TtlDuration</code>, by specifying the <code>TtlDuration</code> parameter. A record level <code>TtlDuration</code> is set when specifying the <code>TtlDuration</code> parameter using the <code>PutRecord</code> API call. If the input <code>TtlDuration</code> is <code>null</code> or unspecified, <code>TtlDuration</code> is set to the default feature group level <code>TtlDuration</code>. A record level <code>TtlDuration</code> supersedes the group level <code>TtlDuration</code>.</p>",
+    "UpdateRecord": "<p>Updates one or more feature values for an existing record in the specified feature group. Features that you do not include in the request remain unchanged. You can update up to 100 features per call.</p> <important> <p>This operation is available only for feature groups that use the <code>Standard_V2</code> or <code>InMemory</code> online store type.</p> </important> <p>The record must already exist. If the record does not exist or has been soft-deleted, the operation returns a <code>ResourceNotFound</code> error. To create a record, use <code>PutRecord</code>.</p> <p>If you provide an <code>EventTime</code> that is older than the record's current <code>EventTime</code>, the service rejects the update with a <code>ConflictException</code>. If the <code>EventTime</code> is equal to or newer than the current value, the service applies the update. If you omit <code>EventTime</code>, the service keeps the record's existing <code>EventTime</code> and applies the update.</p> <p>If you specify a <code>TtlDuration</code>, you must also provide an <code>EventTime</code> in the request. Otherwise, the operation returns a <code>ValidationError</code>.</p>"
   },
   "shapes": {
     "AccessForbidden": {
@@ -99,6 +100,10 @@
         "ListRecordsRequest$IncludeSoftDeletedRecords": "<p>If set to <code>true</code>, the result includes records that have been soft deleted.</p>"
       }
     },
+    "ConflictException": {
+      "base": "<p>The service rejected the update because the provided <code>EventTime</code> is older than the record's current <code>EventTime</code>. To persist the update, retrieve the record's latest <code>EventTime</code> and resubmit the request with an <code>EventTime</code> that is equal to or newer than the current value.</p>",
+      "refs": {}
+    },
     "DeleteRecordRequest": {
       "base": null,
       "refs": {}
@@ -131,7 +136,8 @@
         "DeleteRecordRequest$FeatureGroupName": "<p>The name or Amazon Resource Name (ARN) of the feature group to delete the record from. </p>",
         "GetRecordRequest$FeatureGroupName": "<p>The name or Amazon Resource Name (ARN) of the feature group from which you want to retrieve a record.</p>",
         "ListRecordsRequest$FeatureGroupName": "<p>The name or Amazon Resource Name (ARN) of the feature group to list records from.</p>",
-        "PutRecordRequest$FeatureGroupName": "<p>The name or Amazon Resource Name (ARN) of the feature group that you want to insert the record into.</p>"
+        "PutRecordRequest$FeatureGroupName": "<p>The name or Amazon Resource Name (ARN) of the feature group that you want to insert the record into.</p>",
+        "UpdateRecordRequest$FeatureGroupName": "<p>The identifier for the feature group that contains the record to update. You can specify one of the following:</p> <ul> <li> <p>The feature group name.</p> </li> <li> <p>The feature group Amazon Resource Name (ARN).</p> </li> </ul>"
       }
     },
     "FeatureName": {
@@ -193,6 +199,7 @@
         "AccessForbidden$Message": null,
         "BatchGetRecordError$ErrorMessage": "<p>The error message of an error that has occurred when attempting to retrieve a record in the batch.</p>",
         "BatchWriteRecordError$ErrorMessage": "<p>The error message for the failed record write.</p>",
+        "ConflictException$Message": null,
         "InternalFailure$Message": null,
         "ResourceNotFound$Message": null,
         "ServiceUnavailable$Message": null,
@@ -209,7 +216,8 @@
         "BatchGetRecordResultDetail$Record": "<p>The <code>Record</code> retrieved.</p>",
         "BatchWriteRecordEntry$Record": "<p>List of FeatureValues to be inserted. This will be a full over-write.</p>",
         "GetRecordResponse$Record": "<p>The record you requested. A list of <code>FeatureValues</code>.</p>",
-        "PutRecordRequest$Record": "<p>List of FeatureValues to be inserted. This will be a full over-write. If you only want to update few of the feature values, do the following:</p> <ul> <li> <p>Use <code>GetRecord</code> to retrieve the latest record.</p> </li> <li> <p>Update the record returned from <code>GetRecord</code>. </p> </li> <li> <p>Use <code>PutRecord</code> to update feature values.</p> </li> </ul>"
+        "PutRecordRequest$Record": "<p>List of FeatureValues to be inserted. This will be a full over-write. If you only want to update few of the feature values, do the following:</p> <ul> <li> <p>Use <code>GetRecord</code> to retrieve the latest record.</p> </li> <li> <p>Update the record returned from <code>GetRecord</code>. </p> </li> <li> <p>Use <code>PutRecord</code> to update feature values.</p> </li> </ul>",
+        "UpdateRecordRequest$Features": "<p>The feature values to write to the record.</p>"
       }
     },
     "RecordIdentifierList": {
@@ -243,7 +251,8 @@
       "refs": {
         "BatchWriteRecordEntry$TargetStores": "<p>A list of stores to which you're adding the record. By default, Feature Store adds the record to all of the stores that you're using for the <code>FeatureGroup</code>.</p>",
         "DeleteRecordRequest$TargetStores": "<p>A list of stores from which you're deleting the record. By default, Feature Store deletes the record from all of the stores that you're using for the <code>FeatureGroup</code>.</p>",
-        "PutRecordRequest$TargetStores": "<p>A list of stores to which you're adding the record. By default, Feature Store adds the record to all of the stores that you're using for the <code>FeatureGroup</code>.</p>"
+        "PutRecordRequest$TargetStores": "<p>A list of stores to which you're adding the record. By default, Feature Store adds the record to all of the stores that you're using for the <code>FeatureGroup</code>.</p>",
+        "UpdateRecordRequest$TargetStores": "<p>The target stores for the record update. By default, Amazon SageMaker Feature Store updates the record in all stores associated with the <code>FeatureGroup</code>.</p>"
       }
     },
     "TtlDuration": {
@@ -251,7 +260,8 @@
       "refs": {
         "BatchWriteRecordEntry$TtlDuration": "<p>Time to live duration for this entry, where the record is hard deleted after the expiration time is reached; <code>ExpiresAt</code> = <code>EventTime</code> + <code>TtlDuration</code>. This overrides the request level <code>TtlDuration</code>.</p>",
         "BatchWriteRecordRequest$TtlDuration": "<p>Time to live duration applied to all entries in the batch that do not specify their own <code>TtlDuration</code>; <code>ExpiresAt</code> = <code>EventTime</code> + <code>TtlDuration</code>. For information on HardDelete, see the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_feature_store_DeleteRecord.html\">DeleteRecord</a> API in the Amazon SageMaker API Reference guide.</p>",
-        "PutRecordRequest$TtlDuration": "<p>Time to live duration, where the record is hard deleted after the expiration time is reached; <code>ExpiresAt</code> = <code>EventTime</code> + <code>TtlDuration</code>. For information on HardDelete, see the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_feature_store_DeleteRecord.html\">DeleteRecord</a> API in the Amazon SageMaker API Reference guide.</p>"
+        "PutRecordRequest$TtlDuration": "<p>Time to live duration, where the record is hard deleted after the expiration time is reached; <code>ExpiresAt</code> = <code>EventTime</code> + <code>TtlDuration</code>. For information on HardDelete, see the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_feature_store_DeleteRecord.html\">DeleteRecord</a> API in the Amazon SageMaker API Reference guide.</p>",
+        "UpdateRecordRequest$TtlDuration": "<p>The time-to-live (TTL) duration for the record. Amazon SageMaker Feature Store deletes the record when <code>EventTime</code> + <code>TtlDuration</code> elapses. If you omit this parameter, the record's existing TTL setting remains unchanged. For information about <code>HardDelete</code>, see the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_feature_store_DeleteRecord.html\">DeleteRecord</a> operation in the Amazon SageMaker API Reference.</p>"
       }
     },
     "TtlDurationUnit": {
@@ -278,6 +288,10 @@
         "BatchGetRecordResponse$UnprocessedIdentifiers": "<p>A unprocessed list of <code>FeatureGroup</code> names, with their corresponding <code>RecordIdentifier</code> value, and Feature name.</p>"
       }
     },
+    "UpdateRecordRequest": {
+      "base": null,
+      "refs": {}
+    },
     "ValidationError": {
       "base": "<p>There was an error validating your request.</p>",
       "refs": {}
@@ -297,6 +311,7 @@
         "GetRecordRequest$RecordIdentifierValueAsString": "<p>The value that corresponds to <code>RecordIdentifier</code> type and uniquely identifies the record in the <code>FeatureGroup</code>. </p>",
         "RecordIdentifierList$member": null,
         "RecordIdentifiers$member": null,
+        "UpdateRecordRequest$RecordIdentifierValueAsString": "<p>The value that uniquely identifies the record in the feature group. This must match the value defined by the feature group's record identifier feature.</p>",
         "ValueAsStringList$member": null
       }
     },

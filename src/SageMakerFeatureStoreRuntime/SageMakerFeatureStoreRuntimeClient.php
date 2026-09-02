@@ -17,5 +17,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listRecordsAsync(array $args = [])
  * @method \Aws\Result putRecord(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putRecordAsync(array $args = [])
+ * @method \Aws\Result updateRecord(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateRecordAsync(array $args = [])
  */
 class SageMakerFeatureStoreRuntimeClient extends AwsClient {}
