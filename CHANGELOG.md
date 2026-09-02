@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.394.7 - 2026-09-02
 
 * `Aws\AppIntegrationsService` - This release adds a force parameter to DeleteApplication and a ConflictException to UpdateApplication, letting customers delete applications with existing associations in one call and get a clear error when an update conflicts with the application's current state.
 * `Aws\MediaLive` - AWS Elemental MediaLive now supports AB forensic video watermarking
