@@ -151,9 +151,10 @@ class EndpointProviderV2Test extends TestCase
             if (isset($expectedEndpoint['headers'])){
                 $this->assertEquals($expectedEndpoint['headers'], $endpoint->getHeaders());
             }
-            if (isset($expectedEndpoint['properties'])) {
-                $this->assertEquals($expectedEndpoint['properties'], $endpoint->getProperties());
-            }
+            $this->assertEquals(
+                $expectedEndpoint['properties'] ?? [],
+                $endpoint->getProperties() ?? []
+            );
         }
     }
 
