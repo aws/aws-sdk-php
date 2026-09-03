@@ -2205,7 +2205,8 @@
         "propagateTags":{"shape":"DaemonPropagateTags"},
         "enableECSManagedTags":{"shape":"Boolean"},
         "enableExecuteCommand":{"shape":"Boolean"},
-        "clientToken":{"shape":"String"}
+        "clientToken":{"shape":"String"},
+        "critical":{"shape":"BoxedBoolean"}
       }
     },
     "CreateDaemonResponse":{
@@ -2342,7 +2343,8 @@
       "type":"structure",
       "members":{
         "arn":{"shape":"String"},
-        "runningCount":{"shape":"Integer"}
+        "runningCount":{"shape":"Integer"},
+        "withoutDaemonCount":{"shape":"Integer"}
       }
     },
     "DaemonCapacityProviderList":{
@@ -2440,6 +2442,7 @@
       "members":{
         "arn":{"shape":"String"},
         "runningInstanceCount":{"shape":"BoxedInteger"},
+        "withoutDaemonInstanceCount":{"shape":"BoxedInteger"},
         "drainingInstanceCount":{"shape":"BoxedInteger"}
       }
     },
@@ -2465,6 +2468,7 @@
         "arn":{"shape":"String"},
         "capacityProviders":{"shape":"DaemonDeploymentCapacityProviderList"},
         "totalRunningInstanceCount":{"shape":"BoxedInteger"},
+        "totalWithoutDaemonInstanceCount":{"shape":"BoxedInteger"},
         "totalDrainingInstanceCount":{"shape":"BoxedInteger"}
       }
     },
@@ -2590,7 +2594,8 @@
         "containerImages":{"shape":"DaemonContainerImages"},
         "propagateTags":{"shape":"DaemonPropagateTags"},
         "enableECSManagedTags":{"shape":"BoxedBoolean"},
-        "enableExecuteCommand":{"shape":"BoxedBoolean"}
+        "enableExecuteCommand":{"shape":"BoxedBoolean"},
+        "critical":{"shape":"BoxedBoolean"}
       }
     },
     "DaemonRevisionDetail":{
@@ -2598,7 +2603,8 @@
       "members":{
         "arn":{"shape":"String"},
         "capacityProviders":{"shape":"DaemonCapacityProviderList"},
-        "totalRunningCount":{"shape":"Integer"}
+        "totalRunningCount":{"shape":"Integer"},
+        "totalWithoutDaemonCount":{"shape":"Integer"}
       }
     },
     "DaemonRevisionDetailList":{
@@ -6466,7 +6472,8 @@
         "deploymentConfiguration":{"shape":"DaemonDeploymentConfiguration"},
         "propagateTags":{"shape":"DaemonPropagateTags"},
         "enableECSManagedTags":{"shape":"Boolean"},
-        "enableExecuteCommand":{"shape":"Boolean"}
+        "enableExecuteCommand":{"shape":"Boolean"},
+        "critical":{"shape":"BoxedBoolean"}
       }
     },
     "UpdateDaemonResponse":{

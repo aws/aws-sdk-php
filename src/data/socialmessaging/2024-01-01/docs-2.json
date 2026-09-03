@@ -15,6 +15,7 @@
     "DisassociateWhatsAppBusinessAccount": "<p>Disassociate a WhatsApp Business Account (WABA) from your Amazon Web Services account.</p>",
     "GetLinkedWhatsAppBusinessAccount": "<p>Get the details of your linked WhatsApp Business Account.</p>",
     "GetLinkedWhatsAppBusinessAccountPhoneNumber": "<p>Retrieve the WABA account id and phone number details of a WhatsApp business account phone number.</p>",
+    "GetWhatsAppBusinessPublicKey": "<p>Retrieves the business public key for a phone number and its signature status.</p>",
     "GetWhatsAppFlow": "<p>Retrieves the metadata and status of a WhatsApp Flow, including validation errors, preview information, and health status.</p>",
     "GetWhatsAppFlowPreview": "<p>Generates a web preview URL for testing a WhatsApp Flow before publishing. Preview URLs expire in 30 days and can be shared with stakeholders for review.</p>",
     "GetWhatsAppMessageMedia": "<p>Get a media file from the WhatsApp service. On successful completion the media file is retrieved from Meta and stored in the specified Amazon S3 bucket. Use either <code>destinationS3File</code> or <code>destinationS3PresignedUrl</code> for the destination. If both are used then an <code>InvalidParameterException</code> is returned.</p>",
@@ -28,6 +29,7 @@
     "PostWhatsAppMessageMedia": "<p>Upload a media file to the WhatsApp service. Only the specified <code>originationPhoneNumberId</code> has the permissions to send the media file when using <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_SendWhatsAppMessage.html\">SendWhatsAppMessage</a>. You must use either <code>sourceS3File</code> or <code>sourceS3PresignedUrl</code> for the source. If both or neither are specified then an <code>InvalidParameterException</code> is returned.</p>",
     "PublishWhatsAppFlow": "<p>Publishes a WhatsApp Flow, making it available for use in template messages. The Flow must be in DRAFT status with valid Flow JSON that passes Meta's validation. This is an irreversible operation.</p>",
     "PutWhatsAppBusinessAccountEventDestinations": "<p>Add an event destination to log event data from WhatsApp for a WhatsApp Business Account (WABA). A WABA can only have one event destination at a time. All resources associated with the WABA use the same event destination.</p>",
+    "PutWhatsAppBusinessPublicKey": "<p>Sets the business public key used to encrypt the data exchanged with the endpoint of a data exchange Flow.</p>",
     "SendWhatsAppConversionEvent": "<p>Sends a conversion event to Meta's Conversions API for the specified WhatsApp Business Account dataset.</p>",
     "SendWhatsAppMessage": "<p>Send a WhatsApp message. For examples of sending a message using the Amazon Web Services CLI, see <a href=\"https://docs.aws.amazon.com/social-messaging/latest/userguide/send-message.html\">Sending messages</a> in the <i> <i>Amazon Web Services End User Messaging Social User Guide</i> </i>.</p>",
     "TagResource": "<p>Adds or overwrites only the specified tags for the specified resource. When you specify an existing tag key, the value is overwritten with the new value.</p>",
@@ -99,6 +101,19 @@
         "DeleteWhatsAppMessageMediaOutput$success": "<p>Success indicator for deleting the media file.</p>",
         "GetWhatsAppFlowPreviewInput$invalidate": "<p>Set to <code>true</code> to force generation of a new preview URL. Use this if the previous URL has been compromised or you want a fresh expiration period.</p>",
         "GetWhatsAppMessageMediaInput$metadataOnly": "<p>Set to <code>True</code> to get only the metadata for the file.</p>"
+      }
+    },
+    "BusinessPublicKeyPem": {
+      "base": null,
+      "refs": {
+        "GetWhatsAppBusinessPublicKeyOutput$businessPublicKey": "<p>The stored RSA business public key (PEM), if present.</p>",
+        "PutWhatsAppBusinessPublicKeyInput$businessPublicKey": "<p>PEM-encoded RSA public key. Mutually exclusive with kmsKeyArn.</p>"
+      }
+    },
+    "BusinessPublicKeySignatureStatus": {
+      "base": null,
+      "refs": {
+        "GetWhatsAppBusinessPublicKeyOutput$businessPublicKeySignatureStatus": "<p>Meta's signing status: &quot;VALID&quot; | &quot;MISMATCH&quot;.</p>"
       }
     },
     "ButtonType": {
@@ -258,6 +273,14 @@
       "base": null,
       "refs": {}
     },
+    "GetWhatsAppBusinessPublicKeyInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetWhatsAppBusinessPublicKeyOutput": {
+      "base": null,
+      "refs": {}
+    },
     "GetWhatsAppFlowInput": {
       "base": null,
       "refs": {}
@@ -319,6 +342,12 @@
         "WabaPhoneNumberSetupFinalization$dataLocalizationRegion": "<p>The two letter ISO region for the location of where Meta will store data.</p> <p class=\"title\"> <b>Asia–Pacific (APAC)</b> </p> <ul> <li> <p>Australia <b>AU</b> </p> </li> <li> <p>Indonesia <b>ID</b> </p> </li> <li> <p>India <b>IN</b> </p> </li> <li> <p>Japan <b>JP</b> </p> </li> <li> <p>Singapore <b>SG</b> </p> </li> <li> <p>South Korea <b>KR</b> </p> </li> </ul> <p class=\"title\"> <b>Europe</b> </p> <ul> <li> <p>Germany <b>DE</b> </p> </li> <li> <p>Switzerland <b>CH</b> </p> </li> <li> <p>United Kingdom <b>GB</b> </p> </li> </ul> <p class=\"title\"> <b>Latin America (LATAM)</b> </p> <ul> <li> <p>Brazil <b>BR</b> </p> </li> </ul> <p class=\"title\"> <b>Middle East and Africa (MEA)</b> </p> <ul> <li> <p>Bahrain <b>BH</b> </p> </li> <li> <p>South Africa <b>ZA</b> </p> </li> <li> <p>United Arab Emirates <b>AE</b> </p> </li> </ul> <p class=\"title\"> <b>North America (NORAM)</b> </p> <ul> <li> <p>Canada <b>CA</b> </p> </li> </ul>",
         "WhatsAppPhoneNumberDetail$dataLocalizationRegion": "<p>The geographic region where the WhatsApp phone number's data is stored and processed.</p>",
         "WhatsAppPhoneNumberSummary$dataLocalizationRegion": "<p>The geographic region where the WhatsApp phone number's data is stored and processed.</p>"
+      }
+    },
+    "KmsKeyArn": {
+      "base": null,
+      "refs": {
+        "PutWhatsAppBusinessPublicKeyInput$kmsKeyArn": "<p>Customer-managed KMS asymmetric RSA key ARN. Mutually exclusive with businessPublicKey.</p>"
       }
     },
     "LibraryTemplateBodyInputs": {
@@ -488,7 +517,8 @@
     "MetaFlowApplicationId": {
       "base": null,
       "refs": {
-        "MetaFlowApplicationInfo$id": "<p>The unique identifier of the Meta application.</p>"
+        "MetaFlowApplicationInfo$id": "<p>The unique identifier of the Meta application.</p>",
+        "UpdateWhatsAppFlowInput$metaAppId": "<p>Optional Meta app ID to attach to the Flow. Meta signs data-exchange requests with the attached app's secret, so attaching your own app is what enables X-Hub-Signature-256 and flow_token_signature verification at your endpoint. Meta requires the app to be owned by the same business that owns the WABA. Attaching your own app is one-way: the service's app cannot be re-attached afterwards. When omitted, the attached app is unchanged. (Set via update because Meta ignores application_id at creation time.)</p>"
       }
     },
     "MetaFlowApplicationInfo": {
@@ -563,7 +593,9 @@
     "MetaFlowEndpointUri": {
       "base": null,
       "refs": {
-        "GetWhatsAppFlowOutput$endpointUri": "<p>The endpoint URI for data exchange Flows, if configured.</p>"
+        "CreateWhatsAppFlowInput$endpointUri": "<p>Optional HTTPS endpoint for a dynamic Flow, registered with Meta as the Flow's endpoint_uri and called by Meta directly. When omitted, the Flow has no endpoint (static Flow). Meta only calls the endpoint when the Flow JSON also declares data_api_version. To verify that requests originate from Meta, attach your own Meta app via UpdateWhatsAppFlow.</p>",
+        "GetWhatsAppFlowOutput$endpointUri": "<p>The endpoint URI for data exchange Flows, if configured.</p>",
+        "UpdateWhatsAppFlowInput$endpointUri": "<p>Optional HTTPS endpoint for a dynamic Flow, registered with Meta as the Flow's endpoint_uri and called by Meta directly. When omitted, the Flow's endpoint is unchanged.</p>"
       }
     },
     "MetaFlowHealthEntity": {
@@ -949,6 +981,14 @@
       "base": null,
       "refs": {}
     },
+    "PutWhatsAppBusinessPublicKeyInput": {
+      "base": null,
+      "refs": {}
+    },
+    "PutWhatsAppBusinessPublicKeyOutput": {
+      "base": null,
+      "refs": {}
+    },
     "RegistrationStatus": {
       "base": null,
       "refs": {
@@ -1294,8 +1334,10 @@
       "refs": {
         "DeleteWhatsAppMessageMediaInput$originationPhoneNumberId": "<p>The unique identifier of the originating phone number associated with the media. Phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_GetLinkedWhatsAppBusinessAccount.html\">GetLinkedWhatsAppBusinessAccount</a> to find a phone number's id.</p>",
         "GetLinkedWhatsAppBusinessAccountPhoneNumberInput$id": "<p>The unique identifier of the phone number. Phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_GetLinkedWhatsAppBusinessAccount.html\">GetLinkedWhatsAppBusinessAccount</a> to find a phone number's id.</p>",
+        "GetWhatsAppBusinessPublicKeyInput$originationPhoneNumberId": "<p>The unique identifier of the phone number whose business public key to retrieve.</p>",
         "GetWhatsAppMessageMediaInput$originationPhoneNumberId": "<p>The unique identifier of the originating phone number for the WhatsApp message media. The phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_GetLinkedWhatsAppBusinessAccount.html\">GetLinkedWhatsAppBusinessAccount</a> to find a phone number's id.</p>",
         "PostWhatsAppMessageMediaInput$originationPhoneNumberId": "<p>The ID of the phone number to associate with the WhatsApp media file. The phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_GetLinkedWhatsAppBusinessAccount.html\">GetLinkedWhatsAppBusinessAccount</a> to find a phone number's id.</p>",
+        "PutWhatsAppBusinessPublicKeyInput$originationPhoneNumberId": "<p>The unique identifier of the phone number to associate with the business public key.</p>",
         "SendWhatsAppMessageInput$originationPhoneNumberId": "<p>The ID of the phone number used to send the WhatsApp message. If you are sending a media file only the <code>originationPhoneNumberId</code> used to upload the file can be used. Phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_GetLinkedWhatsAppBusinessAccount.html\">GetLinkedWhatsAppBusinessAccount</a> to find a phone number's id.</p>",
         "WhatsAppPhoneNumberDetail$phoneNumberId": "<p>The phone number ID. Phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. </p>",
         "WhatsAppPhoneNumberSummary$phoneNumberId": "<p>The phone number ID. Phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. </p>"

@@ -3842,7 +3842,8 @@
         "cpus":{"shape":"Cpus"},
         "ramBytes":{"shape":"PositiveInteger"},
         "os":{"shape":"OS"},
-        "supportsNitroInstances":{"shape":"Boolean"}
+        "supportsNitroInstances":{"shape":"Boolean"},
+        "architecture":{"shape":"SourceServerArchitecture"}
       }
     },
     "SourceServer":{
@@ -3869,6 +3870,13 @@
       "max":2048,
       "min":20,
       "pattern":"arn:(?:[0-9a-zA-Z_-]+:){3}([0-9]{12,}):source-server/(s-[0-9a-zA-Z]{17})"
+    },
+    "SourceServerArchitecture":{
+      "type":"string",
+      "enum":[
+        "x86_64",
+        "arm64"
+      ]
     },
     "SourceServerID":{
       "type":"string",

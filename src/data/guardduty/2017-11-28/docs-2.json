@@ -235,6 +235,24 @@
         "Service$Action": "<p>Information about the activity that is described in a finding.</p>"
       }
     },
+    "Activities": {
+      "base": "<p>A list of activities that were observed for a signal.</p>",
+      "refs": {
+        "Signal$Activities": "<p>Contains information about the activities, such as API calls, that were observed for this signal.</p>"
+      }
+    },
+    "Activity": {
+      "base": "<p>Contains information about an activity, such as an API call, that was observed for a signal.</p>",
+      "refs": {
+        "Activities$member": null
+      }
+    },
+    "ActivityType": {
+      "base": "<p>The type of an observed activity.</p>",
+      "refs": {
+        "Activity$Type": "<p>The type of the observed activity.</p>"
+      }
+    },
     "Actor": {
       "base": "<p>Information about the actors involved in an attack sequence.</p>",
       "refs": {
@@ -354,6 +372,36 @@
       "base": null,
       "refs": {
         "Behavior$value": null
+      }
+    },
+    "ApiCall": {
+      "base": "<p>Contains information about an API call that was observed as part of an activity.</p>",
+      "refs": {
+        "Activity$Api": "<p>Contains information about the API call that was observed, when the activity type is <code>API_CALL</code>.</p>"
+      }
+    },
+    "ApiCallErrorString": {
+      "base": null,
+      "refs": {
+        "ApiCall$Error": "<p>The error code that was returned, if the API call failed.</p>"
+      }
+    },
+    "ApiCallOperationString": {
+      "base": null,
+      "refs": {
+        "ApiCall$Operation": "<p>The name of the API operation that was invoked.</p>"
+      }
+    },
+    "ApiCallServiceString": {
+      "base": null,
+      "refs": {
+        "ApiCall$Service": "<p>The service that the API operation was invoked against.</p>"
+      }
+    },
+    "ApiCallUserAgentString": {
+      "base": null,
+      "refs": {
+        "ApiCall$UserAgent": "<p>User agent in the request to the API operation</p>"
       }
     },
     "ArchiveFindingsRequest": {

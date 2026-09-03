@@ -161,6 +161,21 @@
       ],
       "idempotent":true
     },
+    "GetAccountSettings":{
+      "name":"GetAccountSettings",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetAccountSettingsRequest"},
+      "output":{"shape":"GetAccountSettingsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
     "GetDepotUrl":{
       "name":"GetDepotUrl",
       "http":{
@@ -286,6 +301,21 @@
       ],
       "readonly":true
     },
+    "PutAccountSettings":{
+      "name":"PutAccountSettings",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutAccountSettingsRequest"},
+      "output":{"shape":"PutAccountSettingsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -333,6 +363,23 @@
     }
   },
   "shapes":{
+    "AccountSetting":{
+      "type":"structure",
+      "required":[
+        "name",
+        "value"
+      ],
+      "members":{
+        "name":{"shape":"SettingName"},
+        "value":{"shape":"SettingValue"}
+      }
+    },
+    "AccountSettingList":{
+      "type":"list",
+      "member":{"shape":"AccountSetting"},
+      "max":100,
+      "min":0
+    },
     "AllocationId":{
       "type":"string",
       "max":26,
@@ -844,6 +891,16 @@
       "type":"list",
       "member":{"shape":"String"}
     },
+    "GetAccountSettingsRequest":{
+      "type":"structure",
+      "members":{}
+    },
+    "GetAccountSettingsResponse":{
+      "type":"structure",
+      "members":{
+        "settings":{"shape":"AccountSettingList"}
+      }
+    },
     "GetDepotUrlRequest":{
       "type":"structure",
       "required":["environmentId"],
@@ -1187,6 +1244,19 @@
       "min":1,
       "pattern":"pg-[a-f0-9]{8}([a-f0-9]{9})?"
     },
+    "PutAccountSettingsRequest":{
+      "type":"structure",
+      "required":["settings"],
+      "members":{
+        "settings":{"shape":"AccountSettingList"}
+      }
+    },
+    "PutAccountSettingsResponse":{
+      "type":"structure",
+      "members":{
+        "settings":{"shape":"AccountSettingList"}
+      }
+    },
     "RequestTagMap":{
       "type":"map",
       "key":{"shape":"TagKey"},
@@ -1265,6 +1335,18 @@
         "message":{"shape":"String"}
       },
       "exception":true
+    },
+    "SettingName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z0-9]+"
+    },
+    "SettingValue":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z0-9]+"
     },
     "SolutionKey":{
       "type":"string",

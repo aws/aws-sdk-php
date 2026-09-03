@@ -274,6 +274,27 @@
       ],
       "readonly":true
     },
+    "GetWhatsAppBusinessPublicKey":{
+      "name":"GetWhatsAppBusinessPublicKey",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/whatsapp/business-public-key",
+        "responseCode":200
+      },
+      "input":{"shape":"GetWhatsAppBusinessPublicKeyInput"},
+      "output":{"shape":"GetWhatsAppBusinessPublicKeyOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParametersException"},
+        {"shape":"AccessDeniedByMetaException"},
+        {"shape":"ThrottledRequestException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"DependencyException"}
+      ],
+      "readonly":true
+    },
     "GetWhatsAppFlow":{
       "name":"GetWhatsAppFlow",
       "http":{
@@ -536,6 +557,27 @@
       ],
       "idempotent":true
     },
+    "PutWhatsAppBusinessPublicKey":{
+      "name":"PutWhatsAppBusinessPublicKey",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/v1/whatsapp/business-public-key",
+        "responseCode":200
+      },
+      "input":{"shape":"PutWhatsAppBusinessPublicKeyInput"},
+      "output":{"shape":"PutWhatsAppBusinessPublicKeyOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParametersException"},
+        {"shape":"AccessDeniedByMetaException"},
+        {"shape":"ThrottledRequestException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"DependencyException"}
+      ],
+      "idempotent":true
+    },
     "SendWhatsAppConversionEvent":{
       "name":"SendWhatsAppConversionEvent",
       "http":{
@@ -740,6 +782,16 @@
       "type":"boolean",
       "box":true
     },
+    "BusinessPublicKeyPem":{
+      "type":"string",
+      "max":8192,
+      "min":1
+    },
+    "BusinessPublicKeySignatureStatus":{
+      "type":"string",
+      "max":20,
+      "min":1
+    },
     "ButtonType":{
       "type":"string",
       "max":25,
@@ -776,7 +828,8 @@
         "categories":{"shape":"MetaFlowCategoryList"},
         "flowJson":{"shape":"MetaFlowJsonBlob"},
         "publish":{"shape":"Boolean"},
-        "cloneFlowId":{"shape":"MetaFlowId"}
+        "cloneFlowId":{"shape":"MetaFlowId"},
+        "endpointUri":{"shape":"MetaFlowEndpointUri"}
       }
     },
     "CreateWhatsAppFlowOutput":{
@@ -1022,6 +1075,24 @@
         "linkedWhatsAppBusinessAccountId":{"shape":"LinkedWhatsAppBusinessAccountId"}
       }
     },
+    "GetWhatsAppBusinessPublicKeyInput":{
+      "type":"structure",
+      "required":["originationPhoneNumberId"],
+      "members":{
+        "originationPhoneNumberId":{
+          "shape":"WhatsAppPhoneNumberId",
+          "location":"querystring",
+          "locationName":"originationPhoneNumberId"
+        }
+      }
+    },
+    "GetWhatsAppBusinessPublicKeyOutput":{
+      "type":"structure",
+      "members":{
+        "businessPublicKey":{"shape":"BusinessPublicKeyPem"},
+        "businessPublicKeySignatureStatus":{"shape":"BusinessPublicKeySignatureStatus"}
+      }
+    },
     "GetWhatsAppFlowInput":{
       "type":"structure",
       "required":[
@@ -1184,6 +1255,12 @@
     "IsoCountryCode":{
       "type":"string",
       "pattern":"[A-Z]{2}"
+    },
+    "KmsKeyArn":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"arn:aws[a-z-]*:kms:[a-z0-9-]+:[0-9]{12}:(key/.+|alias/.+)"
     },
     "LibraryTemplateBodyInputs":{
       "type":"structure",
@@ -1924,6 +2001,19 @@
       "type":"structure",
       "members":{}
     },
+    "PutWhatsAppBusinessPublicKeyInput":{
+      "type":"structure",
+      "required":["originationPhoneNumberId"],
+      "members":{
+        "originationPhoneNumberId":{"shape":"WhatsAppPhoneNumberId"},
+        "businessPublicKey":{"shape":"BusinessPublicKeyPem"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"}
+      }
+    },
+    "PutWhatsAppBusinessPublicKeyOutput":{
+      "type":"structure",
+      "members":{}
+    },
     "RegistrationStatus":{
       "type":"string",
       "enum":[
@@ -2170,7 +2260,9 @@
         "id":{"shape":"LinkedWhatsAppBusinessAccountId"},
         "flowId":{"shape":"MetaFlowId"},
         "flowName":{"shape":"MetaFlowName"},
-        "categories":{"shape":"MetaFlowCategoryList"}
+        "categories":{"shape":"MetaFlowCategoryList"},
+        "endpointUri":{"shape":"MetaFlowEndpointUri"},
+        "metaAppId":{"shape":"MetaFlowApplicationId"}
       }
     },
     "UpdateWhatsAppFlowOutput":{

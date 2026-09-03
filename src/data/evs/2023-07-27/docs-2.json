@@ -12,6 +12,7 @@
     "DeleteEnvironmentConnector": "<p>Deletes a connector from an Amazon EVS environment.</p> <note> <p>Before deleting a connector, you must remove all entitlements that are associated with the same vCenter.</p> </note>",
     "DeleteEnvironmentHost": "<p>Deletes a host from an Amazon EVS environment.</p> <note> <p>Before deleting a host, you must unassign and decommission the host from within the SDDC Manager user interface. Not doing so could impact the availability of your virtual machines or result in data loss.</p> </note>",
     "DisassociateEipFromVlan": "<p>Disassociates an Elastic IP address from a public HCX VLAN. This operation is only allowed for public HCX VLANs at this time.</p>",
+    "GetAccountSettings": "<p>Returns the configured EVS settings for your Amazon Web Services account in the specified Amazon Web Services Region. If no settings have been set, an empty list is returned.</p>",
     "GetDepotUrl": "<p>Returns a URL and authentication token for accessing the Amazon EVS Custom Addon depot. Configure the depot URL as a download source in vSphere Lifecycle Manager (vLCM) to sync and install the Amazon EVS Custom Addon.</p> <p>The depot URL remains active until you rotate the authentication token by calling this action with <code>rotate</code> set to <code>true</code>.</p>",
     "GetEnvironment": "<p>Returns a description of the specified environment.</p>",
     "GetVersions": "<p>Returns information about VCF versions, ESX versions and EC2 instance types provided by Amazon EVS. For each VCF version, the response also includes the default ESX version and provided EC2 instance types.</p>",
@@ -21,11 +22,26 @@
     "ListEnvironments": "<p>Lists the Amazon EVS environments in your Amazon Web Services account in the specified Amazon Web Services Region.</p>",
     "ListTagsForResource": "<p>Lists the tags for an Amazon EVS resource.</p>",
     "ListVmEntitlements": "<p>Lists the Windows Server License entitlements for virtual machines in an Amazon EVS environment. Returns existing entitlements for virtual machines associated with the specified environment and connector.</p>",
+    "PutAccountSettings": "<p>Creates or updates account-level EVS settings for your Amazon Web Services account in the specified Amazon Web Services Region.</p> <p>EVS settings included in the request are created or overwritten. Settings omitted from the request retain their current values.</p>",
     "TagResource": "<p>Associates the specified tags to an Amazon EVS resource with the specified <code>resourceArn</code>. If existing tags on a resource are not specified in the request parameters, they aren't changed. When a resource is deleted, the tags associated with that resource are also deleted. Tags that you create for Amazon EVS resources don't propagate to any other resources associated with the environment. For example, if you tag an environment with this operation, that tag doesn't automatically propagate to the VLAN subnets and hosts associated with the environment.</p>",
     "UntagResource": "<p>Deletes specified tags from an Amazon EVS resource.</p>",
     "UpdateEnvironmentConnector": "<p>Updates a connector for an Amazon EVS environment. You can update the Amazon Web Services Secrets Manager secret ARN or the appliance FQDN to reconfigure the connector metadata.</p> <note> <p>You cannot update both the secret and the FQDN in the same request.</p> </note>"
   },
   "shapes": {
+    "AccountSetting": {
+      "base": "<p>A regional account-level EVS setting, represented as a name and value pair.</p>",
+      "refs": {
+        "AccountSettingList$member": null
+      }
+    },
+    "AccountSettingList": {
+      "base": "<p>A list of regional account-level EVS settings.</p>",
+      "refs": {
+        "GetAccountSettingsResponse$settings": "<p>A list of regional account-level EVS settings for the account. EVS settings that have never been explicitly set are omitted from the response.</p>",
+        "PutAccountSettingsRequest$settings": "<p>A list of regional account-level EVS settings to create or update. Only the settings included in this list are modified.</p>",
+        "PutAccountSettingsResponse$settings": "<p>A list of regional account-level EVS settings, and their values, that were modified in this request.</p>"
+      }
+    },
     "AllocationId": {
       "base": null,
       "refs": {
@@ -393,6 +409,14 @@
         "InstanceTypeEsxVersionsInfo$esxVersions": "<p>The list of ESX versions offered for this instance type.</p>"
       }
     },
+    "GetAccountSettingsRequest": {
+      "base": "<p>The request for the GetAccountSettings operation.</p>",
+      "refs": {}
+    },
+    "GetAccountSettingsResponse": {
+      "base": "<p>The response for the GetAccountSettings operation.</p>",
+      "refs": {}
+    },
     "GetDepotUrlRequest": {
       "base": null,
       "refs": {}
@@ -657,6 +681,14 @@
         "HostInfoForCreate$placementGroupId": "<p>The unique ID of the placement group where the host is placed.</p>"
       }
     },
+    "PutAccountSettingsRequest": {
+      "base": "<p>The request for the PutAccountSettings operation.</p>",
+      "refs": {}
+    },
+    "PutAccountSettingsResponse": {
+      "base": "<p>The response for the PutAccountSettings operation.</p>",
+      "refs": {}
+    },
     "RequestTagMap": {
       "base": null,
       "refs": {
@@ -728,6 +760,18 @@
     "ServiceQuotaExceededException": {
       "base": "<p>The number of one or more Amazon EVS resources exceeds the maximum allowed. For a list of Amazon EVS quotas, see <a href=\"https://docs.aws.amazon.com/evs/latest/userguide/service-quotas-evs.html\">Amazon EVS endpoints and quotas</a> in the <i>Amazon EVS User Guide</i>. Delete some resources or request an increase in your service quota. To request an increase, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html\">Amazon Web Services Service Quotas</a> in the <i>Amazon Web Services General Reference Guide</i>. </p>",
       "refs": {}
+    },
+    "SettingName": {
+      "base": "<p>The name of a regional account-level EVS setting, such as <code>vcfPortedCoreCount</code>.</p>",
+      "refs": {
+        "AccountSetting$name": "<p>The name of the EVS setting. Valid values are:</p> <ul> <li> <p> <code>vcfPortedCoreCount</code> (type: numeric string) - The total number of VCF license cores ported to Amazon EVS for the account in that Region. The maximum value is 1,000,000 cores. This setting value is shared with Broadcom for record-keeping.</p> </li> </ul>"
+      }
+    },
+    "SettingValue": {
+      "base": "<p>The value of a regional account-level EVS setting, represented as a string.</p>",
+      "refs": {
+        "AccountSetting$value": "<p>The value of the EVS setting.</p>"
+      }
     },
     "SolutionKey": {
       "base": null,

@@ -3258,7 +3258,12 @@
     "EncryptionConfig":{
       "type":"structure",
       "members":{
-        "resources":{"shape":"StringList"},
+        "resources":{
+          "shape":"StringList",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Amazon EKS encrypts all Kubernetes API data by default, so this value no longer determines which resources are encrypted.",
+          "deprecatedSince":"2025-03-05"
+        },
         "provider":{"shape":"Provider"}
       }
     },

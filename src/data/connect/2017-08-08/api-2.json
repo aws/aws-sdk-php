@@ -10480,10 +10480,12 @@
         "Function":{"shape":"RuleFunction"},
         "Actions":{"shape":"RuleActions"},
         "PublishStatus":{"shape":"RulePublishStatus"},
+        "PreEvaluationFilters":{"shape":"PreEvaluationFilters"},
         "ClientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        }
+        },
+        "Tags":{"shape":"TagMap"}
       }
     },
     "CreateRuleResponse":{
@@ -21455,6 +21457,45 @@
       "max":128,
       "min":0
     },
+    "PreEvaluationFilter":{
+      "type":"structure",
+      "required":[
+        "ResourceType",
+        "FilterType",
+        "FilterKey",
+        "FilterValue",
+        "Operator"
+      ],
+      "members":{
+        "ResourceType":{"shape":"PreEvaluationFilterResourceType"},
+        "FilterType":{"shape":"PreEvaluationFilterType"},
+        "FilterKey":{"shape":"String"},
+        "FilterValue":{"shape":"String"},
+        "Operator":{"shape":"PreEvaluationFilterOperator"}
+      }
+    },
+    "PreEvaluationFilterList":{
+      "type":"list",
+      "member":{"shape":"PreEvaluationFilter"}
+    },
+    "PreEvaluationFilterOperator":{
+      "type":"string",
+      "enum":["EQUALS"]
+    },
+    "PreEvaluationFilterResourceType":{
+      "type":"string",
+      "enum":["CONTACT"]
+    },
+    "PreEvaluationFilterType":{
+      "type":"string",
+      "enum":["TAG"]
+    },
+    "PreEvaluationFilters":{
+      "type":"structure",
+      "members":{
+        "AndConditions":{"shape":"PreEvaluationFilterList"}
+      }
+    },
     "PreSignedAttachmentUrl":{
       "type":"string",
       "max":2000,
@@ -23148,6 +23189,7 @@
         "Function":{"shape":"RuleFunction"},
         "Actions":{"shape":"RuleActions"},
         "PublishStatus":{"shape":"RulePublishStatus"},
+        "PreEvaluationFilters":{"shape":"PreEvaluationFilters"},
         "CreatedTime":{"shape":"Timestamp"},
         "LastUpdatedTime":{"shape":"Timestamp"},
         "LastUpdatedBy":{"shape":"ARN"},
@@ -23241,6 +23283,7 @@
         "ActionSummaries":{"shape":"ActionSummaries"},
         "RuleCapabilityTiers":{"shape":"RuleCapabilityTiers"},
         "PublishStatus":{"shape":"RulePublishStatus"},
+        "PreEvaluationFilters":{"shape":"PreEvaluationFilters"},
         "CreatedTime":{"shape":"Timestamp"},
         "LastUpdatedTime":{"shape":"Timestamp"},
         "LastUpdatedBy":{"shape":"ARN"},
@@ -27448,7 +27491,8 @@
         "Name":{"shape":"RuleName"},
         "Function":{"shape":"RuleFunction"},
         "Actions":{"shape":"RuleActions"},
-        "PublishStatus":{"shape":"RulePublishStatus"}
+        "PublishStatus":{"shape":"RulePublishStatus"},
+        "PreEvaluationFilters":{"shape":"PreEvaluationFilters"}
       }
     },
     "UpdateSecurityProfileRequest":{

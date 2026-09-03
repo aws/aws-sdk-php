@@ -1774,6 +1774,30 @@
         }
       }
     },
+    "Activities":{
+      "type":"list",
+      "member":{"shape":"Activity"},
+      "max":100,
+      "min":0
+    },
+    "Activity":{
+      "type":"structure",
+      "required":["Type"],
+      "members":{
+        "Type":{
+          "shape":"ActivityType",
+          "locationName":"type"
+        },
+        "Api":{
+          "shape":"ApiCall",
+          "locationName":"api"
+        }
+      }
+    },
+    "ActivityType":{
+      "type":"string",
+      "enum":["API_CALL"]
+    },
     "Actor":{
       "type":"structure",
       "required":["Id"],
@@ -1979,6 +2003,47 @@
       "type":"map",
       "key":{"shape":"String"},
       "value":{"shape":"AnomalyObject"}
+    },
+    "ApiCall":{
+      "type":"structure",
+      "members":{
+        "Operation":{
+          "shape":"ApiCallOperationString",
+          "locationName":"operation"
+        },
+        "Service":{
+          "shape":"ApiCallServiceString",
+          "locationName":"service"
+        },
+        "Error":{
+          "shape":"ApiCallErrorString",
+          "locationName":"error"
+        },
+        "UserAgent":{
+          "shape":"ApiCallUserAgentString",
+          "locationName":"userAgent"
+        }
+      }
+    },
+    "ApiCallErrorString":{
+      "type":"string",
+      "max":512,
+      "min":0
+    },
+    "ApiCallOperationString":{
+      "type":"string",
+      "max":512,
+      "min":0
+    },
+    "ApiCallServiceString":{
+      "type":"string",
+      "max":512,
+      "min":0
+    },
+    "ApiCallUserAgentString":{
+      "type":"string",
+      "max":1024,
+      "min":0
     },
     "ArchiveFindingsRequest":{
       "type":"structure",
@@ -11131,6 +11196,10 @@
         "SignalIndicators":{
           "shape":"Indicators",
           "locationName":"signalIndicators"
+        },
+        "Activities":{
+          "shape":"Activities",
+          "locationName":"activities"
         }
       }
     },

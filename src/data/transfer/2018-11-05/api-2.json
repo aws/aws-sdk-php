@@ -3419,6 +3419,17 @@
       "max":2048,
       "min":1
     },
+    "SecretVersionStage":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "SecretVersionStageList":{
+      "type":"list",
+      "member":{"shape":"SecretVersionStage"},
+      "max":2,
+      "min":1
+    },
     "SecurityGroupId":{
       "type":"string",
       "max":20,
@@ -3544,7 +3555,8 @@
       "members":{
         "UserSecretId":{"shape":"SecretId"},
         "TrustedHostKeys":{"shape":"SftpConnectorTrustedHostKeyList"},
-        "MaxConcurrentConnections":{"shape":"MaxConcurrentConnections"}
+        "MaxConcurrentConnections":{"shape":"MaxConcurrentConnections"},
+        "OrderedUserSecretVersionStages":{"shape":"SecretVersionStageList"}
       }
     },
     "SftpConnectorConnectionDetails":{

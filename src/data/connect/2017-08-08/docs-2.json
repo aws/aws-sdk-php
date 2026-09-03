@@ -10526,6 +10526,45 @@
         "DisconnectDetails$PotentialDisconnectIssue": "<p>Indicates the potential disconnection issues for a call. This field is not populated if the service does not detect potential issues.</p>"
       }
     },
+    "PreEvaluationFilter": {
+      "base": "<p>A single pre-evaluation filter condition. Specifies a resource type, filter type, key, value, and operator to match against a resource attribute.</p>",
+      "refs": {
+        "PreEvaluationFilterList$member": null
+      }
+    },
+    "PreEvaluationFilterList": {
+      "base": null,
+      "refs": {
+        "PreEvaluationFilters$AndConditions": "<p>A list of conditions that the rule evaluates together using AND logic. All conditions must be met for the event to be evaluated by the rule.</p>"
+      }
+    },
+    "PreEvaluationFilterOperator": {
+      "base": null,
+      "refs": {
+        "PreEvaluationFilter$Operator": "<p>The comparison operator for the filter condition. Valid values: <code>EQUALS</code>.</p>"
+      }
+    },
+    "PreEvaluationFilterResourceType": {
+      "base": null,
+      "refs": {
+        "PreEvaluationFilter$ResourceType": "<p>The type of resource to filter on. Valid values: <code>CONTACT</code>.</p>"
+      }
+    },
+    "PreEvaluationFilterType": {
+      "base": null,
+      "refs": {
+        "PreEvaluationFilter$FilterType": "<p>The type of filter to apply. Valid values: <code>TAG</code>.</p>"
+      }
+    },
+    "PreEvaluationFilters": {
+      "base": "<p>The pre-evaluation filters for a rule, that restrict a rule to be applied to only certain resources based on the resource's attributes, such as tags assigned to a contact. The pre-evaluation filters are applied even before rule conditions are evaluated and are used to enforce tag-based-access-control while applying rules.</p>",
+      "refs": {
+        "CreateRuleRequest$PreEvaluationFilters": "<p>The pre-evaluation filters for the rule, that restrict the rule to be applied to only certain resources based on the resource's attributes, such as tags assigned to a contact. The pre-evaluation filters are applied even before rule conditions are evaluated and are used to enforce tag-based-access-control while applying rules.</p>",
+        "Rule$PreEvaluationFilters": "<p>The pre-evaluation filters for the rule, that restrict the rule to be applied to only certain resources based on the resource's attributes, such as tags assigned to a contact. The pre-evaluation filters are applied even before rule conditions are evaluated and are used to enforce tag-based-access-control while applying rules.</p>",
+        "RuleSearchSummary$PreEvaluationFilters": "<p>The pre-evaluation filters for the rule, that restrict the rule to be applied to only certain resources based on the resource's attributes, such as tags assigned to a contact. The pre-evaluation filters are applied even before rule conditions are evaluated and are used to enforce tag-based-access-control while applying rules.</p>",
+        "UpdateRuleRequest$PreEvaluationFilters": "<p>The pre-evaluation filters for the rule, that restrict the rule to be applied to only certain resources based on the resource's attributes, such as tags assigned to a contact. The pre-evaluation filters are applied even before rule conditions are evaluated and are used to enforce tag-based-access-control while applying rules.</p>"
+      }
+    },
     "PreSignedAttachmentUrl": {
       "base": null,
       "refs": {
@@ -13480,6 +13519,8 @@
         "MetricFilterValueList$member": null,
         "MetricGroupingList$member": null,
         "NumberCondition$FieldName": "<p>The name of the field in the number condition.</p>",
+        "PreEvaluationFilter$FilterKey": "<p>The key of the attribute to filter on. For tag filters, this is the tag key.</p>",
+        "PreEvaluationFilter$FilterValue": "<p>The value to match against. For tag filters, this is the tag value.</p>",
         "PrimaryValue$Value": "<p>The actual value for the primary attribute. Must be provided as a string regardless of the attribute's value type. Primary values cannot be expressions and must be explicitly specified.</p>",
         "PrimaryValueResponse$Value": "<p>The value's value.</p>",
         "PropertyValidationExceptionProperty$PropertyPath": "<p>The full property path.</p>",
@@ -13741,6 +13782,7 @@
         "CreateQueueRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "CreateQuickConnectRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "CreateRoutingProfileRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
+        "CreateRuleRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "CreateSecurityProfileRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "CreateTestCaseRequest$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "CreateTrafficDistributionGroupRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",

@@ -704,8 +704,14 @@
         "DataSourceConfig$cloudWatchLogs": "<p>Configuration for pulling agent session traces from CloudWatch Logs.</p>"
       }
     },
+    "CloudWatchLogsSourceLogGroupNamePrefixesList": {
+      "base": "<p>List of CloudWatch Logs log group name prefixes to source trace data from.</p>",
+      "refs": {
+        "CloudWatchLogsSource$logGroupNamePrefixes": "<p>The list of CloudWatch log group name prefixes to read agent traces from. Specify this instead of <code>logGroupNames</code> to match log groups by prefix. Maximum of 5 prefixes. Specify either <code>logGroupNames</code> or <code>logGroupNamePrefixes</code>, not both. One of the two is required.</p>"
+      }
+    },
     "CloudWatchLogsSourceLogGroupNamesList": {
-      "base": null,
+      "base": "<p>Length is constrained per member, because members relaxed from @required carry @default([]).</p>",
       "refs": {
         "CloudWatchLogsSource$logGroupNames": "<p>The list of CloudWatch log group names to read agent traces from. Maximum of 10 log groups.</p>"
       }
@@ -2920,6 +2926,24 @@
         "BrowserSessionStream$liveViewStream": "<p>The stream that provides a visual representation of the browser content. This stream allows agents to observe the current state of the browser, including rendered web pages and visual elements.</p>"
       }
     },
+    "LogGroupName": {
+      "base": null,
+      "refs": {
+        "CloudWatchLogsSourceLogGroupNamesList$member": null
+      }
+    },
+    "LogGroupNamePrefix": {
+      "base": "<p>Prefix of a CloudWatch Logs log group name.</p>",
+      "refs": {
+        "CloudWatchLogsSourceLogGroupNamePrefixesList$member": null
+      }
+    },
+    "LogStreamName": {
+      "base": "<p>A log stream name. The pattern is CloudWatch Logs' own log stream name pattern, which already admits the empty string; empty is the @default of members relaxed from @required and means &quot;no log stream&quot;. No @length is applied, because CloudWatch's min of 1 would reject that default.</p>",
+      "refs": {
+        "CloudWatchOutputConfig$logStreamName": "<p>The name of the CloudWatch log stream where evaluation results will be written.</p>"
+      }
+    },
     "Long": {
       "base": null,
       "refs": {
@@ -3219,6 +3243,12 @@
       "base": null,
       "refs": {
         "MetadataValue$stringValue": "<p>Value associated with the <code>eventMetadata</code> key.</p>"
+      }
+    },
+    "MetricsNamespace": {
+      "base": "<p>CloudWatch metrics namespace for evaluation result metrics.</p>",
+      "refs": {
+        "CloudWatchOutputConfig$metricsNamespace": "<p>The CloudWatch metrics namespace where evaluation result metrics are published. If you omit this value, the service publishes metrics to <code>Bedrock-AgentCore/Evaluations</code>. This value can't begin with <code>AWS/</code>.</p>"
       }
     },
     "MimeType": {
@@ -3538,10 +3568,17 @@
         "EventMetadataFilterExpression$operator": "<p>Operator applied to the event metadata filter expression.</p>"
       }
     },
+    "OptionalLogGroupName": {
+      "base": "<p>A log group name that may also be empty. The empty string is the @default of members that were relaxed from @required, and carries the meaning &quot;no log group&quot; for that member.</p>",
+      "refs": {
+        "CloudWatchOutputConfig$logGroupName": "<p>The name of the CloudWatch log group where evaluation results will be written. This value doesn't apply when <code>resultDestination</code> is <code>SOURCE_LOG_GROUP</code>, because results are written back to the trace source log group. The name can't be under the service-reserved <code>/aws/bedrock-agentcore/evaluations/</code> namespace, apart from the service-managed default group.</p>"
+      }
+    },
     "OutputConfig": {
       "base": "<p>Output destination configuration.</p>",
       "refs": {
         "GetBatchEvaluationResponse$outputConfig": "<p>The output configuration specifying where evaluation results are written.</p>",
+        "StartBatchEvaluationRequest$outputConfig": null,
         "StartBatchEvaluationResponse$outputConfig": "<p>The output configuration specifying where evaluation results are written.</p>"
       }
     },
@@ -4115,6 +4152,12 @@
         "InvokeAgentRuntimeResponse$response": "<p>The response data from the agent runtime. The format of this data depends on the specific agent configuration and the requested accept type. For most agents, this is a JSON object containing the agent's response to the user's request.</p>"
       }
     },
+    "ResultDestination": {
+      "base": "<p>Where evaluation results are written: dedicated results log group (default) or the source log group.</p>",
+      "refs": {
+        "CloudWatchOutputConfig$resultDestination": "<p>The destination where evaluation results are written. Valid values:</p> <ul> <li> <p> <code>DEDICATED_LOG_GROUP</code> (default) – Writes results to a dedicated result log group.</p> </li> <li> <p> <code>SOURCE_LOG_GROUP</code> – Writes results back to the log group that the agent traces were read from. If you use this value, don't specify <code>logGroupName</code>.</p> </li> </ul>"
+      }
+    },
     "RetrieveMemoryRecordsInput": {
       "base": null,
       "refs": {}
@@ -4651,11 +4694,8 @@
         "BatchCreateMemoryRecordsInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotent processing of the batch request.</p>",
         "BrowserSessionSummary$browserIdentifier": "<p>The unique identifier of the browser associated with the session. This identifier specifies which browser environment is used for the session.</p>",
         "CloudWatchFilterConfigSessionIdsList$member": null,
-        "CloudWatchLogsSourceLogGroupNamesList$member": null,
         "CloudWatchLogsSourceServiceNamesList$member": null,
         "CloudWatchLogsTraceConfigLogGroupArnsList$member": null,
-        "CloudWatchOutputConfig$logGroupName": "<p>The name of the CloudWatch log group where evaluation results will be written.</p>",
-        "CloudWatchOutputConfig$logStreamName": "<p>The name of the CloudWatch log stream where evaluation results will be written.</p>",
         "CodeInterpreterSessionSummary$codeInterpreterIdentifier": "<p>The unique identifier of the code interpreter associated with the session. This identifier specifies which code interpreter environment is used for the session.</p>",
         "ConfigurationBundleToolEntry$toolDescriptionJsonPath": "<p>The JSON path within the configuration bundle's components that contains the tool description.</p>",
         "ContentBlock$text": "<p>The text content of the block.</p>",
