@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.394.8 - 2026-09-03
 
 * `Aws\GuardDuty` - Adding support for Sequence Activities in GuardDuty Findings
 * `Aws\EKS` - Deprecate EncryptionConfig resources field. Amazon EKS encrypts all Kubernetes API data with envelope encryption by default for clusters running Kubernetes version 1.28 or higher, so this field no longer affects which resources are encrypted.
