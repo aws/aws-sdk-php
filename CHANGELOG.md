@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.394.9 - 2026-09-04
 
 * `Aws\EC2` - Adds support for ValidateSecurityGroupQuotasForInterface, an API that specifically authorized AWS services use to validate security group rule quotas before creating an elastic network interface.
 * `Aws\Bedrock` - New AWS REVIEW mode as supported data retention mode for Bedrock models
