@@ -802,6 +802,7 @@
     "UpdateInterruptibleCapacityReservationAllocation": "<p> Modifies the number of instances allocated to an interruptible reservation, allowing you to add more capacity or reclaim capacity to your source Capacity Reservation. </p>",
     "UpdateSecurityGroupRuleDescriptionsEgress": "<p>Updates the description of an egress (outbound) security group rule. You can replace an existing description, or add a description to a rule that did not have one previously. You can remove a description for a security group rule by omitting the description parameter in the request.</p>",
     "UpdateSecurityGroupRuleDescriptionsIngress": "<p>Updates the description of an ingress (inbound) security group rule. You can replace an existing description, or add a description to a rule that did not have one previously. You can remove a description for a security group rule by omitting the description parameter in the request.</p>",
+    "ValidateSecurityGroupQuotasForInterface": "<p>Validates whether the specified security groups can be associated with a single network interface. The operation checks Amazon Virtual Private Cloud (Amazon VPC) quotas for inbound or outbound rules per security group and security groups per network interface. Only authorized AWS services can call this operation.</p> <p>For more information about security group quotas, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html#vpc-limits-security-groups\">Amazon VPC quotas</a> in the <i>Amazon VPC User Guide</i>.</p>",
     "WithdrawByoipCidr": "<p>Stops advertising an address range that is provisioned as an address pool.</p> <p>You can perform this operation at most once every 10 seconds, even if you specify different address ranges each time.</p> <p>It can take a few minutes before traffic to the specified addresses stops routing to Amazon Web Services because of BGP propagation delays.</p>"
   },
   "shapes": {
@@ -3799,6 +3800,8 @@
         "UpdateSecurityGroupRuleDescriptionsEgressResult$Return": "<p>Returns <code>true</code> if the request succeeds; otherwise, returns an error.</p>",
         "UpdateSecurityGroupRuleDescriptionsIngressRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "UpdateSecurityGroupRuleDescriptionsIngressResult$Return": "<p>Returns <code>true</code> if the request succeeds; otherwise, returns an error.</p>",
+        "ValidateSecurityGroupQuotasForInterfaceRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "ValidateSecurityGroupQuotasForInterfaceResult$Valid": "<p>The operation returns <code>true</code> if the specified security groups can be associated with a single network interface without exceeding the quotas. It returns an error if associating the security groups would exceed a quota.</p>",
         "VerifiedAccessInstance$FipsEnabled": "<p>Indicates whether support for Federal Information Processing Standards (FIPS) is enabled on the instance.</p>",
         "VerifiedAccessInstanceUserTrustProviderClientConfiguration$PkceEnabled": "<p>Indicates whether Proof of Key Code Exchange (PKCE) is enabled.</p>",
         "VerifiedAccessLogCloudWatchLogsDestination$Enabled": "<p>Indicates whether logging is enabled.</p>",
@@ -25092,6 +25095,7 @@
       "base": null,
       "refs": {
         "CreateVerifiedAccessEndpointRequest$SecurityGroupIds": "<p>The IDs of the security groups to associate with the Verified Access endpoint. Required if <code>AttachmentType</code> is set to <code>vpc</code>.</p>",
+        "ValidateSecurityGroupQuotasForInterfaceRequest$SecurityGroupIds": "<p>The IDs of the security groups to validate for association with a single network interface. You must specify at least one ID, and each ID must be unique. The number of IDs cannot exceed the maximum number of security groups allowed per network interface.</p>",
         "VerifiedAccessEndpoint$SecurityGroupIds": "<p>The IDs of the security groups for the endpoint.</p>"
       }
     },
@@ -31058,6 +31062,16 @@
       "base": "<p>Describes the vCPU configurations for the instance type.</p>",
       "refs": {
         "InstanceTypeInfo$VCpuInfo": "<p>Describes the vCPU configurations for the instance type.</p>"
+      }
+    },
+    "ValidateSecurityGroupQuotasForInterfaceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ValidateSecurityGroupQuotasForInterfaceResult": {
+      "base": null,
+      "refs": {
       }
     },
     "ValidationError": {

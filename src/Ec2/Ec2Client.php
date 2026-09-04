@@ -1610,6 +1610,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise updateSecurityGroupRuleDescriptionsEgressAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result updateSecurityGroupRuleDescriptionsIngress(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise updateSecurityGroupRuleDescriptionsIngressAsync(array $args = []) (supported in versions 2016-11-15)
+ * @method \Aws\Result validateSecurityGroupQuotasForInterface(array $args = []) (supported in versions 2016-11-15)
+ * @method \GuzzleHttp\Promise\Promise validateSecurityGroupQuotasForInterfaceAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result withdrawByoipCidr(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise withdrawByoipCidrAsync(array $args = []) (supported in versions 2016-11-15)
  */

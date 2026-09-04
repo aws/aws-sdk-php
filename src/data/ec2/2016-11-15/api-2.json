@@ -7161,6 +7161,15 @@
       "input":{"shape":"UpdateSecurityGroupRuleDescriptionsIngressRequest"},
       "output":{"shape":"UpdateSecurityGroupRuleDescriptionsIngressResult"}
     },
+    "ValidateSecurityGroupQuotasForInterface":{
+      "name":"ValidateSecurityGroupQuotasForInterface",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ValidateSecurityGroupQuotasForInterfaceRequest"},
+      "output":{"shape":"ValidateSecurityGroupQuotasForInterfaceResult"}
+    },
     "WithdrawByoipCidr":{
       "name":"WithdrawByoipCidr",
       "http":{
@@ -60302,6 +60311,26 @@
         "ValidThreadsPerCore":{
           "shape":"ThreadsPerCoreList",
           "locationName":"validThreadsPerCore"
+        }
+      }
+    },
+    "ValidateSecurityGroupQuotasForInterfaceRequest":{
+      "type":"structure",
+      "required":["SecurityGroupIds"],
+      "members":{
+        "SecurityGroupIds":{
+          "shape":"SecurityGroupIdList",
+          "locationName":"SecurityGroupId"
+        },
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "ValidateSecurityGroupQuotasForInterfaceResult":{
+      "type":"structure",
+      "members":{
+        "Valid":{
+          "shape":"Boolean",
+          "locationName":"valid"
         }
       }
     },

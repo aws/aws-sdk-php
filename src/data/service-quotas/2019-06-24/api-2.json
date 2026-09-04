@@ -155,6 +155,7 @@
         {"shape":"NoSuchResourceException"},
         {"shape":"IllegalArgumentException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"InvalidPaginationTokenException"},
         {"shape":"ServiceException"}
       ]
     },
@@ -484,6 +485,14 @@
         "Message":{"shape":"ExceptionMessage"}
       },
       "exception":true
+    },
+    "AdjustableAtLevelEnum":{
+      "type":"string",
+      "enum":[
+        "ACCOUNT",
+        "PER_RESOURCE",
+        "ALL"
+      ]
     },
     "AmazonResourceName":{
       "type":"string",
@@ -996,7 +1005,8 @@
       "members":{
         "ContextScope":{"shape":"QuotaContextScope"},
         "ContextScopeType":{"shape":"QuotaContextScopeType"},
-        "ContextId":{"shape":"QuotaContextId"}
+        "ContextId":{"shape":"QuotaContextId"},
+        "AdjustableAtLevel":{"shape":"AdjustableAtLevelEnum"}
       }
     },
     "QuotaContextScope":{
