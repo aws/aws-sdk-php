@@ -58,4 +58,24 @@ jobs:
 
       - name: Run PHP_CodeSniffer
         if: steps.changed-middleware-files.outputs.has_files == 'true'
-        run: xargs vendor/bin/phpcs --standard=phpcs.xml.dist < changed-middleware-files.txt
+        shell: bash
+        run: |
+          set +e
+          xargs vendor/bin/phpcs --standard=phpcs.xml.dist < changed-middleware-files.txt
+          phpcs_exit=$?
+          set -e
+
+          if [[ "$phpcs_exit" -ne 0 ]]; then
+            echo ""
+            echo "To apply automatic PHPCS fixes locally, run this from the repository root:"
+            echo "phpcbf --standard=phpcs.xml.dist \\"
+            sed 's/^/  /; $!s/$/ \\/' changed-middleware-files.txt
+            echo ""
+
+            echo "::group::Suggested PHPCBF patch"
+            xargs vendor/bin/phpcbf --standard=phpcs.xml.dist < changed-middleware-files.txt || true
+            git diff -- $(cat changed-middleware-files.txt)
+            echo "::endgroup::"
+
+            exit "$phpcs_exit"
+          fi
