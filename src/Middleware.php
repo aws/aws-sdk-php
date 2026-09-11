@@ -7,8 +7,7 @@ use Aws\Credentials\CredentialsInterface;
 use Aws\EndpointV2\EndpointProviderV2;
 use Aws\Exception\AwsException;
 use Aws\Signature\DpopSignature;
-use 
-Aws\Signature\S3ExpressSignature;
+use Aws\Signature\S3ExpressSignature;
 use Aws\Token\TokenAuthorization;
 use Aws\Token\TokenInterface;
 use GuzzleHttp\Promise;
@@ -18,22 +17,22 @@ use Psr\Http\Message\RequestInterface;
 
 final class Middleware
 {
-/**
- * Middleware used to allow a command parameter (e.g., "SourceFile") to
- * be used to specify the source of data for an upload operation.
- *
- * @param Service $api
- * @param string  $bodyParameter
- * @param string  $sourceParameter
- *
- * @return callable
- */
-public static function sourceFile(
-    Service $api,
-    $bodyParameter = 'Body',
-    $sourceParameter = 'SourceFile'
-) {
-return function (callable $handler) use (
+    /**
+     * Middleware used to allow a command parameter (e.g., "SourceFile") to
+     * be used to specify the source of data for an upload operation.
+     *
+     * @param Service $api
+     * @param string  $bodyParameter
+     * @param string  $sourceParameter
+     *
+     * @return callable
+     */
+    public static function sourceFile(
+        Service $api,
+        $bodyParameter = 'Body',
+        $sourceParameter = 'SourceFile'
+    ) {
+        return function (callable $handler) use (
             $api,
             $bodyParameter,
             $sourceParameter
