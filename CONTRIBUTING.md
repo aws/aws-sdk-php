@@ -87,8 +87,8 @@ we ask the same of all community contributions as well:
    ask you to sign a [Contributor License Agreement (CLA)][cla].
 2. We follow all of the relevant PSR recommendations from the [PHP Framework
    Interop Group][php-fig]. Please submit code that follows these standards.
-   The [PHP_CodeSniffer][phpcs] tool is automatically run against changed source
-   files ending in `Middleware.php` for submitted pull requests.
+   The [PHP_CodeSniffer][phpcs] tool is automatically run against changed PHP
+   files in the `src` directory for submitted pull requests.
 3. We maintain a high percentage of code coverage in our unit tests. If you make
    changes to the code, please add, update, and/or remove tests as appropriate.
    Tests are run via `make test` command.
