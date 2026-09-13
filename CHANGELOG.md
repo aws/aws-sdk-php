@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.395.1 - 2026-09-13
+
+* `Aws\` - Temporarily omit @phpstan-method annotations from Ec2Client. The inline EC2 input shapes increased Ec2Client.php from approximately 171 KB to 1.7 MB and caused PHPStan to hang when resolving the class.
+
 ## 3.395.0 - 2026-09-11
 
 * `Aws\` - Adds `@phpstan-method` method annotations for better service client static analysis support.
