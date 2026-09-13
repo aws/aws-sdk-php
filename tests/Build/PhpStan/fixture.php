@@ -28,8 +28,16 @@ declare(strict_types=1);
 namespace Aws\Test\Build\PhpStan;
 
 use Aws\DynamoDb\DynamoDbClient;
+use Aws\Ec2\Ec2Client;
 use Aws\S3\S3Client;
 use Aws\Sqs\SqsClient;
+
+function fixture_ec2_type_resolution(Ec2Client $ec2): void
+{
+    // Regression test for #3348. Merely resolving this type caused PHPStan
+    // to run indefinitely when Ec2Client contained inline array shapes for
+    // every operation.
+}
 
 function fixture_s3(S3Client $s3): void
 {

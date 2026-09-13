@@ -94,14 +94,12 @@ final class PhpstanShapeFormatter
      * or not a structure type).
      *
      * Empty-input operations (modeled as a structure with `"members": {}`)
-     * return the unsealed empty shape `array{...}`. This keeps the
-     * `@method` / `@phpstan-method` pairing invariant in ClientAnnotator —
-     * every legacy `@method` we emit must have a matching `@phpstan-method`
-     * so consumers and static-analysis tools never see a mixed surface.
-     * `array{...}` is an unsealed array shape with no required keys, so it
-     * accepts any `array` at runtime without flagging extra keys — exactly
-     * the semantics consumers want for an op that takes no modeled args
-     * but may receive an empty (or sentinel) array.
+     * return the unsealed empty shape `array{...}`. For services that emit
+     * PHPStan annotations, this keeps the `@method` / `@phpstan-method`
+     * pairing invariant. `array{...}` is an unsealed array shape with no
+     * required keys, so it accepts any `array` at runtime without flagging
+     * extra keys — exactly the semantics consumers want for an op that takes
+     * no modeled args but may receive an empty (or sentinel) array.
      *
      * @param string $inputShapeName Name of the input shape from operations[op].input.shape
      * @return string|null PHPStan/Psalm array-shape string, multi-line for nested shapes

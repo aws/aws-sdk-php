@@ -4,6 +4,10 @@ Smoke test for the `@phpstan-method` annotations on generated client
 classes. Verifies that PHPStan and Psalm accept the emitted array shapes
 and enforce them at the call site.
 
+EC2 is temporarily excluded because its inline shapes make `Ec2Client.php`
+large enough to prevent PHPStan analysis from terminating. It retains the
+legacy `@method` annotations.
+
 PHPStan and Psalm are not in this repo's `composer.json`. Install them
 before running.
 
@@ -31,10 +35,11 @@ error indicates a bug in the generated annotations.
 
 ## What the fixture exercises
 
-`fixture.php` calls operations on S3, DynamoDB, and SQS:
+`fixture.php` resolves EC2 and calls operations on S3, DynamoDB, and SQS:
 
 | Case | Expected behavior |
 |---|---|
+| `Ec2Client` type resolution | completes without hanging |
 | Inline literal with valid keys | accepted |
 | Required key omitted | accepted (every key renders as optional) |
 | Extra key not in the shape | accepted (shapes are unsealed via trailing `...`) |

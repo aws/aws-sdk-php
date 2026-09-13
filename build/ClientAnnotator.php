@@ -15,10 +15,10 @@ use Aws\Api\ApiProvider;
  *      read this tag; PhpStorm ignores it entirely (so its parser doesn't
  *      trip on array shapes it doesn't understand).
  *
- * Pairing invariant: every legacy `@method` must have a matching
- * `@phpstan-method`. When an operation has no modeled input (or its input
- * shape is empty), we still emit the unsealed empty shape `array{...}` so
- * consumers and static-analysis tools see a uniform surface across all
+ * Unless a service is explicitly excluded, every legacy `@method` has a
+ * matching `@phpstan-method`. When an operation has no modeled input (or its
+ * input shape is empty), we still emit the unsealed empty shape `array{...}`
+ * so consumers and static-analysis tools see a uniform surface across all
  * operations.
  */
 class ClientAnnotator
@@ -35,6 +35,15 @@ class ClientAnnotator
      */
     private const GENERATED_ANNOTATION_PATTERN =
         '/^\* @(?:phpstan-)?method (\\\\Aws\\\\Result|\\\\GuzzleHttp\\\\Promise\\\\Promise)[ <(]/';
+
+    /**
+     * EC2's inline shapes make Ec2Client.php large enough that PHPStan may
+     * not terminate when resolving the class. Keep its legacy annotations
+     * while a more compact representation is investigated.
+     */
+    private const PHPSTAN_METHOD_EXCLUDED_ENDPOINTS = [
+        'ec2',
+    ];
 
     /** @var ReflectionClass */
     private $reflection;
@@ -114,16 +123,17 @@ class ClientAnnotator
     }
 
     /**
-     * Returns the list of docblock lines to emit. Each operation produces
-     * a `@method` line (for PhpStorm + runtime baseline) immediately
-     * followed by a `@phpstan-method` line (or lines, for multi-line
-     * shapes) carrying the input array shape (for PHPStan/Psalm). When
-     * the operation has no modeled input, we fall back to `array{...}`
-     * so the pair invariant always holds.
+     * Returns the list of docblock lines to emit. Each operation produces a
+     * `@method` line for PhpStorm and other IDEs. Unless the service is
+     * excluded, it is immediately followed by a `@phpstan-method` line (or
+     * lines, for multi-line shapes) carrying the input array shape for
+     * PHPStan and Psalm. When the operation has no modeled input, we fall
+     * back to `array{...}`.
      */
     private function getMethodAnnotations()
     {
         $annotations = [];
+        $emitPhpstanMethods = $this->shouldEmitPhpstanMethodAnnotations();
         $latestVersion = $this->getLatestVersion();
 
         foreach ($this->getMethods() as $command => $apiVersions) {
@@ -132,29 +142,28 @@ class ClientAnnotator
                 "{$command}Async" => '\\GuzzleHttp\\Promise\\Promise',
             ];
 
-            // Look up the input shape once per operation. Both the sync
-            // and async variants share the same input.
-            //
-            // When the operation has no modeled input (`input` key absent
-            // from api-2.json, e.g. AutoScaling::DescribeAdjustmentTypes,
-            // Acm::GetAccountConfiguration) or its input shape is empty,
-            // we still emit a paired `@phpstan-method` carrying the
-            // unsealed empty shape `array{...}`. Keeping the pair
-            // invariant means downstream consumers and the sweep tool
-            // never see a mixed `@method`/`@phpstan-method` surface.
-            $inputShape = $this->resolveInputShape(
-                $command,
-                $latestVersion,
-                $apiVersions
-            );
-            $renderedShape = ($inputShape !== null)
-                ? $this->getFormatter($latestVersion)->formatInput($inputShape)
-                : 'array{...}';
-            if ($renderedShape === null) {
-                // Formatter returned null for an exotic shape (e.g. an
-                // input keyed to a non-structure type). Fall back to the
-                // unsealed empty shape so the pair invariant still holds.
-                $renderedShape = 'array{...}';
+            if ($emitPhpstanMethods) {
+                // Look up the input shape once per operation. Both the sync
+                // and async variants share the same input.
+                //
+                // When the operation has no modeled input (`input` key absent
+                // from api-2.json, e.g. AutoScaling::DescribeAdjustmentTypes,
+                // Acm::GetAccountConfiguration) or its input shape is empty,
+                // emit the unsealed empty shape `array{...}`.
+                $inputShape = $this->resolveInputShape(
+                    $command,
+                    $latestVersion,
+                    $apiVersions
+                );
+                $renderedShape = ($inputShape !== null)
+                    ? $this->getFormatter($latestVersion)
+                        ->formatInput($inputShape)
+                    : 'array{...}';
+                if ($renderedShape === null) {
+                    // Formatter returned null for an exotic shape (e.g. an
+                    // input keyed to a non-structure type).
+                    $renderedShape = 'array{...}';
+                }
             }
 
             foreach ($commandMethods as $method => $returnType) {
@@ -164,12 +173,14 @@ class ClientAnnotator
                     $apiVersions
                 );
 
-                foreach ($this->getPhpstanAnnotationLines(
-                    $method,
-                    $returnType,
-                    $renderedShape
-                ) as $line) {
-                    $annotations []= $line;
+                if ($emitPhpstanMethods) {
+                    foreach ($this->getPhpstanAnnotationLines(
+                        $method,
+                        $returnType,
+                        $renderedShape
+                    ) as $line) {
+                        $annotations []= $line;
+                    }
                 }
             }
         }
@@ -331,6 +342,15 @@ class ClientAnnotator
     {
         $versions = $this->getVersions();
         return end($versions);
+    }
+
+    private function shouldEmitPhpstanMethodAnnotations(): bool
+    {
+        return !in_array(
+            $this->getEndpoint(),
+            self::PHPSTAN_METHOD_EXCLUDED_ENDPOINTS,
+            true
+        );
     }
 
     private function getApiDefinition($version = 'latest')
