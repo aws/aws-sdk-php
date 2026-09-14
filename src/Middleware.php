@@ -1,7 +1,7 @@
 <?php
 namespace Aws;
 
-use Aws\Api\Service;  
+use Aws\Api\Service;
 use Aws\Api\Validator;
 use Aws\Credentials\CredentialsInterface;
 use Aws\EndpointV2\EndpointProviderV2;
