@@ -63,21 +63,61 @@ jobs:
         if: steps.changed-source-files.outputs.has_files == 'true'
         shell: bash
         run: |
+          echo "::group::PHPCS violations"
           set +e
-          xargs vendor/bin/phpcs --standard=phpcs.xml.dist < changed-source-files.txt
-          phpcs_exit=$?
+          xargs vendor/bin/phpcs --standard=phpcs.xml.dist --basepath="$(pwd)" --no-colors < changed-source-files.txt 2>&1 | tee phpcs-report.txt
+          phpcs_exit=${PIPESTATUS[0]}
           set -e
+          echo "::endgroup::"
 
           if [[ "$phpcs_exit" -ne 0 ]]; then
+            echo ""
+            echo "PHPCS detected formatting violations."
+            echo ""
+            echo "Files and lines to fix:"
+            awk '
+              /^FILE: / {
+                file = $0
+                sub(/^FILE: /, "", file)
+                next
+              }
+              /^[[:space:]]*[0-9]+[[:space:]]+\|[[:space:]]+ERROR[[:space:]]+\|/ {
+                line = $1
+                message = $0
+                sub(/^[[:space:]]*[0-9]+[[:space:]]+\|[[:space:]]+ERROR[[:space:]]+\|[[:space:]]+/, "", message)
+                print "- " file ":" line " - " message
+              }
+              /^[[:space:]]+\|[[:space:]]+\|[[:space:]]+/ && file != "" {
+                continuation = $0
+                sub(/^[[:space:]]+\|[[:space:]]+\|[[:space:]]+/, "", continuation)
+                print "  " continuation
+              }
+            ' phpcs-report.txt
             echo ""
             echo "To apply automatic PHPCS fixes locally, run this from the repository root:"
             echo "phpcbf --standard=phpcs.xml.dist \\"
             sed 's/^/  /; $!s/$/ \\/' changed-source-files.txt
             echo ""
 
-            echo "::group::Suggested PHPCBF patch"
-            xargs vendor/bin/phpcbf --standard=phpcs.xml.dist < changed-source-files.txt || true
-            git diff -- $(cat changed-source-files.txt)
+            echo "::group::Preview after running PHPCBF"
+            echo "This diff shows the file contents after PHPCBF applies automatic fixes in the CI checkout."
+            echo ""
+            set +e
+            xargs vendor/bin/phpcbf --standard=phpcs.xml.dist < changed-source-files.txt
+            phpcbf_exit=$?
+            set -e
+
+            if [[ "$phpcbf_exit" -ne 0 ]]; then
+              echo ""
+              echo "PHPCBF could not fix every violation automatically. The diff below shows the changes it could apply."
+              echo ""
+            fi
+
+            if git diff --quiet -- $(cat changed-source-files.txt); then
+              echo "PHPCBF did not produce automatic changes for these violations."
+            else
+              git diff -- $(cat changed-source-files.txt)
+            fi
             echo "::endgroup::"
 
             exit "$phpcs_exit"
