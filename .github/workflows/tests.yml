@@ -12,6 +12,7 @@ permissions:
 
 jobs:
   run:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.ref != 'phpcs-workflow-tests'
     runs-on: ubuntu-latest
     strategy:
       # for each of the following versions of PHP, with and without --prefer-lowest
