@@ -43,6 +43,9 @@ jobs:
             DIFF_BASE="$(git rev-list --max-parents=0 "$HEAD_SHA")"
           fi
 
+          echo "$DIFF_BASE" > diff-base.txt
+          echo "$HEAD_SHA" > diff-head.txt
+
           git diff --name-only --diff-filter=ACMRT "$DIFF_BASE" "$HEAD_SHA" -- '*.php' \
             | grep -E '^src/' \
             | grep -v '^src/data/' > changed-source-files.txt || true
@@ -72,9 +75,6 @@ jobs:
 
           if [[ "$phpcs_exit" -ne 0 ]]; then
             echo ""
-            echo "PHPCS detected formatting violations."
-            echo ""
-            echo "Files and lines to fix:"
             awk '
               /^FILE: / {
                 file = $0
@@ -82,43 +82,101 @@ jobs:
                 next
               }
               /^[[:space:]]*[0-9]+[[:space:]]+\|[[:space:]]+ERROR[[:space:]]+\|/ {
-                line = $1
-                message = $0
-                sub(/^[[:space:]]*[0-9]+[[:space:]]+\|[[:space:]]+ERROR[[:space:]]+\|[[:space:]]+/, "", message)
-                print "- " file ":" line " - " message
+                line = $1 + 0
+                print file, line
               }
-              /^[[:space:]]+\|[[:space:]]+\|[[:space:]]+/ && file != "" {
-                continuation = $0
-                sub(/^[[:space:]]+\|[[:space:]]+\|[[:space:]]+/, "", continuation)
-                print "  " continuation
-              }
-            ' phpcs-report.txt
-            echo ""
-            echo "To apply automatic PHPCS fixes locally, run this from the repository root:"
-            echo "phpcbf --standard=phpcs.xml.dist \\"
-            sed 's/^/  /; $!s/$/ \\/' changed-source-files.txt
-            echo ""
+            ' phpcs-report.txt > phpcs-violation-lines.txt
 
-            echo "::group::Preview after running PHPCBF"
-            echo "This diff shows the file contents after PHPCBF applies automatic fixes in the CI checkout."
-            echo ""
+            while IFS= read -r file; do
+              git diff --unified=0 "$(cat diff-base.txt)" "$(cat diff-head.txt)" -- "$file" \
+                | awk -v file="$file" '
+                  /^@@ / {
+                    split($0, parts, " ")
+                    new_range = parts[3]
+                    sub(/^\+/, "", new_range)
+                    split(new_range, range, ",")
+                    start = range[1]
+                    count = range[2] == "" ? 1 : range[2]
+                    if (count > 0) {
+                      print file, start, start + count - 1
+                    }
+                  }
+                '
+            done < changed-source-files.txt > changed-line-ranges.txt
+
+            awk '
+              NR == FNR {
+                count[$1]++
+                start[$1, count[$1]] = $2
+                end[$1, count[$1]] = $3
+                next
+              }
+              {
+                file = $1
+                line = $2
+                if (!(file in all_first) || line < all_first[file]) {
+                  all_first[file] = line
+                }
+                if (!(file in all_last) || line > all_last[file]) {
+                  all_last[file] = line
+                }
+
+                for (i = 1; i <= count[file]; i++) {
+                  if (line >= start[file, i] && line <= end[file, i]) {
+                    if (!(file in changed_first) || line < changed_first[file]) {
+                      changed_first[file] = line
+                    }
+                    if (!(file in changed_last) || line > changed_last[file]) {
+                      changed_last[file] = line
+                    }
+                  }
+                }
+              }
+              END {
+                for (file in all_first) {
+                  if (file in changed_first) {
+                    print file, changed_first[file], changed_last[file]
+                  } else {
+                    print file, all_first[file], all_last[file]
+                  }
+                }
+              }
+            ' changed-line-ranges.txt phpcs-violation-lines.txt > phpcs-ranges.txt
+
+            echo "::group::PHPCBF fixed-code preview"
             set +e
-            xargs vendor/bin/phpcbf --standard=phpcs.xml.dist < changed-source-files.txt
+            xargs vendor/bin/phpcbf --standard=phpcs.xml.dist < changed-source-files.txt > phpcbf-report.txt 2>&1
             phpcbf_exit=$?
             set -e
 
             if [[ "$phpcbf_exit" -ne 0 ]]; then
-              echo ""
-              echo "PHPCBF could not fix every violation automatically. The diff below shows the changes it could apply."
-              echo ""
+              echo "PHPCBF could not fix every violation automatically. The preview below reflects any changes PHPCBF wrote."
             fi
 
-            if git diff --quiet -- $(cat changed-source-files.txt); then
-              echo "PHPCBF did not produce automatic changes for these violations."
-            else
-              git diff -- $(cat changed-source-files.txt)
-            fi
+            while IFS= read -r file; do
+              range="$(awk -v target="$file" '$1 == target { print $2 " " $3 }' phpcs-ranges.txt)"
+              if [[ -z "$range" ]]; then
+                continue
+              fi
+
+              start_line="${range%% *}"
+              end_line="${range##* }"
+
+              echo ""
+              echo "$file:$start_line-$end_line after PHPCBF"
+              echo '```php'
+              sed -n "${start_line},${end_line}p" "$file"
+              echo '```'
+            done < changed-source-files.txt
             echo "::endgroup::"
+
+            echo ""
+            echo "Recommended local command:"
+            echo '```bash'
+            echo "phpcbf --standard=phpcs.xml.dist \\"
+            sed 's/^/  /; $!s/$/ \\/' changed-source-files.txt
+            echo '```'
+            echo ""
 
             exit "$phpcs_exit"
           fi
