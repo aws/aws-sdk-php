@@ -32,6 +32,7 @@ use Aws\Sts\RegionalEndpoints\ConfigurationProvider;
  *     TokenCode?: string,
  *     SourceIdentity?: string,
  *     ProvidedContexts?: list<array{ProviderArn?: string, ContextAssertion?: string, ...}>,
+ *     MinimumSessionTokenSize?: int,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise assumeRoleAsync(array $args = [])
@@ -48,6 +49,7 @@ use Aws\Sts\RegionalEndpoints\ConfigurationProvider;
  *     TokenCode?: string,
  *     SourceIdentity?: string,
  *     ProvidedContexts?: list<array{ProviderArn?: string, ContextAssertion?: string, ...}>,
+ *     MinimumSessionTokenSize?: int,
  *     ...,
  * } $args = [])
  * @method \Aws\Result assumeRoleWithSAML(array $args = [])
@@ -58,6 +60,7 @@ use Aws\Sts\RegionalEndpoints\ConfigurationProvider;
  *     PolicyArns?: list<array{arn?: string, ...}>,
  *     Policy?: string,
  *     DurationSeconds?: int,
+ *     MinimumSessionTokenSize?: int,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise assumeRoleWithSAMLAsync(array $args = [])
@@ -68,6 +71,7 @@ use Aws\Sts\RegionalEndpoints\ConfigurationProvider;
  *     PolicyArns?: list<array{arn?: string, ...}>,
  *     Policy?: string,
  *     DurationSeconds?: int,
+ *     MinimumSessionTokenSize?: int,
  *     ...,
  * } $args = [])
  * @method \Aws\Result assumeRoleWithWebIdentity(array $args = [])
@@ -79,6 +83,7 @@ use Aws\Sts\RegionalEndpoints\ConfigurationProvider;
  *     PolicyArns?: list<array{arn?: string, ...}>,
  *     Policy?: string,
  *     DurationSeconds?: int,
+ *     MinimumSessionTokenSize?: int,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise assumeRoleWithWebIdentityAsync(array $args = [])
@@ -90,12 +95,25 @@ use Aws\Sts\RegionalEndpoints\ConfigurationProvider;
  *     PolicyArns?: list<array{arn?: string, ...}>,
  *     Policy?: string,
  *     DurationSeconds?: int,
+ *     MinimumSessionTokenSize?: int,
  *     ...,
  * } $args = [])
  * @method \Aws\Result assumeRoot(array $args = [])
- * @phpstan-method \Aws\Result assumeRoot(array{TargetPrincipal?: string, TaskPolicyArn?: array{arn?: string, ...}, DurationSeconds?: int, ...} $args = [])
+ * @phpstan-method \Aws\Result assumeRoot(array{
+ *     TargetPrincipal?: string,
+ *     TaskPolicyArn?: array{arn?: string, ...},
+ *     DurationSeconds?: int,
+ *     MinimumSessionTokenSize?: int,
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise assumeRootAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise assumeRootAsync(array{TargetPrincipal?: string, TaskPolicyArn?: array{arn?: string, ...}, DurationSeconds?: int, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise assumeRootAsync(array{
+ *     TargetPrincipal?: string,
+ *     TaskPolicyArn?: array{arn?: string, ...},
+ *     DurationSeconds?: int,
+ *     MinimumSessionTokenSize?: int,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result decodeAuthorizationMessage(array $args = [])
  * @phpstan-method \Aws\Result decodeAuthorizationMessage(array{EncodedMessage?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise decodeAuthorizationMessageAsync(array $args = [])
@@ -119,6 +137,7 @@ use Aws\Sts\RegionalEndpoints\ConfigurationProvider;
  *     PolicyArns?: list<array{arn?: string, ...}>,
  *     DurationSeconds?: int,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     MinimumSessionTokenSize?: int,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise getFederationTokenAsync(array $args = [])
@@ -128,12 +147,13 @@ use Aws\Sts\RegionalEndpoints\ConfigurationProvider;
  *     PolicyArns?: list<array{arn?: string, ...}>,
  *     DurationSeconds?: int,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     MinimumSessionTokenSize?: int,
  *     ...,
  * } $args = [])
  * @method \Aws\Result getSessionToken(array $args = [])
- * @phpstan-method \Aws\Result getSessionToken(array{DurationSeconds?: int, SerialNumber?: string, TokenCode?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result getSessionToken(array{DurationSeconds?: int, SerialNumber?: string, TokenCode?: string, MinimumSessionTokenSize?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getSessionTokenAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise getSessionTokenAsync(array{DurationSeconds?: int, SerialNumber?: string, TokenCode?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getSessionTokenAsync(array{DurationSeconds?: int, SerialNumber?: string, TokenCode?: string, MinimumSessionTokenSize?: int, ...} $args = [])
  * @method \Aws\Result getWebIdentityToken(array $args = [])
  * @phpstan-method \Aws\Result getWebIdentityToken(array{
  *     Audience?: list<string>,

@@ -644,7 +644,13 @@ use Aws\AwsClient;
  *         RecordUpdateField?: string,
  *         ...,
  *     },
- *     TargetTableConfig?: array{UnnestSpec?: 'FULL'|'NOUNNEST'|'TOPLEVEL', PartitionSpec?: list<array>, TargetTableName?: string, ...},
+ *     TargetTableConfig?: array{
+ *         UnnestSpec?: 'FULL'|'NOUNNEST'|'TOPLEVEL',
+ *         PartitionSpec?: list<array>,
+ *         TargetTableName?: string,
+ *         IntegrationArn?: string,
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createIntegrationTablePropertiesAsync(array $args = [])
@@ -658,7 +664,13 @@ use Aws\AwsClient;
  *         RecordUpdateField?: string,
  *         ...,
  *     },
- *     TargetTableConfig?: array{UnnestSpec?: 'FULL'|'NOUNNEST'|'TOPLEVEL', PartitionSpec?: list<array>, TargetTableName?: string, ...},
+ *     TargetTableConfig?: array{
+ *         UnnestSpec?: 'FULL'|'NOUNNEST'|'TOPLEVEL',
+ *         PartitionSpec?: list<array>,
+ *         TargetTableName?: string,
+ *         IntegrationArn?: string,
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \Aws\Result createJob(array $args = [])
@@ -2781,6 +2793,20 @@ use Aws\AwsClient;
  *     MaxRecords?: int,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result listIntegrationTableProperties(array $args = [])
+ * @phpstan-method \Aws\Result listIntegrationTableProperties(array{
+ *     Marker?: string,
+ *     Filters?: list<array{Name?: string, Values?: list<string>, ...}>,
+ *     MaxRecords?: int,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listIntegrationTablePropertiesAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listIntegrationTablePropertiesAsync(array{
+ *     Marker?: string,
+ *     Filters?: list<array{Name?: string, Values?: list<string>, ...}>,
+ *     MaxRecords?: int,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listIterableForms(array $args = [])
  * @phpstan-method \Aws\Result listIterableForms(array{AssetIdentifier?: string, IterableFormName?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listIterableFormsAsync(array $args = [])
@@ -4080,7 +4106,13 @@ use Aws\AwsClient;
  *         RecordUpdateField?: string,
  *         ...,
  *     },
- *     TargetTableConfig?: array{UnnestSpec?: 'FULL'|'NOUNNEST'|'TOPLEVEL', PartitionSpec?: list<array>, TargetTableName?: string, ...},
+ *     TargetTableConfig?: array{
+ *         UnnestSpec?: 'FULL'|'NOUNNEST'|'TOPLEVEL',
+ *         PartitionSpec?: list<array>,
+ *         TargetTableName?: string,
+ *         IntegrationArn?: string,
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateIntegrationTablePropertiesAsync(array $args = [])
@@ -4094,7 +4126,13 @@ use Aws\AwsClient;
  *         RecordUpdateField?: string,
  *         ...,
  *     },
- *     TargetTableConfig?: array{UnnestSpec?: 'FULL'|'NOUNNEST'|'TOPLEVEL', PartitionSpec?: list<array>, TargetTableName?: string, ...},
+ *     TargetTableConfig?: array{
+ *         UnnestSpec?: 'FULL'|'NOUNNEST'|'TOPLEVEL',
+ *         PartitionSpec?: list<array>,
+ *         TargetTableName?: string,
+ *         IntegrationArn?: string,
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateJob(array $args = [])

@@ -222,7 +222,8 @@
         "SerialNumber":{"shape":"serialNumberType"},
         "TokenCode":{"shape":"tokenCodeType"},
         "SourceIdentity":{"shape":"sourceIdentityType"},
-        "ProvidedContexts":{"shape":"ProvidedContextsListType"}
+        "ProvidedContexts":{"shape":"ProvidedContextsListType"},
+        "MinimumSessionTokenSize":{"shape":"minimumSessionTokenSizeType"}
       }
     },
     "AssumeRoleResponse":{
@@ -230,8 +231,15 @@
       "members":{
         "Credentials":{"shape":"Credentials"},
         "AssumedRoleUser":{"shape":"AssumedRoleUser"},
-        "PackedPolicySize":{"shape":"nonNegativeIntegerType"},
-        "SourceIdentity":{"shape":"sourceIdentityType"}
+        "PackedPolicySize":{
+          "shape":"nonNegativeIntegerType",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Replaced by SessionTokenUtilization.",
+          "deprecatedSince":"2026-06-17"
+        },
+        "SourceIdentity":{"shape":"sourceIdentityType"},
+        "SessionTokenUtilization":{"shape":"sessionTokenUtilizationType"},
+        "SessionTokenSize":{"shape":"sessionTokenSizeType"}
       }
     },
     "AssumeRoleWithSAMLRequest":{
@@ -247,7 +255,8 @@
         "SAMLAssertion":{"shape":"SAMLAssertionType"},
         "PolicyArns":{"shape":"policyDescriptorListType"},
         "Policy":{"shape":"sessionPolicyDocumentType"},
-        "DurationSeconds":{"shape":"roleDurationSecondsType"}
+        "DurationSeconds":{"shape":"roleDurationSecondsType"},
+        "MinimumSessionTokenSize":{"shape":"minimumSessionTokenSizeType"}
       }
     },
     "AssumeRoleWithSAMLResponse":{
@@ -255,13 +264,20 @@
       "members":{
         "Credentials":{"shape":"Credentials"},
         "AssumedRoleUser":{"shape":"AssumedRoleUser"},
-        "PackedPolicySize":{"shape":"nonNegativeIntegerType"},
+        "PackedPolicySize":{
+          "shape":"nonNegativeIntegerType",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Replaced by SessionTokenUtilization.",
+          "deprecatedSince":"2026-06-17"
+        },
         "Subject":{"shape":"Subject"},
         "SubjectType":{"shape":"SubjectType"},
         "Issuer":{"shape":"Issuer"},
         "Audience":{"shape":"Audience"},
         "NameQualifier":{"shape":"NameQualifier"},
-        "SourceIdentity":{"shape":"sourceIdentityType"}
+        "SourceIdentity":{"shape":"sourceIdentityType"},
+        "SessionTokenUtilization":{"shape":"sessionTokenUtilizationType"},
+        "SessionTokenSize":{"shape":"sessionTokenSizeType"}
       }
     },
     "AssumeRoleWithWebIdentityRequest":{
@@ -278,7 +294,8 @@
         "ProviderId":{"shape":"urlType"},
         "PolicyArns":{"shape":"policyDescriptorListType"},
         "Policy":{"shape":"sessionPolicyDocumentType"},
-        "DurationSeconds":{"shape":"roleDurationSecondsType"}
+        "DurationSeconds":{"shape":"roleDurationSecondsType"},
+        "MinimumSessionTokenSize":{"shape":"minimumSessionTokenSizeType"}
       }
     },
     "AssumeRoleWithWebIdentityResponse":{
@@ -287,10 +304,17 @@
         "Credentials":{"shape":"Credentials"},
         "SubjectFromWebIdentityToken":{"shape":"webIdentitySubjectType"},
         "AssumedRoleUser":{"shape":"AssumedRoleUser"},
-        "PackedPolicySize":{"shape":"nonNegativeIntegerType"},
+        "PackedPolicySize":{
+          "shape":"nonNegativeIntegerType",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Replaced by SessionTokenUtilization.",
+          "deprecatedSince":"2026-06-17"
+        },
         "Provider":{"shape":"Issuer"},
         "Audience":{"shape":"Audience"},
-        "SourceIdentity":{"shape":"sourceIdentityType"}
+        "SourceIdentity":{"shape":"sourceIdentityType"},
+        "SessionTokenUtilization":{"shape":"sessionTokenUtilizationType"},
+        "SessionTokenSize":{"shape":"sessionTokenSizeType"}
       }
     },
     "AssumeRootRequest":{
@@ -302,14 +326,17 @@
       "members":{
         "TargetPrincipal":{"shape":"TargetPrincipalType"},
         "TaskPolicyArn":{"shape":"PolicyDescriptorType"},
-        "DurationSeconds":{"shape":"RootDurationSecondsType"}
+        "DurationSeconds":{"shape":"RootDurationSecondsType"},
+        "MinimumSessionTokenSize":{"shape":"minimumSessionTokenSizeType"}
       }
     },
     "AssumeRootResponse":{
       "type":"structure",
       "members":{
         "Credentials":{"shape":"Credentials"},
-        "SourceIdentity":{"shape":"sourceIdentityType"}
+        "SourceIdentity":{"shape":"sourceIdentityType"},
+        "SessionTokenUtilization":{"shape":"sessionTokenUtilizationType"},
+        "SessionTokenSize":{"shape":"sessionTokenSizeType"}
       }
     },
     "AssumedRoleUser":{
@@ -423,7 +450,12 @@
       "type":"structure",
       "members":{
         "Credentials":{"shape":"Credentials"},
-        "PackedPolicySize":{"shape":"nonNegativeIntegerType"},
+        "PackedPolicySize":{
+          "shape":"nonNegativeIntegerType",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. This field is not populated for GetDelegatedAccessToken.",
+          "deprecatedSince":"2026-06-17"
+        },
         "AssumedPrincipal":{"shape":"arnType"}
       }
     },
@@ -435,7 +467,8 @@
         "Policy":{"shape":"sessionPolicyDocumentType"},
         "PolicyArns":{"shape":"policyDescriptorListType"},
         "DurationSeconds":{"shape":"durationSecondsType"},
-        "Tags":{"shape":"tagListType"}
+        "Tags":{"shape":"tagListType"},
+        "MinimumSessionTokenSize":{"shape":"minimumSessionTokenSizeType"}
       }
     },
     "GetFederationTokenResponse":{
@@ -443,7 +476,14 @@
       "members":{
         "Credentials":{"shape":"Credentials"},
         "FederatedUser":{"shape":"FederatedUser"},
-        "PackedPolicySize":{"shape":"nonNegativeIntegerType"}
+        "PackedPolicySize":{
+          "shape":"nonNegativeIntegerType",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Replaced by SessionTokenUtilization.",
+          "deprecatedSince":"2026-06-17"
+        },
+        "SessionTokenUtilization":{"shape":"sessionTokenUtilizationType"},
+        "SessionTokenSize":{"shape":"sessionTokenSizeType"}
       }
     },
     "GetSessionTokenRequest":{
@@ -451,13 +491,16 @@
       "members":{
         "DurationSeconds":{"shape":"durationSecondsType"},
         "SerialNumber":{"shape":"serialNumberType"},
-        "TokenCode":{"shape":"tokenCodeType"}
+        "TokenCode":{"shape":"tokenCodeType"},
+        "MinimumSessionTokenSize":{"shape":"minimumSessionTokenSizeType"}
       }
     },
     "GetSessionTokenResponse":{
       "type":"structure",
       "members":{
-        "Credentials":{"shape":"Credentials"}
+        "Credentials":{"shape":"Credentials"},
+        "SessionTokenUtilization":{"shape":"sessionTokenUtilizationType"},
+        "SessionTokenSize":{"shape":"sessionTokenSizeType"}
       }
     },
     "GetWebIdentityTokenRequest":{
@@ -721,6 +764,11 @@
     },
     "jwtPayloadSizeExceededException":{"type":"string"},
     "malformedPolicyDocumentMessage":{"type":"string"},
+    "minimumSessionTokenSizeType":{
+      "type":"integer",
+      "max":4096,
+      "min":0
+    },
     "nonNegativeIntegerType":{
       "type":"integer",
       "min":0
@@ -755,6 +803,14 @@
       "max":2048,
       "min":1,
       "pattern":"[\\u0009\\u000A\\u000D\\u0020-\\u00FF]+"
+    },
+    "sessionTokenSizeType":{
+      "type":"integer",
+      "min":0
+    },
+    "sessionTokenUtilizationType":{
+      "type":"integer",
+      "min":0
     },
     "sourceIdentityType":{
       "type":"string",

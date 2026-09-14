@@ -1095,9 +1095,9 @@
     },
     "CreateTieringInput":{
       "type":"structure",
-      "required":["FreeTier"],
       "members":{
-        "FreeTier":{"shape":"CreateFreeTierConfig"}
+        "FreeTier":{"shape":"CreateFreeTierConfig"},
+        "CustomTiers":{"shape":"CustomTiersList"}
       }
     },
     "Currency":{"type":"string"},
@@ -1269,6 +1269,39 @@
         "ComputationRule":{"shape":"ComputationRuleEnum"},
         "PresentationDetails":{"shape":"PresentationObject"}
       }
+    },
+    "CustomTier":{
+      "type":"structure",
+      "required":[
+        "BeginRangeInclusive",
+        "RateValue"
+      ],
+      "members":{
+        "BeginRangeInclusive":{"shape":"CustomTierBeginRangeInclusive"},
+        "EndRangeExclusive":{"shape":"CustomTierEndRangeExclusive"},
+        "RateValue":{"shape":"CustomTierRateValue"}
+      }
+    },
+    "CustomTierBeginRangeInclusive":{
+      "type":"double",
+      "box":true,
+      "min":0
+    },
+    "CustomTierEndRangeExclusive":{
+      "type":"double",
+      "box":true,
+      "min":0
+    },
+    "CustomTierRateValue":{
+      "type":"double",
+      "box":true,
+      "min":0
+    },
+    "CustomTiersList":{
+      "type":"list",
+      "member":{"shape":"CustomTier"},
+      "max":10,
+      "min":1
     },
     "DeleteBillingGroupInput":{
       "type":"structure",
@@ -2095,9 +2128,9 @@
     },
     "Tiering":{
       "type":"structure",
-      "required":["FreeTier"],
       "members":{
-        "FreeTier":{"shape":"FreeTierConfig"}
+        "FreeTier":{"shape":"FreeTierConfig"},
+        "CustomTiers":{"shape":"CustomTiersList"}
       }
     },
     "TieringActivated":{
@@ -2265,9 +2298,9 @@
     },
     "UpdateTieringInput":{
       "type":"structure",
-      "required":["FreeTier"],
       "members":{
-        "FreeTier":{"shape":"UpdateFreeTierConfig"}
+        "FreeTier":{"shape":"UpdateFreeTierConfig"},
+        "CustomTiers":{"shape":"CustomTiersList"}
       }
     },
     "UsageType":{

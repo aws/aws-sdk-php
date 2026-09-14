@@ -211,6 +211,7 @@
     "ListGlossaries": "<p>Lists business glossaries in Glue Data Catalog.</p>",
     "ListGlossaryTerms": "<p>Lists glossary terms within a business glossary in Glue Data Catalog.</p>",
     "ListIntegrationResourceProperties": "<p>List integration resource properties for a single customer. It supports the filters, maxRecords and markers.</p>",
+    "ListIntegrationTableProperties": "<p>Lists the integration table properties in your account. This operation supports filtering and pagination.</p>",
     "ListIterableForms": "<p>Lists the items in an iterable form on an asset in Glue Data Catalog. For example, lists the columns of a table asset.</p>",
     "ListJobs": "<p>Retrieves the names of all job resources in this Amazon Web Services account, or the resources with the specified tag. This operation allows you to see which resources are available in your account, and their names.</p> <p>This operation takes the optional <code>Tags</code> field, which you can use as a filter on the response so that tagged resources can be retrieved as a group. If you choose to use tags filtering, only resources with the tag are retrieved.</p>",
     "ListMLTransforms": "<p> Retrieves a sortable, filterable list of existing Glue machine learning transforms in this Amazon Web Services account, or the resources with the specified tag. This operation takes the optional <code>Tags</code> field, which you can use as a filter of the responses so that tagged resources can be retrieved as a group. If you choose to use tag filtering, only resources with the tags are retrieved. </p>",
@@ -6832,7 +6833,8 @@
       "refs": {
         "DescribeInboundIntegrationsRequest$MaxRecords": "<p>The total number of items to return in the output.</p>",
         "DescribeIntegrationsRequest$MaxRecords": "<p>The total number of items to return in the output.</p>",
-        "ListIntegrationResourcePropertiesRequest$MaxRecords": "<p>This is total number of items to be evaluated.</p>"
+        "ListIntegrationResourcePropertiesRequest$MaxRecords": "<p>This is total number of items to be evaluated.</p>",
+        "ListIntegrationTablePropertiesRequest$MaxRecords": "<p>The maximum number of records to return in the response.</p>"
       }
     },
     "IntegrationNotFoundFault": {
@@ -6908,6 +6910,36 @@
         "IntegrationAdditionalEncryptionContextMap$value": null,
         "IntegrationSourcePropertiesMap$key": null,
         "IntegrationSourcePropertiesMap$value": null
+      }
+    },
+    "IntegrationTableProperties": {
+      "base": "<p>The properties of a single integration table, including the resource ARN, the table name, and the source or target table configuration.</p>",
+      "refs": {
+        "IntegrationTablePropertiesList$member": null
+      }
+    },
+    "IntegrationTablePropertiesFilter": {
+      "base": "<p>A key-value filter used to narrow the list of integration table properties returned by ListIntegrationTableProperties. Specify a filter key and one or more values to match.</p>",
+      "refs": {
+        "IntegrationTablePropertiesFilterList$member": null
+      }
+    },
+    "IntegrationTablePropertiesFilterList": {
+      "base": null,
+      "refs": {
+        "ListIntegrationTablePropertiesRequest$Filters": "<p>A list of filters. Supported filter keys are <code>SourceArn</code>, <code>TargetArn</code>, <code>SourceTableName</code>, and <code>TargetTableName</code>.</p>"
+      }
+    },
+    "IntegrationTablePropertiesFilterValues": {
+      "base": null,
+      "refs": {
+        "IntegrationTablePropertiesFilter$Values": "<p>A list of filter values.</p>"
+      }
+    },
+    "IntegrationTablePropertiesList": {
+      "base": null,
+      "refs": {
+        "ListIntegrationTablePropertiesResponse$IntegrationTablePropertiesList": "<p>A list of integration table properties meeting the filter criteria.</p>"
       }
     },
     "IntegrationTagsList": {
@@ -7622,6 +7654,14 @@
       "refs": {}
     },
     "ListIntegrationResourcePropertiesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListIntegrationTablePropertiesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListIntegrationTablePropertiesResponse": {
       "base": null,
       "refs": {}
     },
@@ -11188,6 +11228,7 @@
       "refs": {
         "CreateIntegrationTablePropertiesRequest$SourceTableConfig": "<p>A structure for the source table configuration. See the <code>SourceTableConfig</code> structure to see list of supported source properties.</p>",
         "GetIntegrationTablePropertiesResponse$SourceTableConfig": "<p>A structure for the source table configuration.</p>",
+        "IntegrationTableProperties$SourceTableConfig": "<p>A structure for the source table configuration.</p>",
         "UpdateIntegrationTablePropertiesRequest$SourceTableConfig": "<p>A structure for the source table configuration.</p>"
       }
     },
@@ -11585,13 +11626,6 @@
         "Property$KeyOverride": "<p>A key name to use when sending this property in API requests, if different from the display name.</p>"
       }
     },
-    "String1024": {
-      "base": null,
-      "refs": {
-        "ListIntegrationResourcePropertiesRequest$Marker": "<p>This is the pagination token for next page, initial value is <code>null</code>.</p>",
-        "ListIntegrationResourcePropertiesResponse$Marker": "<p>This is the pagination token for the next page.</p>"
-      }
-    },
     "String128": {
       "base": null,
       "refs": {
@@ -11623,6 +11657,9 @@
         "IntegrationPartition$ConversionSpec": "<p>Specifies the timestamp format of the source data. Valid values are:</p> <ul> <li> <p> <code>epoch_sec</code> - Unix epoch timestamp in seconds</p> </li> <li> <p> <code>epoch_milli</code> - Unix epoch timestamp in milliseconds</p> </li> <li> <p> <code>iso</code> - ISO 8601 formatted timestamp</p> </li> </ul> <note> <p> Only specify <code>ConversionSpec</code> when using timestamp-based partition functions (year, month, day, or hour). Glue Zero-ETL uses this parameter to correctly transform source data into timestamp format before partitioning. </p> <p> Do not use high-cardinality columns with the <code>identity</code> partition function. High-cardinality columns include: </p> <ul> <li> <p>Primary keys</p> </li> <li> <p>Timestamp fields (such as <code>LastModifiedTimestamp</code>, <code>CreatedDate</code>)</p> </li> <li> <p>System-generated timestamps</p> </li> </ul> <p> Using high-cardinality columns with identity partitioning creates many small partitions, which can significantly degrade ingestion performance. </p> </note>",
         "IntegrationResourcePropertyFilter$Name": "<p>The name of the filter. Supported filter keys are <code>SourceArn</code> and <code>TargetArn</code>.</p>",
         "IntegrationResourcePropertyFilterValues$member": null,
+        "IntegrationTableProperties$TableName": "<p>The name of the source table to be replicated.</p>",
+        "IntegrationTablePropertiesFilter$Name": "<p>The name of the filter. Supported filter keys are <code>SourceArn</code>, <code>TargetArn</code>, <code>SourceTableName</code>, and <code>TargetTableName</code>.</p>",
+        "IntegrationTablePropertiesFilterValues$member": null,
         "ModifyIntegrationRequest$IntegrationIdentifier": "<p>The Amazon Resource Name (ARN) for the integration.</p>",
         "ModifyIntegrationRequest$IntegrationName": "<p>A unique name for an integration in Glue.</p>",
         "ModifyIntegrationResponse$IntegrationName": "<p>A unique name for an integration in Glue.</p>",
@@ -11635,6 +11672,7 @@
         "TargetProcessingProperties$RoleArn": "<p>The IAM role to access the Glue database.</p>",
         "TargetProcessingProperties$ConnectionName": "<p>The Glue network connection to configure the Glue job running in the customer VPC.</p>",
         "TargetTableConfig$TargetTableName": "<p>The optional name of a target table.</p>",
+        "TargetTableConfig$IntegrationArn": "<p>The ARN of the integration that owns this target table configuration.</p>",
         "UpdateIntegrationTablePropertiesRequest$TableName": "<p>The name of the table to be replicated.</p>"
       }
     },
@@ -11655,6 +11693,15 @@
         "ModifyIntegrationResponse$DataFilter": "<p>Selects source tables for the integration using Maxwell filter syntax.</p>",
         "TargetProcessingProperties$KmsArn": "<p>The ARN of the KMS key used for encryption.</p>",
         "TargetProcessingProperties$EventBusArn": "<p>The ARN of an Eventbridge event bus to receive the integration status notification.</p>"
+      }
+    },
+    "String4096": {
+      "base": null,
+      "refs": {
+        "ListIntegrationResourcePropertiesRequest$Marker": "<p>This is the pagination token for next page, initial value is <code>null</code>.</p>",
+        "ListIntegrationResourcePropertiesResponse$Marker": "<p>This is the pagination token for the next page.</p>",
+        "ListIntegrationTablePropertiesRequest$Marker": "<p>The pagination token for the next page of results. The initial value is <code>null</code>.</p>",
+        "ListIntegrationTablePropertiesResponse$Marker": "<p>The pagination token for the next page. Returns <code>null</code> if there are no more results.</p>"
       }
     },
     "String512": {
@@ -11684,6 +11731,7 @@
         "Integration$TargetArn": "<p>The ARN for the target of the integration.</p>",
         "IntegrationResourceProperty$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
         "IntegrationResourceProperty$ResourcePropertyArn": "<p>The resource ARN created through this create API. The format is something like arn:aws:glue:&lt;region&gt;:&lt;account_id&gt;:integrationresourceproperty/*</p>",
+        "IntegrationTableProperties$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
         "ModifyIntegrationResponse$SourceArn": "<p>The ARN of the source for the integration.</p>",
         "ModifyIntegrationResponse$TargetArn": "<p>The ARN of the target for the integration.</p>",
         "UpdateIntegrationResourcePropertyRequest$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
@@ -12017,6 +12065,7 @@
       "refs": {
         "CreateIntegrationTablePropertiesRequest$TargetTableConfig": "<p>A structure for the target table configuration.</p>",
         "GetIntegrationTablePropertiesResponse$TargetTableConfig": "<p>A structure for the target table configuration.</p>",
+        "IntegrationTableProperties$TargetTableConfig": "<p>A structure for the target table configuration.</p>",
         "UpdateIntegrationTablePropertiesRequest$TargetTableConfig": "<p>A structure for the target table configuration.</p>"
       }
     },

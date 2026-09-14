@@ -63,6 +63,7 @@ use Aws\AwsClient;
  *     targetRepository?: array{service?: 'ECR', repositoryName?: string, ...},
  *     kmsKeyId?: string,
  *     clientToken?: string,
+ *     dryRun?: bool,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createContainerRecipeAsync(array $args = [])
@@ -83,6 +84,7 @@ use Aws\AwsClient;
  *     targetRepository?: array{service?: 'ECR', repositoryName?: string, ...},
  *     kmsKeyId?: string,
  *     clientToken?: string,
+ *     dryRun?: bool,
  *     ...,
  * } $args = [])
  * @method \Aws\Result createDistributionConfiguration(array $args = [])
@@ -102,6 +104,7 @@ use Aws\AwsClient;
  *     }>,
  *     tags?: array<string, string>,
  *     clientToken?: string,
+ *     dryRun?: bool,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createDistributionConfigurationAsync(array $args = [])
@@ -121,6 +124,7 @@ use Aws\AwsClient;
  *     }>,
  *     tags?: array<string, string>,
  *     clientToken?: string,
+ *     dryRun?: bool,
  *     ...,
  * } $args = [])
  * @method \Aws\Result createImage(array $args = [])
@@ -210,6 +214,7 @@ use Aws\AwsClient;
  *     }>,
  *     executionRole?: string,
  *     loggingConfiguration?: array{imageLogGroupName?: string, pipelineLogGroupName?: string, ...},
+ *     dryRun?: bool,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createImagePipelineAsync(array $args = [])
@@ -247,6 +252,7 @@ use Aws\AwsClient;
  *     }>,
  *     executionRole?: string,
  *     loggingConfiguration?: array{imageLogGroupName?: string, pipelineLogGroupName?: string, ...},
+ *     dryRun?: bool,
  *     ...,
  * } $args = [])
  * @method \Aws\Result createImageRecipe(array $args = [])
@@ -263,6 +269,7 @@ use Aws\AwsClient;
  *     amiTags?: array<string, string>,
  *     amiWatermarks?: list<string>,
  *     clientToken?: string,
+ *     dryRun?: bool,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createImageRecipeAsync(array $args = [])
@@ -279,6 +286,7 @@ use Aws\AwsClient;
  *     amiTags?: array<string, string>,
  *     amiWatermarks?: list<string>,
  *     clientToken?: string,
+ *     dryRun?: bool,
  *     ...,
  * } $args = [])
  * @method \Aws\Result createInfrastructureConfiguration(array $args = [])
@@ -304,6 +312,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     clientToken?: string,
+ *     dryRun?: bool,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createInfrastructureConfigurationAsync(array $args = [])
@@ -329,6 +338,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     clientToken?: string,
+ *     dryRun?: bool,
  *     ...,
  * } $args = [])
  * @method \Aws\Result createLifecyclePolicy(array $args = [])
@@ -342,6 +352,7 @@ use Aws\AwsClient;
  *     resourceSelection?: array{recipes?: list<array>, tagMap?: array<string, string>, ...},
  *     tags?: array<string, string>,
  *     clientToken?: string,
+ *     dryRun?: bool,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createLifecyclePolicyAsync(array $args = [])
@@ -355,6 +366,7 @@ use Aws\AwsClient;
  *     resourceSelection?: array{recipes?: list<array>, tagMap?: array<string, string>, ...},
  *     tags?: array<string, string>,
  *     clientToken?: string,
+ *     dryRun?: bool,
  *     ...,
  * } $args = [])
  * @method \Aws\Result createWorkflow(array $args = [])

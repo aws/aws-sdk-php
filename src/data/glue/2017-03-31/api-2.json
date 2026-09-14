@@ -3335,6 +3335,24 @@
         {"shape":"InvalidInputException"}
       ]
     },
+    "ListIntegrationTableProperties":{
+      "name":"ListIntegrationTableProperties",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListIntegrationTablePropertiesRequest"},
+      "output":{"shape":"ListIntegrationTablePropertiesResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidInputException"}
+      ]
+    },
     "ListIterableForms":{
       "name":"ListIterableForms",
       "http":{
@@ -13129,6 +13147,38 @@
       ]
     },
     "IntegrationString":{"type":"string"},
+    "IntegrationTableProperties":{
+      "type":"structure",
+      "required":[
+        "ResourceArn",
+        "TableName"
+      ],
+      "members":{
+        "ResourceArn":{"shape":"String512"},
+        "TableName":{"shape":"String128"},
+        "SourceTableConfig":{"shape":"SourceTableConfig"},
+        "TargetTableConfig":{"shape":"TargetTableConfig"}
+      }
+    },
+    "IntegrationTablePropertiesFilter":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"String128"},
+        "Values":{"shape":"IntegrationTablePropertiesFilterValues"}
+      }
+    },
+    "IntegrationTablePropertiesFilterList":{
+      "type":"list",
+      "member":{"shape":"IntegrationTablePropertiesFilter"}
+    },
+    "IntegrationTablePropertiesFilterValues":{
+      "type":"list",
+      "member":{"shape":"String128"}
+    },
+    "IntegrationTablePropertiesList":{
+      "type":"list",
+      "member":{"shape":"IntegrationTableProperties"}
+    },
     "IntegrationTagsList":{
       "type":"list",
       "member":{"shape":"Tag"}
@@ -14115,7 +14165,7 @@
     "ListIntegrationResourcePropertiesRequest":{
       "type":"structure",
       "members":{
-        "Marker":{"shape":"String1024"},
+        "Marker":{"shape":"String4096"},
         "Filters":{"shape":"IntegrationResourcePropertyFilterList"},
         "MaxRecords":{"shape":"IntegrationInteger"}
       }
@@ -14124,7 +14174,22 @@
       "type":"structure",
       "members":{
         "IntegrationResourcePropertyList":{"shape":"IntegrationResourcePropertyList"},
-        "Marker":{"shape":"String1024"}
+        "Marker":{"shape":"String4096"}
+      }
+    },
+    "ListIntegrationTablePropertiesRequest":{
+      "type":"structure",
+      "members":{
+        "Marker":{"shape":"String4096"},
+        "Filters":{"shape":"IntegrationTablePropertiesFilterList"},
+        "MaxRecords":{"shape":"IntegrationInteger"}
+      }
+    },
+    "ListIntegrationTablePropertiesResponse":{
+      "type":"structure",
+      "members":{
+        "IntegrationTablePropertiesList":{"shape":"IntegrationTablePropertiesList"},
+        "Marker":{"shape":"String4096"}
       }
     },
     "ListIterableFormsRequest":{
@@ -18157,11 +18222,6 @@
       }
     },
     "String":{"type":"string"},
-    "String1024":{
-      "type":"string",
-      "max":1024,
-      "min":1
-    },
     "String128":{
       "type":"string",
       "max":128,
@@ -18170,6 +18230,11 @@
     "String2048":{
       "type":"string",
       "max":2048,
+      "min":1
+    },
+    "String4096":{
+      "type":"string",
+      "max":4096,
       "min":1
     },
     "String512":{
@@ -18508,7 +18573,8 @@
       "members":{
         "UnnestSpec":{"shape":"UnnestSpec"},
         "PartitionSpec":{"shape":"IntegrationPartitionSpecList"},
-        "TargetTableName":{"shape":"String128"}
+        "TargetTableName":{"shape":"String128"},
+        "IntegrationArn":{"shape":"String128"}
       }
     },
     "TaskRun":{

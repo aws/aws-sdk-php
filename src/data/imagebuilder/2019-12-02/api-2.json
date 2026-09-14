@@ -95,7 +95,8 @@
         {"shape":"InvalidVersionNumberException"},
         {"shape":"ResourceInUseException"},
         {"shape":"ResourceAlreadyExistsException"},
-        {"shape":"ServiceQuotaExceededException"}
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"DryRunOperationException"}
       ]
     },
     "CreateDistributionConfiguration":{
@@ -117,7 +118,8 @@
         {"shape":"ResourceInUseException"},
         {"shape":"ResourceAlreadyExistsException"},
         {"shape":"InvalidParameterCombinationException"},
-        {"shape":"ServiceQuotaExceededException"}
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"DryRunOperationException"}
       ]
     },
     "CreateImage":{
@@ -158,7 +160,8 @@
         {"shape":"CallRateLimitExceededException"},
         {"shape":"ResourceInUseException"},
         {"shape":"ResourceAlreadyExistsException"},
-        {"shape":"ServiceQuotaExceededException"}
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"DryRunOperationException"}
       ]
     },
     "CreateImageRecipe":{
@@ -180,7 +183,8 @@
         {"shape":"InvalidVersionNumberException"},
         {"shape":"ResourceInUseException"},
         {"shape":"ResourceAlreadyExistsException"},
-        {"shape":"ServiceQuotaExceededException"}
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"DryRunOperationException"}
       ]
     },
     "CreateInfrastructureConfiguration":{
@@ -201,7 +205,8 @@
         {"shape":"CallRateLimitExceededException"},
         {"shape":"ResourceInUseException"},
         {"shape":"ResourceAlreadyExistsException"},
-        {"shape":"ServiceQuotaExceededException"}
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"DryRunOperationException"}
       ]
     },
     "CreateLifecyclePolicy":{
@@ -222,7 +227,8 @@
         {"shape":"CallRateLimitExceededException"},
         {"shape":"ResourceInUseException"},
         {"shape":"ResourceAlreadyExistsException"},
-        {"shape":"ServiceQuotaExceededException"}
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"DryRunOperationException"}
       ]
     },
     "CreateWorkflow":{
@@ -1635,6 +1641,16 @@
       "min":1
     },
     "ComponentData":{"type":"string"},
+    "ComponentFailureContext":{
+      "type":"structure",
+      "members":{
+        "componentArn":{"shape":"ComponentBuildVersionArn"},
+        "phaseName":{"shape":"NonEmptyString"},
+        "stepName":{"shape":"NonEmptyString"},
+        "action":{"shape":"NonEmptyString"},
+        "errorMessage":{"shape":"NonEmptyMaxLengthString"}
+      }
+    },
     "ComponentFormat":{
       "type":"string",
       "enum":["SHELL"]
@@ -1912,7 +1928,8 @@
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        }
+        },
+        "dryRun":{"shape":"Boolean"}
       }
     },
     "CreateContainerRecipeResponse":{
@@ -1939,7 +1956,8 @@
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        }
+        },
+        "dryRun":{"shape":"Boolean"}
       }
     },
     "CreateDistributionConfigurationResponse":{
@@ -1977,7 +1995,8 @@
         "imageScanningConfiguration":{"shape":"ImageScanningConfiguration"},
         "workflows":{"shape":"WorkflowConfigurationList"},
         "executionRole":{"shape":"RoleNameOrArn"},
-        "loggingConfiguration":{"shape":"PipelineLoggingConfiguration"}
+        "loggingConfiguration":{"shape":"PipelineLoggingConfiguration"},
+        "dryRun":{"shape":"Boolean"}
       }
     },
     "CreateImagePipelineResponse":{
@@ -2011,7 +2030,8 @@
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        }
+        },
+        "dryRun":{"shape":"Boolean"}
       }
     },
     "CreateImageRecipeResponse":{
@@ -2081,7 +2101,8 @@
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        }
+        },
+        "dryRun":{"shape":"Boolean"}
       }
     },
     "CreateInfrastructureConfigurationResponse":{
@@ -2114,7 +2135,8 @@
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        }
+        },
+        "dryRun":{"shape":"Boolean"}
       }
     },
     "CreateLifecyclePolicyResponse":{
@@ -2436,6 +2458,13 @@
     "DistributionConfigurationSummaryList":{
       "type":"list",
       "member":{"shape":"DistributionConfigurationSummary"}
+    },
+    "DistributionFailureContext":{
+      "type":"structure",
+      "members":{
+        "errorMessage":{"shape":"NonEmptyMaxLengthString"},
+        "regionFailures":{"shape":"RegionFailureList"}
+      }
     },
     "DistributionList":{
       "type":"list",
@@ -2908,7 +2937,9 @@
         "startTime":{"shape":"DateTime"},
         "endTime":{"shape":"DateTime"},
         "onFailure":{"shape":"NonEmptyString"},
-        "timeoutSeconds":{"shape":"WorkflowStepTimeoutSecondsInteger"}
+        "timeoutSeconds":{"shape":"WorkflowStepTimeoutSecondsInteger"},
+        "attemptNumber":{"shape":"WorkflowStepAttemptCount"},
+        "maxAttempts":{"shape":"WorkflowStepAttemptCount"}
       }
     },
     "HttpPutResponseHopLimit":{
@@ -2979,6 +3010,28 @@
     "ImageBuilderArn":{
       "type":"string",
       "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:[0-9]{12}|aws(?:-[a-z-]+)?):(?:image-recipe|container-recipe|infrastructure-configuration|distribution-configuration|component|image|image-pipeline|lifecycle-policy|workflow\\/(?:build|test|distribution))/[a-z0-9-_]+(?:/(?:(?:x|[0-9]+)\\.(?:x|[0-9]+)\\.(?:x|[0-9]+))(?:/[0-9]+)?)?$"
+    },
+    "ImageConfigurationStep":{
+      "type":"string",
+      "enum":[
+        "ASSOCIATE_LICENSES",
+        "UPDATE_LAUNCH_TEMPLATES",
+        "PUT_SSM_PARAMETERS",
+        "UPDATE_FAST_LAUNCH_CONFIGURATIONS",
+        "EXPORT_AMI"
+      ]
+    },
+    "ImageFailureContext":{
+      "type":"structure",
+      "members":{
+        "imageStatus":{"shape":"ImageStatus"},
+        "workflowExecutionId":{"shape":"WorkflowExecutionId"},
+        "workflowArn":{"shape":"WorkflowBuildVersionArn"},
+        "stepExecutionId":{"shape":"WorkflowStepExecutionId"},
+        "failedStep":{"shape":"WorkflowStepName"},
+        "componentFailure":{"shape":"ComponentFailureContext"},
+        "distributionFailure":{"shape":"DistributionFailureContext"}
+      }
     },
     "ImageLoggingConfiguration":{
       "type":"structure",
@@ -3177,7 +3230,8 @@
       "type":"structure",
       "members":{
         "status":{"shape":"ImageStatus"},
-        "reason":{"shape":"NonEmptyString"}
+        "reason":{"shape":"NonEmptyString"},
+        "failureContext":{"shape":"ImageFailureContext"}
       }
     },
     "ImageStatus":{
@@ -4335,6 +4389,11 @@
       "type":"integer",
       "min":1
     },
+    "NonEmptyMaxLengthString":{
+      "type":"string",
+      "max":384000,
+      "min":1
+    },
     "NonEmptyString":{
       "type":"string",
       "max":1024,
@@ -4565,6 +4624,30 @@
         "requestId":{"shape":"NonEmptyString"},
         "imageRecipeArn":{"shape":"ImageRecipeArn"}
       }
+    },
+    "RegionFailure":{
+      "type":"structure",
+      "members":{
+        "region":{"shape":"NonEmptyString"},
+        "status":{"shape":"RegionFailureStatus"},
+        "imageConfigurationStep":{"shape":"ImageConfigurationStep"},
+        "errorMessage":{"shape":"NonEmptyMaxLengthString"},
+        "targetAccountId":{"shape":"AccountId"}
+      }
+    },
+    "RegionFailureList":{
+      "type":"list",
+      "member":{"shape":"RegionFailure"},
+      "max":256,
+      "min":1
+    },
+    "RegionFailureStatus":{
+      "type":"string",
+      "enum":[
+        "FAILED",
+        "CANCELLED",
+        "TIMED_OUT"
+      ]
     },
     "RegionList":{
       "type":"list",
@@ -5346,6 +5429,10 @@
         "STOP"
       ]
     },
+    "WorkflowStepAttemptCount":{
+      "type":"integer",
+      "min":1
+    },
     "WorkflowStepCount":{"type":"integer"},
     "WorkflowStepDescription":{
       "type":"string",
@@ -5415,7 +5502,9 @@
         "inputs":{"shape":"WorkflowStepInputs"},
         "outputs":{"shape":"WorkflowStepOutputs"},
         "startTime":{"shape":"DateTime"},
-        "endTime":{"shape":"DateTime"}
+        "endTime":{"shape":"DateTime"},
+        "attemptNumber":{"shape":"WorkflowStepAttemptCount"},
+        "maxAttempts":{"shape":"WorkflowStepAttemptCount"}
       }
     },
     "WorkflowStepName":{

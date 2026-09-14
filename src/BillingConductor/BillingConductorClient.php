@@ -132,7 +132,7 @@ use Aws\AwsClient;
  *     Service?: string,
  *     Tags?: array<string, string>,
  *     BillingEntity?: string,
- *     Tiering?: array{FreeTier?: array{Activated?: bool, ...}, ...},
+ *     Tiering?: array{FreeTier?: array{Activated?: bool, ...}, CustomTiers?: list<array>, ...},
  *     UsageType?: string,
  *     Operation?: string,
  *     ...,
@@ -148,7 +148,7 @@ use Aws\AwsClient;
  *     Service?: string,
  *     Tags?: array<string, string>,
  *     BillingEntity?: string,
- *     Tiering?: array{FreeTier?: array{Activated?: bool, ...}, ...},
+ *     Tiering?: array{FreeTier?: array{Activated?: bool, ...}, CustomTiers?: list<array>, ...},
  *     UsageType?: string,
  *     Operation?: string,
  *     ...,
@@ -430,7 +430,7 @@ use Aws\AwsClient;
  *     Description?: string,
  *     Type?: 'DISCOUNT'|'MARKUP'|'TIERING',
  *     ModifierPercentage?: float,
- *     Tiering?: array{FreeTier?: array{Activated?: bool, ...}, ...},
+ *     Tiering?: array{FreeTier?: array{Activated?: bool, ...}, CustomTiers?: list<array>, ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updatePricingRuleAsync(array $args = [])
@@ -440,7 +440,7 @@ use Aws\AwsClient;
  *     Description?: string,
  *     Type?: 'DISCOUNT'|'MARKUP'|'TIERING',
  *     ModifierPercentage?: float,
- *     Tiering?: array{FreeTier?: array{Activated?: bool, ...}, ...},
+ *     Tiering?: array{FreeTier?: array{Activated?: bool, ...}, CustomTiers?: list<array>, ...},
  *     ...,
  * } $args = [])
  */

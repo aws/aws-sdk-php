@@ -642,6 +642,38 @@
         "CustomLineItemVersionList$member": null
       }
     },
+    "CustomTier": {
+      "base": "<p> A custom tier for the pricing rule. Each custom tier applies a rate to the usage that falls within the tier's range. </p>",
+      "refs": {
+        "CustomTiersList$member": null
+      }
+    },
+    "CustomTierBeginRangeInclusive": {
+      "base": null,
+      "refs": {
+        "CustomTier$BeginRangeInclusive": "<p> The inclusive start of the usage range that this tier applies to. </p>"
+      }
+    },
+    "CustomTierEndRangeExclusive": {
+      "base": null,
+      "refs": {
+        "CustomTier$EndRangeExclusive": "<p> The exclusive end of the usage range that this tier applies to. If you don't specify a value, this tier applies to all usage that is greater than or equal to <code>BeginRangeInclusive</code>. </p>"
+      }
+    },
+    "CustomTierRateValue": {
+      "base": null,
+      "refs": {
+        "CustomTier$RateValue": "<p> The rate that's applied to the usage that falls within this tier. </p>"
+      }
+    },
+    "CustomTiersList": {
+      "base": null,
+      "refs": {
+        "CreateTieringInput$CustomTiers": "<p> The set of custom tiers for the pricing rule. </p>",
+        "Tiering$CustomTiers": "<p> The set of custom tiers for the pricing rule. </p>",
+        "UpdateTieringInput$CustomTiers": "<p> The set of custom tiers for the pricing rule. </p>"
+      }
+    },
     "DeleteBillingGroupInput": {
       "base": null,
       "refs": {}

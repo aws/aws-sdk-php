@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\BillingConductor` - This release adds support for custom volume tiering. You can now define custom tiers on a pricing rule's tiering configuration, where each tier specifies a usage range and the rate applied to usage in that range.
+* `Aws\Billing` - Increased the maximum number of services returned in the supportEligibleSpendByService field of ListEnterpriseSupportLinkedAccountCharges
+* `Aws\Glue` - Amazon Glue releasing the new API ListIntegrationTableProperties and adding IntegrationArn to TargetTableConfig
+* `Aws\imagebuilder` - This release adds a dryRun option to Image Builder create APIs (except CreateImage), structured failure context on failed images including component and distribution failure details, and step retry attempt tracking.
+* `Aws\STS` - Increases the maximum session token size to 4,096 bytes and removes the packed policy size limit. Adds SessionTokenSize and SessionTokenUtilization fields and a new MinimumSessionTokenSize parameter. PackedPolicySize is deprecated.
+* `Aws\CodeDeploy` - AWS CodeDeploy now returns the deployment mode on GetDeployment and BatchGetDeployments. The new deploymentMode field on DeploymentInfo indicates whether a deployment used the standard deployment process or restarted the application using a previously installed revision (RESTART mode).
+
 ## 3.395.1 - 2026-09-13
 
 * `Aws\` - Temporarily omit @phpstan-method annotations from Ec2Client. The inline EC2 input shapes increased Ec2Client.php from approximately 171 KB to 1.7 MB and caused PHPStan to hang when resolving the class.
