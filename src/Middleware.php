@@ -1,7 +1,7 @@
 <?php
 namespace Aws;
 
-use Aws\Api\Service;  
+use Aws\Api\Service;    
 use Aws\Api\Validator;
 use Aws\Credentials\CredentialsInterface;
 use Aws\EndpointV2\EndpointProviderV2;
@@ -52,7 +52,7 @@ final class Middleware
                 if ($source !== null
                     && $operation->getInput()->hasMember($bodyParameter)
                 ) {
-                    $lazyOpenStream = new LazyOpenStream($source, 'r');
+                    $lazyOpenStream = new LazyOpenStream($source,'r');
                     $command[$bodyParameter] = $lazyOpenStream;
                     unset($command[$sourceParameter]);
 
