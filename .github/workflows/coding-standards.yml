@@ -146,10 +146,12 @@ jobs:
             echo "::group::PHPCBF fixed-code preview"
             set +e
             xargs vendor/bin/phpcbf --standard=phpcs.xml.dist < changed-source-files.txt > phpcbf-report.txt 2>&1
-            phpcbf_exit=$?
+            xargs_phpcbf_exit=$?
+            xargs vendor/bin/phpcs --standard=phpcs.xml.dist --basepath="$(pwd)" --no-colors < changed-source-files.txt > phpcs-after-phpcbf-report.txt 2>&1
+            phpcs_after_phpcbf_exit=$?
             set -e
 
-            if [[ "$phpcbf_exit" -ne 0 ]]; then
+            if [[ "$phpcs_after_phpcbf_exit" -ne 0 ]]; then
               echo "PHPCBF could not fix every violation automatically. The preview below reflects any changes PHPCBF wrote."
             fi
 
@@ -164,18 +166,16 @@ jobs:
 
               echo ""
               echo "$file:$start_line-$end_line after PHPCBF"
-              echo '```php'
+              echo "----- begin fixed PHP -----"
               sed -n "${start_line},${end_line}p" "$file"
-              echo '```'
+              echo "----- end fixed PHP -----"
             done < changed-source-files.txt
             echo "::endgroup::"
 
             echo ""
             echo "Recommended local command:"
-            echo '```bash'
             echo "phpcbf --standard=phpcs.xml.dist \\"
             sed 's/^/  /; $!s/$/ \\/' changed-source-files.txt
-            echo '```'
             echo ""
 
             exit "$phpcs_exit"
