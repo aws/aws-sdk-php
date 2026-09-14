@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.395.2 - 2026-09-14
 
 * `Aws\BillingConductor` - This release adds support for custom volume tiering. You can now define custom tiers on a pricing rule's tiering configuration, where each tier specifies a usage range and the rate applied to usage in that range.
 * `Aws\Billing` - Increased the maximum number of services returned in the supportEligibleSpendByService field of ListEnterpriseSupportLinkedAccountCharges
