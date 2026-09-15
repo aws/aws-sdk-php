@@ -867,4 +867,30 @@ class RestXmlSerializerTest extends TestCase
             function () {}
         );
     }
+
+    public function testPreservesSubSecondTimestampPrecision()
+    {
+        // S3 lifecycle Transition.Date is an iso8601 timestamp in the XML body
+        $dt = new \DateTimeImmutable('2024-01-01T12:00:00.123456Z');
+        $request = $this->getRequest('PutBucketLifecycleConfiguration', [
+            'Bucket' => 'foo',
+            'LifecycleConfiguration' => [
+                'Rules' => [
+                    [
+                        'ID' => 'rule1',
+                        'Status' => 'Enabled',
+                        'Filter' => ['Prefix' => 'documents/'],
+                        'Transitions' => [
+                            ['Date' => $dt, 'StorageClass' => 'GLACIER']
+                        ]
+                    ]
+                ]
+            ]
+        ]);
+
+        $this->assertStringContainsString(
+            '<Date>2024-01-01T12:00:00.123456Z</Date>',
+            (string) $request->getBody()
+        );
+    }
 }
