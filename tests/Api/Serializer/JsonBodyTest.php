@@ -100,6 +100,32 @@ class JsonBodyTest extends TestCase
             ['foo' => 1397259637],
             '{"foo":1397259637}'
         ];
+        yield 'Preserves sub-second precision in unixTimestamp' => [
+            [
+                'type' => 'structure',
+                'members' => ['foo' => ['type' => 'timestamp']]
+            ],
+            ['foo' => new \DateTimeImmutable('2014-04-11T23:40:37.123456Z')],
+            '{"foo":1397259637.123456}'
+        ];
+        yield 'Omits fractional component for whole-second DateTime' => [
+            [
+                'type' => 'structure',
+                'members' => ['foo' => ['type' => 'timestamp']]
+            ],
+            ['foo' => new \DateTimeImmutable('2014-04-11T23:40:37Z')],
+            '{"foo":1397259637}'
+        ];
+        yield 'Preserves sub-second precision in iso8601 timestamps' => [
+            [
+                'type' => 'structure',
+                'members' => [
+                    'foo' => ['type' => 'timestamp', 'timestampFormat' => 'iso8601']
+                ]
+            ],
+            ['foo' => new \DateTimeImmutable('2014-04-11T23:40:37.123456Z')],
+            '{"foo":"2014-04-11T23:40:37.123456Z"}'
+        ];
         yield 'Formats nested structures, maps and lists which have no elements' => [
             [
                 'type' => 'structure',
