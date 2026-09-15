@@ -337,6 +337,140 @@ final class ResumableDownloadTest extends TestCase
         $this->assertFalse(ResumableDownload::isResumeFile('/non/existent.resume'));
     }
 
+    /**
+     * Preservation: fromJson() with legitimate paths (no '..' segments) must
+     * continue to return valid ResumableDownload objects.
+     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('legitimateDestinationPathsProvider')]
+    public function testFromJsonPreservesLegitimateDestinationPaths(
+        string $destination,
+    ): void {
+        $json = $this->buildResumeJson([
+            'destination' => $destination,
+        ]);
+
+        $result = ResumableDownload::fromJson($json);
+
+        $this->assertEquals($destination, $result->getDestination());
+    }
+
+    public static function legitimateDestinationPathsProvider(): array
+    {
+        return [
+            'absolute path' => [
+                '/home/user/downloads/file.dat',
+                'Legitimate absolute path',
+            ],
+            'relative path' => [
+                'downloads/file.dat',
+                'Relative path without traversal',
+            ],
+            'dots in filename' => [
+                '/tmp/file.v2.0.tar.gz',
+                'Dots in filename must NOT be falsely rejected',
+            ],
+            'single-dot segment in path' => [
+                '/tmp/./file.dat',
+                'Single-dot segment must NOT be falsely rejected',
+            ],
+        ];
+    }
+
+    /**
+     * Preservation: fromJson() with null temporaryFile must continue to
+     * return a valid ResumableDownload object.
+     */
+    public function testFromJsonPreservesNullTemporaryFile(): void
+    {
+        $json = json_encode([
+            'version' => '1.0',
+            'resumeFilePath' => $this->tempDir . 'download.resume',
+            'requestArgs' => ['Bucket' => 'my-bucket', 'Key' => 'my-key'],
+            'config' => ['target_part_size_bytes' => 8388608],
+            'currentSnapshot' => ['transferred_bytes' => 0, 'total_bytes' => 5000],
+            'initialRequestResult' => ['ContentLength' => 5000, 'ETag' => '"abc123"'],
+            'partsCompleted' => [],
+            'totalNumberOfParts' => 3,
+            'temporaryFile' => null,
+            'eTag' => '"abc123"',
+            'objectSizeInBytes' => 5000,
+            'fixedPartSize' => 8388608,
+            'destination' => '/tmp/destination.dat',
+        ]);
+
+        $result = ResumableDownload::fromJson($json);
+
+        $this->assertNull($result->getTemporaryFile());
+    }
+
+    /**
+     * fromJson() with destination containing '..' segments
+     * should throw S3TransferException with "path traversal" message.
+     */
+    public function testFromJsonThrowsOnDestinationPathTraversal(): void
+    {
+        $json = $this->buildResumeJson([
+            'destination' => '/downloads/../../etc/malicious',
+        ]);
+
+        $this->expectException(S3TransferException::class);
+        $this->expectExceptionMessage('path traversal');
+        ResumableDownload::fromJson($json);
+    }
+
+    /**
+     * fromJson() with temporaryFile containing '..' segments
+     * should throw S3TransferException with "path traversal" message.
+     */
+    public function testFromJsonThrowsOnTemporaryFilePathTraversal(): void
+    {
+        $json = $this->buildResumeJson([
+            'temporaryFile' => '/tmp/../../var/www/shell.php',
+        ]);
+
+        $this->expectException(S3TransferException::class);
+        $this->expectExceptionMessage('path traversal');
+        ResumableDownload::fromJson($json);
+    }
+
+    /**
+     * fromJson() with both destination and temporaryFile
+     * containing '..' segments should throw S3TransferException.
+     */
+    public function testFromJsonThrowsOnBothFieldsPathTraversal(): void
+    {
+        $json = $this->buildResumeJson([
+            'destination' => '../../../var/www/shell.php',
+            'temporaryFile' => '../../etc/passwd',
+        ]);
+
+        $this->expectException(S3TransferException::class);
+        $this->expectExceptionMessage('path traversal');
+        ResumableDownload::fromJson($json);
+    }
+
+    /**
+     * Build a valid resume JSON string with optional field overrides.
+     */
+    private function buildResumeJson(array $overrides = []): string
+    {
+        return json_encode([
+            'version' => '1.0',
+            'resumeFilePath' => $overrides['resumeFilePath'] ?? $this->tempDir . 'download.resume',
+            'requestArgs' => $overrides['requestArgs'] ?? ['Bucket' => 'my-bucket', 'Key' => 'my-key'],
+            'config' => $overrides['config'] ?? ['target_part_size_bytes' => 8388608],
+            'currentSnapshot' => $overrides['currentSnapshot'] ?? ['transferred_bytes' => 0, 'total_bytes' => 5000],
+            'initialRequestResult' => $overrides['initialRequestResult'] ?? ['ContentLength' => 5000, 'ETag' => '"abc123"'],
+            'partsCompleted' => $overrides['partsCompleted'] ?? [],
+            'totalNumberOfParts' => $overrides['totalNumberOfParts'] ?? 3,
+            'temporaryFile' => $overrides['temporaryFile'] ?? '/tmp/download.tmp',
+            'eTag' => $overrides['eTag'] ?? '"abc123"',
+            'objectSizeInBytes' => $overrides['objectSizeInBytes'] ?? 5000,
+            'fixedPartSize' => $overrides['fixedPartSize'] ?? 8388608,
+            'destination' => $overrides['destination'] ?? '/tmp/destination.dat',
+        ]);
+    }
+
     private function createResumableDownload(array $overrides = []): ResumableDownload
     {
         return new ResumableDownload(
