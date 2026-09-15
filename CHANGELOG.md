@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.395.3 - 2026-09-15
 
 * `Aws\Transfer` - AWS Transfer Family now preserves the original source IP address using Proxy Protocol v2 when you place a Network Load Balancer in front of your server for SFTP connections.
 * `Aws\WorkSpaces` - Added support for 4 new graphics-optimized compute types - Graphics.g7 (2xlarge, 4xlarge, 8xlarge, 12xlarge).
