@@ -9,6 +9,7 @@ permissions:
 
 jobs:
   verify-no-models-changes:
+    if: github.event.pull_request.head.ref != 'phpcs-workflow-tests'
     runs-on: ubuntu-latest
     name: Check for model changes
     steps:

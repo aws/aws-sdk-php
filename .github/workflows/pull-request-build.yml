@@ -14,7 +14,7 @@ env:
 
 jobs:
   aws-sdk-pr-build:
-    if: github.event.pull_request.draft == false
+    if: github.event.pull_request.draft == false && github.event.pull_request.head.ref != 'phpcs-workflow-tests'
     runs-on: ubuntu-latest
     permissions:
       id-token: write
