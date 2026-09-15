@@ -118,6 +118,20 @@
         {"shape":"DirectConnectClientException"}
       ]
     },
+    "AssociateConnectionsToResiliencyGroup":{
+      "name":"AssociateConnectionsToResiliencyGroup",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AssociateConnectionsToResiliencyGroupRequest"},
+      "output":{"shape":"AssociateConnectionsToResiliencyGroupResult"},
+      "errors":[
+        {"shape":"LimitExceededException"},
+        {"shape":"DirectConnectServerException"},
+        {"shape":"DirectConnectClientException"}
+      ]
+    },
     "AssociateHostedConnection":{
       "name":"AssociateHostedConnection",
       "http":{
@@ -351,6 +365,22 @@
         {"shape":"DirectConnectClientException"}
       ]
     },
+    "CreateResiliencyGroup":{
+      "name":"CreateResiliencyGroup",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateResiliencyGroupRequest"},
+      "output":{"shape":"CreateResiliencyGroupResult"},
+      "errors":[
+        {"shape":"DuplicateTagKeysException"},
+        {"shape":"TooManyTagsException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"DirectConnectServerException"},
+        {"shape":"DirectConnectClientException"}
+      ]
+    },
     "CreateTransitVirtualInterface":{
       "name":"CreateTransitVirtualInterface",
       "http":{
@@ -453,6 +483,19 @@
       },
       "input":{"shape":"DeleteLagRequest"},
       "output":{"shape":"Lag"},
+      "errors":[
+        {"shape":"DirectConnectServerException"},
+        {"shape":"DirectConnectClientException"}
+      ]
+    },
+    "DeleteResiliencyGroup":{
+      "name":"DeleteResiliencyGroup",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteResiliencyGroupRequest"},
+      "output":{"shape":"DeleteResiliencyGroupResult"},
       "errors":[
         {"shape":"DirectConnectServerException"},
         {"shape":"DirectConnectClientException"}
@@ -718,6 +761,19 @@
         {"shape":"DirectConnectClientException"}
       ]
     },
+    "DisassociateConnectionsFromResiliencyGroup":{
+      "name":"DisassociateConnectionsFromResiliencyGroup",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisassociateConnectionsFromResiliencyGroupRequest"},
+      "output":{"shape":"DisassociateConnectionsFromResiliencyGroupResult"},
+      "errors":[
+        {"shape":"DirectConnectServerException"},
+        {"shape":"DirectConnectClientException"}
+      ]
+    },
     "DisassociateMacSecKey":{
       "name":"DisassociateMacSecKey",
       "http":{
@@ -726,6 +782,45 @@
       },
       "input":{"shape":"DisassociateMacSecKeyRequest"},
       "output":{"shape":"DisassociateMacSecKeyResponse"},
+      "errors":[
+        {"shape":"DirectConnectServerException"},
+        {"shape":"DirectConnectClientException"}
+      ]
+    },
+    "GetResiliencyGroup":{
+      "name":"GetResiliencyGroup",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetResiliencyGroupRequest"},
+      "output":{"shape":"GetResiliencyGroupResult"},
+      "errors":[
+        {"shape":"DirectConnectServerException"},
+        {"shape":"DirectConnectClientException"}
+      ]
+    },
+    "ListResiliencyGroupAssociations":{
+      "name":"ListResiliencyGroupAssociations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListResiliencyGroupAssociationsRequest"},
+      "output":{"shape":"ListResiliencyGroupAssociationsResult"},
+      "errors":[
+        {"shape":"DirectConnectServerException"},
+        {"shape":"DirectConnectClientException"}
+      ]
+    },
+    "ListResiliencyGroups":{
+      "name":"ListResiliencyGroups",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListResiliencyGroupsRequest"},
+      "output":{"shape":"ListResiliencyGroupsResult"},
       "errors":[
         {"shape":"DirectConnectServerException"},
         {"shape":"DirectConnectClientException"}
@@ -824,6 +919,19 @@
         {"shape":"DirectConnectClientException"}
       ]
     },
+    "UpdateConnectionsBillingMode":{
+      "name":"UpdateConnectionsBillingMode",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateConnectionsBillingModeRequest"},
+      "output":{"shape":"UpdateConnectionsBillingModeResponse"},
+      "errors":[
+        {"shape":"DirectConnectServerException"},
+        {"shape":"DirectConnectClientException"}
+      ]
+    },
     "UpdateDirectConnectGateway":{
       "name":"UpdateDirectConnectGateway",
       "http":{
@@ -858,6 +966,19 @@
       },
       "input":{"shape":"UpdateLagRequest"},
       "output":{"shape":"Lag"},
+      "errors":[
+        {"shape":"DirectConnectServerException"},
+        {"shape":"DirectConnectClientException"}
+      ]
+    },
+    "UpdateResiliencyGroup":{
+      "name":"UpdateResiliencyGroup",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateResiliencyGroupRequest"},
+      "output":{"shape":"UpdateResiliencyGroupResult"},
       "errors":[
         {"shape":"DirectConnectServerException"},
         {"shape":"DirectConnectClientException"}
@@ -1028,6 +1149,24 @@
         "lagId":{"shape":"LagId"}
       }
     },
+    "AssociateConnectionsToResiliencyGroupRequest":{
+      "type":"structure",
+      "required":[
+        "connectionIdentifiers",
+        "resiliencyGroupId"
+      ],
+      "members":{
+        "connectionIdentifiers":{"shape":"ConnectionIdentifierList"},
+        "resiliencyGroupId":{"shape":"ResiliencyGroupId"},
+        "clientToken":{"shape":"IdempotencyToken"}
+      }
+    },
+    "AssociateConnectionsToResiliencyGroupResult":{
+      "type":"structure",
+      "members":{
+        "resiliencyGroupAssociations":{"shape":"ResiliencyGroupAssociationList"}
+      }
+    },
     "AssociateHostedConnectionRequest":{
       "type":"structure",
       "required":[
@@ -1085,6 +1224,18 @@
       }
     },
     "AssociatedGatewayId":{"type":"string"},
+    "AvailableBillingMode":{
+      "type":"structure",
+      "members":{
+        "billingMode":{"shape":"BillingMode"},
+        "availablePortSpeeds":{"shape":"AvailablePortSpeeds"},
+        "includedRegions":{"shape":"IncludedRegionList"}
+      }
+    },
+    "AvailableBillingModeList":{
+      "type":"list",
+      "member":{"shape":"AvailableBillingMode"}
+    },
     "AvailableMacSecPortSpeeds":{
       "type":"list",
       "member":{"shape":"PortSpeed"}
@@ -1144,6 +1295,22 @@
       ]
     },
     "Bandwidth":{"type":"string"},
+    "BillingMode":{
+      "type":"string",
+      "enum":[
+        "PayAsYouGo",
+        "FlatRateTier1",
+        "FlatRateTier2",
+        "FlatRateTier3",
+        "FlatRateTier4",
+        "FlatRateTier5",
+        "PortPairFlatRateTier1",
+        "PortPairFlatRateTier2",
+        "PortPairFlatRateTier3",
+        "PortPairFlatRateTier4",
+        "PortPairFlatRateTier5"
+      ]
+    },
     "BooleanFlag":{"type":"boolean"},
     "CIDR":{"type":"string"},
     "Cak":{"type":"string"},
@@ -1253,10 +1420,33 @@
         "prefixPoolSizeIpv4":{"shape":"PrefixPoolSize"},
         "prefixPoolSizeIpv6":{"shape":"PrefixPoolSize"},
         "prefixPoolUnallocatedCountIpv4":{"shape":"PrefixPoolUnallocatedCount"},
-        "prefixPoolUnallocatedCountIpv6":{"shape":"PrefixPoolUnallocatedCount"}
+        "prefixPoolUnallocatedCountIpv6":{"shape":"PrefixPoolUnallocatedCount"},
+        "billingMode":{"shape":"BillingMode"}
       }
     },
+    "ConnectionArn":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
     "ConnectionId":{"type":"string"},
+    "ConnectionIdList":{
+      "type":"list",
+      "member":{"shape":"ConnectionId"},
+      "max":200,
+      "min":1
+    },
+    "ConnectionIdentifier":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "ConnectionIdentifierList":{
+      "type":"list",
+      "member":{"shape":"ConnectionIdentifier"},
+      "max":50,
+      "min":1
+    },
     "ConnectionList":{
       "type":"list",
       "member":{"shape":"Connection"}
@@ -1323,7 +1513,8 @@
         "lagId":{"shape":"LagId"},
         "tags":{"shape":"TagList"},
         "providerName":{"shape":"ProviderName"},
-        "requestMACSec":{"shape":"RequestMACSec"}
+        "requestMACSec":{"shape":"RequestMACSec"},
+        "billingMode":{"shape":"RequestBillingMode"}
       }
     },
     "CreateDirectConnectGatewayAssociationProposalRequest":{
@@ -1412,7 +1603,8 @@
         "tags":{"shape":"TagList"},
         "childConnectionTags":{"shape":"TagList"},
         "providerName":{"shape":"ProviderName"},
-        "requestMACSec":{"shape":"RequestMACSec"}
+        "requestMACSec":{"shape":"RequestMACSec"},
+        "billingMode":{"shape":"RequestBillingMode"}
       }
     },
     "CreatePrivateVirtualInterfaceRequest":{
@@ -1435,6 +1627,25 @@
       "members":{
         "connectionId":{"shape":"ConnectionId"},
         "newPublicVirtualInterface":{"shape":"NewPublicVirtualInterface"}
+      }
+    },
+    "CreateResiliencyGroupRequest":{
+      "type":"structure",
+      "required":[
+        "resiliencyGroupName",
+        "intendedResiliencyModel"
+      ],
+      "members":{
+        "resiliencyGroupName":{"shape":"ResiliencyGroupName"},
+        "intendedResiliencyModel":{"shape":"ResiliencyModel"},
+        "clientToken":{"shape":"IdempotencyToken"},
+        "tags":{"shape":"TagList"}
+      }
+    },
+    "CreateResiliencyGroupResult":{
+      "type":"structure",
+      "members":{
+        "resiliencyGroup":{"shape":"ResiliencyGroup"}
       }
     },
     "CreateTransitVirtualInterfaceRequest":{
@@ -1543,6 +1754,19 @@
       "required":["lagId"],
       "members":{
         "lagId":{"shape":"LagId"}
+      }
+    },
+    "DeleteResiliencyGroupRequest":{
+      "type":"structure",
+      "required":["resiliencyGroupId"],
+      "members":{
+        "resiliencyGroupId":{"shape":"ResiliencyGroupId"}
+      }
+    },
+    "DeleteResiliencyGroupResult":{
+      "type":"structure",
+      "members":{
+        "resiliencyGroup":{"shape":"ResiliencyGroup"}
       }
     },
     "DeleteVirtualInterfaceRequest":{
@@ -1890,6 +2114,24 @@
         "lagId":{"shape":"LagId"}
       }
     },
+    "DisassociateConnectionsFromResiliencyGroupRequest":{
+      "type":"structure",
+      "required":[
+        "connectionIdentifiers",
+        "resiliencyGroupId"
+      ],
+      "members":{
+        "connectionIdentifiers":{"shape":"ConnectionIdentifierList"},
+        "resiliencyGroupId":{"shape":"ResiliencyGroupId"},
+        "clientToken":{"shape":"IdempotencyToken"}
+      }
+    },
+    "DisassociateConnectionsFromResiliencyGroupResult":{
+      "type":"structure",
+      "members":{
+        "resiliencyGroupAssociations":{"shape":"ResiliencyGroupAssociationList"}
+      }
+    },
     "DisassociateMacSecKeyRequest":{
       "type":"structure",
       "required":[
@@ -1927,6 +2169,19 @@
         "transitGateway"
       ]
     },
+    "GetResiliencyGroupRequest":{
+      "type":"structure",
+      "required":["resiliencyGroupId"],
+      "members":{
+        "resiliencyGroupId":{"shape":"ResiliencyGroupId"}
+      }
+    },
+    "GetResiliencyGroupResult":{
+      "type":"structure",
+      "members":{
+        "resiliencyGroup":{"shape":"ResiliencyGroup"}
+      }
+    },
     "HasLogicalRedundancy":{
       "type":"string",
       "enum":[
@@ -1934,6 +2189,15 @@
         "yes",
         "no"
       ]
+    },
+    "IdempotencyToken":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "IncludedRegionList":{
+      "type":"list",
+      "member":{"shape":"Region"}
     },
     "Interconnect":{
       "type":"structure",
@@ -2013,7 +2277,8 @@
         "prefixPoolSizeIpv6":{"shape":"PrefixPoolSize"},
         "prefixPoolUnallocatedCountIpv4":{"shape":"PrefixPoolUnallocatedCount"},
         "prefixPoolUnallocatedCountIpv6":{"shape":"PrefixPoolUnallocatedCount"},
-        "rateLimiterStatus":{"shape":"RateLimiterStatus"}
+        "rateLimiterStatus":{"shape":"RateLimiterStatus"},
+        "billingMode":{"shape":"BillingMode"}
       }
     },
     "LagId":{"type":"string"},
@@ -2045,6 +2310,36 @@
       "type":"structure",
       "members":{},
       "exception":true
+    },
+    "ListResiliencyGroupAssociationsRequest":{
+      "type":"structure",
+      "required":["resiliencyGroupId"],
+      "members":{
+        "resiliencyGroupId":{"shape":"ResiliencyGroupId"},
+        "maxResults":{"shape":"MaxResultSetSize"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListResiliencyGroupAssociationsResult":{
+      "type":"structure",
+      "members":{
+        "items":{"shape":"ResiliencyGroupAssociationList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListResiliencyGroupsRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{"shape":"MaxResultSetSize"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListResiliencyGroupsResult":{
+      "type":"structure",
+      "members":{
+        "items":{"shape":"ResiliencyGroupSummaryList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
     },
     "ListVirtualInterfaceRoutesRequest":{
       "type":"structure",
@@ -2102,7 +2397,8 @@
         "region":{"shape":"Region"},
         "availablePortSpeeds":{"shape":"AvailablePortSpeeds"},
         "availableProviders":{"shape":"ProviderList"},
-        "availableMacSecPortSpeeds":{"shape":"AvailableMacSecPortSpeeds"}
+        "availableMacSecPortSpeeds":{"shape":"AvailableMacSecPortSpeeds"},
+        "availableBillingModes":{"shape":"AvailableBillingModeList"}
       }
     },
     "LocationCode":{"type":"string"},
@@ -2312,7 +2608,105 @@
       }
     },
     "Region":{"type":"string"},
+    "RequestBillingMode":{
+      "type":"string",
+      "enum":[
+        "PayAsYouGo",
+        "FlatRateTier1",
+        "FlatRateTier2",
+        "FlatRateTier3",
+        "FlatRateTier4",
+        "FlatRateTier5"
+      ]
+    },
     "RequestMACSec":{"type":"boolean"},
+    "ResiliencyGroup":{
+      "type":"structure",
+      "members":{
+        "resiliencyGroupId":{"shape":"ResiliencyGroupId"},
+        "resiliencyGroupArn":{"shape":"ResiliencyGroupArn"},
+        "resiliencyGroupName":{"shape":"ResiliencyGroupName"},
+        "resiliencyGroupType":{"shape":"ResiliencyGroupType"},
+        "ownerAccount":{"shape":"OwnerAccount"},
+        "state":{"shape":"ResiliencyGroupState"},
+        "tags":{"shape":"TagList"}
+      }
+    },
+    "ResiliencyGroupArn":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"^arn:(aws|aws-cn|aws-us-gov):directconnect::[0-9]{12}:dx-resiliency-group/dxrg-[0-9a-z]{17}$"
+    },
+    "ResiliencyGroupAssociation":{
+      "type":"structure",
+      "members":{
+        "resiliencyGroupId":{"shape":"ResiliencyGroupId"},
+        "connectionArn":{"shape":"ConnectionArn"},
+        "state":{"shape":"ResiliencyGroupAssociationState"}
+      }
+    },
+    "ResiliencyGroupAssociationList":{
+      "type":"list",
+      "member":{"shape":"ResiliencyGroupAssociation"}
+    },
+    "ResiliencyGroupAssociationState":{
+      "type":"string",
+      "enum":[
+        "associating",
+        "associated",
+        "disassociating",
+        "disassociated"
+      ]
+    },
+    "ResiliencyGroupId":{
+      "type":"string",
+      "max":22,
+      "min":22,
+      "pattern":"^(dxrg|DXRG)-[0-9a-zA-Z]{17}$"
+    },
+    "ResiliencyGroupName":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9_\\-]+$"
+    },
+    "ResiliencyGroupState":{
+      "type":"string",
+      "enum":[
+        "pending",
+        "available",
+        "deleting",
+        "deleted"
+      ]
+    },
+    "ResiliencyGroupSummary":{
+      "type":"structure",
+      "members":{
+        "resiliencyGroupId":{"shape":"ResiliencyGroupId"},
+        "resiliencyGroupArn":{"shape":"ResiliencyGroupArn"},
+        "resiliencyGroupName":{"shape":"ResiliencyGroupName"},
+        "resiliencyGroupType":{"shape":"ResiliencyGroupType"},
+        "ownerAccount":{"shape":"OwnerAccount"},
+        "state":{"shape":"ResiliencyGroupState"}
+      }
+    },
+    "ResiliencyGroupSummaryList":{
+      "type":"list",
+      "member":{"shape":"ResiliencyGroupSummary"}
+    },
+    "ResiliencyGroupType":{
+      "type":"string",
+      "enum":["Managed"]
+    },
+    "ResiliencyModel":{
+      "type":"string",
+      "enum":[
+        "maximum-resiliency",
+        "high-resiliency",
+        "basic-resiliency"
+      ]
+    },
     "ResourceArn":{"type":"string"},
     "ResourceArnList":{
       "type":"list",
@@ -2511,6 +2905,24 @@
         "encryptionMode":{"shape":"EncryptionMode"}
       }
     },
+    "UpdateConnectionsBillingModeRequest":{
+      "type":"structure",
+      "required":[
+        "connectionIds",
+        "billingMode"
+      ],
+      "members":{
+        "connectionIds":{"shape":"ConnectionIdList"},
+        "billingMode":{"shape":"RequestBillingMode"}
+      }
+    },
+    "UpdateConnectionsBillingModeResponse":{
+      "type":"structure",
+      "members":{
+        "billingMode":{"shape":"BillingMode"},
+        "connections":{"shape":"ConnectionList"}
+      }
+    },
     "UpdateDirectConnectGatewayAssociationRequest":{
       "type":"structure",
       "members":{
@@ -2550,6 +2962,24 @@
         "lagName":{"shape":"LagName"},
         "minimumLinks":{"shape":"Count"},
         "encryptionMode":{"shape":"EncryptionMode"}
+      }
+    },
+    "UpdateResiliencyGroupRequest":{
+      "type":"structure",
+      "required":[
+        "resiliencyGroupId",
+        "resiliencyGroupName"
+      ],
+      "members":{
+        "resiliencyGroupId":{"shape":"ResiliencyGroupId"},
+        "resiliencyGroupName":{"shape":"ResiliencyGroupName"},
+        "clientToken":{"shape":"IdempotencyToken"}
+      }
+    },
+    "UpdateResiliencyGroupResult":{
+      "type":"structure",
+      "members":{
+        "resiliencyGroup":{"shape":"ResiliencyGroup"}
       }
     },
     "UpdateVirtualInterfaceAttributesRequest":{

@@ -185,6 +185,7 @@ use Aws\AwsClient;
  *         TlsSessionResumptionMode?: 'DISABLED'|'ENABLED'|'ENFORCED',
  *         SetStatOption?: 'DEFAULT'|'ENABLE_NO_OP',
  *         As2Transports?: list<'HTTP'>,
+ *         ProxyConfig?: array{SftpMode?: 'NONE'|'PROXY_PROTOCOL_V2_ENFORCED', ...},
  *         ...,
  *     },
  *     SecurityPolicyName?: string,
@@ -227,6 +228,7 @@ use Aws\AwsClient;
  *         TlsSessionResumptionMode?: 'DISABLED'|'ENABLED'|'ENFORCED',
  *         SetStatOption?: 'DEFAULT'|'ENABLE_NO_OP',
  *         As2Transports?: list<'HTTP'>,
+ *         ProxyConfig?: array{SftpMode?: 'NONE'|'PROXY_PROTOCOL_V2_ENFORCED', ...},
  *         ...,
  *     },
  *     SecurityPolicyName?: string,
@@ -789,6 +791,7 @@ use Aws\AwsClient;
  *         TlsSessionResumptionMode?: 'DISABLED'|'ENABLED'|'ENFORCED',
  *         SetStatOption?: 'DEFAULT'|'ENABLE_NO_OP',
  *         As2Transports?: list<'HTTP'>,
+ *         ProxyConfig?: array{SftpMode?: 'NONE'|'PROXY_PROTOCOL_V2_ENFORCED', ...},
  *         ...,
  *     },
  *     EndpointDetails?: array{
@@ -830,6 +833,7 @@ use Aws\AwsClient;
  *         TlsSessionResumptionMode?: 'DISABLED'|'ENABLED'|'ENFORCED',
  *         SetStatOption?: 'DEFAULT'|'ENABLE_NO_OP',
  *         As2Transports?: list<'HTTP'>,
+ *         ProxyConfig?: array{SftpMode?: 'NONE'|'PROXY_PROTOCOL_V2_ENFORCED', ...},
  *         ...,
  *     },
  *     EndpointDetails?: array{

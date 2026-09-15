@@ -3286,7 +3286,8 @@
         "PassiveIp":{"shape":"PassiveIp"},
         "TlsSessionResumptionMode":{"shape":"TlsSessionResumptionMode"},
         "SetStatOption":{"shape":"SetStatOption"},
-        "As2Transports":{"shape":"As2Transports"}
+        "As2Transports":{"shape":"As2Transports"},
+        "ProxyConfig":{"shape":"ProxyConfig"}
       }
     },
     "Protocols":{
@@ -3294,6 +3295,19 @@
       "member":{"shape":"Protocol"},
       "max":4,
       "min":1
+    },
+    "ProxyConfig":{
+      "type":"structure",
+      "members":{
+        "SftpMode":{"shape":"ProxyMode"}
+      }
+    },
+    "ProxyMode":{
+      "type":"string",
+      "enum":[
+        "NONE",
+        "PROXY_PROTOCOL_V2_ENFORCED"
+      ]
     },
     "Resource":{"type":"string"},
     "ResourceExistsException":{

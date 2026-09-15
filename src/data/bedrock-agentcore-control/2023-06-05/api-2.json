@@ -4780,7 +4780,8 @@
         "environmentVariables":{"shape":"EnvironmentVariablesMap"},
         "filesystemConfigurations":{"shape":"FilesystemConfigurations"},
         "capacityProviderConfiguration":{"shape":"CapacityProviderConfiguration"},
-        "tags":{"shape":"TagsMap"}
+        "tags":{"shape":"TagsMap"},
+        "platformVersion":{"shape":"PlatformVersion"}
       }
     },
     "CreateAgentRuntimeResponse":{
@@ -8136,7 +8137,8 @@
         "requestHeaderConfiguration":{"shape":"RequestHeaderConfiguration"},
         "metadataConfiguration":{"shape":"RuntimeMetadataConfiguration"},
         "filesystemConfigurations":{"shape":"FilesystemConfigurations"},
-        "capacityProviderConfiguration":{"shape":"CapacityProviderConfiguration"}
+        "capacityProviderConfiguration":{"shape":"CapacityProviderConfiguration"},
+        "platformVersion":{"shape":"PlatformVersion"}
       }
     },
     "GetApiKeyCredentialProviderRequest":{
@@ -12987,6 +12989,12 @@
         "capacityProviderOperatorRoleArn":{"shape":"RoleArn"}
       }
     },
+    "PlatformVersion":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[^\\s]+"
+    },
     "Policies":{
       "type":"list",
       "member":{"shape":"Policy"},
@@ -15315,6 +15323,7 @@
         "environmentVariables":{"shape":"EnvironmentVariablesMap"},
         "filesystemConfigurations":{"shape":"FilesystemConfigurations"},
         "capacityProviderConfiguration":{"shape":"CapacityProviderConfiguration"},
+        "platformVersion":{"shape":"PlatformVersion"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true

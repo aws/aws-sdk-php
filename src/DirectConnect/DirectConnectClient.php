@@ -184,6 +184,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result associateConnectionWithLag(array{connectionId?: string, lagId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise associateConnectionWithLagAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise associateConnectionWithLagAsync(array{connectionId?: string, lagId?: string, ...} $args = [])
+ * @method \Aws\Result associateConnectionsToResiliencyGroup(array $args = [])
+ * @phpstan-method \Aws\Result associateConnectionsToResiliencyGroup(array{connectionIdentifiers?: list<string>, resiliencyGroupId?: string, clientToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise associateConnectionsToResiliencyGroupAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise associateConnectionsToResiliencyGroupAsync(array{connectionIdentifiers?: list<string>, resiliencyGroupId?: string, clientToken?: string, ...} $args = [])
  * @method \Aws\Result associateHostedConnection(array $args = [])
  * @phpstan-method \Aws\Result associateHostedConnection(array{connectionId?: string, parentConnectionId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise associateHostedConnectionAsync(array $args = [])
@@ -253,6 +257,7 @@ use Aws\AwsClient;
  *     tags?: list<array{key?: string, value?: string, ...}>,
  *     providerName?: string,
  *     requestMACSec?: bool,
+ *     billingMode?: 'FlatRateTier1'|'FlatRateTier2'|'FlatRateTier3'|'FlatRateTier4'|'FlatRateTier5'|'PayAsYouGo',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createConnectionAsync(array $args = [])
@@ -264,6 +269,7 @@ use Aws\AwsClient;
  *     tags?: list<array{key?: string, value?: string, ...}>,
  *     providerName?: string,
  *     requestMACSec?: bool,
+ *     billingMode?: 'FlatRateTier1'|'FlatRateTier2'|'FlatRateTier3'|'FlatRateTier4'|'FlatRateTier5'|'PayAsYouGo',
  *     ...,
  * } $args = [])
  * @method \Aws\Result createDirectConnectGateway(array $args = [])
@@ -347,6 +353,7 @@ use Aws\AwsClient;
  *     childConnectionTags?: list<array{key?: string, value?: string, ...}>,
  *     providerName?: string,
  *     requestMACSec?: bool,
+ *     billingMode?: 'FlatRateTier1'|'FlatRateTier2'|'FlatRateTier3'|'FlatRateTier4'|'FlatRateTier5'|'PayAsYouGo',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createLagAsync(array $args = [])
@@ -360,6 +367,7 @@ use Aws\AwsClient;
  *     childConnectionTags?: list<array{key?: string, value?: string, ...}>,
  *     providerName?: string,
  *     requestMACSec?: bool,
+ *     billingMode?: 'FlatRateTier1'|'FlatRateTier2'|'FlatRateTier3'|'FlatRateTier4'|'FlatRateTier5'|'PayAsYouGo',
  *     ...,
  * } $args = [])
  * @method \Aws\Result createPrivateVirtualInterface(array $args = [])
@@ -446,6 +454,22 @@ use Aws\AwsClient;
  *         rateLimit?: string,
  *         ...,
  *     },
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result createResiliencyGroup(array $args = [])
+ * @phpstan-method \Aws\Result createResiliencyGroup(array{
+ *     resiliencyGroupName?: string,
+ *     intendedResiliencyModel?: 'basic-resiliency'|'high-resiliency'|'maximum-resiliency',
+ *     clientToken?: string,
+ *     tags?: list<array{key?: string, value?: string, ...}>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createResiliencyGroupAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createResiliencyGroupAsync(array{
+ *     resiliencyGroupName?: string,
+ *     intendedResiliencyModel?: 'basic-resiliency'|'high-resiliency'|'maximum-resiliency',
+ *     clientToken?: string,
+ *     tags?: list<array{key?: string, value?: string, ...}>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result createTransitVirtualInterface(array $args = [])
@@ -536,6 +560,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result deleteLag(array{lagId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteLagAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteLagAsync(array{lagId?: string, ...} $args = [])
+ * @method \Aws\Result deleteResiliencyGroup(array $args = [])
+ * @phpstan-method \Aws\Result deleteResiliencyGroup(array{resiliencyGroupId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteResiliencyGroupAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteResiliencyGroupAsync(array{resiliencyGroupId?: string, ...} $args = [])
  * @method \Aws\Result deleteVirtualInterface(array $args = [])
  * @phpstan-method \Aws\Result deleteVirtualInterface(array{virtualInterfaceId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteVirtualInterfaceAsync(array $args = [])
@@ -646,10 +674,26 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result disassociateConnectionFromLag(array{connectionId?: string, lagId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise disassociateConnectionFromLagAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise disassociateConnectionFromLagAsync(array{connectionId?: string, lagId?: string, ...} $args = [])
+ * @method \Aws\Result disassociateConnectionsFromResiliencyGroup(array $args = [])
+ * @phpstan-method \Aws\Result disassociateConnectionsFromResiliencyGroup(array{connectionIdentifiers?: list<string>, resiliencyGroupId?: string, clientToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise disassociateConnectionsFromResiliencyGroupAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise disassociateConnectionsFromResiliencyGroupAsync(array{connectionIdentifiers?: list<string>, resiliencyGroupId?: string, clientToken?: string, ...} $args = [])
  * @method \Aws\Result disassociateMacSecKey(array $args = [])
  * @phpstan-method \Aws\Result disassociateMacSecKey(array{connectionId?: string, secretARN?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise disassociateMacSecKeyAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise disassociateMacSecKeyAsync(array{connectionId?: string, secretARN?: string, ...} $args = [])
+ * @method \Aws\Result getResiliencyGroup(array $args = [])
+ * @phpstan-method \Aws\Result getResiliencyGroup(array{resiliencyGroupId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getResiliencyGroupAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getResiliencyGroupAsync(array{resiliencyGroupId?: string, ...} $args = [])
+ * @method \Aws\Result listResiliencyGroupAssociations(array $args = [])
+ * @phpstan-method \Aws\Result listResiliencyGroupAssociations(array{resiliencyGroupId?: string, maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listResiliencyGroupAssociationsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listResiliencyGroupAssociationsAsync(array{resiliencyGroupId?: string, maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \Aws\Result listResiliencyGroups(array $args = [])
+ * @phpstan-method \Aws\Result listResiliencyGroups(array{maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listResiliencyGroupsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listResiliencyGroupsAsync(array{maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \Aws\Result listVirtualInterfaceRoutes(array $args = [])
  * @phpstan-method \Aws\Result listVirtualInterfaceRoutes(array{
  *     virtualInterfaceId?: string,
@@ -720,6 +764,18 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result updateConnection(array{connectionId?: string, connectionName?: string, encryptionMode?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise updateConnectionAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise updateConnectionAsync(array{connectionId?: string, connectionName?: string, encryptionMode?: string, ...} $args = [])
+ * @method \Aws\Result updateConnectionsBillingMode(array $args = [])
+ * @phpstan-method \Aws\Result updateConnectionsBillingMode(array{
+ *     connectionIds?: list<string>,
+ *     billingMode?: 'FlatRateTier1'|'FlatRateTier2'|'FlatRateTier3'|'FlatRateTier4'|'FlatRateTier5'|'PayAsYouGo',
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateConnectionsBillingModeAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateConnectionsBillingModeAsync(array{
+ *     connectionIds?: list<string>,
+ *     billingMode?: 'FlatRateTier1'|'FlatRateTier2'|'FlatRateTier3'|'FlatRateTier4'|'FlatRateTier5'|'PayAsYouGo',
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result updateDirectConnectGateway(array $args = [])
  * @phpstan-method \Aws\Result updateDirectConnectGateway(array{directConnectGatewayId?: string, newDirectConnectGatewayName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise updateDirectConnectGatewayAsync(array $args = [])
@@ -742,6 +798,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result updateLag(array{lagId?: string, lagName?: string, minimumLinks?: int, encryptionMode?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise updateLagAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise updateLagAsync(array{lagId?: string, lagName?: string, minimumLinks?: int, encryptionMode?: string, ...} $args = [])
+ * @method \Aws\Result updateResiliencyGroup(array $args = [])
+ * @phpstan-method \Aws\Result updateResiliencyGroup(array{resiliencyGroupId?: string, resiliencyGroupName?: string, clientToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateResiliencyGroupAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateResiliencyGroupAsync(array{resiliencyGroupId?: string, resiliencyGroupName?: string, clientToken?: string, ...} $args = [])
  * @method \Aws\Result updateVirtualInterfaceAttributes(array $args = [])
  * @phpstan-method \Aws\Result updateVirtualInterfaceAttributes(array{
  *     virtualInterfaceId?: string,

@@ -82,6 +82,7 @@ use Aws\AwsClient;
  *     }>,
  *     capacityProviderConfiguration?: array{capacityProviderArn?: string, ...},
  *     tags?: array<string, string>,
+ *     platformVersion?: string,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createAgentRuntimeAsync(array $args = [])
@@ -133,6 +134,7 @@ use Aws\AwsClient;
  *     }>,
  *     capacityProviderConfiguration?: array{capacityProviderArn?: string, ...},
  *     tags?: array<string, string>,
+ *     platformVersion?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result createAgentRuntimeEndpoint(array $args = [])
@@ -1955,6 +1957,7 @@ use Aws\AwsClient;
  *         ...,
  *     }>,
  *     capacityProviderConfiguration?: array{capacityProviderArn?: string, ...},
+ *     platformVersion?: string,
  *     clientToken?: string,
  *     ...,
  * } $args = [])
@@ -2006,6 +2009,7 @@ use Aws\AwsClient;
  *         ...,
  *     }>,
  *     capacityProviderConfiguration?: array{capacityProviderArn?: string, ...},
+ *     platformVersion?: string,
  *     clientToken?: string,
  *     ...,
  * } $args = [])
