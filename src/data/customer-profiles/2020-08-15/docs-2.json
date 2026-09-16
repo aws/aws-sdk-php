@@ -104,6 +104,7 @@
     "PutProfileObjectType": "<p>Defines a ProfileObjectType.</p> <p>To add or remove tags on an existing ObjectType, see <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_TagResource.html\"> TagResource</a>/<a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_UntagResource.html\">UntagResource</a>.</p>",
     "PutSegmentSubscription": "<p>Creates or updates a segment subscription for membership events. When a subscription is created, an initial snapshot is taken and the system begins monitoring for membership changes. </p> <p>You can optionally set a schedule configuration interval to control how often membership snapshots are run. The interval can be from 1 to 24 hours. If not set, the interval defaults to 24 hours. Scheduled snapshots run on a best-effort basis. If a scheduled snapshot takes longer than the configured interval, the next scheduled run does not start until the in-progress snapshot completes, so a run might be delayed or skipped and is not guaranteed to occur at exactly the requested time. </p> <p>For Classic segments, membership events are generated from these scheduled snapshots and also in near real-time as profile attribute changes occur. For SQL segments, membership events are generated only from the scheduled snapshots. </p>",
     "SearchProfiles": "<p>Searches for profiles within a specific domain using one or more predefined search keys (e.g., _fullName, _phone, _email, _account, etc.) and/or custom-defined search keys. A search key is a data type pair that consists of a <code>KeyName</code> and <code>Values</code> list.</p> <p>This operation supports searching for profiles with a minimum of 1 key-value(s) pair and up to 5 key-value(s) pairs using either <code>AND</code> or <code>OR</code> logic.</p>",
+    "SearchRecommendations": "<p>Retrieves recommendations for a profile in a specific domain. The profile is identified using a search key, which consists of a <code>KeyName</code> and a <code>KeyValues</code> list. The <code>KeyName</code> can be a predefined key (for example, <code>_profileId</code>, <code>_phone</code>, <code>_email</code>) or a custom-defined key.</p> <p>The search key must match exactly one profile. If no profile matches the search key, the operation returns a <code>ResourceNotFoundException</code>. If more than one profile matches the search key, the operation returns a <code>BadRequestException</code>. You can use the SearchProfiles API to review the matching profiles.</p>",
     "StartRecommender": "<p>Starts a recommender that was previously stopped. Starting a recommender resumes its ability to generate recommendations.</p>",
     "StartUploadJob": "<p>This API starts the processing of an upload job to ingest profile data. </p>",
     "StopRecommender": "<p>Stops a recommender, suspending its ability to generate recommendations. The recommender can be restarted later using StartRecommender.</p>",
@@ -303,6 +304,7 @@
         "PutProfileObjectTypeResponse$TemplateId": "<p>A unique identifier for the object template.</p>",
         "PutSegmentSubscriptionRequest$DomainName": "<p>The unique name of the domain.</p>",
         "PutSegmentSubscriptionRequest$SegmentDefinitionName": "<p>The unique name of the segment definition. </p>",
+        "Recommender$Name": "<p>The unique name of the recommender.</p>",
         "RecommenderFilter$Name": "<p>The name of the recommender filter to apply.</p>",
         "RecommenderFilterSummary$RecommenderSchemaName": "<p>The name of the recommender schema associated with this recommender filter.</p>",
         "RecommenderPromotionalFilter$Name": "<p>The name of the recommender filter to use for the promotion.</p>",
@@ -312,6 +314,8 @@
         "RecommenderSummary$RecommenderSchemaName": "<p>The name of the recommender schema associated with this recommender.</p>",
         "SearchProfilesRequest$DomainName": "<p>The unique name of the domain.</p>",
         "SearchProfilesRequest$KeyName": "<p>A searchable identifier of a customer profile. The predefined keys you can use to search include: _account, _profileId, _assetId, _caseId, _orderId, _fullName, _phone, _email, _ctrContactId, _marketoLeadId, _salesforceAccountId, _salesforceContactId, _salesforceAssetId, _zendeskUserId, _zendeskExternalId, _zendeskTicketId, _serviceNowSystemId, _serviceNowIncidentId, _segmentUserId, _shopifyCustomerId, _shopifyOrderId.</p>",
+        "SearchRecommendationsRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "SearchRecommendationsRequest$KeyName": "<p>A searchable identifier of a customer profile. You can use a predefined key, such as <code>_profileId</code>, <code>_phone</code>, or <code>_email</code>, or a custom-defined key.</p>",
         "SegmentDefinitionItem$SegmentDefinitionName": "<p>Name of the segment definition.</p>",
         "SourceSegment$SegmentDefinitionName": "<p>The unique name of the segment definition.</p>",
         "StartRecommenderRequest$DomainName": "<p>The unique name of the domain.</p>",
@@ -701,7 +705,8 @@
     "CandidateIdList": {
       "base": null,
       "refs": {
-        "GetProfileRecommendationsRequest$CandidateIds": "<p>A list of item IDs to rank for the user. Use this when you want to re-rank a specific set of items rather than getting recommendations from the full item catalog. Required for personalized-ranking use cases.</p>"
+        "GetProfileRecommendationsRequest$CandidateIds": "<p>A list of item IDs to rank for the user. Use this when you want to re-rank a specific set of items rather than getting recommendations from the full item catalog. Required for personalized-ranking use cases.</p>",
+        "SearchRecommendationsRequest$CandidateIds": "<p>A list of item IDs to rank for the user. Use this when you want to re-rank a specific set of items rather than getting recommendations from the full item catalog. Required for personalized-ranking use cases.</p>"
       }
     },
     "CatalogItem": {
@@ -2019,6 +2024,12 @@
         "PutProfileObjectTypeResponse$Keys": "<p>A list of unique keys that can be used to map data to the profile.</p>"
       }
     },
+    "KeyValuesList": {
+      "base": null,
+      "refs": {
+        "SearchRecommendationsRequest$KeyValues": "<p>A list of key values. Provide one value for each field of the search key.</p>"
+      }
+    },
     "KmsArn": {
       "base": null,
       "refs": {
@@ -2461,7 +2472,8 @@
     "MetadataColumnsList": {
       "base": null,
       "refs": {
-        "MetadataConfig$MetadataColumns": "<p>A list of metadata column names from your Items dataset to include in the recommendation response.</p>"
+        "MetadataConfig$MetadataColumns": "<p>A list of metadata column names from your Items dataset to include in the recommendation response.</p>",
+        "RecommendationMetadata$Columns": "<p>A list of metadata column names from your Items dataset to include in the recommendation response.</p>"
       }
     },
     "MetadataConfig": {
@@ -2849,13 +2861,27 @@
     "RecommendationDiversityConfig": {
       "base": "<p>Runtime diversity configuration for a <code>GetProfileRecommendations</code> request.</p>",
       "refs": {
-        "GetProfileRecommendationsRequest$DiversityConfig": "<p>Runtime diversity configuration for this request. Enables diversity-aware recommendations and optionally supplies values for placeholder-based diversity caps configured on the recommender.</p>"
+        "GetProfileRecommendationsRequest$DiversityConfig": "<p>Runtime diversity configuration for this request. Enables diversity-aware recommendations and optionally supplies values for placeholder-based diversity caps configured on the recommender.</p>",
+        "SearchRecommendationsRequest$Diversity": "<p>Runtime diversity configuration for this request. Enables diversity-aware recommendations and optionally supplies values for placeholder-based diversity caps configured on the recommender.</p>"
+      }
+    },
+    "RecommendationMetadata": {
+      "base": "<p>Configuration for metadata to include in recommendation responses.</p>",
+      "refs": {
+        "SearchRecommendationsRequest$Metadata": "<p>Configuration for metadata to include in recommendation responses.</p>"
       }
     },
     "Recommendations": {
       "base": null,
       "refs": {
-        "GetProfileRecommendationsResponse$Recommendations": "<p>List of recommendations generated by the recommender.</p>"
+        "GetProfileRecommendationsResponse$Recommendations": "<p>List of recommendations generated by the recommender.</p>",
+        "SearchRecommendationsResponse$Recommendations": "<p>List of recommendations generated by the recommender.</p>"
+      }
+    },
+    "Recommender": {
+      "base": "<p>The recommender used to generate the recommendations.</p>",
+      "refs": {
+        "SearchRecommendationsRequest$Recommender": "<p>The recommender used to generate the recommendations.</p>"
       }
     },
     "RecommenderConfig": {
@@ -2877,7 +2903,8 @@
     "RecommenderContext": {
       "base": null,
       "refs": {
-        "GetProfileRecommendationsRequest$Context": "<p>The contextual metadata used to provide dynamic runtime information to tailor recommendations.</p>"
+        "GetProfileRecommendationsRequest$Context": "<p>The contextual metadata used to provide dynamic runtime information to tailor recommendations.</p>",
+        "SearchRecommendationsRequest$Context": "<p>The contextual metadata used to provide dynamic runtime information to tailor recommendations.</p>"
       }
     },
     "RecommenderFilter": {
@@ -2945,7 +2972,8 @@
     "RecommenderFilters": {
       "base": null,
       "refs": {
-        "GetProfileRecommendationsRequest$RecommenderFilters": "<p>A list of filters to apply to the returned recommendations. Filters define criteria for including or excluding items from the recommendation results.</p>"
+        "GetProfileRecommendationsRequest$RecommenderFilters": "<p>A list of filters to apply to the returned recommendations. Filters define criteria for including or excluding items from the recommendation results.</p>",
+        "Recommender$Filters": "<p>A list of filters to apply to the returned recommendations. Filters define criteria for including or excluding items from the recommendation results.</p>"
       }
     },
     "RecommenderPromotionalFilter": {
@@ -2957,7 +2985,8 @@
     "RecommenderPromotionalFilters": {
       "base": null,
       "refs": {
-        "GetProfileRecommendationsRequest$RecommenderPromotionalFilters": "<p>A list of promotional filters to apply to the recommendations. Promotional filters allow you to promote specific items within a configurable subset of recommendation results.</p>"
+        "GetProfileRecommendationsRequest$RecommenderPromotionalFilters": "<p>A list of promotional filters to apply to the recommendations. Promotional filters allow you to promote specific items within a configurable subset of recommendation results.</p>",
+        "Recommender$PromotionalFilters": "<p>A list of promotional filters to apply to the recommendations. Promotional filters allow you to promote specific items within a configurable subset of recommendation results.</p>"
       }
     },
     "RecommenderRecipe": {
@@ -3195,6 +3224,14 @@
       "refs": {}
     },
     "SearchProfilesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "SearchRecommendationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SearchRecommendationsResponse": {
       "base": null,
       "refs": {}
     },
@@ -4004,7 +4041,8 @@
     "maxSize500": {
       "base": null,
       "refs": {
-        "GetProfileRecommendationsRequest$MaxResults": "<p>The maximum number of recommendations to return. The default value is 10.</p>"
+        "GetProfileRecommendationsRequest$MaxResults": "<p>The maximum number of recommendations to return. The default value is 10.</p>",
+        "SearchRecommendationsRequest$MaxRecommendations": "<p>The maximum number of recommendations to return. The default value is 5.</p>"
       }
     },
     "maxSize60": {
@@ -4385,6 +4423,7 @@
         "GetStreamForSegmentsResponse$FailureReason": "<p>The reason why the stream is in an unhealthy state, if applicable. </p>",
         "GetUploadJobResponse$DisplayName": "<p>The unique name of the upload job. Could be a file name to identify the upload job. </p>",
         "GetWorkflowResponse$ErrorDescription": "<p>Workflow error messages during execution (if any).</p>",
+        "KeyValuesList$member": null,
         "ListAccountIntegrationsRequest$Uri": "<p>The URI of the S3 bucket or any other type of data source.</p>",
         "ListCalculatedAttributeForProfileItem$IsDataPartial": "<p>Indicates whether the calculated attribute’s value is based on partial data. If data is partial, it is set to true.</p>",
         "ListCalculatedAttributeForProfileItem$Value": "<p>The value of the calculated attribute.</p>",
@@ -4762,6 +4801,7 @@
         "ProfileIdList$member": null,
         "ProfileIdToBeMergedList$member": null,
         "ProfileIds$member": null,
+        "SearchRecommendationsResponse$ProfileId": "<p>The unique identifier of the profile for which to retrieve recommendations.</p>",
         "SubscriptionEventItem$ProfileId": "<p>The unique identifier of a customer profile.</p>",
         "UpdateProfileRequest$ProfileId": "<p>The unique identifier of a customer profile.</p>",
         "UpdateProfileResponse$ProfileId": "<p>The unique identifier of a customer profile.</p>",

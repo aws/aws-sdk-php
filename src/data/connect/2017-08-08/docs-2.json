@@ -461,6 +461,7 @@
         "ClaimedPhoneNumberSummary$SourcePhoneNumberArn": "<p>The claimed phone number ARN that was previously imported from the external service, such as Amazon Web Services End User Messaging. If it is from Amazon Web Services End User Messaging, it looks like the ARN of the phone number that was imported from Amazon Web Services End User Messaging.</p>",
         "CompleteAttachedFileUploadRequest$AssociatedResourceArn": "<p>The resource to which the attached file is (being) uploaded to. The supported resources are <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/cases.html\">Cases</a>, <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/setup-email-channel.html\">Email</a>, and <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/concepts-getting-started-tasks.html\">Task</a>.</p> <note> <p>This value must be a valid ARN.</p> </note>",
         "Contact$Arn": "<p>The Amazon Resource Name (ARN) for the contact.</p>",
+        "ContactAnalysisReference$Arn": "<p>The Amazon Resource Name (ARN) of the contact analysis reference.</p>",
         "ContactFlow$Arn": "<p>The Amazon Resource Name (ARN) of the flow.</p>",
         "ContactFlowModule$Arn": "<p>The Amazon Resource Name (ARN).</p>",
         "ContactFlowModuleAliasInfo$ContactFlowModuleArn": "<p>The Amazon Resource Name (ARN) of the flow module.</p>",
@@ -1196,7 +1197,8 @@
     "AnalyticsMode": {
       "base": null,
       "refs": {
-        "AnalyticsModes$member": null
+        "AnalyticsModes$member": null,
+        "ContactAnalysisReference$AnalyticsMode": "<p>The analytics mode of the contact analysis.</p>"
       }
     },
     "AnalyticsModes": {
@@ -2456,6 +2458,12 @@
       "base": "<p>A structure that defines search criteria for contacts using analysis outputs from Connect Customer Contact Lens.</p>",
       "refs": {
         "SearchCriteria$ContactAnalysis": "<p>Search criteria based on analysis outputs from Connect Customer Contact Lens.</p>"
+      }
+    },
+    "ContactAnalysisReference": {
+      "base": "<p>Information about a reference when the <code>referenceType</code> is <code>CONTACT_ANALYSIS</code>. Otherwise, null.</p>",
+      "refs": {
+        "ReferenceSummary$ContactAnalysis": null
       }
     },
     "ContactConfiguration": {
@@ -9872,6 +9880,7 @@
       "base": null,
       "refs": {
         "ChatContactMetrics$MultiParty": "<p>A boolean flag indicating whether multiparty chat or supervisor barge were enabled on this contact.</p>",
+        "ContactAnalysisReference$IsRedacted": "<p>Indicates whether sensitive data has been redacted from the contact analysis.</p>",
         "ParticipantMetrics$ConversationAbandon": "<p>A boolean flag indicating whether the chat conversation was abandoned by a Participant.</p>"
       }
     },
@@ -11780,6 +11789,7 @@
       "base": null,
       "refs": {
         "AttachmentReference$Name": "<p>Identifier of the attachment reference.</p>",
+        "ContactAnalysisReference$Name": "<p>Identifier of the contact analysis reference.</p>",
         "ContactReferences$key": null,
         "DateReference$Name": "<p>Identifier of the date reference.</p>",
         "EmailMessageReference$Name": "<p>The name of the email message reference</p>",
@@ -11793,6 +11803,7 @@
       "base": null,
       "refs": {
         "AttachmentReference$Status": "<p>Status of the attachment reference type.</p>",
+        "ContactAnalysisReference$Status": "<p>Status of the contact analysis reference type.</p>",
         "Reference$Status": "<p>Status of the attachment reference type.</p>"
       }
     },
@@ -11831,6 +11842,7 @@
       "base": null,
       "refs": {
         "AttachmentReference$Value": "<p>The location path of the attachment reference.</p>",
+        "ContactAnalysisReference$Value": "<p>The location path of the contact analysis reference.</p>",
         "DateReference$Value": "<p>A valid date.</p>",
         "EmailReference$Value": "<p>A valid email address.</p>",
         "NumberReference$Value": "<p>A valid number.</p>",

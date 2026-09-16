@@ -8913,6 +8913,17 @@
         "Transcript":{"shape":"Transcript"}
       }
     },
+    "ContactAnalysisReference":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"ReferenceKey"},
+        "Value":{"shape":"ReferenceValue"},
+        "Status":{"shape":"ReferenceStatus"},
+        "Arn":{"shape":"ARN"},
+        "AnalyticsMode":{"shape":"AnalyticsMode"},
+        "IsRedacted":{"shape":"NullableBoolean"}
+      }
+    },
     "ContactConfiguration":{
       "type":"structure",
       "required":["ContactId"],
@@ -22811,7 +22822,8 @@
         "String":{"shape":"StringReference"},
         "Number":{"shape":"NumberReference"},
         "Date":{"shape":"DateReference"},
-        "Email":{"shape":"EmailReference"}
+        "Email":{"shape":"EmailReference"},
+        "ContactAnalysis":{"shape":"ContactAnalysisReference"}
       },
       "union":true
     },

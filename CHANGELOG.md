@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Resiliencehubv2` - Next Gen Resilience Hub now supports dependency insights (LLM-based insights about customer's service dependencies) and organization-level policy sharing (provision to share policy with member accounts for an organization)
+* `Aws\BedrockAgentCoreControl` - Adds support for a new DELETE FAILED status for Bedrock AgentCore Runtimes and Bedrock AgentCore Runtime Endpoints.
+* `Aws\ElasticBeanstalk` - Adds support to create and manage Elastic Beanstalk Cluster Environments.
+* `Aws\Connect` - Adds support for ContactAnalysis via ListContactReferences.
+* `Aws\EC2` - Releasing new EC2 R9g and R9gd memory-optimized instances powered by AWS Graviton5 processors, with up to 25 percent better compute performance than R8g instances, faster DDR5 memory, and up to 100 Gbps network and 72 Gbps EBS bandwidth. R9gd instances additionally provide local NVMe SSD storage.
+* `Aws\MarketplaceCatalog` - This release enhances the ListEntities API to support issuerAccountId and SourceAuthorization filter for ResaleAuthorization entity.
+* `Aws\CustomerProfiles` - This release introduces the SearchRecommendations API, which retrieves recommendations for a profile identified by a search key.
+
 ## 3.395.3 - 2026-09-15
 
 * `Aws\Transfer` - AWS Transfer Family now preserves the original source IP address using Proxy Protocol v2 when you place a Network Load Balancer in front of your server for SFTP connections.

@@ -22,6 +22,7 @@
     "DeleteTest": "<p>Deletes a test.</p>",
     "DeleteTestSources": "<p>Removes monitoring sources from a test. The operation is transactional and idempotent — removing a source that is not attached is a no-op.</p>",
     "DeleteUserJourney": "<p>Deletes a user journey.</p>",
+    "GetDependencyInsights": "<p>Retrieves the dependency insights generated for a service. The response reports the current generation status; insights are populated once generation has completed. If generation failed, the response includes an error code, whose possible values are listed under the response's errorCode field, and a message describing the cause. To use this operation, you must have the <code>resiliencehub:GetDependencyInsights</code> permission on the service.</p>",
     "GetFailureModeFinding": "<p>Retrieves a finding by findingId.</p>",
     "GetPolicy": "<p>Retrieves a resilience policy by ARN.</p>",
     "GetService": "<p>Retrieves a service by ARN.</p>",
@@ -38,6 +39,7 @@
     "ListFailureModeFindings": "<p>List findings.</p>",
     "ListInputSources": "<p>Lists input sources for a service.</p>",
     "ListPolicies": "<p>Lists resilience policies.</p>",
+    "ListPolicyEvents": "<p>Lists events for a resilience policy, including services that started or stopped using it, changes to cross-account sharing, and deletion of the policy.</p>",
     "ListReports": "<p>List reports for a service, or all reports owned by the account if serviceArn is not provided.</p>",
     "ListResolvedTestRunTargetResources": "<p>Lists the AWS resources that AWS Fault Injection Service (AWS FIS) resolved as targets for a test run.</p>",
     "ListResources": "<p>List resources.</p>",
@@ -58,6 +60,7 @@
     "ListTests": "<p>Lists the tests configured for a service.</p>",
     "ListUserJourneys": "<p>Lists user journeys for a system.</p>",
     "PutTestSources": "<p>Adds or updates the monitoring sources on a test. The operation is transactional — either every source is written or the call fails and nothing is written.</p>",
+    "StartDependencyInsights": "<p>Starts generating dependency insights for a service. Generation runs asynchronously; the response returns the initial status, and you retrieve the results with GetDependencyInsights. To use this operation, you must have the <code>resiliencehub:StartDependencyInsights</code> permission on the service.</p>",
     "StartFailureModeAssessment": "<p>Starts a failure mode assessment.</p>",
     "StartTestRun": "<p>Starts a run of a test. Each run scopes to the current resources in the service and produces a pass or fail outcome.</p>",
     "StopTestRun": "<p>Stops an in-progress test run.</p>",
@@ -81,7 +84,10 @@
     "AccountId": {
       "base": null,
       "refs": {
+        "ListPoliciesRequest$accountId": "<p>The identifier of the account that owns the policies to include in the results.</p>",
         "ListServicesRequest$accountId": "<p>Filter services by AWS account ID.</p>",
+        "PolicyAttachedToServiceMetadata$accountId": "<p>The account that owns the service.</p>",
+        "PolicyDetachedFromServiceMetadata$accountId": "<p>The account that owns the service.</p>",
         "Service$accountId": "<p>The AWS account ID that owns the service.</p>",
         "ServiceSummary$accountId": "<p>Displayed only if caller has access.</p>"
       }
@@ -173,6 +179,7 @@
         "ExperimentArnList$member": null,
         "ExperimentDetails$experimentArn": "<p>The ARN of the AWS FIS experiment.</p>",
         "FindingSummary$serviceArn": null,
+        "GetDependencyInsightsRequest$serviceArn": null,
         "GetFailureModeFindingRequest$serviceArn": null,
         "GetPolicyRequest$policyArn": null,
         "GetServiceRequest$serviceArn": null,
@@ -189,6 +196,7 @@
         "ListFailureModeAssessmentsRequest$serviceArn": null,
         "ListFailureModeFindingsRequest$serviceArn": null,
         "ListInputSourcesRequest$serviceArn": null,
+        "ListPolicyEventsRequest$policyArn": null,
         "ListReportsRequest$serviceArn": "<p>Optional. If not provided, lists all reports owned by the account.</p>",
         "ListResolvedTestRunTargetResourcesRequest$serviceArn": "<p>The ARN of the service the test run belongs to.</p>",
         "ListResourcesRequest$serviceArn": null,
@@ -209,6 +217,9 @@
         "ListUserJourneysRequest$systemArn": null,
         "LoggingConfiguration$cloudWatchLogGroupArn": "<p>The ARN of the CloudWatch Logs log group for log delivery.</p>",
         "Policy$policyArn": null,
+        "PolicyAttachedToServiceMetadata$serviceArn": null,
+        "PolicyDetachedFromServiceMetadata$serviceArn": null,
+        "PolicyEvent$policyArn": null,
         "PolicySummary$policyArn": null,
         "PutTestSourcesRequest$serviceArn": "<p>The ARN of the service the test belongs to.</p>",
         "ReportGenerationResult$serviceArn": "<p>The service this report was generated for.</p>",
@@ -223,6 +234,7 @@
         "ServiceSummary$policyArn": null,
         "ServiceSystemAssociatedMetadata$systemArn": null,
         "ServiceSystemDisassociatedMetadata$systemArn": null,
+        "StartDependencyInsightsRequest$serviceArn": null,
         "StartFailureModeAssessmentRequest$serviceArn": null,
         "StartFailureModeAssessmentResponse$serviceArn": null,
         "StartTestRunRequest$serviceArn": "<p>The ARN of the service the test belongs to.</p>",
@@ -421,12 +433,16 @@
     "Boolean": {
       "base": null,
       "refs": {
+        "CreatePolicyRequest$sharingEnabled": "<p>Specifies whether cross-account sharing is enabled for the policy. Only a delegated administrator or the management account can enable sharing.</p>",
         "CreateSystemRequest$sharingEnabled": "<p>Indicates whether cross-account sharing is enabled for the system.</p>",
         "ImportAppRequest$skipManuallyAddedResources": "<p>Whether to skip manually added resources during import.</p>",
         "ListResourcesRequest$billable": "<p>Specifies whether to filter non-billable resources. When true (the default), the operation returns only billable resources.</p>",
+        "Policy$sharingEnabled": "<p>Specifies whether cross-account sharing is enabled.</p>",
+        "PolicySummary$sharingEnabled": "<p>Specifies whether cross-account sharing is enabled.</p>",
         "Service$rerunAssessment": "<p>Indicates whether the assessment should be rerun.</p>",
         "System$sharingEnabled": "<p>Indicates whether cross-account sharing is enabled.</p>",
         "TestTemplateParameter$required": "<p>Indicates whether the parameter is required.</p>",
+        "UpdatePolicyRequest$sharingEnabled": "<p>Specifies whether cross-account sharing is enabled for the policy. Disabling sharing stops member services from using the policy.</p>",
         "UpdateSystemRequest$sharingEnabled": "<p>Whether cross-account sharing is enabled for the system.</p>"
       }
     },
@@ -443,6 +459,7 @@
         "CreateUserJourneyRequest$clientToken": null,
         "ImportAppRequest$clientToken": null,
         "ImportPolicyRequest$clientToken": null,
+        "StartDependencyInsightsRequest$clientToken": null,
         "StartFailureModeAssessmentRequest$clientToken": null
       }
     },
@@ -702,6 +719,37 @@
         "DependencyDiscoveryConfig$status": "<p>The current status of dependency discovery.</p>"
       }
     },
+    "DependencyInsight": {
+      "base": "<p>Contains a single insight about a service's dependencies.</p>",
+      "refs": {
+        "DependencyInsightsList$member": null
+      }
+    },
+    "DependencyInsightDescriptionString": {
+      "base": null,
+      "refs": {
+        "DependencyInsight$description": "<p>A human-readable explanation of the insight, describing the dependency behavior or condition that was detected.</p>"
+      }
+    },
+    "DependencyInsightsErrorCode": {
+      "base": null,
+      "refs": {
+        "GetDependencyInsightsResponse$errorCode": "<p>The error code returned when insights generation failed. Valid values:</p> <ul> <li> <p>INSUFFICIENT_DATA - There was not enough dependency data to generate insights.</p> </li> <li> <p>LLM_GENERATION_FAILED - The insights could not be generated.</p> </li> <li> <p>INTERNAL_ERROR - An internal error occurred while generating insights.</p> </li> </ul>"
+      }
+    },
+    "DependencyInsightsList": {
+      "base": null,
+      "refs": {
+        "GetDependencyInsightsResponse$insights": "<p>The list of dependency insights generated for the service. This field is not returned until the status is COMPLETED.</p>"
+      }
+    },
+    "DependencyInsightsStatus": {
+      "base": null,
+      "refs": {
+        "GetDependencyInsightsResponse$status": "<p>The status of the dependency insights generation. Valid values:</p> <ul> <li> <p>IN_PROGRESS - Insights generation is in progress.</p> </li> <li> <p>COMPLETED - Insights generation completed successfully.</p> </li> <li> <p>FAILED - Insights generation failed. See errorCode and errorMessage for details.</p> </li> </ul>",
+        "StartDependencyInsightsResponse$status": "<p>The status of the dependency insights generation. Valid values:</p> <ul> <li> <p>IN_PROGRESS - Insights generation is in progress.</p> </li> <li> <p>COMPLETED - Insights generation completed successfully.</p> </li> <li> <p>FAILED - Insights generation failed. Call GetDependencyInsights for the error code and message.</p> </li> </ul>"
+      }
+    },
     "DependencySummary": {
       "base": "<p>Contains summary information about a discovered dependency.</p>",
       "refs": {
@@ -882,6 +930,7 @@
     "EventActor": {
       "base": "<p>Identifies the actor that triggered an event.</p>",
       "refs": {
+        "PolicyEvent$actor": null,
         "ServiceEvent$actor": "<p>The actor that triggered the event.</p>",
         "SystemEvent$actor": "<p>The actor that triggered the event.</p>"
       }
@@ -964,6 +1013,26 @@
       "base": null,
       "refs": {
         "Finding$serviceFunctions": "<p>The service functions associated with the finding.</p>"
+      }
+    },
+    "GetDependencyInsightsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDependencyInsightsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDependencyInsightsResponseErrorMessageString": {
+      "base": null,
+      "refs": {
+        "GetDependencyInsightsResponse$errorMessage": "<p>A message describing why insights generation failed.</p>"
+      }
+    },
+    "GetDependencyInsightsResponseOverviewString": {
+      "base": null,
+      "refs": {
+        "GetDependencyInsightsResponse$overview": "<p>A summary of the dependency insights for the service. This field is not returned until the status is COMPLETED.</p>"
       }
     },
     "GetFailureModeFindingRequest": {
@@ -1109,12 +1178,20 @@
         "ListInputSourcesRequest$type": "<p>Filter input sources by type.</p>"
       }
     },
+    "InsightsCategory": {
+      "base": null,
+      "refs": {
+        "DependencyInsight$category": "<p>The category of the insight. Valid values:</p> <ul> <li> <p>CROSS_REGION - The insight relates to dependencies used across multiple Regions.</p> </li> <li> <p>NEW_DEPENDENCY - The insight relates to a recently detected dependency.</p> </li> <li> <p>THIRD_PARTY - The insight relates to a third-party dependency.</p> </li> <li> <p>UNEVEN_USAGE - The insight relates to a dependency with uneven usage across the service.</p> </li> <li> <p>AWS_SERVICE - The insight relates to a dependency on an Amazon Web Services service.</p> </li> </ul>"
+      }
+    },
     "Integer": {
       "base": null,
       "refs": {
         "AssessmentSummary$totalFindings": "<p>The total number of findings generated by the assessment.</p>",
         "AssessmentSummary$billableAssessmentUnitCount": "<p>The number of billable assessment units consumed by the assessment.</p>",
         "Policy$associatedServiceCount": "<p>The number of services associated with this policy.</p>",
+        "PolicyDeletedMetadata$affectedServiceCount": "<p>The number of services that were using the policy when it was deleted.</p>",
+        "PolicySharingRevokedMetadata$affectedServiceCount": "<p>The number of services that were using the policy when sharing was revoked.</p>",
         "PolicySummary$associatedServiceCount": "<p>The number of services associated with this policy.</p>",
         "Service$openFindingsCount": "<p>The number of open findings for the service.</p>",
         "Service$resolvedFindingsCount": "<p>The number of resolved findings for the service.</p>",
@@ -1197,6 +1274,14 @@
       "refs": {}
     },
     "ListPoliciesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListPolicyEventsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListPolicyEventsResponse": {
       "base": null,
       "refs": {}
     },
@@ -1387,6 +1472,7 @@
         "ListFailureModeFindingsRequest$maxResults": null,
         "ListInputSourcesRequest$maxResults": null,
         "ListPoliciesRequest$maxResults": null,
+        "ListPolicyEventsRequest$maxResults": null,
         "ListReportsRequest$maxResults": null,
         "ListResolvedTestRunTargetResourcesRequest$maxResults": null,
         "ListResourcesRequest$maxResults": null,
@@ -1479,6 +1565,8 @@
         "ListInputSourcesResponse$nextToken": null,
         "ListPoliciesRequest$nextToken": null,
         "ListPoliciesResponse$nextToken": null,
+        "ListPolicyEventsRequest$nextToken": null,
+        "ListPolicyEventsResponse$nextToken": null,
         "ListReportsRequest$nextToken": null,
         "ListReportsResponse$nextToken": null,
         "ListResolvedTestRunTargetResourcesRequest$nextToken": null,
@@ -1542,6 +1630,8 @@
     "OrganizationId": {
       "base": null,
       "refs": {
+        "Policy$organizationId": "<p>The identifier of the organization this policy is shared with.</p>",
+        "PolicySummary$organizationId": "<p>The identifier of the organization this policy is shared with.</p>",
         "Service$organizationId": "<p>The AWS Organizations identifier for the service.</p>",
         "ServiceSummary$organizationId": "<p>Displayed only if caller has access.</p>",
         "System$organizationId": "<p>The AWS Organizations identifier for the system.</p>",
@@ -1595,11 +1685,78 @@
         "UpdatePolicyResponse$policy": "<p>The updated policy.</p>"
       }
     },
+    "PolicyAttachedToServiceMetadata": {
+      "base": "<p>Contains details about the service that started using the policy, such as the account that owns the service.</p>",
+      "refs": {
+        "PolicyEventMetadata$policyAttachedToService": "<p>Contains details about the service that started using the policy, such as the account that owns the service.</p>"
+      }
+    },
     "PolicyComponent": {
       "base": null,
       "refs": {
         "Finding$policyComponent": "<p>The policy component associated with the finding.</p>",
         "FindingSummary$policyComponent": "<p>The policy component associated with the finding.</p>"
+      }
+    },
+    "PolicyDeletedMetadata": {
+      "base": "<p>Contains details about a policy that was deleted, including the number of services that were affected.</p>",
+      "refs": {
+        "PolicyEventMetadata$policyDeleted": "<p>Contains details about a policy that was deleted, including the number of services that were affected.</p>"
+      }
+    },
+    "PolicyDetachedFromServiceMetadata": {
+      "base": "<p>Contains details about the service that stopped using the policy, such as the account that owns the service.</p>",
+      "refs": {
+        "PolicyEventMetadata$policyDetachedFromService": "<p>Contains details about the service that stopped using the policy, such as the account that owns the service.</p>"
+      }
+    },
+    "PolicyDisassociationReason": {
+      "base": null,
+      "refs": {
+        "ServicePolicyDisassociatedMetadata$reason": "<p>The reason the policy was disassociated from the service.</p>"
+      }
+    },
+    "PolicyEvent": {
+      "base": "<p>An event on the timeline of a resilience policy.</p>",
+      "refs": {
+        "PolicyEventList$member": null
+      }
+    },
+    "PolicyEventDetails": {
+      "base": "<p>Contains the title, description, and event-specific metadata for a single event on the timeline of a resilience policy.</p>",
+      "refs": {
+        "PolicyEvent$eventDetails": "<p>The details of the event.</p>"
+      }
+    },
+    "PolicyEventList": {
+      "base": null,
+      "refs": {
+        "ListPolicyEventsResponse$events": "<p>The list of policy events.</p>"
+      }
+    },
+    "PolicyEventMetadata": {
+      "base": "<p>Contains the event-specific metadata for a policy event. Exactly one member is populated, according to the event type.</p> <ul> <li> <p>policyAttachedToService — a service started using the policy.</p> </li> <li> <p>policyDetachedFromService — a service stopped using the policy.</p> </li> <li> <p>policySharingRevoked — cross-account sharing was disabled for the policy.</p> </li> <li> <p>policyDeleted — the policy was deleted.</p> </li> </ul>",
+      "refs": {
+        "PolicyEventDetails$eventMetadata": "<p>The event-specific metadata, with one member populated according to the event type.</p>"
+      }
+    },
+    "PolicyEventType": {
+      "base": null,
+      "refs": {
+        "PolicyEvent$eventType": "<p>The type of the event.</p>",
+        "PolicyEventTypeList$member": null
+      }
+    },
+    "PolicyEventTypeList": {
+      "base": null,
+      "refs": {
+        "ListPolicyEventsRequest$eventTypes": "<p>The type of events to include in the results.</p>"
+      }
+    },
+    "PolicySharingRevokedMetadata": {
+      "base": "<p>Contains details about a policy for which organization sharing was revoked, including the number of services that were affected.</p>",
+      "refs": {
+        "PolicyEventMetadata$policySharingRevoked": "<p>Contains details about a policy for which organization sharing was revoked, including the number of services that were affected.</p>"
       }
     },
     "PolicySummary": {
@@ -1618,6 +1775,8 @@
       "base": null,
       "refs": {
         "DisasterRecoverySource$source": "<p>Indicates whether the value comes from the service's own account or a cross-account policy.</p>",
+        "ServicePolicyAssociatedMetadata$policySource": "<p>The source of the policy.</p> <ul> <li> <p>SELF — the policy belongs to the account that owns the service.</p> </li> <li> <p>CROSS_ACCOUNT — the policy belongs to another account and was shared with the organization.</p> </li> </ul>",
+        "ServicePolicyDisassociatedMetadata$policySource": "<p>The source of the policy.</p> <ul> <li> <p>SELF — the policy belongs to the account that owns the service.</p> </li> <li> <p>CROSS_ACCOUNT — the policy belongs to another account and was shared with the organization.</p> </li> </ul>",
         "SloSource$source": "<p>Indicates whether the value comes from the service's own account or a cross-account policy.</p>",
         "TargetSource$source": "<p>Indicates whether the value comes from the service's own account or a cross-account policy.</p>"
       }
@@ -1937,7 +2096,7 @@
     "ServiceEventTypeList": {
       "base": null,
       "refs": {
-        "ListServiceEventsRequest$eventTypes": "<p>Filter events by type.</p>"
+        "ListServiceEventsRequest$eventTypes": "<p>The type of events to include in the results.</p>"
       }
     },
     "ServiceFunction": {
@@ -2141,6 +2300,14 @@
         "ListFailureModeAssessmentsRequest$sortOrder": "<p>The sort order for results.</p>"
       }
     },
+    "StartDependencyInsightsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartDependencyInsightsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "StartFailureModeAssessmentRequest": {
       "base": null,
       "refs": {}
@@ -2220,6 +2387,8 @@
         "ObservabilityAlarmSummary$alarmName": "<p>The name of the CloudWatch alarm.</p>",
         "ObservabilityAlarmSummary$region": "<p>The Region of the CloudWatch alarm.</p>",
         "ObservabilityAlarmSummary$accountId": "<p>The account ID that owns the CloudWatch alarm.</p>",
+        "PolicyEventDetails$title": "<p>A short summary of the event.</p>",
+        "PolicyEventDetails$description": "<p>A description of the event.</p>",
         "Resource$identifier": "<p>The identifier of the resource.</p>",
         "Resource$resourceType": "<p>The type of the resource.</p>",
         "ResourceDiscoveryStatus$errorMessage": "<p>A message describing the error if resource discovery failed.</p>",
@@ -2246,7 +2415,9 @@
         "ServiceFunctionUpdatedMetadata$serviceFunctionId": "<p>The identifier of the service function.</p>",
         "ServiceFunctionUpdatedMetadata$serviceFunctionName": "<p>The name of the service function.</p>",
         "ServicePolicyAssociatedMetadata$policyName": "<p>The name of the associated policy.</p>",
+        "ServicePolicyAssociatedMetadata$policyOwnerAccountId": "<p>The account that owns the policy.</p>",
         "ServicePolicyDisassociatedMetadata$policyName": "<p>The name of the disassociated policy.</p>",
+        "ServicePolicyDisassociatedMetadata$policyOwnerAccountId": "<p>The account that owns the policy.</p>",
         "ServiceQuotaExceededException$message": null,
         "ServiceReference$serviceId": "<p>The identifier of the referenced service.</p>",
         "ServiceReference$serviceName": "<p>The name of the referenced service.</p>",
@@ -2392,7 +2563,7 @@
     "SystemEventTypeList": {
       "base": null,
       "refs": {
-        "ListSystemEventsRequest$eventTypes": "<p>Filter events by type.</p>"
+        "ListSystemEventsRequest$eventTypes": "<p>The type of events to include in the results.</p>"
       }
     },
     "SystemId": {
@@ -2889,11 +3060,14 @@
         "DependencySummary$lastDetectedTime": "<p>The timestamp when the dependency was last detected.</p>",
         "Finding$updatedAt": "<p>The timestamp when the finding was last updated.</p>",
         "FindingSummary$updatedAt": "<p>The timestamp when the finding was last updated.</p>",
+        "GetDependencyInsightsResponse$createdAt": "<p>The timestamp when the dependency insights were generated.</p>",
         "InputSourceSummary$createdAt": "<p>The timestamp when the input source was created.</p>",
         "ListDependenciesRequest$queryRangeStartTime": "<p>The start time for the dependency query range.</p>",
         "ListDependenciesRequest$queryRangeEndTime": "<p>The end time for the dependency query range.</p>",
         "ListFailureModeAssessmentsRequest$startedAfter": "<p>Specifies that only assessments that started at or after this timestamp appear in the results.</p>",
         "ListFailureModeAssessmentsRequest$endedBefore": "<p>Specifies that only assessments that ended at or before this timestamp appear in the results.</p>",
+        "ListPolicyEventsRequest$startTime": "<p>The start time for filtering events.</p>",
+        "ListPolicyEventsRequest$endTime": "<p>The end time for filtering events.</p>",
         "ListServiceEventsRequest$startTime": "<p>The start time for filtering events.</p>",
         "ListServiceEventsRequest$endTime": "<p>The end time for filtering events.</p>",
         "ListSystemEventsRequest$startTime": "<p>The start time for filtering events.</p>",
@@ -2903,6 +3077,7 @@
         "ObservabilityAlarmSummary$createdAt": "<p>The timestamp when the source was configured.</p>",
         "Policy$createdAt": "<p>The timestamp when the policy was created.</p>",
         "Policy$updatedAt": "<p>The timestamp when the policy was last updated.</p>",
+        "PolicyEvent$timestamp": "<p>The time the event occurred.</p>",
         "PolicySummary$createdAt": "<p>The timestamp when the policy was created.</p>",
         "PolicySummary$updatedAt": "<p>The timestamp when the policy was last updated.</p>",
         "QueryDataPoint$timestamp": "<p>The timestamp of the data point.</p>",
@@ -3094,6 +3269,7 @@
         "Finding$findingId": "<p>The unique identifier of the finding.</p>",
         "FindingSummary$findingId": "<p>The unique identifier of the finding.</p>",
         "GetFailureModeFindingRequest$findingId": "<p>The unique identifier of the finding to retrieve.</p>",
+        "PolicyEvent$eventId": "<p>The identifier of the event.</p>",
         "ReportGenerationResult$assessmentId": "<p>Present for FAILURE_MODE reports.</p>",
         "ServiceEvent$eventId": "<p>The unique identifier of the event.</p>",
         "StartFailureModeAssessmentResponse$assessmentId": "<p>The unique identifier of the started assessment.</p>",

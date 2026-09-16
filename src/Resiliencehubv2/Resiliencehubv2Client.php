@@ -55,6 +55,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     dataRecovery?: array{timeBetweenBackupsInMinutes?: int, ...},
+ *     sharingEnabled?: bool,
  *     kmsKeyId?: string,
  *     tags?: array<string, string>,
  *     clientToken?: string,
@@ -78,6 +79,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     dataRecovery?: array{timeBetweenBackupsInMinutes?: int, ...},
+ *     sharingEnabled?: bool,
  *     kmsKeyId?: string,
  *     tags?: array<string, string>,
  *     clientToken?: string,
@@ -233,6 +235,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result deleteUserJourney(array{systemArn?: string, userJourneyId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteUserJourneyAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteUserJourneyAsync(array{systemArn?: string, userJourneyId?: string, ...} $args = [])
+ * @method \Aws\Result getDependencyInsights(array $args = [])
+ * @phpstan-method \Aws\Result getDependencyInsights(array{serviceArn?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getDependencyInsightsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getDependencyInsightsAsync(array{serviceArn?: string, ...} $args = [])
  * @method \Aws\Result getFailureModeFinding(array $args = [])
  * @phpstan-method \Aws\Result getFailureModeFinding(array{findingId?: string, serviceArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getFailureModeFindingAsync(array $args = [])
@@ -394,9 +400,29 @@ use Aws\AwsClient;
  *     ...,
  * } $args = [])
  * @method \Aws\Result listPolicies(array $args = [])
- * @phpstan-method \Aws\Result listPolicies(array{maxResults?: int, nextToken?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result listPolicies(array{accountId?: string, maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listPoliciesAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise listPoliciesAsync(array{maxResults?: int, nextToken?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listPoliciesAsync(array{accountId?: string, maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \Aws\Result listPolicyEvents(array $args = [])
+ * @phpstan-method \Aws\Result listPolicyEvents(array{
+ *     policyArn?: string,
+ *     eventTypes?: list<'POLICY_ATTACHED_TO_SERVICE'|'POLICY_DELETED'|'POLICY_DETACHED_FROM_SERVICE'|'POLICY_SHARING_REVOKED'>,
+ *     startTime?: int|string|\DateTimeInterface,
+ *     endTime?: int|string|\DateTimeInterface,
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listPolicyEventsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listPolicyEventsAsync(array{
+ *     policyArn?: string,
+ *     eventTypes?: list<'POLICY_ATTACHED_TO_SERVICE'|'POLICY_DELETED'|'POLICY_DETACHED_FROM_SERVICE'|'POLICY_SHARING_REVOKED'>,
+ *     startTime?: int|string|\DateTimeInterface,
+ *     endTime?: int|string|\DateTimeInterface,
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listReports(array $args = [])
  * @phpstan-method \Aws\Result listReports(array{
  *     serviceArn?: string,
@@ -615,6 +641,10 @@ use Aws\AwsClient;
  *     testSources?: list<array{successCriteriaAlarm?: array, observabilityAlarm?: array, ...}>,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result startDependencyInsights(array $args = [])
+ * @phpstan-method \Aws\Result startDependencyInsights(array{serviceArn?: string, clientToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise startDependencyInsightsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise startDependencyInsightsAsync(array{serviceArn?: string, clientToken?: string, ...} $args = [])
  * @method \Aws\Result startFailureModeAssessment(array $args = [])
  * @phpstan-method \Aws\Result startFailureModeAssessment(array{serviceArn?: string, clientToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise startFailureModeAssessmentAsync(array $args = [])
@@ -677,6 +707,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     dataRecovery?: array{timeBetweenBackupsInMinutes?: int, ...},
+ *     sharingEnabled?: bool,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updatePolicyAsync(array $args = [])
@@ -697,6 +728,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     dataRecovery?: array{timeBetweenBackupsInMinutes?: int, ...},
+ *     sharingEnabled?: bool,
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateService(array $args = [])

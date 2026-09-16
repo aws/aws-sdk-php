@@ -68,6 +68,20 @@ use Aws\AwsClient;
  *     AutoCreateApplication?: bool,
  *     Process?: bool,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     ImageConfiguration?: array{
+ *         Source?: array{Uri?: string, ...},
+ *         Build?: array{
+ *             Type?: 'buildpack'|'docker',
+ *             DockerfileLocation?: string,
+ *             Buildpack?: string,
+ *             Architecture?: 'amd64'|'arm64',
+ *             CodeBuildServiceRole?: string,
+ *             ComputeType?: 'BUILD_GENERAL1_LARGE'|'BUILD_GENERAL1_MEDIUM'|'BUILD_GENERAL1_SMALL',
+ *             TimeoutInMinutes?: int,
+ *             ...,
+ *         },
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createApplicationVersionAsync(array $args = [])
@@ -88,6 +102,20 @@ use Aws\AwsClient;
  *     AutoCreateApplication?: bool,
  *     Process?: bool,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     ImageConfiguration?: array{
+ *         Source?: array{Uri?: string, ...},
+ *         Build?: array{
+ *             Type?: 'buildpack'|'docker',
+ *             DockerfileLocation?: string,
+ *             Buildpack?: string,
+ *             Architecture?: 'amd64'|'arm64',
+ *             CodeBuildServiceRole?: string,
+ *             ComputeType?: 'BUILD_GENERAL1_LARGE'|'BUILD_GENERAL1_MEDIUM'|'BUILD_GENERAL1_SMALL',
+ *             TimeoutInMinutes?: int,
+ *             ...,
+ *         },
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \Aws\Result createConfigurationTemplate(array $args = [])

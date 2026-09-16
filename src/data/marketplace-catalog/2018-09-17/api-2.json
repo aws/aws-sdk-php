@@ -2002,8 +2002,28 @@
         "Status":{"shape":"ResaleAuthorizationStatusFilter"},
         "OfferExtendedStatus":{"shape":"ResaleAuthorizationOfferExtendedStatusFilter"},
         "LastModifiedDate":{"shape":"ResaleAuthorizationLastModifiedDateFilter"},
-        "ResellerRole":{"shape":"ResaleAuthorizationResellerRoleFilter"}
+        "ResellerRole":{"shape":"ResaleAuthorizationResellerRoleFilter"},
+        "SourceAuthorization":{"shape":"ResaleAuthorizationSourceAuthorizationFilter"},
+        "IssuerAccountId":{"shape":"ResaleAuthorizationIssuerAccountIdFilter"}
       }
+    },
+    "ResaleAuthorizationIssuerAccountIdFilter":{
+      "type":"structure",
+      "members":{
+        "ValueList":{"shape":"ResaleAuthorizationIssuerAccountIdFilterValueList"}
+      }
+    },
+    "ResaleAuthorizationIssuerAccountIdFilterValueList":{
+      "type":"list",
+      "member":{"shape":"ResaleAuthorizationIssuerAccountIdString"},
+      "max":10,
+      "min":1
+    },
+    "ResaleAuthorizationIssuerAccountIdString":{
+      "type":"string",
+      "max":12,
+      "min":12,
+      "pattern":"^\\d{12}$"
     },
     "ResaleAuthorizationLastModifiedDateFilter":{
       "type":"structure",
@@ -2252,8 +2272,29 @@
         "OfferExtendedStatus",
         "CreatedDate",
         "AvailabilityEndDate",
-        "LastModifiedDate"
+        "LastModifiedDate",
+        "ResellerRole",
+        "SourceAuthorization",
+        "IssuerAccountId"
       ]
+    },
+    "ResaleAuthorizationSourceAuthorizationFilter":{
+      "type":"structure",
+      "members":{
+        "ValueList":{"shape":"ResaleAuthorizationSourceAuthorizationFilterValueList"}
+      }
+    },
+    "ResaleAuthorizationSourceAuthorizationFilterValueList":{
+      "type":"list",
+      "member":{"shape":"ResaleAuthorizationSourceAuthorizationString"},
+      "max":10,
+      "min":1
+    },
+    "ResaleAuthorizationSourceAuthorizationString":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^(.)+$"
     },
     "ResaleAuthorizationStatusFilter":{
       "type":"structure",
@@ -2289,7 +2330,9 @@
         "OfferExtendedStatus":{"shape":"ResaleAuthorizationOfferExtendedStatusString"},
         "CreatedDate":{"shape":"DateTimeISO8601"},
         "AvailabilityEndDate":{"shape":"DateTimeISO8601"},
-        "ResellerRole":{"shape":"ResaleAuthorizationResellerRoleString"}
+        "ResellerRole":{"shape":"ResaleAuthorizationResellerRoleString"},
+        "SourceAuthorization":{"shape":"ResaleAuthorizationSourceAuthorizationString"},
+        "IssuerAccountId":{"shape":"ResaleAuthorizationIssuerAccountIdString"}
       }
     },
     "ResourceARN":{

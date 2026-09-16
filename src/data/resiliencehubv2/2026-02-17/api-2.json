@@ -359,6 +359,24 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "GetDependencyInsights":{
+      "name":"GetDependencyInsights",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/get-dependency-insights",
+        "responseCode":200
+      },
+      "input":{"shape":"GetDependencyInsightsRequest"},
+      "output":{"shape":"GetDependencyInsightsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
     "GetFailureModeFinding":{
       "name":"GetFailureModeFinding",
       "http":{
@@ -625,6 +643,23 @@
       "output":{"shape":"ListPoliciesResponse"},
       "errors":[
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
+    "ListPolicyEvents":{
+      "name":"ListPolicyEvents",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/list-policy-events",
+        "responseCode":200
+      },
+      "input":{"shape":"ListPolicyEventsRequest"},
+      "output":{"shape":"ListPolicyEventsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
       ],
@@ -966,6 +1001,24 @@
         {"shape":"ValidationException"},
         {"shape":"ConflictException"},
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "StartDependencyInsights":{
+      "name":"StartDependencyInsights",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/start-dependency-insights",
+        "responseCode":202
+      },
+      "input":{"shape":"StartDependencyInsightsRequest"},
+      "output":{"shape":"StartDependencyInsightsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ]
     },
@@ -1549,6 +1602,7 @@
         "multiAz":{"shape":"MultiAzTargets"},
         "multiRegion":{"shape":"MultiRegionTargets"},
         "dataRecovery":{"shape":"DataRecoveryTargets"},
+        "sharingEnabled":{"shape":"Boolean"},
         "kmsKeyId":{"shape":"KmsKeyId"},
         "tags":{"shape":"TagMap"},
         "clientToken":{
@@ -1976,6 +2030,44 @@
         "DISABLED"
       ]
     },
+    "DependencyInsight":{
+      "type":"structure",
+      "required":[
+        "category",
+        "description"
+      ],
+      "members":{
+        "category":{"shape":"InsightsCategory"},
+        "description":{"shape":"DependencyInsightDescriptionString"}
+      }
+    },
+    "DependencyInsightDescriptionString":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "DependencyInsightsErrorCode":{
+      "type":"string",
+      "enum":[
+        "INSUFFICIENT_DATA",
+        "LLM_GENERATION_FAILED",
+        "INTERNAL_ERROR"
+      ]
+    },
+    "DependencyInsightsList":{
+      "type":"list",
+      "member":{"shape":"DependencyInsight"},
+      "max":5,
+      "min":0
+    },
+    "DependencyInsightsStatus":{
+      "type":"string",
+      "enum":[
+        "IN_PROGRESS",
+        "COMPLETED",
+        "FAILED"
+      ]
+    },
     "DependencySummary":{
       "type":"structure",
       "required":[
@@ -2262,6 +2354,39 @@
       "type":"list",
       "member":{"shape":"EntityId"},
       "max":20,
+      "min":0
+    },
+    "GetDependencyInsightsRequest":{
+      "type":"structure",
+      "required":["serviceArn"],
+      "members":{
+        "serviceArn":{
+          "shape":"Arn",
+          "location":"querystring",
+          "locationName":"serviceArn"
+        }
+      }
+    },
+    "GetDependencyInsightsResponse":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "overview":{"shape":"GetDependencyInsightsResponseOverviewString"},
+        "insights":{"shape":"DependencyInsightsList"},
+        "status":{"shape":"DependencyInsightsStatus"},
+        "createdAt":{"shape":"Timestamp"},
+        "errorCode":{"shape":"DependencyInsightsErrorCode"},
+        "errorMessage":{"shape":"GetDependencyInsightsResponseErrorMessageString"}
+      }
+    },
+    "GetDependencyInsightsResponseErrorMessageString":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "GetDependencyInsightsResponseOverviewString":{
+      "type":"string",
+      "max":4096,
       "min":0
     },
     "GetFailureModeFindingRequest":{
@@ -2554,6 +2679,16 @@
         "MONITORING"
       ]
     },
+    "InsightsCategory":{
+      "type":"string",
+      "enum":[
+        "CROSS_REGION",
+        "NEW_DEPENDENCY",
+        "THIRD_PARTY",
+        "UNEVEN_USAGE",
+        "AWS_SERVICE"
+      ]
+    },
     "Integer":{
       "type":"integer",
       "box":true
@@ -2785,6 +2920,11 @@
     "ListPoliciesRequest":{
       "type":"structure",
       "members":{
+        "accountId":{
+          "shape":"AccountId",
+          "location":"querystring",
+          "locationName":"accountId"
+        },
         "maxResults":{
           "shape":"MaxResults",
           "location":"querystring",
@@ -2802,6 +2942,50 @@
       "required":["policySummaries"],
       "members":{
         "policySummaries":{"shape":"PolicySummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListPolicyEventsRequest":{
+      "type":"structure",
+      "required":["policyArn"],
+      "members":{
+        "policyArn":{
+          "shape":"Arn",
+          "location":"querystring",
+          "locationName":"policyArn"
+        },
+        "eventTypes":{
+          "shape":"PolicyEventTypeList",
+          "location":"querystring",
+          "locationName":"eventTypes"
+        },
+        "startTime":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"startTime"
+        },
+        "endTime":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"endTime"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListPolicyEventsResponse":{
+      "type":"structure",
+      "required":["events"],
+      "members":{
+        "events":{"shape":"PolicyEventList"},
         "nextToken":{"shape":"NextToken"}
       }
     },
@@ -3659,11 +3843,20 @@
         "multiAz":{"shape":"MultiAzTargets"},
         "multiRegion":{"shape":"MultiRegionTargets"},
         "dataRecovery":{"shape":"DataRecoveryTargets"},
+        "sharingEnabled":{"shape":"Boolean"},
+        "organizationId":{"shape":"OrganizationId"},
         "kmsKeyId":{"shape":"KmsKeyId"},
         "tags":{"shape":"TagMap"},
         "associatedServiceCount":{"shape":"Integer"},
         "createdAt":{"shape":"Timestamp"},
         "updatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "PolicyAttachedToServiceMetadata":{
+      "type":"structure",
+      "members":{
+        "serviceArn":{"shape":"Arn"},
+        "accountId":{"shape":"AccountId"}
       }
     },
     "PolicyComponent":{
@@ -3674,6 +3867,93 @@
         "MULTI_REGION_DISASTER_RECOVERY",
         "DATA_RECOVERY"
       ]
+    },
+    "PolicyDeletedMetadata":{
+      "type":"structure",
+      "members":{
+        "affectedServiceCount":{"shape":"Integer"}
+      }
+    },
+    "PolicyDetachedFromServiceMetadata":{
+      "type":"structure",
+      "members":{
+        "serviceArn":{"shape":"Arn"},
+        "accountId":{"shape":"AccountId"}
+      }
+    },
+    "PolicyDisassociationReason":{
+      "type":"string",
+      "enum":[
+        "REPLACED_BY_UPDATE",
+        "SHARING_REVOKED",
+        "POLICY_DELETED"
+      ]
+    },
+    "PolicyEvent":{
+      "type":"structure",
+      "required":[
+        "eventId",
+        "timestamp",
+        "eventType",
+        "policyArn",
+        "actor",
+        "eventDetails"
+      ],
+      "members":{
+        "eventId":{"shape":"Uuid"},
+        "timestamp":{"shape":"Timestamp"},
+        "eventType":{"shape":"PolicyEventType"},
+        "policyArn":{"shape":"Arn"},
+        "actor":{"shape":"EventActor"},
+        "eventDetails":{"shape":"PolicyEventDetails"}
+      }
+    },
+    "PolicyEventDetails":{
+      "type":"structure",
+      "required":[
+        "title",
+        "description"
+      ],
+      "members":{
+        "title":{"shape":"String"},
+        "description":{"shape":"String"},
+        "eventMetadata":{"shape":"PolicyEventMetadata"}
+      }
+    },
+    "PolicyEventList":{
+      "type":"list",
+      "member":{"shape":"PolicyEvent"}
+    },
+    "PolicyEventMetadata":{
+      "type":"structure",
+      "members":{
+        "policyAttachedToService":{"shape":"PolicyAttachedToServiceMetadata"},
+        "policyDetachedFromService":{"shape":"PolicyDetachedFromServiceMetadata"},
+        "policySharingRevoked":{"shape":"PolicySharingRevokedMetadata"},
+        "policyDeleted":{"shape":"PolicyDeletedMetadata"}
+      },
+      "union":true
+    },
+    "PolicyEventType":{
+      "type":"string",
+      "enum":[
+        "POLICY_ATTACHED_TO_SERVICE",
+        "POLICY_DETACHED_FROM_SERVICE",
+        "POLICY_SHARING_REVOKED",
+        "POLICY_DELETED"
+      ]
+    },
+    "PolicyEventTypeList":{
+      "type":"list",
+      "member":{"shape":"PolicyEventType"},
+      "max":4,
+      "min":0
+    },
+    "PolicySharingRevokedMetadata":{
+      "type":"structure",
+      "members":{
+        "affectedServiceCount":{"shape":"Integer"}
+      }
     },
     "PolicySummary":{
       "type":"structure",
@@ -3688,6 +3968,8 @@
         "multiAz":{"shape":"MultiAzTargets"},
         "multiRegion":{"shape":"MultiRegionTargets"},
         "dataRecovery":{"shape":"DataRecoveryTargets"},
+        "sharingEnabled":{"shape":"Boolean"},
+        "organizationId":{"shape":"OrganizationId"},
         "associatedServiceCount":{"shape":"Integer"},
         "createdAt":{"shape":"Timestamp"},
         "updatedAt":{"shape":"Timestamp"}
@@ -4251,14 +4533,19 @@
       "type":"structure",
       "members":{
         "policyName":{"shape":"String"},
-        "policyArn":{"shape":"Arn"}
+        "policyArn":{"shape":"Arn"},
+        "policyOwnerAccountId":{"shape":"String"},
+        "policySource":{"shape":"PolicyValueSource"}
       }
     },
     "ServicePolicyDisassociatedMetadata":{
       "type":"structure",
       "members":{
         "policyName":{"shape":"String"},
-        "policyArn":{"shape":"Arn"}
+        "policyArn":{"shape":"Arn"},
+        "policyOwnerAccountId":{"shape":"String"},
+        "policySource":{"shape":"PolicyValueSource"},
+        "reason":{"shape":"PolicyDisassociationReason"}
       }
     },
     "ServiceQuotaExceededException":{
@@ -4412,6 +4699,24 @@
         "ASC",
         "DESC"
       ]
+    },
+    "StartDependencyInsightsRequest":{
+      "type":"structure",
+      "required":["serviceArn"],
+      "members":{
+        "serviceArn":{"shape":"Arn"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "StartDependencyInsightsResponse":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "status":{"shape":"DependencyInsightsStatus"}
+      }
     },
     "StartFailureModeAssessmentRequest":{
       "type":"structure",
@@ -5400,7 +5705,8 @@
         "availabilitySlo":{"shape":"AvailabilitySlo"},
         "multiAz":{"shape":"MultiAzTargets"},
         "multiRegion":{"shape":"MultiRegionTargets"},
-        "dataRecovery":{"shape":"DataRecoveryTargets"}
+        "dataRecovery":{"shape":"DataRecoveryTargets"},
+        "sharingEnabled":{"shape":"Boolean"}
       }
     },
     "UpdatePolicyResponse":{

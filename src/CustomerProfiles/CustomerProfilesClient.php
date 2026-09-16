@@ -1217,6 +1217,32 @@ use Aws\AwsClient;
  *     LogicalOperator?: 'AND'|'OR',
  *     ...,
  * } $args = [])
+ * @method \Aws\Result searchRecommendations(array $args = [])
+ * @phpstan-method \Aws\Result searchRecommendations(array{
+ *     DomainName?: string,
+ *     KeyName?: string,
+ *     KeyValues?: list<string>,
+ *     Recommender?: array{Name?: string, Filters?: list<array>, PromotionalFilters?: list<array>, ...},
+ *     CandidateIds?: list<string>,
+ *     Context?: array<string, string>,
+ *     Diversity?: array{Enabled?: bool, Values?: array<string, int>, ...},
+ *     Metadata?: array{Columns?: list<string>, ...},
+ *     MaxRecommendations?: int,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise searchRecommendationsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise searchRecommendationsAsync(array{
+ *     DomainName?: string,
+ *     KeyName?: string,
+ *     KeyValues?: list<string>,
+ *     Recommender?: array{Name?: string, Filters?: list<array>, PromotionalFilters?: list<array>, ...},
+ *     CandidateIds?: list<string>,
+ *     Context?: array<string, string>,
+ *     Diversity?: array{Enabled?: bool, Values?: array<string, int>, ...},
+ *     Metadata?: array{Columns?: list<string>, ...},
+ *     MaxRecommendations?: int,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result startRecommender(array $args = [])
  * @phpstan-method \Aws\Result startRecommender(array{DomainName?: string, RecommenderName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise startRecommenderAsync(array $args = [])

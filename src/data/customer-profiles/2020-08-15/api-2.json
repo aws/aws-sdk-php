@@ -1694,6 +1694,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "SearchRecommendations":{
+      "name":"SearchRecommendations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/domains/{DomainName}/recommendations"
+      },
+      "input":{"shape":"SearchRecommendationsRequest"},
+      "output":{"shape":"SearchRecommendationsResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "StartRecommender":{
       "name":"StartRecommender",
       "http":{
@@ -5637,6 +5653,13 @@
       "value":{"shape":"ObjectTypeKeyList"},
       "sensitive":true
     },
+    "KeyValuesList":{
+      "type":"list",
+      "member":{"shape":"string1To255"},
+      "max":10,
+      "min":1,
+      "sensitive":true
+    },
     "KmsArn":{
       "type":"string",
       "max":2048,
@@ -7496,10 +7519,25 @@
         "Values":{"shape":"DiversityValuesMap"}
       }
     },
+    "RecommendationMetadata":{
+      "type":"structure",
+      "members":{
+        "Columns":{"shape":"MetadataColumnsList"}
+      }
+    },
     "Recommendations":{
       "type":"list",
       "member":{"shape":"Recommendation"},
       "sensitive":true
+    },
+    "Recommender":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"name"},
+        "Filters":{"shape":"RecommenderFilters"},
+        "PromotionalFilters":{"shape":"RecommenderPromotionalFilters"}
+      }
     },
     "RecommenderConfig":{
       "type":"structure",
@@ -7975,6 +8013,37 @@
       "members":{
         "Items":{"shape":"ProfileList"},
         "NextToken":{"shape":"token"}
+      }
+    },
+    "SearchRecommendationsRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "KeyName",
+        "KeyValues",
+        "Recommender"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "KeyName":{"shape":"name"},
+        "KeyValues":{"shape":"KeyValuesList"},
+        "Recommender":{"shape":"Recommender"},
+        "CandidateIds":{"shape":"CandidateIdList"},
+        "Context":{"shape":"RecommenderContext"},
+        "Diversity":{"shape":"RecommendationDiversityConfig"},
+        "Metadata":{"shape":"RecommendationMetadata"},
+        "MaxRecommendations":{"shape":"maxSize500"}
+      }
+    },
+    "SearchRecommendationsResponse":{
+      "type":"structure",
+      "members":{
+        "ProfileId":{"shape":"uuid"},
+        "Recommendations":{"shape":"Recommendations"}
       }
     },
     "SegmentDefinitionArn":{

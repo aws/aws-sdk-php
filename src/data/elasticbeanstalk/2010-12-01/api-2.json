@@ -767,6 +767,9 @@
         "SourceBuildInformation":{"shape":"SourceBuildInformation"},
         "BuildArn":{"shape":"String"},
         "SourceBundle":{"shape":"S3Location"},
+        "ImageSource":{"shape":"ImageSource"},
+        "ImageBuildConfiguration":{"shape":"ImageBuildConfiguration"},
+        "Process":{"shape":"ApplicationVersionProccess"},
         "DateCreated":{"shape":"CreationDate"},
         "DateUpdated":{"shape":"UpdateDate"},
         "Status":{"shape":"ApplicationVersionStatus"}
@@ -824,6 +827,13 @@
         "ActionType":{"shape":"ActionType"},
         "Status":{"shape":"String"}
       }
+    },
+    "ArchitectureType":{
+      "type":"string",
+      "enum":[
+        "amd64",
+        "arm64"
+      ]
     },
     "AssociateEnvironmentOperationsRoleMessage":{
       "type":"structure",
@@ -913,6 +923,12 @@
       "members":{
         "Available":{"shape":"CnameAvailability"},
         "FullyQualifiedCNAME":{"shape":"DNSCname"}
+      }
+    },
+    "Cluster":{
+      "type":"structure",
+      "members":{
+        "ClusterArn":{"shape":"ResourceId"}
       }
     },
     "CnameAvailability":{"type":"boolean"},
@@ -1072,7 +1088,8 @@
         "BuildConfiguration":{"shape":"BuildConfiguration"},
         "AutoCreateApplication":{"shape":"AutoCreateApplication"},
         "Process":{"shape":"ApplicationVersionProccess"},
-        "Tags":{"shape":"Tags"}
+        "Tags":{"shape":"Tags"},
+        "ImageConfiguration":{"shape":"ImageConfiguration"}
       }
     },
     "CreateConfigurationTemplateMessage":{
@@ -1536,6 +1553,7 @@
       "members":{
         "EnvironmentName":{"shape":"EnvironmentName"},
         "AutoScalingGroups":{"shape":"AutoScalingGroupList"},
+        "Cluster":{"shape":"Cluster"},
         "Instances":{"shape":"InstanceList"},
         "LaunchConfigurations":{"shape":"LaunchConfigurationList"},
         "LaunchTemplates":{"shape":"LaunchTemplateList"},
@@ -1639,7 +1657,39 @@
       "max":19,
       "min":1
     },
+    "ImageBuildConfiguration":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"ImageBuildType"},
+        "DockerfileLocation":{"shape":"String"},
+        "Buildpack":{"shape":"String"},
+        "Architecture":{"shape":"ArchitectureType"},
+        "CodeBuildServiceRole":{"shape":"NonEmptyString"},
+        "ComputeType":{"shape":"ComputeType"},
+        "TimeoutInMinutes":{"shape":"BoxedInt"}
+      }
+    },
+    "ImageBuildType":{
+      "type":"string",
+      "enum":[
+        "docker",
+        "buildpack"
+      ]
+    },
+    "ImageConfiguration":{
+      "type":"structure",
+      "members":{
+        "Source":{"shape":"ImageSource"},
+        "Build":{"shape":"ImageBuildConfiguration"}
+      }
+    },
     "ImageId":{"type":"string"},
+    "ImageSource":{
+      "type":"structure",
+      "members":{
+        "Uri":{"shape":"String"}
+      }
+    },
     "IncludeDeleted":{"type":"boolean"},
     "IncludeDeletedBackTo":{"type":"timestamp"},
     "Instance":{
