@@ -29,34 +29,14 @@ jobs:
       - name: Find changed source files
         id: changed-source-files
         shell: bash
-        run: |
-          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            BASE_SHA="${{ github.event.pull_request.base.sha }}"
-            HEAD_SHA="${{ github.event.pull_request.head.sha }}"
-            DIFF_BASE="$(git merge-base "$BASE_SHA" "$HEAD_SHA")"
-          else
-            DIFF_BASE="${{ github.event.before }}"
-            HEAD_SHA="${{ github.sha }}"
-          fi
-
-          if [[ -z "$DIFF_BASE" || "$DIFF_BASE" == "0000000000000000000000000000000000000000" ]]; then
-            DIFF_BASE="$(git rev-list --max-parents=0 "$HEAD_SHA")"
-          fi
-
-          echo "$DIFF_BASE" > diff-base.txt
-          echo "$HEAD_SHA" > diff-head.txt
-
-          git diff --name-only --diff-filter=ACMRT "$DIFF_BASE" "$HEAD_SHA" -- '*.php' \
-            | grep -E '^src/' \
-            | grep -v '^src/data/' > changed-source-files.txt || true
-
-          if [[ -s changed-source-files.txt ]]; then
-            echo "has_files=true" >> "$GITHUB_OUTPUT"
-            cat changed-source-files.txt
-          else
-            echo "has_files=false" >> "$GITHUB_OUTPUT"
-            echo "No changed source files to check."
-          fi
+        run: bash .github/scripts/find-changed-source-files.sh
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_USER_LOGIN: ${{ github.event.pull_request.user.login }}
+          PUSH_BEFORE_SHA: ${{ github.event.before }}
+          HEAD_SHA: ${{ github.sha }}
 
       - name: Install PHP_CodeSniffer
         if: steps.changed-source-files.outputs.has_files == 'true'
