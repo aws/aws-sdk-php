@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.395.4 - 2026-09-16
 
 * `Aws\Resiliencehubv2` - Next Gen Resilience Hub now supports dependency insights (LLM-based insights about customer's service dependencies) and organization-level policy sharing (provision to share policy with member accounts for an organization)
 * `Aws\BedrockAgentCoreControl` - Adds support for a new DELETE FAILED status for Bedrock AgentCore Runtimes and Bedrock AgentCore Runtime Endpoints.
