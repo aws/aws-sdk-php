@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.395.5 - 2026-09-17
 
 * `Aws\` - Preserved sub-second precision when serializing `unixTimestamp` and `iso8601` request timestamps. Whole-second values and `rfc822` timestamps are unchanged.
 * `Aws\BedrockAgentCore` - Batch evaluation now supports evaluating specific traces within a session. Each session can specify up to 100 trace IDs to evaluate.
