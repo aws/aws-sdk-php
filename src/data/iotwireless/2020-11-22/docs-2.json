@@ -158,9 +158,9 @@
       }
     },
     "AdvancedConfiguration": {
-      "base": "Optional configuration to customize location estimates.",
+      "base": "<p>Optional configuration for customizing position estimates, including parameters that affect the accuracy and uncertainty of WiFi and cellular-based location estimates.</p>",
       "refs": {
-        "GetPositionEstimateRequest$AdvancedConfiguration": "Optional configuration to customize position estimates. If not provided, defaults are applied."
+        "GetPositionEstimateRequest$AdvancedConfiguration": "<p>Optional configuration for customizing position measurement data.</p>"
       }
     },
     "AggregationPeriod": {
@@ -249,7 +249,8 @@
     "AssistPosition": {
       "base": null,
       "refs": {
-        "Gnss$AssistPosition": "<p>Optional assistance position information, specified using latitude and longitude values in degrees. The coordinates are inside the WGS84 reference frame.</p>"
+        "Gnss$AssistPosition": "<p>Optional assistance position information, specified using latitude and longitude values in degrees. The coordinates are inside the WGS84 reference frame.</p>",
+        "GnssMultiFrame$AssistPosition": "<p>Optional assistance position information, specified using latitude and longitude values in degrees. The coordinates are inside the WGS84 reference frame.</p>"
       }
     },
     "AssociateAwsAccountWithPartnerAccountRequest": {
@@ -395,7 +396,8 @@
     "CaptureTimeAccuracy": {
       "base": null,
       "refs": {
-        "Gnss$CaptureTimeAccuracy": "<p>Optional value that gives the capture time estimate accuracy, in seconds. If capture time accuracy is not specified, default value of 300 is used.</p>"
+        "Gnss$CaptureTimeAccuracy": "<p>Optional value that gives the capture time estimate accuracy, in seconds. If capture time accuracy is not specified, default value of 300 is used.</p>",
+        "GnssMultiFrame$CaptureTimeAccuracy": "<p>Optional value that gives the capture time estimate accuracy, in seconds. If capture time accuracy is not specified, default value of 300 is used.</p>"
       }
     },
     "CdmaChannel": {
@@ -505,7 +507,7 @@
     "ConfidencePercent": {
       "base": null,
       "refs": {
-        "WiFiCellular$ConfidencePercent": "Confidence level for WiFi and cellular position estimates, expressed as a percentage. Valid range: 50–99 inclusive. Defaults to 68 if not specified."
+        "WiFiCellular$ConfidencePercent": "<p>The confidence level for WiFi and cellular position estimates, expressed as a percentage. This value determines the size of the confidence area or uncertainty radius for the estimated position. A higher confidence level produces a larger uncertainty radius, while a lower confidence level produces a smaller, more precise radius.</p> <p>Valid range: 50 to 99 inclusive. If not specified, the default value of 68 is used, which corresponds to approximately one standard deviation of the normal distribution.</p>"
       }
     },
     "ConflictException": {
@@ -537,7 +539,8 @@
       "base": null,
       "refs": {
         "AssistPosition$member": null,
-        "Gnss$AssistAltitude": "<p>Optional assistance altitude, which is the altitude of the device at capture time, specified in meters above the WGS84 reference ellipsoid.</p>"
+        "Gnss$AssistAltitude": "<p>Optional assistance altitude, which is the altitude of the device at capture time, specified in meters above the WGS84 reference ellipsoid.</p>",
+        "GnssMultiFrame$AssistAltitude": "<p>Optional assistance altitude, which is the altitude of the device at capture time, specified in meters above the WGS84 reference ellipsoid. This parameter is required when Use2DSolver is enabled.</p>"
       }
     },
     "Crc": {
@@ -1440,7 +1443,8 @@
     "GPST": {
       "base": null,
       "refs": {
-        "Gnss$CaptureTime": "<p>Optional parameter that gives an estimate of the time when the GNSS scan information is taken, in seconds GPS time (GPST). If capture time is not specified, the local server time is used.</p>"
+        "Gnss$CaptureTime": "<p>Optional parameter that gives an estimate of the time when the GNSS scan information is taken, in seconds GPS time (GPST). If capture time is not specified, the local server time is used.</p>",
+        "GnssCapture$CaptureTime": "<p>Optional parameter that gives an estimate of the time when the GNSS scan information is taken, in seconds GPS time (GPST). If capture time is not specified, the local server time is used.</p>"
       }
     },
     "GatewayEui": {
@@ -1729,13 +1733,32 @@
     "Gnss": {
       "base": "<p>Global navigation satellite system (GNSS) object used for positioning.</p>",
       "refs": {
-        "GetPositionEstimateRequest$Gnss": "<p>Retrieves an estimated device position by resolving the global navigation satellite system (GNSS) scan data. The position is resolved using the GNSS solver powered by LoRa Cloud.</p>"
+        "GetPositionEstimateRequest$Gnss": "<p>Retrieves an estimated device position by resolving the global navigation satellite system (GNSS) scan data. The position is resolved using the GNSS solver powered by LoRa Cloud. This field is mutually exclusive with the GnssMultiFrame field.</p>"
+      }
+    },
+    "GnssCapture": {
+      "base": "<p>A single GNSS scan capture containing the scan payload and optional capture time.</p>",
+      "refs": {
+        "GnssCaptures$member": null
+      }
+    },
+    "GnssCaptures": {
+      "base": null,
+      "refs": {
+        "GnssMultiFrame$Captures": "<p>List of GNSS scan captures. Each capture contains a payload from a single GNSS scan. The number of captures must be 2, 4, 8, 16, or 32.</p>"
+      }
+    },
+    "GnssMultiFrame": {
+      "base": "<p>Global navigation satellite system (GNSS) multi-frame object used for positioning. Contains multiple GNSS scan captures that are combined by the solver.</p>",
+      "refs": {
+        "GetPositionEstimateRequest$GnssMultiFrame": "<p>Retrieves an estimated device position by resolving multiple global navigation satellite system (GNSS) scan captures. The position is resolved using the multi-frame GNSS solver powered by LoRa Cloud. This field is mutually exclusive with the Gnss field.</p>"
       }
     },
     "GnssNav": {
       "base": null,
       "refs": {
-        "Gnss$Payload": "<p>Payload that contains the GNSS scan result, or NAV message, in hexadecimal notation.</p>"
+        "Gnss$Payload": "<p>Payload that contains the GNSS scan result, or NAV message, in hexadecimal notation.</p>",
+        "GnssCapture$Payload": "<p>Payload that contains the GNSS scan result, or NAV message, in hexadecimal notation.</p>"
       }
     },
     "GsmList": {
@@ -4097,7 +4120,8 @@
     "Use2DSolver": {
       "base": null,
       "refs": {
-        "Gnss$Use2DSolver": "<p>Optional parameter that forces 2D solve, which modifies the positioning algorithm to a 2D solution problem. When this parameter is specified, the assistance altitude should have an accuracy of at least 10 meters.</p>"
+        "Gnss$Use2DSolver": "<p>Optional parameter that forces 2D solve, which modifies the positioning algorithm to a 2D solution problem. When this parameter is specified, the assistance altitude should have an accuracy of at least 10 meters.</p>",
+        "GnssMultiFrame$Use2DSolver": "<p>Optional parameter that forces 2D solve, which modifies the positioning algorithm to a 2D solution problem. When this parameter is specified, the assistance altitude should have an accuracy of at least 10 meters.</p>"
       }
     },
     "UtranCid": {
@@ -4162,9 +4186,9 @@
       }
     },
     "WiFiCellular": {
-      "base": "Configuration for WiFi and cellular location payloads.",
+      "base": "<p>Configuration for WiFi and cellular location payloads. Contains the confidence level that determines the size of the uncertainty radius in the position estimate.</p>",
       "refs": {
-        "AdvancedConfiguration$WiFiCellular": "Configuration for WiFi and cellular-based payloads for location estimates."
+        "AdvancedConfiguration$WiFiCellular": "<p>Configuration for WiFi and cellular-based location estimate payloads resolved by HERE's solvers.</p>"
       }
     },
     "WirelessDeviceArn": {

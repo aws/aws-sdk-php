@@ -242,6 +242,24 @@
         "UpdateServiceResponse$certificateArn": "<p>The Amazon Resource Name (ARN) of the certificate.</p>"
       }
     },
+    "CidrRange": {
+      "base": null,
+      "refs": {
+        "CidrRangeList$member": null
+      }
+    },
+    "CidrRangeList": {
+      "base": null,
+      "refs": {
+        "CidrResource$cidrRanges": "<p>The CIDR ranges of the network segment, for example, <code>10.0.0.0/16</code>.</p>"
+      }
+    },
+    "CidrResource": {
+      "base": "<p>Describes a CIDR resource, which represents a network segment as one or more CIDR ranges.</p>",
+      "refs": {
+        "ResourceConfigurationDefinition$cidrResource": "<p>The network segment for a resource configuration of type CIDR, specified as one or more CIDR ranges (<code>cidrRanges</code>). Resources whose IP addresses fall within these ranges are reachable through a <code>Tunnel</code> VPC endpoint.</p>"
+      }
+    },
     "ClientToken": {
       "base": null,
       "refs": {
@@ -502,12 +520,12 @@
       "refs": {
         "CreateServiceNetworkServiceAssociationResponse$dnsEntry": "<p>The DNS name of the service.</p>",
         "CreateServiceResponse$dnsEntry": "<p>The public DNS name of the service.</p>",
-        "GetServiceNetworkResourceAssociationResponse$privateDnsEntry": "<p>The private DNS entry for the service.</p>",
+        "GetServiceNetworkResourceAssociationResponse$privateDnsEntry": "<p>The private DNS entry for the service. This entry includes only the domain name.</p>",
         "GetServiceNetworkResourceAssociationResponse$dnsEntry": "<p>The DNS entry for the service.</p>",
         "GetServiceNetworkServiceAssociationResponse$dnsEntry": "<p>The DNS name of the service.</p>",
         "GetServiceResponse$dnsEntry": "<p>The DNS name of the service.</p>",
         "ServiceNetworkResourceAssociationSummary$dnsEntry": "<p>The DNS entry for the service.</p>",
-        "ServiceNetworkResourceAssociationSummary$privateDnsEntry": "<p>The private DNS entry for the service.</p>",
+        "ServiceNetworkResourceAssociationSummary$privateDnsEntry": "<p>The private DNS entry for the service. This entry includes only the domain name.</p>",
         "ServiceNetworkServiceAssociationSummary$dnsEntry": "<p>The DNS information.</p>",
         "ServiceSummary$dnsEntry": "<p>The DNS information.</p>"
       }
@@ -1186,6 +1204,30 @@
         "PathMatch$match": "<p>The type of path match.</p>"
       }
     },
+    "PayerResponsibilityEntry": {
+      "base": "<p>Specifies which account pays for a category of charges on a VPC endpoint association.</p>",
+      "refs": {
+        "PayerResponsibilityList$member": null
+      }
+    },
+    "PayerResponsibilityList": {
+      "base": null,
+      "refs": {
+        "ResourceEndpointAssociationSummary$payerResponsibility": "<p>Who pays for each category of charges on the VPC endpoint association.</p>"
+      }
+    },
+    "PayerResponsibilityPayer": {
+      "base": null,
+      "refs": {
+        "PayerResponsibilityEntry$payerResponsibilityType": "<p>The account that pays this category of charges. <code>VpcEndpointAccount</code> owns the VPC endpoint. <code>ResourceGatewayAccount</code> owns the resource gateway.</p>"
+      }
+    },
+    "PayerResponsibilityScope": {
+      "base": null,
+      "refs": {
+        "PayerResponsibilityEntry$scope": "<p>The category of charges that this entry applies to. <code>ResourceGatewayCharges</code> covers the resource gateway's data processing charge.</p>"
+      }
+    },
     "PolicyString": {
       "base": null,
       "refs": {
@@ -1217,7 +1259,7 @@
     "PortRangeList": {
       "base": null,
       "refs": {
-        "CreateResourceConfigurationRequest$portRanges": "<p>(SINGLE, GROUP, CHILD) The TCP port ranges that a consumer can use to access a resource configuration (for example: 1-65535). You can separate port ranges using commas (for example: 1,2,22-30).</p>",
+        "CreateResourceConfigurationRequest$portRanges": "<p>(SINGLE, GROUP, CHILD, CIDR) The port ranges that a consumer can use to access a resource configuration (for example: 1-65535). You can separate port ranges using commas (for example: 1,2,22-30). To resolve DNS through a CIDR resource configuration, include port 53 in the port ranges.</p>",
         "CreateResourceConfigurationResponse$portRanges": "<p>The port range.</p>",
         "GetResourceConfigurationResponse$portRanges": "<p>The TCP port ranges that a consumer can use to access a resource configuration. You can separate port ranges with a comma. Example: 1-65535 or 1,2,22-30</p>",
         "UpdateResourceConfigurationRequest$portRanges": "<p>The TCP port ranges that a consumer can use to access a resource configuration. You can separate port ranges with a comma. Example: 1-65535 or 1,2,22-30</p>",
@@ -1245,7 +1287,7 @@
     "ProtocolType": {
       "base": null,
       "refs": {
-        "CreateResourceConfigurationRequest$protocol": "<p>(SINGLE, GROUP) The protocol accepted by the resource configuration.</p>",
+        "CreateResourceConfigurationRequest$protocol": "<p>(SINGLE, GROUP, CIDR) The protocol accepted by the resource configuration. The default is <code>TCP</code>. <code>TCP_UDP</code> is supported only for CIDR resource configurations; specify it for a CIDR resource configuration to allow DNS resolution, which uses UDP.</p>",
         "CreateResourceConfigurationResponse$protocol": "<p>The protocol.</p>",
         "GetResourceConfigurationResponse$protocol": "<p>The TCP protocol accepted by the specified resource configuration.</p>",
         "UpdateResourceConfigurationResponse$protocol": "<p>The TCP protocol accepted by the specified resource configuration.</p>"
@@ -1296,7 +1338,7 @@
     "ResourceConfigDnsResolution": {
       "base": null,
       "refs": {
-        "CreateResourceGatewayRequest$resourceConfigDnsResolution": "<p>Indicates how DNS is resolved for resource configurations associated to this resource gateway. ResourceConfigDnsResolution is set at creation time and cannot be changed.</p> <ul> <li> <p> <code>IN_VPC</code> - DNS resolution occurs privately within the resource gateway's VPC. DNS queries for resources behind this resource gateway resolve using the DNS resolvers defined in the VPC's DHCP option sets. Use this when your resource domain names are hosted in private Route 53 hosted zones or on-premises DNS servers reachable from the VPC.</p> </li> <li> <p> <code>PUBLIC</code> - DNS resolution occurs against public DNS resolvers. DNS queries for resources behind this resource gateway resolve using standard public DNS. Use this when your resource domain names are publicly resolvable.</p> </li> </ul>",
+        "CreateResourceGatewayRequest$resourceConfigDnsResolution": "<p>Indicates how DNS is resolved for resource configurations associated with this resource gateway. This value is set when you create the resource gateway and can't be changed afterward. The default is <code>PUBLIC</code>.</p> <ul> <li> <p> <code>IN_VPC</code> - DNS resolution occurs privately within the resource gateway's VPC. DNS queries for resources behind this resource gateway resolve using the DNS resolvers defined in the VPC's DHCP option sets. Use this when your resource domain names are hosted in private Route 53 hosted zones or on-premises DNS servers reachable from the VPC. A CIDR resource configuration requires a resource gateway that uses <code>IN_VPC</code>, and an <code>IN_VPC</code> resource gateway can't be used for ARN resource configurations, so a single resource gateway can't serve both ARN and CIDR resource configurations.</p> </li> <li> <p> <code>PUBLIC</code> - DNS resolution occurs against public DNS resolvers. DNS queries for resources behind this resource gateway resolve using standard public DNS. Use this when your resource domain names are publicly resolvable.</p> </li> </ul>",
         "CreateResourceGatewayResponse$resourceConfigDnsResolution": "<p>The DNS resolution type for resource configurations that are associated with this resource gateway.</p>",
         "GetResourceGatewayResponse$resourceConfigDnsResolution": "<p>The DNS resolution type for resource configurations that are associated with this resource gateway.</p>",
         "ResourceGatewaySummary$resourceConfigDnsResolution": "<p>The DNS resolution type for resource configurations that are associated with this resource gateway.</p>"
@@ -1318,7 +1360,7 @@
     "ResourceConfigurationDefinition": {
       "base": "<p>Describes a resource configuration.</p>",
       "refs": {
-        "CreateResourceConfigurationRequest$resourceConfigurationDefinition": "<p>Identifies the resource configuration in one of the following ways:</p> <ul> <li> <p> <b>Amazon Resource Name (ARN)</b> - Supported resource-types that are provisioned by Amazon Web Services services, such as RDS databases, can be identified by their ARN.</p> </li> <li> <p> <b>Domain name</b> - Any domain name that is publicly resolvable.</p> </li> <li> <p> <b>IP address</b> - For IPv4 and IPv6, only IP addresses in the VPC are supported.</p> </li> </ul>",
+        "CreateResourceConfigurationRequest$resourceConfigurationDefinition": "<p>Identifies the resource configuration in one of the following ways:</p> <ul> <li> <p> <b>Amazon Resource Name (ARN)</b> - Supported resource-types that are provisioned by Amazon Web Services services, such as RDS databases, can be identified by their ARN.</p> </li> <li> <p> <b>Domain name</b> - Any domain name that is publicly resolvable.</p> </li> <li> <p> <b>IP address</b> - For IPv4 and IPv6, only IP addresses in the VPC are supported.</p> </li> <li> <p> <b>CIDR range</b> - For a resource configuration of type CIDR, specify a <code>cidrResource</code> with one or more <code>cidrRanges</code> (for example, <code>10.0.0.0/16</code>) that cover the IP addresses of the resources you want to make accessible. You can specify up to 10 ranges, using IPv4, IPv6, or both, and each range must include a prefix length. To represent your entire network, specify <code>0.0.0.0/0</code> (IPv4) or <code>::/0</code> (IPv6) as the only range. You can't use reserved ranges such as <code>169.254.0.0/16</code>, <code>100.64.0.0/10</code>, <code>224.0.0.0/4</code>, <code>fe80::/10</code>, or <code>ff00::/8</code>.</p> </li> </ul>",
         "CreateResourceConfigurationResponse$resourceConfigurationDefinition": "<p>Identifies the resource configuration in one of the following ways:</p> <ul> <li> <p> <b>Amazon Resource Name (ARN)</b> - Supported resource-types that are provisioned by Amazon Web Services services, such as RDS databases, can be identified by their ARN.</p> </li> <li> <p> <b>Domain name</b> - Any domain name that is publicly resolvable.</p> </li> <li> <p> <b>IP address</b> - For IPv4 and IPv6, only IP addresses in the VPC are supported.</p> </li> </ul>",
         "GetResourceConfigurationResponse$resourceConfigurationDefinition": "<p>The resource configuration.</p>",
         "UpdateResourceConfigurationRequest$resourceConfigurationDefinition": "<p>Identifies the resource configuration in one of the following ways:</p> <ul> <li> <p> <b>Amazon Resource Name (ARN)</b> - Supported resource-types that are provisioned by Amazon Web Services services, such as RDS databases, can be identified by their ARN.</p> </li> <li> <p> <b>Domain name</b> - Any domain name that is publicly resolvable.</p> </li> <li> <p> <b>IP address</b> - For IPv4 and IPv6, only IP addresses in the VPC are supported.</p> </li> </ul>",
@@ -1398,11 +1440,11 @@
     "ResourceConfigurationType": {
       "base": null,
       "refs": {
-        "CreateResourceConfigurationRequest$type": "<p>The type of resource configuration. A resource configuration can be one of the following types:</p> <ul> <li> <p> <b>SINGLE</b> - A single resource.</p> </li> <li> <p> <b>GROUP</b> - A group of resources. You must create a group resource configuration before you create a child resource configuration.</p> </li> <li> <p> <b>CHILD</b> - A single resource that is part of a group resource configuration.</p> </li> <li> <p> <b>ARN</b> - An Amazon Web Services resource.</p> </li> </ul>",
-        "CreateResourceConfigurationResponse$type": "<p>The type of resource configuration. A resource configuration can be one of the following types:</p> <ul> <li> <p> <b>SINGLE</b> - A single resource.</p> </li> <li> <p> <b>GROUP</b> - A group of resources. You must create a group resource configuration before you create a child resource configuration.</p> </li> <li> <p> <b>CHILD</b> - A single resource that is part of a group resource configuration.</p> </li> <li> <p> <b>ARN</b> - An Amazon Web Services resource.</p> </li> </ul>",
-        "GetResourceConfigurationResponse$type": "<p>The type of resource configuration.</p> <ul> <li> <p> <code>SINGLE</code> - A single resource.</p> </li> <li> <p> <code>GROUP</code> - A group of resources.</p> </li> <li> <p> <code>CHILD</code> - A single resource that is part of a group resource configuration.</p> </li> <li> <p> <code>ARN</code> - An Amazon Web Services resource.</p> </li> </ul>",
-        "ResourceConfigurationSummary$type": "<p>The type of resource configuration.</p> <ul> <li> <p> <code>SINGLE</code> - A single resource.</p> </li> <li> <p> <code>GROUP</code> - A group of resources. You must create a group resource configuration before you create a child resource configuration.</p> </li> <li> <p> <code>CHILD</code> - A single resource that is part of a group resource configuration.</p> </li> <li> <p> <code>ARN</code> - An Amazon Web Services resource.</p> </li> </ul>",
-        "UpdateResourceConfigurationResponse$type": "<p>The type of resource configuration.</p> <ul> <li> <p> <code>SINGLE</code> - A single resource.</p> </li> <li> <p> <code>GROUP</code> - A group of resources.</p> </li> <li> <p> <code>CHILD</code> - A single resource that is part of a group resource configuration.</p> </li> <li> <p> <code>ARN</code> - An Amazon Web Services resource.</p> </li> </ul>"
+        "CreateResourceConfigurationRequest$type": "<p>The type of resource configuration. A resource configuration can be one of the following types:</p> <ul> <li> <p> <b>SINGLE</b> - A single resource.</p> </li> <li> <p> <b>GROUP</b> - A group of resources. You must create a group resource configuration before you create a child resource configuration.</p> </li> <li> <p> <b>CHILD</b> - A single resource that is part of a group resource configuration.</p> </li> <li> <p> <b>ARN</b> - An Amazon Web Services resource.</p> </li> <li> <p> <b>CIDR</b> - A network segment, expressed as a range of IP addresses (a CIDR block). Use this type to share a portion of your network rather than an individual resource. A consumer accesses the resources within the CIDR range through a <code>Tunnel</code> VPC endpoint. You can't add a CIDR resource configuration to a service network. A CIDR resource configuration must be associated with a resource gateway whose DNS resolution is set to <code>IN_VPC</code>.</p> </li> </ul>",
+        "CreateResourceConfigurationResponse$type": "<p>The type of resource configuration. A resource configuration can be one of the following types:</p> <ul> <li> <p> <b>SINGLE</b> - A single resource.</p> </li> <li> <p> <b>GROUP</b> - A group of resources. You must create a group resource configuration before you create a child resource configuration.</p> </li> <li> <p> <b>CHILD</b> - A single resource that is part of a group resource configuration.</p> </li> <li> <p> <b>ARN</b> - An Amazon Web Services resource.</p> </li> <li> <p> <b>CIDR</b> - A network segment, expressed as a range of IP addresses (a CIDR block). A consumer accesses the resources within the CIDR range through a <code>Tunnel</code> VPC endpoint. A CIDR resource configuration must be associated with a resource gateway whose DNS resolution is set to <code>IN_VPC</code>.</p> </li> </ul>",
+        "GetResourceConfigurationResponse$type": "<p>The type of resource configuration.</p> <ul> <li> <p> <code>SINGLE</code> - A single resource.</p> </li> <li> <p> <code>GROUP</code> - A group of resources.</p> </li> <li> <p> <code>CHILD</code> - A single resource that is part of a group resource configuration.</p> </li> <li> <p> <code>ARN</code> - An Amazon Web Services resource.</p> </li> <li> <p> <code>CIDR</code> - A network segment (a range of IP addresses) accessed through a <code>Tunnel</code> VPC endpoint.</p> </li> </ul>",
+        "ResourceConfigurationSummary$type": "<p>The type of resource configuration.</p> <ul> <li> <p> <code>SINGLE</code> - A single resource.</p> </li> <li> <p> <code>GROUP</code> - A group of resources. You must create a group resource configuration before you create a child resource configuration.</p> </li> <li> <p> <code>CHILD</code> - A single resource that is part of a group resource configuration.</p> </li> <li> <p> <code>ARN</code> - An Amazon Web Services resource.</p> </li> <li> <p> <code>CIDR</code> - A network segment (a range of IP addresses) accessed through a <code>Tunnel</code> VPC endpoint.</p> </li> </ul>",
+        "UpdateResourceConfigurationResponse$type": "<p>The type of resource configuration.</p> <ul> <li> <p> <code>SINGLE</code> - A single resource.</p> </li> <li> <p> <code>GROUP</code> - A group of resources.</p> </li> <li> <p> <code>CHILD</code> - A single resource that is part of a group resource configuration.</p> </li> <li> <p> <code>ARN</code> - An Amazon Web Services resource.</p> </li> <li> <p> <code>CIDR</code> - A network segment (a range of IP addresses) accessed through a <code>Tunnel</code> VPC endpoint.</p> </li> </ul>"
       }
     },
     "ResourceEndpointAssociationArn": {
@@ -1454,7 +1496,7 @@
         "CreateResourceConfigurationResponse$resourceGatewayId": "<p>The ID of the resource gateway associated with the resource configuration.</p>",
         "CreateResourceGatewayResponse$id": "<p>The ID of the resource gateway.</p>",
         "DeleteResourceGatewayResponse$id": "<p>The ID of the resource gateway.</p>",
-        "GetResourceConfigurationResponse$resourceGatewayId": "<p>The ID of the resource gateway used to connect to the resource configuration in a given VPC. You can specify the resource gateway identifier only for resource configurations with type SINGLE, GROUP, or ARN.</p>",
+        "GetResourceConfigurationResponse$resourceGatewayId": "<p>The ID of the resource gateway used to connect to the resource configuration in a given VPC. You can specify the resource gateway identifier only for resource configurations with type SINGLE, GROUP, ARN, or CIDR.</p>",
         "GetResourceGatewayResponse$id": "<p>The ID of the resource gateway.</p>",
         "ResourceConfigurationSummary$resourceGatewayId": "<p>The ID of the resource gateway.</p>",
         "ResourceGatewaySummary$id": "<p>The ID of the resource gateway.</p>",
@@ -1465,7 +1507,7 @@
     "ResourceGatewayIdentifier": {
       "base": null,
       "refs": {
-        "CreateResourceConfigurationRequest$resourceGatewayIdentifier": "<p>(SINGLE, GROUP, ARN) The ID or ARN of the resource gateway used to connect to the resource configuration. For a child resource configuration, this value is inherited from the parent resource configuration.</p>",
+        "CreateResourceConfigurationRequest$resourceGatewayIdentifier": "<p>(SINGLE, GROUP, ARN, CIDR) The ID or ARN of the resource gateway used to connect to the resource configuration. For a child resource configuration, this value is inherited from the parent resource configuration. For a CIDR resource configuration, the associated resource gateway must have its DNS resolution set to <code>IN_VPC</code> so that DNS queries resolve in the context of your VPC.</p>",
         "DeleteResourceGatewayRequest$resourceGatewayIdentifier": "<p>The ID or ARN of the resource gateway.</p>",
         "GetResourceGatewayRequest$resourceGatewayIdentifier": "<p>The ID of the resource gateway.</p>",
         "ListResourceConfigurationsRequest$resourceGatewayIdentifier": "<p>The ID of the resource gateway for the resource configuration.</p>",

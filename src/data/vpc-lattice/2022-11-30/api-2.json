@@ -1495,6 +1495,23 @@
       "min":0,
       "pattern":"(arn(:[a-z0-9]+([.-][a-z0-9]+)*){2}(:([a-z0-9]+([.-][a-z0-9]+)*)?){2}:certificate/[0-9a-z-]+)?"
     },
+    "CidrRange":{
+      "type":"string",
+      "max":50,
+      "min":1
+    },
+    "CidrRangeList":{
+      "type":"list",
+      "member":{"shape":"CidrRange"},
+      "max":10,
+      "min":1
+    },
+    "CidrResource":{
+      "type":"structure",
+      "members":{
+        "cidrRanges":{"shape":"CidrRangeList"}
+      }
+    },
     "ClientToken":{
       "type":"string",
       "max":64,
@@ -3466,6 +3483,30 @@
       },
       "union":true
     },
+    "PayerResponsibilityEntry":{
+      "type":"structure",
+      "members":{
+        "scope":{"shape":"PayerResponsibilityScope"},
+        "payerResponsibilityType":{"shape":"PayerResponsibilityPayer"}
+      }
+    },
+    "PayerResponsibilityList":{
+      "type":"list",
+      "member":{"shape":"PayerResponsibilityEntry"},
+      "max":10,
+      "min":1
+    },
+    "PayerResponsibilityPayer":{
+      "type":"string",
+      "enum":[
+        "VpcEndpointAccount",
+        "ResourceGatewayAccount"
+      ]
+    },
+    "PayerResponsibilityScope":{
+      "type":"string",
+      "enum":["ResourceGatewayCharges"]
+    },
     "PolicyString":{
       "type":"string",
       "max":10000,
@@ -3510,7 +3551,10 @@
     },
     "ProtocolType":{
       "type":"string",
-      "enum":["TCP"]
+      "enum":[
+        "TCP",
+        "TCP_UDP"
+      ]
     },
     "PutAuthPolicyRequest":{
       "type":"structure",
@@ -3605,7 +3649,8 @@
       "members":{
         "dnsResource":{"shape":"DnsResource"},
         "ipResource":{"shape":"IpResource"},
-        "arnResource":{"shape":"ArnResource"}
+        "arnResource":{"shape":"ArnResource"},
+        "cidrResource":{"shape":"CidrResource"}
       },
       "union":true
     },
@@ -3675,7 +3720,8 @@
         "GROUP",
         "CHILD",
         "SINGLE",
-        "ARN"
+        "ARN",
+        "CIDR"
       ]
     },
     "ResourceEndpointAssociationArn":{
@@ -3711,7 +3757,8 @@
         "vpcEndpointId":{"shape":"VpcEndpointId"},
         "vpcEndpointOwner":{"shape":"VpcEndpointOwner"},
         "createdBy":{"shape":"AccountId"},
-        "createdAt":{"shape":"Timestamp"}
+        "createdAt":{"shape":"Timestamp"},
+        "payerResponsibility":{"shape":"PayerResponsibilityList"}
       }
     },
     "ResourceGatewayArn":{

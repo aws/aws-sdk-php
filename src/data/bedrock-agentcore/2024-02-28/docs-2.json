@@ -4487,6 +4487,18 @@
         "ListSessionsOutput$sessionSummaries": "<p>The list of session summaries that match the specified criteria.</p>"
       }
     },
+    "SessionTraceIds": {
+      "base": "<p>A pairing of a session with the specific trace IDs to evaluate within that session. Use this to evaluate individual traces rather than an entire session.</p>",
+      "refs": {
+        "SessionTraceIdsList$member": null
+      }
+    },
+    "SessionTraceIdsList": {
+      "base": null,
+      "refs": {
+        "CloudWatchFilterConfig$sessionTraceIds": "<p>A list of session and trace ID pairs that restrict evaluation to specific traces within a session. If specified, only the listed traces are evaluated instead of the entire session.</p>"
+      }
+    },
     "SessionType": {
       "base": null,
       "refs": {
@@ -4802,6 +4814,7 @@
         "ServiceException$message": null,
         "SessionMetadataShape$sessionId": "<p>The unique identifier of the session this metadata applies to.</p>",
         "SessionMetadataShape$testScenarioId": "<p>An optional test scenario identifier for categorizing and tracking evaluation results.</p>",
+        "SessionTraceIds$sessionId": "<p>The unique identifier of the session that contains the traces to evaluate.</p>",
         "SpanContext$sessionId": "<p> The unique identifier of the session containing this span. Sessions represent complete conversation flows and are detected using configurable <code>SessionTimeoutMinutes</code> (default 15 minutes). </p>",
         "SpanContext$traceId": "<p> The unique identifier of the trace containing this span. Traces represent individual request-response interactions within a session and group related spans together. </p>",
         "SpanContext$spanId": "<p> The unique identifier of the specific span being referenced. Spans represent individual operations like tool calls, model invocations, or other discrete actions within the agent's execution. </p>",
@@ -5220,7 +5233,14 @@
     "TraceId": {
       "base": null,
       "refs": {
+        "TraceIdList$member": null,
         "TraceIds$member": null
+      }
+    },
+    "TraceIdList": {
+      "base": null,
+      "refs": {
+        "SessionTraceIds$traceIds": "<p>The list of trace IDs within the session to evaluate.</p>"
       }
     },
     "TraceIds": {

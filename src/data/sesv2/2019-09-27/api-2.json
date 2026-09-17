@@ -4546,6 +4546,7 @@
         "Destination":{"shape":"EmailAddressFilterList"},
         "Subject":{"shape":"EmailSubjectFilterList"},
         "Isp":{"shape":"IspFilterList"},
+        "TenantName":{"shape":"TenantNameFilterList"},
         "LastDeliveryEvent":{"shape":"LastDeliveryEventList"},
         "LastEngagementEvent":{"shape":"LastEngagementEventList"}
       }
@@ -4630,7 +4631,8 @@
       "enum":[
         "EMAIL_IDENTITY",
         "CONFIGURATION_SET",
-        "ISP"
+        "ISP",
+        "TENANT_NAME"
       ]
     },
     "MetricDimensionValue":{"type":"string"},
@@ -5720,6 +5722,11 @@
     "TenantName":{
       "type":"string",
       "min":1
+    },
+    "TenantNameFilterList":{
+      "type":"list",
+      "member":{"shape":"TenantName"},
+      "max":5
     },
     "TenantResource":{
       "type":"structure",

@@ -10,7 +10,7 @@
     "CreateNotificationConfiguration": "<p>Creates a new <code>NotificationConfiguration</code>.</p>",
     "DeleteEventRule": "<p>Deletes an <code>EventRule</code>.</p>",
     "DeleteNotificationConfiguration": "<p>Deletes a <code>NotificationConfiguration</code>.</p>",
-    "DeregisterNotificationHub": "<p>Deregisters a <code>NotificationConfiguration</code> in the specified Region.</p> <note> <p>You can't deregister the last <code>NotificationHub</code> in the account. <code>NotificationEvents</code> stored in the deregistered <code>NotificationConfiguration</code> are no longer be visible. Recreating a new <code>NotificationConfiguration</code> in the same Region restores access to those <code>NotificationEvents</code>.</p> </note>",
+    "DeregisterNotificationHub": "<p>Deregisters a <code>NotificationHub</code> in the specified Region.</p> <note> <p>You can't deregister the last <code>NotificationHub</code> in the account. <code>NotificationEvents</code> stored in the deregistered <code>NotificationHub</code> are no longer visible. Recreating a new <code>NotificationHub</code> in the same Region restores access to those <code>NotificationEvents</code>.</p> </note>",
     "DisableNotificationsAccessForOrganization": "<p>Disables service trust between User Notifications and Amazon Web Services Organizations.</p>",
     "DisassociateChannel": "<p>Disassociates a Channel from a specified <code>NotificationConfiguration</code>. Supported Channels include Amazon Q Developer in chat applications, the Console Mobile Application, and emails (notifications-contacts).</p>",
     "DisassociateManagedNotificationAccountContact": "<p>Disassociates an Account Contact with a particular <code>ManagedNotificationConfiguration</code>.</p>",
@@ -36,10 +36,11 @@
     "ListNotificationHubs": "<p>Returns a list of <code>NotificationHubs</code>.</p>",
     "ListOrganizationalUnits": "<p>Returns a list of organizational units associated with a notification configuration.</p>",
     "ListTagsForResource": "<p>Returns a list of tags for a specified Amazon Resource Name (ARN).</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/tagging.html\">Tagging your Amazon Web Services resources</a> in the <i>Tagging Amazon Web Services Resources User Guide</i>.</p> <note> <p>This is only supported for <code>NotificationConfigurations</code>.</p> </note>",
-    "RegisterNotificationHub": "<p>Registers a <code>NotificationConfiguration</code> in the specified Region.</p> <p>There is a maximum of one <code>NotificationConfiguration</code> per Region. You can have a maximum of 3 <code>NotificationHub</code> resources at a time.</p>",
+    "RegisterNotificationHub": "<p>Registers a <code>NotificationHub</code> in the specified Region.</p> <p>There is a maximum of one <code>NotificationHub</code> per Region. You can have a maximum of 3 <code>NotificationHub</code> resources at a time.</p>",
     "TagResource": "<p>Tags the resource with a tag key and value.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/tagging.html\">Tagging your Amazon Web Services resources</a> in the <i>Tagging Amazon Web Services Resources User Guide</i>.</p> <note> <p>This is only supported for <code>NotificationConfigurations</code>.</p> </note>",
     "UntagResource": "<p>Untags a resource with a specified Amazon Resource Name (ARN).</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/tagging.html\">Tagging your Amazon Web Services resources</a> in the <i>Tagging Amazon Web Services Resources User Guide</i>.</p>",
     "UpdateEventRule": "<p>Updates an existing <code>EventRule</code>.</p>",
+    "UpdateManagedNotificationChannelAssociation": "<p>Updates the <code>isSensitiveEventsSubscribed</code> property of a particular ManagedNotification channel association.</p>",
     "UpdateNotificationConfiguration": "<p>Updates a <code>NotificationConfiguration</code>.</p>"
   },
   "shapes": {
@@ -162,10 +163,27 @@
       "base": null,
       "refs": {}
     },
+    "AttachmentContentType": {
+      "base": null,
+      "refs": {
+        "NotificationEventAttachment$contentType": "<p>The MIME content type of the attachment, for example <code>application/pdf</code>.</p>"
+      }
+    },
+    "AttachmentDisplayName": {
+      "base": null,
+      "refs": {
+        "NotificationEventAttachment$displayName": "<p>The name of the attachment that recipients see.</p>"
+      }
+    },
     "Boolean": {
       "base": null,
       "refs": {
-        "ListNotificationEventsRequest$includeChildEvents": "<p>Include aggregated child events in the result.</p>"
+        "AssociateManagedNotificationAccountContactRequest$isSensitiveEventsSubscribed": "<p>Specifies whether this contact is subscribed to sensitive events. The <code>notifications:SubscribeSensitiveEvents</code> permission controls access to sensitive events. Defaults to false.</p>",
+        "AssociateManagedNotificationAdditionalChannelRequest$isSensitiveEventsSubscribed": "<p>Specifies whether this channel is subscribed to sensitive events. The <code>notifications:SubscribeSensitiveEvents</code> permission controls access to sensitive events. Defaults to false.</p>",
+        "ListManagedNotificationEventsRequest$includeSensitiveEvents": "<p>Specifies whether to include sensitive events in the result. By default, only non-sensitive events are returned. The <code>notifications:AccessSensitiveEvents</code> permission controls access to sensitive events.</p>",
+        "ListNotificationEventsRequest$includeChildEvents": "<p>Include aggregated child events in the result.</p>",
+        "ManagedNotificationChannelAssociationSummary$isSensitiveEventsSubscribed": "<p>Specifies whether this channel association is subscribed to sensitive events. Defaults to false for associations created without the flag.</p>",
+        "UpdateManagedNotificationChannelAssociationRequest$isSensitiveEventsSubscribed": "<p>Specifies whether the association is subscribed to sensitive events. The <code>notifications:SubscribeSensitiveEvents</code> permission controls access to sensitive events.</p>"
       }
     },
     "ChannelArn": {
@@ -667,8 +685,14 @@
         "ListManagedNotificationChannelAssociationsResponse$channelAssociations": "<p>A list that contains the following information about a channel association.</p>"
       }
     },
+    "ManagedNotificationChannelIdentifier": {
+      "base": null,
+      "refs": {
+        "UpdateManagedNotificationChannelAssociationRequest$channelIdentifier": "<p>The identifier of the channel association to update. You can specify one of the following:</p> <ul> <li> <p>An Account contact identifier.</p> </li> <li> <p>A Channel ARN.</p> </li> </ul>"
+      }
+    },
     "ManagedNotificationChildEvent": {
-      "base": "<p>A ManagedNotificationChildEvent is a notification-focused representation of an event. They contain semantic information used to create aggregated or non-aggregated end-user notifications.</p>",
+      "base": "<p>A notification-focused representation of an event. They contain semantic information used to create aggregated or non-aggregated end-user notifications.</p>",
       "refs": {
         "GetManagedNotificationChildEventResponse$content": "<p>The content of the <code>ManagedNotificationChildEvent</code>.</p>"
       }
@@ -726,7 +750,8 @@
         "ListManagedNotificationChannelAssociationsRequest$managedNotificationConfigurationArn": "<p>The Amazon Resource Name (ARN) of the <code>ManagedNotificationConfiguration</code> to match.</p>",
         "ManagedNotificationChildEventOverview$managedNotificationConfigurationArn": "<p>The Amazon Resource Name (ARN) of the <code>ManagedNotificationConfiguration</code>.</p>",
         "ManagedNotificationConfigurationStructure$arn": "<p>The Amazon Resource Name (ARN) of the <code>ManagedNotificationConfiguration</code>.</p>",
-        "ManagedNotificationEventOverview$managedNotificationConfigurationArn": "<p>The Amazon Resource Name (ARN) of the <code>ManagedNotificationConfiguration</code>.</p>"
+        "ManagedNotificationEventOverview$managedNotificationConfigurationArn": "<p>The Amazon Resource Name (ARN) of the <code>ManagedNotificationConfiguration</code>.</p>",
+        "UpdateManagedNotificationChannelAssociationRequest$managedNotificationConfigurationArn": "<p>The Amazon Resource Name (ARN) of the <code>ManagedNotificationConfiguration</code> whose Channel association property you want to update.</p>"
       }
     },
     "ManagedNotificationConfigurationStructure": {
@@ -996,6 +1021,18 @@
         "NotificationEventOverview$aggregateNotificationEventArn": "<p>The ARN of the <code>aggregatedNotificationEventArn</code> to match.</p>"
       }
     },
+    "NotificationEventAttachment": {
+      "base": "<p>A file attached to a notification event.</p>",
+      "refs": {
+        "NotificationEventAttachmentList$member": null
+      }
+    },
+    "NotificationEventAttachmentList": {
+      "base": null,
+      "refs": {
+        "ManagedNotificationEvent$attachments": "<p>A list of files attached to the notification event.</p>"
+      }
+    },
     "NotificationEventId": {
       "base": null,
       "refs": {
@@ -1043,9 +1080,9 @@
     "NotificationHubStatusSummary": {
       "base": "<p>Provides additional information about the current <code>NotificationHub</code> status.</p>",
       "refs": {
-        "DeregisterNotificationHubResponse$statusSummary": "<p> <code>NotificationConfiguration</code> status information.</p>",
+        "DeregisterNotificationHubResponse$statusSummary": "<p> <code>NotificationHub</code> status information.</p>",
         "NotificationHubOverview$statusSummary": "<p>The status summary of the resource.</p>",
-        "RegisterNotificationHubResponse$statusSummary": "<p>Provides additional information about the current <code>NotificationConfiguration</code> status information.</p>"
+        "RegisterNotificationHubResponse$statusSummary": "<p>Provides additional information about the current <code>NotificationHub</code> status information.</p>"
       }
     },
     "NotificationHubs": {
@@ -1107,8 +1144,8 @@
       "base": null,
       "refs": {
         "AggregatedNotificationRegions$member": null,
-        "DeregisterNotificationHubRequest$notificationHubRegion": "<p>The <code>NotificationConfiguration</code> Region.</p>",
-        "DeregisterNotificationHubResponse$notificationHubRegion": "<p>The <code>NotificationConfiguration</code> Region.</p>",
+        "DeregisterNotificationHubRequest$notificationHubRegion": "<p>The <code>NotificationHub</code> Region.</p>",
+        "DeregisterNotificationHubResponse$notificationHubRegion": "<p>The <code>NotificationHub</code> Region.</p>",
         "NotificationHubOverview$notificationHubRegion": "<p>The Region of the resource.</p>",
         "Regions$member": null,
         "RegisterNotificationHubRequest$notificationHubRegion": "<p>The Region of the <code>NotificationHub</code>.</p>",
@@ -1184,6 +1221,12 @@
         "ManagedNotificationEventSummary$schemaVersion": "<p>The schema version of the <code>ManagedNotificationEvent</code>.</p>",
         "NotificationEvent$schemaVersion": "<p>The schema version of the Notification Event.</p>",
         "NotificationEventSummary$schemaVersion": "<p>The schema version of the Notification Event.</p>"
+      }
+    },
+    "SensitiveUrl": {
+      "base": null,
+      "refs": {
+        "NotificationEventAttachment$attachmentDownloadUrl": "<p>A temporary URL for downloading the attachment. The URL expires shortly after it's issued.</p>"
       }
     },
     "ServiceCode": {
@@ -1402,7 +1445,8 @@
         "MediaElement$caption": "<p>The caption of the media.</p>",
         "MessageComponents$headline": "<p>A sentence long summary. For example, titles or an email subject line.</p>",
         "MessageComponents$paragraphSummary": "<p>A paragraph long or multiple sentence summary. For example, Amazon Q Developer in chat applications notifications.</p>",
-        "MessageComponents$completeDescription": "<p>A complete summary with all possible relevant information.</p>"
+        "MessageComponents$completeDescription": "<p>A complete summary with all possible relevant information.</p>",
+        "MessageComponents$markupDescription": "<p>A rich description in Portable Text format, which you can convert to markup formats such as HTML, Markdown, or plain text. Channels that don't support rich rendering ignore this field and use the plain text components instead.</p>"
       }
     },
     "TextPartType": {
@@ -1448,6 +1492,14 @@
       "refs": {}
     },
     "UpdateEventRuleResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateManagedNotificationChannelAssociationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateManagedNotificationChannelAssociationResponse": {
       "base": null,
       "refs": {}
     },

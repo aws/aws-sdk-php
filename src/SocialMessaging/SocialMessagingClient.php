@@ -137,6 +137,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getWhatsAppBusinessPublicKey(array{originationPhoneNumberId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getWhatsAppBusinessPublicKeyAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getWhatsAppBusinessPublicKeyAsync(array{originationPhoneNumberId?: string, ...} $args = [])
+ * @method \Aws\Result getWhatsAppCallPermission(array $args = [])
+ * @phpstan-method \Aws\Result getWhatsAppCallPermission(array{originationPhoneNumberId?: string, destinationPhoneNumber?: string, endUserBsuid?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getWhatsAppCallPermissionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getWhatsAppCallPermissionAsync(array{originationPhoneNumberId?: string, destinationPhoneNumber?: string, endUserBsuid?: string, ...} $args = [])
  * @method \Aws\Result getWhatsAppFlow(array $args = [])
  * @phpstan-method \Aws\Result getWhatsAppFlow(array{id?: string, flowId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getWhatsAppFlowAsync(array $args = [])
@@ -217,6 +221,20 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result putWhatsAppBusinessPublicKey(array{originationPhoneNumberId?: string, businessPublicKey?: string, kmsKeyArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise putWhatsAppBusinessPublicKeyAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise putWhatsAppBusinessPublicKeyAsync(array{originationPhoneNumberId?: string, businessPublicKey?: string, kmsKeyArn?: string, ...} $args = [])
+ * @method \Aws\Result sendWhatsAppCallEvent(array $args = [])
+ * @phpstan-method \Aws\Result sendWhatsAppCallEvent(array{
+ *     originationPhoneNumberId?: string,
+ *     metaApiVersion?: string,
+ *     callEvent?: string|resource|\Psr\Http\Message\StreamInterface,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise sendWhatsAppCallEventAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise sendWhatsAppCallEventAsync(array{
+ *     originationPhoneNumberId?: string,
+ *     metaApiVersion?: string,
+ *     callEvent?: string|resource|\Psr\Http\Message\StreamInterface,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result sendWhatsAppConversionEvent(array $args = [])
  * @phpstan-method \Aws\Result sendWhatsAppConversionEvent(array{id?: string, datasetId?: string, eventData?: string|resource|\Psr\Http\Message\StreamInterface, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise sendWhatsAppConversionEventAsync(array $args = [])
@@ -243,6 +261,42 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result untagResource(array{resourceArn?: string, tagKeys?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise untagResourceAsync(array{resourceArn?: string, tagKeys?: list<string>, ...} $args = [])
+ * @method \Aws\Result updateLinkedWhatsAppBusinessAccountPhoneNumber(array $args = [])
+ * @phpstan-method \Aws\Result updateLinkedWhatsAppBusinessAccountPhoneNumber(array{
+ *     id?: string,
+ *     callSettings?: array{
+ *         callEnabled?: bool,
+ *         callHours?: array{
+ *             enabled?: bool,
+ *             timezone?: string,
+ *             weeklyOperatingHours?: list<array>,
+ *             holidaySchedule?: list<array>,
+ *             ...,
+ *         },
+ *         callIconVisibility?: string,
+ *         callbackPermissionStatus?: string,
+ *         ...,
+ *     },
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateLinkedWhatsAppBusinessAccountPhoneNumberAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateLinkedWhatsAppBusinessAccountPhoneNumberAsync(array{
+ *     id?: string,
+ *     callSettings?: array{
+ *         callEnabled?: bool,
+ *         callHours?: array{
+ *             enabled?: bool,
+ *             timezone?: string,
+ *             weeklyOperatingHours?: list<array>,
+ *             holidaySchedule?: list<array>,
+ *             ...,
+ *         },
+ *         callIconVisibility?: string,
+ *         callbackPermissionStatus?: string,
+ *         ...,
+ *     },
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result updateWhatsAppFlow(array $args = [])
  * @phpstan-method \Aws\Result updateWhatsAppFlow(array{
  *     id?: string,

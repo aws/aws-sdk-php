@@ -13,18 +13,30 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result associateManagedNotificationAccountContact(array{
  *     contactIdentifier?: 'ACCOUNT_ALTERNATE_BILLING'|'ACCOUNT_ALTERNATE_OPERATIONS'|'ACCOUNT_ALTERNATE_SECURITY'|'ACCOUNT_PRIMARY',
  *     managedNotificationConfigurationArn?: string,
+ *     isSensitiveEventsSubscribed?: bool,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise associateManagedNotificationAccountContactAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise associateManagedNotificationAccountContactAsync(array{
  *     contactIdentifier?: 'ACCOUNT_ALTERNATE_BILLING'|'ACCOUNT_ALTERNATE_OPERATIONS'|'ACCOUNT_ALTERNATE_SECURITY'|'ACCOUNT_PRIMARY',
  *     managedNotificationConfigurationArn?: string,
+ *     isSensitiveEventsSubscribed?: bool,
  *     ...,
  * } $args = [])
  * @method \Aws\Result associateManagedNotificationAdditionalChannel(array $args = [])
- * @phpstan-method \Aws\Result associateManagedNotificationAdditionalChannel(array{channelArn?: string, managedNotificationConfigurationArn?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result associateManagedNotificationAdditionalChannel(array{
+ *     channelArn?: string,
+ *     managedNotificationConfigurationArn?: string,
+ *     isSensitiveEventsSubscribed?: bool,
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise associateManagedNotificationAdditionalChannelAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise associateManagedNotificationAdditionalChannelAsync(array{channelArn?: string, managedNotificationConfigurationArn?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise associateManagedNotificationAdditionalChannelAsync(array{
+ *     channelArn?: string,
+ *     managedNotificationConfigurationArn?: string,
+ *     isSensitiveEventsSubscribed?: bool,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result associateOrganizationalUnit(array $args = [])
  * @phpstan-method \Aws\Result associateOrganizationalUnit(array{organizationalUnitId?: string, notificationConfigurationArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise associateOrganizationalUnitAsync(array $args = [])
@@ -209,6 +221,7 @@ use Aws\AwsClient;
  *     nextToken?: string,
  *     organizationalUnitId?: string,
  *     relatedAccount?: string,
+ *     includeSensitiveEvents?: bool,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise listManagedNotificationEventsAsync(array $args = [])
@@ -221,6 +234,7 @@ use Aws\AwsClient;
  *     nextToken?: string,
  *     organizationalUnitId?: string,
  *     relatedAccount?: string,
+ *     includeSensitiveEvents?: bool,
  *     ...,
  * } $args = [])
  * @method \Aws\Result listMemberAccounts(array $args = [])
@@ -317,6 +331,20 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result updateEventRule(array{arn?: string, eventPattern?: string, regions?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise updateEventRuleAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise updateEventRuleAsync(array{arn?: string, eventPattern?: string, regions?: list<string>, ...} $args = [])
+ * @method \Aws\Result updateManagedNotificationChannelAssociation(array $args = [])
+ * @phpstan-method \Aws\Result updateManagedNotificationChannelAssociation(array{
+ *     managedNotificationConfigurationArn?: string,
+ *     channelIdentifier?: string,
+ *     isSensitiveEventsSubscribed?: bool,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateManagedNotificationChannelAssociationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateManagedNotificationChannelAssociationAsync(array{
+ *     managedNotificationConfigurationArn?: string,
+ *     channelIdentifier?: string,
+ *     isSensitiveEventsSubscribed?: bool,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result updateNotificationConfiguration(array $args = [])
  * @phpstan-method \Aws\Result updateNotificationConfiguration(array{arn?: string, name?: string, description?: string, aggregationDuration?: 'LONG'|'NONE'|'SHORT', ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise updateNotificationConfigurationAsync(array $args = [])

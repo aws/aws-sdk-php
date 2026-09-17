@@ -16,6 +16,7 @@
     "GetLinkedWhatsAppBusinessAccount": "<p>Get the details of your linked WhatsApp Business Account.</p>",
     "GetLinkedWhatsAppBusinessAccountPhoneNumber": "<p>Retrieve the WABA account id and phone number details of a WhatsApp business account phone number.</p>",
     "GetWhatsAppBusinessPublicKey": "<p>Retrieves the business public key for a phone number and its signature status.</p>",
+    "GetWhatsAppCallPermission": "<p>Retrieves the current calling permission for a WhatsApp end user, along with the calling actions the business is allowed to take with that user. Provide the destination phone number or the business-scoped user ID to identify the end user.</p>",
     "GetWhatsAppFlow": "<p>Retrieves the metadata and status of a WhatsApp Flow, including validation errors, preview information, and health status.</p>",
     "GetWhatsAppFlowPreview": "<p>Generates a web preview URL for testing a WhatsApp Flow before publishing. Preview URLs expire in 30 days and can be shared with stakeholders for review.</p>",
     "GetWhatsAppMessageMedia": "<p>Get a media file from the WhatsApp service. On successful completion the media file is retrieved from Meta and stored in the specified Amazon S3 bucket. Use either <code>destinationS3File</code> or <code>destinationS3PresignedUrl</code> for the destination. If both are used then an <code>InvalidParameterException</code> is returned.</p>",
@@ -30,10 +31,12 @@
     "PublishWhatsAppFlow": "<p>Publishes a WhatsApp Flow, making it available for use in template messages. The Flow must be in DRAFT status with valid Flow JSON that passes Meta's validation. This is an irreversible operation.</p>",
     "PutWhatsAppBusinessAccountEventDestinations": "<p>Add an event destination to log event data from WhatsApp for a WhatsApp Business Account (WABA). A WABA can only have one event destination at a time. All resources associated with the WABA use the same event destination.</p>",
     "PutWhatsAppBusinessPublicKey": "<p>Sets the business public key used to encrypt the data exchanged with the endpoint of a data exchange Flow.</p>",
+    "SendWhatsAppCallEvent": "<p>Sends a WhatsApp calling event, such as connecting or terminating a call, for a business phone number. This operation passes the event through to Meta. To use this operation, the origination phone number must belong to a WhatsApp Business Account that is linked to your Amazon Web Services account.</p>",
     "SendWhatsAppConversionEvent": "<p>Sends a conversion event to Meta's Conversions API for the specified WhatsApp Business Account dataset.</p>",
     "SendWhatsAppMessage": "<p>Send a WhatsApp message. For examples of sending a message using the Amazon Web Services CLI, see <a href=\"https://docs.aws.amazon.com/social-messaging/latest/userguide/send-message.html\">Sending messages</a> in the <i> <i>Amazon Web Services End User Messaging Social User Guide</i> </i>.</p>",
     "TagResource": "<p>Adds or overwrites only the specified tags for the specified resource. When you specify an existing tag key, the value is overwritten with the new value.</p>",
     "UntagResource": "<p>Removes the specified tags from a resource. </p>",
+    "UpdateLinkedWhatsAppBusinessAccountPhoneNumber": "<p>Updates the calling settings for a linked WhatsApp business phone number, such as whether calling is enabled and the hours during which the business accepts calls.</p>",
     "UpdateWhatsAppFlow": "<p>Updates the metadata of a WhatsApp Flow, such as its name or categories. This does not update the Flow JSON definition. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_UpdateWhatsAppFlowAssets.html\">UpdateWhatsAppFlowAssets</a> to update the Flow JSON.</p>",
     "UpdateWhatsAppFlowAssets": "<p>Updates the Flow JSON definition (assets) of a WhatsApp Flow. Updating a published Flow's assets reverts it to DRAFT status, requiring re-publishing.</p>",
     "UpdateWhatsAppMessageTemplate": "<p>Updates an existing WhatsApp message template.</p>"
@@ -100,20 +103,23 @@
         "CreateWhatsAppFlowInput$publish": "<p>Set to <code>true</code> to publish the Flow immediately after creation. Requires a valid <code>flowJson</code> that passes Meta's validation.</p>",
         "DeleteWhatsAppMessageMediaOutput$success": "<p>Success indicator for deleting the media file.</p>",
         "GetWhatsAppFlowPreviewInput$invalidate": "<p>Set to <code>true</code> to force generation of a new preview URL. Use this if the previous URL has been compromised or you want a fresh expiration period.</p>",
-        "GetWhatsAppMessageMediaInput$metadataOnly": "<p>Set to <code>True</code> to get only the metadata for the file.</p>"
+        "GetWhatsAppMessageMediaInput$metadataOnly": "<p>Set to <code>True</code> to get only the metadata for the file.</p>",
+        "WhatsAppCallHours$enabled": "<p>Specifies whether call hours are enforced. When disabled, the business accepts calls at any time.</p>",
+        "WhatsAppCallPermissionAction$canPerformAction": "<p>Specifies whether the business can currently perform the action.</p>",
+        "WhatsAppCallSettings$callEnabled": "<p>Specifies whether calling is enabled for the phone number.</p>"
       }
     },
     "BusinessPublicKeyPem": {
       "base": null,
       "refs": {
-        "GetWhatsAppBusinessPublicKeyOutput$businessPublicKey": "<p>The stored RSA business public key (PEM), if present.</p>",
-        "PutWhatsAppBusinessPublicKeyInput$businessPublicKey": "<p>PEM-encoded RSA public key. Mutually exclusive with kmsKeyArn.</p>"
+        "GetWhatsAppBusinessPublicKeyOutput$businessPublicKey": "<p>The stored PEM-encoded 2048-bit RSA public key.</p>",
+        "PutWhatsAppBusinessPublicKeyInput$businessPublicKey": "<p>The PEM-encoded 2048-bit RSA public key to set. Mutually exclusive with <code>kmsKeyArn</code>.</p>"
       }
     },
     "BusinessPublicKeySignatureStatus": {
       "base": null,
       "refs": {
-        "GetWhatsAppBusinessPublicKeyOutput$businessPublicKeySignatureStatus": "<p>Meta's signing status: &quot;VALID&quot; | &quot;MISMATCH&quot;.</p>"
+        "GetWhatsAppBusinessPublicKeyOutput$businessPublicKeySignatureStatus": "<p>The signature status of the stored business public key. Valid values are VALID and MISMATCH.</p>"
       }
     },
     "ButtonType": {
@@ -128,6 +134,10 @@
       "refs": {
         "LibraryTemplateBodyInputs$codeExpirationMinutes": "<p>The number of minutes until a verification code or OTP expires.</p>"
       }
+    },
+    "ConflictException": {
+      "base": "<p>Your request has conflicting operations. This can occur if you're trying to perform more than one operation on the same resource at the same time.</p>",
+      "refs": {}
     },
     "CreateWhatsAppDatasetInput": {
       "base": null,
@@ -224,6 +234,7 @@
       "refs": {
         "AccessDeniedByMetaException$message": null,
         "AccessDeniedException$message": null,
+        "ConflictException$message": null,
         "DependencyException$message": null,
         "InternalServiceException$message": null,
         "InvalidParametersException$message": null,
@@ -281,6 +292,14 @@
       "base": null,
       "refs": {}
     },
+    "GetWhatsAppCallPermissionInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetWhatsAppCallPermissionOutput": {
+      "base": null,
+      "refs": {}
+    },
     "GetWhatsAppFlowInput": {
       "base": null,
       "refs": {}
@@ -319,13 +338,21 @@
         "S3PresignedUrl$headers": "<p>A map of headers and their values. You must specify the <code>Content-Type</code> header when using <code>PostWhatsAppMessageMedia</code>. For a list of common headers, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/RESTCommonRequestHeaders.html\">Common Request Headers</a> in the <i>Amazon S3 API Reference</i> </p>"
       }
     },
+    "IanaTimezone": {
+      "base": null,
+      "refs": {
+        "WhatsAppCallHours$timezone": "<p>The IANA time zone in which the operating hours are interpreted, such as <code>America/New_York</code>.</p>"
+      }
+    },
     "Integer": {
       "base": null,
       "refs": {
         "AssociateWhatsAppBusinessAccountOutput$statusCode": "<p>The status code for the response.</p>",
         "ListTagsForResourceOutput$statusCode": "<p>The status code of the response.</p>",
         "TagResourceOutput$statusCode": "<p>The status code of the tag resource operation.</p>",
-        "UntagResourceOutput$statusCode": "<p>The status code of the untag resource operation.</p>"
+        "UntagResourceOutput$statusCode": "<p>The status code of the untag resource operation.</p>",
+        "WhatsAppCallPermissionLimit$maxAllowed": "<p>The maximum number of times the action is allowed within the time period.</p>",
+        "WhatsAppCallPermissionLimit$currentUsage": "<p>The number of times the action has been used within the current time period.</p>"
       }
     },
     "InternalServiceException": {
@@ -335,6 +362,12 @@
     "InvalidParametersException": {
       "base": "<p>One or more parameters provided to the action are not valid.</p>",
       "refs": {}
+    },
+    "Iso8601Duration": {
+      "base": null,
+      "refs": {
+        "WhatsAppCallPermissionLimit$timePeriod": "<p>The time period over which the limit applies, as an ISO 8601 duration.</p>"
+      }
     },
     "IsoCountryCode": {
       "base": null,
@@ -347,7 +380,7 @@
     "KmsKeyArn": {
       "base": null,
       "refs": {
-        "PutWhatsAppBusinessPublicKeyInput$kmsKeyArn": "<p>Customer-managed KMS asymmetric RSA key ARN. Mutually exclusive with businessPublicKey.</p>"
+        "PutWhatsAppBusinessPublicKeyInput$kmsKeyArn": "<p>The ARN of a customer managed asymmetric RSA key in Amazon Web Services KMS. Mutually exclusive with <code>businessPublicKey</code>.</p>"
       }
     },
     "LibraryTemplateBodyInputs": {
@@ -518,7 +551,7 @@
       "base": null,
       "refs": {
         "MetaFlowApplicationInfo$id": "<p>The unique identifier of the Meta application.</p>",
-        "UpdateWhatsAppFlowInput$metaAppId": "<p>Optional Meta app ID to attach to the Flow. Meta signs data-exchange requests with the attached app's secret, so attaching your own app is what enables X-Hub-Signature-256 and flow_token_signature verification at your endpoint. Meta requires the app to be owned by the same business that owns the WABA. Attaching your own app is one-way: the service's app cannot be re-attached afterwards. When omitted, the attached app is unchanged. (Set via update because Meta ignores application_id at creation time.)</p>"
+        "UpdateWhatsAppFlowInput$metaAppId": "<p>The ID of the Meta application to attach to the Flow.</p>"
       }
     },
     "MetaFlowApplicationInfo": {
@@ -593,9 +626,9 @@
     "MetaFlowEndpointUri": {
       "base": null,
       "refs": {
-        "CreateWhatsAppFlowInput$endpointUri": "<p>Optional HTTPS endpoint for a dynamic Flow, registered with Meta as the Flow's endpoint_uri and called by Meta directly. When omitted, the Flow has no endpoint (static Flow). Meta only calls the endpoint when the Flow JSON also declares data_api_version. To verify that requests originate from Meta, attach your own Meta app via UpdateWhatsAppFlow.</p>",
-        "GetWhatsAppFlowOutput$endpointUri": "<p>The endpoint URI for data exchange Flows, if configured.</p>",
-        "UpdateWhatsAppFlowInput$endpointUri": "<p>Optional HTTPS endpoint for a dynamic Flow, registered with Meta as the Flow's endpoint_uri and called by Meta directly. When omitted, the Flow's endpoint is unchanged.</p>"
+        "CreateWhatsAppFlowInput$endpointUri": "<p>The HTTPS endpoint that Meta calls for a data exchange Flow.</p>",
+        "GetWhatsAppFlowOutput$endpointUri": "<p>The HTTPS endpoint that Meta calls for a data exchange Flow.</p>",
+        "UpdateWhatsAppFlowInput$endpointUri": "<p>The updated HTTPS endpoint for a data exchange Flow.</p>"
       }
     },
     "MetaFlowHealthEntity": {
@@ -1040,6 +1073,14 @@
         "S3PresignedUrl$url": "<p>The presign url to the object.</p>"
       }
     },
+    "SendWhatsAppCallEventInput": {
+      "base": null,
+      "refs": {}
+    },
+    "SendWhatsAppCallEventOutput": {
+      "base": null,
+      "refs": {}
+    },
     "SendWhatsAppConversionEventInput": {
       "base": null,
       "refs": {}
@@ -1067,6 +1108,8 @@
         "Headers$value": null,
         "MetaFlowHealthEntity$id": "<p>The unique identifier of the entity.</p>",
         "MetaTemplateBodyExampleParams$member": null,
+        "SendWhatsAppCallEventInput$metaApiVersion": "<p>The version of the Meta Graph API to use for the request.</p>",
+        "SendWhatsAppCallEventOutput$callId": "<p>The unique identifier that Meta assigns to the call.</p>",
         "SendWhatsAppConversionEventOutput$requestId": "<p>The unique identifier for the conversion event request.</p>",
         "SendWhatsAppMessageInput$metaApiVersion": "<p>The API version for the request formatted as <code>v{VersionNumber}</code>. For a list of supported API versions and Amazon Web Services Regions, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/end-user-messaging.html\"> <i>Amazon Web Services End User Messaging Social API</i> Service Endpoints</a> in the <i>Amazon Web Services General Reference</i>.</p>",
         "SendWhatsAppMessageOutput$messageId": "<p>The unique identifier of the message.</p>",
@@ -1155,6 +1198,13 @@
       "base": "<p>The request was denied due to request throttling.</p>",
       "refs": {}
     },
+    "Timestamp": {
+      "base": null,
+      "refs": {
+        "WhatsAppCallPermission$expirationTime": "<p>The time when a temporary permission expires. This value is absent for permanent permissions and when there is no permission.</p>",
+        "WhatsAppCallPermissionLimit$limitExpirationTime": "<p>The time when the limit resets. This value is present only when the current usage has reached the maximum allowed.</p>"
+      }
+    },
     "TwoFactorPin": {
       "base": null,
       "refs": {
@@ -1166,6 +1216,14 @@
       "refs": {}
     },
     "UntagResourceOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateLinkedWhatsAppBusinessAccountPhoneNumberInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateLinkedWhatsAppBusinessAccountPhoneNumberOutput": {
       "base": null,
       "refs": {}
     },
@@ -1272,6 +1330,85 @@
         "MetaFlowWhatsAppBusinessAccountInfo$name": "<p>The name of the WhatsApp Business Account.</p>"
       }
     },
+    "WhatsAppBusinessScopedUserId": {
+      "base": null,
+      "refs": {
+        "GetWhatsAppCallPermissionInput$endUserBsuid": "<p>The business-scoped user identifier (BSUID) of the end user for which to retrieve the calling permission.</p>"
+      }
+    },
+    "WhatsAppCallEventBlob": {
+      "base": null,
+      "refs": {
+        "SendWhatsAppCallEventInput$callEvent": "<p>The call event payload to send, as a JSON blob in the format defined by the Meta calling API.</p>"
+      }
+    },
+    "WhatsAppCallHours": {
+      "base": "<p>The operating hours during which a business phone number accepts WhatsApp calls, including the time zone, weekly schedule, and any holiday overrides.</p>",
+      "refs": {
+        "WhatsAppCallSettings$callHours": "<p>The hours during which the business accepts calls on the phone number.</p>"
+      }
+    },
+    "WhatsAppCallIconVisibility": {
+      "base": null,
+      "refs": {
+        "WhatsAppCallSettings$callIconVisibility": "<p>The visibility setting for the call icon shown to end users in WhatsApp.</p>"
+      }
+    },
+    "WhatsAppCallPermission": {
+      "base": "<p>The current calling permission state for a business phone number and a specific WhatsApp end user.</p>",
+      "refs": {
+        "GetWhatsAppCallPermissionOutput$permission": "<p>The current calling permission state for the end user.</p>"
+      }
+    },
+    "WhatsAppCallPermissionAction": {
+      "base": "<p>Describes a single calling action the business can take with an end user, including whether the action is currently allowed and any limits that apply to it. Returned as an item in the actions list from <code>GetWhatsAppCallPermission</code>.</p>",
+      "refs": {
+        "WhatsAppCallPermissionActionList$member": null
+      }
+    },
+    "WhatsAppCallPermissionActionList": {
+      "base": null,
+      "refs": {
+        "GetWhatsAppCallPermissionOutput$actions": "<p>The calling actions the business can take with the end user, and any limits that apply to each action.</p>"
+      }
+    },
+    "WhatsAppCallPermissionActionName": {
+      "base": null,
+      "refs": {
+        "WhatsAppCallPermissionAction$actionName": "<p>The name of the calling action.</p>"
+      }
+    },
+    "WhatsAppCallPermissionLimit": {
+      "base": "<p>A time-bound restriction on a calling action, such as the number of calls allowed within a time period.</p>",
+      "refs": {
+        "WhatsAppCallPermissionLimitList$member": null
+      }
+    },
+    "WhatsAppCallPermissionLimitList": {
+      "base": null,
+      "refs": {
+        "WhatsAppCallPermissionAction$limits": "<p>The time-bound limits that apply to the action.</p>"
+      }
+    },
+    "WhatsAppCallPermissionStatus": {
+      "base": null,
+      "refs": {
+        "WhatsAppCallPermission$status": "<p>The permission status for the end user.</p>"
+      }
+    },
+    "WhatsAppCallSettings": {
+      "base": "<p>The calling configuration for a WhatsApp business phone number.</p>",
+      "refs": {
+        "GetLinkedWhatsAppBusinessAccountPhoneNumberOutput$callSettings": "<p>The calling settings configured for the phone number. This value is absent when calling is not configured.</p>",
+        "UpdateLinkedWhatsAppBusinessAccountPhoneNumberInput$callSettings": "<p>The calling settings to apply to the phone number.</p>"
+      }
+    },
+    "WhatsAppCallbackPermissionStatus": {
+      "base": null,
+      "refs": {
+        "WhatsAppCallSettings$callbackPermissionStatus": "<p>The callback permission status for the phone number.</p>"
+      }
+    },
     "WhatsAppConversionEventBlob": {
       "base": null,
       "refs": {
@@ -1287,11 +1424,41 @@
         "SendWhatsAppConversionEventInput$datasetId": "<p>The Meta-generated dataset ID to send the event to.</p>"
       }
     },
+    "WhatsAppDate": {
+      "base": null,
+      "refs": {
+        "WhatsAppHolidayScheduleEntry$date": "<p>The date that the override applies to, in ISO 8601 format (<code>YYYY-MM-DD</code>).</p>"
+      }
+    },
+    "WhatsAppDayOfWeek": {
+      "base": null,
+      "refs": {
+        "WhatsAppWeeklyOperatingHoursEntry$dayOfWeek": "<p>The day of the week that the entry applies to.</p>"
+      }
+    },
+    "WhatsAppDestinationPhoneNumber": {
+      "base": null,
+      "refs": {
+        "GetWhatsAppCallPermissionInput$destinationPhoneNumber": "<p>The end user's phone number, in E.164 format, for which to retrieve the calling permission.</p>"
+      }
+    },
     "WhatsAppDisplayPhoneNumber": {
       "base": null,
       "refs": {
         "WhatsAppPhoneNumberDetail$displayPhoneNumber": "<p>The phone number that appears in the recipients display.</p>",
         "WhatsAppPhoneNumberSummary$displayPhoneNumber": "<p>The phone number that appears in the recipients display.</p>"
+      }
+    },
+    "WhatsAppHolidayScheduleEntry": {
+      "base": "<p>A date-specific override to the weekly operating hours, such as a holiday.</p>",
+      "refs": {
+        "WhatsAppHolidayScheduleList$member": null
+      }
+    },
+    "WhatsAppHolidayScheduleList": {
+      "base": null,
+      "refs": {
+        "WhatsAppCallHours$holidaySchedule": "<p>Date-specific overrides to the weekly operating hours, such as holidays.</p>"
       }
     },
     "WhatsAppMediaId": {
@@ -1335,10 +1502,14 @@
         "DeleteWhatsAppMessageMediaInput$originationPhoneNumberId": "<p>The unique identifier of the originating phone number associated with the media. Phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_GetLinkedWhatsAppBusinessAccount.html\">GetLinkedWhatsAppBusinessAccount</a> to find a phone number's id.</p>",
         "GetLinkedWhatsAppBusinessAccountPhoneNumberInput$id": "<p>The unique identifier of the phone number. Phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_GetLinkedWhatsAppBusinessAccount.html\">GetLinkedWhatsAppBusinessAccount</a> to find a phone number's id.</p>",
         "GetWhatsAppBusinessPublicKeyInput$originationPhoneNumberId": "<p>The unique identifier of the phone number whose business public key to retrieve.</p>",
+        "GetWhatsAppCallPermissionInput$originationPhoneNumberId": "<p>The unique identifier of the business phone number for which to retrieve the calling permission. The phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>.</p>",
         "GetWhatsAppMessageMediaInput$originationPhoneNumberId": "<p>The unique identifier of the originating phone number for the WhatsApp message media. The phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_GetLinkedWhatsAppBusinessAccount.html\">GetLinkedWhatsAppBusinessAccount</a> to find a phone number's id.</p>",
         "PostWhatsAppMessageMediaInput$originationPhoneNumberId": "<p>The ID of the phone number to associate with the WhatsApp media file. The phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_GetLinkedWhatsAppBusinessAccount.html\">GetLinkedWhatsAppBusinessAccount</a> to find a phone number's id.</p>",
         "PutWhatsAppBusinessPublicKeyInput$originationPhoneNumberId": "<p>The unique identifier of the phone number to associate with the business public key.</p>",
+        "SendWhatsAppCallEventInput$originationPhoneNumberId": "<p>The unique identifier of the origination phone number for the call. The phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. Use <code>GetLinkedWhatsAppBusinessAccount</code> to find a phone number's ID.</p>",
         "SendWhatsAppMessageInput$originationPhoneNumberId": "<p>The ID of the phone number used to send the WhatsApp message. If you are sending a media file only the <code>originationPhoneNumberId</code> used to upload the file can be used. Phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_GetLinkedWhatsAppBusinessAccount.html\">GetLinkedWhatsAppBusinessAccount</a> to find a phone number's id.</p>",
+        "UpdateLinkedWhatsAppBusinessAccountPhoneNumberInput$id": "<p>The unique identifier of the phone number to update. The phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>.</p>",
+        "UpdateLinkedWhatsAppBusinessAccountPhoneNumberOutput$phoneNumberId": "<p>The unique identifier of the phone number that was updated.</p>",
         "WhatsAppPhoneNumberDetail$phoneNumberId": "<p>The phone number ID. Phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. </p>",
         "WhatsAppPhoneNumberSummary$phoneNumberId": "<p>The phone number ID. Phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. </p>"
       }
@@ -1397,6 +1568,39 @@
       "base": "<p>Contains the results of WhatsAppSignupCallback.</p>",
       "refs": {
         "AssociateWhatsAppBusinessAccountOutput$signupCallbackResult": "<p>Contains your WhatsApp registration status.</p>"
+      }
+    },
+    "WhatsAppTimeOfDay": {
+      "base": "<p>A time of day, expressed as an hour and minute.</p>",
+      "refs": {
+        "WhatsAppHolidayScheduleEntry$startTime": "<p>The time of day when the business begins accepting calls on the override date.</p>",
+        "WhatsAppHolidayScheduleEntry$endTime": "<p>The time of day when the business stops accepting calls on the override date.</p>",
+        "WhatsAppWeeklyOperatingHoursEntry$openTime": "<p>The time of day when the business begins accepting calls.</p>",
+        "WhatsAppWeeklyOperatingHoursEntry$closeTime": "<p>The time of day when the business stops accepting calls.</p>"
+      }
+    },
+    "WhatsAppTimeOfDayHoursInteger": {
+      "base": null,
+      "refs": {
+        "WhatsAppTimeOfDay$hours": "<p>The hour of the day, from 0 to 23.</p>"
+      }
+    },
+    "WhatsAppTimeOfDayMinutesInteger": {
+      "base": null,
+      "refs": {
+        "WhatsAppTimeOfDay$minutes": "<p>The minute of the hour, from 0 to 59.</p>"
+      }
+    },
+    "WhatsAppWeeklyOperatingHoursEntry": {
+      "base": "<p>A single entry in a weekly calling schedule, defining the open and close times for one day of the week.</p>",
+      "refs": {
+        "WhatsAppWeeklyOperatingHoursList$member": null
+      }
+    },
+    "WhatsAppWeeklyOperatingHoursList": {
+      "base": null,
+      "refs": {
+        "WhatsAppCallHours$weeklyOperatingHours": "<p>The weekly schedule of hours during which the business accepts calls.</p>"
       }
     },
     "ZeroTapTermsAccepted": {

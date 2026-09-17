@@ -295,6 +295,26 @@
       ],
       "readonly":true
     },
+    "GetWhatsAppCallPermission":{
+      "name":"GetWhatsAppCallPermission",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/whatsapp/call/permission/get",
+        "responseCode":200
+      },
+      "input":{"shape":"GetWhatsAppCallPermissionInput"},
+      "output":{"shape":"GetWhatsAppCallPermissionOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParametersException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedByMetaException"},
+        {"shape":"ThrottledRequestException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"DependencyException"}
+      ]
+    },
     "GetWhatsAppFlow":{
       "name":"GetWhatsAppFlow",
       "http":{
@@ -578,6 +598,27 @@
       ],
       "idempotent":true
     },
+    "SendWhatsAppCallEvent":{
+      "name":"SendWhatsAppCallEvent",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/whatsapp/call/event",
+        "responseCode":200
+      },
+      "input":{"shape":"SendWhatsAppCallEventInput"},
+      "output":{"shape":"SendWhatsAppCallEventOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParametersException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedByMetaException"},
+        {"shape":"ThrottledRequestException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"DependencyException"}
+      ]
+    },
     "SendWhatsAppConversionEvent":{
       "name":"SendWhatsAppConversionEvent",
       "http":{
@@ -650,6 +691,27 @@
         {"shape":"ThrottledRequestException"},
         {"shape":"InternalServiceException"}
       ]
+    },
+    "UpdateLinkedWhatsAppBusinessAccountPhoneNumber":{
+      "name":"UpdateLinkedWhatsAppBusinessAccountPhoneNumber",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/v1/whatsapp/waba/phone",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateLinkedWhatsAppBusinessAccountPhoneNumberInput"},
+      "output":{"shape":"UpdateLinkedWhatsAppBusinessAccountPhoneNumberOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParametersException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedByMetaException"},
+        {"shape":"ThrottledRequestException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"DependencyException"}
+      ],
+      "idempotent":true
     },
     "UpdateWhatsAppFlow":{
       "name":"UpdateWhatsAppFlow",
@@ -800,6 +862,17 @@
     "CodeExpirationMinutes":{
       "type":"integer",
       "box":true
+    },
+    "ConflictException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ErrorMessage"}
+      },
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
+      "exception":true
     },
     "CreateWhatsAppDatasetInput":{
       "type":"structure",
@@ -1072,7 +1145,8 @@
       "type":"structure",
       "members":{
         "phoneNumber":{"shape":"WhatsAppPhoneNumberDetail"},
-        "linkedWhatsAppBusinessAccountId":{"shape":"LinkedWhatsAppBusinessAccountId"}
+        "linkedWhatsAppBusinessAccountId":{"shape":"LinkedWhatsAppBusinessAccountId"},
+        "callSettings":{"shape":"WhatsAppCallSettings"}
       }
     },
     "GetWhatsAppBusinessPublicKeyInput":{
@@ -1091,6 +1165,26 @@
       "members":{
         "businessPublicKey":{"shape":"BusinessPublicKeyPem"},
         "businessPublicKeySignatureStatus":{"shape":"BusinessPublicKeySignatureStatus"}
+      }
+    },
+    "GetWhatsAppCallPermissionInput":{
+      "type":"structure",
+      "required":["originationPhoneNumberId"],
+      "members":{
+        "originationPhoneNumberId":{"shape":"WhatsAppPhoneNumberId"},
+        "destinationPhoneNumber":{"shape":"WhatsAppDestinationPhoneNumber"},
+        "endUserBsuid":{"shape":"WhatsAppBusinessScopedUserId"}
+      }
+    },
+    "GetWhatsAppCallPermissionOutput":{
+      "type":"structure",
+      "required":[
+        "permission",
+        "actions"
+      ],
+      "members":{
+        "permission":{"shape":"WhatsAppCallPermission"},
+        "actions":{"shape":"WhatsAppCallPermissionActionList"}
       }
     },
     "GetWhatsAppFlowInput":{
@@ -1227,6 +1321,11 @@
       "key":{"shape":"String"},
       "value":{"shape":"String"}
     },
+    "IanaTimezone":{
+      "type":"string",
+      "max":100,
+      "min":1
+    },
     "Integer":{
       "type":"integer",
       "box":true
@@ -1251,6 +1350,11 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "Iso8601Duration":{
+      "type":"string",
+      "max":20,
+      "min":1
     },
     "IsoCountryCode":{
       "type":"string",
@@ -2077,6 +2181,26 @@
       "min":1,
       "pattern":"https://(.*)s3(.*).amazonaws.com/(.*)"
     },
+    "SendWhatsAppCallEventInput":{
+      "type":"structure",
+      "required":[
+        "originationPhoneNumberId",
+        "metaApiVersion",
+        "callEvent"
+      ],
+      "members":{
+        "originationPhoneNumberId":{"shape":"WhatsAppPhoneNumberId"},
+        "metaApiVersion":{"shape":"String"},
+        "callEvent":{"shape":"WhatsAppCallEventBlob"}
+      }
+    },
+    "SendWhatsAppCallEventOutput":{
+      "type":"structure",
+      "required":["callId"],
+      "members":{
+        "callId":{"shape":"String"}
+      }
+    },
     "SendWhatsAppConversionEventInput":{
       "type":"structure",
       "required":[
@@ -2208,6 +2332,7 @@
       "exception":true,
       "retryable":{"throttling":false}
     },
+    "Timestamp":{"type":"timestamp"},
     "TwoFactorPin":{
       "type":"string",
       "max":6,
@@ -2229,6 +2354,28 @@
       "type":"structure",
       "members":{
         "statusCode":{"shape":"Integer"}
+      }
+    },
+    "UpdateLinkedWhatsAppBusinessAccountPhoneNumberInput":{
+      "type":"structure",
+      "required":[
+        "id",
+        "callSettings"
+      ],
+      "members":{
+        "id":{
+          "shape":"WhatsAppPhoneNumberId",
+          "location":"querystring",
+          "locationName":"id"
+        },
+        "callSettings":{"shape":"WhatsAppCallSettings"}
+      }
+    },
+    "UpdateLinkedWhatsAppBusinessAccountPhoneNumberOutput":{
+      "type":"structure",
+      "required":["phoneNumberId"],
+      "members":{
+        "phoneNumberId":{"shape":"WhatsAppPhoneNumberId"}
       }
     },
     "UpdateWhatsAppFlowAssetsInput":{
@@ -2357,6 +2504,107 @@
       "max":200,
       "min":0
     },
+    "WhatsAppBusinessScopedUserId":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "sensitive":true
+    },
+    "WhatsAppCallEventBlob":{
+      "type":"blob",
+      "max":2048000,
+      "min":1,
+      "sensitive":true
+    },
+    "WhatsAppCallHours":{
+      "type":"structure",
+      "required":[
+        "enabled",
+        "timezone",
+        "weeklyOperatingHours"
+      ],
+      "members":{
+        "enabled":{"shape":"Boolean"},
+        "timezone":{"shape":"IanaTimezone"},
+        "weeklyOperatingHours":{"shape":"WhatsAppWeeklyOperatingHoursList"},
+        "holidaySchedule":{"shape":"WhatsAppHolidayScheduleList"}
+      }
+    },
+    "WhatsAppCallIconVisibility":{
+      "type":"string",
+      "max":50,
+      "min":1
+    },
+    "WhatsAppCallPermission":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "status":{"shape":"WhatsAppCallPermissionStatus"},
+        "expirationTime":{"shape":"Timestamp"}
+      }
+    },
+    "WhatsAppCallPermissionAction":{
+      "type":"structure",
+      "required":[
+        "actionName",
+        "canPerformAction",
+        "limits"
+      ],
+      "members":{
+        "actionName":{"shape":"WhatsAppCallPermissionActionName"},
+        "canPerformAction":{"shape":"Boolean"},
+        "limits":{"shape":"WhatsAppCallPermissionLimitList"}
+      }
+    },
+    "WhatsAppCallPermissionActionList":{
+      "type":"list",
+      "member":{"shape":"WhatsAppCallPermissionAction"}
+    },
+    "WhatsAppCallPermissionActionName":{
+      "type":"string",
+      "max":50,
+      "min":1
+    },
+    "WhatsAppCallPermissionLimit":{
+      "type":"structure",
+      "required":[
+        "timePeriod",
+        "maxAllowed",
+        "currentUsage"
+      ],
+      "members":{
+        "timePeriod":{"shape":"Iso8601Duration"},
+        "maxAllowed":{"shape":"Integer"},
+        "currentUsage":{"shape":"Integer"},
+        "limitExpirationTime":{"shape":"Timestamp"}
+      }
+    },
+    "WhatsAppCallPermissionLimitList":{
+      "type":"list",
+      "member":{"shape":"WhatsAppCallPermissionLimit"},
+      "max":10,
+      "min":0
+    },
+    "WhatsAppCallPermissionStatus":{
+      "type":"string",
+      "max":50,
+      "min":1
+    },
+    "WhatsAppCallSettings":{
+      "type":"structure",
+      "required":["callEnabled"],
+      "members":{
+        "callEnabled":{"shape":"Boolean"},
+        "callHours":{"shape":"WhatsAppCallHours"},
+        "callIconVisibility":{"shape":"WhatsAppCallIconVisibility"},
+        "callbackPermissionStatus":{"shape":"WhatsAppCallbackPermissionStatus"}
+      }
+    },
+    "WhatsAppCallbackPermissionStatus":{
+      "type":"string",
+      "max":50,
+      "min":1
+    },
     "WhatsAppConversionEventBlob":{
       "type":"blob",
       "max":1024000,
@@ -2369,8 +2617,52 @@
       "min":10,
       "pattern":"[0-9]+"
     },
+    "WhatsAppDate":{
+      "type":"string",
+      "max":10,
+      "min":10,
+      "pattern":"[0-9]{4}-[0-9]{2}-[0-9]{2}"
+    },
+    "WhatsAppDayOfWeek":{
+      "type":"string",
+      "enum":[
+        "MONDAY",
+        "TUESDAY",
+        "WEDNESDAY",
+        "THURSDAY",
+        "FRIDAY",
+        "SATURDAY",
+        "SUNDAY"
+      ]
+    },
+    "WhatsAppDestinationPhoneNumber":{
+      "type":"string",
+      "max":20,
+      "min":1,
+      "pattern":"\\+[1-9]\\d{1,14}",
+      "sensitive":true
+    },
     "WhatsAppDisplayPhoneNumber":{
       "type":"string",
+      "max":20,
+      "min":0
+    },
+    "WhatsAppHolidayScheduleEntry":{
+      "type":"structure",
+      "required":[
+        "date",
+        "startTime",
+        "endTime"
+      ],
+      "members":{
+        "date":{"shape":"WhatsAppDate"},
+        "startTime":{"shape":"WhatsAppTimeOfDay"},
+        "endTime":{"shape":"WhatsAppTimeOfDay"}
+      }
+    },
+    "WhatsAppHolidayScheduleList":{
+      "type":"list",
+      "member":{"shape":"WhatsAppHolidayScheduleEntry"},
       "max":20,
       "min":0
     },
@@ -2496,6 +2788,48 @@
         "associateInProgressToken":{"shape":"AssociateInProgressToken"},
         "linkedAccountsWithIncompleteSetup":{"shape":"LinkedAccountWithIncompleteSetup"}
       }
+    },
+    "WhatsAppTimeOfDay":{
+      "type":"structure",
+      "required":[
+        "hours",
+        "minutes"
+      ],
+      "members":{
+        "hours":{"shape":"WhatsAppTimeOfDayHoursInteger"},
+        "minutes":{"shape":"WhatsAppTimeOfDayMinutesInteger"}
+      }
+    },
+    "WhatsAppTimeOfDayHoursInteger":{
+      "type":"integer",
+      "box":true,
+      "max":23,
+      "min":0
+    },
+    "WhatsAppTimeOfDayMinutesInteger":{
+      "type":"integer",
+      "box":true,
+      "max":59,
+      "min":0
+    },
+    "WhatsAppWeeklyOperatingHoursEntry":{
+      "type":"structure",
+      "required":[
+        "dayOfWeek",
+        "openTime",
+        "closeTime"
+      ],
+      "members":{
+        "dayOfWeek":{"shape":"WhatsAppDayOfWeek"},
+        "openTime":{"shape":"WhatsAppTimeOfDay"},
+        "closeTime":{"shape":"WhatsAppTimeOfDay"}
+      }
+    },
+    "WhatsAppWeeklyOperatingHoursList":{
+      "type":"list",
+      "member":{"shape":"WhatsAppWeeklyOperatingHoursEntry"},
+      "max":14,
+      "min":0
     },
     "ZeroTapTermsAccepted":{
       "type":"boolean",

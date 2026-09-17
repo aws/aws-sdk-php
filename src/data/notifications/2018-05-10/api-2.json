@@ -317,7 +317,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetManagedNotificationChildEvent":{
       "name":"GetManagedNotificationChildEvent",
@@ -334,7 +335,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetManagedNotificationConfiguration":{
       "name":"GetManagedNotificationConfiguration",
@@ -351,7 +353,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetManagedNotificationEvent":{
       "name":"GetManagedNotificationEvent",
@@ -368,7 +371,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetNotificationConfiguration":{
       "name":"GetNotificationConfiguration",
@@ -385,7 +389,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetNotificationEvent":{
       "name":"GetNotificationEvent",
@@ -402,7 +407,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetNotificationsAccessForOrganization":{
       "name":"GetNotificationsAccessForOrganization",
@@ -418,7 +424,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListChannels":{
       "name":"ListChannels",
@@ -435,7 +442,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListEventRules":{
       "name":"ListEventRules",
@@ -452,7 +460,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListManagedNotificationChannelAssociations":{
       "name":"ListManagedNotificationChannelAssociations",
@@ -469,7 +478,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListManagedNotificationChildEvents":{
       "name":"ListManagedNotificationChildEvents",
@@ -485,7 +495,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListManagedNotificationConfigurations":{
       "name":"ListManagedNotificationConfigurations",
@@ -501,7 +512,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListManagedNotificationEvents":{
       "name":"ListManagedNotificationEvents",
@@ -517,7 +529,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListMemberAccounts":{
       "name":"ListMemberAccounts",
@@ -534,7 +547,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListNotificationConfigurations":{
       "name":"ListNotificationConfigurations",
@@ -550,7 +564,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListNotificationEvents":{
       "name":"ListNotificationEvents",
@@ -566,7 +581,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListNotificationHubs":{
       "name":"ListNotificationHubs",
@@ -582,7 +598,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListOrganizationalUnits":{
       "name":"ListOrganizationalUnits",
@@ -599,7 +616,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -616,7 +634,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "RegisterNotificationHub":{
       "name":"RegisterNotificationHub",
@@ -682,6 +701,25 @@
       },
       "input":{"shape":"UpdateEventRuleRequest"},
       "output":{"shape":"UpdateEventRuleResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
+    "UpdateManagedNotificationChannelAssociation":{
+      "name":"UpdateManagedNotificationChannelAssociation",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/channels/update-managed-notification-channel-association",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateManagedNotificationChannelAssociationRequest"},
+      "output":{"shape":"UpdateManagedNotificationChannelAssociationResponse"},
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
@@ -840,7 +878,8 @@
           "location":"uri",
           "locationName":"contactIdentifier"
         },
-        "managedNotificationConfigurationArn":{"shape":"ManagedNotificationConfigurationOsArn"}
+        "managedNotificationConfigurationArn":{"shape":"ManagedNotificationConfigurationOsArn"},
+        "isSensitiveEventsSubscribed":{"shape":"Boolean"}
       }
     },
     "AssociateManagedNotificationAccountContactResponse":{
@@ -859,7 +898,8 @@
           "location":"uri",
           "locationName":"channelArn"
         },
-        "managedNotificationConfigurationArn":{"shape":"ManagedNotificationConfigurationOsArn"}
+        "managedNotificationConfigurationArn":{"shape":"ManagedNotificationConfigurationOsArn"},
+        "isSensitiveEventsSubscribed":{"shape":"Boolean"}
       }
     },
     "AssociateManagedNotificationAdditionalChannelResponse":{
@@ -885,13 +925,22 @@
       "type":"structure",
       "members":{}
     },
+    "AttachmentContentType":{
+      "type":"string",
+      "pattern":"[a-zA-Z0-9]+/[a-zA-Z0-9][a-zA-Z0-9!#$&\\-^_.+]*"
+    },
+    "AttachmentDisplayName":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
     "Boolean":{
       "type":"boolean",
       "box":true
     },
     "ChannelArn":{
       "type":"string",
-      "pattern":"arn:aws:(chatbot|consoleapp|notifications-contacts):[a-zA-Z0-9-]*:[0-9]{12}:[a-zA-Z0-9-_.@]+/[a-zA-Z0-9/_.@:-]+"
+      "pattern":"arn:[a-z-]{3,10}:(chatbot|consoleapp|notifications-contacts):[a-zA-Z0-9-]*:[0-9]{12}:[a-zA-Z0-9-_.@]+/[a-zA-Z0-9/_.@:-]+"
     },
     "ChannelAssociationOverrideOption":{
       "type":"string",
@@ -902,7 +951,7 @@
     },
     "ChannelIdentifier":{
       "type":"string",
-      "pattern":"ACCOUNT_PRIMARY|ACCOUNT_ALTERNATE_BILLING|ACCOUNT_ALTERNATE_OPERATIONS|ACCOUNT_ALTERNATE_SECURITY|arn:aws:(chatbot|consoleapp|notifications-contacts):[a-zA-Z0-9-]*:[0-9]{12}:[a-zA-Z0-9-_.@]+/[a-zA-Z0-9/_.@:-]+"
+      "pattern":"(ACCOUNT_PRIMARY|ACCOUNT_ALTERNATE_BILLING|ACCOUNT_ALTERNATE_OPERATIONS|ACCOUNT_ALTERNATE_SECURITY|arn:[a-z-]{3,10}:(chatbot|consoleapp|notifications-contacts):[a-zA-Z0-9-]*:[0-9]{12}:[a-zA-Z0-9-_.@]+/[a-zA-Z0-9/_.@:-]+)"
     },
     "ChannelType":{
       "type":"string",
@@ -1154,7 +1203,7 @@
     "ErrorMessage":{"type":"string"},
     "EventRuleArn":{
       "type":"string",
-      "pattern":"arn:aws:notifications::[0-9]{12}:configuration/[a-z0-9]{27}/rule/[a-z0-9]{27}"
+      "pattern":"arn:[a-z-]{3,10}:notifications::[0-9]{12}:configuration/[a-z0-9]{27}/rule/[a-z0-9]{27}"
     },
     "EventRuleEventPattern":{
       "type":"string",
@@ -1683,6 +1732,11 @@
           "shape":"AccountId",
           "location":"querystring",
           "locationName":"relatedAccount"
+        },
+        "includeSensitiveEvents":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"includeSensitiveEvents"
         }
       }
     },
@@ -1973,12 +2027,17 @@
       "members":{
         "channelIdentifier":{"shape":"String"},
         "channelType":{"shape":"ChannelType"},
-        "overrideOption":{"shape":"ChannelAssociationOverrideOption"}
+        "overrideOption":{"shape":"ChannelAssociationOverrideOption"},
+        "isSensitiveEventsSubscribed":{"shape":"Boolean"}
       }
     },
     "ManagedNotificationChannelAssociations":{
       "type":"list",
       "member":{"shape":"ManagedNotificationChannelAssociationSummary"}
+    },
+    "ManagedNotificationChannelIdentifier":{
+      "type":"string",
+      "pattern":"(ACCOUNT_PRIMARY|ACCOUNT_ALTERNATE_BILLING|ACCOUNT_ALTERNATE_OPERATIONS|ACCOUNT_ALTERNATE_SECURITY|arn:[a-z-]{3,10}:(chatbot|consoleapp|notifications-contacts):[a-zA-Z0-9-]*:[0-9]{12}:[a-zA-Z0-9-_.@]+/[a-zA-Z0-9/_.@:-]+)"
     },
     "ManagedNotificationChildEvent":{
       "type":"structure",
@@ -2008,7 +2067,7 @@
     },
     "ManagedNotificationChildEventArn":{
       "type":"string",
-      "pattern":"arn:[-.a-z0-9]{1,63}:notifications::[0-9]{12}:managed-notification-configuration/category/[a-zA-Z0-9\\-]{3,64}/sub-category/[a-zA-Z0-9\\-]{3,64}/event/[a-z0-9]{27}/child-event/[a-z0-9]{27}"
+      "pattern":"arn:[a-z-]{3,10}:notifications::[0-9]{12}:managed-notification-configuration/category/[a-zA-Z0-9\\-]{3,64}/sub-category/[a-zA-Z0-9\\-]{3,64}/event/[a-z0-9]{27}/child-event/[a-z0-9]{27}"
     },
     "ManagedNotificationChildEventOverview":{
       "type":"structure",
@@ -2067,7 +2126,7 @@
     },
     "ManagedNotificationConfigurationOsArn":{
       "type":"string",
-      "pattern":"arn:[-.a-z0-9]{1,63}:notifications::[0-9]{12}:managed-notification-configuration/category/[a-zA-Z0-9\\-]{3,64}/sub-category/[a-zA-Z0-9\\-]{3,64}"
+      "pattern":"arn:[a-z-]{3,10}:notifications::[0-9]{12}:managed-notification-configuration/category/[a-zA-Z0-9\\-]{3,64}/sub-category/[a-zA-Z0-9\\-]{3,64}"
     },
     "ManagedNotificationConfigurationStructure":{
       "type":"structure",
@@ -2108,12 +2167,13 @@
         "startTime":{"shape":"SyntheticTimestamp_date_time"},
         "endTime":{"shape":"SyntheticTimestamp_date_time"},
         "textParts":{"shape":"TextParts"},
-        "organizationalUnitId":{"shape":"OrganizationalUnitId"}
+        "organizationalUnitId":{"shape":"OrganizationalUnitId"},
+        "attachments":{"shape":"NotificationEventAttachmentList"}
       }
     },
     "ManagedNotificationEventArn":{
       "type":"string",
-      "pattern":"arn:[-.a-z0-9]{1,63}:notifications::[0-9]{12}:managed-notification-configuration/category/[a-zA-Z0-9\\-]{3,64}/sub-category/[a-zA-Z0-9\\-]{3,64}/event/[a-z0-9]{27}"
+      "pattern":"arn:[a-z-]{3,10}:notifications::[0-9]{12}:managed-notification-configuration/category/[a-zA-Z0-9\\-]{3,64}/sub-category/[a-zA-Z0-9\\-]{3,64}/event/[a-z0-9]{27}"
     },
     "ManagedNotificationEventOverview":{
       "type":"structure",
@@ -2159,7 +2219,7 @@
     },
     "ManagedRuleArn":{
       "type":"string",
-      "pattern":"arn:aws:events:[a-z-\\d]{2,25}:\\d{12}:rule\\/[a-zA-Z-\\d]{1,1024}"
+      "pattern":"arn:[a-z-]{3,10}:events:[a-z-\\d]{2,25}:\\d{12}:rule\\/[a-zA-Z-\\d]{1,1024}"
     },
     "ManagedRuleArns":{
       "type":"list",
@@ -2181,7 +2241,7 @@
       "type":"string",
       "max":32,
       "min":0,
-      "pattern":"([a-z]{1,2})-([a-z]{1,15}-)+([0-9])"
+      "pattern":"([a-z]{1,4})-([a-z]{1,15}-)+([0-9])"
     },
     "ManagedSourceEventMetadataSummaryEventTypeString":{
       "type":"string",
@@ -2253,6 +2313,7 @@
         "headline":{"shape":"TextPartReference"},
         "paragraphSummary":{"shape":"TextPartReference"},
         "completeDescription":{"shape":"TextPartReference"},
+        "markupDescription":{"shape":"TextPartReference"},
         "dimensions":{"shape":"Dimensions"}
       }
     },
@@ -2276,7 +2337,7 @@
     },
     "NotificationConfigurationArn":{
       "type":"string",
-      "pattern":"arn:aws:notifications::[0-9]{12}:configuration/[a-z0-9]{27}"
+      "pattern":"arn:[a-z-]{3,10}:notifications::[0-9]{12}:configuration/[a-z0-9]{27}"
     },
     "NotificationConfigurationDescription":{
       "type":"string",
@@ -2361,7 +2422,23 @@
     },
     "NotificationEventArn":{
       "type":"string",
-      "pattern":"arn:[-.a-z0-9]{1,63}:notifications:[-.a-z0-9]{1,63}:[0-9]{12}:configuration/[a-z0-9]{27}/event/[a-z0-9]{27}"
+      "pattern":"arn:[a-z-]{3,10}:notifications:[-.a-z0-9]{1,63}:[0-9]{12}:configuration/[a-z0-9]{27}/event/[a-z0-9]{27}"
+    },
+    "NotificationEventAttachment":{
+      "type":"structure",
+      "required":[
+        "displayName",
+        "contentType"
+      ],
+      "members":{
+        "displayName":{"shape":"AttachmentDisplayName"},
+        "attachmentDownloadUrl":{"shape":"SensitiveUrl"},
+        "contentType":{"shape":"AttachmentContentType"}
+      }
+    },
+    "NotificationEventAttachmentList":{
+      "type":"list",
+      "member":{"shape":"NotificationEventAttachment"}
     },
     "NotificationEventId":{
       "type":"string",
@@ -2477,7 +2554,7 @@
       "type":"string",
       "max":25,
       "min":2,
-      "pattern":"([a-z]{1,2})-([a-z]{1,15}-)+([0-9])"
+      "pattern":"([a-z]{1,4})-([a-z]{1,15}-)+([0-9])"
     },
     "Regions":{
       "type":"list",
@@ -2551,6 +2628,13 @@
       "type":"string",
       "enum":["v1.0"]
     },
+    "SensitiveUrl":{
+      "type":"string",
+      "max":4096,
+      "min":0,
+      "pattern":"(https?):\\/\\/.*",
+      "sensitive":true
+    },
     "ServiceCode":{"type":"string"},
     "ServiceQuotaExceededException":{
       "type":"structure",
@@ -2603,7 +2687,7 @@
       "type":"string",
       "max":32,
       "min":0,
-      "pattern":"([a-z]{1,2})-([a-z]{1,15}-)+([0-9])"
+      "pattern":"([a-z]{1,4})-([a-z]{1,15}-)+([0-9])"
     },
     "SourceEventMetadataEventTypeString":{
       "type":"string",
@@ -2752,7 +2836,8 @@
       "enum":[
         "LOCALIZED_TEXT",
         "PLAIN_TEXT",
-        "URL"
+        "URL",
+        "PORTABLE_TEXT"
       ]
     },
     "TextPartValue":{
@@ -2767,7 +2852,7 @@
     },
     "TextPartValueDisplayTextString":{
       "type":"string",
-      "max":1024,
+      "max":12000,
       "min":1
     },
     "TextParts":{
@@ -2844,6 +2929,22 @@
         "statusSummaryByRegion":{"shape":"StatusSummaryByRegion"}
       }
     },
+    "UpdateManagedNotificationChannelAssociationRequest":{
+      "type":"structure",
+      "required":[
+        "managedNotificationConfigurationArn",
+        "channelIdentifier"
+      ],
+      "members":{
+        "managedNotificationConfigurationArn":{"shape":"ManagedNotificationConfigurationOsArn"},
+        "channelIdentifier":{"shape":"ManagedNotificationChannelIdentifier"},
+        "isSensitiveEventsSubscribed":{"shape":"Boolean"}
+      }
+    },
+    "UpdateManagedNotificationChannelAssociationResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "UpdateNotificationConfigurationRequest":{
       "type":"structure",
       "required":["arn"],
@@ -2868,8 +2969,7 @@
     "Url":{
       "type":"string",
       "max":2000,
-      "min":0,
-      "pattern":"(https?)://.*"
+      "min":0
     },
     "ValidationException":{
       "type":"structure",

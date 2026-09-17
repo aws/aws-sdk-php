@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Preserved sub-second precision when serializing `unixTimestamp` and `iso8601` request timestamps. Whole-second values and `rfc822` timestamps are unchanged.
+* `Aws\BedrockAgentCore` - Batch evaluation now supports evaluating specific traces within a session. Each session can specify up to 100 trace IDs to evaluate.
+* `Aws\SocialMessaging` - Add support for WhatsApp Calling APIs.
+* `Aws\VPCLattice` - Adding support for CIDR Resource Configuration
+* `Aws\SNS` - SNS API reference documentation update
+* `Aws\IoTWireless` - Adds Multi-frame GNSS support to the AWS IoT Core Device Location GetPositionEstimate API. The new GnssMultiFrame measurement type improves location accuracy by combining multiple GNSS signal captures (2, 4, 8, 16, or 32) from the same device to estimate its position.
+* `Aws\SESv2` - Added support to query the tenant name for BatchGetMetricData and CreateExportJob APIs to filter metrics and messages at the tenant level.
+* `Aws\GuardDuty` - This change surfaces AI Protection resources on existing public IAM attack sequences. Customers will now see which model was accessed and whether a guardrail intervened as part of the credential-compromise sequence.
+* `Aws\Notifications` - Added support for attachments on managed notification events. Added support to access and subscribe sensitive managed notification events.
+* `Aws\EC2` - Adding support for "Tunnel" VPC Endpoint
+* `Aws\Connect` - Made the replicaAlias attribute optional in the ReplicateInstance API to support Global routing for Amazon Connect Global Resiliency (ACGR) instances. This change maintains backward compatibility. When onboarding to ACGR without Global routing, you must specify a custom replicaAlias in your API call
+
 ## 3.395.4 - 2026-09-16
 
 * `Aws\Resiliencehubv2` - Next Gen Resilience Hub now supports dependency insights (LLM-based insights about customer's service dependencies) and organization-level policy sharing (provision to share policy with member accounts for an organization)

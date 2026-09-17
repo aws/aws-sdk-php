@@ -3729,6 +3729,7 @@
         "CellTowers":{"shape":"CellTowers"},
         "Ip":{"shape":"Ip"},
         "Gnss":{"shape":"Gnss"},
+        "GnssMultiFrame":{"shape":"GnssMultiFrame"},
         "Timestamp":{"shape":"CreationDate"},
         "AdvancedConfiguration":{"shape":"AdvancedConfiguration"}
       }
@@ -4123,6 +4124,31 @@
       "members":{
         "Payload":{"shape":"GnssNav"},
         "CaptureTime":{"shape":"GPST"},
+        "CaptureTimeAccuracy":{"shape":"CaptureTimeAccuracy"},
+        "AssistPosition":{"shape":"AssistPosition"},
+        "AssistAltitude":{"shape":"Coordinate"},
+        "Use2DSolver":{"shape":"Use2DSolver"}
+      }
+    },
+    "GnssCapture":{
+      "type":"structure",
+      "required":["Payload"],
+      "members":{
+        "Payload":{"shape":"GnssNav"},
+        "CaptureTime":{"shape":"GPST"}
+      }
+    },
+    "GnssCaptures":{
+      "type":"list",
+      "member":{"shape":"GnssCapture"},
+      "max":32,
+      "min":2
+    },
+    "GnssMultiFrame":{
+      "type":"structure",
+      "required":["Captures"],
+      "members":{
+        "Captures":{"shape":"GnssCaptures"},
         "CaptureTimeAccuracy":{"shape":"CaptureTimeAccuracy"},
         "AssistPosition":{"shape":"AssistPosition"},
         "AssistAltitude":{"shape":"Coordinate"},

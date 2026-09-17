@@ -2425,7 +2425,7 @@
       }
     },
     "MetricDimensionName": {
-      "base": "<p>The <code>BatchGetMetricDataQuery</code> dimension name. This can be one of the following:</p> <ul> <li> <p> <code>EMAIL_IDENTITY</code> – The email identity used when sending messages.</p> </li> <li> <p> <code>CONFIGURATION_SET</code> – The configuration set used when sending messages (if one was used).</p> </li> <li> <p> <code>ISP</code> – The recipient ISP (e.g. <code>Gmail</code>, <code>Yahoo</code>, etc.).</p> </li> </ul>",
+      "base": "<p>The <code>BatchGetMetricDataQuery</code> dimension name. This can be one of the following:</p> <ul> <li> <p> <code>EMAIL_IDENTITY</code> – The email identity used when sending messages.</p> </li> <li> <p> <code>CONFIGURATION_SET</code> – The configuration set used when sending messages (if one was used).</p> </li> <li> <p> <code>ISP</code> – The recipient ISP (e.g. <code>Gmail</code>, <code>Yahoo</code>, etc.).</p> </li> <li> <p> <code>TENANT_NAME</code> – The name of the tenant used when sending messages (if one was used).</p> </li> </ul>",
       "refs": {
         "Dimensions$key": null,
         "ExportDimensions$key": null
@@ -3483,7 +3483,14 @@
         "SendEmailRequest$TenantName": "<p>The name of the tenant through which this email will be sent.</p> <note> <p>The email sending operation will only succeed if all referenced resources (identities, configuration sets, and templates) are associated with this tenant. </p> </note>",
         "SuppressedDestination$TenantName": "<p>The name of the tenant that the suppressed destination belongs to. This field is present only when the suppressed destination is on a tenant's suppression list.</p>",
         "Tenant$TenantName": "<p>The name of the tenant.</p>",
-        "TenantInfo$TenantName": "<p>The name of the tenant.</p>"
+        "TenantInfo$TenantName": "<p>The name of the tenant.</p>",
+        "TenantNameFilterList$member": null
+      }
+    },
+    "TenantNameFilterList": {
+      "base": null,
+      "refs": {
+        "MessageInsightsFilters$TenantName": "<p>The name of the tenant used when sending the message.</p>"
       }
     },
     "TenantResource": {

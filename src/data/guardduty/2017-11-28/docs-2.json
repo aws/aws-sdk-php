@@ -516,6 +516,18 @@
         "BedrockGuardrailDetails$GuardrailVersion": "<p>The version of the Bedrock guardrail. This field is deprecated. Use the <code>guardrails</code> list instead.</p>"
       }
     },
+    "BedrockGuardrailResource": {
+      "base": "<p>Contains details about an Amazon Bedrock guardrail evaluated during a model invocation.</p>",
+      "refs": {
+        "ResourceData$BedrockGuardrail": "<p>Contains detailed information about the Amazon Bedrock guardrail associated with the activity that prompted GuardDuty to generate a finding.</p>"
+      }
+    },
+    "BedrockGuardrailResourceVersionString": {
+      "base": null,
+      "refs": {
+        "BedrockGuardrailResource$Version": "<p>The version of the Amazon Bedrock guardrail. Valid values are a numeric version, <code>DRAFT</code>, or <code>ENFORCED</code>.</p>"
+      }
+    },
     "BedrockGuardrailVersionString": {
       "base": null,
       "refs": {
@@ -2258,13 +2270,15 @@
     "GuardrailAction": {
       "base": null,
       "refs": {
-        "BedrockGuardrailDetails$GuardrailAction": "<p>Indicates whether the guardrail intervened or not.</p>"
+        "BedrockGuardrailDetails$GuardrailAction": "<p>Indicates whether the guardrail intervened or not.</p>",
+        "BedrockGuardrailResource$GuardrailAction": "<p>Indicates whether the guardrail intervened during the model invocation.</p>"
       }
     },
     "GuardrailSource": {
       "base": null,
       "refs": {
-        "BedrockGuardrailDetails$GuardrailSource": "<p>Indicates whether the guardrail was applied on the input or output of the model invocation.</p>"
+        "BedrockGuardrailDetails$GuardrailSource": "<p>Indicates whether the guardrail was applied on the input or output of the model invocation.</p>",
+        "BedrockGuardrailResource$GuardrailSource": "<p>Indicates whether the guardrail was applied on the input or output of the model invocation.</p>"
       }
     },
     "HighestSeverityThreatDetails": {
