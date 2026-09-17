@@ -84,4 +84,49 @@ class QuerySerializerTest extends TestCase
         $request = $q($cmd, $endpoint);
         $this->assertSame('http://foo.com/', (string) $request->getUri());
     }
+
+    public function testPreservesSubSecondTimestampPrecision()
+    {
+        $service = new Service(
+            [
+                'metadata'=> [
+                    'protocol'   => 'query',
+                    'apiVersion' => '1'
+                ],
+                'operations' => [
+                    'foo' => [
+                        'http' => ['httpMethod' => 'POST'],
+                        'input' => [
+                            'type' => 'structure',
+                            'members' => [
+                                'iso' => ['type' => 'timestamp'],
+                                'epoch' => [
+                                    'type' => 'timestamp',
+                                    'timestampFormat' => 'unixTimestamp'
+                                ],
+                                'whole' => ['type' => 'timestamp'],
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            function () {}
+        );
+
+        $q = new QuerySerializer($service, 'http://foo.com');
+        $dt = new \DateTimeImmutable('2024-01-01T12:00:00.123456Z');
+        $request = $q(new Command('foo', [
+            'iso' => $dt,
+            'epoch' => $dt,
+            'whole' => new \DateTimeImmutable('2024-01-01T12:00:00Z'),
+        ]));
+
+        $this->assertSame(
+            'Action=foo&Version=1'
+                . '&iso=2024-01-01T12%3A00%3A00.123456Z'
+                . '&epoch=1704110400.123456'
+                . '&whole=2024-01-01T12%3A00%3A00Z',
+            (string) $request->getBody()
+        );
+    }
 }

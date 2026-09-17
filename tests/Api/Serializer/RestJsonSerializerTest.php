@@ -1167,4 +1167,80 @@ class RestJsonSerializerTest extends TestCase
             }
         );
     }
+
+    public function testPreservesSubSecondTimestampPrecisionInHttpBindings()
+    {
+        $service = new Service(
+            [
+                'metadata' => [
+                    'protocol' => 'rest-json',
+                    'apiVersion' => '1',
+                ],
+                'operations' => [
+                    'Op' => [
+                        'http' => ['method' => 'GET', 'requestUri' => '/{path}'],
+                        'input' => ['shape' => 'OpInput'],
+                    ]
+                ],
+                'shapes' => [
+                    'OpInput' => [
+                        'type' => 'structure',
+                        'members' => [
+                            'path' => [
+                                'shape' => 'Timestamp',
+                                'location' => 'uri'
+                            ],
+                            'iso' => [
+                                'shape' => 'Timestamp',
+                                'location' => 'querystring'
+                            ],
+                            'epoch' => [
+                                'shape' => 'Timestamp',
+                                'location' => 'querystring',
+                                'timestampFormat' => 'unixTimestamp'
+                            ],
+                            'header' => [
+                                'shape' => 'Timestamp',
+                                'location' => 'header',
+                                'locationName' => 'x-amz-date-header'
+                            ],
+                            'epochHeader' => [
+                                'shape' => 'Timestamp',
+                                'location' => 'header',
+                                'locationName' => 'x-amz-epoch-header',
+                                'timestampFormat' => 'unixTimestamp'
+                            ],
+                        ]
+                    ],
+                    'Timestamp' => ['type' => 'timestamp'],
+                ]
+            ],
+            function () {}
+        );
+
+        $serializer = new RestJsonSerializer($service, 'https://foo.com');
+        $dt = new \DateTimeImmutable('2024-01-01T12:00:00.123456Z');
+        $request = $serializer(new Command('Op', [
+            'path' => $dt,
+            'iso' => $dt,
+            'epoch' => $dt,
+            'header' => $dt,
+            'epochHeader' => $dt,
+        ]));
+
+        $this->assertSame(
+            'https://foo.com/2024-01-01T12%3A00%3A00.123456Z'
+                . '?iso=2024-01-01T12%3A00%3A00.123456Z&epoch=1704110400.123456',
+            (string) $request->getUri()
+        );
+        // Header default is rfc822, which is whole seconds only
+        $this->assertSame(
+            'Mon, 01 Jan 2024 12:00:00 GMT',
+            $request->getHeaderLine('x-amz-date-header')
+        );
+        $this->assertSame(
+            '1704110400.123456',
+            $request->getHeaderLine('x-amz-epoch-header')
+        );
+    }
 }
