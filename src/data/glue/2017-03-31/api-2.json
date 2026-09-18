@@ -8755,7 +8755,8 @@
         "Status":{"shape":"TaskStatusType"},
         "StartedOn":{"shape":"Timestamp"},
         "DataSource":{"shape":"DataSource"},
-        "CreatedRulesetName":{"shape":"NameString"}
+        "CreatedRulesetName":{"shape":"NameString"},
+        "RecommendationMode":{"shape":"RecommendationMode"}
       }
     },
     "DataQualityRuleRecommendationRunFilter":{
@@ -11190,7 +11191,8 @@
         "RecommendedRuleset":{"shape":"DataQualityRulesetString"},
         "CreatedRulesetName":{"shape":"NameString"},
         "DataQualitySecurityConfiguration":{"shape":"NameString"},
-        "AdditionalRunOptions":{"shape":"DataQualityRuleRecommendationRunAdditionalRunOptions"}
+        "AdditionalRunOptions":{"shape":"DataQualityRuleRecommendationRunAdditionalRunOptions"},
+        "RecommendationMode":{"shape":"RecommendationMode"}
       }
     },
     "GetDataQualityRulesetEvaluationRunRequest":{
@@ -16033,6 +16035,13 @@
       "max":16,
       "min":1
     },
+    "RecommendationMode":{
+      "type":"string",
+      "enum":[
+        "BASIC",
+        "ADVANCED"
+      ]
+    },
     "Record":{
       "type":"structure",
       "members":{},
@@ -17778,7 +17787,8 @@
         "CreatedRulesetName":{"shape":"NameString"},
         "DataQualitySecurityConfiguration":{"shape":"NameString"},
         "ClientToken":{"shape":"HashString"},
-        "AdditionalRunOptions":{"shape":"DataQualityRuleRecommendationRunAdditionalRunOptions"}
+        "AdditionalRunOptions":{"shape":"DataQualityRuleRecommendationRunAdditionalRunOptions"},
+        "RecommendationMode":{"shape":"RecommendationMode"}
       }
     },
     "StartDataQualityRuleRecommendationRunResponse":{

@@ -220,7 +220,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ConflictException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetEncoderConfiguration":{
       "name":"GetEncoderConfiguration",
@@ -238,7 +239,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ConflictException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetIngestConfiguration":{
       "name":"GetIngestConfiguration",
@@ -253,7 +255,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetParticipant":{
       "name":"GetParticipant",
@@ -268,7 +271,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetPublicKey":{
       "name":"GetPublicKey",
@@ -283,7 +287,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetStage":{
       "name":"GetStage",
@@ -298,7 +303,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetStageSession":{
       "name":"GetStageSession",
@@ -313,7 +319,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetStorageConfiguration":{
       "name":"GetStorageConfiguration",
@@ -331,7 +338,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ConflictException"}
-      ]
+      ],
+      "readonly":true
     },
     "ImportPublicKey":{
       "name":"ImportPublicKey",
@@ -365,7 +373,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ConflictException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListEncoderConfigurations":{
       "name":"ListEncoderConfigurations",
@@ -382,7 +391,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ConflictException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListIngestConfigurations":{
       "name":"ListIngestConfigurations",
@@ -396,7 +406,8 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListParticipantEvents":{
       "name":"ListParticipantEvents",
@@ -410,7 +421,8 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListParticipantReplicas":{
       "name":"ListParticipantReplicas",
@@ -424,7 +436,8 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListParticipants":{
       "name":"ListParticipants",
@@ -438,7 +451,8 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListPublicKeys":{
       "name":"ListPublicKeys",
@@ -452,7 +466,8 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListStageSessions":{
       "name":"ListStageSessions",
@@ -466,7 +481,8 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListStages":{
       "name":"ListStages",
@@ -481,7 +497,8 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListStorageConfigurations":{
       "name":"ListStorageConfigurations",
@@ -498,7 +515,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ConflictException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -513,7 +531,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "StartComposition":{
       "name":"StartComposition",
@@ -549,8 +568,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ServiceQuotaExceededException"},
-        {"shape":"ConflictException"},
-        {"shape":"PendingVerification"}
+        {"shape":"PendingVerification"},
+        {"shape":"ConflictException"}
       ]
     },
     "StopComposition":{
@@ -922,6 +941,41 @@
     "CreateIngestConfigurationResponse":{
       "type":"structure",
       "members":{
+        "accessControlAllowOrigin":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Allow-Origin"
+        },
+        "accessControlExposeHeaders":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Expose-Headers"
+        },
+        "cacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
+        "contentSecurityPolicy":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Content-Security-Policy"
+        },
+        "strictTransportSecurity":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Strict-Transport-Security"
+        },
+        "xContentTypeOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Content-Type-Options"
+        },
+        "xFrameOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Frame-Options"
+        },
         "ingestConfiguration":{"shape":"IngestConfiguration"}
       }
     },
@@ -982,8 +1036,7 @@
     },
     "DeleteEncoderConfigurationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteIngestConfigurationRequest":{
       "type":"structure",
@@ -995,8 +1048,7 @@
     },
     "DeleteIngestConfigurationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeletePublicKeyRequest":{
       "type":"structure",
@@ -1007,8 +1059,7 @@
     },
     "DeletePublicKeyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteStageRequest":{
       "type":"structure",
@@ -1019,8 +1070,7 @@
     },
     "DeleteStageResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteStorageConfigurationRequest":{
       "type":"structure",
@@ -1031,8 +1081,7 @@
     },
     "DeleteStorageConfigurationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Destination":{
       "type":"structure",
@@ -1131,8 +1180,7 @@
     },
     "DisconnectParticipantResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "EncoderConfiguration":{
       "type":"structure",
@@ -1840,7 +1888,7 @@
       "type":"string",
       "max":64,
       "min":0,
-      "pattern":"[a-zA-Z0-9-]*"
+      "pattern":"[a-zA-Z0-9-_]*"
     },
     "ParticipantList":{
       "type":"list",
@@ -2537,8 +2585,7 @@
     },
     "StopCompositionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StopParticipantReplicationRequest":{
       "type":"structure",
@@ -2663,8 +2710,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -2729,8 +2775,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateIngestConfigurationRequest":{
       "type":"structure",
@@ -2744,6 +2789,41 @@
     "UpdateIngestConfigurationResponse":{
       "type":"structure",
       "members":{
+        "accessControlAllowOrigin":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Allow-Origin"
+        },
+        "accessControlExposeHeaders":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Expose-Headers"
+        },
+        "cacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
+        "contentSecurityPolicy":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Content-Security-Policy"
+        },
+        "strictTransportSecurity":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Strict-Transport-Security"
+        },
+        "xContentTypeOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Content-Type-Options"
+        },
+        "xFrameOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Frame-Options"
+        },
         "ingestConfiguration":{"shape":"IngestConfiguration"}
       }
     },

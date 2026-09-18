@@ -20,7 +20,8 @@ use Aws\AwsClient;
  *     InitializationTimeout?: int,
  *     ApplicationConfig?: array{ContactHandling?: array{Scope?: 'CROSS_CONTACTS'|'PER_CONTACT', ...}, ...},
  *     IframeConfig?: array{Allow?: list<string>, Sandbox?: list<string>, ...},
- *     ApplicationType?: 'MCP_SERVER'|'SERVICE'|'STANDARD',
+ *     ApplicationType?: 'A2A_SERVER'|'MCP_SERVER'|'SERVICE'|'STANDARD',
+ *     AuthConfig?: array{AuthType?: 'API_KEY', CredentialProviderIdentifier?: string, ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createApplicationAsync(array $args = [])
@@ -38,7 +39,8 @@ use Aws\AwsClient;
  *     InitializationTimeout?: int,
  *     ApplicationConfig?: array{ContactHandling?: array{Scope?: 'CROSS_CONTACTS'|'PER_CONTACT', ...}, ...},
  *     IframeConfig?: array{Allow?: list<string>, Sandbox?: list<string>, ...},
- *     ApplicationType?: 'MCP_SERVER'|'SERVICE'|'STANDARD',
+ *     ApplicationType?: 'A2A_SERVER'|'MCP_SERVER'|'SERVICE'|'STANDARD',
+ *     AuthConfig?: array{AuthType?: 'API_KEY', CredentialProviderIdentifier?: string, ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result createDataIntegration(array $args = [])
@@ -148,9 +150,19 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listApplicationAssociationsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listApplicationAssociationsAsync(array{ApplicationId?: string, NextToken?: string, MaxResults?: int, ...} $args = [])
  * @method \Aws\Result listApplications(array $args = [])
- * @phpstan-method \Aws\Result listApplications(array{NextToken?: string, MaxResults?: int, ApplicationType?: 'MCP_SERVER'|'SERVICE'|'STANDARD', ...} $args = [])
+ * @phpstan-method \Aws\Result listApplications(array{
+ *     NextToken?: string,
+ *     MaxResults?: int,
+ *     ApplicationType?: 'A2A_SERVER'|'MCP_SERVER'|'SERVICE'|'STANDARD',
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise listApplicationsAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise listApplicationsAsync(array{NextToken?: string, MaxResults?: int, ApplicationType?: 'MCP_SERVER'|'SERVICE'|'STANDARD', ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listApplicationsAsync(array{
+ *     NextToken?: string,
+ *     MaxResults?: int,
+ *     ApplicationType?: 'A2A_SERVER'|'MCP_SERVER'|'SERVICE'|'STANDARD',
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listDataIntegrationAssociations(array $args = [])
  * @phpstan-method \Aws\Result listDataIntegrationAssociations(array{DataIntegrationIdentifier?: string, NextToken?: string, MaxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listDataIntegrationAssociationsAsync(array $args = [])
@@ -192,7 +204,8 @@ use Aws\AwsClient;
  *     InitializationTimeout?: int,
  *     ApplicationConfig?: array{ContactHandling?: array{Scope?: 'CROSS_CONTACTS'|'PER_CONTACT', ...}, ...},
  *     IframeConfig?: array{Allow?: list<string>, Sandbox?: list<string>, ...},
- *     ApplicationType?: 'MCP_SERVER'|'SERVICE'|'STANDARD',
+ *     ApplicationType?: 'A2A_SERVER'|'MCP_SERVER'|'SERVICE'|'STANDARD',
+ *     AuthConfig?: array{AuthType?: 'API_KEY', CredentialProviderIdentifier?: string, ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateApplicationAsync(array $args = [])
@@ -208,7 +221,8 @@ use Aws\AwsClient;
  *     InitializationTimeout?: int,
  *     ApplicationConfig?: array{ContactHandling?: array{Scope?: 'CROSS_CONTACTS'|'PER_CONTACT', ...}, ...},
  *     IframeConfig?: array{Allow?: list<string>, Sandbox?: list<string>, ...},
- *     ApplicationType?: 'MCP_SERVER'|'SERVICE'|'STANDARD',
+ *     ApplicationType?: 'A2A_SERVER'|'MCP_SERVER'|'SERVICE'|'STANDARD',
+ *     AuthConfig?: array{AuthType?: 'API_KEY', CredentialProviderIdentifier?: string, ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateDataIntegration(array $args = [])

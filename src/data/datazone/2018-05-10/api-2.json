@@ -6273,6 +6273,7 @@
         "owningProjectIdentifier":{"shape":"ProjectId"},
         "name":{"shape":"NotebookName"},
         "description":{"shape":"Description"},
+        "type":{"shape":"NotebookType"},
         "metadata":{"shape":"Metadata"},
         "parameters":{"shape":"Parameters"},
         "clientToken":{
@@ -6298,6 +6299,7 @@
         "domainId":{"shape":"DomainId"},
         "cellOrder":{"shape":"CellOrder"},
         "status":{"shape":"NotebookStatus"},
+        "type":{"shape":"NotebookType"},
         "description":{"shape":"Description"},
         "createdAt":{"shape":"CreatedAt"},
         "createdBy":{"shape":"CreatedBy"},
@@ -10127,6 +10129,7 @@
         "domainId":{"shape":"DomainId"},
         "cellOrder":{"shape":"CellOrder"},
         "status":{"shape":"NotebookStatus"},
+        "type":{"shape":"NotebookType"},
         "description":{"shape":"Description"},
         "createdAt":{"shape":"CreatedAt"},
         "createdBy":{"shape":"CreatedBy"},
@@ -12756,6 +12759,11 @@
           "location":"querystring",
           "locationName":"status"
         },
+        "type":{
+          "shape":"NotebookType",
+          "location":"querystring",
+          "locationName":"type"
+        },
         "nextToken":{
           "shape":"PaginationToken",
           "location":"querystring",
@@ -14020,6 +14028,7 @@
         "owningProjectId":{"shape":"ProjectId"},
         "domainId":{"shape":"DomainId"},
         "status":{"shape":"NotebookStatus"},
+        "type":{"shape":"NotebookType"},
         "description":{"shape":"Description"},
         "createdAt":{"shape":"CreatedAt"},
         "createdBy":{"shape":"CreatedBy"},
@@ -14030,6 +14039,13 @@
     "NotebookSummaryList":{
       "type":"list",
       "member":{"shape":"NotebookSummary"}
+    },
+    "NotebookType":{
+      "type":"string",
+      "enum":[
+        "DATA",
+        "SQL"
+      ]
     },
     "NotificationOutput":{
       "type":"structure",
@@ -18119,6 +18135,7 @@
         "status":{"shape":"NotebookStatus"},
         "name":{"shape":"NotebookName"},
         "cellOrder":{"shape":"CellOrder"},
+        "type":{"shape":"NotebookType"},
         "metadata":{"shape":"Metadata"},
         "parameters":{"shape":"Parameters"},
         "environmentConfiguration":{"shape":"EnvironmentConfig"},
@@ -18145,6 +18162,7 @@
         "domainId":{"shape":"DomainId"},
         "cellOrder":{"shape":"CellOrder"},
         "status":{"shape":"NotebookStatus"},
+        "type":{"shape":"NotebookType"},
         "description":{"shape":"Description"},
         "createdAt":{"shape":"CreatedAt"},
         "createdBy":{"shape":"CreatedBy"},

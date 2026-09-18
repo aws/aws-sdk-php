@@ -10060,6 +10060,14 @@
         "RecipeReference$RecipeVersion": "<p>The RecipeVersion of the DataBrew recipe.</p>"
       }
     },
+    "RecommendationMode": {
+      "base": "<p>Specifies the mode for how Glue Data Quality recommends rules.</p> <ul> <li> <p> <code>BASIC</code> uses an Glue job to analyze table data and recommend rules. This value is the default.</p> </li> <li> <p> <code>ADVANCED</code> uses Amazon Athena to analyze table data and Amazon Bedrock to recommend rules.</p> </li> </ul>",
+      "refs": {
+        "DataQualityRuleRecommendationRunDescription$RecommendationMode": "<p>The mode that Glue Data Quality uses to recommend rules.</p> <p>The default is <code>BASIC</code>.</p>",
+        "GetDataQualityRuleRecommendationRunResponse$RecommendationMode": "<p>The mode that Glue Data Quality uses to recommend rules.</p> <p>The default is <code>BASIC</code>.</p>",
+        "StartDataQualityRuleRecommendationRunRequest$RecommendationMode": "<p>The mode that Glue Data Quality uses to recommend rules.</p> <p>The default is <code>BASIC</code>.</p>"
+      }
+    },
     "Record": {
       "base": null,
       "refs": {
@@ -10343,13 +10351,13 @@
         "CreateJobRequest$Role": "<p>The name or Amazon Resource Name (ARN) of the IAM role associated with this job.</p>",
         "CreateMLTransformRequest$Role": "<p>The name or Amazon Resource Name (ARN) of the IAM role with the required permissions. The required permissions include both Glue service role permissions to Glue resources, and Amazon S3 permissions required by the transform. </p> <ul> <li> <p>This role needs Glue service role permissions to allow access to resources in Glue. See <a href=\"https://docs.aws.amazon.com/glue/latest/dg/attach-policy-iam-user.html\">Attach a Policy to IAM Users That Access Glue</a>.</p> </li> <li> <p>This role needs permission to your Amazon Simple Storage Service (Amazon S3) sources, targets, temporary directory, scripts, and any libraries used by the task run for this transform.</p> </li> </ul>",
         "DataQualityRulesetEvaluationRun$Role": "<p>An IAM role supplied to encrypt the results of the run.</p>",
-        "GetDataQualityRuleRecommendationRunResponse$Role": "<p>An IAM role supplied to encrypt the results of the run.</p>",
+        "GetDataQualityRuleRecommendationRunResponse$Role": "<p>The IAM role that Glue assumes to access resources for the run.</p>",
         "GetDataQualityRulesetEvaluationRunResponse$Role": "<p>An IAM role supplied to encrypt the results of the run.</p>",
         "GetMLTransformResponse$Role": "<p>The name or Amazon Resource Name (ARN) of the IAM role with the required permissions.</p>",
         "Job$Role": "<p>The name or Amazon Resource Name (ARN) of the IAM role associated with this job.</p>",
         "JobUpdate$Role": "<p>The name or Amazon Resource Name (ARN) of the IAM role associated with this job (required).</p>",
         "MLTransform$Role": "<p>The name or Amazon Resource Name (ARN) of the IAM role with the required permissions. The required permissions include both Glue service role permissions to Glue resources, and Amazon S3 permissions required by the transform. </p> <ul> <li> <p>This role needs Glue service role permissions to allow access to resources in Glue. See <a href=\"https://docs.aws.amazon.com/glue/latest/dg/attach-policy-iam-user.html\">Attach a Policy to IAM Users That Access Glue</a>.</p> </li> <li> <p>This role needs permission to your Amazon Simple Storage Service (Amazon S3) sources, targets, temporary directory, scripts, and any libraries used by the task run for this transform.</p> </li> </ul>",
-        "StartDataQualityRuleRecommendationRunRequest$Role": "<p>An IAM role supplied to encrypt the results of the run.</p>",
+        "StartDataQualityRuleRecommendationRunRequest$Role": "<p>The IAM role that Glue assumes to access resources for the run.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/data-quality-authorization.html\">Configure IAM permissions for Glue Data Quality</a>.</p>",
         "StartDataQualityRulesetEvaluationRunRequest$Role": "<p>An IAM role supplied to encrypt the results of the run.</p>",
         "UpdateMLTransformRequest$Role": "<p>The name or Amazon Resource Name (ARN) of the IAM role with the required permissions.</p>"
       }

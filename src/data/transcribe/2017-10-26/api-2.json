@@ -597,6 +597,22 @@
         {"shape":"ConflictException"}
       ]
     },
+    "UpdateLanguageModel":{
+      "name":"UpdateLanguageModel",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateLanguageModelRequest"},
+      "output":{"shape":"UpdateLanguageModelResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"NotFoundException"},
+        {"shape":"ConflictException"}
+      ]
+    },
     "UpdateMedicalVocabulary":{
       "name":"UpdateMedicalVocabulary",
       "http":{
@@ -641,7 +657,8 @@
         {"shape":"BadRequestException"},
         {"shape":"LimitExceededException"},
         {"shape":"InternalFailureException"},
-        {"shape":"NotFoundException"}
+        {"shape":"NotFoundException"},
+        {"shape":"ConflictException"}
       ]
     }
   },
@@ -874,6 +891,7 @@
         "BaseModelName":{"shape":"BaseModelName"},
         "ModelName":{"shape":"ModelName"},
         "InputDataConfig":{"shape":"InputDataConfig"},
+        "EncryptionConfiguration":{"shape":"EncryptionConfiguration"},
         "Tags":{"shape":"TagList"}
       }
     },
@@ -923,7 +941,8 @@
         "Words":{"shape":"Words"},
         "VocabularyFilterFileUri":{"shape":"Uri"},
         "Tags":{"shape":"TagList"},
-        "DataAccessRoleArn":{"shape":"DataAccessRoleArn"}
+        "DataAccessRoleArn":{"shape":"DataAccessRoleArn"},
+        "EncryptionConfiguration":{"shape":"EncryptionConfiguration"}
       }
     },
     "CreateVocabularyFilterResponse":{
@@ -946,7 +965,8 @@
         "Phrases":{"shape":"Phrases"},
         "VocabularyFileUri":{"shape":"Uri"},
         "Tags":{"shape":"TagList"},
-        "DataAccessRoleArn":{"shape":"DataAccessRoleArn"}
+        "DataAccessRoleArn":{"shape":"DataAccessRoleArn"},
+        "EncryptionConfiguration":{"shape":"EncryptionConfiguration"}
       }
     },
     "CreateVocabularyResponse":{
@@ -1051,6 +1071,14 @@
       }
     },
     "DurationInSeconds":{"type":"float"},
+    "EncryptionConfiguration":{
+      "type":"structure",
+      "required":["KMSKey"],
+      "members":{
+        "KMSEncryptionContext":{"shape":"KMSEncryptionContextMap"},
+        "KMSKey":{"shape":"KMSKeyId"}
+      }
+    },
     "FailureReason":{"type":"string"},
     "GetCallAnalyticsCategoryRequest":{
       "type":"structure",
@@ -1148,7 +1176,9 @@
         "VocabularyFilterName":{"shape":"VocabularyFilterName"},
         "LanguageCode":{"shape":"LanguageCode"},
         "LastModifiedTime":{"shape":"DateTime"},
-        "DownloadUri":{"shape":"Uri"}
+        "DownloadUri":{"shape":"Uri"},
+        "DataAccessRoleArn":{"shape":"DataAccessRoleArn"},
+        "EncryptionConfiguration":{"shape":"EncryptionConfiguration"}
       }
     },
     "GetVocabularyRequest":{
@@ -1166,7 +1196,9 @@
         "VocabularyState":{"shape":"VocabularyState"},
         "LastModifiedTime":{"shape":"DateTime"},
         "FailureReason":{"shape":"FailureReason"},
-        "DownloadUri":{"shape":"Uri"}
+        "DownloadUri":{"shape":"Uri"},
+        "DataAccessRoleArn":{"shape":"DataAccessRoleArn"},
+        "EncryptionConfiguration":{"shape":"EncryptionConfiguration"}
       }
     },
     "IdentifiedLanguageScore":{"type":"float"},
@@ -1216,8 +1248,8 @@
     },
     "KMSEncryptionContextMap":{
       "type":"map",
-      "key":{"shape":"NonEmptyString"},
-      "value":{"shape":"NonEmptyString"},
+      "key":{"shape":"PrintableNonEmptyString"},
+      "value":{"shape":"PrintableNonEmptyString"},
       "max":10,
       "min":1
     },
@@ -1386,7 +1418,8 @@
         "ModelStatus":{"shape":"ModelStatus"},
         "UpgradeAvailability":{"shape":"Boolean"},
         "FailureReason":{"shape":"FailureReason"},
-        "InputDataConfig":{"shape":"InputDataConfig"}
+        "InputDataConfig":{"shape":"InputDataConfig"},
+        "EncryptionConfiguration":{"shape":"EncryptionConfiguration"}
       }
     },
     "LanguageOptions":{
@@ -1925,6 +1958,12 @@
       "max":29,
       "min":0
     },
+    "PrintableNonEmptyString":{
+      "type":"string",
+      "max":2000,
+      "min":1,
+      "pattern":"^[\\x20-\\x7E]+$"
+    },
     "Pronouns":{
       "type":"string",
       "enum":[
@@ -2396,6 +2435,23 @@
         "CategoryProperties":{"shape":"CategoryProperties"}
       }
     },
+    "UpdateLanguageModelRequest":{
+      "type":"structure",
+      "required":["ModelName"],
+      "members":{
+        "ModelName":{"shape":"ModelName"},
+        "DataAccessRoleArn":{"shape":"DataAccessRoleArn"},
+        "EncryptionConfiguration":{"shape":"EncryptionConfiguration"}
+      }
+    },
+    "UpdateLanguageModelResponse":{
+      "type":"structure",
+      "members":{
+        "ModelName":{"shape":"ModelName"},
+        "ModelStatus":{"shape":"ModelStatus"},
+        "LastModifiedTime":{"shape":"DateTime"}
+      }
+    },
     "UpdateMedicalVocabularyRequest":{
       "type":"structure",
       "required":[
@@ -2425,7 +2481,8 @@
         "VocabularyFilterName":{"shape":"VocabularyFilterName"},
         "Words":{"shape":"Words"},
         "VocabularyFilterFileUri":{"shape":"Uri"},
-        "DataAccessRoleArn":{"shape":"DataAccessRoleArn"}
+        "DataAccessRoleArn":{"shape":"DataAccessRoleArn"},
+        "EncryptionConfiguration":{"shape":"EncryptionConfiguration"}
       }
     },
     "UpdateVocabularyFilterResponse":{
@@ -2447,7 +2504,8 @@
         "LanguageCode":{"shape":"LanguageCode"},
         "Phrases":{"shape":"Phrases"},
         "VocabularyFileUri":{"shape":"Uri"},
-        "DataAccessRoleArn":{"shape":"DataAccessRoleArn"}
+        "DataAccessRoleArn":{"shape":"DataAccessRoleArn"},
+        "EncryptionConfiguration":{"shape":"EncryptionConfiguration"}
       }
     },
     "UpdateVocabularyResponse":{

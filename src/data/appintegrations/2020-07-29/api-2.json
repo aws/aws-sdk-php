@@ -466,7 +466,8 @@
       "enum":[
         "STANDARD",
         "SERVICE",
-        "MCP_SERVER"
+        "MCP_SERVER",
+        "A2A_SERVER"
       ]
     },
     "ApplicationsList":{
@@ -486,6 +487,17 @@
       "max":2048,
       "min":1,
       "pattern":"^(arn:aws:[A-Za-z0-9][A-Za-z0-9_/.-]{0,62}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,1023}|[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})(:[\\w\\$]+)?$"
+    },
+    "AuthConfig":{
+      "type":"structure",
+      "members":{
+        "AuthType":{"shape":"AuthType"},
+        "CredentialProviderIdentifier":{"shape":"Arn"}
+      }
+    },
+    "AuthType":{
+      "type":"string",
+      "enum":["API_KEY"]
     },
     "Boolean":{"type":"boolean"},
     "ClientAssociationMetadata":{
@@ -557,7 +569,8 @@
         "InitializationTimeout":{"shape":"InitializationTimeout"},
         "ApplicationConfig":{"shape":"ApplicationConfig"},
         "IframeConfig":{"shape":"IframeConfig"},
-        "ApplicationType":{"shape":"ApplicationType"}
+        "ApplicationType":{"shape":"ApplicationType"},
+        "AuthConfig":{"shape":"AuthConfig"}
       }
     },
     "CreateApplicationResponse":{
@@ -928,7 +941,8 @@
         "InitializationTimeout":{"shape":"InitializationTimeout"},
         "ApplicationConfig":{"shape":"ApplicationConfig"},
         "IframeConfig":{"shape":"IframeConfig"},
-        "ApplicationType":{"shape":"ApplicationType"}
+        "ApplicationType":{"shape":"ApplicationType"},
+        "AuthConfig":{"shape":"AuthConfig"}
       }
     },
     "GetDataIntegrationRequest":{
@@ -1466,7 +1480,8 @@
         "InitializationTimeout":{"shape":"InitializationTimeout"},
         "ApplicationConfig":{"shape":"ApplicationConfig"},
         "IframeConfig":{"shape":"IframeConfig"},
-        "ApplicationType":{"shape":"ApplicationType"}
+        "ApplicationType":{"shape":"ApplicationType"},
+        "AuthConfig":{"shape":"AuthConfig"}
       }
     },
     "UpdateApplicationResponse":{

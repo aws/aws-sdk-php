@@ -853,6 +853,7 @@ use Aws\AwsClient;
  *     owningProjectIdentifier?: string,
  *     name?: string,
  *     description?: string,
+ *     type?: 'DATA'|'SQL',
  *     metadata?: array<string, string>,
  *     parameters?: array<string, string>,
  *     clientToken?: string,
@@ -864,6 +865,7 @@ use Aws\AwsClient;
  *     owningProjectIdentifier?: string,
  *     name?: string,
  *     description?: string,
+ *     type?: 'DATA'|'SQL',
  *     metadata?: array<string, string>,
  *     parameters?: array<string, string>,
  *     clientToken?: string,
@@ -1843,6 +1845,7 @@ use Aws\AwsClient;
  *     sortOrder?: 'ASCENDING'|'DESCENDING',
  *     sortBy?: 'CREATED_AT'|'UPDATED_AT',
  *     status?: 'ACTIVE'|'ARCHIVED'|'SYNC_FAILED'|'SYNC_IN_PROGRESS',
+ *     type?: 'DATA'|'SQL',
  *     nextToken?: string,
  *     ...,
  * } $args = [])
@@ -1854,6 +1857,7 @@ use Aws\AwsClient;
  *     sortOrder?: 'ASCENDING'|'DESCENDING',
  *     sortBy?: 'CREATED_AT'|'UPDATED_AT',
  *     status?: 'ACTIVE'|'ARCHIVED'|'SYNC_FAILED'|'SYNC_IN_PROGRESS',
+ *     type?: 'DATA'|'SQL',
  *     nextToken?: string,
  *     ...,
  * } $args = [])
@@ -3077,6 +3081,7 @@ use Aws\AwsClient;
  *     status?: 'ACTIVE'|'ARCHIVED'|'SYNC_FAILED'|'SYNC_IN_PROGRESS',
  *     name?: string,
  *     cellOrder?: list<array>,
+ *     type?: 'DATA'|'SQL',
  *     metadata?: array<string, string>,
  *     parameters?: array<string, string>,
  *     environmentConfiguration?: array{
@@ -3095,6 +3100,7 @@ use Aws\AwsClient;
  *     status?: 'ACTIVE'|'ARCHIVED'|'SYNC_FAILED'|'SYNC_IN_PROGRESS',
  *     name?: string,
  *     cellOrder?: list<array>,
+ *     type?: 'DATA'|'SQL',
  *     metadata?: array<string, string>,
  *     parameters?: array<string, string>,
  *     environmentConfiguration?: array{

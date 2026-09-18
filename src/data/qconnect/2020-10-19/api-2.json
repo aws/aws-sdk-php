@@ -2101,6 +2101,14 @@
         "lastName":{"shape":"MessageTemplateAttributeValue"}
       }
     },
+    "AgentTarget":{
+      "type":"structure",
+      "members":{
+        "aiAgentId":{"shape":"NonEmptyString"},
+        "applicationId":{"shape":"NonEmptyString"}
+      },
+      "union":true
+    },
     "AmazonConnectGuideAssociationData":{
       "type":"structure",
       "members":{
@@ -3366,6 +3374,14 @@
         "messageTemplateArn":{"shape":"ArnWithQualifier"},
         "messageTemplateId":{"shape":"Uuid"},
         "versionNumber":{"shape":"Version"}
+      }
+    },
+    "DelegateAgentConfiguration":{
+      "type":"structure",
+      "required":["agentTarget"],
+      "members":{
+        "agentTarget":{"shape":"AgentTarget"},
+        "instruction":{"shape":"MultiAgentInstruction"}
       }
     },
     "DeleteAIAgentRequest":{
@@ -4744,6 +4760,16 @@
       "member":{"shape":"GuardrailWordConfig"},
       "min":1
     },
+    "HandoffAgentConfiguration":{
+      "type":"structure",
+      "required":["agentTarget"],
+      "members":{
+        "agentTarget":{"shape":"AgentTarget"},
+        "instruction":{"shape":"MultiAgentInstruction"},
+        "audioStreamingEnabled":{"shape":"Boolean"},
+        "immediateHandoff":{"shape":"Boolean"}
+      }
+    },
     "Headers":{
       "type":"map",
       "key":{"shape":"NonEmptyString"},
@@ -4892,6 +4918,13 @@
       "members":{
         "intentId":{"shape":"Uuid"}
       }
+    },
+    "InteractionMode":{
+      "type":"string",
+      "enum":[
+        "DELEGATE",
+        "HANDOFF"
+      ]
     },
     "JSONDocument":{
       "type":"structure",
@@ -5670,7 +5703,8 @@
       "type":"structure",
       "members":{
         "text":{"shape":"TextMessage"},
-        "toolUseResult":{"shape":"ToolUseResultData"}
+        "toolUseResult":{"shape":"ToolUseResultData"},
+        "data":{"shape":"JSONDocument"}
       },
       "union":true
     },
@@ -6041,7 +6075,8 @@
       "type":"string",
       "enum":[
         "TEXT",
-        "TOOL_USE_RESULT"
+        "TOOL_USE_RESULT",
+        "DATA"
       ]
     },
     "ModelDisplayName":{
@@ -6081,6 +6116,30 @@
     "ModelSummaryList":{
       "type":"list",
       "member":{"shape":"ModelSummary"}
+    },
+    "MultiAgentConfiguration":{
+      "type":"structure",
+      "members":{
+        "delegateAgentConfiguration":{"shape":"DelegateAgentConfiguration"},
+        "handoffAgentConfiguration":{"shape":"HandoffAgentConfiguration"}
+      },
+      "union":true
+    },
+    "MultiAgentConfigurationList":{
+      "type":"list",
+      "member":{"shape":"MultiAgentConfiguration"}
+    },
+    "MultiAgentExampleList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
+    "MultiAgentInstruction":{
+      "type":"structure",
+      "members":{
+        "instruction":{"shape":"String"},
+        "examples":{"shape":"MultiAgentExampleList"}
+      },
+      "sensitive":true
     },
     "Name":{
       "type":"string",
@@ -6190,14 +6249,28 @@
     },
     "OrchestrationAIAgentConfiguration":{
       "type":"structure",
-      "required":["orchestrationAIPromptId"],
       "members":{
         "orchestrationAIPromptId":{"shape":"UuidWithQualifier"},
         "orchestrationAIGuardrailId":{"shape":"UuidWithQualifier"},
         "toolConfigurations":{"shape":"ToolConfigurationList"},
+        "multiAgentConfigurations":{"shape":"MultiAgentConfigurationList"},
         "connectInstanceArn":{"shape":"GenericArn"},
-        "locale":{"shape":"NonEmptyString"}
+        "locale":{"shape":"NonEmptyString"},
+        "inputSchemas":{"shape":"OrchestrationAIAgentConfigurationInputSchemasList"},
+        "outputSchemas":{"shape":"OrchestrationAIAgentConfigurationOutputSchemasList"}
       }
+    },
+    "OrchestrationAIAgentConfigurationInputSchemasList":{
+      "type":"list",
+      "member":{"shape":"JSONDocument"},
+      "max":1,
+      "min":0
+    },
+    "OrchestrationAIAgentConfigurationOutputSchemasList":{
+      "type":"list",
+      "member":{"shape":"JSONDocument"},
+      "max":1,
+      "min":0
     },
     "OrchestratorConfigurationEntry":{
       "type":"structure",
@@ -7081,6 +7154,15 @@
       "type":"list",
       "member":{"shape":"RetrieveResult"}
     },
+    "ReturnReason":{
+      "type":"string",
+      "enum":[
+        "COMPLETE",
+        "COMPLETE_WITH_ERROR",
+        "ESCALATE",
+        "OUT_OF_DOMAIN"
+      ]
+    },
     "RuntimeSessionData":{
       "type":"structure",
       "required":[
@@ -7527,6 +7609,9 @@
         "aiAgentVersion":{"shape":"Integer"},
         "aiAgentInvoker":{"shape":"NonEmptyString"},
         "aiAgentOrchestratorUseCase":{"shape":"NonEmptyString"},
+        "interactionMode":{"shape":"InteractionMode"},
+        "targetAgentId":{"shape":"NonEmptyString"},
+        "returnReason":{"shape":"ReturnReason"},
         "requestModel":{"shape":"NonEmptyString"},
         "requestMaxTokens":{"shape":"Integer"},
         "temperature":{"shape":"SpanAttributesTemperatureFloat"},

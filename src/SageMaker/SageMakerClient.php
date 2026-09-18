@@ -4589,13 +4589,13 @@ use Aws\AwsClient;
  * } $args = [])
  * @method \Aws\Result getSearchSuggestions(array $args = [])
  * @phpstan-method \Aws\Result getSearchSuggestions(array{
- *     Resource?: 'Endpoint'|'Experiment'|'ExperimentTrial'|'ExperimentTrialComponent'|'FeatureGroup'|'FeatureMetadata'|'HyperParameterTuningJob'|'Image'|'ImageVersion'|'Job'|'Model'|'ModelCard'|'ModelPackage'|'ModelPackageGroup'|'Pipeline'|'PipelineExecution'|'PipelineVersion'|'Project'|'TrainingJob',
+ *     Resource?: 'Endpoint'|'Experiment'|'ExperimentTrial'|'ExperimentTrialComponent'|'FeatureGroup'|'FeatureMetadata'|'HubContent'|'HyperParameterTuningJob'|'Image'|'ImageVersion'|'Job'|'Model'|'ModelCard'|'ModelPackage'|'ModelPackageGroup'|'Pipeline'|'PipelineExecution'|'PipelineVersion'|'Project'|'TrainingJob',
  *     SuggestionQuery?: array{PropertyNameQuery?: array{PropertyNameHint?: string, ...}, ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise getSearchSuggestionsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getSearchSuggestionsAsync(array{
- *     Resource?: 'Endpoint'|'Experiment'|'ExperimentTrial'|'ExperimentTrialComponent'|'FeatureGroup'|'FeatureMetadata'|'HyperParameterTuningJob'|'Image'|'ImageVersion'|'Job'|'Model'|'ModelCard'|'ModelPackage'|'ModelPackageGroup'|'Pipeline'|'PipelineExecution'|'PipelineVersion'|'Project'|'TrainingJob',
+ *     Resource?: 'Endpoint'|'Experiment'|'ExperimentTrial'|'ExperimentTrialComponent'|'FeatureGroup'|'FeatureMetadata'|'HubContent'|'HyperParameterTuningJob'|'Image'|'ImageVersion'|'Job'|'Model'|'ModelCard'|'ModelPackage'|'ModelPackageGroup'|'Pipeline'|'PipelineExecution'|'PipelineVersion'|'Project'|'TrainingJob',
  *     SuggestionQuery?: array{PropertyNameQuery?: array{PropertyNameHint?: string, ...}, ...},
  *     ...,
  * } $args = [])
@@ -6761,7 +6761,7 @@ use Aws\AwsClient;
  * } $args = [])
  * @method \Aws\Result search(array $args = [])
  * @phpstan-method \Aws\Result search(array{
- *     Resource?: 'Endpoint'|'Experiment'|'ExperimentTrial'|'ExperimentTrialComponent'|'FeatureGroup'|'FeatureMetadata'|'HyperParameterTuningJob'|'Image'|'ImageVersion'|'Job'|'Model'|'ModelCard'|'ModelPackage'|'ModelPackageGroup'|'Pipeline'|'PipelineExecution'|'PipelineVersion'|'Project'|'TrainingJob',
+ *     Resource?: 'Endpoint'|'Experiment'|'ExperimentTrial'|'ExperimentTrialComponent'|'FeatureGroup'|'FeatureMetadata'|'HubContent'|'HyperParameterTuningJob'|'Image'|'ImageVersion'|'Job'|'Model'|'ModelCard'|'ModelPackage'|'ModelPackageGroup'|'Pipeline'|'PipelineExecution'|'PipelineVersion'|'Project'|'TrainingJob',
  *     SearchExpression?: array{
  *         Filters?: list<array>,
  *         NestedFilters?: list<array>,
@@ -6779,7 +6779,7 @@ use Aws\AwsClient;
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise searchAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise searchAsync(array{
- *     Resource?: 'Endpoint'|'Experiment'|'ExperimentTrial'|'ExperimentTrialComponent'|'FeatureGroup'|'FeatureMetadata'|'HyperParameterTuningJob'|'Image'|'ImageVersion'|'Job'|'Model'|'ModelCard'|'ModelPackage'|'ModelPackageGroup'|'Pipeline'|'PipelineExecution'|'PipelineVersion'|'Project'|'TrainingJob',
+ *     Resource?: 'Endpoint'|'Experiment'|'ExperimentTrial'|'ExperimentTrialComponent'|'FeatureGroup'|'FeatureMetadata'|'HubContent'|'HyperParameterTuningJob'|'Image'|'ImageVersion'|'Job'|'Model'|'ModelCard'|'ModelPackage'|'ModelPackageGroup'|'Pipeline'|'PipelineExecution'|'PipelineVersion'|'Project'|'TrainingJob',
  *     SearchExpression?: array{
  *         Filters?: list<array>,
  *         NestedFilters?: list<array>,

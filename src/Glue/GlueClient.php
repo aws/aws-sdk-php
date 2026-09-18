@@ -3434,6 +3434,7 @@ use Aws\AwsClient;
  *     DataQualitySecurityConfiguration?: string,
  *     ClientToken?: string,
  *     AdditionalRunOptions?: array{CustomLogGroupPrefix?: string, ...},
+ *     RecommendationMode?: 'ADVANCED'|'BASIC',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise startDataQualityRuleRecommendationRunAsync(array $args = [])
@@ -3465,6 +3466,7 @@ use Aws\AwsClient;
  *     DataQualitySecurityConfiguration?: string,
  *     ClientToken?: string,
  *     AdditionalRunOptions?: array{CustomLogGroupPrefix?: string, ...},
+ *     RecommendationMode?: 'ADVANCED'|'BASIC',
  *     ...,
  * } $args = [])
  * @method \Aws\Result startDataQualityRulesetEvaluationRun(array $args = [])

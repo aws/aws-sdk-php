@@ -116,6 +116,7 @@
         "ApplicationAssociationSummary$ApplicationAssociationArn": "<p>The Amazon Resource Name (ARN) of the Application Association.</p>",
         "ApplicationAssociationSummary$ApplicationArn": "<p>The Amazon Resource Name (ARN) of the Application.</p>",
         "ApplicationSummary$Arn": "<p>The Amazon Resource Name (ARN) of the Application.</p>",
+        "AuthConfig$CredentialProviderIdentifier": "<p>The ARN of the Secrets Manager secret that stores the credentials. The secret must be accessible to Connect Customer.</p>",
         "CreateApplicationResponse$Arn": "<p>The Amazon Resource Name (ARN) of the Application.</p>",
         "CreateDataIntegrationAssociationResponse$DataIntegrationArn": "<p>The Amazon Resource Name (ARN) for the DataIntegration.</p>",
         "CreateDataIntegrationResponse$Arn": "<p>The Amazon Resource Name (ARN)</p>",
@@ -140,6 +141,20 @@
         "GetApplicationRequest$Arn": "<p>The Amazon Resource Name (ARN) of the Application.</p>",
         "ListApplicationAssociationsRequest$ApplicationId": "<p>A unique identifier for the Application.</p>",
         "UpdateApplicationRequest$Arn": "<p>The Amazon Resource Name (ARN) of the Application.</p>"
+      }
+    },
+    "AuthConfig": {
+      "base": "<p>Contains the authentication settings that Connect Customer uses to call an external application endpoint. The configuration includes the authentication type and credential location.</p>",
+      "refs": {
+        "CreateApplicationRequest$AuthConfig": "<p>The authentication settings that Connect Customer uses when calling the external application.</p>",
+        "GetApplicationResponse$AuthConfig": "<p>The authentication settings that Connect Customer uses when calling the external application.</p>",
+        "UpdateApplicationRequest$AuthConfig": "<p>The authentication settings that Connect Customer uses when calling the external application.</p>"
+      }
+    },
+    "AuthType": {
+      "base": null,
+      "refs": {
+        "AuthConfig$AuthType": "<p>The type of authentication used when calling the external application.</p>"
       }
     },
     "Boolean": {

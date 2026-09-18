@@ -241,6 +241,7 @@
     "ListRoutingProfiles": "<p>Provides summary information about the routing profiles for the specified Connect Customer instance.</p> <p>For more information about routing profiles, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/concepts-routing.html\">Routing Profiles</a> and <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/routing-profiles.html\">Create a Routing Profile</a> in the <i>Connect Customer Administrator Guide</i>.</p>",
     "ListRules": "<p>List all rules for the specified Connect Customer instance.</p>",
     "ListSecurityKeys": "<p>This API is in preview release for Connect Customer and is subject to change.</p> <p>Returns a paginated list of all security keys associated with the instance.</p>",
+    "ListSecurityProfileAIAgents": "<p>Returns a list of the allowed AI agents in a specific security profile.</p>",
     "ListSecurityProfileApplications": "<p>Returns a list of third-party applications or MCP Servers in a specific security profile.</p>",
     "ListSecurityProfileFlowModules": "<p> A list of Flow Modules an AI Agent can invoke as a tool </p>",
     "ListSecurityProfilePermissions": "<p>Lists the permissions granted to a security profile.</p> <p>For information about security profiles, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/connect-security-profiles.html\">Security Profiles</a> in the <i>Connect Customer Administrator Guide</i>. For a mapping of the API name and user interface name of the security profile permissions, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/security-profile-list.html\">List of security profile permissions</a>. </p>",
@@ -435,9 +436,22 @@
         "TrafficDistributionGroupSummary$Id": "<p>The identifier of the traffic distribution group. This can be the ID or the ARN if the API is being called in the Region where the traffic distribution group was created. The ARN must be provided if the call is from the replicated Region.</p>"
       }
     },
+    "AIAgent": {
+      "base": "<p>Information about an AI agent that a security profile allows access to for Agent-to-Agent authorization.</p>",
+      "refs": {
+        "AllowedAIAgents$member": null
+      }
+    },
+    "AIAgentType": {
+      "base": "<p>The type of the AI agent.</p>",
+      "refs": {
+        "AIAgent$Type": "<p>The type of the AI agent. The valid value is <code>THIRD_PARTY</code>.</p>"
+      }
+    },
     "ARN": {
       "base": null,
       "refs": {
+        "AIAgent$Arn": "<p>The Amazon Resource Name (ARN) of the AI agent.</p>",
         "ActivateEvaluationFormResponse$EvaluationFormArn": "<p>The Amazon Resource Name (ARN) for the evaluation form resource.</p>",
         "AgentHierarchyGroup$Arn": "<p>The Amazon Resource Name (ARN) of the group.</p>",
         "AgentStatus$AgentStatusARN": "<p>The Amazon Resource Name (ARN) of the agent status.</p>",
@@ -1109,6 +1123,14 @@
       "refs": {
         "DescribeEmailAddressResponse$AliasConfigurations": "<p>A list of alias configurations associated with this email address. Contains details about email addresses that forward to this primary email address. The list can contain at most one alias configuration per email address.</p>",
         "EmailAddressMetadata$AliasConfigurations": "<p>A list of alias configurations for this email address, showing which email addresses forward to this primary address. Each configuration contains the email address ID of an alias that forwards emails to this address.</p>"
+      }
+    },
+    "AllowedAIAgents": {
+      "base": null,
+      "refs": {
+        "CreateSecurityProfileRequest$AllowedAIAgents": "<p>A list of AI agents that the security profile will give access to.</p>",
+        "ListSecurityProfileAIAgentsResponse$AllowedAIAgents": "<p>A list of the allowed AI agents and their types.</p>",
+        "UpdateSecurityProfileRequest$AllowedAIAgents": "<p>A list of AI agents that the security profile will give access to.</p>"
       }
     },
     "AllowedAccessControlTags": {
@@ -7744,6 +7766,7 @@
         "ListRoutingProfilesRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListRulesRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListSecurityKeysRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "ListSecurityProfileAIAgentsRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListSecurityProfileApplicationsRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListSecurityProfileFlowModulesRequest$InstanceId": "<p> The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListSecurityProfilePermissionsRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -8673,6 +8696,14 @@
       "base": null,
       "refs": {}
     },
+    "ListSecurityProfileAIAgentsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSecurityProfileAIAgentsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListSecurityProfileApplicationsRequest": {
       "base": null,
       "refs": {}
@@ -8961,6 +8992,7 @@
         "ListQueuesRequest$MaxResults": "<p>The maximum number of results to return per page. The default MaxResult size is 100.</p>",
         "ListQuickConnectsRequest$MaxResults": "<p>The maximum number of results to return per page. The default MaxResult size is 100.</p>",
         "ListRoutingProfilesRequest$MaxResults": "<p>The maximum number of results to return per page. The default MaxResult size is 100.</p>",
+        "ListSecurityProfileAIAgentsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListSecurityProfileApplicationsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListSecurityProfileFlowModulesRequest$MaxResults": "<p> The maximum number of results to return per page. The default MaxResult size is 100. </p>",
         "ListSecurityProfilePermissionsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
@@ -9655,6 +9687,8 @@
         "ListRulesResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListSecurityKeysRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListSecurityKeysResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
+        "ListSecurityProfileAIAgentsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
+        "ListSecurityProfileAIAgentsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListSecurityProfileApplicationsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListSecurityProfileApplicationsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListSecurityProfileFlowModulesRequest$NextToken": "<p> The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results. </p>",
@@ -11893,6 +11927,7 @@
         "ListQueueQuickConnectsResponse$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
         "ListRoutingProfileManualAssignmentQueuesResponse$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
         "ListRoutingProfileQueuesResponse$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
+        "ListSecurityProfileAIAgentsResponse$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
         "ListSecurityProfileApplicationsResponse$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
         "ListSecurityProfileFlowModulesResponse$LastModifiedRegion": "<p> The Region that flow module was last modified in. </p>",
         "ListSecurityProfilePermissionsResponse$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
@@ -12982,6 +13017,7 @@
         "CreateSecurityProfileResponse$SecurityProfileId": "<p>The identifier for the security profle.</p>",
         "DeleteSecurityProfileRequest$SecurityProfileId": "<p>The identifier for the security profle.</p>",
         "DescribeSecurityProfileRequest$SecurityProfileId": "<p>The identifier for the security profle.</p>",
+        "ListSecurityProfileAIAgentsRequest$SecurityProfileId": "<p>The identifier for the security profle.</p>",
         "ListSecurityProfileApplicationsRequest$SecurityProfileId": "<p>The identifier for the security profle.</p>",
         "ListSecurityProfileFlowModulesRequest$SecurityProfileId": "<p> The identifier for the security profile. </p>",
         "ListSecurityProfilePermissionsRequest$SecurityProfileId": "<p>The identifier for the security profle.</p>",
@@ -14522,6 +14558,7 @@
         "ListQueueQuickConnectsResponse$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
         "ListRoutingProfileManualAssignmentQueuesResponse$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
         "ListRoutingProfileQueuesResponse$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
+        "ListSecurityProfileAIAgentsResponse$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
         "ListSecurityProfileApplicationsResponse$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
         "ListSecurityProfileFlowModulesResponse$LastModifiedTime": "<p> The time the flow module was last modified. </p>",
         "ListSecurityProfilePermissionsResponse$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",

@@ -1248,6 +1248,7 @@ use Aws\AwsClient;
  *     HierarchyRestrictedResources?: list<string>,
  *     AllowedAccessControlHierarchyGroupId?: string,
  *     AllowedFlowModules?: list<array{Type?: 'MCP', FlowModuleId?: string, ...}>,
+ *     AllowedAIAgents?: list<array{Arn?: string, Type?: 'THIRD_PARTY', ...}>,
  *     GranularAccessControlConfiguration?: array{
  *         DataTableAccessControlConfiguration?: array{PrimaryAttributeAccessControlConfiguration?: array, ...},
  *         ...,
@@ -1267,6 +1268,7 @@ use Aws\AwsClient;
  *     HierarchyRestrictedResources?: list<string>,
  *     AllowedAccessControlHierarchyGroupId?: string,
  *     AllowedFlowModules?: list<array{Type?: 'MCP', FlowModuleId?: string, ...}>,
+ *     AllowedAIAgents?: list<array{Arn?: string, Type?: 'THIRD_PARTY', ...}>,
  *     GranularAccessControlConfiguration?: array{
  *         DataTableAccessControlConfiguration?: array{PrimaryAttributeAccessControlConfiguration?: array, ...},
  *         ...,
@@ -2811,6 +2813,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listSecurityKeys(array{InstanceId?: string, NextToken?: string, MaxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listSecurityKeysAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listSecurityKeysAsync(array{InstanceId?: string, NextToken?: string, MaxResults?: int, ...} $args = [])
+ * @method \Aws\Result listSecurityProfileAIAgents(array $args = [])
+ * @phpstan-method \Aws\Result listSecurityProfileAIAgents(array{SecurityProfileId?: string, InstanceId?: string, NextToken?: string, MaxResults?: int, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listSecurityProfileAIAgentsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listSecurityProfileAIAgentsAsync(array{SecurityProfileId?: string, InstanceId?: string, NextToken?: string, MaxResults?: int, ...} $args = [])
  * @method \Aws\Result listSecurityProfileApplications(array $args = [])
  * @phpstan-method \Aws\Result listSecurityProfileApplications(array{SecurityProfileId?: string, InstanceId?: string, NextToken?: string, MaxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listSecurityProfileApplicationsAsync(array $args = [])
@@ -5753,6 +5759,7 @@ use Aws\AwsClient;
  *     HierarchyRestrictedResources?: list<string>,
  *     AllowedAccessControlHierarchyGroupId?: string,
  *     AllowedFlowModules?: list<array{Type?: 'MCP', FlowModuleId?: string, ...}>,
+ *     AllowedAIAgents?: list<array{Arn?: string, Type?: 'THIRD_PARTY', ...}>,
  *     GranularAccessControlConfiguration?: array{
  *         DataTableAccessControlConfiguration?: array{PrimaryAttributeAccessControlConfiguration?: array, ...},
  *         ...,
@@ -5771,6 +5778,7 @@ use Aws\AwsClient;
  *     HierarchyRestrictedResources?: list<string>,
  *     AllowedAccessControlHierarchyGroupId?: string,
  *     AllowedFlowModules?: list<array{Type?: 'MCP', FlowModuleId?: string, ...}>,
+ *     AllowedAIAgents?: list<array{Arn?: string, Type?: 'THIRD_PARTY', ...}>,
  *     GranularAccessControlConfiguration?: array{
  *         DataTableAccessControlConfiguration?: array{PrimaryAttributeAccessControlConfiguration?: array, ...},
  *         ...,

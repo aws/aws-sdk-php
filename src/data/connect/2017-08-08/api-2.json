@@ -3994,6 +3994,22 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "ListSecurityProfileAIAgents":{
+      "name":"ListSecurityProfileAIAgents",
+      "http":{
+        "method":"GET",
+        "requestUri":"/security-profiles-ai-agents/{InstanceId}/{SecurityProfileId}"
+      },
+      "input":{"shape":"ListSecurityProfileAIAgentsRequest"},
+      "output":{"shape":"ListSecurityProfileAIAgentsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "ListSecurityProfileApplications":{
       "name":"ListSecurityProfileApplications",
       "http":{
@@ -6623,6 +6639,17 @@
       "type":"string",
       "pattern":"^[a-zA-Z0-9_-]+$"
     },
+    "AIAgent":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"ARN"},
+        "Type":{"shape":"AIAgentType"}
+      }
+    },
+    "AIAgentType":{
+      "type":"string",
+      "enum":["THIRD_PARTY"]
+    },
     "ARN":{"type":"string"},
     "AWSAccountId":{"type":"string"},
     "AccessDeniedException":{
@@ -7064,6 +7091,11 @@
       "type":"list",
       "member":{"shape":"AliasConfiguration"},
       "max":1
+    },
+    "AllowedAIAgents":{
+      "type":"list",
+      "member":{"shape":"AIAgent"},
+      "max":100
     },
     "AllowedAccessControlTags":{
       "type":"map",
@@ -10562,6 +10594,7 @@
         "HierarchyRestrictedResources":{"shape":"HierarchyRestrictedResourceList"},
         "AllowedAccessControlHierarchyGroupId":{"shape":"HierarchyGroupId"},
         "AllowedFlowModules":{"shape":"AllowedFlowModules"},
+        "AllowedAIAgents":{"shape":"AllowedAIAgents"},
         "GranularAccessControlConfiguration":{"shape":"GranularAccessControlConfiguration"}
       }
     },
@@ -19172,6 +19205,45 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListSecurityProfileAIAgentsRequest":{
+      "type":"structure",
+      "required":[
+        "SecurityProfileId",
+        "InstanceId"
+      ],
+      "members":{
+        "SecurityProfileId":{
+          "shape":"SecurityProfileId",
+          "location":"uri",
+          "locationName":"SecurityProfileId"
+        },
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxResult1000",
+          "box":true,
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListSecurityProfileAIAgentsResponse":{
+      "type":"structure",
+      "members":{
+        "AllowedAIAgents":{"shape":"AllowedAIAgents"},
+        "NextToken":{"shape":"NextToken"},
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "LastModifiedRegion":{"shape":"RegionName"}
+      }
+    },
     "ListSecurityProfileApplicationsRequest":{
       "type":"structure",
       "required":[
@@ -27664,6 +27736,7 @@
         "HierarchyRestrictedResources":{"shape":"HierarchyRestrictedResourceList"},
         "AllowedAccessControlHierarchyGroupId":{"shape":"HierarchyGroupId"},
         "AllowedFlowModules":{"shape":"AllowedFlowModules"},
+        "AllowedAIAgents":{"shape":"AllowedAIAgents"},
         "GranularAccessControlConfiguration":{"shape":"GranularAccessControlConfiguration"}
       }
     },
