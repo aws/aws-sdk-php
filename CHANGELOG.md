@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.395.6 - 2026-09-18
 
 * `Aws\IVSRealTime` - GetParticipant, ListParticipantEvents, ListParticipantReplicas, StartParticipantReplication, and StopParticipantReplication now accept participant IDs containing underscores.
 * `Aws\Connect` - This release adds the ListSecurityProfileAIAgents API and updates the CreateSecurityProfile and UpdateSecurityProfile APIs to support the AllowedAIAgents field on security profiles, allowing customers to manage the 3P AI agents associated with a security profile for Agent-to-Agent interactions.
