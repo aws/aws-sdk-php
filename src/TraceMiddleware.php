@@ -97,7 +97,7 @@ class TraceMiddleware
 
                 return $next($command, $request)->then(
                     function ($value) use ($step, $name, $command, $start) {
-                        $this->flushHttpDebug($command);
+                        $value = $this->flushHttpDebug($command, $value);
                         $this->stepOutput($start, [
                             'step'   => $step,
                             'name'   => $name,
@@ -284,16 +284,37 @@ class TraceMiddleware
         }
     }
 
-    private function flushHttpDebug(CommandInterface $command)
+    private function flushHttpDebug(CommandInterface $command, $value = null)
     {
-        if ($res = $command['@http']['debug']) {
-            if (is_resource($res)) {
-                rewind($res);
-                $this->write(stream_get_contents($res));
-                fclose($res);
+        $res = $command['@http']['debug'] ?? null;
+        if (!is_resource($res)) {
+            if ($res !== null) {
+                $command['@http']['debug'] = null;
             }
-            $command['@http']['debug'] = null;
+            return $value;
         }
+
+        rewind($res);
+        $this->write(stream_get_contents($res));
+        $command['@http']['debug'] = null;
+
+        // When the response body is streamed, Guzzle's StreamHandler has
+        // captured $res in a stream_notification callback that fires on every
+        // read of the body. Closing it here would raise warnings once
+        // the caller (e.g. S3 stream wrapper) reads the body. Transfer
+        // ownership to the body so the resource closes with it.
+        if (
+            !empty($command['@http']['stream'])
+            && $value instanceof ResultInterface
+            && ($body = $value['Body'] ?? null) instanceof StreamInterface
+            && !$body instanceof DebugResourceBoundStream
+        ) {
+            $value['Body'] = new DebugResourceBoundStream($body, $res);
+            return $value;
+        }
+
+        fclose($res);
+        return $value;
     }
 
     private function write($value)
