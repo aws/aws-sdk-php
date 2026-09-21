@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.395.7 - 2026-09-21
 
 * `Aws\BedrockAgentCore` - Amazon Bedrock AgentCore Harness now supports lifecycle hooks for invocations and tool calls, with Lambda, SNS, and EventBridge targets. This release also adds apiBase for custom OpenAI-compatible endpoints.
 * `Aws\DocDB` - Add support for CopyTagsToSnapshot field in CreateDbCluster, ModifyDbCluster, RestoreDbClusterFromSnapshot and RestoreDbClusterToPointInTime for DocumentDB.
