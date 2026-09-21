@@ -4,6 +4,7 @@ set -euo pipefail
 
 readonly CHANGED_FILES="changed-source-files.txt"
 readonly PHPCS_REPORT="phpcs-report.txt"
+readonly PHPCS_FILES_WITH_ERRORS="phpcs-files-with-errors.txt"
 readonly PHPCS_AFTER_PHPCBF_REPORT="phpcs-after-phpcbf-report.txt"
 
 echo "::group::PHPCS violations"
@@ -22,17 +23,31 @@ if [[ "$phpcs_exit" -eq 0 ]]; then
     exit 0
 fi
 
+awk '
+    /^[[:space:]]*FILE: / {
+        sub(/^[[:space:]]*FILE: /, "")
+        if (!seen[$0]++) {
+            print
+        }
+    }
+' "$PHPCS_REPORT" > "$PHPCS_FILES_WITH_ERRORS"
+
+if [[ ! -s "$PHPCS_FILES_WITH_ERRORS" ]]; then
+    echo "Could not determine files with PHPCS violations from $PHPCS_REPORT."
+    exit "$phpcs_exit"
+fi
+
 echo "::group::PHPCBF fixed-code preview"
 set +e
 vendor/bin/phpcbf \
     --standard=phpcs.xml.dist \
-    --file-list="$CHANGED_FILES" > phpcbf-report.txt 2>&1
+    --file-list="$PHPCS_FILES_WITH_ERRORS" > phpcbf-report.txt 2>&1
 
 vendor/bin/phpcs \
     --standard=phpcs.xml.dist \
     --basepath="$(pwd)" \
     --no-colors \
-    --file-list="$CHANGED_FILES" > "$PHPCS_AFTER_PHPCBF_REPORT" 2>&1
+    --file-list="$PHPCS_FILES_WITH_ERRORS" > "$PHPCS_AFTER_PHPCBF_REPORT" 2>&1
 phpcs_after_phpcbf_exit=$?
 set -e
 
@@ -52,7 +67,7 @@ while IFS= read -r file; do
     git diff --unified=2 -- "$file"
     echo "----- end PHPCBF diff -----"
     previewed_changes=true
-done < "$CHANGED_FILES"
+done < "$PHPCS_FILES_WITH_ERRORS"
 
 if [[ "$previewed_changes" == false ]]; then
     echo "PHPCBF did not write any changes."
@@ -62,7 +77,7 @@ echo "::endgroup::"
 echo ""
 echo "Run the following command locally for PHPCBF to autofix formatting errors:"
 echo "phpcbf --standard=phpcs.xml.dist \\"
-sed 's/^/  /; $!s/$/ \\/' "$CHANGED_FILES"
+sed 's/^/  /; $!s/$/ \\/' "$PHPCS_FILES_WITH_ERRORS"
 echo ""
 
 exit "$phpcs_exit"
