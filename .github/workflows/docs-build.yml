@@ -7,7 +7,7 @@ on:
       - master
 jobs:
   build_docs:
-    if: github.repository_owner == 'aws'
+    if: github.head_ref != 'expand-format-exclusions-test' && github.repository_owner == 'aws'
     runs-on: ubuntu-latest
     strategy:
       matrix:

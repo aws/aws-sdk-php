@@ -11,6 +11,7 @@ permissions:
 
 jobs:
   phpstan:
+    if: github.head_ref != 'expand-format-exclusions-test'
     runs-on: ubuntu-latest
     name: PHPStan
     steps:

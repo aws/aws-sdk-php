@@ -2,26 +2,26 @@
 namespace Aws\Token;
 
 /**
- * Provides access to an AWS token used for accessing AWS services
+ * Provides access to an AWS token used for service requests.
  */
 interface TokenInterface
 {
     /**
-     * Returns the token this token object.
+     * Returns the token string.
      *
      * @return string
      */
     public function getToken();
 
     /**
-     * Get the UNIX timestamp in which the token will expire
+     * Returns the UNIX timestamp when the token expires.
      *
      * @return int|null
      */
     public function getExpiration();
 
     /**
-     * Check if the token are expired
+     * Returns true when the token has expired.
      *
      * @return bool
      */

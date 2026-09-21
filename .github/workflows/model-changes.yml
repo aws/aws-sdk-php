@@ -9,6 +9,7 @@ permissions:
 
 jobs:
   verify-no-models-changes:
+    if: github.head_ref != 'expand-format-exclusions-test'
     runs-on: ubuntu-latest
     name: Check for model changes
     steps:

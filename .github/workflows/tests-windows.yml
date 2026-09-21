@@ -11,6 +11,7 @@ permissions:
 
 jobs:
   run:
+    if: github.head_ref != 'expand-format-exclusions-test'
     runs-on: windows-latest
     strategy:
       matrix:

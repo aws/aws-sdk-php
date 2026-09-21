@@ -22,7 +22,7 @@ final class HttpTransportSharing
         self::PERSISTENT_REQUIRE,
     ];
 
-    public static function isRequired(?string $mode): bool
+    public static function isRequired( ?string $mode): bool
     {
         return $mode === self::HANDLER_REQUIRE
             || $mode === self::PERSISTENT_REQUIRE;
