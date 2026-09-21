@@ -4102,6 +4102,18 @@
         "UpdateHarnessResponse$harness": "<p>The updated harness.</p>"
       }
     },
+    "HarnessAfterInvocationHook": {
+      "base": "<p>The configuration for a hook that runs after an invocation completes.</p>",
+      "refs": {
+        "HarnessHook$afterInvocation": "<p>A hook that runs after an invocation completes.</p>"
+      }
+    },
+    "HarnessAfterToolCallHook": {
+      "base": "<p>The configuration for a hook that runs after a tool call completes.</p>",
+      "refs": {
+        "HarnessHook$afterToolCall": "<p>A hook that runs after a tool call completes.</p>"
+      }
+    },
     "HarnessAgentCoreBrowserConfig": {
       "base": "<p>Configuration for AgentCore Browser.</p>",
       "refs": {
@@ -4196,6 +4208,18 @@
         "HarnessModelConfiguration$bedrockModelConfig": "<p>Configuration for an Amazon Bedrock model.</p>"
       }
     },
+    "HarnessBeforeInvocationHook": {
+      "base": "<p>The configuration for a hook that runs before an invocation begins.</p>",
+      "refs": {
+        "HarnessHook$beforeInvocation": "<p>A hook that runs before an invocation begins.</p>"
+      }
+    },
+    "HarnessBeforeToolCallHook": {
+      "base": "<p>The configuration for a hook that runs before the agent calls a tool.</p>",
+      "refs": {
+        "HarnessHook$beforeToolCall": "<p>A hook that runs before the agent calls a tool.</p>"
+      }
+    },
     "HarnessBrowserArn": {
       "base": "<p>Browser ARN for Harness tool configuration. Accepts both managed (aws.browser.v1) and custom browser ARNs.</p>",
       "refs": {
@@ -4281,6 +4305,12 @@
         "UpdateHarnessRequest$environment": "<p>The compute environment configuration for the harness. If not specified, the existing value is retained.</p>"
       }
     },
+    "HarnessEventBridgeBusArn": {
+      "base": "<p>The ARN of an Amazon EventBridge event bus.</p>",
+      "refs": {
+        "HarnessHookEventBridgeTarget$arn": "<p>The ARN of the Amazon EventBridge event bus to send hook events to.</p>"
+      }
+    },
     "HarnessGatewayOutboundAuth": {
       "base": "<p>Authentication method for calling a Gateway.</p>",
       "refs": {
@@ -4291,6 +4321,68 @@
       "base": "<p>Configuration for a Google Gemini model provider. Requires an API key stored in AgentCore Identity.</p>",
       "refs": {
         "HarnessModelConfiguration$geminiModelConfig": "<p>Configuration for a Google Gemini model.</p>"
+      }
+    },
+    "HarnessHook": {
+      "base": "<p>A lifecycle hook configuration. Specify one hook type.</p>",
+      "refs": {
+        "HarnessHooks$member": null
+      }
+    },
+    "HarnessHookEventBridgeTarget": {
+      "base": "<p>The configuration for an Amazon EventBridge hook target.</p>",
+      "refs": {
+        "HarnessHookTarget$eventBridge": "<p>An Amazon EventBridge hook target that sends the hook event without waiting for a response.</p>"
+      }
+    },
+    "HarnessHookFailureMode": {
+      "base": "<p>The behavior when a synchronous hook target fails.</p>",
+      "refs": {
+        "HarnessHookLambdaTarget$failureMode": "<p>The behavior when the Lambda function times out, returns an error, or returns an invalid response. The default is <code>DENY</code>.</p>"
+      }
+    },
+    "HarnessHookLambdaTarget": {
+      "base": "<p>The configuration for an AWS Lambda hook target.</p>",
+      "refs": {
+        "HarnessHookTarget$lambda": "<p>A Lambda hook target that invokes an AWS Lambda function synchronously and waits for its response.</p>"
+      }
+    },
+    "HarnessHookLambdaTargetTimeoutSecondsInteger": {
+      "base": null,
+      "refs": {
+        "HarnessHookLambdaTarget$timeoutSeconds": "<p>The maximum number of seconds to wait for the Lambda function response. The default is 60 seconds.</p>"
+      }
+    },
+    "HarnessHookName": {
+      "base": "<p>The name of a lifecycle hook.</p>",
+      "refs": {
+        "HarnessAfterInvocationHook$name": "<p>The name of the hook.</p>",
+        "HarnessAfterToolCallHook$name": "<p>The name of the hook.</p>",
+        "HarnessBeforeInvocationHook$name": "<p>The name of the hook.</p>",
+        "HarnessBeforeToolCallHook$name": "<p>The name of the hook.</p>"
+      }
+    },
+    "HarnessHookSnsTarget": {
+      "base": "<p>The configuration for an Amazon SNS hook target.</p>",
+      "refs": {
+        "HarnessHookTarget$sns": "<p>An Amazon SNS hook target that publishes the hook event without waiting for a response.</p>"
+      }
+    },
+    "HarnessHookTarget": {
+      "base": "<p>The target that receives lifecycle hook events. Specify one target type.</p>",
+      "refs": {
+        "HarnessAfterInvocationHook$target": "<p>The target that receives the hook event.</p>",
+        "HarnessAfterToolCallHook$target": "<p>The target that receives the hook event.</p>",
+        "HarnessBeforeInvocationHook$target": "<p>The target that receives the hook event.</p>",
+        "HarnessBeforeToolCallHook$target": "<p>The target that receives the hook event.</p>"
+      }
+    },
+    "HarnessHooks": {
+      "base": "<p>The lifecycle hooks configured to run at defined points in the agent loop.</p>",
+      "refs": {
+        "CreateHarnessRequest$hooks": "<p>The lifecycle hooks to run at defined points in the agent loop.</p>",
+        "Harness$hooks": "<p>The lifecycle hooks configured for the harness.</p>",
+        "UpdateHarnessRequest$hooks": "<p>The lifecycle hooks to run at defined points in the agent loop. If specified, this replaces all existing hooks. If not specified, the existing hooks are retained.</p>"
       }
     },
     "HarnessId": {
@@ -4321,6 +4413,12 @@
       "base": null,
       "refs": {
         "HarnessInlineFunctionConfig$description": "<p>Description of what the tool does, provided to the model.</p>"
+      }
+    },
+    "HarnessLambdaFunctionArn": {
+      "base": "<p>The ARN of an AWS Lambda function.</p>",
+      "refs": {
+        "HarnessHookLambdaTarget$arn": "<p>The ARN of the Lambda function to invoke.</p>"
       }
     },
     "HarnessLiteLlmApiBase": {
@@ -4383,6 +4481,12 @@
         "HarnessEndpoint$harnessName": "<p>The name of the harness that the endpoint belongs to.</p>",
         "HarnessSummary$harnessName": "<p>The name of the harness.</p>",
         "HarnessVersionSummary$harnessName": "<p>The name of the harness.</p>"
+      }
+    },
+    "HarnessOpenAiApiBase": {
+      "base": null,
+      "refs": {
+        "HarnessOpenAiModelConfig$apiBase": "<p>Optional custom endpoint URL for an OpenAI-compatible endpoint.</p>"
       }
     },
     "HarnessOpenAiApiFormat": {
@@ -4469,6 +4573,12 @@
       "base": "<p>Configuration for sliding window truncation strategy.</p>",
       "refs": {
         "HarnessTruncationStrategyConfiguration$slidingWindow": "<p>Configuration for sliding window truncation.</p>"
+      }
+    },
+    "HarnessSnsTopicArn": {
+      "base": "<p>The ARN of an Amazon SNS topic.</p>",
+      "refs": {
+        "HarnessHookSnsTarget$arn": "<p>The ARN of the Amazon SNS topic to publish hook events to.</p>"
       }
     },
     "HarnessStatus": {

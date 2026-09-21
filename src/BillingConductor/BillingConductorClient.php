@@ -203,6 +203,10 @@ use Aws\AwsClient;
  *     NextToken?: string,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result getBillingTransferPreference(array $args = [])
+ * @phpstan-method \Aws\Result getBillingTransferPreference(array{ResponsibilityTransferArn?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getBillingTransferPreferenceAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getBillingTransferPreferenceAsync(array{ResponsibilityTransferArn?: string, ...} $args = [])
  * @method \Aws\Result listAccountAssociations(array $args = [])
  * @phpstan-method \Aws\Result listAccountAssociations(array{
  *     BillingPeriod?: string,
@@ -389,6 +393,20 @@ use Aws\AwsClient;
  *     ComputationPreference?: array{PricingPlanArn?: string, ...},
  *     Description?: string,
  *     AccountGrouping?: array{AutoAssociate?: bool, ResponsibilityTransferArn?: string, ...},
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result updateBillingTransferPreference(array $args = [])
+ * @phpstan-method \Aws\Result updateBillingTransferPreference(array{
+ *     ClientToken?: string,
+ *     ResponsibilityTransferArn?: string,
+ *     AutoBillingTransferBillingGroupCreation?: array{Enabled?: bool, PricingPlanArn?: string, ...},
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateBillingTransferPreferenceAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateBillingTransferPreferenceAsync(array{
+ *     ClientToken?: string,
+ *     ResponsibilityTransferArn?: string,
+ *     AutoBillingTransferBillingGroupCreation?: array{Enabled?: bool, PricingPlanArn?: string, ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateCustomLineItem(array $args = [])

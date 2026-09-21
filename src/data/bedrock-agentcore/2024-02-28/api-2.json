@@ -4070,6 +4070,53 @@
         "additionalParams":{"shape":"Document"}
       }
     },
+    "HarnessHookDecision":{
+      "type":"string",
+      "enum":[
+        "allow",
+        "deny"
+      ]
+    },
+    "HarnessHookEvent":{
+      "type":"structure",
+      "required":[
+        "hookEventId",
+        "name",
+        "type"
+      ],
+      "members":{
+        "hookEventId":{"shape":"HarnessHookEventId"},
+        "name":{"shape":"HarnessHookName"},
+        "type":{"shape":"HarnessHookEventType"},
+        "decision":{"shape":"HarnessHookDecision"},
+        "reason":{"shape":"HarnessHookEventReasonString"}
+      },
+      "event":true
+    },
+    "HarnessHookEventId":{
+      "type":"string",
+      "pattern":"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+    },
+    "HarnessHookEventReasonString":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "HarnessHookEventType":{
+      "type":"string",
+      "enum":[
+        "before_tool_call",
+        "after_tool_call",
+        "before_invocation",
+        "after_invocation"
+      ]
+    },
+    "HarnessHookName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_-]+"
+    },
     "HarnessInlineFunctionConfig":{
       "type":"structure",
       "required":[
@@ -4159,6 +4206,12 @@
       },
       "union":true
     },
+    "HarnessOpenAiApiBase":{
+      "type":"string",
+      "max":16383,
+      "min":1,
+      "sensitive":true
+    },
     "HarnessOpenAiApiFormat":{
       "type":"string",
       "enum":[
@@ -4175,6 +4228,7 @@
       "members":{
         "modelId":{"shape":"ModelId"},
         "apiKeyArn":{"shape":"ApiKeyArn"},
+        "apiBase":{"shape":"HarnessOpenAiApiBase"},
         "maxTokens":{"shape":"MaxTokens"},
         "temperature":{"shape":"Temperature"},
         "topP":{"shape":"TopP"},
@@ -4301,7 +4355,8 @@
         "model_context_window_exceeded",
         "max_iterations_exceeded",
         "max_output_tokens_exceeded",
-        "timeout_exceeded"
+        "timeout_exceeded",
+        "hook_stopped"
       ]
     },
     "HarnessStreamMetrics":{
@@ -5250,7 +5305,8 @@
         "metadata":{"shape":"HarnessMetadataEvent"},
         "internalServerException":{"shape":"InternalServerException"},
         "validationException":{"shape":"ValidationException"},
-        "runtimeClientError":{"shape":"RuntimeClientError"}
+        "runtimeClientError":{"shape":"RuntimeClientError"},
+        "hookEvent":{"shape":"HarnessHookEvent"}
       },
       "eventstream":true
     },

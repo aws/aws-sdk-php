@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\BedrockAgentCore` - Amazon Bedrock AgentCore Harness now supports lifecycle hooks for invocations and tool calls, with Lambda, SNS, and EventBridge targets. This release also adds apiBase for custom OpenAI-compatible endpoints.
+* `Aws\DocDB` - Add support for CopyTagsToSnapshot field in CreateDbCluster, ModifyDbCluster, RestoreDbClusterFromSnapshot and RestoreDbClusterToPointInTime for DocumentDB.
+* `Aws\BillingConductor` - Launching Auto Billing Transfer Billing Group Creation Preference feature
+* `Aws\BedrockAgentCoreControl` - Amazon Bedrock AgentCore Harness now supports lifecycle hooks for invocations and tool calls, with Lambda, SNS, and EventBridge targets. This release also adds apiBase for custom OpenAI-compatible endpoints
+* `Aws\SageMaker` - Add support for r6i, m8i, c8i, r8i instance types in Training and Processing
+
 ## 3.395.6 - 2026-09-18
 
 * `Aws\IVSRealTime` - GetParticipant, ListParticipantEvents, ListParticipantReplicas, StartParticipantReplication, and StopParticipantReplication now accept participant IDs containing underscores.

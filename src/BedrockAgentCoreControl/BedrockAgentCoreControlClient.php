@@ -663,6 +663,7 @@ use Aws\AwsClient;
  *         openAiModelConfig?: array{
  *             modelId?: string,
  *             apiKeyArn?: string,
+ *             apiBase?: string,
  *             maxTokens?: int,
  *             temperature?: float,
  *             topP?: float,
@@ -718,6 +719,7 @@ use Aws\AwsClient;
  *         config?: array{slidingWindow?: array, summarization?: array, ...},
  *         ...,
  *     },
+ *     hooks?: list<array{beforeInvocation?: array, afterInvocation?: array, beforeToolCall?: array, afterToolCall?: array, ...}>,
  *     maxIterations?: int,
  *     maxTokens?: int,
  *     timeoutSeconds?: int,
@@ -768,6 +770,7 @@ use Aws\AwsClient;
  *         openAiModelConfig?: array{
  *             modelId?: string,
  *             apiKeyArn?: string,
+ *             apiBase?: string,
  *             maxTokens?: int,
  *             temperature?: float,
  *             topP?: float,
@@ -823,6 +826,7 @@ use Aws\AwsClient;
  *         config?: array{slidingWindow?: array, summarization?: array, ...},
  *         ...,
  *     },
+ *     hooks?: list<array{beforeInvocation?: array, afterInvocation?: array, beforeToolCall?: array, afterToolCall?: array, ...}>,
  *     maxIterations?: int,
  *     maxTokens?: int,
  *     timeoutSeconds?: int,
@@ -2397,6 +2401,7 @@ use Aws\AwsClient;
  *         openAiModelConfig?: array{
  *             modelId?: string,
  *             apiKeyArn?: string,
+ *             apiBase?: string,
  *             maxTokens?: int,
  *             temperature?: float,
  *             topP?: float,
@@ -2444,6 +2449,7 @@ use Aws\AwsClient;
  *         config?: array{slidingWindow?: array, summarization?: array, ...},
  *         ...,
  *     },
+ *     hooks?: list<array{beforeInvocation?: array, afterInvocation?: array, beforeToolCall?: array, afterToolCall?: array, ...}>,
  *     maxIterations?: int,
  *     maxTokens?: int,
  *     timeoutSeconds?: int,
@@ -2479,6 +2485,7 @@ use Aws\AwsClient;
  *         openAiModelConfig?: array{
  *             modelId?: string,
  *             apiKeyArn?: string,
+ *             apiBase?: string,
  *             maxTokens?: int,
  *             temperature?: float,
  *             topP?: float,
@@ -2526,6 +2533,7 @@ use Aws\AwsClient;
  *         config?: array{slidingWindow?: array, summarization?: array, ...},
  *         ...,
  *     },
+ *     hooks?: list<array{beforeInvocation?: array, afterInvocation?: array, beforeToolCall?: array, afterToolCall?: array, ...}>,
  *     maxIterations?: int,
  *     maxTokens?: int,
  *     timeoutSeconds?: int,

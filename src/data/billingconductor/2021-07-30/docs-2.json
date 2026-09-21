@@ -17,6 +17,7 @@
     "DisassociateAccounts": "<p>Removes the specified list of account IDs from the given billing group. </p>",
     "DisassociatePricingRules": "<p> Disassociates a list of pricing rules from a pricing plan. </p>",
     "GetBillingGroupCostReport": "<p>Retrieves the margin summary report, which includes the Amazon Web Services cost and charged amount (pro forma cost) by Amazon Web Services service for a specific billing group.</p>",
+    "GetBillingTransferPreference": "<p>Retrieves the auto billing group creation preference for a billing transfer.</p>",
     "ListAccountAssociations": "<p> This is a paginated call to list linked accounts that are linked to the payer account for the specified time period. If no information is provided, the current billing period is used. The response will optionally include the billing group that's associated with the linked account.</p>",
     "ListBillingGroupCostReports": "<p>A paginated call to retrieve a summary report of actual Amazon Web Services charges and the calculated Amazon Web Services charges based on the associated pricing plan of a billing group.</p>",
     "ListBillingGroups": "<p>A paginated call to retrieve a list of billing groups for the given billing period. If you don't provide a billing group, the current billing period is used.</p>",
@@ -31,6 +32,7 @@
     "TagResource": "<p> Associates the specified tags to a resource with the specified <code>resourceArn</code>. If existing tags on a resource are not specified in the request parameters, they are not changed. </p>",
     "UntagResource": "<p> Deletes specified tags from a resource. </p>",
     "UpdateBillingGroup": "<p>This updates an existing billing group. </p>",
+    "UpdateBillingTransferPreference": "<p>Sets the auto billing group creation preference for a billing transfer. When the preference is enabled, Billing Conductor automatically creates an indirect billing transfer billing group in your account, with the pricing plan that you specify, for each account that transfers its bill to the bill source account of this billing transfer. The preference applies only to billing groups that are created after you enable it.</p> <p>Enabling the preference requires the <code>iam:CreateServiceLinkedRole</code> permission. While a pricing plan is specified in an enabled preference, you can't delete that pricing plan.</p>",
     "UpdateCustomLineItem": "<p> Update an existing custom line item in the current or previous billing period. </p>",
     "UpdatePricingPlan": "<p>This updates an existing pricing plan. </p>",
     "UpdatePricingRule": "<p> Updates an existing pricing rule. </p>"
@@ -186,6 +188,14 @@
       "base": null,
       "refs": {
         "BillingGroupCostReportResultElement$Attributes": "<p>The list of key-value pairs that represent the attributes by which the <code>BillingGroupCostReportResults</code> are grouped. For example, if you want the Amazon S3 service-level breakdown of a billing group for November 2023, the attributes list will contain a key-value pair of <code>\"PRODUCT_NAME\"</code> and <code>\"S3\"</code> and a key-value pair of <code>\"BILLING_PERIOD\"</code> and <code>\"Nov 2023\"</code>.</p>"
+      }
+    },
+    "AutoTransferBillingGroupCreationPreference": {
+      "base": "<p> The auto billing group creation preference for a billing transfer. When the preference is enabled, Billing Conductor automatically creates an indirect billing transfer billing group, with the specified pricing plan, for each account that transfers its bill to the bill source account of the billing transfer. </p>",
+      "refs": {
+        "GetBillingTransferPreferenceOutput$AutoBillingTransferBillingGroupCreation": "<p>The auto billing group creation preference for the billing transfer.</p>",
+        "UpdateBillingTransferPreferenceInput$AutoBillingTransferBillingGroupCreation": "<p>The auto billing group creation preference to set for the billing transfer.</p>",
+        "UpdateBillingTransferPreferenceOutput$AutoBillingTransferBillingGroupCreation": "<p>The updated auto billing group creation preference for the billing transfer.</p>"
       }
     },
     "BatchAssociateResourcesToCustomLineItemInput": {
@@ -375,6 +385,7 @@
       "base": null,
       "refs": {
         "AccountGrouping$AutoAssociate": "<p>Specifies if this billing group will automatically associate newly added Amazon Web Services accounts that join your consolidated billing family.</p>",
+        "AutoTransferBillingGroupCreationPreference$Enabled": "<p> Specifies whether Billing Conductor automatically creates billing groups for the billing transfer. The preference is disabled by default. </p>",
         "ListBillingGroupAccountGrouping$AutoAssociate": "<p>Specifies if this billing group will automatically associate newly added Amazon Web Services accounts that join your consolidated billing family.</p>",
         "ListBillingGroupsFilter$AutoAssociate": "<p>Specifies if this billing group will automatically associate newly added Amazon Web Services accounts that join your consolidated billing family.</p>",
         "UpdateBillingGroupAccountGrouping$AutoAssociate": "<p>Specifies if this billing group will automatically associate newly added Amazon Web Services accounts that join your consolidated billing family.</p>"
@@ -386,7 +397,8 @@
         "CreateBillingGroupInput$ClientToken": "<p>A unique, case-sensitive identifier that you specify to ensure idempotency of the request. Idempotency ensures that an API request completes no more than one time. With an idempotent request, if the original request completes successfully, any subsequent retries complete successfully without performing any further actions.</p>",
         "CreateCustomLineItemInput$ClientToken": "<p>A unique, case-sensitive identifier that you specify to ensure idempotency of the request. Idempotency ensures that an API request completes no more than one time. With an idempotent request, if the original request completes successfully, any subsequent retries complete successfully without performing any further actions.</p>",
         "CreatePricingPlanInput$ClientToken": "<p>A unique, case-sensitive identifier that you specify to ensure idempotency of the request. Idempotency ensures that an API request completes no more than one time. With an idempotent request, if the original request completes successfully, any subsequent retries complete successfully without performing any further actions.</p>",
-        "CreatePricingRuleInput$ClientToken": "<p>A unique, case-sensitive identifier that you specify to ensure idempotency of the request. Idempotency ensures that an API request completes no more than one time. With an idempotent request, if the original request completes successfully, any subsequent retries complete successfully without performing any further actions.</p>"
+        "CreatePricingRuleInput$ClientToken": "<p>A unique, case-sensitive identifier that you specify to ensure idempotency of the request. Idempotency ensures that an API request completes no more than one time. With an idempotent request, if the original request completes successfully, any subsequent retries complete successfully without performing any further actions.</p>",
+        "UpdateBillingTransferPreferenceInput$ClientToken": "<p>A unique, case-sensitive identifier that you specify to ensure idempotency of the request. Idempotency ensures that an API request completes no more than one time. With an idempotent request, if the original request completes successfully, any subsequent retries complete successfully without performing any further actions.</p>"
       }
     },
     "ComputationPreference": {
@@ -749,6 +761,14 @@
       "base": null,
       "refs": {}
     },
+    "GetBillingTransferPreferenceInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetBillingTransferPreferenceOutput": {
+      "base": null,
+      "refs": {}
+    },
     "GroupByAttributeName": {
       "base": null,
       "refs": {
@@ -771,11 +791,13 @@
         "CustomLineItemVersionListElement$CreationTime": "<p>The time when the custom line item version was created.</p>",
         "CustomLineItemVersionListElement$LastModifiedTime": "<p>The most recent time that the custom line item version was modified.</p>",
         "CustomLineItemVersionListElement$StartTime": "<p> The inclusive start time. </p>",
+        "GetBillingTransferPreferenceOutput$LastModifiedTime": "<p>The most recent time when the preference was modified. This value is empty if the preference has never been set for the billing transfer.</p>",
         "PricingPlanListElement$CreationTime": "<p>The time when the pricing plan was created.</p>",
         "PricingPlanListElement$LastModifiedTime": "<p>The most recent time when the pricing plan was modified.</p>",
         "PricingRuleListElement$CreationTime": "<p>The time when the pricing rule was created.</p>",
         "PricingRuleListElement$LastModifiedTime": "<p> The most recent time when the pricing rule was modified.</p>",
         "UpdateBillingGroupOutput$LastModifiedTime": "<p> The most recent time when the billing group was modified. </p>",
+        "UpdateBillingTransferPreferenceOutput$LastModifiedTime": "<p>The most recent time when the preference was modified.</p>",
         "UpdateCustomLineItemOutput$LastModifiedTime": "<p> The most recent time when the custom line item was modified. </p>",
         "UpdatePricingPlanOutput$LastModifiedTime": "<p> The most recent time when the pricing plan was modified. </p>",
         "UpdatePricingRuleOutput$LastModifiedTime": "<p> The most recent time the pricing rule was modified. </p>"
@@ -1111,6 +1133,7 @@
       "refs": {
         "AssociatePricingRulesInput$Arn": "<p> The <code>PricingPlanArn</code> that the <code>PricingRuleArns</code> are associated with. </p>",
         "AssociatePricingRulesOutput$Arn": "<p> The <code>PricingPlanArn</code> that the <code>PricingRuleArns</code> are associated with. </p>",
+        "AutoTransferBillingGroupCreationPreference$PricingPlanArn": "<p> The Amazon Resource Name (ARN) of the pricing plan to apply to the automatically created billing groups. This value is required when <code>Enabled</code> is <code>true</code>, and must be omitted when <code>Enabled</code> is <code>false</code>. </p>",
         "CreatePricingPlanOutput$Arn": "<p>The Amazon Resource Name (ARN) of the created pricing plan.</p>",
         "DeletePricingPlanInput$Arn": "<p>The Amazon Resource Name (ARN) of the pricing plan that you're deleting. </p>",
         "DeletePricingPlanOutput$Arn": "<p> The Amazon Resource Name (ARN) of the deleted pricing plan. </p>",
@@ -1273,9 +1296,13 @@
       "base": null,
       "refs": {
         "AccountGrouping$ResponsibilityTransferArn": "<p> The Amazon Resource Name (ARN) that identifies the transfer relationship owned by the Bill Transfer account (caller account). When specified, the PrimaryAccountId is no longer required. </p>",
+        "GetBillingTransferPreferenceInput$ResponsibilityTransferArn": "<p>The Amazon Resource Name (ARN) of the billing transfer whose preference you want to retrieve.</p>",
+        "GetBillingTransferPreferenceOutput$ResponsibilityTransferArn": "<p>The Amazon Resource Name (ARN) of the billing transfer that the preference applies to.</p>",
         "ListBillingGroupAccountGrouping$ResponsibilityTransferArn": "<p> The Amazon Resource Name (ARN) that identifies the transfer relationship for the billing group. </p>",
         "ResponsibilityTransferArnsList$member": null,
-        "UpdateBillingGroupAccountGrouping$ResponsibilityTransferArn": "<p> The Amazon Resource Name (ARN) that identifies the transfer relationship. Note: Modifications to the ResponsibilityTransferArn are not permitted for existing billing groups. </p>"
+        "UpdateBillingGroupAccountGrouping$ResponsibilityTransferArn": "<p> The Amazon Resource Name (ARN) that identifies the transfer relationship. Note: Modifications to the ResponsibilityTransferArn are not permitted for existing billing groups. </p>",
+        "UpdateBillingTransferPreferenceInput$ResponsibilityTransferArn": "<p>The Amazon Resource Name (ARN) of the billing transfer whose preference you want to set.</p>",
+        "UpdateBillingTransferPreferenceOutput$ResponsibilityTransferArn": "<p>The Amazon Resource Name (ARN) of the billing transfer that the preference applies to.</p>"
       }
     },
     "ResponsibilityTransferArnsList": {
@@ -1456,6 +1483,14 @@
       "refs": {}
     },
     "UpdateBillingGroupOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateBillingTransferPreferenceInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateBillingTransferPreferenceOutput": {
       "base": null,
       "refs": {}
     },

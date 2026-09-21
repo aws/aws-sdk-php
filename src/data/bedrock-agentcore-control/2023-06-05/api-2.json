@@ -2939,6 +2939,7 @@
       "input":{"shape":"UpdateHarnessRequest"},
       "output":{"shape":"UpdateHarnessResponse"},
       "errors":[
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
@@ -5418,6 +5419,7 @@
         "allowedTools":{"shape":"HarnessAllowedTools"},
         "memory":{"shape":"HarnessMemoryConfiguration"},
         "truncation":{"shape":"HarnessTruncationConfiguration"},
+        "hooks":{"shape":"HarnessHooks"},
         "maxIterations":{"shape":"Integer"},
         "maxTokens":{"shape":"Integer"},
         "timeoutSeconds":{"shape":"Integer"},
@@ -9420,10 +9422,33 @@
         "environmentVariables":{"shape":"EnvironmentVariablesMap"},
         "authorizerConfiguration":{"shape":"AuthorizerConfiguration"},
         "memory":{"shape":"HarnessMemoryConfiguration"},
+        "hooks":{"shape":"HarnessHooks"},
         "maxIterations":{"shape":"Integer"},
         "maxTokens":{"shape":"Integer"},
         "timeoutSeconds":{"shape":"Integer"},
         "failureReason":{"shape":"String"}
+      }
+    },
+    "HarnessAfterInvocationHook":{
+      "type":"structure",
+      "required":[
+        "name",
+        "target"
+      ],
+      "members":{
+        "name":{"shape":"HarnessHookName"},
+        "target":{"shape":"HarnessHookTarget"}
+      }
+    },
+    "HarnessAfterToolCallHook":{
+      "type":"structure",
+      "required":[
+        "name",
+        "target"
+      ],
+      "members":{
+        "name":{"shape":"HarnessHookName"},
+        "target":{"shape":"HarnessHookTarget"}
       }
     },
     "HarnessAgentCoreBrowserConfig":{
@@ -9539,6 +9564,28 @@
         "additionalParams":{"shape":"Document"}
       }
     },
+    "HarnessBeforeInvocationHook":{
+      "type":"structure",
+      "required":[
+        "name",
+        "target"
+      ],
+      "members":{
+        "name":{"shape":"HarnessHookName"},
+        "target":{"shape":"HarnessHookTarget"}
+      }
+    },
+    "HarnessBeforeToolCallHook":{
+      "type":"structure",
+      "required":[
+        "name",
+        "target"
+      ],
+      "members":{
+        "name":{"shape":"HarnessHookName"},
+        "target":{"shape":"HarnessHookTarget"}
+      }
+    },
     "HarnessBrowserArn":{
       "type":"string",
       "pattern":"arn:aws(-[^:]+)?:bedrock-agentcore:[a-z0-9-]+:(aws|[0-9]{12}):browser(-custom)?/(aws\\.browser\\.v1|[a-zA-Z][a-zA-Z0-9_]{0,47}-[a-zA-Z0-9]{10})"
@@ -9626,6 +9673,12 @@
       },
       "union":true
     },
+    "HarnessEventBridgeBusArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws(-[^:]+)?:events:[a-z0-9-]+:[0-9]{12}:event-bus/.+"
+    },
     "HarnessGatewayOutboundAuth":{
       "type":"structure",
       "members":{
@@ -9651,6 +9704,73 @@
         "additionalParams":{"shape":"Document"}
       }
     },
+    "HarnessHook":{
+      "type":"structure",
+      "members":{
+        "beforeInvocation":{"shape":"HarnessBeforeInvocationHook"},
+        "afterInvocation":{"shape":"HarnessAfterInvocationHook"},
+        "beforeToolCall":{"shape":"HarnessBeforeToolCallHook"},
+        "afterToolCall":{"shape":"HarnessAfterToolCallHook"}
+      },
+      "union":true
+    },
+    "HarnessHookEventBridgeTarget":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"HarnessEventBridgeBusArn"}
+      }
+    },
+    "HarnessHookFailureMode":{
+      "type":"string",
+      "enum":[
+        "allow",
+        "deny"
+      ]
+    },
+    "HarnessHookLambdaTarget":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"HarnessLambdaFunctionArn"},
+        "timeoutSeconds":{"shape":"HarnessHookLambdaTargetTimeoutSecondsInteger"},
+        "failureMode":{"shape":"HarnessHookFailureMode"}
+      }
+    },
+    "HarnessHookLambdaTargetTimeoutSecondsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":900,
+      "min":1
+    },
+    "HarnessHookName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_-]+"
+    },
+    "HarnessHookSnsTarget":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"HarnessSnsTopicArn"}
+      }
+    },
+    "HarnessHookTarget":{
+      "type":"structure",
+      "members":{
+        "lambda":{"shape":"HarnessHookLambdaTarget"},
+        "sns":{"shape":"HarnessHookSnsTarget"},
+        "eventBridge":{"shape":"HarnessHookEventBridgeTarget"}
+      },
+      "union":true
+    },
+    "HarnessHooks":{
+      "type":"list",
+      "member":{"shape":"HarnessHook"},
+      "max":20,
+      "min":0
+    },
     "HarnessId":{
       "type":"string",
       "pattern":"[a-zA-Z][a-zA-Z0-9_]{0,39}-[a-zA-Z0-9]{10}"
@@ -9671,6 +9791,12 @@
       "max":4096,
       "min":1,
       "sensitive":true
+    },
+    "HarnessLambdaFunctionArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws(-[^:]+)?:lambda:[a-z0-9-]+:[0-9]{12}:function:.+"
     },
     "HarnessLiteLlmApiBase":{
       "type":"string",
@@ -9744,6 +9870,12 @@
       "type":"string",
       "pattern":"[a-zA-Z][a-zA-Z0-9_]{0,39}"
     },
+    "HarnessOpenAiApiBase":{
+      "type":"string",
+      "max":16383,
+      "min":1,
+      "sensitive":true
+    },
     "HarnessOpenAiApiFormat":{
       "type":"string",
       "enum":[
@@ -9760,6 +9892,7 @@
       "members":{
         "modelId":{"shape":"ModelId"},
         "apiKeyArn":{"shape":"ApiKeyArn"},
+        "apiBase":{"shape":"HarnessOpenAiApiBase"},
         "maxTokens":{"shape":"MaxTokens"},
         "temperature":{"shape":"Temperature"},
         "topP":{"shape":"TopP"},
@@ -9847,6 +9980,12 @@
       "members":{
         "messagesCount":{"shape":"Integer"}
       }
+    },
+    "HarnessSnsTopicArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws(-[^:]+)?:sns:[a-z0-9-]+:[0-9]{12}:.+"
     },
     "HarnessStatus":{
       "type":"string",
@@ -15879,6 +16018,7 @@
         "allowedTools":{"shape":"HarnessAllowedTools"},
         "memory":{"shape":"UpdatedHarnessMemoryConfiguration"},
         "truncation":{"shape":"HarnessTruncationConfiguration"},
+        "hooks":{"shape":"HarnessHooks"},
         "maxIterations":{"shape":"Integer"},
         "maxTokens":{"shape":"Integer"},
         "timeoutSeconds":{"shape":"Integer"}

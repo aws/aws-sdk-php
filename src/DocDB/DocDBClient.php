@@ -81,6 +81,7 @@ use Aws\PresignUrlMiddleware;
  *     ManageMasterUserPassword?: bool,
  *     MasterUserSecretKmsKeyId?: string,
  *     NetworkType?: string,
+ *     CopyTagsToSnapshot?: bool,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createDBClusterAsync(array $args = [])
@@ -110,6 +111,7 @@ use Aws\PresignUrlMiddleware;
  *     ManageMasterUserPassword?: bool,
  *     MasterUserSecretKmsKeyId?: string,
  *     NetworkType?: string,
+ *     CopyTagsToSnapshot?: bool,
  *     ...,
  * } $args = [])
  * @method \Aws\Result createDBClusterParameterGroup(array $args = [])
@@ -580,6 +582,7 @@ use Aws\PresignUrlMiddleware;
  *     MasterUserSecretKmsKeyId?: string,
  *     RotateMasterUserPassword?: bool,
  *     NetworkType?: string,
+ *     CopyTagsToSnapshot?: bool,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise modifyDBClusterAsync(array $args = [])
@@ -604,6 +607,7 @@ use Aws\PresignUrlMiddleware;
  *     MasterUserSecretKmsKeyId?: string,
  *     RotateMasterUserPassword?: bool,
  *     NetworkType?: string,
+ *     CopyTagsToSnapshot?: bool,
  *     ...,
  * } $args = [])
  * @method \Aws\Result modifyDBClusterParameterGroup(array $args = [])
@@ -788,6 +792,7 @@ use Aws\PresignUrlMiddleware;
  *     ServerlessV2ScalingConfiguration?: array{MinCapacity?: float, MaxCapacity?: float, ...},
  *     StorageType?: string,
  *     NetworkType?: string,
+ *     CopyTagsToSnapshot?: bool,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise restoreDBClusterFromSnapshotAsync(array $args = [])
@@ -808,6 +813,7 @@ use Aws\PresignUrlMiddleware;
  *     ServerlessV2ScalingConfiguration?: array{MinCapacity?: float, MaxCapacity?: float, ...},
  *     StorageType?: string,
  *     NetworkType?: string,
+ *     CopyTagsToSnapshot?: bool,
  *     ...,
  * } $args = [])
  * @method \Aws\Result restoreDBClusterToPointInTime(array $args = [])
@@ -827,6 +833,7 @@ use Aws\PresignUrlMiddleware;
  *     ServerlessV2ScalingConfiguration?: array{MinCapacity?: float, MaxCapacity?: float, ...},
  *     StorageType?: string,
  *     NetworkType?: string,
+ *     CopyTagsToSnapshot?: bool,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise restoreDBClusterToPointInTimeAsync(array $args = [])
@@ -846,6 +853,7 @@ use Aws\PresignUrlMiddleware;
  *     ServerlessV2ScalingConfiguration?: array{MinCapacity?: float, MaxCapacity?: float, ...},
  *     StorageType?: string,
  *     NetworkType?: string,
+ *     CopyTagsToSnapshot?: bool,
  *     ...,
  * } $args = [])
  * @method \Aws\Result startDBCluster(array $args = [])
