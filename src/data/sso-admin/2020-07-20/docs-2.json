@@ -969,6 +969,13 @@
         "UpdatePermissionSetRequest$InstanceArn": "<p>The ARN of the IAM Identity Center instance under which the operation will be executed. For more information about ARNs, see <a href=\"/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces</a> in the <i>Amazon Web Services General Reference</i>.</p>"
       }
     },
+    "InstanceIdentityStoreArn": {
+      "base": null,
+      "refs": {
+        "DescribeInstanceResponse$IdentityStoreArn": "<p>The ARN of the identity store that is connected to the instance of IAM Identity Center.</p>",
+        "InstanceMetadata$IdentityStoreArn": "<p>The ARN of the identity store that is connected to the Identity Center instance.</p>"
+      }
+    },
     "InstanceList": {
       "base": null,
       "refs": {
@@ -1549,6 +1556,7 @@
     "RegionMetadataList": {
       "base": null,
       "refs": {
+        "DescribeInstanceResponse$Regions": "<p>The list of Regions enabled in the IAM Identity Center instance, including Regions with ACTIVE, ADDING, or REMOVING status.</p>",
         "InstanceMetadata$Regions": "<p>The list of Regions enabled in the IAM Identity Center instance, including Regions with ACTIVE, ADDING, or REMOVING status.</p>",
         "ListRegionsResponse$Regions": "<p>The list of Regions enabled in the IAM Identity Center instance, including Regions with ACTIVE, ADDING, or REMOVING status.</p>"
       }
@@ -1559,6 +1567,7 @@
         "AddRegionRequest$RegionName": "<p>The name of the Amazon Web Services Region to add to the IAM Identity Center instance. The Region name must be 1-32 characters long and follow the pattern of Amazon Web Services Region names (for example, us-east-1).</p>",
         "Application$CreatedFrom": "<p>The Amazon Web Services Region where the application was created in IAM Identity Center.</p>",
         "DescribeApplicationResponse$CreatedFrom": "<p>The Amazon Web Services Region where the application was created in IAM Identity Center.</p>",
+        "DescribeInstanceResponse$PrimaryRegion": "<p>The primary Region where the IAM Identity Center instance was originally enabled. The primary Region cannot be removed.</p>",
         "DescribeRegionRequest$RegionName": "<p>The name of the Amazon Web Services Region to retrieve information about. The Region name must be 1-32 characters long and follow the pattern of Amazon Web Services Region names (for example, us-east-1).</p>",
         "DescribeRegionResponse$RegionName": "<p>The Amazon Web Services Region name.</p>",
         "InstanceMetadata$PrimaryRegion": "<p>The primary Region where the IAM Identity Center instance was originally enabled. The primary Region cannot be removed.</p>",

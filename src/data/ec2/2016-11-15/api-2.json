@@ -640,6 +640,15 @@
       "input":{"shape":"CreateCapacityReservationCancellationQuoteRequest"},
       "output":{"shape":"CreateCapacityReservationCancellationQuoteResult"}
     },
+    "CreateCapacityReservationDateChangeQuote":{
+      "name":"CreateCapacityReservationDateChangeQuote",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateCapacityReservationDateChangeQuoteRequest"},
+      "output":{"shape":"CreateCapacityReservationDateChangeQuoteResult"}
+    },
     "CreateCapacityReservationFleet":{
       "name":"CreateCapacityReservationFleet",
       "http":{
@@ -2688,6 +2697,15 @@
       },
       "input":{"shape":"DescribeCapacityReservationCancellationQuotesRequest"},
       "output":{"shape":"DescribeCapacityReservationCancellationQuotesResult"}
+    },
+    "DescribeCapacityReservationDateChangeQuotes":{
+      "name":"DescribeCapacityReservationDateChangeQuotes",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeCapacityReservationDateChangeQuotesRequest"},
+      "output":{"shape":"DescribeCapacityReservationDateChangeQuotesResult"}
     },
     "DescribeCapacityReservationFleets":{
       "name":"DescribeCapacityReservationFleets",
@@ -11951,11 +11969,56 @@
           "shape":"InterruptionInfo",
           "locationName":"interruptionInfo"
         },
+        "AdjustmentStatus":{
+          "shape":"CapacityReservationAdjustmentStatus",
+          "locationName":"adjustmentStatus"
+        },
+        "AdjustmentDetails":{
+          "shape":"CapacityReservationAdjustmentDetails",
+          "locationName":"adjustmentDetails"
+        },
+        "OriginalStartDate":{
+          "shape":"MillisecondDateTime",
+          "locationName":"originalStartDate"
+        },
         "ZeroSizePreference":{
           "shape":"ZeroSizePreference",
           "locationName":"zeroSizePreference"
         }
       }
+    },
+    "CapacityReservationAdjustmentDetails":{
+      "type":"structure",
+      "members":{
+        "StartDate":{
+          "shape":"MillisecondDateTime",
+          "locationName":"startDate"
+        },
+        "EndDate":{
+          "shape":"MillisecondDateTime",
+          "locationName":"endDate"
+        },
+        "CommitmentEndDate":{
+          "shape":"MillisecondDateTime",
+          "locationName":"commitmentEndDate"
+        },
+        "EndDateType":{
+          "shape":"String",
+          "locationName":"endDateType"
+        },
+        "CommitmentDuration":{
+          "shape":"BoxedLong",
+          "locationName":"commitmentDuration"
+        }
+      }
+    },
+    "CapacityReservationAdjustmentStatus":{
+      "type":"string",
+      "enum":[
+        "requested",
+        "applied",
+        "rejected"
+      ]
     },
     "CapacityReservationBillingRequest":{
       "type":"structure",
@@ -12083,6 +12146,10 @@
         "CommitmentEndDate":{
           "shape":"MillisecondDateTime",
           "locationName":"commitmentEndDate"
+        },
+        "CommitmentDuration":{
+          "shape":"BoxedLong",
+          "locationName":"commitmentDuration"
         }
       }
     },
@@ -12282,6 +12349,67 @@
         "RHEL with HA and SQL Server Standard",
         "RHEL with HA and SQL Server Enterprise",
         "Ubuntu Pro"
+      ]
+    },
+    "CapacityReservationModificationQuote":{
+      "type":"structure",
+      "members":{
+        "CapacityReservationModificationQuoteId":{
+          "shape":"CapacityReservationModificationQuoteId",
+          "locationName":"capacityReservationModificationQuoteId"
+        },
+        "CapacityReservationId":{
+          "shape":"CapacityReservationId",
+          "locationName":"capacityReservationId"
+        },
+        "CreateTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"createTime"
+        },
+        "ExpirationTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"expirationTime"
+        },
+        "QuoteState":{
+          "shape":"CapacityReservationModificationQuoteState",
+          "locationName":"quoteState"
+        },
+        "CurrentConfiguration":{
+          "shape":"ModificationQuoteCurrentConfiguration",
+          "locationName":"currentConfiguration"
+        },
+        "ModificationTerms":{
+          "shape":"ModificationTerms",
+          "locationName":"modificationTerms"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "locationName":"tagSet"
+        }
+      }
+    },
+    "CapacityReservationModificationQuoteId":{"type":"string"},
+    "CapacityReservationModificationQuoteIdSet":{
+      "type":"list",
+      "member":{
+        "shape":"CapacityReservationModificationQuoteId",
+        "locationName":"item"
+      },
+      "max":1000,
+      "min":0
+    },
+    "CapacityReservationModificationQuoteResponseSet":{
+      "type":"list",
+      "member":{
+        "shape":"CapacityReservationModificationQuote",
+        "locationName":"item"
+      }
+    },
+    "CapacityReservationModificationQuoteState":{
+      "type":"string",
+      "enum":[
+        "active",
+        "expired"
       ]
     },
     "CapacityReservationOptions":{
@@ -13934,6 +14062,35 @@
         "CapacityReservationCancellationQuote":{
           "shape":"CapacityReservationCancellationQuote",
           "locationName":"capacityReservationCancellationQuote"
+        }
+      }
+    },
+    "CreateCapacityReservationDateChangeQuoteRequest":{
+      "type":"structure",
+      "required":[
+        "CapacityReservationId",
+        "NewStartDate"
+      ],
+      "members":{
+        "CapacityReservationId":{"shape":"CapacityReservationId"},
+        "NewStartDate":{"shape":"MillisecondDateTime"},
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "TagSpecifications":{
+          "shape":"TagSpecificationList",
+          "locationName":"TagSpecification"
+        },
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "CreateCapacityReservationDateChangeQuoteResult":{
+      "type":"structure",
+      "members":{
+        "CapacityReservationModificationQuote":{
+          "shape":"CapacityReservationModificationQuote",
+          "locationName":"capacityReservationModificationQuote"
         }
       }
     },
@@ -20511,6 +20668,40 @@
         "CapacityReservationCancellationQuotes":{
           "shape":"CapacityReservationCancellationQuoteResponseSet",
           "locationName":"capacityReservationCancellationQuoteSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "DescribeCapacityReservationDateChangeQuotesRequest":{
+      "type":"structure",
+      "members":{
+        "CapacityReservationModificationQuoteIds":{
+          "shape":"CapacityReservationModificationQuoteIdSet",
+          "locationName":"CapacityReservationModificationQuoteId"
+        },
+        "MaxResults":{"shape":"DescribeCapacityReservationDateChangeQuotesRequestMaxResults"},
+        "NextToken":{"shape":"String"},
+        "DryRun":{"shape":"Boolean"},
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        }
+      }
+    },
+    "DescribeCapacityReservationDateChangeQuotesRequestMaxResults":{
+      "type":"integer",
+      "max":1000,
+      "min":1
+    },
+    "DescribeCapacityReservationDateChangeQuotesResult":{
+      "type":"structure",
+      "members":{
+        "CapacityReservationModificationQuotes":{
+          "shape":"CapacityReservationModificationQuoteResponseSet",
+          "locationName":"capacityReservationModificationQuoteSet"
         },
         "NextToken":{
           "shape":"String",
@@ -44162,6 +44353,53 @@
       }
     },
     "MillisecondDateTime":{"type":"timestamp"},
+    "ModificationQuoteCurrentConfiguration":{
+      "type":"structure",
+      "members":{
+        "InstanceCount":{
+          "shape":"Integer",
+          "locationName":"instanceCount"
+        },
+        "ReservationState":{
+          "shape":"String",
+          "locationName":"reservationState"
+        },
+        "StartDate":{
+          "shape":"MillisecondDateTime",
+          "locationName":"startDate"
+        },
+        "OriginalStartDate":{
+          "shape":"MillisecondDateTime",
+          "locationName":"originalStartDate"
+        }
+      }
+    },
+    "ModificationReservationUpdate":{
+      "type":"structure",
+      "members":{
+        "NewCommitmentEndDate":{
+          "shape":"MillisecondDateTime",
+          "locationName":"newCommitmentEndDate"
+        },
+        "NewStartDate":{
+          "shape":"MillisecondDateTime",
+          "locationName":"newStartDate"
+        },
+        "NewCommitmentDuration":{
+          "shape":"BoxedInteger",
+          "locationName":"newCommitmentDuration"
+        }
+      }
+    },
+    "ModificationTerms":{
+      "type":"structure",
+      "members":{
+        "ReservationUpdate":{
+          "shape":"ModificationReservationUpdate",
+          "locationName":"reservationUpdate"
+        }
+      }
+    },
     "ModifyAccountVpcEncryptionControlRequest":{
       "type":"structure",
       "members":{
@@ -44301,7 +44539,10 @@
         "Accept":{"shape":"Boolean"},
         "DryRun":{"shape":"Boolean"},
         "AdditionalInfo":{"shape":"String"},
-        "InstanceMatchCriteria":{"shape":"InstanceMatchCriteria"}
+        "InstanceMatchCriteria":{"shape":"InstanceMatchCriteria"},
+        "AcceptModificationTerms":{"shape":"Boolean"},
+        "StartDate":{"shape":"MillisecondDateTime"},
+        "QuoteId":{"shape":"CapacityReservationModificationQuoteId"}
       }
     },
     "ModifyCapacityReservationResult":{
@@ -44310,6 +44551,14 @@
         "Return":{
           "shape":"Boolean",
           "locationName":"return"
+        },
+        "AdjustmentStatus":{
+          "shape":"CapacityReservationAdjustmentStatus",
+          "locationName":"adjustmentStatus"
+        },
+        "AdjustmentDetails":{
+          "shape":"CapacityReservationAdjustmentDetails",
+          "locationName":"adjustmentDetails"
         }
       }
     },
@@ -52182,7 +52431,8 @@
         "vpn-concentrator",
         "ipam-pool-allocation",
         "capacity-reservation-cancellation-quote",
-        "application-status-check"
+        "application-status-check",
+        "capacity-reservation-modification-quote"
       ]
     },
     "ResourceTypeOption":{

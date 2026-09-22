@@ -2141,11 +2141,14 @@
       "members":{
         "InstanceArn":{"shape":"InstanceArn"},
         "IdentityStoreId":{"shape":"Id"},
+        "IdentityStoreArn":{"shape":"InstanceIdentityStoreArn"},
         "OwnerAccountId":{"shape":"AccountId"},
         "Name":{"shape":"NameType"},
         "CreatedDate":{"shape":"Date"},
         "Status":{"shape":"InstanceStatus"},
         "StatusReason":{"shape":"Reason"},
+        "PrimaryRegion":{"shape":"RegionName"},
+        "Regions":{"shape":"RegionMetadataList"},
         "EncryptionConfigurationDetails":{"shape":"EncryptionConfigurationDetails"},
         "PermissionSetsEnabled":{"shape":"Boolean"}
       }
@@ -2488,6 +2491,12 @@
       "min":10,
       "pattern":"arn:aws(-[a-z]{1,5}){0,3}:sso:::instance/(sso)?ins-[a-zA-Z0-9-.]{16}"
     },
+    "InstanceIdentityStoreArn":{
+      "type":"string",
+      "max":93,
+      "min":62,
+      "pattern":"arn:aws(-[a-z]{1,5}){0,3}:identitystore::\\d{12}:identitystore/(d-[0-9a-f]{10}|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})"
+    },
     "InstanceList":{
       "type":"list",
       "member":{"shape":"InstanceMetadata"},
@@ -2499,6 +2508,7 @@
       "members":{
         "InstanceArn":{"shape":"InstanceArn"},
         "IdentityStoreId":{"shape":"Id"},
+        "IdentityStoreArn":{"shape":"InstanceIdentityStoreArn"},
         "OwnerAccountId":{"shape":"AccountId"},
         "Name":{"shape":"NameType"},
         "CreatedDate":{"shape":"Date"},

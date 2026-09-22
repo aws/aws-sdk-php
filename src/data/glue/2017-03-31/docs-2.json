@@ -9028,12 +9028,21 @@
         "Workflow$MaxConcurrentRuns": "<p>You can use this parameter to prevent unwanted multiple updates to data, to control costs, or in some cases, to prevent exceeding the maximum number of concurrent runs of any of the component jobs. If you leave this parameter blank, there is no limit to the number of concurrent workflow runs.</p>"
       }
     },
+    "NullableLong": {
+      "base": null,
+      "refs": {
+        "SubObjectStatistics$PartitionCount": "<p>The number of sub-object partitions selected for that refresh. Not present for unpartitioned sub-objects.</p>",
+        "SubObjectStatistics$FileCount": "<p>The number of sub-object data files selected for that refresh.</p>",
+        "SubObjectStatistics$TotalFileBytes": "<p>The total size, in bytes, of the data files counted by <code>FileCount</code>.</p>"
+      }
+    },
     "NullableString": {
       "base": null,
       "refs": {
         "QuerySessionContext$ClusterId": "<p>An identifier string for the consumer cluster.</p>",
         "StringToStringMap$key": null,
-        "StringToStringMap$value": null
+        "StringToStringMap$value": null,
+        "SubObjectStatistics$GlueVersionId": "<p>The Glue version ID of the sub-object that the statistics were captured for.</p>"
       }
     },
     "NumberTargetPartitionsString": {
@@ -11264,6 +11273,25 @@
         "CodeGenConfigurationNode$SparkConnectorTarget": "<p>Specifies a target that uses an Apache Spark connector.</p>"
       }
     },
+    "SparkPipelineInfoKey": {
+      "base": null,
+      "refs": {
+        "SparkPipelineInfoMap$key": null
+      }
+    },
+    "SparkPipelineInfoMap": {
+      "base": null,
+      "refs": {
+        "ViewDefinition$SparkPipelineInfo": "<p>A map of key-value pairs containing Spark Declarative Pipelines (SDP) information for the materialized view.</p>",
+        "ViewDefinitionInput$SparkPipelineInfo": "<p>A map of key-value pairs containing Spark Declarative Pipelines (SDP) information for the materialized view.</p>"
+      }
+    },
+    "SparkPipelineInfoValue": {
+      "base": null,
+      "refs": {
+        "SparkPipelineInfoMap$value": null
+      }
+    },
     "SparkSQL": {
       "base": "<p>Specifies a transform where you enter a SQL query using Spark SQL syntax to transform the data. The output is a single <code>DynamicFrame</code>.</p>",
       "refs": {
@@ -11770,6 +11798,25 @@
         "IcebergEncryptedKey$Properties": "<p>A string to string map of additional metadata used by the table's encryption scheme. These properties provide additional context and configuration for the encryption key implementation.</p>",
         "IcebergTableMetadata$Properties": "<p>A map of key-value pairs that define table-level properties and configuration settings for the Iceberg table.</p>",
         "IcebergTableUpdate$Properties": "<p>Updated key-value pairs of table properties and configuration settings for the Iceberg table.</p>"
+      }
+    },
+    "SubObjectSourceType": {
+      "base": null,
+      "refs": {
+        "SubObjectStatistics$SourceType": "<p>The source type of the sub-object (for example, its table format), which identifies the sub-object.</p>"
+      }
+    },
+    "SubObjectStatistics": {
+      "base": "<p>Statistics for one sub-object referenced by a materialized view, recorded when the materialized view was created or last fully refreshed. These values describe what that refresh selected from the sub-object, which can be a subset of the table when the materialized view's definition limits the data it reads. The fields present depend on the sub-object's format.</p>",
+      "refs": {
+        "SubObjectsStatisticsList$member": null
+      }
+    },
+    "SubObjectsStatisticsList": {
+      "base": null,
+      "refs": {
+        "ViewDefinition$SubObjectsStatistics": "<p>Statistics captured for each sub-object referenced by the materialized view as of its most recent refresh, such as the source type, Glue version ID, and the partition, file, and byte counts. Each entry describes one sub-object, identified by its source type.</p>",
+        "ViewDefinitionInput$SubObjectsStatistics": "<p>Statistics for each sub-object referenced by the materialized view, such as the source type, Glue version ID, and the partition, file, and byte counts. Each entry describes one sub-object, identified by its source type.</p>"
       }
     },
     "SupportedDialect": {

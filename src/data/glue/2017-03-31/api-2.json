@@ -14973,6 +14973,10 @@
       "type":"integer",
       "box":true
     },
+    "NullableLong":{
+      "type":"long",
+      "box":true
+    },
     "NullableString":{
       "type":"string",
       "box":true
@@ -17631,6 +17635,23 @@
         "OutputSchemas":{"shape":"GlueSchemas"}
       }
     },
+    "SparkPipelineInfoKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "SparkPipelineInfoMap":{
+      "type":"map",
+      "key":{"shape":"SparkPipelineInfoKey"},
+      "value":{"shape":"SparkPipelineInfoValue"},
+      "max":50,
+      "min":0
+    },
+    "SparkPipelineInfoValue":{
+      "type":"string",
+      "max":2048,
+      "min":0
+    },
     "SparkSQL":{
       "type":"structure",
       "required":[
@@ -18275,6 +18296,33 @@
       "type":"map",
       "key":{"shape":"NullableString"},
       "value":{"shape":"NullableString"}
+    },
+    "SubObjectSourceType":{
+      "type":"string",
+      "enum":[
+        "HIVE_PARQUET",
+        "HIVE_ORC",
+        "HIVE_CSV",
+        "HIVE_JSON",
+        "PLAIN_PARQUET",
+        "ICEBERG"
+      ]
+    },
+    "SubObjectStatistics":{
+      "type":"structure",
+      "members":{
+        "SourceType":{"shape":"SubObjectSourceType"},
+        "GlueVersionId":{"shape":"NullableString"},
+        "PartitionCount":{"shape":"NullableLong"},
+        "FileCount":{"shape":"NullableLong"},
+        "TotalFileBytes":{"shape":"NullableLong"}
+      }
+    },
+    "SubObjectsStatisticsList":{
+      "type":"list",
+      "member":{"shape":"SubObjectStatistics"},
+      "max":250,
+      "min":0
     },
     "SupportedDialect":{
       "type":"structure",
@@ -19772,7 +19820,9 @@
         "LastRefreshType":{"shape":"LastRefreshType"},
         "SubObjects":{"shape":"ViewSubObjectsList"},
         "SubObjectVersionIds":{"shape":"ViewSubObjectVersionIdsList"},
-        "Representations":{"shape":"ViewRepresentationList"}
+        "SubObjectsStatistics":{"shape":"SubObjectsStatisticsList"},
+        "Representations":{"shape":"ViewRepresentationList"},
+        "SparkPipelineInfo":{"shape":"SparkPipelineInfoMap"}
       }
     },
     "ViewDefinitionInput":{
@@ -19786,7 +19836,9 @@
         "RefreshSeconds":{"shape":"RefreshSeconds"},
         "LastRefreshType":{"shape":"LastRefreshType"},
         "SubObjects":{"shape":"ViewSubObjectsList"},
-        "SubObjectVersionIds":{"shape":"ViewSubObjectVersionIdsList"}
+        "SubObjectVersionIds":{"shape":"ViewSubObjectVersionIdsList"},
+        "SubObjectsStatistics":{"shape":"SubObjectsStatisticsList"},
+        "SparkPipelineInfo":{"shape":"SparkPipelineInfoMap"}
       }
     },
     "ViewDialect":{
