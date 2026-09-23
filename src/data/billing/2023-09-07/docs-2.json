@@ -13,6 +13,7 @@
     "GetEnterpriseSupportChargeSummary": "<p>Returns a summary of Enterprise Support data aggregated across all accounts in the Enterprise Support profile.</p>",
     "GetEnterpriseSupportContractDetails": "<p>Returns Enterprise Support contract details.</p>",
     "GetResourcePolicy": "<p>Returns the resource-based policy document attached to the resource in <code>JSON</code> format. </p>",
+    "ListBillingViewSegments": "<p>Lists the segments of a billing view over a given time period. Each segment identifies the billing domain (<code>PRO_FORMA</code> or <code>BILLABLE</code>) and the account relationships that apply during its time range.</p> <p>If you don't provide an <code>arn</code>, the response includes segments for the caller's <code>PRIMARY</code> billing view.</p> <p>If a mid-period change occurs, the response includes multiple segments, each with its own time range. The response omits hidden segments, so the segments it returns might not cover the entire requested time period.</p>",
     "ListBillingViews": "<p>Lists the billing views available for a given time period. </p> <p>Every Amazon Web Services account has a unique <code>PRIMARY</code> billing view that represents the billing data available by default. Accounts that use Billing Conductor also have <code>BILLING_GROUP</code> billing views representing pro forma costs associated with each created billing group.</p>",
     "ListEnterpriseSupportLinkedAccountCharges": "<p>Returns Support-eligible spend broken down at linked account level.</p>",
     "ListSourceViewsForBillingView": "<p>Lists the source views (managed Amazon Web Services billing views) associated with the billing view. </p>",
@@ -36,6 +37,9 @@
         "BillingViewElement$sourceAccountId": "<p> The Amazon Web Services account ID that owns the source billing view, if this is a derived billing view. </p>",
         "BillingViewListElement$ownerAccountId": "<p> The list of owners of the Billing view. </p>",
         "BillingViewListElement$sourceAccountId": "<p> The Amazon Web Services account ID that owns the source billing view, if this is a derived billing view. </p>",
+        "BillingViewSegmentsListElement$billingTransferAccountId": "<p> The billing transfer account ID. The response includes this field only when the caller is a billing transfer source account. The response omits this field for billing group billing views. </p>",
+        "BillingViewSegmentsListElement$managementAccountId": "<p> The management account ID of the organization. The response includes this field for organization member accounts. </p>",
+        "BillingViewSegmentsListElement$billingGroupPrimaryAccountId": "<p> The billing group primary account ID. The response includes this field for billing group members. Compare this value to your own account ID to determine whether you are the primary account. </p>",
         "ChargeAccount$accountId": "<p>The account ID.</p>",
         "ContractAccount$accountId": "<p>The account ID.</p>",
         "CreditAllocationHistoryEntry$accountId": "<p>The Amazon Web Services account the credit was applied to.</p>",
@@ -97,6 +101,12 @@
     "AssociateSourceViewsResponse": {
       "base": null,
       "refs": {}
+    },
+    "BillingDomain": {
+      "base": "<p>The billing domain for a billing view segment. The following values are valid:</p> <ul> <li> <p> <code>PRO_FORMA</code> - Data shaped by Billing Conductor that doesn't reflect the final charges owed to Amazon Web Services.</p> </li> <li> <p> <code>BILLABLE</code> - Data that represents the final charges owed to Amazon Web Services.</p> </li> </ul>",
+      "refs": {
+        "BillingViewSegmentsListElement$domain": "<p>The billing domain for this segment. The following values are valid:</p> <ul> <li> <p> <code>PRO_FORMA</code> - Data shaped by Billing Conductor that doesn't reflect the final charges owed to Amazon Web Services.</p> </li> <li> <p> <code>BILLABLE</code> - Data that represents the final charges owed to Amazon Web Services.</p> </li> </ul>"
+      }
     },
     "BillingFeature": {
       "base": null,
@@ -182,6 +192,7 @@
         "DisassociateSourceViewsRequest$arn": "<p> The Amazon Resource Name (ARN) of the billing view to disassociate source views from. </p>",
         "DisassociateSourceViewsResponse$arn": "<p> The ARN of the billing view that the source views were disassociated from. </p>",
         "GetBillingViewRequest$arn": "<p> The Amazon Resource Name (ARN) that can be used to uniquely identify the billing view. </p>",
+        "ListBillingViewSegmentsRequest$arn": "<p> The Amazon Resource Name (ARN) that uniquely identifies the billing view to query. If you don't provide an ARN, the caller's <code>PRIMARY</code> billing view is used. The ARN must reference a primary billing view. Custom billing views aren't supported. </p>",
         "ListSourceViewsForBillingViewRequest$arn": "<p> The Amazon Resource Name (ARN) that can be used to uniquely identify the billing view. </p>",
         "UpdateBillingViewRequest$arn": "<p> The Amazon Resource Name (ARN) that can be used to uniquely identify the billing view. </p>",
         "UpdateBillingViewResponse$arn": "<p> The Amazon Resource Name (ARN) that can be used to uniquely identify the billing view. </p>"
@@ -240,6 +251,25 @@
         "UpdateBillingViewRequest$name": "<p> The name of the billing view. </p>"
       }
     },
+    "BillingViewSegmentTimeRange": {
+      "base": "<p> Specifies a time range with an inclusive begin date and an exclusive end date. </p>",
+      "refs": {
+        "BillingViewSegmentsListElement$timeRange": "<p> The time range during which this segment is effective. </p>",
+        "ListBillingViewSegmentsRequest$timeRange": "<p> The billing period to query. If you don't provide a time range, the current billing period, which is the calendar month in UTC, is used. </p>"
+      }
+    },
+    "BillingViewSegmentsList": {
+      "base": "<p> A list of billing view segments. </p>",
+      "refs": {
+        "ListBillingViewSegmentsResponse$items": "<p> A list of billing view segments. Each segment covers a portion of the requested time period. The response omits hidden segments, so the segments it returns might not cover the entire requested time period. </p>"
+      }
+    },
+    "BillingViewSegmentsListElement": {
+      "base": "<p> A billing view segment. A segment represents a time range during which the billing domain and account relationships for a billing view remained unchanged. </p>",
+      "refs": {
+        "BillingViewSegmentsList$member": null
+      }
+    },
     "BillingViewSourceViewsList": {
       "base": null,
       "refs": {
@@ -284,6 +314,7 @@
     "BillingViewsMaxResults": {
       "base": null,
       "refs": {
+        "ListBillingViewSegmentsRequest$maxResults": "<p> The number of entries a paginated response contains. Valid values range from 1 to 100. The default is 100. </p>",
         "ListBillingViewsRequest$maxResults": "<p>The maximum number of billing views to retrieve. Default is 100. </p>",
         "ListSourceViewsForBillingViewRequest$maxResults": "<p> The number of entries a paginated response contains. </p>"
       }
@@ -598,6 +629,14 @@
         "ListEnterpriseSupportLinkedAccountChargesResponse$linkedAccount": "<p>The list of Enterprise Support charges per linked account.</p>"
       }
     },
+    "ListBillingViewSegmentsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListBillingViewSegmentsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListBillingViewsRequest": {
       "base": null,
       "refs": {}
@@ -657,6 +696,8 @@
         "GetBillingPreferencesResponse$nextToken": "<p>Pagination token. Present when more pages are available; <code>null</code> when there are no more results.</p>",
         "GetCreditAllocationHistoryRequest$nextToken": "<p>Pagination token from a previous response. Pass the value returned in <code>nextToken</code> to retrieve the next page of results.</p>",
         "GetCreditAllocationHistoryResponse$nextToken": "<p>Pagination token. Present when more pages are available; <code>null</code> when there are no more results.</p>",
+        "ListBillingViewSegmentsRequest$nextToken": "<p> The pagination token that is used on subsequent calls to list billing view segments. </p>",
+        "ListBillingViewSegmentsResponse$nextToken": "<p> The pagination token that is used on subsequent calls to list billing view segments. </p>",
         "ListBillingViewsRequest$nextToken": "<p>The pagination token that is used on subsequent calls to list billing views.</p>",
         "ListBillingViewsResponse$nextToken": "<p>The pagination token to use on subsequent calls to list billing views. </p>",
         "ListEnterpriseSupportLinkedAccountChargesRequest$nextToken": "<p>The pagination token for the next page of results.</p>",
@@ -962,6 +1003,8 @@
         "BillingViewElement$createdAt": "<p>The time when the billing view was created. </p>",
         "BillingViewElement$updatedAt": "<p>The time when the billing view was last updated. </p>",
         "BillingViewElement$viewDefinitionLastUpdatedAt": "<p> The timestamp of when the billing view definition was last updated. </p>",
+        "BillingViewSegmentTimeRange$beginDateInclusive": "<p> The inclusive start of the time range. This value can't be in the future. </p>",
+        "BillingViewSegmentTimeRange$endDateExclusive": "<p> The exclusive end of the time range. This value must be after <code>beginDateInclusive</code>. </p>",
         "CreateBillingViewResponse$createdAt": "<p> The time when the billing view was created. </p>",
         "CreditData$startDate": "<p>The date the credit becomes valid, as Unix epoch seconds.</p>",
         "CreditData$endDate": "<p>The date the credit expires, as Unix epoch seconds.</p>",

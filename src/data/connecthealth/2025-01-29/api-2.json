@@ -1338,7 +1338,8 @@
         "MedicalScribeLanguageCode": {
             "type": "string",
             "enum": [
-                "en-US"
+                "en-US",
+                "multi"
             ]
         },
         "MedicalScribeListeningSessionDetails": {
@@ -1658,11 +1659,6 @@
             "min": 0,
             "pattern": "s3:\/\/[a-z0-9][\\.\\-a-z0-9]{1,61}[a-z0-9](\/.*)?"
         },
-        "SensitiveAlphanumericString": {
-            "type": "string",
-            "pattern": "[a-zA-Z0-9]+",
-            "sensitive": true
-        },
         "SensitiveIsoDateString": {
             "type": "string",
             "pattern": "\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])",
@@ -1676,6 +1672,11 @@
         "SensitiveNonEmptyString": {
             "type": "string",
             "pattern": ".*[\\s\\S]*\\S[\\s\\S]*.*",
+            "sensitive": true
+        },
+        "SensitiveSectionHeaderString": {
+            "type": "string",
+            "pattern": "[a-zA-Z0-9_]+",
             "sensitive": true
         },
         "ServiceQuotaExceededException": {
@@ -1981,7 +1982,7 @@
             ],
             "members": {
                 "sectionHeader": {
-                    "shape": "SensitiveAlphanumericString"
+                    "shape": "SensitiveSectionHeaderString"
                 },
                 "sectionInstruction": {
                     "shape": "SensitiveMarkdownString"

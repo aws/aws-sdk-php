@@ -204,6 +204,24 @@
       ],
       "readonly":true
     },
+    "ListBillingViewSegments":{
+      "name":"ListBillingViewSegments",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListBillingViewSegmentsRequest"},
+      "output":{"shape":"ListBillingViewSegmentsResponse"},
+      "errors":[
+        {"shape":"BillingViewHealthStatusException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
     "ListBillingViews":{
       "name":"ListBillingViews",
       "http":{
@@ -434,6 +452,13 @@
         "arn":{"shape":"BillingViewArn"}
       }
     },
+    "BillingDomain":{
+      "type":"string",
+      "enum":[
+        "BILLABLE",
+        "PRO_FORMA"
+      ]
+    },
     "BillingFeature":{
       "type":"string",
       "enum":[
@@ -593,6 +618,27 @@
       "min":1,
       "pattern":"[ a-zA-Z0-9_\\+=\\.\\-@]+",
       "sensitive":true
+    },
+    "BillingViewSegmentTimeRange":{
+      "type":"structure",
+      "members":{
+        "beginDateInclusive":{"shape":"Timestamp"},
+        "endDateExclusive":{"shape":"Timestamp"}
+      }
+    },
+    "BillingViewSegmentsList":{
+      "type":"list",
+      "member":{"shape":"BillingViewSegmentsListElement"}
+    },
+    "BillingViewSegmentsListElement":{
+      "type":"structure",
+      "members":{
+        "domain":{"shape":"BillingDomain"},
+        "timeRange":{"shape":"BillingViewSegmentTimeRange"},
+        "billingTransferAccountId":{"shape":"AccountId"},
+        "managementAccountId":{"shape":"AccountId"},
+        "billingGroupPrimaryAccountId":{"shape":"AccountId"}
+      }
     },
     "BillingViewSourceViewsList":{
       "type":"list",
@@ -1159,6 +1205,23 @@
       "member":{"shape":"LinkedAccountCharge"},
       "max":100,
       "min":0
+    },
+    "ListBillingViewSegmentsRequest":{
+      "type":"structure",
+      "members":{
+        "timeRange":{"shape":"BillingViewSegmentTimeRange"},
+        "arn":{"shape":"BillingViewArn"},
+        "maxResults":{"shape":"BillingViewsMaxResults"},
+        "nextToken":{"shape":"PageToken"}
+      }
+    },
+    "ListBillingViewSegmentsResponse":{
+      "type":"structure",
+      "required":["items"],
+      "members":{
+        "items":{"shape":"BillingViewSegmentsList"},
+        "nextToken":{"shape":"PageToken"}
+      }
     },
     "ListBillingViewsRequest":{
       "type":"structure",

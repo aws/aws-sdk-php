@@ -560,6 +560,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionNetworkManager(array $args = [])
  * @method \Aws\NetworkMonitor\NetworkMonitorClient createNetworkMonitor(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionNetworkMonitor(array $args = [])
+ * @method \Aws\NetworkSecurityManager\NetworkSecurityManagerClient createNetworkSecurityManager(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionNetworkSecurityManager(array $args = [])
  * @method \Aws\Notifications\NotificationsClient createNotifications(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionNotifications(array $args = [])
  * @method \Aws\NotificationsContacts\NotificationsContactsClient createNotificationsContacts(array $args = [])

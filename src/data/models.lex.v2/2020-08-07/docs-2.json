@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<p>Amazon Lex Model Building Service provides APIs for creating, managing, and deploying conversational bots and their components.</p>",
+  "service": "<p>This document provides detailed information about the Amazon Lex V2 API actions and their parameters.</p> <p>For information about the IAM access control permissions you need to use this API, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/security_iam_service-with-iam.html\">Identity-based policies for Amazon Lex V2</a>.</p> <p>Amazon Lex V2 Model Building V2 operations let you build and manage bots.</p> <p>If you use a custom HTTP client to call Amazon Lex Model Building V2 operations, you must set the \"Content-Type\" HTTP header to \"application/x-amz-json-1.1\". Otherwise, you receive an HTTP 404 - UnknownOperationException in the response.</p> <p>Amazon Lex Model Building V2 operations return the responses with the \"application/x-amz-json-1.1\" content type.</p> <p>You can use <a href=\"http://aws.amazon.com/tools/#sdk\">Amazon Web Services SDKs</a> to access Amazon Lex V2 APIs using your favorite programming language. The SDKs automatically perform useful tasks for you, such as:</p> <ul> <li> <p>Cryptographically sign your service requests</p> </li> <li> <p>Retry requests</p> </li> <li> <p>Handle error responses</p> </li> </ul> <p>The following resources provide additional information about the Amazon Lex V2 Model Building API.</p> <ul> <li> <p> <i>Amazon Web Services General Reference</i> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/general/latest/gr/lex.html\">Amazon Lex V2 Endpoints for each region</a>.</p> </li> </ul> </li> <li> <p> <i>Command Line Interface</i> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/cli/latest/reference/lexv2-models/index.html\"> Amazon Lex Model Building V2 CLI commands</a>.</p> </li> </ul> </li> </ul>",
   "operations": {
     "BatchCreateCustomVocabularyItem": "<p>Create a batch of custom vocabulary items for a given bot locale's custom vocabulary.</p>",
     "BatchDeleteCustomVocabularyItem": "<p>Delete a batch of custom vocabulary items for a given bot locale's custom vocabulary.</p>",
@@ -2669,7 +2669,8 @@
       "refs": {
         "IntentDisambiguationSettings$enabled": "<p>Determines whether the Intent Disambiguation feature is enabled. When set to <code>true</code>, Amazon Lex will present disambiguation options to users when multiple intents could match their input, with the default being <code>false</code>.</p>",
         "NluImprovementSpecification$enabled": "<p>Determines whether the Assisted NLU feature is enabled for the bot. When set to <code>true</code>, Amazon Lex uses advanced models to improve intent recognition and slot resolution, with the default being <code>false</code>.</p>",
-        "SlotResolutionImprovementSpecification$enabled": "<p>Specifies whether assisted slot resolution is turned on or off.</p>"
+        "SlotResolutionImprovementSpecification$enabled": "<p>Specifies whether assisted slot resolution is turned on or off.</p>",
+        "SpeakerDiarizationSettings$enabled": "<p>Specifies whether speaker diarization is enabled for the bot locale. Set to <code>true</code> to have Amazon Lex treat speech from speakers other than the primary speaker as non-speech. Set to <code>false</code> to disable speaker diarization and rely on voice activity detection alone.</p>"
       }
     },
     "EncryptionSetting": {
@@ -5241,6 +5242,17 @@
         "SlotTypeSortBy$order": "<p>The order to sort the list. You can say ascending or descending.</p>",
         "TestExecutionSortBy$order": "<p>Specifies whether to sort in ascending or descending order.</p>",
         "TestSetSortBy$order": "<p>Specifies whether to sort in ascending or descending order.</p>"
+      }
+    },
+    "SpeakerDiarizationSettings": {
+      "base": "<p>Specifies configuration that restricts speech detection to the primary (loudest) speaker during streaming audio conversations, so that speech from background speakers does not start a turn, interrupt the bot, or reach speech recognition.</p>",
+      "refs": {
+        "BotLocaleImportSpecification$speakerDiarizationSettings": "<p>The speaker diarization settings to apply when importing the bot locale configuration.</p>",
+        "CreateBotLocaleRequest$speakerDiarizationSettings": "<p>The speaker diarization settings to configure for the new bot locale. When enabled, Amazon Lex restricts speech detection to the primary (loudest) speaker during streaming audio conversations.</p>",
+        "CreateBotLocaleResponse$speakerDiarizationSettings": "<p>The speaker diarization settings configured for the created bot locale.</p>",
+        "DescribeBotLocaleResponse$speakerDiarizationSettings": "<p>The speaker diarization settings configured for the bot locale.</p>",
+        "UpdateBotLocaleRequest$speakerDiarizationSettings": "<p>The updated speaker diarization settings to apply to the bot locale. If you omit this field, Amazon Lex keeps the setting currently stored on the bot locale. To turn speaker diarization off, set <code>enabled</code> to <code>false</code> explicitly.</p>",
+        "UpdateBotLocaleResponse$speakerDiarizationSettings": "<p>The updated speaker diarization settings for the bot locale.</p>"
       }
     },
     "Specifications": {

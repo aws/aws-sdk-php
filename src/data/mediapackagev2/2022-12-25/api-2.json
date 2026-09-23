@@ -737,6 +737,20 @@
         "ISM"
       ]
     },
+    "ContentKeyPeriodConfiguration":{
+      "type":"structure",
+      "members":{
+        "ContentKeyPeriodTiming":{"shape":"ContentKeyPeriodTiming"}
+      }
+    },
+    "ContentKeyPeriodTiming":{
+      "type":"string",
+      "enum":[
+        "INDEX_ONLY",
+        "START_END_ONLY",
+        "INDEX_WITH_START_END"
+      ]
+    },
     "CreateChannelGroupRequest":{
       "type":"structure",
       "required":["ChannelGroupName"],
@@ -2785,7 +2799,9 @@
         "DrmSystems":{"shape":"SpekeKeyProviderDrmSystemsList"},
         "RoleArn":{"shape":"SpekeKeyProviderRoleArnString"},
         "Url":{"shape":"SpekeKeyProviderUrlString"},
-        "CertificateArn":{"shape":"SpekeKeyProviderCertificateArnString"}
+        "CertificateArn":{"shape":"SpekeKeyProviderCertificateArnString"},
+        "SpekeVersion":{"shape":"SpekeVersion"},
+        "ContentKeyPeriodConfiguration":{"shape":"ContentKeyPeriodConfiguration"}
       }
     },
     "SpekeKeyProviderCertificateArnString":{
@@ -2815,6 +2831,13 @@
       "type":"string",
       "max":1024,
       "min":1
+    },
+    "SpekeVersion":{
+      "type":"string",
+      "enum":[
+        "V2_0",
+        "V2_1"
+      ]
     },
     "StartTag":{
       "type":"structure",
@@ -3241,7 +3264,9 @@
         "MULTIVIEW_INPUT_TYPE_WITH_NON_EPOCH_LOCKED",
         "MULTIVIEW_INPUT_TYPE_WITH_SEGMENT_DURATION",
         "MULTIVIEW_SOURCE_NON_EPOCH_LOCKED",
-        "MULTIVIEW_SCTE_REQUIRES_AVAILS_PERIOD_TRIGGER"
+        "MULTIVIEW_SCTE_REQUIRES_AVAILS_PERIOD_TRIGGER",
+        "CONTENT_KEY_PERIOD_TIMING_WITHOUT_KEY_ROTATION",
+        "CONTENT_KEY_PERIOD_TIMING_REQUIRES_SPEKE_V2_1"
       ]
     }
   }

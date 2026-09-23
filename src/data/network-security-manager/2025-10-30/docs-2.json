@@ -1,0 +1,1862 @@
+{
+  "version": "2.0",
+  "service": "<p>AWS Network Security Manager helps you centrally configure and deploy network security protections across your organization. Supported protections include AWS WAF and AWS Shield Advanced. This centralized approach reduces the overhead of managing protections individually across accounts and ensures consistent security at scale.</p> <p>You define reusable <i>rules</i> and <i>templates</i>, then combine them into <i>policies</i>. Next, you select the accounts and resources to protect with <i>scopes</i> and roll the protections out with <i>deployments</i>. For example, you can define a set of AWS WAF rules and group them into a policy. Then deploy that policy across all accounts in your organization with a single deployment.</p> <p>This API reference describes the operations and data types for AWS Network Security Manager.</p> <p>For conceptual information, tutorials, and guidance on writing rule configurations, see the <a href=\"https://docs.aws.amazon.com/network-security-manager/latest/devguide/what-is.html\">AWS Network Security Manager Developer Guide</a>. For the default quotas that apply to your account, see <a href=\"https://docs.aws.amazon.com/network-security-manager/latest/devguide/quotas.html\">Quotas</a>. For the service endpoints available in each Region, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/network-security-manager.html\">AWS Network Security Manager endpoints and quotas</a> in the <i>AWS General Reference</i>.</p>",
+  "operations": {
+    "CreateDeployment": "<p>Creates a deployment. A deployment applies one or more policies to the accounts and resources selected by a scope. Use <code>isPublished</code> to create the deployment in published (<code>ACTIVE</code>) or draft (<code>DRAFT</code>) state. The response includes coverage information and any warnings about the deployment.</p>",
+    "CreateDeploymentSnapshot": "<p>Creates a snapshot of the current published version of the specified deployment.</p>",
+    "CreatePolicy": "<p>Creates a policy. A policy combines templates and rules with enforcement settings for a firewall type, such as AWS WAF or AWS Shield Advanced. Use <code>isPublished</code> to create the policy in published (<code>ACTIVE</code>) or draft (<code>DRAFT</code>) state.</p>",
+    "CreatePolicySnapshot": "<p>Creates a snapshot of the current published version of the specified policy.</p>",
+    "CreateRule": "<p>Creates a rule. A rule defines a network security configuration to enforce, such as an AWS WAF rule group or configuration data. Use <code>isPublished</code> to create the rule in published (<code>ACTIVE</code>) or draft (<code>DRAFT</code>) state.</p>",
+    "CreateRuleSnapshot": "<p>Creates a snapshot of the current published version of the specified rule. A snapshot is an immutable, versioned copy that other resources can reference.</p>",
+    "CreateScope": "<p>Creates a scope. A scope selects the accounts and resources that a deployment applies to. Use <code>isPublished</code> to create the scope in published (<code>ACTIVE</code>) or draft (<code>DRAFT</code>) state.</p>",
+    "CreateScopeSnapshot": "<p>Creates a snapshot of the current published version of the specified scope.</p>",
+    "CreateTemplate": "<p>Creates a template. A template groups one or more rules to simplify reuse across policies. You can also associate rules with a policy directly, without a template. Use <code>isPublished</code> to create the template in published (<code>ACTIVE</code>) or draft (<code>DRAFT</code>) state.</p>",
+    "CreateTemplateSnapshot": "<p>Creates a snapshot of the current published version of the specified template.</p>",
+    "DeleteAdminAccount": "<p>Removes the specified AWS Network Security Manager administrator account.</p>",
+    "DeleteDeployment": "<p>Deletes the specified deployment.</p>",
+    "DeletePolicy": "<p>Deletes the specified policy.</p>",
+    "DeleteRule": "<p>Deletes the specified rule.</p>",
+    "DeleteScope": "<p>Deletes the specified scope.</p>",
+    "DeleteTemplate": "<p>Deletes the specified template.</p>",
+    "GenerateRuleConfiguration": "<p>Generates a rule configuration from a natural-language description. Provide a prompt along with the rule's firewall type and rule type. The service returns a configuration that you can use when you create or update a rule. If you also provide an existing configuration, the service edits that configuration instead of generating a new one.</p>",
+    "GetAdminAccount": "<p>Retrieves the details of the specified AWS Network Security Manager administrator account.</p>",
+    "GetDeployment": "<p>Retrieves the details of the specified deployment, including coverage information and any warnings.</p>",
+    "GetPolicy": "<p>Retrieves the details of the specified policy.</p>",
+    "GetRule": "<p>Retrieves the details of the specified rule.</p>",
+    "GetScope": "<p>Retrieves the details of the specified scope.</p>",
+    "GetTemplate": "<p>Retrieves the details of the specified template.</p>",
+    "ListAdminAccounts": "<p>Lists the AWS Network Security Manager administrator accounts in the organization.</p>",
+    "ListAggregateResourceSynchronizationStatuses": "<p>Lists the aggregated synchronization statuses of resources across the deployments in your administrator account. You can filter the results by synchronization status and page through them.</p>",
+    "ListDeploymentSnapshots": "<p>Lists the snapshots of the specified deployment.</p>",
+    "ListDeployments": "<p>Lists the deployments in the account. You can filter the results by status and page through them using <code>maxResults</code> and <code>nextToken</code>.</p>",
+    "ListPolicies": "<p>Lists the policies in the account. You can filter the results by status and page through them using <code>maxResults</code> and <code>nextToken</code>.</p>",
+    "ListPolicySnapshots": "<p>Lists the snapshots of the specified policy.</p>",
+    "ListResourceAssociations": "<p>Lists the resources associated with the specified resource.</p>",
+    "ListResourceSynchronizationStatuses": "<p>Lists the synchronization statuses of the resources covered by the specified deployment. You can filter the results by synchronization status and page through them.</p>",
+    "ListRuleSnapshots": "<p>Lists the snapshots of the specified rule.</p>",
+    "ListRules": "<p>Lists the rules in the account. You can filter the results by status and page through them using <code>maxResults</code> and <code>nextToken</code>.</p>",
+    "ListScopeSnapshots": "<p>Lists the snapshots of the specified scope.</p>",
+    "ListScopes": "<p>Lists the scopes in the account. You can filter the results by status and page through them using <code>maxResults</code> and <code>nextToken</code>.</p>",
+    "ListTagsForResource": "<p>Lists the tags associated with the specified resource.</p>",
+    "ListTemplateSnapshots": "<p>Lists the snapshots of the specified template.</p>",
+    "ListTemplates": "<p>Lists the templates in the account. You can filter the results by status and page through them using <code>maxResults</code> and <code>nextToken</code>.</p>",
+    "PutAdminAccount": "<p>Sets the AWS account that serves as an AWS Network Security Manager administrator account, and optionally configures the scope of resources that the administrator can manage.</p> <p>You can't set an administrator account again immediately after you remove it, or while the service creates its service-linked role. Retry the request after a few minutes.</p>",
+    "TagResource": "<p>Adds or overwrites the specified tags on the given resource.</p>",
+    "UntagResource": "<p>Removes the specified tags from the given resource.</p>",
+    "UpdateDeployment": "<p>Updates the specified deployment. To prevent conflicting concurrent updates, provide the current <code>updateToken</code>. Use <code>isPublished</code> to publish the update or keep the deployment as a draft.</p>",
+    "UpdatePolicy": "<p>Updates the specified policy. To prevent conflicting concurrent updates, provide the current <code>updateToken</code>. Use <code>isPublished</code> to publish the update or keep the policy as a draft.</p>",
+    "UpdateRule": "<p>Updates the specified rule. To prevent conflicting concurrent updates, provide the current <code>updateToken</code>. Use <code>isPublished</code> to publish the update or keep the rule as a draft.</p>",
+    "UpdateScope": "<p>Updates the specified scope. To prevent conflicting concurrent updates, provide the current <code>updateToken</code>. Use <code>isPublished</code> to publish the update or keep the scope as a draft.</p>",
+    "UpdateTemplate": "<p>Updates the specified template. To prevent conflicting concurrent updates, provide the current <code>updateToken</code>. Use <code>isPublished</code> to publish the update or keep the template as a draft.</p>"
+  },
+  "shapes": {
+    "AccessDeniedException": {
+      "base": "<p>You do not have sufficient permissions to perform this action.</p>",
+      "refs": {}
+    },
+    "AccountFilter": {
+      "base": "<p>Determines which accounts are in scope. Exactly one of <code>includeAll</code>, <code>include</code>, or <code>exclude</code> is set.</p>",
+      "refs": {
+        "ScopeConfiguration$accountFilter": "<p>The account filter that determines which accounts are in scope. When set, exactly one of <code>includeAll</code>, <code>include</code>, or <code>exclude</code> is set.</p> <p>Organization administrators must include an account filter in every scope configuration. Single-account administrators must omit it: a scope without an account filter applies only to the administrator's own account. The presence of an account filter is fixed when the scope is created: an update can't add an account filter to a scope that was created without one, or remove the account filter from a scope that was created with one.</p>"
+      }
+    },
+    "AccountId": {
+      "base": null,
+      "refs": {
+        "AccountIdList$member": null,
+        "AccountList$member": null,
+        "AccountReference$accountId": "<p>The AWS account ID.</p>",
+        "AdminAccountDetails$adminAccount": "<p>The AWS account ID of the administrator account.</p>",
+        "AdminAccountSummary$accountId": "<p>The AWS account ID.</p>",
+        "DeleteAdminAccountRequest$accountId": "<p>The AWS account ID of the administrator account to remove.</p>",
+        "GetAdminAccountRequest$accountId": "<p>The AWS account ID of the administrator account to retrieve.</p>",
+        "PutAdminAccountRequest$accountId": "<p>The AWS account ID to set as the AWS Network Security Manager administrator account.</p>",
+        "ResourceSynchronizationStatusSummary$accountId": "<p>The AWS account ID that owns the resource.</p>"
+      }
+    },
+    "AccountIdList": {
+      "base": null,
+      "refs": {
+        "AdminScopeSelectionInput$accounts": "<p>The AWS accounts in the selection.</p>"
+      }
+    },
+    "AccountList": {
+      "base": null,
+      "refs": {
+        "AccountSet$accountIds": "<p>The list of AWS account IDs.</p>"
+      }
+    },
+    "AccountReference": {
+      "base": "<p>A reference to an AWS account, with optional display metadata.</p>",
+      "refs": {
+        "AccountReferenceList$member": null
+      }
+    },
+    "AccountReferenceList": {
+      "base": null,
+      "refs": {
+        "AdminScopeSelection$accounts": "<p>The AWS accounts in the selection.</p>"
+      }
+    },
+    "AccountSet": {
+      "base": "<p>A set of AWS accounts and organizational units.</p>",
+      "refs": {
+        "AccountFilter$include": "<p>Includes only the specified accounts and organizational units.</p>",
+        "AccountFilter$exclude": "<p>Excludes the specified accounts and organizational units. All others are in scope.</p>"
+      }
+    },
+    "AdminAccountDetails": {
+      "base": "<p>The details of an AWS Network Security Manager administrator account.</p>",
+      "refs": {
+        "GetAdminAccountResponse$adminAccountDetails": "<p>The details of the administrator account.</p>",
+        "PutAdminAccountResponse$adminAccountDetails": "<p>The details of the administrator account that was set.</p>"
+      }
+    },
+    "AdminAccountStatus": {
+      "base": null,
+      "refs": {
+        "AdminAccountDetails$status": "<p>The status of the administrator account, either <code>ONBOARDED</code> or <code>OFFBOARDED</code>.</p>"
+      }
+    },
+    "AdminAccountSummary": {
+      "base": "<p>Summary information about an AWS Network Security Manager administrator account.</p>",
+      "refs": {
+        "AdminAccountSummaryList$member": null
+      }
+    },
+    "AdminAccountSummaryList": {
+      "base": null,
+      "refs": {
+        "ListAdminAccountsResponse$adminAccounts": "<p>The list of administrator accounts.</p>"
+      }
+    },
+    "AdminFirewallTypeScope": {
+      "base": "<p>Defines the firewall types that an administrator can create and manage.</p>",
+      "refs": {
+        "AdminScope$firewallTypeScope": "<p>The firewall types that the administrator can create and manage.</p>",
+        "AdminScopeInput$firewallTypeScope": "<p>The firewall types that the administrator can create and manage.</p>"
+      }
+    },
+    "AdminPriority": {
+      "base": null,
+      "refs": {
+        "AdminAccountDetails$priority": "<p>The priority assigned to the administrator account.</p>",
+        "AdminAccountSummary$priority": "<p>The priority assigned to the administrator account.</p>",
+        "PutAdminAccountRequest$priority": "<p>The priority to assign to the administrator account.</p>"
+      }
+    },
+    "AdminScope": {
+      "base": "<p>Defines the accounts, organizational units, and firewall types that an administrator can manage.</p>",
+      "refs": {
+        "AdminAccountDetails$adminScope": "<p>The administrative scope, which defines the accounts, organizational units, and firewall types that the administrator can manage.</p>"
+      }
+    },
+    "AdminScopeFilter": {
+      "base": "<p>Determines which accounts and organizational units are in an administrator's scope. This is the reference form, which includes display metadata.</p>",
+      "refs": {
+        "AdminScope$scopeFilter": "<p>The filter that determines which accounts and organizational units are in the administrator's scope.</p>"
+      }
+    },
+    "AdminScopeFilterInput": {
+      "base": "<p>Determines which accounts and organizational units are in an administrator's scope. This is the input form, which uses account and organizational unit IDs.</p>",
+      "refs": {
+        "AdminScopeInput$scopeFilter": "<p>The filter that determines which accounts and organizational units are in the administrator's scope.</p>"
+      }
+    },
+    "AdminScopeInput": {
+      "base": "<p>The administrative scope configuration provided on input, using account and organizational unit IDs.</p>",
+      "refs": {
+        "PutAdminAccountRequest$adminScope": "<p>The scope of accounts, organizational units, and firewall types that the administrator can manage.</p>"
+      }
+    },
+    "AdminScopeSelection": {
+      "base": "<p>A selection of accounts and organizational units. This is the reference form, which includes display metadata.</p>",
+      "refs": {
+        "AdminScopeFilter$includeOnly": "<p>Only the specified accounts and organizational units are in the administrator's scope.</p>",
+        "AdminScopeFilter$excludeOnly": "<p>The accounts and organizational units to exclude from the administrator's scope. All others are in scope.</p>"
+      }
+    },
+    "AdminScopeSelectionInput": {
+      "base": "<p>A selection of accounts and organizational units. This is the input form, which uses account and organizational unit IDs.</p>",
+      "refs": {
+        "AdminScopeFilterInput$includeOnly": "<p>Only the specified accounts and organizational units are in the administrator's scope.</p>",
+        "AdminScopeFilterInput$excludeOnly": "<p>The accounts and organizational units to exclude from the administrator's scope. All others are in scope.</p>"
+      }
+    },
+    "AlbConfiguration": {
+      "base": "<p>Filter criteria specific to Application Load Balancers.</p>",
+      "refs": {
+        "ResourceCriteria$albConfig": "<p>Filter criteria specific to Application Load Balancers.</p>"
+      }
+    },
+    "Arn": {
+      "base": null,
+      "refs": {
+        "ListTagsForResourceInput$resourceArn": "<p>The ARN of the resource to list tags for. The ARN must not include a <code>:DRAFT</code> qualifier.</p>",
+        "ResourceArnList$member": null,
+        "ResourceAssociation$arn": "<p>The ARN of the associated resource.</p>",
+        "ResourceSynchronizationStatusSummary$resourceArn": "<p>The ARN of the resource whose synchronization status is reported.</p>",
+        "TagResourceInput$resourceArn": "<p>The ARN of the resource to tag. The ARN must not include a <code>:DRAFT</code> qualifier.</p>",
+        "UntagResourceInput$resourceArn": "<p>The ARN of the resource to remove tags from. The ARN must not include a <code>:DRAFT</code> qualifier.</p>"
+      }
+    },
+    "AssociatedPolicy": {
+      "base": "<p>An association between a deployment and a policy, as returned in outputs. The corresponding request structure is <code>PolicyReference</code>.</p>",
+      "refs": {
+        "AssociatedPolicyList$member": null
+      }
+    },
+    "AssociatedPolicyList": {
+      "base": null,
+      "refs": {
+        "CreateDeploymentOutput$associatedPolicyList": "<p>The policies associated with the deployment.</p>",
+        "CreateDeploymentSnapshotOutput$associatedPolicyList": "<p>The policies associated with the deployment.</p>",
+        "GetDeploymentOutput$associatedPolicyList": "<p>The policies associated with the deployment.</p>",
+        "UpdateDeploymentOutput$associatedPolicyList": "<p>The policies associated with the deployment.</p>"
+      }
+    },
+    "AssociatedRule": {
+      "base": "<p>An association between a template and a rule, as returned in outputs. The corresponding request structure is <code>RuleReference</code>.</p>",
+      "refs": {
+        "AssociatedRuleList$member": null
+      }
+    },
+    "AssociatedRuleList": {
+      "base": null,
+      "refs": {
+        "CreateTemplateOutput$associatedRuleList": "<p>The rules associated with the template.</p>",
+        "CreateTemplateSnapshotOutput$associatedRuleList": "<p>The rules associated with the template.</p>",
+        "GetTemplateOutput$associatedRuleList": "<p>The rules associated with the template.</p>",
+        "UpdateTemplateOutput$associatedRuleList": "<p>The rules associated with the template.</p>"
+      }
+    },
+    "AssociatedScope": {
+      "base": "<p>An association between a deployment and a scope, as returned in outputs. The corresponding request structure is <code>ScopeReference</code>.</p>",
+      "refs": {
+        "AssociatedScopeList$member": null
+      }
+    },
+    "AssociatedScopeList": {
+      "base": null,
+      "refs": {
+        "CreateDeploymentOutput$associatedScopeList": "<p>The scope associated with the deployment. A deployment has exactly one scope.</p>",
+        "CreateDeploymentSnapshotOutput$associatedScopeList": "<p>The scope associated with the deployment. A deployment has exactly one scope.</p>",
+        "GetDeploymentOutput$associatedScopeList": "<p>The scope associated with the deployment. A deployment has exactly one scope.</p>",
+        "UpdateDeploymentOutput$associatedScopeList": "<p>The scope associated with the deployment. A deployment has exactly one scope.</p>"
+      }
+    },
+    "AssociatedTemplateAndRuleList": {
+      "base": null,
+      "refs": {
+        "CreatePolicyOutput$associatedTemplateAndRuleList": "<p>The templates and rules associated with the policy. For AWS WAF policies, this list contains 1 to 100 templates or rules, of which at most 2 can be templates. For AWS Shield Advanced policies, this list is empty.</p>",
+        "CreatePolicySnapshotOutput$associatedTemplateAndRuleList": "<p>The templates and rules associated with the policy. For AWS WAF policies, this list contains 1 to 100 templates or rules, of which at most 2 can be templates. For AWS Shield Advanced policies, this list is empty.</p>",
+        "GetPolicyOutput$associatedTemplateAndRuleList": "<p>The templates and rules associated with the policy. For AWS WAF policies, this list contains 1 to 100 templates or rules, of which at most 2 can be templates. For AWS Shield Advanced policies, this list is empty.</p>",
+        "UpdatePolicyOutput$associatedTemplateAndRuleList": "<p>The templates and rules associated with the policy. For AWS WAF policies, this list contains 1 to 100 templates or rules, of which at most 2 can be templates. For AWS Shield Advanced policies, this list is empty.</p>"
+      }
+    },
+    "AssociatedTemplateOrRule": {
+      "base": "<p>An association between a policy and either a template or a rule, as returned in outputs. Exactly one of <code>templateArn</code> or <code>ruleArn</code> is set. The corresponding request structure is <code>TemplateOrRuleReference</code>.</p>",
+      "refs": {
+        "AssociatedTemplateAndRuleList$member": null
+      }
+    },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "AdminFirewallTypeScope$allFirewallTypesEnabled": "<p>Specifies whether the administrator can manage all firewall types, except for third-party firewall types.</p>",
+        "ResourceScope$includeAll": "<p>Includes all resources of the resource type.</p>"
+      }
+    },
+    "ConfigurationIssue": {
+      "base": "<p>Describes a single configuration value that does not match the intended configuration.</p>",
+      "refs": {
+        "ConfigurationIssueList$member": null
+      }
+    },
+    "ConfigurationIssueList": {
+      "base": null,
+      "refs": {
+        "InvalidFirewallReasons$incorrectSingleValueConfigurations": "<p>Single-value configuration settings whose values do not match the expected values.</p>",
+        "InvalidFirewallReasons$missingAppendableConfigurationValues": "<p>Appendable configuration values that are expected but missing.</p>",
+        "InvalidFirewallReasons$unexpectedAppendableConfigurationValues": "<p>Appendable configuration values that are present but not expected.</p>",
+        "InvalidFirewallReasons$incorrectAppendableConfigurationOrder": "<p>Appendable configuration values that are present but in the wrong order.</p>",
+        "InvalidFirewallReasons$missingMergeableConfigurationValues": "<p>Mergeable configuration values that are expected but missing.</p>",
+        "InvalidFirewallReasons$unexpectedMergeableConfigurationValues": "<p>Mergeable configuration values that are present but not expected.</p>"
+      }
+    },
+    "ConflictException": {
+      "base": "<p>The request conflicts with the current state of the resource. For example, the resource was modified concurrently, or it is in a state that does not allow the requested operation.</p>",
+      "refs": {}
+    },
+    "CreateDeploymentInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateDeploymentOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateDeploymentSnapshotInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateDeploymentSnapshotOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreatePolicyInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreatePolicyOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreatePolicySnapshotInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreatePolicySnapshotOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRuleInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRuleOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRuleSnapshotInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRuleSnapshotOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateScopeInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateScopeOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateScopeSnapshotInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateScopeSnapshotOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateTemplateInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateTemplateOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateTemplateSnapshotInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateTemplateSnapshotOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DateTimestamp": {
+      "base": null,
+      "refs": {
+        "CreateDeploymentOutput$updatedAt": "<p>The time when the resource was last updated.</p>",
+        "CreateDeploymentSnapshotOutput$updatedAt": "<p>The time when the snapshot was created.</p>",
+        "CreatePolicyOutput$updatedAt": "<p>The time when the resource was last updated.</p>",
+        "CreatePolicySnapshotOutput$updatedAt": "<p>The time when the snapshot was created.</p>",
+        "CreateRuleOutput$updatedAt": "<p>The time when the resource was last updated.</p>",
+        "CreateRuleSnapshotOutput$updatedAt": "<p>The time when the snapshot was created.</p>",
+        "CreateScopeOutput$updatedAt": "<p>The time when the resource was last updated.</p>",
+        "CreateScopeSnapshotOutput$updatedAt": "<p>The time when the snapshot was created.</p>",
+        "CreateTemplateOutput$updatedAt": "<p>The time when the resource was last updated.</p>",
+        "CreateTemplateSnapshotOutput$updatedAt": "<p>The time when the snapshot was created.</p>",
+        "DeploymentSummary$updatedAt": "<p>The time when the resource was last updated. For a snapshot, this is the time when the snapshot was created.</p>",
+        "GetDeploymentOutput$updatedAt": "<p>The time when the resource was last updated.</p>",
+        "GetPolicyOutput$updatedAt": "<p>The time when the resource was last updated.</p>",
+        "GetRuleOutput$updatedAt": "<p>The time when the resource was last updated.</p>",
+        "GetScopeOutput$updatedAt": "<p>The time when the resource was last updated.</p>",
+        "GetTemplateOutput$updatedAt": "<p>The time when the resource was last updated.</p>",
+        "PolicySummary$updatedAt": "<p>The time when the resource was last updated. For a snapshot, this is the time when the snapshot was created.</p>",
+        "ResourceSynchronizationStatusSummary$updatedAt": "<p>The time when the resource was last updated.</p>",
+        "ResourceSynchronizationStatusSummary$evaluatedAt": "<p>The time when the synchronization status was last evaluated.</p>",
+        "RuleSummary$updatedAt": "<p>The time when the resource was last updated. For a snapshot, this is the time when the snapshot was created.</p>",
+        "ScopeSummary$updatedAt": "<p>The time when the resource was last updated. For a snapshot, this is the time when the snapshot was created.</p>",
+        "TemplateSummary$updatedAt": "<p>The time when the resource was last updated. For a snapshot, this is the time when the snapshot was created.</p>",
+        "UpdateDeploymentOutput$updatedAt": "<p>The time when the resource was last updated.</p>",
+        "UpdatePolicyOutput$updatedAt": "<p>The time when the resource was last updated.</p>",
+        "UpdateRuleOutput$updatedAt": "<p>The time when the resource was last updated.</p>",
+        "UpdateScopeOutput$updatedAt": "<p>The time when the resource was last updated.</p>",
+        "UpdateTemplateOutput$updatedAt": "<p>The time when the resource was last updated.</p>"
+      }
+    },
+    "DeleteAdminAccountRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteDeploymentInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeletePolicyInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRuleInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteScopeInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteTemplateInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeploymentArn": {
+      "base": null,
+      "refs": {
+        "CreateDeploymentOutput$deploymentArn": "<p>The Amazon Resource Name (ARN) of the deployment.</p>",
+        "CreateDeploymentSnapshotOutput$deploymentArn": "<p>The Amazon Resource Name (ARN) of the deployment.</p>",
+        "DeploymentSummary$deploymentArn": "<p>The Amazon Resource Name (ARN) of the deployment.</p>",
+        "GetDeploymentOutput$deploymentArn": "<p>The Amazon Resource Name (ARN) of the deployment.</p>",
+        "ResourceSynchronizationStatusSummary$deploymentArn": "<p>The ARN of the deployment that the synchronization status is associated with. This is absent for aggregate (cross-deployment) statuses.</p>",
+        "UpdateDeploymentOutput$deploymentArn": "<p>The Amazon Resource Name (ARN) of the deployment.</p>"
+      }
+    },
+    "DeploymentConfiguration": {
+      "base": "<p>Configuration settings that control a deployment's behavior.</p>",
+      "refs": {
+        "CreateDeploymentInput$deploymentConfiguration": "<p>The configuration settings for the deployment.</p>",
+        "CreateDeploymentOutput$deploymentConfiguration": "<p>The configuration settings for the deployment.</p>",
+        "CreateDeploymentSnapshotOutput$deploymentConfiguration": "<p>The configuration settings for the deployment.</p>",
+        "GetDeploymentOutput$deploymentConfiguration": "<p>The configuration settings for the deployment.</p>",
+        "UpdateDeploymentInput$deploymentConfiguration": "<p>The configuration settings for the deployment.</p>",
+        "UpdateDeploymentOutput$deploymentConfiguration": "<p>The configuration settings for the deployment.</p>"
+      }
+    },
+    "DeploymentCoverageEntry": {
+      "base": "<p>Coverage information for one firewall type within a deployment. It lists the deployment's policies that have this firewall type. It also lists the resource types in the deployment's scope that the firewall type protects.</p>",
+      "refs": {
+        "DeploymentCoverageList$member": null
+      }
+    },
+    "DeploymentCoverageList": {
+      "base": null,
+      "refs": {
+        "CreateDeploymentOutput$deploymentCoverage": "<p>The coverage information for the deployment. For each firewall type, it shows which policies have that firewall type and which in-scope resource types the firewall type protects.</p>",
+        "GetDeploymentOutput$deploymentCoverage": "<p>The coverage information for the deployment. For each firewall type, it shows which policies have that firewall type and which in-scope resource types the firewall type protects.</p>",
+        "UpdateDeploymentOutput$deploymentCoverage": "<p>The coverage information for the deployment. For each firewall type, it shows which policies have that firewall type and which in-scope resource types the firewall type protects.</p>"
+      }
+    },
+    "DeploymentId": {
+      "base": null,
+      "refs": {
+        "CreateDeploymentOutput$deploymentId": "<p>The service-generated id of the deployment.</p>",
+        "CreateDeploymentSnapshotOutput$deploymentId": "<p>The service-generated id of the deployment.</p>",
+        "DeploymentSummary$deploymentId": "<p>The service-generated id of the deployment.</p>",
+        "GetDeploymentOutput$deploymentId": "<p>The service-generated id of the deployment.</p>",
+        "UpdateDeploymentOutput$deploymentId": "<p>The service-generated id of the deployment.</p>"
+      }
+    },
+    "DeploymentIdentifier": {
+      "base": null,
+      "refs": {
+        "CreateDeploymentSnapshotInput$deploymentIdentifier": "<p>The identifier of the deployment. This is the deployment's Amazon Resource Name (ARN).</p>",
+        "DeleteDeploymentInput$deploymentIdentifier": "<p>The identifier of the deployment. This is the deployment's Amazon Resource Name (ARN).</p>",
+        "GetDeploymentInput$deploymentIdentifier": "<p>The identifier of the deployment. This is the deployment's Amazon Resource Name (ARN).</p>",
+        "ListDeploymentSnapshotsInput$deploymentIdentifier": "<p>The identifier of the deployment. This is the deployment's Amazon Resource Name (ARN).</p>",
+        "ListResourceSynchronizationStatusesInput$deploymentIdentifier": "<p>The identifier of the deployment to list synchronization statuses for. This is the deployment's Amazon Resource Name (ARN).</p>",
+        "UpdateDeploymentInput$deploymentIdentifier": "<p>The identifier of the deployment. This is the deployment's Amazon Resource Name (ARN).</p>"
+      }
+    },
+    "DeploymentName": {
+      "base": null,
+      "refs": {
+        "CreateDeploymentInput$deploymentName": "<p>The name of the deployment.</p>",
+        "CreateDeploymentOutput$deploymentName": "<p>The name of the deployment.</p>",
+        "CreateDeploymentSnapshotOutput$deploymentName": "<p>The name of the deployment.</p>",
+        "DeploymentSummary$deploymentName": "<p>The name of the deployment.</p>",
+        "GetDeploymentOutput$deploymentName": "<p>The name of the deployment.</p>",
+        "UpdateDeploymentOutput$deploymentName": "<p>The name of the deployment.</p>"
+      }
+    },
+    "DeploymentPolicyArnList": {
+      "base": null,
+      "refs": {
+        "DeploymentCoverageEntry$policyArns": "<p>The Amazon Resource Names (ARNs) of the deployment's policies that have this firewall type.</p>"
+      }
+    },
+    "DeploymentResourceTypeList": {
+      "base": null,
+      "refs": {
+        "DeploymentCoverageEntry$inScopeResourceTypes": "<p>The resource types in the deployment's scope that this firewall type protects. This list is empty if the scope does not select any resource types that the firewall type protects.</p>"
+      }
+    },
+    "DeploymentSummary": {
+      "base": "<p>Summary information about a deployment.</p>",
+      "refs": {
+        "DeploymentSummaryList$member": null
+      }
+    },
+    "DeploymentSummaryList": {
+      "base": null,
+      "refs": {
+        "ListDeploymentSnapshotsOutput$snapshots": "<p>The snapshots of the deployment.</p>",
+        "ListDeploymentsOutput$deployments": "<p>The list of deployments.</p>"
+      }
+    },
+    "DeploymentWarningEntry": {
+      "base": "<p>A warning about a potential issue with a deployment.</p>",
+      "refs": {
+        "DeploymentWarningList$member": null
+      }
+    },
+    "DeploymentWarningList": {
+      "base": null,
+      "refs": {
+        "CreateDeploymentOutput$warnings": "<p>Warnings about potential issues, such as a policy that has no applicable resources in the deployment's scope.</p>",
+        "GetDeploymentOutput$warnings": "<p>Warnings about potential issues, such as a policy that has no applicable resources in the deployment's scope.</p>",
+        "UpdateDeploymentOutput$warnings": "<p>Warnings about potential issues, such as a policy that has no applicable resources in the deployment's scope.</p>"
+      }
+    },
+    "Description": {
+      "base": null,
+      "refs": {
+        "CreateDeploymentInput$deploymentDescription": "<p>A description of the deployment.</p>",
+        "CreateDeploymentOutput$deploymentDescription": "<p>A description of the deployment.</p>",
+        "CreateDeploymentSnapshotOutput$deploymentDescription": "<p>A description of the deployment.</p>",
+        "CreatePolicyInput$policyDescription": "<p>A description of the policy.</p>",
+        "CreatePolicyOutput$policyDescription": "<p>A description of the policy.</p>",
+        "CreatePolicySnapshotOutput$policyDescription": "<p>A description of the policy.</p>",
+        "CreateRuleInput$ruleDescription": "<p>A description of the rule.</p>",
+        "CreateRuleOutput$ruleDescription": "<p>A description of the rule.</p>",
+        "CreateRuleSnapshotOutput$ruleDescription": "<p>A description of the rule.</p>",
+        "CreateScopeInput$scopeDescription": "<p>A description of the scope.</p>",
+        "CreateScopeOutput$scopeDescription": "<p>A description of the scope.</p>",
+        "CreateScopeSnapshotOutput$scopeDescription": "<p>A description of the scope.</p>",
+        "CreateTemplateInput$templateDescription": "<p>A description of the template.</p>",
+        "CreateTemplateOutput$templateDescription": "<p>A description of the template.</p>",
+        "CreateTemplateSnapshotOutput$templateDescription": "<p>A description of the template.</p>",
+        "GetDeploymentOutput$deploymentDescription": "<p>A description of the deployment.</p>",
+        "GetPolicyOutput$policyDescription": "<p>A description of the policy.</p>",
+        "GetRuleOutput$ruleDescription": "<p>A description of the rule.</p>",
+        "GetScopeOutput$scopeDescription": "<p>A description of the scope.</p>",
+        "GetTemplateOutput$templateDescription": "<p>A description of the template.</p>",
+        "UpdateDeploymentInput$deploymentDescription": "<p>A description of the deployment.</p>",
+        "UpdateDeploymentOutput$deploymentDescription": "<p>A description of the deployment.</p>",
+        "UpdatePolicyInput$policyDescription": "<p>A description of the policy.</p>",
+        "UpdatePolicyOutput$policyDescription": "<p>A description of the policy.</p>",
+        "UpdateRuleInput$ruleDescription": "<p>A description of the rule.</p>",
+        "UpdateRuleOutput$ruleDescription": "<p>A description of the rule.</p>",
+        "UpdateScopeInput$scopeDescription": "<p>A description of the scope.</p>",
+        "UpdateScopeOutput$scopeDescription": "<p>A description of the scope.</p>",
+        "UpdateTemplateInput$templateDescription": "<p>A description of the template.</p>",
+        "UpdateTemplateOutput$templateDescription": "<p>A description of the template.</p>"
+      }
+    },
+    "EnableCrossAccountVisibility": {
+      "base": null,
+      "refs": {
+        "DeploymentConfiguration$enableCrossAccountVisibility": "<p>Specifies whether aggregate synchronization status details for the resources covered by this deployment are visible across accounts. Default: <code>false</code>.</p>"
+      }
+    },
+    "EntityStatus": {
+      "base": null,
+      "refs": {
+        "CreateDeploymentOutput$status": "<p>The current status of the resource: <code>DRAFT</code> (unpublished, editable) or <code>ACTIVE</code> (published, in use).</p>",
+        "CreateDeploymentSnapshotOutput$status": "<p>The current status of the resource: <code>DRAFT</code> (unpublished, editable) or <code>ACTIVE</code> (published, in use).</p>",
+        "CreatePolicyOutput$status": "<p>The current status of the resource: <code>DRAFT</code> (unpublished, editable) or <code>ACTIVE</code> (published, in use).</p>",
+        "CreatePolicySnapshotOutput$status": "<p>The current status of the resource: <code>DRAFT</code> (unpublished, editable) or <code>ACTIVE</code> (published, in use).</p>",
+        "CreateRuleOutput$status": "<p>The current status of the resource: <code>DRAFT</code> (unpublished, editable) or <code>ACTIVE</code> (published, in use).</p>",
+        "CreateRuleSnapshotOutput$status": "<p>The current status of the resource: <code>DRAFT</code> (unpublished, editable) or <code>ACTIVE</code> (published, in use).</p>",
+        "CreateScopeOutput$status": "<p>The current status of the resource: <code>DRAFT</code> (unpublished, editable) or <code>ACTIVE</code> (published, in use).</p>",
+        "CreateScopeSnapshotOutput$status": "<p>The current status of the resource: <code>DRAFT</code> (unpublished, editable) or <code>ACTIVE</code> (published, in use).</p>",
+        "CreateTemplateOutput$status": "<p>The current status of the resource: <code>DRAFT</code> (unpublished, editable) or <code>ACTIVE</code> (published, in use).</p>",
+        "CreateTemplateSnapshotOutput$status": "<p>The current status of the resource: <code>DRAFT</code> (unpublished, editable) or <code>ACTIVE</code> (published, in use).</p>",
+        "DeploymentSummary$status": "<p>The current status of the resource: <code>DRAFT</code> (unpublished, editable), <code>ACTIVE</code> (published, in use), or <code>DISABLED</code> (deactivated; changes cannot be published until the resource is re-enabled).</p>",
+        "GetDeploymentOutput$status": "<p>The current status of the resource: <code>DRAFT</code> (unpublished, editable), <code>ACTIVE</code> (published, in use), or <code>DISABLED</code> (deactivated; changes cannot be published until the resource is re-enabled).</p>",
+        "GetPolicyOutput$status": "<p>The current status of the resource: <code>DRAFT</code> (unpublished, editable) or <code>ACTIVE</code> (published, in use).</p>",
+        "GetRuleOutput$status": "<p>The current status of the resource: <code>DRAFT</code> (unpublished, editable) or <code>ACTIVE</code> (published, in use).</p>",
+        "GetScopeOutput$status": "<p>The current status of the resource: <code>DRAFT</code> (unpublished, editable), <code>ACTIVE</code> (published, in use), or <code>DISABLED</code> (deactivated; changes cannot be published until the resource is re-enabled).</p>",
+        "GetTemplateOutput$status": "<p>The current status of the resource: <code>DRAFT</code> (unpublished, editable) or <code>ACTIVE</code> (published, in use).</p>",
+        "PolicySummary$status": "<p>The current status of the resource: <code>DRAFT</code> (unpublished, editable) or <code>ACTIVE</code> (published, in use).</p>",
+        "RuleSummary$status": "<p>The current status of the resource: <code>DRAFT</code> (unpublished, editable) or <code>ACTIVE</code> (published, in use).</p>",
+        "ScopeSummary$status": "<p>The current status of the resource: <code>DRAFT</code> (unpublished, editable), <code>ACTIVE</code> (published, in use), or <code>DISABLED</code> (deactivated; changes cannot be published until the resource is re-enabled).</p>",
+        "TemplateSummary$status": "<p>The current status of the resource: <code>DRAFT</code> (unpublished, editable) or <code>ACTIVE</code> (published, in use).</p>",
+        "UpdateDeploymentOutput$status": "<p>The current status of the resource: <code>DRAFT</code> (unpublished, editable) or <code>ACTIVE</code> (published, in use).</p>",
+        "UpdatePolicyOutput$status": "<p>The current status of the resource: <code>DRAFT</code> (unpublished, editable) or <code>ACTIVE</code> (published, in use).</p>",
+        "UpdateRuleOutput$status": "<p>The current status of the resource: <code>DRAFT</code> (unpublished, editable) or <code>ACTIVE</code> (published, in use).</p>",
+        "UpdateScopeOutput$status": "<p>The current status of the resource: <code>DRAFT</code> (unpublished, editable) or <code>ACTIVE</code> (published, in use).</p>",
+        "UpdateTemplateOutput$status": "<p>The current status of the resource: <code>DRAFT</code> (unpublished, editable) or <code>ACTIVE</code> (published, in use).</p>"
+      }
+    },
+    "EntityStatusFilter": {
+      "base": null,
+      "refs": {
+        "ListDeploymentsInput$status": "<p>Filters the results by status: <code>ACTIVE</code>, <code>DRAFT</code>, or <code>DISABLED</code>.</p>",
+        "ListPoliciesInput$status": "<p>Filters the results by status, either <code>ACTIVE</code> or <code>DRAFT</code>.</p>",
+        "ListRulesInput$status": "<p>Filters the results by status, either <code>ACTIVE</code> or <code>DRAFT</code>.</p>",
+        "ListScopesInput$status": "<p>Filters the results by status: <code>ACTIVE</code>, <code>DRAFT</code>, or <code>DISABLED</code>.</p>",
+        "ListTemplatesInput$status": "<p>Filters the results by status, either <code>ACTIVE</code> or <code>DRAFT</code>.</p>"
+      }
+    },
+    "EntityVersion": {
+      "base": null,
+      "refs": {
+        "CreateDeploymentOutput$version": "<p>The version of the resource.</p>",
+        "CreateDeploymentSnapshotOutput$version": "<p>The version of the resource.</p>",
+        "CreatePolicyOutput$version": "<p>The version of the resource.</p>",
+        "CreatePolicySnapshotOutput$version": "<p>The version of the resource.</p>",
+        "CreateRuleOutput$version": "<p>The version of the resource.</p>",
+        "CreateRuleSnapshotOutput$version": "<p>The version of the resource.</p>",
+        "CreateScopeOutput$version": "<p>The version of the resource.</p>",
+        "CreateScopeSnapshotOutput$version": "<p>The version of the resource.</p>",
+        "CreateTemplateOutput$version": "<p>The version of the resource.</p>",
+        "CreateTemplateSnapshotOutput$version": "<p>The version of the resource.</p>",
+        "DeploymentSummary$version": "<p>The version of the resource.</p>",
+        "GetDeploymentOutput$version": "<p>The version of the resource.</p>",
+        "GetPolicyOutput$version": "<p>The version of the resource.</p>",
+        "GetRuleOutput$version": "<p>The version of the resource.</p>",
+        "GetScopeOutput$version": "<p>The version of the resource.</p>",
+        "GetTemplateOutput$version": "<p>The version of the resource.</p>",
+        "PolicySummary$version": "<p>The version of the resource.</p>",
+        "RuleSummary$version": "<p>The version of the resource.</p>",
+        "ScopeSummary$version": "<p>The version of the resource.</p>",
+        "TemplateSummary$version": "<p>The version of the resource.</p>",
+        "UpdateDeploymentOutput$version": "<p>The version of the resource.</p>",
+        "UpdatePolicyOutput$version": "<p>The version of the resource.</p>",
+        "UpdateRuleOutput$version": "<p>The version of the resource.</p>",
+        "UpdateScopeOutput$version": "<p>The version of the resource.</p>",
+        "UpdateTemplateOutput$version": "<p>The version of the resource.</p>"
+      }
+    },
+    "ExistingCustomerWebACLResolution": {
+      "base": null,
+      "refs": {
+        "WafConfig$existingCustomerWebACLResolution": "<p>Determines how AWS Network Security Manager handles remediation when a resource already has a customer-created web ACL. Required for AWS WAF policies.</p>"
+      }
+    },
+    "FirewallSyncReason": {
+      "base": "<p>Describes why a firewall is out of sync. Exactly one of <code>missingFirewall</code> or <code>invalidFirewall</code> is set.</p>",
+      "refs": {
+        "OutOfSyncReasons$value": null
+      }
+    },
+    "FirewallTypeList": {
+      "base": null,
+      "refs": {
+        "AdminFirewallTypeScope$firewallTypes": "<p>The list of firewall types that the administrator can manage.</p>"
+      }
+    },
+    "GenerateRuleConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GenerateRuleConfigurationRequestCurrentConfigurationString": {
+      "base": null,
+      "refs": {
+        "GenerateRuleConfigurationRequest$currentConfiguration": "<p>An existing configuration to edit, as a JSON string. When you provide this value, the operation edits the configuration. When you omit it, the operation generates a new configuration.</p>"
+      }
+    },
+    "GenerateRuleConfigurationRequestPromptString": {
+      "base": null,
+      "refs": {
+        "GenerateRuleConfigurationRequest$prompt": "<p>A natural-language description of the configuration that you want to generate.</p>"
+      }
+    },
+    "GenerateRuleConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GenerateRuleConfigurationResponseConfigurationString": {
+      "base": null,
+      "refs": {
+        "GenerateRuleConfigurationResponse$configuration": "<p>The generated configuration, as a JSON string. You can use this value in the <code>configuration</code> field of a rule.</p>"
+      }
+    },
+    "GetAdminAccountRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAdminAccountResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDeploymentInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDeploymentOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetPolicyInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetPolicyOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRuleInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRuleOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetScopeInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetScopeOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetTemplateInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetTemplateOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "HasPublishedVersion": {
+      "base": null,
+      "refs": {
+        "CreateDeploymentOutput$hasPublishedVersion": "<p>Specifies whether a published version of the resource exists.</p>",
+        "CreateDeploymentSnapshotOutput$hasPublishedVersion": "<p>Specifies whether a published version of the resource exists.</p>",
+        "CreatePolicyOutput$hasPublishedVersion": "<p>Specifies whether a published version of the resource exists.</p>",
+        "CreatePolicySnapshotOutput$hasPublishedVersion": "<p>Specifies whether a published version of the resource exists.</p>",
+        "CreateRuleOutput$hasPublishedVersion": "<p>Specifies whether a published version of the resource exists.</p>",
+        "CreateRuleSnapshotOutput$hasPublishedVersion": "<p>Specifies whether a published version of the resource exists.</p>",
+        "CreateScopeOutput$hasPublishedVersion": "<p>Specifies whether a published version of the resource exists.</p>",
+        "CreateScopeSnapshotOutput$hasPublishedVersion": "<p>Specifies whether a published version of the resource exists.</p>",
+        "CreateTemplateOutput$hasPublishedVersion": "<p>Specifies whether a published version of the resource exists.</p>",
+        "CreateTemplateSnapshotOutput$hasPublishedVersion": "<p>Specifies whether a published version of the resource exists.</p>",
+        "DeploymentSummary$hasPublishedVersion": "<p>Specifies whether a published version of the resource exists.</p>",
+        "GetDeploymentOutput$hasPublishedVersion": "<p>Specifies whether a published version of the resource exists.</p>",
+        "GetPolicyOutput$hasPublishedVersion": "<p>Specifies whether a published version of the resource exists.</p>",
+        "GetRuleOutput$hasPublishedVersion": "<p>Specifies whether a published version of the resource exists.</p>",
+        "GetScopeOutput$hasPublishedVersion": "<p>Specifies whether a published version of the resource exists.</p>",
+        "GetTemplateOutput$hasPublishedVersion": "<p>Specifies whether a published version of the resource exists.</p>",
+        "PolicySummary$hasPublishedVersion": "<p>Specifies whether a published version of the resource exists.</p>",
+        "RuleSummary$hasPublishedVersion": "<p>Specifies whether a published version of the resource exists.</p>",
+        "ScopeSummary$hasPublishedVersion": "<p>Specifies whether a published version of the resource exists.</p>",
+        "TemplateSummary$hasPublishedVersion": "<p>Specifies whether a published version of the resource exists.</p>",
+        "UpdateDeploymentOutput$hasPublishedVersion": "<p>Specifies whether a published version of the resource exists.</p>",
+        "UpdatePolicyOutput$hasPublishedVersion": "<p>Specifies whether a published version of the resource exists.</p>",
+        "UpdateRuleOutput$hasPublishedVersion": "<p>Specifies whether a published version of the resource exists.</p>",
+        "UpdateScopeOutput$hasPublishedVersion": "<p>Specifies whether a published version of the resource exists.</p>",
+        "UpdateTemplateOutput$hasPublishedVersion": "<p>Specifies whether a published version of the resource exists.</p>"
+      }
+    },
+    "IdempotencyToken": {
+      "base": null,
+      "refs": {
+        "CreateDeploymentInput$clientToken": "<p>A unique, case-sensitive token that you provide to ensure that the operation completes no more than one time. If you retry a request with the same client token and the same parameters, the service returns the result of the original successful request.</p>",
+        "CreateDeploymentSnapshotInput$clientToken": "<p>A unique, case-sensitive token that you provide to ensure that the operation completes no more than one time. If you retry a request with the same client token and the same parameters, the service returns the result of the original successful request.</p>",
+        "CreatePolicyInput$clientToken": "<p>A unique, case-sensitive token that you provide to ensure that the operation completes no more than one time. If you retry a request with the same client token and the same parameters, the service returns the result of the original successful request.</p>",
+        "CreatePolicySnapshotInput$clientToken": "<p>A unique, case-sensitive token that you provide to ensure that the operation completes no more than one time. If you retry a request with the same client token and the same parameters, the service returns the result of the original successful request.</p>",
+        "CreateRuleInput$clientToken": "<p>A unique, case-sensitive token that you provide to ensure that the operation completes no more than one time. If you retry a request with the same client token and the same parameters, the service returns the result of the original successful request.</p>",
+        "CreateRuleSnapshotInput$clientToken": "<p>A unique, case-sensitive token that you provide to ensure that the operation completes no more than one time. If you retry a request with the same client token and the same parameters, the service returns the result of the original successful request.</p>",
+        "CreateScopeInput$clientToken": "<p>A unique, case-sensitive token that you provide to ensure that the operation completes no more than one time. If you retry a request with the same client token and the same parameters, the service returns the result of the original successful request.</p>",
+        "CreateScopeSnapshotInput$clientToken": "<p>A unique, case-sensitive token that you provide to ensure that the operation completes no more than one time. If you retry a request with the same client token and the same parameters, the service returns the result of the original successful request.</p>",
+        "CreateTemplateInput$clientToken": "<p>A unique, case-sensitive token that you provide to ensure that the operation completes no more than one time. If you retry a request with the same client token and the same parameters, the service returns the result of the original successful request.</p>",
+        "CreateTemplateSnapshotInput$clientToken": "<p>A unique, case-sensitive token that you provide to ensure that the operation completes no more than one time. If you retry a request with the same client token and the same parameters, the service returns the result of the original successful request.</p>",
+        "GenerateRuleConfigurationRequest$clientToken": "<p>A unique, case-sensitive token that you provide to ensure that the operation completes no more than one time. If you retry a request with the same client token and the same parameters, the service returns the result of the original successful request.</p>",
+        "UpdateDeploymentInput$clientToken": "<p>A unique, case-sensitive token that you provide to ensure that the operation completes no more than one time. If you retry a request with the same client token and the same parameters, the service returns the result of the original successful request.</p>",
+        "UpdatePolicyInput$clientToken": "<p>A unique, case-sensitive token that you provide to ensure that the operation completes no more than one time. If you retry a request with the same client token and the same parameters, the service returns the result of the original successful request.</p>",
+        "UpdateRuleInput$clientToken": "<p>A unique, case-sensitive token that you provide to ensure that the operation completes no more than one time. If you retry a request with the same client token and the same parameters, the service returns the result of the original successful request.</p>",
+        "UpdateScopeInput$clientToken": "<p>A unique, case-sensitive token that you provide to ensure that the operation completes no more than one time. If you retry a request with the same client token and the same parameters, the service returns the result of the original successful request.</p>",
+        "UpdateTemplateInput$clientToken": "<p>A unique, case-sensitive token that you provide to ensure that the operation completes no more than one time. If you retry a request with the same client token and the same parameters, the service returns the result of the original successful request.</p>"
+      }
+    },
+    "Integer": {
+      "base": null,
+      "refs": {
+        "ServiceUnavailableException$retryAfterSeconds": "<p>The number of seconds to wait before retrying the request.</p>",
+        "ThrottlingException$retryAfterSeconds": "<p>The number of seconds to wait before retrying the request.</p>"
+      }
+    },
+    "InternalServerException": {
+      "base": "<p>The request processing failed because of an internal error in the service. This is a retryable error.</p>",
+      "refs": {}
+    },
+    "InvalidFirewallReasons": {
+      "base": "<p>Details about the ways in which a firewall's configuration differs from the intended configuration.</p>",
+      "refs": {
+        "FirewallSyncReason$invalidFirewall": "<p>Details about a firewall whose configuration does not match the intended configuration.</p>"
+      }
+    },
+    "IpAddressType": {
+      "base": null,
+      "refs": {
+        "AlbConfiguration$ipAddressType": "<p>The IP address type of the Application Load Balancer.</p>"
+      }
+    },
+    "IsPublished": {
+      "base": null,
+      "refs": {
+        "CreateDeploymentInput$isPublished": "<p>Specifies whether to publish the resource. When <code>true</code>, the resource is saved in published (<code>ACTIVE</code>) state. When <code>false</code>, it is saved as a draft (<code>DRAFT</code>). Default: <code>true</code>.</p>",
+        "CreatePolicyInput$isPublished": "<p>Specifies whether to publish the resource. When <code>true</code>, the resource is saved in published (<code>ACTIVE</code>) state. When <code>false</code>, it is saved as a draft (<code>DRAFT</code>). Default: <code>true</code>.</p>",
+        "CreateRuleInput$isPublished": "<p>Specifies whether to publish the resource. When <code>true</code>, the resource is saved in published (<code>ACTIVE</code>) state. When <code>false</code>, it is saved as a draft (<code>DRAFT</code>). Default: <code>true</code>.</p>",
+        "CreateScopeInput$isPublished": "<p>Specifies whether to publish the resource. When <code>true</code>, the resource is saved in published (<code>ACTIVE</code>) state. When <code>false</code>, it is saved as a draft (<code>DRAFT</code>). Default: <code>true</code>.</p>",
+        "CreateTemplateInput$isPublished": "<p>Specifies whether to publish the resource. When <code>true</code>, the resource is saved in published (<code>ACTIVE</code>) state. When <code>false</code>, it is saved as a draft (<code>DRAFT</code>). Default: <code>true</code>.</p>",
+        "UpdateDeploymentInput$isPublished": "<p>Specifies whether to publish the resource. When <code>true</code>, the resource is saved in published (<code>ACTIVE</code>) state. When <code>false</code>, it is saved as a draft (<code>DRAFT</code>).</p>",
+        "UpdatePolicyInput$isPublished": "<p>Specifies whether to publish the resource. When <code>true</code>, the resource is saved in published (<code>ACTIVE</code>) state. When <code>false</code>, it is saved as a draft (<code>DRAFT</code>).</p>",
+        "UpdateRuleInput$isPublished": "<p>Specifies whether to publish the resource. When <code>true</code>, the resource is saved in published (<code>ACTIVE</code>) state. When <code>false</code>, it is saved as a draft (<code>DRAFT</code>).</p>",
+        "UpdateScopeInput$isPublished": "<p>Specifies whether to publish the resource. When <code>true</code>, the resource is saved in published (<code>ACTIVE</code>) state. When <code>false</code>, it is saved as a draft (<code>DRAFT</code>).</p>",
+        "UpdateTemplateInput$isPublished": "<p>Specifies whether to publish the resource. When <code>true</code>, the resource is saved in published (<code>ACTIVE</code>) state. When <code>false</code>, it is saved as a draft (<code>DRAFT</code>).</p>"
+      }
+    },
+    "IsSnapshot": {
+      "base": null,
+      "refs": {
+        "CreateDeploymentOutput$isSnapshot": "<p>Specifies whether the resource is a snapshot of a published version.</p>",
+        "CreateDeploymentSnapshotOutput$isSnapshot": "<p>Specifies whether the resource is a snapshot of a published version.</p>",
+        "CreatePolicyOutput$isSnapshot": "<p>Specifies whether the resource is a snapshot of a published version.</p>",
+        "CreatePolicySnapshotOutput$isSnapshot": "<p>Specifies whether the resource is a snapshot of a published version.</p>",
+        "CreateRuleOutput$isSnapshot": "<p>Specifies whether the resource is a snapshot of a published version.</p>",
+        "CreateRuleSnapshotOutput$isSnapshot": "<p>Specifies whether the resource is a snapshot of a published version.</p>",
+        "CreateScopeOutput$isSnapshot": "<p>Specifies whether the resource is a snapshot of a published version.</p>",
+        "CreateScopeSnapshotOutput$isSnapshot": "<p>Specifies whether the resource is a snapshot of a published version.</p>",
+        "CreateTemplateOutput$isSnapshot": "<p>Specifies whether the resource is a snapshot of a published version.</p>",
+        "CreateTemplateSnapshotOutput$isSnapshot": "<p>Specifies whether the resource is a snapshot of a published version.</p>",
+        "GetDeploymentOutput$isSnapshot": "<p>Specifies whether the resource is a snapshot of a published version.</p>",
+        "GetPolicyOutput$isSnapshot": "<p>Specifies whether the resource is a snapshot of a published version.</p>",
+        "GetRuleOutput$isSnapshot": "<p>Specifies whether the resource is a snapshot of a published version.</p>",
+        "GetScopeOutput$isSnapshot": "<p>Specifies whether the resource is a snapshot of a published version.</p>",
+        "GetTemplateOutput$isSnapshot": "<p>Specifies whether the resource is a snapshot of a published version.</p>",
+        "UpdateDeploymentOutput$isSnapshot": "<p>Specifies whether the resource is a snapshot of a published version.</p>",
+        "UpdatePolicyOutput$isSnapshot": "<p>Specifies whether the resource is a snapshot of a published version.</p>",
+        "UpdateRuleOutput$isSnapshot": "<p>Specifies whether the resource is a snapshot of a published version.</p>",
+        "UpdateScopeOutput$isSnapshot": "<p>Specifies whether the resource is a snapshot of a published version.</p>",
+        "UpdateTemplateOutput$isSnapshot": "<p>Specifies whether the resource is a snapshot of a published version.</p>"
+      }
+    },
+    "JsonDocument": {
+      "base": null,
+      "refs": {
+        "CreateRuleInput$configuration": "<p>The firewall configuration for the rule, as a JSON document. The structure depends on the rule's firewall type and rule type. For an AWS WAF <code>INSPECTION</code> rule, provide an AWS WAF rule group. For an AWS WAF <code>CONFIGURATION</code> rule, provide a single web ACL setting, such as <code>DefaultAction</code> or <code>VisibilityConfig</code>; use <code>wafConfigDataType</code> to declare which setting the document contains. For the schema of each setting and complete examples, see <a href=\"https://docs.aws.amazon.com/network-security-manager/latest/devguide/what-is.html\">Writing rule configurations</a> in the <i>AWS Network Security Manager Developer Guide</i>.</p>",
+        "CreateRuleOutput$configuration": "<p>The firewall configuration for the rule, as a JSON document. The structure depends on the rule's firewall type and rule type.</p>",
+        "CreateRuleSnapshotOutput$configuration": "<p>The firewall configuration for the rule, as a JSON document. The structure depends on the rule's firewall type and rule type.</p>",
+        "GetRuleOutput$configuration": "<p>The firewall configuration for the rule, as a JSON document. The structure depends on the rule's firewall type and rule type.</p>",
+        "UpdateRuleInput$configuration": "<p>The firewall configuration for the rule, as a JSON document. The structure depends on the rule's firewall type and rule type. For an AWS WAF <code>INSPECTION</code> rule, provide an AWS WAF rule group. For an AWS WAF <code>CONFIGURATION</code> rule, provide a single web ACL setting, such as <code>DefaultAction</code> or <code>VisibilityConfig</code>; use <code>wafConfigDataType</code> to declare which setting the document contains. For the schema of each setting and complete examples, see <a href=\"https://docs.aws.amazon.com/network-security-manager/latest/devguide/what-is.html\">Writing rule configurations</a> in the <i>AWS Network Security Manager Developer Guide</i>.</p>",
+        "UpdateRuleOutput$configuration": "<p>The firewall configuration for the rule, as a JSON document. The structure depends on the rule's firewall type and rule type.</p>"
+      }
+    },
+    "ListAdminAccountsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAdminAccountsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAggregateResourceSynchronizationStatusesInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAggregateResourceSynchronizationStatusesOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDeploymentSnapshotsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDeploymentSnapshotsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDeploymentsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDeploymentsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListPoliciesInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListPoliciesOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListPolicySnapshotsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListPolicySnapshotsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListResourceAssociationsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListResourceAssociationsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListResourceSynchronizationStatusesInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListResourceSynchronizationStatusesOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRuleSnapshotsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRuleSnapshotsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRulesInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRulesOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListScopeSnapshotsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListScopeSnapshotsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListScopesInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListScopesOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForResourceInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForResourceOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTemplateSnapshotsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTemplateSnapshotsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTemplatesInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTemplatesOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "MaxResults": {
+      "base": null,
+      "refs": {
+        "ListAdminAccountsRequest$maxResults": "<p>The maximum number of results to return in a single call. Valid range: 1-100. To retrieve the remaining results, use the returned <code>nextToken</code> value in a subsequent call.</p>",
+        "ListAggregateResourceSynchronizationStatusesInput$maxResults": "<p>The maximum number of results to return in a single call. Valid range: 1-100. To retrieve the remaining results, use the returned <code>nextToken</code> value in a subsequent call.</p>",
+        "ListDeploymentSnapshotsInput$maxResults": "<p>The maximum number of results to return in a single call. Valid range: 1-100. To retrieve the remaining results, use the returned <code>nextToken</code> value in a subsequent call.</p>",
+        "ListDeploymentsInput$maxResults": "<p>The maximum number of results to return in a single call. Valid range: 1-100. To retrieve the remaining results, use the returned <code>nextToken</code> value in a subsequent call.</p>",
+        "ListPoliciesInput$maxResults": "<p>The maximum number of results to return in a single call. Valid range: 1-100. To retrieve the remaining results, use the returned <code>nextToken</code> value in a subsequent call.</p>",
+        "ListPolicySnapshotsInput$maxResults": "<p>The maximum number of results to return in a single call. Valid range: 1-100. To retrieve the remaining results, use the returned <code>nextToken</code> value in a subsequent call.</p>",
+        "ListResourceAssociationsInput$maxResults": "<p>The maximum number of results to return in a single call. Valid range: 1-100. To retrieve the remaining results, use the returned <code>nextToken</code> value in a subsequent call.</p>",
+        "ListResourceSynchronizationStatusesInput$maxResults": "<p>The maximum number of results to return in a single call. Valid range: 1-100. To retrieve the remaining results, use the returned <code>nextToken</code> value in a subsequent call.</p>",
+        "ListRuleSnapshotsInput$maxResults": "<p>The maximum number of results to return in a single call. Valid range: 1-100. To retrieve the remaining results, use the returned <code>nextToken</code> value in a subsequent call.</p>",
+        "ListRulesInput$maxResults": "<p>The maximum number of results to return in a single call. Valid range: 1-100. To retrieve the remaining results, use the returned <code>nextToken</code> value in a subsequent call.</p>",
+        "ListScopeSnapshotsInput$maxResults": "<p>The maximum number of results to return in a single call. Valid range: 1-100. To retrieve the remaining results, use the returned <code>nextToken</code> value in a subsequent call.</p>",
+        "ListScopesInput$maxResults": "<p>The maximum number of results to return in a single call. Valid range: 1-100. To retrieve the remaining results, use the returned <code>nextToken</code> value in a subsequent call.</p>",
+        "ListTemplateSnapshotsInput$maxResults": "<p>The maximum number of results to return in a single call. Valid range: 1-100. To retrieve the remaining results, use the returned <code>nextToken</code> value in a subsequent call.</p>",
+        "ListTemplatesInput$maxResults": "<p>The maximum number of results to return in a single call. Valid range: 1-100. To retrieve the remaining results, use the returned <code>nextToken</code> value in a subsequent call.</p>"
+      }
+    },
+    "NextToken": {
+      "base": null,
+      "refs": {
+        "ListAdminAccountsRequest$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
+        "ListAdminAccountsResponse$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
+        "ListAggregateResourceSynchronizationStatusesInput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
+        "ListAggregateResourceSynchronizationStatusesOutput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
+        "ListDeploymentSnapshotsInput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
+        "ListDeploymentSnapshotsOutput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
+        "ListDeploymentsInput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
+        "ListDeploymentsOutput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
+        "ListPoliciesInput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
+        "ListPoliciesOutput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
+        "ListPolicySnapshotsInput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
+        "ListPolicySnapshotsOutput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
+        "ListResourceAssociationsInput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
+        "ListResourceAssociationsOutput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
+        "ListResourceSynchronizationStatusesInput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
+        "ListResourceSynchronizationStatusesOutput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
+        "ListRuleSnapshotsInput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
+        "ListRuleSnapshotsOutput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
+        "ListRulesInput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
+        "ListRulesOutput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
+        "ListScopeSnapshotsInput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
+        "ListScopeSnapshotsOutput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
+        "ListScopesInput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
+        "ListScopesOutput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
+        "ListTemplateSnapshotsInput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
+        "ListTemplateSnapshotsOutput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
+        "ListTemplatesInput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
+        "ListTemplatesOutput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>"
+      }
+    },
+    "NotVisibleMarker": {
+      "base": "<p>Indicates that details are not visible because of cross-account restrictions.</p>",
+      "refs": {
+        "OutOfSyncReasonsView$notVisible": "<p>Indicates that the details are not visible because of cross-account restrictions.</p>",
+        "RemediationIssuesView$notVisible": "<p>Indicates that the details are not visible because of cross-account restrictions.</p>"
+      }
+    },
+    "OrganizationalUnit": {
+      "base": null,
+      "refs": {
+        "OrganizationalUnitList$member": null
+      }
+    },
+    "OrganizationalUnitId": {
+      "base": null,
+      "refs": {
+        "OrganizationalUnitIdList$member": null,
+        "OrganizationalUnitReference$ouId": "<p>The ID of the AWS Organizations organizational unit (OU).</p>"
+      }
+    },
+    "OrganizationalUnitIdList": {
+      "base": null,
+      "refs": {
+        "AdminScopeSelectionInput$organizationalUnits": "<p>The AWS Organizations organizational units (OUs) in the selection.</p>"
+      }
+    },
+    "OrganizationalUnitList": {
+      "base": null,
+      "refs": {
+        "AccountSet$organizationalUnits": "<p>The AWS Organizations organizational units (OUs) in the selection.</p>"
+      }
+    },
+    "OrganizationalUnitReference": {
+      "base": "<p>A reference to an AWS Organizations organizational unit (OU), with optional display metadata.</p>",
+      "refs": {
+        "OrganizationalUnitReferenceList$member": null
+      }
+    },
+    "OrganizationalUnitReferenceList": {
+      "base": null,
+      "refs": {
+        "AdminScopeSelection$organizationalUnits": "<p>The AWS Organizations organizational units (OUs) in the selection.</p>"
+      }
+    },
+    "OutOfSyncReasons": {
+      "base": null,
+      "refs": {
+        "OutOfSyncReasonsView$reasons": "<p>The out-of-sync reasons, keyed by firewall type.</p>"
+      }
+    },
+    "OutOfSyncReasonsView": {
+      "base": "<p>The out-of-sync reasons for a resource, or a marker indicating that the details are not visible. Exactly one member is set.</p>",
+      "refs": {
+        "ResourceSynchronizationStatusSummary$outOfSyncReasons": "<p>The reasons the resource is out of sync, keyed by firewall type. This is null when the resource is in sync.</p>"
+      }
+    },
+    "PolicyArn": {
+      "base": null,
+      "refs": {
+        "AssociatedPolicy$policyArn": "<p>The ARN of the associated policy, including its version qualifier when a specific published version is pinned (for example, <code>...:policy:abc123:3</code>).</p>",
+        "CreatePolicyOutput$policyArn": "<p>The Amazon Resource Name (ARN) of the policy.</p>",
+        "CreatePolicySnapshotOutput$policyArn": "<p>The Amazon Resource Name (ARN) of the policy.</p>",
+        "DeploymentPolicyArnList$member": null,
+        "DeploymentWarningEntry$policyArn": "<p>The ARN of the policy that the warning relates to.</p>",
+        "GetPolicyOutput$policyArn": "<p>The Amazon Resource Name (ARN) of the policy.</p>",
+        "PolicySummary$policyArn": "<p>The Amazon Resource Name (ARN) of the policy.</p>",
+        "UpdatePolicyOutput$policyArn": "<p>The Amazon Resource Name (ARN) of the policy.</p>"
+      }
+    },
+    "PolicyConfiguration": {
+      "base": "<p>Configuration settings that control a policy's behavior.</p>",
+      "refs": {
+        "CreatePolicyInput$policyConfiguration": "<p>The configuration settings that control the policy's behavior, including remediation and firewall-type-specific settings.</p>",
+        "CreatePolicyOutput$policyConfiguration": "<p>The configuration settings that control the policy's behavior, including remediation and firewall-type-specific settings.</p>",
+        "CreatePolicySnapshotOutput$policyConfiguration": "<p>The configuration settings that control the policy's behavior, including remediation and firewall-type-specific settings.</p>",
+        "GetPolicyOutput$policyConfiguration": "<p>The configuration settings that control the policy's behavior, including remediation and firewall-type-specific settings.</p>",
+        "UpdatePolicyInput$policyConfiguration": "<p>The configuration settings that control the policy's behavior, including remediation and firewall-type-specific settings.</p>",
+        "UpdatePolicyOutput$policyConfiguration": "<p>The configuration settings that control the policy's behavior, including remediation and firewall-type-specific settings.</p>"
+      }
+    },
+    "PolicyFirewallType": {
+      "base": null,
+      "refs": {
+        "CreatePolicyInput$firewallType": "<p>The firewall type associated with the resource.</p>",
+        "CreatePolicyOutput$firewallType": "<p>The firewall type associated with the resource.</p>",
+        "CreatePolicySnapshotOutput$firewallType": "<p>The firewall type associated with the resource.</p>",
+        "DeploymentCoverageEntry$firewallType": "<p>The firewall type that the policies in this entry share.</p>",
+        "FirewallTypeList$member": null,
+        "GetPolicyOutput$firewallType": "<p>The firewall type associated with the resource.</p>",
+        "OutOfSyncReasons$key": null,
+        "PolicySummary$firewallType": "<p>The firewall type associated with the resource.</p>",
+        "RemediationIssues$key": null,
+        "UpdatePolicyOutput$firewallType": "<p>The firewall type associated with the resource.</p>"
+      }
+    },
+    "PolicyId": {
+      "base": null,
+      "refs": {
+        "CreatePolicyOutput$policyId": "<p>The service-generated id of the policy.</p>",
+        "CreatePolicySnapshotOutput$policyId": "<p>The service-generated id of the policy.</p>",
+        "GetPolicyOutput$policyId": "<p>The service-generated id of the policy.</p>",
+        "PolicySummary$policyId": "<p>The service-generated id of the policy.</p>",
+        "UpdatePolicyOutput$policyId": "<p>The service-generated id of the policy.</p>"
+      }
+    },
+    "PolicyIdentifier": {
+      "base": null,
+      "refs": {
+        "CreatePolicySnapshotInput$policyIdentifier": "<p>The identifier of the policy. This is the policy's Amazon Resource Name (ARN).</p>",
+        "DeletePolicyInput$policyIdentifier": "<p>The identifier of the policy. This is the policy's Amazon Resource Name (ARN).</p>",
+        "GetPolicyInput$policyIdentifier": "<p>The identifier of the policy. This is the policy's Amazon Resource Name (ARN).</p>",
+        "ListPolicySnapshotsInput$policyIdentifier": "<p>The identifier of the policy. This is the policy's Amazon Resource Name (ARN).</p>",
+        "PolicyReference$policyIdentifier": "<p>The identifier of the policy. This is the policy's Amazon Resource Name (ARN), optionally version-qualified to pin a specific published version.</p>",
+        "UpdatePolicyInput$policyIdentifier": "<p>The identifier of the policy. This is the policy's Amazon Resource Name (ARN).</p>"
+      }
+    },
+    "PolicyName": {
+      "base": null,
+      "refs": {
+        "CreatePolicyInput$policyName": "<p>The name of the policy.</p>",
+        "CreatePolicyOutput$policyName": "<p>The name of the policy.</p>",
+        "CreatePolicySnapshotOutput$policyName": "<p>The name of the policy.</p>",
+        "GetPolicyOutput$policyName": "<p>The name of the policy.</p>",
+        "PolicySummary$policyName": "<p>The name of the policy.</p>",
+        "UpdatePolicyOutput$policyName": "<p>The name of the policy.</p>"
+      }
+    },
+    "PolicyReference": {
+      "base": "<p>A reference to a policy in a create or update request.</p>",
+      "refs": {
+        "PolicyReferenceList$member": null
+      }
+    },
+    "PolicyReferenceList": {
+      "base": null,
+      "refs": {
+        "CreateDeploymentInput$associatedPolicyList": "<p>The policies associated with the deployment.</p>",
+        "UpdateDeploymentInput$associatedPolicyList": "<p>The policies associated with the deployment.</p>"
+      }
+    },
+    "PolicySummary": {
+      "base": "<p>Summary information about a policy.</p>",
+      "refs": {
+        "PolicySummaryList$member": null
+      }
+    },
+    "PolicySummaryList": {
+      "base": null,
+      "refs": {
+        "ListPoliciesOutput$policies": "<p>The list of policies.</p>",
+        "ListPolicySnapshotsOutput$snapshots": "<p>The snapshots of the policy.</p>"
+      }
+    },
+    "Priority": {
+      "base": null,
+      "refs": {
+        "CreatePolicyInput$priority": "<p>The priority of the resource. A lower number indicates a higher priority.</p>",
+        "CreatePolicyOutput$priority": "<p>The priority of the resource. A lower number indicates a higher priority.</p>",
+        "CreatePolicySnapshotOutput$priority": "<p>The priority of the resource. A lower number indicates a higher priority.</p>",
+        "GetPolicyOutput$priority": "<p>The priority of the resource. A lower number indicates a higher priority.</p>",
+        "PolicySummary$priority": "<p>The priority of the resource. A lower number indicates a higher priority.</p>",
+        "UpdatePolicyInput$priority": "<p>The priority of the resource. A lower number indicates a higher priority.</p>",
+        "UpdatePolicyOutput$priority": "<p>The priority of the resource. A lower number indicates a higher priority.</p>"
+      }
+    },
+    "PutAdminAccountRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "PutAdminAccountResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "RemediationEnabled": {
+      "base": null,
+      "refs": {
+        "PolicyConfiguration$remediationEnabled": "<p>Specifies whether AWS Network Security Manager automatically remediates noncompliant resources. Default: <code>false</code>.</p>"
+      }
+    },
+    "RemediationIssueDetails": {
+      "base": "<p>Details about a remediation issue for a firewall type.</p>",
+      "refs": {
+        "RemediationIssues$value": null
+      }
+    },
+    "RemediationIssues": {
+      "base": null,
+      "refs": {
+        "RemediationIssuesView$issues": "<p>The remediation issues, keyed by firewall type.</p>"
+      }
+    },
+    "RemediationIssuesView": {
+      "base": "<p>Remediation issue details for a resource, or a marker indicating that the details are not visible. Exactly one member is set.</p>",
+      "refs": {
+        "ResourceSynchronizationStatusSummary$remediationIssues": "<p>Details about remediation issues, keyed by firewall type. This is null when there are no remediation issues.</p>"
+      }
+    },
+    "ResourceArnList": {
+      "base": null,
+      "refs": {
+        "ResourceSet$explicitArns": "<p>An explicit list of resource ARNs.</p>"
+      }
+    },
+    "ResourceAssociation": {
+      "base": "<p>Describes an association between a resource and another entity.</p>",
+      "refs": {
+        "ResourceAssociationList$member": null
+      }
+    },
+    "ResourceAssociationList": {
+      "base": null,
+      "refs": {
+        "ListResourceAssociationsOutput$resourceAssociations": "<p>The list of resource associations.</p>"
+      }
+    },
+    "ResourceCriteria": {
+      "base": "<p>A leaf condition that matches resources by tag or by resource-type-specific configuration.</p>",
+      "refs": {
+        "ResourceLogicalExpression$criteria": "<p>A leaf condition that matches resources by tag or by resource-type-specific configuration.</p>"
+      }
+    },
+    "ResourceIdentifier": {
+      "base": null,
+      "refs": {
+        "ListResourceAssociationsInput$resourceIdentifier": "<p>The identifier of the resource to list associations for. This is the resource's Amazon Resource Name (ARN).</p>"
+      }
+    },
+    "ResourceLogicalExpression": {
+      "base": "<p>A logical expression that selects resources. Exactly one of <code>criteria</code>, <code>and</code>, <code>or</code>, or <code>not</code> is set.</p>",
+      "refs": {
+        "ResourceLogicalExpression$not": "<p>A subexpression that must not match.</p>",
+        "ResourceLogicalExpressionList$member": null,
+        "ResourceSet$expression": "<p>A logical expression that selects resources by combining criteria with AND, OR, and NOT operators.</p>"
+      }
+    },
+    "ResourceLogicalExpressionList": {
+      "base": null,
+      "refs": {
+        "ResourceLogicalExpression$and": "<p>A list of subexpressions that must all match.</p>",
+        "ResourceLogicalExpression$or": "<p>A list of subexpressions of which at least one must match.</p>"
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p>The specified resource was not found. Verify that the resource identifier is correct and that the resource exists, then try your request again.</p>",
+      "refs": {}
+    },
+    "ResourceScope": {
+      "base": "<p>Defines which resources of a given type are in scope. Exactly one of <code>includeAll</code>, <code>include</code>, or <code>exclude</code> is set.</p>",
+      "refs": {
+        "ResourceScopeMap$value": null
+      }
+    },
+    "ResourceScopeMap": {
+      "base": null,
+      "refs": {
+        "ScopeConfiguration$resourceScopes": "<p>The resource-level scoping configuration, keyed by resource type, that defines which resources within the selected accounts are in scope.</p>"
+      }
+    },
+    "ResourceSet": {
+      "base": "<p>A set of resources defined by explicit ARNs, a logical expression, or both.</p>",
+      "refs": {
+        "ResourceScope$include": "<p>Includes the resources that match the specified criteria or explicit ARNs.</p>",
+        "ResourceScope$exclude": "<p>Excludes the resources that match the specified criteria or explicit ARNs.</p>"
+      }
+    },
+    "ResourceSynchronizationStatusSummary": {
+      "base": "<p>The synchronization status of a resource covered by a deployment.</p>",
+      "refs": {
+        "ResourceSynchronizationStatusSummaryList$member": null
+      }
+    },
+    "ResourceSynchronizationStatusSummaryList": {
+      "base": null,
+      "refs": {
+        "ListAggregateResourceSynchronizationStatusesOutput$resourceSynchronizationStatuses": "<p>The list of resource synchronization statuses.</p>",
+        "ListResourceSynchronizationStatusesOutput$resourceSynchronizationStatuses": "<p>The list of resource synchronization statuses.</p>"
+      }
+    },
+    "ResourceType": {
+      "base": null,
+      "refs": {
+        "ResourceSynchronizationStatusSummary$resourceType": "<p>The type of the resource, in AWS CloudFormation format.</p>"
+      }
+    },
+    "ResourcesCleanUp": {
+      "base": null,
+      "refs": {
+        "PolicyConfiguration$resourcesCleanUp": "<p>Specifies whether AWS Network Security Manager automatically removes the resources it created when they are no longer needed. Default: <code>false</code>.</p>"
+      }
+    },
+    "RuleArn": {
+      "base": null,
+      "refs": {
+        "AssociatedRule$ruleArn": "<p>The ARN of the associated rule.</p>",
+        "AssociatedTemplateOrRule$ruleArn": "<p>The ARN of the associated rule.</p>",
+        "CreateRuleOutput$ruleArn": "<p>The Amazon Resource Name (ARN) of the rule.</p>",
+        "CreateRuleSnapshotOutput$ruleArn": "<p>The Amazon Resource Name (ARN) of the rule.</p>",
+        "GetRuleOutput$ruleArn": "<p>The Amazon Resource Name (ARN) of the rule.</p>",
+        "RuleSummary$ruleArn": "<p>The Amazon Resource Name (ARN) of the rule.</p>",
+        "UpdateRuleOutput$ruleArn": "<p>The Amazon Resource Name (ARN) of the rule.</p>"
+      }
+    },
+    "RuleFirewallType": {
+      "base": null,
+      "refs": {
+        "CreateRuleInput$firewallType": "<p>The firewall type associated with the resource.</p>",
+        "CreateRuleOutput$firewallType": "<p>The firewall type associated with the resource.</p>",
+        "CreateRuleSnapshotOutput$firewallType": "<p>The firewall type associated with the resource.</p>",
+        "GenerateRuleConfigurationRequest$ruleFirewallType": "<p>The firewall type of the rule.</p>",
+        "GetRuleOutput$firewallType": "<p>The firewall type associated with the resource.</p>",
+        "RuleSummary$firewallType": "<p>The firewall type associated with the resource.</p>",
+        "UpdateRuleOutput$firewallType": "<p>The firewall type associated with the resource.</p>"
+      }
+    },
+    "RuleId": {
+      "base": null,
+      "refs": {
+        "CreateRuleOutput$ruleId": "<p>The service-generated id of the rule.</p>",
+        "CreateRuleSnapshotOutput$ruleId": "<p>The service-generated id of the rule.</p>",
+        "GetRuleOutput$ruleId": "<p>The service-generated id of the rule.</p>",
+        "RuleSummary$ruleId": "<p>The service-generated id of the rule.</p>",
+        "UpdateRuleOutput$ruleId": "<p>The service-generated id of the rule.</p>"
+      }
+    },
+    "RuleIdentifier": {
+      "base": null,
+      "refs": {
+        "CreateRuleSnapshotInput$ruleIdentifier": "<p>The identifier of the rule. This is the rule's Amazon Resource Name (ARN).</p>",
+        "DeleteRuleInput$ruleIdentifier": "<p>The identifier of the rule. This is the rule's Amazon Resource Name (ARN).</p>",
+        "GetRuleInput$ruleIdentifier": "<p>The identifier of the rule. This is the rule's Amazon Resource Name (ARN).</p>",
+        "ListRuleSnapshotsInput$ruleIdentifier": "<p>The identifier of the rule. This is the rule's Amazon Resource Name (ARN).</p>",
+        "RuleReference$ruleIdentifier": "<p>The identifier of the rule. This is the rule's Amazon Resource Name (ARN).</p>",
+        "TemplateOrRuleReference$ruleIdentifier": "<p>The identifier of the rule. This is the rule's Amazon Resource Name (ARN).</p>",
+        "UpdateRuleInput$ruleIdentifier": "<p>The identifier of the rule. This is the rule's Amazon Resource Name (ARN).</p>"
+      }
+    },
+    "RuleName": {
+      "base": null,
+      "refs": {
+        "CreateRuleInput$ruleName": "<p>The name of the rule.</p>",
+        "CreateRuleOutput$ruleName": "<p>The name of the rule.</p>",
+        "CreateRuleSnapshotOutput$ruleName": "<p>The name of the rule.</p>",
+        "GetRuleOutput$ruleName": "<p>The name of the rule.</p>",
+        "RuleSummary$ruleName": "<p>The name of the rule.</p>",
+        "UpdateRuleOutput$ruleName": "<p>The name of the rule.</p>"
+      }
+    },
+    "RuleReference": {
+      "base": "<p>A reference to a rule in a create or update request.</p>",
+      "refs": {
+        "RuleReferenceList$member": null
+      }
+    },
+    "RuleReferenceList": {
+      "base": null,
+      "refs": {
+        "CreateTemplateInput$associatedRuleList": "<p>The rules associated with the template.</p>",
+        "UpdateTemplateInput$associatedRuleList": "<p>The rules associated with the template.</p>"
+      }
+    },
+    "RuleSummary": {
+      "base": "<p>Summary information about a rule.</p>",
+      "refs": {
+        "RuleSummaryList$member": null
+      }
+    },
+    "RuleSummaryList": {
+      "base": null,
+      "refs": {
+        "ListRuleSnapshotsOutput$snapshots": "<p>The snapshots of the rule.</p>",
+        "ListRulesOutput$rules": "<p>The list of rules.</p>"
+      }
+    },
+    "RuleType": {
+      "base": null,
+      "refs": {
+        "CreateRuleInput$ruleType": "<p>The type of the rule. <code>CONFIGURATION</code> rules contain firewall settings, and <code>INSPECTION</code> rules contain rule groups.</p>",
+        "CreateRuleOutput$ruleType": "<p>The type of the rule. <code>CONFIGURATION</code> rules contain firewall settings, and <code>INSPECTION</code> rules contain rule groups.</p>",
+        "CreateRuleSnapshotOutput$ruleType": "<p>The type of the rule. <code>CONFIGURATION</code> rules contain firewall settings, and <code>INSPECTION</code> rules contain rule groups.</p>",
+        "GenerateRuleConfigurationRequest$ruleType": "<p>The type of the rule. <code>CONFIGURATION</code> rules contain firewall settings, and <code>INSPECTION</code> rules contain rule groups.</p>",
+        "GetRuleOutput$ruleType": "<p>The type of the rule. <code>CONFIGURATION</code> rules contain firewall settings, and <code>INSPECTION</code> rules contain rule groups.</p>",
+        "RuleSummary$ruleType": "<p>The type of the rule. <code>CONFIGURATION</code> rules contain firewall settings, and <code>INSPECTION</code> rules contain rule groups.</p>",
+        "UpdateRuleInput$ruleType": "<p>The type of the rule. <code>CONFIGURATION</code> rules contain firewall settings, and <code>INSPECTION</code> rules contain rule groups.</p>",
+        "UpdateRuleOutput$ruleType": "<p>The type of the rule. <code>CONFIGURATION</code> rules contain firewall settings, and <code>INSPECTION</code> rules contain rule groups.</p>"
+      }
+    },
+    "Scheme": {
+      "base": null,
+      "refs": {
+        "AlbConfiguration$scheme": "<p>The scheme of the Application Load Balancer, either <code>internet-facing</code> or <code>internal</code>.</p>"
+      }
+    },
+    "ScopeArn": {
+      "base": null,
+      "refs": {
+        "AssociatedScope$scopeArn": "<p>The ARN of the associated scope.</p>",
+        "CreateScopeOutput$scopeArn": "<p>The Amazon Resource Name (ARN) of the scope.</p>",
+        "CreateScopeSnapshotOutput$scopeArn": "<p>The Amazon Resource Name (ARN) of the scope.</p>",
+        "GetScopeOutput$scopeArn": "<p>The Amazon Resource Name (ARN) of the scope.</p>",
+        "ScopeSummary$scopeArn": "<p>The Amazon Resource Name (ARN) of the scope.</p>",
+        "UpdateScopeOutput$scopeArn": "<p>The Amazon Resource Name (ARN) of the scope.</p>"
+      }
+    },
+    "ScopeConfiguration": {
+      "base": "<p>Defines which accounts and resources are in scope.</p>",
+      "refs": {
+        "CreateScopeInput$scopeConfiguration": "<p>The configuration that defines which accounts and resources are in scope.</p>",
+        "CreateScopeOutput$scopeConfiguration": "<p>The configuration that defines which accounts and resources are in scope.</p>",
+        "CreateScopeSnapshotOutput$scopeConfiguration": "<p>The configuration that defines which accounts and resources are in scope.</p>",
+        "GetScopeOutput$scopeConfiguration": "<p>The configuration that defines which accounts and resources are in scope.</p>",
+        "UpdateScopeInput$scopeConfiguration": "<p>The configuration that defines which accounts and resources are in scope. If you don't include this member, the scope keeps its existing configuration.</p> <p>A new configuration can change which accounts and resources are selected, but it can't add or remove the account filter itself: a scope created for multi-account use stays multi-account, and a scope created for single-account use stays single-account.</p>",
+        "UpdateScopeOutput$scopeConfiguration": "<p>The configuration that defines which accounts and resources are in scope.</p>"
+      }
+    },
+    "ScopeId": {
+      "base": null,
+      "refs": {
+        "CreateScopeOutput$scopeId": "<p>The service-generated id of the scope.</p>",
+        "CreateScopeSnapshotOutput$scopeId": "<p>The service-generated id of the scope.</p>",
+        "GetScopeOutput$scopeId": "<p>The service-generated id of the scope.</p>",
+        "ScopeSummary$scopeId": "<p>The service-generated id of the scope.</p>",
+        "UpdateScopeOutput$scopeId": "<p>The service-generated id of the scope.</p>"
+      }
+    },
+    "ScopeIdentifier": {
+      "base": null,
+      "refs": {
+        "CreateScopeSnapshotInput$scopeIdentifier": "<p>The identifier of the scope. This is the scope's Amazon Resource Name (ARN).</p>",
+        "DeleteScopeInput$scopeIdentifier": "<p>The identifier of the scope. This is the scope's Amazon Resource Name (ARN).</p>",
+        "GetScopeInput$scopeIdentifier": "<p>The identifier of the scope. This is the scope's Amazon Resource Name (ARN).</p>",
+        "ListScopeSnapshotsInput$scopeIdentifier": "<p>The identifier of the scope. This is the scope's Amazon Resource Name (ARN).</p>",
+        "ScopeReference$scopeIdentifier": "<p>The identifier of the scope. This is the scope's Amazon Resource Name (ARN).</p>",
+        "UpdateScopeInput$scopeIdentifier": "<p>The identifier of the scope. This is the scope's Amazon Resource Name (ARN).</p>"
+      }
+    },
+    "ScopeName": {
+      "base": null,
+      "refs": {
+        "CreateScopeInput$scopeName": "<p>The name of the scope.</p>",
+        "CreateScopeOutput$scopeName": "<p>The name of the scope.</p>",
+        "CreateScopeSnapshotOutput$scopeName": "<p>The name of the scope.</p>",
+        "GetScopeOutput$scopeName": "<p>The name of the scope.</p>",
+        "ScopeSummary$scopeName": "<p>The name of the scope.</p>",
+        "UpdateScopeOutput$scopeName": "<p>The name of the scope.</p>"
+      }
+    },
+    "ScopeReference": {
+      "base": "<p>A reference to a scope in a create or update request.</p>",
+      "refs": {
+        "ScopeReferenceList$member": null
+      }
+    },
+    "ScopeReferenceList": {
+      "base": null,
+      "refs": {
+        "CreateDeploymentInput$associatedScopeList": "<p>The scope associated with the deployment. A deployment has exactly one scope.</p>",
+        "UpdateDeploymentInput$associatedScopeList": "<p>The scope associated with the deployment. A deployment has exactly one scope.</p>"
+      }
+    },
+    "ScopeResourceType": {
+      "base": null,
+      "refs": {
+        "DeploymentResourceTypeList$member": null,
+        "ResourceScopeMap$key": null
+      }
+    },
+    "ScopeSummary": {
+      "base": "<p>Summary information about a scope.</p>",
+      "refs": {
+        "ScopeSummaryList$member": null
+      }
+    },
+    "ScopeSummaryList": {
+      "base": null,
+      "refs": {
+        "ListScopeSnapshotsOutput$snapshots": "<p>The snapshots of the scope.</p>",
+        "ListScopesOutput$scopes": "<p>The list of scopes.</p>"
+      }
+    },
+    "SensitiveAccountEmail": {
+      "base": null,
+      "refs": {
+        "AccountReference$email": "<p>The email address associated with the account.</p>"
+      }
+    },
+    "SensitiveAccountName": {
+      "base": null,
+      "refs": {
+        "AccountReference$name": "<p>The display name of the account.</p>"
+      }
+    },
+    "SensitiveEmail": {
+      "base": null,
+      "refs": {
+        "AdminAccountSummary$email": "<p>The email address associated with the account.</p>"
+      }
+    },
+    "SensitiveName": {
+      "base": null,
+      "refs": {
+        "AdminAccountSummary$name": "<p>The name of the administrator account.</p>"
+      }
+    },
+    "ServiceQuotaExceededException": {
+      "base": "<p>The request would exceed a service quota.</p>",
+      "refs": {}
+    },
+    "ServiceResourceType": {
+      "base": null,
+      "refs": {
+        "ResourceAssociation$resourceType": "<p>The type of the associated resource, such as <code>Policy</code>, <code>Template</code>, or <code>Deployment</code>.</p>"
+      }
+    },
+    "ServiceUnavailableException": {
+      "base": "<p>The service is temporarily unavailable. This is a retryable error.</p>",
+      "refs": {}
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$message": null,
+        "ConfigurationIssue$configurationName": "<p>The name of the configuration setting that is in conflict.</p>",
+        "ConfigurationIssue$expectedValue": "<p>The configuration value that AWS Network Security Manager expected.</p>",
+        "ConfigurationIssue$actualValue": "<p>The configuration value that was found on the resource.</p>",
+        "ConflictException$message": null,
+        "ConflictException$resourceId": "<p>The ID of the resource that is in conflict with the request.</p>",
+        "ConflictException$resourceType": "<p>The type of the resource that is in conflict with the request.</p>",
+        "DeploymentWarningEntry$code": "<p>A code that identifies the type of warning.</p>",
+        "DeploymentWarningEntry$message": "<p>A human-readable description of the warning.</p>",
+        "FirewallSyncReason$missingFirewall": "<p>Indicates that an expected firewall is missing. The value describes the missing firewall.</p>",
+        "GenerateRuleConfigurationResponse$description": "<p>Reserved for a future human-readable description of the generated configuration. This field is currently not populated.</p>",
+        "InternalServerException$message": null,
+        "NotVisibleMarker$reason": "<p>The reason the details are not visible.</p>",
+        "OrganizationalUnitReference$name": "<p>The display name of the organizational unit.</p>",
+        "RemediationIssueDetails$issueType": "<p>The type of remediation issue.</p>",
+        "RemediationIssueDetails$message": "<p>A human-readable description of the remediation issue.</p>",
+        "RemediationIssueDetails$correctiveAction": "<p>A recommended action for resolving the remediation issue.</p>",
+        "ResourceNotFoundException$message": null,
+        "ResourceNotFoundException$resourceId": "<p>The ID of the resource that could not be found.</p>",
+        "ResourceNotFoundException$resourceType": "<p>The type of the resource that could not be found.</p>",
+        "ServiceQuotaExceededException$message": null,
+        "ServiceQuotaExceededException$quotaCode": "<p>The code that identifies the service quota that was exceeded.</p>",
+        "ServiceQuotaExceededException$serviceCode": "<p>The code for the AWS service that owns the quota that was exceeded.</p>",
+        "ServiceQuotaExceededException$resourceId": "<p>The ID of the resource associated with the quota that was exceeded.</p>",
+        "ServiceQuotaExceededException$resourceType": "<p>The type of the resource associated with the quota that was exceeded.</p>",
+        "ServiceUnavailableException$message": null,
+        "StringMap$key": null,
+        "StringMap$value": null,
+        "TagPolicyViolationException$message": null,
+        "ThrottlingException$message": null,
+        "ValidationException$message": null,
+        "ValidationExceptionField$name": "<p>The name of the field that failed validation.</p>",
+        "ValidationExceptionField$message": "<p>A message describing the validation error for the field.</p>"
+      }
+    },
+    "StringMap": {
+      "base": null,
+      "refs": {
+        "ResourceCriteria$tags": "<p>Tag key-value pairs used to match resources.</p>"
+      }
+    },
+    "SynchronizationStatus": {
+      "base": null,
+      "refs": {
+        "ListAggregateResourceSynchronizationStatusesInput$synchronizationStatus": "<p>Filters the results by synchronization status, such as <code>IN_SYNC</code> or <code>OUT_OF_SYNC</code>.</p>",
+        "ListResourceSynchronizationStatusesInput$synchronizationStatus": "<p>Filters the results by synchronization status, such as <code>IN_SYNC</code> or <code>OUT_OF_SYNC</code>.</p>",
+        "ResourceSynchronizationStatusSummary$synchronizationStatus": "<p>The synchronization status of the resource, such as <code>IN_SYNC</code> or <code>OUT_OF_SYNC</code>.</p>"
+      }
+    },
+    "TagKey": {
+      "base": null,
+      "refs": {
+        "TagKeyList$member": null,
+        "TagMap$key": null
+      }
+    },
+    "TagKeyList": {
+      "base": null,
+      "refs": {
+        "UntagResourceInput$tagKeys": "<p>The keys of the tags to remove from the resource.</p>"
+      }
+    },
+    "TagMap": {
+      "base": null,
+      "refs": {
+        "CreateDeploymentInput$tags": "<p>The tags to add to the resource when it is created.</p>",
+        "CreateDeploymentSnapshotInput$tags": "<p>The tags to add to the snapshot when it is created.</p>",
+        "CreatePolicyInput$tags": "<p>The tags to add to the resource when it is created.</p>",
+        "CreatePolicySnapshotInput$tags": "<p>The tags to add to the snapshot when it is created.</p>",
+        "CreateRuleInput$tags": "<p>The tags to add to the resource when it is created.</p>",
+        "CreateRuleSnapshotInput$tags": "<p>The tags to add to the snapshot when it is created.</p>",
+        "CreateScopeInput$tags": "<p>The tags to add to the resource when it is created.</p>",
+        "CreateScopeSnapshotInput$tags": "<p>The tags to add to the snapshot when it is created.</p>",
+        "CreateTemplateInput$tags": "<p>The tags to add to the resource when it is created.</p>",
+        "CreateTemplateSnapshotInput$tags": "<p>The tags to add to the snapshot when it is created.</p>",
+        "ListTagsForResourceOutput$tags": "<p>The tags associated with the resource. Each tag is a key-value pair.</p>",
+        "TagResourceInput$tags": "<p>The tags to add to the resource.</p>"
+      }
+    },
+    "TagPolicyViolationException": {
+      "base": "<p>The request violates a tag policy that is in effect for the account or organization.</p>",
+      "refs": {}
+    },
+    "TagResourceInput": {
+      "base": null,
+      "refs": {}
+    },
+    "TagResourceOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "TagValue": {
+      "base": null,
+      "refs": {
+        "TagMap$value": null
+      }
+    },
+    "TemplateAndRuleReferenceList": {
+      "base": null,
+      "refs": {
+        "CreatePolicyInput$associatedTemplateAndRuleList": "<p>The templates and rules to associate with the policy. For AWS WAF policies, specify 1 to 100 templates or rules, of which at most 2 can be templates. For AWS Shield Advanced policies, this list must be empty.</p>",
+        "UpdatePolicyInput$associatedTemplateAndRuleList": "<p>The templates and rules to associate with the policy. For AWS WAF policies, specify 1 to 100 templates or rules, of which at most 2 can be templates. For AWS Shield Advanced policies, this list must be empty.</p>"
+      }
+    },
+    "TemplateArn": {
+      "base": null,
+      "refs": {
+        "AssociatedTemplateOrRule$templateArn": "<p>The ARN of the associated template.</p>",
+        "CreateTemplateOutput$templateArn": "<p>The Amazon Resource Name (ARN) of the template.</p>",
+        "CreateTemplateSnapshotOutput$templateArn": "<p>The Amazon Resource Name (ARN) of the template.</p>",
+        "GetTemplateOutput$templateArn": "<p>The Amazon Resource Name (ARN) of the template.</p>",
+        "TemplateSummary$templateArn": "<p>The Amazon Resource Name (ARN) of the template.</p>",
+        "UpdateTemplateOutput$templateArn": "<p>The Amazon Resource Name (ARN) of the template.</p>"
+      }
+    },
+    "TemplateFirewallType": {
+      "base": null,
+      "refs": {
+        "CreateTemplateInput$firewallType": "<p>The firewall type associated with the resource.</p>",
+        "CreateTemplateOutput$firewallType": "<p>The firewall type associated with the resource.</p>",
+        "CreateTemplateSnapshotOutput$firewallType": "<p>The firewall type associated with the resource.</p>",
+        "GetTemplateOutput$firewallType": "<p>The firewall type associated with the resource.</p>",
+        "TemplateSummary$firewallType": "<p>The firewall type associated with the resource.</p>",
+        "UpdateTemplateOutput$firewallType": "<p>The firewall type associated with the resource.</p>"
+      }
+    },
+    "TemplateId": {
+      "base": null,
+      "refs": {
+        "CreateTemplateOutput$templateId": "<p>The service-generated id of the template.</p>",
+        "CreateTemplateSnapshotOutput$templateId": "<p>The service-generated id of the template.</p>",
+        "GetTemplateOutput$templateId": "<p>The service-generated id of the template.</p>",
+        "TemplateSummary$templateId": "<p>The service-generated id of the template.</p>",
+        "UpdateTemplateOutput$templateId": "<p>The service-generated id of the template.</p>"
+      }
+    },
+    "TemplateIdentifier": {
+      "base": null,
+      "refs": {
+        "CreateTemplateSnapshotInput$templateIdentifier": "<p>The identifier of the template. This is the template's Amazon Resource Name (ARN).</p>",
+        "DeleteTemplateInput$templateIdentifier": "<p>The identifier of the template. This is the template's Amazon Resource Name (ARN).</p>",
+        "GetTemplateInput$templateIdentifier": "<p>The identifier of the template. This is the template's Amazon Resource Name (ARN).</p>",
+        "ListTemplateSnapshotsInput$templateIdentifier": "<p>The identifier of the template. This is the template's Amazon Resource Name (ARN).</p>",
+        "TemplateOrRuleReference$templateIdentifier": "<p>The identifier of the template. This is the template's Amazon Resource Name (ARN).</p>",
+        "UpdateTemplateInput$templateIdentifier": "<p>The identifier of the template. This is the template's Amazon Resource Name (ARN).</p>"
+      }
+    },
+    "TemplateName": {
+      "base": null,
+      "refs": {
+        "CreateTemplateInput$templateName": "<p>The name of the template.</p>",
+        "CreateTemplateOutput$templateName": "<p>The name of the template.</p>",
+        "CreateTemplateSnapshotOutput$templateName": "<p>The name of the template.</p>",
+        "GetTemplateOutput$templateName": "<p>The name of the template.</p>",
+        "TemplateSummary$templateName": "<p>The name of the template.</p>",
+        "UpdateTemplateOutput$templateName": "<p>The name of the template.</p>"
+      }
+    },
+    "TemplateOrRuleReference": {
+      "base": "<p>A reference to either a template or a rule in a create or update request. Set exactly one of <code>templateIdentifier</code> or <code>ruleIdentifier</code>.</p>",
+      "refs": {
+        "TemplateAndRuleReferenceList$member": null
+      }
+    },
+    "TemplateSummary": {
+      "base": "<p>Summary information about a template.</p>",
+      "refs": {
+        "TemplateSummaryList$member": null
+      }
+    },
+    "TemplateSummaryList": {
+      "base": null,
+      "refs": {
+        "ListTemplateSnapshotsOutput$snapshots": "<p>The snapshots of the template.</p>",
+        "ListTemplatesOutput$templates": "<p>The list of templates.</p>"
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>The request was denied because of request throttling. Reduce your request rate and try again.</p>",
+      "refs": {}
+    },
+    "Unit": {
+      "base": null,
+      "refs": {
+        "AccountFilter$includeAll": "<p>Includes all accounts. No account filtering is applied.</p>",
+        "AdminScopeFilter$includeAll": "<p>All accounts and organizational units are in scope.</p>",
+        "AdminScopeFilterInput$includeAll": "<p>All accounts and organizational units are in scope.</p>"
+      }
+    },
+    "UntagResourceInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UntagResourceOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateDeploymentInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateDeploymentOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdatePolicyInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdatePolicyOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRuleInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRuleOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateScopeInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateScopeOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateTemplateInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateTemplateOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateToken": {
+      "base": null,
+      "refs": {
+        "CreateDeploymentOutput$updateToken": "<p>A token used for optimistic concurrency control. Each read and write returns an <code>updateToken</code>. Provide the most recent value on your next update to detect and prevent conflicting concurrent modifications.</p>",
+        "CreateDeploymentSnapshotOutput$updateToken": "<p>A token used for optimistic concurrency control. Each read and write returns an <code>updateToken</code>. Provide the most recent value on your next update to detect and prevent conflicting concurrent modifications.</p>",
+        "CreatePolicyOutput$updateToken": "<p>A token used for optimistic concurrency control. Each read and write returns an <code>updateToken</code>. Provide the most recent value on your next update to detect and prevent conflicting concurrent modifications.</p>",
+        "CreatePolicySnapshotOutput$updateToken": "<p>A token used for optimistic concurrency control. Each read and write returns an <code>updateToken</code>. Provide the most recent value on your next update to detect and prevent conflicting concurrent modifications.</p>",
+        "CreateRuleOutput$updateToken": "<p>A token used for optimistic concurrency control. Each read and write returns an <code>updateToken</code>. Provide the most recent value on your next update to detect and prevent conflicting concurrent modifications.</p>",
+        "CreateRuleSnapshotOutput$updateToken": "<p>A token used for optimistic concurrency control. Each read and write returns an <code>updateToken</code>. Provide the most recent value on your next update to detect and prevent conflicting concurrent modifications.</p>",
+        "CreateScopeOutput$updateToken": "<p>A token used for optimistic concurrency control. Each read and write returns an <code>updateToken</code>. Provide the most recent value on your next update to detect and prevent conflicting concurrent modifications.</p>",
+        "CreateScopeSnapshotOutput$updateToken": "<p>A token used for optimistic concurrency control. Each read and write returns an <code>updateToken</code>. Provide the most recent value on your next update to detect and prevent conflicting concurrent modifications.</p>",
+        "CreateTemplateOutput$updateToken": "<p>A token used for optimistic concurrency control. Each read and write returns an <code>updateToken</code>. Provide the most recent value on your next update to detect and prevent conflicting concurrent modifications.</p>",
+        "CreateTemplateSnapshotOutput$updateToken": "<p>A token used for optimistic concurrency control. Each read and write returns an <code>updateToken</code>. Provide the most recent value on your next update to detect and prevent conflicting concurrent modifications.</p>",
+        "GetDeploymentOutput$updateToken": "<p>A token used for optimistic concurrency control. Each read and write returns an <code>updateToken</code>. Provide the most recent value on your next update to detect and prevent conflicting concurrent modifications.</p>",
+        "GetPolicyOutput$updateToken": "<p>A token used for optimistic concurrency control. Each read and write returns an <code>updateToken</code>. Provide the most recent value on your next update to detect and prevent conflicting concurrent modifications.</p>",
+        "GetRuleOutput$updateToken": "<p>A token used for optimistic concurrency control. Each read and write returns an <code>updateToken</code>. Provide the most recent value on your next update to detect and prevent conflicting concurrent modifications.</p>",
+        "GetScopeOutput$updateToken": "<p>A token used for optimistic concurrency control. Each read and write returns an <code>updateToken</code>. Provide the most recent value on your next update to detect and prevent conflicting concurrent modifications.</p>",
+        "GetTemplateOutput$updateToken": "<p>A token used for optimistic concurrency control. Each read and write returns an <code>updateToken</code>. Provide the most recent value on your next update to detect and prevent conflicting concurrent modifications.</p>",
+        "UpdateDeploymentInput$updateToken": "<p>A token used for optimistic concurrency control. Each read and write returns an <code>updateToken</code>. Provide the most recent value on your next update to detect and prevent conflicting concurrent modifications.</p>",
+        "UpdateDeploymentOutput$updateToken": "<p>A token used for optimistic concurrency control. Each read and write returns an <code>updateToken</code>. Provide the most recent value on your next update to detect and prevent conflicting concurrent modifications.</p>",
+        "UpdatePolicyInput$updateToken": "<p>A token used for optimistic concurrency control. Each read and write returns an <code>updateToken</code>. Provide the most recent value on your next update to detect and prevent conflicting concurrent modifications.</p>",
+        "UpdatePolicyOutput$updateToken": "<p>A token used for optimistic concurrency control. Each read and write returns an <code>updateToken</code>. Provide the most recent value on your next update to detect and prevent conflicting concurrent modifications.</p>",
+        "UpdateRuleInput$updateToken": "<p>A token used for optimistic concurrency control. Each read and write returns an <code>updateToken</code>. Provide the most recent value on your next update to detect and prevent conflicting concurrent modifications.</p>",
+        "UpdateRuleOutput$updateToken": "<p>A token used for optimistic concurrency control. Each read and write returns an <code>updateToken</code>. Provide the most recent value on your next update to detect and prevent conflicting concurrent modifications.</p>",
+        "UpdateScopeInput$updateToken": "<p>A token used for optimistic concurrency control. Each read and write returns an <code>updateToken</code>. Provide the most recent value on your next update to detect and prevent conflicting concurrent modifications.</p>",
+        "UpdateScopeOutput$updateToken": "<p>A token used for optimistic concurrency control. Each read and write returns an <code>updateToken</code>. Provide the most recent value on your next update to detect and prevent conflicting concurrent modifications.</p>",
+        "UpdateTemplateInput$updateToken": "<p>A token used for optimistic concurrency control. Each read and write returns an <code>updateToken</code>. Provide the most recent value on your next update to detect and prevent conflicting concurrent modifications.</p>",
+        "UpdateTemplateOutput$updateToken": "<p>A token used for optimistic concurrency control. Each read and write returns an <code>updateToken</code>. Provide the most recent value on your next update to detect and prevent conflicting concurrent modifications.</p>"
+      }
+    },
+    "ValidationException": {
+      "base": "<p>The request failed validation. For details, see the <code>reason</code> and <code>fieldList</code> members of the response.</p>",
+      "refs": {}
+    },
+    "ValidationExceptionField": {
+      "base": "<p>Describes a single request field that failed validation.</p>",
+      "refs": {
+        "ValidationExceptionFieldList$member": null
+      }
+    },
+    "ValidationExceptionFieldList": {
+      "base": null,
+      "refs": {
+        "ValidationException$fieldList": "<p>The list of request fields that failed validation, if any.</p>"
+      }
+    },
+    "ValidationExceptionReason": {
+      "base": null,
+      "refs": {
+        "ValidationException$reason": "<p>The reason that the request failed validation.</p>"
+      }
+    },
+    "WAFConfigDataType": {
+      "base": null,
+      "refs": {
+        "GenerateRuleConfigurationRequest$wafConfigDataType": "<p>For AWS WAF configuration rules, the specific AWS WAF configuration variant to generate. This is optional; if you omit it, the service selects the variant.</p>"
+      }
+    },
+    "WAFConflictResolutionOptions": {
+      "base": null,
+      "refs": {
+        "WafConfig$conflictResolution": "<p>The conflict-resolution strategy for AWS WAF policies. Required for AWS WAF policies.</p>"
+      }
+    },
+    "WafConfig": {
+      "base": "<p>AWS WAF-specific policy configuration settings.</p>",
+      "refs": {
+        "PolicyConfiguration$wafConfig": "<p>AWS WAF-specific policy settings. This is populated only for AWS WAF policies.</p>"
+      }
+    }
+  }
+}

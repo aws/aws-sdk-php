@@ -125,6 +125,30 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getResourcePolicy(array{resourceArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getResourcePolicyAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getResourcePolicyAsync(array{resourceArn?: string, ...} $args = [])
+ * @method \Aws\Result listBillingViewSegments(array $args = [])
+ * @phpstan-method \Aws\Result listBillingViewSegments(array{
+ *     timeRange?: array{
+ *         beginDateInclusive?: int|string|\DateTimeInterface,
+ *         endDateExclusive?: int|string|\DateTimeInterface,
+ *         ...,
+ *     },
+ *     arn?: string,
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listBillingViewSegmentsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listBillingViewSegmentsAsync(array{
+ *     timeRange?: array{
+ *         beginDateInclusive?: int|string|\DateTimeInterface,
+ *         endDateExclusive?: int|string|\DateTimeInterface,
+ *         ...,
+ *     },
+ *     arn?: string,
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listBillingViews(array $args = [])
  * @phpstan-method \Aws\Result listBillingViews(array{
  *     activeTimeRange?: array{

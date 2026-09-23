@@ -3247,7 +3247,8 @@
         "speechRecognitionSettings":{"shape":"SpeechRecognitionSettings"},
         "speechDetectionSensitivity":{"shape":"SpeechDetectionSensitivity"},
         "unifiedSpeechSettings":{"shape":"UnifiedSpeechSettings"},
-        "audioFillerSettings":{"shape":"AudioFillerSettings"}
+        "audioFillerSettings":{"shape":"AudioFillerSettings"},
+        "speakerDiarizationSettings":{"shape":"SpeakerDiarizationSettings"}
       }
     },
     "BotLocaleSortAttribute":{
@@ -3978,7 +3979,8 @@
         "audioFillerSettings":{"shape":"AudioFillerSettings"},
         "speechRecognitionSettings":{"shape":"SpeechRecognitionSettings"},
         "generativeAISettings":{"shape":"GenerativeAISettings"},
-        "speechDetectionSensitivity":{"shape":"SpeechDetectionSensitivity"}
+        "speechDetectionSensitivity":{"shape":"SpeechDetectionSensitivity"},
+        "speakerDiarizationSettings":{"shape":"SpeakerDiarizationSettings"}
       }
     },
     "CreateBotLocaleResponse":{
@@ -3997,7 +3999,8 @@
         "botLocaleStatus":{"shape":"BotLocaleStatus"},
         "creationDateTime":{"shape":"Timestamp"},
         "generativeAISettings":{"shape":"GenerativeAISettings"},
-        "speechDetectionSensitivity":{"shape":"SpeechDetectionSensitivity"}
+        "speechDetectionSensitivity":{"shape":"SpeechDetectionSensitivity"},
+        "speakerDiarizationSettings":{"shape":"SpeakerDiarizationSettings"}
       }
     },
     "CreateBotReplicaRequest":{
@@ -5086,7 +5089,8 @@
         "botLocaleHistoryEvents":{"shape":"BotLocaleHistoryEventsList"},
         "recommendedActions":{"shape":"RecommendedActions"},
         "generativeAISettings":{"shape":"GenerativeAISettings"},
-        "speechDetectionSensitivity":{"shape":"SpeechDetectionSensitivity"}
+        "speechDetectionSensitivity":{"shape":"SpeechDetectionSensitivity"},
+        "speakerDiarizationSettings":{"shape":"SpeakerDiarizationSettings"}
       }
     },
     "DescribeBotRecommendationRequest":{
@@ -8517,6 +8521,13 @@
         "Descending"
       ]
     },
+    "SpeakerDiarizationSettings":{
+      "type":"structure",
+      "required":["enabled"],
+      "members":{
+        "enabled":{"shape":"Enabled"}
+      }
+    },
     "Specifications":{
       "type":"structure",
       "required":[
@@ -8555,7 +8566,8 @@
       "enum":[
         "Standard",
         "Neural",
-        "Deepgram"
+        "Deepgram",
+        "Advanced"
       ]
     },
     "SpeechRecognitionSettings":{
@@ -9501,7 +9513,8 @@
         "audioFillerSettings":{"shape":"AudioFillerSettings"},
         "speechRecognitionSettings":{"shape":"SpeechRecognitionSettings"},
         "generativeAISettings":{"shape":"GenerativeAISettings"},
-        "speechDetectionSensitivity":{"shape":"SpeechDetectionSensitivity"}
+        "speechDetectionSensitivity":{"shape":"SpeechDetectionSensitivity"},
+        "speakerDiarizationSettings":{"shape":"SpeakerDiarizationSettings"}
       }
     },
     "UpdateBotLocaleResponse":{
@@ -9523,7 +9536,8 @@
         "lastUpdatedDateTime":{"shape":"Timestamp"},
         "recommendedActions":{"shape":"RecommendedActions"},
         "generativeAISettings":{"shape":"GenerativeAISettings"},
-        "speechDetectionSensitivity":{"shape":"SpeechDetectionSensitivity"}
+        "speechDetectionSensitivity":{"shape":"SpeechDetectionSensitivity"},
+        "speakerDiarizationSettings":{"shape":"SpeakerDiarizationSettings"}
       }
     },
     "UpdateBotRecommendationRequest":{
