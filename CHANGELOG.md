@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.397.0 - 2026-09-23
 
 * `Aws\LexModelsV2` - Adds support for speaker diarization on Amazon Lex V2 bot locales. Speaker diarization keeps your bot on the primary (loudest) speaker during a streaming voice conversation, so background voices do not start a turn or interrupt a prompt.
 * `Aws\MediaPackageV2` - This release adds support for signalling start and end in the ContentKeyPeriod element in key request from MediaPackageV2
