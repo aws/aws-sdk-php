@@ -4816,6 +4816,10 @@
         "attributes":{"shape":"BatchPutAttributeItems"}
       }
     },
+    "BlueprintCategory":{
+      "type":"string",
+      "enum":["TOOLING"]
+    },
     "Boolean":{
       "type":"boolean",
       "box":true
@@ -5915,7 +5919,8 @@
         "name":{"shape":"EnvironmentBlueprintName"},
         "description":{"shape":"Description"},
         "provisioningProperties":{"shape":"ProvisioningProperties"},
-        "userParameters":{"shape":"CustomParameterList"}
+        "userParameters":{"shape":"CustomParameterList"},
+        "blueprintCategory":{"shape":"BlueprintCategory"}
       }
     },
     "CreateEnvironmentBlueprintOutput":{
@@ -5935,6 +5940,7 @@
         "deploymentProperties":{"shape":"DeploymentProperties"},
         "userParameters":{"shape":"CustomParameterList"},
         "glossaryTerms":{"shape":"GlossaryTerms"},
+        "blueprintCategory":{"shape":"BlueprintCategory"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
@@ -8358,7 +8364,8 @@
         "provider":{"shape":"String"},
         "provisioningProperties":{"shape":"ProvisioningProperties"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
-        "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "blueprintCategory":{"shape":"BlueprintCategory"}
       }
     },
     "EnvironmentConfig":{
@@ -9503,6 +9510,7 @@
         "deploymentProperties":{"shape":"DeploymentProperties"},
         "userParameters":{"shape":"CustomParameterList"},
         "glossaryTerms":{"shape":"GlossaryTerms"},
+        "blueprintCategory":{"shape":"BlueprintCategory"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
@@ -11278,7 +11286,8 @@
     "IamPropertiesInput":{
       "type":"structure",
       "members":{
-        "glueLineageSyncEnabled":{"shape":"Boolean"}
+        "glueLineageSyncEnabled":{"shape":"Boolean"},
+        "roleArn":{"shape":"RoleArn"}
       }
     },
     "IamPropertiesOutput":{
@@ -17860,7 +17869,8 @@
         },
         "description":{"shape":"String"},
         "provisioningProperties":{"shape":"ProvisioningProperties"},
-        "userParameters":{"shape":"CustomParameterList"}
+        "userParameters":{"shape":"CustomParameterList"},
+        "blueprintCategory":{"shape":"BlueprintCategory"}
       }
     },
     "UpdateEnvironmentBlueprintOutput":{
@@ -17880,6 +17890,7 @@
         "deploymentProperties":{"shape":"DeploymentProperties"},
         "userParameters":{"shape":"CustomParameterList"},
         "glossaryTerms":{"shape":"GlossaryTerms"},
+        "blueprintCategory":{"shape":"BlueprintCategory"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }

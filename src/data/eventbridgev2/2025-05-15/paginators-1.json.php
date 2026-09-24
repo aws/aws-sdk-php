@@ -1,0 +1,3 @@
+<?php
+// This file was auto-generated from sdk-root/src/data/eventbridgev2/2025-05-15/paginators-1.json
+return [ 'pagination' => [ 'ListEventBuses' => [ 'input_token' => 'NextToken', 'output_token' => 'NextToken', 'limit_key' => 'MaxResults', 'result_key' => 'EventBuses', ], 'ListEventSources' => [ 'input_token' => 'NextToken', 'output_token' => 'NextToken', 'limit_key' => 'MaxResults', 'result_key' => 'EventSources', ], 'ListResourcePolicies' => [ 'input_token' => 'NextToken', 'output_token' => 'NextToken', 'limit_key' => 'MaxResults', 'result_key' => 'PolicySummaries', ], 'ListSubscribers' => [ 'input_token' => 'NextToken', 'output_token' => 'NextToken', 'limit_key' => 'MaxResults', 'result_key' => 'Subscribers', ], ],];

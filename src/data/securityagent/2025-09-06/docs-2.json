@@ -608,7 +608,9 @@
         "GitHubResourceCapabilities$leaveComments": "<p>Indicates whether the integration can leave comments on pull requests.</p>",
         "GitHubResourceCapabilities$remediateCode": "<p>Indicates whether the integration can create code remediation pull requests.</p>",
         "GitLabResourceCapabilities$leaveComments": "<p>Whether to post code review comments on merge request discussions.</p>",
-        "GitLabResourceCapabilities$remediateCode": "<p>Whether to create merge requests with automated fixes.</p>"
+        "GitLabResourceCapabilities$remediateCode": "<p>Whether to create merge requests with automated fixes.</p>",
+        "ReportFilters$annotationNotes": "<p>Whether to include reviewer annotation notes under each finding.</p>",
+        "ReportFilters$complianceReport": "<p>Whether to include the compliance-ready report additions.</p>"
       }
     },
     "CaCertificatePem": {
@@ -620,7 +622,7 @@
     "CaCertificateSource": {
       "base": "<p>The source of a trusted CA certificate. Exactly one member must be set.</p>",
       "refs": {
-        "TrustedCaCertificate$source": "<p>The source that AWS Security Agent reads the certificate from.</p>"
+        "TrustedCaCertificate$source": "<p>The source that Security Agent reads the certificate from.</p>"
       }
     },
     "Category": {
@@ -826,9 +828,16 @@
     "ConfidenceLevel": {
       "base": "<p>Finding confidence level.</p>",
       "refs": {
+        "ConfidenceLevelFilterList$member": null,
         "Finding$confidence": "<p>The confidence level of the finding. Valid values include FALSE_POSITIVE, UNCONFIRMED, LOW, MEDIUM, and HIGH.</p>",
         "FindingSummary$confidence": "<p>The confidence level of the finding.</p>",
         "ListFindingsInput$confidence": "<p>Filter findings by confidence level.</p>"
+      }
+    },
+    "ConfidenceLevelFilterList": {
+      "base": "<p>A list of confidence levels for a report filter.</p>",
+      "refs": {
+        "ReportFilters$confidenceLevels": "<p>The confidence levels to include in the report.</p>"
       }
     },
     "ConflictException": {
@@ -1254,9 +1263,16 @@
       "base": "<p>Finding status.</p>",
       "refs": {
         "Finding$status": "<p>The current status of the finding. Valid values include ACTIVE, RESOLVED, ACCEPTED, and FALSE_POSITIVE.</p>",
+        "FindingStatusFilterList$member": null,
         "FindingSummary$status": "<p>The current status of the finding.</p>",
         "ListFindingsInput$status": "<p>Filter findings by status.</p>",
         "UpdateFindingInput$status": "<p>The updated status for the finding.</p>"
+      }
+    },
+    "FindingStatusFilterList": {
+      "base": "<p>A list of finding statuses for a report filter.</p>",
+      "refs": {
+        "ReportFilters$statuses": "<p>The finding statuses to include in the report.</p>"
       }
     },
     "FindingSummary": {
@@ -2199,7 +2215,51 @@
     "ReportDestination": {
       "base": "<p>Destination for publishing scan reports to an integrated document provider.</p>",
       "refs": {
-        "CreateThreatModelInput$reportDestination": "<p>The destination for publishing scan reports to an integrated document provider.</p>"
+        "CodeReview$reportDestination": "<p>The destination for publishing scan reports to an integrated document provider.</p>",
+        "CodeReviewJob$reportDestination": "<p>The destination for publishing scan reports to an integrated document provider.</p>",
+        "CreateCodeReviewInput$reportDestination": "<p>The destination for publishing scan reports to an integrated document provider.</p>",
+        "CreateCodeReviewOutput$reportDestination": "<p>The destination for publishing scan reports to an integrated document provider.</p>",
+        "CreatePentestInput$reportDestination": "<p>The destination for publishing scan reports to an integrated document provider.</p>",
+        "CreatePentestOutput$reportDestination": "<p>The destination for publishing scan reports to an integrated document provider.</p>",
+        "CreateThreatModelInput$reportDestination": "<p>The destination for publishing scan reports to an integrated document provider.</p>",
+        "CreateThreatModelOutput$reportDestination": "<p>The destination for publishing scan reports to an integrated document provider.</p>",
+        "Pentest$reportDestination": "<p>The destination for publishing scan reports to an integrated document provider.</p>",
+        "PentestJob$reportDestination": "<p>The destination for publishing scan reports to an integrated document provider.</p>",
+        "ThreatModel$reportDestination": "<p>The destination for publishing scan reports to an integrated document provider.</p>",
+        "ThreatModelJob$reportDestination": "<p>The destination for publishing scan reports to an integrated document provider.</p>",
+        "UpdateCodeReviewInput$reportDestination": "<p>The destination for publishing scan reports to an integrated document provider.</p>",
+        "UpdateCodeReviewOutput$reportDestination": "<p>The destination for publishing scan reports to an integrated document provider.</p>",
+        "UpdatePentestInput$reportDestination": "<p>The destination for publishing scan reports to an integrated document provider.</p>",
+        "UpdatePentestOutput$reportDestination": "<p>The destination for publishing scan reports to an integrated document provider.</p>",
+        "UpdateThreatModelInput$reportDestination": "<p>The destination for publishing scan reports to an integrated document provider.</p>",
+        "UpdateThreatModelOutput$reportDestination": "<p>The destination for publishing scan reports to an integrated document provider.</p>"
+      }
+    },
+    "ReportFilterList": {
+      "base": "<p>A bounded list of report-filter values for an open-ended filter dimension.</p>",
+      "refs": {
+        "ReportFilters$findingTypes": "<p>The finding types to include in the report.</p>"
+      }
+    },
+    "ReportFilterValue": {
+      "base": "<p>A single report-filter value for one filter dimension.</p>",
+      "refs": {
+        "ReportFilterList$member": null
+      }
+    },
+    "ReportFilters": {
+      "base": "<p>The report-generation filters applied when a pentest or code review report is exported.</p>",
+      "refs": {
+        "CodeReview$reportFilters": "<p>The report-generation filters applied when the report is exported.</p>",
+        "CreateCodeReviewInput$reportFilters": "<p>The report-generation filters applied when the report is exported.</p>",
+        "CreateCodeReviewOutput$reportFilters": "<p>The report-generation filters applied when the report is exported.</p>",
+        "CreatePentestInput$reportFilters": "<p>The report-generation filters applied when the report is exported.</p>",
+        "CreatePentestOutput$reportFilters": "<p>The report-generation filters applied when the report is exported.</p>",
+        "Pentest$reportFilters": "<p>The report-generation filters applied when the report is exported.</p>",
+        "UpdateCodeReviewInput$reportFilters": "<p>The report-generation filters applied when the report is exported.</p>",
+        "UpdateCodeReviewOutput$reportFilters": "<p>The report-generation filters applied when the report is exported.</p>",
+        "UpdatePentestInput$reportFilters": "<p>The report-generation filters applied when the report is exported.</p>",
+        "UpdatePentestOutput$reportFilters": "<p>The report-generation filters applied when the report is exported.</p>"
       }
     },
     "ResourceArn": {
@@ -2258,7 +2318,14 @@
         "Finding$riskLevel": "<p>The risk level of the finding. Valid values include UNKNOWN, INFORMATIONAL, LOW, MEDIUM, HIGH, and CRITICAL.</p>",
         "FindingSummary$riskLevel": "<p>The risk level of the finding.</p>",
         "ListFindingsInput$riskLevel": "<p>Filter findings by risk level.</p>",
+        "RiskLevelFilterList$member": null,
         "UpdateFindingInput$riskLevel": "<p>The updated risk level for the finding.</p>"
+      }
+    },
+    "RiskLevelFilterList": {
+      "base": "<p>A list of severity levels for a report filter.</p>",
+      "refs": {
+        "ReportFilters$riskLevels": "<p>The severity levels to include in the report.</p>"
       }
     },
     "RiskType": {
@@ -2266,9 +2333,16 @@
       "refs": {
         "CodeReviewJobTask$riskType": "<p>The type of security risk the task is testing for.</p>",
         "CodeReviewJobTaskSummary$riskType": "<p>The type of security risk the task is testing for.</p>",
+        "RiskTypeFilterList$member": null,
         "RiskTypeList$member": null,
         "Task$riskType": "<p>The type of security risk the task is testing for.</p>",
         "TaskSummary$riskType": "<p>The type of security risk the task is testing for.</p>"
+      }
+    },
+    "RiskTypeFilterList": {
+      "base": "<p>A list of risk types for a report filter.</p>",
+      "refs": {
+        "ReportFilters$riskTypes": "<p>The risk types to include in the report.</p>"
       }
     },
     "RiskTypeList": {
@@ -2323,7 +2397,7 @@
     "SecurityGroupArns": {
       "base": "<p>A list of one or more security group ARNs or IDs in the customer VPC.</p>",
       "refs": {
-        "VpcConfig$securityGroupArns": "<p>The Amazon Resource Names (ARNs) of the security groups for the VPC configuration.</p>"
+        "VpcConfig$securityGroupArns": "<p>The Amazon Resource Names (ARNs) or IDs of the security groups for the VPC configuration.</p>"
       }
     },
     "SecurityRequirementArtifact": {
@@ -3090,7 +3164,7 @@
     "SubnetArns": {
       "base": "<p>A list of one or more subnet ARNs or IDs in the customer VPC.</p>",
       "refs": {
-        "VpcConfig$subnetArns": "<p>The Amazon Resource Names (ARNs) of the subnets for the VPC configuration.</p>"
+        "VpcConfig$subnetArns": "<p>The Amazon Resource Names (ARNs) or IDs of the subnets for the VPC configuration.</p>"
       }
     },
     "SyntheticTimestamp_date_time": {
@@ -3331,9 +3405,16 @@
         "CodeReviewJobTask$executionStatus": "<p>The current execution status of the task.</p>",
         "CodeReviewJobTaskSummary$executionStatus": "<p>The current execution status of the task.</p>",
         "Task$executionStatus": "<p>The current execution status of the task.</p>",
+        "TaskExecutionStatusFilterList$member": null,
         "TaskSummary$executionStatus": "<p>The current execution status of the task.</p>",
         "ThreatModelJobTask$executionStatus": "<p>The current execution status of the task.</p>",
         "ThreatModelJobTaskSummary$executionStatus": "<p>The current execution status of the task.</p>"
+      }
+    },
+    "TaskExecutionStatusFilterList": {
+      "base": "<p>A list of task execution statuses for a report filter.</p>",
+      "refs": {
+        "ReportFilters$taskStatuses": "<p>The task execution statuses to include in the report's task table.</p>"
       }
     },
     "TaskIdList": {
@@ -3763,7 +3844,7 @@
     "VpcArn": {
       "base": "<p>ARN or ID of a VPC.</p>",
       "refs": {
-        "VpcConfig$vpcArn": "<p>The Amazon Resource Name (ARN) of the VPC.</p>"
+        "VpcConfig$vpcArn": "<p>The Amazon Resource Name (ARN) or ID of the VPC.</p>"
       }
     },
     "VpcConfig": {

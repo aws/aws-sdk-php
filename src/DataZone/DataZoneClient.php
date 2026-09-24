@@ -342,7 +342,7 @@ use Aws\AwsClient;
  *         athenaProperties?: array{workgroupName?: string, ...},
  *         glueProperties?: array{glueConnectionInput?: array, ...},
  *         hyperPodProperties?: array{clusterName?: string, ...},
- *         iamProperties?: array{glueLineageSyncEnabled?: bool, ...},
+ *         iamProperties?: array{glueLineageSyncEnabled?: bool, roleArn?: string, ...},
  *         redshiftProperties?: array{
  *             storage?: array,
  *             databaseName?: string,
@@ -409,7 +409,7 @@ use Aws\AwsClient;
  *         athenaProperties?: array{workgroupName?: string, ...},
  *         glueProperties?: array{glueConnectionInput?: array, ...},
  *         hyperPodProperties?: array{clusterName?: string, ...},
- *         iamProperties?: array{glueLineageSyncEnabled?: bool, ...},
+ *         iamProperties?: array{glueLineageSyncEnabled?: bool, roleArn?: string, ...},
  *         redshiftProperties?: array{
  *             storage?: array,
  *             databaseName?: string,
@@ -701,6 +701,7 @@ use Aws\AwsClient;
  *         isUpdateSupported?: bool,
  *         ...,
  *     }>,
+ *     blueprintCategory?: 'TOOLING',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createEnvironmentBlueprintAsync(array $args = [])
@@ -719,6 +720,7 @@ use Aws\AwsClient;
  *         isUpdateSupported?: bool,
  *         ...,
  *     }>,
+ *     blueprintCategory?: 'TOOLING',
  *     ...,
  * } $args = [])
  * @method \Aws\Result createEnvironmentProfile(array $args = [])
@@ -2983,6 +2985,7 @@ use Aws\AwsClient;
  *         isUpdateSupported?: bool,
  *         ...,
  *     }>,
+ *     blueprintCategory?: 'TOOLING',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateEnvironmentBlueprintAsync(array $args = [])
@@ -3001,6 +3004,7 @@ use Aws\AwsClient;
  *         isUpdateSupported?: bool,
  *         ...,
  *     }>,
+ *     blueprintCategory?: 'TOOLING',
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateEnvironmentProfile(array $args = [])

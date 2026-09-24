@@ -40,6 +40,22 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "CreateResourceMetricsConfiguration":{
+      "name":"CreateResourceMetricsConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateResourceMetricsConfigurationInput"},
+      "output":{
+        "shape":"CreateResourceMetricsConfigurationOutput",
+        "resultWrapper":"CreateResourceMetricsConfigurationResult"
+      },
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "DeleteAlarmMuteRule":{
       "name":"DeleteAlarmMuteRule",
       "http":{
@@ -127,6 +143,21 @@
         {"shape":"InternalServiceFault"},
         {"shape":"InvalidParameterValueException"},
         {"shape":"MissingRequiredParameterException"}
+      ]
+    },
+    "DeleteResourceMetricsConfiguration":{
+      "name":"DeleteResourceMetricsConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteResourceMetricsConfigurationInput"},
+      "output":{
+        "shape":"DeleteResourceMetricsConfigurationOutput",
+        "resultWrapper":"DeleteResourceMetricsConfigurationResult"
+      },
+      "errors":[
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "DescribeAlarmContributors":{
@@ -427,6 +458,21 @@
         "resultWrapper":"GetOTelEnrichmentResult"
       }
     },
+    "GetResourceMetricsConfiguration":{
+      "name":"GetResourceMetricsConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetResourceMetricsConfigurationInput"},
+      "output":{
+        "shape":"GetResourceMetricsConfigurationOutput",
+        "resultWrapper":"GetResourceMetricsConfigurationResult"
+      },
+      "errors":[
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "ListAlarmMuteRules":{
       "name":"ListAlarmMuteRules",
       "http":{
@@ -714,7 +760,10 @@
       "output":{
         "shape":"StartOTelEnrichmentOutput",
         "resultWrapper":"StartOTelEnrichmentResult"
-      }
+      },
+      "errors":[
+        {"shape":"ValidationException"}
+      ]
     },
     "StopMetricStreams":{
       "name":"StopMetricStreams",
@@ -781,6 +830,37 @@
         {"shape":"ConcurrentModificationException"},
         {"shape":"InternalServiceFault"},
         {"shape":"ConflictException"}
+      ]
+    },
+    "UpdateOTelEnrichment":{
+      "name":"UpdateOTelEnrichment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateOTelEnrichmentInput"},
+      "output":{
+        "shape":"UpdateOTelEnrichmentOutput",
+        "resultWrapper":"UpdateOTelEnrichmentResult"
+      },
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "UpdateResourceMetricsConfiguration":{
+      "name":"UpdateResourceMetricsConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateResourceMetricsConfigurationInput"},
+      "output":{
+        "shape":"UpdateResourceMetricsConfigurationOutput",
+        "resultWrapper":"UpdateResourceMetricsConfigurationResult"
+      },
+      "errors":[
+        {"shape":"ResourceNotFoundException"}
       ]
     }
   },
@@ -1156,6 +1236,21 @@
       "type":"list",
       "member":{"shape":"DatapointValue"}
     },
+    "CreateResourceMetricsConfigurationInput":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{"shape":"ResourceArn"},
+        "MetricSelections":{"shape":"ResourceMetricSelectionList"}
+      }
+    },
+    "CreateResourceMetricsConfigurationOutput":{
+      "type":"structure",
+      "required":["ResourceMetricsConfiguration"],
+      "members":{
+        "ResourceMetricsConfiguration":{"shape":"ResourceMetricsConfiguration"}
+      }
+    },
     "DashboardArn":{"type":"string"},
     "DashboardBody":{"type":"string"},
     "DashboardEntries":{
@@ -1352,6 +1447,17 @@
       }
     },
     "DeleteMetricStreamOutput":{
+      "type":"structure",
+      "members":{}
+    },
+    "DeleteResourceMetricsConfigurationInput":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{"shape":"ResourceArn"}
+      }
+    },
+    "DeleteResourceMetricsConfigurationOutput":{
       "type":"structure",
       "members":{}
     },
@@ -1871,7 +1977,25 @@
       "type":"structure",
       "required":["Status"],
       "members":{
-        "Status":{"shape":"OTelEnrichmentStatus"}
+        "Status":{"shape":"OTelEnrichmentStatus"},
+        "IncludeFilters":{"shape":"OTelEnrichmentMetricSelectorList"},
+        "ExcludeFilters":{"shape":"OTelEnrichmentMetricSelectorList"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "UpdatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "GetResourceMetricsConfigurationInput":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{"shape":"ResourceArn"}
+      }
+    },
+    "GetResourceMetricsConfigurationOutput":{
+      "type":"structure",
+      "required":["ResourceMetricsConfiguration"],
+      "members":{
+        "ResourceMetricsConfiguration":{"shape":"ResourceMetricsConfiguration"}
       }
     },
     "HistoryData":{
@@ -2037,6 +2161,7 @@
         "httpStatusCode":500
       },
       "exception":true,
+      "fault":true,
       "xmlOrder":["Message"]
     },
     "InvalidFormatFault":{
@@ -2545,6 +2670,12 @@
       "max":255,
       "min":1
     },
+    "MetricNameList":{
+      "type":"list",
+      "member":{"shape":"MetricName"},
+      "max":500,
+      "min":1
+    },
     "MetricStat":{
       "type":"structure",
       "required":[
@@ -2689,6 +2820,26 @@
       "pattern":"[^:].*"
     },
     "NextToken":{"type":"string"},
+    "OTelEnrichmentMetricNameList":{
+      "type":"list",
+      "member":{"shape":"MetricName"},
+      "max":100,
+      "min":0
+    },
+    "OTelEnrichmentMetricSelector":{
+      "type":"structure",
+      "required":["Namespace"],
+      "members":{
+        "Namespace":{"shape":"Namespace"},
+        "MetricNames":{"shape":"OTelEnrichmentMetricNameList"}
+      }
+    },
+    "OTelEnrichmentMetricSelectorList":{
+      "type":"list",
+      "member":{"shape":"OTelEnrichmentMetricSelector"},
+      "max":100,
+      "min":0
+    },
     "OTelEnrichmentStatus":{
       "type":"string",
       "enum":[
@@ -2983,6 +3134,12 @@
       "max":86400,
       "min":0
     },
+    "ResourceArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:[a-zA-Z0-9-]+:[a-zA-Z0-9-]+:[a-zA-Z0-9-]*:\\d{12}:.+"
+    },
     "ResourceConflict":{
       "type":"structure",
       "members":{
@@ -3000,6 +3157,33 @@
       "type":"list",
       "member":{"shape":"ResourceName"},
       "max":5
+    },
+    "ResourceMetricSelection":{
+      "type":"structure",
+      "required":["IncludeMetrics"],
+      "members":{
+        "IncludeMetrics":{"shape":"MetricNameList"}
+      }
+    },
+    "ResourceMetricSelectionList":{
+      "type":"list",
+      "member":{"shape":"ResourceMetricSelection"},
+      "max":1,
+      "min":1
+    },
+    "ResourceMetricsConfiguration":{
+      "type":"structure",
+      "required":[
+        "ResourceArn",
+        "CreatedAt",
+        "UpdatedAt"
+      ],
+      "members":{
+        "ResourceArn":{"shape":"ResourceArn"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "UpdatedAt":{"shape":"Timestamp"},
+        "MetricSelections":{"shape":"ResourceMetricSelectionList"}
+      }
     },
     "ResourceName":{
       "type":"string",
@@ -3168,11 +3352,19 @@
     },
     "StartOTelEnrichmentInput":{
       "type":"structure",
-      "members":{}
+      "members":{
+        "IncludeFilters":{"shape":"OTelEnrichmentMetricSelectorList"},
+        "ExcludeFilters":{"shape":"OTelEnrichmentMetricSelectorList"}
+      }
     },
     "StartOTelEnrichmentOutput":{
       "type":"structure",
-      "members":{}
+      "members":{
+        "IncludeFilters":{"shape":"OTelEnrichmentMetricSelectorList"},
+        "ExcludeFilters":{"shape":"OTelEnrichmentMetricSelectorList"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "UpdatedAt":{"shape":"Timestamp"}
+      }
     },
     "StartTimeOffset":{
       "type":"long",
@@ -3345,6 +3537,51 @@
       "type":"structure",
       "members":{}
     },
+    "UpdateOTelEnrichmentInput":{
+      "type":"structure",
+      "members":{
+        "IncludeFilters":{"shape":"OTelEnrichmentMetricSelectorList"},
+        "ExcludeFilters":{"shape":"OTelEnrichmentMetricSelectorList"}
+      }
+    },
+    "UpdateOTelEnrichmentOutput":{
+      "type":"structure",
+      "members":{
+        "IncludeFilters":{"shape":"OTelEnrichmentMetricSelectorList"},
+        "ExcludeFilters":{"shape":"OTelEnrichmentMetricSelectorList"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "UpdatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "UpdateResourceMetricsConfigurationInput":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{"shape":"ResourceArn"},
+        "MetricSelections":{"shape":"ResourceMetricSelectionList"}
+      }
+    },
+    "UpdateResourceMetricsConfigurationOutput":{
+      "type":"structure",
+      "required":["ResourceMetricsConfiguration"],
+      "members":{
+        "ResourceMetricsConfiguration":{"shape":"ResourceMetricsConfiguration"}
+      }
+    },
+    "ValidationException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ValidationExceptionMessage"}
+      },
+      "error":{
+        "code":"ValidationError",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true,
+      "synthetic":true
+    },
+    "ValidationExceptionMessage":{"type":"string"},
     "Values":{
       "type":"list",
       "member":{"shape":"DatapointValue"}

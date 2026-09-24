@@ -1,0 +1,396 @@
+{
+    "version": "1.1",
+    "parameters": {
+        "Region": {
+            "builtIn": "AWS::Region",
+            "required": true,
+            "documentation": "The AWS region used to dispatch the request.",
+            "type": "string"
+        },
+        "Endpoint": {
+            "builtIn": "SDK::Endpoint",
+            "required": false,
+            "documentation": "Override the endpoint used to send this request.",
+            "type": "string"
+        },
+        "UseFIPS": {
+            "builtIn": "AWS::UseFIPS",
+            "required": true,
+            "default": false,
+            "documentation": "When true, send this request to the FIPS-compliant regional endpoint.",
+            "type": "boolean"
+        },
+        "UseDualStack": {
+            "builtIn": "AWS::UseDualStack",
+            "required": true,
+            "default": false,
+            "documentation": "When true, use the dual-stack endpoint.",
+            "type": "boolean"
+        },
+        "AccountId": {
+            "builtIn": "AWS::Auth::AccountId",
+            "required": false,
+            "documentation": "The AWS account ID used for the request, sourced from the caller's credentials.",
+            "type": "string"
+        },
+        "EventBusArn": {
+            "required": false,
+            "documentation": "The bus ARN from the request, bound via @contextParam. Its account is the bus owner and takes precedence over the credentials-sourced account for cell routing (cross-account calls).",
+            "type": "string"
+        },
+        "AccountIdEndpointMode": {
+            "builtIn": "AWS::Auth::AccountIdEndpointMode",
+            "required": false,
+            "documentation": "The behavior for account ID based endpoint routing: preferred, disabled, or required.",
+            "type": "string"
+        }
+    },
+    "conditions": [
+        {
+            "fn": "isSet",
+            "argv": [
+                {
+                    "ref": "Endpoint"
+                }
+            ]
+        },
+        {
+            "fn": "aws.partition",
+            "argv": [
+                {
+                    "ref": "Region"
+                }
+            ],
+            "assign": "PartitionResult"
+        },
+        {
+            "fn": "isSet",
+            "argv": [
+                {
+                    "ref": "AccountIdEndpointMode"
+                }
+            ]
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "ref": "AccountIdEndpointMode"
+                },
+                "disabled"
+            ]
+        },
+        {
+            "fn": "isSet",
+            "argv": [
+                {
+                    "ref": "EventBusArn"
+                }
+            ]
+        },
+        {
+            "fn": "aws.parseArn",
+            "argv": [
+                {
+                    "ref": "EventBusArn"
+                }
+            ],
+            "assign": "ParsedBusArn"
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "fn": "getAttr",
+                    "argv": [
+                        {
+                            "ref": "ParsedBusArn"
+                        },
+                        "service"
+                    ]
+                },
+                "events"
+            ]
+        },
+        {
+            "fn": "isValidHostLabel",
+            "argv": [
+                {
+                    "fn": "getAttr",
+                    "argv": [
+                        {
+                            "ref": "ParsedBusArn"
+                        },
+                        "accountId"
+                    ]
+                },
+                false
+            ]
+        },
+        {
+            "fn": "isSet",
+            "argv": [
+                {
+                    "ref": "AccountId"
+                }
+            ]
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "ref": "AccountIdEndpointMode"
+                },
+                "required"
+            ]
+        },
+        {
+            "fn": "isValidHostLabel",
+            "argv": [
+                {
+                    "ref": "AccountId"
+                },
+                false
+            ]
+        },
+        {
+            "fn": "booleanEquals",
+            "argv": [
+                {
+                    "ref": "UseFIPS"
+                },
+                true
+            ]
+        },
+        {
+            "fn": "booleanEquals",
+            "argv": [
+                {
+                    "ref": "UseDualStack"
+                },
+                true
+            ]
+        },
+        {
+            "fn": "booleanEquals",
+            "argv": [
+                {
+                    "fn": "getAttr",
+                    "argv": [
+                        {
+                            "ref": "PartitionResult"
+                        },
+                        "supportsDualStack"
+                    ]
+                },
+                true
+            ]
+        },
+        {
+            "fn": "booleanEquals",
+            "argv": [
+                {
+                    "fn": "getAttr",
+                    "argv": [
+                        {
+                            "ref": "PartitionResult"
+                        },
+                        "supportsFIPS"
+                    ]
+                },
+                true
+            ]
+        }
+    ],
+    "results": [
+        {
+            "conditions": [],
+            "error": "Invalid Configuration: FIPS and custom endpoint are not supported",
+            "type": "error"
+        },
+        {
+            "conditions": [],
+            "error": "Invalid Configuration: Dualstack and custom endpoint are not supported",
+            "type": "error"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": {
+                    "ref": "Endpoint"
+                },
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://{ParsedBusArn#accountId}.eventsv2-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {
+                    "metricValues": [
+                        "O"
+                    ]
+                },
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "error": "FIPS and DualStack are enabled, but this partition does not support one or both",
+            "type": "error"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://{ParsedBusArn#accountId}.eventsv2-fips.{Region}.{PartitionResult#dnsSuffix}",
+                "properties": {
+                    "metricValues": [
+                        "O"
+                    ]
+                },
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "error": "FIPS is enabled but this partition does not support FIPS",
+            "type": "error"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://{ParsedBusArn#accountId}.eventsv2.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {
+                    "metricValues": [
+                        "O"
+                    ]
+                },
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "error": "DualStack is enabled but this partition does not support DualStack",
+            "type": "error"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://{ParsedBusArn#accountId}.eventsv2.{Region}.{PartitionResult#dnsSuffix}",
+                "properties": {
+                    "metricValues": [
+                        "O"
+                    ]
+                },
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://{AccountId}.eventsv2-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {
+                    "metricValues": [
+                        "O"
+                    ]
+                },
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://{AccountId}.eventsv2-fips.{Region}.{PartitionResult#dnsSuffix}",
+                "properties": {
+                    "metricValues": [
+                        "O"
+                    ]
+                },
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://{AccountId}.eventsv2.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {
+                    "metricValues": [
+                        "O"
+                    ]
+                },
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://{AccountId}.eventsv2.{Region}.{PartitionResult#dnsSuffix}",
+                "properties": {
+                    "metricValues": [
+                        "O"
+                    ]
+                },
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "error": "Credentials-sourced account ID parameter is invalid",
+            "type": "error"
+        },
+        {
+            "conditions": [],
+            "error": "AccountIdEndpointMode is required but no AccountID was provided or able to be loaded",
+            "type": "error"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://eventsv2-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://eventsv2-fips.{Region}.{PartitionResult#dnsSuffix}",
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://eventsv2.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://eventsv2.{Region}.{PartitionResult#dnsSuffix}",
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
+        }
+    ],
+    "root": 2,
+    "nodeCount": 35,
+    "nodes": "/////wAAAAH/////AAAAAAAAACIAAAADAAAAAQAAAAQF9eEAAAAAAgAAAAUAAAAbAAAAAwAAABoAAAAGAAAABAAAAAcAAAAKAAAABQAAAAgAAAAKAAAABgAAAAkAAAAKAAAABwAAABMAAAAKAAAACAAAAAsAAAAaAAAACgAAAAwF9eEPAAAACwAAAA8AAAANAAAADAAAAA4F9eEOAAAADQX14Q0F9eEJAAAADAAAABEAAAAQAAAADgX14QwF9eEHAAAADQAAABIF9eEFAAAADgX14QsF9eEFAAAACwAAABYAAAAUAAAADAAAABUF9eEKAAAADQX14QgF9eEJAAAADAAAABgAAAAXAAAADgX14QYF9eEHAAAADQAAABkF9eEFAAAADgX14QQF9eEFAAAACQX14RAAAAAbAAAACwAAAB4AAAAcAAAADAAAAB0F9eEUAAAADQX14RMF9eEJAAAADAAAACAAAAAfAAAADgX14RIF9eEHAAAADQAAACEF9eEFAAAADgX14REF9eEFAAAACwX14QEAAAAjAAAADAX14QIF9eED"
+}

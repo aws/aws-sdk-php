@@ -193,6 +193,7 @@ use Aws\AwsClient;
  *     GlobalReplicationGroupIdSuffix?: string,
  *     GlobalReplicationGroupDescription?: string,
  *     PrimaryReplicationGroupId?: string,
+ *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createGlobalReplicationGroupAsync(array $args = [])
@@ -200,6 +201,7 @@ use Aws\AwsClient;
  *     GlobalReplicationGroupIdSuffix?: string,
  *     GlobalReplicationGroupDescription?: string,
  *     PrimaryReplicationGroupId?: string,
+ *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result createReplicationGroup(array $args = [])

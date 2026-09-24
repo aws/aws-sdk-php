@@ -40,7 +40,9 @@
         {"shape":"ServerlessCacheSnapshotNotFoundFault"},
         {"shape":"InvalidServerlessCacheSnapshotStateFault"},
         {"shape":"TagQuotaPerResourceExceeded"},
-        {"shape":"InvalidARNFault"}
+        {"shape":"InvalidARNFault"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"GlobalReplicationGroupNotFoundFault"}
       ]
     },
     "AuthorizeCacheSecurityGroupIngress":{
@@ -257,6 +259,7 @@
         {"shape":"InvalidReplicationGroupStateFault"},
         {"shape":"GlobalReplicationGroupAlreadyExistsFault"},
         {"shape":"ServiceLinkedRoleNotFoundFault"},
+        {"shape":"TagQuotaPerResourceExceeded"},
         {"shape":"InvalidParameterValueException"}
       ]
     },
@@ -1100,7 +1103,9 @@
         {"shape":"InvalidServerlessCacheStateFault"},
         {"shape":"ServerlessCacheSnapshotNotFoundFault"},
         {"shape":"InvalidServerlessCacheSnapshotStateFault"},
-        {"shape":"InvalidARNFault"}
+        {"shape":"InvalidARNFault"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"GlobalReplicationGroupNotFoundFault"}
       ]
     },
     "ModifyCacheCluster":{
@@ -1380,7 +1385,9 @@
         {"shape":"ServerlessCacheSnapshotNotFoundFault"},
         {"shape":"InvalidServerlessCacheSnapshotStateFault"},
         {"shape":"InvalidARNFault"},
-        {"shape":"TagNotFoundFault"}
+        {"shape":"TagNotFoundFault"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"GlobalReplicationGroupNotFoundFault"}
       ]
     },
     "ResetCacheParameterGroup":{
@@ -2280,7 +2287,8 @@
       "members":{
         "GlobalReplicationGroupIdSuffix":{"shape":"String"},
         "GlobalReplicationGroupDescription":{"shape":"String"},
-        "PrimaryReplicationGroupId":{"shape":"String"}
+        "PrimaryReplicationGroupId":{"shape":"String"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "CreateGlobalReplicationGroupResult":{

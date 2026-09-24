@@ -181,6 +181,18 @@ use Aws\AwsClient;
  *     codeRemediationStrategy?: 'AUTOMATIC'|'DISABLED',
  *     validationMode?: 'DISABLED'|'SIMULATED',
  *     maxTaskHours?: float,
+ *     reportDestination?: array{integrationId?: string, containerId?: string, parentId?: string, documentId?: string, ...},
+ *     reportFilters?: array{
+ *         riskLevels?: list<'CRITICAL'|'HIGH'|'INFORMATIONAL'|'LOW'|'MEDIUM'|'UNKNOWN'>,
+ *         confidenceLevels?: list<'FALSE_POSITIVE'|'HIGH'|'LOW'|'MEDIUM'|'UNCONFIRMED'>,
+ *         statuses?: list<'ACCEPTED'|'ACTIVE'|'FALSE_POSITIVE'|'RESOLVED'>,
+ *         riskTypes?: list<'ARBITRARY_FILE_UPLOAD'|'BUSINESS_LOGIC_VULNERABILITIES'|'CODE_INJECTION'|'COMMAND_INJECTION'|'CROSS_SITE_SCRIPTING'|'CRYPTOGRAPHIC_VULNERABILITIES'|'DATABASE_ACCESS'|'DATABASE_MODIFICATION'|'DEFAULT_CREDENTIALS'|'DENIAL_OF_SERVICE'|'FILE_ACCESS'|'FILE_CREATION'|'FILE_DELETION'|'GRAPHQL_VULNERABILITIES'|'INFORMATION_DISCLOSURE'|'INSECURE_DESERIALIZATION'|'INSECURE_DIRECT_OBJECT_REFERENCE'|'JSON_WEB_TOKEN_VULNERABILITIES'|'LOCAL_FILE_INCLUSION'|'OTHER'|'OUTBOUND_SERVICE_REQUEST'|'PATH_TRAVERSAL'|'PRIVILEGE_ESCALATION'|'SERVER_SIDE_REQUEST_FORGERY'|'SERVER_SIDE_TEMPLATE_INJECTION'|'SQL_INJECTION'|'UNKNOWN'|'XML_EXTERNAL_ENTITY'>,
+ *         findingTypes?: list<string>,
+ *         taskStatuses?: list<'ABORTED'|'COMPLETED'|'FAILED'|'INTERNAL_ERROR'|'IN_PROGRESS'>,
+ *         annotationNotes?: bool,
+ *         complianceReport?: bool,
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createCodeReviewAsync(array $args = [])
@@ -201,6 +213,18 @@ use Aws\AwsClient;
  *     codeRemediationStrategy?: 'AUTOMATIC'|'DISABLED',
  *     validationMode?: 'DISABLED'|'SIMULATED',
  *     maxTaskHours?: float,
+ *     reportDestination?: array{integrationId?: string, containerId?: string, parentId?: string, documentId?: string, ...},
+ *     reportFilters?: array{
+ *         riskLevels?: list<'CRITICAL'|'HIGH'|'INFORMATIONAL'|'LOW'|'MEDIUM'|'UNKNOWN'>,
+ *         confidenceLevels?: list<'FALSE_POSITIVE'|'HIGH'|'LOW'|'MEDIUM'|'UNCONFIRMED'>,
+ *         statuses?: list<'ACCEPTED'|'ACTIVE'|'FALSE_POSITIVE'|'RESOLVED'>,
+ *         riskTypes?: list<'ARBITRARY_FILE_UPLOAD'|'BUSINESS_LOGIC_VULNERABILITIES'|'CODE_INJECTION'|'COMMAND_INJECTION'|'CROSS_SITE_SCRIPTING'|'CRYPTOGRAPHIC_VULNERABILITIES'|'DATABASE_ACCESS'|'DATABASE_MODIFICATION'|'DEFAULT_CREDENTIALS'|'DENIAL_OF_SERVICE'|'FILE_ACCESS'|'FILE_CREATION'|'FILE_DELETION'|'GRAPHQL_VULNERABILITIES'|'INFORMATION_DISCLOSURE'|'INSECURE_DESERIALIZATION'|'INSECURE_DIRECT_OBJECT_REFERENCE'|'JSON_WEB_TOKEN_VULNERABILITIES'|'LOCAL_FILE_INCLUSION'|'OTHER'|'OUTBOUND_SERVICE_REQUEST'|'PATH_TRAVERSAL'|'PRIVILEGE_ESCALATION'|'SERVER_SIDE_REQUEST_FORGERY'|'SERVER_SIDE_TEMPLATE_INJECTION'|'SQL_INJECTION'|'UNKNOWN'|'XML_EXTERNAL_ENTITY'>,
+ *         findingTypes?: list<string>,
+ *         taskStatuses?: list<'ABORTED'|'COMPLETED'|'FAILED'|'INTERNAL_ERROR'|'IN_PROGRESS'>,
+ *         annotationNotes?: bool,
+ *         complianceReport?: bool,
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \Aws\Result createIntegration(array $args = [])
@@ -288,6 +312,18 @@ use Aws\AwsClient;
  *     codeRemediationStrategy?: 'AUTOMATIC'|'DISABLED',
  *     disableManagedSkills?: list<'FINDING_PERSONALIZATION'|'LOGIN_OPTIMIZATION'>,
  *     maxTaskHours?: float,
+ *     reportDestination?: array{integrationId?: string, containerId?: string, parentId?: string, documentId?: string, ...},
+ *     reportFilters?: array{
+ *         riskLevels?: list<'CRITICAL'|'HIGH'|'INFORMATIONAL'|'LOW'|'MEDIUM'|'UNKNOWN'>,
+ *         confidenceLevels?: list<'FALSE_POSITIVE'|'HIGH'|'LOW'|'MEDIUM'|'UNCONFIRMED'>,
+ *         statuses?: list<'ACCEPTED'|'ACTIVE'|'FALSE_POSITIVE'|'RESOLVED'>,
+ *         riskTypes?: list<'ARBITRARY_FILE_UPLOAD'|'BUSINESS_LOGIC_VULNERABILITIES'|'CODE_INJECTION'|'COMMAND_INJECTION'|'CROSS_SITE_SCRIPTING'|'CRYPTOGRAPHIC_VULNERABILITIES'|'DATABASE_ACCESS'|'DATABASE_MODIFICATION'|'DEFAULT_CREDENTIALS'|'DENIAL_OF_SERVICE'|'FILE_ACCESS'|'FILE_CREATION'|'FILE_DELETION'|'GRAPHQL_VULNERABILITIES'|'INFORMATION_DISCLOSURE'|'INSECURE_DESERIALIZATION'|'INSECURE_DIRECT_OBJECT_REFERENCE'|'JSON_WEB_TOKEN_VULNERABILITIES'|'LOCAL_FILE_INCLUSION'|'OTHER'|'OUTBOUND_SERVICE_REQUEST'|'PATH_TRAVERSAL'|'PRIVILEGE_ESCALATION'|'SERVER_SIDE_REQUEST_FORGERY'|'SERVER_SIDE_TEMPLATE_INJECTION'|'SQL_INJECTION'|'UNKNOWN'|'XML_EXTERNAL_ENTITY'>,
+ *         findingTypes?: list<string>,
+ *         taskStatuses?: list<'ABORTED'|'COMPLETED'|'FAILED'|'INTERNAL_ERROR'|'IN_PROGRESS'>,
+ *         annotationNotes?: bool,
+ *         complianceReport?: bool,
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createPentestAsync(array $args = [])
@@ -311,6 +347,18 @@ use Aws\AwsClient;
  *     codeRemediationStrategy?: 'AUTOMATIC'|'DISABLED',
  *     disableManagedSkills?: list<'FINDING_PERSONALIZATION'|'LOGIN_OPTIMIZATION'>,
  *     maxTaskHours?: float,
+ *     reportDestination?: array{integrationId?: string, containerId?: string, parentId?: string, documentId?: string, ...},
+ *     reportFilters?: array{
+ *         riskLevels?: list<'CRITICAL'|'HIGH'|'INFORMATIONAL'|'LOW'|'MEDIUM'|'UNKNOWN'>,
+ *         confidenceLevels?: list<'FALSE_POSITIVE'|'HIGH'|'LOW'|'MEDIUM'|'UNCONFIRMED'>,
+ *         statuses?: list<'ACCEPTED'|'ACTIVE'|'FALSE_POSITIVE'|'RESOLVED'>,
+ *         riskTypes?: list<'ARBITRARY_FILE_UPLOAD'|'BUSINESS_LOGIC_VULNERABILITIES'|'CODE_INJECTION'|'COMMAND_INJECTION'|'CROSS_SITE_SCRIPTING'|'CRYPTOGRAPHIC_VULNERABILITIES'|'DATABASE_ACCESS'|'DATABASE_MODIFICATION'|'DEFAULT_CREDENTIALS'|'DENIAL_OF_SERVICE'|'FILE_ACCESS'|'FILE_CREATION'|'FILE_DELETION'|'GRAPHQL_VULNERABILITIES'|'INFORMATION_DISCLOSURE'|'INSECURE_DESERIALIZATION'|'INSECURE_DIRECT_OBJECT_REFERENCE'|'JSON_WEB_TOKEN_VULNERABILITIES'|'LOCAL_FILE_INCLUSION'|'OTHER'|'OUTBOUND_SERVICE_REQUEST'|'PATH_TRAVERSAL'|'PRIVILEGE_ESCALATION'|'SERVER_SIDE_REQUEST_FORGERY'|'SERVER_SIDE_TEMPLATE_INJECTION'|'SQL_INJECTION'|'UNKNOWN'|'XML_EXTERNAL_ENTITY'>,
+ *         findingTypes?: list<string>,
+ *         taskStatuses?: list<'ABORTED'|'COMPLETED'|'FAILED'|'INTERNAL_ERROR'|'IN_PROGRESS'>,
+ *         annotationNotes?: bool,
+ *         complianceReport?: bool,
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \Aws\Result createPrivateConnection(array $args = [])
@@ -854,6 +902,18 @@ use Aws\AwsClient;
  *     codeRemediationStrategy?: 'AUTOMATIC'|'DISABLED',
  *     validationMode?: 'DISABLED'|'SIMULATED',
  *     maxTaskHours?: float,
+ *     reportDestination?: array{integrationId?: string, containerId?: string, parentId?: string, documentId?: string, ...},
+ *     reportFilters?: array{
+ *         riskLevels?: list<'CRITICAL'|'HIGH'|'INFORMATIONAL'|'LOW'|'MEDIUM'|'UNKNOWN'>,
+ *         confidenceLevels?: list<'FALSE_POSITIVE'|'HIGH'|'LOW'|'MEDIUM'|'UNCONFIRMED'>,
+ *         statuses?: list<'ACCEPTED'|'ACTIVE'|'FALSE_POSITIVE'|'RESOLVED'>,
+ *         riskTypes?: list<'ARBITRARY_FILE_UPLOAD'|'BUSINESS_LOGIC_VULNERABILITIES'|'CODE_INJECTION'|'COMMAND_INJECTION'|'CROSS_SITE_SCRIPTING'|'CRYPTOGRAPHIC_VULNERABILITIES'|'DATABASE_ACCESS'|'DATABASE_MODIFICATION'|'DEFAULT_CREDENTIALS'|'DENIAL_OF_SERVICE'|'FILE_ACCESS'|'FILE_CREATION'|'FILE_DELETION'|'GRAPHQL_VULNERABILITIES'|'INFORMATION_DISCLOSURE'|'INSECURE_DESERIALIZATION'|'INSECURE_DIRECT_OBJECT_REFERENCE'|'JSON_WEB_TOKEN_VULNERABILITIES'|'LOCAL_FILE_INCLUSION'|'OTHER'|'OUTBOUND_SERVICE_REQUEST'|'PATH_TRAVERSAL'|'PRIVILEGE_ESCALATION'|'SERVER_SIDE_REQUEST_FORGERY'|'SERVER_SIDE_TEMPLATE_INJECTION'|'SQL_INJECTION'|'UNKNOWN'|'XML_EXTERNAL_ENTITY'>,
+ *         findingTypes?: list<string>,
+ *         taskStatuses?: list<'ABORTED'|'COMPLETED'|'FAILED'|'INTERNAL_ERROR'|'IN_PROGRESS'>,
+ *         annotationNotes?: bool,
+ *         complianceReport?: bool,
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateCodeReviewAsync(array $args = [])
@@ -875,6 +935,18 @@ use Aws\AwsClient;
  *     codeRemediationStrategy?: 'AUTOMATIC'|'DISABLED',
  *     validationMode?: 'DISABLED'|'SIMULATED',
  *     maxTaskHours?: float,
+ *     reportDestination?: array{integrationId?: string, containerId?: string, parentId?: string, documentId?: string, ...},
+ *     reportFilters?: array{
+ *         riskLevels?: list<'CRITICAL'|'HIGH'|'INFORMATIONAL'|'LOW'|'MEDIUM'|'UNKNOWN'>,
+ *         confidenceLevels?: list<'FALSE_POSITIVE'|'HIGH'|'LOW'|'MEDIUM'|'UNCONFIRMED'>,
+ *         statuses?: list<'ACCEPTED'|'ACTIVE'|'FALSE_POSITIVE'|'RESOLVED'>,
+ *         riskTypes?: list<'ARBITRARY_FILE_UPLOAD'|'BUSINESS_LOGIC_VULNERABILITIES'|'CODE_INJECTION'|'COMMAND_INJECTION'|'CROSS_SITE_SCRIPTING'|'CRYPTOGRAPHIC_VULNERABILITIES'|'DATABASE_ACCESS'|'DATABASE_MODIFICATION'|'DEFAULT_CREDENTIALS'|'DENIAL_OF_SERVICE'|'FILE_ACCESS'|'FILE_CREATION'|'FILE_DELETION'|'GRAPHQL_VULNERABILITIES'|'INFORMATION_DISCLOSURE'|'INSECURE_DESERIALIZATION'|'INSECURE_DIRECT_OBJECT_REFERENCE'|'JSON_WEB_TOKEN_VULNERABILITIES'|'LOCAL_FILE_INCLUSION'|'OTHER'|'OUTBOUND_SERVICE_REQUEST'|'PATH_TRAVERSAL'|'PRIVILEGE_ESCALATION'|'SERVER_SIDE_REQUEST_FORGERY'|'SERVER_SIDE_TEMPLATE_INJECTION'|'SQL_INJECTION'|'UNKNOWN'|'XML_EXTERNAL_ENTITY'>,
+ *         findingTypes?: list<string>,
+ *         taskStatuses?: list<'ABORTED'|'COMPLETED'|'FAILED'|'INTERNAL_ERROR'|'IN_PROGRESS'>,
+ *         annotationNotes?: bool,
+ *         complianceReport?: bool,
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateFinding(array $args = [])
@@ -943,6 +1015,18 @@ use Aws\AwsClient;
  *     codeRemediationStrategy?: 'AUTOMATIC'|'DISABLED',
  *     disableManagedSkills?: list<'FINDING_PERSONALIZATION'|'LOGIN_OPTIMIZATION'>,
  *     maxTaskHours?: float,
+ *     reportDestination?: array{integrationId?: string, containerId?: string, parentId?: string, documentId?: string, ...},
+ *     reportFilters?: array{
+ *         riskLevels?: list<'CRITICAL'|'HIGH'|'INFORMATIONAL'|'LOW'|'MEDIUM'|'UNKNOWN'>,
+ *         confidenceLevels?: list<'FALSE_POSITIVE'|'HIGH'|'LOW'|'MEDIUM'|'UNCONFIRMED'>,
+ *         statuses?: list<'ACCEPTED'|'ACTIVE'|'FALSE_POSITIVE'|'RESOLVED'>,
+ *         riskTypes?: list<'ARBITRARY_FILE_UPLOAD'|'BUSINESS_LOGIC_VULNERABILITIES'|'CODE_INJECTION'|'COMMAND_INJECTION'|'CROSS_SITE_SCRIPTING'|'CRYPTOGRAPHIC_VULNERABILITIES'|'DATABASE_ACCESS'|'DATABASE_MODIFICATION'|'DEFAULT_CREDENTIALS'|'DENIAL_OF_SERVICE'|'FILE_ACCESS'|'FILE_CREATION'|'FILE_DELETION'|'GRAPHQL_VULNERABILITIES'|'INFORMATION_DISCLOSURE'|'INSECURE_DESERIALIZATION'|'INSECURE_DIRECT_OBJECT_REFERENCE'|'JSON_WEB_TOKEN_VULNERABILITIES'|'LOCAL_FILE_INCLUSION'|'OTHER'|'OUTBOUND_SERVICE_REQUEST'|'PATH_TRAVERSAL'|'PRIVILEGE_ESCALATION'|'SERVER_SIDE_REQUEST_FORGERY'|'SERVER_SIDE_TEMPLATE_INJECTION'|'SQL_INJECTION'|'UNKNOWN'|'XML_EXTERNAL_ENTITY'>,
+ *         findingTypes?: list<string>,
+ *         taskStatuses?: list<'ABORTED'|'COMPLETED'|'FAILED'|'INTERNAL_ERROR'|'IN_PROGRESS'>,
+ *         annotationNotes?: bool,
+ *         complianceReport?: bool,
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updatePentestAsync(array $args = [])
@@ -967,6 +1051,18 @@ use Aws\AwsClient;
  *     codeRemediationStrategy?: 'AUTOMATIC'|'DISABLED',
  *     disableManagedSkills?: list<'FINDING_PERSONALIZATION'|'LOGIN_OPTIMIZATION'>,
  *     maxTaskHours?: float,
+ *     reportDestination?: array{integrationId?: string, containerId?: string, parentId?: string, documentId?: string, ...},
+ *     reportFilters?: array{
+ *         riskLevels?: list<'CRITICAL'|'HIGH'|'INFORMATIONAL'|'LOW'|'MEDIUM'|'UNKNOWN'>,
+ *         confidenceLevels?: list<'FALSE_POSITIVE'|'HIGH'|'LOW'|'MEDIUM'|'UNCONFIRMED'>,
+ *         statuses?: list<'ACCEPTED'|'ACTIVE'|'FALSE_POSITIVE'|'RESOLVED'>,
+ *         riskTypes?: list<'ARBITRARY_FILE_UPLOAD'|'BUSINESS_LOGIC_VULNERABILITIES'|'CODE_INJECTION'|'COMMAND_INJECTION'|'CROSS_SITE_SCRIPTING'|'CRYPTOGRAPHIC_VULNERABILITIES'|'DATABASE_ACCESS'|'DATABASE_MODIFICATION'|'DEFAULT_CREDENTIALS'|'DENIAL_OF_SERVICE'|'FILE_ACCESS'|'FILE_CREATION'|'FILE_DELETION'|'GRAPHQL_VULNERABILITIES'|'INFORMATION_DISCLOSURE'|'INSECURE_DESERIALIZATION'|'INSECURE_DIRECT_OBJECT_REFERENCE'|'JSON_WEB_TOKEN_VULNERABILITIES'|'LOCAL_FILE_INCLUSION'|'OTHER'|'OUTBOUND_SERVICE_REQUEST'|'PATH_TRAVERSAL'|'PRIVILEGE_ESCALATION'|'SERVER_SIDE_REQUEST_FORGERY'|'SERVER_SIDE_TEMPLATE_INJECTION'|'SQL_INJECTION'|'UNKNOWN'|'XML_EXTERNAL_ENTITY'>,
+ *         findingTypes?: list<string>,
+ *         taskStatuses?: list<'ABORTED'|'COMPLETED'|'FAILED'|'INTERNAL_ERROR'|'IN_PROGRESS'>,
+ *         annotationNotes?: bool,
+ *         complianceReport?: bool,
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \Aws\Result updatePrivateConnectionCertificate(array $args = [])
@@ -1039,6 +1135,7 @@ use Aws\AwsClient;
  *     scopeDocs?: list<array{s3Location?: string, artifactId?: string, integratedDocument?: array, ...}>,
  *     serviceRole?: string,
  *     logConfig?: array{logGroup?: string, logStream?: string, ...},
+ *     reportDestination?: array{integrationId?: string, containerId?: string, parentId?: string, documentId?: string, ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateThreatModelAsync(array $args = [])
@@ -1059,6 +1156,7 @@ use Aws\AwsClient;
  *     scopeDocs?: list<array{s3Location?: string, artifactId?: string, integratedDocument?: array, ...}>,
  *     serviceRole?: string,
  *     logConfig?: array{logGroup?: string, logStream?: string, ...},
+ *     reportDestination?: array{integrationId?: string, containerId?: string, parentId?: string, documentId?: string, ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result verifyTargetDomain(array $args = [])

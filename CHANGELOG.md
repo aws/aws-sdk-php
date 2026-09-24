@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EventBridge` - Adds a ManagedBy field to the DescribeEventBus and ListEventBuses responses, identifying the AWS service that created an event bus on your behalf.
+* `Aws\CloudWatch` - This release adds Create, Get, Update, and DeleteResourceMetricsConfiguration to enable detailed metric collection for an AWS resource, and adds UpdateOTelEnrichment plus include and exclude filters on StartOTelEnrichment so you can choose which metric namespaces CloudWatch enriches.
+* `Aws\IoT` - Fixed ListV2LoggingLevels and DeleteV2LoggingLevel documentation to include all supported target-types
+* `Aws\SecurityAgent` - Added support for Confluence export, enabling customers to publish security findings to Confluence pages.
+* `Aws\RedshiftDataAPIService` - Updates to the ListDatabases and WorkgroupName validation
+* `Aws\MarketplaceDiscovery` - AWS Marketplace Discovery API now supports localized responses and SigV4a request signing. It returns new fulfillment details, including AMI architecture, EBS volume and security group information, SaaS quick-launch status, and SageMaker input and output MIME types.
+* `Aws\Route53Resolver` - Documentation updates for Route 53 Resolver. Clarifies which Outpost Resolver operations apply to first-generation AWS Outposts and that Resolver is managed automatically on second-generation Outposts. Adds Local Network Interface subnet compatibility notes for Resolver endpoints.
+* `Aws\ElastiCache` - Added tagging support for ElastiCache Global DataStore.
+* `Aws\DataZone` - Amazon DataZone now supports the TOOLING blueprint category on CreateEnvironmentBlueprint, UpdateEnvironmentBlueprint, GetEnvironmentBlueprint, and ListEnvironmentBlueprints, for custom tooling blueprints. CreateConnection now accepts roleArn in iamProperties.
+* `Aws\EventBridgeV2` - Introducing Amazon EventBridge enhanced Custom event bus, a new shareable event bus for organizational-scale event-driven applications feature ordered delivery, deduplication, open event formats, and cross-account bus sharing.
+
 ## 3.397.0 - 2026-09-23
 
 * `Aws\LexModelsV2` - Adds support for speaker diarization on Amazon Lex V2 bot locales. Speaker diarization keeps your bot on the primary (loudest) speaker during a streaming voice conversation, so background voices do not start a turn or interrupt a prompt.
