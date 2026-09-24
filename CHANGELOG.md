@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.398.0 - 2026-09-24
 
 * `Aws\EventBridge` - Adds a ManagedBy field to the DescribeEventBus and ListEventBuses responses, identifying the AWS service that created an event bus on your behalf.
 * `Aws\CloudWatch` - This release adds Create, Get, Update, and DeleteResourceMetricsConfiguration to enable detailed metric collection for an AWS resource, and adds UpdateOTelEnrichment plus include and exclude filters on StartOTelEnrichment so you can choose which metric namespaces CloudWatch enriches.
