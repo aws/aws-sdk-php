@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.398.1 - 2026-09-25
 
 * `Aws\WellArchitected` - This change releases the Well-Architected Agent, a generative AI service that analyzes a customer's AWS environment and delivers personalized, prioritized recommendations across cost, security, performance, and resilience.
 * `Aws\Glue` - add support for table level federation
