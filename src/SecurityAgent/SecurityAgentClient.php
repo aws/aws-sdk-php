@@ -577,6 +577,24 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result initiateProviderRegistration(array{provider?: 'BITBUCKET'|'CONFLUENCE'|'GITHUB'|'GITLAB', ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise initiateProviderRegistrationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise initiateProviderRegistrationAsync(array{provider?: 'BITBUCKET'|'CONFLUENCE'|'GITHUB'|'GITLAB', ...} $args = [])
+ * @method \Aws\Result listActorMessages(array $args = [])
+ * @phpstan-method \Aws\Result listActorMessages(array{
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     agentSpaceId?: string,
+ *     pentestId?: string,
+ *     actorIdentifier?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listActorMessagesAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listActorMessagesAsync(array{
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     agentSpaceId?: string,
+ *     pentestId?: string,
+ *     actorIdentifier?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listAgentSpaces(array $args = [])
  * @phpstan-method \Aws\Result listAgentSpaces(array{nextToken?: string, maxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listAgentSpacesAsync(array $args = [])

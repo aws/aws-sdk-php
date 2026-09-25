@@ -1206,6 +1206,7 @@ use Aws\AwsClient;
  *         TableType?: string,
  *         Parameters?: array<string, string>,
  *         TargetTable?: array{CatalogId?: string, DatabaseName?: string, Name?: string, Region?: string, ...},
+ *         FederatedTable?: array{Identifier?: string, DatabaseIdentifier?: string, ConnectionName?: string, ConnectionType?: string, ...},
  *         ViewDefinition?: array{
  *             IsProtected?: bool,
  *             Definer?: string,
@@ -1265,6 +1266,7 @@ use Aws\AwsClient;
  *         TableType?: string,
  *         Parameters?: array<string, string>,
  *         TargetTable?: array{CatalogId?: string, DatabaseName?: string, Name?: string, Region?: string, ...},
+ *         FederatedTable?: array{Identifier?: string, DatabaseIdentifier?: string, ConnectionName?: string, ConnectionType?: string, ...},
  *         ViewDefinition?: array{
  *             IsProtected?: bool,
  *             Definer?: string,
@@ -2345,6 +2347,7 @@ use Aws\AwsClient;
  *     TransactionId?: string,
  *     QueryAsOfTime?: int|string|\DateTimeInterface,
  *     AuditContext?: array{AdditionalAuditContext?: string, RequestedColumns?: list<string>, AllColumnsRequested?: bool, ...},
+ *     ResourceShareType?: 'ALL'|'FEDERATED',
  *     IncludeStatusDetails?: bool,
  *     AttributesToGet?: list<'DEFAULT'|'LATEST_ICEBERG_METADATA'|'NAME'|'TABLE_TYPE'>,
  *     ...,
@@ -2359,6 +2362,7 @@ use Aws\AwsClient;
  *     TransactionId?: string,
  *     QueryAsOfTime?: int|string|\DateTimeInterface,
  *     AuditContext?: array{AdditionalAuditContext?: string, RequestedColumns?: list<string>, AllColumnsRequested?: bool, ...},
+ *     ResourceShareType?: 'ALL'|'FEDERATED',
  *     IncludeStatusDetails?: bool,
  *     AttributesToGet?: list<'DEFAULT'|'LATEST_ICEBERG_METADATA'|'NAME'|'TABLE_TYPE'>,
  *     ...,
@@ -4444,6 +4448,7 @@ use Aws\AwsClient;
  *         TableType?: string,
  *         Parameters?: array<string, string>,
  *         TargetTable?: array{CatalogId?: string, DatabaseName?: string, Name?: string, Region?: string, ...},
+ *         FederatedTable?: array{Identifier?: string, DatabaseIdentifier?: string, ConnectionName?: string, ConnectionType?: string, ...},
  *         ViewDefinition?: array{
  *             IsProtected?: bool,
  *             Definer?: string,
@@ -4503,6 +4508,7 @@ use Aws\AwsClient;
  *         TableType?: string,
  *         Parameters?: array<string, string>,
  *         TargetTable?: array{CatalogId?: string, DatabaseName?: string, Name?: string, Region?: string, ...},
+ *         FederatedTable?: array{Identifier?: string, DatabaseIdentifier?: string, ConnectionName?: string, ConnectionType?: string, ...},
  *         ViewDefinition?: array{
  *             IsProtected?: bool,
  *             Definer?: string,

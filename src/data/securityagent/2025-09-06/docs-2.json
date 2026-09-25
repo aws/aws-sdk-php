@@ -50,6 +50,7 @@
     "GetSecurityRequirementPack": "<p>Retrieves information about a security requirement pack.</p>",
     "ImportSecurityRequirements": "<p>Imports security requirements from uploaded documents into a customer managed security requirement pack. The import process asynchronously extracts and generates structured security requirements from the provided source files.</p>",
     "InitiateProviderRegistration": "<p>Initiates the OAuth registration flow with a third-party provider. Returns a redirect URL and CSRF state token for completing the authorization.</p>",
+    "ListActorMessages": "<p>Returns a paginated list of the email MFA messages received for an actor at its server-generated email address, most recent first.</p>",
     "ListAgentSpaces": "<p>Returns a paginated list of agent space summaries in your account.</p>",
     "ListApplications": "<p>Returns a paginated list of application summaries in your account.</p>",
     "ListArtifacts": "<p>Returns a paginated list of artifact summaries for the specified agent space.</p>",
@@ -135,6 +136,18 @@
       "refs": {
         "Assets$actors": "<p>The list of actors used during penetration testing.</p>",
         "PentestJob$actors": "<p>The list of actors used during the pentest job.</p>"
+      }
+    },
+    "ActorMessage": {
+      "base": "<p>A message received at an actor's server-generated email MFA address.</p>",
+      "refs": {
+        "ActorMessageList$member": null
+      }
+    },
+    "ActorMessageList": {
+      "base": null,
+      "refs": {
+        "ListActorMessagesOutput$messages": "<p>The list of messages received for the actor, most recent first.</p>"
       }
     },
     "AddArtifactInput": {
@@ -1601,6 +1614,14 @@
         "AWSResources$lambdaFunctionArns": "<p>The Amazon Resource Names (ARNs) of the Lambda functions associated with the agent space.</p>"
       }
     },
+    "ListActorMessagesInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListActorMessagesOutput": {
+      "base": null,
+      "refs": {}
+    },
     "ListAgentSpacesInput": {
       "base": "<p>Input for listing agent spaces.</p>",
       "refs": {}
@@ -1840,6 +1861,7 @@
     "MaxResults": {
       "base": "<p>Maximum results for pagination.</p>",
       "refs": {
+        "ListActorMessagesInput$maxResults": "<p>The maximum number of results to return in a single call.</p>",
         "ListAgentSpacesInput$maxResults": "<p>The maximum number of results to return in a single call.</p>",
         "ListApplicationsRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>",
         "ListArtifactsInput$maxResults": "<p>The maximum number of results to return in a single call.</p>",
@@ -1947,6 +1969,8 @@
     "NextToken": {
       "base": "<p>Pagination token.</p>",
       "refs": {
+        "ListActorMessagesInput$nextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request. For subsequent calls, use the nextToken value returned from the previous request.</p>",
+        "ListActorMessagesOutput$nextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request. For subsequent calls, use the nextToken value returned from the previous request.</p>",
         "ListAgentSpacesInput$nextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request. For subsequent calls, use the nextToken value returned from the previous request.</p>",
         "ListAgentSpacesOutput$nextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request. For subsequent calls, use the nextToken value returned from the previous request.</p>",
         "ListApplicationsRequest$nextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request. For subsequent calls, use the nextToken value returned from the previous request.</p>",
@@ -2544,6 +2568,24 @@
         "Actor$mfaForwardingAddress": "<p>Server-generated email forwarding address for receiving MFA codes.</p>"
       }
     },
+    "SensitiveMessageBody": {
+      "base": null,
+      "refs": {
+        "ActorMessage$body": "<p>The plain-text body of the message, containing the MFA code or verification link.</p>"
+      }
+    },
+    "SensitiveMessageSender": {
+      "base": null,
+      "refs": {
+        "ActorMessage$sender": "<p>The address the message was sent from.</p>"
+      }
+    },
+    "SensitiveMessageSubject": {
+      "base": null,
+      "refs": {
+        "ActorMessage$subject": "<p>The subject line of the message.</p>"
+      }
+    },
     "ServiceManagedInput": {
       "base": "<p>The configuration for a service-managed private connection.</p>",
       "refs": {
@@ -2911,6 +2953,9 @@
         "IntegrationSummary$installationId": "<p>The installation identifier from the integration provider.</p>",
         "IntegrationSummary$displayName": "<p>The display name of the integration.</p>",
         "InternalServerException$message": "<p>Error description.</p>",
+        "ListActorMessagesInput$agentSpaceId": "<p>The unique identifier of the agent space that owns the pentest.</p>",
+        "ListActorMessagesInput$pentestId": "<p>The unique identifier of the pentest that the actor belongs to.</p>",
+        "ListActorMessagesInput$actorIdentifier": "<p>The identifier of the actor whose messages to list. The identifier is case-insensitive.</p>",
         "ListCodeReviewJobTasksInput$agentSpaceId": "<p>The unique identifier of the agent space.</p>",
         "ListCodeReviewJobTasksInput$codeReviewJobId": "<p>The unique identifier of the code review job to list tasks for.</p>",
         "ListCodeReviewJobTasksInput$categoryName": "<p>Filter tasks by category name.</p>",
@@ -3170,6 +3215,7 @@
     "SyntheticTimestamp_date_time": {
       "base": null,
       "refs": {
+        "ActorMessage$receivedAt": "<p>The time the message was received.</p>",
         "AgentSpace$createdAt": "<p>The date and time the agent space was created, in UTC format.</p>",
         "AgentSpace$updatedAt": "<p>The date and time the agent space was last updated, in UTC format.</p>",
         "AgentSpaceSummary$createdAt": "<p>The date and time the agent space was created, in UTC format.</p>",

@@ -453,6 +453,38 @@ use Aws\AwsClient;
  *     tags?: array<string, string>,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result createVpcConfiguration(array $args = [])
+ * @phpstan-method \Aws\Result createVpcConfiguration(array{
+ *     knowledgeBaseId?: string,
+ *     clientToken?: string,
+ *     vpcId?: string,
+ *     subnetIds?: list<string>,
+ *     resourceTarget?: string,
+ *     port?: int,
+ *     protocol?: 'HTTP'|'HTTPS',
+ *     resolutionMode?: 'IN_VPC'|'PUBLIC',
+ *     hostHeader?: string,
+ *     tlsServerName?: string,
+ *     name?: string,
+ *     description?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createVpcConfigurationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createVpcConfigurationAsync(array{
+ *     knowledgeBaseId?: string,
+ *     clientToken?: string,
+ *     vpcId?: string,
+ *     subnetIds?: list<string>,
+ *     resourceTarget?: string,
+ *     port?: int,
+ *     protocol?: 'HTTP'|'HTTPS',
+ *     resolutionMode?: 'IN_VPC'|'PUBLIC',
+ *     hostHeader?: string,
+ *     tlsServerName?: string,
+ *     name?: string,
+ *     description?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result deleteAgent(array $args = [])
  * @phpstan-method \Aws\Result deleteAgent(array{agentId?: string, skipResourceInUseCheck?: bool, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteAgentAsync(array $args = [])
@@ -513,6 +545,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result deleteResourcePolicy(array{resourceArn?: string, expectedRevisionId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteResourcePolicyAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteResourcePolicyAsync(array{resourceArn?: string, expectedRevisionId?: string, ...} $args = [])
+ * @method \Aws\Result deleteVpcConfiguration(array $args = [])
+ * @phpstan-method \Aws\Result deleteVpcConfiguration(array{knowledgeBaseId?: string, vpcConfigurationId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteVpcConfigurationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteVpcConfigurationAsync(array{knowledgeBaseId?: string, vpcConfigurationId?: string, ...} $args = [])
  * @method \Aws\Result disassociateAgentCollaborator(array $args = [])
  * @phpstan-method \Aws\Result disassociateAgentCollaborator(array{agentId?: string, agentVersion?: string, collaboratorId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise disassociateAgentCollaboratorAsync(array $args = [])
@@ -591,6 +627,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getResourcePolicy(array{resourceArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getResourcePolicyAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getResourcePolicyAsync(array{resourceArn?: string, ...} $args = [])
+ * @method \Aws\Result getVpcConfiguration(array $args = [])
+ * @phpstan-method \Aws\Result getVpcConfiguration(array{knowledgeBaseId?: string, vpcConfigurationId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getVpcConfigurationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getVpcConfigurationAsync(array{knowledgeBaseId?: string, vpcConfigurationId?: string, ...} $args = [])
  * @method \Aws\Result ingestKnowledgeBaseDocuments(array $args = [])
  * @phpstan-method \Aws\Result ingestKnowledgeBaseDocuments(array{
  *     knowledgeBaseId?: string,
@@ -683,6 +723,22 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listTagsForResource(array{resourceArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array{resourceArn?: string, ...} $args = [])
+ * @method \Aws\Result listVpcConfigurations(array $args = [])
+ * @phpstan-method \Aws\Result listVpcConfigurations(array{
+ *     knowledgeBaseId?: string,
+ *     statusFilter?: 'CREATED'|'CREATE_FAILED'|'CREATING'|'DELETE_FAILED'|'DELETING',
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listVpcConfigurationsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listVpcConfigurationsAsync(array{
+ *     knowledgeBaseId?: string,
+ *     statusFilter?: 'CREATED'|'CREATE_FAILED'|'CREATING'|'DELETE_FAILED'|'DELETING',
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result prepareAgent(array $args = [])
  * @phpstan-method \Aws\Result prepareAgent(array{agentId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise prepareAgentAsync(array $args = [])

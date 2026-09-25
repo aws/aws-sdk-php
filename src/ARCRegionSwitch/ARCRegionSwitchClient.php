@@ -55,6 +55,7 @@ use Aws\AwsClient;
  *         ...,
  *     }>,
  *     reportConfiguration?: array{reportOutput?: list<array>, ...},
+ *     serviceQuotaChecksEnabled?: bool,
  *     name?: string,
  *     regions?: list<string>,
  *     recoveryApproach?: 'activeActive'|'activePassive',
@@ -90,6 +91,7 @@ use Aws\AwsClient;
  *         ...,
  *     }>,
  *     reportConfiguration?: array{reportOutput?: list<array>, ...},
+ *     serviceQuotaChecksEnabled?: bool,
  *     name?: string,
  *     regions?: list<string>,
  *     recoveryApproach?: 'activeActive'|'activePassive',
@@ -153,6 +155,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listRoute53HealthChecksInRegion(array{arn?: string, hostedZoneId?: string, recordName?: string, maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listRoute53HealthChecksInRegionAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listRoute53HealthChecksInRegionAsync(array{arn?: string, hostedZoneId?: string, recordName?: string, maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \Aws\Result listServiceQuotaWarnings(array $args = [])
+ * @phpstan-method \Aws\Result listServiceQuotaWarnings(array{planArns?: list<string>, maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listServiceQuotaWarningsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listServiceQuotaWarningsAsync(array{planArns?: list<string>, maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
  * @phpstan-method \Aws\Result listTagsForResource(array{arn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
@@ -218,6 +224,7 @@ use Aws\AwsClient;
  *         ...,
  *     }>,
  *     reportConfiguration?: array{reportOutput?: list<array>, ...},
+ *     serviceQuotaChecksEnabled?: bool,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updatePlanAsync(array $args = [])
@@ -249,6 +256,7 @@ use Aws\AwsClient;
  *         ...,
  *     }>,
  *     reportConfiguration?: array{reportOutput?: list<array>, ...},
+ *     serviceQuotaChecksEnabled?: bool,
  *     ...,
  * } $args = [])
  * @method \Aws\Result updatePlanExecution(array $args = [])

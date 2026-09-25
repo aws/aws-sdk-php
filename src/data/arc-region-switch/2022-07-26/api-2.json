@@ -220,6 +220,20 @@
       ],
       "readonly":true
     },
+    "ListServiceQuotaWarnings":{
+      "name":"ListServiceQuotaWarnings",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListServiceQuotaWarningsRequest"},
+      "output":{"shape":"ListServiceQuotaWarningsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
       "http":{
@@ -566,6 +580,10 @@
       "box":true,
       "min":1
     },
+    "Boolean":{
+      "type":"boolean",
+      "box":true
+    },
     "CancelPlanExecutionRequest":{
       "type":"structure",
       "required":[
@@ -613,6 +631,7 @@
         "associatedAlarms":{"shape":"AssociatedAlarmMap"},
         "triggers":{"shape":"TriggerList"},
         "reportConfiguration":{"shape":"ReportConfiguration"},
+        "serviceQuotaChecksEnabled":{"shape":"Boolean"},
         "name":{"shape":"PlanName"},
         "regions":{"shape":"RegionList"},
         "recoveryApproach":{"shape":"RecoveryApproach"},
@@ -726,7 +745,8 @@
         "asgs":{"shape":"AsgList"},
         "ungraceful":{"shape":"Ec2Ungraceful"},
         "targetPercent":{"shape":"Integer"},
-        "capacityMonitoringApproach":{"shape":"Ec2AsgCapacityMonitoringApproach"}
+        "capacityMonitoringApproach":{"shape":"Ec2AsgCapacityMonitoringApproach"},
+        "waitELBTargetGroupHealthy":{"shape":"WaitELBTargetGroupHealthy"}
       }
     },
     "Ec2AsgCapacityIncreaseConfigurationTimeoutMinutesInteger":{
@@ -762,7 +782,8 @@
         "services":{"shape":"ServiceList"},
         "ungraceful":{"shape":"EcsUngraceful"},
         "targetPercent":{"shape":"Integer"},
-        "capacityMonitoringApproach":{"shape":"EcsCapacityMonitoringApproach"}
+        "capacityMonitoringApproach":{"shape":"EcsCapacityMonitoringApproach"},
+        "waitELBTargetGroupHealthy":{"shape":"WaitELBTargetGroupHealthy"}
       }
     },
     "EcsCapacityIncreaseConfigurationTimeoutMinutesInteger":{
@@ -1465,6 +1486,22 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListServiceQuotaWarningsRequest":{
+      "type":"structure",
+      "members":{
+        "planArns":{"shape":"PlanArnList"},
+        "maxResults":{"shape":"MaxResults"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListServiceQuotaWarningsResponse":{
+      "type":"structure",
+      "required":["serviceQuotaWarningSummaries"],
+      "members":{
+        "serviceQuotaWarningSummaries":{"shape":"ServiceQuotaWarningSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListTagsForResourceRequest":{
       "type":"structure",
       "required":["arn"],
@@ -1572,6 +1609,7 @@
         "associatedAlarms":{"shape":"AssociatedAlarmMap"},
         "triggers":{"shape":"TriggerList"},
         "reportConfiguration":{"shape":"ReportConfiguration"},
+        "serviceQuotaChecksEnabled":{"shape":"Boolean"},
         "name":{"shape":"PlanName"},
         "regions":{"shape":"RegionList"},
         "recoveryApproach":{"shape":"RecoveryApproach"},
@@ -1584,6 +1622,12 @@
     "PlanArn":{
       "type":"string",
       "pattern":"arn:aws[a-zA-Z-]*:arc-region-switch::[0-9]{12}:plan/([a-zA-Z0-9](?:[a-zA-Z0-9-]{0,30}[a-zA-Z0-9])?):([a-z0-9]{6})"
+    },
+    "PlanArnList":{
+      "type":"list",
+      "member":{"shape":"PlanArn"},
+      "max":100,
+      "min":0
     },
     "PlanList":{
       "type":"list",
@@ -1937,6 +1981,43 @@
       "max":2,
       "min":2
     },
+    "ServiceQuotaWarningStatus":{
+      "type":"string",
+      "enum":[
+        "pending",
+        "denied",
+        "insufficientPermissions",
+        "maxRegionSwitchRequestsExceeded",
+        "maxAccountRequestsExceeded"
+      ]
+    },
+    "ServiceQuotaWarningSummary":{
+      "type":"structure",
+      "required":[
+        "accountId",
+        "quotaRegion",
+        "status",
+        "planArn"
+      ],
+      "members":{
+        "accountId":{"shape":"AccountId"},
+        "quotaRegion":{"shape":"Region"},
+        "serviceCode":{"shape":"String"},
+        "quotaCode":{"shape":"String"},
+        "quotaName":{"shape":"String"},
+        "status":{"shape":"ServiceQuotaWarningStatus"},
+        "planArn":{"shape":"PlanArn"},
+        "requestId":{"shape":"String"},
+        "caseId":{"shape":"String"},
+        "warningMessage":{"shape":"String"},
+        "lastCheckedAt":{"shape":"Timestamp"},
+        "warningCreatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "ServiceQuotaWarningSummaryList":{
+      "type":"list",
+      "member":{"shape":"ServiceQuotaWarningSummary"}
+    },
     "StartPlanExecutionRequest":{
       "type":"structure",
       "required":[
@@ -2181,7 +2262,8 @@
         "recoveryTimeObjectiveMinutes":{"shape":"UpdatePlanRequestRecoveryTimeObjectiveMinutesInteger"},
         "associatedAlarms":{"shape":"AssociatedAlarmMap"},
         "triggers":{"shape":"TriggerList"},
-        "reportConfiguration":{"shape":"ReportConfiguration"}
+        "reportConfiguration":{"shape":"ReportConfiguration"},
+        "serviceQuotaChecksEnabled":{"shape":"Boolean"}
       }
     },
     "UpdatePlanRequestRecoveryTimeObjectiveMinutesInteger":{
@@ -2195,6 +2277,13 @@
       "members":{
         "plan":{"shape":"Plan"}
       }
+    },
+    "WaitELBTargetGroupHealthy":{
+      "type":"string",
+      "enum":[
+        "enabled",
+        "disabled"
+      ]
     },
     "Workflow":{
       "type":"structure",

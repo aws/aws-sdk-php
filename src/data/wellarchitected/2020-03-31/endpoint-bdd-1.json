@@ -1,12 +1,6 @@
 {
     "version": "1.1",
     "parameters": {
-        "Region": {
-            "builtIn": "AWS::Region",
-            "required": false,
-            "documentation": "The AWS region used to dispatch the request.",
-            "type": "string"
-        },
         "UseDualStack": {
             "builtIn": "AWS::UseDualStack",
             "required": true,
@@ -25,6 +19,17 @@
             "builtIn": "SDK::Endpoint",
             "required": false,
             "documentation": "Override the endpoint used to send this request",
+            "type": "string"
+        },
+        "Region": {
+            "builtIn": "AWS::Region",
+            "required": false,
+            "documentation": "The AWS region used to dispatch the request.",
+            "type": "string"
+        },
+        "SubServiceType": {
+            "required": false,
+            "documentation": "Identifies the sub-service used for endpoint routing. This value is set automatically per operation and is not client-configurable. It is unset for Well-Architected Tool operations. It is AGENT for Well-Architected Agent operations, which resolve to the wellarchitected-agent endpoint.",
             "type": "string"
         }
     },
@@ -67,6 +72,38 @@
             "fn": "booleanEquals",
             "argv": [
                 {
+                    "fn": "getAttr",
+                    "argv": [
+                        {
+                            "ref": "PartitionResult"
+                        },
+                        "supportsFIPS"
+                    ]
+                },
+                true
+            ]
+        },
+        {
+            "fn": "isSet",
+            "argv": [
+                {
+                    "ref": "SubServiceType"
+                }
+            ]
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "ref": "SubServiceType"
+                },
+                "AGENT"
+            ]
+        },
+        {
+            "fn": "booleanEquals",
+            "argv": [
+                {
                     "ref": "UseDualStack"
                 },
                 true
@@ -82,21 +119,6 @@
                             "ref": "PartitionResult"
                         },
                         "supportsDualStack"
-                    ]
-                },
-                true
-            ]
-        },
-        {
-            "fn": "booleanEquals",
-            "argv": [
-                {
-                    "fn": "getAttr",
-                    "argv": [
-                        {
-                            "ref": "PartitionResult"
-                        },
-                        "supportsFIPS"
                     ]
                 },
                 true
@@ -128,8 +150,16 @@
         {
             "conditions": [],
             "endpoint": {
-                "url": "https://wellarchitected-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
-                "properties": {},
+                "url": "https://wellarchitected-agent-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {
+                    "authSchemes": [
+                        {
+                            "name": "sigv4",
+                            "signingName": "wellarchitected",
+                            "signingRegion": "{Region}"
+                        }
+                    ]
+                },
                 "headers": {}
             },
             "type": "endpoint"
@@ -142,8 +172,16 @@
         {
             "conditions": [],
             "endpoint": {
-                "url": "https://wellarchitected-fips.{Region}.{PartitionResult#dnsSuffix}",
-                "properties": {},
+                "url": "https://wellarchitected-agent-fips.{Region}.{PartitionResult#dnsSuffix}",
+                "properties": {
+                    "authSchemes": [
+                        {
+                            "name": "sigv4",
+                            "signingName": "wellarchitected",
+                            "signingRegion": "{Region}"
+                        }
+                    ]
+                },
                 "headers": {}
             },
             "type": "endpoint"
@@ -156,8 +194,16 @@
         {
             "conditions": [],
             "endpoint": {
-                "url": "https://wellarchitected.{Region}.{PartitionResult#dualStackDnsSuffix}",
-                "properties": {},
+                "url": "https://wellarchitected-agent.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {
+                    "authSchemes": [
+                        {
+                            "name": "sigv4",
+                            "signingName": "wellarchitected",
+                            "signingRegion": "{Region}"
+                        }
+                    ]
+                },
                 "headers": {}
             },
             "type": "endpoint"
@@ -166,6 +212,50 @@
             "conditions": [],
             "error": "DualStack is enabled but this partition does not support DualStack",
             "type": "error"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://wellarchitected-agent.{Region}.{PartitionResult#dnsSuffix}",
+                "properties": {
+                    "authSchemes": [
+                        {
+                            "name": "sigv4",
+                            "signingName": "wellarchitected",
+                            "signingRegion": "{Region}"
+                        }
+                    ]
+                },
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://wellarchitected-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://wellarchitected-fips.{Region}.{PartitionResult#dnsSuffix}",
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://wellarchitected.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
         },
         {
             "conditions": [],
@@ -183,6 +273,6 @@
         }
     ],
     "root": 2,
-    "nodeCount": 13,
-    "nodes": "/////wAAAAH/////AAAAAAAAAAwAAAADAAAAAQAAAAQF9eELAAAAAgAAAAUF9eELAAAAAwAAAAgAAAAGAAAABAAAAAcF9eEKAAAABQX14QgF9eEJAAAABAAAAAoAAAAJAAAABgX14QYF9eEHAAAABQAAAAsF9eEFAAAABgX14QQF9eEFAAAAAwX14QEAAAANAAAABAX14QIF9eED"
+    "nodeCount": 21,
+    "nodes": "/////wAAAAH/////AAAAAAAAABQAAAADAAAAAQAAAAQF9eEPAAAAAgAAAAUF9eEPAAAAAwAAAAwAAAAGAAAABQAAAAcAAAAIAAAABgAAAAoAAAAIAAAABwAAAAkF9eEOAAAACAX14Q0F9eEJAAAABwAAAAsF9eEKAAAACAX14QgF9eEJAAAABAAAAA4AAAANAAAABwX14QUF9eEHAAAABQAAAA8AAAAQAAAABgAAABIAAAAQAAAABwAAABEF9eEMAAAACAX14QsF9eEFAAAABwAAABMF9eEGAAAACAX14QQF9eEFAAAAAwX14QEAAAAVAAAABwX14QIF9eED"
 }

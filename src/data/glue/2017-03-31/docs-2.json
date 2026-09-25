@@ -4680,7 +4680,8 @@
     "FederatedTable": {
       "base": "<p>A table that points to an entity outside the Glue Data Catalog.</p>",
       "refs": {
-        "Table$FederatedTable": "<p>A <code>FederatedTable</code> structure that references an entity outside the Glue Data Catalog.</p>"
+        "Table$FederatedTable": "<p>A <code>FederatedTable</code> structure that references an entity outside the Glue Data Catalog.</p>",
+        "TableInput$FederatedTable": "<p>A <code>FederatedTable</code> structure that references an entity outside the Glue Data Catalog. Specify this field to create a federated table, which points to a table in an external metastore instead of describing data managed in the Glue Data Catalog.</p>"
       }
     },
     "FederationIdentifier": {
@@ -11963,6 +11964,12 @@
         "Crawler$TablePrefix": "<p>The prefix added to the names of tables that are created.</p>",
         "CreateCrawlerRequest$TablePrefix": "<p>The table prefix used for catalog tables that are created.</p>",
         "UpdateCrawlerRequest$TablePrefix": "<p>The table prefix used for catalog tables that are created.</p>"
+      }
+    },
+    "TableResourceShareType": {
+      "base": null,
+      "refs": {
+        "GetTablesRequest$ResourceShareType": "<p>Specifies which tables the <code>GetTables</code> call returns. The allowable values are <code>FEDERATED</code> or <code>ALL</code>. </p> <ul> <li> <p>If set to <code>FEDERATED</code>, returns only federated tables, which reference an entity outside the Glue Data Catalog.</p> </li> <li> <p>If set to <code>ALL</code>, returns all tables in the database, both federated and non-federated. </p> </li> </ul>"
       }
     },
     "TableStatus": {

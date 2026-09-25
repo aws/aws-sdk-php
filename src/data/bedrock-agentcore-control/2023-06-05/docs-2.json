@@ -139,6 +139,7 @@
     "ListTagsForResource": "<p>Lists the tags associated with the specified resource.</p> <note> <p>This feature is currently available only for AgentCore Runtime, Browser, Browser Profile, Code Interpreter tool, and Gateway.</p> </note>",
     "ListWorkloadIdentities": "<p>Lists all workload identities in your account.</p>",
     "PutResourcePolicy": "<p>Creates or updates a resource-based policy for a resource with the specified resourceArn.</p> <note> <p>This feature is currently available only for AgentCore Runtime and Gateway.</p> </note>",
+    "RotatePaymentConnectorCredentials": "<p>Replaces the service-managed credentials of a payment connector with newly issued credentials.</p> <p>Use this operation only for payment connectors with a <code>provisionMode</code> of <code>QUICK_CREATE</code>. For payment connectors with a <code>provisionMode</code> of <code>MANUAL</code>, call <code>UpdatePaymentCredentialProvider</code> instead after rotating credentials with the payment provider directly.</p> <p>The rotation finishes before the response is returned, and only one rotation runs at a time for a given payment connector. When it succeeds, the new credential is in effect and the payment connector stays in the <code>READY</code> state. When it fails, an error is returned, the payment connector and its existing credential are left unchanged, and you can retry the request.</p> <p>Rotation replaces the credential on the connector's credential provider, so every payment connector that uses that provider is affected. Replace any copy of the previous credential that you use outside AgentCore.</p>",
     "SetTokenVaultCMK": "<p>Sets the customer master key (CMK) for a token vault.</p>",
     "StartPolicyGeneration": "<p>Initiates the AI-powered generation of Dogwood policies from natural language descriptions within the AgentCore Policy system. This feature enables both technical and non-technical users to create policies by describing their authorization requirements in plain English, which is then automatically translated into formal Dogwood policy statements. The generation process analyzes the natural language input along with the Gateway's tool context to produce validated policy options. Generated policy assets are automatically deleted after 7 days, so you should review and create policies from the generated assets within this timeframe. Once created, policies are permanent and not subject to this expiration. Generated policies should be reviewed and tested in log-only mode before deploying to production. Use this when you want to describe policy intent naturally rather than learning Dogwood syntax, though generated policies may require refinement for complex scenarios.</p>",
     "SubmitRegistryRecordForApproval": "<p>Submits a registry record for approval. This transitions the record from <code>DRAFT</code> status to <code>PENDING_APPROVAL</code> status. If the registry has auto-approval enabled, the record is automatically approved.</p>",
@@ -1172,6 +1173,7 @@
         "DeleteHarnessRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "DeletePaymentConnectorRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "DeletePaymentManagerRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
+        "RotatePaymentConnectorCredentialsRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "StartPolicyGenerationRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure the idempotency of the request. The AWS SDK automatically generates this token, so you don't need to provide it in most cases. If you retry a request with the same client token, the service returns the same response without starting a duplicate generation.</p>",
         "UpdateAgentRuntimeEndpointRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "UpdateAgentRuntimeRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
@@ -1332,6 +1334,24 @@
       "base": "<p>Coinbase CDP configuration output with secret ARNs.</p>",
       "refs": {
         "PaymentProviderConfigurationOutput$coinbaseCdpConfiguration": "<p>The Coinbase CDP configuration.</p>"
+      }
+    },
+    "CoinbaseCdpRotationTargets": {
+      "base": "<p>Specifies the service-managed Coinbase CDP secrets to rotate.</p>",
+      "refs": {
+        "CredentialRotationConfig$coinbaseCDP": "<p>The credentials to rotate for a Coinbase CDP payment connector.</p>"
+      }
+    },
+    "CoinbaseCdpSecret": {
+      "base": null,
+      "refs": {
+        "CoinbaseCdpSecrets$member": null
+      }
+    },
+    "CoinbaseCdpSecrets": {
+      "base": null,
+      "refs": {
+        "CoinbaseCdpRotationTargets$secrets": "<p>The secrets to rotate. Specify at least one value. Each secret that you specify is rotated independently.</p> <ul> <li> <p> <code>API_KEY</code> - The API key that the payment connector uses to call Coinbase CDP. Rotate it as routine maintenance, or if you suspect that it is compromised.</p> </li> <li> <p> <code>WALLET_SECRET</code> - The wallet secret that signs transactions. Rotate it only if it is lost or compromised. Coinbase CDP allows one wallet secret per project, so it is replaced in place and signing can be briefly interrupted.</p> </li> </ul>"
       }
     },
     "ComponentConfiguration": {
@@ -2069,6 +2089,12 @@
         "UpdateOauth2CredentialProviderResponse$credentialProviderVendor": "<p>The vendor of the OAuth2 credential provider.</p>"
       }
     },
+    "CredentialRotationConfig": {
+      "base": "<p>Specifies the service-managed credentials to rotate. Provide the member that matches the payment connector's <code>type</code>.</p>",
+      "refs": {
+        "RotatePaymentConnectorCredentialsRequest$credentialsToRotate": "<p>The credentials to rotate. Specify the member that matches the payment connector's <code>type</code>. Each credential that you select is rotated independently.</p>"
+      }
+    },
     "CredentialsProviderConfiguration": {
       "base": "<p>The credential provider configuration for a payment connector. Specifies the payment provider type and its associated credential provider.</p>",
       "refs": {
@@ -2396,6 +2422,7 @@
         "GetGatewayTargetResponse$lastSynchronizedAt": "<p>The last synchronization of the target.</p>",
         "GetPaymentConnectorResponse$createdAt": "<p>The timestamp when the payment connector was created.</p>",
         "GetPaymentConnectorResponse$lastUpdatedAt": "<p>The timestamp when the payment connector was last updated.</p>",
+        "GetPaymentConnectorResponse$credentialsUpdatedAt": "<p>The timestamp when the payment connector's current service-managed credentials took effect. It is first set when the credentials are provisioned and is updated by each rotation. This field is present only for payment connectors with a <code>provisionMode</code> of <code>QUICK_CREATE</code>.</p>",
         "GetPaymentManagerResponse$createdAt": "<p>The timestamp when the payment manager was created.</p>",
         "GetPaymentManagerResponse$lastUpdatedAt": "<p>The timestamp when the payment manager was last updated.</p>",
         "GetPolicyEngineResponse$createdAt": "<p>The timestamp when the policy engine was originally created.</p>",
@@ -2441,6 +2468,7 @@
         "RegistryRecordSummary$updatedAt": "<p>The timestamp when the registry record was last updated.</p>",
         "RegistrySummary$createdAt": "<p>The timestamp when the registry was created.</p>",
         "RegistrySummary$updatedAt": "<p>The timestamp when the registry was last updated.</p>",
+        "RotatePaymentConnectorCredentialsResponse$lastUpdatedAt": "<p>The timestamp when the payment connector was last updated, which is when the rotation completed.</p>",
         "StartPolicyGenerationResponse$createdAt": "<p>The timestamp when the policy generation request was created.</p>",
         "StartPolicyGenerationResponse$updatedAt": "<p>The timestamp when the policy generation was last updated.</p>",
         "SubmitRegistryRecordForApprovalResponse$updatedAt": "<p>The timestamp when the record was last updated.</p>",
@@ -5939,7 +5967,7 @@
     "McpToolSchemaConfiguration": {
       "base": "<p>The MCP tool schema configuration for an MCP server target. The tool schema must be aligned with the MCP specification.</p>",
       "refs": {
-        "McpServerTargetConfiguration$mcpToolSchema": "<p>The tool schema configuration for the MCP server target. Supported only when the credential provider is configured with an authorization code grant type. Dynamic tool discovery/synchronization will be disabled when target is configured with mcpToolSchema.</p>"
+        "McpServerTargetConfiguration$mcpToolSchema": "<p>A static tool list for the MCP server target. It is supported for all credential providers. Dynamic tool discovery/synchronization will be disabled when a target is configured with mcpToolSchema.</p>"
       }
     },
     "McpVersion": {
@@ -6749,6 +6777,8 @@
         "GetPaymentConnectorRequest$paymentConnectorId": "<p>The unique identifier of the payment connector to retrieve.</p>",
         "GetPaymentConnectorResponse$paymentConnectorId": "<p>The unique identifier of the payment connector.</p>",
         "PaymentConnectorSummary$paymentConnectorId": "<p>The unique identifier of the payment connector.</p>",
+        "RotatePaymentConnectorCredentialsRequest$paymentConnectorId": "<p>The unique identifier of the payment connector whose credentials you want to rotate.</p>",
+        "RotatePaymentConnectorCredentialsResponse$paymentConnectorId": "<p>The unique identifier of the payment connector.</p>",
         "UpdatePaymentConnectorRequest$paymentConnectorId": "<p>The unique identifier of the payment connector to update.</p>",
         "UpdatePaymentConnectorResponse$paymentConnectorId": "<p>The unique identifier of the updated payment connector.</p>"
       }
@@ -6766,7 +6796,9 @@
     "PaymentConnectorProvisionMode": {
       "base": null,
       "refs": {
-        "CreatePaymentConnectorRequest$provisionMode": "<p>The provision mode for creating the payment connector. If you don't specify a value, the default is <code>MANUAL</code>.</p> <ul> <li> <p> <code>MANUAL</code> - You provide the credential provider configurations directly.</p> </li> <li> <p> <code>QUICK_CREATE</code> - The service orchestrates OAuth consent and provisions the credential provider for you.</p> </li> </ul>"
+        "CreatePaymentConnectorRequest$provisionMode": "<p>The provision mode for creating the payment connector. If you don't specify a value, the default is <code>MANUAL</code>.</p> <ul> <li> <p> <code>MANUAL</code> - You provide the credential provider configurations directly.</p> </li> <li> <p> <code>QUICK_CREATE</code> - The service orchestrates OAuth consent and provisions the credential provider for you.</p> </li> </ul>",
+        "GetPaymentConnectorResponse$provisionMode": "<p>Specifies how the payment connector was provisioned. Payment connectors that were created before this field was available return <code>MANUAL</code>.</p> <ul> <li> <p> <code>MANUAL</code> - You provided the credential provider configurations, so you own the credentials. Rotate them with the payment provider, then call <code>UpdatePaymentCredentialProvider</code>.</p> </li> <li> <p> <code>QUICK_CREATE</code> - AgentCore provisioned the credential provider for you, so the credentials are service-managed. You can rotate them with <code>RotatePaymentConnectorCredentials</code>.</p> </li> </ul>",
+        "PaymentConnectorSummary$provisionMode": "<p>Specifies how the payment connector was provisioned. Payment connectors that were created before this field was available return <code>MANUAL</code>.</p> <ul> <li> <p> <code>MANUAL</code> - You provided the credential provider configurations, so you own the credentials.</p> </li> <li> <p> <code>QUICK_CREATE</code> - AgentCore provisioned the credential provider for you, so the credentials are service-managed and you can rotate them with <code>RotatePaymentConnectorCredentials</code>.</p> </li> </ul>"
       }
     },
     "PaymentConnectorStatus": {
@@ -6776,6 +6808,7 @@
         "DeletePaymentConnectorResponse$status": "<p>The current status of the payment connector, set to <code>DELETING</code> when deletion is initiated. Possible values include <code>CREATING</code>, <code>READY</code>, <code>UPDATING</code>, <code>DELETING</code>, <code>CREATE_FAILED</code>, <code>UPDATE_FAILED</code>, and <code>DELETE_FAILED</code>.</p>",
         "GetPaymentConnectorResponse$status": "<p>The current status of the payment connector. Possible values include <code>CREATING</code>, <code>READY</code>, <code>UPDATING</code>, <code>DELETING</code>, <code>CREATE_FAILED</code>, <code>UPDATE_FAILED</code>, and <code>DELETE_FAILED</code>.</p>",
         "PaymentConnectorSummary$status": "<p>The current status of the payment connector. Possible values include <code>CREATING</code>, <code>READY</code>, <code>UPDATING</code>, <code>DELETING</code>, <code>CREATE_FAILED</code>, <code>UPDATE_FAILED</code>, and <code>DELETE_FAILED</code>.</p>",
+        "RotatePaymentConnectorCredentialsResponse$status": "<p>The current status of the payment connector, which is <code>READY</code> after a successful rotation.</p>",
         "UpdatePaymentConnectorResponse$status": "<p>The current status of the updated payment connector. Possible values include <code>CREATING</code>, <code>READY</code>, <code>UPDATING</code>, <code>DELETING</code>, <code>CREATE_FAILED</code>, <code>UPDATE_FAILED</code>, and <code>DELETE_FAILED</code>.</p>"
       }
     },
@@ -6870,6 +6903,8 @@
         "GetPaymentManagerResponse$paymentManagerId": "<p>The unique identifier of the payment manager.</p>",
         "ListPaymentConnectorsRequest$paymentManagerId": "<p>The unique identifier of the payment manager whose connectors to list.</p>",
         "PaymentManagerSummary$paymentManagerId": "<p>The unique identifier of the payment manager.</p>",
+        "RotatePaymentConnectorCredentialsRequest$paymentManagerId": "<p>The unique identifier of the parent payment manager.</p>",
+        "RotatePaymentConnectorCredentialsResponse$paymentManagerId": "<p>The unique identifier of the parent payment manager.</p>",
         "UpdatePaymentConnectorRequest$paymentManagerId": "<p>The unique identifier of the parent payment manager.</p>",
         "UpdatePaymentConnectorResponse$paymentManagerId": "<p>The unique identifier of the parent payment manager.</p>",
         "UpdatePaymentManagerRequest$paymentManagerId": "<p>The unique identifier of the payment manager to update.</p>",
@@ -7822,6 +7857,14 @@
       "refs": {
         "RootVolumeConfiguration$throughput": "<p>The throughput to provision, in MiB/s. Valid only for <code>gp3</code> volumes. Valid range: 125–2,000 MiB/s.</p>"
       }
+    },
+    "RotatePaymentConnectorCredentialsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "RotatePaymentConnectorCredentialsResponse": {
+      "base": null,
+      "refs": {}
     },
     "RouteToTargetAction": {
       "base": "<p>An action that routes requests to a gateway target, either statically or with weighted traffic splitting.</p>",

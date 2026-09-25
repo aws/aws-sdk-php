@@ -1883,6 +1883,12 @@
         "PublicRouterNetworkInterfaceRule$Cidr": "<p>The CIDR block that is allowed to access the public router network interface.</p>"
       }
     },
+    "PublicTlsEncryptionConfiguration": {
+      "base": "<p>The TLS encryption configuration for destinations that present a certificate from a publicly trusted certificate authority. This type does not require any additional settings.</p>",
+      "refs": {
+        "TlsEncryptionConfiguration$Public": "<p>The TLS encryption configuration that validates the destination by using a publicly trusted certificate authority.</p>"
+      }
+    },
     "PurchaseOfferingRequest": {
       "base": null,
       "refs": {}
@@ -2539,6 +2545,18 @@
         "RouterOutputFilter$RoutingScopes": "<p>Filter criteria to list router outputs based on their routing scope.</p>"
       }
     },
+    "RtmpPushRouterOutputConfiguration": {
+      "base": "<p>The configuration settings for a router output that pushes a stream to a destination using the RTMP (Real-Time Messaging Protocol) protocol, or RTMPS (RTMP over TLS) when TLS encryption is specified. These settings include the destination address and port, the application and stream names, and optional TLS encryption configuration.</p>",
+      "refs": {
+        "RouterOutputProtocolConfiguration$RtmpPush": null
+      }
+    },
+    "RtmpPushRouterOutputConfigurationDestinationPortInteger": {
+      "base": null,
+      "refs": {
+        "RtmpPushRouterOutputConfiguration$DestinationPort": "<p>The TCP port on the destination RTMP server. For RTMP, valid values range from <code>1024</code> to <code>65535</code>. For RTMPS (RTMP over TLS), valid values are <code>443</code> or <code>1024</code> to <code>65535</code>. RTMP typically uses port <code>1935</code>, and RTMPS typically uses port <code>443</code>.</p>"
+      }
+    },
     "RtpRouterInputConfiguration": {
       "base": "<p>The configuration settings for a Router Input using the RTP (Real-Time Transport Protocol) protocol, including the port and forward error correction state.</p>",
       "refs": {
@@ -3111,6 +3129,9 @@
         "RouterOutputMessage$Code": "<p>The code associated with the router output message.</p>",
         "RouterOutputMessage$Message": "<p>The message text associated with the router output message.</p>",
         "RouterOutputServiceQuotaExceededException$Message": null,
+        "RtmpPushRouterOutputConfiguration$DestinationAddress": "<p>The IP address or hostname of the destination RTMP server that the router output pushes the stream to. Provide only the server address; specify the application and stream names separately.</p>",
+        "RtmpPushRouterOutputConfiguration$ApplicationName": "<p>The name of the RTMP application on the destination server. Together with the stream name, the application name forms the RTMP URL path, in the pattern <code>rtmp://destinationAddress/applicationName/streamName</code>.</p>",
+        "RtmpPushRouterOutputConfiguration$StreamName": "<p>The name of the RTMP stream that the output publishes to the destination application. The stream name forms the final segment of the RTMP URL path.</p>",
         "RtpRouterOutputConfiguration$DestinationAddress": "<p>The destination IP address for the RTP protocol in the router output configuration.</p>",
         "ServiceUnavailableException$Message": null,
         "SetSourceRequest$Description": "<p> A description for the source. This value is not used or seen outside of the current MediaConnect account.</p>",
@@ -3284,6 +3305,24 @@
       "base": null,
       "refs": {
         "MonitoringConfig$ThumbnailState": "<p> Indicates whether thumbnails are enabled or disabled.</p>"
+      }
+    },
+    "TlsEncryption": {
+      "base": "<p>The Transport Layer Security (TLS) encryption settings used to establish a secure connection to a destination.</p>",
+      "refs": {
+        "RtmpPushRouterOutputConfiguration$TlsEncryption": "<p>The TLS encryption settings for the output. When you specify these settings, the output uses RTMPS (RTMP over TLS) to establish a secure, encrypted connection to the destination server.</p>"
+      }
+    },
+    "TlsEncryptionConfiguration": {
+      "base": "<p>The configuration settings for TLS encryption.</p>",
+      "refs": {
+        "TlsEncryption$EncryptionConfiguration": "<p>The configuration settings for the specified TLS encryption type.</p>"
+      }
+    },
+    "TlsEncryptionType": {
+      "base": null,
+      "refs": {
+        "TlsEncryption$EncryptionType": "<p>The type of TLS encryption to use for the connection.</p>"
       }
     },
     "TooManyRequestsException": {

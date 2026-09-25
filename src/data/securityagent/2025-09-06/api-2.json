@@ -652,6 +652,16 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "ListActorMessages":{
+      "name":"ListActorMessages",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListActorMessages",
+        "responseCode":200
+      },
+      "input":{"shape":"ListActorMessagesInput"},
+      "output":{"shape":"ListActorMessagesOutput"}
+    },
     "ListAgentSpaces":{
       "name":"ListAgentSpaces",
       "http":{
@@ -1221,6 +1231,19 @@
     "ActorList":{
       "type":"list",
       "member":{"shape":"Actor"}
+    },
+    "ActorMessage":{
+      "type":"structure",
+      "members":{
+        "sender":{"shape":"SensitiveMessageSender"},
+        "subject":{"shape":"SensitiveMessageSubject"},
+        "body":{"shape":"SensitiveMessageBody"},
+        "receivedAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "ActorMessageList":{
+      "type":"list",
+      "member":{"shape":"ActorMessage"}
     },
     "AddArtifactInput":{
       "type":"structure",
@@ -3419,6 +3442,28 @@
       "type":"list",
       "member":{"shape":"LambdaFunctionArn"}
     },
+    "ListActorMessagesInput":{
+      "type":"structure",
+      "required":[
+        "agentSpaceId",
+        "pentestId",
+        "actorIdentifier"
+      ],
+      "members":{
+        "maxResults":{"shape":"MaxResults"},
+        "nextToken":{"shape":"NextToken"},
+        "agentSpaceId":{"shape":"String"},
+        "pentestId":{"shape":"String"},
+        "actorIdentifier":{"shape":"String"}
+      }
+    },
+    "ListActorMessagesOutput":{
+      "type":"structure",
+      "members":{
+        "messages":{"shape":"ActorMessageList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListAgentSpacesInput":{
       "type":"structure",
       "members":{
@@ -4431,6 +4476,18 @@
     },
     "SensitiveEmail":{"type":"string"},
     "SensitiveEmailAddress":{
+      "type":"string",
+      "sensitive":true
+    },
+    "SensitiveMessageBody":{
+      "type":"string",
+      "sensitive":true
+    },
+    "SensitiveMessageSender":{
+      "type":"string",
+      "sensitive":true
+    },
+    "SensitiveMessageSubject":{
       "type":"string",
       "sensitive":true
     },

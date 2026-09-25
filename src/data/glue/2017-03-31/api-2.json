@@ -12042,6 +12042,7 @@
         "TransactionId":{"shape":"TransactionIdString"},
         "QueryAsOfTime":{"shape":"Timestamp"},
         "AuditContext":{"shape":"AuditContext"},
+        "ResourceShareType":{"shape":"TableResourceShareType"},
         "IncludeStatusDetails":{"shape":"BooleanNullable"},
         "AttributesToGet":{"shape":"TableAttributesList"}
       }
@@ -18418,6 +18419,7 @@
         "TableType":{"shape":"TableTypeString"},
         "Parameters":{"shape":"ParametersMap"},
         "TargetTable":{"shape":"TableIdentifier"},
+        "FederatedTable":{"shape":"FederatedTable"},
         "ViewDefinition":{"shape":"ViewDefinitionInput"}
       }
     },
@@ -18497,6 +18499,13 @@
       "type":"string",
       "max":128,
       "min":0
+    },
+    "TableResourceShareType":{
+      "type":"string",
+      "enum":[
+        "FEDERATED",
+        "ALL"
+      ]
     },
     "TableStatus":{
       "type":"structure",

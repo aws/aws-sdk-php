@@ -2561,6 +2561,25 @@
       ],
       "idempotent":true
     },
+    "RotatePaymentConnectorCredentials":{
+      "name":"RotatePaymentConnectorCredentials",
+      "http":{
+        "method":"POST",
+        "requestUri":"/payments/managers/{paymentManagerId}/connectors/{paymentConnectorId}/rotate-credentials",
+        "responseCode":202
+      },
+      "input":{"shape":"RotatePaymentConnectorCredentialsRequest"},
+      "output":{"shape":"RotatePaymentConnectorCredentialsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "SetTokenVaultCMK":{
       "name":"SetTokenVaultCMK",
       "http":{
@@ -4328,6 +4347,25 @@
         "walletSecretSource":{"shape":"SecretSourceType"}
       }
     },
+    "CoinbaseCdpRotationTargets":{
+      "type":"structure",
+      "required":["secrets"],
+      "members":{
+        "secrets":{"shape":"CoinbaseCdpSecrets"}
+      }
+    },
+    "CoinbaseCdpSecret":{
+      "type":"string",
+      "enum":[
+        "API_KEY",
+        "WALLET_SECRET"
+      ]
+    },
+    "CoinbaseCdpSecrets":{
+      "type":"list",
+      "member":{"shape":"CoinbaseCdpSecret"},
+      "min":1
+    },
     "ComponentConfiguration":{
       "type":"structure",
       "required":["configuration"],
@@ -5919,6 +5957,13 @@
         "Auth0Oauth2",
         "CognitoOauth2"
       ]
+    },
+    "CredentialRotationConfig":{
+      "type":"structure",
+      "members":{
+        "coinbaseCDP":{"shape":"CoinbaseCdpRotationTargets"}
+      },
+      "union":true
     },
     "CredentialsProviderConfiguration":{
       "type":"structure",
@@ -8892,11 +8937,13 @@
         "name":{"shape":"PaymentConnectorName"},
         "description":{"shape":"PaymentsDescription"},
         "type":{"shape":"PaymentConnectorType"},
+        "provisionMode":{"shape":"PaymentConnectorProvisionMode"},
         "credentialProviderConfigurations":{"shape":"CredentialsProviderConfigurations"},
         "createdAt":{"shape":"DateTimestamp"},
         "lastUpdatedAt":{"shape":"DateTimestamp"},
         "status":{"shape":"PaymentConnectorStatus"},
-        "authorizationUrl":{"shape":"PaymentConnectorAuthorizationUrl"}
+        "authorizationUrl":{"shape":"PaymentConnectorAuthorizationUrl"},
+        "credentialsUpdatedAt":{"shape":"DateTimestamp"}
       }
     },
     "GetPaymentCredentialProviderRequest":{
@@ -12973,6 +13020,7 @@
         "paymentConnectorId":{"shape":"PaymentConnectorId"},
         "name":{"shape":"PaymentConnectorName"},
         "type":{"shape":"PaymentConnectorType"},
+        "provisionMode":{"shape":"PaymentConnectorProvisionMode"},
         "status":{"shape":"PaymentConnectorStatus"},
         "lastUpdatedAt":{"shape":"DateTimestamp"}
       }
@@ -13974,6 +14022,46 @@
       "box":true,
       "max":2000,
       "min":125
+    },
+    "RotatePaymentConnectorCredentialsRequest":{
+      "type":"structure",
+      "required":[
+        "paymentManagerId",
+        "paymentConnectorId",
+        "credentialsToRotate"
+      ],
+      "members":{
+        "paymentManagerId":{
+          "shape":"PaymentManagerId",
+          "location":"uri",
+          "locationName":"paymentManagerId"
+        },
+        "paymentConnectorId":{
+          "shape":"PaymentConnectorId",
+          "location":"uri",
+          "locationName":"paymentConnectorId"
+        },
+        "credentialsToRotate":{"shape":"CredentialRotationConfig"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "RotatePaymentConnectorCredentialsResponse":{
+      "type":"structure",
+      "required":[
+        "paymentConnectorId",
+        "paymentManagerId",
+        "lastUpdatedAt",
+        "status"
+      ],
+      "members":{
+        "paymentConnectorId":{"shape":"PaymentConnectorId"},
+        "paymentManagerId":{"shape":"PaymentManagerId"},
+        "lastUpdatedAt":{"shape":"DateTimestamp"},
+        "status":{"shape":"PaymentConnectorStatus"}
+      }
     },
     "RouteToTargetAction":{
       "type":"structure",
