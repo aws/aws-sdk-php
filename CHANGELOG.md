@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.398.2 - 2026-09-28
 
 * `Aws\BedrockAgentCoreControl` - Amazon Bedrock AgentCore Gateway now supports returning the complete MCP tools list in a single response by disabling pagination for the tools list operation. This feature is available in limited preview.
 * `Aws\AgentRegistry` - AWS Agent Registry adds support for custom metadata. Discovery APIs now return custom metadata on registry records and support filtering by metadata fields. Semantic search includes custom metadata for improved relevance. Filter customMetadata fields using eq, ne, and in operators.
