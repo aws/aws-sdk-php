@@ -1618,6 +1618,15 @@
       "input":{"shape":"DeleteClientVpnEndpointRequest"},
       "output":{"shape":"DeleteClientVpnEndpointResult"}
     },
+    "DeleteClientVpnEndpointAuthorizationPolicy":{
+      "name":"DeleteClientVpnEndpointAuthorizationPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteClientVpnEndpointAuthorizationPolicyRequest"},
+      "output":{"shape":"DeleteClientVpnEndpointAuthorizationPolicyResult"}
+    },
     "DeleteClientVpnRoute":{
       "name":"DeleteClientVpnRoute",
       "http":{
@@ -5030,6 +5039,15 @@
       "input":{"shape":"GetCapacityReservationUsageRequest"},
       "output":{"shape":"GetCapacityReservationUsageResult"}
     },
+    "GetClientVpnEndpointAuthorizationPolicy":{
+      "name":"GetClientVpnEndpointAuthorizationPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetClientVpnEndpointAuthorizationPolicyRequest"},
+      "output":{"shape":"GetClientVpnEndpointAuthorizationPolicyResult"}
+    },
     "GetCoipPoolUsage":{
       "name":"GetCoipPoolUsage",
       "http":{
@@ -5785,6 +5803,15 @@
       },
       "input":{"shape":"ModifyClientVpnEndpointRequest"},
       "output":{"shape":"ModifyClientVpnEndpointResult"}
+    },
+    "ModifyClientVpnEndpointAuthorizationPolicy":{
+      "name":"ModifyClientVpnEndpointAuthorizationPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyClientVpnEndpointAuthorizationPolicyRequest"},
+      "output":{"shape":"ModifyClientVpnEndpointAuthorizationPolicyResult"}
     },
     "ModifyDefaultCreditSpecification":{
       "name":"ModifyDefaultCreditSpecification",
@@ -12918,6 +12945,23 @@
         "federated-authentication"
       ]
     },
+    "ClientVpnAuthorizationPolicyShadowMode":{
+      "type":"string",
+      "enum":[
+        "enabled",
+        "disabled"
+      ]
+    },
+    "ClientVpnAuthorizationPolicyStatus":{
+      "type":"string",
+      "enum":[
+        "creating",
+        "updating",
+        "active",
+        "failed",
+        "deleting"
+      ]
+    },
     "ClientVpnAuthorizationRuleStatus":{
       "type":"structure",
       "members":{
@@ -13016,6 +13060,10 @@
         "PostureComplianceStatuses":{
           "shape":"ValueStringList",
           "locationName":"postureComplianceStatusSet"
+        },
+        "AuthorizationPolicyLastEvaluatedTime":{
+          "shape":"String",
+          "locationName":"authorizationPolicyLastEvaluatedTime"
         }
       }
     },
@@ -13046,6 +13094,14 @@
         "failed-to-terminate",
         "terminating",
         "terminated"
+      ]
+    },
+    "ClientVpnDeviceTrustProviderType":{
+      "type":"string",
+      "enum":[
+        "crowdstrike",
+        "jamf",
+        "jumpcloud"
       ]
     },
     "ClientVpnEndpoint":{
@@ -13164,6 +13220,10 @@
         "TransitGatewayConfiguration":{
           "shape":"TransitGatewayConfigurationDescribeEndpointStructure",
           "locationName":"transitGatewayConfiguration"
+        },
+        "DevicePostureOptions":{
+          "shape":"DevicePostureResponseOptions",
+          "locationName":"devicePostureOptions"
         }
       }
     },
@@ -13288,6 +13348,45 @@
       "type":"list",
       "member":{
         "shape":"SecurityGroupId",
+        "locationName":"item"
+      }
+    },
+    "ClientVpnTrustProvider":{
+      "type":"structure",
+      "members":{
+        "TrustProviderType":{
+          "shape":"ClientVpnDeviceTrustProviderType",
+          "locationName":"trustProviderType"
+        },
+        "TenantId":{
+          "shape":"String",
+          "locationName":"tenantId"
+        },
+        "PublicSigningKeyUrl":{
+          "shape":"String",
+          "locationName":"publicSigningKeyUrl"
+        }
+      }
+    },
+    "ClientVpnTrustProviderRequest":{
+      "type":"structure",
+      "members":{
+        "TrustProviderType":{"shape":"ClientVpnDeviceTrustProviderType"},
+        "TenantId":{"shape":"String"},
+        "PublicSigningKeyUrl":{"shape":"String"}
+      }
+    },
+    "ClientVpnTrustProviderRequestList":{
+      "type":"list",
+      "member":{
+        "shape":"ClientVpnTrustProviderRequest",
+        "locationName":"item"
+      }
+    },
+    "ClientVpnTrustProviderSet":{
+      "type":"list",
+      "member":{
+        "shape":"ClientVpnTrustProvider",
         "locationName":"item"
       }
     },
@@ -13484,7 +13583,8 @@
       "members":{
         "Enabled":{"shape":"Boolean"},
         "CloudwatchLogGroup":{"shape":"String"},
-        "CloudwatchLogStream":{"shape":"String"}
+        "CloudwatchLogStream":{"shape":"String"},
+        "IncludeAuthorizationPolicyContext":{"shape":"Boolean"}
       }
     },
     "ConnectionLogResponseOptions":{
@@ -13492,7 +13592,8 @@
       "members":{
         "Enabled":{"shape":"Boolean"},
         "CloudwatchLogGroup":{"shape":"String"},
-        "CloudwatchLogStream":{"shape":"String"}
+        "CloudwatchLogStream":{"shape":"String"},
+        "IncludeAuthorizationPolicyContext":{"shape":"Boolean"}
       }
     },
     "ConnectionNotification":{
@@ -14272,7 +14373,8 @@
         "DisconnectOnSessionTimeout":{"shape":"Boolean"},
         "EndpointIpAddressType":{"shape":"EndpointIpAddressType"},
         "TrafficIpAddressType":{"shape":"TrafficIpAddressType"},
-        "TransitGatewayConfiguration":{"shape":"TransitGatewayConfigurationInputStructure"}
+        "TransitGatewayConfiguration":{"shape":"TransitGatewayConfigurationInputStructure"},
+        "DevicePostureOptions":{"shape":"DevicePostureOptions"}
       }
     },
     "CreateClientVpnEndpointResult":{
@@ -18018,6 +18120,23 @@
         "CarrierGateway":{
           "shape":"CarrierGateway",
           "locationName":"carrierGateway"
+        }
+      }
+    },
+    "DeleteClientVpnEndpointAuthorizationPolicyRequest":{
+      "type":"structure",
+      "required":["ClientVpnEndpointId"],
+      "members":{
+        "ClientVpnEndpointId":{"shape":"ClientVpnEndpointId"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DeleteClientVpnEndpointAuthorizationPolicyResult":{
+      "type":"structure",
+      "members":{
+        "Status":{
+          "shape":"ClientVpnAuthorizationPolicyStatus",
+          "locationName":"status"
         }
       }
     },
@@ -26466,6 +26585,25 @@
         }
       }
     },
+    "DevicePostureOptions":{
+      "type":"structure",
+      "members":{
+        "TrustProviders":{
+          "shape":"ClientVpnTrustProviderRequestList",
+          "locationName":"TrustProvider"
+        },
+        "Enabled":{"shape":"Boolean"}
+      }
+    },
+    "DevicePostureResponseOptions":{
+      "type":"structure",
+      "members":{
+        "TrustProviders":{
+          "shape":"ClientVpnTrustProviderSet",
+          "locationName":"trustProviderSet"
+        }
+      }
+    },
     "DeviceTrustProviderType":{
       "type":"string",
       "enum":[
@@ -31204,6 +31342,39 @@
         "InterruptionInfo":{
           "shape":"InterruptionInfo",
           "locationName":"interruptionInfo"
+        }
+      }
+    },
+    "GetClientVpnEndpointAuthorizationPolicyRequest":{
+      "type":"structure",
+      "required":["ClientVpnEndpointId"],
+      "members":{
+        "ClientVpnEndpointId":{"shape":"ClientVpnEndpointId"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "GetClientVpnEndpointAuthorizationPolicyResult":{
+      "type":"structure",
+      "members":{
+        "ClientVpnEndpointId":{
+          "shape":"String",
+          "locationName":"clientVpnEndpointId"
+        },
+        "PolicyDocument":{
+          "shape":"String",
+          "locationName":"policyDocument"
+        },
+        "Description":{
+          "shape":"String",
+          "locationName":"description"
+        },
+        "ShadowMode":{
+          "shape":"ClientVpnAuthorizationPolicyShadowMode",
+          "locationName":"shadowMode"
+        },
+        "Status":{
+          "shape":"ClientVpnAuthorizationPolicyStatus",
+          "locationName":"status"
         }
       }
     },
@@ -39950,6 +40121,9 @@
         "enable-in-progress",
         "enable-complete",
         "enable-failed",
+        "disable-in-progress",
+        "disable-complete",
+        "disable-failed",
         "delete-in-progress",
         "delete-complete",
         "delete-failed"
@@ -44562,6 +44736,30 @@
         }
       }
     },
+    "ModifyClientVpnEndpointAuthorizationPolicyRequest":{
+      "type":"structure",
+      "required":["ClientVpnEndpointId"],
+      "members":{
+        "ClientVpnEndpointId":{"shape":"ClientVpnEndpointId"},
+        "PolicyDocument":{"shape":"String"},
+        "Description":{"shape":"String"},
+        "ShadowMode":{"shape":"ClientVpnAuthorizationPolicyShadowMode"},
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "ModifyClientVpnEndpointAuthorizationPolicyResult":{
+      "type":"structure",
+      "members":{
+        "Status":{
+          "shape":"ClientVpnAuthorizationPolicyStatus",
+          "locationName":"status"
+        }
+      }
+    },
     "ModifyClientVpnEndpointRequest":{
       "type":"structure",
       "required":["ClientVpnEndpointId"],
@@ -44585,7 +44783,8 @@
         "ClientLoginBannerOptions":{"shape":"ClientLoginBannerOptions"},
         "ClientRouteEnforcementOptions":{"shape":"ClientRouteEnforcementOptions"},
         "DisconnectOnSessionTimeout":{"shape":"Boolean"},
-        "TransitGatewayConfiguration":{"shape":"TransitGatewayConfigurationInputStructure"}
+        "TransitGatewayConfiguration":{"shape":"TransitGatewayConfigurationInputStructure"},
+        "DevicePostureOptions":{"shape":"DevicePostureOptions"}
       }
     },
     "ModifyClientVpnEndpointResult":{
@@ -53011,7 +53210,8 @@
         "ripe",
         "apnic",
         "arin",
-        "lacnic"
+        "lacnic",
+        "nicbr"
       ]
     },
     "RoleId":{"type":"string"},

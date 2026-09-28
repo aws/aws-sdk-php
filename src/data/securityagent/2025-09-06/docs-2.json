@@ -613,6 +613,7 @@
         "BitbucketResourceCapabilities$leaveComments": "<p>Whether to post code review comments on pull requests.</p>",
         "BitbucketResourceCapabilities$remediateCode": "<p>Whether to create pull requests with automated fixes.</p>",
         "Category$isPrimary": "<p>Indicates whether this is the primary category for the task.</p>",
+        "CiCdConfiguration$enabled": "<p>Whether CI/CD pentesting is enabled for this pentest.</p>",
         "CodeReviewSettings$controlsScanning": "<p>Indicates whether controls scanning is enabled for code reviews.</p>",
         "CodeReviewSettings$generalPurposeScanning": "<p>Indicates whether general-purpose scanning is enabled for code reviews.</p>",
         "ConfluenceResourceCapabilities$fetchDocument": "<p>Whether to fetch documents from this space.</p>",
@@ -657,6 +658,17 @@
         "SelfManagedInput$certificate": "<p>The certificate for the private connection.</p>",
         "ServiceManagedInput$certificate": "<p>The certificate for the private connection.</p>",
         "UpdatePrivateConnectionCertificateInput$certificate": "<p>The PEM-encoded certificate chain for the private connection.</p>"
+      }
+    },
+    "CiCdConfiguration": {
+      "base": "<p>The configuration that enables a pentest to run as part of a CI/CD pipeline, scoped to the code changes in each pipeline run.</p>",
+      "refs": {
+        "CreatePentestInput$cicdConfiguration": "<p>The CI/CD pentesting configuration to apply to the pentest.</p>",
+        "CreatePentestOutput$cicdConfiguration": "<p>The CI/CD pentesting configuration applied to the pentest.</p>",
+        "Pentest$cicdConfiguration": "<p>The CI/CD pentesting configuration for this pentest. Present when the pentest is set up to run from a CI/CD pipeline.</p>",
+        "PentestJob$cicdConfiguration": null,
+        "UpdatePentestInput$cicdConfiguration": "<p>The updated CI/CD pentesting configuration to apply to the pentest.</p>",
+        "UpdatePentestOutput$cicdConfiguration": "<p>The CI/CD pentesting configuration applied to the pentest.</p>"
       }
     },
     "CleanUpStrategy": {
@@ -1585,8 +1597,10 @@
     "JobType": {
       "base": "<p>The type of pentest job execution.</p>",
       "refs": {
-        "PentestJob$jobType": "<p>The type of the pentest job. Valid values are FULL and REVALIDATION.</p>",
-        "StartPentestJobInput$jobType": "<p>The type of pentest job to start. Valid values are FULL and REVALIDATION. When set to REVALIDATION, the selectedFindingIds parameter is required.</p>"
+        "ListPentestJobsForPentestInput$jobType": "<p>Filters the returned pentest jobs to only those of the specified job type.</p>",
+        "PentestJob$jobType": "<p>The type of the pentest job. Valid values are FULL, REVALIDATION, and CICD.</p>",
+        "PentestJobSummary$jobType": "<p>The type of the pentest job. Valid values are FULL, REVALIDATION, and CICD.</p>",
+        "StartPentestJobInput$jobType": "<p>The type of pentest job to start. Valid values are FULL, REVALIDATION, and CICD. When set to REVALIDATION, the selectedFindingIds parameter is required. When set to CICD, the scopeChanges parameter defines the code changes to test.</p>"
       }
     },
     "KmsKeyId": {
@@ -2400,6 +2414,31 @@
         "AWSResources$s3Buckets": "<p>The Amazon Resource Names (ARNs) of the S3 buckets associated with the agent space.</p>"
       }
     },
+    "ScopeChange": {
+      "base": "<p>A code change in a CI/CD pipeline run that defines what a CI/CD pentest job tests. Each scope change identifies an integrated repository and the commit range for the change.</p>",
+      "refs": {
+        "ScopeChangeList$member": null
+      }
+    },
+    "ScopeChangeList": {
+      "base": null,
+      "refs": {
+        "PentestJob$scopeChanges": "<p>The code changes that defined the scope of this CI/CD pentest job. Present only for jobs of type CICD.</p>",
+        "StartPentestJobInput$scopeChanges": "<p>The code changes that define the scope of a CI/CD pentest job. Provide this when starting a job with jobType CICD to test only the changes in the current pipeline run.</p>"
+      }
+    },
+    "ScopeDecision": {
+      "base": "<p>The scoping decision for a CI/CD pentest job, indicating whether the supplied code changes are tested.</p>",
+      "refs": {
+        "ScopeResult$decision": "<p>The scoping decision for the job's code changes.</p>"
+      }
+    },
+    "ScopeResult": {
+      "base": "<p>The outcome of scoping a CI/CD pentest job's code changes, including the decision and the reason for it.</p>",
+      "refs": {
+        "PentestJob$scopeResult": "<p>The scoping outcome for this CI/CD pentest job. Present only for jobs of type CICD.</p>"
+      }
+    },
     "SecretArn": {
       "base": "<p>Secret ARN or name for agent space AWS resources.</p>",
       "refs": {
@@ -2994,10 +3033,12 @@
         "PentestJob$pentestId": "<p>The unique identifier of the pentest associated with the job.</p>",
         "PentestJob$title": "<p>The title of the pentest job.</p>",
         "PentestJob$overview": "<p>An overview of the pentest job results.</p>",
+        "PentestJob$reportUrl": "<p>The URL to view this pentest job's findings report in the console.</p>",
         "PentestJobIdList$member": null,
         "PentestJobSummary$pentestJobId": "<p>The unique identifier of the pentest job.</p>",
         "PentestJobSummary$pentestId": "<p>The unique identifier of the pentest associated with the job.</p>",
         "PentestJobSummary$title": "<p>The title of the pentest job.</p>",
+        "PentestJobSummary$reportUrl": "<p>The URL to view this pentest job's findings report in the console.</p>",
         "PentestSummary$pentestId": "<p>The unique identifier of the pentest.</p>",
         "PentestSummary$agentSpaceId": "<p>The unique identifier of the agent space that contains the pentest.</p>",
         "PentestSummary$title": "<p>The title of the pentest.</p>",
@@ -3007,6 +3048,12 @@
         "ReportDestination$parentId": "<p>The parent document identifier under which the report will be created.</p>",
         "ReportDestination$documentId": "<p>The existing document identifier to update instead of creating a new document.</p>",
         "ResourceNotFoundException$message": "<p>Error description.</p>",
+        "ScopeChange$integrationId": "<p>The identifier of the integration for the source-code provider that hosts the repository.</p>",
+        "ScopeChange$providerResourceId": "<p>The provider-specific identifier of the repository the change belongs to.</p>",
+        "ScopeChange$baseCommitSha": "<p>The commit SHA that the change is compared against. When omitted, the change is evaluated against the head commit alone.</p>",
+        "ScopeChange$headCommitSha": "<p>The commit SHA at the tip of the change to be tested.</p>",
+        "ScopeChange$triggerRunId": "<p>The identifier of the CI/CD pipeline run that triggered this pentest job.</p>",
+        "ScopeResult$reason": "<p>A human-readable explanation of the scoping decision.</p>",
         "SecurityRequirementPackSummary$description": "<p>A description of the security requirement pack.</p>",
         "SecurityRequirementPackSummary$vendorName": "<p>The vendor name for AWS managed packs.</p>",
         "SecurityRequirementSummary$description": "<p>A description of the security requirement.</p>",

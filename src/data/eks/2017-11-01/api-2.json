@@ -1420,7 +1420,8 @@
         "namespace":{"shape":"String"},
         "awsIdc":{"shape":"ArgoCdAwsIdcConfigRequest"},
         "rbacRoleMappings":{"shape":"ArgoCdRoleMappingList"},
-        "networkAccess":{"shape":"ArgoCdNetworkAccessConfigRequest"}
+        "networkAccess":{"shape":"ArgoCdNetworkAccessConfigRequest"},
+        "endpointPrefix":{"shape":"ArgoCdEndpointPrefix"}
       }
     },
     "ArgoCdConfigResponse":{
@@ -1430,8 +1431,15 @@
         "awsIdc":{"shape":"ArgoCdAwsIdcConfigResponse"},
         "rbacRoleMappings":{"shape":"ArgoCdRoleMappingList"},
         "networkAccess":{"shape":"ArgoCdNetworkAccessConfigResponse"},
-        "serverUrl":{"shape":"String"}
+        "serverUrl":{"shape":"String"},
+        "endpointPrefix":{"shape":"ArgoCdEndpointPrefix"}
       }
+    },
+    "ArgoCdEndpointPrefix":{
+      "type":"string",
+      "max":50,
+      "min":1,
+      "pattern":"^[a-z0-9]([a-z0-9-]*[a-z0-9])?$"
     },
     "ArgoCdNetworkAccessConfigRequest":{
       "type":"structure",

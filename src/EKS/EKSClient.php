@@ -137,7 +137,14 @@ use Aws\AwsClient;
  *     type?: 'ACK'|'ARGOCD'|'KRO',
  *     roleArn?: string,
  *     configuration?: array{
- *         argoCd?: array{namespace?: string, awsIdc?: array, rbacRoleMappings?: list<array>, networkAccess?: array, ...},
+ *         argoCd?: array{
+ *             namespace?: string,
+ *             awsIdc?: array,
+ *             rbacRoleMappings?: list<array>,
+ *             networkAccess?: array,
+ *             endpointPrefix?: string,
+ *             ...,
+ *         },
  *         ...,
  *     },
  *     tags?: array<string, string>,
@@ -152,7 +159,14 @@ use Aws\AwsClient;
  *     type?: 'ACK'|'ARGOCD'|'KRO',
  *     roleArn?: string,
  *     configuration?: array{
- *         argoCd?: array{namespace?: string, awsIdc?: array, rbacRoleMappings?: list<array>, networkAccess?: array, ...},
+ *         argoCd?: array{
+ *             namespace?: string,
+ *             awsIdc?: array,
+ *             rbacRoleMappings?: list<array>,
+ *             networkAccess?: array,
+ *             endpointPrefix?: string,
+ *             ...,
+ *         },
  *         ...,
  *     },
  *     tags?: array<string, string>,

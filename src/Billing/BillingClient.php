@@ -181,6 +181,30 @@ use Aws\AwsClient;
  *     nextToken?: string,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result listBusinessSupportAccountCharges(array $args = [])
+ * @phpstan-method \Aws\Result listBusinessSupportAccountCharges(array{billingMonth?: string, accountId?: string, maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listBusinessSupportAccountChargesAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listBusinessSupportAccountChargesAsync(array{billingMonth?: string, accountId?: string, maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \Aws\Result listBusinessSupportSubscriptionHistory(array $args = [])
+ * @phpstan-method \Aws\Result listBusinessSupportSubscriptionHistory(array{
+ *     billingMonth?: string,
+ *     accountId?: string,
+ *     startDate?: int|string|\DateTimeInterface,
+ *     endDate?: int|string|\DateTimeInterface,
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listBusinessSupportSubscriptionHistoryAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listBusinessSupportSubscriptionHistoryAsync(array{
+ *     billingMonth?: string,
+ *     accountId?: string,
+ *     startDate?: int|string|\DateTimeInterface,
+ *     endDate?: int|string|\DateTimeInterface,
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listEnterpriseSupportLinkedAccountCharges(array $args = [])
  * @phpstan-method \Aws\Result listEnterpriseSupportLinkedAccountCharges(array{billingMonth?: string, accountId?: string, maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listEnterpriseSupportLinkedAccountChargesAsync(array $args = [])

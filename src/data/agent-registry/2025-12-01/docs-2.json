@@ -79,6 +79,12 @@
         "Descriptors$custom": "<p> The custom descriptor, populated when the record type is CUSTOM.</p>"
       }
     },
+    "CustomMetadataDocument": {
+      "base": "<p>Free-form JSON document representing custom metadata on a registry record. Values may be strings or booleans (native JSON types). Key/value constraints enforced in service code.</p>",
+      "refs": {
+        "RegistryRecordSummary$customMetadata": "<p> The custom metadata attached to this registry record. Values are strings (maximum 128 characters) or booleans. This field is only present if the registry has a custom metadata schema configured.</p>"
+      }
+    },
     "DataSchemaVersion": {
       "base": "<p>Version of the descriptor type schema</p>",
       "refs": {
@@ -225,7 +231,7 @@
     "MetadataFilterExpression": {
       "base": null,
       "refs": {
-        "SearchDiscoverableRegistryRecordsRequest$filters": "<p> An optional structured JSON metadata filter that narrows the search results. Supports the field-level operators <code>$eq</code>, <code>$ne</code>, and <code>$in</code>, and the logical operators <code>$and</code> and <code>$or</code> on filterable fields.</p>"
+        "SearchDiscoverableRegistryRecordsRequest$filters": "<p> An optional structured JSON metadata filter that narrows the search results. Supports the field-level operators <code>$eq</code>, <code>$ne</code>, and <code>$in</code>, and the logical operators <code>$and</code> and <code>$or</code> on filterable fields.</p> <p> You can also filter on custom metadata fields using the <code>customMetadata.{key}</code> prefix. For example, to filter by a custom metadata field: <code>{\"customMetadata.environment\": {\"$eq\": \"production\"}}</code>. Filter values must be strings, so match a boolean field on its string form: <code>{\"customMetadata.requiresApproval\": {\"$eq\": \"true\"}}</code>.</p>"
       }
     },
     "NonBlankString": {

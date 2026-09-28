@@ -491,9 +491,21 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteResourceDataSyncAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteResourceDataSyncAsync(array{SyncName?: string, SyncType?: string, ...} $args = [])
  * @method \Aws\Result deleteResourcePolicy(array $args = [])
- * @phpstan-method \Aws\Result deleteResourcePolicy(array{ResourceArn?: string, PolicyId?: string, PolicyHash?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result deleteResourcePolicy(array{
+ *     ResourceArn?: string,
+ *     PolicyId?: string,
+ *     PolicyHash?: string,
+ *     DeletionMode?: 'RemoveSharing'|'RollbackMigration',
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteResourcePolicyAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise deleteResourcePolicyAsync(array{ResourceArn?: string, PolicyId?: string, PolicyHash?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteResourcePolicyAsync(array{
+ *     ResourceArn?: string,
+ *     PolicyId?: string,
+ *     PolicyHash?: string,
+ *     DeletionMode?: 'RemoveSharing'|'RollbackMigration',
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result deregisterManagedInstance(array $args = [])
  * @phpstan-method \Aws\Result deregisterManagedInstance(array{InstanceId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deregisterManagedInstanceAsync(array $args = [])

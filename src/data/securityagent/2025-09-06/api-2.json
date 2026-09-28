@@ -1965,6 +1965,12 @@
       "type":"string",
       "sensitive":true
     },
+    "CiCdConfiguration":{
+      "type":"structure",
+      "members":{
+        "enabled":{"shape":"Boolean"}
+      }
+    },
     "CleanUpStrategy":{
       "type":"string",
       "enum":[
@@ -2424,7 +2430,8 @@
         "disableManagedSkills":{"shape":"SkillTypeList"},
         "maxTaskHours":{"shape":"Double"},
         "reportDestination":{"shape":"ReportDestination"},
-        "reportFilters":{"shape":"ReportFilters"}
+        "reportFilters":{"shape":"ReportFilters"},
+        "cicdConfiguration":{"shape":"CiCdConfiguration"}
       }
     },
     "CreatePentestOutput":{
@@ -2440,7 +2447,8 @@
         "logConfig":{"shape":"CloudWatchLog"},
         "agentSpaceId":{"shape":"String"},
         "reportDestination":{"shape":"ReportDestination"},
-        "reportFilters":{"shape":"ReportFilters"}
+        "reportFilters":{"shape":"ReportFilters"},
+        "cicdConfiguration":{"shape":"CiCdConfiguration"}
       }
     },
     "CreatePrivateConnectionInput":{
@@ -3433,7 +3441,8 @@
       "type":"string",
       "enum":[
         "FULL",
-        "REVALIDATION"
+        "REVALIDATION",
+        "CICD"
       ]
     },
     "KmsKeyId":{"type":"string"},
@@ -3695,7 +3704,8 @@
         "maxResults":{"shape":"MaxResults"},
         "pentestId":{"shape":"String"},
         "agentSpaceId":{"shape":"String"},
-        "nextToken":{"shape":"NextToken"}
+        "nextToken":{"shape":"NextToken"},
+        "jobType":{"shape":"JobType"}
       }
     },
     "ListPentestJobsForPentestOutput":{
@@ -4025,6 +4035,7 @@
         "maxTaskHours":{"shape":"Double"},
         "reportDestination":{"shape":"ReportDestination"},
         "reportFilters":{"shape":"ReportFilters"},
+        "cicdConfiguration":{"shape":"CiCdConfiguration"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
@@ -4064,6 +4075,10 @@
         "jobType":{"shape":"JobType"},
         "selectedFindingIds":{"shape":"StringList"},
         "reportDestination":{"shape":"ReportDestination"},
+        "reportUrl":{"shape":"String"},
+        "scopeResult":{"shape":"ScopeResult"},
+        "scopeChanges":{"shape":"ScopeChangeList"},
+        "cicdConfiguration":{"shape":"CiCdConfiguration"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
@@ -4088,7 +4103,9 @@
         "title":{"shape":"String"},
         "status":{"shape":"JobStatus"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
-        "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "jobType":{"shape":"JobType"},
+        "reportUrl":{"shape":"String"}
       }
     },
     "PentestJobSummaryList":{
@@ -4355,6 +4372,44 @@
       "type":"list",
       "member":{"shape":"S3BucketArn"}
     },
+    "ScopeChange":{
+      "type":"structure",
+      "required":[
+        "integrationId",
+        "providerResourceId",
+        "headCommitSha"
+      ],
+      "members":{
+        "integrationId":{"shape":"String"},
+        "providerResourceId":{"shape":"String"},
+        "baseCommitSha":{"shape":"String"},
+        "headCommitSha":{"shape":"String"},
+        "triggerRunId":{"shape":"String"}
+      }
+    },
+    "ScopeChangeList":{
+      "type":"list",
+      "member":{"shape":"ScopeChange"}
+    },
+    "ScopeDecision":{
+      "type":"string",
+      "enum":[
+        "IN_SCOPE",
+        "SCOPED_OUT",
+        "SCOPE_CONFLICT"
+      ]
+    },
+    "ScopeResult":{
+      "type":"structure",
+      "required":[
+        "decision",
+        "reason"
+      ],
+      "members":{
+        "decision":{"shape":"ScopeDecision"},
+        "reason":{"shape":"String"}
+      }
+    },
     "SecretArn":{"type":"string"},
     "SecretArns":{
       "type":"list",
@@ -4599,7 +4654,8 @@
         "agentSpaceId":{"shape":"String"},
         "pentestId":{"shape":"String"},
         "jobType":{"shape":"JobType"},
-        "selectedFindingIds":{"shape":"StringList"}
+        "selectedFindingIds":{"shape":"StringList"},
+        "scopeChanges":{"shape":"ScopeChangeList"}
       }
     },
     "StartPentestJobOutput":{
@@ -5318,7 +5374,8 @@
         "disableManagedSkills":{"shape":"SkillTypeList"},
         "maxTaskHours":{"shape":"Double"},
         "reportDestination":{"shape":"ReportDestination"},
-        "reportFilters":{"shape":"ReportFilters"}
+        "reportFilters":{"shape":"ReportFilters"},
+        "cicdConfiguration":{"shape":"CiCdConfiguration"}
       }
     },
     "UpdatePentestOutput":{
@@ -5334,7 +5391,8 @@
         "logConfig":{"shape":"CloudWatchLog"},
         "agentSpaceId":{"shape":"String"},
         "reportDestination":{"shape":"ReportDestination"},
-        "reportFilters":{"shape":"ReportFilters"}
+        "reportFilters":{"shape":"ReportFilters"},
+        "cicdConfiguration":{"shape":"CiCdConfiguration"}
       }
     },
     "UpdatePrivateConnectionCertificateInput":{

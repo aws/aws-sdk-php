@@ -4298,6 +4298,8 @@ use Aws\AwsClient;
  *     }>,
  *     CustomerId?: string,
  *     DisconnectOnCustomerExit?: list<'AGENT'>,
+ *     ConnectionTypes?: list<'AUTHENTICATION_SESSION'|'CONNECTION_CREDENTIALS'|'WEBRTC_CONNECTION'|'WEBSOCKET'>,
+ *     ChatStreamingConfiguration?: array{StreamingEndpointArn?: string, ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise startChatContactAsync(array $args = [])
@@ -4323,6 +4325,8 @@ use Aws\AwsClient;
  *     }>,
  *     CustomerId?: string,
  *     DisconnectOnCustomerExit?: list<'AGENT'>,
+ *     ConnectionTypes?: list<'AUTHENTICATION_SESSION'|'CONNECTION_CREDENTIALS'|'WEBRTC_CONNECTION'|'WEBSOCKET'>,
+ *     ChatStreamingConfiguration?: array{StreamingEndpointArn?: string, ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result startContactConversationalAnalyticsJob(array $args = [])

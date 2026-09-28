@@ -8879,12 +8879,34 @@
       "error":{"httpStatusCode":409},
       "exception":true
     },
+    "ConnectionCredentials":{
+      "type":"structure",
+      "members":{
+        "ConnectionToken":{"shape":"ParticipantToken"},
+        "Expiry":{"shape":"ISO8601Datetime"}
+      }
+    },
     "ConnectionData":{
       "type":"structure",
       "members":{
         "Attendee":{"shape":"Attendee"},
         "Meeting":{"shape":"Meeting"}
       }
+    },
+    "ConnectionType":{
+      "type":"string",
+      "enum":[
+        "WEBSOCKET",
+        "CONNECTION_CREDENTIALS",
+        "AUTHENTICATION_SESSION",
+        "WEBRTC_CONNECTION"
+      ]
+    },
+    "ConnectionTypeList":{
+      "type":"list",
+      "member":{"shape":"ConnectionType"},
+      "max":2,
+      "min":1
     },
     "Contact":{
       "type":"structure",
@@ -21717,6 +21739,11 @@
       "max":2000,
       "min":1
     },
+    "PreSignedConnectionUrl":{
+      "type":"string",
+      "max":2000,
+      "min":1
+    },
     "PredefinedAttribute":{
       "type":"structure",
       "members":{
@@ -24971,7 +24998,9 @@
         "RelatedContactId":{"shape":"ContactId"},
         "SegmentAttributes":{"shape":"SegmentAttributes"},
         "CustomerId":{"shape":"CustomerIdNonEmpty"},
-        "DisconnectOnCustomerExit":{"shape":"DisconnectOnCustomerExit"}
+        "DisconnectOnCustomerExit":{"shape":"DisconnectOnCustomerExit"},
+        "ConnectionTypes":{"shape":"ConnectionTypeList"},
+        "ChatStreamingConfiguration":{"shape":"ChatStreamingConfiguration"}
       }
     },
     "StartChatContactResponse":{
@@ -24980,7 +25009,10 @@
         "ContactId":{"shape":"ContactId"},
         "ParticipantId":{"shape":"ParticipantId"},
         "ParticipantToken":{"shape":"ParticipantToken"},
-        "ContinuedFromContactId":{"shape":"ContactId"}
+        "ContinuedFromContactId":{"shape":"ContactId"},
+        "ConnectionCredentials":{"shape":"ConnectionCredentials"},
+        "Websocket":{"shape":"Websocket"},
+        "StreamingId":{"shape":"StreamingId"}
       }
     },
     "StartContactConversationalAnalyticsJobRequest":{
@@ -28955,6 +28987,13 @@
       "type":"string",
       "max":36,
       "min":1
+    },
+    "Websocket":{
+      "type":"structure",
+      "members":{
+        "Url":{"shape":"PreSignedConnectionUrl"},
+        "ConnectionExpiry":{"shape":"ISO8601Datetime"}
+      }
     },
     "WeekdayOccurrenceInteger":{
       "type":"integer",

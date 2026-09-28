@@ -537,6 +537,7 @@
           "idempotencyToken":true
         },
         "provenance":{"shape":"ProvenanceList"},
+        "customMetadata":{"shape":"CustomMetadataDocument"},
         "tags":{"shape":"TagsMap"}
       }
     },
@@ -565,6 +566,7 @@
         },
         "tags":{"shape":"TagsMap"},
         "approvalConfiguration":{"shape":"ApprovalConfiguration"},
+        "customMetadataSchemaConfiguration":{"shape":"CustomMetadataSchemaConfiguration"},
         "autoDetectionConfiguration":{"shape":"AutoDetectionConfiguration"}
       }
     },
@@ -623,6 +625,33 @@
         "privateEndpoint":{"shape":"PrivateEndpoint"},
         "privateEndpointOverrides":{"shape":"PrivateEndpointOverrides"}
       }
+    },
+    "CustomMetadataDocument":{
+      "type":"structure",
+      "members":{},
+      "document":true,
+      "sensitive":true
+    },
+    "CustomMetadataSchemaComplianceStatus":{
+      "type":"string",
+      "enum":[
+        "COMPLIANT",
+        "NON_COMPLIANT"
+      ]
+    },
+    "CustomMetadataSchemaConfiguration":{
+      "type":"structure",
+      "members":{
+        "defaultSchema":{"shape":"CustomMetadataSchemaDefinition"},
+        "recordTypeSchemaOverrides":{"shape":"RecordTypeSchemaOverrideList"}
+      },
+      "sensitive":true
+    },
+    "CustomMetadataSchemaDefinition":{
+      "type":"string",
+      "max":10240,
+      "min":1,
+      "sensitive":true
     },
     "CustomParameterMap":{
       "type":"map",
@@ -807,7 +836,9 @@
         "statusReason":{"shape":"String"},
         "provenance":{"shape":"ProvenanceList"},
         "createdByAutoDetection":{"shape":"Boolean"},
-        "createdBy":{"shape":"CreatorAccountId"}
+        "createdBy":{"shape":"CreatorAccountId"},
+        "customMetadata":{"shape":"CustomMetadataDocument"},
+        "customMetadataSchemaComplianceStatus":{"shape":"CustomMetadataSchemaComplianceStatus"}
       }
     },
     "GetRegistryRequest":{
@@ -839,6 +870,7 @@
         "discoveryConfiguration":{"shape":"DiscoveryConfiguration"},
         "encryptionConfiguration":{"shape":"EncryptionConfiguration"},
         "approvalConfiguration":{"shape":"ApprovalConfiguration"},
+        "customMetadataSchemaConfiguration":{"shape":"CustomMetadataSchemaConfiguration"},
         "status":{"shape":"RegistryStatus"},
         "statusReason":{"shape":"String"},
         "autoDetection":{"shape":"AutoDetection"},
@@ -1107,6 +1139,23 @@
         "GATEWAY"
       ]
     },
+    "RecordTypeSchemaOverride":{
+      "type":"structure",
+      "required":[
+        "recordType",
+        "schema"
+      ],
+      "members":{
+        "recordType":{"shape":"RecordType"},
+        "schema":{"shape":"CustomMetadataSchemaDefinition"}
+      }
+    },
+    "RecordTypeSchemaOverrideList":{
+      "type":"list",
+      "member":{"shape":"RecordTypeSchemaOverride"},
+      "max":5,
+      "min":0
+    },
     "RegistryArn":{
       "type":"string",
       "max":2048,
@@ -1305,7 +1354,8 @@
         "updatedAt":{"shape":"DateTimestamp"},
         "createdByAutoDetection":{"shape":"Boolean"},
         "createdBy":{"shape":"CreatorAccountId"},
-        "provenanceSummaryList":{"shape":"ProvenanceSummaryList"}
+        "provenanceSummaryList":{"shape":"ProvenanceSummaryList"},
+        "customMetadataSchemaComplianceStatus":{"shape":"CustomMetadataSchemaComplianceStatus"}
       }
     },
     "RegistryRecordSummaryList":{
@@ -1594,6 +1644,7 @@
         "recordType":{"shape":"RecordType"},
         "descriptors":{"shape":"UpdatedDescriptors"},
         "recordVersion":{"shape":"RegistryRecordVersion"},
+        "customMetadata":{"shape":"UpdatedCustomMetadataMap"},
         "triggerSynchronization":{"shape":"Boolean"},
         "provenance":{"shape":"ProvenanceList"}
       }
@@ -1626,7 +1677,9 @@
         "statusReason":{"shape":"String"},
         "provenance":{"shape":"ProvenanceList"},
         "createdByAutoDetection":{"shape":"Boolean"},
-        "createdBy":{"shape":"CreatorAccountId"}
+        "createdBy":{"shape":"CreatorAccountId"},
+        "customMetadata":{"shape":"CustomMetadataDocument"},
+        "customMetadataSchemaComplianceStatus":{"shape":"CustomMetadataSchemaComplianceStatus"}
       }
     },
     "UpdateRegistryRecordStatusRequest":{
@@ -1689,6 +1742,7 @@
         "description":{"shape":"UpdatedDescription"},
         "discoveryConfiguration":{"shape":"UpdatedDiscoveryConfiguration"},
         "approvalConfiguration":{"shape":"UpdatedApprovalConfiguration"},
+        "customMetadataSchemaConfiguration":{"shape":"UpdatedCustomMetadataSchemaConfiguration"},
         "autoDetectionConfiguration":{"shape":"UpdatedAutoDetectionConfiguration"}
       }
     },
@@ -1710,6 +1764,7 @@
         "discoveryConfiguration":{"shape":"DiscoveryConfiguration"},
         "encryptionConfiguration":{"shape":"EncryptionConfiguration"},
         "approvalConfiguration":{"shape":"ApprovalConfiguration"},
+        "customMetadataSchemaConfiguration":{"shape":"CustomMetadataSchemaConfiguration"},
         "status":{"shape":"RegistryStatus"},
         "statusReason":{"shape":"String"},
         "autoDetection":{"shape":"AutoDetection"},
@@ -1811,6 +1866,18 @@
       "type":"structure",
       "members":{
         "data":{"shape":"UpdatedDescriptorData"}
+      }
+    },
+    "UpdatedCustomMetadataMap":{
+      "type":"structure",
+      "members":{
+        "optionalValue":{"shape":"CustomMetadataDocument"}
+      }
+    },
+    "UpdatedCustomMetadataSchemaConfiguration":{
+      "type":"structure",
+      "members":{
+        "optionalValue":{"shape":"CustomMetadataSchemaConfiguration"}
       }
     },
     "UpdatedDataSchemaVersion":{

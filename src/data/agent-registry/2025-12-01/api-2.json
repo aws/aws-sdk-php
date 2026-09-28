@@ -173,6 +173,12 @@
         "data":{"shape":"DescriptorData"}
       }
     },
+    "CustomMetadataDocument":{
+      "type":"structure",
+      "members":{},
+      "document":true,
+      "sensitive":true
+    },
     "DataSchemaVersion":{
       "type":"string",
       "max":255,
@@ -470,7 +476,8 @@
         "recordVersion":{"shape":"RegistryRecordVersion"},
         "status":{"shape":"RegistryRecordStatus"},
         "createdAt":{"shape":"DateTimestamp"},
-        "updatedAt":{"shape":"DateTimestamp"}
+        "updatedAt":{"shape":"DateTimestamp"},
+        "customMetadata":{"shape":"CustomMetadataDocument"}
       }
     },
     "RegistryRecordSummaryList":{

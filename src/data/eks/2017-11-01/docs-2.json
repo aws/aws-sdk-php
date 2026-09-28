@@ -292,6 +292,13 @@
         "CapabilityConfigurationResponse$argoCd": "<p>Configuration settings for an Argo CD capability, including the server URL and other Argo CD-specific settings.</p>"
       }
     },
+    "ArgoCdEndpointPrefix": {
+      "base": null,
+      "refs": {
+        "ArgoCdConfigRequest$endpointPrefix": "<p>An optional prefix used to construct the hostname of the Argo CD server endpoint. If not specified, Amazon EKS automatically generates the endpoint. This value can't be changed after the capability is created.</p>",
+        "ArgoCdConfigResponse$endpointPrefix": "<p>The prefix that was configured for the hostname of the Argo CD server endpoint when the capability was created.</p>"
+      }
+    },
     "ArgoCdNetworkAccessConfigRequest": {
       "base": "<p>Configuration for network access to the Argo CD capability's managed API server endpoint. When VPC endpoint IDs are specified, public access is blocked and the Argo CD server is only accessible through the specified VPC endpoints.</p>",
       "refs": {

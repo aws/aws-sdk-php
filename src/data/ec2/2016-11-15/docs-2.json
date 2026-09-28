@@ -181,6 +181,7 @@
     "DeleteCapacityManagerDataExport": "<p> Deletes an existing Capacity Manager data export configuration. This stops future scheduled exports but does not delete previously exported files from S3. </p>",
     "DeleteCarrierGateway": "<p>Deletes a carrier gateway.</p> <important> <p>If you do not delete the route that contains the carrier gateway as the Target, the route is a blackhole route. For information about how to delete a route, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DeleteRoute.html\">DeleteRoute</a>.</p> </important>",
     "DeleteClientVpnEndpoint": "<p>Deletes the specified Client VPN endpoint. You must disassociate all target networks before you can delete a Client VPN endpoint.</p>",
+    "DeleteClientVpnEndpointAuthorizationPolicy": "<p>Deletes the authorization policy for a Client VPN endpoint.</p>",
     "DeleteClientVpnRoute": "<p>Deletes a route from a Client VPN endpoint. You can only delete routes that you manually added using the <b>CreateClientVpnRoute</b> action. You cannot delete routes that were automatically added when associating a subnet. To remove routes that have been automatically added, disassociate the target subnet from the Client VPN endpoint.</p>",
     "DeleteCoipCidr": "<p> Deletes a range of customer-owned IP addresses. </p>",
     "DeleteCoipPool": "<p>Deletes a pool of customer-owned IP (CoIP) addresses. </p>",
@@ -563,6 +564,7 @@
     "GetCapacityManagerMetricDimensions": "<p> Retrieves the available dimension values for capacity metrics within a specified time range. This is useful for discovering what accounts, regions, instance families, and other dimensions have data available for filtering and grouping. </p>",
     "GetCapacityManagerMonitoredTagKeys": "<p> Retrieves the tag keys that are currently being monitored by EC2 Capacity Manager. Monitored tag keys are included as dimensions in capacity metric data, enabling you to group and filter metrics by tag values. </p>",
     "GetCapacityReservationUsage": "<p>Gets usage information about a Capacity Reservation. If the Capacity Reservation is shared, it shows usage information for the Capacity Reservation owner and each Amazon Web Services account that is currently using the shared capacity. If the Capacity Reservation is not shared, it shows only the Capacity Reservation owner's usage.</p>",
+    "GetClientVpnEndpointAuthorizationPolicy": "<p>Describes the authorization policy for a Client VPN endpoint.</p>",
     "GetCoipPoolUsage": "<p>Describes the allocations from the specified customer-owned address pool.</p>",
     "GetConsoleOutput": "<p>Gets the console output for the specified instance. For Linux instances, the instance console output displays the exact console output that would normally be displayed on a physical monitor attached to a computer. For Windows instances, the instance console output includes the last three system event log errors.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-console.html#instance-console-console-output\">Instance console output</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "GetConsoleScreenshot": "<p>Retrieve a JPG-format screenshot of a running instance to help with troubleshooting.</p> <p>The returned content is Base64-encoded.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/troubleshoot-unreachable-instance.html#instance-console-console-output\">Instance console output</a> in the <i>Amazon EC2 User Guide</i>.</p>",
@@ -647,6 +649,7 @@
     "ModifyCapacityReservation": "<p>Modifies a Capacity Reservation's capacity, instance eligibility, and the conditions under which it is to be released. You can't modify a Capacity Reservation's instance type, EBS optimization, platform, instance store settings, Availability Zone, or tenancy. If you need to modify any of these attributes, we recommend that you cancel the Capacity Reservation, and then create a new one with the required attributes. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/capacity-reservations-modify.html\"> Modify an active Capacity Reservation</a>.</p> <p>The allowed modifications depend on the state of the Capacity Reservation:</p> <ul> <li> <p> <code>assessing</code> or <code>scheduled</code> state - You can modify the tags only.</p> </li> <li> <p> <code>pending</code> state - You can't modify the Capacity Reservation in any way.</p> </li> <li> <p> <code>active</code> state but still within the commitment duration - You can't decrease the instance count or set an end date that is within the commitment duration. All other modifications are allowed.</p> </li> <li> <p> <code>active</code> state with no commitment duration or elapsed commitment duration - All modifications are allowed.</p> </li> <li> <p> <code>expired</code>, <code>cancelled</code>, <code>unsupported</code>, or <code>failed</code> state - You can't modify the Capacity Reservation in any way.</p> </li> </ul> <p>For a future-dated Capacity Reservation that has not yet been delivered, pushing out the start date requires a quote generated by <code>CreateCapacityReservationDateChangeQuote</code>. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/capacity-reservations-modify.html\">Modify an active Capacity Reservation</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "ModifyCapacityReservationFleet": "<p>Modifies a Capacity Reservation Fleet.</p> <p>When you modify the total target capacity of a Capacity Reservation Fleet, the Fleet automatically creates new Capacity Reservations, or modifies or cancels existing Capacity Reservations in the Fleet to meet the new total target capacity. When you modify the end date for the Fleet, the end dates for all of the individual Capacity Reservations in the Fleet are updated accordingly.</p>",
     "ModifyClientVpnEndpoint": "<p>Modifies the specified Client VPN endpoint. Modifying the DNS server resets existing client connections.</p>",
+    "ModifyClientVpnEndpointAuthorizationPolicy": "<p>Creates or updates the authorization policy for a Client VPN endpoint. A Client VPN endpoint can have one authorization policy. If a policy already exists for the endpoint, the values that you specify replace the corresponding values in the existing policy, and values that you do not specify remain unchanged.</p>",
     "ModifyDefaultCreditSpecification": "<p>Modifies the default credit option for CPU usage of burstable performance instances. The default credit option is set at the account level per Amazon Web Services Region, and is specified per instance family. All new burstable performance instances in the account launch using the default credit option.</p> <p> <code>ModifyDefaultCreditSpecification</code> is an asynchronous operation, which works at an Amazon Web Services Region level and modifies the credit option for each Availability Zone. All zones in a Region are updated within five minutes. But if instances are launched during this operation, they might not get the new credit option until the zone is updated. To verify whether the update has occurred, you can call <code>GetDefaultCreditSpecification</code> and check <code>DefaultCreditSpecification</code> for updates.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/burstable-performance-instances.html\">Burstable performance instances</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "ModifyEbsDefaultKmsKeyId": "<p>Changes the default KMS key for EBS encryption by default for your account in this Region.</p> <p>Amazon Web Services creates a unique Amazon Web Services managed KMS key in each Region for use with encryption by default. If you change the default KMS key to a symmetric customer managed KMS key, it is used instead of the Amazon Web Services managed KMS key. Amazon EBS does not support asymmetric KMS keys.</p> <p>If you delete or disable the customer managed KMS key that you specified for use with encryption by default, your instances will fail to launch.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/ebs-encryption.html\">Amazon EBS encryption</a> in the <i>Amazon EBS User Guide</i>.</p>",
     "ModifyFleet": "<p>Modifies the specified EC2 Fleet.</p> <p>You can only modify an EC2 Fleet request of type <code>maintain</code>.</p> <p>While the EC2 Fleet is being modified, it is in the <code>modifying</code> state.</p> <p>To scale up your EC2 Fleet, increase its target capacity. The EC2 Fleet launches the additional Spot Instances according to the allocation strategy for the EC2 Fleet request. If the allocation strategy is <code>lowest-price</code>, the EC2 Fleet launches instances using the Spot Instance pool with the lowest price. If the allocation strategy is <code>diversified</code>, the EC2 Fleet distributes the instances across the Spot Instance pools. If the allocation strategy is <code>capacity-optimized</code>, EC2 Fleet launches instances from Spot Instance pools with optimal capacity for the number of instances that are launching.</p> <p>To scale down your EC2 Fleet, decrease its target capacity. First, the EC2 Fleet cancels any open requests that exceed the new target capacity. You can request that the EC2 Fleet terminate Spot Instances until the size of the fleet no longer exceeds the new target capacity. If the allocation strategy is <code>lowest-price</code>, the EC2 Fleet terminates the instances with the highest price per unit. If the allocation strategy is <code>capacity-optimized</code>, the EC2 Fleet terminates the instances in the Spot Instance pools that have the least available Spot Instance capacity. If the allocation strategy is <code>diversified</code>, the EC2 Fleet terminates instances across the Spot Instance pools. Alternatively, you can request that the EC2 Fleet keep the fleet at its current size, but not replace any Spot Instances that are interrupted or that you terminate manually.</p> <p>If you are finished with your EC2 Fleet for now, but will use it again later, you can set the target capacity to 0.</p>",
@@ -2710,7 +2713,9 @@
         "ConfirmProductInstanceRequest$DryRun": "<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ConfirmProductInstanceResult$Return": "<p>The return value of the request. Returns <code>true</code> if the specified product code is owned by the requester and associated with the specified instance.</p>",
         "ConnectionLogOptions$Enabled": "<p>Indicates whether connection logging is enabled.</p>",
+        "ConnectionLogOptions$IncludeAuthorizationPolicyContext": "<p>Specifies whether to include the authorization policy evaluation context in the connection logs for the Client VPN endpoint.</p>",
         "ConnectionLogResponseOptions$Enabled": "<p>Indicates whether client connection logging is enabled for the Client VPN endpoint.</p>",
+        "ConnectionLogResponseOptions$IncludeAuthorizationPolicyContext": "<p>Specifies whether the authorization policy evaluation context is included in the connection logs for the Client VPN endpoint.</p>",
         "CopyFpgaImageRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CopyImageRequest$Encrypted": "<p>Specifies whether to encrypt the snapshots of the copied image.</p> <p>You can encrypt a copy of an unencrypted snapshot, but you cannot create an unencrypted copy of an encrypted snapshot. The default KMS key for Amazon EBS is used unless you specify a non-default Key Management Service (KMS) KMS key using <code>KmsKeyId</code>. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIEncryption.html\">Use encryption with EBS-backed AMIs</a> in the <i>Amazon EC2 User Guide</i>.</p>",
         "CopyImageRequest$CopyImageTags": "<p>Specifies whether to copy your user-defined AMI tags to the new AMI.</p> <p>The following tags are not be copied:</p> <ul> <li> <p>System tags (prefixed with <code>aws:</code>)</p> </li> <li> <p>For public and shared AMIs, user-defined tags that are attached by other Amazon Web Services accounts</p> </li> </ul> <p>Default: Your user-defined AMI tags are not copied.</p>",
@@ -2858,6 +2863,7 @@
         "DeleteApplicationStatusCheckRequest$DryRun": "<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteCapacityManagerDataExportRequest$DryRun": "<p> Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>. </p>",
         "DeleteCarrierGatewayRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DeleteClientVpnEndpointAuthorizationPolicyRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteClientVpnEndpointRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteClientVpnRouteRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteCoipCidrRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -3193,6 +3199,7 @@
         "DetachVolumeRequest$Force": "<p>Forces detachment if the previous detachment attempt did not occur cleanly (for example, logging into an instance, unmounting the volume, and detaching normally). This option can lead to data loss or a corrupted file system. Use this option only as a last resort to detach a volume from a failed instance. The instance won't have an opportunity to flush file system caches or file system metadata. If you use this option, you must perform file system check and repair procedures.</p>",
         "DetachVolumeRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DetachVpnGatewayRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DevicePostureOptions$Enabled": "<p>Indicates whether device posture evaluation is enabled for the Client VPN endpoint. Specify <code>false</code> to disable device posture, which clears the configured device trust providers.</p>",
         "DisableAddressTransferRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisableAllowedImagesSettingsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisableApplicationStatusCheckSuppressionRequest$DryRun": "<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -3319,6 +3326,7 @@
         "GetCapacityManagerMetricDimensionsRequest$DryRun": "<p> Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>. </p>",
         "GetCapacityManagerMonitoredTagKeysRequest$DryRun": "<p> Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>. </p>",
         "GetCapacityReservationUsageRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "GetClientVpnEndpointAuthorizationPolicyRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "GetCoipPoolUsageRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "GetConsoleOutputRequest$Latest": "<p>When enabled, retrieves the latest console output for the instance.</p> <p>Default: disabled (<code>false</code>)</p>",
         "GetConsoleOutputRequest$DryRun": "<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -3493,6 +3501,7 @@
         "ModifyCapacityReservationRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyCapacityReservationRequest$AcceptModificationTerms": "<p>Indicates that you accept the modification terms of the quote identified by <code>QuoteId</code>. To apply a quoted modification, set this parameter to <code>true</code>.</p>",
         "ModifyCapacityReservationResult$Return": "<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>",
+        "ModifyClientVpnEndpointAuthorizationPolicyRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyClientVpnEndpointRequest$SplitTunnel": "<p>Indicates whether the VPN is split-tunnel.</p> <p>For information about split-tunnel VPN endpoints, see <a href=\"https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/split-tunnel-vpn.html\">Split-tunnel Client VPN endpoint</a> in the <i>Client VPN Administrator Guide</i>.</p>",
         "ModifyClientVpnEndpointRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyClientVpnEndpointRequest$DisconnectOnSessionTimeout": "<p>Indicates whether the client VPN session is disconnected after the maximum timeout specified in <code>sessionTimeoutHours</code> is reached. If <code>true</code>, users are prompted to reconnect client VPN. If <code>false</code>, client VPN attempts to reconnect automatically. The default value is <code>true</code>.</p>",
@@ -5029,6 +5038,21 @@
         "ClientVpnAuthenticationRequest$Type": "<p>The type of client authentication to be used.</p>"
       }
     },
+    "ClientVpnAuthorizationPolicyShadowMode": {
+      "base": "<p>Indicates whether the authorization policy for a Client VPN endpoint is evaluated in shadow mode. Possible values include:</p> <ul> <li> <p> <code>enabled</code> - The authorization policy is evaluated and the results are logged, but access is not enforced.</p> </li> <li> <p> <code>disabled</code> - The authorization policy is enforced.</p> </li> </ul>",
+      "refs": {
+        "GetClientVpnEndpointAuthorizationPolicyResult$ShadowMode": "<p>Specifies whether the authorization policy is evaluated in shadow mode. Possible values include:</p> <ul> <li> <p> <code>enabled</code> - The authorization policy is evaluated and the results are logged, but access is not enforced.</p> </li> <li> <p> <code>disabled</code> - The authorization policy is enforced.</p> </li> </ul>",
+        "ModifyClientVpnEndpointAuthorizationPolicyRequest$ShadowMode": "<p>Specifies whether the authorization policy is evaluated in shadow mode. Possible values include:</p> <ul> <li> <p> <code>enabled</code> - The authorization policy is evaluated and the results are logged, but access is not enforced.</p> </li> <li> <p> <code>disabled</code> - The authorization policy is enforced.</p> </li> </ul> <p>The default value is <code>disabled</code>.</p>"
+      }
+    },
+    "ClientVpnAuthorizationPolicyStatus": {
+      "base": "<p>Describes the state of an authorization policy for a Client VPN endpoint. Possible states include:</p> <ul> <li> <p> <code>creating</code> - The authorization policy is being created.</p> </li> <li> <p> <code>updating</code> - The authorization policy is being updated.</p> </li> <li> <p> <code>active</code> - The authorization policy has been applied to the Client VPN endpoint.</p> </li> <li> <p> <code>failed</code> - The authorization policy could not be applied to the Client VPN endpoint.</p> </li> <li> <p> <code>deleting</code> - The authorization policy is being deleted.</p> </li> </ul>",
+      "refs": {
+        "DeleteClientVpnEndpointAuthorizationPolicyResult$Status": "<p>The current state of the authorization policy.</p>",
+        "GetClientVpnEndpointAuthorizationPolicyResult$Status": "<p>The current state of the authorization policy.</p>",
+        "ModifyClientVpnEndpointAuthorizationPolicyResult$Status": "<p>The current state of the authorization policy.</p>"
+      }
+    },
     "ClientVpnAuthorizationRuleStatus": {
       "base": "<p>Describes the state of an authorization rule.</p>",
       "refs": {
@@ -5085,6 +5109,13 @@
         "ClientVpnConnectionStatus$Code": "<p>The state of the client connection.</p>"
       }
     },
+    "ClientVpnDeviceTrustProviderType": {
+      "base": null,
+      "refs": {
+        "ClientVpnTrustProvider$TrustProviderType": "<p>The type of the device trust provider. Possible values include:</p> <ul> <li> <p> <code>crowdstrike</code> - CrowdStrike device trust provider.</p> </li> <li> <p> <code>jamf</code> - Jamf device trust provider.</p> </li> <li> <p> <code>jumpcloud</code> - JumpCloud device trust provider.</p> </li> </ul>",
+        "ClientVpnTrustProviderRequest$TrustProviderType": "<p>The type of the device trust provider. Possible values include:</p> <ul> <li> <p> <code>crowdstrike</code> - CrowdStrike device trust provider.</p> </li> <li> <p> <code>jamf</code> - Jamf device trust provider.</p> </li> <li> <p> <code>jumpcloud</code> - JumpCloud device trust provider.</p> </li> </ul>"
+      }
+    },
     "ClientVpnEndpoint": {
       "base": "<p>Describes a Client VPN endpoint.</p>",
       "refs": {
@@ -5111,6 +5142,7 @@
         "AuthorizeClientVpnIngressRequest$ClientVpnEndpointId": "<p>The ID of the Client VPN endpoint.</p>",
         "ClientVpnEndpointIdList$member": null,
         "CreateClientVpnRouteRequest$ClientVpnEndpointId": "<p>The ID of the Client VPN endpoint to which to add the route.</p>",
+        "DeleteClientVpnEndpointAuthorizationPolicyRequest$ClientVpnEndpointId": "<p>The ID of the Client VPN endpoint.</p>",
         "DeleteClientVpnEndpointRequest$ClientVpnEndpointId": "<p>The ID of the Client VPN to be deleted.</p>",
         "DeleteClientVpnRouteRequest$ClientVpnEndpointId": "<p>The ID of the Client VPN endpoint from which the route is to be deleted.</p>",
         "DescribeClientVpnAuthorizationRulesRequest$ClientVpnEndpointId": "<p>The ID of the Client VPN endpoint.</p>",
@@ -5120,7 +5152,9 @@
         "DisassociateClientVpnTargetNetworkRequest$ClientVpnEndpointId": "<p>The ID of the Client VPN endpoint from which to disassociate the target network.</p>",
         "ExportClientVpnClientCertificateRevocationListRequest$ClientVpnEndpointId": "<p>The ID of the Client VPN endpoint.</p>",
         "ExportClientVpnClientConfigurationRequest$ClientVpnEndpointId": "<p>The ID of the Client VPN endpoint.</p>",
+        "GetClientVpnEndpointAuthorizationPolicyRequest$ClientVpnEndpointId": "<p>The ID of the Client VPN endpoint.</p>",
         "ImportClientVpnClientCertificateRevocationListRequest$ClientVpnEndpointId": "<p>The ID of the Client VPN endpoint to which the client certificate revocation list applies.</p>",
+        "ModifyClientVpnEndpointAuthorizationPolicyRequest$ClientVpnEndpointId": "<p>The ID of the Client VPN endpoint.</p>",
         "ModifyClientVpnEndpointRequest$ClientVpnEndpointId": "<p>The ID of the Client VPN endpoint to modify.</p>",
         "RevokeClientVpnIngressRequest$ClientVpnEndpointId": "<p>The ID of the Client VPN endpoint with which the authorization rule is associated.</p>",
         "TerminateClientVpnConnectionsRequest$ClientVpnEndpointId": "<p>The ID of the Client VPN endpoint to which the client is connected.</p>",
@@ -5181,6 +5215,30 @@
         "ClientVpnEndpoint$SecurityGroupIds": "<p>The IDs of the security groups for the target network.</p>",
         "CreateClientVpnEndpointRequest$SecurityGroupIds": "<p>The IDs of one or more security groups to apply to the target network. You must also specify the ID of the VPC that contains the security groups.</p>",
         "ModifyClientVpnEndpointRequest$SecurityGroupIds": "<p>The IDs of one or more security groups to apply to the target network.</p>"
+      }
+    },
+    "ClientVpnTrustProvider": {
+      "base": "<p>Information about a device trust provider configured for a Client VPN endpoint.</p>",
+      "refs": {
+        "ClientVpnTrustProviderSet$member": null
+      }
+    },
+    "ClientVpnTrustProviderRequest": {
+      "base": "<p>Describes a device trust provider to configure for a Client VPN endpoint.</p>",
+      "refs": {
+        "ClientVpnTrustProviderRequestList$member": null
+      }
+    },
+    "ClientVpnTrustProviderRequestList": {
+      "base": null,
+      "refs": {
+        "DevicePostureOptions$TrustProviders": "<p>The device trust providers to configure for the Client VPN endpoint.</p>"
+      }
+    },
+    "ClientVpnTrustProviderSet": {
+      "base": null,
+      "refs": {
+        "DevicePostureResponseOptions$TrustProviders": "<p>The device trust providers configured for the Client VPN endpoint.</p>"
       }
     },
     "CloudWatchLogGroupArn": {
@@ -7166,6 +7224,16 @@
       }
     },
     "DeleteCarrierGatewayResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteClientVpnEndpointAuthorizationPolicyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteClientVpnEndpointAuthorizationPolicyResult": {
       "base": null,
       "refs": {
       }
@@ -10770,6 +10838,19 @@
         "VerifiedAccessTrustProvider$DeviceOptions": "<p>The options for device-identity trust provider.</p>"
       }
     },
+    "DevicePostureOptions": {
+      "base": "<p>Describes the device posture options for a Client VPN endpoint. Device posture options specify the device trust providers that the endpoint uses to evaluate the security posture of connecting devices.</p>",
+      "refs": {
+        "CreateClientVpnEndpointRequest$DevicePostureOptions": "<p>The device posture options for the Client VPN endpoint. Use this parameter to specify the device trust providers that the endpoint uses to evaluate the security posture of connecting devices.</p>",
+        "ModifyClientVpnEndpointRequest$DevicePostureOptions": "<p>The device posture options for the Client VPN endpoint. Specifying this parameter replaces the entire device posture configuration for the endpoint. To remove all device trust providers, specify an empty list.</p>"
+      }
+    },
+    "DevicePostureResponseOptions": {
+      "base": "<p>Information about the device posture options for a Client VPN endpoint.</p>",
+      "refs": {
+        "ClientVpnEndpoint$DevicePostureOptions": "<p>The device trust providers configured for the Client VPN endpoint, if applicable.</p>"
+      }
+    },
     "DeviceTrustProviderType": {
       "base": null,
       "refs": {
@@ -12665,7 +12746,7 @@
         "DescribeVpcEndpointServiceConfigurationsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>service-name</code> - The name of the service.</p> </li> <li> <p> <code>service-id</code> - The ID of the service.</p> </li> <li> <p> <code>service-state</code> - The state of the service (<code>Pending</code> | <code>Available</code> | <code>Deleting</code> | <code>Deleted</code> | <code>Failed</code>). </p> </li> <li> <p> <code>supported-ip-address-types</code> - The IP address type (<code>ipv4</code> | <code>ipv6</code>).</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> </ul>",
         "DescribeVpcEndpointServicePermissionsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>principal</code> - The ARN of the principal.</p> </li> <li> <p> <code>principal-type</code> - The principal type (<code>All</code> | <code>Service</code> | <code>OrganizationUnit</code> | <code>Account</code> | <code>User</code> | <code>Role</code>).</p> </li> </ul>",
         "DescribeVpcEndpointServicesRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>owner</code> - The ID or alias of the Amazon Web Services account that owns the service.</p> </li> <li> <p> <code>service-name</code> - The name of the service.</p> </li> <li> <p> <code>service-region</code> - The Region of the service.</p> </li> <li> <p> <code>service-type</code> - The type of service (<code>Interface</code> | <code>Gateway</code> | <code>GatewayLoadBalancer</code>).</p> </li> <li> <p> <code>supported-ip-address-types</code> - The IP address type (<code>ipv4</code> | <code>ipv6</code>).</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> </ul>",
-        "DescribeVpcEndpointsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>ip-address-type</code> - The IP address type (<code>ipv4</code> | <code>ipv6</code>).</p> </li> <li> <p> <code>service-name</code> - The name of the service.</p> </li> <li> <p> <code>service-region</code> - The Region of the service.</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC in which the endpoint resides.</p> </li> <li> <p> <code>vpc-endpoint-id</code> - The ID of the endpoint.</p> </li> <li> <p> <code>vpc-endpoint-state</code> - The state of the endpoint (<code>pendingAcceptance</code> | <code>pending</code> | <code>available</code> | <code>deleting</code> | <code>deleted</code> | <code>rejected</code> | <code>failed</code>).</p> </li> <li> <p> <code>vpc-endpoint-type</code> - The type of VPC endpoint (<code>Interface</code> | <code>Gateway</code> | <code>GatewayLoadBalancer</code> | <code>Resource</code> | <code>ServiceNetwork</code>).</p> </li> </ul>",
+        "DescribeVpcEndpointsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>ip-address-type</code> - The IP address type (<code>ipv4</code> | <code>ipv6</code>).</p> </li> <li> <p> <code>service-name</code> - The name of the service.</p> </li> <li> <p> <code>service-region</code> - The Region of the service.</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC in which the endpoint resides.</p> </li> <li> <p> <code>vpc-endpoint-id</code> - The ID of the endpoint.</p> </li> <li> <p> <code>vpc-endpoint-state</code> - The state of the endpoint (<code>pendingAcceptance</code> | <code>pending</code> | <code>available</code> | <code>deleting</code> | <code>deleted</code> | <code>rejected</code> | <code>failed</code>).</p> </li> <li> <p> <code>vpc-endpoint-type</code> - The type of VPC endpoint (<code>Interface</code> | <code>Gateway</code> | <code>GatewayLoadBalancer</code> | <code>Resource</code> | <code>ServiceNetwork</code> | <code>Tunnel</code>).</p> </li> </ul>",
         "DescribeVpcPeeringConnectionsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>accepter-vpc-info.cidr-block</code> - The IPv4 CIDR block of the accepter VPC.</p> </li> <li> <p> <code>accepter-vpc-info.owner-id</code> - The ID of the Amazon Web Services account that owns the accepter VPC.</p> </li> <li> <p> <code>accepter-vpc-info.vpc-id</code> - The ID of the accepter VPC.</p> </li> <li> <p> <code>expiration-time</code> - The expiration date and time for the VPC peering connection.</p> </li> <li> <p> <code>requester-vpc-info.cidr-block</code> - The IPv4 CIDR block of the requester's VPC.</p> </li> <li> <p> <code>requester-vpc-info.owner-id</code> - The ID of the Amazon Web Services account that owns the requester VPC.</p> </li> <li> <p> <code>requester-vpc-info.vpc-id</code> - The ID of the requester VPC.</p> </li> <li> <p> <code>status-code</code> - The status of the VPC peering connection (<code>pending-acceptance</code> | <code>failed</code> | <code>expired</code> | <code>provisioning</code> | <code>active</code> | <code>deleting</code> | <code>deleted</code> | <code>rejected</code>).</p> </li> <li> <p> <code>status-message</code> - A message that provides more information about the status of the VPC peering connection, if applicable.</p> </li> <li> <p> <code>tag</code> - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>vpc-peering-connection-id</code> - The ID of the VPC peering connection.</p> </li> </ul>",
         "DescribeVpcsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>cidr</code> - The primary IPv4 CIDR block of the VPC. The CIDR block you specify must exactly match the VPC's CIDR block for information to be returned for the VPC. Must contain the slash followed by one or two digits (for example, <code>/28</code>).</p> </li> <li> <p> <code>cidr-block-association.cidr-block</code> - An IPv4 CIDR block associated with the VPC.</p> </li> <li> <p> <code>cidr-block-association.association-id</code> - The association ID for an IPv4 CIDR block associated with the VPC.</p> </li> <li> <p> <code>cidr-block-association.state</code> - The state of an IPv4 CIDR block associated with the VPC.</p> </li> <li> <p> <code>dhcp-options-id</code> - The ID of a set of DHCP options.</p> </li> <li> <p> <code>ipv6-cidr-block-association.ipv6-cidr-block</code> - An IPv6 CIDR block associated with the VPC.</p> </li> <li> <p> <code>ipv6-cidr-block-association.ipv6-pool</code> - The ID of the IPv6 address pool from which the IPv6 CIDR block is allocated.</p> </li> <li> <p> <code>ipv6-cidr-block-association.association-id</code> - The association ID for an IPv6 CIDR block associated with the VPC.</p> </li> <li> <p> <code>ipv6-cidr-block-association.state</code> - The state of an IPv6 CIDR block associated with the VPC.</p> </li> <li> <p> <code>is-default</code> - Indicates whether the VPC is the default VPC.</p> </li> <li> <p> <code>owner-id</code> - The ID of the Amazon Web Services account that owns the VPC.</p> </li> <li> <p> <code>state</code> - The state of the VPC (<code>pending</code> | <code>available</code>).</p> </li> <li> <p> <code>tag</code> - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC.</p> </li> </ul>",
         "DescribeVpnConcentratorsRequest$Filters": "<p>One or more filters to limit the results.</p>",
@@ -13285,6 +13366,16 @@
       }
     },
     "GetCapacityReservationUsageResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetClientVpnEndpointAuthorizationPolicyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetClientVpnEndpointAuthorizationPolicyResult": {
       "base": null,
       "refs": {
       }
@@ -14106,7 +14197,7 @@
     "GroupIdentifierSet": {
       "base": null,
       "refs": {
-        "VpcEndpoint$Groups": "<p>(Interface endpoint) Information about the security groups that are associated with the network interface.</p>"
+        "VpcEndpoint$Groups": "<p>(Interface, Resource, ServiceNetwork, and Tunnel endpoints only) Information about the security groups that are associated with the network interface.</p>"
       }
     },
     "GroupIds": {
@@ -20089,6 +20180,16 @@
       "refs": {
       }
     },
+    "ModifyClientVpnEndpointAuthorizationPolicyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ModifyClientVpnEndpointAuthorizationPolicyResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ModifyClientVpnEndpointRequest": {
       "base": null,
       "refs": {
@@ -24016,7 +24117,7 @@
     "ResourceConfigurationArn": {
       "base": null,
       "refs": {
-        "CreateVpcEndpointRequest$ResourceConfigurationArn": "<p>The Amazon Resource Name (ARN) of a resource configuration that will be associated with the VPC endpoint of type resource.</p>",
+        "CreateVpcEndpointRequest$ResourceConfigurationArn": "<p>(Resource and Tunnel endpoints only) The Amazon Resource Name (ARN) of a resource configuration associated with the VPC endpoint. The type of resource configuration depends on the endpoint type:</p> <ul> <li> <p>For a Resource endpoint, you can specify a resource configuration that is of type <code>SINGLE</code>, <code>GROUP</code>, or <code>ARN</code>. To reach a resource that belongs to a group, specify the parent <code>GROUP</code> resource configuration.</p> </li> <li> <p>For a Tunnel endpoint, you can specify a resource configuration that is of type <code>CIDR</code>.</p> </li> </ul> <p>For more information about the types of resource configurations, see <a href=\"https://docs.aws.amazon.com/vpc/latest/privatelink/resource-configuration.html\">Types of resource configurations</a> in the <i>Amazon Web Services PrivateLink User Guide</i>.</p> <p>This request fails if a VPC endpoint owned by a different Amazon Web Services account already exists on a resource gateway that is enabled for <code>ResourceGatewayCharges</code> payer responsibility.</p>",
         "VpcEndpoint$ResourceConfigurationArn": "<p>The Amazon Resource Name (ARN) of the resource configuration.</p>"
       }
     },
@@ -26420,6 +26521,7 @@
         "ClientVpnConnection$ClientIpv6Address": "<p>The IPv6 address assigned to the client connection when using a dual-stack Client VPN endpoint. This field is only populated when the endpoint is configured for dual-stack addressing, and the client is using IPv6 for connectivity.</p>",
         "ClientVpnConnection$CommonName": "<p>The common name associated with the client. This is either the name of the client certificate, or the Active Directory user name.</p>",
         "ClientVpnConnection$ConnectionEndTime": "<p>The date and time the client connection was terminated.</p>",
+        "ClientVpnConnection$AuthorizationPolicyLastEvaluatedTime": "<p>The date and time the authorization policy was last evaluated for the client connection, if applicable.</p>",
         "ClientVpnConnectionStatus$Message": "<p>A message about the status of the client connection, if applicable.</p>",
         "ClientVpnEndpoint$ClientVpnEndpointId": "<p>The ID of the Client VPN endpoint.</p>",
         "ClientVpnEndpoint$Description": "<p>A brief description of the endpoint.</p>",
@@ -26438,6 +26540,10 @@
         "ClientVpnRoute$Origin": "<p>Indicates how the route was associated with the Client VPN endpoint. <code>associate</code> indicates that the route was automatically added when the target network was associated with the Client VPN endpoint. <code>add-route</code> indicates that the route was manually added using the <b>CreateClientVpnRoute</b> action.</p>",
         "ClientVpnRoute$Description": "<p>A brief description of the route.</p>",
         "ClientVpnRouteStatus$Message": "<p>A message about the status of the Client VPN endpoint route, if applicable.</p>",
+        "ClientVpnTrustProvider$TenantId": "<p>The tenant ID associated with your device trust provider account.</p>",
+        "ClientVpnTrustProvider$PublicSigningKeyUrl": "<p>The URL of the public signing key that is used to verify the identity token issued by the device trust provider.</p>",
+        "ClientVpnTrustProviderRequest$TenantId": "<p>The tenant ID associated with your device trust provider account.</p>",
+        "ClientVpnTrustProviderRequest$PublicSigningKeyUrl": "<p>The URL of the public signing key that is used to verify the identity token issued by the device trust provider.</p>",
         "CloudWatchLogOptions$LogGroupArn": "<p>The Amazon Resource Name (ARN) of the CloudWatch log group to send logs to.</p>",
         "CloudWatchLogOptions$LogOutputFormat": "<p>Configured log format. Default format is <code>json</code>.</p> <p>Valid values: <code>json</code> | <code>text</code> </p>",
         "CloudWatchLogOptions$BgpLogGroupArn": "<p>The Amazon Resource Name (ARN) of the CloudWatch log group for BGP logs.</p>",
@@ -27247,6 +27353,9 @@
         "GetCapacityReservationUsageResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "GetCapacityReservationUsageResult$CapacityReservationId": "<p>The ID of the Capacity Reservation.</p>",
         "GetCapacityReservationUsageResult$InstanceType": "<p>The type of instance for which the Capacity Reservation reserves capacity.</p>",
+        "GetClientVpnEndpointAuthorizationPolicyResult$ClientVpnEndpointId": "<p>The ID of the Client VPN endpoint.</p>",
+        "GetClientVpnEndpointAuthorizationPolicyResult$PolicyDocument": "<p>The authorization policy document, written in the Cedar policy language.</p>",
+        "GetClientVpnEndpointAuthorizationPolicyResult$Description": "<p>A brief description of the authorization policy.</p>",
         "GetCoipPoolUsageRequest$NextToken": "<p>The token for the next page of results.</p>",
         "GetCoipPoolUsageResult$CoipPoolId": "<p>The ID of the customer-owned address pool.</p>",
         "GetCoipPoolUsageResult$LocalGatewayRouteTableId": "<p>The ID of the local gateway route table.</p>",
@@ -27827,6 +27936,9 @@
         "ModifyApplicationStatusCheckRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure that the operation completes no more than one time. If you retry a request with the same token, the service ignores the request but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "ModifyAvailabilityZoneGroupRequest$GroupName": "<p>The name of the Availability Zone group, Local Zone group, or Wavelength Zone group.</p>",
         "ModifyCapacityReservationRequest$AdditionalInfo": "<p>Reserved for future use.</p>",
+        "ModifyClientVpnEndpointAuthorizationPolicyRequest$PolicyDocument": "<p>The authorization policy document, written in the Cedar policy language. This parameter is required when you create the authorization policy for a Client VPN endpoint that does not already have one.</p>",
+        "ModifyClientVpnEndpointAuthorizationPolicyRequest$Description": "<p>A brief description of the authorization policy.</p>",
+        "ModifyClientVpnEndpointAuthorizationPolicyRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensuring idempotency</a>.</p>",
         "ModifyClientVpnEndpointRequest$ServerCertificateArn": "<p>The ARN of the server certificate to be used. The server certificate must be provisioned in Certificate Manager (ACM).</p>",
         "ModifyClientVpnEndpointRequest$Description": "<p>A brief description of the Client VPN endpoint.</p>",
         "ModifyDefaultCreditSpecificationRequest$CpuCredits": "<p>The credit option for CPU usage of the instance family.</p> <p>Valid Values: <code>standard</code> | <code>unlimited</code> </p>",
@@ -31330,8 +31442,8 @@
         "UpdateCapacityManagerMonitoredTagKeysRequest$DeactivateTagKeys": "<p> The tag keys to deactivate. Deactivated tag keys will no longer be included as dimensions in capacity metric data. </p>",
         "VerifiedAccessInstanceCustomSubDomain$Nameservers": "<p>The name servers.</p>",
         "VpcEndpoint$RouteTableIds": "<p>(Gateway endpoint) The IDs of the route tables associated with the endpoint.</p>",
-        "VpcEndpoint$SubnetIds": "<p>(Interface endpoint) The subnets for the endpoint.</p>",
-        "VpcEndpoint$NetworkInterfaceIds": "<p>(Interface endpoint) The network interfaces for the endpoint.</p>",
+        "VpcEndpoint$SubnetIds": "<p>(Interface, Gateway Load Balancer endpoints, Resource, ServiceNetwork, and Tunnel endpoints only) The subnets for the endpoint.</p>",
+        "VpcEndpoint$NetworkInterfaceIds": "<p>(Interface, Gateway Load Balancer endpoints, Resource, ServiceNetwork, and Tunnel endpoints only) The network interfaces for the endpoint.</p>",
         "VpcEndpointConnection$NetworkLoadBalancerArns": "<p>The Amazon Resource Names (ARNs) of the network load balancers for the service.</p>",
         "VpcEndpointConnection$GatewayLoadBalancerArns": "<p>The Amazon Resource Names (ARNs) of the Gateway Load Balancers for the service.</p>"
       }
@@ -32330,7 +32442,7 @@
     "VpcEndpointSecurityGroupIdList": {
       "base": null,
       "refs": {
-        "CreateVpcEndpointRequest$SecurityGroupIds": "<p>(Interface endpoint) The IDs of the security groups to associate with the endpoint network interfaces. If this parameter is not specified, we use the default security group for the VPC.</p>",
+        "CreateVpcEndpointRequest$SecurityGroupIds": "<p>(Interface, Resource, ServiceNetwork, and Tunnel endpoints only) The IDs of the security groups to associate with the endpoint network interfaces. If this parameter is not specified, we use the default security group for the VPC.</p>",
         "ModifyVpcEndpointRequest$AddSecurityGroupIds": "<p>(Interface endpoint) The IDs of the security groups to associate with the endpoint network interfaces.</p>",
         "ModifyVpcEndpointRequest$RemoveSecurityGroupIds": "<p>(Interface endpoint) The IDs of the security groups to disassociate from the endpoint network interfaces.</p>"
       }
@@ -32366,7 +32478,7 @@
     "VpcEndpointSubnetIdList": {
       "base": null,
       "refs": {
-        "CreateVpcEndpointRequest$SubnetIds": "<p>(Interface and Gateway Load Balancer endpoints) The IDs of the subnets in which to create endpoint network interfaces. For a Gateway Load Balancer endpoint, you can specify only one subnet.</p>",
+        "CreateVpcEndpointRequest$SubnetIds": "<p>(Interface, Gateway Load Balancer endpoints, Resource, ServiceNetwork, and Tunnel endpoints only) The IDs of the subnets in which to create endpoint network interfaces. For a Gateway Load Balancer endpoint, you can specify only one subnet. For a <code>Tunnel</code> endpoint, the subnets must be in the Availability Zones of the resource gateway associated with the shared resource configuration. An endpoint network interface is created only in an Availability Zone that the resource gateway is also in.</p>",
         "ModifyVpcEndpointRequest$AddSubnetIds": "<p>(Interface and Gateway Load Balancer endpoints) The IDs of the subnets in which to serve the endpoint. For a Gateway Load Balancer endpoint, you can specify only one subnet.</p>",
         "ModifyVpcEndpointRequest$RemoveSubnetIds": "<p>(Interface endpoint) The IDs of the subnets from which to remove the endpoint.</p>"
       }
@@ -32374,8 +32486,8 @@
     "VpcEndpointType": {
       "base": null,
       "refs": {
-        "CreateVpcEndpointRequest$VpcEndpointType": "<p>The type of endpoint.</p> <p>Default: Gateway</p>",
-        "VpcEndpoint$VpcEndpointType": "<p>The type of endpoint.</p>"
+        "CreateVpcEndpointRequest$VpcEndpointType": "<p>The type of endpoint.</p> <p>For more information about the types of VPC endpoints, see <a href=\"https://docs.aws.amazon.com/vpc/latest/privatelink/concepts.html#concepts-vpc-endpoints\">VPC endpoints</a> in the <i>Amazon Web Services PrivateLink User Guide</i>.</p> <p>Default: Gateway</p>",
+        "VpcEndpoint$VpcEndpointType": "<p>The type of endpoint.</p> <p>For more information about the types of VPC endpoints, see <a href=\"https://docs.aws.amazon.com/vpc/latest/privatelink/concepts.html#concepts-vpc-endpoints\">VPC endpoints</a> in the <i>Amazon Web Services PrivateLink User Guide</i>.</p>"
       }
     },
     "VpcFlowLogId": {

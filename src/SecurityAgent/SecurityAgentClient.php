@@ -324,6 +324,7 @@ use Aws\AwsClient;
  *         complianceReport?: bool,
  *         ...,
  *     },
+ *     cicdConfiguration?: array{enabled?: bool, ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createPentestAsync(array $args = [])
@@ -359,6 +360,7 @@ use Aws\AwsClient;
  *         complianceReport?: bool,
  *         ...,
  *     },
+ *     cicdConfiguration?: array{enabled?: bool, ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result createPrivateConnection(array $args = [])
@@ -760,9 +762,23 @@ use Aws\AwsClient;
  *     ...,
  * } $args = [])
  * @method \Aws\Result listPentestJobsForPentest(array $args = [])
- * @phpstan-method \Aws\Result listPentestJobsForPentest(array{maxResults?: int, pentestId?: string, agentSpaceId?: string, nextToken?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result listPentestJobsForPentest(array{
+ *     maxResults?: int,
+ *     pentestId?: string,
+ *     agentSpaceId?: string,
+ *     nextToken?: string,
+ *     jobType?: 'CICD'|'FULL'|'REVALIDATION',
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise listPentestJobsForPentestAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise listPentestJobsForPentestAsync(array{maxResults?: int, pentestId?: string, agentSpaceId?: string, nextToken?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listPentestJobsForPentestAsync(array{
+ *     maxResults?: int,
+ *     pentestId?: string,
+ *     agentSpaceId?: string,
+ *     nextToken?: string,
+ *     jobType?: 'CICD'|'FULL'|'REVALIDATION',
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listPentests(array $args = [])
  * @phpstan-method \Aws\Result listPentests(array{maxResults?: int, nextToken?: string, agentSpaceId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listPentestsAsync(array $args = [])
@@ -825,16 +841,32 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result startPentestJob(array{
  *     agentSpaceId?: string,
  *     pentestId?: string,
- *     jobType?: 'FULL'|'REVALIDATION',
+ *     jobType?: 'CICD'|'FULL'|'REVALIDATION',
  *     selectedFindingIds?: list<string>,
+ *     scopeChanges?: list<array{
+ *         integrationId?: string,
+ *         providerResourceId?: string,
+ *         baseCommitSha?: string,
+ *         headCommitSha?: string,
+ *         triggerRunId?: string,
+ *         ...,
+ *     }>,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise startPentestJobAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise startPentestJobAsync(array{
  *     agentSpaceId?: string,
  *     pentestId?: string,
- *     jobType?: 'FULL'|'REVALIDATION',
+ *     jobType?: 'CICD'|'FULL'|'REVALIDATION',
  *     selectedFindingIds?: list<string>,
+ *     scopeChanges?: list<array{
+ *         integrationId?: string,
+ *         providerResourceId?: string,
+ *         baseCommitSha?: string,
+ *         headCommitSha?: string,
+ *         triggerRunId?: string,
+ *         ...,
+ *     }>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result startThreatModelJob(array $args = [])
@@ -1045,6 +1077,7 @@ use Aws\AwsClient;
  *         complianceReport?: bool,
  *         ...,
  *     },
+ *     cicdConfiguration?: array{enabled?: bool, ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updatePentestAsync(array $args = [])
@@ -1081,6 +1114,7 @@ use Aws\AwsClient;
  *         complianceReport?: bool,
  *         ...,
  *     },
+ *     cicdConfiguration?: array{enabled?: bool, ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result updatePrivateConnectionCertificate(array $args = [])
