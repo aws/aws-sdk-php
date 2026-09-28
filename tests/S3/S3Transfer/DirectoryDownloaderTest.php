@@ -392,11 +392,21 @@ final class DirectoryDownloaderTest extends TestCase
             ['Key' => 'good2.txt', 'Size' => 200],
         ];
         $failurePolicyCalls = 0;
+        $destination = $this->tempDir
+            . DIRECTORY_SEPARATOR
+            . 'bad-parent'
+            . DIRECTORY_SEPARATOR
+            . 'dest';
+        mkdir($destination, 0777, true);
 
-        $downloadClosure = function (S3ClientInterface $client, DownloadFileRequest $request)
-        use (&$failurePolicyCalls): PromiseInterface {
+        $downloadClosure = function (
+            S3ClientInterface $client,
+            DownloadFileRequest $request
+        ): PromiseInterface {
+            $key = $request->getDownloadRequest()
+                ->getObjectRequestArgs()['Key'];
             $dest = $request->getDestination();
-            if (str_contains($dest, 'bad')) {
+            if ($key === 'bad.txt') {
                 return new RejectedPromise(new RuntimeException('download failed'));
             }
             $dir = dirname($dest);
@@ -413,7 +423,7 @@ final class DirectoryDownloaderTest extends TestCase
             $downloadClosure,
             new DownloadDirectoryRequest(
                 'my-bucket',
-                $this->destDir,
+                $destination,
                 [],
                 [
                     'failure_policy' => function () use (&$failurePolicyCalls) {
