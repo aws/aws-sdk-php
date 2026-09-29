@@ -1095,6 +1095,24 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "UpdateIntegration":{
+      "name":"UpdateIntegration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/UpdateIntegration",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateIntegrationInput"},
+      "output":{"shape":"UpdateIntegrationOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "UpdatePentest":{
       "name":"UpdatePentest",
       "http":{
@@ -1425,6 +1443,55 @@
         "AWS_IAM_ROLE",
         "AWS_INTERNAL"
       ]
+    },
+    "AzureDevOpsIntegrationInput":{
+      "type":"structure",
+      "required":[
+        "code",
+        "state",
+        "organizationName"
+      ],
+      "members":{
+        "code":{"shape":"AuthCode"},
+        "state":{"shape":"CsrfState"},
+        "organizationName":{"shape":"String"}
+      }
+    },
+    "AzureDevOpsOrganization":{"type":"string"},
+    "AzureDevOpsRepositoryMetadata":{
+      "type":"structure",
+      "required":[
+        "name",
+        "providerResourceId",
+        "organization"
+      ],
+      "members":{
+        "name":{"shape":"ProviderResourceName"},
+        "providerResourceId":{"shape":"ProviderResourceId"},
+        "organization":{"shape":"AzureDevOpsOrganization"},
+        "project":{"shape":"String"},
+        "projectId":{"shape":"String"},
+        "accessType":{"shape":"AccessType"}
+      }
+    },
+    "AzureDevOpsRepositoryResource":{
+      "type":"structure",
+      "required":[
+        "name",
+        "organization"
+      ],
+      "members":{
+        "name":{"shape":"ProviderResourceName"},
+        "organization":{"shape":"AzureDevOpsOrganization"},
+        "project":{"shape":"String"}
+      }
+    },
+    "AzureDevOpsResourceCapabilities":{
+      "type":"structure",
+      "members":{
+        "leaveComments":{"shape":"Boolean"},
+        "remediateCode":{"shape":"Boolean"}
+      }
     },
     "BatchCreateSecurityRequirementResult":{
       "type":"structure",
@@ -1881,6 +1948,19 @@
         "errors":{"shape":"BatchSecurityRequirementErrors"}
       }
     },
+    "BitbucketDataCenterIntegrationInput":{
+      "type":"structure",
+      "required":[
+        "targetUrl",
+        "code",
+        "state"
+      ],
+      "members":{
+        "targetUrl":{"shape":"TargetUrl"},
+        "code":{"shape":"AuthCode"},
+        "state":{"shape":"CsrfState"}
+      }
+    },
     "BitbucketInstallationId":{"type":"string"},
     "BitbucketIntegrationInput":{
       "type":"structure",
@@ -1977,6 +2057,11 @@
         "BEST_EFFORT_DELETE",
         "RETAIN_ALL"
       ]
+    },
+    "ClientId":{"type":"string"},
+    "ClientSecret":{
+      "type":"string",
+      "sensitive":true
     },
     "CloudWatchLog":{
       "type":"structure",
@@ -3097,6 +3182,7 @@
         "displayName":{"shape":"String"},
         "kmsKeyId":{"shape":"KmsKeyId"},
         "targetUrl":{"shape":"TargetUrl"},
+        "webhookUrl":{"shape":"String"},
         "privateConnectionName":{"shape":"PrivateConnectionName"}
       }
     },
@@ -3284,7 +3370,11 @@
       "type":"structure",
       "required":["provider"],
       "members":{
-        "provider":{"shape":"Provider"}
+        "provider":{"shape":"Provider"},
+        "targetUrl":{"shape":"TargetUrl"},
+        "organizationName":{"shape":"String"},
+        "clientId":{"shape":"ClientId"},
+        "clientSecret":{"shape":"ClientSecret"}
       }
     },
     "InitiateProviderRegistrationOutput":{
@@ -3335,7 +3425,8 @@
         "githubRepository":{"shape":"GitHubRepositoryResource"},
         "gitlabRepository":{"shape":"GitLabRepositoryResource"},
         "bitbucketRepository":{"shape":"BitbucketRepositoryResource"},
-        "confluenceDocument":{"shape":"ConfluenceDocumentResource"}
+        "confluenceDocument":{"shape":"ConfluenceDocumentResource"},
+        "azureDevOpsRepository":{"shape":"AzureDevOpsRepositoryResource"}
       },
       "union":true
     },
@@ -3357,7 +3448,8 @@
         "githubRepository":{"shape":"GitHubRepositoryMetadata"},
         "gitlabRepository":{"shape":"GitLabRepositoryMetadata"},
         "bitbucketRepository":{"shape":"BitbucketRepositoryMetadata"},
-        "confluenceDocument":{"shape":"ConfluenceDocumentMetadata"}
+        "confluenceDocument":{"shape":"ConfluenceDocumentMetadata"},
+        "azureDevOpsRepository":{"shape":"AzureDevOpsRepositoryMetadata"}
       },
       "union":true
     },
@@ -3402,6 +3494,7 @@
         "providerType":{"shape":"ProviderType"},
         "displayName":{"shape":"String"},
         "targetUrl":{"shape":"TargetUrl"},
+        "webhookUrl":{"shape":"String"},
         "privateConnectionName":{"shape":"PrivateConnectionName"}
       }
     },
@@ -4208,7 +4301,8 @@
         "GITHUB",
         "GITLAB",
         "BITBUCKET",
-        "CONFLUENCE"
+        "CONFLUENCE",
+        "AZURE_DEVOPS"
       ]
     },
     "ProviderInput":{
@@ -4217,7 +4311,9 @@
         "github":{"shape":"GitHubIntegrationInput"},
         "gitlab":{"shape":"GitLabIntegrationInput"},
         "bitbucket":{"shape":"BitbucketIntegrationInput"},
-        "confluence":{"shape":"ConfluenceIntegrationInput"}
+        "confluence":{"shape":"ConfluenceIntegrationInput"},
+        "azureDevOps":{"shape":"AzureDevOpsIntegrationInput"},
+        "bitbucketDataCenter":{"shape":"BitbucketDataCenterIntegrationInput"}
       },
       "union":true
     },
@@ -4227,7 +4323,8 @@
         "github":{"shape":"GitHubResourceCapabilities"},
         "gitlab":{"shape":"GitLabResourceCapabilities"},
         "bitbucket":{"shape":"BitbucketResourceCapabilities"},
-        "confluence":{"shape":"ConfluenceResourceCapabilities"}
+        "confluence":{"shape":"ConfluenceResourceCapabilities"},
+        "azureDevOps":{"shape":"AzureDevOpsResourceCapabilities"}
       },
       "union":true
     },
@@ -5354,6 +5451,26 @@
       "type":"structure",
       "members":{}
     },
+    "UpdateIntegrationInput":{
+      "type":"structure",
+      "required":[
+        "integrationId",
+        "webhookAction"
+      ],
+      "members":{
+        "integrationId":{"shape":"IntegrationId"},
+        "webhookAction":{"shape":"WebhookAction"}
+      }
+    },
+    "UpdateIntegrationOutput":{
+      "type":"structure",
+      "required":["integrationId"],
+      "members":{
+        "integrationId":{"shape":"IntegrationId"},
+        "webhookUrl":{"shape":"String"},
+        "secret":{"shape":"WebhookSecret"}
+      }
+    },
     "UpdatePentestInput":{
       "type":"structure",
       "required":[
@@ -5705,6 +5822,17 @@
     "VpcConfigs":{
       "type":"list",
       "member":{"shape":"VpcConfig"}
+    },
+    "WebhookAction":{
+      "type":"string",
+      "enum":[
+        "CREATE_IF_ABSENT",
+        "ROTATE"
+      ]
+    },
+    "WebhookSecret":{
+      "type":"string",
+      "sensitive":true
     }
   }
 }

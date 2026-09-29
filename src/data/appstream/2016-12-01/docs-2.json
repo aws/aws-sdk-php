@@ -181,7 +181,7 @@
       }
     },
     "AgentSoftwareVersion": {
-      "base": "The image type is the type of AppStream image resource.",
+      "base": "<p>The image type is the type of AppStream image resource.</p>",
       "refs": {
         "CreateImportedImageRequest$AgentSoftwareVersion": "<p>The version of the WorkSpaces Applications agent to use for the imported image. Choose CURRENT_LATEST to use the agent version available at the time of import, or ALWAYS_LATEST to automatically update to the latest agent version when new versions are released.</p>"
       }
@@ -1482,6 +1482,12 @@
         "Image$ImageSharedWithOthers": "<p>Indicates whether the image is shared with another account ID.</p>"
       }
     },
+    "ImageSoftwareMetadata": {
+      "base": "<p>Describes the software metadata for an image, such as the installed NVIDIA GRID driver version.</p>",
+      "refs": {
+        "Image$ImageSoftwareMetadata": "<p>The software metadata associated with the image.</p>"
+      }
+    },
     "ImageState": {
       "base": null,
       "refs": {
@@ -1501,7 +1507,7 @@
       }
     },
     "ImageType": {
-      "base": "The image type is the type of AppStream image resource.",
+      "base": "<p>The image type is the type of AppStream image resource.</p>",
       "refs": {
         "Image$ImageType": "<p>The type of the image. Images created through AMI import have type \"custom\", while WorkSpaces Applications provided images have type \"native\". Custom images support additional instance types including GeneralPurpose, MemoryOptimized, ComputeOptimized, and Accelerated instance families.</p>"
       }
@@ -1753,6 +1759,12 @@
       "refs": {
         "ImageBuilder$NetworkAccessConfiguration": null,
         "Session$NetworkAccessConfiguration": "<p>The network details for the streaming session.</p>"
+      }
+    },
+    "NvidiaGridDriverVersion": {
+      "base": null,
+      "refs": {
+        "ImageSoftwareMetadata$nvidiaGridDriverVersion": "<p>The version of the NVIDIA GRID driver installed on the image. This field is empty if no NVIDIA GRID driver is installed.</p>"
       }
     },
     "OperationNotPermittedException": {
@@ -2747,7 +2759,7 @@
       }
     },
     "WorkspaceImageId": {
-      "base": null,
+      "base": "<p>WorkspaceImageId type with validation pattern</p>",
       "refs": {
         "CreateImportedImageRequest$WorkspaceImageId": "<p>The ID of the Workspaces Image to import.</p>"
       }

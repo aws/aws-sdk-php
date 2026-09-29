@@ -12011,6 +12011,10 @@
         "ZeroSizePreference":{
           "shape":"ZeroSizePreference",
           "locationName":"zeroSizePreference"
+        },
+        "LaunchStatus":{
+          "shape":"CapacityReservationLaunchStatus",
+          "locationName":"launchStatus"
         }
       }
     },
@@ -12376,6 +12380,13 @@
         "RHEL with HA and SQL Server Standard",
         "RHEL with HA and SQL Server Enterprise",
         "Ubuntu Pro"
+      ]
+    },
+    "CapacityReservationLaunchStatus":{
+      "type":"string",
+      "enum":[
+        "launchable",
+        "unlaunchable"
       ]
     },
     "CapacityReservationModificationQuote":{

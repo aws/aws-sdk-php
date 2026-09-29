@@ -1138,6 +1138,12 @@
         "ModifyCustomDBEngineVersionMessage$Status": "<p>The availability status to be assigned to the CEV. Valid values are as follows:</p> <dl> <dt>available</dt> <dd> <p>You can use this CEV to create a new RDS Custom DB instance.</p> </dd> <dt>inactive</dt> <dd> <p>You can create a new RDS Custom instance by restoring a DB snapshot with this CEV. You can't patch or create new instances with this CEV.</p> </dd> </dl> <p>You can change any status to any status. A typical reason to change status is to prevent the accidental use of a CEV, or to make a deprecated CEV eligible for use again. For example, you might change the status of your CEV from <code>available</code> to <code>inactive</code>, and from <code>inactive</code> back to <code>available</code>. To change the availability status of the CEV, it must not currently be in use by an RDS Custom instance, snapshot, or automated backup.</p>"
       }
     },
+    "DBAndClusterArn": {
+      "base": null,
+      "refs": {
+        "TargetResourceConfiguration$SourceArn": "<p>The Amazon Resource Name (ARN) of the DB cluster or DB instance in the blue environment to which this configuration applies.</p>"
+      }
+    },
     "DBCluster": {
       "base": "<p>Contains the details of an Amazon Aurora DB cluster or Multi-AZ DB cluster. </p> <p>For an Amazon Aurora DB cluster, this data type is used as a response element in the operations <code>CreateDBCluster</code>, <code>DeleteDBCluster</code>, <code>DescribeDBClusters</code>, <code>FailoverDBCluster</code>, <code>ModifyDBCluster</code>, <code>PromoteReadReplicaDBCluster</code>, <code>RestoreDBClusterFromS3</code>, <code>RestoreDBClusterFromSnapshot</code>, <code>RestoreDBClusterToPointInTime</code>, <code>StartDBCluster</code>, and <code>StopDBCluster</code>.</p> <p>For a Multi-AZ DB cluster, this data type is used as a response element in the operations <code>CreateDBCluster</code>, <code>DeleteDBCluster</code>, <code>DescribeDBClusters</code>, <code>FailoverDBCluster</code>, <code>ModifyDBCluster</code>, <code>RebootDBCluster</code>, <code>RestoreDBClusterFromSnapshot</code>, and <code>RestoreDBClusterToPointInTime</code>.</p> <p>For more information on Amazon Aurora DB clusters, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/CHAP_AuroraOverview.html\"> What is Amazon Aurora?</a> in the <i>Amazon Aurora User Guide.</i> </p> <p>For more information on Multi-AZ DB clusters, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/multi-az-db-clusters-concepts.html\"> Multi-AZ deployments with two readable standby DB instances</a> in the <i>Amazon RDS User Guide.</i> </p>",
       "refs": {
@@ -3346,7 +3352,8 @@
     "KmsKeyIdOrArn": {
       "base": null,
       "refs": {
-        "CreateCustomDBEngineVersionMessage$KMSKeyId": "<p>The Amazon Web Services KMS key identifier for an encrypted CEV. A symmetric encryption KMS key is required for RDS Custom, but optional for Amazon RDS.</p> <p>If you have an existing symmetric encryption KMS key in your account, you can use it with RDS Custom. No further action is necessary. If you don't already have a symmetric encryption KMS key in your account, follow the instructions in <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/create-keys.html#create-symmetric-cmk\"> Creating a symmetric encryption KMS key</a> in the <i>Amazon Web Services Key Management Service Developer Guide</i>.</p> <p>You can choose the same symmetric encryption key when you create a CEV and a DB instance, or choose different keys.</p>"
+        "CreateCustomDBEngineVersionMessage$KMSKeyId": "<p>The Amazon Web Services KMS key identifier for an encrypted CEV. A symmetric encryption KMS key is required for RDS Custom, but optional for Amazon RDS.</p> <p>If you have an existing symmetric encryption KMS key in your account, you can use it with RDS Custom. No further action is necessary. If you don't already have a symmetric encryption KMS key in your account, follow the instructions in <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/create-keys.html#create-symmetric-cmk\"> Creating a symmetric encryption KMS key</a> in the <i>Amazon Web Services Key Management Service Developer Guide</i>.</p> <p>You can choose the same symmetric encryption key when you create a CEV and a DB instance, or choose different keys.</p>",
+        "TargetResourceConfiguration$TargetKmsKeyId": "<p>The Amazon Web Services KMS key identifier for encryption of the corresponding resource in the green environment.</p> <p>The Amazon Web Services KMS key identifier is the key ARN, key ID, alias ARN, or alias name for the KMS key.</p> <p>Specify this setting in either of the following cases:</p> <ul> <li> <p>You want the green resource to use a different KMS key than the blue resource.</p> </li> <li> <p>The blue resource is unencrypted and you want to encrypt the green resource.</p> </li> </ul> <p>For Aurora, encryption applies at the DB cluster level. Specify a DB cluster ARN in <code>SourceArn</code>. All DB instances in that cluster use the same KMS key.</p> <p>For RDS, encryption applies at the DB instance level. Specify a DB instance ARN in <code>SourceArn</code>. To encrypt read replicas, include a separate entry for each one. Each entry can specify a different KMS key.</p>"
       }
     },
     "LifecycleSupportName": {
@@ -6011,6 +6018,18 @@
       "refs": {
         "DescribeDBProxyTargetsResponse$Targets": "<p>An arbitrary number of <code>DBProxyTarget</code> objects, containing details of the corresponding targets.</p>",
         "RegisterDBProxyTargetsResponse$DBProxyTargets": "<p>One or more <code>DBProxyTarget</code> objects that are created when you register targets with a target group.</p>"
+      }
+    },
+    "TargetResourceConfiguration": {
+      "base": "<p>The configuration for a single resource in the green environment of a blue/green deployment.</p> <p>Use <code>SourceArn</code> to identify a resource in the blue environment. Amazon RDS creates the corresponding resource in the green environment using this configuration.</p> <p>This data type is a request parameter of the <code>CreateBlueGreenDeployment</code> operation.</p>",
+      "refs": {
+        "TargetResourceConfigurationList$member": null
+      }
+    },
+    "TargetResourceConfigurationList": {
+      "base": null,
+      "refs": {
+        "CreateBlueGreenDeploymentRequest$TargetResourceConfigurations": "<p>Specifies resource-level configuration overrides for the green environment.</p> <p>Each entry identifies a resource in the blue environment by its Amazon Resource Name (ARN). It defines the desired configuration for the corresponding resource in the green environment. Any resource that you don't include in this parameter retains the same configuration as its counterpart in the blue environment.</p> <p>Use this parameter when one or more resources in the green environment require a different configuration than what they have in the blue environment.</p> <p>Constraints:</p> <ul> <li> <p>You can't specify the same <code>SourceArn</code> in more than one entry.</p> </li> </ul>"
       }
     },
     "TargetRole": {

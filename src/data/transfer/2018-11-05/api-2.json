@@ -1309,6 +1309,13 @@
         "TLS"
       ]
     },
+    "CommunicationMode":{
+      "type":"string",
+      "enum":[
+        "CLIENT_TALK_FIRST",
+        "SERVER_TALK_FIRST"
+      ]
+    },
     "CompressionEnum":{
       "type":"string",
       "enum":[
@@ -3286,6 +3293,7 @@
         "PassiveIp":{"shape":"PassiveIp"},
         "TlsSessionResumptionMode":{"shape":"TlsSessionResumptionMode"},
         "SetStatOption":{"shape":"SetStatOption"},
+        "SftpPorts":{"shape":"SftpPorts"},
         "As2Transports":{"shape":"As2Transports"},
         "ProxyConfig":{"shape":"ProxyConfig"}
       }
@@ -3600,6 +3608,20 @@
       "box":true,
       "max":65535,
       "min":1
+    },
+    "SftpPortWithOptions":{
+      "type":"structure",
+      "required":["SftpPort"],
+      "members":{
+        "SftpPort":{"shape":"SftpPort"},
+        "CommunicationMode":{"shape":"CommunicationMode"}
+      }
+    },
+    "SftpPorts":{
+      "type":"list",
+      "member":{"shape":"SftpPortWithOptions"},
+      "max":3,
+      "min":0
     },
     "SigningAlg":{
       "type":"string",

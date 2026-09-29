@@ -197,6 +197,14 @@
       "base": "<p>Contains details about the accepted inbound connection.</p>",
       "refs": {}
     },
+    "AcceptedWarningsList": {
+      "base": null,
+      "refs": {
+        "ChangeProgressStatusDetails$AcceptedWarnings": "<p>The list of advisory warning codes that were accepted for the configuration change.</p>",
+        "DryRunProgressStatus$AcceptedWarnings": "<p>The list of advisory warning codes that were accepted for the configuration change.</p>",
+        "UpdateDomainConfigRequest$AcceptedWarnings": "<p>A list of advisory warning codes to accept for this configuration change. By default, any advisory warning blocks the change. Include the code of each warning you want to accept so the change can proceed. You can find warning codes in the<code>ValidationFailures</code> list returned by <code>DescribeDomainChangeProgress</code>and <code>DescribeDryRunProgress</code>. Critical validation failures cannot be accepted and always block the change. If you omit this parameter or pass an empty list, all warnings block the change. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains-configuration-changes#validation-check\">Validating a domain update</a>.</p>"
+      }
+    },
     "AccessDeniedException": {
       "base": "<p>An error occurred because you don't have permissions to access the resource.</p>",
       "refs": {}
@@ -3732,6 +3740,7 @@
     "String": {
       "base": null,
       "refs": {
+        "AcceptedWarningsList$member": null,
         "AddDataSourceResponse$Message": "<p>A message associated with creation of the data source.</p>",
         "AddDirectQueryDataSourceResponse$DataSourceArn": "<p> The unique, system-generated identifier that represents the data source. </p>",
         "AdvancedOptions$key": null,
@@ -4134,10 +4143,17 @@
         "ValidationFailures$member": null
       }
     },
+    "ValidationFailureSeverity": {
+      "base": null,
+      "refs": {
+        "ValidationFailure$Severity": "<p>The severity of the validation failure.</p>"
+      }
+    },
     "ValidationFailures": {
       "base": null,
       "refs": {
-        "DryRunProgressStatus$ValidationFailures": "<p>Any validation failures that occurred as a result of the dry run.</p>"
+        "ChangeProgressStatusDetails$ValidationFailures": "<p>The validation failures that occurred as a result of the configuration change.</p>",
+        "DryRunProgressStatus$ValidationFailures": "<p>The validation failures that occurred as a result of the dry run.</p>"
       }
     },
     "ValueStringList": {

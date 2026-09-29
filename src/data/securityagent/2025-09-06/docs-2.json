@@ -88,6 +88,7 @@
     "UpdateCodeReview": "<p>Updates an existing code review configuration.</p>",
     "UpdateFinding": "<p>Updates the status or risk level of a security finding.</p>",
     "UpdateIntegratedResources": "<p>Updates the integrated resources for an agent space, including their capabilities.</p>",
+    "UpdateIntegration": "<p>Creates an integration's webhook, or rotates the HMAC signing secret of an existing one. The secret is returned only once, in this response, and cannot be retrieved again.</p>",
     "UpdatePentest": "<p>Updates an existing pentest configuration.</p>",
     "UpdatePrivateConnectionCertificate": "<p>Updates the certificate associated with a private connection. Certificates can be added or replaced but not removed.</p>",
     "UpdateSecurityRequirementPack": "<p>Updates a security requirement pack. For customer managed packs, both metadata and status can be updated. For AWS managed packs, only status can be updated.</p>",
@@ -120,6 +121,7 @@
     "AccessType": {
       "base": "<p>Defines the visibility level of provider resources. PRIVATE indicates restricted access, while PUBLIC indicates open access.</p>",
       "refs": {
+        "AzureDevOpsRepositoryMetadata$accessType": null,
         "BitbucketRepositoryMetadata$accessType": null,
         "GitHubRepositoryMetadata$accessType": "<p>The access type of the GitHub repository. Valid values are PRIVATE and PUBLIC.</p>",
         "GitLabRepositoryMetadata$accessType": null
@@ -338,6 +340,8 @@
     "AuthCode": {
       "base": "<p>Authorization code from OAuth flow.</p>",
       "refs": {
+        "AzureDevOpsIntegrationInput$code": "<p>The OAuth 2.0 authorization code returned to your redirect URL after the connection is authorized.</p>",
+        "BitbucketDataCenterIntegrationInput$code": "<p>The OAuth 2.0 authorization code returned to your redirect URL after the connection is authorized.</p>",
         "BitbucketIntegrationInput$code": "<p>The OAuth 2.0 authorization code returned from the consent redirect.</p>",
         "ConfluenceIntegrationInput$code": "<p>The OAuth 2.0 authorization code returned from the consent redirect.</p>",
         "GitHubIntegrationInput$code": "<p>The OAuth authorization code received from GitHub.</p>"
@@ -353,6 +357,37 @@
       "base": "<p>Type of authentication provider.</p>",
       "refs": {
         "Authentication$providerType": "<p>The type of authentication provider. Valid values include SECRETS_MANAGER, AWS_LAMBDA, AWS_IAM_ROLE, and AWS_INTERNAL.</p>"
+      }
+    },
+    "AzureDevOpsIntegrationInput": {
+      "base": "<p>Connection details for an Azure DevOps integration.</p>",
+      "refs": {
+        "ProviderInput$azureDevOps": "<p>The Azure DevOps-specific input for creating an integration.</p>"
+      }
+    },
+    "AzureDevOpsOrganization": {
+      "base": "<p>An Azure DevOps organization name.</p>",
+      "refs": {
+        "AzureDevOpsRepositoryMetadata$organization": "<p>The name of the Azure DevOps organization that owns the repository.</p>",
+        "AzureDevOpsRepositoryResource$organization": "<p>The name of the Azure DevOps organization that owns the repository.</p>"
+      }
+    },
+    "AzureDevOpsRepositoryMetadata": {
+      "base": "<p>Metadata for an integrated Azure DevOps repository.</p>",
+      "refs": {
+        "IntegratedResourceMetadata$azureDevOpsRepository": "<p>The Azure DevOps repository metadata.</p>"
+      }
+    },
+    "AzureDevOpsRepositoryResource": {
+      "base": "<p>An Azure DevOps repository integrated as a resource.</p>",
+      "refs": {
+        "IntegratedResource$azureDevOpsRepository": "<p>The Azure DevOps repository resource information.</p>"
+      }
+    },
+    "AzureDevOpsResourceCapabilities": {
+      "base": "<p>Capabilities for an integrated Azure DevOps repository.</p>",
+      "refs": {
+        "ProviderResourceCapabilities$azureDevOps": "<p>The Azure DevOps-specific resource capabilities.</p>"
       }
     },
     "BatchCreateSecurityRequirementResult": {
@@ -562,6 +597,12 @@
       "base": null,
       "refs": {}
     },
+    "BitbucketDataCenterIntegrationInput": {
+      "base": "<p>Connection details for a self-managed Bitbucket Data Center integration.</p>",
+      "refs": {
+        "ProviderInput$bitbucketDataCenter": "<p>The Bitbucket Data Center-specific input for creating an integration.</p>"
+      }
+    },
     "BitbucketInstallationId": {
       "base": "<p>An Atlassian installation identifier for a Bitbucket integration.</p>",
       "refs": {
@@ -610,6 +651,8 @@
       "base": null,
       "refs": {
         "Actor$enableEmailMfa": "<p>Whether email-based MFA is enabled for this actor.</p>",
+        "AzureDevOpsResourceCapabilities$leaveComments": "<p>Whether to post code review comments on pull requests.</p>",
+        "AzureDevOpsResourceCapabilities$remediateCode": "<p>Whether to create pull requests with automated fixes.</p>",
         "BitbucketResourceCapabilities$leaveComments": "<p>Whether to post code review comments on pull requests.</p>",
         "BitbucketResourceCapabilities$remediateCode": "<p>Whether to create pull requests with automated fixes.</p>",
         "Category$isPrimary": "<p>Indicates whether this is the primary category for the task.</p>",
@@ -676,6 +719,18 @@
       "refs": {
         "Pentest$cleanUpStrategy": "<p>Strategy for cleaning up resources after pentest job completion.</p>",
         "PentestJob$cleanUpStrategy": "<p>Strategy for cleaning up resources after pentest job completion.</p>"
+      }
+    },
+    "ClientId": {
+      "base": "<p>A client ID for an OAuth application registered on a self-managed provider instance.</p>",
+      "refs": {
+        "InitiateProviderRegistrationInput$clientId": "<p>The client ID of the OAuth application registered on your self-managed provider instance.</p>"
+      }
+    },
+    "ClientSecret": {
+      "base": "<p>A client secret for an OAuth application registered on a self-managed provider instance.</p>",
+      "refs": {
+        "InitiateProviderRegistrationInput$clientSecret": "<p>The client secret of the OAuth application registered on your self-managed provider instance.</p>"
       }
     },
     "CloudWatchLog": {
@@ -1014,6 +1069,8 @@
     "CsrfState": {
       "base": "<p>CSRF state token for OAuth security.</p>",
       "refs": {
+        "AzureDevOpsIntegrationInput$state": "<p>The CSRF state value returned by <code>InitiateProviderRegistration</code> and echoed back on the authorization redirect.</p>",
+        "BitbucketDataCenterIntegrationInput$state": "<p>The CSRF state value returned by <code>InitiateProviderRegistration</code> and echoed back on the authorization redirect.</p>",
         "BitbucketIntegrationInput$state": "<p>The CSRF state token echoed back from the OAuth redirect.</p>",
         "ConfluenceIntegrationInput$state": "<p>The CSRF state token echoed back from the OAuth redirect.</p>",
         "GitHubIntegrationInput$state": "<p>The CSRF state token for validating the OAuth flow.</p>",
@@ -1555,7 +1612,9 @@
         "GetIntegrationOutput$integrationId": "<p>The unique identifier of the integration.</p>",
         "IntegratedResourceSummary$integrationId": "<p>The unique identifier of the integration that provides access to the resource.</p>",
         "ListIntegratedResourcesInput$integrationId": "<p>The unique identifier of the integration to filter by.</p>",
-        "UpdateIntegratedResourcesInput$integrationId": "<p>The unique identifier of the integration.</p>"
+        "UpdateIntegratedResourcesInput$integrationId": "<p>The unique identifier of the integration.</p>",
+        "UpdateIntegrationInput$integrationId": "<p>The ID of the integration whose webhook you want to create or rotate.</p>",
+        "UpdateIntegrationOutput$integrationId": "<p>The ID of the integration.</p>"
       }
     },
     "IntegrationSummary": {
@@ -2200,9 +2259,9 @@
     "Provider": {
       "base": "<p>Third-party provider type.</p>",
       "refs": {
-        "CreateIntegrationInput$provider": "<p>The integration provider. Currently, only GITHUB is supported.</p>",
+        "CreateIntegrationInput$provider": "<p>The integration provider.</p>",
         "GetIntegrationOutput$provider": "<p>The integration provider.</p>",
-        "InitiateProviderRegistrationInput$provider": "<p>The provider to initiate registration with. Currently, only GITHUB is supported.</p>",
+        "InitiateProviderRegistrationInput$provider": "<p>The provider to initiate registration with.</p>",
         "IntegrationFilter$provider": "<p>Filter integrations by provider.</p>",
         "IntegrationSummary$provider": "<p>The integration provider.</p>"
       }
@@ -2223,6 +2282,7 @@
     "ProviderResourceId": {
       "base": "<p>Provider Id of the resource e.g. GitHub repository id, etc.</p>",
       "refs": {
+        "AzureDevOpsRepositoryMetadata$providerResourceId": null,
         "BitbucketRepositoryMetadata$providerResourceId": null,
         "ConfluenceDocumentMetadata$providerResourceId": null,
         "GitHubRepositoryMetadata$providerResourceId": "<p>The provider-specific resource identifier for the GitHub repository.</p>",
@@ -2232,6 +2292,8 @@
     "ProviderResourceName": {
       "base": "<p>Name of the resource e.g. repository name, etc.</p>",
       "refs": {
+        "AzureDevOpsRepositoryMetadata$name": null,
+        "AzureDevOpsRepositoryResource$name": null,
         "BitbucketRepositoryMetadata$name": null,
         "BitbucketRepositoryResource$name": null,
         "ConfluenceDocumentMetadata$name": null,
@@ -2802,6 +2864,10 @@
         "ArtifactMetadataItem$fileName": "<p>The file name of the artifact.</p>",
         "ArtifactSummary$fileName": "<p>The file name of the artifact.</p>",
         "Authentication$value": "<p>The authentication value, such as a secret ARN, Lambda function ARN, or IAM role ARN, depending on the provider type.</p>",
+        "AzureDevOpsIntegrationInput$organizationName": "<p>The name of the Azure DevOps organization to connect, for example <code>my-org</code>.</p>",
+        "AzureDevOpsRepositoryMetadata$project": "<p>The name of the Azure DevOps project that contains the repository.</p>",
+        "AzureDevOpsRepositoryMetadata$projectId": "<p>The GUID of the Azure DevOps project that contains the repository.</p>",
+        "AzureDevOpsRepositoryResource$project": "<p>The name of the Azure DevOps project that contains the repository.</p>",
         "BatchCreateSecurityRequirementResult$description": "<p>A description of the security requirement.</p>",
         "BatchCreateSecurityRequirementResult$domain": "<p>The security domain the requirement belongs to.</p>",
         "BatchCreateSecurityRequirementResult$evaluation": "<p>The evaluation criteria used to assess compliance with this requirement.</p>",
@@ -2976,6 +3042,7 @@
         "GetArtifactOutput$fileName": "<p>The file name of the artifact.</p>",
         "GetIntegrationOutput$installationId": "<p>The installation identifier from the integration provider.</p>",
         "GetIntegrationOutput$displayName": "<p>The display name of the integration.</p>",
+        "GetIntegrationOutput$webhookUrl": "<p>The payload URL of the integration's webhook, once it has been created. The signing secret is never returned on a read.</p>",
         "GetSecurityRequirementPackOutput$description": "<p>A description of the security requirement pack.</p>",
         "GetSecurityRequirementPackOutput$vendorName": "<p>The vendor name for AWS managed packs, such as ISO or NIST.</p>",
         "GitHubIntegrationInput$organizationName": "<p>The name of the GitHub organization to integrate with.</p>",
@@ -2983,6 +3050,7 @@
         "GitLabIntegrationInput$groupId": "<p>The identifier of the GitLab group. Required when tokenType is group and ignored for personal tokens.</p>",
         "HttpVerification$token": "<p>The verification token to serve at the specified route path.</p>",
         "HttpVerification$routePath": "<p>The HTTP route path where the verification token must be served.</p>",
+        "InitiateProviderRegistrationInput$organizationName": "<p>The name of the organization to connect.</p>",
         "IntegratedDocument$integrationId": "<p>The identifier of the integration that provides access to the document.</p>",
         "IntegratedDocument$resourceId": "<p>The provider-specific resource identifier for the document.</p>",
         "IntegratedRepository$integrationId": "<p>The unique identifier of the integration that provides access to the repository.</p>",
@@ -2991,6 +3059,7 @@
         "IntegrationSummary$integrationId": "<p>The unique identifier of the integration.</p>",
         "IntegrationSummary$installationId": "<p>The installation identifier from the integration provider.</p>",
         "IntegrationSummary$displayName": "<p>The display name of the integration.</p>",
+        "IntegrationSummary$webhookUrl": "<p>The payload URL of the integration's webhook, once it has been created. The signing secret is never returned on a read.</p>",
         "InternalServerException$message": "<p>Error description.</p>",
         "ListActorMessagesInput$agentSpaceId": "<p>The unique identifier of the agent space that owns the pentest.</p>",
         "ListActorMessagesInput$pentestId": "<p>The unique identifier of the pentest that the actor belongs to.</p>",
@@ -3172,6 +3241,7 @@
         "UpdateFindingInput$attackScript": "<p>The updated attack script for the finding.</p>",
         "UpdateFindingInput$reasoning": "<p>The updated reasoning for the finding.</p>",
         "UpdateFindingInput$customerNote": "<p>A customer-provided note on the finding.</p>",
+        "UpdateIntegrationOutput$webhookUrl": "<p>The payload URL to configure on your provider instance. Returned when a webhook is created; unchanged by a rotate.</p>",
         "UpdatePentestInput$pentestId": "<p>The unique identifier of the pentest to update.</p>",
         "UpdatePentestInput$agentSpaceId": "<p>The unique identifier of the agent space that contains the pentest.</p>",
         "UpdatePentestInput$title": "<p>The updated title of the pentest.</p>",
@@ -3480,9 +3550,11 @@
     "TargetUrl": {
       "base": "<p>The HTTPS URL of a customer self-hosted instance.</p>",
       "refs": {
+        "BitbucketDataCenterIntegrationInput$targetUrl": "<p>The HTTPS URL of your Bitbucket Data Center instance, for example <code>https://bitbucket.example.com</code>.</p>",
         "GetIntegrationOutput$targetUrl": "<p>The HTTPS URL of the customer self-hosted instance, such as a GitHub Enterprise Server or self-managed GitLab instance. This value is absent for SaaS integrations.</p>",
         "GitHubIntegrationInput$targetUrl": "<p>The HTTPS URL of a self-hosted GitHub Enterprise Server instance. Omit this value for GitHub.com.</p>",
         "GitLabIntegrationInput$targetUrl": "<p>The HTTPS URL of a self-managed GitLab instance. Omit this value for GitLab SaaS (gitlab.com).</p>",
+        "InitiateProviderRegistrationInput$targetUrl": "<p>The HTTPS URL of a self-managed provider instance. Omit for SaaS providers.</p>",
         "IntegrationSummary$targetUrl": "<p>The HTTPS URL of the customer self-hosted instance, such as a GitHub Enterprise Server or self-managed GitLab instance. This value is absent for SaaS integrations.</p>"
       }
     },
@@ -3783,6 +3855,14 @@
       "base": null,
       "refs": {}
     },
+    "UpdateIntegrationInput": {
+      "base": "<p>Input for creating or rotating an integration's webhook.</p>",
+      "refs": {}
+    },
+    "UpdateIntegrationOutput": {
+      "base": "<p>Output for the UpdateIntegration operation.</p>",
+      "refs": {}
+    },
     "UpdatePentestInput": {
       "base": "<p>Input for updating an existing pentest.</p>",
       "refs": {}
@@ -3954,6 +4034,18 @@
       "base": null,
       "refs": {
         "AWSResources$vpcs": "<p>The VPC configurations associated with the agent space.</p>"
+      }
+    },
+    "WebhookAction": {
+      "base": "<p>The action to perform on an integration's webhook.</p>",
+      "refs": {
+        "UpdateIntegrationInput$webhookAction": "<p>The action to perform on the integration's webhook.</p>"
+      }
+    },
+    "WebhookSecret": {
+      "base": "<p>An HMAC signing secret for a provider webhook.</p>",
+      "refs": {
+        "UpdateIntegrationOutput$secret": "<p>The HMAC signing secret for the webhook. Returned only once, in this response; it is never returned again.</p>"
       }
     }
   }

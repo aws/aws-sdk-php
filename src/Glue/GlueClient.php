@@ -1209,6 +1209,7 @@ use Aws\AwsClient;
  *         FederatedTable?: array{Identifier?: string, DatabaseIdentifier?: string, ConnectionName?: string, ConnectionType?: string, ...},
  *         ViewDefinition?: array{
  *             IsProtected?: bool,
+ *             IsManaged?: bool,
  *             Definer?: string,
  *             Representations?: list<array>,
  *             ViewVersionId?: int,
@@ -1269,6 +1270,7 @@ use Aws\AwsClient;
  *         FederatedTable?: array{Identifier?: string, DatabaseIdentifier?: string, ConnectionName?: string, ConnectionType?: string, ...},
  *         ViewDefinition?: array{
  *             IsProtected?: bool,
+ *             IsManaged?: bool,
  *             Definer?: string,
  *             Representations?: list<array>,
  *             ViewVersionId?: int,
@@ -4451,6 +4453,7 @@ use Aws\AwsClient;
  *         FederatedTable?: array{Identifier?: string, DatabaseIdentifier?: string, ConnectionName?: string, ConnectionType?: string, ...},
  *         ViewDefinition?: array{
  *             IsProtected?: bool,
+ *             IsManaged?: bool,
  *             Definer?: string,
  *             Representations?: list<array>,
  *             ViewVersionId?: int,
@@ -4511,6 +4514,7 @@ use Aws\AwsClient;
  *         FederatedTable?: array{Identifier?: string, DatabaseIdentifier?: string, ConnectionName?: string, ConnectionType?: string, ...},
  *         ViewDefinition?: array{
  *             IsProtected?: bool,
+ *             IsManaged?: bool,
  *             Definer?: string,
  *             Representations?: list<array>,
  *             ViewVersionId?: int,

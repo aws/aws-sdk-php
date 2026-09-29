@@ -113,7 +113,7 @@
     "UntagResource": "<p>Removes a tag from a resource using the resource's ARN and tag to remove.</p>",
     "UpdateBudget": "<p>Updates a budget that sets spending thresholds for rendering activity.</p>",
     "UpdateFarm": "<p>Updates a farm.</p>",
-    "UpdateFleet": "<p>Updates a fleet.</p>",
+    "UpdateFleet": "<p>Updates a fleet.</p> <note> <p>Workers that are running when you call <code>UpdateFleet</code> keep the instance type and capabilities that they launched with until they scale in. Deadline Cloud can schedule jobs that you submit after the update on these existing workers, so the new configuration might not take effect immediately. To make sure that all workers use the new configuration, set <code>maxWorkerCount</code> to 0, use the <code>ListWorkers</code> operation to confirm that the fleet has no workers, and then restore <code>maxWorkerCount</code>.</p> </note>",
     "UpdateJob": "<p>Updates a job. </p> <p>When you change the status of the job to <code>ARCHIVED</code>, the job can't be scheduled or archived.</p> <important> <p>An archived jobs and its steps and tasks are deleted after 120 days. The job can't be recovered.</p> </important>",
     "UpdateLimit": "<p>Updates the properties of the specified limit. </p>",
     "UpdateMonitor": "<p>Modifies the settings for a Deadline Cloud monitor. You can modify one or all of the settings when you call <code>UpdateMonitor</code>.</p>",
@@ -816,6 +816,19 @@
       "base": null,
       "refs": {}
     },
+    "BooleanString": {
+      "base": null,
+      "refs": {
+        "BooleanStringList$member": null,
+        "JobParameter$bool": "<p>A boolean value represented as a string. Accepted values are <code>true</code>, <code>false</code>, <code>yes</code>, <code>no</code>, <code>on</code>, <code>off</code>, <code>1</code>, and <code>0</code>, case-insensitive.</p>"
+      }
+    },
+    "BooleanStringList": {
+      "base": null,
+      "refs": {
+        "JobParameter$boolList": "<p>A list of boolean values, each represented as a string.</p>"
+      }
+    },
     "BoundedString": {
       "base": null,
       "refs": {
@@ -1238,7 +1251,7 @@
       }
     },
     "DateTimeFilterExpression": {
-      "base": "<p>The time stamp in date-time format.</p>",
+      "base": "<p>The timestamp in date-time format.</p>",
       "refs": {
         "SearchFilterExpression$dateTimeFilter": "<p>Filters based on date and time.</p>"
       }
@@ -1938,6 +1951,24 @@
         "ListFleetMembersResponse$members": "<p>The members on the list.</p>"
       }
     },
+    "FleetSoftwareAddOn": {
+      "base": "<p>Software that the service installs on worker hosts in a service-managed fleet.</p>",
+      "refs": {
+        "FleetSoftwareAddOns$member": null
+      }
+    },
+    "FleetSoftwareAddOnName": {
+      "base": null,
+      "refs": {
+        "FleetSoftwareAddOn$name": "<p>The name of the software add-on. The supported value is <code>docker</code>.</p>"
+      }
+    },
+    "FleetSoftwareAddOns": {
+      "base": null,
+      "refs": {
+        "ServiceManagedEc2InstanceCapabilities$softwareAddOns": "<p>The software add-ons that the service installs on worker hosts when they launch.</p>"
+      }
+    },
     "FleetStatus": {
       "base": null,
       "refs": {
@@ -1970,8 +2001,15 @@
     "FloatString": {
       "base": null,
       "refs": {
+        "FloatStringList$member": null,
         "JobParameter$float": "<p>A double precision IEEE-754 floating point number represented as a string.</p>",
         "TaskParameterValue$float": "<p>A double precision IEEE-754 floating point number represented as a string.</p>"
+      }
+    },
+    "FloatStringList": {
+      "base": null,
+      "refs": {
+        "JobParameter$floatList": "<p>A list of double precision IEEE-754 floating point numbers, each represented as a string.</p>"
       }
     },
     "GetBudgetRequest": {
@@ -2290,8 +2328,22 @@
     "IntString": {
       "base": null,
       "refs": {
+        "IntStringList$member": null,
         "JobParameter$int": "<p>A signed integer represented as a string.</p>",
+        "NestedIntStringList$member": null,
         "TaskParameterValue$int": "<p>A signed integer represented as a string.</p>"
+      }
+    },
+    "IntStringList": {
+      "base": null,
+      "refs": {
+        "JobParameter$intList": "<p>A list of signed integers, each represented as a string.</p>"
+      }
+    },
+    "IntStringListList": {
+      "base": null,
+      "refs": {
+        "JobParameter$intListList": "<p>A list of lists of signed integers, each represented as a string.</p>"
       }
     },
     "Integer": {
@@ -3265,6 +3317,12 @@
         "PersistentVolumeConfiguration$mountPath": "<p>The file system path where the persistent volume is mounted on the worker instance.</p>"
       }
     },
+    "NestedIntStringList": {
+      "base": null,
+      "refs": {
+        "IntStringListList$member": null
+      }
+    },
     "NextItemOffset": {
       "base": null,
       "refs": {
@@ -3339,6 +3397,20 @@
         "ListWorkersResponse$nextToken": "<p>If Deadline Cloud returns <code>nextToken</code>, then there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page, call the operation again using the returned token. Keep all other arguments unchanged. If no results remain, then <code>nextToken</code> is set to <code>null</code>. Each pagination token expires after 24 hours. If you provide a token that isn't valid, then you receive an HTTP 400 <code>ValidationException</code> error.</p>"
       }
     },
+    "OpenjdExtensionName": {
+      "base": null,
+      "refs": {
+        "OpenjdExtensionNameList$member": null
+      }
+    },
+    "OpenjdExtensionNameList": {
+      "base": null,
+      "refs": {
+        "EnvironmentDetailsEntity$extensions": "<p>The Open Job Description extensions that the environment uses. This value is used by the worker agent.</p>",
+        "JobDetailsEntity$extensions": "<p>The Open Job Description extensions that the job template uses. This value is used by the worker agent.</p>",
+        "StepDetailsEntity$extensions": "<p>The Open Job Description extensions that the step uses. This value is used by the worker agent.</p>"
+      }
+    },
     "OutputRelativeDirectoriesList": {
       "base": null,
       "refs": {
@@ -3375,7 +3447,14 @@
       "base": null,
       "refs": {
         "JobParameter$string": "<p>A UTF-8 string.</p>",
+        "ParameterStringList$member": null,
         "TaskParameterValue$string": "<p>A UTF-8 string.</p>"
+      }
+    },
+    "ParameterStringList": {
+      "base": null,
+      "refs": {
+        "JobParameter$stringList": "<p>A list of UTF-8 strings.</p>"
       }
     },
     "ParameterValue": {
@@ -3408,7 +3487,14 @@
       "refs": {
         "FileSystemLocation$path": "<p>The file path.</p>",
         "JobParameter$path": "<p>A file system path represented as a string.</p>",
+        "PathStringList$member": null,
         "TaskParameterValue$path": "<p>A file system path represented as a string.</p>"
+      }
+    },
+    "PathStringList": {
+      "base": null,
+      "refs": {
+        "JobParameter$pathList": "<p>A list of file system paths, each represented as a string.</p>"
       }
     },
     "Period": {
@@ -3721,6 +3807,12 @@
       "base": null,
       "refs": {
         "StepParameterChunks$rangeConstraint": "<p>Specifies whether the chunked ranges must be contiguous or can have gaps between them.</p>"
+      }
+    },
+    "RangeExprString": {
+      "base": null,
+      "refs": {
+        "JobParameter$rangeExpr": "<p>An Open Job Description range expression represented as a string, such as <code>1-10:2</code>.</p>"
       }
     },
     "Region": {
@@ -4063,6 +4155,13 @@
         "GetLicenseEndpointResponseSecurityGroupIdsList$member": null
       }
     },
+    "SerializedSymbolTable": {
+      "base": null,
+      "refs": {
+        "EnvironmentDetailsEntity$resolvedSymbolTable": "<p>The resolved symbol table for the environment's expressions, serialized as JSON. This value is used by the worker agent.</p>",
+        "StepDetailsEntity$resolvedSymbolTable": "<p>The resolved symbol table for the step's expressions, serialized as JSON. This value is used by the worker agent.</p>"
+      }
+    },
     "ServiceManagedEc2AutoScalingConfiguration": {
       "base": "<p>The auto scaling configuration settings for a service managed EC2 fleet.</p>",
       "refs": {
@@ -4218,6 +4317,24 @@
         "SessionSummary$targetLifecycleStatus": "<p>The target life cycle status for the session.</p>",
         "UpdateSessionRequest$targetLifecycleStatus": "<p>The life cycle status to update in the session.</p>",
         "WorkerSessionSummary$targetLifecycleStatus": "<p>The life cycle status </p>"
+      }
+    },
+    "SessionMetadata": {
+      "base": null,
+      "refs": {
+        "AssignedSession$metadata": "<p>Key-value hints that the service provides to guide how the session runs. This value is used by the worker agent.</p>"
+      }
+    },
+    "SessionMetadataKey": {
+      "base": null,
+      "refs": {
+        "SessionMetadata$key": null
+      }
+    },
+    "SessionMetadataValue": {
+      "base": null,
+      "refs": {
+        "SessionMetadata$value": null
       }
     },
     "SessionSummaries": {
@@ -4980,7 +5097,7 @@
     "Timezone": {
       "base": null,
       "refs": {
-        "StartSessionsStatisticsAggregationRequest$timezone": "<p>The timezone to use for the statistics. Use UTC notation such as \"UTC+8.\"</p>"
+        "StartSessionsStatisticsAggregationRequest$timezone": "<p>The time zone to use for the statistics. Use UTC notation such as \"UTC+8.\"</p>"
       }
     },
     "TotalResults": {

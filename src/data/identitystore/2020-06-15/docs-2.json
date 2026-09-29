@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<p>The Identity Store service used by IAM Identity Center provides a single place to retrieve all of your identities (users and groups). For more information, see the <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/what-is.html\"> IAM Identity Center User Guide</a>.</p> <p>This reference guide describes the identity store operations that you can call programmatically and includes detailed information about data types and errors.</p> <note> <p> IAM Identity Center uses the <code>sso</code>, <code>sso-directory</code>, and <code>identitystore</code> API namespaces. The <code>sso-directory</code> and <code>identitystore</code> namespaces authorize access to data in the Identity Store. Make sure your policies with IAM actions from these two namespaces are consistent to avoid conflicting authorization to the same data.</p> </note>",
+  "service": "<p><note> <p> IAM Identity Center uses the <code>sso</code>, <code>sso-directory</code>, and <code>identitystore</code> API namespaces. The <code>sso-directory</code> and <code>identitystore</code> namespaces authorize access to data in the Identity Store. Make sure your policies with IAM actions from these two namespaces are consistent to avoid conflicting authorization to the same data.</p> </note> <p>The Identity Store service used by IAM Identity Center provides a single place to retrieve all of your identities (users and groups). You can use the identity store API operations in this guide to manage your identity data programmatically. The scope of these APIs allows you to create, read, update, delete, and list users, groups, and memberships.</p> <p>This guide also describes identity store operations that you can call and includes detailed information about data types and errors.</p> <important> <p>If you use an external identity provider or Active Directory as your identity source, we recommend that you use the <code>Create</code>, <code>Update</code>, and <code>Delete</code> APIs with caution. Because IAM Identity Center doesn't support outbound synchronization, your identity source won't automatically update with the changes that you make to users or groups using these APIs.</p> </important> <p>Amazon Web Services provides SDKs that consist of libraries and sample code for various programming languages and platforms (Java, Ruby, .Net, iOS, Android, and more). The SDKs provide a convenient way to programmatically access the identity store and other Amazon Web Services services. For more information about the Amazon Web Services SDKs, including how to download and install them, see <a href=\"http://aws.amazon.com/tools/\">Amazon Web Services Builder Center Toolbox</a>.</p></p>",
   "operations": {
     "CreateGroup": "<p>Creates a group within the specified identity store.</p>",
     "CreateGroupMembership": "<p>Creates a relationship between a member and a group. The following identifiers must be specified: <code>GroupId</code>, <code>IdentityStoreId</code>, and <code>MemberId</code>.</p>",
@@ -10,6 +10,7 @@
     "DeleteUser": "<p>Deletes a user within an identity store given <code>UserId</code>.</p>",
     "DescribeGroup": "<p>Retrieves the group metadata and attributes from <code>GroupId</code> in an identity store.</p> <note> <p>If you have access to a member account, you can use this API operation from the member account. For more information, see <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/manage-your-accounts.html#limiting-access-from-member-accounts\">Limiting access to the identity store from member accounts</a> in the <i> IAM Identity Center User Guide</i>.</p> </note>",
     "DescribeGroupMembership": "<p>Retrieves membership metadata and attributes from <code>MembershipId</code> in an identity store.</p> <note> <p>If you have access to a member account, you can use this API operation from the member account. For more information, see <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/manage-your-accounts.html#limiting-access-from-member-accounts\">Limiting access to the identity store from member accounts</a> in the <i> IAM Identity Center User Guide</i>.</p> </note>",
+    "DescribeIdentityStore": "<p>Retrieves details about the specified identity store, including its Amazon Resource Name (ARN) and network configuration.</p>",
     "DescribeUser": "<p>Retrieves the user metadata and attributes from the <code>UserId</code> in an identity store.</p> <note> <p>If you have access to a member account, you can use this API operation from the member account. For more information, see <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/manage-your-accounts.html#limiting-access-from-member-accounts\">Limiting access to the identity store from member accounts</a> in the <i> IAM Identity Center User Guide</i>.</p> </note>",
     "GetGroupId": "<p>Retrieves <code>GroupId</code> in an identity store.</p> <note> <p>If you have access to a member account, you can use this API operation from the member account. For more information, see <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/manage-your-accounts.html#limiting-access-from-member-accounts\">Limiting access to the identity store from member accounts</a> in the <i> IAM Identity Center User Guide</i>.</p> </note>",
     "GetGroupMembershipId": "<p>Retrieves the <code>MembershipId</code> in an identity store.</p> <note> <p>If you have access to a member account, you can use this API operation from the member account. For more information, see <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/manage-your-accounts.html#limiting-access-from-member-accounts\">Limiting access to the identity store from member accounts</a> in the <i> IAM Identity Center User Guide</i>.</p> </note>",
@@ -18,8 +19,10 @@
     "ListGroupMemberships": "<p>For the specified group in the specified identity store, returns the list of all <code> GroupMembership</code> objects and returns results in paginated form.</p> <note> <p>If you have access to a member account, you can use this API operation from the member account. For more information, see <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/manage-your-accounts.html#limiting-access-from-member-accounts\">Limiting access to the identity store from member accounts</a> in the <i> IAM Identity Center User Guide</i>.</p> </note>",
     "ListGroupMembershipsForMember": "<p>For the specified member in the specified identity store, returns the list of all <code> GroupMembership</code> objects and returns results in paginated form.</p> <note> <p>If you have access to a member account, you can use this API operation from the member account. For more information, see <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/manage-your-accounts.html#limiting-access-from-member-accounts\">Limiting access to the identity store from member accounts</a> in the <i> IAM Identity Center User Guide</i>.</p> </note>",
     "ListGroups": "<p>Lists all groups in the identity store. Returns a paginated list of complete <code>Group</code> objects. Filtering for a <code>Group</code> by the <code>DisplayName</code> attribute is deprecated. Instead, use the <code>GetGroupId</code> API action.</p> <note> <p>If you have access to a member account, you can use this API operation from the member account. For more information, see <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/manage-your-accounts.html#limiting-access-from-member-accounts\">Limiting access to the identity store from member accounts</a> in the <i> IAM Identity Center User Guide</i>.</p> </note>",
+    "ListIdentityStores": "<p>Lists the identity stores that you have access to. This operation returns only the identity store ID and Amazon Resource Name (ARN) of each identity store. To obtain additional information about an identity store, call <code>DescribeIdentityStore</code>.</p> <p>This operation returns results in paginated form. Use the <code>NextToken</code> parameter to retrieve additional pages of results.</p>",
     "ListUsers": "<p>Lists all users in the identity store. Returns a paginated list of complete <code>User</code> objects. Filtering for a <code>User</code> by the <code>UserName</code> attribute is deprecated. Instead, use the <code>GetUserId</code> API action.</p> <note> <p>If you have access to a member account, you can use this API operation from the member account. For more information, see <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/manage-your-accounts.html#limiting-access-from-member-accounts\">Limiting access to the identity store from member accounts</a> in the <i> IAM Identity Center User Guide</i>.</p> </note>",
     "UpdateGroup": "<p>Updates the specified group metadata and attributes in the specified identity store.</p>",
+    "UpdateIdentityStore": "<p>Updates the configuration of the specified identity store, including its network configuration.</p>",
     "UpdateUser": "<p>Updates the specified user metadata and attributes in the specified identity store.</p>"
   },
   "shapes": {
@@ -89,6 +92,8 @@
         "Address$Primary": "<p>A Boolean value representing whether this is the primary address for the associated resource.</p>",
         "Email$Primary": "<p>A Boolean value representing whether this is the primary email address for the associated resource.</p>",
         "GroupMembershipExistenceResult$MembershipExists": "<p>Indicates whether a membership relation exists or not.</p>",
+        "NetworkConfiguration$VpceAccessRequired": "<p>Specifies whether the identity store can be accessed only through a virtual private cloud (VPC) endpoint. When set to <code>true</code>, requests must originate from a VPC endpoint.</p> <p>This value must be set to either <code>true</code> or <code>false</code> when you provide <code>NetworkConfiguration</code> in a request.</p>",
+        "NetworkConfigurationDetails$VpceAccessRequired": "<p>Specifies whether the identity store can be accessed only through a virtual private cloud (VPC) endpoint. When set to <code>true</code>, requests must originate from a VPC endpoint.</p>",
         "PhoneNumber$Primary": "<p>A Boolean value representing whether this is the primary phone number for the associated resource.</p>",
         "Photo$Primary": "<p>Specifies whether this is the user's primary photo. Default value is <code>false</code>. Only one photo can be designated as primary per user.</p>",
         "Role$Primary": "<p>A Boolean value representing whether this is the primary role for the associated resource.</p>"
@@ -182,6 +187,14 @@
       "refs": {}
     },
     "DescribeGroupResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeIdentityStoreRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeIdentityStoreResponse": {
       "base": null,
       "refs": {}
     },
@@ -323,7 +336,7 @@
     "GroupIds": {
       "base": null,
       "refs": {
-        "IsMemberInGroupsRequest$GroupIds": "<p>A list of identifiers for groups in the identity store.</p>"
+        "IsMemberInGroupsRequest$GroupIds": "<p>A list of identifiers for groups in the identity store.</p> <p>You can specify each group by ID or by Amazon Resource Name (ARN). For example, group ID <code>a1b2c3d4-5678-90ab-cdef-EXAMPLE22222</code> or group ARN <code>arn:aws:identitystore:::group/a1b2c3d4-5678-90ab-cdef-EXAMPLE22222</code>.</p>"
       }
     },
     "GroupMembership": {
@@ -357,45 +370,87 @@
         "ListGroupsResponse$Groups": "<p>A list of <code>Group</code> objects in the identity store.</p>"
       }
     },
+    "IdentityStore": {
+      "base": "<p>A structure that contains the identifiers for an identity store: its globally unique identifier (ID) and Amazon Resource Name (ARN).</p>",
+      "refs": {
+        "IdentityStores$member": null
+      }
+    },
+    "IdentityStoreArn": {
+      "base": null,
+      "refs": {
+        "DescribeIdentityStoreResponse$IdentityStoreArn": "<p>The Amazon Resource Name (ARN) of the identity store. For example, <code>arn:aws:identitystore::111122223333:identitystore/d-1234567890</code>.</p>",
+        "IdentityStore$IdentityStoreArn": "<p>The Amazon Resource Name (ARN) of the identity store. For example, <code>arn:aws:identitystore::111122223333:identitystore/d-1234567890</code>.</p>",
+        "UpdateIdentityStoreResponse$IdentityStoreArn": "<p>The Amazon Resource Name (ARN) of the identity store. For example, <code>arn:aws:identitystore::111122223333:identitystore/d-1234567890</code>.</p>"
+      }
+    },
     "IdentityStoreId": {
       "base": null,
       "refs": {
-        "CreateGroupMembershipRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p>",
+        "CreateGroupMembershipRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p> <p>You can specify the identity store by ID or by Amazon Resource Name (ARN). For example, identity store ID <code>d-1234567890</code> or identity store ARN <code>arn:aws:identitystore::111122223333:identitystore/d-1234567890</code>.</p>",
         "CreateGroupMembershipResponse$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p>",
-        "CreateGroupRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p>",
+        "CreateGroupRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p> <p>You can specify the identity store by ID or by Amazon Resource Name (ARN). For example, identity store ID <code>d-1234567890</code> or identity store ARN <code>arn:aws:identitystore::111122223333:identitystore/d-1234567890</code>.</p>",
         "CreateGroupResponse$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p>",
-        "CreateUserRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p>",
+        "CreateUserRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p> <p>You can specify the identity store by ID or by Amazon Resource Name (ARN). For example, identity store ID <code>d-1234567890</code> or identity store ARN <code>arn:aws:identitystore::111122223333:identitystore/d-1234567890</code>.</p>",
         "CreateUserResponse$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p>",
-        "DeleteGroupMembershipRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p>",
-        "DeleteGroupRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p>",
-        "DeleteUserRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p>",
-        "DescribeGroupMembershipRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p>",
+        "DeleteGroupMembershipRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p> <p>You can specify the identity store by ID or by Amazon Resource Name (ARN). For example, identity store ID <code>d-1234567890</code> or identity store ARN <code>arn:aws:identitystore::111122223333:identitystore/d-1234567890</code>.</p>",
+        "DeleteGroupRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p> <p>You can specify the identity store by ID or by Amazon Resource Name (ARN). For example, identity store ID <code>d-1234567890</code> or identity store ARN <code>arn:aws:identitystore::111122223333:identitystore/d-1234567890</code>.</p>",
+        "DeleteUserRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p> <p>You can specify the identity store by ID or by Amazon Resource Name (ARN). For example, identity store ID <code>d-1234567890</code> or identity store ARN <code>arn:aws:identitystore::111122223333:identitystore/d-1234567890</code>.</p>",
+        "DescribeGroupMembershipRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p> <p>You can specify the identity store by ID or by Amazon Resource Name (ARN). For example, identity store ID <code>d-1234567890</code> or identity store ARN <code>arn:aws:identitystore::111122223333:identitystore/d-1234567890</code>.</p>",
         "DescribeGroupMembershipResponse$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p>",
-        "DescribeGroupRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store, such as <code>d-1234567890</code>. In this example, <code>d-</code> is a fixed prefix, and <code>1234567890</code> is a randomly generated string that contains numbers and lower case letters. This value is generated at the time that a new identity store is created.</p>",
+        "DescribeGroupRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store, such as <code>d-1234567890</code>. In this example, <code>d-</code> is a fixed prefix, and <code>1234567890</code> is a randomly generated string that contains numbers and lower case letters. This value is generated at the time that a new identity store is created.</p> <p>You can specify the identity store by ID or by Amazon Resource Name (ARN). For example, identity store ID <code>d-1234567890</code> or identity store ARN <code>arn:aws:identitystore::111122223333:identitystore/d-1234567890</code>.</p>",
         "DescribeGroupResponse$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p>",
-        "DescribeUserRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store, such as <code>d-1234567890</code>. In this example, <code>d-</code> is a fixed prefix, and <code>1234567890</code> is a randomly generated string that contains numbers and lower case letters. This value is generated at the time that a new identity store is created.</p>",
+        "DescribeIdentityStoreRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p> <p>You can specify the identity store by ID or by Amazon Resource Name (ARN). For example, identity store ID <code>d-1234567890</code> or identity store ARN <code>arn:aws:identitystore::111122223333:identitystore/d-1234567890</code>.</p>",
+        "DescribeIdentityStoreResponse$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p>",
+        "DescribeUserRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store, such as <code>d-1234567890</code>. In this example, <code>d-</code> is a fixed prefix, and <code>1234567890</code> is a randomly generated string that contains numbers and lower case letters. This value is generated at the time that a new identity store is created.</p> <p>You can specify the identity store by ID or by Amazon Resource Name (ARN). For example, identity store ID <code>d-1234567890</code> or identity store ARN <code>arn:aws:identitystore::111122223333:identitystore/d-1234567890</code>.</p>",
         "DescribeUserResponse$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p>",
-        "GetGroupIdRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p>",
+        "GetGroupIdRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p> <p>You can specify the identity store by ID or by Amazon Resource Name (ARN). For example, identity store ID <code>d-1234567890</code> or identity store ARN <code>arn:aws:identitystore::111122223333:identitystore/d-1234567890</code>.</p>",
         "GetGroupIdResponse$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p>",
-        "GetGroupMembershipIdRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p>",
+        "GetGroupMembershipIdRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p> <p>You can specify the identity store by ID or by Amazon Resource Name (ARN). For example, identity store ID <code>d-1234567890</code> or identity store ARN <code>arn:aws:identitystore::111122223333:identitystore/d-1234567890</code>.</p>",
         "GetGroupMembershipIdResponse$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p>",
-        "GetUserIdRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p>",
+        "GetUserIdRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p> <p>You can specify the identity store by ID or by Amazon Resource Name (ARN). For example, identity store ID <code>d-1234567890</code> or identity store ARN <code>arn:aws:identitystore::111122223333:identitystore/d-1234567890</code>.</p>",
         "GetUserIdResponse$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p>",
         "Group$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p>",
         "GroupMembership$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p>",
-        "IsMemberInGroupsRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p>",
-        "ListGroupMembershipsForMemberRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p>",
-        "ListGroupMembershipsRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p>",
-        "ListGroupsRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store, such as <code>d-1234567890</code>. In this example, <code>d-</code> is a fixed prefix, and <code>1234567890</code> is a randomly generated string that contains numbers and lower case letters. This value is generated at the time that a new identity store is created.</p>",
-        "ListUsersRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store, such as <code>d-1234567890</code>. In this example, <code>d-</code> is a fixed prefix, and <code>1234567890</code> is a randomly generated string that contains numbers and lower case letters. This value is generated at the time that a new identity store is created.</p>",
-        "UpdateGroupRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p>",
-        "UpdateUserRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p>",
+        "IdentityStore$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p>",
+        "IsMemberInGroupsRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p> <p>You can specify the identity store by ID or by Amazon Resource Name (ARN). For example, identity store ID <code>d-1234567890</code> or identity store ARN <code>arn:aws:identitystore::111122223333:identitystore/d-1234567890</code>.</p>",
+        "ListGroupMembershipsForMemberRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p> <p>You can specify the identity store by ID or by Amazon Resource Name (ARN). For example, identity store ID <code>d-1234567890</code> or identity store ARN <code>arn:aws:identitystore::111122223333:identitystore/d-1234567890</code>.</p>",
+        "ListGroupMembershipsRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p> <p>You can specify the identity store by ID or by Amazon Resource Name (ARN). For example, identity store ID <code>d-1234567890</code> or identity store ARN <code>arn:aws:identitystore::111122223333:identitystore/d-1234567890</code>.</p>",
+        "ListGroupsRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store, such as <code>d-1234567890</code>. In this example, <code>d-</code> is a fixed prefix, and <code>1234567890</code> is a randomly generated string that contains numbers and lower case letters. This value is generated at the time that a new identity store is created.</p> <p>You can specify the identity store by ID or by Amazon Resource Name (ARN). For example, identity store ID <code>d-1234567890</code> or identity store ARN <code>arn:aws:identitystore::111122223333:identitystore/d-1234567890</code>.</p>",
+        "ListUsersRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store, such as <code>d-1234567890</code>. In this example, <code>d-</code> is a fixed prefix, and <code>1234567890</code> is a randomly generated string that contains numbers and lower case letters. This value is generated at the time that a new identity store is created.</p> <p>You can specify the identity store by ID or by Amazon Resource Name (ARN). For example, identity store ID <code>d-1234567890</code> or identity store ARN <code>arn:aws:identitystore::111122223333:identitystore/d-1234567890</code>.</p>",
+        "UpdateGroupRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p> <p>You can specify the identity store by ID or by Amazon Resource Name (ARN). For example, identity store ID <code>d-1234567890</code> or identity store ARN <code>arn:aws:identitystore::111122223333:identitystore/d-1234567890</code>.</p>",
+        "UpdateGroupResponse$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p>",
+        "UpdateIdentityStoreRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p> <p>You can specify the identity store by ID or by Amazon Resource Name (ARN). For example, identity store ID <code>d-1234567890</code> or identity store ARN <code>arn:aws:identitystore::111122223333:identitystore/d-1234567890</code>.</p>",
+        "UpdateIdentityStoreResponse$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p>",
+        "UpdateUserRequest$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p> <p>You can specify the identity store by ID or by Amazon Resource Name (ARN). For example, identity store ID <code>d-1234567890</code> or identity store ARN <code>arn:aws:identitystore::111122223333:identitystore/d-1234567890</code>.</p>",
+        "UpdateUserResponse$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p>",
         "User$IdentityStoreId": "<p>The globally unique identifier for the identity store.</p>"
+      }
+    },
+    "IdentityStores": {
+      "base": null,
+      "refs": {
+        "ListIdentityStoresResponse$IdentityStores": "<p>A list of <code>IdentityStore</code> objects, each of which contains the identifiers for an identity store that you have access to.</p>"
       }
     },
     "InternalServerException": {
       "base": "<p>The request processing has failed because of an unknown error, exception or failure with an internal server.</p>",
       "refs": {}
+    },
+    "IpCidrList": {
+      "base": null,
+      "refs": {
+        "NetworkConfiguration$ApiAllowSourceIps": "<p>A list of IP address CIDR ranges that are allowed to access the identity store API operations. A request from an IP address in this list bypasses the identity store's other API network controls: it's permitted even if it doesn't come through a VPC endpoint required by <code>VpceAccessRequired</code>, and even if it doesn't originate from a VPC in <code>ApiRestrictSourceVpcs</code>. If you don't specify a value, no such IP address exception applies.</p>",
+        "NetworkConfiguration$ScimAllowSourceIps": "<p>A list of IP address CIDR ranges that are allowed to access the identity store through the System for Cross-domain Identity Management (SCIM) protocol. Requests from IP addresses outside these ranges are denied. If you don't specify a value, SCIM requests remain subject to the identity store's other network controls, such as the VPC endpoint requirement set by <code>VpceAccessRequired</code>.</p> <p>For example, to allow SCIM traffic from the public internet while still requiring the identity store API operations to be accessed through a VPC endpoint, set <code>VpceAccessRequired</code> to <code>true</code> and set this value to <code>0.0.0.0/0</code>.</p>",
+        "NetworkConfigurationDetails$ApiAllowSourceIps": "<p>A list of IP address CIDR ranges that are allowed to access the identity store API operations. A request from an IP address in this list bypasses the identity store's other API network controls: it's permitted even if it doesn't come through a VPC endpoint required by <code>VpceAccessRequired</code>, and even if it doesn't originate from a VPC in <code>ApiRestrictSourceVpcs</code>. If this field is empty, no such IP address exception applies.</p>",
+        "NetworkConfigurationDetails$ScimAllowSourceIps": "<p>A list of IP address CIDR ranges that are allowed to access the identity store through the System for Cross-domain Identity Management (SCIM) protocol. Requests from IP addresses outside these ranges are denied. If this field is empty, SCIM requests remain subject to the identity store's other network controls, such as the VPC endpoint requirement.</p>"
+      }
+    },
+    "IpCidrType": {
+      "base": null,
+      "refs": {
+        "IpCidrList$member": null
+      }
     },
     "IsMemberInGroupsRequest": {
       "base": null,
@@ -429,6 +484,14 @@
       "base": null,
       "refs": {}
     },
+    "ListIdentityStoresRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListIdentityStoresResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListUsersRequest": {
       "base": null,
       "refs": {}
@@ -440,10 +503,11 @@
     "MaxResults": {
       "base": null,
       "refs": {
-        "ListGroupMembershipsForMemberRequest$MaxResults": "<p>The maximum number of results to be returned per request. This parameter is used in the <code> ListUsers</code> and <code>ListGroups</code> requests to specify how many results to return in one page. The length limit is 50 characters.</p>",
+        "ListGroupMembershipsForMemberRequest$MaxResults": "<p>The maximum number of results to be returned per request. This parameter is used in all <code>List</code> requests to specify how many results to return in one page.</p>",
         "ListGroupMembershipsRequest$MaxResults": "<p>The maximum number of results to be returned per request. This parameter is used in all <code> List</code> requests to specify how many results to return in one page.</p>",
-        "ListGroupsRequest$MaxResults": "<p>The maximum number of results to be returned per request. This parameter is used in the <code> ListUsers</code> and <code>ListGroups</code> requests to specify how many results to return in one page. The length limit is 50 characters.</p>",
-        "ListUsersRequest$MaxResults": "<p>The maximum number of results to be returned per request. This parameter is used in the <code> ListUsers</code> and <code>ListGroups</code> requests to specify how many results to return in one page. The length limit is 50 characters.</p>"
+        "ListGroupsRequest$MaxResults": "<p>The maximum number of results to be returned per request. This parameter is used in all <code>List</code> requests to specify how many results to return in one page.</p>",
+        "ListIdentityStoresRequest$MaxResults": "<p>The maximum number of results to return per request. This parameter is used in all <code> List</code> operations to specify how many results to return on one page. If you don't specify a value, the operation uses a default page size.</p>",
+        "ListUsersRequest$MaxResults": "<p>The maximum number of results to be returned per request. This parameter is used in all <code>List</code> requests to specify how many results to return in one page.</p>"
       }
     },
     "MemberId": {
@@ -466,17 +530,31 @@
         "User$Name": "<p>An object containing the name of the user.</p>"
       }
     },
+    "NetworkConfiguration": {
+      "base": "<p>The network configuration that controls how an identity store can be accessed. You provide this object in a request.</p>",
+      "refs": {
+        "UpdateIdentityStoreRequest$NetworkConfiguration": "<p>The network configuration to apply to the identity store. This controls whether access through a virtual private cloud (VPC) endpoint is required and the source VPCs and IP addresses that are allowed to access the identity store.</p> <p>When you provide <code>NetworkConfiguration</code> in a request, the service performs a full replacement of the identity store's current network configuration with the values you specify. Any values that you omit are cleared. To preserve or change the allowed source VPCs or IP address ranges, include the complete set of values that you want in the request. To clear a list, omit it; an empty list is not accepted.</p>"
+      }
+    },
+    "NetworkConfigurationDetails": {
+      "base": "<p>The network configuration that controls how an identity store can be accessed. This object is returned as part of service API responses.</p>",
+      "refs": {
+        "DescribeIdentityStoreResponse$NetworkConfiguration": "<p>The network configuration of the identity store. This configuration controls whether access through a virtual private cloud (VPC) endpoint is required, and which source VPCs and IP addresses are allowed.</p>"
+      }
+    },
     "NextToken": {
       "base": null,
       "refs": {
-        "ListGroupMembershipsForMemberRequest$NextToken": "<p>The pagination token used for the <code>ListUsers</code>, <code>ListGroups</code>, and <code> ListGroupMemberships</code> API operations. This value is generated by the identity store service. It is returned in the API response if the total results are more than the size of one page. This token is also returned when it is used in the API request to search for the next page.</p>",
-        "ListGroupMembershipsForMemberResponse$NextToken": "<p>The pagination token used for the <code>ListUsers</code>, <code>ListGroups</code>, and <code> ListGroupMemberships</code> API operations. This value is generated by the identity store service. It is returned in the API response if the total results are more than the size of one page. This token is also returned when it is used in the API request to search for the next page. </p>",
-        "ListGroupMembershipsRequest$NextToken": "<p>The pagination token used for the <code>ListUsers</code>, <code>ListGroups</code> and <code> ListGroupMemberships</code> API operations. This value is generated by the identity store service. It is returned in the API response if the total results are more than the size of one page. This token is also returned when it is used in the API request to search for the next page.</p>",
-        "ListGroupMembershipsResponse$NextToken": "<p>The pagination token used for the <code>ListUsers</code>, <code>ListGroups</code>, and <code> ListGroupMemberships</code> API operations. This value is generated by the identity store service. It is returned in the API response if the total results are more than the size of one page. This token is also returned when it is used in the API request to search for the next page.</p>",
-        "ListGroupsRequest$NextToken": "<p>The pagination token used for the <code>ListUsers</code> and <code>ListGroups</code> API operations. This value is generated by the identity store service. It is returned in the API response if the total results are more than the size of one page. This token is also returned when it is used in the API request to search for the next page.</p>",
-        "ListGroupsResponse$NextToken": "<p>The pagination token used for the <code>ListUsers</code> and <code>ListGroups</code> API operations. This value is generated by the identity store service. It is returned in the API response if the total results are more than the size of one page. This token is also returned when it is used in the API request to search for the next page.</p>",
-        "ListUsersRequest$NextToken": "<p>The pagination token used for the <code>ListUsers</code> and <code>ListGroups</code> API operations. This value is generated by the identity store service. It is returned in the API response if the total results are more than the size of one page. This token is also returned when it is used in the API request to search for the next page.</p>",
-        "ListUsersResponse$NextToken": "<p>The pagination token used for the <code>ListUsers</code> and <code>ListGroups</code> API operations. This value is generated by the identity store service. It is returned in the API response if the total results are more than the size of one page. This token is also returned when it is used in the API request to search for the next page.</p>"
+        "ListGroupMembershipsForMemberRequest$NextToken": "<p>The pagination token used for the <code>ListUsers</code>, <code>ListGroups</code>, and <code> ListGroupMemberships</code> API operations. This value is generated by the identity store service. It is returned in the API response if the total results are more than the size of one page. This token is also returned when it is used in the API request to retrieve the next page of results.</p>",
+        "ListGroupMembershipsForMemberResponse$NextToken": "<p>The pagination token used for the <code>ListUsers</code>, <code>ListGroups</code>, and <code> ListGroupMemberships</code> API operations. This value is generated by the identity store service. It is returned in the API response if the total results are more than the size of one page. This token is also returned when it is used in the API request to retrieve the next page of results. </p>",
+        "ListGroupMembershipsRequest$NextToken": "<p>The pagination token used for the <code>ListUsers</code>, <code>ListGroups</code> and <code> ListGroupMemberships</code> API operations. This value is generated by the identity store service. It is returned in the API response if the total results are more than the size of one page. This token is also returned when it is used in the API request to retrieve the next page of results.</p>",
+        "ListGroupMembershipsResponse$NextToken": "<p>The pagination token used for the <code>ListUsers</code>, <code>ListGroups</code>, and <code> ListGroupMemberships</code> API operations. This value is generated by the identity store service. It is returned in the API response if the total results are more than the size of one page. This token is also returned when it is used in the API request to retrieve the next page of results.</p>",
+        "ListGroupsRequest$NextToken": "<p>The pagination token used for the <code>ListUsers</code> and <code>ListGroups</code> API operations. This value is generated by the identity store service. It is returned in the API response if the total results are more than the size of one page. This token is also returned when it is used in the API request to retrieve the next page of results.</p>",
+        "ListGroupsResponse$NextToken": "<p>The pagination token used for the <code>ListUsers</code> and <code>ListGroups</code> API operations. This value is generated by the identity store service. It is returned in the API response if the total results are more than the size of one page. This token is also returned when it is used in the API request to retrieve the next page of results.</p>",
+        "ListIdentityStoresRequest$NextToken": "<p>The pagination token used for the <code>ListIdentityStores</code> API operation. This value is generated by the identity store service. It is returned in the API response if the total results are more than the size of one page. This token is also returned when it is used in the API request to retrieve the next page of results.</p>",
+        "ListIdentityStoresResponse$NextToken": "<p>The pagination token used for the <code>ListIdentityStores</code> API operation. This value is generated by the identity store service. It is returned in the API response if the total results are more than the size of one page. This token is also returned when it is used in the API request to retrieve the next page of results.</p>",
+        "ListUsersRequest$NextToken": "<p>The pagination token used for the <code>ListUsers</code> and <code>ListGroups</code> API operations. This value is generated by the identity store service. It is returned in the API response if the total results are more than the size of one page. This token is also returned when it is used in the API request to retrieve the next page of results.</p>",
+        "ListUsersResponse$NextToken": "<p>The pagination token used for the <code>ListUsers</code> and <code>ListGroups</code> API operations. This value is generated by the identity store service. It is returned in the API response if the total results are more than the size of one page. This token is also returned when it is used in the API request to retrieve the next page of results.</p>"
       }
     },
     "PhoneNumber": {
@@ -519,25 +597,44 @@
         "ValidationException$RequestId": "<p>The identifier for each request. This value is a globally unique ID that is generated by the identity store service for each sent request, and is then returned inside the exception if the request fails.</p>"
       }
     },
+    "ResourceArn": {
+      "base": null,
+      "refs": {
+        "CreateGroupMembershipResponse$MembershipArn": "<p>The Amazon Resource Name (ARN) of the newly created group membership in the identity store. For example, <code>arn:aws:identitystore:::membership/a1b2c3d4-5678-90ab-cdef-EXAMPLE33333</code>.</p>",
+        "CreateGroupResponse$GroupArn": "<p>The Amazon Resource Name (ARN) of the newly created group in the identity store. For example, <code>arn:aws:identitystore:::group/a1b2c3d4-5678-90ab-cdef-EXAMPLE22222</code>.</p>",
+        "CreateUserResponse$UserArn": "<p>The Amazon Resource Name (ARN) of the newly created user in the identity store. For example, <code>arn:aws:identitystore:::user/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111</code>.</p>",
+        "DescribeGroupMembershipResponse$MembershipArn": "<p>The Amazon Resource Name (ARN) of the group membership in the identity store. For example, <code>arn:aws:identitystore:::membership/a1b2c3d4-5678-90ab-cdef-EXAMPLE33333</code>.</p>",
+        "DescribeGroupResponse$GroupArn": "<p>The Amazon Resource Name (ARN) of the group in the identity store. For example, <code>arn:aws:identitystore:::group/a1b2c3d4-5678-90ab-cdef-EXAMPLE22222</code>.</p>",
+        "DescribeUserResponse$UserArn": "<p>The Amazon Resource Name (ARN) of the user in the identity store. For example, <code>arn:aws:identitystore:::user/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111</code>.</p>",
+        "GetGroupIdResponse$GroupArn": "<p>The Amazon Resource Name (ARN) of the group in the identity store. For example, <code>arn:aws:identitystore:::group/a1b2c3d4-5678-90ab-cdef-EXAMPLE22222</code>.</p>",
+        "GetGroupMembershipIdResponse$MembershipArn": "<p>The Amazon Resource Name (ARN) of the group membership in the identity store. For example, <code>arn:aws:identitystore:::membership/a1b2c3d4-5678-90ab-cdef-EXAMPLE33333</code>.</p>",
+        "GetUserIdResponse$UserArn": "<p>The Amazon Resource Name (ARN) of the user in the identity store. For example, <code>arn:aws:identitystore:::user/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111</code>.</p>",
+        "Group$GroupArn": "<p>The Amazon Resource Name (ARN) of the group in the identity store. For example, <code>arn:aws:identitystore:::group/a1b2c3d4-5678-90ab-cdef-EXAMPLE22222</code>.</p>",
+        "GroupMembership$MembershipArn": "<p>The Amazon Resource Name (ARN) of the group membership in the identity store. For example, <code>arn:aws:identitystore:::membership/a1b2c3d4-5678-90ab-cdef-EXAMPLE33333</code>.</p>",
+        "UpdateGroupResponse$GroupArn": "<p>The Amazon Resource Name (ARN) of the group in the identity store. For example, <code>arn:aws:identitystore:::group/a1b2c3d4-5678-90ab-cdef-EXAMPLE22222</code>.</p>",
+        "UpdateUserResponse$UserArn": "<p>The Amazon Resource Name (ARN) of the user in the identity store. For example, <code>arn:aws:identitystore:::user/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111</code>.</p>",
+        "User$UserArn": "<p>The Amazon Resource Name (ARN) of the user in the identity store. For example, <code>arn:aws:identitystore:::user/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111</code>.</p>"
+      }
+    },
     "ResourceId": {
       "base": null,
       "refs": {
-        "CreateGroupMembershipRequest$GroupId": "<p>The identifier for a group in the identity store.</p>",
+        "CreateGroupMembershipRequest$GroupId": "<p>The identifier for a group in the identity store.</p> <p>You can specify the group by ID or by Amazon Resource Name (ARN). For example, group ID <code>a1b2c3d4-5678-90ab-cdef-EXAMPLE22222</code> or group ARN <code>arn:aws:identitystore:::group/a1b2c3d4-5678-90ab-cdef-EXAMPLE22222</code>.</p>",
         "CreateGroupMembershipResponse$MembershipId": "<p>The identifier for a newly created <code>GroupMembership</code> in an identity store.</p>",
         "CreateGroupResponse$GroupId": "<p>The identifier of the newly created group in the identity store.</p>",
         "CreateUserResponse$UserId": "<p>The identifier of the newly created user in the identity store.</p>",
-        "DeleteGroupMembershipRequest$MembershipId": "<p>The identifier for a <code>GroupMembership</code> in an identity store.</p>",
-        "DeleteGroupRequest$GroupId": "<p>The identifier for a group in the identity store.</p>",
-        "DeleteUserRequest$UserId": "<p>The identifier for a user in the identity store.</p>",
-        "DescribeGroupMembershipRequest$MembershipId": "<p>The identifier for a <code>GroupMembership</code> in an identity store.</p>",
+        "DeleteGroupMembershipRequest$MembershipId": "<p>The identifier for a <code>GroupMembership</code> in an identity store.</p> <p>You can specify the group membership by ID or by Amazon Resource Name (ARN). For example, membership ID <code>a1b2c3d4-5678-90ab-cdef-EXAMPLE33333</code> or membership ARN <code>arn:aws:identitystore:::membership/a1b2c3d4-5678-90ab-cdef-EXAMPLE33333</code>.</p>",
+        "DeleteGroupRequest$GroupId": "<p>The identifier for a group in the identity store.</p> <p>You can specify the group by ID or by Amazon Resource Name (ARN). For example, group ID <code>a1b2c3d4-5678-90ab-cdef-EXAMPLE22222</code> or group ARN <code>arn:aws:identitystore:::group/a1b2c3d4-5678-90ab-cdef-EXAMPLE22222</code>.</p>",
+        "DeleteUserRequest$UserId": "<p>The identifier for a user in the identity store.</p> <p>You can specify the user by ID or by Amazon Resource Name (ARN). For example, user ID <code>a1b2c3d4-5678-90ab-cdef-EXAMPLE11111</code> or user ARN <code>arn:aws:identitystore:::user/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111</code>.</p>",
+        "DescribeGroupMembershipRequest$MembershipId": "<p>The identifier for a <code>GroupMembership</code> in an identity store.</p> <p>You can specify the group membership by ID or by Amazon Resource Name (ARN). For example, membership ID <code>a1b2c3d4-5678-90ab-cdef-EXAMPLE33333</code> or membership ARN <code>arn:aws:identitystore:::membership/a1b2c3d4-5678-90ab-cdef-EXAMPLE33333</code>.</p>",
         "DescribeGroupMembershipResponse$MembershipId": "<p>The identifier for a <code>GroupMembership</code> in an identity store.</p>",
         "DescribeGroupMembershipResponse$GroupId": "<p>The identifier for a group in the identity store.</p>",
-        "DescribeGroupRequest$GroupId": "<p>The identifier for a group in the identity store.</p>",
+        "DescribeGroupRequest$GroupId": "<p>The identifier for a group in the identity store.</p> <p>You can specify the group by ID or by Amazon Resource Name (ARN). For example, group ID <code>a1b2c3d4-5678-90ab-cdef-EXAMPLE22222</code> or group ARN <code>arn:aws:identitystore:::group/a1b2c3d4-5678-90ab-cdef-EXAMPLE22222</code>.</p>",
         "DescribeGroupResponse$GroupId": "<p>The identifier for a group in the identity store.</p>",
-        "DescribeUserRequest$UserId": "<p>The identifier for a user in the identity store.</p>",
+        "DescribeUserRequest$UserId": "<p>The identifier for a user in the identity store.</p> <p>You can specify the user by ID or by Amazon Resource Name (ARN). For example, user ID <code>a1b2c3d4-5678-90ab-cdef-EXAMPLE11111</code> or user ARN <code>arn:aws:identitystore:::user/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111</code>.</p>",
         "DescribeUserResponse$UserId": "<p>The identifier for a user in the identity store.</p>",
         "GetGroupIdResponse$GroupId": "<p>The identifier for a group in the identity store.</p>",
-        "GetGroupMembershipIdRequest$GroupId": "<p>The identifier for a group in the identity store.</p>",
+        "GetGroupMembershipIdRequest$GroupId": "<p>The identifier for a group in the identity store.</p> <p>You can specify the group by ID or by Amazon Resource Name (ARN). For example, group ID <code>a1b2c3d4-5678-90ab-cdef-EXAMPLE22222</code> or group ARN <code>arn:aws:identitystore:::group/a1b2c3d4-5678-90ab-cdef-EXAMPLE22222</code>.</p>",
         "GetGroupMembershipIdResponse$MembershipId": "<p>The identifier for a <code>GroupMembership</code> in an identity store.</p>",
         "GetUserIdResponse$UserId": "<p>The identifier for a user in the identity store.</p>",
         "Group$GroupId": "<p>The identifier for a group in the identity store.</p>",
@@ -545,11 +642,13 @@
         "GroupMembership$MembershipId": "<p>The identifier for a <code>GroupMembership</code> object in an identity store.</p>",
         "GroupMembership$GroupId": "<p>The identifier for a group in the identity store.</p>",
         "GroupMembershipExistenceResult$GroupId": "<p>The identifier for a group in the identity store.</p>",
-        "ListGroupMembershipsRequest$GroupId": "<p>The identifier for a group in the identity store.</p>",
-        "MemberId$UserId": "<p>An object containing the identifiers of resources that can be members.</p>",
+        "ListGroupMembershipsRequest$GroupId": "<p>The identifier for a group in the identity store.</p> <p>You can specify the group by ID or by Amazon Resource Name (ARN). For example, group ID <code>a1b2c3d4-5678-90ab-cdef-EXAMPLE22222</code> or group ARN <code>arn:aws:identitystore:::group/a1b2c3d4-5678-90ab-cdef-EXAMPLE22222</code>.</p>",
+        "MemberId$UserId": "<p>The identifier for a user in the identity store.</p> <p>You can specify the user by ID or by Amazon Resource Name (ARN). For example, user ID <code>a1b2c3d4-5678-90ab-cdef-EXAMPLE11111</code> or user ARN <code>arn:aws:identitystore:::user/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111</code>.</p>",
         "ResourceNotFoundException$ResourceId": "<p>The identifier for a resource in the identity store that can be used as <code>UserId</code> or <code>GroupId</code>. The format for <code>ResourceId</code> is either <code>UUID</code> or <code>1234567890-UUID</code>, where <code>UUID</code> is a randomly generated value for each resource when it is created and <code>1234567890</code> represents the <code> IdentityStoreId</code> string value. In the case that the identity store is migrated from a legacy SSO identity store, the <code>ResourceId</code> for that identity store will be in the format of <code>UUID</code>. Otherwise, it will be in the <code>1234567890-UUID</code> format.</p>",
-        "UpdateGroupRequest$GroupId": "<p>The identifier for a group in the identity store.</p>",
-        "UpdateUserRequest$UserId": "<p>The identifier for a user in the identity store.</p>",
+        "UpdateGroupRequest$GroupId": "<p>The identifier for a group in the identity store.</p> <p>You can specify the group by ID or by Amazon Resource Name (ARN). For example, group ID <code>a1b2c3d4-5678-90ab-cdef-EXAMPLE22222</code> or group ARN <code>arn:aws:identitystore:::group/a1b2c3d4-5678-90ab-cdef-EXAMPLE22222</code>.</p>",
+        "UpdateGroupResponse$GroupId": "<p>The identifier for a group in the identity store.</p>",
+        "UpdateUserRequest$UserId": "<p>The identifier for a user in the identity store.</p> <p>You can specify the user by ID or by Amazon Resource Name (ARN). For example, user ID <code>a1b2c3d4-5678-90ab-cdef-EXAMPLE11111</code> or user ARN <code>arn:aws:identitystore:::user/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111</code>.</p>",
+        "UpdateUserResponse$UserId": "<p>The identifier for a user in the identity store.</p>",
         "User$UserId": "<p>The identifier for a user in the identity store.</p>"
       }
     },
@@ -561,6 +660,23 @@
       "base": null,
       "refs": {
         "ResourceNotFoundException$Reason": "<p>Indicates the reason for a resource not found error when the service is unable to access a Customer Managed KMS key. For non-KMS permission errors, this field is not included.</p>"
+      }
+    },
+    "ResourceRevision": {
+      "base": null,
+      "refs": {
+        "CreateGroupResponse$Revision": "<p>The revision of the newly created group in the identity store.</p>",
+        "CreateUserResponse$Revision": "<p>The revision of the newly created user in the identity store.</p>",
+        "DeleteGroupRequest$Revision": "<p>The expected current revision of the group. When you provide this value, the group is deleted only if it matches the current revision of the group in the identity store. If the value doesn't match, the operation fails with a <code>ConflictException</code>. If you don't provide this value, the group is deleted regardless of its current revision.</p>",
+        "DeleteUserRequest$Revision": "<p>The expected current revision of the user. When you provide this value, the user is deleted only if it matches the current revision of the user in the identity store. If the value doesn't match, the operation fails with a <code>ConflictException</code>. If you don't provide this value, the user is deleted regardless of its current revision.</p>",
+        "DescribeGroupResponse$Revision": "<p>The current revision of the group in the identity store. This value changes each time the group is modified.</p>",
+        "DescribeUserResponse$Revision": "<p>The current revision of the user in the identity store. This value changes each time the user is modified.</p>",
+        "Group$Revision": "<p>The current revision of the group in the identity store. This value changes each time the group is modified. You can provide it as the <code>Revision</code> parameter of an <code>UpdateGroup</code> or <code>DeleteGroup</code> request to make the operation conditional on the group not having changed. Treat this value as an opaque token: don't parse it or rely on its format or ordering.</p>",
+        "UpdateGroupRequest$Revision": "<p>The expected current revision of the group. When you provide this value, the update is applied only if it matches the current revision of the group in the identity store, which prevents you from overwriting concurrent changes. If the value doesn't match, the operation fails with a <code>ConflictException</code>. If you don't provide this value, the update is applied unconditionally.</p>",
+        "UpdateGroupResponse$Revision": "<p>The revision of the group after the requested update is applied.</p>",
+        "UpdateUserRequest$Revision": "<p>The expected current revision of the user. When you provide this value, the update is applied only if it matches the current revision of the user in the identity store, which prevents you from overwriting concurrent changes. If the value doesn't match, the operation fails with a <code>ConflictException</code>. If you don't provide this value, the update is applied unconditionally.</p>",
+        "UpdateUserResponse$Revision": "<p>The revision of the user after the requested update is applied.</p>",
+        "User$Revision": "<p>The current revision of the user in the identity store. This value changes each time the user is modified. You can provide it as the <code>Revision</code> parameter of an <code>UpdateUser</code> or <code>DeleteUser</code> request to make the operation conditional on the user not having changed. Treat this value as an opaque token: don't parse it or rely on its format or ordering.</p>"
       }
     },
     "ResourceType": {
@@ -632,7 +748,7 @@
         "Name$MiddleName": "<p>The middle name of the user.</p>",
         "Name$HonorificPrefix": "<p>The honorific prefix of the user. For example, \"Dr.\"</p>",
         "Name$HonorificSuffix": "<p>The honorific suffix of the user. For example, \"M.D.\"</p>",
-        "PhoneNumber$Value": "<p>A string containing a phone number. For example, \"8675309\" or \"+1 (800) 123-4567\". </p>",
+        "PhoneNumber$Value": "<p>A string containing a phone number. For example, \"8675309\" or \"+1 (800) 123-4567\".</p>",
         "PhoneNumber$Type": "<p>A string representing the type of a phone number. For example, \"Mobile.\"</p>",
         "Photo$Value": "<p>The photo data or URL. Supported formats include jpg, jpeg, png, and gif. This field is required for all photo entries.</p>",
         "Photo$Type": "<p>The type of photo. This field is optional and can be used to categorize different types of photos.</p>",
@@ -696,6 +812,14 @@
       "base": null,
       "refs": {}
     },
+    "UpdateIdentityStoreRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateIdentityStoreResponse": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateUserRequest": {
       "base": null,
       "refs": {}
@@ -739,6 +863,19 @@
       "base": null,
       "refs": {
         "ValidationException$Reason": "<p>Indicates the reason for the validation error when the service is unable to access a Customer Managed KMS key. For non-KMS permission errors, this field is not included.</p>"
+      }
+    },
+    "VpcIdList": {
+      "base": null,
+      "refs": {
+        "NetworkConfiguration$ApiRestrictSourceVpcs": "<p>A list of virtual private cloud (VPC) IDs that are allowed to access the identity store API operations. A request is denied unless it originates from a VPC in this list, or from an IP address in <code>ApiAllowSourceIps</code> if you specified one. If you don't specify a value, access isn't restricted to specific VPCs, but the VPC endpoint requirement set by <code>VpceAccessRequired</code> still applies.</p>",
+        "NetworkConfigurationDetails$ApiRestrictSourceVpcs": "<p>A list of virtual private cloud (VPC) IDs that are allowed to access the identity store API operations. A request is denied unless it originates from a VPC in this list, or from an IP address in <code>ApiAllowSourceIps</code> if one is configured. If this field is empty, access isn't restricted to specific VPCs, but the VPC endpoint requirement from <code>VpceAccessRequired</code> still applies.</p>"
+      }
+    },
+    "VpcIdType": {
+      "base": null,
+      "refs": {
+        "VpcIdList$member": null
       }
     }
   }

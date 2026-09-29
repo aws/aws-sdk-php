@@ -1641,6 +1641,11 @@
         "Connection":{"shape":"InboundConnection"}
       }
     },
+    "AcceptedWarningsList":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":25
+    },
     "AccessDeniedException":{
       "type":"structure",
       "members":{},
@@ -2289,7 +2294,9 @@
         "ChangeProgressStages":{"shape":"ChangeProgressStageList"},
         "LastUpdatedTime":{"shape":"UpdateTimestamp"},
         "ConfigChangeStatus":{"shape":"ConfigChangeStatus"},
-        "InitiatedBy":{"shape":"InitiatedBy"}
+        "InitiatedBy":{"shape":"InitiatedBy"},
+        "ValidationFailures":{"shape":"ValidationFailures"},
+        "AcceptedWarnings":{"shape":"AcceptedWarningsList"}
       }
     },
     "ClientToken":{
@@ -3687,7 +3694,8 @@
         "DryRunStatus":{"shape":"String"},
         "CreationDate":{"shape":"String"},
         "UpdateDate":{"shape":"String"},
-        "ValidationFailures":{"shape":"ValidationFailures"}
+        "ValidationFailures":{"shape":"ValidationFailures"},
+        "AcceptedWarnings":{"shape":"AcceptedWarningsList"}
       }
     },
     "DryRunResults":{
@@ -6511,7 +6519,8 @@
         "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptions"},
         "AutomatedSnapshotPauseOptions":{"shape":"AutomatedSnapshotPauseRequestOptions"},
         "UseCase":{"shape":"DomainUseCase"},
-        "EngineMode":{"shape":"EngineMode"}
+        "EngineMode":{"shape":"EngineMode"},
+        "AcceptedWarnings":{"shape":"AcceptedWarningsList"}
       }
     },
     "UpdateDomainConfigResponse":{
@@ -6769,8 +6778,16 @@
       "type":"structure",
       "members":{
         "Code":{"shape":"String"},
-        "Message":{"shape":"String"}
+        "Message":{"shape":"String"},
+        "Severity":{"shape":"ValidationFailureSeverity"}
       }
+    },
+    "ValidationFailureSeverity":{
+      "type":"string",
+      "enum":[
+        "Critical",
+        "Warning"
+      ]
     },
     "ValidationFailures":{
       "type":"list",

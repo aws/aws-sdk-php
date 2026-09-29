@@ -504,7 +504,8 @@
     "ContextualMetadataConfig":{
       "type":"structure",
       "members":{
-        "summaryGeneration":{"shape":"SummaryGenerationMode"}
+        "summaryGeneration":{"shape":"SummaryGenerationMode"},
+        "extendedAnalysis":{"shape":"ExtendedAnalysisMode"}
       }
     },
     "CreateDictionaryRequest":{
@@ -771,6 +772,13 @@
       "members":{
         "entries":{"shape":"DictionaryEntriesPayload"}
       }
+    },
+    "ExtendedAnalysisMode":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "FeedArn":{"type":"string"},
     "FeedAssociation":{

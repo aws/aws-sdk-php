@@ -2139,6 +2139,13 @@
         "PreferredOutpostArns":{"shape":"PreferredOutpostArnList"}
       }
     },
+    "ConnectionType":{
+      "type":"string",
+      "enum":[
+        "vpc",
+        "public"
+      ]
+    },
     "CopyServerlessCacheSnapshotRequest":{
       "type":"structure",
       "required":[
@@ -2372,7 +2379,8 @@
         "SubnetIds":{"shape":"SubnetIdsList"},
         "SnapshotRetentionLimit":{"shape":"IntegerOptional"},
         "DailySnapshotTime":{"shape":"String"},
-        "NetworkType":{"shape":"NetworkType"}
+        "NetworkType":{"shape":"NetworkType"},
+        "ConnectionType":{"shape":"ConnectionType"}
       }
     },
     "CreateServerlessCacheResponse":{
@@ -4469,7 +4477,8 @@
         "SubnetIds":{"shape":"SubnetIdsList"},
         "SnapshotRetentionLimit":{"shape":"IntegerOptional"},
         "DailySnapshotTime":{"shape":"String"},
-        "NetworkType":{"shape":"NetworkType"}
+        "NetworkType":{"shape":"NetworkType"},
+        "ConnectionType":{"shape":"ConnectionType"}
       }
     },
     "ServerlessCacheAlreadyExistsFault":{

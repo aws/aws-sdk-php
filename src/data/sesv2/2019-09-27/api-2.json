@@ -848,8 +848,8 @@
     "ListConfigurationSets":{
       "name":"ListConfigurationSets",
       "http":{
-        "method":"GET",
-        "requestUri":"/v2/email/configuration-sets"
+        "method":"POST",
+        "requestUri":"/v2/email/list-configuration-sets"
       },
       "input":{"shape":"ListConfigurationSetsRequest"},
       "output":{"shape":"ListConfigurationSetsResponse"},
@@ -942,8 +942,8 @@
     "ListEmailIdentities":{
       "name":"ListEmailIdentities",
       "http":{
-        "method":"GET",
-        "requestUri":"/v2/email/identities"
+        "method":"POST",
+        "requestUri":"/v2/email/list-identities"
       },
       "input":{"shape":"ListEmailIdentitiesRequest"},
       "output":{"shape":"ListEmailIdentitiesResponse"},
@@ -2024,6 +2024,19 @@
       "members":{
         "Tracking":{"shape":"TrackingConfigurationOverrides"}
       }
+    },
+    "ConfigurationSetFilter":{
+      "type":"map",
+      "key":{"shape":"ConfigurationSetFilterKey"},
+      "value":{"shape":"ConfigurationSetFilterValue"}
+    },
+    "ConfigurationSetFilterKey":{
+      "type":"string",
+      "enum":["CONFIGURATION_SET_NAME_CONTAINS"]
+    },
+    "ConfigurationSetFilterValue":{
+      "type":"string",
+      "min":1
     },
     "ConfigurationSetName":{"type":"string"},
     "ConfigurationSetNameList":{
@@ -3769,6 +3782,23 @@
         "FAILED"
       ]
     },
+    "IdentityFilter":{
+      "type":"map",
+      "key":{"shape":"IdentityFilterKey"},
+      "value":{"shape":"IdentityFilterValue"}
+    },
+    "IdentityFilterKey":{
+      "type":"string",
+      "enum":[
+        "IDENTITY_NAME_CONTAINS",
+        "IDENTITY_TYPE",
+        "VERIFICATION_STATUS"
+      ]
+    },
+    "IdentityFilterValue":{
+      "type":"string",
+      "min":1
+    },
     "IdentityInfo":{
       "type":"structure",
       "members":{
@@ -3941,16 +3971,9 @@
     "ListConfigurationSetsRequest":{
       "type":"structure",
       "members":{
-        "NextToken":{
-          "shape":"NextToken",
-          "location":"querystring",
-          "locationName":"NextToken"
-        },
-        "PageSize":{
-          "shape":"MaxItems",
-          "location":"querystring",
-          "locationName":"PageSize"
-        }
+        "Filter":{"shape":"ConfigurationSetFilter"},
+        "NextToken":{"shape":"NextToken"},
+        "PageSize":{"shape":"MaxItems"}
       }
     },
     "ListConfigurationSetsResponse":{
@@ -4123,16 +4146,9 @@
     "ListEmailIdentitiesRequest":{
       "type":"structure",
       "members":{
-        "NextToken":{
-          "shape":"NextToken",
-          "location":"querystring",
-          "locationName":"NextToken"
-        },
-        "PageSize":{
-          "shape":"MaxItems",
-          "location":"querystring",
-          "locationName":"PageSize"
-        }
+        "Filter":{"shape":"IdentityFilter"},
+        "NextToken":{"shape":"NextToken"},
+        "PageSize":{"shape":"MaxItems"}
       }
     },
     "ListEmailIdentitiesResponse":{
@@ -4411,9 +4427,26 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListTenantsFilter":{
+      "type":"map",
+      "key":{"shape":"ListTenantsFilterKey"},
+      "value":{"shape":"ListTenantsFilterValue"}
+    },
+    "ListTenantsFilterKey":{
+      "type":"string",
+      "enum":[
+        "TENANT_NAME_CONTAINS",
+        "SENDING_STATUS"
+      ]
+    },
+    "ListTenantsFilterValue":{
+      "type":"string",
+      "min":1
+    },
     "ListTenantsRequest":{
       "type":"structure",
       "members":{
+        "Filter":{"shape":"ListTenantsFilter"},
         "NextToken":{"shape":"NextToken"},
         "PageSize":{"shape":"MaxItems"}
       }
@@ -5712,7 +5745,8 @@
         "TenantName":{"shape":"TenantName"},
         "TenantId":{"shape":"TenantId"},
         "TenantArn":{"shape":"AmazonResourceName"},
-        "CreatedTimestamp":{"shape":"Timestamp"}
+        "CreatedTimestamp":{"shape":"Timestamp"},
+        "SendingStatus":{"shape":"SendingStatus"}
       }
     },
     "TenantInfoList":{

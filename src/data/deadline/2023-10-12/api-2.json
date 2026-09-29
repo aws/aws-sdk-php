@@ -2556,7 +2556,8 @@
         "queueId":{"shape":"QueueId"},
         "jobId":{"shape":"JobId"},
         "sessionActions":{"shape":"AssignedSessionActions"},
-        "logConfiguration":{"shape":"LogConfiguration"}
+        "logConfiguration":{"shape":"LogConfiguration"},
+        "metadata":{"shape":"SessionMetadata"}
       }
     },
     "AssignedSessionAction":{
@@ -3806,6 +3807,18 @@
       "members":{
         "errors":{"shape":"BatchUpdateTaskErrors"}
       }
+    },
+    "BooleanString":{
+      "type":"string",
+      "max":5,
+      "min":1,
+      "pattern":"([Tt][Rr][Uu][Ee]|[Ff][Aa][Ll][Ss][Ee]|[Yy][Ee][Ss]|[Nn][Oo]|[Oo][Nn]|[Oo][Ff][Ff]|[01])"
+    },
+    "BooleanStringList":{
+      "type":"list",
+      "member":{"shape":"BooleanString"},
+      "max":512,
+      "min":0
     },
     "BoundedString":{
       "type":"string",
@@ -5119,7 +5132,9 @@
         "jobId":{"shape":"JobId"},
         "environmentId":{"shape":"EnvironmentId"},
         "schemaVersion":{"shape":"String"},
-        "template":{"shape":"Document"}
+        "template":{"shape":"Document"},
+        "extensions":{"shape":"OpenjdExtensionNameList"},
+        "resolvedSymbolTable":{"shape":"SerializedSymbolTable"}
       }
     },
     "EnvironmentDetailsError":{
@@ -5380,6 +5395,23 @@
       "type":"list",
       "member":{"shape":"FleetMember"}
     },
+    "FleetSoftwareAddOn":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{"shape":"FleetSoftwareAddOnName"}
+      }
+    },
+    "FleetSoftwareAddOnName":{
+      "type":"string",
+      "enum":["docker"]
+    },
+    "FleetSoftwareAddOns":{
+      "type":"list",
+      "member":{"shape":"FleetSoftwareAddOn"},
+      "max":10,
+      "min":0
+    },
     "FleetStatus":{
       "type":"string",
       "enum":[
@@ -5436,6 +5468,12 @@
       "max":26,
       "min":1,
       "pattern":"[-]?(0|[1-9][0-9]*)([.][0-9]+)?([eE][+-]?[0-9]+)?"
+    },
+    "FloatStringList":{
+      "type":"list",
+      "member":{"shape":"FloatString"},
+      "max":512,
+      "min":0
     },
     "GetBudgetRequest":{
       "type":"structure",
@@ -6505,6 +6543,18 @@
       "min":1,
       "pattern":"[-]?(0|[1-9][0-9]*)"
     },
+    "IntStringList":{
+      "type":"list",
+      "member":{"shape":"IntString"},
+      "max":512,
+      "min":0
+    },
+    "IntStringListList":{
+      "type":"list",
+      "member":{"shape":"NestedIntStringList"},
+      "max":512,
+      "min":0
+    },
     "Integer":{
       "type":"integer",
       "box":true
@@ -6624,6 +6674,7 @@
         "queueRoleArn":{"shape":"IamRoleArn"},
         "parameters":{"shape":"JobParameters"},
         "schemaVersion":{"shape":"String"},
+        "extensions":{"shape":"OpenjdExtensionNameList"},
         "pathMappingRules":{"shape":"PathMappingRules"}
       }
     },
@@ -6740,7 +6791,7 @@
     },
     "JobName":{
       "type":"string",
-      "max":128,
+      "max":512,
       "min":1
     },
     "JobParameter":{
@@ -6749,7 +6800,15 @@
         "int":{"shape":"IntString"},
         "float":{"shape":"FloatString"},
         "string":{"shape":"ParameterString"},
-        "path":{"shape":"PathString"}
+        "path":{"shape":"PathString"},
+        "bool":{"shape":"BooleanString"},
+        "rangeExpr":{"shape":"RangeExprString"},
+        "stringList":{"shape":"ParameterStringList"},
+        "pathList":{"shape":"PathStringList"},
+        "intList":{"shape":"IntStringList"},
+        "floatList":{"shape":"FloatStringList"},
+        "boolList":{"shape":"BooleanStringList"},
+        "intListList":{"shape":"IntStringListList"}
       },
       "union":true
     },
@@ -6766,6 +6825,8 @@
       "type":"map",
       "key":{"shape":"JobParametersKeyString"},
       "value":{"shape":"JobParameter"},
+      "max":200,
+      "min":0,
       "sensitive":true
     },
     "JobParametersKeyString":{
@@ -8276,6 +8337,12 @@
       "max":255,
       "min":1
     },
+    "NestedIntStringList":{
+      "type":"list",
+      "member":{"shape":"IntString"},
+      "max":64,
+      "min":0
+    },
     "NextItemOffset":{
       "type":"integer",
       "box":true,
@@ -8285,6 +8352,18 @@
     "NextToken":{
       "type":"string",
       "max":4096,
+      "min":0
+    },
+    "OpenjdExtensionName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[A-Z][A-Z0-9_]*"
+    },
+    "OpenjdExtensionNameList":{
+      "type":"list",
+      "member":{"shape":"OpenjdExtensionName"},
+      "max":32,
       "min":0
     },
     "OutputRelativeDirectoriesList":{
@@ -8335,6 +8414,12 @@
       "max":1024,
       "min":0
     },
+    "ParameterStringList":{
+      "type":"list",
+      "member":{"shape":"ParameterString"},
+      "max":64,
+      "min":0
+    },
     "ParameterValue":{
       "type":"string",
       "max":256,
@@ -8368,6 +8453,12 @@
     "PathString":{
       "type":"string",
       "max":1024,
+      "min":0
+    },
+    "PathStringList":{
+      "type":"list",
+      "member":{"shape":"PathString"},
+      "max":64,
       "min":0
     },
     "Period":{
@@ -8656,6 +8747,11 @@
         "CONTIGUOUS",
         "NONCONTIGUOUS"
       ]
+    },
+    "RangeExprString":{
+      "type":"string",
+      "max":1024,
+      "min":1
     },
     "Region":{
       "type":"string",
@@ -9080,6 +9176,11 @@
       "type":"string",
       "pattern":"sg-[\\w]{1,120}"
     },
+    "SerializedSymbolTable":{
+      "type":"string",
+      "max":1000000,
+      "min":1
+    },
     "ServiceManagedEc2AutoScalingConfiguration":{
       "type":"structure",
       "members":{
@@ -9121,7 +9222,8 @@
         "allowedInstanceTypes":{"shape":"InstanceTypes"},
         "excludedInstanceTypes":{"shape":"InstanceTypes"},
         "customAmounts":{"shape":"CustomFleetAmountCapabilities"},
-        "customAttributes":{"shape":"CustomFleetAttributeCapabilities"}
+        "customAttributes":{"shape":"CustomFleetAttributeCapabilities"},
+        "softwareAddOns":{"shape":"FleetSoftwareAddOns"}
       }
     },
     "ServiceManagedEc2InstanceMarketOptions":{
@@ -9273,6 +9375,23 @@
     "SessionLifecycleTargetStatus":{
       "type":"string",
       "enum":["ENDED"]
+    },
+    "SessionMetadata":{
+      "type":"map",
+      "key":{"shape":"SessionMetadataKey"},
+      "value":{"shape":"SessionMetadataValue"},
+      "max":10,
+      "min":0
+    },
+    "SessionMetadataKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "SessionMetadataValue":{
+      "type":"string",
+      "max":128,
+      "min":0
     },
     "SessionSummaries":{
       "type":"list",
@@ -9519,7 +9638,9 @@
         "stepId":{"shape":"StepId"},
         "schemaVersion":{"shape":"String"},
         "template":{"shape":"Document"},
-        "dependencies":{"shape":"DependenciesList"}
+        "dependencies":{"shape":"DependenciesList"},
+        "extensions":{"shape":"OpenjdExtensionNameList"},
+        "resolvedSymbolTable":{"shape":"SerializedSymbolTable"}
       }
     },
     "StepDetailsError":{
@@ -9563,7 +9684,7 @@
     },
     "StepName":{
       "type":"string",
-      "max":64,
+      "max":512,
       "min":1
     },
     "StepParameter":{
@@ -9596,7 +9717,7 @@
     },
     "StepParameterName":{
       "type":"string",
-      "max":64,
+      "max":512,
       "min":1
     },
     "StepParameterType":{
