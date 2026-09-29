@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.398.3 - 2026-09-29
 
 * `Aws\SESv2` - Added Filter support for ListTenants, ListEmailIdentities, and ListConfigurationSets APIs.
 * `Aws\RDS` - Adds the TargetResourceConfigurations parameter to CreateBlueGreenDeployment, letting you specify a target KMS key for each resource in the green environment.
