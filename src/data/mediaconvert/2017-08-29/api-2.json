@@ -957,10 +957,10 @@
       },
       "errors": [
         {
-          "shape": "BadRequestException"
+          "shape": "UnprocessableEntityException"
         },
         {
-          "shape": "UnprocessableEntityException"
+          "shape": "BadRequestException"
         },
         {
           "shape": "InternalServerErrorException"
@@ -2145,6 +2145,10 @@
           "shape": "AudioSelectorType",
           "locationName": "selectorType"
         },
+        "Smpte337Passthrough": {
+          "shape": "AudioSmpte337Passthrough",
+          "locationName": "smpte337Passthrough"
+        },
         "Streams": {
           "shape": "__listOf__integerMin1Max2147483647",
           "locationName": "streams"
@@ -2173,6 +2177,13 @@
         "HLS_RENDITION_GROUP",
         "ALL_PCM",
         "STREAM"
+      ]
+    },
+    "AudioSmpte337Passthrough": {
+      "type": "string",
+      "enum": [
+        "ENABLED",
+        "DISABLED"
       ]
     },
     "AudioTypeControl": {
@@ -5750,7 +5761,12 @@
         "mp3",
         "flac",
         "asf",
-        "ogg"
+        "ogg",
+        "three_gp",
+        "three_g2",
+        "aac",
+        "ac3",
+        "eac3"
       ]
     },
     "FrameCaptureSettings": {
@@ -8210,6 +8226,10 @@
           "shape": "MotionImageInserter",
           "locationName": "motionImageInserter"
         },
+        "MotionImageInserters": {
+          "shape": "__listOfMotionImageInserter",
+          "locationName": "motionImageInserters"
+        },
         "NielsenConfiguration": {
           "shape": "NielsenConfiguration",
           "locationName": "nielsenConfiguration"
@@ -8349,6 +8369,10 @@
         "MotionImageInserter": {
           "shape": "MotionImageInserter",
           "locationName": "motionImageInserter"
+        },
+        "MotionImageInserters": {
+          "shape": "__listOfMotionImageInserter",
+          "locationName": "motionImageInserters"
         },
         "NielsenConfiguration": {
           "shape": "NielsenConfiguration",
@@ -10695,12 +10719,28 @@
         }
       }
     },
+    "PassthroughSegmentationMode": {
+      "type": "string",
+      "enum": [
+        "AUTO",
+        "DURATION_BASED",
+        "GOP_COUNT"
+      ]
+    },
     "PassthroughSettings": {
       "type": "structure",
       "members": {
         "FrameControl": {
           "shape": "FrameControl",
           "locationName": "frameControl"
+        },
+        "GopsPerSegment": {
+          "shape": "__integerMin1Max100",
+          "locationName": "gopsPerSegment"
+        },
+        "SegmentationMode": {
+          "shape": "PassthroughSegmentationMode",
+          "locationName": "segmentationMode"
         },
         "VideoSelectorMode": {
           "shape": "VideoSelectorMode",
@@ -14283,6 +14323,12 @@
       "type": "list",
       "member": {
         "shape": "JobsQueryFilter"
+      }
+    },
+    "__listOfMotionImageInserter": {
+      "type": "list",
+      "member": {
+        "shape": "MotionImageInserter"
       }
     },
     "__listOfMsSmoothAdditionalManifest": {

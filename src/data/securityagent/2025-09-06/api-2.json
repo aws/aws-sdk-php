@@ -652,6 +652,16 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "ListActorMessages":{
+      "name":"ListActorMessages",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListActorMessages",
+        "responseCode":200
+      },
+      "input":{"shape":"ListActorMessagesInput"},
+      "output":{"shape":"ListActorMessagesOutput"}
+    },
     "ListAgentSpaces":{
       "name":"ListAgentSpaces",
       "http":{
@@ -1085,6 +1095,24 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "UpdateIntegration":{
+      "name":"UpdateIntegration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/UpdateIntegration",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateIntegrationInput"},
+      "output":{"shape":"UpdateIntegrationOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "UpdatePentest":{
       "name":"UpdatePentest",
       "http":{
@@ -1221,6 +1249,19 @@
     "ActorList":{
       "type":"list",
       "member":{"shape":"Actor"}
+    },
+    "ActorMessage":{
+      "type":"structure",
+      "members":{
+        "sender":{"shape":"SensitiveMessageSender"},
+        "subject":{"shape":"SensitiveMessageSubject"},
+        "body":{"shape":"SensitiveMessageBody"},
+        "receivedAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "ActorMessageList":{
+      "type":"list",
+      "member":{"shape":"ActorMessage"}
     },
     "AddArtifactInput":{
       "type":"structure",
@@ -1402,6 +1443,55 @@
         "AWS_IAM_ROLE",
         "AWS_INTERNAL"
       ]
+    },
+    "AzureDevOpsIntegrationInput":{
+      "type":"structure",
+      "required":[
+        "code",
+        "state",
+        "organizationName"
+      ],
+      "members":{
+        "code":{"shape":"AuthCode"},
+        "state":{"shape":"CsrfState"},
+        "organizationName":{"shape":"String"}
+      }
+    },
+    "AzureDevOpsOrganization":{"type":"string"},
+    "AzureDevOpsRepositoryMetadata":{
+      "type":"structure",
+      "required":[
+        "name",
+        "providerResourceId",
+        "organization"
+      ],
+      "members":{
+        "name":{"shape":"ProviderResourceName"},
+        "providerResourceId":{"shape":"ProviderResourceId"},
+        "organization":{"shape":"AzureDevOpsOrganization"},
+        "project":{"shape":"String"},
+        "projectId":{"shape":"String"},
+        "accessType":{"shape":"AccessType"}
+      }
+    },
+    "AzureDevOpsRepositoryResource":{
+      "type":"structure",
+      "required":[
+        "name",
+        "organization"
+      ],
+      "members":{
+        "name":{"shape":"ProviderResourceName"},
+        "organization":{"shape":"AzureDevOpsOrganization"},
+        "project":{"shape":"String"}
+      }
+    },
+    "AzureDevOpsResourceCapabilities":{
+      "type":"structure",
+      "members":{
+        "leaveComments":{"shape":"Boolean"},
+        "remediateCode":{"shape":"Boolean"}
+      }
     },
     "BatchCreateSecurityRequirementResult":{
       "type":"structure",
@@ -1858,6 +1948,19 @@
         "errors":{"shape":"BatchSecurityRequirementErrors"}
       }
     },
+    "BitbucketDataCenterIntegrationInput":{
+      "type":"structure",
+      "required":[
+        "targetUrl",
+        "code",
+        "state"
+      ],
+      "members":{
+        "targetUrl":{"shape":"TargetUrl"},
+        "code":{"shape":"AuthCode"},
+        "state":{"shape":"CsrfState"}
+      }
+    },
     "BitbucketInstallationId":{"type":"string"},
     "BitbucketIntegrationInput":{
       "type":"structure",
@@ -1942,12 +2045,23 @@
       "type":"string",
       "sensitive":true
     },
+    "CiCdConfiguration":{
+      "type":"structure",
+      "members":{
+        "enabled":{"shape":"Boolean"}
+      }
+    },
     "CleanUpStrategy":{
       "type":"string",
       "enum":[
         "BEST_EFFORT_DELETE",
         "RETAIN_ALL"
       ]
+    },
+    "ClientId":{"type":"string"},
+    "ClientSecret":{
+      "type":"string",
+      "sensitive":true
     },
     "CloudWatchLog":{
       "type":"structure",
@@ -2024,6 +2138,8 @@
         "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"},
         "validationMode":{"shape":"ValidationMode"},
         "maxTaskHours":{"shape":"Double"},
+        "reportDestination":{"shape":"ReportDestination"},
+        "reportFilters":{"shape":"ReportFilters"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
@@ -2050,6 +2166,7 @@
         "integratedRepositories":{"shape":"IntegratedRepositoryList"},
         "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"},
         "maxTaskHours":{"shape":"Double"},
+        "reportDestination":{"shape":"ReportDestination"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
@@ -2165,6 +2282,12 @@
         "MEDIUM",
         "HIGH"
       ]
+    },
+    "ConfidenceLevelFilterList":{
+      "type":"list",
+      "member":{"shape":"ConfidenceLevel"},
+      "max":50,
+      "min":0
     },
     "ConflictException":{
       "type":"structure",
@@ -2306,7 +2429,9 @@
         "logConfig":{"shape":"CloudWatchLog"},
         "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"},
         "validationMode":{"shape":"ValidationMode"},
-        "maxTaskHours":{"shape":"Double"}
+        "maxTaskHours":{"shape":"Double"},
+        "reportDestination":{"shape":"ReportDestination"},
+        "reportFilters":{"shape":"ReportFilters"}
       }
     },
     "CreateCodeReviewOutput":{
@@ -2323,7 +2448,9 @@
         "agentSpaceId":{"shape":"String"},
         "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"},
         "validationMode":{"shape":"ValidationMode"},
-        "maxTaskHours":{"shape":"Double"}
+        "maxTaskHours":{"shape":"Double"},
+        "reportDestination":{"shape":"ReportDestination"},
+        "reportFilters":{"shape":"ReportFilters"}
       }
     },
     "CreateIntegrationInput":{
@@ -2386,7 +2513,10 @@
         "networkTrafficConfig":{"shape":"NetworkTrafficConfig"},
         "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"},
         "disableManagedSkills":{"shape":"SkillTypeList"},
-        "maxTaskHours":{"shape":"Double"}
+        "maxTaskHours":{"shape":"Double"},
+        "reportDestination":{"shape":"ReportDestination"},
+        "reportFilters":{"shape":"ReportFilters"},
+        "cicdConfiguration":{"shape":"CiCdConfiguration"}
       }
     },
     "CreatePentestOutput":{
@@ -2400,7 +2530,10 @@
         "excludeRiskTypes":{"shape":"RiskTypeList"},
         "serviceRole":{"shape":"ServiceRole"},
         "logConfig":{"shape":"CloudWatchLog"},
-        "agentSpaceId":{"shape":"String"}
+        "agentSpaceId":{"shape":"String"},
+        "reportDestination":{"shape":"ReportDestination"},
+        "reportFilters":{"shape":"ReportFilters"},
+        "cicdConfiguration":{"shape":"CiCdConfiguration"}
       }
     },
     "CreatePrivateConnectionInput":{
@@ -2564,7 +2697,8 @@
         "serviceRole":{"shape":"ServiceRole"},
         "logConfig":{"shape":"CloudWatchLog"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
-        "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "reportDestination":{"shape":"ReportDestination"}
       }
     },
     "CreateThreatOutput":{
@@ -2942,6 +3076,12 @@
         "FALSE_POSITIVE"
       ]
     },
+    "FindingStatusFilterList":{
+      "type":"list",
+      "member":{"shape":"FindingStatus"},
+      "max":50,
+      "min":0
+    },
     "FindingSummary":{
       "type":"structure",
       "required":[
@@ -3042,6 +3182,7 @@
         "displayName":{"shape":"String"},
         "kmsKeyId":{"shape":"KmsKeyId"},
         "targetUrl":{"shape":"TargetUrl"},
+        "webhookUrl":{"shape":"String"},
         "privateConnectionName":{"shape":"PrivateConnectionName"}
       }
     },
@@ -3229,7 +3370,11 @@
       "type":"structure",
       "required":["provider"],
       "members":{
-        "provider":{"shape":"Provider"}
+        "provider":{"shape":"Provider"},
+        "targetUrl":{"shape":"TargetUrl"},
+        "organizationName":{"shape":"String"},
+        "clientId":{"shape":"ClientId"},
+        "clientSecret":{"shape":"ClientSecret"}
       }
     },
     "InitiateProviderRegistrationOutput":{
@@ -3280,7 +3425,8 @@
         "githubRepository":{"shape":"GitHubRepositoryResource"},
         "gitlabRepository":{"shape":"GitLabRepositoryResource"},
         "bitbucketRepository":{"shape":"BitbucketRepositoryResource"},
-        "confluenceDocument":{"shape":"ConfluenceDocumentResource"}
+        "confluenceDocument":{"shape":"ConfluenceDocumentResource"},
+        "azureDevOpsRepository":{"shape":"AzureDevOpsRepositoryResource"}
       },
       "union":true
     },
@@ -3302,7 +3448,8 @@
         "githubRepository":{"shape":"GitHubRepositoryMetadata"},
         "gitlabRepository":{"shape":"GitLabRepositoryMetadata"},
         "bitbucketRepository":{"shape":"BitbucketRepositoryMetadata"},
-        "confluenceDocument":{"shape":"ConfluenceDocumentMetadata"}
+        "confluenceDocument":{"shape":"ConfluenceDocumentMetadata"},
+        "azureDevOpsRepository":{"shape":"AzureDevOpsRepositoryMetadata"}
       },
       "union":true
     },
@@ -3347,6 +3494,7 @@
         "providerType":{"shape":"ProviderType"},
         "displayName":{"shape":"String"},
         "targetUrl":{"shape":"TargetUrl"},
+        "webhookUrl":{"shape":"String"},
         "privateConnectionName":{"shape":"PrivateConnectionName"}
       }
     },
@@ -3386,7 +3534,8 @@
       "type":"string",
       "enum":[
         "FULL",
-        "REVALIDATION"
+        "REVALIDATION",
+        "CICD"
       ]
     },
     "KmsKeyId":{"type":"string"},
@@ -3394,6 +3543,28 @@
     "LambdaFunctionArns":{
       "type":"list",
       "member":{"shape":"LambdaFunctionArn"}
+    },
+    "ListActorMessagesInput":{
+      "type":"structure",
+      "required":[
+        "agentSpaceId",
+        "pentestId",
+        "actorIdentifier"
+      ],
+      "members":{
+        "maxResults":{"shape":"MaxResults"},
+        "nextToken":{"shape":"NextToken"},
+        "agentSpaceId":{"shape":"String"},
+        "pentestId":{"shape":"String"},
+        "actorIdentifier":{"shape":"String"}
+      }
+    },
+    "ListActorMessagesOutput":{
+      "type":"structure",
+      "members":{
+        "messages":{"shape":"ActorMessageList"},
+        "nextToken":{"shape":"NextToken"}
+      }
     },
     "ListAgentSpacesInput":{
       "type":"structure",
@@ -3626,7 +3797,8 @@
         "maxResults":{"shape":"MaxResults"},
         "pentestId":{"shape":"String"},
         "agentSpaceId":{"shape":"String"},
-        "nextToken":{"shape":"NextToken"}
+        "nextToken":{"shape":"NextToken"},
+        "jobType":{"shape":"JobType"}
       }
     },
     "ListPentestJobsForPentestOutput":{
@@ -3954,6 +4126,9 @@
         "cleanUpStrategy":{"shape":"CleanUpStrategy"},
         "disableManagedSkills":{"shape":"SkillTypeList"},
         "maxTaskHours":{"shape":"Double"},
+        "reportDestination":{"shape":"ReportDestination"},
+        "reportFilters":{"shape":"ReportFilters"},
+        "cicdConfiguration":{"shape":"CiCdConfiguration"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
@@ -3992,6 +4167,11 @@
         "maxTaskHours":{"shape":"Double"},
         "jobType":{"shape":"JobType"},
         "selectedFindingIds":{"shape":"StringList"},
+        "reportDestination":{"shape":"ReportDestination"},
+        "reportUrl":{"shape":"String"},
+        "scopeResult":{"shape":"ScopeResult"},
+        "scopeChanges":{"shape":"ScopeChangeList"},
+        "cicdConfiguration":{"shape":"CiCdConfiguration"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
@@ -4016,7 +4196,9 @@
         "title":{"shape":"String"},
         "status":{"shape":"JobStatus"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
-        "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "jobType":{"shape":"JobType"},
+        "reportUrl":{"shape":"String"}
       }
     },
     "PentestJobSummaryList":{
@@ -4119,7 +4301,8 @@
         "GITHUB",
         "GITLAB",
         "BITBUCKET",
-        "CONFLUENCE"
+        "CONFLUENCE",
+        "AZURE_DEVOPS"
       ]
     },
     "ProviderInput":{
@@ -4128,7 +4311,9 @@
         "github":{"shape":"GitHubIntegrationInput"},
         "gitlab":{"shape":"GitLabIntegrationInput"},
         "bitbucket":{"shape":"BitbucketIntegrationInput"},
-        "confluence":{"shape":"ConfluenceIntegrationInput"}
+        "confluence":{"shape":"ConfluenceIntegrationInput"},
+        "azureDevOps":{"shape":"AzureDevOpsIntegrationInput"},
+        "bitbucketDataCenter":{"shape":"BitbucketDataCenterIntegrationInput"}
       },
       "union":true
     },
@@ -4138,7 +4323,8 @@
         "github":{"shape":"GitHubResourceCapabilities"},
         "gitlab":{"shape":"GitLabResourceCapabilities"},
         "bitbucket":{"shape":"BitbucketResourceCapabilities"},
-        "confluence":{"shape":"ConfluenceResourceCapabilities"}
+        "confluence":{"shape":"ConfluenceResourceCapabilities"},
+        "azureDevOps":{"shape":"AzureDevOpsResourceCapabilities"}
       },
       "union":true
     },
@@ -4162,6 +4348,30 @@
         "containerId":{"shape":"String"},
         "parentId":{"shape":"String"},
         "documentId":{"shape":"String"}
+      }
+    },
+    "ReportFilterList":{
+      "type":"list",
+      "member":{"shape":"ReportFilterValue"},
+      "max":50,
+      "min":0
+    },
+    "ReportFilterValue":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "ReportFilters":{
+      "type":"structure",
+      "members":{
+        "riskLevels":{"shape":"RiskLevelFilterList"},
+        "confidenceLevels":{"shape":"ConfidenceLevelFilterList"},
+        "statuses":{"shape":"FindingStatusFilterList"},
+        "riskTypes":{"shape":"RiskTypeFilterList"},
+        "findingTypes":{"shape":"ReportFilterList"},
+        "taskStatuses":{"shape":"TaskExecutionStatusFilterList"},
+        "annotationNotes":{"shape":"Boolean"},
+        "complianceReport":{"shape":"Boolean"}
       }
     },
     "ResourceArn":{"type":"string"},
@@ -4204,6 +4414,12 @@
         "CRITICAL"
       ]
     },
+    "RiskLevelFilterList":{
+      "type":"list",
+      "member":{"shape":"RiskLevel"},
+      "max":50,
+      "min":0
+    },
     "RiskType":{
       "type":"string",
       "enum":[
@@ -4237,6 +4453,12 @@
         "UNKNOWN"
       ]
     },
+    "RiskTypeFilterList":{
+      "type":"list",
+      "member":{"shape":"RiskType"},
+      "max":50,
+      "min":0
+    },
     "RiskTypeList":{
       "type":"list",
       "member":{"shape":"RiskType"}
@@ -4246,6 +4468,44 @@
     "S3BucketArns":{
       "type":"list",
       "member":{"shape":"S3BucketArn"}
+    },
+    "ScopeChange":{
+      "type":"structure",
+      "required":[
+        "integrationId",
+        "providerResourceId",
+        "headCommitSha"
+      ],
+      "members":{
+        "integrationId":{"shape":"String"},
+        "providerResourceId":{"shape":"String"},
+        "baseCommitSha":{"shape":"String"},
+        "headCommitSha":{"shape":"String"},
+        "triggerRunId":{"shape":"String"}
+      }
+    },
+    "ScopeChangeList":{
+      "type":"list",
+      "member":{"shape":"ScopeChange"}
+    },
+    "ScopeDecision":{
+      "type":"string",
+      "enum":[
+        "IN_SCOPE",
+        "SCOPED_OUT",
+        "SCOPE_CONFLICT"
+      ]
+    },
+    "ScopeResult":{
+      "type":"structure",
+      "required":[
+        "decision",
+        "reason"
+      ],
+      "members":{
+        "decision":{"shape":"ScopeDecision"},
+        "reason":{"shape":"String"}
+      }
     },
     "SecretArn":{"type":"string"},
     "SecretArns":{
@@ -4371,6 +4631,18 @@
       "type":"string",
       "sensitive":true
     },
+    "SensitiveMessageBody":{
+      "type":"string",
+      "sensitive":true
+    },
+    "SensitiveMessageSender":{
+      "type":"string",
+      "sensitive":true
+    },
+    "SensitiveMessageSubject":{
+      "type":"string",
+      "sensitive":true
+    },
     "ServiceManagedInput":{
       "type":"structure",
       "required":[
@@ -4479,7 +4751,8 @@
         "agentSpaceId":{"shape":"String"},
         "pentestId":{"shape":"String"},
         "jobType":{"shape":"JobType"},
-        "selectedFindingIds":{"shape":"StringList"}
+        "selectedFindingIds":{"shape":"StringList"},
+        "scopeChanges":{"shape":"ScopeChangeList"}
       }
     },
     "StartPentestJobOutput":{
@@ -4736,6 +5009,12 @@
         "FAILED"
       ]
     },
+    "TaskExecutionStatusFilterList":{
+      "type":"list",
+      "member":{"shape":"TaskExecutionStatus"},
+      "max":50,
+      "min":0
+    },
     "TaskIdList":{
       "type":"list",
       "member":{"shape":"String"}
@@ -4841,6 +5120,7 @@
         "scopeDocs":{"shape":"DocumentList"},
         "serviceRole":{"shape":"ServiceRole"},
         "logConfig":{"shape":"CloudWatchLog"},
+        "reportDestination":{"shape":"ReportDestination"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
@@ -4866,7 +5146,8 @@
         "documents":{"shape":"DocumentList"},
         "scopeDocs":{"shape":"DocumentList"},
         "errorInformation":{"shape":"ErrorInformation"},
-        "systemOverview":{"shape":"String"}
+        "systemOverview":{"shape":"String"},
+        "reportDestination":{"shape":"ReportDestination"}
       }
     },
     "ThreatModelJobIdList":{
@@ -5105,7 +5386,9 @@
         "logConfig":{"shape":"CloudWatchLog"},
         "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"},
         "validationMode":{"shape":"ValidationMode"},
-        "maxTaskHours":{"shape":"Double"}
+        "maxTaskHours":{"shape":"Double"},
+        "reportDestination":{"shape":"ReportDestination"},
+        "reportFilters":{"shape":"ReportFilters"}
       }
     },
     "UpdateCodeReviewOutput":{
@@ -5122,7 +5405,9 @@
         "agentSpaceId":{"shape":"String"},
         "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"},
         "validationMode":{"shape":"ValidationMode"},
-        "maxTaskHours":{"shape":"Double"}
+        "maxTaskHours":{"shape":"Double"},
+        "reportDestination":{"shape":"ReportDestination"},
+        "reportFilters":{"shape":"ReportFilters"}
       }
     },
     "UpdateFindingInput":{
@@ -5166,6 +5451,26 @@
       "type":"structure",
       "members":{}
     },
+    "UpdateIntegrationInput":{
+      "type":"structure",
+      "required":[
+        "integrationId",
+        "webhookAction"
+      ],
+      "members":{
+        "integrationId":{"shape":"IntegrationId"},
+        "webhookAction":{"shape":"WebhookAction"}
+      }
+    },
+    "UpdateIntegrationOutput":{
+      "type":"structure",
+      "required":["integrationId"],
+      "members":{
+        "integrationId":{"shape":"IntegrationId"},
+        "webhookUrl":{"shape":"String"},
+        "secret":{"shape":"WebhookSecret"}
+      }
+    },
     "UpdatePentestInput":{
       "type":"structure",
       "required":[
@@ -5184,7 +5489,10 @@
         "networkTrafficConfig":{"shape":"NetworkTrafficConfig"},
         "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"},
         "disableManagedSkills":{"shape":"SkillTypeList"},
-        "maxTaskHours":{"shape":"Double"}
+        "maxTaskHours":{"shape":"Double"},
+        "reportDestination":{"shape":"ReportDestination"},
+        "reportFilters":{"shape":"ReportFilters"},
+        "cicdConfiguration":{"shape":"CiCdConfiguration"}
       }
     },
     "UpdatePentestOutput":{
@@ -5198,7 +5506,10 @@
         "excludeRiskTypes":{"shape":"RiskTypeList"},
         "serviceRole":{"shape":"ServiceRole"},
         "logConfig":{"shape":"CloudWatchLog"},
-        "agentSpaceId":{"shape":"String"}
+        "agentSpaceId":{"shape":"String"},
+        "reportDestination":{"shape":"ReportDestination"},
+        "reportFilters":{"shape":"ReportFilters"},
+        "cicdConfiguration":{"shape":"CiCdConfiguration"}
       }
     },
     "UpdatePrivateConnectionCertificateInput":{
@@ -5335,7 +5646,8 @@
         "assets":{"shape":"Assets"},
         "scopeDocs":{"shape":"DocumentList"},
         "serviceRole":{"shape":"ServiceRole"},
-        "logConfig":{"shape":"CloudWatchLog"}
+        "logConfig":{"shape":"CloudWatchLog"},
+        "reportDestination":{"shape":"ReportDestination"}
       }
     },
     "UpdateThreatModelOutput":{
@@ -5351,7 +5663,8 @@
         "serviceRole":{"shape":"ServiceRole"},
         "logConfig":{"shape":"CloudWatchLog"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
-        "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "reportDestination":{"shape":"ReportDestination"}
       }
     },
     "UpdateThreatOutput":{
@@ -5509,6 +5822,17 @@
     "VpcConfigs":{
       "type":"list",
       "member":{"shape":"VpcConfig"}
+    },
+    "WebhookAction":{
+      "type":"string",
+      "enum":[
+        "CREATE_IF_ABSENT",
+        "ROTATE"
+      ]
+    },
+    "WebhookSecret":{
+      "type":"string",
+      "sensitive":true
     }
   }
 }

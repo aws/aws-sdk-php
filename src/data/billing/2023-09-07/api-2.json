@@ -204,6 +204,24 @@
       ],
       "readonly":true
     },
+    "ListBillingViewSegments":{
+      "name":"ListBillingViewSegments",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListBillingViewSegmentsRequest"},
+      "output":{"shape":"ListBillingViewSegmentsResponse"},
+      "errors":[
+        {"shape":"BillingViewHealthStatusException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
     "ListBillingViews":{
       "name":"ListBillingViews",
       "http":{
@@ -214,6 +232,40 @@
       "output":{"shape":"ListBillingViewsResponse"},
       "errors":[
         {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "ListBusinessSupportAccountCharges":{
+      "name":"ListBusinessSupportAccountCharges",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListBusinessSupportAccountChargesRequest"},
+      "output":{"shape":"ListBusinessSupportAccountChargesResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "ListBusinessSupportSubscriptionHistory":{
+      "name":"ListBusinessSupportSubscriptionHistory",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListBusinessSupportSubscriptionHistoryRequest"},
+      "output":{"shape":"ListBusinessSupportSubscriptionHistoryResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
@@ -434,6 +486,13 @@
         "arn":{"shape":"BillingViewArn"}
       }
     },
+    "BillingDomain":{
+      "type":"string",
+      "enum":[
+        "BILLABLE",
+        "PRO_FORMA"
+      ]
+    },
     "BillingFeature":{
       "type":"string",
       "enum":[
@@ -594,6 +653,27 @@
       "pattern":"[ a-zA-Z0-9_\\+=\\.\\-@]+",
       "sensitive":true
     },
+    "BillingViewSegmentTimeRange":{
+      "type":"structure",
+      "members":{
+        "beginDateInclusive":{"shape":"Timestamp"},
+        "endDateExclusive":{"shape":"Timestamp"}
+      }
+    },
+    "BillingViewSegmentsList":{
+      "type":"list",
+      "member":{"shape":"BillingViewSegmentsListElement"}
+    },
+    "BillingViewSegmentsListElement":{
+      "type":"structure",
+      "members":{
+        "domain":{"shape":"BillingDomain"},
+        "timeRange":{"shape":"BillingViewSegmentTimeRange"},
+        "billingTransferAccountId":{"shape":"AccountId"},
+        "managementAccountId":{"shape":"AccountId"},
+        "billingGroupPrimaryAccountId":{"shape":"AccountId"}
+      }
+    },
     "BillingViewSourceViewsList":{
       "type":"list",
       "member":{"shape":"BillingViewArn"},
@@ -655,6 +735,109 @@
     "Boolean":{
       "type":"boolean",
       "box":true
+    },
+    "BusinessSupportAccountCharge":{
+      "type":"structure",
+      "required":[
+        "accountId",
+        "supportPlanName",
+        "totalCharge",
+        "totalUsageBasis"
+      ],
+      "members":{
+        "accountId":{"shape":"AccountId"},
+        "supportPlanName":{"shape":"String"},
+        "totalCharge":{"shape":"String"},
+        "totalUsageBasis":{"shape":"String"},
+        "tierCharges":{"shape":"BusinessSupportTierChargeList"},
+        "supportDiscount":{"shape":"BusinessSupportDiscount"},
+        "supportEligibleSpendByService":{"shape":"BusinessSupportServiceSpendList"}
+      }
+    },
+    "BusinessSupportAccountChargeList":{
+      "type":"list",
+      "member":{"shape":"BusinessSupportAccountCharge"},
+      "max":100,
+      "min":0
+    },
+    "BusinessSupportBillingMonth":{
+      "type":"string",
+      "pattern":"\\d{4}-(0[1-9]|1[0-2])"
+    },
+    "BusinessSupportDiscount":{
+      "type":"structure",
+      "members":{
+        "discountAmount":{"shape":"String"},
+        "discountPercentage":{"shape":"String"},
+        "discountType":{"shape":"String"},
+        "discountSource":{"shape":"String"}
+      }
+    },
+    "BusinessSupportServiceSpend":{
+      "type":"structure",
+      "required":[
+        "contributingService",
+        "itemType",
+        "chargeAmount",
+        "currency"
+      ],
+      "members":{
+        "contributingService":{"shape":"String"},
+        "itemType":{"shape":"String"},
+        "description":{"shape":"String"},
+        "chargeAmount":{"shape":"String"},
+        "currency":{"shape":"String"}
+      }
+    },
+    "BusinessSupportServiceSpendList":{
+      "type":"list",
+      "member":{"shape":"BusinessSupportServiceSpend"},
+      "max":50,
+      "min":0
+    },
+    "BusinessSupportSubscriptionContract":{
+      "type":"structure",
+      "required":[
+        "accountId",
+        "planName",
+        "contractStartDate",
+        "contractEndDate"
+      ],
+      "members":{
+        "accountId":{"shape":"AccountId"},
+        "planName":{"shape":"String"},
+        "contractStartDate":{"shape":"Timestamp"},
+        "contractEndDate":{"shape":"Timestamp"}
+      }
+    },
+    "BusinessSupportSubscriptionContractList":{
+      "type":"list",
+      "member":{"shape":"BusinessSupportSubscriptionContract"},
+      "max":1000,
+      "min":0
+    },
+    "BusinessSupportTierCharge":{
+      "type":"structure",
+      "required":[
+        "tierDescription",
+        "tierRate",
+        "usageSlice",
+        "tierCharge"
+      ],
+      "members":{
+        "tierDescription":{"shape":"String"},
+        "tierRate":{"shape":"String"},
+        "usageSlice":{"shape":"String"},
+        "tierCharge":{"shape":"String"},
+        "chargePeriodStartDate":{"shape":"Timestamp"},
+        "chargePeriodEndDate":{"shape":"Timestamp"}
+      }
+    },
+    "BusinessSupportTierChargeList":{
+      "type":"list",
+      "member":{"shape":"BusinessSupportTierCharge"},
+      "max":20,
+      "min":0
     },
     "ChargeAccount":{
       "type":"structure",
@@ -1160,6 +1343,23 @@
       "max":100,
       "min":0
     },
+    "ListBillingViewSegmentsRequest":{
+      "type":"structure",
+      "members":{
+        "timeRange":{"shape":"BillingViewSegmentTimeRange"},
+        "arn":{"shape":"BillingViewArn"},
+        "maxResults":{"shape":"BillingViewsMaxResults"},
+        "nextToken":{"shape":"PageToken"}
+      }
+    },
+    "ListBillingViewSegmentsResponse":{
+      "type":"structure",
+      "required":["items"],
+      "members":{
+        "items":{"shape":"BillingViewSegmentsList"},
+        "nextToken":{"shape":"PageToken"}
+      }
+    },
     "ListBillingViewsRequest":{
       "type":"structure",
       "members":{
@@ -1178,6 +1378,67 @@
       "required":["billingViews"],
       "members":{
         "billingViews":{"shape":"BillingViewList"},
+        "nextToken":{"shape":"PageToken"}
+      }
+    },
+    "ListBusinessSupportAccountChargesRequest":{
+      "type":"structure",
+      "required":["billingMonth"],
+      "members":{
+        "billingMonth":{"shape":"BusinessSupportBillingMonth"},
+        "accountId":{"shape":"AccountId"},
+        "maxResults":{"shape":"ListBusinessSupportAccountChargesRequestMaxResultsInteger"},
+        "nextToken":{"shape":"PageToken"}
+      }
+    },
+    "ListBusinessSupportAccountChargesRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListBusinessSupportAccountChargesResponse":{
+      "type":"structure",
+      "required":[
+        "billingMonth",
+        "isEstimated",
+        "totalSupportCharge",
+        "totalSupportEligibleSpend",
+        "accountCount",
+        "accountCharges"
+      ],
+      "members":{
+        "billingMonth":{"shape":"BusinessSupportBillingMonth"},
+        "isEstimated":{"shape":"Boolean"},
+        "totalSupportCharge":{"shape":"String"},
+        "totalSupportEligibleSpend":{"shape":"String"},
+        "accountCount":{"shape":"Integer"},
+        "accountCharges":{"shape":"BusinessSupportAccountChargeList"},
+        "nextToken":{"shape":"PageToken"}
+      }
+    },
+    "ListBusinessSupportSubscriptionHistoryRequest":{
+      "type":"structure",
+      "members":{
+        "billingMonth":{"shape":"BusinessSupportBillingMonth"},
+        "accountId":{"shape":"AccountId"},
+        "startDate":{"shape":"Timestamp"},
+        "endDate":{"shape":"Timestamp"},
+        "maxResults":{"shape":"ListBusinessSupportSubscriptionHistoryRequestMaxResultsInteger"},
+        "nextToken":{"shape":"PageToken"}
+      }
+    },
+    "ListBusinessSupportSubscriptionHistoryRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListBusinessSupportSubscriptionHistoryResponse":{
+      "type":"structure",
+      "required":["subscriptionContracts"],
+      "members":{
+        "subscriptionContracts":{"shape":"BusinessSupportSubscriptionContractList"},
         "nextToken":{"shape":"PageToken"}
       }
     },

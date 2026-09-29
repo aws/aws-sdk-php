@@ -688,7 +688,7 @@ use Aws\AwsClient;
  *         Standard?: array{
  *             NetworkInterfaceArn?: string,
  *             ProtocolConfiguration?: array,
- *             Protocol?: 'RIST'|'RTP'|'SRT_CALLER'|'SRT_LISTENER',
+ *             Protocol?: 'RIST'|'RTMP_PUSH'|'RTP'|'SRT_CALLER'|'SRT_LISTENER',
  *             ...,
  *         },
  *         MediaConnectFlow?: array{FlowArn?: string, FlowSourceArn?: string, DestinationTransitEncryption?: array, ...},
@@ -722,7 +722,7 @@ use Aws\AwsClient;
  *         Standard?: array{
  *             NetworkInterfaceArn?: string,
  *             ProtocolConfiguration?: array,
- *             Protocol?: 'RIST'|'RTP'|'SRT_CALLER'|'SRT_LISTENER',
+ *             Protocol?: 'RIST'|'RTMP_PUSH'|'RTP'|'SRT_CALLER'|'SRT_LISTENER',
  *             ...,
  *         },
  *         MediaConnectFlow?: array{FlowArn?: string, FlowSourceArn?: string, DestinationTransitEncryption?: array, ...},
@@ -1621,7 +1621,7 @@ use Aws\AwsClient;
  *         Standard?: array{
  *             NetworkInterfaceArn?: string,
  *             ProtocolConfiguration?: array,
- *             Protocol?: 'RIST'|'RTP'|'SRT_CALLER'|'SRT_LISTENER',
+ *             Protocol?: 'RIST'|'RTMP_PUSH'|'RTP'|'SRT_CALLER'|'SRT_LISTENER',
  *             ...,
  *         },
  *         MediaConnectFlow?: array{FlowArn?: string, FlowSourceArn?: string, DestinationTransitEncryption?: array, ...},
@@ -1652,7 +1652,7 @@ use Aws\AwsClient;
  *         Standard?: array{
  *             NetworkInterfaceArn?: string,
  *             ProtocolConfiguration?: array,
- *             Protocol?: 'RIST'|'RTP'|'SRT_CALLER'|'SRT_LISTENER',
+ *             Protocol?: 'RIST'|'RTMP_PUSH'|'RTP'|'SRT_CALLER'|'SRT_LISTENER',
  *             ...,
  *         },
  *         MediaConnectFlow?: array{FlowArn?: string, FlowSourceArn?: string, DestinationTransitEncryption?: array, ...},

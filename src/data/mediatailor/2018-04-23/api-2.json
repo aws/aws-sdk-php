@@ -673,6 +673,7 @@
         "INTERSTITIAL_VOD_FAILURE",
         "PRE_ADS_REQUEST_HOOK_ERROR",
         "PRE_ADS_REQUEST_FUNCTION_ERROR",
+        "BEACON_RECEIVED",
         "POST_ADS_RESPONSE_HOOK_ERROR",
         "POST_ADS_RESPONSE_FUNCTION_ERROR",
         "PRE_MANIFEST_INSERTION_HOOK_ERROR",
@@ -844,6 +845,25 @@
       },
       "exception":true
     },
+    "BeaconEventType":{
+      "type":"string",
+      "enum":[
+        "MUTE",
+        "UNMUTE",
+        "PAUSE",
+        "SKIP"
+      ]
+    },
+    "BeaconEventTypeList":{
+      "type":"list",
+      "member":{"shape":"BeaconEventType"}
+    },
+    "BeaconingConfiguration":{
+      "type":"structure",
+      "members":{
+        "ClientSide":{"shape":"ClientSideBeaconingConfiguration"}
+      }
+    },
     "Bumper":{
       "type":"structure",
       "members":{
@@ -892,6 +912,21 @@
       "enum":[
         "RUNNING",
         "STOPPED"
+      ]
+    },
+    "ClientSideBeaconingConfiguration":{
+      "type":"structure",
+      "required":["ReportingMode"],
+      "members":{
+        "ReportingMode":{"shape":"ClientSideBeaconingMode"},
+        "AdditionalEventTypes":{"shape":"BeaconEventTypeList"}
+      }
+    },
+    "ClientSideBeaconingMode":{
+      "type":"string",
+      "enum":[
+        "DISABLED",
+        "INSIGHTS"
       ]
     },
     "ClipRange":{
@@ -1814,7 +1849,8 @@
         "YieldOptimizationConfiguration":{"shape":"YieldOptimizationConfiguration"},
         "FunctionMapping":{"shape":"FunctionMapping"},
         "AdsPersonalizationTimeouts":{"shape":"AdsPersonalizationTimeouts"},
-        "AdsPersonalizationConcurrency":{"shape":"AdsPersonalizationConcurrency"}
+        "AdsPersonalizationConcurrency":{"shape":"AdsPersonalizationConcurrency"},
+        "BeaconingConfiguration":{"shape":"BeaconingConfiguration"}
       }
     },
     "GetPrefetchScheduleRequest":{
@@ -2378,7 +2414,8 @@
         "YieldOptimizationConfiguration":{"shape":"YieldOptimizationConfiguration"},
         "FunctionMapping":{"shape":"FunctionMapping"},
         "AdsPersonalizationTimeouts":{"shape":"AdsPersonalizationTimeouts"},
-        "AdsPersonalizationConcurrency":{"shape":"AdsPersonalizationConcurrency"}
+        "AdsPersonalizationConcurrency":{"shape":"AdsPersonalizationConcurrency"},
+        "BeaconingConfiguration":{"shape":"BeaconingConfiguration"}
       }
     },
     "PlaybackMode":{
@@ -2552,7 +2589,8 @@
         "YieldOptimizationConfiguration":{"shape":"YieldOptimizationConfiguration"},
         "FunctionMapping":{"shape":"FunctionMapping"},
         "AdsPersonalizationTimeouts":{"shape":"AdsPersonalizationTimeouts"},
-        "AdsPersonalizationConcurrency":{"shape":"AdsPersonalizationConcurrency"}
+        "AdsPersonalizationConcurrency":{"shape":"AdsPersonalizationConcurrency"},
+        "BeaconingConfiguration":{"shape":"BeaconingConfiguration"}
       }
     },
     "PutPlaybackConfigurationResponse":{
@@ -2588,7 +2626,8 @@
         "YieldOptimizationConfiguration":{"shape":"YieldOptimizationConfiguration"},
         "FunctionMapping":{"shape":"FunctionMapping"},
         "AdsPersonalizationTimeouts":{"shape":"AdsPersonalizationTimeouts"},
-        "AdsPersonalizationConcurrency":{"shape":"AdsPersonalizationConcurrency"}
+        "AdsPersonalizationConcurrency":{"shape":"AdsPersonalizationConcurrency"},
+        "BeaconingConfiguration":{"shape":"BeaconingConfiguration"}
       }
     },
     "RecurringConsumption":{

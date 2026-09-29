@@ -765,7 +765,8 @@
         "BedrockRerankingModelConfiguration$modelArn": "<p>The ARN of the reranker model.</p>",
         "ExternalSourcesRetrieveAndGenerateConfiguration$modelArn": "<p>The model Amazon Resource Name (ARN) for the external source wrapper object in the <code>retrieveAndGenerate</code> function.</p>",
         "ImplicitFilterConfiguration$modelArn": "<p>The model that generates the filter.</p>",
-        "KnowledgeBaseRetrieveAndGenerateConfiguration$modelArn": "<p>The ARN of the foundation model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a> used to generate a response.</p>"
+        "KnowledgeBaseRetrieveAndGenerateConfiguration$modelArn": "<p>The ARN of the foundation model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a> used to generate a response.</p>",
+        "MantleFoundationModelModelConfiguration$modelArn": "<p>The ARN of the Mantle foundation model.</p>"
       }
     },
     "BedrockModelConfigurations": {
@@ -2766,6 +2767,24 @@
       "base": "<p>The type of reranking configuration for managed search.</p>",
       "refs": {
         "ManagedSearchRerankingConfiguration$type": "<p>The type of reranking configuration.</p>"
+      }
+    },
+    "MantleFoundationModelConfiguration": {
+      "base": "<p>Configuration for a Mantle foundation model.</p>",
+      "refs": {
+        "FoundationModelConfiguration$mantleFoundationModelConfiguration": "<p>The Mantle foundation model configuration.</p>"
+      }
+    },
+    "MantleFoundationModelModelConfiguration": {
+      "base": "<p>Model configuration for a Mantle foundation model.</p>",
+      "refs": {
+        "MantleFoundationModelConfiguration$modelConfiguration": "<p>The model configuration containing the model ARN and project ID.</p>"
+      }
+    },
+    "MantleProjectId": {
+      "base": null,
+      "refs": {
+        "MantleFoundationModelModelConfiguration$projectId": "<p>The Amazon Bedrock project ID used for billing and usage attribution. If you don't specify a value, the service uses the default project.</p>"
       }
     },
     "MaxResults": {

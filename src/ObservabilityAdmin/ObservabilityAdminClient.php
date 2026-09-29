@@ -14,6 +14,7 @@ use Aws\AwsClient;
  *             Scope?: string,
  *             SourceLogsConfiguration?: array,
  *             SourceMetricsConfiguration?: array,
+ *             SourceContextGraphConfiguration?: array,
  *             ...,
  *         },
  *         Destination?: array{
@@ -37,6 +38,7 @@ use Aws\AwsClient;
  *             Scope?: string,
  *             SourceLogsConfiguration?: array,
  *             SourceMetricsConfiguration?: array,
+ *             SourceContextGraphConfiguration?: array,
  *             ...,
  *         },
  *         Destination?: array{
@@ -51,6 +53,10 @@ use Aws\AwsClient;
  *     Tags?: array<string, string>,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result createDatasetIntegration(array $args = [])
+ * @phpstan-method \Aws\Result createDatasetIntegration(array{RoleArn?: string, Tags?: array<string, string>, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise createDatasetIntegrationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createDatasetIntegrationAsync(array{RoleArn?: string, Tags?: array<string, string>, ...} $args = [])
  * @method \Aws\Result createS3TableIntegration(array $args = [])
  * @phpstan-method \Aws\Result createS3TableIntegration(array{
  *     Encryption?: array{SseAlgorithm?: 'AES256'|'aws:kms', KmsKeyArn?: string, ...},
@@ -193,6 +199,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result deleteCentralizationRuleForOrganization(array{RuleIdentifier?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteCentralizationRuleForOrganizationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteCentralizationRuleForOrganizationAsync(array{RuleIdentifier?: string, ...} $args = [])
+ * @method \Aws\Result deleteDatasetIntegration(array $args = [])
+ * @phpstan-method \Aws\Result deleteDatasetIntegration(array{Arn?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteDatasetIntegrationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteDatasetIntegrationAsync(array{Arn?: string, ...} $args = [])
  * @method \Aws\Result deleteS3TableIntegration(array $args = [])
  * @phpstan-method \Aws\Result deleteS3TableIntegration(array{Arn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteS3TableIntegrationAsync(array $args = [])
@@ -213,6 +223,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getCentralizationRuleForOrganization(array{RuleIdentifier?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getCentralizationRuleForOrganizationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getCentralizationRuleForOrganizationAsync(array{RuleIdentifier?: string, ...} $args = [])
+ * @method \Aws\Result getDatasetIntegration(array $args = [])
+ * @phpstan-method \Aws\Result getDatasetIntegration(array{Arn?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getDatasetIntegrationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getDatasetIntegrationAsync(array{Arn?: string, ...} $args = [])
  * @method \Aws\Result getS3TableIntegration(array $args = [])
  * @phpstan-method \Aws\Result getS3TableIntegration(array{Arn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getS3TableIntegrationAsync(array $args = [])
@@ -245,6 +259,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listCentralizationRulesForOrganization(array{RuleNamePrefix?: string, AllRegions?: bool, MaxResults?: int, NextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listCentralizationRulesForOrganizationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listCentralizationRulesForOrganizationAsync(array{RuleNamePrefix?: string, AllRegions?: bool, MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @method \Aws\Result listDatasetIntegrations(array $args = [])
+ * @phpstan-method \Aws\Result listDatasetIntegrations(array{MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listDatasetIntegrationsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listDatasetIntegrationsAsync(array{MaxResults?: int, NextToken?: string, ...} $args = [])
  * @method \Aws\Result listResourceTelemetry(array $args = [])
  * @phpstan-method \Aws\Result listResourceTelemetry(array{
  *     ResourceIdentifierPrefix?: string,
@@ -376,6 +394,7 @@ use Aws\AwsClient;
  *             Scope?: string,
  *             SourceLogsConfiguration?: array,
  *             SourceMetricsConfiguration?: array,
+ *             SourceContextGraphConfiguration?: array,
  *             ...,
  *         },
  *         Destination?: array{
@@ -398,6 +417,7 @@ use Aws\AwsClient;
  *             Scope?: string,
  *             SourceLogsConfiguration?: array,
  *             SourceMetricsConfiguration?: array,
+ *             SourceContextGraphConfiguration?: array,
  *             ...,
  *         },
  *         Destination?: array{
@@ -411,6 +431,10 @@ use Aws\AwsClient;
  *     },
  *     ...,
  * } $args = [])
+ * @method \Aws\Result updateDatasetIntegration(array $args = [])
+ * @phpstan-method \Aws\Result updateDatasetIntegration(array{Arn?: string, RoleArn?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateDatasetIntegrationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateDatasetIntegrationAsync(array{Arn?: string, RoleArn?: string, ...} $args = [])
  * @method \Aws\Result updateTelemetryPipeline(array $args = [])
  * @phpstan-method \Aws\Result updateTelemetryPipeline(array{PipelineIdentifier?: string, Configuration?: array{Body?: string, ...}, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise updateTelemetryPipelineAsync(array $args = [])

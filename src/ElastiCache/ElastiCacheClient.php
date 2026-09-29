@@ -193,6 +193,7 @@ use Aws\AwsClient;
  *     GlobalReplicationGroupIdSuffix?: string,
  *     GlobalReplicationGroupDescription?: string,
  *     PrimaryReplicationGroupId?: string,
+ *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createGlobalReplicationGroupAsync(array $args = [])
@@ -200,6 +201,7 @@ use Aws\AwsClient;
  *     GlobalReplicationGroupIdSuffix?: string,
  *     GlobalReplicationGroupDescription?: string,
  *     PrimaryReplicationGroupId?: string,
+ *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result createReplicationGroup(array $args = [])
@@ -342,6 +344,7 @@ use Aws\AwsClient;
  *     SnapshotRetentionLimit?: int,
  *     DailySnapshotTime?: string,
  *     NetworkType?: 'dual_stack'|'ipv4'|'ipv6',
+ *     ConnectionType?: 'public'|'vpc',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createServerlessCacheAsync(array $args = [])
@@ -364,6 +367,7 @@ use Aws\AwsClient;
  *     SnapshotRetentionLimit?: int,
  *     DailySnapshotTime?: string,
  *     NetworkType?: 'dual_stack'|'ipv4'|'ipv6',
+ *     ConnectionType?: 'public'|'vpc',
  *     ...,
  * } $args = [])
  * @method \Aws\Result createServerlessCacheSnapshot(array $args = [])

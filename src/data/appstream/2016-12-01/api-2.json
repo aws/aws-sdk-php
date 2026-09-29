@@ -1580,11 +1580,13 @@
     "AppDisplayName":{
       "type":"string",
       "max":100,
+      "min":0,
       "pattern":"^[a-zA-Z0-9][a-zA-Z0-9_. -]{0,99}$"
     },
     "AppName":{
       "type":"string",
       "max":100,
+      "min":0,
       "pattern":"^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,99}$"
     },
     "AppVisibility":{
@@ -3067,6 +3069,7 @@
     "FilePath":{
       "type":"string",
       "max":32767,
+      "min":0,
       "sensitive":true
     },
     "Filter":{
@@ -3258,7 +3261,8 @@
         "DynamicAppProvidersEnabled":{"shape":"DynamicAppProvidersEnabled"},
         "ImageSharedWithOthers":{"shape":"ImageSharedWithOthers"},
         "ManagedSoftwareIncluded":{"shape":"Boolean"},
-        "ImageType":{"shape":"ImageType"}
+        "ImageType":{"shape":"ImageType"},
+        "ImageSoftwareMetadata":{"shape":"ImageSoftwareMetadata"}
       }
     },
     "ImageBuilder":{
@@ -3328,11 +3332,13 @@
     "ImageImportDescription":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":"^[a-zA-Z0-9_.() -]+$"
     },
     "ImageImportDisplayName":{
       "type":"string",
       "max":100,
+      "min":0,
       "pattern":"^[a-zA-Z0-9_.() -]+$"
     },
     "ImageList":{
@@ -3352,6 +3358,12 @@
         "TRUE",
         "FALSE"
       ]
+    },
+    "ImageSoftwareMetadata":{
+      "type":"structure",
+      "members":{
+        "nvidiaGridDriverVersion":{"shape":"NvidiaGridDriverVersion"}
+      }
     },
     "ImageState":{
       "type":"string",
@@ -3457,7 +3469,8 @@
     "LaunchParameters":{
       "type":"string",
       "max":1024,
-      "pattern":"[^\\x00]+",
+      "min":0,
+      "pattern":"^[^\\x00]+$",
       "sensitive":true
     },
     "LimitExceededException":{
@@ -3576,6 +3589,12 @@
         "EniIpv6Addresses":{"shape":"StringList"},
         "EniId":{"shape":"String"}
       }
+    },
+    "NvidiaGridDriverVersion":{
+      "type":"string",
+      "max":32,
+      "min":1,
+      "pattern":"^[0-9]+(\\.[0-9]+){1,2}$"
     },
     "OperationNotPermittedException":{
       "type":"structure",
@@ -4174,7 +4193,7 @@
     "Timestamp":{"type":"timestamp"},
     "UUID":{
       "type":"string",
-      "pattern":"[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
+      "pattern":"^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
     },
     "UntagResourceRequest":{
       "type":"structure",

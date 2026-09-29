@@ -1,0 +1,2729 @@
+{
+  "version": "2.0",
+  "service": "<p>CloudWatch Omni is a unified observability experience built on Amazon CloudWatch. You work in a space, an isolated environment that holds your telemetry and controls who can access it, and your data is stored in the CloudWatch Dataset for correlated analysis of logs, metrics, and traces.</p>",
+  "operations": {
+    "CreateAccessGrant": "<p>Creates an AccessGrant that authorizes a principal to perform a set of actions on resources in a space.</p> <p>Optionally narrow the grant with scoped actions that limit it to specific resources and fields. Use ListAccessGrants and GetAccessGrant to retrieve grants, and DeleteAccessGrant to remove them.</p>",
+    "CreateAccessProfile": "<p>Creates an access profile in a space.</p> <p>Use GetAccessProfile and ListAccessProfiles to retrieve profiles, and UpdateAccessProfile to modify one.</p>",
+    "CreateAlert": "<p>Creates a new alert within a space.</p> <p>Use GetAlert and ListAlerts to retrieve alerts, UpdateAlert to modify one, and DeleteAlert to remove it.</p>",
+    "CreateDomain": "<p>Creates a domain with identity provider configuration.</p> <p>Use GetDomain to retrieve the domain, UpdateDomain to change its configuration, and CreateSpace to add spaces within it.</p>",
+    "CreateDomainAccessGrantForOrganization": "<p>Creates an AccessGrant that authorizes a principal to administer an organization domain.</p>",
+    "CreateDomainForOrganization": "<p>Creates an organization-scoped domain for the caller's AWS Organization. Only the organization's management account can call this operation.</p>",
+    "CreateIntegration": "<p>Creates an integration with a third-party provider. Returns the integration identifier and its initial status; when the provider requires interactive consent, an authorization URL is returned for the user to complete setup.</p>",
+    "CreateOmniDashboard": "<p>Creates a new dashboard within a space.</p> <p>Use GetOmniDashboard and ListOmniDashboards to retrieve dashboards, UpdateOmniDashboard to modify one, and DeleteOmniDashboard to remove it.</p>",
+    "CreateOneTimeDeepLinkCode": "<p>Generates a one-time code for deep-link authentication.</p> <p>Direct the user's browser to the returned deepLinkUrl before it expires. The code is exchanged for an authenticated, domain-scoped session and can be used only once.</p>",
+    "CreateSpace": "<p>Creates a space in a domain.</p> <p>Use GetSpace to retrieve the space, ListSpaces to enumerate spaces, UpdateSpace to modify it, and DeleteSpace to remove it.</p>",
+    "CreateView": "<p>Creates a new SQL view.</p> <p>A view is a named, reusable SQL query that can be referenced from telemetry queries. View names must be unique within the account and region. Only USER views can be created — MANAGED views are provisioned by AWS.</p>",
+    "DeleteAccessGrant": "<p>Removes an existing AccessGrant, revoking the access it granted.</p> <p>A service-managed grant cannot be deleted.</p>",
+    "DeleteAccessProfile": "<p>Removes an access profile.</p> <p>An access profile cannot be deleted while access grants reference it.</p>",
+    "DeleteAlert": "<p>Deletes an alert by its identifier.</p> <p>Idempotent: deleting an alert that has already been removed succeeds without error.</p>",
+    "DeleteDomain": "<p>Removes a domain and all of its resources. Call this operation in the Region where the domain was created.</p> <p>A domain cannot be deleted while it contains spaces.</p>",
+    "DeleteDomainAccessGrantForOrganization": "<p>Removes an existing organization access grant, revoking the access it granted.</p> <p>A service-managed grant cannot be deleted.</p>",
+    "DeleteDomainForOrganization": "<p>Removes an organization domain and all of its resources. Call this operation in the Region where the domain was created.</p> <p>A domain cannot be deleted while it contains spaces.</p>",
+    "DeleteIntegration": "<p>Deletes an integration. Returns the resulting status.</p>",
+    "DeleteOmniDashboard": "<p>Removes a dashboard from a space.</p>",
+    "DeleteSpace": "<p>Removes a space and all of its resources.</p>",
+    "DeleteView": "<p>Deletes the specified view.</p> <p>Queries that reference the view fail after it is deleted. Managed views cannot be deleted.</p>",
+    "GetAccessGrant": "<p>Retrieves the full detail of a single AccessGrant by ID.</p>",
+    "GetAccessProfile": "<p>Retrieves an access profile by ID.</p> <p>The response indicates whether the calling principal is currently allowed to assume the profile.</p>",
+    "GetAlert": "<p>Retrieves a single alert by its identifier.</p> <p>Use ListAlerts to enumerate alerts in the space.</p>",
+    "GetContextGraph": "<p>Queries the context graph with filtering, traversal, and pagination support.</p> <p>Pagination note: nodes and edges are returned together as a coherent subgraph. Pagination cursors advance over nodes (the primary collection); each page includes all edges connecting nodes within that page. Callers should treat nodes as the paginated collection and edges as supplementary relationship data attached to those nodes.</p>",
+    "GetDomain": "<p>Retrieves the details of a domain by ID.</p>",
+    "GetDomainAccessGrantForOrganization": "<p>Retrieves the full detail of a single organization access grant by ID.</p>",
+    "GetDomainForOrganization": "<p>Retrieves the details of an organization domain by ID.</p>",
+    "GetIntegration": "<p>Returns the details of a single integration, identified by its identifier, Amazon Resource Name, or name.</p>",
+    "GetIntelligenceConfiguration": "<p>Retrieves the intelligence configuration for the calling account. Account is identified via FAS (caller identity). Returns the default configuration if none exists yet.</p>",
+    "GetOmniDashboard": "<p>Retrieves a dashboard by ID within a space.</p>",
+    "GetSpace": "<p>Retrieves the details of a space by ID.</p>",
+    "GetSpaceCredentialsForOrganization": "<p>Returns temporary credentials for a space in an organization member account. The credentials are valid for one hour.</p> <p>The caller must be the organization's management account or a delegated administrator with access to the target space. The target account must be an active member of the same organization as the domain, and the space must already exist.</p>",
+    "GetTelemetryQueryResults": "<p>Returns the results for the specified query.</p>",
+    "GetView": "<p>Returns the definition and metadata of the specified view.</p>",
+    "ListAccessGrants": "<p>Returns AccessGrants, with optional filtering by domain, space, principal, or permission. A grant is returned only when it matches every filter supplied. With no filters, returns the grants for the current account and Region.</p>",
+    "ListAccessProfiles": "<p>Returns the access profiles in a space.</p>",
+    "ListAlerts": "<p>Lists alerts within a space, optionally filtered by exact name(s), a single name prefix, or exact alertId(s), with pagination.</p> <p>Use GetAlert to retrieve a single alert's full detail.</p>",
+    "ListDomainAccessGrantsForOrganization": "<p>Returns organization-level domain access grants, with optional filtering by domain, principal, or permission. A grant is returned only when it matches every filter supplied. With no filters, returns the grants for the caller's organization.</p>",
+    "ListDomains": "<p>Returns the caller's domains: the account-scoped domain and the organization-scoped domain, if either exists. At most two domains are returned.</p>",
+    "ListIntegrations": "<p>Lists the integrations in the account, optionally filtered by type, status, or name. Results are paginated.</p>",
+    "ListOmniDashboards": "<p>Returns the dashboards in a space, optionally filtered by name prefix.</p>",
+    "ListSpaces": "<p>Returns the spaces in the account, optionally filtered by domain.</p>",
+    "ListSpacesForOrganization": "<p>Returns the spaces across all member accounts in the organization.</p>",
+    "ListTelemetryFields": "<p>Lists fields available for telemetry queries.</p> <p>Returns a list of fields included in the specified dataset, granular to telemetry type. Returned field names reflect the exact stored casing and are case-sensitive when referenced in query expressions; the query engine does not normalize identifier case.</p>",
+    "ListTelemetryQuerySessions": "<p>Lists telemetry query sessions.</p> <p>Returns a list of telemetry query sessions owned by the caller.</p>",
+    "ListViews": "<p>Lists the views in the caller's account and region.</p> <p>Returns a summary for each view, optionally filtered by view type. View definitions are not included — use GetView to retrieve them.</p>",
+    "PutIntelligenceConfiguration": "<p>Creates or updates the intelligence configuration for the calling account. Account is identified via FAS (caller identity).</p>",
+    "SearchPrincipals": "<p>Searches Identity Center for users and groups in a domain. The domain must be configured with Identity Center.</p> <p>To grant access to a result, pass its principalId to CreateAccessGrant with a principalType of IDC_USER for a user or IDC_GROUP for a group.</p>",
+    "StartTelemetryQuery": "<p>Starts a telemetry query within a session.</p> <p>Submits the provided query string for execution in the specified session. Use GetTelemetryQueryResults to poll for results and check query status.</p>",
+    "StartTelemetryQuerySession": "<p>Starts a new telemetry query session.</p> <p>A session provides a logical grouping for one or more telemetry queries. The returned session ID is required when starting queries via StartTelemetryQuery.</p>",
+    "StopTelemetryQuery": "<p>Stops a running telemetry query.</p>",
+    "StopTelemetryQuerySession": "<p>Stops a telemetry query session.</p> <p>Terminates the specified session. After a session is stopped it cannot be reused.</p>",
+    "UpdateAccessProfile": "<p>Updates the name or description of an access profile.</p> <p>Only the provided fields are changed; omitted fields are left unchanged.</p>",
+    "UpdateAlert": "<p>Updates an existing alert.</p> <p>Only non-null fields overwrite existing values.</p>",
+    "UpdateDomain": "<p>Updates a domain's name or identity provider configuration.</p> <p>Only the provided fields are changed; omitted fields are left unchanged. Renaming a domain also changes the endpoint URLs derived from its name.</p>",
+    "UpdateDomainForOrganization": "<p>Updates an organization domain's name or identity provider configuration. Call this operation in the Region where the domain was created.</p> <p>Only the provided fields are changed; omitted fields are left unchanged. Renaming a domain also changes the endpoint URLs derived from its name.</p>",
+    "UpdateIntegration": "<p>Updates an existing integration, identified by its id, ARN, or name. Only the fields you provide are changed.</p>",
+    "UpdateOmniDashboard": "<p>Updates an existing dashboard within a space.</p> <p>Only the provided fields are changed; omitted fields are left unchanged.</p>",
+    "UpdateSpace": "<p>Updates a space.</p> <p>Only the provided fields are changed; omitted fields are left unchanged.</p>",
+    "UpdateView": "<p>Updates an existing view's definition and/or description.</p> <p>Only the fields you provide are changed. Managed views cannot be updated.</p>"
+  },
+  "shapes": {
+    "AccessDeniedException": {
+      "base": "<p>The caller is not authorized to perform this action.</p>",
+      "refs": {}
+    },
+    "AccessGrant": {
+      "base": "<p>Full AccessGrant structure returned by API operations.</p>",
+      "refs": {
+        "CreateAccessGrantOutput$accessGrant": "<p>The details of the created access grant.</p>",
+        "GetAccessGrantOutput$accessGrant": "<p>The full details of the access grant.</p>"
+      }
+    },
+    "AccessGrantNameString": {
+      "base": null,
+      "refs": {
+        "AccessGrant$name": "<p>A name that identifies the access grant.</p>"
+      }
+    },
+    "AccessGrantPermission": {
+      "base": "<p>Permission levels for AccessGrants. SPACE_ADMIN can manage grants within a space but cannot create spaces.</p>",
+      "refs": {
+        "AccessGrant$permission": "<p>The permission granted.</p>",
+        "AccessGrantSummary$permission": "<p>The permission granted.</p>",
+        "CreateAccessGrantInput$permission": "<p>The permission to grant. Exactly one permission is granted per request.</p>",
+        "ListAccessGrantsInput$permission": "<p>Filter by permission level.</p>"
+      }
+    },
+    "AccessGrantPrincipal": {
+      "base": "<p>The principal receiving the grant. Specify principalId, principalAttributes, or both.</p>",
+      "refs": {
+        "AccessGrant$principal": "<p>The principal receiving the grant.</p>",
+        "AccessGrantSummary$principal": "<p>The principal receiving the grant.</p>",
+        "CreateAccessGrantInput$principal": "<p>The principal receiving the grant.</p>"
+      }
+    },
+    "AccessGrantPrincipalAttribute": {
+      "base": "<p>A single attribute condition used to match principals for attribute-based access.</p>",
+      "refs": {
+        "AccessGrantPrincipalAttributeList$member": null
+      }
+    },
+    "AccessGrantPrincipalAttributeKeyString": {
+      "base": null,
+      "refs": {
+        "AccessGrantPrincipalAttribute$key": "<p>The Identity Center user attribute to match on. One of userName, active, userStatus, displayName, email, name.givenName, name.familyName, enterprise.department, enterprise.division, enterprise.organization, enterprise.costCenter, or enterprise.employeeNumber. Each key may appear only once per grant.</p>"
+      }
+    },
+    "AccessGrantPrincipalAttributeList": {
+      "base": "<p>List of principal attribute conditions.</p>",
+      "refs": {
+        "AccessGrantPrincipal$principalAttributes": "<p>Attribute conditions for attribute-based access. When provided, the grant targets any principal matching all specified conditions. Supported only for IDC_USER principals.</p>",
+        "OrganizationAccessGrantPrincipal$principalAttributes": "<p>Attribute conditions for attribute-based access. When provided, the grant targets any principal matching all specified conditions. Supported only for IDC_USER principals.</p>"
+      }
+    },
+    "AccessGrantPrincipalAttributeValueString": {
+      "base": null,
+      "refs": {
+        "AccessGrantPrincipalAttribute$value": "<p>The attribute value.</p>"
+      }
+    },
+    "AccessGrantPrincipalType": {
+      "base": "<p>Type of principal receiving the grant.</p>",
+      "refs": {
+        "AccessGrantPrincipal$principalType": "<p>The type of principal receiving the grant.</p>",
+        "ListAccessGrantsInput$principalType": "<p>Filter by principal type.</p>"
+      }
+    },
+    "AccessGrantSummary": {
+      "base": "<p>Summary of an AccessGrant. Call GetAccessGrant for the full grant.</p>",
+      "refs": {
+        "AccessGrantSummaryList$member": null
+      }
+    },
+    "AccessGrantSummaryList": {
+      "base": "<p>List of AccessGrant summaries.</p>",
+      "refs": {
+        "ListAccessGrantsOutput$items": "<p>The list of access grant summaries.</p>"
+      }
+    },
+    "AccessGrantSummaryNameString": {
+      "base": null,
+      "refs": {
+        "AccessGrantSummary$name": "<p>A name that identifies the access grant.</p>"
+      }
+    },
+    "AccessGrantType": {
+      "base": "<p>Who manages an access grant.</p>",
+      "refs": {
+        "AccessGrant$grantType": "<p>Who manages the grant.</p>",
+        "AccessGrantSummary$grantType": "<p>Who manages the grant.</p>",
+        "OrganizationAccessGrant$grantType": "<p>Who manages the grant.</p>",
+        "OrganizationAccessGrantSummary$grantType": "<p>Who manages the grant.</p>"
+      }
+    },
+    "AccessKeyId": {
+      "base": "<p>An AWS access key ID.</p>",
+      "refs": {
+        "AwsCredentials$accessKeyId": "<p>The AWS access key ID.</p>"
+      }
+    },
+    "AccessProfile": {
+      "base": "<p>An Access Profile.</p>",
+      "refs": {
+        "CreateAccessProfileOutput$accessProfile": "<p>The access profile.</p>",
+        "GetAccessProfileOutput$accessProfile": "<p>The access profile.</p>",
+        "UpdateAccessProfileOutput$accessProfile": "<p>The access profile.</p>"
+      }
+    },
+    "AccessProfileName": {
+      "base": "<p>A name that identifies an access profile. Must be 1-256 characters: letters, numbers, spaces, and the characters _ . : / = + @ -</p>",
+      "refs": {
+        "CreateAccessProfileInput$name": "<p>A name that identifies the access profile.</p>",
+        "UpdateAccessProfileInput$name": "<p>A new name for the access profile. Omit to leave unchanged.</p>"
+      }
+    },
+    "AccessProfileSummary": {
+      "base": "<p>Summary of an access profile. Call GetAccessProfile for the full profile.</p>",
+      "refs": {
+        "AccessProfileSummaryList$member": null
+      }
+    },
+    "AccessProfileSummaryList": {
+      "base": "<p>List of Access Profile summaries.</p>",
+      "refs": {
+        "ListAccessProfilesOutput$items": "<p>The list of access profile summaries.</p>"
+      }
+    },
+    "AccessProfileType": {
+      "base": "<p>Who manages an access profile.</p>",
+      "refs": {
+        "AccessProfile$profileType": "<p>Who manages the access profile.</p>",
+        "AccessProfileSummary$profileType": "<p>Who manages the access profile.</p>"
+      }
+    },
+    "AccountId": {
+      "base": "<p>12-digit AWS account id.</p>",
+      "refs": {
+        "AccessGrant$accountId": "<p>The AWS account ID that owns the grant.</p>",
+        "Alert$accountId": "<p>The AWS account ID that owns the alert.</p>",
+        "GetIntelligenceConfigurationOutput$accountId": "<p>The AWS account ID this configuration applies to.</p>",
+        "OrganizationDomain$ownerAccountId": "<p>The AWS account ID that owns the organization domain.</p>",
+        "PutIntelligenceConfigurationOutput$accountId": "<p>The AWS account ID this configuration applies to.</p>",
+        "Space$ownerAccountId": "<p>AWS account ID that owns this space.</p>",
+        "SpaceCredentialRequestContext$targetAccountId": "<p>The ID of the target member account. Required when domainId is set.</p>",
+        "SpaceSummary$ownerAccountId": "<p>AWS account ID that owns this space.</p>"
+      }
+    },
+    "Alert": {
+      "base": "<p>Full alert entity, returned by both CreateAlert and GetAlert. A create and a read of the same alert describe it identically except for {@code state}, which only the read paths populate. UpdateAlert returns an empty response.</p>",
+      "refs": {
+        "CreateAlertOutput$alert": "<p>The alert that was created. The same <code>Alert</code> shape GetAlert returns, so a caller need not read the alert back to learn its timestamps or its minted alert id.</p> <p>{@code alert.state} is absent here — see the <code>state</code> member of <code>Alert</code>. Every other member is populated exactly as GetAlert populates it.</p>",
+        "GetAlertOutput$alert": "<p>The full alert entity.</p>"
+      }
+    },
+    "AlertCondition": {
+      "base": "<p>The condition that determines when the alert fires.</p> <p>On UpdateAlert a supplied condition is replaced whole, not merged: an omitted {@code warningThreshold} or {@code criticalThreshold} removes that tier, and an omitted {@code thresholdField} clears it. A condition must keep at least one tier. {@code thresholdMode} and {@code comparator} are optional at the Smithy level (so a single-tier condition is expressible) but are required whenever a threshold is present; enforced by the service-side validator.</p>",
+      "refs": {
+        "TelemetryRule$condition": "<p>The condition that determines when the alert fires.</p>"
+      }
+    },
+    "AlertConditionThresholdFieldString": {
+      "base": null,
+      "refs": {
+        "AlertCondition$thresholdField": "<p>The field the threshold is evaluated against.</p>"
+      }
+    },
+    "AlertEvaluation": {
+      "base": "<p>Evaluation cadence. {@code intervalSeconds} must be one of {30, 60, 120, 300, 600, 900, 1800, 3600}; {@code pendingDurationSeconds} and {@code recoveryDurationSeconds} must be multiples of {@code intervalSeconds}. A duration of 0 means fire/clear immediately with no delay.</p> <p>On UpdateAlert a supplied evaluation block is replaced whole, not merged: an omitted {@code pendingDurationSeconds} or {@code recoveryDurationSeconds} is cleared to unset (no such duration), not preserved and not defaulted to 0. {@code intervalSeconds} is required whenever the block is present. All enforced server-side / by the front-door validator.</p>",
+      "refs": {
+        "TelemetryRule$evaluation": "<p>The evaluation cadence and durations.</p>"
+      }
+    },
+    "AlertFilterCriteria": {
+      "base": "<p>Filter criteria for ListAlerts. All members are optional; each omitted member is unconstrained. At most one of {@code names}, {@code namePrefix}, {@code ids} may be provided (mutually exclusive; the service rejects more than one). The remaining members combine with AND.</p>",
+      "refs": {
+        "ListAlertsInput$filterCriteria": "<p>Filter criteria narrowing which alerts are returned. All members are optional; the three name/id filters are mutually exclusive.</p>"
+      }
+    },
+    "AlertFilterCriteriaNamePrefixString": {
+      "base": null,
+      "refs": {
+        "AlertFilterCriteria$namePrefix": "<p>Filter to alerts whose name starts with this prefix. Mutually exclusive with {@code names} and {@code ids}.</p>"
+      }
+    },
+    "AlertId": {
+      "base": "<p>The stable alert identifier: a 32-character lowercase hex uuid, minted by the backend on create and immutable across updates.</p> <p>It deliberately carries no name, so that a future rename cannot change an alert's identity and break the ARNs, saved links and IAM policies pointing at it. Use {@code name} to display an alert and {@code alertId} to address one.</p>",
+      "refs": {
+        "Alert$alertId": "<p>The stable alert identifier (see {@link AlertId}), minted on create and immutable across updates. Use it (not {@code name}) to address the alert on GetAlert/UpdateAlert/DeleteAlert; it is also the ARN's resource id.</p>",
+        "AlertIdFilterList$member": null,
+        "AlertSummary$alertId": "<p>The stable alert identifier (see {@link Alert#alertId}). Use it to address the alert; it is also the ARN's resource id.</p>",
+        "DeleteAlertInput$alertId": "<p>The alert to delete.</p>",
+        "GetAlertInput$alertId": "<p>The alert to retrieve.</p>",
+        "UpdateAlertInput$alertId": "<p>The alert to update.</p>"
+      }
+    },
+    "AlertIdFilterList": {
+      "base": "<p>Exact alertId match list. Members reuse the {@link AlertId} type so the charset/cap stay in sync with it.</p>",
+      "refs": {
+        "AlertFilterCriteria$ids": "<p>Filter to alerts whose {@link AlertId} exactly matches any entry (OR semantics). Mutually exclusive with {@code names} and {@code namePrefix}.</p>"
+      }
+    },
+    "AlertNameFilterList": {
+      "base": "<p>List of exact alert names to filter by.</p>",
+      "refs": {
+        "AlertFilterCriteria$names": "<p>Filter to alerts whose name exactly matches any entry (OR semantics). Mutually exclusive with {@code namePrefix} and {@code ids}.</p>"
+      }
+    },
+    "AlertNameFilterListMemberString": {
+      "base": null,
+      "refs": {
+        "AlertNameFilterList$member": null
+      }
+    },
+    "AlertRuleQuery": {
+      "base": "<p>Query expression and the language it's written in.</p>",
+      "refs": {
+        "TelemetryRule$query": "<p>The query expression to evaluate.</p>"
+      }
+    },
+    "AlertRuleQueryExpressionString": {
+      "base": null,
+      "refs": {
+        "AlertRuleQuery$expression": "<p>The query expression to evaluate.</p>"
+      }
+    },
+    "AlertSortField": {
+      "base": "<p>Field by which alerts can be sorted.</p>",
+      "refs": {
+        "ListAlertsInput$sortBy": "<p>The field to sort results by.</p>"
+      }
+    },
+    "AlertSortOrder": {
+      "base": "<p>Sort order for list results.</p>",
+      "refs": {
+        "ListAlertsInput$sortOrder": "<p>The order in which to sort results.</p>"
+      }
+    },
+    "AlertState": {
+      "base": "<p>Flat alert state. Severity is folded in: a WARNING/CRITICAL alert reports that state directly. {@code NODATA} indicates the evaluation produced no data (subject to the rule's noData.treatAs handling).</p>",
+      "refs": {
+        "AlertStateInfo$value": "<p>Current flat state.</p>",
+        "AlertStateList$member": null,
+        "NoData$treatAs": "<p>The state to report when an evaluation produces no data.</p>"
+      }
+    },
+    "AlertStateData": {
+      "base": "<p>Structured detail about the current evaluation.</p>",
+      "refs": {
+        "AlertStateInfo$data": "<p>Structured detail about why the alert is in its current state.</p>"
+      }
+    },
+    "AlertStateInfo": {
+      "base": "<p>Live evaluation state for an alert. Read-only, system-managed.</p>",
+      "refs": {
+        "Alert$state": "<p>Live evaluation state (read-only, system-managed). Populated by GetAlert. ListAlerts reports state on <code>AlertSummary</code> instead, where it stays required.</p> <p>Absent on CreateAlert: a newly created alert has never been evaluated, so any state reported there would be a default rather than an observation. Call GetAlert for live state. Not @required for that reason — GetAlert always populates it.</p> <p><code>contributorSummary</code> is nested inside this member, so it too is absent on CreateAlert.</p>",
+        "AlertSummary$state": "<p>Live evaluation state (read-only, system-managed).</p>"
+      }
+    },
+    "AlertStateList": {
+      "base": "<p>List of alert states.</p>",
+      "refs": {
+        "AlertFilterCriteria$stateValue": "<p>Filter to alerts currently in any of these states (OR semantics).</p>",
+        "NotificationTrigger$stateValues": "<p>Alert state(s) that trigger this rule. Empty / omitted = any state.</p>"
+      }
+    },
+    "AlertSummary": {
+      "base": "<p>Summary representation of an alert used in list responses.</p>",
+      "refs": {
+        "AlertSummaryList$member": null
+      }
+    },
+    "AlertSummaryList": {
+      "base": "<p>List of alert summaries.</p>",
+      "refs": {
+        "ListAlertsOutput$items": "<p>The list of alert summaries.</p>"
+      }
+    },
+    "ApiKeyCredential": {
+      "base": "<p>An API key used to authenticate an integration with its external system.</p>",
+      "refs": {
+        "IntegrationCredential$apiKeyCredential": "<p>An API key credential.</p>"
+      }
+    },
+    "ApiKeyCredentialApiKeyValueString": {
+      "base": null,
+      "refs": {
+        "ApiKeyCredential$apiKeyValue": "<p>The API key value used to authenticate with the external system.</p>"
+      }
+    },
+    "Arn": {
+      "base": "<p>An Amazon Resource Name (ARN).</p>",
+      "refs": {
+        "AccessGrant$grantArn": "<p>The Amazon Resource Name (ARN) of the access grant.</p>",
+        "AccessGrantSummary$grantArn": "<p>The Amazon Resource Name (ARN) of the access grant.</p>",
+        "AccessProfile$arn": "<p>The ARN of this access profile.</p>",
+        "AccessProfileSummary$arn": "<p>The ARN of this access profile.</p>",
+        "Alert$alertArn": "<p>The Amazon Resource Name (ARN) of the alert.</p>",
+        "AlertSummary$alertArn": "<p>The Amazon Resource Name (ARN) of the alert.</p>",
+        "CreateAlertOutput$alertArn": "<p>Deprecated. Use <code>alert.alertArn</code>, which carries the same value. Kept so an existing caller keeps working while it moves to <code>alert</code>.</p>",
+        "CreateSpaceInput$dataAccessRoleArn": "<p>The ARN of the IAM role used for data access. The role must be in the caller's account.</p>",
+        "CreateSpaceInput$agentCoreEvaluationRoleArn": "<p>The ARN of the IAM role used by AgentCore online evaluation. Must be in the caller's account. Omit if the space does not use AgentCore online evaluation.</p>",
+        "Domain$domainArn": "<p>The Amazon Resource Name (ARN) of the domain.</p>",
+        "Domain$identityCenterApplicationArn": "<p>The ARN of the Identity Center application. Absent for IAM-only domains.</p>",
+        "DomainSummary$domainArn": "<p>The Amazon Resource Name (ARN) of the domain.</p>",
+        "OmniDashboard$arn": "<p>The Amazon Resource Name (ARN) of the dashboard.</p>",
+        "OmniDashboardSummary$arn": "<p>The Amazon Resource Name (ARN) of the dashboard.</p>",
+        "OrganizationAccessGrant$grantArn": "<p>The Amazon Resource Name (ARN) of the access grant.</p>",
+        "OrganizationAccessGrantSummary$grantArn": "<p>The Amazon Resource Name (ARN) of the access grant.</p>",
+        "OrganizationDomain$domainArn": "<p>The Amazon Resource Name (ARN) of the organization domain.</p>",
+        "OrganizationDomain$identityCenterApplicationArn": "<p>The ARN of the Identity Center application. Absent for IAM-only domains.</p>",
+        "Space$spaceArn": "<p>The Amazon Resource Name (ARN) of the space.</p>",
+        "Space$domainArn": "<p>The Amazon Resource Name (ARN) of the domain the space belongs to. Absent when the space is not associated with a domain, so callers must tolerate its absence.</p>",
+        "Space$dataAccessRoleArn": "<p>The ARN of the IAM role used for data access.</p>",
+        "Space$agentCoreEvaluationRoleArn": "<p>The ARN of the IAM role used by AgentCore online evaluation. Absent when the space was created without one.</p>",
+        "SpaceSummary$spaceArn": "<p>The Amazon Resource Name (ARN) of the space.</p>",
+        "SpaceSummary$domainArn": "<p>The Amazon Resource Name (ARN) of the domain the space belongs to. Absent when the space is not associated with a domain, so callers must tolerate its absence.</p>"
+      }
+    },
+    "AssumeStatus": {
+      "base": "<p>The calling principal's authorization to assume an access profile.</p>",
+      "refs": {
+        "AccessProfile$assumeStatus": "<p>The calling principal's authorization to assume this access profile.</p>"
+      }
+    },
+    "AuthType": {
+      "base": "<p>The authentication method that an integration uses to connect to its external system.</p>",
+      "refs": {
+        "Integration$authType": null
+      }
+    },
+    "AwsCredentials": {
+      "base": "<p>A set of temporary AWS credentials.</p>",
+      "refs": {
+        "GetSpaceCredentialsForOrganizationOutput$credentials": "<p>The temporary AWS credentials for the space.</p>"
+      }
+    },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "AlertFilterCriteria$notificationsEnabled": "<p>Filter to alerts by whether notifications are enabled.</p>",
+        "CreateAlertInput$notificationsEnabled": "<p>Whether actions (notifications) are enabled for this alert. Defaults to true when omitted.</p>",
+        "EdgeProperties$blocked": "<p>Whether the observed network flow was denied. Absent means the edge was not derived from network flow data, which is not the same as allowed.</p>",
+        "EdgeProperties$serviceInitiated": "<p>Whether the caller was an AWS service principal rather than a user or role. Absent means the edge was not derived from a source that reports it.</p>",
+        "GetContextGraphInput$includeMetadata": "<p>Whether to return the metadata block, semantics included, on each node and edge. Off by default because it costs an extra lookup per returned node.</p>",
+        "PartialResults$partialResultsDetected": "<p>True when the query returned partial results (some data could not be read).</p>",
+        "PutIntelligenceConfigurationInput$removeKmsKey": "<p>Set to true to disassociate the configured KMS key. Mutually exclusive with kmsKeyArn; the service returns ValidationException if both are provided.</p>",
+        "UpdateAlertInput$notificationsEnabled": "<p>Whether actions (notifications) are enabled for this alert. Omitted = leave existing value unchanged.</p>"
+      }
+    },
+    "ClientToken": {
+      "base": "<p>Idempotency token for safe retries. Repeated requests with the same token return the original result instead of creating a duplicate.</p>",
+      "refs": {
+        "CreateAccessGrantInput$clientToken": "<p>Idempotency token for safe retries. Repeated requests with the same token return the original result instead of creating a duplicate.</p>",
+        "CreateAccessProfileInput$clientToken": "<p>Idempotency token for safe retries. Repeated requests with the same token return the original result instead of creating a duplicate.</p>",
+        "CreateDomainAccessGrantForOrganizationInput$clientToken": "<p>Idempotency token for safe retries. Repeated requests with the same token return the original result instead of creating a duplicate.</p>",
+        "CreateDomainForOrganizationInput$clientToken": "<p>Idempotency token for safe retries. Repeated requests with the same token return the original result instead of creating a duplicate.</p>",
+        "CreateDomainInput$clientToken": "<p>Idempotency token for safe retries. Repeated requests with the same token return the original result instead of creating a duplicate.</p>",
+        "CreateOmniDashboardInput$clientToken": "<p>Idempotency token for safe retries. Repeated requests with the same token return the original result instead of creating a duplicate.</p>",
+        "CreateSpaceInput$clientToken": "<p>Idempotency token for safe retries. Repeated requests with the same token return the original result instead of creating a duplicate.</p>",
+        "PutIntelligenceConfigurationInput$clientToken": "<p>Idempotency token for safe retries. Repeating a request with the same token applies the update at most once instead of reprocessing it.</p>"
+      }
+    },
+    "Comparator": {
+      "base": "<p>Comparison operator for a threshold.</p>",
+      "refs": {
+        "AlertCondition$comparator": "<p>The comparison operator applied to the threshold.</p>"
+      }
+    },
+    "ConflictException": {
+      "base": "<p>The operation could not be completed because of a conflict with the current state of the resource.</p>",
+      "refs": {}
+    },
+    "ContextConditionsMap": {
+      "base": "<p>Map of context condition keys to lists of allowed values. Used for fine-grained access control on integrations.</p>",
+      "refs": {
+        "ScopedActions$contextConditions": "<p>Optional context conditions for fine-grained access control on these actions.</p>"
+      }
+    },
+    "ContextGraphAttributeMap": {
+      "base": "<p>Attribute map for the unpromoted tail on a context graph node or edge. Holds only the keys that did not land on a typed properties member, so a value is never reported in two places.</p>",
+      "refs": {
+        "Edge$telemetryAttributes": "<p>The edge's OpenTelemetry (OTel) attributes, as emitted by telemetry. A key promoted onto an <code>edgeProperties</code> member is removed here, so no value appears twice.</p>",
+        "Node$telemetryAttributes": "<p>The node's OpenTelemetry (OTel) attributes, as emitted by telemetry — the raw values, as opposed to the normalized <code>nodeProperties</code>. A key promoted onto a <code>nodeProperties</code> member is removed here, so no value appears twice.</p>"
+      }
+    },
+    "ContextGraphId": {
+      "base": "<p>Context graph node identifier.</p>",
+      "refs": {
+        "Edge$edgeId": "<p>The unique identifier of the edge within the context graph.</p>",
+        "Edge$from": "<p>The node identifier the edge originates from.</p>",
+        "Edge$to": "<p>The node identifier the edge points to.</p>",
+        "EdgeFilters$edgeId": "<p>Match only the edge with this identifier.</p>",
+        "EdgeFilters$from": "<p>Match only edges originating from this node identifier.</p>",
+        "EdgeFilters$to": "<p>Match only edges pointing to this node identifier.</p>",
+        "Node$nodeId": "<p>The unique identifier of the node within the context graph.</p>",
+        "NodeFilters$nodeId": "<p>Match only the node with this identifier.</p>"
+      }
+    },
+    "ContextGraphName": {
+      "base": "<p>Context graph node name.</p>",
+      "refs": {
+        "Node$name": "<p>The primary display name of the node.</p>",
+        "NodeFilters$name": "<p>Match only nodes with this name.</p>"
+      }
+    },
+    "ContributorSummary": {
+      "base": "<p>Counts of contributors currently breaching each severity threshold.</p>",
+      "refs": {
+        "AlertStateInfo$contributorSummary": "<p>Counts of contributors currently breaching each severity threshold. Present only when contributor-level tracking is active; absent until the first contributor breaches a {@code WARNING} or {@code CRITICAL} threshold.</p>"
+      }
+    },
+    "CreateAccessGrantInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAccessGrantInputNameString": {
+      "base": null,
+      "refs": {
+        "CreateAccessGrantInput$name": "<p>A name that identifies the access grant.</p>"
+      }
+    },
+    "CreateAccessGrantOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAccessProfileInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAccessProfileInputDescriptionString": {
+      "base": null,
+      "refs": {
+        "CreateAccessProfileInput$description": "<p>An optional description of the access profile.</p>"
+      }
+    },
+    "CreateAccessProfileOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAlertInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAlertInputClientTokenString": {
+      "base": null,
+      "refs": {
+        "CreateAlertInput$clientToken": "<p>Idempotency token for safe retries. Retrying with the same token within the idempotency window returns the original alert instead of creating a duplicate.</p>"
+      }
+    },
+    "CreateAlertInputDescriptionString": {
+      "base": null,
+      "refs": {
+        "CreateAlertInput$description": "<p>An optional description of the alert.</p>"
+      }
+    },
+    "CreateAlertInputNameString": {
+      "base": null,
+      "refs": {
+        "CreateAlertInput$name": "<p>Alert name, for display. Max 256 (the AlarmName budget). Not the alert's identity: the backend mints a separate uuid as the {@link AlertId}, so the name need not be unique within a space and addressing an alert never depends on it. UpdateAlert accepts a new name to rename the alert.</p>"
+      }
+    },
+    "CreateAlertOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateDomainAccessGrantForOrganizationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateDomainAccessGrantForOrganizationInputNameString": {
+      "base": null,
+      "refs": {
+        "CreateDomainAccessGrantForOrganizationInput$name": "<p>A name that identifies the access grant.</p>"
+      }
+    },
+    "CreateDomainAccessGrantForOrganizationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateDomainForOrganizationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateDomainForOrganizationInputNameString": {
+      "base": null,
+      "refs": {
+        "CreateDomainForOrganizationInput$name": "<p>A name that identifies the organization domain. Must be 3-63 characters: lowercase letters, numbers, and hyphens. It must begin and end with a letter or number and cannot contain consecutive hyphens.</p>"
+      }
+    },
+    "CreateDomainForOrganizationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateDomainInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateDomainInputNameString": {
+      "base": null,
+      "refs": {
+        "CreateDomainInput$name": "<p>A name that identifies the domain. Must be 3-63 characters: lowercase letters, numbers, and hyphens. It must begin and end with a letter or number and cannot contain consecutive hyphens.</p>"
+      }
+    },
+    "CreateDomainOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateIntegrationInput": {
+      "base": "<p>The request for creating an integration with a third-party provider.</p>",
+      "refs": {}
+    },
+    "CreateIntegrationInputClientTokenString": {
+      "base": null,
+      "refs": {
+        "CreateIntegrationInput$clientToken": "<p>Idempotency token for safe retries. Retrying with the same token returns the original integration instead of creating a duplicate.</p>"
+      }
+    },
+    "CreateIntegrationInputIntegrationAttributesMap": {
+      "base": null,
+      "refs": {
+        "CreateIntegrationInput$integrationAttributes": "<p>Provider-specific attributes to associate with the integration.</p>"
+      }
+    },
+    "CreateIntegrationInputIntegrationAttributesMapKeyString": {
+      "base": null,
+      "refs": {
+        "CreateIntegrationInputIntegrationAttributesMap$key": null
+      }
+    },
+    "CreateIntegrationInputIntegrationAttributesMapValueString": {
+      "base": null,
+      "refs": {
+        "CreateIntegrationInputIntegrationAttributesMap$value": null
+      }
+    },
+    "CreateIntegrationInputNameString": {
+      "base": null,
+      "refs": {
+        "CreateIntegrationInput$name": "<p>The name for the new integration; unique within the account.</p>"
+      }
+    },
+    "CreateIntegrationOutput": {
+      "base": "<p>The response from creating an integration.</p>",
+      "refs": {}
+    },
+    "CreateOmniDashboardInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateOmniDashboardInputBodyString": {
+      "base": null,
+      "refs": {
+        "CreateOmniDashboardInput$body": "<p>The dashboard definition, as a JSON document. Maximum 1 MiB.</p>"
+      }
+    },
+    "CreateOmniDashboardInputDescriptionString": {
+      "base": null,
+      "refs": {
+        "CreateOmniDashboardInput$description": "<p>An optional description of the dashboard.</p>"
+      }
+    },
+    "CreateOmniDashboardInputNameString": {
+      "base": null,
+      "refs": {
+        "CreateOmniDashboardInput$name": "<p>A name that identifies the dashboard.</p>"
+      }
+    },
+    "CreateOmniDashboardOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateOneTimeDeepLinkCodeInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateOneTimeDeepLinkCodeInputTtlSecondsInteger": {
+      "base": null,
+      "refs": {
+        "CreateOneTimeDeepLinkCodeInput$ttlSeconds": "<p>How long the code remains valid, in seconds. Defaults to 300.</p>"
+      }
+    },
+    "CreateOneTimeDeepLinkCodeOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateSpaceInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateSpaceInputNameString": {
+      "base": null,
+      "refs": {
+        "CreateSpaceInput$name": "<p>A name that identifies the space. Must be 3-64 characters: lowercase letters, numbers, and hyphens. It must begin and end with a letter or number and cannot contain consecutive hyphens.</p>"
+      }
+    },
+    "CreateSpaceOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateViewRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateViewRequestClientTokenString": {
+      "base": null,
+      "refs": {
+        "CreateViewRequest$clientToken": "<p>Idempotency token for safe retries. Retrying with the same token returns the original view instead of creating a duplicate.</p>"
+      }
+    },
+    "CreateViewResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DashboardId": {
+      "base": "<p>Dashboard identifier — a lowercase v4 UUID assigned when the dashboard is created.</p>",
+      "refs": {
+        "DeleteOmniDashboardInput$dashboardId": "<p>The unique ID of the dashboard.</p>",
+        "GetOmniDashboardInput$dashboardId": "<p>The unique ID of the dashboard.</p>",
+        "OmniDashboard$dashboardId": "<p>The unique ID of the dashboard.</p>",
+        "OmniDashboardSummary$dashboardId": "<p>The unique ID of the dashboard.</p>",
+        "UpdateOmniDashboardInput$dashboardId": "<p>The unique ID of the dashboard.</p>"
+      }
+    },
+    "DeepLinkCode": {
+      "base": "<p>A one-time deep-link code exchanged for a domain-scoped session. Sensitive: it can be redeemed for a session token, so it is redacted from request logs and CloudTrail.</p>",
+      "refs": {
+        "CreateOneTimeDeepLinkCodeOutput$code": "<p>The one-time deep-link code.</p>"
+      }
+    },
+    "DeepLinkUrl": {
+      "base": "<p>A deep-link URL that embeds the one-time deep-link code. Sensitive: it carries the same redeemable code, so it is redacted from request logs and CloudTrail.</p>",
+      "refs": {
+        "CreateOneTimeDeepLinkCodeOutput$deepLinkUrl": "<p>The deep-link URL containing the one-time code.</p>"
+      }
+    },
+    "DeleteAccessGrantInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteAccessGrantOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteAccessProfileInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteAccessProfileOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteAlertInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteAlertOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteDomainAccessGrantForOrganizationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteDomainAccessGrantForOrganizationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteDomainForOrganizationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteDomainForOrganizationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteDomainInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteDomainOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteIntegrationInput": {
+      "base": "<p>The request for deleting an integration.</p>",
+      "refs": {}
+    },
+    "DeleteIntegrationOutput": {
+      "base": "<p>The response from deleting an integration. Empty by contract — a successful call indicates the deletion was accepted (DeleteIntegration is idempotent).</p>",
+      "refs": {}
+    },
+    "DeleteOmniDashboardInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteOmniDashboardOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteSpaceInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteSpaceOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteViewRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteViewResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "Domain": {
+      "base": "<p>Detailed information about a domain.</p>",
+      "refs": {
+        "CreateDomainOutput$domain": "<p>The details of the created domain.</p>",
+        "GetDomainOutput$domain": "<p>The details of the domain.</p>",
+        "UpdateDomainOutput$domain": "<p>The details of the updated domain.</p>"
+      }
+    },
+    "DomainId": {
+      "base": "<p>Domain identifier in &quot;d-{base36}&quot; format, e.g. &quot;d-5h2neqbcpc4sk6gswog&quot;. Minted by the backend as &quot;d-&quot; + base36(UUID) — at most &quot;d-&quot; plus 25 chars. Note: not a bare UUID (unlike space/grant ids), so a UUID pattern would wrongly reject valid domain ids.</p>",
+      "refs": {
+        "AccessGrant$domainId": "<p>The ID of the domain the grant belongs to.</p>",
+        "AccessGrantSummary$domainId": "<p>The ID of the domain the grant belongs to.</p>",
+        "CreateAccessGrantInput$domainId": "<p>The ID of the domain that contains the space.</p>",
+        "CreateDomainAccessGrantForOrganizationInput$domainId": "<p>The ID of the organization domain to create the grant on.</p>",
+        "CreateOneTimeDeepLinkCodeInput$domainId": "<p>The ID of the domain to generate the code for.</p>",
+        "CreateSpaceInput$domainId": "<p>The ID of the domain to create the space in.</p>",
+        "DeleteDomainForOrganizationInput$domainId": "<p>The ID of the organization domain to delete.</p>",
+        "DeleteDomainInput$domainId": "<p>The unique ID of the domain to delete.</p>",
+        "Domain$domainId": "<p>The unique ID of the domain.</p>",
+        "DomainSummary$domainId": "<p>The unique ID of the domain.</p>",
+        "GetDomainForOrganizationInput$domainId": "<p>The ID of the organization domain.</p>",
+        "GetDomainInput$domainId": "<p>The unique ID of the domain.</p>",
+        "ListAccessGrantsInput$domainId": "<p>Filter by domain ID.</p>",
+        "ListDomainAccessGrantsForOrganizationInput$domainId": "<p>Filter by domain ID.</p>",
+        "ListSpacesInput$domainId": "<p>Filter by domain ID.</p>",
+        "OrganizationAccessGrant$domainId": "<p>The ID of the organization domain the grant belongs to.</p>",
+        "OrganizationAccessGrantSummary$domainId": "<p>The ID of the organization domain the grant belongs to.</p>",
+        "OrganizationDomain$domainId": "<p>The unique ID of the organization domain.</p>",
+        "SearchPrincipalsInput$domainId": "<p>The ID of the domain to search within.</p>",
+        "SpaceCredentialRequestContext$domainId": "<p>The ID of the domain, when returning credentials for a target account that does not yet have a space.</p>",
+        "UpdateDomainForOrganizationInput$domainId": "<p>The ID of the organization domain to update.</p>",
+        "UpdateDomainInput$domainId": "<p>The unique ID of the domain to update.</p>"
+      }
+    },
+    "DomainNameString": {
+      "base": null,
+      "refs": {
+        "Domain$name": "<p>A name that identifies the domain.</p>"
+      }
+    },
+    "DomainStatus": {
+      "base": "<p>Current status of a domain.</p>",
+      "refs": {
+        "Domain$status": "<p>Current status of the domain.</p>",
+        "DomainSummary$status": "<p>Current status of the domain.</p>",
+        "OrganizationDomain$status": "<p>Current status of the organization domain.</p>"
+      }
+    },
+    "DomainSummary": {
+      "base": "<p>Summary of a domain. Call GetDomain for the full domain.</p>",
+      "refs": {
+        "DomainSummaryList$member": null
+      }
+    },
+    "DomainSummaryList": {
+      "base": "<p>List of domain summaries.</p>",
+      "refs": {
+        "ListDomainsOutput$items": "<p>The list of domain summaries.</p>"
+      }
+    },
+    "DomainSummaryNameString": {
+      "base": null,
+      "refs": {
+        "DomainSummary$name": "<p>A name that identifies the domain.</p>"
+      }
+    },
+    "Double": {
+      "base": null,
+      "refs": {
+        "AlertCondition$warningThreshold": "<p>The value at which the alert enters the WARNING state.</p>",
+        "AlertCondition$criticalThreshold": "<p>The value at which the alert enters the CRITICAL state.</p>",
+        "AlertStateData$thresholdBreached": "<p>For COUNT_OF_RESULTS alerts, the row count that breached; null for FIELD_VALUE (multi-contributor) alerts.</p>",
+        "QueryStatistics$bytesScanned": "<p>The number of bytes scanned by the query.</p>"
+      }
+    },
+    "Edge": {
+      "base": "<p>A directed edge in the context graph connecting two nodes.</p>",
+      "refs": {
+        "EdgeList$member": null
+      }
+    },
+    "EdgeFilters": {
+      "base": "<p>Criteria for filtering edges in a context graph query.</p>",
+      "refs": {
+        "GetContextGraphInput$edgeFilters": "<p>Criteria restricting which edges are returned.</p>"
+      }
+    },
+    "EdgeList": {
+      "base": "<p>List of context graph edges returned by GetContextGraph. Bounded to allow up to maxResults nodes each with up to maxEdgesPerNode edges, with a practical upper cap to guarantee predictable response sizes.</p>",
+      "refs": {
+        "Node$edges": "<p>Outbound edges originating from this node. Each edge carries its <code>from</code>.</p>"
+      }
+    },
+    "EdgeProperties": {
+      "base": "<p>Edge attributes promoted out of the flat attribute map onto typed members. Which members are present depends entirely on what produced the edge, so most edges carry only a few of them.</p>",
+      "refs": {
+        "Edge$edgeProperties": "<p>Attributes promoted out of the flat attribute map onto typed members. Which members are present depends on what produced the edge.</p>"
+      }
+    },
+    "EdgeTrafficStats": {
+      "base": "<p>Additive traffic counters accumulated over an edge's observation window. Which counters are populated depends on what produced the edge.</p>",
+      "refs": {
+        "EdgeProperties$trafficStats": "<p>Traffic counters accumulated over the edge's observation window.</p>"
+      }
+    },
+    "EdgeTrafficStatsBytesLong": {
+      "base": null,
+      "refs": {
+        "EdgeTrafficStats$bytes": "<p>Total bytes observed across the edge.</p>"
+      }
+    },
+    "EdgeTrafficStatsFlowsLong": {
+      "base": null,
+      "refs": {
+        "EdgeTrafficStats$flows": "<p>Total network flows observed across the edge.</p>"
+      }
+    },
+    "EdgeTrafficStatsPacketsLong": {
+      "base": null,
+      "refs": {
+        "EdgeTrafficStats$packets": "<p>Total packets observed across the edge.</p>"
+      }
+    },
+    "EdgeTrafficStatsReceivedBytesLong": {
+      "base": null,
+      "refs": {
+        "EdgeTrafficStats$receivedBytes": "<p>Total bytes received from the destination.</p>"
+      }
+    },
+    "EdgeTrafficStatsSentBytesLong": {
+      "base": null,
+      "refs": {
+        "EdgeTrafficStats$sentBytes": "<p>Total bytes sent to the destination.</p>"
+      }
+    },
+    "EdgeType": {
+      "base": "<p>Context graph edge types.</p>",
+      "refs": {
+        "Edge$edgeType": "<p>The kind of relationship the edge represents.</p>",
+        "EdgeFilters$edgeType": "<p>Match only edges of this relationship kind.</p>"
+      }
+    },
+    "EncryptionConfiguration": {
+      "base": "<p>How a resource's data at rest is encrypted.</p> <p><code>kmsKeyArn</code> is required when <code>encryptionStrategy</code> is CUSTOMER_MANAGED and must be absent when it is AWS_OWNED; a mismatch is a ValidationException rather than a silently ignored field, so a caller that selects AWS_OWNED while still passing a key learns that the key was not applied.</p>",
+      "refs": {
+        "CreateSpaceInput$encryptionConfiguration": "<p>How to encrypt the space's data at rest. Omit for service owned encryption, which is equivalent to passing <code>encryptionStrategy</code> AWS_OWNED.</p>",
+        "Space$encryptionConfiguration": "<p>How the space's data at rest is encrypted. Always populated: a space with no customer managed key reports <code>encryptionStrategy</code> AWS_OWNED and no <code>kmsKeyArn</code>.</p>",
+        "UpdateSpaceInput$encryptionConfiguration": "<p>How to encrypt the space's data at rest. Omit to leave encryption unchanged. Pass <code>encryptionStrategy</code> AWS_OWNED to stop using a customer managed key and revert to service owned encryption.</p>"
+      }
+    },
+    "EncryptionStrategy": {
+      "base": "<p>Which kind of KMS key protects a resource's data at rest.</p>",
+      "refs": {
+        "EncryptionConfiguration$encryptionStrategy": "<p>Which kind of key to use. Required.</p>"
+      }
+    },
+    "Field": {
+      "base": "<p>A telemetry field available for use in query expressions.</p>",
+      "refs": {
+        "FieldChildrenList$member": null,
+        "FieldList$member": null
+      }
+    },
+    "FieldChildrenList": {
+      "base": null,
+      "refs": {
+        "Field$children": "<p>Child fields nested under this field.</p>"
+      }
+    },
+    "FieldList": {
+      "base": null,
+      "refs": {
+        "ListTelemetryFieldsResponse$fields": "<p>The list of fields available for queries.</p>"
+      }
+    },
+    "GetAccessGrantInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAccessGrantOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAccessProfileInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAccessProfileOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAlertInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAlertOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetContextGraphInput": {
+      "base": "<p>The request for retrieving a slice of the context graph.</p>",
+      "refs": {}
+    },
+    "GetContextGraphInputDepthInteger": {
+      "base": null,
+      "refs": {
+        "GetContextGraphInput$depth": "<p>How many hops to traverse out from the nodes matched by nodeFilters. 0 returns only the matched nodes themselves.</p>"
+      }
+    },
+    "GetContextGraphInputMaxEdgesPerNodeInteger": {
+      "base": null,
+      "refs": {
+        "GetContextGraphInput$maxEdgesPerNode": "<p>The maximum number of edges to return per node, bounding the fan-out of a densely connected node.</p>"
+      }
+    },
+    "GetContextGraphInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "GetContextGraphInput$maxResults": "<p>The maximum number of nodes to return in a single page.</p>"
+      }
+    },
+    "GetContextGraphOutput": {
+      "base": "<p>The response containing the requested slice of the context graph.</p>",
+      "refs": {}
+    },
+    "GetDomainAccessGrantForOrganizationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDomainAccessGrantForOrganizationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDomainForOrganizationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDomainForOrganizationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDomainInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDomainOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetIntegrationInput": {
+      "base": "<p>The request for retrieving a single integration.</p>",
+      "refs": {}
+    },
+    "GetIntegrationOutput": {
+      "base": "<p>The response containing the requested integration.</p>",
+      "refs": {}
+    },
+    "GetIntelligenceConfigurationInput": {
+      "base": "<p>The request for retrieving the intelligence configuration of the calling account.</p>",
+      "refs": {}
+    },
+    "GetIntelligenceConfigurationOutput": {
+      "base": "<p>The intelligence configuration for the calling account.</p>",
+      "refs": {}
+    },
+    "GetOmniDashboardInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetOmniDashboardOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetSpaceCredentialsForOrganizationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetSpaceCredentialsForOrganizationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetSpaceInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetSpaceOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetTelemetryQueryResultsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetTelemetryQueryResultsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "GetTelemetryQueryResultsRequest$maxResults": "<p>The maximum number of result rows to return per page.</p>"
+      }
+    },
+    "GetTelemetryQueryResultsRequestQueryIdString": {
+      "base": null,
+      "refs": {
+        "GetTelemetryQueryResultsRequest$queryId": "<p>The unique ID of the query.</p>"
+      }
+    },
+    "GetTelemetryQueryResultsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetViewRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetViewResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GrantId": {
+      "base": "<p>AccessGrant identifier — a v4 UUID assigned when the grant is created.</p>",
+      "refs": {
+        "AccessGrant$grantId": "<p>The unique ID of the access grant.</p>",
+        "AccessGrantSummary$grantId": "<p>The unique ID of the access grant.</p>",
+        "DeleteAccessGrantInput$grantId": "<p>The ID of the access grant to delete.</p>",
+        "DeleteDomainAccessGrantForOrganizationInput$grantId": "<p>The ID of the access grant to delete.</p>",
+        "GetAccessGrantInput$grantId": "<p>The ID of the access grant to retrieve.</p>",
+        "GetDomainAccessGrantForOrganizationInput$grantId": "<p>The ID of the access grant to retrieve.</p>",
+        "OrganizationAccessGrant$grantId": "<p>The unique ID of the access grant.</p>",
+        "OrganizationAccessGrantSummary$grantId": "<p>The unique ID of the access grant.</p>"
+      }
+    },
+    "IamRoleArn": {
+      "base": "<p>IAM role ARN for backend delivery.</p>",
+      "refs": {
+        "CreateDomainForOrganizationInput$domainAccessRoleArn": "<p>The ARN of an IAM role in the management account used for domain access. You must create this role, and its trust policy must allow the service principal to assume it.</p>",
+        "OrganizationDomain$domainAccessRoleArn": "<p>The ARN of the customer-provided IAM role in the management account used for domain access.</p>"
+      }
+    },
+    "IdentityCenterConfiguration": {
+      "base": "<p>Identity Center specific configuration.</p>",
+      "refs": {
+        "IdentityProviderConfiguration$identityCenterConfiguration": "<p>Identity Center configuration. Required when identityProviders includes IDC.</p>"
+      }
+    },
+    "IdentityCenterInstanceArn": {
+      "base": null,
+      "refs": {
+        "DomainSummary$identityCenterInstanceArn": "<p>Identity Center instance ARN configured for the domain. Absent for IAM-only domains.</p>",
+        "IdentityCenterConfiguration$identityCenterInstanceArn": "<p>Identity Center instance ARN</p>"
+      }
+    },
+    "IdentityProvider": {
+      "base": "<p>Identity provider type for a domain. Determines which identity mechanisms are active for authentication.</p>",
+      "refs": {
+        "IdentityProviderList$member": null
+      }
+    },
+    "IdentityProviderConfiguration": {
+      "base": "<p>Identity provider configuration for domain authentication. Contains provider-specific configuration blocks.</p>",
+      "refs": {
+        "CreateDomainForOrganizationInput$identityProviderConfiguration": "<p>Identity provider configuration for the domain.</p>",
+        "CreateDomainInput$identityProviderConfiguration": "<p>Identity provider configuration for the domain.</p>",
+        "Domain$identityProviderConfiguration": "<p>Identity provider configuration for the domain.</p>",
+        "OrganizationDomain$identityProviderConfiguration": "<p>Identity provider configuration for the organization domain.</p>",
+        "UpdateDomainForOrganizationInput$identityProviderConfiguration": "<p>Identity provider configuration for the domain. Omit to leave unchanged.</p>",
+        "UpdateDomainInput$identityProviderConfiguration": "<p>Identity provider configuration for the domain.</p>"
+      }
+    },
+    "IdentityProviderList": {
+      "base": "<p>List of identity providers configured for a domain.</p>",
+      "refs": {
+        "CreateDomainForOrganizationInput$identityProviders": "<p>The identity providers to configure for the domain.</p>",
+        "CreateDomainInput$identityProviders": "<p>The identity providers to configure for the domain.</p>",
+        "Domain$identityProviders": "<p>The identity providers configured for the domain.</p>",
+        "OrganizationDomain$identityProviders": "<p>The identity providers configured for the organization domain.</p>",
+        "UpdateDomainForOrganizationInput$identityProviders": "<p>The identity providers to configure for the domain. Omit to leave unchanged.</p>",
+        "UpdateDomainInput$identityProviders": "<p>The identity providers to configure for the domain.</p>"
+      }
+    },
+    "Integer": {
+      "base": null,
+      "refs": {
+        "AlertEvaluation$intervalSeconds": "<p>The interval between evaluations, in seconds.</p>",
+        "AlertEvaluation$pendingDurationSeconds": "<p>The duration a breach must persist before the alert fires, in seconds.</p>",
+        "AlertEvaluation$recoveryDurationSeconds": "<p>The duration a recovery must persist before the alert clears, in seconds.</p>",
+        "ContributorSummary$warningCount": "<p>Number of contributors currently breaching the warning threshold.</p>",
+        "ContributorSummary$criticalCount": "<p>Number of contributors currently breaching the critical threshold.</p>",
+        "QueryStatistics$percentComplete": "<p>The percentage of the query that has completed.</p>",
+        "ThrottlingException$retryAfterSeconds": "<p>The number of seconds to wait before retrying the request. Not always present.</p>"
+      }
+    },
+    "Integration": {
+      "base": "<p>A connection between CloudWatch and an external system — such as a source of telemetry or configuration data, a messaging destination, or a model provider.</p>",
+      "refs": {
+        "CreateIntegrationOutput$integration": "<p>The details of the created integration. This is the same object returned by GetIntegration and UpdateIntegration.</p>",
+        "GetIntegrationOutput$integration": "<p>The details of the requested integration.</p>",
+        "IntegrationList$member": null,
+        "UpdateIntegrationOutput$integration": "<p>The details of the updated integration. This is the same object returned by GetIntegration and CreateIntegration. Populated on a successful update; absent only if the post-update read-back of the resource did not complete.</p>"
+      }
+    },
+    "IntegrationArn": {
+      "base": null,
+      "refs": {
+        "Integration$integrationArn": "<p>The Amazon Resource Name (ARN) of the integration.</p>",
+        "IntegrationIdentifier$integrationArn": "<p>The Amazon Resource Name of the integration.</p>"
+      }
+    },
+    "IntegrationCredential": {
+      "base": "<p>The credential that an integration uses to authenticate with its external system. Exactly one member is set, matching the integration's authentication type.</p>",
+      "refs": {
+        "CreateIntegrationInput$credential": "<p>The credential used to authenticate with the third-party provider.</p>",
+        "UpdateIntegrationInput$credential": "<p>The replacement credential used to authenticate with the provider.</p>"
+      }
+    },
+    "IntegrationIdentifier": {
+      "base": "<p>Identifies a single integration by exactly one of its unique keys: the integration id, the integration ARN, or the integration name.</p>",
+      "refs": {
+        "DeleteIntegrationInput$identifier": "<p>Identifies the integration to delete — exactly one of integrationId, integrationArn, or integrationName.</p>",
+        "GetIntegrationInput$identifier": "<p>Identifies the integration to return — exactly one of integrationId, integrationArn, or integrationName.</p>",
+        "UpdateIntegrationInput$identifier": "<p>Identifies the integration to update — exactly one of integrationId, integrationArn, or integrationName.</p>"
+      }
+    },
+    "IntegrationList": {
+      "base": null,
+      "refs": {
+        "ListIntegrationsOutput$items": "<p>The page of integrations.</p>"
+      }
+    },
+    "IntegrationStatus": {
+      "base": "<p>The current lifecycle state of an integration.</p>",
+      "refs": {
+        "Integration$status": null,
+        "ListIntegrationsInput$status": "<p>Returns only integrations in this status.</p>"
+      }
+    },
+    "IntegrationType": {
+      "base": "<p>The type of external system that an integration connects to, such as a source of configuration data, a messaging destination, or a model provider.</p>",
+      "refs": {
+        "CreateIntegrationInput$integrationType": "<p>The type of third-party provider to integrate with.</p>",
+        "Integration$integrationType": null,
+        "ListIntegrationsInput$integrationType": "<p>Returns only integrations of this provider type.</p>"
+      }
+    },
+    "IntelligenceKmsKeyArn": {
+      "base": "<p>Constrained KMS key ARN string matching the format arn:aws:kms:<region>:<account>:key/<uuid>.</p>",
+      "refs": {
+        "GetIntelligenceConfigurationOutput$kmsKeyArn": "<p>The currently active KMS key ARN for customer-managed encryption, if configured.</p>",
+        "PutIntelligenceConfigurationInput$kmsKeyArn": "<p>Optional KMS key ARN to configure customer-managed encryption for anomaly data.</p>",
+        "PutIntelligenceConfigurationOutput$kmsKeyArn": "<p>The currently active KMS key ARN for customer-managed encryption, if configured.</p>"
+      }
+    },
+    "IntelligenceTagMap": {
+      "base": "<p>Tag map for Intelligence shapes (collision-avoidance renamed from TagMap).</p>",
+      "refs": {
+        "Node$tags": "<p>The tags observed on the underlying resource.</p>"
+      }
+    },
+    "InternalServerException": {
+      "base": "<p>An unexpected error occurred while processing the request.</p>",
+      "refs": {}
+    },
+    "KeyFilter": {
+      "base": "<p>Key-value filter used for tags and attributes filtering. Multiple KeyFilters are AND'ed. Multiple values within a single KeyFilter are OR'ed. Values support pattern syntax: exact, negation (!value), wildcard (<em>value</em>, value*, *value).</p>",
+      "refs": {
+        "KeyFilterList$member": null
+      }
+    },
+    "KeyFilterKey": {
+      "base": "<p>Key filter key string.</p>",
+      "refs": {
+        "KeyFilter$key": "<p>The tag or attribute key to filter on.</p>"
+      }
+    },
+    "KeyFilterList": {
+      "base": "<p>Key filter list for context graph queries.</p>",
+      "refs": {
+        "EdgeFilters$telemetryAttributes": "<p>Match edges by their OpenTelemetry (OTel) telemetry attributes. Not yet enforced: currently accepted but ignored (does not filter), matching nodeFilters.telemetryAttributes.</p>",
+        "NodeFilters$tags": "<p>Match nodes by the tags on the underlying resource.</p>",
+        "NodeFilters$telemetryAttributes": "<p>Match nodes by their OpenTelemetry (OTel) telemetry attributes.</p>"
+      }
+    },
+    "KeyFilterValue": {
+      "base": "<p>Key filter value string.</p>",
+      "refs": {
+        "KeyFilterValues$member": null
+      }
+    },
+    "KeyFilterValues": {
+      "base": "<p>Key filter values list.</p>",
+      "refs": {
+        "KeyFilter$values": "<p>The values to match for this key, OR'ed together. Each supports exact, negation (!value), and wildcard (<em>value</em>, value*, *value) syntax.</p>"
+      }
+    },
+    "KmsKeyArn": {
+      "base": "<p>KMS key ARN — must be a full key ARN (not an alias).</p>",
+      "refs": {
+        "EncryptionConfiguration$kmsKeyArn": "<p>Customer managed KMS key ARN. Required when <code>encryptionStrategy</code> is CUSTOMER_MANAGED, and must be omitted when it is AWS_OWNED. Must be a symmetric ENCRYPT_DECRYPT key in the caller's account and region.</p>"
+      }
+    },
+    "ListAccessGrantsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAccessGrantsInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListAccessGrantsInput$maxResults": "<p>The maximum number of access grants to return per page. Defaults to 100. A page can contain fewer results than this value even when more results remain; continue while nextToken is present.</p>"
+      }
+    },
+    "ListAccessGrantsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAccessProfilesInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAccessProfilesInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListAccessProfilesInput$maxResults": "<p>The maximum number of access profiles to return per page. Defaults to 100.</p>"
+      }
+    },
+    "ListAccessProfilesOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAlertsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAlertsInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListAlertsInput$maxResults": "<p>The maximum number of alerts to return per page.</p>"
+      }
+    },
+    "ListAlertsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDomainAccessGrantsForOrganizationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDomainAccessGrantsForOrganizationInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListDomainAccessGrantsForOrganizationInput$maxResults": "<p>The maximum number of access grants to return per page. Defaults to 100. A page can contain fewer results than this value even when more results remain; continue while nextToken is present.</p>"
+      }
+    },
+    "ListDomainAccessGrantsForOrganizationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDomainsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDomainsInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListDomainsInput$maxResults": "<p>The maximum number of domains to return per page. Defaults to 100.</p>"
+      }
+    },
+    "ListDomainsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListIntegrationsInput": {
+      "base": "<p>The request for listing the integrations in an account.</p>",
+      "refs": {}
+    },
+    "ListIntegrationsInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListIntegrationsInput$maxResults": "<p>Maximum number of integrations to return in one page.</p>"
+      }
+    },
+    "ListIntegrationsOutput": {
+      "base": "<p>The response containing a page of integrations.</p>",
+      "refs": {}
+    },
+    "ListOmniDashboardsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListOmniDashboardsInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListOmniDashboardsInput$maxResults": "<p>The maximum number of dashboards to return per page. Defaults to 100. A page can contain fewer results than this value even when more results remain; continue while nextToken is present.</p>"
+      }
+    },
+    "ListOmniDashboardsInputNamePrefixString": {
+      "base": null,
+      "refs": {
+        "ListOmniDashboardsInput$namePrefix": "<p>Filter to dashboards whose name starts with this prefix.</p>"
+      }
+    },
+    "ListOmniDashboardsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSpacesForOrganizationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSpacesForOrganizationInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListSpacesForOrganizationInput$maxResults": "<p>The maximum number of spaces to return per page. Defaults to 100.</p>"
+      }
+    },
+    "ListSpacesForOrganizationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSpacesInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSpacesInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListSpacesInput$maxResults": "<p>The maximum number of spaces to return per page. Defaults to 100. A page can contain fewer results than this value even when more results remain; continue while nextToken is present.</p>"
+      }
+    },
+    "ListSpacesOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTelemetryFieldsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTelemetryFieldsRequestDataSetNameString": {
+      "base": null,
+      "refs": {
+        "ListTelemetryFieldsRequest$dataSetName": "<p>The name of the dataset to list fields for.</p>"
+      }
+    },
+    "ListTelemetryFieldsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTelemetryQuerySessionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTelemetryQuerySessionsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListTelemetryQuerySessionsRequest$maxResults": "<p>The maximum number of sessions to return per page.</p>"
+      }
+    },
+    "ListTelemetryQuerySessionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListViewsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListViewsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListViewsRequest$maxResults": "<p>The maximum number of views to return per page.</p>"
+      }
+    },
+    "ListViewsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "LogMetadata": {
+      "base": "<p>One LOGS query selector block on a node. The <code>attributes</code> map's keys are AND'd; each selects with <code>col = value</code>. Deliberately RAW/un-normalized so the selector matches the store, not the node's merged identity.</p>",
+      "refs": {
+        "LogMetadataList$member": null
+      }
+    },
+    "LogMetadataAttributeMap": {
+      "base": "<p>One LOGS query-selector block: EXACT store column -&gt; raw SCALAR value (mirroring the scalar MetadataAttributeMap). Keyed by the store column that carries the value (e.g. <code>resource.attributes['service.name']</code>, <code>attributes['aws.local.service']</code>, <code>@logGroupName</code>) so the selector matches the emitted signal. A dimension seen under several values (a service under two namespaces, several log groups) becomes several blocks with the same columns and different values, which the console ORs. Dedicated to the LOGS selector so its cap evolves independently of the metric attribute map and the TRACES map. Selector caps are deliberately DISTINCT from the metric caps.</p>",
+      "refs": {
+        "LogMetadata$attributes": null
+      }
+    },
+    "LogMetadataList": {
+      "base": "<p>Per-node log query selectors; the list ORs across blocks (e.g. an OTLP block vs a CloudWatch- VENDED block). Bound is a payload cap, not a selection rule.</p>",
+      "refs": {
+        "Metadata$logs": "<p>Per-signal LOGS query selectors: a LIST of blocks the console ORs, each an AND of exact store column -&gt; raw values. Node-level (edges carry only traces). Populated when the request sets includeMetadata; derived labels (logSourceType) are added by the service projection, not stored here.</p>"
+      }
+    },
+    "Long": {
+      "base": null,
+      "refs": {
+        "QueryStatistics$recordsScanned": "<p>The total number of records scanned.</p>",
+        "QueryStatistics$recordsMatched": "<p>The number of records that matched the query criteria.</p>"
+      }
+    },
+    "Metadata": {
+      "base": "<p>Descriptive information about a context graph node or edge, as opposed to its identity and structure. Returned only when the request sets includeMetadata.</p>",
+      "refs": {
+        "Edge$metadata": "<p>Descriptive metadata about the edge. Present only when the request sets includeMetadata.</p>",
+        "Node$metadata": "<p>Descriptive metadata about the node. Present only when the request sets includeMetadata.</p>"
+      }
+    },
+    "MetadataAttributeMap": {
+      "base": "<p>Per-metric qualifying attributes carried on MetricMetadata. A dedicated shape (not the shared IntelligenceAttributeMap) so its length cap can be tuned independently.</p>",
+      "refs": {
+        "MetricMetadata$attributes": "<p>Per-metric qualifying attributes the console uses to query this metric's telemetry. These are the RAW, store-matching values keyed by their OTel names (&quot;service.name&quot;, &quot;service.namespace&quot;, &quot;cloud.provider&quot;, &quot;cloud.account.id&quot;, &quot;cloud.region&quot;, &quot;instrumentation_scope&quot;) — deliberately NOT the node's normalized/merged identity, so the query selectors match the emitted series. A merged node can carry different values per metric, which is why they live here rather than on the node.</p>"
+      }
+    },
+    "MetricMetadata": {
+      "base": "<p>A single metric observed on a context graph node.</p>",
+      "refs": {
+        "MetricMetadataList$member": null
+      }
+    },
+    "MetricMetadataList": {
+      "base": "<p>Metrics observed on a context graph node. When more are observed than the cap, the backend keeps RED/OTel-semconv names (http/rpc server+client, span-metrics) ahead of the alphabetical remainder, so the metrics the console charts survive. Must match the backend MetricMetadataList cap or entries the backend kept get re-truncated here at the frontend boundary.</p>",
+      "refs": {
+        "Metadata$metrics": "<p>The metrics observed on the element.</p>"
+      }
+    },
+    "MetricSemantics": {
+      "base": "<p>The meaning and unit of a single metric.</p>",
+      "refs": {
+        "MetricMetadata$semantics": "<p>What the metric means and the unit it is reported in.</p>"
+      }
+    },
+    "NextToken": {
+      "base": "<p>A token to retrieve the next page of results.</p>",
+      "refs": {
+        "ListAccessGrantsInput$nextToken": "<p>A token to retrieve the next page of results. Supply the same filters used on the request that returned it. Tokens expire after 24 hours.</p>",
+        "ListAccessGrantsOutput$nextToken": "<p>A token to retrieve the next page of results, or null if there are no more results.</p>",
+        "ListAccessProfilesInput$nextToken": "<p>A token to retrieve the next page of results.</p>",
+        "ListAccessProfilesOutput$nextToken": "<p>A token to retrieve the next page of results, or null if there are no more results.</p>",
+        "ListAlertsInput$nextToken": "<p>A token to retrieve the next page of results.</p>",
+        "ListAlertsOutput$nextToken": "<p>A token to retrieve the next page of results, or null if there are no more results.</p>",
+        "ListDomainAccessGrantsForOrganizationInput$nextToken": "<p>A token to retrieve the next page of results. Supply the same filters used on the request that returned it. Tokens expire after 24 hours.</p>",
+        "ListDomainAccessGrantsForOrganizationOutput$nextToken": "<p>A token to retrieve the next page of results, or null if there are no more results.</p>",
+        "ListDomainsInput$nextToken": "<p>A token to retrieve the next page of results. Tokens expire after 24 hours.</p>",
+        "ListDomainsOutput$nextToken": "<p>A token to retrieve the next page of results, or null if there are no more results.</p>",
+        "ListOmniDashboardsInput$nextToken": "<p>A token to retrieve the next page of results.</p>",
+        "ListOmniDashboardsOutput$nextToken": "<p>A token to retrieve the next page of results, or null if there are no more results.</p>",
+        "ListSpacesForOrganizationInput$nextToken": "<p>A token to retrieve the next page of results. Tokens expire after 24 hours.</p>",
+        "ListSpacesForOrganizationOutput$nextToken": "<p>A token to retrieve the next page of results, or null if there are no more results.</p>",
+        "ListSpacesInput$nextToken": "<p>A token to retrieve the next page of results. Supply the same filters used on the request that returned it. Tokens expire after 24 hours.</p>",
+        "ListSpacesOutput$nextToken": "<p>A token to retrieve the next page of results, or null if there are no more results.</p>"
+      }
+    },
+    "NoData": {
+      "base": "<p>Configures how the alert reacts when an evaluation produces no data. {@code treatAs} carries the resulting state; defaults to {@code NODATA} when omitted.</p>",
+      "refs": {
+        "TelemetryRule$noData": "<p>How the alert behaves when a query produces no data.</p>"
+      }
+    },
+    "Node": {
+      "base": "<p>A node in the context graph representing a service, resource, or remote service.</p>",
+      "refs": {
+        "NodeList$member": null
+      }
+    },
+    "NodeCategory": {
+      "base": "<p>Coarse classification of what a node is. Orthogonal to NodeType, which says whether the node is a service, a resource, or a remote service. Absent on most nodes today because few producers emit the source attribute.</p>",
+      "refs": {
+        "NodeCategorySet$member": null,
+        "NodeProperties$category": "<p>What kind of thing the node is, coarser than nodeType.</p>"
+      }
+    },
+    "NodeCategorySet": {
+      "base": "<p>Set of node categories to filter a context graph query by.</p>",
+      "refs": {
+        "NodeFilters$category": "<p>Match nodes of any of these categories.</p>"
+      }
+    },
+    "NodeFilters": {
+      "base": "<p>Criteria for selecting nodes in a context graph query.</p>",
+      "refs": {
+        "GetContextGraphInput$nodeFilters": "<p>Criteria restricting which nodes are returned.</p>"
+      }
+    },
+    "NodeList": {
+      "base": "<p>List of context graph nodes returned by GetContextGraph. Bounded to match GetContextGraphInput.maxResults cap.</p>",
+      "refs": {
+        "GetContextGraphOutput$nodes": "<p>The page of nodes matching the request. This is the paginated collection.</p>"
+      }
+    },
+    "NodeProperties": {
+      "base": "<p>Node identity attributes promoted out of the flat attribute map onto typed members. The first four are part of the node's merge key, so a node that merged across sources reports one resolved value for each.</p>",
+      "refs": {
+        "Node$nodeProperties": "<p>Identity attributes promoted out of the flat attribute map onto typed members.</p>"
+      }
+    },
+    "NodeSemantics": {
+      "base": "<p>Semantic description of the service a context graph node represents.</p>",
+      "refs": {
+        "Metadata$semantics": "<p>Semantic description of the node. Absent on an edge, because semantics describe a service rather than a relationship.</p>"
+      }
+    },
+    "NodeType": {
+      "base": "<p>Context graph node types.</p>",
+      "refs": {
+        "Node$nodeType": "<p>Whether the node is a service, a resource, or a remote service.</p>",
+        "NodeFilters$nodeType": "<p>Match only nodes of this type.</p>"
+      }
+    },
+    "NotificationRule": {
+      "base": "<p>Single notification rule: which transitions trigger this rule and where the resulting notification should be sent.</p>",
+      "refs": {
+        "NotificationRuleList$member": null
+      }
+    },
+    "NotificationRuleList": {
+      "base": "<p>List of notification rules. On UpdateAlert an omitted list leaves the stored rules unchanged, while an empty list clears them all (see notificationRules).</p>",
+      "refs": {
+        "Alert$notificationRules": "<p>The notification rules for the alert.</p>",
+        "CreateAlertInput$notificationRules": "<p>The notification rules that determine when and where notifications are sent.</p>",
+        "UpdateAlertInput$notificationRules": "<p>Replaces the entire notification rule list when present; full-replace, not merge. Omitted = leave existing rules unchanged. An empty list clears all rules (the alert keeps evaluating; only notifications stop).</p>"
+      }
+    },
+    "NotificationStatus": {
+      "base": null,
+      "refs": {
+        "Alert$notificationStatus": "<p>Whether notifications are enabled.</p>",
+        "AlertSummary$notificationStatus": "<p>Whether notifications are enabled.</p>"
+      }
+    },
+    "NotificationTarget": {
+      "base": "<p>The destination for a notification.</p>",
+      "refs": {
+        "NotificationRule$target": "<p>The destination for notifications from this rule.</p>"
+      }
+    },
+    "NotificationTargetArnString": {
+      "base": "<p>An Amazon Resource Name (ARN).</p>",
+      "refs": {
+        "NotificationTarget$arn": "<p>The Amazon Resource Name (ARN) of the notification target. For {@code slack} and {@code pagerduty}, an integration ARN as returned by {@code ListIntegrations}.</p>"
+      }
+    },
+    "NotificationTargetMetadataMap": {
+      "base": "<p>Map of target-specific metadata keys to values.</p>",
+      "refs": {
+        "NotificationTarget$metadata": "<p>Additional target-specific metadata.</p>"
+      }
+    },
+    "NotificationTargetMetadataMapKeyString": {
+      "base": null,
+      "refs": {
+        "NotificationTargetMetadataMap$key": null
+      }
+    },
+    "NotificationTargetMetadataMapValueString": {
+      "base": null,
+      "refs": {
+        "NotificationTargetMetadataMap$value": null
+      }
+    },
+    "NotificationTargetType": {
+      "base": "<p>Supported notification target type.</p>",
+      "refs": {
+        "NotificationTarget$type": "<p>The type of notification target.</p>"
+      }
+    },
+    "NotificationTrigger": {
+      "base": "<p>Trigger conditions for a notification rule. {@code stateValues} entries combine with OR semantics; empty / omitted = any state.</p>",
+      "refs": {
+        "NotificationRule$trigger": "<p>The conditions that trigger this notification rule.</p>"
+      }
+    },
+    "OAuthClientCredential": {
+      "base": "<p>Credentials for an OAuth 2.0 client-credentials grant used to authenticate an integration with its external system.</p>",
+      "refs": {
+        "IntegrationCredential$oauthClientCredential": "<p>Credentials for an OAuth 2.0 client-credentials grant.</p>"
+      }
+    },
+    "OAuthCodeCredential": {
+      "base": "<p>Credentials for an OAuth 2.0 authorization-code grant, supplied when completing the authorization of an integration.</p>",
+      "refs": {
+        "IntegrationCredential$oauthCodeCredential": "<p>Credentials for an OAuth 2.0 authorization-code grant.</p>"
+      }
+    },
+    "OAuthCodeCredentialAuthCodeString": {
+      "base": null,
+      "refs": {
+        "OAuthCodeCredential$authCode": "<p>The OAuth 2.0 authorization code returned by the external system's authorization endpoint.</p>"
+      }
+    },
+    "OmniDashboard": {
+      "base": "<p>A dashboard within a space, including its body.</p>",
+      "refs": {
+        "CreateOmniDashboardOutput$omniDashboard": "<p>The dashboard.</p>",
+        "GetOmniDashboardOutput$omniDashboard": "<p>The dashboard.</p>",
+        "UpdateOmniDashboardOutput$omniDashboard": "<p>The dashboard.</p>"
+      }
+    },
+    "OmniDashboardSummary": {
+      "base": "<p>Summary of a dashboard. Call GetOmniDashboard for the full dashboard.</p>",
+      "refs": {
+        "OmniDashboardSummaryList$member": null
+      }
+    },
+    "OmniDashboardSummaryList": {
+      "base": "<p>List of dashboard summaries.</p>",
+      "refs": {
+        "ListOmniDashboardsOutput$items": "<p>The list of dashboard summaries.</p>"
+      }
+    },
+    "OperationDetails": {
+      "base": "<p>Operations on a Node, keyed by operation name; value = list of identifier sets.</p>",
+      "refs": {
+        "Node$operationDetails": "<p>The operations observed on this node, keyed by operation name. Each value lists the dimension sets that identify the metric series for that operation.</p>"
+      }
+    },
+    "OperationIdentifierKey": {
+      "base": "<p>OTel dimension key on an operation identifier set (e.g. &quot;http.request.method&quot;).</p>",
+      "refs": {
+        "OperationIdentifierSet$key": null
+      }
+    },
+    "OperationIdentifierSet": {
+      "base": "<p>One OTel dimension set identifying a metric series for an operation.</p>",
+      "refs": {
+        "OperationIdentifierSets$member": null
+      }
+    },
+    "OperationIdentifierSets": {
+      "base": null,
+      "refs": {
+        "OperationDetails$value": null
+      }
+    },
+    "OperationIdentifierValue": {
+      "base": "<p>OTel dimension value on an operation identifier set.</p>",
+      "refs": {
+        "OperationIdentifierSet$value": null
+      }
+    },
+    "OperationName": {
+      "base": "<p>Operation name on a context graph node (typically OTel span.name).</p>",
+      "refs": {
+        "OperationDetails$key": null
+      }
+    },
+    "OrganizationAccessGrant": {
+      "base": "<p>An organization-scoped access grant.</p>",
+      "refs": {
+        "CreateDomainAccessGrantForOrganizationOutput$accessGrant": "<p>The details of the created organization access grant.</p>",
+        "GetDomainAccessGrantForOrganizationOutput$accessGrant": "<p>The retrieved organization access grant.</p>"
+      }
+    },
+    "OrganizationAccessGrantNameString": {
+      "base": null,
+      "refs": {
+        "OrganizationAccessGrant$name": "<p>A name that identifies the access grant.</p>"
+      }
+    },
+    "OrganizationAccessGrantPrincipal": {
+      "base": "<p>The principal receiving an organization-level domain access grant. Specify principalId, principalAttributes, or both.</p>",
+      "refs": {
+        "CreateDomainAccessGrantForOrganizationInput$principal": "<p>The principal receiving the grant.</p>",
+        "OrganizationAccessGrant$principal": "<p>The principal receiving the grant.</p>",
+        "OrganizationAccessGrantSummary$principal": "<p>The principal receiving the grant.</p>"
+      }
+    },
+    "OrganizationAccessGrantSummary": {
+      "base": "<p>Summary of an organization access grant. Call GetDomainAccessGrantForOrganization for the full grant.</p>",
+      "refs": {
+        "OrganizationAccessGrantSummaryList$member": null
+      }
+    },
+    "OrganizationAccessGrantSummaryList": {
+      "base": "<p>List of organization access grant summaries.</p>",
+      "refs": {
+        "ListDomainAccessGrantsForOrganizationOutput$items": "<p>The list of organization access grant summaries.</p>"
+      }
+    },
+    "OrganizationAccessGrantSummaryNameString": {
+      "base": null,
+      "refs": {
+        "OrganizationAccessGrantSummary$name": "<p>A name that identifies the access grant.</p>"
+      }
+    },
+    "OrganizationCredentialType": {
+      "base": "<p>Selects which member-account credential GetSpaceCredentialsForOrganization returns.</p>",
+      "refs": {
+        "GetSpaceCredentialsForOrganizationInput$credentialType": "<p>Selects which member-account credential to return. Set this to SPACE_OPERATION.</p>"
+      }
+    },
+    "OrganizationDomain": {
+      "base": "<p>Detailed information about an organization domain.</p>",
+      "refs": {
+        "CreateDomainForOrganizationOutput$organizationDomain": "<p>The details of the created organization domain.</p>",
+        "GetDomainForOrganizationOutput$organizationDomain": "<p>The details of the organization domain.</p>",
+        "UpdateDomainForOrganizationOutput$organizationDomain": "<p>The details of the updated organization domain.</p>"
+      }
+    },
+    "OrganizationDomainNameString": {
+      "base": null,
+      "refs": {
+        "OrganizationDomain$name": "<p>A name that identifies the organization domain.</p>"
+      }
+    },
+    "OrganizationGrantPermission": {
+      "base": "<p>Permission level for an organization-scoped grant.</p>",
+      "refs": {
+        "CreateDomainAccessGrantForOrganizationInput$permission": "<p>The permission to grant.</p>",
+        "ListDomainAccessGrantsForOrganizationInput$permission": "<p>Filter by permission level.</p>",
+        "OrganizationAccessGrant$permission": "<p>The permission granted.</p>",
+        "OrganizationAccessGrantSummary$permission": "<p>The permission granted.</p>"
+      }
+    },
+    "OrganizationGrantPrincipalType": {
+      "base": "<p>Principal types valid for organization-level domain access grants.</p>",
+      "refs": {
+        "ListDomainAccessGrantsForOrganizationInput$principalType": "<p>Filter by principal type.</p>",
+        "OrganizationAccessGrantPrincipal$principalType": "<p>The type of principal receiving the grant.</p>"
+      }
+    },
+    "OrganizationPrincipalId": {
+      "base": "<p>Principal receiving an organization-level domain access grant. One field spans every OrganizationGrantPrincipalType: an IAM principal ARN (IAM_USER / IAM_ROLE / IAM_ROOT) or an IdC UUID (IDC_USER / IDC_GROUP). Must begin with an alphanumeric character.</p>",
+      "refs": {
+        "OrganizationAccessGrantPrincipal$principalId": "<p>The ID of the principal receiving the grant.</p>"
+      }
+    },
+    "PaginationToken": {
+      "base": "<p>Pagination token for context graph and insights.</p>",
+      "refs": {
+        "GetContextGraphInput$nextToken": "<p>Pagination token from a previous response, to retrieve the next page.</p>",
+        "GetContextGraphOutput$nextToken": "<p>Pagination token for the next page; absent when there are no more results.</p>"
+      }
+    },
+    "PartialResults": {
+      "base": "<p>Indicates whether a query returned partial results.</p>",
+      "refs": {
+        "QueryStatistics$partialResults": "<p>Information about whether the query returned partial results.</p>"
+      }
+    },
+    "PrincipalId": {
+      "base": "<p>Principal receiving a grant. One field spans every AccessGrantPrincipalType: an IAM principal ARN (IAM_USER / IAM_ROLE / IAM_ROOT), an IdC UUID (IDC_USER / IDC_GROUP), or a service-defined id for ACCESS_PROFILE, ALERT, or AGENT. Must begin with an alphanumeric character.</p> <p>Set to the reserved value ALL (case-sensitive) to apply the grant to every ALERT principal in the space. ALL is supported only for the ALERT principal type, and only on CUSTOM grants whose single action is AssumeAccessProfile.</p>",
+      "refs": {
+        "AccessGrantPrincipal$principalId": "<p>The ID of the principal receiving the grant.</p>",
+        "ListAccessGrantsInput$principalId": "<p>Filter by principal ID.</p>",
+        "ListDomainAccessGrantsForOrganizationInput$principalId": "<p>Filter by principal ID.</p>",
+        "PrincipalSearchResult$principalId": "<p>The unique ID of the principal.</p>"
+      }
+    },
+    "PrincipalSearchResult": {
+      "base": "<p>A user or group matched by SearchPrincipals.</p>",
+      "refs": {
+        "PrincipalSearchResultList$member": null
+      }
+    },
+    "PrincipalSearchResultList": {
+      "base": "<p>List of principal search results.</p>",
+      "refs": {
+        "SearchPrincipalsOutput$results": "<p>The list of matching principals.</p>"
+      }
+    },
+    "PrincipalType": {
+      "base": "<p>Whether a principal is a user or a group.</p>",
+      "refs": {
+        "PrincipalSearchResult$principalType": "<p>Whether the principal is a user or a group.</p>"
+      }
+    },
+    "ProfileId": {
+      "base": "<p>Access profile identifier — assigned when the profile is created.</p>",
+      "refs": {
+        "AccessProfile$profileId": "<p>The unique ID of the access profile.</p>",
+        "AccessProfileSummary$profileId": "<p>The unique ID of the access profile.</p>",
+        "Alert$profileId": "<p>The ID of the access profile associated with the alert.</p>",
+        "AlertSummary$profileId": "<p>The ID of the access profile associated with the alert.</p>",
+        "CreateAlertInput$profileId": "<p>The ID of the access profile the alert uses to evaluate its query and execute notifications. The caller supplies it: there is no managed alert profile, and the service does not pick one on the caller's behalf.</p>",
+        "DeleteAccessProfileInput$profileId": "<p>The unique ID of the access profile to delete.</p>",
+        "GetAccessProfileInput$profileId": "<p>The unique ID of the access profile.</p>",
+        "UpdateAccessProfileInput$profileId": "<p>The unique ID of the access profile to update.</p>",
+        "UpdateAlertInput$profileId": "<p>The ID of the access profile associated with the alert.</p>"
+      }
+    },
+    "PutIntelligenceConfigurationInput": {
+      "base": "<p>The request for updating the intelligence configuration of the calling account.</p>",
+      "refs": {}
+    },
+    "PutIntelligenceConfigurationOutput": {
+      "base": "<p>The intelligence configuration for the calling account after the update.</p>",
+      "refs": {}
+    },
+    "QueryLanguage": {
+      "base": "<p>Query language for an alert rule expression.</p>",
+      "refs": {
+        "AlertRuleQuery$language": "<p>The query language of the expression.</p>"
+      }
+    },
+    "QueryStatistics": {
+      "base": "<p>Statistics about a telemetry query execution.</p>",
+      "refs": {
+        "GetTelemetryQueryResultsResponse$statistics": "<p>Statistics about the query execution.</p>"
+      }
+    },
+    "QueryStatus": {
+      "base": "<p>The current status of a telemetry query.</p>",
+      "refs": {
+        "GetTelemetryQueryResultsResponse$status": "<p>The current execution status of the query.</p>"
+      }
+    },
+    "ResourceArnList": {
+      "base": "<p>List of resource ARNs or ARN patterns.</p>",
+      "refs": {
+        "ResourceScope$resourceArns": "<p>Specific resource ARNs or ARN patterns. When set, actions are limited to these resources. When absent, defaults to &quot;*&quot;.</p>"
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p>The specified resource does not exist.</p>",
+      "refs": {}
+    },
+    "ResourceScope": {
+      "base": "<p>A single resource scope entry within an AccessGrant. Associates a resource type with optional ARN patterns, tag conditions, and row-level filters.</p>",
+      "refs": {
+        "ResourceScopeList$member": null
+      }
+    },
+    "ResourceScopeList": {
+      "base": "<p>List of resource scopes.</p>",
+      "refs": {
+        "ScopedActions$resources": "<p>Optional resource scopes constraining these actions to specific resources.</p>"
+      }
+    },
+    "ResourceScopeTagMap": {
+      "base": "<p>Map of tag keys to values for resource scoping.</p>",
+      "refs": {
+        "ResourceScope$tags": "<p>Tag-based conditions for dynamic resource scoping. Access applies only to resources carrying all of the specified tag key/value pairs.</p>"
+      }
+    },
+    "Row": {
+      "base": null,
+      "refs": {
+        "RowList$member": null
+      }
+    },
+    "RowList": {
+      "base": null,
+      "refs": {
+        "GetTelemetryQueryResultsResponse$rows": "<p>The result rows returned by the query.</p>"
+      }
+    },
+    "RowScope": {
+      "base": "<p>A single additive row-level filter on an AccessGrant. A row is visible when its value for the given field matches the filter's values. Row filters are additive: the visible rows are the union of all row filters across a principal's matching grants.</p>",
+      "refs": {
+        "RowScopeGroup$member": null
+      }
+    },
+    "RowScopeFieldString": {
+      "base": null,
+      "refs": {
+        "RowScope$field": "<p>The field (column) the allowlist applies to (e.g., &quot;serviceName&quot;, &quot;accountId&quot;).</p>"
+      }
+    },
+    "RowScopeGroup": {
+      "base": "<p>A group of row filters that must all match. A row satisfies the group only when it matches every filter in it.</p>",
+      "refs": {
+        "RowScopeGroupList$member": null
+      }
+    },
+    "RowScopeGroupList": {
+      "base": "<p>Row filters as an OR of one or more RowScopeGroups: a row is visible when it matches every filter in any one group. Row filters remain additive across a principal's matching grants.</p>",
+      "refs": {
+        "ResourceScope$rowScopeGroups": "<p>Row-level filters for this scope, as an OR of AND-groups: a row is visible when it matches every filter in any one group. Requires signalTypes.</p> <p>Row filters are additive across a principal's matching grants. A signal type with no matching group is unrestricted, and when rowScopeGroups is omitted all rows are visible for all signal types.</p>"
+      }
+    },
+    "RowScopeOperator": {
+      "base": "<p>Match operator for a row-scope filter. Only IN is supported.</p>",
+      "refs": {
+        "RowScope$operator": "<p>Match operator applied to this filter's values.</p>"
+      }
+    },
+    "RowScopeValue": {
+      "base": "<p>A single allowlist value for a RowScope field.</p>",
+      "refs": {
+        "RowScopeValueList$member": null
+      }
+    },
+    "RowScopeValueList": {
+      "base": "<p>The values for a single RowScope field. Duplicates are not permitted.</p>",
+      "refs": {
+        "RowScope$values": "<p>The values the field is matched against.</p>"
+      }
+    },
+    "Rule": {
+      "base": "<p>Top-level rule definition.</p> <p>{@code telemetryRule} members are optional at the Smithy level to support PATCH semantics on UpdateAlert (send only the sub-blocks you want to change). On CreateAlert, presence is enforced by the service-side validator.</p>",
+      "refs": {
+        "Alert$rule": "<p>The rule that defines how the alert is evaluated.</p>",
+        "CreateAlertInput$rule": "<p>The rule that defines how the alert is evaluated.</p>",
+        "UpdateAlertInput$rule": "<p>The rule that defines how the alert is evaluated. Omit to leave unchanged. Each sub-block is replaced whole when present: {@code query}, {@code condition}, {@code evaluation} and {@code noData} are applied only when supplied, and within a supplied block an omitted optional member is cleared to unset (null/absent) rather than preserved from the stored alert or defaulted. See {@link AlertCondition} and {@link AlertEvaluation}.</p>"
+      }
+    },
+    "Scope": {
+      "base": "<p>Whether an integration is account-scoped (customer-created) or organization-scoped (created by an org-enablement rule on behalf of the destination account). Mirrors the {@code Scope} discriminator used by CloudWatch Centralization / Observability Admin.</p>",
+      "refs": {
+        "Integration$scope": "<p>Whether this integration is account-scoped (ACCOUNT, customer-created) or organization-scoped (ORGANIZATION, created by an org-enablement rule). Absent on legacy records is treated as ACCOUNT.</p>"
+      }
+    },
+    "ScopedActionName": {
+      "base": "<p>A single scoped action in &quot;vendor-code:Action&quot; form (e.g. &quot;bedrock:InvokeModel&quot;). Wildcards are not permitted.</p>",
+      "refs": {
+        "ScopedActionNameList$member": null
+      }
+    },
+    "ScopedActionNameList": {
+      "base": "<p>The actions for a ScopedActions entry (1-50 entries), each &quot;vendor-code:Action&quot;.</p>",
+      "refs": {
+        "ScopedActions$actions": "<p>The actions this group applies to.</p>"
+      }
+    },
+    "ScopedActions": {
+      "base": "<p>A group of actions within an access grant, together with the resource scopes and context conditions that apply to exactly those actions.</p>",
+      "refs": {
+        "ScopedActionsList$member": null
+      }
+    },
+    "ScopedActionsList": {
+      "base": "<p>Groups of scoped actions within an access grant.</p>",
+      "refs": {
+        "AccessGrant$scopedActions": "<p>Groups of actions allowed by the grant, each with the resource scopes and conditions that limit those actions.</p>",
+        "CreateAccessGrantInput$scopedActions": "<p>Groups of actions to allow, each with the resource scopes and conditions that limit those actions.</p>"
+      }
+    },
+    "SearchPrincipalsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "SearchPrincipalsInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "SearchPrincipalsInput$maxResults": "<p>The maximum number of results to return. Defaults to 10. Valid only when searchQuery is *; other searches reject this parameter and return at most 10 results.</p>"
+      }
+    },
+    "SearchPrincipalsInputSearchQueryString": {
+      "base": null,
+      "refs": {
+        "SearchPrincipalsInput$searchQuery": "<p>A search term to match against user names, display names, and IDs. Pass * to list all principals. Maximum 128 characters.</p>"
+      }
+    },
+    "SearchPrincipalsNextToken": {
+      "base": "<p>SearchPrincipals nextToken. Uncapped — wraps two Identity Store tokens (up to 65,535 chars each) inside a KMS-encrypted envelope.</p>",
+      "refs": {
+        "SearchPrincipalsInput$nextToken": "<p>A token to retrieve the next page of results. Valid only when searchQuery is *; other searches do not paginate and reject this parameter. Tokens expire after 24 hours.</p>",
+        "SearchPrincipalsOutput$nextToken": "<p>A token to retrieve the next page of results, or null if there are no more results.</p>"
+      }
+    },
+    "SearchPrincipalsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "SecretAccessKey": {
+      "base": "<p>An AWS secret access key.</p>",
+      "refs": {
+        "AwsCredentials$secretAccessKey": "<p>The AWS secret access key.</p>"
+      }
+    },
+    "SensitiveString": {
+      "base": null,
+      "refs": {
+        "OAuthClientCredential$clientSecret": "<p>The OAuth 2.0 client secret that pairs with the client identifier.</p>"
+      }
+    },
+    "ServiceQuotaExceededException": {
+      "base": "<p>A service quota was exceeded.</p>",
+      "refs": {}
+    },
+    "SessionSummary": {
+      "base": "<p>Summary information about a query session, including its identifier, name, and activity timestamps.</p>",
+      "refs": {
+        "SessionSummaryList$member": null
+      }
+    },
+    "SessionSummaryList": {
+      "base": null,
+      "refs": {
+        "ListTelemetryQuerySessionsResponse$sessions": "<p>The list of session summaries.</p>"
+      }
+    },
+    "SessionSummarySessionNameString": {
+      "base": null,
+      "refs": {
+        "SessionSummary$sessionName": "<p>The human-readable name of the session. Names under <code>/aws/</code> are reserved for service integrations.</p>"
+      }
+    },
+    "SessionToken": {
+      "base": "<p>A session token (IdC or deep-link scoped). Sensitive: carries a bearer credential, so it is redacted from request logs and CloudTrail <code>requestParameters</code>.</p>",
+      "refs": {
+        "AwsCredentials$sessionToken": "<p>The AWS session token.</p>"
+      }
+    },
+    "Signal": {
+      "base": "<p>Signal enum for context graph queries.</p>",
+      "refs": {
+        "SignalSet$member": null
+      }
+    },
+    "SignalSet": {
+      "base": "<p>Signal set for context graph queries.</p>",
+      "refs": {
+        "Edge$signalTypes": "<p>The kinds of telemetry signal observed on this edge.</p>",
+        "Node$signalTypes": "<p>The kinds of telemetry signal observed on this node.</p>"
+      }
+    },
+    "SignalType": {
+      "base": "<p>Telemetry signal type that row-scoped access control applies to.</p>",
+      "refs": {
+        "SignalTypeList$member": null
+      }
+    },
+    "SignalTypeList": {
+      "base": "<p>The set of telemetry signal types a row scope applies to.</p>",
+      "refs": {
+        "ResourceScope$signalTypes": "<p>Signal types this scope's row filtering applies to. Required when rowScopeGroups is set.</p>"
+      }
+    },
+    "Source": {
+      "base": "<p>Data source enum for context graph queries.</p>",
+      "refs": {
+        "SourceSet$member": null
+      }
+    },
+    "SourceSet": {
+      "base": "<p>Source set for context graph queries.</p>",
+      "refs": {
+        "Edge$sources": "<p>The discovery sources that contributed this edge.</p>",
+        "EdgeFilters$sources": "<p>Match edges contributed by any of these discovery sources.</p>",
+        "Node$sources": "<p>The discovery sources that contributed this node.</p>",
+        "NodeFilters$sources": "<p>Match nodes contributed by any of these discovery sources.</p>"
+      }
+    },
+    "Space": {
+      "base": "<p>Detailed information about a space.</p>",
+      "refs": {
+        "CreateSpaceOutput$space": "<p>The details of the created space.</p>",
+        "GetSpaceOutput$space": "<p>The details of the space.</p>",
+        "UpdateSpaceOutput$space": "<p>The updated details of the space.</p>"
+      }
+    },
+    "SpaceCredentialRequestContext": {
+      "base": "<p>Identifies what the credentials are for: either an existing space, or a target account in a domain. Specify spaceId, or both domainId and targetAccountId.</p>",
+      "refs": {
+        "GetSpaceCredentialsForOrganizationInput$context": "<p>Context for credential resolution.</p>"
+      }
+    },
+    "SpaceId": {
+      "base": "<p>Space identifier — a v4 UUID minted by the backend.</p>",
+      "refs": {
+        "AccessGrant$spaceId": "<p>The space this grant applies to. Domain-scoped grants are returned by ListDomainAccessGrantsForOrganization instead.</p>",
+        "AccessGrantSummary$spaceId": "<p>The space this grant applies to. Domain-scoped grants are returned by ListDomainAccessGrantsForOrganization instead.</p>",
+        "AccessProfile$spaceId": "<p>The ID of the space the profile belongs to.</p>",
+        "Alert$spaceId": "<p>The ID of the space the alert belongs to.</p>",
+        "AlertSummary$spaceId": "<p>The ID of the space the alert belongs to.</p>",
+        "CreateAccessGrantInput$spaceId": "<p>The ID of the space to scope the grant to.</p>",
+        "CreateAccessProfileInput$spaceId": "<p>The unique ID of the space to create the profile in.</p>",
+        "CreateAlertInput$spaceId": "<p>The unique ID of the space to create the alert in.</p>",
+        "CreateOmniDashboardInput$spaceId": "<p>The unique ID of the space to create the dashboard in.</p>",
+        "DeleteAccessProfileInput$spaceId": "<p>The unique ID of the space.</p>",
+        "DeleteAlertInput$spaceId": "<p>The unique ID of the space.</p>",
+        "DeleteOmniDashboardInput$spaceId": "<p>The unique ID of the space.</p>",
+        "DeleteSpaceInput$spaceId": "<p>The unique ID of the space to delete.</p>",
+        "GetAccessProfileInput$spaceId": "<p>The unique ID of the space.</p>",
+        "GetAlertInput$spaceId": "<p>The unique ID of the space.</p>",
+        "GetOmniDashboardInput$spaceId": "<p>The unique ID of the space.</p>",
+        "GetSpaceInput$spaceId": "<p>The unique ID of the space.</p>",
+        "ListAccessGrantsInput$spaceId": "<p>Filter by space ID.</p>",
+        "ListAccessProfilesInput$spaceId": "<p>The unique ID of the space.</p>",
+        "ListAlertsInput$spaceId": "<p>The unique ID of the space.</p>",
+        "ListOmniDashboardsInput$spaceId": "<p>The unique ID of the space.</p>",
+        "Space$spaceId": "<p>The unique ID of the space.</p>",
+        "SpaceCredentialRequestContext$spaceId": "<p>The ID of an existing space to return credentials for.</p>",
+        "SpaceSummary$spaceId": "<p>The unique ID of the space.</p>",
+        "UpdateAccessProfileInput$spaceId": "<p>The unique ID of the space.</p>",
+        "UpdateAlertInput$spaceId": "<p>The unique ID of the space.</p>",
+        "UpdateOmniDashboardInput$spaceId": "<p>The unique ID of the space.</p>",
+        "UpdateSpaceInput$spaceId": "<p>The unique ID of the space to update.</p>"
+      }
+    },
+    "SpaceStatus": {
+      "base": "<p>Status of a space.</p>",
+      "refs": {
+        "Space$status": "<p>The status of the space.</p>",
+        "SpaceSummary$status": "<p>The status of the space.</p>"
+      }
+    },
+    "SpaceSummary": {
+      "base": "<p>Summary of a space. Call GetSpace for the full space.</p>",
+      "refs": {
+        "SpaceSummaryList$member": null
+      }
+    },
+    "SpaceSummaryList": {
+      "base": "<p>List of space summaries.</p>",
+      "refs": {
+        "ListSpacesForOrganizationOutput$items": "<p>The list of space summaries.</p>",
+        "ListSpacesOutput$items": "<p>The list of space summaries.</p>"
+      }
+    },
+    "StartTelemetryQueryRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartTelemetryQueryRequestQueryStringString": {
+      "base": null,
+      "refs": {
+        "StartTelemetryQueryRequest$queryString": "<p>The query string to execute.</p>"
+      }
+    },
+    "StartTelemetryQueryRequestSessionIdString": {
+      "base": null,
+      "refs": {
+        "StartTelemetryQueryRequest$sessionId": "<p>The unique ID of the session.</p>"
+      }
+    },
+    "StartTelemetryQueryResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "StartTelemetryQueryResponseQueryIdString": {
+      "base": null,
+      "refs": {
+        "StartTelemetryQueryResponse$queryId": "<p>The unique ID of the query.</p>"
+      }
+    },
+    "StartTelemetryQueryResponseSessionIdString": {
+      "base": null,
+      "refs": {
+        "StartTelemetryQueryResponse$sessionId": "<p>The unique ID of the session.</p>"
+      }
+    },
+    "StartTelemetryQuerySessionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartTelemetryQuerySessionRequestSessionNameString": {
+      "base": null,
+      "refs": {
+        "StartTelemetryQuerySessionRequest$sessionName": "<p>A human-readable name for the session. Names under <code>/aws/</code> are reserved for service integrations.</p>"
+      }
+    },
+    "StartTelemetryQuerySessionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "StartTelemetryQuerySessionResponseSessionIdString": {
+      "base": null,
+      "refs": {
+        "StartTelemetryQuerySessionResponse$sessionId": "<p>The unique ID of the session.</p>"
+      }
+    },
+    "StopTelemetryQueryRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StopTelemetryQueryRequestQueryIdString": {
+      "base": null,
+      "refs": {
+        "StopTelemetryQueryRequest$queryId": "<p>The unique ID of the query.</p>"
+      }
+    },
+    "StopTelemetryQueryResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "StopTelemetryQuerySessionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StopTelemetryQuerySessionRequestSessionIdString": {
+      "base": null,
+      "refs": {
+        "StopTelemetryQuerySessionRequest$sessionId": "<p>The unique ID of the session.</p>"
+      }
+    },
+    "StopTelemetryQuerySessionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$message": null,
+        "AccessGrant$createdBy": "<p>The principal that created the grant.</p>",
+        "AccessProfile$name": "<p>A name that identifies the access profile.</p>",
+        "AccessProfile$description": "<p>An optional description of the access profile.</p>",
+        "AccessProfileSummary$name": "<p>A name that identifies the access profile.</p>",
+        "AccessProfileSummary$description": "<p>An optional description of the access profile.</p>",
+        "Alert$name": "<p>The name of the alert.</p>",
+        "Alert$description": "<p>An optional description of the alert.</p>",
+        "AlertSummary$name": "<p>The name of the alert.</p>",
+        "ConflictException$message": "<p>A human-readable description of the conflict.</p>",
+        "ConflictException$conflictType": "<p>The type of conflict that caused the request to fail. Not always present.</p>",
+        "ConflictException$resourceId": "<p>The identifier of the resource that is in conflict. Not always present.</p>",
+        "ConflictException$resourceType": "<p>The type of the resource that is in conflict. Not always present.</p>",
+        "ConflictException$errorCode": "<p>The error code associated with the conflict. Not always present.</p>",
+        "ContextConditionsMap$key": null,
+        "ContextGraphAttributeMap$key": null,
+        "ContextGraphAttributeMap$value": null,
+        "CreateIntegrationInput$roleArn": "<p>The Amazon Resource Name of the IAM role assumed to access the integration.</p>",
+        "CreateOneTimeDeepLinkCodeInput$redirectUrl": "<p>The URL to redirect to after the deep-link code is used. Must be an HTTPS URL in the domain with a path of /auth/callback, and cannot include a query string or fragment. If omitted, no redirect is applied.</p>",
+        "CreateViewResponse$name": "<p>The name of the view.</p>",
+        "CreateViewResponse$description": "<p>The description of the view.</p>",
+        "CreateViewResponse$definition": "<p>The SQL query that defines the view.</p>",
+        "CreateViewResponse$arn": "<p>The ARN of the view.</p>",
+        "Domain$domainEndpointUrl": "<p>The HTTPS endpoint URL for accessing the domain.</p>",
+        "Domain$region": "<p>The Region where this domain was created.</p>",
+        "DomainSummary$region": "<p>The Region where this domain was created.</p>",
+        "EdgeProperties$protocol": "<p>The IANA protocol name for the observed network traffic, such as &quot;tcp&quot;.</p>",
+        "EdgeProperties$sourcePort": "<p>The source port of the observed traffic. May be a placeholder when the port is unknown.</p>",
+        "EdgeProperties$destinationPort": "<p>The destination port of the observed traffic. May be a placeholder when the port is unknown.</p>",
+        "EdgeProperties$errorCode": "<p>The error code returned when the call was attempted and refused. Its presence means the edge exists but the dependency is failing.</p>",
+        "EdgeProperties$httpStatusCode": "<p>The HTTP status code observed on the request. Distinct from errorCode.</p>",
+        "EdgeProperties$httpMethod": "<p>The HTTP method observed on the request.</p>",
+        "Field$name": "<p>The name of the field. Field names are case-sensitive and must be used exactly as returned when referencing them in query expressions.</p>",
+        "GetTelemetryQueryResultsRequest$nextToken": "<p>A token to retrieve the next page of results.</p>",
+        "GetTelemetryQueryResultsResponse$nextToken": "<p>A token to retrieve the next page of results, or null if there are no more results.</p>",
+        "GetViewResponse$name": "<p>The name of the view.</p>",
+        "GetViewResponse$description": "<p>The description of the view.</p>",
+        "GetViewResponse$definition": "<p>The SQL query that defines the view.</p>",
+        "GetViewResponse$arn": "<p>The ARN of the view.</p>",
+        "Integration$integrationId": "<p>The unique identifier of the integration.</p>",
+        "Integration$name": "<p>The customer-provided name of the integration.</p>",
+        "Integration$credentialArn": "<p>The Amazon Resource Name (ARN) of the secret that stores the integration's credentials.</p>",
+        "Integration$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that CloudWatch assumes to access the external system.</p>",
+        "Integration$authorizationUrl": "<p>The URL the customer visits to authorize the integration. Present while an OAuth authorization is pending.</p>",
+        "Integration$errorMessage": "<p>A human-readable description of why the integration is in an ERROR or FAILED state. Present only when the integration has failed.</p>",
+        "IntegrationIdentifier$integrationId": "<p>The unique identifier of the integration.</p>",
+        "IntegrationIdentifier$integrationName": "<p>The name of the integration; unique within the account.</p>",
+        "IntelligenceTagMap$key": null,
+        "IntelligenceTagMap$value": null,
+        "InternalServerException$message": null,
+        "InternalServerException$errorCode": "<p>The error code associated with the internal error.</p>",
+        "ListIntegrationsInput$name": "<p>Returns only the integration with this exact name.</p>",
+        "ListIntegrationsInput$nextToken": "<p>Pagination token from a previous response; omit for the first page.</p>",
+        "ListIntegrationsOutput$nextToken": "<p>Pagination token for the next page; absent when there are no more results.</p>",
+        "ListTelemetryFieldsRequest$nextToken": "<p>A token to retrieve the next page of results. Reserved for future pagination; the service does not paginate at this time and returns null.</p>",
+        "ListTelemetryFieldsResponse$nextToken": "<p>A token to retrieve the next page of results, or null if there are no more results.</p>",
+        "ListTelemetryQuerySessionsRequest$nextToken": "<p>A token to retrieve the next page of results.</p>",
+        "ListTelemetryQuerySessionsResponse$nextToken": "<p>A token to retrieve the next page of results, or null if there are no more results.</p>",
+        "ListViewsRequest$nextToken": "<p>A token to retrieve the next page of results.</p>",
+        "ListViewsResponse$nextToken": "<p>A token to retrieve the next page of results, or null if there are no more results.</p>",
+        "LogMetadataAttributeMap$key": null,
+        "LogMetadataAttributeMap$value": null,
+        "MetadataAttributeMap$key": null,
+        "MetadataAttributeMap$value": null,
+        "MetricMetadata$name": "<p>The metric name as emitted, such as &quot;Duration&quot;.</p>",
+        "MetricMetadata$namespace": "<p>DEPRECATED: read attributes[&quot;service.namespace&quot;] instead. Retained (deprecated) for backward compatibility with existing consumers; will be removed once they migrate. The logical service grouping the metric belongs to.</p>",
+        "MetricMetadata$preferredStat": "<p>The statistic to chart or alarm on, such as &quot;p99&quot; or &quot;Sum&quot;. Free-form and frequently absent.</p>",
+        "MetricMetadata$metricType": "<p>OTel metric kind: &quot;gauge&quot;, &quot;sum&quot;, &quot;histogram&quot;, &quot;exponential_histogram&quot;, or &quot;summary&quot; (CloudWatch-vended metrics carry the same kinds). Absent when the producer did not report one.</p>",
+        "MetricSemantics$description": "<p>Human-readable description of what the metric measures.</p>",
+        "MetricSemantics$unit": "<p>The unit the metric is reported in.</p>",
+        "NodeProperties$region": "<p>The region the node runs in. Falls back to the region the telemetry was ingested from when the node does not report one.</p>",
+        "NodeProperties$cloudProvider": "<p>The cloud provider hosting the node, resolved from the reported provider, platform, or vendor namespace, and defaulting to &quot;aws&quot;.</p>",
+        "NodeProperties$sourceAccountId": "<p>The account that produced the telemetry this node was discovered from.</p>",
+        "NodeProperties$namespace": "<p>The logical service grouping the node belongs to. This is not a metric namespace.</p>",
+        "NodeProperties$stage": "<p>The node's deployment environment. A node may be observed in several; this is the highest-precedence one. Match any of them with NodeFilters.stage.</p>",
+        "NodeSemantics$purpose": "<p>What the service does.</p>",
+        "NodeSemantics$language": "<p>The primary programming language the service is written in.</p>",
+        "NodeSemantics$framework": "<p>The application framework the service is built on.</p>",
+        "NodeSemantics$kind": "<p>The kind of workload the service is.</p>",
+        "NodeSemantics$repository": "<p>The source repository the service is built from.</p>",
+        "OAuthClientCredential$clientId": "<p>The OAuth 2.0 client identifier registered with the external system.</p>",
+        "OAuthClientCredential$providerId": "<p>The identifier of the OAuth provider that issued the client credentials.</p>",
+        "OmniDashboard$name": "<p>A name that identifies the dashboard.</p>",
+        "OmniDashboard$body": "<p>The dashboard definition.</p>",
+        "OmniDashboard$createdBy": "<p>The principal that created the dashboard.</p>",
+        "OmniDashboard$description": "<p>An optional description of the dashboard.</p>",
+        "OmniDashboardSummary$name": "<p>A name that identifies the dashboard.</p>",
+        "OmniDashboardSummary$createdBy": "<p>The principal that created the dashboard.</p>",
+        "OmniDashboardSummary$description": "<p>An optional description of the dashboard.</p>",
+        "OrganizationAccessGrant$createdBy": "<p>The principal that created the grant.</p>",
+        "OrganizationDomain$domainEndpointUrl": "<p>The HTTPS endpoint URL for accessing the organization domain.</p>",
+        "OrganizationDomain$organizationId": "<p>The ID of the AWS Organization that owns the domain.</p>",
+        "OrganizationDomain$region": "<p>The Region where this organization domain was created.</p>",
+        "PrincipalSearchResult$displayName": "<p>The display name of the principal.</p>",
+        "PrincipalSearchResult$userName": "<p>The user name of the principal. Present for users only.</p>",
+        "PrincipalSearchResult$description": "<p>An optional description of the principal.</p>",
+        "ResourceArnList$member": null,
+        "ResourceNotFoundException$message": null,
+        "ResourceNotFoundException$resourceType": "<p>The type of the resource that could not be found. Not always present.</p>",
+        "ResourceNotFoundException$resourceId": "<p>The identifier of the resource that could not be found. Not always present.</p>",
+        "ResourceNotFoundException$errorCode": "<p>The error code associated with the failure.</p>",
+        "ResourceScope$resourceType": "<p>Resource type name (e.g., &quot;DataSet&quot;, &quot;OmniDashboard&quot;).</p>",
+        "ResourceScopeTagMap$key": null,
+        "ResourceScopeTagMap$value": null,
+        "Row$key": null,
+        "Row$value": null,
+        "ServiceQuotaExceededException$message": null,
+        "SessionSummary$sessionId": "<p>The unique ID of the session.</p>",
+        "Space$name": "<p>A name that identifies the space.</p>",
+        "Space$region": "<p>The region where this space was created.</p>",
+        "Space$statusReason": "<p>Reason for the current space status.</p>",
+        "SpaceSummary$name": "<p>A name that identifies the space.</p>",
+        "SpaceSummary$region": "<p>The region where this space was created.</p>",
+        "SpaceSummary$statusReason": "<p>Reason for the current space status.</p>",
+        "StringList$member": null,
+        "StringSet$member": null,
+        "ThrottlingException$message": null,
+        "TraceMetadataAttributeMap$key": null,
+        "TraceMetadataAttributeMap$value": null,
+        "UpdateIntegrationInput$roleArn": "<p>The Amazon Resource Name of the IAM role assumed to access the integration.</p>",
+        "UpdateViewResponse$name": "<p>The name of the view.</p>",
+        "UpdateViewResponse$description": "<p>The description of the view.</p>",
+        "UpdateViewResponse$definition": "<p>The SQL query that defines the view.</p>",
+        "UpdateViewResponse$arn": "<p>The ARN of the view.</p>",
+        "ValidationException$message": null,
+        "ValidationException$errorCode": "<p>The error code associated with the validation failure.</p>",
+        "ViewSummary$name": "<p>The name of the view.</p>",
+        "ViewSummary$description": "<p>The description of the view.</p>"
+      }
+    },
+    "StringList": {
+      "base": "<p>Generic list of strings.</p>",
+      "refs": {
+        "ContextConditionsMap$value": null,
+        "Domain$customEndpointUrls": "<p>Additional endpoint URLs derived from the domain name.</p>",
+        "OrganizationDomain$customEndpointUrls": "<p>Additional endpoint URLs derived from the domain name.</p>"
+      }
+    },
+    "StringMap": {
+      "base": null,
+      "refs": {
+        "Integration$integrationAttributes": "<p>Provider-specific key/value attributes that configure the integration.</p>",
+        "UpdateIntegrationInput$integrationAttributes": "<p>The provider-specific attributes to associate with the integration.</p>"
+      }
+    },
+    "StringMapKeyString": {
+      "base": null,
+      "refs": {
+        "StringMap$key": null
+      }
+    },
+    "StringMapValueString": {
+      "base": null,
+      "refs": {
+        "StringMap$value": null
+      }
+    },
+    "StringSet": {
+      "base": "<p>String set for context graph queries.</p>",
+      "refs": {
+        "Edge$operations": "<p>The operations observed on this edge.</p>",
+        "EdgeFilters$operations": "<p>Match edges carrying any of these operations.</p>",
+        "Node$alternateNames": "<p>Other names this node was observed under. A node that merged across sources reports one resolved name, and the names it was merged away from appear here.</p>",
+        "NodeFilters$region": "<p>Match nodes in any of these regions.</p>",
+        "NodeFilters$cloudProvider": "<p>Match nodes on any of these cloud providers.</p>",
+        "NodeFilters$sourceAccountId": "<p>Match nodes discovered from telemetry produced by any of these accounts.</p>",
+        "NodeFilters$namespace": "<p>Match nodes in any of these logical service groupings.</p>",
+        "NodeFilters$stage": "<p>Match nodes observed in any of these deployment environments.</p>"
+      }
+    },
+    "TagKey": {
+      "base": "<p>Tag key. Must be non-empty; AWS-standard maximum length. Constraining the key (rather than a bare String) rejects empty-key payloads at the edge with a 400 ValidationException instead of faulting downstream as a 500.</p>",
+      "refs": {
+        "TagMap$key": null
+      }
+    },
+    "TagMap": {
+      "base": null,
+      "refs": {
+        "CreateAccessGrantInput$tags": "<p>The tags to associate with the access grant.</p>",
+        "CreateAccessProfileInput$tags": "<p>The tags to associate with the access profile.</p>",
+        "CreateAlertInput$tags": "<p>The tags to associate with the alert.</p>",
+        "CreateDomainAccessGrantForOrganizationInput$tags": "<p>The tags to associate with the access grant.</p>",
+        "CreateDomainForOrganizationInput$tags": "<p>The tags to associate with the domain.</p>",
+        "CreateDomainInput$tags": "<p>The tags to associate with the domain.</p>",
+        "CreateIntegrationInput$tags": "<p>Tags to apply to the integration at creation time (Tagris tag-on-create).</p>",
+        "CreateOmniDashboardInput$tags": "<p>The tags to associate with the dashboard.</p>",
+        "CreateSpaceInput$tags": "<p>The tags to associate with the space.</p>",
+        "CreateViewRequest$tags": "<p>Resource tags.</p>",
+        "OmniDashboard$tags": "<p>The tags associated with the dashboard.</p>",
+        "OmniDashboardSummary$tags": "<p>The tags associated with the dashboard.</p>"
+      }
+    },
+    "TagValue": {
+      "base": "<p>Tag value. AWS-standard maximum length; may be empty.</p>",
+      "refs": {
+        "TagMap$value": null
+      }
+    },
+    "TelemetryRule": {
+      "base": "<p>Telemetry-based rule: what to query, how to evaluate the result, what condition makes it fire, and what to do on missing data.</p>",
+      "refs": {
+        "Rule$telemetryRule": "<p>The telemetry-based rule definition.</p>"
+      }
+    },
+    "TelemetryType": {
+      "base": "<p>The type of telemetry data.</p>",
+      "refs": {
+        "ListTelemetryFieldsRequest$telemetryType": "<p>The type of telemetry to filter fields by.</p>"
+      }
+    },
+    "ThresholdMode": {
+      "base": "<p>How a threshold is applied to query results.</p>",
+      "refs": {
+        "AlertCondition$thresholdMode": "<p>How the threshold is applied to query results.</p>"
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>The request was throttled due to exceeding the allowed request rate.</p>",
+      "refs": {}
+    },
+    "Timestamp": {
+      "base": null,
+      "refs": {
+        "AccessGrant$createdAt": "<p>The timestamp when the grant was created.</p>",
+        "AccessGrant$updatedAt": "<p>The timestamp when the grant was last updated.</p>",
+        "AccessProfile$createdAt": "<p>The timestamp when the access profile was created.</p>",
+        "AccessProfile$updatedAt": "<p>The timestamp when the access profile was last updated.</p>",
+        "Alert$createdAt": "<p>The timestamp when the alert was created.</p>",
+        "Alert$updatedAt": "<p>The timestamp when the alert was last updated.</p>",
+        "AlertStateInfo$transitionedAt": "<p>When the alert transitioned to its current state.</p>",
+        "AlertSummary$createdAt": "<p>The timestamp when the alert was created.</p>",
+        "AlertSummary$updatedAt": "<p>The timestamp when the alert was last updated.</p>",
+        "AwsCredentials$expiration": "<p>The timestamp when the credentials expire.</p>",
+        "CreateOneTimeDeepLinkCodeOutput$expiresAt": "<p>The timestamp when the code expires.</p>",
+        "CreateViewResponse$createdAt": "<p>The timestamp when the view was created.</p>",
+        "CreateViewResponse$updatedAt": "<p>The timestamp when the view was last updated.</p>",
+        "Domain$createdAt": "<p>The timestamp when the domain was created.</p>",
+        "Domain$updatedAt": "<p>The timestamp when the domain was last updated.</p>",
+        "DomainSummary$createdAt": "<p>The timestamp when the domain was created.</p>",
+        "DomainSummary$updatedAt": "<p>The timestamp when the domain was last updated.</p>",
+        "Edge$firstObservedAt": "<p>When this edge was first observed (UTC), at minute granularity. For an edge that merged across sources, this is the earliest value any source reported.</p>",
+        "Edge$lastObservedAt": "<p>When this edge was most recently observed (UTC), at minute granularity. For an edge that merged across sources, this is the latest value any source reported.</p>",
+        "GetContextGraphInput$startTime": "<p>Start of the time range (UTC), inclusive.</p>",
+        "GetContextGraphInput$endTime": "<p>End of the time range (UTC), inclusive.</p>",
+        "GetIntelligenceConfigurationOutput$updatedAt": "<p>ISO-8601 timestamp of the last update.</p>",
+        "GetIntelligenceConfigurationOutput$createdAt": "<p>ISO-8601 timestamp of initial creation.</p>",
+        "GetViewResponse$createdAt": "<p>The timestamp when the view was created.</p>",
+        "GetViewResponse$updatedAt": "<p>The timestamp when the view was last updated.</p>",
+        "Integration$createdAt": "<p>The time at which the integration was created.</p>",
+        "Integration$updatedAt": "<p>The time at which the integration was last updated.</p>",
+        "ListTelemetryFieldsRequest$startTime": "<p>Inclusive start of the lookback window. When omitted, the service defaults to the configured lookback before endTime.</p>",
+        "ListTelemetryFieldsRequest$endTime": "<p>Inclusive end of the lookback window. When omitted, the service defaults to the current time.</p>",
+        "Node$firstObservedAt": "<p>When this node was first observed (UTC), at minute granularity. For a node that merged across sources, this is the earliest value any source reported.</p>",
+        "Node$lastObservedAt": "<p>When this node was most recently observed (UTC), at minute granularity. For a node that merged across sources, this is the latest value any source reported.</p>",
+        "OmniDashboard$createdAt": "<p>The timestamp when the dashboard was created.</p>",
+        "OmniDashboard$updatedAt": "<p>The timestamp when the dashboard was last updated.</p>",
+        "OmniDashboardSummary$createdAt": "<p>The timestamp when the dashboard was created.</p>",
+        "OmniDashboardSummary$updatedAt": "<p>The timestamp when the dashboard was last updated.</p>",
+        "OrganizationAccessGrant$createdAt": "<p>The timestamp when the grant was created.</p>",
+        "OrganizationAccessGrant$updatedAt": "<p>The timestamp when the grant was last updated.</p>",
+        "OrganizationAccessGrantSummary$createdAt": "<p>The timestamp when the access grant was created.</p>",
+        "OrganizationAccessGrantSummary$updatedAt": "<p>The timestamp when the access grant was last updated.</p>",
+        "OrganizationDomain$createdAt": "<p>The timestamp when the organization domain was created.</p>",
+        "OrganizationDomain$updatedAt": "<p>The timestamp when the organization domain was last updated.</p>",
+        "PutIntelligenceConfigurationOutput$updatedAt": "<p>ISO-8601 timestamp of the last update.</p>",
+        "PutIntelligenceConfigurationOutput$createdAt": "<p>ISO-8601 timestamp of initial creation.</p>",
+        "SessionSummary$createdAt": "<p>The timestamp when the session was created.</p>",
+        "SessionSummary$lastActivityAt": "<p>The timestamp of the most recent activity in the session.</p>",
+        "Space$createdAt": "<p>The timestamp when the space was created.</p>",
+        "Space$updatedAt": "<p>The timestamp when the space was last updated.</p>",
+        "SpaceSummary$createdAt": "<p>The timestamp when the space was created.</p>",
+        "SpaceSummary$updatedAt": "<p>The timestamp when the space was last updated.</p>",
+        "UpdateViewResponse$createdAt": "<p>The timestamp when the view was created.</p>",
+        "UpdateViewResponse$updatedAt": "<p>The timestamp when the view was last updated.</p>",
+        "ViewSummary$createdAt": "<p>The timestamp when the view was created.</p>",
+        "ViewSummary$updatedAt": "<p>The timestamp when the view was last updated.</p>"
+      }
+    },
+    "TraceMetadata": {
+      "base": "<p>One TRACES query selector block on a node/edge (see LogMetadata).</p>",
+      "refs": {
+        "TraceMetadataList$member": null
+      }
+    },
+    "TraceMetadataAttributeMap": {
+      "base": "<p>TRACES counterpart of LogMetadataAttributeMap — a dedicated per-signal map so the two evolve independently (same scalar shape and cap today).</p>",
+      "refs": {
+        "TraceMetadata$attributes": null
+      }
+    },
+    "TraceMetadataList": {
+      "base": "<p>Per-node/per-edge trace query selectors; the list ORs across blocks. Bound is a payload cap.</p>",
+      "refs": {
+        "Metadata$traces": "<p>Per-signal TRACES query selectors (same block shape as logs). Present on both node and edge metadata. serviceName is derived at the service projection, not stored here.</p>"
+      }
+    },
+    "UpdateAccessProfileInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAccessProfileInputDescriptionString": {
+      "base": null,
+      "refs": {
+        "UpdateAccessProfileInput$description": "<p>A new description of the access profile. Omit to leave unchanged.</p>"
+      }
+    },
+    "UpdateAccessProfileOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAlertInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAlertInputDescriptionString": {
+      "base": null,
+      "refs": {
+        "UpdateAlertInput$description": "<p>A new description of the alert. Omit to leave unchanged.</p>"
+      }
+    },
+    "UpdateAlertInputNameString": {
+      "base": null,
+      "refs": {
+        "UpdateAlertInput$name": "<p>A new display name for the alert. Omit to leave the name unchanged (apply-if-present / PATCH). Same constraints as CreateAlert.name; the name is not the alert's identity, so a rename never changes the alertId.</p>"
+      }
+    },
+    "UpdateAlertOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateDomainForOrganizationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateDomainForOrganizationInputNameString": {
+      "base": null,
+      "refs": {
+        "UpdateDomainForOrganizationInput$name": "<p>A new name for the organization domain. Omit to leave unchanged. Must be 3-63 characters: lowercase letters, numbers, and hyphens. It must begin and end with a letter or number and cannot contain consecutive hyphens.</p>"
+      }
+    },
+    "UpdateDomainForOrganizationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateDomainInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateDomainInputNameString": {
+      "base": null,
+      "refs": {
+        "UpdateDomainInput$name": "<p>A new name for the domain. Omit to leave unchanged. Must be 3-63 characters: lowercase letters, numbers, and hyphens. It must begin and end with a letter or number and cannot contain consecutive hyphens.</p>"
+      }
+    },
+    "UpdateDomainOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateIntegrationInput": {
+      "base": "<p>The request for updating an existing integration.</p>",
+      "refs": {}
+    },
+    "UpdateIntegrationOutput": {
+      "base": "<p>The response from updating an integration.</p>",
+      "refs": {}
+    },
+    "UpdateOmniDashboardInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateOmniDashboardInputBodyString": {
+      "base": null,
+      "refs": {
+        "UpdateOmniDashboardInput$body": "<p>The new dashboard definition, as a JSON document. Maximum 1 MiB. Omit to leave unchanged.</p>"
+      }
+    },
+    "UpdateOmniDashboardInputDescriptionString": {
+      "base": null,
+      "refs": {
+        "UpdateOmniDashboardInput$description": "<p>A new description of the dashboard. Omit to leave unchanged.</p>"
+      }
+    },
+    "UpdateOmniDashboardInputNameString": {
+      "base": null,
+      "refs": {
+        "UpdateOmniDashboardInput$name": "<p>A new name for the dashboard. Omit to leave unchanged.</p>"
+      }
+    },
+    "UpdateOmniDashboardOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateSpaceInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateSpaceInputNameString": {
+      "base": null,
+      "refs": {
+        "UpdateSpaceInput$name": "<p>A new name for the space. Omit to leave unchanged. Must be 3-64 characters: lowercase letters, numbers, and hyphens. It must begin and end with a letter or number and cannot contain consecutive hyphens.</p>"
+      }
+    },
+    "UpdateSpaceOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateViewRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateViewResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ValidationException": {
+      "base": "<p>A parameter is specified incorrectly.</p>",
+      "refs": {}
+    },
+    "ViewDefinition": {
+      "base": "<p>View definition (SQL query). Maximum 10,000 characters.</p>",
+      "refs": {
+        "CreateViewRequest$definition": "<p>The SQL query that defines the view.</p>",
+        "UpdateViewRequest$definition": "<p>The new SQL query that defines the view. Omit to leave unchanged.</p>"
+      }
+    },
+    "ViewDescription": {
+      "base": "<p>Description of a view.</p>",
+      "refs": {
+        "CreateViewRequest$description": "<p>A description of the view.</p>",
+        "UpdateViewRequest$description": "<p>The new description of the view. Omit to leave unchanged.</p>"
+      }
+    },
+    "ViewName": {
+      "base": "<p>User view name: must start with &quot;view.&quot; prefix followed by lowercase alphanumeric, hyphens, and underscores.</p>",
+      "refs": {
+        "CreateViewRequest$name": "<p>The name of the view. Must begin with the &quot;view.&quot; prefix. View names must be unique within the account and region.</p>",
+        "DeleteViewRequest$name": "<p>The name of the view to delete.</p>",
+        "GetViewRequest$name": "<p>The name of the view.</p>",
+        "UpdateViewRequest$name": "<p>The name of the view to update.</p>"
+      }
+    },
+    "ViewSummary": {
+      "base": "<p>Summary information about a view. Does not include the view definition.</p>",
+      "refs": {
+        "ViewSummaryList$member": null
+      }
+    },
+    "ViewSummaryList": {
+      "base": null,
+      "refs": {
+        "ListViewsResponse$items": "<p>The list of view summaries.</p>"
+      }
+    },
+    "ViewType": {
+      "base": "<p>The ownership category of a view.</p>",
+      "refs": {
+        "CreateViewResponse$type": "<p>The ownership category of the view.</p>",
+        "GetViewResponse$type": "<p>The ownership category of the view.</p>",
+        "ListViewsRequest$type": "<p>Return only views of this ownership category.</p>",
+        "UpdateViewResponse$type": "<p>The ownership category of the view.</p>",
+        "ViewSummary$type": "<p>The ownership category of the view.</p>"
+      }
+    }
+  }
+}

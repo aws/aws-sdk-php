@@ -76,6 +76,7 @@ use Aws\AwsClient;
  *     Tags?: array<string, string>,
  *     WarmThroughputMiBps?: int,
  *     MaxRecordSizeInKiB?: int,
+ *     RecordDistributionStrategy?: 'AUTO'|'USER_PARTITION_KEY',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createStreamAsync(array $args = [])
@@ -86,6 +87,7 @@ use Aws\AwsClient;
  *     Tags?: array<string, string>,
  *     WarmThroughputMiBps?: int,
  *     MaxRecordSizeInKiB?: int,
+ *     RecordDistributionStrategy?: 'AUTO'|'USER_PARTITION_KEY',
  *     ...,
  * } $args = [])
  * @method \Aws\Result decreaseStreamRetentionPeriod(array $args = [])
@@ -508,6 +510,10 @@ use Aws\AwsClient;
  *     WarmThroughputMiBps?: int,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result updateStreamRecordDistributionStrategy(array $args = [])
+ * @phpstan-method \Aws\Result updateStreamRecordDistributionStrategy(array{StreamARN?: string, StreamId?: string, RecordDistributionStrategy?: 'AUTO'|'USER_PARTITION_KEY', ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateStreamRecordDistributionStrategyAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateStreamRecordDistributionStrategyAsync(array{StreamARN?: string, StreamId?: string, RecordDistributionStrategy?: 'AUTO'|'USER_PARTITION_KEY', ...} $args = [])
  * @method \Aws\Result updateStreamWarmThroughput(array $args = [])
  * @phpstan-method \Aws\Result updateStreamWarmThroughput(array{StreamARN?: string, StreamName?: string, StreamId?: string, WarmThroughputMiBps?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise updateStreamWarmThroughputAsync(array $args = [])

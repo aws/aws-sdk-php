@@ -1625,7 +1625,7 @@
     },
     "ComponentBuildVersionArn":{
       "type":"string",
-      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:[0-9]{12}|aws(?:-[a-z-]+)?):component/[a-z0-9-_]+/[0-9]+\\.[0-9]+\\.[0-9]+/[0-9]+$"
+      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:[0-9]{12}|aws(?:-[a-z-]+)?|third-party):component/[a-z0-9-_]+/[0-9]+\\.[0-9]+\\.[0-9]+/[0-9]+$"
     },
     "ComponentConfiguration":{
       "type":"structure",
@@ -1778,11 +1778,11 @@
     },
     "ComponentVersionArn":{
       "type":"string",
-      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:[0-9]{12}|aws(?:-[a-z-]+)?):component/[a-z0-9-_]+/[0-9]+\\.[0-9]+\\.[0-9]+$"
+      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:[0-9]{12}|aws(?:-[a-z-]+)?|third-party):component/[a-z0-9-_]+/[0-9]+\\.[0-9]+\\.[0-9]+$"
     },
     "ComponentVersionArnOrBuildVersionArn":{
       "type":"string",
-      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:[0-9]{12}|aws(?:-[a-z-]+)?):component/[a-z0-9-_]+/(?:(?:([0-9]+|x)\\.([0-9]+|x)\\.([0-9]+|x))|(?:[0-9]+\\.[0-9]+\\.[0-9]+/[0-9]+))$"
+      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:[0-9]{12}|aws(?:-[a-z-]+)?|third-party):component/[a-z0-9-_]+/(?:(?:([0-9]+|x)\\.([0-9]+|x)\\.([0-9]+|x))|(?:[0-9]+\\.[0-9]+\\.[0-9]+/[0-9]+))$"
     },
     "ComponentVersionList":{
       "type":"list",
@@ -2965,7 +2965,7 @@
         "arn":{"shape":"ImageBuilderArn"},
         "type":{"shape":"ImageType"},
         "name":{"shape":"ResourceName"},
-        "version":{"shape":"VersionNumber"},
+        "version":{"shape":"VersionNumberWithBuild"},
         "platform":{"shape":"Platform"},
         "enhancedImageMetadataEnabled":{"shape":"NullableBoolean"},
         "osVersion":{"shape":"OsVersion"},
@@ -3009,7 +3009,7 @@
     },
     "ImageBuilderArn":{
       "type":"string",
-      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:[0-9]{12}|aws(?:-[a-z-]+)?):(?:image-recipe|container-recipe|infrastructure-configuration|distribution-configuration|component|image|image-pipeline|lifecycle-policy|workflow\\/(?:build|test|distribution))/[a-z0-9-_]+(?:/(?:(?:x|[0-9]+)\\.(?:x|[0-9]+)\\.(?:x|[0-9]+))(?:/[0-9]+)?)?$"
+      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:[0-9]{12}|aws(?:-[a-z-]+)?|third-party):(?:image-recipe|container-recipe|infrastructure-configuration|distribution-configuration|component|image|image-pipeline|lifecycle-policy|workflow\\/(?:build|test|distribution))/[a-z0-9-_]+(?:/(?:(?:x|[0-9]+)\\.(?:x|[0-9]+)\\.(?:x|[0-9]+))(?:/[0-9]+)?)?$"
     },
     "ImageConfigurationStep":{
       "type":"string",
@@ -3257,7 +3257,7 @@
         "arn":{"shape":"ImageBuilderArn"},
         "name":{"shape":"ResourceName"},
         "type":{"shape":"ImageType"},
-        "version":{"shape":"VersionNumber"},
+        "version":{"shape":"VersionNumberWithBuild"},
         "platform":{"shape":"Platform"},
         "osVersion":{"shape":"OsVersion"},
         "state":{"shape":"ImageState"},
@@ -5214,6 +5214,12 @@
       "type":"string",
       "pattern":"^[0-9]+\\.[0-9]+\\.[0-9]+$"
     },
+    "VersionNumberWithBuild":{
+      "type":"string",
+      "max":64,
+      "min":5,
+      "pattern":"^[0-9]+\\.[0-9]+\\.[0-9]+(?:/[0-9]+)?$"
+    },
     "VulnerabilityId":{"type":"string"},
     "VulnerabilityIdAggregation":{
       "type":"structure",
@@ -5342,10 +5348,6 @@
     "WorkflowExecutionsList":{
       "type":"list",
       "member":{"shape":"WorkflowExecutionMetadata"}
-    },
-    "WorkflowNameArn":{
-      "type":"string",
-      "pattern":"^arn:aws(?:-[a-z]+)*:imagebuilder:[a-z]{2,}(?:-[a-z]+)+-[0-9]+:(?:[0-9]{12}|aws(?:-[a-z-]+)?):workflow/(build|test|distribution)/[a-z0-9-_]+/x\\.x\\.x$"
     },
     "WorkflowParameter":{
       "type":"structure",
@@ -5520,7 +5522,7 @@
     "WorkflowSummary":{
       "type":"structure",
       "members":{
-        "arn":{"shape":"WorkflowNameArn"},
+        "arn":{"shape":"WorkflowBuildVersionArn"},
         "name":{"shape":"ResourceName"},
         "version":{"shape":"VersionNumber"},
         "description":{"shape":"NonEmptyString"},
@@ -5547,7 +5549,7 @@
     "WorkflowVersion":{
       "type":"structure",
       "members":{
-        "arn":{"shape":"WorkflowVersionArn"},
+        "arn":{"shape":"WorkflowWildcardVersionArn"},
         "name":{"shape":"ResourceName"},
         "version":{"shape":"VersionNumber"},
         "description":{"shape":"NonEmptyString"},
@@ -5555,10 +5557,6 @@
         "owner":{"shape":"NonEmptyString"},
         "dateCreated":{"shape":"DateTime"}
       }
-    },
-    "WorkflowVersionArn":{
-      "type":"string",
-      "pattern":"^arn:aws(?:-[a-z]+)*:imagebuilder:[a-z]{2,}(?:-[a-z]+)+-[0-9]+:(?:[0-9]{12}|aws(?:-[a-z-]+)?):workflow/(build|test|distribution)/[a-z0-9-_]+/[0-9]+\\.[0-9]+\\.[0-9]+$"
     },
     "WorkflowVersionArnOrBuildVersionArn":{
       "type":"string",

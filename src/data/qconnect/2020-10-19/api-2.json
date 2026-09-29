@@ -1690,7 +1690,8 @@
       "type":"structure",
       "required":["aiAgentId"],
       "members":{
-        "aiAgentId":{"shape":"UuidWithQualifier"}
+        "aiAgentId":{"shape":"UuidWithQualifier"},
+        "enabled":{"shape":"Boolean"}
       }
     },
     "AIAgentConfigurationMap":{
@@ -2178,7 +2179,7 @@
     "AssistantAssociationIdList":{
       "type":"list",
       "member":{"shape":"UuidOrArn"},
-      "max":1,
+      "max":5,
       "min":1
     },
     "AssistantAssociationInputData":{
@@ -3314,7 +3315,8 @@
         "caseSummarizationChunkData":{"shape":"CaseSummarizationChunkDataDetails"},
         "suggestedMessageData":{"shape":"SuggestedMessageDataDetails"},
         "notesData":{"shape":"NotesDataDetails"},
-        "notesChunkData":{"shape":"NotesChunkDataDetails"}
+        "notesChunkData":{"shape":"NotesChunkDataDetails"},
+        "proactiveRecommendationData":{"shape":"ProactiveRecommendationDataDetails"}
       },
       "union":true
     },
@@ -6349,6 +6351,13 @@
         "LOW"
       ]
     },
+    "ProactiveRecommendationDataDetails":{
+      "type":"structure",
+      "required":["nextMessageToken"],
+      "members":{
+        "nextMessageToken":{"shape":"NextToken"}
+      }
+    },
     "Probability":{
       "type":"float",
       "box":true,
@@ -6577,7 +6586,7 @@
     },
     "QuickResponseContent":{
       "type":"string",
-      "max":1024,
+      "max":4000,
       "min":1,
       "sensitive":true
     },
@@ -6926,7 +6935,8 @@
         "BLOCKED_CASE_SUMMARIZATION_CHUNK",
         "SUGGESTED_MESSAGE",
         "NOTES_CHUNK",
-        "BLOCKED_NOTES_CHUNK"
+        "BLOCKED_NOTES_CHUNK",
+        "PROACTIVE_RECOMMENDATION"
       ]
     },
     "ReferenceType":{
@@ -7111,6 +7121,41 @@
       "member":{"shape":"RetrievalFilterConfiguration"},
       "min":2
     },
+    "RetrieveError":{
+      "type":"structure",
+      "required":[
+        "associationId",
+        "code",
+        "message"
+      ],
+      "members":{
+        "associationId":{"shape":"Uuid"},
+        "code":{"shape":"RetrieveErrorCode"},
+        "message":{"shape":"RetrieveErrorMessageString"}
+      }
+    },
+    "RetrieveErrorCode":{
+      "type":"string",
+      "enum":[
+        "ACCESS_DENIED",
+        "RESOURCE_NOT_FOUND",
+        "VALIDATION_ERROR",
+        "THROTTLED",
+        "DEPENDENCY_FAILED",
+        "INTERNAL_SERVER_ERROR"
+      ]
+    },
+    "RetrieveErrorList":{
+      "type":"list",
+      "member":{"shape":"RetrieveError"},
+      "max":5,
+      "min":0
+    },
+    "RetrieveErrorMessageString":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
     "RetrieveRequest":{
       "type":"structure",
       "required":[
@@ -7132,7 +7177,8 @@
       "type":"structure",
       "required":["results"],
       "members":{
-        "results":{"shape":"RetrieveResultList"}
+        "results":{"shape":"RetrieveResultList"},
+        "errors":{"shape":"RetrieveErrorList"}
       }
     },
     "RetrieveResult":{

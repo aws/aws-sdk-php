@@ -656,6 +656,7 @@
     "Boolean": {
       "base": null,
       "refs": {
+        "AIAgentConfigurationData$enabled": "<p>Indicates whether the AI Agent configured for this AI Agent type is enabled. When this value is omitted or set to true, the configured AI Agent runs; when set to false, the AI Agent ID is retained but no AI Agent runs for the AI Agent type. Setting this value to false is currently supported only for the <code>ANSWER_RECOMMENDATION</code> AI Agent type; other requests to set it to false are rejected with a validation error.</p>",
         "AIGuardrailAssessment$blocked": "<p>Indicates whether the AI Guardrail blocked the content.</p>",
         "Annotation$destructiveHint": "<p>A hint indicating that the annotation contains potentially destructive content.</p>",
         "CreateQuickResponseRequest$isActive": "<p>Whether the quick response is active.</p>",
@@ -2815,6 +2816,7 @@
         "ListSpansRequest$nextToken": "<p>Pagination token for retrieving the next page of results</p>",
         "ListSpansResponse$nextToken": "<p>Pagination token for retrieving additional results</p>",
         "NotesChunkDataDetails$nextChunkToken": "<p>The token for the next chunk of notes data.</p>",
+        "ProactiveRecommendationDataDetails$nextMessageToken": "<p>The token used to retrieve the next message in the proactive recommendation. Pass this token in a <code>GetNextMessage</code> request to continue receiving the chunked proactive response. Each response returns the next token to use until the chunked response is complete.</p>",
         "QueryAssistantRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "QueryAssistantResponse$nextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "SearchContentRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
@@ -3109,6 +3111,12 @@
       "refs": {
         "MessageTemplateQueryField$priority": "<p>The importance of the attribute field when calculating query result relevancy scores. The value set for this parameter affects the ordering of search results.</p>",
         "QuickResponseQueryField$priority": "<p>The importance of the attribute field when calculating query result relevancy scores. The value set for this parameter affects the ordering of search results.</p>"
+      }
+    },
+    "ProactiveRecommendationDataDetails": {
+      "base": "<p>Details about a proactive recommendation, including the token used to retrieve its chunked response with <code>GetNextMessage</code>.</p>",
+      "refs": {
+        "DataDetails$proactiveRecommendationData": "<p>Details about a proactive recommendation, including the token used to retrieve its chunked response with <code>GetNextMessage</code>.</p>"
       }
     },
     "Probability": {
@@ -3578,6 +3586,30 @@
       "refs": {
         "RetrievalFilterConfiguration$andAll": "<p>Filter configuration that requires all conditions to be met.</p>",
         "RetrievalFilterConfiguration$orAll": "<p>Filter configuration where any condition can be met.</p>"
+      }
+    },
+    "RetrieveError": {
+      "base": "<p>An error returned for a single assistant association whose knowledge base retrieval failed during a <code>Retrieve</code> operation. The overall operation still succeeds and returns the results from the associations that were queried successfully.</p>",
+      "refs": {
+        "RetrieveErrorList$member": null
+      }
+    },
+    "RetrieveErrorCode": {
+      "base": "<p>The error code that categorizes a per-association retrieval failure.</p> <ul> <li> <p> <code>ACCESS_DENIED</code> – you do not have permission to retrieve from the knowledge base for the assistant association.</p> </li> <li> <p> <code>RESOURCE_NOT_FOUND</code> – the assistant association or its knowledge base could not be found.</p> </li> <li> <p> <code>VALIDATION_ERROR</code> – the retrieval request or the knowledge base configuration for the assistant association was not valid.</p> </li> <li> <p> <code>THROTTLED</code> – the retrieval request for the assistant association was throttled.</p> </li> <li> <p> <code>DEPENDENCY_FAILED</code> – a dependency required to query the assistant association failed.</p> </li> <li> <p> <code>INTERNAL_SERVER_ERROR</code> – an internal error occurred while querying the assistant association.</p> </li> </ul>",
+      "refs": {
+        "RetrieveError$code": "<p>The error code that categorizes the retrieval failure for the assistant association.</p>"
+      }
+    },
+    "RetrieveErrorList": {
+      "base": null,
+      "refs": {
+        "RetrieveResponse$errors": "<p>The per-association errors returned when one or more knowledge base associations fail during a <code>Retrieve</code> operation that spans multiple assistant associations. The overall operation still succeeds and returns the results from the associations that were queried successfully. This list contains one entry for each association that failed, up to a maximum of five.</p>"
+      }
+    },
+    "RetrieveErrorMessageString": {
+      "base": null,
+      "refs": {
+        "RetrieveError$message": "<p>A human-readable description of the retrieval failure for the assistant association.</p>"
       }
     },
     "RetrieveRequest": {
@@ -4583,6 +4615,7 @@
         "QuickResponseSummary$knowledgeBaseId": "<p>The identifier of the knowledge base.</p>",
         "RecommendationTrigger$id": "<p>The identifier of the recommendation trigger.</p>",
         "ResultData$resultId": "<p>The identifier of the result data.</p>",
+        "RetrieveError$associationId": "<p>The identifier of the assistant association whose knowledge base retrieval failed.</p>",
         "RetrieveResult$associationId": "<p>The identifier of the assistant association for the retrieved result.</p>",
         "SendMessageResponse$requestMessageId": "<p>The identifier of the submitted message.</p>",
         "SessionData$sessionId": "<p>The identifier of the session.</p>",

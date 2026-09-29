@@ -6179,6 +6179,10 @@
       "type":"string",
       "pattern":"(?:[0-9]{1,3}\\.){3}[0-9]{1,3}/([0-9]|[12][0-9]|3[0-2])"
     },
+    "PublicTlsEncryptionConfiguration":{
+      "type":"structure",
+      "members":{}
+    },
     "PurchaseOfferingRequest":{
       "type":"structure",
       "required":[
@@ -7510,7 +7514,8 @@
         "RTP",
         "RIST",
         "SRT_CALLER",
-        "SRT_LISTENER"
+        "SRT_LISTENER",
+        "RTMP_PUSH"
       ]
     },
     "RouterOutputProtocolConfiguration":{
@@ -7523,6 +7528,10 @@
         "SrtListener":{
           "shape":"SrtListenerRouterOutputConfiguration",
           "locationName":"srtListener"
+        },
+        "RtmpPush":{
+          "shape":"RtmpPushRouterOutputConfiguration",
+          "locationName":"rtmpPush"
         },
         "SrtCaller":{
           "shape":"SrtCallerRouterOutputConfiguration",
@@ -7621,6 +7630,43 @@
     "RoutingScopeList":{
       "type":"list",
       "member":{"shape":"RoutingScope"}
+    },
+    "RtmpPushRouterOutputConfiguration":{
+      "type":"structure",
+      "required":[
+        "DestinationAddress",
+        "DestinationPort",
+        "ApplicationName",
+        "StreamName"
+      ],
+      "members":{
+        "DestinationAddress":{
+          "shape":"String",
+          "locationName":"destinationAddress"
+        },
+        "DestinationPort":{
+          "shape":"RtmpPushRouterOutputConfigurationDestinationPortInteger",
+          "locationName":"destinationPort"
+        },
+        "ApplicationName":{
+          "shape":"String",
+          "locationName":"applicationName"
+        },
+        "StreamName":{
+          "shape":"String",
+          "locationName":"streamName"
+        },
+        "TlsEncryption":{
+          "shape":"TlsEncryption",
+          "locationName":"tlsEncryption"
+        }
+      }
+    },
+    "RtmpPushRouterOutputConfigurationDestinationPortInteger":{
+      "type":"integer",
+      "box":true,
+      "max":65535,
+      "min":443
     },
     "RtpRouterInputConfiguration":{
       "type":"structure",
@@ -8558,6 +8604,34 @@
         "ENABLED",
         "DISABLED"
       ]
+    },
+    "TlsEncryption":{
+      "type":"structure",
+      "required":["EncryptionConfiguration"],
+      "members":{
+        "EncryptionType":{
+          "shape":"TlsEncryptionType",
+          "locationName":"encryptionType"
+        },
+        "EncryptionConfiguration":{
+          "shape":"TlsEncryptionConfiguration",
+          "locationName":"encryptionConfiguration"
+        }
+      }
+    },
+    "TlsEncryptionConfiguration":{
+      "type":"structure",
+      "members":{
+        "Public":{
+          "shape":"PublicTlsEncryptionConfiguration",
+          "locationName":"public"
+        }
+      },
+      "union":true
+    },
+    "TlsEncryptionType":{
+      "type":"string",
+      "enum":["PUBLIC"]
     },
     "TooManyRequestsException":{
       "type":"structure",

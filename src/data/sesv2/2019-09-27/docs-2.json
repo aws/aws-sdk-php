@@ -471,6 +471,24 @@
         "SendEmailRequest$ConfigurationOverrides": "<p>An object that overrides, for this message only, settings that would otherwise apply to it. Each setting that you don't override keeps the value that already applies.</p>"
       }
     },
+    "ConfigurationSetFilter": {
+      "base": "<p>An object that contains filters to apply when listing configuration sets.</p>",
+      "refs": {
+        "ListConfigurationSetsRequest$Filter": "<p>An object that contains filters to apply when listing configuration sets. You can filter by configuration set name.</p>"
+      }
+    },
+    "ConfigurationSetFilterKey": {
+      "base": "<p>The filter key to use when listing configuration sets. This can be one of the following:</p> <ul> <li> <p> <code>CONFIGURATION_SET_NAME_CONTAINS</code> – Filter by a substring of the configuration set name.</p> </li> </ul>",
+      "refs": {
+        "ConfigurationSetFilter$key": null
+      }
+    },
+    "ConfigurationSetFilterValue": {
+      "base": null,
+      "refs": {
+        "ConfigurationSetFilter$value": null
+      }
+    },
     "ConfigurationSetName": {
       "base": "<p>The name of a configuration set.</p> <p> <i>Configuration sets</i> are groups of rules that you can apply to the emails you send. You apply a configuration set to an email by including a reference to the configuration set in the headers of the email. When you apply a configuration set to an email, all of the rules in that configuration set are applied to the email.</p>",
       "refs": {
@@ -1779,6 +1797,24 @@
         "IdentityCertificate$Status": "<p>The status of the certificate association. A status of <code>ACTIVE</code> indicates that the certificate is ready to use for signing.</p>"
       }
     },
+    "IdentityFilter": {
+      "base": "<p>An object that contains filters to apply when listing email identities.</p>",
+      "refs": {
+        "ListEmailIdentitiesRequest$Filter": "<p>An object that contains filters to apply when listing email identities. You can filter by identity name, identity type, or verification status.</p>"
+      }
+    },
+    "IdentityFilterKey": {
+      "base": "<p>The filter key to use when listing email identities. This can be one of the following:</p> <ul> <li> <p> <code>IDENTITY_NAME_CONTAINS</code> – Filter by a substring of the identity name.</p> </li> <li> <p> <code>IDENTITY_TYPE</code> – Filter by identity type.</p> </li> <li> <p> <code>VERIFICATION_STATUS</code> – Filter by verification status.</p> </li> </ul>",
+      "refs": {
+        "IdentityFilter$key": null
+      }
+    },
+    "IdentityFilterValue": {
+      "base": null,
+      "refs": {
+        "IdentityFilter$value": null
+      }
+    },
     "IdentityInfo": {
       "base": "<p>Information about an email identity.</p>",
       "refs": {
@@ -2197,6 +2233,24 @@
     "ListTenantResourcesResponse": {
       "base": "<p>Information about resources associated with a specific tenant.</p>",
       "refs": {}
+    },
+    "ListTenantsFilter": {
+      "base": "<p>An object that contains filters to apply when listing tenants.</p>",
+      "refs": {
+        "ListTenantsRequest$Filter": "<p>An object that contains filters to apply when listing tenants. You can filter by tenant name or sending status.</p>"
+      }
+    },
+    "ListTenantsFilterKey": {
+      "base": "<p>The filter key to use when listing tenants. This can be one of the following:</p> <ul> <li> <p> <code>TENANT_NAME_CONTAINS</code> – Filter by a substring of the tenant name.</p> </li> <li> <p> <code>SENDING_STATUS</code> – Filter by sending status.</p> </li> </ul>",
+      "refs": {
+        "ListTenantsFilter$key": null
+      }
+    },
+    "ListTenantsFilterValue": {
+      "base": null,
+      "refs": {
+        "ListTenantsFilter$value": null
+      }
     },
     "ListTenantsRequest": {
       "base": "<p>Represents a request to list all tenants associated with your account in the current Amazon Web Services Region.</p>",
@@ -3167,6 +3221,7 @@
         "ReputationEntity$SendingStatusAggregate": "<p>The aggregate sending status that determines whether the entity is allowed to send emails. This status is derived from both the customer-managed and Amazon Web Services Amazon SES-managed statuses. If either the customer-managed status or the Amazon Web Services Amazon SES-managed status is <code>DISABLED</code>, the aggregate status will be <code>DISABLED</code> and the entity will not be allowed to send emails. When the customer-managed status is set to <code>REINSTATED</code>, the entity can continue sending even if there are active reputation findings, provided the Amazon Web Services Amazon SES-managed status also permits sending. The entity can only send emails when both statuses permit sending.</p>",
         "StatusRecord$Status": "<p>The current sending status. This can be one of the following:</p> <ul> <li> <p> <code>ENABLED</code> – Sending is allowed.</p> </li> <li> <p> <code>DISABLED</code> – Sending is prevented.</p> </li> <li> <p> <code>REINSTATED</code> – Sending is allowed even with active reputation findings.</p> </li> </ul>",
         "Tenant$SendingStatus": "<p>The status of sending capability for the tenant.</p>",
+        "TenantInfo$SendingStatus": null,
         "UpdateReputationEntityCustomerManagedStatusRequest$SendingStatus": "<p>The new customer-managed sending status for the reputation entity. This can be one of the following:</p> <ul> <li> <p> <code>ENABLED</code> – Allow sending for this entity.</p> </li> <li> <p> <code>DISABLED</code> – Prevent sending for this entity.</p> </li> <li> <p> <code>REINSTATED</code> – Allow sending even if there are active reputation findings.</p> </li> </ul>"
       }
     },

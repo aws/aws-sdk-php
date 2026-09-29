@@ -407,6 +407,7 @@ use Aws\AwsClient;
  *             searchType?: 'SEMANTIC',
  *             sessionConfiguration?: array,
  *             streamingConfiguration?: array,
+ *             disableMcpListToolsPagination?: bool,
  *             ...,
  *         },
  *         ...,
@@ -448,6 +449,7 @@ use Aws\AwsClient;
  *             searchType?: 'SEMANTIC',
  *             sessionConfiguration?: array,
  *             streamingConfiguration?: array,
+ *             disableMcpListToolsPagination?: bool,
  *             ...,
  *         },
  *         ...,
@@ -1867,6 +1869,22 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result putResourcePolicy(array{resourceArn?: string, policy?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise putResourcePolicyAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise putResourcePolicyAsync(array{resourceArn?: string, policy?: string, ...} $args = [])
+ * @method \Aws\Result rotatePaymentConnectorCredentials(array $args = [])
+ * @phpstan-method \Aws\Result rotatePaymentConnectorCredentials(array{
+ *     paymentManagerId?: string,
+ *     paymentConnectorId?: string,
+ *     credentialsToRotate?: array{coinbaseCDP?: array{secrets?: list<'API_KEY'|'WALLET_SECRET'>, ...}, ...},
+ *     clientToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise rotatePaymentConnectorCredentialsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise rotatePaymentConnectorCredentialsAsync(array{
+ *     paymentManagerId?: string,
+ *     paymentConnectorId?: string,
+ *     credentialsToRotate?: array{coinbaseCDP?: array{secrets?: list<'API_KEY'|'WALLET_SECRET'>, ...}, ...},
+ *     clientToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result setTokenVaultCMK(array $args = [])
  * @phpstan-method \Aws\Result setTokenVaultCMK(array{
  *     tokenVaultId?: string,
@@ -2161,6 +2179,7 @@ use Aws\AwsClient;
  *             searchType?: 'SEMANTIC',
  *             sessionConfiguration?: array,
  *             streamingConfiguration?: array,
+ *             disableMcpListToolsPagination?: bool,
  *             ...,
  *         },
  *         ...,
@@ -2203,6 +2222,7 @@ use Aws\AwsClient;
  *             searchType?: 'SEMANTIC',
  *             sessionConfiguration?: array,
  *             streamingConfiguration?: array,
+ *             disableMcpListToolsPagination?: bool,
  *             ...,
  *         },
  *         ...,

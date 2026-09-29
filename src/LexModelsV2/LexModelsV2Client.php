@@ -143,7 +143,7 @@ use Psr\Http\Message\RequestInterface;
  *         ...,
  *     },
  *     speechRecognitionSettings?: array{
- *         speechModelPreference?: 'Deepgram'|'Neural'|'Standard',
+ *         speechModelPreference?: 'Advanced'|'Deepgram'|'Neural'|'Standard',
  *         speechModelConfig?: array{deepgramConfig?: array, ...},
  *         ...,
  *     },
@@ -153,6 +153,7 @@ use Psr\Http\Message\RequestInterface;
  *         ...,
  *     },
  *     speechDetectionSensitivity?: 'Default'|'HighNoiseTolerance'|'MaximumNoiseTolerance',
+ *     speakerDiarizationSettings?: array{enabled?: bool, ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createBotLocaleAsync(array $args = [])
@@ -173,7 +174,7 @@ use Psr\Http\Message\RequestInterface;
  *         ...,
  *     },
  *     speechRecognitionSettings?: array{
- *         speechModelPreference?: 'Deepgram'|'Neural'|'Standard',
+ *         speechModelPreference?: 'Advanced'|'Deepgram'|'Neural'|'Standard',
  *         speechModelConfig?: array{deepgramConfig?: array, ...},
  *         ...,
  *     },
@@ -183,6 +184,7 @@ use Psr\Http\Message\RequestInterface;
  *         ...,
  *     },
  *     speechDetectionSensitivity?: 'Default'|'HighNoiseTolerance'|'MaximumNoiseTolerance',
+ *     speakerDiarizationSettings?: array{enabled?: bool, ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result createBotReplica(array $args = [])
@@ -1517,6 +1519,7 @@ use Psr\Http\Message\RequestInterface;
  *             speechDetectionSensitivity?: 'Default'|'HighNoiseTolerance'|'MaximumNoiseTolerance',
  *             unifiedSpeechSettings?: array,
  *             audioFillerSettings?: array,
+ *             speakerDiarizationSettings?: array,
  *             ...,
  *         },
  *         customVocabularyImportSpecification?: array{botId?: string, botVersion?: string, localeId?: string, ...},
@@ -1560,6 +1563,7 @@ use Psr\Http\Message\RequestInterface;
  *             speechDetectionSensitivity?: 'Default'|'HighNoiseTolerance'|'MaximumNoiseTolerance',
  *             unifiedSpeechSettings?: array,
  *             audioFillerSettings?: array,
+ *             speakerDiarizationSettings?: array,
  *             ...,
  *         },
  *         customVocabularyImportSpecification?: array{botId?: string, botVersion?: string, localeId?: string, ...},
@@ -1719,7 +1723,7 @@ use Psr\Http\Message\RequestInterface;
  *         ...,
  *     },
  *     speechRecognitionSettings?: array{
- *         speechModelPreference?: 'Deepgram'|'Neural'|'Standard',
+ *         speechModelPreference?: 'Advanced'|'Deepgram'|'Neural'|'Standard',
  *         speechModelConfig?: array{deepgramConfig?: array, ...},
  *         ...,
  *     },
@@ -1729,6 +1733,7 @@ use Psr\Http\Message\RequestInterface;
  *         ...,
  *     },
  *     speechDetectionSensitivity?: 'Default'|'HighNoiseTolerance'|'MaximumNoiseTolerance',
+ *     speakerDiarizationSettings?: array{enabled?: bool, ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateBotLocaleAsync(array $args = [])
@@ -1749,7 +1754,7 @@ use Psr\Http\Message\RequestInterface;
  *         ...,
  *     },
  *     speechRecognitionSettings?: array{
- *         speechModelPreference?: 'Deepgram'|'Neural'|'Standard',
+ *         speechModelPreference?: 'Advanced'|'Deepgram'|'Neural'|'Standard',
  *         speechModelConfig?: array{deepgramConfig?: array, ...},
  *         ...,
  *     },
@@ -1759,6 +1764,7 @@ use Psr\Http\Message\RequestInterface;
  *         ...,
  *     },
  *     speechDetectionSensitivity?: 'Default'|'HighNoiseTolerance'|'MaximumNoiseTolerance',
+ *     speakerDiarizationSettings?: array{enabled?: bool, ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateBotRecommendation(array $args = [])

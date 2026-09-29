@@ -46,7 +46,8 @@
         {"shape":"InternalServiceException"},
         {"shape":"EntityNotFoundException"},
         {"shape":"OperationTimeoutException"},
-        {"shape":"GlueEncryptionException"}
+        {"shape":"GlueEncryptionException"},
+        {"shape":"ConcurrentModificationException"}
       ]
     },
     "BatchDeleteConnection":{
@@ -74,7 +75,8 @@
         {"shape":"InvalidInputException"},
         {"shape":"EntityNotFoundException"},
         {"shape":"InternalServiceException"},
-        {"shape":"OperationTimeoutException"}
+        {"shape":"OperationTimeoutException"},
+        {"shape":"ConcurrentModificationException"}
       ]
     },
     "BatchDeleteTable":{
@@ -91,7 +93,8 @@
         {"shape":"InternalServiceException"},
         {"shape":"OperationTimeoutException"},
         {"shape":"GlueEncryptionException"},
-        {"shape":"ResourceNotReadyException"}
+        {"shape":"ResourceNotReadyException"},
+        {"shape":"ConcurrentModificationException"}
       ]
     },
     "BatchDeleteTableVersion":{
@@ -328,7 +331,8 @@
         {"shape":"EntityNotFoundException"},
         {"shape":"OperationTimeoutException"},
         {"shape":"InternalServiceException"},
-        {"shape":"GlueEncryptionException"}
+        {"shape":"GlueEncryptionException"},
+        {"shape":"ConcurrentModificationException"}
       ]
     },
     "CancelDataQualityRuleRecommendationRun":{
@@ -12042,6 +12046,7 @@
         "TransactionId":{"shape":"TransactionIdString"},
         "QueryAsOfTime":{"shape":"Timestamp"},
         "AuditContext":{"shape":"AuditContext"},
+        "ResourceShareType":{"shape":"TableResourceShareType"},
         "IncludeStatusDetails":{"shape":"BooleanNullable"},
         "AttributesToGet":{"shape":"TableAttributesList"}
       }
@@ -14973,6 +14978,10 @@
       "type":"integer",
       "box":true
     },
+    "NullableLong":{
+      "type":"long",
+      "box":true
+    },
     "NullableString":{
       "type":"string",
       "box":true
@@ -17631,6 +17640,23 @@
         "OutputSchemas":{"shape":"GlueSchemas"}
       }
     },
+    "SparkPipelineInfoKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "SparkPipelineInfoMap":{
+      "type":"map",
+      "key":{"shape":"SparkPipelineInfoKey"},
+      "value":{"shape":"SparkPipelineInfoValue"},
+      "max":50,
+      "min":0
+    },
+    "SparkPipelineInfoValue":{
+      "type":"string",
+      "max":2048,
+      "min":0
+    },
     "SparkSQL":{
       "type":"structure",
       "required":[
@@ -18276,6 +18302,33 @@
       "key":{"shape":"NullableString"},
       "value":{"shape":"NullableString"}
     },
+    "SubObjectSourceType":{
+      "type":"string",
+      "enum":[
+        "HIVE_PARQUET",
+        "HIVE_ORC",
+        "HIVE_CSV",
+        "HIVE_JSON",
+        "PLAIN_PARQUET",
+        "ICEBERG"
+      ]
+    },
+    "SubObjectStatistics":{
+      "type":"structure",
+      "members":{
+        "SourceType":{"shape":"SubObjectSourceType"},
+        "GlueVersionId":{"shape":"NullableString"},
+        "PartitionCount":{"shape":"NullableLong"},
+        "FileCount":{"shape":"NullableLong"},
+        "TotalFileBytes":{"shape":"NullableLong"}
+      }
+    },
+    "SubObjectsStatisticsList":{
+      "type":"list",
+      "member":{"shape":"SubObjectStatistics"},
+      "max":250,
+      "min":0
+    },
     "SupportedDialect":{
       "type":"structure",
       "members":{
@@ -18370,6 +18423,7 @@
         "TableType":{"shape":"TableTypeString"},
         "Parameters":{"shape":"ParametersMap"},
         "TargetTable":{"shape":"TableIdentifier"},
+        "FederatedTable":{"shape":"FederatedTable"},
         "ViewDefinition":{"shape":"ViewDefinitionInput"}
       }
     },
@@ -18449,6 +18503,13 @@
       "type":"string",
       "max":128,
       "min":0
+    },
+    "TableResourceShareType":{
+      "type":"string",
+      "enum":[
+        "FEDERATED",
+        "ALL"
+      ]
     },
     "TableStatus":{
       "type":"structure",
@@ -19765,6 +19826,7 @@
       "type":"structure",
       "members":{
         "IsProtected":{"shape":"NullableBoolean"},
+        "IsManaged":{"shape":"NullableBoolean"},
         "Definer":{"shape":"ArnString"},
         "ViewVersionId":{"shape":"TableVersionId"},
         "ViewVersionToken":{"shape":"HashString"},
@@ -19772,13 +19834,16 @@
         "LastRefreshType":{"shape":"LastRefreshType"},
         "SubObjects":{"shape":"ViewSubObjectsList"},
         "SubObjectVersionIds":{"shape":"ViewSubObjectVersionIdsList"},
-        "Representations":{"shape":"ViewRepresentationList"}
+        "SubObjectsStatistics":{"shape":"SubObjectsStatisticsList"},
+        "Representations":{"shape":"ViewRepresentationList"},
+        "SparkPipelineInfo":{"shape":"SparkPipelineInfoMap"}
       }
     },
     "ViewDefinitionInput":{
       "type":"structure",
       "members":{
         "IsProtected":{"shape":"NullableBoolean"},
+        "IsManaged":{"shape":"NullableBoolean"},
         "Definer":{"shape":"ArnString"},
         "Representations":{"shape":"ViewRepresentationInputList"},
         "ViewVersionId":{"shape":"TableVersionId"},
@@ -19786,7 +19851,9 @@
         "RefreshSeconds":{"shape":"RefreshSeconds"},
         "LastRefreshType":{"shape":"LastRefreshType"},
         "SubObjects":{"shape":"ViewSubObjectsList"},
-        "SubObjectVersionIds":{"shape":"ViewSubObjectVersionIdsList"}
+        "SubObjectVersionIds":{"shape":"ViewSubObjectVersionIdsList"},
+        "SubObjectsStatistics":{"shape":"SubObjectsStatisticsList"},
+        "SparkPipelineInfo":{"shape":"SparkPipelineInfoMap"}
       }
     },
     "ViewDialect":{

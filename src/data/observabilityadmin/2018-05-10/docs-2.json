@@ -3,16 +3,19 @@
   "service": "<p> You can use Amazon CloudWatch Observability Admin to discover and understand the state of telemetry configuration in CloudWatch for your Amazon Web Services Organization or account. This simplifies the process of auditing your telemetry collection configurations across multiple resource types within your Amazon Web Services Organization or account. By providing a consolidated view, it allows you to easily review and manage telemetry settings, helping you ensure proper monitoring and data collection across your Amazon Web Services environment. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/telemetry-config-cloudwatch.html\">Auditing CloudWatch telemetry conﬁgurations</a> in the CloudWatch User Guide.</p> <p>For information on the permissions you need to use this API, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/auth-and-access-control-cw.html\">Identity and access management for Amazon CloudWatch</a> in the CloudWatch User Guide.</p>",
   "operations": {
     "CreateCentralizationRuleForOrganization": "<p>Creates a centralization rule that applies across an Amazon Web Services Organization. This operation can only be called by the organization's management account or a delegated administrator account.</p>",
+    "CreateDatasetIntegration": "<p>Creates a dataset integration for the caller's account in the current region and returns its ARN.</p> <p>To use this operation, you must have permission to access the dataset integration resources through the IAM role specified in the <code>RoleArn</code> parameter.</p> <p>If a dataset integration already exists for the account, this operation fails with a <code>ConflictException</code>.</p>",
     "CreateS3TableIntegration": "<p>Creates an integration between CloudWatch and S3 Tables for analytics. This integration enables querying CloudWatch telemetry data using analytics engines like Amazon Athena, Amazon Redshift, and Apache Spark.</p>",
     "CreateTelemetryPipeline": "<p>Creates a telemetry pipeline for processing and transforming telemetry data. The pipeline defines how data flows from sources through processors to destinations, enabling data transformation and delivering capabilities. </p>",
     "CreateTelemetryRule": "<p> Creates a telemetry rule that defines how telemetry should be configured for Amazon Web Services resources in your account. The rule specifies which resources should have telemetry enabled and how that telemetry data should be collected based on resource type, telemetry type, and selection criteria. </p>",
     "CreateTelemetryRuleForOrganization": "<p> Creates a telemetry rule that applies across an Amazon Web Services Organization. This operation can only be called by the organization's management account or a delegated administrator account. </p>",
     "DeleteCentralizationRuleForOrganization": "<p>Deletes an organization-wide centralization rule. This operation can only be called by the organization's management account or a delegated administrator account.</p>",
+    "DeleteDatasetIntegration": "<p>Deletes a dataset integration for the caller's account in the current region. This operation is idempotent; if you submit the same delete more than once, each call succeeds.</p>",
     "DeleteS3TableIntegration": "<p>Deletes an S3 Table integration and its associated data. This operation removes the connection between CloudWatch Observability Admin and S3 Tables.</p>",
     "DeleteTelemetryPipeline": "<p>Deletes a telemetry pipeline and its associated resources. This operation stops data processing and removes the pipeline configuration.</p>",
     "DeleteTelemetryRule": "<p> Deletes a telemetry rule from your account. Any telemetry configurations previously created by the rule will remain but no new resources will be configured by this rule. </p>",
     "DeleteTelemetryRuleForOrganization": "<p> Deletes an organization-wide telemetry rule. This operation can only be called by the organization's management account or a delegated administrator account. </p>",
     "GetCentralizationRuleForOrganization": "<p>Retrieves the details of a specific organization centralization rule. This operation can only be called by the organization's management account or a delegated administrator account.</p>",
+    "GetDatasetIntegration": "<p>Returns the dataset integration for the caller's account in the current region.</p>",
     "GetS3TableIntegration": "<p>Retrieves information about a specific S3 Table integration, including its configuration, status, and metadata.</p>",
     "GetTelemetryEnrichmentStatus": "<p> Returns the current status of the resource tags for telemetry feature, which enhances telemetry data with additional resource metadata from Resource Explorer. </p>",
     "GetTelemetryEvaluationStatus": "<p> Returns the current onboarding status of the telemetry config feature, including the status of the feature and reason the feature failed to start or stop. </p>",
@@ -21,6 +24,7 @@
     "GetTelemetryRule": "<p> Retrieves the details of a specific telemetry rule in your account. </p>",
     "GetTelemetryRuleForOrganization": "<p> Retrieves the details of a specific organization telemetry rule. This operation can only be called by the organization's management account or a delegated administrator account. </p>",
     "ListCentralizationRulesForOrganization": "<p>Lists all centralization rules in your organization. This operation can only be called by the organization's management account or a delegated administrator account.</p>",
+    "ListDatasetIntegrations": "<p>Returns the dataset integrations in your account.</p>",
     "ListResourceTelemetry": "<p> Returns a list of telemetry configurations for Amazon Web Services resources supported by telemetry config. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/telemetry-config-cloudwatch.html\">Auditing CloudWatch telemetry configurations</a>. </p>",
     "ListResourceTelemetryForOrganization": "<p> Returns a list of telemetry configurations for Amazon Web Services resources supported by telemetry config in the organization. </p>",
     "ListS3TableIntegrations": "<p>Lists all S3 Table integrations in your account. We recommend using pagination to ensure that the operation returns quickly and successfully.</p>",
@@ -38,6 +42,7 @@
     "TestTelemetryPipeline": "<p>Tests a pipeline configuration with sample records to validate data processing before deployment. This operation helps ensure your pipeline configuration works as expected. </p>",
     "UntagResource": "<p> Removes tags from a resource. Supports telemetry rule resources and telemetry pipeline resources. </p>",
     "UpdateCentralizationRuleForOrganization": "<p>Updates an existing centralization rule that applies across an Amazon Web Services Organization. This operation can only be called by the organization's management account or a delegated administrator account.</p>",
+    "UpdateDatasetIntegration": "<p>Updates a dataset integration for the caller's account in the current region. This operation is idempotent; if you submit the same update more than once, each call succeeds.</p>",
     "UpdateTelemetryPipeline": "<p>Updates the configuration of an existing telemetry pipeline.</p> <note> <p>The following attributes cannot be updated after pipeline creation:</p> <ul> <li> <p> <b>Pipeline name</b> - The pipeline name is immutable</p> </li> <li> <p> <b>Pipeline ARN</b> - The ARN is automatically generated and cannot be changed</p> </li> <li> <p> <b>Source type</b> - Once a pipeline is created with a specific source type (such as S3, CloudWatch Logs, GitHub, or third-party sources), it cannot be changed to a different source type</p> </li> </ul> <p>Processors can be added, removed, or modified. However, some processors are not supported for third-party pipelines and cannot be added through updates.</p> </note> <p> <b>Source-Specific Update Rules</b> </p> <dl> <dt>CloudWatch Logs Sources (Vended and Custom)</dt> <dd> <p> <b>Updatable:</b> <code>sts_role_arn</code> </p> <p> <b>Fixed:</b> <code>data_source_name</code>, <code>data_source_type</code>, sink (must remain <code>@original</code>)</p> </dd> <dt>S3 Sources (Crowdstrike, Zscaler, SentinelOne, Custom)</dt> <dd> <p> <b>Updatable:</b> All SQS configuration parameters, <code>sts_role_arn</code>, codec settings, compression type, bucket ownership settings, sink log group</p> <p> <b>Fixed:</b> <code>notification_type</code>, <code>aws.region</code> </p> </dd> <dt>GitHub Audit Logs</dt> <dd> <p> <b>Updatable:</b> All Amazon Web Services Secrets Manager attributes, <code>scope</code> (can switch between ORGANIZATION/ENTERPRISE), <code>organization</code> or <code>enterprise</code> name, <code>range</code>, authentication credentials (PAT or GitHub App)</p> </dd> <dt>Microsoft Sources (Entra ID, Office365, Windows)</dt> <dd> <p> <b>Updatable:</b> All Amazon Web Services Secrets Manager attributes, <code>tenant_id</code>, <code>workspace_id</code> (Windows only), OAuth2 credentials (<code>client_id</code>, <code>client_secret</code>)</p> </dd> <dt>Okta Sources (SSO, Auth0)</dt> <dd> <p> <b>Updatable:</b> All Amazon Web Services Secrets Manager attributes, <code>domain</code>, <code>range</code>, OAuth2 credentials (<code>client_id</code>, <code>client_secret</code>)</p> </dd> <dt>Palo Alto Networks</dt> <dd> <p> <b>Updatable:</b> All Amazon Web Services Secrets Manager attributes, <code>hostname</code>, basic authentication credentials (<code>username</code>, <code>password</code>)</p> </dd> <dt>ServiceNow CMDB</dt> <dd> <p> <b>Updatable:</b> All Amazon Web Services Secrets Manager attributes, <code>instance_url</code>, <code>range</code>, OAuth2 credentials (<code>client_id</code>, <code>client_secret</code>)</p> </dd> <dt>Wiz CNAPP</dt> <dd> <p> <b>Updatable:</b> All Amazon Web Services Secrets Manager attributes, <code>region</code>, <code>range</code>, OAuth2 credentials (<code>client_id</code>, <code>client_secret</code>)</p> </dd> </dl>",
     "UpdateTelemetryRule": "<p> Updates an existing telemetry rule in your account. If multiple users attempt to modify the same telemetry rule simultaneously, a ConflictException is returned to provide specific error information for concurrent modification scenarios. </p>",
     "UpdateTelemetryRuleForOrganization": "<p> Updates an existing telemetry rule that applies across an Amazon Web Services Organization. This operation can only be called by the organization's management account or a delegated administrator account. </p>",
@@ -182,11 +187,26 @@
       "base": "<p> The requested operation conflicts with the current state of the specified resource or with another request. </p>",
       "refs": {}
     },
+    "ContextGraphStatus": {
+      "base": "<p>The status of context graph centralization for a centralization rule. This status is independent of the overall <code>RuleHealth</code> for log delivery. Returns <code>Provisioning</code> while the context graph is being set up, <code>Healthy</code> once it is active, or <code>Unhealthy</code> if provisioning failed.</p>",
+      "refs": {
+        "CentralizationRuleSummary$ContextGraphStatus": "<p>The status of context graph centralization for this rule. Returns <code>Provisioning</code> while the context graph is being set up, <code>Healthy</code> once it is active, or <code>Unhealthy</code> if provisioning failed. This status is independent of the overall <code>RuleHealth</code> for log delivery.</p>",
+        "GetCentralizationRuleForOrganizationOutput$ContextGraphStatus": "<p>The status of context graph centralization for this rule. Returns <code>Provisioning</code> while the context graph is being set up, <code>Healthy</code> once it is active, or <code>Unhealthy</code> if provisioning failed. This status is independent of the overall <code>RuleHealth</code> for log delivery.</p>"
+      }
+    },
     "CreateCentralizationRuleForOrganizationInput": {
       "base": null,
       "refs": {}
     },
     "CreateCentralizationRuleForOrganizationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateDatasetIntegrationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateDatasetIntegrationOutput": {
       "base": null,
       "refs": {}
     },
@@ -240,7 +260,23 @@
         "ConfigurationSummary$DataSources": "<p>The list of data sources that provide telemetry data to the pipeline.</p>"
       }
     },
+    "DatasetIntegrationSummaries": {
+      "base": null,
+      "refs": {
+        "ListDatasetIntegrationsOutput$DatasetIntegrationSummaries": "<p>The dataset integrations in your account.</p>"
+      }
+    },
+    "DatasetIntegrationSummary": {
+      "base": "<p>Contains summary information about a dataset integration, including its ARN, associated IAM role, and creation and update timestamps, as returned by <code>ListDatasetIntegrations</code>.</p>",
+      "refs": {
+        "DatasetIntegrationSummaries$member": null
+      }
+    },
     "DeleteCentralizationRuleForOrganizationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteDatasetIntegrationInput": {
       "base": null,
       "refs": {}
     },
@@ -377,6 +413,14 @@
       "base": null,
       "refs": {}
     },
+    "GetDatasetIntegrationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDatasetIntegrationOutput": {
+      "base": null,
+      "refs": {}
+    },
     "GetS3TableIntegrationInput": {
       "base": null,
       "refs": {}
@@ -504,6 +548,20 @@
       }
     },
     "ListCentralizationRulesForOrganizationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDatasetIntegrationsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDatasetIntegrationsMaxResults": {
+      "base": null,
+      "refs": {
+        "ListDatasetIntegrationsInput$MaxResults": "<p>The maximum number of results to return in a single call.</p>"
+      }
+    },
+    "ListDatasetIntegrationsOutput": {
       "base": null,
       "refs": {}
     },
@@ -703,6 +761,8 @@
       "refs": {
         "ListCentralizationRulesForOrganizationInput$NextToken": "<p>The token for the next set of results. A previous call generates this token.</p>",
         "ListCentralizationRulesForOrganizationOutput$NextToken": "<p>A token to resume pagination of results.</p>",
+        "ListDatasetIntegrationsInput$NextToken": "<p>The token for the next set of results. A previous call generates this token.</p>",
+        "ListDatasetIntegrationsOutput$NextToken": "<p>A token to resume pagination of results.</p>",
         "ListResourceTelemetryForOrganizationInput$NextToken": "<p> The token for the next set of items to return. A previous call provides this token. </p>",
         "ListResourceTelemetryForOrganizationOutput$NextToken": "<p> The token for the next set of items to return. A previous call provides this token. </p>",
         "ListResourceTelemetryInput$NextToken": "<p> The token for the next set of items to return. A previous call generates this token. </p>",
@@ -830,14 +890,23 @@
       "refs": {
         "CentralizationRuleSummary$RuleArn": "<p>The Amazon Resource Name (ARN) of the organization centralization rule.</p>",
         "CreateCentralizationRuleForOrganizationOutput$RuleArn": "<p>The Amazon Resource Name (ARN) of the created organization centralization rule.</p>",
+        "CreateDatasetIntegrationInput$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that grants Amazon CloudWatch permission to access the resources needed for the dataset integration.</p>",
+        "CreateDatasetIntegrationOutput$Arn": "<p>The Amazon Resource Name (ARN) of the created dataset integration.</p>",
+        "CreateDatasetIntegrationOutput$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role associated with the dataset integration.</p>",
         "CreateS3TableIntegrationInput$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that grants permissions for the S3 Table integration to access necessary resources.</p>",
         "CreateS3TableIntegrationOutput$Arn": "<p>The Amazon Resource Name (ARN) of the created S3 Table integration.</p>",
         "CreateTelemetryPipelineOutput$Arn": "<p>The Amazon Resource Name (ARN) of the created telemetry pipeline.</p>",
         "CreateTelemetryRuleForOrganizationOutput$RuleArn": "<p> The Amazon Resource Name (ARN) of the created organization telemetry rule. </p>",
         "CreateTelemetryRuleOutput$RuleArn": "<p> The Amazon Resource Name (ARN) of the created telemetry rule. </p>",
+        "DatasetIntegrationSummary$Arn": "<p>The Amazon Resource Name (ARN) of the dataset integration.</p>",
+        "DatasetIntegrationSummary$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role associated with the dataset integration.</p>",
+        "DeleteDatasetIntegrationInput$Arn": "<p>The Amazon Resource Name (ARN) of the dataset integration to delete.</p>",
         "DeleteS3TableIntegrationInput$Arn": "<p>The Amazon Resource Name (ARN) of the S3 Table integration to delete.</p>",
         "Encryption$KmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used for encryption when using customer-managed keys.</p>",
         "GetCentralizationRuleForOrganizationOutput$RuleArn": "<p>The Amazon Resource Name (ARN) of the organization centralization rule.</p>",
+        "GetDatasetIntegrationInput$Arn": "<p>The Amazon Resource Name (ARN) of the dataset integration to retrieve.</p>",
+        "GetDatasetIntegrationOutput$Arn": "<p>The Amazon Resource Name (ARN) of the dataset integration.</p>",
+        "GetDatasetIntegrationOutput$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role associated with the dataset integration.</p>",
         "GetS3TableIntegrationInput$Arn": "<p>The Amazon Resource Name (ARN) of the S3 Table integration to retrieve.</p>",
         "GetS3TableIntegrationOutput$Arn": "<p>The Amazon Resource Name (ARN) of the S3 Table integration.</p>",
         "GetS3TableIntegrationOutput$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role used by the S3 Table integration.</p>",
@@ -855,6 +924,10 @@
         "TelemetryRuleSummary$RuleArn": "<p> The Amazon Resource Name (ARN) of the telemetry rule. </p>",
         "UntagResourceInput$ResourceARN": "<p> The Amazon Resource Name (ARN) of the telemetry rule resource to remove tags from. </p>",
         "UpdateCentralizationRuleForOrganizationOutput$RuleArn": "<p>The Amazon Resource Name (ARN) of the updated organization centralization rule.</p>",
+        "UpdateDatasetIntegrationInput$Arn": "<p>The Amazon Resource Name (ARN) of the dataset integration to update.</p>",
+        "UpdateDatasetIntegrationInput$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role to associate with the dataset integration.</p>",
+        "UpdateDatasetIntegrationOutput$Arn": "<p>The Amazon Resource Name (ARN) of the updated dataset integration.</p>",
+        "UpdateDatasetIntegrationOutput$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role associated with the updated dataset integration.</p>",
         "UpdateTelemetryRuleForOrganizationOutput$RuleArn": "<p> The Amazon Resource Name (ARN) of the updated organization telemetry rule. </p>",
         "UpdateTelemetryRuleOutput$RuleArn": "<p> The Amazon Resource Name (ARN) of the updated telemetry rule. </p>"
       }
@@ -888,8 +961,8 @@
     "ResourceTypes": {
       "base": null,
       "refs": {
-        "ListResourceTelemetryForOrganizationInput$ResourceTypes": "<p> A list of resource types used to filter resources in the organization. If this parameter is provided, the resources will be returned in the same order used in the request. </p>",
-        "ListResourceTelemetryInput$ResourceTypes": "<p> A list of resource types used to filter resources supported by telemetry config. If this parameter is provided, the resources will be returned in the same order used in the request. </p>"
+        "ListResourceTelemetryForOrganizationInput$ResourceTypes": "<p> A list of resource types used to filter resources in the organization. If this parameter is provided, the service returns the resources in the same order as specified in the request. Currently supported resource types for discovery are:</p> <ul> <li> <p> <code>AWS::EC2::Instance</code> </p> </li> <li> <p> <code>AWS::EC2::VPC</code> </p> </li> <li> <p> <code>AWS::Lambda::Function</code> </p> </li> <li> <p> <code>AWS::EKS::Cluster</code> </p> </li> <li> <p> <code>AWS::WAFv2::WebACL</code> </p> </li> <li> <p> <code>AWS::ElasticLoadBalancingV2::LoadBalancer</code> (Network Load Balancers only)</p> </li> </ul>",
+        "ListResourceTelemetryInput$ResourceTypes": "<p> A list of resource types used to filter resources supported by telemetry config. If this parameter is provided, the service returns the resources in the same order as specified in the request. Currently supported resource types for discovery are:</p> <ul> <li> <p> <code>AWS::EC2::Instance</code> </p> </li> <li> <p> <code>AWS::EC2::VPC</code> </p> </li> <li> <p> <code>AWS::Lambda::Function</code> </p> </li> <li> <p> <code>AWS::EKS::Cluster</code> </p> </li> <li> <p> <code>AWS::WAFv2::WebACL</code> </p> </li> <li> <p> <code>AWS::ElasticLoadBalancingV2::LoadBalancer</code> (Network Load Balancers only)</p> </li> </ul>"
       }
     },
     "RetentionPeriodInDays": {
@@ -970,6 +1043,12 @@
       "base": "<p>A list of source plugin types used in the pipeline configuration (such as <code>cloudwatch_logs</code> or <code>s3</code>). Currently supports a single source per pipeline, but is structured as a list to accommodate multiple pipelines in the configuration.</p>",
       "refs": {
         "Sources$member": null
+      }
+    },
+    "SourceContextGraphConfiguration": {
+      "base": "<p>Configuration that enables centralization of the context graph for the selected sources. Including this configuration in a rule's source opts the rule into centralizing the context graph for the selected sources.</p>",
+      "refs": {
+        "CentralizationRuleSource$SourceContextGraphConfiguration": "<p>Configuration that enables centralization of the context graph for the selected sources. Including this configuration in a rule's source opts the rule into centralizing the context graph for the selected sources.</p>"
       }
     },
     "SourceFilterString": {
@@ -1110,6 +1189,7 @@
       "base": null,
       "refs": {
         "CreateCentralizationRuleForOrganizationInput$Tags": "<p>The key-value pairs to associate with the organization telemetry rule resource for categorization and management purposes.</p>",
+        "CreateDatasetIntegrationInput$Tags": "<p>The key-value pairs to associate with the dataset integration resource for categorization and management purposes.</p>",
         "CreateS3TableIntegrationInput$Tags": "<p>The key-value pairs to associate with the S3 Table integration resource for categorization and management purposes.</p>",
         "CreateTelemetryPipelineInput$Tags": "<p>The key-value pairs to associate with the telemetry pipeline resource for categorization and management purposes.</p>",
         "CreateTelemetryRuleForOrganizationInput$Tags": "<p> The key-value pairs to associate with the organization telemetry rule resource for categorization and management purposes. </p>",
@@ -1316,6 +1396,19 @@
       "base": null,
       "refs": {}
     },
+    "Timestamp": {
+      "base": null,
+      "refs": {
+        "CreateDatasetIntegrationOutput$CreatedAt": "<p>The timestamp when the dataset integration was created.</p>",
+        "CreateDatasetIntegrationOutput$UpdatedAt": "<p>The timestamp when the dataset integration was last updated.</p>",
+        "DatasetIntegrationSummary$CreatedAt": "<p>The timestamp when the dataset integration was created.</p>",
+        "DatasetIntegrationSummary$UpdatedAt": "<p>The timestamp when the dataset integration was last updated.</p>",
+        "GetDatasetIntegrationOutput$CreatedAt": "<p>The timestamp when the dataset integration was created.</p>",
+        "GetDatasetIntegrationOutput$UpdatedAt": "<p>The timestamp when the dataset integration was last updated.</p>",
+        "UpdateDatasetIntegrationOutput$CreatedAt": "<p>The timestamp when the dataset integration was created.</p>",
+        "UpdateDatasetIntegrationOutput$UpdatedAt": "<p>The timestamp when the dataset integration was last updated.</p>"
+      }
+    },
     "TooManyRequestsException": {
       "base": "<p> The request throughput limit was exceeded. </p>",
       "refs": {}
@@ -1329,6 +1422,14 @@
       "refs": {}
     },
     "UpdateCentralizationRuleForOrganizationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateDatasetIntegrationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateDatasetIntegrationOutput": {
       "base": null,
       "refs": {}
     },

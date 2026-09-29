@@ -2818,6 +2818,39 @@
         "TIMESTAMP"
       ]
     },
+    "FeedbackCode":{
+      "type":"string",
+      "enum":[
+        "FACE_NOT_VISIBLE",
+        "FACE_OBSTRUCTION_DETECTED",
+        "LOW_VIDEO_QUALITY_DETECTED",
+        "FACE_NOT_ALIGNED",
+        "EYES_CLOSED_DETECTED",
+        "LOW_LIGHTING_DETECTED",
+        "HIGH_LIGHTING_DETECTED"
+      ]
+    },
+    "FeedbackItem":{
+      "type":"structure",
+      "required":[
+        "Code",
+        "Message"
+      ],
+      "members":{
+        "Code":{"shape":"FeedbackCode"},
+        "Message":{"shape":"FeedbackMessage"}
+      }
+    },
+    "FeedbackList":{
+      "type":"list",
+      "member":{"shape":"FeedbackItem"},
+      "max":10
+    },
+    "FeedbackMessage":{
+      "type":"string",
+      "max":512,
+      "min":1
+    },
     "Float":{"type":"float"},
     "FlowDefinitionArn":{
       "type":"string",
@@ -2977,7 +3010,9 @@
         "Confidence":{"shape":"Percent"},
         "ReferenceImage":{"shape":"AuditImage"},
         "AuditImages":{"shape":"AuditImages"},
-        "Challenge":{"shape":"Challenge"}
+        "Challenge":{"shape":"Challenge"},
+        "Feedback":{"shape":"FeedbackList"},
+        "Metadata":{"shape":"SessionMetadata"}
       }
     },
     "GetFaceSearchRequest":{
@@ -4381,6 +4416,11 @@
       "max":1024,
       "min":1
     },
+    "SDKTypeString":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
     "SNSTopicArn":{
       "type":"string",
       "pattern":"(^arn:aws:sns:.*:\\w{12}:.+$)"
@@ -4543,6 +4583,13 @@
       "type":"structure",
       "members":{},
       "exception":true
+    },
+    "SessionMetadata":{
+      "type":"structure",
+      "required":["SDKType"],
+      "members":{
+        "SDKType":{"shape":"SDKTypeString"}
+      }
     },
     "SessionNotFoundException":{
       "type":"structure",

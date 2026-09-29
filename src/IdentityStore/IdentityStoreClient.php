@@ -96,17 +96,17 @@ use Aws\AwsClient;
  *     ...,
  * } $args = [])
  * @method \Aws\Result deleteGroup(array $args = [])
- * @phpstan-method \Aws\Result deleteGroup(array{IdentityStoreId?: string, GroupId?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result deleteGroup(array{IdentityStoreId?: string, GroupId?: string, Revision?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteGroupAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise deleteGroupAsync(array{IdentityStoreId?: string, GroupId?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteGroupAsync(array{IdentityStoreId?: string, GroupId?: string, Revision?: string, ...} $args = [])
  * @method \Aws\Result deleteGroupMembership(array $args = [])
  * @phpstan-method \Aws\Result deleteGroupMembership(array{IdentityStoreId?: string, MembershipId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteGroupMembershipAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteGroupMembershipAsync(array{IdentityStoreId?: string, MembershipId?: string, ...} $args = [])
  * @method \Aws\Result deleteUser(array $args = [])
- * @phpstan-method \Aws\Result deleteUser(array{IdentityStoreId?: string, UserId?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result deleteUser(array{IdentityStoreId?: string, UserId?: string, Revision?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteUserAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise deleteUserAsync(array{IdentityStoreId?: string, UserId?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteUserAsync(array{IdentityStoreId?: string, UserId?: string, Revision?: string, ...} $args = [])
  * @method \Aws\Result describeGroup(array $args = [])
  * @phpstan-method \Aws\Result describeGroup(array{IdentityStoreId?: string, GroupId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeGroupAsync(array $args = [])
@@ -115,6 +115,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result describeGroupMembership(array{IdentityStoreId?: string, MembershipId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeGroupMembershipAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise describeGroupMembershipAsync(array{IdentityStoreId?: string, MembershipId?: string, ...} $args = [])
+ * @method \Aws\Result describeIdentityStore(array $args = [])
+ * @phpstan-method \Aws\Result describeIdentityStore(array{IdentityStoreId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeIdentityStoreAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeIdentityStoreAsync(array{IdentityStoreId?: string, ...} $args = [])
  * @method \Aws\Result describeUser(array $args = [])
  * @phpstan-method \Aws\Result describeUser(array{IdentityStoreId?: string, UserId?: string, Extensions?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeUserAsync(array $args = [])
@@ -203,6 +207,10 @@ use Aws\AwsClient;
  *     Filters?: list<array{AttributePath?: string, AttributeValue?: string, ...}>,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result listIdentityStores(array $args = [])
+ * @phpstan-method \Aws\Result listIdentityStores(array{MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listIdentityStoresAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listIdentityStoresAsync(array{MaxResults?: int, NextToken?: string, ...} $args = [])
  * @method \Aws\Result listUsers(array $args = [])
  * @phpstan-method \Aws\Result listUsers(array{
  *     IdentityStoreId?: string,
@@ -226,6 +234,7 @@ use Aws\AwsClient;
  *     IdentityStoreId?: string,
  *     GroupId?: string,
  *     Operations?: list<array{AttributePath?: string, AttributeValue?: array, ...}>,
+ *     Revision?: string,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateGroupAsync(array $args = [])
@@ -233,6 +242,31 @@ use Aws\AwsClient;
  *     IdentityStoreId?: string,
  *     GroupId?: string,
  *     Operations?: list<array{AttributePath?: string, AttributeValue?: array, ...}>,
+ *     Revision?: string,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result updateIdentityStore(array $args = [])
+ * @phpstan-method \Aws\Result updateIdentityStore(array{
+ *     IdentityStoreId?: string,
+ *     NetworkConfiguration?: array{
+ *         VpceAccessRequired?: bool,
+ *         ApiRestrictSourceVpcs?: list<string>,
+ *         ApiAllowSourceIps?: list<string>,
+ *         ScimAllowSourceIps?: list<string>,
+ *         ...,
+ *     },
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateIdentityStoreAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateIdentityStoreAsync(array{
+ *     IdentityStoreId?: string,
+ *     NetworkConfiguration?: array{
+ *         VpceAccessRequired?: bool,
+ *         ApiRestrictSourceVpcs?: list<string>,
+ *         ApiAllowSourceIps?: list<string>,
+ *         ScimAllowSourceIps?: list<string>,
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateUser(array $args = [])
@@ -240,6 +274,7 @@ use Aws\AwsClient;
  *     IdentityStoreId?: string,
  *     UserId?: string,
  *     Operations?: list<array{AttributePath?: string, AttributeValue?: array, ...}>,
+ *     Revision?: string,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateUserAsync(array $args = [])
@@ -247,6 +282,7 @@ use Aws\AwsClient;
  *     IdentityStoreId?: string,
  *     UserId?: string,
  *     Operations?: list<array{AttributePath?: string, AttributeValue?: array, ...}>,
+ *     Revision?: string,
  *     ...,
  * } $args = [])
  */

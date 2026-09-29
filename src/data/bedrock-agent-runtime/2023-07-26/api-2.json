@@ -998,7 +998,7 @@
     "AgenticRetrieveConfigurationMaxAgentIterationInteger":{
       "type":"integer",
       "box":true,
-      "min":2
+      "min":0
     },
     "AgenticRetrieveFailure":{
       "type":"structure",
@@ -2865,12 +2865,16 @@
       "required":["type"],
       "members":{
         "bedrockFoundationModelConfiguration":{"shape":"BedrockFoundationModelConfiguration"},
+        "mantleFoundationModelConfiguration":{"shape":"MantleFoundationModelConfiguration"},
         "type":{"shape":"FoundationModelConfigurationType"}
       }
     },
     "FoundationModelConfigurationType":{
       "type":"string",
-      "enum":["BEDROCK_FOUNDATION_MODEL"]
+      "enum":[
+        "BEDROCK_FOUNDATION_MODEL",
+        "MANTLE_FOUNDATION_MODEL"
+      ]
     },
     "FoundationModelType":{
       "type":"string",
@@ -4472,6 +4476,27 @@
     "ManagedSearchRerankingConfigurationType":{
       "type":"string",
       "enum":["BEDROCK_RERANKING_MODEL"]
+    },
+    "MantleFoundationModelConfiguration":{
+      "type":"structure",
+      "required":["modelConfiguration"],
+      "members":{
+        "modelConfiguration":{"shape":"MantleFoundationModelModelConfiguration"}
+      }
+    },
+    "MantleFoundationModelModelConfiguration":{
+      "type":"structure",
+      "required":["modelArn"],
+      "members":{
+        "modelArn":{"shape":"BedrockModelArn"},
+        "projectId":{"shape":"MantleProjectId"}
+      }
+    },
+    "MantleProjectId":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "pattern":"^(proj_[a-zA-Z0-9]+|default)$"
     },
     "MaxResults":{
       "type":"integer",

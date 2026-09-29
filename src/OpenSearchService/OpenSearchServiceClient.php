@@ -1037,6 +1037,7 @@ use Aws\AwsClient;
  *     AutomatedSnapshotPauseOptions?: array{Enabled?: bool, StartTime?: int|string|\DateTimeInterface, EndTime?: int|string|\DateTimeInterface, ...},
  *     UseCase?: 'MIXED'|'OBSERVABILITY'|'SEARCH'|'VECTOR',
  *     EngineMode?: 'GENERAL'|'OPTIMIZED',
+ *     AcceptedWarnings?: list<string>,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateDomainConfigAsync(array $args = [])
@@ -1131,6 +1132,7 @@ use Aws\AwsClient;
  *     AutomatedSnapshotPauseOptions?: array{Enabled?: bool, StartTime?: int|string|\DateTimeInterface, EndTime?: int|string|\DateTimeInterface, ...},
  *     UseCase?: 'MIXED'|'OBSERVABILITY'|'SEARCH'|'VECTOR',
  *     EngineMode?: 'GENERAL'|'OPTIMIZED',
+ *     AcceptedWarnings?: list<string>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateIndex(array $args = [])

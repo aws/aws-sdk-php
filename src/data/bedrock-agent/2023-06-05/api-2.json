@@ -249,6 +249,26 @@
       ],
       "idempotent":true
     },
+    "CreateVpcConfiguration":{
+      "name":"CreateVpcConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/knowledgebases/{knowledgeBaseId}/vpcconfigurations/",
+        "responseCode":202
+      },
+      "input":{"shape":"CreateVpcConfigurationRequest"},
+      "output":{"shape":"CreateVpcConfigurationResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ],
+      "idempotent":true
+    },
     "DeleteAgent":{
       "name":"DeleteAgent",
       "http":{
@@ -466,6 +486,25 @@
       },
       "input":{"shape":"DeleteResourcePolicyRequest"},
       "output":{"shape":"DeleteResourcePolicyResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteVpcConfiguration":{
+      "name":"DeleteVpcConfiguration",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/knowledgebases/{knowledgeBaseId}/vpcconfigurations/{vpcConfigurationId}",
+        "responseCode":202
+      },
+      "input":{"shape":"DeleteVpcConfigurationRequest"},
+      "output":{"shape":"DeleteVpcConfigurationResponse"},
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
@@ -785,6 +824,24 @@
       ],
       "readonly":true
     },
+    "GetVpcConfiguration":{
+      "name":"GetVpcConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/knowledgebases/{knowledgeBaseId}/vpcconfigurations/{vpcConfigurationId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetVpcConfigurationRequest"},
+      "output":{"shape":"GetVpcConfigurationResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
     "IngestKnowledgeBaseDocuments":{
       "name":"IngestKnowledgeBaseDocuments",
       "http":{
@@ -1063,6 +1120,24 @@
       },
       "input":{"shape":"ListTagsForResourceRequest"},
       "output":{"shape":"ListTagsForResourceResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
+    "ListVpcConfigurations":{
+      "name":"ListVpcConfigurations",
+      "http":{
+        "method":"GET",
+        "requestUri":"/knowledgebases/{knowledgeBaseId}/vpcconfigurations/",
+        "responseCode":200
+      },
+      "input":{"shape":"ListVpcConfigurationsRequest"},
+      "output":{"shape":"ListVpcConfigurationsResponse"},
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
@@ -2702,6 +2777,50 @@
         "updatedAt":{"shape":"DateTimestamp"}
       }
     },
+    "CreateVpcConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "knowledgeBaseId",
+        "vpcId",
+        "subnetIds",
+        "resourceTarget",
+        "port",
+        "protocol",
+        "resolutionMode"
+      ],
+      "members":{
+        "knowledgeBaseId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "vpcId":{"shape":"VpcId"},
+        "subnetIds":{"shape":"SubnetIdList"},
+        "resourceTarget":{"shape":"ResourceTarget"},
+        "port":{"shape":"Port"},
+        "protocol":{"shape":"VpcProtocol"},
+        "resolutionMode":{"shape":"VpcResolutionMode"},
+        "hostHeader":{"shape":"HostHeader"},
+        "tlsServerName":{"shape":"TlsServerName"},
+        "name":{"shape":"VpcConfigurationName"},
+        "description":{"shape":"VpcConfigurationDescription"}
+      }
+    },
+    "CreateVpcConfigurationResponse":{
+      "type":"structure",
+      "required":[
+        "vpcConfigurationId",
+        "status"
+      ],
+      "members":{
+        "vpcConfigurationId":{"shape":"VpcConfigurationId"},
+        "status":{"shape":"VpcConfigurationStatus"}
+      }
+    },
     "CreationMode":{
       "type":"string",
       "enum":[
@@ -3275,6 +3394,36 @@
       "members":{
         "resourceArn":{"shape":"ResourceArn"},
         "revisionId":{"shape":"RevisionId"}
+      }
+    },
+    "DeleteVpcConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "knowledgeBaseId",
+        "vpcConfigurationId"
+      ],
+      "members":{
+        "knowledgeBaseId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
+        "vpcConfigurationId":{
+          "shape":"VpcConfigurationId",
+          "location":"uri",
+          "locationName":"vpcConfigurationId"
+        }
+      }
+    },
+    "DeleteVpcConfigurationResponse":{
+      "type":"structure",
+      "required":[
+        "vpcConfigurationId",
+        "status"
+      ],
+      "members":{
+        "vpcConfigurationId":{"shape":"VpcConfigurationId"},
+        "status":{"shape":"VpcConfigurationStatus"}
       }
     },
     "DeletionProtectionConfiguration":{
@@ -4634,6 +4783,32 @@
         "revisionId":{"shape":"RevisionId"}
       }
     },
+    "GetVpcConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "knowledgeBaseId",
+        "vpcConfigurationId"
+      ],
+      "members":{
+        "knowledgeBaseId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
+        "vpcConfigurationId":{
+          "shape":"VpcConfigurationId",
+          "location":"uri",
+          "locationName":"vpcConfigurationId"
+        }
+      }
+    },
+    "GetVpcConfigurationResponse":{
+      "type":"structure",
+      "required":["vpcConfiguration"],
+      "members":{
+        "vpcConfiguration":{"shape":"VpcConfiguration"}
+      }
+    },
     "GraphArn":{
       "type":"string",
       "max":255,
@@ -4692,6 +4867,12 @@
       "member":{"shape":"HierarchicalChunkingLevelConfiguration"},
       "max":2,
       "min":2
+    },
+    "HostHeader":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[A-Za-z0-9._:\\[\\]-]{1,255}"
     },
     "HttpsUrl":{
       "type":"string",
@@ -5602,6 +5783,46 @@
         "tags":{"shape":"TagsMap"}
       }
     },
+    "ListVpcConfigurationsRequest":{
+      "type":"structure",
+      "required":["knowledgeBaseId"],
+      "members":{
+        "knowledgeBaseId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
+        "statusFilter":{
+          "shape":"VpcConfigurationStatus",
+          "location":"querystring",
+          "locationName":"status"
+        },
+        "maxResults":{
+          "shape":"ListVpcConfigurationsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListVpcConfigurationsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListVpcConfigurationsResponse":{
+      "type":"structure",
+      "required":["items"],
+      "members":{
+        "items":{"shape":"VpcConfigurationSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "LoopControllerFlowNodeConfiguration":{
       "type":"structure",
       "required":["continueCondition"],
@@ -6274,6 +6495,12 @@
       "max":2048,
       "min":0,
       "pattern":".*"
+    },
+    "Port":{
+      "type":"integer",
+      "box":true,
+      "max":65535,
+      "min":1
     },
     "PrepareAgentRequest":{
       "type":"structure",
@@ -6965,6 +7192,11 @@
       "min":1,
       "pattern":"[\\u0009\\u000A\\u000D\\u0020-\\u00FF]+"
     },
+    "ResourceTarget":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
     "RetrievalFlowNodeConfiguration":{
       "type":"structure",
       "required":["serviceConfiguration"],
@@ -7381,6 +7613,18 @@
       "min":1,
       "sensitive":true
     },
+    "SubnetId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"subnet-[a-zA-Z0-9]+"
+    },
+    "SubnetIdList":{
+      "type":"list",
+      "member":{"shape":"SubnetId"},
+      "max":6,
+      "min":1
+    },
     "SupplementalDataStorageConfiguration":{
       "type":"structure",
       "required":["storageLocations"],
@@ -7518,6 +7762,12 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "TlsServerName":{
+      "type":"string",
+      "max":253,
+      "min":1,
+      "pattern":"(\\*\\.)?([A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?\\.)*[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?"
     },
     "Tool":{
       "type":"structure",
@@ -8276,6 +8526,123 @@
       "box":true,
       "max":30,
       "min":1
+    },
+    "VpcConfiguration":{
+      "type":"structure",
+      "required":[
+        "vpcConfigurationId",
+        "status",
+        "vpcId",
+        "subnetIds",
+        "resourceTarget",
+        "port",
+        "protocol",
+        "resolutionMode",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "vpcConfigurationId":{"shape":"VpcConfigurationId"},
+        "status":{"shape":"VpcConfigurationStatus"},
+        "statusMessage":{"shape":"VpcConfigurationStatusMessage"},
+        "vpcId":{"shape":"VpcId"},
+        "subnetIds":{"shape":"SubnetIdList"},
+        "resourceTarget":{"shape":"ResourceTarget"},
+        "port":{"shape":"Port"},
+        "protocol":{"shape":"VpcProtocol"},
+        "resolutionMode":{"shape":"VpcResolutionMode"},
+        "hostHeader":{"shape":"HostHeader"},
+        "tlsServerName":{"shape":"TlsServerName"},
+        "name":{"shape":"VpcConfigurationName"},
+        "description":{"shape":"VpcConfigurationDescription"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"}
+      }
+    },
+    "VpcConfigurationDescription":{
+      "type":"string",
+      "max":512,
+      "min":0,
+      "pattern":"[^\\p{C}]*"
+    },
+    "VpcConfigurationId":{
+      "type":"string",
+      "max":32,
+      "min":32,
+      "pattern":"[a-z0-9](?:[a-z0-9-]{30}[a-z0-9])"
+    },
+    "VpcConfigurationName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z0-9]([a-zA-Z0-9 _-]*[a-zA-Z0-9])?"
+    },
+    "VpcConfigurationStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "CREATED",
+        "DELETING",
+        "CREATE_FAILED",
+        "DELETE_FAILED"
+      ]
+    },
+    "VpcConfigurationStatusMessage":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "VpcConfigurationSummary":{
+      "type":"structure",
+      "required":[
+        "vpcConfigurationId",
+        "status",
+        "vpcId",
+        "resourceTarget",
+        "port",
+        "protocol",
+        "resolutionMode",
+        "createdAt"
+      ],
+      "members":{
+        "vpcConfigurationId":{"shape":"VpcConfigurationId"},
+        "status":{"shape":"VpcConfigurationStatus"},
+        "statusMessage":{"shape":"VpcConfigurationStatusMessage"},
+        "vpcId":{"shape":"VpcId"},
+        "resourceTarget":{"shape":"ResourceTarget"},
+        "port":{"shape":"Port"},
+        "protocol":{"shape":"VpcProtocol"},
+        "resolutionMode":{"shape":"VpcResolutionMode"},
+        "hostHeader":{"shape":"HostHeader"},
+        "tlsServerName":{"shape":"TlsServerName"},
+        "name":{"shape":"VpcConfigurationName"},
+        "description":{"shape":"VpcConfigurationDescription"},
+        "createdAt":{"shape":"DateTimestamp"}
+      }
+    },
+    "VpcConfigurationSummaryList":{
+      "type":"list",
+      "member":{"shape":"VpcConfigurationSummary"}
+    },
+    "VpcId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"vpc-[a-zA-Z0-9]+"
+    },
+    "VpcProtocol":{
+      "type":"string",
+      "enum":[
+        "HTTP",
+        "HTTPS"
+      ]
+    },
+    "VpcResolutionMode":{
+      "type":"string",
+      "enum":[
+        "PUBLIC",
+        "IN_VPC"
+      ]
     },
     "WebCrawlerConfiguration":{
       "type":"structure",

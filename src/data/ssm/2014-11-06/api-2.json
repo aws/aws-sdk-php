@@ -2820,7 +2820,7 @@
     },
     "AssociationVersion":{
       "type":"string",
-      "pattern":"([$]LATEST)|([1-9][0-9]*)"
+      "pattern":"^(([$]LATEST)|([1-9][0-9]*))$"
     },
     "AssociationVersionInfo":{
       "type":"structure",
@@ -3835,7 +3835,7 @@
       "type":"string",
       "max":100,
       "min":1,
-      "pattern":"[A-Za-z0-9_\\-]\\w+|Custom:[a-zA-Z0-9_\\-]\\w+"
+      "pattern":"^([A-Za-z0-9_\\-]\\w+|Custom:[a-zA-Z0-9_\\-]\\w+)$"
     },
     "ComplianceUploadType":{
       "type":"string",
@@ -4389,12 +4389,20 @@
       "members":{
         "ResourceArn":{"shape":"ResourceArnString"},
         "PolicyId":{"shape":"PolicyId"},
-        "PolicyHash":{"shape":"PolicyHash"}
+        "PolicyHash":{"shape":"PolicyHash"},
+        "DeletionMode":{"shape":"DeletionMode"}
       }
     },
     "DeleteResourcePolicyResponse":{
       "type":"structure",
       "members":{}
+    },
+    "DeletionMode":{
+      "type":"string",
+      "enum":[
+        "RemoveSharing",
+        "RollbackMigration"
+      ]
     },
     "DeliveryTimedOutCount":{"type":"integer"},
     "DeregisterManagedInstanceRequest":{
@@ -5615,7 +5623,7 @@
       "type":"string",
       "max":68,
       "min":6,
-      "pattern":"^(ou-[a-z0-9]{4,32}-[a-z0-9]{8,32})|(\\d{12})$"
+      "pattern":"^((ou-[a-z0-9]{4,32}-[a-z0-9]{8,32})|(\\d{12}))$"
     },
     "ExcludeAccounts":{
       "type":"list",
@@ -9566,7 +9574,7 @@
       "type":"string",
       "max":132,
       "min":1,
-      "pattern":"tag:.+|Name|Type|KeyId|Path|Label|Tier|DataType"
+      "pattern":"^(tag:.+|Name|Type|KeyId|Path|Label|Tier|DataType)$"
     },
     "ParameterStringFilterList":{
       "type":"list",

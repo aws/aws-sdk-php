@@ -72,6 +72,7 @@
     "CreateCapacityReservation": "<p>Creates a new Capacity Reservation with the specified attributes. Capacity Reservations enable you to reserve capacity for your Amazon EC2 instances in a specific Availability Zone for any duration.</p> <p>You can create a Capacity Reservation at any time, and you can choose when it starts. You can create a Capacity Reservation for immediate use or you can request a Capacity Reservation for a future date.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-capacity-reservations.html\"> Reserve compute capacity with On-Demand Capacity Reservations</a> in the <i>Amazon EC2 User Guide</i>.</p> <p>Your request to create a Capacity Reservation could fail if:</p> <ul> <li> <p>Amazon EC2 does not have sufficient capacity. In this case, try again at a later time, try in a different Availability Zone, or request a smaller Capacity Reservation. If your workload is flexible across instance types and sizes, try with different instance attributes.</p> </li> <li> <p>The requested quantity exceeds your On-Demand Instance quota. In this case, increase your On-Demand Instance quota for the requested instance type and try again. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-resource-limits.html\"> Amazon EC2 Service Quotas</a> in the <i>Amazon EC2 User Guide</i>.</p> </li> </ul>",
     "CreateCapacityReservationBySplitting": "<p> Create a new Capacity Reservation by splitting the capacity of the source Capacity Reservation. The new Capacity Reservation will have the same attributes as the source Capacity Reservation except for tags. The source Capacity Reservation must be <code>active</code> and owned by your Amazon Web Services account. </p>",
     "CreateCapacityReservationCancellationQuote": "<p>Generates a cancellation quote for a future-dated Capacity Reservation that is within its commitment duration. The quote includes the cancellation terms and a quote ID that you can pass to the <code>CancelCapacityReservation</code> action. Cancellation quotes are valid for 24 hours.</p>",
+    "CreateCapacityReservationDateChangeQuote": "<p>Generates a quote for changing the start date of a future-dated Capacity Reservation that has not yet been delivered. The quote includes the new start date, the resulting commitment end date, and a quote ID. Pass the quote ID to <code>ModifyCapacityReservation</code> to apply the change.</p> <p>The cumulative pushout across all changes is limited to 30 days from the Capacity Reservation's original start date. Quotes are valid for 24 hours, and always expire at least one hour before the start date.</p>",
     "CreateCapacityReservationFleet": "<p>Creates a Capacity Reservation Fleet. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/work-with-cr-fleets.html#create-crfleet\">Create a Capacity Reservation Fleet</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "CreateCarrierGateway": "<p>Creates a carrier gateway. For more information about carrier gateways, see <a href=\"https://docs.aws.amazon.com/wavelength/latest/developerguide/how-wavelengths-work.html#wavelength-carrier-gateway\">Carrier gateways</a> in the <i>Amazon Web Services Wavelength Developer Guide</i>.</p>",
     "CreateClientVpnEndpoint": "<p>Creates a Client VPN endpoint. A Client VPN endpoint is the resource you create and configure to enable and manage client VPN sessions. It is the destination endpoint at which all client VPN sessions are terminated.</p>",
@@ -180,6 +181,7 @@
     "DeleteCapacityManagerDataExport": "<p> Deletes an existing Capacity Manager data export configuration. This stops future scheduled exports but does not delete previously exported files from S3. </p>",
     "DeleteCarrierGateway": "<p>Deletes a carrier gateway.</p> <important> <p>If you do not delete the route that contains the carrier gateway as the Target, the route is a blackhole route. For information about how to delete a route, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DeleteRoute.html\">DeleteRoute</a>.</p> </important>",
     "DeleteClientVpnEndpoint": "<p>Deletes the specified Client VPN endpoint. You must disassociate all target networks before you can delete a Client VPN endpoint.</p>",
+    "DeleteClientVpnEndpointAuthorizationPolicy": "<p>Deletes the authorization policy for a Client VPN endpoint.</p>",
     "DeleteClientVpnRoute": "<p>Deletes a route from a Client VPN endpoint. You can only delete routes that you manually added using the <b>CreateClientVpnRoute</b> action. You cannot delete routes that were automatically added when associating a subnet. To remove routes that have been automatically added, disassociate the target subnet from the Client VPN endpoint.</p>",
     "DeleteCoipCidr": "<p> Deletes a range of customer-owned IP addresses. </p>",
     "DeleteCoipPool": "<p>Deletes a pool of customer-owned IP (CoIP) addresses. </p>",
@@ -302,6 +304,7 @@
     "DescribeCapacityManagerDataExports": "<p> Describes one or more Capacity Manager data export configurations. Returns information about export settings, delivery status, and recent export activity. </p>",
     "DescribeCapacityReservationBillingRequests": "<p>Describes a request to assign the billing of the unused capacity of a Capacity Reservation. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/transfer-billing.html\"> Billing assignment for shared Amazon EC2 Capacity Reservations</a>.</p>",
     "DescribeCapacityReservationCancellationQuotes": "<p>Describes one or more Capacity Reservation cancellation quotes. The results describe only the quotes that you have previously generated by using the <code>CreateCapacityReservationCancellationQuote</code> action.</p>",
+    "DescribeCapacityReservationDateChangeQuotes": "<p>Describes one or more Capacity Reservation date change quotes that you generated by using the <code>CreateCapacityReservationDateChangeQuote</code> operation.</p>",
     "DescribeCapacityReservationFleets": "<p>Describes one or more Capacity Reservation Fleets.</p>",
     "DescribeCapacityReservationTopology": "<p>Describes a tree-based hierarchy that represents the physical host placement of your pending or active Capacity Reservations within an Availability Zone or Local Zone. You can use this information to determine the relative proximity of your capacity within the Amazon Web Services network before it is launched and use this information to allocate capacity together to support your tightly coupled workloads.</p> <p>Capacity Reservation topology is supported for specific instance types only. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-topology-prerequisites.html\">Prerequisites for Amazon EC2 instance topology</a> in the <i>Amazon EC2 User Guide</i>.</p> <note> <p>The Amazon EC2 API follows an eventual consistency model due to the distributed nature of the system supporting it. As a result, when you call the DescribeCapacityReservationTopology API command immediately after launching instances, the response might return a <code>null</code> value for <code>capacityBlockId</code> because the data might not have fully propagated across all subsystems. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/eventual-consistency.html\">Eventual consistency in the Amazon EC2 API</a> in the <i>Amazon EC2 Developer Guide</i>.</p> </note> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-topology.html\">Amazon EC2 topology</a> in the <i>Amazon EC2 User Guide</i>.</p> <p/>",
     "DescribeCapacityReservations": "<p>Describes one or more of your Capacity Reservations. The results describe only the Capacity Reservations in the Amazon Web Services Region that you're currently using.</p>",
@@ -561,6 +564,7 @@
     "GetCapacityManagerMetricDimensions": "<p> Retrieves the available dimension values for capacity metrics within a specified time range. This is useful for discovering what accounts, regions, instance families, and other dimensions have data available for filtering and grouping. </p>",
     "GetCapacityManagerMonitoredTagKeys": "<p> Retrieves the tag keys that are currently being monitored by EC2 Capacity Manager. Monitored tag keys are included as dimensions in capacity metric data, enabling you to group and filter metrics by tag values. </p>",
     "GetCapacityReservationUsage": "<p>Gets usage information about a Capacity Reservation. If the Capacity Reservation is shared, it shows usage information for the Capacity Reservation owner and each Amazon Web Services account that is currently using the shared capacity. If the Capacity Reservation is not shared, it shows only the Capacity Reservation owner's usage.</p>",
+    "GetClientVpnEndpointAuthorizationPolicy": "<p>Describes the authorization policy for a Client VPN endpoint.</p>",
     "GetCoipPoolUsage": "<p>Describes the allocations from the specified customer-owned address pool.</p>",
     "GetConsoleOutput": "<p>Gets the console output for the specified instance. For Linux instances, the instance console output displays the exact console output that would normally be displayed on a physical monitor attached to a computer. For Windows instances, the instance console output includes the last three system event log errors.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-console.html#instance-console-console-output\">Instance console output</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "GetConsoleScreenshot": "<p>Retrieve a JPG-format screenshot of a running instance to help with troubleshooting.</p> <p>The returned content is Base64-encoded.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/troubleshoot-unreachable-instance.html#instance-console-console-output\">Instance console output</a> in the <i>Amazon EC2 User Guide</i>.</p>",
@@ -642,9 +646,10 @@
     "ModifyAddressAttribute": "<p>Modifies an attribute of the specified Elastic IP address. For requirements, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html#Using_Elastic_Addressing_Reverse_DNS\">Using reverse DNS for email applications</a>.</p>",
     "ModifyApplicationStatusCheck": "<p>Modifies an existing application status check. You can update the protocol, port, path, thresholds, and other configuration settings. The following rules apply:</p> <ul> <li> <p>The application status check must exist and belong to your account.</p> </li> <li> <p>Changes take effect on the next health check interval.</p> </li> </ul>",
     "ModifyAvailabilityZoneGroup": "<p>Changes the opt-in status of the specified zone group for your account.</p>",
-    "ModifyCapacityReservation": "<p>Modifies a Capacity Reservation's capacity, instance eligibility, and the conditions under which it is to be released. You can't modify a Capacity Reservation's instance type, EBS optimization, platform, instance store settings, Availability Zone, or tenancy. If you need to modify any of these attributes, we recommend that you cancel the Capacity Reservation, and then create a new one with the required attributes. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/capacity-reservations-modify.html\"> Modify an active Capacity Reservation</a>.</p> <p>The allowed modifications depend on the state of the Capacity Reservation:</p> <ul> <li> <p> <code>assessing</code> or <code>scheduled</code> state - You can modify the tags only.</p> </li> <li> <p> <code>pending</code> state - You can't modify the Capacity Reservation in any way.</p> </li> <li> <p> <code>active</code> state but still within the commitment duration - You can't decrease the instance count or set an end date that is within the commitment duration. All other modifications are allowed.</p> </li> <li> <p> <code>active</code> state with no commitment duration or elapsed commitment duration - All modifications are allowed.</p> </li> <li> <p> <code>expired</code>, <code>cancelled</code>, <code>unsupported</code>, or <code>failed</code> state - You can't modify the Capacity Reservation in any way.</p> </li> </ul>",
+    "ModifyCapacityReservation": "<p>Modifies a Capacity Reservation's capacity, instance eligibility, and the conditions under which it is to be released. You can't modify a Capacity Reservation's instance type, EBS optimization, platform, instance store settings, Availability Zone, or tenancy. If you need to modify any of these attributes, we recommend that you cancel the Capacity Reservation, and then create a new one with the required attributes. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/capacity-reservations-modify.html\"> Modify an active Capacity Reservation</a>.</p> <p>The allowed modifications depend on the state of the Capacity Reservation:</p> <ul> <li> <p> <code>assessing</code> or <code>scheduled</code> state - You can modify the tags only.</p> </li> <li> <p> <code>pending</code> state - You can't modify the Capacity Reservation in any way.</p> </li> <li> <p> <code>active</code> state but still within the commitment duration - You can't decrease the instance count or set an end date that is within the commitment duration. All other modifications are allowed.</p> </li> <li> <p> <code>active</code> state with no commitment duration or elapsed commitment duration - All modifications are allowed.</p> </li> <li> <p> <code>expired</code>, <code>cancelled</code>, <code>unsupported</code>, or <code>failed</code> state - You can't modify the Capacity Reservation in any way.</p> </li> </ul> <p>For a future-dated Capacity Reservation that has not yet been delivered, pushing out the start date requires a quote generated by <code>CreateCapacityReservationDateChangeQuote</code>. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/capacity-reservations-modify.html\">Modify an active Capacity Reservation</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "ModifyCapacityReservationFleet": "<p>Modifies a Capacity Reservation Fleet.</p> <p>When you modify the total target capacity of a Capacity Reservation Fleet, the Fleet automatically creates new Capacity Reservations, or modifies or cancels existing Capacity Reservations in the Fleet to meet the new total target capacity. When you modify the end date for the Fleet, the end dates for all of the individual Capacity Reservations in the Fleet are updated accordingly.</p>",
     "ModifyClientVpnEndpoint": "<p>Modifies the specified Client VPN endpoint. Modifying the DNS server resets existing client connections.</p>",
+    "ModifyClientVpnEndpointAuthorizationPolicy": "<p>Creates or updates the authorization policy for a Client VPN endpoint. A Client VPN endpoint can have one authorization policy. If a policy already exists for the endpoint, the values that you specify replace the corresponding values in the existing policy, and values that you do not specify remain unchanged.</p>",
     "ModifyDefaultCreditSpecification": "<p>Modifies the default credit option for CPU usage of burstable performance instances. The default credit option is set at the account level per Amazon Web Services Region, and is specified per instance family. All new burstable performance instances in the account launch using the default credit option.</p> <p> <code>ModifyDefaultCreditSpecification</code> is an asynchronous operation, which works at an Amazon Web Services Region level and modifies the credit option for each Availability Zone. All zones in a Region are updated within five minutes. But if instances are launched during this operation, they might not get the new credit option until the zone is updated. To verify whether the update has occurred, you can call <code>GetDefaultCreditSpecification</code> and check <code>DefaultCreditSpecification</code> for updates.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/burstable-performance-instances.html\">Burstable performance instances</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "ModifyEbsDefaultKmsKeyId": "<p>Changes the default KMS key for EBS encryption by default for your account in this Region.</p> <p>Amazon Web Services creates a unique Amazon Web Services managed KMS key in each Region for use with encryption by default. If you change the default KMS key to a symmetric customer managed KMS key, it is used instead of the Amazon Web Services managed KMS key. Amazon EBS does not support asymmetric KMS keys.</p> <p>If you delete or disable the customer managed KMS key that you specified for use with encryption by default, your instances will fail to launch.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/ebs-encryption.html\">Amazon EBS encryption</a> in the <i>Amazon EBS User Guide</i>.</p>",
     "ModifyFleet": "<p>Modifies the specified EC2 Fleet.</p> <p>You can only modify an EC2 Fleet request of type <code>maintain</code>.</p> <p>While the EC2 Fleet is being modified, it is in the <code>modifying</code> state.</p> <p>To scale up your EC2 Fleet, increase its target capacity. The EC2 Fleet launches the additional Spot Instances according to the allocation strategy for the EC2 Fleet request. If the allocation strategy is <code>lowest-price</code>, the EC2 Fleet launches instances using the Spot Instance pool with the lowest price. If the allocation strategy is <code>diversified</code>, the EC2 Fleet distributes the instances across the Spot Instance pools. If the allocation strategy is <code>capacity-optimized</code>, EC2 Fleet launches instances from Spot Instance pools with optimal capacity for the number of instances that are launching.</p> <p>To scale down your EC2 Fleet, decrease its target capacity. First, the EC2 Fleet cancels any open requests that exceed the new target capacity. You can request that the EC2 Fleet terminate Spot Instances until the size of the fleet no longer exceeds the new target capacity. If the allocation strategy is <code>lowest-price</code>, the EC2 Fleet terminates the instances with the highest price per unit. If the allocation strategy is <code>capacity-optimized</code>, the EC2 Fleet terminates the instances in the Spot Instance pools that have the least available Spot Instance capacity. If the allocation strategy is <code>diversified</code>, the EC2 Fleet terminates instances across the Spot Instance pools. Alternatively, you can request that the EC2 Fleet keep the fleet at its current size, but not replace any Spot Instances that are interrupted or that you terminate manually.</p> <p>If you are finished with your EC2 Fleet for now, but will use it again later, you can set the target capacity to 0.</p>",
@@ -2708,7 +2713,9 @@
         "ConfirmProductInstanceRequest$DryRun": "<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ConfirmProductInstanceResult$Return": "<p>The return value of the request. Returns <code>true</code> if the specified product code is owned by the requester and associated with the specified instance.</p>",
         "ConnectionLogOptions$Enabled": "<p>Indicates whether connection logging is enabled.</p>",
+        "ConnectionLogOptions$IncludeAuthorizationPolicyContext": "<p>Specifies whether to include the authorization policy evaluation context in the connection logs for the Client VPN endpoint.</p>",
         "ConnectionLogResponseOptions$Enabled": "<p>Indicates whether client connection logging is enabled for the Client VPN endpoint.</p>",
+        "ConnectionLogResponseOptions$IncludeAuthorizationPolicyContext": "<p>Specifies whether the authorization policy evaluation context is included in the connection logs for the Client VPN endpoint.</p>",
         "CopyFpgaImageRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CopyImageRequest$Encrypted": "<p>Specifies whether to encrypt the snapshots of the copied image.</p> <p>You can encrypt a copy of an unencrypted snapshot, but you cannot create an unencrypted copy of an encrypted snapshot. The default KMS key for Amazon EBS is used unless you specify a non-default Key Management Service (KMS) KMS key using <code>KmsKeyId</code>. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIEncryption.html\">Use encryption with EBS-backed AMIs</a> in the <i>Amazon EC2 User Guide</i>.</p>",
         "CopyImageRequest$CopyImageTags": "<p>Specifies whether to copy your user-defined AMI tags to the new AMI.</p> <p>The following tags are not be copied:</p> <ul> <li> <p>System tags (prefixed with <code>aws:</code>)</p> </li> <li> <p>For public and shared AMIs, user-defined tags that are attached by other Amazon Web Services accounts</p> </li> </ul> <p>Default: Your user-defined AMI tags are not copied.</p>",
@@ -2722,6 +2729,7 @@
         "CreateCapacityManagerDataExportRequest$DryRun": "<p> Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>. </p>",
         "CreateCapacityReservationBySplittingRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateCapacityReservationCancellationQuoteRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "CreateCapacityReservationDateChangeQuoteRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateCapacityReservationFleetRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateCapacityReservationRequest$EbsOptimized": "<p>Indicates whether the Capacity Reservation supports EBS-optimized instances. This optimization provides dedicated throughput to Amazon EBS and an optimized configuration stack to provide optimal I/O performance. This optimization isn't available with all instance types. Additional usage charges apply when using an EBS- optimized instance.</p>",
         "CreateCapacityReservationRequest$EphemeralStorage": "<p> <i>Deprecated.</i> </p>",
@@ -2855,6 +2863,7 @@
         "DeleteApplicationStatusCheckRequest$DryRun": "<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteCapacityManagerDataExportRequest$DryRun": "<p> Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>. </p>",
         "DeleteCarrierGatewayRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DeleteClientVpnEndpointAuthorizationPolicyRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteClientVpnEndpointRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteClientVpnRouteRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteCoipCidrRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2999,6 +3008,7 @@
         "DescribeCapacityManagerDataExportsRequest$DryRun": "<p> Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>. </p>",
         "DescribeCapacityReservationBillingRequestsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeCapacityReservationCancellationQuotesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DescribeCapacityReservationDateChangeQuotesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeCapacityReservationFleetsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeCapacityReservationTopologyRequest$DryRun": "<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeCapacityReservationsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -3189,6 +3199,7 @@
         "DetachVolumeRequest$Force": "<p>Forces detachment if the previous detachment attempt did not occur cleanly (for example, logging into an instance, unmounting the volume, and detaching normally). This option can lead to data loss or a corrupted file system. Use this option only as a last resort to detach a volume from a failed instance. The instance won't have an opportunity to flush file system caches or file system metadata. If you use this option, you must perform file system check and repair procedures.</p>",
         "DetachVolumeRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DetachVpnGatewayRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DevicePostureOptions$Enabled": "<p>Indicates whether device posture evaluation is enabled for the Client VPN endpoint. Specify <code>false</code> to disable device posture, which clears the configured device trust providers.</p>",
         "DisableAddressTransferRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisableAllowedImagesSettingsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisableApplicationStatusCheckSuppressionRequest$DryRun": "<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -3315,6 +3326,7 @@
         "GetCapacityManagerMetricDimensionsRequest$DryRun": "<p> Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>. </p>",
         "GetCapacityManagerMonitoredTagKeysRequest$DryRun": "<p> Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>. </p>",
         "GetCapacityReservationUsageRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "GetClientVpnEndpointAuthorizationPolicyRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "GetCoipPoolUsageRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "GetConsoleOutputRequest$Latest": "<p>When enabled, retrieves the latest console output for the instance.</p> <p>Default: disabled (<code>false</code>)</p>",
         "GetConsoleOutputRequest$DryRun": "<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -3487,7 +3499,9 @@
         "ModifyCapacityReservationFleetResult$Return": "<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>",
         "ModifyCapacityReservationRequest$Accept": "<p>Reserved. Capacity Reservations you have created are accepted by default.</p>",
         "ModifyCapacityReservationRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "ModifyCapacityReservationRequest$AcceptModificationTerms": "<p>Indicates that you accept the modification terms of the quote identified by <code>QuoteId</code>. To apply a quoted modification, set this parameter to <code>true</code>.</p>",
         "ModifyCapacityReservationResult$Return": "<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>",
+        "ModifyClientVpnEndpointAuthorizationPolicyRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyClientVpnEndpointRequest$SplitTunnel": "<p>Indicates whether the VPN is split-tunnel.</p> <p>For information about split-tunnel VPN endpoints, see <a href=\"https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/split-tunnel-vpn.html\">Split-tunnel Client VPN endpoint</a> in the <i>Client VPN Administrator Guide</i>.</p>",
         "ModifyClientVpnEndpointRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyClientVpnEndpointRequest$DisconnectOnSessionTimeout": "<p>Indicates whether the client VPN session is disconnected after the maximum timeout specified in <code>sessionTimeoutHours</code> is reached. If <code>true</code>, users are prompted to reconnect client VPN. If <code>false</code>, client VPN attempts to reconnect automatically. The default value is <code>true</code>.</p>",
@@ -3897,6 +3911,7 @@
         "CapacityBlockOffering$UltraserverCount": "<p>The number of EC2 UltraServers in the offering.</p>",
         "EnableApplicationStatusCheckSuppressionRequest$DurationSeconds": "<p>The duration, in seconds, for which to suppress application status checks. If omitted, the application status check is suppressed indefinitely until you call <code>DisableApplicationStatusCheckSuppression</code>.</p>",
         "InstanceMetadataDefaultsResponse$HttpPutResponseHopLimit": "<p>The maximum number of hops that the metadata token can travel.</p>",
+        "ModificationReservationUpdate$NewCommitmentDuration": "<p>The commitment duration, in seconds, that the Capacity Reservation will have after the modification.</p>",
         "ModifyInstanceMetadataDefaultsRequest$HttpPutResponseHopLimit": "<p>The maximum number of hops that the metadata token can travel. To indicate no preference, specify <code>-1</code>.</p> <p>Possible values: Integers from <code>1</code> to <code>64</code>, and <code>-1</code> to indicate no preference</p>"
       }
     },
@@ -3904,6 +3919,8 @@
       "base": null,
       "refs": {
         "CancellationTerms$ChargeCommitmentDurationHours": "<p>The number of hours for which cancellation charges will apply.</p>",
+        "CapacityReservationAdjustmentDetails$CommitmentDuration": "<p>The commitment duration, in seconds, that the Capacity Reservation will have after the adjustment.</p>",
+        "CapacityReservationCommitmentInfo$CommitmentDuration": "<p>The commitment duration, in seconds, for the future-dated Capacity Reservation. This is the minimum duration for which you commit to having the Capacity Reservation in the <code>active</code> state in your account after it has been delivered.</p>",
         "CreateIpamPrefixListResolverTargetRequest$DesiredVersion": "<p>The specific version of the prefix list to target. If not specified, the resolver will target the latest version.</p>",
         "CreateRouteServerRequest$PersistRoutesDuration": "<p>The number of minutes a route server will wait after BGP is re-established to unpersist the routes in the FIB and RIB. Value must be in the range of 1-5. Required if PersistRoutes is <code>enabled</code>.</p> <p>If you set the duration to 1 minute, then when your network appliance re-establishes BGP with route server, it has 1 minute to relearn it's adjacent network and advertise those routes to route server before route server resumes normal functionality. In most cases, 1 minute is probably sufficient. If, however, you have concerns that your BGP network may not be capable of fully re-establishing and re-learning everything in 1 minute, you can increase the duration up to 5 minutes.</p>",
         "IpamPrefixListResolverTarget$DesiredVersion": "<p>The desired version of the prefix list that this target should synchronize with.</p>",
@@ -4428,6 +4445,20 @@
         "PurchaseCapacityBlockResult$CapacityReservation": "<p>The Capacity Reservation.</p>"
       }
     },
+    "CapacityReservationAdjustmentDetails": {
+      "base": "<p>Describes the configuration that a Capacity Reservation will have after a pending adjustment is applied.</p>",
+      "refs": {
+        "CapacityReservation$AdjustmentDetails": "<p>The configuration that the Capacity Reservation will have after the requested adjustment is applied.</p>",
+        "ModifyCapacityReservationResult$AdjustmentDetails": "<p>The configuration that the Capacity Reservation will have after the adjustment is applied.</p>"
+      }
+    },
+    "CapacityReservationAdjustmentStatus": {
+      "base": null,
+      "refs": {
+        "CapacityReservation$AdjustmentStatus": "<p>The status of the most recent modification to the Capacity Reservation. A Capacity Reservation can have one of the following adjustment statuses:</p> <ul> <li> <p> <code>requested</code> - The modification was requested and is being processed.</p> </li> <li> <p> <code>applied</code> - The modification was applied to the Capacity Reservation.</p> </li> <li> <p> <code>rejected</code> - The modification was not applied and the Capacity Reservation keeps its existing configuration.</p> </li> </ul> <p>This field is not returned if the Capacity Reservation has never been modified.</p>",
+        "ModifyCapacityReservationResult$AdjustmentStatus": "<p>The status of the requested modification. For a description of each possible value, see the <code>adjustmentStatus</code> field of the <code>CapacityReservation</code> data type.</p>"
+      }
+    },
     "CapacityReservationBillingRequest": {
       "base": "<p>Information about a request to assign billing of the unused capacity of a Capacity Reservation.</p>",
       "refs": {
@@ -4576,10 +4607,12 @@
         "CapacityBlockExtension$CapacityReservationId": "<p>The reservation ID of the Capacity Block extension.</p>",
         "CapacityReservationCancellationQuote$CapacityReservationId": "<p>The ID of the Capacity Reservation associated with the cancellation quote.</p>",
         "CapacityReservationIdSet$member": null,
+        "CapacityReservationModificationQuote$CapacityReservationId": "<p>The ID of the Capacity Reservation associated with the modification quote.</p>",
         "CapacityReservationStatus$CapacityReservationId": "<p>The ID of the Capacity Reservation.</p>",
         "CapacityReservationTarget$CapacityReservationId": "<p>The ID of the Capacity Reservation in which to run the instance.</p>",
         "CreateCapacityReservationBySplittingRequest$SourceCapacityReservationId": "<p> The ID of the Capacity Reservation from which you want to split the capacity. </p>",
         "CreateCapacityReservationCancellationQuoteRequest$CapacityReservationId": "<p>The ID of the Capacity Reservation.</p>",
+        "CreateCapacityReservationDateChangeQuoteRequest$CapacityReservationId": "<p>The ID of the Capacity Reservation.</p>",
         "CreateInterruptibleCapacityReservationAllocationRequest$CapacityReservationId": "<p> The ID of the source Capacity Reservation from which to create the interruptible Capacity Reservation. Your Capacity Reservation must be in active state with no end date set and have available capacity for allocation. </p>",
         "CreateInterruptibleCapacityReservationAllocationResult$SourceCapacityReservationId": "<p> The ID of the source Capacity Reservation from which the interruptible Capacity Reservation was created. </p>",
         "DescribeCapacityBlockExtensionOfferingsRequest$CapacityReservationId": "<p>The ID of the Capacity reservation to be extended.</p>",
@@ -4622,6 +4655,45 @@
         "FleetCapacityReservation$InstancePlatform": "<p>The type of operating system for which the Capacity Reservation reserves capacity.</p>",
         "PurchaseCapacityBlockRequest$InstancePlatform": "<p>The type of operating system for which to reserve capacity.</p>",
         "ReservationFleetInstanceSpecification$InstancePlatform": "<p>The type of operating system for which the Capacity Reservation Fleet reserves capacity.</p>"
+      }
+    },
+    "CapacityReservationLaunchStatus": {
+      "base": null,
+      "refs": {
+        "CapacityReservation$LaunchStatus": "<note> <p>Only supported for UltraServers.</p> </note> <p>Indicates whether you can launch instances into the Capacity Reservation. A Capacity Reservation can have the following launch statuses:</p> <ul> <li> <p> <code>launchable</code> - You can launch instances into the Capacity Reservation.</p> </li> <li> <p> <code>unlaunchable</code> - You can't launch instances into the Capacity Reservation. For example, the Capacity Reservation is not active.</p> </li> </ul>"
+      }
+    },
+    "CapacityReservationModificationQuote": {
+      "base": "<p>Describes a Capacity Reservation modification quote, which provides the terms for changing the start date or the commitment of a future-dated Capacity Reservation.</p>",
+      "refs": {
+        "CapacityReservationModificationQuoteResponseSet$member": null,
+        "CreateCapacityReservationDateChangeQuoteResult$CapacityReservationModificationQuote": "<p>Information about the Capacity Reservation date change quote.</p>"
+      }
+    },
+    "CapacityReservationModificationQuoteId": {
+      "base": null,
+      "refs": {
+        "CapacityReservationModificationQuote$CapacityReservationModificationQuoteId": "<p>The ID of the modification quote.</p>",
+        "CapacityReservationModificationQuoteIdSet$member": null,
+        "ModifyCapacityReservationRequest$QuoteId": "<p>The ID of the quote that describes the modification you want to apply. Generate a quote by using <code>CreateCapacityReservationDateChangeQuote</code>. The quote must be in the <code>active</code> state, and each quote can be used only once.</p>"
+      }
+    },
+    "CapacityReservationModificationQuoteIdSet": {
+      "base": null,
+      "refs": {
+        "DescribeCapacityReservationDateChangeQuotesRequest$CapacityReservationModificationQuoteIds": "<p>The IDs of the date change quotes to describe.</p>"
+      }
+    },
+    "CapacityReservationModificationQuoteResponseSet": {
+      "base": null,
+      "refs": {
+        "DescribeCapacityReservationDateChangeQuotesResult$CapacityReservationModificationQuotes": "<p>Information about the Capacity Reservation date change quotes.</p>"
+      }
+    },
+    "CapacityReservationModificationQuoteState": {
+      "base": null,
+      "refs": {
+        "CapacityReservationModificationQuote$QuoteState": "<p>The state of the modification quote itself. Possible values are:</p> <ul> <li> <p> <code>active</code> - The quote can still be used.</p> </li> <li> <p> <code>expired</code> - The quote can no longer be used. A quote becomes <code>expired</code> at its <code>expirationTime</code>.</p> </li> </ul>"
       }
     },
     "CapacityReservationOptions": {
@@ -4972,6 +5044,21 @@
         "ClientVpnAuthenticationRequest$Type": "<p>The type of client authentication to be used.</p>"
       }
     },
+    "ClientVpnAuthorizationPolicyShadowMode": {
+      "base": "<p>Indicates whether the authorization policy for a Client VPN endpoint is evaluated in shadow mode. Possible values include:</p> <ul> <li> <p> <code>enabled</code> - The authorization policy is evaluated and the results are logged, but access is not enforced.</p> </li> <li> <p> <code>disabled</code> - The authorization policy is enforced.</p> </li> </ul>",
+      "refs": {
+        "GetClientVpnEndpointAuthorizationPolicyResult$ShadowMode": "<p>Specifies whether the authorization policy is evaluated in shadow mode. Possible values include:</p> <ul> <li> <p> <code>enabled</code> - The authorization policy is evaluated and the results are logged, but access is not enforced.</p> </li> <li> <p> <code>disabled</code> - The authorization policy is enforced.</p> </li> </ul>",
+        "ModifyClientVpnEndpointAuthorizationPolicyRequest$ShadowMode": "<p>Specifies whether the authorization policy is evaluated in shadow mode. Possible values include:</p> <ul> <li> <p> <code>enabled</code> - The authorization policy is evaluated and the results are logged, but access is not enforced.</p> </li> <li> <p> <code>disabled</code> - The authorization policy is enforced.</p> </li> </ul> <p>The default value is <code>disabled</code>.</p>"
+      }
+    },
+    "ClientVpnAuthorizationPolicyStatus": {
+      "base": "<p>Describes the state of an authorization policy for a Client VPN endpoint. Possible states include:</p> <ul> <li> <p> <code>creating</code> - The authorization policy is being created.</p> </li> <li> <p> <code>updating</code> - The authorization policy is being updated.</p> </li> <li> <p> <code>active</code> - The authorization policy has been applied to the Client VPN endpoint.</p> </li> <li> <p> <code>failed</code> - The authorization policy could not be applied to the Client VPN endpoint.</p> </li> <li> <p> <code>deleting</code> - The authorization policy is being deleted.</p> </li> </ul>",
+      "refs": {
+        "DeleteClientVpnEndpointAuthorizationPolicyResult$Status": "<p>The current state of the authorization policy.</p>",
+        "GetClientVpnEndpointAuthorizationPolicyResult$Status": "<p>The current state of the authorization policy.</p>",
+        "ModifyClientVpnEndpointAuthorizationPolicyResult$Status": "<p>The current state of the authorization policy.</p>"
+      }
+    },
     "ClientVpnAuthorizationRuleStatus": {
       "base": "<p>Describes the state of an authorization rule.</p>",
       "refs": {
@@ -5028,6 +5115,13 @@
         "ClientVpnConnectionStatus$Code": "<p>The state of the client connection.</p>"
       }
     },
+    "ClientVpnDeviceTrustProviderType": {
+      "base": null,
+      "refs": {
+        "ClientVpnTrustProvider$TrustProviderType": "<p>The type of the device trust provider. Possible values include:</p> <ul> <li> <p> <code>crowdstrike</code> - CrowdStrike device trust provider.</p> </li> <li> <p> <code>jamf</code> - Jamf device trust provider.</p> </li> <li> <p> <code>jumpcloud</code> - JumpCloud device trust provider.</p> </li> </ul>",
+        "ClientVpnTrustProviderRequest$TrustProviderType": "<p>The type of the device trust provider. Possible values include:</p> <ul> <li> <p> <code>crowdstrike</code> - CrowdStrike device trust provider.</p> </li> <li> <p> <code>jamf</code> - Jamf device trust provider.</p> </li> <li> <p> <code>jumpcloud</code> - JumpCloud device trust provider.</p> </li> </ul>"
+      }
+    },
     "ClientVpnEndpoint": {
       "base": "<p>Describes a Client VPN endpoint.</p>",
       "refs": {
@@ -5054,6 +5148,7 @@
         "AuthorizeClientVpnIngressRequest$ClientVpnEndpointId": "<p>The ID of the Client VPN endpoint.</p>",
         "ClientVpnEndpointIdList$member": null,
         "CreateClientVpnRouteRequest$ClientVpnEndpointId": "<p>The ID of the Client VPN endpoint to which to add the route.</p>",
+        "DeleteClientVpnEndpointAuthorizationPolicyRequest$ClientVpnEndpointId": "<p>The ID of the Client VPN endpoint.</p>",
         "DeleteClientVpnEndpointRequest$ClientVpnEndpointId": "<p>The ID of the Client VPN to be deleted.</p>",
         "DeleteClientVpnRouteRequest$ClientVpnEndpointId": "<p>The ID of the Client VPN endpoint from which the route is to be deleted.</p>",
         "DescribeClientVpnAuthorizationRulesRequest$ClientVpnEndpointId": "<p>The ID of the Client VPN endpoint.</p>",
@@ -5063,7 +5158,9 @@
         "DisassociateClientVpnTargetNetworkRequest$ClientVpnEndpointId": "<p>The ID of the Client VPN endpoint from which to disassociate the target network.</p>",
         "ExportClientVpnClientCertificateRevocationListRequest$ClientVpnEndpointId": "<p>The ID of the Client VPN endpoint.</p>",
         "ExportClientVpnClientConfigurationRequest$ClientVpnEndpointId": "<p>The ID of the Client VPN endpoint.</p>",
+        "GetClientVpnEndpointAuthorizationPolicyRequest$ClientVpnEndpointId": "<p>The ID of the Client VPN endpoint.</p>",
         "ImportClientVpnClientCertificateRevocationListRequest$ClientVpnEndpointId": "<p>The ID of the Client VPN endpoint to which the client certificate revocation list applies.</p>",
+        "ModifyClientVpnEndpointAuthorizationPolicyRequest$ClientVpnEndpointId": "<p>The ID of the Client VPN endpoint.</p>",
         "ModifyClientVpnEndpointRequest$ClientVpnEndpointId": "<p>The ID of the Client VPN endpoint to modify.</p>",
         "RevokeClientVpnIngressRequest$ClientVpnEndpointId": "<p>The ID of the Client VPN endpoint with which the authorization rule is associated.</p>",
         "TerminateClientVpnConnectionsRequest$ClientVpnEndpointId": "<p>The ID of the Client VPN endpoint to which the client is connected.</p>",
@@ -5124,6 +5221,30 @@
         "ClientVpnEndpoint$SecurityGroupIds": "<p>The IDs of the security groups for the target network.</p>",
         "CreateClientVpnEndpointRequest$SecurityGroupIds": "<p>The IDs of one or more security groups to apply to the target network. You must also specify the ID of the VPC that contains the security groups.</p>",
         "ModifyClientVpnEndpointRequest$SecurityGroupIds": "<p>The IDs of one or more security groups to apply to the target network.</p>"
+      }
+    },
+    "ClientVpnTrustProvider": {
+      "base": "<p>Information about a device trust provider configured for a Client VPN endpoint.</p>",
+      "refs": {
+        "ClientVpnTrustProviderSet$member": null
+      }
+    },
+    "ClientVpnTrustProviderRequest": {
+      "base": "<p>Describes a device trust provider to configure for a Client VPN endpoint.</p>",
+      "refs": {
+        "ClientVpnTrustProviderRequestList$member": null
+      }
+    },
+    "ClientVpnTrustProviderRequestList": {
+      "base": null,
+      "refs": {
+        "DevicePostureOptions$TrustProviders": "<p>The device trust providers to configure for the Client VPN endpoint.</p>"
+      }
+    },
+    "ClientVpnTrustProviderSet": {
+      "base": null,
+      "refs": {
+        "DevicePostureResponseOptions$TrustProviders": "<p>The device trust providers configured for the Client VPN endpoint.</p>"
       }
     },
     "CloudWatchLogGroupArn": {
@@ -5530,6 +5651,16 @@
       }
     },
     "CreateCapacityReservationCancellationQuoteResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateCapacityReservationDateChangeQuoteRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateCapacityReservationDateChangeQuoteResult": {
       "base": null,
       "refs": {
       }
@@ -7103,6 +7234,16 @@
       "refs": {
       }
     },
+    "DeleteClientVpnEndpointAuthorizationPolicyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteClientVpnEndpointAuthorizationPolicyResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DeleteClientVpnEndpointRequest": {
       "base": null,
       "refs": {
@@ -8425,6 +8566,22 @@
       }
     },
     "DescribeCapacityReservationCancellationQuotesResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeCapacityReservationDateChangeQuotesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeCapacityReservationDateChangeQuotesRequestMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribeCapacityReservationDateChangeQuotesRequest$MaxResults": "<p>The maximum number of items to return for this request. To get the next page of items, make another request with the token returned in the output. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Query-Requests.html#api-pagination\">Pagination</a>.</p>"
+      }
+    },
+    "DescribeCapacityReservationDateChangeQuotesResult": {
       "base": null,
       "refs": {
       }
@@ -10687,6 +10844,19 @@
         "VerifiedAccessTrustProvider$DeviceOptions": "<p>The options for device-identity trust provider.</p>"
       }
     },
+    "DevicePostureOptions": {
+      "base": "<p>Describes the device posture options for a Client VPN endpoint. Device posture options specify the device trust providers that the endpoint uses to evaluate the security posture of connecting devices.</p>",
+      "refs": {
+        "CreateClientVpnEndpointRequest$DevicePostureOptions": "<p>The device posture options for the Client VPN endpoint. Use this parameter to specify the device trust providers that the endpoint uses to evaluate the security posture of connecting devices.</p>",
+        "ModifyClientVpnEndpointRequest$DevicePostureOptions": "<p>The device posture options for the Client VPN endpoint. Specifying this parameter replaces the entire device posture configuration for the endpoint. To remove all device trust providers, specify an empty list.</p>"
+      }
+    },
+    "DevicePostureResponseOptions": {
+      "base": "<p>Information about the device posture options for a Client VPN endpoint.</p>",
+      "refs": {
+        "ClientVpnEndpoint$DevicePostureOptions": "<p>The device trust providers configured for the Client VPN endpoint, if applicable.</p>"
+      }
+    },
     "DeviceTrustProviderType": {
       "base": null,
       "refs": {
@@ -12440,6 +12610,7 @@
         "DescribeCapacityManagerDataExportsRequest$Filters": "<p> One or more filters to narrow the results. Supported filters include export status, creation date, and S3 bucket name. </p>",
         "DescribeCapacityReservationBillingRequestsRequest$Filters": "<p>One or more filters.</p> <ul> <li> <p> <code>status</code> - The state of the request (<code>pending</code> | <code>accepted</code> | <code>rejected</code> | <code>cancelled</code> | <code>revoked</code> | <code>expired</code>).</p> </li> <li> <p> <code>requested-by</code> - The account ID of the Capacity Reservation owner that initiated the request. Not supported if you specify <code>requested-by</code> for <b>Role</b>.</p> </li> <li> <p> <code>unused-reservation-billing-owner</code> - The ID of the consumer account to which the request was sent. Not supported if you specify <code>unused-reservation-billing-owner</code> for <b>Role</b>.</p> </li> </ul>",
         "DescribeCapacityReservationCancellationQuotesRequest$Filters": "<p>One or more filters. Filter names and values are case-sensitive.</p>",
+        "DescribeCapacityReservationDateChangeQuotesRequest$Filters": "<p>One or more filters. Filter names and values are case-sensitive.</p>",
         "DescribeCapacityReservationFleetsRequest$Filters": "<p>One or more filters.</p> <ul> <li> <p> <code>state</code> - The state of the Fleet (<code>submitted</code> | <code>modifying</code> | <code>active</code> | <code>partially_fulfilled</code> | <code>expiring</code> | <code>expired</code> | <code>cancelling</code> | <code>cancelled</code> | <code>failed</code>).</p> </li> <li> <p> <code>instance-match-criteria</code> - The instance matching criteria for the Fleet. Only <code>open</code> is supported.</p> </li> <li> <p> <code>tenancy</code> - The tenancy of the Fleet (<code>default</code> | <code>dedicated</code>).</p> </li> <li> <p> <code>allocation-strategy</code> - The allocation strategy used by the Fleet. Only <code>prioritized</code> is supported.</p> </li> </ul>",
         "DescribeCapacityReservationTopologyRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>availability-zone</code> - The name of the Availability Zone (for example, <code>us-west-2a</code>) or Local Zone (for example, <code>us-west-2-lax-1b</code>) that the Capacity Reservation is in.</p> </li> <li> <p> <code>instance-type</code> - The instance type (for example, <code>p4d.24xlarge</code>) or instance family (for example, <code>p4d*</code>). You can use the <code>*</code> wildcard to match zero or more characters, or the <code>?</code> wildcard to match zero or one character.</p> </li> </ul>",
         "DescribeCapacityReservationsRequest$Filters": "<p>One or more filters.</p> <ul> <li> <p> <code>instance-type</code> - The type of instance for which the Capacity Reservation reserves capacity.</p> </li> <li> <p> <code>owner-id</code> - The ID of the Amazon Web Services account that owns the Capacity Reservation.</p> </li> <li> <p> <code>instance-platform</code> - The type of operating system for which the Capacity Reservation reserves capacity.</p> </li> <li> <p> <code>availability-zone</code> - The Availability Zone of the Capacity Reservation.</p> </li> <li> <p> <code>tenancy</code> - Indicates the tenancy of the Capacity Reservation. A Capacity Reservation can have one of the following tenancy settings:</p> <ul> <li> <p> <code>default</code> - The Capacity Reservation is created on hardware that is shared with other Amazon Web Services accounts.</p> </li> <li> <p> <code>dedicated</code> - The Capacity Reservation is created on single-tenant hardware that is dedicated to a single Amazon Web Services account.</p> </li> </ul> </li> <li> <p> <code>outpost-arn</code> - The Amazon Resource Name (ARN) of the Outpost on which the Capacity Reservation was created.</p> </li> <li> <p> <code>state</code> - The current state of the Capacity Reservation. A Capacity Reservation can be in one of the following states:</p> <ul> <li> <p> <code>active</code>- The Capacity Reservation is active and the capacity is available for your use.</p> </li> <li> <p> <code>expired</code> - The Capacity Reservation expired automatically at the date and time specified in your request. The reserved capacity is no longer available for your use.</p> </li> <li> <p> <code>cancelled</code> - The Capacity Reservation was cancelled. The reserved capacity is no longer available for your use.</p> </li> <li> <p> <code>pending</code> - The Capacity Reservation request was successful but the capacity provisioning is still pending.</p> </li> <li> <p> <code>failed</code> - The Capacity Reservation request has failed. A request might fail due to invalid request parameters, capacity constraints, or instance limit constraints. Failed requests are retained for 60 minutes.</p> </li> </ul> </li> <li> <p> <code>start-date</code> - The date and time at which the Capacity Reservation was started.</p> </li> <li> <p> <code>end-date</code> - The date and time at which the Capacity Reservation expires. When a Capacity Reservation expires, the reserved capacity is released and you can no longer launch instances into it. The Capacity Reservation's state changes to expired when it reaches its end date and time.</p> </li> <li> <p> <code>end-date-type</code> - Indicates the way in which the Capacity Reservation ends. A Capacity Reservation can have one of the following end types:</p> <ul> <li> <p> <code>unlimited</code> - The Capacity Reservation remains active until you explicitly cancel it.</p> </li> <li> <p> <code>limited</code> - The Capacity Reservation expires automatically at a specified date and time.</p> </li> </ul> </li> <li> <p> <code>instance-match-criteria</code> - Indicates the type of instance launches that the Capacity Reservation accepts. The options include:</p> <ul> <li> <p> <code>open</code> - The Capacity Reservation accepts all instances that have matching attributes (instance type, platform, and Availability Zone). Instances that have matching attributes launch into the Capacity Reservation automatically without specifying any additional parameters.</p> </li> <li> <p> <code>targeted</code> - The Capacity Reservation only accepts instances that have matching attributes (instance type, platform, and Availability Zone), and explicitly target the Capacity Reservation. This ensures that only permitted instances can use the reserved capacity.</p> </li> </ul> </li> <li> <p> <code>placement-group-arn</code> - The ARN of the cluster placement group in which the Capacity Reservation was created.</p> </li> </ul>",
@@ -12581,7 +12752,7 @@
         "DescribeVpcEndpointServiceConfigurationsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>service-name</code> - The name of the service.</p> </li> <li> <p> <code>service-id</code> - The ID of the service.</p> </li> <li> <p> <code>service-state</code> - The state of the service (<code>Pending</code> | <code>Available</code> | <code>Deleting</code> | <code>Deleted</code> | <code>Failed</code>). </p> </li> <li> <p> <code>supported-ip-address-types</code> - The IP address type (<code>ipv4</code> | <code>ipv6</code>).</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> </ul>",
         "DescribeVpcEndpointServicePermissionsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>principal</code> - The ARN of the principal.</p> </li> <li> <p> <code>principal-type</code> - The principal type (<code>All</code> | <code>Service</code> | <code>OrganizationUnit</code> | <code>Account</code> | <code>User</code> | <code>Role</code>).</p> </li> </ul>",
         "DescribeVpcEndpointServicesRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>owner</code> - The ID or alias of the Amazon Web Services account that owns the service.</p> </li> <li> <p> <code>service-name</code> - The name of the service.</p> </li> <li> <p> <code>service-region</code> - The Region of the service.</p> </li> <li> <p> <code>service-type</code> - The type of service (<code>Interface</code> | <code>Gateway</code> | <code>GatewayLoadBalancer</code>).</p> </li> <li> <p> <code>supported-ip-address-types</code> - The IP address type (<code>ipv4</code> | <code>ipv6</code>).</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> </ul>",
-        "DescribeVpcEndpointsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>ip-address-type</code> - The IP address type (<code>ipv4</code> | <code>ipv6</code>).</p> </li> <li> <p> <code>service-name</code> - The name of the service.</p> </li> <li> <p> <code>service-region</code> - The Region of the service.</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC in which the endpoint resides.</p> </li> <li> <p> <code>vpc-endpoint-id</code> - The ID of the endpoint.</p> </li> <li> <p> <code>vpc-endpoint-state</code> - The state of the endpoint (<code>pendingAcceptance</code> | <code>pending</code> | <code>available</code> | <code>deleting</code> | <code>deleted</code> | <code>rejected</code> | <code>failed</code>).</p> </li> <li> <p> <code>vpc-endpoint-type</code> - The type of VPC endpoint (<code>Interface</code> | <code>Gateway</code> | <code>GatewayLoadBalancer</code> | <code>Resource</code> | <code>ServiceNetwork</code>).</p> </li> </ul>",
+        "DescribeVpcEndpointsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>ip-address-type</code> - The IP address type (<code>ipv4</code> | <code>ipv6</code>).</p> </li> <li> <p> <code>service-name</code> - The name of the service.</p> </li> <li> <p> <code>service-region</code> - The Region of the service.</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC in which the endpoint resides.</p> </li> <li> <p> <code>vpc-endpoint-id</code> - The ID of the endpoint.</p> </li> <li> <p> <code>vpc-endpoint-state</code> - The state of the endpoint (<code>pendingAcceptance</code> | <code>pending</code> | <code>available</code> | <code>deleting</code> | <code>deleted</code> | <code>rejected</code> | <code>failed</code>).</p> </li> <li> <p> <code>vpc-endpoint-type</code> - The type of VPC endpoint (<code>Interface</code> | <code>Gateway</code> | <code>GatewayLoadBalancer</code> | <code>Resource</code> | <code>ServiceNetwork</code> | <code>Tunnel</code>).</p> </li> </ul>",
         "DescribeVpcPeeringConnectionsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>accepter-vpc-info.cidr-block</code> - The IPv4 CIDR block of the accepter VPC.</p> </li> <li> <p> <code>accepter-vpc-info.owner-id</code> - The ID of the Amazon Web Services account that owns the accepter VPC.</p> </li> <li> <p> <code>accepter-vpc-info.vpc-id</code> - The ID of the accepter VPC.</p> </li> <li> <p> <code>expiration-time</code> - The expiration date and time for the VPC peering connection.</p> </li> <li> <p> <code>requester-vpc-info.cidr-block</code> - The IPv4 CIDR block of the requester's VPC.</p> </li> <li> <p> <code>requester-vpc-info.owner-id</code> - The ID of the Amazon Web Services account that owns the requester VPC.</p> </li> <li> <p> <code>requester-vpc-info.vpc-id</code> - The ID of the requester VPC.</p> </li> <li> <p> <code>status-code</code> - The status of the VPC peering connection (<code>pending-acceptance</code> | <code>failed</code> | <code>expired</code> | <code>provisioning</code> | <code>active</code> | <code>deleting</code> | <code>deleted</code> | <code>rejected</code>).</p> </li> <li> <p> <code>status-message</code> - A message that provides more information about the status of the VPC peering connection, if applicable.</p> </li> <li> <p> <code>tag</code> - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>vpc-peering-connection-id</code> - The ID of the VPC peering connection.</p> </li> </ul>",
         "DescribeVpcsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>cidr</code> - The primary IPv4 CIDR block of the VPC. The CIDR block you specify must exactly match the VPC's CIDR block for information to be returned for the VPC. Must contain the slash followed by one or two digits (for example, <code>/28</code>).</p> </li> <li> <p> <code>cidr-block-association.cidr-block</code> - An IPv4 CIDR block associated with the VPC.</p> </li> <li> <p> <code>cidr-block-association.association-id</code> - The association ID for an IPv4 CIDR block associated with the VPC.</p> </li> <li> <p> <code>cidr-block-association.state</code> - The state of an IPv4 CIDR block associated with the VPC.</p> </li> <li> <p> <code>dhcp-options-id</code> - The ID of a set of DHCP options.</p> </li> <li> <p> <code>ipv6-cidr-block-association.ipv6-cidr-block</code> - An IPv6 CIDR block associated with the VPC.</p> </li> <li> <p> <code>ipv6-cidr-block-association.ipv6-pool</code> - The ID of the IPv6 address pool from which the IPv6 CIDR block is allocated.</p> </li> <li> <p> <code>ipv6-cidr-block-association.association-id</code> - The association ID for an IPv6 CIDR block associated with the VPC.</p> </li> <li> <p> <code>ipv6-cidr-block-association.state</code> - The state of an IPv6 CIDR block associated with the VPC.</p> </li> <li> <p> <code>is-default</code> - Indicates whether the VPC is the default VPC.</p> </li> <li> <p> <code>owner-id</code> - The ID of the Amazon Web Services account that owns the VPC.</p> </li> <li> <p> <code>state</code> - The state of the VPC (<code>pending</code> | <code>available</code>).</p> </li> <li> <p> <code>tag</code> - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC.</p> </li> </ul>",
         "DescribeVpnConcentratorsRequest$Filters": "<p>One or more filters to limit the results.</p>",
@@ -13201,6 +13372,16 @@
       }
     },
     "GetCapacityReservationUsageResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetClientVpnEndpointAuthorizationPolicyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetClientVpnEndpointAuthorizationPolicyResult": {
       "base": null,
       "refs": {
       }
@@ -14022,7 +14203,7 @@
     "GroupIdentifierSet": {
       "base": null,
       "refs": {
-        "VpcEndpoint$Groups": "<p>(Interface endpoint) Information about the security groups that are associated with the network interface.</p>"
+        "VpcEndpoint$Groups": "<p>(Interface, Resource, ServiceNetwork, and Tunnel endpoints only) Information about the security groups that are associated with the network interface.</p>"
       }
     },
     "GroupIds": {
@@ -16418,6 +16599,7 @@
         "MemoryMiB$Max": "<p>The maximum amount of memory, in MiB. If this parameter is not specified, there is no maximum limit.</p>",
         "MemoryMiBRequest$Min": "<p>The minimum amount of memory, in MiB. To specify no minimum limit, specify <code>0</code>.</p>",
         "MemoryMiBRequest$Max": "<p>The maximum amount of memory, in MiB. To specify no maximum limit, omit this parameter.</p>",
+        "ModificationQuoteCurrentConfiguration$InstanceCount": "<p>The number of instances in the Capacity Reservation.</p>",
         "ModifyApplicationStatusCheckRequest$DeviceIndex": "<p>The index of the network device to use for the health check. The value must be greater than or equal to 0.</p>",
         "ModifyApplicationStatusCheckRequest$Interval": "<p>The interval, in seconds, between health checks. Valid value: 60.</p>",
         "ModifyApplicationStatusCheckRequest$Timeout": "<p>The amount of time, in seconds, to wait for a health check response before considering it failed. Valid values: 1 to 30. The value must be less than <code>Interval</code>.</p>",
@@ -19768,12 +19950,19 @@
         "CapacityManagerDimension$ReservationEndTimestamp": "<p> The timestamp when the capacity reservation expires and is no longer available, in milliseconds since epoch. After this time, the reservation will not provide any capacity. </p>",
         "CapacityManagerMonitoredTagKey$EarliestDatapointTimestamp": "<p> The earliest timestamp from which tag data is available for queries, in UTC ISO 8601 format. </p>",
         "CapacityReservation$StartDate": "<p>The date and time the Capacity Reservation was started.</p>",
+        "CapacityReservation$OriginalStartDate": "<p>The start date that you originally requested for the Capacity Reservation, in the ISO8601 format in the UTC time zone (<code>YYYY-MM-DDThh:mm:ss.sssZ</code>). This value doesn't change when you push out the start date.</p>",
+        "CapacityReservationAdjustmentDetails$StartDate": "<p>The start date that the Capacity Reservation will have after the adjustment.</p>",
+        "CapacityReservationAdjustmentDetails$EndDate": "<p>The end date that the Capacity Reservation will have after the adjustment.</p>",
+        "CapacityReservationAdjustmentDetails$CommitmentEndDate": "<p>The date and time at which the commitment duration will expire after the adjustment.</p>",
         "CapacityReservationBillingRequest$LastUpdateTime": "<p>The date and time, in UTC time format, at which the request was initiated.</p>",
         "CapacityReservationCancellationQuote$CreateTime": "<p>The date and time at which the cancellation quote was created.</p>",
         "CapacityReservationCancellationQuote$ExpirationTime": "<p>The date and time at which the cancellation quote expires.</p>",
         "CapacityReservationCommitmentInfo$CommitmentEndDate": "<p>The date and time at which the commitment duration expires, in the ISO8601 format in the UTC time zone (<code>YYYY-MM-DDThh:mm:ss.sssZ</code>). You can't decrease the instance count or cancel the Capacity Reservation before this date and time.</p>",
         "CapacityReservationFleet$EndDate": "<p>The date and time at which the Capacity Reservation Fleet expires.</p>",
         "CapacityReservationFleet$CreateTime": "<p>The date and time at which the Capacity Reservation Fleet was created.</p>",
+        "CapacityReservationModificationQuote$CreateTime": "<p>The date and time at which the modification quote was created.</p>",
+        "CapacityReservationModificationQuote$ExpirationTime": "<p>The date and time at which the modification quote expires.</p>",
+        "CreateCapacityReservationDateChangeQuoteRequest$NewStartDate": "<p>The requested new start date for the Capacity Reservation, in the ISO8601 format in the UTC time zone (<code>YYYY-MM-DDThh:mm:ss.sssZ</code>). The new start date must be later than the current start date and within the cumulative 30-day pushout limit.</p>",
         "CreateCapacityReservationFleetRequest$EndDate": "<p>The date and time at which the Capacity Reservation Fleet expires. When the Capacity Reservation Fleet expires, its state changes to <code>expired</code> and all of the Capacity Reservations in the Fleet expire.</p> <p>The Capacity Reservation Fleet expires within an hour after the specified time. For example, if you specify <code>5/31/2019</code>, <code>13:30:55</code>, the Capacity Reservation Fleet is guaranteed to expire between <code>13:30:55</code> and <code>14:30:55</code> on <code>5/31/2019</code>. </p>",
         "CreateCapacityReservationFleetResult$CreateTime": "<p>The date and time at which the Capacity Reservation Fleet was created.</p>",
         "CreateCapacityReservationFleetResult$EndDate": "<p>The date and time at which the Capacity Reservation Fleet expires.</p>",
@@ -19867,7 +20056,12 @@
         "MetricDataResult$Timestamp": "<p> The timestamp for this data point, indicating when the capacity usage occurred. </p>",
         "MetricPoint$StartDate": "<p>The start date for the metric point. The starting date for the metric point. The starting time must be formatted as <code>yyyy-mm-ddThh:mm:ss</code>. For example, <code>2022-06-10T12:00:00.000Z</code>.</p>",
         "MetricPoint$EndDate": "<p>The end date for the metric point. The ending time must be formatted as <code>yyyy-mm-ddThh:mm:ss</code>. For example, <code>2022-06-12T12:00:00.000Z</code>.</p>",
+        "ModificationQuoteCurrentConfiguration$StartDate": "<p>The start date that the Capacity Reservation has before the quoted modification is applied.</p>",
+        "ModificationQuoteCurrentConfiguration$OriginalStartDate": "<p>The start date that the Capacity Reservation was originally requested with. This value does not change when you push out the start date.</p>",
+        "ModificationReservationUpdate$NewCommitmentEndDate": "<p>The date and time at which the commitment duration will expire after the modification, in the ISO8601 format in the UTC time zone (<code>YYYY-MM-DDThh:mm:ss.sssZ</code>).</p>",
+        "ModificationReservationUpdate$NewStartDate": "<p>The start date that the Capacity Reservation will have after the modification, in the ISO8601 format in the UTC time zone (<code>YYYY-MM-DDThh:mm:ss.sssZ</code>).</p>",
         "ModifyCapacityReservationFleetRequest$EndDate": "<p>The date and time at which the Capacity Reservation Fleet expires. When the Capacity Reservation Fleet expires, its state changes to <code>expired</code> and all of the Capacity Reservations in the Fleet expire.</p> <p>The Capacity Reservation Fleet expires within an hour after the specified time. For example, if you specify <code>5/31/2019</code>, <code>13:30:55</code>, the Capacity Reservation Fleet is guaranteed to expire between <code>13:30:55</code> and <code>14:30:55</code> on <code>5/31/2019</code>.</p> <p>You can't specify <b>EndDate</b> and <b> RemoveEndDate</b> in the same request.</p>",
+        "ModifyCapacityReservationRequest$StartDate": "<p>The new start date for the Capacity Reservation, in the ISO8601 format in the UTC time zone (<code>YYYY-MM-DDThh:mm:ss.sssZ</code>). Applies to future-dated Capacity Reservations only. Requires a quote from <code>CreateCapacityReservationDateChangeQuote</code>; pass the quote ID in <code>QuoteId</code> with <code>AcceptModificationTerms</code> set to <code>true</code>.</p>",
         "ModifySnapshotTierResult$TieringStartTime": "<p>The date and time when the archive process was started.</p>",
         "NetworkInsightsAccessScope$CreatedDate": "<p>The creation date.</p>",
         "NetworkInsightsAccessScope$UpdatedDate": "<p>The last updated date.</p>",
@@ -19906,6 +20100,24 @@
         "VpcBlockPublicAccessOptions$LastUpdateTimestamp": "<p>The last time the VPC BPA mode was updated.</p>",
         "VpcEndpoint$CreationTimestamp": "<p>The date and time that the endpoint was created.</p>",
         "VpcEndpointConnection$CreationTimestamp": "<p>The date and time that the VPC endpoint was created.</p>"
+      }
+    },
+    "ModificationQuoteCurrentConfiguration": {
+      "base": "<p>Describes the configuration that a Capacity Reservation has at the time a modification quote is generated.</p>",
+      "refs": {
+        "CapacityReservationModificationQuote$CurrentConfiguration": "<p>The configuration that the Capacity Reservation has at the time the quote was generated.</p>"
+      }
+    },
+    "ModificationReservationUpdate": {
+      "base": "<p>Describes the changes that a Capacity Reservation modification quote will apply to a Capacity Reservation.</p>",
+      "refs": {
+        "ModificationTerms$ReservationUpdate": "<p>The changes that will be applied to the Capacity Reservation if you accept the modification terms.</p>"
+      }
+    },
+    "ModificationTerms": {
+      "base": "<p>Describes the terms of a Capacity Reservation modification quote.</p>",
+      "refs": {
+        "CapacityReservationModificationQuote$ModificationTerms": "<p>The terms of the modification, including the configuration that the Capacity Reservation will have if you accept them by using <code>ModifyCapacityReservation</code>.</p>"
       }
     },
     "ModifyAccountVpcEncryptionControlRequest": {
@@ -19970,6 +20182,16 @@
       }
     },
     "ModifyCapacityReservationResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ModifyClientVpnEndpointAuthorizationPolicyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ModifyClientVpnEndpointAuthorizationPolicyResult": {
       "base": null,
       "refs": {
       }
@@ -23901,7 +24123,7 @@
     "ResourceConfigurationArn": {
       "base": null,
       "refs": {
-        "CreateVpcEndpointRequest$ResourceConfigurationArn": "<p>The Amazon Resource Name (ARN) of a resource configuration that will be associated with the VPC endpoint of type resource.</p>",
+        "CreateVpcEndpointRequest$ResourceConfigurationArn": "<p>(Resource and Tunnel endpoints only) The Amazon Resource Name (ARN) of a resource configuration associated with the VPC endpoint. The type of resource configuration depends on the endpoint type:</p> <ul> <li> <p>For a Resource endpoint, you can specify a resource configuration that is of type <code>SINGLE</code>, <code>GROUP</code>, or <code>ARN</code>. To reach a resource that belongs to a group, specify the parent <code>GROUP</code> resource configuration.</p> </li> <li> <p>For a Tunnel endpoint, you can specify a resource configuration that is of type <code>CIDR</code>.</p> </li> </ul> <p>For more information about the types of resource configurations, see <a href=\"https://docs.aws.amazon.com/vpc/latest/privatelink/resource-configuration.html\">Types of resource configurations</a> in the <i>Amazon Web Services PrivateLink User Guide</i>.</p> <p>This request fails if a VPC endpoint owned by a different Amazon Web Services account already exists on a resource gateway that is enabled for <code>ResourceGatewayCharges</code> payer responsibility.</p>",
         "VpcEndpoint$ResourceConfigurationArn": "<p>The Amazon Resource Name (ARN) of the resource configuration.</p>"
       }
     },
@@ -26255,6 +26477,7 @@
         "CapacityReservation$InstanceType": "<p>The type of instance for which the Capacity Reservation reserves capacity.</p>",
         "CapacityReservation$AvailabilityZone": "<p>The Availability Zone in which the capacity is reserved.</p>",
         "CapacityReservation$CapacityReservationFleetId": "<p>The ID of the Capacity Reservation Fleet to which the Capacity Reservation belongs. Only valid for Capacity Reservations that were created by a Capacity Reservation Fleet.</p>",
+        "CapacityReservationAdjustmentDetails$EndDateType": "<p>Indicates the way in which the Capacity Reservation will end after the adjustment. Possible values are:</p> <ul> <li> <p> <code>unlimited</code> - The Capacity Reservation remains active until you explicitly cancel it.</p> </li> <li> <p> <code>limited</code> - The Capacity Reservation expires automatically at the date and time given by <code>endDate</code>.</p> </li> </ul>",
         "CapacityReservationBillingRequest$CapacityReservationId": "<p>The ID of the Capacity Reservation.</p>",
         "CapacityReservationBillingRequest$RequestedBy": "<p>The ID of the Amazon Web Services account that initiated the request.</p>",
         "CapacityReservationBillingRequest$StatusMessage": "<p>Information about the status.</p>",
@@ -26304,6 +26527,7 @@
         "ClientVpnConnection$ClientIpv6Address": "<p>The IPv6 address assigned to the client connection when using a dual-stack Client VPN endpoint. This field is only populated when the endpoint is configured for dual-stack addressing, and the client is using IPv6 for connectivity.</p>",
         "ClientVpnConnection$CommonName": "<p>The common name associated with the client. This is either the name of the client certificate, or the Active Directory user name.</p>",
         "ClientVpnConnection$ConnectionEndTime": "<p>The date and time the client connection was terminated.</p>",
+        "ClientVpnConnection$AuthorizationPolicyLastEvaluatedTime": "<p>The date and time the authorization policy was last evaluated for the client connection, if applicable.</p>",
         "ClientVpnConnectionStatus$Message": "<p>A message about the status of the client connection, if applicable.</p>",
         "ClientVpnEndpoint$ClientVpnEndpointId": "<p>The ID of the Client VPN endpoint.</p>",
         "ClientVpnEndpoint$Description": "<p>A brief description of the endpoint.</p>",
@@ -26322,6 +26546,10 @@
         "ClientVpnRoute$Origin": "<p>Indicates how the route was associated with the Client VPN endpoint. <code>associate</code> indicates that the route was automatically added when the target network was associated with the Client VPN endpoint. <code>add-route</code> indicates that the route was manually added using the <b>CreateClientVpnRoute</b> action.</p>",
         "ClientVpnRoute$Description": "<p>A brief description of the route.</p>",
         "ClientVpnRouteStatus$Message": "<p>A message about the status of the Client VPN endpoint route, if applicable.</p>",
+        "ClientVpnTrustProvider$TenantId": "<p>The tenant ID associated with your device trust provider account.</p>",
+        "ClientVpnTrustProvider$PublicSigningKeyUrl": "<p>The URL of the public signing key that is used to verify the identity token issued by the device trust provider.</p>",
+        "ClientVpnTrustProviderRequest$TenantId": "<p>The tenant ID associated with your device trust provider account.</p>",
+        "ClientVpnTrustProviderRequest$PublicSigningKeyUrl": "<p>The URL of the public signing key that is used to verify the identity token issued by the device trust provider.</p>",
         "CloudWatchLogOptions$LogGroupArn": "<p>The Amazon Resource Name (ARN) of the CloudWatch log group to send logs to.</p>",
         "CloudWatchLogOptions$LogOutputFormat": "<p>Configured log format. Default format is <code>json</code>.</p> <p>Valid values: <code>json</code> | <code>text</code> </p>",
         "CloudWatchLogOptions$BgpLogGroupArn": "<p>The Amazon Resource Name (ARN) of the CloudWatch log group for BGP logs.</p>",
@@ -26376,6 +26604,7 @@
         "CreateCapacityManagerDataExportRequest$ClientToken": "<p> Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see Ensure Idempotency. </p>",
         "CreateCapacityReservationBySplittingRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensure Idempotency</a>.</p>",
         "CreateCapacityReservationCancellationQuoteRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensure Idempotency</a>.</p>",
+        "CreateCapacityReservationDateChangeQuoteRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensure Idempotency</a>.</p>",
         "CreateCapacityReservationFleetRequest$AllocationStrategy": "<p>The strategy used by the Capacity Reservation Fleet to determine which of the specified instance types to use. Currently, only the <code>prioritized</code> allocation strategy is supported. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/crfleet-concepts.html#allocation-strategy\"> Allocation strategy</a> in the <i>Amazon EC2 User Guide</i>.</p> <p>Valid values: <code>prioritized</code> </p>",
         "CreateCapacityReservationFleetRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensure Idempotency</a>.</p>",
         "CreateCapacityReservationFleetResult$AllocationStrategy": "<p>The allocation strategy used by the Capacity Reservation Fleet.</p>",
@@ -26684,6 +26913,8 @@
         "DescribeCapacityReservationBillingRequestsResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "DescribeCapacityReservationCancellationQuotesRequest$NextToken": "<p>The token to use to retrieve the next page of results.</p>",
         "DescribeCapacityReservationCancellationQuotesResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
+        "DescribeCapacityReservationDateChangeQuotesRequest$NextToken": "<p>The token to use to retrieve the next page of results.</p>",
+        "DescribeCapacityReservationDateChangeQuotesResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "DescribeCapacityReservationFleetsRequest$NextToken": "<p>The token to use to retrieve the next page of results.</p>",
         "DescribeCapacityReservationFleetsResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "DescribeCapacityReservationTopologyRequest$NextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>",
@@ -27128,6 +27359,9 @@
         "GetCapacityReservationUsageResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "GetCapacityReservationUsageResult$CapacityReservationId": "<p>The ID of the Capacity Reservation.</p>",
         "GetCapacityReservationUsageResult$InstanceType": "<p>The type of instance for which the Capacity Reservation reserves capacity.</p>",
+        "GetClientVpnEndpointAuthorizationPolicyResult$ClientVpnEndpointId": "<p>The ID of the Client VPN endpoint.</p>",
+        "GetClientVpnEndpointAuthorizationPolicyResult$PolicyDocument": "<p>The authorization policy document, written in the Cedar policy language.</p>",
+        "GetClientVpnEndpointAuthorizationPolicyResult$Description": "<p>A brief description of the authorization policy.</p>",
         "GetCoipPoolUsageRequest$NextToken": "<p>The token for the next page of results.</p>",
         "GetCoipPoolUsageResult$CoipPoolId": "<p>The ID of the customer-owned address pool.</p>",
         "GetCoipPoolUsageResult$LocalGatewayRouteTableId": "<p>The ID of the local gateway route table.</p>",
@@ -27701,12 +27935,16 @@
         "ManagedPrefixList$OwnerId": "<p>The ID of the owner of the prefix list.</p>",
         "ManagedPrefixList$IpamPrefixListResolverTargetId": "<p>The ID of the IPAM prefix list resolver target associated with this managed prefix list. When set, this prefix list becomes an IPAM managed prefix list.</p> <p>An IPAM-managed prefix list is a customer-managed prefix list that has been associated with an IPAM prefix list resolver target. When a prefix list becomes IPAM managed, its CIDRs are automatically synchronized based on the IPAM prefix list resolver's CIDR selection rules, and direct CIDR modifications are restricted.</p>",
         "MetricPoint$Status": "<p>The status of the metric point.</p>",
+        "ModificationQuoteCurrentConfiguration$ReservationState": "<p>The current state of the Capacity Reservation.</p>",
         "ModifyAddressAttributeRequest$DomainName": "<p>The domain name to modify for the IP address.</p>",
         "ModifyApplicationStatusCheckRequest$Path": "<p>The URL path to use for the health check HTTP request (for example, <code>/health</code> or <code>/status</code>).</p>",
         "ModifyApplicationStatusCheckRequest$StatusCodeMatcher": "<p>The HTTP status codes that indicate a successful health check response. Specify a comma-separated list of individual status codes or ranges, for example, <code>200,202,300-399</code>. For a range, the first value must be less than the second value. Maximum length: 64 characters.</p>",
         "ModifyApplicationStatusCheckRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure that the operation completes no more than one time. If you retry a request with the same token, the service ignores the request but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "ModifyAvailabilityZoneGroupRequest$GroupName": "<p>The name of the Availability Zone group, Local Zone group, or Wavelength Zone group.</p>",
         "ModifyCapacityReservationRequest$AdditionalInfo": "<p>Reserved for future use.</p>",
+        "ModifyClientVpnEndpointAuthorizationPolicyRequest$PolicyDocument": "<p>The authorization policy document, written in the Cedar policy language. This parameter is required when you create the authorization policy for a Client VPN endpoint that does not already have one.</p>",
+        "ModifyClientVpnEndpointAuthorizationPolicyRequest$Description": "<p>A brief description of the authorization policy.</p>",
+        "ModifyClientVpnEndpointAuthorizationPolicyRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensuring idempotency</a>.</p>",
         "ModifyClientVpnEndpointRequest$ServerCertificateArn": "<p>The ARN of the server certificate to be used. The server certificate must be provisioned in Certificate Manager (ACM).</p>",
         "ModifyClientVpnEndpointRequest$Description": "<p>A brief description of the Client VPN endpoint.</p>",
         "ModifyDefaultCreditSpecificationRequest$CpuCredits": "<p>The credit option for CPU usage of the instance family.</p> <p>Valid Values: <code>standard</code> | <code>unlimited</code> </p>",
@@ -29087,6 +29325,7 @@
         "CapacityReservation$Tags": "<p>Any tags assigned to the Capacity Reservation.</p>",
         "CapacityReservationCancellationQuote$Tags": "<p>The tags assigned to the cancellation quote.</p>",
         "CapacityReservationFleet$Tags": "<p>The tags assigned to the Capacity Reservation Fleet.</p>",
+        "CapacityReservationModificationQuote$Tags": "<p>The tags assigned to the modification quote.</p>",
         "CarrierGateway$Tags": "<p>The tags assigned to the carrier gateway.</p>",
         "ClassicLinkInstance$Tags": "<p>Any tags assigned to the instance.</p>",
         "ClientVpnEndpoint$Tags": "<p>Any tags assigned to the Client VPN endpoint.</p>",
@@ -29245,6 +29484,7 @@
         "CreateCapacityManagerDataExportRequest$TagSpecifications": "<p> The tags to apply to the data export configuration. You can tag the export for organization and cost tracking purposes. </p>",
         "CreateCapacityReservationBySplittingRequest$TagSpecifications": "<p> The tags to apply to the new Capacity Reservation. </p>",
         "CreateCapacityReservationCancellationQuoteRequest$TagSpecifications": "<p>The tags to apply to the cancellation quote.</p>",
+        "CreateCapacityReservationDateChangeQuoteRequest$TagSpecifications": "<p>The tags to apply to the date change quote.</p>",
         "CreateCapacityReservationFleetRequest$TagSpecifications": "<p>The tags to assign to the Capacity Reservation Fleet. The tags are automatically assigned to the Capacity Reservations in the Fleet.</p>",
         "CreateCapacityReservationRequest$TagSpecifications": "<p>The tags to apply to the Capacity Reservation during launch.</p>",
         "CreateCarrierGatewayRequest$TagSpecifications": "<p>The tags to associate with the carrier gateway.</p>",
@@ -31208,8 +31448,8 @@
         "UpdateCapacityManagerMonitoredTagKeysRequest$DeactivateTagKeys": "<p> The tag keys to deactivate. Deactivated tag keys will no longer be included as dimensions in capacity metric data. </p>",
         "VerifiedAccessInstanceCustomSubDomain$Nameservers": "<p>The name servers.</p>",
         "VpcEndpoint$RouteTableIds": "<p>(Gateway endpoint) The IDs of the route tables associated with the endpoint.</p>",
-        "VpcEndpoint$SubnetIds": "<p>(Interface endpoint) The subnets for the endpoint.</p>",
-        "VpcEndpoint$NetworkInterfaceIds": "<p>(Interface endpoint) The network interfaces for the endpoint.</p>",
+        "VpcEndpoint$SubnetIds": "<p>(Interface, Gateway Load Balancer endpoints, Resource, ServiceNetwork, and Tunnel endpoints only) The subnets for the endpoint.</p>",
+        "VpcEndpoint$NetworkInterfaceIds": "<p>(Interface, Gateway Load Balancer endpoints, Resource, ServiceNetwork, and Tunnel endpoints only) The network interfaces for the endpoint.</p>",
         "VpcEndpointConnection$NetworkLoadBalancerArns": "<p>The Amazon Resource Names (ARNs) of the network load balancers for the service.</p>",
         "VpcEndpointConnection$GatewayLoadBalancerArns": "<p>The Amazon Resource Names (ARNs) of the Gateway Load Balancers for the service.</p>"
       }
@@ -32208,7 +32448,7 @@
     "VpcEndpointSecurityGroupIdList": {
       "base": null,
       "refs": {
-        "CreateVpcEndpointRequest$SecurityGroupIds": "<p>(Interface endpoint) The IDs of the security groups to associate with the endpoint network interfaces. If this parameter is not specified, we use the default security group for the VPC.</p>",
+        "CreateVpcEndpointRequest$SecurityGroupIds": "<p>(Interface, Resource, ServiceNetwork, and Tunnel endpoints only) The IDs of the security groups to associate with the endpoint network interfaces. If this parameter is not specified, we use the default security group for the VPC.</p>",
         "ModifyVpcEndpointRequest$AddSecurityGroupIds": "<p>(Interface endpoint) The IDs of the security groups to associate with the endpoint network interfaces.</p>",
         "ModifyVpcEndpointRequest$RemoveSecurityGroupIds": "<p>(Interface endpoint) The IDs of the security groups to disassociate from the endpoint network interfaces.</p>"
       }
@@ -32244,7 +32484,7 @@
     "VpcEndpointSubnetIdList": {
       "base": null,
       "refs": {
-        "CreateVpcEndpointRequest$SubnetIds": "<p>(Interface and Gateway Load Balancer endpoints) The IDs of the subnets in which to create endpoint network interfaces. For a Gateway Load Balancer endpoint, you can specify only one subnet.</p>",
+        "CreateVpcEndpointRequest$SubnetIds": "<p>(Interface, Gateway Load Balancer endpoints, Resource, ServiceNetwork, and Tunnel endpoints only) The IDs of the subnets in which to create endpoint network interfaces. For a Gateway Load Balancer endpoint, you can specify only one subnet. For a <code>Tunnel</code> endpoint, the subnets must be in the Availability Zones of the resource gateway associated with the shared resource configuration. An endpoint network interface is created only in an Availability Zone that the resource gateway is also in.</p>",
         "ModifyVpcEndpointRequest$AddSubnetIds": "<p>(Interface and Gateway Load Balancer endpoints) The IDs of the subnets in which to serve the endpoint. For a Gateway Load Balancer endpoint, you can specify only one subnet.</p>",
         "ModifyVpcEndpointRequest$RemoveSubnetIds": "<p>(Interface endpoint) The IDs of the subnets from which to remove the endpoint.</p>"
       }
@@ -32252,8 +32492,8 @@
     "VpcEndpointType": {
       "base": null,
       "refs": {
-        "CreateVpcEndpointRequest$VpcEndpointType": "<p>The type of endpoint.</p> <p>Default: Gateway</p>",
-        "VpcEndpoint$VpcEndpointType": "<p>The type of endpoint.</p>"
+        "CreateVpcEndpointRequest$VpcEndpointType": "<p>The type of endpoint.</p> <p>For more information about the types of VPC endpoints, see <a href=\"https://docs.aws.amazon.com/vpc/latest/privatelink/concepts.html#concepts-vpc-endpoints\">VPC endpoints</a> in the <i>Amazon Web Services PrivateLink User Guide</i>.</p> <p>Default: Gateway</p>",
+        "VpcEndpoint$VpcEndpointType": "<p>The type of endpoint.</p> <p>For more information about the types of VPC endpoints, see <a href=\"https://docs.aws.amazon.com/vpc/latest/privatelink/concepts.html#concepts-vpc-endpoints\">VPC endpoints</a> in the <i>Amazon Web Services PrivateLink User Guide</i>.</p>"
       }
     },
     "VpcFlowLogId": {

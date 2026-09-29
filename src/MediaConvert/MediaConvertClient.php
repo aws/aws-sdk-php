@@ -62,6 +62,7 @@ use Aws\AwsClient;
  *             StartTime?: string,
  *             ...,
  *         },
+ *         MotionImageInserters?: list<array>,
  *         NielsenConfiguration?: array{BreakoutCode?: int, DistributorId?: string, ...},
  *         NielsenNonLinearWatermark?: array{
  *             ActiveWatermarkProcess?: 'CBET'|'NAES2_AND_NW'|'NAES2_AND_NW_AND_CBET',
@@ -143,6 +144,7 @@ use Aws\AwsClient;
  *             StartTime?: string,
  *             ...,
  *         },
+ *         MotionImageInserters?: list<array>,
  *         NielsenConfiguration?: array{BreakoutCode?: int, DistributorId?: string, ...},
  *         NielsenNonLinearWatermark?: array{
  *             ActiveWatermarkProcess?: 'CBET'|'NAES2_AND_NW'|'NAES2_AND_NW_AND_CBET',
@@ -222,6 +224,7 @@ use Aws\AwsClient;
  *             StartTime?: string,
  *             ...,
  *         },
+ *         MotionImageInserters?: list<array>,
  *         NielsenConfiguration?: array{BreakoutCode?: int, DistributorId?: string, ...},
  *         NielsenNonLinearWatermark?: array{
  *             ActiveWatermarkProcess?: 'CBET'|'NAES2_AND_NW'|'NAES2_AND_NW_AND_CBET',
@@ -299,6 +302,7 @@ use Aws\AwsClient;
  *             StartTime?: string,
  *             ...,
  *         },
+ *         MotionImageInserters?: list<array>,
  *         NielsenConfiguration?: array{BreakoutCode?: int, DistributorId?: string, ...},
  *         NielsenNonLinearWatermark?: array{
  *             ActiveWatermarkProcess?: 'CBET'|'NAES2_AND_NW'|'NAES2_AND_NW_AND_CBET',
@@ -696,6 +700,7 @@ use Aws\AwsClient;
  *             StartTime?: string,
  *             ...,
  *         },
+ *         MotionImageInserters?: list<array>,
  *         NielsenConfiguration?: array{BreakoutCode?: int, DistributorId?: string, ...},
  *         NielsenNonLinearWatermark?: array{
  *             ActiveWatermarkProcess?: 'CBET'|'NAES2_AND_NW'|'NAES2_AND_NW_AND_CBET',
@@ -772,6 +777,7 @@ use Aws\AwsClient;
  *             StartTime?: string,
  *             ...,
  *         },
+ *         MotionImageInserters?: list<array>,
  *         NielsenConfiguration?: array{BreakoutCode?: int, DistributorId?: string, ...},
  *         NielsenNonLinearWatermark?: array{
  *             ActiveWatermarkProcess?: 'CBET'|'NAES2_AND_NW'|'NAES2_AND_NW_AND_CBET',

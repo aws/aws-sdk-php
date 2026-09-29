@@ -31,6 +31,23 @@
         {"shape":"TooManyRequestsException"}
       ]
     },
+    "CreateDatasetIntegration":{
+      "name":"CreateDatasetIntegration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/CreateDatasetIntegration",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateDatasetIntegrationInput"},
+      "output":{"shape":"CreateDatasetIntegrationOutput"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"TooManyRequestsException"}
+      ]
+    },
     "CreateS3TableIntegration":{
       "name":"CreateS3TableIntegration",
       "http":{
@@ -119,6 +136,23 @@
         {"shape":"TooManyRequestsException"}
       ]
     },
+    "DeleteDatasetIntegration":{
+      "name":"DeleteDatasetIntegration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/DeleteDatasetIntegration",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteDatasetIntegrationInput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"TooManyRequestsException"}
+      ],
+      "idempotent":true
+    },
     "DeleteS3TableIntegration":{
       "name":"DeleteS3TableIntegration",
       "http":{
@@ -196,6 +230,24 @@
       },
       "input":{"shape":"GetCentralizationRuleForOrganizationInput"},
       "output":{"shape":"GetCentralizationRuleForOrganizationOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"TooManyRequestsException"}
+      ],
+      "readonly":true
+    },
+    "GetDatasetIntegration":{
+      "name":"GetDatasetIntegration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetDatasetIntegration",
+        "responseCode":200
+      },
+      "input":{"shape":"GetDatasetIntegrationInput"},
+      "output":{"shape":"GetDatasetIntegrationOutput"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
@@ -333,6 +385,23 @@
       },
       "input":{"shape":"ListCentralizationRulesForOrganizationInput"},
       "output":{"shape":"ListCentralizationRulesForOrganizationOutput"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"TooManyRequestsException"}
+      ],
+      "readonly":true
+    },
+    "ListDatasetIntegrations":{
+      "name":"ListDatasetIntegrations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListDatasetIntegrations",
+        "responseCode":200
+      },
+      "input":{"shape":"ListDatasetIntegrationsInput"},
+      "output":{"shape":"ListDatasetIntegrationsOutput"},
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
@@ -616,6 +685,24 @@
         {"shape":"TooManyRequestsException"}
       ]
     },
+    "UpdateDatasetIntegration":{
+      "name":"UpdateDatasetIntegration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/UpdateDatasetIntegration",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateDatasetIntegrationInput"},
+      "output":{"shape":"UpdateDatasetIntegrationOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"TooManyRequestsException"}
+      ],
+      "idempotent":true
+    },
     "UpdateTelemetryPipeline":{
       "name":"UpdateTelemetryPipeline",
       "http":{
@@ -808,7 +895,8 @@
         "Regions":{"shape":"Regions"},
         "Scope":{"shape":"SourceFilterString"},
         "SourceLogsConfiguration":{"shape":"SourceLogsConfiguration"},
-        "SourceMetricsConfiguration":{"shape":"SourceMetricsConfiguration"}
+        "SourceMetricsConfiguration":{"shape":"SourceMetricsConfiguration"},
+        "SourceContextGraphConfiguration":{"shape":"SourceContextGraphConfiguration"}
       }
     },
     "CentralizationRuleSummaries":{
@@ -828,6 +916,7 @@
         "FailureReason":{"shape":"CentralizationFailureReason"},
         "TagPropagationStatus":{"shape":"TagPropagationStatus"},
         "TagPropagationFailureReason":{"shape":"TagPropagationFailureReason"},
+        "ContextGraphStatus":{"shape":"ContextGraphStatus"},
         "DestinationAccountId":{"shape":"String"},
         "DestinationRegion":{"shape":"Region"}
       }
@@ -874,6 +963,14 @@
       },
       "exception":true
     },
+    "ContextGraphStatus":{
+      "type":"string",
+      "enum":[
+        "Healthy",
+        "Unhealthy",
+        "Provisioning"
+      ]
+    },
     "CreateCentralizationRuleForOrganizationInput":{
       "type":"structure",
       "required":[
@@ -890,6 +987,29 @@
       "type":"structure",
       "members":{
         "RuleArn":{"shape":"ResourceArn"}
+      }
+    },
+    "CreateDatasetIntegrationInput":{
+      "type":"structure",
+      "required":["RoleArn"],
+      "members":{
+        "RoleArn":{"shape":"ResourceArn"},
+        "Tags":{"shape":"TagMapInput"}
+      }
+    },
+    "CreateDatasetIntegrationOutput":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "RoleArn",
+        "CreatedAt",
+        "UpdatedAt"
+      ],
+      "members":{
+        "Arn":{"shape":"ResourceArn"},
+        "RoleArn":{"shape":"ResourceArn"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "UpdatedAt":{"shape":"Timestamp"}
       }
     },
     "CreateS3TableIntegrationInput":{
@@ -980,11 +1100,32 @@
       "type":"list",
       "member":{"shape":"DataSource"}
     },
+    "DatasetIntegrationSummaries":{
+      "type":"list",
+      "member":{"shape":"DatasetIntegrationSummary"}
+    },
+    "DatasetIntegrationSummary":{
+      "type":"structure",
+      "required":["Arn"],
+      "members":{
+        "Arn":{"shape":"ResourceArn"},
+        "RoleArn":{"shape":"ResourceArn"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "UpdatedAt":{"shape":"Timestamp"}
+      }
+    },
     "DeleteCentralizationRuleForOrganizationInput":{
       "type":"structure",
       "required":["RuleIdentifier"],
       "members":{
         "RuleIdentifier":{"shape":"RuleIdentifier"}
+      }
+    },
+    "DeleteDatasetIntegrationInput":{
+      "type":"structure",
+      "required":["Arn"],
+      "members":{
+        "Arn":{"shape":"ResourceArn"}
       }
     },
     "DeleteS3TableIntegrationInput":{
@@ -1147,7 +1288,24 @@
         "FailureReason":{"shape":"CentralizationFailureReason"},
         "TagPropagationStatus":{"shape":"TagPropagationStatus"},
         "TagPropagationFailureReason":{"shape":"TagPropagationFailureReason"},
+        "ContextGraphStatus":{"shape":"ContextGraphStatus"},
         "CentralizationRule":{"shape":"CentralizationRule"}
+      }
+    },
+    "GetDatasetIntegrationInput":{
+      "type":"structure",
+      "required":["Arn"],
+      "members":{
+        "Arn":{"shape":"ResourceArn"}
+      }
+    },
+    "GetDatasetIntegrationOutput":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"ResourceArn"},
+        "RoleArn":{"shape":"ResourceArn"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "UpdatedAt":{"shape":"Timestamp"}
       }
     },
     "GetS3TableIntegrationInput":{
@@ -1350,6 +1508,27 @@
       "type":"structure",
       "members":{
         "CentralizationRuleSummaries":{"shape":"CentralizationRuleSummaries"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListDatasetIntegrationsInput":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{"shape":"ListDatasetIntegrationsMaxResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListDatasetIntegrationsMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListDatasetIntegrationsOutput":{
+      "type":"structure",
+      "required":["DatasetIntegrationSummaries"],
+      "members":{
+        "DatasetIntegrationSummaries":{"shape":"DatasetIntegrationSummaries"},
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -1819,6 +1998,10 @@
         "Type":{"shape":"String"}
       }
     },
+    "SourceContextGraphConfiguration":{
+      "type":"structure",
+      "members":{}
+    },
     "SourceFilterString":{
       "type":"string",
       "max":2000,
@@ -2152,6 +2335,7 @@
         "Results":{"shape":"PipelineOutputs"}
       }
     },
+    "Timestamp":{"type":"timestamp"},
     "TooManyRequestsException":{
       "type":"structure",
       "members":{
@@ -2189,6 +2373,32 @@
       "type":"structure",
       "members":{
         "RuleArn":{"shape":"ResourceArn"}
+      }
+    },
+    "UpdateDatasetIntegrationInput":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "RoleArn"
+      ],
+      "members":{
+        "Arn":{"shape":"ResourceArn"},
+        "RoleArn":{"shape":"ResourceArn"}
+      }
+    },
+    "UpdateDatasetIntegrationOutput":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "RoleArn",
+        "CreatedAt",
+        "UpdatedAt"
+      ],
+      "members":{
+        "Arn":{"shape":"ResourceArn"},
+        "RoleArn":{"shape":"ResourceArn"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "UpdatedAt":{"shape":"Timestamp"}
       }
     },
     "UpdateTelemetryPipelineInput":{

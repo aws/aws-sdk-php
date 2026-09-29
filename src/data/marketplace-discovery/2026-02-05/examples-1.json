@@ -4,7 +4,8 @@
     "GetListing": [
       {
         "input": {
-          "listingId": "prodview-sampleSaasId"
+          "listingId": "prodview-sampleSaasId",
+          "locale": "en-US"
         },
         "output": {
           "associatedEntities": [
@@ -44,6 +45,7 @@
           ],
           "listingId": "prodview-sampleSaasId",
           "listingName": "sample SaaS listing",
+          "locale": "en-US",
           "logoThumbnailUrl": "https://example.com/logos/sample-saas-logo.png",
           "longDescription": "A sample SaaS product that provides automated, ready-to-code development environments in the cloud.",
           "pricingModels": [
@@ -118,7 +120,8 @@
       },
       {
         "input": {
-          "listingId": "prodview-sampleAmiId"
+          "listingId": "prodview-sampleAmiId",
+          "locale": "en-US"
         },
         "output": {
           "associatedEntities": [
@@ -176,6 +179,7 @@
           ],
           "listingId": "prodview-sampleAmiId",
           "listingName": "sample AMI listing",
+          "locale": "en-US",
           "logoThumbnailUrl": "https://example.com/logos/sample-ami-logo.png",
           "longDescription": "A sample AMI product that provides load balancing, content caching, and API gateway capabilities optimized for cloud-native architectures.",
           "pricingModels": [
@@ -258,7 +262,8 @@
       },
       {
         "input": {
-          "listingId": "prodview-sampleMultiProductId"
+          "listingId": "prodview-sampleMultiProductId",
+          "locale": "en-US"
         },
         "output": {
           "associatedEntities": [
@@ -305,6 +310,7 @@
           "integrationGuide": "To add the remote Box MCP server in Amazon Quick Suite, follow these steps: In the Amazon Quick Suite console, choose Integrations and create new integration by choosing Model Content Protocol.",
           "listingId": "prodview-sampleMultiProductId",
           "listingName": "sample multi-product listing",
+          "locale": "en-US",
           "logoThumbnailUrl": "https://example.com/logos/sample-multi-product-logo.png",
           "longDescription": "A sample multi-product listing that connects content management with a unified AI platform. Users can securely search, analyze, and extract valuable insights from their files.",
           "pricingModels": [
@@ -367,6 +373,7 @@
     "GetOffer": [
       {
         "input": {
+          "locale": "en-US",
           "offerId": "offer-sampleContractId"
         },
         "output": {
@@ -403,6 +410,7 @@
           ],
           "catalog": "AWSMarketplace",
           "expirationTime": "2023-10-08T21:40:43.644Z",
+          "locale": "en-US",
           "offerId": "offer-sampleContractId",
           "offerName": "sample contract offer",
           "pricingModel": {
@@ -420,6 +428,7 @@
       },
       {
         "input": {
+          "locale": "en-US",
           "offerId": "offer-sampleUsageId"
         },
         "output": {
@@ -444,6 +453,7 @@
           ],
           "catalog": "AWSMarketplace",
           "expirationTime": "2022-03-29T23:59:59.999Z",
+          "locale": "en-US",
           "offerId": "offer-sampleUsageId",
           "offerName": "sample usage offer",
           "pricingModel": {
@@ -461,6 +471,7 @@
       },
       {
         "input": {
+          "locale": "en-US",
           "offerId": "offer-sampleByolId"
         },
         "output": {
@@ -480,6 +491,7 @@
           "badges": [],
           "catalog": "AWSMarketplace",
           "expirationTime": "2022-03-29T23:59:59.999Z",
+          "locale": "en-US",
           "offerId": "offer-sampleByolId",
           "offerName": "sample BYOL offer",
           "pricingModel": {
@@ -497,6 +509,7 @@
       },
       {
         "input": {
+          "locale": "en-US",
           "offerId": "offer-sampleFreeId"
         },
         "output": {
@@ -516,6 +529,7 @@
           "badges": [],
           "catalog": "AWSMarketplace",
           "expirationTime": "2022-03-29T23:59:59.999Z",
+          "locale": "en-US",
           "offerId": "offer-sampleFreeId",
           "offerName": "sample free offer",
           "pricingModel": {
@@ -535,6 +549,7 @@
     "GetOfferSet": [
       {
         "input": {
+          "locale": "en-US",
           "offerSetId": "offerset-sampleId"
         },
         "output": {
@@ -581,11 +596,20 @@
             {
               "badgeType": "PRIVATE_PRICING",
               "displayName": "Private Pricing"
+            },
+            {
+              "badgeType": "FUTURE_DATED",
+              "displayName": "Future Dated"
+            },
+            {
+              "badgeType": "REPLACEMENT_OFFER",
+              "displayName": "Replacement Offer"
             }
           ],
           "buyerNotes": "This bundle includes CrowdStrike Falcon and Splunk Enterprise for comprehensive security monitoring.",
           "catalog": "AWSMarketplace",
           "expirationTime": "2025-03-20T00:00:00.000Z",
+          "locale": "en-US",
           "offerSetId": "offerset-sampleId",
           "offerSetName": "sample offer set",
           "sellerOfRecord": {
@@ -595,14 +619,97 @@
         },
         "id": "example-1",
         "title": "Get offer set with multiple products"
+      },
+      {
+        "input": {
+          "offerSetId": "offerset-sampleMinimalId"
+        },
+        "output": {
+          "associatedEntities": [
+            {
+              "offer": {
+                "offerId": "offer-sampleMinimalId",
+                "sellerOfRecord": {
+                  "displayName": "sample reseller",
+                  "sellerProfileId": "seller-sampleResellerId"
+                }
+              },
+              "product": {
+                "manufacturer": {
+                  "displayName": "sample seller name 1",
+                  "sellerProfileId": "seller-sampleId1"
+                },
+                "productId": "prod-sampleMinimalId",
+                "productName": "sample product name"
+              }
+            }
+          ],
+          "badges": [],
+          "catalog": "AWSMarketplace",
+          "offerSetId": "offerset-sampleMinimalId",
+          "sellerOfRecord": {
+            "displayName": "sample reseller",
+            "sellerProfileId": "seller-sampleResellerId"
+          }
+        },
+        "id": "example-2",
+        "title": "Get offer set with only required fields"
+      },
+      {
+        "input": {
+          "locale": "en-US",
+          "offerSetId": "offerset-samplePerpetualId"
+        },
+        "output": {
+          "associatedEntities": [
+            {
+              "offer": {
+                "offerId": "offer-samplePerpetualId",
+                "offerName": "sample perpetual offer",
+                "sellerOfRecord": {
+                  "displayName": "sample first-party seller",
+                  "sellerProfileId": "seller-sampleFirstPartyId"
+                }
+              },
+              "product": {
+                "manufacturer": {
+                  "displayName": "sample first-party seller",
+                  "sellerProfileId": "seller-sampleFirstPartyId"
+                },
+                "productId": "prod-samplePerpetualId",
+                "productName": "sample perpetual product"
+              }
+            }
+          ],
+          "availableFromTime": "2024-03-20T00:00:00.000Z",
+          "badges": [
+            {
+              "badgeType": "PRIVATE_PRICING",
+              "displayName": "Private Pricing"
+            }
+          ],
+          "buyerNotes": "This offer set does not expire. Omitting expirationTime indicates the offer set remains available for procurement indefinitely.",
+          "catalog": "AWSMarketplace",
+          "locale": "en-US",
+          "offerSetId": "offerset-samplePerpetualId",
+          "offerSetName": "sample perpetual offer set",
+          "sellerOfRecord": {
+            "displayName": "sample first-party seller",
+            "sellerProfileId": "seller-sampleFirstPartyId"
+          }
+        },
+        "id": "example-3",
+        "title": "Get offer set that never expires from a first-party seller"
       }
     ],
     "GetOfferTerms": [
       {
         "input": {
+          "locale": "en-US",
           "offerId": "offer-sampleUsageBasedId"
         },
         "output": {
+          "locale": "en-US",
           "offerTerms": [
             {
               "usageBasedPricingTerm": {
@@ -779,9 +886,11 @@
       },
       {
         "input": {
+          "locale": "en-US",
           "offerId": "offer-sampleByolId"
         },
         "output": {
+          "locale": "en-US",
           "offerTerms": [
             {
               "byolPricingTerm": {
@@ -808,9 +917,11 @@
       },
       {
         "input": {
+          "locale": "en-US",
           "offerId": "offer-sampleConfigUpfrontId"
         },
         "output": {
+          "locale": "en-US",
           "offerTerms": [
             {
               "configurableUpfrontPricingTerm": {
@@ -866,9 +977,11 @@
       },
       {
         "input": {
+          "locale": "en-US",
           "offerId": "offer-sampleFreeTrialId"
         },
         "output": {
+          "locale": "en-US",
           "offerTerms": [
             {
               "freeTrialPricingTerm": {
@@ -899,9 +1012,11 @@
       },
       {
         "input": {
+          "locale": "en-US",
           "offerId": "offer-sampleRecurringId"
         },
         "output": {
+          "locale": "en-US",
           "offerTerms": [
             {
               "recurringPaymentTerm": {
@@ -919,9 +1034,11 @@
       },
       {
         "input": {
+          "locale": "en-US",
           "offerId": "offer-sampleVariableId"
         },
         "output": {
+          "locale": "en-US",
           "offerTerms": [
             {
               "variablePaymentTerm": {
@@ -938,9 +1055,11 @@
       },
       {
         "input": {
+          "locale": "en-US",
           "offerId": "offer-sampleRenewalId"
         },
         "output": {
+          "locale": "en-US",
           "offerTerms": [
             {
               "renewalTerm": {
@@ -987,9 +1106,11 @@
       },
       {
         "input": {
+          "locale": "en-US",
           "offerId": "offer-sampleRenewalFixedId"
         },
         "output": {
+          "locale": "en-US",
           "offerTerms": [
             {
               "renewalTerm": {
@@ -1011,9 +1132,11 @@
       },
       {
         "input": {
+          "locale": "en-US",
           "offerId": "offer-sampleRenewalNoPriceIncreaseId"
         },
         "output": {
+          "locale": "en-US",
           "offerTerms": [
             {
               "renewalTerm": {
@@ -1030,9 +1153,11 @@
       },
       {
         "input": {
+          "locale": "en-US",
           "offerId": "offer-sampleSupportId"
         },
         "output": {
+          "locale": "en-US",
           "offerTerms": [
             {
               "supportTerm": {
@@ -1048,9 +1173,11 @@
       },
       {
         "input": {
+          "locale": "en-US",
           "offerId": "offer-sampleValidityId"
         },
         "output": {
+          "locale": "en-US",
           "offerTerms": [
             {
               "validityTerm": {
@@ -1068,9 +1195,11 @@
       },
       {
         "input": {
+          "locale": "en-US",
           "offerId": "offer-sampleNetPaymentId"
         },
         "output": {
+          "locale": "en-US",
           "offerTerms": [
             {
               "netPaymentTerm": {
@@ -1088,6 +1217,7 @@
     "GetProduct": [
       {
         "input": {
+          "locale": "en-US",
           "productId": "prod-sampleSaasId"
         },
         "output": {
@@ -1116,6 +1246,8 @@
           "highlights": [
             "Configured to your specs: Pre-configured environments, out-of-the-box."
           ],
+          "listingId": "listing-sampleSaasId",
+          "locale": "en-US",
           "logoThumbnailUrl": "https://d7umqicpi7263.cloudfront.net/img/product/07afb7c8-32f1-4851-8289-7e200d817ab1.png",
           "longDescription": "Gitpod is a developer platform that provides on-demand, pre-configured cloud development environments (CDEs) that automatically integrate into any tool, library, or dependency required for creating software.",
           "manufacturer": {
@@ -1161,6 +1293,7 @@
       },
       {
         "input": {
+          "locale": "en-US",
           "productId": "prod-sampleAmiId"
         },
         "output": {
@@ -1193,6 +1326,8 @@
           "highlights": [
             "AES-256 encryption at rest and in transit"
           ],
+          "listingId": "listing-sampleAmiId",
+          "locale": "en-US",
           "logoThumbnailUrl": "https://d7umqicpi7263.cloudfront.net/img/product/securevault-logo.png",
           "longDescription": "SecureVault Enterprise provides comprehensive data encryption, key management, and security compliance tools for organizations.",
           "manufacturer": {
@@ -1240,6 +1375,7 @@
       },
       {
         "input": {
+          "locale": "en-US",
           "productId": "prod-sampleProServId"
         },
         "output": {
@@ -1276,6 +1412,8 @@
           "highlights": [
             "Certified AWS migration specialists"
           ],
+          "listingId": "listing-sampleProServId",
+          "locale": "en-US",
           "logoThumbnailUrl": "https://d7umqicpi7263.cloudfront.net/img/product/cloudexperts-logo.png",
           "longDescription": "Professional consulting services to help organizations plan and execute their cloud migration strategy.",
           "manufacturer": {
@@ -1309,12 +1447,22 @@
     "ListFulfillmentOptions": [
       {
         "input": {
+          "locale": "en-US",
           "productId": "prod-sampleAmiId"
         },
         "output": {
           "fulfillmentOptions": [
             {
               "amazonMachineImageFulfillmentOption": {
+                "accessUrlTemplate": "http://{0}:8888/",
+                "amiAlias": "/aws/service/marketplace/prod-sampleAmiId/2.0.20260120.1",
+                "architecture": "x86_64",
+                "availableFromTime": "2022-03-07T00:00:00Z",
+                "ebsVolume": {
+                  "volumeTypes": [
+                    "gp2"
+                  ]
+                },
                 "fulfillmentOptionDisplayName": "Amazon Machine Image",
                 "fulfillmentOptionId": "fo-sampleAmiId",
                 "fulfillmentOptionName": "64-bit (x86) Amazon Machine Image (AMI)",
@@ -1328,19 +1476,32 @@
                   }
                 ],
                 "recommendation": {
-                  "instanceType": "t3a.medium"
+                  "instanceType": "t3a.medium",
+                  "securityGroups": [
+                    {
+                      "cidrIpAddresses": [
+                        "0.0.0.0/0"
+                      ],
+                      "fromPort": 22,
+                      "protocol": "tcp",
+                      "toPort": 22
+                    }
+                  ]
                 },
                 "releaseNotes": "https://aws.amazon.com/amazon-linux-2/release-notes/",
+                "shortDescription": "Amazon Linux 2 AMI for x86_64 EC2 instances.",
                 "usageInstructions": "The Amazon Linux 2 AMI can be launched through the EC2 console's Quick Launch page."
               }
             }
-          ]
+          ],
+          "locale": "en-US"
         },
         "id": "example-1",
         "title": "List AMI Fulfillment Options"
       },
       {
         "input": {
+          "locale": "en-US",
           "productId": "prod-sampleApiId"
         },
         "output": {
@@ -1360,35 +1521,70 @@
                 "usageInstructions": "Please refer to the MCP usage instructions."
               }
             }
-          ]
+          ],
+          "locale": "en-US"
         },
         "id": "example-2",
         "title": "List API Fulfillment Options"
       },
       {
         "input": {
+          "locale": "en-US",
+          "productId": "prod-sampleApiDynamicId"
+        },
+        "output": {
+          "fulfillmentOptions": [
+            {
+              "apiFulfillmentOption": {
+                "awsSupportedServices": [
+                  {
+                    "description": "A managed service that enables you to develop, deploy, and maintain AI agents seamlessly.",
+                    "displayName": "Amazon Bedrock AgentCore",
+                    "supportedServiceType": "BEDROCK_AGENTCORE"
+                  }
+                ],
+                "fulfillmentOptionDisplayName": "API-Based Agents & Tools",
+                "fulfillmentOptionId": "fo-sampleApiDynamicId",
+                "fulfillmentOptionType": "API",
+                "usageInstructions": "Deploy to your preferred region using the dynamic endpoint."
+              }
+            }
+          ],
+          "locale": "en-US"
+        },
+        "id": "example-3",
+        "title": "List API Fulfillment Options with Dynamic Endpoint"
+      },
+      {
+        "input": {
+          "locale": "en-US",
           "productId": "prod-sampleCftId"
         },
         "output": {
           "fulfillmentOptions": [
             {
               "cloudFormationFulfillmentOption": {
+                "availableFromTime": "2021-12-15T00:00:00Z",
                 "fulfillmentOptionDisplayName": "CloudFormation Template",
                 "fulfillmentOptionId": "fo-sampleCftId",
                 "fulfillmentOptionName": "Sophos Standalone Firewall for AWS",
                 "fulfillmentOptionType": "CLOUDFORMATION_TEMPLATE",
                 "fulfillmentOptionVersion": "21.5 MR1",
+                "longDescription": "This CloudFormation template deploys the Sophos XG Firewall with auto-scaling and load balancing for enterprise environments.",
                 "releaseNotes": "https://community.sophos.com/products/xg-firewall/b/blog",
+                "shortDescription": "Deploy Sophos XG Firewall on AWS with high availability.",
                 "usageInstructions": "You can manage your Sophos XG Firewall on AWS from the Web Interface using HTTPS (TCP port 4444)."
               }
             }
-          ]
+          ],
+          "locale": "en-US"
         },
-        "id": "example-3",
+        "id": "example-4",
         "title": "List CloudFormation Template Fulfillment Options"
       },
       {
         "input": {
+          "locale": "en-US",
           "productId": "prod-sampleContainerId"
         },
         "output": {
@@ -1417,13 +1613,15 @@
                 "usageInstructions": "See Elastic MCP GitHub instructions"
               }
             }
-          ]
+          ],
+          "locale": "en-US"
         },
-        "id": "example-4",
+        "id": "example-5",
         "title": "List Container Fulfillment Options"
       },
       {
         "input": {
+          "locale": "en-US",
           "productId": "prod-sampleHelmId"
         },
         "output": {
@@ -1452,13 +1650,15 @@
                 "usageInstructions": "helm install nginx-ingress"
               }
             }
-          ]
+          ],
+          "locale": "en-US"
         },
-        "id": "example-5",
+        "id": "example-6",
         "title": "List Helm Fulfillment Options"
       },
       {
         "input": {
+          "locale": "en-US",
           "productId": "prod-sampleEksId"
         },
         "output": {
@@ -1487,13 +1687,15 @@
                 "usageInstructions": "https://help.splunk.com/en/splunk-observability-cloud/manage-data/splunk-distribution-of-the-opentelemetry-collector/get-started-with-the-splunk-distribution-of-the-opentelemetry-collector/collector-for-kubernetes/kubernetes-eks-add-on"
               }
             }
-          ]
+          ],
+          "locale": "en-US"
         },
-        "id": "example-6",
+        "id": "example-7",
         "title": "List EKS Add-On Fulfillment Options"
       },
       {
         "input": {
+          "locale": "en-US",
           "productId": "prod-sampleImageBuilderId"
         },
         "output": {
@@ -1522,13 +1724,15 @@
                 "usageInstructions": "https://github.com/CrowdStrike/aws-ec2-image-builder"
               }
             }
-          ]
+          ],
+          "locale": "en-US"
         },
-        "id": "example-7",
+        "id": "example-8",
         "title": "List EC2 Image Builder Component Fulfillment Options"
       },
       {
         "input": {
+          "locale": "en-US",
           "productId": "prod-sampleDataExchangeId"
         },
         "output": {
@@ -1548,13 +1752,15 @@
                 "fulfillmentOptionType": "DATA_EXCHANGE"
               }
             }
-          ]
+          ],
+          "locale": "en-US"
         },
-        "id": "example-8",
+        "id": "example-9",
         "title": "List Data Exchange Fulfillment Options"
       },
       {
         "input": {
+          "locale": "en-US",
           "productId": "prod-sampleProServId"
         },
         "output": {
@@ -1566,32 +1772,40 @@
                 "fulfillmentOptionType": "PROFESSIONAL_SERVICES"
               }
             }
-          ]
+          ],
+          "locale": "en-US"
         },
-        "id": "example-9",
+        "id": "example-10",
         "title": "List Professional Services Fulfillment Options"
       },
       {
         "input": {
+          "locale": "en-US",
           "productId": "prod-sampleSaasId"
         },
         "output": {
           "fulfillmentOptions": [
             {
               "saasFulfillmentOption": {
+                "availableFromTime": "2018-08-07T00:00:00.000Z",
                 "fulfillmentOptionDisplayName": "SaaS",
                 "fulfillmentOptionId": "fo-sampleSaasId",
                 "fulfillmentOptionType": "SAAS",
-                "fulfillmentUrl": "https://example.com/order/SAMPLE123"
+                "fulfillmentUrl": "https://example.com/order/SAMPLE123",
+                "launchUrl": "https://example.com/saas/launch",
+                "quickLaunch": "ENABLED",
+                "usageInstructions": "Refer to the seller's setup guide to configure and start using this SaaS product."
               }
             }
-          ]
+          ],
+          "locale": "en-US"
         },
-        "id": "example-10",
+        "id": "example-11",
         "title": "List SaaS Fulfillment Options"
       },
       {
         "input": {
+          "locale": "en-US",
           "productId": "prod-sampleSmAlgoId"
         },
         "output": {
@@ -1611,13 +1825,15 @@
                 "usageInstructions": "A zip file called train should be provided."
               }
             }
-          ]
+          ],
+          "locale": "en-US"
         },
-        "id": "example-11",
+        "id": "example-12",
         "title": "List SageMaker Algorithm Fulfillment Options"
       },
       {
         "input": {
+          "locale": "en-US",
           "productId": "prod-sampleSmModelId"
         },
         "output": {
@@ -1633,12 +1849,20 @@
                   "recommendedRealtimeInferenceInstanceType": "ml.g5.12xlarge"
                 },
                 "releaseNotes": "Initial release",
+                "supportedContentTypes": [
+                  "application/json",
+                  "text/csv"
+                ],
+                "supportedResponseMimeTypes": [
+                  "application/json"
+                ],
                 "usageInstructions": "See Input Summary"
               }
             }
-          ]
+          ],
+          "locale": "en-US"
         },
-        "id": "example-12",
+        "id": "example-13",
         "title": "List SageMaker Model Fulfillment Options"
       }
     ],
@@ -1652,7 +1876,8 @@
                 "prod-sampleOfferId"
               ]
             }
-          ]
+          ],
+          "locale": "en-US"
         },
         "output": {
           "purchaseOptions": [
@@ -1713,7 +1938,8 @@
                 "PRIVATE"
               ]
             }
-          ]
+          ],
+          "locale": "en-US"
         },
         "output": {
           "purchaseOptions": [
@@ -1792,6 +2018,7 @@
               ]
             }
           ],
+          "locale": "en-US",
           "searchText": "analytics"
         },
         "output": {
@@ -1862,7 +2089,8 @@
                 "5.0"
               ]
             }
-          ]
+          ],
+          "locale": "en-US"
         },
         "output": {
           "listingFacets": {
@@ -1920,6 +2148,7 @@
               ]
             }
           ],
+          "locale": "en-US",
           "maxResults": 25,
           "searchText": "computer vision",
           "sortBy": "RELEVANCE",

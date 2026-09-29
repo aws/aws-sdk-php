@@ -24,10 +24,64 @@
         "GetOfferOutput$replacementAgreementId": "<p>The identifier of the existing agreement that this offer would replace. Enables agreement-based offer functionality.</p>"
       }
     },
+    "AmazonMachineImageCidrIpAddressList": {
+      "base": null,
+      "refs": {
+        "AmazonMachineImageSecurityGroup$cidrIpAddresses": "<p>The IP address ranges in CIDR format.</p>"
+      }
+    },
+    "AmazonMachineImageEbsVolume": {
+      "base": "<p>Contains supported Amazon EBS volume information for an AMI fulfillment option.</p>",
+      "refs": {
+        "AmazonMachineImageFulfillmentOption$ebsVolume": "<p>The supported Amazon EBS volume configuration for the AMI.</p>"
+      }
+    },
+    "AmazonMachineImageEbsVolumeIopsInteger": {
+      "base": null,
+      "refs": {
+        "AmazonMachineImageEbsVolume$iops": "<p>The total number of provisioned IOPS supported.</p>"
+      }
+    },
+    "AmazonMachineImageEbsVolumeTypeList": {
+      "base": null,
+      "refs": {
+        "AmazonMachineImageEbsVolume$volumeTypes": "<p>The supported Amazon EBS volume types.</p>"
+      }
+    },
+    "AmazonMachineImageEbsVolumeTypeListMemberString": {
+      "base": null,
+      "refs": {
+        "AmazonMachineImageEbsVolumeTypeList$member": null
+      }
+    },
     "AmazonMachineImageFulfillmentOption": {
       "base": "<p>Describes an Amazon Machine Image (AMI) fulfillment option, including version details, supported operating systems, and recommended instance types.</p>",
       "refs": {
         "FulfillmentOption$amazonMachineImageFulfillmentOption": "<p>An Amazon Machine Image (AMI) fulfillment option for EC2 deployment.</p>"
+      }
+    },
+    "AmazonMachineImageFulfillmentOptionAccessUrlTemplateString": {
+      "base": null,
+      "refs": {
+        "AmazonMachineImageFulfillmentOption$accessUrlTemplate": "<p>The URL pattern for accessing the product when an instance is running.</p>"
+      }
+    },
+    "AmazonMachineImageFulfillmentOptionAmiAliasString": {
+      "base": null,
+      "refs": {
+        "AmazonMachineImageFulfillmentOption$amiAlias": "<p>The alias of the AMI associated with this fulfillment option.</p>"
+      }
+    },
+    "AmazonMachineImageFulfillmentOptionArchitectureString": {
+      "base": null,
+      "refs": {
+        "AmazonMachineImageFulfillmentOption$architecture": "<p>The architecture of the AMI, such as <code>x86_64</code>.</p>"
+      }
+    },
+    "AmazonMachineImageFulfillmentOptionShortDescriptionString": {
+      "base": null,
+      "refs": {
+        "AmazonMachineImageFulfillmentOption$shortDescription": "<p>A short description of the fulfillment option.</p>"
       }
     },
     "AmazonMachineImageOperatingSystem": {
@@ -46,6 +100,18 @@
       "base": "<p>Recommended instance types for running an AMI fulfillment option.</p>",
       "refs": {
         "AmazonMachineImageFulfillmentOption$recommendation": "<p>Recommended instance types for running this AMI.</p>"
+      }
+    },
+    "AmazonMachineImageSecurityGroup": {
+      "base": "<p>Contains a recommended security group configuration for an AMI fulfillment option.</p>",
+      "refs": {
+        "AmazonMachineImageSecurityGroupList$member": null
+      }
+    },
+    "AmazonMachineImageSecurityGroupList": {
+      "base": null,
+      "refs": {
+        "AmazonMachineImageRecommendation$securityGroups": "<p>The recommended security group configurations for this AMI.</p>"
       }
     },
     "ApiFulfillmentOption": {
@@ -90,8 +156,8 @@
         "GrantItem$description": "<p>A description of the entitlement.</p>",
         "GrantItem$unit": "<p>The unit of measurement for the entitlement.</p>",
         "NetPaymentTerm$paymentDuePeriod": "<p>The duration after invoice date by which payment is due.</p>",
-        "PaymentScheduleEntry$chargeDateOffset": "<p>The relative offset from the renewal agreement start date when this installment is due, in ISO 8601 duration format. The offset uses months only or days only (for example, P1M or P30D); mixed units are not supported, and every offset in a schedule uses the same unit.</p>",
-        "PaymentScheduleEntry$chargePercentage": "<p>The percentage of the increased TCV to charge in this installment. All entries in a schedule sum to 100.00.</p>",
+        "PaymentScheduleEntry$chargeDateOffset": "<p>The relative offset from the renewal agreement start date when this installment is due, represented in ISO 8601 duration format (for example, P1M or P30D).</p>",
+        "PaymentScheduleEntry$chargePercentage": "<p>The percentage of the increased Total Contract Value (TCV) to charge in this installment. All entries in a schedule sum to 100.00.</p>",
         "PercentageRange$minimumValue": "<p>The minimum percentage by which the price can increase at each renewal cycle.</p>",
         "PercentageRange$maximumValue": "<p>The maximum percentage by which the price can increase at each renewal cycle.</p>",
         "PercentageRange$defaultValue": "<p>The percentage increase applied by default when no other value is finalized before the adjustment deadline. Falls between <code>minimumValue</code> and <code>maximumValue</code>.</p>",
@@ -145,6 +211,18 @@
       "base": "<p>Describes an AWS CloudFormation template fulfillment option for infrastructure deployment.</p>",
       "refs": {
         "FulfillmentOption$cloudFormationFulfillmentOption": "<p>An AWS CloudFormation template fulfillment option for infrastructure deployment.</p>"
+      }
+    },
+    "CloudFormationFulfillmentOptionLongDescriptionString": {
+      "base": null,
+      "refs": {
+        "CloudFormationFulfillmentOption$longDescription": "<p>A detailed description of the fulfillment option.</p>"
+      }
+    },
+    "CloudFormationFulfillmentOptionShortDescriptionString": {
+      "base": null,
+      "refs": {
+        "CloudFormationFulfillmentOption$shortDescription": "<p>A short description of the fulfillment option.</p>"
       }
     },
     "ConfigurableUpfrontPricingTerm": {
@@ -457,6 +535,8 @@
     "Integer": {
       "base": null,
       "refs": {
+        "AmazonMachineImageSecurityGroup$fromPort": "<p>The start of the port range.</p>",
+        "AmazonMachineImageSecurityGroup$toPort": "<p>The end of the port range.</p>",
         "GrantItem$maxQuantity": "<p>The maximum quantity of the entitlement that can be granted.</p>"
       }
     },
@@ -552,6 +632,7 @@
       "refs": {
         "GetListingInput$listingId": "<p>The unique identifier of the listing to retrieve.</p>",
         "GetListingOutput$listingId": "<p>The unique identifier of the listing.</p>",
+        "GetProductOutput$listingId": "<p>The default listing identifier associated with the product.</p>",
         "ListingSummary$listingId": "<p>The unique identifier of the listing.</p>"
       }
     },
@@ -577,6 +658,26 @@
       "base": null,
       "refs": {
         "SearchListingsOutput$listingSummaries": "<p>The listing summaries matching the search criteria. Each summary includes the listing name, description, badges, categories, pricing models, reviews, and associated products.</p>"
+      }
+    },
+    "Locale": {
+      "base": "<p>A BCP 47 language tag or comma-separated priority list of language tags that specifies the preferred locale for response content. The field accepts a maximum of two language tags.</p> <p>The service resolves a locale string to the nearest supported locale. If no supported locale matches, the service applies the fallback behavior described below.</p> <ul> <li> <p> <b>Preferred locale</b> (first tag) – The locale you want the service to return content in.</p> </li> <li> <p> <b>Fallback locale</b> (optional, second tag) – The service default locale (<code>en-US</code> or <code>en</code>). The service returns content in this locale when translated content for the preferred locale is unavailable.</p> </li> </ul> <p>The field is optional. If omitted or null, the service returns content in the default locale (<code>en-US</code>).</p> <p> <b>Supported locales:</b> </p> <ul> <li> <p> <code>en-US</code> – English (service default, also resolves from <code>en</code>)</p> </li> <li> <p> <code>fr</code> – French</p> </li> <li> <p> <code>es</code> – Spanish</p> </li> <li> <p> <code>ko</code> – Korean</p> </li> <li> <p> <code>ja</code> – Japanese</p> </li> </ul> <p> <b>Fallback behavior:</b> </p> <ul> <li> <p>If translated content for the preferred locale is unavailable, the service returns content in the default locale.</p> </li> <li> <p>If the preferred locale is not supported and no fallback is provided, the service returns a <code>ValidationException</code>.</p> </li> <li> <p>If you provide an unsupported locale with the default locale as fallback (for example, <code>xx, en-US</code>), the service returns content in the default locale.</p> </li> </ul> <p> <b>Response locale field (Get APIs):</b> The <code>locale</code> field in Get API responses indicates the locale of the returned content. You can use this field to determine whether the response contains content in the requested locale or the default locale.</p> <p> <b>Examples:</b> </p> <ul> <li> <p> <code>fr</code> – Request French content. If unavailable, falls back to <code>en-US</code>.</p> </li> <li> <p> <code>fr, en-US</code> – Request French content with explicit fallback to English.</p> </li> <li> <p> <code>en-US</code> – Request content in the default locale.</p> </li> </ul>",
+      "refs": {
+        "GetListingInput$locale": "<p>A BCP 47 language tag or comma-separated priority list specifying the preferred locale for response content. See <code>Locale</code> for supported values, constraints, fallback behavior, and the default locale. If omitted, the service returns content in the default locale.</p>",
+        "GetListingOutput$locale": "<p>The locale of the returned content. Indicates whether the response contains content in the requested locale, or fell back to the default locale. See <code>Locale</code> for details.</p>",
+        "GetOfferInput$locale": "<p>A BCP 47 language tag or comma-separated priority list specifying the preferred locale for response content. See <code>Locale</code> for supported values, constraints, fallback behavior, and the default locale. If omitted, the service returns content in the default locale.</p>",
+        "GetOfferOutput$locale": "<p>The locale of the returned content. Indicates whether the response contains content in the requested locale, or fell back to the default locale. See <code>Locale</code> for details.</p>",
+        "GetOfferSetInput$locale": "<p>A BCP 47 language tag or comma-separated priority list specifying the preferred locale for response content. See <code>Locale</code> for supported values, constraints, fallback behavior, and the default locale. If omitted, the service returns content in the default locale.</p>",
+        "GetOfferSetOutput$locale": "<p>The locale of the returned content. Indicates whether the response contains content in the requested locale, or fell back to the default locale. See <code>Locale</code> for details.</p>",
+        "GetOfferTermsInput$locale": "<p>A BCP 47 language tag or comma-separated priority list specifying the preferred locale for response content. See <code>Locale</code> for supported values, constraints, fallback behavior, and the default locale. If omitted, the service returns content in the default locale.</p>",
+        "GetOfferTermsOutput$locale": "<p>The locale of the returned content. Indicates whether the response contains content in the requested locale, or fell back to the default locale. See <code>Locale</code> for details.</p>",
+        "GetProductInput$locale": "<p>A BCP 47 language tag or comma-separated priority list specifying the preferred locale for response content. See <code>Locale</code> for supported values, constraints, fallback behavior, and the default locale. If omitted, the service returns content in the default locale.</p>",
+        "GetProductOutput$locale": "<p>The locale of the returned content. Indicates whether the response contains content in the requested locale, or fell back to the default locale. See <code>Locale</code> for details.</p>",
+        "ListFulfillmentOptionsInput$locale": "<p>A BCP 47 language tag or comma-separated priority list specifying the preferred locale for response content. See <code>Locale</code> for supported values, constraints, fallback behavior, and the default locale. If omitted, the service returns content in the default locale.</p>",
+        "ListFulfillmentOptionsOutput$locale": null,
+        "ListPurchaseOptionsInput$locale": "<p>A BCP 47 language tag or comma-separated priority list specifying the preferred locale for response content. See <code>Locale</code> for supported values, constraints, fallback behavior, and the default locale. If omitted, the service returns content in the default locale.</p>",
+        "SearchFacetsInput$locale": "<p>A BCP 47 language tag or comma-separated priority list specifying the preferred locale for response content. See <code>Locale</code> for supported values, constraints, fallback behavior, and the default locale. If omitted, the service returns content in the default locale.</p>",
+        "SearchListingsInput$locale": "<p>A BCP 47 language tag or comma-separated priority list specifying the preferred locale for response content. See <code>Locale</code> for supported values, constraints, fallback behavior, and the default locale. If omitted, the service returns content in the default locale.</p>"
       }
     },
     "MaxResults": {
@@ -740,7 +841,7 @@
     "PaymentScheduleEntryDayOfMonthInteger": {
       "base": null,
       "refs": {
-        "PaymentScheduleEntry$dayOfMonth": "<p>The optional calendar day of month on which the charge occurs. When absent, the charge day is derived from <code>chargeDateOffset</code>, and this field does not apply when <code>chargeDateOffset</code> is expressed in days. For months with fewer days than the specified day, the charge occurs on the last day of the month. For example, if <code>dayOfMonth</code> is 31, the charge in April occurs on April 30.</p>"
+        "PaymentScheduleEntry$dayOfMonth": "<p>The optional calendar day of month on which the charge occurs. When absent, the charge day is derived from <code>chargeDateOffset</code>. For months with fewer days than the specified day, the charge occurs on the last day of the month. For example, if <code>dayOfMonth</code> is 31, the charge in April occurs on April 30.</p>"
       }
     },
     "PaymentScheduleEntryList": {
@@ -921,7 +1022,7 @@
     "PurchaseOptionFilterValueList": {
       "base": null,
       "refs": {
-        "PurchaseOptionFilter$filterValues": "<p>The values to filter by. Multiple values within the same filter are combined with OR logic.</p>"
+        "PurchaseOptionFilter$filterValues": "<p>The values to filter by. Supported values depend on <code>filterType</code>:</p> <ul> <li> <p> <code>PRODUCT_ID</code> – One or more product identifiers to filter by.</p> </li> <li> <p> <code>SELLER_OF_RECORD_PROFILE_ID</code> – One or more seller profile identifiers to filter by.</p> </li> <li> <p> <code>PURCHASE_OPTION_TYPE</code> – One or more purchase option types to filter by: <code>OFFER</code> or <code>OFFERSET</code>.</p> </li> <li> <p> <code>VISIBILITY_SCOPE</code> – The visibility scope to filter by: <code>PRIVATE</code>.</p> </li> <li> <p> <code>AVAILABILITY_STATUS</code> – One or more availability statuses to filter by: <code>AVAILABLE</code> or <code>EXPIRED</code>.</p> </li> </ul> <p>To retrieve private offers and offer sets visible to you, use <code>VISIBILITY_SCOPE</code> with <code>PRIVATE</code>. OR logic combines multiple values within the same filter.</p>"
       }
     },
     "PurchaseOptionSummary": {
@@ -1040,6 +1141,12 @@
         "FulfillmentOption$saasFulfillmentOption": "<p>A Software as a Service (SaaS) fulfillment option.</p>"
       }
     },
+    "SaasQuickLaunchStatus": {
+      "base": null,
+      "refs": {
+        "SaasFulfillmentOption$quickLaunch": "<p>Specifies whether the SaaS product supports quick-launch deployment.</p>"
+      }
+    },
     "SageMakerAlgorithmFulfillmentOption": {
       "base": "<p>Describes an Amazon SageMaker algorithm fulfillment option, including version details and recommended instance types.</p>",
       "refs": {
@@ -1052,6 +1159,18 @@
         "SageMakerAlgorithmFulfillmentOption$recommendation": "<p>Recommended instance types for training and inference with this algorithm.</p>"
       }
     },
+    "SageMakerModelContentTypeList": {
+      "base": null,
+      "refs": {
+        "SageMakerModelFulfillmentOption$supportedContentTypes": "<p>The MIME types that this model accepts as input.</p>"
+      }
+    },
+    "SageMakerModelContentTypeListMemberString": {
+      "base": null,
+      "refs": {
+        "SageMakerModelContentTypeList$member": null
+      }
+    },
     "SageMakerModelFulfillmentOption": {
       "base": "<p>Describes an Amazon SageMaker model fulfillment option, including version details and recommended instance types.</p>",
       "refs": {
@@ -1062,6 +1181,18 @@
       "base": "<p>Recommended instance types for inference with a SageMaker model.</p>",
       "refs": {
         "SageMakerModelFulfillmentOption$recommendation": "<p>Recommended instance types for inference with this model.</p>"
+      }
+    },
+    "SageMakerModelResponseMimeTypeList": {
+      "base": null,
+      "refs": {
+        "SageMakerModelFulfillmentOption$supportedResponseMimeTypes": "<p>The MIME types that this model returns as output.</p>"
+      }
+    },
+    "SageMakerModelResponseMimeTypeListMemberString": {
+      "base": null,
+      "refs": {
+        "SageMakerModelResponseMimeTypeList$member": null
       }
     },
     "ScheduleItem": {
@@ -1209,6 +1340,7 @@
     "String": {
       "base": null,
       "refs": {
+        "AmazonMachineImageCidrIpAddressList$member": null,
         "AmazonMachineImageFulfillmentOption$fulfillmentOptionId": "<p>The unique identifier of the fulfillment option.</p>",
         "AmazonMachineImageFulfillmentOption$fulfillmentOptionName": "<p>The display name of the fulfillment option version.</p>",
         "AmazonMachineImageFulfillmentOption$fulfillmentOptionVersion": "<p>The version identifier of the fulfillment option.</p>",
@@ -1219,6 +1351,7 @@
         "AmazonMachineImageOperatingSystem$operatingSystemName": "<p>The specific operating system name, such as Amazon Linux 2 or Windows Server 2022.</p>",
         "AmazonMachineImageOperatingSystem$operatingSystemVersion": "<p>The version of the operating system.</p>",
         "AmazonMachineImageRecommendation$instanceType": "<p>The recommended EC2 instance type for this AMI.</p>",
+        "AmazonMachineImageSecurityGroup$protocol": "<p>The IP protocol name, such as <code>tcp</code>.</p>",
         "ApiFulfillmentOption$fulfillmentOptionId": "<p>The unique identifier of the fulfillment option.</p>",
         "ApiFulfillmentOption$fulfillmentOptionDisplayName": "<p>A human-readable name for the fulfillment option type.</p>",
         "ApiFulfillmentOption$usageInstructions": "<p>Instructions on how to integrate with and use this API.</p>",
@@ -1352,12 +1485,15 @@
     "Timestamp": {
       "base": null,
       "refs": {
+        "AmazonMachineImageFulfillmentOption$availableFromTime": "<p>The date and time when the AMI became available for fulfillment.</p>",
+        "CloudFormationFulfillmentOption$availableFromTime": "<p>The date and time when the CloudFormation fulfillment option became available for fulfillment.</p>",
         "GetOfferOutput$expirationTime": "<p>The date and time until when the offer can be procured. This value is null for offers that never expire.</p>",
         "GetOfferOutput$availableFromTime": "<p>The date and time when the offer became available to the buyer.</p>",
         "GetOfferSetOutput$availableFromTime": "<p>The date and time when the offer set became available to the buyer.</p>",
         "GetOfferSetOutput$expirationTime": "<p>The date and time when the offer set expires and is no longer available for procurement.</p>",
         "PurchaseOptionSummary$availableFromTime": "<p>The date and time when the purchase option became available to the buyer.</p>",
         "PurchaseOptionSummary$expirationTime": "<p>The date and time when the purchase option expires and is no longer available for procurement.</p>",
+        "SaasFulfillmentOption$availableFromTime": "<p>The date and time when the SaaS product became available for fulfillment.</p>",
         "ScheduleItem$chargeDate": "<p>The date when the payment is due.</p>",
         "ValidityTerm$agreementEndDate": "<p>The date when the agreement ends.</p>",
         "ValidityTerm$agreementStartDate": "<p>The date when the agreement starts.</p>"
@@ -1380,7 +1516,8 @@
         "PromotionalEmbeddedVideo$url": "<p>The URL of the video file.</p>",
         "PromotionalEmbeddedVideo$preview": "<p>The URL of the high-resolution preview image for the video.</p>",
         "PromotionalEmbeddedVideo$thumbnail": "<p>The URL of the thumbnail image for the video.</p>",
-        "ReviewSourceSummary$sourceUrl": "<p>The URL where the reviews can be accessed at the source.</p>"
+        "ReviewSourceSummary$sourceUrl": "<p>The URL where the reviews can be accessed at the source.</p>",
+        "SaasFulfillmentOption$launchUrl": "<p>The URL that a buyer uses to launch the seller's SaaS product. This URL is distinct from <code>fulfillmentUrl</code>, which is the seller's software registration landing page.</p>"
       }
     },
     "UsageBasedPricingTerm": {

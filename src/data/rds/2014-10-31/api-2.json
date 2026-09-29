@@ -3647,7 +3647,8 @@
         "TargetIops":{"shape":"IntegerOptional"},
         "TargetStorageType":{"shape":"TargetStorageType"},
         "TargetAllocatedStorage":{"shape":"IntegerOptional"},
-        "TargetStorageThroughput":{"shape":"IntegerOptional"}
+        "TargetStorageThroughput":{"shape":"IntegerOptional"},
+        "TargetResourceConfigurations":{"shape":"TargetResourceConfigurationList"}
       }
     },
     "CreateBlueGreenDeploymentResponse":{
@@ -4286,6 +4287,12 @@
         "inactive",
         "inactive-except-restore"
       ]
+    },
+    "DBAndClusterArn":{
+      "type":"string",
+      "max":255,
+      "min":39,
+      "pattern":"arn:aws[a-z-]*:rds(-[a-z]+)?:[a-z0-9-]*:[0-9]{12}:(cluster|db):[a-zA-Z][a-zA-Z0-9-]{0,62}"
     },
     "DBCluster":{
       "type":"structure",
@@ -10415,6 +10422,23 @@
     "TargetList":{
       "type":"list",
       "member":{"shape":"DBProxyTarget"}
+    },
+    "TargetResourceConfiguration":{
+      "type":"structure",
+      "required":["SourceArn"],
+      "members":{
+        "SourceArn":{"shape":"DBAndClusterArn"},
+        "TargetKmsKeyId":{"shape":"KmsKeyIdOrArn"}
+      }
+    },
+    "TargetResourceConfigurationList":{
+      "type":"list",
+      "member":{
+        "shape":"TargetResourceConfiguration",
+        "locationName":"TargetResourceConfiguration"
+      },
+      "max":20,
+      "min":0
     },
     "TargetRole":{
       "type":"string",

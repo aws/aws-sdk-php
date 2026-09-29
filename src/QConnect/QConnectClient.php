@@ -642,7 +642,7 @@ use Aws\AwsClient;
  *         orConditions?: list<array>,
  *         ...,
  *     },
- *     aiAgentConfiguration?: array<string, array{aiAgentId?: string, ...}>,
+ *     aiAgentConfiguration?: array<string, array{aiAgentId?: string, enabled?: bool, ...}>,
  *     contactArn?: string,
  *     orchestratorConfigurationList?: list<array{aiAgentId?: string, orchestratorUseCase?: string, ...}>,
  *     removeOrchestratorConfigurationList?: bool,
@@ -661,7 +661,7 @@ use Aws\AwsClient;
  *         orConditions?: list<array>,
  *         ...,
  *     },
- *     aiAgentConfiguration?: array<string, array{aiAgentId?: string, ...}>,
+ *     aiAgentConfiguration?: array<string, array{aiAgentId?: string, enabled?: bool, ...}>,
  *     contactArn?: string,
  *     orchestratorConfigurationList?: list<array{aiAgentId?: string, orchestratorUseCase?: string, ...}>,
  *     removeOrchestratorConfigurationList?: bool,
@@ -790,7 +790,7 @@ use Aws\AwsClient;
  *     maxResults?: int,
  *     waitTimeSeconds?: int,
  *     nextChunkToken?: string,
- *     recommendationType?: 'BLOCKED_CASE_SUMMARIZATION_CHUNK'|'BLOCKED_GENERATIVE_ANSWER_CHUNK'|'BLOCKED_INTENT_ANSWER_CHUNK'|'BLOCKED_NOTES_CHUNK'|'CASE_SUMMARIZATION_CHUNK'|'DETECTED_INTENT'|'EMAIL_GENERATIVE_ANSWER_CHUNK'|'EMAIL_OVERVIEW_CHUNK'|'EMAIL_RESPONSE_CHUNK'|'GENERATIVE_ANSWER'|'GENERATIVE_ANSWER_CHUNK'|'GENERATIVE_RESPONSE'|'INTENT_ANSWER_CHUNK'|'KNOWLEDGE_CONTENT'|'NOTES_CHUNK'|'SUGGESTED_MESSAGE',
+ *     recommendationType?: 'BLOCKED_CASE_SUMMARIZATION_CHUNK'|'BLOCKED_GENERATIVE_ANSWER_CHUNK'|'BLOCKED_INTENT_ANSWER_CHUNK'|'BLOCKED_NOTES_CHUNK'|'CASE_SUMMARIZATION_CHUNK'|'DETECTED_INTENT'|'EMAIL_GENERATIVE_ANSWER_CHUNK'|'EMAIL_OVERVIEW_CHUNK'|'EMAIL_RESPONSE_CHUNK'|'GENERATIVE_ANSWER'|'GENERATIVE_ANSWER_CHUNK'|'GENERATIVE_RESPONSE'|'INTENT_ANSWER_CHUNK'|'KNOWLEDGE_CONTENT'|'NOTES_CHUNK'|'PROACTIVE_RECOMMENDATION'|'SUGGESTED_MESSAGE',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise getRecommendationsAsync(array $args = [])
@@ -800,7 +800,7 @@ use Aws\AwsClient;
  *     maxResults?: int,
  *     waitTimeSeconds?: int,
  *     nextChunkToken?: string,
- *     recommendationType?: 'BLOCKED_CASE_SUMMARIZATION_CHUNK'|'BLOCKED_GENERATIVE_ANSWER_CHUNK'|'BLOCKED_INTENT_ANSWER_CHUNK'|'BLOCKED_NOTES_CHUNK'|'CASE_SUMMARIZATION_CHUNK'|'DETECTED_INTENT'|'EMAIL_GENERATIVE_ANSWER_CHUNK'|'EMAIL_OVERVIEW_CHUNK'|'EMAIL_RESPONSE_CHUNK'|'GENERATIVE_ANSWER'|'GENERATIVE_ANSWER_CHUNK'|'GENERATIVE_RESPONSE'|'INTENT_ANSWER_CHUNK'|'KNOWLEDGE_CONTENT'|'NOTES_CHUNK'|'SUGGESTED_MESSAGE',
+ *     recommendationType?: 'BLOCKED_CASE_SUMMARIZATION_CHUNK'|'BLOCKED_GENERATIVE_ANSWER_CHUNK'|'BLOCKED_INTENT_ANSWER_CHUNK'|'BLOCKED_NOTES_CHUNK'|'CASE_SUMMARIZATION_CHUNK'|'DETECTED_INTENT'|'EMAIL_GENERATIVE_ANSWER_CHUNK'|'EMAIL_OVERVIEW_CHUNK'|'EMAIL_RESPONSE_CHUNK'|'GENERATIVE_ANSWER'|'GENERATIVE_ANSWER_CHUNK'|'GENERATIVE_RESPONSE'|'INTENT_ANSWER_CHUNK'|'KNOWLEDGE_CONTENT'|'NOTES_CHUNK'|'PROACTIVE_RECOMMENDATION'|'SUGGESTED_MESSAGE',
  *     ...,
  * } $args = [])
  * @method \Aws\Result getSession(array $args = [])
@@ -1549,7 +1549,7 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result updateAssistantAIAgent(array{
  *     assistantId?: string,
  *     aiAgentType?: 'ANSWER_RECOMMENDATION'|'CASE_SUMMARIZATION'|'EMAIL_GENERATIVE_ANSWER'|'EMAIL_OVERVIEW'|'EMAIL_RESPONSE'|'MANUAL_SEARCH'|'NOTE_TAKING'|'ORCHESTRATION'|'SELF_SERVICE',
- *     configuration?: array{aiAgentId?: string, ...},
+ *     configuration?: array{aiAgentId?: string, enabled?: bool, ...},
  *     orchestratorUseCase?: string,
  *     ...,
  * } $args = [])
@@ -1557,7 +1557,7 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise updateAssistantAIAgentAsync(array{
  *     assistantId?: string,
  *     aiAgentType?: 'ANSWER_RECOMMENDATION'|'CASE_SUMMARIZATION'|'EMAIL_GENERATIVE_ANSWER'|'EMAIL_OVERVIEW'|'EMAIL_RESPONSE'|'MANUAL_SEARCH'|'NOTE_TAKING'|'ORCHESTRATION'|'SELF_SERVICE',
- *     configuration?: array{aiAgentId?: string, ...},
+ *     configuration?: array{aiAgentId?: string, enabled?: bool, ...},
  *     orchestratorUseCase?: string,
  *     ...,
  * } $args = [])
@@ -1818,7 +1818,7 @@ use Aws\AwsClient;
  *         orConditions?: list<array>,
  *         ...,
  *     },
- *     aiAgentConfiguration?: array<string, array{aiAgentId?: string, ...}>,
+ *     aiAgentConfiguration?: array<string, array{aiAgentId?: string, enabled?: bool, ...}>,
  *     orchestratorConfigurationList?: list<array{aiAgentId?: string, orchestratorUseCase?: string, ...}>,
  *     removeOrchestratorConfigurationList?: bool,
  *     ...,
@@ -1834,7 +1834,7 @@ use Aws\AwsClient;
  *         orConditions?: list<array>,
  *         ...,
  *     },
- *     aiAgentConfiguration?: array<string, array{aiAgentId?: string, ...}>,
+ *     aiAgentConfiguration?: array<string, array{aiAgentId?: string, enabled?: bool, ...}>,
  *     orchestratorConfigurationList?: list<array{aiAgentId?: string, orchestratorUseCase?: string, ...}>,
  *     removeOrchestratorConfigurationList?: bool,
  *     ...,

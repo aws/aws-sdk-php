@@ -6725,7 +6725,13 @@
         "NODEJS_24_X",
         "NODEJS_22_X",
         "JAVA_21",
-        "JAVA_25"
+        "JAVA_25",
+        "PYTHON_3_12",
+        "PYTHON_3_13",
+        "PYTHON_3_14",
+        "RUBY_3_3",
+        "DOTNET_8",
+        "NODEJS_20_X"
       ]
     },
     "SbomReportFormat":{
@@ -7066,7 +7072,10 @@
         "all":{"shape":"Long"},
         "medium":{"shape":"Long"},
         "high":{"shape":"Long"},
-        "critical":{"shape":"Long"}
+        "critical":{"shape":"Long"},
+        "low":{"shape":"Long"},
+        "informational":{"shape":"Long"},
+        "untriaged":{"shape":"Long"}
       }
     },
     "SortCriteria":{
@@ -7918,7 +7927,7 @@
     "VendorUpdatedAt":{"type":"timestamp"},
     "Version":{
       "type":"string",
-      "pattern":"\\$LATEST|[0-9]+"
+      "pattern":"(\\$LATEST|[0-9]+)"
     },
     "Vm":{
       "type":"structure",
