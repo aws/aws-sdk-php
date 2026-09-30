@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.398.4 - 2026-09-30
 
 * `Aws\S3Vectors` - Amazon S3 Vectors now supports metadata prefiltering, providing higher recall on filtered queries.
 * `Aws\AgentRegistry` - Minor doc update for the AWS Agent Registry Custom metadata SearchDiscoverableRegistryRecords API
