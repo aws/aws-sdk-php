@@ -211,6 +211,7 @@ class XmlParser
         return (string) $value;
     }
 
+    // phpcs:ignore PSR1.Methods.CamelCapsMethodName.NotCamelCaps
     private function parse_structure(
         StructureShape $shape,
         \SimpleXMLElement $value
@@ -263,6 +264,7 @@ class XmlParser
         return $shape['locationName'] ?? $name;
     }
 
+    // phpcs:ignore PSR1.Methods.CamelCapsMethodName.NotCamelCaps
     private function parse_list(ListShape $shape, \SimpleXMLElement $value)
     {
         $target = [];
@@ -279,6 +281,7 @@ class XmlParser
         return $target;
     }
 
+    // phpcs:ignore PSR1.Methods.CamelCapsMethodName.NotCamelCaps
     private function parse_map(MapShape $shape, \SimpleXMLElement $value)
     {
         $target = [];
@@ -301,11 +304,13 @@ class XmlParser
         return $target;
     }
 
+    // phpcs:ignore PSR1.Methods.CamelCapsMethodName.NotCamelCaps
     private function parse_blob(Shape $shape, $value)
     {
         return base64_decode((string) $value);
     }
 
+    // phpcs:ignore PSR1.Methods.CamelCapsMethodName.NotCamelCaps
     private function parse_float(Shape $shape, $value)
     {
         $value = (string) $value;
@@ -316,16 +321,19 @@ class XmlParser
         };
     }
 
+    // phpcs:ignore PSR1.Methods.CamelCapsMethodName.NotCamelCaps
     private function parse_integer(Shape $shape, $value)
     {
         return (int) (string) $value;
     }
 
+    // phpcs:ignore PSR1.Methods.CamelCapsMethodName.NotCamelCaps
     private function parse_boolean(Shape $shape, $value)
     {
         return $value == 'true';
     }
 
+    // phpcs:ignore PSR1.Methods.CamelCapsMethodName.NotCamelCaps
     private function parse_timestamp(Shape $shape, $value)
     {
         if (
@@ -342,6 +350,7 @@ class XmlParser
         throw new ParserException('Invalid timestamp value passed to XmlParser::parse_timestamp');
     }
 
+    // phpcs:ignore PSR1.Methods.CamelCapsMethodName.NotCamelCaps
     private function parse_xml_attribute(Shape $shape, Shape $memberShape, $value)
     {
         $namespace = $shape['xmlNamespace']['uri'] ?? '';

@@ -116,6 +116,7 @@ class XmlBody
         $xml->endElement();
     }
 
+    // phpcs:ignore PSR1.Methods.CamelCapsMethodName.NotCamelCaps
     private function add_structure(
         StructureShape $shape,
         $name,
@@ -169,6 +170,7 @@ class XmlBody
         return $members;
     }
 
+    // phpcs:ignore PSR1.Methods.CamelCapsMethodName.NotCamelCaps
     private function add_list(
         ListShape $shape,
         $name,
@@ -193,6 +195,7 @@ class XmlBody
         }
     }
 
+    // phpcs:ignore PSR1.Methods.CamelCapsMethodName.NotCamelCaps
     private function add_map(
         MapShape $shape,
         $name,
@@ -219,6 +222,7 @@ class XmlBody
         }
     }
 
+    // phpcs:ignore PSR1.Methods.CamelCapsMethodName.NotCamelCaps
     private function add_blob(Shape $shape, $name, $value, XMLWriter $xml)
     {
         $this->startElement($shape, $name, $xml);
@@ -226,6 +230,7 @@ class XmlBody
         $xml->endElement();
     }
 
+    // phpcs:ignore PSR1.Methods.CamelCapsMethodName.NotCamelCaps
     private function add_timestamp(
         TimestampShape $shape,
         $name,
@@ -242,6 +247,7 @@ class XmlBody
         $xml->endElement();
     }
 
+    // phpcs:ignore PSR1.Methods.CamelCapsMethodName.NotCamelCaps
     private function add_boolean(
         Shape $shape,
         $name,
@@ -253,6 +259,7 @@ class XmlBody
         $xml->endElement();
     }
 
+    // phpcs:ignore PSR1.Methods.CamelCapsMethodName.NotCamelCaps
     private function add_string(
         Shape $shape,
         $name,
