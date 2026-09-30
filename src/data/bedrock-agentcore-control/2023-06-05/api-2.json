@@ -4116,12 +4116,38 @@
         "location":{"shape":"CertificateLocation"}
       }
     },
+    "CertificateBucketOwnerAccountId":{
+      "type":"string",
+      "pattern":"[0-9]{12}"
+    },
+    "CertificateConfiguration":{
+      "type":"structure",
+      "members":{
+        "s3":{"shape":"S3CertificateConfiguration"},
+        "secretsManager":{"shape":"SecretsManagerCertificateConfiguration"}
+      },
+      "union":true
+    },
+    "CertificateConfigurationList":{
+      "type":"list",
+      "member":{"shape":"CertificateConfiguration"},
+      "max":1,
+      "min":1
+    },
     "CertificateLocation":{
       "type":"structure",
       "members":{
         "secretsManager":{"shape":"SecretsManagerLocation"}
       },
       "union":true
+    },
+    "CertificateS3Uri":{
+      "type":"string",
+      "pattern":"s3://.{1,2043}"
+    },
+    "CertificateSecretArn":{
+      "type":"string",
+      "pattern":"arn:aws(-[^:]+)?:secretsmanager:[a-z0-9-]+:[0-9]{12}:secret:.+"
     },
     "Certificates":{
       "type":"list",
@@ -5370,7 +5396,8 @@
         "targetConfiguration":{"shape":"TargetConfiguration"},
         "credentialProviderConfigurations":{"shape":"CredentialProviderConfigurations"},
         "metadataConfiguration":{"shape":"MetadataConfiguration"},
-        "privateEndpoint":{"shape":"PrivateEndpoint"}
+        "privateEndpoint":{"shape":"PrivateEndpoint"},
+        "certificateConfigurations":{"shape":"CertificateConfigurationList"}
       }
     },
     "CreateGatewayTargetResponse":{
@@ -5401,7 +5428,8 @@
         "privateEndpoint":{"shape":"PrivateEndpoint"},
         "privateEndpointManagedResources":{"shape":"PrivateEndpointManagedResources"},
         "authorizationData":{"shape":"AuthorizationData"},
-        "protocolType":{"shape":"TargetProtocolType"}
+        "protocolType":{"shape":"TargetProtocolType"},
+        "certificateConfigurations":{"shape":"CertificateConfigurationList"}
       }
     },
     "CreateHarnessEndpointRequest":{
@@ -6525,10 +6553,12 @@
     "DeleteConfigurationBundleResponse":{
       "type":"structure",
       "required":[
+        "bundleArn",
         "bundleId",
         "status"
       ],
       "members":{
+        "bundleArn":{"shape":"ConfigurationBundleArn"},
         "bundleId":{"shape":"ConfigurationBundleId"},
         "status":{"shape":"ConfigurationBundleStatus"}
       }
@@ -7862,7 +7892,7 @@
       "type":"string",
       "max":170,
       "min":1,
-      "pattern":"arn:aws:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:policy-engine\\/[a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9_]{10}"
+      "pattern":"arn:aws(-[^:]+)?:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:policy-engine\\/[a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9_]{10}"
     },
     "GatewayPolicyEngineConfiguration":{
       "type":"structure",
@@ -8080,7 +8110,8 @@
         "privateEndpoint":{"shape":"PrivateEndpoint"},
         "privateEndpointManagedResources":{"shape":"PrivateEndpointManagedResources"},
         "authorizationData":{"shape":"AuthorizationData"},
-        "protocolType":{"shape":"TargetProtocolType"}
+        "protocolType":{"shape":"TargetProtocolType"},
+        "certificateConfigurations":{"shape":"CertificateConfigurationList"}
       }
     },
     "GatewayTargetList":{
@@ -8751,7 +8782,8 @@
         "privateEndpoint":{"shape":"PrivateEndpoint"},
         "privateEndpointManagedResources":{"shape":"PrivateEndpointManagedResources"},
         "authorizationData":{"shape":"AuthorizationData"},
-        "protocolType":{"shape":"TargetProtocolType"}
+        "protocolType":{"shape":"TargetProtocolType"},
+        "certificateConfigurations":{"shape":"CertificateConfigurationList"}
       }
     },
     "GetHarnessEndpointRequest":{
@@ -14120,6 +14152,14 @@
       "type":"string",
       "pattern":"s3://.{1,2043}"
     },
+    "S3CertificateConfiguration":{
+      "type":"structure",
+      "required":["uri"],
+      "members":{
+        "uri":{"shape":"CertificateS3Uri"},
+        "bucketOwnerAccountId":{"shape":"CertificateBucketOwnerAccountId"}
+      }
+    },
     "S3Configuration":{
       "type":"structure",
       "members":{
@@ -14328,6 +14368,13 @@
         "MANAGED",
         "EXTERNAL"
       ]
+    },
+    "SecretsManagerCertificateConfiguration":{
+      "type":"structure",
+      "required":["secretArn"],
+      "members":{
+        "secretArn":{"shape":"CertificateSecretArn"}
+      }
     },
     "SecretsManagerLocation":{
       "type":"structure",
@@ -15648,7 +15695,8 @@
       "type":"structure",
       "required":[
         "bundleId",
-        "parentVersionIds"
+        "parentVersionIds",
+        "commitMessage"
       ],
       "members":{
         "clientToken":{
@@ -16016,7 +16064,8 @@
         "targetConfiguration":{"shape":"TargetConfiguration"},
         "credentialProviderConfigurations":{"shape":"CredentialProviderConfigurations"},
         "metadataConfiguration":{"shape":"MetadataConfiguration"},
-        "privateEndpoint":{"shape":"PrivateEndpoint"}
+        "privateEndpoint":{"shape":"PrivateEndpoint"},
+        "certificateConfigurations":{"shape":"CertificateConfigurationList"}
       }
     },
     "UpdateGatewayTargetResponse":{
@@ -16047,7 +16096,8 @@
         "privateEndpoint":{"shape":"PrivateEndpoint"},
         "privateEndpointManagedResources":{"shape":"PrivateEndpointManagedResources"},
         "authorizationData":{"shape":"AuthorizationData"},
-        "protocolType":{"shape":"TargetProtocolType"}
+        "protocolType":{"shape":"TargetProtocolType"},
+        "certificateConfigurations":{"shape":"CertificateConfigurationList"}
       }
     },
     "UpdateHarnessEndpointRequest":{

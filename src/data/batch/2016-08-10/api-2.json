@@ -1655,6 +1655,29 @@
         "networkMode":{"shape":"String"}
       }
     },
+    "EksAccessEntry":{
+      "type":"structure",
+      "required":["desiredState"],
+      "members":{
+        "desiredState":{"shape":"EksAccessEntryDesiredState"},
+        "status":{"shape":"EksAccessEntryStatus"}
+      }
+    },
+    "EksAccessEntryDesiredState":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED",
+        "INHERIT_FROM_CLUSTER"
+      ]
+    },
+    "EksAccessEntryStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "INACTIVE"
+      ]
+    },
     "EksAnnotationsMap":{
       "type":"map",
       "key":{"shape":"String"},
@@ -1699,7 +1722,14 @@
       ],
       "members":{
         "eksClusterArn":{"shape":"String"},
-        "kubernetesNamespace":{"shape":"String"}
+        "kubernetesNamespace":{"shape":"String"},
+        "accessEntry":{"shape":"EksAccessEntry"}
+      }
+    },
+    "EksConfigurationUpdate":{
+      "type":"structure",
+      "members":{
+        "accessEntry":{"shape":"EksAccessEntry"}
       }
     },
     "EksContainer":{
@@ -3724,7 +3754,8 @@
         "serviceRole":{"shape":"String"},
         "updatePolicy":{"shape":"UpdatePolicy"},
         "context":{"shape":"String"},
-        "ecsSettings":{"shape":"EcsSettings"}
+        "ecsSettings":{"shape":"EcsSettings"},
+        "eksConfiguration":{"shape":"EksConfigurationUpdate"}
       }
     },
     "UpdateComputeEnvironmentResponse":{

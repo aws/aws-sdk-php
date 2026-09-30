@@ -6693,7 +6693,8 @@
         "ASSIGN_SLA",
         "END_ASSOCIATED_TASKS",
         "SUBMIT_AUTO_EVALUATION",
-        "EXTRACT_INFORMATION"
+        "EXTRACT_INFORMATION",
+        "SEND_IN_APP_NOTIFICATION"
       ]
     },
     "ActivateEvaluationFormRequest":{
@@ -20006,7 +20007,7 @@
     },
     "LocalizedString":{
       "type":"string",
-      "max":500,
+      "max":3000,
       "min":0
     },
     "Long":{"type":"long"},
@@ -23453,7 +23454,8 @@
         "AssignSlaAction":{"shape":"AssignSlaActionDefinition"},
         "EndAssociatedTasksAction":{"shape":"EndAssociatedTasksActionDefinition"},
         "SubmitAutoEvaluationAction":{"shape":"SubmitAutoEvaluationActionDefinition"},
-        "ExtractInformationAction":{"shape":"ExtractInformationActionDefinition"}
+        "ExtractInformationAction":{"shape":"ExtractInformationActionDefinition"},
+        "SendInAppNotificationAction":{"shape":"SendInAppNotificationActionDefinition"}
       }
     },
     "RuleActions":{
@@ -24649,6 +24651,19 @@
       "members":{
         "InitialContactId":{"shape":"ContactId"},
         "NewChatCreated":{"shape":"NewChatCreated"}
+      }
+    },
+    "SendInAppNotificationActionDefinition":{
+      "type":"structure",
+      "required":[
+        "Content",
+        "Recipient"
+      ],
+      "members":{
+        "Content":{"shape":"NotificationContent"},
+        "Recipient":{"shape":"NotificationRecipientType"},
+        "Exclusion":{"shape":"NotificationRecipientType"},
+        "Priority":{"shape":"ConfigurableNotificationPriority"}
       }
     },
     "SendNotificationActionDefinition":{

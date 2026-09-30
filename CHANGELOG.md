@@ -1,5 +1,26 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3Vectors` - Amazon S3 Vectors now supports metadata prefiltering, providing higher recall on filtered queries.
+* `Aws\AgentRegistry` - Minor doc update for the AWS Agent Registry Custom metadata SearchDiscoverableRegistryRecords API
+* `Aws\Bedrock` - Amazon Bedrock Automated Reasoning policies now accept Unicode letters in identifier names such as type names, type value names, and variable names. You can now author policies in non-English languages using accented or non-Latin characters.
+* `Aws\GlobalAccelerator` - IpSets now include the Network Zone for each Static IP address.
+* `Aws\DynamoDB` - Adds support for filtering exported table data using FilterExpression, ProjectionExpression and KeyConditionExpression with ExportTableToPointInTime.
+* `Aws\SageMaker` - This feature enables customers to modify their accounting database via API.
+* `Aws\Account` - This release adds support for verifying an AWS account's primary contact phone number. SendPhoneNumberVerification sends a one-time code by SMS, VerifyPhoneNumber validates it, and GetContactInformation now returns the verification status.
+* `Aws\Connect` - Amazon Connect Rules can now trigger in-app notifications to users as a rule action. Notification character limit was increased to 500 visible characters.
+* `Aws\Batch` - AWS Batch adds support for Amazon EKS access entries on EKS compute environments through the new accessEntry setting in CreateComputeEnvironment and UpdateComputeEnvironment.
+* `Aws\ECS` - Releasing VPCL for BlueGreen ecs deployments.
+* `Aws\Glue` - Enable Catalog ID for crawler, column statistics and materialized views.
+* `Aws\BedrockAgentCoreControl` - This release adds support for private certificate authorities on Amazon Bedrock AgentCore Gateway targets. The new certificateConfigurations parameter on CreateGatewayTarget and UpdateGatewayTarget references a PEM-encoded CA certificate in Amazon S3 or AWS Secrets Manager.
+* `Aws\CloudWatchLogs` - Amazon CloudWatch Logs now supports an optional roleArn parameter on PutDeliveryDestination for X-Ray trace delivery destinations, specifying the IAM role to assume when delivering traces.
+* `Aws\GuardDuty` - GuardDuty AWS Organizations policy integration. GetDetector and GetMemberDetectors now show whether a GuardDuty policy manages a feature.
+* `Aws\DataZone` - Support for setting notebook run notification configurations
+* `Aws\ObservabilityAdmin` - Enablement for Bedrock PaymentManager logs via Observability Admin Telemetry Rule
+* `Aws\S3` - Amazon S3 adds a new optional S3 Inventory field, IntelligentTieringReferenceDate, reporting the reference date S3 Intelligent-Tiering uses to evaluate an object's tier-transition eligibility. The value is populated for objects in the Intelligent-Tiering storage class and left blank for others.
+* `Aws\Organizations` - Add support for policy operations on the GUARDDUTY POLICY policy type.
+
 ## 3.398.3 - 2026-09-29
 
 * `Aws\SESv2` - Added Filter support for ListTenants, ListEmailIdentities, and ListConfigurationSets APIs.

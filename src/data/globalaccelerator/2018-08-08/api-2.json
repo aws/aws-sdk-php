@@ -1837,6 +1837,19 @@
       "type":"string",
       "max":45
     },
+    "IpAddressDetail":{
+      "type":"structure",
+      "members":{
+        "IpAddress":{"shape":"IpAddress"},
+        "NetworkZone":{"shape":"NetworkZone"}
+      }
+    },
+    "IpAddressDetails":{
+      "type":"list",
+      "member":{"shape":"IpAddressDetail"},
+      "max":2,
+      "min":0
+    },
     "IpAddressFamily":{
       "type":"string",
       "enum":[
@@ -1866,7 +1879,8 @@
           "deprecatedMessage":"IpFamily has been replaced by IpAddressFamily"
         },
         "IpAddresses":{"shape":"IpAddresses"},
-        "IpAddressFamily":{"shape":"IpAddressFamily"}
+        "IpAddressFamily":{"shape":"IpAddressFamily"},
+        "IpAddressDetails":{"shape":"IpAddressDetails"}
       }
     },
     "IpSets":{
@@ -2101,6 +2115,10 @@
       "type":"integer",
       "max":100,
       "min":1
+    },
+    "NetworkZone":{
+      "type":"string",
+      "max":24
     },
     "PortMapping":{
       "type":"structure",

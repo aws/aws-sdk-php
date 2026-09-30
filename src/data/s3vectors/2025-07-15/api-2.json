@@ -300,6 +300,26 @@
       ],
       "readonly":true
     },
+    "PutVectorBucketDefaultIndexMode":{
+      "name":"PutVectorBucketDefaultIndexMode",
+      "http":{
+        "method":"POST",
+        "requestUri":"/PutVectorBucketDefaultIndexMode",
+        "responseCode":200
+      },
+      "input":{"shape":"PutVectorBucketDefaultIndexModeInput"},
+      "output":{"shape":"PutVectorBucketDefaultIndexModeOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"RequestTimeoutException"},
+        {"shape":"NotFoundException"}
+      ],
+      "idempotent":true
+    },
     "PutVectorBucketPolicy":{
       "name":"PutVectorBucketPolicy",
       "http":{
@@ -408,6 +428,26 @@
         {"shape":"RequestTimeoutException"},
         {"shape":"NotFoundException"},
         {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
+    "UpdateIndexMode":{
+      "name":"UpdateIndexMode",
+      "http":{
+        "method":"POST",
+        "requestUri":"/UpdateIndexMode",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateIndexModeInput"},
+      "output":{"shape":"UpdateIndexModeOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"RequestTimeoutException"},
+        {"shape":"NotFoundException"}
       ],
       "idempotent":true
     }
@@ -676,12 +716,20 @@
         "dimension":{"shape":"Dimension"},
         "distanceMetric":{"shape":"DistanceMetric"},
         "metadataConfiguration":{"shape":"MetadataConfiguration"},
-        "encryptionConfiguration":{"shape":"EncryptionConfiguration"}
+        "encryptionConfiguration":{"shape":"EncryptionConfiguration"},
+        "indexMode":{"shape":"IndexMode"}
       }
     },
     "IndexArn":{
       "type":"string",
       "pattern":"arn:aws[-a-z0-9]*:s3vectors:[a-z0-9-]+:[0-9]{12}:bucket/[a-z0-9][a-z0-9-.]{1,61}[a-z0-9]/index/[a-z0-9][a-z0-9-.]{1,61}[a-z0-9]"
+    },
+    "IndexMode":{
+      "type":"string",
+      "enum":[
+        "CLASSIC",
+        "ENHANCED"
+      ]
     },
     "IndexName":{
       "type":"string",
@@ -960,6 +1008,19 @@
         "metadata":{"shape":"VectorMetadata"}
       }
     },
+    "PutVectorBucketDefaultIndexModeInput":{
+      "type":"structure",
+      "required":["defaultIndexMode"],
+      "members":{
+        "vectorBucketName":{"shape":"VectorBucketName"},
+        "vectorBucketArn":{"shape":"VectorBucketArn"},
+        "defaultIndexMode":{"shape":"IndexMode"}
+      }
+    },
+    "PutVectorBucketDefaultIndexModeOutput":{
+      "type":"structure",
+      "members":{}
+    },
     "PutVectorBucketPolicyInput":{
       "type":"structure",
       "required":["policy"],
@@ -1015,6 +1076,7 @@
         "topK":{"shape":"TopK"},
         "queryVector":{"shape":"VectorData"},
         "filter":{"shape":"Document"},
+        "queryMode":{"shape":"IndexMode"},
         "returnMetadata":{"shape":"Boolean"},
         "returnDistance":{"shape":"Boolean"},
         "nextToken":{"shape":"QueryVectorsNextToken"}
@@ -1172,6 +1234,20 @@
       "type":"structure",
       "members":{}
     },
+    "UpdateIndexModeInput":{
+      "type":"structure",
+      "required":["indexMode"],
+      "members":{
+        "vectorBucketName":{"shape":"VectorBucketName"},
+        "indexName":{"shape":"IndexName"},
+        "indexArn":{"shape":"IndexArn"},
+        "indexMode":{"shape":"IndexMode"}
+      }
+    },
+    "UpdateIndexModeOutput":{
+      "type":"structure",
+      "members":{}
+    },
     "ValidationException":{
       "type":"structure",
       "required":["message"],
@@ -1207,7 +1283,8 @@
         "vectorBucketName":{"shape":"VectorBucketName"},
         "vectorBucketArn":{"shape":"VectorBucketArn"},
         "creationTime":{"shape":"Timestamp"},
-        "encryptionConfiguration":{"shape":"EncryptionConfiguration"}
+        "encryptionConfiguration":{"shape":"EncryptionConfiguration"},
+        "defaultIndexMode":{"shape":"IndexMode"}
       }
     },
     "VectorBucketArn":{

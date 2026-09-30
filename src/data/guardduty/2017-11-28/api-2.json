@@ -4466,6 +4466,10 @@
         "UpdatedAt":{
           "shape":"Timestamp",
           "locationName":"updatedAt"
+        },
+        "ManagedBy":{
+          "shape":"ManagedBy",
+          "locationName":"managedBy"
         }
       }
     },
@@ -4526,6 +4530,10 @@
         "AdditionalConfiguration":{
           "shape":"DetectorAdditionalConfigurationResults",
           "locationName":"additionalConfiguration"
+        },
+        "ManagedBy":{
+          "shape":"ManagedBy",
+          "locationName":"managedBy"
         }
       }
     },
@@ -8458,6 +8466,10 @@
       "type":"list",
       "member":{"shape":"MalwareScan"}
     },
+    "ManagedBy":{
+      "type":"string",
+      "enum":["GUARDDUTY_POLICY"]
+    },
     "ManagementType":{
       "type":"string",
       "enum":[
@@ -8585,6 +8597,10 @@
         "UpdatedAt":{
           "shape":"Timestamp",
           "locationName":"updatedAt"
+        },
+        "ManagedBy":{
+          "shape":"ManagedBy",
+          "locationName":"managedBy"
         }
       }
     },
@@ -8660,6 +8676,10 @@
         "AdditionalConfiguration":{
           "shape":"MemberAdditionalConfigurationResults",
           "locationName":"additionalConfiguration"
+        },
+        "ManagedBy":{
+          "shape":"ManagedBy",
+          "locationName":"managedBy"
         }
       }
     },

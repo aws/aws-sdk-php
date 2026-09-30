@@ -434,6 +434,7 @@ use Aws\AwsClient;
  *     Configuration?: string,
  *     CrawlerSecurityConfiguration?: string,
  *     Tags?: array<string, string>,
+ *     CatalogId?: string,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createCrawlerAsync(array $args = [])
@@ -467,6 +468,7 @@ use Aws\AwsClient;
  *     Configuration?: string,
  *     CrawlerSecurityConfiguration?: string,
  *     Tags?: array<string, string>,
+ *     CatalogId?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result createCustomEntityType(array $args = [])
@@ -1494,9 +1496,9 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteColumnStatisticsForTableAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteColumnStatisticsForTableAsync(array{CatalogId?: string, DatabaseName?: string, TableName?: string, ColumnName?: string, ...} $args = [])
  * @method \Aws\Result deleteColumnStatisticsTaskSettings(array $args = [])
- * @phpstan-method \Aws\Result deleteColumnStatisticsTaskSettings(array{DatabaseName?: string, TableName?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result deleteColumnStatisticsTaskSettings(array{DatabaseName?: string, TableName?: string, CatalogID?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteColumnStatisticsTaskSettingsAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise deleteColumnStatisticsTaskSettingsAsync(array{DatabaseName?: string, TableName?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteColumnStatisticsTaskSettingsAsync(array{DatabaseName?: string, TableName?: string, CatalogID?: string, ...} $args = [])
  * @method \Aws\Result deleteConnection(array $args = [])
  * @phpstan-method \Aws\Result deleteConnection(array{CatalogId?: string, ConnectionName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteConnectionAsync(array $args = [])
@@ -1784,13 +1786,27 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getColumnStatisticsTaskRunAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getColumnStatisticsTaskRunAsync(array{ColumnStatisticsTaskRunId?: string, ...} $args = [])
  * @method \Aws\Result getColumnStatisticsTaskRuns(array $args = [])
- * @phpstan-method \Aws\Result getColumnStatisticsTaskRuns(array{DatabaseName?: string, TableName?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result getColumnStatisticsTaskRuns(array{
+ *     DatabaseName?: string,
+ *     TableName?: string,
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     CatalogID?: string,
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise getColumnStatisticsTaskRunsAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise getColumnStatisticsTaskRunsAsync(array{DatabaseName?: string, TableName?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getColumnStatisticsTaskRunsAsync(array{
+ *     DatabaseName?: string,
+ *     TableName?: string,
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     CatalogID?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result getColumnStatisticsTaskSettings(array $args = [])
- * @phpstan-method \Aws\Result getColumnStatisticsTaskSettings(array{DatabaseName?: string, TableName?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result getColumnStatisticsTaskSettings(array{DatabaseName?: string, TableName?: string, CatalogID?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getColumnStatisticsTaskSettingsAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise getColumnStatisticsTaskSettingsAsync(array{DatabaseName?: string, TableName?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getColumnStatisticsTaskSettingsAsync(array{DatabaseName?: string, TableName?: string, CatalogID?: string, ...} $args = [])
  * @method \Aws\Result getConnection(array $args = [])
  * @phpstan-method \Aws\Result getConnection(array{
  *     CatalogId?: string,
@@ -3404,9 +3420,9 @@ use Aws\AwsClient;
  *     ...,
  * } $args = [])
  * @method \Aws\Result startColumnStatisticsTaskRunSchedule(array $args = [])
- * @phpstan-method \Aws\Result startColumnStatisticsTaskRunSchedule(array{DatabaseName?: string, TableName?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result startColumnStatisticsTaskRunSchedule(array{DatabaseName?: string, TableName?: string, CatalogID?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise startColumnStatisticsTaskRunScheduleAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise startColumnStatisticsTaskRunScheduleAsync(array{DatabaseName?: string, TableName?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise startColumnStatisticsTaskRunScheduleAsync(array{DatabaseName?: string, TableName?: string, CatalogID?: string, ...} $args = [])
  * @method \Aws\Result startCrawler(array $args = [])
  * @phpstan-method \Aws\Result startCrawler(array{Name?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise startCrawlerAsync(array $args = [])
@@ -3628,13 +3644,13 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise startWorkflowRunAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise startWorkflowRunAsync(array{Name?: string, RunProperties?: array<string, string>, ...} $args = [])
  * @method \Aws\Result stopColumnStatisticsTaskRun(array $args = [])
- * @phpstan-method \Aws\Result stopColumnStatisticsTaskRun(array{DatabaseName?: string, TableName?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result stopColumnStatisticsTaskRun(array{DatabaseName?: string, TableName?: string, CatalogID?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise stopColumnStatisticsTaskRunAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise stopColumnStatisticsTaskRunAsync(array{DatabaseName?: string, TableName?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise stopColumnStatisticsTaskRunAsync(array{DatabaseName?: string, TableName?: string, CatalogID?: string, ...} $args = [])
  * @method \Aws\Result stopColumnStatisticsTaskRunSchedule(array $args = [])
- * @phpstan-method \Aws\Result stopColumnStatisticsTaskRunSchedule(array{DatabaseName?: string, TableName?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result stopColumnStatisticsTaskRunSchedule(array{DatabaseName?: string, TableName?: string, CatalogID?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise stopColumnStatisticsTaskRunScheduleAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise stopColumnStatisticsTaskRunScheduleAsync(array{DatabaseName?: string, TableName?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise stopColumnStatisticsTaskRunScheduleAsync(array{DatabaseName?: string, TableName?: string, CatalogID?: string, ...} $args = [])
  * @method \Aws\Result stopCrawler(array $args = [])
  * @phpstan-method \Aws\Result stopCrawler(array{Name?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise stopCrawlerAsync(array $args = [])
@@ -3969,6 +3985,7 @@ use Aws\AwsClient;
  *     LakeFormationConfiguration?: array{UseLakeFormationCredentials?: bool, AccountId?: string, ...},
  *     Configuration?: string,
  *     CrawlerSecurityConfiguration?: string,
+ *     CatalogId?: string,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateCrawlerAsync(array $args = [])
@@ -4001,6 +4018,7 @@ use Aws\AwsClient;
  *     LakeFormationConfiguration?: array{UseLakeFormationCredentials?: bool, AccountId?: string, ...},
  *     Configuration?: string,
  *     CrawlerSecurityConfiguration?: string,
+ *     CatalogId?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateCrawlerSchedule(array $args = [])

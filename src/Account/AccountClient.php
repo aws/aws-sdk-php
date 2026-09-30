@@ -129,9 +129,17 @@ use Aws\AwsClient;
  *     AccountId?: string,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result sendPhoneNumberVerification(array $args = [])
+ * @phpstan-method \Aws\Result sendPhoneNumberVerification(array{AccountId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise sendPhoneNumberVerificationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise sendPhoneNumberVerificationAsync(array{AccountId?: string, ...} $args = [])
  * @method \Aws\Result startPrimaryEmailUpdate(array $args = [])
  * @phpstan-method \Aws\Result startPrimaryEmailUpdate(array{AccountId?: string, PrimaryEmail?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise startPrimaryEmailUpdateAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise startPrimaryEmailUpdateAsync(array{AccountId?: string, PrimaryEmail?: string, ...} $args = [])
+ * @method \Aws\Result verifyPhoneNumber(array $args = [])
+ * @phpstan-method \Aws\Result verifyPhoneNumber(array{AccountId?: string, Otp?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise verifyPhoneNumberAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise verifyPhoneNumberAsync(array{AccountId?: string, Otp?: string, ...} $args = [])
  */
 class AccountClient extends AwsClient {}

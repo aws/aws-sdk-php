@@ -8111,6 +8111,43 @@
       "min":1,
       "pattern":"[a-zA-Z0-9-]+"
     },
+    "ClusterAccountingDatabase":{
+      "type":"structure",
+      "required":[
+        "Endpoint",
+        "SecretArn"
+      ],
+      "members":{
+        "Endpoint":{"shape":"ClusterAccountingDatabaseEndpoint"},
+        "Port":{"shape":"ClusterAccountingDatabasePort"},
+        "Name":{"shape":"ClusterAccountingDatabaseName"},
+        "SecretArn":{"shape":"ClusterAccountingDatabaseSecretArn"}
+      }
+    },
+    "ClusterAccountingDatabaseEndpoint":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"(?=.{1,255}$)([a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?)(\\.[a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?)*"
+    },
+    "ClusterAccountingDatabaseName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9$_]+"
+    },
+    "ClusterAccountingDatabasePort":{
+      "type":"integer",
+      "box":true,
+      "max":65535,
+      "min":1
+    },
+    "ClusterAccountingDatabaseSecretArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws[a-z\\-]*:secretsmanager:[a-z0-9\\-]*:[0-9]{12}:secret:.+"
+    },
     "ClusterArn":{
       "type":"string",
       "max":256,
@@ -9005,7 +9042,8 @@
     "ClusterOrchestratorSlurmConfig":{
       "type":"structure",
       "members":{
-        "SlurmConfigStrategy":{"shape":"ClusterSlurmConfigStrategy"}
+        "SlurmConfigStrategy":{"shape":"ClusterSlurmConfigStrategy"},
+        "AccountingDatabase":{"shape":"ClusterAccountingDatabase"}
       }
     },
     "ClusterPartitionName":{
@@ -11883,6 +11921,22 @@
       "max":255,
       "min":1,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\t]*"
+    },
+    "DatabaseConfigurationMetadata":{
+      "type":"structure",
+      "members":{
+        "RollbackStatus":{"shape":"DatabaseConfigurationRollbackStatus"},
+        "Advisory":{"shape":"String"},
+        "FailureMessage":{"shape":"String"}
+      }
+    },
+    "DatabaseConfigurationRollbackStatus":{
+      "type":"string",
+      "enum":[
+        "NotApplicable",
+        "Reverted",
+        "RevertFailed"
+      ]
     },
     "DatasetDefinition":{
       "type":"structure",
@@ -16348,7 +16402,9 @@
         "Cluster":{"shape":"ClusterMetadata"},
         "InstanceGroup":{"shape":"InstanceGroupMetadata"},
         "InstanceGroupScaling":{"shape":"InstanceGroupScalingMetadata"},
-        "Instance":{"shape":"InstanceMetadata"}
+        "Instance":{"shape":"InstanceMetadata"},
+        "DatabaseConfiguration":{"shape":"DatabaseConfigurationMetadata"},
+        "SlurmHealth":{"shape":"SlurmHealthMetadata"}
       },
       "union":true
     },
@@ -28489,6 +28545,37 @@
       "enum":[
         "All",
         "None"
+      ]
+    },
+    "SlurmHealthComponent":{
+      "type":"string",
+      "enum":["Slurmdbd"]
+    },
+    "SlurmHealthMetadata":{
+      "type":"structure",
+      "required":[
+        "Component",
+        "Status"
+      ],
+      "members":{
+        "Component":{"shape":"SlurmHealthComponent"},
+        "Status":{"shape":"SlurmHealthStatus"},
+        "Reason":{"shape":"SlurmHealthReason"}
+      }
+    },
+    "SlurmHealthReason":{
+      "type":"string",
+      "enum":[
+        "DaemonDown",
+        "DaemonDisabled",
+        "DbUnreachable"
+      ]
+    },
+    "SlurmHealthStatus":{
+      "type":"string",
+      "enum":[
+        "Healthy",
+        "Unhealthy"
       ]
     },
     "SnsTopicArn":{

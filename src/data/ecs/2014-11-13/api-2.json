@@ -5133,7 +5133,8 @@
     "ResolvedConfiguration":{
       "type":"structure",
       "members":{
-        "loadBalancers":{"shape":"ServiceRevisionLoadBalancers"}
+        "loadBalancers":{"shape":"ServiceRevisionLoadBalancers"},
+        "vpcLatticeConfigurations":{"shape":"ServiceRevisionVpcLatticeConfigurations"}
       }
     },
     "Resource":{
@@ -5721,6 +5722,17 @@
           "box":true
         }
       }
+    },
+    "ServiceRevisionVpcLatticeConfiguration":{
+      "type":"structure",
+      "members":{
+        "targetGroupArn":{"shape":"String"},
+        "productionListenerRule":{"shape":"String"}
+      }
+    },
+    "ServiceRevisionVpcLatticeConfigurations":{
+      "type":"list",
+      "member":{"shape":"ServiceRevisionVpcLatticeConfiguration"}
     },
     "ServiceRevisions":{
       "type":"list",
@@ -6697,6 +6709,14 @@
       "type":"list",
       "member":{"shape":"Volume"}
     },
+    "VpcLatticeAdvancedConfiguration":{
+      "type":"structure",
+      "members":{
+        "alternateTargetGroupArn":{"shape":"String"},
+        "productionListenerRule":{"shape":"String"},
+        "testListenerRule":{"shape":"String"}
+      }
+    },
     "VpcLatticeConfiguration":{
       "type":"structure",
       "required":[
@@ -6707,7 +6727,8 @@
       "members":{
         "roleArn":{"shape":"IAMRoleArn"},
         "targetGroupArn":{"shape":"String"},
-        "portName":{"shape":"String"}
+        "portName":{"shape":"String"},
+        "advancedConfiguration":{"shape":"VpcLatticeAdvancedConfiguration"}
       }
     },
     "VpcLatticeConfigurations":{

@@ -6440,6 +6440,14 @@
         "UpdateNotebookOutput$type": "<p>The type of the notebook.</p>"
       }
     },
+    "NotificationConfig": {
+      "base": "<p>The notification configuration for a notebook run in Amazon SageMaker Unified Studio.</p>",
+      "refs": {
+        "GetNotebookRunOutput$notificationConfiguration": "<p>The notification configuration of the notebook run, including the notebook run states that trigger notifications.</p>",
+        "StartNotebookRunInput$notificationConfiguration": "<p>The notification configuration for the notebook run. Use this to specify the notebook run states that trigger notifications.</p>",
+        "StartNotebookRunOutput$notificationConfiguration": "<p>The notification configuration of the notebook run, including the notebook run states that trigger notifications.</p>"
+      }
+    },
     "NotificationOutput": {
       "base": "<p>The details of a notification generated in Amazon DataZone.</p>",
       "refs": {
@@ -6481,6 +6489,18 @@
       "base": null,
       "refs": {
         "ListNotificationsOutput$notifications": "<p>The results of the <code>ListNotifications</code> action.</p>"
+      }
+    },
+    "NotifyOnState": {
+      "base": "<p>A notebook run state that triggers a notification in Amazon SageMaker Unified Studio.</p>",
+      "refs": {
+        "NotifyOnStates$member": null
+      }
+    },
+    "NotifyOnStates": {
+      "base": null,
+      "refs": {
+        "NotificationConfig$notifyOn": "<p>Notebook run states that trigger notifications. Ordering is not significant.</p>"
       }
     },
     "OAuth2ClientApplication": {

@@ -830,6 +830,7 @@ use Generator;
  *     outputFormat?: 'json'|'parquet'|'plain'|'raw'|'w3c',
  *     deliveryDestinationConfiguration?: array{destinationResourceArn?: string, ...},
  *     deliveryDestinationType?: 'CWL'|'FH'|'S3'|'XRAY',
+ *     roleArn?: string,
  *     tags?: array<string, string>,
  *     ...,
  * } $args = [])
@@ -839,6 +840,7 @@ use Generator;
  *     outputFormat?: 'json'|'parquet'|'plain'|'raw'|'w3c',
  *     deliveryDestinationConfiguration?: array{destinationResourceArn?: string, ...},
  *     deliveryDestinationType?: 'CWL'|'FH'|'S3'|'XRAY',
+ *     roleArn?: string,
  *     tags?: array<string, string>,
  *     ...,
  * } $args = [])

@@ -270,6 +270,24 @@
       ],
       "idempotent":true
     },
+    "SendPhoneNumberVerification":{
+      "name":"SendPhoneNumberVerification",
+      "http":{
+        "method":"POST",
+        "requestUri":"/sendPhoneNumberVerification",
+        "responseCode":200
+      },
+      "input":{"shape":"SendPhoneNumberVerificationRequest"},
+      "output":{"shape":"SendPhoneNumberVerificationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "StartPrimaryEmailUpdate":{
       "name":"StartPrimaryEmailUpdate",
       "http":{
@@ -279,6 +297,24 @@
       },
       "input":{"shape":"StartPrimaryEmailUpdateRequest"},
       "output":{"shape":"StartPrimaryEmailUpdateResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "VerifyPhoneNumber":{
+      "name":"VerifyPhoneNumber",
+      "http":{
+        "method":"POST",
+        "requestUri":"/verifyPhoneNumber",
+        "responseCode":200
+      },
+      "input":{"shape":"VerifyPhoneNumberRequest"},
+      "output":{"shape":"VerifyPhoneNumberResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
@@ -531,7 +567,8 @@
     "GetContactInformationResponse":{
       "type":"structure",
       "members":{
-        "ContactInformation":{"shape":"ContactInformation"}
+        "ContactInformation":{"shape":"ContactInformation"},
+        "VerificationStatus":{"shape":"PhoneNumberVerificationStatus"}
       }
     },
     "GetGovCloudAccountInformationRequest":{
@@ -654,6 +691,15 @@
       "pattern":"[\\s0-9()+-]+",
       "sensitive":true
     },
+    "PhoneNumberVerificationStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "VERIFIED",
+        "UNVERIFIED",
+        "NOT_SUPPORTED"
+      ]
+    },
     "PostalCode":{
       "type":"string",
       "max":20,
@@ -773,6 +819,18 @@
       },
       "exception":true
     },
+    "SendPhoneNumberVerificationRequest":{
+      "type":"structure",
+      "members":{
+        "AccountId":{"shape":"AccountId"}
+      }
+    },
+    "SendPhoneNumberVerificationResponse":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"PhoneNumberVerificationStatus"}
+      }
+    },
     "SensitiveString":{
       "type":"string",
       "sensitive":true
@@ -861,6 +919,20 @@
         "invalidRegionOptTarget",
         "fieldValidationFailed"
       ]
+    },
+    "VerifyPhoneNumberRequest":{
+      "type":"structure",
+      "required":["Otp"],
+      "members":{
+        "AccountId":{"shape":"AccountId"},
+        "Otp":{"shape":"Otp"}
+      }
+    },
+    "VerifyPhoneNumberResponse":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"PhoneNumberVerificationStatus"}
+      }
     },
     "WebsiteUrl":{
       "type":"string",

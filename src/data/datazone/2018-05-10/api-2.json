@@ -10197,6 +10197,7 @@
         "timeoutConfiguration":{"shape":"TimeoutConfig"},
         "environmentConfiguration":{"shape":"EnvironmentConfig"},
         "storageConfiguration":{"shape":"StorageConfig"},
+        "notificationConfiguration":{"shape":"NotificationConfig"},
         "triggerSource":{"shape":"TriggerSource"},
         "error":{"shape":"NotebookRunError"},
         "createdAt":{"shape":"CreatedAt"},
@@ -14056,6 +14057,13 @@
         "SQL"
       ]
     },
+    "NotificationConfig":{
+      "type":"structure",
+      "required":["notifyOn"],
+      "members":{
+        "notifyOn":{"shape":"NotifyOnStates"}
+      }
+    },
     "NotificationOutput":{
       "type":"structure",
       "required":[
@@ -14123,6 +14131,24 @@
     "NotificationsList":{
       "type":"list",
       "member":{"shape":"NotificationOutput"}
+    },
+    "NotifyOnState":{
+      "type":"string",
+      "enum":[
+        "SUCCEEDED",
+        "FAILED",
+        "STOPPED",
+        "QUEUED",
+        "STARTING",
+        "RUNNING",
+        "STOPPING"
+      ]
+    },
+    "NotifyOnStates":{
+      "type":"list",
+      "member":{"shape":"NotifyOnState"},
+      "max":7,
+      "min":0
     },
     "OAuth2ClientApplication":{
       "type":"structure",
@@ -16565,6 +16591,7 @@
         "computeConfiguration":{"shape":"ComputeConfig"},
         "networkConfiguration":{"shape":"NetworkConfig"},
         "timeoutConfiguration":{"shape":"TimeoutConfig"},
+        "notificationConfiguration":{"shape":"NotificationConfig"},
         "triggerSource":{"shape":"TriggerSource"},
         "metadata":{"shape":"Metadata"},
         "parameters":{"shape":"Parameters"},
@@ -16598,6 +16625,7 @@
         "timeoutConfiguration":{"shape":"TimeoutConfig"},
         "environmentConfiguration":{"shape":"EnvironmentConfig"},
         "storageConfiguration":{"shape":"StorageConfig"},
+        "notificationConfiguration":{"shape":"NotificationConfig"},
         "triggerSource":{"shape":"TriggerSource"},
         "error":{"shape":"NotebookRunError"},
         "createdAt":{"shape":"CreatedAt"},

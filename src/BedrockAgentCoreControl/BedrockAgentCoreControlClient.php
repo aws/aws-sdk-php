@@ -573,6 +573,7 @@ use Aws\AwsClient;
  *         },
  *         ...,
  *     },
+ *     certificateConfigurations?: list<array{s3?: array, secretsManager?: array, ...}>,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createGatewayTargetAsync(array $args = [])
@@ -619,6 +620,7 @@ use Aws\AwsClient;
  *         },
  *         ...,
  *     },
+ *     certificateConfigurations?: list<array{s3?: array, secretsManager?: array, ...}>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result createHarness(array $args = [])
@@ -2343,6 +2345,7 @@ use Aws\AwsClient;
  *         },
  *         ...,
  *     },
+ *     certificateConfigurations?: list<array{s3?: array, secretsManager?: array, ...}>,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateGatewayTargetAsync(array $args = [])
@@ -2389,6 +2392,7 @@ use Aws\AwsClient;
  *         },
  *         ...,
  *     },
+ *     certificateConfigurations?: list<array{s3?: array, secretsManager?: array, ...}>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateHarness(array $args = [])

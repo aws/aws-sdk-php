@@ -741,7 +741,7 @@
         "CustomRoutingAccelerator$Name": "<p>The name of the accelerator. The name must contain only alphanumeric characters or hyphens (-), and must not begin or end with a hyphen.</p>",
         "CustomRoutingAccelerator$DnsName": "<p>The Domain Name System (DNS) name that Global Accelerator creates that points to an accelerator's static IPv4 addresses. </p> <p>The naming convention for the DNS name is the following: A lowercase letter a, followed by a 16-bit random hex string, followed by .awsglobalaccelerator.com. For example: a1234567890abcdef.awsglobalaccelerator.com.</p> <p>If you have a dual-stack accelerator, you also have a second DNS name, <code>DualStackDnsName</code>, that points to both the A record and the AAAA record for all four static addresses for the accelerator: two IPv4 addresses and two IPv6 addresses.</p> <p>For more information about the default DNS name, see <a href=\"https://docs.aws.amazon.com/global-accelerator/latest/dg/dns-addressing-custom-domains.dns-addressing.html\"> Support for DNS addressing in Global Accelerator</a> in the <i>Global Accelerator Developer Guide</i>.</p>",
         "CustomRoutingAcceleratorAttributes$FlowLogsS3Bucket": "<p>The name of the Amazon S3 bucket for the flow logs. Attribute is required if <code>FlowLogsEnabled</code> is <code>true</code>. The bucket must exist and have a bucket policy that grants Global Accelerator permission to write to the bucket.</p>",
-        "CustomRoutingAcceleratorAttributes$FlowLogsS3Prefix": "<p>The prefix for the location in the Amazon S3 bucket for the flow logs. Attribute is required if <code>FlowLogsEnabled</code> is <code>true</code>.</p> <p>If you don’t specify a prefix, the flow logs are stored in the root of the bucket. If you specify slash (/) for the S3 bucket prefix, the log file bucket folder structure will include a double slash (//), like the following:</p> <p>DOC-EXAMPLE-BUCKET//AWSLogs/aws_account_id</p>",
+        "CustomRoutingAcceleratorAttributes$FlowLogsS3Prefix": "<p>The prefix for the location in the Amazon S3 bucket for the flow logs. Attribute is required if <code>FlowLogsEnabled</code> is <code>true</code>.</p> <p>If you specify slash (/) for the S3 bucket prefix, the log file bucket folder structure will include a double slash (//), like the following:</p> <p>DOC-EXAMPLE-BUCKET//AWSLogs/aws_account_id</p>",
         "CustomRoutingEndpointConfiguration$EndpointId": "<p>An ID for the endpoint. For custom routing accelerators, this is the virtual private cloud (VPC) subnet ID. </p>",
         "CustomRoutingEndpointConfiguration$AttachmentArn": "<p>The Amazon Resource Name (ARN) of the cross-account attachment that specifies the endpoints (resources) that can be added to accelerators and principals that have permission to add the endpoints.</p>",
         "CustomRoutingEndpointDescription$EndpointId": "<p>An ID for the endpoint. For custom routing accelerators, this is the virtual private cloud (VPC) subnet ID. </p>",
@@ -829,7 +829,7 @@
         "UpdateCrossAccountAttachmentRequest$AttachmentArn": "<p>The Amazon Resource Name (ARN) of the cross-account attachment to update.</p>",
         "UpdateCustomRoutingAcceleratorAttributesRequest$AcceleratorArn": "<p>The Amazon Resource Name (ARN) of the custom routing accelerator to update attributes for.</p>",
         "UpdateCustomRoutingAcceleratorAttributesRequest$FlowLogsS3Bucket": "<p>The name of the Amazon S3 bucket for the flow logs. Attribute is required if <code>FlowLogsEnabled</code> is <code>true</code>. The bucket must exist and have a bucket policy that grants Global Accelerator permission to write to the bucket.</p>",
-        "UpdateCustomRoutingAcceleratorAttributesRequest$FlowLogsS3Prefix": "<p>Update the prefix for the location in the Amazon S3 bucket for the flow logs. Attribute is required if <code>FlowLogsEnabled</code> is <code>true</code>. </p> <p>If you don’t specify a prefix, the flow logs are stored in the root of the bucket. If you specify slash (/) for the S3 bucket prefix, the log file bucket folder structure will include a double slash (//), like the following:</p> <p>DOC-EXAMPLE-BUCKET//AWSLogs/aws_account_id</p>",
+        "UpdateCustomRoutingAcceleratorAttributesRequest$FlowLogsS3Prefix": "<p>Update the prefix for the location in the Amazon S3 bucket for the flow logs. Attribute is required if <code>FlowLogsEnabled</code> is <code>true</code>. </p> <p>If you specify slash (/) for the S3 bucket prefix, the log file bucket folder structure will include a double slash (//), like the following:</p> <p>DOC-EXAMPLE-BUCKET//AWSLogs/aws_account_id</p>",
         "UpdateCustomRoutingAcceleratorRequest$AcceleratorArn": "<p>The Amazon Resource Name (ARN) of the accelerator to update.</p>",
         "UpdateCustomRoutingAcceleratorRequest$Name": "<p>The name of the accelerator. The name can have a maximum of 64 characters, must contain only alphanumeric characters, periods (.), or hyphens (-), and must not begin or end with a hyphen or period.</p>",
         "UpdateCustomRoutingListenerRequest$ListenerArn": "<p>The Amazon Resource Name (ARN) of the listener to update.</p>",
@@ -912,7 +912,20 @@
       "base": null,
       "refs": {
         "DestinationAddresses$member": null,
+        "IpAddressDetail$IpAddress": "<p>The static IP address.</p>",
         "IpAddresses$member": null
+      }
+    },
+    "IpAddressDetail": {
+      "base": "<p>Detailed information for the IP addresses assigned to the Global Accelerator.</p>",
+      "refs": {
+        "IpAddressDetails$member": null
+      }
+    },
+    "IpAddressDetails": {
+      "base": null,
+      "refs": {
+        "IpSet$IpAddressDetails": "<p>The array of IP addresses in the IP address set, with detailed information about the IP addresses. An IP address set can have a maximum of two IP addresses.</p>"
       }
     },
     "IpAddressFamily": {
@@ -1095,6 +1108,12 @@
         "ListCustomRoutingListenersRequest$MaxResults": "<p>The number of listener objects that you want to return with this call. The default value is 10.</p>",
         "ListEndpointGroupsRequest$MaxResults": "<p>The number of endpoint group objects that you want to return with this call. The default value is 10.</p>",
         "ListListenersRequest$MaxResults": "<p>The number of listener objects that you want to return with this call. The default value is 10.</p>"
+      }
+    },
+    "NetworkZone": {
+      "base": null,
+      "refs": {
+        "IpAddressDetail$NetworkZone": "<p>The network zone that the specified IP address is located on.</p>"
       }
     },
     "PortMapping": {

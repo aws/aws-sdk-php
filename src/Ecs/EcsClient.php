@@ -289,7 +289,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     volumeConfigurations?: list<array{name?: string, managedEBSVolume?: array, ...}>,
- *     vpcLatticeConfigurations?: list<array{roleArn?: string, targetGroupArn?: string, portName?: string, ...}>,
+ *     vpcLatticeConfigurations?: list<array{roleArn?: string, targetGroupArn?: string, portName?: string, advancedConfiguration?: array, ...}>,
  *     monitoring?: array{metricConfigurations?: list<array>, ...},
  *     ...,
  * } $args = [])
@@ -354,7 +354,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     volumeConfigurations?: list<array{name?: string, managedEBSVolume?: array, ...}>,
- *     vpcLatticeConfigurations?: list<array{roleArn?: string, targetGroupArn?: string, portName?: string, ...}>,
+ *     vpcLatticeConfigurations?: list<array{roleArn?: string, targetGroupArn?: string, portName?: string, advancedConfiguration?: array, ...}>,
  *     monitoring?: array{metricConfigurations?: list<array>, ...},
  *     ...,
  * } $args = [])
@@ -1627,7 +1627,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     volumeConfigurations?: list<array{name?: string, managedEBSVolume?: array, ...}>,
- *     vpcLatticeConfigurations?: list<array{roleArn?: string, targetGroupArn?: string, portName?: string, ...}>,
+ *     vpcLatticeConfigurations?: list<array{roleArn?: string, targetGroupArn?: string, portName?: string, advancedConfiguration?: array, ...}>,
  *     monitoring?: array{metricConfigurations?: list<array>, ...},
  *     ...,
  * } $args = [])
@@ -1688,7 +1688,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     volumeConfigurations?: list<array{name?: string, managedEBSVolume?: array, ...}>,
- *     vpcLatticeConfigurations?: list<array{roleArn?: string, targetGroupArn?: string, portName?: string, ...}>,
+ *     vpcLatticeConfigurations?: list<array{roleArn?: string, targetGroupArn?: string, portName?: string, advancedConfiguration?: array, ...}>,
  *     monitoring?: array{metricConfigurations?: list<array>, ...},
  *     ...,
  * } $args = [])

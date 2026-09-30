@@ -1079,10 +1079,45 @@
         "Certificates$member": null
       }
     },
+    "CertificateBucketOwnerAccountId": {
+      "base": null,
+      "refs": {
+        "S3CertificateConfiguration$bucketOwnerAccountId": "<p>The account ID of the Amazon S3 bucket owner. This ID is used for cross-account access to the bucket.</p>"
+      }
+    },
+    "CertificateConfiguration": {
+      "base": "<p>A reference to a private certificate authority (CA) certificate that the gateway uses to verify TLS connections to the target endpoint. Use this when the target presents a certificate issued by a private CA that is not trusted by default. Specify exactly one certificate source. The configuration is a reference only and never contains the certificate content.</p>",
+      "refs": {
+        "CertificateConfigurationList$member": null
+      }
+    },
+    "CertificateConfigurationList": {
+      "base": null,
+      "refs": {
+        "CreateGatewayTargetRequest$certificateConfigurations": "<p>The private certificate authority (CA) configurations for the gateway target. Use this to have the gateway trust a private CA when it establishes TLS connections to the target endpoint. Provide each certificate by reference to an Amazon S3 object or an Amazon Web Services Secrets Manager secret. You can specify only one certificate authority configuration in this list.</p>",
+        "CreateGatewayTargetResponse$certificateConfigurations": "<p>The private certificate authority (CA) configurations for the gateway target.</p>",
+        "GatewayTarget$certificateConfigurations": "<p>The private certificate authority (CA) configurations for the gateway target.</p>",
+        "GetGatewayTargetResponse$certificateConfigurations": "<p>The private certificate authority (CA) configurations for the gateway target.</p>",
+        "UpdateGatewayTargetRequest$certificateConfigurations": "<p>The private certificate authority (CA) configurations for the gateway target. Use this to have the gateway trust a private CA when it establishes TLS connections to the target endpoint. Provide each certificate by reference to an Amazon S3 object or an Amazon Web Services Secrets Manager secret. You can specify only one certificate authority configuration in this list. To remove a previously configured certificate authority, omit this field on update.</p>",
+        "UpdateGatewayTargetResponse$certificateConfigurations": "<p>The private certificate authority (CA) configurations for the gateway target.</p>"
+      }
+    },
     "CertificateLocation": {
       "base": "<p>The location from which to retrieve a certificate.</p>",
       "refs": {
         "Certificate$location": "<p>The location of the certificate.</p>"
+      }
+    },
+    "CertificateS3Uri": {
+      "base": null,
+      "refs": {
+        "S3CertificateConfiguration$uri": "<p>The URI of the Amazon S3 object that contains the PEM-encoded certificate.</p>"
+      }
+    },
+    "CertificateSecretArn": {
+      "base": null,
+      "refs": {
+        "SecretsManagerCertificateConfiguration$secretArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Secrets Manager secret that contains the PEM-encoded certificate.</p>"
       }
     },
     "Certificates": {
@@ -1428,6 +1463,7 @@
         "ConfigurationBundleSummary$bundleArn": "<p>The Amazon Resource Name (ARN) of the configuration bundle.</p>",
         "ConfigurationBundleVersionSummary$bundleArn": "<p>The Amazon Resource Name (ARN) of the configuration bundle.</p>",
         "CreateConfigurationBundleResponse$bundleArn": "<p>The Amazon Resource Name (ARN) of the created configuration bundle.</p>",
+        "DeleteConfigurationBundleResponse$bundleArn": "<p>The Amazon Resource Name (ARN) of the deleted configuration bundle.</p>",
         "GetConfigurationBundleResponse$bundleArn": "<p>The Amazon Resource Name (ARN) of the configuration bundle.</p>",
         "GetConfigurationBundleVersionResponse$bundleArn": "<p>The Amazon Resource Name (ARN) of the configuration bundle.</p>",
         "UpdateConfigurationBundleResponse$bundleArn": "<p>The Amazon Resource Name (ARN) of the updated configuration bundle.</p>"
@@ -7924,6 +7960,12 @@
         "S3Configuration$uri": "<p>The URI of the Amazon S3 object. This URI specifies the location of the object in Amazon S3.</p>"
       }
     },
+    "S3CertificateConfiguration": {
+      "base": "<p>A reference to a PEM-encoded private CA certificate stored as an Amazon S3 object.</p>",
+      "refs": {
+        "CertificateConfiguration$s3": "<p>The Amazon S3 location of the PEM-encoded private CA certificate.</p>"
+      }
+    },
     "S3Configuration": {
       "base": "<p>The Amazon S3 configuration for a gateway. This structure defines how the gateway accesses files in Amazon S3.</p>",
       "refs": {
@@ -8181,6 +8223,12 @@
         "UpdateApiKeyCredentialProviderRequest$apiKeySecretSource": "<p>The source type of the API key secret. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in Amazon Web Services Secrets Manager.</p>",
         "UpdateApiKeyCredentialProviderResponse$apiKeySecretSource": "<p>The source type of the API key secret. Either <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if managed by the user in Amazon Web Services Secrets Manager.</p>",
         "UpdateOauth2CredentialProviderResponse$clientSecretSource": "<p>The source type of the client secret. Either <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if managed by the user in Amazon Web Services Secrets Manager.</p>"
+      }
+    },
+    "SecretsManagerCertificateConfiguration": {
+      "base": "<p>A reference to a PEM-encoded private CA certificate stored in an Amazon Web Services Secrets Manager secret.</p>",
+      "refs": {
+        "CertificateConfiguration$secretsManager": "<p>The Amazon Web Services Secrets Manager location of the PEM-encoded private CA certificate.</p>"
       }
     },
     "SecretsManagerLocation": {

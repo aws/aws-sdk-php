@@ -619,7 +619,7 @@ use Aws\AwsClient;
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     Orchestrator?: array{
  *         Eks?: array{ClusterArn?: string, ...},
- *         Slurm?: array{SlurmConfigStrategy?: 'Managed'|'Merge'|'Overwrite', ...},
+ *         Slurm?: array{SlurmConfigStrategy?: 'Managed'|'Merge'|'Overwrite', AccountingDatabase?: array, ...},
  *         ...,
  *     },
  *     NodeRecovery?: 'Automatic'|'None',
@@ -677,7 +677,7 @@ use Aws\AwsClient;
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     Orchestrator?: array{
  *         Eks?: array{ClusterArn?: string, ...},
- *         Slurm?: array{SlurmConfigStrategy?: 'Managed'|'Merge'|'Overwrite', ...},
+ *         Slurm?: array{SlurmConfigStrategy?: 'Managed'|'Merge'|'Overwrite', AccountingDatabase?: array, ...},
  *         ...,
  *     },
  *     NodeRecovery?: 'Automatic'|'None',
@@ -7147,7 +7147,7 @@ use Aws\AwsClient;
  *     AutoScaling?: array{Mode?: 'Disable'|'Enable', AutoScalerType?: 'Karpenter', ...},
  *     Orchestrator?: array{
  *         Eks?: array{ClusterArn?: string, ...},
- *         Slurm?: array{SlurmConfigStrategy?: 'Managed'|'Merge'|'Overwrite', ...},
+ *         Slurm?: array{SlurmConfigStrategy?: 'Managed'|'Merge'|'Overwrite', AccountingDatabase?: array, ...},
  *         ...,
  *     },
  *     ...,
@@ -7204,7 +7204,7 @@ use Aws\AwsClient;
  *     AutoScaling?: array{Mode?: 'Disable'|'Enable', AutoScalerType?: 'Karpenter', ...},
  *     Orchestrator?: array{
  *         Eks?: array{ClusterArn?: string, ...},
- *         Slurm?: array{SlurmConfigStrategy?: 'Managed'|'Merge'|'Overwrite', ...},
+ *         Slurm?: array{SlurmConfigStrategy?: 'Managed'|'Merge'|'Overwrite', AccountingDatabase?: array, ...},
  *         ...,
  *     },
  *     ...,

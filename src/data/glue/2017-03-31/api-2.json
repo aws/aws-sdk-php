@@ -7397,7 +7397,8 @@
         "Version":{"shape":"VersionId"},
         "Configuration":{"shape":"CrawlerConfiguration"},
         "CrawlerSecurityConfiguration":{"shape":"CrawlerSecurityConfiguration"},
-        "LakeFormationConfiguration":{"shape":"LakeFormationConfiguration"}
+        "LakeFormationConfiguration":{"shape":"LakeFormationConfiguration"},
+        "CatalogId":{"shape":"CatalogIdString"}
       }
     },
     "CrawlerConfiguration":{"type":"string"},
@@ -7590,7 +7591,7 @@
         "Schedule":{"shape":"CronExpression"},
         "ColumnNameList":{"shape":"ColumnNameList"},
         "SampleSize":{"shape":"SampleSizePercentage"},
-        "CatalogID":{"shape":"NameString"},
+        "CatalogID":{"shape":"CatalogIdString"},
         "SecurityConfiguration":{"shape":"NameString"},
         "Tags":{"shape":"TagsMap"}
       }
@@ -7636,7 +7637,8 @@
         "LakeFormationConfiguration":{"shape":"LakeFormationConfiguration"},
         "Configuration":{"shape":"CrawlerConfiguration"},
         "CrawlerSecurityConfiguration":{"shape":"CrawlerSecurityConfiguration"},
-        "Tags":{"shape":"TagsMap"}
+        "Tags":{"shape":"TagsMap"},
+        "CatalogId":{"shape":"CatalogIdString"}
       }
     },
     "CreateCrawlerResponse":{
@@ -9190,7 +9192,8 @@
       ],
       "members":{
         "DatabaseName":{"shape":"NameString"},
-        "TableName":{"shape":"NameString"}
+        "TableName":{"shape":"NameString"},
+        "CatalogID":{"shape":"CatalogIdString"}
       }
     },
     "DeleteColumnStatisticsTaskSettingsResponse":{
@@ -10938,7 +10941,8 @@
         "DatabaseName":{"shape":"DatabaseName"},
         "TableName":{"shape":"NameString"},
         "MaxResults":{"shape":"PageSize"},
-        "NextToken":{"shape":"Token"}
+        "NextToken":{"shape":"Token"},
+        "CatalogID":{"shape":"CatalogIdString"}
       }
     },
     "GetColumnStatisticsTaskRunsResponse":{
@@ -10956,7 +10960,8 @@
       ],
       "members":{
         "DatabaseName":{"shape":"NameString"},
-        "TableName":{"shape":"NameString"}
+        "TableName":{"shape":"NameString"},
+        "CatalogID":{"shape":"CatalogIdString"}
       }
     },
     "GetColumnStatisticsTaskSettingsResponse":{
@@ -11630,7 +11635,7 @@
         "MaterializedViewRefreshTaskRunId"
       ],
       "members":{
-        "CatalogId":{"shape":"NameString"},
+        "CatalogId":{"shape":"CatalogIdString"},
         "MaterializedViewRefreshTaskRunId":{"shape":"UUIDv4"}
       }
     },
@@ -14256,7 +14261,7 @@
       "type":"structure",
       "required":["CatalogId"],
       "members":{
-        "CatalogId":{"shape":"NameString"},
+        "CatalogId":{"shape":"CatalogIdString"},
         "DatabaseName":{"shape":"NameString"},
         "TableName":{"shape":"NameString"},
         "MaxResults":{"shape":"PageSize"},
@@ -17752,7 +17757,7 @@
         "ColumnNameList":{"shape":"ColumnNameList"},
         "Role":{"shape":"NameString"},
         "SampleSize":{"shape":"SampleSizePercentage"},
-        "CatalogID":{"shape":"NameString"},
+        "CatalogID":{"shape":"CatalogIdString"},
         "SecurityConfiguration":{"shape":"NameString"}
       }
     },
@@ -17770,7 +17775,8 @@
       ],
       "members":{
         "DatabaseName":{"shape":"NameString"},
-        "TableName":{"shape":"NameString"}
+        "TableName":{"shape":"NameString"},
+        "CatalogID":{"shape":"CatalogIdString"}
       }
     },
     "StartColumnStatisticsTaskRunScheduleResponse":{
@@ -17949,7 +17955,7 @@
         "TableName"
       ],
       "members":{
-        "CatalogId":{"shape":"NameString"},
+        "CatalogId":{"shape":"CatalogIdString"},
         "DatabaseName":{"shape":"NameString"},
         "TableName":{"shape":"NameString"},
         "FullRefresh":{"shape":"NullableBoolean"}
@@ -18128,7 +18134,8 @@
       ],
       "members":{
         "DatabaseName":{"shape":"DatabaseName"},
-        "TableName":{"shape":"NameString"}
+        "TableName":{"shape":"NameString"},
+        "CatalogID":{"shape":"CatalogIdString"}
       }
     },
     "StopColumnStatisticsTaskRunResponse":{
@@ -18143,7 +18150,8 @@
       ],
       "members":{
         "DatabaseName":{"shape":"NameString"},
-        "TableName":{"shape":"NameString"}
+        "TableName":{"shape":"NameString"},
+        "CatalogID":{"shape":"CatalogIdString"}
       }
     },
     "StopColumnStatisticsTaskRunScheduleResponse":{
@@ -18180,7 +18188,7 @@
         "TableName"
       ],
       "members":{
-        "CatalogId":{"shape":"NameString"},
+        "CatalogId":{"shape":"CatalogIdString"},
         "DatabaseName":{"shape":"NameString"},
         "TableName":{"shape":"NameString"}
       }
@@ -19195,7 +19203,7 @@
         "Schedule":{"shape":"CronExpression"},
         "ColumnNameList":{"shape":"ColumnNameList"},
         "SampleSize":{"shape":"SampleSizePercentage"},
-        "CatalogID":{"shape":"NameString"},
+        "CatalogID":{"shape":"CatalogIdString"},
         "SecurityConfiguration":{"shape":"NameString"}
       }
     },
@@ -19236,7 +19244,8 @@
         "LineageConfiguration":{"shape":"LineageConfiguration"},
         "LakeFormationConfiguration":{"shape":"LakeFormationConfiguration"},
         "Configuration":{"shape":"CrawlerConfiguration"},
-        "CrawlerSecurityConfiguration":{"shape":"CrawlerSecurityConfiguration"}
+        "CrawlerSecurityConfiguration":{"shape":"CrawlerSecurityConfiguration"},
+        "CatalogId":{"shape":"CatalogIdString"}
       }
     },
     "UpdateCrawlerResponse":{

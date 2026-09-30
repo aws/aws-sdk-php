@@ -2164,7 +2164,8 @@
         "BilledSizeBytes":{"shape":"BilledSizeBytes"},
         "ItemCount":{"shape":"ItemCount"},
         "ExportType":{"shape":"ExportType"},
-        "IncrementalExportSpecification":{"shape":"IncrementalExportSpecification"}
+        "IncrementalExportSpecification":{"shape":"IncrementalExportSpecification"},
+        "FilterSpecification":{"shape":"FilterSpecification"}
       }
     },
     "ExportEndTime":{"type":"timestamp"},
@@ -2229,7 +2230,8 @@
         "S3SseKmsKeyId":{"shape":"S3SseKmsKeyId"},
         "ExportFormat":{"shape":"ExportFormat"},
         "ExportType":{"shape":"ExportType"},
-        "IncrementalExportSpecification":{"shape":"IncrementalExportSpecification"}
+        "IncrementalExportSpecification":{"shape":"IncrementalExportSpecification"},
+        "FilterSpecification":{"shape":"FilterSpecification"}
       }
     },
     "ExportTableToPointInTimeOutput":{
@@ -2279,6 +2281,16 @@
       "type":"map",
       "key":{"shape":"AttributeName"},
       "value":{"shape":"Condition"}
+    },
+    "FilterSpecification":{
+      "type":"structure",
+      "members":{
+        "FilterExpression":{"shape":"ConditionExpression"},
+        "ProjectionExpression":{"shape":"ProjectionExpression"},
+        "KeyConditionExpression":{"shape":"KeyExpression"},
+        "ExpressionAttributeNames":{"shape":"ExpressionAttributeNameMap"},
+        "ExpressionAttributeValues":{"shape":"ExpressionAttributeValueMap"}
+      }
     },
     "Get":{
       "type":"structure",
