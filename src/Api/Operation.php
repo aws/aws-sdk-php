@@ -155,7 +155,7 @@ class Operation extends AbstractModel
         $members = $this->getInput()->getMembers();
         $contextParams = [];
 
-        foreach($members as $name => $shape) {
+        foreach ($members as $name => $shape) {
             if (!empty($contextParam = $shape->getContextParam())) {
                 $contextParams[$contextParam['name']] = [
                     'shape' => $name,

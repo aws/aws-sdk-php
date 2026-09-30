@@ -70,7 +70,7 @@ class Service extends AbstractModel
         }
         $this->apiVersion = $this->getApiVersion();
         if (isset($definition['clientContextParams'])) {
-           $this->clientContextParams = $definition['clientContextParams'];
+            $this->clientContextParams = $definition['clientContextParams'];
         }
 
         $this->protocol = $this->selectProtocol($definition);
@@ -559,7 +559,7 @@ class Service extends AbstractModel
     {
         $modeledProtocols = $definition['metadata']['protocols'] ?? null;
         if (!empty($modeledProtocols)) {
-            foreach(SupportedProtocols::cases() as $protocol) {
+            foreach (SupportedProtocols::cases() as $protocol) {
                 if (in_array($protocol->value, $modeledProtocols)) {
                     return $protocol->value;
                 }

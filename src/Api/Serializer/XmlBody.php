@@ -128,8 +128,10 @@ class XmlBody
             // Default to member name
             $elementName = $k;
 
-            if ($definition['member']['locationName']
-                && !isset($definition['member']['locationNameAtStructureLevel'])) {
+            if (
+                $definition['member']['locationName']
+                && !isset($definition['member']['locationNameAtStructureLevel'])
+            ) {
                 $elementName = $definition['member']['locationName'];
             }
 

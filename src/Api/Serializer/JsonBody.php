@@ -109,7 +109,7 @@ class JsonBody
                     }
                 }
                 if (empty($data)) {
-                    return new \stdClass;
+                    return new \stdClass();
                 }
                 return $data;
 
@@ -122,7 +122,7 @@ class JsonBody
 
             case 'map':
                 if (empty($value)) {
-                    return new \stdClass;
+                    return new \stdClass();
                 }
                 $values = $shape->getValue();
                 foreach ($value as $k => $v) {
@@ -168,7 +168,7 @@ class JsonBody
                     );
                 }
                 if (empty($data)) {
-                    return new \stdClass;
+                    return new \stdClass();
                 }
                 return $data;
 
@@ -183,7 +183,7 @@ class JsonBody
 
             case JsonShapeType::MAP:
                 if (empty($value)) {
-                    return new \stdClass;
+                    return new \stdClass();
                 }
                 $type  = $plan->value[JsonEncodePlan::V_TYPE];
                 $shape = $plan->value[JsonEncodePlan::V_SHAPE];

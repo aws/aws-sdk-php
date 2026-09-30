@@ -144,7 +144,8 @@ class JsonParser
                         $target[$name] = $this->parseLegacy($member, $value[$locationName]);
                     }
                 }
-                if (isset($shape['union'])
+                if (
+                    isset($shape['union'])
                     && $shape['union']
                     && is_array($value)
                     && empty($target)

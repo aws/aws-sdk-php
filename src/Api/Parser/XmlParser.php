@@ -160,7 +160,8 @@ class XmlParser
 
     private function coerceTimestamp($value, ?string $tsFormat)
     {
-        if (is_string($value)
+        if (
+            is_string($value)
             || is_int($value)
             || (is_object($value) && method_exists($value, '__toString'))
         ) {
@@ -232,7 +233,8 @@ class XmlParser
                 }
             }
         }
-        if (isset($shape['union'])
+        if (
+            isset($shape['union'])
             && $shape['union']
             && empty($target)
         ) {
@@ -250,7 +252,8 @@ class XmlParser
         if ($shape instanceof StructureShape && isset($shape['locationName'])) {
             $originalDef = $shape->getOriginalDefinition($shape->getName());
 
-            if ($originalDef && isset($originalDef['locationName'])
+            if (
+                $originalDef && isset($originalDef['locationName'])
                 && $originalDef['locationName'] === $shape['locationName']
             ) {
                 return $name;
@@ -260,7 +263,7 @@ class XmlParser
         return $shape['locationName'] ?? $name;
     }
 
-    private function parse_list(ListShape $shape, \SimpleXMLElement  $value)
+    private function parse_list(ListShape $shape, \SimpleXMLElement $value)
     {
         $target = [];
         $member = $shape->getMember();
@@ -325,7 +328,8 @@ class XmlParser
 
     private function parse_timestamp(Shape $shape, $value)
     {
-        if (is_string($value)
+        if (
+            is_string($value)
             || is_int($value)
             || (is_object($value)
                 && method_exists($value, '__toString'))

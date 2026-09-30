@@ -122,7 +122,8 @@ final class XmlDecodePlanProvider
     {
         if ($member instanceof StructureShape && isset($member['locationName'])) {
             $originalDef = $member->getOriginalDefinition($member->getName());
-            if ($originalDef
+            if (
+                $originalDef
                 && isset($originalDef['locationName'])
                 && $originalDef['locationName'] === $member['locationName']
             ) {
