@@ -126,6 +126,10 @@ class Operation extends AbstractModel
      */
     public function getContextParams()
     {
+        if ($this->contextParams === null) {
+            $this->contextParams = $this->setContextParams();
+        }
+
         return $this->contextParams;
     }
 
@@ -148,6 +152,12 @@ class Operation extends AbstractModel
         $this->input = null;
         $this->output = null;
         $this->errors = null;
+
+        // Context params derive from the definition and the input shape, so
+        // refresh them too. Dynamic context params rebuild on next access.
+        $this->staticContextParams = $this->definition['staticContextParams'] ?? [];
+        $this->operationContextParams = $this->definition['operationContextParams'] ?? [];
+        $this->contextParams = null;
     }
 
     private function setContextParams()
