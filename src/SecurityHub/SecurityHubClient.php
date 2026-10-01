@@ -1275,6 +1275,28 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getRecommendedPolicyV2(array{MetadataUid?: string, NextToken?: string, MaxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getRecommendedPolicyV2Async(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getRecommendedPolicyV2Async(array{MetadataUid?: string, NextToken?: string, MaxResults?: int, ...} $args = [])
+ * @method \Aws\Result getRemediationsV2(array $args = [])
+ * @phpstan-method \Aws\Result getRemediationsV2(array{
+ *     TargetUid?: string,
+ *     MetadataUid?: string,
+ *     Filters?: array{CompositeFilters?: list<array>, ...},
+ *     ShowGuidance?: bool,
+ *     GuidanceFormat?: 'All'|'AwsCli'|'Cdk'|'Cli'|'CloudFormation'|'IaC'|'Python'|'Template'|'Terraform',
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise getRemediationsV2Async(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getRemediationsV2Async(array{
+ *     TargetUid?: string,
+ *     MetadataUid?: string,
+ *     Filters?: array{CompositeFilters?: list<array>, ...},
+ *     ShowGuidance?: bool,
+ *     GuidanceFormat?: 'All'|'AwsCli'|'Cdk'|'Cli'|'CloudFormation'|'IaC'|'Python'|'Template'|'Terraform',
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result getResourcesStatisticsV2(array $args = [])
  * @phpstan-method \Aws\Result getResourcesStatisticsV2(array{
  *     GroupByRules?: list<array{
@@ -1423,6 +1445,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listEnabledProductsForImport(array{NextToken?: string, MaxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listEnabledProductsForImportAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listEnabledProductsForImportAsync(array{NextToken?: string, MaxResults?: int, ...} $args = [])
+ * @method \Aws\Result listExposuresByRemediationV2(array $args = [])
+ * @phpstan-method \Aws\Result listExposuresByRemediationV2(array{TargetUid?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listExposuresByRemediationV2Async(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listExposuresByRemediationV2Async(array{TargetUid?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
  * @method \Aws\Result listFindingAggregators(array $args = [])
  * @phpstan-method \Aws\Result listFindingAggregators(array{NextToken?: string, MaxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listFindingAggregatorsAsync(array $args = [])

@@ -1,0 +1,568 @@
+{
+  "version": "1.0",
+  "examples": {
+    "CreateBrandProfile": [
+      {
+        "input": {
+          "brandProfileName": "AcmeCorp",
+          "deletionProtectionEnabled": true
+        },
+        "output": {
+          "attributesCreated": 0,
+          "brandProfileArn": "arn:aws:end-user-messaging:us-east-1:123456789012:brand-profile/bp-abc12345678901234",
+          "brandProfileId": "bp-abc12345678901234",
+          "brandProfileName": "AcmeCorp",
+          "createdAt": 1727130000,
+          "deletionProtectionEnabled": true,
+          "status": "ACTIVE",
+          "updatedAt": 1727130000
+        },
+        "id": "example-1",
+        "title": "Create a brand profile"
+      }
+    ],
+    "CreateBrandProfileAttributes": [
+      {
+        "input": {
+          "attributes": [
+            {
+              "attributeName": "SupportEmail",
+              "attributeType": "TEXT",
+              "attributeValue": "support@example.com",
+              "category": "CONTACT"
+            }
+          ],
+          "brandProfileId": "bp-abc12345678901234"
+        },
+        "output": {
+          "attributes": [
+            {
+              "attributeName": "SupportEmail",
+              "attributeType": "TEXT"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Create a text attribute on a brand profile"
+      }
+    ],
+    "CreateBrandProfileFromRegistration": [
+      {
+        "input": {
+          "brandProfileName": "AcmeCorp",
+          "registrationId": "reg-abc12345678901234",
+          "smartMatch": true
+        },
+        "output": {
+          "results": [
+            {
+              "jobId": "job-abc12345678901234",
+              "resourceIdentifier": "reg-abc12345678901234"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Create a brand profile from a registration"
+      }
+    ],
+    "CreateNotifyCodeConfiguration": [
+      {
+        "input": {
+          "channelParameters": {
+            "text": {
+              "inlineTemplateBody": "Your verification code is {{code}}."
+            }
+          },
+          "codeConfigurationParameters": {
+            "codeLength": 6,
+            "codeType": "NUMERIC",
+            "maxAttempts": 3,
+            "validityPeriodMinutes": 10
+          },
+          "notifyCodeConfigurationName": "SignupOtp"
+        },
+        "output": {
+          "notifyCodeConfiguration": {
+            "channelParameters": {
+              "text": {
+                "inlineTemplateBody": "Your verification code is {{code}}."
+              }
+            },
+            "codeConfigurationParameters": {
+              "codeLength": 6,
+              "codeType": "NUMERIC",
+              "maxAttempts": 3,
+              "validityPeriodMinutes": 10
+            },
+            "createdAt": 1727130000,
+            "deletionProtectionEnabled": false,
+            "notifyCodeConfigurationArn": "arn:aws:end-user-messaging:us-east-1:123456789012:notify-code-configuration/ncc-abc12345678901234",
+            "notifyCodeConfigurationId": "ncc-abc12345678901234",
+            "notifyCodeConfigurationName": "SignupOtp",
+            "updatedAt": 1727130000
+          }
+        },
+        "id": "example-1",
+        "title": "Create a notify code configuration"
+      }
+    ],
+    "CreateRegistrationsFromBrandProfile": [
+      {
+        "input": {
+          "brandProfileId": "bp-abc12345678901234",
+          "registrationTypes": [
+            "US_TOLL_FREE_REGISTRATION"
+          ],
+          "smartMatch": true
+        },
+        "output": {
+          "results": [
+            {
+              "jobId": "job-abc12345678901234",
+              "resourceIdentifier": "US_TOLL_FREE_REGISTRATION"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Create draft registrations from a brand profile"
+      }
+    ],
+    "DeleteBrandProfile": [
+      {
+        "input": {
+          "brandProfileId": "bp-abc12345678901234"
+        },
+        "output": {
+          "brandProfileArn": "arn:aws:end-user-messaging:us-east-1:123456789012:brand-profile/bp-abc12345678901234",
+          "brandProfileId": "bp-abc12345678901234"
+        },
+        "id": "example-1",
+        "title": "Delete a brand profile"
+      }
+    ],
+    "DeleteBrandProfileAttribute": [
+      {
+        "input": {
+          "attributeName": "SupportEmail",
+          "brandProfileId": "bp-abc12345678901234"
+        },
+        "output": {
+          "attributeName": "SupportEmail",
+          "brandProfileId": "bp-abc12345678901234"
+        },
+        "id": "example-1",
+        "title": "Delete a brand profile attribute"
+      }
+    ],
+    "DeleteNotifyCodeConfiguration": [
+      {
+        "input": {
+          "notifyCodeConfigurationId": "ncc-abc12345678901234"
+        },
+        "output": {},
+        "id": "example-1",
+        "title": "Delete a notify code configuration"
+      }
+    ],
+    "GetBrandProfile": [
+      {
+        "input": {
+          "brandProfileId": "bp-abc12345678901234"
+        },
+        "output": {
+          "brandProfileArn": "arn:aws:end-user-messaging:us-east-1:123456789012:brand-profile/bp-abc12345678901234",
+          "brandProfileId": "bp-abc12345678901234",
+          "brandProfileName": "AcmeCorp",
+          "createdAt": 1727130000,
+          "deletionProtectionEnabled": true,
+          "status": "ACTIVE",
+          "updatedAt": 1727130000
+        },
+        "id": "example-1",
+        "title": "Get a brand profile"
+      }
+    ],
+    "GetBrandProfileAttribute": [
+      {
+        "input": {
+          "attributeName": "SupportEmail",
+          "brandProfileId": "bp-abc12345678901234"
+        },
+        "output": {
+          "attributeName": "SupportEmail",
+          "attributeType": "TEXT",
+          "attributeValue": "support@example.com",
+          "category": "CONTACT",
+          "createdAt": 1727130000,
+          "updatedAt": 1727130000
+        },
+        "id": "example-1",
+        "title": "Get a brand profile attribute"
+      }
+    ],
+    "GetJob": [
+      {
+        "input": {
+          "jobId": "job-abc12345678901234"
+        },
+        "output": {
+          "brandProfileId": "bp-abc12345678901234",
+          "createdAt": 1727130000,
+          "jobId": "job-abc12345678901234",
+          "operationType": "CreateRegistrationsFromBrandProfile",
+          "resources": [
+            {
+              "resourceArn": "arn:aws:end-user-messaging:us-east-1:123456789012:registration/reg-abc12345678901234",
+              "resourceId": "reg-abc12345678901234",
+              "resourceType": "REGISTRATION"
+            }
+          ],
+          "status": "SUCCESS",
+          "updatedAt": 1727130060
+        },
+        "id": "example-1",
+        "title": "Get an async job"
+      }
+    ],
+    "GetNotifyCodeConfiguration": [
+      {
+        "input": {
+          "notifyCodeConfigurationId": "ncc-abc12345678901234"
+        },
+        "output": {
+          "notifyCodeConfiguration": {
+            "channelParameters": {
+              "text": {
+                "inlineTemplateBody": "Your verification code is {{code}}."
+              }
+            },
+            "codeConfigurationParameters": {
+              "codeLength": 6,
+              "codeType": "NUMERIC",
+              "maxAttempts": 3,
+              "validityPeriodMinutes": 10
+            },
+            "createdAt": 1727130000,
+            "deletionProtectionEnabled": false,
+            "notifyCodeConfigurationArn": "arn:aws:end-user-messaging:us-east-1:123456789012:notify-code-configuration/ncc-abc12345678901234",
+            "notifyCodeConfigurationId": "ncc-abc12345678901234",
+            "notifyCodeConfigurationName": "SignupOtp",
+            "updatedAt": 1727130000
+          }
+        },
+        "id": "example-1",
+        "title": "Get a notify code configuration"
+      }
+    ],
+    "ListBrandProfileAttributes": [
+      {
+        "input": {
+          "brandProfileId": "bp-abc12345678901234",
+          "maxResults": 10
+        },
+        "output": {
+          "brandProfileAttributes": [
+            {
+              "attributeName": "SupportEmail",
+              "attributeType": "TEXT",
+              "category": "CONTACT",
+              "createdAt": 1727130000,
+              "updatedAt": 1727130000
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "List brand profile attributes"
+      }
+    ],
+    "ListBrandProfiles": [
+      {
+        "input": {
+          "maxResults": 10
+        },
+        "output": {
+          "brandProfiles": [
+            {
+              "brandProfileArn": "arn:aws:end-user-messaging:us-east-1:123456789012:brand-profile/bp-abc12345678901234",
+              "brandProfileId": "bp-abc12345678901234",
+              "brandProfileName": "AcmeCorp",
+              "createdAt": 1727130000,
+              "deletionProtectionEnabled": true,
+              "status": "ACTIVE",
+              "updatedAt": 1727130000
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "List brand profiles"
+      }
+    ],
+    "ListJobs": [
+      {
+        "input": {
+          "maxResults": 10,
+          "status": "SUCCESS"
+        },
+        "output": {
+          "jobs": [
+            {
+              "brandProfileId": "bp-abc12345678901234",
+              "createdAt": 1727130000,
+              "jobId": "job-abc12345678901234",
+              "operationType": "CreateRegistrationsFromBrandProfile",
+              "status": "SUCCESS",
+              "updatedAt": 1727130060
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "List async jobs"
+      }
+    ],
+    "ListNotifyCodeConfigurations": [
+      {
+        "input": {
+          "maxResults": 10
+        },
+        "output": {
+          "notifyCodeConfigurations": [
+            {
+              "channelParameters": {
+                "text": {
+                  "inlineTemplateBody": "Your verification code is {{code}}."
+                }
+              },
+              "codeConfigurationParameters": {
+                "codeLength": 6,
+                "codeType": "NUMERIC",
+                "maxAttempts": 3,
+                "validityPeriodMinutes": 10
+              },
+              "createdAt": 1727130000,
+              "deletionProtectionEnabled": false,
+              "notifyCodeConfigurationArn": "arn:aws:end-user-messaging:us-east-1:123456789012:notify-code-configuration/ncc-abc12345678901234",
+              "notifyCodeConfigurationId": "ncc-abc12345678901234",
+              "notifyCodeConfigurationName": "SignupOtp",
+              "updatedAt": 1727130000
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "List notify code configurations"
+      }
+    ],
+    "ListRegistrationsFromBrandProfile": [
+      {
+        "input": {
+          "brandProfileId": "bp-abc12345678901234",
+          "maxResults": 10
+        },
+        "output": {
+          "registrationAssociations": [
+            {
+              "createdAt": 1727130000,
+              "registrationId": "reg-abc12345678901234",
+              "registrationType": "US_TOLL_FREE_REGISTRATION",
+              "smartMatchUsed": true
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "List registrations created from a brand profile"
+      }
+    ],
+    "ListTagsForResource": [
+      {
+        "input": {
+          "resourceArn": "arn:aws:end-user-messaging:us-east-1:123456789012:brand-profile/bp-abc12345678901234"
+        },
+        "output": {
+          "tags": [
+            {
+              "key": "Environment",
+              "value": "Production"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "List tags on a resource"
+      }
+    ],
+    "SendNotifyCodeVerification": [
+      {
+        "input": {
+          "channel": "TEXT",
+          "destinationIdentity": "+14255550100",
+          "notifyCodeConfiguration": "ncc-abc12345678901234",
+          "originationIdentity": "arn:aws:sms-voice:us-east-1:123456789012:phone-number/pn-abc123",
+          "referenceId": "signup-flow-42"
+        },
+        "output": {
+          "messageId": "msg-abc12345678901234",
+          "verificationId": "ver-abc12345678901234"
+        },
+        "id": "example-1",
+        "title": "Send a one-time passcode over SMS"
+      }
+    ],
+    "TagResource": [
+      {
+        "input": {
+          "resourceArn": "arn:aws:end-user-messaging:us-east-1:123456789012:brand-profile/bp-abc12345678901234",
+          "tags": [
+            {
+              "key": "Environment",
+              "value": "Production"
+            }
+          ]
+        },
+        "output": {},
+        "id": "example-1",
+        "title": "Tag a resource"
+      }
+    ],
+    "UntagResource": [
+      {
+        "input": {
+          "resourceArn": "arn:aws:end-user-messaging:us-east-1:123456789012:brand-profile/bp-abc12345678901234",
+          "tagKeys": [
+            "Environment"
+          ]
+        },
+        "output": {},
+        "id": "example-1",
+        "title": "Remove tags from a resource"
+      }
+    ],
+    "UpdateBrandProfile": [
+      {
+        "input": {
+          "brandProfileId": "bp-abc12345678901234",
+          "brandProfileName": "AcmeCorpUpdated",
+          "deletionProtectionEnabled": false
+        },
+        "output": {
+          "brandProfileArn": "arn:aws:end-user-messaging:us-east-1:123456789012:brand-profile/bp-abc12345678901234",
+          "brandProfileId": "bp-abc12345678901234",
+          "brandProfileName": "AcmeCorpUpdated",
+          "createdAt": 1727130000,
+          "deletionProtectionEnabled": false,
+          "status": "ACTIVE",
+          "updatedAt": 1727216400
+        },
+        "id": "example-1",
+        "title": "Update a brand profile name"
+      }
+    ],
+    "UpdateBrandProfileAttribute": [
+      {
+        "input": {
+          "attributeName": "SupportEmail",
+          "attributeValue": "help@example.com",
+          "brandProfileId": "bp-abc12345678901234",
+          "category": "CONTACT"
+        },
+        "output": {
+          "attributeName": "SupportEmail",
+          "attributeType": "TEXT",
+          "attributeValue": "help@example.com",
+          "category": "CONTACT",
+          "createdAt": 1727130000,
+          "updatedAt": 1727216400
+        },
+        "id": "example-1",
+        "title": "Update a brand profile attribute value"
+      }
+    ],
+    "UpdateBrandProfileFromRegistration": [
+      {
+        "input": {
+          "brandProfileId": "bp-abc12345678901234",
+          "onAttributeConflict": "REPLACE",
+          "registrationId": "reg-abc12345678901234",
+          "smartMatch": true
+        },
+        "output": {
+          "results": [
+            {
+              "jobId": "job-abc12345678901234",
+              "resourceIdentifier": "reg-abc12345678901234"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Update a brand profile from a registration"
+      }
+    ],
+    "UpdateNotifyCodeConfiguration": [
+      {
+        "input": {
+          "codeConfigurationParameters": {
+            "codeLength": 8,
+            "validityPeriodMinutes": 15
+          },
+          "notifyCodeConfigurationId": "ncc-abc12345678901234"
+        },
+        "output": {
+          "notifyCodeConfiguration": {
+            "channelParameters": {
+              "text": {
+                "inlineTemplateBody": "Your verification code is {{code}}."
+              }
+            },
+            "codeConfigurationParameters": {
+              "codeLength": 8,
+              "codeType": "NUMERIC",
+              "maxAttempts": 3,
+              "validityPeriodMinutes": 15
+            },
+            "createdAt": 1727130000,
+            "deletionProtectionEnabled": false,
+            "notifyCodeConfigurationArn": "arn:aws:end-user-messaging:us-east-1:123456789012:notify-code-configuration/ncc-abc12345678901234",
+            "notifyCodeConfigurationId": "ncc-abc12345678901234",
+            "notifyCodeConfigurationName": "SignupOtp",
+            "updatedAt": 1727216400
+          }
+        },
+        "id": "example-1",
+        "title": "Update a notify code configuration"
+      }
+    ],
+    "UpdateRegistrationsFromBrandProfile": [
+      {
+        "input": {
+          "brandProfileId": "bp-abc12345678901234",
+          "onAttributeConflict": "PRESERVE",
+          "registrationIds": [
+            "reg-abc12345678901234"
+          ],
+          "smartMatch": true
+        },
+        "output": {
+          "results": [
+            {
+              "jobId": "job-abc12345678901234",
+              "resourceIdentifier": "reg-abc12345678901234"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Update registrations from a brand profile"
+      }
+    ],
+    "ValidateNotifyCodeVerification": [
+      {
+        "input": {
+          "code": "123456",
+          "destinationIdentity": "+14255550100",
+          "referenceId": "signup-flow-42"
+        },
+        "output": {
+          "status": "VALID"
+        },
+        "id": "example-1",
+        "title": "Validate a submitted one-time passcode"
+      }
+    ]
+  }
+}

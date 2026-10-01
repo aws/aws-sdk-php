@@ -166,6 +166,19 @@
       "output":{"shape":"DescribeHealthServiceStatusForOrganizationResponse"},
       "idempotent":true
     },
+    "DescribeServiceLifecycle":{
+      "name":"DescribeServiceLifecycle",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeServiceLifecycleRequest"},
+      "output":{"shape":"DescribeServiceLifecycleResponse"},
+      "errors":[
+        {"shape":"InvalidPaginationToken"}
+      ],
+      "idempotent":true
+    },
     "DisableHealthServiceAccessForOrganization":{
       "name":"DisableHealthServiceAccessForOrganization",
       "http":{
@@ -433,6 +446,21 @@
         "healthServiceAccessStatusForOrganization":{"shape":"healthServiceAccessStatusForOrganization"}
       }
     },
+    "DescribeServiceLifecycleRequest":{
+      "type":"structure",
+      "members":{
+        "filter":{"shape":"ServiceLifecycleFilter"},
+        "nextToken":{"shape":"nextToken"},
+        "maxResults":{"shape":"LifecycleMaxResults"}
+      }
+    },
+    "DescribeServiceLifecycleResponse":{
+      "type":"structure",
+      "members":{
+        "serviceLifecycles":{"shape":"ServiceLifecycleList"},
+        "nextToken":{"shape":"nextToken"}
+      }
+    },
     "EntityAccountFilter":{
       "type":"structure",
       "required":["eventArn"],
@@ -651,12 +679,35 @@
       "max":3,
       "min":1
     },
+    "ImpactRiskList":{
+      "type":"list",
+      "member":{"shape":"string"}
+    },
     "InvalidPaginationToken":{
       "type":"structure",
       "members":{
         "message":{"shape":"string"}
       },
       "exception":true
+    },
+    "LifecycleEvent":{
+      "type":"structure",
+      "members":{
+        "lifecycleEventType":{"shape":"string"},
+        "date":{"shape":"timestamp"},
+        "regions":{"shape":"regionList"},
+        "impactRisks":{"shape":"ImpactRiskList"},
+        "description":{"shape":"string"}
+      }
+    },
+    "LifecycleEventList":{
+      "type":"list",
+      "member":{"shape":"LifecycleEvent"}
+    },
+    "LifecycleMaxResults":{
+      "type":"integer",
+      "max":20,
+      "min":1
     },
     "OrganizationAccountIdsList":{
       "type":"list",
@@ -766,6 +817,26 @@
     "OrganizationEventList":{
       "type":"list",
       "member":{"shape":"OrganizationEvent"}
+    },
+    "ServiceLifecycle":{
+      "type":"structure",
+      "members":{
+        "service":{"shape":"service"},
+        "version":{"shape":"string"},
+        "title":{"shape":"string"},
+        "recommendedVersion":{"shape":"string"},
+        "lifecycleEvents":{"shape":"LifecycleEventList"}
+      }
+    },
+    "ServiceLifecycleFilter":{
+      "type":"structure",
+      "members":{
+        "service":{"shape":"service"}
+      }
+    },
+    "ServiceLifecycleList":{
+      "type":"list",
+      "member":{"shape":"ServiceLifecycle"}
     },
     "UnsupportedLocale":{
       "type":"structure",

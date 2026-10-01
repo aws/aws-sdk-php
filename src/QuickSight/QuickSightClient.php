@@ -1454,7 +1454,14 @@ use Aws\AwsClient;
  *         TwitterParameters?: array{Query?: string, MaxRows?: int, ...},
  *         AmazonOpenSearchParameters?: array{Domain?: string, ...},
  *         ExasolParameters?: array{Host?: string, Port?: int, ...},
- *         DatabricksParameters?: array{Host?: string, Port?: int, SqlEndpointPath?: string, ...},
+ *         DatabricksParameters?: array{
+ *             Host?: string,
+ *             Port?: int,
+ *             SqlEndpointPath?: string,
+ *             AuthenticationType?: 'KEYPAIR'|'PASSWORD'|'TOKEN'|'X509',
+ *             OAuthParameters?: array,
+ *             ...,
+ *         },
  *         StarburstParameters?: array{
  *             Host?: string,
  *             Port?: int,
@@ -1568,7 +1575,14 @@ use Aws\AwsClient;
  *         TwitterParameters?: array{Query?: string, MaxRows?: int, ...},
  *         AmazonOpenSearchParameters?: array{Domain?: string, ...},
  *         ExasolParameters?: array{Host?: string, Port?: int, ...},
- *         DatabricksParameters?: array{Host?: string, Port?: int, SqlEndpointPath?: string, ...},
+ *         DatabricksParameters?: array{
+ *             Host?: string,
+ *             Port?: int,
+ *             SqlEndpointPath?: string,
+ *             AuthenticationType?: 'KEYPAIR'|'PASSWORD'|'TOKEN'|'X509',
+ *             OAuthParameters?: array,
+ *             ...,
+ *         },
  *         StarburstParameters?: array{
  *             Host?: string,
  *             Port?: int,
@@ -5281,7 +5295,14 @@ use Aws\AwsClient;
  *         TwitterParameters?: array{Query?: string, MaxRows?: int, ...},
  *         AmazonOpenSearchParameters?: array{Domain?: string, ...},
  *         ExasolParameters?: array{Host?: string, Port?: int, ...},
- *         DatabricksParameters?: array{Host?: string, Port?: int, SqlEndpointPath?: string, ...},
+ *         DatabricksParameters?: array{
+ *             Host?: string,
+ *             Port?: int,
+ *             SqlEndpointPath?: string,
+ *             AuthenticationType?: 'KEYPAIR'|'PASSWORD'|'TOKEN'|'X509',
+ *             OAuthParameters?: array,
+ *             ...,
+ *         },
  *         StarburstParameters?: array{
  *             Host?: string,
  *             Port?: int,
@@ -5391,7 +5412,14 @@ use Aws\AwsClient;
  *         TwitterParameters?: array{Query?: string, MaxRows?: int, ...},
  *         AmazonOpenSearchParameters?: array{Domain?: string, ...},
  *         ExasolParameters?: array{Host?: string, Port?: int, ...},
- *         DatabricksParameters?: array{Host?: string, Port?: int, SqlEndpointPath?: string, ...},
+ *         DatabricksParameters?: array{
+ *             Host?: string,
+ *             Port?: int,
+ *             SqlEndpointPath?: string,
+ *             AuthenticationType?: 'KEYPAIR'|'PASSWORD'|'TOKEN'|'X509',
+ *             OAuthParameters?: array,
+ *             ...,
+ *         },
  *         StarburstParameters?: array{
  *             Host?: string,
  *             Port?: int,

@@ -14,6 +14,7 @@
     "DescribeEvents": "<p> Returns information about events that meet the specified filter criteria. Events are returned in a summary form and do not include the detailed description, any additional metadata that depends on the event type, or any affected resources. To retrieve that information, use the <a href=\"https://docs.aws.amazon.com/health/latest/APIReference/API_DescribeEventDetails.html\">DescribeEventDetails</a> and <a href=\"https://docs.aws.amazon.com/health/latest/APIReference/API_DescribeAffectedEntities.html\">DescribeAffectedEntities</a> operations.</p> <p>If no filter criteria are specified, all events are returned. Results are sorted by <code>lastModifiedTime</code>, starting with the most recent event.</p> <note> <ul> <li> <p>When you call the <code>DescribeEvents</code> operation and specify an entity for the <code>entityValues</code> parameter, Health might return public events that aren't specific to that resource. For example, if you call <code>DescribeEvents</code> and specify an ID for an Amazon Elastic Compute Cloud (Amazon EC2) instance, Health might return events that aren't specific to that resource or service. To get events that are specific to a service, use the <code>services</code> parameter in the <code>filter</code> object. For more information, see <a href=\"https://docs.aws.amazon.com/health/latest/APIReference/API_Event.html\">Event</a>.</p> </li> <li> <p>This API operation uses pagination. Specify the <code>nextToken</code> parameter in the next request to return more results.</p> </li> </ul> </note>",
     "DescribeEventsForOrganization": "<p>Returns information about events across your organization in Organizations. You can use the<code>filters</code> parameter to specify the events that you want to return. Events are returned in a summary form and don't include the affected accounts, detailed description, any additional metadata that depends on the event type, or any affected resources. To retrieve that information, use the following operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/health/latest/APIReference/API_DescribeAffectedAccountsForOrganization.html\">DescribeAffectedAccountsForOrganization</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/health/latest/APIReference/API_DescribeEventDetailsForOrganization.html\">DescribeEventDetailsForOrganization</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/health/latest/APIReference/API_DescribeAffectedEntitiesForOrganization.html\">DescribeAffectedEntitiesForOrganization</a> </p> </li> </ul> <p>If you don't specify a <code>filter</code>, the <code>DescribeEventsForOrganizations</code> returns all events across your organization. Results are sorted by <code>lastModifiedTime</code>, starting with the most recent event. </p> <p>For more information about the different types of Health events, see <a href=\"https://docs.aws.amazon.com/health/latest/APIReference/API_Event.html\">Event</a>.</p> <p>Before you can call this operation, you must first enable Health to work with Organizations. To do this, call the <a href=\"https://docs.aws.amazon.com/health/latest/APIReference/API_EnableHealthServiceAccessForOrganization.html\">EnableHealthServiceAccessForOrganization</a> operation from your organization's management account.</p> <note> <p>This API operation uses pagination. Specify the <code>nextToken</code> parameter in the next request to return more results.</p> </note>",
     "DescribeHealthServiceStatusForOrganization": "<p>This operation provides status information on enabling or disabling Health to work with your organization. To call this operation, you must use the organization's management account.</p>",
+    "DescribeServiceLifecycle": "<p>Returns lifecycle information for Amazon Web Services services, including end-of-life dates, version recommendations, and lifecycle events.</p>",
     "DisableHealthServiceAccessForOrganization": "<p>Disables Health from working with Organizations. To call this operation, you must sign in to the organization's management account. For more information, see <a href=\"https://docs.aws.amazon.com/health/latest/ug/aggregate-events.html\">Aggregating Health events</a> in the <i>Health User Guide</i>.</p> <p>This operation doesn't remove the service-linked role from the management account in your organization. You must use the IAM console, API, or Command Line Interface (CLI) to remove the service-linked role. For more information, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/using-service-linked-roles.html#delete-service-linked-role\">Deleting a Service-Linked Role</a> in the <i>IAM User Guide</i>.</p> <note> <p>You can also disable the organizational feature by using the Organizations <a href=\"https://docs.aws.amazon.com/organizations/latest/APIReference/API_DisableAWSServiceAccess.html\">DisableAWSServiceAccess</a> API operation. After you call this operation, Health stops aggregating events for all other Amazon Web Services accounts in your organization. If you call the Health API operations for organizational view, Health returns an error. Health continues to aggregate health events for your Amazon Web Services account.</p> </note>",
     "EnableHealthServiceAccessForOrganization": "<p>Enables Health to work with Organizations. You can use the organizational view feature to aggregate events from all Amazon Web Services accounts in your organization in a centralized location. </p> <p>This operation also creates a service-linked role for the management account in the organization. </p> <note> <p>To call this operation, you must meet the following requirements:</p> <ul> <li> <p>You must have a Business, Enterprise On-Ramp, or Enterprise Support plan from <a href=\"http://aws.amazon.com/premiumsupport/\">Amazon Web Services Support</a> to use the Health API. If you call the Health API from an Amazon Web Services account that doesn't have a Business, Enterprise On-Ramp, or Enterprise Support plan, you receive a <code>SubscriptionRequiredException</code> error.</p> </li> <li> <p>You must have permission to call this operation from the organization's management account. For example IAM policies, see <a href=\"https://docs.aws.amazon.com/health/latest/ug/security_iam_id-based-policy-examples.html\">Health identity-based policy examples</a>.</p> </li> </ul> </note> <p>If you don't have the required support plan, you can instead use the Health console to enable the organizational view feature. For more information, see <a href=\"https://docs.aws.amazon.com/health/latest/ug/aggregate-events.html\">Aggregating Health events</a> in the <i>Health User Guide</i>.</p>"
   },
@@ -168,6 +169,14 @@
       "refs": {}
     },
     "DescribeHealthServiceStatusForOrganizationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeServiceLifecycleRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeServiceLifecycleResponse": {
       "base": null,
       "refs": {}
     },
@@ -353,9 +362,33 @@
         "EventTypeFilter$personas": "<p>A list of persona classifications to filter event types. Possible values are <code>OPERATIONS</code>, <code>SECURITY</code>, and <code>BILLING</code>.</p>"
       }
     },
+    "ImpactRiskList": {
+      "base": null,
+      "refs": {
+        "LifecycleEvent$impactRisks": "<p>The potential impact risks associated with this lifecycle event.</p>"
+      }
+    },
     "InvalidPaginationToken": {
       "base": "<p>The specified pagination token (<code>nextToken</code>) is not valid.</p>",
       "refs": {}
+    },
+    "LifecycleEvent": {
+      "base": "<p>A lifecycle event for an Amazon Web Services service version, such as end-of-support or end-of-life.</p>",
+      "refs": {
+        "LifecycleEventList$member": null
+      }
+    },
+    "LifecycleEventList": {
+      "base": null,
+      "refs": {
+        "ServiceLifecycle$lifecycleEvents": "<p>The list of lifecycle events for this service version.</p>"
+      }
+    },
+    "LifecycleMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribeServiceLifecycleRequest$maxResults": "<p>The maximum number of items to return in one batch, between 1 and 20, inclusive.</p>"
+      }
     },
     "OrganizationAccountIdsList": {
       "base": null,
@@ -433,6 +466,24 @@
       "base": null,
       "refs": {
         "DescribeEventsForOrganizationResponse$events": "<p>The events that match the specified filter criteria.</p>"
+      }
+    },
+    "ServiceLifecycle": {
+      "base": "<p>Contains lifecycle information for an Amazon Web Services service version, including lifecycle events and version recommendations.</p>",
+      "refs": {
+        "ServiceLifecycleList$member": null
+      }
+    },
+    "ServiceLifecycleFilter": {
+      "base": "<p>A filter for narrowing down service lifecycle results.</p>",
+      "refs": {
+        "DescribeServiceLifecycleRequest$filter": "<p>Values to narrow the results returned.</p>"
+      }
+    },
+    "ServiceLifecycleList": {
+      "base": null,
+      "refs": {
+        "DescribeServiceLifecycleResponse$serviceLifecycles": "<p>The list of service lifecycle entries matching the filter criteria.</p>"
       }
     },
     "UnsupportedLocale": {
@@ -752,7 +803,9 @@
         "DescribeEventsForOrganizationRequest$nextToken": "<p>If the results of a search are large, only a portion of the results are returned, and a <code>nextToken</code> pagination token is returned in the response. To retrieve the next batch of results, reissue the search request and include the returned token. When all results have been returned, the response does not contain a pagination token value.</p>",
         "DescribeEventsForOrganizationResponse$nextToken": "<p>If the results of a search are large, only a portion of the results are returned, and a <code>nextToken</code> pagination token is returned in the response. To retrieve the next batch of results, reissue the search request and include the returned token. When all results have been returned, the response does not contain a pagination token value.</p>",
         "DescribeEventsRequest$nextToken": "<p>If the results of a search are large, only a portion of the results are returned, and a <code>nextToken</code> pagination token is returned in the response. To retrieve the next batch of results, reissue the search request and include the returned token. When all results have been returned, the response does not contain a pagination token value.</p>",
-        "DescribeEventsResponse$nextToken": "<p>If the results of a search are large, only a portion of the results are returned, and a <code>nextToken</code> pagination token is returned in the response. To retrieve the next batch of results, reissue the search request and include the returned token. When all results have been returned, the response does not contain a pagination token value.</p>"
+        "DescribeEventsResponse$nextToken": "<p>If the results of a search are large, only a portion of the results are returned, and a <code>nextToken</code> pagination token is returned in the response. To retrieve the next batch of results, reissue the search request and include the returned token. When all results have been returned, the response does not contain a pagination token value.</p>",
+        "DescribeServiceLifecycleRequest$nextToken": "<p>If the results of a search are large, only a portion of the results are returned, and a <code>nextToken</code> pagination token is returned in the response. To retrieve the next batch of results, reissue the search request and include the returned token. When all results have been returned, the response does not contain a pagination token value.</p>",
+        "DescribeServiceLifecycleResponse$nextToken": "<p>If the results of a search are large, only a portion of the results are returned, and a <code>nextToken</code> pagination token is returned in the response. To retrieve the next batch of results, reissue the search request and include the returned token. When all results have been returned, the response does not contain a pagination token value.</p>"
       }
     },
     "region": {
@@ -767,6 +820,7 @@
       "base": null,
       "refs": {
         "EventFilter$regions": "<p>A list of Amazon Web Services Regions.</p>",
+        "LifecycleEvent$regions": "<p>The Amazon Web Services Regions affected by this lifecycle event.</p>",
         "OrganizationEventFilter$regions": "<p>A list of Amazon Web Services Regions.</p>"
       }
     },
@@ -776,6 +830,8 @@
         "Event$service": "<p>The Amazon Web Services service that is affected by the event. For example, <code>EC2</code>, <code>RDS</code>.</p>",
         "EventType$service": "<p>The Amazon Web Services service that is affected by the event. For example, <code>EC2</code>, <code>RDS</code>.</p>",
         "OrganizationEvent$service": "<p>The Amazon Web Services service that is affected by the event, such as EC2 and RDS.</p>",
+        "ServiceLifecycle$service": "<p>The name of the Amazon Web Services service.</p>",
+        "ServiceLifecycleFilter$service": "<p>The Amazon Web Services service name to filter by.</p>",
         "serviceList$member": null
       }
     },
@@ -793,11 +849,17 @@
         "ConcurrentModificationException$message": null,
         "EventDetailsErrorItem$errorName": "<p>The name of the error.</p>",
         "EventDetailsErrorItem$errorMessage": "<p>A message that describes the error.</p>",
+        "ImpactRiskList$member": null,
         "InvalidPaginationToken$message": null,
+        "LifecycleEvent$lifecycleEventType": "<p>The type of lifecycle event (for example, end-of-support, end-of-life).</p>",
+        "LifecycleEvent$description": "<p>A description of the lifecycle event.</p>",
         "OrganizationAffectedEntitiesErrorItem$errorName": "<p>The name of the error.</p>",
         "OrganizationAffectedEntitiesErrorItem$errorMessage": "<p>A message that describes the error. Follow the error message and retry your request.</p> <p>For example, the <code>InvalidAccountInputError</code> error message appears if you call the <code>DescribeAffectedEntitiesForOrganization</code> operation and specify the <code>AccountSpecific</code> value for the <code>EventScopeCode</code> parameter, but don't specify an Amazon Web Services account.</p>",
         "OrganizationEventDetailsErrorItem$errorName": "<p>The name of the error.</p>",
         "OrganizationEventDetailsErrorItem$errorMessage": "<p>A message that describes the error.</p> <p>If you call the <code>DescribeEventDetailsForOrganization</code> operation and receive one of the following errors, follow the recommendations in the message:</p> <ul> <li> <p>We couldn't find a public event that matches your request. To find an event that is account specific, you must enter an Amazon Web Services account ID in the request.</p> </li> <li> <p>We couldn't find an account specific event for the specified Amazon Web Services account. To find an event that is public, you must enter a null value for the Amazon Web Services account ID in the request.</p> </li> <li> <p>Your Amazon Web Services account doesn't include the Amazon Web Services Support plan required to use the Health API. You must have either a Business, Enterprise On-Ramp, or Enterprise Support plan.</p> </li> </ul>",
+        "ServiceLifecycle$version": "<p>The version of the service.</p>",
+        "ServiceLifecycle$title": "<p>A human-readable title for the lifecycle entry.</p>",
+        "ServiceLifecycle$recommendedVersion": "<p>The recommended version to upgrade to.</p>",
         "UnsupportedLocale$message": null
       }
     },
@@ -836,6 +898,7 @@
         "Event$startTime": "<p>The date and time that the event began.</p>",
         "Event$endTime": "<p>The date and time that the event ended.</p>",
         "Event$lastUpdatedTime": "<p>The most recent date and time that the event was updated.</p>",
+        "LifecycleEvent$date": "<p>The date of the lifecycle event.</p>",
         "OrganizationEvent$startTime": "<p>The date and time that the event began.</p>",
         "OrganizationEvent$endTime": "<p>The date and time that the event ended.</p>",
         "OrganizationEvent$lastUpdatedTime": "<p>The most recent date and time that the event was updated.</p>"

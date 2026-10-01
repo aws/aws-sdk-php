@@ -1284,6 +1284,22 @@
         {"shape":"ValidationException"}
       ]
     },
+    "GetRemediationsV2":{
+      "name":"GetRemediationsV2",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetRemediationsV2"
+      },
+      "input":{"shape":"GetRemediationsV2Request"},
+      "output":{"shape":"GetRemediationsV2Response"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "GetResourcesStatisticsV2":{
       "name":"GetResourcesStatisticsV2",
       "http":{
@@ -1498,6 +1514,22 @@
         {"shape":"InternalException"},
         {"shape":"LimitExceededException"},
         {"shape":"InvalidAccessException"}
+      ]
+    },
+    "ListExposuresByRemediationV2":{
+      "name":"ListExposuresByRemediationV2",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListExposuresByRemediationV2"
+      },
+      "input":{"shape":"ListExposuresByRemediationV2Request"},
+      "output":{"shape":"ListExposuresByRemediationV2Response"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "ListFindingAggregators":{
@@ -9592,6 +9624,47 @@
         "AllowedValues":{"shape":"StringList"}
       }
     },
+    "ExposureFinding":{
+      "type":"structure",
+      "required":[
+        "MetadataUid",
+        "Title",
+        "PreviousSeverity",
+        "ProjectedSeverity",
+        "Impact"
+      ],
+      "members":{
+        "MetadataUid":{"shape":"NonEmptyString"},
+        "Title":{"shape":"NonEmptyString"},
+        "PreviousSeverity":{"shape":"ExposureSeverity"},
+        "ProjectedSeverity":{"shape":"ExposureSeverity"},
+        "Impact":{"shape":"ExposureImpact"}
+      }
+    },
+    "ExposureFindingItemsList":{
+      "type":"list",
+      "member":{"shape":"ExposureFinding"},
+      "max":1000,
+      "min":0
+    },
+    "ExposureImpact":{
+      "type":"string",
+      "enum":[
+        "Reduces",
+        "Resolves",
+        "Unchanged"
+      ]
+    },
+    "ExposureSeverity":{
+      "type":"string",
+      "enum":[
+        "Informational",
+        "Low",
+        "Medium",
+        "High",
+        "Critical"
+      ]
+    },
     "ExternalIntegrationConfiguration":{
       "type":"structure",
       "members":{
@@ -10282,6 +10355,26 @@
         "ResourceArn":{"shape":"NonEmptyString"}
       }
     },
+    "GetRemediationsV2Request":{
+      "type":"structure",
+      "members":{
+        "TargetUid":{"shape":"RemediationStringUid"},
+        "MetadataUid":{"shape":"RemediationStringUid"},
+        "Filters":{"shape":"RemediationFilters"},
+        "ShowGuidance":{"shape":"Boolean"},
+        "GuidanceFormat":{"shape":"GuidanceFormat"},
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "GetRemediationsV2Response":{
+      "type":"structure",
+      "required":["Items"],
+      "members":{
+        "Items":{"shape":"RemediationV2ItemList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "GetResourcesStatisticsV2Request":{
       "type":"structure",
       "required":["GroupByRules"],
@@ -10438,6 +10531,20 @@
     "GroupByValues":{
       "type":"list",
       "member":{"shape":"GroupByValue"}
+    },
+    "GuidanceFormat":{
+      "type":"string",
+      "enum":[
+        "All",
+        "AwsCli",
+        "Cli",
+        "Python",
+        "Terraform",
+        "Cdk",
+        "CloudFormation",
+        "IaC",
+        "Template"
+      ]
     },
     "HealthCheck":{
       "type":"structure",
@@ -10728,6 +10835,23 @@
         "ProjectKey":{"shape":"NonEmptyString"}
       }
     },
+    "KbArticle":{
+      "type":"structure",
+      "required":[
+        "Title",
+        "Url"
+      ],
+      "members":{
+        "Title":{"shape":"NonEmptyString"},
+        "Url":{"shape":"NonEmptyString"}
+      }
+    },
+    "KbArticleList":{
+      "type":"list",
+      "member":{"shape":"KbArticle"},
+      "max":10,
+      "min":0
+    },
     "KeywordFilter":{
       "type":"structure",
       "members":{
@@ -10945,6 +11069,33 @@
       "type":"structure",
       "members":{
         "ProductSubscriptions":{"shape":"ProductSubscriptionArnList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListExposuresByRemediationV2Request":{
+      "type":"structure",
+      "required":["TargetUid"],
+      "members":{
+        "TargetUid":{"shape":"RemediationStringUid"},
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListExposuresByRemediationV2Response":{
+      "type":"structure",
+      "required":[
+        "Items",
+        "TargetUid",
+        "Resource",
+        "TotalCount",
+        "Trait"
+      ],
+      "members":{
+        "Items":{"shape":"ExposureFindingItemsList"},
+        "TargetUid":{"shape":"NonEmptyString"},
+        "Resource":{"shape":"RemediationResource"},
+        "TotalCount":{"shape":"Integer"},
+        "Trait":{"shape":"RemediationTrait"},
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -12040,6 +12191,296 @@
       "members":{
         "Recommendation":{"shape":"Recommendation"}
       }
+    },
+    "RemediationCompositeFilter":{
+      "type":"structure",
+      "members":{
+        "StringFilters":{"shape":"RemediationStringFilterList"}
+      }
+    },
+    "RemediationCompositeFilterList":{
+      "type":"list",
+      "member":{"shape":"RemediationCompositeFilter"},
+      "max":1,
+      "min":0
+    },
+    "RemediationFilters":{
+      "type":"structure",
+      "members":{
+        "CompositeFilters":{"shape":"RemediationCompositeFilterList"}
+      }
+    },
+    "RemediationGuidance":{
+      "type":"structure",
+      "required":[
+        "TargetTypeName",
+        "Pattern",
+        "Version",
+        "Context",
+        "Specification",
+        "Examples",
+        "Metadata"
+      ],
+      "members":{
+        "TargetTypeName":{"shape":"NonEmptyString"},
+        "Pattern":{"shape":"NonEmptyString"},
+        "Version":{"shape":"NonEmptyString"},
+        "Context":{"shape":"RemediationGuidanceContext"},
+        "Specification":{"shape":"RemediationGuidanceSpecification"},
+        "Examples":{"shape":"RemediationGuidanceExamples"},
+        "Metadata":{"shape":"RemediationGuidanceMetadata"}
+      }
+    },
+    "RemediationGuidanceContext":{
+      "type":"structure",
+      "members":{
+        "ProblemStatement":{"shape":"NonEmptyString"},
+        "RiskAssessment":{"shape":"NonEmptyString"},
+        "AffectedScope":{"shape":"NonEmptyString"},
+        "Prerequisites":{"shape":"RemediationStringList"}
+      }
+    },
+    "RemediationGuidanceExamples":{
+      "type":"structure",
+      "members":{
+        "AwsCli":{"shape":"NonEmptyString"},
+        "Cli":{"shape":"NonEmptyString"},
+        "Python":{"shape":"NonEmptyString"},
+        "Terraform":{"shape":"NonEmptyString"},
+        "Cdk":{"shape":"NonEmptyString"},
+        "CloudFormation":{"shape":"NonEmptyString"},
+        "IaC":{"shape":"NonEmptyString"},
+        "Template":{"shape":"NonEmptyString"}
+      }
+    },
+    "RemediationGuidanceMetadata":{
+      "type":"structure",
+      "required":[
+        "ResourceType",
+        "ExposureType",
+        "TraitTitles",
+        "Reversibility",
+        "FixEffect",
+        "RiskLevel"
+      ],
+      "members":{
+        "ResourceType":{"shape":"NonEmptyString"},
+        "ExposureType":{"shape":"NonEmptyString"},
+        "TraitTitles":{"shape":"RemediationStringList"},
+        "Reversibility":{"shape":"NonEmptyString"},
+        "FixEffect":{"shape":"NonEmptyString"},
+        "RiskLevel":{"shape":"NonEmptyString"},
+        "AutomationLevel":{"shape":"NonEmptyString"},
+        "HumanReviewRequired":{"shape":"Boolean"},
+        "GeneratedAt":{"shape":"Timestamp"},
+        "VerificationStatus":{"shape":"NonEmptyString"}
+      }
+    },
+    "RemediationGuidanceSpecification":{
+      "type":"structure",
+      "members":{
+        "Parameters":{"shape":"RemediationParameterList"},
+        "Steps":{"shape":"RemediationStepList"},
+        "ExpectedEndState":{"shape":"NonEmptyString"},
+        "RequiredPermissions":{"shape":"RemediationStringList"}
+      }
+    },
+    "RemediationOutcome":{
+      "type":"structure",
+      "required":[
+        "ResolvedFindingsCount",
+        "SeverityReductionFindingsCount",
+        "SeverityUnchangedCount"
+      ],
+      "members":{
+        "ResolvedFindingsCount":{"shape":"Integer"},
+        "SeverityReductionFindingsCount":{"shape":"Integer"},
+        "SeverityUnchangedCount":{"shape":"Integer"}
+      }
+    },
+    "RemediationParameter":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Type",
+        "Description"
+      ],
+      "members":{
+        "Name":{"shape":"NonEmptyString"},
+        "Type":{"shape":"NonEmptyString"},
+        "Description":{"shape":"NonEmptyString"},
+        "Required":{"shape":"Boolean"}
+      }
+    },
+    "RemediationParameterList":{
+      "type":"list",
+      "member":{"shape":"RemediationParameter"},
+      "max":50,
+      "min":0
+    },
+    "RemediationPriority":{
+      "type":"string",
+      "enum":[
+        "Critical",
+        "High",
+        "Medium",
+        "Low"
+      ]
+    },
+    "RemediationResource":{
+      "type":"structure",
+      "required":[
+        "AccountId",
+        "Region",
+        "Type",
+        "Id",
+        "ResourceRegion",
+        "CloudProvider"
+      ],
+      "members":{
+        "AccountId":{"shape":"NonEmptyString"},
+        "Region":{"shape":"NonEmptyString"},
+        "ResourceOwnerAccountId":{"shape":"NonEmptyString"},
+        "ResourceOwnerOrgId":{"shape":"NonEmptyString"},
+        "Type":{"shape":"NonEmptyString"},
+        "Name":{"shape":"NonEmptyString"},
+        "Id":{"shape":"NonEmptyString"},
+        "ResourceGuid":{"shape":"NonEmptyString"},
+        "ResourceRegion":{"shape":"NonEmptyString"},
+        "CloudProvider":{"shape":"CloudProviderName"}
+      }
+    },
+    "RemediationStatus":{
+      "type":"string",
+      "enum":[
+        "New",
+        "Updated",
+        "Resolved"
+      ]
+    },
+    "RemediationStep":{
+      "type":"structure",
+      "required":[
+        "Phase",
+        "Description",
+        "Service",
+        "Action"
+      ],
+      "members":{
+        "Phase":{"shape":"NonEmptyString"},
+        "Description":{"shape":"NonEmptyString"},
+        "Service":{"shape":"NonEmptyString"},
+        "Action":{"shape":"NonEmptyString"},
+        "Logic":{"shape":"NonEmptyString"},
+        "Inverse":{"shape":"NonEmptyString"},
+        "VerifyAfter":{"shape":"NonEmptyString"}
+      }
+    },
+    "RemediationStepList":{
+      "type":"list",
+      "member":{"shape":"RemediationStep"},
+      "max":50,
+      "min":0
+    },
+    "RemediationStringField":{
+      "type":"string",
+      "enum":[
+        "Resource.Type",
+        "Priority",
+        "Status",
+        "Resource.Id",
+        "Resource.ResourceOwnerAccountId",
+        "Resource.CloudProvider"
+      ]
+    },
+    "RemediationStringFilter":{
+      "type":"structure",
+      "required":[
+        "FieldName",
+        "Filter"
+      ],
+      "members":{
+        "FieldName":{"shape":"RemediationStringField"},
+        "Filter":{"shape":"RemediationStringFilterCondition"}
+      }
+    },
+    "RemediationStringFilterCondition":{
+      "type":"structure",
+      "required":["Value"],
+      "members":{
+        "Value":{"shape":"NonEmptyString"}
+      }
+    },
+    "RemediationStringFilterList":{
+      "type":"list",
+      "member":{"shape":"RemediationStringFilter"},
+      "max":2,
+      "min":0
+    },
+    "RemediationStringList":{
+      "type":"list",
+      "member":{"shape":"NonEmptyString"},
+      "max":50,
+      "min":0
+    },
+    "RemediationStringUid":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "RemediationSummaryDetail":{
+      "type":"structure",
+      "required":[
+        "Action",
+        "IsImmediate"
+      ],
+      "members":{
+        "Action":{"shape":"NonEmptyString"},
+        "Description":{"shape":"NonEmptyString"},
+        "IsImmediate":{"shape":"Boolean"},
+        "PostRemediationSteps":{"shape":"RemediationStringList"},
+        "KbArticles":{"shape":"KbArticleList"}
+      }
+    },
+    "RemediationTrait":{
+      "type":"structure",
+      "required":[
+        "Type",
+        "Title"
+      ],
+      "members":{
+        "Type":{"shape":"NonEmptyString"},
+        "Title":{"shape":"NonEmptyString"}
+      }
+    },
+    "RemediationV2Item":{
+      "type":"structure",
+      "required":[
+        "TargetUid",
+        "Outcome",
+        "Priority",
+        "RemediationSummary",
+        "Resource",
+        "Status",
+        "Trait"
+      ],
+      "members":{
+        "TargetUid":{"shape":"NonEmptyString"},
+        "Outcome":{"shape":"RemediationOutcome"},
+        "Priority":{"shape":"RemediationPriority"},
+        "RemediationSummary":{"shape":"RemediationSummaryDetail"},
+        "Resource":{"shape":"RemediationResource"},
+        "Status":{"shape":"RemediationStatus"},
+        "Trait":{"shape":"RemediationTrait"},
+        "Guidance":{"shape":"RemediationGuidance"},
+        "UpdatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "RemediationV2ItemList":{
+      "type":"list",
+      "member":{"shape":"RemediationV2Item"},
+      "max":100,
+      "min":0
     },
     "Resource":{
       "type":"structure",

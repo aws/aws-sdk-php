@@ -80,6 +80,7 @@
     "GetMasterAccount": "<p>This method is deprecated. Instead, use <code>GetAdministratorAccount</code>.</p> <p>The Security Hub CSPM console continues to use <code>GetMasterAccount</code>. It will eventually change to use <code>GetAdministratorAccount</code>. Any IAM policies that specifically control access to this function must continue to use <code>GetMasterAccount</code>. You should also add <code>GetAdministratorAccount</code> to your policies to ensure that the correct permissions are in place after the console begins to use <code>GetAdministratorAccount</code>.</p> <p>Provides the details for the Security Hub CSPM administrator account for the current member account.</p> <p>Can be used by both member accounts that are managed using Organizations and accounts that were invited manually.</p>",
     "GetMembers": "<p>Returns the details for the Security Hub CSPM member accounts for the specified account IDs.</p> <p>An administrator account can be either the delegated Security Hub CSPM administrator account for an organization or an administrator account that enabled Security Hub CSPM manually.</p> <p>The results include both member accounts that are managed using Organizations and accounts that were invited manually.</p>",
     "GetRecommendedPolicyV2": "<p>Retrieves the recommended policy to remediate a Security Hub finding. <code>GetRecommendedPolicyV2</code> only supports findings for unused permissions.</p>",
+    "GetRemediationsV2": "<p>Retrieves remediation targets for the account, or for all member accounts if the caller is the delegated administrator. Results are sorted by priority, highest first, and are paginated. Use <code>TargetUid</code> or <code>MetadataUid</code> to scope the request to a single target or finding.</p>",
     "GetResourcesStatisticsV2": "<p>Retrieves statistical information about Amazon Web Services resources and their associated security findings.</p> <p>You can use the <code>Scopes</code> parameter to define the data boundary for the query. Currently, <code>Scopes</code> supports <code>AwsOrganizations</code>, which lets you aggregate resources from your entire organization or from specific organizational units. Only the delegated administrator account can use <code>Scopes</code>.</p> <p>If you set <code>GroupByField</code> to <code>ResourceSubCategory</code>, <code>ResourceInfo.AIDetails.HostResourceType</code>, or <code>ResourceInfo.AIDetails.CanonicalId</code>, you must include a <code>ResourceCategory</code> string filter with comparison set to <code>EQUALS</code> and value <code>AI/ML</code> in the corresponding <code>ResourceGroupByRule</code>.</p>",
     "GetResourcesTrendsV2": "<p>Returns resource trend data based on the specified criteria. This operation helps you analyze patterns and changes in resource compliance over time.</p>",
     "GetResourcesV2": "<p>Returns a list of resources.</p> <p>You can use the <code>Scopes</code> parameter to define the data boundary for the query. Currently, <code>Scopes</code> supports <code>AwsOrganizations</code>, which lets you retrieve resources from your entire organization or from specific organizational units. Only the delegated administrator account can use <code>Scopes</code>.</p> <p>You can use the <code>Filters</code> parameter to refine results based on resource attributes. You can use <code>Scopes</code> and <code>Filters</code> independently or together. When both are provided, <code>Scopes</code> narrows the data set first, and then <code>Filters</code> refines results within that scoped data set.</p> <p>For AI/ML resources, the response includes the <code>ResourceSubCategory</code> field. For self-hosted AI resources and their host resources, the response also includes <code>ResourceInfo</code> with AI-specific details. Self-hosted AI resources use a <code>ResourceType</code> with the <code>SelfHosted::AI::</code> prefix, such as <code>SelfHosted::AI::Model</code>, <code>SelfHosted::AI::Agent</code>, <code>SelfHosted::AI::InferenceEndpoint</code>, and <code>SelfHosted::AI::ExternalEndpoint</code>.</p> <p>If you filter by <code>ResourceSubCategory</code>, you must also include a <code>ResourceCategory</code> string filter with comparison set to <code>EQUALS</code> and value <code>AI/ML</code> in the same request.</p>",
@@ -93,6 +94,7 @@
     "ListConnectors": "<p>Lists the CSPM connectors and their metadata for the calling account.</p>",
     "ListConnectorsV2": "<p>Grants permission to retrieve a list of connectorsV2 and their metadata for the calling account.</p>",
     "ListEnabledProductsForImport": "<p>Lists all findings-generating solutions (products) that you are subscribed to receive findings from in Security Hub CSPM.</p>",
+    "ListExposuresByRemediationV2": "<p>Retrieves the exposure findings tied to a specific remediation target. Results are sorted by previous severity, highest first, and are paginated.</p>",
     "ListFindingAggregators": "<p>If cross-Region aggregation is enabled, then <code>ListFindingAggregators</code> returns the Amazon Resource Name (ARN) of the finding aggregator. You can run this operation from any Amazon Web Services Region.</p>",
     "ListFreeTrialStatusesV2": "<p>Lists the free trial status of Security Hub features. A delegated Security Hub administrator can list the status for accounts in its organization. Any other account can list the status only for itself. Free trial status remains available after a feature is disabled.</p>",
     "ListInvitations": "<note> <p>We recommend using Organizations instead of Security Hub CSPM invitations to manage your member accounts. For information, see <a href=\"https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-accounts-orgs.html\">Managing Security Hub CSPM administrator and member accounts with Organizations</a> in the <i>Security Hub CSPM User Guide</i>.</p> </note> <p>Lists all Security Hub CSPM membership invitations that were sent to the calling account.</p> <p>Only accounts that are managed by invitation can use this operation. Accounts that are managed using the integration with Organizations don't receive invitations.</p>",
@@ -4885,10 +4887,14 @@
         "DnsRequestAction$Blocked": "<p>Indicates whether the DNS request was blocked.</p>",
         "EnableSecurityHubRequest$EnableDefaultStandards": "<p>Whether to enable the security standards that Security Hub CSPM has designated as automatically enabled. If you don't provide a value for <code>EnableDefaultStandards</code>, it is set to <code>true</code>. To not enable the automatically enabled standards, set <code>EnableDefaultStandards</code> to <code>false</code>.</p>",
         "FindingHistoryRecord$FindingCreated": "<p> Identifies whether the event marks the creation of a new finding. A value of <code>True</code> means that the finding is newly created. A value of <code>False</code> means that the finding isn’t newly created. </p>",
+        "GetRemediationsV2Request$ShowGuidance": "<p>Specifies whether to show remediation target guidance.</p>",
         "ListMembersRequest$OnlyAssociated": "<p>Specifies which member accounts to include in the response based on their relationship status with the administrator account. The default value is <code>TRUE</code>.</p> <p>If <code>OnlyAssociated</code> is set to <code>TRUE</code>, the response includes member accounts whose relationship status with the administrator account is set to <code>ENABLED</code>.</p> <p>If <code>OnlyAssociated</code> is set to <code>FALSE</code>, the response includes all existing member accounts. </p>",
         "NetworkConnectionAction$Blocked": "<p>Indicates whether the network connection attempt was blocked.</p>",
         "ParameterValue$Boolean": "<p> A control parameter that is a boolean. </p>",
         "PortProbeAction$Blocked": "<p>Indicates whether the port probe was blocked.</p>",
+        "RemediationGuidanceMetadata$HumanReviewRequired": "<p>Specifies whether human review is required.</p>",
+        "RemediationParameter$Required": "<p>Specifies whether the parameter is required for running the guidance steps.</p>",
+        "RemediationSummaryDetail$IsImmediate": "<p>Specifies whether the effect of this target is immediate.</p>",
         "SecurityHubPolicy$ServiceEnabled": "<p> Indicates whether Security Hub CSPM is enabled in the policy. </p>",
         "Standard$EnabledByDefault": "<p>Whether the standard is enabled by default. When Security Hub CSPM is enabled from the console, if a standard is enabled by default, the check box for that standard is selected by default.</p> <p>When Security Hub CSPM is enabled using the <code>EnableSecurityHub</code> API operation, the standard is enabled by default unless <code>EnableDefaultStandards</code> is set to <code>false</code>.</p>",
         "UpdateAutomationRulesRequestItem$IsTerminal": "<p>Specifies whether a rule is the last to be applied with respect to a finding that matches the rule criteria. This is useful when a finding matches the criteria for multiple rules, and each rule has different actions. If a rule is terminal, Security Hub CSPM applies the rule action to a finding that matches the rule criteria and doesn't evaluate other rules for the finding. By default, a rule isn't terminal. </p>",
@@ -4980,6 +4986,7 @@
     "CloudProviderName": {
       "base": null,
       "refs": {
+        "RemediationResource$CloudProvider": "<p>The cloud provider where the resource exists.</p> <ul> <li> <p> <code>AWS</code> specifies that the resource exists in Amazon Web Services.</p> </li> <li> <p> <code>Azure</code> specifies that the resource exists in Microsoft Azure.</p> </li> </ul>",
         "Resource$Provider": "<p>The cloud provider that the resource belongs to. Valid values are <code>AWS</code> and <code>Azure</code>.</p>"
       }
     },
@@ -5776,6 +5783,31 @@
         "ConfigurationOptions$EnumList": "<p> The options for customizing a security control parameter that is a list of enums. </p>"
       }
     },
+    "ExposureFinding": {
+      "base": "<p>Provides details about an exposure finding and the effect the specific remediation target has on it.</p>",
+      "refs": {
+        "ExposureFindingItemsList$member": null
+      }
+    },
+    "ExposureFindingItemsList": {
+      "base": null,
+      "refs": {
+        "ListExposuresByRemediationV2Response$Items": "<p>An array of exposure findings returned by the operation.</p>"
+      }
+    },
+    "ExposureImpact": {
+      "base": null,
+      "refs": {
+        "ExposureFinding$Impact": "<p>The impact resolving a remediation target has on the exposure finding.</p> <ul> <li> <p> <code>Reduces</code> specifies that resolving the remediation target lowers the severity of the exposure finding, but does not resolve it.</p> </li> <li> <p> <code>Resolves</code> specifies that resolving the remediation target resolves the exposure finding.</p> </li> <li> <p> <code>Unchanged</code> specifies that resolving the remediation target does not change the severity of the exposure finding.</p> </li> </ul>"
+      }
+    },
+    "ExposureSeverity": {
+      "base": null,
+      "refs": {
+        "ExposureFinding$PreviousSeverity": "<p>The severity of the exposure finding before the remediation target is resolved.</p>",
+        "ExposureFinding$ProjectedSeverity": "<p>The severity of the exposure finding after the remediation target is resolved.</p>"
+      }
+    },
     "ExternalIntegrationConfiguration": {
       "base": "<p>Defines the settings and parameters required for integrating external security tools and services.</p>",
       "refs": {
@@ -6023,7 +6055,7 @@
     "FreeTrialStatusValue": {
       "base": null,
       "refs": {
-        "FreeTrialStatus$Status": "<p>Whether the free trial period is currently active. Valid values:</p> <ul> <li> <p> <code>ACTIVE</code> specifies that the free trial period is ongoing.</p> </li> <li> <p> <code>INACTIVE</code> specifies that the free trial period has ended, or that it never started.</p> </li> </ul> <p>To determine whether a trial has expired, compare <code>ExpiresAt</code> to the current time.</p>",
+        "FreeTrialStatus$Status": "<p>Specifies whether the free trial period is currently active. Valid values:</p> <ul> <li> <p> <code>ACTIVE</code> specifies that the free trial period is ongoing.</p> </li> <li> <p> <code>INACTIVE</code> specifies that the free trial period has ended, or that it never started.</p> </li> </ul> <p>To determine whether a trial has expired, compare <code>ExpiresAt</code> to the current time.</p>",
         "FreeTrialStatusValueList$member": null
       }
     },
@@ -6219,6 +6251,14 @@
       "base": null,
       "refs": {}
     },
+    "GetRemediationsV2Request": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRemediationsV2Response": {
+      "base": null,
+      "refs": {}
+    },
     "GetResourcesStatisticsV2Request": {
       "base": null,
       "refs": {}
@@ -6299,6 +6339,12 @@
       "base": null,
       "refs": {
         "GroupByResult$GroupByValues": "<p>An array of grouped values and their respective counts for each <code>GroupByField</code>.</p>"
+      }
+    },
+    "GuidanceFormat": {
+      "base": null,
+      "refs": {
+        "GetRemediationsV2Request$GuidanceFormat": "<p>The format of the remediation guidance examples to return. Valid values are <code>All</code>, <code>AwsCli</code>, <code>Cli</code>, <code>Python</code>, <code>Terraform</code>, <code>Cdk</code>, <code>CloudFormation</code>, <code>IaC</code>, and <code>Template</code>. If you don't specify a value, all formats are returned. Applies only when <code>ShowGuidance</code> is <code>true</code>.</p>"
       }
     },
     "HealthCheck": {
@@ -6624,6 +6670,7 @@
         "IntegerListConfigurationOptions$Max": "<p> The maximum valid value for a control parameter that is a list of integers. </p>",
         "IntegerListConfigurationOptions$MaxItems": "<p> The maximum number of list items that an interger list control parameter can accept. </p>",
         "IpOrganizationDetails$Asn": "<p>The Autonomous System Number (ASN) of the internet provider</p>",
+        "ListExposuresByRemediationV2Response$TotalCount": "<p>The total count of exposure findings associated with the remediation target.</p>",
         "Network$SourcePort": "<p>The source port of network-related information about a finding.</p>",
         "Network$DestinationPort": "<p>The destination port of network-related information about a finding.</p>",
         "NetworkAutonomousSystem$Number": "<p> The unique number that identifies the AS. </p>",
@@ -6641,6 +6688,9 @@
         "PortRangeFromTo$To": "<p>The last port in the port range.</p>",
         "ProcessDetails$Pid": "<p>The process ID.</p>",
         "ProcessDetails$ParentPid": "<p>The parent process ID. This field accepts positive integers between <code>O</code> and <code>2147483647</code>.</p>",
+        "RemediationOutcome$ResolvedFindingsCount": "<p>The number of associated exposure findings that are resolved by remediating the target.</p>",
+        "RemediationOutcome$SeverityReductionFindingsCount": "<p>The number of associated exposure findings whose severity is reduced by remediating the target.</p>",
+        "RemediationOutcome$SeverityUnchangedCount": "<p>The number of associated exposure findings whose severity is unchanged by remediating the target.</p>",
         "ResourceFindingsSummary$TotalFindings": "<p>The total count of security findings.</p>",
         "ResourceSeverityBreakdown$Other": "<p>The number of findings not in any of the severity categories.</p>",
         "ResourceSeverityBreakdown$Fatal": "<p>The number of findings with a severity level of fatal.</p>",
@@ -6807,6 +6857,18 @@
         "ProviderUpdateConfiguration$JiraCloud": "<p>The parameters required to update the configuration for a Jira Cloud integration.</p>"
       }
     },
+    "KbArticle": {
+      "base": "<p>A knowledge base article that provides additional guidance related to the remediation target.</p>",
+      "refs": {
+        "KbArticleList$member": null
+      }
+    },
+    "KbArticleList": {
+      "base": null,
+      "refs": {
+        "RemediationSummaryDetail$KbArticles": "<p>An array of <code>KbArticle</code> objects.</p>"
+      }
+    },
     "KeywordFilter": {
       "base": "<p>A keyword filter for querying findings.</p>",
       "refs": {
@@ -6884,6 +6946,14 @@
       "refs": {}
     },
     "ListEnabledProductsForImportResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListExposuresByRemediationV2Request": {
+      "base": null,
+      "refs": {}
+    },
+    "ListExposuresByRemediationV2Response": {
       "base": null,
       "refs": {}
     },
@@ -7065,6 +7135,7 @@
         "GetFindingsV2Request$MaxResults": "<p>The maximum number of results to return.</p>",
         "GetInsightsRequest$MaxResults": "<p>The maximum number of items to return in the response.</p>",
         "GetRecommendedPolicyV2Request$MaxResults": "<p>The maximum number of recommendation steps to return.</p>",
+        "GetRemediationsV2Request$MaxResults": "<p>The maximum number of results to return. Valid range is 1-100. If you don't specify a value, the operation returns up to 25 results.</p>",
         "GetResourcesTrendsV2Request$MaxResults": "<p>The maximum number of trend data points to return in a single response.</p>",
         "GetResourcesV2Request$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListAggregatorsV2Request$MaxResults": "<p>The maximum number of results to return.</p>",
@@ -7075,6 +7146,7 @@
         "ListConnectorsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListConnectorsV2Request$MaxResults": "<p>The maximum number of results to be returned.</p>",
         "ListEnabledProductsForImportRequest$MaxResults": "<p>The maximum number of items to return in the response.</p>",
+        "ListExposuresByRemediationV2Request$MaxResults": "<p>The maximum number of results to return. Valid range is 1-100. If you don't specify a value, the operation returns up to 25 results.</p>",
         "ListFindingAggregatorsRequest$MaxResults": "<p>The maximum number of results to return. This operation currently only returns a single result.</p>",
         "ListFreeTrialStatusesV2Request$MaxResults": "<p>The maximum number of results to return. If you don't specify a value, Security Hub returns up to 100 results.</p>",
         "ListSecurityControlDefinitionsRequest$MaxResults": "<p> An optional parameter that limits the total results of the API response to the specified number. If this parameter isn't provided in the request, the results include the first 25 security controls that apply to the specified standard. The results also include a <code>NextToken</code> parameter that you can use in a subsequent API call to get the next 25 controls. This repeats until all controls for the standard are returned. </p>",
@@ -7209,6 +7281,8 @@
         "GetInsightsResponse$NextToken": "<p>The pagination token to use to request the next page of results.</p>",
         "GetRecommendedPolicyV2Request$NextToken": "<p>The token used to paginate the <code>RecommendationSteps</code> list returned. On your first call to <code>GetRecommendedPolicyV2</code>, omit this parameter or set it to <code>NULL</code>. For subsequent calls, use the <code>NextToken</code> value returned in the previous response to retrieve the next page of results.</p>",
         "GetRecommendedPolicyV2Response$NextToken": "<p>The pagination token to use to request the next page of results.</p>",
+        "GetRemediationsV2Request$NextToken": "<p>The token used to paginate the remediations target list returned. On your first call to <code>GetRemediationsV2</code>, omit this parameter or set it to <code>NULL</code>. For subsequent calls, use the <code>NextToken</code> value returned in the previous response to retrieve the next page of results.</p>",
+        "GetRemediationsV2Response$NextToken": "<p>The pagination token to use to request the next page of results. Otherwise, this parameter is null.</p>",
         "GetResourcesTrendsV2Request$NextToken": "<p>The token to use for paginating results. This value is returned in the response if more results are available.</p>",
         "GetResourcesTrendsV2Response$NextToken": "<p>The token to use for retrieving the next page of results, if more trend data is available.</p>",
         "GetResourcesV2Request$NextToken": "<p>The token required for pagination. On your first call, set the value of this parameter to <code>NULL</code>. For subsequent calls, to continue listing data, set the value of this parameter to the value returned in the previous response.</p>",
@@ -7229,6 +7303,8 @@
         "ListConnectorsV2Response$NextToken": "<p>The pagination token to use to request the next page of results. Otherwise, this parameter is null.</p>",
         "ListEnabledProductsForImportRequest$NextToken": "<p>The token that is required for pagination. On your first call to the <code>ListEnabledProductsForImport</code> operation, set the value of this parameter to <code>NULL</code>.</p> <p>For subsequent calls to the operation, to continue listing data, set the value of this parameter to the value returned from the previous response.</p>",
         "ListEnabledProductsForImportResponse$NextToken": "<p>The pagination token to use to request the next page of results.</p>",
+        "ListExposuresByRemediationV2Request$NextToken": "<p>The token used to paginate the exposures list returned. On your first call to <code>ListExposuresByRemediationV2</code>, omit this parameter or set it to <code>NULL</code>. For subsequent calls, use the <code>NextToken</code> value returned in the previous response to retrieve the next page of results.</p>",
+        "ListExposuresByRemediationV2Response$NextToken": "<p>The pagination token to use to request the next page of results. Otherwise, this parameter is null.</p>",
         "ListFindingAggregatorsRequest$NextToken": "<p>The token returned with the previous set of results. Identifies the next set of results to return.</p>",
         "ListFindingAggregatorsResponse$NextToken": "<p>If there are more results, this is the token to provide in the next call to <code>ListFindingAggregators</code>.</p> <p>This operation currently only returns a single result. </p>",
         "ListFreeTrialStatusesV2Request$NextToken": "<p>The pagination token to request the next page of results.</p>",
@@ -8726,6 +8802,8 @@
         "EnabledSecurityControlIdentifierList$member": null,
         "EnabledStandardIdentifierList$member": null,
         "EnumConfigurationOptions$DefaultValue": "<p> The Security Hub CSPM default value for a control parameter that is an enum. </p>",
+        "ExposureFinding$MetadataUid": "<p>The unique identifier (ID) of the Security Hub exposure finding, found under the <code>metadata.uid</code> field of the finding.</p>",
+        "ExposureFinding$Title": "<p>The title of the exposure finding.</p>",
         "ExternalIntegrationConfiguration$ConnectorArn": "<p>The ARN of the connector that establishes the integration.</p>",
         "FieldMap$key": null,
         "FieldMap$value": null,
@@ -8822,9 +8900,12 @@
         "JiraCloudDetail$AuthUrl": "<p>The URL to provide to customers for OAuth auth code flow.</p>",
         "JiraCloudProviderConfiguration$ProjectKey": "<p>The project key for a JiraCloud instance.</p>",
         "JiraCloudUpdateConfiguration$ProjectKey": "<p>The project key for a JiraCloud instance.</p>",
+        "KbArticle$Title": "<p>The title of the <code>KbArticle</code>.</p>",
+        "KbArticle$Url": "<p>The URL of the <code>KbArticle</code>.</p>",
         "KeywordFilter$Value": "<p>A value for the keyword.</p>",
         "LimitExceededException$Message": null,
         "LimitExceededException$Code": null,
+        "ListExposuresByRemediationV2Response$TargetUid": "<p>The unique identifier (ID) of the remediation target that the exposure findings are associated with.</p>",
         "ListInvitationsResponse$NextToken": "<p>The pagination token to use to request the next page of results.</p>",
         "ListMembersResponse$NextToken": "<p>The pagination token to use to request the next page of results.</p>",
         "ListSecurityControlDefinitionsRequest$StandardsArn": "<p> The Amazon Resource Name (ARN) of the standard that you want to view controls for. </p>",
@@ -8914,6 +8995,54 @@
         "RelatedFinding$ProductArn": "<p>The ARN of the product that generated a related finding.</p>",
         "RelatedFinding$Id": "<p>The product-generated identifier for a related finding.</p>",
         "RelatedRequirementsList$member": null,
+        "RemediationGuidance$TargetTypeName": "<p>The name of the remediation target type.</p>",
+        "RemediationGuidance$Pattern": "<p>The remediation pattern of the remediation target.</p>",
+        "RemediationGuidance$Version": "<p>The guidance version.</p>",
+        "RemediationGuidanceContext$ProblemStatement": "<p>Explains the cause which directly created the remediation target.</p>",
+        "RemediationGuidanceContext$RiskAssessment": "<p>An assessment of the existing risk the remediation target creates.</p>",
+        "RemediationGuidanceContext$AffectedScope": "<p>The scope of the resources affected by the resolution of the remediation target.</p>",
+        "RemediationGuidanceExamples$AwsCli": "<p>An AWS CLI snippet version of the example.</p>",
+        "RemediationGuidanceExamples$Cli": "<p>A CLI snippet version of the example.</p>",
+        "RemediationGuidanceExamples$Python": "<p>A Python snippet version of the example.</p>",
+        "RemediationGuidanceExamples$Terraform": "<p>A Terraform snippet version of the example.</p>",
+        "RemediationGuidanceExamples$Cdk": "<p>A CDK snippet version of the example.</p>",
+        "RemediationGuidanceExamples$CloudFormation": "<p>A CloudFormation snippet version of the example.</p>",
+        "RemediationGuidanceExamples$IaC": "<p>An IaC snippet version of the example.</p>",
+        "RemediationGuidanceExamples$Template": "<p>A Template snippet version of the example.</p>",
+        "RemediationGuidanceMetadata$ResourceType": "<p>The resource type of the remediation target.</p>",
+        "RemediationGuidanceMetadata$ExposureType": "<p>The exposure type of the related exposure findings.</p>",
+        "RemediationGuidanceMetadata$Reversibility": "<p>The extent to which changes made in accordance with the guidance can be reversed, for example <code>Fully reversible</code>.</p>",
+        "RemediationGuidanceMetadata$FixEffect": "<p>When the fix takes effect, for example <code>Immediate</code> or <code>Deferred</code>.</p>",
+        "RemediationGuidanceMetadata$RiskLevel": "<p>The risk when implementing the guidance provided.</p>",
+        "RemediationGuidanceMetadata$AutomationLevel": "<p>The extent to which the guidance can be automated, for example <code>Full</code>.</p>",
+        "RemediationGuidanceMetadata$VerificationStatus": "<p>Verification status of the guidance.</p>",
+        "RemediationGuidanceSpecification$ExpectedEndState": "<p>The expected end state of the associated resources after completion of the steps.</p>",
+        "RemediationParameter$Name": "<p>The name of the parameter.</p>",
+        "RemediationParameter$Type": "<p>The type of the parameter.</p>",
+        "RemediationParameter$Description": "<p>A description of the parameter.</p>",
+        "RemediationResource$AccountId": "<p>The Amazon Web Services account that recorded the resource data in Security Hub.</p>",
+        "RemediationResource$Region": "<p>The Amazon Web Services Region in which Security Hub recorded the resource data.</p>",
+        "RemediationResource$ResourceOwnerAccountId": "<p>The identifier of the cloud account that owns the resource. For Amazon Web Services resources, this is the Amazon Web Services account ID. For Azure resources, this is the Azure subscription ID.</p>",
+        "RemediationResource$ResourceOwnerOrgId": "<p>The identifier of the cloud organization that owns the resource. For Amazon Web Services resources, this is the Organizations ID. For Azure resources, this is the Azure tenant ID.</p>",
+        "RemediationResource$Type": "<p>The type of the resource.</p>",
+        "RemediationResource$Name": "<p>The name of the resource.</p>",
+        "RemediationResource$Id": "<p>The unique identifier for a resource.</p>",
+        "RemediationResource$ResourceGuid": "<p>The global identifier used to identify a resource.</p>",
+        "RemediationResource$ResourceRegion": "<p>The native cloud region where the resource is located. For Amazon Web Services, this is an Amazon Web Services Region (for example, <code>us-east-1</code>). For Azure resources, this is the Azure region (for example, <code>westus2</code>). This field is always included.</p>",
+        "RemediationStep$Phase": "<p>The phase of the remediation plan that this step belongs to (for example, <code>FIX</code>).</p>",
+        "RemediationStep$Description": "<p>A description of what the step does.</p>",
+        "RemediationStep$Service": "<p>Which service this step is performed in.</p>",
+        "RemediationStep$Action": "<p>The action to be taken for this step.</p>",
+        "RemediationStep$Logic": "<p>The logic behind the existence of this step.</p>",
+        "RemediationStep$Inverse": "<p>The inverse of the step, to be used if the step needs to be rolled back.</p>",
+        "RemediationStep$VerifyAfter": "<p>The action to take after the step to verify its success.</p>",
+        "RemediationStringFilterCondition$Value": "<p>The value the string filter is comparing against.</p>",
+        "RemediationStringList$member": null,
+        "RemediationSummaryDetail$Action": "<p>A summarized action to take for the remediation target.</p>",
+        "RemediationSummaryDetail$Description": "<p>A description of the remediation target.</p>",
+        "RemediationTrait$Type": "<p>The trait type.</p>",
+        "RemediationTrait$Title": "<p>The trait title.</p>",
+        "RemediationV2Item$TargetUid": "<p>The unique identifier (ID) of the remediation target.</p>",
         "Resource$Type": "<p>The type of the resource that details are provided for. If possible, set <code>Type</code> to one of the supported resource types. For example, if the resource is an EC2 instance, then set <code>Type</code> to <code>AwsEc2Instance</code>.</p> <p>If the resource does not match any of the provided types, then set <code>Type</code> to <code>Other</code>. </p> <p>Length Constraints: Minimum length of 1. Maximum length of 256.</p>",
         "Resource$Id": "<p>The canonical identifier for the given resource type.</p>",
         "Resource$Region": "<p>The canonical Amazon Web Services external Region name where this resource is located.</p> <p>Length Constraints: Minimum length of 1. Maximum length of 16.</p>",
@@ -9761,6 +9890,169 @@
       "base": "<p>Details about the remediation steps for a finding.</p>",
       "refs": {
         "AwsSecurityFinding$Remediation": "<p>A data type that describes the remediation options for a finding.</p>"
+      }
+    },
+    "RemediationCompositeFilter": {
+      "base": "<p>Enables the creation of criteria for remediation targets.</p>",
+      "refs": {
+        "RemediationCompositeFilterList$member": null
+      }
+    },
+    "RemediationCompositeFilterList": {
+      "base": null,
+      "refs": {
+        "RemediationFilters$CompositeFilters": "<p>A collection of complex filtering conditions that can be applied to remediation target data.</p>"
+      }
+    },
+    "RemediationFilters": {
+      "base": "<p>Contains the criteria used to filter remediation targets, such as resource type, priority, or status.</p>",
+      "refs": {
+        "GetRemediationsV2Request$Filters": "<p>Filters remediation targets based on a set of criteria. You can't use <code>Filters</code> together with <code>TargetUid</code> or <code>MetadataUid</code>.</p>"
+      }
+    },
+    "RemediationGuidance": {
+      "base": "<p>A remediation guidebook outlining guidance in resolving the remediation target.</p>",
+      "refs": {
+        "RemediationV2Item$Guidance": "<p>The remediation target's guidance. Returned only when <code>ShowGuidance</code> is <code>true</code> in the request.</p>"
+      }
+    },
+    "RemediationGuidanceContext": {
+      "base": "<p>The context behind the remediation target's existence and guidance.</p>",
+      "refs": {
+        "RemediationGuidance$Context": "<p>The context behind the remediation target's existence and guidance.</p>"
+      }
+    },
+    "RemediationGuidanceExamples": {
+      "base": "<p>Provided remediation guidance examples in different formats that can be run for remediating the target.</p>",
+      "refs": {
+        "RemediationGuidance$Examples": "<p>Provided remediation guidance examples in different formats that can be run for remediating the target.</p>"
+      }
+    },
+    "RemediationGuidanceMetadata": {
+      "base": "<p>The metadata of the remediation guidance.</p>",
+      "refs": {
+        "RemediationGuidance$Metadata": "<p>The metadata of the remediation guidance.</p>"
+      }
+    },
+    "RemediationGuidanceSpecification": {
+      "base": "<p>The specification of the remediation target guidance. This outlines required resource parameters and permissions, remediation steps, and the end state.</p>",
+      "refs": {
+        "RemediationGuidance$Specification": "<p>The specification of the remediation target guidance. This outlines required resource parameters and permissions, remediation steps, and the end state.</p>"
+      }
+    },
+    "RemediationOutcome": {
+      "base": "<p>The outcome from resolving the remediation target.</p>",
+      "refs": {
+        "RemediationV2Item$Outcome": "<p>The outcome of the remediation target's resolution.</p>"
+      }
+    },
+    "RemediationParameter": {
+      "base": "<p>A parameter used in running the guidance steps.</p>",
+      "refs": {
+        "RemediationParameterList$member": null
+      }
+    },
+    "RemediationParameterList": {
+      "base": null,
+      "refs": {
+        "RemediationGuidanceSpecification$Parameters": "<p>An array of the parameters used in running the steps provided.</p>"
+      }
+    },
+    "RemediationPriority": {
+      "base": null,
+      "refs": {
+        "RemediationV2Item$Priority": "<p>The remediation target's priority. Valid values are <code>Critical</code>, <code>High</code>, <code>Medium</code>, and <code>Low</code>.</p>"
+      }
+    },
+    "RemediationResource": {
+      "base": "<p>Provides comprehensive details about a resource.</p>",
+      "refs": {
+        "ListExposuresByRemediationV2Response$Resource": "<p>Provides comprehensive details about a resource.</p>",
+        "RemediationV2Item$Resource": "<p>The remediation target's associated resource.</p>"
+      }
+    },
+    "RemediationStatus": {
+      "base": null,
+      "refs": {
+        "RemediationV2Item$Status": "<p>The current status of the remediation target.</p> <ul> <li> <p> <code>New</code> specifies that the remediation target was newly identified.</p> </li> <li> <p> <code>Updated</code> specifies that the remediation target changed after it was identified.</p> </li> <li> <p> <code>Resolved</code> specifies that the remediation target is no longer present.</p> </li> </ul>"
+      }
+    },
+    "RemediationStep": {
+      "base": "<p>A step in the remediation guidance.</p>",
+      "refs": {
+        "RemediationStepList$member": null
+      }
+    },
+    "RemediationStepList": {
+      "base": null,
+      "refs": {
+        "RemediationGuidanceSpecification$Steps": "<p>An array of ordered steps for resolving the remediation targets.</p>"
+      }
+    },
+    "RemediationStringField": {
+      "base": null,
+      "refs": {
+        "RemediationStringFilter$FieldName": "<p>The name of the filter field. Valid values are <code>Resource.Type</code>, <code>Priority</code>, <code>Status</code>, <code>Resource.Id</code>, <code>Resource.ResourceOwnerAccountId</code>, and <code>Resource.CloudProvider</code>.</p>"
+      }
+    },
+    "RemediationStringFilter": {
+      "base": "<p>A string filter for filtering remediation targets.</p>",
+      "refs": {
+        "RemediationStringFilterList$member": null
+      }
+    },
+    "RemediationStringFilterCondition": {
+      "base": "<p>The condition to apply to the string filter.</p>",
+      "refs": {
+        "RemediationStringFilter$Filter": "<p>The string filter definition.</p>"
+      }
+    },
+    "RemediationStringFilterList": {
+      "base": null,
+      "refs": {
+        "RemediationCompositeFilter$StringFilters": "<p>Enables filtering based on string field values.</p>"
+      }
+    },
+    "RemediationStringList": {
+      "base": null,
+      "refs": {
+        "RemediationGuidanceContext$Prerequisites": "<p>An array of prerequisite steps in resolving the remediation target.</p>",
+        "RemediationGuidanceMetadata$TraitTitles": "<p>The titles of traits this guidance applies to.</p>",
+        "RemediationGuidanceSpecification$RequiredPermissions": "<p>An array of required permissions to run the steps.</p>",
+        "RemediationSummaryDetail$PostRemediationSteps": "<p>An array of steps to be taken after remediation.</p>"
+      }
+    },
+    "RemediationStringUid": {
+      "base": null,
+      "refs": {
+        "GetRemediationsV2Request$TargetUid": "<p>The unique identifier (ID) of an existing remediation target to return. Returns the single matching target. You can't use <code>TargetUid</code> together with <code>MetadataUid</code> or <code>Filters</code>.</p>",
+        "GetRemediationsV2Request$MetadataUid": "<p>The unique identifier (ID) of the Security Hub exposure finding, found under the <code>metadata.uid</code> field of the finding. Returns the remediation targets associated with that finding. You can't use <code>MetadataUid</code> together with <code>TargetUid</code> or <code>Filters</code>.</p>",
+        "ListExposuresByRemediationV2Request$TargetUid": "<p>The unique identifier (ID) of an existing remediation target to list exposure findings for.</p>"
+      }
+    },
+    "RemediationSummaryDetail": {
+      "base": "<p>A summary of the remediation target.</p>",
+      "refs": {
+        "RemediationV2Item$RemediationSummary": "<p>A summary of the remediation target.</p>"
+      }
+    },
+    "RemediationTrait": {
+      "base": "<p>The trait associated with the remediation target.</p>",
+      "refs": {
+        "ListExposuresByRemediationV2Response$Trait": "<p>The specific trait associated with the remediation target.</p>",
+        "RemediationV2Item$Trait": "<p>The trait associated with the remediation target.</p>"
+      }
+    },
+    "RemediationV2Item": {
+      "base": "<p>A remediation target.</p>",
+      "refs": {
+        "RemediationV2ItemList$member": null
+      }
+    },
+    "RemediationV2ItemList": {
+      "base": null,
+      "refs": {
+        "GetRemediationsV2Response$Items": "<p>An array of remediation targets returned by the operation.</p>"
       }
     },
     "Resource": {
@@ -10794,7 +11086,7 @@
     "StringFilterComparison": {
       "base": null,
       "refs": {
-        "StringFilter$Comparison": "<p>The condition to apply to a string value when filtering Security Hub CSPM findings.</p> <p>To search for values that have the filter value, use one of the following comparison operators:</p> <ul> <li> <p>To search for values that include the filter value, use <code>CONTAINS</code>. For example, the filter <code>Title CONTAINS CloudFront</code> matches findings that have a <code>Title</code> that includes the string CloudFront.</p> </li> <li> <p>To search for values that exactly match the filter value, use <code>EQUALS</code>. For example, the filter <code>AwsAccountId EQUALS 123456789012</code> only matches findings that have an account ID of <code>123456789012</code>.</p> </li> <li> <p>To search for values that start with the filter value, use <code>PREFIX</code>. For example, the filter <code>ResourceRegion PREFIX us</code> matches findings that have a <code>ResourceRegion</code> that starts with <code>us</code>. A <code>ResourceRegion</code> that starts with a different value, such as <code>af</code>, <code>ap</code>, or <code>ca</code>, doesn't match.</p> </li> </ul> <p> <code>CONTAINS</code>, <code>EQUALS</code>, and <code>PREFIX</code> filters on the same field are joined by <code>OR</code>. A finding matches if it matches any one of those filters. For example, the filters <code>Title CONTAINS CloudFront OR Title CONTAINS CloudWatch</code> match a finding that includes either <code>CloudFront</code>, <code>CloudWatch</code>, or both strings in the title.</p> <p>To search for values that don’t have the filter value, use one of the following comparison operators:</p> <ul> <li> <p>To search for values that exclude the filter value, use <code>NOT_CONTAINS</code>. For example, the filter <code>Title NOT_CONTAINS CloudFront</code> matches findings that have a <code>Title</code> that excludes the string CloudFront.</p> </li> <li> <p>To search for values other than the filter value, use <code>NOT_EQUALS</code>. For example, the filter <code>AwsAccountId NOT_EQUALS 123456789012</code> only matches findings that have an account ID other than <code>123456789012</code>.</p> </li> <li> <p>To search for values that don't start with the filter value, use <code>PREFIX_NOT_EQUALS</code>. For example, the filter <code>ResourceRegion PREFIX_NOT_EQUALS us</code> matches findings with a <code>ResourceRegion</code> that starts with a value other than <code>us</code>.</p> </li> </ul> <p> <code>NOT_CONTAINS</code>, <code>NOT_EQUALS</code>, and <code>PREFIX_NOT_EQUALS</code> filters on the same field are joined by <code>AND</code>. A finding matches only if it matches all of those filters. For example, the filters <code>Title NOT_CONTAINS CloudFront AND Title NOT_CONTAINS CloudWatch</code> match a finding that excludes both <code>CloudFront</code> and <code>CloudWatch</code> in the title.</p> <p>You can’t have both a <code>CONTAINS</code> filter and a <code>NOT_CONTAINS</code> filter on the same field. Similarly, you can't provide both an <code>EQUALS</code> filter and a <code>NOT_EQUALS</code> or <code>PREFIX_NOT_EQUALS</code> filter on the same field. Combining filters in this way returns an error. <code>CONTAINS</code> filters can only be used with other <code>CONTAINS</code> filters. <code>NOT_CONTAINS</code> filters can only be used with other <code>NOT_CONTAINS</code> filters. </p> <p>You can combine <code>PREFIX</code> filters with <code>NOT_EQUALS</code> or <code>PREFIX_NOT_EQUALS</code> filters for the same field. Security Hub CSPM first processes the <code>PREFIX</code> filters, and then the <code>NOT_EQUALS</code> or <code>PREFIX_NOT_EQUALS</code> filters.</p> <p>For example, for the following filters, Security Hub CSPM first identifies findings that have resource types that start with either <code>AwsIam</code> or <code>AwsEc2</code>. It then excludes findings that have a resource type of <code>AwsIamPolicy</code> and findings that have a resource type of <code>AwsEc2NetworkInterface</code>.</p> <ul> <li> <p> <code>ResourceType PREFIX AwsIam</code> </p> </li> <li> <p> <code>ResourceType PREFIX AwsEc2</code> </p> </li> <li> <p> <code>ResourceType NOT_EQUALS AwsIamPolicy</code> </p> </li> <li> <p> <code>ResourceType NOT_EQUALS AwsEc2NetworkInterface</code> </p> </li> </ul> <p>The <code>CONTAINS</code> operator works with automation rules V1 and V2. The <code>NOT_CONTAINS</code> operator works only with automation rules V1. The <code>CONTAINS_WORD</code> operator works only in the <code>GetFindingsV2</code>, <code>GetFindingStatisticsV2</code>, <code>GetResourcesV2</code>, and <code>GetResourcesStatisticsV2</code> APIs. For more information, see <a href=\"https://docs.aws.amazon.com/securityhub/latest/userguide/automation-rules.html\">Automation rules</a> in the <i>Security Hub CSPM User Guide</i>.</p>"
+        "StringFilter$Comparison": "<p>The condition to apply to a string value when filtering Security Hub CSPM findings.</p> <p>To search for values that have the filter value, use one of the following comparison operators:</p> <ul> <li> <p>To search for values that include the filter value, use <code>CONTAINS</code>. For example, the filter <code>Title CONTAINS CloudFront</code> matches findings that have a <code>Title</code> that includes the string <code>CloudFront</code>.</p> </li> <li> <p>To search for values that contain a word matching the filter value, regardless of case, use <code>CONTAINS_WORD</code>. For example, the filter <code>Title CONTAINS_WORD lambda</code> matches a finding whose <code>Title</code> is <code>GuardDuty Lambda Protection</code>, because the <code>Title</code> contains the word Lambda. Including special characters in the filter value might produce unexpected search results.</p> </li> <li> <p>To search for values that exactly match the filter value, use <code>EQUALS</code>. For example, the filter <code>AwsAccountId EQUALS 123456789012</code> only matches findings that have an account ID of <code>123456789012</code>.</p> </li> <li> <p>To search for values that start with the filter value, use <code>PREFIX</code>. For example, the filter <code>ResourceRegion PREFIX us</code> matches findings that have a <code>ResourceRegion</code> that starts with <code>us</code>. A <code>ResourceRegion</code> that starts with a different value, such as <code>af</code>, <code>ap</code>, or <code>ca</code>, doesn't match.</p> </li> </ul> <p> <code>CONTAINS</code>, <code>EQUALS</code>, and <code>PREFIX</code> filters on the same field are joined by <code>OR</code>. A finding matches if it matches any one of those filters. For example, the filters <code>Title CONTAINS CloudFront OR Title CONTAINS CloudWatch</code> match a finding that includes either <code>CloudFront</code>, <code>CloudWatch</code>, or both strings in the title.</p> <p>To search for values that don’t have the filter value, use one of the following comparison operators:</p> <ul> <li> <p>To search for values that exclude the filter value, use <code>NOT_CONTAINS</code>. For example, the filter <code>Title NOT_CONTAINS CloudFront</code> matches findings that have a <code>Title</code> that excludes the string CloudFront.</p> </li> <li> <p>To search for values other than the filter value, use <code>NOT_EQUALS</code>. For example, the filter <code>AwsAccountId NOT_EQUALS 123456789012</code> only matches findings that have an account ID other than <code>123456789012</code>.</p> </li> <li> <p>To search for values that don't start with the filter value, use <code>PREFIX_NOT_EQUALS</code>. For example, the filter <code>ResourceRegion PREFIX_NOT_EQUALS us</code> matches findings with a <code>ResourceRegion</code> that starts with a value other than <code>us</code>.</p> </li> </ul> <p> <code>NOT_CONTAINS</code>, <code>NOT_EQUALS</code>, and <code>PREFIX_NOT_EQUALS</code> filters on the same field are joined by <code>AND</code>. A finding matches only if it matches all of those filters. For example, the filters <code>Title NOT_CONTAINS CloudFront AND Title NOT_CONTAINS CloudWatch</code> match a finding that excludes both <code>CloudFront</code> and <code>CloudWatch</code> in the title.</p> <p>You can’t have both a <code>CONTAINS</code> filter and a <code>NOT_CONTAINS</code> filter on the same field. Similarly, you can't provide both an <code>EQUALS</code> filter and a <code>NOT_EQUALS</code> or <code>PREFIX_NOT_EQUALS</code> filter on the same field. Combining filters in this way returns an error. <code>CONTAINS</code> filters can only be used with other <code>CONTAINS</code> filters. <code>NOT_CONTAINS</code> filters can only be used with other <code>NOT_CONTAINS</code> filters. </p> <p>You can combine <code>PREFIX</code> filters with <code>NOT_EQUALS</code> or <code>PREFIX_NOT_EQUALS</code> filters for the same field. Security Hub CSPM first processes the <code>PREFIX</code> filters, and then the <code>NOT_EQUALS</code> or <code>PREFIX_NOT_EQUALS</code> filters.</p> <p>For example, for the following filters, Security Hub CSPM first identifies findings that have resource types that start with either <code>AwsIam</code> or <code>AwsEc2</code>. It then excludes findings that have a resource type of <code>AwsIamPolicy</code> and findings that have a resource type of <code>AwsEc2NetworkInterface</code>.</p> <ul> <li> <p> <code>ResourceType PREFIX AwsIam</code> </p> </li> <li> <p> <code>ResourceType PREFIX AwsEc2</code> </p> </li> <li> <p> <code>ResourceType NOT_EQUALS AwsIamPolicy</code> </p> </li> <li> <p> <code>ResourceType NOT_EQUALS AwsEc2NetworkInterface</code> </p> </li> </ul> <p>The <code>CONTAINS</code> operator works with automation rules V1 and V2. The <code>NOT_CONTAINS</code> operator works only with automation rules V1. The <code>CONTAINS_WORD</code> operator works only in the <code>GetFindingsV2</code>, <code>GetFindingStatisticsV2</code>, <code>GetResourcesV2</code>, and <code>GetResourcesStatisticsV2</code> APIs. For more information, see <a href=\"https://docs.aws.amazon.com/securityhub/latest/userguide/automation-rules.html\">Automation rules</a> in the <i>Security Hub CSPM User Guide</i>.</p>"
       }
     },
     "StringFilterList": {
@@ -11115,6 +11407,8 @@
         "Invitation$InvitedAt": "<p>The timestamp of when the invitation was sent.</p>",
         "Member$InvitedAt": "<p>A timestamp for the date and time when the invitation was sent to the member account.</p>",
         "Member$UpdatedAt": "<p>The timestamp for the date and time when the member account was updated.</p>",
+        "RemediationGuidanceMetadata$GeneratedAt": "<p>Timestamp of when the guidance was generated.</p> <p>For more information about the validation and formatting of timestamp fields in Security Hub CSPM, see <a href=\"https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps\">Timestamps</a>.</p>",
+        "RemediationV2Item$UpdatedAt": "<p>The remediation target's last updated timestamp.</p> <p>For more information about the validation and formatting of timestamp fields in Security Hub CSPM, see <a href=\"https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps\">Timestamps</a>.</p>",
         "ResourcesTrendsMetricsResult$Timestamp": "<p>The timestamp for this data point in the resources trend metrics.</p>",
         "StandardsControl$ControlStatusUpdatedAt": "<p>The date and time that the status of the security standard control was most recently updated.</p>",
         "StandardsControlAssociationDetail$UpdatedAt": "<p> The time at which the enablement status of the control in the specified standard was last updated. </p>",

@@ -329,6 +329,7 @@ use Aws\AwsClient;
  *         ...,
  *     }>,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     StructuredLogDestinations?: list<string>,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createWorkflowAsync(array $args = [])
@@ -353,6 +354,7 @@ use Aws\AwsClient;
  *         ...,
  *     }>,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     StructuredLogDestinations?: list<string>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result deleteAccess(array $args = [])
