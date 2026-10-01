@@ -6,9 +6,9 @@ namespace Aws\Api\Serde\Xml;
  *
  * A plan is built once per shape and cached on the shape
  * (ShapePlanCache::XML_ENCODE). It removes the per-request model reads that
- * XmlBody performed: shape-type dispatch, namespace lookups, structure
- * attribute-vs-element partitioning and element-name resolution, list/map
- * flattening decisions, and collection element naming.
+ * XmlBody would otherwise perform: shape-type dispatch, namespace lookups,
+ * structure attribute-vs-element partitioning and element-name resolution,
+ * list/map flattening decisions, and collection element naming.
  *
  * The XMLWriter calls themselves are unchanged; only the trait derivation is
  * precomputed, so writer output stays byte-identical.

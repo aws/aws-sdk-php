@@ -7,8 +7,8 @@ use Aws\Api\Shape;
  * Maps a modeled shape to an integer category tag for XML encoding.
  *
  * Integer tags replace repeated model-string reads and string dispatch inside
- * the XML encode traversal. The categories mirror XmlBody::format's handler
- * table: structure, list, map, blob, timestamp, boolean, and a default
+ * the XML encode traversal. The categories are structure, list, map, blob,
+ * timestamp, boolean, and a default
  * (scalar) bucket for string/integer/long/double/float and any other leaf.
  *
  * XML has no document category (unlike JSON).

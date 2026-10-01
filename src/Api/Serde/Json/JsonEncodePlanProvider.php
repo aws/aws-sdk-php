@@ -82,7 +82,7 @@ final class JsonEncodePlanProvider
 
     /**
      * Resolves the timestamp format for a shape, or null when it is not a
-     * timestamp. Matches JsonBody::format's default of unixTimestamp.
+     * timestamp. Defaults to unixTimestamp.
      */
     private static function timestampFormat(int $type, Shape $shape): ?string
     {

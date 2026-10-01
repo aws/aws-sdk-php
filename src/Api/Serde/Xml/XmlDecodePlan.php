@@ -6,9 +6,10 @@ namespace Aws\Api\Serde\Xml;
  *
  * A plan is built once per shape and cached on the shape
  * (ShapePlanCache::XML_DECODE). It removes the per-response model reads that
- * XmlParser performed: shape-type dispatch, element-name resolution (including
- * the getOriginalDefinition special case), attribute key + namespace
- * derivation, list/map flattening decisions, and collection element naming.
+ * XmlParser would otherwise perform: shape-type dispatch, element-name
+ * resolution (including the getOriginalDefinition special case), attribute
+ * key + namespace derivation, list/map flattening decisions, and collection
+ * element naming.
  *
  * The SimpleXML traversal itself is unchanged; only the trait derivation is
  * precomputed, so the parsed result is identical.

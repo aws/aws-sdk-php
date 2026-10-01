@@ -113,8 +113,8 @@ final class XmlDecodePlanProvider
     }
 
     /**
-     * Resolves the element name to read for a structure member, reproducing
-     * XmlParser::memberKey including the getOriginalDefinition special case:
+     * Resolves the element name to read for a structure member, including the
+     * getOriginalDefinition special case:
      * a StructureShape member whose locationName was inherited from the target
      * shape definition (not declared at member level) reads by member name.
      */

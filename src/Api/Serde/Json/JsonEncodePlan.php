@@ -6,8 +6,8 @@ namespace Aws\Api\Serde\Json;
  *
  * A plan is built once per shape and cached on the shape
  * (ShapePlanCache::JSON_ENCODE). It removes the per-request model reads that
- * JsonBody::format() performed: shape-type dispatch, wire-name derivation, and
- * timestamp-format lookups.
+ * JsonBody would otherwise perform: shape-type dispatch, wire-name
+ * derivation, and timestamp-format lookups.
  *
  * Descriptor tuples use named index constants rather than magic offsets.
  *

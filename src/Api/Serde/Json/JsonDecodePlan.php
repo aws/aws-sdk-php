@@ -6,7 +6,7 @@ namespace Aws\Api\Serde\Json;
  *
  * A plan is built once per shape and cached on the shape
  * (ShapePlanCache::JSON_DECODE). It removes the per-response model reads that
- * JsonParser::parse() performed: shape-type dispatch, member iteration,
+ * JsonParser would otherwise perform: shape-type dispatch, member iteration,
  * wire-name derivation, and collection member resolution.
  *
  * Structure members are stored as an ordered list to preserve V3 result order.

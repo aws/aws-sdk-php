@@ -81,8 +81,7 @@ final class XmlEncodePlanProvider
                 $plan->mapValueNs = self::namespaceAttribute($value);
                 $plan->mapKeyAttribute = self::writesAttribute($key);
                 $plan->mapValueAttribute = self::writesAttribute($value);
-                // Each entry element is opened with the map shape's namespace,
-                // matching XmlBody::add_map (startElement($shape, $xmlEntry)).
+                // Each entry element is opened with the map shape's namespace.
                 $plan->mapEntryNs = $plan->namespace;
                 break;
 
@@ -136,9 +135,8 @@ final class XmlEncodePlanProvider
     }
 
     /**
-     * Precomputes the root element name using the current three-level
-     * precedence, reproducing XmlBody::determineRootElementName so the runtime
-     * serializer does not inspect shape metadata to open the document root:
+     * Precomputes the root element name using a three-level precedence, so the
+     * runtime serializer does not inspect shape metadata to open the root:
      *   1. the original ShapeMap target definition's locationName
      *   2. the resolved shape's locationName
      *   3. the modeled shape name
@@ -163,8 +161,8 @@ final class XmlEncodePlanProvider
 
     /**
      * Whether XmlBody writes this shape as an attribute. Only string shapes
-     * honor xmlAttribute (XmlBody::add_string); every other type is written as
-     * an element even when the model marks it xmlAttribute.
+     * honor xmlAttribute; every other type is written as an element even when
+     * the model marks it xmlAttribute.
      */
     private static function writesAttribute(Shape $shape): bool
     {
