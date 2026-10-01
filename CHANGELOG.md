@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.399.0 - 2026-10-01
 
 * `Aws\SecurityHub` - Adds GetRemediationsV2 and ListExposuresByRemediationV2 APIs. This feature allows customers to see their highest priority remediations for their Exposure findings. Remediations target key changes customers can make to resources to drive finding resolution.
 * `Aws\SageMaker` - Release support for c8a.16xlarge and m8a.16xlarge instance types for SageMaker HyperPod
