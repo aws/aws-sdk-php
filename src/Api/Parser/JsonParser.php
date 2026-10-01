@@ -98,13 +98,16 @@ class JsonParser
      */
     private function parseByType(int $type, Shape $shape, ?string $tsFormat, $value)
     {
+        // Match the legacy parser: a null value is returned as-is for every
+        // shape type, so sparse list elements stay null.
+        if ($value === null) {
+            return null;
+        }
+
         switch ($type) {
             case JsonShapeType::STRUCTURE:
             case JsonShapeType::LIST:
             case JsonShapeType::MAP:
-                if ($value === null) {
-                    return null;
-                }
                 return $this->parsePlan($this->planProvider->get($shape), $value);
 
             case JsonShapeType::TIMESTAMP:
