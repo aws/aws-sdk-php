@@ -308,7 +308,7 @@ class XmlBody
                         $member[XmlEncodePlan::M_SHAPE],
                         $member[XmlEncodePlan::M_ELEMENT],
                         $v,
-                        $member[XmlEncodePlan::M_ATTRIBUTE],
+                        $member[XmlEncodePlan::M_ATTR_NAME],
                         $member[XmlEncodePlan::M_NS],
                         $xml
                     );
@@ -323,13 +323,16 @@ class XmlBody
                     $this->startElementPlan($plan, $name, $xml);
                     $elementName = $plan->listItemName;
                 }
+                $itemAttrName = $plan->listItemAttribute
+                    ? ($plan->listItemAttrName ?? $elementName)
+                    : null;
                 foreach ($value as $v) {
                     $this->formatByTypePlan(
                         $plan->listItemType,
                         $plan->listItemShape,
                         $elementName,
                         $v,
-                        false,
+                        $itemAttrName,
                         $plan->listItemNs,
                         $xml
                     );
@@ -351,7 +354,7 @@ class XmlBody
                         $plan->mapKeyShape,
                         $plan->mapKeyName,
                         $key,
-                        false,
+                        $plan->mapKeyAttribute ? $plan->mapKeyName : null,
                         $plan->mapKeyNs,
                         $xml
                     );
@@ -360,7 +363,7 @@ class XmlBody
                         $plan->mapValueShape,
                         $plan->mapValueName,
                         $v,
-                        false,
+                        $plan->mapValueAttribute ? $plan->mapValueName : null,
                         $plan->mapValueNs,
                         $xml
                     );
@@ -411,15 +414,16 @@ class XmlBody
 
     /**
      * Formats one member, list item, or map key/value. Composite children fetch
-     * their own plan lazily; leaf types are handled inline. A structure member
-     * flagged as an attribute is written as an attribute instead of an element.
+     * their own plan lazily; leaf types are handled inline. A non-null
+     * $attributeName writes the value as that attribute instead of an element;
+     * the plan only sets it for string shapes, matching XmlBody::add_string.
      */
     private function formatByTypePlan(
         int $type,
         Shape $shape,
         $name,
         $value,
-        bool $isAttribute,
+        ?string $attributeName,
         ?array $ns,
         XMLWriter $xml
     ) {
@@ -452,8 +456,8 @@ class XmlBody
                 return;
 
             default: // SCALAR
-                if ($isAttribute) {
-                    $xml->writeAttribute($name, $value);
+                if ($attributeName !== null) {
+                    $xml->writeAttribute($attributeName, $value);
                 } else {
                     $this->openLeaf($name, $ns, $xml);
                     $xml->text($value);

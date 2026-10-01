@@ -25,8 +25,9 @@ final class XmlEncodePlan
     public const M_ELEMENT   = 0; // resolved element/attribute name
     public const M_TYPE      = 1; // XmlShapeType tag
     public const M_SHAPE     = 2; // child Shape, for lazy composite plan lookup
-    public const M_ATTRIBUTE = 3; // bool: emit as attribute rather than element
+    public const M_ATTRIBUTE = 3; // bool: modeled xmlAttribute, ordered first
     public const M_NS        = 4; // child namespace attribute [name, uri] or null
+    public const M_ATTR_NAME = 5; // attribute name if written as one, else null
 
     /** @var int XmlShapeType tag for the shape this shape encodes. */
     public $type;
@@ -67,6 +68,10 @@ final class XmlEncodePlan
     public $listItemName;
     /** @var array{0:string,1:string}|null Namespace attr for list items. */
     public $listItemNs;
+    /** @var bool Whether list items are written as attributes (string only). */
+    public $listItemAttribute = false;
+    /** @var string|null Item locationName used as the attribute name. */
+    public $listItemAttrName;
 
     // --- Map fields ---
     /** @var string|null Entry wrapper element name ('entry' when not flat). */
@@ -89,6 +94,10 @@ final class XmlEncodePlan
     public $mapKeyNs;
     /** @var array{0:string,1:string}|null Namespace attr for map values. */
     public $mapValueNs;
+    /** @var bool Whether map keys are written as attributes (string only). */
+    public $mapKeyAttribute = false;
+    /** @var bool Whether map values are written as attributes (string only). */
+    public $mapValueAttribute = false;
 
     /** @var string|null Timestamp format when the shape is a timestamp. */
     public $timestampFormat;

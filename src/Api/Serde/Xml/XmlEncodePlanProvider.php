@@ -61,6 +61,8 @@ final class XmlEncodePlanProvider
                 // flattened lists reuse the list's own element name at runtime.
                 $plan->listItemName = $item['locationName'] ?: 'member';
                 $plan->listItemNs = self::namespaceAttribute($item);
+                $plan->listItemAttribute = self::writesAttribute($item);
+                $plan->listItemAttrName = $item['locationName'] ?: null;
                 break;
 
             case XmlShapeType::MAP:
@@ -77,6 +79,8 @@ final class XmlEncodePlanProvider
                 $plan->mapValueType = XmlShapeType::fromShape($value);
                 $plan->mapKeyNs = self::namespaceAttribute($key);
                 $plan->mapValueNs = self::namespaceAttribute($value);
+                $plan->mapKeyAttribute = self::writesAttribute($key);
+                $plan->mapValueAttribute = self::writesAttribute($value);
                 // Each entry element is opened with the map shape's namespace,
                 // matching XmlBody::add_map (startElement($shape, $xmlEntry)).
                 $plan->mapEntryNs = $plan->namespace;
@@ -118,6 +122,9 @@ final class XmlEncodePlanProvider
                 XmlEncodePlan::M_SHAPE     => $member,
                 XmlEncodePlan::M_ATTRIBUTE => $isAttribute,
                 XmlEncodePlan::M_NS        => self::namespaceAttribute($member),
+                XmlEncodePlan::M_ATTR_NAME => self::writesAttribute($member)
+                    ? ($member['locationName'] ?: $elementName)
+                    : null,
             ];
 
             if ($isAttribute) {
@@ -153,6 +160,16 @@ final class XmlEncodePlanProvider
         }
 
         return (string) $shapeName;
+    }
+
+    /**
+     * Whether XmlBody writes this shape as an attribute. Only string shapes
+     * honor xmlAttribute (XmlBody::add_string); every other type is written as
+     * an element even when the model marks it xmlAttribute.
+     */
+    private static function writesAttribute(Shape $shape): bool
+    {
+        return $shape['type'] === 'string' && $shape['xmlAttribute'];
     }
 
     /**

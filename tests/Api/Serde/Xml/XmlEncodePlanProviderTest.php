@@ -53,6 +53,29 @@ class XmlEncodePlanProviderTest extends TestCase
         $this->assertSame(XmlShapeType::TIMESTAMP, $plan->members['When'][XmlEncodePlan::M_TYPE]);
     }
 
+    public function testOnlyStringAttributesGetAnAttributeName(): void
+    {
+        $provider = new XmlEncodePlanProvider();
+        $shape = $this->shape([
+            'type' => 'structure',
+            'members' => [
+                'Id'    => ['type' => 'string', 'xmlAttribute' => true, 'locationName' => 'id'],
+                'Count' => ['type' => 'integer', 'xmlAttribute' => true],
+                'Name'  => ['type' => 'string'],
+            ],
+        ]);
+
+        $plan = $provider->get($shape);
+
+        $this->assertSame('id', $plan->members['Id'][XmlEncodePlan::M_ATTR_NAME]);
+        // Non-string xmlAttribute members are still ordered first but written
+        // as elements, so they carry no attribute name.
+        $this->assertTrue($plan->members['Count'][XmlEncodePlan::M_ATTRIBUTE]);
+        $this->assertNull($plan->members['Count'][XmlEncodePlan::M_ATTR_NAME]);
+        $this->assertNull($plan->members['Name'][XmlEncodePlan::M_ATTR_NAME]);
+        $this->assertSame(['Id', 'Count'], $plan->attributeMembers);
+    }
+
     public function testPrefixedNamespace(): void
     {
         $provider = new XmlEncodePlanProvider();
