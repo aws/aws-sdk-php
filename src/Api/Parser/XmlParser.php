@@ -160,8 +160,7 @@ class XmlParser
 
     private function coerceTimestamp($value, ?string $tsFormat)
     {
-        if (
-            is_string($value)
+        if (is_string($value)
             || is_int($value)
             || (is_object($value) && method_exists($value, '__toString'))
         ) {
@@ -234,8 +233,7 @@ class XmlParser
                 }
             }
         }
-        if (
-            isset($shape['union'])
+        if (isset($shape['union'])
             && $shape['union']
             && empty($target)
         ) {
@@ -253,8 +251,7 @@ class XmlParser
         if ($shape instanceof StructureShape && isset($shape['locationName'])) {
             $originalDef = $shape->getOriginalDefinition($shape->getName());
 
-            if (
-                $originalDef && isset($originalDef['locationName'])
+            if ($originalDef && isset($originalDef['locationName'])
                 && $originalDef['locationName'] === $shape['locationName']
             ) {
                 return $name;
@@ -336,8 +333,7 @@ class XmlParser
     // phpcs:ignore PSR1.Methods.CamelCapsMethodName.NotCamelCaps
     private function parse_timestamp(Shape $shape, $value)
     {
-        if (
-            is_string($value)
+        if (is_string($value)
             || is_int($value)
             || (is_object($value)
                 && method_exists($value, '__toString'))
