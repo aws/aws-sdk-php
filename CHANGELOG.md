@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.399.1 - 2026-10-02
 
 * `Aws\SecurityAgent` - Adds trigger filters that control which pull request events, target branches, and labels start an automatic code review.
 * `Aws\PinpointSMSVoiceV2` - AWS End User Messaging SMS CarrierLookup API now supports phone number cleansing on customer opt-in. when selected, the response includes the additional field "OriginalPhoneNumber". It can also return additional PhoneNumberType enums, VOIP and PREPAID.
