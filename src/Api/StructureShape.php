@@ -102,4 +102,12 @@ class StructureShape extends Shape
             $this->members[$name] = $this->shapeFor($definition);
         }
     }
+
+    /**
+     * @return void
+     */
+    protected function clearResolvedModelCache()
+    {
+        $this->members = null;
+    }
 }

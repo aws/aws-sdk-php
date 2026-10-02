@@ -51,4 +51,13 @@ class MapShape extends Shape
 
         return $this->key;
     }
+
+    /**
+     * @return void
+     */
+    protected function clearResolvedModelCache()
+    {
+        $this->value = null;
+        $this->key = null;
+    }
 }

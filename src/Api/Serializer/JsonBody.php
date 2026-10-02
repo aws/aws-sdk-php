@@ -1,6 +1,9 @@
 <?php
 namespace Aws\Api\Serializer;
 
+use Aws\Api\Serde\Json\JsonEncodePlan;
+use Aws\Api\Serde\Json\JsonEncodePlanProvider;
+use Aws\Api\Serde\Json\JsonShapeType;
 use Aws\Api\Service;
 use Aws\Api\Shape;
 use Aws\Api\TimestampShape;
@@ -14,9 +17,13 @@ class JsonBody
 {
     private $api;
 
+    /** @var JsonEncodePlanProvider */
+    private $planProvider;
+
     public function __construct(Service $api)
     {
         $this->api = $api;
+        $this->planProvider = new JsonEncodePlanProvider();
     }
 
     /**
@@ -52,7 +59,8 @@ class JsonBody
     public function build(Shape $shape, array|string $args)
     {
         try {
-            $result = json_encode($this->format($shape, $args), JSON_THROW_ON_ERROR);
+            $plan = $this->planProvider->get($shape);
+            $result = json_encode($this->formatPlan($plan, $args), JSON_THROW_ON_ERROR);
         } catch (\JsonException $e) {
             throw new InvalidJsonException(
                 'Unable to encode JSON document ' . $shape->getName() . ': ' .
@@ -63,53 +71,82 @@ class JsonBody
         return $result === '[]' ? '{}' : $result;
     }
 
-    private function format(Shape $shape, $value)
+    /**
+     * Encodes a value using a compiled plan instead of re-reading the model.
+     */
+    private function formatPlan(JsonEncodePlan $plan, $value)
     {
-        switch ($shape['type']) {
-            case 'structure':
+        switch ($plan->type) {
+            case JsonShapeType::STRUCTURE:
                 $data = [];
-                if ($shape['document'] ?? false) {
-                    return $value;
-                }
                 foreach ($value as $k => $v) {
-                    if ($v !== null && $shape->hasMember($k)) {
-                        $valueShape = $shape->getMember($k);
-                        $data[$valueShape['locationName'] ?: $k]
-                            = $this->format($valueShape, $v);
+                    if ($v === null || !isset($plan->members[$k])) {
+                        continue;
                     }
+                    $member = $plan->members[$k];
+                    $data[$member[JsonEncodePlan::M_WIRE]] = $this->formatByType(
+                        $member[JsonEncodePlan::M_TYPE],
+                        $member[JsonEncodePlan::M_SHAPE],
+                        $member[JsonEncodePlan::M_TSFORMAT],
+                        $v
+                    );
                 }
                 if (empty($data)) {
-                    return new \stdClass;
+                    return new \stdClass();
                 }
                 return $data;
 
-            case 'list':
-                $items = $shape->getMember();
+            case JsonShapeType::LIST:
+                $type  = $plan->value[JsonEncodePlan::V_TYPE];
+                $shape = $plan->value[JsonEncodePlan::V_SHAPE];
+                $ts    = $plan->value[JsonEncodePlan::V_TSFORMAT];
                 foreach ($value as $k => $v) {
-                    $value[$k] = $this->format($items, $v);
+                    $value[$k] = $this->formatByType($type, $shape, $ts, $v);
                 }
                 return $value;
 
-            case 'map':
+            case JsonShapeType::MAP:
                 if (empty($value)) {
-                    return new \stdClass;
+                    return new \stdClass();
                 }
-                $values = $shape->getValue();
+                $type  = $plan->value[JsonEncodePlan::V_TYPE];
+                $shape = $plan->value[JsonEncodePlan::V_SHAPE];
+                $ts    = $plan->value[JsonEncodePlan::V_TSFORMAT];
                 foreach ($value as $k => $v) {
-                    $value[$k] = $this->format($values, $v);
+                    $value[$k] = $this->formatByType($type, $shape, $ts, $v);
                 }
                 return $value;
 
-            case 'blob':
+            case JsonShapeType::BLOB:
                 return base64_encode($value);
 
-            case 'timestamp':
-                $timestampFormat = !empty($shape['timestampFormat'])
-                    ? $shape['timestampFormat']
-                    : 'unixTimestamp';
-                return TimestampShape::format($value, $timestampFormat);
+            case JsonShapeType::TIMESTAMP:
+                return TimestampShape::format($value, $plan->timestampFormat);
 
-            default:
+            default: // SCALAR, DOCUMENT
+                return $value;
+        }
+    }
+
+    /**
+     * Formats one member or collection element. Composite children fetch their
+     * own plan lazily; leaf types are handled inline.
+     */
+    private function formatByType(int $type, Shape $shape, ?string $tsFormat, $value)
+    {
+        switch ($type) {
+            case JsonShapeType::STRUCTURE:
+            case JsonShapeType::LIST:
+            case JsonShapeType::MAP:
+                return $this->formatPlan($this->planProvider->get($shape), $value);
+
+            case JsonShapeType::BLOB:
+                return base64_encode($value);
+
+            case JsonShapeType::TIMESTAMP:
+                return TimestampShape::format($value, $tsFormat);
+
+            default: // SCALAR, DOCUMENT
                 return $value;
         }
     }

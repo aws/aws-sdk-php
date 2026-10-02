@@ -70,7 +70,7 @@ class Service extends AbstractModel
         }
         $this->apiVersion = $this->getApiVersion();
         if (isset($definition['clientContextParams'])) {
-           $this->clientContextParams = $definition['clientContextParams'];
+            $this->clientContextParams = $definition['clientContextParams'];
         }
 
         $this->protocol = $this->selectProtocol($definition);
@@ -288,11 +288,6 @@ class Service extends AbstractModel
             if (!isset($this->definition['operations'][$name])) {
                 throw new \InvalidArgumentException("Unknown operation: $name");
             }
-            $this->operations[$name] = new Operation(
-                $this->definition['operations'][$name],
-                $this->shapeMap
-            );
-        } elseif ($this->modifiedModel) {
             $this->operations[$name] = new Operation(
                 $this->definition['operations'][$name],
                 $this->shapeMap
@@ -526,7 +521,16 @@ class Service extends AbstractModel
     {
         $this->definition = $definition;
         $this->shapeMap = new ShapeMap($definition['shapes']);
+        $this->operations = [];
         $this->modifiedModel = true;
+    }
+
+    /**
+     * @return void
+     */
+    protected function clearResolvedModelCache()
+    {
+        $this->operations = [];
     }
 
     /**
@@ -555,7 +559,7 @@ class Service extends AbstractModel
     {
         $modeledProtocols = $definition['metadata']['protocols'] ?? null;
         if (!empty($modeledProtocols)) {
-            foreach(SupportedProtocols::cases() as $protocol) {
+            foreach (SupportedProtocols::cases() as $protocol) {
                 if (in_array($protocol->value, $modeledProtocols)) {
                     return $protocol->value;
                 }
