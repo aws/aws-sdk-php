@@ -1999,7 +1999,8 @@
       "type":"structure",
       "required":["PhoneNumber"],
       "members":{
-        "PhoneNumber":{"shape":"CarrierLookupInputPhoneNumberType"}
+        "PhoneNumber":{"shape":"CarrierLookupInputPhoneNumberType"},
+        "EnableCleansing":{"shape":"Boolean"}
       }
     },
     "CarrierLookupResult":{
@@ -2016,7 +2017,8 @@
         "MCC":{"shape":"MCCType"},
         "MNC":{"shape":"MNCType"},
         "Carrier":{"shape":"String"},
-        "PhoneNumberType":{"shape":"PhoneNumberType"}
+        "PhoneNumberType":{"shape":"PhoneNumberType"},
+        "OriginalPhoneNumber":{"shape":"CarrierLookupInputPhoneNumberType"}
       }
     },
     "CarrierStatus":{
@@ -4798,6 +4800,8 @@
       "enum":[
         "MOBILE",
         "LANDLINE",
+        "VOIP",
+        "PREPAID",
         "OTHER",
         "INVALID"
       ]

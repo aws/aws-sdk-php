@@ -141,6 +141,7 @@
         "ListProcurementPortalSuppliersResponse$NextToken": "<p>The token to use to retrieve the next set of results, or null if there are no more results.</p>",
         "ListProcurementPortalsRequest$NextToken": "<p>The token for the next set of results. You received this token from a previous call.</p>",
         "ListProcurementPortalsResponse$NextToken": "<p>The token to use to retrieve the next set of results, or null if there are no more results.</p>",
+        "MarketplacePunchOutPreference$ApprovalRequestRedirectUrl": "<p>The URL that buyers are redirected to for approval requests in the procurement portal. This is only supported for Coupa. When provided together with the procurement portal instance endpoint, its host must match the host of that endpoint.</p>",
         "ProcurementPortalPreference$BuyerIdentifier": "<p>The unique identifier for the buyer in the procurement portal.</p>",
         "ProcurementPortalPreference$SupplierIdentifier": "<p>The unique identifier for the supplier in the procurement portal.</p>",
         "ProcurementPortalPreference$ProcurementPortalSharedSecret": "<p>The shared secret or authentication credential used for secure communication with the procurement portal.</p>",
@@ -206,12 +207,16 @@
       "refs": {
         "CreateProcurementPortalPreferenceRequest$EinvoiceDeliveryEnabled": "<p>Indicates whether e-invoice delivery is enabled for this procurement portal preference. Set to true to enable e-invoice delivery, false to disable.</p>",
         "CreateProcurementPortalPreferenceRequest$PurchaseOrderRetrievalEnabled": "<p>Indicates whether purchase order retrieval is enabled for this procurement portal preference. Set to true to enable PO retrieval, false to disable.</p>",
+        "CreateProcurementPortalPreferenceRequest$MarketplacePunchOutEnabled": "<p>Defaults to false if not provided.</p>",
         "ProcurementPortalPreference$EinvoiceDeliveryEnabled": "<p>Indicates whether e-invoice delivery is enabled for this procurement portal preference.</p>",
         "ProcurementPortalPreference$PurchaseOrderRetrievalEnabled": "<p>Indicates whether purchase order retrieval is enabled for this procurement portal preference.</p>",
+        "ProcurementPortalPreference$MarketplacePunchOutEnabled": "<p>Indicates whether Marketplace PunchOut is enabled for this procurement portal preference. Defaults to <code>false</code>.</p>",
         "ProcurementPortalPreferenceSummary$EinvoiceDeliveryEnabled": "<p>Indicates whether e-invoice delivery is enabled for this procurement portal preference.</p>",
         "ProcurementPortalPreferenceSummary$PurchaseOrderRetrievalEnabled": "<p>Indicates whether purchase order retrieval is enabled for this procurement portal preference.</p>",
+        "ProcurementPortalPreferenceSummary$MarketplacePunchOutEnabled": "<p>Indicates whether Marketplace PunchOut is enabled for this procurement portal preference. Defaults to <code>false</code>.</p>",
         "PutProcurementPortalPreferenceRequest$EinvoiceDeliveryEnabled": "<p>Updated flag indicating whether e-invoice delivery is enabled for this procurement portal preference.</p>",
-        "PutProcurementPortalPreferenceRequest$PurchaseOrderRetrievalEnabled": "<p>Updated flag indicating whether purchase order retrieval is enabled for this procurement portal preference.</p>"
+        "PutProcurementPortalPreferenceRequest$PurchaseOrderRetrievalEnabled": "<p>Updated flag indicating whether purchase order retrieval is enabled for this procurement portal preference.</p>",
+        "PutProcurementPortalPreferenceRequest$MarketplacePunchOutEnabled": "<p>Whether Marketplace PunchOut is enabled for this connection. Defaults to false if not provided.</p>"
       }
     },
     "BuyerDomain": {
@@ -362,7 +367,7 @@
       "base": "<p>Specifies the preferences for e-invoice delivery, including document types, attachment types, and customization settings.</p>",
       "refs": {
         "CreateProcurementPortalPreferenceRequest$EinvoiceDeliveryPreference": "<p>Specifies the e-invoice delivery configuration including document types, attachment types, and customization settings for the portal.</p>",
-        "ProcurementPortalPreference$EinvoiceDeliveryPreference": "<p>The configuration settings that specify how e-invoices are delivered to the procurement portal.</p>",
+        "ProcurementPortalPreference$EinvoiceDeliveryPreference": "<p>The e-invoice delivery configuration including document types, attachment types, and customization settings.</p>",
         "PutProcurementPortalPreferenceRequest$EinvoiceDeliveryPreference": "<p>Updated e-invoice delivery configuration including document types, attachment types, and customization settings for the portal.</p>"
       }
     },
@@ -642,6 +647,14 @@
       "refs": {
         "ProcurementPortalPreference$Version": "<p>The version number of the procurement portal preference configuration.</p>",
         "ProcurementPortalPreferenceSummary$Version": "<p>The version number of the procurement portal preference configuration in this summary.</p>"
+      }
+    },
+    "MarketplacePunchOutPreference": {
+      "base": "<p>Represents the Marketplace PunchOut configuration for a procurement portal preference.</p>",
+      "refs": {
+        "CreateProcurementPortalPreferenceRequest$MarketplacePunchOutPreference": "<p>Required for Coupa when MarketplacePunchOutEnabled is true.</p>",
+        "ProcurementPortalPreference$MarketplacePunchOutPreference": "<p>The Marketplace PunchOut configuration for this procurement portal preference. This is present when <code>MarketplacePunchOutEnabled</code> is <code>true</code>.</p>",
+        "PutProcurementPortalPreferenceRequest$MarketplacePunchOutPreference": "<p>Configuration for Marketplace PunchOut. Required when MarketplacePunchOutEnabled is true.</p>"
       }
     },
     "MaxResults": {

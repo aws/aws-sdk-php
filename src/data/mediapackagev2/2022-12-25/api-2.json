@@ -1585,7 +1585,8 @@
         "Start":{"shape":"Timestamp"},
         "End":{"shape":"Timestamp"},
         "TimeDelaySeconds":{"shape":"FilterConfigurationTimeDelaySecondsInteger"},
-        "ClipStartTime":{"shape":"Timestamp"}
+        "ClipStartTime":{"shape":"Timestamp"},
+        "Multiview":{"shape":"MultiviewFilterConfiguration"}
       }
     },
     "FilterConfigurationDrmSettingsString":{
@@ -2390,6 +2391,17 @@
         "AvailableLayouts":{"shape":"MultiviewLayoutList"}
       }
     },
+    "MultiviewFilterConfiguration":{
+      "type":"structure",
+      "required":[
+        "Layout",
+        "Sources"
+      ],
+      "members":{
+        "Layout":{"shape":"MultiviewLayoutType"},
+        "Sources":{"shape":"MultiviewSourceList"}
+      }
+    },
     "MultiviewLayoutList":{
       "type":"list",
       "member":{"shape":"MultiviewLayoutType"},
@@ -2410,7 +2422,7 @@
     "MultiviewSourceList":{
       "type":"list",
       "member":{"shape":"ResourceName"},
-      "max":10,
+      "max":50,
       "min":1
     },
     "OriginEndpointListConfiguration":{
@@ -3266,7 +3278,13 @@
         "MULTIVIEW_SOURCE_NON_EPOCH_LOCKED",
         "MULTIVIEW_SCTE_REQUIRES_AVAILS_PERIOD_TRIGGER",
         "CONTENT_KEY_PERIOD_TIMING_WITHOUT_KEY_ROTATION",
-        "CONTENT_KEY_PERIOD_TIMING_REQUIRES_SPEKE_V2_1"
+        "CONTENT_KEY_PERIOD_TIMING_REQUIRES_SPEKE_V2_1",
+        "MULTIVIEW_FILTER_CONFIGURATION_NOT_ALLOWED",
+        "MULTIVIEW_FILTER_LAYOUT_NOT_AVAILABLE",
+        "MULTIVIEW_FILTER_SOURCE_NOT_AVAILABLE",
+        "MULTIVIEW_FILTER_SOURCE_COUNT_MISMATCH",
+        "MULTIVIEW_SOURCE_CHANNEL_LIMIT_EXCEEDED",
+        "MULTIVIEW_TS_USE_AUDIO_RENDITION_GROUP_DISABLED"
       ]
     }
   }

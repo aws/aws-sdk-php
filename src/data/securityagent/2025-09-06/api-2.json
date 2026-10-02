@@ -1489,6 +1489,7 @@
     "AzureDevOpsResourceCapabilities":{
       "type":"structure",
       "members":{
+        "triggerFilterGroups":{"shape":"TriggerFilterGroups"},
         "leaveComments":{"shape":"Boolean"},
         "remediateCode":{"shape":"Boolean"}
       }
@@ -2005,6 +2006,7 @@
     "BitbucketResourceCapabilities":{
       "type":"structure",
       "members":{
+        "triggerFilterGroups":{"shape":"TriggerFilterGroups"},
         "leaveComments":{"shape":"Boolean"},
         "remediateCode":{"shape":"Boolean"}
       }
@@ -3259,6 +3261,7 @@
     "GitHubResourceCapabilities":{
       "type":"structure",
       "members":{
+        "triggerFilterGroups":{"shape":"TriggerFilterGroups"},
         "leaveComments":{"shape":"Boolean"},
         "remediateCode":{"shape":"Boolean"}
       }
@@ -3305,6 +3308,7 @@
     "GitLabResourceCapabilities":{
       "type":"structure",
       "members":{
+        "triggerFilterGroups":{"shape":"TriggerFilterGroups"},
         "leaveComments":{"shape":"Boolean"},
         "remediateCode":{"shape":"Boolean"}
       }
@@ -5290,6 +5294,77 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "TriggerEvent":{
+      "type":"string",
+      "enum":[
+        "PULL_REQUEST_READY_FOR_REVIEW",
+        "PULL_REQUEST_DRAFT",
+        "PULL_REQUEST_LABEL_ADDED"
+      ]
+    },
+    "TriggerEventList":{
+      "type":"list",
+      "member":{"shape":"TriggerEvent"},
+      "max":10,
+      "min":1
+    },
+    "TriggerFilter":{
+      "type":"structure",
+      "required":[
+        "type",
+        "patterns"
+      ],
+      "members":{
+        "type":{"shape":"TriggerFilterType"},
+        "patterns":{"shape":"TriggerRegexPatternList"},
+        "matchMode":{"shape":"TriggerFilterMatchMode"}
+      }
+    },
+    "TriggerFilterGroup":{
+      "type":"structure",
+      "members":{
+        "events":{"shape":"TriggerEventList"},
+        "filters":{"shape":"TriggerFilterList"}
+      }
+    },
+    "TriggerFilterGroups":{
+      "type":"list",
+      "member":{"shape":"TriggerFilterGroup"},
+      "max":5,
+      "min":1
+    },
+    "TriggerFilterList":{
+      "type":"list",
+      "member":{"shape":"TriggerFilter"},
+      "max":5,
+      "min":1
+    },
+    "TriggerFilterMatchMode":{
+      "type":"string",
+      "enum":[
+        "INCLUDE",
+        "EXCLUDE"
+      ]
+    },
+    "TriggerFilterType":{
+      "type":"string",
+      "enum":[
+        "TARGET_BRANCH",
+        "LABEL"
+      ]
+    },
+    "TriggerRegexPattern":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[^\\x00-\\x1F\\x7F-\\x9F]+"
+    },
+    "TriggerRegexPatternList":{
+      "type":"list",
+      "member":{"shape":"TriggerRegexPattern"},
+      "max":20,
+      "min":1
     },
     "TrustedCaCertificate":{
       "type":"structure",

@@ -93,6 +93,7 @@
       "output":{"shape":"DeleteProcurementPortalPreferenceResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ServiceQuotaExceededException"},
@@ -554,6 +555,8 @@
         "EinvoiceDeliveryEnabled":{"shape":"Boolean"},
         "EinvoiceDeliveryPreference":{"shape":"EinvoiceDeliveryPreference"},
         "PurchaseOrderRetrievalEnabled":{"shape":"Boolean"},
+        "MarketplacePunchOutEnabled":{"shape":"Boolean"},
+        "MarketplacePunchOutPreference":{"shape":"MarketplacePunchOutPreference"},
         "Contacts":{"shape":"Contacts"},
         "ResourceTags":{"shape":"ResourceTagList"},
         "ClientToken":{
@@ -1075,6 +1078,12 @@
       "type":"long",
       "box":true
     },
+    "MarketplacePunchOutPreference":{
+      "type":"structure",
+      "members":{
+        "ApprovalRequestRedirectUrl":{"shape":"BasicStringWithoutSpace"}
+      }
+    },
     "MaxResults":{
       "type":"integer",
       "box":true,
@@ -1161,6 +1170,8 @@
         "EinvoiceDeliveryEnabled":{"shape":"Boolean"},
         "EinvoiceDeliveryPreference":{"shape":"EinvoiceDeliveryPreference"},
         "PurchaseOrderRetrievalEnabled":{"shape":"Boolean"},
+        "MarketplacePunchOutEnabled":{"shape":"Boolean"},
+        "MarketplacePunchOutPreference":{"shape":"MarketplacePunchOutPreference"},
         "Contacts":{"shape":"Contacts"},
         "EinvoiceDeliveryPreferenceStatus":{"shape":"ProcurementPortalPreferenceStatus"},
         "EinvoiceDeliveryPreferenceStatusReason":{"shape":"BasicString"},
@@ -1227,6 +1238,7 @@
         "Selector":{"shape":"ProcurementPortalPreferenceSelector"},
         "EinvoiceDeliveryEnabled":{"shape":"Boolean"},
         "PurchaseOrderRetrievalEnabled":{"shape":"Boolean"},
+        "MarketplacePunchOutEnabled":{"shape":"Boolean"},
         "EinvoiceDeliveryPreferenceStatus":{"shape":"ProcurementPortalPreferenceStatus"},
         "EinvoiceDeliveryPreferenceStatusReason":{"shape":"BasicString"},
         "PurchaseOrderRetrievalPreferenceStatus":{"shape":"ProcurementPortalPreferenceStatus"},
@@ -1297,6 +1309,8 @@
         "EinvoiceDeliveryEnabled":{"shape":"Boolean"},
         "EinvoiceDeliveryPreference":{"shape":"EinvoiceDeliveryPreference"},
         "PurchaseOrderRetrievalEnabled":{"shape":"Boolean"},
+        "MarketplacePunchOutEnabled":{"shape":"Boolean"},
+        "MarketplacePunchOutPreference":{"shape":"MarketplacePunchOutPreference"},
         "Contacts":{"shape":"Contacts"},
         "ClientToken":{
           "shape":"BasicStringWithoutSpace",

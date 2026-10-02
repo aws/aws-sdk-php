@@ -14,9 +14,9 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise associateProtectConfigurationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise associateProtectConfigurationAsync(array{ProtectConfigurationId?: string, ConfigurationSetName?: string, ...} $args = [])
  * @method \Aws\Result carrierLookup(array $args = [])
- * @phpstan-method \Aws\Result carrierLookup(array{PhoneNumber?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result carrierLookup(array{PhoneNumber?: string, EnableCleansing?: bool, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise carrierLookupAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise carrierLookupAsync(array{PhoneNumber?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise carrierLookupAsync(array{PhoneNumber?: string, EnableCleansing?: bool, ...} $args = [])
  * @method \Aws\Result createConfigurationSet(array $args = [])
  * @phpstan-method \Aws\Result createConfigurationSet(array{
  *     ConfigurationSetName?: string,

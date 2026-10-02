@@ -3794,6 +3794,69 @@
       "base": "<p>The request was denied due to request throttling.</p>",
       "refs": {}
     },
+    "TriggerEvent": {
+      "base": "<p>A pull request event that can start an automatic code review. For GitLab repositories, pull request refers to a merge request.</p>",
+      "refs": {
+        "TriggerEventList$member": null
+      }
+    },
+    "TriggerEventList": {
+      "base": "<p>A list of pull request events that start an automatic code review.</p>",
+      "refs": {
+        "TriggerFilterGroup$events": "<p>Passes when the pull request event is one of the listed events. If you omit this, the group matches <code>PULL_REQUEST_READY_FOR_REVIEW</code> and <code>PULL_REQUEST_DRAFT</code> events only.</p>"
+      }
+    },
+    "TriggerFilter": {
+      "base": "<p>A condition on a pull request value.</p>",
+      "refs": {
+        "TriggerFilterList$member": null
+      }
+    },
+    "TriggerFilterGroup": {
+      "base": "<p>A set of conditions that start an automatic code review when they all pass. A filter group must include <code>events</code>, <code>filters</code>, or both.</p>",
+      "refs": {
+        "TriggerFilterGroups$member": null
+      }
+    },
+    "TriggerFilterGroups": {
+      "base": "<p>A list of filter groups. An automatic code review starts when any group matches. The filters across all groups can contain at most 100 patterns in total.</p>",
+      "refs": {
+        "AzureDevOpsResourceCapabilities$triggerFilterGroups": "<p>The filter groups that control which pull request events start an automatic code review when <code>leaveComments</code> is enabled. A review starts when any group matches. If you omit this, a review starts on <code>PULL_REQUEST_READY_FOR_REVIEW</code> events.</p>",
+        "BitbucketResourceCapabilities$triggerFilterGroups": "<p>The filter groups that control which pull request events start an automatic code review when <code>leaveComments</code> is enabled. A review starts when any group matches. If you omit this, a review starts on <code>PULL_REQUEST_READY_FOR_REVIEW</code> events.</p>",
+        "GitHubResourceCapabilities$triggerFilterGroups": "<p>The filter groups that control which pull request events start an automatic code review when <code>leaveComments</code> is enabled. A review starts when any group matches. If you omit this, a review starts on <code>PULL_REQUEST_READY_FOR_REVIEW</code> events.</p>",
+        "GitLabResourceCapabilities$triggerFilterGroups": "<p>The filter groups that control which merge request events start an automatic code review when <code>leaveComments</code> is enabled. A review starts when any group matches. If you omit this, a review starts on <code>PULL_REQUEST_READY_FOR_REVIEW</code> events.</p>"
+      }
+    },
+    "TriggerFilterList": {
+      "base": "<p>A list of filters that must all pass.</p>",
+      "refs": {
+        "TriggerFilterGroup$filters": "<p>Passes when every filter passes. If you omit this, the group matches its events on any target branch and with any labels.</p>"
+      }
+    },
+    "TriggerFilterMatchMode": {
+      "base": "<p>Whether a filter's value must match its patterns.</p>",
+      "refs": {
+        "TriggerFilter$matchMode": "<p>Whether the value must match the patterns. The default is <code>INCLUDE</code>.</p>"
+      }
+    },
+    "TriggerFilterType": {
+      "base": "<p>A pull request value that a filter matches.</p>",
+      "refs": {
+        "TriggerFilter$type": "<p>The pull request value to match.</p>"
+      }
+    },
+    "TriggerRegexPattern": {
+      "base": "<p>A regular expression in RE2 syntax that must match the entire value, for example <code>main</code> or <code>release/.*</code>.</p>",
+      "refs": {
+        "TriggerRegexPatternList$member": null
+      }
+    },
+    "TriggerRegexPatternList": {
+      "base": "<p>A list of regular expressions.</p>",
+      "refs": {
+        "TriggerFilter$patterns": "<p>The regular expressions to match against the value.</p>"
+      }
+    },
     "TrustedCaCertificate": {
       "base": "<p>A trust anchor used when validating a target endpoint's TLS certificate.</p>",
       "refs": {
