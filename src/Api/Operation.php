@@ -11,6 +11,7 @@ class Operation extends AbstractModel
     private $errors;
     private $staticContextParams = [];
     private $contextParams;
+    private $contextParamsGeneration;
     private $operationContextParams = [];
 
     public function __construct(array $definition, ShapeMap $shapeMap)
@@ -35,6 +36,7 @@ class Operation extends AbstractModel
 
         parent::__construct($definition, $shapeMap);
         $this->contextParams = $this->setContextParams();
+        $this->contextParamsGeneration = $shapeMap->getGeneration();
     }
 
     /**
@@ -126,8 +128,12 @@ class Operation extends AbstractModel
      */
     public function getContextParams()
     {
-        if ($this->contextParams === null) {
+        // Context params derive from the input shape graph, so rebuild them
+        // when any shape in the shared ShapeMap has been mutated.
+        $generation = $this->shapeMap->getGeneration();
+        if ($this->contextParams === null || $this->contextParamsGeneration !== $generation) {
             $this->contextParams = $this->setContextParams();
+            $this->contextParamsGeneration = $generation;
         }
 
         return $this->contextParams;

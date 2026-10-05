@@ -202,6 +202,33 @@ class OperationTest extends TestCase
         );
     }
 
+    public function testContextParamsFollowInputShapeMutation()
+    {
+        $o = new Operation(
+            ['input' => ['shape' => 'FooRequest']],
+            new ShapeMap([
+                'FooRequest' => [
+                    'type' => 'structure',
+                    'members' => [
+                        'Foo' => ['shape' => 'Str', 'contextParam' => ['name' => 'Foo']],
+                    ],
+                ],
+                'Str' => ['type' => 'string'],
+            ])
+        );
+        $this->assertSame(['Foo'], array_keys($o->getContextParams()));
+
+        $o->getInput()['members'] = [
+            'Bar' => ['shape' => 'Str', 'contextParam' => ['name' => 'Bar']],
+        ];
+
+        $this->assertSame(['Bar'], array_keys($o->getInput()->getMembers()));
+        $this->assertSame(
+            ['Bar' => ['shape' => 'Bar', 'type' => 'string']],
+            $o->getContextParams()
+        );
+    }
+
     public function testStaticContextParamsFollowDefinitionChange()
     {
         $o = new Operation(
