@@ -157,10 +157,7 @@ class XmlParser
 
     private function coerceTimestamp($value, ?string $tsFormat)
     {
-        if (is_string($value)
-            || is_int($value)
-            || (is_object($value) && method_exists($value, '__toString'))
-        ) {
+        if (is_string($value) || is_int($value) || (is_object($value) && method_exists($value, '__toString'))) {
             return DateTimeResult::fromTimestamp((string) $value, $tsFormat);
         }
         throw new ParserException('Invalid timestamp value passed to XmlParser::parse_timestamp');
@@ -171,5 +168,4 @@ class XmlParser
         $attributes = $value->attributes($namespace);
         return isset($attributes[$key]) ? (string) $attributes[$key] : null;
     }
-
 }

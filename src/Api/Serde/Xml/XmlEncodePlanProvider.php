@@ -107,9 +107,7 @@ final class XmlEncodePlanProvider
             $isAttribute = (bool) $member['xmlAttribute'];
 
             $elementName = $name;
-            if ($member['locationName']
-                && !isset($member['locationNameAtStructureLevel'])
-            ) {
+            if ($member['locationName'] && !isset($member['locationNameAtStructureLevel'])) {
                 $elementName = $member['locationName'];
             }
 

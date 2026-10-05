@@ -252,5 +252,4 @@ class XmlBody
             $xml->writeAttribute($ns[0], $ns[1]);
         }
     }
-
 }

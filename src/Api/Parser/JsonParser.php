@@ -119,5 +119,4 @@ class JsonParser
                 return $value;
         }
     }
-
 }
