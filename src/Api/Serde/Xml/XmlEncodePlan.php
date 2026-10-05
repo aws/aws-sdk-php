@@ -33,10 +33,9 @@ final class XmlEncodePlan
     public $type;
 
     /**
-     * Root element name for this shape, precomputed via the three-level
-     * precedence (ShapeMap original locationName, resolved locationName, shape
-     * name). Lets the serializer open the document root without inspecting shape
-     * metadata at request time. Only meaningful when the shape is used as a root.
+     * Root element name for this shape, resolved by XmlBody the first time the
+     * shape is built as a document root and cached here. Stays null for shapes
+     * only reached as nested values.
      *
      * @var string|null
      */

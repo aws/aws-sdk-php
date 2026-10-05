@@ -44,6 +44,7 @@ class XmlBody
         $xml->startDocument('1.0', 'UTF-8');
 
         $plan = $this->planProvider->get($shape);
+        $plan->rootName ??= XmlEncodePlanProvider::rootElementName($shape);
 
         $this->formatPlan($plan, $plan->rootName, $args, $xml);
         $xml->endDocument();

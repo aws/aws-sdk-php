@@ -43,7 +43,6 @@ final class XmlEncodePlanProvider
         $plan = new XmlEncodePlan();
         $plan->type = XmlShapeType::fromShape($shape);
         $plan->namespace = self::namespaceAttribute($shape);
-        $plan->rootName = self::rootElementName($shape);
 
         switch ($plan->type) {
             case XmlShapeType::STRUCTURE:
@@ -135,13 +134,15 @@ final class XmlEncodePlanProvider
     }
 
     /**
-     * Precomputes the root element name using a three-level precedence, so the
-     * runtime serializer does not inspect shape metadata to open the root:
+     * Resolves the root element name using a three-level precedence:
      *   1. the original ShapeMap target definition's locationName
      *   2. the resolved shape's locationName
      *   3. the modeled shape name
+     *
+     * Called by XmlBody only for the shape it is asked to build, never for
+     * nested shapes, which may be inline and carry no name.
      */
-    private static function rootElementName(Shape $shape): string
+    public static function rootElementName(Shape $shape): string
     {
         $shapeName = $shape->getName();
 
