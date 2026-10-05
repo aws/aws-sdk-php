@@ -30,6 +30,74 @@ class HashingStreamTest extends TestCase
         $this->assertTrue($called);
     }
 
+    public function testCallbackIsOnlyTriggeredOnceAfterEndOfStream()
+    {
+        $source = Psr7\Utils::streamFor('foobar');
+        $hash = new PhpHash('md5');
+        $callCount = 0;
+        $calculatedHash = null;
+        $stream = new HashingStream(
+            $source,
+            $hash,
+            function ($result) use (&$callCount, &$calculatedHash) {
+                $callCount++;
+                $calculatedHash = $result;
+            }
+        );
+
+        $stream->getContents();
+        $stream->read(1);
+        $stream->read(1);
+
+        $this->assertSame(1, $callCount);
+        $this->assertSame(md5('foobar'), bin2hex($calculatedHash));
+    }
+
+    public function testSeekingToBeginningResetsCompletionState()
+    {
+        $source = Psr7\Utils::streamFor('foobar');
+        $hash = new PhpHash('md5');
+        $callCount = 0;
+        $stream = new HashingStream(
+            $source,
+            $hash,
+            function () use (&$callCount) {
+                $callCount++;
+            }
+        );
+
+        $stream->getContents();
+        $stream->rewind();
+        $stream->getContents();
+
+        $this->assertSame(2, $callCount);
+    }
+
+    public function testCompletionExceptionIsRethrown()
+    {
+        $source = Psr7\Utils::streamFor('foobar');
+        $hash = new PhpHash('md5');
+        $expectedException = new \RuntimeException('callback failed');
+        $stream = new HashingStream(
+            $source,
+            $hash,
+            function () use ($expectedException) {
+                throw $expectedException;
+            }
+        );
+
+        foreach (['getContents', 'read'] as $method) {
+            try {
+                $method === 'read'
+                    ? $stream->read(1)
+                    : $stream->getContents();
+                $this->fail('Expected the completion exception to be thrown');
+            } catch (\RuntimeException $e) {
+                $this->assertSame($expectedException, $e);
+            }
+        }
+    }
+
     public function testCanOnlySeekToTheBeginning()
     {
         $source = Psr7\Utils::streamFor('foobar');
