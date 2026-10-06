@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\LambdaWeb` - Removes operations that are not yet generally available from the Lambda Web.
+
 ## 3.399.1 - 2026-10-02
 
 * `Aws\SecurityAgent` - Adds trigger filters that control which pull request events, target branches, and labels start an automatic code review.
