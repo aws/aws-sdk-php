@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.399.2 - 2026-10-06
 
 * `Aws\LambdaWeb` - Removes operations that are not yet generally available from the Lambda Web.
 
