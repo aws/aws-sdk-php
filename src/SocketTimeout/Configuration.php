@@ -41,7 +41,7 @@ final class Configuration
     private const EXEMPT = -1;
 
     /** Relative path to the tier table, from this file. */
-    private const TIER_FILE = '/../data/socket_timeout_tiers.json';
+    private const TIER_FILE = '/socket_timeout_tiers.json';
 
     /**
      * serviceId (sdkId) => milliseconds. Null means either not-yet-loaded or
