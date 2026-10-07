@@ -380,6 +380,22 @@ class XmlWireCompatibilityTest extends TestCase
         $this->assertSame($expected, self::decode($members, $xml));
     }
 
+    public function testDecodeAttributeWithoutLocationNameUsesMemberName(): void
+    {
+        // Compiling the plan must not pass a null locationName to str_replace().
+        $result = $this->withoutWarnings(function () {
+            return self::decode(
+                [
+                    'A' => ['type' => 'string', 'xmlAttribute' => true],
+                    'E' => ['type' => 'string'],
+                ],
+                '<Root A="1"><E>e</E></Root>'
+            );
+        });
+
+        $this->assertSame(['A' => '1', 'E' => 'e'], $result);
+    }
+
     public function testDecodeUnionKnownMember(): void
     {
         $this->assertSame(

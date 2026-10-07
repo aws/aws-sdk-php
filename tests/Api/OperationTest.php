@@ -229,6 +229,35 @@ class OperationTest extends TestCase
         );
     }
 
+    public function testContextParamsFollowMemberContextParamMutation()
+    {
+        $o = new Operation(
+            ['input' => ['shape' => 'FooRequest']],
+            new ShapeMap([
+                'FooRequest' => [
+                    'type' => 'structure',
+                    'members' => [
+                        'Foo' => ['shape' => 'Str', 'contextParam' => ['name' => 'Foo']],
+                    ],
+                ],
+                'Str' => ['type' => 'string'],
+            ])
+        );
+        $member = $o->getInput()->getMember('Foo');
+        $this->assertSame(['Foo'], array_keys($o->getContextParams()));
+
+        $member['contextParam'] = ['name' => 'Renamed'];
+        $this->assertSame(['name' => 'Renamed'], $member->getContextParam());
+        $this->assertSame(
+            ['Renamed' => ['shape' => 'Foo', 'type' => 'string']],
+            $o->getContextParams()
+        );
+
+        unset($member['contextParam']);
+        $this->assertNull($member->getContextParam());
+        $this->assertSame([], $o->getContextParams());
+    }
+
     public function testStaticContextParamsFollowDefinitionChange()
     {
         $o = new Operation(

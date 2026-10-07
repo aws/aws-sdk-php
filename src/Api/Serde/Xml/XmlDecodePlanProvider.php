@@ -100,7 +100,7 @@ final class XmlDecodePlanProvider
                 XmlDecodePlan::M_SHAPE     => $member,
                 XmlDecodePlan::M_ATTRIBUTE => $isAttribute,
                 XmlDecodePlan::M_ATTRKEY   => $isAttribute
-                    ? str_replace($nsPrefix, '', $member['locationName'])
+                    ? str_replace($nsPrefix, '', $member['locationName'] ?: $name)
                     : null,
                 XmlDecodePlan::M_ATTRNS    => $nsUri,
                 XmlDecodePlan::M_TSFORMAT  => self::timestampFormat($member),
