@@ -199,7 +199,7 @@ class ConfigurationTest extends TestCase
     private function loadTierFile(): array
     {
         return \Aws\load_compiled_json(
-            __DIR__ . '/../../src/SocketTimeout/socket-timeout-tiers.json'
+            __DIR__ . '/../../src/data/socket-timeout-tiers.json'
         );
     }
 
