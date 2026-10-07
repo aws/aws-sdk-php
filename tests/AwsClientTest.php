@@ -7,6 +7,7 @@ use Aws\Api\Service;
 use Aws\AwsClient;
 use Aws\CommandInterface;
 use Aws\Credentials\Credentials;
+use Aws\DynamoDb\DynamoDbClient;
 use Aws\Ec2\Ec2Client;
 use Aws\Endpoint\UseFipsEndpoint\Configuration as FipsConfiguration;
 use Aws\Endpoint\UseDualStackEndpoint\Configuration as DualStackConfiguration;
@@ -25,6 +26,7 @@ use Aws\Waiter;
 use Aws\WrappedHttpHandler;
 use Exception;
 use GuzzleHttp\Promise\PromiseInterface;
+use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
@@ -1157,6 +1159,255 @@ EOT
         ]);
         $client->listObjects(args: [
             'Bucket' => 'foo',
+        ]);
+    }
+
+    // ---- Default socket timeout -----------------------------------------
+    //
+    // End-to-end middleware behaviour for the default socket timeout,
+    // exercised through a real client's handler list (the all-or-nothing
+    // guard and the attach/skip decisions live in Aws\AwsClient).
+
+    private const SOCKET_TIMEOUT_GATE = 'AWS_ENABLE_DEFAULT_SOCKET_TIMEOUT_2026';
+
+    /** @var string|false */
+    private $savedSocketTimeoutGate;
+
+    private function socketTimeoutSetUp(): void
+    {
+        $this->savedSocketTimeoutGate = getenv(self::SOCKET_TIMEOUT_GATE);
+    }
+
+    private function socketTimeoutTearDown(): void
+    {
+        if ($this->savedSocketTimeoutGate === false) {
+            putenv(self::SOCKET_TIMEOUT_GATE);
+        } else {
+            putenv(self::SOCKET_TIMEOUT_GATE . '=' . $this->savedSocketTimeoutGate);
+        }
+    }
+
+    private function enableSocketTimeout(): void
+    {
+        putenv(self::SOCKET_TIMEOUT_GATE . '=true');
+    }
+
+    /**
+     * Runs one command through $client, capturing the final @http.curl array
+     * that reaches the handler (after every init middleware has run).
+     *
+     * @return array the curl option array, or [] if none was set
+     */
+    private function captureSocketTimeoutCurl($client, callable $invoke): array
+    {
+        $captured = [];
+        $list = $client->getHandlerList();
+        $list->setHandler(function ($command, $request) use (&$captured) {
+            $captured = $command['@http']['curl'] ?? [];
+            return Promise\Create::promiseFor(new Result([]));
+        });
+        $invoke($client);
+        return $captured;
+    }
+
+    private function socketTimeoutDynamoDb(): DynamoDbClient
+    {
+        return new DynamoDbClient([
+            'region' => 'us-east-1',
+            'version' => 'latest',
+            'credentials' => ['key' => 'a', 'secret' => 'b'],
+        ]);
+    }
+
+    private function socketTimeoutS3(): S3Client
+    {
+        return new S3Client([
+            'region' => 'us-east-1',
+            'version' => 'latest',
+            'credentials' => ['key' => 'a', 'secret' => 'b'],
+        ]);
+    }
+
+    public function testSocketTimeoutGateOffAttachesNothing(): void
+    {
+        if (!extension_loaded('curl')) {
+            $this->markTestSkipped('Default socket timeout is cURL-only');
+        }
+        $this->socketTimeoutSetUp();
+        try {
+            putenv(self::SOCKET_TIMEOUT_GATE); // off
+            $curl = $this->captureSocketTimeoutCurl(
+                $this->socketTimeoutDynamoDb(),
+                fn($c) => $c->listTables()
+            );
+            $this->assertArrayNotHasKey(CURLOPT_LOW_SPEED_LIMIT, $curl);
+            $this->assertArrayNotHasKey(CURLOPT_LOW_SPEED_TIME, $curl);
+        } finally {
+            $this->socketTimeoutTearDown();
+        }
+    }
+
+    public function testSocketTimeoutDefaultTierServiceGetsLowSpeedPair(): void
+    {
+        if (!extension_loaded('curl')) {
+            $this->markTestSkipped('Default socket timeout is cURL-only');
+        }
+        $this->socketTimeoutSetUp();
+        try {
+            $this->enableSocketTimeout();
+            $curl = $this->captureSocketTimeoutCurl(
+                $this->socketTimeoutDynamoDb(), // unlisted -> 300s
+                fn($c) => $c->listTables()
+            );
+            $this->assertSame(1, $curl[CURLOPT_LOW_SPEED_LIMIT]);
+            $this->assertSame(300, $curl[CURLOPT_LOW_SPEED_TIME]);
+        } finally {
+            $this->socketTimeoutTearDown();
+        }
+    }
+
+    public function testSocketTimeoutFullyExemptServiceGetsNoPair(): void
+    {
+        if (!extension_loaded('curl')) {
+            $this->markTestSkipped('Default socket timeout is cURL-only');
+        }
+        $this->socketTimeoutSetUp();
+        try {
+            $this->enableSocketTimeout();
+            $curl = $this->captureSocketTimeoutCurl(
+                $this->socketTimeoutS3(), // S3 is -1 -> exempt
+                fn($c) => $c->listBuckets()
+            );
+            $this->assertArrayNotHasKey(CURLOPT_LOW_SPEED_LIMIT, $curl);
+            $this->assertArrayNotHasKey(CURLOPT_LOW_SPEED_TIME, $curl);
+        } finally {
+            $this->socketTimeoutTearDown();
+        }
+    }
+
+    public function testSocketTimeoutCallerSettingOnlyLowSpeedTimeDisablesDefaultEntirely(): void
+    {
+        if (!extension_loaded('curl')) {
+            $this->markTestSkipped('Default socket timeout is cURL-only');
+        }
+        $this->socketTimeoutSetUp();
+        try {
+            $this->enableSocketTimeout();
+            $curl = $this->captureSocketTimeoutCurl(
+                $this->socketTimeoutDynamoDb(),
+                fn($c) => $c->listTables([
+                    '@http' => ['curl' => [CURLOPT_LOW_SPEED_TIME => 120]],
+                ])
+            );
+            // Caller's time stands alone; the SDK must NOT weld LIMIT=1 onto it.
+            $this->assertSame(120, $curl[CURLOPT_LOW_SPEED_TIME]);
+            $this->assertArrayNotHasKey(CURLOPT_LOW_SPEED_LIMIT, $curl);
+        } finally {
+            $this->socketTimeoutTearDown();
+        }
+    }
+
+    public function testSocketTimeoutCallerSettingOnlyLowSpeedLimitDisablesDefaultEntirely(): void
+    {
+        if (!extension_loaded('curl')) {
+            $this->markTestSkipped('Default socket timeout is cURL-only');
+        }
+        $this->socketTimeoutSetUp();
+        try {
+            $this->enableSocketTimeout();
+            $curl = $this->captureSocketTimeoutCurl(
+                $this->socketTimeoutDynamoDb(),
+                fn($c) => $c->listTables([
+                    '@http' => ['curl' => [CURLOPT_LOW_SPEED_LIMIT => 500]],
+                ])
+            );
+            // Caller's limit stands alone; the SDK must NOT add its own TIME.
+            $this->assertSame(500, $curl[CURLOPT_LOW_SPEED_LIMIT]);
+            $this->assertArrayNotHasKey(CURLOPT_LOW_SPEED_TIME, $curl);
+        } finally {
+            $this->socketTimeoutTearDown();
+        }
+    }
+
+    public function testSocketTimeoutCallerSettingUnrelatedCurlOptionStillGetsDefaultPair(): void
+    {
+        if (!extension_loaded('curl')) {
+            $this->markTestSkipped('Default socket timeout is cURL-only');
+        }
+        $this->socketTimeoutSetUp();
+        try {
+            $this->enableSocketTimeout();
+            $curl = $this->captureSocketTimeoutCurl(
+                $this->socketTimeoutDynamoDb(),
+                fn($c) => $c->listTables([
+                    '@http' => ['curl' => [CURLOPT_TCP_KEEPALIVE => 1]],
+                ])
+            );
+            // An unrelated curl option does not count as owning low-speed.
+            $this->assertSame(1, $curl[CURLOPT_TCP_KEEPALIVE]);
+            $this->assertSame(1, $curl[CURLOPT_LOW_SPEED_LIMIT]);
+            $this->assertSame(300, $curl[CURLOPT_LOW_SPEED_TIME]);
+        } finally {
+            $this->socketTimeoutTearDown();
+        }
+    }
+
+    public function testSocketTimeoutServiceWithoutServiceIdAttachesNothing(): void
+    {
+        if (!extension_loaded('curl')) {
+            $this->markTestSkipped('Default socket timeout is cURL-only');
+        }
+        $this->socketTimeoutSetUp();
+        try {
+            $this->enableSocketTimeout();
+            // A model whose metadata has no serviceId must NOT emit an
+            // undefined-index notice and must attach no timeout. This is the one
+            // reason addDefaultSocketTimeoutMiddleware() uses
+            // getMetadata('serviceId') (returns null) instead of getServiceId()
+            // (unguarded array access).
+            $client = $this->socketTimeoutBareClientWithoutServiceId();
+            $curl = $this->captureSocketTimeoutCurl($client, fn($c) => $c->foo());
+            $this->assertArrayNotHasKey(CURLOPT_LOW_SPEED_LIMIT, $curl);
+            $this->assertArrayNotHasKey(CURLOPT_LOW_SPEED_TIME, $curl);
+        } finally {
+            $this->socketTimeoutTearDown();
+        }
+    }
+
+    /**
+     * A minimal real AwsClient over a synthetic model that deliberately omits
+     * metadata.serviceId, mirroring the handful of older models that lack it.
+     */
+    private function socketTimeoutBareClientWithoutServiceId(): AwsClient
+    {
+        $apiProvider = function ($type) {
+            if ($type === 'paginator') {
+                return ['pagination' => []];
+            }
+            if ($type === 'waiter') {
+                return ['waiters' => [], 'version' => 2];
+            }
+            return [
+                'metadata' => [
+                    // no 'serviceId' on purpose
+                    'protocol'       => 'query',
+                    'endpointPrefix' => 'foo',
+                ],
+                'operations' => ['foo' => ['http' => ['method' => 'POST']]],
+                'shapes'     => [],
+            ];
+        };
+
+        return new AwsClient([
+            'handler'      => new MockHandler(),
+            'credentials'  => new Credentials('foo', 'bar'),
+            'signature'    => new SignatureV4('foo', 'bar'),
+            'endpoint'     => 'http://us-east-1.foo.amazonaws.com',
+            'region'       => 'foo',
+            'service'      => 'foo',
+            'api_provider' => $apiProvider,
+            'error_parser' => function () {},
+            'version'      => 'latest',
         ]);
     }
 }
