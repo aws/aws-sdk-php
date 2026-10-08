@@ -456,7 +456,7 @@ class AwsClient implements AwsClientInterface
         $region = $this->config['signing_region'];
         $signingRegionSet = $this->signingRegionSet;
 
-             if (isset($args['signature_version']))
+        if (isset($args['signature_version'])
             || isset($this->config['configured_signature_version'])
         ) {
             $configuredSignatureVersion = true;
