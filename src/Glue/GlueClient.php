@@ -2277,6 +2277,14 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getStatement(array{SessionId?: string, Id?: int, RequestOrigin?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getStatementAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getStatementAsync(array{SessionId?: string, Id?: int, RequestOrigin?: string, ...} $args = [])
+ * @method \Aws\Result getSystemLogsForJobRun(array $args = [])
+ * @phpstan-method \Aws\Result getSystemLogsForJobRun(array{JobName?: string, RunId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getSystemLogsForJobRunAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getSystemLogsForJobRunAsync(array{JobName?: string, RunId?: string, ...} $args = [])
+ * @method \Aws\Result getSystemLogsForSession(array $args = [])
+ * @phpstan-method \Aws\Result getSystemLogsForSession(array{Id?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getSystemLogsForSessionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getSystemLogsForSessionAsync(array{Id?: string, ...} $args = [])
  * @method \Aws\Result getTable(array $args = [])
  * @phpstan-method \Aws\Result getTable(array{
  *     CatalogId?: string,

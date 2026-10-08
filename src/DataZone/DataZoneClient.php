@@ -2575,9 +2575,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result startNotebookImport(array{
  *     domainIdentifier?: string,
  *     owningProjectIdentifier?: string,
- *     sourceLocation?: array{s3?: string, ...},
+ *     sourceLocation?: array{s3?: string, s3Files?: array{bucket?: string, fileList?: list<array>, ...}, ...},
  *     name?: string,
  *     description?: string,
+ *     type?: 'DATA'|'SQL',
  *     clientToken?: string,
  *     ...,
  * } $args = [])
@@ -2585,9 +2586,10 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise startNotebookImportAsync(array{
  *     domainIdentifier?: string,
  *     owningProjectIdentifier?: string,
- *     sourceLocation?: array{s3?: string, ...},
+ *     sourceLocation?: array{s3?: string, s3Files?: array{bucket?: string, fileList?: list<array>, ...}, ...},
  *     name?: string,
  *     description?: string,
+ *     type?: 'DATA'|'SQL',
  *     clientToken?: string,
  *     ...,
  * } $args = [])
@@ -2639,7 +2641,7 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result startNotebookSync(array{
  *     domainIdentifier?: string,
  *     owningProjectIdentifier?: string,
- *     sourceLocation?: array{s3?: string, ...},
+ *     sourceLocation?: array{s3?: string, s3Files?: array{bucket?: string, fileList?: list<array>, ...}, ...},
  *     gitMetadata?: array{
  *         connectionId?: string,
  *         repository?: string,
@@ -2660,7 +2662,7 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise startNotebookSyncAsync(array{
  *     domainIdentifier?: string,
  *     owningProjectIdentifier?: string,
- *     sourceLocation?: array{s3?: string, ...},
+ *     sourceLocation?: array{s3?: string, s3Files?: array{bucket?: string, fileList?: list<array>, ...}, ...},
  *     gitMetadata?: array{
  *         connectionId?: string,
  *         repository?: string,

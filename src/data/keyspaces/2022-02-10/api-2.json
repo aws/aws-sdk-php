@@ -5,8 +5,11 @@
     "auth":["aws.auth#sigv4"],
     "endpointPrefix":"cassandra",
     "jsonVersion":"1.0",
-    "protocol":"json",
-    "protocols":["json"],
+    "protocol":"smithy-rpc-v2-cbor",
+    "protocols":[
+      "smithy-rpc-v2-cbor",
+      "json"
+    ],
     "serviceFullName":"Amazon Keyspaces",
     "serviceId":"Keyspaces",
     "signatureVersion":"v4",
@@ -343,7 +346,6 @@
         "message":{"shape":"String"}
       },
       "error":{
-        "code":"AccessDeniedException",
         "httpStatusCode":403,
         "senderFault":true
       },
@@ -485,7 +487,6 @@
         "message":{"shape":"String"}
       },
       "error":{
-        "code":"ConflictException",
         "httpStatusCode":409,
         "senderFault":true
       },
@@ -778,10 +779,7 @@
       "members":{
         "message":{"shape":"String"}
       },
-      "error":{
-        "code":"InternalServerException",
-        "httpStatusCode":500
-      },
+      "error":{"httpStatusCode":500},
       "exception":true,
       "fault":true
     },
@@ -1008,7 +1006,6 @@
         "resourceArn":{"shape":"ARN"}
       },
       "error":{
-        "code":"ResourceNotFoundException",
         "httpStatusCode":404,
         "senderFault":true
       },
@@ -1062,7 +1059,6 @@
         "message":{"shape":"String"}
       },
       "error":{
-        "code":"ServiceQuotaExceededException",
         "httpStatusCode":402,
         "senderFault":true
       },
@@ -1294,11 +1290,6 @@
       "type":"structure",
       "members":{
         "message":{"shape":"String"}
-      },
-      "error":{
-        "code":"ValidationException",
-        "httpStatusCode":400,
-        "senderFault":true
       },
       "exception":true
     },

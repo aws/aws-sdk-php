@@ -541,6 +541,24 @@
         "title": "To update enablement status of a batch of controls"
       }
     ],
+    "CancelExportJobV2": [
+      {
+        "input": {
+          "ExportJobId": "a1b2c3d4e5f6"
+        },
+        "output": {
+          "ExportJobId": "a1b2c3d4e5f6",
+          "Status": "CANCELLED"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example cancels an export job that is in progress. Security Hub transitions the job to the CANCELLED state and returns its new status.",
+        "id": "to-cancel-a-running-export-job-1711563856000",
+        "title": "Example – Canceling a running export job"
+      }
+    ],
     "CreateActionTarget": [
       {
         "input": {
@@ -1487,6 +1505,130 @@
         "title": "To return a list of enabled standards"
       }
     ],
+    "GetExportJobV2": [
+      {
+        "input": {
+          "ExportJobId": "a1b2c3d4e5f6"
+        },
+        "output": {
+          "DataType": "FINDINGS",
+          "Destination": {
+            "S3": {
+              "BucketArn": "arn:aws:s3:::amzn-s3-demo-bucket",
+              "KmsKeyArn": "arn:aws:kms:aa-example-1:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab",
+              "ObjectPrefix": "security-hub-exports/2026-Q1"
+            }
+          },
+          "EndedAt": "2026-03-27T18:09:52Z",
+          "ExportJobId": "a1b2c3d4e5f6",
+          "Name": "quarterly-critical-findings",
+          "OutputConfiguration": {
+            "Findings": {
+              "Filters": {
+                "CompositeFilters": [
+                  {
+                    "Operator": "AND",
+                    "StringFilters": [
+                      {
+                        "FieldName": "severity",
+                        "Filter": {
+                          "Comparison": "EQUALS",
+                          "Value": "Critical"
+                        }
+                      },
+                      {
+                        "FieldName": "status",
+                        "Filter": {
+                          "Comparison": "EQUALS",
+                          "Value": "New"
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "CompositeOperator": "AND"
+              },
+              "Format": "CSV",
+              "SelectedFields": [
+                "finding_info.title",
+                "severity",
+                "status",
+                "cloud.account.uid",
+                "resources.uid"
+              ]
+            }
+          },
+          "StartedAt": "2026-03-27T18:04:11Z",
+          "Status": "SUCCEEDED"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example retrieves an export job that has finished successfully. The output is available in the destination bucket.",
+        "id": "to-get-a-succeeded-export-job-1711563853000",
+        "title": "Example – Getting the details of a completed export job"
+      },
+      {
+        "input": {
+          "ExportJobId": "f6e5d4c3b2a1"
+        },
+        "output": {
+          "DataType": "FINDINGS",
+          "Destination": {
+            "S3": {
+              "BucketArn": "arn:aws:s3:::amzn-s3-demo-bucket",
+              "KmsKeyArn": "arn:aws:kms:aa-example-1:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"
+            }
+          },
+          "EndedAt": "2026-03-27T18:05:03Z",
+          "ExportJobId": "f6e5d4c3b2a1",
+          "FailureCode": "ACCESS_DENIED",
+          "FailureMessage": "Security Hub could not write to the destination bucket. Verify the bucket policy and KMS key policy.",
+          "OutputConfiguration": {
+            "Findings": {
+              "Filters": {
+                "CompositeFilters": [
+                  {
+                    "DateFilters": [
+                      {
+                        "FieldName": "finding_info.last_seen_time_dt",
+                        "Filter": {
+                          "DateRange": {
+                            "Comparison": "WITHIN",
+                            "Unit": "DAYS",
+                            "Value": 30
+                          }
+                        }
+                      }
+                    ],
+                    "Operator": "AND"
+                  }
+                ],
+                "CompositeOperator": "AND"
+              },
+              "Format": "OCSF_JSON"
+            }
+          },
+          "Scopes": {
+            "AwsOrganizations": [
+              {
+                "OrganizationalUnitId": "ou-1234-a1b2c3d4"
+              }
+            ]
+          },
+          "StartedAt": "2026-03-27T18:04:11Z",
+          "Status": "FAILED"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example retrieves an export job that failed because Security Hub couldn't write to the destination. The FailureCode and FailureMessage explain the cause.",
+        "id": "to-get-a-failed-export-job-1711563854000",
+        "title": "Example – Getting the details of a failed export job"
+      }
+    ],
     "GetFindingAggregator": [
       {
         "input": {
@@ -1987,6 +2129,47 @@
         "title": "To list ARNs for enabled integrations"
       }
     ],
+    "ListExportJobsV2": [
+      {
+        "input": {
+          "DataType": "FINDINGS",
+          "MaxResults": 10,
+          "Status": "SUCCEEDED"
+        },
+        "output": {
+          "Items": [
+            {
+              "DataType": "FINDINGS",
+              "Destination": {
+                "S3": {
+                  "BucketArn": "arn:aws:s3:::amzn-s3-demo-bucket",
+                  "KmsKeyArn": "arn:aws:kms:aa-example-1:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab",
+                  "ObjectPrefix": "security-hub-exports/2026-Q1"
+                }
+              },
+              "EndedAt": "2026-03-27T18:09:52Z",
+              "ExportJobId": "a1b2c3d4e5f6",
+              "Name": "quarterly-critical-findings",
+              "OutputConfiguration": {
+                "Findings": {
+                  "Format": "CSV"
+                }
+              },
+              "StartedAt": "2026-03-27T18:04:11Z",
+              "Status": "SUCCEEDED"
+            }
+          ],
+          "NextToken": "U2VjdXJpdHlIdWJFeGFtcGxlUGFnaW5hdGlvblRva2Vu"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example lists the findings export jobs in the account that have succeeded, returning up to 10 results per page.",
+        "id": "to-list-succeeded-export-jobs-1711563855000",
+        "title": "Example – Listing successful findings export jobs"
+      }
+    ],
     "ListFindingAggregators": [
       {
         "input": {},
@@ -2299,6 +2482,119 @@
         "description": "This operation disassociates a configuration policy or self-managed behavior from the target account, organizational unit, or the root.",
         "id": "to-disassociate-a-configuration-from-a-target-1695177176748",
         "title": "To disassociate a configuration from a target"
+      }
+    ],
+    "StartExportJobV2": [
+      {
+        "input": {
+          "ClientToken": "b3d1f9a2-1c4e-4b9a-9f2e-EXAMPLE11111",
+          "Destination": {
+            "S3": {
+              "BucketArn": "arn:aws:s3:::amzn-s3-demo-bucket",
+              "KmsKeyArn": "arn:aws:kms:aa-example-1:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab",
+              "ObjectPrefix": "security-hub-exports/2026-Q1"
+            }
+          },
+          "Name": "quarterly-critical-findings",
+          "OutputConfiguration": {
+            "Findings": {
+              "Filters": {
+                "CompositeFilters": [
+                  {
+                    "Operator": "AND",
+                    "StringFilters": [
+                      {
+                        "FieldName": "severity",
+                        "Filter": {
+                          "Comparison": "EQUALS",
+                          "Value": "Critical"
+                        }
+                      },
+                      {
+                        "FieldName": "status",
+                        "Filter": {
+                          "Comparison": "EQUALS",
+                          "Value": "New"
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "CompositeOperator": "AND"
+              },
+              "Format": "CSV",
+              "SelectedFields": [
+                "finding_info.title",
+                "severity",
+                "status",
+                "cloud.account.uid",
+                "resources.uid"
+              ]
+            }
+          }
+        },
+        "output": {
+          "ExportJobId": "a1b2c3d4e5f6"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example starts an export that writes selected fields of new, critical findings to an Amazon S3 bucket in CSV format.",
+        "id": "to-start-a-csv-findings-export-1711563851000",
+        "title": "Example – Starting a CSV export of critical findings"
+      },
+      {
+        "input": {
+          "Destination": {
+            "S3": {
+              "BucketArn": "arn:aws:s3:::amzn-s3-demo-bucket",
+              "KmsKeyArn": "arn:aws:kms:aa-example-1:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"
+            }
+          },
+          "OutputConfiguration": {
+            "Findings": {
+              "Filters": {
+                "CompositeFilters": [
+                  {
+                    "DateFilters": [
+                      {
+                        "FieldName": "finding_info.last_seen_time_dt",
+                        "Filter": {
+                          "DateRange": {
+                            "Comparison": "WITHIN",
+                            "Unit": "DAYS",
+                            "Value": 30
+                          }
+                        }
+                      }
+                    ],
+                    "Operator": "AND"
+                  }
+                ],
+                "CompositeOperator": "AND"
+              },
+              "Format": "OCSF_JSON"
+            }
+          },
+          "Scopes": {
+            "AwsOrganizations": [
+              {
+                "OrganizationalUnitId": "ou-1234-a1b2c3d4"
+              }
+            ]
+          }
+        },
+        "output": {
+          "ExportJobId": "f6e5d4c3b2a1"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example, run by a delegated administrator, starts an export of the last 30 days of findings for a specific organizational unit (OU) in OCSF JSON format.",
+        "id": "to-start-an-ocsf-json-org-scoped-export-1711563852000",
+        "title": "Example – Starting an OCSF JSON export scoped to an organizational unit"
       }
     ],
     "TagResource": [

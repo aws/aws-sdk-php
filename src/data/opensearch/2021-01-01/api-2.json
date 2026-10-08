@@ -3742,7 +3742,8 @@
       "type":"structure",
       "members":{
         "Enabled":{"shape":"Boolean"},
-        "KmsKeyId":{"shape":"KmsKeyId"}
+        "KmsKeyId":{"shape":"KmsKeyId"},
+        "EncryptionMode":{"shape":"EncryptionMode"}
       }
     },
     "EncryptionAtRestOptionsStatus":{
@@ -3755,6 +3756,13 @@
         "Options":{"shape":"EncryptionAtRestOptions"},
         "Status":{"shape":"OptionStatus"}
       }
+    },
+    "EncryptionMode":{
+      "type":"string",
+      "enum":[
+        "DISK",
+        "NATIVE"
+      ]
     },
     "Endpoint":{
       "type":"string",

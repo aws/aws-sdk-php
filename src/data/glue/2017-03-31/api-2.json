@@ -2757,6 +2757,39 @@
         {"shape":"IllegalSessionStateException"}
       ]
     },
+    "GetSystemLogsForJobRun":{
+      "name":"GetSystemLogsForJobRun",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetSystemLogsForJobRunRequest"},
+      "output":{"shape":"GetSystemLogsForJobRunResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"}
+      ],
+      "readonly":true
+    },
+    "GetSystemLogsForSession":{
+      "name":"GetSystemLogsForSession",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetSystemLogsForSessionRequest"},
+      "output":{"shape":"GetSystemLogsForSessionResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InvalidInputException"}
+      ],
+      "readonly":true
+    },
     "GetTable":{
       "name":"GetTable",
       "http":{
@@ -11946,6 +11979,36 @@
         "Statement":{"shape":"Statement"}
       }
     },
+    "GetSystemLogsForJobRunRequest":{
+      "type":"structure",
+      "required":[
+        "JobName",
+        "RunId"
+      ],
+      "members":{
+        "JobName":{"shape":"NameString"},
+        "RunId":{"shape":"IdString"}
+      }
+    },
+    "GetSystemLogsForJobRunResponse":{
+      "type":"structure",
+      "members":{
+        "SystemLogsUrl":{"shape":"Url"}
+      }
+    },
+    "GetSystemLogsForSessionRequest":{
+      "type":"structure",
+      "required":["Id"],
+      "members":{
+        "Id":{"shape":"NameString"}
+      }
+    },
+    "GetSystemLogsForSessionResponse":{
+      "type":"structure",
+      "members":{
+        "SystemLogsUrl":{"shape":"Url"}
+      }
+    },
     "GetTableOptimizerRequest":{
       "type":"structure",
       "required":[
@@ -19727,6 +19790,10 @@
       }
     },
     "UriString":{"type":"string"},
+    "Url":{
+      "type":"string",
+      "max":40000
+    },
     "UrlString":{"type":"string"},
     "UsageProfileDefinition":{
       "type":"structure",

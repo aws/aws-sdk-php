@@ -16,6 +16,7 @@
     "BatchUpdateFindings": "<p> Used by Security Hub CSPM customers to update information about their investigation into one or more findings. Requested by administrator accounts or member accounts. Administrator accounts can update findings for their account and their member accounts. A member account can update findings only for their own account. Administrator and member accounts can use this operation to update the following fields and objects for one or more findings: </p> <ul> <li> <p> <code>Confidence</code> </p> </li> <li> <p> <code>Criticality</code> </p> </li> <li> <p> <code>Note</code> </p> </li> <li> <p> <code>RelatedFindings</code> </p> </li> <li> <p> <code>Severity</code> </p> </li> <li> <p> <code>Types</code> </p> </li> <li> <p> <code>UserDefinedFields</code> </p> </li> <li> <p> <code>VerificationState</code> </p> </li> <li> <p> <code>Workflow</code> </p> </li> </ul> <p> If you use this operation to update a finding, your updates don’t affect the value for the <code>UpdatedAt</code> field of the finding. Also note that it can take several minutes for Security Hub CSPM to process your request and update each finding specified in the request. </p> <p> You can configure IAM policies to restrict access to fields and field values. For example, you might not want member accounts to be able to suppress findings or change the finding severity. For more information see <a href=\"https://docs.aws.amazon.com/securityhub/latest/userguide/finding-update-batchupdatefindings.html#batchupdatefindings-configure-access\">Configuring access to BatchUpdateFindings</a> in the <i>Security Hub CSPM User Guide</i>. </p>",
     "BatchUpdateFindingsV2": "<p>Updates information about a customer's investigation into a finding. Delegated administrator accounts can update findings for their account and their member accounts. Member accounts can update findings for their own account.</p> <p> <code>BatchUpdateFindings</code> and <code>BatchUpdateFindingsV2</code> both use <code>securityhub:BatchUpdateFindings</code> in the <code>Action</code> element of an IAM policy statement. You must have permission to perform the <code>securityhub:BatchUpdateFindings</code> action. You can configure IAM policies to restrict access to specific finding fields or field values by using the <code>securityhub:OCSFSyntaxPath/&lt;fieldName&gt;</code> condition key, where <code>&lt;fieldName&gt;</code> is one of the following supported fields: <code>SeverityId</code>, <code>StatusId</code>, or <code>Comment</code>.</p> <p>To prevent a user from updating a specific field, use a <code>Null</code> condition with <code>securityhub:OCSFSyntaxPath/&lt;fieldName&gt;</code> set to <code>\"false\"</code>. To prevent a user from setting a field to a specific value, use a <code>StringEquals</code> condition with <code>securityhub:OCSFSyntaxPath/&lt;fieldName&gt;</code> set to the disallowed value or list of values.</p> <p>Updates from <code>BatchUpdateFindingsV2</code> don't affect the value of <code>finding_info.modified_time</code>, <code>finding_info.modified_time_dt</code>, <code>time</code>, or <code>time_dt</code> for a finding.</p>",
     "BatchUpdateStandardsControlAssociations": "<p> For a batch of security controls and standards, this operation updates the enablement status of a control in a standard. </p>",
+    "CancelExportJobV2": "<p>Cancels a findings export job that is in progress. Security Hub transitions a running job to the <code>CANCELLED</code> state and returns the <code>ExportJobId</code> and its new <code>Status</code>. Canceling a job that is already in the <code>CANCELLED</code> state succeeds and returns the same result, so you can safely retry a cancel request.</p> <p>You can't cancel an export job that has already reached a terminal <code>SUCCEEDED</code> or <code>FAILED</code> state; in that case, this operation returns a <code>ConflictException</code>. If no export job matches the <code>ExportJobId</code> that you provide, this operation returns a <code>ResourceNotFoundException</code>.</p> <p>The <code>Status</code> value returned by this operation reflects the cancellation immediately, even though the job can take a short time to stop completely.</p>",
     "CreateActionTarget": "<p>Creates a custom action target in Security Hub CSPM.</p> <p>You can use custom actions on findings and insights in Security Hub CSPM to trigger target actions in Amazon CloudWatch Events.</p>",
     "CreateAggregatorV2": "<p>Enables aggregation across Amazon Web Services Regions.</p>",
     "CreateAutomationRule": "<p> Creates an automation rule based on input parameters. </p>",
@@ -68,6 +69,7 @@
     "GetConnector": "<p>Retrieves details for a CSPM connector based on the connector ID.</p>",
     "GetConnectorV2": "<p>Grants permission to retrieve details for a connectorV2 based on connector id.</p>",
     "GetEnabledStandards": "<p>Returns a list of the standards that are currently enabled.</p>",
+    "GetExportJobV2": "<p>Returns the details of a single findings export job, including its current <code>Status</code>, the <code>Destination</code> it writes to, the <code>OutputConfiguration</code> it was started with, and its <code>StartedAt</code> and <code>EndedAt</code> timestamps. Use this operation to poll an export job that you started with <code>StartExportJobV2</code> until it reaches a terminal state (<code>SUCCEEDED</code>, <code>FAILED</code>, or <code>CANCELLED</code>).</p> <p>If the job failed, the response includes a <code>FailureCode</code> and <code>FailureMessage</code> that describe the reason. Input values such as <code>Scopes</code> and <code>Filters</code> are echoed back as they were submitted, with relative date ranges returned unresolved. If no export job matches the <code>ExportJobId</code> that you provide, this operation returns a <code>ResourceNotFoundException</code>.</p>",
     "GetFindingAggregator": "<note> <p>The <i>aggregation Region</i> is now called the <i>home Region</i>.</p> </note> <p>Returns the current configuration in the calling account for cross-Region aggregation. A finding aggregator is a resource that establishes the home Region and any linked Regions.</p>",
     "GetFindingHistory": "<p> Returns the history of a Security Hub CSPM finding. The history includes changes made to any fields in the Amazon Web Services Security Finding Format (ASFF) except top-level timestamp fields, such as the <code>CreatedAt</code> and <code>UpdatedAt</code> fields. </p> <p>This operation might return fewer results than the maximum number of results (<code>MaxResults</code>) specified in a request, even when more results are available. If this occurs, the response includes a <code>NextToken</code> value, which you should use to retrieve the next set of results in the response. The presence of a <code>NextToken</code> value in a response doesn't necessarily indicate that the results are incomplete. However, you should continue to specify a <code>NextToken</code> value until you receive a response that doesn't include this value.</p>",
     "GetFindingStatisticsV2": "<p>Returns aggregated statistical data about findings.</p> <p>You can use the <code>Scopes</code> parameter to define the data boundary for the query. Currently, <code>Scopes</code> supports <code>AwsOrganizations</code>, which lets you aggregate findings from your entire organization or from specific organizational units. Only the delegated administrator account can use <code>Scopes</code>.</p> <p> <code>GetFindingStatisticsV2</code> uses <code>securityhub:GetAdhocInsightResults</code> in the <code>Action</code> element of an IAM policy statement. You must have permission to perform the <code>securityhub:GetAdhocInsightResults</code> action.</p>",
@@ -94,6 +96,7 @@
     "ListConnectors": "<p>Lists the CSPM connectors and their metadata for the calling account.</p>",
     "ListConnectorsV2": "<p>Grants permission to retrieve a list of connectorsV2 and their metadata for the calling account.</p>",
     "ListEnabledProductsForImport": "<p>Lists all findings-generating solutions (products) that you are subscribed to receive findings from in Security Hub CSPM.</p>",
+    "ListExportJobsV2": "<p>Returns the findings export jobs in your account as a paginated list of <code>ExportSummary</code> objects. You can filter the results by job <code>Status</code> or <code>DataType</code>.</p> <p>To page through the results, use the <code>MaxResults</code> and <code>NextToken</code> parameters. If the response includes a <code>NextToken</code> value, pass it in a subsequent request to retrieve the next page of results.</p> <p>Each <code>ExportSummary</code> reports the output <code>Format</code> of the job but not its full <code>OutputConfiguration</code>. To retrieve the filters and selected fields that a job was started with, call <code>GetExportJobV2</code>.</p>",
     "ListExposuresByRemediationV2": "<p>Retrieves the exposure findings tied to a specific remediation target. Results are sorted by previous severity, highest first, and are paginated.</p>",
     "ListFindingAggregators": "<p>If cross-Region aggregation is enabled, then <code>ListFindingAggregators</code> returns the Amazon Resource Name (ARN) of the finding aggregator. You can run this operation from any Amazon Web Services Region.</p>",
     "ListFreeTrialStatusesV2": "<p>Lists the free trial status of Security Hub features. A delegated Security Hub administrator can list the status for accounts in its organization. Any other account can list the status only for itself. Free trial status remains available after a feature is disabled.</p>",
@@ -106,6 +109,7 @@
     "RegisterConnectorV2": "<p>Grants permission to complete the authorization based on input parameters.</p>",
     "StartConfigurationPolicyAssociation": "<p> Associates a target account, organizational unit, or the root with a specified configuration. The target can be associated with a configuration policy or self-managed behavior. Only the Security Hub CSPM delegated administrator can invoke this operation from the home Region. </p>",
     "StartConfigurationPolicyDisassociation": "<p> Disassociates a target account, organizational unit, or the root from a specified configuration. When you disassociate a configuration from its target, the target inherits the configuration of the closest parent. If there’s no configuration to inherit, the target retains its settings but becomes a self-managed account. A target can be disassociated from a configuration policy or self-managed behavior. Only the Security Hub CSPM delegated administrator can invoke this operation from the home Region. </p>",
+    "StartExportJobV2": "<p>Starts an ad hoc export job that writes Security Hub findings to an Amazon Simple Storage Service (Amazon S3) bucket that you own. Because the export runs asynchronously, this operation returns only the <code>ExportJobId</code> of the new job; it doesn't wait for the export to finish. Use <code>GetExportJobV2</code> to poll the job, and <code>ListExportJobsV2</code> to view the export jobs in your account.</p> <p>Security Hub allows only one export job in the <code>RUNNING</code> state per account at a time. If an export job is already running, this operation returns a <code>ServiceQuotaExceededException</code>. Wait for the running job to finish, or cancel it with <code>CancelExportJobV2</code>, before you start a new one.</p> <p>Specify the destination bucket and Amazon Web Services Key Management Service (Amazon Web Services KMS) key in the <code>Destination</code> parameter, and the output format (<code>CSV</code> or <code>OCSF_JSON</code>), optional filters, and field selection in the <code>OutputConfiguration</code> parameter. Before you call this operation, you must grant Security Hub permission to write to your bucket and use your Amazon Web Services KMS key by adding the bucket policy and key policy statements shown in the Examples section.</p> <p>Two identities use your Amazon Web Services KMS key, and each needs its own permission. Security Hub uses the key when it writes the export objects to your bucket. The IAM principal that calls <code>StartExportJobV2</code> must also have <code>kms:GenerateDataKey</code> and <code>kms:Decrypt</code> permissions on the key. The Examples section shows both grants.</p> <p>A delegated administrator can use the optional <code>Scopes</code> parameter to export findings for specific organizations or organizational units (OUs).</p> <p>To make the request idempotent, provide a <code>ClientToken</code>. If you retry a <code>StartExportJobV2</code> request with the same <code>ClientToken</code> and the same request parameters, Security Hub returns the <code>ExportJobId</code> of the original job instead of starting a new one. If you reuse a <code>ClientToken</code> with different request parameters, this operation returns a <code>ConflictException</code>.</p>",
     "TagResource": "<p>Adds one or more tags to a resource.</p>",
     "UntagResource": "<p>Removes one or more tags from a resource.</p>",
     "UpdateActionTarget": "<p>Updates the name and description of a custom action target in Security Hub CSPM.</p>",
@@ -3380,6 +3384,7 @@
     "AwsOrganizationScopeList": {
       "base": "<p>A list of Organizations scopes. You can specify up to 10 entries.</p>",
       "refs": {
+        "ExportScopes$AwsOrganizations": "<p>A list of Organizations scopes to include in the export. Each entry in the list specifies an organization or organizational unit to include for the delegated administrator's account. If the list specifies multiple entries, the entries are combined using OR logic.</p>",
         "FindingScopes$AwsOrganizations": "<p>A list of Organizations scopes to include in the query results. Each entry in the list specifies an organization or organizational unit to include for the delegated administrator's account. If the list specifies multiple entries, the entries are combined using OR logic.</p>",
         "ResourceScopes$AwsOrganizations": "<p>A list of Organizations scopes to include in the query results. Each entry in the list specifies an organization or organizational unit to include for the delegated administrator's account. If the list specifies multiple entries, the entries are combined using OR logic.</p>"
       }
@@ -4924,6 +4929,14 @@
         "AwsSecurityFindingFilters$Sample": "<p>Indicates whether or not sample findings are included in the filter results.</p>"
       }
     },
+    "CancelExportJobV2Request": {
+      "base": null,
+      "refs": {}
+    },
+    "CancelExportJobV2Response": {
+      "base": null,
+      "refs": {}
+    },
     "CategoryList": {
       "base": null,
       "refs": {
@@ -4980,7 +4993,8 @@
         "CreateAutomationRuleV2Request$ClientToken": "<p>A unique identifier used to ensure idempotency.</p>",
         "CreateConnectorRequest$ClientToken": "<p>A unique identifier used to ensure idempotency of the request.</p>",
         "CreateConnectorV2Request$ClientToken": "<p>A unique identifier used to ensure idempotency.</p>",
-        "CreateTicketV2Request$ClientToken": "<p>The client idempotency token.</p>"
+        "CreateTicketV2Request$ClientToken": "<p>The client idempotency token.</p>",
+        "StartExportJobV2Request$ClientToken": "<p>A unique identifier used to ensure idempotency.</p>"
       }
     },
     "CloudProviderName": {
@@ -5783,6 +5797,96 @@
         "ConfigurationOptions$EnumList": "<p> The options for customizing a security control parameter that is a list of enums. </p>"
       }
     },
+    "ExportDataType": {
+      "base": "<p>The category of data that an export job produces. Currently, the only supported value is <code>FINDINGS</code>.</p>",
+      "refs": {
+        "ExportSummary$DataType": "<p>The category of data that the export job produces.</p>",
+        "GetExportJobV2Response$DataType": "<p>The category of data that the export job produces.</p>",
+        "ListExportJobsV2Request$DataType": "<p>Filters the results to export jobs that produce the specified data type.</p>"
+      }
+    },
+    "ExportDestination": {
+      "base": "<p>Specifies where Security Hub writes the export output. This is a union: you must specify exactly one member. Currently, the only supported member is <code>S3</code>.</p>",
+      "refs": {
+        "ExportSummary$Destination": "<p>The destination that the export job writes to.</p>",
+        "GetExportJobV2Response$Destination": "<p>The destination that the export job writes to.</p>",
+        "StartExportJobV2Request$Destination": "<p>The destination that Security Hub writes the export to. You must specify exactly one destination type. Currently, the only supported type is Amazon S3.</p>"
+      }
+    },
+    "ExportFailureCode": {
+      "base": "<p>Classifies why a terminal-state export job failed. Present only when <code>Status</code> is <code>FAILED</code>. Valid values are as follows:</p> <ul> <li> <p> <code>ACCESS_DENIED</code> – Security Hub couldn't read a required resource or write to the destination. Verify the bucket policy and key policy.</p> </li> <li> <p> <code>RESOURCE_NOT_FOUND</code> – A referenced destination bucket or Amazon Web Services KMS key no longer exists.</p> </li> <li> <p> <code>INTERNAL_ERROR</code> – An unclassified service-side error occurred. Retry the export, and if the failure persists, contact Amazon Web Services Support.</p> </li> </ul>",
+      "refs": {
+        "ExportSummary$FailureCode": "<p>A code that classifies why the export job failed. Present only when <code>Status</code> is <code>FAILED</code>.</p>",
+        "GetExportJobV2Response$FailureCode": "<p>A code that classifies why the export job failed. Present only when <code>Status</code> is <code>FAILED</code>.</p>"
+      }
+    },
+    "ExportJobId": {
+      "base": "<p>The unique identifier of an export job. Security Hub generates this value when you call <code>StartExportJobV2</code>. It consists of 1–64 lowercase alphanumeric characters.</p>",
+      "refs": {
+        "CancelExportJobV2Request$ExportJobId": "<p>The unique identifier of the export job to cancel. This is the value returned by <code>StartExportJobV2</code>.</p>",
+        "CancelExportJobV2Response$ExportJobId": "<p>The unique identifier of the export job.</p>",
+        "ExportSummary$ExportJobId": "<p>The unique identifier of the export job.</p>",
+        "GetExportJobV2Request$ExportJobId": "<p>The unique identifier of the export job to retrieve. This is the value returned by <code>StartExportJobV2</code>.</p>",
+        "GetExportJobV2Response$ExportJobId": "<p>The unique identifier of the export job.</p>",
+        "StartExportJobV2Response$ExportJobId": "<p>The unique identifier of the export job that Security Hub started. Use this value with <code>GetExportJobV2</code> or <code>CancelExportJobV2</code>.</p>"
+      }
+    },
+    "ExportMaxResults": {
+      "base": null,
+      "refs": {
+        "ListExportJobsV2Request$MaxResults": "<p>The maximum number of results to return in a single call. Valid range is 1–20.</p>"
+      }
+    },
+    "ExportName": {
+      "base": "<p>A user-provided name for an export job. The value can be 1–256 characters. Alphanumeric characters, spaces, and the following ASCII characters are permitted: <code>. _ , : ( ) / + -</code>.</p>",
+      "refs": {
+        "ExportSummary$Name": "<p>The user-provided name of the export job, if one was specified.</p>",
+        "GetExportJobV2Response$Name": "<p>The user-provided name of the export job, if one was specified when the job was started.</p>",
+        "StartExportJobV2Request$Name": "<p>An optional, user-provided name for the export job that helps you identify it in <code>ListExportJobsV2</code> results. The value can be 1–256 characters. Alphanumeric characters, spaces, and the following ASCII characters are permitted: <code>. _ , : ( ) / + -</code>.</p>"
+      }
+    },
+    "ExportOutput": {
+      "base": "<p>Specifies what data to export and how to format it. This is a union: you must specify exactly one member. Currently, the only supported member is <code>Findings</code>.</p>",
+      "refs": {
+        "GetExportJobV2Response$OutputConfiguration": "<p>The output configuration that the export job was started with, including the format and any filters or selected fields.</p>",
+        "StartExportJobV2Request$OutputConfiguration": "<p>Specifies what data to export and how to format it. You must specify exactly one output type. Currently, the only supported type is <code>Findings</code>.</p>"
+      }
+    },
+    "ExportOutputSummary": {
+      "base": "<p>A summary of the output configuration for an export job. The populated member corresponds to the data type that was exported.</p>",
+      "refs": {
+        "ExportSummary$OutputConfiguration": "<p>The output configuration of the export job. For findings exports, this reports the output format. Present only for findings exports; absent for other data types.</p>"
+      }
+    },
+    "ExportScopes": {
+      "base": "<p>Defines the data boundary for a findings export. Scopes determine which organizational units or organizations to retrieve data from.</p> <p>Only a delegated administrator can use this structure. If a delegated administrator omits it, the export covers the entire organization; any other caller exports only findings from its own account.</p>",
+      "refs": {
+        "ExportSummary$Scopes": "<p>The organization scopes that the export job was started with, echoed verbatim. Absent if the caller didn't supply <code>Scopes</code>.</p>",
+        "GetExportJobV2Response$Scopes": "<p>The organization scopes that the export job was started with, echoed verbatim. This parameter is absent if the caller didn't supply <code>Scopes</code>. It contains only the organization or organizational unit (OU) identifiers that the caller submitted; it never contains resolved member-account identifiers.</p>",
+        "StartExportJobV2Request$Scopes": "<p>Limits the export to findings from specific organizational units (OUs) or from the delegated administrator's organization. Only the delegated administrator account can use this parameter; other accounts that specify it receive an <code>AccessDeniedException</code>.</p> <p>This parameter is optional. If you omit it, the delegated administrator exports findings from all accounts across the entire organization, and other accounts export only their own findings.</p> <p>You can specify up to 10 entries in <code>Scopes.AwsOrganizations</code>. If you specify multiple entries, Security Hub combines them using OR logic.</p>"
+      }
+    },
+    "ExportStatus": {
+      "base": "<p>The state of an export job. Valid values are as follows:</p> <ul> <li> <p> <code>RUNNING</code> – The job is queued or in progress.</p> </li> <li> <p> <code>SUCCEEDED</code> – The job completed and the output is available in the destination bucket.</p> </li> <li> <p> <code>FAILED</code> – The job didn't complete. See <code>FailureCode</code> and <code>FailureMessage</code>.</p> </li> <li> <p> <code>CANCELLED</code> – The job was canceled with <code>CancelExportJobV2</code>.</p> </li> </ul>",
+      "refs": {
+        "CancelExportJobV2Response$Status": "<p>The state of the export job after the cancel request.</p>",
+        "ExportSummary$Status": "<p>The current state of the export job.</p>",
+        "GetExportJobV2Response$Status": "<p>The current state of the export job.</p>",
+        "ListExportJobsV2Request$Status": "<p>Filters the results to export jobs that have the specified status.</p>"
+      }
+    },
+    "ExportSummary": {
+      "base": "<p>A summary of an export job, as returned by <code>ListExportJobsV2</code>.</p>",
+      "refs": {
+        "ExportSummaryList$member": null
+      }
+    },
+    "ExportSummaryList": {
+      "base": "<p>A list of export job summaries.</p>",
+      "refs": {
+        "ListExportJobsV2Response$Items": "<p>The export jobs that match the request, as <code>ExportSummary</code> objects.</p>"
+      }
+    },
     "ExposureFinding": {
       "base": "<p>Provides details about an exposure finding and the effect the specific remediation target has on it.</p>",
       "refs": {
@@ -5946,6 +6050,37 @@
       "refs": {
         "GetFindingStatisticsV2Request$Scopes": "<p>Limits the results to findings from specific organizational units or from the delegated administrator's organization. Only the delegated administrator account can use this parameter. Other accounts receive an <code>AccessDeniedException</code>.</p> <p>This parameter is optional. If you omit it, the delegated administrator sees statistics from all accounts across the entire organization. Other accounts see only statistics for their own findings.</p> <p>You can specify up to 10 entries in <code>Scopes.AwsOrganizations</code>. If multiple entries are specified, the entries are combined using OR logic.</p>",
         "GetFindingsV2Request$Scopes": "<p>Limits the results to findings from specific organizational units or from the delegated administrator's organization. Only the delegated administrator account can use this parameter. Other accounts receive an <code>AccessDeniedException</code>.</p> <p>This parameter is optional. If you omit it, the delegated administrator sees findings from all accounts across the entire organization. Other accounts see only their own findings.</p> <p>You can specify up to 10 entries in <code>Scopes.AwsOrganizations</code>. If multiple entries are specified, the entries are combined using OR logic.</p>"
+      }
+    },
+    "FindingsExportFormat": {
+      "base": "<p>The output format of an export. <code>CSV</code> produces comma-separated rows. <code>OCSF_JSON</code> produces newline-delimited JSON records in the Open Cybersecurity Schema Framework (OCSF) format.</p>",
+      "refs": {
+        "FindingsOutput$Format": "<p>The output format of the export. <code>CSV</code> produces comma-separated rows that are suitable for spreadsheets and analysis tools. <code>OCSF_JSON</code> produces newline-delimited JSON records in the Open Cybersecurity Schema Framework (OCSF) format used elsewhere in Security Hub.</p>",
+        "FindingsOutputSummary$Format": "<p>The output format of the export. <code>CSV</code> produces comma-separated rows that are suitable for spreadsheets and analysis tools. <code>OCSF_JSON</code> produces newline-delimited JSON records in the Open Cybersecurity Schema Framework (OCSF) format used elsewhere in Security Hub.</p>"
+      }
+    },
+    "FindingsOutput": {
+      "base": "<p>The configuration for a findings export: the output format, an optional set of filters, and the fields to include.</p>",
+      "refs": {
+        "ExportOutput$Findings": "<p>Configures an export of Security Hub findings, including the output format and any filters or selected fields.</p>"
+      }
+    },
+    "FindingsOutputSummary": {
+      "base": "<p>A summary of the output configuration for a findings export, returned by <code>ListExportJobsV2</code>. Unlike the configuration returned by <code>GetExportJobV2</code>, it reports only the output format.</p>",
+      "refs": {
+        "ExportOutputSummary$Findings": "<p>The output configuration summary for a findings export.</p>"
+      }
+    },
+    "FindingsSelectableField": {
+      "base": "<p>An OCSF finding field path that can be included in <code>FindingsOutput.SelectedFields</code>, for example <code>finding_info.title</code>, <code>severity</code>, or <code>cloud.account.uid</code>. Each value corresponds to a field in the OCSF finding schema.</p>",
+      "refs": {
+        "FindingsSelectedFieldList$member": null
+      }
+    },
+    "FindingsSelectedFieldList": {
+      "base": "<p>A list of the OCSF finding fields to include in an export.</p>",
+      "refs": {
+        "FindingsOutput$SelectedFields": "<p>The OCSF finding fields to include in the export, specified as OCSF field paths (for example, <code>finding_info.title</code> or <code>severity</code>). You can specify from 1 to 50 fields.</p> <p>Whether this parameter is required depends on the value of <code>Format</code>:</p> <ul> <li> <p> <code>CSV</code> – Required. The field paths that you specify become the columns of the output, in the order that you provide them. If you omit this parameter, the request returns a <code>ValidationException</code>.</p> </li> <li> <p> <code>OCSF_JSON</code> – Not supported. This format includes each finding in full, so field selection doesn't apply. If you specify this parameter, the request returns a <code>ValidationException</code>.</p> </li> </ul>"
       }
     },
     "FindingsTrendsCompositeFilter": {
@@ -6152,6 +6287,14 @@
       "refs": {}
     },
     "GetEnabledStandardsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetExportJobV2Request": {
+      "base": null,
+      "refs": {}
+    },
+    "GetExportJobV2Response": {
       "base": null,
       "refs": {}
     },
@@ -6949,6 +7092,14 @@
       "base": null,
       "refs": {}
     },
+    "ListExportJobsV2Request": {
+      "base": null,
+      "refs": {}
+    },
+    "ListExportJobsV2Response": {
+      "base": null,
+      "refs": {}
+    },
     "ListExposuresByRemediationV2Request": {
       "base": null,
       "refs": {}
@@ -7303,6 +7454,8 @@
         "ListConnectorsV2Response$NextToken": "<p>The pagination token to use to request the next page of results. Otherwise, this parameter is null.</p>",
         "ListEnabledProductsForImportRequest$NextToken": "<p>The token that is required for pagination. On your first call to the <code>ListEnabledProductsForImport</code> operation, set the value of this parameter to <code>NULL</code>.</p> <p>For subsequent calls to the operation, to continue listing data, set the value of this parameter to the value returned from the previous response.</p>",
         "ListEnabledProductsForImportResponse$NextToken": "<p>The pagination token to use to request the next page of results.</p>",
+        "ListExportJobsV2Request$NextToken": "<p>The token required for pagination. On your first call, set the value of this parameter to <code>NULL</code>. For subsequent calls, to continue listing data, set the value of this parameter to the value returned in the previous response.</p>",
+        "ListExportJobsV2Response$NextToken": "<p>The pagination token to use to request the next page of results. Otherwise, this parameter is null.</p>",
         "ListExposuresByRemediationV2Request$NextToken": "<p>The token used to paginate the exposures list returned. On your first call to <code>ListExposuresByRemediationV2</code>, omit this parameter or set it to <code>NULL</code>. For subsequent calls, use the <code>NextToken</code> value returned in the previous response to retrieve the next page of results.</p>",
         "ListExposuresByRemediationV2Response$NextToken": "<p>The pagination token to use to request the next page of results. Otherwise, this parameter is null.</p>",
         "ListFindingAggregatorsRequest$NextToken": "<p>The token returned with the previous set of results. Identifies the next set of results to return.</p>",
@@ -8802,6 +8955,7 @@
         "EnabledSecurityControlIdentifierList$member": null,
         "EnabledStandardIdentifierList$member": null,
         "EnumConfigurationOptions$DefaultValue": "<p> The Security Hub CSPM default value for a control parameter that is an enum. </p>",
+        "ExportSummary$FailureMessage": "<p>A human-readable message about why the export job failed. Present only when <code>Status</code> is <code>FAILED</code>.</p>",
         "ExposureFinding$MetadataUid": "<p>The unique identifier (ID) of the Security Hub exposure finding, found under the <code>metadata.uid</code> field of the finding.</p>",
         "ExposureFinding$Title": "<p>The title of the exposure finding.</p>",
         "ExternalIntegrationConfiguration$ConnectorArn": "<p>The ARN of the connector that establishes the integration.</p>",
@@ -8853,6 +9007,7 @@
         "GetConnectorV2Response$Description": "<p>The description of the connectorV2.</p>",
         "GetConnectorV2Response$KmsKeyArn": "<p>The Amazon Resource Name (ARN) of KMS key used for the connectorV2.</p>",
         "GetConnectorV2Response$EnablementStatusReason": "<p>The reason for the current enablement status. Provides additional context when the connector is in a failed state.</p>",
+        "GetExportJobV2Response$FailureMessage": "<p>A human-readable message that provides more detail about why the export job failed. Present only when <code>Status</code> is <code>FAILED</code>.</p>",
         "GetFindingAggregatorRequest$FindingAggregatorArn": "<p>The ARN of the finding aggregator to return details for. To obtain the ARN, use <code>ListFindingAggregators</code>.</p>",
         "GetFindingAggregatorResponse$FindingAggregatorArn": "<p>The ARN of the finding aggregator.</p>",
         "GetFindingAggregatorResponse$FindingAggregationRegion": "<p>The home Region. Findings generated in linked Regions are replicated and sent to the home Region.</p>",
@@ -9001,7 +9156,7 @@
         "RemediationGuidanceContext$ProblemStatement": "<p>Explains the cause which directly created the remediation target.</p>",
         "RemediationGuidanceContext$RiskAssessment": "<p>An assessment of the existing risk the remediation target creates.</p>",
         "RemediationGuidanceContext$AffectedScope": "<p>The scope of the resources affected by the resolution of the remediation target.</p>",
-        "RemediationGuidanceExamples$AwsCli": "<p>An AWS CLI snippet version of the example.</p>",
+        "RemediationGuidanceExamples$AwsCli": "<p>An CLI snippet version of the example.</p>",
         "RemediationGuidanceExamples$Cli": "<p>A CLI snippet version of the example.</p>",
         "RemediationGuidanceExamples$Python": "<p>A Python snippet version of the example.</p>",
         "RemediationGuidanceExamples$Terraform": "<p>A Terraform snippet version of the example.</p>",
@@ -9106,6 +9261,8 @@
         "RuleGroupSourceStatefulRulesRuleOptionsSettingsList$member": null,
         "RuleGroupSourceStatelessRuleMatchAttributesDestinations$AddressDefinition": "<p>An IP address or a block of IP addresses.</p>",
         "RuleGroupSourceStatelessRuleMatchAttributesSources$AddressDefinition": "<p>An IP address or a block of IP addresses.</p>",
+        "S3ExportDestination$BucketArn": "<p>The Amazon Resource Name (ARN) of the Amazon S3 bucket that Security Hub writes the export to. You must own the bucket, and its bucket policy must grant the Security Hub service principal (<code>exportv2.securityhub.amazonaws.com</code>) permission to write objects. For the required bucket policy, see the Examples section of <code>StartExportJobV2</code>.</p>",
+        "S3ExportDestination$KmsKeyArn": "<p>The ARN of the Amazon Web Services KMS key that Security Hub uses to encrypt the export objects with server-side encryption. The key policy must allow the Security Hub service principal (<code>exportv2.securityhub.amazonaws.com</code>) to use the key through Amazon S3. For the required key policy, see the Examples section of <code>StartExportJobV2</code>.</p> <p>The key must meet all of the following requirements:</p> <ul> <li> <p>It must be a symmetric key with a key usage of <code>ENCRYPT_DECRYPT</code>.</p> </li> <li> <p>It must be a single-Region key. Multi-Region keys, whose key IDs begin with <code>mrk-</code>, are rejected.</p> </li> <li> <p>You must specify the full key ARN. Key IDs and aliases are rejected.</p> </li> <li> <p>The key must be in the same Amazon Web Services account as the export job.</p> </li> <li> <p>The key must be in the same Amazon Web Services Region as the export job.</p> </li> <li> <p>The key must be in the <code>aws</code>, <code>aws-cn</code>, or <code>aws-us-gov</code> partition.</p> </li> </ul>",
         "ScopeValueList$member": null,
         "SecurityControl$SecurityControlId": "<p> The unique identifier of a security control across standards. Values for this field typically consist of an Amazon Web Services service name and a number, such as APIGateway.3. </p>",
         "SecurityControl$SecurityControlArn": "<p> The Amazon Resource Name (ARN) for a security control across standards, such as <code>arn:aws:securityhub:eu-central-1:123456789012:security-control/S3.1</code>. This parameter doesn't mention a specific standard. </p>",
@@ -9461,6 +9618,7 @@
       "base": "<p>Specifies the filtering criteria for security findings using OCSF.</p>",
       "refs": {
         "Criteria$OcsfFindingCriteria": "<p>The filtering conditions that align with OCSF standards.</p>",
+        "FindingsOutput$Filters": "<p>An optional set of OCSF finding filters that restrict which findings are exported. The filter structure is the same as the one used by <code>GetFindingsV2</code>. If you omit this member, Security Hub exports all findings available to the caller. When echoed by <code>GetExportJobV2</code>, relative date ranges are returned unresolved.</p>",
         "GetFindingsV2Request$Filters": "<p>The finding attributes used to define a condition to filter the returned OCSF findings. You can filter up to 10 composite filters. For each filter type inside of a composite filter, you can provide up to 20 filters.</p>",
         "GroupByRule$Filters": "<p>The criteria used to select which security findings should be included in the grouping operation.</p>"
       }
@@ -10600,6 +10758,18 @@
         "UpdateAutomationRuleV2Request$RuleStatus": "<p>The status of the automation rule.</p>"
       }
     },
+    "S3ExportDestination": {
+      "base": "<p>The Amazon S3 destination for an export, including the bucket, the Amazon Web Services KMS key used for encryption, and an optional object key prefix.</p>",
+      "refs": {
+        "ExportDestination$S3": "<p>The Amazon Simple Storage Service (Amazon S3) bucket and Amazon Web Services Key Management Service (Amazon Web Services KMS) key that Security Hub uses to write the export.</p>"
+      }
+    },
+    "S3ObjectPrefix": {
+      "base": "<p>A key prefix that Security Hub prepends to the Amazon S3 object keys of an export. The value can be up to 512 characters.</p>",
+      "refs": {
+        "S3ExportDestination$ObjectPrefix": "<p>An optional key prefix that Security Hub prepends to the Amazon S3 object keys of the export output. Use a prefix to organize exports within the bucket. The value can be up to 512 characters.</p>"
+      }
+    },
     "ScopeType": {
       "base": "<p>The type of scope for an Azure connector. Valid values are <code>TENANT</code> (monitor all subscriptions in the tenant) and <code>SUBSCRIPTION</code> (monitor specific subscriptions).</p>",
       "refs": {
@@ -11024,6 +11194,14 @@
       "base": null,
       "refs": {}
     },
+    "StartExportJobV2Request": {
+      "base": null,
+      "refs": {}
+    },
+    "StartExportJobV2Response": {
+      "base": null,
+      "refs": {}
+    },
     "StatelessCustomActionDefinition": {
       "base": "<p>The definition of a custom action that can be used for stateless packet handling.</p>",
       "refs": {
@@ -11384,6 +11562,8 @@
         "CreateConfigurationPolicyResponse$CreatedAt": "<p> The date and time, in UTC and ISO 8601 format, that the configuration policy was created. </p>",
         "CspmConnectorSummary$CreatedAt": "<p>The ISO 8601 UTC timestamp indicating when the connector was created.</p>",
         "CspmHealthCheck$LastCheckedAt": "<p>The ISO 8601 UTC timestamp indicating when the health status was last checked.</p>",
+        "ExportSummary$StartedAt": "<p>The time when the export job was created.</p> <p>For more information about the validation and formatting of timestamp fields in Security Hub, see <a href=\"https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps\">Timestamps</a>.</p>",
+        "ExportSummary$EndedAt": "<p>The time when the export job reached a terminal state. Absent while the job is <code>RUNNING</code>.</p> <p>For more information about the validation and formatting of timestamp fields in Security Hub, see <a href=\"https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps\">Timestamps</a>.</p>",
         "FeatureDetail$UpdatedAt": "<p>The date and time when the feature status was last updated.</p>",
         "FindingHistoryRecord$UpdateTime": "<p> A timestamp that indicates when Security Hub CSPM processed the updated finding record.</p> <p>For more information about the validation and formatting of timestamp fields in Security Hub CSPM, see <a href=\"https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps\">Timestamps</a>.</p>",
         "FreeTrialStatus$StartedAt": "<p>The date and time at which the free trial period began.</p>",
@@ -11397,6 +11577,8 @@
         "GetConnectorResponse$LastUpdatedAt": "<p>The ISO 8601 UTC timestamp indicating when the connector was last updated.</p>",
         "GetConnectorV2Response$CreatedAt": "<p>ISO 8601 UTC timestamp for the time create the connectorV2.</p>",
         "GetConnectorV2Response$LastUpdatedAt": "<p>ISO 8601 UTC timestamp for the time update the connectorV2 connectorStatus.</p>",
+        "GetExportJobV2Response$StartedAt": "<p>The time when the export job was created.</p> <p>For more information about the validation and formatting of timestamp fields in Security Hub, see <a href=\"https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps\">Timestamps</a>.</p>",
+        "GetExportJobV2Response$EndedAt": "<p>The time when the export job reached a terminal state (<code>SUCCEEDED</code>, <code>FAILED</code>, or <code>CANCELLED</code>). This parameter is absent while the job is <code>RUNNING</code>.</p> <p>For more information about the validation and formatting of timestamp fields in Security Hub, see <a href=\"https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps\">Timestamps</a>.</p>",
         "GetFindingHistoryRequest$StartTime": "<p>A timestamp that indicates the start time of the requested finding history.</p> <p>If you provide values for both <code>StartTime</code> and <code>EndTime</code>, Security Hub CSPM returns finding history for the specified time period. If you provide a value for <code>StartTime</code> but not for <code>EndTime</code>, Security Hub CSPM returns finding history from the <code>StartTime</code> to the time at which the API is called. If you provide a value for <code>EndTime</code> but not for <code>StartTime</code>, Security Hub CSPM returns finding history from the <a href=\"https://docs.aws.amazon.com/securityhub/1.0/APIReference/API_AwsSecurityFindingFilters.html#securityhub-Type-AwsSecurityFindingFilters-CreatedAt\">CreatedAt</a> timestamp of the finding to the <code>EndTime</code>. If you provide neither <code>StartTime</code> nor <code>EndTime</code>, Security Hub CSPM returns finding history from the <code>CreatedAt</code> timestamp of the finding to the time at which the API is called. In all of these scenarios, the response is limited to 100 results.</p> <p>For more information about the validation and formatting of timestamp fields in Security Hub CSPM, see <a href=\"https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps\">Timestamps</a>.</p>",
         "GetFindingHistoryRequest$EndTime": "<p> An ISO 8601-formatted timestamp that indicates the end time of the requested finding history.</p> <p>If you provide values for both <code>StartTime</code> and <code>EndTime</code>, Security Hub CSPM returns finding history for the specified time period. If you provide a value for <code>StartTime</code> but not for <code>EndTime</code>, Security Hub CSPM returns finding history from the <code>StartTime</code> to the time at which the API is called. If you provide a value for <code>EndTime</code> but not for <code>StartTime</code>, Security Hub CSPM returns finding history from the <a href=\"https://docs.aws.amazon.com/securityhub/1.0/APIReference/API_AwsSecurityFindingFilters.html#securityhub-Type-AwsSecurityFindingFilters-CreatedAt\">CreatedAt</a> timestamp of the finding to the <code>EndTime</code>. If you provide neither <code>StartTime</code> nor <code>EndTime</code>, Security Hub CSPM returns finding history from the <code>CreatedAt</code> timestamp of the finding to the time at which the API is called. In all of these scenarios, the response is limited to 100 results.</p> <p>For more information about the validation and formatting of timestamp fields in Security Hub CSPM, see <a href=\"https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps\">Timestamps</a>.</p>",
         "GetFindingsTrendsV2Request$StartTime": "<p>The starting timestamp for the time period to analyze findings trends, in ISO 8601 format.</p>",

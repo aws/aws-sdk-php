@@ -4,8 +4,11 @@
     "apiVersion":"2017-07-01",
     "endpointPrefix":"translate",
     "jsonVersion":"1.1",
-    "protocol":"json",
-    "protocols":["json"],
+    "protocol":"smithy-rpc-v2-cbor",
+    "protocols":[
+      "smithy-rpc-v2-cbor",
+      "json"
+    ],
     "serviceFullName":"Amazon Translate",
     "serviceId":"Translate",
     "signatureVersion":"v4",
@@ -348,6 +351,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":409},
       "exception":true
     },
     "ConflictException":{
@@ -355,6 +359,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":409},
       "exception":true
     },
     "ContentType":{
@@ -433,6 +438,7 @@
         "Message":{"shape":"String"},
         "DetectedLanguageCode":{"shape":"LanguageCodeString"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "Directionality":{
@@ -579,6 +585,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":500},
       "exception":true,
       "fault":true
     },
@@ -587,6 +594,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "InvalidParameterValueException":{
@@ -594,6 +602,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "InvalidRequestException":{
@@ -601,6 +610,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "JobDetails":{
@@ -664,6 +674,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "ListLanguagesRequest":{
@@ -857,6 +868,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":404},
       "exception":true
     },
     "S3Uri":{
@@ -869,6 +881,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":503},
       "exception":true,
       "fault":true
     },
@@ -1057,6 +1070,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "TextTranslationJobFilter":{
@@ -1098,6 +1112,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":429},
       "exception":true
     },
     "TooManyTagsException":{
@@ -1106,6 +1121,7 @@
         "message":{"shape":"String"},
         "ResourceArn":{"shape":"ResourceArn"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "TranslateDocumentRequest":{
@@ -1199,6 +1215,7 @@
         "Message":{"shape":"String"},
         "DisplayLanguageCode":{"shape":"LanguageCodeString"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "UnsupportedLanguagePairException":{
@@ -1208,6 +1225,7 @@
         "SourceLanguageCode":{"shape":"LanguageCodeString"},
         "TargetLanguageCode":{"shape":"LanguageCodeString"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "UntagResourceRequest":{

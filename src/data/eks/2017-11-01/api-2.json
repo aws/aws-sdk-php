@@ -1197,6 +1197,31 @@
         "namespace"
       ]
     },
+    "AckConfigRequest":{
+      "type":"structure",
+      "members":{
+        "enableCrossNamespace":{"shape":"BoxedBoolean"},
+        "disabledServices":{"shape":"AckDisabledServicesList"}
+      }
+    },
+    "AckConfigResponse":{
+      "type":"structure",
+      "members":{
+        "enableCrossNamespace":{"shape":"BoxedBoolean"},
+        "disabledServices":{"shape":"AckDisabledServicesList"}
+      }
+    },
+    "AckDisabledServicesList":{
+      "type":"list",
+      "member":{"shape":"AckServiceName"},
+      "max":200
+    },
+    "AckServiceName":{
+      "type":"string",
+      "max":63,
+      "min":1,
+      "pattern":"^[a-z][a-z0-9]*$"
+    },
     "ActivateCertificateAuthorityRequest":{
       "type":"structure",
       "required":[
@@ -1678,13 +1703,15 @@
     "CapabilityConfigurationRequest":{
       "type":"structure",
       "members":{
-        "argoCd":{"shape":"ArgoCdConfigRequest"}
+        "argoCd":{"shape":"ArgoCdConfigRequest"},
+        "ack":{"shape":"AckConfigRequest"}
       }
     },
     "CapabilityConfigurationResponse":{
       "type":"structure",
       "members":{
-        "argoCd":{"shape":"ArgoCdConfigResponse"}
+        "argoCd":{"shape":"ArgoCdConfigResponse"},
+        "ack":{"shape":"AckConfigResponse"}
       }
     },
     "CapabilityDeletePropagationPolicy":{
@@ -5027,6 +5054,13 @@
         "accessEntry":{"shape":"AccessEntry"}
       }
     },
+    "UpdateAckConfig":{
+      "type":"structure",
+      "members":{
+        "enableCrossNamespace":{"shape":"BoxedBoolean"},
+        "disabledServices":{"shape":"AckDisabledServicesList"}
+      }
+    },
     "UpdateAddonRequest":{
       "type":"structure",
       "required":[
@@ -5071,7 +5105,8 @@
     "UpdateCapabilityConfiguration":{
       "type":"structure",
       "members":{
-        "argoCd":{"shape":"UpdateArgoCdConfig"}
+        "argoCd":{"shape":"UpdateArgoCdConfig"},
+        "ack":{"shape":"UpdateAckConfig"}
       }
     },
     "UpdateCapabilityRequest":{
@@ -5323,6 +5358,8 @@
         "VendedLogs",
         "UpdatedTier",
         "PreviousTier",
+        "EnableCrossNamespace",
+        "DisabledServices",
         "WarmPoolEnabled",
         "WarmPoolMaxGroupPreparedCapacity",
         "WarmPoolMinSize",

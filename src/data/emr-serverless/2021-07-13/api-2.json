@@ -860,6 +860,11 @@
           "shape":"ResourceType",
           "location":"querystring",
           "locationName":"resourceType"
+        },
+        "accessSystemProfileLogs":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"accessSystemProfileLogs"
         }
       }
     },
@@ -1562,7 +1567,7 @@
       "type":"string",
       "max":1024,
       "min":60,
-      "pattern":"arn:(aws[a-zA-Z0-9-]*):emr-serverless:.+:(\\d{12}):\\/applications\\/[0-9a-zA-Z]+(\\/jobruns\\/[0-9a-zA-Z]+)?"
+      "pattern":"arn:(aws[a-zA-Z0-9-]*):emr-serverless:.+:(\\d{12}):\\/applications\\/[0-9a-zA-Z]+(\\/jobruns\\/[0-9a-zA-Z]+|\\/sessions\\/[0-9a-zA-Z]+)?"
     },
     "ResourceId":{
       "type":"string",

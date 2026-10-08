@@ -2394,6 +2394,16 @@
       "min":1,
       "pattern":"^[a-zA-Z0-9\\-]+$|^arn:.*:containergroupdefinition\\/[a-zA-Z0-9\\-]+(:[0-9]+)?$"
     },
+    "ContainerGroupDefinitionRemoveAttribute":{
+      "type":"string",
+      "enum":["TOTAL_VCPU_LIMIT"]
+    },
+    "ContainerGroupDefinitionRemoveAttributeList":{
+      "type":"list",
+      "member":{"shape":"ContainerGroupDefinitionRemoveAttribute"},
+      "max":1,
+      "min":1
+    },
     "ContainerGroupDefinitionStatus":{
       "type":"string",
       "enum":[
@@ -2632,7 +2642,6 @@
       "required":[
         "Name",
         "TotalMemoryLimitMebibytes",
-        "TotalVcpuLimit",
         "OperatingSystem"
       ],
       "members":{
@@ -4633,7 +4642,8 @@
         "PortConfiguration":{"shape":"ContainerPortConfiguration"},
         "ResolvedImageDigest":{"shape":"Sha256"},
         "ServerSdkVersion":{"shape":"ServerSdkVersion"},
-        "LinuxCapabilities":{"shape":"LinuxCapabilities"}
+        "LinuxCapabilities":{"shape":"LinuxCapabilities"},
+        "Vcpu":{"shape":"ContainerVcpu"}
       }
     },
     "GameServerContainerDefinitionInput":{
@@ -4652,7 +4662,8 @@
         "ImageUri":{"shape":"ImageUriString"},
         "PortConfiguration":{"shape":"ContainerPortConfiguration"},
         "ServerSdkVersion":{"shape":"ServerSdkVersion"},
-        "LinuxCapabilities":{"shape":"LinuxCapabilities"}
+        "LinuxCapabilities":{"shape":"LinuxCapabilities"},
+        "Vcpu":{"shape":"ContainerVcpu"}
       }
     },
     "GameServerContainerGroupCounts":{
@@ -7051,7 +7062,8 @@
         "TotalVcpuLimit":{"shape":"ContainerTotalVcpuLimit"},
         "VersionDescription":{"shape":"NonZeroAndMaxString"},
         "SourceVersionNumber":{"shape":"PositiveInteger"},
-        "OperatingSystem":{"shape":"ContainerOperatingSystem"}
+        "OperatingSystem":{"shape":"ContainerOperatingSystem"},
+        "RemoveAttributes":{"shape":"ContainerGroupDefinitionRemoveAttributeList"}
       }
     },
     "UpdateContainerGroupDefinitionOutput":{

@@ -11,6 +11,7 @@
     "GetCase": "<p>Returns the attributes of a case.</p>",
     "GetCaseAttachmentDownloadUrl": "<p>Returns a Pre-Signed URL for uploading attachments into a case.</p>",
     "GetCaseAttachmentUploadUrl": "<p>Uploads an attachment to a case.</p>",
+    "GetFindingMetrics": "<p>Returns finding-lifecycle metrics for a membership over a date range.</p>",
     "GetMembership": "<p>Returns the attributes of a membership.</p>",
     "ListCaseEdits": "<p>Views the case history for edits made to a designated case.</p>",
     "ListCases": "<p>Lists all cases the requester has access to.</p>",
@@ -399,6 +400,14 @@
       "base": null,
       "refs": {}
     },
+    "GetFindingMetricsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetFindingMetricsResponse": {
+      "base": "<p>Finding-lifecycle metrics for a membership over the requested date range.</p>",
+      "refs": {}
+    },
     "GetMembershipAccountDetailError": {
       "base": "<p/>",
       "refs": {
@@ -697,6 +706,17 @@
     "Long": {
       "base": null,
       "refs": {
+        "GetFindingMetricsResponse$findingsIngestedSecurityHub": "<p>The number of findings ingested from AWS Security Hub during the requested date range.</p>",
+        "GetFindingMetricsResponse$findingsIngestedGuardDuty": "<p>The number of findings ingested from Amazon GuardDuty during the requested date range.</p>",
+        "GetFindingMetricsResponse$findingsTriaged": "<p>The number of findings triaged during the requested date range.</p>",
+        "GetFindingMetricsResponse$findingsTriagedFalsePositive": "<p>The number of triaged findings that were closed as false positives during the requested date range.</p>",
+        "GetFindingMetricsResponse$findingsInvestigated": "<p>The number of findings investigated during the requested date range.</p>",
+        "GetFindingMetricsResponse$findingsInvestigatedFalsePositive": "<p>The number of investigated findings that were closed as false positives during the requested date range.</p>",
+        "GetFindingMetricsResponse$findingsEscalated": "<p>The number of findings escalated during the requested date range.</p>",
+        "GetFindingMetricsResponse$findingsEscalatedFalsePositive": "<p>The number of escalated findings that were closed as false positives during the requested date range.</p>",
+        "GetFindingMetricsResponse$findingsTruePositive": "<p>The number of findings confirmed as true positives during the requested date range.</p>",
+        "GetFindingMetricsResponse$findingsInvestigatedInProgress": "<p>The number of findings whose investigation was in progress during the requested date range.</p>",
+        "GetFindingMetricsResponse$findingsEscalatedInProgress": "<p>The number of findings whose escalation was in progress during the requested date range.</p>",
         "GetMembershipResponse$numberOfAccountsCovered": "<p>Response element for GetMembership that provides the number of accounts in the membership.</p>",
         "ListCasesResponse$total": "<p>Response element for ListCases providing the total number of responses.</p>"
       }
@@ -751,6 +771,7 @@
         "CancelMembershipRequest$membershipId": "<p>Required element used in combination with CancelMembershipRequest to identify the membership ID to cancel. </p>",
         "CancelMembershipResponse$membershipId": "<p>The response element providing responses for requests to CancelMembershipRequest.</p>",
         "CreateMembershipResponse$membershipId": "<p>Response element for CreateMembership providing the newly created membership ID.</p>",
+        "GetFindingMetricsRequest$membershipId": "<p>The membership ID to retrieve metrics for.</p>",
         "GetMembershipRequest$membershipId": "<p>Required element for GetMembership to identify the membership ID to query.</p>",
         "GetMembershipResponse$membershipId": "<p>Response element for GetMembership that provides the queried membership ID.</p>",
         "ListMembershipItem$membershipId": "<p/>",
@@ -969,6 +990,8 @@
         "GetCaseResponse$createdDate": "<p>Response element for GetCase that provides the date the case was created.</p>",
         "GetCaseResponse$lastUpdatedDate": "<p>Response element for GetCase that provides the date a case was last modified.</p>",
         "GetCaseResponse$closedDate": "<p>Response element for GetCase that provides the date a specified case was closed.</p>",
+        "GetFindingMetricsRequest$startDate": "<p>The start of the day-aligned UTC window, inclusive.</p>",
+        "GetFindingMetricsRequest$endDate": "<p>The end of the day-aligned UTC window, inclusive.</p>",
         "GetMembershipResponse$membershipActivationTimestamp": "<p>Response element for GetMembership that provides the configured membership activation timestamp.</p>",
         "GetMembershipResponse$membershipDeactivationTimestamp": "<p>Response element for GetMembership that provides the configured membership name deactivation timestamp. </p>",
         "InvestigationAction$lastUpdated": "<p>ISO 8601 timestamp of the most recent status update. This indicates when the investigation was last modified or when its status last changed.</p>",

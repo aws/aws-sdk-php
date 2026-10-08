@@ -5,8 +5,11 @@
     "auth":["aws.auth#sigv4"],
     "endpointPrefix":"agreement-marketplace",
     "jsonVersion":"1.0",
-    "protocol":"json",
-    "protocols":["json"],
+    "protocol":"smithy-rpc-v2-cbor",
+    "protocols":[
+      "smithy-rpc-v2-cbor",
+      "json"
+    ],
     "serviceAbbreviation":"Agreement Service",
     "serviceFullName":"AWS Marketplace Agreement Service",
     "serviceId":"Marketplace Agreement",
@@ -532,6 +535,10 @@
         "requestId":{"shape":"RequestId"},
         "message":{"shape":"ExceptionMessage"},
         "reason":{"shape":"AccessDeniedExceptionReason"}
+      },
+      "error":{
+        "httpStatusCode":403,
+        "senderFault":true
       },
       "exception":true
     },
@@ -1071,6 +1078,10 @@
         "resourceId":{"shape":"ResourceId"},
         "resourceType":{"shape":"ResourceType"}
       },
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "Constraints":{
@@ -1456,6 +1467,7 @@
         "requestId":{"shape":"RequestId"},
         "message":{"shape":"ExceptionMessage"}
       },
+      "error":{"httpStatusCode":500},
       "exception":true,
       "fault":true
     },
@@ -2008,6 +2020,10 @@
         "resourceId":{"shape":"ResourceId"},
         "resourceType":{"shape":"ResourceType"}
       },
+      "error":{
+        "httpStatusCode":404,
+        "senderFault":true
+      },
       "exception":true
     },
     "ResourceType":{
@@ -2133,6 +2149,10 @@
         "resourceType":{"shape":"BoundedString"},
         "resourceId":{"shape":"ResourceId"}
       },
+      "error":{
+        "httpStatusCode":402,
+        "senderFault":true
+      },
       "exception":true
     },
     "Sort":{
@@ -2208,6 +2228,10 @@
         "requestId":{"shape":"RequestId"},
         "message":{"shape":"ExceptionMessage"}
       },
+      "error":{
+        "httpStatusCode":429,
+        "senderFault":true
+      },
       "exception":true
     },
     "Timestamp":{"type":"timestamp"},
@@ -2262,6 +2286,10 @@
         "message":{"shape":"ExceptionMessage"},
         "reason":{"shape":"ValidationExceptionReason"},
         "fields":{"shape":"ValidationExceptionFieldList"}
+      },
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
       },
       "exception":true
     },

@@ -893,6 +893,7 @@
       "input":{"shape":"InvokeWithResponseStreamRequest"},
       "output":{"shape":"InvokeWithResponseStreamResponse"},
       "errors":[
+        {"shape":"CodeArtifactUserDeletedException"},
         {"shape":"ResourceNotReadyException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"InvalidSecurityGroupIDException"},
@@ -920,11 +921,13 @@
         {"shape":"ENILimitReachedException"},
         {"shape":"SnapStartNotReadyException"},
         {"shape":"ServiceException"},
+        {"shape":"CodeArtifactUserPendingException"},
         {"shape":"SnapStartException"},
         {"shape":"RecursiveInvocationException"},
         {"shape":"S3FilesMountFailureException"},
         {"shape":"EFSMountTimeoutException"},
         {"shape":"S3FilesMountTimeoutException"},
+        {"shape":"CodeArtifactUserFailedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidRequestContentException"},
         {"shape":"SnapStartRegenerationFailureException"},
@@ -1871,7 +1874,7 @@
     },
     "BinaryOperationPayload":{
       "type":"blob",
-      "max":262144,
+      "max":1048576,
       "min":0,
       "sensitive":true
     },
@@ -4587,7 +4590,8 @@
       "enum":[
         "BASIC_AUTH",
         "CLIENT_CERTIFICATE_TLS_AUTH",
-        "SERVER_ROOT_CA_CERTIFICATE"
+        "SERVER_ROOT_CA_CERTIFICATE",
+        "OAUTHBEARER_AUTH"
       ]
     },
     "KafkaSchemaRegistryConfig":{
@@ -5636,7 +5640,7 @@
       "type":"string",
       "max":256,
       "min":0,
-      "pattern":"arn:(aws[a-zA-Z-]*)?:lambda:(eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:function:[a-zA-Z0-9-_]+(:(\\$LATEST(\\.PUBLISHED)?|[a-zA-Z0-9-_])+)?"
+      "pattern":"arn:(aws[a-zA-Z-]*)?:lambda:(eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:(runtime/|function:)[a-zA-Z0-9-_]+(:(\\$LATEST(\\.PUBLISHED)?|[a-zA-Z0-9-_])+)?"
     },
     "PositiveInteger":{
       "type":"integer",
@@ -6601,7 +6605,14 @@
         "SASL_SCRAM_256_AUTH",
         "VIRTUAL_HOST",
         "CLIENT_CERTIFICATE_TLS_AUTH",
-        "SERVER_ROOT_CA_CERTIFICATE"
+        "SERVER_ROOT_CA_CERTIFICATE",
+        "OAUTHBEARER_AUTH",
+        "OAUTHBEARER_SCOPE",
+        "OAUTHBEARER_AUDIENCE",
+        "OAUTHBEARER_LOGICAL_CLUSTER",
+        "OAUTHBEARER_IDENTITY_POOL",
+        "IAM_AUTH",
+        "IAM_OAUTHBEARER_AUTH"
       ]
     },
     "SourceOwner":{

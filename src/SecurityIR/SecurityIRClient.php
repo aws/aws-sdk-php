@@ -103,6 +103,20 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getCaseAttachmentUploadUrl(array{caseId?: string, fileName?: string, contentLength?: int, clientToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getCaseAttachmentUploadUrlAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getCaseAttachmentUploadUrlAsync(array{caseId?: string, fileName?: string, contentLength?: int, clientToken?: string, ...} $args = [])
+ * @method \Aws\Result getFindingMetrics(array $args = [])
+ * @phpstan-method \Aws\Result getFindingMetrics(array{
+ *     membershipId?: string,
+ *     startDate?: int|string|\DateTimeInterface,
+ *     endDate?: int|string|\DateTimeInterface,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise getFindingMetricsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getFindingMetricsAsync(array{
+ *     membershipId?: string,
+ *     startDate?: int|string|\DateTimeInterface,
+ *     endDate?: int|string|\DateTimeInterface,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result getMembership(array $args = [])
  * @phpstan-method \Aws\Result getMembership(array{membershipId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getMembershipAsync(array $args = [])

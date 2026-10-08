@@ -185,6 +185,44 @@
         "description": "Gets the export job with ID ef28cf62-9d8e-4b60-9283-b09816c99a99",
         "id": "get-export-job-1685699942772",
         "title": "Get export job"
+      },
+      {
+        "input": {
+          "JobId": "ef28cf62-9d8e-4b60-9283-b09816c99a99"
+        },
+        "output": {
+          "CompletedTimestamp": "1688292100000",
+          "CreatedTimestamp": "1688292000000",
+          "ExportDataSource": {
+            "MessageInsightsDataSource": {
+              "EndDate": "1688256000000",
+              "Include": {
+                "Subject": [
+                  "Hello"
+                ]
+              },
+              "StartDate": "1688169600000"
+            }
+          },
+          "ExportDestination": {
+            "DataFormat": "CSV",
+            "S3Url": "https://amzn-s3-demo-bucket.s3.us-east-1.amazonaws.com/export-file.csv?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=EXAMPLE&X-Amz-Date=20230702T100500Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=EXAMPLE"
+          },
+          "ExportSourceType": "MESSAGE_INSIGHTS",
+          "JobId": "ef28cf62-9d8e-4b60-9283-b09816c99a99",
+          "JobStatus": "COMPLETED",
+          "Statistics": {
+            "ExportedRecordsCount": 5,
+            "ProcessedRecordsCount": 5
+          }
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "Gets a completed export job and the pre-signed URL for the export file",
+        "id": "get-export-job-1685701061057",
+        "title": "Get a completed export job"
       }
     ],
     "GetMessageInsights": [

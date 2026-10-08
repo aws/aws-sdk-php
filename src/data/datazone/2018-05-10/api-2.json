@@ -15663,10 +15663,41 @@
       "min":0,
       "pattern":"[a-zA-Z0-9\\-]+"
     },
+    "S3BucketName":{
+      "type":"string",
+      "max":63,
+      "min":3,
+      "pattern":"[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]",
+      "sensitive":true
+    },
     "S3Destination":{
       "type":"structure",
       "members":{
         "uri":{"shape":"NotebookS3Uri"}
+      }
+    },
+    "S3File":{
+      "type":"structure",
+      "required":["key"],
+      "members":{
+        "key":{"shape":"S3ObjectKey"}
+      }
+    },
+    "S3FileList":{
+      "type":"list",
+      "member":{"shape":"S3File"},
+      "max":100,
+      "min":1
+    },
+    "S3FilesLocation":{
+      "type":"structure",
+      "required":[
+        "bucket",
+        "fileList"
+      ],
+      "members":{
+        "bucket":{"shape":"S3BucketName"},
+        "fileList":{"shape":"S3FileList"}
       }
     },
     "S3Location":{
@@ -15680,6 +15711,12 @@
       "member":{"shape":"S3Location"},
       "max":20,
       "min":0
+    },
+    "S3ObjectKey":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "sensitive":true
     },
     "S3Path":{
       "type":"string",
@@ -16188,7 +16225,8 @@
     "SourceLocation":{
       "type":"structure",
       "members":{
-        "s3":{"shape":"S3SourceLocation"}
+        "s3":{"shape":"S3SourceLocation"},
+        "s3Files":{"shape":"S3FilesLocation"}
       },
       "union":true
     },
@@ -16552,6 +16590,7 @@
         "sourceLocation":{"shape":"SourceLocation"},
         "name":{"shape":"NotebookName"},
         "description":{"shape":"Description"},
+        "type":{"shape":"NotebookType"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -16567,6 +16606,7 @@
         "owningProjectId":{"shape":"ProjectId"},
         "name":{"shape":"NotebookName"},
         "description":{"shape":"Description"},
+        "type":{"shape":"NotebookType"},
         "sourceLocation":{"shape":"SourceLocation"},
         "createdAt":{"shape":"CreatedAt"},
         "createdBy":{"shape":"CreatedBy"}

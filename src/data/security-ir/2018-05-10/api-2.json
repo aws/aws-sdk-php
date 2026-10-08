@@ -210,6 +210,28 @@
       ],
       "idempotent":true
     },
+    "GetFindingMetrics":{
+      "name":"GetFindingMetrics",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/membership/{membershipId}/finding-metrics",
+        "responseCode":200
+      },
+      "input":{"shape":"GetFindingMetricsRequest"},
+      "output":{"shape":"GetFindingMetricsResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"SecurityIncidentResponseNotActiveException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidTokenException"}
+      ],
+      "readonly":true
+    },
     "GetMembership":{
       "name":"GetMembership",
       "http":{
@@ -1114,6 +1136,60 @@
         "caseAttachments":{"shape":"CaseAttachmentsList"},
         "closedDate":{"shape":"Timestamp"},
         "caseMetadata":{"shape":"CaseMetadata"}
+      }
+    },
+    "GetFindingMetricsRequest":{
+      "type":"structure",
+      "required":[
+        "membershipId",
+        "startDate",
+        "endDate"
+      ],
+      "members":{
+        "membershipId":{
+          "shape":"MembershipId",
+          "location":"uri",
+          "locationName":"membershipId"
+        },
+        "startDate":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"startDate"
+        },
+        "endDate":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"endDate"
+        }
+      }
+    },
+    "GetFindingMetricsResponse":{
+      "type":"structure",
+      "required":[
+        "findingsIngestedSecurityHub",
+        "findingsIngestedGuardDuty",
+        "findingsTriaged",
+        "findingsTriagedFalsePositive",
+        "findingsInvestigated",
+        "findingsInvestigatedFalsePositive",
+        "findingsEscalated",
+        "findingsEscalatedFalsePositive",
+        "findingsTruePositive",
+        "findingsInvestigatedInProgress",
+        "findingsEscalatedInProgress"
+      ],
+      "members":{
+        "findingsIngestedSecurityHub":{"shape":"Long"},
+        "findingsIngestedGuardDuty":{"shape":"Long"},
+        "findingsTriaged":{"shape":"Long"},
+        "findingsTriagedFalsePositive":{"shape":"Long"},
+        "findingsInvestigated":{"shape":"Long"},
+        "findingsInvestigatedFalsePositive":{"shape":"Long"},
+        "findingsEscalated":{"shape":"Long"},
+        "findingsEscalatedFalsePositive":{"shape":"Long"},
+        "findingsTruePositive":{"shape":"Long"},
+        "findingsInvestigatedInProgress":{"shape":"Long"},
+        "findingsEscalatedInProgress":{"shape":"Long"}
       }
     },
     "GetMembershipAccountDetailError":{

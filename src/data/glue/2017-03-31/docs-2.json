@@ -173,6 +173,8 @@
     "GetSession": "<p>Retrieves the session.</p>",
     "GetSessionEndpoint": "<p>Returns the Spark Connect endpoint URL and authentication token for an interactive session.</p>",
     "GetStatement": "<p>Retrieves the statement.</p>",
+    "GetSystemLogsForJobRun": "<p>Retrieves the system logs for a job run.</p>",
+    "GetSystemLogsForSession": "<p>Retrieves the system logs for an interactive session.</p>",
     "GetTable": "<p>Retrieves the <code>Table</code> definition in a Data Catalog for a specified table.</p>",
     "GetTableOptimizer": "<p>Returns the configuration of all optimizers associated with a specified table.</p>",
     "GetTableVersion": "<p>Retrieves a specified version of a table.</p>",
@@ -5736,6 +5738,22 @@
       "base": null,
       "refs": {}
     },
+    "GetSystemLogsForJobRunRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetSystemLogsForJobRunResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetSystemLogsForSessionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetSystemLogsForSessionResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetTableOptimizerRequest": {
       "base": null,
       "refs": {}
@@ -6590,6 +6608,7 @@
         "BlueprintRun$RunId": "<p>The run ID for this blueprint run.</p>",
         "GetBlueprintRunRequest$RunId": "<p>The run ID for the blueprint run you want to retrieve.</p>",
         "GetJobRunRequest$RunId": "<p>The ID of the job run.</p>",
+        "GetSystemLogsForJobRunRequest$RunId": "<p>The ID of the job run.</p>",
         "GetWorkflowRunPropertiesRequest$RunId": "<p>The ID of the workflow run whose run properties should be returned.</p>",
         "GetWorkflowRunRequest$RunId": "<p>The ID of the workflow run.</p>",
         "JobRun$Id": "<p>The ID of this job run.</p>",
@@ -8457,6 +8476,8 @@
         "GetSessionEndpointRequest$SessionId": "<p>The unique identifier of the interactive session.</p>",
         "GetSessionRequest$Id": "<p>The ID of the session. </p>",
         "GetStatementRequest$SessionId": "<p>The Session ID of the statement.</p>",
+        "GetSystemLogsForJobRunRequest$JobName": "<p>The name of the job.</p>",
+        "GetSystemLogsForSessionRequest$Id": "<p>The ID of the session.</p>",
         "GetTableOptimizerRequest$DatabaseName": "<p>The name of the database in the catalog in which the table resides.</p>",
         "GetTableOptimizerRequest$TableName": "<p>The name of the table.</p>",
         "GetTableOptimizerResponse$DatabaseName": "<p>The name of the database in the catalog in which the table resides.</p>",
@@ -13056,6 +13077,13 @@
         "StartExportLabelsTaskRunRequest$OutputS3Path": "<p>The Amazon S3 path where you export the labels.</p>",
         "StartImportLabelsTaskRunRequest$InputS3Path": "<p>The Amazon Simple Storage Service (Amazon S3) path from where you import the labels.</p>",
         "StartMLLabelingSetGenerationTaskRunRequest$OutputS3Path": "<p>The Amazon Simple Storage Service (Amazon S3) path where you generate the labeling set.</p>"
+      }
+    },
+    "Url": {
+      "base": null,
+      "refs": {
+        "GetSystemLogsForJobRunResponse$SystemLogsUrl": "<p>The URL to download the system logs for the job run.</p>",
+        "GetSystemLogsForSessionResponse$SystemLogsUrl": "<p>The URL to download the system logs for the session.</p>"
       }
     },
     "UrlString": {

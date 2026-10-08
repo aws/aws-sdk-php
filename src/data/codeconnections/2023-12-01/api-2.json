@@ -4,8 +4,11 @@
     "apiVersion":"2023-12-01",
     "endpointPrefix":"codeconnections",
     "jsonVersion":"1.0",
-    "protocol":"json",
-    "protocols":["json"],
+    "protocol":"smithy-rpc-v2-cbor",
+    "protocols":[
+      "smithy-rpc-v2-cbor",
+      "json"
+    ],
     "serviceFullName":"AWS CodeConnections",
     "serviceId":"CodeConnections",
     "signatureVersion":"v4",
@@ -428,6 +431,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":403},
       "exception":true
     },
     "AccountId":{
@@ -464,6 +468,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":409},
       "exception":true
     },
     "ConditionalCheckFailedException":{
@@ -471,6 +476,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":409},
       "exception":true
     },
     "ConflictException":{
@@ -478,6 +484,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":409},
       "exception":true
     },
     "Connection":{
@@ -834,6 +841,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":503},
       "exception":true
     },
     "InvalidInputException":{
@@ -841,6 +849,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "KmsKeyArn":{
@@ -858,6 +867,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":429},
       "exception":true
     },
     "ListConnectionsInput":{
@@ -1109,6 +1119,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":409},
       "exception":true
     },
     "ResourceName":{
@@ -1122,6 +1133,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":404},
       "exception":true
     },
     "ResourceSyncAttempt":{
@@ -1175,6 +1187,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "RetryLatestCommitFailedException":{
@@ -1182,6 +1195,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":503},
       "exception":true
     },
     "Revision":{
@@ -1280,6 +1294,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":404},
       "exception":true
     },
     "SyncBlockerSummary":{
@@ -1327,6 +1342,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":409},
       "exception":true
     },
     "SyncConfigurationType":{
@@ -1389,6 +1405,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":429},
       "exception":true
     },
     "Timestamp":{"type":"timestamp"},
@@ -1411,6 +1428,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "UnsupportedProviderTypeException":{
@@ -1418,6 +1436,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "UntagResourceInput":{
@@ -1453,6 +1472,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":409},
       "exception":true
     },
     "UpdateRepositoryLinkInput":{

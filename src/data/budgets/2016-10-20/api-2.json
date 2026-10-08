@@ -1284,7 +1284,8 @@
         "Not":{"shape":"Expression"},
         "Dimensions":{"shape":"ExpressionDimensionValues"},
         "Tags":{"shape":"TagValues"},
-        "CostCategories":{"shape":"CostCategoryValues"}
+        "CostCategories":{"shape":"CostCategoryValues"},
+        "ProductAttributes":{"shape":"ProductAttributeValues"}
       }
     },
     "ExpressionDimensionValues":{
@@ -1550,6 +1551,21 @@
       "max":130,
       "min":10,
       "pattern":"^p-[0-9a-zA-Z_]{8,128}$"
+    },
+    "ProductAttributeName":{
+      "type":"string",
+      "max":1024,
+      "min":0,
+      "pattern":"[\\S\\s]*"
+    },
+    "ProductAttributeValues":{
+      "type":"structure",
+      "required":["Key"],
+      "members":{
+        "Key":{"shape":"ProductAttributeName"},
+        "Values":{"shape":"Values"},
+        "MatchOptions":{"shape":"MatchOptions"}
+      }
     },
     "Region":{
       "type":"string",

@@ -166,6 +166,7 @@
         "AutoStopConfig$enabled": "<p>Enables the application to automatically stop after a certain amount of time being idle. Defaults to true.</p>",
         "CloudWatchLoggingConfiguration$enabled": "<p>Enables CloudWatch logging.</p>",
         "GetDashboardForJobRunRequest$accessSystemProfileLogs": "<p>Allows access to system profile logs for Lake Formation-enabled jobs. Default is false.</p>",
+        "GetResourceDashboardRequest$accessSystemProfileLogs": "<p>Allows access to system profile logs for Lake Formation-enabled sessions. Default is false.</p>",
         "IdentityCenterConfiguration$userBackgroundSessionsEnabled": "<p>Enables user background sessions for this application so Livy sessions can continue running after users log out of their interactive notebook or their Identity Center sessions expire.</p>",
         "IdentityCenterConfigurationInput$userBackgroundSessionsEnabled": "<p>Enables user background sessions for this application so Livy sessions can continue running after users log out of their interactive notebook or their Identity Center sessions expire.</p>",
         "ImageConfiguration$applicationLevelDigestResolution": "<p>Boolean value indicating if the digest resolution is application level or workload level. If true, a custom image URI is resolved at application start time and all workloads submitted will use that image digest. If false, the custom image URI is resolved at the workload submission time.</p>",
@@ -333,9 +334,9 @@
     "Duration": {
       "base": null,
       "refs": {
-        "JobRun$executionTimeoutMinutes": "<p>Returns the job run timeout value from the <code>StartJobRun</code> call. If no timeout was specified, then it returns the default timeout of 720 minutes.</p>",
+        "JobRun$executionTimeoutMinutes": "<p>Returns the job run timeout value from the <code>StartJobRun</code> call. If you didn't specify a timeout, this value defaults to 720 minutes.</p> <p>For BATCH mode job runs, the maximum value is 10080 minutes (7 days) starting with Amazon EMR release 7.11.</p>",
         "Session$idleTimeoutMinutes": "<p>The idle timeout in minutes for the session. After the session remains idle for this duration, it is automatically terminated.</p>",
-        "StartJobRunRequest$executionTimeoutMinutes": "<p>The maximum duration for the job run to run. If the job run runs beyond this duration, it will be automatically cancelled.</p>",
+        "StartJobRunRequest$executionTimeoutMinutes": "<p>The maximum duration, in minutes, for the job run. If the job run exceeds this duration, Amazon EMR Serverless cancels it automatically.</p> <p>For BATCH mode job runs, the maximum value is 10080 minutes (7 days) starting with Amazon EMR release 7.11. Setting a value of 0 to disable the timeout is no longer supported for BATCH mode job runs.</p>",
         "StartSessionRequest$idleTimeoutMinutes": "<p>The idle timeout in minutes for the session. After the session remains idle for this duration, Amazon EMR Serverless automatically terminates it.</p>"
       }
     },

@@ -238,6 +238,23 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "CancelExportJobV2":{
+      "name":"CancelExportJobV2",
+      "http":{
+        "method":"POST",
+        "requestUri":"/exportjobsv2/{ExportJobId}/cancel"
+      },
+      "input":{"shape":"CancelExportJobV2Request"},
+      "output":{"shape":"CancelExportJobV2Response"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"}
+      ]
+    },
     "CreateActionTarget":{
       "name":"CreateActionTarget",
       "http":{
@@ -1088,6 +1105,23 @@
         {"shape":"LimitExceededException"}
       ]
     },
+    "GetExportJobV2":{
+      "name":"GetExportJobV2",
+      "http":{
+        "method":"GET",
+        "requestUri":"/exportjobsv2/{ExportJobId}"
+      },
+      "input":{"shape":"GetExportJobV2Request"},
+      "output":{"shape":"GetExportJobV2Response"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
     "GetFindingAggregator":{
       "name":"GetFindingAggregator",
       "http":{
@@ -1516,6 +1550,22 @@
         {"shape":"InvalidAccessException"}
       ]
     },
+    "ListExportJobsV2":{
+      "name":"ListExportJobsV2",
+      "http":{
+        "method":"GET",
+        "requestUri":"/exportjobsv2"
+      },
+      "input":{"shape":"ListExportJobsV2Request"},
+      "output":{"shape":"ListExportJobsV2Response"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
     "ListExposuresByRemediationV2":{
       "name":"ListExposuresByRemediationV2",
       "http":{
@@ -1702,6 +1752,26 @@
         {"shape":"LimitExceededException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
+      ]
+    },
+    "StartExportJobV2":{
+      "name":"StartExportJobV2",
+      "http":{
+        "method":"POST",
+        "requestUri":"/exportjobsv2",
+        "responseCode":202
+      },
+      "input":{"shape":"StartExportJobV2Request"},
+      "output":{"shape":"StartExportJobV2Response"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"OrganizationalUnitNotFoundException"},
+        {"shape":"OrganizationNotFoundException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"}
       ]
     },
     "TagResource":{
@@ -8347,6 +8417,28 @@
       "type":"list",
       "member":{"shape":"BooleanFilter"}
     },
+    "CancelExportJobV2Request":{
+      "type":"structure",
+      "required":["ExportJobId"],
+      "members":{
+        "ExportJobId":{
+          "shape":"ExportJobId",
+          "location":"uri",
+          "locationName":"ExportJobId"
+        }
+      }
+    },
+    "CancelExportJobV2Response":{
+      "type":"structure",
+      "required":[
+        "ExportJobId",
+        "Status"
+      ],
+      "members":{
+        "ExportJobId":{"shape":"ExportJobId"},
+        "Status":{"shape":"ExportStatus"}
+      }
+    },
     "CategoryList":{
       "type":"list",
       "member":{"shape":"NonEmptyString"}
@@ -9624,6 +9716,97 @@
         "AllowedValues":{"shape":"StringList"}
       }
     },
+    "ExportDataType":{
+      "type":"string",
+      "enum":["FINDINGS"]
+    },
+    "ExportDestination":{
+      "type":"structure",
+      "members":{
+        "S3":{"shape":"S3ExportDestination"}
+      },
+      "union":true
+    },
+    "ExportFailureCode":{
+      "type":"string",
+      "enum":[
+        "ACCESS_DENIED",
+        "RESOURCE_NOT_FOUND",
+        "INTERNAL_ERROR"
+      ]
+    },
+    "ExportJobId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[a-z0-9]+$"
+    },
+    "ExportMaxResults":{
+      "type":"integer",
+      "max":20,
+      "min":1
+    },
+    "ExportName":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "ExportOutput":{
+      "type":"structure",
+      "members":{
+        "Findings":{"shape":"FindingsOutput"}
+      },
+      "union":true
+    },
+    "ExportOutputSummary":{
+      "type":"structure",
+      "members":{
+        "Findings":{"shape":"FindingsOutputSummary"}
+      },
+      "union":true
+    },
+    "ExportScopes":{
+      "type":"structure",
+      "members":{
+        "AwsOrganizations":{"shape":"AwsOrganizationScopeList"}
+      }
+    },
+    "ExportStatus":{
+      "type":"string",
+      "enum":[
+        "RUNNING",
+        "SUCCEEDED",
+        "FAILED",
+        "CANCELLED"
+      ]
+    },
+    "ExportSummary":{
+      "type":"structure",
+      "required":[
+        "ExportJobId",
+        "Status",
+        "DataType",
+        "Destination",
+        "StartedAt"
+      ],
+      "members":{
+        "ExportJobId":{"shape":"ExportJobId"},
+        "Name":{"shape":"ExportName"},
+        "Status":{"shape":"ExportStatus"},
+        "DataType":{"shape":"ExportDataType"},
+        "OutputConfiguration":{"shape":"ExportOutputSummary"},
+        "Scopes":{"shape":"ExportScopes"},
+        "Destination":{"shape":"ExportDestination"},
+        "FailureCode":{"shape":"ExportFailureCode"},
+        "FailureMessage":{"shape":"NonEmptyString"},
+        "StartedAt":{"shape":"Timestamp"},
+        "EndedAt":{"shape":"Timestamp"}
+      }
+    },
+    "ExportSummaryList":{
+      "type":"list",
+      "member":{"shape":"ExportSummary"}
+    },
     "ExposureFinding":{
       "type":"structure",
       "required":[
@@ -9786,6 +9969,149 @@
       "members":{
         "AwsOrganizations":{"shape":"AwsOrganizationScopeList"}
       }
+    },
+    "FindingsExportFormat":{
+      "type":"string",
+      "enum":[
+        "CSV",
+        "OCSF_JSON"
+      ]
+    },
+    "FindingsOutput":{
+      "type":"structure",
+      "required":["Format"],
+      "members":{
+        "Format":{"shape":"FindingsExportFormat"},
+        "Filters":{"shape":"OcsfFindingFilters"},
+        "SelectedFields":{"shape":"FindingsSelectedFieldList"}
+      }
+    },
+    "FindingsOutputSummary":{
+      "type":"structure",
+      "required":["Format"],
+      "members":{
+        "Format":{"shape":"FindingsExportFormat"}
+      }
+    },
+    "FindingsSelectableField":{
+      "type":"string",
+      "enum":[
+        "metadata.uid",
+        "activity_name",
+        "cloud.account.name",
+        "cloud.account.uid",
+        "cloud.provider",
+        "cloud.region",
+        "compliance.assessments.category",
+        "compliance.assessments.name",
+        "compliance.control",
+        "compliance.status",
+        "compliance.standards",
+        "finding_info.desc",
+        "finding_info.src_url",
+        "finding_info.title",
+        "finding_info.types",
+        "finding_info.uid",
+        "finding_info.related_events.traits.category",
+        "finding_info.related_events.uid",
+        "finding_info.related_events.product.uid",
+        "finding_info.related_events.title",
+        "metadata.product.feature.uid",
+        "metadata.product.name",
+        "metadata.product.uid",
+        "metadata.product.vendor_name",
+        "remediation.desc",
+        "remediation.references",
+        "resources.cloud_partition",
+        "resources.name",
+        "resources.owner.account.uid",
+        "resources.owner.org.uid",
+        "resources.owner.account.name",
+        "resources.provider",
+        "resources.region",
+        "resources.type",
+        "resources.uid",
+        "severity",
+        "status",
+        "comment",
+        "vulnerabilities.fix_coverage",
+        "class_name",
+        "databucket.encryption_details.algorithm",
+        "databucket.encryption_details.key_uid",
+        "databucket.file.data_classifications.classifier_details.type",
+        "evidences.actor.user.account.uid",
+        "evidences.api.operation",
+        "evidences.api.response.error_message",
+        "evidences.api.service.name",
+        "evidences.connection_info.direction",
+        "evidences.connection_info.protocol_name",
+        "evidences.dst_endpoint.autonomous_system.name",
+        "evidences.dst_endpoint.location.city",
+        "evidences.dst_endpoint.location.country",
+        "evidences.src_endpoint.autonomous_system.name",
+        "evidences.src_endpoint.hostname",
+        "evidences.src_endpoint.location.city",
+        "evidences.src_endpoint.location.country",
+        "finding_info.analytic.name",
+        "malware.name",
+        "malware_scan_info.uid",
+        "malware.severity",
+        "resources.cloud_function.layers.uid_alt",
+        "resources.cloud_function.runtime",
+        "resources.cloud_function.user.uid",
+        "resources.device.encryption_details.key_uid",
+        "resources.device.image.uid",
+        "resources.image.architecture",
+        "resources.image.registry_uid",
+        "resources.image.repository_name",
+        "resources.image.uid",
+        "resources.subnet_info.uid",
+        "resources.vpc_uid",
+        "vulnerabilities.affected_code.file.path",
+        "vulnerabilities.affected_packages.name",
+        "vulnerabilities.cve.cvss.vendor_name",
+        "vulnerabilities.cve.cvss.version",
+        "vulnerabilities.cve.epss.score",
+        "vulnerabilities.cve.uid",
+        "vulnerabilities.related_vulnerabilities",
+        "vendor_attributes.severity",
+        "activity_id",
+        "compliance.status_id",
+        "confidence_score",
+        "severity_id",
+        "status_id",
+        "finding_info.related_events_count",
+        "evidences.api.response.code",
+        "evidences.dst_endpoint.autonomous_system.number",
+        "evidences.dst_endpoint.port",
+        "evidences.src_endpoint.autonomous_system.number",
+        "evidences.src_endpoint.port",
+        "resources.image.in_use_count",
+        "vulnerabilities.cve.cvss.base_score",
+        "vendor_attributes.severity_id",
+        "finding_info.created_time_dt",
+        "finding_info.first_seen_time_dt",
+        "finding_info.last_seen_time_dt",
+        "finding_info.modified_time_dt",
+        "resources.image.created_time_dt",
+        "resources.image.last_used_time_dt",
+        "resources.modified_time_dt",
+        "compliance.assessments.meets_criteria",
+        "vulnerabilities.is_exploit_available",
+        "vulnerabilities.is_fix_available",
+        "resources.tags",
+        "compliance.control_parameters",
+        "databucket.tags",
+        "finding_info.tags",
+        "evidences.dst_endpoint.ip",
+        "evidences.src_endpoint.ip"
+      ]
+    },
+    "FindingsSelectedFieldList":{
+      "type":"list",
+      "member":{"shape":"FindingsSelectableField"},
+      "max":50,
+      "min":1
     },
     "FindingsTrendsCompositeFilter":{
       "type":"structure",
@@ -10139,6 +10465,40 @@
       "members":{
         "StandardsSubscriptions":{"shape":"StandardsSubscriptions"},
         "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "GetExportJobV2Request":{
+      "type":"structure",
+      "required":["ExportJobId"],
+      "members":{
+        "ExportJobId":{
+          "shape":"ExportJobId",
+          "location":"uri",
+          "locationName":"ExportJobId"
+        }
+      }
+    },
+    "GetExportJobV2Response":{
+      "type":"structure",
+      "required":[
+        "ExportJobId",
+        "Status",
+        "DataType",
+        "Destination",
+        "StartedAt"
+      ],
+      "members":{
+        "ExportJobId":{"shape":"ExportJobId"},
+        "Name":{"shape":"ExportName"},
+        "Status":{"shape":"ExportStatus"},
+        "DataType":{"shape":"ExportDataType"},
+        "OutputConfiguration":{"shape":"ExportOutput"},
+        "Scopes":{"shape":"ExportScopes"},
+        "Destination":{"shape":"ExportDestination"},
+        "FailureCode":{"shape":"ExportFailureCode"},
+        "FailureMessage":{"shape":"NonEmptyString"},
+        "StartedAt":{"shape":"Timestamp"},
+        "EndedAt":{"shape":"Timestamp"}
       }
     },
     "GetFindingAggregatorRequest":{
@@ -11069,6 +11429,39 @@
       "type":"structure",
       "members":{
         "ProductSubscriptions":{"shape":"ProductSubscriptionArnList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListExportJobsV2Request":{
+      "type":"structure",
+      "members":{
+        "Status":{
+          "shape":"ExportStatus",
+          "location":"querystring",
+          "locationName":"Status"
+        },
+        "DataType":{
+          "shape":"ExportDataType",
+          "location":"querystring",
+          "locationName":"DataType"
+        },
+        "MaxResults":{
+          "shape":"ExportMaxResults",
+          "location":"querystring",
+          "locationName":"MaxResults"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"NextToken"
+        }
+      }
+    },
+    "ListExportJobsV2Response":{
+      "type":"structure",
+      "required":["Items"],
+      "members":{
+        "Items":{"shape":"ExportSummaryList"},
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -13268,6 +13661,22 @@
         "DISABLED"
       ]
     },
+    "S3ExportDestination":{
+      "type":"structure",
+      "required":[
+        "BucketArn",
+        "KmsKeyArn"
+      ],
+      "members":{
+        "BucketArn":{"shape":"NonEmptyString"},
+        "KmsKeyArn":{"shape":"NonEmptyString"},
+        "ObjectPrefix":{"shape":"S3ObjectPrefix"}
+      }
+    },
+    "S3ObjectPrefix":{
+      "type":"string",
+      "max":512
+    },
     "ScopeType":{
       "type":"string",
       "enum":[
@@ -13839,6 +14248,30 @@
     "StartConfigurationPolicyDisassociationResponse":{
       "type":"structure",
       "members":{}
+    },
+    "StartExportJobV2Request":{
+      "type":"structure",
+      "required":[
+        "Destination",
+        "OutputConfiguration"
+      ],
+      "members":{
+        "Name":{"shape":"ExportName"},
+        "Destination":{"shape":"ExportDestination"},
+        "OutputConfiguration":{"shape":"ExportOutput"},
+        "Scopes":{"shape":"ExportScopes"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "StartExportJobV2Response":{
+      "type":"structure",
+      "required":["ExportJobId"],
+      "members":{
+        "ExportJobId":{"shape":"ExportJobId"}
+      }
     },
     "StatelessCustomActionDefinition":{
       "type":"structure",

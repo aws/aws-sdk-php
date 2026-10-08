@@ -452,6 +452,8 @@
         "Association$associationId": "<p>The unique identifier of the given association.</p>",
         "DisassociateServiceInput$associationId": "<p>The unique identifier of the given association.</p>",
         "GetAssociationInput$associationId": "<p>The unique identifier of the given association.</p>",
+        "GitHubConfiguration$releaseManagementAssociationId": "<p>The identifier of the release management association that this repository maps to for automatic verification testing.</p>",
+        "GitLabConfiguration$releaseManagementAssociationId": "<p>The identifier of the release management association that this project maps to for automatic verification testing.</p>",
         "ListWebhooksInput$associationId": "<p>The unique identifier of the given association.</p>",
         "UpdateAssociationInput$associationId": "<p>The unique identifier of the given association.</p>"
       }
@@ -679,6 +681,12 @@
       "base": "<p>Response structure for creating a new Trigger</p>",
       "refs": {}
     },
+    "CronSchedule": {
+      "base": "<p>Cron or rate schedule. Trigger-created custom-agent schedules use an EventBridge flexible window of up to 30 minutes for load distribution.</p>",
+      "refs": {
+        "ScheduleSpec$cron": "<p>Runs on an EventBridge cron or rate cadence</p>"
+      }
+    },
     "CustomHeaderName": {
       "base": "<p>HTTP header name. Allows alphanumeric characters, hyphens, and underscores.</p>",
       "refs": {
@@ -696,6 +704,12 @@
       "refs": {
         "MCPServerSigV4AuthorizationConfig$customHeaders": "<p>Custom headers for the SigV4 MCP server.</p>",
         "RegisteredMCPServerSigV4Details$customHeaders": "<p>Custom headers for the SigV4 MCP server.</p>"
+      }
+    },
+    "DailyRecurrence": {
+      "base": "<p>Daily recurrence</p>",
+      "refs": {
+        "Recurrence$daily": "<p>The window recurs every day</p>"
       }
     },
     "DatadogAuthorizationConfig": {
@@ -721,6 +735,12 @@
       "refs": {
         "GetAccountUsageOutput$usagePeriodStartTime": "<p>The start time of the usage tracking period</p>",
         "GetAccountUsageOutput$usagePeriodEndTime": "<p>The end time of the usage tracking period</p>"
+      }
+    },
+    "DayOfWeek": {
+      "base": "<p>Day of week for a WEEKLY recurrence</p>",
+      "refs": {
+        "WeeklyRecurrence$dayOfWeek": "<p>Day of week the window recurs on</p>"
       }
     },
     "DeleteAgentSpaceInput": {
@@ -800,6 +820,12 @@
     "DisassociateServiceOutput": {
       "base": "<p>Empty output for successful service disassociation.</p>",
       "refs": {}
+    },
+    "DisplayName": {
+      "base": "<p>Display name for the resource.</p>",
+      "refs": {
+        "ReleaseManagementConfiguration$name": "<p>The name for this release management environment.</p>"
+      }
     },
     "Document": {
       "base": null,
@@ -1878,6 +1904,24 @@
         "AWSConfiguration$accountType": "<p>Account Type 'monitor' for AIDevOps monitoring.</p>"
       }
     },
+    "MonthlyRecurrence": {
+      "base": "<p>Monthly recurrence</p>",
+      "refs": {
+        "Recurrence$monthly": "<p>The window recurs once per month</p>"
+      }
+    },
+    "MonthlyRecurrenceDayOfMonthInteger": {
+      "base": null,
+      "refs": {
+        "MonthlyRecurrence$dayOfMonth": "<p>Day of month the window recurs on</p>"
+      }
+    },
+    "NetworkAccessConfiguration": {
+      "base": "<p>Specifies how AWS DevOps Agent reaches your application using a Release Management Environment</p>",
+      "refs": {
+        "ReleaseManagementConfiguration$networkAccess": "<p>Specifies how AWS DevOps Agent reaches your application using a Release Management Environment</p>"
+      }
+    },
     "NewRelicAlertPolicyIds": {
       "base": "<p>List of New Relic alert policy IDs</p>",
       "refs": {
@@ -2110,6 +2154,7 @@
         "DescribePrivateConnectionInput$name": "<p>The name of the Private Connection.</p>",
         "DescribePrivateConnectionOutput$name": "<p>The name of the Private Connection.</p>",
         "PrivateConnectionSummary$name": "<p>The name of the Private Connection.</p>",
+        "PrivateNetworkAccess$privateConnectionName": "<p>Name of the private connection that supplies the VPC configuration for this release management environment.</p>",
         "RegisterServiceInput$privateConnectionName": "<p>The name of the private connection to use for VPC connectivity.</p>",
         "RegisterServiceInput$targetUrlPrivateConnectionName": "<p>The name of the private connection to use for API calls (target URL) only. Cannot be specified when privateConnectionName is provided.</p>",
         "RegisterServiceInput$exchangeUrlPrivateConnectionName": "<p>The name of the private connection to use for OAuth token exchange requests only. Cannot be specified when privateConnectionName is provided.</p>",
@@ -2147,6 +2192,12 @@
         "DescribePrivateConnectionOutput$type": "<p>The type of the Private Connection.</p>",
         "PrivateConnectionSummary$type": "<p>The type of the Private Connection.</p>",
         "UpdatePrivateConnectionCertificateOutput$type": "<p>The type of the Private Connection.</p>"
+      }
+    },
+    "PrivateNetworkAccess": {
+      "base": "<p>Private network access to the resource inside a VPC, using a private connection.</p>",
+      "refs": {
+        "NetworkAccessConfiguration$privateAccess": "<p>Private network access to the resource inside a VPC, using a private connection.</p>"
       }
     },
     "Recommendation": {
@@ -2194,6 +2245,12 @@
         "ListRecommendationsRequest$status": "<p>Optional status to filter recommendations by their current status</p>",
         "Recommendation$status": "<p>Current status of the recommendation</p>",
         "UpdateRecommendationRequest$status": "<p>Current status of the recommendation</p>"
+      }
+    },
+    "Recurrence": {
+      "base": "<p>Recurrence cadence for a time-range schedule</p>",
+      "refs": {
+        "TimeRangeSchedule$recurrence": "<p>How the window recurs</p>"
       }
     },
     "ReferenceInput": {
@@ -2362,6 +2419,12 @@
       "base": "<p>Details specific to a registered Slack workspace.</p>",
       "refs": {
         "AdditionalServiceDetails$slack": "<p>Slack-specific service details.</p>"
+      }
+    },
+    "ReleaseManagementConfiguration": {
+      "base": "<p>Configuration for a release management environment.</p>",
+      "refs": {
+        "ServiceConfiguration$releaseManagement": "<p>Release management network environment configuration</p>"
       }
     },
     "RemoteAgentAPIKeyConfig": {
@@ -2587,6 +2650,7 @@
         "GitHubConfiguration$runtimeRoleArn": "<p>Optional role ARN that AIDevOps assumes at runtime for automatic verification testing and VPC connectivity on this association.</p>",
         "GitLabConfiguration$runtimeRoleArn": "<p>Optional role ARN that AIDevOps assumes at runtime for automatic verification testing and VPC connectivity on this association.</p>",
         "MCPServerSigV4AuthorizationConfig$mcpRoleArn": "<p>IAM role ARN to assume for SigV4 signing. Optional — when omitted, credentials are resolved at runtime via a monitor account association.</p>",
+        "PrivateNetworkAccess$runtimeRoleArn": "<p>Role ARN that AWS DevOps Agent assumes at runtime to connect to your VPC.</p>",
         "RegisteredAzureIdentityDetails$webIdentityRoleArn": "<p>The role ARN to be assumed by DevOps Agent for requesting Web Identity Token.</p>",
         "RegisteredMCPServerSigV4Details$mcpRoleArn": null,
         "RegisteredRemoteAgentSigV4Details$roleArn": null,
@@ -2597,15 +2661,22 @@
       }
     },
     "ScheduleCondition": {
-      "base": "<p>Schedule-based condition that fires the Trigger</p>",
+      "base": "<p>Expression-based schedule condition. CreateTrigger callers using this condition supply expression and omit spec. Trigger responses always use this condition, include the persisted or derived expression, and also include spec when the trigger was created from a structured schedule.</p>",
       "refs": {
-        "TriggerCondition$schedule": "<p>Time-based firing condition</p>"
+        "TriggerCondition$schedule": "<p>Schedule-based firing condition. On CreateTrigger supply exactly one of the schedule condition's expression or spec.</p>"
       }
     },
     "ScheduleExpression": {
       "base": "<p>Schedule expression used by a TIME_BASED Trigger</p>",
       "refs": {
-        "ScheduleCondition$expression": "<p>The schedule expression</p>"
+        "CronSchedule$expression": "<p>EventBridge cron or rate expression that anchors the flexible window</p>",
+        "ScheduleCondition$expression": "<p>EventBridge cron or rate expression. Required for existing request and response compatibility. For a structured schedule response, this is the expression derived by Backlog.</p>"
+      }
+    },
+    "ScheduleSpec": {
+      "base": "<p>Structured schedule specification. Select exactly one schedule form.</p>",
+      "refs": {
+        "ScheduleCondition$spec": "<p>Structured schedule source of truth (cron | timeRange). On CreateTrigger supply exactly one of spec or expression. Present in responses together with the derived expression for structured triggers.</p>"
       }
     },
     "SchedulerState": {
@@ -2774,8 +2845,13 @@
     "ServiceName": {
       "base": "<p>The display name for a registered service.</p>",
       "refs": {
-        "RegisterServiceInput$name": "<p>The display name for the service registration.</p>",
         "RegisteredService$name": "<p>The display name of the registered service.</p>"
+      }
+    },
+    "ServiceNameInput": {
+      "base": null,
+      "refs": {
+        "RegisterServiceInput$name": "<p>The display name for the service registration.</p>"
       }
     },
     "ServiceNowAuthenticationScopeList": {
@@ -3176,6 +3252,19 @@
       "base": "<p>The request was throttled due to too many requests. Please slow down and try again.</p>",
       "refs": {}
     },
+    "TimeOfDay": {
+      "base": "<p>Time of day in HH:MM format (24-hour clock, UTC)</p>",
+      "refs": {
+        "TimeRangeSchedule$startAfter": "<p>Earliest time of day the trigger may fire</p>",
+        "TimeRangeSchedule$startBefore": "<p>Latest time of day the trigger may fire</p>"
+      }
+    },
+    "TimeRangeSchedule": {
+      "base": "<p>Recurring time-of-day window in UTC. The service derives an EventBridge expression anchored at startAfter and a flexible-window width from the interval to startBefore. A startBefore earlier than startAfter wraps past midnight.</p>",
+      "refs": {
+        "ScheduleSpec$timeRange": "<p>Runs within a recurring time-of-day window</p>"
+      }
+    },
     "Timestamp": {
       "base": null,
       "refs": {
@@ -3233,7 +3322,7 @@
       }
     },
     "TriggerCondition": {
-      "base": "<p>Defines the firing condition for a Trigger</p>",
+      "base": "<p>Defines how a Trigger fires.</p>",
       "refs": {
         "CreateTriggerRequest$condition": "<p>The condition that fires the new Trigger</p>",
         "Trigger$condition": "<p>The condition that fires this Trigger</p>"
@@ -3558,6 +3647,12 @@
       "base": "<p>A list of Association Webhook resources.</p>",
       "refs": {
         "ListWebhooksOutput$webhooks": "<p>The list of association webhooks.</p>"
+      }
+    },
+    "WeeklyRecurrence": {
+      "base": "<p>Weekly recurrence</p>",
+      "refs": {
+        "Recurrence$weekly": "<p>The window recurs once per week</p>"
       }
     }
   }

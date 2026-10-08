@@ -1,5 +1,33 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Add an opt-in default socket read/write inactivity timeout for cURL-based clients, resolved per service and gated off by default behind the `AWS_ENABLE_DEFAULT_SOCKET_TIMEOUT_2026` environment variable.
+* `Aws\SecurityAgent` - Include model field for suggested remediation steps as part of findings
+* `Aws\Keyspaces` - This release adds Smithy RPC v2 CBOR as an additional protocol alongside the existing AWS JSON 1.0. The SDK will prioritize its most performant protocol.
+* `Aws\CodeConnections` - This release adds Smithy RPC v2 CBOR as an additional protocol alongside the existing AWS JSON 1.0. The SDK will prioritize its most performant protocol.
+* `Aws\FMS` - This release adds Smithy RPC v2 CBOR as an additional protocol alongside the existing AWS JSON 1.1. The SDK will prioritize its most performant protocol.
+* `Aws\Glue` - Introduced GetSystemLogsForJobRun and GetSystemLogsForSession APIs, enabling account admins to retrieve system-space logs for FGAC-enabled Glue jobs and sessions.
+* `Aws\Translate` - This release adds Smithy RPC v2 CBOR as an additional protocol alongside the existing AWS JSON 1.1. The SDK will prioritize its most performant protocol.
+* `Aws\Budgets` - Adds a product attribute dimension to CreateBudget and UpdateBudget, letting customers filter AWS Budgets costs by structured attributes such as Amazon Bedrock model, provider, inference type, and feature.
+* `Aws\Health` - This release adds Smithy RPC v2 CBOR as an additional protocol alongside the existing AWS JSON 1.1. The SDK will prioritize its most performant protocol.
+* `Aws\EKS` - Configurations support for EKS ACK Capabilities, including EnableCrossNamespace and DisableServices configuration.
+* `Aws\MediaLive` - AWS Elemental MediaLive Workflow Monitor now supports AWS Elemental Inference feeds as a target resource type for CloudWatch alarm templates.
+* `Aws\SecurityHub` - Release findings export APIs - StartExportJobV2, GetExportJobV2, ListExportJobsV2, and CancelExportJobV2. This supports exporting findings from AWS Security Hub to Amazon S3 bucket.
+* `Aws\Lambda` - AWS Lambda now supports OAuth 2.0 (OAUTHBEARER), IAM, and IAM with OAUTHBEARER authentication for self-managed Apache Kafka event source mappings, including optional OAuth scope, audience, logical cluster, and identity pool parameters. OAuth 2.0 is also available for Confluent Schema Registry.
+* `Aws\OpenSearchService` - This release adds a new EncryptionMode option (DISK or NATIVE) to EncryptionAtRestOptions for the CreateDomain and UpdateDomainConfig operations, enabling selection of engine-native index-level encryption on supported Amazon OpenSearch Service domains.
+* `Aws\CloudFormation` - CloudFormation introduces force rollback, a new opt-in capability that lets your stacks complete a rollback even when an individual resource cannot be reverted. Set ForceRollback on ContinueUpdateRollback and CloudFormation records each resource that fails as skipped, completing the rollback.
+* `Aws\SecurityIR` - Adds support for retrieving finding-lifecycle metrics for an AWS Security Incident Response membership.
+* `Aws\DevOpsAgent` - Adds release management associations with private network access to AWS DevOps Agent, and a releaseManagementAssociationId field on GitHub and GitLab associations. This helps release management agents (Release-readiness review and Release Testing) access customer resources that are behind a VPC.
+* `Aws\DataZone` - Adds support for multi-file notebook import. StartNotebookImport now accepts an s3Files source location with an ordered list of Amazon S3 objects, creating one notebook cell per file, plus a type field to create either a DATA or SQL notebook.
+* `Aws\GameLift` - Amazon GameLift Servers container fleets now support CPU bursting for game server container groups. The TotalVcpuLimit property of a game server container group definition is now optional. When you omit it, the group has no CPU cap and its containers can burst into unused CPU on the instance.
+* `Aws\GuardDuty` - Added support for GuardDuty RDS Data Activity Monitoring
+* `Aws\CostExplorer` - Adds a product attribute dimension to GetCostAndUsage, GetCostAndUsageWithResources, and GetDimensionValues, letting customers group, filter, and discover Cost Explorer costs by structured attributes such as Amazon Bedrock model, provider, inference type, and feature.
+* `Aws\SESv2` - SESV2 DEED - Documentation Update
+* `Aws\EMRServerless` - This release adds support for system profile logs for lakeformation enabled Spark connect sessions .
+* `Aws\MarketplaceAgreement` - This release adds Smithy RPC v2 CBOR as an additional protocol alongside the existing AWS JSON 1.0. The SDK will prioritize its most performant protocol.
+* `Aws\PI` - This release adds Smithy RPC v2 CBOR as an additional protocol alongside the existing AWS JSON 1.1. The SDK will prioritize its most performant protocol.
+
 ## 3.399.2 - 2026-10-06
 
 * `Aws\LambdaWeb` - Removes operations that are not yet generally available from the Lambda Web.

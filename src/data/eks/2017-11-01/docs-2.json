@@ -124,6 +124,32 @@
         "AccessScope$type": "<p>The scope type of an access policy.</p>"
       }
     },
+    "AckConfigRequest": {
+      "base": "<p>Configuration settings for an ACK (Amazon Web Services Controllers for Kubernetes) capability. This includes whether controllers can resolve cross-namespace resource references and which ACK service controllers are disabled.</p>",
+      "refs": {
+        "CapabilityConfigurationRequest$ack": "<p>Configuration settings specific to ACK (Amazon Web Services Controllers for Kubernetes) capabilities. This field is only used when creating or updating an ACK capability.</p>"
+      }
+    },
+    "AckConfigResponse": {
+      "base": "<p>The response object containing configuration details for an ACK (Amazon Web Services Controllers for Kubernetes) capability.</p>",
+      "refs": {
+        "CapabilityConfigurationResponse$ack": "<p>Configuration settings for an ACK (Amazon Web Services Controllers for Kubernetes) capability, including the cross-namespace reference setting and the list of disabled services.</p>"
+      }
+    },
+    "AckDisabledServicesList": {
+      "base": null,
+      "refs": {
+        "AckConfigRequest$disabledServices": "<p>A list of ACK service names whose controllers are turned off for this capability, for example <code>s3</code>, <code>ec2</code>, and <code>iam</code>. Resources of a disabled service aren't reconciled until you re-enable the service. To keep all services enabled, omit this field or specify an empty list. An unrecognized service name is accepted and stored but turns nothing off, and <code>DescribeCapability</code> returns the list exactly as you supplied it. For more information, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/create-ack-capability.html#ack-configuration-options\">ACK capability configuration options</a> in the <i>Amazon EKS User Guide</i>.</p>",
+        "AckConfigResponse$disabledServices": "<p>The list of ACK service names whose controllers are turned off for this capability. Existing custom resource definitions remain installed, and resources of a disabled service aren't reconciled until the service is re-enabled.</p>",
+        "UpdateAckConfig$disabledServices": "<p>An updated list of ACK service names whose controllers are turned off for this capability. This list replaces the previous list instead of merging with it, so specify the complete set of services that you want turned off. If you omit this field, the previous list is unchanged. To turn all services back on, specify an empty list.</p>"
+      }
+    },
+    "AckServiceName": {
+      "base": null,
+      "refs": {
+        "AckDisabledServicesList$member": null
+      }
+    },
     "ActivateCertificateAuthorityRequest": {
       "base": null,
       "refs": {}
@@ -422,6 +448,8 @@
       "base": null,
       "refs": {
         "AccessConfigResponse$bootstrapClusterCreatorAdminPermissions": "<p>Specifies whether or not the cluster creator IAM principal was set as a cluster admin access entry during cluster creation time.</p>",
+        "AckConfigRequest$enableCrossNamespace": "<p>Specifies whether ACK controllers resolve resource references to resources in a different Kubernetes namespace. Set this value to <code>true</code> to allow references to resolve to resources in another namespace. If you don't specify this value, or you omit the <code>ack</code> configuration entirely, the capability is created with this value set to <code>false</code> and references must remain within the same namespace.</p>",
+        "AckConfigResponse$enableCrossNamespace": "<p>Indicates whether ACK controllers resolve resource references to resources in a different Kubernetes namespace. This value reflects the setting that's in effect, and is <code>false</code> if you never specified a value. Capabilities that were using cross-namespace references before this setting became available have this value set to <code>true</code>, so their behavior is unchanged.</p>",
         "BlockStorage$enabled": "<p>Indicates if the block storage capability is enabled on your EKS Auto Mode cluster. If the block storage capability is enabled, EKS Auto Mode will create and delete EBS volumes in your Amazon Web Services account.</p>",
         "CertificateAuthority$rollbackAvailable": "<p>Indicates whether CA rollback is still available for this certificate authority. After you activate a successor CA, rollback lets you revert to the outgoing CA for a limited period while you finish updating any worker nodes or clients that were missed.</p>",
         "Cluster$deletionProtection": "<p>The current deletion protection setting for the cluster. When <code>true</code>, deletion protection is enabled and the cluster cannot be deleted until protection is disabled. When <code>false</code>, the cluster can be deleted normally. This setting only applies to clusters in an active state.</p>",
@@ -437,6 +465,7 @@
         "LogSetup$enabled": "<p>If a log type is enabled, that log type exports its control plane logs to CloudWatch Logs . If a log type isn't enabled, that log type doesn't export its control plane logs. Each individual log type can be enabled or disabled independently.</p>",
         "NodeRepairConfig$enabled": "<p>Specifies whether to enable node auto repair for the node group. Node auto repair is disabled by default.</p>",
         "PodIdentityAssociation$disableSessionTags": "<p>The state of the automatic sessions tags. The value of <i>true</i> disables these tags.</p> <p>EKS Pod Identity adds a pre-defined set of session tags when it assumes the role. You can use these tags to author a single role that can work across resources by allowing access to Amazon Web Services resources based on matching tags. By default, EKS Pod Identity attaches six tags, including tags for cluster name, namespace, and service account name. For the list of tags added by EKS Pod Identity, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/pod-id-abac.html#pod-id-abac-tags\">List of session tags added by EKS Pod Identity</a> in the <i>Amazon EKS User Guide</i>.</p>",
+        "UpdateAckConfig$enableCrossNamespace": "<p>Specifies whether ACK controllers resolve resource references to resources in a different Kubernetes namespace. Set this value to <code>false</code> to require references to remain within the same namespace, or <code>true</code> to allow cross-namespace references. If you omit this field, the current value is unchanged.</p>",
         "UpdateClusterConfigRequest$deletionProtection": "<p>Specifies whether to enable or disable deletion protection for the cluster. When enabled (<code>true</code>), the cluster cannot be deleted until deletion protection is explicitly disabled. When disabled (<code>false</code>), the cluster can be deleted normally.</p>",
         "UpdatePodIdentityAssociationRequest$disableSessionTags": "<p>Disable the automatic sessions tags that are appended by EKS Pod Identity.</p> <p>EKS Pod Identity adds a pre-defined set of session tags when it assumes the role. You can use these tags to author a single role that can work across resources by allowing access to Amazon Web Services resources based on matching tags. By default, EKS Pod Identity attaches six tags, including tags for cluster name, namespace, and service account name. For the list of tags added by EKS Pod Identity, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/pod-id-abac.html#pod-id-abac-tags\">List of session tags added by EKS Pod Identity</a> in the <i>Amazon EKS User Guide</i>.</p> <p>Amazon Web Services compresses inline session policies, managed policy ARNs, and session tags into a packed binary format that has a separate limit. If you receive a <code>PackedPolicyTooLarge</code> error indicating the packed binary format has exceeded the size limit, you can attempt to reduce the size by disabling the session tags added by EKS Pod Identity.</p>",
         "VpcConfigRequest$endpointPublicAccess": "<p>Set this value to <code>false</code> to disable public access to your cluster's Kubernetes API server endpoint. If you disable public access, your cluster's Kubernetes API server can only receive requests from within the cluster VPC. The default value for this parameter is <code>true</code>, which enables public access for your Kubernetes API server. The endpoint domain name and IP address family depends on the value of the <code>ipFamily</code> for the cluster. For more information, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/cluster-endpoint.html\">Cluster API server endpoint</a> in the <i> <i>Amazon EKS User Guide</i> </i>.</p>",
@@ -2924,6 +2953,12 @@
     "UpdateAccessEntryResponse": {
       "base": null,
       "refs": {}
+    },
+    "UpdateAckConfig": {
+      "base": "<p>Configuration updates for an ACK (Amazon Web Services Controllers for Kubernetes) capability. You only need to specify the fields that you want to update.</p>",
+      "refs": {
+        "UpdateCapabilityConfiguration$ack": "<p>Configuration updates specific to ACK (Amazon Web Services Controllers for Kubernetes) capabilities.</p>"
+      }
     },
     "UpdateAddonRequest": {
       "base": null,

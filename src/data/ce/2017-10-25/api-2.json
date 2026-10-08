@@ -1505,8 +1505,15 @@
         "AGREEMENT_END_DATE_TIME_BEFORE",
         "INVOICING_ENTITY",
         "ANOMALY_TOTAL_IMPACT_ABSOLUTE",
-        "ANOMALY_TOTAL_IMPACT_PERCENTAGE"
+        "ANOMALY_TOTAL_IMPACT_PERCENTAGE",
+        "PRODUCT_ATTRIBUTE"
       ]
+    },
+    "DimensionKey":{
+      "type":"string",
+      "max":1024,
+      "min":0,
+      "pattern":"[\\S\\s]*"
     },
     "DimensionValues":{
       "type":"structure",
@@ -1638,7 +1645,8 @@
         "Not":{"shape":"Expression"},
         "Dimensions":{"shape":"DimensionValues"},
         "Tags":{"shape":"TagValues"},
-        "CostCategories":{"shape":"CostCategoryValues"}
+        "CostCategories":{"shape":"CostCategoryValues"},
+        "ProductAttributes":{"shape":"ProductAttributeValues"}
       }
     },
     "Expressions":{
@@ -2005,6 +2013,7 @@
         "SearchString":{"shape":"SearchString"},
         "TimePeriod":{"shape":"DateInterval"},
         "Dimension":{"shape":"Dimension"},
+        "DimensionKey":{"shape":"DimensionKey"},
         "Context":{"shape":"Context"},
         "Filter":{"shape":"Expression"},
         "SortBy":{"shape":"SortDefinitions"},
@@ -2319,7 +2328,8 @@
       "enum":[
         "DIMENSION",
         "TAG",
-        "COST_CATEGORY"
+        "COST_CATEGORY",
+        "PRODUCT_ATTRIBUTE"
       ]
     },
     "GroupDefinitions":{
@@ -2675,6 +2685,27 @@
       "type":"integer",
       "max":99,
       "min":51
+    },
+    "ProductAttributeName":{
+      "type":"string",
+      "max":1024,
+      "min":0,
+      "pattern":"^([a-zA-Z][a-zA-Z0-9]*)?$"
+    },
+    "ProductAttributeValueList":{
+      "type":"list",
+      "member":{"shape":"Value"},
+      "max":6000,
+      "min":1
+    },
+    "ProductAttributeValues":{
+      "type":"structure",
+      "required":["Key"],
+      "members":{
+        "Key":{"shape":"ProductAttributeName"},
+        "Values":{"shape":"ProductAttributeValueList"},
+        "MatchOptions":{"shape":"MatchOptions"}
+      }
     },
     "ProvideAnomalyFeedbackRequest":{
       "type":"structure",
