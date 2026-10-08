@@ -291,6 +291,7 @@ class AwsClient implements AwsClientInterface
         }
         $this->addUserAgentMiddleware($config);
         $this->addEventStreamHttpFlagMiddleware();
+        $this->addDefaultSocketTimeoutMiddleware();
     }
 
     public function getHandlerList()
@@ -456,7 +457,7 @@ class AwsClient implements AwsClientInterface
         $signingRegionSet = $this->signingRegionSet;
 
         if (isset($args['signature_version'])
-         || isset($this->config['configured_signature_version'])
+            || isset($this->config['configured_signature_version'])
         ) {
             $configuredSignatureVersion = true;
         } else {
@@ -466,13 +467,13 @@ class AwsClient implements AwsClientInterface
         $resolver = static function (
             CommandInterface $command
         ) use (
-                $api,
-                $provider,
-                $name,
-                $region,
-                $signatureVersion,
-                $configuredSignatureVersion,
-                $signingRegionSet
+            $api,
+            $provider,
+            $name,
+            $region,
+            $signatureVersion,
+            $configuredSignatureVersion,
+            $signingRegionSet
         ) {
             if (!$configuredSignatureVersion) {
                 if (!empty($command['@context']['signing_region'])) {
@@ -486,7 +487,7 @@ class AwsClient implements AwsClientInterface
                 }
 
                 $authType = $api->getOperation($command->getName())['authtype'];
-                switch ($authType){
+                switch ($authType) {
                     case 'none':
                         $signatureVersion = 'anonymous';
                         break;
@@ -518,7 +519,8 @@ class AwsClient implements AwsClientInterface
             return SignatureProvider::resolve($provider, $signatureVersion, $name, $region);
         };
         $this->handlerList->appendSign(
-            Middleware::signer($this->credentialProvider,
+            Middleware::signer(
+                $this->credentialProvider,
                 $resolver,
                 $this->tokenProvider,
                 $this->getConfig()
@@ -605,7 +607,8 @@ class AwsClient implements AwsClientInterface
         // Add recursion detection header to requests
         // originating in supported Lambda runtimes
         $this->handlerList->appendBuild(
-            Middleware::recursionDetection(), 'recursion-detection'
+            Middleware::recursionDetection(),
+            'recursion-detection'
         );
     }
 
@@ -686,6 +689,73 @@ class AwsClient implements AwsClientInterface
     }
 
     /**
+     * Attaches a default socket (inactivity) timeout, resolved per-service and
+     * gated by an opt-in env var, via cURL's LOW_SPEED options.
+     *
+     * cURL-only by design: the LOW_SPEED options are a libcurl primitive. On
+     * the stream-wrapper transport (an environment without ext-curl) there is
+     * no equivalent rolling-inactivity primitive, so nothing is attached and
+     * that path remains uncovered.
+     *
+     * @return void
+     */
+    private function addDefaultSocketTimeoutMiddleware(): void
+    {
+        if (!extension_loaded('curl')) {
+            return;
+        }
+
+        // Resolve the tier key defensively: getServiceId() does an unguarded
+        // array access and emits an undefined-index notice on the handful of
+        // older models missing the key, whereas getMetadata() returns null.
+        $serviceId = $this->api->getMetadata('serviceId');
+        if (!is_string($serviceId) || $serviceId === '') {
+            return;
+        }
+
+        $timeoutSeconds = SocketTimeout\Configuration::resolve($serviceId);
+        if ($timeoutSeconds === null) {
+            // Gate off, or the service is fully exempt.
+            return;
+        }
+
+        // All-or-nothing: if the caller already set EITHER low-speed key, the
+        // SDK sets NEITHER, so a caller who touches one key owns both and never
+        // gets a mixed pair. This differs from the single-key += merge used
+        // elsewhere (e.g. LambdaClient's TCP_KEEPALIVE): those set one option,
+        // where a partial merge is harmless. This sets a pair that only means
+        // anything together, so the pair is guarded as a unit. Do not simplify
+        // to +=.
+        //
+        // LOW_SPEED_LIMIT is a fixed 1 byte/sec floor for every service, which
+        // turns cURL's throughput monitor into a pure inactivity timer -- it
+        // trips only on genuine silence, never on a slow-but-progressing
+        // transfer. The per-service tier lives entirely in LOW_SPEED_TIME. The
+        // single window covers both the read and the write mandate, since
+        // libcurl watches both directions.
+        $this->handlerList->appendInit(
+            Middleware::mapCommand(
+                static function (CommandInterface $cmd) use ($timeoutSeconds) {
+                    $curl = $cmd['@http']['curl'] ?? [];
+
+                    $callerOwnsLowSpeed =
+                        array_key_exists(CURLOPT_LOW_SPEED_LIMIT, $curl) ||
+                        array_key_exists(CURLOPT_LOW_SPEED_TIME, $curl);
+
+                    if (!$callerOwnsLowSpeed) {
+                        $curl[CURLOPT_LOW_SPEED_LIMIT] = 1;
+                        $curl[CURLOPT_LOW_SPEED_TIME] = $timeoutSeconds;
+                        $cmd['@http']['curl'] = $curl;
+                    }
+
+                    return $cmd;
+                }
+            ),
+            'default_socket_timeout'
+        );
+    }
+
+    /**
      * Retrieves client context param definition from service model,
      * creates mapping of client context param names with client-provided
      * values.
@@ -697,10 +767,10 @@ class AwsClient implements AwsClientInterface
         $api = $this->getApi();
         $resolvedParams = [];
         if (!empty($paramDefinitions = $api->getClientContextParams())) {
-            foreach($paramDefinitions as $paramName => $paramValue) {
+            foreach ($paramDefinitions as $paramName => $paramValue) {
                 if (isset($args[$paramName])) {
-                   $resolvedParams[$paramName] = $args[$paramName];
-               }
+                    $resolvedParams[$paramName] = $args[$paramName];
+                }
             }
         }
         return $resolvedParams;
@@ -724,7 +794,7 @@ class AwsClient implements AwsClientInterface
         $builtIns['AWS::Region'] = $this->getRegion();
         $builtIns['AWS::UseFIPS'] = $config['use_fips_endpoint']->isUseFipsEndpoint();
         $builtIns['AWS::UseDualStack'] = $config['use_dual_stack_endpoint']->isUseDualstackEndpoint();
-        if ($service === 's3' || $service === 's3control'){
+        if ($service === 's3' || $service === 's3control') {
             $builtIns['AWS::S3::UseArnRegion'] = $config['use_arn_region']->isUseArnRegion();
         }
         if ($service === 's3') {
@@ -759,7 +829,7 @@ class AwsClient implements AwsClientInterface
     {
         $normalizedBuiltIns = [];
 
-        foreach($this->clientBuiltIns as $name => $value) {
+        foreach ($this->clientBuiltIns as $name => $value) {
             $normalizedName = explode('::', $name);
             $normalizedName = $normalizedName[count($normalizedName) - 1];
             $normalizedBuiltIns[$normalizedName] = $value;
