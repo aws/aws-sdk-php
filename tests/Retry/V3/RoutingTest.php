@@ -2,6 +2,7 @@
 namespace Aws\Test\Retry\V3;
 
 use Aws\DynamoDb\DynamoDbClient;
+use Aws\DynamoDbStreams\DynamoDbStreamsClient;
 use Aws\Retry\Configuration;
 use Aws\Retry\ConfigurationProvider;
 use Aws\Retry\V3\OptIn;
@@ -9,6 +10,8 @@ use Aws\Retry\V3\RetryMiddleware as RetryV3Middleware;
 use Aws\RetryMiddlewareV2;
 use Aws\S3\S3Client;
 use Aws\Sts\StsClient;
+use GuzzleHttp\Promise\Create;
+use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -107,6 +110,121 @@ class RoutingTest extends TestCase
         $this->assertSame(RetryV3Middleware::class, $entries[0]['middleware_class']);
     }
 
+    /**
+     * @dataProvider envOrIniModeProvider
+     */
+    public function testDynamoDbDefaultAttemptsFromEnvOrIniWhenOptedIn(
+        array $env,
+        string $expectedMode,
+        int $expectedAttempts,
+        ?string $ini = null
+    ): void {
+        // When only the mode comes from the environment or ~/.aws/config,
+        // DynamoDB must apply its own max_attempts default (4 standard/adaptive,
+        // 11 legacy) rather than the generic 3 filled in by the env/ini providers.
+        $this->enableFlag();
+        $saved = [];
+        foreach (['AWS_RETRY_MODE', 'AWS_MAX_ATTEMPTS', 'AWS_CONFIG_FILE', 'AWS_PROFILE', 'HOME'] as $k) {
+            $saved[$k] = getenv($k);
+        }
+        $home = sys_get_temp_dir() . '/ddb-retries-' . uniqid();
+        mkdir($home . '/.aws', 0777, true);
+        try {
+            putenv('AWS_CONFIG_FILE');
+            putenv('AWS_PROFILE');
+            putenv('AWS_MAX_ATTEMPTS');
+            putenv("HOME=$home");
+            foreach ($env as $k => $v) {
+                putenv("$k=$v");
+            }
+            if ($ini !== null) {
+                file_put_contents($home . '/.aws/config', $ini);
+            }
+
+            $config = call_user_func(DynamoDbClient::_defaultRetries())->wait();
+            $this->assertSame($expectedMode, $config->getMode());
+            $this->assertSame($expectedAttempts, $config->getMaxAttempts());
+        } finally {
+            foreach ($saved as $k => $v) {
+                putenv($v === false ? $k : "$k=$v");
+            }
+            @unlink($home . '/.aws/config');
+            rmdir($home . '/.aws');
+            rmdir($home);
+        }
+    }
+
+    public static function envOrIniModeProvider(): array
+    {
+        return [
+            'legacy only' => [['AWS_RETRY_MODE' => 'legacy'], 'legacy', 11],
+            'standard only' => [['AWS_RETRY_MODE' => 'standard'], 'standard', 4],
+            'adaptive only' => [['AWS_RETRY_MODE' => 'adaptive'], 'adaptive', 4],
+            'legacy + explicit max_attempts' => [['AWS_RETRY_MODE' => 'legacy', 'AWS_MAX_ATTEMPTS' => '5'], 'legacy', 5],
+            'standard + explicit max_attempts' => [['AWS_RETRY_MODE' => 'standard', 'AWS_MAX_ATTEMPTS' => '5'], 'standard', 5],
+            'ini legacy only' => [[], 'legacy', 11, "[default]\nretry_mode = legacy\n"],
+            'ini standard only' => [[], 'standard', 4, "[default]\nretry_mode = standard\n"],
+            'ini standard + explicit max_attempts' => [[], 'standard', 5, "[default]\nretry_mode = standard\nmax_attempts = 5\n"],
+        ];
+    }
+
+    /**
+     * @dataProvider arrayModeProvider
+     */
+    public function testDynamoDbDefaultAttemptsFromArrayWhenOptedIn(
+        array $retries,
+        int $expectedAttempts
+    ): void {
+        // 'retries' => ['mode' => ...] without max_attempts must use the
+        // DynamoDB attempt default (4 standard/adaptive, 11 legacy), not the
+        // generic 3 that ConfigurationProvider::unwrap() fills in.
+        $this->enableFlag();
+        $this->assertSame($expectedAttempts, $this->countDynamoDbAttempts($retries));
+    }
+
+    public static function arrayModeProvider(): array
+    {
+        return [
+            'standard' => [['mode' => 'standard'], 4],
+            'adaptive' => [['mode' => 'adaptive'], 4],
+            'legacy' => [['mode' => 'legacy'], 11],
+            'standard + max_attempts' => [['mode' => 'standard', 'max_attempts' => 2], 2],
+        ];
+    }
+
+    public function testDynamoDbArrayAttemptsUnchangedWhenOptedOut(): void
+    {
+        // Pre-opt-in behaviour: the generic 3 attempts.
+        $this->assertSame(3, $this->countDynamoDbAttempts(['mode' => 'standard']));
+    }
+
+    public function testDynamoDbStreamsDefaultRetriesIsElevenWhenOptedOut(): void
+    {
+        $args = DynamoDbStreamsClient::getArguments();
+        $this->assertSame(11, $args['retries']['default']);
+    }
+
+    public function testDynamoDbStreamsSharesDynamoDbDefaultsWhenOptedIn(): void
+    {
+        $this->enableFlag();
+        $args = DynamoDbStreamsClient::getArguments();
+        $this->assertSame([DynamoDbClient::class, '_defaultRetries'], $args['retries']['default']);
+
+        $attempts = 0;
+        $client = new DynamoDbStreamsClient([
+            'region'       => 'us-east-1',
+            'version'      => 'latest',
+            'credentials'  => false,
+            'http_handler' => $this->failingHandler($attempts),
+        ]);
+        $entries = $this->retryEntries($client);
+        $this->assertCount(1, $entries);
+        $this->assertSame(RetryV3Middleware::class, $entries[0]['middleware_class']);
+
+        $client->listStreams();
+        $this->assertSame(4, $attempts);
+    }
+
     public function testStsRetriesFnInheritsParentWhenOptedOut(): void
     {
         // STS does not override the retry handler when opted out; it falls
@@ -153,6 +271,31 @@ class RoutingTest extends TestCase
             'region'  => 'us-east-1',
             'version' => 'latest',
         ] + $extra);
+    }
+
+    /** Handler that always returns HTTP 500 and counts invocations. */
+    private function failingHandler(int &$attempts): callable
+    {
+        return function ($request, array $options) use (&$attempts) {
+            $attempts++;
+            return Create::promiseFor(new Response(500, [], ''));
+        };
+    }
+
+    /** Total attempts a DynamoDbClient makes for the given 'retries' config. */
+    private function countDynamoDbAttempts(array $retries): int
+    {
+        $attempts = 0;
+        $client = new DynamoDbClient([
+            'region'       => 'us-east-1',
+            'version'      => 'latest',
+            'credentials'  => false,
+            'http_handler' => $this->failingHandler($attempts),
+            'retries'      => $retries,
+        ]);
+        $client->listTables();
+
+        return $attempts;
     }
 
     /**

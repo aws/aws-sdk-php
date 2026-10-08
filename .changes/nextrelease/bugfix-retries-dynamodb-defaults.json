@@ -1,0 +1,7 @@
+[
+  {
+    "type": "bugfix",
+    "category": "Retries",
+    "description": "Fixed the opt-in retry path (AWS_NEW_RETRIES_2026) for DynamoDB and DynamoDB Streams. A retry mode selected without max_attempts (via AWS_RETRY_MODE, retry_mode, or 'retries' => ['mode' => ...]) now uses the DynamoDB attempt defaults (4 in standard/adaptive mode, 11 in legacy mode) instead of 3. DynamoDbStreamsClient now applies the same defaults as DynamoDbClient instead of always using 12 legacy attempts."
+  }
+]
