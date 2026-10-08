@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.400.0 - 2026-10-08
 
 * `Aws\` - Add an opt-in default socket read/write inactivity timeout for cURL-based clients, resolved per service and gated off by default behind the `AWS_ENABLE_DEFAULT_SOCKET_TIMEOUT_2026` environment variable.
 * `Aws\SecurityAgent` - Include model field for suggested remediation steps as part of findings
