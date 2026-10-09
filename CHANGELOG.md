@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.400.1 - 2026-10-09
 
 * `Aws\SecurityAgent` - Adds a test scope field to specify whether a pentest targets a web application or a generative AI application.
 * `Aws\MediaTailor` - Add caching settings to http functions
