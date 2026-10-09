@@ -95,6 +95,12 @@
     }
   },
   "shapes":{
+    "AgreementId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[A-Za-z0-9_/-]+"
+    },
     "AllocatedUsageQuantity":{
       "type":"integer",
       "max":2147483647,
@@ -250,6 +256,12 @@
       "type":"string",
       "pattern":"^arn:aws[a-zA-Z-]*:[A-Za-z0-9][A-Za-z0-9_/.-]{0,62}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,1023}$"
     },
+    "Metadata":{
+      "type":"structure",
+      "members":{
+        "AgreementId":{"shape":"AgreementId"}
+      }
+    },
     "MeterUsageRequest":{
       "type":"structure",
       "required":[
@@ -330,7 +342,8 @@
         "CustomerIdentifier":{"shape":"CustomerIdentifier"},
         "ProductCode":{"shape":"ProductCode"},
         "CustomerAWSAccountId":{"shape":"CustomerAWSAccountId"},
-        "LicenseArn":{"shape":"LicenseArn"}
+        "LicenseArn":{"shape":"LicenseArn"},
+        "Metadata":{"shape":"Metadata"}
       }
     },
     "String":{"type":"string"},

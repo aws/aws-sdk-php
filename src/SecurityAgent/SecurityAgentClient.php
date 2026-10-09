@@ -329,6 +329,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     cicdConfiguration?: array{enabled?: bool, ...},
+ *     testScope?: array{type?: 'GENERATIVE_AI_APP'|'WEB_APP', ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createPentestAsync(array $args = [])
@@ -365,6 +366,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     cicdConfiguration?: array{enabled?: bool, ...},
+ *     testScope?: array{type?: 'GENERATIVE_AI_APP'|'WEB_APP', ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result createPrivateConnection(array $args = [])
@@ -1100,6 +1102,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     cicdConfiguration?: array{enabled?: bool, ...},
+ *     testScope?: array{type?: 'GENERATIVE_AI_APP'|'WEB_APP', ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updatePentestAsync(array $args = [])
@@ -1137,6 +1140,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     cicdConfiguration?: array{enabled?: bool, ...},
+ *     testScope?: array{type?: 'GENERATIVE_AI_APP'|'WEB_APP', ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result updatePrivateConnectionCertificate(array $args = [])

@@ -1575,6 +1575,25 @@
       "endpoint":{"hostPrefix":"management."},
       "readonly":true
     },
+    "ListMemberships":{
+      "name":"ListMemberships",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2023-10-12/memberships",
+        "responseCode":200
+      },
+      "input":{"shape":"ListMembershipsRequest"},
+      "output":{"shape":"ListMembershipsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"}
+      ],
+      "endpoint":{"hostPrefix":"management."},
+      "readonly":true
+    },
     "ListMeteredProducts":{
       "name":"ListMeteredProducts",
       "http":{
@@ -7383,6 +7402,50 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListMembershipsRequest":{
+      "type":"structure",
+      "required":["principalId"],
+      "members":{
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "principalId":{
+          "shape":"IdentityCenterPrincipalId",
+          "location":"querystring",
+          "locationName":"principalId"
+        },
+        "identityStoreId":{
+          "shape":"IdentityStoreId",
+          "location":"querystring",
+          "locationName":"identityStoreId"
+        },
+        "identityCenterRegion":{
+          "shape":"Region",
+          "location":"querystring",
+          "locationName":"identityCenterRegion"
+        },
+        "resourceTypes":{
+          "shape":"MembershipResourceTypes",
+          "location":"querystring",
+          "locationName":"resourceTypes"
+        }
+      }
+    },
+    "ListMembershipsResponse":{
+      "type":"structure",
+      "required":["memberships"],
+      "members":{
+        "memberships":{"shape":"MembershipSummaries"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListMeteredProductsRequest":{
       "type":"structure",
       "required":["licenseEndpointId"],
@@ -8240,6 +8303,35 @@
         "OWNER",
         "MANAGER"
       ]
+    },
+    "MembershipResourceType":{
+      "type":"string",
+      "enum":[
+        "FARM",
+        "QUEUE",
+        "FLEET",
+        "JOB"
+      ]
+    },
+    "MembershipResourceTypes":{
+      "type":"list",
+      "member":{"shape":"MembershipResourceType"},
+      "max":4,
+      "min":1
+    },
+    "MembershipSummaries":{
+      "type":"list",
+      "member":{"shape":"MembershipSummary"}
+    },
+    "MembershipSummary":{
+      "type":"structure",
+      "members":{
+        "farm":{"shape":"FarmMember"},
+        "queue":{"shape":"QueueMember"},
+        "fleet":{"shape":"FleetMember"},
+        "job":{"shape":"JobMember"}
+      },
+      "union":true
     },
     "MemoryAmountMiB":{
       "type":"integer",

@@ -2518,7 +2518,8 @@
         "maxTaskHours":{"shape":"Double"},
         "reportDestination":{"shape":"ReportDestination"},
         "reportFilters":{"shape":"ReportFilters"},
-        "cicdConfiguration":{"shape":"CiCdConfiguration"}
+        "cicdConfiguration":{"shape":"CiCdConfiguration"},
+        "testScope":{"shape":"TestScope"}
       }
     },
     "CreatePentestOutput":{
@@ -2535,7 +2536,8 @@
         "agentSpaceId":{"shape":"String"},
         "reportDestination":{"shape":"ReportDestination"},
         "reportFilters":{"shape":"ReportFilters"},
-        "cicdConfiguration":{"shape":"CiCdConfiguration"}
+        "cicdConfiguration":{"shape":"CiCdConfiguration"},
+        "testScope":{"shape":"TestScope"}
       }
     },
     "CreatePrivateConnectionInput":{
@@ -4134,6 +4136,7 @@
         "reportDestination":{"shape":"ReportDestination"},
         "reportFilters":{"shape":"ReportFilters"},
         "cicdConfiguration":{"shape":"CiCdConfiguration"},
+        "testScope":{"shape":"TestScope"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
@@ -4177,6 +4180,7 @@
         "scopeResult":{"shape":"ScopeResult"},
         "scopeChanges":{"shape":"ScopeChangeList"},
         "cicdConfiguration":{"shape":"CiCdConfiguration"},
+        "testScope":{"shape":"TestScope"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
@@ -5048,6 +5052,20 @@
       "type":"list",
       "member":{"shape":"TaskSummary"}
     },
+    "TestScope":{
+      "type":"structure",
+      "required":["type"],
+      "members":{
+        "type":{"shape":"TestScopeType"}
+      }
+    },
+    "TestScopeType":{
+      "type":"string",
+      "enum":[
+        "WEB_APP",
+        "GENERATIVE_AI_APP"
+      ]
+    },
     "Threat":{
       "type":"structure",
       "members":{
@@ -5568,7 +5586,8 @@
         "maxTaskHours":{"shape":"Double"},
         "reportDestination":{"shape":"ReportDestination"},
         "reportFilters":{"shape":"ReportFilters"},
-        "cicdConfiguration":{"shape":"CiCdConfiguration"}
+        "cicdConfiguration":{"shape":"CiCdConfiguration"},
+        "testScope":{"shape":"TestScope"}
       }
     },
     "UpdatePentestOutput":{
@@ -5585,7 +5604,8 @@
         "agentSpaceId":{"shape":"String"},
         "reportDestination":{"shape":"ReportDestination"},
         "reportFilters":{"shape":"ReportFilters"},
-        "cicdConfiguration":{"shape":"CiCdConfiguration"}
+        "cicdConfiguration":{"shape":"CiCdConfiguration"},
+        "testScope":{"shape":"TestScope"}
       }
     },
     "UpdatePrivateConnectionCertificateInput":{

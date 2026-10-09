@@ -84,6 +84,7 @@
     "ListJobs": "<p>Lists jobs.</p>",
     "ListLicenseEndpoints": "<p>Lists license endpoints.</p>",
     "ListLimits": "<p>Gets a list of limits defined in the specified farm.</p>",
+    "ListMemberships": "<p>Lists the Deadline Cloud resource memberships associated with a specified IAM Identity Center principal, optionally filtered by the requested resource types.</p>",
     "ListMeteredProducts": "<p>Lists metered products.</p>",
     "ListMonitors": "<p>Gets a list of your monitors in Deadline Cloud.</p>",
     "ListQueueEnvironments": "<p>Lists queue environments.</p>",
@@ -1785,7 +1786,8 @@
     "FarmMember": {
       "base": "<p>The member of a farm.</p>",
       "refs": {
-        "FarmMembers$member": null
+        "FarmMembers$member": null,
+        "MembershipSummary$farm": "<p>A membership on a farm.</p>"
       }
     },
     "FarmMembers": {
@@ -1942,7 +1944,8 @@
     "FleetMember": {
       "base": "<p>The fleet member.</p>",
       "refs": {
-        "FleetMembers$member": null
+        "FleetMembers$member": null,
+        "MembershipSummary$fleet": "<p>A membership on a fleet.</p>"
       }
     },
     "FleetMembers": {
@@ -2293,6 +2296,7 @@
         "ListFarmsRequest$principalId": "<p>The principal ID of the member to list on the farm.</p>",
         "ListFleetsRequest$principalId": "<p>The principal ID of the members to include in the fleet.</p>",
         "ListJobsRequest$principalId": "<p>The principal ID of the members on the jobs.</p>",
+        "ListMembershipsRequest$principalId": "<p>The ID of the IAM Identity Center principal whose Deadline Cloud resource memberships you want to list.</p>",
         "ListQueuesRequest$principalId": "<p>The principal IDs to include in the list of queues.</p>",
         "QueueMember$principalId": "<p>The principal ID of the queue member.</p>"
       }
@@ -2307,6 +2311,7 @@
         "FarmMember$identityStoreId": "<p>The identity store ID of the farm member.</p>",
         "FleetMember$identityStoreId": "<p>The identity store ID.</p>",
         "JobMember$identityStoreId": "<p>The identity store ID.</p>",
+        "ListMembershipsRequest$identityStoreId": "<p>The identity store ID that contains the principal. This parameter is required for callers that do not use a monitor session.</p>",
         "QueueMember$identityStoreId": "<p>The identity store ID.</p>"
       }
     },
@@ -2582,7 +2587,8 @@
     "JobMember": {
       "base": "<p>The details for a job member.</p>",
       "refs": {
-        "JobMembers$member": null
+        "JobMembers$member": null,
+        "MembershipSummary$job": "<p>A membership on a job.</p>"
       }
     },
     "JobMembers": {
@@ -2879,6 +2885,14 @@
       "base": "<p>Shared pagination field for List operation outputs (nextToken).</p>",
       "refs": {}
     },
+    "ListMembershipsRequest": {
+      "base": "<p>Shared pagination fields for List operation inputs (nextToken + maxResults).</p>",
+      "refs": {}
+    },
+    "ListMembershipsResponse": {
+      "base": "<p>Shared pagination field for List operation outputs (nextToken).</p>",
+      "refs": {}
+    },
     "ListMeteredProductsRequest": {
       "base": "<p>Shared pagination fields for List operation inputs (nextToken + maxResults).</p>",
       "refs": {}
@@ -3159,6 +3173,7 @@
         "ListJobsRequest$maxResults": "<p>The maximum number of results to return. Use this parameter with <code>NextToken</code> to get results as a set of sequential pages.</p>",
         "ListLicenseEndpointsRequest$maxResults": "<p>The maximum number of results to return. Use this parameter with <code>NextToken</code> to get results as a set of sequential pages.</p>",
         "ListLimitsRequest$maxResults": "<p>The maximum number of limits to return in each page of results.</p>",
+        "ListMembershipsRequest$maxResults": "<p>The maximum number of results to return. Use this parameter with <code>NextToken</code> to get results as a set of sequential pages.</p>",
         "ListMeteredProductsRequest$maxResults": "<p>The maximum number of results to return. Use this parameter with <code>NextToken</code> to get results as a set of sequential pages.</p>",
         "ListMonitorsRequest$maxResults": "<p>The maximum number of results to return. Use this parameter with <code>NextToken</code> to get results as a set of sequential pages.</p>",
         "ListQueueEnvironmentsRequest$maxResults": "<p>The maximum number of results to return. Use this parameter with <code>NextToken</code> to get results as a set of sequential pages.</p>",
@@ -3212,6 +3227,30 @@
         "FleetMember$membershipLevel": "<p>The fleet member's membership level.</p>",
         "JobMember$membershipLevel": "<p>The job member's membership level.</p>",
         "QueueMember$membershipLevel": "<p>The queue member's membership level.</p>"
+      }
+    },
+    "MembershipResourceType": {
+      "base": null,
+      "refs": {
+        "MembershipResourceTypes$member": null
+      }
+    },
+    "MembershipResourceTypes": {
+      "base": "<p>The list of resource types to include when listing a principal's memberships.</p>",
+      "refs": {
+        "ListMembershipsRequest$resourceTypes": "<p>The resource types to include when listing the principal's memberships. If not specified, memberships for all supported resource types are returned.</p>"
+      }
+    },
+    "MembershipSummaries": {
+      "base": "<p>The list of membership records for the principal.</p>",
+      "refs": {
+        "ListMembershipsResponse$memberships": "<p>The memberships associated with the specified principal.</p>"
+      }
+    },
+    "MembershipSummary": {
+      "base": "<p>A membership record for a principal on a single Deadline Cloud resource. The summary identifies the resource that the principal is a member of and the principal's membership level for that resource.</p>",
+      "refs": {
+        "MembershipSummaries$member": null
       }
     },
     "MemoryAmountMiB": {
@@ -3359,6 +3398,8 @@
         "ListLicenseEndpointsResponse$nextToken": "<p>If Deadline Cloud returns <code>nextToken</code>, then there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page, call the operation again using the returned token. Keep all other arguments unchanged. If no results remain, then <code>nextToken</code> is set to <code>null</code>. Each pagination token expires after 24 hours. If you provide a token that isn't valid, then you receive an HTTP 400 <code>ValidationException</code> error.</p>",
         "ListLimitsRequest$nextToken": "<p>The token for the next set of results, or <code>null</code> to start from the beginning.</p>",
         "ListLimitsResponse$nextToken": "<p>If Deadline Cloud returns <code>nextToken</code>, then there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page, call the operation again using the returned token. Keep all other arguments unchanged. If no results remain, then <code>nextToken</code> is set to <code>null</code>. Each pagination token expires after 24 hours. If you provide a token that isn't valid, then you receive an HTTP 400 <code>ValidationException</code> error.</p>",
+        "ListMembershipsRequest$nextToken": "<p>The token for the next set of results, or <code>null</code> to start from the beginning.</p>",
+        "ListMembershipsResponse$nextToken": "<p>If Deadline Cloud returns <code>nextToken</code>, then there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page, call the operation again using the returned token. Keep all other arguments unchanged. If no results remain, then <code>nextToken</code> is set to <code>null</code>. Each pagination token expires after 24 hours. If you provide a token that isn't valid, then you receive an HTTP 400 <code>ValidationException</code> error.</p>",
         "ListMeteredProductsRequest$nextToken": "<p>The token for the next set of results, or <code>null</code> to start from the beginning.</p>",
         "ListMeteredProductsResponse$nextToken": "<p>If Deadline Cloud returns <code>nextToken</code>, then there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page, call the operation again using the returned token. Keep all other arguments unchanged. If no results remain, then <code>nextToken</code> is set to <code>null</code>. Each pagination token expires after 24 hours. If you provide a token that isn't valid, then you receive an HTTP 400 <code>ValidationException</code> error.</p>",
         "ListMonitorsRequest$nextToken": "<p>The token for the next set of results, or <code>null</code> to start from the beginning.</p>",
@@ -3774,6 +3815,7 @@
     "QueueMember": {
       "base": "<p>The details of a queue member.</p>",
       "refs": {
+        "MembershipSummary$queue": "<p>A membership on a queue.</p>",
         "QueueMemberList$member": null
       }
     },
@@ -3824,6 +3866,7 @@
         "AssociateMemberToQueueRequest$identityCenterRegion": "<p>The Region of the IAM Identity Center instance. If not provided, the service defaults to the Region of the farm.</p>",
         "CreateMonitorRequest$identityCenterRegion": "<p>The Region where IAM Identity Center is enabled. Required when IAM Identity Center is in a different Region than the monitor.</p>",
         "GetMonitorResponse$identityCenterRegion": "<p>The Region where IAM Identity Center is enabled.</p>",
+        "ListMembershipsRequest$identityCenterRegion": "<p>The Region of the IAM Identity Center instance. If not provided, the service defaults to the Amazon Web Services Region in which you make the request.</p>",
         "MonitorSummary$identityCenterRegion": "<p>The Region where IAM Identity Center is enabled.</p>"
       }
     },

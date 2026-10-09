@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SecurityAgent` - Adds a test scope field to specify whether a pentest targets a web application or a generative AI application.
+* `Aws\MediaTailor` - Add caching settings to http functions
+* `Aws\MarketplaceMetering` - AWS Marketplace Metering Service adds AgreementId to ResolveCustomer API response.
+* `Aws\Deadline` - The new ListMemberships API enables users to discover their memberships across Deadline Cloud resources, enabling scoped users of Deadline resources to discover and interact with the resources they have been provided scoped access to.
+* `Aws\QuickSight` - Adds granular custom permissions for the Gong action connector (GongAction, CreateAndUpdateGongAction, ShareGongAction, UseGongAction) and for create, update, and share operations on 45 data source connectors, such as Amazon S3 and Snowflake, through the Custom Permissions APIs.
+
 ## 3.400.0 - 2026-10-08
 
 * `Aws\` - Add an opt-in default socket read/write inactivity timeout for cURL-based clients, resolved per service and gated off by default behind the `AWS_ENABLE_DEFAULT_SOCKET_TIMEOUT_2026` environment variable.
