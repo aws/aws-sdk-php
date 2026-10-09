@@ -20,6 +20,7 @@ final class JsonEncodePlan
     public const M_TYPE      = 1; // JsonShapeType tag
     public const M_SHAPE     = 2; // child Shape, for lazy composite plan lookup
     public const M_TSFORMAT  = 3; // timestamp format, or null
+    public const M_PLAN      = 4; // lazily resolved composite child plan
 
     // List/map value descriptor: value = [...]
     public const V_TYPE      = 0; // JsonShapeType tag
@@ -34,6 +35,9 @@ final class JsonEncodePlan
 
     /** @var array|null Value descriptor for a list or map. */
     public $value;
+
+    /** @var JsonEncodePlan|null Lazily resolved list/map child plan. */
+    public $valuePlan;
 
     /** @var string|null Timestamp format when the root shape is a timestamp. */
     public $timestampFormat;

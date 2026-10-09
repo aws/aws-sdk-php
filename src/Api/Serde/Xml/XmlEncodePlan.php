@@ -28,6 +28,8 @@ final class XmlEncodePlan
     public const M_ATTRIBUTE = 3; // bool: modeled xmlAttribute, ordered first
     public const M_NS        = 4; // child namespace attribute [name, uri] or null
     public const M_ATTR_NAME = 5; // attribute name if written as one, else null
+    public const M_TSFORMAT  = 6; // timestamp format, or null
+    public const M_PLAN      = 7; // lazily resolved composite child plan
 
     /** @var int XmlShapeType tag for the shape this shape encodes. */
     public $type;
@@ -71,6 +73,10 @@ final class XmlEncodePlan
     public $listItemAttribute = false;
     /** @var string|null Item locationName used as the attribute name. */
     public $listItemAttrName;
+    /** @var string|null Timestamp format for timestamp list items. */
+    public $listItemTimestampFormat;
+    /** @var XmlEncodePlan|null Lazily resolved composite list item plan. */
+    public $listItemPlan;
 
     // --- Map fields ---
     /** @var string|null Entry wrapper element name ('entry' when not flat). */
@@ -97,6 +103,14 @@ final class XmlEncodePlan
     public $mapKeyAttribute = false;
     /** @var bool Whether map values are written as attributes (string only). */
     public $mapValueAttribute = false;
+    /** @var string|null Timestamp format for timestamp map keys. */
+    public $mapKeyTimestampFormat;
+    /** @var string|null Timestamp format for timestamp map values. */
+    public $mapValueTimestampFormat;
+    /** @var XmlEncodePlan|null Lazily resolved composite map key plan. */
+    public $mapKeyPlan;
+    /** @var XmlEncodePlan|null Lazily resolved composite map value plan. */
+    public $mapValuePlan;
 
     /** @var string|null Timestamp format when the shape is a timestamp. */
     public $timestampFormat;

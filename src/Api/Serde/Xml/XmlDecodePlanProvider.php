@@ -105,6 +105,7 @@ final class XmlDecodePlanProvider
                 XmlDecodePlan::M_ATTRNS    => $nsUri,
                 XmlDecodePlan::M_TSFORMAT  => self::timestampFormat($member),
                 XmlDecodePlan::M_COERCE    => self::coercionKind($member),
+                XmlDecodePlan::M_PLAN      => null,
             ];
         }
 

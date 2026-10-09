@@ -64,31 +64,45 @@ class XmlBody
         switch ($plan->type) {
             case XmlShapeType::STRUCTURE:
                 $this->startElementPlan($plan, $name, $xml);
-                // Iterate the input in order, prepending xmlAttribute members
-                // so they emit first.
-                $ordered = [];
-                foreach ($value as $k => $v) {
-                    if ($v === null || !isset($plan->members[$k])) {
-                        continue;
+
+                if (empty($plan->attributeMembers)) {
+                    foreach ($value as $k => $v) {
+                        if ($v !== null && isset($plan->members[$k])) {
+                            $this->formatStructureMember($plan, $k, $v, $xml);
+                        }
                     }
-                    if ($plan->members[$k][XmlEncodePlan::M_ATTRIBUTE]) {
-                        $ordered = [$k => $v] + $ordered;
-                    } else {
-                        $ordered[$k] = $v;
+                } else {
+                    // Preserve legacy ordering: modeled xmlAttribute members
+                    // are prepended in reverse caller order, including
+                    // non-string members that are ultimately written as
+                    // elements.
+                    $attributeValues = [];
+                    foreach ($value as $k => $v) {
+                        if ($v !== null
+                            && isset($plan->members[$k])
+                            && $plan->members[$k][XmlEncodePlan::M_ATTRIBUTE]
+                        ) {
+                            $attributeValues[] = [$k, $v];
+                        }
+                    }
+                    for ($i = count($attributeValues) - 1; $i >= 0; $i--) {
+                        $this->formatStructureMember(
+                            $plan,
+                            $attributeValues[$i][0],
+                            $attributeValues[$i][1],
+                            $xml
+                        );
+                    }
+                    foreach ($value as $k => $v) {
+                        if ($v !== null
+                            && isset($plan->members[$k])
+                            && !$plan->members[$k][XmlEncodePlan::M_ATTRIBUTE]
+                        ) {
+                            $this->formatStructureMember($plan, $k, $v, $xml);
+                        }
                     }
                 }
-                foreach ($ordered as $k => $v) {
-                    $member = $plan->members[$k];
-                    $this->formatByTypePlan(
-                        $member[XmlEncodePlan::M_TYPE],
-                        $member[XmlEncodePlan::M_SHAPE],
-                        $member[XmlEncodePlan::M_ELEMENT],
-                        $v,
-                        $member[XmlEncodePlan::M_ATTR_NAME],
-                        $member[XmlEncodePlan::M_NS],
-                        $xml
-                    );
-                }
+
                 $xml->endElement();
                 break;
 
@@ -102,17 +116,75 @@ class XmlBody
                 $itemAttrName = $plan->listItemAttribute
                     ? ($plan->listItemAttrName ?? $elementName)
                     : null;
-                foreach ($value as $v) {
-                    $this->formatByTypePlan(
-                        $plan->listItemType,
-                        $plan->listItemShape,
-                        $elementName,
-                        $v,
-                        $itemAttrName,
-                        $plan->listItemNs,
-                        $xml
-                    );
+
+                switch ($plan->listItemType) {
+                    case XmlShapeType::STRUCTURE:
+                    case XmlShapeType::LIST:
+                    case XmlShapeType::MAP:
+                        $childPlan = $plan->listItemPlan
+                            ??= $this->planProvider->get($plan->listItemShape);
+                        foreach ($value as $v) {
+                            $this->formatPlan($childPlan, $elementName, $v, $xml);
+                        }
+                        break;
+
+                    case XmlShapeType::BLOB:
+                        foreach ($value as $v) {
+                            $this->writeLeafValue(
+                                $elementName,
+                                base64_encode($v),
+                                $plan->listItemNs,
+                                true,
+                                $xml
+                            );
+                        }
+                        break;
+
+                    case XmlShapeType::TIMESTAMP:
+                        foreach ($value as $v) {
+                            $this->writeLeafValue(
+                                $elementName,
+                                TimestampShape::formatAsString(
+                                    $v,
+                                    $plan->listItemTimestampFormat
+                                ),
+                                $plan->listItemNs,
+                                true,
+                                $xml
+                            );
+                        }
+                        break;
+
+                    case XmlShapeType::BOOLEAN:
+                        foreach ($value as $v) {
+                            $this->writeLeafValue(
+                                $elementName,
+                                $v ? 'true' : 'false',
+                                $plan->listItemNs,
+                                true,
+                                $xml
+                            );
+                        }
+                        break;
+
+                    default: // SCALAR
+                        if ($itemAttrName !== null) {
+                            foreach ($value as $v) {
+                                $xml->writeAttribute($itemAttrName, $v);
+                            }
+                        } else {
+                            foreach ($value as $v) {
+                                $this->writeLeafValue(
+                                    $elementName,
+                                    $v,
+                                    $plan->listItemNs,
+                                    false,
+                                    $xml
+                                );
+                            }
+                        }
                 }
+
                 if (!$plan->flattened) {
                     $xml->endElement();
                 }
@@ -123,24 +195,42 @@ class XmlBody
                 if (!$plan->flattened) {
                     $this->startElementPlan($plan, $name, $xml);
                 }
+
+                $keyPlan = null;
+                if ($plan->mapKeyType >= XmlShapeType::STRUCTURE
+                    && $plan->mapKeyType <= XmlShapeType::MAP
+                ) {
+                    $keyPlan = $plan->mapKeyPlan
+                        ??= $this->planProvider->get($plan->mapKeyShape);
+                }
+                $valuePlan = null;
+                if ($plan->mapValueType >= XmlShapeType::STRUCTURE
+                    && $plan->mapValueType <= XmlShapeType::MAP
+                ) {
+                    $valuePlan = $plan->mapValuePlan
+                        ??= $this->planProvider->get($plan->mapValueShape);
+                }
+
                 foreach ($value as $key => $v) {
                     $this->openLeaf($entryName, $plan->mapEntryNs, $xml);
-                    $this->formatByTypePlan(
+                    $this->formatResolvedValue(
                         $plan->mapKeyType,
-                        $plan->mapKeyShape,
+                        $keyPlan,
                         $plan->mapKeyName,
                         $key,
                         $plan->mapKeyAttribute ? $plan->mapKeyName : null,
                         $plan->mapKeyNs,
+                        $plan->mapKeyTimestampFormat,
                         $xml
                     );
-                    $this->formatByTypePlan(
+                    $this->formatResolvedValue(
                         $plan->mapValueType,
-                        $plan->mapValueShape,
+                        $valuePlan,
                         $plan->mapValueName,
                         $v,
                         $plan->mapValueAttribute ? $plan->mapValueName : null,
                         $plan->mapValueNs,
+                        $plan->mapValueTimestampFormat,
                         $xml
                     );
                     $xml->endElement();
@@ -151,29 +241,46 @@ class XmlBody
                 break;
 
             case XmlShapeType::BLOB:
-                $this->startElementPlan($plan, $name, $xml);
-                $xml->writeRaw(base64_encode($value));
-                $xml->endElement();
+                $this->writeLeafValue(
+                    $name,
+                    base64_encode($value),
+                    $plan->namespace,
+                    true,
+                    $xml
+                );
                 break;
 
             case XmlShapeType::TIMESTAMP:
-                $this->startElementPlan($plan, $name, $xml);
-                $xml->writeRaw(
-                    TimestampShape::formatAsString($value, $plan->timestampFormat)
+                $this->writeLeafValue(
+                    $name,
+                    TimestampShape::formatAsString(
+                        $value,
+                        $plan->timestampFormat
+                    ),
+                    $plan->namespace,
+                    true,
+                    $xml
                 );
-                $xml->endElement();
                 break;
 
             case XmlShapeType::BOOLEAN:
-                $this->startElementPlan($plan, $name, $xml);
-                $xml->writeRaw($value ? 'true' : 'false');
-                $xml->endElement();
+                $this->writeLeafValue(
+                    $name,
+                    $value ? 'true' : 'false',
+                    $plan->namespace,
+                    true,
+                    $xml
+                );
                 break;
 
             default: // SCALAR
-                $this->startElementPlan($plan, $name, $xml);
-                $xml->text($value);
-                $xml->endElement();
+                $this->writeLeafValue(
+                    $name,
+                    $value,
+                    $plan->namespace,
+                    false,
+                    $xml
+                );
         }
     }
 
@@ -188,58 +295,164 @@ class XmlBody
         }
     }
 
+    private function formatStructureMember(
+        XmlEncodePlan $plan,
+        $key,
+        $value,
+        XMLWriter $xml
+    ) {
+        $member = $plan->members[$key];
+        $type = $member[XmlEncodePlan::M_TYPE];
+        $name = $member[XmlEncodePlan::M_ELEMENT];
+        $namespace = $member[XmlEncodePlan::M_NS];
+
+        switch ($type) {
+            case XmlShapeType::STRUCTURE:
+            case XmlShapeType::LIST:
+            case XmlShapeType::MAP:
+                $childPlan = $member[XmlEncodePlan::M_PLAN];
+                if ($childPlan === null) {
+                    $childPlan = $this->planProvider->get(
+                        $member[XmlEncodePlan::M_SHAPE]
+                    );
+                    $plan->members[$key][XmlEncodePlan::M_PLAN] = $childPlan;
+                }
+                $this->formatPlan($childPlan, $name, $value, $xml);
+                return;
+
+            case XmlShapeType::BLOB:
+                $this->writeLeafValue(
+                    $name,
+                    base64_encode($value),
+                    $namespace,
+                    true,
+                    $xml
+                );
+                return;
+
+            case XmlShapeType::TIMESTAMP:
+                $this->writeLeafValue(
+                    $name,
+                    TimestampShape::formatAsString(
+                        $value,
+                        $member[XmlEncodePlan::M_TSFORMAT]
+                    ),
+                    $namespace,
+                    true,
+                    $xml
+                );
+                return;
+
+            case XmlShapeType::BOOLEAN:
+                $this->writeLeafValue(
+                    $name,
+                    $value ? 'true' : 'false',
+                    $namespace,
+                    true,
+                    $xml
+                );
+                return;
+
+            default: // SCALAR
+                if ($member[XmlEncodePlan::M_ATTR_NAME] !== null) {
+                    $xml->writeAttribute(
+                        $member[XmlEncodePlan::M_ATTR_NAME],
+                        $value
+                    );
+                } else {
+                    $this->writeLeafValue(
+                        $name,
+                        $value,
+                        $namespace,
+                        false,
+                        $xml
+                    );
+                }
+        }
+    }
+
     /**
-     * Formats one member, list item, or map key/value. Composite children fetch
-     * their own plan lazily; leaf types are handled inline. A non-null
-     * $attributeName writes the value as that attribute instead of an element;
-     * the plan only sets it for string shapes.
+     * Formats a value whose model-derived metadata has already been resolved.
      */
-    private function formatByTypePlan(
+    private function formatResolvedValue(
         int $type,
-        Shape $shape,
+        ?XmlEncodePlan $childPlan,
         $name,
         $value,
         ?string $attributeName,
         ?array $ns,
+        ?string $timestampFormat,
         XMLWriter $xml
     ) {
         switch ($type) {
             case XmlShapeType::STRUCTURE:
             case XmlShapeType::LIST:
             case XmlShapeType::MAP:
-                $this->formatPlan($this->planProvider->get($shape), $name, $value, $xml);
+                /** @var XmlEncodePlan $childPlan */
+                $this->formatPlan($childPlan, $name, $value, $xml);
                 return;
 
             case XmlShapeType::BLOB:
-                $this->openLeaf($name, $ns, $xml);
-                $xml->writeRaw(base64_encode($value));
-                $xml->endElement();
+                $this->writeLeafValue(
+                    $name,
+                    base64_encode($value),
+                    $ns,
+                    true,
+                    $xml
+                );
                 return;
 
             case XmlShapeType::TIMESTAMP:
-                $childPlan = $this->planProvider->get($shape);
-                $this->openLeaf($name, $ns, $xml);
-                $xml->writeRaw(
-                    TimestampShape::formatAsString($value, $childPlan->timestampFormat)
+                $this->writeLeafValue(
+                    $name,
+                    TimestampShape::formatAsString($value, $timestampFormat),
+                    $ns,
+                    true,
+                    $xml
                 );
-                $xml->endElement();
                 return;
 
             case XmlShapeType::BOOLEAN:
-                $this->openLeaf($name, $ns, $xml);
-                $xml->writeRaw($value ? 'true' : 'false');
-                $xml->endElement();
+                $this->writeLeafValue(
+                    $name,
+                    $value ? 'true' : 'false',
+                    $ns,
+                    true,
+                    $xml
+                );
                 return;
 
             default: // SCALAR
                 if ($attributeName !== null) {
                     $xml->writeAttribute($attributeName, $value);
                 } else {
-                    $this->openLeaf($name, $ns, $xml);
-                    $xml->text($value);
-                    $xml->endElement();
+                    $this->writeLeafValue($name, $value, $ns, false, $xml);
                 }
         }
+    }
+
+    /**
+     * Writes a leaf with a single XMLWriter call when no namespace is needed.
+     */
+    private function writeLeafValue(
+        $name,
+        $value,
+        ?array $ns,
+        bool $raw,
+        XMLWriter $xml
+    ) {
+        if ($ns === null) {
+            $xml->writeElement($name, (string) $value);
+            return;
+        }
+
+        $this->openLeaf($name, $ns, $xml);
+        if ($raw) {
+            $xml->writeRaw((string) $value);
+        } else {
+            $xml->text($value);
+        }
+        $xml->endElement();
     }
 
     /**

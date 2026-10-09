@@ -2,11 +2,9 @@
 namespace Aws\Api\Parser;
 
 use Aws\Api\DateTimeResult;
-use Aws\Api\Parser\Exception\ParserException;
 use Aws\Api\Serde\Xml\XmlDecodePlan;
 use Aws\Api\Serde\Xml\XmlDecodePlanProvider;
 use Aws\Api\Serde\Xml\XmlShapeType;
-use Aws\Api\Shape;
 use Aws\Api\StructureShape;
 
 /**
@@ -38,16 +36,55 @@ class XmlParser
         switch ($plan->type) {
             case XmlShapeType::STRUCTURE:
                 $target = [];
-                foreach ($plan->members as $member) {
+                foreach ($plan->members as $index => $member) {
                     $node = $member[XmlDecodePlan::M_NODE];
                     if (isset($value->{$node})) {
-                        $target[$member[XmlDecodePlan::M_SDK]] = $this->parseByType(
-                            $member[XmlDecodePlan::M_TYPE],
-                            $member[XmlDecodePlan::M_SHAPE],
-                            $member[XmlDecodePlan::M_TSFORMAT],
-                            $member[XmlDecodePlan::M_COERCE],
-                            $value->{$node}
-                        );
+                        $type = $member[XmlDecodePlan::M_TYPE];
+                        $nodeValue = $value->{$node};
+                        switch ($type) {
+                            case XmlShapeType::STRUCTURE:
+                            case XmlShapeType::LIST:
+                            case XmlShapeType::MAP:
+                                $childPlan = $member[XmlDecodePlan::M_PLAN];
+                                if ($childPlan === null) {
+                                    $childPlan = $this->planProvider->get(
+                                        $member[XmlDecodePlan::M_SHAPE]
+                                    );
+                                    $plan->members[$index][XmlDecodePlan::M_PLAN] = $childPlan;
+                                }
+                                $parsed = $this->parsePlan($childPlan, $nodeValue);
+                                break;
+
+                            case XmlShapeType::BLOB:
+                                $parsed = base64_decode((string) $nodeValue);
+                                break;
+
+                            case XmlShapeType::BOOLEAN:
+                                $parsed = $nodeValue == 'true';
+                                break;
+
+                            case XmlShapeType::TIMESTAMP:
+                                $parsed = DateTimeResult::fromTimestamp(
+                                    (string) $nodeValue,
+                                    $member[XmlDecodePlan::M_TSFORMAT]
+                                );
+                                break;
+
+                            default: // SCALAR
+                                $coerce = $member[XmlDecodePlan::M_COERCE];
+                                if ($coerce === XmlDecodePlan::COERCE_INT) {
+                                    $parsed = (int) (string) $nodeValue;
+                                } elseif ($coerce === XmlDecodePlan::COERCE_FLOAT) {
+                                    $s = (string) $nodeValue;
+                                    $parsed = match ($s) {
+                                        'NaN', 'Infinity', '-Infinity' => $s,
+                                        default => (float) $s,
+                                    };
+                                } else {
+                                    $parsed = (string) $nodeValue;
+                                }
+                        }
+                        $target[$member[XmlDecodePlan::M_SDK]] = $parsed;
                     } elseif ($member[XmlDecodePlan::M_ATTRIBUTE]) {
                         $target[$member[XmlDecodePlan::M_SDK]] = $this->readAttribute(
                             $member[XmlDecodePlan::M_ATTRKEY],
@@ -69,14 +106,57 @@ class XmlParser
                 if (!$plan->flattened) {
                     $value = $value->{$plan->listItemName};
                 }
-                foreach ($value as $v) {
-                    $target[] = $this->parseByType(
-                        $plan->listItemType,
-                        $plan->listItemShape,
-                        $plan->listItemTsFormat,
-                        $plan->listItemCoerce,
-                        $v
-                    );
+                switch ($plan->listItemType) {
+                    case XmlShapeType::STRUCTURE:
+                    case XmlShapeType::LIST:
+                    case XmlShapeType::MAP:
+                        $childPlan = $plan->listItemPlan
+                            ??= $this->planProvider->get($plan->listItemShape);
+                        foreach ($value as $v) {
+                            $target[] = $this->parsePlan($childPlan, $v);
+                        }
+                        break;
+
+                    case XmlShapeType::BLOB:
+                        foreach ($value as $v) {
+                            $target[] = base64_decode((string) $v);
+                        }
+                        break;
+
+                    case XmlShapeType::BOOLEAN:
+                        foreach ($value as $v) {
+                            $target[] = $v == 'true';
+                        }
+                        break;
+
+                    case XmlShapeType::TIMESTAMP:
+                        $timestampFormat = $plan->listItemTsFormat;
+                        foreach ($value as $v) {
+                            $target[] = DateTimeResult::fromTimestamp(
+                                (string) $v,
+                                $timestampFormat
+                            );
+                        }
+                        break;
+
+                    default: // SCALAR
+                        if ($plan->listItemCoerce === XmlDecodePlan::COERCE_INT) {
+                            foreach ($value as $v) {
+                                $target[] = (int) (string) $v;
+                            }
+                        } elseif ($plan->listItemCoerce === XmlDecodePlan::COERCE_FLOAT) {
+                            foreach ($value as $v) {
+                                $s = (string) $v;
+                                $target[] = match ($s) {
+                                    'NaN', 'Infinity', '-Infinity' => $s,
+                                    default => (float) $s,
+                                };
+                            }
+                        } else {
+                            foreach ($value as $v) {
+                                $target[] = (string) $v;
+                            }
+                        }
                 }
                 return $target;
 
@@ -85,17 +165,31 @@ class XmlParser
                 if (!$plan->flattened) {
                     $value = $value->entry;
                 }
+                $keyPlan = null;
+                if ($plan->mapKeyType >= XmlShapeType::STRUCTURE
+                    && $plan->mapKeyType <= XmlShapeType::MAP
+                ) {
+                    $keyPlan = $plan->mapKeyPlan
+                        ??= $this->planProvider->get($plan->mapKeyShape);
+                }
+                $valuePlan = null;
+                if ($plan->mapValueType >= XmlShapeType::STRUCTURE
+                    && $plan->mapValueType <= XmlShapeType::MAP
+                ) {
+                    $valuePlan = $plan->mapValuePlan
+                        ??= $this->planProvider->get($plan->mapValueShape);
+                }
                 foreach ($value as $node) {
-                    $key = $this->parseByType(
+                    $key = $this->parseResolvedValue(
                         $plan->mapKeyType,
-                        $plan->mapKeyShape,
+                        $keyPlan,
                         null,
                         $plan->mapKeyCoerce,
                         $node->{$plan->mapKeyName}
                     );
-                    $target[$key] = $this->parseByType(
+                    $target[$key] = $this->parseResolvedValue(
                         $plan->mapValueType,
-                        $plan->mapValueShape,
+                        $valuePlan,
                         $plan->mapValueTsFormat,
                         $plan->mapValueCoerce,
                         $node->{$plan->mapValueName}
@@ -110,7 +204,10 @@ class XmlParser
                 return $value == 'true';
 
             case XmlShapeType::TIMESTAMP:
-                return $this->coerceTimestamp($value, $plan->timestampFormat);
+                return DateTimeResult::fromTimestamp(
+                    (string) $value,
+                    $plan->timestampFormat
+                );
 
             default: // SCALAR (string, integer, float/double handled below)
                 return (string) $value;
@@ -118,18 +215,21 @@ class XmlParser
     }
 
     /**
-     * Decodes one member, list item, or map key/value. Composite children fetch
-     * their own plan lazily; leaf types are handled inline. Integer/float leaf
-     * coercion is resolved from the child Shape's type here (the plan tag only
-     * distinguishes SCALAR from the specially handled leaves).
+     * Decodes a value whose model-derived metadata has already been resolved.
      */
-    private function parseByType(int $type, Shape $shape, ?string $tsFormat, int $coerce, $value)
-    {
+    private function parseResolvedValue(
+        int $type,
+        ?XmlDecodePlan $childPlan,
+        ?string $tsFormat,
+        int $coerce,
+        $value
+    ) {
         switch ($type) {
             case XmlShapeType::STRUCTURE:
             case XmlShapeType::LIST:
             case XmlShapeType::MAP:
-                return $this->parsePlan($this->planProvider->get($shape), $value);
+                /** @var XmlDecodePlan $childPlan */
+                return $this->parsePlan($childPlan, $value);
 
             case XmlShapeType::BLOB:
                 return base64_decode((string) $value);
@@ -138,7 +238,10 @@ class XmlParser
                 return $value == 'true';
 
             case XmlShapeType::TIMESTAMP:
-                return $this->coerceTimestamp($value, $tsFormat);
+                return DateTimeResult::fromTimestamp(
+                    (string) $value,
+                    $tsFormat
+                );
 
             default: // SCALAR: coercion kind precomputed, no model read
                 if ($coerce === XmlDecodePlan::COERCE_INT) {
@@ -153,14 +256,6 @@ class XmlParser
                 }
                 return (string) $value;
         }
-    }
-
-    private function coerceTimestamp($value, ?string $tsFormat)
-    {
-        if (is_string($value) || is_int($value) || (is_object($value) && method_exists($value, '__toString'))) {
-            return DateTimeResult::fromTimestamp((string) $value, $tsFormat);
-        }
-        throw new ParserException('Invalid timestamp value passed to XmlParser::parse_timestamp');
     }
 
     private function readAttribute(string $key, string $namespace, \SimpleXMLElement $value)

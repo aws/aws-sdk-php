@@ -37,6 +37,7 @@ final class XmlDecodePlan
     public const M_ATTRNS    = 6; // attribute namespace uri, or ''
     public const M_TSFORMAT  = 7; // timestamp format, or null
     public const M_COERCE    = 8; // scalar coercion kind (COERCE_*)
+    public const M_PLAN      = 9; // lazily resolved composite child plan
 
     /** @var int XmlShapeType tag for the shape this plan decodes. */
     public $type;
@@ -60,6 +61,8 @@ final class XmlDecodePlan
     public $listItemTsFormat;
     /** @var int Scalar coercion kind for a scalar list element. */
     public $listItemCoerce = self::COERCE_STRING;
+    /** @var XmlDecodePlan|null Lazily resolved composite list item plan. */
+    public $listItemPlan;
 
     // --- Map fields ---
     /** @var string|null Key element name ('key' default). */
@@ -80,6 +83,10 @@ final class XmlDecodePlan
     public $mapKeyCoerce = self::COERCE_STRING;
     /** @var int Scalar coercion kind for a scalar map value. */
     public $mapValueCoerce = self::COERCE_STRING;
+    /** @var XmlDecodePlan|null Lazily resolved composite map key plan. */
+    public $mapKeyPlan;
+    /** @var XmlDecodePlan|null Lazily resolved composite map value plan. */
+    public $mapValuePlan;
 
     /** @var string|null Timestamp format when the shape is a timestamp. */
     public $timestampFormat;

@@ -62,6 +62,10 @@ final class XmlEncodePlanProvider
                 $plan->listItemNs = self::namespaceAttribute($item);
                 $plan->listItemAttribute = self::writesAttribute($item);
                 $plan->listItemAttrName = $item['locationName'] ?: null;
+                $plan->listItemTimestampFormat = self::timestampFormatForType(
+                    $plan->listItemType,
+                    $item
+                );
                 break;
 
             case XmlShapeType::MAP:
@@ -80,6 +84,14 @@ final class XmlEncodePlanProvider
                 $plan->mapValueNs = self::namespaceAttribute($value);
                 $plan->mapKeyAttribute = self::writesAttribute($key);
                 $plan->mapValueAttribute = self::writesAttribute($value);
+                $plan->mapKeyTimestampFormat = self::timestampFormatForType(
+                    $plan->mapKeyType,
+                    $key
+                );
+                $plan->mapValueTimestampFormat = self::timestampFormatForType(
+                    $plan->mapValueType,
+                    $value
+                );
                 // Each entry element is opened with the map shape's namespace.
                 $plan->mapEntryNs = $plan->namespace;
                 break;
@@ -105,6 +117,7 @@ final class XmlEncodePlanProvider
 
         foreach ($shape->getMembers() as $name => $member) {
             $isAttribute = (bool) $member['xmlAttribute'];
+            $type = XmlShapeType::fromShape($member);
 
             $elementName = $name;
             if ($member['locationName'] && !isset($member['locationNameAtStructureLevel'])) {
@@ -113,13 +126,18 @@ final class XmlEncodePlanProvider
 
             $members[$name] = [
                 XmlEncodePlan::M_ELEMENT   => $elementName,
-                XmlEncodePlan::M_TYPE      => XmlShapeType::fromShape($member),
+                XmlEncodePlan::M_TYPE      => $type,
                 XmlEncodePlan::M_SHAPE     => $member,
                 XmlEncodePlan::M_ATTRIBUTE => $isAttribute,
                 XmlEncodePlan::M_NS        => self::namespaceAttribute($member),
                 XmlEncodePlan::M_ATTR_NAME => self::writesAttribute($member)
                     ? ($member['locationName'] ?: $elementName)
                     : null,
+                XmlEncodePlan::M_TSFORMAT  => self::timestampFormatForType(
+                    $type,
+                    $member
+                ),
+                XmlEncodePlan::M_PLAN      => null,
             ];
 
             if ($isAttribute) {
@@ -194,5 +212,15 @@ final class XmlEncodePlanProvider
         return !empty($shape['timestampFormat'])
             ? $shape['timestampFormat']
             : 'iso8601';
+    }
+
+    /**
+     * Resolves the timestamp format only when the shape is a timestamp.
+     */
+    private static function timestampFormatForType(int $type, Shape $shape): ?string
+    {
+        return $type === XmlShapeType::TIMESTAMP
+            ? self::timestampFormat($shape)
+            : null;
     }
 }

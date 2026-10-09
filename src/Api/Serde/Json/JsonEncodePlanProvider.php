@@ -47,6 +47,7 @@ final class JsonEncodePlanProvider
                         JsonEncodePlan::M_TYPE     => $type,
                         JsonEncodePlan::M_SHAPE    => $member,
                         JsonEncodePlan::M_TSFORMAT => self::timestampFormat($type, $member),
+                        JsonEncodePlan::M_PLAN     => null,
                     ];
                 }
                 $plan->members = $members;

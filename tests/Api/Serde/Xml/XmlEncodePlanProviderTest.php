@@ -173,6 +173,32 @@ class XmlEncodePlanProviderTest extends TestCase
             'type' => 'structure',
             'members' => ['When' => ['type' => 'timestamp']],
         ]));
+        $this->assertSame(
+            'iso8601',
+            $plan->members['When'][XmlEncodePlan::M_TSFORMAT]
+        );
+
+        $list = $provider->get($this->shape([
+            'type' => 'list',
+            'member' => [
+                'type' => 'timestamp',
+                'timestampFormat' => 'unixTimestamp',
+            ],
+        ]));
+        $this->assertSame(
+            'unixTimestamp',
+            $list->listItemTimestampFormat
+        );
+
+        $map = $provider->get($this->shape([
+            'type' => 'map',
+            'key' => ['type' => 'string'],
+            'value' => [
+                'type' => 'timestamp',
+                'timestampFormat' => 'rfc822',
+            ],
+        ]));
+        $this->assertSame('rfc822', $map->mapValueTimestampFormat);
 
         // Root timestamp form:
         $root = $provider->get($this->shape(['type' => 'timestamp']));

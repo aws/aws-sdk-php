@@ -156,6 +156,26 @@ class XmlWireCompatibilityTest extends TestCase
                 ['D' => 0, 'E' => 0, 'H' => 0],
                 '<Root><D>1970-01-01T00:00:00Z</D><E>0</E><H>Thu, 01 Jan 1970 00:00:00 GMT</H></Root>',
             ],
+            'timestamp list uses item format' => [
+                ['L' => ['type' => 'list', 'member' => [
+                    'type' => 'timestamp',
+                    'timestampFormat' => 'unixTimestamp',
+                ]]],
+                ['L' => [0, 86400]],
+                '<Root><L><member>0</member><member>86400</member></L></Root>',
+            ],
+            'timestamp map uses value format' => [
+                ['M' => ['type' => 'map',
+                    'key' => ['type' => 'string'],
+                    'value' => [
+                        'type' => 'timestamp',
+                        'timestampFormat' => 'rfc822',
+                    ],
+                ]],
+                ['M' => ['epoch' => 0]],
+                '<Root><M><entry><key>epoch</key>'
+                    . '<value>Thu, 01 Jan 1970 00:00:00 GMT</value></entry></M></Root>',
+            ],
             'special floating-point values' => [
                 [
                     'A' => ['type' => 'double'],
@@ -355,6 +375,24 @@ class XmlWireCompatibilityTest extends TestCase
                 ],
                 '<Root><D>1970-01-02T00:00:00Z</D><E>86400</E></Root>',
                 ['D' => 'ts:1970-01-02T00:00:00Z', 'E' => 'ts:1970-01-02T00:00:00Z'],
+            ],
+            'timestamp list' => [
+                ['L' => ['type' => 'list', 'member' => [
+                    'type' => 'timestamp',
+                    'timestampFormat' => 'unixTimestamp',
+                ]]],
+                '<Root><L><member>0</member><member>86400</member></L></Root>',
+                [
+                    'L' => [
+                        'ts:1970-01-01T00:00:00Z',
+                        'ts:1970-01-02T00:00:00Z',
+                    ],
+                ],
+            ],
+            'floating-point list' => [
+                ['L' => ['type' => 'list', 'member' => ['type' => 'double']]],
+                '<Root><L><member>1.5</member><member>NaN</member></L></Root>',
+                ['L' => [1.5, 'NaN']],
             ],
             'special floating-point values' => [
                 [
