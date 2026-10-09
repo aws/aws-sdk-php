@@ -6,11 +6,14 @@ use Aws\Api\ApiProvider;
 use Aws\AwsClientInterface;
 use Aws\Command;
 use Aws\HandlerList;
+use Aws\HashingStream;
 use Aws\Result;
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\Parser\ValidateResponseChecksumResultMutator;
 use Aws\Test\UsesServiceTrait;
+use GuzzleHttp\Psr7\NoSeekStream;
 use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Psr7\Utils;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -297,6 +300,64 @@ class ValidateResponseChecksumResultMutatorTest extends TestCase
         $result = $mutator($result, $command, $response);
         // if it reached here, it didn't throw the error
         self::assertSame("SHA256", $result['ChecksumValidated']);
+    }
+
+    public function testDefersValidationForNonSeekableResponseBody()
+    {
+        $body = new NoSeekStream(Utils::streamFor('response body'));
+        $response = new Response(
+            200,
+            ['x-amz-checksum-crc32' => 'DIt2Ng=='],
+            $body
+        );
+        $result = new Result(['Body' => $body]);
+        $command = new Command(
+            'GetObject',
+            ['ChecksumMode' => 'enabled'],
+            new HandlerList()
+        );
+
+        $result = $this->getValidateResponseChecksumMutator()(
+            $result,
+            $command,
+            $response
+        );
+
+        $this->assertInstanceOf(HashingStream::class, $result['Body']);
+        $this->assertNull($result['ChecksumValidated']);
+        $this->assertSame('resp', $result['Body']->read(4));
+        $this->assertNull($result['ChecksumValidated']);
+        $this->assertSame('onse body', $result['Body']->getContents());
+        $this->assertSame('CRC32', $result['ChecksumValidated']);
+        $this->assertSame('', $result['Body']->read(1));
+    }
+
+    public function testThrowsOnInvalidNonSeekableResponseChecksum()
+    {
+        $body = new NoSeekStream(Utils::streamFor('response body'));
+        $response = new Response(
+            200,
+            ['x-amz-checksum-crc32' => 'invalid'],
+            $body
+        );
+        $result = new Result(['Body' => $body]);
+        $command = new Command(
+            'GetObject',
+            ['ChecksumMode' => 'enabled'],
+            new HandlerList()
+        );
+        $result = $this->getValidateResponseChecksumMutator()(
+            $result,
+            $command,
+            $response
+        );
+
+        $this->expectException(S3Exception::class);
+        $this->expectExceptionMessage(
+            'Calculated response checksum did not match the expected value'
+        );
+
+        $result['Body']->getContents();
     }
 
     /**

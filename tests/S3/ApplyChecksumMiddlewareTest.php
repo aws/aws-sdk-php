@@ -4,6 +4,7 @@ namespace Aws\Test\S3;
 use Aws\S3\ApplyChecksumMiddleware;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Utils;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -294,5 +295,208 @@ class ApplyChecksumMiddlewareTest extends TestCase
         $request = new Request('PUT', 'foo', ['x-amz-checksum-crc32c' => 'foo']);
 
         $mw($command, $request);
+    }
+
+    public function testEnablesModeledResponseChecksumValidationByDefault()
+    {
+        $client = $this->getTestClient('s3');
+        $nextHandler = function ($command, $request) {
+            $this->assertSame('ENABLED', $command['ChecksumMode']);
+            $this->assertSame(
+                'ENABLED',
+                $request->getHeaderLine('x-amz-checksum-mode')
+            );
+        };
+        $middleware = new ApplyChecksumMiddleware(
+            $nextHandler,
+            $client->getApi()
+        );
+        $command = $client->getCommand('GetObject', [
+            'Bucket' => 'foo',
+            'Key' => 'bar',
+        ]);
+
+        $middleware(
+            $command,
+            new Request('GET', 'https://foo.bar')
+        );
+    }
+
+    public function testDoesNotEnableResponseChecksumValidationWhenRequired()
+    {
+        $client = $this->getTestClient('s3');
+        $nextHandler = function ($command, $request) {
+            $this->assertNull($command['ChecksumMode']);
+            $this->assertFalse(
+                $request->hasHeader('x-amz-checksum-mode')
+            );
+        };
+        $middleware = new ApplyChecksumMiddleware(
+            $nextHandler,
+            $client->getApi(),
+            ['response_checksum_validation' => 'when_required']
+        );
+        $command = $client->getCommand('GetObject', [
+            'Bucket' => 'foo',
+            'Key' => 'bar',
+        ]);
+
+        $middleware(
+            $command,
+            new Request('GET', 'https://foo.bar')
+        );
+    }
+
+    public function testPreservesExplicitResponseChecksumValidationMode()
+    {
+        $client = $this->getTestClient('s3');
+        $nextHandler = function ($command, $request) {
+            $this->assertSame('enabled', $command['ChecksumMode']);
+            $this->assertSame(
+                'enabled',
+                $request->getHeaderLine('x-amz-checksum-mode')
+            );
+        };
+        $middleware = new ApplyChecksumMiddleware(
+            $nextHandler,
+            $client->getApi(),
+            ['response_checksum_validation' => 'when_required']
+        );
+        $command = $client->getCommand('GetObject', [
+            'Bucket' => 'foo',
+            'Key' => 'bar',
+            'ChecksumMode' => 'enabled',
+        ]);
+
+        $middleware(
+            $command,
+            new Request('GET', 'https://foo.bar')
+        );
+    }
+
+    public function testDoesNotEnableResponseValidationForUnsupportedAlgorithms()
+    {
+        $client = $this->getTestClient('s3');
+        $definition = $client->getApi()->getDefinition();
+        $definition['operations']['GetObject']['httpChecksum']['responseAlgorithms'] = [
+            'CRC64NVME',
+            'MD5',
+        ];
+        $client->getApi()->setDefinition($definition);
+
+        $nextHandler = function ($command, $request) {
+            $this->assertNull($command['ChecksumMode']);
+            $this->assertFalse(
+                $request->hasHeader('x-amz-checksum-mode')
+            );
+        };
+        $middleware = new ApplyChecksumMiddleware(
+            $nextHandler,
+            $client->getApi()
+        );
+        $command = $client->getCommand('GetObject', [
+            'Bucket' => 'foo',
+            'Key' => 'bar',
+        ]);
+
+        $middleware(
+            $command,
+            new Request('GET', 'https://foo.bar')
+        );
+    }
+
+    #[DataProvider('nonChecksumValueHeaderProvider')]
+    public function testNonChecksumValueHeadersDoNotSuppressCalculation(
+        string $header
+    ) {
+        $client = $this->getTestClient('s3');
+        $nextHandler = function ($command, $request) {
+            $this->assertSame(
+                'NSRBwg==',
+                $request->getHeaderLine('x-amz-checksum-crc32')
+            );
+        };
+        $middleware = new ApplyChecksumMiddleware(
+            $nextHandler,
+            $client->getApi()
+        );
+        $command = $client->getCommand('PutObject', [
+            'Bucket' => 'foo',
+            'Key' => 'bar',
+            'Body' => 'abc',
+        ]);
+        $request = new Request(
+            'PUT',
+            'https://foo.bar',
+            [$header => 'value'],
+            'abc'
+        );
+
+        $middleware($command, $request);
+    }
+
+    public static function nonChecksumValueHeaderProvider(): array
+    {
+        return [
+            ['x-amz-checksum-algorithm'],
+            ['x-amz-checksum-mode'],
+            ['x-amz-checksum-type'],
+        ];
+    }
+
+    public function testUnknownChecksumHeaderSuppressesCalculation()
+    {
+        $client = $this->getTestClient('s3');
+        $nextHandler = function ($command, $request) {
+            $this->assertSame(
+                'custom-value',
+                $request->getHeaderLine('x-amz-checksum-emoji')
+            );
+            $this->assertFalse(
+                $request->hasHeader('x-amz-checksum-crc32')
+            );
+        };
+        $middleware = new ApplyChecksumMiddleware(
+            $nextHandler,
+            $client->getApi()
+        );
+        $command = $client->getCommand('PutObject', [
+            'Bucket' => 'foo',
+            'Key' => 'bar',
+            'Body' => 'abc',
+        ]);
+        $request = new Request(
+            'PUT',
+            'https://foo.bar',
+            ['x-amz-checksum-emoji' => 'custom-value'],
+            'abc'
+        );
+
+        $middleware($command, $request);
+    }
+
+    #[DataProvider('crtChecksumAlgorithmProvider')]
+    public function testCrtChecksumCalculationPreservesStreamPosition(
+        string $algorithm
+    ) {
+        if (!extension_loaded('awscrt')) {
+            $this->markTestSkipped('Cannot test CRT checksums without awscrt');
+        }
+
+        $stream = Utils::streamFor('testing!');
+        $stream->seek(2);
+
+        ApplyChecksumMiddleware::getEncodedValue($algorithm, $stream);
+
+        $this->assertSame(2, $stream->tell());
+        $this->assertSame('sting!', $stream->getContents());
+    }
+
+    public static function crtChecksumAlgorithmProvider(): array
+    {
+        return [
+            ['crc32'],
+            ['crc32c'],
+        ];
     }
 }
