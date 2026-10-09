@@ -170,4 +170,116 @@ class OperationTest extends TestCase
         $operationContextParams = $operation->getOperationContextParams();
         $this->assertSame($definition['operationContextParams'], $operationContextParams);
     }
+
+    public function testContextParamsFollowInputReplacement()
+    {
+        $o = new Operation(
+            ['input' => ['shape' => 'FooRequest']],
+            new ShapeMap([
+                'FooRequest' => [
+                    'type' => 'structure',
+                    'members' => [
+                        'Foo' => ['shape' => 'Str', 'contextParam' => ['name' => 'Foo']],
+                    ],
+                ],
+                'BarRequest' => [
+                    'type' => 'structure',
+                    'members' => [
+                        'Bar' => ['shape' => 'Str', 'contextParam' => ['name' => 'Bar']],
+                    ],
+                ],
+                'Str' => ['type' => 'string'],
+            ])
+        );
+        $this->assertSame(['Foo'], array_keys($o->getContextParams()));
+
+        $o['input'] = ['shape' => 'BarRequest'];
+
+        $this->assertSame(['Bar'], array_keys($o->getInput()->getMembers()));
+        $this->assertSame(
+            ['Bar' => ['shape' => 'Bar', 'type' => 'string']],
+            $o->getContextParams()
+        );
+    }
+
+    public function testContextParamsFollowInputShapeMutation()
+    {
+        $o = new Operation(
+            ['input' => ['shape' => 'FooRequest']],
+            new ShapeMap([
+                'FooRequest' => [
+                    'type' => 'structure',
+                    'members' => [
+                        'Foo' => ['shape' => 'Str', 'contextParam' => ['name' => 'Foo']],
+                    ],
+                ],
+                'Str' => ['type' => 'string'],
+            ])
+        );
+        $this->assertSame(['Foo'], array_keys($o->getContextParams()));
+
+        $o->getInput()['members'] = [
+            'Bar' => ['shape' => 'Str', 'contextParam' => ['name' => 'Bar']],
+        ];
+
+        $this->assertSame(['Bar'], array_keys($o->getInput()->getMembers()));
+        $this->assertSame(
+            ['Bar' => ['shape' => 'Bar', 'type' => 'string']],
+            $o->getContextParams()
+        );
+    }
+
+    public function testContextParamsFollowMemberContextParamMutation()
+    {
+        $o = new Operation(
+            ['input' => ['shape' => 'FooRequest']],
+            new ShapeMap([
+                'FooRequest' => [
+                    'type' => 'structure',
+                    'members' => [
+                        'Foo' => ['shape' => 'Str', 'contextParam' => ['name' => 'Foo']],
+                    ],
+                ],
+                'Str' => ['type' => 'string'],
+            ])
+        );
+        $member = $o->getInput()->getMember('Foo');
+        $this->assertSame(['Foo'], array_keys($o->getContextParams()));
+
+        $member['contextParam'] = ['name' => 'Renamed'];
+        $this->assertSame(['name' => 'Renamed'], $member->getContextParam());
+        $this->assertSame(
+            ['Renamed' => ['shape' => 'Foo', 'type' => 'string']],
+            $o->getContextParams()
+        );
+
+        unset($member['contextParam']);
+        $this->assertNull($member->getContextParam());
+        $this->assertSame([], $o->getContextParams());
+    }
+
+    public function testStaticContextParamsFollowDefinitionChange()
+    {
+        $o = new Operation(
+            ['staticContextParams' => ['Foo' => ['value' => 'a']]],
+            new ShapeMap([])
+        );
+
+        $o['staticContextParams'] = ['Foo' => ['value' => 'b']];
+        $this->assertSame(['Foo' => ['value' => 'b']], $o->getStaticContextParams());
+
+        unset($o['staticContextParams']);
+        $this->assertSame([], $o->getStaticContextParams());
+    }
+
+    public function testOperationContextParamsFollowDefinitionChange()
+    {
+        $o = new Operation([], new ShapeMap([]));
+        $this->assertSame([], $o->getOperationContextParams());
+
+        $params = ['Keys' => ['path' => 'items[*].key']];
+        $o['operationContextParams'] = $params;
+
+        $this->assertSame($params, $o->getOperationContextParams());
+    }
 }

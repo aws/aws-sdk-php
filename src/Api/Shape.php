@@ -72,6 +72,8 @@ class Shape extends AbstractModel
      */
     public function getContextParam()
     {
-        return $this->contextParam;
+        // Read the live definition so direct mutation or removal of
+        // contextParam is reflected without a separate cached copy.
+        return $this->definition['contextParam'] ?? null;
     }
 }

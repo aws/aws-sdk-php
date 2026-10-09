@@ -2,6 +2,9 @@
 namespace Aws\Api\Parser;
 
 use Aws\Api\DateTimeResult;
+use Aws\Api\Serde\Json\JsonDecodePlan;
+use Aws\Api\Serde\Json\JsonDecodePlanProvider;
+use Aws\Api\Serde\Json\JsonShapeType;
 use Aws\Api\Shape;
 
 /**
@@ -9,66 +12,111 @@ use Aws\Api\Shape;
  */
 class JsonParser
 {
+    /** @var JsonDecodePlanProvider */
+    private $planProvider;
+
+    public function __construct()
+    {
+        $this->planProvider = new JsonDecodePlanProvider();
+    }
+
     public function parse(Shape $shape, $value)
     {
         if ($value === null) {
             return $value;
         }
 
-        switch ($shape['type']) {
-            case 'structure':
-                if (isset($shape['document']) && $shape['document']) {
-                    return $value;
-                }
+        return $this->parsePlan($this->planProvider->get($shape), $value);
+    }
+
+    /**
+     * Decodes a value using a compiled plan instead of re-reading the model.
+     *
+     * Preserves modeled member order and union handling.
+     */
+    private function parsePlan(JsonDecodePlan $plan, $value)
+    {
+        switch ($plan->type) {
+            case JsonShapeType::STRUCTURE:
                 $target = [];
-                foreach ($shape->getMembers() as $name => $member) {
-                    $locationName = $member['locationName'] ?: $name;
-                    if (isset($value[$locationName])) {
-                        $target[$name] = $this->parse($member, $value[$locationName]);
+                foreach ($plan->members as $member) {
+                    $wire = $member[JsonDecodePlan::M_WIRE];
+                    if (isset($value[$wire])) {
+                        $target[$member[JsonDecodePlan::M_SDK]] = $this->parseByType(
+                            $member[JsonDecodePlan::M_TYPE],
+                            $member[JsonDecodePlan::M_SHAPE],
+                            $member[JsonDecodePlan::M_TSFORMAT],
+                            $value[$wire]
+                        );
                     }
                 }
-                if (isset($shape['union'])
-                    && $shape['union']
-                    && is_array($value)
-                    && empty($target)
-                ) {
+                if ($plan->union && is_array($value) && empty($target)) {
                     foreach ($value as $key => $val) {
                         $target['Unknown'][$key] = $val;
                     }
                 }
                 return $target;
 
-            case 'list':
-                $member = $shape->getMember();
+            case JsonShapeType::LIST:
+                $type  = $plan->value[JsonDecodePlan::V_TYPE];
+                $shape = $plan->value[JsonDecodePlan::V_SHAPE];
+                $ts    = $plan->value[JsonDecodePlan::V_TSFORMAT];
                 $target = [];
                 foreach ($value as $v) {
-                    $target[] = $this->parse($member, $v);
+                    $target[] = $this->parseByType($type, $shape, $ts, $v);
                 }
                 return $target;
 
-            case 'map':
-                $values = $shape->getValue();
+            case JsonShapeType::MAP:
+                $type  = $plan->value[JsonDecodePlan::V_TYPE];
+                $shape = $plan->value[JsonDecodePlan::V_SHAPE];
+                $ts    = $plan->value[JsonDecodePlan::V_TSFORMAT];
                 $target = [];
                 foreach ($value as $k => $v) {
                     // null map values should not be deserialized
                     if (!is_null($v)) {
-                        $target[$k] = $this->parse($values, $v);
+                        $target[$k] = $this->parseByType($type, $shape, $ts, $v);
                     }
                 }
                 return $target;
 
-            case 'timestamp':
-                return DateTimeResult::fromTimestamp(
-                    $value,
-                    !empty($shape['timestampFormat']) ? $shape['timestampFormat'] : null
-                );
+            case JsonShapeType::TIMESTAMP:
+                return DateTimeResult::fromTimestamp($value, $plan->timestampFormat);
 
-            case 'blob':
+            case JsonShapeType::BLOB:
                 return base64_decode($value);
 
-            default:
+            default: // SCALAR, DOCUMENT
+                return $value;
+        }
+    }
+
+    /**
+     * Decodes one member or collection element. Composite children fetch their
+     * own plan lazily; leaf types are handled inline.
+     */
+    private function parseByType(int $type, Shape $shape, ?string $tsFormat, $value)
+    {
+        // A null value is returned as-is for every shape type, so sparse
+        // list elements stay null.
+        if ($value === null) {
+            return null;
+        }
+
+        switch ($type) {
+            case JsonShapeType::STRUCTURE:
+            case JsonShapeType::LIST:
+            case JsonShapeType::MAP:
+                return $this->parsePlan($this->planProvider->get($shape), $value);
+
+            case JsonShapeType::TIMESTAMP:
+                return DateTimeResult::fromTimestamp($value, $tsFormat);
+
+            case JsonShapeType::BLOB:
+                return base64_decode($value);
+
+            default: // SCALAR, DOCUMENT
                 return $value;
         }
     }
 }
-
