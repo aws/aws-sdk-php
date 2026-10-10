@@ -116,4 +116,31 @@ class AssumeRoleCredentialProviderTest extends TestCase
         $provider = new AssumeRoleCredentialProvider($args);
         $provider()->wait();
     }
+
+    public function testWrapsNonRuntimeExceptionWhenRetrievingAssumeRoleCredentialFails()
+    {
+        $exception = new \Exception('Request cancelled');
+        $sts = new StsClient([
+            'region' => 'us-west-2',
+            'version' => 'latest',
+            'credentials' => new Credentials('foo', 'bar'),
+            'http_handler' => function () use ($exception) {
+                throw $exception;
+            }
+        ]);
+        $args['client'] = $sts;
+        $args['assume_role_params'] = [
+            'RoleArn' => self::SAMPLE_ROLE_ARN,
+            'RoleSessionName' => 'test_session',
+        ];
+        $provider = new AssumeRoleCredentialProvider($args);
+
+        try {
+            $provider()->wait();
+            $this->fail('Expected a CredentialsException to be thrown.');
+        } catch (\Aws\Exception\CredentialsException $e) {
+            $this->assertSame('Error in retrieving assume role credentials.', $e->getMessage());
+            $this->assertSame($exception, $e->getPrevious());
+        }
+    }
 }
