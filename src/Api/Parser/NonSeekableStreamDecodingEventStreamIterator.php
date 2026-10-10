@@ -51,7 +51,8 @@ class NonSeekableStreamDecodingEventStreamIterator extends DecodingEventStreamIt
         );
         $calculatedCrc = hash_final($this->hashContext, true);
         $messageCrc = '';
-        while (strlen($messageCrc) < self::BYTES_TRAILING
+        while (
+            strlen($messageCrc) < self::BYTES_TRAILING
             && !$this->stream->eof()
         ) {
             $chunk = $this->stream->read(
