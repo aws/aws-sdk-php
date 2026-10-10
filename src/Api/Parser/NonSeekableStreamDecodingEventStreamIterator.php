@@ -50,7 +50,20 @@ class NonSeekableStreamDecodingEventStreamIterator extends DecodingEventStreamIt
             )
         );
         $calculatedCrc = hash_final($this->hashContext, true);
-        $messageCrc = $this->stream->read(4);
+        $messageCrc = '';
+        while (strlen($messageCrc) < self::BYTES_TRAILING
+            && !$this->stream->eof()
+        ) {
+            $chunk = $this->stream->read(
+                self::BYTES_TRAILING - strlen($messageCrc)
+            );
+            if ($chunk === '') {
+                break;
+            }
+
+            $messageCrc .= $chunk;
+        }
+
         if ($calculatedCrc !== $messageCrc) {
             throw new ParserException('Message checksum mismatch.');
         }
