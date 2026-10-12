@@ -4,6 +4,8 @@ namespace Aws\Test\Api\Parser;
 use Aws\Api\Parser\Exception\ParserException;
 use Aws\Api\Parser\JsonRpcParser;
 use Aws\Api\Parser\JsonParser;
+use Aws\Api\Shape;
+use Aws\Api\ShapeMap;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -133,5 +135,66 @@ class JsonParserTest extends TestCase
         $handler = $list->resolve();
         $this->expectException($expectedException, $expectedMessage);
         $handler($command)->wait();
+    }
+
+    public static function sparseListProvider(): array
+    {
+        return [
+            'blob'      => [['type' => 'blob'], [null, 'Zm9v'], [null, 'foo']],
+            'timestamp' => [['type' => 'timestamp'], [null], [null]],
+            'string'    => [['type' => 'string'], ['a', null, 'b'], ['a', null, 'b']],
+            'integer'   => [['type' => 'integer'], [null, 1], [null, 1]],
+            'boolean'   => [['type' => 'boolean'], [null, false], [null, false]],
+            'structure' => [
+                ['type' => 'structure', 'members' => ['A' => ['type' => 'string']]],
+                [null, ['A' => 'x']],
+                [null, ['A' => 'x']],
+            ],
+            'list'      => [
+                ['type' => 'list', 'member' => ['type' => 'blob']],
+                [null, [null, 'Zm9v']],
+                [null, [null, 'foo']],
+            ],
+            'map'       => [
+                ['type' => 'map', 'key' => ['type' => 'string'], 'value' => ['type' => 'string']],
+                [null, ['k' => 'v']],
+                [null, ['k' => 'v']],
+            ],
+        ];
+    }
+
+    #[DataProvider('sparseListProvider')]
+    public function testNullListElementsStayNull(
+        array $memberDef,
+        array $input,
+        array $expected
+    ): void {
+        $shape = Shape::create(
+            ['type' => 'list', 'member' => $memberDef],
+            new ShapeMap([])
+        );
+
+        $result = (new JsonParser())->parse($shape, $input);
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testNullListElementsStayNullInsideStructure(): void
+    {
+        $shape = Shape::create([
+            'type' => 'structure',
+            'members' => [
+                'Blobs' => ['type' => 'list', 'member' => ['type' => 'blob']],
+                'Times' => ['type' => 'list', 'member' => ['type' => 'timestamp']],
+            ],
+        ], new ShapeMap([]));
+
+        $result = (new JsonParser())->parse($shape, [
+            'Blobs' => [null, 'Zm9v'],
+            'Times' => [null],
+        ]);
+
+        $this->assertSame([null, 'foo'], $result['Blobs']);
+        $this->assertSame([null], $result['Times']);
     }
 }

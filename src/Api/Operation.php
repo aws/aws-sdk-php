@@ -11,6 +11,7 @@ class Operation extends AbstractModel
     private $errors;
     private $staticContextParams = [];
     private $contextParams;
+    private $contextParamsGeneration;
     private $operationContextParams = [];
 
     public function __construct(array $definition, ShapeMap $shapeMap)
@@ -35,6 +36,7 @@ class Operation extends AbstractModel
 
         parent::__construct($definition, $shapeMap);
         $this->contextParams = $this->setContextParams();
+        $this->contextParamsGeneration = $shapeMap->getGeneration();
     }
 
     /**
@@ -126,6 +128,14 @@ class Operation extends AbstractModel
      */
     public function getContextParams()
     {
+        // Context params derive from the input shape graph, so rebuild them
+        // when any shape in the shared ShapeMap has been mutated.
+        $generation = $this->shapeMap->getGeneration();
+        if ($this->contextParams === null || $this->contextParamsGeneration !== $generation) {
+            $this->contextParams = $this->setContextParams();
+            $this->contextParamsGeneration = $generation;
+        }
+
         return $this->contextParams;
     }
 
@@ -140,12 +150,28 @@ class Operation extends AbstractModel
         return $this->operationContextParams;
     }
 
+    /**
+     * @return void
+     */
+    protected function clearResolvedModelCache()
+    {
+        $this->input = null;
+        $this->output = null;
+        $this->errors = null;
+
+        // Context params derive from the definition and the input shape, so
+        // refresh them too. Dynamic context params rebuild on next access.
+        $this->staticContextParams = $this->definition['staticContextParams'] ?? [];
+        $this->operationContextParams = $this->definition['operationContextParams'] ?? [];
+        $this->contextParams = null;
+    }
+
     private function setContextParams()
     {
         $members = $this->getInput()->getMembers();
         $contextParams = [];
 
-        foreach($members as $name => $shape) {
+        foreach ($members as $name => $shape) {
             if (!empty($contextParam = $shape->getContextParam())) {
                 $contextParams[$contextParam['name']] = [
                     'shape' => $name,

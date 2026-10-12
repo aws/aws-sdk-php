@@ -12,12 +12,41 @@ class ShapeMap implements \ArrayAccess
     /** @var Shape[] */
     private $simple;
 
+    /** @var int Monotonically increasing graph generation. */
+    private $generation = 0;
+
     /**
      * @param array $shapeModels Associative array of shape definitions.
      */
     public function __construct(array $shapeModels)
     {
         $this->definitions = $shapeModels;
+    }
+
+    /**
+     * Get the current graph generation.
+     *
+     * Model objects record the generation their cached plans were built
+     * against. A mismatch signals that a related object mutated and the plans
+     * must be recompiled.
+     *
+     * @return int
+     * @internal
+     */
+    public function getGeneration()
+    {
+        return $this->generation;
+    }
+
+    /**
+     * Advance the graph generation after a model object mutates.
+     *
+     * @return void
+     * @internal
+     */
+    public function incrementGeneration()
+    {
+        $this->generation++;
     }
 
     /**
