@@ -12,6 +12,7 @@ use Aws\S3\S3Client;
 use Aws\Sts\StsClient;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -110,18 +111,18 @@ class RoutingTest extends TestCase
         $this->assertSame(RetryV3Middleware::class, $entries[0]['middleware_class']);
     }
 
-    /**
-     * @dataProvider envOrIniModeProvider
-     */
+    #[DataProvider('envOrIniModeProvider')]
     public function testDynamoDbDefaultAttemptsFromEnvOrIniWhenOptedIn(
         array $env,
         string $expectedMode,
         int $expectedAttempts,
-        ?string $ini = null
-    ): void {
+        ?string $ini = null,
+        array $args = []
+    ): void
+    {
         // When only the mode comes from the environment or ~/.aws/config,
         // DynamoDB must apply its own max_attempts default (4 standard/adaptive,
-        // 11 legacy) rather than the generic 3 filled in by the env/ini providers.
+        // 11 legacy) rather than the generic 3.
         $this->enableFlag();
         $saved = [];
         foreach (['AWS_RETRY_MODE', 'AWS_MAX_ATTEMPTS', 'AWS_CONFIG_FILE', 'AWS_PROFILE', 'HOME'] as $k) {
@@ -132,6 +133,7 @@ class RoutingTest extends TestCase
         try {
             putenv('AWS_CONFIG_FILE');
             putenv('AWS_PROFILE');
+            putenv('AWS_RETRY_MODE');
             putenv('AWS_MAX_ATTEMPTS');
             putenv("HOME=$home");
             foreach ($env as $k => $v) {
@@ -141,7 +143,7 @@ class RoutingTest extends TestCase
                 file_put_contents($home . '/.aws/config', $ini);
             }
 
-            $config = call_user_func(DynamoDbClient::_defaultRetries())->wait();
+            $config = call_user_func(DynamoDbClient::_defaultRetries($args))->wait();
             $this->assertSame($expectedMode, $config->getMode());
             $this->assertSame($expectedAttempts, $config->getMaxAttempts());
         } finally {
@@ -165,16 +167,20 @@ class RoutingTest extends TestCase
             'ini legacy only' => [[], 'legacy', 11, "[default]\nretry_mode = legacy\n"],
             'ini standard only' => [[], 'standard', 4, "[default]\nretry_mode = standard\n"],
             'ini standard + explicit max_attempts' => [[], 'standard', 5, "[default]\nretry_mode = standard\nmax_attempts = 5\n"],
+            'env mode + ini max_attempts' => [['AWS_RETRY_MODE' => 'standard'], 'standard', 8, "[default]\nmax_attempts = 8\n"],
+            'env max_attempts + ini mode' => [['AWS_MAX_ATTEMPTS' => '8'], 'adaptive', 8, "[default]\nretry_mode = adaptive\n"],
+            'ini profile prefix' => [['AWS_PROFILE' => 'foo'], 'adaptive', 7, "[profile foo]\nretry_mode = adaptive\nmax_attempts = 7\n"],
+            'ini ignored when shared config disabled' => [[], 'standard', 4, "[default]\nretry_mode = adaptive\nmax_attempts = 7\n", ['use_aws_shared_config_files' => false]],
+            'uppercase legacy' => [['AWS_RETRY_MODE' => 'LEGACY'], 'legacy', 11],
         ];
     }
 
-    /**
-     * @dataProvider arrayModeProvider
-     */
+    #[DataProvider('arrayModeProvider')]
     public function testDynamoDbDefaultAttemptsFromArrayWhenOptedIn(
         array $retries,
         int $expectedAttempts
-    ): void {
+    ): void
+    {
         // 'retries' => ['mode' => ...] without max_attempts must use the
         // DynamoDB attempt default (4 standard/adaptive, 11 legacy), not the
         // generic 3 that ConfigurationProvider::unwrap() fills in.

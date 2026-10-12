@@ -3,6 +3,7 @@ namespace Aws\Retry;
 
 use Aws\AbstractConfigurationProvider;
 use Aws\CacheInterface;
+use Aws\Configuration\ConfigurationResolver;
 use Aws\ConfigurationProviderInterface;
 use Aws\Retry\Exception\ConfigurationException;
 use Aws\Retry\V3\OptIn;
@@ -60,12 +61,11 @@ class ConfigurationProvider extends AbstractConfigurationProvider
     protected static $exceptionClass = ConfigurationException::class;
 
     /**
-     * Create a default config provider that first checks for environment
-     * variables, then checks for a specified profile in the environment-defined
-     * config file location (env variable is 'AWS_CONFIG_FILE', file location
-     * defaults to ~/.aws/config), then checks for the "default" profile in the
-     * environment-defined config file location, and failing those uses a default
-     * fallback set of configuration options.
+     * Create a default config provider that resolves the retry mode and
+     * max attempts independently. Each value is read from its environment
+     * variable, then from the profile selected by AWS_PROFILE (or "default")
+     * in the shared config file (AWS_CONFIG_FILE, defaulting to
+     * ~/.aws/config), and failing those falls back to its default.
      *
      * This provider is automatically wrapped in a memoize function that caches
      * previously provided config options.
@@ -76,18 +76,14 @@ class ConfigurationProvider extends AbstractConfigurationProvider
      */
     public static function defaultProvider(array $config = [])
     {
-        $configProviders = [self::env()];
-        if (
-            !isset($config['use_aws_shared_config_files'])
-            || $config['use_aws_shared_config_files'] != false
-        ) {
-            $configProviders[] = self::ini();
-        }
-        $configProviders[] = self::fallback();
-
-        $memo = self::memoize(
-            call_user_func_array([ConfigurationProvider::class, 'chain'], $configProviders)
-        );
+        $memo = self::memoize(function () use ($config) {
+            return Promise\Create::promiseFor(
+                new Configuration(
+                    self::resolveMode($config),
+                    self::resolveMaxAttempts($config) ?? self::DEFAULT_MAX_ATTEMPTS
+                )
+            );
+        });
 
         if (isset($config['retries'])
             && $config['retries'] instanceof CacheInterface
@@ -147,6 +143,53 @@ class ConfigurationProvider extends AbstractConfigurationProvider
     public static function getDefaultMode(): string
     {
         return OptIn::isEnabled() ? 'standard' : self::DEFAULT_MODE;
+    }
+
+    /**
+     * @internal Resolves retry_mode from AWS_RETRY_MODE, then the shared
+     *           config file, then {@see self::getDefaultMode()}. The value
+     *           is lowercased, matching {@see Configuration}.
+     *
+     * @param array $config Client arguments ('use_aws_shared_config_files').
+     *
+     * @return string
+     */
+    public static function resolveMode(array $config = []): string
+    {
+        $mode = ConfigurationResolver::resolve(
+            self::INI_MODE,
+            null,
+            'string',
+            $config
+        );
+
+        return $mode === null || $mode === ''
+            ? self::getDefaultMode()
+            : strtolower($mode);
+    }
+
+    /**
+     * @internal Resolves max_attempts from AWS_MAX_ATTEMPTS, then the shared
+     *           config file. Returns null when neither sets a value so each
+     *           caller can apply its own default. The value is returned
+     *           unvalidated; {@see Configuration} rejects invalid values.
+     *
+     * @param array $config Client arguments ('use_aws_shared_config_files').
+     *
+     * @return string|null
+     */
+    public static function resolveMaxAttempts(array $config = []): ?string
+    {
+        // Resolved as a string so an empty "max_attempts =" stays '' (unset)
+        // rather than being coerced to 0.
+        $maxAttempts = ConfigurationResolver::resolve(
+            self::INI_MAX_ATTEMPTS,
+            null,
+            'string',
+            $config
+        );
+
+        return $maxAttempts === '' ? null : $maxAttempts;
     }
 
     /**

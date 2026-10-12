@@ -4,7 +4,6 @@ namespace Aws\DynamoDb;
 use Aws\Api\Parser\Crc32ValidatingParser;
 use Aws\AwsClient;
 use Aws\ClientResolver;
-use Aws\Configuration\ConfigurationResolver;
 use Aws\Exception\AwsException;
 use Aws\HandlerList;
 use Aws\Middleware;
@@ -1453,47 +1452,26 @@ class DynamoDbClient extends AwsClient
 
     /**
      * @internal Default retry-config provider for the AWS_NEW_RETRIES_2026
-     *           path. Resolves the mode from env/INI (falling back to the
-     *           spec default). Unless max_attempts is set explicitly, the
-     *           attempt count is the DynamoDB default for that mode:
+     *           path. Resolves the mode and max_attempts independently from
+     *           env and the shared config file. Unless max_attempts is set,
+     *           the attempt count is the DynamoDB default for the mode:
      *           {@see self::DYNAMODB_MAX_ATTEMPTS} attempts in standard and
      *           adaptive mode, {@see self::DEFAULT_LEGACY_MAX_ATTEMPTS}
      *           retries in legacy mode.
+     *
+     * @param array $args Client arguments.
      */
-    public static function _defaultRetries()
+    public static function _defaultRetries(array $args = [])
     {
-        return function () {
-            $provider = RetryConfigurationProvider::chain(
-                RetryConfigurationProvider::env(),
-                RetryConfigurationProvider::ini(),
-                function () {
-                    return Create::promiseFor(
-                        new RetryConfiguration(
-                            RetryConfigurationProvider::getDefaultMode(),
-                            self::DYNAMODB_MAX_ATTEMPTS
-                        )
-                    );
-                }
-            );
+        return function () use ($args) {
+            $mode = RetryConfigurationProvider::resolveMode($args);
+            $maxAttempts = RetryConfigurationProvider::resolveMaxAttempts($args)
+                ?? ($mode === 'legacy'
+                    ? self::DEFAULT_LEGACY_MAX_ATTEMPTS + 1
+                    : self::DYNAMODB_MAX_ATTEMPTS);
 
-            return $provider()->then(
-                function (RetryConfigurationInterface $config) {
-                    $configuredMaxAttempts = ConfigurationResolver::resolve(
-                        RetryConfigurationProvider::INI_MAX_ATTEMPTS,
-                        null,
-                        'int'
-                    );
-                    if ($configuredMaxAttempts !== null) {
-                        return $config;
-                    }
-
-                    return new RetryConfiguration(
-                        $config->getMode(),
-                        $config->getMode() === 'legacy'
-                            ? self::DEFAULT_LEGACY_MAX_ATTEMPTS + 1
-                            : self::DYNAMODB_MAX_ATTEMPTS
-                    );
-                }
+            return Create::promiseFor(
+                new RetryConfiguration($mode, $maxAttempts)
             );
         };
     }
@@ -1567,8 +1545,7 @@ class DynamoDbClient extends AwsClient
         RetryConfigurationInterface $config
     ): int
     {
-        if (
-            NewRetriesOptIn::isEnabled()
+        if (NewRetriesOptIn::isEnabled()
             && is_array($value)
             && !isset($value['max_attempts'])
         ) {
@@ -1583,8 +1560,7 @@ class DynamoDbClient extends AwsClient
         RetryConfigurationInterface $config
     ): RetryConfigurationInterface
     {
-        if (
-            NewRetriesOptIn::isEnabled()
+        if (NewRetriesOptIn::isEnabled()
             && is_array($value)
             && !isset($value['max_attempts'])
         ) {

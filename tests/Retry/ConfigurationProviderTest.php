@@ -361,6 +361,104 @@ EOT;
         unlink($dir . '/config');
     }
 
+    #[DataProvider('perValueProvider')]
+    public function testDefaultProviderResolvesEachValueIndependently(
+        array $env,
+        string $ini,
+        string $expectedMode,
+        int $expectedMaxAttempts
+    ) {
+        $dir = $this->clearEnv();
+        file_put_contents($dir . '/config', $ini);
+        putenv('HOME=' . dirname($dir));
+        foreach ($env as $key => $value) {
+            putenv("$key=$value");
+        }
+
+        try {
+            $expected = new Configuration($expectedMode, $expectedMaxAttempts);
+            $result = call_user_func(ConfigurationProvider::defaultProvider())->wait();
+            $this->assertSame($expected->toArray(), $result->toArray());
+        } finally {
+            unlink($dir . '/config');
+        }
+    }
+
+    public static function perValueProvider(): array
+    {
+        return [
+            'env mode, ini max_attempts' => [
+                [ConfigurationProvider::ENV_MODE => 'standard'],
+                "[default]\nmax_attempts = 8\n",
+                'standard',
+                8,
+            ],
+            'env max_attempts, ini mode' => [
+                [ConfigurationProvider::ENV_MAX_ATTEMPTS => '8'],
+                "[default]\nretry_mode = adaptive\n",
+                'adaptive',
+                8,
+            ],
+            'env overrides ini per value' => [
+                [ConfigurationProvider::ENV_MAX_ATTEMPTS => '8'],
+                "[default]\nretry_mode = adaptive\nmax_attempts = 5\n",
+                'adaptive',
+                8,
+            ],
+            'profile prefix' => [
+                [ConfigurationProvider::ENV_PROFILE => 'foo'],
+                "[profile foo]\nretry_mode = adaptive\nmax_attempts = 7\n",
+                'adaptive',
+                7,
+            ],
+            'profile without prefix' => [
+                [ConfigurationProvider::ENV_PROFILE => 'foo'],
+                "[foo]\nretry_mode = adaptive\nmax_attempts = 7\n",
+                'adaptive',
+                7,
+            ],
+            'empty ini values' => [
+                [],
+                "[default]\nretry_mode =\nmax_attempts =\n",
+                'legacy',
+                3,
+            ],
+        ];
+    }
+
+    public function testDefaultProviderRejectsInvalidMaxAttempts()
+    {
+        $this->expectException(ConfigurationException::class);
+        $this->clearEnv();
+        putenv('HOME=/does/not/exist');
+        putenv(ConfigurationProvider::ENV_MAX_ATTEMPTS . '=0');
+        call_user_func(ConfigurationProvider::defaultProvider())->wait();
+    }
+
+    #[DataProvider('invalidIniProvider')]
+    public function testDefaultProviderRejectsInvalidIniValue(string $ini)
+    {
+        $this->expectException(ConfigurationException::class);
+        $dir = $this->clearEnv();
+        file_put_contents($dir . '/config', $ini);
+        putenv('HOME=' . dirname($dir));
+
+        try {
+            call_user_func(ConfigurationProvider::defaultProvider())->wait();
+        } finally {
+            unlink($dir . '/config');
+        }
+    }
+
+    public static function invalidIniProvider(): array
+    {
+        return [
+            'max_attempts 0' => ["[default]\nmax_attempts = 0\n"],
+            'max_attempts not a number' => ["[default]\nmax_attempts = abc\n"],
+            'unknown mode' => ["[default]\nretry_mode = foo\n"],
+        ];
+    }
+
     public function testsPersistsToCache()
     {
         $cache = new LruArrayCache();
