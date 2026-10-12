@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.401.0 - 2026-10-12
 
 * `Aws\Api` - Caches compiled JSON and XML serialization and parsing plans on model shapes, reducing per-request serialization and parsing overhead. Wire output and parsed results are unchanged, and plans are invalidated when a shape is mutated.
 * `Aws\CloudWatchOmni` - Adds support for updating agentCoreEvaluationRoleArn in UpdateSpace API
