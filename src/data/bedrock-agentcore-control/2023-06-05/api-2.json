@@ -6117,7 +6117,8 @@
         },
         "namespaceTemplates":{"shape":"NamespacesList"},
         "configuration":{"shape":"CustomConfigurationInput"},
-        "memoryRecordSchema":{"shape":"MemoryRecordSchema"}
+        "memoryRecordSchema":{"shape":"MemoryRecordSchema"},
+        "recordExpirySpecification":{"shape":"RecordExpirySpecification"}
       }
     },
     "CustomOauth2ProviderConfigInput":{
@@ -7454,7 +7455,8 @@
         },
         "namespaceTemplates":{"shape":"NamespacesList"},
         "reflectionConfiguration":{"shape":"EpisodicReflectionConfigurationInput"},
-        "memoryRecordSchema":{"shape":"MemoryRecordSchema"}
+        "memoryRecordSchema":{"shape":"MemoryRecordSchema"},
+        "recordExpirySpecification":{"shape":"RecordExpirySpecification"}
       }
     },
     "EpisodicOverrideConfigurationInput":{
@@ -12276,7 +12278,8 @@
         "createdAt":{"shape":"Timestamp"},
         "updatedAt":{"shape":"Timestamp"},
         "status":{"shape":"MemoryStrategyStatus"},
-        "memoryRecordSchema":{"shape":"MemoryRecordSchema"}
+        "memoryRecordSchema":{"shape":"MemoryRecordSchema"},
+        "recordExpiryDurationDays":{"shape":"RecordExpiryDurationDays"}
       }
     },
     "MemoryStrategyId":{
@@ -12506,7 +12509,8 @@
         },
         "namespaceTemplates":{"shape":"NamespacesList"},
         "configuration":{"shape":"ModifyStrategyConfiguration"},
-        "memoryRecordSchema":{"shape":"MemoryRecordSchema"}
+        "memoryRecordSchema":{"shape":"MemoryRecordSchema"},
+        "recordExpirySpecification":{"shape":"RecordExpirySpecification"}
       }
     },
     "ModifyReflectionConfiguration":{
@@ -12594,7 +12598,7 @@
       "type":"list",
       "member":{"shape":"NamespaceKeyEntry"},
       "max":5,
-      "min":1
+      "min":0
     },
     "NamespaceRegexPattern":{
       "type":"string",
@@ -13681,6 +13685,23 @@
       "max":64,
       "min":1
     },
+    "RecordExpiryAction":{
+      "type":"string",
+      "enum":["REMOVE"]
+    },
+    "RecordExpiryDurationDays":{
+      "type":"integer",
+      "box":true,
+      "min":31
+    },
+    "RecordExpirySpecification":{
+      "type":"structure",
+      "members":{
+        "recordExpiryDurationDays":{"shape":"RecordExpiryDurationDays"},
+        "action":{"shape":"RecordExpiryAction"}
+      },
+      "union":true
+    },
     "RecordIdentifier":{
       "type":"string",
       "max":2048,
@@ -14473,7 +14494,8 @@
           "deprecatedSince":"2026-03-02"
         },
         "namespaceTemplates":{"shape":"NamespacesList"},
-        "memoryRecordSchema":{"shape":"MemoryRecordSchema"}
+        "memoryRecordSchema":{"shape":"MemoryRecordSchema"},
+        "recordExpirySpecification":{"shape":"RecordExpirySpecification"}
       }
     },
     "SemanticOverrideConfigurationInput":{
@@ -14991,7 +15013,8 @@
           "deprecatedSince":"2026-03-02"
         },
         "namespaceTemplates":{"shape":"NamespacesList"},
-        "memoryRecordSchema":{"shape":"MemoryRecordSchema"}
+        "memoryRecordSchema":{"shape":"MemoryRecordSchema"},
+        "recordExpirySpecification":{"shape":"RecordExpirySpecification"}
       }
     },
     "SummaryOverrideConfigurationInput":{
@@ -16818,7 +16841,8 @@
           "deprecatedSince":"2026-03-02"
         },
         "namespaceTemplates":{"shape":"NamespacesList"},
-        "memoryRecordSchema":{"shape":"MemoryRecordSchema"}
+        "memoryRecordSchema":{"shape":"MemoryRecordSchema"},
+        "recordExpirySpecification":{"shape":"RecordExpirySpecification"}
       }
     },
     "UserPreferenceOverrideConfigurationInput":{

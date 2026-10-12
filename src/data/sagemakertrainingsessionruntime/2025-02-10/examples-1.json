@@ -1,0 +1,171 @@
+{
+  "version": "1.0",
+  "examples": {
+    "ExecuteSamplingOperation": [
+      {
+        "input": {
+          "operationConfig": {
+            "sample": {
+              "numSamples": 4,
+              "prompt": {
+                "chunks": [
+                  {
+                    "type": "encoded_text",
+                    "tokens": [
+                      791,
+                      6864,
+                      315,
+                      9822,
+                      374
+                    ]
+                  }
+                ]
+              },
+              "samplingParams": {
+                "maxTokens": 1024,
+                "temperature": 0.7,
+                "topP": 0.9
+              }
+            }
+          },
+          "trainingSessionName": "my-training-session"
+        },
+        "output": {
+          "operationId": "b2c3d4e5-6789-01bc-def0-234567890abc"
+        },
+        "description": "Generates completions for a tokenized prompt using the session's current weights. Generation behavior is controlled by `samplingParams`, and the operation is dispatched asynchronously.",
+        "id": "example-1",
+        "title": "Generate samples from a prompt"
+      }
+    ],
+    "ExecuteTrainingOperation": [
+      {
+        "input": {
+          "operationConfig": {
+            "forwardBackward": {
+              "datumList": [
+                {
+                  "modelInput": {
+                    "chunks": [
+                      {
+                        "type": "encoded_text",
+                        "tokens": [
+                          791,
+                          6864,
+                          315,
+                          9822,
+                          374,
+                          12366
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ],
+              "lossFnName": "cross_entropy"
+            }
+          },
+          "sequenceNumber": 1,
+          "trainingSessionName": "my-training-session"
+        },
+        "output": {
+          "operationId": "a1b2c3d4-5678-90ab-cdef-1234567890ab"
+        },
+        "description": "Computes gradients for a batch of tokenized prompts and accumulates them into the session. Operations are applied in `sequenceNumber` order, so each call must supply the next number in the sequence.",
+        "id": "example-1",
+        "title": "Run a forward and backward pass"
+      }
+    ],
+    "GetSamplingOperationResult": [
+      {
+        "input": {
+          "operationId": "a1b2c3d4-5678-90ab-cdef-1234567890ab",
+          "trainingSessionName": "my-training-session"
+        },
+        "output": {
+          "operationResult": {
+            "sample": {
+              "sequences": [
+                {
+                  "stopReason": "stop",
+                  "tokenUsage": {
+                    "decode": 7,
+                    "prefill": 5
+                  },
+                  "tokens": [
+                    791,
+                    6864,
+                    315,
+                    9822,
+                    374,
+                    12366,
+                    13
+                  ]
+                }
+              ]
+            }
+          },
+          "status": "Completed"
+        },
+        "description": "Retrieves the status and generated sequences for a sampling operation submitted with ExecuteSamplingOperation.",
+        "id": "example-1",
+        "title": "Get the result of a sampling operation"
+      }
+    ],
+    "GetTrainingOperationResult": [
+      {
+        "input": {
+          "operationId": "a1b2c3d4-5678-90ab-cdef-1234567890ab",
+          "trainingSessionName": "my-training-session"
+        },
+        "output": {
+          "operationResult": {
+            "forwardBackward": {
+              "lossFnOutputType": "logprobs",
+              "metrics": {
+                "loss": 1.8342
+              }
+            }
+          },
+          "status": "Completed",
+          "tokenUsage": {
+            "trainingTokens": 4096
+          }
+        },
+        "description": "Retrieves the status and result of a training operation submitted with ExecuteTrainingOperation.",
+        "id": "example-1",
+        "title": "Get the result of a training operation"
+      }
+    ],
+    "SampleTrainingSession": [
+      {
+        "input": {
+          "accept": "application/json",
+          "body": "eyJtZXNzYWdlcyI6W3sicm9sZSI6InVzZXIiLCJjb250ZW50IjoiV2hhdCBpcyB0aGUgY2FwaXRhbCBvZiBGcmFuY2U/In1dLCJtYXhfdG9rZW5zIjoxMjh9",
+          "contentType": "application/json",
+          "trainingSessionName": "my-training-session"
+        },
+        "output": {
+          "body": "eyJjaG9pY2VzIjpbeyJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiUGFyaXMifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV19",
+          "contentType": "application/json"
+        },
+        "description": "Sends a chat completion request to the session's current weights and receives the complete response in a single payload.",
+        "id": "example-1",
+        "title": "Sample from a training session"
+      }
+    ],
+    "SampleTrainingSessionWithResponseStream": [
+      {
+        "input": {
+          "accept": "application/json",
+          "body": "eyJtZXNzYWdlcyI6W3sicm9sZSI6InVzZXIiLCJjb250ZW50IjoiV2hhdCBpcyB0aGUgY2FwaXRhbCBvZiBGcmFuY2U/In1dLCJtYXhfdG9rZW5zIjoxMjgsInN0cmVhbSI6dHJ1ZX0=",
+          "contentType": "application/json",
+          "trainingSessionName": "my-training-session"
+        },
+        "description": "Sends a chat completion request to the session's current weights and receives the response as a stream of payload chunks.",
+        "id": "example-1",
+        "title": "Stream samples from a training session"
+      }
+    ]
+  }
+}

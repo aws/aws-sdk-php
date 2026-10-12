@@ -3615,6 +3615,30 @@ use Aws\AwsClient;
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result createTrainingSession(array $args = [])
+ * @phpstan-method \Aws\Result createTrainingSession(array{
+ *     TrainingSessionName?: string,
+ *     ModelPackageGroupArn?: string,
+ *     LoraConfig?: array{Rank?: int, Alpha?: int, ...},
+ *     RoleArn?: string,
+ *     VpcConfig?: array{SecurityGroupIds?: list<string>, Subnets?: list<string>, ...},
+ *     ModelConfig?: array{BaseModelArn?: string, AcceptEula?: bool, ...},
+ *     OutputConfig?: array{S3Location?: array{Path?: string, KmsKeyArn?: string, ...}, ...},
+ *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createTrainingSessionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createTrainingSessionAsync(array{
+ *     TrainingSessionName?: string,
+ *     ModelPackageGroupArn?: string,
+ *     LoraConfig?: array{Rank?: int, Alpha?: int, ...},
+ *     RoleArn?: string,
+ *     VpcConfig?: array{SecurityGroupIds?: list<string>, Subnets?: list<string>, ...},
+ *     ModelConfig?: array{BaseModelArn?: string, AcceptEula?: bool, ...},
+ *     OutputConfig?: array{S3Location?: array{Path?: string, KmsKeyArn?: string, ...}, ...},
+ *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result createTransformJob(array $args = [])
  * @phpstan-method \Aws\Result createTransformJob(array{
  *     TransformJobName?: string,
@@ -4179,6 +4203,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result deleteTrainingJob(array{TrainingJobName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteTrainingJobAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteTrainingJobAsync(array{TrainingJobName?: string, ...} $args = [])
+ * @method \Aws\Result deleteTrainingSession(array $args = [])
+ * @phpstan-method \Aws\Result deleteTrainingSession(array{TrainingSessionName?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteTrainingSessionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteTrainingSessionAsync(array{TrainingSessionName?: string, ...} $args = [])
  * @method \Aws\Result deleteTrial(array $args = [])
  * @phpstan-method \Aws\Result deleteTrial(array{TrialName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteTrialAsync(array $args = [])
@@ -4509,6 +4537,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result describeTrainingPlanExtensionHistory(array{TrainingPlanArn?: string, NextToken?: string, MaxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeTrainingPlanExtensionHistoryAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise describeTrainingPlanExtensionHistoryAsync(array{TrainingPlanArn?: string, NextToken?: string, MaxResults?: int, ...} $args = [])
+ * @method \Aws\Result describeTrainingSession(array $args = [])
+ * @phpstan-method \Aws\Result describeTrainingSession(array{TrainingSessionName?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeTrainingSessionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeTrainingSessionAsync(array{TrainingSessionName?: string, ...} $args = [])
  * @method \Aws\Result describeTransformJob(array $args = [])
  * @phpstan-method \Aws\Result describeTransformJob(array{TransformJobName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeTransformJobAsync(array $args = [])
@@ -6533,6 +6565,26 @@ use Aws\AwsClient;
  *     Filters?: list<array{Name?: 'Status', Value?: string, ...}>,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result listTrainingSessions(array $args = [])
+ * @phpstan-method \Aws\Result listTrainingSessions(array{
+ *     NextToken?: string,
+ *     MaxResults?: int,
+ *     CreationTimeAfter?: int|string|\DateTimeInterface,
+ *     CreationTimeBefore?: int|string|\DateTimeInterface,
+ *     NameContains?: string,
+ *     StatusEquals?: 'Blocked'|'Created'|'Deleting'|'DeletionFailed'|'Expired'|'Failed'|'Running'|'Scheduled'|'Stopped'|'Stopping',
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listTrainingSessionsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listTrainingSessionsAsync(array{
+ *     NextToken?: string,
+ *     MaxResults?: int,
+ *     CreationTimeAfter?: int|string|\DateTimeInterface,
+ *     CreationTimeBefore?: int|string|\DateTimeInterface,
+ *     NameContains?: string,
+ *     StatusEquals?: 'Blocked'|'Created'|'Deleting'|'DeletionFailed'|'Expired'|'Failed'|'Running'|'Scheduled'|'Stopped'|'Stopping',
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listTransformJobs(array $args = [])
  * @phpstan-method \Aws\Result listTransformJobs(array{
  *     CreationTimeAfter?: int|string|\DateTimeInterface,
@@ -6997,6 +7049,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result stopTrainingJob(array{TrainingJobName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise stopTrainingJobAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise stopTrainingJobAsync(array{TrainingJobName?: string, ...} $args = [])
+ * @method \Aws\Result stopTrainingSession(array $args = [])
+ * @phpstan-method \Aws\Result stopTrainingSession(array{TrainingSessionName?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise stopTrainingSessionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise stopTrainingSessionAsync(array{TrainingSessionName?: string, ...} $args = [])
  * @method \Aws\Result stopTransformJob(array $args = [])
  * @phpstan-method \Aws\Result stopTransformJob(array{TransformJobName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise stopTransformJobAsync(array $args = [])

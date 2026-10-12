@@ -125,7 +125,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result createConfiguration(array{
  *     name?: string,
  *     description?: string,
- *     runConfigurations?: array{vpcConfig?: array{securityGroupIds?: list<string>, subnetIds?: list<string>, ...}, ...},
+ *     runConfigurations?: array{
+ *         vpcConfig?: array{securityGroupIds?: list<string>, subnetIds?: list<string>, vpcOwnerAccountId?: string, ...},
+ *         ...,
+ *     },
  *     tags?: array<string, string>,
  *     requestId?: string,
  *     ...,
@@ -134,7 +137,10 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise createConfigurationAsync(array{
  *     name?: string,
  *     description?: string,
- *     runConfigurations?: array{vpcConfig?: array{securityGroupIds?: list<string>, subnetIds?: list<string>, ...}, ...},
+ *     runConfigurations?: array{
+ *         vpcConfig?: array{securityGroupIds?: list<string>, subnetIds?: list<string>, vpcOwnerAccountId?: string, ...},
+ *         ...,
+ *     },
  *     tags?: array<string, string>,
  *     requestId?: string,
  *     ...,

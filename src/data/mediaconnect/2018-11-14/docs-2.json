@@ -436,6 +436,13 @@
         "CreateRouterOutputRequest$ClientToken": "<p>A unique identifier for the request to ensure idempotency.</p>"
       }
     },
+    "ColorInformation": {
+      "base": "<p>The color signaling of the video stream.</p>",
+      "refs": {
+        "NdiMediaStreamInfo$Color": "<p> The color signaling of the video stream. Used when the <code>streamType</code> is <code>Video</code>. </p>",
+        "TransportStream$Color": "<p>The color signaling of the video stream.</p>"
+      }
+    },
     "Colorimetry": {
       "base": null,
       "refs": {
@@ -1211,6 +1218,7 @@
         "Transport$SmoothingLatency": "<p> The smoothing latency in milliseconds for RIST, RTP, and RTP-FEC streams.</p>",
         "Transport$SourceListenerPort": "<p> Source port for SRT-caller protocol.</p>",
         "Transport$NdiSpeedHqQuality": "<p>A quality setting for the NDI Speed HQ encoder. </p>",
+        "TransportMediaInfo$TsId": "<p>The transport stream ID (TSID) of the source, from the Program Association Table (PAT).</p>",
         "TransportStream$Channels": "<p> The number of channels in the audio stream.</p>",
         "TransportStream$Pid": "<p> The Packet ID (PID) as it is reported in the Program Map Table.</p>",
         "TransportStream$SampleRate": "<p> The sample rate used by the audio stream.</p>",
@@ -1529,7 +1537,7 @@
       }
     },
     "MediaConnectFlowRouterInputConfiguration": {
-      "base": "<p>Configuration settings for connecting a router input to a flow output.</p>",
+      "base": "<p>Configuration settings for connecting a router input to a flow output.</p> <p>To connect the router input to the flow output, provide both <code>flowArn</code> and <code>flowOutputArn</code>. To disconnect it, call the update operation and omit both fields while keeping this configuration object.</p> <note> <p>You can't change <code>sourceTransitDecryption</code> while the router input is connected to a flow output. To change it, first disconnect the router input, then update the decryption.</p> </note>",
       "refs": {
         "RouterInputConfiguration$MediaConnectFlow": null
       }
@@ -1541,7 +1549,7 @@
       }
     },
     "MediaConnectFlowRouterOutputConfiguration": {
-      "base": "<p>Configuration settings for connecting a router output to a MediaConnect flow source.</p>",
+      "base": "<p>Configuration settings for connecting a router output to a MediaConnect flow source.</p> <p>To connect the router output to the flow source, provide both <code>flowArn</code> and <code>flowSourceArn</code>. To disconnect it, call the update operation and omit both fields while keeping this configuration object.</p> <note> <p>You can't change <code>destinationTransitEncryption</code> while the router output is connected to a flow source. To change it, first disconnect the router output, then update the encryption.</p> </note>",
       "refs": {
         "RouterOutputConfiguration$MediaConnectFlow": null
       }
@@ -1565,7 +1573,7 @@
       }
     },
     "MediaLiveChannelRouterInputConfiguration": {
-      "base": "<p>Configuration settings for connecting a router input to a MediaLive channel output.</p>",
+      "base": "<p>Configuration settings for connecting a router input to a MediaLive channel output.</p> <p>To connect the router input to the MediaLive channel output, provide all three of <code>mediaLiveChannelArn</code>, <code>mediaLivePipelineId</code>, and <code>mediaLiveChannelOutputName</code>. To disconnect it, call the update operation and omit all three fields while keeping this configuration object.</p> <note> <p>You can't change <code>sourceTransitDecryption</code> while the router input is connected to a MediaLive channel output. To change it, first disconnect the router input, then update the decryption.</p> </note>",
       "refs": {
         "RouterInputConfiguration$MediaLiveChannel": null
       }
@@ -1589,7 +1597,7 @@
       }
     },
     "MediaLiveInputRouterOutputConfiguration": {
-      "base": "<p>Configuration settings for connecting a router output to a MediaLive input.</p>",
+      "base": "<p>Configuration settings for connecting a router output to a MediaLive input.</p> <p>To connect the router output to the MediaLive input, provide both <code>mediaLiveInputArn</code> and <code>mediaLivePipelineId</code>. To disconnect it, call the update operation and omit both fields while keeping this configuration object.</p> <note> <p>You can't change <code>destinationTransitEncryption</code> while the router output is connected to a MediaLive input. To change it, first disconnect the router output, then update the encryption.</p> </note>",
       "refs": {
         "RouterOutputConfiguration$MediaLiveInput": null
       }
@@ -1730,6 +1738,15 @@
         "UpdateBridgeNetworkSourceRequest$MulticastSourceSettings": "<p>The settings related to the multicast source. </p>"
       }
     },
+    "NdiAudioReferenceLevel": {
+      "base": null,
+      "refs": {
+        "AddOutputRequest$NdiAudioReferenceLevel": "<p>The audio reference level of the NDI receiver, in decibels relative to full scale (dBFS). Common values are <code>-20</code> (NDI and SMPTE) and <code>-18</code> (EBU). If you don't specify this field, MediaConnect uses <code>-20</code>.</p>",
+        "NdiSourceSettings$AudioReferenceLevel": "<p>The audio reference level of the NDI sender, in decibels relative to full scale (dBFS). Common values are <code>-20</code> (NDI and SMPTE) and <code>-18</code> (EBU). If you don't specify this field, MediaConnect uses <code>-20</code>.</p>",
+        "Transport$NdiAudioReferenceLevel": "<p>The audio reference level of the NDI receiver, in decibels relative to full scale (dBFS). Common values are <code>-20</code> (NDI and SMPTE) and <code>-18</code> (EBU). For NDI outputs, this field is always present and defaults to <code>-20</code>.</p>",
+        "UpdateFlowOutputRequest$NdiAudioReferenceLevel": "<p>The audio reference level of the NDI receiver, in decibels relative to full scale (dBFS). Common values are <code>-20</code> (NDI and SMPTE) and <code>-18</code> (EBU). If you don't specify this field, MediaConnect leaves the value unchanged.</p>"
+      }
+    },
     "NdiConfig": {
       "base": "<p>Specifies the configuration settings for NDI sources and outputs. </p>",
       "refs": {
@@ -1778,7 +1795,7 @@
       }
     },
     "NdiSourceSettings": {
-      "base": "<p> The settings for the NDI® source. This includes the exact name of the upstream NDI sender that you want to connect to your source. </p>",
+      "base": "<p> The settings for the NDI® source. This includes the exact name of the upstream NDI sender that you want to connect to your source. </p> <note> <p>When you update the NDI source, include only the members you want to change. MediaConnect leaves the members that you don't specify unchanged.</p> </note>",
       "refs": {
         "SetSourceRequest$NdiSourceSettings": "<p> The settings for the NDI® source. This includes the exact name of the upstream NDI sender that you want to connect to your source. </p>",
         "Transport$NdiSourceSettings": "<p> The settings for the NDI source. This includes the exact name of the upstream NDI sender that you want to connect to your source. </p>",
@@ -2266,9 +2283,9 @@
     "RouterInputTier": {
       "base": null,
       "refs": {
-        "CreateRouterInputRequest$Tier": "<p>The tier level for the router input.</p>",
-        "RouterInput$Tier": "<p>The tier level of the router input.</p>",
-        "UpdateRouterInputRequest$Tier": "<p>The updated tier level for the router input.</p>"
+        "CreateRouterInputRequest$Tier": "<p>The tier level for the router input. The tier sets the maximum bitrate, in Mbps, for the router input. Valid values include the following:</p> <ul> <li> <p> <code>INPUT_20</code> – 20 Mbps</p> </li> <li> <p> <code>INPUT_50</code> – 50 Mbps</p> </li> <li> <p> <code>INPUT_100</code> – 100 Mbps</p> </li> <li> <p> <code>INPUT_250</code> – 250 Mbps</p> </li> <li> <p> <code>INPUT_500</code> – 500 Mbps</p> </li> </ul> <p>The 250 Mbps and 500 Mbps tiers are high-bitrate tiers that support TR-07 (JPEG XS) workflows.</p>",
+        "RouterInput$Tier": "<p>The tier level for the router input. The tier sets the maximum bitrate, in Mbps, for the router input. Valid values include the following:</p> <ul> <li> <p> <code>INPUT_20</code> – 20 Mbps</p> </li> <li> <p> <code>INPUT_50</code> – 50 Mbps</p> </li> <li> <p> <code>INPUT_100</code> – 100 Mbps</p> </li> <li> <p> <code>INPUT_250</code> – 250 Mbps</p> </li> <li> <p> <code>INPUT_500</code> – 500 Mbps</p> </li> </ul> <p>The 250 Mbps and 500 Mbps tiers are high-bitrate tiers that support TR-07 (JPEG XS) workflows.</p>",
+        "UpdateRouterInputRequest$Tier": "<p>The updated tier level for the router input. The tier sets the maximum bitrate, in Mbps, for the router input. Valid values include the following:</p> <ul> <li> <p> <code>INPUT_20</code> – 20 Mbps</p> </li> <li> <p> <code>INPUT_50</code> – 50 Mbps</p> </li> <li> <p> <code>INPUT_100</code> – 100 Mbps</p> </li> <li> <p> <code>INPUT_250</code> – 250 Mbps</p> </li> <li> <p> <code>INPUT_500</code> – 500 Mbps</p> </li> </ul> <p>The 250 Mbps and 500 Mbps tiers are high-bitrate tiers that support TR-07 (JPEG XS) workflows.</p>"
       }
     },
     "RouterInputTransitEncryption": {
@@ -2505,9 +2522,9 @@
     "RouterOutputTier": {
       "base": null,
       "refs": {
-        "CreateRouterOutputRequest$Tier": "<p>The tier level for the router output.</p>",
-        "RouterOutput$Tier": "<p>The tier level of the router output.</p>",
-        "UpdateRouterOutputRequest$Tier": "<p>The updated tier level for the router output.</p>"
+        "CreateRouterOutputRequest$Tier": "<p>The tier level for the router output. The tier sets the maximum bitrate, in Mbps, for the router output. Valid values include the following:</p> <ul> <li> <p> <code>OUTPUT_20</code> – 20 Mbps</p> </li> <li> <p> <code>OUTPUT_50</code> – 50 Mbps</p> </li> <li> <p> <code>OUTPUT_100</code> – 100 Mbps</p> </li> <li> <p> <code>OUTPUT_250</code> – 250 Mbps</p> </li> <li> <p> <code>OUTPUT_500</code> – 500 Mbps</p> </li> </ul> <p>The 250 Mbps and 500 Mbps tiers are high-bitrate tiers that support TR-07 (JPEG XS) workflows.</p>",
+        "RouterOutput$Tier": "<p>The tier level for the router output. The tier sets the maximum bitrate, in Mbps, for the router output. Valid values include the following:</p> <ul> <li> <p> <code>OUTPUT_20</code> – 20 Mbps</p> </li> <li> <p> <code>OUTPUT_50</code> – 50 Mbps</p> </li> <li> <p> <code>OUTPUT_100</code> – 100 Mbps</p> </li> <li> <p> <code>OUTPUT_250</code> – 250 Mbps</p> </li> <li> <p> <code>OUTPUT_500</code> – 500 Mbps</p> </li> </ul> <p>The 250 Mbps and 500 Mbps tiers are high-bitrate tiers that support TR-07 (JPEG XS) workflows.</p>",
+        "UpdateRouterOutputRequest$Tier": "<p>The updated tier level for the router output. The tier sets the maximum bitrate, in Mbps, for the router output. Valid values include the following:</p> <ul> <li> <p> <code>OUTPUT_20</code> – 20 Mbps</p> </li> <li> <p> <code>OUTPUT_50</code> – 50 Mbps</p> </li> <li> <p> <code>OUTPUT_100</code> – 100 Mbps</p> </li> <li> <p> <code>OUTPUT_250</code> – 250 Mbps</p> </li> <li> <p> <code>OUTPUT_500</code> – 500 Mbps</p> </li> </ul> <p>The 250 Mbps and 500 Mbps tiers are high-bitrate tiers that support TR-07 (JPEG XS) workflows.</p>"
       }
     },
     "RouterOutputType": {
@@ -3638,10 +3655,28 @@
       "base": null,
       "refs": {}
     },
+    "VideoColorimetry": {
+      "base": null,
+      "refs": {
+        "ColorInformation$Colorimetry": "<p>The color primaries that the video stream uses (for example, <code>BT709</code> or <code>BT2020</code>).</p>"
+      }
+    },
+    "VideoMatrixCoefficients": {
+      "base": null,
+      "refs": {
+        "ColorInformation$MatrixCoefficients": "<p>The YCbCr matrix coefficients that the video stream uses (for example, <code>BT709</code> or <code>BT2020_NCL</code>).</p>"
+      }
+    },
     "VideoMonitoringSetting": {
       "base": "<p>Specifies the configuration for video stream metrics monitoring.</p>",
       "refs": {
         "__listOfVideoMonitoringSetting$member": null
+      }
+    },
+    "VideoTransferCharacteristics": {
+      "base": null,
+      "refs": {
+        "ColorInformation$TransferCharacteristics": "<p>The transfer characteristics that the video stream uses (for example, <code>BT601</code>, <code>BT709</code>, <code>BT2100_PQ</code>, or <code>BT2100_HLG</code>).</p>"
       }
     },
     "VpcInterface": {

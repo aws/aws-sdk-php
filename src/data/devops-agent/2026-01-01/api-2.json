@@ -2265,6 +2265,12 @@
       "min":1,
       "pattern":"[a-zA-Z0-9-_]+"
     },
+    "CustomHeaderNames":{
+      "type":"list",
+      "member":{"shape":"CustomHeaderName"},
+      "max":3,
+      "min":0
+    },
     "CustomHeaderValue":{
       "type":"string",
       "max":4096,
@@ -2732,6 +2738,7 @@
         "monthlyAccountEvaluationHours":{"shape":"UsageMetric"},
         "monthlyAccountSystemLearningHours":{"shape":"UsageMetric"},
         "monthlyAccountOnDemandHours":{"shape":"UsageMetric"},
+        "monthlyAccountGraderHours":{"shape":"UsageMetric"},
         "usagePeriodStartTime":{"shape":"DateTime"},
         "usagePeriodEndTime":{"shape":"DateTime"}
       }
@@ -2744,6 +2751,11 @@
           "shape":"AgentSpaceId",
           "location":"uri",
           "locationName":"agentSpaceId"
+        },
+        "includedData":{
+          "shape":"IncludedData",
+          "location":"querystring",
+          "locationName":"includedData"
         }
       }
     },
@@ -3270,6 +3282,13 @@
       "min":1,
       "sensitive":true
     },
+    "IncludedData":{
+      "type":"string",
+      "enum":[
+        "METADATA_ONLY",
+        "ALL_DATA"
+      ]
+    },
     "Integer":{
       "type":"integer",
       "box":true
@@ -3358,6 +3377,11 @@
           "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
+        },
+        "includedData":{
+          "shape":"IncludedData",
+          "location":"querystring",
+          "locationName":"includedData"
         }
       }
     },
@@ -4004,6 +4028,7 @@
         "oAuth3LO":{"shape":"MCPServerOAuth3LOConfig"},
         "apiKey":{"shape":"MCPServerAPIKeyConfig"},
         "bearerToken":{"shape":"MCPServerBearerTokenConfig"},
+        "customHeaders":{"shape":"MCPServerCustomHeadersConfig"},
         "authorizationDiscovery":{"shape":"MCPServerAuthorizationDiscoveryConfig"}
       },
       "union":true
@@ -4025,7 +4050,8 @@
         "oauth-client-credentials",
         "oauth-3lo",
         "api-key",
-        "bearer-token"
+        "bearer-token",
+        "custom-headers"
       ]
     },
     "MCPServerBearerTokenConfig":{
@@ -4060,6 +4086,20 @@
         "tools":{"shape":"MCPToolsList"},
         "toolDetails":{"shape":"MCPToolDetailsList"}
       }
+    },
+    "MCPServerCustomHeadersConfig":{
+      "type":"structure",
+      "required":["headers"],
+      "members":{
+        "headers":{"shape":"MCPServerCustomHeadersConfigHeadersMap"}
+      }
+    },
+    "MCPServerCustomHeadersConfigHeadersMap":{
+      "type":"map",
+      "key":{"shape":"CustomHeaderName"},
+      "value":{"shape":"CustomHeaderValue"},
+      "max":3,
+      "min":1
     },
     "MCPServerDatadogConfiguration":{
       "type":"structure",
@@ -4863,7 +4903,8 @@
         "endpoint":{"shape":"String"},
         "authorizationMethod":{"shape":"MCPServerAuthorizationMethod"},
         "description":{"shape":"Description"},
-        "apiKeyHeader":{"shape":"String"}
+        "apiKeyHeader":{"shape":"String"},
+        "customHeaderNames":{"shape":"CustomHeaderNames"}
       }
     },
     "RegisteredMCPServerSigV4Details":{

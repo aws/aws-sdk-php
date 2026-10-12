@@ -71,6 +71,7 @@ use Aws\AwsClient;
  *         RouterIntegrationState?: 'DISABLED'|'ENABLED',
  *         RouterIntegrationTransitEncryption?: array,
  *         NdiOutputTimecodeSource?: 'EMBEDDED_TIMECODE'|'UTC_SYSTEM_TIME',
+ *         NdiAudioReferenceLevel?: int,
  *         ...,
  *     }>,
  *     ...,
@@ -101,6 +102,7 @@ use Aws\AwsClient;
  *         RouterIntegrationState?: 'DISABLED'|'ENABLED',
  *         RouterIntegrationTransitEncryption?: array,
  *         NdiOutputTimecodeSource?: 'EMBEDDED_TIMECODE'|'UTC_SYSTEM_TIME',
+ *         NdiAudioReferenceLevel?: int,
  *         ...,
  *     }>,
  *     ...,
@@ -289,6 +291,7 @@ use Aws\AwsClient;
  *         RouterIntegrationState?: 'DISABLED'|'ENABLED',
  *         RouterIntegrationTransitEncryption?: array,
  *         NdiOutputTimecodeSource?: 'EMBEDDED_TIMECODE'|'UTC_SYSTEM_TIME',
+ *         NdiAudioReferenceLevel?: int,
  *         ...,
  *     }>,
  *     Source?: array{
@@ -322,7 +325,7 @@ use Aws\AwsClient;
  *         VpcInterfaceName?: string,
  *         WhitelistCidr?: string,
  *         GatewayBridgeSource?: array{BridgeArn?: string, VpcInterfaceAttachment?: array, ...},
- *         NdiSourceSettings?: array{SourceName?: string, ...},
+ *         NdiSourceSettings?: array{SourceName?: string, AudioReferenceLevel?: int, ...},
  *         SourceTags?: array<string, string>,
  *         RouterIntegrationState?: 'DISABLED'|'ENABLED',
  *         RouterIntegrationTransitDecryption?: array{EncryptionKeyType?: 'AUTOMATIC'|'SECRETS_MANAGER', EncryptionKeyConfiguration?: array, ...},
@@ -436,6 +439,7 @@ use Aws\AwsClient;
  *         RouterIntegrationState?: 'DISABLED'|'ENABLED',
  *         RouterIntegrationTransitEncryption?: array,
  *         NdiOutputTimecodeSource?: 'EMBEDDED_TIMECODE'|'UTC_SYSTEM_TIME',
+ *         NdiAudioReferenceLevel?: int,
  *         ...,
  *     }>,
  *     Source?: array{
@@ -469,7 +473,7 @@ use Aws\AwsClient;
  *         VpcInterfaceName?: string,
  *         WhitelistCidr?: string,
  *         GatewayBridgeSource?: array{BridgeArn?: string, VpcInterfaceAttachment?: array, ...},
- *         NdiSourceSettings?: array{SourceName?: string, ...},
+ *         NdiSourceSettings?: array{SourceName?: string, AudioReferenceLevel?: int, ...},
  *         SourceTags?: array<string, string>,
  *         RouterIntegrationState?: 'DISABLED'|'ENABLED',
  *         RouterIntegrationTransitDecryption?: array{EncryptionKeyType?: 'AUTOMATIC'|'SECRETS_MANAGER', EncryptionKeyConfiguration?: array, ...},
@@ -584,7 +588,7 @@ use Aws\AwsClient;
  *     },
  *     MaximumBitrate?: int,
  *     RoutingScope?: 'GLOBAL'|'REGIONAL',
- *     Tier?: 'INPUT_100'|'INPUT_20'|'INPUT_50',
+ *     Tier?: 'INPUT_100'|'INPUT_20'|'INPUT_250'|'INPUT_50'|'INPUT_500',
  *     RegionName?: string,
  *     AvailabilityZone?: string,
  *     TransitEncryption?: array{
@@ -637,7 +641,7 @@ use Aws\AwsClient;
  *     },
  *     MaximumBitrate?: int,
  *     RoutingScope?: 'GLOBAL'|'REGIONAL',
- *     Tier?: 'INPUT_100'|'INPUT_20'|'INPUT_50',
+ *     Tier?: 'INPUT_100'|'INPUT_20'|'INPUT_250'|'INPUT_50'|'INPUT_500',
  *     RegionName?: string,
  *     AvailabilityZone?: string,
  *     TransitEncryption?: array{
@@ -702,7 +706,7 @@ use Aws\AwsClient;
  *     },
  *     MaximumBitrate?: int,
  *     RoutingScope?: 'GLOBAL'|'REGIONAL',
- *     Tier?: 'OUTPUT_100'|'OUTPUT_20'|'OUTPUT_50',
+ *     Tier?: 'OUTPUT_100'|'OUTPUT_20'|'OUTPUT_250'|'OUTPUT_50'|'OUTPUT_500',
  *     RegionName?: string,
  *     AvailabilityZone?: string,
  *     MaintenanceConfiguration?: array{
@@ -736,7 +740,7 @@ use Aws\AwsClient;
  *     },
  *     MaximumBitrate?: int,
  *     RoutingScope?: 'GLOBAL'|'REGIONAL',
- *     Tier?: 'OUTPUT_100'|'OUTPUT_20'|'OUTPUT_50',
+ *     Tier?: 'OUTPUT_100'|'OUTPUT_20'|'OUTPUT_250'|'OUTPUT_50'|'OUTPUT_500',
  *     RegionName?: string,
  *     AvailabilityZone?: string,
  *     MaintenanceConfiguration?: array{
@@ -1343,6 +1347,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     NdiOutputTimecodeSource?: 'EMBEDDED_TIMECODE'|'UTC_SYSTEM_TIME',
+ *     NdiAudioReferenceLevel?: int,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateFlowOutputAsync(array $args = [])
@@ -1391,6 +1396,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     NdiOutputTimecodeSource?: 'EMBEDDED_TIMECODE'|'UTC_SYSTEM_TIME',
+ *     NdiAudioReferenceLevel?: int,
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateFlowSource(array $args = [])
@@ -1431,7 +1437,7 @@ use Aws\AwsClient;
  *     VpcInterfaceName?: string,
  *     WhitelistCidr?: string,
  *     GatewayBridgeSource?: array{BridgeArn?: string, VpcInterfaceAttachment?: array{VpcInterfaceName?: string, ...}, ...},
- *     NdiSourceSettings?: array{SourceName?: string, ...},
+ *     NdiSourceSettings?: array{SourceName?: string, AudioReferenceLevel?: int, ...},
  *     RouterIntegrationState?: 'DISABLED'|'ENABLED',
  *     RouterIntegrationTransitDecryption?: array{
  *         EncryptionKeyType?: 'AUTOMATIC'|'SECRETS_MANAGER',
@@ -1478,7 +1484,7 @@ use Aws\AwsClient;
  *     VpcInterfaceName?: string,
  *     WhitelistCidr?: string,
  *     GatewayBridgeSource?: array{BridgeArn?: string, VpcInterfaceAttachment?: array{VpcInterfaceName?: string, ...}, ...},
- *     NdiSourceSettings?: array{SourceName?: string, ...},
+ *     NdiSourceSettings?: array{SourceName?: string, AudioReferenceLevel?: int, ...},
  *     RouterIntegrationState?: 'DISABLED'|'ENABLED',
  *     RouterIntegrationTransitDecryption?: array{
  *         EncryptionKeyType?: 'AUTOMATIC'|'SECRETS_MANAGER',
@@ -1527,7 +1533,7 @@ use Aws\AwsClient;
  *     },
  *     MaximumBitrate?: int,
  *     RoutingScope?: 'GLOBAL'|'REGIONAL',
- *     Tier?: 'INPUT_100'|'INPUT_20'|'INPUT_50',
+ *     Tier?: 'INPUT_100'|'INPUT_20'|'INPUT_250'|'INPUT_50'|'INPUT_500',
  *     TransitEncryption?: array{
  *         EncryptionKeyType?: 'AUTOMATIC'|'SECRETS_MANAGER',
  *         EncryptionKeyConfiguration?: array{SecretsManager?: array, Automatic?: array, ...},
@@ -1577,7 +1583,7 @@ use Aws\AwsClient;
  *     },
  *     MaximumBitrate?: int,
  *     RoutingScope?: 'GLOBAL'|'REGIONAL',
- *     Tier?: 'INPUT_100'|'INPUT_20'|'INPUT_50',
+ *     Tier?: 'INPUT_100'|'INPUT_20'|'INPUT_250'|'INPUT_50'|'INPUT_500',
  *     TransitEncryption?: array{
  *         EncryptionKeyType?: 'AUTOMATIC'|'SECRETS_MANAGER',
  *         EncryptionKeyConfiguration?: array{SecretsManager?: array, Automatic?: array, ...},
@@ -1635,7 +1641,7 @@ use Aws\AwsClient;
  *     },
  *     MaximumBitrate?: int,
  *     RoutingScope?: 'GLOBAL'|'REGIONAL',
- *     Tier?: 'OUTPUT_100'|'OUTPUT_20'|'OUTPUT_50',
+ *     Tier?: 'OUTPUT_100'|'OUTPUT_20'|'OUTPUT_250'|'OUTPUT_50'|'OUTPUT_500',
  *     MaintenanceConfiguration?: array{
  *         PreferredDayTime?: array{Day?: 'FRIDAY'|'MONDAY'|'SATURDAY'|'SUNDAY'|'THURSDAY'|'TUESDAY'|'WEDNESDAY', Time?: string, ...},
  *         Default?: array,
@@ -1666,7 +1672,7 @@ use Aws\AwsClient;
  *     },
  *     MaximumBitrate?: int,
  *     RoutingScope?: 'GLOBAL'|'REGIONAL',
- *     Tier?: 'OUTPUT_100'|'OUTPUT_20'|'OUTPUT_50',
+ *     Tier?: 'OUTPUT_100'|'OUTPUT_20'|'OUTPUT_250'|'OUTPUT_50'|'OUTPUT_500',
  *     MaintenanceConfiguration?: array{
  *         PreferredDayTime?: array{Day?: 'FRIDAY'|'MONDAY'|'SATURDAY'|'SUNDAY'|'THURSDAY'|'TUESDAY'|'WEDNESDAY', Time?: string, ...},
  *         Default?: array,

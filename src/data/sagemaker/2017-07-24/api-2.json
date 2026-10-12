@@ -960,6 +960,20 @@
         {"shape":"ResourceLimitExceeded"}
       ]
     },
+    "CreateTrainingSession":{
+      "name":"CreateTrainingSession",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateTrainingSessionRequest"},
+      "output":{"shape":"CreateTrainingSessionResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"},
+        {"shape":"ResourceInUse"},
+        {"shape":"ResourceLimitExceeded"}
+      ]
+    },
     "CreateTransformJob":{
       "name":"CreateTransformJob",
       "http":{
@@ -1668,6 +1682,18 @@
       "errors":[
         {"shape":"ResourceNotFound"},
         {"shape":"ResourceInUse"}
+      ]
+    },
+    "DeleteTrainingSession":{
+      "name":"DeleteTrainingSession",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteTrainingSessionRequest"},
+      "output":{"shape":"DeleteTrainingSessionResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
       ]
     },
     "DeleteTrial":{
@@ -2540,6 +2566,19 @@
       "errors":[
         {"shape":"ResourceNotFound"}
       ]
+    },
+    "DescribeTrainingSession":{
+      "name":"DescribeTrainingSession",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeTrainingSessionRequest"},
+      "output":{"shape":"DescribeTrainingSessionResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ],
+      "readonly":true
     },
     "DescribeTransformJob":{
       "name":"DescribeTransformJob",
@@ -3554,6 +3593,16 @@
       "input":{"shape":"ListTrainingPlansRequest"},
       "output":{"shape":"ListTrainingPlansResponse"}
     },
+    "ListTrainingSessions":{
+      "name":"ListTrainingSessions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListTrainingSessionsRequest"},
+      "output":{"shape":"ListTrainingSessionsResponse"},
+      "readonly":true
+    },
     "ListTransformJobs":{
       "name":"ListTransformJobs",
       "http":{
@@ -4025,6 +4074,18 @@
         "requestUri":"/"
       },
       "input":{"shape":"StopTrainingJobRequest"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ]
+    },
+    "StopTrainingSession":{
+      "name":"StopTrainingSession",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StopTrainingSessionRequest"},
+      "output":{"shape":"StopTrainingSessionResponse"},
       "errors":[
         {"shape":"ResourceNotFound"}
       ]
@@ -6913,6 +6974,12 @@
         "RecipeName":{"shape":"RecipeName"}
       }
     },
+    "BaseModelArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"(arn:[a-z0-9-.]{1,63}:sagemaker:[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)+:([0-9]{12}|aws):hub-content/)[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}/Model/[a-zA-Z0-9](-*[a-zA-Z0-9]){0,63}(/[0-9]{1,4}\\.[0-9]{1,4}\\.[0-9]{1,4})?"
+    },
     "BaseModelName":{
       "type":"string",
       "max":256,
@@ -7342,6 +7409,14 @@
       "type":"long",
       "box":true,
       "min":0
+    },
+    "BillableTokenUsage":{
+      "type":"structure",
+      "members":{
+        "PrefillTokenCount":{"shape":"JavaLong"},
+        "SampleTokenCount":{"shape":"JavaLong"},
+        "TrainingTokenCount":{"shape":"JavaLong"}
+      }
     },
     "BlockedReason":{
       "type":"string",
@@ -11516,6 +11591,33 @@
         "TrainingPlanArn":{"shape":"TrainingPlanArn"}
       }
     },
+    "CreateTrainingSessionRequest":{
+      "type":"structure",
+      "required":[
+        "TrainingSessionName",
+        "LoraConfig",
+        "RoleArn",
+        "ModelConfig",
+        "OutputConfig"
+      ],
+      "members":{
+        "TrainingSessionName":{"shape":"TrainingSessionName"},
+        "ModelPackageGroupArn":{"shape":"ModelPackageGroupArn"},
+        "LoraConfig":{"shape":"LoraConfig"},
+        "RoleArn":{"shape":"RoleArn"},
+        "VpcConfig":{"shape":"VpcConfig"},
+        "ModelConfig":{"shape":"TrainingSessionModelConfig"},
+        "OutputConfig":{"shape":"TrainingSessionOutputConfig"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateTrainingSessionResponse":{
+      "type":"structure",
+      "required":["TrainingSessionArn"],
+      "members":{
+        "TrainingSessionArn":{"shape":"TrainingSessionArn"}
+      }
+    },
     "CreateTransformJobRequest":{
       "type":"structure",
       "required":[
@@ -11758,6 +11860,12 @@
         "Uid":{"shape":"Uid"},
         "Gid":{"shape":"Gid"}
       }
+    },
+    "CustomerKmsKeyArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"arn:aws[a-z\\-]*:kms:[a-z0-9\\-]+:[0-9]{12}:key/(mrk-)?[a-f0-9\\-]+"
     },
     "CustomerMetadataKey":{
       "type":"string",
@@ -12636,6 +12744,17 @@
       "members":{
         "TrainingJobName":{"shape":"TrainingJobName"}
       }
+    },
+    "DeleteTrainingSessionRequest":{
+      "type":"structure",
+      "required":["TrainingSessionName"],
+      "members":{
+        "TrainingSessionName":{"shape":"TrainingSessionName"}
+      }
+    },
+    "DeleteTrainingSessionResponse":{
+      "type":"structure",
+      "members":{}
     },
     "DeleteTrialComponentRequest":{
       "type":"structure",
@@ -15084,6 +15203,20 @@
         "TotalUltraServerCount":{"shape":"UltraServerCount"},
         "TargetResources":{"shape":"SageMakerResourceNames"},
         "ReservedCapacitySummaries":{"shape":"ReservedCapacitySummaries"}
+      }
+    },
+    "DescribeTrainingSessionRequest":{
+      "type":"structure",
+      "required":["TrainingSessionName"],
+      "members":{
+        "TrainingSessionName":{"shape":"TrainingSessionName"}
+      }
+    },
+    "DescribeTrainingSessionResponse":{
+      "type":"structure",
+      "required":["TrainingSessionDetail"],
+      "members":{
+        "TrainingSessionDetail":{"shape":"TrainingSessionDetail"}
       }
     },
     "DescribeTransformJobRequest":{
@@ -19476,6 +19609,18 @@
       "max":256,
       "min":1
     },
+    "JavaBoolean":{
+      "type":"boolean",
+      "box":true
+    },
+    "JavaInteger":{
+      "type":"integer",
+      "box":true
+    },
+    "JavaLong":{
+      "type":"long",
+      "box":true
+    },
     "Job":{
       "type":"structure",
       "members":{
@@ -21922,6 +22067,24 @@
         "TrainingPlanSummaries":{"shape":"TrainingPlanSummaries"}
       }
     },
+    "ListTrainingSessionsRequest":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"MaxResults"},
+        "CreationTimeAfter":{"shape":"Timestamp"},
+        "CreationTimeBefore":{"shape":"Timestamp"},
+        "NameContains":{"shape":"NameContains"},
+        "StatusEquals":{"shape":"TrainingSessionStatus"}
+      }
+    },
+    "ListTrainingSessionsResponse":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"NextToken"},
+        "TrainingSessionSummaries":{"shape":"TrainingSessionSummaries"}
+      }
+    },
     "ListTransformJobsRequest":{
       "type":"structure",
       "members":{
@@ -22087,6 +22250,22 @@
       "max":2048,
       "min":0,
       "pattern":"(https|s3)://([^/]+)/?(.*)"
+    },
+    "LoraAlpha":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
+    "LoraConfig":{
+      "type":"structure",
+      "required":[
+        "Rank",
+        "Alpha"
+      ],
+      "members":{
+        "Rank":{"shape":"Rank"},
+        "Alpha":{"shape":"LoraAlpha"}
+      }
     },
     "MIGProfileType":{
       "type":"string",
@@ -24937,6 +25116,12 @@
       "max":50,
       "min":0
     },
+    "OutputS3Path":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"(https|s3)://([^/]+)/?(.*)"
+    },
     "OwnershipSettings":{
       "type":"structure",
       "required":["OwnerUserProfileName"],
@@ -26945,6 +27130,12 @@
       "type":"integer",
       "box":true,
       "min":0
+    },
+    "Rank":{
+      "type":"integer",
+      "box":true,
+      "max":256,
+      "min":1
     },
     "RealTimeInferenceConfig":{
       "type":"structure",
@@ -29281,6 +29472,17 @@
         "TrainingJobName":{"shape":"TrainingJobName"}
       }
     },
+    "StopTrainingSessionRequest":{
+      "type":"structure",
+      "required":["TrainingSessionName"],
+      "members":{
+        "TrainingSessionName":{"shape":"TrainingSessionName"}
+      }
+    },
+    "StopTrainingSessionResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "StopTransformJobRequest":{
       "type":"structure",
       "required":["TransformJobName"],
@@ -30738,6 +30940,103 @@
       "max":2048,
       "min":1,
       "pattern":"arn:[\\p{Alnum}\\-]+:lambda:[\\p{Alnum}\\-]+:[0-9]{12}:function:.*"
+    },
+    "TrainingSessionArn":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"arn:(aws[a-z\\-]*):sagemaker:[a-z0-9\\-]+:[0-9]{12}:training-session/[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
+    },
+    "TrainingSessionDetail":{
+      "type":"structure",
+      "required":[
+        "TrainingSessionArn",
+        "TrainingSessionName",
+        "TrainingSessionStatus",
+        "CreationTime"
+      ],
+      "members":{
+        "TrainingSessionArn":{"shape":"TrainingSessionArn"},
+        "TrainingSessionName":{"shape":"TrainingSessionName"},
+        "TrainingSessionStatus":{"shape":"TrainingSessionStatus"},
+        "ModelPackageGroupArn":{"shape":"ModelPackageGroupArn"},
+        "CreationTime":{"shape":"Timestamp"},
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "EndTime":{"shape":"Timestamp"},
+        "ErrorDetails":{"shape":"FailureReason"},
+        "LastReceivedSequenceNumber":{"shape":"JavaInteger"},
+        "BillableTokenUsage":{"shape":"BillableTokenUsage"},
+        "VpcConfig":{"shape":"VpcConfig"},
+        "RoleArn":{"shape":"RoleArn"},
+        "LoraConfig":{"shape":"LoraConfig"},
+        "ModelConfig":{"shape":"TrainingSessionModelConfig"},
+        "OutputConfig":{"shape":"TrainingSessionOutputConfig"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "TrainingSessionModelConfig":{
+      "type":"structure",
+      "required":["BaseModelArn"],
+      "members":{
+        "BaseModelArn":{"shape":"BaseModelArn"},
+        "AcceptEula":{"shape":"JavaBoolean"}
+      }
+    },
+    "TrainingSessionName":{
+      "type":"string",
+      "max":63,
+      "min":1,
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
+    },
+    "TrainingSessionOutputConfig":{
+      "type":"structure",
+      "required":["S3Location"],
+      "members":{
+        "S3Location":{"shape":"TrainingSessionS3Location"}
+      }
+    },
+    "TrainingSessionS3Location":{
+      "type":"structure",
+      "required":["Path"],
+      "members":{
+        "Path":{"shape":"OutputS3Path"},
+        "KmsKeyArn":{"shape":"CustomerKmsKeyArn"}
+      }
+    },
+    "TrainingSessionStatus":{
+      "type":"string",
+      "enum":[
+        "Created",
+        "Blocked",
+        "Running",
+        "Failed",
+        "Scheduled",
+        "Stopping",
+        "Stopped",
+        "Expired",
+        "Deleting",
+        "DeletionFailed"
+      ]
+    },
+    "TrainingSessionSummaries":{
+      "type":"list",
+      "member":{"shape":"TrainingSessionSummary"},
+      "max":100,
+      "min":0
+    },
+    "TrainingSessionSummary":{
+      "type":"structure",
+      "required":[
+        "TrainingSessionArn",
+        "TrainingSessionStatus",
+        "CreationTime"
+      ],
+      "members":{
+        "TrainingSessionArn":{"shape":"TrainingSessionArn"},
+        "TrainingSessionStatus":{"shape":"TrainingSessionStatus"},
+        "CreationTime":{"shape":"Timestamp"},
+        "LastModifiedTime":{"shape":"Timestamp"}
+      }
     },
     "TrainingSpecification":{
       "type":"structure",

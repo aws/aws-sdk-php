@@ -379,7 +379,8 @@
         "Space$dataAccessRoleArn": "<p>The ARN of the IAM role used for data access.</p>",
         "Space$agentCoreEvaluationRoleArn": "<p>The ARN of the IAM role used by AgentCore online evaluation. Absent when the space was created without one.</p>",
         "SpaceSummary$spaceArn": "<p>The Amazon Resource Name (ARN) of the space.</p>",
-        "SpaceSummary$domainArn": "<p>The Amazon Resource Name (ARN) of the domain the space belongs to. Absent when the space is not associated with a domain, so callers must tolerate its absence.</p>"
+        "SpaceSummary$domainArn": "<p>The Amazon Resource Name (ARN) of the domain the space belongs to. Absent when the space is not associated with a domain, so callers must tolerate its absence.</p>",
+        "UpdateSpaceInput$agentCoreEvaluationRoleArn": "<p>The ARN of the IAM role used by AgentCore online evaluation. Must be in the caller's account. Omit if the space does not use AgentCore online evaluation.</p>"
       }
     },
     "AssumeStatus": {
@@ -1459,7 +1460,7 @@
       }
     },
     "LogMetadataAttributeMap": {
-      "base": "<p>One LOGS query-selector block: EXACT store column -&gt; raw SCALAR value (mirroring the scalar MetadataAttributeMap). Keyed by the store column that carries the value (e.g. <code>resource.attributes['service.name']</code>, <code>attributes['aws.local.service']</code>, <code>@logGroupName</code>) so the selector matches the emitted signal. A dimension seen under several values (a service under two namespaces, several log groups) becomes several blocks with the same columns and different values, which the console ORs. Dedicated to the LOGS selector so its cap evolves independently of the metric attribute map and the TRACES map. Selector caps are deliberately DISTINCT from the metric caps.</p>",
+      "base": "<p>One LOGS query-selector block: an exact log-store column mapped to the raw value it carries, so the selector matches the emitted signal. Keys are store column names, not bare attribute names. Every block carries &quot;@logGroupName&quot;; alongside it a block carries either the entity columns (&quot;<code>@entities</code>.KeyAttributes.Name&quot;, &quot;.Type&quot;, &quot;.Environment&quot;, &quot;<code>@entities</code>.Attributes.PlatformType&quot;) or OTel columns (&quot;resource.attributes['service.name']&quot;, &quot;resource.attributes['service.namespace']&quot;, &quot;resource.attributes['cloud.provider'|'cloud.account.id'|'cloud.region']&quot;). A dimension seen under several values — several log groups, or a service under two namespaces — becomes several blocks with the same columns and different values, to be OR'd together.</p>",
       "refs": {
         "LogMetadata$attributes": null
       }
@@ -1467,7 +1468,7 @@
     "LogMetadataList": {
       "base": "<p>Per-node log query selectors; the list ORs across blocks (e.g. an OTLP block vs a CloudWatch- VENDED block). Bound is a payload cap, not a selection rule.</p>",
       "refs": {
-        "Metadata$logs": "<p>Per-signal LOGS query selectors: a LIST of blocks the console ORs, each an AND of exact store column -&gt; raw values. Node-level (edges carry only traces). Populated when the request sets includeMetadata; derived labels (logSourceType) are added by the service projection, not stored here.</p>"
+        "Metadata$logs": "<p>LOGS query selectors: a list of blocks to OR together, each block an AND of exact store column to raw value. Present on node metadata only — edges carry trace selectors. Returned when the request sets includeMetadata.</p>"
       }
     },
     "Long": {
@@ -1487,7 +1488,7 @@
     "MetadataAttributeMap": {
       "base": "<p>Per-metric qualifying attributes carried on MetricMetadata. A dedicated shape (not the shared IntelligenceAttributeMap) so its length cap can be tuned independently.</p>",
       "refs": {
-        "MetricMetadata$attributes": "<p>Per-metric qualifying attributes the console uses to query this metric's telemetry. These are the RAW, store-matching values keyed by their OTel names (&quot;service.name&quot;, &quot;service.namespace&quot;, &quot;cloud.provider&quot;, &quot;cloud.account.id&quot;, &quot;cloud.region&quot;, &quot;instrumentation_scope&quot;) — deliberately NOT the node's normalized/merged identity, so the query selectors match the emitted series. A merged node can carry different values per metric, which is why they live here rather than on the node.</p>"
+        "MetricMetadata$attributes": "<p>Per-metric qualifying attributes used to query this metric's telemetry. Keys are the metric store's own label names, not bare OTel attribute names: service identity arrives as &quot;@resource.service.name&quot; and &quot;@resource.service.namespace&quot;, and the instrumentation scope as &quot;@instrumentation.@name&quot;, while span-derived metrics label the service as a bare &quot;service.name&quot;. Cloud provider, account and region are not repeated per metric — read those from the node. Values are RAW, deliberately NOT the node's normalized or merged identity, so a selector built from them matches the emitted series. A merged node can carry different values per metric, which is why these live here rather than on the node.</p>"
       }
     },
     "MetricMetadata": {
@@ -1804,7 +1805,7 @@
       }
     },
     "PaginationToken": {
-      "base": "<p>Pagination token for context graph and insights.</p>",
+      "base": "<p>Pagination token for the context graph.</p>",
       "refs": {
         "GetContextGraphInput$nextToken": "<p>Pagination token from a previous response, to retrieve the next page.</p>",
         "GetContextGraphOutput$nextToken": "<p>Pagination token for the next page; absent when there are no more results.</p>"
@@ -2326,7 +2327,6 @@
         "MetadataAttributeMap$key": null,
         "MetadataAttributeMap$value": null,
         "MetricMetadata$name": "<p>The metric name as emitted, such as &quot;Duration&quot;.</p>",
-        "MetricMetadata$namespace": "<p>DEPRECATED: read attributes[&quot;service.namespace&quot;] instead. Retained (deprecated) for backward compatibility with existing consumers; will be removed once they migrate. The logical service grouping the metric belongs to.</p>",
         "MetricMetadata$preferredStat": "<p>The statistic to chart or alarm on, such as &quot;p99&quot; or &quot;Sum&quot;. Free-form and frequently absent.</p>",
         "MetricMetadata$metricType": "<p>OTel metric kind: &quot;gauge&quot;, &quot;sum&quot;, &quot;histogram&quot;, &quot;exponential_histogram&quot;, or &quot;summary&quot; (CloudWatch-vended metrics carry the same kinds). Absent when the producer did not report one.</p>",
         "MetricSemantics$description": "<p>Human-readable description of what the metric measures.</p>",
@@ -2547,7 +2547,7 @@
       }
     },
     "TraceMetadataAttributeMap": {
-      "base": "<p>TRACES counterpart of LogMetadataAttributeMap — a dedicated per-signal map so the two evolve independently (same scalar shape and cap today).</p>",
+      "base": "<p>One TRACES query-selector block: an exact span-store column mapped to the raw value it carries. Keys are store column names, not bare attribute names — the service identity and cloud dimensions arrive as &quot;resource.attributes['service.name']&quot;, &quot;resource.attributes['service.namespace']&quot;, &quot;resource.attributes['cloud.provider']&quot;, &quot;resource.attributes['cloud.account.id']&quot;, &quot;resource.attributes['cloud.region']&quot; and &quot;resource.attributes['deployment.environment']&quot;, and span-level identity as &quot;attributes['aws.local.service']&quot; and &quot;attributes['aws.local.environment']&quot;. Not every column is present on every block; which ones appear depends on what the span carried.</p>",
       "refs": {
         "TraceMetadata$attributes": null
       }
@@ -2555,7 +2555,7 @@
     "TraceMetadataList": {
       "base": "<p>Per-node/per-edge trace query selectors; the list ORs across blocks. Bound is a payload cap.</p>",
       "refs": {
-        "Metadata$traces": "<p>Per-signal TRACES query selectors (same block shape as logs). Present on both node and edge metadata. serviceName is derived at the service projection, not stored here.</p>"
+        "Metadata$traces": "<p>TRACES query selectors, same block shape as the logs selectors. Present on both node and edge metadata. Returned when the request sets includeMetadata.</p>"
       }
     },
     "UpdateAccessProfileInput": {

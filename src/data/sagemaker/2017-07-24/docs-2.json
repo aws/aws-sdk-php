@@ -78,6 +78,7 @@
     "CreateStudioLifecycleConfig": "<p>Creates a new Amazon SageMaker AI Studio Lifecycle Configuration.</p>",
     "CreateTrainingJob": "<p>Starts a model training job. After training completes, SageMaker saves the resulting model artifacts to an Amazon S3 location that you specify. </p> <p>If you choose to host your model using SageMaker hosting services, you can use the resulting model artifacts as part of the model. You can also use the artifacts in a machine learning service other than SageMaker, provided that you know how to use them for inference. </p> <p>In the request body, you provide the following: </p> <ul> <li> <p> <code>AlgorithmSpecification</code> - Identifies the training algorithm to use. </p> </li> <li> <p> <code>HyperParameters</code> - Specify these algorithm-specific parameters to enable the estimation of model parameters during training. Hyperparameters can be tuned to optimize this learning process. For a list of hyperparameters for each training algorithm provided by SageMaker, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/algos.html\">Algorithms</a>. </p> <important> <p>Do not include any security-sensitive information including account access IDs, secrets, or tokens in any hyperparameter fields. As part of the shared responsibility model, you are responsible for any potential exposure, unauthorized access, or compromise of your sensitive data if caused by security-sensitive information included in the request hyperparameter variable or plain text fields.</p> </important> </li> <li> <p> <code>InputDataConfig</code> - Describes the input required by the training job and the Amazon S3, EFS, or FSx location where it is stored.</p> </li> <li> <p> <code>OutputDataConfig</code> - Identifies the Amazon S3 bucket where you want SageMaker to save the results of model training. </p> </li> <li> <p> <code>ResourceConfig</code> - Identifies the resources, ML compute instances, and ML storage volumes to deploy for model training. In distributed training, you specify more than one instance. </p> </li> <li> <p> <code>EnableManagedSpotTraining</code> - Optimize the cost of training machine learning models by up to 80% by using Amazon EC2 Spot instances. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/model-managed-spot-training.html\">Managed Spot Training</a>. </p> </li> <li> <p> <code>RoleArn</code> - The Amazon Resource Name (ARN) that SageMaker assumes to perform tasks on your behalf during model training. You must grant this role the necessary permissions so that SageMaker can successfully complete model training. </p> </li> <li> <p> <code>StoppingCondition</code> - To help cap training costs, use <code>MaxRuntimeInSeconds</code> to set a time limit for training. Use <code>MaxWaitTimeInSeconds</code> to specify how long a managed spot training job has to complete. </p> </li> <li> <p> <code>Environment</code> - The environment variables to set in the Docker container.</p> <important> <p>Do not include any security-sensitive information including account access IDs, secrets, or tokens in any environment fields. As part of the shared responsibility model, you are responsible for any potential exposure, unauthorized access, or compromise of your sensitive data if caused by security-sensitive information included in the request environment variable or plain text fields.</p> </important> </li> <li> <p> <code>RetryStrategy</code> - The number of times to retry the job when the job fails due to an <code>InternalServerError</code>.</p> </li> </ul> <p> For more information about SageMaker, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/how-it-works.html\">How It Works</a>. </p>",
     "CreateTrainingPlan": "<p>Creates a new training plan in SageMaker to reserve compute capacity.</p> <p>Amazon SageMaker Training Plan is a capability within SageMaker that allows customers to reserve and manage GPU capacity for large-scale AI model training. It provides a way to secure predictable access to computational resources within specific timelines and budgets, without the need to manage underlying infrastructure. </p> <p> <b>How it works</b> </p> <p>Plans can be created for specific resources such as SageMaker Training Jobs or SageMaker HyperPod clusters, automatically provisioning resources, setting up infrastructure, executing workloads, and handling infrastructure failures.</p> <p> <b>Plan creation workflow</b> </p> <ul> <li> <p>Users search for available plan offerings based on their requirements (e.g., instance type, count, start time, duration) using the <code> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_SearchTrainingPlanOfferings.html\">SearchTrainingPlanOfferings</a> </code> API operation.</p> </li> <li> <p>They create a plan that best matches their needs using the ID of the plan offering they want to use. </p> </li> <li> <p>After successful upfront payment, the plan's status becomes <code>Scheduled</code>. </p> </li> <li> <p>The plan can be used to:</p> <ul> <li> <p>Queue training jobs.</p> </li> <li> <p>Allocate to an instance group of a SageMaker HyperPod cluster. </p> </li> </ul> </li> <li> <p>When the plan start date arrives, it becomes <code>Active</code>. Based on available reserved capacity:</p> <ul> <li> <p>Training jobs are launched.</p> </li> <li> <p>Instance groups are provisioned.</p> </li> </ul> </li> </ul> <p> <b>Plan composition</b> </p> <p>A plan can consist of one or more Reserved Capacities, each defined by a specific instance type, quantity, Availability Zone, duration, and start and end times. For more information about Reserved Capacity, see <code> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_ReservedCapacitySummary.html\">ReservedCapacitySummary</a> </code>.</p>",
+    "CreateTrainingSession": "<p>Creates a training session in Amazon SageMaker. A training session provisions compute resources for fine-tuning a foundation model using Low-Rank Adaptation (LoRA). After the session is created, you can submit training operations and sample inference requests through the Amazon SageMaker Training Session Runtime API.</p> <p>The following operations are related to <code>CreateTrainingSession</code>:</p> <ul> <li> <p> <code>DescribeTrainingSession</code> </p> </li> <li> <p> <code>ListTrainingSessions</code> </p> </li> <li> <p> <code>StopTrainingSession</code> </p> </li> <li> <p> <code>DeleteTrainingSession</code> </p> </li> </ul>",
     "CreateTransformJob": "<p>Starts a transform job. A transform job uses a trained model to get inferences on a dataset and saves these results to an Amazon S3 location that you specify.</p> <p>To perform batch transformations, you create a transform job and use the data that you have readily available.</p> <p>In the request body, you provide the following:</p> <ul> <li> <p> <code>TransformJobName</code> - Identifies the transform job. The name must be unique within an Amazon Web Services Region in an Amazon Web Services account.</p> </li> <li> <p> <code>ModelName</code> - Identifies the model to use. <code>ModelName</code> must be the name of an existing Amazon SageMaker model in the same Amazon Web Services Region and Amazon Web Services account. For information on creating a model, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateModel.html\">CreateModel</a>.</p> </li> <li> <p> <code>TransformInput</code> - Describes the dataset to be transformed and the Amazon S3 location where it is stored.</p> </li> <li> <p> <code>TransformOutput</code> - Identifies the Amazon S3 location where you want Amazon SageMaker to save the results from the transform job.</p> </li> <li> <p> <code>TransformResources</code> - Identifies the ML compute instances and AMI image versions for the transform job.</p> </li> </ul> <p>For more information about how batch transformation works, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/batch-transform.html\">Batch Transform</a>.</p>",
     "CreateTrial": "<p>Creates an SageMaker <i>trial</i>. A trial is a set of steps called <i>trial components</i> that produce a machine learning model. A trial is part of a single SageMaker <i>experiment</i>.</p> <p>When you use SageMaker Studio or the SageMaker Python SDK, all experiments, trials, and trial components are automatically tracked, logged, and indexed. When you use the Amazon Web Services SDK for Python (Boto), you must use the logging APIs provided by the SDK.</p> <p>You can add tags to a trial and then use the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_Search.html\">Search</a> API to search for the tags.</p> <p>To get a list of all your trials, call the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_ListTrials.html\">ListTrials</a> API. To view a trial's properties, call the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeTrial.html\">DescribeTrial</a> API. To create a trial component, call the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateTrialComponent.html\">CreateTrialComponent</a> API.</p>",
     "CreateTrialComponent": "<p>Creates a <i>trial component</i>, which is a stage of a machine learning <i>trial</i>. A trial is composed of one or more trial components. A trial component can be used in multiple trials.</p> <p>Trial components include pre-processing jobs, training jobs, and batch transform jobs.</p> <p>When you use SageMaker Studio or the SageMaker Python SDK, all experiments, trials, and trial components are automatically tracked, logged, and indexed. When you use the Amazon Web Services SDK for Python (Boto), you must use the logging APIs provided by the SDK.</p> <p>You can add tags to a trial component and then use the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_Search.html\">Search</a> API to search for the tags.</p>",
@@ -141,6 +142,7 @@
     "DeleteStudioLifecycleConfig": "<p>Deletes the Amazon SageMaker AI Studio Lifecycle Configuration. In order to delete the Lifecycle Configuration, there must be no running apps using the Lifecycle Configuration. You must also remove the Lifecycle Configuration from UserSettings in all Domains and UserProfiles.</p>",
     "DeleteTags": "<p>Deletes the specified tags from an SageMaker resource.</p> <p>To list a resource's tags, use the <code>ListTags</code> API. </p> <note> <p>When you call this API to delete tags from a hyperparameter tuning job, the deleted tags are not removed from training jobs that the hyperparameter tuning job launched before you called this API.</p> </note> <note> <p>When you call this API to delete tags from a SageMaker Domain or User Profile, the deleted tags are not removed from Apps that the SageMaker Domain or User Profile launched before you called this API.</p> </note>",
     "DeleteTrainingJob": "<p>Deletes a training job. After SageMaker deletes a training job, all of the metadata for the training job is lost. You can delete only training jobs that are in a terminal state (<code>Stopped</code>, <code>Failed</code>, or <code>Completed</code>) and don't retain an <code>Available</code> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/train-warm-pools.html\">managed warm pool</a>. You cannot delete a job that is in the <code>InProgress</code> or <code>Stopping</code> state. After deleting the job, you can reuse its name to create another training job.</p>",
+    "DeleteTrainingSession": "<p>Deletes a training session. You must stop a running session before deleting it. Use the <code>StopTrainingSession</code> operation to stop the session first.</p> <p>The following operations are related to <code>DeleteTrainingSession</code>:</p> <ul> <li> <p> <code>CreateTrainingSession</code> </p> </li> <li> <p> <code>DescribeTrainingSession</code> </p> </li> <li> <p> <code>StopTrainingSession</code> </p> </li> </ul>",
     "DeleteTrial": "<p>Deletes the specified trial. All trial components that make up the trial must be deleted first. Use the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeTrialComponent.html\">DescribeTrialComponent</a> API to get the list of trial components.</p>",
     "DeleteTrialComponent": "<p>Deletes the specified trial component. A trial component must be disassociated from all trials before the trial component can be deleted. To disassociate a trial component from a trial, call the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DisassociateTrialComponent.html\">DisassociateTrialComponent</a> API.</p>",
     "DeleteUserProfile": "<p>Deletes a user profile. When a user profile is deleted, the user loses access to their EFS volume, including data, notebooks, and other artifacts.</p>",
@@ -217,6 +219,7 @@
     "DescribeTrainingJob": "<p>Returns information about a training job. </p> <p>Some of the attributes below only appear if the training job successfully starts. If the training job fails, <code>TrainingJobStatus</code> is <code>Failed</code> and, depending on the <code>FailureReason</code>, attributes like <code>TrainingStartTime</code>, <code>TrainingTimeInSeconds</code>, <code>TrainingEndTime</code>, and <code>BillableTimeInSeconds</code> may not be present in the response.</p>",
     "DescribeTrainingPlan": "<p>Retrieves detailed information about a specific training plan.</p>",
     "DescribeTrainingPlanExtensionHistory": "<p>Retrieves the extension history for a specified training plan. The response includes details about each extension, such as the offering ID, start and end dates, status, payment status, and cost information.</p>",
+    "DescribeTrainingSession": "<p>Retrieves detailed information about a training session, including its current status, model configuration, Low-Rank Adaptation (LoRA) parameters, and timestamps.</p> <p>The following operations are related to <code>DescribeTrainingSession</code>:</p> <ul> <li> <p> <code>CreateTrainingSession</code> </p> </li> <li> <p> <code>ListTrainingSessions</code> </p> </li> <li> <p> <code>StopTrainingSession</code> </p> </li> <li> <p> <code>DeleteTrainingSession</code> </p> </li> </ul>",
     "DescribeTransformJob": "<p>Returns information about a transform job.</p>",
     "DescribeTrial": "<p>Provides a list of a trial's properties.</p>",
     "DescribeTrialComponent": "<p>Provides a list of a trials component's properties.</p>",
@@ -318,6 +321,7 @@
     "ListTrainingJobs": "<p>Lists training jobs.</p> <note> <p>When <code>StatusEquals</code> and <code>MaxResults</code> are set at the same time, the <code>MaxResults</code> number of training jobs are first retrieved ignoring the <code>StatusEquals</code> parameter and then they are filtered by the <code>StatusEquals</code> parameter, which is returned as a response.</p> <p>For example, if <code>ListTrainingJobs</code> is invoked with the following parameters:</p> <p> <code>{ ... MaxResults: 100, StatusEquals: InProgress ... }</code> </p> <p>First, 100 trainings jobs with any status, including those other than <code>InProgress</code>, are selected (sorted according to the creation time, from the most current to the oldest). Next, those with a status of <code>InProgress</code> are returned.</p> <p>You can quickly test the API using the following Amazon Web Services CLI code.</p> <p> <code>aws sagemaker list-training-jobs --max-results 100 --status-equals InProgress</code> </p> </note>",
     "ListTrainingJobsForHyperParameterTuningJob": "<p>Gets a list of <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_TrainingJobSummary.html\">TrainingJobSummary</a> objects that describe the training jobs that a hyperparameter tuning job launched.</p>",
     "ListTrainingPlans": "<p>Retrieves a list of training plans for the current account. </p>",
+    "ListTrainingSessions": "<p>Lists training sessions in your account. You can filter results by creation time, name, and status. The operation paginates results. To retrieve additional results, use the <code>NextToken</code> parameter.</p> <p>The following operations are related to <code>ListTrainingSessions</code>:</p> <ul> <li> <p> <code>CreateTrainingSession</code> </p> </li> <li> <p> <code>DescribeTrainingSession</code> </p> </li> </ul>",
     "ListTransformJobs": "<p>Lists transform jobs.</p>",
     "ListTrialComponents": "<p>Lists the trial components in your account. You can sort the list by trial component name or creation time. You can filter the list to show only components that were created in a specific time range. You can also filter on one of the following:</p> <ul> <li> <p> <code>ExperimentName</code> </p> </li> <li> <p> <code>SourceArn</code> </p> </li> <li> <p> <code>TrialName</code> </p> </li> </ul>",
     "ListTrials": "<p>Lists the trials in your account. Specify an experiment name to limit the list to the trials that are part of that experiment. Specify a trial component name to limit the list to the trials that associated with that trial component. The list can be filtered to show only trials that were created in a specific time range. The list can be sorted by trial name or creation time.</p>",
@@ -360,6 +364,7 @@
     "StopPipelineExecution": "<p>Stops a pipeline execution.</p> <p> <b>Callback Step</b> </p> <p>A pipeline execution won't stop while a callback step is running. When you call <code>StopPipelineExecution</code> on a pipeline execution with a running callback step, SageMaker Pipelines sends an additional Amazon SQS message to the specified SQS queue. The body of the SQS message contains a \"Status\" field which is set to \"Stopping\".</p> <p>You should add logic to your Amazon SQS message consumer to take any needed action (for example, resource cleanup) upon receipt of the message followed by a call to <code>SendPipelineExecutionStepSuccess</code> or <code>SendPipelineExecutionStepFailure</code>.</p> <p>Only when SageMaker Pipelines receives one of these calls will it stop the pipeline execution.</p> <p> <b>Lambda Step</b> </p> <p>A pipeline execution can't be stopped while a lambda step is running because the Lambda function invoked by the lambda step can't be stopped. If you attempt to stop the execution while the Lambda function is running, the pipeline waits for the Lambda function to finish or until the timeout is hit, whichever occurs first, and then stops. If the Lambda function finishes, the pipeline execution status is <code>Stopped</code>. If the timeout is hit the pipeline execution status is <code>Failed</code>.</p>",
     "StopProcessingJob": "<p>Stops a processing job.</p>",
     "StopTrainingJob": "<p>Stops a training job. To stop a job, SageMaker sends the algorithm the <code>SIGTERM</code> signal, which delays job termination for 120 seconds. Algorithms might use this 120-second window to save the model artifacts, so the results of the training is not lost. </p> <p>When it receives a <code>StopTrainingJob</code> request, SageMaker changes the status of the job to <code>Stopping</code>. After SageMaker stops the job, it sets the status to <code>Stopped</code>.</p>",
+    "StopTrainingSession": "<p>Stops a running training session and sets the session status to <code>Stopping</code>. After the session stops, the status changes to <code>Stopped</code>. To delete a stopped session, use the <code>DeleteTrainingSession</code> operation.</p> <p>The following operations are related to <code>StopTrainingSession</code>:</p> <ul> <li> <p> <code>CreateTrainingSession</code> </p> </li> <li> <p> <code>DescribeTrainingSession</code> </p> </li> <li> <p> <code>DeleteTrainingSession</code> </p> </li> </ul>",
     "StopTransformJob": "<p>Stops a batch transform job.</p> <p>When Amazon SageMaker receives a <code>StopTransformJob</code> request, the status of the job changes to <code>Stopping</code>. After Amazon SageMaker stops the job, the status is set to <code>Stopped</code>. When you stop a batch transform job before it is completed, Amazon SageMaker doesn't store the job's output in Amazon S3.</p>",
     "UpdateAction": "<p>Updates an action.</p>",
     "UpdateAppImageConfig": "<p>Updates the properties of an AppImageConfig.</p>",
@@ -2244,6 +2249,12 @@
         "ModelPackageContainerDefinition$BaseModel": "<p> Identifies the foundation model that was used as the starting point for model customization. </p>"
       }
     },
+    "BaseModelArn": {
+      "base": null,
+      "refs": {
+        "TrainingSessionModelConfig$BaseModelArn": "<p>The Amazon Resource Name (ARN) of the base foundation model from SageMaker Hub.</p>"
+      }
+    },
     "BaseModelName": {
       "base": null,
       "refs": {
@@ -2531,6 +2542,12 @@
       "base": null,
       "refs": {
         "DescribeTrainingJobResponse$BillableTokenCount": "<p> The billable token count for eligible serverless training jobs. </p>"
+      }
+    },
+    "BillableTokenUsage": {
+      "base": "<p>The billable token usage for a training session, broken down by operation type.</p>",
+      "refs": {
+        "TrainingSessionDetail$BillableTokenUsage": "<p>The billable token usage for the training session.</p>"
       }
     },
     "BlockedReason": {
@@ -5160,6 +5177,14 @@
       "base": null,
       "refs": {}
     },
+    "CreateTrainingSessionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateTrainingSessionResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CreateTransformJobRequest": {
       "base": null,
       "refs": {}
@@ -5363,6 +5388,12 @@
       "refs": {
         "DefaultSpaceSettings$CustomPosixUserConfig": null,
         "UserSettings$CustomPosixUserConfig": "<p>Details about the POSIX identity that is used for file system operations.</p> <p>SageMaker applies these settings only to private spaces that the user creates in the domain. SageMaker doesn't apply these settings to shared spaces.</p>"
+      }
+    },
+    "CustomerKmsKeyArn": {
+      "base": null,
+      "refs": {
+        "TrainingSessionS3Location$KmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt output data. If not specified, the default Amazon S3 encryption is used.</p>"
       }
     },
     "CustomerMetadataKey": {
@@ -5916,6 +5947,14 @@
       "refs": {}
     },
     "DeleteTrainingJobRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteTrainingSessionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteTrainingSessionResponse": {
       "base": null,
       "refs": {}
     },
@@ -6604,6 +6643,14 @@
       "refs": {}
     },
     "DescribeTrainingPlanResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeTrainingSessionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeTrainingSessionResponse": {
       "base": null,
       "refs": {}
     },
@@ -8217,6 +8264,7 @@
         "ResourceLimitExceeded$Message": null,
         "ResourceNotFound$Message": null,
         "TrainingJob$FailureReason": "<p>If the training job failed, the reason it failed.</p>",
+        "TrainingSessionDetail$ErrorDetails": "<p>If the training session failed or is blocked, detailed error information.</p>",
         "TransformJob$FailureReason": "<p>If the transform job failed, the reason it failed.</p>",
         "TransformJobSummary$FailureReason": "<p>If the transform job failed, the reason it failed.</p>"
       }
@@ -10593,6 +10641,26 @@
         "TimeSeriesConfig$ItemIdentifierAttributeName": "<p>The name of the column that represents the set of item identifiers for which you want to predict the target value.</p>"
       }
     },
+    "JavaBoolean": {
+      "base": null,
+      "refs": {
+        "TrainingSessionModelConfig$AcceptEula": "<p>Specifies whether you accept the end-user license agreement (EULA) for gated models.</p>"
+      }
+    },
+    "JavaInteger": {
+      "base": null,
+      "refs": {
+        "TrainingSessionDetail$LastReceivedSequenceNumber": "<p>The sequence number of the last training operation received by the session.</p>"
+      }
+    },
+    "JavaLong": {
+      "base": null,
+      "refs": {
+        "BillableTokenUsage$PrefillTokenCount": "<p>The number of prefill tokens consumed.</p>",
+        "BillableTokenUsage$SampleTokenCount": "<p>The number of sample tokens consumed.</p>",
+        "BillableTokenUsage$TrainingTokenCount": "<p>The number of training tokens consumed.</p>"
+      }
+    },
     "Job": {
       "base": "<p>The properties of a job returned by the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_Search.html\">Search</a> API.</p>",
       "refs": {
@@ -11959,6 +12027,14 @@
       "base": null,
       "refs": {}
     },
+    "ListTrainingSessionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTrainingSessionsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListTransformJobsRequest": {
       "base": null,
       "refs": {}
@@ -12058,6 +12134,19 @@
       "base": null,
       "refs": {
         "AuthorizedUrl$Url": "<p>The presigned S3 URL that provides temporary, secure access to download the file. URLs expire within 15 minutes for security purposes.</p>"
+      }
+    },
+    "LoraAlpha": {
+      "base": null,
+      "refs": {
+        "LoraConfig$Alpha": "<p>The Low-Rank Adaptation (LoRA) scaling factor.</p>"
+      }
+    },
+    "LoraConfig": {
+      "base": "<p>The Low-Rank Adaptation (LoRA) configuration for a training session, including the rank and alpha parameters.</p>",
+      "refs": {
+        "CreateTrainingSessionRequest$LoraConfig": "<p>The Low-Rank Adaptation (LoRA) configuration for the training session, including the rank and alpha parameters.</p>",
+        "TrainingSessionDetail$LoraConfig": "<p>The Low-Rank Adaptation (LoRA) configuration for the training session.</p>"
       }
     },
     "MIGProfileType": {
@@ -12333,6 +12422,7 @@
         "ListTrainingJobsForHyperParameterTuningJobRequest$MaxResults": "<p>The maximum number of training jobs to return. The default value is 10.</p>",
         "ListTrainingJobsRequest$MaxResults": "<p>The maximum number of training jobs to return in the response.</p>",
         "ListTrainingPlansRequest$MaxResults": "<p>The maximum number of results to return in the response.</p>",
+        "ListTrainingSessionsRequest$MaxResults": "<p>The maximum number of training sessions to return in the response.</p>",
         "ListTransformJobsRequest$MaxResults": "<p>The maximum number of transform jobs to return in the response. The default value is <code>10</code>.</p>",
         "ListTrialComponentsRequest$MaxResults": "<p>The maximum number of components to return in the response. The default value is 10.</p>",
         "ListTrialsRequest$MaxResults": "<p>The maximum number of trials to return in the response. The default value is 10.</p>",
@@ -13242,11 +13332,13 @@
       "base": null,
       "refs": {
         "CreateModelPackageGroupOutput$ModelPackageGroupArn": "<p>The Amazon Resource Name (ARN) of the model group.</p>",
+        "CreateTrainingSessionRequest$ModelPackageGroupArn": "<p>The Amazon Resource Name (ARN) of the model package group where checkpoints and fine-tuned model artifacts are published.</p>",
         "DescribeModelPackageGroupOutput$ModelPackageGroupArn": "<p>The Amazon Resource Name (ARN) of the model group.</p>",
         "ModelPackageConfig$ModelPackageGroupArn": "<p> The Amazon Resource Name (ARN) of the model package group of output model package. </p>",
         "ModelPackageGroup$ModelPackageGroupArn": "<p>The Amazon Resource Name (ARN) of the model group.</p>",
         "ModelPackageGroupSummary$ModelPackageGroupArn": "<p>The Amazon Resource Name (ARN) of the model group.</p>",
-        "PutModelPackageGroupPolicyOutput$ModelPackageGroupArn": "<p>The Amazon Resource Name (ARN) of the model package group.</p>"
+        "PutModelPackageGroupPolicyOutput$ModelPackageGroupArn": "<p>The Amazon Resource Name (ARN) of the model package group.</p>",
+        "TrainingSessionDetail$ModelPackageGroupArn": "<p>The Amazon Resource Name (ARN) of the model package group where checkpoints are published.</p>"
       }
     },
     "ModelPackageGroupSortBy": {
@@ -14050,6 +14142,7 @@
         "ListOptimizationJobsRequest$OptimizationContains": "<p>Filters the results to only those optimization jobs that apply the specified optimization techniques. You can specify either <code>Quantization</code> or <code>Compilation</code>.</p>",
         "ListOptimizationJobsRequest$NameContains": "<p>Filters the results to only those optimization jobs with a name that contains the specified string.</p>",
         "ListTrainingJobsRequest$NameContains": "<p>A string in the training job name. This filter returns only training jobs whose name contains the specified string.</p>",
+        "ListTrainingSessionsRequest$NameContains": "<p>A string in the training session name to filter results. Only sessions whose name contains the specified string are returned.</p>",
         "ListTransformJobsRequest$NameContains": "<p>A string in the transform job name. This filter returns only transform jobs whose name contains the specified string.</p>"
       }
     },
@@ -14282,6 +14375,8 @@
         "ListTrainingJobsResponse$NextToken": "<p>If the response is truncated, SageMaker returns this token. To retrieve the next set of training jobs, use it in the subsequent request.</p>",
         "ListTrainingPlansRequest$NextToken": "<p>A token to continue pagination if more results are available.</p>",
         "ListTrainingPlansResponse$NextToken": "<p>A token to continue pagination if more results are available.</p>",
+        "ListTrainingSessionsRequest$NextToken": "<p>If the response was truncated, use the token returned in the previous response to retrieve the next page of results.</p>",
+        "ListTrainingSessionsResponse$NextToken": "<p>If the response is truncated, this token retrieves the next set of results.</p>",
         "ListTransformJobsRequest$NextToken": "<p>If the result of the previous <code>ListTransformJobs</code> request was truncated, the response includes a <code>NextToken</code>. To retrieve the next set of transform jobs, use the token in the next request.</p>",
         "ListTransformJobsResponse$NextToken": "<p>If the response is truncated, Amazon SageMaker returns this token. To retrieve the next set of transform jobs, use it in the next request.</p>",
         "ListTrialComponentsRequest$NextToken": "<p>If the previous call to <code>ListTrialComponents</code> didn't return the full set of components, the call returns a token for getting the next set of components.</p>",
@@ -14927,6 +15022,12 @@
         "CallbackStepMetadata$OutputParameters": "<p>A list of the output parameters of the callback step.</p>",
         "LambdaStepMetadata$OutputParameters": "<p>A list of the output parameters of the Lambda step.</p>",
         "SendPipelineExecutionStepSuccessRequest$OutputParameters": "<p>A list of the output parameters of the callback step.</p>"
+      }
+    },
+    "OutputS3Path": {
+      "base": null,
+      "refs": {
+        "TrainingSessionS3Location$Path": "<p>The Amazon S3 path where training session outputs are stored.</p>"
       }
     },
     "OwnershipSettings": {
@@ -16293,6 +16394,12 @@
         "HyperParameterTuningJobConfig$RandomSeed": "<p>A value used to initialize a pseudo-random number generator. Setting a random seed and using the same seed later for the same tuning job will allow hyperparameter optimization to find more a consistent hyperparameter configuration between the two runs.</p>"
       }
     },
+    "Rank": {
+      "base": null,
+      "refs": {
+        "LoraConfig$Rank": "<p>The rank of the Low-Rank Adaptation (LoRA) adapter matrices.</p>"
+      }
+    },
     "RealTimeInferenceConfig": {
       "base": "<p>The infrastructure configuration for deploying the model to a real-time inference endpoint.</p>",
       "refs": {
@@ -17013,6 +17120,7 @@
         "CreatePipelineRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of the role used by the pipeline to access and create resources.</p>",
         "CreateProcessingJobRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of an IAM role that Amazon SageMaker can assume to perform tasks on your behalf.</p>",
         "CreateTrainingJobRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of an IAM role that SageMaker can assume to perform tasks on your behalf. </p> <p>During model training, SageMaker needs your permission to read input data from an S3 bucket, download a Docker image that contains training code, write model artifacts to an S3 bucket, write logs to Amazon CloudWatch Logs, and publish metrics to Amazon CloudWatch. You grant permissions for all of these tasks to an IAM role. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-roles.html\">SageMaker Roles</a>. </p> <note> <p>To be able to pass this role to SageMaker, the caller of this API must have the <code>iam:PassRole</code> permission.</p> </note>",
+        "CreateTrainingSessionRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that Amazon SageMaker assumes to access resources on your behalf. The role must have permissions to access the output S3 path and model package group.</p>",
         "DefaultSpaceSettings$ExecutionRole": "<p>The ARN of the execution role for the space.</p>",
         "DescribeAIBenchmarkJobResponse$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role used by the benchmark job.</p>",
         "DescribeAIRecommendationJobResponse$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role used by the recommendation job.</p>",
@@ -17065,6 +17173,7 @@
         "RenderUiTemplateRequest$RoleArn": "<p>The Amazon Resource Name (ARN) that has access to the S3 objects that are used by the template.</p>",
         "TimeSeriesForecastingSettings$AmazonForecastRoleArn": "<p>The IAM role that Canvas passes to Amazon Forecast for time series forecasting. By default, Canvas uses the execution role specified in the <code>UserProfile</code> that launches the Canvas application. If an execution role is not specified in the <code>UserProfile</code>, Canvas uses the execution role specified in the Domain that owns the <code>UserProfile</code>. To allow time series forecasting, this IAM role should have the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/security-iam-awsmanpol-canvas.html#security-iam-awsmanpol-AmazonSageMakerCanvasForecastAccess\"> AmazonSageMakerCanvasForecastAccess</a> policy attached and <code>forecast.amazonaws.com</code> added in the trust relationship as a service principal.</p>",
         "TrainingJob$RoleArn": "<p>The Amazon Web Services Identity and Access Management (IAM) role configured for the training job.</p>",
+        "TrainingSessionDetail$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role associated with the training session.</p>",
         "UpdateClusterRequest$ClusterRole": "<p>The Amazon Resource Name (ARN) of the IAM role that HyperPod assumes for cluster autoscaling operations. Cannot be updated while autoscaling is enabled.</p>",
         "UpdateDeviceFleetRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of the device.</p>",
         "UpdateImageRequest$RoleArn": "<p>The new ARN for the IAM role that enables Amazon SageMaker AI to perform tasks on your behalf.</p>",
@@ -18355,6 +18464,14 @@
       "base": null,
       "refs": {}
     },
+    "StopTrainingSessionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StopTrainingSessionResponse": {
+      "base": null,
+      "refs": {}
+    },
     "StopTransformJobRequest": {
       "base": null,
       "refs": {}
@@ -18901,6 +19018,7 @@
         "CreateStudioLifecycleConfigRequest$Tags": "<p>Tags to be associated with the Lifecycle Configuration. Each tag consists of a key and an optional value. Tag keys must be unique per resource. Tags are searchable using the Search API. </p>",
         "CreateTrainingJobRequest$Tags": "<p>An array of key-value pairs. You can use tags to categorize your Amazon Web Services resources in different ways, for example, by purpose, owner, or environment. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web Services Resources</a>.</p> <important> <p>Do not include any security-sensitive information including account access IDs, secrets, or tokens in any tags. As part of the shared responsibility model, you are responsible for any potential exposure, unauthorized access, or compromise of your sensitive data if caused by any security-sensitive information included in the request tag variable or plain text fields.</p> </important>",
         "CreateTrainingPlanRequest$Tags": "<p>An array of key-value pairs to apply to this training plan.</p>",
+        "CreateTrainingSessionRequest$Tags": "<p>An array of key-value pairs to apply to the training session as tags. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web Services Resources</a>.</p>",
         "CreateTransformJobRequest$Tags": "<p>(Optional) An array of key-value pairs. For more information, see <a href=\"https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html#allocation-what\">Using Cost Allocation Tags</a> in the <i>Amazon Web Services Billing and Cost Management User Guide</i>.</p>",
         "CreateTrialComponentRequest$Tags": "<p>A list of tags to associate with the component. You can use <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_Search.html\">Search</a> API to search on the tags.</p>",
         "CreateTrialRequest$Tags": "<p>A list of tags to associate with the trial. You can use <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_Search.html\">Search</a> API to search on the tags.</p>",
@@ -18931,6 +19049,7 @@
         "Project$Tags": "<p>An array of key-value pairs. You can use tags to categorize your Amazon Web Services resources in different ways, for example, by purpose, owner, or environment. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web Services Resources</a>.</p>",
         "RegisterDevicesRequest$Tags": "<p>The tags associated with devices.</p>",
         "TrainingJob$Tags": "<p>An array of key-value pairs. You can use tags to categorize your Amazon Web Services resources in different ways, for example, by purpose, owner, or environment. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web Services Resources</a>.</p>",
+        "TrainingSessionDetail$Tags": "<p>The tags associated with the training session.</p>",
         "TransformJob$Tags": "<p>A list of tags associated with the transform job.</p>",
         "Trial$Tags": "<p>The list of tags that are associated with the trial. You can use <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_Search.html\">Search</a> API to search on the tags.</p>",
         "TrialComponent$Tags": "<p>The list of tags that are associated with the component. You can use <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_Search.html\">Search</a> API to search on the tags.</p>",
@@ -19616,6 +19735,8 @@
         "ListTrainingJobsRequest$LastModifiedTimeBefore": "<p>A filter that returns only training jobs modified before the specified time (timestamp).</p>",
         "ListTrainingPlansRequest$StartTimeAfter": "<p>Filter to list only training plans with an actual start time after this date.</p>",
         "ListTrainingPlansRequest$StartTimeBefore": "<p>Filter to list only training plans with an actual start time before this date.</p>",
+        "ListTrainingSessionsRequest$CreationTimeAfter": "<p>A filter that returns only training sessions created after the specified time.</p>",
+        "ListTrainingSessionsRequest$CreationTimeBefore": "<p>A filter that returns only training sessions created before the specified time.</p>",
         "ListTransformJobsRequest$CreationTimeAfter": "<p>A filter that returns only transform jobs created after the specified time.</p>",
         "ListTransformJobsRequest$CreationTimeBefore": "<p>A filter that returns only transform jobs created before the specified time.</p>",
         "ListTransformJobsRequest$LastModifiedTimeAfter": "<p>A filter that returns only transform jobs modified after the specified time.</p>",
@@ -19720,6 +19841,11 @@
         "TrainingPlanOffering$RequestedEndTimeBefore": "<p>The requested end time that the user specified when searching for the training plan offering.</p>",
         "TrainingPlanSummary$StartTime": "<p>The start time of the training plan.</p>",
         "TrainingPlanSummary$EndTime": "<p>The end time of the training plan.</p>",
+        "TrainingSessionDetail$CreationTime": "<p>The date and time that the training session was created.</p>",
+        "TrainingSessionDetail$LastModifiedTime": "<p>The date and time that the training session was last modified.</p>",
+        "TrainingSessionDetail$EndTime": "<p>The date and time that the training session ended.</p>",
+        "TrainingSessionSummary$CreationTime": "<p>The date and time that the training session was created.</p>",
+        "TrainingSessionSummary$LastModifiedTime": "<p>The date and time that the training session was last modified.</p>",
         "TransformJob$CreationTime": "<p>A timestamp that shows when the transform Job was created.</p>",
         "TransformJob$TransformStartTime": "<p>Indicates when the transform job starts on ML instances. You are billed for the time interval between this time and the value of <code>TransformEndTime</code>.</p>",
         "TransformJob$TransformEndTime": "<p>Indicates when the transform job has been completed, or has stopped or failed. You are billed for the time interval between this time and the value of <code>TransformStartTime</code>.</p>",
@@ -20288,6 +20414,70 @@
       "base": null,
       "refs": {
         "TrainingRepositoryAuthConfig$TrainingRepositoryCredentialsProviderArn": "<p>The Amazon Resource Name (ARN) of an Amazon Web Services Lambda function used to give SageMaker access credentials to your private Docker registry.</p>"
+      }
+    },
+    "TrainingSessionArn": {
+      "base": null,
+      "refs": {
+        "CreateTrainingSessionResponse$TrainingSessionArn": "<p>The Amazon Resource Name (ARN) of the training session.</p>",
+        "TrainingSessionDetail$TrainingSessionArn": "<p>The Amazon Resource Name (ARN) of the training session.</p>",
+        "TrainingSessionSummary$TrainingSessionArn": "<p>The Amazon Resource Name (ARN) of the training session.</p>"
+      }
+    },
+    "TrainingSessionDetail": {
+      "base": "<p>Contains detailed information about a training session.</p>",
+      "refs": {
+        "DescribeTrainingSessionResponse$TrainingSessionDetail": "<p>The detailed information about the training session.</p>"
+      }
+    },
+    "TrainingSessionModelConfig": {
+      "base": "<p>The configuration for the base model used in a training session.</p>",
+      "refs": {
+        "CreateTrainingSessionRequest$ModelConfig": "<p>The configuration for the base model, including the model ARN and end-user license agreement (EULA) acceptance.</p>",
+        "TrainingSessionDetail$ModelConfig": "<p>The configuration for the base model.</p>"
+      }
+    },
+    "TrainingSessionName": {
+      "base": null,
+      "refs": {
+        "CreateTrainingSessionRequest$TrainingSessionName": "<p>The name of the training session.</p>",
+        "DeleteTrainingSessionRequest$TrainingSessionName": "<p>The name of the training session to delete.</p>",
+        "DescribeTrainingSessionRequest$TrainingSessionName": "<p>The name of the training session to describe.</p>",
+        "StopTrainingSessionRequest$TrainingSessionName": "<p>The name of the training session to stop.</p>",
+        "TrainingSessionDetail$TrainingSessionName": "<p>The name of the training session.</p>"
+      }
+    },
+    "TrainingSessionOutputConfig": {
+      "base": "<p>The output configuration for a training session, including the Amazon S3 location for checkpoints and model artifacts, and optional encryption settings.</p>",
+      "refs": {
+        "CreateTrainingSessionRequest$OutputConfig": "<p>The output configuration for the training session, including the S3 location and optional encryption settings.</p>",
+        "TrainingSessionDetail$OutputConfig": "<p>The output configuration for the training session.</p>"
+      }
+    },
+    "TrainingSessionS3Location": {
+      "base": "<p>Specifies the Amazon S3 path and optional encryption settings for training session output data, including checkpoints, model artifacts, and invocation results.</p>",
+      "refs": {
+        "TrainingSessionOutputConfig$S3Location": "<p>The Amazon S3 location where training session outputs, including checkpoints and model artifacts, are stored.</p>"
+      }
+    },
+    "TrainingSessionStatus": {
+      "base": "<p>The status of a training session.</p>",
+      "refs": {
+        "ListTrainingSessionsRequest$StatusEquals": "<p>A filter that returns only training sessions with the specified status.</p>",
+        "TrainingSessionDetail$TrainingSessionStatus": "<p>The current status of the training session.</p>",
+        "TrainingSessionSummary$TrainingSessionStatus": "<p>The current status of the training session.</p>"
+      }
+    },
+    "TrainingSessionSummaries": {
+      "base": null,
+      "refs": {
+        "ListTrainingSessionsResponse$TrainingSessionSummaries": "<p>An array of <code>TrainingSessionSummary</code> objects that provide summary information about the training sessions.</p>"
+      }
+    },
+    "TrainingSessionSummary": {
+      "base": "<p>Contains summary information about a training session.</p>",
+      "refs": {
+        "TrainingSessionSummaries$member": null
       }
     },
     "TrainingSpecification": {
@@ -21548,6 +21738,7 @@
         "CreateEndpointConfigInput$VpcConfig": null,
         "CreateModelInput$VpcConfig": "<p>A <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_VpcConfig.html\">VpcConfig</a> object that specifies the VPC that you want your model to connect to. Control access to and from your model container by configuring the VPC. <code>VpcConfig</code> is used in hosting services and in batch transform. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/host-vpc.html\">Protect Endpoints by Using an Amazon Virtual Private Cloud</a> and <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/batch-vpc.html\">Protect Data in Batch Transform Jobs by Using an Amazon Virtual Private Cloud</a>.</p>",
         "CreateTrainingJobRequest$VpcConfig": "<p>A <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_VpcConfig.html\">VpcConfig</a> object that specifies the VPC that you want your training job to connect to. Control access to and from your training container by configuring the VPC. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/train-vpc.html\">Protect Training Jobs by Using an Amazon Virtual Private Cloud</a>.</p>",
+        "CreateTrainingSessionRequest$VpcConfig": "<p>The Virtual Private Cloud (VPC) configuration for the training session. Specify subnets and security groups to run the training session in your VPC.</p>",
         "DescribeClusterResponse$VpcConfig": null,
         "DescribeEndpointConfigOutput$VpcConfig": null,
         "DescribeModelOutput$VpcConfig": "<p>A <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_VpcConfig.html\">VpcConfig</a> object that specifies the VPC that this model has access to. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/host-vpc.html\">Protect Endpoints by Using an Amazon Virtual Private Cloud</a> </p>",
@@ -21557,7 +21748,8 @@
         "Model$VpcConfig": null,
         "MonitoringNetworkConfig$VpcConfig": null,
         "NetworkConfig$VpcConfig": null,
-        "TrainingJob$VpcConfig": "<p>A <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_VpcConfig.html\">VpcConfig</a> object that specifies the VPC that this training job has access to. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/train-vpc.html\">Protect Training Jobs by Using an Amazon Virtual Private Cloud</a>.</p>"
+        "TrainingJob$VpcConfig": "<p>A <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_VpcConfig.html\">VpcConfig</a> object that specifies the VPC that this training job has access to. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/train-vpc.html\">Protect Training Jobs by Using an Amazon Virtual Private Cloud</a>.</p>",
+        "TrainingSessionDetail$VpcConfig": "<p>The Virtual Private Cloud (VPC) configuration for the training session.</p>"
       }
     },
     "VpcId": {

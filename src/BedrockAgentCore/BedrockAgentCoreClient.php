@@ -18,6 +18,7 @@ use Aws\AwsClient;
  *         ...,
  *     }>,
  *     clientToken?: string,
+ *     recordExpirySpecification?: array{recordExpiryDurationDays?: int, action?: 'REMOVE', ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise batchCreateMemoryRecordsAsync(array $args = [])
@@ -33,6 +34,7 @@ use Aws\AwsClient;
  *         ...,
  *     }>,
  *     clientToken?: string,
+ *     recordExpirySpecification?: array{recordExpiryDurationDays?: int, action?: 'REMOVE', ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result batchDeleteMemoryRecords(array $args = [])
@@ -52,6 +54,7 @@ use Aws\AwsClient;
  *         metadata?: array<string, array>,
  *         ...,
  *     }>,
+ *     recordExpirySpecification?: array{recordExpiryDurationDays?: int, action?: 'REMOVE', ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise batchUpdateMemoryRecordsAsync(array $args = [])
@@ -67,6 +70,7 @@ use Aws\AwsClient;
  *         metadata?: array<string, array>,
  *         ...,
  *     }>,
+ *     recordExpirySpecification?: array{recordExpiryDurationDays?: int, action?: 'REMOVE', ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result completeResourceTokenAuth(array $args = [])

@@ -8,6 +8,8 @@
     "BatchDeletePentests": "<p>Deletes one or more pentests from an agent space.</p>",
     "BatchDeleteSecurityRequirements": "<p>Batch deletes security requirements from a customer managed pack.</p>",
     "BatchDeleteThreatModels": "<p>Deletes one or more threat models from an agent space.</p>",
+    "BatchDisassociateFindingIssue": "<p>Disassociates a batch of findings from their linked issues.</p>",
+    "BatchExportFindings": "<p>Exports a batch of findings to the connected issue tracker as issues.</p>",
     "BatchGetAgentSpaces": "<p>Retrieves information about one or more agent spaces.</p>",
     "BatchGetArtifactMetadata": "<p>Retrieves metadata for one or more artifacts in an agent space.</p>",
     "BatchGetCodeReviewJobTasks": "<p>Retrieves information about one or more tasks within a code review job.</p>",
@@ -344,7 +346,8 @@
         "BitbucketDataCenterIntegrationInput$code": "<p>The OAuth 2.0 authorization code returned to your redirect URL after the connection is authorized.</p>",
         "BitbucketIntegrationInput$code": "<p>The OAuth 2.0 authorization code returned from the consent redirect.</p>",
         "ConfluenceIntegrationInput$code": "<p>The OAuth 2.0 authorization code returned from the consent redirect.</p>",
-        "GitHubIntegrationInput$code": "<p>The OAuth authorization code received from GitHub.</p>"
+        "GitHubIntegrationInput$code": "<p>The OAuth authorization code received from GitHub.</p>",
+        "JiraIntegrationInput$code": "<p>The OAuth 2.0 authorization code returned from the consent redirect.</p>"
       }
     },
     "Authentication": {
@@ -440,6 +443,70 @@
     },
     "BatchDeleteThreatModelsOutput": {
       "base": "<p>Output for the BatchDeleteThreatModels operation.</p>",
+      "refs": {}
+    },
+    "BatchDisassociateFindingIssueError": {
+      "base": "<p>A finding that failed to disassociate, with the cause of the failure.</p>",
+      "refs": {
+        "BatchDisassociateFindingIssueErrors$member": null
+      }
+    },
+    "BatchDisassociateFindingIssueErrorMessageString": {
+      "base": null,
+      "refs": {
+        "BatchDisassociateFindingIssueError$message": "<p>A customer-facing explanation of the failure.</p>"
+      }
+    },
+    "BatchDisassociateFindingIssueErrors": {
+      "base": "<p>The per-finding errors from a BatchDisassociateFindingIssue request.</p>",
+      "refs": {
+        "BatchDisassociateFindingIssueOutput$errors": "<p>The findings whose issue could not be disassociated.</p>"
+      }
+    },
+    "BatchDisassociateFindingIssueInput": {
+      "base": "<p>The input for the BatchDisassociateFindingIssue operation.</p>",
+      "refs": {}
+    },
+    "BatchDisassociateFindingIssueOutput": {
+      "base": "<p>The output for the BatchDisassociateFindingIssue operation.</p>",
+      "refs": {}
+    },
+    "BatchExportFindingError": {
+      "base": "<p>A finding whose issue could not be created, with the cause of the failure.</p>",
+      "refs": {
+        "BatchExportFindingErrorList$member": null
+      }
+    },
+    "BatchExportFindingErrorList": {
+      "base": "<p>The per-finding errors of a BatchExportFindings request.</p>",
+      "refs": {
+        "BatchExportFindingsOutput$errors": "<p>The findings whose issue could not be created, each with a customer-facing reason.</p>"
+      }
+    },
+    "BatchExportFindingErrorMessageString": {
+      "base": null,
+      "refs": {
+        "BatchExportFindingError$message": "<p>A customer-facing explanation of why the issue could not be created.</p>"
+      }
+    },
+    "BatchExportFindingResult": {
+      "base": "<p>A finding whose issue was created.</p>",
+      "refs": {
+        "BatchExportFindingResultList$member": null
+      }
+    },
+    "BatchExportFindingResultList": {
+      "base": "<p>The per-finding successful results of a BatchExportFindings request.</p>",
+      "refs": {
+        "BatchExportFindingsOutput$results": "<p>The findings whose issue was created, each with its linked issue.</p>"
+      }
+    },
+    "BatchExportFindingsInput": {
+      "base": "<p>The input for the BatchExportFindings operation.</p>",
+      "refs": {}
+    },
+    "BatchExportFindingsOutput": {
+      "base": "<p>The output for the BatchExportFindings operation.</p>",
       "refs": {}
     },
     "BatchGetAgentSpacesInput": {
@@ -666,6 +733,8 @@
         "GitHubResourceCapabilities$remediateCode": "<p>Indicates whether the integration can create code remediation pull requests.</p>",
         "GitLabResourceCapabilities$leaveComments": "<p>Whether to post code review comments on merge request discussions.</p>",
         "GitLabResourceCapabilities$remediateCode": "<p>Whether to create merge requests with automated fixes.</p>",
+        "JiraResourceCapabilities$createIssue": "<p>Whether to create issues in the integrated jira project.</p>",
+        "JiraResourceCapabilities$commentIssue": "<p>Whether to post comments on issues in the integrated jira project.</p>",
         "ReportFilters$annotationNotes": "<p>Whether to include reviewer annotation notes under each finding.</p>",
         "ReportFilters$complianceReport": "<p>Whether to include the compliance-ready report additions.</p>"
       }
@@ -1074,7 +1143,8 @@
         "BitbucketIntegrationInput$state": "<p>The CSRF state token echoed back from the OAuth redirect.</p>",
         "ConfluenceIntegrationInput$state": "<p>The CSRF state token echoed back from the OAuth redirect.</p>",
         "GitHubIntegrationInput$state": "<p>The CSRF state token for validating the OAuth flow.</p>",
-        "InitiateProviderRegistrationOutput$csrfState": "<p>The CSRF state token to use when completing the OAuth flow.</p>"
+        "InitiateProviderRegistrationOutput$csrfState": "<p>The CSRF state token to use when completing the OAuth flow.</p>",
+        "JiraIntegrationInput$state": "<p>The CSRF state token echoed back from the OAuth redirect.</p>"
       }
     },
     "CustomHeader": {
@@ -1297,6 +1367,8 @@
     "ErrorCode": {
       "base": "<p>Error code for pentest job failure.</p>",
       "refs": {
+        "BatchDisassociateFindingIssueError$code": "<p>The machine-readable failure category.</p>",
+        "BatchExportFindingError$code": "<p>The machine-readable failure category.</p>",
         "ErrorInformation$code": "<p>The error code. Valid values include CLIENT_ERROR, INTERNAL_ERROR, and STOPPED_BY_USER.</p>"
       }
     },
@@ -1330,6 +1402,8 @@
     "FindingIdList": {
       "base": null,
       "refs": {
+        "BatchDisassociateFindingIssueInput$findingIds": "<p>The identifiers of the findings to disassociate from their issues. Each must belong to the specified job.</p>",
+        "BatchExportFindingsInput$findingIds": "<p>The identifiers of the findings to export. Each must belong to the specified job.</p>",
         "BatchGetFindingsInput$findingIds": "<p>The list of finding identifiers to retrieve.</p>",
         "BatchGetFindingsOutput$notFound": "<p>The list of finding identifiers that were not found.</p>",
         "StartCodeRemediationInput$findingIds": "<p>The list of finding identifiers to initiate code remediation for.</p>"
@@ -1639,6 +1713,60 @@
         "ServiceManagedInput$ipAddressType": "<p>The IP address type of the service-managed resource gateway.</p>"
       }
     },
+    "IssueDestination": {
+      "base": "<p>The destination for filing findings as issues in an integrated issue tracker.</p>",
+      "refs": {
+        "BatchExportFindingsInput$issueDestination": "<p>The destination issue-tracker project the findings are exported to. Must be a connected capability of the agent space.</p>"
+      }
+    },
+    "JiraInstallationId": {
+      "base": "<p>An Atlassian installation identifier for a Jira integration.</p>",
+      "refs": {
+        "JiraIntegrationInput$installationId": "<p>The Atlassian installation identifier, available from the Atlassian administration console.</p>"
+      }
+    },
+    "JiraIntegrationInput": {
+      "base": "<p>The configuration for creating a Jira integration.</p>",
+      "refs": {
+        "ProviderInput$jira": "<p>The configuration for a Jira integration.</p>"
+      }
+    },
+    "JiraProjectMetadata": {
+      "base": "<p>Contains metadata about a Jira project that is integrated with the service.</p>",
+      "refs": {
+        "IntegratedResourceMetadata$jiraProject": "<p>The Jira project metadata.</p>"
+      }
+    },
+    "JiraProjectMetadataProjectNameString": {
+      "base": null,
+      "refs": {
+        "JiraProjectMetadata$projectName": "<p>The display name of the Jira project.</p>"
+      }
+    },
+    "JiraProjectResource": {
+      "base": "<p>Represents a Jira project resource used in an integration.</p>",
+      "refs": {
+        "IntegratedResource$jiraProject": "<p>The Jira project resource information.</p>"
+      }
+    },
+    "JiraProjectResourceProjectNameString": {
+      "base": null,
+      "refs": {
+        "JiraProjectResource$projectName": "<p>The display name of the Jira project.</p>"
+      }
+    },
+    "JiraResourceCapabilities": {
+      "base": "<p>Capabilities for an integrated Jira project.</p>",
+      "refs": {
+        "ProviderResourceCapabilities$jira": "<p>The Jira-specific resource capabilities.</p>"
+      }
+    },
+    "JiraSiteUrl": {
+      "base": "<p>The URL of a Jira Cloud site.</p>",
+      "refs": {
+        "JiraIntegrationInput$siteUrl": "<p>The Jira Cloud site URL, for example https://mysite.atlassian.net.</p>"
+      }
+    },
     "JobStatus": {
       "base": "<p>Status of a pentest job.</p>",
       "refs": {
@@ -1685,6 +1813,13 @@
       "base": null,
       "refs": {
         "AWSResources$lambdaFunctionArns": "<p>The Amazon Resource Names (ARNs) of the Lambda functions associated with the agent space.</p>"
+      }
+    },
+    "LinkedIssue": {
+      "base": "<p>A reference to an issue created for a finding in a third-party issue tracker.</p>",
+      "refs": {
+        "BatchExportFindingResult$linkedIssue": "<p>The issue that was created for the finding.</p>",
+        "Finding$linkedIssue": "<p>The issue in a third-party issue tracker that this finding has been exported to.</p>"
       }
     },
     "ListActorMessagesInput": {
@@ -2263,7 +2398,8 @@
         "GetIntegrationOutput$provider": "<p>The integration provider.</p>",
         "InitiateProviderRegistrationInput$provider": "<p>The provider to initiate registration with.</p>",
         "IntegrationFilter$provider": "<p>Filter integrations by provider.</p>",
-        "IntegrationSummary$provider": "<p>The integration provider.</p>"
+        "IntegrationSummary$provider": "<p>The integration provider.</p>",
+        "LinkedIssue$provider": "<p>The issue-tracker provider.</p>"
       }
     },
     "ProviderInput": {
@@ -2286,7 +2422,8 @@
         "BitbucketRepositoryMetadata$providerResourceId": null,
         "ConfluenceDocumentMetadata$providerResourceId": null,
         "GitHubRepositoryMetadata$providerResourceId": "<p>The provider-specific resource identifier for the GitHub repository.</p>",
-        "GitLabRepositoryMetadata$providerResourceId": null
+        "GitLabRepositoryMetadata$providerResourceId": null,
+        "JiraProjectMetadata$providerResourceId": null
       }
     },
     "ProviderResourceName": {
@@ -2301,7 +2438,9 @@
         "GitHubRepositoryMetadata$name": "<p>The name of the GitHub repository.</p>",
         "GitHubRepositoryResource$name": "<p>The name of the GitHub repository.</p>",
         "GitLabRepositoryMetadata$name": null,
-        "GitLabRepositoryResource$name": null
+        "GitLabRepositoryResource$name": null,
+        "JiraProjectMetadata$name": null,
+        "JiraProjectResource$name": null
       }
     },
     "ProviderType": {
@@ -2875,6 +3014,15 @@
         "BatchDeleteCodeReviewsInput$agentSpaceId": "<p>The unique identifier of the agent space that contains the code reviews to delete.</p>",
         "BatchDeletePentestsInput$agentSpaceId": "<p>The unique identifier of the agent space that contains the pentests to delete.</p>",
         "BatchDeleteThreatModelsInput$agentSpaceId": "<p>The unique identifier of the agent space that contains the threat models to delete.</p>",
+        "BatchDisassociateFindingIssueError$findingId": "<p>The identifier of the finding that failed to disassociate.</p>",
+        "BatchDisassociateFindingIssueInput$agentSpaceId": "<p>The identifier of the agent space where the job exists.</p>",
+        "BatchDisassociateFindingIssueInput$pentestJobId": "<p>The identifier of the penetration test job. This parameter is mutually exclusive with <code>codeReviewJobId</code>.</p>",
+        "BatchDisassociateFindingIssueInput$codeReviewJobId": "<p>The identifier of the code review job. This parameter is mutually exclusive with <code>pentestJobId</code>.</p>",
+        "BatchExportFindingError$findingId": "<p>The identifier of the finding this error corresponds to.</p>",
+        "BatchExportFindingResult$findingId": "<p>The identifier of the finding this result corresponds to.</p>",
+        "BatchExportFindingsInput$agentSpaceId": "<p>The identifier of the agent space where the job exists.</p>",
+        "BatchExportFindingsInput$pentestJobId": "<p>The identifier of the penetration test job. This parameter is mutually exclusive with <code>codeReviewJobId</code>.</p>",
+        "BatchExportFindingsInput$codeReviewJobId": "<p>The identifier of the code review job. This parameter is mutually exclusive with <code>pentestJobId</code>.</p>",
         "BatchGetCodeReviewJobTasksInput$agentSpaceId": "<p>The unique identifier of the agent space that contains the tasks.</p>",
         "BatchGetCodeReviewJobsInput$agentSpaceId": "<p>The unique identifier of the agent space that contains the code review jobs.</p>",
         "BatchGetCodeReviewsInput$agentSpaceId": "<p>The unique identifier of the agent space that contains the code reviews.</p>",
@@ -3062,6 +3210,18 @@
         "IntegrationSummary$displayName": "<p>The display name of the integration.</p>",
         "IntegrationSummary$webhookUrl": "<p>The payload URL of the integration's webhook, once it has been created. The signing secret is never returned on a read.</p>",
         "InternalServerException$message": "<p>Error description.</p>",
+        "IssueDestination$integrationId": "<p>The integration identifier for the issue-tracker provider.</p>",
+        "IssueDestination$projectKey": "<p>The identifier of the project the issues are filed under.</p>",
+        "JiraProjectMetadata$projectKey": "<p>The Jira project key, for example PROJ.</p>",
+        "JiraProjectMetadata$projectId": "<p>The Jira project identifier.</p>",
+        "JiraProjectResource$projectKey": "<p>The Jira project key, for example PROJ.</p>",
+        "JiraProjectResource$projectId": "<p>The Jira project identifier.</p>",
+        "LinkedIssue$integrationId": "<p>The integration identifier for the issue-tracker provider.</p>",
+        "LinkedIssue$projectKey": "<p>The key of the project the issue belongs to.</p>",
+        "LinkedIssue$issueKey": "<p>The issue key.</p>",
+        "LinkedIssue$issueId": "<p>The stable numeric issue identifier.</p>",
+        "LinkedIssue$issueUrl": "<p>The issue URL.</p>",
+        "LinkedIssue$siteUrl": "<p>The Atlassian Cloud site URL.</p>",
         "ListActorMessagesInput$agentSpaceId": "<p>The unique identifier of the agent space that owns the pentest.</p>",
         "ListActorMessagesInput$pentestId": "<p>The unique identifier of the pentest that the actor belongs to.</p>",
         "ListActorMessagesInput$actorIdentifier": "<p>The identifier of the actor whose messages to list. The identifier is case-insensitive.</p>",
@@ -3553,6 +3713,7 @@
       "refs": {
         "BitbucketDataCenterIntegrationInput$targetUrl": "<p>The HTTPS URL of your Bitbucket Data Center instance, for example <code>https://bitbucket.example.com</code>.</p>",
         "GetIntegrationOutput$targetUrl": "<p>The HTTPS URL of the customer self-hosted instance, such as a GitHub Enterprise Server or self-managed GitLab instance. This value is absent for SaaS integrations.</p>",
+        "GetIntegrationOutput$siteUrl": "<p>The Atlassian Cloud site URL for Atlassian integrations.</p>",
         "GitHubIntegrationInput$targetUrl": "<p>The HTTPS URL of a self-hosted GitHub Enterprise Server instance. Omit this value for GitHub.com.</p>",
         "GitLabIntegrationInput$targetUrl": "<p>The HTTPS URL of a self-managed GitLab instance. Omit this value for GitLab SaaS (gitlab.com).</p>",
         "InitiateProviderRegistrationInput$targetUrl": "<p>The HTTPS URL of a self-managed provider instance. Omit for SaaS providers.</p>",

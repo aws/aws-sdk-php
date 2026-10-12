@@ -97,6 +97,44 @@
       "input":{"shape":"BatchDeleteThreatModelsInput"},
       "output":{"shape":"BatchDeleteThreatModelsOutput"}
     },
+    "BatchDisassociateFindingIssue":{
+      "name":"BatchDisassociateFindingIssue",
+      "http":{
+        "method":"POST",
+        "requestUri":"/BatchDisassociateFindingIssue",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchDisassociateFindingIssueInput"},
+      "output":{"shape":"BatchDisassociateFindingIssueOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ]
+    },
+    "BatchExportFindings":{
+      "name":"BatchExportFindings",
+      "http":{
+        "method":"POST",
+        "requestUri":"/BatchExportFindings",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchExportFindingsInput"},
+      "output":{"shape":"BatchExportFindingsOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ]
+    },
     "BatchGetAgentSpaces":{
       "name":"BatchGetAgentSpaces",
       "http":{
@@ -1618,6 +1656,111 @@
         "failed":{"shape":"DeleteThreatModelFailureList"}
       }
     },
+    "BatchDisassociateFindingIssueError":{
+      "type":"structure",
+      "required":[
+        "findingId",
+        "code",
+        "message"
+      ],
+      "members":{
+        "findingId":{"shape":"String"},
+        "code":{"shape":"ErrorCode"},
+        "message":{"shape":"BatchDisassociateFindingIssueErrorMessageString"}
+      }
+    },
+    "BatchDisassociateFindingIssueErrorMessageString":{
+      "type":"string",
+      "max":300,
+      "min":0
+    },
+    "BatchDisassociateFindingIssueErrors":{
+      "type":"list",
+      "member":{"shape":"BatchDisassociateFindingIssueError"}
+    },
+    "BatchDisassociateFindingIssueInput":{
+      "type":"structure",
+      "required":[
+        "agentSpaceId",
+        "findingIds"
+      ],
+      "members":{
+        "agentSpaceId":{"shape":"String"},
+        "pentestJobId":{"shape":"String"},
+        "codeReviewJobId":{"shape":"String"},
+        "findingIds":{"shape":"FindingIdList"}
+      }
+    },
+    "BatchDisassociateFindingIssueOutput":{
+      "type":"structure",
+      "required":["errors"],
+      "members":{
+        "errors":{"shape":"BatchDisassociateFindingIssueErrors"}
+      }
+    },
+    "BatchExportFindingError":{
+      "type":"structure",
+      "required":[
+        "findingId",
+        "code",
+        "message"
+      ],
+      "members":{
+        "findingId":{"shape":"String"},
+        "code":{"shape":"ErrorCode"},
+        "message":{"shape":"BatchExportFindingErrorMessageString"}
+      }
+    },
+    "BatchExportFindingErrorList":{
+      "type":"list",
+      "member":{"shape":"BatchExportFindingError"}
+    },
+    "BatchExportFindingErrorMessageString":{
+      "type":"string",
+      "max":300,
+      "min":0
+    },
+    "BatchExportFindingResult":{
+      "type":"structure",
+      "required":[
+        "findingId",
+        "linkedIssue"
+      ],
+      "members":{
+        "findingId":{"shape":"String"},
+        "linkedIssue":{"shape":"LinkedIssue"}
+      }
+    },
+    "BatchExportFindingResultList":{
+      "type":"list",
+      "member":{"shape":"BatchExportFindingResult"}
+    },
+    "BatchExportFindingsInput":{
+      "type":"structure",
+      "required":[
+        "agentSpaceId",
+        "issueDestination",
+        "findingIds"
+      ],
+      "members":{
+        "agentSpaceId":{"shape":"String"},
+        "pentestJobId":{"shape":"String"},
+        "codeReviewJobId":{"shape":"String"},
+        "issueDestination":{"shape":"IssueDestination"},
+        "findingIds":{"shape":"FindingIdList"}
+      }
+    },
+    "BatchExportFindingsOutput":{
+      "type":"structure",
+      "required":[
+        "results",
+        "errors"
+      ],
+      "members":{
+        "results":{"shape":"BatchExportFindingResultList"},
+        "errors":{"shape":"BatchExportFindingErrorList"}
+      }
+    },
     "BatchGetAgentSpacesInput":{
       "type":"structure",
       "required":["agentSpaceIds"],
@@ -3060,6 +3203,7 @@
         "alignmentRationale":{"shape":"String"},
         "revalidationJobIds":{"shape":"StringList"},
         "originalFindingId":{"shape":"String"},
+        "linkedIssue":{"shape":"LinkedIssue"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
@@ -3187,6 +3331,7 @@
         "displayName":{"shape":"String"},
         "kmsKeyId":{"shape":"KmsKeyId"},
         "targetUrl":{"shape":"TargetUrl"},
+        "siteUrl":{"shape":"TargetUrl"},
         "webhookUrl":{"shape":"String"},
         "privateConnectionName":{"shape":"PrivateConnectionName"}
       }
@@ -3433,7 +3578,8 @@
         "gitlabRepository":{"shape":"GitLabRepositoryResource"},
         "bitbucketRepository":{"shape":"BitbucketRepositoryResource"},
         "confluenceDocument":{"shape":"ConfluenceDocumentResource"},
-        "azureDevOpsRepository":{"shape":"AzureDevOpsRepositoryResource"}
+        "azureDevOpsRepository":{"shape":"AzureDevOpsRepositoryResource"},
+        "jiraProject":{"shape":"JiraProjectResource"}
       },
       "union":true
     },
@@ -3456,7 +3602,8 @@
         "gitlabRepository":{"shape":"GitLabRepositoryMetadata"},
         "bitbucketRepository":{"shape":"BitbucketRepositoryMetadata"},
         "confluenceDocument":{"shape":"ConfluenceDocumentMetadata"},
-        "azureDevOpsRepository":{"shape":"AzureDevOpsRepositoryMetadata"}
+        "azureDevOpsRepository":{"shape":"AzureDevOpsRepositoryMetadata"},
+        "jiraProject":{"shape":"JiraProjectMetadata"}
       },
       "union":true
     },
@@ -3527,6 +3674,86 @@
         "DUAL_STACK"
       ]
     },
+    "IssueDestination":{
+      "type":"structure",
+      "required":[
+        "integrationId",
+        "projectKey"
+      ],
+      "members":{
+        "integrationId":{"shape":"String"},
+        "projectKey":{"shape":"String"}
+      }
+    },
+    "JiraInstallationId":{"type":"string"},
+    "JiraIntegrationInput":{
+      "type":"structure",
+      "required":[
+        "installationId",
+        "code",
+        "state",
+        "siteUrl"
+      ],
+      "members":{
+        "installationId":{"shape":"JiraInstallationId"},
+        "code":{"shape":"AuthCode"},
+        "state":{"shape":"CsrfState"},
+        "siteUrl":{"shape":"JiraSiteUrl"}
+      }
+    },
+    "JiraProjectMetadata":{
+      "type":"structure",
+      "required":[
+        "name",
+        "providerResourceId",
+        "projectKey",
+        "projectId"
+      ],
+      "members":{
+        "name":{"shape":"ProviderResourceName"},
+        "providerResourceId":{"shape":"ProviderResourceId"},
+        "projectKey":{"shape":"String"},
+        "projectId":{"shape":"String"},
+        "projectName":{"shape":"JiraProjectMetadataProjectNameString"}
+      }
+    },
+    "JiraProjectMetadataProjectNameString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "JiraProjectResource":{
+      "type":"structure",
+      "required":[
+        "name",
+        "projectKey",
+        "projectId"
+      ],
+      "members":{
+        "name":{"shape":"ProviderResourceName"},
+        "projectKey":{"shape":"String"},
+        "projectId":{"shape":"String"},
+        "projectName":{"shape":"JiraProjectResourceProjectNameString"}
+      }
+    },
+    "JiraProjectResourceProjectNameString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "JiraResourceCapabilities":{
+      "type":"structure",
+      "members":{
+        "createIssue":{"shape":"Boolean"},
+        "commentIssue":{"shape":"Boolean"}
+      }
+    },
+    "JiraSiteUrl":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"https://[a-zA-Z0-9\\-]+\\.atlassian\\.net"
+    },
     "JobStatus":{
       "type":"string",
       "enum":[
@@ -3550,6 +3777,18 @@
     "LambdaFunctionArns":{
       "type":"list",
       "member":{"shape":"LambdaFunctionArn"}
+    },
+    "LinkedIssue":{
+      "type":"structure",
+      "members":{
+        "provider":{"shape":"Provider"},
+        "integrationId":{"shape":"String"},
+        "projectKey":{"shape":"String"},
+        "issueKey":{"shape":"String"},
+        "issueId":{"shape":"String"},
+        "issueUrl":{"shape":"String"},
+        "siteUrl":{"shape":"String"}
+      }
     },
     "ListActorMessagesInput":{
       "type":"structure",
@@ -4311,7 +4550,8 @@
         "GITLAB",
         "BITBUCKET",
         "CONFLUENCE",
-        "AZURE_DEVOPS"
+        "AZURE_DEVOPS",
+        "JIRA"
       ]
     },
     "ProviderInput":{
@@ -4322,7 +4562,8 @@
         "bitbucket":{"shape":"BitbucketIntegrationInput"},
         "confluence":{"shape":"ConfluenceIntegrationInput"},
         "azureDevOps":{"shape":"AzureDevOpsIntegrationInput"},
-        "bitbucketDataCenter":{"shape":"BitbucketDataCenterIntegrationInput"}
+        "bitbucketDataCenter":{"shape":"BitbucketDataCenterIntegrationInput"},
+        "jira":{"shape":"JiraIntegrationInput"}
       },
       "union":true
     },
@@ -4333,7 +4574,8 @@
         "gitlab":{"shape":"GitLabResourceCapabilities"},
         "bitbucket":{"shape":"BitbucketResourceCapabilities"},
         "confluence":{"shape":"ConfluenceResourceCapabilities"},
-        "azureDevOps":{"shape":"AzureDevOpsResourceCapabilities"}
+        "azureDevOps":{"shape":"AzureDevOpsResourceCapabilities"},
+        "jira":{"shape":"JiraResourceCapabilities"}
       },
       "union":true
     },
@@ -4343,7 +4585,8 @@
       "type":"string",
       "enum":[
         "SOURCE_CODE",
-        "DOCUMENTATION"
+        "DOCUMENTATION",
+        "ISSUE_TRACKING"
       ]
     },
     "ReportDestination":{
@@ -4409,7 +4652,8 @@
       "type":"string",
       "enum":[
         "CODE_REPOSITORY",
-        "DOCUMENT"
+        "DOCUMENT",
+        "PROJECT"
       ]
     },
     "RiskLevel":{

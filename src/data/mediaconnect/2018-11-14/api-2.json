@@ -2062,6 +2062,10 @@
         "NdiOutputTimecodeSource":{
           "shape":"NdiOutputTimecodeSource",
           "locationName":"ndiOutputTimecodeSource"
+        },
+        "NdiAudioReferenceLevel":{
+          "shape":"NdiAudioReferenceLevel",
+          "locationName":"ndiAudioReferenceLevel"
         }
       }
     },
@@ -2543,6 +2547,23 @@
       "max":256,
       "min":0,
       "pattern":"[!-~]+"
+    },
+    "ColorInformation":{
+      "type":"structure",
+      "members":{
+        "Colorimetry":{
+          "shape":"VideoColorimetry",
+          "locationName":"colorimetry"
+        },
+        "TransferCharacteristics":{
+          "shape":"VideoTransferCharacteristics",
+          "locationName":"transferCharacteristics"
+        },
+        "MatrixCoefficients":{
+          "shape":"VideoMatrixCoefficients",
+          "locationName":"matrixCoefficients"
+        }
+      }
     },
     "Colorimetry":{
       "type":"string",
@@ -5796,6 +5817,12 @@
         }
       }
     },
+    "NdiAudioReferenceLevel":{
+      "type":"integer",
+      "box":true,
+      "max":0,
+      "min":-40
+    },
     "NdiConfig":{
       "type":"structure",
       "members":{
@@ -5868,6 +5895,10 @@
           "shape":"ScanMode",
           "locationName":"scanMode"
         },
+        "Color":{
+          "shape":"ColorInformation",
+          "locationName":"color"
+        },
         "FrameResolution":{
           "shape":"FrameResolution",
           "locationName":"frameResolution"
@@ -5935,6 +5966,10 @@
         "SourceName":{
           "shape":"String",
           "locationName":"sourceName"
+        },
+        "AudioReferenceLevel":{
+          "shape":"NdiAudioReferenceLevel",
+          "locationName":"audioReferenceLevel"
         }
       }
     },
@@ -7100,7 +7135,9 @@
       "enum":[
         "INPUT_100",
         "INPUT_50",
-        "INPUT_20"
+        "INPUT_20",
+        "INPUT_500",
+        "INPUT_250"
       ]
     },
     "RouterInputTransitEncryption":{
@@ -7605,7 +7642,9 @@
       "enum":[
         "OUTPUT_100",
         "OUTPUT_50",
-        "OUTPUT_20"
+        "OUTPUT_20",
+        "OUTPUT_500",
+        "OUTPUT_250"
       ]
     },
     "RouterOutputType":{
@@ -8720,6 +8759,10 @@
         "NdiOutputTimecodeSource":{
           "shape":"NdiOutputTimecodeSource",
           "locationName":"ndiOutputTimecodeSource"
+        },
+        "NdiAudioReferenceLevel":{
+          "shape":"NdiAudioReferenceLevel",
+          "locationName":"ndiAudioReferenceLevel"
         }
       }
     },
@@ -8730,6 +8773,10 @@
         "Programs":{
           "shape":"__listOfTransportStreamProgram",
           "locationName":"programs"
+        },
+        "TsId":{
+          "shape":"Integer",
+          "locationName":"tsId"
         }
       }
     },
@@ -8747,6 +8794,10 @@
         "Codec":{
           "shape":"String",
           "locationName":"codec"
+        },
+        "Color":{
+          "shape":"ColorInformation",
+          "locationName":"color"
         },
         "FrameRate":{
           "shape":"String",
@@ -9348,6 +9399,10 @@
         "NdiOutputTimecodeSource":{
           "shape":"NdiOutputTimecodeSource",
           "locationName":"ndiOutputTimecodeSource"
+        },
+        "NdiAudioReferenceLevel":{
+          "shape":"NdiAudioReferenceLevel",
+          "locationName":"ndiAudioReferenceLevel"
         }
       }
     },
@@ -9774,6 +9829,40 @@
         }
       }
     },
+    "VideoColorimetry":{
+      "type":"string",
+      "enum":[
+        "BT709",
+        "BT470M",
+        "BT470BG",
+        "BT601",
+        "SMPTE240M",
+        "GENERIC_FILM",
+        "BT2020",
+        "SMPTE428",
+        "SMPTE431",
+        "SMPTE432"
+      ]
+    },
+    "VideoMatrixCoefficients":{
+      "type":"string",
+      "enum":[
+        "IDENTITY",
+        "BT709",
+        "FCC",
+        "BT470BG",
+        "BT601",
+        "SMPTE240M",
+        "YCGCO",
+        "BT2020_NCL",
+        "BT2020_CL",
+        "SMPTE2085",
+        "CHROMATICITY_DERIVED_NCL",
+        "CHROMATICITY_DERIVED_CL",
+        "BT2100_ICTCP",
+        "IPT_C2"
+      ]
+    },
     "VideoMonitoringSetting":{
       "type":"structure",
       "members":{
@@ -9786,6 +9875,27 @@
           "locationName":"frozenFrames"
         }
       }
+    },
+    "VideoTransferCharacteristics":{
+      "type":"string",
+      "enum":[
+        "BT709",
+        "BT470M",
+        "BT470BG",
+        "BT601",
+        "SMPTE240M",
+        "LINEAR",
+        "LOG100",
+        "LOG316",
+        "IEC61966_2_4",
+        "BT1361_ECG",
+        "IEC61966_2_1",
+        "BT2020_10",
+        "BT2020_12",
+        "BT2100_PQ",
+        "SMPTE428",
+        "BT2100_HLG"
+      ]
     },
     "VpcInterface":{
       "type":"structure",

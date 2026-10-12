@@ -2111,9 +2111,9 @@
       }
     },
     "HarnessSkillAwsSkillsSource": {
-      "base": "<p>Passed to show that AWS Skills should be included.</p>",
+      "base": "<p>Passed to show that Amazon Web Services Skills should be included.</p>",
       "refs": {
-        "HarnessSkill$awsSkills": "<p>AWS Skills baked into the Harness's underlying Runtime.</p>"
+        "HarnessSkill$awsSkills": "<p>Amazon Web Services Skills baked into the Harness's underlying Runtime.</p>"
       }
     },
     "HarnessSkillGitAuth": {
@@ -4069,6 +4069,25 @@
         "StartRecommendationResponse$type": "<p>The type of recommendation.</p>"
       }
     },
+    "RecordExpiryAction": {
+      "base": "<p>The action to apply to an existing record expiry (long-term memory time-to-live) configuration. <code>REMOVE</code> removes a previously configured expiry so that the records no longer expire.</p>",
+      "refs": {
+        "RecordExpirySpecification$action": "<p>The action to apply to the existing record expiry configuration. Set to <code>REMOVE</code> to remove a previously configured expiry so that the records no longer expire. This value does not apply when creating records.</p>"
+      }
+    },
+    "RecordExpiryDurationDays": {
+      "base": null,
+      "refs": {
+        "RecordExpirySpecification$recordExpiryDurationDays": "<p>The duration, in days, after which the records in this request expire. The minimum is 31 days.</p>"
+      }
+    },
+    "RecordExpirySpecification": {
+      "base": "<p>Specifies the record expiry (long-term memory time-to-live) applied to the records in a batch request. Provide exactly one of <code>recordExpiryDurationDays</code> or <code>action</code>. Set <code>recordExpiryDurationDays</code> to configure or update the expiry, or set <code>action</code> to <code>REMOVE</code> to remove a previously configured expiry.</p>",
+      "refs": {
+        "BatchCreateMemoryRecordsInput$recordExpirySpecification": "<p>The record expiry (long-term memory time-to-live) applied to every record created by this request. Set <code>recordExpiryDurationDays</code> to the number of days after which the records expire. Only the expiry provided here is applied; the records' strategy association has no effect on their expiry. If you do not provide this value, the records do not expire. The <code>REMOVE</code> action does not apply when creating records.</p>",
+        "BatchUpdateMemoryRecordsInput$recordExpirySpecification": "<p>The record expiry (long-term memory time-to-live) applied to every record updated by this request. Set <code>recordExpiryDurationDays</code> to configure or overwrite the number of days after which the records expire, or set <code>action</code> to <code>REMOVE</code> to clear a previously configured expiry so that the records no longer expire.</p> <p>When you do not provide this value, the service determines each record's expiry from its current state:</p> <ul> <li> <p>If the record already has an expiry configured, the service resets and reapplies the expiry based on the last applied <code>recordExpiryDurationDays</code>.</p> </li> <li> <p>If the record does not have an expiry configured, no expiry is applied and the record remains non-expiring. This is the outcome regardless of whether the record's strategy configures an expiry.</p> </li> </ul> <p>Providing an explicit <code>recordExpiryDurationDays</code> always takes precedence: it overwrites an existing expiry, or sets one on a record that previously had none.</p>"
+      }
+    },
     "RegistryArn": {
       "base": null,
       "refs": {
@@ -5131,9 +5150,12 @@
         "GetABTestResponse$updatedAt": "<p>The timestamp when the A/B test was last updated.</p>",
         "IngestDataInput$contentTimestamp": "<p>The timestamp of when the content occurred.</p>",
         "MemoryRecord$createdAt": "<p>The timestamp when the memory record was created.</p>",
+        "MemoryRecord$timestamp": "<p>The timestamp based on which the memory record was ingested. This reflects the time of the source content that the record was derived from, which can differ from <code>createdAt</code>, the time the record itself was written.</p>",
+        "MemoryRecord$expiresAt": "<p>The timestamp at which the memory record expires and becomes eligible for deletion. This value is set when a record expiry (long-term memory time-to-live) applies to the record, either from the strategy the record belongs to or from a record expiry provided on the batch request that created or updated it. If the record has no expiry configured, this value is not present and the record does not expire.</p>",
         "MemoryRecordCreateInput$timestamp": "<p>Time at which the memory record was created.</p>",
         "MemoryRecordMetadataValue$dateTimeValue": "<p>A timestamp value in ISO 8601 UTC format.</p>",
         "MemoryRecordSummary$createdAt": "<p>The timestamp when the memory record was created.</p>",
+        "MemoryRecordSummary$timestamp": "<p>The timestamp based on which the memory record was ingested. This reflects the time of the source content that the record was derived from, which can differ from <code>createdAt</code>, the time the record itself was written.</p>",
         "MemoryRecordUpdateInput$timestamp": "<p>Time at which the memory record was updated</p>",
         "SessionSummary$createdAt": "<p>The timestamp when the session was created.</p>",
         "UpdateABTestResponse$updatedAt": "<p>The timestamp when the A/B test was updated.</p>"

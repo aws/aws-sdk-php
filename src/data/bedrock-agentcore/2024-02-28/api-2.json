@@ -1555,7 +1555,8 @@
         "clientToken":{
           "shape":"String",
           "idempotencyToken":true
-        }
+        },
+        "recordExpirySpecification":{"shape":"RecordExpirySpecification"}
       }
     },
     "BatchCreateMemoryRecordsOutput":{
@@ -1669,7 +1670,8 @@
           "location":"uri",
           "locationName":"memoryId"
         },
-        "records":{"shape":"MemoryRecordsUpdateInputList"}
+        "records":{"shape":"MemoryRecordsUpdateInputList"},
+        "recordExpirySpecification":{"shape":"RecordExpirySpecification"}
       }
     },
     "BatchUpdateMemoryRecordsOutput":{
@@ -5914,7 +5916,9 @@
         "memoryStrategyId":{"shape":"MemoryStrategyId"},
         "namespaces":{"shape":"NamespacesList"},
         "createdAt":{"shape":"Timestamp"},
-        "metadata":{"shape":"MemoryRecordMetadataMap"}
+        "timestamp":{"shape":"Timestamp"},
+        "metadata":{"shape":"MemoryRecordMetadataMap"},
+        "expiresAt":{"shape":"Timestamp"}
       }
     },
     "MemoryRecordCreateInput":{
@@ -6031,6 +6035,7 @@
         "namespaces":{"shape":"NamespacesList"},
         "createdAt":{"shape":"Timestamp"},
         "score":{"shape":"Double"},
+        "timestamp":{"shape":"Timestamp"},
         "metadata":{"shape":"MemoryRecordMetadataMap"}
       }
     },
@@ -6987,6 +6992,23 @@
         "SYSTEM_PROMPT_RECOMMENDATION",
         "TOOL_DESCRIPTION_RECOMMENDATION"
       ]
+    },
+    "RecordExpiryAction":{
+      "type":"string",
+      "enum":["REMOVE"]
+    },
+    "RecordExpiryDurationDays":{
+      "type":"integer",
+      "box":true,
+      "min":31
+    },
+    "RecordExpirySpecification":{
+      "type":"structure",
+      "members":{
+        "recordExpiryDurationDays":{"shape":"RecordExpiryDurationDays"},
+        "action":{"shape":"RecordExpiryAction"}
+      },
+      "union":true
     },
     "RegistryArn":{
       "type":"string",

@@ -97,6 +97,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result batchGetDataQualityResult(array{ResultIds?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise batchGetDataQualityResultAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise batchGetDataQualityResultAsync(array{ResultIds?: list<string>, ...} $args = [])
+ * @method \Aws\Result batchGetDataQualityResultV2(array $args = [])
+ * @phpstan-method \Aws\Result batchGetDataQualityResultV2(array{ResultIds?: list<string>, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchGetDataQualityResultV2Async(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise batchGetDataQualityResultV2Async(array{ResultIds?: list<string>, ...} $args = [])
  * @method \Aws\Result batchGetDataQualityRulesetEvaluationRun(array $args = [])
  * @phpstan-method \Aws\Result batchGetDataQualityRulesetEvaluationRun(array{RunIds?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise batchGetDataQualityRulesetEvaluationRunAsync(array $args = [])
@@ -1891,6 +1895,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getDataQualityResult(array{ResultId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getDataQualityResultAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getDataQualityResultAsync(array{ResultId?: string, ...} $args = [])
+ * @method \Aws\Result getDataQualityResultV2(array $args = [])
+ * @phpstan-method \Aws\Result getDataQualityResultV2(array{ResultId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getDataQualityResultV2Async(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getDataQualityResultV2Async(array{ResultId?: string, ...} $args = [])
  * @method \Aws\Result getDataQualityRuleRecommendationRun(array $args = [])
  * @phpstan-method \Aws\Result getDataQualityRuleRecommendationRun(array{RunId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getDataQualityRuleRecommendationRunAsync(array $args = [])
@@ -2657,6 +2665,34 @@ use Aws\AwsClient;
  *     MaxResults?: int,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result listDataQualityResultsV2(array $args = [])
+ * @phpstan-method \Aws\Result listDataQualityResultsV2(array{
+ *     Filter?: array{
+ *         DataSource?: array{GlueTable?: array, DataQualityGlueTable?: array, ...},
+ *         PublishedAfter?: int|string|\DateTimeInterface,
+ *         PublishedBefore?: int|string|\DateTimeInterface,
+ *         Dimensions?: array<string, string>,
+ *         EvaluationContext?: string,
+ *         ...,
+ *     },
+ *     NextToken?: string,
+ *     MaxResults?: int,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listDataQualityResultsV2Async(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listDataQualityResultsV2Async(array{
+ *     Filter?: array{
+ *         DataSource?: array{GlueTable?: array, DataQualityGlueTable?: array, ...},
+ *         PublishedAfter?: int|string|\DateTimeInterface,
+ *         PublishedBefore?: int|string|\DateTimeInterface,
+ *         Dimensions?: array<string, string>,
+ *         EvaluationContext?: string,
+ *         ...,
+ *     },
+ *     NextToken?: string,
+ *     MaxResults?: int,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listDataQualityRuleRecommendationRuns(array $args = [])
  * @phpstan-method \Aws\Result listDataQualityRuleRecommendationRuns(array{
  *     Filter?: array{
@@ -3003,6 +3039,142 @@ use Aws\AwsClient;
  *     DataFilter?: string,
  *     IntegrationConfig?: array{RefreshInterval?: string, SourceProperties?: array<string, string>, ContinuousSync?: bool, ...},
  *     IntegrationName?: string,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result publishDataQualityResultV2(array $args = [])
+ * @phpstan-method \Aws\Result publishDataQualityResultV2(array{
+ *     Dimensions?: array<string, string>,
+ *     Tags?: array<string, string>,
+ *     ExecutionStartedOn?: int|string|\DateTimeInterface,
+ *     ExecutionCompletedOn?: int|string|\DateTimeInterface,
+ *     Score?: float,
+ *     RuleResults?: list<array{
+ *         Name?: string,
+ *         Description?: string,
+ *         EvaluationMessage?: string,
+ *         Result?: 'ERROR'|'FAIL'|'PASS',
+ *         EvaluatedMetrics?: array<string, float>,
+ *         EvaluatedRule?: string,
+ *         RuleMetrics?: array<string, float>,
+ *         Labels?: array<string, string>,
+ *         ...,
+ *     }>,
+ *     AnalyzerResults?: list<array{
+ *         Name?: string,
+ *         Description?: string,
+ *         EvaluationMessage?: string,
+ *         EvaluatedMetrics?: array<string, float>,
+ *         EvaluatedDistributions?: array<string, array>,
+ *         ...,
+ *     }>,
+ *     Observations?: list<array{Description?: string, MetricBasedObservation?: array, ...}>,
+ *     AggregatedMetrics?: array{
+ *         TotalRowsProcessed?: float,
+ *         TotalRowsPassed?: float,
+ *         TotalRowsFailed?: float,
+ *         TotalRulesProcessed?: float,
+ *         TotalRulesPassed?: float,
+ *         TotalRulesFailed?: float,
+ *         ...,
+ *     },
+ *     Statistics?: list<array{
+ *         StatisticId?: string,
+ *         ProfileId?: string,
+ *         RunIdentifier?: array,
+ *         StatisticName?: string,
+ *         DoubleValue?: float,
+ *         DistributionValue?: array,
+ *         EvaluationLevel?: 'Column'|'Dataset'|'Multicolumn',
+ *         ColumnsReferenced?: list<string>,
+ *         ReferencedDatasets?: list<string>,
+ *         StatisticProperties?: array<string, string>,
+ *         RecordedOn?: int|string|\DateTimeInterface,
+ *         InclusionAnnotation?: array,
+ *         ...,
+ *     }>,
+ *     RunConfiguration?: array{ObservationsEnabled?: 'ALL'|'NONE', ObservationMode?: 'FIXED'|'SCHEDULED', ...},
+ *     ClientToken?: string,
+ *     EvaluationContext?: string,
+ *     Descriptors?: array<string, string>,
+ *     RulesetName?: string,
+ *     DataQualitySecurityConfiguration?: string,
+ *     Telemetry?: array{
+ *         VcpuHours?: float,
+ *         FlagsEnabled?: array<string, string>,
+ *         LibraryVersion?: string,
+ *         SparkVersion?: string,
+ *         HostRuntimeVersion?: string,
+ *         Engine?: 'PYTHON'|'SPARK',
+ *         ...,
+ *     },
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise publishDataQualityResultV2Async(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise publishDataQualityResultV2Async(array{
+ *     Dimensions?: array<string, string>,
+ *     Tags?: array<string, string>,
+ *     ExecutionStartedOn?: int|string|\DateTimeInterface,
+ *     ExecutionCompletedOn?: int|string|\DateTimeInterface,
+ *     Score?: float,
+ *     RuleResults?: list<array{
+ *         Name?: string,
+ *         Description?: string,
+ *         EvaluationMessage?: string,
+ *         Result?: 'ERROR'|'FAIL'|'PASS',
+ *         EvaluatedMetrics?: array<string, float>,
+ *         EvaluatedRule?: string,
+ *         RuleMetrics?: array<string, float>,
+ *         Labels?: array<string, string>,
+ *         ...,
+ *     }>,
+ *     AnalyzerResults?: list<array{
+ *         Name?: string,
+ *         Description?: string,
+ *         EvaluationMessage?: string,
+ *         EvaluatedMetrics?: array<string, float>,
+ *         EvaluatedDistributions?: array<string, array>,
+ *         ...,
+ *     }>,
+ *     Observations?: list<array{Description?: string, MetricBasedObservation?: array, ...}>,
+ *     AggregatedMetrics?: array{
+ *         TotalRowsProcessed?: float,
+ *         TotalRowsPassed?: float,
+ *         TotalRowsFailed?: float,
+ *         TotalRulesProcessed?: float,
+ *         TotalRulesPassed?: float,
+ *         TotalRulesFailed?: float,
+ *         ...,
+ *     },
+ *     Statistics?: list<array{
+ *         StatisticId?: string,
+ *         ProfileId?: string,
+ *         RunIdentifier?: array,
+ *         StatisticName?: string,
+ *         DoubleValue?: float,
+ *         DistributionValue?: array,
+ *         EvaluationLevel?: 'Column'|'Dataset'|'Multicolumn',
+ *         ColumnsReferenced?: list<string>,
+ *         ReferencedDatasets?: list<string>,
+ *         StatisticProperties?: array<string, string>,
+ *         RecordedOn?: int|string|\DateTimeInterface,
+ *         InclusionAnnotation?: array,
+ *         ...,
+ *     }>,
+ *     RunConfiguration?: array{ObservationsEnabled?: 'ALL'|'NONE', ObservationMode?: 'FIXED'|'SCHEDULED', ...},
+ *     ClientToken?: string,
+ *     EvaluationContext?: string,
+ *     Descriptors?: array<string, string>,
+ *     RulesetName?: string,
+ *     DataQualitySecurityConfiguration?: string,
+ *     Telemetry?: array{
+ *         VcpuHours?: float,
+ *         FlagsEnabled?: array<string, string>,
+ *         LibraryVersion?: string,
+ *         SparkVersion?: string,
+ *         HostRuntimeVersion?: string,
+ *         Engine?: 'PYTHON'|'SPARK',
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \Aws\Result putAsset(array $args = [])

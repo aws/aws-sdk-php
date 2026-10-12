@@ -49,6 +49,28 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result batchDeleteThreatModels(array{threatModelIds?: list<string>, agentSpaceId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise batchDeleteThreatModelsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise batchDeleteThreatModelsAsync(array{threatModelIds?: list<string>, agentSpaceId?: string, ...} $args = [])
+ * @method \Aws\Result batchDisassociateFindingIssue(array $args = [])
+ * @phpstan-method \Aws\Result batchDisassociateFindingIssue(array{agentSpaceId?: string, pentestJobId?: string, codeReviewJobId?: string, findingIds?: list<string>, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchDisassociateFindingIssueAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise batchDisassociateFindingIssueAsync(array{agentSpaceId?: string, pentestJobId?: string, codeReviewJobId?: string, findingIds?: list<string>, ...} $args = [])
+ * @method \Aws\Result batchExportFindings(array $args = [])
+ * @phpstan-method \Aws\Result batchExportFindings(array{
+ *     agentSpaceId?: string,
+ *     pentestJobId?: string,
+ *     codeReviewJobId?: string,
+ *     issueDestination?: array{integrationId?: string, projectKey?: string, ...},
+ *     findingIds?: list<string>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchExportFindingsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise batchExportFindingsAsync(array{
+ *     agentSpaceId?: string,
+ *     pentestJobId?: string,
+ *     codeReviewJobId?: string,
+ *     issueDestination?: array{integrationId?: string, projectKey?: string, ...},
+ *     findingIds?: list<string>,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result batchGetAgentSpaces(array $args = [])
  * @phpstan-method \Aws\Result batchGetAgentSpaces(array{agentSpaceIds?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise batchGetAgentSpacesAsync(array $args = [])
@@ -229,7 +251,7 @@ use Aws\AwsClient;
  * } $args = [])
  * @method \Aws\Result createIntegration(array $args = [])
  * @phpstan-method \Aws\Result createIntegration(array{
- *     provider?: 'AZURE_DEVOPS'|'BITBUCKET'|'CONFLUENCE'|'GITHUB'|'GITLAB',
+ *     provider?: 'AZURE_DEVOPS'|'BITBUCKET'|'CONFLUENCE'|'GITHUB'|'GITLAB'|'JIRA',
  *     input?: array{
  *         github?: array{
  *             code?: string,
@@ -244,6 +266,7 @@ use Aws\AwsClient;
  *         confluence?: array{installationId?: string, code?: string, state?: string, siteUrl?: string, ...},
  *         azureDevOps?: array{code?: string, state?: string, organizationName?: string, ...},
  *         bitbucketDataCenter?: array{targetUrl?: string, code?: string, state?: string, ...},
+ *         jira?: array{installationId?: string, code?: string, state?: string, siteUrl?: string, ...},
  *         ...,
  *     },
  *     integrationDisplayName?: string,
@@ -254,7 +277,7 @@ use Aws\AwsClient;
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createIntegrationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise createIntegrationAsync(array{
- *     provider?: 'AZURE_DEVOPS'|'BITBUCKET'|'CONFLUENCE'|'GITHUB'|'GITLAB',
+ *     provider?: 'AZURE_DEVOPS'|'BITBUCKET'|'CONFLUENCE'|'GITHUB'|'GITLAB'|'JIRA',
  *     input?: array{
  *         github?: array{
  *             code?: string,
@@ -269,6 +292,7 @@ use Aws\AwsClient;
  *         confluence?: array{installationId?: string, code?: string, state?: string, siteUrl?: string, ...},
  *         azureDevOps?: array{code?: string, state?: string, organizationName?: string, ...},
  *         bitbucketDataCenter?: array{targetUrl?: string, code?: string, state?: string, ...},
+ *         jira?: array{installationId?: string, code?: string, state?: string, siteUrl?: string, ...},
  *         ...,
  *     },
  *     integrationDisplayName?: string,
@@ -583,7 +607,7 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise importSecurityRequirementsAsync(array{packId?: string, input?: array{documents?: list<array>, ...}, ...} $args = [])
  * @method \Aws\Result initiateProviderRegistration(array $args = [])
  * @phpstan-method \Aws\Result initiateProviderRegistration(array{
- *     provider?: 'AZURE_DEVOPS'|'BITBUCKET'|'CONFLUENCE'|'GITHUB'|'GITLAB',
+ *     provider?: 'AZURE_DEVOPS'|'BITBUCKET'|'CONFLUENCE'|'GITHUB'|'GITLAB'|'JIRA',
  *     targetUrl?: string,
  *     organizationName?: string,
  *     clientId?: string,
@@ -592,7 +616,7 @@ use Aws\AwsClient;
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise initiateProviderRegistrationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise initiateProviderRegistrationAsync(array{
- *     provider?: 'AZURE_DEVOPS'|'BITBUCKET'|'CONFLUENCE'|'GITHUB'|'GITLAB',
+ *     provider?: 'AZURE_DEVOPS'|'BITBUCKET'|'CONFLUENCE'|'GITHUB'|'GITLAB'|'JIRA',
  *     targetUrl?: string,
  *     organizationName?: string,
  *     clientId?: string,
@@ -707,7 +731,7 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listIntegratedResources(array{
  *     agentSpaceId?: string,
  *     integrationId?: string,
- *     resourceType?: 'CODE_REPOSITORY'|'DOCUMENT',
+ *     resourceType?: 'CODE_REPOSITORY'|'DOCUMENT'|'PROJECT',
  *     nextToken?: string,
  *     maxResults?: int,
  *     ...,
@@ -716,7 +740,7 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise listIntegratedResourcesAsync(array{
  *     agentSpaceId?: string,
  *     integrationId?: string,
- *     resourceType?: 'CODE_REPOSITORY'|'DOCUMENT',
+ *     resourceType?: 'CODE_REPOSITORY'|'DOCUMENT'|'PROJECT',
  *     nextToken?: string,
  *     maxResults?: int,
  *     ...,
@@ -724,8 +748,8 @@ use Aws\AwsClient;
  * @method \Aws\Result listIntegrations(array $args = [])
  * @phpstan-method \Aws\Result listIntegrations(array{
  *     filter?: array{
- *         provider?: 'AZURE_DEVOPS'|'BITBUCKET'|'CONFLUENCE'|'GITHUB'|'GITLAB',
- *         providerType?: 'DOCUMENTATION'|'SOURCE_CODE',
+ *         provider?: 'AZURE_DEVOPS'|'BITBUCKET'|'CONFLUENCE'|'GITHUB'|'GITLAB'|'JIRA',
+ *         providerType?: 'DOCUMENTATION'|'ISSUE_TRACKING'|'SOURCE_CODE',
  *         ...,
  *     },
  *     nextToken?: string,
@@ -735,8 +759,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listIntegrationsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listIntegrationsAsync(array{
  *     filter?: array{
- *         provider?: 'AZURE_DEVOPS'|'BITBUCKET'|'CONFLUENCE'|'GITHUB'|'GITLAB',
- *         providerType?: 'DOCUMENTATION'|'SOURCE_CODE',
+ *         provider?: 'AZURE_DEVOPS'|'BITBUCKET'|'CONFLUENCE'|'GITHUB'|'GITLAB'|'JIRA',
+ *         providerType?: 'DOCUMENTATION'|'ISSUE_TRACKING'|'SOURCE_CODE',
  *         ...,
  *     },
  *     nextToken?: string,

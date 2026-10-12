@@ -690,13 +690,22 @@
     "CustomHeaderName": {
       "base": "<p>HTTP header name. Allows alphanumeric characters, hyphens, and underscores.</p>",
       "refs": {
-        "CustomHeaders$key": null
+        "CustomHeaderNames$member": null,
+        "CustomHeaders$key": null,
+        "MCPServerCustomHeadersConfigHeadersMap$key": null
+      }
+    },
+    "CustomHeaderNames": {
+      "base": null,
+      "refs": {
+        "RegisteredMCPServerDetails$customHeaderNames": "<p>The configured custom authentication header names when the MCP server uses custom-header authentication. Secret values are not returned.</p>"
       }
     },
     "CustomHeaderValue": {
       "base": "<p>Value type for custom headers.</p>",
       "refs": {
-        "CustomHeaders$value": null
+        "CustomHeaders$value": null,
+        "MCPServerCustomHeadersConfigHeadersMap$value": null
       }
     },
     "CustomHeaders": {
@@ -1236,6 +1245,13 @@
         "UpdateOperatorAppIdpConfigInput$idpClientSecret": "<p>The OIDC client secret for the IdP application</p>"
       }
     },
+    "IncludedData": {
+      "base": "<p>How much data to include in the response. Defaults to ALL_DATA.</p>",
+      "refs": {
+        "GetAgentSpaceInput$includedData": "<p>How much data to include in the response.</p>",
+        "ListAgentSpacesInput$includedData": "<p>How much data to include in the response.</p>"
+      }
+    },
     "Integer": {
       "base": null,
       "refs": {
@@ -1671,6 +1687,18 @@
       "base": "<p>Configuration for Model Context Protocol (MCP) server integration.</p>",
       "refs": {
         "ServiceConfiguration$mcpserver": "<p>MCP (Model Context Protocol) server integration configuration.</p>"
+      }
+    },
+    "MCPServerCustomHeadersConfig": {
+      "base": "<p>Configuration for authenticating to an MCP server with custom HTTP headers.</p>",
+      "refs": {
+        "MCPServerAuthorizationConfig$customHeaders": "<p>MCP server configuration with one or more custom authentication headers.</p>"
+      }
+    },
+    "MCPServerCustomHeadersConfigHeadersMap": {
+      "base": "<p>Custom headers map.</p>",
+      "refs": {
+        "MCPServerCustomHeadersConfig$headers": null
       }
     },
     "MCPServerDatadogConfiguration": {
@@ -3536,7 +3564,8 @@
         "GetAccountUsageOutput$monthlyAccountInvestigationHours": "<p>Monthly investigation hours usage and limit for an account</p>",
         "GetAccountUsageOutput$monthlyAccountEvaluationHours": "<p>Monthly evaluation hours usage and limit for an account</p>",
         "GetAccountUsageOutput$monthlyAccountSystemLearningHours": "<p>Monthly system learning hours usage and limit for an account</p>",
-        "GetAccountUsageOutput$monthlyAccountOnDemandHours": "<p>Monthly on-demand hours usage and limit for an account</p>"
+        "GetAccountUsageOutput$monthlyAccountOnDemandHours": "<p>Monthly on-demand hours usage and limit for an account</p>",
+        "GetAccountUsageOutput$monthlyAccountGraderHours": null
       }
     },
     "UserMessage": {

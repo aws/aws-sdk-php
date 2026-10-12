@@ -134,7 +134,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ConflictException"}
-      ]
+      ],
+      "idempotent":true
     },
     "CreateOmniDashboard":{
       "name":"CreateOmniDashboard",
@@ -333,7 +334,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"InternalServerException"}
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"}
       ],
       "idempotent":true
     },
@@ -349,7 +351,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"InternalServerException"}
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"}
       ],
       "idempotent":true
     },
@@ -731,6 +734,7 @@
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
       ],
@@ -3064,12 +3068,6 @@
       "type":"structure",
       "members":{
         "name":{"shape":"String"},
-        "namespace":{
-          "shape":"String",
-          "deprecated":true,
-          "deprecatedMessage":"Use attributes['service.namespace']; retained for backward compatibility.",
-          "deprecatedSince":"2026-08-19"
-        },
         "preferredStat":{"shape":"String"},
         "metricType":{"shape":"String"},
         "attributes":{"shape":"MetadataAttributeMap"},
@@ -4322,6 +4320,7 @@
       "members":{
         "spaceId":{"shape":"SpaceId"},
         "name":{"shape":"UpdateSpaceInputNameString"},
+        "agentCoreEvaluationRoleArn":{"shape":"Arn"},
         "encryptionConfiguration":{"shape":"EncryptionConfiguration"}
       }
     },

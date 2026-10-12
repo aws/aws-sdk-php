@@ -13,7 +13,7 @@ use Aws\AwsClient;
  *             SubnetIds?: list<string>,
  *             SecurityGroupIds?: list<string>,
  *             NetworkProtocol?: 'DualStack'|'IPv4',
- *             AssociatedComputeResourceTypes?: list<'MicroVm'>,
+ *             AssociatedComputeResourceTypes?: list<'MicroVm'|'WebFunction'>,
  *             ...,
  *         },
  *         ...,
@@ -31,7 +31,7 @@ use Aws\AwsClient;
  *             SubnetIds?: list<string>,
  *             SecurityGroupIds?: list<string>,
  *             NetworkProtocol?: 'DualStack'|'IPv4',
- *             AssociatedComputeResourceTypes?: list<'MicroVm'>,
+ *             AssociatedComputeResourceTypes?: list<'MicroVm'|'WebFunction'>,
  *             ...,
  *         },
  *         ...,
@@ -49,6 +49,22 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getNetworkConnector(array{Identifier?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getNetworkConnectorAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getNetworkConnectorAsync(array{Identifier?: string, ...} $args = [])
+ * @method \Aws\Result listNetworkConnectorVersions(array $args = [])
+ * @phpstan-method \Aws\Result listNetworkConnectorVersions(array{
+ *     Identifier?: string,
+ *     State?: 'ACTIVE'|'DELETE_FAILED'|'DELETING'|'FAILED'|'INACTIVE'|'PENDING',
+ *     Marker?: string,
+ *     MaxItems?: int,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listNetworkConnectorVersionsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listNetworkConnectorVersionsAsync(array{
+ *     Identifier?: string,
+ *     State?: 'ACTIVE'|'DELETE_FAILED'|'DELETING'|'FAILED'|'INACTIVE'|'PENDING',
+ *     Marker?: string,
+ *     MaxItems?: int,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listNetworkConnectors(array $args = [])
  * @phpstan-method \Aws\Result listNetworkConnectors(array{
  *     State?: 'ACTIVE'|'DELETE_FAILED'|'DELETING'|'FAILED'|'INACTIVE'|'PENDING',
@@ -71,7 +87,7 @@ use Aws\AwsClient;
  *             SubnetIds?: list<string>,
  *             SecurityGroupIds?: list<string>,
  *             NetworkProtocol?: 'DualStack'|'IPv4',
- *             AssociatedComputeResourceTypes?: list<'MicroVm'>,
+ *             AssociatedComputeResourceTypes?: list<'MicroVm'|'WebFunction'>,
  *             ...,
  *         },
  *         ...,
@@ -88,7 +104,7 @@ use Aws\AwsClient;
  *             SubnetIds?: list<string>,
  *             SecurityGroupIds?: list<string>,
  *             NetworkProtocol?: 'DualStack'|'IPv4',
- *             AssociatedComputeResourceTypes?: list<'MicroVm'>,
+ *             AssociatedComputeResourceTypes?: list<'MicroVm'|'WebFunction'>,
  *             ...,
  *         },
  *         ...,

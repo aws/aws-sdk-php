@@ -66,6 +66,23 @@
       ],
       "readonly":true
     },
+    "ListNetworkConnectorVersions":{
+      "name":"ListNetworkConnectorVersions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2026-04-04/network-connectors/{Identifier}/versions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListNetworkConnectorVersionsRequest"},
+      "output":{"shape":"ListNetworkConnectorVersionsResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
     "ListNetworkConnectors":{
       "name":"ListNetworkConnectors",
       "http":{
@@ -94,6 +111,7 @@
       "errors":[
         {"shape":"InvalidParameterValueException"},
         {"shape":"ResourceConflictException"},
+        {"shape":"NetworkConnectorLimitExceededException"},
         {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"ResourceNotFoundException"}
@@ -114,7 +132,10 @@
     },
     "ComputeResourceType":{
       "type":"string",
-      "enum":["MicroVm"]
+      "enum":[
+        "MicroVm",
+        "WebFunction"
+      ]
     },
     "CoreTimestamp":{
       "type":"timestamp",
@@ -148,6 +169,8 @@
         "Arn":{"shape":"NetworkConnectorArn"},
         "Name":{"shape":"NetworkConnectorName"},
         "Id":{"shape":"NetworkConnectorId"},
+        "VersionArn":{"shape":"NetworkConnectorArn"},
+        "Version":{"shape":"NetworkConnectorVersion"},
         "Configuration":{"shape":"NetworkConnectorConfiguration"},
         "OperatorRole":{"shape":"NetworkConnectorRoleArn"},
         "State":{"shape":"NetworkConnectorState"}
@@ -175,6 +198,8 @@
         "Arn":{"shape":"NetworkConnectorArn"},
         "Name":{"shape":"NetworkConnectorName"},
         "Id":{"shape":"NetworkConnectorId"},
+        "VersionArn":{"shape":"NetworkConnectorArn"},
+        "Version":{"shape":"NetworkConnectorVersion"},
         "Configuration":{"shape":"NetworkConnectorConfiguration"},
         "OperatorRole":{"shape":"NetworkConnectorRoleArn"},
         "State":{"shape":"NetworkConnectorState"}
@@ -202,7 +227,10 @@
         "Arn":{"shape":"NetworkConnectorArn"},
         "Name":{"shape":"NetworkConnectorName"},
         "Id":{"shape":"NetworkConnectorId"},
+        "VersionArn":{"shape":"NetworkConnectorArn"},
         "Version":{"shape":"NetworkConnectorVersion"},
+        "LatestVersionArn":{"shape":"NetworkConnectorArn"},
+        "LatestVersion":{"shape":"NetworkConnectorVersion"},
         "Configuration":{"shape":"NetworkConnectorConfiguration"},
         "OperatorRole":{"shape":"NetworkConnectorRoleArn"},
         "State":{"shape":"NetworkConnectorState"},
@@ -225,6 +253,40 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "ListNetworkConnectorVersionsRequest":{
+      "type":"structure",
+      "required":["Identifier"],
+      "members":{
+        "Identifier":{
+          "shape":"NetworkConnectorIdentifier",
+          "location":"uri",
+          "locationName":"Identifier"
+        },
+        "State":{
+          "shape":"NetworkConnectorState",
+          "location":"querystring",
+          "locationName":"State"
+        },
+        "Marker":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"Marker"
+        },
+        "MaxItems":{
+          "shape":"MaxHundredListItems",
+          "location":"querystring",
+          "locationName":"MaxItems"
+        }
+      }
+    },
+    "ListNetworkConnectorVersionsResponse":{
+      "type":"structure",
+      "required":["NetworkConnectorVersions"],
+      "members":{
+        "NetworkConnectorVersions":{"shape":"NetworkConnectorVersionsList"},
+        "NextMarker":{"shape":"String"}
+      }
     },
     "ListNetworkConnectorsRequest":{
       "type":"structure",
@@ -264,7 +326,7 @@
       "type":"string",
       "max":140,
       "min":1,
-      "pattern":"(arn:aws[a-zA-Z-]*:lambda:(eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:network-connector:[a-zA-Z0-9-_]+(:[1-9]|[1-9][0-9]+)?)"
+      "pattern":"(arn:aws[a-zA-Z-]*:lambda:(eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:network-connector:[a-zA-Z0-9-_]+(:[1-9][0-9]*)?)"
     },
     "NetworkConnectorConfiguration":{
       "type":"structure",
@@ -301,6 +363,7 @@
         "InternalError",
         "InvalidSecurityGroup",
         "InvalidSubnet",
+        "SecurityGroupsPerInterfaceLimitExceeded",
         "SubnetOutOfIPAddresses"
       ]
     },
@@ -320,7 +383,7 @@
       "type":"string",
       "max":140,
       "min":1,
-      "pattern":"(arn:aws[a-zA-Z-]*:lambda:(eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:network-connector:[a-zA-Z0-9-_]+(:[1-9]|[1-9][0-9]+)?)|[a-zA-Z0-9_-]{1,64}"
+      "pattern":"(arn:aws[a-zA-Z-]*:lambda:(eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:network-connector:[a-zA-Z0-9-_]+(:[1-9][0-9]*)?)|[a-zA-Z0-9_-]{1,64}"
     },
     "NetworkConnectorRoleArn":{
       "type":"string",
@@ -337,7 +400,7 @@
     "NetworkConnectorSecurityGroupIds":{
       "type":"list",
       "member":{"shape":"NetworkConnectorSecurityGroupId"},
-      "max":5,
+      "max":16,
       "min":0
     },
     "NetworkConnectorState":{
@@ -360,6 +423,7 @@
         "InternalError",
         "InvalidSecurityGroup",
         "InvalidSubnet",
+        "SecurityGroupsPerInterfaceLimitExceeded",
         "SubnetOutOfIPAddresses"
       ]
     },
@@ -389,7 +453,9 @@
         "Id":{"shape":"NetworkConnectorId"},
         "Type":{"shape":"NetworkConnectorType"},
         "State":{"shape":"NetworkConnectorState"},
-        "LastModified":{"shape":"CoreTimestamp"}
+        "LastModified":{"shape":"CoreTimestamp"},
+        "LatestVersionArn":{"shape":"NetworkConnectorArn"},
+        "LatestVersion":{"shape":"NetworkConnectorVersion"}
       }
     },
     "NetworkConnectorTagKey":{
@@ -416,6 +482,34 @@
     "NetworkConnectorVersion":{
       "type":"long",
       "box":true,
+      "min":1
+    },
+    "NetworkConnectorVersionSummary":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "VersionArn",
+        "Name",
+        "Id",
+        "Version",
+        "State"
+      ],
+      "members":{
+        "Arn":{"shape":"NetworkConnectorArn"},
+        "VersionArn":{"shape":"NetworkConnectorArn"},
+        "Name":{"shape":"NetworkConnectorName"},
+        "Id":{"shape":"NetworkConnectorId"},
+        "Version":{"shape":"NetworkConnectorVersion"},
+        "State":{"shape":"NetworkConnectorState"},
+        "StateReason":{"shape":"String"},
+        "StateReasonCode":{"shape":"NetworkConnectorStateReasonCode"},
+        "LastModified":{"shape":"CoreTimestamp"}
+      }
+    },
+    "NetworkConnectorVersionsList":{
+      "type":"list",
+      "member":{"shape":"NetworkConnectorVersionSummary"},
+      "max":100,
       "min":0
     },
     "NetworkConnectorVpcEgressConfiguration":{
@@ -532,6 +626,8 @@
         "Arn":{"shape":"NetworkConnectorArn"},
         "Name":{"shape":"NetworkConnectorName"},
         "Id":{"shape":"NetworkConnectorId"},
+        "VersionArn":{"shape":"NetworkConnectorArn"},
+        "Version":{"shape":"NetworkConnectorVersion"},
         "OperatorRole":{"shape":"NetworkConnectorRoleArn"},
         "Configuration":{"shape":"NetworkConnectorConfiguration"},
         "State":{"shape":"NetworkConnectorState"},

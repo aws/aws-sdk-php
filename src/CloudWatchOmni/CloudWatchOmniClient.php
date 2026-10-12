@@ -677,6 +677,7 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result updateSpace(array{
  *     spaceId?: string,
  *     name?: string,
+ *     agentCoreEvaluationRoleArn?: string,
  *     encryptionConfiguration?: array{encryptionStrategy?: 'AWS_OWNED'|'CUSTOMER_MANAGED', kmsKeyArn?: string, ...},
  *     ...,
  * } $args = [])
@@ -684,6 +685,7 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise updateSpaceAsync(array{
  *     spaceId?: string,
  *     name?: string,
+ *     agentCoreEvaluationRoleArn?: string,
  *     encryptionConfiguration?: array{encryptionStrategy?: 'AWS_OWNED'|'CUSTOMER_MANAGED', kmsKeyArn?: string, ...},
  *     ...,
  * } $args = [])
