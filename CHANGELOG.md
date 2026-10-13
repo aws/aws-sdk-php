@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.401.1 - 2026-10-13
 
 * `Aws\Retries` - retry_mode and max_attempts are now resolved independently, so a value set in the environment no longer hides the other value in the shared config file. The shared config file lookup now also honors [profile name] sections, and an invalid retry_mode or max_attempts in the shared config file now raises a ConfigurationException, as it already did for environment variables. On the opt-in retry path (AWS_NEW_RETRIES_2026), DynamoDB and DynamoDB Streams use the DynamoDB attempt defaults (4 in standard/adaptive mode, 11 in legacy mode) when max_attempts is not set, and DynamoDbStreamsClient applies the same defaults as DynamoDbClient.
 * `Aws\ARCRegionSwitch` - Adds support for SSM Execution Block in Region switch plans
