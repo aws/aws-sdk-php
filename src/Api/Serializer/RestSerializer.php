@@ -26,6 +26,8 @@ use Psr\Http\Message\UriInterface;
  */
 abstract class RestSerializer
 {
+    use EndpointV2SerializerTrait;
+
     /** @var Service */
     private Service $api;
 
@@ -37,8 +39,6 @@ abstract class RestSerializer
 
     /** @var HttpRequestBindingPlanProvider */
     private $bindingPlanProvider;
-
-    use EndpointV2SerializerTrait;
 
     /**
      * @param Service $api Service API description
@@ -59,8 +59,7 @@ abstract class RestSerializer
     public function __invoke(
         CommandInterface $command,
         mixed $endpoint = null
-    )
-    {
+    ) {
         $operation = $this->api->getOperation($command->getName());
         $plan = $this->bindingPlanProvider->get($operation);
         $commandArgs = $command->toArray();
@@ -434,8 +433,7 @@ abstract class RestSerializer
         Plan $plan,
         array $args,
         array $opts
-    ): UriInterface
-    {
+    ): UriInterface {
         // Expand `requestUri` field members
         $relativeUri = $plan->uriLiteral ?? $this->expandUriTemplate($plan, $args);
 
@@ -445,7 +443,8 @@ abstract class RestSerializer
         }
 
         // Special case - S3 keys that need path preservation
-        if ($plan->isS3
+        if (
+            $plan->isS3
             && isset($args['Key'])
             && $this->shouldPreservePath($args['Key'])
         ) {
@@ -540,7 +539,8 @@ abstract class RestSerializer
 
             // if relative is '/?query', we want base path without trailing slash + query
             // for now, this is only seen with S3 GetBucketLocation after processing the model
-            if (empty($opts['query'])
+            if (
+                empty($opts['query'])
                 && str_starts_with($relativeUri, '/?')
             ) {
                 $query = substr($relativeUri, 2); // Remove '/?'
@@ -583,8 +583,7 @@ abstract class RestSerializer
     private function formatTimestamp(
         DateTimeInterface|string|int|float $value,
         string $timestampFormat
-    ): string
-    {
+    ): string {
         return TimestampShape::formatAsString($value, $timestampFormat);
     }
 

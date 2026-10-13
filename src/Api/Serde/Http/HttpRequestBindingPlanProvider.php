@@ -140,7 +140,8 @@ final class HttpRequestBindingPlanProvider
             // its own locationName and reads "temp", so keep the legacy path
             // for those and for nested collections.
             $item = isset($member['member']) ? $member->getMember() : null;
-            if ($item === null
+            if (
+                $item === null
                 || $item instanceof ListShape
                 || $item instanceof MapShape
                 || $item['locationName']
