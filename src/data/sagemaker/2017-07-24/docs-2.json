@@ -1686,6 +1686,12 @@
         "AthenaDatasetDefinition$OutputFormat": null
       }
     },
+    "AthenaStepMetadata": {
+      "base": "<p>The query execution identifier and the result output location for the Amazon Athena query that an Athena step runs.</p>",
+      "refs": {
+        "PipelineExecutionStepMetadata$Athena": "<p>The metadata for the Athena step execution.</p>"
+      }
+    },
     "AthenaWorkGroup": {
       "base": "<p>The name of the workgroup in which the Athena query is being started.</p>",
       "refs": {
@@ -3212,6 +3218,37 @@
       "base": null,
       "refs": {
         "ClarifyTextConfig$Language": "<p>Specifies the language of the text features in <a href=\" https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes\">ISO 639-1</a> or <a href=\"https://en.wikipedia.org/wiki/ISO_639-3\">ISO 639-3</a> code of a supported language. </p> <note> <p>For a mix of multiple languages, use code <code>'xx'</code>.</p> </note>"
+      }
+    },
+    "CleanupFailure": {
+      "base": "<p>The Amazon S3 output resources associated with an upstream step that the Cleanup step could not delete.</p>",
+      "refs": {
+        "CleanupFailureList$member": null
+      }
+    },
+    "CleanupFailureErrorCode": {
+      "base": "<p>The type of error that prevented the Cleanup step from deleting output resources. Valid values are:</p> <ul> <li> <p> <code>ClientError</code> indicates that the failure was caused by the request.</p> </li> <li> <p> <code>InternalFailure</code> indicates that the failure was caused by an internal error.</p> </li> </ul>",
+      "refs": {
+        "CleanupFailure$ErrorCode": "<p>The error code that identifies why the Cleanup step could not delete the output resources associated with the upstream step.</p>"
+      }
+    },
+    "CleanupFailureList": {
+      "base": null,
+      "refs": {
+        "CleanupStepMetadata$FailedSteps": "<p>The upstream steps whose Amazon S3 output resources the Cleanup step could not delete.</p>"
+      }
+    },
+    "CleanupStepMetadata": {
+      "base": "<p>The cleanup outcomes for Amazon S3 output resources associated with upstream steps.</p>",
+      "refs": {
+        "PipelineExecutionStepMetadata$Cleanup": "<p>The metadata for the cleanup step execution.</p>"
+      }
+    },
+    "CleanupStepNameList": {
+      "base": null,
+      "refs": {
+        "CleanupStepMetadata$CleanedSteps": "<p>The names of upstream steps whose Amazon S3 output resources the Cleanup step deleted successfully.</p>",
+        "CleanupStepMetadata$SkippedSteps": "<p>The names of upstream steps that the Cleanup step skipped. The Cleanup step skips a step when the output properties needed to locate its resources are unavailable.</p>"
       }
     },
     "ClientId": {
@@ -7136,6 +7173,24 @@
         "CustomFileSystemConfig$EFSFileSystemConfig": "<p>The settings for a custom Amazon EFS file system.</p>"
       }
     },
+    "EMRServerlessApplicationId": {
+      "base": null,
+      "refs": {
+        "EMRServerlessStepMetadata$ApplicationId": "<p>The identifier of the Amazon EMR Serverless application.</p>"
+      }
+    },
+    "EMRServerlessJobRunId": {
+      "base": null,
+      "refs": {
+        "EMRServerlessStepMetadata$JobRunId": "<p>The identifier of the Amazon EMR Serverless job run.</p>"
+      }
+    },
+    "EMRServerlessStepMetadata": {
+      "base": "<p>The configurations and outcomes of an Amazon EMR Serverless step execution.</p>",
+      "refs": {
+        "PipelineExecutionStepMetadata$EMRServerless": "<p>The configurations and outcomes of an Amazon EMR Serverless step execution.</p>"
+      }
+    },
     "EMRStepMetadata": {
       "base": "<p>The configurations and outcomes of an Amazon EMR step execution.</p>",
       "refs": {
@@ -8695,6 +8750,24 @@
       "base": null,
       "refs": {
         "HumanLoopConfig$TaskTitle": "<p>A title for the human worker task.</p>"
+      }
+    },
+    "ForEachSelectorResult": {
+      "base": "<p>The result of the selector that identifies an iteration of a ForEach step.</p>",
+      "refs": {
+        "ForEachStepMetadata$Selector": "<p>Identifies the body step and iteration selected within the ForEach step.</p>"
+      }
+    },
+    "ForEachStatus": {
+      "base": "<p>The status of a ForEach step execution. Valid values are:</p> <ul> <li> <p> <code>Succeeded</code> indicates that the ForEach step execution completed successfully.</p> </li> <li> <p> <code>Failed</code> indicates that the ForEach step execution failed.</p> </li> <li> <p> <code>Stopped</code> indicates that the ForEach step execution was stopped.</p> </li> </ul>",
+      "refs": {
+        "ForEachStepMetadata$Status": "<p>The status of the ForEach step execution.</p>"
+      }
+    },
+    "ForEachStepMetadata": {
+      "base": "<p>The status, the iteration-step counts, and the selector information for a ForEach step execution.</p>",
+      "refs": {
+        "PipelineExecutionStepMetadata$ForEach": "<p>The metadata for the ForEach step execution.</p>"
       }
     },
     "ForecastFrequency": {
@@ -10554,10 +10627,17 @@
         "EdgeDeploymentStatus$EdgeDeploymentSuccessInStage": "<p>The number of edge devices with the successful deployment in the current stage.</p>",
         "EdgeDeploymentStatus$EdgeDeploymentPendingInStage": "<p>The number of edge devices yet to pick up the deployment in current stage, or in progress.</p>",
         "EdgeDeploymentStatus$EdgeDeploymentFailedInStage": "<p>The number of edge devices that failed the deployment in current stage.</p>",
+        "ForEachSelectorResult$Index": "<p>The index of the iteration within the ForEach step.</p>",
+        "ForEachStepMetadata$InputItemCount": "<p>The number of input items that the ForEach step iterates over.</p>",
+        "ForEachStepMetadata$TotalStepCount": "<p>The total number of steps generated across all iterations of the ForEach step.</p>",
+        "ForEachStepMetadata$SucceededStepCount": "<p>The number of iteration steps that completed successfully.</p>",
+        "ForEachStepMetadata$FailedStepCount": "<p>The number of iteration steps that failed.</p>",
+        "ForEachStepMetadata$StoppedStepCount": "<p>The number of iteration steps that were stopped.</p>",
         "HyperParameterTuningJobCompletionDetails$NumberOfTrainingJobsObjectiveNotImproving": "<p>The number of training jobs launched by a tuning job that are not improving (1% or less) as measured by model performance evaluated against an objective function.</p>",
         "HyperParameterTuningJobConsumedResources$RuntimeInSeconds": "<p>The wall clock runtime in seconds used by your hyperparameter tuning job.</p>",
         "InferenceMetrics$MaxInvocations": "<p>The expected maximum number of requests per minute for the instance.</p>",
         "InferenceMetrics$ModelLatency": "<p>The expected model latency at maximum invocations per minute for the instance.</p>",
+        "IterationContext$Index": "<p>The index of the iteration within the ForEach step.</p>",
         "ListModelCardExportJobsRequest$ModelCardVersion": "<p>List export jobs for the model card with the specified version.</p>",
         "ModelCard$ModelCardVersion": "<p>The version of the model card.</p>",
         "ModelCardExportJobSummary$ModelCardVersion": "<p>The version of the model card that the export job exports.</p>",
@@ -10639,6 +10719,12 @@
       "base": null,
       "refs": {
         "TimeSeriesConfig$ItemIdentifierAttributeName": "<p>The name of the column that represents the set of item identifiers for which you want to predict the target value.</p>"
+      }
+    },
+    "IterationContext": {
+      "base": "<p>The context for an iteration of a ForEach step.</p>",
+      "refs": {
+        "PipelineExecutionStep$IterationContext": "<p>The context for the iteration of a ForEach step that generated this step execution.</p>"
       }
     },
     "JavaBoolean": {
@@ -18642,6 +18728,7 @@
     "String1024": {
       "base": null,
       "refs": {
+        "AthenaStepMetadata$S3OutputLocation": "<p>The Amazon S3 location of the Amazon Athena query results. This is the effective output location reported by <code>GetQueryExecution</code> for the query. This value can be absent when the query uses Athena managed query results.</p>",
         "BedrockCustomModelDeploymentMetadata$Arn": "<p> The Amazon Resource Name (ARN) for the Amazon Bedrock custom model deployment. </p>",
         "BedrockCustomModelMetadata$Arn": "<p> The Amazon Resource Name (ARN) of the Amazon Bedrock custom model. </p>",
         "BedrockModelImportMetadata$Arn": "<p> The Amazon Resource Name (ARN) of the Amazon Bedrock model import. </p>",
@@ -18653,6 +18740,7 @@
         "DescribeDomainResponse$Url": "<p>The domain's URL.</p>",
         "DescribeSpaceResponse$Url": "<p>Returns the URL of the space. If the space is created with Amazon Web Services IAM Identity Center (Successor to Amazon Web Services Single Sign-On) authentication, users can navigate to the URL after appending the respective redirect parameter for the application type to be federated through Amazon Web Services IAM Identity Center.</p> <p>The following application types are supported:</p> <ul> <li> <p>Studio Classic: <code>&amp;redirect=JupyterServer</code> </p> </li> <li> <p>JupyterLab: <code>&amp;redirect=JupyterLab</code> </p> </li> <li> <p>Code Editor, based on Code-OSS, Visual Studio Code - Open Source: <code>&amp;redirect=CodeEditor</code> </p> </li> </ul>",
         "DomainDetails$Url": "<p>The domain's URL.</p>",
+        "EMRServerlessStepMetadata$LogFilePath": "<p>The path to the log file for the Amazon EMR Serverless job run.</p>",
         "EMRStepMetadata$LogFilePath": "<p>The path to the log file where the cluster step's failure root cause is recorded.</p>",
         "JobStepMetadata$Arn": "<p>The Amazon Resource Name (ARN) of the SageMaker job that was run by this step execution.</p>",
         "OutputParameter$Value": "<p>The value of the output parameter.</p>",
@@ -18673,6 +18761,12 @@
         "CategoricalParameterRangeValues$member": null
       }
     },
+    "String12800": {
+      "base": null,
+      "refs": {
+        "IterationContext$Item": "<p>The input item that is being processed in this iteration.</p>"
+      }
+    },
     "String200": {
       "base": null,
       "refs": {
@@ -18688,6 +18782,7 @@
       "refs": {
         "AssociationInfo$SourceArn": "<p> The Amazon Resource Name (ARN) of the <code>AssociationInfo</code> source. </p>",
         "AssociationInfo$DestinationArn": "<p> The Amazon Resource Name (ARN) of the <code>AssociationInfo</code> destination. </p>",
+        "CleanupFailure$ErrorMessage": "<p>A message describing why the Cleanup step could not delete the output resources associated with the upstream step.</p>",
         "CreatePartnerAppPresignedUrlResponse$Url": "<p>The presigned URL that you can use to access the SageMaker Partner AI App.</p>",
         "DescribePartnerAppResponse$BaseUrl": "<p>The URL of the SageMaker Partner AI App that the Application SDK uses to support in-app calls for the user.</p>",
         "InferenceComponentMetadata$Arn": "<p> The Amazon Resource Name (ARN) of the inference component. </p>",
@@ -18704,10 +18799,13 @@
         "ArtifactSummary$ArtifactType": "<p>The type of the artifact.</p>",
         "AssociationSummary$SourceType": "<p>The source type.</p>",
         "AssociationSummary$DestinationType": "<p>The destination type.</p>",
+        "AthenaStepMetadata$QueryExecutionId": "<p>The unique identifier of the Amazon Athena query execution that was run by this step execution.</p>",
         "CallbackStepMetadata$SqsQueueUrl": "<p>The URL of the Amazon Simple Queue Service (Amazon SQS) queue used by the callback step.</p>",
         "ClarifyCheckStepMetadata$CheckType": "<p>The type of the Clarify Check step</p>",
         "ClarifyCheckStepMetadata$ModelPackageGroupName": "<p>The model package group name.</p>",
         "ClarifyCheckStepMetadata$CheckJobArn": "<p>The Amazon Resource Name (ARN) of the check processing job that was run by this step's execution.</p>",
+        "CleanupFailure$StepName": "<p>The name of the upstream step whose Amazon S3 output resources the Cleanup step could not delete.</p>",
+        "CleanupStepNameList$member": null,
         "ContextSource$SourceType": "<p>The type of the source.</p>",
         "ContextSource$SourceId": "<p>The ID of the source.</p>",
         "ContextSummary$ContextType": "<p>The type of the context.</p>",
@@ -18722,9 +18820,12 @@
         "DescribeDomainResponse$SingleSignOnManagedApplicationInstanceId": "<p>The IAM Identity Center managed application instance ID.</p>",
         "DescribeTrainingPlanResponse$UpfrontFee": "<p>The upfront fee for the training plan.</p>",
         "DescribeUserProfileResponse$SingleSignOnUserValue": "<p>The IAM Identity Center user value.</p>",
+        "EMRServerlessStepMetadata$JobRunName": "<p>The name of the Amazon EMR Serverless job run.</p>",
         "EMRStepMetadata$ClusterId": "<p>The identifier of the EMR cluster.</p>",
         "EMRStepMetadata$StepId": "<p>The identifier of the EMR cluster step.</p>",
         "EMRStepMetadata$StepName": "<p>The name of the EMR cluster step.</p>",
+        "ForEachSelectorResult$StepName": "<p>The name of the step associated with the iteration.</p>",
+        "IterationContext$ParentStepName": "<p>The name of the ForEach step that generated this iteration.</p>",
         "LambdaStepMetadata$Arn": "<p>The Amazon Resource Name (ARN) of the Lambda function that was run by this step execution.</p>",
         "ListActionsRequest$ActionType": "<p>A filter that returns only actions of the specified type.</p>",
         "ListArtifactsRequest$ArtifactType": "<p>A filter that returns only artifacts of the specified type.</p>",

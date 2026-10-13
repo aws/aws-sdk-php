@@ -16,11 +16,12 @@
     "EnableDomainTransferLock": "<p>This operation sets the transfer lock on the domain (specifically the <code>clientTransferProhibited</code> status) to prevent domain transfers. Successful submission returns an operation ID that you can use to track the progress and completion of the action. If the request is not completed successfully, the domain registrant will be notified by email.</p>",
     "GetContactReachabilityStatus": "<p>For operations that require confirmation that the email address for the registrant contact is valid, such as registering a new domain, this operation returns information about whether the registrant contact has responded.</p> <p>If you want us to resend the email, use the <code>ResendContactReachabilityEmail</code> operation.</p>",
     "GetDomainDetail": "<p>This operation returns detailed information about a specified domain that is associated with the current Amazon Web Services account. Contact information for the domain is also returned as part of the output.</p>",
+    "GetDomainPrices": "<p>Returns the following prices for the specified domain:</p> <ul> <li> <p>Registration</p> </li> <li> <p>Transfer</p> </li> <li> <p>Owner change</p> </li> <li> <p>Renewal</p> </li> <li> <p>Restoration</p> </li> </ul> <p>For most domains, the prices match the standard prices for the TLD that the <a href=\"https://docs.aws.amazon.com/Route53/latest/APIReference/API_domains_ListPrices.html\">ListPrices</a> operation returns. For a premium domain, the registry sets the price individually. Premium prices might differ from the standard prices and can change over time.</p>",
     "GetDomainSuggestions": "<p>The GetDomainSuggestions operation returns a list of suggested domain names.</p>",
     "GetOperationDetail": "<p>This operation returns the current status of an operation that is not completed.</p>",
     "ListDomains": "<p>This operation returns all the domain names registered with Amazon Route 53 for the current Amazon Web Services account if no filtering conditions are used.</p>",
     "ListOperations": "<p>Returns information about all of the operations that return an operation ID and that have ever been performed on domains that were registered by the current account. </p> <p>This command runs only in the us-east-1 Region.</p>",
-    "ListPrices": "<p>Lists the following prices for either all the TLDs supported by Route 53, or the specified TLD:</p> <ul> <li> <p>Registration</p> </li> <li> <p>Transfer</p> </li> <li> <p>Owner change</p> </li> <li> <p>Domain renewal</p> </li> <li> <p>Domain restoration</p> </li> </ul>",
+    "ListPrices": "<p>Lists the following prices for either all the TLDs supported by Route 53, or the specified TLD:</p> <ul> <li> <p>Registration</p> </li> <li> <p>Transfer</p> </li> <li> <p>Owner change</p> </li> <li> <p>Renewal</p> </li> <li> <p>Restoration</p> </li> </ul> <note> <p>The prices that <code>ListPrices</code> returns are the standard rates for a TLD. <code>ListPrices</code> doesn't return registry premium prices, which apply to individual domain names rather than to a TLD. To get accurate pricing for a specific domain name, including premium prices, call <code>GetDomainPrices</code>.</p> </note>",
     "ListTagsForDomain": "<p>This operation returns all of the tags that are associated with the specified domain.</p> <p>All tag operations are eventually consistent; subsequent operations might not immediately represent all issued operations.</p>",
     "PushDomain": "<p> Moves a domain from Amazon Web Services to another registrar. </p> <p>Supported actions:</p> <ul> <li> <p>Changes the IPS tags of a .uk domain, and pushes it to transit. Transit means that the domain is ready to be transferred to another registrar.</p> </li> </ul>",
     "RegisterDomain": "<p>This operation registers a domain. For some top-level domains (TLDs), this operation requires extra parameters.</p> <p>When you register a domain, Amazon Route 53 does the following:</p> <ul> <li> <p>Creates a Route 53 hosted zone that has the same name as the domain. Route 53 assigns four name servers to your hosted zone and automatically updates your domain registration with the names of these name servers.</p> </li> <li> <p>Enables auto renew, so your domain registration will renew automatically each year. We'll notify you in advance of the renewal date so you can choose whether to renew the registration.</p> </li> <li> <p>Optionally enables privacy protection, so WHOIS queries return contact for the registrar or the phrase \"REDACTED FOR PRIVACY\", or \"On behalf of &lt;domain name&gt; owner.\" If you don't enable privacy protection, WHOIS queries return the information that you entered for the administrative, registrant, and technical contacts.</p> <note> <p>While some domains may allow different privacy settings per contact, we recommend specifying the same privacy setting for all contacts.</p> </note> </li> <li> <p>If registration is successful, returns an operation ID that you can use to track the progress and completion of the action. If the request is not completed successfully, the domain registrant is notified by email.</p> </li> <li> <p>Charges your Amazon Web Services account an amount based on the top-level domain. For more information, see <a href=\"http://aws.amazon.com/route53/pricing/\">Amazon Route 53 Pricing</a>.</p> </li> </ul>",
@@ -89,7 +90,8 @@
         "GetDomainDetailResponse$RegistrantPrivacy": "<p>Specifies whether contact information is concealed from WHOIS queries. If the value is <code>true</code>, WHOIS (\"who is\") queries return contact information either for Amazon Registrar or for our registrar associate, Gandi. If the value is <code>false</code>, WHOIS queries return the information that you entered for the registrant contact (domain owner).</p>",
         "GetDomainDetailResponse$TechPrivacy": "<p>Specifies whether contact information is concealed from WHOIS queries. If the value is <code>true</code>, WHOIS (\"who is\") queries return contact information either for Amazon Registrar or for our registrar associate, Gandi. If the value is <code>false</code>, WHOIS queries return the information that you entered for the technical contact.</p>",
         "GetDomainDetailResponse$BillingPrivacy": "<p>Specifies whether contact information is concealed from WHOIS queries. If the value is <code>true</code>, WHOIS (\"who is\") queries return contact information either for Amazon Registrar or for our registrar associate, Gandi. If the value is <code>false</code>, WHOIS queries return the information that you entered for the billing contact.</p>",
-        "GetDomainSuggestionsRequest$OnlyAvailable": "<p>If <code>OnlyAvailable</code> is <code>true</code>, Route 53 returns only domain names that are available. If <code>OnlyAvailable</code> is <code>false</code>, Route 53 returns domain names without checking whether they're available to be registered. To determine whether the domain is available, you can call <code>checkDomainAvailability</code> for each suggestion.</p>",
+        "GetDomainSuggestionsRequest$OnlyAvailable": "<p>If <code>OnlyAvailable</code> is <code>true</code>, Route 53 returns only domain names that are available. If <code>OnlyAvailable</code> is <code>false</code>, Route 53 returns domain names without checking whether they're available to be registered. To determine whether the domain is available, call <code>checkDomainAvailability</code> for each suggestion.</p> <p>If <code>OnlyAvailable</code> is <code>false</code>, Route 53 does not return pricing information for the suggested domain names.</p>",
+        "GetDomainSuggestionsRequest$OnlyStandardPrices": "<p>If <code>true</code>, Route 53 returns only domain names that are priced at the standard registration rate for their TLD. If <code>false</code>, Route 53 includes domain names with premium pricing in the suggestions list. The default is <code>true</code>.</p>",
         "RegisterDomainRequest$AutoRenew": "<p>Indicates whether the domain will be automatically renewed (<code>true</code>) or not (<code>false</code>). Auto renewal only takes effect after the account is charged.</p> <p>Default: <code>true</code> </p>",
         "RegisterDomainRequest$PrivacyProtectAdminContact": "<p>Whether you want to conceal contact information from WHOIS queries. If you specify <code>true</code>, WHOIS (\"who is\") queries return contact information either for Amazon Registrar or for our registrar associate, Gandi. If you specify <code>false</code>, WHOIS queries return the information that you entered for the admin contact.</p> <note> <p>You must specify the same privacy setting for the administrative, billing, registrant, and technical contacts.</p> </note> <p>Default: <code>true</code> </p>",
         "RegisterDomainRequest$PrivacyProtectRegistrantContact": "<p>Whether you want to conceal contact information from WHOIS queries. If you specify <code>true</code>, WHOIS (\"who is\") queries return contact information either for Amazon Registrar or for our registrar associate, Gandi. If you specify <code>false</code>, WHOIS queries return the information that you entered for the registrant contact (the domain owner).</p> <note> <p>You must specify the same privacy setting for the administrative, billing, registrant, and technical contacts.</p> </note> <p>Default: <code>true</code> </p>",
@@ -138,9 +140,18 @@
       }
     },
     "Consent": {
-      "base": "<p> Customer's consent for the owner change request. </p>",
+      "base": "<p> The maximum amount that you agree to pay for an operation, and the currency for that amount. </p>",
       "refs": {
-        "UpdateDomainContactRequest$Consent": "<p> Customer's consent for the owner change request. Required if the domain is not free (consent price is more than $0.00).</p>"
+        "RegisterDomainRequest$Consent": "<p>Specifies the maximum price that you agree to pay to register the domain name. This element is required if the domain has registry premium pricing, and optional if the domain is priced at the standard rate for its TLD. If you include it and the registration price is more than <code>MaxPrice</code>, the request fails.</p>",
+        "RenewDomainRequest$Consent": "<p>Specifies the maximum price that you agree to pay to renew the domain name. This element is required if the domain has registry premium pricing, and optional if the domain is priced at the standard rate for its TLD. If you include it and the renewal price is more than <code>MaxPrice</code>, the request fails.</p>",
+        "TransferDomainRequest$Consent": "<p>Specifies the maximum price that you agree to pay to transfer the domain name to Route 53. This element is required if the domain has registry premium pricing, and optional if the domain is priced at the standard rate for its TLD. If you include it and the transfer price is more than <code>MaxPrice</code>, the request fails.</p>",
+        "UpdateDomainContactRequest$Consent": "<p> The maximum amount that you agree to pay for the owner change. Required if the domain is not free (consent price is more than USD $0.00).</p>"
+      }
+    },
+    "ConsentPrice": {
+      "base": null,
+      "refs": {
+        "Consent$MaxPrice": "<p> The maximum amount that you agree to accept. </p>"
       }
     },
     "ContactDetail": {
@@ -195,7 +206,7 @@
     "Currency": {
       "base": null,
       "refs": {
-        "Consent$Currency": "<p> Currency for the <code>MaxPrice</code>. </p>",
+        "Consent$Currency": "<p> The currency for the <code>MaxPrice</code>. </p>",
         "PriceWithCurrency$Currency": "<p>The currency specifier.</p>"
       }
     },
@@ -270,7 +281,7 @@
     "DnssecPublicKey": {
       "base": null,
       "refs": {
-        "DnssecKey$PublicKey": "<p>The base64-encoded public key part of the key pair that is passed to the registry .</p>",
+        "DnssecKey$PublicKey": "<p>The base64-encoded public key of the key pair. This field is deprecated; the <code>DnssecKey</code> response no longer returns the public key.</p>",
         "DnssecSigningAttributes$PublicKey": "<p> The base64-encoded public key part of the key pair that is passed to the registry. </p>"
       }
     },
@@ -320,6 +331,7 @@
         "GetContactReachabilityStatusResponse$domainName": "<p>The domain name for which you requested the reachability status.</p>",
         "GetDomainDetailRequest$DomainName": "<p>The name of the domain that you want to get detailed information about.</p>",
         "GetDomainDetailResponse$DomainName": "<p>The name of a domain.</p>",
+        "GetDomainPricesRequest$DomainName": "<p>The name of the domain that you want to get the prices for.</p>",
         "GetDomainSuggestionsRequest$DomainName": "<p>A domain name that you want to use as the basis for a list of possible domain names. The top-level domain (TLD), such as .com, must be a TLD that Route 53 supports. For a list of supported TLDs, see <a href=\"https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/registrar-tld-list.html\">Domains that You Can Register with Amazon Route 53</a> in the <i>Amazon Route 53 Developer Guide</i>.</p> <p>The domain name can contain only the following characters:</p> <ul> <li> <p>Letters a through z. Domain names are not case sensitive.</p> </li> <li> <p>Numbers 0 through 9.</p> </li> <li> <p>Hyphen (-). You can't specify a hyphen at the beginning or end of a label. </p> </li> <li> <p>Period (.) to separate the labels in the name, such as the <code>.</code> in <code>example.com</code>.</p> </li> </ul> <p>Internationalized domain names are not supported for some top-level domains. To determine whether the TLD that you want to use supports internationalized domain names, see <a href=\"https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/registrar-tld-list.html\">Domains that You Can Register with Amazon Route 53</a>. </p>",
         "GetOperationDetailResponse$DomainName": "<p>The name of a domain.</p>",
         "ListTagsForDomainRequest$DomainName": "<p>The domain for which you want to get a list of tags.</p>",
@@ -340,9 +352,10 @@
       }
     },
     "DomainPrice": {
-      "base": "<p>Information about the domain price associated with a TLD.</p>",
+      "base": "<p>Information about the prices associated with a TLD or a domain name.</p>",
       "refs": {
-        "DomainPriceList$member": null
+        "DomainPriceList$member": null,
+        "GetDomainPricesResponse$DomainPrice": "<p>The registration, transfer, owner change, renewal, and restoration prices for the specified domain.</p>"
       }
     },
     "DomainPriceList": {
@@ -354,7 +367,7 @@
     "DomainPriceName": {
       "base": null,
       "refs": {
-        "DomainPrice$Name": "<p>The name of the TLD for which the prices apply.</p>"
+        "DomainPrice$Name": "<p>The TLD or domain name that the prices apply to.</p>"
       }
     },
     "DomainStatus": {
@@ -508,6 +521,14 @@
       "base": "<p>The GetDomainDetail response includes the following elements.</p>",
       "refs": {}
     },
+    "GetDomainPricesRequest": {
+      "base": "<p>The GetDomainPrices request includes the following element.</p>",
+      "refs": {}
+    },
+    "GetDomainPricesResponse": {
+      "base": "<p>The GetDomainPrices response includes the following element.</p>",
+      "refs": {}
+    },
     "GetDomainSuggestionsRequest": {
       "base": null,
       "refs": {}
@@ -647,7 +668,7 @@
       "base": null,
       "refs": {
         "DnssecKey$Algorithm": "<p>The number of the public key’s cryptographic algorithm according to an <a href=\"https://www.iana.org/assignments/dns-sec-alg-numbers/dns-sec-alg-numbers.xml\">IANA</a> assignment. </p> <p>If Route 53 is your DNS service, set this to 13.</p> <p>For more information about enabling DNSSEC signing, see <a href=\"https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/dns-configuring-dnssec-enable-signing.html\">Enabling DNSSEC signing and establishing a chain of trust</a>.</p>",
-        "DnssecKey$Flags": "<p>Defines the type of key. It can be either a KSK (key-signing-key, value 257) or ZSK (zone-signing-key, value 256). Using KSK is always encouraged. Only use ZSK if your DNS provider isn't Route 53 and you don’t have KSK available.</p> <p>If you have KSK and ZSK keys, always use KSK to create a delegations signer (DS) record. If you have ZSK keys only – use ZSK to create a DS record.</p>",
+        "DnssecKey$Flags": "<p>The DNSKEY flags that indicate the key type. This field is deprecated; the <code>DnssecKey</code> response no longer returns the flags.</p>",
         "DnssecKey$DigestType": "<p> The number of the DS digest algorithm according to an IANA assignment.</p> <p>For more information, see <a href=\"https://www.iana.org/assignments/ds-rr-types/ds-rr-types.xhtml\">IANA</a> for DNSSEC Delegation Signer (DS) Resource Record (RR) Type Digest Algorithms. </p>",
         "DnssecKey$KeyTag": "<p> A numeric identification of the DNSKEY record referred to by this DS record. </p>",
         "DnssecSigningAttributes$Algorithm": "<p> Algorithm which was used to generate the digest from the public key. </p>",
@@ -761,18 +782,26 @@
       "base": null,
       "refs": {
         "BillingRecord$Price": "<p>The price that you were charged for the operation, in US dollars.</p> <p>Example value: 12.0</p>",
-        "Consent$MaxPrice": "<p> Maximum amount the customer agreed to accept. </p>",
         "PriceWithCurrency$Price": "<p>The price of a domain, in a specific currency.</p>"
+      }
+    },
+    "PriceType": {
+      "base": null,
+      "refs": {
+        "PriceWithCurrency$PriceType": "<p>Indicates whether the domain has standard or premium pricing. A value of <code>STANDARD</code> means the domain is priced at the regular rate for its TLD. A value of <code>REGISTRY_PREMIUM</code> means the domain has registry premium pricing, which may be different than the standard rate.</p>"
       }
     },
     "PriceWithCurrency": {
       "base": "<p>Currency-specific price information.</p>",
       "refs": {
+        "CheckDomainAvailabilityResponse$Price": "<p>The price to register the domain name, in the currency that <code>Currency</code> specifies. If the domain has registry premium pricing, this price is different from the standard rate for the TLD that <code>ListPrices</code> returns. Use <code>PriceType</code> to determine which rate applies.</p> <p>This element is returned only when <code>Availability</code> is <code>AVAILABLE</code>.</p>",
+        "CheckDomainTransferabilityResponse$Price": "<p>The price to transfer the domain name to Route 53, in the currency that <code>Currency</code> specifies. If the domain has registry premium pricing, this price is different from the standard rate for the TLD that <code>ListPrices</code> returns. Use <code>PriceType</code> to determine which rate applies.</p> <p>This element is returned only when Route 53 can determine whether the domain is transferable.</p>",
         "DomainPrice$RegistrationPrice": "<p>The price for domain registration with Route 53.</p>",
         "DomainPrice$TransferPrice": "<p>The price for transferring the domain registration to Route 53.</p>",
         "DomainPrice$RenewalPrice": "<p>The price for renewing domain registration with Route 53.</p>",
         "DomainPrice$ChangeOwnershipPrice": "<p>The price for changing domain ownership.</p>",
-        "DomainPrice$RestorationPrice": "<p>The price for restoring the domain with Route 53.</p>"
+        "DomainPrice$RestorationPrice": "<p>The price for restoring the domain with Route 53.</p>",
+        "DomainSuggestion$Price": "<p>The price to register the suggested domain name, in the currency that <code>Currency</code> specifies. This element is populated only if you specified <code>true</code> for <code>OnlyAvailable</code> in the request.</p>"
       }
     },
     "PushDomainRequest": {
@@ -897,7 +926,7 @@
         "DisassociateDelegationSignerFromDomainRequest$Id": "<p>An internal identification number assigned to each DS record after it’s created. You can retrieve it as part of DNSSEC information returned by <a href=\"https://docs.aws.amazon.com/Route53/latest/APIReference/API_domains_GetDomainDetail.html\">GetDomainDetail</a>.</p>",
         "DnssecKey$Digest": "<p> The delegation signer digest.</p> <p>Digest is calculated from the public key provided using specified digest algorithm and this digest is the actual value returned from the registry nameservers as the value of DS records. </p>",
         "DnssecKey$Id": "<p> An ID assigned to each DS record created by <a href=\"https://docs.aws.amazon.com/Route53/latest/APIReference/API_domains_AssociateDelegationSignerToDomain.html\">AssociateDelegationSignerToDomain</a>. </p>",
-        "DomainSuggestion$Availability": "<p>Whether the domain name is available for registering.</p> <note> <p>You can register only the domains that are designated as <code>AVAILABLE</code>.</p> </note> <p>Valid values:</p> <dl> <dt>AVAILABLE</dt> <dd> <p>The domain name is available.</p> </dd> <dt>AVAILABLE_RESERVED</dt> <dd> <p>The domain name is reserved under specific conditions.</p> </dd> <dt>AVAILABLE_PREORDER</dt> <dd> <p>The domain name is available and can be preordered.</p> </dd> <dt>DONT_KNOW</dt> <dd> <p>The TLD registry didn't reply with a definitive answer about whether the domain name is available. Route 53 can return this response for a variety of reasons, for example, the registry is performing maintenance. Try again later.</p> </dd> <dt>PENDING</dt> <dd> <p>The TLD registry didn't return a response in the expected amount of time. When the response is delayed, it usually takes just a few extra seconds. You can resubmit the request immediately.</p> </dd> <dt>RESERVED</dt> <dd> <p>The domain name has been reserved for another person or organization.</p> </dd> <dt>UNAVAILABLE</dt> <dd> <p>The domain name is not available.</p> </dd> <dt>UNAVAILABLE_PREMIUM</dt> <dd> <p>The domain name is not available.</p> </dd> <dt>UNAVAILABLE_RESTRICTED</dt> <dd> <p>The domain name is forbidden.</p> </dd> </dl>"
+        "DomainSuggestion$Availability": "<p>Specifies whether the domain name is available for registering. This element is populated only if you specified <code>true</code> for <code>OnlyAvailable</code> in the request.</p> <note> <p>You can register only the domains that are designated as <code>AVAILABLE</code>.</p> </note> <p>Valid values:</p> <dl> <dt>AVAILABLE</dt> <dd> <p>The domain name is available.</p> </dd> <dt>AVAILABLE_RESERVED</dt> <dd> <p>The domain name is reserved under specific conditions.</p> </dd> <dt>AVAILABLE_PREORDER</dt> <dd> <p>The domain name is available and can be preordered.</p> </dd> <dt>DONT_KNOW</dt> <dd> <p>The TLD registry didn't reply with a definitive answer about whether the domain name is available. Route 53 can return this response for a variety of reasons, for example, the registry is performing maintenance. Try again later.</p> </dd> <dt>PENDING</dt> <dd> <p>The TLD registry didn't return a response in the expected amount of time. When the response is delayed, it usually takes just a few extra seconds. You can resubmit the request immediately.</p> </dd> <dt>RESERVED</dt> <dd> <p>The domain name has been reserved for another person or organization.</p> </dd> <dt>UNAVAILABLE</dt> <dd> <p>The domain name is not available.</p> </dd> <dt>UNAVAILABLE_PREMIUM</dt> <dd> <p>The domain name is not available.</p> </dd> <dt>UNAVAILABLE_RESTRICTED</dt> <dd> <p>The domain name is forbidden.</p> </dd> </dl>"
       }
     },
     "TLDInMaintenance": {
@@ -981,7 +1010,7 @@
       "refs": {}
     },
     "Transferable": {
-      "base": "<p>Whether the domain name can be transferred to Route 53.</p> <note> <p>You can transfer only domains that have a value of <code>TRANSFERABLE</code> or <code>Transferable</code>.</p> </note> <p>Valid values:</p> <dl> <dt>TRANSFERABLE</dt> <dd> <p>The domain name can be transferred to Route 53.</p> </dd> <dt>UNTRANSFERRABLE</dt> <dd> <p>The domain name can't be transferred to Route 53.</p> </dd> <dt>DONT_KNOW</dt> <dd> <p>The TLD registry didn't respond in time or didn't provide a definitive answer about domain transferability, which can occur due to registry maintenance or temporary delays.</p> </dd> <dt>DOMAIN_IN_OWN_ACCOUNT</dt> <dd> <p>The domain already exists in the current Amazon Web Services account.</p> </dd> <dt>DOMAIN_IN_ANOTHER_ACCOUNT</dt> <dd> <p> The domain exists in another Amazon Web Services account.</p> </dd> <dt>PREMIUM_DOMAIN</dt> <dd> <p>Premium domain transfer is not supported.</p> </dd> </dl>",
+      "base": "<p>Whether the domain name can be transferred to Route 53.</p> <note> <p>You can transfer only domains that have a value of <code>TRANSFERABLE</code> or <code>Transferable</code>.</p> </note> <p>Valid values:</p> <dl> <dt>TRANSFERABLE</dt> <dd> <p>The domain name can be transferred to Route 53.</p> </dd> <dt>UNTRANSFERRABLE</dt> <dd> <p>The domain name can't be transferred to Route 53.</p> </dd> <dt>DONT_KNOW</dt> <dd> <p>The TLD registry didn't reply with a definitive answer about whether the domain name can be transferred. Route 53 can return this response for a variety of reasons, for example, the registry is performing maintenance. Try again later.</p> </dd> <dt>PENDING</dt> <dd> <p>The TLD registry didn't return a response in the expected amount of time. When the response is delayed, it usually takes just a few extra seconds. You can resubmit the request immediately.</p> </dd> <dt>DOMAIN_IN_OWN_ACCOUNT</dt> <dd> <p>The domain already exists in the current Amazon Web Services account.</p> </dd> <dt>DOMAIN_IN_ANOTHER_ACCOUNT</dt> <dd> <p> The domain exists in another Amazon Web Services account.</p> </dd> <dt>PREMIUM_DOMAIN</dt> <dd> <p>Premium domain transfer is not supported.</p> </dd> </dl>",
       "refs": {
         "DomainTransferability$Transferable": null
       }

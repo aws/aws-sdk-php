@@ -47,6 +47,25 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "AttachRLSPolicy":{
+      "name":"AttachRLSPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/AttachRLSPolicy"
+      },
+      "input":{"shape":"AttachRLSPolicyRequest"},
+      "output":{"shape":"AttachRLSPolicyResponse"},
+      "errors":[
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNumberLimitExceededException"},
+        {"shape":"AlreadyExistsException"},
+        {"shape":"ConcurrentModificationException"}
+      ]
+    },
     "BatchGrantPermissions":{
       "name":"BatchGrantPermissions",
       "http":{
@@ -195,6 +214,24 @@
         {"shape":"ResourceNumberLimitExceededException"}
       ]
     },
+    "CreateRLSPolicy":{
+      "name":"CreateRLSPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/CreateRLSPolicy"
+      },
+      "input":{"shape":"CreateRLSPolicyRequest"},
+      "output":{"shape":"CreateRLSPolicyResponse"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"ResourceNumberLimitExceededException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"AlreadyExistsException"},
+        {"shape":"ConcurrentModificationException"}
+      ]
+    },
     "DeleteDataCellsFilter":{
       "name":"DeleteDataCellsFilter",
       "http":{
@@ -296,6 +333,23 @@
         {"shape":"ConcurrentModificationException"}
       ]
     },
+    "DeleteRLSPolicy":{
+      "name":"DeleteRLSPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/DeleteRLSPolicy"
+      },
+      "input":{"shape":"DeleteRLSPolicyRequest"},
+      "output":{"shape":"DeleteRLSPolicyResponse"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"ConcurrentModificationException"}
+      ]
+    },
     "DeregisterResource":{
       "name":"DeregisterResource",
       "http":{
@@ -355,6 +409,23 @@
         {"shape":"InvalidInputException"},
         {"shape":"InternalServiceException"},
         {"shape":"OperationTimeoutException"}
+      ]
+    },
+    "DetachRLSPolicy":{
+      "name":"DetachRLSPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/DetachRLSPolicy"
+      },
+      "input":{"shape":"DetachRLSPolicyRequest"},
+      "output":{"shape":"DetachRLSPolicyResponse"},
+      "errors":[
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConcurrentModificationException"}
       ]
     },
     "ExtendTransaction":{
@@ -500,6 +571,22 @@
         {"shape":"ThrottledException"}
       ],
       "endpoint":{"hostPrefix":"query-"}
+    },
+    "GetRLSPolicy":{
+      "name":"GetRLSPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetRLSPolicy"
+      },
+      "input":{"shape":"GetRLSPolicyRequest"},
+      "output":{"shape":"GetRLSPolicyResponse"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ]
     },
     "GetResourceLFTags":{
       "name":"GetResourceLFTags",
@@ -697,6 +784,7 @@
         {"shape":"InvalidInputException"},
         {"shape":"InternalServiceException"},
         {"shape":"OperationTimeoutException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"AccessDeniedException"}
       ]
     },
@@ -712,6 +800,38 @@
         {"shape":"InvalidInputException"},
         {"shape":"OperationTimeoutException"},
         {"shape":"InternalServiceException"}
+      ]
+    },
+    "ListRLSPolicies":{
+      "name":"ListRLSPolicies",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListRLSPolicies"
+      },
+      "input":{"shape":"ListRLSPoliciesRequest"},
+      "output":{"shape":"ListRLSPoliciesResponse"},
+      "errors":[
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "ListRLSPolicyAttachments":{
+      "name":"ListRLSPolicyAttachments",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListRLSPolicyAttachments"
+      },
+      "input":{"shape":"ListRLSPolicyAttachmentsRequest"},
+      "output":{"shape":"ListRLSPolicyAttachmentsResponse"},
+      "errors":[
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "ListResources":{
@@ -952,6 +1072,24 @@
         {"shape":"ConcurrentModificationException"}
       ]
     },
+    "UpdateRLSPolicy":{
+      "name":"UpdateRLSPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/UpdateRLSPolicy"
+      },
+      "input":{"shape":"UpdateRLSPolicyRequest"},
+      "output":{"shape":"UpdateRLSPolicyResponse"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"ResourceNumberLimitExceededException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConcurrentModificationException"}
+      ]
+    },
     "UpdateResource":{
       "name":"UpdateResource",
       "http":{
@@ -1099,6 +1237,24 @@
         "Expiration":{"shape":"ExpirationTimestamp"}
       }
     },
+    "AttachRLSPolicyRequest":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Resource"
+      ],
+      "members":{
+        "Name":{"shape":"NameString"},
+        "Resource":{"shape":"Resource"},
+        "Principal":{"shape":"DataLakePrincipal"},
+        "Condition":{"shape":"Condition"},
+        "SetDefault":{"shape":"NullableBoolean"}
+      }
+    },
+    "AttachRLSPolicyResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "AuditContext":{
       "type":"structure",
       "members":{
@@ -1195,6 +1351,14 @@
         "Id":{"shape":"CatalogIdString"}
       }
     },
+    "Column":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"NameString"},
+        "Type":{"shape":"ColumnTypeString"}
+      }
+    },
     "ColumnLFTag":{
       "type":"structure",
       "members":{
@@ -1206,9 +1370,19 @@
       "type":"list",
       "member":{"shape":"ColumnLFTag"}
     },
+    "ColumnList":{
+      "type":"list",
+      "member":{"shape":"Column"}
+    },
     "ColumnNames":{
       "type":"list",
       "member":{"shape":"NameString"}
+    },
+    "ColumnTypeString":{
+      "type":"string",
+      "max":131072,
+      "min":0,
+      "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\t]*"
     },
     "ColumnWildcard":{
       "type":"structure",
@@ -1348,6 +1522,23 @@
       }
     },
     "CreateLakeFormationOptInResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "CreateRLSPolicyRequest":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "AttachmentColumns",
+        "FilterExpression"
+      ],
+      "members":{
+        "Name":{"shape":"NameString"},
+        "AttachmentColumns":{"shape":"ColumnList"},
+        "FilterExpression":{"shape":"PredicateString"}
+      }
+    },
+    "CreateRLSPolicyResponse":{
       "type":"structure",
       "members":{}
     },
@@ -1558,6 +1749,17 @@
       "type":"structure",
       "members":{}
     },
+    "DeleteRLSPolicyRequest":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"NameString"}
+      }
+    },
+    "DeleteRLSPolicyResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "DeregisterResourceRequest":{
       "type":"structure",
       "required":["ResourceArn"],
@@ -1618,6 +1820,24 @@
       "max":2048,
       "min":0,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
+    },
+    "DetachRLSPolicyRequest":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Resource"
+      ],
+      "members":{
+        "Name":{"shape":"NameString"},
+        "Resource":{"shape":"Resource"},
+        "Principal":{"shape":"DataLakePrincipal"},
+        "Condition":{"shape":"Condition"},
+        "RemoveDefault":{"shape":"NullableBoolean"}
+      }
+    },
+    "DetachRLSPolicyResponse":{
+      "type":"structure",
+      "members":{}
     },
     "DetailsMap":{
       "type":"structure",
@@ -1855,6 +2075,19 @@
         "ExecutionStatistics":{"shape":"ExecutionStatistics"},
         "PlanningStatistics":{"shape":"PlanningStatistics"},
         "QuerySubmissionTime":{"shape":"DateTime"}
+      }
+    },
+    "GetRLSPolicyRequest":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"NameString"}
+      }
+    },
+    "GetRLSPolicyResponse":{
+      "type":"structure",
+      "members":{
+        "RLSPolicy":{"shape":"RLSPolicy"}
       }
     },
     "GetResourceLFTagsRequest":{
@@ -2286,6 +2519,37 @@
         "NextToken":{"shape":"Token"}
       }
     },
+    "ListRLSPoliciesRequest":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{"shape":"PageSize"},
+        "NextToken":{"shape":"Token"}
+      }
+    },
+    "ListRLSPoliciesResponse":{
+      "type":"structure",
+      "members":{
+        "RLSPolicies":{"shape":"RLSPolicyList"},
+        "NextToken":{"shape":"Token"}
+      }
+    },
+    "ListRLSPolicyAttachmentsRequest":{
+      "type":"structure",
+      "members":{
+        "Resource":{"shape":"Resource"},
+        "Principal":{"shape":"DataLakePrincipal"},
+        "PolicyName":{"shape":"NameString"},
+        "MaxResults":{"shape":"PageSize"},
+        "NextToken":{"shape":"Token"}
+      }
+    },
+    "ListRLSPolicyAttachmentsResponse":{
+      "type":"structure",
+      "members":{
+        "RLSPolicyAttachments":{"shape":"RLSPolicyAttachmentList"},
+        "NextToken":{"shape":"Token"}
+      }
+    },
     "ListResourcesRequest":{
       "type":"structure",
       "members":{
@@ -2566,6 +2830,42 @@
       ]
     },
     "RAMResourceShareArn":{"type":"string"},
+    "RLSPolicy":{
+      "type":"structure",
+      "members":{
+        "CatalogId":{"shape":"CatalogIdString"},
+        "Name":{"shape":"NameString"},
+        "AttachmentColumns":{"shape":"ColumnList"},
+        "FilterExpression":{"shape":"PredicateString"}
+      }
+    },
+    "RLSPolicyAttachment":{
+      "type":"structure",
+      "members":{
+        "CatalogId":{"shape":"CatalogIdString"},
+        "PolicyName":{"shape":"NameString"},
+        "Principal":{"shape":"DataLakePrincipal"},
+        "Resource":{"shape":"Resource"},
+        "Condition":{"shape":"Condition"},
+        "DefaultRLSPolicy":{"shape":"NullableBoolean"}
+      }
+    },
+    "RLSPolicyAttachmentList":{
+      "type":"list",
+      "member":{"shape":"RLSPolicyAttachment"}
+    },
+    "RLSPolicyList":{
+      "type":"list",
+      "member":{"shape":"RLSPolicy"}
+    },
+    "RLSPolicyResource":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "CatalogId":{"shape":"CatalogIdString"},
+        "Name":{"shape":"NameString"}
+      }
+    },
     "RedshiftConnect":{
       "type":"structure",
       "required":["Authorization"],
@@ -2630,7 +2930,8 @@
         "DataCellsFilter":{"shape":"DataCellsFilterResource"},
         "LFTag":{"shape":"LFTagKeyResource"},
         "LFTagPolicy":{"shape":"LFTagPolicyResource"},
-        "LFTagExpression":{"shape":"LFTagExpressionResource"}
+        "LFTagExpression":{"shape":"LFTagExpressionResource"},
+        "RLSPolicy":{"shape":"RLSPolicyResource"}
       }
     },
     "ResourceArnString":{"type":"string"},
@@ -3100,6 +3401,18 @@
       }
     },
     "UpdateLakeFormationIdentityCenterConfigurationResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "UpdateRLSPolicyRequest":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"NameString"},
+        "FilterExpression":{"shape":"PredicateString"}
+      }
+    },
+    "UpdateRLSPolicyResponse":{
       "type":"structure",
       "members":{}
     },

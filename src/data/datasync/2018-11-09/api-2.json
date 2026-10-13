@@ -2016,7 +2016,15 @@
         "AUTOMATIC",
         "NFS3",
         "NFS4_0",
-        "NFS4_1"
+        "NFS4_1",
+        "NFS4_2"
+      ]
+    },
+    "ObjectMetadata":{
+      "type":"string",
+      "enum":[
+        "PRESERVE",
+        "NONE"
       ]
     },
     "ObjectStorageAccessKey":{
@@ -2108,7 +2116,8 @@
         "LogLevel":{"shape":"LogLevel"},
         "TransferMode":{"shape":"TransferMode"},
         "SecurityDescriptorCopyFlags":{"shape":"SmbSecurityDescriptorCopyFlags"},
-        "ObjectTags":{"shape":"ObjectTags"}
+        "ObjectTags":{"shape":"ObjectTags"},
+        "ObjectMetadata":{"shape":"ObjectMetadata"}
       }
     },
     "OutputTagList":{

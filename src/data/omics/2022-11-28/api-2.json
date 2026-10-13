@@ -6652,11 +6652,16 @@
     },
     "RegistryMapping":{
       "type":"structure",
+      "required":[
+        "upstreamRegistryUrl",
+        "ecrRepositoryPrefix"
+      ],
       "members":{
         "upstreamRegistryUrl":{"shape":"Uri"},
         "ecrRepositoryPrefix":{"shape":"EcrRepositoryPrefix"},
         "upstreamRepositoryPrefix":{"shape":"UpstreamRepositoryPrefix"},
-        "ecrAccountId":{"shape":"AwsAccountId"}
+        "ecrAccountId":{"shape":"AwsAccountId"},
+        "credentialArn":{"shape":"SecretArn"}
       }
     },
     "RegistryMappingsList":{
@@ -7137,6 +7142,12 @@
       ],
       "max":64,
       "min":1
+    },
+    "SecretArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws(-\\w+)*:secretsmanager:[a-z0-9-]+:[0-9]{12}:secret:[a-zA-Z0-9\\/_+=.@-]+"
     },
     "SecurityGroupId":{
       "type":"string",

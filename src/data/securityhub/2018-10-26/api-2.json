@@ -2373,7 +2373,8 @@
       "type":"string",
       "enum":[
         "FINDING_FIELDS_UPDATE",
-        "EXTERNAL_INTEGRATION"
+        "EXTERNAL_INTEGRATION",
+        "RESOURCE_FIELDS_UPDATE"
       ]
     },
     "AutomationRulesActionV2":{
@@ -2382,7 +2383,8 @@
       "members":{
         "Type":{"shape":"AutomationRulesActionTypeV2"},
         "FindingFieldsUpdate":{"shape":"AutomationRulesFindingFieldsUpdateV2"},
-        "ExternalIntegrationConfiguration":{"shape":"ExternalIntegrationConfiguration"}
+        "ExternalIntegrationConfiguration":{"shape":"ExternalIntegrationConfiguration"},
+        "ResourceFieldsUpdate":{"shape":"AutomationRulesResourceFieldsUpdateV2"}
       }
     },
     "AutomationRulesArnsList":{
@@ -2513,6 +2515,13 @@
         "Actions":{"shape":"AutomationRulesActionTypeListV2"},
         "CreatedAt":{"shape":"Timestamp"},
         "UpdatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "AutomationRulesResourceFieldsUpdateV2":{
+      "type":"structure",
+      "required":["Criticality"],
+      "members":{
+        "Criticality":{"shape":"ResourceCriticality"}
       }
     },
     "AvailabilityZone":{
@@ -8994,9 +9003,34 @@
     "Criteria":{
       "type":"structure",
       "members":{
-        "OcsfFindingCriteria":{"shape":"OcsfFindingFilters"}
+        "OcsfFindingCriteria":{"shape":"OcsfFindingFilters"},
+        "ResourceCriteria":{"shape":"ResourcesFilters"}
       },
       "union":true
+    },
+    "CriticalitySource":{
+      "type":"structure",
+      "required":[
+        "Source",
+        "Reason"
+      ],
+      "members":{
+        "Source":{"shape":"CriticalitySourceType"},
+        "Reason":{"shape":"NonEmptyString"}
+      }
+    },
+    "CriticalitySourceList":{
+      "type":"list",
+      "member":{"shape":"CriticalitySource"},
+      "max":3
+    },
+    "CriticalitySourceType":{
+      "type":"string",
+      "enum":[
+        "AutomationRule",
+        "ResourceName",
+        "TagInference"
+      ]
     },
     "CrossAccountMaxResults":{
       "type":"integer",
@@ -10835,10 +10869,13 @@
         "finding_info.title",
         "finding_info.related_events.traits.category",
         "finding_info.types",
+        "impact",
+        "likelihood",
         "metadata.product.name",
         "metadata.product.uid",
         "resources.type",
         "resources.cloud_partition",
+        "resources.criticality",
         "resources.name",
         "resources.owner.account.uid",
         "resources.owner.org.uid",
@@ -12121,12 +12158,15 @@
         "finding_info.related_events.uid",
         "finding_info.related_events.product.uid",
         "finding_info.related_events.title",
+        "impact",
+        "likelihood",
         "metadata.product.name",
         "metadata.product.uid",
         "metadata.product.vendor_name",
         "remediation.desc",
         "remediation.references",
         "resources.cloud_partition",
+        "resources.criticality",
         "resources.name",
         "resources.owner.account.uid",
         "resources.owner.org.uid",
@@ -12928,6 +12968,16 @@
       "error":{"httpStatusCode":409},
       "exception":true
     },
+    "ResourceCriticality":{
+      "type":"string",
+      "enum":[
+        "Very High",
+        "High",
+        "Medium",
+        "Low",
+        "Unknown"
+      ]
+    },
     "ResourceDetails":{
       "type":"structure",
       "members":{
@@ -13070,7 +13120,8 @@
         "ResourceSubCategory",
         "DiscoveryType",
         "ResourceInfo.AIDetails.HostResourceType",
-        "ResourceInfo.AIDetails.CanonicalId"
+        "ResourceInfo.AIDetails.CanonicalId",
+        "ResourceCriticality"
       ]
     },
     "ResourceGroupByRule":{
@@ -13163,7 +13214,9 @@
         "ResourceConfig":{"shape":"ResourceConfig"},
         "ResourceSubCategory":{"shape":"ResourceSubCategory"},
         "DiscoveryType":{"shape":"DiscoveryType"},
-        "ResourceInfo":{"shape":"ResourceInfo"}
+        "ResourceInfo":{"shape":"ResourceInfo"},
+        "ResourceCriticality":{"shape":"ResourceCriticality"},
+        "CriticalitySources":{"shape":"CriticalitySourceList"}
       }
     },
     "ResourceScopes":{
@@ -13337,7 +13390,8 @@
         "DiscoveryType",
         "ResourceInfo.AIDetails.HostResourceGuid",
         "ResourceInfo.AIDetails.HostResourceType",
-        "ResourceInfo.AIDetails.CanonicalId"
+        "ResourceInfo.AIDetails.CanonicalId",
+        "ResourceCriticality"
       ]
     },
     "ResourcesStringFilter":{

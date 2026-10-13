@@ -39,10 +39,11 @@
     "CreateAuthCode": "<p>Creates an authorization code for the specified Connect Customer instance. The authorization code can be used to establish a session with scoped permissions defined by the specified scope parameters.</p>",
     "CreateContact": "<important> <p>Only the VOICE, EMAIL, and TASK channels are supported. </p> <ul> <li> <p>For VOICE: The supported initiation method is <code>TRANSFER</code>. The contacts created with this initiation method have a subtype <code>connect:ExternalAudio</code>. </p> </li> <li> <p>For EMAIL: The supported initiation methods are <code>OUTBOUND</code>, <code>AGENT_REPLY</code>, and <code>FLOW</code>. </p> </li> <li> <p>For TASK: The supported initiation method is <code>API</code>. Contacts created with this API have a sub-type of <code>connect:ExternalTask</code>.</p> </li> </ul> </important> <p>Creates a new VOICE, EMAIL, or TASK contact. </p> <p>After a contact is created, you can move it to the desired state by using the <code>InitiateAs</code> parameter. While you can use API to create task contacts that are in the <code>COMPLETED</code> state, you must contact Amazon Web Services Support before using it for bulk import use cases. Bulk import causes your requests to be throttled or fail if your CreateContact limits aren't high enough. </p>",
     "CreateContactFlow": "<p>Creates a flow for the specified Connect Customer instance.</p> <p>You can also create and update flows using the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/flow-language.html\">Connect Customer Flow language</a>.</p>",
+    "CreateContactFlowAlias": "<p>Creates a named alias that points to a specific version of a flow.</p>",
     "CreateContactFlowModule": "<p>Creates a flow module for the specified Connect Customer instance. </p>",
     "CreateContactFlowModuleAlias": "<p>Creates a named alias that points to a specific version of a contact flow module.</p>",
     "CreateContactFlowModuleVersion": "<p>Creates an immutable snapshot of a contact flow module, preserving its content and settings at a specific point in time for version control and rollback capabilities.</p>",
-    "CreateContactFlowVersion": "<p>Publishes a new version of the flow provided. Versions are immutable and monotonically increasing. If the <code>FlowContentSha256</code> provided is different from the <code>FlowContentSha256</code> of the <code>$LATEST</code> published flow content, then an error is returned. This API only supports creating versions for flows of type <code>Campaign</code>.</p>",
+    "CreateContactFlowVersion": "<p>Publishes a new version of the flow provided. Versions are immutable and monotonically increasing. If the <code>FlowContentSha256</code> provided is different from the <code>FlowContentSha256</code> of the <code>$LATEST</code> published flow content, then an error is returned.</p>",
     "CreateDataTable": "<p>Creates a new data table with the specified properties. Supports the creation of all table properties except for attributes and values. A table with no attributes and values is a valid state for a table. The number of tables per instance is limited to 100 per instance. Customers can request an increase by using Amazon Web Services Service Quotas.</p>",
     "CreateDataTableAttribute": "<p>Adds an attribute to an existing data table. Creating a new primary attribute uses the empty value for the specified value type for all existing records. This should not affect uniqueness of published data tables since the existing primary values will already be unique. Creating attributes does not create any values. System managed tables may not allow customers to create new attributes.</p>",
     "CreateEmailAddress": "<p>Create new email address in the specified Connect Customer instance. For more information about email addresses, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/create-email-address1.html\">Create email addresses</a> in the Connect Customer Administrator Guide.</p>",
@@ -80,6 +81,7 @@
     "DeleteContactData": "<p>Deletes the specified fields containing personally identifiable information (PII) from a contact in the specified Connect Customer instance. We redact PII (such as customer endpoints, additional email recipients, and the email subject) from the contact and its associated contact trace record (CTR). The contact must be in a terminated state.</p> <important> <p> <b>This deletion is permanent and cannot be undone.</b> Performing this operation permanently deletes the specified PII. There is no retention period; you cannot recover the data after deletion. We remove only the fields that Connect Customer identifies and stores as PII. Any PII that you place in fields outside the scope of this operation remains your responsibility to remove.</p> </important>",
     "DeleteContactEvaluation": "<p>Deletes a contact evaluation in the specified Connect Customer instance.</p>",
     "DeleteContactFlow": "<p>Deletes a flow for the specified Connect Customer instance.</p>",
+    "DeleteContactFlowAlias": "<p>Deletes an alias from a flow without deleting the version that the alias points to.</p>",
     "DeleteContactFlowModule": "<p>Deletes the specified flow module.</p>",
     "DeleteContactFlowModuleAlias": "<p>Removes an alias reference, breaking the named connection to the underlying module version without affecting the version itself.</p>",
     "DeleteContactFlowModuleVersion": "<p>Removes a specific version of a contact flow module.</p>",
@@ -122,6 +124,7 @@
     "DescribeContact": "<p>This API is in preview release for Connect Customer and is subject to change.</p> <p>Describes the specified contact. </p> <p> <b>Use cases</b> </p> <p>Following are common uses cases for this API:</p> <ul> <li> <p>Retrieve contact information such as the caller's phone number and the specific number the caller dialed to integrate into custom monitoring or custom agent experience solutions.</p> </li> <li> <p>Detect when a customer chat session disconnects due to a network issue on the agent's end. Use the DisconnectReason field in the <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/ctr-data-model.html#ctr-ContactTraceRecord\">ContactTraceRecord</a> to detect this event and then re-queue the chat for followup.</p> </li> <li> <p>Identify after contact work (ACW) duration and call recordings information when a COMPLETED event is received by using the <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/contact-events.html\">contact event stream</a>. </p> </li> </ul> <p> <b>Important things to know</b> </p> <ul> <li> <p> <code>SystemEndpoint</code> is not populated for contacts with initiation method of MONITOR, QUEUE_TRANSFER, or CALLBACK</p> </li> <li> <p>Contact information remains available in Connect Customer for 24 months from the <code>InitiationTimestamp</code>, and then it is deleted. Only contact information that is available in Connect Customer is returned by this API.</p> </li> </ul> <p> <b>Endpoints</b>: See <a href=\"https://docs.aws.amazon.com/general/latest/gr/connect_region.html\">Connect Customer endpoints and quotas</a>.</p>",
     "DescribeContactEvaluation": "<p>Describes a contact evaluation in the specified Connect Customer instance.</p>",
     "DescribeContactFlow": "<p>Describes the specified flow.</p> <p>You can also create and update flows using the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/flow-language.html\">Connect Customer Flow language</a>.</p> <p>Use the <code>$SAVED</code> alias in the request to describe the <code>SAVED</code> content of a Flow. For example, <code>arn:aws:.../contact-flow/{id}:$SAVED</code>. After a flow is published, <code>$SAVED</code> needs to be supplied to view saved content that has not been published.</p> <p>Use <code>arn:aws:.../contact-flow/{id}:{version}</code> to retrieve the content of a specific flow version.</p> <p>In the response, <b>Status</b> indicates the flow status as either <code>SAVED</code> or <code>PUBLISHED</code>. The <code>PUBLISHED</code> status will initiate validation on the content. <code>SAVED</code> does not initiate validation of the content. <code>SAVED</code> | <code>PUBLISHED</code> </p>",
+    "DescribeContactFlowAlias": "<p>Returns information about a specific flow alias, including the version that it points to.</p>",
     "DescribeContactFlowModule": "<p>Describes the specified flow module.</p> <p>Use the <code>$SAVED</code> alias in the request to describe the <code>SAVED</code> content of a Flow. For example, <code>arn:aws:.../contact-flow/{id}:$SAVED</code>. After a flow is published, <code>$SAVED</code> needs to be supplied to view saved content that has not been published.</p>",
     "DescribeContactFlowModuleAlias": "<p>Retrieves detailed information about a specific alias, including which version it currently points to and its metadata.</p>",
     "DescribeDataTable": "<p>Returns all properties for a data table except for attributes and values. All properties from CreateDataTable are returned as well as properties for region replication, versioning, and system tables. \"Describe\" is a deprecated term but is allowed to maintain consistency with existing operations.</p>",
@@ -200,6 +203,7 @@
     "ListBots": "<p>This API is in preview release for Connect Customer and is subject to change.</p> <p>For the specified version of Amazon Lex, returns a paginated list of all the Amazon Lex bots currently associated with the instance. Use this API to return both Amazon Lex V1 and V2 bots.</p>",
     "ListChildHoursOfOperations": "<p>Provides information about the child hours of operations for the specified parent hours of operation.</p> <p>For more information about child hours of operations, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/hours-of-operation-overrides.html\">Link overrides from different hours of operation</a> in the <i> Administrator Guide</i>.</p>",
     "ListContactEvaluations": "<p>Lists contact evaluations in the specified Connect Customer instance.</p>",
+    "ListContactFlowAliases": "<p>Lists the aliases associated with a flow, including the version that each alias points to.</p>",
     "ListContactFlowModuleAliases": "<p>Lists all aliases associated with a contact flow module, showing their current version mappings and metadata.</p>",
     "ListContactFlowModuleVersions": "<p>Retrieves a paginated list of all versions for a specific contact flow module.</p>",
     "ListContactFlowModules": "<p>Provides information about the flow modules for the specified Connect Customer instance.</p>",
@@ -336,6 +340,7 @@
     "UpdateContact": "<p>This API is in preview release for Connect Customer and is subject to change.</p> <p>Adds or updates user-defined contact information associated with the specified contact. At least one field to be updated must be present in the request.</p> <important> <p>You can add or update user-defined contact information for both ongoing and completed contacts.</p> </important>",
     "UpdateContactAttributes": "<p>Creates or updates user-defined contact attributes associated with the specified contact.</p> <p>You can create or update user-defined attributes for both ongoing and completed contacts. For example, while the call is active, you can update the customer's name or the reason the customer called. You can add notes about steps that the agent took during the call that display to the next agent that takes the call. You can also update attributes for a contact using data from your CRM application and save the data with the contact in Connect Customer. You could also flag calls for additional analysis, such as legal review or to identify abusive callers.</p> <p>Contact attributes are available in Connect Customer for 24 months, and are then deleted. For information about contact record retention and the maximum size of the contact record attributes section, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html#feature-limits\">Feature specifications</a> in the <i>Connect Customer Administrator Guide</i>. </p>",
     "UpdateContactEvaluation": "<p>Updates details about a contact evaluation in the specified Connect Customer instance. A contact evaluation must be in draft state. Answers included in the request are merged with existing answers for the given evaluation. An answer or note can be deleted by passing an empty object (<code>{}</code>) to the question identifier. </p>",
+    "UpdateContactFlowAlias": "<p>Updates the name, description, or flow version associated with an alias.</p>",
     "UpdateContactFlowContent": "<p>Updates the specified flow.</p> <p>You can also create and update flows using the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/flow-language.html\">Connect Customer Flow language</a>.</p> <p>Use the <code>$SAVED</code> alias in the request to describe the <code>SAVED</code> content of a Flow. For example, <code>arn:aws:.../contact-flow/{id}:$SAVED</code>. After a flow is published, <code>$SAVED</code> needs to be supplied to view saved content that has not been published.</p>",
     "UpdateContactFlowMetadata": "<p>Updates metadata about specified flow.</p>",
     "UpdateContactFlowModuleAlias": "<p>Updates a specific Aliases metadata, including the version it’s tied to, it’s name, and description.</p>",
@@ -477,17 +482,21 @@
         "Contact$Arn": "<p>The Amazon Resource Name (ARN) for the contact.</p>",
         "ContactAnalysisReference$Arn": "<p>The Amazon Resource Name (ARN) of the contact analysis reference.</p>",
         "ContactFlow$Arn": "<p>The Amazon Resource Name (ARN) of the flow.</p>",
+        "ContactFlowAliasInfo$ContactFlowArn": "<p>The Amazon Resource Name (ARN) of the flow.</p>",
+        "ContactFlowAliasSummary$Arn": "<p>The Amazon Resource Name (ARN) of the flow alias.</p>",
         "ContactFlowModule$Arn": "<p>The Amazon Resource Name (ARN).</p>",
         "ContactFlowModuleAliasInfo$ContactFlowModuleArn": "<p>The Amazon Resource Name (ARN) of the flow module.</p>",
         "ContactFlowModuleAliasSummary$Arn": "<p>The Amazon Resource Name (ARN) of the flow module alias.</p>",
         "ContactFlowModuleSummary$Arn": "<p>The Amazon Resource Name (ARN) of the flow module.</p>",
         "ContactFlowModuleVersionSummary$Arn": "<p>The Amazon Resource Name (ARN) of the flow module version.</p>",
         "ContactFlowSummary$Arn": "<p>The Amazon Resource Name (ARN) of the flow.</p>",
-        "ContactFlowVersionSummary$Arn": "<p>The Amazon Resource Name (ARN) of the view version.</p>",
+        "ContactFlowVersionSummary$Arn": "<p>The Amazon Resource Name (ARN) of the flow version.</p>",
         "ContactSearchSummary$Arn": "<p>The Amazon Resource Name (ARN) of the contact.</p>",
         "CreateAgentStatusResponse$AgentStatusARN": "<p>The Amazon Resource Name (ARN) of the agent status.</p>",
         "CreateAttachedFileRequest$AssociatedResourceArn": "<p>The ARN of the completed voice contact to attach the file to. Only voice contacts with Telephony subtype are supported.</p> <note> <p>This value must be a valid ARN.</p> </note>",
         "CreateAttachedFileResponse$FileArn": "<p>The unique identifier of the attached file resource (ARN).</p>",
+        "CreateContactFlowAliasRequest$ContactFlowId": "<p>The identifier of the flow.</p>",
+        "CreateContactFlowAliasResponse$ContactFlowArn": "<p>The Amazon Resource Name (ARN) of the flow.</p>",
         "CreateContactFlowModuleAliasResponse$ContactFlowModuleArn": "<p>The Amazon Resource Name (ARN) of the flow module.</p>",
         "CreateContactFlowModuleResponse$Arn": "<p>The Amazon Resource Name (ARN) of the flow module.</p>",
         "CreateContactFlowModuleVersionRequest$ContactFlowModuleId": "<p>The identifier of the flow module.</p>",
@@ -526,9 +535,11 @@
         "DataTableSummary$Arn": "<p>The summary's ARN.</p>",
         "DeactivateEvaluationFormResponse$EvaluationFormArn": "<p>The Amazon Resource Name (ARN) for the evaluation form resource.</p>",
         "DeleteAttachedFileRequest$AssociatedResourceArn": "<p>The resource to which the attached file is (being) uploaded to. The supported resources are <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/cases.html\">Cases</a>, <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/setup-email-channel.html\">Email</a>, and <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/concepts-getting-started-tasks.html\">Task</a>.</p> <note> <p>This value must be a valid ARN.</p> </note>",
+        "DeleteContactFlowAliasRequest$ContactFlowId": "<p>The identifier of the flow.</p>",
         "DeleteContactFlowModuleVersionRequest$ContactFlowModuleId": "<p>The identifier of the flow module.</p>",
         "DeleteContactFlowVersionRequest$ContactFlowId": "<p>The identifier of the flow.</p>",
         "DeleteVocabularyResponse$VocabularyArn": "<p>The Amazon Resource Name (ARN) of the custom vocabulary.</p>",
+        "DescribeContactFlowAliasRequest$ContactFlowId": "<p>The identifier of the flow.</p>",
         "DisassociateFlowRequest$ResourceId": "<p>The identifier of the resource.</p> <ul> <li> <p>Amazon Web Services End User Messaging SMS phone number ARN when using <code>SMS_PHONE_NUMBER</code> </p> </li> <li> <p>Amazon Web Services End User Messaging Social phone number ARN when using <code>WHATSAPP_MESSAGING_PHONE_NUMBER</code> </p> </li> </ul>",
         "Evaluation$EvaluationArn": "<p>The Amazon Resource Name (ARN) for the contact evaluation resource.</p>",
         "EvaluationAcknowledgement$AcknowledgedBy": "<p>The agent who acknowledged the evaluation.</p>",
@@ -592,6 +603,7 @@
         "IntegrationAssociationSummary$IntegrationArn": "<p>The Amazon Resource Name (ARN) for the AppIntegration.</p>",
         "KinesisFirehoseConfig$FirehoseArn": "<p>The Amazon Resource Name (ARN) of the delivery stream.</p>",
         "KinesisStreamConfig$StreamArn": "<p>The Amazon Resource Name (ARN) of the data stream.</p>",
+        "ListContactFlowAliasesRequest$ContactFlowId": "<p>The identifier of the flow.</p>",
         "ListContactFlowModuleAliasesRequest$ContactFlowModuleId": "<p>The identifier of the flow module.</p>",
         "ListContactFlowModuleVersionsRequest$ContactFlowModuleId": "<p>The identifier of the flow module.</p>",
         "ListContactFlowVersionsRequest$ContactFlowId": "<p>The identifier of the flow.</p>",
@@ -645,6 +657,7 @@
         "TransferContactResponse$ContactArn": "<p>The Amazon Resource Name (ARN) of the contact.</p>",
         "UntagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
         "UpdateContactEvaluationResponse$EvaluationArn": "<p>The Amazon Resource Name (ARN) for the contact evaluation resource.</p>",
+        "UpdateContactFlowAliasRequest$ContactFlowId": "<p>The identifier of the flow.</p>",
         "UpdateEvaluationFormResponse$EvaluationFormArn": "<p>The Amazon Resource Name (ARN) for the contact evaluation resource.</p>",
         "UpdatePhoneNumberRequest$TargetArn": "<p>The Amazon Resource Name (ARN) for Connect Customer instances or traffic distribution groups that phone number inbound traffic is routed through. You must enter <code>InstanceId</code> or <code>TargetArn</code>. </p>",
         "UpdatePhoneNumberResponse$PhoneNumberArn": "<p>The Amazon Resource Name (ARN) of the phone number.</p>",
@@ -2631,6 +2644,24 @@
         "DescribeContactFlowResponse$ContactFlow": "<p>Information about the flow.</p>"
       }
     },
+    "ContactFlowAliasInfo": {
+      "base": "<p>Contains information about a flow alias.</p>",
+      "refs": {
+        "DescribeContactFlowAliasResponse$ContactFlowAlias": "<p>Information about the flow alias.</p>"
+      }
+    },
+    "ContactFlowAliasSummary": {
+      "base": "<p>Contains summary information about a flow alias.</p>",
+      "refs": {
+        "ContactFlowAliasSummaryList$member": null
+      }
+    },
+    "ContactFlowAliasSummaryList": {
+      "base": null,
+      "refs": {
+        "ListContactFlowAliasesResponse$ContactFlowAliasSummaryList": "<p>Information about the flow aliases.</p>"
+      }
+    },
     "ContactFlowAttributeAndCondition": {
       "base": "<p> A list of conditions which would be applied together with an AND condition.</p>",
       "refs": {
@@ -2663,10 +2694,14 @@
       "refs": {
         "ContactFlow$Description": "<p>The description of the flow.</p>",
         "ContactFlow$VersionDescription": "<p>The description of the flow version.</p>",
+        "ContactFlowAliasInfo$Description": "<p>The description of the alias.</p>",
+        "ContactFlowAliasSummary$AliasDescription": "<p>The description of the alias.</p>",
         "ContactFlowVersionSummary$VersionDescription": "<p>The description of the flow version.</p>",
+        "CreateContactFlowAliasRequest$Description": "<p>The description of the alias.</p>",
         "CreateContactFlowModuleAliasRequest$Description": "<p>The description of the alias.</p>",
         "CreateContactFlowRequest$Description": "<p>The description of the flow. </p>",
         "CreateContactFlowVersionRequest$Description": "<p>The description of the flow version.</p>",
+        "UpdateContactFlowAliasRequest$Description": "<p>The description of the alias.</p>",
         "UpdateContactFlowMetadataRequest$Description": "<p>The description of the flow.</p>",
         "UpdateContactFlowNameRequest$Description": "<p>The description of the flow.</p>"
       }
@@ -2861,9 +2896,13 @@
       "base": null,
       "refs": {
         "ContactFlow$Name": "<p>The name of the flow.</p>",
+        "ContactFlowAliasInfo$Name": "<p>The name of the alias.</p>",
+        "ContactFlowAliasSummary$AliasName": "<p>The name of the alias.</p>",
         "ContactFlowSummary$Name": "<p>The name of the flow.</p>",
+        "CreateContactFlowAliasRequest$AliasName": "<p>The name of the alias.</p>",
         "CreateContactFlowRequest$Name": "<p>The name of the flow.</p>",
         "TestCaseSummary$Name": "<p>The name of the test case.</p>",
+        "UpdateContactFlowAliasRequest$Name": "<p>The name of the alias.</p>",
         "UpdateContactFlowMetadataRequest$Name": "<p>The name of the flow.</p>",
         "UpdateContactFlowNameRequest$Name": "<p>The name of the flow.</p>"
       }
@@ -3342,6 +3381,14 @@
       "refs": {
         "RuleAction$CreateCaseAction": "<p>Information about the create case action.</p> <p>Supported only for <code>TriggerEventSource</code> values: <code>OnPostCallAnalysisAvailable</code> | <code>OnPostChatAnalysisAvailable</code>.</p>"
       }
+    },
+    "CreateContactFlowAliasRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateContactFlowAliasResponse": {
+      "base": null,
+      "refs": {}
     },
     "CreateContactFlowModuleAliasRequest": {
       "base": null,
@@ -4184,6 +4231,14 @@
       "base": null,
       "refs": {}
     },
+    "DeleteContactFlowAliasRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteContactFlowAliasResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteContactFlowModuleAliasRequest": {
       "base": null,
       "refs": {}
@@ -4449,6 +4504,14 @@
       "refs": {}
     },
     "DescribeContactEvaluationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeContactFlowAliasRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeContactFlowAliasResponse": {
       "base": null,
       "refs": {}
     },
@@ -7940,18 +8003,23 @@
     "InstanceIdOrArn": {
       "base": null,
       "refs": {
+        "CreateContactFlowAliasRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "CreateContactFlowModuleAliasRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "CreateTestCaseRequest$InstanceId": "<p>The identifier of the Amazon Connect instance.</p>",
+        "DeleteContactFlowAliasRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeleteContactFlowModuleAliasRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeleteTestCaseRequest$InstanceId": "<p>The identifier of the Amazon Connect instance.</p>",
+        "DescribeContactFlowAliasRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DescribeContactFlowModuleAliasRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DescribeTestCaseRequest$InstanceId": "<p>The identifier of the Amazon Connect instance.</p>",
         "GetContactMetricsRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "GetContactMetricsRequest$ContactId": "<p>The identifier of the contact in this instance of Connect Customer. </p>",
+        "ListContactFlowAliasesRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListContactFlowModuleAliasesRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "SearchResourceTagsRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can find the instanceId in the Amazon Resource Name (ARN) of the instance.</p>",
         "SearchTestCasesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can find the instance ID in the Amazon Resource Name (ARN) of the instance.</p>",
         "SearchViewsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "UpdateContactFlowAliasRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdateContactFlowModuleAliasRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdateTestCaseRequest$InstanceId": "<p>The identifier of the Amazon Connect instance.</p>"
       }
@@ -8367,6 +8435,14 @@
       "refs": {}
     },
     "ListContactEvaluationsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListContactFlowAliasesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListContactFlowAliasesResponse": {
       "base": null,
       "refs": {}
     },
@@ -8997,6 +9073,7 @@
         "ListAnalyticsDataAssociationsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListAnalyticsDataLakeDataSetsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListAuthenticationProfilesRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
+        "ListContactFlowAliasesRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListContactFlowModuleAliasesRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListContactFlowModuleVersionsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListContactFlowModulesRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
@@ -9635,6 +9712,8 @@
         "ListChildHoursOfOperationsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListContactEvaluationsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p> <important> <p>This is not expected to be set because the value returned in the previous response is always null.</p> </important>",
         "ListContactEvaluationsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p> <important> <p>This is always returned as null in the response.</p> </important>",
+        "ListContactFlowAliasesRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
+        "ListContactFlowAliasesResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListContactFlowModuleAliasesRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListContactFlowModuleAliasesResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListContactFlowModuleVersionsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
@@ -11939,7 +12018,10 @@
         "AuthenticationProfileSummary$LastModifiedRegion": "<p>The Amazon Web Services Region when the authentication profile summary was last modified.</p>",
         "BatchDescribeDataTableValueSuccessResult$LastModifiedRegion": "<p>The result's last modified region.</p>",
         "ContactFlow$LastModifiedRegion": "<p>The region in which the flow was last modified</p>",
+        "ContactFlowAliasInfo$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
+        "ContactFlowAliasSummary$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
         "ContactFlowModuleAliasInfo$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
+        "ContactFlowVersionSummary$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
         "CreateContactFlowVersionRequest$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
         "CreateTestCaseRequest$LastModifiedRegion": "<p>The region in which the resource was last modified</p>",
         "DataTable$LastModifiedRegion": "<p>The Amazon Web Services Region where the data table was last modified, used for region replication.</p>",
@@ -12078,17 +12160,23 @@
       "refs": {
         "ActivateEvaluationFormRequest$EvaluationFormId": "<p>The unique identifier for the evaluation form.</p>",
         "ActivateEvaluationFormResponse$EvaluationFormId": "<p>The unique identifier for the evaluation form.</p>",
+        "ContactFlowAliasInfo$ContactFlowId": "<p>The identifier of the flow.</p>",
+        "ContactFlowAliasInfo$AliasId": "<p>The identifier of the alias.</p>",
+        "ContactFlowAliasSummary$AliasId": "<p>The identifier of the alias.</p>",
         "ContactFlowModuleAliasInfo$ContactFlowModuleId": "<p>The identifier of the flow module.</p>",
         "ContactFlowModuleAliasSummary$AliasId": "<p>The identifier of the alias.</p>",
+        "CreateContactFlowAliasResponse$Id": "<p>The identifier of the alias.</p>",
         "CreateContactFlowModuleAliasResponse$Id": "<p>The identifier of the alias.</p>",
         "CreateEvaluationFormResponse$EvaluationFormId": "<p>The unique identifier for the evaluation form.</p>",
         "DeactivateEvaluationFormRequest$EvaluationFormId": "<p>The unique identifier for the evaluation form.</p>",
         "DeactivateEvaluationFormResponse$EvaluationFormId": "<p>The unique identifier for the evaluation form.</p>",
         "DeleteContactEvaluationRequest$EvaluationId": "<p>A unique identifier for the contact evaluation.</p>",
+        "DeleteContactFlowAliasRequest$AliasId": "<p>The identifier of the alias.</p>",
         "DeleteContactFlowModuleAliasRequest$ContactFlowModuleId": "<p>The identifier of the flow module.</p>",
         "DeleteContactFlowModuleAliasRequest$AliasId": "<p>The identifier of the alias.</p>",
         "DeleteEvaluationFormRequest$EvaluationFormId": "<p>The unique identifier for the evaluation form.</p>",
         "DescribeContactEvaluationRequest$EvaluationId": "<p>A unique identifier for the contact evaluation.</p>",
+        "DescribeContactFlowAliasRequest$AliasId": "<p>The identifier of the alias.</p>",
         "DescribeContactFlowModuleAliasRequest$AliasId": "<p>The identifier of the alias.</p>",
         "DescribeEvaluationFormRequest$EvaluationFormId": "<p>A unique identifier for the contact evaluation.</p>",
         "Evaluation$EvaluationId": "<p>A unique identifier for the contact evaluation.</p>",
@@ -12128,6 +12216,7 @@
         "SubmitContactEvaluationResponse$EvaluationId": "<p>A unique identifier for the contact evaluation.</p>",
         "UpdateContactEvaluationRequest$EvaluationId": "<p>A unique identifier for the contact evaluation.</p>",
         "UpdateContactEvaluationResponse$EvaluationId": "<p>A unique identifier for the contact evaluation.</p>",
+        "UpdateContactFlowAliasRequest$AliasId": "<p>The identifier of the alias.</p>",
         "UpdateContactFlowModuleAliasRequest$AliasId": "<p>The identifier of the alias.</p>",
         "UpdateEvaluationFormRequest$EvaluationFormId": "<p>The unique identifier for the evaluation form.</p>",
         "UpdateEvaluationFormResponse$EvaluationFormId": "<p>The unique identifier for the evaluation form.</p>"
@@ -12167,17 +12256,21 @@
       "base": null,
       "refs": {
         "ContactFlow$Version": "<p>The identifier of the flow version.</p>",
+        "ContactFlowAliasInfo$Version": "<p>The version of the flow.</p>",
+        "ContactFlowAliasSummary$Version": "<p>The version of the flow.</p>",
         "ContactFlowModule$Version": "<p>The version of the flow module.</p>",
         "ContactFlowModuleAliasInfo$Version": "<p>The version of the flow module.</p>",
         "ContactFlowModuleAliasSummary$Version": "<p>The version of the flow module.</p>",
         "ContactFlowModuleVersionSummary$Version": "<p>The version of the flow module.</p>",
         "ContactFlowVersionSummary$Version": "<p>The identifier of the flow version.</p>",
+        "CreateContactFlowAliasRequest$ContactFlowVersion": "<p>The version of the flow.</p>",
         "CreateContactFlowModuleAliasRequest$ContactFlowModuleVersion": "<p>The version of the flow module.</p>",
         "CreateContactFlowModuleVersionResponse$Version": "<p>The version of the flow module.</p>",
         "CreateContactFlowVersionRequest$ContactFlowVersion": "<p>The identifier of the flow version.</p>",
         "CreateContactFlowVersionResponse$Version": "<p>The identifier of the flow version.</p>",
         "DeleteContactFlowModuleVersionRequest$ContactFlowModuleVersion": "<p>The version of the flow module to delete.</p>",
         "DeleteContactFlowVersionRequest$ContactFlowVersion": "<p>The identifier of the flow version.</p>",
+        "UpdateContactFlowAliasRequest$ContactFlowVersion": "<p>The version of the flow.</p>",
         "UpdateContactFlowModuleAliasRequest$ContactFlowModuleVersion": "<p>The version of the flow module.</p>"
       }
     },
@@ -14535,8 +14628,11 @@
         "AuthenticationProfileSummary$LastModifiedTime": "<p>The timestamp when the authentication profile summary was last modified.</p>",
         "BatchDescribeDataTableValueSuccessResult$LastModifiedTime": "<p>The result's last modified time.</p>",
         "ContactFlow$LastModifiedTime": "<p>The time at which the flow was last modified.</p>",
+        "ContactFlowAliasInfo$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
+        "ContactFlowAliasSummary$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
         "ContactFlowModuleAliasInfo$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
         "ContactFlowModuleAliasSummary$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
+        "ContactFlowVersionSummary$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
         "CreateContactFlowVersionRequest$LastModifiedTime": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
         "CreateNotificationRequest$ExpiresAt": "<p>The timestamp when the notification should expire and no longer be displayed to users. If not specified, defaults to one week from creation.</p>",
         "CreateTestCaseRequest$LastModifiedTime": "<p>The time at which the resource was last modified.</p>",
@@ -14858,6 +14954,14 @@
       "refs": {}
     },
     "UpdateContactEvaluationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateContactFlowAliasRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateContactFlowAliasResponse": {
       "base": null,
       "refs": {}
     },

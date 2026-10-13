@@ -947,7 +947,8 @@
         "auroraServerlessScalingConfig":{"shape":"AuroraServerlessScalingConfiguration"},
         "auroraProvisionedScalingConfig":{"shape":"AuroraProvisionedScalingConfiguration"},
         "neptuneGlobalDatabaseConfig":{"shape":"NeptuneGlobalDatabaseConfiguration"},
-        "rdsSwitchoverReadReplicaConfig":{"shape":"RdsSwitchoverReadReplicaConfiguration"}
+        "rdsSwitchoverReadReplicaConfig":{"shape":"RdsSwitchoverReadReplicaConfiguration"},
+        "ssmSendCommandConfig":{"shape":"SsmSendCommandConfiguration"}
       },
       "union":true
     },
@@ -971,7 +972,8 @@
         "AuroraServerlessScaling",
         "AuroraProvisionedScaling",
         "NeptuneGlobalDatabase",
-        "RdsSwitchoverReadReplica"
+        "RdsSwitchoverReadReplica",
+        "SSMSendCommand"
       ]
     },
     "ExecutionComment":{
@@ -1768,6 +1770,13 @@
       "max":2,
       "min":2
     },
+    "RegionSsmDocumentMap":{
+      "type":"map",
+      "key":{"shape":"Region"},
+      "value":{"shape":"SsmDocumentConfig"},
+      "max":2,
+      "min":1
+    },
     "RegionSwitchPlanConfiguration":{
       "type":"structure",
       "required":["arn"],
@@ -2017,6 +2026,119 @@
     "ServiceQuotaWarningSummaryList":{
       "type":"list",
       "member":{"shape":"ServiceQuotaWarningSummary"}
+    },
+    "SsmDocumentArn":{
+      "type":"string",
+      "max":256,
+      "min":20,
+      "pattern":"arn:[a-z0-9\\-]+:ssm:[a-z0-9\\-]+:([0-9]{12})?:document/[a-zA-Z0-9_.\\-]+"
+    },
+    "SsmDocumentConfig":{
+      "type":"structure",
+      "required":[
+        "documentArn",
+        "targets"
+      ],
+      "members":{
+        "crossAccountRole":{"shape":"IamRoleArn"},
+        "externalId":{"shape":"String"},
+        "documentArn":{"shape":"SsmDocumentArn"},
+        "targets":{"shape":"SsmTargetList"},
+        "parameters":{"shape":"SsmDocumentParameters"},
+        "documentVersion":{"shape":"SsmDocumentVersion"}
+      }
+    },
+    "SsmDocumentParameters":{
+      "type":"map",
+      "key":{"shape":"SsmParameterKey"},
+      "value":{"shape":"SsmParameterValues"},
+      "max":30,
+      "min":0
+    },
+    "SsmDocumentVersion":{
+      "type":"string",
+      "max":8,
+      "min":1,
+      "pattern":"([$]LATEST|[$]DEFAULT|[1-9][0-9]*)"
+    },
+    "SsmParameterKey":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "SsmParameterValue":{
+      "type":"string",
+      "max":65535,
+      "min":1,
+      "pattern":".{1,65535}"
+    },
+    "SsmParameterValues":{
+      "type":"list",
+      "member":{"shape":"SsmParameterValue"},
+      "max":50,
+      "min":1
+    },
+    "SsmSendCommandConfiguration":{
+      "type":"structure",
+      "required":[
+        "regionDocuments",
+        "retryIntervalMinutes"
+      ],
+      "members":{
+        "timeoutMinutes":{"shape":"SsmSendCommandConfigurationTimeoutMinutesInteger"},
+        "regionDocuments":{"shape":"RegionSsmDocumentMap"},
+        "retryIntervalMinutes":{"shape":"Float"},
+        "ungraceful":{"shape":"SsmSendCommandUngraceful"}
+      }
+    },
+    "SsmSendCommandConfigurationTimeoutMinutesInteger":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
+    "SsmSendCommandUngraceful":{
+      "type":"structure",
+      "members":{
+        "behavior":{"shape":"SsmSendCommandUngracefulBehavior"}
+      }
+    },
+    "SsmSendCommandUngracefulBehavior":{
+      "type":"string",
+      "enum":["skip"]
+    },
+    "SsmTarget":{
+      "type":"structure",
+      "required":[
+        "key",
+        "values"
+      ],
+      "members":{
+        "key":{"shape":"SsmTargetKey"},
+        "values":{"shape":"SsmTargetValueList"}
+      }
+    },
+    "SsmTargetKey":{
+      "type":"string",
+      "max":163,
+      "min":1,
+      "pattern":"[\\p{L}\\p{Z}\\p{N}_.:/=\\-@]*"
+    },
+    "SsmTargetList":{
+      "type":"list",
+      "member":{"shape":"SsmTarget"},
+      "max":5,
+      "min":1
+    },
+    "SsmTargetValue":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "SsmTargetValueList":{
+      "type":"list",
+      "member":{"shape":"SsmTargetValue"},
+      "max":50,
+      "min":1
     },
     "StartPlanExecutionRequest":{
       "type":"structure",

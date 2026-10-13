@@ -100,6 +100,7 @@ use Aws\AwsClient;
  *     dependencyDiscovery?: 'DISABLED'|'ENABLED',
  *     reportConfiguration?: array{reportOutputs?: list<array>, ...},
  *     kmsKeyId?: string,
+ *     devOpsAgentConfiguration?: array{agentSpaceArn?: string, ...},
  *     tags?: array<string, string>,
  *     clientToken?: string,
  *     ...,
@@ -115,6 +116,7 @@ use Aws\AwsClient;
  *     dependencyDiscovery?: 'DISABLED'|'ENABLED',
  *     reportConfiguration?: array{reportOutputs?: list<array>, ...},
  *     kmsKeyId?: string,
+ *     devOpsAgentConfiguration?: array{agentSpaceArn?: string, ...},
  *     tags?: array<string, string>,
  *     clientToken?: string,
  *     ...,
@@ -741,6 +743,7 @@ use Aws\AwsClient;
  *     permissionModel?: array{invokerRoleName?: string, crossAccountRoles?: list<array>, ...},
  *     dependencyDiscovery?: 'DISABLED'|'ENABLED',
  *     reportConfiguration?: array{reportOutputs?: list<array>, ...},
+ *     devOpsAgentConfiguration?: array{agentSpaceArn?: string, ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateServiceAsync(array $args = [])
@@ -753,6 +756,7 @@ use Aws\AwsClient;
  *     permissionModel?: array{invokerRoleName?: string, crossAccountRoles?: list<array>, ...},
  *     dependencyDiscovery?: 'DISABLED'|'ENABLED',
  *     reportConfiguration?: array{reportOutputs?: list<array>, ...},
+ *     devOpsAgentConfiguration?: array{agentSpaceArn?: string, ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateServiceFunction(array $args = [])

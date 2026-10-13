@@ -2180,7 +2180,8 @@
         "EmbedHostDomains":{"shape":"EmbedHostDomains"},
         "StreamingExperienceSettings":{"shape":"StreamingExperienceSettings"},
         "ContentRedirection":{"shape":"ContentRedirection"},
-        "AgentAccessConfig":{"shape":"AgentAccessConfig"}
+        "AgentAccessConfig":{"shape":"AgentAccessConfig"},
+        "StorageConnectorAuthentication":{"shape":"StorageConnectorAuthentication"}
       }
     },
     "CreateStackResult":{
@@ -3897,7 +3898,8 @@
         "EmbedHostDomains":{"shape":"EmbedHostDomains"},
         "StreamingExperienceSettings":{"shape":"StreamingExperienceSettings"},
         "ContentRedirection":{"shape":"ContentRedirection"},
-        "AgentAccessConfig":{"shape":"AgentAccessConfig"}
+        "AgentAccessConfig":{"shape":"AgentAccessConfig"},
+        "StorageConnectorAuthentication":{"shape":"StorageConnectorAuthentication"}
       }
     },
     "StackAttribute":{
@@ -3916,7 +3918,8 @@
         "ACCESS_ENDPOINTS",
         "STREAMING_EXPERIENCE_SETTINGS",
         "CONTENT_REDIRECTION",
-        "AGENT_ACCESS_CONFIG"
+        "AGENT_ACCESS_CONFIG",
+        "STORAGE_CONNECTOR_AUTHENTICATION"
       ]
     },
     "StackAttributes":{
@@ -4041,6 +4044,13 @@
         "Domains":{"shape":"DomainList"},
         "DomainsRequireAdminConsent":{"shape":"DomainList"}
       }
+    },
+    "StorageConnectorAuthentication":{
+      "type":"string",
+      "enum":[
+        "FORCE_REAUTHENTICATION",
+        "REUSE_CREDENTIALS"
+      ]
     },
     "StorageConnectorList":{
       "type":"list",
@@ -4366,7 +4376,8 @@
         "EmbedHostDomains":{"shape":"EmbedHostDomains"},
         "StreamingExperienceSettings":{"shape":"StreamingExperienceSettings"},
         "ContentRedirection":{"shape":"ContentRedirection"},
-        "AgentAccessConfig":{"shape":"AgentAccessConfigForUpdate"}
+        "AgentAccessConfig":{"shape":"AgentAccessConfigForUpdate"},
+        "StorageConnectorAuthentication":{"shape":"StorageConnectorAuthentication"}
       }
     },
     "UpdateStackResult":{

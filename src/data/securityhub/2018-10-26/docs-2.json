@@ -525,6 +525,12 @@
         "AutomationRulesMetadataListV2$member": null
       }
     },
+    "AutomationRulesResourceFieldsUpdateV2": {
+      "base": "<p>Allows you to define the structure for modifying specific fields of resources.</p>",
+      "refs": {
+        "AutomationRulesActionV2$ResourceFieldsUpdate": "<p>The changes to be applied to resource fields when an automation rule is triggered.</p>"
+      }
+    },
     "AvailabilityZone": {
       "base": "<p>Information about an Availability Zone.</p>",
       "refs": {
@@ -5269,11 +5275,29 @@
       "refs": {}
     },
     "Criteria": {
-      "base": "<p>Defines the parameters and conditions used to evaluate and filter security findings.</p>",
+      "base": "<p>Defines the parameters and conditions used to evaluate and filter security findings or resources.</p>",
       "refs": {
         "CreateAutomationRuleV2Request$Criteria": "<p>The filtering type and configuration of the automation rule.</p>",
         "GetAutomationRuleV2Response$Criteria": "<p>The filtering type and configuration of the V2 automation rule.</p>",
         "UpdateAutomationRuleV2Request$Criteria": "<p>The filtering type and configuration of the automation rule.</p>"
+      }
+    },
+    "CriticalitySource": {
+      "base": "<p>Details the source and reason of a criticality.</p>",
+      "refs": {
+        "CriticalitySourceList$member": null
+      }
+    },
+    "CriticalitySourceList": {
+      "base": null,
+      "refs": {
+        "ResourceResult$CriticalitySources": "<p>The sources of criticalities determined from a resource.</p>"
+      }
+    },
+    "CriticalitySourceType": {
+      "base": null,
+      "refs": {
+        "CriticalitySource$Source": "<p>The source of the criticality.</p>"
       }
     },
     "CrossAccountMaxResults": {
@@ -8912,6 +8936,7 @@
         "CreateTicketV2Request$FindingMetadataUid": "<p>The the unique ID for the finding.</p>",
         "CreateTicketV2Response$TicketId": "<p>The ID for the ticketv2.</p>",
         "CreateTicketV2Response$TicketSrcUrl": "<p>The url to the created ticket.</p>",
+        "CriticalitySource$Reason": "<p>The reason the criticality was assigned.</p>",
         "CspmConnectorSummary$ConnectorArn": "<p>The Amazon Resource Name (ARN) of the connector.</p>",
         "CspmConnectorSummary$ConnectorId": "<p>The unique identifier of the connector.</p>",
         "CspmConnectorSummary$Name": "<p>The name of the connector.</p>",
@@ -10243,6 +10268,13 @@
       "base": "<p>The resource specified in the request conflicts with an existing resource.</p>",
       "refs": {}
     },
+    "ResourceCriticality": {
+      "base": null,
+      "refs": {
+        "AutomationRulesResourceFieldsUpdateV2$Criticality": "<p>The criticality level to be assigned to resources that match the automation rule criteria.</p>",
+        "ResourceResult$ResourceCriticality": "<p>The criticality assigned to a resource.</p>"
+      }
+    },
     "ResourceDetails": {
       "base": "<p>Additional details about a resource related to a finding.</p> <p>To provide the details, use the object that corresponds to the resource type. For example, if the resource type is <code>AwsEc2Instance</code>, then you use the <code>AwsEc2Instance</code> object to provide the details.</p> <p>If the type-specific object does not contain all of the fields you want to populate, then you use the <code>Other</code> object to populate those additional fields.</p> <p>You also use the <code>Other</code> object to populate the details when the selected type does not have a corresponding object.</p>",
       "refs": {
@@ -10400,6 +10432,7 @@
     "ResourcesFilters": {
       "base": "<p>Enables filtering of Amazon Web Services resources based on data.</p>",
       "refs": {
+        "Criteria$ResourceCriteria": "<p>The filtering conditions for resources.</p>",
         "GetResourcesV2Request$Filters": "<p>Filters resources based on a set of criteria.</p>",
         "ResourceGroupByRule$Filters": "<p>The criteria used to select resources and associated security findings.</p>"
       }

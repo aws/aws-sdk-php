@@ -492,12 +492,16 @@
       "type":"structure",
       "members":{
         "AuthType":{"shape":"AuthType"},
-        "CredentialProviderIdentifier":{"shape":"Arn"}
+        "CredentialProviderIdentifier":{"shape":"Arn"},
+        "AudienceOverride":{"shape":"Identifier"}
       }
     },
     "AuthType":{
       "type":"string",
-      "enum":["API_KEY"]
+      "enum":[
+        "API_KEY",
+        "CONNECT_JWT"
+      ]
     },
     "Boolean":{"type":"boolean"},
     "ClientAssociationMetadata":{

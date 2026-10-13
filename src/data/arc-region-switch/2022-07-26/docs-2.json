@@ -16,7 +16,7 @@
     "ListPlansInRegion": "<p>Lists all Region switch plans in your Amazon Web Services account that are available in the current Amazon Web Services Region.</p>",
     "ListRoute53HealthChecks": "<p>List the Amazon Route 53 health checks.</p>",
     "ListRoute53HealthChecksInRegion": "<p>List the Amazon Route 53 health checks in a specific Amazon Web Services Region.</p>",
-    "ListServiceQuotaWarnings": "<p>Lists the service quota warnings for the plans that you can access. Region switch creates a warning when the applied quota value in one Region of a plan is lower than the value required for the matching resource in another Region or account in the plan.</p> <p>Returns the warnings for the plans that you own and for plans that are shared with your account through AWS Resource Access Manager (AWS RAM). To return warnings for specific plans, provide a list of plan Amazon Resource Names (ARNs). Region switch ignores any plan ARN that you can't access. If you don't provide any plan ARNs, Region switch returns the warnings for all of your accessible plans.</p>",
+    "ListServiceQuotaWarnings": "<p>Lists the service quota warnings for the plans that you can access. Region switch creates a warning when the applied quota value in one Region of a plan is lower than the value required for the matching resource in another Region or account in the plan.</p> <p>Returns the warnings for the plans that you own and for plans that are shared with your account through Resource Access Manager (RAM). To return warnings for specific plans, provide a list of plan Amazon Resource Names (ARNs). Region switch ignores any plan ARN that you can't access. If you don't provide any plan ARNs, Region switch returns the warnings for all of your accessible plans.</p>",
     "ListTagsForResource": "<p>Lists the tags attached to a Region switch resource.</p>",
     "StartPlanExecution": "<p>Starts the execution of a Region switch plan. You can execute a plan in either <code>graceful</code> or <code>ungraceful</code> mode.</p> <p>Specifing <code>ungraceful</code> mode either changes the behavior of the execution blocks in a workflow or skips specific execution blocks.</p>",
     "TagResource": "<p>Adds or updates tags for a Region switch resource. You can assign metadata to your resources in the form of tags, which are key-value pairs.</p>",
@@ -556,7 +556,8 @@
     "Float": {
       "base": null,
       "refs": {
-        "CustomActionLambdaConfiguration$retryIntervalMinutes": "<p>The retry interval specified.</p>"
+        "CustomActionLambdaConfiguration$retryIntervalMinutes": "<p>The retry interval specified.</p>",
+        "SsmSendCommandConfiguration$retryIntervalMinutes": "<p>How often, in minutes, Region switch retries the command if it returns a failure.</p>"
       }
     },
     "GeneratedReport": {
@@ -669,6 +670,7 @@
         "RegionSwitchPlanConfiguration$crossAccountRole": "<p>The cross account role for the configuration.</p>",
         "Route53HealthCheckConfiguration$crossAccountRole": "<p>The cross account role for the configuration.</p>",
         "Service$crossAccountRole": "<p>The cross account role for a service.</p>",
+        "SsmDocumentConfig$crossAccountRole": "<p>The cross-account role for the configuration.</p>",
         "UpdatePlanRequest$executionRole": "<p>The updated IAM role ARN that grants Region switch the permissions needed to execute the plan steps.</p>"
       }
     },
@@ -1109,6 +1111,7 @@
         "RegionEventSourceMappingMap$key": null,
         "RegionList$member": null,
         "RegionNeptuneClusterArnMap$key": null,
+        "RegionSsmDocumentMap$key": null,
         "RegionalScalingResource$key": null,
         "Route53HealthCheck$region": "<p>The Amazon Route 53 Region.</p>",
         "Route53ResourceRecordSet$region": "<p>The Amazon Route 53 record set Region.</p>",
@@ -1154,6 +1157,12 @@
       "base": "<p>A map of Region to Neptune database cluster ARN for Neptune global database configuration.</p>",
       "refs": {
         "NeptuneGlobalDatabaseConfiguration$regionDatabaseClusterArns": "<p>The database cluster Amazon Resource Names (ARNs) for a Neptune global database.</p>"
+      }
+    },
+    "RegionSsmDocumentMap": {
+      "base": "<p>The Systems Manager document and target configuration for each Amazon Web Services Region that the configuration applies to.</p>",
+      "refs": {
+        "SsmSendCommandConfiguration$regionDocuments": "<p>The Systems Manager document and target configuration for each Amazon Web Services Region in the plan. Provide an entry for each Amazon Web Services Region that you want the command to run in.</p>"
       }
     },
     "RegionSwitchPlanConfiguration": {
@@ -1367,6 +1376,102 @@
         "ListServiceQuotaWarningsResponse$serviceQuotaWarningSummaries": "<p>The service quota warnings for the plans that you can access.</p>"
       }
     },
+    "SsmDocumentArn": {
+      "base": "<p>The Amazon Resource Name (ARN) of the Systems Manager document to run.</p>",
+      "refs": {
+        "SsmDocumentConfig$documentArn": "<p>The Amazon Resource Name (ARN) of the Systems Manager document to run.</p>"
+      }
+    },
+    "SsmDocumentConfig": {
+      "base": "<p>The Systems Manager document to run and the managed nodes to target for a single Amazon Web Services Region.</p>",
+      "refs": {
+        "RegionSsmDocumentMap$value": null
+      }
+    },
+    "SsmDocumentParameters": {
+      "base": "<p>The parameters passed to the Systems Manager document.</p>",
+      "refs": {
+        "SsmDocumentConfig$parameters": "<p>The parameters that are passed to this Region's Systems Manager document. You set parameters for each document, so each Region can run its document with its own parameters.</p>"
+      }
+    },
+    "SsmDocumentVersion": {
+      "base": "<p>The version of the Systems Manager document to run.</p>",
+      "refs": {
+        "SsmDocumentConfig$documentVersion": "<p>The version of the Systems Manager document to run for this Region. When you omit it, Systems Manager runs the document's default version.</p>"
+      }
+    },
+    "SsmParameterKey": {
+      "base": "<p>The name of a Systems Manager document parameter.</p>",
+      "refs": {
+        "SsmDocumentParameters$key": null
+      }
+    },
+    "SsmParameterValue": {
+      "base": "<p>A single value supplied for a Systems Manager document parameter.</p>",
+      "refs": {
+        "SsmParameterValues$member": null
+      }
+    },
+    "SsmParameterValues": {
+      "base": "<p>The values supplied for a single Systems Manager document parameter.</p>",
+      "refs": {
+        "SsmDocumentParameters$value": null
+      }
+    },
+    "SsmSendCommandConfiguration": {
+      "base": "<p>Configuration for an AWS Systems Manager <code>SendCommand</code> execution block in a Region switch plan. This execution block runs a Systems Manager document on the managed nodes that you target in each Amazon Web Services Region of the plan.</p>",
+      "refs": {
+        "ExecutionBlockConfiguration$ssmSendCommandConfig": "<p>Specifies an AWS Systems Manager <code>SendCommand</code> execution block.</p>"
+      }
+    },
+    "SsmSendCommandConfigurationTimeoutMinutesInteger": {
+      "base": null,
+      "refs": {
+        "SsmSendCommandConfiguration$timeoutMinutes": "<p>The timeout value specified for the configuration.</p>"
+      }
+    },
+    "SsmSendCommandUngraceful": {
+      "base": "<p>The ungraceful execution settings for an AWS Systems Manager <code>SendCommand</code> execution block.</p>",
+      "refs": {
+        "SsmSendCommandConfiguration$ungraceful": "<p>Specifies the settings that determine how the execution block behaves when the plan runs ungracefully, such as whether to skip the command.</p>"
+      }
+    },
+    "SsmSendCommandUngracefulBehavior": {
+      "base": "<p>The ungraceful behavior for an AWS Systems Manager <code>SendCommand</code> execution block, which must be set to <code>skip</code>.</p>",
+      "refs": {
+        "SsmSendCommandUngraceful$behavior": "<p>Specifies whether to skip running this command during an ungraceful execution. Set to <code>skip</code> to skip the command.</p>"
+      }
+    },
+    "SsmTarget": {
+      "base": "<p>A single <code>SendCommand</code> target filter, consisting of a target key and the values matched by that key.</p>",
+      "refs": {
+        "SsmTargetList$member": null
+      }
+    },
+    "SsmTargetKey": {
+      "base": "<p>A target key used to select managed nodes, such as <code>tag:Environment</code> or <code>InstanceIds</code>.</p>",
+      "refs": {
+        "SsmTarget$key": "<p>The target key, such as <code>tag:Environment</code> or <code>InstanceIds</code>.</p>"
+      }
+    },
+    "SsmTargetList": {
+      "base": "<p>The target filters passed to <code>SendCommand</code>. You can specify up to five filters.</p>",
+      "refs": {
+        "SsmDocumentConfig$targets": "<p>The target filters that Systems Manager resolves to managed nodes when the command runs. To target specific managed nodes, use the <code>InstanceIds</code> key. You can specify up to five target filters.</p>"
+      }
+    },
+    "SsmTargetValue": {
+      "base": "<p>A single value matched by a target key.</p>",
+      "refs": {
+        "SsmTargetValueList$member": null
+      }
+    },
+    "SsmTargetValueList": {
+      "base": "<p>The values matched by a single target key.</p>",
+      "refs": {
+        "SsmTarget$values": "<p>The values matched by this target key. Multiple values combine with a logical OR.</p>"
+      }
+    },
     "StartPlanExecutionRequest": {
       "base": null,
       "refs": {}
@@ -1496,6 +1601,7 @@
         "ServiceQuotaWarningSummary$requestId": "<p>The ID of the quota increase request that Region switch submitted, if it submitted one for this quota.</p>",
         "ServiceQuotaWarningSummary$caseId": "<p>The ID of the support case associated with the quota increase request, if Region switch submitted one for this quota.</p>",
         "ServiceQuotaWarningSummary$warningMessage": "<p>A message that describes the service quota warning.</p>",
+        "SsmDocumentConfig$externalId": "<p>The external ID (secret key) for the configuration.</p>",
         "StartPlanExecutionRequest$targetRegion": "<p>The Amazon Web Services Region to target with this execution. This is the Region that traffic will be shifted to or from, depending on the action.</p>",
         "StartPlanExecutionRequest$latestVersion": "<p>A boolean value indicating whether to use the latest version of the plan. If set to false, you must specify a specific version.</p>",
         "StartPlanExecutionResponse$planVersion": "<p>The version of the plan, a unique number generated by Region switch.</p>",

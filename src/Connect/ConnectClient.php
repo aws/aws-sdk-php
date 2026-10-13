@@ -543,6 +543,24 @@ use Aws\AwsClient;
  *     Tags?: array<string, string>,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result createContactFlowAlias(array $args = [])
+ * @phpstan-method \Aws\Result createContactFlowAlias(array{
+ *     InstanceId?: string,
+ *     Description?: string,
+ *     ContactFlowId?: string,
+ *     ContactFlowVersion?: int,
+ *     AliasName?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createContactFlowAliasAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createContactFlowAliasAsync(array{
+ *     InstanceId?: string,
+ *     Description?: string,
+ *     ContactFlowId?: string,
+ *     ContactFlowVersion?: int,
+ *     AliasName?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result createContactFlowModule(array $args = [])
  * @phpstan-method \Aws\Result createContactFlowModule(array{
  *     InstanceId?: string,
@@ -1599,6 +1617,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result deleteContactFlow(array{InstanceId?: string, ContactFlowId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteContactFlowAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteContactFlowAsync(array{InstanceId?: string, ContactFlowId?: string, ...} $args = [])
+ * @method \Aws\Result deleteContactFlowAlias(array $args = [])
+ * @phpstan-method \Aws\Result deleteContactFlowAlias(array{InstanceId?: string, ContactFlowId?: string, AliasId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteContactFlowAliasAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteContactFlowAliasAsync(array{InstanceId?: string, ContactFlowId?: string, AliasId?: string, ...} $args = [])
  * @method \Aws\Result deleteContactFlowModule(array $args = [])
  * @phpstan-method \Aws\Result deleteContactFlowModule(array{InstanceId?: string, ContactFlowModuleId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteContactFlowModuleAsync(array $args = [])
@@ -1777,6 +1799,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result describeContactFlow(array{InstanceId?: string, ContactFlowId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeContactFlowAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise describeContactFlowAsync(array{InstanceId?: string, ContactFlowId?: string, ...} $args = [])
+ * @method \Aws\Result describeContactFlowAlias(array $args = [])
+ * @phpstan-method \Aws\Result describeContactFlowAlias(array{InstanceId?: string, ContactFlowId?: string, AliasId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeContactFlowAliasAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeContactFlowAliasAsync(array{InstanceId?: string, ContactFlowId?: string, AliasId?: string, ...} $args = [])
  * @method \Aws\Result describeContactFlowModule(array $args = [])
  * @phpstan-method \Aws\Result describeContactFlowModule(array{InstanceId?: string, ContactFlowModuleId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeContactFlowModuleAsync(array $args = [])
@@ -2419,6 +2445,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listContactEvaluations(array{InstanceId?: string, ContactId?: string, NextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listContactEvaluationsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listContactEvaluationsAsync(array{InstanceId?: string, ContactId?: string, NextToken?: string, ...} $args = [])
+ * @method \Aws\Result listContactFlowAliases(array $args = [])
+ * @phpstan-method \Aws\Result listContactFlowAliases(array{InstanceId?: string, ContactFlowId?: string, NextToken?: string, MaxResults?: int, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listContactFlowAliasesAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listContactFlowAliasesAsync(array{InstanceId?: string, ContactFlowId?: string, NextToken?: string, MaxResults?: int, ...} $args = [])
  * @method \Aws\Result listContactFlowModuleAliases(array $args = [])
  * @phpstan-method \Aws\Result listContactFlowModuleAliases(array{InstanceId?: string, ContactFlowModuleId?: string, NextToken?: string, MaxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listContactFlowModuleAliasesAsync(array $args = [])
@@ -5073,6 +5103,26 @@ use Aws\AwsClient;
  *     Answers?: array<string, array{Value?: array, ...}>,
  *     Notes?: array<string, array{Value?: string, ...}>,
  *     UpdatedBy?: array{ConnectUserArn?: string, ...},
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result updateContactFlowAlias(array $args = [])
+ * @phpstan-method \Aws\Result updateContactFlowAlias(array{
+ *     InstanceId?: string,
+ *     ContactFlowId?: string,
+ *     AliasId?: string,
+ *     Name?: string,
+ *     Description?: string,
+ *     ContactFlowVersion?: int,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateContactFlowAliasAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateContactFlowAliasAsync(array{
+ *     InstanceId?: string,
+ *     ContactFlowId?: string,
+ *     AliasId?: string,
+ *     Name?: string,
+ *     Description?: string,
+ *     ContactFlowVersion?: int,
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateContactFlowContent(array $args = [])

@@ -31,6 +31,7 @@ use Aws\AwsClient;
  *             ...,
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
+ *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
  *         ...,
  *     },
  *     LFTags?: list<array{CatalogId?: string, TagKey?: string, TagValues?: list<string>, ...}>,
@@ -62,6 +63,7 @@ use Aws\AwsClient;
  *             ...,
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
+ *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
  *         ...,
  *     },
  *     LFTags?: list<array{CatalogId?: string, TagKey?: string, TagValues?: list<string>, ...}>,
@@ -71,6 +73,74 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result assumeDecoratedRoleWithSAML(array{SAMLAssertion?: string, RoleArn?: string, PrincipalArn?: string, DurationSeconds?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise assumeDecoratedRoleWithSAMLAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise assumeDecoratedRoleWithSAMLAsync(array{SAMLAssertion?: string, RoleArn?: string, PrincipalArn?: string, DurationSeconds?: int, ...} $args = [])
+ * @method \Aws\Result attachRLSPolicy(array $args = [])
+ * @phpstan-method \Aws\Result attachRLSPolicy(array{
+ *     Name?: string,
+ *     Resource?: array{
+ *         Catalog?: array{Id?: string, ...},
+ *         Database?: array{CatalogId?: string, Name?: string, ...},
+ *         Table?: array{CatalogId?: string, DatabaseName?: string, Name?: string, TableWildcard?: array, ...},
+ *         TableWithColumns?: array{
+ *             CatalogId?: string,
+ *             DatabaseName?: string,
+ *             Name?: string,
+ *             ColumnNames?: list<string>,
+ *             ColumnWildcard?: array,
+ *             ...,
+ *         },
+ *         DataLocation?: array{CatalogId?: string, ResourceArn?: string, ...},
+ *         DataCellsFilter?: array{TableCatalogId?: string, DatabaseName?: string, TableName?: string, Name?: string, ...},
+ *         LFTag?: array{CatalogId?: string, TagKey?: string, TagValues?: list<string>, ...},
+ *         LFTagPolicy?: array{
+ *             CatalogId?: string,
+ *             ResourceType?: 'DATABASE'|'TABLE',
+ *             Expression?: list<array>,
+ *             ExpressionName?: string,
+ *             ...,
+ *         },
+ *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
+ *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
+ *         ...,
+ *     },
+ *     Principal?: array{DataLakePrincipalIdentifier?: string, ...},
+ *     Condition?: array{Expression?: string, ...},
+ *     SetDefault?: bool,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise attachRLSPolicyAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise attachRLSPolicyAsync(array{
+ *     Name?: string,
+ *     Resource?: array{
+ *         Catalog?: array{Id?: string, ...},
+ *         Database?: array{CatalogId?: string, Name?: string, ...},
+ *         Table?: array{CatalogId?: string, DatabaseName?: string, Name?: string, TableWildcard?: array, ...},
+ *         TableWithColumns?: array{
+ *             CatalogId?: string,
+ *             DatabaseName?: string,
+ *             Name?: string,
+ *             ColumnNames?: list<string>,
+ *             ColumnWildcard?: array,
+ *             ...,
+ *         },
+ *         DataLocation?: array{CatalogId?: string, ResourceArn?: string, ...},
+ *         DataCellsFilter?: array{TableCatalogId?: string, DatabaseName?: string, TableName?: string, Name?: string, ...},
+ *         LFTag?: array{CatalogId?: string, TagKey?: string, TagValues?: list<string>, ...},
+ *         LFTagPolicy?: array{
+ *             CatalogId?: string,
+ *             ResourceType?: 'DATABASE'|'TABLE',
+ *             Expression?: list<array>,
+ *             ExpressionName?: string,
+ *             ...,
+ *         },
+ *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
+ *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
+ *         ...,
+ *     },
+ *     Principal?: array{DataLakePrincipalIdentifier?: string, ...},
+ *     Condition?: array{Expression?: string, ...},
+ *     SetDefault?: bool,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result batchGrantPermissions(array $args = [])
  * @phpstan-method \Aws\Result batchGrantPermissions(array{
  *     CatalogId?: string,
@@ -229,6 +299,7 @@ use Aws\AwsClient;
  *             ...,
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
+ *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
  *         ...,
  *     },
  *     Condition?: array{Expression?: string, ...},
@@ -260,9 +331,24 @@ use Aws\AwsClient;
  *             ...,
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
+ *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
  *         ...,
  *     },
  *     Condition?: array{Expression?: string, ...},
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result createRLSPolicy(array $args = [])
+ * @phpstan-method \Aws\Result createRLSPolicy(array{
+ *     Name?: string,
+ *     AttachmentColumns?: list<array{Name?: string, Type?: string, ...}>,
+ *     FilterExpression?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createRLSPolicyAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createRLSPolicyAsync(array{
+ *     Name?: string,
+ *     AttachmentColumns?: list<array{Name?: string, Type?: string, ...}>,
+ *     FilterExpression?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result deleteDataCellsFilter(array $args = [])
@@ -307,6 +393,7 @@ use Aws\AwsClient;
  *             ...,
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
+ *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
  *         ...,
  *     },
  *     Condition?: array{Expression?: string, ...},
@@ -338,6 +425,7 @@ use Aws\AwsClient;
  *             ...,
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
+ *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
  *         ...,
  *     },
  *     Condition?: array{Expression?: string, ...},
@@ -361,6 +449,10 @@ use Aws\AwsClient;
  *     Objects?: list<array{Uri?: string, ETag?: string, ...}>,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result deleteRLSPolicy(array $args = [])
+ * @phpstan-method \Aws\Result deleteRLSPolicy(array{Name?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteRLSPolicyAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteRLSPolicyAsync(array{Name?: string, ...} $args = [])
  * @method \Aws\Result deregisterResource(array $args = [])
  * @phpstan-method \Aws\Result deregisterResource(array{ResourceArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deregisterResourceAsync(array $args = [])
@@ -377,6 +469,74 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result describeTransaction(array{TransactionId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeTransactionAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise describeTransactionAsync(array{TransactionId?: string, ...} $args = [])
+ * @method \Aws\Result detachRLSPolicy(array $args = [])
+ * @phpstan-method \Aws\Result detachRLSPolicy(array{
+ *     Name?: string,
+ *     Resource?: array{
+ *         Catalog?: array{Id?: string, ...},
+ *         Database?: array{CatalogId?: string, Name?: string, ...},
+ *         Table?: array{CatalogId?: string, DatabaseName?: string, Name?: string, TableWildcard?: array, ...},
+ *         TableWithColumns?: array{
+ *             CatalogId?: string,
+ *             DatabaseName?: string,
+ *             Name?: string,
+ *             ColumnNames?: list<string>,
+ *             ColumnWildcard?: array,
+ *             ...,
+ *         },
+ *         DataLocation?: array{CatalogId?: string, ResourceArn?: string, ...},
+ *         DataCellsFilter?: array{TableCatalogId?: string, DatabaseName?: string, TableName?: string, Name?: string, ...},
+ *         LFTag?: array{CatalogId?: string, TagKey?: string, TagValues?: list<string>, ...},
+ *         LFTagPolicy?: array{
+ *             CatalogId?: string,
+ *             ResourceType?: 'DATABASE'|'TABLE',
+ *             Expression?: list<array>,
+ *             ExpressionName?: string,
+ *             ...,
+ *         },
+ *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
+ *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
+ *         ...,
+ *     },
+ *     Principal?: array{DataLakePrincipalIdentifier?: string, ...},
+ *     Condition?: array{Expression?: string, ...},
+ *     RemoveDefault?: bool,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise detachRLSPolicyAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise detachRLSPolicyAsync(array{
+ *     Name?: string,
+ *     Resource?: array{
+ *         Catalog?: array{Id?: string, ...},
+ *         Database?: array{CatalogId?: string, Name?: string, ...},
+ *         Table?: array{CatalogId?: string, DatabaseName?: string, Name?: string, TableWildcard?: array, ...},
+ *         TableWithColumns?: array{
+ *             CatalogId?: string,
+ *             DatabaseName?: string,
+ *             Name?: string,
+ *             ColumnNames?: list<string>,
+ *             ColumnWildcard?: array,
+ *             ...,
+ *         },
+ *         DataLocation?: array{CatalogId?: string, ResourceArn?: string, ...},
+ *         DataCellsFilter?: array{TableCatalogId?: string, DatabaseName?: string, TableName?: string, Name?: string, ...},
+ *         LFTag?: array{CatalogId?: string, TagKey?: string, TagValues?: list<string>, ...},
+ *         LFTagPolicy?: array{
+ *             CatalogId?: string,
+ *             ResourceType?: 'DATABASE'|'TABLE',
+ *             Expression?: list<array>,
+ *             ExpressionName?: string,
+ *             ...,
+ *         },
+ *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
+ *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
+ *         ...,
+ *     },
+ *     Principal?: array{DataLakePrincipalIdentifier?: string, ...},
+ *     Condition?: array{Expression?: string, ...},
+ *     RemoveDefault?: bool,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result extendTransaction(array $args = [])
  * @phpstan-method \Aws\Result extendTransaction(array{TransactionId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise extendTransactionAsync(array $args = [])
@@ -413,6 +573,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getQueryStatistics(array{QueryId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getQueryStatisticsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getQueryStatisticsAsync(array{QueryId?: string, ...} $args = [])
+ * @method \Aws\Result getRLSPolicy(array $args = [])
+ * @phpstan-method \Aws\Result getRLSPolicy(array{Name?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getRLSPolicyAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getRLSPolicyAsync(array{Name?: string, ...} $args = [])
  * @method \Aws\Result getResourceLFTags(array $args = [])
  * @phpstan-method \Aws\Result getResourceLFTags(array{
  *     CatalogId?: string,
@@ -439,6 +603,7 @@ use Aws\AwsClient;
  *             ...,
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
+ *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
  *         ...,
  *     },
  *     ShowAssignedLFTags?: bool,
@@ -470,6 +635,7 @@ use Aws\AwsClient;
  *             ...,
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
+ *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
  *         ...,
  *     },
  *     ShowAssignedLFTags?: bool,
@@ -606,6 +772,7 @@ use Aws\AwsClient;
  *             ...,
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
+ *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
  *         ...,
  *     },
  *     Permissions?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
@@ -640,6 +807,7 @@ use Aws\AwsClient;
  *             ...,
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
+ *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
  *         ...,
  *     },
  *     Permissions?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
@@ -695,6 +863,7 @@ use Aws\AwsClient;
  *             ...,
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
+ *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
  *         ...,
  *     },
  *     MaxResults?: int,
@@ -727,6 +896,7 @@ use Aws\AwsClient;
  *             ...,
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
+ *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
  *         ...,
  *     },
  *     MaxResults?: int,
@@ -761,6 +931,7 @@ use Aws\AwsClient;
  *             ...,
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
+ *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
  *         ...,
  *     },
  *     NextToken?: string,
@@ -796,11 +967,84 @@ use Aws\AwsClient;
  *             ...,
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
+ *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
  *         ...,
  *     },
  *     NextToken?: string,
  *     MaxResults?: int,
  *     IncludeRelated?: string,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result listRLSPolicies(array $args = [])
+ * @phpstan-method \Aws\Result listRLSPolicies(array{MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listRLSPoliciesAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listRLSPoliciesAsync(array{MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @method \Aws\Result listRLSPolicyAttachments(array $args = [])
+ * @phpstan-method \Aws\Result listRLSPolicyAttachments(array{
+ *     Resource?: array{
+ *         Catalog?: array{Id?: string, ...},
+ *         Database?: array{CatalogId?: string, Name?: string, ...},
+ *         Table?: array{CatalogId?: string, DatabaseName?: string, Name?: string, TableWildcard?: array, ...},
+ *         TableWithColumns?: array{
+ *             CatalogId?: string,
+ *             DatabaseName?: string,
+ *             Name?: string,
+ *             ColumnNames?: list<string>,
+ *             ColumnWildcard?: array,
+ *             ...,
+ *         },
+ *         DataLocation?: array{CatalogId?: string, ResourceArn?: string, ...},
+ *         DataCellsFilter?: array{TableCatalogId?: string, DatabaseName?: string, TableName?: string, Name?: string, ...},
+ *         LFTag?: array{CatalogId?: string, TagKey?: string, TagValues?: list<string>, ...},
+ *         LFTagPolicy?: array{
+ *             CatalogId?: string,
+ *             ResourceType?: 'DATABASE'|'TABLE',
+ *             Expression?: list<array>,
+ *             ExpressionName?: string,
+ *             ...,
+ *         },
+ *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
+ *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
+ *         ...,
+ *     },
+ *     Principal?: array{DataLakePrincipalIdentifier?: string, ...},
+ *     PolicyName?: string,
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listRLSPolicyAttachmentsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listRLSPolicyAttachmentsAsync(array{
+ *     Resource?: array{
+ *         Catalog?: array{Id?: string, ...},
+ *         Database?: array{CatalogId?: string, Name?: string, ...},
+ *         Table?: array{CatalogId?: string, DatabaseName?: string, Name?: string, TableWildcard?: array, ...},
+ *         TableWithColumns?: array{
+ *             CatalogId?: string,
+ *             DatabaseName?: string,
+ *             Name?: string,
+ *             ColumnNames?: list<string>,
+ *             ColumnWildcard?: array,
+ *             ...,
+ *         },
+ *         DataLocation?: array{CatalogId?: string, ResourceArn?: string, ...},
+ *         DataCellsFilter?: array{TableCatalogId?: string, DatabaseName?: string, TableName?: string, Name?: string, ...},
+ *         LFTag?: array{CatalogId?: string, TagKey?: string, TagValues?: list<string>, ...},
+ *         LFTagPolicy?: array{
+ *             CatalogId?: string,
+ *             ResourceType?: 'DATABASE'|'TABLE',
+ *             Expression?: list<array>,
+ *             ExpressionName?: string,
+ *             ...,
+ *         },
+ *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
+ *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
+ *         ...,
+ *     },
+ *     Principal?: array{DataLakePrincipalIdentifier?: string, ...},
+ *     PolicyName?: string,
+ *     MaxResults?: int,
+ *     NextToken?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result listResources(array $args = [])
@@ -947,6 +1191,7 @@ use Aws\AwsClient;
  *             ...,
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
+ *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
  *         ...,
  *     },
  *     LFTags?: list<array{CatalogId?: string, TagKey?: string, TagValues?: list<string>, ...}>,
@@ -978,6 +1223,7 @@ use Aws\AwsClient;
  *             ...,
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
+ *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
  *         ...,
  *     },
  *     LFTags?: list<array{CatalogId?: string, TagKey?: string, TagValues?: list<string>, ...}>,
@@ -1010,6 +1256,7 @@ use Aws\AwsClient;
  *             ...,
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
+ *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
  *         ...,
  *     },
  *     Permissions?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
@@ -1044,6 +1291,7 @@ use Aws\AwsClient;
  *             ...,
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
+ *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
  *         ...,
  *     },
  *     Permissions?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
@@ -1193,6 +1441,10 @@ use Aws\AwsClient;
  *     ExternalFiltering?: array{Status?: 'DISABLED'|'ENABLED', AuthorizedTargets?: list<string>, ...},
  *     ...,
  * } $args = [])
+ * @method \Aws\Result updateRLSPolicy(array $args = [])
+ * @phpstan-method \Aws\Result updateRLSPolicy(array{Name?: string, FilterExpression?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateRLSPolicyAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateRLSPolicyAsync(array{Name?: string, FilterExpression?: string, ...} $args = [])
  * @method \Aws\Result updateResource(array $args = [])
  * @phpstan-method \Aws\Result updateResource(array{
  *     RoleArn?: string,

@@ -13307,7 +13307,8 @@
       "members":{
         "RefreshInterval":{"shape":"String128"},
         "SourceProperties":{"shape":"IntegrationSourcePropertiesMap"},
-        "ContinuousSync":{"shape":"ContinuousSync"}
+        "ContinuousSync":{"shape":"ContinuousSync"},
+        "TargetNamespace":{"shape":"TargetNamespace"}
       }
     },
     "IntegrationConflictOperationFault":{
@@ -18970,6 +18971,12 @@
         "hyper",
         "xml"
       ]
+    },
+    "TargetNamespace":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[a-z0-9]([a-z0-9_]*[a-z0-9])?"
     },
     "TargetProcessingProperties":{
       "type":"structure",

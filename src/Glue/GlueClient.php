@@ -607,7 +607,13 @@ use Aws\AwsClient;
  *     KmsKeyId?: string,
  *     AdditionalEncryptionContext?: array<string, string>,
  *     Tags?: list<array{key?: string, value?: string, ...}>,
- *     IntegrationConfig?: array{RefreshInterval?: string, SourceProperties?: array<string, string>, ContinuousSync?: bool, ...},
+ *     IntegrationConfig?: array{
+ *         RefreshInterval?: string,
+ *         SourceProperties?: array<string, string>,
+ *         ContinuousSync?: bool,
+ *         TargetNamespace?: string,
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createIntegrationAsync(array $args = [])
@@ -620,7 +626,13 @@ use Aws\AwsClient;
  *     KmsKeyId?: string,
  *     AdditionalEncryptionContext?: array<string, string>,
  *     Tags?: list<array{key?: string, value?: string, ...}>,
- *     IntegrationConfig?: array{RefreshInterval?: string, SourceProperties?: array<string, string>, ContinuousSync?: bool, ...},
+ *     IntegrationConfig?: array{
+ *         RefreshInterval?: string,
+ *         SourceProperties?: array<string, string>,
+ *         ContinuousSync?: bool,
+ *         TargetNamespace?: string,
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \Aws\Result createIntegrationResourceProperty(array $args = [])
@@ -3028,7 +3040,13 @@ use Aws\AwsClient;
  *     IntegrationIdentifier?: string,
  *     Description?: string,
  *     DataFilter?: string,
- *     IntegrationConfig?: array{RefreshInterval?: string, SourceProperties?: array<string, string>, ContinuousSync?: bool, ...},
+ *     IntegrationConfig?: array{
+ *         RefreshInterval?: string,
+ *         SourceProperties?: array<string, string>,
+ *         ContinuousSync?: bool,
+ *         TargetNamespace?: string,
+ *         ...,
+ *     },
  *     IntegrationName?: string,
  *     ...,
  * } $args = [])
@@ -3037,7 +3055,13 @@ use Aws\AwsClient;
  *     IntegrationIdentifier?: string,
  *     Description?: string,
  *     DataFilter?: string,
- *     IntegrationConfig?: array{RefreshInterval?: string, SourceProperties?: array<string, string>, ContinuousSync?: bool, ...},
+ *     IntegrationConfig?: array{
+ *         RefreshInterval?: string,
+ *         SourceProperties?: array<string, string>,
+ *         ContinuousSync?: bool,
+ *         TargetNamespace?: string,
+ *         ...,
+ *     },
  *     IntegrationName?: string,
  *     ...,
  * } $args = [])

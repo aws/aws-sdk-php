@@ -762,6 +762,70 @@
         "ListDependenciesResponse$dependencySummaries": "<p>The list of dependency summaries.</p>"
       }
     },
+    "DevOpsAgentConfidence": {
+      "base": null,
+      "refs": {
+        "DevOpsAgentInvestigation$confidence": "<p>The confidence level of the verdict. Valid values:</p> <ul> <li> <p>HIGH - The verdict is highly reliable.</p> </li> <li> <p>MEDIUM - The verdict has moderate reliability.</p> </li> <li> <p>LOW - The verdict has low reliability.</p> </li> </ul>"
+      }
+    },
+    "DevOpsAgentConfiguration": {
+      "base": "<p>The AWS DevOps Agent (DevOps Agent) integration configuration that you supply when creating or updating a service. Connecting a service to a DevOps Agent Agent Space lets DevOps Agent investigate the service's resilience test runs and attach its analysis to the results. Include this block with an Agent Space Amazon Resource Name (ARN) to connect or reconnect the service to an Agent Space. Include it without an Agent Space ARN to disconnect the service. Omit it to leave the existing linkage unchanged.</p>",
+      "refs": {
+        "CreateServiceRequest$devOpsAgentConfiguration": "<p>The optional DevOps Agent integration configuration to apply to the new service. If you omit this field, the new service has no DevOps Agent integration.</p>",
+        "UpdateServiceRequest$devOpsAgentConfiguration": "<p>The optional DevOps Agent integration configuration to set, replace, or disconnect for the service. If you omit this field, the existing DevOps Agent linkage stays unchanged.</p>"
+      }
+    },
+    "DevOpsAgentConfigurationView": {
+      "base": "<p>The current DevOps Agent integration state for a service. Read operations return this state.</p>",
+      "refs": {
+        "Service$devOpsAgentConfiguration": "<p>The current DevOps Agent integration state for the service.</p>"
+      }
+    },
+    "DevOpsAgentConnectionStatus": {
+      "base": null,
+      "refs": {
+        "DevOpsAgentConfigurationView$status": "<p>The connection status of the DevOps Agent integration for this service. Valid values:</p> <ul> <li> <p>CONNECTING - The service is being connected to the Agent Space.</p> </li> <li> <p>CONNECTED - The service is connected to the Agent Space.</p> </li> <li> <p>DISCONNECTED - The service is not connected to an Agent Space.</p> </li> <li> <p>FAILED - The connection attempt failed. See statusReason for details.</p> </li> </ul>",
+        "ServiceSummary$devOpsAgentStatus": "<p>The DevOps Agent connection status for the service. Valid values:</p> <ul> <li> <p>CONNECTING - The service is being connected to the Agent Space.</p> </li> <li> <p>CONNECTED - The service is connected to the Agent Space.</p> </li> <li> <p>DISCONNECTED - The service is not connected to an Agent Space.</p> </li> <li> <p>FAILED - The connection attempt failed.</p> </li> </ul>"
+      }
+    },
+    "DevOpsAgentInvestigation": {
+      "base": "<p>The result when DevOps Agent investigates a resilience test run. The verdict is advisory and builds on the test run's own result, which remains authoritative.</p>",
+      "refs": {
+        "TestRun$devOpsAgentInvestigation": "<p>The DevOps Agent investigation result for the test run, present when the integration is enabled for the service.</p>"
+      }
+    },
+    "DevOpsAgentInvestigationStatus": {
+      "base": null,
+      "refs": {
+        "DevOpsAgentInvestigation$status": "<p>The lifecycle status of the investigation. Valid values:</p> <ul> <li> <p>PENDING - The investigation has been created but has not started.</p> </li> <li> <p>IN_PROGRESS - The investigation is running.</p> </li> <li> <p>COMPLETED - The investigation finished successfully.</p> </li> <li> <p>FAILED - The investigation failed to complete.</p> </li> <li> <p>TIMED_OUT - The investigation did not complete within the allotted time.</p> </li> <li> <p>CANCELED - The investigation was canceled.</p> </li> </ul>"
+      }
+    },
+    "DevOpsAgentRegion": {
+      "base": null,
+      "refs": {
+        "DevOpsAgentConfigurationView$region": "<p>The AWS Region of the linked DevOps Agent Agent Space.</p>"
+      }
+    },
+    "DevOpsAgentSpaceArn": {
+      "base": null,
+      "refs": {
+        "DevOpsAgentConfiguration$agentSpaceArn": "<p>The ARN of the DevOps Agent Agent Space to link to this service.</p>",
+        "DevOpsAgentConfigurationView$agentSpaceArn": "<p>The ARN of the linked DevOps Agent Agent Space.</p>",
+        "ServiceSummary$devOpsAgentSpaceArn": "<p>The ARN of the DevOps Agent Agent Space linked to the service, when the service is linked to one.</p>"
+      }
+    },
+    "DevOpsAgentSpaceId": {
+      "base": null,
+      "refs": {
+        "DevOpsAgentConfigurationView$agentSpaceId": "<p>The identifier of the linked DevOps Agent Agent Space.</p>"
+      }
+    },
+    "DevOpsAgentVerdict": {
+      "base": null,
+      "refs": {
+        "DevOpsAgentInvestigation$verdict": "<p>The investigation verdict. Valid values:</p> <ul> <li> <p>PASS - The resilience test run passed.</p> </li> <li> <p>FAIL - The resilience test run failed.</p> </li> <li> <p>INCONCLUSIVE - The investigation could not determine a clear outcome.</p> </li> </ul>"
+      }
+    },
     "DisasterRecoverySource": {
       "base": "<p>Contains the effective disaster recovery approach value for a service.</p>",
       "refs": {
@@ -2370,6 +2434,10 @@
         "DependencySummary$location": "<p>The location of the dependency.</p>",
         "DependencySummary$provider": "<p>The provider of the dependency.</p>",
         "DependencySummary$comment": "<p>A user-provided comment about the dependency.</p>",
+        "DevOpsAgentConfigurationView$operatorAppUrl": "<p>The URL of the DevOps Agent Operator App for the linked Agent Space. This URL is present when the connection status is CONNECTED.</p>",
+        "DevOpsAgentConfigurationView$statusReason": "<p>A human-readable explanation of the current connection status. This field explains the status when the connection fails.</p>",
+        "DevOpsAgentInvestigation$deepLink": "<p>A deep link to the interactive DevOps Agent investigation session.</p>",
+        "DevOpsAgentInvestigation$summary": "<p>The DevOps Agent analysis summary for the investigation.</p>",
         "DisasterRecoverySource$value": "<p>The disaster recovery approach value.</p>",
         "EdgePropertySummary$label": "<p>Human-readable relationship description. Only present for LLM-inferred edges.</p>",
         "EventActor$principalId": "<p>The principal ID of the actor.</p>",
@@ -2379,7 +2447,9 @@
         "FailedReportOutput$errorMessage": "<p>The error message describing why the report generation failed.</p>",
         "Finding$name": "<p>The name of the finding.</p>",
         "Finding$reasoning": "<p>The reasoning behind the finding.</p>",
+        "Finding$investigationDeepLink": "<p>A deep link to an interactive DevOps Agent investigation seeded with this finding. This value is null until DevOps Agent creates an investigation.</p>",
         "FindingSummary$name": "<p>The name of the finding.</p>",
+        "FindingSummary$investigationDeepLink": "<p>A deep link to an interactive DevOps Agent investigation seeded with this finding. This value is null until DevOps Agent creates an investigation.</p>",
         "InputSource$identifier": "<p>The identifier of the input source.</p>",
         "InternalServerException$message": null,
         "LoggingConfiguration$s3BucketName": "<p>The name of the S3 bucket for log delivery.</p>",
@@ -2391,6 +2461,10 @@
         "PolicyEventDetails$description": "<p>A description of the event.</p>",
         "Resource$identifier": "<p>The identifier of the resource.</p>",
         "Resource$resourceType": "<p>The type of the resource.</p>",
+        "Resource$availabilityZoneId": "<p>The Availability Zone ID of the Availability Zone that hosts the resource, such as use1-az1. The Availability Zone ID is consistent across Amazon Web Services (AWS) accounts, unlike the Availability Zone name.</p>",
+        "Resource$availabilityZoneName": "<p>The name of the Availability Zone that hosts the resource, such as us-west-2a.</p>",
+        "Resource$containmentParentId": "<p>The identifier of the single parent resource that contains this resource, used to represent containment relationships in the resource topology. A resource has at most one containment parent.</p>",
+        "Resource$logicalResourceGroupId": "<p>The identifier of the logical resource group that this resource belongs to. Resources that share this identifier are managed as a single unit.</p>",
         "ResourceDiscoveryStatus$errorMessage": "<p>A message describing the error if resource discovery failed.</p>",
         "ResourceList$member": null,
         "ResourceNotFoundException$message": null,
@@ -3058,6 +3132,7 @@
         "AssessmentSummary$endedAt": "<p>The timestamp when the assessment ended.</p>",
         "DependencyDiscoveryConfig$updatedAt": "<p>The timestamp when dependency discovery was last updated.</p>",
         "DependencySummary$lastDetectedTime": "<p>The timestamp when the dependency was last detected.</p>",
+        "DevOpsAgentConfigurationView$connectedAt": "<p>The timestamp when the service successfully connected to the DevOps Agent Agent Space.</p>",
         "Finding$updatedAt": "<p>The timestamp when the finding was last updated.</p>",
         "FindingSummary$updatedAt": "<p>The timestamp when the finding was last updated.</p>",
         "GetDependencyInsightsResponse$createdAt": "<p>The timestamp when the dependency insights were generated.</p>",

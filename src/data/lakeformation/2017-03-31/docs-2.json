@@ -4,6 +4,7 @@
   "operations": {
     "AddLFTagsToResource": "<p>Attaches one or more LF-tags to an existing resource.</p>",
     "AssumeDecoratedRoleWithSAML": "<p>Allows a caller to assume an IAM role decorated as the SAML user specified in the SAML assertion included in the request. This decoration allows Lake Formation to enforce access policies against the SAML users and groups. This API operation requires SAML federation setup in the caller’s account as it can only be called with valid SAML assertions. Lake Formation does not scope down the permission of the assumed role. All permissions attached to the role via the SAML federation setup will be included in the role session. </p> <p> This decorated role is expected to access data in Amazon S3 by getting temporary access from Lake Formation which is authorized via the virtual API <code>GetDataAccess</code>. Therefore, all SAML roles that can be assumed via <code>AssumeDecoratedRoleWithSAML</code> must at a minimum include <code>lakeformation:GetDataAccess</code> in their role policies. A typical IAM policy attached to such a role would include the following actions: </p> <ul> <li> <p>glue:*Database*</p> </li> <li> <p>glue:*Table*</p> </li> <li> <p>glue:*Partition*</p> </li> <li> <p>glue:*UserDefinedFunction*</p> </li> <li> <p>lakeformation:GetDataAccess</p> </li> </ul>",
+    "AttachRLSPolicy": "<p>Attaches a row-level security policy to a resource for a principal. When the principal queries the resource, Lake Formation applies the policy's filter expression so that only the permitted rows are returned.</p>",
     "BatchGrantPermissions": "<p>Batch operation to grant permissions to the principal.</p>",
     "BatchRevokePermissions": "<p>Batch operation to revoke permissions from the principal.</p>",
     "CancelTransaction": "<p>Attempts to cancel the specified transaction. Returns an exception if the transaction was previously committed.</p>",
@@ -13,16 +14,19 @@
     "CreateLFTagExpression": "<p>Creates a new LF-Tag expression with the provided name, description, catalog ID, and expression body. This call fails if a LF-Tag expression with the same name already exists in the caller’s account or if the underlying LF-Tags don't exist. To call this API operation, caller needs the following Lake Formation permissions:</p> <p> <code>CREATE_LF_TAG_EXPRESSION</code> on the root catalog resource.</p> <p> <code>GRANT_WITH_LF_TAG_EXPRESSION</code> on all underlying LF-Tag key:value pairs included in the expression. </p>",
     "CreateLakeFormationIdentityCenterConfiguration": "<p>Creates an IAM Identity Center connection with Lake Formation to allow IAM Identity Center users and groups to access Data Catalog resources.</p>",
     "CreateLakeFormationOptIn": "<p>Enforce Lake Formation permissions for the given databases, tables, and principals.</p>",
+    "CreateRLSPolicy": "<p>Creates a row-level security (RLS) policy. A row-level security policy defines a filter expression that Lake Formation evaluates to determine which rows of a table a principal is allowed to see. The policy is created independently of any resource, and is later associated with a resource and principal using <code>AttachRLSPolicy</code>.</p>",
     "DeleteDataCellsFilter": "<p>Deletes a data cell filter.</p>",
     "DeleteLFTag": "<p> Deletes an LF-tag by its key name. The operation fails if the specified tag key doesn't exist. When you delete an LF-Tag: </p> <ul> <li> <p>The associated LF-Tag policy becomes invalid.</p> </li> <li> <p> Resources that had this tag assigned will no longer have the tag policy applied to them.</p> </li> </ul>",
     "DeleteLFTagExpression": "<p>Deletes the LF-Tag expression. The caller must be a data lake admin or have <code>DROP</code> permissions on the LF-Tag expression. Deleting a LF-Tag expression will also delete all <code>LFTagPolicy</code> permissions referencing the LF-Tag expression.</p>",
     "DeleteLakeFormationIdentityCenterConfiguration": "<p>Deletes an IAM Identity Center connection with Lake Formation.</p>",
     "DeleteLakeFormationOptIn": "<p>Remove the Lake Formation permissions enforcement of the given databases, tables, and principals.</p>",
     "DeleteObjectsOnCancel": "<p>For a specific governed table, provides a list of Amazon S3 objects that will be written during the current transaction and that can be automatically deleted if the transaction is canceled. Without this call, no Amazon S3 objects are automatically deleted when a transaction cancels. </p> <p> The Glue ETL library function <code>write_dynamic_frame.from_catalog()</code> includes an option to automatically call <code>DeleteObjectsOnCancel</code> before writes. For more information, see <a href=\"https://docs.aws.amazon.com/lake-formation/latest/dg/transactions-data-operations.html#rolling-back-writes\">Rolling Back Amazon S3 Writes</a>. </p>",
+    "DeleteRLSPolicy": "<p>Deletes a row-level security policy. Any active attachments of the policy are automatically removed as part of the deletion, so you do not need to detach the policy first.</p>",
     "DeregisterResource": "<p>Deregisters the resource as managed by the Data Catalog.</p> <p>When you deregister a path, Lake Formation removes the path from the inline policy attached to your service-linked role.</p>",
     "DescribeLakeFormationIdentityCenterConfiguration": "<p>Retrieves the instance ARN and application ARN for the connection.</p>",
     "DescribeResource": "<p>Retrieves the current data access role for the given resource registered in Lake Formation.</p>",
     "DescribeTransaction": "<p>Returns the details of a single transaction.</p>",
+    "DetachRLSPolicy": "<p>Detaches a row-level security policy from a resource for a principal. After the policy is detached, its filter expression is no longer applied to the principal's queries on that resource.</p>",
     "ExtendTransaction": "<p>Indicates to the service that the specified transaction is still active and should not be treated as idle and aborted.</p> <p>Write transactions that remain idle for a long period are automatically aborted unless explicitly extended.</p>",
     "GetDataCellsFilter": "<p>Returns a data cells filter.</p>",
     "GetDataLakePrincipal": "<p>Returns the identity of the invoking principal.</p>",
@@ -32,6 +36,7 @@
     "GetLFTagExpression": "<p>Returns the details about the LF-Tag expression. The caller must be a data lake admin or must have <code>DESCRIBE</code> permission on the LF-Tag expression resource. </p>",
     "GetQueryState": "<p>Returns the state of a query previously submitted. Clients are expected to poll <code>GetQueryState</code> to monitor the current state of the planning before retrieving the work units. A query state is only visible to the principal that made the initial call to <code>StartQueryPlanning</code>.</p>",
     "GetQueryStatistics": "<p>Retrieves statistics on the planning and execution of a query.</p>",
+    "GetRLSPolicy": "<p>Returns the definition of a row-level security policy, including its attachment columns and filter expression.</p>",
     "GetResourceLFTags": "<p>Returns the LF-tags applied to a resource.</p>",
     "GetTableObjects": "<p>Returns the set of Amazon S3 objects that make up the specified governed table. A transaction ID or timestamp can be specified for time-travel queries.</p>",
     "GetTemporaryDataLocationCredentials": "<p>Allows a user or application in a secure environment to access data in a specific Amazon S3 location registered with Lake Formation by providing temporary scoped credentials that are limited to the requested data location and the caller's authorized access level.</p> <p> <code>GetDataAccess</code> is logged in CloudTrail whenever a principal requests temporary data location credentials to access data in a data lake location that is registered with Lake Formation.</p> <p> The API operation returns an error in the following scenarios:</p> <ul> <li> <p>The data location is not registered with Lake Formation. </p> </li> <li> <p>No Glue table is associated with the data location.</p> </li> <li> <p>The caller doesn't have required permissions on the associated table. The caller must have <code>SELECT</code> or <code>SUPER</code> permissions on the associated table, and credential vending for full table access must be enabled in the data lake settings. </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/lake-formation/latest/dg/full-table-credential-vending.html\">Application integration for full table access</a>.</p> </li> <li> <p>The data location is in a different Amazon Web Services Region. Lake Formation doesn't support cross-Region access when vending credentials for a data location. Lake Formation only supports Amazon S3 paths registered within the same Region as the API call. </p> </li> </ul>",
@@ -45,6 +50,8 @@
     "ListLFTags": "<p>Lists LF-tags that the requester has permission to view. </p>",
     "ListLakeFormationOptIns": "<p>Retrieve the current list of resources and principals that are opt in to enforce Lake Formation permissions.</p>",
     "ListPermissions": "<p>Returns a list of the principal permissions on the resource, filtered by the permissions of the caller. For example, if you are granted an ALTER permission, you are able to see only the principal permissions for ALTER.</p> <p>This operation returns only those permissions that have been explicitly granted. If both <code>Principal</code> and <code>Resource</code> parameters are provided, the response returns effective permissions rather than the explicitly granted permissions.</p> <p>For information about permissions, see <a href=\"https://docs.aws.amazon.com/lake-formation/latest/dg/security-data-access.html\">Security and Access Control to Metadata and Data</a>.</p>",
+    "ListRLSPolicies": "<p>Lists the row-level security policies in the Data Catalog.</p>",
+    "ListRLSPolicyAttachments": "<p>Lists the row-level security policy attachments in the Data Catalog. You can filter the results by resource, principal, or policy name.</p>",
     "ListResources": "<p>Lists the resources registered to be managed by the Data Catalog.</p>",
     "ListTableStorageOptimizers": "<p>Returns the configuration of all storage optimizers associated with a specified table.</p>",
     "ListTransactions": "<p>Returns metadata about transactions and their status. To prevent the response from growing indefinitely, only uncommitted transactions and those available for time-travel queries are returned.</p> <p>This operation can help you identify uncommitted transactions or to get information about transactions.</p>",
@@ -60,6 +67,7 @@
     "UpdateLFTag": "<p>Updates the list of possible values for the specified LF-tag key. If the LF-tag does not exist, the operation throws an EntityNotFoundException. The values in the delete key values will be deleted from list of possible values. If any value in the delete key values is attached to a resource, then API errors out with a 400 Exception - \"Update not allowed\". Untag the attribute before deleting the LF-tag key's value. </p>",
     "UpdateLFTagExpression": "<p>Updates the name of the LF-Tag expression to the new description and expression body provided. Updating a LF-Tag expression immediately changes the permission boundaries of all existing <code>LFTagPolicy</code> permission grants that reference the given LF-Tag expression.</p>",
     "UpdateLakeFormationIdentityCenterConfiguration": "<p>Updates the IAM Identity Center connection parameters.</p>",
+    "UpdateRLSPolicy": "<p>Updates the filter expression of an existing row-level security policy. The change applies to all attachments of the policy.</p>",
     "UpdateResource": "<p>Updates the data access role used for vending access to the given (registered) resource in Lake Formation. </p>",
     "UpdateTableObjects": "<p>Updates the manifest of Amazon S3 objects that make up the specified governed table.</p>",
     "UpdateTableStorageOptimizer": "<p>Updates the configuration of the storage optimizers for a table.</p>"
@@ -134,6 +142,14 @@
       "refs": {}
     },
     "AssumeDecoratedRoleWithSAMLResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "AttachRLSPolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "AttachRLSPolicyResponse": {
       "base": null,
       "refs": {}
     },
@@ -263,6 +279,9 @@
         "ListTransactionsRequest$CatalogId": "<p>The catalog for which to list transactions. Defaults to the account ID of the caller.</p>",
         "PutDataLakeSettingsRequest$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, and other control information to manage your Lake Formation environment. </p>",
         "QueryPlanningContext$CatalogId": "<p>The ID of the Data Catalog where the partition in question resides. If none is provided, the Amazon Web Services account ID is used by default.</p>",
+        "RLSPolicy$CatalogId": "<p>The identifier for the Data Catalog that contains the policy. By default, the account ID.</p>",
+        "RLSPolicyAttachment$CatalogId": "<p>The identifier for the Data Catalog that contains the attachment. By default, the account ID.</p>",
+        "RLSPolicyResource$CatalogId": "<p>The identifier for the Data Catalog that contains the policy. By default, the account ID.</p>",
         "RemoveLFTagsFromResourceRequest$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, and other control information to manage your Lake Formation environment. </p>",
         "RevokePermissionsRequest$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, and other control information to manage your Lake Formation environment. </p>",
         "SearchDatabasesByLFTagsRequest$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, and other control information to manage your Lake Formation environment. </p>",
@@ -283,6 +302,12 @@
         "Resource$Catalog": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, and other control information to manage your Lake Formation environment. </p>"
       }
     },
+    "Column": {
+      "base": "<p>A column in a table that a row-level security policy's filter expression can reference.</p>",
+      "refs": {
+        "ColumnList$member": null
+      }
+    },
     "ColumnLFTag": {
       "base": "<p>A structure containing the name of a column resource and the LF-tags attached to it.</p>",
       "refs": {
@@ -296,12 +321,25 @@
         "TaggedTable$LFTagsOnColumns": "<p>A list of LF-tags attached to columns in the table.</p>"
       }
     },
+    "ColumnList": {
+      "base": "<p>A list of <code>Column</code> structures.</p>",
+      "refs": {
+        "CreateRLSPolicyRequest$AttachmentColumns": "<p>The list of columns that the filter expression references. These columns define the shape of the data that the policy can be attached to.</p>",
+        "RLSPolicy$AttachmentColumns": "<p>The list of columns that the filter expression references.</p>"
+      }
+    },
     "ColumnNames": {
       "base": null,
       "refs": {
         "ColumnWildcard$ExcludedColumnNames": "<p>Excludes column names. Any column with this name will be excluded.</p>",
         "DataCellsFilter$ColumnNames": "<p>A list of column names and/or nested column attributes. When specifying nested attributes, use a qualified dot (.) delimited format such as \"address\".\"zip\". Nested attributes within this list may not exceed a depth of 5.</p>",
         "TableWithColumnsResource$ColumnNames": "<p>The list of column names for the table. At least one of <code>ColumnNames</code> or <code>ColumnWildcard</code> is required.</p>"
+      }
+    },
+    "ColumnTypeString": {
+      "base": null,
+      "refs": {
+        "Column$Type": "<p>The data type of the column.</p>"
       }
     },
     "ColumnWildcard": {
@@ -332,12 +370,15 @@
     "Condition": {
       "base": "<p>A Lake Formation condition, which applies to permissions and opt-ins that contain an expression.</p>",
       "refs": {
+        "AttachRLSPolicyRequest$Condition": "<p>A Lake Formation condition, which applies to the row-level security policy attachment and contains an expression.</p>",
         "BatchPermissionsRequestEntry$Condition": null,
         "CreateLakeFormationOptInRequest$Condition": null,
         "DeleteLakeFormationOptInRequest$Condition": null,
+        "DetachRLSPolicyRequest$Condition": "<p>A Lake Formation condition, which applies to the row-level security policy attachment and contains an expression.</p>",
         "GrantPermissionsRequest$Condition": null,
         "LakeFormationOptInsInfo$Condition": "<p>A Lake Formation condition, which applies to permissions and opt-ins that contain an expression.</p>",
         "PrincipalResourcePermissions$Condition": "<p>A Lake Formation condition, which applies to permissions and opt-ins that contain an expression.</p>",
+        "RLSPolicyAttachment$Condition": "<p>A Lake Formation condition, which applies to the row-level security policy attachment and contains an expression.</p>",
         "RevokePermissionsRequest$Condition": null
       }
     },
@@ -397,6 +438,14 @@
       "base": null,
       "refs": {}
     },
+    "CreateRLSPolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRLSPolicyResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CredentialTimeoutDurationSecondInteger": {
       "base": null,
       "refs": {
@@ -437,16 +486,20 @@
     "DataLakePrincipal": {
       "base": "<p>The Lake Formation principal. Supported principals are IAM users or IAM roles.</p>",
       "refs": {
+        "AttachRLSPolicyRequest$Principal": "<p>The principal to which the row-level security policy applies.</p>",
         "BatchPermissionsRequestEntry$Principal": "<p>The principal to be granted a permission.</p>",
         "CreateLakeFormationOptInRequest$Principal": null,
         "DataLakePrincipalList$member": null,
         "DeleteLakeFormationOptInRequest$Principal": null,
+        "DetachRLSPolicyRequest$Principal": "<p>The principal for which the row-level security policy is detached.</p>",
         "GrantPermissionsRequest$Principal": "<p>The principal to be granted the permissions on the resource. Supported principals are IAM users or IAM roles, and they are defined by their principal type and their ARN.</p> <p>Note that if you define a resource with a particular ARN, then later delete, and recreate a resource with that same ARN, the resource maintains the permissions already granted. </p>",
         "LakeFormationOptInsInfo$Principal": null,
         "ListLakeFormationOptInsRequest$Principal": null,
         "ListPermissionsRequest$Principal": "<p>Specifies a principal to filter the permissions returned.</p>",
+        "ListRLSPolicyAttachmentsRequest$Principal": "<p>If specified, returns only the attachments for the given principal.</p>",
         "PrincipalPermissions$Principal": "<p>The principal who is granted permissions.</p>",
         "PrincipalResourcePermissions$Principal": "<p>The Data Lake principal to be granted or revoked permissions.</p>",
+        "RLSPolicyAttachment$Principal": "<p>The principal to which the attached policy applies.</p>",
         "RevokePermissionsRequest$Principal": "<p>The principal to be revoked permissions on the resource.</p>"
       }
     },
@@ -559,6 +612,14 @@
       "base": null,
       "refs": {}
     },
+    "DeleteRLSPolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRLSPolicyResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DeregisterResourceRequest": {
       "base": null,
       "refs": {}
@@ -600,6 +661,14 @@
         "LFTagExpression$Description": "<p>A structure that contains information about the LF-Tag expression.</p>",
         "UpdateLFTagExpressionRequest$Description": "<p>The description with information about the saved LF-Tag expression.</p>"
       }
+    },
+    "DetachRLSPolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DetachRLSPolicyResponse": {
+      "base": null,
+      "refs": {}
     },
     "DetailsMap": {
       "base": "<p>A structure containing the additional details to be returned in the <code>AdditionalDetails</code> attribute of <code>PrincipalResourcePermissions</code>.</p> <p>If a catalog resource is shared through Resource Access Manager (RAM), then there will exist a corresponding RAM resource share ARN.</p>",
@@ -783,6 +852,14 @@
       }
     },
     "GetQueryStatisticsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRLSPolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRLSPolicyResponse": {
       "base": null,
       "refs": {}
     },
@@ -1081,6 +1158,22 @@
       "base": null,
       "refs": {}
     },
+    "ListRLSPoliciesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRLSPoliciesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRLSPolicyAttachmentsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRLSPolicyAttachmentsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListResourcesRequest": {
       "base": null,
       "refs": {}
@@ -1135,10 +1228,13 @@
     "NameString": {
       "base": null,
       "refs": {
+        "AttachRLSPolicyRequest$Name": "<p>The name of the row-level security policy to attach.</p>",
         "AuthorizedSessionTagValueList$member": null,
+        "Column$Name": "<p>The name of the column.</p>",
         "ColumnLFTag$Name": "<p>The name of a column resource.</p>",
         "ColumnNames$member": null,
         "CreateLFTagExpressionRequest$Name": "<p>A name for the expression.</p>",
+        "CreateRLSPolicyRequest$Name": "<p>A unique name for the row-level security policy within the Data Catalog.</p>",
         "DataCellsFilter$DatabaseName": "<p>A database in the Glue Data Catalog.</p>",
         "DataCellsFilter$TableName": "<p>A table in the database.</p>",
         "DataCellsFilter$Name": "<p>The name given by the user to the data filter cell.</p>",
@@ -1152,12 +1248,15 @@
         "DeleteLFTagExpressionRequest$Name": "<p>The name for the LF-Tag expression.</p>",
         "DeleteObjectsOnCancelRequest$DatabaseName": "<p>The database that contains the governed table.</p>",
         "DeleteObjectsOnCancelRequest$TableName": "<p>The name of the governed table.</p>",
+        "DeleteRLSPolicyRequest$Name": "<p>The name of the row-level security policy to delete.</p>",
+        "DetachRLSPolicyRequest$Name": "<p>The name of the row-level security policy to detach.</p>",
         "ErrorDetail$ErrorCode": "<p>The code associated with this error.</p>",
         "GetDataCellsFilterRequest$DatabaseName": "<p>A database in the Glue Data Catalog.</p>",
         "GetDataCellsFilterRequest$TableName": "<p>A table in the database.</p>",
         "GetDataCellsFilterRequest$Name": "<p>The name given by the user to the data filter cell.</p>",
         "GetLFTagExpressionRequest$Name": "<p>The name for the LF-Tag expression</p>",
         "GetLFTagExpressionResponse$Name": "<p>The name for the LF-Tag expression. </p>",
+        "GetRLSPolicyRequest$Name": "<p>The name of the row-level security policy to retrieve.</p>",
         "GetTableObjectsRequest$DatabaseName": "<p>The database containing the governed table.</p>",
         "GetTableObjectsRequest$TableName": "<p>The governed table for which to retrieve objects.</p>",
         "LFTagExpression$Name": "<p>The name for saved the LF-Tag expression.</p>",
@@ -1165,14 +1264,19 @@
         "LFTagKeyResource$TagKey": "<p>The key-name for the LF-tag.</p>",
         "LFTagPolicyResource$ExpressionName": "<p>If provided, permissions are granted to the Data Catalog resources whose assigned LF-Tags match the expression body of the saved expression under the provided <code>ExpressionName</code>.</p>",
         "LakeFormationOptInsInfo$LastUpdatedBy": "<p>The user who updated the record.</p>",
+        "ListRLSPolicyAttachmentsRequest$PolicyName": "<p>If specified, returns only the attachments for the row-level security policy with this name.</p>",
         "ListTableStorageOptimizersRequest$DatabaseName": "<p>Name of the database where the table is present.</p>",
         "ListTableStorageOptimizersRequest$TableName": "<p>Name of the table.</p>",
         "PrincipalResourcePermissions$LastUpdatedBy": "<p>The user who updated the record.</p>",
+        "RLSPolicy$Name": "<p>The name of the row-level security policy.</p>",
+        "RLSPolicyAttachment$PolicyName": "<p>The name of the attached row-level security policy.</p>",
+        "RLSPolicyResource$Name": "<p>The name of the row-level security policy.</p>",
         "TableResource$DatabaseName": "<p>The name of the database for the table. Unique to a Data Catalog. A database is a set of associated table definitions organized into a logical group. You can Grant and Revoke database privileges to a principal. </p>",
         "TableResource$Name": "<p>The name of the table.</p>",
         "TableWithColumnsResource$DatabaseName": "<p>The name of the database for the table with columns resource. Unique to the Data Catalog. A database is a set of associated table definitions organized into a logical group. You can Grant and Revoke database privileges to a principal. </p>",
         "TableWithColumnsResource$Name": "<p>The name of the table resource. A table is a metadata definition that represents your data. You can Grant and Revoke table privileges to a principal. </p>",
         "UpdateLFTagExpressionRequest$Name": "<p>The name for the LF-Tag expression.</p>",
+        "UpdateRLSPolicyRequest$Name": "<p>The name of the row-level security policy to update.</p>",
         "UpdateTableObjectsRequest$DatabaseName": "<p>The database containing the governed table to update.</p>",
         "UpdateTableObjectsRequest$TableName": "<p>The governed table to update.</p>",
         "UpdateTableStorageOptimizerRequest$DatabaseName": "<p>Name of the database where the table is present.</p>",
@@ -1182,8 +1286,11 @@
     "NullableBoolean": {
       "base": null,
       "refs": {
+        "AttachRLSPolicyRequest$SetDefault": "<p>Indicates whether this policy becomes the default row-level security policy for the resource. The default policy applies to all principals by default.</p>",
         "DataLakeSettings$AllowExternalDataFiltering": "<p>Whether to allow Amazon EMR clusters to access data managed by Lake Formation. </p> <p>If true, you allow Amazon EMR clusters to access data in Amazon S3 locations that are registered with Lake Formation.</p> <p>If false or null, no Amazon EMR clusters will be able to access data in Amazon S3 locations that are registered with Lake Formation.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/lake-formation/latest/dg/initial-LF-setup.html#external-data-filter\">(Optional) Allow external data filtering</a>.</p>",
         "DataLakeSettings$AllowFullTableExternalDataAccess": "<p>Whether to allow a third-party query engine to get data access credentials without session tags when a caller has full data access permissions.</p>",
+        "DetachRLSPolicyRequest$RemoveDefault": "<p>Indicates whether to remove this policy as the default row-level security policy for the resource.</p>",
+        "RLSPolicyAttachment$DefaultRLSPolicy": "<p>Indicates whether this attachment is the default row-level security policy for the resource.</p>",
         "RegisterResourceRequest$UseServiceLinkedRole": "<p>Designates an Identity and Access Management (IAM) service-linked role by registering this role with the Data Catalog. A service-linked role is a unique type of IAM role that is linked directly to Lake Formation.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/lake-formation/latest/dg/service-linked-roles.html\">Using Service-Linked Roles for Lake Formation</a>.</p>",
         "RegisterResourceRequest$WithFederation": "<p>Whether or not the resource is a federated resource.</p>",
         "RegisterResourceRequest$HybridAccessEnabled": "<p> Specifies whether the data access of tables pointing to the location can be managed by both Lake Formation permissions as well as Amazon S3 bucket policies. </p>",
@@ -1251,6 +1358,8 @@
         "ListLFTagsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListLakeFormationOptInsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListPermissionsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
+        "ListRLSPoliciesRequest$MaxResults": "<p>The maximum number of row-level security policies to return in a single response.</p>",
+        "ListRLSPolicyAttachmentsRequest$MaxResults": "<p>The maximum number of attachments to return in a single response.</p>",
         "ListResourcesRequest$MaxResults": "<p>The maximum number of resource results.</p>",
         "ListTableStorageOptimizersRequest$MaxResults": "<p>The number of storage optimizers to return on each call.</p>",
         "ListTransactionsRequest$MaxResults": "<p>The maximum number of transactions to return in a single call.</p>"
@@ -1363,8 +1472,11 @@
     "PredicateString": {
       "base": null,
       "refs": {
+        "CreateRLSPolicyRequest$FilterExpression": "<p>A filter predicate, written in a SQL-like syntax, that Lake Formation evaluates against each row. Only the rows for which the expression evaluates to true are returned to the principal.</p>",
         "GetTableObjectsRequest$PartitionPredicate": "<p>A predicate to filter the objects returned based on the partition keys defined in the governed table.</p> <ul> <li> <p>The comparison operators supported are: =, &gt;, &lt;, &gt;=, &lt;=</p> </li> <li> <p>The logical operators supported are: AND</p> </li> <li> <p>The data types supported are integer, long, date(yyyy-MM-dd), timestamp(yyyy-MM-dd HH:mm:ssXXX or yyyy-MM-dd HH:mm:ss\"), string and decimal.</p> </li> </ul>",
-        "RowFilter$FilterExpression": "<p>A filter expression.</p>"
+        "RLSPolicy$FilterExpression": "<p>The filter predicate, written in a SQL-like syntax, that determines which rows are returned to the principal.</p>",
+        "RowFilter$FilterExpression": "<p>A filter expression.</p>",
+        "UpdateRLSPolicyRequest$FilterExpression": "<p>The new filter predicate, written in a SQL-like syntax, that replaces the policy's current filter expression.</p>"
       }
     },
     "PrincipalPermissions": {
@@ -1445,6 +1557,37 @@
         "ResourceShareList$member": null
       }
     },
+    "RLSPolicy": {
+      "base": "<p>A structure that describes a row-level security policy, including the columns its filter expression references and the filter expression itself.</p>",
+      "refs": {
+        "GetRLSPolicyResponse$RLSPolicy": "<p>An <code>RLSPolicy</code> structure containing the definition of the requested row-level security policy.</p>",
+        "RLSPolicyList$member": null
+      }
+    },
+    "RLSPolicyAttachment": {
+      "base": "<p>A structure that describes the attachment of a row-level security policy to a resource for a principal.</p>",
+      "refs": {
+        "RLSPolicyAttachmentList$member": null
+      }
+    },
+    "RLSPolicyAttachmentList": {
+      "base": "<p>A list of <code>RLSPolicyAttachment</code> structures.</p>",
+      "refs": {
+        "ListRLSPolicyAttachmentsResponse$RLSPolicyAttachments": "<p>A list of <code>RLSPolicyAttachment</code> structures.</p>"
+      }
+    },
+    "RLSPolicyList": {
+      "base": "<p>A list of <code>RLSPolicy</code> structures.</p>",
+      "refs": {
+        "ListRLSPoliciesResponse$RLSPolicies": "<p>A list of <code>RLSPolicy</code> structures.</p>"
+      }
+    },
+    "RLSPolicyResource": {
+      "base": "<p>A structure that identifies a row-level security policy as a resource, used when granting permissions on the policy.</p>",
+      "refs": {
+        "Resource$RLSPolicy": "<p>A row-level security policy resource. Specify this when granting or revoking permissions on a row-level security policy.</p>"
+      }
+    },
     "RedshiftConnect": {
       "base": "<p>Configuration for enabling trusted identity propagation with Redshift Connect.</p>",
       "refs": {
@@ -1483,15 +1626,19 @@
       "base": "<p>A structure for the resource.</p>",
       "refs": {
         "AddLFTagsToResourceRequest$Resource": "<p>The database, table, or column resource to which to attach an LF-tag.</p>",
+        "AttachRLSPolicyRequest$Resource": "<p>The resource to which the row-level security policy is attached.</p>",
         "BatchPermissionsRequestEntry$Resource": "<p>The resource to which the principal is to be granted a permission.</p>",
         "CreateLakeFormationOptInRequest$Resource": null,
         "DeleteLakeFormationOptInRequest$Resource": null,
+        "DetachRLSPolicyRequest$Resource": "<p>The resource from which the row-level security policy is detached.</p>",
         "GetResourceLFTagsRequest$Resource": "<p>The database, table, or column resource for which you want to return LF-tags.</p>",
         "GrantPermissionsRequest$Resource": "<p>The resource to which permissions are to be granted. Resources in Lake Formation are the Data Catalog, databases, and tables.</p>",
         "LakeFormationOptInsInfo$Resource": null,
         "ListLakeFormationOptInsRequest$Resource": "<p>A structure for the resource.</p>",
         "ListPermissionsRequest$Resource": "<p>A resource where you will get a list of the principal permissions.</p> <p>This operation does not support getting privileges on a table with columns. Instead, call this operation on the table, and the operation returns the table and the table w columns.</p>",
+        "ListRLSPolicyAttachmentsRequest$Resource": "<p>If specified, returns only the attachments for the given resource.</p>",
         "PrincipalResourcePermissions$Resource": "<p>The resource where permissions are to be granted or revoked.</p>",
+        "RLSPolicyAttachment$Resource": "<p>The resource to which the policy is attached.</p>",
         "RemoveLFTagsFromResourceRequest$Resource": "<p>The database, table, or column resource where you want to remove an LF-tag.</p>",
         "RevokePermissionsRequest$Resource": "<p>The resource to which permissions are to be revoked.</p>"
       }
@@ -1841,6 +1988,10 @@
         "ListLakeFormationOptInsResponse$NextToken": "<p>A continuation token, if this is not the first call to retrieve this list.</p>",
         "ListPermissionsRequest$NextToken": "<p>A continuation token, if this is not the first call to retrieve this list.</p>",
         "ListPermissionsResponse$NextToken": "<p>A continuation token, if this is not the first call to retrieve this list.</p>",
+        "ListRLSPoliciesRequest$NextToken": "<p>A continuation token, if this is a continuation call.</p>",
+        "ListRLSPoliciesResponse$NextToken": "<p>A continuation token, if not all row-level security policies have been returned.</p>",
+        "ListRLSPolicyAttachmentsRequest$NextToken": "<p>A continuation token, if this is a continuation call.</p>",
+        "ListRLSPolicyAttachmentsResponse$NextToken": "<p>A continuation token, if not all attachments have been returned.</p>",
         "ListResourcesRequest$NextToken": "<p>A continuation token, if this is not the first call to retrieve these resources.</p>",
         "ListResourcesResponse$NextToken": "<p>A continuation token, if this is not the first call to retrieve these resources.</p>",
         "ListTableStorageOptimizersRequest$NextToken": "<p>A continuation token, if this is a continuation call.</p>",
@@ -1969,6 +2120,14 @@
       "refs": {}
     },
     "UpdateLakeFormationIdentityCenterConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRLSPolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRLSPolicyResponse": {
       "base": null,
       "refs": {}
     },

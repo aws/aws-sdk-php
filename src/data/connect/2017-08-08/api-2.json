@@ -647,6 +647,25 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "CreateContactFlowAlias":{
+      "name":"CreateContactFlowAlias",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/contact-flows/{InstanceId}/{ContactFlowId}/alias"
+      },
+      "input":{"shape":"CreateContactFlowAliasRequest"},
+      "output":{"shape":"CreateContactFlowAliasResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"DuplicateResourceException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "CreateContactFlowModule":{
       "name":"CreateContactFlowModule",
       "http":{
@@ -1394,6 +1413,23 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "DeleteContactFlowAlias":{
+      "name":"DeleteContactFlowAlias",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/contact-flows/{InstanceId}/{ContactFlowId}/alias/{AliasId}"
+      },
+      "input":{"shape":"DeleteContactFlowAliasRequest"},
+      "output":{"shape":"DeleteContactFlowAliasResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "DeleteContactFlowModule":{
       "name":"DeleteContactFlowModule",
       "http":{
@@ -2074,6 +2110,23 @@
         {"shape":"InvalidParameterException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ContactFlowNotPublishedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
+    "DescribeContactFlowAlias":{
+      "name":"DescribeContactFlowAlias",
+      "http":{
+        "method":"GET",
+        "requestUri":"/contact-flows/{InstanceId}/{ContactFlowId}/alias/{AliasId}"
+      },
+      "input":{"shape":"DescribeContactFlowAliasRequest"},
+      "output":{"shape":"DescribeContactFlowAliasResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"}
       ]
@@ -3330,6 +3383,23 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"}
+      ]
+    },
+    "ListContactFlowAliases":{
+      "name":"ListContactFlowAliases",
+      "http":{
+        "method":"GET",
+        "requestUri":"/contact-flows/{InstanceId}/{ContactFlowId}/aliases"
+      },
+      "input":{"shape":"ListContactFlowAliasesRequest"},
+      "output":{"shape":"ListContactFlowAliasesResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "ListContactFlowModuleAliases":{
@@ -5568,6 +5638,25 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"},
         {"shape":"ResourceConflictException"}
+      ]
+    },
+    "UpdateContactFlowAlias":{
+      "name":"UpdateContactFlowAlias",
+      "http":{
+        "method":"POST",
+        "requestUri":"/contact-flows/{InstanceId}/{ContactFlowId}/alias/{AliasId}"
+      },
+      "input":{"shape":"UpdateContactFlowAliasRequest"},
+      "output":{"shape":"UpdateContactFlowAliasResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConditionalOperationFailedException"},
+        {"shape":"DuplicateResourceException"}
       ]
     },
     "UpdateContactFlowContent":{
@@ -9123,6 +9212,35 @@
         "LastModifiedRegion":{"shape":"RegionName"}
       }
     },
+    "ContactFlowAliasInfo":{
+      "type":"structure",
+      "members":{
+        "ContactFlowId":{"shape":"ResourceId"},
+        "ContactFlowArn":{"shape":"ARN"},
+        "AliasId":{"shape":"ResourceId"},
+        "Version":{"shape":"ResourceVersion"},
+        "Name":{"shape":"ContactFlowName"},
+        "Description":{"shape":"ContactFlowDescription"},
+        "LastModifiedRegion":{"shape":"RegionName"},
+        "LastModifiedTime":{"shape":"Timestamp"}
+      }
+    },
+    "ContactFlowAliasSummary":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"ARN"},
+        "AliasId":{"shape":"ResourceId"},
+        "Version":{"shape":"ResourceVersion"},
+        "AliasName":{"shape":"ContactFlowName"},
+        "AliasDescription":{"shape":"ContactFlowDescription"},
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "LastModifiedRegion":{"shape":"RegionName"}
+      }
+    },
+    "ContactFlowAliasSummaryList":{
+      "type":"list",
+      "member":{"shape":"ContactFlowAliasSummary"}
+    },
     "ContactFlowAttributeAndCondition":{
       "type":"structure",
       "members":{
@@ -9384,7 +9502,9 @@
       "members":{
         "Arn":{"shape":"ARN"},
         "VersionDescription":{"shape":"ContactFlowDescription"},
-        "Version":{"shape":"ResourceVersion"}
+        "Version":{"shape":"ResourceVersion"},
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "LastModifiedRegion":{"shape":"RegionName"}
       }
     },
     "ContactFlowVersionSummaryList":{
@@ -9765,6 +9885,37 @@
       "members":{
         "Fields":{"shape":"FieldValues"},
         "TemplateId":{"shape":"TemplateId"}
+      }
+    },
+    "CreateContactFlowAliasRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactFlowId",
+        "ContactFlowVersion",
+        "AliasName"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceIdOrArn",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "Description":{"shape":"ContactFlowDescription"},
+        "ContactFlowId":{
+          "shape":"ARN",
+          "location":"uri",
+          "locationName":"ContactFlowId"
+        },
+        "ContactFlowVersion":{"shape":"ResourceVersion"},
+        "AliasName":{"shape":"ContactFlowName"}
+      }
+    },
+    "CreateContactFlowAliasResponse":{
+      "type":"structure",
+      "members":{
+        "ContactFlowArn":{"shape":"ARN"},
+        "Id":{"shape":"ResourceId"}
       }
     },
     "CreateContactFlowModuleAliasRequest":{
@@ -11594,6 +11745,35 @@
         }
       }
     },
+    "DeleteContactFlowAliasRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactFlowId",
+        "AliasId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceIdOrArn",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "ContactFlowId":{
+          "shape":"ARN",
+          "location":"uri",
+          "locationName":"ContactFlowId"
+        },
+        "AliasId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"AliasId"
+        }
+      }
+    },
+    "DeleteContactFlowAliasResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "DeleteContactFlowModuleAliasRequest":{
       "type":"structure",
       "required":[
@@ -12558,6 +12738,37 @@
       "members":{
         "Evaluation":{"shape":"Evaluation"},
         "EvaluationForm":{"shape":"EvaluationFormContent"}
+      }
+    },
+    "DescribeContactFlowAliasRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactFlowId",
+        "AliasId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceIdOrArn",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "ContactFlowId":{
+          "shape":"ARN",
+          "location":"uri",
+          "locationName":"ContactFlowId"
+        },
+        "AliasId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"AliasId"
+        }
+      }
+    },
+    "DescribeContactFlowAliasResponse":{
+      "type":"structure",
+      "members":{
+        "ContactFlowAlias":{"shape":"ContactFlowAliasInfo"}
       }
     },
     "DescribeContactFlowModuleAliasRequest":{
@@ -17821,6 +18032,43 @@
       "required":["EvaluationSummaryList"],
       "members":{
         "EvaluationSummaryList":{"shape":"EvaluationSummaryList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListContactFlowAliasesRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactFlowId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceIdOrArn",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "ContactFlowId":{
+          "shape":"ARN",
+          "location":"uri",
+          "locationName":"ContactFlowId"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxResult1000",
+          "box":true,
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListContactFlowAliasesResponse":{
+      "type":"structure",
+      "members":{
+        "ContactFlowAliasSummaryList":{"shape":"ContactFlowAliasSummaryList"},
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -26625,6 +26873,38 @@
         "EvaluationId":{"shape":"ResourceId"},
         "EvaluationArn":{"shape":"ARN"}
       }
+    },
+    "UpdateContactFlowAliasRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactFlowId",
+        "AliasId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceIdOrArn",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "ContactFlowId":{
+          "shape":"ARN",
+          "location":"uri",
+          "locationName":"ContactFlowId"
+        },
+        "AliasId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"AliasId"
+        },
+        "Name":{"shape":"ContactFlowName"},
+        "Description":{"shape":"ContactFlowDescription"},
+        "ContactFlowVersion":{"shape":"ResourceVersion"}
+      }
+    },
+    "UpdateContactFlowAliasResponse":{
+      "type":"structure",
+      "members":{}
     },
     "UpdateContactFlowContentRequest":{
       "type":"structure",

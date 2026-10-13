@@ -527,6 +527,7 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"AccessDeniedException"}
       ]
     },
@@ -544,6 +545,7 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"AccessDeniedException"}
       ]
     },
@@ -1703,6 +1705,7 @@
         "dependencyDiscovery":{"shape":"DependencyDiscoveryInput"},
         "reportConfiguration":{"shape":"ServiceReportConfiguration"},
         "kmsKeyId":{"shape":"KmsKeyId"},
+        "devOpsAgentConfiguration":{"shape":"DevOpsAgentConfiguration"},
         "tags":{"shape":"TagMap"},
         "clientToken":{
           "shape":"ClientToken",
@@ -2099,6 +2102,87 @@
       "type":"list",
       "member":{"shape":"DependencySummary"}
     },
+    "DevOpsAgentConfidence":{
+      "type":"string",
+      "enum":[
+        "HIGH",
+        "MEDIUM",
+        "LOW"
+      ]
+    },
+    "DevOpsAgentConfiguration":{
+      "type":"structure",
+      "members":{
+        "agentSpaceArn":{"shape":"DevOpsAgentSpaceArn"}
+      }
+    },
+    "DevOpsAgentConfigurationView":{
+      "type":"structure",
+      "members":{
+        "agentSpaceArn":{"shape":"DevOpsAgentSpaceArn"},
+        "agentSpaceId":{"shape":"DevOpsAgentSpaceId"},
+        "region":{"shape":"DevOpsAgentRegion"},
+        "status":{"shape":"DevOpsAgentConnectionStatus"},
+        "operatorAppUrl":{"shape":"String"},
+        "connectedAt":{"shape":"Timestamp"},
+        "statusReason":{"shape":"String"}
+      }
+    },
+    "DevOpsAgentConnectionStatus":{
+      "type":"string",
+      "enum":[
+        "CONNECTING",
+        "CONNECTED",
+        "DISCONNECTED",
+        "FAILED"
+      ]
+    },
+    "DevOpsAgentInvestigation":{
+      "type":"structure",
+      "members":{
+        "verdict":{"shape":"DevOpsAgentVerdict"},
+        "confidence":{"shape":"DevOpsAgentConfidence"},
+        "deepLink":{"shape":"String"},
+        "status":{"shape":"DevOpsAgentInvestigationStatus"},
+        "summary":{"shape":"String"}
+      }
+    },
+    "DevOpsAgentInvestigationStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "IN_PROGRESS",
+        "COMPLETED",
+        "FAILED",
+        "TIMED_OUT",
+        "CANCELED"
+      ]
+    },
+    "DevOpsAgentRegion":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-z0-9-]+"
+    },
+    "DevOpsAgentSpaceArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"arn:aws[a-zA-Z-]*:aidevops:[a-z0-9-]+:[0-9]{12}:agentspace/[a-zA-Z0-9-]{1,64}"
+    },
+    "DevOpsAgentSpaceId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9-]{1,64}"
+    },
+    "DevOpsAgentVerdict":{
+      "type":"string",
+      "enum":[
+        "PASS",
+        "FAIL"
+      ]
+    },
     "DisasterRecoverySource":{
       "type":"structure",
       "members":{
@@ -2308,7 +2392,8 @@
         "infrastructureAndCodeRecommendations":{"shape":"InfrastructureAndCodeRecommendationsList"},
         "observabilityRecommendations":{"shape":"ObservabilityRecommendationsList"},
         "testingRecommendations":{"shape":"TestingRecommendationsList"},
-        "updatedAt":{"shape":"Timestamp"}
+        "updatedAt":{"shape":"Timestamp"},
+        "investigationDeepLink":{"shape":"String"}
       }
     },
     "FindingCommentString":{
@@ -2343,7 +2428,8 @@
         "severity":{"shape":"FindingSeverity"},
         "status":{"shape":"FindingStatus"},
         "policyComponent":{"shape":"PolicyComponent"},
-        "updatedAt":{"shape":"Timestamp"}
+        "updatedAt":{"shape":"Timestamp"},
+        "investigationDeepLink":{"shape":"String"}
       }
     },
     "FindingsList":{
@@ -4172,7 +4258,11 @@
         "identifier":{"shape":"String"},
         "awsRegion":{"shape":"AwsRegion"},
         "awsAccountId":{"shape":"AwsAccountId"},
-        "resourceType":{"shape":"String"}
+        "resourceType":{"shape":"String"},
+        "availabilityZoneId":{"shape":"String"},
+        "availabilityZoneName":{"shape":"String"},
+        "containmentParentId":{"shape":"String"},
+        "logicalResourceGroupId":{"shape":"String"}
       }
     },
     "ResourceConfiguration":{
@@ -4334,6 +4424,7 @@
         "organizationId":{"shape":"OrganizationId"},
         "ouId":{"shape":"OuId"},
         "accountId":{"shape":"AccountId"},
+        "devOpsAgentConfiguration":{"shape":"DevOpsAgentConfigurationView"},
         "createdAt":{"shape":"Timestamp"},
         "updatedAt":{"shape":"Timestamp"}
       }
@@ -4628,6 +4719,8 @@
         "regions":{"shape":"RegionList"},
         "policyArn":{"shape":"Arn"},
         "assessmentStatus":{"shape":"AssessmentStatus"},
+        "devOpsAgentStatus":{"shape":"DevOpsAgentConnectionStatus"},
+        "devOpsAgentSpaceArn":{"shape":"DevOpsAgentSpaceArn"},
         "openFindingsCount":{"shape":"Integer"},
         "resolvedFindingsCount":{"shape":"Integer"},
         "dependencyDiscovery":{"shape":"DependencyDiscoveryConfig"},
@@ -5164,7 +5257,8 @@
         "regionSwitchExecutionId":{"shape":"RegionSwitchExecutionId"},
         "permissionModel":{"shape":"PermissionModel"},
         "regions":{"shape":"RegionList"},
-        "accountTargeting":{"shape":"AccountTargeting"}
+        "accountTargeting":{"shape":"AccountTargeting"},
+        "devOpsAgentInvestigation":{"shape":"DevOpsAgentInvestigation"}
       }
     },
     "TestRunDependencySource":{
@@ -5748,7 +5842,8 @@
         "regions":{"shape":"RegionList"},
         "permissionModel":{"shape":"PermissionModel"},
         "dependencyDiscovery":{"shape":"DependencyDiscoveryInput"},
-        "reportConfiguration":{"shape":"ServiceReportConfiguration"}
+        "reportConfiguration":{"shape":"ServiceReportConfiguration"},
+        "devOpsAgentConfiguration":{"shape":"DevOpsAgentConfiguration"}
       }
     },
     "UpdateServiceResponse":{

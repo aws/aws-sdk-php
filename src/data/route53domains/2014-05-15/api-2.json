@@ -219,6 +219,21 @@
         {"shape":"UnsupportedTLD"}
       ]
     },
+    "GetDomainPrices":{
+      "name":"GetDomainPrices",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetDomainPricesRequest"},
+      "output":{"shape":"GetDomainPricesResponse"},
+      "errors":[
+        {"shape":"InvalidInput"},
+        {"shape":"UnsupportedTLD"},
+        {"shape":"TLDInMaintenance"}
+      ],
+      "readonly":true
+    },
     "GetDomainSuggestions":{
       "name":"GetDomainSuggestions",
       "http":{
@@ -590,7 +605,8 @@
     "CheckDomainAvailabilityResponse":{
       "type":"structure",
       "members":{
-        "Availability":{"shape":"DomainAvailability"}
+        "Availability":{"shape":"DomainAvailability"},
+        "Price":{"shape":"PriceWithCurrency"}
       }
     },
     "CheckDomainTransferabilityRequest":{
@@ -605,7 +621,8 @@
       "type":"structure",
       "members":{
         "Transferability":{"shape":"DomainTransferability"},
-        "Message":{"shape":"Message"}
+        "Message":{"shape":"Message"},
+        "Price":{"shape":"PriceWithCurrency"}
       }
     },
     "City":{
@@ -620,9 +637,14 @@
         "Currency"
       ],
       "members":{
-        "MaxPrice":{"shape":"Price"},
+        "MaxPrice":{"shape":"ConsentPrice"},
         "Currency":{"shape":"Currency"}
       }
+    },
+    "ConsentPrice":{
+      "type":"double",
+      "max":2000000000.0,
+      "min":0.0
     },
     "ContactDetail":{
       "type":"structure",
@@ -1001,8 +1023,18 @@
       "type":"structure",
       "members":{
         "Algorithm":{"shape":"NullableInteger"},
-        "Flags":{"shape":"NullableInteger"},
-        "PublicKey":{"shape":"DnssecPublicKey"},
+        "Flags":{
+          "shape":"NullableInteger",
+          "deprecated":true,
+          "deprecatedMessage":"The DnssecKey response no longer returns the flags.",
+          "deprecatedSince":"2026-10-01"
+        },
+        "PublicKey":{
+          "shape":"DnssecPublicKey",
+          "deprecated":true,
+          "deprecatedMessage":"The DnssecKey response no longer returns the public key.",
+          "deprecatedSince":"2026-10-01"
+        },
         "DigestType":{"shape":"NullableInteger"},
         "Digest":{"shape":"String"},
         "KeyTag":{"shape":"NullableInteger"},
@@ -1092,7 +1124,8 @@
       "type":"structure",
       "members":{
         "DomainName":{"shape":"DomainName"},
-        "Availability":{"shape":"String"}
+        "Availability":{"shape":"String"},
+        "Price":{"shape":"PriceWithCurrency"}
       }
     },
     "DomainSuggestionsList":{
@@ -1292,6 +1325,19 @@
         "BillingPrivacy":{"shape":"Boolean"}
       }
     },
+    "GetDomainPricesRequest":{
+      "type":"structure",
+      "required":["DomainName"],
+      "members":{
+        "DomainName":{"shape":"DomainName"}
+      }
+    },
+    "GetDomainPricesResponse":{
+      "type":"structure",
+      "members":{
+        "DomainPrice":{"shape":"DomainPrice"}
+      }
+    },
     "GetDomainSuggestionsRequest":{
       "type":"structure",
       "required":[
@@ -1302,7 +1348,8 @@
       "members":{
         "DomainName":{"shape":"DomainName"},
         "SuggestionCount":{"shape":"Integer"},
-        "OnlyAvailable":{"shape":"Boolean"}
+        "OnlyAvailable":{"shape":"Boolean"},
+        "OnlyStandardPrices":{"shape":"Boolean"}
       }
     },
     "GetDomainSuggestionsResponse":{
@@ -1360,7 +1407,7 @@
     },
     "LangCode":{
       "type":"string",
-      "pattern":"|[A-Za-z]{2,3}"
+      "pattern":"(|[A-Za-z]{2,3})"
     },
     "ListDomainsAttributeName":{
       "type":"string",
@@ -1552,6 +1599,13 @@
       "type":"double",
       "min":0.0
     },
+    "PriceType":{
+      "type":"string",
+      "enum":[
+        "STANDARD",
+        "REGISTRY_PREMIUM"
+      ]
+    },
     "PriceWithCurrency":{
       "type":"structure",
       "required":[
@@ -1560,7 +1614,8 @@
       ],
       "members":{
         "Price":{"shape":"Price"},
-        "Currency":{"shape":"Currency"}
+        "Currency":{"shape":"Currency"},
+        "PriceType":{"shape":"PriceType"}
       }
     },
     "PushDomainRequest":{
@@ -1603,7 +1658,8 @@
         "PrivacyProtectRegistrantContact":{"shape":"Boolean"},
         "PrivacyProtectTechContact":{"shape":"Boolean"},
         "BillingContact":{"shape":"ContactDetail"},
-        "PrivacyProtectBillingContact":{"shape":"Boolean"}
+        "PrivacyProtectBillingContact":{"shape":"Boolean"},
+        "Consent":{"shape":"Consent"}
       }
     },
     "RegisterDomainResponse":{
@@ -1638,7 +1694,8 @@
       "members":{
         "DomainName":{"shape":"DomainName"},
         "DurationInYears":{"shape":"DurationInYears"},
-        "CurrentExpiryYear":{"shape":"CurrentExpiryYear"}
+        "CurrentExpiryYear":{"shape":"CurrentExpiryYear"},
+        "Consent":{"shape":"Consent"}
       }
     },
     "RenewDomainResponse":{
@@ -1785,7 +1842,8 @@
         "PrivacyProtectRegistrantContact":{"shape":"Boolean"},
         "PrivacyProtectTechContact":{"shape":"Boolean"},
         "BillingContact":{"shape":"ContactDetail"},
-        "PrivacyProtectBillingContact":{"shape":"Boolean"}
+        "PrivacyProtectBillingContact":{"shape":"Boolean"},
+        "Consent":{"shape":"Consent"}
       }
     },
     "TransferDomainResponse":{
@@ -1820,7 +1878,8 @@
         "DONT_KNOW",
         "DOMAIN_IN_OWN_ACCOUNT",
         "DOMAIN_IN_ANOTHER_ACCOUNT",
-        "PREMIUM_DOMAIN"
+        "PREMIUM_DOMAIN",
+        "PENDING"
       ]
     },
     "UnsupportedTLD":{

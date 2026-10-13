@@ -70,10 +70,14 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getDomainDetail(array{DomainName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getDomainDetailAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getDomainDetailAsync(array{DomainName?: string, ...} $args = [])
+ * @method \Aws\Result getDomainPrices(array $args = [])
+ * @phpstan-method \Aws\Result getDomainPrices(array{DomainName?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getDomainPricesAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getDomainPricesAsync(array{DomainName?: string, ...} $args = [])
  * @method \Aws\Result getDomainSuggestions(array $args = [])
- * @phpstan-method \Aws\Result getDomainSuggestions(array{DomainName?: string, SuggestionCount?: int, OnlyAvailable?: bool, ...} $args = [])
+ * @phpstan-method \Aws\Result getDomainSuggestions(array{DomainName?: string, SuggestionCount?: int, OnlyAvailable?: bool, OnlyStandardPrices?: bool, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getDomainSuggestionsAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise getDomainSuggestionsAsync(array{DomainName?: string, SuggestionCount?: int, OnlyAvailable?: bool, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getDomainSuggestionsAsync(array{DomainName?: string, SuggestionCount?: int, OnlyAvailable?: bool, OnlyStandardPrices?: bool, ...} $args = [])
  * @method \Aws\Result getOperationDetail(array $args = [])
  * @phpstan-method \Aws\Result getOperationDetail(array{OperationId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getOperationDetailAsync(array $args = [])
@@ -206,6 +210,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     PrivacyProtectBillingContact?: bool,
+ *     Consent?: array{MaxPrice?: float, Currency?: string, ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise registerDomainAsync(array $args = [])
@@ -286,6 +291,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     PrivacyProtectBillingContact?: bool,
+ *     Consent?: array{MaxPrice?: float, Currency?: string, ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result rejectDomainTransferFromAnotherAwsAccount(array $args = [])
@@ -293,9 +299,21 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise rejectDomainTransferFromAnotherAwsAccountAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise rejectDomainTransferFromAnotherAwsAccountAsync(array{DomainName?: string, ...} $args = [])
  * @method \Aws\Result renewDomain(array $args = [])
- * @phpstan-method \Aws\Result renewDomain(array{DomainName?: string, DurationInYears?: int, CurrentExpiryYear?: int, ...} $args = [])
+ * @phpstan-method \Aws\Result renewDomain(array{
+ *     DomainName?: string,
+ *     DurationInYears?: int,
+ *     CurrentExpiryYear?: int,
+ *     Consent?: array{MaxPrice?: float, Currency?: string, ...},
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise renewDomainAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise renewDomainAsync(array{DomainName?: string, DurationInYears?: int, CurrentExpiryYear?: int, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise renewDomainAsync(array{
+ *     DomainName?: string,
+ *     DurationInYears?: int,
+ *     CurrentExpiryYear?: int,
+ *     Consent?: array{MaxPrice?: float, Currency?: string, ...},
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result resendContactReachabilityEmail(array $args = [])
  * @phpstan-method \Aws\Result resendContactReachabilityEmail(array{domainName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise resendContactReachabilityEmailAsync(array $args = [])
@@ -388,6 +406,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     PrivacyProtectBillingContact?: bool,
+ *     Consent?: array{MaxPrice?: float, Currency?: string, ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise transferDomainAsync(array $args = [])
@@ -470,6 +489,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     PrivacyProtectBillingContact?: bool,
+ *     Consent?: array{MaxPrice?: float, Currency?: string, ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result transferDomainToAnotherAwsAccount(array $args = [])

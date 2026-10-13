@@ -442,6 +442,7 @@ use Aws\AwsClient;
  *         UserControlMode?: 'DISABLED'|'VIEW_ONLY'|'VIEW_STOP',
  *         ...,
  *     },
+ *     StorageConnectorAuthentication?: 'FORCE_REAUTHENTICATION'|'REUSE_CREDENTIALS',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createStackAsync(array $args = [])
@@ -479,6 +480,7 @@ use Aws\AwsClient;
  *         UserControlMode?: 'DISABLED'|'VIEW_ONLY'|'VIEW_STOP',
  *         ...,
  *     },
+ *     StorageConnectorAuthentication?: 'FORCE_REAUTHENTICATION'|'REUSE_CREDENTIALS',
  *     ...,
  * } $args = [])
  * @method \Aws\Result createStreamingURL(array $args = [])
@@ -1026,7 +1028,7 @@ use Aws\AwsClient;
  *     DeleteStorageConnectors?: bool,
  *     RedirectURL?: string,
  *     FeedbackURL?: string,
- *     AttributesToDelete?: list<'ACCESS_ENDPOINTS'|'AGENT_ACCESS_CONFIG'|'CONTENT_REDIRECTION'|'EMBED_HOST_DOMAINS'|'FEEDBACK_URL'|'IAM_ROLE_ARN'|'REDIRECT_URL'|'STORAGE_CONNECTORS'|'STORAGE_CONNECTOR_GOOGLE_DRIVE'|'STORAGE_CONNECTOR_HOMEFOLDERS'|'STORAGE_CONNECTOR_ONE_DRIVE'|'STREAMING_EXPERIENCE_SETTINGS'|'THEME_NAME'|'USER_SETTINGS'>,
+ *     AttributesToDelete?: list<'ACCESS_ENDPOINTS'|'AGENT_ACCESS_CONFIG'|'CONTENT_REDIRECTION'|'EMBED_HOST_DOMAINS'|'FEEDBACK_URL'|'IAM_ROLE_ARN'|'REDIRECT_URL'|'STORAGE_CONNECTORS'|'STORAGE_CONNECTOR_AUTHENTICATION'|'STORAGE_CONNECTOR_GOOGLE_DRIVE'|'STORAGE_CONNECTOR_HOMEFOLDERS'|'STORAGE_CONNECTOR_ONE_DRIVE'|'STREAMING_EXPERIENCE_SETTINGS'|'THEME_NAME'|'USER_SETTINGS'>,
  *     UserSettings?: list<array{
  *         Action?: 'AUTO_TIME_ZONE_REDIRECTION'|'CLIPBOARD_COPY_FROM_LOCAL_DEVICE'|'CLIPBOARD_COPY_TO_LOCAL_DEVICE'|'DOMAIN_PASSWORD_SIGNIN'|'DOMAIN_SMART_CARD_SIGNIN'|'FILE_DOWNLOAD'|'FILE_UPLOAD'|'PRINTING_TO_LOCAL_DEVICE',
  *         Permission?: 'DISABLED'|'ENABLED',
@@ -1047,6 +1049,7 @@ use Aws\AwsClient;
  *         UserControlMode?: 'DISABLED'|'VIEW_ONLY'|'VIEW_STOP',
  *         ...,
  *     },
+ *     StorageConnectorAuthentication?: 'FORCE_REAUTHENTICATION'|'REUSE_CREDENTIALS',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateStackAsync(array $args = [])
@@ -1064,7 +1067,7 @@ use Aws\AwsClient;
  *     DeleteStorageConnectors?: bool,
  *     RedirectURL?: string,
  *     FeedbackURL?: string,
- *     AttributesToDelete?: list<'ACCESS_ENDPOINTS'|'AGENT_ACCESS_CONFIG'|'CONTENT_REDIRECTION'|'EMBED_HOST_DOMAINS'|'FEEDBACK_URL'|'IAM_ROLE_ARN'|'REDIRECT_URL'|'STORAGE_CONNECTORS'|'STORAGE_CONNECTOR_GOOGLE_DRIVE'|'STORAGE_CONNECTOR_HOMEFOLDERS'|'STORAGE_CONNECTOR_ONE_DRIVE'|'STREAMING_EXPERIENCE_SETTINGS'|'THEME_NAME'|'USER_SETTINGS'>,
+ *     AttributesToDelete?: list<'ACCESS_ENDPOINTS'|'AGENT_ACCESS_CONFIG'|'CONTENT_REDIRECTION'|'EMBED_HOST_DOMAINS'|'FEEDBACK_URL'|'IAM_ROLE_ARN'|'REDIRECT_URL'|'STORAGE_CONNECTORS'|'STORAGE_CONNECTOR_AUTHENTICATION'|'STORAGE_CONNECTOR_GOOGLE_DRIVE'|'STORAGE_CONNECTOR_HOMEFOLDERS'|'STORAGE_CONNECTOR_ONE_DRIVE'|'STREAMING_EXPERIENCE_SETTINGS'|'THEME_NAME'|'USER_SETTINGS'>,
  *     UserSettings?: list<array{
  *         Action?: 'AUTO_TIME_ZONE_REDIRECTION'|'CLIPBOARD_COPY_FROM_LOCAL_DEVICE'|'CLIPBOARD_COPY_TO_LOCAL_DEVICE'|'DOMAIN_PASSWORD_SIGNIN'|'DOMAIN_SMART_CARD_SIGNIN'|'FILE_DOWNLOAD'|'FILE_UPLOAD'|'PRINTING_TO_LOCAL_DEVICE',
  *         Permission?: 'DISABLED'|'ENABLED',
@@ -1085,6 +1088,7 @@ use Aws\AwsClient;
  *         UserControlMode?: 'DISABLED'|'VIEW_ONLY'|'VIEW_STOP',
  *         ...,
  *     },
+ *     StorageConnectorAuthentication?: 'FORCE_REAUTHENTICATION'|'REUSE_CREDENTIALS',
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateThemeForStack(array $args = [])

@@ -395,11 +395,16 @@ use Aws\AwsClient;
  *     RuleStatus?: 'DISABLED'|'ENABLED',
  *     Description?: string,
  *     RuleOrder?: float,
- *     Criteria?: array{OcsfFindingCriteria?: array{CompositeFilters?: list<array>, CompositeOperator?: 'AND'|'OR', ...}, ...},
+ *     Criteria?: array{
+ *         OcsfFindingCriteria?: array{CompositeFilters?: list<array>, CompositeOperator?: 'AND'|'OR', ...},
+ *         ResourceCriteria?: array{CompositeFilters?: list<array>, CompositeOperator?: 'AND'|'OR', ...},
+ *         ...,
+ *     },
  *     Actions?: list<array{
- *         Type?: 'EXTERNAL_INTEGRATION'|'FINDING_FIELDS_UPDATE',
+ *         Type?: 'EXTERNAL_INTEGRATION'|'FINDING_FIELDS_UPDATE'|'RESOURCE_FIELDS_UPDATE',
  *         FindingFieldsUpdate?: array,
  *         ExternalIntegrationConfiguration?: array,
+ *         ResourceFieldsUpdate?: array,
  *         ...,
  *     }>,
  *     Tags?: array<string, string>,
@@ -412,11 +417,16 @@ use Aws\AwsClient;
  *     RuleStatus?: 'DISABLED'|'ENABLED',
  *     Description?: string,
  *     RuleOrder?: float,
- *     Criteria?: array{OcsfFindingCriteria?: array{CompositeFilters?: list<array>, CompositeOperator?: 'AND'|'OR', ...}, ...},
+ *     Criteria?: array{
+ *         OcsfFindingCriteria?: array{CompositeFilters?: list<array>, CompositeOperator?: 'AND'|'OR', ...},
+ *         ResourceCriteria?: array{CompositeFilters?: list<array>, CompositeOperator?: 'AND'|'OR', ...},
+ *         ...,
+ *     },
  *     Actions?: list<array{
- *         Type?: 'EXTERNAL_INTEGRATION'|'FINDING_FIELDS_UPDATE',
+ *         Type?: 'EXTERNAL_INTEGRATION'|'FINDING_FIELDS_UPDATE'|'RESOURCE_FIELDS_UPDATE',
  *         FindingFieldsUpdate?: array,
  *         ExternalIntegrationConfiguration?: array,
+ *         ResourceFieldsUpdate?: array,
  *         ...,
  *     }>,
  *     Tags?: array<string, string>,
@@ -969,7 +979,7 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getFindingStatisticsV2(array{
  *     GroupByRules?: list<array{
  *         Filters?: array,
- *         GroupByField?: 'activity_name'|'class_name'|'cloud.account.name'|'cloud.account.uid'|'cloud.provider'|'cloud.region'|'compliance.assessments.name'|'compliance.control'|'compliance.standards'|'compliance.status'|'finding_info.analytic.name'|'finding_info.related_events.traits.category'|'finding_info.title'|'finding_info.types'|'metadata.product.name'|'metadata.product.uid'|'metadata.product.vendor_name'|'resources.cloud_partition'|'resources.name'|'resources.owner.account.name'|'resources.owner.account.uid'|'resources.owner.org.uid'|'resources.provider'|'resources.region'|'resources.type'|'resources.uid'|'severity'|'status'|'vendor_attributes.severity'|'vulnerabilities.affected_packages.name'|'vulnerabilities.fix_coverage',
+ *         GroupByField?: 'activity_name'|'class_name'|'cloud.account.name'|'cloud.account.uid'|'cloud.provider'|'cloud.region'|'compliance.assessments.name'|'compliance.control'|'compliance.standards'|'compliance.status'|'finding_info.analytic.name'|'finding_info.related_events.traits.category'|'finding_info.title'|'finding_info.types'|'impact'|'likelihood'|'metadata.product.name'|'metadata.product.uid'|'metadata.product.vendor_name'|'resources.cloud_partition'|'resources.criticality'|'resources.name'|'resources.owner.account.name'|'resources.owner.account.uid'|'resources.owner.org.uid'|'resources.provider'|'resources.region'|'resources.type'|'resources.uid'|'severity'|'status'|'vendor_attributes.severity'|'vulnerabilities.affected_packages.name'|'vulnerabilities.fix_coverage',
  *         ...,
  *     }>,
  *     Scopes?: array{AwsOrganizations?: list<array>, ...},
@@ -981,7 +991,7 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise getFindingStatisticsV2Async(array{
  *     GroupByRules?: list<array{
  *         Filters?: array,
- *         GroupByField?: 'activity_name'|'class_name'|'cloud.account.name'|'cloud.account.uid'|'cloud.provider'|'cloud.region'|'compliance.assessments.name'|'compliance.control'|'compliance.standards'|'compliance.status'|'finding_info.analytic.name'|'finding_info.related_events.traits.category'|'finding_info.title'|'finding_info.types'|'metadata.product.name'|'metadata.product.uid'|'metadata.product.vendor_name'|'resources.cloud_partition'|'resources.name'|'resources.owner.account.name'|'resources.owner.account.uid'|'resources.owner.org.uid'|'resources.provider'|'resources.region'|'resources.type'|'resources.uid'|'severity'|'status'|'vendor_attributes.severity'|'vulnerabilities.affected_packages.name'|'vulnerabilities.fix_coverage',
+ *         GroupByField?: 'activity_name'|'class_name'|'cloud.account.name'|'cloud.account.uid'|'cloud.provider'|'cloud.region'|'compliance.assessments.name'|'compliance.control'|'compliance.standards'|'compliance.status'|'finding_info.analytic.name'|'finding_info.related_events.traits.category'|'finding_info.title'|'finding_info.types'|'impact'|'likelihood'|'metadata.product.name'|'metadata.product.uid'|'metadata.product.vendor_name'|'resources.cloud_partition'|'resources.criticality'|'resources.name'|'resources.owner.account.name'|'resources.owner.account.uid'|'resources.owner.org.uid'|'resources.provider'|'resources.region'|'resources.type'|'resources.uid'|'severity'|'status'|'vendor_attributes.severity'|'vulnerabilities.affected_packages.name'|'vulnerabilities.fix_coverage',
  *         ...,
  *     }>,
  *     Scopes?: array{AwsOrganizations?: list<array>, ...},
@@ -1308,7 +1318,7 @@ use Aws\AwsClient;
  * @method \Aws\Result getResourcesStatisticsV2(array $args = [])
  * @phpstan-method \Aws\Result getResourcesStatisticsV2(array{
  *     GroupByRules?: list<array{
- *         GroupByField?: 'AccountId'|'AccountName'|'DiscoveryType'|'FindingsSummary.FindingType'|'Region'|'ResourceCategory'|'ResourceCloudPartition'|'ResourceInfo.AIDetails.CanonicalId'|'ResourceInfo.AIDetails.HostResourceType'|'ResourceName'|'ResourceOwnerAccountId'|'ResourceOwnerOrgId'|'ResourceProvider'|'ResourceRegion'|'ResourceSubCategory'|'ResourceType',
+ *         GroupByField?: 'AccountId'|'AccountName'|'DiscoveryType'|'FindingsSummary.FindingType'|'Region'|'ResourceCategory'|'ResourceCloudPartition'|'ResourceCriticality'|'ResourceInfo.AIDetails.CanonicalId'|'ResourceInfo.AIDetails.HostResourceType'|'ResourceName'|'ResourceOwnerAccountId'|'ResourceOwnerOrgId'|'ResourceProvider'|'ResourceRegion'|'ResourceSubCategory'|'ResourceType',
  *         Filters?: array,
  *         ...,
  *     }>,
@@ -1320,7 +1330,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getResourcesStatisticsV2Async(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getResourcesStatisticsV2Async(array{
  *     GroupByRules?: list<array{
- *         GroupByField?: 'AccountId'|'AccountName'|'DiscoveryType'|'FindingsSummary.FindingType'|'Region'|'ResourceCategory'|'ResourceCloudPartition'|'ResourceInfo.AIDetails.CanonicalId'|'ResourceInfo.AIDetails.HostResourceType'|'ResourceName'|'ResourceOwnerAccountId'|'ResourceOwnerOrgId'|'ResourceProvider'|'ResourceRegion'|'ResourceSubCategory'|'ResourceType',
+ *         GroupByField?: 'AccountId'|'AccountName'|'DiscoveryType'|'FindingsSummary.FindingType'|'Region'|'ResourceCategory'|'ResourceCloudPartition'|'ResourceCriticality'|'ResourceInfo.AIDetails.CanonicalId'|'ResourceInfo.AIDetails.HostResourceType'|'ResourceName'|'ResourceOwnerAccountId'|'ResourceOwnerOrgId'|'ResourceProvider'|'ResourceRegion'|'ResourceSubCategory'|'ResourceType',
  *         Filters?: array,
  *         ...,
  *     }>,
@@ -1602,11 +1612,16 @@ use Aws\AwsClient;
  *     RuleOrder?: float,
  *     Description?: string,
  *     RuleName?: string,
- *     Criteria?: array{OcsfFindingCriteria?: array{CompositeFilters?: list<array>, CompositeOperator?: 'AND'|'OR', ...}, ...},
+ *     Criteria?: array{
+ *         OcsfFindingCriteria?: array{CompositeFilters?: list<array>, CompositeOperator?: 'AND'|'OR', ...},
+ *         ResourceCriteria?: array{CompositeFilters?: list<array>, CompositeOperator?: 'AND'|'OR', ...},
+ *         ...,
+ *     },
  *     Actions?: list<array{
- *         Type?: 'EXTERNAL_INTEGRATION'|'FINDING_FIELDS_UPDATE',
+ *         Type?: 'EXTERNAL_INTEGRATION'|'FINDING_FIELDS_UPDATE'|'RESOURCE_FIELDS_UPDATE',
  *         FindingFieldsUpdate?: array,
  *         ExternalIntegrationConfiguration?: array,
+ *         ResourceFieldsUpdate?: array,
  *         ...,
  *     }>,
  *     ...,
@@ -1618,11 +1633,16 @@ use Aws\AwsClient;
  *     RuleOrder?: float,
  *     Description?: string,
  *     RuleName?: string,
- *     Criteria?: array{OcsfFindingCriteria?: array{CompositeFilters?: list<array>, CompositeOperator?: 'AND'|'OR', ...}, ...},
+ *     Criteria?: array{
+ *         OcsfFindingCriteria?: array{CompositeFilters?: list<array>, CompositeOperator?: 'AND'|'OR', ...},
+ *         ResourceCriteria?: array{CompositeFilters?: list<array>, CompositeOperator?: 'AND'|'OR', ...},
+ *         ...,
+ *     },
  *     Actions?: list<array{
- *         Type?: 'EXTERNAL_INTEGRATION'|'FINDING_FIELDS_UPDATE',
+ *         Type?: 'EXTERNAL_INTEGRATION'|'FINDING_FIELDS_UPDATE'|'RESOURCE_FIELDS_UPDATE',
  *         FindingFieldsUpdate?: array,
  *         ExternalIntegrationConfiguration?: array,
+ *         ResourceFieldsUpdate?: array,
  *         ...,
  *     }>,
  *     ...,

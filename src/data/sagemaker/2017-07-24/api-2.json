@@ -6274,6 +6274,13 @@
         "TEXTFILE"
       ]
     },
+    "AthenaStepMetadata":{
+      "type":"structure",
+      "members":{
+        "QueryExecutionId":{"shape":"String256"},
+        "S3OutputLocation":{"shape":"String1024"}
+      }
+    },
     "AthenaWorkGroup":{
       "type":"string",
       "max":128,
@@ -8166,6 +8173,41 @@
         "lij",
         "xx"
       ]
+    },
+    "CleanupFailure":{
+      "type":"structure",
+      "members":{
+        "StepName":{"shape":"String256"},
+        "ErrorCode":{"shape":"CleanupFailureErrorCode"},
+        "ErrorMessage":{"shape":"String2048"}
+      }
+    },
+    "CleanupFailureErrorCode":{
+      "type":"string",
+      "enum":[
+        "ClientError",
+        "InternalFailure"
+      ]
+    },
+    "CleanupFailureList":{
+      "type":"list",
+      "member":{"shape":"CleanupFailure"},
+      "max":100,
+      "min":0
+    },
+    "CleanupStepMetadata":{
+      "type":"structure",
+      "members":{
+        "CleanedSteps":{"shape":"CleanupStepNameList"},
+        "FailedSteps":{"shape":"CleanupFailureList"},
+        "SkippedSteps":{"shape":"CleanupStepNameList"}
+      }
+    },
+    "CleanupStepNameList":{
+      "type":"list",
+      "member":{"shape":"String256"},
+      "max":100,
+      "min":0
     },
     "ClientId":{
       "type":"string",
@@ -15845,6 +15887,27 @@
         "FileSystemPath":{"shape":"FileSystemPath"}
       }
     },
+    "EMRServerlessApplicationId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":".*[0-9a-z]+.*"
+    },
+    "EMRServerlessJobRunId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":".*[0-9a-z]+.*"
+    },
+    "EMRServerlessStepMetadata":{
+      "type":"structure",
+      "members":{
+        "ApplicationId":{"shape":"EMRServerlessApplicationId"},
+        "JobRunId":{"shape":"EMRServerlessJobRunId"},
+        "JobRunName":{"shape":"String256"},
+        "LogFilePath":{"shape":"String1024"}
+      }
+    },
     "EMRStepMetadata":{
       "type":"structure",
       "members":{
@@ -17224,6 +17287,51 @@
       "max":128,
       "min":1,
       "pattern":"[\\t\\n\\r -\\uD7FF\\uE000-\\uFFFD]*"
+    },
+    "ForEachSelectorResult":{
+      "type":"structure",
+      "members":{
+        "StepName":{"shape":"String256"},
+        "Index":{
+          "shape":"Integer",
+          "box":true
+        }
+      }
+    },
+    "ForEachStatus":{
+      "type":"string",
+      "enum":[
+        "Succeeded",
+        "Failed",
+        "Stopped"
+      ]
+    },
+    "ForEachStepMetadata":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"ForEachStatus"},
+        "InputItemCount":{
+          "shape":"Integer",
+          "box":true
+        },
+        "TotalStepCount":{
+          "shape":"Integer",
+          "box":true
+        },
+        "SucceededStepCount":{
+          "shape":"Integer",
+          "box":true
+        },
+        "FailedStepCount":{
+          "shape":"Integer",
+          "box":true
+        },
+        "StoppedStepCount":{
+          "shape":"Integer",
+          "box":true
+        },
+        "Selector":{"shape":"ForEachSelectorResult"}
+      }
     },
     "ForecastFrequency":{
       "type":"string",
@@ -19608,6 +19716,17 @@
       "type":"string",
       "max":256,
       "min":1
+    },
+    "IterationContext":{
+      "type":"structure",
+      "members":{
+        "ParentStepName":{"shape":"String256"},
+        "Index":{
+          "shape":"Integer",
+          "box":true
+        },
+        "Item":{"shape":"String12800"}
+      }
     },
     "JavaBoolean":{
       "type":"boolean",
@@ -25479,7 +25598,8 @@
         "Stopping",
         "Stopped",
         "Failed",
-        "Succeeded"
+        "Succeeded",
+        "CompletedWithFailures"
       ]
     },
     "PipelineExecutionStep":{
@@ -25498,7 +25618,8 @@
           "shape":"Integer",
           "box":true
         },
-        "SelectiveExecutionResult":{"shape":"SelectiveExecutionResult"}
+        "SelectiveExecutionResult":{"shape":"SelectiveExecutionResult"},
+        "IterationContext":{"shape":"IterationContext"}
       }
     },
     "PipelineExecutionStepList":{
@@ -25520,6 +25641,7 @@
         "Callback":{"shape":"CallbackStepMetadata"},
         "Lambda":{"shape":"LambdaStepMetadata"},
         "EMR":{"shape":"EMRStepMetadata"},
+        "EMRServerless":{"shape":"EMRServerlessStepMetadata"},
         "QualityCheck":{"shape":"QualityCheckStepMetadata"},
         "ClarifyCheck":{"shape":"ClarifyCheckStepMetadata"},
         "Fail":{"shape":"FailStepMetadata"},
@@ -25532,7 +25654,10 @@
         "BedrockModelImport":{"shape":"BedrockModelImportMetadata"},
         "InferenceComponent":{"shape":"InferenceComponentMetadata"},
         "Lineage":{"shape":"LineageMetadata"},
-        "Job":{"shape":"JobStepMetadata"}
+        "Job":{"shape":"JobStepMetadata"},
+        "Athena":{"shape":"AthenaStepMetadata"},
+        "Cleanup":{"shape":"CleanupStepMetadata"},
+        "ForEach":{"shape":"ForEachStepMetadata"}
       }
     },
     "PipelineExecutionSummary":{
@@ -29519,6 +29644,11 @@
     "String128":{
       "type":"string",
       "max":128,
+      "min":0
+    },
+    "String12800":{
+      "type":"string",
+      "max":12800,
       "min":0
     },
     "String200":{
