@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\GuardDuty` - Releasing support for Custom Detection Rule Runtime Monitoring
+* `Aws\Lambda` - AWS Lambda now supports an optional X-Ray trace header for chained invocations in durable executions, enabling child invocations to be linked to the initiating span.
+* `Aws\MarketplaceMetering` - Documentation update - added a Get started pointer to the AWS Marketplace AI Metering Agent Skill in the BatchMeterUsage API reference. No API or behavior change.
+* `Aws\BedrockAgentCoreControl` - This release supports scoping Amazon Bedrock AgentCore Gateway rate limits by request header or request body field.
+* `Aws\Organizations` - With dual-stack enabled, all requests now resolve to the endpoint in the partition's primary Region (for example, organizations.us-east-1.api.aws) and are signed for that Region. Previously, requests from other Regions resolved to a nonexistent endpoint. No API changes.
+* `Aws\ARCRegionSwitch` - Features - Adds support for an optional payload to invoke the Lambda function with as part of the Custom action Lambda execution block
+* `Aws\EC2` - Adds T8i instance sizes to the InstanceType enum. T8i instances are low-cost burstable instances powered by custom sixth generation Intel Xeon 6 processors, available exclusively on AWS, and built on the latest sixth generation AWS Nitro cards
+* `Aws\DynamoDBStreams` - Add support for a new iterator type (AT TIMESTAMP) for DynamoDB Streams GetShardIterator API that allows reading from a specific point in time from the stream.
+* `Aws\Transfer` - AWS Transfer Family now lets you store SFTP server host keys in AWS Secrets Manager in your own AWS account. This gives you greater control over your server identity and helps simplify server migrations and failover.
+* `Aws\CloudFront` - This release adds a new "IpAddressType" field to "VPCOriginEndpointConfig", allowing customers to specify whether their VPC origin accepts IPv4-only or dualstack connections.
+* `Aws\imagebuilder` - This release adds parentInstance to infrastructure configurations, so builds can use an already-running instance from an Amazon EC2 Auto Scaling group. It also adds terminateInstanceOnCompletion, which keeps build and test instances running after image creation ends.
+
 ## 3.401.1 - 2026-10-13
 
 * `Aws\Retries` - retry_mode and max_attempts are now resolved independently, so a value set in the environment no longer hides the other value in the shared config file. The shared config file lookup now also honors [profile name] sections, and an invalid retry_mode or max_attempts in the shared config file now raises a ConfigurationException, as it already did for environment variables. On the opt-in retry path (AWS_NEW_RETRIES_2026), DynamoDB and DynamoDB Streams use the DynamoDB attempt defaults (4 in standard/adaptive mode, 11 in legacy mode) when max_attempts is not set, and DynamoDbStreamsClient applies the same defaults as DynamoDbClient.

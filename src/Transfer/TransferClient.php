@@ -195,6 +195,7 @@ use Aws\AwsClient;
  *     StructuredLogDestinations?: list<string>,
  *     S3StorageOptions?: array{DirectoryListingOptimization?: 'DISABLED'|'ENABLED', ...},
  *     IpAddressType?: 'DUALSTACK'|'IPV4',
+ *     HostKeyStorageType?: 'SECRETS_MANAGER'|'SERVICE_MANAGED',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createServerAsync(array $args = [])
@@ -239,6 +240,7 @@ use Aws\AwsClient;
  *     StructuredLogDestinations?: list<string>,
  *     S3StorageOptions?: array{DirectoryListingOptimization?: 'DISABLED'|'ENABLED', ...},
  *     IpAddressType?: 'DUALSTACK'|'IPV4',
+ *     HostKeyStorageType?: 'SECRETS_MANAGER'|'SERVICE_MANAGED',
  *     ...,
  * } $args = [])
  * @method \Aws\Result createUser(array $args = [])
@@ -487,6 +489,8 @@ use Aws\AwsClient;
  *     HostKeyBody?: string,
  *     Description?: string,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     StorageType?: 'SECRETS_MANAGER'|'SERVICE_MANAGED',
+ *     KmsKey?: string,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise importHostKeyAsync(array $args = [])
@@ -495,6 +499,8 @@ use Aws\AwsClient;
  *     HostKeyBody?: string,
  *     Description?: string,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     StorageType?: 'SECRETS_MANAGER'|'SERVICE_MANAGED',
+ *     KmsKey?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result importSshPublicKey(array $args = [])
@@ -780,9 +786,23 @@ use Aws\AwsClient;
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateHostKey(array $args = [])
- * @phpstan-method \Aws\Result updateHostKey(array{ServerId?: string, HostKeyId?: string, Description?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result updateHostKey(array{
+ *     ServerId?: string,
+ *     HostKeyId?: string,
+ *     Description?: string,
+ *     StorageType?: 'SECRETS_MANAGER'|'SERVICE_MANAGED',
+ *     KmsKey?: string,
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateHostKeyAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise updateHostKeyAsync(array{ServerId?: string, HostKeyId?: string, Description?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateHostKeyAsync(array{
+ *     ServerId?: string,
+ *     HostKeyId?: string,
+ *     Description?: string,
+ *     StorageType?: 'SECRETS_MANAGER'|'SERVICE_MANAGED',
+ *     KmsKey?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result updateProfile(array $args = [])
  * @phpstan-method \Aws\Result updateProfile(array{ProfileId?: string, CertificateIds?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise updateProfileAsync(array $args = [])

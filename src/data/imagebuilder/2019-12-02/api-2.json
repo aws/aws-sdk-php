@@ -1526,6 +1526,14 @@
         "failureCount":{"shape":"AutoDisableFailureCount"}
       }
     },
+    "AutoScalingGroupConfiguration":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{"shape":"NonEmptyString"},
+        "capacityWaitTimeoutSeconds":{"shape":"CapacityWaitTimeoutSeconds"}
+      }
+    },
     "Boolean":{"type":"boolean"},
     "BuildType":{
       "type":"string",
@@ -1585,6 +1593,11 @@
       "members":{
         "lifecycleExecutionId":{"shape":"LifecycleExecutionId"}
       }
+    },
+    "CapacityWaitTimeoutSeconds":{
+      "type":"integer",
+      "max":3600,
+      "min":0
     },
     "ClientException":{
       "type":"structure",
@@ -2093,11 +2106,13 @@
         "logging":{"shape":"Logging"},
         "keyPair":{"shape":"NonEmptyString"},
         "terminateInstanceOnFailure":{"shape":"NullableBoolean"},
+        "terminateInstanceOnCompletion":{"shape":"NullableBoolean"},
         "snsTopicArn":{"shape":"SnsTopicArn"},
         "resourceTags":{"shape":"ResourceTagMap"},
         "instanceMetadataOptions":{"shape":"InstanceMetadataOptions"},
         "tags":{"shape":"TagMap"},
         "placement":{"shape":"Placement"},
+        "parentInstance":{"shape":"ParentInstanceConfiguration"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -3446,7 +3461,9 @@
         "resourceTags":{"shape":"ResourceTagMap"},
         "instanceMetadataOptions":{"shape":"InstanceMetadataOptions"},
         "tags":{"shape":"TagMap"},
-        "placement":{"shape":"Placement"}
+        "placement":{"shape":"Placement"},
+        "terminateInstanceOnCompletion":{"shape":"NullableBoolean"},
+        "parentInstance":{"shape":"ParentInstanceConfiguration"}
       }
     },
     "InfrastructureConfigurationArn":{
@@ -4492,6 +4509,13 @@
       "min":1,
       "pattern":"^[A-Za-z0-9][A-Za-z0-9-_+#]{0,99}$"
     },
+    "ParentInstanceConfiguration":{
+      "type":"structure",
+      "required":["autoScalingGroup"],
+      "members":{
+        "autoScalingGroup":{"shape":"AutoScalingGroupConfiguration"}
+      }
+    },
     "PipelineExecutionStartCondition":{
       "type":"string",
       "enum":[
@@ -5155,10 +5179,12 @@
         "logging":{"shape":"Logging"},
         "keyPair":{"shape":"NonEmptyString"},
         "terminateInstanceOnFailure":{"shape":"NullableBoolean"},
+        "terminateInstanceOnCompletion":{"shape":"NullableBoolean"},
         "snsTopicArn":{"shape":"SnsTopicArn"},
         "resourceTags":{"shape":"ResourceTagMap"},
         "instanceMetadataOptions":{"shape":"InstanceMetadataOptions"},
         "placement":{"shape":"Placement"},
+        "parentInstance":{"shape":"ParentInstanceConfiguration"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true

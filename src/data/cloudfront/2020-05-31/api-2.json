@@ -12536,6 +12536,13 @@
         "redirect-to-https"
       ]
     },
+    "VpcIpAddressType":{
+      "type":"string",
+      "enum":[
+        "ipv4",
+        "dualstack"
+      ]
+    },
     "VpcOrigin":{
       "type":"structure",
       "required":[
@@ -12581,7 +12588,8 @@
         "HTTPPort":{"shape":"integer"},
         "HTTPSPort":{"shape":"integer"},
         "OriginProtocolPolicy":{"shape":"OriginProtocolPolicy"},
-        "OriginSslProtocols":{"shape":"OriginSslProtocols"}
+        "OriginSslProtocols":{"shape":"OriginSslProtocols"},
+        "IpAddressType":{"shape":"VpcIpAddressType"}
       }
     },
     "VpcOriginList":{
@@ -12620,7 +12628,8 @@
         "LastModifiedTime":{"shape":"timestamp"},
         "Arn":{"shape":"string"},
         "AccountId":{"shape":"string"},
-        "OriginEndpointArn":{"shape":"string"}
+        "OriginEndpointArn":{"shape":"string"},
+        "IpAddressType":{"shape":"VpcIpAddressType"}
       }
     },
     "VpcOriginSummaryList":{

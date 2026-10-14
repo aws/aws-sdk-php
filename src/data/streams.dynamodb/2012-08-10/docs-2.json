@@ -54,7 +54,7 @@
       "base": null,
       "refs": {
         "StreamDescription$CreationRequestDateTime": "<p>The date and time when the request to create this stream was issued.</p>",
-        "StreamRecord$ApproximateCreationDateTime": "<p>The approximate date and time when the stream record was created, in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\">ISO 8601</a> format and rounded down to the closest second.</p>"
+        "StreamRecord$ApproximateCreationDateTime": "<p>The approximate date and time when the stream record was created, in <a href=\"http://www.epochconverter.com/\">UNIX epoch time</a> format and rounded down to the closest second. Some tools and SDKs may convert this value to a different format, such as <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\">ISO 8601</a>.</p>"
       }
     },
     "DescribeStreamInput": {
@@ -269,7 +269,7 @@
     "ShardIteratorType": {
       "base": null,
       "refs": {
-        "GetShardIteratorInput$ShardIteratorType": "<p>Determines how the shard iterator is used to start reading stream records from the shard:</p> <ul> <li> <p> <code>AT_SEQUENCE_NUMBER</code> - Start reading exactly from the position denoted by a specific sequence number.</p> </li> <li> <p> <code>AFTER_SEQUENCE_NUMBER</code> - Start reading right after the position denoted by a specific sequence number.</p> </li> <li> <p> <code>TRIM_HORIZON</code> - Start reading at the last (untrimmed) stream record, which is the oldest record in the shard. In DynamoDB Streams, there is a 24 hour limit on data retention. Stream records whose age exceeds this limit are subject to removal (trimming) from the stream.</p> </li> <li> <p> <code>LATEST</code> - Start reading just after the most recent stream record in the shard, so that you always read the most recent data in the shard.</p> </li> </ul>"
+        "GetShardIteratorInput$ShardIteratorType": "<p>Determines how the shard iterator is used to start reading stream records from the shard:</p> <ul> <li> <p> <code>AT_SEQUENCE_NUMBER</code> - Start reading exactly from the position denoted by a specific sequence number.</p> </li> <li> <p> <code>AFTER_SEQUENCE_NUMBER</code> - Start reading right after the position denoted by a specific sequence number.</p> </li> <li> <p> <code>TRIM_HORIZON</code> - Start reading at the last (untrimmed) stream record, which is the oldest record in the shard. In DynamoDB Streams, there is a 24 hour limit on data retention. Stream records whose age exceeds this limit are subject to removal (trimming) from the stream.</p> </li> <li> <p> <code>LATEST</code> - Start reading just after the most recent stream record in the shard, so that you always read the most recent data in the shard.</p> </li> <li> <p> <code>AT_TIMESTAMP</code> - Start reading from the position denoted by a specific timestamp, provided in the parameter <code>Timestamp</code>.</p> </li> </ul>"
       }
     },
     "Stream": {
@@ -352,6 +352,12 @@
         "ListStreamsInput$TableName": "<p>If this parameter is provided, then only the streams associated with this table name are returned.</p>",
         "Stream$TableName": "<p>The DynamoDB table with which the stream is associated.</p>",
         "StreamDescription$TableName": "<p>The DynamoDB table with which the stream is associated.</p>"
+      }
+    },
+    "Timestamp": {
+      "base": null,
+      "refs": {
+        "GetShardIteratorInput$Timestamp": "<p>The timestamp of the stream record from which to start reading. Used with shard iterator type <code>AT_TIMESTAMP</code>. A timestamp is the Unix epoch date with precision in milliseconds. For example, <code>1791316726.480</code>. The iterator points to the first stream record whose <code>ApproximateCreationDateTime</code> is at or after the specified timestamp. If no record with that exact timestamp exists, the iterator points to the next (later) record. If the timestamp is older than the current trim horizon, the iterator points to the oldest untrimmed stream record (<code>TRIM_HORIZON</code>). If the timestamp is in the future, the request returns a <code>ValidationException</code>.</p>"
       }
     },
     "TrimmedDataAccessException": {

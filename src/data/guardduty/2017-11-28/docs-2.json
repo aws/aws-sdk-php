@@ -1264,6 +1264,14 @@
         "UpdateCustomDetectionRuleOrgConfigurationRequest$ExcludeAccountIds": "<p>The account IDs to exclude from the organization configuration. Mutually exclusive with <code>IncludeAccountIds</code>.</p>"
       }
     },
+    "DetectionRuleAgentVersion": {
+      "base": null,
+      "refs": {
+        "DetectionRuleEc2Requirements$MinAgentVersion": "<p>The minimum GuardDuty agent version required to run the rule on Amazon EC2.</p>",
+        "DetectionRuleEcsFargateRequirements$MinAgentVersion": "<p>The minimum GuardDuty agent version required to run the rule on Amazon ECS with the Fargate launch type.</p>",
+        "DetectionRuleEksRequirements$MinAgentVersion": "<p>The minimum GuardDuty agent version required to run the rule on Amazon EKS.</p>"
+      }
+    },
     "DetectionRuleArn": {
       "base": null,
       "refs": {
@@ -1293,6 +1301,24 @@
       "refs": {
         "RuleDetail$Description": "<p>A description of what the rule detects.</p>",
         "RuleSummary$Description": "<p>A description of what the rule detects.</p>"
+      }
+    },
+    "DetectionRuleEc2Requirements": {
+      "base": "<p>The requirements for running a Runtime Monitoring custom detection rule on Amazon EC2.</p>",
+      "refs": {
+        "DetectionRuleRuntimePlatforms$Ec2": "<p>The requirements for running the rule on Amazon EC2.</p>"
+      }
+    },
+    "DetectionRuleEcsFargateRequirements": {
+      "base": "<p>The requirements for running a Runtime Monitoring custom detection rule on Amazon ECS with the Fargate launch type.</p>",
+      "refs": {
+        "DetectionRuleRuntimePlatforms$EcsFargate": "<p>The requirements for running the rule on Amazon ECS with the Fargate launch type.</p>"
+      }
+    },
+    "DetectionRuleEksRequirements": {
+      "base": "<p>The requirements for running a Runtime Monitoring custom detection rule on Amazon EKS.</p>",
+      "refs": {
+        "DetectionRuleRuntimePlatforms$Eks": "<p>The requirements for running the rule on Amazon EKS.</p>"
       }
     },
     "DetectionRuleFilter": {
@@ -1349,6 +1375,18 @@
       "base": null,
       "refs": {
         "ListCustomDetectionRuleOrgConfigurationsResponse$Configurations": "<p>A list of organization configurations for custom detection rules.</p>"
+      }
+    },
+    "DetectionRuleRuntimeMonitoringDetails": {
+      "base": "<p>Contains Runtime Monitoring-specific details for a custom detection rule.</p>",
+      "refs": {
+        "RuleDetail$RuntimeMonitoringDetails": "<p>Runtime Monitoring-specific details for the rule, including the platforms on which the rule can run and the minimum GuardDuty agent version required on each.</p>"
+      }
+    },
+    "DetectionRuleRuntimePlatforms": {
+      "base": "<p>The platforms on which a Runtime Monitoring custom detection rule can run. A member's presence is the support statement: when present, the rule runs on that platform and <code>minAgentVersion</code> is the minimum GuardDuty agent version required there. When absent, the rule cannot run on that platform at any agent version.</p>",
+      "refs": {
+        "DetectionRuleRuntimeMonitoringDetails$Platforms": "<p>The platforms on which the rule can run. The presence of a platform member indicates that the rule is supported on that platform; the absence of a member indicates that the rule cannot run on that platform at any agent version.</p>"
       }
     },
     "DetectionRuleServiceName": {
@@ -4522,6 +4560,7 @@
         "Finding$Title": "<p>The title of the finding.</p>",
         "Finding$UpdatedAt": "<p>The time and date when the finding was last updated.</p>",
         "Finding$AssociatedAttackSequenceArn": "<p>Amazon Resource Name (ARN) associated with the attack sequence finding.</p>",
+        "Finding$CustomDetectionRuleName": "<p>The name of the custom detection rule that generated this finding.</p>",
         "FindingTypeStatistics$FindingType": "<p>Name of the finding type.</p>",
         "FlagsList$member": null,
         "GetDetectorResponse$CreatedAt": "<p>The timestamp of when the detector was created.</p>",

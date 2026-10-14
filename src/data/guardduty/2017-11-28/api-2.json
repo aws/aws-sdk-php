@@ -4249,6 +4249,12 @@
       "max":50000,
       "min":0
     },
+    "DetectionRuleAgentVersion":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[0-9]+(\\.[0-9]+){1,3}"
+    },
     "DetectionRuleArn":{
       "type":"string",
       "max":1024,
@@ -4265,12 +4271,42 @@
     },
     "DetectionRuleDataSource":{
       "type":"string",
-      "enum":["CloudTrailManagementEvent"]
+      "enum":[
+        "CloudTrailManagementEvent",
+        "RuntimeMonitoring"
+      ]
     },
     "DetectionRuleDescription":{
       "type":"string",
       "max":1024,
       "min":1
+    },
+    "DetectionRuleEc2Requirements":{
+      "type":"structure",
+      "members":{
+        "MinAgentVersion":{
+          "shape":"DetectionRuleAgentVersion",
+          "locationName":"minAgentVersion"
+        }
+      }
+    },
+    "DetectionRuleEcsFargateRequirements":{
+      "type":"structure",
+      "members":{
+        "MinAgentVersion":{
+          "shape":"DetectionRuleAgentVersion",
+          "locationName":"minAgentVersion"
+        }
+      }
+    },
+    "DetectionRuleEksRequirements":{
+      "type":"structure",
+      "members":{
+        "MinAgentVersion":{
+          "shape":"DetectionRuleAgentVersion",
+          "locationName":"minAgentVersion"
+        }
+      }
     },
     "DetectionRuleFilter":{
       "type":"structure",
@@ -4417,6 +4453,32 @@
     "DetectionRuleOrgConfigurationSummaryList":{
       "type":"list",
       "member":{"shape":"DetectionRuleOrgConfigurationSummary"}
+    },
+    "DetectionRuleRuntimeMonitoringDetails":{
+      "type":"structure",
+      "members":{
+        "Platforms":{
+          "shape":"DetectionRuleRuntimePlatforms",
+          "locationName":"platforms"
+        }
+      }
+    },
+    "DetectionRuleRuntimePlatforms":{
+      "type":"structure",
+      "members":{
+        "Eks":{
+          "shape":"DetectionRuleEksRequirements",
+          "locationName":"eks"
+        },
+        "Ec2":{
+          "shape":"DetectionRuleEc2Requirements",
+          "locationName":"ec2"
+        },
+        "EcsFargate":{
+          "shape":"DetectionRuleEcsFargateRequirements",
+          "locationName":"ecsFargate"
+        }
+      }
     },
     "DetectionRuleServiceName":{
       "type":"string",
@@ -5353,6 +5415,10 @@
         "AssociatedAttackSequenceArn":{
           "shape":"String",
           "locationName":"associatedAttackSequenceArn"
+        },
+        "CustomDetectionRuleName":{
+          "shape":"String",
+          "locationName":"customDetectionRuleName"
         }
       }
     },
@@ -10154,6 +10220,10 @@
         "Schema":{
           "shape":"RuleSchema",
           "locationName":"schema"
+        },
+        "RuntimeMonitoringDetails":{
+          "shape":"DetectionRuleRuntimeMonitoringDetails",
+          "locationName":"runtimeMonitoringDetails"
         },
         "CreatedAt":{
           "shape":"Timestamp",

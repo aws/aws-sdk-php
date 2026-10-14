@@ -32,16 +32,18 @@ use Aws\Retry\V3\OptIn as NewRetriesOptIn;
  * @phpstan-method \Aws\Result getShardIterator(array{
  *     StreamArn?: string,
  *     ShardId?: string,
- *     ShardIteratorType?: 'AFTER_SEQUENCE_NUMBER'|'AT_SEQUENCE_NUMBER'|'LATEST'|'TRIM_HORIZON',
+ *     ShardIteratorType?: 'AFTER_SEQUENCE_NUMBER'|'AT_SEQUENCE_NUMBER'|'AT_TIMESTAMP'|'LATEST'|'TRIM_HORIZON',
  *     SequenceNumber?: string,
+ *     Timestamp?: int|string|\DateTimeInterface,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise getShardIteratorAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getShardIteratorAsync(array{
  *     StreamArn?: string,
  *     ShardId?: string,
- *     ShardIteratorType?: 'AFTER_SEQUENCE_NUMBER'|'AT_SEQUENCE_NUMBER'|'LATEST'|'TRIM_HORIZON',
+ *     ShardIteratorType?: 'AFTER_SEQUENCE_NUMBER'|'AT_SEQUENCE_NUMBER'|'AT_TIMESTAMP'|'LATEST'|'TRIM_HORIZON',
  *     SequenceNumber?: string,
+ *     Timestamp?: int|string|\DateTimeInterface,
  *     ...,
  * } $args = [])
  * @method \Aws\Result listStreams(array $args = [])

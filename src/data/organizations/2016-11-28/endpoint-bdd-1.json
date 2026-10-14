@@ -1,12 +1,6 @@
 {
     "version": "1.1",
     "parameters": {
-        "Region": {
-            "builtIn": "AWS::Region",
-            "required": false,
-            "documentation": "The AWS region used to dispatch the request.",
-            "type": "string"
-        },
         "UseDualStack": {
             "builtIn": "AWS::UseDualStack",
             "required": true,
@@ -25,6 +19,12 @@
             "builtIn": "SDK::Endpoint",
             "required": false,
             "documentation": "Override the endpoint used to send this request",
+            "type": "string"
+        },
+        "Region": {
+            "builtIn": "AWS::Region",
+            "required": false,
+            "documentation": "The AWS region used to dispatch the request.",
             "type": "string"
         }
     },
@@ -73,51 +73,6 @@
             ]
         },
         {
-            "fn": "booleanEquals",
-            "argv": [
-                {
-                    "fn": "getAttr",
-                    "argv": [
-                        {
-                            "ref": "PartitionResult"
-                        },
-                        "supportsDualStack"
-                    ]
-                },
-                true
-            ]
-        },
-        {
-            "fn": "stringEquals",
-            "argv": [
-                {
-                    "fn": "getAttr",
-                    "argv": [
-                        {
-                            "ref": "PartitionResult"
-                        },
-                        "name"
-                    ]
-                },
-                "aws"
-            ]
-        },
-        {
-            "fn": "stringEquals",
-            "argv": [
-                {
-                    "fn": "getAttr",
-                    "argv": [
-                        {
-                            "ref": "PartitionResult"
-                        },
-                        "name"
-                    ]
-                },
-                "aws-cn"
-            ]
-        },
-        {
             "fn": "stringEquals",
             "argv": [
                 {
@@ -130,21 +85,6 @@
                     ]
                 },
                 "aws-us-gov"
-            ]
-        },
-        {
-            "fn": "stringEquals",
-            "argv": [
-                {
-                    "fn": "getAttr",
-                    "argv": [
-                        {
-                            "ref": "PartitionResult"
-                        },
-                        "name"
-                    ]
-                },
-                "aws-iso"
             ]
         },
         {
@@ -163,7 +103,7 @@
             ]
         },
         {
-            "fn": "stringEquals",
+            "fn": "booleanEquals",
             "argv": [
                 {
                     "fn": "getAttr",
@@ -171,25 +111,10 @@
                         {
                             "ref": "PartitionResult"
                         },
-                        "name"
+                        "supportsDualStack"
                     ]
                 },
-                "aws-iso-b"
-            ]
-        },
-        {
-            "fn": "stringEquals",
-            "argv": [
-                {
-                    "fn": "getAttr",
-                    "argv": [
-                        {
-                            "ref": "PartitionResult"
-                        },
-                        "name"
-                    ]
-                },
-                "aws-iso-f"
+                true
             ]
         }
     ],
@@ -218,63 +143,11 @@
         {
             "conditions": [],
             "endpoint": {
-                "url": "https://organizations.us-east-1.amazonaws.com",
-                "properties": {
-                    "authSchemes": [
-                        {
-                            "name": "sigv4",
-                            "signingName": "organizations",
-                            "signingRegion": "us-east-1"
-                        }
-                    ]
-                },
-                "headers": {}
-            },
-            "type": "endpoint"
-        },
-        {
-            "conditions": [],
-            "endpoint": {
-                "url": "https://organizations-fips.us-east-1.amazonaws.com",
-                "properties": {
-                    "authSchemes": [
-                        {
-                            "name": "sigv4",
-                            "signingName": "organizations",
-                            "signingRegion": "us-east-1"
-                        }
-                    ]
-                },
-                "headers": {}
-            },
-            "type": "endpoint"
-        },
-        {
-            "conditions": [],
-            "endpoint": {
-                "url": "https://organizations.cn-northwest-1.amazonaws.com.cn",
-                "properties": {
-                    "authSchemes": [
-                        {
-                            "name": "sigv4",
-                            "signingName": "organizations",
-                            "signingRegion": "cn-northwest-1"
-                        }
-                    ]
-                },
-                "headers": {}
-            },
-            "type": "endpoint"
-        },
-        {
-            "conditions": [],
-            "endpoint": {
                 "url": "https://organizations.us-gov-west-1.amazonaws.com",
                 "properties": {
                     "authSchemes": [
                         {
                             "name": "sigv4",
-                            "signingName": "organizations",
                             "signingRegion": "us-gov-west-1"
                         }
                     ]
@@ -286,13 +159,12 @@
         {
             "conditions": [],
             "endpoint": {
-                "url": "https://organizations.us-iso-east-1.c2s.ic.gov",
+                "url": "https://organizations.us-gov-west-1.api.aws",
                 "properties": {
                     "authSchemes": [
                         {
                             "name": "sigv4",
-                            "signingName": "organizations",
-                            "signingRegion": "us-iso-east-1"
+                            "signingRegion": "us-gov-west-1"
                         }
                     ]
                 },
@@ -303,42 +175,15 @@
         {
             "conditions": [],
             "endpoint": {
-                "url": "https://organizations.us-isob-east-1.sc2s.sgov.gov",
+                "url": "https://organizations-fips.{PartitionResult#implicitGlobalRegion}.{PartitionResult#dualStackDnsSuffix}",
                 "properties": {
                     "authSchemes": [
                         {
                             "name": "sigv4",
-                            "signingName": "organizations",
-                            "signingRegion": "us-isob-east-1"
+                            "signingRegion": "{PartitionResult#implicitGlobalRegion}"
                         }
                     ]
                 },
-                "headers": {}
-            },
-            "type": "endpoint"
-        },
-        {
-            "conditions": [],
-            "endpoint": {
-                "url": "https://organizations.us-isof-south-1.csp.hci.ic.gov",
-                "properties": {
-                    "authSchemes": [
-                        {
-                            "name": "sigv4",
-                            "signingName": "organizations",
-                            "signingRegion": "us-isof-south-1"
-                        }
-                    ]
-                },
-                "headers": {}
-            },
-            "type": "endpoint"
-        },
-        {
-            "conditions": [],
-            "endpoint": {
-                "url": "https://organizations-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
-                "properties": {},
                 "headers": {}
             },
             "type": "endpoint"
@@ -351,8 +196,15 @@
         {
             "conditions": [],
             "endpoint": {
-                "url": "https://organizations-fips.{Region}.{PartitionResult#dnsSuffix}",
-                "properties": {},
+                "url": "https://organizations-fips.{PartitionResult#implicitGlobalRegion}.{PartitionResult#dnsSuffix}",
+                "properties": {
+                    "authSchemes": [
+                        {
+                            "name": "sigv4",
+                            "signingRegion": "{PartitionResult#implicitGlobalRegion}"
+                        }
+                    ]
+                },
                 "headers": {}
             },
             "type": "endpoint"
@@ -365,8 +217,15 @@
         {
             "conditions": [],
             "endpoint": {
-                "url": "https://organizations.{Region}.{PartitionResult#dualStackDnsSuffix}",
-                "properties": {},
+                "url": "https://organizations.{PartitionResult#implicitGlobalRegion}.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {
+                    "authSchemes": [
+                        {
+                            "name": "sigv4",
+                            "signingRegion": "{PartitionResult#implicitGlobalRegion}"
+                        }
+                    ]
+                },
                 "headers": {}
             },
             "type": "endpoint"
@@ -379,8 +238,15 @@
         {
             "conditions": [],
             "endpoint": {
-                "url": "https://organizations.{Region}.{PartitionResult#dnsSuffix}",
-                "properties": {},
+                "url": "https://organizations.{PartitionResult#implicitGlobalRegion}.{PartitionResult#dnsSuffix}",
+                "properties": {
+                    "authSchemes": [
+                        {
+                            "name": "sigv4",
+                            "signingRegion": "{PartitionResult#implicitGlobalRegion}"
+                        }
+                    ]
+                },
                 "headers": {}
             },
             "type": "endpoint"
@@ -392,6 +258,6 @@
         }
     ],
     "root": 2,
-    "nodeCount": 21,
-    "nodes": "/////wAAAAH/////AAAAAAAAABQAAAADAAAAAQAAAAQF9eESAAAAAgAAAAUF9eESAAAAAwAAAA4AAAAGAAAABAAAAA0AAAAHAAAABgX14QQAAAAIAAAABwX14QYAAAAJAAAACAX14QcAAAAKAAAACQX14QgAAAALAAAACwX14QkAAAAMAAAADAX14QoF9eERAAAABQX14Q8F9eEQAAAABAAAABIAAAAPAAAABgX14QUAAAAQAAAACAX14QcAAAARAAAACgX14Q0F9eEOAAAABQAAABMF9eEMAAAACgX14QsF9eEMAAAAAwX14QEAAAAVAAAABAX14QIF9eED"
+    "nodeCount": 15,
+    "nodes": "/////wAAAAH/////AAAAAAAAAA4AAAADAAAAAQAAAAQF9eENAAAAAgAAAAUF9eENAAAAAwAAAAgAAAAGAAAABAAAAAcF9eEMAAAABwX14QoF9eELAAAABAAAAAsAAAAJAAAABQX14QQAAAAKAAAABgX14QgF9eEJAAAABQX14QUAAAAMAAAABgAAAA0F9eEHAAAABwX14QYF9eEHAAAAAwX14QEAAAAPAAAABAX14QIF9eED"
 }

@@ -7185,9 +7185,9 @@
     },
     "DimensionKey":{
       "type":"string",
-      "max":80,
+      "max":128,
       "min":1,
-      "pattern":"(targetName|toolName|qualifiedModelId|\\$\\.context\\.iam\\.principal|\\$\\.context\\.iam\\.sourceIdentity|\\$\\.context\\.jwt\\.[a-zA-Z_][a-zA-Z0-9_\\-\\.]{0,61}[a-zA-Z0-9_])"
+      "pattern":"(targetName|toolName|qualifiedModelId|\\$\\.context\\.iam\\.principal|\\$\\.context\\.iam\\.sourceIdentity|\\$\\.context\\.jwt\\.[a-zA-Z_][a-zA-Z0-9_\\-\\.]{0,61}[a-zA-Z0-9_]|\\$\\.context\\.request\\.header\\.[a-zA-Z0-9!#$%&'+\\.\\^_`|~\\-]+|\\$\\.context\\.request\\.body\\.[a-zA-Z_][a-zA-Z0-9_\\-]*(\\.[a-zA-Z_][a-zA-Z0-9_\\-]*)*)"
     },
     "DimensionKeys":{
       "type":"list",

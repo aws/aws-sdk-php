@@ -154,7 +154,8 @@
         "StreamArn":{"shape":"StreamArn"},
         "ShardId":{"shape":"ShardId"},
         "ShardIteratorType":{"shape":"ShardIteratorType"},
-        "SequenceNumber":{"shape":"SequenceNumber"}
+        "SequenceNumber":{"shape":"SequenceNumber"},
+        "Timestamp":{"shape":"Timestamp"}
       }
     },
     "GetShardIteratorOutput":{
@@ -181,7 +182,6 @@
     "KeySchema":{
       "type":"list",
       "member":{"shape":"KeySchemaElement"},
-      "max":2,
       "min":1
     },
     "KeySchemaAttributeName":{
@@ -334,7 +334,8 @@
         "TRIM_HORIZON",
         "LATEST",
         "AT_SEQUENCE_NUMBER",
-        "AFTER_SEQUENCE_NUMBER"
+        "AFTER_SEQUENCE_NUMBER",
+        "AT_TIMESTAMP"
       ]
     },
     "Stream":{
@@ -410,6 +411,7 @@
       "min":3,
       "pattern":"[a-zA-Z0-9_.-]+"
     },
+    "Timestamp":{"type":"timestamp"},
     "TrimmedDataAccessException":{
       "type":"structure",
       "members":{

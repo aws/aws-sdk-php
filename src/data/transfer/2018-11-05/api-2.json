@@ -1529,7 +1529,8 @@
         "WorkflowDetails":{"shape":"WorkflowDetails"},
         "StructuredLogDestinations":{"shape":"StructuredLogDestinations"},
         "S3StorageOptions":{"shape":"S3StorageOptions"},
-        "IpAddressType":{"shape":"IpAddressType"}
+        "IpAddressType":{"shape":"IpAddressType"},
+        "HostKeyStorageType":{"shape":"HostKeyStorageType"}
       }
     },
     "CreateServerResponse":{
@@ -2140,7 +2141,9 @@
         "Description":{"shape":"HostKeyDescription"},
         "Type":{"shape":"HostKeyType"},
         "DateImported":{"shape":"DateImported"},
-        "Tags":{"shape":"Tags"}
+        "Tags":{"shape":"Tags"},
+        "StorageType":{"shape":"HostKeyStorageType"},
+        "SecretId":{"shape":"SecretId"}
       }
     },
     "DescribedIdentityCenterConfig":{
@@ -2522,6 +2525,13 @@
       "min":25,
       "pattern":"hostkey-[0-9a-f]{17}"
     },
+    "HostKeyStorageType":{
+      "type":"string",
+      "enum":[
+        "SERVICE_MANAGED",
+        "SECRETS_MANAGER"
+      ]
+    },
     "HostKeyType":{"type":"string"},
     "IdentityCenterApplicationArn":{
       "type":"string",
@@ -2595,7 +2605,9 @@
         "ServerId":{"shape":"ServerId"},
         "HostKeyBody":{"shape":"HostKey"},
         "Description":{"shape":"HostKeyDescription"},
-        "Tags":{"shape":"Tags"}
+        "Tags":{"shape":"Tags"},
+        "StorageType":{"shape":"HostKeyStorageType"},
+        "KmsKey":{"shape":"KmsKey"}
       }
     },
     "ImportHostKeyResponse":{
@@ -2673,6 +2685,12 @@
         "IPV4",
         "DUALSTACK"
       ]
+    },
+    "KmsKey":{
+      "type":"string",
+      "max":1600,
+      "min":20,
+      "pattern":"arn:\\S+"
     },
     "ListAccessesRequest":{
       "type":"structure",
@@ -2999,7 +3017,9 @@
         "Fingerprint":{"shape":"HostKeyFingerprint"},
         "Description":{"shape":"HostKeyDescription"},
         "Type":{"shape":"HostKeyType"},
-        "DateImported":{"shape":"DateImported"}
+        "DateImported":{"shape":"DateImported"},
+        "StorageType":{"shape":"HostKeyStorageType"},
+        "SecretId":{"shape":"SecretId"}
       }
     },
     "ListedHostKeys":{
@@ -4055,13 +4075,14 @@
       "type":"structure",
       "required":[
         "ServerId",
-        "HostKeyId",
-        "Description"
+        "HostKeyId"
       ],
       "members":{
         "ServerId":{"shape":"ServerId"},
         "HostKeyId":{"shape":"HostKeyId"},
-        "Description":{"shape":"HostKeyDescription"}
+        "Description":{"shape":"HostKeyDescription"},
+        "StorageType":{"shape":"HostKeyStorageType"},
+        "KmsKey":{"shape":"KmsKey"}
       }
     },
     "UpdateHostKeyResponse":{

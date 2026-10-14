@@ -2126,7 +2126,8 @@
       "required":["FunctionName"],
       "members":{
         "FunctionName":{"shape":"NamespacedFunctionName"},
-        "TenantId":{"shape":"TenantId"}
+        "TenantId":{"shape":"TenantId"},
+        "XAmznTraceId":{"shape":"XAmznTraceId"}
       }
     },
     "ChainedInvokeStartedDetails":{
@@ -6282,7 +6283,7 @@
       "type":"string",
       "max":2048,
       "min":26,
-      "pattern":"arn:(aws[a-zA-Z-]*):lambda:(eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}::runtime:.+"
+      "pattern":"((arn:(aws[a-zA-Z-]*):lambda:(eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}::runtime:.+)|(arn:(aws[a-zA-Z-]*):lambda:(eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:runtime/[A-Za-z0-9_.-]{1,128}/version/[A-Za-z0-9_.-]{1,128}))"
     },
     "RuntimeVersionConfig":{
       "type":"structure",

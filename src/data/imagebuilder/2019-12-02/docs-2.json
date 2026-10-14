@@ -176,6 +176,12 @@
         "Schedule$autoDisablePolicy": "<p>The policy that configures when Image Builder should automatically disable a pipeline that is failing.</p>"
       }
     },
+    "AutoScalingGroupConfiguration": {
+      "base": "<p>Identifies the Amazon EC2 Auto Scaling group that Image Builder takes the build instance from, and how long Image Builder waits when the group has no instance available.</p>",
+      "refs": {
+        "ParentInstanceConfiguration$autoScalingGroup": "<p>The Amazon EC2 Auto Scaling group that Image Builder takes the build instance from. This is required when you specify <code>parentInstance</code>.</p>"
+      }
+    },
     "Boolean": {
       "base": null,
       "refs": {
@@ -231,6 +237,12 @@
     "CancelLifecycleExecutionResponse": {
       "base": null,
       "refs": {}
+    },
+    "CapacityWaitTimeoutSeconds": {
+      "base": null,
+      "refs": {
+        "AutoScalingGroupConfiguration$capacityWaitTimeoutSeconds": "<p>The number of seconds that Image Builder waits for an instance to become available in the group before the build fails. If you set this value to 0 or omit it, the build fails as soon as the group has no instance available.</p>"
+      }
     },
     "ClientException": {
       "base": "<p>A generic client error. This error usually indicates that the request failed a validation check, such as when a downstream service rejects a configured value.</p>",
@@ -2159,6 +2171,7 @@
         "Ami$accountId": "<p>The account ID of the owner of the AMI.</p>",
         "AmiDistributionConfiguration$description": "<p>The description to apply to the distributed AMI. Image Builder sets this as the output AMI's description in each target Region and account. If you don't specify a description, the AMI in the build Region uses the image recipe's description, if the recipe has one. Copies distributed to other Regions and accounts don't receive a default description.</p>",
         "AmiDistributionConfiguration$kmsKeyId": "<p>The Amazon Resource Name (ARN) that uniquely identifies the KMS key used to encrypt the distributed image. This can be either the Key ARN or the Alias ARN. For more information, see <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN\">Key identifiers (KeyId)</a> in the <i>Key Management Service Developer Guide</i>.</p>",
+        "AutoScalingGroupConfiguration$name": "<p>The name of the Auto Scaling group, in the same account and Amazon Web Services Region as the infrastructure configuration. To specify a group, you must have permissions to describe it.</p>",
         "CancelImageCreationResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
         "Component$description": "<p>The description of the component.</p>",
         "Component$changeDescription": "<p>Describes what change has been made in this version of the component, or what makes this version different from other versions of the component.</p>",
@@ -2395,6 +2408,7 @@
         "CreateImagePipelineRequest$enhancedImageMetadataEnabled": "<p>Specifies whether to collect additional information about the image being created, including the operating system (OS) version and package list. Defaults to <code>true</code>.</p>",
         "CreateImageRequest$enhancedImageMetadataEnabled": "<p>Specifies whether to collect additional information about the image being created, including the operating system (OS) version and package list. Defaults to <code>true</code>.</p>",
         "CreateInfrastructureConfigurationRequest$terminateInstanceOnFailure": "<p>Specifies whether to terminate the instance on failure. Set to false if you want Image Builder to retain the instance used to configure your AMI if the build or test phase of your workflow fails. Defaults to <code>true</code>.</p>",
+        "CreateInfrastructureConfigurationRequest$terminateInstanceOnCompletion": "<p>Specifies whether Image Builder terminates build and test instances when image creation ends without a failure (success, cancellation, or expiration). Defaults to <code>true</code>.</p>",
         "EbsInstanceBlockDeviceSpecification$encrypted": "<p>Specifies whether to encrypt the device.</p>",
         "EbsInstanceBlockDeviceSpecification$deleteOnTermination": "<p>Specifies whether to delete the associated device on termination.</p>",
         "Image$enhancedImageMetadataEnabled": "<p>Indicates whether Image Builder collects additional information about the image, such as the operating system (OS) version and package list.</p>",
@@ -2402,11 +2416,13 @@
         "ImageScanningConfiguration$imageScanningEnabled": "<p>Specifies whether Amazon Inspector scans for vulnerabilities when you create a new image, and whether Image Builder saves the findings. Amazon Inspector must be enabled in the account. Image tests must also be enabled. For AMI output, Amazon Inspector scans the test instance. For container output, Amazon Inspector scans the container image that Image Builder pushes to the Amazon ECR repository from your <code>ecrConfiguration</code> settings.</p>",
         "ImageTestsConfiguration$imageTestsEnabled": "<p>Specifies whether tests run after building the image. When enabled, tests run after the image build and before image distribution. Defaults to <code>true</code>.</p>",
         "InfrastructureConfiguration$terminateInstanceOnFailure": "<p>Indicates whether Image Builder terminates the build and test instances when the image build fails. When <code>false</code>, Image Builder retains the instance so that you can debug it.</p>",
+        "InfrastructureConfiguration$terminateInstanceOnCompletion": "<p>Specifies whether Image Builder terminates build and test instances when image creation ends without a failure.</p>",
         "ListImagesRequest$includeDeprecated": "<p>Specifies whether to include deprecated Amazon-managed images in the results. Deprecated images that you own are always returned. Defaults to <code>false</code>.</p>",
         "RegisterImageOptions$secureBootEnabled": "<p>Specifies whether Secure Boot is enabled for the output AMI. The default value is <code>true</code>. To disable Secure Boot for custom unsigned drivers, set this value to <code>false</code>.</p>",
         "SystemsManagerAgent$uninstallAfterBuild": "<p>Specifies whether the Systems Manager agent is removed from your final build image before Image Builder creates the new AMI. If <code>true</code>, the agent is removed. If <code>false</code>, the agent is kept, so that it's included in the AMI. If you don't set this property, Image Builder removes the agent only if Image Builder installed the agent during the build. An agent that was pre-installed on the base image is kept.</p>",
         "UpdateImagePipelineRequest$enhancedImageMetadataEnabled": "<p>Specifies whether to collect additional information about the image being created, including the operating system (OS) version and package list. Defaults to <code>true</code>.</p>",
         "UpdateInfrastructureConfigurationRequest$terminateInstanceOnFailure": "<p>Specifies whether to terminate the instance on failure. Set to false if you want Image Builder to retain the instance used to configure your AMI if the build or test phase of your workflow fails. Defaults to <code>true</code>.</p>",
+        "UpdateInfrastructureConfigurationRequest$terminateInstanceOnCompletion": "<p>Specifies whether Image Builder terminates build and test instances when image creation ends without a failure (success, cancellation, or expiration). Defaults to <code>true</code>.</p>",
         "WorkflowExecutionMetadata$retried": "<p>Indicates whether a retry of the image build superseded this runtime instance of the workflow. When you retry a failed image build, Image Builder sets this flag to <code>true</code> on the original workflow executions that the retry re-ran.</p>"
       }
     },
@@ -2547,6 +2563,14 @@
         "GetWorkflowExecutionResponse$parallelGroup": "<p>The name of the parallel group that this runtime instance of the workflow ran in, if configured. Parallel groups apply only to test workflows.</p>",
         "WorkflowConfiguration$parallelGroup": "<p>Test workflows are defined within named runtime groups called parallel groups. The parallel group is the named group that contains this test workflow. Test workflows within a parallel group can run at the same time. Image Builder starts up to five test workflows in the group at the same time, and starts additional workflows as others complete, until all workflows in the group have completed. This field only applies for test workflows.</p>",
         "WorkflowExecutionMetadata$parallelGroup": "<p>The name of the test group that included the test workflow resource at runtime.</p>"
+      }
+    },
+    "ParentInstanceConfiguration": {
+      "base": "<p>Settings for building on an instance that is already running, instead of an instance that Image Builder launches for the build.</p>",
+      "refs": {
+        "CreateInfrastructureConfigurationRequest$parentInstance": "<p>The Amazon EC2 Auto Scaling group that Image Builder takes the build instance from, instead of launching a new instance. This applies only to the build phase.</p> <p>To use this feature, the execution role for the build must have permissions to describe the Auto Scaling group, tag the instance while it's still in the group, and detach it from the group. For more information, see <a href=\"https://docs.aws.amazon.com/imagebuilder/latest/userguide/infra-config-parent-instance.html\">Build on an instance from an Auto Scaling group</a> in the <i>EC2 Image Builder User Guide</i>.</p>",
+        "InfrastructureConfiguration$parentInstance": "<p>The Amazon EC2 Auto Scaling group that Image Builder takes the build instance from, instead of launching a new instance. This applies only to the build phase.</p>",
+        "UpdateInfrastructureConfigurationRequest$parentInstance": "<p>The Amazon EC2 Auto Scaling group that Image Builder takes the build instance from, instead of launching a new instance. This applies only to the build phase.</p> <p>To use this feature, the execution role for the build must have permissions to describe the Auto Scaling group, tag the instance while it's still in the group, and detach it from the group. For more information, see <a href=\"https://docs.aws.amazon.com/imagebuilder/latest/userguide/infra-config-parent-instance.html\">Build on an instance from an Auto Scaling group</a> in the <i>EC2 Image Builder User Guide</i>.</p>"
       }
     },
     "PipelineExecutionStartCondition": {

@@ -1344,6 +1344,12 @@
       "max":2,
       "min":1
     },
+    "LambdaPayload":{
+      "type":"string",
+      "max":786432,
+      "min":1,
+      "sensitive":true
+    },
     "LambdaUngraceful":{
       "type":"structure",
       "members":{
@@ -1359,7 +1365,8 @@
       "members":{
         "crossAccountRole":{"shape":"IamRoleArn"},
         "externalId":{"shape":"String"},
-        "arn":{"shape":"LambdaArn"}
+        "arn":{"shape":"LambdaArn"},
+        "payload":{"shape":"LambdaPayload"}
       }
     },
     "ListExecutionEventsMaxResults":{
