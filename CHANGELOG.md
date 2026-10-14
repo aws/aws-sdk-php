@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.401.2 - 2026-10-14
 
 * `Aws\GuardDuty` - Releasing support for Custom Detection Rule Runtime Monitoring
 * `Aws\Lambda` - AWS Lambda now supports an optional X-Ray trace header for chained invocations in durable executions, enabling child invocations to be linked to the initiating span.
