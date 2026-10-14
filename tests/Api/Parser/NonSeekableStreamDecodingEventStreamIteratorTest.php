@@ -3,6 +3,7 @@
 namespace Aws\Test\Api\Parser;
 
 use Aws\Api\Parser\NonSeekableStreamDecodingEventStreamIterator;
+use GuzzleHttp\Psr7\BufferStream;
 use GuzzleHttp\Psr7\NoSeekStream;
 use GuzzleHttp\Psr7\StreamDecoratorTrait;
 use GuzzleHttp\Psr7\Utils;
@@ -72,6 +73,23 @@ EOF;
         );
         $iterator = new NonSeekableStreamDecodingEventStreamIterator($stream);
         $iterator->rewind();
+        $iterator->next();
+        $this->assertFalse($iterator->valid());
+    }
+
+    public function testValidReturnsTrueWhenFinalEventReachesEOF()
+    {
+        $encodedEvent = <<<EOF
+AAAAhQAAAExjTu0wDTptZXNzYWdlLXR5cGUHAAVldmVudAs6ZXZlbnQtdHlwZQcABnBlcnNvbg06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbnsibmFtZSI6ImZvbyIsImxhc3ROYW1lIjo
+iZnV6eiIsImFnZSI6Mjh9+hfixw==
+EOF;
+        $stream = new BufferStream();
+        $stream->write(base64_decode($encodedEvent));
+        $iterator = new NonSeekableStreamDecodingEventStreamIterator($stream);
+        $iterator->rewind();
+        $this->assertTrue($stream->eof());
+        $this->assertTrue($iterator->valid());
+        $this->assertSame('person', $iterator->current()['headers'][':event-type']);
         $iterator->next();
         $this->assertFalse($iterator->valid());
     }
