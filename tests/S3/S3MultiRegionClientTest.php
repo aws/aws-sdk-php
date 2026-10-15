@@ -8,6 +8,7 @@ use Aws\LruArrayCache;
 use Aws\ResultInterface;
 use Aws\S3\S3ClientInterface;
 use Aws\S3\S3MultiRegionClient;
+use Aws\Test\TestsUtility;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7;
@@ -604,5 +605,62 @@ EOXML;
     public static function booleanProvider(): array
     {
         return [[true], [false]];
+    }
+
+    public function testRejectsPathTraversalInVersion()
+    {
+        $plantedDir = sys_get_temp_dir() . '/aws-traversal-' . uniqid();
+        $marker = $plantedDir . '/marker';
+        mkdir($plantedDir, 0777, true);
+
+        try {
+            $payload = '<?php file_put_contents(' . var_export($marker, true)
+                . ', "pwned"); return [];';
+            file_put_contents($plantedDir . '/endpoint-bdd.json.php', $payload);
+            file_put_contents(
+                $plantedDir . '/endpoint-rule-set-1.json.php',
+                $payload
+            );
+
+            // Climb from src/data/s3 up to the filesystem root so that,
+            // without validation, the path resolves to the planted dir.
+            $s3DataDir = realpath(__DIR__ . '/../../src/data/s3');
+            $depth = count(array_filter(
+                preg_split('#[/\\\\]#', $s3DataDir),
+                'strlen'
+            ));
+            $realPlanted = realpath($plantedDir);
+            $version = str_repeat('../', $depth + 1)
+                . ltrim(str_replace('\\', '/', $realPlanted), '/');
+
+            try {
+                new S3MultiRegionClient([
+                    'region' => 'us-east-1',
+                    'version' => $version,
+                ]);
+                $this->fail('Expected an InvalidArgumentException.');
+            } catch (\InvalidArgumentException $e) {
+                $this->assertSame('Invalid api version.', $e->getMessage());
+            }
+
+            $this->assertFileDoesNotExist($marker);
+        } finally {
+            TestsUtility::cleanUpDir($plantedDir);
+        }
+    }
+
+    public static function validVersionProvider(): array
+    {
+        return [['latest'], ['2006-03-01']];
+    }
+
+    #[DataProvider('validVersionProvider')]
+    public function testConstructsWithValidVersion($version)
+    {
+        $client = new S3MultiRegionClient([
+            'region' => 'us-east-1',
+            'version' => $version,
+        ]);
+        $this->assertInstanceOf(S3MultiRegionClient::class, $client);
     }
 }
