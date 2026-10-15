@@ -78,6 +78,8 @@ class EndpointDefinitionProvider
 
     private static function getData($service, $apiVersion, $type, $baseDir, $throwIfMissing = true)
     {
+        self::validateService($service);
+
         $basePath = $baseDir ?:  __DIR__ . '/../data';
         $serviceDir = $basePath . "/{$service}";
         if (!is_dir($serviceDir)) {
@@ -92,6 +94,8 @@ class EndpointDefinitionProvider
         if ($apiVersion === 'latest') {
             $apiVersion = self::getLatest($service);
         }
+
+        self::validateApiVersion($apiVersion);
 
         $rulesetPath = $serviceDir . '/' . $apiVersion;
         if (!is_dir($rulesetPath)) {
@@ -119,6 +123,32 @@ class EndpointDefinitionProvider
             'Specified ' . $type . ' endpoint file for ' . $service
             . ' with api version ' . $apiVersion . ' does not exist.'
         );
+    }
+
+    /**
+     * Ensures the service name is a single, safe path segment so it cannot
+     * be used to traverse outside the endpoint data directory.
+     */
+    private static function validateService($service): void
+    {
+        if (!is_string($service)
+            || !preg_match('/^[A-Za-z0-9]+(?:[.\-_][A-Za-z0-9]+)*$/D', $service)
+        ) {
+            throw new \InvalidArgumentException('Invalid service name.');
+        }
+    }
+
+    /**
+     * Ensures the api version is a single, safe path segment so it cannot
+     * be used to traverse outside the service's data directory.
+     */
+    private static function validateApiVersion($apiVersion): void
+    {
+        if (!is_string($apiVersion)
+            || !preg_match('/^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$/D', $apiVersion)
+        ) {
+            throw new \InvalidArgumentException('Invalid api version.');
+        }
     }
 
     private static function getFileName($type): string
