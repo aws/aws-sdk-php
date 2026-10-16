@@ -119,6 +119,40 @@ EOF;
         );
     }
 
+    #[DataProvider('readAndHashBytesHandlesPartialReadsProvider')]
+    public function testParseEventHandlesPartialChecksumReads(
+        string $eventName,
+        array $expected
+    ): void
+    {
+        $eventPath = self::EVENT_STREAMS_DIR . "events/$eventName";
+        $eventStream = Utils::streamFor(
+            base64_decode(
+                file_get_contents($eventPath)
+            )
+        );
+        $partialReadStream = $this->createMock(StreamInterface::class);
+        $partialReadStream->method('isSeekable')->willReturn(false);
+        $partialReadStream->method('isReadable')->willReturn(true);
+        $partialReadStream->method('read')
+            ->willReturnCallback(function ($length) use ($eventStream) {
+                return $eventStream->read(min($length, 1));
+            });
+        $iterator = new NonSeekableStreamDecodingEventStreamIterator(
+            $partialReadStream
+        );
+        $iterator->rewind();
+        $event = $iterator->current();
+        $this->assertEquals(
+            $expected['headers'],
+            $event['headers']
+        );
+        $this->assertEquals(
+            $expected['payload'],
+            json_decode($event['payload']->getContents(), true)
+        );
+    }
+
     public static function readAndHashBytesHandlesPartialReadsProvider(): \Generator
     {
         $cases = json_decode(
