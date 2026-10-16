@@ -5,10 +5,9 @@ use Aws\DynamoDb\DynamoDbClient;
 use Aws\DynamoDbStreams\DynamoDbStreamsClient;
 use Aws\Retry\Configuration;
 use Aws\Retry\ConfigurationProvider;
-use Aws\Retry\V3\OptIn;
 use Aws\Retry\V3\RetryMiddleware as RetryV3Middleware;
-use Aws\RetryMiddlewareV2;
 use Aws\S3\S3Client;
+use Aws\Sns\SnsClient;
 use Aws\Sts\StsClient;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Psr7\Response;
@@ -16,103 +15,72 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Verifies that the AWS_NEW_RETRIES_2026 opt-in flag dispatches to the
- * correct middleware/config path at every integration point.
+ * Verifies that standard and adaptive modes dispatch to the V3 retry
+ * middleware at every integration point.
  */
 class RoutingTest extends TestCase
 {
-    private string $previousOptIn;
-
-    protected function setUp(): void
+    public function testFallbackModeIsStandard(): void
     {
-        $this->previousOptIn = getenv(OptIn::ENV) ?: '';
-        putenv(OptIn::ENV . '=');
-        OptIn::reset();
-    }
-
-    protected function tearDown(): void
-    {
-        putenv(OptIn::ENV . '=' . $this->previousOptIn);
-        OptIn::reset();
-    }
-
-    private function enableFlag(): void
-    {
-        putenv(OptIn::ENV . '=true');
-        OptIn::reset();
-    }
-
-    public function testFallbackModeIsLegacyByDefault(): void
-    {
-        $this->assertSame('legacy', ConfigurationProvider::getDefaultMode());
-        $config = call_user_func(ConfigurationProvider::fallback())->wait();
-        $this->assertSame('legacy', $config->getMode());
-    }
-
-    public function testFallbackModeIsStandardWhenOptedIn(): void
-    {
-        $this->enableFlag();
+        $this->assertSame('standard', ConfigurationProvider::DEFAULT_MODE);
         $this->assertSame('standard', ConfigurationProvider::getDefaultMode());
         $config = call_user_func(ConfigurationProvider::fallback())->wait();
         $this->assertSame('standard', $config->getMode());
     }
 
-    public function testRetryMiddlewareV2Constant(): void
+    public function testS3ClientUsesV3Middleware(): void
     {
-        // Sanity check: legacy const is still 'legacy'.
-        $this->assertSame('legacy', ConfigurationProvider::DEFAULT_MODE);
-    }
-
-    public function testS3ClientUsesPreSepMiddlewareWhenOptedOut(): void
-    {
-        $client = $this->newS3();
-        $entries = $this->retryEntries($client);
-        $this->assertCount(1, $entries);
-        $this->assertSame(RetryMiddlewareV2::class, $entries[0]['middleware_class']);
-    }
-
-    public function testS3ClientUsesStandardMiddlewareWhenOptedIn(): void
-    {
-        $this->enableFlag();
-        $client = $this->newS3();
-        $entries = $this->retryEntries($client);
+        $entries = $this->retryEntries($this->newS3());
         $this->assertCount(1, $entries);
         $this->assertSame(RetryV3Middleware::class, $entries[0]['middleware_class']);
     }
 
-    public function testDynamoDbDefaultRetriesIsTenWhenOptedOut(): void
+    public function testClientWithoutRetryConfigRetriesWithStandardDefaults(): void
     {
-        $args = DynamoDbClient::getArguments();
-        $this->assertSame(10, $args['retries']['default']);
+        // No retry configuration anywhere: the client must use standard mode
+        // with 3 attempts and the 50 ms transient base delay.
+        $delays = [];
+        $handler = function ($request, array $options) use (&$delays) {
+            // Full jitter can legitimately pick 0, so test presence, not truthiness.
+            if (isset($options['delay'])) {
+                $delays[] = $options['delay'];
+            }
+            return Create::promiseFor(new Response(500, [], ''));
+        };
+
+        $client = new SnsClient([
+            'region'       => 'us-east-1',
+            'version'      => 'latest',
+            'credentials'  => false,
+            'http_handler' => $handler,
+            'stats'        => ['retries' => true],
+        ]);
+
+        // A 500 with an empty body is surfaced as a Result carrying the
+        // status code, so the retry stats are read from the result metadata.
+        $result = $client->listTopics();
+        $stats = $result['@metadata']['transferStats'];
+
+        $entries = $this->retryEntries($client);
+        $this->assertSame(RetryV3Middleware::class, $entries[0]['middleware_class']);
+        $this->assertSame(500, $result['@metadata']['statusCode']);
+        $this->assertSame(2, $stats['retries_attempted']);
+        $this->assertCount(3, $stats['http']);
+        $this->assertCount(2, $delays);
+        // Full jitter: rand(0, 50 * 2^(attempt - 1))
+        $this->assertLessThanOrEqual(50, $delays[0]);
+        $this->assertLessThanOrEqual(100, $delays[1]);
+        $this->assertLessThanOrEqual(150, $stats['total_retry_delay']);
     }
 
-    public function testDynamoDbDefaultRetriesIsCallableWhenOptedIn(): void
+    public function testDynamoDbDefaultRetriesIsCallable(): void
     {
-        $this->enableFlag();
         $args = DynamoDbClient::getArguments();
-        $this->assertIsArray($args['retries']['default']);
         $this->assertSame([DynamoDbClient::class, '_defaultRetries'], $args['retries']['default']);
     }
 
-    public function testDynamoDbUsesPreSepMiddlewareWhenOptedOut(): void
-    {
-        $client = $this->newDynamoDb(['retries' => new Configuration('standard', 3)]);
-        $entries = $this->retryEntries($client);
-        $this->assertCount(1, $entries);
-        $this->assertSame(RetryMiddlewareV2::class, $entries[0]['middleware_class']);
-    }
-
-    public function testDynamoDbUsesStandardMiddlewareWhenOptedIn(): void
-    {
-        $this->enableFlag();
-        $client = $this->newDynamoDb(['retries' => new Configuration('standard', 3)]);
-        $entries = $this->retryEntries($client);
-        $this->assertCount(1, $entries);
-        $this->assertSame(RetryV3Middleware::class, $entries[0]['middleware_class']);
-    }
-
     #[DataProvider('envOrIniModeProvider')]
-    public function testDynamoDbDefaultAttemptsFromEnvOrIniWhenOptedIn(
+    public function testDynamoDbDefaultAttemptsFromEnvOrIni(
         array $env,
         string $expectedMode,
         int $expectedAttempts,
@@ -123,7 +91,6 @@ class RoutingTest extends TestCase
         // When only the mode comes from the environment or ~/.aws/config,
         // DynamoDB must apply its own max_attempts default (4 standard/adaptive,
         // 11 legacy) rather than the generic 3.
-        $this->enableFlag();
         $saved = [];
         foreach (['AWS_RETRY_MODE', 'AWS_MAX_ATTEMPTS', 'AWS_CONFIG_FILE', 'AWS_PROFILE', 'HOME'] as $k) {
             $saved[$k] = getenv($k);
@@ -176,7 +143,7 @@ class RoutingTest extends TestCase
     }
 
     #[DataProvider('arrayModeProvider')]
-    public function testDynamoDbDefaultAttemptsFromArrayWhenOptedIn(
+    public function testDynamoDbDefaultAttemptsFromArray(
         array $retries,
         int $expectedAttempts
     ): void
@@ -184,7 +151,6 @@ class RoutingTest extends TestCase
         // 'retries' => ['mode' => ...] without max_attempts must use the
         // DynamoDB attempt default (4 standard/adaptive, 11 legacy), not the
         // generic 3 that ConfigurationProvider::unwrap() fills in.
-        $this->enableFlag();
         $this->assertSame($expectedAttempts, $this->countDynamoDbAttempts($retries));
     }
 
@@ -198,23 +164,20 @@ class RoutingTest extends TestCase
         ];
     }
 
-    public function testDynamoDbArrayAttemptsUnchangedWhenOptedOut(): void
+    public function testDynamoDbUsesV3Middleware(): void
     {
-        // Pre-opt-in behaviour: the generic 3 attempts.
-        $this->assertSame(3, $this->countDynamoDbAttempts(['mode' => 'standard']));
+        $entries = $this->retryEntries(
+            $this->newDynamoDb(['retries' => new Configuration('standard', 3)])
+        );
+        $this->assertCount(1, $entries);
+        $this->assertSame(RetryV3Middleware::class, $entries[0]['middleware_class']);
     }
 
-    public function testDynamoDbStreamsDefaultRetriesIsElevenWhenOptedOut(): void
+    public function testDynamoDbStreamsSharesDynamoDbDefaults(): void
     {
-        $args = DynamoDbStreamsClient::getArguments();
-        $this->assertSame(11, $args['retries']['default']);
-    }
-
-    public function testDynamoDbStreamsSharesDynamoDbDefaultsWhenOptedIn(): void
-    {
-        $this->enableFlag();
         $args = DynamoDbStreamsClient::getArguments();
         $this->assertSame([DynamoDbClient::class, '_defaultRetries'], $args['retries']['default']);
+        $this->assertSame([DynamoDbClient::class, '_applyRetryConfig'], $args['retries']['fn']);
 
         $attempts = 0;
         $client = new DynamoDbStreamsClient([
@@ -231,27 +194,14 @@ class RoutingTest extends TestCase
         $this->assertSame(4, $attempts);
     }
 
-    public function testStsRetriesFnInheritsParentWhenOptedOut(): void
+    public function testStsRetriesFnIsRegistered(): void
     {
-        // STS does not override the retry handler when opted out; it falls
-        // back to ClientResolver::_apply_retries.
-        $args = StsClient::getArguments();
-        $this->assertSame(
-            [\Aws\ClientResolver::class, '_apply_retries'],
-            $args['retries']['fn']
-        );
-    }
-
-    public function testStsRetriesFnIsRegisteredWhenOptedIn(): void
-    {
-        $this->enableFlag();
         $args = StsClient::getArguments();
         $this->assertSame([StsClient::class, '_applyRetryConfig'], $args['retries']['fn']);
     }
 
-    public function testStsUsesStandardMiddlewareWhenOptedIn(): void
+    public function testStsUsesV3Middleware(): void
     {
-        $this->enableFlag();
         $client = new StsClient([
             'region'  => 'us-east-1',
             'version' => 'latest',
