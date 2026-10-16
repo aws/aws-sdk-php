@@ -1,6 +1,7 @@
 <?php
 namespace Aws\S3;
 
+use Aws\Api\Operation;
 use Aws\Api\Service;
 use Aws\Api\Shape;
 use Aws\CommandInterface;
@@ -22,7 +23,14 @@ class ApplyChecksumMiddleware
     use CalculatesChecksumTrait;
 
     public const DEFAULT_CALCULATION_MODE = 'when_supported';
+    public const DEFAULT_VALIDATION_MODE = 'when_supported';
     public const DEFAULT_ALGORITHM = 'crc32';
+
+    private const CHECKSUM_HEADER_EXCLUSIONS = [
+        'x-amz-checksum-algorithm' => true,
+        'x-amz-checksum-mode' => true,
+        'x-amz-checksum-type' => true,
+    ];
 
     /**
      * @var true[]
@@ -59,10 +67,9 @@ class ApplyChecksumMiddleware
 
     public function __construct(
         callable $nextHandler,
-        Service $api, 
+        Service $api,
         array $config = []
-    )
-    {
+    ) {
         $this->api = $api;
         $this->nextHandler = $nextHandler;
         $this->config = $config;
@@ -89,6 +96,12 @@ class ApplyChecksumMiddleware
         $this->handleDeprecatedAddContentMD5($command);
 
         $checksumInfo = $operation['httpChecksum'] ?? [];
+        $request = $this->applyResponseChecksumValidationMode(
+            $command,
+            $request,
+            $operation,
+            $checksumInfo
+        );
         $checksumMemberName = $checksumInfo['requestAlgorithmMember'] ?? '';
         $checksumMember = !empty($checksumMemberName)
             ? $operation->getInput()->getMember($checksumMemberName)
@@ -131,6 +144,85 @@ class ApplyChecksumMiddleware
         }
 
         return $next($command, $request);
+    }
+
+    /**
+     * Enables modeled response checksum validation by default when supported.
+     *
+     * This middleware runs after request serialization, so both the command
+     * member and its modeled HTTP header must be updated.
+     *
+     * @param CommandInterface $command
+     * @param RequestInterface $request
+     * @param Operation $operation
+     * @param array $checksumInfo
+     *
+     * @return RequestInterface
+     */
+    private function applyResponseChecksumValidationMode(
+        CommandInterface $command,
+        RequestInterface $request,
+        Operation $operation,
+        array $checksumInfo
+    ): RequestInterface
+    {
+        $validationMemberName = $checksumInfo['requestValidationModeMember'] ?? '';
+        $responseAlgorithms = $checksumInfo['responseAlgorithms'] ?? [];
+
+        $shouldSkipValidation = empty($validationMemberName)
+            || !$this->hasSupportedResponseAlgorithm($responseAlgorithms);
+        if ($shouldSkipValidation) {
+            return $request;
+        }
+
+        $mode = $this->config['response_checksum_validation']
+            ?? self::DEFAULT_VALIDATION_MODE;
+
+        $shouldEnableValidation = $mode === 'when_supported'
+            && $command[$validationMemberName] === null;
+        if ($shouldEnableValidation) {
+            $command[$validationMemberName] = 'ENABLED';
+        }
+
+        $validationMode = $command[$validationMemberName];
+        if (strtolower((string) $validationMode) !== 'enabled') {
+            return $request;
+        }
+
+        $validationMember = $operation->getInput()->getMember(
+            $validationMemberName
+        );
+        if ($validationMember['location'] !== 'header') {
+            return $request;
+        }
+
+        $headerName = $validationMember['locationName']
+            ?: $validationMemberName;
+
+        return $request->withHeader($headerName, $validationMode);
+    }
+
+    /**
+     * @param string[] $responseAlgorithms
+     *
+     * @return bool
+     */
+    private function hasSupportedResponseAlgorithm(
+        array $responseAlgorithms
+    ): bool
+    {
+        foreach ($responseAlgorithms as $algorithm) {
+            $algorithm = strtolower($algorithm);
+            if (!isset(self::$supportedAlgorithms[$algorithm])) {
+                continue;
+            }
+
+            if ($algorithm !== 'crc32c' || extension_loaded('awscrt')) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -233,7 +325,10 @@ class ApplyChecksumMiddleware
         $headers = $request->getHeaders();
 
         foreach ($headers as $name => $values) {
-            if (stripos($name, 'x-amz-checksum-') === 0) {
+            $name = strtolower($name);
+            $isChecksumHeader = str_starts_with($name, 'x-amz-checksum-');
+            $isExcludedHeader = isset(self::CHECKSUM_HEADER_EXCLUSIONS[$name]);
+            if ($isChecksumHeader && !$isExcludedHeader) {
                 return true;
             }
         }
