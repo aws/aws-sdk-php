@@ -462,6 +462,15 @@ EOF;
         ]);
         $rejectionRawConnectException = Promise\Create::rejectionFor($connectException);
 
+        $tooManyRequestsException = self::createRequestException(
+            '429 Too Many Requests',
+            new Psr7\Request('GET', '/latest'),
+            new Psr7\Response(429)
+        );
+        $rejectionTooManyRequests = Promise\Create::rejectionFor([
+            'exception' => $tooManyRequestsException,
+        ]);
+
         $promiseCreds = Promise\Create::promiseFor(
             new Response(200, [], Psr7\Utils::streamFor(
                 json_encode(call_user_func_array(
@@ -524,6 +533,135 @@ EOF;
         ];
     }
 
+    public function testRetriesOptedInErrorCode()
+    {
+        $expiry = time() + 1000;
+        $creds = ['foo_key', 'baz_secret', 'qux_token', "@{$expiry}"];
+
+        $rejectionTooManyRequests = Promise\Create::rejectionFor([
+            'exception' => self::createRequestException(
+                '429 Too Many Requests',
+                new Psr7\Request('GET', '/latest'),
+                new Psr7\Response(429)
+            ),
+        ]);
+        $promiseCreds = Promise\Create::promiseFor(
+            new Response(200, [], Psr7\Utils::streamFor(
+                json_encode(call_user_func_array(
+                    [self::class, 'getCredentialArray'],
+                    $creds
+                )))
+            )
+        );
+
+        $provider = new EcsCredentialProvider([
+            'client' => $this->getTestClient([
+                $rejectionTooManyRequests,
+                $promiseCreds,
+            ], $creds),
+            'retries' => 2,
+            'retryable_error_codes' => [429],
+        ]);
+
+        $credentials = $provider()->wait();
+        $this->assertSame('foo_key', $credentials->getAccessKeyId());
+        $this->assertSame('baz_secret', $credentials->getSecretKey());
+    }
+
+    public function testDoesNotRetry429ByDefault()
+    {
+        $rejectionTooManyRequests = Promise\Create::rejectionFor([
+            'exception' => self::createRequestException(
+                '429 Too Many Requests',
+                new Psr7\Request('GET', '/latest'),
+                new Psr7\Response(429)
+            ),
+        ]);
+
+        $provider = new EcsCredentialProvider([
+            'client' => $this->getTestClient([
+                $rejectionTooManyRequests,
+            ]),
+            'retries' => 3,
+        ]);
+
+        try {
+            $provider()->wait();
+            $this->fail('Provider should have thrown an exception.');
+        } catch (CredentialsException $e) {
+            $this->assertStringContainsString(
+                'attempt 0/3',
+                $e->getMessage()
+            );
+            $this->assertStringContainsString('429 Too Many Requests', $e->getMessage());
+        }
+
+        $this->assertSame(0, $provider->getAttempts());
+    }
+
+    public function testRetriesOptedInExceptionClass()
+    {
+        $expiry = time() + 1000;
+        $creds = ['foo_key', 'baz_secret', 'qux_token', "@{$expiry}"];
+
+        $rejectionRequest = Promise\Create::rejectionFor([
+            'exception' => new \DomainException('Boom'),
+        ]);
+        $promiseCreds = Promise\Create::promiseFor(
+            new Response(200, [], Psr7\Utils::streamFor(
+                json_encode(call_user_func_array(
+                    [self::class, 'getCredentialArray'],
+                    $creds
+                )))
+            )
+        );
+
+        $provider = new EcsCredentialProvider([
+            'client' => $this->getTestClient([
+                $rejectionRequest,
+                $promiseCreds,
+            ], $creds),
+            'retries' => 2,
+            'retryable_exceptions' => [\DomainException::class],
+        ]);
+
+        $credentials = $provider()->wait();
+        $this->assertSame('foo_key', $credentials->getAccessKeyId());
+    }
+
+    public function testCustomRetryableExceptionsAreAddedToDefaults()
+    {
+        $expiry = time() + 1000;
+        $creds = ['foo_key', 'baz_secret', 'qux_token', "@{$expiry}"];
+
+        $rejectionConnection = Promise\Create::rejectionFor([
+            'exception' => new ConnectException(
+                'cURL error 28: Connection timed out after 1000 milliseconds',
+                new Psr7\Request('GET', '/latest')
+            ),
+        ]);
+        $promiseCreds = Promise\Create::promiseFor(
+            new Response(200, [], Psr7\Utils::streamFor(
+                json_encode(call_user_func_array(
+                    [self::class, 'getCredentialArray'],
+                    $creds
+                )))
+            )
+        );
+
+        $provider = new EcsCredentialProvider([
+            'client' => $this->getTestClient([
+                $rejectionConnection,
+                $promiseCreds,
+            ], $creds),
+            'retries' => 2,
+            'retryable_exceptions' => [\DomainException::class],
+        ]);
+
+        $credentials = $provider()->wait();
+        $this->assertSame('foo_key', $credentials->getAccessKeyId());
+    }
+
     /**
      * @param $client
      * @param \Exception $expected
@@ -566,6 +704,13 @@ EOF;
             'connection_error' => true,
             'exception' => new \Exception('cURL error 28: Connection timed out after 1000 milliseconds'),
         ]);
+        $rejectionTooManyRequests = Promise\Create::rejectionFor([
+            'exception' => self::createRequestException(
+                '429 Too Many Requests',
+                $getRequest,
+                new Psr7\Response(429)
+            )
+        ]);
 
         return [
             'Non-retryable error' => [
@@ -585,7 +730,45 @@ EOF;
                     'Error retrieving credentials from container metadata after attempt 1/1 (cURL error 28: Connection timed out after 1000 milliseconds)'
                 )
             ],
+            'Non-retryable HTTP 429 by default' => [
+                [
+                    $rejectionTooManyRequests,
+                ],
+                new CredentialsException(
+                    'Error retrieving credentials from container metadata after attempt 0/1 (429 Too Many Requests)'
+                )
+            ],
         ];
+    }
+
+    public function testOptedInHTTP429RetryExhaustsAttempts()
+    {
+        $rejectionTooManyRequests = Promise\Create::rejectionFor([
+            'exception' => self::createRequestException(
+                '429 Too Many Requests',
+                new Psr7\Request('GET', '/latest'),
+                new Psr7\Response(429)
+            ),
+        ]);
+
+        $provider = new EcsCredentialProvider([
+            'client' => $this->getTestClient([
+                $rejectionTooManyRequests,
+                $rejectionTooManyRequests,
+            ]),
+            'retries' => 1,
+            'retryable_error_codes' => [429],
+        ]);
+
+        try {
+            $provider()->wait();
+            $this->fail('Provider should have thrown an exception.');
+        } catch (CredentialsException $e) {
+            $this->assertSame(
+                'Error retrieving credentials from container metadata after attempt 1/1 (429 Too Many Requests)',
+                $e->getMessage()
+            );
+        }
     }
 
     public function testReadsRetriesFromEnvironment()
