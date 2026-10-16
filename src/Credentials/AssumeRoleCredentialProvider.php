@@ -56,7 +56,7 @@ class AssumeRoleCredentialProvider
                     $result,
                     CredentialSources::STS_ASSUME_ROLE
                 );
-            })->otherwise(function (\RuntimeException $exception) {
+            })->otherwise(function (\Throwable $exception) {
                 throw new CredentialsException(
                     "Error in retrieving assume role credentials.",
                     0,
