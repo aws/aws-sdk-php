@@ -189,6 +189,42 @@
             "fn": "stringEquals",
             "argv": [
                 {
+                    "ref": "Region"
+                },
+                "us-gov-east-1"
+            ]
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "ref": "Region"
+                },
+                "cn-north-1"
+            ]
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "ref": "Region"
+                },
+                "cn-northwest-1"
+            ]
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "ref": "Region"
+                },
+                "us-gov-west-1"
+            ]
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                {
                     "fn": "getAttr",
                     "argv": [
                         {
@@ -235,12 +271,10 @@
                         {
                             "ref": "ParsedArn_ssa_2"
                         },
-                        "region"
+                        "service"
                     ]
                 },
-                {
-                    "ref": "Region"
-                }
+                "dynamodb"
             ]
         },
         {
@@ -252,10 +286,12 @@
                         {
                             "ref": "ParsedArn_ssa_2"
                         },
-                        "service"
+                        "region"
                     ]
                 },
-                "dynamodb"
+                {
+                    "ref": "Region"
+                }
             ]
         },
         {
@@ -267,7 +303,7 @@
                         {
                             "ref": "ParsedArn_ssa_2"
                         },
-                        "region"
+                        "accountId"
                     ]
                 },
                 false
@@ -282,7 +318,7 @@
                         {
                             "ref": "ParsedArn_ssa_2"
                         },
-                        "accountId"
+                        "region"
                     ]
                 },
                 false
@@ -477,8 +513,8 @@
                     "authSchemes": [
                         {
                             "signingRegion": "us-east-1",
-                            "signingName": "dynamodb",
-                            "name": "sigv4"
+                            "name": "sigv4",
+                            "signingName": "dynamodb"
                         }
                     ]
                 },
@@ -554,6 +590,29 @@
             "conditions": [],
             "error": "FIPS is enabled but this partition does not support FIPS",
             "type": "error"
+        },
+        {
+            "conditions": [],
+            "error": "Invalid Configuration: AccountIdEndpointMode is required but account endpoints are not supported in this region",
+            "type": "error"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://search-dynamodb.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://dynamodb.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
         },
         {
             "conditions": [],
@@ -645,29 +704,6 @@
         },
         {
             "conditions": [],
-            "error": "Invalid Configuration: AccountIdEndpointMode is required but account endpoints are not supported in this partition",
-            "type": "error"
-        },
-        {
-            "conditions": [],
-            "endpoint": {
-                "url": "https://search-dynamodb.{Region}.{PartitionResult#dualStackDnsSuffix}",
-                "properties": {},
-                "headers": {}
-            },
-            "type": "endpoint"
-        },
-        {
-            "conditions": [],
-            "endpoint": {
-                "url": "https://dynamodb.{Region}.{PartitionResult#dualStackDnsSuffix}",
-                "properties": {},
-                "headers": {}
-            },
-            "type": "endpoint"
-        },
-        {
-            "conditions": [],
             "error": "DualStack is enabled but this partition does not support DualStack",
             "type": "error"
         },
@@ -756,6 +792,6 @@
         }
     ],
     "root": 2,
-    "nodeCount": 82,
-    "nodes": "/////wAAAAH/////AAAAAAAAAAYAAAADAAAAAQAAAAQF9eEjAAAAAgX14QEAAAAFAAAAAwX14QIF9eEEAAAAAQAAAE0AAAAHAAAAAgAAAD0AAAAIAAAAAwAAACIAAAAJAAAABAAAAAoF9eEjAAAABQX14QcAAAALAAAACwAAAAwAAABFAAAADAAAAA4AAAANAAAAHAX14RkAAABFAAAADQAAACEAAAAPAAAADgAAABAAAAAVAAAADwAAABEAAAAVAAAAEAAAABIAAAAVAAAAEQAAABMAAAAVAAAAEgAAABQAAAAVAAAAEwAAACAAAAAVAAAAFAAAABYAAAAcAAAAFQAAABcAAAAcAAAAFgAAABgAAAAcAAAAFwAAABkAAAAcAAAAGAAAABoAAAAcAAAAGQAAABsAAAAcAAAAGgAAAB8AAAAcAAAAGwAAAB0AAAAhAAAAHQAAAB4F9eEXAAAAHwX14SEF9eEiAAAAHwX14R8F9eEgAAAAHwX14R0F9eEeAAAAHAX14RgAAABFAAAABAAAACMF9eEjAAAABQX14QYAAAAkAAAACQAAACUF9eEcAAAACwAAACYAAAA8AAAADAAAACgAAAAnAAAAHAX14RkAAAA8AAAADQAAADsAAAApAAAADgAAACoAAAAvAAAADwAAACsAAAAvAAAAEAAAACwAAAAvAAAAEQAAAC0AAAAvAAAAEgAAAC4AAAAvAAAAEwAAADoAAAAvAAAAFAAAADAAAAA2AAAAFQAAADEAAAA2AAAAFgAAADIAAAA2AAAAFwAAADMAAAA2AAAAGAAAADQAAAA2AAAAGQAAADUAAAA2AAAAGgAAADkAAAA2AAAAGwAAADcAAAA7AAAAHQAAADgF9eEXAAAAHwX14RUF9eEWAAAAHwX14RMF9eEUAAAAHwX14REF9eESAAAAHAX14RgAAAA8AAAAHwX14RoF9eEbAAAAAwAAAEYAAAA+AAAABAAAAD8F9eEjAAAABQX14QUAAABAAAAABgAAAEEF9eEQAAAACwAAAEIAAABDAAAAHAX14QgAAABDAAAAHgAAAEUAAABEAAAAHwX14Q4F9eEPAAAAHwX14QwF9eENAAAABAAAAEcF9eEjAAAABQX14QUAAABIAAAABgAAAEkF9eELAAAACQAAAEoF9eELAAAACwAAAEsAAABMAAAAHAX14QgAAABMAAAAHwX14QkF9eEKAAAAAgX14QEAAABOAAAAAwX14QIAAABPAAAABAAAAFAF9eEEAAAABwAAAFEF9eEEAAAACAX14QMAAABSAAAACgX14QMF9eEE"
+    "nodeCount": 90,
+    "nodes": "/////wAAAAH/////AAAAAAAAAAYAAAADAAAAAQAAAAQF9eEjAAAAAgX14QEAAAAFAAAAAwX14QIF9eEEAAAAAQAAAFUAAAAHAAAAAgAAAEUAAAAIAAAAAwAAACYAAAAJAAAABAAAAAoF9eEjAAAABQX14QcAAAALAAAACwAAAAwAAABNAAAADAAAABIAAAANAAAADQAAABIAAAAOAAAADgAAABIAAAAPAAAADwAAABIAAAAQAAAAEAAAABIAAAARAAAAIAX14REAAABNAAAAEQAAACUAAAATAAAAEgAAABQAAAAZAAAAEwAAABUAAAAZAAAAFAAAABYAAAAZAAAAFQAAABcAAAAZAAAAFgAAABgAAAAZAAAAFwAAACQAAAAZAAAAGAAAABoAAAAgAAAAGQAAABsAAAAgAAAAGgAAABwAAAAgAAAAGwAAAB0AAAAgAAAAHAAAAB4AAAAgAAAAHQAAAB8AAAAgAAAAHgAAACMAAAAgAAAAHwAAACEAAAAlAAAAIQAAACIF9eEaAAAAIwX14SEF9eEiAAAAIwX14R8F9eEgAAAAIwX14R0F9eEeAAAAIAX14RsAAABNAAAABAAAACcF9eEjAAAABQX14QYAAAAoAAAACQAAACkF9eEcAAAACwAAACoAAABEAAAADAAAADAAAAArAAAADQAAADAAAAAsAAAADgAAADAAAAAtAAAADwAAADAAAAAuAAAAEAAAADAAAAAvAAAAIAX14REAAABEAAAAEQAAAEMAAAAxAAAAEgAAADIAAAA3AAAAEwAAADMAAAA3AAAAFAAAADQAAAA3AAAAFQAAADUAAAA3AAAAFgAAADYAAAA3AAAAFwAAAEIAAAA3AAAAGAAAADgAAAA+AAAAGQAAADkAAAA+AAAAGgAAADoAAAA+AAAAGwAAADsAAAA+AAAAHAAAADwAAAA+AAAAHQAAAD0AAAA+AAAAHgAAAEEAAAA+AAAAHwAAAD8AAABDAAAAIQAAAEAF9eEaAAAAIwX14RgF9eEZAAAAIwX14RYF9eEXAAAAIwX14RQF9eEVAAAAIAX14RsAAABEAAAAIwX14RIF9eETAAAAAwAAAE4AAABGAAAABAAAAEcF9eEjAAAABQX14QUAAABIAAAABgAAAEkF9eEQAAAACwAAAEoAAABLAAAAIAX14QgAAABLAAAAIgAAAE0AAABMAAAAIwX14Q4F9eEPAAAAIwX14QwF9eENAAAABAAAAE8F9eEjAAAABQX14QUAAABQAAAABgAAAFEF9eELAAAACQAAAFIF9eELAAAACwAAAFMAAABUAAAAIAX14QgAAABUAAAAIwX14QkF9eEKAAAAAgX14QEAAABWAAAAAwX14QIAAABXAAAABAAAAFgF9eEEAAAABwAAAFkF9eEEAAAACAX14QMAAABaAAAACgX14QMF9eEE"
 }

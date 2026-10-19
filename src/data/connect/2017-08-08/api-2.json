@@ -9748,6 +9748,13 @@
         "RecommenderConfig":{"shape":"RecommenderConfig"}
       }
     },
+    "ContentDisposition":{
+      "type":"string",
+      "enum":[
+        "INLINE",
+        "ATTACHMENT"
+      ]
+    },
     "ContentType":{
       "type":"string",
       "max":255,
@@ -16085,7 +16092,8 @@
         "APPROVED",
         "REJECTED",
         "PROCESSING",
-        "FAILED"
+        "FAILED",
+        "DRAFTING"
       ]
     },
     "FileUseCaseType":{
@@ -16253,6 +16261,11 @@
           "shape":"ARN",
           "location":"querystring",
           "locationName":"associatedResourceArn"
+        },
+        "UrlContentDisposition":{
+          "shape":"ContentDisposition",
+          "location":"querystring",
+          "locationName":"urlContentDisposition"
         }
       }
     },

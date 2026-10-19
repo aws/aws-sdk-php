@@ -80,7 +80,7 @@ use Aws\AwsClient;
  *     RuleName?: string,
  *     Rule?: array{
  *         ResourceType?: 'AWS::Bedrock::KnowledgeBase'|'AWS::BedrockAgentCore::Browser'|'AWS::BedrockAgentCore::CodeInterpreter'|'AWS::BedrockAgentCore::Gateway'|'AWS::BedrockAgentCore::Memory'|'AWS::BedrockAgentCore::PaymentManager'|'AWS::BedrockAgentCore::Runtime'|'AWS::BedrockAgentCore::WorkloadIdentity'|'AWS::CloudFront::Distribution'|'AWS::CloudTrail'|'AWS::CloudWatch::OTelEnrichment'|'AWS::EC2::Instance'|'AWS::EC2::VPC'|'AWS::EKS::Cluster'|'AWS::ElasticLoadBalancingV2::LoadBalancer'|'AWS::Lambda::Function'|'AWS::MSK::Cluster'|'AWS::Route53Resolver::ResolverEndpoint'|'AWS::S3::Bucket'|'AWS::SecurityHub::Hub'|'AWS::SecurityHub::HubV2'|'AWS::WAFv2::WebACL'|'AWS::XRay::TransactionSearchConfig',
- *         TelemetryType?: 'Logs'|'Metrics'|'Traces',
+ *         TelemetryType?: 'Insights'|'Logs'|'Metrics'|'Traces',
  *         TelemetrySourceTypes?: list<'EKS_API_LOGS'|'EKS_AUDIT_LOGS'|'EKS_AUTHENTICATOR_LOGS'|'EKS_CONTROLLER_MANAGER_LOGS'|'EKS_SCHEDULER_LOGS'|'ROUTE53_RESOLVER_QUERY_LOGS'|'VPC_FLOW_LOGS'>,
  *         DestinationConfiguration?: array{
  *             DestinationType?: 'cloud-watch-logs',
@@ -110,7 +110,7 @@ use Aws\AwsClient;
  *     RuleName?: string,
  *     Rule?: array{
  *         ResourceType?: 'AWS::Bedrock::KnowledgeBase'|'AWS::BedrockAgentCore::Browser'|'AWS::BedrockAgentCore::CodeInterpreter'|'AWS::BedrockAgentCore::Gateway'|'AWS::BedrockAgentCore::Memory'|'AWS::BedrockAgentCore::PaymentManager'|'AWS::BedrockAgentCore::Runtime'|'AWS::BedrockAgentCore::WorkloadIdentity'|'AWS::CloudFront::Distribution'|'AWS::CloudTrail'|'AWS::CloudWatch::OTelEnrichment'|'AWS::EC2::Instance'|'AWS::EC2::VPC'|'AWS::EKS::Cluster'|'AWS::ElasticLoadBalancingV2::LoadBalancer'|'AWS::Lambda::Function'|'AWS::MSK::Cluster'|'AWS::Route53Resolver::ResolverEndpoint'|'AWS::S3::Bucket'|'AWS::SecurityHub::Hub'|'AWS::SecurityHub::HubV2'|'AWS::WAFv2::WebACL'|'AWS::XRay::TransactionSearchConfig',
- *         TelemetryType?: 'Logs'|'Metrics'|'Traces',
+ *         TelemetryType?: 'Insights'|'Logs'|'Metrics'|'Traces',
  *         TelemetrySourceTypes?: list<'EKS_API_LOGS'|'EKS_AUDIT_LOGS'|'EKS_AUTHENTICATOR_LOGS'|'EKS_CONTROLLER_MANAGER_LOGS'|'EKS_SCHEDULER_LOGS'|'ROUTE53_RESOLVER_QUERY_LOGS'|'VPC_FLOW_LOGS'>,
  *         DestinationConfiguration?: array{
  *             DestinationType?: 'cloud-watch-logs',
@@ -140,7 +140,7 @@ use Aws\AwsClient;
  *     RuleName?: string,
  *     Rule?: array{
  *         ResourceType?: 'AWS::Bedrock::KnowledgeBase'|'AWS::BedrockAgentCore::Browser'|'AWS::BedrockAgentCore::CodeInterpreter'|'AWS::BedrockAgentCore::Gateway'|'AWS::BedrockAgentCore::Memory'|'AWS::BedrockAgentCore::PaymentManager'|'AWS::BedrockAgentCore::Runtime'|'AWS::BedrockAgentCore::WorkloadIdentity'|'AWS::CloudFront::Distribution'|'AWS::CloudTrail'|'AWS::CloudWatch::OTelEnrichment'|'AWS::EC2::Instance'|'AWS::EC2::VPC'|'AWS::EKS::Cluster'|'AWS::ElasticLoadBalancingV2::LoadBalancer'|'AWS::Lambda::Function'|'AWS::MSK::Cluster'|'AWS::Route53Resolver::ResolverEndpoint'|'AWS::S3::Bucket'|'AWS::SecurityHub::Hub'|'AWS::SecurityHub::HubV2'|'AWS::WAFv2::WebACL'|'AWS::XRay::TransactionSearchConfig',
- *         TelemetryType?: 'Logs'|'Metrics'|'Traces',
+ *         TelemetryType?: 'Insights'|'Logs'|'Metrics'|'Traces',
  *         TelemetrySourceTypes?: list<'EKS_API_LOGS'|'EKS_AUDIT_LOGS'|'EKS_AUTHENTICATOR_LOGS'|'EKS_CONTROLLER_MANAGER_LOGS'|'EKS_SCHEDULER_LOGS'|'ROUTE53_RESOLVER_QUERY_LOGS'|'VPC_FLOW_LOGS'>,
  *         DestinationConfiguration?: array{
  *             DestinationType?: 'cloud-watch-logs',
@@ -170,7 +170,7 @@ use Aws\AwsClient;
  *     RuleName?: string,
  *     Rule?: array{
  *         ResourceType?: 'AWS::Bedrock::KnowledgeBase'|'AWS::BedrockAgentCore::Browser'|'AWS::BedrockAgentCore::CodeInterpreter'|'AWS::BedrockAgentCore::Gateway'|'AWS::BedrockAgentCore::Memory'|'AWS::BedrockAgentCore::PaymentManager'|'AWS::BedrockAgentCore::Runtime'|'AWS::BedrockAgentCore::WorkloadIdentity'|'AWS::CloudFront::Distribution'|'AWS::CloudTrail'|'AWS::CloudWatch::OTelEnrichment'|'AWS::EC2::Instance'|'AWS::EC2::VPC'|'AWS::EKS::Cluster'|'AWS::ElasticLoadBalancingV2::LoadBalancer'|'AWS::Lambda::Function'|'AWS::MSK::Cluster'|'AWS::Route53Resolver::ResolverEndpoint'|'AWS::S3::Bucket'|'AWS::SecurityHub::Hub'|'AWS::SecurityHub::HubV2'|'AWS::WAFv2::WebACL'|'AWS::XRay::TransactionSearchConfig',
- *         TelemetryType?: 'Logs'|'Metrics'|'Traces',
+ *         TelemetryType?: 'Insights'|'Logs'|'Metrics'|'Traces',
  *         TelemetrySourceTypes?: list<'EKS_API_LOGS'|'EKS_AUDIT_LOGS'|'EKS_AUTHENTICATOR_LOGS'|'EKS_CONTROLLER_MANAGER_LOGS'|'EKS_SCHEDULER_LOGS'|'ROUTE53_RESOLVER_QUERY_LOGS'|'VPC_FLOW_LOGS'>,
  *         DestinationConfiguration?: array{
  *             DestinationType?: 'cloud-watch-logs',
@@ -444,7 +444,7 @@ use Aws\AwsClient;
  *     RuleIdentifier?: string,
  *     Rule?: array{
  *         ResourceType?: 'AWS::Bedrock::KnowledgeBase'|'AWS::BedrockAgentCore::Browser'|'AWS::BedrockAgentCore::CodeInterpreter'|'AWS::BedrockAgentCore::Gateway'|'AWS::BedrockAgentCore::Memory'|'AWS::BedrockAgentCore::PaymentManager'|'AWS::BedrockAgentCore::Runtime'|'AWS::BedrockAgentCore::WorkloadIdentity'|'AWS::CloudFront::Distribution'|'AWS::CloudTrail'|'AWS::CloudWatch::OTelEnrichment'|'AWS::EC2::Instance'|'AWS::EC2::VPC'|'AWS::EKS::Cluster'|'AWS::ElasticLoadBalancingV2::LoadBalancer'|'AWS::Lambda::Function'|'AWS::MSK::Cluster'|'AWS::Route53Resolver::ResolverEndpoint'|'AWS::S3::Bucket'|'AWS::SecurityHub::Hub'|'AWS::SecurityHub::HubV2'|'AWS::WAFv2::WebACL'|'AWS::XRay::TransactionSearchConfig',
- *         TelemetryType?: 'Logs'|'Metrics'|'Traces',
+ *         TelemetryType?: 'Insights'|'Logs'|'Metrics'|'Traces',
  *         TelemetrySourceTypes?: list<'EKS_API_LOGS'|'EKS_AUDIT_LOGS'|'EKS_AUTHENTICATOR_LOGS'|'EKS_CONTROLLER_MANAGER_LOGS'|'EKS_SCHEDULER_LOGS'|'ROUTE53_RESOLVER_QUERY_LOGS'|'VPC_FLOW_LOGS'>,
  *         DestinationConfiguration?: array{
  *             DestinationType?: 'cloud-watch-logs',
@@ -473,7 +473,7 @@ use Aws\AwsClient;
  *     RuleIdentifier?: string,
  *     Rule?: array{
  *         ResourceType?: 'AWS::Bedrock::KnowledgeBase'|'AWS::BedrockAgentCore::Browser'|'AWS::BedrockAgentCore::CodeInterpreter'|'AWS::BedrockAgentCore::Gateway'|'AWS::BedrockAgentCore::Memory'|'AWS::BedrockAgentCore::PaymentManager'|'AWS::BedrockAgentCore::Runtime'|'AWS::BedrockAgentCore::WorkloadIdentity'|'AWS::CloudFront::Distribution'|'AWS::CloudTrail'|'AWS::CloudWatch::OTelEnrichment'|'AWS::EC2::Instance'|'AWS::EC2::VPC'|'AWS::EKS::Cluster'|'AWS::ElasticLoadBalancingV2::LoadBalancer'|'AWS::Lambda::Function'|'AWS::MSK::Cluster'|'AWS::Route53Resolver::ResolverEndpoint'|'AWS::S3::Bucket'|'AWS::SecurityHub::Hub'|'AWS::SecurityHub::HubV2'|'AWS::WAFv2::WebACL'|'AWS::XRay::TransactionSearchConfig',
- *         TelemetryType?: 'Logs'|'Metrics'|'Traces',
+ *         TelemetryType?: 'Insights'|'Logs'|'Metrics'|'Traces',
  *         TelemetrySourceTypes?: list<'EKS_API_LOGS'|'EKS_AUDIT_LOGS'|'EKS_AUTHENTICATOR_LOGS'|'EKS_CONTROLLER_MANAGER_LOGS'|'EKS_SCHEDULER_LOGS'|'ROUTE53_RESOLVER_QUERY_LOGS'|'VPC_FLOW_LOGS'>,
  *         DestinationConfiguration?: array{
  *             DestinationType?: 'cloud-watch-logs',
@@ -502,7 +502,7 @@ use Aws\AwsClient;
  *     RuleIdentifier?: string,
  *     Rule?: array{
  *         ResourceType?: 'AWS::Bedrock::KnowledgeBase'|'AWS::BedrockAgentCore::Browser'|'AWS::BedrockAgentCore::CodeInterpreter'|'AWS::BedrockAgentCore::Gateway'|'AWS::BedrockAgentCore::Memory'|'AWS::BedrockAgentCore::PaymentManager'|'AWS::BedrockAgentCore::Runtime'|'AWS::BedrockAgentCore::WorkloadIdentity'|'AWS::CloudFront::Distribution'|'AWS::CloudTrail'|'AWS::CloudWatch::OTelEnrichment'|'AWS::EC2::Instance'|'AWS::EC2::VPC'|'AWS::EKS::Cluster'|'AWS::ElasticLoadBalancingV2::LoadBalancer'|'AWS::Lambda::Function'|'AWS::MSK::Cluster'|'AWS::Route53Resolver::ResolverEndpoint'|'AWS::S3::Bucket'|'AWS::SecurityHub::Hub'|'AWS::SecurityHub::HubV2'|'AWS::WAFv2::WebACL'|'AWS::XRay::TransactionSearchConfig',
- *         TelemetryType?: 'Logs'|'Metrics'|'Traces',
+ *         TelemetryType?: 'Insights'|'Logs'|'Metrics'|'Traces',
  *         TelemetrySourceTypes?: list<'EKS_API_LOGS'|'EKS_AUDIT_LOGS'|'EKS_AUTHENTICATOR_LOGS'|'EKS_CONTROLLER_MANAGER_LOGS'|'EKS_SCHEDULER_LOGS'|'ROUTE53_RESOLVER_QUERY_LOGS'|'VPC_FLOW_LOGS'>,
  *         DestinationConfiguration?: array{
  *             DestinationType?: 'cloud-watch-logs',
@@ -531,7 +531,7 @@ use Aws\AwsClient;
  *     RuleIdentifier?: string,
  *     Rule?: array{
  *         ResourceType?: 'AWS::Bedrock::KnowledgeBase'|'AWS::BedrockAgentCore::Browser'|'AWS::BedrockAgentCore::CodeInterpreter'|'AWS::BedrockAgentCore::Gateway'|'AWS::BedrockAgentCore::Memory'|'AWS::BedrockAgentCore::PaymentManager'|'AWS::BedrockAgentCore::Runtime'|'AWS::BedrockAgentCore::WorkloadIdentity'|'AWS::CloudFront::Distribution'|'AWS::CloudTrail'|'AWS::CloudWatch::OTelEnrichment'|'AWS::EC2::Instance'|'AWS::EC2::VPC'|'AWS::EKS::Cluster'|'AWS::ElasticLoadBalancingV2::LoadBalancer'|'AWS::Lambda::Function'|'AWS::MSK::Cluster'|'AWS::Route53Resolver::ResolverEndpoint'|'AWS::S3::Bucket'|'AWS::SecurityHub::Hub'|'AWS::SecurityHub::HubV2'|'AWS::WAFv2::WebACL'|'AWS::XRay::TransactionSearchConfig',
- *         TelemetryType?: 'Logs'|'Metrics'|'Traces',
+ *         TelemetryType?: 'Insights'|'Logs'|'Metrics'|'Traces',
  *         TelemetrySourceTypes?: list<'EKS_API_LOGS'|'EKS_AUDIT_LOGS'|'EKS_AUTHENTICATOR_LOGS'|'EKS_CONTROLLER_MANAGER_LOGS'|'EKS_SCHEDULER_LOGS'|'ROUTE53_RESOLVER_QUERY_LOGS'|'VPC_FLOW_LOGS'>,
  *         DestinationConfiguration?: array{
  *             DestinationType?: 'cloud-watch-logs',

@@ -115,6 +115,10 @@ use Aws\AwsClient;
  *     fileExistsBehavior?: 'DISALLOW'|'OVERWRITE'|'RETAIN',
  *     deploymentMode?: 'RESTART'|'STANDARD',
  *     overrideAlarmConfiguration?: array{enabled?: bool, ignorePollAlarmFailure?: bool, alarms?: list<array>, ...},
+ *     ec2DeploymentOptions?: array{
+ *         autoScalingGroupProcessesToSuspend?: list<'AZRebalance'|'InstanceRefresh'|'ScheduledActions'|'Terminate'>,
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createDeploymentAsync(array $args = [])
@@ -154,6 +158,10 @@ use Aws\AwsClient;
  *     fileExistsBehavior?: 'DISALLOW'|'OVERWRITE'|'RETAIN',
  *     deploymentMode?: 'RESTART'|'STANDARD',
  *     overrideAlarmConfiguration?: array{enabled?: bool, ignorePollAlarmFailure?: bool, alarms?: list<array>, ...},
+ *     ec2DeploymentOptions?: array{
+ *         autoScalingGroupProcessesToSuspend?: list<'AZRebalance'|'InstanceRefresh'|'ScheduledActions'|'Terminate'>,
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \Aws\Result createDeploymentConfig(array $args = [])
@@ -237,6 +245,10 @@ use Aws\AwsClient;
  *     ecsServices?: list<array{serviceName?: string, clusterName?: string, ...}>,
  *     onPremisesTagSet?: array{onPremisesTagSetList?: list<list<array>>, ...},
  *     tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     ec2DeploymentOptions?: array{
+ *         autoScalingGroupProcessesToSuspend?: list<'AZRebalance'|'InstanceRefresh'|'ScheduledActions'|'Terminate'>,
+ *         ...,
+ *     },
  *     terminationHookEnabled?: bool,
  *     ...,
  * } $args = [])
@@ -283,6 +295,10 @@ use Aws\AwsClient;
  *     ecsServices?: list<array{serviceName?: string, clusterName?: string, ...}>,
  *     onPremisesTagSet?: array{onPremisesTagSetList?: list<list<array>>, ...},
  *     tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     ec2DeploymentOptions?: array{
+ *         autoScalingGroupProcessesToSuspend?: list<'AZRebalance'|'InstanceRefresh'|'ScheduledActions'|'Terminate'>,
+ *         ...,
+ *     },
  *     terminationHookEnabled?: bool,
  *     ...,
  * } $args = [])
@@ -601,6 +617,10 @@ use Aws\AwsClient;
  *     ec2TagSet?: array{ec2TagSetList?: list<list<array>>, ...},
  *     ecsServices?: list<array{serviceName?: string, clusterName?: string, ...}>,
  *     onPremisesTagSet?: array{onPremisesTagSetList?: list<list<array>>, ...},
+ *     ec2DeploymentOptions?: array{
+ *         autoScalingGroupProcessesToSuspend?: list<'AZRebalance'|'InstanceRefresh'|'ScheduledActions'|'Terminate'>,
+ *         ...,
+ *     },
  *     terminationHookEnabled?: bool,
  *     ...,
  * } $args = [])
@@ -647,6 +667,10 @@ use Aws\AwsClient;
  *     ec2TagSet?: array{ec2TagSetList?: list<list<array>>, ...},
  *     ecsServices?: list<array{serviceName?: string, clusterName?: string, ...}>,
  *     onPremisesTagSet?: array{onPremisesTagSetList?: list<list<array>>, ...},
+ *     ec2DeploymentOptions?: array{
+ *         autoScalingGroupProcessesToSuspend?: list<'AZRebalance'|'InstanceRefresh'|'ScheduledActions'|'Terminate'>,
+ *         ...,
+ *     },
  *     terminationHookEnabled?: bool,
  *     ...,
  * } $args = [])

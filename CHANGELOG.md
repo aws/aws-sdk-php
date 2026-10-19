@@ -1,5 +1,39 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EndpointV2` - `EndpointDefinitionProvider` now rejects service names and api versions that are not a single safe path segment, preventing path traversal through the `version` or `service` client options.
+* `Aws\IoTWireless` - Documentation update release for AWS service
+* `Aws\WorkspacesInstances` - ModifyVolume is a new public API for WorkSpaces Core Managed Instances. Customers can change the size, type, IOPS, or throughput of an existing managed volume online, with no stop required. Customers track progress by calling EC2 DescribeVolumesModifications directly.
+* `Aws\OpenSearchService` - Amazon OpenSearch Service adds a new TLS security policy to support FIPS policy and post-quantum cryptography
+* `Aws\ECS` - Adds support for configurable envoy application log levels. Customers can now debug network connectivity issues with their task's sidecar envoys.
+* `Aws\CodeStarNotifications` - Documentation update release for AWS service
+* `Aws\CodeDeploy` - Adds support for suspending Amazon EC2 Auto Scaling processes during CodeDeploy EC2 in-place deployments. Use ec2DeploymentOptions to choose which processes are suspended and resumed.
+* `Aws\TimestreamInfluxDB` - Adds four new parameters to the InfluxDBv3Enterprise parameter group for Amazon Timestream for InfluxDB. The new parameters are upgradePachaTree, walBufferSize, snapshotSize, and snapshotDuration.
+* `Aws\SocialMessaging` - Adding support for WhatsApp Direct Send.
+* `Aws\ManagedGrafana` - Documentation update release for AWS service
+* `Aws\CloudWatchLogs` - Amazon CloudWatch Logs now supports filtering DescribeDeliverySources by resourceArns, DescribeDeliveryDestinations by names, and DescribeDeliveries by deliverySourceNames.
+* `Aws\Connect` - Amazon Connect GetAttachedFile API now supports an optional UrlContentDisposition parameter. Set it to INLINE to get a pre-signed URL that displays the file in the browser, so agents can preview email attachments without downloading them. ATTACHMENT (download) remains the default.
+* `Aws\WorkSpaces` - Adds optional imageValidationMode enum to ImportCustomWorkspaceImageRequest. This allows customers to opt-in to having prevalidation run in the service account instead of customer account.
+* `Aws\ControlTower` - Documentation update release for AWS service
+* `Aws\CodeCommit` - Documentation update release for AWS service
+* `Aws\BedrockAgentCore` - Adds the Builtin.FailureAnalysis evaluator for batch evaluations. GetBatchEvaluation now returns insightResults that group session failures into insights with root causes and suggested fixes.
+* `Aws\Amplify` - Documentation update release for AWS service
+* `Aws\drs` - Documentation update release for AWS service
+* `Aws\DataZone` - Adds SDK and CLI support for the Iceberg REST catalog connection types already available in Amazon SageMaker Unified Studio - ICEBERGRESTCATALOG, SNOWFLAKEICEBERGRESTCATALOG, and DATABRICKSICEBERGRESTCATALOG.
+* `Aws\DynamoDB` - Enable account endpoint generation for existing CN and GovCloud regions
+* `Aws\BedrockAgentRuntime` - Adds support for applying a Retrieval Instruction, optionally by version, to AgenticRetrieveStream requests for Amazon Bedrock Knowledge Bases, and reports the applied instruction and version on the trace.
+* `Aws\EMRContainers` - Documentation update release for AWS service
+* `Aws\BedrockAgent` - Adds Retrieval Instructions for Amazon Bedrock Knowledge Bases. Create, get, update, delete, list, and version customer-authored instructions that guide how a knowledge base retrieves and answers, with content review before use.
+* `Aws\GlueDataBrew` - Documentation update release for AWS service
+* `Aws\XRay` - Adds support for encrypting the Transaction Search spans log group with a customer managed AWS KMS key. Pass the key ARN in the new CloudWatchLogsConfiguration.SpansLogGroupKmsKeyId field of UpdateTraceSegmentDestination. X-Ray applies the key when it creates the log group.
+* `Aws\ObservabilityAdmin` - Adding support for EKS Container Insights Telemetry Rules
+* `Aws\CodeConnections` - Documentation update release for AWS service
+* `Aws\CloudWatch` - This release adds ActionConfiguration to PutMetricAlarm, PutCompositeAlarm and PutLogAlarm. It allows customers to include an alarm's tags in its notifications and alarm state change events
+* `Aws\GuardDuty` - Adding a new Expected Bucket Owner optional field for GuardDuty publishing destination APIs
+* `Aws\DevOpsAgent` - Documentation update release for AWS service
+* `Aws\CodePipeline` - Documentation update release for AWS service
+
 ## 3.401.2 - 2026-10-14
 
 * `Aws\GuardDuty` - Releasing support for Custom Detection Rule Runtime Monitoring

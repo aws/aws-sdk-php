@@ -175,6 +175,12 @@
         "SamplingStatisticsDocument$ClientID": "<p>A unique identifier for the service in hexadecimal.</p>"
       }
     },
+    "CloudWatchLogsConfiguration": {
+      "base": "<p> Contains the settings for the CloudWatch Logs log groups that X-Ray creates for Transaction Search. </p>",
+      "refs": {
+        "UpdateTraceSegmentDestinationRequest$CloudWatchLogsConfiguration": "<p> Specifies settings for the CloudWatch Logs log groups that X-Ray creates for Transaction Search. Specify this only when <code>Destination</code> is <code>CloudWatchLogs</code>. </p>"
+      }
+    },
     "CooldownWindowMinutes": {
       "base": null,
       "refs": {
@@ -818,6 +824,12 @@
     "InvalidRequestException": {
       "base": "<p>The request is missing required parameters or has invalid parameters.</p>",
       "refs": {}
+    },
+    "KmsKeyId": {
+      "base": null,
+      "refs": {
+        "CloudWatchLogsConfiguration$SpansLogGroupKmsKeyId": "<p> The ARN of an AWS Key Management Service (AWS KMS) key that you create and manage, in the same account and Region, used to encrypt the <code>aws/spans</code> log group. Key IDs and alias ARNs are not supported. </p> <p> X-Ray applies the key only when it creates <code>aws/spans</code>. If the account already has an <code>aws/spans</code> log group, X-Ray fails the request with an <code>InvalidRequestException</code> and does not change the log group. To enable Transaction Search with the existing log group as it is, call <code>UpdateTraceSegmentDestination</code> again without <code>SpansLogGroupKmsKeyId</code>. To set or change the key of the existing log group, use the CloudWatch Logs <code>AssociateKmsKey</code> operation. </p> <p> You need <code>kms:DescribeKey</code> permission on the key, and the key policy must allow CloudWatch Logs to use the key. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/encrypt-log-data-kms.html\">Encrypt log data in CloudWatch Logs using AWS Key Management Service</a>. </p>"
+      }
     },
     "LinksList": {
       "base": null,

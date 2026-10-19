@@ -14,6 +14,8 @@
     "CreateKnowledgeBase": "<p>Creates a knowledge base. A knowledge base contains your data sources so that Large Language Models (LLMs) can use your data. To create a knowledge base, you must first set up your data sources and configure a supported vector store. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowlege-base-prereq.html\">Set up a knowledge base</a>.</p> <note> <p>To create a managed knowledge base, provide a <code>managedKnowledgeBaseConfiguration</code> during creation. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-build-managed.html\">Build a managed knowledge base</a>.</p> </note> <ul> <li> <p>Provide the <code>name</code> and an optional <code>description</code>.</p> </li> <li> <p>Provide the Amazon Resource Name (ARN) with permissions to create a knowledge base in the <code>roleArn</code> field.</p> </li> <li> <p>For managed knowledge bases, set <code>embeddingModelType</code> to <code>MANAGED</code> to use the service-managed embedding model, or <code>CUSTOM</code> with an <code>embeddingModelArn</code> to use your own. To use your own KMS key for encryption, provide the ARN in <code>serverSideEncryptionConfiguration</code>. No vector store configuration is required for managed knowledge bases.</p> </li> <li> <p>For self-managed knowledge bases, provide the embedding model to use in the <code>embeddingModelArn</code> field in the <code>knowledgeBaseConfiguration</code> object.</p> </li> <li> <p>For self-managed knowledge bases, provide the configuration for your vector store in the <code>storageConfiguration</code> object.</p> <ul> <li> <p>For an Amazon OpenSearch Service database, use the <code>opensearchServerlessConfiguration</code> object. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-setup-oss.html\">Create a vector store in Amazon OpenSearch Service</a>.</p> </li> <li> <p>For an Amazon Aurora database, use the <code>RdsConfiguration</code> object. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-setup-rds.html\">Create a vector store in Amazon Aurora</a>.</p> </li> <li> <p>For a Pinecone database, use the <code>pineconeConfiguration</code> object. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-setup-pinecone.html\">Create a vector store in Pinecone</a>.</p> </li> <li> <p>For a Redis Enterprise Cloud database, use the <code>redisEnterpriseCloudConfiguration</code> object. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-setup-redis.html\">Create a vector store in Redis Enterprise Cloud</a>.</p> </li> </ul> </li> </ul>",
     "CreatePrompt": "<p>Creates a prompt in your prompt library that you can add to a flow. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management.html\">Prompt management in Amazon Bedrock</a>, <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-create.html\">Create a prompt using Prompt management</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows.html\">Prompt flows in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p>",
     "CreatePromptVersion": "<p>Creates a static snapshot of your prompt that can be deployed to production. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-deploy.html\">Deploy prompts using Prompt management by creating versions</a> in the Amazon Bedrock User Guide.</p>",
+    "CreateRetrievalInstruction": "<p>Creates a new retrieval instruction. The retrieval instruction is usable once its status becomes ACTIVE. Use GetRetrievalInstruction to check whether it is ready.</p>",
+    "CreateRetrievalInstructionVersion": "<p>Creates an immutable numbered version from the retrieval instruction's current reviewed content. The service creates the version synchronously.</p> <p>The service numbers versions from 1 and assigns them in order, never reusing a number.</p>",
     "CreateVpcConfiguration": "<p>Creates a VPC configuration that lets a knowledge base connect to a resource in your private VPC. This operation is asynchronous: it returns a <code>vpcConfigurationId</code> with status <code>CREATING</code>. Poll <code>GetVpcConfiguration</code> until the status becomes <code>CREATED</code> or <code>CREATE_FAILED</code>.</p>",
     "DeleteAgent": "<p>Deletes an agent.</p>",
     "DeleteAgentActionGroup": "<p>Deletes an action group in an agent.</p>",
@@ -27,6 +29,7 @@
     "DeleteKnowledgeBaseDocuments": "<p>Deletes documents from a data source and syncs the changes to the knowledge base that is connected to it. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-direct-ingestion.html\">Ingest changes directly into a knowledge base</a> in the Amazon Bedrock User Guide.</p>",
     "DeletePrompt": "<p>Deletes a prompt or a version of it, depending on whether you include the <code>promptVersion</code> field or not. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-manage.html#prompt-management-delete.html\">Delete prompts from the Prompt management tool</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-deploy.html#prompt-management-versions-delete.html\">Delete a version of a prompt from the Prompt management tool</a> in the Amazon Bedrock User Guide.</p>",
     "DeleteResourcePolicy": "<p>Removes the resource policy associated with a knowledge base. After deletion, other AWS accounts can no longer access the knowledge base using cross-account permissions.</p>",
+    "DeleteRetrievalInstruction": "<p>Deletes a retrieval instruction or a single version of it. Omit retrievalInstructionVersion to delete the retrieval instruction itself; the service rejects that request with ConflictException while the retrieval instruction has versions or while lastTransitionStatus is CREATING or UPDATING. Specify retrievalInstructionVersion to delete only that version; the retrieval instruction and its other versions are unaffected.</p>",
     "DeleteVpcConfiguration": "<p>Deletes a VPC configuration. This operation is asynchronous: it returns status <code>DELETING</code>. Poll <code>GetVpcConfiguration</code> until it returns a <code>ResourceNotFoundException</code>, indicating the configuration is deleted. Delete requests are idempotent and safe to retry.</p>",
     "DisassociateAgentCollaborator": "<p>Disassociates an agent collaborator.</p>",
     "DisassociateAgentKnowledgeBase": "<p>Disassociates a knowledge base from an agent.</p>",
@@ -45,6 +48,7 @@
     "GetKnowledgeBaseDocuments": "<p>Retrieves specific documents from a data source that is connected to a knowledge base. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-direct-ingestion.html\">Ingest changes directly into a knowledge base</a> in the Amazon Bedrock User Guide.</p>",
     "GetPrompt": "<p>Retrieves information about the working draft (<code>DRAFT</code> version) of a prompt or a version of it, depending on whether you include the <code>promptVersion</code> field or not. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-manage.html#prompt-management-view.html\">View information about prompts using Prompt management</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-deploy.html#prompt-management-versions-view.html\">View information about a version of your prompt</a> in the Amazon Bedrock User Guide.</p>",
     "GetResourcePolicy": "<p>Retrieves the resource policy associated with a knowledge base.</p>",
+    "GetRetrievalInstruction": "<p>Gets a retrieval instruction. Also used to poll the terminal reporting of an asynchronous create or update.</p>",
     "GetVpcConfiguration": "<p>Returns the details and current status of a single VPC configuration. Use this operation to poll for the outcome of an asynchronous create or delete.</p>",
     "IngestKnowledgeBaseDocuments": "<p>Ingests documents directly into the knowledge base that is connected to the data source. The <code>dataSourceType</code> specified in the content for each document must match the type of the data source that you specify in the header. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-direct-ingestion.html\">Ingest changes directly into a knowledge base</a> in the Amazon Bedrock User Guide.</p>",
     "ListAgentActionGroups": "<p>Lists the action groups for an agent and information about each one.</p>",
@@ -61,6 +65,8 @@
     "ListKnowledgeBaseDocuments": "<p>Retrieves all the documents contained in a data source that is connected to a knowledge base. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-direct-ingestion.html\">Ingest changes directly into a knowledge base</a> in the Amazon Bedrock User Guide.</p>",
     "ListKnowledgeBases": "<p>Lists the knowledge bases in an account. The list also includesinformation about each knowledge base.</p>",
     "ListPrompts": "<p>Returns either information about the working draft (<code>DRAFT</code> version) of each prompt in an account, or information about of all versions of a prompt, depending on whether you include the <code>promptIdentifier</code> field or not. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-manage.html#prompt-management-view.html\">View information about prompts using Prompt management</a> in the Amazon Bedrock User Guide.</p>",
+    "ListRetrievalInstructionVersions": "<p>Lists the numbered versions of a retrieval instruction, newest first. DRAFT is not listed; read it with GetRetrievalInstruction without retrievalInstructionVersion. Results are paginated. Use the nextToken parameter to retrieve additional results.</p>",
+    "ListRetrievalInstructions": "<p>Lists the retrieval instructions in the caller's account. Results are paginated. Use the nextToken parameter to retrieve additional results.</p>",
     "ListTagsForResource": "<p>List all the tags for the resource you specify.</p>",
     "ListVpcConfigurations": "<p>Returns a paginated list of the VPC configurations for a knowledge base. You can optionally filter by status. Use the <code>nextToken</code> parameter to retrieve additional results.</p>",
     "PrepareAgent": "<p>Creates a <code>DRAFT</code> version of the agent that can be used for internal testing.</p>",
@@ -80,6 +86,7 @@
     "UpdateFlowAlias": "<p>Modifies the alias of a flow. Include both fields that you want to keep and ones that you want to change. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-deploy.html\">Deploy a flow in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p>",
     "UpdateKnowledgeBase": "<p>Updates the configuration of a knowledge base with the fields that you specify. Because all fields will be overwritten, you must include the same values for fields that you want to keep the same.</p> <p>You can change the following fields:</p> <ul> <li> <p> <code>name</code> </p> </li> <li> <p> <code>description</code> </p> </li> <li> <p> <code>roleArn</code> </p> </li> </ul> <p>You can't change the <code>knowledgeBaseConfiguration</code> or <code>storageConfiguration</code> fields, so you must specify the same configurations as when you created the knowledge base. You can send a <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_GetKnowledgeBase.html\">GetKnowledgeBase</a> request and copy the same configurations.</p>",
     "UpdatePrompt": "<p>Modifies a prompt in your prompt library. Include both fields that you want to keep and fields that you want to replace. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management.html\">Prompt management in Amazon Bedrock</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-manage.html#prompt-management-edit\">Edit prompts in your prompt library</a> in the Amazon Bedrock User Guide.</p>",
+    "UpdateRetrievalInstruction": "<p>Updates the content of a retrieval instruction. The update is processed asynchronously; the stored content is a candidate until content review passes, and the served content does not change while the update is in flight. The service rejects the request with ConflictException while lastTransitionStatus is CREATING or UPDATING.</p>",
     "ValidateFlowDefinition": "<p>Validates the definition of a flow.</p>"
   },
   "shapes": {
@@ -613,6 +620,8 @@
         "CreateKnowledgeBaseRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreatePromptRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreatePromptVersionRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
+        "CreateRetrievalInstructionRequest$clientToken": "<p>A caller-supplied token that makes a retried create return the existing resource rather than a second one. The window is 8 hours.</p>",
+        "CreateRetrievalInstructionVersionRequest$clientToken": "<p>A caller-supplied token that makes a retried call return the version created by the first call rather than a second version. The window is 8 hours.</p>",
         "CreateVpcConfigurationRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, the service ignores the request but does not return an error.</p>",
         "DeleteKnowledgeBaseDocumentsRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "IngestKnowledgeBaseDocumentsRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
@@ -821,6 +830,22 @@
       "base": null,
       "refs": {}
     },
+    "CreateRetrievalInstructionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRetrievalInstructionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRetrievalInstructionVersionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRetrievalInstructionVersionResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CreateVpcConfigurationRequest": {
       "base": null,
       "refs": {}
@@ -1004,6 +1029,9 @@
         "CreatePromptResponse$updatedAt": "<p>The time at which the prompt was last updated.</p>",
         "CreatePromptVersionResponse$createdAt": "<p>The time at which the prompt was created.</p>",
         "CreatePromptVersionResponse$updatedAt": "<p>The time at which the prompt was last updated.</p>",
+        "CreateRetrievalInstructionResponse$createdAt": "<p>When you created the retrieval instruction.</p>",
+        "CreateRetrievalInstructionResponse$updatedAt": "<p>When the retrieval instruction was last updated.</p>",
+        "CreateRetrievalInstructionVersionResponse$createdAt": "<p>When this version was created.</p>",
         "DataSource$createdAt": "<p>The time at which the data source was created.</p>",
         "DataSource$updatedAt": "<p>The time at which the data source was last updated.</p>",
         "DataSourceSummary$updatedAt": "<p>The time at which the data source was last updated.</p>",
@@ -1019,6 +1047,8 @@
         "GetFlowVersionResponse$createdAt": "<p>The time at which the flow was created.</p>",
         "GetPromptResponse$createdAt": "<p>The time at which the prompt was created.</p>",
         "GetPromptResponse$updatedAt": "<p>The time at which the prompt was last updated.</p>",
+        "GetRetrievalInstructionResponse$createdAt": "<p>When the retrieval instruction was created. On a numbered version, when that version was created.</p>",
+        "GetRetrievalInstructionResponse$updatedAt": "<p>When the retrieval instruction was last updated. Equal to createdAt on a numbered version, which is immutable.</p>",
         "IngestionJob$startedAt": "<p>The time the data ingestion job started.</p> <p>If you stop a data ingestion job, the <code>startedAt</code> time is the time the job was started before the job was stopped.</p>",
         "IngestionJob$updatedAt": "<p>The time the data ingestion job was last updated.</p> <p>If you stop a data ingestion job, the <code>updatedAt</code> time is the time the job was stopped.</p>",
         "IngestionJob$textReadyAt": "<p>The time at which all text content in the data ingestion job finished extraction and became available to query.</p> <p>This time isn't returned until text extraction is complete for all the documents in the job.</p>",
@@ -1032,12 +1062,17 @@
         "PrepareAgentResponse$preparedAt": "<p>The time at which the <code>DRAFT</code> version of the agent was last prepared.</p>",
         "PromptSummary$createdAt": "<p>The time at which the prompt was created.</p>",
         "PromptSummary$updatedAt": "<p>The time at which the prompt was last updated.</p>",
+        "RetrievalInstructionSummary$createdAt": "<p>When you created the retrieval instruction.</p>",
+        "RetrievalInstructionSummary$updatedAt": "<p>When the retrieval instruction was last updated.</p>",
+        "RetrievalInstructionVersionSummary$createdAt": "<p>When this version was created.</p>",
         "UpdateFlowAliasResponse$createdAt": "<p>The time at which the flow was created.</p>",
         "UpdateFlowAliasResponse$updatedAt": "<p>The time at which the alias was last updated.</p>",
         "UpdateFlowResponse$createdAt": "<p>The time at which the flow was created.</p>",
         "UpdateFlowResponse$updatedAt": "<p>The time at which the flow was last updated.</p>",
         "UpdatePromptResponse$createdAt": "<p>The time at which the prompt was created.</p>",
         "UpdatePromptResponse$updatedAt": "<p>The time at which the prompt was last updated.</p>",
+        "UpdateRetrievalInstructionResponse$createdAt": "<p>When you created the retrieval instruction.</p>",
+        "UpdateRetrievalInstructionResponse$updatedAt": "<p>When the retrieval instruction was last updated.</p>",
         "VpcConfiguration$createdAt": "<p>The time at which the VPC configuration was created.</p>",
         "VpcConfiguration$updatedAt": "<p>The time at which the VPC configuration was last updated.</p>",
         "VpcConfigurationSummary$createdAt": "<p>The time at which the VPC configuration was created.</p>"
@@ -1154,6 +1189,14 @@
       "refs": {}
     },
     "DeleteResourcePolicyResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRetrievalInstructionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRetrievalInstructionResponse": {
       "base": null,
       "refs": {}
     },
@@ -2135,6 +2178,14 @@
       "base": null,
       "refs": {}
     },
+    "GetRetrievalInstructionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRetrievalInstructionResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetVpcConfigurationRequest": {
       "base": null,
       "refs": {}
@@ -2563,9 +2614,11 @@
         "CreatePromptRequest$customerEncryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key to encrypt the prompt.</p>",
         "CreatePromptResponse$customerEncryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key that you encrypted the prompt with.</p>",
         "CreatePromptVersionResponse$customerEncryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key to encrypt the version of the prompt.</p>",
+        "CreateRetrievalInstructionRequest$customerEncryptionKeyArn": "<p>The Amazon Resource Name (ARN) of a customer managed AWS Key Management Service (AWS KMS) key used to encrypt the instruction content at rest. If you omit it, the service uses an AWS owned key. You fix the key at create and cannot change it later.</p>",
         "GetFlowResponse$customerEncryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key that the flow is encrypted with.</p>",
         "GetFlowVersionResponse$customerEncryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key that the version of the flow is encrypted with.</p>",
         "GetPromptResponse$customerEncryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key that the prompt is encrypted with.</p>",
+        "GetRetrievalInstructionResponse$customerEncryptionKeyArn": "<p>The ARN of the customer managed KMS key protecting this content, when one was supplied at create.</p>",
         "ServerSideEncryptionConfiguration$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the resource.</p>",
         "UpdateAgentRequest$customerEncryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key with which to encrypt the agent.</p>",
         "UpdateFlowRequest$customerEncryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key to encrypt the flow.</p>",
@@ -2845,6 +2898,22 @@
       "refs": {}
     },
     "ListPromptsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRetrievalInstructionVersionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRetrievalInstructionVersionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRetrievalInstructionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRetrievalInstructionsResponse": {
       "base": null,
       "refs": {}
     },
@@ -3261,6 +3330,10 @@
         "ListKnowledgeBasesResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
         "ListPromptsRequest$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results.</p>",
         "ListPromptsResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
+        "ListRetrievalInstructionVersionsRequest$nextToken": "<p>The pagination token from a previous ListRetrievalInstructionVersions response.</p>",
+        "ListRetrievalInstructionVersionsResponse$nextToken": "<p>The pagination token to pass to the next ListRetrievalInstructionVersions call, absent on the last page.</p>",
+        "ListRetrievalInstructionsRequest$nextToken": "<p>The pagination token from a previous ListRetrievalInstructions response.</p>",
+        "ListRetrievalInstructionsResponse$nextToken": "<p>The pagination token to pass to the next ListRetrievalInstructions call, absent on the last page.</p>",
         "ListVpcConfigurationsRequest$nextToken": "<p>A pagination token to retrieve the next page of results, returned in a previous response when more results are available.</p>",
         "ListVpcConfigurationsResponse$nextToken": "<p>A pagination token to retrieve the next page of results, present when the total number of results exceeds the maximum number of results.</p>"
       }
@@ -4086,6 +4159,162 @@
         "RetrievalFlowNodeConfiguration$serviceConfiguration": "<p>Contains configurations for the service to use for retrieving data to return as the output from the node.</p>"
       }
     },
+    "RetrievalInstructionArn": {
+      "base": "<p>Arn representation of the RetrievalInstruction.</p>",
+      "refs": {
+        "CreateRetrievalInstructionResponse$retrievalInstructionArn": "<p>The ARN of the newly created retrieval instruction.</p>",
+        "CreateRetrievalInstructionVersionResponse$retrievalInstructionArn": "<p>The ARN of the retrieval instruction. Versions do not have their own ARN.</p>",
+        "DeleteRetrievalInstructionResponse$retrievalInstructionArn": "<p>The ARN of the retrieval instruction.</p>",
+        "GetRetrievalInstructionResponse$retrievalInstructionArn": "<p>The ARN of the retrieval instruction.</p>",
+        "RetrievalInstructionSummary$retrievalInstructionArn": "<p>The ARN of the retrieval instruction.</p>",
+        "UpdateRetrievalInstructionResponse$retrievalInstructionArn": "<p>The ARN of the retrieval instruction.</p>"
+      }
+    },
+    "RetrievalInstructionContent": {
+      "base": "<p>The instruction content, as a set of named fields. Every field is optional; at least one must be present. Service-side validation enforces per-field and aggregate size limits.</p>",
+      "refs": {
+        "CreateRetrievalInstructionRequest$instruction": "<p>The instruction content, as a set of named fields. Get does not return this field until the create review passes.</p>",
+        "GetRetrievalInstructionResponse$instruction": "<p>The reviewed content this instruction serves — what AgenticRetrieveStream resolves while status is ACTIVE. Absent until the first create review passes. Always present on a numbered version.</p>",
+        "UpdateRetrievalInstructionRequest$instruction": "<p>The replacement instruction content. This is a full replacement of all four fields, not a patch. During UPDATING, Get continues to return the previously-served content until the update review passes.</p>"
+      }
+    },
+    "RetrievalInstructionDescription": {
+      "base": "<p>A description of a retrieval instruction.</p>",
+      "refs": {
+        "CreateRetrievalInstructionRequest$description": "<p>Specifies a description of the retrieval instruction.</p>",
+        "CreateRetrievalInstructionVersionRequest$description": "<p>A description of this version. Independent of the retrieval instruction's own description.</p>",
+        "CreateRetrievalInstructionVersionResponse$description": "<p>The description of this version, when one was supplied.</p>",
+        "GetRetrievalInstructionResponse$description": "<p>A description of the retrieval instruction. On a numbered version, the description of that version.</p>",
+        "RetrievalInstructionSummary$description": "<p>A description of the retrieval instruction.</p>",
+        "UpdateRetrievalInstructionRequest$description": "<p>A replacement description; applied together with the content when the review passes. Omit to clear.</p>"
+      }
+    },
+    "RetrievalInstructionFailureReason": {
+      "base": "<p>One reason the most recent create or update did not succeed. code drives programmatic branching (fix the text, fix the configuration, or retry); message carries the specific cause.</p>",
+      "refs": {
+        "RetrievalInstructionFailureReasons$member": null
+      }
+    },
+    "RetrievalInstructionFailureReasonCode": {
+      "base": "<p>A machine-readable failure classification. See RetrievalInstructionFailureReason.code for the value semantics.</p>",
+      "refs": {
+        "RetrievalInstructionFailureReason$code": "<p>Stable, machine-readable classification by fault attribution. Valid values:</p> <ul> <li> <p>CONTENT_REJECTED – The review rejected the named field's content; revise the text and resubmit.</p> </li> <li> <p>CLIENT_ERROR – The review could not run for a customer-side reason, for example the customer managed AWS KMS key could not be used; fix the configuration and resubmit.</p> </li> <li> <p>INTERNAL_ERROR – The review could not complete due to a service fault; retry the create or update.</p> </li> </ul> <p>New values may be added over time; your client should tolerate values it does not recognize and treat them as a failure.</p>"
+      }
+    },
+    "RetrievalInstructionFailureReasons": {
+      "base": "<p>Why the most recent create or update did not succeed: one entry per rejected field (CONTENT_REJECTED, with fieldName), or a single entry for a whole-review failure (CLIENT_ERROR or INTERNAL_ERROR, without fieldName). Present only when lastTransitionStatus is CREATE_FAILED or UPDATE_FAILED.</p>",
+      "refs": {
+        "GetRetrievalInstructionResponse$lastTransitionStatusReasons": "<p>Why the most recent create or update was rejected. One entry for each rejected field, or a single entry when the review itself failed. Each entry has a machine-readable code and a message, and names the field when it applies to one. The service includes this field only when lastTransitionStatus is CREATE_FAILED or UPDATE_FAILED. Never present on a numbered version.</p>"
+      }
+    },
+    "RetrievalInstructionFieldName": {
+      "base": "<p>Identifies one field of RetrievalInstructionContent:</p> <ul> <li> <p>RETRIEVAL_GUIDANCE – retrievalGuidance</p> </li> <li> <p>PERSONA – persona</p> </li> <li> <p>ANSWER_FORMAT – answerFormat</p> </li> <li> <p>ANSWER_POLICY – answerPolicy</p> </li> </ul>",
+      "refs": {
+        "RetrievalInstructionFailureReason$fieldName": "<p>The instruction field this entry is about. Present on review rejections of a specific field; absent when the failure applies to the whole review, because a client-side execution failure or a service fault has no single field.</p>"
+      }
+    },
+    "RetrievalInstructionFieldText": {
+      "base": "<p>The text of a single retrieval instruction field.</p>",
+      "refs": {
+        "RetrievalInstructionContent$retrievalGuidance": "<p>How to interpret and decompose the question, and what to prioritise when searching.</p>",
+        "RetrievalInstructionContent$persona": "<p>Who the assistant is: identity, tone and language.</p>",
+        "RetrievalInstructionContent$answerFormat": "<p>How the answer is structured, including how sources are cited.</p>",
+        "RetrievalInstructionContent$answerPolicy": "<p>Whether and how to answer: how strongly an answer must be supported, and what to do with questions outside scope.</p>"
+      }
+    },
+    "RetrievalInstructionId": {
+      "base": "<p>The identifier of a retrieval instruction.</p>",
+      "refs": {
+        "CreateRetrievalInstructionResponse$retrievalInstructionId": "<p>The identifier of the newly created retrieval instruction.</p>",
+        "CreateRetrievalInstructionVersionRequest$retrievalInstructionId": "<p>The identifier of the retrieval instruction to version.</p>",
+        "CreateRetrievalInstructionVersionResponse$retrievalInstructionId": "<p>The identifier of the retrieval instruction.</p>",
+        "DeleteRetrievalInstructionRequest$retrievalInstructionId": "<p>The identifier of the retrieval instruction to delete.</p>",
+        "DeleteRetrievalInstructionResponse$retrievalInstructionId": "<p>The identifier of the deleted retrieval instruction.</p>",
+        "GetRetrievalInstructionRequest$retrievalInstructionId": "<p>The identifier of the retrieval instruction to get.</p>",
+        "GetRetrievalInstructionResponse$retrievalInstructionId": "<p>The identifier of the retrieval instruction.</p>",
+        "ListRetrievalInstructionVersionsRequest$retrievalInstructionId": "<p>The identifier of the retrieval instruction whose versions to list.</p>",
+        "RetrievalInstructionSummary$retrievalInstructionId": "<p>The identifier of the retrieval instruction.</p>",
+        "UpdateRetrievalInstructionRequest$retrievalInstructionId": "<p>The identifier of the retrieval instruction to update.</p>",
+        "UpdateRetrievalInstructionResponse$retrievalInstructionId": "<p>The identifier of the retrieval instruction.</p>"
+      }
+    },
+    "RetrievalInstructionLastTransitionStatus": {
+      "base": "<p>The outcome or in-progress state of the most recent create or update of a retrieval instruction. Delete is synchronous and has no representation here. Independent of RetrievalInstructionStatus.</p>",
+      "refs": {
+        "CreateRetrievalInstructionResponse$lastTransitionStatus": "<p>Always CREATING on this response. Poll GetRetrievalInstruction until this member is neither CREATING nor UPDATING, then read the outcome from it.</p>",
+        "GetRetrievalInstructionResponse$lastTransitionStatus": "<p>The outcome or in-progress state of the most recent create or update. CREATING or UPDATING means the operation is still running. Independent of status. Always has a value from the create 202 onward. On a numbered version this is always CREATE_SUCCESSFUL: a version is created once, from reviewed content, and is immutable.</p>",
+        "RetrievalInstructionSummary$lastTransitionStatus": "<p>The outcome or in-progress state of the most recent create or update of the retrieval instruction.</p>",
+        "UpdateRetrievalInstructionResponse$lastTransitionStatus": "<p>Always UPDATING on this response. Poll GetRetrievalInstruction until this member is neither CREATING nor UPDATING, then read the outcome from it.</p>"
+      }
+    },
+    "RetrievalInstructionMaxResults": {
+      "base": "<p>The maximum number of items to return in a single page of ListRetrievalInstructions or ListRetrievalInstructionVersions. The effective upper bound is enforced service-side; the model constrains only to a positive value.</p>",
+      "refs": {
+        "ListRetrievalInstructionVersionsRequest$maxResults": "<p>Specifies the maximum number of versions to return in a single page. The service enforces the effective upper bound.</p>",
+        "ListRetrievalInstructionsRequest$maxResults": "<p>The maximum number of results to return in a single page. The effective upper bound is enforced service-side.</p>"
+      }
+    },
+    "RetrievalInstructionName": {
+      "base": "<p>The name of a retrieval instruction.</p>",
+      "refs": {
+        "CreateRetrievalInstructionRequest$name": "<p>Specifies the name of the retrieval instruction.</p>",
+        "CreateRetrievalInstructionResponse$name": "<p>The name of the retrieval instruction.</p>",
+        "GetRetrievalInstructionResponse$name": "<p>The name of the retrieval instruction.</p>",
+        "RetrievalInstructionSummary$name": "<p>The name of the retrieval instruction.</p>",
+        "UpdateRetrievalInstructionResponse$name": "<p>The name of the retrieval instruction.</p>"
+      }
+    },
+    "RetrievalInstructionNumericalVersion": {
+      "base": "<p>A retrieval instruction version number: at most nine digits (1 to 999,999,999). Numbers are allocated monotonically from 1 and never reused, even after the version is deleted, so the shape also bounds the lifetime number of versions an instruction can ever allocate.</p>",
+      "refs": {
+        "CreateRetrievalInstructionVersionResponse$version": "<p>The number of the version created. Versions are numbered from 1 and allocated monotonically; a number is never reused, even after the version is deleted.</p>",
+        "DeleteRetrievalInstructionRequest$retrievalInstructionVersion": "<p>The version to delete. Omit this field to delete the retrieval instruction itself, which you can do only when it has no versions; while any version exists the service rejects the request with ConflictException. You cannot delete DRAFT on its own; deleting the retrieval instruction removes it.</p>",
+        "DeleteRetrievalInstructionResponse$version": "<p>The version that you deleted. Absent when you deleted the whole retrieval instruction.</p>",
+        "GetRetrievalInstructionResponse$latestVersion": "<p>The largest version number that currently exists for this retrieval instruction, that is, the newest version you can retrieve. Present only on a DRAFT read, and only when at least one version exists. Because version numbers are never reused, deleting versions can leave gaps: this is the newest existing version, not a count and not the highest number ever created.</p>",
+        "RetrievalInstructionVersionSummary$version": "<p>The version number.</p>"
+      }
+    },
+    "RetrievalInstructionStatus": {
+      "base": "<p>Specifies whether you can use a retrieval instruction. You can resolve only an ACTIVE retrieval instruction at retrieval time. Monotone: INACTIVE to ACTIVE once, never back.</p>",
+      "refs": {
+        "CreateRetrievalInstructionResponse$status": "<p>Always INACTIVE on this response. The content review has not run when this call returns, so the resource is not yet usable.</p>",
+        "GetRetrievalInstructionResponse$status": "<p>Specifies whether you can use the instruction. You can resolve only an ACTIVE instruction at retrieval time. Monotone: INACTIVE to ACTIVE once, never back. Numbered versions are always ACTIVE.</p>",
+        "ListRetrievalInstructionsRequest$status": "<p>Return only instructions with this availability status.</p>",
+        "RetrievalInstructionSummary$status": "<p>Whether the instruction can be used. Only ACTIVE is resolvable at retrieval time.</p>",
+        "UpdateRetrievalInstructionResponse$status": "<p>Whether the instruction can be used. An update never lowers status. Unchanged from the previous value on this response.</p>"
+      }
+    },
+    "RetrievalInstructionSummaries": {
+      "base": "<p>List of retrieval instruction summaries.</p>",
+      "refs": {
+        "ListRetrievalInstructionsResponse$retrievalInstructionSummaries": "<p>The retrieval instruction summaries in this page.</p>"
+      }
+    },
+    "RetrievalInstructionSummary": {
+      "base": "<p>A summary of a retrieval instruction, without the content.</p>",
+      "refs": {
+        "RetrievalInstructionSummaries$member": null
+      }
+    },
+    "RetrievalInstructionVersionSelector": {
+      "base": "<p>A version selector for a retrieval instruction: a version number, or DRAFT for the retrieval instruction's current reviewed content. Version numbers are 1 to 999,999,999 (at most nine digits, no leading zeros) — the same number space as RetrievalInstructionNumericalVersion.</p>",
+      "refs": {
+        "GetRetrievalInstructionRequest$retrievalInstructionVersion": "<p>The version to return: a version number, or DRAFT for the retrieval instruction's current reviewed content. When omitted, DRAFT is used. This default is permanent: omitting retrievalInstructionVersion will never resolve to a numbered version.</p>",
+        "GetRetrievalInstructionResponse$version": "<p>The version this response describes: a version number, or DRAFT.</p>"
+      }
+    },
+    "RetrievalInstructionVersionSummaries": {
+      "base": "<p>List of retrieval instruction version summaries.</p>",
+      "refs": {
+        "ListRetrievalInstructionVersionsResponse$retrievalInstructionVersionSummaries": "<p>The version summaries in this page, newest first.</p>"
+      }
+    },
+    "RetrievalInstructionVersionSummary": {
+      "base": "<p>A summary of one numbered version of a retrieval instruction, without the content.</p>",
+      "refs": {
+        "RetrievalInstructionVersionSummaries$member": null
+      }
+    },
     "RevisionId": {
       "base": null,
       "refs": {
@@ -4407,6 +4636,7 @@
         "KnowledgeBaseDocumentDetail$statusReason": "<p>The reason for the status. Appears alongside the status <code>IGNORED</code>.</p>",
         "ListKnowledgeBaseDocumentsResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
         "RedshiftProvisionedAuthConfiguration$databaseUser": "<p>The database username for authentication to an Amazon Redshift provisioned data warehouse.</p>",
+        "RetrievalInstructionFailureReason$message": "<p>Human-readable explanation of the specific cause. Never contains the customer's own text.</p>",
         "StopSequences$member": null
       }
     },
@@ -4524,6 +4754,7 @@
         "CreateKnowledgeBaseRequest$tags": "<p>Specify the key-value pairs for the tags that you want to attach to your knowledge base in this object.</p>",
         "CreatePromptRequest$tags": "<p>Any tags that you want to attach to the prompt. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tagging.html\">Tagging resources in Amazon Bedrock</a>.</p>",
         "CreatePromptVersionRequest$tags": "<p>Any tags that you want to attach to the version of the prompt. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tagging.html\">Tagging resources in Amazon Bedrock</a>.</p>",
+        "CreateRetrievalInstructionRequest$tags": "<p>Tags for the retrieval instruction.</p>",
         "ListTagsForResourceResponse$tags": "<p>The key-value pairs for the tags associated with the resource.</p>",
         "TagResourceRequest$tags": "<p>An object containing key-value pairs that define the tags to attach to the resource.</p>"
       }
@@ -4802,6 +5033,14 @@
       "refs": {}
     },
     "UpdatePromptResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRetrievalInstructionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRetrievalInstructionResponse": {
       "base": null,
       "refs": {}
     },

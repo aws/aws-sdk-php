@@ -426,8 +426,16 @@ use Aws\AwsClient;
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateTraceSegmentDestination(array $args = [])
- * @phpstan-method \Aws\Result updateTraceSegmentDestination(array{Destination?: 'CloudWatchLogs'|'XRay', ...} $args = [])
+ * @phpstan-method \Aws\Result updateTraceSegmentDestination(array{
+ *     Destination?: 'CloudWatchLogs'|'XRay',
+ *     CloudWatchLogsConfiguration?: array{SpansLogGroupKmsKeyId?: string, ...},
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateTraceSegmentDestinationAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise updateTraceSegmentDestinationAsync(array{Destination?: 'CloudWatchLogs'|'XRay', ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateTraceSegmentDestinationAsync(array{
+ *     Destination?: 'CloudWatchLogs'|'XRay',
+ *     CloudWatchLogsConfiguration?: array{SpansLogGroupKmsKeyId?: string, ...},
+ *     ...,
+ * } $args = [])
  */
 class XRayClient extends AwsClient {}

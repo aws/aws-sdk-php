@@ -870,6 +870,12 @@
       "max":255,
       "min":1
     },
+    "ActionConfiguration":{
+      "type":"structure",
+      "members":{
+        "AlarmTagsPropagation":{"shape":"AlarmTagsPropagation"}
+      }
+    },
     "ActionLogLineCount":{"type":"integer"},
     "ActionLogLineRoleArn":{"type":"string"},
     "ActionPrefix":{
@@ -1000,6 +1006,27 @@
     "AlarmRule":{
       "type":"string",
       "max":10240,
+      "min":1
+    },
+    "AlarmTagsPropagation":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{"shape":"AlarmTagsPropagationEnabled"},
+        "IncludedTagKeys":{"shape":"AlarmTagsPropagationTagKeys"},
+        "ExcludedTagKeys":{"shape":"AlarmTagsPropagationTagKeys"}
+      }
+    },
+    "AlarmTagsPropagationEnabled":{"type":"boolean"},
+    "AlarmTagsPropagationTagKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "AlarmTagsPropagationTagKeys":{
+      "type":"list",
+      "member":{"shape":"AlarmTagsPropagationTagKey"},
+      "max":50,
       "min":1
     },
     "AlarmType":{
@@ -1174,7 +1201,8 @@
         "ActionsSuppressedReason":{"shape":"ActionsSuppressedReason"},
         "ActionsSuppressor":{"shape":"AlarmArn"},
         "ActionsSuppressorWaitPeriod":{"shape":"SuppressorPeriod"},
-        "ActionsSuppressorExtensionPeriod":{"shape":"SuppressorPeriod"}
+        "ActionsSuppressorExtensionPeriod":{"shape":"SuppressorPeriod"},
+        "ActionConfiguration":{"shape":"ActionConfiguration"}
       },
       "xmlOrder":[
         "ActionsEnabled",
@@ -1195,7 +1223,8 @@
         "ActionsSuppressedReason",
         "ActionsSuppressor",
         "ActionsSuppressorWaitPeriod",
-        "ActionsSuppressorExtensionPeriod"
+        "ActionsSuppressorExtensionPeriod",
+        "ActionConfiguration"
       ]
     },
     "CompositeAlarms":{
@@ -2401,7 +2430,8 @@
         "EvaluationState":{"shape":"EvaluationState"},
         "ActionLogLineCount":{"shape":"ActionLogLineCount"},
         "ActionLogLineRoleArn":{"shape":"ActionLogLineRoleArn"},
-        "WarmUpConfiguration":{"shape":"WarmUpConfiguration"}
+        "WarmUpConfiguration":{"shape":"WarmUpConfiguration"},
+        "ActionConfiguration":{"shape":"ActionConfiguration"}
       },
       "xmlOrder":[
         "AlarmName",
@@ -2426,7 +2456,8 @@
         "EvaluationState",
         "ActionLogLineCount",
         "ActionLogLineRoleArn",
-        "WarmUpConfiguration"
+        "WarmUpConfiguration",
+        "ActionConfiguration"
       ]
     },
     "LogAlarms":{
@@ -2545,7 +2576,8 @@
         "EvaluationWindow":{"shape":"EvaluationWindow"},
         "WarmUpConfiguration":{"shape":"WarmUpConfiguration"},
         "EvaluationCriteria":{"shape":"EvaluationCriteria"},
-        "EvaluationInterval":{"shape":"EvaluationInterval"}
+        "EvaluationInterval":{"shape":"EvaluationInterval"},
+        "ActionConfiguration":{"shape":"ActionConfiguration"}
       },
       "xmlOrder":[
         "AlarmName",
@@ -2580,7 +2612,8 @@
         "EvaluationWindow",
         "WarmUpConfiguration",
         "EvaluationCriteria",
-        "EvaluationInterval"
+        "EvaluationInterval",
+        "ActionConfiguration"
       ]
     },
     "MetricAlarms":{
@@ -2940,7 +2973,8 @@
         "Tags":{"shape":"TagList"},
         "ActionsSuppressor":{"shape":"AlarmArn"},
         "ActionsSuppressorWaitPeriod":{"shape":"SuppressorPeriod"},
-        "ActionsSuppressorExtensionPeriod":{"shape":"SuppressorPeriod"}
+        "ActionsSuppressorExtensionPeriod":{"shape":"SuppressorPeriod"},
+        "ActionConfiguration":{"shape":"ActionConfiguration"}
       }
     },
     "PutDashboardInput":{
@@ -3005,7 +3039,8 @@
         "ComparisonOperator":{"shape":"ComparisonOperator"},
         "TreatMissingData":{"shape":"TreatMissingData"},
         "Tags":{"shape":"TagList"},
-        "WarmUpConfiguration":{"shape":"WarmUpConfiguration"}
+        "WarmUpConfiguration":{"shape":"WarmUpConfiguration"},
+        "ActionConfiguration":{"shape":"ActionConfiguration"}
       }
     },
     "PutManagedInsightRulesInput":{
@@ -3050,7 +3085,8 @@
         "EvaluationWindow":{"shape":"EvaluationWindow"},
         "WarmUpConfiguration":{"shape":"WarmUpConfiguration"},
         "EvaluationCriteria":{"shape":"EvaluationCriteria"},
-        "EvaluationInterval":{"shape":"EvaluationInterval"}
+        "EvaluationInterval":{"shape":"EvaluationInterval"},
+        "ActionConfiguration":{"shape":"ActionConfiguration"}
       }
     },
     "PutMetricDataInput":{

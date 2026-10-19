@@ -5394,8 +5394,29 @@
         "namespace":{"shape":"String"},
         "services":{"shape":"ServiceConnectServiceList"},
         "logConfiguration":{"shape":"LogConfiguration"},
-        "accessLogConfiguration":{"shape":"ServiceConnectAccessLogConfiguration"}
+        "accessLogConfiguration":{"shape":"ServiceConnectAccessLogConfiguration"},
+        "containerConfigurations":{"shape":"ServiceConnectContainerConfigurations"}
       }
+    },
+    "ServiceConnectContainerConfiguration":{
+      "type":"structure",
+      "members":{
+        "logLevel":{"shape":"ServiceConnectContainerLogLevel"}
+      },
+      "union":true
+    },
+    "ServiceConnectContainerConfigurations":{
+      "type":"list",
+      "member":{"shape":"ServiceConnectContainerConfiguration"},
+      "max":10,
+      "min":0
+    },
+    "ServiceConnectContainerLogLevel":{
+      "type":"string",
+      "enum":[
+        "debug",
+        "info"
+      ]
     },
     "ServiceConnectIncludeQueryParameters":{
       "type":"string",

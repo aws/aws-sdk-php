@@ -157,7 +157,7 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result createPublishingDestination(array{
  *     DetectorId?: string,
  *     DestinationType?: 'S3',
- *     DestinationProperties?: array{DestinationArn?: string, KmsKeyArn?: string, ...},
+ *     DestinationProperties?: array{DestinationArn?: string, KmsKeyArn?: string, ExpectedBucketOwner?: string, ...},
  *     ClientToken?: string,
  *     Tags?: array<string, string>,
  *     ...,
@@ -166,7 +166,7 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise createPublishingDestinationAsync(array{
  *     DetectorId?: string,
  *     DestinationType?: 'S3',
- *     DestinationProperties?: array{DestinationArn?: string, KmsKeyArn?: string, ...},
+ *     DestinationProperties?: array{DestinationArn?: string, KmsKeyArn?: string, ExpectedBucketOwner?: string, ...},
  *     ClientToken?: string,
  *     Tags?: array<string, string>,
  *     ...,
@@ -935,14 +935,14 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result updatePublishingDestination(array{
  *     DetectorId?: string,
  *     DestinationId?: string,
- *     DestinationProperties?: array{DestinationArn?: string, KmsKeyArn?: string, ...},
+ *     DestinationProperties?: array{DestinationArn?: string, KmsKeyArn?: string, ExpectedBucketOwner?: string, ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updatePublishingDestinationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise updatePublishingDestinationAsync(array{
  *     DetectorId?: string,
  *     DestinationId?: string,
- *     DestinationProperties?: array{DestinationArn?: string, KmsKeyArn?: string, ...},
+ *     DestinationProperties?: array{DestinationArn?: string, KmsKeyArn?: string, ExpectedBucketOwner?: string, ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateThreatEntitySet(array $args = [])

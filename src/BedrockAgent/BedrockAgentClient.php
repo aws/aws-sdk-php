@@ -453,6 +453,30 @@ use Aws\AwsClient;
  *     tags?: array<string, string>,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result createRetrievalInstruction(array $args = [])
+ * @phpstan-method \Aws\Result createRetrievalInstruction(array{
+ *     clientToken?: string,
+ *     name?: string,
+ *     instruction?: array{retrievalGuidance?: string, persona?: string, answerFormat?: string, answerPolicy?: string, ...},
+ *     description?: string,
+ *     customerEncryptionKeyArn?: string,
+ *     tags?: array<string, string>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createRetrievalInstructionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createRetrievalInstructionAsync(array{
+ *     clientToken?: string,
+ *     name?: string,
+ *     instruction?: array{retrievalGuidance?: string, persona?: string, answerFormat?: string, answerPolicy?: string, ...},
+ *     description?: string,
+ *     customerEncryptionKeyArn?: string,
+ *     tags?: array<string, string>,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result createRetrievalInstructionVersion(array $args = [])
+ * @phpstan-method \Aws\Result createRetrievalInstructionVersion(array{retrievalInstructionId?: string, description?: string, clientToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise createRetrievalInstructionVersionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createRetrievalInstructionVersionAsync(array{retrievalInstructionId?: string, description?: string, clientToken?: string, ...} $args = [])
  * @method \Aws\Result createVpcConfiguration(array $args = [])
  * @phpstan-method \Aws\Result createVpcConfiguration(array{
  *     knowledgeBaseId?: string,
@@ -545,6 +569,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result deleteResourcePolicy(array{resourceArn?: string, expectedRevisionId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteResourcePolicyAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteResourcePolicyAsync(array{resourceArn?: string, expectedRevisionId?: string, ...} $args = [])
+ * @method \Aws\Result deleteRetrievalInstruction(array $args = [])
+ * @phpstan-method \Aws\Result deleteRetrievalInstruction(array{retrievalInstructionId?: string, retrievalInstructionVersion?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteRetrievalInstructionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteRetrievalInstructionAsync(array{retrievalInstructionId?: string, retrievalInstructionVersion?: string, ...} $args = [])
  * @method \Aws\Result deleteVpcConfiguration(array $args = [])
  * @phpstan-method \Aws\Result deleteVpcConfiguration(array{knowledgeBaseId?: string, vpcConfigurationId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteVpcConfigurationAsync(array $args = [])
@@ -627,6 +655,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getResourcePolicy(array{resourceArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getResourcePolicyAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getResourcePolicyAsync(array{resourceArn?: string, ...} $args = [])
+ * @method \Aws\Result getRetrievalInstruction(array $args = [])
+ * @phpstan-method \Aws\Result getRetrievalInstruction(array{retrievalInstructionId?: string, retrievalInstructionVersion?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getRetrievalInstructionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getRetrievalInstructionAsync(array{retrievalInstructionId?: string, retrievalInstructionVersion?: string, ...} $args = [])
  * @method \Aws\Result getVpcConfiguration(array $args = [])
  * @phpstan-method \Aws\Result getVpcConfiguration(array{knowledgeBaseId?: string, vpcConfigurationId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getVpcConfigurationAsync(array $args = [])
@@ -719,6 +751,14 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listPrompts(array{promptIdentifier?: string, maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listPromptsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listPromptsAsync(array{promptIdentifier?: string, maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \Aws\Result listRetrievalInstructionVersions(array $args = [])
+ * @phpstan-method \Aws\Result listRetrievalInstructionVersions(array{retrievalInstructionId?: string, maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listRetrievalInstructionVersionsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listRetrievalInstructionVersionsAsync(array{retrievalInstructionId?: string, maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \Aws\Result listRetrievalInstructions(array $args = [])
+ * @phpstan-method \Aws\Result listRetrievalInstructions(array{status?: 'ACTIVE'|'INACTIVE', maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listRetrievalInstructionsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listRetrievalInstructionsAsync(array{status?: 'ACTIVE'|'INACTIVE', maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
  * @phpstan-method \Aws\Result listTagsForResource(array{resourceArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
@@ -1183,6 +1223,20 @@ use Aws\AwsClient;
  *         ...,
  *     }>,
  *     promptIdentifier?: string,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result updateRetrievalInstruction(array $args = [])
+ * @phpstan-method \Aws\Result updateRetrievalInstruction(array{
+ *     retrievalInstructionId?: string,
+ *     instruction?: array{retrievalGuidance?: string, persona?: string, answerFormat?: string, answerPolicy?: string, ...},
+ *     description?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateRetrievalInstructionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateRetrievalInstructionAsync(array{
+ *     retrievalInstructionId?: string,
+ *     instruction?: array{retrievalGuidance?: string, persona?: string, answerFormat?: string, answerPolicy?: string, ...},
+ *     description?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result validateFlowDefinition(array $args = [])

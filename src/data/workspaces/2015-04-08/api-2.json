@@ -3297,6 +3297,13 @@
         "SHARED"
       ]
     },
+    "ImageValidationMode":{
+      "type":"string",
+      "enum":[
+        "CUSTOMER_MANAGED",
+        "SERVICE_MANAGED"
+      ]
+    },
     "ImportClientBrandingRequest":{
       "type":"structure",
       "required":["ResourceId"],
@@ -3342,7 +3349,8 @@
         "InfrastructureConfigurationArn":{"shape":"InfrastructureConfigurationArn"},
         "Platform":{"shape":"Platform"},
         "OsVersion":{"shape":"OSVersion"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "ImageValidationMode":{"shape":"ImageValidationMode"}
       }
     },
     "ImportCustomWorkspaceImageResult":{

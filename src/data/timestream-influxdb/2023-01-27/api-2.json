@@ -1656,7 +1656,11 @@
         "lastValueCacheDisableFromHistory":{"shape":"Boolean"},
         "distinctValueCacheDisableFromHistory":{"shape":"Boolean"},
         "replicationInterval":{"shape":"Duration"},
-        "catalogSyncInterval":{"shape":"Duration"}
+        "catalogSyncInterval":{"shape":"Duration"},
+        "upgradePachaTree":{"shape":"Boolean"},
+        "walBufferSize":{"shape":"InfluxDBv3EnterpriseParametersWalBufferSizeLong"},
+        "snapshotSize":{"shape":"PercentOrAbsoluteLong"},
+        "snapshotDuration":{"shape":"Duration"}
       }
     },
     "InfluxDBv3EnterpriseParametersCompactionMaxNumFilesPerPlanInteger":{
@@ -1780,6 +1784,12 @@
       "type":"integer",
       "box":true,
       "max":1000,
+      "min":1
+    },
+    "InfluxDBv3EnterpriseParametersWalBufferSizeLong":{
+      "type":"long",
+      "box":true,
+      "max":1073741824,
       "min":1
     },
     "InfluxDBv3EnterpriseParametersWalMaxWriteBufferSizeInteger":{

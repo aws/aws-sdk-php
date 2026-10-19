@@ -222,6 +222,7 @@
         {"shape":"InvalidIgnoreApplicationStopFailuresValueException"},
         {"shape":"InvalidGitHubAccountTokenException"},
         {"shape":"InvalidTrafficRoutingConfigurationException"},
+        {"shape":"InvalidAutoScalingGroupProcessToSuspendException"},
         {"shape":"InvalidECSServiceException"},
         {"shape":"InvalidInputException"}
       ]
@@ -286,7 +287,8 @@
         {"shape":"InvalidTargetGroupPairException"},
         {"shape":"ECSServiceMappingLimitExceededException"},
         {"shape":"InvalidTagsToAddException"},
-        {"shape":"InvalidTrafficRoutingConfigurationException"}
+        {"shape":"InvalidTrafficRoutingConfigurationException"},
+        {"shape":"InvalidAutoScalingGroupProcessToSuspendException"}
       ]
     },
     "DeleteApplication":{
@@ -869,7 +871,8 @@
         {"shape":"InvalidECSServiceException"},
         {"shape":"InvalidTargetGroupPairException"},
         {"shape":"ECSServiceMappingLimitExceededException"},
-        {"shape":"InvalidTrafficRoutingConfigurationException"}
+        {"shape":"InvalidTrafficRoutingConfigurationException"},
+        {"shape":"InvalidAutoScalingGroupProcessToSuspendException"}
       ]
     }
   },
@@ -1021,6 +1024,23 @@
     "AutoScalingGroupNameList":{
       "type":"list",
       "member":{"shape":"AutoScalingGroupName"}
+    },
+    "AutoScalingGroupProcess":{
+      "type":"string",
+      "enum":[
+        "Terminate",
+        "AZRebalance",
+        "InstanceRefresh",
+        "ScheduledActions"
+      ],
+      "max":255,
+      "min":1
+    },
+    "AutoScalingGroupProcessesToSuspendList":{
+      "type":"list",
+      "member":{"shape":"AutoScalingGroupProcess"},
+      "max":4,
+      "min":0
     },
     "BatchGetApplicationRevisionsInput":{
       "type":"structure",
@@ -1256,6 +1276,7 @@
         "ecsServices":{"shape":"ECSServiceList"},
         "onPremisesTagSet":{"shape":"OnPremisesTagSet"},
         "tags":{"shape":"TagList"},
+        "ec2DeploymentOptions":{"shape":"EC2DeploymentOptions"},
         "terminationHookEnabled":{"shape":"NullableBoolean"}
       }
     },
@@ -1280,7 +1301,8 @@
         "updateOutdatedInstancesOnly":{"shape":"Boolean"},
         "fileExistsBehavior":{"shape":"FileExistsBehavior"},
         "deploymentMode":{"shape":"DeploymentMode"},
-        "overrideAlarmConfiguration":{"shape":"AlarmConfiguration"}
+        "overrideAlarmConfiguration":{"shape":"AlarmConfiguration"},
+        "ec2DeploymentOptions":{"shape":"EC2DeploymentOptions"}
       }
     },
     "CreateDeploymentOutput":{
@@ -1454,6 +1476,7 @@
         "onPremisesTagSet":{"shape":"OnPremisesTagSet"},
         "computePlatform":{"shape":"ComputePlatform"},
         "ecsServices":{"shape":"ECSServiceList"},
+        "ec2DeploymentOptions":{"shape":"EC2DeploymentOptions"},
         "terminationHookEnabled":{"shape":"Boolean"}
       }
     },
@@ -1520,7 +1543,8 @@
         "computePlatform":{"shape":"ComputePlatform"},
         "externalId":{"shape":"ExternalId"},
         "relatedDeployments":{"shape":"RelatedDeployments"},
-        "overrideAlarmConfiguration":{"shape":"AlarmConfiguration"}
+        "overrideAlarmConfiguration":{"shape":"AlarmConfiguration"},
+        "ec2DeploymentOptions":{"shape":"EC2DeploymentOptions"}
       }
     },
     "DeploymentIsNotInReadyStateException":{
@@ -1688,6 +1712,12 @@
       }
     },
     "Duration":{"type":"integer"},
+    "EC2DeploymentOptions":{
+      "type":"structure",
+      "members":{
+        "autoScalingGroupProcessesToSuspend":{"shape":"AutoScalingGroupProcessesToSuspendList"}
+      }
+    },
     "EC2TagFilter":{
       "type":"structure",
       "members":{
@@ -2178,6 +2208,11 @@
       "exception":true
     },
     "InvalidAutoScalingGroupException":{
+      "type":"structure",
+      "members":{},
+      "exception":true
+    },
+    "InvalidAutoScalingGroupProcessToSuspendException":{
       "type":"structure",
       "members":{},
       "exception":true
@@ -3226,6 +3261,7 @@
         "ec2TagSet":{"shape":"EC2TagSet"},
         "ecsServices":{"shape":"ECSServiceList"},
         "onPremisesTagSet":{"shape":"OnPremisesTagSet"},
+        "ec2DeploymentOptions":{"shape":"EC2DeploymentOptions"},
         "terminationHookEnabled":{"shape":"NullableBoolean"}
       }
     },

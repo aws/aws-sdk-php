@@ -1644,6 +1644,24 @@
         "CloudWatchLogsFilter$value": "<p>The value to compare against using the specified operator.</p>"
       }
     },
+    "FindingDescription": {
+      "base": null,
+      "refs": {
+        "SessionFinding$description": "<p>A description of the failure.</p>"
+      }
+    },
+    "FindingTargetId": {
+      "base": null,
+      "refs": {
+        "SessionFinding$targetId": "<p>The identifier or name of the location in the session where the failure was found, interpreted according to <code>targetType</code>.</p>"
+      }
+    },
+    "FindingTargetType": {
+      "base": "<p>The type of location in a session that a finding points to: a span ID, a trace ID, or a span name.</p>",
+      "refs": {
+        "SessionFinding$targetType": "<p>The type of location that <code>targetId</code> refers to.</p>"
+      }
+    },
     "GatewayArn": {
       "base": null,
       "refs": {
@@ -2447,6 +2465,12 @@
         "StartBatchEvaluationRequestInsightsList$member": null
       }
     },
+    "InsightDescription": {
+      "base": null,
+      "refs": {
+        "InsightResult$description": "<p>A description of the failure pattern that the insight represents.</p>"
+      }
+    },
     "InsightId": {
       "base": "<p>Canonical insight identifiers using the Builtin.Insight.* naming convention. Used by BatchEvaluate, InternalEvaluate, and ServiceEngineEvaluate flows.</p>",
       "refs": {
@@ -2459,6 +2483,49 @@
         "BatchEvaluationSummary$insights": "<p>The list of insight analyses applied during the batch evaluation.</p>",
         "GetBatchEvaluationResponse$insights": "<p>The list of insight analyses applied during the batch evaluation.</p>",
         "StartBatchEvaluationResponse$insights": "<p>The list of insight analyses applied during the batch evaluation.</p>"
+      }
+    },
+    "InsightName": {
+      "base": null,
+      "refs": {
+        "InsightResult$name": "<p>A generated label for the insight. The name is not an identifier and can differ between batch evaluations.</p>"
+      }
+    },
+    "InsightResult": {
+      "base": "<p>An insight that groups related failures found across the sessions in a batch evaluation.</p>",
+      "refs": {
+        "InsightResultList$member": null
+      }
+    },
+    "InsightResultList": {
+      "base": null,
+      "refs": {
+        "GetBatchEvaluationResponse$insightResults": "<p>The insights generated when the batch evaluation includes the <code>Builtin.FailureAnalysis</code> evaluator. Each insight groups related failures found across the evaluated sessions. An empty list means that no failures were found. If the analysis fails, this field is omitted and <code>errorDetails</code> describes the error.</p>"
+      }
+    },
+    "InsightRootCause": {
+      "base": "<p>A root cause that contributes to an insight.</p>",
+      "refs": {
+        "InsightRootCauseList$member": null
+      }
+    },
+    "InsightRootCauseList": {
+      "base": null,
+      "refs": {
+        "InsightResult$rootCauses": "<p>The root causes identified for the insight.</p>"
+      }
+    },
+    "InsightSampleSessionList": {
+      "base": null,
+      "refs": {
+        "InsightResult$sampleSessions": "<p>A sample of up to 10 sessions affected by the insight. Returned only when the insight has no root causes. Otherwise, sample sessions are returned for each root cause.</p>",
+        "InsightRootCause$sampleSessions": "<p>A sample of up to 10 sessions affected by the root cause.</p>"
+      }
+    },
+    "InsightType": {
+      "base": "<p>The type of insight.</p>",
+      "refs": {
+        "InsightResult$type": "<p>The type of insight. <code>FAILURE</code> indicates a group of related failures.</p>"
       }
     },
     "InsightsFailureCategory": {
@@ -2507,6 +2574,8 @@
         "HarnessContentBlockDeltaEvent$contentBlockIndex": "<p>The index of the content block being updated.</p>",
         "HarnessContentBlockStartEvent$contentBlockIndex": "<p>The index of the content block within the message.</p>",
         "HarnessContentBlockStopEvent$contentBlockIndex": "<p>The index of the content block that ended.</p>",
+        "InsightResult$affectedSessionCount": "<p>The number of distinct sessions affected by the insight.</p>",
+        "InsightRootCause$affectedSessionCount": "<p>The number of distinct sessions affected by the root cause. A session can be affected by more than one root cause of the same insight.</p>",
         "InvokeAgentRuntimeCommandRequestBody$timeout": "<p>The maximum duration in seconds to wait for the command to complete. If the command execution exceeds this timeout, it will be terminated. Default is 300 seconds. Minimum is 1 second. Maximum is 3600 seconds.</p>",
         "InvokeHarnessRequest$maxIterations": "<p>The maximum number of iterations the agent loop can execute. If specified, overrides the harness default.</p>",
         "InvokeHarnessRequest$maxTokens": "<p>The maximum number of tokens the agent can generate per iteration. If specified, overrides the harness default.</p>",
@@ -3431,11 +3500,11 @@
       "refs": {
         "DeleteMemoryRecordInput$namespace": "<p>The namespace of the memory record to delete. This value is used for IAM condition key authorization.</p>",
         "GetMemoryRecordInput$namespace": "<p>The namespace of the memory record to retrieve. This value is used for IAM condition key authorization.</p>",
-        "ListMemoryRecordsInput$namespace": "<p>The namespace prefix to filter memory records by. Returns all memory records in namespaces that start with the provided prefix. Either <code>namespace</code> or <code>namespacePath</code> is required.</p>",
+        "ListMemoryRecordsInput$namespace": "<p>The exact namespace to filter memory records by. Returns all memory records that matches the provided namespace. Either <code>namespace</code> or <code>namespacePath</code> is required.</p>",
         "ListMemoryRecordsInput$namespacePath": "<p>Use namespacePath for hierarchical retrievals. Return all memory records where namespace falls under the same parent hierarchy. Either <code>namespace</code> or <code>namespacePath</code> is required.</p>",
         "MemoryRecordDeleteInput$namespace": "<p>The namespace of the memory record being deleted. This value is used for IAM condition key authorization.</p>",
         "NamespacesList$member": null,
-        "RetrieveMemoryRecordsInput$namespace": "<p>The namespace prefix to filter memory records by. Searches for memory records in namespaces that start with the provided prefix. Either <code>namespace</code> or <code>namespacePath</code> is required.</p>",
+        "RetrieveMemoryRecordsInput$namespace": "<p>The exact namespace to filter memory records by. Searches for memory records that matches the provided namespace value. Either <code>namespace</code> or <code>namespacePath</code> is required.</p>",
         "RetrieveMemoryRecordsInput$namespacePath": "<p>Use namespacePath for hierarchical retrievals. Return all memory records where namespace falls under the same parent hierarchy. Either <code>namespace</code> or <code>namespacePath</code> is required.</p>"
       }
     },
@@ -3526,7 +3595,7 @@
     "OAuthCredentialProvider": {
       "base": "<p>Configuration for an OAuth 2.0 credential provider used to authenticate tool calls.</p>",
       "refs": {
-        "HarnessGatewayOutboundAuth$oauth": "<p>OAuth 2.0 authentication via AgentCore Identity.</p>"
+        "HarnessGatewayOutboundAuth$oauth": "<p>OAuth 2.0 authentication via AgentCore Identity.</p> <p>The <code>AUTHORIZATION_CODE</code> grant type is not supported for outbound authentication from a harness to an AgentCore Gateway, even when <code>defaultReturnUrl</code> is specified.</p>"
       }
     },
     "OAuthCredentialProviderArn": {
@@ -4263,6 +4332,18 @@
         "FailureSubCategoryCluster$rootCauses": "<p>The list of root cause clusters identified within this subcategory.</p>"
       }
     },
+    "RootCauseExplanation": {
+      "base": null,
+      "refs": {
+        "InsightRootCause$explanation": "<p>An explanation of how the root cause leads to the failures in the insight.</p>"
+      }
+    },
+    "RootCauseName": {
+      "base": null,
+      "refs": {
+        "InsightRootCause$name": "<p>A generated label for the root cause.</p>"
+      }
+    },
     "RuntimeClientError": {
       "base": "<p>The exception that occurs when there is an error in the runtime client. This can happen due to network issues, invalid configuration, or other client-side problems. Check the error message for specific details about the error.</p>",
       "refs": {
@@ -4310,6 +4391,12 @@
       "base": null,
       "refs": {
         "S3Location$versionId": "<p>The name of the Amazon S3 version ID where the resource is stored (Optional).</p>"
+      }
+    },
+    "SampleSession": {
+      "base": "<p>A session affected by an insight or root cause. Use the session ID to find the per-session evaluation results in CloudWatch Logs.</p>",
+      "refs": {
+        "InsightSampleSessionList$member": null
       }
     },
     "SaveBrowserSessionProfileRequest": {
@@ -4491,6 +4578,30 @@
         "OnlineEvaluationConfigSource$timeRange": "<p>Optional session filter configuration to narrow down which sessions from the online evaluation configuration to include.</p>"
       }
     },
+    "SessionFinding": {
+      "base": "<p>A failure found in a session.</p>",
+      "refs": {
+        "SessionFindingList$member": null
+      }
+    },
+    "SessionFindingCategoryString": {
+      "base": null,
+      "refs": {
+        "SessionFinding$category": "<p>The category of the failure.</p>"
+      }
+    },
+    "SessionFindingConfidenceDouble": {
+      "base": null,
+      "refs": {
+        "SessionFinding$confidence": "<p>The confidence that the finding is a failure, from 0 to 1.</p>"
+      }
+    },
+    "SessionFindingList": {
+      "base": null,
+      "refs": {
+        "SampleSession$findings": "<p>The failures found in the session that belong to the insight or root cause, up to 10.</p>"
+      }
+    },
     "SessionId": {
       "base": null,
       "refs": {
@@ -4507,6 +4618,7 @@
         "InvokeAgentRuntimeResponse$runtimeSessionId": "<p>The identifier of the runtime session.</p>",
         "InvokeAgentRuntimeResponse$mcpSessionId": "<p>The identifier of the MCP session.</p>",
         "ListEventsInput$sessionId": "<p>The identifier of the session for which to list events.</p>",
+        "SampleSession$sessionId": "<p>The unique identifier of the session.</p>",
         "SessionSummary$sessionId": "<p>The unique identifier of the session.</p>",
         "StopRuntimeSessionResponse$runtimeSessionId": "<p>The ID of the session that you requested to stop.</p>"
       }
@@ -5016,6 +5128,12 @@
         "SubscriptionRequiredException$subscriptionUrl": "<p>The URL to the Marketplace listing where you can subscribe.</p>"
       }
     },
+    "SuggestedFix": {
+      "base": null,
+      "refs": {
+        "InsightRootCause$suggestedFix": "<p>A suggested change to the agent that addresses the root cause.</p>"
+      }
+    },
     "SyntheticTimestamp_date_time": {
       "base": null,
       "refs": {
@@ -5027,10 +5145,12 @@
         "GetBatchEvaluationResponse$updatedAt": "<p>The timestamp when the batch evaluation was last updated.</p>",
         "GetRecommendationResponse$createdAt": "<p>The timestamp when the recommendation was created.</p>",
         "GetRecommendationResponse$updatedAt": "<p>The timestamp when the recommendation was last updated.</p>",
+        "InsightResult$createdAt": "<p>The timestamp when the insight was generated.</p>",
         "OnlineEvaluationTraceConfig$startTime": "<p>The start time of the time range. Only sessions evaluated at or after this timestamp are included.</p>",
         "OnlineEvaluationTraceConfig$endTime": "<p>The end time of the time range. Only sessions evaluated before this timestamp are included.</p>",
         "RecommendationSummary$createdAt": "<p>The timestamp when the recommendation was created.</p>",
         "RecommendationSummary$updatedAt": "<p>The timestamp when the recommendation was last updated.</p>",
+        "SampleSession$lastSeenAt": "<p>The latest timestamp observed for the session in the batch evaluation input.</p>",
         "SessionFilterConfig$startTime": "<p>The start time of the time range. Only sessions with activity at or after this timestamp are included.</p>",
         "SessionFilterConfig$endTime": "<p>The end time of the time range. Only sessions with activity before this timestamp are included.</p>",
         "StartBatchEvaluationResponse$createdAt": "<p>The timestamp when the batch evaluation was created.</p>",

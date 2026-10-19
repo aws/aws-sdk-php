@@ -920,6 +920,14 @@
       "type":"list",
       "member":{"shape":"AgenticRetrieveAction"}
     },
+    "AgenticRetrieveAppliedInstruction":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{"shape":"RetrievalInstructionId"},
+        "version":{"shape":"RetrievalInstructionVersion"}
+      }
+    },
     "AgenticRetrieveBedrockGuardrailConfiguration":{
       "type":"structure",
       "required":[
@@ -1039,6 +1047,14 @@
         "id":{"shape":"String"},
         "message":{"shape":"String"},
         "version":{"shape":"String"}
+      }
+    },
+    "AgenticRetrieveInstructionConfiguration":{
+      "type":"structure",
+      "required":["retrievalInstructionId"],
+      "members":{
+        "retrievalInstructionId":{"shape":"RetrievalInstructionId"},
+        "version":{"shape":"RetrievalInstructionVersion"}
       }
     },
     "AgenticRetrieveMemoryConfiguration":{
@@ -1310,6 +1326,7 @@
         "messages":{"shape":"AgenticRetrieveStreamRequestMessagesList"},
         "nextToken":{"shape":"NextToken"},
         "policyConfiguration":{"shape":"AgenticRetrievePolicyConfiguration"},
+        "retrievalInstructionConfiguration":{"shape":"AgenticRetrieveInstructionConfiguration"},
         "retrievers":{"shape":"AgenticRetrieveStreamRequestRetrieversList"},
         "userContext":{"shape":"UserContext"}
       }
@@ -1373,6 +1390,7 @@
       ],
       "members":{
         "actions":{"shape":"AgenticRetrieveActions"},
+        "appliedInstruction":{"shape":"AgenticRetrieveAppliedInstruction"},
         "failures":{"shape":"AgenticRetrieveFailures"},
         "message":{"shape":"String"},
         "retrievalMetadata":{"shape":"AgenticRetrieveSourceMetadataList"},
@@ -5631,6 +5649,18 @@
       "type":"list",
       "member":{"shape":"RetrievalFilter"},
       "min":2
+    },
+    "RetrievalInstructionId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[a-z0-9]+$"
+    },
+    "RetrievalInstructionVersion":{
+      "type":"string",
+      "max":9,
+      "min":1,
+      "pattern":"^(DRAFT|[1-9][0-9]{0,8})$"
     },
     "RetrievalOverrides":{
       "type":"structure",

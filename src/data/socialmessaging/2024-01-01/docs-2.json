@@ -221,6 +221,20 @@
       "base": null,
       "refs": {}
     },
+    "DirectSendEnforcementStatus": {
+      "base": null,
+      "refs": {
+        "LinkedWhatsAppBusinessAccount$directSendEnforcementStatus": "<p>The Direct Send enforcement status for the WhatsApp Business Account. Enforcement applies when an account repeatedly sends messages in a category that does not match the content. This field is not present when no enforcement is active.</p>",
+        "LinkedWhatsAppBusinessAccountSummary$directSendEnforcementStatus": "<p>The Direct Send enforcement status for the WhatsApp Business Account. Enforcement applies when an account repeatedly sends messages in a category that does not match the content. This field is not present when no enforcement is active.</p>"
+      }
+    },
+    "DirectSendEnforcementStatusExpiresAt": {
+      "base": null,
+      "refs": {
+        "LinkedWhatsAppBusinessAccount$directSendEnforcementStatusExpiresAt": "<p>The time when the current Direct Send enforcement is expected to lift. This field is not present for permanent enforcement or when no enforcement is active.</p>",
+        "LinkedWhatsAppBusinessAccountSummary$directSendEnforcementStatusExpiresAt": "<p>The time when the current Direct Send enforcement is expected to lift. This field is not present for permanent enforcement or when no enforcement is active.</p>"
+      }
+    },
     "DisassociateWhatsAppBusinessAccountInput": {
       "base": null,
       "refs": {}
@@ -844,6 +858,7 @@
         "MetaLibraryTemplate$templateCategory": "<p>The category of the template (for example, UTILITY or MARKETING).</p>",
         "MetaLibraryTemplateDefinition$templateCategory": "<p>The category of the template (for example, UTILITY or MARKETING).</p>",
         "TemplateSummary$templateCategory": "<p>The category of the template (for example, UTILITY or MARKETING).</p>",
+        "TemplateSummary$correctCategory": "<p>The category that the template content actually belongs to, when it differs from the template's current category. This field is present only when the template has been flagged as miscategorized.</p>",
         "UpdateWhatsAppMessageTemplateInput$templateCategory": "<p>The new category for the template (for example, UTILITY or MARKETING).</p>"
       }
     },
@@ -909,6 +924,12 @@
       "base": null,
       "refs": {
         "TemplateSummary$templateQualityScore": "<p>The quality score assigned to the template by Meta.</p>"
+      }
+    },
+    "MetaTemplateSource": {
+      "base": null,
+      "refs": {
+        "TemplateSummary$templateSource": "<p>The source of the template. A value of AUTO_GENERATED indicates that the template was created automatically from a message that you sent. This field is not present for templates that you created manually.</p>"
       }
     },
     "MetaTemplateStatus": {

@@ -133,6 +133,7 @@
         "InfluxDBv3EnterpriseParameters$dedicatedCompactor": "<p>Specifies if the compactor instance should be a standalone instance or not.</p>",
         "InfluxDBv3EnterpriseParameters$lastValueCacheDisableFromHistory": "<p>Disables populating the last-N-value cache from historical data. If disabled, the cache is still populated with data from the write-ahead log (WAL).</p>",
         "InfluxDBv3EnterpriseParameters$distinctValueCacheDisableFromHistory": "<p>Disables populating the distinct value cache from historical data. If disabled, the cache is still populated with data from the write-ahead log (WAL).</p>",
+        "InfluxDBv3EnterpriseParameters$upgradePachaTree": "<p>Specifies whether to migrate the cluster from the Parquet storage engine to PachaTree. This action cannot be reversed. To create a new cluster on Parquet, set this to false.</p>",
         "RebootDbInstanceOutput$publiclyAccessible": "<p>Indicates if the DB instance has a public IP to facilitate access.</p>",
         "RestoreFromDbBackupInput$publiclyAccessible": "<p>Specifies whether the restored resource is publicly accessible.</p>",
         "S3Configuration$enabled": "<p>Indicates whether log delivery to the S3 bucket is enabled.</p>",
@@ -612,7 +613,8 @@
         "InfluxDBv3EnterpriseParameters$compactionCleanupWait": "<p>Specifies the amount of time that the compactor waits after finishing a compaction run to delete files marked as needing deletion during that compaction run.</p> <p>Default: 10m</p>",
         "InfluxDBv3EnterpriseParameters$compactionCheckInterval": "<p>Specifies how often the compactor checks for new compaction work to perform.</p> <p>Default: 10s</p>",
         "InfluxDBv3EnterpriseParameters$replicationInterval": "<p>Specifies the interval at which data replication occurs between cluster nodes.</p> <p>Default: 250ms</p>",
-        "InfluxDBv3EnterpriseParameters$catalogSyncInterval": "<p>Defines how often the catalog synchronizes across cluster nodes.</p> <p>Default: 10s</p>"
+        "InfluxDBv3EnterpriseParameters$catalogSyncInterval": "<p>Defines how often the catalog synchronizes across cluster nodes.</p> <p>Default: 10s</p>",
+        "InfluxDBv3EnterpriseParameters$snapshotDuration": "<p>The time-based trigger that controls how often the ingester creates snapshots. This value is also used on query nodes as the bucket rotation interval for the replica buffer.</p>"
       }
     },
     "DurationType": {
@@ -1056,6 +1058,12 @@
         "InfluxDBv3EnterpriseParameters$tableIndexCacheMaxEntries": "<p>Specifies the maximum number of entries in the table index cache.</p> <p>Default: 1000</p>"
       }
     },
+    "InfluxDBv3EnterpriseParametersWalBufferSizeLong": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3EnterpriseParameters$walBufferSize": "<p>The maximum size, in bytes, of the in-memory WAL buffer before a flush is triggered regardless of the flush interval. Increase this value if WAL files are flushed before the interval elapses.</p>"
+      }
+    },
     "InfluxDBv3EnterpriseParametersWalMaxWriteBufferSizeInteger": {
       "base": null,
       "refs": {
@@ -1323,7 +1331,8 @@
         "InfluxDBv3CoreParameters$parquetMemCacheSize": "<p>Specifies the size of the in-memory Parquet cache in megabytes or percentage of total available memory.</p> <p>Default: 20%</p>",
         "InfluxDBv3EnterpriseParameters$forceSnapshotMemThreshold": "<p>Specifies the threshold for the internal memory buffer. Supports either a percentage (portion of available memory) or absolute value in MB–for example: 70% or 100</p> <p>Default: 70%</p>",
         "InfluxDBv3EnterpriseParameters$execMemPoolBytes": "<p>Specifies the size of memory pool used during query execution. Can be given as absolute value in bytes or as a percentage of the total available memory–for example: 8000000000 or 10%.</p> <p>Default: 20%</p>",
-        "InfluxDBv3EnterpriseParameters$parquetMemCacheSize": "<p>Specifies the size of the in-memory Parquet cache in megabytes or percentage of total available memory.</p> <p>Default: 20%</p>"
+        "InfluxDBv3EnterpriseParameters$parquetMemCacheSize": "<p>Specifies the size of the in-memory Parquet cache in megabytes or percentage of total available memory.</p> <p>Default: 20%</p>",
+        "InfluxDBv3EnterpriseParameters$snapshotSize": "<p>The maximum size of the active snapshot bucket before it is rotated for snapshotting.</p>"
       }
     },
     "PercentOrAbsoluteLongAbsoluteLong": {

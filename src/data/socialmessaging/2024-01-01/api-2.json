@@ -1074,6 +1074,12 @@
       "type":"structure",
       "members":{}
     },
+    "DirectSendEnforcementStatus":{
+      "type":"string",
+      "max":30,
+      "min":1
+    },
+    "DirectSendEnforcementStatusExpiresAt":{"type":"timestamp"},
     "DisassociateWhatsAppBusinessAccountInput":{
       "type":"structure",
       "required":["id"],
@@ -1436,6 +1442,8 @@
         "wabaName":{"shape":"WhatsAppBusinessAccountName"},
         "eventDestinations":{"shape":"WhatsAppBusinessAccountEventDestinations"},
         "marketingMessagesOnboardingStatus":{"shape":"WhatsAppBusinessAccountMarketingMessagesOnboardingStatus"},
+        "directSendEnforcementStatus":{"shape":"DirectSendEnforcementStatus"},
+        "directSendEnforcementStatusExpiresAt":{"shape":"DirectSendEnforcementStatusExpiresAt"},
         "datasetId":{"shape":"WhatsAppDatasetId"},
         "phoneNumbers":{"shape":"WhatsAppPhoneNumberSummaryList"}
       }
@@ -1481,6 +1489,8 @@
         "wabaName":{"shape":"WhatsAppBusinessAccountName"},
         "eventDestinations":{"shape":"WhatsAppBusinessAccountEventDestinations"},
         "marketingMessagesOnboardingStatus":{"shape":"WhatsAppBusinessAccountMarketingMessagesOnboardingStatus"},
+        "directSendEnforcementStatus":{"shape":"DirectSendEnforcementStatus"},
+        "directSendEnforcementStatusExpiresAt":{"shape":"DirectSendEnforcementStatusExpiresAt"},
         "datasetId":{"shape":"WhatsAppDatasetId"}
       }
     },
@@ -2003,6 +2013,11 @@
       "max":20,
       "min":1
     },
+    "MetaTemplateSource":{
+      "type":"string",
+      "max":20,
+      "min":1
+    },
     "MetaTemplateStatus":{
       "type":"string",
       "max":20,
@@ -2313,7 +2328,9 @@
         "templateStatus":{"shape":"MetaTemplateStatus"},
         "templateQualityScore":{"shape":"MetaTemplateQualityScore"},
         "templateLanguage":{"shape":"MetaTemplateLanguage"},
-        "templateCategory":{"shape":"MetaTemplateCategory"}
+        "templateCategory":{"shape":"MetaTemplateCategory"},
+        "templateSource":{"shape":"MetaTemplateSource"},
+        "correctCategory":{"shape":"MetaTemplateCategory"}
       }
     },
     "TemplateSummaryList":{

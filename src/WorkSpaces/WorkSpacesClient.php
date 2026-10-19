@@ -587,6 +587,7 @@ use Aws\AwsClient;
  *     Platform?: 'WINDOWS',
  *     OsVersion?: 'Windows_10'|'Windows_11',
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     ImageValidationMode?: 'CUSTOMER_MANAGED'|'SERVICE_MANAGED',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise importCustomWorkspaceImageAsync(array $args = [])
@@ -600,6 +601,7 @@ use Aws\AwsClient;
  *     Platform?: 'WINDOWS',
  *     OsVersion?: 'Windows_10'|'Windows_11',
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     ImageValidationMode?: 'CUSTOMER_MANAGED'|'SERVICE_MANAGED',
  *     ...,
  * } $args = [])
  * @method \Aws\Result importWorkspaceImage(array $args = [])

@@ -247,6 +247,18 @@
         "UpdateDeploymentGroupInput$autoScalingGroups": "<p>The replacement list of Auto Scaling groups to be included in the deployment group, if you want to change them.</p> <ul> <li> <p>To keep the Auto Scaling groups, enter their names or do not specify this parameter. </p> </li> <li> <p>To remove Auto Scaling groups, specify a non-null empty list of Auto Scaling group names to detach all CodeDeploy-managed Auto Scaling lifecycle hooks. For examples, see <a href=\"https://docs.aws.amazon.com/codedeploy/latest/userguide/troubleshooting-auto-scaling.html#troubleshooting-auto-scaling-heartbeat\">Amazon EC2 instances in an Amazon EC2 Auto Scaling group fail to launch and receive the error \"Heartbeat Timeout\"</a> in the <i>CodeDeploy User Guide</i>.</p> </li> </ul>"
       }
     },
+    "AutoScalingGroupProcess": {
+      "base": "<p>An Amazon EC2 Auto Scaling process that CodeDeploy can suspend during an in-place deployment. Valid values are <code>Terminate</code>, <code>AZRebalance</code>, <code>InstanceRefresh</code>, and <code>ScheduledActions</code>.</p>",
+      "refs": {
+        "AutoScalingGroupProcessesToSuspendList$member": null
+      }
+    },
+    "AutoScalingGroupProcessesToSuspendList": {
+      "base": null,
+      "refs": {
+        "EC2DeploymentOptions$autoScalingGroupProcessesToSuspend": "<p>The Amazon EC2 Auto Scaling processes to suspend during the deployment. CodeDeploy suspends these processes before it deploys to instances in an Auto Scaling group, and resumes them when the deployment succeeds, fails, or is stopped. Valid values are <code>Terminate</code>, <code>AZRebalance</code>, <code>InstanceRefresh</code>, and <code>ScheduledActions</code>.</p> <p>This parameter applies only to in-place deployments on the EC2/On-premises compute platform. If the list is empty, or if the deployment does not target instances in an Auto Scaling group, no processes are suspended.</p> <p>The service role for the deployment group must have permission to call <code>autoscaling:SuspendProcesses</code> and <code>autoscaling:ResumeProcesses</code> on the target Auto Scaling groups. If the processes cannot be suspended, the deployment fails before any instance is updated.</p> <p>If you suspend <code>ScheduledActions</code>, scheduled actions with a start time during the deployment are skipped and do not run after the process resumes.</p> <note> <p>If CodeDeploy cannot resume the processes, the deployment fails and the processes stay suspended until you resume them with the Auto Scaling <code>ResumeProcesses</code> action. While <code>Terminate</code> is suspended, Auto Scaling does not replace unhealthy instances. If you suspend <code>Terminate</code>, configure a trigger that notifies you when a deployment fails.</p> </note>"
+      }
+    },
     "BatchGetApplicationRevisionsInput": {
       "base": "<p>Represents the input of a <code>BatchGetApplicationRevisions</code> operation.</p>",
       "refs": {}
@@ -774,6 +786,16 @@
         "DeploymentReadyOption$waitTimeInMinutes": "<p>The number of minutes to wait before the status of a blue/green deployment is changed to Stopped if rerouting is not started manually. Applies only to the <code>STOP_DEPLOYMENT</code> option for <code>actionOnTimeout</code>.</p>"
       }
     },
+    "EC2DeploymentOptions": {
+      "base": "<p>Options that control how CodeDeploy manages Amazon EC2 Auto Scaling groups during a deployment.</p>",
+      "refs": {
+        "CreateDeploymentGroupInput$ec2DeploymentOptions": null,
+        "CreateDeploymentInput$ec2DeploymentOptions": null,
+        "DeploymentGroupInfo$ec2DeploymentOptions": null,
+        "DeploymentInfo$ec2DeploymentOptions": null,
+        "UpdateDeploymentGroupInput$ec2DeploymentOptions": null
+      }
+    },
     "EC2TagFilter": {
       "base": "<p>Information about an EC2 tag filter.</p>",
       "refs": {
@@ -1251,6 +1273,10 @@
     },
     "InvalidAutoScalingGroupException": {
       "base": "<p>The Auto Scaling group was specified in an invalid format or does not exist.</p>",
+      "refs": {}
+    },
+    "InvalidAutoScalingGroupProcessToSuspendException": {
+      "base": "<p>The <code>autoScalingGroupProcessesToSuspend</code> list in <code>ec2DeploymentOptions</code> contains a process that is not valid. Valid values are <code>Terminate</code>, <code>AZRebalance</code>, <code>InstanceRefresh</code>, and <code>ScheduledActions</code>. Process names are case sensitive.</p>",
       "refs": {}
     },
     "InvalidBlueGreenDeploymentConfigurationException": {

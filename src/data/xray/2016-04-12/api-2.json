@@ -642,6 +642,12 @@
       "max":24,
       "min":24
     },
+    "CloudWatchLogsConfiguration":{
+      "type":"structure",
+      "members":{
+        "SpansLogGroupKmsKeyId":{"shape":"KmsKeyId"}
+      }
+    },
     "CooldownWindowMinutes":{
       "type":"integer",
       "min":0
@@ -1416,6 +1422,11 @@
         "Message":{"shape":"ErrorMessage"}
       },
       "exception":true
+    },
+    "KmsKeyId":{
+      "type":"string",
+      "max":256,
+      "min":1
     },
     "LinksList":{
       "type":"list",
@@ -2366,7 +2377,8 @@
     "UpdateTraceSegmentDestinationRequest":{
       "type":"structure",
       "members":{
-        "Destination":{"shape":"TraceSegmentDestination"}
+        "Destination":{"shape":"TraceSegmentDestination"},
+        "CloudWatchLogsConfiguration":{"shape":"CloudWatchLogsConfiguration"}
       }
     },
     "UpdateTraceSegmentDestinationResult":{

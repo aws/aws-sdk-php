@@ -267,6 +267,26 @@ use Aws\AwsClient;
  *     NextToken?: string,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result modifyVolume(array $args = [])
+ * @phpstan-method \Aws\Result modifyVolume(array{
+ *     VolumeId?: string,
+ *     SizeInGB?: int,
+ *     VolumeType?: 'gp2'|'gp3'|'io1'|'io2'|'sc1'|'st1'|'standard',
+ *     Iops?: int,
+ *     Throughput?: int,
+ *     ClientToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise modifyVolumeAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise modifyVolumeAsync(array{
+ *     VolumeId?: string,
+ *     SizeInGB?: int,
+ *     VolumeType?: 'gp2'|'gp3'|'io1'|'io2'|'sc1'|'st1'|'standard',
+ *     Iops?: int,
+ *     Throughput?: int,
+ *     ClientToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @phpstan-method \Aws\Result tagResource(array{WorkspaceInstanceId?: string, Tags?: list<array{Key?: string, Value?: string, ...}>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])

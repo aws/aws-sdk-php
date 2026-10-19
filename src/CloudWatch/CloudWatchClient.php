@@ -441,6 +441,10 @@ use Aws\AwsClient;
  *     ActionsSuppressor?: string,
  *     ActionsSuppressorWaitPeriod?: int,
  *     ActionsSuppressorExtensionPeriod?: int,
+ *     ActionConfiguration?: array{
+ *         AlarmTagsPropagation?: array{Enabled?: bool, IncludedTagKeys?: list<string>, ExcludedTagKeys?: list<string>, ...},
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise putCompositeAlarmAsync(array $args = [])
@@ -456,6 +460,10 @@ use Aws\AwsClient;
  *     ActionsSuppressor?: string,
  *     ActionsSuppressorWaitPeriod?: int,
  *     ActionsSuppressorExtensionPeriod?: int,
+ *     ActionConfiguration?: array{
+ *         AlarmTagsPropagation?: array{Enabled?: bool, IncludedTagKeys?: list<string>, ExcludedTagKeys?: list<string>, ...},
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \Aws\Result putDashboard(array $args = [])
@@ -517,6 +525,10 @@ use Aws\AwsClient;
  *     TreatMissingData?: string,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     WarmUpConfiguration?: array{WarmUpPeriodDurationInMinutes?: int, OnlyStartEvaluatingAfterWarmUpPeriodEnds?: bool, ...},
+ *     ActionConfiguration?: array{
+ *         AlarmTagsPropagation?: array{Enabled?: bool, IncludedTagKeys?: list<string>, ExcludedTagKeys?: list<string>, ...},
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise putLogAlarmAsync(array $args = [])
@@ -546,6 +558,10 @@ use Aws\AwsClient;
  *     TreatMissingData?: string,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     WarmUpConfiguration?: array{WarmUpPeriodDurationInMinutes?: int, OnlyStartEvaluatingAfterWarmUpPeriodEnds?: bool, ...},
+ *     ActionConfiguration?: array{
+ *         AlarmTagsPropagation?: array{Enabled?: bool, IncludedTagKeys?: list<string>, ExcludedTagKeys?: list<string>, ...},
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \Aws\Result putManagedInsightRules(array $args = [])
@@ -589,6 +605,10 @@ use Aws\AwsClient;
  *     WarmUpConfiguration?: array{WarmUpPeriodDurationInMinutes?: int, OnlyStartEvaluatingAfterWarmUpPeriodEnds?: bool, ...},
  *     EvaluationCriteria?: array{PromQLCriteria?: array{Query?: string, PendingPeriod?: int, RecoveryPeriod?: int, ...}, ...},
  *     EvaluationInterval?: int,
+ *     ActionConfiguration?: array{
+ *         AlarmTagsPropagation?: array{Enabled?: bool, IncludedTagKeys?: list<string>, ExcludedTagKeys?: list<string>, ...},
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise putMetricAlarmAsync(array $args = [])
@@ -628,6 +648,10 @@ use Aws\AwsClient;
  *     WarmUpConfiguration?: array{WarmUpPeriodDurationInMinutes?: int, OnlyStartEvaluatingAfterWarmUpPeriodEnds?: bool, ...},
  *     EvaluationCriteria?: array{PromQLCriteria?: array{Query?: string, PendingPeriod?: int, RecoveryPeriod?: int, ...}, ...},
  *     EvaluationInterval?: int,
+ *     ActionConfiguration?: array{
+ *         AlarmTagsPropagation?: array{Enabled?: bool, IncludedTagKeys?: list<string>, ExcludedTagKeys?: list<string>, ...},
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \Aws\Result putMetricData(array $args = [])

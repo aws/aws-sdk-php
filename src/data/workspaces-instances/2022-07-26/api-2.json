@@ -204,6 +204,26 @@
       ],
       "readonly":true
     },
+    "ModifyVolume":{
+      "name":"ModifyVolume",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyVolumeRequest"},
+      "output":{"shape":"ModifyVolumeResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"VolumeModificationRateExceededException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -413,7 +433,7 @@
         "Encrypted":{"shape":"Boolean"},
         "Iops":{"shape":"NonNegativeInteger"},
         "KmsKeyId":{"shape":"KmsKeyId"},
-        "SizeInGB":{"shape":"NonNegativeInteger"},
+        "SizeInGB":{"shape":"VolumeSizeInGB"},
         "SnapshotId":{"shape":"SnapshotId"},
         "TagSpecifications":{"shape":"TagSpecifications"},
         "Throughput":{"shape":"NonNegativeInteger"},
@@ -941,6 +961,31 @@
       "max":25,
       "min":1
     },
+    "ModifyVolumeRequest":{
+      "type":"structure",
+      "required":["VolumeId"],
+      "members":{
+        "VolumeId":{"shape":"VolumeId"},
+        "SizeInGB":{"shape":"VolumeSizeInGB"},
+        "VolumeType":{"shape":"VolumeTypeEnum"},
+        "Iops":{"shape":"NonNegativeInteger"},
+        "Throughput":{"shape":"NonNegativeInteger"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "ModifyVolumeResponse":{
+      "type":"structure",
+      "members":{
+        "VolumeId":{"shape":"VolumeId"},
+        "TargetSize":{"shape":"NonNegativeInteger"},
+        "TargetVolumeType":{"shape":"VolumeTypeEnum"},
+        "TargetIops":{"shape":"NonNegativeInteger"},
+        "TargetThroughput":{"shape":"NonNegativeInteger"}
+      }
+    },
     "NestedVirtualizationEnum":{
       "type":"string",
       "enum":[
@@ -1320,6 +1365,30 @@
     "VolumeId":{
       "type":"string",
       "pattern":"vol-[0-9a-zA-Z]{1,63}"
+    },
+    "VolumeModificationRateExceededException":{
+      "type":"structure",
+      "required":[
+        "Message",
+        "ResourceId",
+        "ResourceType"
+      ],
+      "members":{
+        "Message":{"shape":"String"},
+        "ResourceId":{"shape":"String"},
+        "ResourceType":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":429,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "VolumeSizeInGB":{
+      "type":"integer",
+      "box":true,
+      "max":16384,
+      "min":1
     },
     "VolumeTypeEnum":{
       "type":"string",

@@ -2118,9 +2118,23 @@ use Aws\AwsClient;
  *     ...,
  * } $args = [])
  * @method \Aws\Result getAttachedFile(array $args = [])
- * @phpstan-method \Aws\Result getAttachedFile(array{InstanceId?: string, FileId?: string, UrlExpiryInSeconds?: int, AssociatedResourceArn?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result getAttachedFile(array{
+ *     InstanceId?: string,
+ *     FileId?: string,
+ *     UrlExpiryInSeconds?: int,
+ *     AssociatedResourceArn?: string,
+ *     UrlContentDisposition?: 'ATTACHMENT'|'INLINE',
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise getAttachedFileAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise getAttachedFileAsync(array{InstanceId?: string, FileId?: string, UrlExpiryInSeconds?: int, AssociatedResourceArn?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getAttachedFileAsync(array{
+ *     InstanceId?: string,
+ *     FileId?: string,
+ *     UrlExpiryInSeconds?: int,
+ *     AssociatedResourceArn?: string,
+ *     UrlContentDisposition?: 'ATTACHMENT'|'INLINE',
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result getContactAttributes(array $args = [])
  * @phpstan-method \Aws\Result getContactAttributes(array{InstanceId?: string, InitialContactId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getContactAttributesAsync(array $args = [])

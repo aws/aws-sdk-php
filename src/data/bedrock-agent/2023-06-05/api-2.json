@@ -249,6 +249,45 @@
       ],
       "idempotent":true
     },
+    "CreateRetrievalInstruction":{
+      "name":"CreateRetrievalInstruction",
+      "http":{
+        "method":"POST",
+        "requestUri":"/retrievalinstructions/",
+        "responseCode":202
+      },
+      "input":{"shape":"CreateRetrievalInstructionRequest"},
+      "output":{"shape":"CreateRetrievalInstructionResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ],
+      "idempotent":true
+    },
+    "CreateRetrievalInstructionVersion":{
+      "name":"CreateRetrievalInstructionVersion",
+      "http":{
+        "method":"POST",
+        "requestUri":"/retrievalinstructions/{retrievalInstructionId}/versions",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateRetrievalInstructionVersionRequest"},
+      "output":{"shape":"CreateRetrievalInstructionVersionResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ],
+      "idempotent":true
+    },
     "CreateVpcConfiguration":{
       "name":"CreateVpcConfiguration",
       "http":{
@@ -486,6 +525,25 @@
       },
       "input":{"shape":"DeleteResourcePolicyRequest"},
       "output":{"shape":"DeleteResourcePolicyResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteRetrievalInstruction":{
+      "name":"DeleteRetrievalInstruction",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/retrievalinstructions/{retrievalInstructionId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteRetrievalInstructionRequest"},
+      "output":{"shape":"DeleteRetrievalInstructionResponse"},
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
@@ -824,6 +882,24 @@
       ],
       "readonly":true
     },
+    "GetRetrievalInstruction":{
+      "name":"GetRetrievalInstruction",
+      "http":{
+        "method":"GET",
+        "requestUri":"/retrievalinstructions/{retrievalInstructionId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetRetrievalInstructionRequest"},
+      "output":{"shape":"GetRetrievalInstructionResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
     "GetVpcConfiguration":{
       "name":"GetVpcConfiguration",
       "http":{
@@ -1108,6 +1184,41 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
+    "ListRetrievalInstructionVersions":{
+      "name":"ListRetrievalInstructionVersions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/retrievalinstructions/{retrievalInstructionId}/versions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListRetrievalInstructionVersionsRequest"},
+      "output":{"shape":"ListRetrievalInstructionVersionsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
+    "ListRetrievalInstructions":{
+      "name":"ListRetrievalInstructions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/retrievalinstructions/",
+        "responseCode":200
+      },
+      "input":{"shape":"ListRetrievalInstructionsRequest"},
+      "output":{"shape":"ListRetrievalInstructionsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
       ],
       "readonly":true
     },
@@ -1473,6 +1584,25 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
         {"shape":"ServiceQuotaExceededException"}
+      ],
+      "idempotent":true
+    },
+    "UpdateRetrievalInstruction":{
+      "name":"UpdateRetrievalInstruction",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/retrievalinstructions/{retrievalInstructionId}",
+        "responseCode":202
+      },
+      "input":{"shape":"UpdateRetrievalInstructionRequest"},
+      "output":{"shape":"UpdateRetrievalInstructionResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"}
       ],
       "idempotent":true
     },
@@ -2777,6 +2907,77 @@
         "updatedAt":{"shape":"DateTimestamp"}
       }
     },
+    "CreateRetrievalInstructionRequest":{
+      "type":"structure",
+      "required":[
+        "name",
+        "instruction"
+      ],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "name":{"shape":"RetrievalInstructionName"},
+        "instruction":{"shape":"RetrievalInstructionContent"},
+        "description":{"shape":"RetrievalInstructionDescription"},
+        "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
+        "tags":{"shape":"TagsMap"}
+      }
+    },
+    "CreateRetrievalInstructionResponse":{
+      "type":"structure",
+      "required":[
+        "retrievalInstructionId",
+        "retrievalInstructionArn",
+        "name",
+        "status",
+        "lastTransitionStatus",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "retrievalInstructionId":{"shape":"RetrievalInstructionId"},
+        "retrievalInstructionArn":{"shape":"RetrievalInstructionArn"},
+        "name":{"shape":"RetrievalInstructionName"},
+        "status":{"shape":"RetrievalInstructionStatus"},
+        "lastTransitionStatus":{"shape":"RetrievalInstructionLastTransitionStatus"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"}
+      }
+    },
+    "CreateRetrievalInstructionVersionRequest":{
+      "type":"structure",
+      "required":["retrievalInstructionId"],
+      "members":{
+        "retrievalInstructionId":{
+          "shape":"RetrievalInstructionId",
+          "location":"uri",
+          "locationName":"retrievalInstructionId"
+        },
+        "description":{"shape":"RetrievalInstructionDescription"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateRetrievalInstructionVersionResponse":{
+      "type":"structure",
+      "required":[
+        "retrievalInstructionId",
+        "retrievalInstructionArn",
+        "version",
+        "createdAt"
+      ],
+      "members":{
+        "retrievalInstructionId":{"shape":"RetrievalInstructionId"},
+        "retrievalInstructionArn":{"shape":"RetrievalInstructionArn"},
+        "version":{"shape":"RetrievalInstructionNumericalVersion"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "description":{"shape":"RetrievalInstructionDescription"}
+      }
+    },
     "CreateVpcConfigurationRequest":{
       "type":"structure",
       "required":[
@@ -3394,6 +3595,34 @@
       "members":{
         "resourceArn":{"shape":"ResourceArn"},
         "revisionId":{"shape":"RevisionId"}
+      }
+    },
+    "DeleteRetrievalInstructionRequest":{
+      "type":"structure",
+      "required":["retrievalInstructionId"],
+      "members":{
+        "retrievalInstructionId":{
+          "shape":"RetrievalInstructionId",
+          "location":"uri",
+          "locationName":"retrievalInstructionId"
+        },
+        "retrievalInstructionVersion":{
+          "shape":"RetrievalInstructionNumericalVersion",
+          "location":"querystring",
+          "locationName":"retrievalInstructionVersion"
+        }
+      }
+    },
+    "DeleteRetrievalInstructionResponse":{
+      "type":"structure",
+      "required":[
+        "retrievalInstructionId",
+        "retrievalInstructionArn"
+      ],
+      "members":{
+        "retrievalInstructionId":{"shape":"RetrievalInstructionId"},
+        "retrievalInstructionArn":{"shape":"RetrievalInstructionArn"},
+        "version":{"shape":"RetrievalInstructionNumericalVersion"}
       }
     },
     "DeleteVpcConfigurationRequest":{
@@ -4783,6 +5012,49 @@
         "revisionId":{"shape":"RevisionId"}
       }
     },
+    "GetRetrievalInstructionRequest":{
+      "type":"structure",
+      "required":["retrievalInstructionId"],
+      "members":{
+        "retrievalInstructionId":{
+          "shape":"RetrievalInstructionId",
+          "location":"uri",
+          "locationName":"retrievalInstructionId"
+        },
+        "retrievalInstructionVersion":{
+          "shape":"RetrievalInstructionVersionSelector",
+          "location":"querystring",
+          "locationName":"retrievalInstructionVersion"
+        }
+      }
+    },
+    "GetRetrievalInstructionResponse":{
+      "type":"structure",
+      "required":[
+        "retrievalInstructionId",
+        "retrievalInstructionArn",
+        "name",
+        "status",
+        "lastTransitionStatus",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "retrievalInstructionId":{"shape":"RetrievalInstructionId"},
+        "retrievalInstructionArn":{"shape":"RetrievalInstructionArn"},
+        "name":{"shape":"RetrievalInstructionName"},
+        "status":{"shape":"RetrievalInstructionStatus"},
+        "lastTransitionStatus":{"shape":"RetrievalInstructionLastTransitionStatus"},
+        "instruction":{"shape":"RetrievalInstructionContent"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"},
+        "description":{"shape":"RetrievalInstructionDescription"},
+        "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
+        "lastTransitionStatusReasons":{"shape":"RetrievalInstructionFailureReasons"},
+        "version":{"shape":"RetrievalInstructionVersionSelector"},
+        "latestVersion":{"shape":"RetrievalInstructionNumericalVersion"}
+      }
+    },
     "GetVpcConfigurationRequest":{
       "type":"structure",
       "required":[
@@ -5765,6 +6037,63 @@
       "required":["promptSummaries"],
       "members":{
         "promptSummaries":{"shape":"PromptSummaries"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListRetrievalInstructionVersionsRequest":{
+      "type":"structure",
+      "required":["retrievalInstructionId"],
+      "members":{
+        "retrievalInstructionId":{
+          "shape":"RetrievalInstructionId",
+          "location":"uri",
+          "locationName":"retrievalInstructionId"
+        },
+        "maxResults":{
+          "shape":"RetrievalInstructionMaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListRetrievalInstructionVersionsResponse":{
+      "type":"structure",
+      "required":["retrievalInstructionVersionSummaries"],
+      "members":{
+        "retrievalInstructionVersionSummaries":{"shape":"RetrievalInstructionVersionSummaries"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListRetrievalInstructionsRequest":{
+      "type":"structure",
+      "members":{
+        "status":{
+          "shape":"RetrievalInstructionStatus",
+          "location":"querystring",
+          "locationName":"status"
+        },
+        "maxResults":{
+          "shape":"RetrievalInstructionMaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListRetrievalInstructionsResponse":{
+      "type":"structure",
+      "required":["retrievalInstructionSummaries"],
+      "members":{
+        "retrievalInstructionSummaries":{"shape":"RetrievalInstructionSummaries"},
         "nextToken":{"shape":"NextToken"}
       }
     },
@@ -7220,6 +7549,151 @@
       },
       "union":true
     },
+    "RetrievalInstructionArn":{
+      "type":"string",
+      "pattern":"arn:aws(-cn|-us-gov|-eusc|-iso(-[b-f])?)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:retrieval-instruction/[a-z0-9]{10}"
+    },
+    "RetrievalInstructionContent":{
+      "type":"structure",
+      "members":{
+        "retrievalGuidance":{"shape":"RetrievalInstructionFieldText"},
+        "persona":{"shape":"RetrievalInstructionFieldText"},
+        "answerFormat":{"shape":"RetrievalInstructionFieldText"},
+        "answerPolicy":{"shape":"RetrievalInstructionFieldText"}
+      },
+      "sensitive":true
+    },
+    "RetrievalInstructionDescription":{
+      "type":"string",
+      "max":200,
+      "min":1,
+      "sensitive":true
+    },
+    "RetrievalInstructionFailureReason":{
+      "type":"structure",
+      "required":[
+        "code",
+        "message"
+      ],
+      "members":{
+        "fieldName":{"shape":"RetrievalInstructionFieldName"},
+        "code":{"shape":"RetrievalInstructionFailureReasonCode"},
+        "message":{"shape":"String"}
+      }
+    },
+    "RetrievalInstructionFailureReasonCode":{
+      "type":"string",
+      "enum":[
+        "CONTENT_REJECTED",
+        "CLIENT_ERROR",
+        "INTERNAL_ERROR"
+      ]
+    },
+    "RetrievalInstructionFailureReasons":{
+      "type":"list",
+      "member":{"shape":"RetrievalInstructionFailureReason"}
+    },
+    "RetrievalInstructionFieldName":{
+      "type":"string",
+      "enum":[
+        "RETRIEVAL_GUIDANCE",
+        "PERSONA",
+        "ANSWER_FORMAT",
+        "ANSWER_POLICY"
+      ]
+    },
+    "RetrievalInstructionFieldText":{
+      "type":"string",
+      "min":1,
+      "sensitive":true
+    },
+    "RetrievalInstructionId":{
+      "type":"string",
+      "max":10,
+      "min":10,
+      "pattern":"[a-z0-9]{10}"
+    },
+    "RetrievalInstructionLastTransitionStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "UPDATING",
+        "CREATE_SUCCESSFUL",
+        "CREATE_FAILED",
+        "UPDATE_SUCCESSFUL",
+        "UPDATE_FAILED"
+      ]
+    },
+    "RetrievalInstructionMaxResults":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
+    "RetrievalInstructionName":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"([0-9a-zA-Z][_-]?){1,100}",
+      "sensitive":true
+    },
+    "RetrievalInstructionNumericalVersion":{
+      "type":"string",
+      "pattern":"[1-9][0-9]{0,8}"
+    },
+    "RetrievalInstructionStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "INACTIVE"
+      ]
+    },
+    "RetrievalInstructionSummaries":{
+      "type":"list",
+      "member":{"shape":"RetrievalInstructionSummary"}
+    },
+    "RetrievalInstructionSummary":{
+      "type":"structure",
+      "required":[
+        "retrievalInstructionId",
+        "retrievalInstructionArn",
+        "name",
+        "status",
+        "lastTransitionStatus",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "retrievalInstructionId":{"shape":"RetrievalInstructionId"},
+        "retrievalInstructionArn":{"shape":"RetrievalInstructionArn"},
+        "name":{"shape":"RetrievalInstructionName"},
+        "status":{"shape":"RetrievalInstructionStatus"},
+        "lastTransitionStatus":{"shape":"RetrievalInstructionLastTransitionStatus"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"},
+        "description":{"shape":"RetrievalInstructionDescription"}
+      }
+    },
+    "RetrievalInstructionVersionSelector":{
+      "type":"string",
+      "max":9,
+      "min":1,
+      "pattern":"(DRAFT|[1-9][0-9]{0,8})"
+    },
+    "RetrievalInstructionVersionSummaries":{
+      "type":"list",
+      "member":{"shape":"RetrievalInstructionVersionSummary"}
+    },
+    "RetrievalInstructionVersionSummary":{
+      "type":"structure",
+      "required":[
+        "version",
+        "createdAt"
+      ],
+      "members":{
+        "version":{"shape":"RetrievalInstructionNumericalVersion"},
+        "createdAt":{"shape":"DateTimestamp"}
+      }
+    },
     "RevisionId":{
       "type":"string",
       "max":255,
@@ -7719,7 +8193,7 @@
       "type":"string",
       "max":1011,
       "min":20,
-      "pattern":".*(^arn:aws:bedrock:[a-zA-Z0-9-]+:/d{12}:(agent|agent-alias|knowledge-base|flow|prompt)/[A-Z0-9]{10}(?:/[A-Z0-9]{10})?$|^arn:aws:bedrock:[a-zA-Z0-9-]+:/d{12}:flow/([A-Z0-9]{10})/alias/([A-Z0-9]{10})$|^arn:aws:bedrock:[a-zA-Z0-9-]+:/d{12}:prompt/([A-Z0-9]{10})?(?::/d+)?$).*"
+      "pattern":".*(^arn:aws:bedrock:[a-zA-Z0-9-]+:/d{12}:(agent|agent-alias|knowledge-base|flow|prompt)/[A-Z0-9]{10}(?:/[A-Z0-9]{10})?$|^arn:aws:bedrock:[a-zA-Z0-9-]+:/d{12}:flow/([A-Z0-9]{10})/alias/([A-Z0-9]{10})$|^arn:aws:bedrock:[a-zA-Z0-9-]+:/d{12}:prompt/([A-Z0-9]{10})?(?::/d+)?$|^arn:aws(-cn|-us-gov|-eusc|-iso(-[b-f])?)?:bedrock:[a-zA-Z0-9-]+:[0-9]{12}:retrieval-instruction/[a-z0-9]{10}$).*"
     },
     "TagsMap":{
       "type":"map",
@@ -8366,6 +8840,43 @@
         "id":{"shape":"PromptId"},
         "arn":{"shape":"PromptArn"},
         "version":{"shape":"Version"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"}
+      }
+    },
+    "UpdateRetrievalInstructionRequest":{
+      "type":"structure",
+      "required":[
+        "retrievalInstructionId",
+        "instruction"
+      ],
+      "members":{
+        "retrievalInstructionId":{
+          "shape":"RetrievalInstructionId",
+          "location":"uri",
+          "locationName":"retrievalInstructionId"
+        },
+        "instruction":{"shape":"RetrievalInstructionContent"},
+        "description":{"shape":"RetrievalInstructionDescription"}
+      }
+    },
+    "UpdateRetrievalInstructionResponse":{
+      "type":"structure",
+      "required":[
+        "retrievalInstructionId",
+        "retrievalInstructionArn",
+        "name",
+        "status",
+        "lastTransitionStatus",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "retrievalInstructionId":{"shape":"RetrievalInstructionId"},
+        "retrievalInstructionArn":{"shape":"RetrievalInstructionArn"},
+        "name":{"shape":"RetrievalInstructionName"},
+        "status":{"shape":"RetrievalInstructionStatus"},
+        "lastTransitionStatus":{"shape":"RetrievalInstructionLastTransitionStatus"},
         "createdAt":{"shape":"DateTimestamp"},
         "updatedAt":{"shape":"DateTimestamp"}
       }
