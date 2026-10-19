@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.401.3 - 2026-10-19
 
 * `Aws\EndpointV2` - `EndpointDefinitionProvider` now rejects service names and api versions that are not a single safe path segment, preventing path traversal through the `version` or `service` client options.
 * `Aws\IoTWireless` - Documentation update release for AWS service
