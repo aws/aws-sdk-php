@@ -10,7 +10,6 @@ use Aws\Middleware;
 use Aws\Result;
 use Aws\Retry\ConfigurationInterface as RetryConfigurationInterface;
 use Aws\Retry\ConfigurationProvider as RetryConfigurationProvider;
-use Aws\Retry\V3\OptIn as NewRetriesOptIn;
 use Aws\Retry\V3\RetryMiddleware as RetryV3Middleware;
 use Aws\RetryMiddleware;
 use Aws\Sts\RegionalEndpoints\ConfigurationProvider;
@@ -208,19 +207,12 @@ class StsClient extends AwsClient
     public static function getArguments()
     {
         $args = parent::getArguments();
-        // Off-path STS keeps the default ClientResolver retry handling. The
-        // override below adds IDPCommunicationError as a transient error and
-        // is only registered when the AWS_NEW_RETRIES_2026 flag is on.
-        if (NewRetriesOptIn::isEnabled()) {
-            $args['retries']['fn'] = [__CLASS__, '_applyRetryConfig'];
-        }
+        // Adds IDPCommunicationError as a transient error.
+        $args['retries']['fn'] = [__CLASS__, '_applyRetryConfig'];
         return $args;
     }
 
-    /**
-     * @internal Only invoked when AWS_NEW_RETRIES_2026=true. The off-path
-     *           uses the default ClientResolver::_apply_retries.
-     */
+    /** @internal */
     public static function _applyRetryConfig(
         $value,
         array &$args,

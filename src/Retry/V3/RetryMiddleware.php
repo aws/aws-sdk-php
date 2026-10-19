@@ -13,7 +13,7 @@ use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Retry middleware for the AWS_NEW_RETRIES_2026 opt-in path. Implements
+ * Retry middleware for standard and adaptive modes. Implements
  * the spec-defined behavior for 'standard' and 'adaptive' modes:
  * throttling-aware quota, retry-after header support, max-attempts
  * before quota in the decision order, supplemental customer deciders,

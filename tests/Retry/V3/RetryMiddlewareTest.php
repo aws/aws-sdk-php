@@ -12,7 +12,6 @@ use Aws\ResultInterface;
 use Aws\Retry\Configuration;
 use Aws\Retry\ConfigurationProvider;
 use Aws\Retry\V3\QuotaManager;
-use Aws\Retry\V3\OptIn;
 use Aws\Retry\V3\RetryMiddleware;
 use Aws\Retry\RateLimiter;
 use GuzzleHttp\Promise\RejectedPromise;
@@ -28,23 +27,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 class RetryMiddlewareTest extends TestCase
 {
     use UsesServiceTrait;
-
-    private string $previousOptIn;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->previousOptIn = getenv(OptIn::ENV) ?: '';
-        putenv(OptIn::ENV . '=');
-        OptIn::reset();
-    }
-
-    protected function tearDown(): void
-    {
-        putenv(OptIn::ENV . '=' . $this->previousOptIn);
-        OptIn::reset();
-        parent::tearDown();
-    }
 
     /**
      * @param CommandInterface $command
@@ -1567,7 +1549,6 @@ class RetryMiddlewareTest extends TestCase
 
     public function testWrapSharesQuotaManagerState()
     {
-        $this->enableOptInFlag();
         $factory = RetryMiddleware::wrap(
             new Configuration('standard', 3),
             []
@@ -1588,7 +1569,6 @@ class RetryMiddlewareTest extends TestCase
 
     public function testWrapSharesAdaptiveRateLimiterState()
     {
-        $this->enableOptInFlag();
         $factory = RetryMiddleware::wrap(
             new Configuration('adaptive', 3),
             []
@@ -1712,12 +1692,6 @@ class RetryMiddlewareTest extends TestCase
         $wrapped($command, $request)->wait();
         // retry-after=0 clamped to [50, 5050] = 50ms (the computed delay minimum)
         $this->assertSame(50, $delays[0]);
-    }
-
-    private function enableOptInFlag(): void
-    {
-        putenv(OptIn::ENV . '=true');
-        OptIn::reset();
     }
 
     private function getPrivateProperty(object $object, string $property): mixed
