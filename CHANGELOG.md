@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.401.4 - 2026-10-20
 
 * `Aws\` - Removes `Tnb` client, which is no longer in service.
 * `Aws\MarketplaceCatalog` - Adds ListEntities filter, sort, and summary support for the ExpressPrivateOfferConfiguration entity type, including filtering by ProductId.
