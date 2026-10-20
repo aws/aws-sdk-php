@@ -2737,7 +2737,7 @@
         "RetrievalFilter$in": "<p>Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is in the list specified in the value in this object.</p> <p>The following example would return data sources with an animal attribute that is either 'cat' or 'dog': <code>\"in\": { \"key\": \"animal\", \"value\": [\"cat\", \"dog\"] }</code> </p>",
         "RetrievalFilter$notIn": "<p>Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value isn't in the list specified in the value in this object.</p> <p>The following example would return data sources whose animal attribute is neither 'cat' nor 'dog': <code>\"notIn\": { \"key\": \"animal\", \"value\": [\"cat\", \"dog\"] }</code> </p>",
         "RetrievalFilter$startsWith": "<p>Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value starts with the value in this object. This filter is currently only supported for Amazon OpenSearch Serverless vector stores.</p> <p>The following example would return data sources with an animal attribute starts with 'ca' (for example, 'cat' or 'camel'). <code>\"startsWith\": { \"key\": \"animal\", \"value\": \"ca\" }</code> </p>",
-        "RetrievalFilter$listContains": "<p>Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is a list that contains the value as one of its members.</p> <p>The following example would return data sources with an animals attribute that is a list containing a cat member (for example, <code>[\"dog\", \"cat\"] </code>): <code>\"listContains\": { \"key\": \"animals\", \"value\": \"cat\" }</code> </p>",
+        "RetrievalFilter$listContains": "<p>Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is a list that contains the value as one of its members.</p> <p>The following example would return data sources with an animals attribute that is a list containing a cat member (for example, <code>[\"dog\", \"cat\"]</code>): <code>\"listContains\": { \"key\": \"animals\", \"value\": \"cat\" }</code> </p>",
         "RetrievalFilter$stringContains": "<p>Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is one of the following:</p> <p>A string that contains the value as a substring. The following example would return data sources with an animal attribute that contains the substring at (for example, 'cat'): <code>\"stringContains\": { \"key\": \"animal\", \"value\": \"at\" }</code> </p> <p>A list with a member that contains the value as a substring. The following example would return data sources with an animals attribute that is a list containing a member that contains the substring at (for example, <code>[\"dog\", \"cat\"]</code>): <code>\"stringContains\": { \"key\": \"animals\", \"value\": \"at\" }</code> </p>"
       }
     },
@@ -3240,6 +3240,25 @@
       "refs": {
         "CreateGuardrailRequest$contextualGroundingPolicyConfig": "<p>The contextual grounding policy configuration used to create a guardrail.</p>",
         "UpdateGuardrailRequest$contextualGroundingPolicyConfig": "<p>The contextual grounding policy configuration used to update a guardrail.</p>"
+      }
+    },
+    "GuardrailContextualGroundingTier": {
+      "base": "<p>Specifies the tier that your guardrail uses for contextual grounding checks.</p>",
+      "refs": {
+        "GuardrailContextualGroundingPolicy$tier": "<p>The tier that your guardrail uses for contextual grounding.</p>"
+      }
+    },
+    "GuardrailContextualGroundingTierConfig": {
+      "base": "<p>Specifies the tier that your guardrail uses for contextual grounding checks.</p>",
+      "refs": {
+        "GuardrailContextualGroundingPolicyConfig$tierConfig": "<p>The tier that your guardrail uses for contextual grounding.</p>"
+      }
+    },
+    "GuardrailContextualGroundingTierName": {
+      "base": null,
+      "refs": {
+        "GuardrailContextualGroundingTier$tierName": "<p>The tier that your guardrail uses for contextual grounding. Valid values include:</p> <ul> <li> <p> <code>CLASSIC</code> tier – Provides established contextual grounding functionality supporting English, French, and Spanish languages.</p> </li> <li> <p> <code>STANDARD</code> tier – Provides a more robust solution than the <code>CLASSIC</code> tier, with support for reasoning, conversational content and more comprehensive language support. This tier requires that your guardrail use <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-cross-region.html\">cross-Region inference</a>.</p> </li> </ul>",
+        "GuardrailContextualGroundingTierConfig$tierName": "<p>The tier that your guardrail uses for contextual grounding. Valid values include:</p> <ul> <li> <p> <code>CLASSIC</code> tier – Provides established contextual grounding functionality supporting English, French, and Spanish languages.</p> </li> <li> <p> <code>STANDARD</code> tier – Provides a more robust solution than the <code>CLASSIC</code> tier, with support for reasoning, conversational content and more comprehensive language support. This tier requires that your guardrail use <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-cross-region.html\">cross-Region inference</a>.</p> </li> </ul>"
       }
     },
     "GuardrailCrossRegionConfig": {

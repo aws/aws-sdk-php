@@ -80,7 +80,8 @@
         {"shape":"DBClusterNotFoundFault"},
         {"shape":"DBInstanceNotFoundFault"},
         {"shape":"DBProxyTargetGroupNotFoundFault"},
-        {"shape":"InvalidDBClusterStateFault"}
+        {"shape":"InvalidDBClusterStateFault"},
+        {"shape":"DBCapacityReservationNotFoundFault"}
       ]
     },
     "ApplyPendingMaintenanceAction":{
@@ -132,6 +133,22 @@
       "errors":[
         {"shape":"InvalidDBClusterStateFault"},
         {"shape":"DBClusterNotFoundFault"}
+      ]
+    },
+    "CancelDBCapacityReservation":{
+      "name":"CancelDBCapacityReservation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CancelDBCapacityReservationRequest"},
+      "output":{
+        "shape":"CancelDBCapacityReservationResponse",
+        "resultWrapper":"CancelDBCapacityReservationResult"
+      },
+      "errors":[
+        {"shape":"InvalidDBCapacityReservationStateFault"},
+        {"shape":"DBCapacityReservationNotFoundFault"}
       ]
     },
     "CancelExportTask":{
@@ -288,6 +305,24 @@
         {"shape":"CustomDBEngineVersionAlreadyExistsFault"}
       ]
     },
+    "CreateDBCapacityReservation":{
+      "name":"CreateDBCapacityReservation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateDBCapacityReservationRequest"},
+      "output":{
+        "shape":"CreateDBCapacityReservationResponse",
+        "resultWrapper":"CreateDBCapacityReservationResult"
+      },
+      "errors":[
+        {"shape":"DBCapacityReservationAlreadyExistsFault"},
+        {"shape":"InstanceQuotaExceededFault"},
+        {"shape":"DBCapacityReservationUnsupportedFault"},
+        {"shape":"InsufficientDBInstanceCapacityFault"}
+      ]
+    },
     "CreateDBCluster":{
       "name":"CreateDBCluster",
       "http":{
@@ -406,6 +441,7 @@
         {"shape":"OptionGroupNotFoundFault"},
         {"shape":"NetworkTypeNotSupported"},
         {"shape":"InstanceQuotaExceededFault"},
+        {"shape":"InvalidDBCapacityReservationStateFault"},
         {"shape":"StorageQuotaExceededFault"},
         {"shape":"BackupPolicyNotFoundFault"},
         {"shape":"DomainNotFoundFault"},
@@ -416,6 +452,7 @@
         {"shape":"DBSecurityGroupNotFoundFault"},
         {"shape":"InvalidVPCNetworkStateFault"},
         {"shape":"InvalidDBClusterStateFault"},
+        {"shape":"DBCapacityReservationNotFoundFault"},
         {"shape":"DBSubnetGroupNotFoundFault"}
       ]
     },
@@ -445,6 +482,7 @@
         {"shape":"DBInstanceNotFoundFault"},
         {"shape":"NetworkTypeNotSupported"},
         {"shape":"InstanceQuotaExceededFault"},
+        {"shape":"InvalidDBCapacityReservationStateFault"},
         {"shape":"StorageQuotaExceededFault"},
         {"shape":"DomainNotFoundFault"},
         {"shape":"CertificateNotFoundFault"},
@@ -455,6 +493,7 @@
         {"shape":"DBSecurityGroupNotFoundFault"},
         {"shape":"InvalidVPCNetworkStateFault"},
         {"shape":"InvalidDBClusterStateFault"},
+        {"shape":"DBCapacityReservationNotFoundFault"},
         {"shape":"DBSubnetGroupNotFoundFault"}
       ]
     },
@@ -1073,6 +1112,21 @@
       },
       "errors":[
         {"shape":"CertificateNotFoundFault"}
+      ]
+    },
+    "DescribeDBCapacityReservations":{
+      "name":"DescribeDBCapacityReservations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeDBCapacityReservationsRequest"},
+      "output":{
+        "shape":"DescribeDBCapacityReservationsResponse",
+        "resultWrapper":"DescribeDBCapacityReservationsResult"
+      },
+      "errors":[
+        {"shape":"DBCapacityReservationNotFoundFault"}
       ]
     },
     "DescribeDBClusterAutomatedBackups":{
@@ -1829,7 +1883,8 @@
         {"shape":"DBShardGroupNotFoundFault"},
         {"shape":"DBClusterNotFoundFault"},
         {"shape":"DBInstanceNotFoundFault"},
-        {"shape":"DBProxyTargetGroupNotFoundFault"}
+        {"shape":"DBProxyTargetGroupNotFoundFault"},
+        {"shape":"DBCapacityReservationNotFoundFault"}
       ]
     },
     "ModifyActivityStream":{
@@ -1895,6 +1950,24 @@
       "errors":[
         {"shape":"CustomDBEngineVersionNotFoundFault"},
         {"shape":"InvalidCustomDBEngineVersionStateFault"}
+      ]
+    },
+    "ModifyDBCapacityReservation":{
+      "name":"ModifyDBCapacityReservation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyDBCapacityReservationRequest"},
+      "output":{
+        "shape":"ModifyDBCapacityReservationResponse",
+        "resultWrapper":"ModifyDBCapacityReservationResult"
+      },
+      "errors":[
+        {"shape":"InvalidDBCapacityReservationStateFault"},
+        {"shape":"DBCapacityReservationNotFoundFault"},
+        {"shape":"InstanceQuotaExceededFault"},
+        {"shape":"InsufficientDBInstanceCapacityFault"}
       ]
     },
     "ModifyDBCluster":{
@@ -2006,6 +2079,7 @@
         {"shape":"OptionGroupNotFoundFault"},
         {"shape":"DBInstanceNotFoundFault"},
         {"shape":"NetworkTypeNotSupported"},
+        {"shape":"InvalidDBCapacityReservationStateFault"},
         {"shape":"StorageQuotaExceededFault"},
         {"shape":"BackupPolicyNotFoundFault"},
         {"shape":"DomainNotFoundFault"},
@@ -2017,7 +2091,8 @@
         {"shape":"TenantDatabaseQuotaExceededFault"},
         {"shape":"DBSecurityGroupNotFoundFault"},
         {"shape":"InvalidVPCNetworkStateFault"},
-        {"shape":"InvalidDBClusterStateFault"}
+        {"shape":"InvalidDBClusterStateFault"},
+        {"shape":"DBCapacityReservationNotFoundFault"}
       ]
     },
     "ModifyDBParameterGroup":{
@@ -2466,7 +2541,8 @@
         {"shape":"DBClusterNotFoundFault"},
         {"shape":"DBInstanceNotFoundFault"},
         {"shape":"DBProxyTargetGroupNotFoundFault"},
-        {"shape":"InvalidDBClusterStateFault"}
+        {"shape":"InvalidDBClusterStateFault"},
+        {"shape":"DBCapacityReservationNotFoundFault"}
       ]
     },
     "ResetDBClusterParameterGroup":{
@@ -2633,6 +2709,7 @@
         {"shape":"OptionGroupNotFoundFault"},
         {"shape":"NetworkTypeNotSupported"},
         {"shape":"InstanceQuotaExceededFault"},
+        {"shape":"InvalidDBCapacityReservationStateFault"},
         {"shape":"StorageQuotaExceededFault"},
         {"shape":"BackupPolicyNotFoundFault"},
         {"shape":"DomainNotFoundFault"},
@@ -2643,6 +2720,7 @@
         {"shape":"TenantDatabaseQuotaExceededFault"},
         {"shape":"DBSecurityGroupNotFoundFault"},
         {"shape":"InvalidVPCNetworkStateFault"},
+        {"shape":"DBCapacityReservationNotFoundFault"},
         {"shape":"DBSubnetGroupNotFoundFault"},
         {"shape":"InvalidRestoreFault"}
       ]
@@ -2660,6 +2738,7 @@
       },
       "errors":[
         {"shape":"AuthorizationNotFoundFault"},
+        {"shape":"InvalidDBCapacityReservationStateFault"},
         {"shape":"StorageQuotaExceededFault"},
         {"shape":"DBParameterGroupNotFoundFault"},
         {"shape":"BackupPolicyNotFoundFault"},
@@ -2675,6 +2754,7 @@
         {"shape":"OptionGroupNotFoundFault"},
         {"shape":"DBSecurityGroupNotFoundFault"},
         {"shape":"InvalidVPCNetworkStateFault"},
+        {"shape":"DBCapacityReservationNotFoundFault"},
         {"shape":"NetworkTypeNotSupported"},
         {"shape":"InstanceQuotaExceededFault"},
         {"shape":"DBSubnetGroupNotFoundFault"},
@@ -2706,6 +2786,7 @@
         {"shape":"DBInstanceAutomatedBackupNotFoundFault"},
         {"shape":"NetworkTypeNotSupported"},
         {"shape":"InstanceQuotaExceededFault"},
+        {"shape":"InvalidDBCapacityReservationStateFault"},
         {"shape":"StorageQuotaExceededFault"},
         {"shape":"BackupPolicyNotFoundFault"},
         {"shape":"DomainNotFoundFault"},
@@ -2716,6 +2797,7 @@
         {"shape":"TenantDatabaseQuotaExceededFault"},
         {"shape":"DBSecurityGroupNotFoundFault"},
         {"shape":"InvalidVPCNetworkStateFault"},
+        {"shape":"DBCapacityReservationNotFoundFault"},
         {"shape":"PointInTimeRestoreNotEnabledFault"},
         {"shape":"DBSubnetGroupNotFoundFault"},
         {"shape":"InvalidRestoreFault"}
@@ -2791,6 +2873,7 @@
       },
       "errors":[
         {"shape":"AuthorizationNotFoundFault"},
+        {"shape":"InvalidDBCapacityReservationStateFault"},
         {"shape":"DBSubnetGroupDoesNotCoverEnoughAZs"},
         {"shape":"InvalidDBInstanceStateFault"},
         {"shape":"KMSKeyNotAccessibleFault"},
@@ -2801,6 +2884,7 @@
         {"shape":"DBInstanceNotFoundFault"},
         {"shape":"InvalidVPCNetworkStateFault"},
         {"shape":"InvalidDBClusterStateFault"},
+        {"shape":"DBCapacityReservationNotFoundFault"},
         {"shape":"DBSubnetGroupNotFoundFault"}
       ]
     },
@@ -2897,6 +2981,7 @@
         "resultWrapper":"StopDBInstanceResult"
       },
       "errors":[
+        {"shape":"InvalidDBCapacityReservationStateFault"},
         {"shape":"DBInstanceNotFoundFault"},
         {"shape":"InvalidDBClusterStateFault"},
         {"shape":"SnapshotQuotaExceededFault"},
@@ -3263,6 +3348,20 @@
         "locationName":"AvailableAdditionalStorageVolumesOption"
       }
     },
+    "AvailableCapacityPerAvailabilityZone":{
+      "type":"structure",
+      "members":{
+        "AvailabilityZone":{"shape":"String"},
+        "AvailableCapacity":{"shape":"IntegerOptional"}
+      }
+    },
+    "AvailableCapacityPerAvailabilityZoneList":{
+      "type":"list",
+      "member":{
+        "shape":"AvailableCapacityPerAvailabilityZone",
+        "locationName":"AvailableCapacityPerAvailabilityZone"
+      }
+    },
     "AvailableProcessorFeature":{
       "type":"structure",
       "members":{
@@ -3390,6 +3489,19 @@
     "CACertificateIdentifiersList":{
       "type":"list",
       "member":{"shape":"String"}
+    },
+    "CancelDBCapacityReservationRequest":{
+      "type":"structure",
+      "required":["DBCapacityReservationIdentifier"],
+      "members":{
+        "DBCapacityReservationIdentifier":{"shape":"DBCapacityReservationIdentifier"}
+      }
+    },
+    "CancelDBCapacityReservationResponse":{
+      "type":"structure",
+      "members":{
+        "DBCapacityReservation":{"shape":"DBCapacityReservation"}
+      }
     },
     "CancelExportTaskMessage":{
       "type":"structure",
@@ -3688,6 +3800,34 @@
         "Tags":{"shape":"TagList"}
       }
     },
+    "CreateDBCapacityReservationRequest":{
+      "type":"structure",
+      "required":[
+        "DBCapacityReservationName",
+        "DBInstanceClass",
+        "Engine",
+        "CapacityPerAvailabilityZone",
+        "AvailabilityZones"
+      ],
+      "members":{
+        "DBCapacityReservationName":{"shape":"DBCapacityReservationName"},
+        "DBInstanceClass":{"shape":"DBInstanceClass"},
+        "Engine":{"shape":"String"},
+        "CapacityPerAvailabilityZone":{"shape":"IntegerOptional"},
+        "AvailabilityZones":{"shape":"AvailabilityZones"},
+        "EndDate":{"shape":"TStamp"},
+        "StartDate":{"shape":"TStamp"},
+        "CommitmentDuration":{"shape":"LongOptional"},
+        "LicenseModel":{"shape":"String"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateDBCapacityReservationResponse":{
+      "type":"structure",
+      "members":{
+        "DBCapacityReservation":{"shape":"DBCapacityReservation"}
+      }
+    },
     "CreateDBClusterEndpointMessage":{
       "type":"structure",
       "required":[
@@ -3891,6 +4031,7 @@
         "EngineLifecycleSupport":{"shape":"String"},
         "AdditionalStorageVolumes":{"shape":"AdditionalStorageVolumesList"},
         "TagSpecifications":{"shape":"TagSpecificationList"},
+        "DBCapacityReservationIdentifier":{"shape":"DBCapacityReservationIdentifier"},
         "MasterUserAuthenticationType":{"shape":"MasterUserAuthenticationType"}
       }
     },
@@ -3946,7 +4087,8 @@
         "UpgradeStorageConfig":{"shape":"BooleanOptional"},
         "CACertificateIdentifier":{"shape":"String"},
         "AdditionalStorageVolumes":{"shape":"AdditionalStorageVolumesList"},
-        "TagSpecifications":{"shape":"TagSpecificationList"}
+        "TagSpecifications":{"shape":"TagSpecificationList"},
+        "DBCapacityReservationIdentifier":{"shape":"DBCapacityReservationIdentifier"}
       }
     },
     "CreateDBInstanceReadReplicaResult":{
@@ -4293,6 +4435,92 @@
       "max":255,
       "min":39,
       "pattern":"arn:aws[a-z-]*:rds(-[a-z]+)?:[a-z0-9-]*:[0-9]{12}:(cluster|db):[a-zA-Z][a-zA-Z0-9-]{0,62}"
+    },
+    "DBCapacityReservation":{
+      "type":"structure",
+      "members":{
+        "DBCapacityReservationName":{"shape":"DBCapacityReservationName"},
+        "DBInstanceClass":{"shape":"DBInstanceClass"},
+        "Engine":{"shape":"String"},
+        "LicenseModel":{"shape":"String"},
+        "ReservedCapacityPerAvailabilityZone":{"shape":"IntegerOptional"},
+        "AvailableCapacityPerAvailabilityZoneList":{"shape":"AvailableCapacityPerAvailabilityZoneList"},
+        "EndDate":{"shape":"TStamp"},
+        "CreateDate":{"shape":"TStamp"},
+        "StartDate":{"shape":"TStamp"},
+        "CommitmentInfo":{"shape":"DBCapacityReservationCommitmentInfo"},
+        "State":{"shape":"DBCapacityReservationState"},
+        "DBCapacityReservationArn":{"shape":"String"},
+        "DBCapacityReservationIdentifier":{"shape":"DBCapacityReservationIdentifier"},
+        "TagList":{"shape":"TagList"}
+      }
+    },
+    "DBCapacityReservationAlreadyExistsFault":{
+      "type":"structure",
+      "members":{},
+      "error":{
+        "code":"DBCapacityReservationAlreadyExists",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "DBCapacityReservationCommitmentInfo":{
+      "type":"structure",
+      "members":{
+        "CommittedCapacityPerAvailabilityZone":{"shape":"IntegerOptional"},
+        "CommitmentEndDate":{"shape":"TStamp"}
+      }
+    },
+    "DBCapacityReservationIdentifier":{
+      "type":"string",
+      "max":63,
+      "min":1,
+      "pattern":"[a-z](?:-?[a-z0-9]+){0,15}"
+    },
+    "DBCapacityReservationList":{
+      "type":"list",
+      "member":{"shape":"DBCapacityReservation"}
+    },
+    "DBCapacityReservationName":{
+      "type":"string",
+      "max":63,
+      "min":1,
+      "pattern":"[a-z](?:-?[a-z0-9]+){0,15}"
+    },
+    "DBCapacityReservationNotFoundFault":{
+      "type":"structure",
+      "members":{},
+      "error":{
+        "code":"DBCapacityReservationNotFound",
+        "httpStatusCode":404,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "DBCapacityReservationState":{
+      "type":"string",
+      "enum":[
+        "active",
+        "expired",
+        "cancelled",
+        "pending",
+        "failed",
+        "assessing",
+        "scheduled",
+        "delayed",
+        "unsupported"
+      ]
+    },
+    "DBCapacityReservationUnsupportedFault":{
+      "type":"structure",
+      "members":{},
+      "error":{
+        "code":"DBCapacityReservationUnsupported",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
     },
     "DBCluster":{
       "type":"structure",
@@ -5008,7 +5236,8 @@
         "AdditionalStorageVolumes":{"shape":"AdditionalStorageVolumesOutputList"},
         "StorageVolumeStatus":{"shape":"String"},
         "StorageOperationStatus":{"shape":"String"},
-        "StorageOperationPercentProgress":{"shape":"IntegerOptional"}
+        "StorageOperationPercentProgress":{"shape":"IntegerOptional"},
+        "DBCapacityReservationIdentifier":{"shape":"DBCapacityReservationIdentifier"}
       },
       "wrapper":true
     },
@@ -5109,6 +5338,12 @@
         "shape":"DBInstanceAutomatedBackupsReplication",
         "locationName":"DBInstanceAutomatedBackupsReplication"
       }
+    },
+    "DBInstanceClass":{
+      "type":"string",
+      "max":30,
+      "min":5,
+      "pattern":"db\\.[0-9a-z]{2,6}\\.[0-9a-z\\.]{4,20}"
     },
     "DBInstanceList":{
       "type":"list",
@@ -6254,6 +6489,22 @@
         "Marker":{"shape":"String"}
       }
     },
+    "DescribeDBCapacityReservationsRequest":{
+      "type":"structure",
+      "members":{
+        "DBCapacityReservationIdentifier":{"shape":"DBCapacityReservationIdentifier"},
+        "Marker":{"shape":"String"},
+        "MaxRecords":{"shape":"MaxRecords"},
+        "Filters":{"shape":"FilterList"}
+      }
+    },
+    "DescribeDBCapacityReservationsResponse":{
+      "type":"structure",
+      "members":{
+        "DBCapacityReservations":{"shape":"DBCapacityReservationList"},
+        "Marker":{"shape":"String"}
+      }
+    },
     "DescribeDBClusterAutomatedBackupsMessage":{
       "type":"structure",
       "members":{
@@ -6964,6 +7215,13 @@
       "key":{"shape":"String"},
       "value":{"shape":"String"}
     },
+    "EndDateType":{
+      "type":"string",
+      "enum":[
+        "unlimited",
+        "limited"
+      ]
+    },
     "Endpoint":{
       "type":"structure",
       "members":{
@@ -7575,6 +7833,16 @@
       },
       "exception":true
     },
+    "InvalidDBCapacityReservationStateFault":{
+      "type":"structure",
+      "members":{},
+      "error":{
+        "code":"InvalidDBCapacityReservationState",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "InvalidDBClusterAutomatedBackupStateFault":{
       "type":"structure",
       "members":{},
@@ -8091,6 +8359,22 @@
         "Status":{"shape":"CustomEngineVersionStatus"}
       }
     },
+    "ModifyDBCapacityReservationRequest":{
+      "type":"structure",
+      "required":["DBCapacityReservationIdentifier"],
+      "members":{
+        "DBCapacityReservationIdentifier":{"shape":"DBCapacityReservationIdentifier"},
+        "CapacityPerAvailabilityZone":{"shape":"IntegerOptional"},
+        "EndDateType":{"shape":"EndDateType"},
+        "EndDate":{"shape":"TStamp"}
+      }
+    },
+    "ModifyDBCapacityReservationResponse":{
+      "type":"structure",
+      "members":{
+        "DBCapacityReservation":{"shape":"DBCapacityReservation"}
+      }
+    },
     "ModifyDBClusterEndpointMessage":{
       "type":"structure",
       "required":["DBClusterEndpointIdentifier"],
@@ -8257,6 +8541,7 @@
         "DedicatedLogVolume":{"shape":"BooleanOptional"},
         "Engine":{"shape":"String"},
         "AdditionalStorageVolumes":{"shape":"ModifyAdditionalStorageVolumesList"},
+        "DBCapacityReservationIdentifier":{"shape":"DBCapacityReservationIdentifier"},
         "TagSpecifications":{"shape":"TagSpecificationList"},
         "MasterUserAuthenticationType":{"shape":"MasterUserAuthenticationType"},
         "EngineLifecycleSupport":{"shape":"String"}
@@ -8885,7 +9170,8 @@
         "IAMDatabaseAuthenticationEnabled":{"shape":"BooleanOptional"},
         "DedicatedLogVolume":{"shape":"BooleanOptional"},
         "Engine":{"shape":"String"},
-        "AdditionalStorageVolumes":{"shape":"AdditionalStorageVolumesList"}
+        "AdditionalStorageVolumes":{"shape":"AdditionalStorageVolumesList"},
+        "DBCapacityReservationIdentifier":{"shape":"DBCapacityReservationIdentifier"}
       }
     },
     "PerformanceInsightsMetricDimensionGroup":{
@@ -9592,6 +9878,7 @@
         "DBClusterSnapshotIdentifier":{"shape":"String"},
         "BackupRetentionPeriod":{"shape":"IntegerOptional"},
         "PreferredBackupWindow":{"shape":"String"},
+        "DBCapacityReservationIdentifier":{"shape":"DBCapacityReservationIdentifier"},
         "DedicatedLogVolume":{"shape":"BooleanOptional"},
         "CACertificateIdentifier":{"shape":"String"},
         "EngineLifecycleSupport":{"shape":"String"},
@@ -9668,6 +9955,7 @@
         "NetworkType":{"shape":"String"},
         "ManageMasterUserPassword":{"shape":"BooleanOptional"},
         "MasterUserSecretKmsKeyId":{"shape":"String"},
+        "DBCapacityReservationIdentifier":{"shape":"DBCapacityReservationIdentifier"},
         "DedicatedLogVolume":{"shape":"BooleanOptional"},
         "CACertificateIdentifier":{"shape":"String"},
         "EngineLifecycleSupport":{"shape":"String"},
@@ -9730,6 +10018,7 @@
         "AllocatedStorage":{"shape":"IntegerOptional"},
         "BackupRetentionPeriod":{"shape":"IntegerOptional"},
         "PreferredBackupWindow":{"shape":"String"},
+        "DBCapacityReservationIdentifier":{"shape":"DBCapacityReservationIdentifier"},
         "DedicatedLogVolume":{"shape":"BooleanOptional"},
         "CACertificateIdentifier":{"shape":"String"},
         "EngineLifecycleSupport":{"shape":"String"},
@@ -10038,7 +10327,8 @@
       "type":"structure",
       "required":["DBInstanceIdentifier"],
       "members":{
-        "DBInstanceIdentifier":{"shape":"String"}
+        "DBInstanceIdentifier":{"shape":"String"},
+        "DBCapacityReservationIdentifier":{"shape":"DBCapacityReservationIdentifier"}
       }
     },
     "StartDBInstanceResult":{
@@ -10113,7 +10403,8 @@
       "required":["DBInstanceIdentifier"],
       "members":{
         "DBInstanceIdentifier":{"shape":"String"},
-        "DBSnapshotIdentifier":{"shape":"String"}
+        "DBSnapshotIdentifier":{"shape":"String"},
+        "DetachFromDBCapacityReservation":{"shape":"BooleanOptional"}
       }
     },
     "StopDBInstanceResult":{

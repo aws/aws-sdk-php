@@ -640,7 +640,7 @@
                 "AttributeType": "S"
               }
             ],
-            "CreationDateTime": "1421866952.062",
+            "CreationDateTime": 1421866952.062,
             "ItemCount": 0,
             "KeySchema": [
               {
@@ -653,7 +653,7 @@
               }
             ],
             "ProvisionedThroughput": {
-              "LastIncreaseDateTime": "1421874759.194",
+              "LastIncreaseDateTime": 1421874759.194,
               "NumberOfDecreasesToday": 1,
               "ReadCapacityUnits": 1,
               "WriteCapacityUnits": 1
@@ -670,6 +670,69 @@
         "description": "This example increases the provisioned read and write capacity on the Music table.",
         "id": "to-modify-a-tables-provisioned-throughput-1476118076147",
         "title": "To modify a table's provisioned throughput"
+      },
+      {
+        "input": {
+          "DisassociationProtectionEnabled": false,
+          "TableName": "MusicCollection"
+        },
+        "output": {
+          "TableDescription": {
+            "DisassociationProtectionEnabled": false,
+            "GlobalTableVersion": "2019.11.21",
+            "Replicas": [
+              {
+                "RegionName": "us-east-1",
+                "ReplicaStatus": "ACTIVE"
+              }
+            ],
+            "TableArn": "arn:aws:dynamodb:us-west-2:123456789012:table/MusicCollection",
+            "TableName": "MusicCollection",
+            "TableStatus": "ACTIVE"
+          }
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "This example disables disassociation protection on the MusicCollection replica in us-west-2. You must send the request to us-west-2 using credentials for the account that owns the replica. Your table must be a global table that uses Version 2019.11.21 and multi-Region eventual consistency (MREC). You cannot combine this change with any other change in the same UpdateTable request. Before requesting disassociation, use DescribeTable to confirm that DisassociationProtectionEnabled is false and TableStatus is ACTIVE.",
+        "id": "to-disable-disassociation-protection-on-a-local-replica",
+        "title": "To disable disassociation protection on a local replica"
+      },
+      {
+        "input": {
+          "ReplicaUpdates": [
+            {
+              "Disassociate": {
+                "DisassociationMode": "WAIT_FOR_REPLICATION",
+                "RegionName": "us-west-2"
+              }
+            }
+          ],
+          "TableName": "arn:aws:dynamodb:us-west-2:123456789012:table/MusicCollection"
+        },
+        "output": {
+          "TableDescription": {
+            "DisassociationProtectionEnabled": false,
+            "GlobalTableVersion": "2019.11.21",
+            "Replicas": [
+              {
+                "RegionName": "us-east-1",
+                "ReplicaStatus": "ACTIVE"
+              }
+            ],
+            "TableArn": "arn:aws:dynamodb:us-west-2:123456789012:table/MusicCollection",
+            "TableName": "MusicCollection",
+            "TableStatus": "UPDATING"
+          }
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "This example disassociates the MusicCollection replica in us-west-2. You must first disable protection in a separate UpdateTable request. You must send the request to us-west-2 using credentials for account 123456789012, the account that owns the replica. This request works for global tables that use Version 2019.11.21 and multi-Region eventual consistency (MREC). Replicas can belong to one account or multiple accounts. You must specify WAIT_FOR_REPLICATION. The response shows that DynamoDB accepted the asynchronous request. To confirm completion, use DescribeTable in us-west-2. Verify that TableStatus is ACTIVE and Replicas is absent or empty. ACTIVE alone does not confirm successful disassociation.",
+        "id": "to-disassociate-a-local-global-table-replica",
+        "title": "To disassociate a local global table replica"
       }
     ]
   }

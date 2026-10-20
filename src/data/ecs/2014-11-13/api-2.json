@@ -16,6 +16,24 @@
     "uid":"ecs-2014-11-13"
   },
   "operations":{
+    "AssociateGatewayWithCluster":{
+      "name":"AssociateGatewayWithCluster",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AssociateGatewayWithClusterRequest"},
+      "output":{"shape":"AssociateGatewayWithClusterResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServerException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ClientException"},
+        {"shape":"GatewayNotFoundException"},
+        {"shape":"ClusterNotFoundException"},
+        {"shape":"UnsupportedFeatureException"}
+      ]
+    },
     "ContinueServiceDeployment":{
       "name":"ContinueServiceDeployment",
       "http":{
@@ -103,6 +121,22 @@
         {"shape":"ClientException"},
         {"shape":"ClusterNotFoundException"},
         {"shape":"PlatformTaskDefinitionIncompatibilityException"},
+        {"shape":"UnsupportedFeatureException"}
+      ]
+    },
+    "CreateGateway":{
+      "name":"CreateGateway",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateGatewayRequest"},
+      "output":{"shape":"CreateGatewayResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServerException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ClientException"},
         {"shape":"UnsupportedFeatureException"}
       ]
     },
@@ -273,6 +307,23 @@
         {"shape":"ClientException"},
         {"shape":"ServiceNotFoundException"},
         {"shape":"ClusterNotFoundException"},
+        {"shape":"UnsupportedFeatureException"}
+      ]
+    },
+    "DeleteGateway":{
+      "name":"DeleteGateway",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteGatewayRequest"},
+      "output":{"shape":"DeleteGatewayResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServerException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ClientException"},
+        {"shape":"GatewayNotFoundException"},
         {"shape":"UnsupportedFeatureException"}
       ]
     },
@@ -503,6 +554,60 @@
       ],
       "readonly":true
     },
+    "DescribeGateway":{
+      "name":"DescribeGateway",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeGatewayRequest"},
+      "output":{"shape":"DescribeGatewayResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServerException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ClientException"},
+        {"shape":"GatewayNotFoundException"},
+        {"shape":"UnsupportedFeatureException"}
+      ],
+      "readonly":true
+    },
+    "DescribeGatewayResources":{
+      "name":"DescribeGatewayResources",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeGatewayResourcesRequest"},
+      "output":{"shape":"DescribeGatewayResourcesResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServerException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ClientException"},
+        {"shape":"GatewayNotFoundException"},
+        {"shape":"UnsupportedFeatureException"}
+      ],
+      "readonly":true
+    },
+    "DescribeGatewayRoute":{
+      "name":"DescribeGatewayRoute",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeGatewayRouteRequest"},
+      "output":{"shape":"DescribeGatewayRouteResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServerException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ClientException"},
+        {"shape":"UnsupportedFeatureException"}
+      ],
+      "readonly":true
+    },
     "DescribeServiceDeployments":{
       "name":"DescribeServiceDeployments",
       "http":{
@@ -610,6 +715,25 @@
         {"shape":"ClusterNotFoundException"}
       ],
       "readonly":true
+    },
+    "DisassociateGatewayFromCluster":{
+      "name":"DisassociateGatewayFromCluster",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisassociateGatewayFromClusterRequest"},
+      "output":{"shape":"DisassociateGatewayFromClusterResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServerException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ClientException"},
+        {"shape":"GatewayNotFoundException"},
+        {"shape":"ClusterNotFoundException"},
+        {"shape":"UnsupportedFeatureException"}
+      ]
     },
     "DiscoverPollEndpoint":{
       "name":"DiscoverPollEndpoint",
@@ -776,6 +900,58 @@
         {"shape":"InvalidParameterException"},
         {"shape":"ClientException"},
         {"shape":"ClusterNotFoundException"},
+        {"shape":"UnsupportedFeatureException"}
+      ],
+      "readonly":true
+    },
+    "ListGatewayClusterAssociations":{
+      "name":"ListGatewayClusterAssociations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListGatewayClusterAssociationsRequest"},
+      "output":{"shape":"ListGatewayClusterAssociationsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServerException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ClientException"},
+        {"shape":"UnsupportedFeatureException"}
+      ],
+      "readonly":true
+    },
+    "ListGatewayRoutes":{
+      "name":"ListGatewayRoutes",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListGatewayRoutesRequest"},
+      "output":{"shape":"ListGatewayRoutesResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServerException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ClientException"},
+        {"shape":"GatewayNotFoundException"},
+        {"shape":"UnsupportedFeatureException"}
+      ],
+      "readonly":true
+    },
+    "ListGateways":{
+      "name":"ListGateways",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListGatewaysRequest"},
+      "output":{"shape":"ListGatewaysResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServerException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ClientException"},
         {"shape":"UnsupportedFeatureException"}
       ],
       "readonly":true
@@ -1295,6 +1471,23 @@
         {"shape":"UnsupportedFeatureException"}
       ]
     },
+    "UpdateGateway":{
+      "name":"UpdateGateway",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateGatewayRequest"},
+      "output":{"shape":"UpdateGatewayResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServerException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ClientException"},
+        {"shape":"GatewayNotFoundException"},
+        {"shape":"UnsupportedFeatureException"}
+      ]
+    },
     "UpdateService":{
       "name":"UpdateService",
       "http":{
@@ -1453,6 +1646,12 @@
         "PRIVATE"
       ]
     },
+    "AccessTypeList":{
+      "type":"list",
+      "member":{"shape":"AccessType"},
+      "max":2,
+      "min":0
+    },
     "AdvancedConfiguration":{
       "type":"structure",
       "members":{
@@ -1499,6 +1698,25 @@
         "ENABLED",
         "DISABLED"
       ]
+    },
+    "AssociateGatewayWithClusterRequest":{
+      "type":"structure",
+      "required":[
+        "gateway",
+        "cluster"
+      ],
+      "members":{
+        "gateway":{"shape":"String"},
+        "cluster":{"shape":"String"}
+      }
+    },
+    "AssociateGatewayWithClusterResponse":{
+      "type":"structure",
+      "members":{
+        "gatewayArn":{"shape":"String"},
+        "clusterArn":{"shape":"String"},
+        "status":{"shape":"GatewayClusterAssociationStatus"}
+      }
     },
     "Attachment":{
       "type":"structure",
@@ -2244,6 +2462,34 @@
         "service":{"shape":"ECSExpressGatewayService"}
       }
     },
+    "CreateGatewayRequest":{
+      "type":"structure",
+      "required":[
+        "name",
+        "infrastructureRoleArn",
+        "configuration"
+      ],
+      "members":{
+        "name":{"shape":"String"},
+        "infrastructureRoleArn":{"shape":"String"},
+        "clientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "deletionProtection":{"shape":"BoxedBoolean"},
+        "configuration":{"shape":"GatewayConfiguration"},
+        "tags":{"shape":"Tags"},
+        "propagateTags":{"shape":"PropagateGatewayTags"}
+      }
+    },
+    "CreateGatewayResponse":{
+      "type":"structure",
+      "members":{
+        "gatewayArn":{"shape":"String"},
+        "name":{"shape":"String"},
+        "status":{"shape":"GatewayStatus"}
+      }
+    },
     "CreateManagedInstancesProviderConfiguration":{
       "type":"structure",
       "required":[
@@ -2288,6 +2534,7 @@
         "serviceConnectConfiguration":{"shape":"ServiceConnectConfiguration"},
         "volumeConfigurations":{"shape":"ServiceVolumeConfigurations"},
         "vpcLatticeConfigurations":{"shape":"VpcLatticeConfigurations"},
+        "gatewayConnectors":{"shape":"GatewayConnectorList"},
         "monitoring":{"shape":"MonitoringConfiguration"}
       }
     },
@@ -2808,6 +3055,21 @@
         "service":{"shape":"ECSExpressGatewayService"}
       }
     },
+    "DeleteGatewayRequest":{
+      "type":"structure",
+      "required":["gateway"],
+      "members":{
+        "gateway":{"shape":"String"}
+      }
+    },
+    "DeleteGatewayResponse":{
+      "type":"structure",
+      "members":{
+        "gatewayArn":{"shape":"String"},
+        "name":{"shape":"String"},
+        "status":{"shape":"GatewayStatus"}
+      }
+    },
     "DeleteServiceRequest":{
       "type":"structure",
       "required":["service"],
@@ -3203,6 +3465,70 @@
         "service":{"shape":"ECSExpressGatewayService"}
       }
     },
+    "DescribeGatewayAlbConfiguration":{
+      "type":"structure",
+      "members":{
+        "networkConfiguration":{"shape":"GatewayElbNetworkConfiguration"},
+        "scheme":{"shape":"GatewayElbScheme"},
+        "accessLogs":{"shape":"GatewayElbAccessLogConfiguration"},
+        "webACLArn":{"shape":"String"},
+        "port":{"shape":"BoxedInteger"},
+        "protocol":{"shape":"GatewayAlbProtocol"},
+        "maxAlbCount":{"shape":"BoxedInteger"},
+        "currentAlbCount":{"shape":"BoxedInteger"},
+        "httpDesync":{"shape":"GatewayAlbDesyncMitigationMode"},
+        "testTrafficRules":{"shape":"GatewayAlbTestTrafficRules"}
+      }
+    },
+    "DescribeGatewayConfiguration":{
+      "type":"structure",
+      "members":{
+        "hostSharedAlb":{"shape":"DescribeGatewayAlbConfiguration"}
+      },
+      "union":true
+    },
+    "DescribeGatewayRequest":{
+      "type":"structure",
+      "required":["gateway"],
+      "members":{
+        "gateway":{"shape":"String"}
+      }
+    },
+    "DescribeGatewayResourcesRequest":{
+      "type":"structure",
+      "required":["gateway"],
+      "members":{
+        "gateway":{"shape":"String"},
+        "maxResults":{"shape":"BoxedInteger"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "DescribeGatewayResourcesResponse":{
+      "type":"structure",
+      "members":{
+        "gatewayResources":{"shape":"GatewayResources"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "DescribeGatewayResponse":{
+      "type":"structure",
+      "members":{
+        "gateway":{"shape":"Gateway"}
+      }
+    },
+    "DescribeGatewayRouteRequest":{
+      "type":"structure",
+      "required":["gatewayRouteArn"],
+      "members":{
+        "gatewayRouteArn":{"shape":"String"}
+      }
+    },
+    "DescribeGatewayRouteResponse":{
+      "type":"structure",
+      "members":{
+        "gatewayRoute":{"shape":"GatewayRoute"}
+      }
+    },
     "DescribeServiceDeploymentsRequest":{
       "type":"structure",
       "required":["serviceDeploymentArns"],
@@ -3331,6 +3657,25 @@
       "type":"list",
       "member":{"shape":"Device"}
     },
+    "DisassociateGatewayFromClusterRequest":{
+      "type":"structure",
+      "required":[
+        "gateway",
+        "cluster"
+      ],
+      "members":{
+        "gateway":{"shape":"String"},
+        "cluster":{"shape":"String"}
+      }
+    },
+    "DisassociateGatewayFromClusterResponse":{
+      "type":"structure",
+      "members":{
+        "gatewayArn":{"shape":"String"},
+        "clusterArn":{"shape":"String"},
+        "status":{"shape":"GatewayClusterAssociationStatus"}
+      }
+    },
     "DiscoverPollEndpointRequest":{
       "type":"structure",
       "members":{
@@ -3410,7 +3755,8 @@
         "autoScaling":{"shape":"ManagedAutoScaling"},
         "metricAlarms":{"shape":"ManagedMetricAlarms"},
         "serviceSecurityGroups":{"shape":"ManagedSecurityGroups"},
-        "logGroups":{"shape":"ManagedLogGroups"}
+        "logGroups":{"shape":"ManagedLogGroups"},
+        "gatewayConnections":{"shape":"GatewayConnectionList"}
       }
     },
     "ECSVolumeName":{"type":"string"},
@@ -3445,6 +3791,21 @@
         "transitEncryptionPort":{"shape":"BoxedInteger"},
         "authorizationConfig":{"shape":"EFSAuthorizationConfig"}
       }
+    },
+    "ElbGatewayResources":{
+      "type":"structure",
+      "members":{
+        "loadBalancerArn":{"shape":"String"},
+        "listenerArn":{"shape":"String"},
+        "securityGroup":{"shape":"String"},
+        "gatewayRouteArns":{"shape":"StringList"}
+      }
+    },
+    "ElbGatewayResourcesList":{
+      "type":"list",
+      "member":{"shape":"ElbGatewayResources"},
+      "max":20,
+      "min":0
     },
     "EnvironmentFile":{
       "type":"structure",
@@ -3703,6 +4064,380 @@
         "fluentbit"
       ]
     },
+    "Gateway":{
+      "type":"structure",
+      "members":{
+        "gatewayArn":{"shape":"String"},
+        "name":{"shape":"String"},
+        "status":{"shape":"GatewayStatus"},
+        "statusReason":{"shape":"String"},
+        "failures":{"shape":"GatewayResourceFailureList"},
+        "infrastructureRoleArn":{"shape":"String"},
+        "deletionProtection":{"shape":"BoxedBoolean"},
+        "configuration":{"shape":"DescribeGatewayConfiguration"},
+        "accessType":{"shape":"AccessType"},
+        "propagateTags":{"shape":"PropagateGatewayTags"},
+        "tags":{"shape":"Tags"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "GatewayAlbDesyncMitigationMode":{
+      "type":"string",
+      "enum":[
+        "monitor",
+        "defensive",
+        "strictest"
+      ]
+    },
+    "GatewayAlbProtocol":{
+      "type":"string",
+      "enum":[
+        "HTTP",
+        "HTTPS"
+      ]
+    },
+    "GatewayAlbTestTrafficRules":{
+      "type":"structure",
+      "members":{
+        "header":{"shape":"GatewayTestTrafficHeader"}
+      }
+    },
+    "GatewayClusterAssociationStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "DISASSOCIATING",
+        "INACTIVE"
+      ]
+    },
+    "GatewayClusterAssociationStatusList":{
+      "type":"list",
+      "member":{"shape":"GatewayClusterAssociationStatus"},
+      "max":3,
+      "min":0
+    },
+    "GatewayClusterAssociationSummary":{
+      "type":"structure",
+      "members":{
+        "gatewayArn":{"shape":"String"},
+        "clusterArn":{"shape":"String"},
+        "status":{"shape":"GatewayClusterAssociationStatus"}
+      }
+    },
+    "GatewayClusterAssociationSummaryList":{
+      "type":"list",
+      "member":{"shape":"GatewayClusterAssociationSummary"}
+    },
+    "GatewayConfiguration":{
+      "type":"structure",
+      "members":{
+        "hostSharedAlb":{"shape":"HostSharedAlbConfiguration"}
+      },
+      "union":true
+    },
+    "GatewayConnection":{
+      "type":"structure",
+      "members":{
+        "gatewayArn":{"shape":"String"},
+        "gatewayRouteArn":{"shape":"String"},
+        "portName":{"shape":"String"},
+        "serviceUrl":{"shape":"String"},
+        "accessType":{"shape":"AccessType"},
+        "status":{"shape":"GatewayRouteStatus"},
+        "resources":{"shape":"GatewayConnectionResources"}
+      }
+    },
+    "GatewayConnectionAlbResources":{
+      "type":"structure",
+      "members":{
+        "acmCertificateArn":{"shape":"String"},
+        "loadBalancerArn":{"shape":"String"},
+        "loadBalancerSecurityGroupArns":{"shape":"StringList"},
+        "listenerArn":{"shape":"String"},
+        "listenerRuleArn":{"shape":"String"},
+        "testListenerRuleArn":{"shape":"String"},
+        "targetGroupArn":{"shape":"String"},
+        "alternateTargetGroupArn":{"shape":"String"}
+      }
+    },
+    "GatewayConnectionAlbResourcesList":{
+      "type":"list",
+      "member":{"shape":"GatewayConnectionAlbResources"},
+      "max":1,
+      "min":0
+    },
+    "GatewayConnectionList":{
+      "type":"list",
+      "member":{"shape":"GatewayConnection"},
+      "max":5,
+      "min":0
+    },
+    "GatewayConnectionResources":{
+      "type":"structure",
+      "members":{
+        "hostSharedAlb":{"shape":"GatewayConnectionAlbResourcesList"}
+      },
+      "union":true
+    },
+    "GatewayConnector":{
+      "type":"structure",
+      "required":["portName"],
+      "members":{
+        "portName":{"shape":"String"},
+        "healthCheck":{"shape":"GatewayConnectorHealthCheck"},
+        "filters":{"shape":"GatewayConnectorFilters"}
+      }
+    },
+    "GatewayConnectorFilters":{
+      "type":"structure",
+      "members":{
+        "accessTypes":{"shape":"AccessTypeList"}
+      }
+    },
+    "GatewayConnectorHealthCheck":{
+      "type":"structure",
+      "members":{
+        "healthCheckProtocol":{"shape":"GatewayConnectorHealthCheckProtocol"},
+        "healthCheckPort":{"shape":"BoxedInteger"},
+        "healthCheckPath":{"shape":"String"},
+        "healthCheckTimeoutSeconds":{"shape":"BoxedInteger"},
+        "healthCheckIntervalSeconds":{"shape":"BoxedInteger"},
+        "healthyThresholdCount":{"shape":"BoxedInteger"},
+        "unhealthyThresholdCount":{"shape":"BoxedInteger"},
+        "matcher":{"shape":"GatewayConnectorHealthCheckMatcher"}
+      }
+    },
+    "GatewayConnectorHealthCheckMatcher":{
+      "type":"structure",
+      "members":{
+        "httpCode":{"shape":"String"},
+        "grpcCode":{"shape":"String"}
+      }
+    },
+    "GatewayConnectorHealthCheckProtocol":{
+      "type":"string",
+      "enum":[
+        "HTTP",
+        "HTTPS"
+      ]
+    },
+    "GatewayConnectorList":{
+      "type":"list",
+      "member":{"shape":"GatewayConnector"},
+      "max":1,
+      "min":0
+    },
+    "GatewayElbAccessLogConfiguration":{
+      "type":"structure",
+      "members":{
+        "destination":{"shape":"GatewayElbAccessLogDestination"}
+      }
+    },
+    "GatewayElbAccessLogDestination":{
+      "type":"structure",
+      "members":{
+        "s3":{"shape":"GatewayElbAccessLogS3Destination"}
+      },
+      "union":true
+    },
+    "GatewayElbAccessLogS3Destination":{
+      "type":"structure",
+      "required":["bucket"],
+      "members":{
+        "bucket":{"shape":"String"},
+        "prefix":{"shape":"String"}
+      }
+    },
+    "GatewayElbIpAddressType":{
+      "type":"string",
+      "enum":[
+        "ipv4",
+        "dualstack",
+        "dualstack-without-public-ipv4"
+      ]
+    },
+    "GatewayElbNetworkConfiguration":{
+      "type":"structure",
+      "members":{
+        "inboundSecurityGroup":{"shape":"String"},
+        "subnets":{"shape":"StringList"},
+        "ipAddressType":{"shape":"GatewayElbIpAddressType"}
+      }
+    },
+    "GatewayElbScheme":{
+      "type":"string",
+      "enum":[
+        "internet-facing",
+        "internal"
+      ]
+    },
+    "GatewayInfrastructureResources":{
+      "type":"structure",
+      "members":{
+        "hostSharedAlb":{"shape":"ElbGatewayResourcesList"}
+      },
+      "union":true
+    },
+    "GatewayNotFoundException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "exception":true
+    },
+    "GatewayOperationError":{
+      "type":"structure",
+      "members":{
+        "operation":{"shape":"String"},
+        "code":{"shape":"String"},
+        "message":{"shape":"String"}
+      }
+    },
+    "GatewayOperationErrorList":{
+      "type":"list",
+      "member":{"shape":"GatewayOperationError"},
+      "max":5,
+      "min":0
+    },
+    "GatewayResourceFailure":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"String"},
+        "errors":{"shape":"GatewayOperationErrorList"}
+      }
+    },
+    "GatewayResourceFailureList":{
+      "type":"list",
+      "member":{"shape":"GatewayResourceFailure"},
+      "max":200,
+      "min":0
+    },
+    "GatewayResources":{
+      "type":"structure",
+      "members":{
+        "gatewayArn":{"shape":"String"},
+        "resources":{"shape":"GatewayInfrastructureResources"}
+      }
+    },
+    "GatewayRoute":{
+      "type":"structure",
+      "members":{
+        "gatewayRouteArn":{"shape":"String"},
+        "serviceArn":{"shape":"String"},
+        "serviceContainerPortName":{"shape":"String"},
+        "status":{"shape":"GatewayRouteStatus"},
+        "serviceUrl":{"shape":"String"},
+        "resources":{"shape":"GatewayRouteResources"}
+      }
+    },
+    "GatewayRouteAlbResources":{
+      "type":"structure",
+      "members":{
+        "acmCertificateArn":{"shape":"String"},
+        "loadBalancerArn":{"shape":"String"},
+        "listenerArn":{"shape":"String"},
+        "listenerRuleArn":{"shape":"String"},
+        "testListenerRuleArns":{"shape":"StringList"},
+        "loadBalancerSecurityGroups":{"shape":"GatewayRouteLoadBalancerSecurityGroupList"},
+        "serviceSecurityGroupArn":{"shape":"String"}
+      }
+    },
+    "GatewayRouteAlbResourcesList":{
+      "type":"list",
+      "member":{"shape":"GatewayRouteAlbResources"}
+    },
+    "GatewayRouteLoadBalancerSecurityGroup":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"String"},
+        "ruleArns":{"shape":"StringList"}
+      }
+    },
+    "GatewayRouteLoadBalancerSecurityGroupList":{
+      "type":"list",
+      "member":{"shape":"GatewayRouteLoadBalancerSecurityGroup"}
+    },
+    "GatewayRouteResources":{
+      "type":"structure",
+      "members":{
+        "hostSharedAlb":{"shape":"GatewayRouteAlbResourcesList"}
+      },
+      "union":true
+    },
+    "GatewayRouteStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "CREATE_IN_PROGRESS",
+        "CREATE_FAILED",
+        "UPDATE_IN_PROGRESS",
+        "UPDATE_FAILED",
+        "DELETE_IN_PROGRESS",
+        "DELETE_FAILED"
+      ]
+    },
+    "GatewayRouteStatusList":{
+      "type":"list",
+      "member":{"shape":"GatewayRouteStatus"},
+      "max":7,
+      "min":0
+    },
+    "GatewayRouteSummary":{
+      "type":"structure",
+      "members":{
+        "gatewayRouteArn":{"shape":"String"},
+        "gatewayArn":{"shape":"String"},
+        "clusterArn":{"shape":"String"},
+        "serviceArn":{"shape":"String"},
+        "serviceContainerPortName":{"shape":"String"},
+        "status":{"shape":"GatewayRouteStatus"}
+      }
+    },
+    "GatewayRouteSummaryList":{
+      "type":"list",
+      "member":{"shape":"GatewayRouteSummary"}
+    },
+    "GatewayStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "UPDATE_IN_PROGRESS",
+        "UPDATE_COMPLETE",
+        "UPDATE_FAILED",
+        "DELETED"
+      ]
+    },
+    "GatewayStatusList":{
+      "type":"list",
+      "member":{"shape":"GatewayStatus"},
+      "max":5,
+      "min":0
+    },
+    "GatewaySummary":{
+      "type":"structure",
+      "members":{
+        "gatewayArn":{"shape":"String"},
+        "name":{"shape":"String"},
+        "status":{"shape":"GatewayStatus"},
+        "createdAt":{"shape":"Timestamp"}
+      }
+    },
+    "GatewaySummaryList":{
+      "type":"list",
+      "member":{"shape":"GatewaySummary"}
+    },
+    "GatewayTestTrafficHeader":{
+      "type":"structure",
+      "required":[
+        "name",
+        "values"
+      ],
+      "members":{
+        "name":{"shape":"String"},
+        "values":{"shape":"StringList"}
+      }
+    },
     "GetTaskProtectionRequest":{
       "type":"structure",
       "required":["cluster"],
@@ -3766,6 +4501,20 @@
     "HostEntryList":{
       "type":"list",
       "member":{"shape":"HostEntry"}
+    },
+    "HostSharedAlbConfiguration":{
+      "type":"structure",
+      "members":{
+        "networkConfiguration":{"shape":"GatewayElbNetworkConfiguration"},
+        "scheme":{"shape":"GatewayElbScheme"},
+        "webACLArn":{"shape":"String"},
+        "accessLogs":{"shape":"GatewayElbAccessLogConfiguration"},
+        "port":{"shape":"BoxedInteger"},
+        "protocol":{"shape":"GatewayAlbProtocol"},
+        "maxAlbCount":{"shape":"BoxedInteger"},
+        "httpDesync":{"shape":"GatewayAlbDesyncMitigationMode"},
+        "testTrafficRules":{"shape":"GatewayAlbTestTrafficRules"}
+      }
     },
     "HostVolumeProperties":{
       "type":"structure",
@@ -4134,6 +4883,58 @@
       "type":"structure",
       "members":{
         "daemonSummariesList":{"shape":"DaemonSummariesList"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListGatewayClusterAssociationsRequest":{
+      "type":"structure",
+      "members":{
+        "gateway":{"shape":"String"},
+        "cluster":{"shape":"String"},
+        "status":{"shape":"GatewayClusterAssociationStatusList"},
+        "maxResults":{"shape":"BoxedInteger"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListGatewayClusterAssociationsResponse":{
+      "type":"structure",
+      "members":{
+        "gatewayClusterAssociations":{"shape":"GatewayClusterAssociationSummaryList"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListGatewayRoutesRequest":{
+      "type":"structure",
+      "members":{
+        "gateway":{"shape":"String"},
+        "cluster":{"shape":"String"},
+        "service":{"shape":"String"},
+        "serviceContainerPortName":{"shape":"String"},
+        "status":{"shape":"GatewayRouteStatusList"},
+        "maxResults":{"shape":"BoxedInteger"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListGatewayRoutesResponse":{
+      "type":"structure",
+      "members":{
+        "gatewayRoutes":{"shape":"GatewayRouteSummaryList"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListGatewaysRequest":{
+      "type":"structure",
+      "members":{
+        "names":{"shape":"StringList"},
+        "status":{"shape":"GatewayStatusList"},
+        "maxResults":{"shape":"BoxedInteger"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListGatewaysResponse":{
+      "type":"structure",
+      "members":{
+        "gateways":{"shape":"GatewaySummaryList"},
         "nextToken":{"shape":"String"}
       }
     },
@@ -4922,6 +5723,13 @@
       "max":65535,
       "min":0
     },
+    "PropagateGatewayTags":{
+      "type":"string",
+      "enum":[
+        "NONE",
+        "GATEWAY"
+      ]
+    },
     "PropagateMITags":{
       "type":"string",
       "enum":[
@@ -5700,6 +6508,7 @@
         "resolvedConfiguration":{"shape":"ResolvedConfiguration"},
         "ecsManagedResources":{"shape":"ECSManagedResources"},
         "overrides":{"shape":"ServiceRevisionOverrides"},
+        "gatewayConnectors":{"shape":"GatewayConnectorList"},
         "monitoring":{"shape":"MonitoringConfiguration"}
       }
     },
@@ -6551,6 +7360,49 @@
         "service":{"shape":"UpdatedExpressGatewayService"}
       }
     },
+    "UpdateGatewayAlbConfiguration":{
+      "type":"structure",
+      "members":{
+        "networkConfiguration":{"shape":"UpdateGatewayNetworkConfiguration"},
+        "maxAlbCount":{"shape":"BoxedInteger"},
+        "webACLArn":{"shape":"String"},
+        "accessLogs":{"shape":"GatewayElbAccessLogConfiguration"},
+        "httpDesync":{"shape":"GatewayAlbDesyncMitigationMode"},
+        "testTrafficRules":{"shape":"GatewayAlbTestTrafficRules"}
+      }
+    },
+    "UpdateGatewayConfiguration":{
+      "type":"structure",
+      "members":{
+        "hostSharedAlb":{"shape":"UpdateGatewayAlbConfiguration"}
+      },
+      "union":true
+    },
+    "UpdateGatewayNetworkConfiguration":{
+      "type":"structure",
+      "members":{
+        "inboundSecurityGroup":{"shape":"String"}
+      }
+    },
+    "UpdateGatewayRequest":{
+      "type":"structure",
+      "required":["gateway"],
+      "members":{
+        "gateway":{"shape":"String"},
+        "infrastructureRoleArn":{"shape":"String"},
+        "deletionProtection":{"shape":"BoxedBoolean"},
+        "configuration":{"shape":"UpdateGatewayConfiguration"},
+        "propagateTags":{"shape":"PropagateGatewayTags"}
+      }
+    },
+    "UpdateGatewayResponse":{
+      "type":"structure",
+      "members":{
+        "gatewayArn":{"shape":"String"},
+        "name":{"shape":"String"},
+        "status":{"shape":"GatewayStatus"}
+      }
+    },
     "UpdateInProgressException":{
       "type":"structure",
       "members":{
@@ -6617,6 +7469,7 @@
         "serviceConnectConfiguration":{"shape":"ServiceConnectConfiguration"},
         "volumeConfigurations":{"shape":"ServiceVolumeConfigurations"},
         "vpcLatticeConfigurations":{"shape":"VpcLatticeConfigurations"},
+        "gatewayConnectors":{"shape":"GatewayConnectorList"},
         "monitoring":{"shape":"MonitoringConfiguration"}
       }
     },

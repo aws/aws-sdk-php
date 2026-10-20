@@ -110,7 +110,14 @@
       "errors":[
         {"shape":"ReplicationGroupNotFoundFault"},
         {"shape":"InvalidReplicationGroupStateFault"},
-        {"shape":"ReplicationGroupNotUnderMigrationFault"}
+        {"shape":"ReplicationGroupNotUnderMigrationFault"},
+        {"shape":"InvalidCacheClusterStateFault"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InvalidParameterCombinationException"},
+        {"shape":"ServerlessCacheNotFoundFault"},
+        {"shape":"InvalidServerlessCacheStateFault"},
+        {"shape":"ServerlessCacheNotUnderMigrationFault"},
+        {"shape":"MigrationHealthFault"}
       ]
     },
     "CopyServerlessCacheSnapshot":{
@@ -1305,6 +1312,24 @@
         {"shape":"InvalidParameterCombinationException"}
       ]
     },
+    "PrepareMigration":{
+      "name":"PrepareMigration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PrepareMigrationRequest"},
+      "output":{
+        "shape":"PrepareMigrationResponse",
+        "resultWrapper":"PrepareMigrationResult"
+      },
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ServerlessCacheNotFoundFault"},
+        {"shape":"InvalidServerlessCacheStateFault"},
+        {"shape":"ServerlessCacheAlreadyUnderMigrationFault"}
+      ]
+    },
     "PurchaseReservedCacheNodesOffering":{
       "name":"PurchaseReservedCacheNodesOffering",
       "http":{
@@ -1443,7 +1468,31 @@
         {"shape":"ReplicationGroupNotFoundFault"},
         {"shape":"InvalidReplicationGroupStateFault"},
         {"shape":"ReplicationGroupAlreadyUnderMigrationFault"},
-        {"shape":"InvalidParameterValueException"}
+        {"shape":"InvalidCacheClusterStateFault"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InvalidParameterCombinationException"},
+        {"shape":"ServerlessCacheNotFoundFault"},
+        {"shape":"InvalidServerlessCacheStateFault"},
+        {"shape":"ServerlessCacheNotUnderMigrationFault"},
+        {"shape":"MigrationHealthFault"}
+      ]
+    },
+    "StopMigration":{
+      "name":"StopMigration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StopMigrationRequest"},
+      "output":{
+        "shape":"StopMigrationResponse",
+        "resultWrapper":"StopMigrationResult"
+      },
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ServerlessCacheNotFoundFault"},
+        {"shape":"InvalidServerlessCacheStateFault"},
+        {"shape":"ServerlessCacheNotUnderMigrationFault"}
       ]
     },
     "TestFailover":{
@@ -1484,7 +1533,9 @@
         {"shape":"ReplicationGroupNotFoundFault"},
         {"shape":"InvalidReplicationGroupStateFault"},
         {"shape":"ReplicationGroupAlreadyUnderMigrationFault"},
-        {"shape":"InvalidParameterValueException"}
+        {"shape":"InvalidCacheClusterStateFault"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InvalidParameterCombinationException"}
       ]
     }
   },
@@ -2114,16 +2165,17 @@
     },
     "CompleteMigrationMessage":{
       "type":"structure",
-      "required":["ReplicationGroupId"],
       "members":{
         "ReplicationGroupId":{"shape":"String"},
+        "ServerlessCacheName":{"shape":"String"},
         "Force":{"shape":"Boolean"}
       }
     },
     "CompleteMigrationResponse":{
       "type":"structure",
       "members":{
-        "ReplicationGroup":{"shape":"ReplicationGroup"}
+        "ReplicationGroup":{"shape":"ReplicationGroup"},
+        "ServerlessCache":{"shape":"ServerlessCache"}
       }
     },
     "ConfigureShard":{
@@ -3516,6 +3568,24 @@
         "engine-log"
       ]
     },
+    "MigrationHealthFault":{
+      "type":"structure",
+      "members":{},
+      "error":{
+        "code":"MigrationHealthFault",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "MigrationSummary":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"String"},
+        "MigrationEndpoint":{"shape":"Endpoint"},
+        "CutoverMode":{"shape":"String"}
+      }
+    },
     "ModifyCacheClusterMessage":{
       "type":"structure",
       "required":["CacheClusterId"],
@@ -4038,6 +4108,25 @@
         "locationName":"PreferredOutpostArn"
       }
     },
+    "PrepareMigrationRequest":{
+      "type":"structure",
+      "required":[
+        "ServerlessCacheName",
+        "CustomerNodeEndpointList"
+      ],
+      "members":{
+        "ServerlessCacheName":{"shape":"String"},
+        "CustomerNodeEndpointList":{"shape":"CustomerNodeEndpointList"},
+        "SourceAuthenticationConfiguration":{"shape":"SourceAuthenticationConfiguration"},
+        "SourceTlsConfiguration":{"shape":"SourceTlsConfiguration"}
+      }
+    },
+    "PrepareMigrationResponse":{
+      "type":"structure",
+      "members":{
+        "ServerlessCache":{"shape":"ServerlessCache"}
+      }
+    },
     "ProcessedUpdateAction":{
       "type":"structure",
       "members":{
@@ -4438,6 +4527,12 @@
         "ScaleIntervalMinutes":{"shape":"IntegerOptional"}
       }
     },
+    "SecretManagerAuthConfig":{
+      "type":"structure",
+      "members":{
+        "SecretArn":{"shape":"String"}
+      }
+    },
     "SecurityGroupIdsList":{
       "type":"list",
       "member":{
@@ -4478,7 +4573,8 @@
         "SnapshotRetentionLimit":{"shape":"IntegerOptional"},
         "DailySnapshotTime":{"shape":"String"},
         "NetworkType":{"shape":"NetworkType"},
-        "ConnectionType":{"shape":"ConnectionType"}
+        "ConnectionType":{"shape":"ConnectionType"},
+        "Migration":{"shape":"MigrationSummary"}
       }
     },
     "ServerlessCacheAlreadyExistsFault":{
@@ -4486,6 +4582,16 @@
       "members":{},
       "error":{
         "code":"ServerlessCacheAlreadyExistsFault",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "ServerlessCacheAlreadyUnderMigrationFault":{
+      "type":"structure",
+      "members":{},
+      "error":{
+        "code":"ServerlessCacheAlreadyUnderMigrationFault",
         "httpStatusCode":400,
         "senderFault":true
       },
@@ -4509,6 +4615,16 @@
       "error":{
         "code":"ServerlessCacheNotFoundFault",
         "httpStatusCode":404,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "ServerlessCacheNotUnderMigrationFault":{
+      "type":"structure",
+      "members":{},
+      "error":{
+        "code":"ServerlessCacheNotUnderMigrationFault",
+        "httpStatusCode":400,
         "senderFault":true
       },
       "exception":true
@@ -4754,6 +4870,19 @@
       },
       "exception":true
     },
+    "SourceAuthenticationConfiguration":{
+      "type":"structure",
+      "members":{
+        "SecretManagerConfig":{"shape":"SecretManagerAuthConfig"}
+      }
+    },
+    "SourceTlsConfiguration":{
+      "type":"structure",
+      "members":{
+        "SourceTlsMode":{"shape":"TlsMode"},
+        "SourceTlsCertificate":{"shape":"String"}
+      }
+    },
     "SourceType":{
       "type":"string",
       "enum":[
@@ -4770,19 +4899,32 @@
     },
     "StartMigrationMessage":{
       "type":"structure",
-      "required":[
-        "ReplicationGroupId",
-        "CustomerNodeEndpointList"
-      ],
       "members":{
+        "ServerlessCacheName":{"shape":"String"},
         "ReplicationGroupId":{"shape":"String"},
-        "CustomerNodeEndpointList":{"shape":"CustomerNodeEndpointList"}
+        "CustomerNodeEndpointList":{"shape":"CustomerNodeEndpointList"},
+        "AutoCutover":{"shape":"BooleanOptional"},
+        "ClearTargetCacheData":{"shape":"BooleanOptional"}
       }
     },
     "StartMigrationResponse":{
       "type":"structure",
       "members":{
-        "ReplicationGroup":{"shape":"ReplicationGroup"}
+        "ReplicationGroup":{"shape":"ReplicationGroup"},
+        "ServerlessCache":{"shape":"ServerlessCache"}
+      }
+    },
+    "StopMigrationRequest":{
+      "type":"structure",
+      "required":["ServerlessCacheName"],
+      "members":{
+        "ServerlessCacheName":{"shape":"String"}
+      }
+    },
+    "StopMigrationResponse":{
+      "type":"structure",
+      "members":{
+        "ServerlessCache":{"shape":"ServerlessCache"}
       }
     },
     "StorageEncryptionType":{
@@ -4941,6 +5083,13 @@
         "StartTime":{"shape":"TStamp"},
         "EndTime":{"shape":"TStamp"}
       }
+    },
+    "TlsMode":{
+      "type":"string",
+      "enum":[
+        "none",
+        "verify-ca"
+      ]
     },
     "TransitEncryptionMode":{
       "type":"string",

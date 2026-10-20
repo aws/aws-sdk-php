@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Removes `Tnb` client, which is no longer in service.
+* `Aws\MarketplaceCatalog` - Adds ListEntities filter, sort, and summary support for the ExpressPrivateOfferConfiguration entity type, including filtering by ProductId.
+* `Aws\ElastiCache` - LiveMigration enables customers to migrate from self-hosted EC2 Redis and Valkey clusters to ElastiCache Serverless with near-zero downtime. Customers control the migration through three API-driven phases (prepare, start, complete) that handle traffic proxying, data replication, and cutover.
+* `Aws\WorkspacesInstances` - Documentation update release for AWS service
+* `Aws\CleanRooms` - This release allows customers and their partners to easily collaborate with data stored in Databricks, without having to move or share their underlying data among collaborators.
+* `Aws\S3Files` - S3 Files adds support for the "Misconfigured" file system status.
+* `Aws\ECS` - ECS Service Gateway makes it easier for developers to deploy ECS services without having to worry about complex ingress networking constructs.
+* `Aws\Bedrock` - Amazon Bedrock Guardrails now supports a configurable tier for the contextual grounding policy via a new tier option. Select the Standard tier for grounding that better supports conversations and reasoning, with expanded language coverage.
+* `Aws\DynamoDB` - Adds support for disassociating a replica from an Amazon DynamoDB multi-Region eventual consistency global table, so you can keep it as a single-Region table with its existing data. Also adds disassociation protection, on by default, to help prevent accidental disassociation.
+* `Aws\CloudWatch` - Amazon CloudWatch now supports two new anomaly detector settings. AdaptationSpeed (FAST, NORMAL, SLOW) controls how fast the model adapts to baseline changes, and OutlierFilteringStrength (MINIMAL, MODERATE, STRICT) controls how aggressively outliers are filtered.
+* `Aws\RDS` - Amazon RDS now supports On-Demand Capacity Reservations for DB instances.
+* `Aws\CloudWatchOmni` - Updating max value for maxResults in SearchPrincipals API
+
 ## 3.401.3 - 2026-10-19
 
 * `Aws\EndpointV2` - `EndpointDefinitionProvider` now rejects service names and api versions that are not a single safe path segment, preventing path traversal through the `version` or `service` client options.

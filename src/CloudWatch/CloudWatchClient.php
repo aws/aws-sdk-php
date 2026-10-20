@@ -396,7 +396,13 @@ use Aws\AwsClient;
  *     MetricName?: string,
  *     Dimensions?: list<array{Name?: string, Value?: string, ...}>,
  *     Stat?: string,
- *     Configuration?: array{ExcludedTimeRanges?: list<array>, MetricTimezone?: string, ...},
+ *     Configuration?: array{
+ *         ExcludedTimeRanges?: list<array>,
+ *         MetricTimezone?: string,
+ *         AdaptationSpeed?: 'FAST'|'NORMAL'|'SLOW',
+ *         OutlierFilteringStrength?: 'MINIMAL'|'MODERATE'|'STRICT',
+ *         ...,
+ *     },
  *     MetricCharacteristics?: array{PeriodicSpikes?: bool, ...},
  *     SingleMetricAnomalyDetector?: array{
  *         AccountId?: string,
@@ -415,7 +421,13 @@ use Aws\AwsClient;
  *     MetricName?: string,
  *     Dimensions?: list<array{Name?: string, Value?: string, ...}>,
  *     Stat?: string,
- *     Configuration?: array{ExcludedTimeRanges?: list<array>, MetricTimezone?: string, ...},
+ *     Configuration?: array{
+ *         ExcludedTimeRanges?: list<array>,
+ *         MetricTimezone?: string,
+ *         AdaptationSpeed?: 'FAST'|'NORMAL'|'SLOW',
+ *         OutlierFilteringStrength?: 'MINIMAL'|'MODERATE'|'STRICT',
+ *         ...,
+ *     },
  *     MetricCharacteristics?: array{PeriodicSpikes?: bool, ...},
  *     SingleMetricAnomalyDetector?: array{
  *         AccountId?: string,

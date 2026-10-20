@@ -1018,7 +1018,8 @@
         "OfferSummary":{"shape":"OfferSummary"},
         "ResaleAuthorizationSummary":{"shape":"ResaleAuthorizationSummary"},
         "MachineLearningProductSummary":{"shape":"MachineLearningProductSummary"},
-        "OfferSetSummary":{"shape":"OfferSetSummary"}
+        "OfferSetSummary":{"shape":"OfferSetSummary"},
+        "ExpressPrivateOfferConfigurationSummary":{"shape":"ExpressPrivateOfferConfigurationSummary"}
       }
     },
     "EntitySummaryList":{
@@ -1041,7 +1042,8 @@
         "ContainerProductFilters":{"shape":"ContainerProductFilters"},
         "ResaleAuthorizationFilters":{"shape":"ResaleAuthorizationFilters"},
         "MachineLearningProductFilters":{"shape":"MachineLearningProductFilters"},
-        "OfferSetFilters":{"shape":"OfferSetFilters"}
+        "OfferSetFilters":{"shape":"OfferSetFilters"},
+        "ExpressPrivateOfferConfigurationFilters":{"shape":"ExpressPrivateOfferConfigurationFilters"}
       },
       "union":true
     },
@@ -1055,7 +1057,8 @@
         "ContainerProductSort":{"shape":"ContainerProductSort"},
         "ResaleAuthorizationSort":{"shape":"ResaleAuthorizationSort"},
         "MachineLearningProductSort":{"shape":"MachineLearningProductSort"},
-        "OfferSetSort":{"shape":"OfferSetSort"}
+        "OfferSetSort":{"shape":"OfferSetSort"},
+        "ExpressPrivateOfferConfigurationSort":{"shape":"ExpressPrivateOfferConfigurationSort"}
       },
       "union":true
     },
@@ -1108,6 +1111,92 @@
       "max":2048,
       "min":1,
       "pattern":"^(.)+$"
+    },
+    "ExpressPrivateOfferConfigurationEntityIdFilter":{
+      "type":"structure",
+      "members":{
+        "ValueList":{"shape":"ExpressPrivateOfferConfigurationEntityIdFilterValueList"}
+      }
+    },
+    "ExpressPrivateOfferConfigurationEntityIdFilterValueList":{
+      "type":"list",
+      "member":{"shape":"ExpressPrivateOfferConfigurationEntityIdString"},
+      "max":10,
+      "min":1
+    },
+    "ExpressPrivateOfferConfigurationEntityIdString":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9][.a-zA-Z0-9/-]+[a-zA-Z0-9]$"
+    },
+    "ExpressPrivateOfferConfigurationFilters":{
+      "type":"structure",
+      "members":{
+        "EntityId":{"shape":"ExpressPrivateOfferConfigurationEntityIdFilter"},
+        "ProductId":{"shape":"ExpressPrivateOfferConfigurationProductIdFilter"},
+        "State":{"shape":"ExpressPrivateOfferConfigurationStateFilter"}
+      }
+    },
+    "ExpressPrivateOfferConfigurationProductIdFilter":{
+      "type":"structure",
+      "members":{
+        "ValueList":{"shape":"ExpressPrivateOfferConfigurationProductIdFilterValueList"}
+      }
+    },
+    "ExpressPrivateOfferConfigurationProductIdFilterValueList":{
+      "type":"list",
+      "member":{"shape":"ExpressPrivateOfferConfigurationProductIdString"},
+      "max":10,
+      "min":1
+    },
+    "ExpressPrivateOfferConfigurationProductIdString":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9][.a-zA-Z0-9/-]+[a-zA-Z0-9]$"
+    },
+    "ExpressPrivateOfferConfigurationSort":{
+      "type":"structure",
+      "members":{
+        "SortBy":{"shape":"ExpressPrivateOfferConfigurationSortBy"},
+        "SortOrder":{"shape":"SortOrder"}
+      }
+    },
+    "ExpressPrivateOfferConfigurationSortBy":{
+      "type":"string",
+      "enum":[
+        "EntityId",
+        "LastModifiedDate",
+        "ProductId",
+        "State"
+      ]
+    },
+    "ExpressPrivateOfferConfigurationStateFilter":{
+      "type":"structure",
+      "members":{
+        "ValueList":{"shape":"ExpressPrivateOfferConfigurationStateFilterValueList"}
+      }
+    },
+    "ExpressPrivateOfferConfigurationStateFilterValueList":{
+      "type":"list",
+      "member":{"shape":"ExpressPrivateOfferConfigurationStateString"},
+      "max":10,
+      "min":1
+    },
+    "ExpressPrivateOfferConfigurationStateString":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "INACTIVE"
+      ]
+    },
+    "ExpressPrivateOfferConfigurationSummary":{
+      "type":"structure",
+      "members":{
+        "ProductId":{"shape":"ExpressPrivateOfferConfigurationProductIdString"},
+        "State":{"shape":"ExpressPrivateOfferConfigurationStateString"}
+      }
     },
     "FailureCode":{
       "type":"string",

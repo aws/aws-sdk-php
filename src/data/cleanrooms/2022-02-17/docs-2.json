@@ -1882,6 +1882,44 @@
         "CreateCollaborationInput$dataEncryptionMetadata": "<p>The settings for client-side encryption with Cryptographic Computing for Clean Rooms.</p>"
       }
     },
+    "DatabricksConnectionType": {
+      "base": "<p>Type of the connector to be used for connecting to Databricks. Supported connector: Delta Sharing</p>",
+      "refs": {
+        "DatabricksTableReference$connectionType": "<p>Type of the connector to be used for connecting to Databricks. Supported connector: Delta Sharing</p>"
+      }
+    },
+    "DatabricksDeltaSharingConnection": {
+      "base": "<p>Details about Delta Sharing Connector for Databricks</p>",
+      "refs": {
+        "DatabricksConnectionType$deltaSharing": "<p>Details about Connector for Databricks</p>"
+      }
+    },
+    "DatabricksEndpointUrl": {
+      "base": null,
+      "refs": {
+        "DatabricksDeltaSharingConnection$deltaShareEndpoint": "<p>The base URL of a Delta Sharing server that hosts shared datasets.</p>"
+      }
+    },
+    "DatabricksObject": {
+      "base": null,
+      "refs": {
+        "DatabricksDeltaSharingConnection$shareName": "<p>Name of the Share used for OpenSharing (Delta Sharing) the Databricks Table.</p>",
+        "DatabricksTableReference$schemaName": "<p>Name of the Schema within Databricks.</p>",
+        "DatabricksTableReference$tableName": "<p>Name of the Table within Databricks.</p>"
+      }
+    },
+    "DatabricksTableReference": {
+      "base": "<p> A reference to a table within Databricks.</p>",
+      "refs": {
+        "TableReference$databricks": "<p> If present, a reference to the Databricks table referred to by this table reference.</p>"
+      }
+    },
+    "DatabricksWorkspaceUrl": {
+      "base": null,
+      "refs": {
+        "DatabricksTableReference$workspaceUrl": "<p>URL for the Databricks Workspace.</p>"
+      }
+    },
     "DeleteAnalysisTemplateInput": {
       "base": null,
       "refs": {}
@@ -4650,6 +4688,13 @@
         "ConfiguredTable$tableReference": "<p>The table that this configured table represents.</p>",
         "CreateConfiguredTableInput$tableReference": "<p>A reference to the table being configured.</p>",
         "UpdateConfiguredTableInput$tableReference": null
+      }
+    },
+    "TableReferenceType": {
+      "base": null,
+      "refs": {
+        "ConfiguredTable$tableType": "<p>Type of the Configured Table DataSource, example: Glue, Snowflake, Athena, Databricks</p>",
+        "ConfiguredTableSummary$tableType": "<p>Type of the Configured Table DataSource, example: Glue, Snowflake, Athena, Databricks</p>"
       }
     },
     "TagKey": {

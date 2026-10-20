@@ -23,9 +23,9 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise batchStopUpdateActionAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise batchStopUpdateActionAsync(array{ReplicationGroupIds?: list<string>, CacheClusterIds?: list<string>, ServiceUpdateName?: string, ...} $args = [])
  * @method \Aws\Result completeMigration(array $args = [])
- * @phpstan-method \Aws\Result completeMigration(array{ReplicationGroupId?: string, Force?: bool, ...} $args = [])
+ * @phpstan-method \Aws\Result completeMigration(array{ReplicationGroupId?: string, ServerlessCacheName?: string, Force?: bool, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise completeMigrationAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise completeMigrationAsync(array{ReplicationGroupId?: string, Force?: bool, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise completeMigrationAsync(array{ReplicationGroupId?: string, ServerlessCacheName?: string, Force?: bool, ...} $args = [])
  * @method \Aws\Result copyServerlessCacheSnapshot(array $args = [])
  * @phpstan-method \Aws\Result copyServerlessCacheSnapshot(array{
  *     SourceServerlessCacheSnapshotName?: string,
@@ -1128,6 +1128,22 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result modifyUserGroup(array{UserGroupId?: string, UserIdsToAdd?: list<string>, UserIdsToRemove?: list<string>, Engine?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise modifyUserGroupAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise modifyUserGroupAsync(array{UserGroupId?: string, UserIdsToAdd?: list<string>, UserIdsToRemove?: list<string>, Engine?: string, ...} $args = [])
+ * @method \Aws\Result prepareMigration(array $args = [])
+ * @phpstan-method \Aws\Result prepareMigration(array{
+ *     ServerlessCacheName?: string,
+ *     CustomerNodeEndpointList?: list<array{Address?: string, Port?: int, ...}>,
+ *     SourceAuthenticationConfiguration?: array{SecretManagerConfig?: array{SecretArn?: string, ...}, ...},
+ *     SourceTlsConfiguration?: array{SourceTlsMode?: 'none'|'verify-ca', SourceTlsCertificate?: string, ...},
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise prepareMigrationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise prepareMigrationAsync(array{
+ *     ServerlessCacheName?: string,
+ *     CustomerNodeEndpointList?: list<array{Address?: string, Port?: int, ...}>,
+ *     SourceAuthenticationConfiguration?: array{SecretManagerConfig?: array{SecretArn?: string, ...}, ...},
+ *     SourceTlsConfiguration?: array{SourceTlsMode?: 'none'|'verify-ca', SourceTlsCertificate?: string, ...},
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result purchaseReservedCacheNodesOffering(array $args = [])
  * @phpstan-method \Aws\Result purchaseReservedCacheNodesOffering(array{
  *     ReservedCacheNodesOfferingId?: string,
@@ -1176,16 +1192,26 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise revokeCacheSecurityGroupIngressAsync(array{CacheSecurityGroupName?: string, EC2SecurityGroupName?: string, EC2SecurityGroupOwnerId?: string, ...} $args = [])
  * @method \Aws\Result startMigration(array $args = [])
  * @phpstan-method \Aws\Result startMigration(array{
+ *     ServerlessCacheName?: string,
  *     ReplicationGroupId?: string,
  *     CustomerNodeEndpointList?: list<array{Address?: string, Port?: int, ...}>,
+ *     AutoCutover?: bool,
+ *     ClearTargetCacheData?: bool,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise startMigrationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise startMigrationAsync(array{
+ *     ServerlessCacheName?: string,
  *     ReplicationGroupId?: string,
  *     CustomerNodeEndpointList?: list<array{Address?: string, Port?: int, ...}>,
+ *     AutoCutover?: bool,
+ *     ClearTargetCacheData?: bool,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result stopMigration(array $args = [])
+ * @phpstan-method \Aws\Result stopMigration(array{ServerlessCacheName?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise stopMigrationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise stopMigrationAsync(array{ServerlessCacheName?: string, ...} $args = [])
  * @method \Aws\Result testFailover(array $args = [])
  * @phpstan-method \Aws\Result testFailover(array{ReplicationGroupId?: string, NodeGroupId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise testFailoverAsync(array $args = [])

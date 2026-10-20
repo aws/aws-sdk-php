@@ -110,6 +110,39 @@
         "title": "To authorize DB security group integress"
       }
     ],
+    "CancelDBCapacityReservation": [
+      {
+        "input": {
+          "DBCapacityReservationIdentifier": "dbcr-7hqk2m9xv4t1bn6cz3ws8dj5fp0gyr2a"
+        },
+        "output": {
+          "DBCapacityReservation": {
+            "AvailableCapacityPerAvailabilityZoneList": [
+              {
+                "AvailabilityZone": "us-east-1a",
+                "AvailableCapacity": 0
+              },
+              {
+                "AvailabilityZone": "us-east-1b",
+                "AvailableCapacity": 0
+              }
+            ],
+            "CreateDate": "2026-09-10T18:22:41.612Z",
+            "DBCapacityReservationArn": "arn:aws:rds:us-east-1:123456789012:db-capacity-reservation:dbcr-7hqk2m9xv4t1bn6cz3ws8dj5fp0gyr2a",
+            "DBCapacityReservationIdentifier": "dbcr-7hqk2m9xv4t1bn6cz3ws8dj5fp0gyr2a",
+            "DBCapacityReservationName": "my-mysql-reservation",
+            "DBInstanceClass": "db.m5.large",
+            "Engine": "mysql",
+            "ReservedCapacityPerAvailabilityZone": 2,
+            "State": "cancelled",
+            "TagList": []
+          }
+        },
+        "description": "The following example cancels the specified DB capacity reservation. Amazon RDS releases the reserved capacity. A DB instance that uses the reservation keeps running on unreserved capacity.",
+        "id": "example-1",
+        "title": "To cancel a DB capacity reservation"
+      }
+    ],
     "CancelExportTask": [
       {
         "input": {
@@ -391,6 +424,46 @@
         "description": "The following example creates a blue/green deployment for an Aurora MySQL DB cluster.",
         "id": "example-2",
         "title": "To create a blue/green deployment for an Aurora MySQL DB cluster"
+      }
+    ],
+    "CreateDBCapacityReservation": [
+      {
+        "input": {
+          "AvailabilityZones": [
+            "us-east-1a",
+            "us-east-1b"
+          ],
+          "CapacityPerAvailabilityZone": 2,
+          "DBCapacityReservationName": "my-mysql-reservation",
+          "DBInstanceClass": "db.m5.large",
+          "Engine": "mysql"
+        },
+        "output": {
+          "DBCapacityReservation": {
+            "AvailableCapacityPerAvailabilityZoneList": [
+              {
+                "AvailabilityZone": "us-east-1a",
+                "AvailableCapacity": 2
+              },
+              {
+                "AvailabilityZone": "us-east-1b",
+                "AvailableCapacity": 2
+              }
+            ],
+            "CreateDate": "2026-09-10T18:22:41.612Z",
+            "DBCapacityReservationArn": "arn:aws:rds:us-east-1:123456789012:db-capacity-reservation:dbcr-7hqk2m9xv4t1bn6cz3ws8dj5fp0gyr2a",
+            "DBCapacityReservationIdentifier": "dbcr-7hqk2m9xv4t1bn6cz3ws8dj5fp0gyr2a",
+            "DBCapacityReservationName": "my-mysql-reservation",
+            "DBInstanceClass": "db.m5.large",
+            "Engine": "mysql",
+            "ReservedCapacityPerAvailabilityZone": 2,
+            "State": "active",
+            "TagList": []
+          }
+        },
+        "description": "The following example reserves capacity for two db.m5.large RDS for MySQL DB instances in each of two Availability Zones. Amazon RDS reserves the same capacity in every Availability Zone in the request. The total reserved capacity is four units. Four units serve four Single-AZ DB instances, or two Multi-AZ DB instances, because a Multi-AZ DB instance uses one unit in each of two Availability Zones.",
+        "id": "example-1",
+        "title": "To create a DB capacity reservation in two Availability Zones"
       }
     ],
     "CreateDBCluster": [
@@ -1845,6 +1918,84 @@
         "description": "The following example retrieves the details of the certificate associated with the user's default region.",
         "id": "example-1",
         "title": "To describe certificates"
+      }
+    ],
+    "DescribeDBCapacityReservations": [
+      {
+        "input": {
+          "DBCapacityReservationIdentifier": "dbcr-7hqk2m9xv4t1bn6cz3ws8dj5fp0gyr2a"
+        },
+        "output": {
+          "DBCapacityReservations": [
+            {
+              "AvailableCapacityPerAvailabilityZoneList": [
+                {
+                  "AvailabilityZone": "us-east-1a",
+                  "AvailableCapacity": 1
+                },
+                {
+                  "AvailabilityZone": "us-east-1b",
+                  "AvailableCapacity": 2
+                }
+              ],
+              "CreateDate": "2026-09-10T18:22:41.612Z",
+              "DBCapacityReservationArn": "arn:aws:rds:us-east-1:123456789012:db-capacity-reservation:dbcr-7hqk2m9xv4t1bn6cz3ws8dj5fp0gyr2a",
+              "DBCapacityReservationIdentifier": "dbcr-7hqk2m9xv4t1bn6cz3ws8dj5fp0gyr2a",
+              "DBCapacityReservationName": "my-mysql-reservation",
+              "DBInstanceClass": "db.m5.large",
+              "Engine": "mysql",
+              "ReservedCapacityPerAvailabilityZone": 2,
+              "State": "active",
+              "TagList": []
+            }
+          ]
+        },
+        "description": "The following example retrieves the details of the specified DB capacity reservation. The response reports the reserved capacity and the available capacity for each Availability Zone of the reservation.",
+        "id": "example-1",
+        "title": "To describe a DB capacity reservation"
+      },
+      {
+        "input": {
+          "Filters": [
+            {
+              "Name": "state",
+              "Values": [
+                "active"
+              ]
+            }
+          ],
+          "Marker": "eyJ2ZXJzaW9uIjoxLCJ0b2tlbkRldGFpbCI6IkFRSUNBSGhWdjlWNG1RM3JLY0xwWjh0Mlh5RjdiTjB3UmpTNXVF...",
+          "MaxRecords": 20
+        },
+        "output": {
+          "DBCapacityReservations": [
+            {
+              "AvailableCapacityPerAvailabilityZoneList": [
+                {
+                  "AvailabilityZone": "us-east-1c",
+                  "AvailableCapacity": 4
+                },
+                {
+                  "AvailabilityZone": "us-east-1d",
+                  "AvailableCapacity": 4
+                }
+              ],
+              "CreateDate": "2026-09-08T11:04:07.335Z",
+              "DBCapacityReservationArn": "arn:aws:rds:us-east-1:123456789012:db-capacity-reservation:dbcr-3npv8ck1zt6wq9db4mhx2js7fr5gy0ea",
+              "DBCapacityReservationIdentifier": "dbcr-3npv8ck1zt6wq9db4mhx2js7fr5gy0ea",
+              "DBCapacityReservationName": "my-postgres-reservation",
+              "DBInstanceClass": "db.r6g.xlarge",
+              "Engine": "postgres",
+              "ReservedCapacityPerAvailabilityZone": 4,
+              "State": "active",
+              "TagList": []
+            }
+          ],
+          "Marker": "eyJ2ZXJzaW9uIjoxLCJ0b2tlbkRldGFpbCI6IkFRSUNBSGkyWnBRN25SeERrVDN2WWJHY0w5c1dtRTB1SmZIYU41..."
+        },
+        "description": "The following example lists the active DB capacity reservations for the AWS account, 20 records at a time. The Marker value comes from the response of the previous DescribeDBCapacityReservations request. Omit Marker for the first request. A Marker is an opaque token. Pass it back without any change, and don't parse it or build one yourself. A Marker expires 24 hours after Amazon RDS issues it. The Marker values in this example are shortened for readability.",
+        "id": "example-2",
+        "title": "To list DB capacity reservations one page at a time"
       }
     ],
     "DescribeDBClusterBacktracks": [
@@ -3382,6 +3533,19 @@
         "description": "The following example scales the capacity of an Aurora Serverless DB cluster to 8.",
         "id": "example-1",
         "title": "To scale the capacity of an Aurora Serverless DB cluster"
+      }
+    ],
+    "ModifyDBCapacityReservation": [
+      {
+        "input": {
+          "CapacityPerAvailabilityZone": 3,
+          "DBCapacityReservationIdentifier": "dbcr-7hqk2m9xv4t1bn6cz3ws8dj5fp0gyr2a",
+          "EndDate": "2026-12-31T23:59:59Z",
+          "EndDateType": "limited"
+        },
+        "description": "The following example raises the reserved capacity to three DB instances in each Availability Zone of the reservation, and it sets an end date. Set EndDateType to limited to give the reservation an end date. Set EndDateType to unlimited to remove the end date, and specify no EndDate. Amazon RDS applies the modification asynchronously, and it moves the reservation to the pending state. Call DescribeDBCapacityReservations to check when the reservation returns to the active state with the new capacity.",
+        "id": "example-1",
+        "title": "To change the capacity and the end date of a DB capacity reservation"
       }
     ],
     "ModifyDBCluster": [

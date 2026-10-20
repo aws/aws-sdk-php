@@ -3681,6 +3681,7 @@
         "name":{"shape":"DisplayName"},
         "description":{"shape":"TableDescription"},
         "tableReference":{"shape":"TableReference"},
+        "tableType":{"shape":"TableReferenceType"},
         "createTime":{"shape":"Timestamp"},
         "updateTime":{"shape":"Timestamp"},
         "analysisRuleTypes":{"shape":"ConfiguredTableAnalysisRuleTypeList"},
@@ -3910,6 +3911,7 @@
         "id":{"shape":"ConfiguredTableIdentifier"},
         "arn":{"shape":"ConfiguredTableArn"},
         "name":{"shape":"DisplayName"},
+        "tableType":{"shape":"TableReferenceType"},
         "createTime":{"shape":"Timestamp"},
         "updateTime":{"shape":"Timestamp"},
         "analysisRuleTypes":{"shape":"ConfiguredTableAnalysisRuleTypeList"},
@@ -4447,6 +4449,57 @@
         "allowJoinsOnColumnsWithDifferentNames":{"shape":"Boolean"},
         "preserveNulls":{"shape":"Boolean"}
       }
+    },
+    "DatabricksConnectionType":{
+      "type":"structure",
+      "members":{
+        "deltaSharing":{"shape":"DatabricksDeltaSharingConnection"}
+      },
+      "union":true
+    },
+    "DatabricksDeltaSharingConnection":{
+      "type":"structure",
+      "required":[
+        "deltaShareEndpoint",
+        "shareName"
+      ],
+      "members":{
+        "deltaShareEndpoint":{"shape":"DatabricksEndpointUrl"},
+        "shareName":{"shape":"DatabricksObject"}
+      }
+    },
+    "DatabricksEndpointUrl":{
+      "type":"string",
+      "max":1024,
+      "min":10,
+      "pattern":"https://(?:[a-zA-Z0-9.-]+\\.cloud\\.databricks\\.com/api/2\\.0/delta-sharing|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\\.opensharing\\.[a-z0-9-]+\\.cloud\\.databricks\\.com/api/2\\.0/opensharing)/metastores/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/recipients/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+    },
+    "DatabricksObject":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[\\p{L}\\p{M}\\p{N}\\p{Pc}\\p{Pd}]+"
+    },
+    "DatabricksTableReference":{
+      "type":"structure",
+      "required":[
+        "schemaName",
+        "tableName",
+        "workspaceUrl",
+        "connectionType"
+      ],
+      "members":{
+        "schemaName":{"shape":"DatabricksObject"},
+        "tableName":{"shape":"DatabricksObject"},
+        "workspaceUrl":{"shape":"DatabricksWorkspaceUrl"},
+        "connectionType":{"shape":"DatabricksConnectionType"}
+      }
+    },
+    "DatabricksWorkspaceUrl":{
+      "type":"string",
+      "max":256,
+      "min":10,
+      "pattern":"https://[a-zA-Z0-9.-]+\\.cloud\\.databricks\\.com/?"
     },
     "DeleteAnalysisTemplateInput":{
       "type":"structure",
@@ -8920,9 +8973,19 @@
       "members":{
         "glue":{"shape":"GlueTableReference"},
         "snowflake":{"shape":"SnowflakeTableReference"},
-        "athena":{"shape":"AthenaTableReference"}
+        "athena":{"shape":"AthenaTableReference"},
+        "databricks":{"shape":"DatabricksTableReference"}
       },
       "union":true
+    },
+    "TableReferenceType":{
+      "type":"string",
+      "enum":[
+        "GLUE",
+        "SNOWFLAKE",
+        "ATHENA",
+        "DATABRICKS"
+      ]
     },
     "TagKey":{
       "type":"string",

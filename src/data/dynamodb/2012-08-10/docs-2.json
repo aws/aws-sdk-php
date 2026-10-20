@@ -57,7 +57,7 @@
     "UpdateGlobalTableSettings": "<p>Updates settings for a global table.</p> <important> <p>This documentation is for version 2017.11.29 (Legacy) of global tables, which should be avoided for new global tables. Customers should use <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html\">Global Tables version 2019.11.21 (Current)</a> when possible, because it provides greater flexibility, higher efficiency, and consumes less write capacity than 2017.11.29 (Legacy).</p> <p>To determine which version you're using, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.DetermineVersion.html\">Determining the global table version you are using</a>. To update existing global tables from version 2017.11.29 (Legacy) to version 2019.11.21 (Current), see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_upgrade.html\">Upgrading global tables</a>.</p> </important>",
     "UpdateItem": "<p>Edits an existing item's attributes, or adds a new item to the table if it does not already exist. You can put, delete, or add attribute values. You can also perform a conditional update on an existing item (insert a new attribute name-value pair if it doesn't exist, or replace an existing name-value pair if it has certain expected attribute values).</p> <p>You can also return the item's attribute values in the same <code>UpdateItem</code> operation using the <code>ReturnValues</code> parameter.</p>",
     "UpdateKinesisStreamingDestination": "<p>The command to update the Kinesis stream destination.</p>",
-    "UpdateTable": "<p>Modifies the provisioned throughput settings, global secondary indexes, or DynamoDB Streams settings for a given table.</p> <p>You can only perform one of the following operations at once:</p> <ul> <li> <p>Modify the provisioned throughput settings of the table.</p> </li> <li> <p>Remove a global secondary index from the table.</p> </li> <li> <p>Create a new global secondary index on the table. After the index begins backfilling, you can use <code>UpdateTable</code> to perform other operations.</p> </li> </ul> <p> <code>UpdateTable</code> is an asynchronous operation; while it's executing, the table status changes from <code>ACTIVE</code> to <code>UPDATING</code>. While it's <code>UPDATING</code>, you can't issue another <code>UpdateTable</code> request. When the table returns to the <code>ACTIVE</code> state, the <code>UpdateTable</code> operation is complete.</p>",
+    "UpdateTable": "<p>Modifies the provisioned throughput settings, global secondary indexes, DynamoDB Streams settings, or global table replica settings for a given table.</p> <p>You can only perform one of the following operations at once:</p> <ul> <li> <p>Modify the provisioned throughput settings of the table.</p> </li> <li> <p>Remove a global secondary index from the table.</p> </li> <li> <p>Create a new global secondary index on the table. After the index begins backfilling, you can use <code>UpdateTable</code> to perform other operations.</p> </li> <li> <p>Enable or disable disassociation protection for the local global table replica.</p> </li> <li> <p>Disassociate the local global table replica and keep it as a standalone regional table. The <code>Disassociate</code> action must be the only replica update in the request. If the request includes any other update, <code>UpdateTable</code> fails with a <code>ValidationException</code> and the disassociation does not start.</p> </li> </ul> <p> <code>UpdateTable</code> is an asynchronous operation; while it's executing, the table status changes from <code>ACTIVE</code> to <code>UPDATING</code>. While it's <code>UPDATING</code>, you can't issue another <code>UpdateTable</code> request. Use <code>DescribeTable</code> to monitor the table's status.</p> <p>To use this operation to disassociate a local replica, you must have the <code>dynamodb:UpdateTable</code> and <code>dynamodb:DisassociateTableReplica</code> IAM permissions on the local replica. Send disassociation and disassociation protection requests to the replica's Region using credentials for the account that owns the replica. For prerequisites and the procedure, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables-disassociate.html\">Disassociating a global table replica</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p> <p>To confirm successful disassociation, call <code>DescribeTable</code> in the replica's Region and verify that <code>TableStatus</code> is <code>ACTIVE</code> and <code>Replicas</code> is absent or empty. If <code>TableStatus</code> returns to <code>ACTIVE</code> but the response still includes a <code>Replicas</code> list, the disassociation did not complete. Check <code>ReplicaStatus</code> for a replication-permission or encryption-access problem, resolve it, and retry.</p>",
     "UpdateTableReplicaAutoScaling": "<p>Updates auto scaling settings on your global tables at once.</p>",
     "UpdateTimeToLive": "<p>The <code>UpdateTimeToLive</code> method enables or disables Time to Live (TTL) for the specified table. A successful <code>UpdateTimeToLive</code> call returns the current <code>TimeToLiveSpecification</code>. It can take up to one hour for the change to fully process. Any additional <code>UpdateTimeToLive</code> calls for the same table during this one hour duration result in a <code>ValidationException</code>. </p> <p>TTL compares the current time in epoch time format to the time stored in the TTL attribute of an item. If the epoch time value stored in the attribute is less than the current time, the item is marked as expired and subsequently deleted.</p> <note> <p> The epoch time format is the number of seconds elapsed since 12:00:00 AM January 1, 1970 UTC. </p> </note> <p>DynamoDB deletes expired items on a best-effort basis to ensure availability of throughput for other data operations. </p> <important> <p>DynamoDB typically deletes expired items within two days of expiration. The exact duration within which an item gets deleted after expiration is specific to the nature of the workload. Items that have expired and not been deleted will still show up in reads, queries, and scans.</p> </important> <p>As items are deleted, they are removed from any local secondary index and global secondary index immediately in the same eventually consistent way as a standard delete operation.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/TTL.html\">Time To Live</a> in the Amazon DynamoDB Developer Guide. </p>"
   },
@@ -990,6 +990,25 @@
         "KinesisDataStreamDestination$DestinationStatus": "<p>The current status of replication.</p>",
         "KinesisStreamingDestinationOutput$DestinationStatus": "<p>The current status of the replication.</p>",
         "UpdateKinesisStreamingDestinationOutput$DestinationStatus": "<p>The status of the attempt to update the Kinesis streaming destination output.</p>"
+      }
+    },
+    "DisassociateReplicationGroupMemberAction": {
+      "base": "<p>The parameters for disassociating the local replica from a global table using Version 2019.11.21 with multi-Region eventual consistency (MREC).</p> <p>After disassociation completes, the replica remains a standalone regional table that keeps its data, indexes, and table settings.</p> <p>For request requirements, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateTable.html\">UpdateTable</a>. For prerequisites, the protection update, and completion checks, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables-disassociate.html\">Disassociating a global table replica</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>",
+      "refs": {
+        "ReplicationGroupUpdate$Disassociate": "<p>The parameters for disassociating the local replica from the global table and retaining it as a standalone regional table.</p>"
+      }
+    },
+    "DisassociationMode": {
+      "base": "<p>Specifies how pending replication is handled before a replica is disassociated. <code>WAIT_FOR_REPLICATION</code> is the only supported value.</p>",
+      "refs": {
+        "DisassociateReplicationGroupMemberAction$DisassociationMode": "<p>The mode for handling pending replication before disassociation completes. You must specify <code>WAIT_FOR_REPLICATION</code>. For more information, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables-disassociate.html\">Disassociating a global table replica</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>"
+      }
+    },
+    "DisassociationProtectionEnabled": {
+      "base": "<p>Specifies whether a global table replica is protected from disassociation. While protection is enabled, <code>UpdateTable</code> rejects requests to disassociate the replica. Disassociation protection is enabled by default and is independent of deletion protection.</p>",
+      "refs": {
+        "TableDescription$DisassociationProtectionEnabled": "<p>Specifies whether disassociation protection is enabled (<code>true</code>) or disabled (<code>false</code>) for the local global table replica. Protection is enabled by default.</p>",
+        "UpdateTableInput$DisassociationProtectionEnabled": "<p>Specifies whether disassociation protection is enabled (<code>true</code>) or disabled (<code>false</code>) for the local replica of a multi-Region eventual consistency (MREC) global table using Version 2019.11.21.</p> <p>Disassociation protection is enabled by default. If you omit this parameter, the existing setting is unchanged. This setting is independent of <code>DeletionProtectionEnabled</code>.</p> <p>You can't combine this change with any other change in the same <code>UpdateTable</code> request.</p>"
       }
     },
     "DoubleObject": {
@@ -2374,6 +2393,7 @@
         "DeleteGlobalTableWitnessGroupMemberAction$RegionName": "<p>The witness Region name to be removed from the MRSC global table.</p>",
         "DeleteReplicaAction$RegionName": "<p>The Region of the replica to be removed.</p>",
         "DeleteReplicationGroupMemberAction$RegionName": "<p>The Region where the replica exists.</p>",
+        "DisassociateReplicationGroupMemberAction$RegionName": "<p>The Region of the replica to disassociate. Set this value to the Region where you send the <code>UpdateTable</code> request. You must use credentials for the account that owns the replica.</p>",
         "GlobalTableWitnessDescription$RegionName": "<p>The name of the Amazon Web Services Region that serves as a witness for the MRSC global table.</p>",
         "ListGlobalTablesInput$RegionName": "<p>Lists the global tables in a specific Region.</p>",
         "Replica$RegionName": "<p>The Region where the replica needs to be created.</p>",
@@ -2429,7 +2449,7 @@
       "base": null,
       "refs": {
         "GlobalTableDescription$ReplicationGroup": "<p>The Regions where the global table has replicas.</p>",
-        "TableDescription$Replicas": "<p>Represents replicas of the table.</p>"
+        "TableDescription$Replicas": "<p>Represents replicas of the table.</p> <p>After a successful disassociation, this list is absent or empty. To confirm disassociation, also verify that <code>TableStatus</code> is <code>ACTIVE</code>.</p>"
       }
     },
     "ReplicaGlobalSecondaryIndex": {
@@ -2578,7 +2598,7 @@
       "refs": {}
     },
     "ReplicationGroupUpdate": {
-      "base": "<p>Represents one of the following:</p> <ul> <li> <p>A new replica to be added to an existing regional table or global table. This request invokes the <code>CreateTableReplica</code> action in the destination Region.</p> </li> <li> <p>New parameters for an existing replica. This request invokes the <code>UpdateTable</code> action in the destination Region.</p> </li> <li> <p>An existing replica to be deleted. The request invokes the <code>DeleteTableReplica</code> action in the destination Region, deleting the replica and all if its items in the destination Region.</p> </li> </ul> <note> <p>When you manually remove a table or global table replica, you do not automatically remove any associated scalable targets, scaling policies, or CloudWatch alarms.</p> </note>",
+      "base": "<p>Represents one of the following:</p> <ul> <li> <p>A new replica to be added to an existing regional table or global table. This request invokes the <code>CreateTableReplica</code> action in the destination Region.</p> </li> <li> <p>New parameters for an existing replica. This request invokes the <code>UpdateTable</code> action in the destination Region.</p> </li> <li> <p>An existing replica to be deleted. The request invokes the <code>DeleteTableReplica</code> action in the destination Region, deleting the replica and all if its items in the destination Region.</p> </li> <li> <p>The local replica to be disassociated from a global table and retained as a standalone regional table.</p> </li> </ul> <p>Each <code>ReplicationGroupUpdate</code> contains exactly one action. A <code>Disassociate</code> action must be the only replica update in the request; including other updates causes the request to fail.</p> <note> <p>When you manually remove a table or global table replica, you do not automatically remove any associated scalable targets, scaling policies, or CloudWatch alarms.</p> </note>",
       "refs": {
         "ReplicationGroupUpdateList$member": null
       }
@@ -2586,7 +2606,7 @@
     "ReplicationGroupUpdateList": {
       "base": null,
       "refs": {
-        "UpdateTableInput$ReplicaUpdates": "<p>A list of replica update actions (create, delete, or update) for the table.</p>"
+        "UpdateTableInput$ReplicaUpdates": "<p>A list of replica update actions (create, delete, update, or disassociate) for the table.</p>"
       }
     },
     "RequestLimitExceeded": {

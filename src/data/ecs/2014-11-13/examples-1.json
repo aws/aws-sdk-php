@@ -1,6 +1,22 @@
 {
   "version": "1.0",
   "examples": {
+    "AssociateGatewayWithCluster": [
+      {
+        "input": {
+          "cluster": "my-cluster",
+          "gateway": "my-gateway"
+        },
+        "output": {
+          "clusterArn": "arn:aws:ecs:us-east-1:123456789012:cluster/my-cluster",
+          "gatewayArn": "arn:aws:ecs:us-east-1:123456789012:gateway/my-gateway/a1b2c3d4e5f6478890abcdef12345678",
+          "status": "ACTIVE"
+        },
+        "description": "This example associates the gateway named my-gateway with the cluster named my-cluster so that services in the cluster can use the gateway for ingress.",
+        "id": "example-1",
+        "title": "To associate a gateway with a cluster"
+      }
+    ],
     "ContinueServiceDeployment": [
       {
         "input": {
@@ -110,6 +126,45 @@
         "description": "This example creates a daemon named my-monitoring-daemon in the specified cluster that uses the monitoring-agent daemon task definition and deploys to the specified capacity provider.",
         "id": "example-1",
         "title": "To create a daemon"
+      }
+    ],
+    "CreateGateway": [
+      {
+        "input": {
+          "name": "my-gateway",
+          "configuration": {
+            "hostSharedAlb": {
+              "httpDesync": "defensive",
+              "maxAlbCount": 10,
+              "networkConfiguration": {
+                "ipAddressType": "ipv4",
+                "subnets": [
+                  "subnet-0123456789abcdef0",
+                  "subnet-0fedcba9876543210"
+                ]
+              },
+              "port": 443,
+              "protocol": "HTTPS",
+              "scheme": "internet-facing"
+            }
+          },
+          "infrastructureRoleArn": "arn:aws:iam::123456789012:role/ecsInfrastructureRole",
+          "propagateTags": "GATEWAY",
+          "tags": [
+            {
+              "key": "team",
+              "value": "web"
+            }
+          ]
+        },
+        "output": {
+          "name": "my-gateway",
+          "gatewayArn": "arn:aws:ecs:us-east-1:123456789012:gateway/my-gateway/a1b2c3d4e5f6478890abcdef12345678",
+          "status": "ACTIVE"
+        },
+        "description": "This example creates a gateway named my-gateway that uses internet-facing Application Load Balancers with host-based routing in the specified subnets.",
+        "id": "example-1",
+        "title": "To create a gateway"
       }
     ],
     "CreateService": [
@@ -517,6 +572,21 @@
         "description": "This example deletes the first revision of the monitoring-agent daemon task definition.",
         "id": "example-1",
         "title": "To delete a daemon task definition"
+      }
+    ],
+    "DeleteGateway": [
+      {
+        "input": {
+          "gateway": "my-gateway"
+        },
+        "output": {
+          "name": "my-gateway",
+          "gatewayArn": "arn:aws:ecs:us-east-1:123456789012:gateway/my-gateway/a1b2c3d4e5f6478890abcdef12345678",
+          "status": "DELETED"
+        },
+        "description": "This example deletes the gateway named my-gateway. Deletion protection must be disabled and the gateway must not be associated with any clusters.",
+        "id": "example-1",
+        "title": "To delete a gateway"
       }
     ],
     "DeleteService": [
@@ -1025,6 +1095,120 @@
         "title": "To describe a daemon task definition"
       }
     ],
+    "DescribeGateway": [
+      {
+        "input": {
+          "gateway": "my-gateway"
+        },
+        "output": {
+          "gateway": {
+            "name": "my-gateway",
+            "accessType": "PUBLIC",
+            "configuration": {
+              "hostSharedAlb": {
+                "currentAlbCount": 1,
+                "httpDesync": "defensive",
+                "maxAlbCount": 10,
+                "networkConfiguration": {
+                  "ipAddressType": "ipv4",
+                  "subnets": [
+                    "subnet-0123456789abcdef0",
+                    "subnet-0fedcba9876543210"
+                  ]
+                },
+                "port": 443,
+                "protocol": "HTTPS",
+                "scheme": "internet-facing"
+              }
+            },
+            "createdAt": "2026-10-20T12:00:00.000Z",
+            "deletionProtection": true,
+            "gatewayArn": "arn:aws:ecs:us-east-1:123456789012:gateway/my-gateway/a1b2c3d4e5f6478890abcdef12345678",
+            "infrastructureRoleArn": "arn:aws:iam::123456789012:role/ecsInfrastructureRole",
+            "propagateTags": "GATEWAY",
+            "status": "ACTIVE",
+            "tags": [
+              {
+                "key": "team",
+                "value": "web"
+              }
+            ],
+            "updatedAt": "2026-10-20T12:00:00.000Z"
+          }
+        },
+        "description": "This example describes the gateway named my-gateway.",
+        "id": "example-1",
+        "title": "To describe a gateway"
+      }
+    ],
+    "DescribeGatewayResources": [
+      {
+        "input": {
+          "gateway": "my-gateway"
+        },
+        "output": {
+          "gatewayResources": {
+            "gatewayArn": "arn:aws:ecs:us-east-1:123456789012:gateway/my-gateway/a1b2c3d4e5f6478890abcdef12345678",
+            "resources": {
+              "hostSharedAlb": [
+                {
+                  "gatewayRouteArns": [
+                    "arn:aws:ecs:us-east-1:123456789012:gateway-route/my-gateway/a1b2c3d4e5f6478890abcdef12345678/f0e1d2c3b4a5968778695a4b3c2d1e0f"
+                  ],
+                  "listenerArn": "arn:aws:elasticloadbalancing:us-east-1:123456789012:listener/app/ecs-gateway-alb-1/50dc6c495c0c9188/f2f7dc8efc522ab2",
+                  "loadBalancerArn": "arn:aws:elasticloadbalancing:us-east-1:123456789012:loadbalancer/app/ecs-gateway-alb-1/50dc6c495c0c9188",
+                  "securityGroup": "sg-0123456789abcdef0"
+                }
+              ]
+            }
+          }
+        },
+        "description": "This example returns the load balancers, listeners, and gateway routes that the gateway named my-gateway manages.",
+        "id": "example-1",
+        "title": "To describe the infrastructure that a gateway manages"
+      }
+    ],
+    "DescribeGatewayRoute": [
+      {
+        "input": {
+          "gatewayRouteArn": "arn:aws:ecs:us-east-1:123456789012:gateway-route/my-gateway/a1b2c3d4e5f6478890abcdef12345678/f0e1d2c3b4a5968778695a4b3c2d1e0f"
+        },
+        "output": {
+          "gatewayRoute": {
+            "gatewayRouteArn": "arn:aws:ecs:us-east-1:123456789012:gateway-route/my-gateway/a1b2c3d4e5f6478890abcdef12345678/f0e1d2c3b4a5968778695a4b3c2d1e0f",
+            "resources": {
+              "hostSharedAlb": [
+                {
+                  "acmCertificateArn": "arn:aws:acm:us-east-1:123456789012:certificate/12345678-90ab-cdef-1234-567890abcdef",
+                  "listenerArn": "arn:aws:elasticloadbalancing:us-east-1:123456789012:listener/app/ecs-gateway-alb-1/50dc6c495c0c9188/f2f7dc8efc522ab2",
+                  "listenerRuleArn": "arn:aws:elasticloadbalancing:us-east-1:123456789012:listener-rule/app/ecs-gateway-alb-1/50dc6c495c0c9188/f2f7dc8efc522ab2/9683b2d02a6cabee",
+                  "loadBalancerArn": "arn:aws:elasticloadbalancing:us-east-1:123456789012:loadbalancer/app/ecs-gateway-alb-1/50dc6c495c0c9188",
+                  "loadBalancerSecurityGroups": [
+                    {
+                      "arn": "arn:aws:ec2:us-east-1:123456789012:security-group/sg-0123456789abcdef0",
+                      "ruleArns": [
+                        "arn:aws:ec2:us-east-1:123456789012:security-group-rule/sgr-0123456789abcdef0"
+                      ]
+                    }
+                  ],
+                  "serviceSecurityGroupArn": "arn:aws:ec2:us-east-1:123456789012:security-group/sg-0fedcba9876543210",
+                  "testListenerRuleArns": [
+                    "arn:aws:elasticloadbalancing:us-east-1:123456789012:listener-rule/app/ecs-gateway-alb-1/50dc6c495c0c9188/f2f7dc8efc522ab2/9683b2d02a6cc1d2"
+                  ]
+                }
+              ]
+            },
+            "serviceArn": "arn:aws:ecs:us-east-1:123456789012:service/my-cluster/my-web-service",
+            "serviceContainerPortName": "web",
+            "serviceUrl": "https://my-web-service.example.com",
+            "status": "ACTIVE"
+          }
+        },
+        "description": "This example describes the specified gateway route, including the service URL and the load balancer resources that the gateway manages for the route.",
+        "id": "example-1",
+        "title": "To describe a gateway route"
+      }
+    ],
     "DescribeServiceDeployments": [
       {
         "input": {
@@ -1468,6 +1652,22 @@
         "title": "To describe a task"
       }
     ],
+    "DisassociateGatewayFromCluster": [
+      {
+        "input": {
+          "cluster": "my-cluster",
+          "gateway": "my-gateway"
+        },
+        "output": {
+          "clusterArn": "arn:aws:ecs:us-east-1:123456789012:cluster/my-cluster",
+          "gatewayArn": "arn:aws:ecs:us-east-1:123456789012:gateway/my-gateway/a1b2c3d4e5f6478890abcdef12345678",
+          "status": "DISASSOCIATING"
+        },
+        "description": "This example removes the association between the gateway named my-gateway and the cluster named my-cluster. The association remains in the DISASSOCIATING state until all gateway routes for the cluster are removed.",
+        "id": "example-1",
+        "title": "To disassociate a gateway from a cluster"
+      }
+    ],
     "ExecuteCommand": [
       {
         "input": {
@@ -1704,6 +1904,81 @@
         "description": "This example lists all daemons in the specified cluster.",
         "id": "example-1",
         "title": "To list daemons in a cluster"
+      }
+    ],
+    "ListGatewayClusterAssociations": [
+      {
+        "input": {
+          "gateway": "my-gateway"
+        },
+        "output": {
+          "gatewayClusterAssociations": [
+            {
+              "clusterArn": "arn:aws:ecs:us-east-1:123456789012:cluster/my-cluster",
+              "gatewayArn": "arn:aws:ecs:us-east-1:123456789012:gateway/my-gateway/a1b2c3d4e5f6478890abcdef12345678",
+              "status": "ACTIVE"
+            },
+            {
+              "clusterArn": "arn:aws:ecs:us-east-1:123456789012:cluster/my-staging-cluster",
+              "gatewayArn": "arn:aws:ecs:us-east-1:123456789012:gateway/my-gateway/a1b2c3d4e5f6478890abcdef12345678",
+              "status": "ACTIVE"
+            }
+          ]
+        },
+        "description": "This example lists the clusters that are associated with the gateway named my-gateway.",
+        "id": "example-1",
+        "title": "To list the clusters associated with a gateway"
+      }
+    ],
+    "ListGatewayRoutes": [
+      {
+        "input": {
+          "cluster": "my-cluster",
+          "gateway": "my-gateway"
+        },
+        "output": {
+          "gatewayRoutes": [
+            {
+              "clusterArn": "arn:aws:ecs:us-east-1:123456789012:cluster/my-cluster",
+              "gatewayArn": "arn:aws:ecs:us-east-1:123456789012:gateway/my-gateway/a1b2c3d4e5f6478890abcdef12345678",
+              "gatewayRouteArn": "arn:aws:ecs:us-east-1:123456789012:gateway-route/my-gateway/a1b2c3d4e5f6478890abcdef12345678/f0e1d2c3b4a5968778695a4b3c2d1e0f",
+              "serviceArn": "arn:aws:ecs:us-east-1:123456789012:service/my-cluster/my-web-service",
+              "serviceContainerPortName": "web",
+              "status": "ACTIVE"
+            }
+          ]
+        },
+        "description": "This example lists the gateway routes for the gateway named my-gateway in the cluster named my-cluster.",
+        "id": "example-1",
+        "title": "To list the gateway routes for a gateway"
+      }
+    ],
+    "ListGateways": [
+      {
+        "input": {
+          "status": [
+            "ACTIVE"
+          ]
+        },
+        "output": {
+          "gateways": [
+            {
+              "name": "my-gateway",
+              "createdAt": "2026-10-20T12:00:00.000Z",
+              "gatewayArn": "arn:aws:ecs:us-east-1:123456789012:gateway/my-gateway/a1b2c3d4e5f6478890abcdef12345678",
+              "status": "ACTIVE"
+            },
+            {
+              "name": "my-internal-gateway",
+              "createdAt": "2026-10-21T09:30:00.000Z",
+              "gatewayArn": "arn:aws:ecs:us-east-1:123456789012:gateway/my-internal-gateway/0f1e2d3c4b5a69788796a5b4c3d2e1f0",
+              "status": "ACTIVE"
+            }
+          ]
+        },
+        "description": "This example lists the gateways in your account that have a status of ACTIVE.",
+        "id": "example-1",
+        "title": "To list active gateways"
       }
     ],
     "ListServiceDeployments": [
@@ -2923,6 +3198,27 @@
         "description": "This example updates the my-monitoring-daemon daemon to use a new daemon task definition revision.",
         "id": "example-1",
         "title": "To update a daemon"
+      }
+    ],
+    "UpdateGateway": [
+      {
+        "input": {
+          "configuration": {
+            "hostSharedAlb": {
+              "httpDesync": "strictest",
+              "maxAlbCount": 20
+            }
+          },
+          "gateway": "my-gateway"
+        },
+        "output": {
+          "name": "my-gateway",
+          "gatewayArn": "arn:aws:ecs:us-east-1:123456789012:gateway/my-gateway/a1b2c3d4e5f6478890abcdef12345678",
+          "status": "UPDATE_IN_PROGRESS"
+        },
+        "description": "This example raises the maximum number of Application Load Balancers that the gateway named my-gateway manages, and changes the desync mitigation mode to strictest.",
+        "id": "example-1",
+        "title": "To update a gateway"
       }
     ],
     "UpdateService": [

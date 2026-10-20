@@ -2038,6 +2038,22 @@
         "UPDATING"
       ]
     },
+    "DisassociateReplicationGroupMemberAction":{
+      "type":"structure",
+      "required":[
+        "RegionName",
+        "DisassociationMode"
+      ],
+      "members":{
+        "RegionName":{"shape":"RegionName"},
+        "DisassociationMode":{"shape":"DisassociationMode"}
+      }
+    },
+    "DisassociationMode":{
+      "type":"string",
+      "enum":["WAIT_FOR_REPLICATION"]
+    },
+    "DisassociationProtectionEnabled":{"type":"boolean"},
     "DoubleObject":{"type":"double"},
     "DuplicateItemException":{
       "type":"structure",
@@ -3613,7 +3629,8 @@
       "members":{
         "Create":{"shape":"CreateReplicationGroupMemberAction"},
         "Update":{"shape":"UpdateReplicationGroupMemberAction"},
-        "Delete":{"shape":"DeleteReplicationGroupMemberAction"}
+        "Delete":{"shape":"DeleteReplicationGroupMemberAction"},
+        "Disassociate":{"shape":"DisassociateReplicationGroupMemberAction"}
       }
     },
     "ReplicationGroupUpdateList":{
@@ -4101,6 +4118,7 @@
         "ArchivalSummary":{"shape":"ArchivalSummary"},
         "TableClassSummary":{"shape":"TableClassSummary"},
         "DeletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"},
+        "DisassociationProtectionEnabled":{"shape":"DisassociationProtectionEnabled"},
         "OnDemandThroughput":{"shape":"OnDemandThroughput"},
         "WarmThroughput":{"shape":"TableWarmThroughputDescription"},
         "MultiRegionConsistency":{"shape":"MultiRegionConsistency"},
@@ -4570,6 +4588,7 @@
         "OnDemandThroughput":{"shape":"OnDemandThroughput"},
         "WarmThroughput":{"shape":"WarmThroughput"},
         "GlobalTableSettingsReplicationMode":{"shape":"GlobalTableSettingsReplicationMode"},
+        "DisassociationProtectionEnabled":{"shape":"DisassociationProtectionEnabled"},
         "VectorIndexUpdates":{"shape":"VectorIndexUpdateList"}
       }
     },

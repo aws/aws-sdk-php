@@ -140,6 +140,7 @@ use Aws\AwsClient;
  *             LastModifiedDate?: array,
  *             ...,
  *         },
+ *         ExpressPrivateOfferConfigurationFilters?: array{EntityId?: array, ProductId?: array, State?: array, ...},
  *         ...,
  *     },
  *     EntityTypeSort?: array{
@@ -183,6 +184,7 @@ use Aws\AwsClient;
  *             SortOrder?: 'ASCENDING'|'DESCENDING',
  *             ...,
  *         },
+ *         ExpressPrivateOfferConfigurationSort?: array{SortBy?: 'EntityId'|'LastModifiedDate'|'ProductId'|'State', SortOrder?: 'ASCENDING'|'DESCENDING', ...},
  *         ...,
  *     },
  *     ...,
@@ -248,6 +250,7 @@ use Aws\AwsClient;
  *             LastModifiedDate?: array,
  *             ...,
  *         },
+ *         ExpressPrivateOfferConfigurationFilters?: array{EntityId?: array, ProductId?: array, State?: array, ...},
  *         ...,
  *     },
  *     EntityTypeSort?: array{
@@ -291,6 +294,7 @@ use Aws\AwsClient;
  *             SortOrder?: 'ASCENDING'|'DESCENDING',
  *             ...,
  *         },
+ *         ExpressPrivateOfferConfigurationSort?: array{SortBy?: 'EntityId'|'LastModifiedDate'|'ProductId'|'State', SortOrder?: 'ASCENDING'|'DESCENDING', ...},
  *         ...,
  *     },
  *     ...,

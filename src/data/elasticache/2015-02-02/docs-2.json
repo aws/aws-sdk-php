@@ -6,7 +6,7 @@
     "AuthorizeCacheSecurityGroupIngress": "<p>Allows network ingress to a cache security group. Applications using ElastiCache must be running on Amazon EC2, and Amazon EC2 security groups are used as the authorization mechanism.</p> <note> <p>You cannot authorize ingress from an Amazon EC2 security group in one region to an ElastiCache cluster in another region.</p> </note>",
     "BatchApplyUpdateAction": "<p>Apply the service update. For more information on service updates and applying them, see <a href=\"https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/applying-updates.html\">Applying Service Updates</a>.</p>",
     "BatchStopUpdateAction": "<p>Stop the service update. For more information on service updates and stopping them, see <a href=\"https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/stopping-self-service-updates.html\">Stopping Service Updates</a>.</p>",
-    "CompleteMigration": "<p>Complete the migration of data.</p>",
+    "CompleteMigration": "<p>Completes the migration of data.</p>",
     "CopyServerlessCacheSnapshot": "<p>Creates a copy of an existing serverless cache’s snapshot. Available for Valkey, Redis OSS and Serverless Memcached only.</p>",
     "CopySnapshot": "<p>Makes a copy of an existing snapshot.</p> <note> <p>This operation is valid for Valkey or Redis OSS only.</p> </note> <important> <p>Users or groups that have permissions to use the <code>CopySnapshot</code> operation can create their own Amazon S3 buckets and copy snapshots to it. To control access to your snapshots, use an IAM policy to control who has the ability to use the <code>CopySnapshot</code> operation. For more information about using IAM to control the use of ElastiCache operations, see <a href=\"https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/backups-exporting.html\">Exporting Snapshots</a> and <a href=\"https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/IAM.html\">Authentication &amp; Access Control</a>.</p> </important> <p>You could receive the following error messages.</p> <p class=\"title\"> <b>Error Messages</b> </p> <ul> <li> <p> <b>Error Message:</b> The S3 bucket %s is outside of the region.</p> <p> <b>Solution:</b> Create an Amazon S3 bucket in the same region as your snapshot. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/backups-exporting.html#backups-exporting-create-s3-bucket\">Step 1: Create an Amazon S3 Bucket</a> in the ElastiCache User Guide.</p> </li> <li> <p> <b>Error Message:</b> The S3 bucket %s does not exist.</p> <p> <b>Solution:</b> Create an Amazon S3 bucket in the same region as your snapshot. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/backups-exporting.html#backups-exporting-create-s3-bucket\">Step 1: Create an Amazon S3 Bucket</a> in the ElastiCache User Guide.</p> </li> <li> <p> <b>Error Message:</b> The S3 bucket %s is not owned by the authenticated user.</p> <p> <b>Solution:</b> Create an Amazon S3 bucket in the same region as your snapshot. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/backups-exporting.html#backups-exporting-create-s3-bucket\">Step 1: Create an Amazon S3 Bucket</a> in the ElastiCache User Guide.</p> </li> <li> <p> <b>Error Message:</b> The authenticated user does not have sufficient permissions to perform the desired activity.</p> <p> <b>Solution:</b> Contact your system administrator to get the needed permissions.</p> </li> <li> <p> <b>Error Message:</b> The S3 bucket %s already contains an object with key %s.</p> <p> <b>Solution:</b> Give the <code>TargetSnapshotName</code> a new and unique value. If exporting a snapshot, you could alternatively create a new Amazon S3 bucket and use this same value for <code>TargetSnapshotName</code>.</p> </li> <li> <p> <b>Error Message: </b> ElastiCache has not been granted READ permissions %s on the S3 Bucket.</p> <p> <b>Solution:</b> Add List and Read permissions on the bucket. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/backups-exporting.html#backups-exporting-grant-access\">Step 2: Grant ElastiCache Access to Your Amazon S3 Bucket</a> in the ElastiCache User Guide.</p> </li> <li> <p> <b>Error Message: </b> ElastiCache has not been granted WRITE permissions %s on the S3 Bucket.</p> <p> <b>Solution:</b> Add Upload/Delete permissions on the bucket. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/backups-exporting.html#backups-exporting-grant-access\">Step 2: Grant ElastiCache Access to Your Amazon S3 Bucket</a> in the ElastiCache User Guide.</p> </li> <li> <p> <b>Error Message: </b> ElastiCache has not been granted READ_ACP permissions %s on the S3 Bucket.</p> <p> <b>Solution:</b> Add View Permissions on the bucket. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/backups-exporting.html#backups-exporting-grant-access\">Step 2: Grant ElastiCache Access to Your Amazon S3 Bucket</a> in the ElastiCache User Guide.</p> </li> </ul>",
     "CreateCacheCluster": "<p>Creates a cluster. All nodes in the cluster run the same protocol-compliant cache engine software, either Memcached, Valkey or Redis OSS.</p> <p>This operation is not supported for Valkey or Redis OSS (cluster mode enabled) clusters.</p>",
@@ -68,13 +68,15 @@
     "ModifyServerlessCache": "<p>This API modifies the attributes of a serverless cache.</p>",
     "ModifyUser": "<p>Changes user password(s) and/or access string.</p>",
     "ModifyUserGroup": "<p>Changes the list of users that belong to the user group.</p>",
+    "PrepareMigration": "<p>Prepares the serverless cache for data migration by validating the configuration and setting up the migration resources.</p>",
     "PurchaseReservedCacheNodesOffering": "<p>Allows you to purchase a reserved cache node offering. Reserved nodes are not eligible for cancellation and are non-refundable. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/reserved-nodes.html\">Managing Costs with Reserved Nodes</a>.</p>",
     "RebalanceSlotsInGlobalReplicationGroup": "<p>Redistribute slots to ensure uniform distribution across existing shards in the cluster.</p>",
     "RebootCacheCluster": "<p>Reboots some, or all, of the cache nodes within a provisioned cluster. This operation applies any modified cache parameter groups to the cluster. The reboot operation takes place as soon as possible, and results in a momentary outage to the cluster. During the reboot, the cluster status is set to REBOOTING.</p> <p>The reboot causes the contents of the cache (for each cache node being rebooted) to be lost.</p> <p>When the reboot is complete, a cluster event is created.</p> <p>Rebooting a cluster is currently supported on Memcached, Valkey and Redis OSS (cluster mode disabled) clusters. Rebooting is not supported on Valkey or Redis OSS (cluster mode enabled) clusters.</p> <p>If you make changes to parameters that require a Valkey or Redis OSS (cluster mode enabled) cluster reboot for the changes to be applied, see <a href=\"http://docs.aws.amazon.com/AmazonElastiCache/latest/dg/nodes.rebooting.html\">Rebooting a Cluster</a> for an alternate process.</p>",
     "RemoveTagsFromResource": "<p>Removes the tags identified by the <code>TagKeys</code> list from the named resource. A tag is a key-value pair where the key and value are case-sensitive. You can use tags to categorize and track all your ElastiCache resources. When you add or remove tags on replication groups, those actions will be replicated to all nodes in the replication group. For more information, see <a href=\"http://docs.aws.amazon.com/AmazonElastiCache/latest/dg/IAM.ResourceLevelPermissions.html\">Resource-level permissions</a>.</p>",
     "ResetCacheParameterGroup": "<p>Modifies the parameters of a cache parameter group to the engine or system default value. You can reset specific parameters by submitting a list of parameter names. To reset the entire cache parameter group, specify the <code>ResetAllParameters</code> and <code>CacheParameterGroupName</code> parameters.</p>",
     "RevokeCacheSecurityGroupIngress": "<p>Revokes ingress from a cache security group. Use this operation to disallow access from an Amazon EC2 security group that had been previously authorized.</p>",
-    "StartMigration": "<p>Start the migration of data.</p>",
+    "StartMigration": "<p>Starts the migration of data.</p>",
+    "StopMigration": "<p>Stops an ongoing data sync between the source and the serverless cache. The migration remains open and the data sync can be restarted. This operation is valid only while the migration is syncing; during cutover it returns <code>InvalidServerlessCacheStateFault</code>.</p>",
     "TestFailover": "<p>Represents the input of a <code>TestFailover</code> operation which tests automatic failover on a specified node group (called shard in the console) in a replication group (called cluster in the console).</p> <p>This API is designed for testing the behavior of your application in case of ElastiCache failover. It is not designed to be an operational tool for initiating a failover to overcome a problem you may have with the cluster. Moreover, in certain conditions such as large-scale operational events, Amazon may block this API. </p> <p class=\"title\"> <b>Note the following</b> </p> <ul> <li> <p>A customer can use this operation to test automatic failover on up to 15 shards (called node groups in the ElastiCache API and Amazon CLI) in any rolling 24-hour period.</p> </li> <li> <p>If calling this operation on shards in different clusters (called replication groups in the API and CLI), the calls can be made concurrently.</p> <p> </p> </li> <li> <p>If calling this operation multiple times on different shards in the same Valkey or Redis OSS (cluster mode enabled) replication group, the first node replacement must complete before a subsequent call can be made.</p> </li> <li> <p>To determine whether the node replacement is complete you can check Events using the Amazon ElastiCache console, the Amazon CLI, or the ElastiCache API. Look for the following automatic failover related events, listed here in order of occurrance:</p> <ol> <li> <p>Replication group message: <code>Test Failover API called for node group &lt;node-group-id&gt;</code> </p> </li> <li> <p>Cache cluster message: <code>Failover from primary node &lt;primary-node-id&gt; to replica node &lt;node-id&gt; completed</code> </p> </li> <li> <p>Replication group message: <code>Failover from primary node &lt;primary-node-id&gt; to replica node &lt;node-id&gt; completed</code> </p> </li> <li> <p>Cache cluster message: <code>Recovering cache nodes &lt;node-id&gt;</code> </p> </li> <li> <p>Cache cluster message: <code>Finished recovery for cache nodes &lt;node-id&gt;</code> </p> </li> </ol> <p>For more information see:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/ECEvents.Viewing.html\">Viewing ElastiCache Events</a> in the <i>ElastiCache User Guide</i> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonElastiCache/latest/APIReference/API_DescribeEvents.html\">DescribeEvents</a> in the ElastiCache API Reference</p> </li> </ul> </li> </ul> <p>Also see, <a href=\"https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/AutoFailover.html#auto-failover-test\">Testing Multi-AZ </a> in the <i>ElastiCache User Guide</i>.</p>",
     "TestMigration": "<p> Async API to test connection between source and target replication group. </p>"
   },
@@ -269,7 +271,9 @@
         "ReplicationGroup$TransitEncryptionEnabled": "<p>A flag that enables in-transit encryption when set to <code>true</code>.</p> <p> <b>Required:</b> Only available when creating a replication group in an Amazon VPC using Redis OSS version <code>3.2.6</code>, <code>4.x</code> or later.</p> <p>Default: <code>false</code> </p>",
         "ReplicationGroup$AtRestEncryptionEnabled": "<p>A flag that enables encryption at-rest on the cluster when set to <code>true</code>. In some cases, encryption at-rest may be enabled even when this value is false. Use <code>StorageEncryptionType</code> to view the effective encryption state of a cluster.</p> <p>You cannot modify the value of <code>AtRestEncryptionEnabled</code> after the cluster is created.</p> <p>Default: <code>true</code> when using Valkey, <code>false</code> when using Redis OSS</p>",
         "ReplicationGroupPendingModifiedValues$TransitEncryptionEnabled": "<p>A flag that enables in-transit encryption when set to true.</p>",
-        "ServiceUpdate$AutoUpdateAfterRecommendedApplyByDate": "<p>Indicates whether the service update will be automatically applied once the recommended apply-by date has expired. </p>"
+        "ServiceUpdate$AutoUpdateAfterRecommendedApplyByDate": "<p>Indicates whether the service update will be automatically applied once the recommended apply-by date has expired. </p>",
+        "StartMigrationMessage$AutoCutover": "<p>Specifies whether ElastiCache automatically attempts to complete the migration after data sync is established.</p>",
+        "StartMigrationMessage$ClearTargetCacheData": "<p>Specifies whether ElastiCache deletes existing data in the serverless cache before migration begins. After <code>StopMigration</code>, <code>StartMigration</code> requires this option to restart the data sync.</p>"
       }
     },
     "CacheCluster": {
@@ -681,7 +685,8 @@
     "CustomerNodeEndpointList": {
       "base": null,
       "refs": {
-        "StartMigrationMessage$CustomerNodeEndpointList": "<p>List of endpoints from which data should be migrated. For Valkey or Redis OSS (cluster mode disabled), the list should have only one element.</p>",
+        "PrepareMigrationRequest$CustomerNodeEndpointList": "<p>The list of endpoints from which to migrate data. For serverless cache migrations, the list should have only one element.</p>",
+        "StartMigrationMessage$CustomerNodeEndpointList": "<p>The list of endpoints from which to migrate data. For Valkey or Redis OSS (cluster mode disabled), the list should have only one element. For serverless cache migrations, ElastiCache uses the endpoint that you provided in <code>PrepareMigration</code>.</p>",
         "TestMigrationMessage$CustomerNodeEndpointList": "<p> List of endpoints from which data should be migrated. List should have only one element. </p>"
       }
     },
@@ -977,6 +982,7 @@
       "refs": {
         "CacheCluster$ConfigurationEndpoint": "<p>Represents a Memcached cluster endpoint which can be used by an application to connect to any node in the cluster. The configuration endpoint will always have <code>.cfg</code> in it.</p> <p>Example: <code>mem-3.9dvc4r<u>.cfg</u>.usw2.cache.amazonaws.com:11211</code> </p>",
         "CacheNode$Endpoint": "<p>The hostname for connecting to this cache node.</p>",
+        "MigrationSummary$MigrationEndpoint": "<p>The migration endpoint, which is the standard endpoint of the serverless cache. Point your application at this endpoint during the migration. Until cutover, ElastiCache routes requests on this endpoint to your source.</p>",
         "NodeGroup$PrimaryEndpoint": "<p>The endpoint of the primary node in this node group (shard).</p>",
         "NodeGroup$ReaderEndpoint": "<p>The endpoint of the replica nodes in this node group (shard). This value is read-only.</p>",
         "NodeGroupMember$ReadEndpoint": "<p>The information required for client programs to connect to a node for read operations. The read endpoint is only applicable on Valkey or Redis OSS (cluster mode disabled) clusters.</p>",
@@ -1377,6 +1383,16 @@
         "PendingLogDeliveryConfiguration$LogType": "<p>Refers to <a href=\"https://redis.io/commands/slowlog\">slow-log</a> or engine-log..</p>"
       }
     },
+    "MigrationHealthFault": {
+      "base": "<p>The migration is not healthy. Check the events for this serverless cache for more details. For <code>CompleteMigration</code>, set <code>Force</code> to true to bypass this check.</p>",
+      "refs": {}
+    },
+    "MigrationSummary": {
+      "base": "<p>Provides a summary of the current migration status for a serverless cache.</p>",
+      "refs": {
+        "ServerlessCache$Migration": "<p>Provides a summary of the migration status for the serverless cache.</p>"
+      }
+    },
     "ModifyCacheClusterMessage": {
       "base": "<p>Represents the input of a <code>ModifyCacheCluster</code> operation.</p>",
       "refs": {}
@@ -1680,6 +1696,14 @@
         "CreateCacheClusterMessage$PreferredOutpostArns": "<p>The outpost ARNs in which the cache cluster is created.</p>"
       }
     },
+    "PrepareMigrationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "PrepareMigrationResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ProcessedUpdateAction": {
       "base": "<p>Update action that has been processed for the corresponding apply/stop request</p>",
       "refs": {
@@ -1907,6 +1931,12 @@
         "PendingModifiedValues$ScaleConfig": "<p>The scaling configuration changes that are pending for the Memcached cluster.</p>"
       }
     },
+    "SecretManagerAuthConfig": {
+      "base": "<p>Configuration for authenticating with the source using Secrets Manager during migration.</p>",
+      "refs": {
+        "SourceAuthenticationConfiguration$SecretManagerConfig": "<p>The Secrets Manager configuration used for authenticating with the source during migration.</p>"
+      }
+    },
     "SecurityGroupIdsList": {
       "base": null,
       "refs": {
@@ -1934,14 +1964,22 @@
     "ServerlessCache": {
       "base": "<p>The resource representing a serverless cache.</p>",
       "refs": {
+        "CompleteMigrationResponse$ServerlessCache": "<p>Provides the details of the serverless cache for which the migration completed.</p>",
         "CreateServerlessCacheResponse$ServerlessCache": "<p>The response for the attempt to create the serverless cache.</p>",
         "DeleteServerlessCacheResponse$ServerlessCache": "<p>Provides the details of the specified serverless cache that is about to be deleted.</p>",
         "ModifyServerlessCacheResponse$ServerlessCache": "<p>The response for the attempt to modify the serverless cache.</p>",
-        "ServerlessCacheList$member": null
+        "PrepareMigrationResponse$ServerlessCache": "<p>Provides the details of the serverless cache prepared for migration.</p>",
+        "ServerlessCacheList$member": null,
+        "StartMigrationResponse$ServerlessCache": "<p>Provides the details of the serverless cache to which ElastiCache is migrating data.</p>",
+        "StopMigrationResponse$ServerlessCache": "<p>Provides the details of the serverless cache for which the data sync stopped.</p>"
       }
     },
     "ServerlessCacheAlreadyExistsFault": {
       "base": "<p>A serverless cache with this name already exists.</p>",
+      "refs": {}
+    },
+    "ServerlessCacheAlreadyUnderMigrationFault": {
+      "base": "<p>A migration is already in progress for this serverless cache. You cannot start another migration until the current one completes.</p>",
       "refs": {}
     },
     "ServerlessCacheConfiguration": {
@@ -1958,6 +1996,10 @@
     },
     "ServerlessCacheNotFoundFault": {
       "base": "<p>The serverless cache was not found or does not exist.</p>",
+      "refs": {}
+    },
+    "ServerlessCacheNotUnderMigrationFault": {
+      "base": "<p>The serverless cache is not currently under migration.</p>",
       "refs": {}
     },
     "ServerlessCacheQuotaForCustomerExceededFault": {
@@ -2096,6 +2138,18 @@
       "base": "<p>The request cannot be processed because it would exceed the maximum number of snapshots.</p>",
       "refs": {}
     },
+    "SourceAuthenticationConfiguration": {
+      "base": "<p>The authentication configuration for connecting to the source during migration.</p>",
+      "refs": {
+        "PrepareMigrationRequest$SourceAuthenticationConfiguration": "<p>The authentication configuration for connecting to the source during migration.</p>"
+      }
+    },
+    "SourceTlsConfiguration": {
+      "base": "<p>The TLS configuration for connecting to the source during migration.</p>",
+      "refs": {
+        "PrepareMigrationRequest$SourceTlsConfiguration": "<p>The TLS configuration for connecting to the source during migration.</p>"
+      }
+    },
     "SourceType": {
       "base": null,
       "refs": {
@@ -2108,6 +2162,14 @@
       "refs": {}
     },
     "StartMigrationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "StopMigrationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StopMigrationResponse": {
       "base": null,
       "refs": {}
     },
@@ -2191,6 +2253,7 @@
         "CloudWatchLogsDestinationDetails$LogGroup": "<p>The name of the CloudWatch Logs log group.</p>",
         "ClusterIdList$member": null,
         "CompleteMigrationMessage$ReplicationGroupId": "<p>The ID of the replication group to which data is being migrated.</p>",
+        "CompleteMigrationMessage$ServerlessCacheName": "<p>The name of the serverless cache to which data is being migrated.</p>",
         "CopyServerlessCacheSnapshotRequest$SourceServerlessCacheSnapshotName": "<p>The identifier of the existing serverless cache’s snapshot to be copied. Available for Valkey, Redis OSS and Serverless Memcached only.</p>",
         "CopyServerlessCacheSnapshotRequest$TargetServerlessCacheSnapshotName": "<p>The identifier for the snapshot to be created. Available for Valkey, Redis OSS and Serverless Memcached only. This value is stored as a lowercase string.</p>",
         "CopyServerlessCacheSnapshotRequest$KmsKeyId": "<p>The identifier of the KMS key used to encrypt the target snapshot. Available for Valkey, Redis OSS and Serverless Memcached only.</p>",
@@ -2371,6 +2434,8 @@
         "ListAllowedNodeTypeModificationsMessage$ReplicationGroupId": "<p>The name of the replication group want to scale up to a larger node type. ElastiCache uses the replication group id to identify the current node type being used by this replication group, and from that to create a list of node types you can scale up to.</p> <important> <p>You must provide a value for either the <code>CacheClusterId</code> or the <code>ReplicationGroupId</code>.</p> </important>",
         "ListTagsForResourceMessage$ResourceName": "<p>The Amazon Resource Name (ARN) of the resource for which you want the list of tags, for example <code>arn:aws:elasticache:us-west-2:0123456789:cluster:myCluster</code> or <code>arn:aws:elasticache:us-west-2:0123456789:snapshot:mySnapshot</code>.</p> <p>For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces</a>.</p>",
         "LogDeliveryConfiguration$Message": "<p>Returns an error message for the log delivery configuration.</p>",
+        "MigrationSummary$Status": "<p>The current status of the migration.</p>",
+        "MigrationSummary$CutoverMode": "<p>The cutover configuration for the migration.</p>",
         "ModifyCacheClusterMessage$CacheClusterId": "<p>The cluster identifier. This value is stored as a lowercase string.</p>",
         "ModifyCacheClusterMessage$PreferredMaintenanceWindow": "<p>Specifies the weekly time range during which maintenance on the cluster is performed. It is specified as a range in the format ddd:hh24:mi-ddd:hh24:mi (24H Clock UTC). The minimum maintenance window is a 60 minute period.</p> <p>Valid values for <code>ddd</code> are:</p> <ul> <li> <p> <code>sun</code> </p> </li> <li> <p> <code>mon</code> </p> </li> <li> <p> <code>tue</code> </p> </li> <li> <p> <code>wed</code> </p> </li> <li> <p> <code>thu</code> </p> </li> <li> <p> <code>fri</code> </p> </li> <li> <p> <code>sat</code> </p> </li> </ul> <p>Example: <code>sun:23:00-mon:01:30</code> </p>",
         "ModifyCacheClusterMessage$NotificationTopicArn": "<p>The Amazon Resource Name (ARN) of the Amazon SNS topic to which notifications are sent.</p> <note> <p>The Amazon SNS topic owner must be same as the cluster owner.</p> </note>",
@@ -2448,6 +2513,7 @@
         "PendingModifiedValues$CacheNodeType": "<p>The cache node type that this cluster or replication group is scaled to.</p>",
         "PreferredAvailabilityZoneList$member": null,
         "PreferredOutpostArnList$member": null,
+        "PrepareMigrationRequest$ServerlessCacheName": "<p>The name of the serverless cache to prepare for migration.</p>",
         "ProcessedUpdateAction$ReplicationGroupId": "<p>The ID of the replication group</p>",
         "ProcessedUpdateAction$CacheClusterId": "<p>The ID of the cache cluster</p>",
         "ProcessedUpdateAction$ServiceUpdateName": "<p>The unique ID of the service update</p>",
@@ -2490,6 +2556,7 @@
         "RevokeCacheSecurityGroupIngressMessage$CacheSecurityGroupName": "<p>The name of the cache security group to revoke ingress from.</p>",
         "RevokeCacheSecurityGroupIngressMessage$EC2SecurityGroupName": "<p>The name of the Amazon EC2 security group to revoke access from.</p>",
         "RevokeCacheSecurityGroupIngressMessage$EC2SecurityGroupOwnerId": "<p>The Amazon account number of the Amazon EC2 security group owner. Note that this is not the same thing as an Amazon access key ID - you must provide a valid Amazon account number for this parameter.</p>",
+        "SecretManagerAuthConfig$SecretArn": "<p>The ARN of the secret in AWS Secrets Manager that contains the credentials for authenticating with the source.</p>",
         "SecurityGroupIdsList$member": null,
         "SecurityGroupMembership$SecurityGroupId": "<p>The identifier of the cache security group.</p>",
         "SecurityGroupMembership$Status": "<p>The status of the cache security group membership. The status changes whenever a cache security group is modified, or when the cache security groups assigned to a cluster are modified.</p>",
@@ -2538,7 +2605,10 @@
         "Snapshot$KmsKeyId": "<p>The ID of the KMS key used to encrypt the snapshot.</p>",
         "Snapshot$ARN": "<p>The ARN (Amazon Resource Name) of the snapshot.</p>",
         "SnapshotArnsList$member": null,
+        "SourceTlsConfiguration$SourceTlsCertificate": "<p>The TLS certificate used to verify the identity of the source during migration.</p>",
+        "StartMigrationMessage$ServerlessCacheName": "<p>The name of the serverless cache to which data is being migrated.</p>",
         "StartMigrationMessage$ReplicationGroupId": "<p>The ID of the replication group to which data should be migrated.</p>",
+        "StopMigrationRequest$ServerlessCacheName": "<p>The name of the serverless cache for which to stop the data sync.</p>",
         "Subnet$SubnetIdentifier": "<p>The unique identifier for the subnet.</p>",
         "SubnetIdentifierList$member": null,
         "SubnetIdsList$member": null,
@@ -2715,6 +2785,12 @@
       "base": "<p>Filters update actions from the service updates that are in available status during the time range.</p>",
       "refs": {
         "DescribeUpdateActionsMessage$ServiceUpdateTimeRange": "<p>The range of time specified to search for service updates that are in available status</p>"
+      }
+    },
+    "TlsMode": {
+      "base": null,
+      "refs": {
+        "SourceTlsConfiguration$SourceTlsMode": "<p>The TLS mode to use when connecting to the source. Valid values are <code>none</code> and <code>verify-ca</code>.</p>"
       }
     },
     "TransitEncryptionMode": {

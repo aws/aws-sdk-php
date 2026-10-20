@@ -6,6 +6,10 @@ use Aws\AwsClient;
 /**
  * This client is used to interact with **Amazon ECS**.
  *
+ * @method \Aws\Result associateGatewayWithCluster(array $args = [])
+ * @phpstan-method \Aws\Result associateGatewayWithCluster(array{gateway?: string, cluster?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise associateGatewayWithClusterAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise associateGatewayWithClusterAsync(array{gateway?: string, cluster?: string, ...} $args = [])
  * @method \Aws\Result continueServiceDeployment(array $args = [])
  * @phpstan-method \Aws\Result continueServiceDeployment(array{serviceDeploymentArn?: string, hookId?: string, action?: 'CONTINUE'|'ROLLBACK', ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise continueServiceDeploymentAsync(array $args = [])
@@ -228,6 +232,56 @@ use Aws\AwsClient;
  *     taskDefinitionArn?: string,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result createGateway(array $args = [])
+ * @phpstan-method \Aws\Result createGateway(array{
+ *     name?: string,
+ *     infrastructureRoleArn?: string,
+ *     clientToken?: string,
+ *     deletionProtection?: bool,
+ *     configuration?: array{
+ *         hostSharedAlb?: array{
+ *             networkConfiguration?: array,
+ *             scheme?: 'internal'|'internet-facing',
+ *             webACLArn?: string,
+ *             accessLogs?: array,
+ *             port?: int,
+ *             protocol?: 'HTTP'|'HTTPS',
+ *             maxAlbCount?: int,
+ *             httpDesync?: 'defensive'|'monitor'|'strictest',
+ *             testTrafficRules?: array,
+ *             ...,
+ *         },
+ *         ...,
+ *     },
+ *     tags?: list<array{key?: string, value?: string, ...}>,
+ *     propagateTags?: 'GATEWAY'|'NONE',
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createGatewayAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createGatewayAsync(array{
+ *     name?: string,
+ *     infrastructureRoleArn?: string,
+ *     clientToken?: string,
+ *     deletionProtection?: bool,
+ *     configuration?: array{
+ *         hostSharedAlb?: array{
+ *             networkConfiguration?: array,
+ *             scheme?: 'internal'|'internet-facing',
+ *             webACLArn?: string,
+ *             accessLogs?: array,
+ *             port?: int,
+ *             protocol?: 'HTTP'|'HTTPS',
+ *             maxAlbCount?: int,
+ *             httpDesync?: 'defensive'|'monitor'|'strictest',
+ *             testTrafficRules?: array,
+ *             ...,
+ *         },
+ *         ...,
+ *     },
+ *     tags?: list<array{key?: string, value?: string, ...}>,
+ *     propagateTags?: 'GATEWAY'|'NONE',
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result createService(array $args = [])
  * @phpstan-method \Aws\Result createService(array{
  *     cluster?: string,
@@ -291,6 +345,7 @@ use Aws\AwsClient;
  *     },
  *     volumeConfigurations?: list<array{name?: string, managedEBSVolume?: array, ...}>,
  *     vpcLatticeConfigurations?: list<array{roleArn?: string, targetGroupArn?: string, portName?: string, advancedConfiguration?: array, ...}>,
+ *     gatewayConnectors?: list<array{portName?: string, healthCheck?: array, filters?: array, ...}>,
  *     monitoring?: array{metricConfigurations?: list<array>, ...},
  *     ...,
  * } $args = [])
@@ -357,6 +412,7 @@ use Aws\AwsClient;
  *     },
  *     volumeConfigurations?: list<array{name?: string, managedEBSVolume?: array, ...}>,
  *     vpcLatticeConfigurations?: list<array{roleArn?: string, targetGroupArn?: string, portName?: string, advancedConfiguration?: array, ...}>,
+ *     gatewayConnectors?: list<array{portName?: string, healthCheck?: array, filters?: array, ...}>,
  *     monitoring?: array{metricConfigurations?: list<array>, ...},
  *     ...,
  * } $args = [])
@@ -458,6 +514,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result deleteExpressGatewayService(array{serviceArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteExpressGatewayServiceAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteExpressGatewayServiceAsync(array{serviceArn?: string, ...} $args = [])
+ * @method \Aws\Result deleteGateway(array $args = [])
+ * @phpstan-method \Aws\Result deleteGateway(array{gateway?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteGatewayAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteGatewayAsync(array{gateway?: string, ...} $args = [])
  * @method \Aws\Result deleteService(array $args = [])
  * @phpstan-method \Aws\Result deleteService(array{cluster?: string, service?: string, force?: bool, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteServiceAsync(array $args = [])
@@ -542,6 +602,18 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result describeExpressGatewayService(array{serviceArn?: string, include?: list<'TAGS'>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeExpressGatewayServiceAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise describeExpressGatewayServiceAsync(array{serviceArn?: string, include?: list<'TAGS'>, ...} $args = [])
+ * @method \Aws\Result describeGateway(array $args = [])
+ * @phpstan-method \Aws\Result describeGateway(array{gateway?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeGatewayAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeGatewayAsync(array{gateway?: string, ...} $args = [])
+ * @method \Aws\Result describeGatewayResources(array $args = [])
+ * @phpstan-method \Aws\Result describeGatewayResources(array{gateway?: string, maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeGatewayResourcesAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeGatewayResourcesAsync(array{gateway?: string, maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \Aws\Result describeGatewayRoute(array $args = [])
+ * @phpstan-method \Aws\Result describeGatewayRoute(array{gatewayRouteArn?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeGatewayRouteAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeGatewayRouteAsync(array{gatewayRouteArn?: string, ...} $args = [])
  * @method \Aws\Result describeServiceDeployments(array $args = [])
  * @phpstan-method \Aws\Result describeServiceDeployments(array{serviceDeploymentArns?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeServiceDeploymentsAsync(array $args = [])
@@ -566,6 +638,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result describeTasks(array{cluster?: string, tasks?: list<string>, include?: list<'TAGS'>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeTasksAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise describeTasksAsync(array{cluster?: string, tasks?: list<string>, include?: list<'TAGS'>, ...} $args = [])
+ * @method \Aws\Result disassociateGatewayFromCluster(array $args = [])
+ * @phpstan-method \Aws\Result disassociateGatewayFromCluster(array{gateway?: string, cluster?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise disassociateGatewayFromClusterAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise disassociateGatewayFromClusterAsync(array{gateway?: string, cluster?: string, ...} $args = [])
  * @method \Aws\Result discoverPollEndpoint(array $args = [])
  * @phpstan-method \Aws\Result discoverPollEndpoint(array{containerInstance?: string, cluster?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise discoverPollEndpointAsync(array $args = [])
@@ -684,6 +760,62 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listDaemons(array{clusterArn?: string, capacityProviderArns?: list<string>, maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listDaemonsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listDaemonsAsync(array{clusterArn?: string, capacityProviderArns?: list<string>, maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \Aws\Result listGatewayClusterAssociations(array $args = [])
+ * @phpstan-method \Aws\Result listGatewayClusterAssociations(array{
+ *     gateway?: string,
+ *     cluster?: string,
+ *     status?: list<'ACTIVE'|'DISASSOCIATING'|'INACTIVE'>,
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listGatewayClusterAssociationsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listGatewayClusterAssociationsAsync(array{
+ *     gateway?: string,
+ *     cluster?: string,
+ *     status?: list<'ACTIVE'|'DISASSOCIATING'|'INACTIVE'>,
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result listGatewayRoutes(array $args = [])
+ * @phpstan-method \Aws\Result listGatewayRoutes(array{
+ *     gateway?: string,
+ *     cluster?: string,
+ *     service?: string,
+ *     serviceContainerPortName?: string,
+ *     status?: list<'ACTIVE'|'CREATE_FAILED'|'CREATE_IN_PROGRESS'|'DELETE_FAILED'|'DELETE_IN_PROGRESS'|'UPDATE_FAILED'|'UPDATE_IN_PROGRESS'>,
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listGatewayRoutesAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listGatewayRoutesAsync(array{
+ *     gateway?: string,
+ *     cluster?: string,
+ *     service?: string,
+ *     serviceContainerPortName?: string,
+ *     status?: list<'ACTIVE'|'CREATE_FAILED'|'CREATE_IN_PROGRESS'|'DELETE_FAILED'|'DELETE_IN_PROGRESS'|'UPDATE_FAILED'|'UPDATE_IN_PROGRESS'>,
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result listGateways(array $args = [])
+ * @phpstan-method \Aws\Result listGateways(array{
+ *     names?: list<string>,
+ *     status?: list<'ACTIVE'|'DELETED'|'UPDATE_COMPLETE'|'UPDATE_FAILED'|'UPDATE_IN_PROGRESS'>,
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listGatewaysAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listGatewaysAsync(array{
+ *     names?: list<string>,
+ *     status?: list<'ACTIVE'|'DELETED'|'UPDATE_COMPLETE'|'UPDATE_FAILED'|'UPDATE_IN_PROGRESS'>,
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listServiceDeployments(array $args = [])
  * @phpstan-method \Aws\Result listServiceDeployments(array{
  *     service?: string,
@@ -1572,6 +1704,46 @@ use Aws\AwsClient;
  *     taskDefinitionArn?: string,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result updateGateway(array $args = [])
+ * @phpstan-method \Aws\Result updateGateway(array{
+ *     gateway?: string,
+ *     infrastructureRoleArn?: string,
+ *     deletionProtection?: bool,
+ *     configuration?: array{
+ *         hostSharedAlb?: array{
+ *             networkConfiguration?: array,
+ *             maxAlbCount?: int,
+ *             webACLArn?: string,
+ *             accessLogs?: array,
+ *             httpDesync?: 'defensive'|'monitor'|'strictest',
+ *             testTrafficRules?: array,
+ *             ...,
+ *         },
+ *         ...,
+ *     },
+ *     propagateTags?: 'GATEWAY'|'NONE',
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateGatewayAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateGatewayAsync(array{
+ *     gateway?: string,
+ *     infrastructureRoleArn?: string,
+ *     deletionProtection?: bool,
+ *     configuration?: array{
+ *         hostSharedAlb?: array{
+ *             networkConfiguration?: array,
+ *             maxAlbCount?: int,
+ *             webACLArn?: string,
+ *             accessLogs?: array,
+ *             httpDesync?: 'defensive'|'monitor'|'strictest',
+ *             testTrafficRules?: array,
+ *             ...,
+ *         },
+ *         ...,
+ *     },
+ *     propagateTags?: 'GATEWAY'|'NONE',
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result updateService(array $args = [])
  * @phpstan-method \Aws\Result updateService(array{
  *     cluster?: string,
@@ -1631,6 +1803,7 @@ use Aws\AwsClient;
  *     },
  *     volumeConfigurations?: list<array{name?: string, managedEBSVolume?: array, ...}>,
  *     vpcLatticeConfigurations?: list<array{roleArn?: string, targetGroupArn?: string, portName?: string, advancedConfiguration?: array, ...}>,
+ *     gatewayConnectors?: list<array{portName?: string, healthCheck?: array, filters?: array, ...}>,
  *     monitoring?: array{metricConfigurations?: list<array>, ...},
  *     ...,
  * } $args = [])
@@ -1693,6 +1866,7 @@ use Aws\AwsClient;
  *     },
  *     volumeConfigurations?: list<array{name?: string, managedEBSVolume?: array, ...}>,
  *     vpcLatticeConfigurations?: list<array{roleArn?: string, targetGroupArn?: string, portName?: string, advancedConfiguration?: array, ...}>,
+ *     gatewayConnectors?: list<array{portName?: string, healthCheck?: array, filters?: array, ...}>,
  *     monitoring?: array{metricConfigurations?: list<array>, ...},
  *     ...,
  * } $args = [])

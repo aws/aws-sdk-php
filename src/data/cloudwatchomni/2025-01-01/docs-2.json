@@ -2012,7 +2012,7 @@
     "SearchPrincipalsInputMaxResultsInteger": {
       "base": null,
       "refs": {
-        "SearchPrincipalsInput$maxResults": "<p>The maximum number of results to return. Defaults to 10. Valid only when searchQuery is *; other searches reject this parameter and return at most 10 results.</p>"
+        "SearchPrincipalsInput$maxResults": "<p>The maximum number of results to return. Defaults to 100.</p>"
       }
     },
     "SearchPrincipalsInputSearchQueryString": {
@@ -2024,7 +2024,7 @@
     "SearchPrincipalsNextToken": {
       "base": "<p>SearchPrincipals nextToken. Uncapped — wraps two Identity Store tokens (up to 65,535 chars each) inside a KMS-encrypted envelope.</p>",
       "refs": {
-        "SearchPrincipalsInput$nextToken": "<p>A token to retrieve the next page of results. Valid only when searchQuery is *; other searches do not paginate and reject this parameter. Tokens expire after 24 hours.</p>",
+        "SearchPrincipalsInput$nextToken": "<p>A token to retrieve the next page of results. Supply the same searchQuery used on the request that returned it. Tokens expire after 24 hours.</p>",
         "SearchPrincipalsOutput$nextToken": "<p>A token to retrieve the next page of results, or null if there are no more results.</p>"
       }
     },

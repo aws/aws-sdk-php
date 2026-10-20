@@ -678,7 +678,7 @@ use GuzzleHttp\Promise\Create;
  *     GlobalSecondaryIndexUpdates?: list<array{Update?: array, Create?: array, Delete?: array, ...}>,
  *     StreamSpecification?: array{StreamEnabled?: bool, StreamViewType?: 'KEYS_ONLY'|'NEW_AND_OLD_IMAGES'|'NEW_IMAGE'|'OLD_IMAGE', ...},
  *     SSESpecification?: array{Enabled?: bool, SSEType?: 'AES256'|'KMS', KMSMasterKeyId?: string, ...},
- *     ReplicaUpdates?: list<array{Create?: array, Update?: array, Delete?: array, ...}>,
+ *     ReplicaUpdates?: list<array{Create?: array, Update?: array, Delete?: array, Disassociate?: array, ...}>,
  *     TableClass?: 'STANDARD'|'STANDARD_INFREQUENT_ACCESS',
  *     DeletionProtectionEnabled?: bool,
  *     MultiRegionConsistency?: 'EVENTUAL'|'STRONG',
@@ -686,6 +686,7 @@ use GuzzleHttp\Promise\Create;
  *     OnDemandThroughput?: array{MaxReadRequestUnits?: int, MaxWriteRequestUnits?: int, ...},
  *     WarmThroughput?: array{ReadUnitsPerSecond?: int, WriteUnitsPerSecond?: int, ...},
  *     GlobalTableSettingsReplicationMode?: 'DISABLED'|'ENABLED'|'ENABLED_WITH_OVERRIDES',
+ *     DisassociationProtectionEnabled?: bool,
  *     VectorIndexUpdates?: list<array{Create?: array, Delete?: array, ...}>,
  *     ...,
  * } $args = [])
@@ -698,7 +699,7 @@ use GuzzleHttp\Promise\Create;
  *     GlobalSecondaryIndexUpdates?: list<array{Update?: array, Create?: array, Delete?: array, ...}>,
  *     StreamSpecification?: array{StreamEnabled?: bool, StreamViewType?: 'KEYS_ONLY'|'NEW_AND_OLD_IMAGES'|'NEW_IMAGE'|'OLD_IMAGE', ...},
  *     SSESpecification?: array{Enabled?: bool, SSEType?: 'AES256'|'KMS', KMSMasterKeyId?: string, ...},
- *     ReplicaUpdates?: list<array{Create?: array, Update?: array, Delete?: array, ...}>,
+ *     ReplicaUpdates?: list<array{Create?: array, Update?: array, Delete?: array, Disassociate?: array, ...}>,
  *     TableClass?: 'STANDARD'|'STANDARD_INFREQUENT_ACCESS',
  *     DeletionProtectionEnabled?: bool,
  *     MultiRegionConsistency?: 'EVENTUAL'|'STRONG',
@@ -706,6 +707,7 @@ use GuzzleHttp\Promise\Create;
  *     OnDemandThroughput?: array{MaxReadRequestUnits?: int, MaxWriteRequestUnits?: int, ...},
  *     WarmThroughput?: array{ReadUnitsPerSecond?: int, WriteUnitsPerSecond?: int, ...},
  *     GlobalTableSettingsReplicationMode?: 'DISABLED'|'ENABLED'|'ENABLED_WITH_OVERRIDES',
+ *     DisassociationProtectionEnabled?: bool,
  *     VectorIndexUpdates?: list<array{Create?: array, Delete?: array, ...}>,
  *     ...,
  * } $args = [])
